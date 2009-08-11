@@ -1,0 +1,468 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Xml;
+using ArcEngine.Forms;
+using ArcEngine.Graphic;
+using ArcEngine.Providers;
+//using WeifenLuo.WinFormsUI.Docking;
+
+namespace DungeonEye
+{
+	/// <summary>
+	/// 
+	/// </summary>
+	public class DungeonProvider : Provider
+	{
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public DungeonProvider()
+		{
+			Dungeons = new Dictionary<string, XmlNode>();
+			SharedDungeons = new Dictionary<string, Dungeon>();
+			Monsters = new Dictionary<string, XmlNode>();
+			WallDecorations = new Dictionary<string, XmlNode>();
+			ItemSets = new Dictionary<string, XmlNode>();
+			SharedItemSets = new Dictionary<string, ItemSet>();
+
+
+
+			Name = "Dungeon Eye";
+			Tags = new string[] { "dungeon", "itemset", "monster", "walldecoration" };
+			Assets = new Type[] { typeof(Dungeon), typeof(ItemSet), typeof(Monster), typeof(WallDecoration) };
+			Version = new Version(0, 1);
+
+		}
+
+
+
+		#region IO routines
+
+
+		/// <summary>
+		/// Saves all assets
+		/// </summary>
+		/// <param name="type"></param>
+		/// <param name="xml"></param>
+		/// <returns></returns>
+		public override bool Save(Type type, XmlWriter writer)
+		{
+
+
+			if (type == typeof(Dungeon))
+			{
+				foreach (XmlNode node in Dungeons.Values)
+					node.WriteTo(writer);
+			}
+			else if (type == typeof(ItemSet))
+			{
+				foreach (XmlNode node in ItemSets.Values)
+					node.WriteTo(writer);
+			}
+			else if (type == typeof(Monster))
+			{
+				foreach (XmlNode node in Monsters.Values)
+					node.WriteTo(writer);
+			}
+
+
+			return true;
+		}
+
+
+
+
+		/// <summary>
+		/// Loads a script
+		/// </summary>
+		/// <param name="xml"></param>
+		/// <returns></returns>
+		public override bool Load(XmlNode xml)
+		{
+			if (xml == null)
+				return false;
+
+			switch (xml.Name.ToLower())
+			{
+				case "dungeon":
+				{
+					Dungeons.Add(xml.Attributes["name"].Value, xml);
+				}
+				break;
+
+				case "monster":
+				{
+					Monsters.Add(xml.Attributes["name"].Value, xml);
+				}
+				break;
+
+				case "itemset":
+				{
+					ItemSets.Add(xml.Attributes["name"].Value, xml);
+				}
+				break;
+
+				case "walldecoration":
+				{
+					WallDecorations.Add(xml.Attributes["name"].Value, xml);
+				}
+				break;
+			}
+
+			return true;
+		}
+
+
+
+		#endregion
+
+
+		#region Editor
+
+
+		/// <summary>
+		/// Edits an asset
+		/// </summary>
+		/// <param name="type">Asset's type</param>
+		/// <param name="name">Name of the asset</param>
+		/// <returns>Handle to the edit form</returns>
+		public override AssetEditor EditAsset<T>(string name)
+		{
+			AssetEditor form = null;
+			XmlNode node = null;
+
+			if (typeof(T) == typeof(Dungeon))
+			{
+				if (Dungeons.ContainsKey(name))
+					node = Dungeons[name];
+
+				form = new Forms.DungeonForm(node);
+			}
+			else if (typeof(T) == typeof(Monster))
+			{
+				if (Monsters.ContainsKey(name))
+					node = Monsters[name];
+
+				form = new Forms.MonsterForm(node);
+			}
+			else if (typeof(T) == typeof(ItemSet))
+			{
+				if (ItemSets.ContainsKey(name))
+					node = ItemSets[name];
+
+				form = new Forms.ItemSetForm(node);
+			}
+
+			form.TabText = name;
+			return form;
+		}
+
+
+		#endregion
+
+
+		#region Assets
+
+		/// <summary>
+		/// Adds an asset definition to the provider
+		/// </summary>
+		/// <typeparam name="T">Type of the asset</typeparam>
+		/// <param name="name">Name of the asset</param>
+		/// <param name="node">Xml node definition</param>
+		public override void Add<T>(string name, XmlNode node)
+		{
+			CheckValue<T>(name);
+
+			if (typeof(Dungeon) == typeof(T))
+				Dungeons[name] = node;
+			else if (typeof(Monster) == typeof(T))
+				Monsters[name] = node;
+			else if (typeof(ItemSet) == typeof(T))
+				ItemSets[name] = node;
+
+		}
+
+
+		/// <summary>
+		/// Returns an array of all available assets
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <returns>Asset's name array</returns>
+		public override List<string> GetAssets<T>()
+		{
+			List<string> list = new List<string>();
+
+			if (typeof(T) == typeof(Dungeon))
+			{
+				foreach (string key in Dungeons.Keys)
+					list.Add(key);
+			}
+			else if (typeof(T) == typeof(Monster))
+			{
+				foreach (string key in Monsters.Keys)
+					list.Add(key);
+			}
+			else if (typeof(T) == typeof(ItemSet))
+			{
+				foreach (string key in ItemSets.Keys)
+					list.Add(key);
+			}
+
+
+			list.Sort();
+			return list;
+		}
+
+		/// <summary>
+		/// Creates an asset
+		/// </summary>
+		/// <typeparam name="T">Type of the asset</typeparam>
+		/// <param name="name">Name of the asset</param>
+		/// <returns></returns>
+		public override T Create<T>(string name)
+		{
+
+			Type type = typeof(T);
+
+
+			if (type == typeof(Dungeon) && Dungeons.ContainsKey(name))
+			{
+				CheckValue<T>(name);
+				Dungeon dungeon = new Dungeon();
+				dungeon.Load(Dungeons[name]);
+				return (T)(object)dungeon;
+			}
+
+			if (type == typeof(Monster) && Monsters.ContainsKey(name))
+			{
+				CheckValue<T>(name);
+				Monster monster = new Monster();
+				monster.Load(Monsters[name]);
+				return (T)(object)monster;
+			}
+
+
+			if (type == typeof(ItemSet) && ItemSets.ContainsKey(name))
+			{
+				CheckValue<T>(name);
+				ItemSet item = new ItemSet();
+				item.Load(ItemSets[name]);
+				return (T)(object)item;
+			}
+				
+			
+			return default(T);
+
+		}
+
+
+
+		/// <summary>
+		/// Returns an asset definition
+		/// </summary>
+		/// <typeparam name="T">Type of the asset</typeparam>
+		/// <param name="name">Asset's name</param>
+		/// <returns></returns>
+		public override XmlNode Get<T>(string name)
+		{
+			CheckValue<T>(name);
+
+			if (typeof(Dungeon) == typeof(T))
+			{
+				if (!Dungeons.ContainsKey(name))
+					return null;
+
+				return Dungeons[name];
+			}
+			else if (typeof(Monster) == typeof(T))
+			{
+				if (!Monsters.ContainsKey(name))
+					return null;
+
+				return Monsters[name];
+			}
+			else if (typeof(ItemSet) == typeof(T))
+			{
+				if (!ItemSets.ContainsKey(name))
+					return null;
+
+				return ItemSets[name];
+			}
+
+			return null;
+		}
+
+
+
+		/// <summary>
+		/// Flush unused assets
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		public override void Remove<T>()
+		{
+		}
+
+
+		/// <summary>
+		/// Removes a specific asset
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="name"></param>
+		public override void Remove<T>(string name)
+		{
+		}
+
+
+
+		/// <summary>
+		/// Removes all assets
+		/// </summary>
+		public override void Clear()
+		{
+			Dungeons.Clear();
+			Monsters.Clear();
+			ItemSets.Clear();
+		}
+
+		#endregion
+
+
+		#region Shared assets
+
+
+		/// <summary>
+		/// Creates a shared resource
+		/// </summary>
+		/// <typeparam name="T">Asset type</typeparam>
+		/// <param name="name">Name of the shared asset</param>
+		/// <returns>The resource</returns>
+		public override T CreateShared<T>(string name)
+		{
+			if (typeof(T) == typeof(Dungeon))
+			{
+				if (SharedDungeons.ContainsKey(name))
+					return (T)(object)SharedDungeons[name];
+
+
+				if (!Dungeons.ContainsKey(name))
+					return default(T);
+							
+				Dungeon dungeon = new Dungeon();
+				dungeon.Load(Dungeons[name]);
+				SharedDungeons[name] = dungeon;
+				return (T)(object)dungeon;
+			}
+
+			if (typeof(T) == typeof(ItemSet))
+			{
+				if (SharedItemSets.ContainsKey(name))
+					return (T)(object)SharedItemSets[name];
+
+
+				if (!ItemSets.ContainsKey(name))
+					return default(T);
+
+				ItemSet ItemSet = new ItemSet();
+				ItemSet.Load(ItemSets[name]);
+				SharedItemSets[name] = ItemSet;
+				return (T)(object)ItemSet;
+			}
+
+			return default(T);
+		}
+
+
+
+		/// <summary>
+		/// Removes a shared asset
+		/// </summary>
+		/// <typeparam name="T">Type of the asset</typeparam>
+		/// <param name="name">Name of the asset</param>
+		public override void RemoveShared<T>(string name)
+		{
+			if (typeof(T) == typeof(Dungeon))
+				SharedDungeons.Remove(name);
+
+			if (typeof(T) == typeof(ItemSet))
+				ItemSets.Remove(name); ;
+		}
+
+
+
+
+		/// <summary>
+		/// Removes a specific type of sharedassets
+		/// </summary>
+		/// <typeparam name="T">Type of the asset to remove</typeparam>
+		public override void RemoveShared<T>()
+		{
+			if (typeof(T) == typeof(Dungeon))
+				SharedDungeons.Clear();
+
+			if (typeof(T) == typeof(ItemSet))
+				SharedItemSets.Clear();
+		}
+
+
+
+		/// <summary>
+		/// Erases all shared assets
+		/// </summary>
+		public override void ClearShared()
+		{
+			SharedDungeons.Clear();
+			ItemSets.Clear();
+		}
+
+
+
+		#endregion
+
+
+		#region Properties
+
+
+		/// <summary>
+		/// Dungeons description
+		/// </summary>
+		Dictionary<string, XmlNode> Dungeons;
+
+		/// <summary>
+		/// Shared dungeons
+		/// </summary>
+		Dictionary<string, Dungeon> SharedDungeons;
+
+
+
+		/// <summary>
+		/// ItemSet
+		/// </summary>
+		Dictionary<string, XmlNode> ItemSets;
+
+		/// <summary>
+		/// Shared ItemSet
+		/// </summary>
+		Dictionary<string, ItemSet> SharedItemSets;
+
+
+
+
+		/// <summary>
+		/// Monsters definition
+		/// </summary>
+		Dictionary<string, XmlNode> Monsters;
+
+
+		/// <summary>
+		/// WallDecoration definition
+		/// </summary>
+		Dictionary<string, XmlNode> WallDecorations;
+
+
+
+		#endregion
+	}
+}
+

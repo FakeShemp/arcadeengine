@@ -1,0 +1,45 @@
+﻿----------------------------------------------------------------------------------------------------
+[+]=Added, [-]=Removed, [=]=Changed, [F]=Fixed, [^]=To-Do, [*]=Info
+----------------------------------------------------------------------------------------------------
+
+
+
+----------------------------------------------------------------------------------------------------
+TODO:
+----------------------------------------------------------------------------------------------------
+[^] Add alcove as wall decoration
+[^] Add Button as wall decoration
+[^] Bad tile when looking at stairs from the side, (block location 'M' and 'O')
+[^] Display HP of heroes in the main interface as a bar graph or as text
+[^] ItemSet's name is hard coded, and it shouldn't
+
+Dungeon Eye v0.3
+[+] Now you can collect/drop item at teams feet, and the object just in front of the team
+[+] Remove all references to BlockInfo() by moving all informations in MazeBlock()
+    Everything, expecting moving objects (monsters and flying items), have to be in MazeBlock
+[+] Throwing items at monster hit them
+[+] When right clicking on a ground item, automaticaly puts it in the inventory (or in the quiver if it's an arrow)
+    of the selected hero. If space is available, items are automatically equiped (if gather a helmet and not helmet
+    is worn, then automaticaly wear the helmet).
+[+] Add a script for each MazeBlock (allow ingame event when the team enter or leave a mazeblock)
+[^] 
+[^] 
+[^] 
+[^] 
+[^] 
+[^] 
+[^] 
+
+
+----------------------------------------------------------------------------------------------------
+Editor v0.3
+----------------------------------------------------------------------------------------------------
+[^] 
+[^] 
+[^] 
+[^] 
+[^] 
+[^] 
+[^] 
+[^] 
+[^] 

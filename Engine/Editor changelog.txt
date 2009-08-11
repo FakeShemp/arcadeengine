@@ -1,0 +1,30 @@
+﻿
+----------------------------------------------------------------------------------------------------
+[+]=Added, [-]=Removed, [=]=Changed, [F]=Fixed, [^]=To-Do, [*]=Info
+----------------------------------------------------------------------------------------------------
+
+
+
+----------------------------------------------------------------------------------------------------
+TODO :
+----------------------------------------------------------------------------------------------------
+
+[^] Use keyboard shortcuts ie: ctrl+s Save, ctrl+o Open bank...
+[^] Use drag'n'drop in the ResourceForm to import / export assets.
+[^] USe a listview to display some specific assets : textures (resolutions, size in byte...), binary (size, type...)
+
+
+----------------------------------------------------------------------------------------------------
+Done :
+----------------------------------------------------------------------------------------------------
+
+Version 0.3
+[+] In the editor, when the save button is clicked, ask for saving all opened asset and then save the bank to disk
+	(Avoid to close all opened asset for saving before saving the bank)
+[+] Add Trace event to the log panel
+[]
+[]
+[]
+[]
+[]
+

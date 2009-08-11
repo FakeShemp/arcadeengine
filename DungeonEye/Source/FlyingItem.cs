@@ -1,0 +1,326 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Drawing;
+using ArcEngine;
+using System.Xml;
+
+namespace DungeonEye
+{
+
+	/// <summary>
+	/// All flying objects in the maze (item, fireball, acid cloud....)
+	/// 
+	/// http://eob.wikispaces.com/eob.thrownitem
+	/// </summary>
+	public class FlyingItem
+	{
+
+		/// <summary>
+		/// Default constructor
+		/// </summary>
+		public FlyingItem()
+		{
+			Location = new DungeonLocation();
+		}
+
+
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="item">Item</param>
+		/// <param name="location">Start location</param>
+		/// <param name="speed">Time in ms taken to cross a block</param>
+		/// <param name="distance">How many block the item have to fly before falling on the ground</param>
+		public FlyingItem(Item item, DungeonLocation location, TimeSpan speed, int distance)
+		{
+			Item = item;
+			Location = new DungeonLocation(location);
+			Speed = speed;
+			Distance = distance;
+		}
+
+
+
+		/// <summary>
+		/// Update the flying item
+		/// </summary>
+		/// <param name="time">Game time</param>
+		/// <param name="maze">Maze where the flying item is</param>
+		/// <returns>True if the blocked or false if nothing happened</rereturns>
+		public bool Update(GameTime time, Maze maze)
+		{
+			// Item can't move any more
+			if (Distance == 0)
+				return true;
+			
+			LastUpdate += time.ElapsedGameTime;
+
+			if (LastUpdate > Speed)
+			{
+				LastUpdate -= Speed;
+
+				// Find the next block according to the direction
+				Point dst = Point.Empty;
+				switch (Location.Direction)
+				{
+					case CardinalPoint.North:
+					dst = new Point(Location.Position.X, Location.Position.Y - 1);
+					break;
+					case CardinalPoint.East:
+					dst = new Point(Location.Position.X + 1, Location.Position.Y);
+					break;
+					case CardinalPoint.South:
+					dst = new Point(Location.Position.X, Location.Position.Y + 1);
+					break;
+					case CardinalPoint.West:
+					dst = new Point(Location.Position.X - 1, Location.Position.Y);
+					break;
+				}
+
+
+				// Blocked by a wall, fall before the block
+				MazeBlock blockinfo =  maze.GetBlock(dst);
+				if (blockinfo.IsBlocking)
+				{
+					Distance = 0;
+				}
+
+
+				// Block by an obstacle, but fall on the block
+				int monstercount = maze.GetMonsterCount(dst);
+				if ((blockinfo.Door != null && blockinfo.Door.State != DoorState.Opened) || monstercount > 0)
+				{
+					Distance = 0;
+					Location.Position = dst;
+
+					GroundPosition gp = Location.GroundPosition;
+					switch (Location.Direction)
+					{
+						case CardinalPoint.North:
+						if (gp == GroundPosition.NorthEast || gp == GroundPosition.SouthEast)
+							Location.GroundPosition = GroundPosition.SouthEast;
+						else
+							Location.GroundPosition = GroundPosition.SouthWest;
+						break;
+						case CardinalPoint.South:
+						if (gp == GroundPosition.NorthEast || gp == GroundPosition.SouthEast)
+							Location.GroundPosition = GroundPosition.NorthEast;
+						else
+							Location.GroundPosition = GroundPosition.NorthWest;
+						break;
+						case CardinalPoint.West:
+						if (gp == GroundPosition.NorthEast || gp == GroundPosition.NorthWest)
+							Location.GroundPosition = GroundPosition.NorthEast;
+						else
+							Location.GroundPosition = GroundPosition.SouthEast;
+						break;
+						case CardinalPoint.East:
+						if (gp == GroundPosition.NorthEast || gp == GroundPosition.NorthWest)
+							Location.GroundPosition = GroundPosition.NorthWest;
+						else
+							Location.GroundPosition = GroundPosition.SouthWest;
+						break;
+					}
+
+
+					// Get monster and hit them
+					if (monstercount > 0)
+					{
+						Monster[] monsters = maze.GetMonsters(dst);
+						foreach(Monster monster in monsters)
+							if (monster != null)
+								monster.Attack(2);
+					}
+					return true;
+				}
+
+
+				//// Hit a monster
+				//else if (maze.GetMonsterCount(dst) > 0)
+				//{
+				//   Distance = 0;
+				//   Location.Position = dst;
+				//}
+
+
+
+				// Drop the item at good ground position
+				if (Distance == 0)
+				{
+					GroundPosition gp = Location.GroundPosition;
+					switch (Location.Direction)
+					{
+						case CardinalPoint.North:
+						if (gp == GroundPosition.NorthEast || gp == GroundPosition.SouthEast)
+							Location.GroundPosition = GroundPosition.NorthEast;
+						else
+							Location.GroundPosition = GroundPosition.NorthWest;
+						break;
+						case CardinalPoint.South:
+						if (gp == GroundPosition.NorthEast || gp == GroundPosition.SouthEast)
+							Location.GroundPosition = GroundPosition.SouthEast;
+						else
+							Location.GroundPosition = GroundPosition.SouthWest;
+						break;
+						case CardinalPoint.West:
+						if (gp == GroundPosition.NorthEast || gp == GroundPosition.NorthWest)
+							Location.GroundPosition = GroundPosition.NorthWest;
+						else
+							Location.GroundPosition = GroundPosition.SouthWest;
+						break;
+						case CardinalPoint.East:
+						if (gp == GroundPosition.NorthEast || gp == GroundPosition.NorthWest)
+							Location.GroundPosition = GroundPosition.NorthEast;
+						else
+							Location.GroundPosition = GroundPosition.SouthEast;
+						break;
+					}
+
+					return true;
+				}
+				else
+				{
+					Distance--;
+					Location.Position = dst;
+				}
+			}
+
+			return false;
+		}
+
+
+
+
+		#region IO
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="writer"></param>
+		public bool Save(XmlWriter writer)
+		{
+			if (writer == null)
+				return false;
+
+
+			writer.WriteStartElement("flyingitem");
+
+			Location.Save(writer);
+
+			writer.WriteStartElement("item");
+			writer.WriteAttributeString("name", Item.Name);
+			writer.WriteEndElement();
+
+			writer.WriteStartElement("speed");
+			writer.WriteAttributeString("value", Speed.TotalMilliseconds.ToString());
+			writer.WriteEndElement();
+
+			writer.WriteStartElement("distance");
+			writer.WriteAttributeString("value", Distance.ToString());
+			writer.WriteEndElement();
+
+			writer.WriteEndElement();
+
+			return true;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="xml"></param>
+		public bool Load(XmlNode xml)
+		{
+			if (xml == null)
+				return false;
+
+
+			foreach (XmlNode node in xml)
+			{
+				if (node.NodeType == XmlNodeType.Comment)
+					continue;
+
+				switch (node.Name.ToLower())
+				{
+					case "location":
+					{
+						Location.Load(node);
+					}
+					break;
+
+					case "item":
+					{
+						ItemSet itemset = ResourceManager.CreateSharedAsset<ItemSet>("Main");
+						Item = itemset.GetItem(node.Attributes["name"].Value);
+					}
+					break;
+
+					case "distance":
+					{
+						Distance = int.Parse(node.Attributes["value"].Value);
+					}
+					break;
+
+					case "speed":
+					{
+						Speed = TimeSpan.FromMilliseconds(int.Parse(node.Attributes["value"].Value));
+					}
+					break;
+				}
+
+
+			}
+
+			return true;
+		}
+
+		#endregion
+
+
+		#region Properties
+
+		/// <summary>
+		/// Speed of the object in ms to cross a block
+		/// </summary>
+		public TimeSpan Speed
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// How many blocks the item have to fly
+		/// </summary>
+		public int Distance;
+
+
+		/// <summary>
+		/// Location of the object
+		/// </summary>
+		public DungeonLocation Location
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// Handle to the item
+		/// </summary>
+		public Item Item
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Last time the update occured
+		/// </summary>
+		TimeSpan LastUpdate;
+		
+		#endregion
+
+	}
+}
