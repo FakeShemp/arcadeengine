@@ -15,28 +15,17 @@ Adding new provider : ArcEngine.Providers.LayoutProvider {ArcEngine.Asset.Layout
 Adding new provider : ArcEngine.Providers.KeyboardSchemeProvider {ArcEngine.KeyboardScheme, }
 Adding new provider : DungeonEye.DungeonProvider {DungeonEye.Dungeon, DungeonEye.ItemSet, DungeonEye.Monster, DungeonEye.WallDecoration, }
 Loading resources from file "data/data.bnk"...
-    + Animation.xml
     + AutoMap.png
     + chargen.png
     + Doors.png
-    + Dungeon.xml
     + Font-Intro.png
     + Font-Outlined.png
     + Font.png
     + Heroes.png
     + interface.png
     + items.png
-    + ItemSet.xml
-    + KeyboardScheme.xml
-    + Layout.xml
     + Main Menu.png
-    + Monster.xml
     + Monsters.png
-    + Script.xml
-    + ScriptModel.xml
-    + StringTable.xml
-    + TextureFont.xml
-    + TileSet.xml
     + wall-blue-overlay.png
     + wall-blue.png
     + wall-brick-overlay.png
@@ -47,71 +36,18 @@ Loading resources from file "data/data.bnk"...
     + wall-green.png
     + wall-xhanata-overlay.png
     + wall-xhanata.png
+    + TextureFont.xml
+    + Script.xml
+    + ScriptModel.xml
+    + TileSet.xml
+    + StringTable.xml
+    + Animation.xml
+    + Layout.xml
+    + KeyboardScheme.xml
+    + Dungeon.xml
+    + ItemSet.xml
+    + Monster.xml
     + WallDecoration.xml
-Compile complete -- 1 error(s).
-line 46 : 'DungeonEye.Team' ne contient pas de définition pour 'Messages'
-Compile complete -- 1 error(s).
-line 46 : 'DungeonEye.Team' ne contient pas de définition pour 'Messages'
-Compile complete -- 1 error(s).
-line 46 : 'DungeonEye.Team' ne contient pas de définition pour 'Messages'
-Compile complete -- 1 error(s).
-line 46 : 'DungeonEye.Team' ne contient pas de définition pour 'Messages'
-Compile complete -- 1 error(s).
-line 46 : 'DungeonEye.Team' ne contient pas de définition pour 'Messages'
-Compile complete -- 1 error(s).
-line 46 : 'DungeonEye.Team' ne contient pas de définition pour 'Messages'
-Compile complete -- 1 error(s).
-line 46 : 'DungeonEye.Team' ne contient pas de définition pour 'Messages'
-Compile complete -- 1 error(s).
-line 46 : 'DungeonEye.Team' ne contient pas de définition pour 'Messages'
-Compile complete -- 1 error(s).
-line 46 : 'DungeonEye.Team' ne contient pas de définition pour 'Messages'
-Compile complete -- 1 error(s).
-line 46 : 'DungeonEye.Team' ne contient pas de définition pour 'Messages'
-Compile complete -- 1 error(s).
-line 46 : 'DungeonEye.Team' ne contient pas de définition pour 'Messages'
-Compile complete -- 1 error(s).
-line 46 : 'DungeonEye.Team' ne contient pas de définition pour 'Messages'
-Compile complete -- 1 error(s).
-line 46 : 'DungeonEye.Team' ne contient pas de définition pour 'Messages'
-Compile complete -- 1 error(s).
-line 46 : 'DungeonEye.Team' ne contient pas de définition pour 'Messages'
-Compile complete -- 1 error(s).
-line 46 : 'DungeonEye.Team' ne contient pas de définition pour 'Messages'
-Compile complete -- 1 error(s).
-line 46 : 'DungeonEye.Team' ne contient pas de définition pour 'Messages'
-Compiling...
-Compile complete -- 1 error(s).
-line 46 : 'DungeonEye.Team' ne contient pas de définition pour 'Messages'
-Compile complete -- 1 error(s).
-Compiling...
-Compile complete -- 1 error(s).
-line 46 : 'DungeonEye.Team' ne contient pas de définition pour 'AddMessages'
-Compile complete -- 1 error(s).
-Compiling...
-Compile complete --  0 error.
-Compiling...
-Compile complete --  0 error.
-Saving all resources to bank "D:\Dev\ArcEngine\DungeonEye\data\Data.bnk"...
-Done !
-Compile complete -- 1 error(s).
-line 46 : 'DungeonEye.Team' ne contient pas de définition pour 'Messages'
-Sezam, open !
-Sezam, open !
-Sezam, open !
-Sezam, open !
-Sezam, open !
-Sezam, open !
-Sezam, open !
-Sezam, open !
-Sezam, open !
-Sezam, open !
-Sezam, open !
-Sezam, open !
-Sezam, open !
-Sezam, open !
-Sezam, open !
-Sezam, open !
 Sezam, open !
 Sezam, open !
 Sezam, open !
