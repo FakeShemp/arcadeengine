@@ -217,7 +217,9 @@
     <Compile Include="GUI\Button.cs" />
     <Compile Include="GUI\GuiBase.cs" />
     <Compile Include="Asset\Layout.cs" />
+    <Compile Include="ScriptManager.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="SoundManager.cs" />
     <Compile Include="Terminal.cs" />
     <Compile Include="Forms\TerminalForm.cs">
       <SubType>Form</SubType>

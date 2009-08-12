@@ -48,8 +48,8 @@ namespace ArcEngine.Asset
 			AddReference("System.Xml.dll");
 			AddReference("System.Windows.Forms.dll");
 
-			AssemblyName[] ass = Assembly.GetCallingAssembly().GetReferencedAssemblies();
-			ass = Assembly.GetExecutingAssembly().GetReferencedAssemblies();
+	//		AssemblyName[] ass = Assembly.GetCallingAssembly().GetReferencedAssemblies();
+	//		ass = Assembly.GetExecutingAssembly().GetReferencedAssemblies();
 			
 			
 
