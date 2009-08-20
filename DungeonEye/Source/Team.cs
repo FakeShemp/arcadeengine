@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DungeonEye.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
@@ -113,7 +114,6 @@ namespace DungeonEye
 			Maze = Dungeon.GetMaze(Dungeon.StartLocation.Maze);
 			Location = Dungeon.StartLocation;
 			Move(Point.Empty);
-			
 
 		}
 

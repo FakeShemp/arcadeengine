@@ -196,6 +196,7 @@
     <Compile Include="Graphic\Texture.cs" />
     <Compile Include="Graphic\Display.cs" />
     <Compile Include="GUI\GuiManager.cs" />
+    <Compile Include="GUI\Window.cs" />
     <Compile Include="Input\GamePad.cs" />
     <Compile Include="Input\GamePadCapabilities.cs" />
     <Compile Include="KeyboardScheme.cs" />

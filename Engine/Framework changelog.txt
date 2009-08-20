@@ -22,7 +22,7 @@ TODO :
 [^] Add an encryption on .bank file to protect them by using a password. Adds a new method Add ResourceMAnager.LoadBank(string filename, string password)
 [^] Validate xml bank with XSD (Visual Studio DataSet Wizard)
 [^] When exiting, Game.Exit() is called two times
-
+[^] Particle : http://wiki.themanaworld.org/index.php/Particle_engine
 
 ----------------------------------------------------------------------------------------------------
 Done :

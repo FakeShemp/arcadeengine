@@ -612,7 +612,7 @@ namespace RuffnTumble.Asset
 /*
 		/// <summary>
 		/// Rendering zone of the level on the screen
-		/// TODO: Checks value for validity !
+		/// ODO: Checks value for validity !
 		/// </summary>
 		public static Rectangle DisplayZone
 		{

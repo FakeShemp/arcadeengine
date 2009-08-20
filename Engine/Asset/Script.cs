@@ -50,9 +50,18 @@ namespace ArcEngine.Asset
 
 	//		AssemblyName[] ass = Assembly.GetCallingAssembly().GetReferencedAssemblies();
 	//		ass = Assembly.GetExecutingAssembly().GetReferencedAssemblies();
-			
-			
 
+
+
+
+			// Find all interfaces
+			foreach (Type t in Assembly.GetCallingAssembly().GetTypes())
+			{
+				if (t.IsInterface)
+				{
+
+				}
+			}
 		}
 
 
@@ -66,7 +75,11 @@ namespace ArcEngine.Asset
 		public bool Invoke(string method, params object[] args)
 		{
 			if (!IsCompiled)
+			{
+				Trace.WriteLine("Invoking method \"" + method + "\" on uncompiled script \"" + Name + "\"");
 				return false;
+			}
+
 
 
 			try
@@ -83,6 +96,7 @@ namespace ArcEngine.Asset
 			}
 			catch (Exception e)
 			{
+				Trace.WriteLine("Exception invoking \"" + method + "\" on uncompiled script \"" + Name + "\" : " + e.Message);
 			}
 
 			return true;
@@ -212,6 +226,40 @@ namespace ArcEngine.Asset
 		}
 
 
+		/// <summary>
+		/// Creates an instance of T
+		/// </summary>
+		/// <typeparam name="T">Type of the instance</typeparam>
+		/// <param name="name">Name of the class</param>
+		/// <returns>An instance of or default(T)</returns>
+		public T CreateInstance<T>(string name) where T : class
+		{
+			if (!IsCompiled)
+			{
+				Trace.WriteLine("Script \"" + Name + "\" is not compiled. Can't create a new instance \"" + name + "\" of type \"" + typeof(T).Name + "\"");
+				return default(T);
+			}
+
+			// Get type
+			Type t = CompiledAssembly.GetType(name);
+			if (t == null)
+			{
+				Trace.WriteLine("Type \"" + Name + "\" not found.");
+				return default(T);
+			}
+
+
+			// Check interface
+			if (!typeof(T).IsAssignableFrom(t))
+			{
+				Trace.WriteLine("Type \"" + Name + "\" found, but not an instance of \"" + typeof(T).Name + "\".");
+				return default(T);
+			}
+
+
+			// Create an instance
+			return Activator.CreateInstance(t) as T;
+		}
 
 
 		#region IO routines

@@ -484,7 +484,7 @@ namespace DungeonEye.Forms
 		/// <summary>
 		/// Removes an item
 		/// 
-		/// TODO:
+		/// TODO
 		/// Quand on a effacé tous les items et qu'il ne reste plus rien, 
 		/// effacer toutes les box contenant des informations sur le dernier item.
 		/// </summary>

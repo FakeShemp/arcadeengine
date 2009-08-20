@@ -122,6 +122,9 @@
     <Compile Include="Forms\Wizards\NewMazeWizard.Designer.cs">
       <DependentUpon>NewMazeWizard.cs</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\IDoor.cs" />
+    <Compile Include="Interfaces\IItem.cs" />
+    <Compile Include="Interfaces\IMonster.cs" />
     <Compile Include="Source\AutoMap.cs" />
     <Compile Include="Source\CharGen.cs" />
     <Compile Include="Source\Compass.cs" />

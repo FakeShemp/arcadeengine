@@ -17,12 +17,7 @@ namespace DungeonEye
 		/// </summary>
 		public FloorPlate()
 		{
-			Script = new Script();
-
-
-			// HACK: Move this somewhere else
-			Script.AddReference(System.Reflection.Assembly.GetExecutingAssembly().Location);
-			
+			Script = new Script();			
 		}
 
 

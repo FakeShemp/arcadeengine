@@ -28,7 +28,7 @@ namespace ArcEngine.Editor
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("");
+			System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("");
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ScriptForm));
 			this.ErrorListView = new System.Windows.Forms.ListView();
 			this.ErrorColumn = new System.Windows.Forms.ColumnHeader();
@@ -52,12 +52,10 @@ namespace ArcEngine.Editor
 			this.UndoBox = new System.Windows.Forms.ToolStripButton();
 			this.ReDoBox = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-			this.InsertModelButton = new System.Windows.Forms.ToolStripDropDownButton();
-			this.aToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.zToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.CompileButton = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+			this.InsertModelButton = new System.Windows.Forms.ToolStripSplitButton();
 			this.ReportStrip.SuspendLayout();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -73,7 +71,7 @@ namespace ArcEngine.Editor
 			this.ErrorListView.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.ErrorListView.GridLines = true;
 			this.ErrorListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1});
+            listViewItem2});
 			this.ErrorListView.Location = new System.Drawing.Point(0, 0);
 			this.ErrorListView.MultiSelect = false;
 			this.ErrorListView.Name = "ErrorListView";
@@ -179,10 +177,10 @@ namespace ArcEngine.Editor
             this.UndoBox,
             this.ReDoBox,
             this.toolStripSeparator2,
-            this.InsertModelButton,
             this.toolStripSeparator1,
             this.CompileButton,
-            this.toolStripSeparator3});
+            this.toolStripSeparator3,
+            this.InsertModelButton});
 			this.CommandStrip.Location = new System.Drawing.Point(0, 0);
 			this.CommandStrip.Name = "CommandStrip";
 			this.CommandStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -279,27 +277,6 @@ namespace ArcEngine.Editor
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
 			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
 			// 
-			// InsertModelButton
-			// 
-			this.InsertModelButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.aToolStripMenuItem,
-            this.zToolStripMenuItem});
-			this.InsertModelButton.Name = "InsertModelButton";
-			this.InsertModelButton.Size = new System.Drawing.Size(104, 22);
-			this.InsertModelButton.Text = "Insert a model...";
-			// 
-			// aToolStripMenuItem
-			// 
-			this.aToolStripMenuItem.Name = "aToolStripMenuItem";
-			this.aToolStripMenuItem.Size = new System.Drawing.Size(80, 22);
-			this.aToolStripMenuItem.Text = "a";
-			// 
-			// zToolStripMenuItem
-			// 
-			this.zToolStripMenuItem.Name = "zToolStripMenuItem";
-			this.zToolStripMenuItem.Size = new System.Drawing.Size(80, 22);
-			this.zToolStripMenuItem.Text = "z";
-			// 
 			// toolStripSeparator1
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
@@ -319,6 +296,12 @@ namespace ArcEngine.Editor
 			// 
 			this.toolStripSeparator3.Name = "toolStripSeparator3";
 			this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+			// 
+			// InsertModelButton
+			// 
+			this.InsertModelButton.Name = "InsertModelButton";
+			this.InsertModelButton.Size = new System.Drawing.Size(130, 22);
+			this.InsertModelButton.Text = "Implement Interface";
 			// 
 			// ScriptForm
 			// 
@@ -360,9 +343,6 @@ namespace ArcEngine.Editor
 		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
 		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
 		private DigitalRune.Windows.TextEditor.TextEditorControl ScriptTxt;
-		private System.Windows.Forms.ToolStripDropDownButton InsertModelButton;
-		private System.Windows.Forms.ToolStripMenuItem aToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem zToolStripMenuItem;
 		private System.Windows.Forms.ToolStripButton NewBox;
 		private System.Windows.Forms.ToolStripButton OpenBox;
 		private System.Windows.Forms.ToolStripButton SaveBox;
@@ -374,5 +354,6 @@ namespace ArcEngine.Editor
 		private System.Windows.Forms.ToolStripButton UndoBox;
 		private System.Windows.Forms.ToolStripButton ReDoBox;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+		private System.Windows.Forms.ToolStripSplitButton InsertModelButton;
 	}
 }

@@ -12,8 +12,11 @@ using System.ComponentModel;
 // http://www.indielib.com/wiki/index.php?title=Tutorial_04_IND_Animation
 //
 //
-//
+// http://wiki.themanaworld.org/index.php/Animations
 // http://www.cutoutpro.com/docs/Time%20Line/index.html
+//
+//
+// http://www.sdltutorials.com/sdl-animation/
 //
 namespace ArcEngine.Asset
 {

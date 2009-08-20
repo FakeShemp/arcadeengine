@@ -12,9 +12,9 @@ using ArcEngine.Asset;
 // List of monsters : http://members.tripod.com/~stanislavs/games/eob1mons.htm
 // http://dmweb.free.fr/?q=node/1363
 //
+// http://wiki.themanaworld.org/index.php/User:Crush/Monster_Database
 //
-//
-//
+// http://wiki.themanaworld.org/index.php/Monster_Database
 //
 //
 //

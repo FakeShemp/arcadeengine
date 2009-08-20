@@ -407,8 +407,7 @@ namespace RuffnTumble.Editor
 
 
 			// Draw the level
-			//HACK null given !!!!
-			Level.Draw(null);
+			Level.Draw();
 
 
 			// No layer selected

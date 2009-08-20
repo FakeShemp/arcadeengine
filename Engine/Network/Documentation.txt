@@ -6,3 +6,22 @@ http://www.gaffer.org/networking-for-game-programmers
 http://www.miscthings.co.uk/GLBasic/networkcommands.html
 
 http://www.csharp-home.com/index/tiki-browse_categories.php?parentId=15
+
+
+
+
+http://wiki.themanaworld.org/index.php/Server_development
+
+
+
+
+
+
+
+
+
+
+
+
+
+

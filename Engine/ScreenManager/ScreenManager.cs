@@ -182,8 +182,6 @@ namespace ArcEngine.ScreenManager
 
 		/// <summary>
 		/// Update game states
-		/// 
-		/// TODO A clarifer car gros bazar
 		/// </summary>
 		/// <param name="time"></param>
 		public void Update(GameTime time)
@@ -197,6 +195,8 @@ namespace ArcEngine.ScreenManager
 			GameScreen screen = screensToUpdate.Pop();
 			screen.Update(time, true, false);
 		}
+
+
 
 		/// <summary>
 		/// Draws game states

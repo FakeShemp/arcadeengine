@@ -3,6 +3,7 @@ using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
@@ -42,11 +43,25 @@ namespace ArcEngine.Editor
 
 
 			// Script models
-			ScriptProvider provider = ResourceManager.GetProvider<ScriptProvider>();
+			//ScriptProvider provider = ResourceManager.GetProvider<ScriptProvider>();
+			//InsertModelButton.DropDownItems.Clear();
+			//foreach (string name in ResourceManager.GetAssets<ScriptModel>())
+			//{
+			//   InsertModelButton.DropDownItems.Add(new ToolStripMenuItem(name));
+			//}
+
+
+			// Find all interfaces
 			InsertModelButton.DropDownItems.Clear();
-			foreach (string name in ResourceManager.GetAssets<ScriptModel>())
+			foreach (Type t in Assembly.GetEntryAssembly().GetTypes())
 			{
-				InsertModelButton.DropDownItems.Add(new ToolStripMenuItem(name));
+				if (t.IsInterface)
+				{
+					ToolStripMenuItem item = new ToolStripMenuItem(t.Name);
+					item.Tag = t;
+					item.Click +=new EventHandler(OnInsertCode);
+					InsertModelButton.DropDownItems.Add(item);
+				}
 			}
 
 
@@ -113,6 +128,8 @@ namespace ArcEngine.Editor
 
 			ResourceManager.AddAsset<Script>(Script.Name, doc.DocumentElement);
 		}
+
+
 
 
 		#region Events
@@ -336,6 +353,46 @@ public class entity : IEntity
 			ScriptTxt.Update();
 		}
 
+
+		/// <summary>
+		/// Insert code
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnInsertCode(object sender, EventArgs e)
+		{
+			ToolStripMenuItem item = sender as ToolStripMenuItem;
+			Type type = item.Tag as Type;
+
+			string code = string.Empty;
+
+			code = "public class Class : " + type.Name + Environment.NewLine;
+			code += "{" + Environment.NewLine + "\t" + Environment.NewLine;
+
+
+
+			foreach (MethodInfo mi in type.GetMethods())
+			{
+				code += "\tpublic " + mi.ReturnType.Name + " " + mi.Name + "(";
+
+				foreach (ParameterInfo pi in mi.GetParameters())
+				{
+					code += pi.ToString() + ", ";
+				}
+
+				code = code.Remove(code.Length - 2, 2);
+				code += ")" + Environment.NewLine;
+				code += "\t{" + Environment.NewLine + "\t}" + Environment.NewLine;
+
+				code += Environment.NewLine;
+			}
+
+			code += "}" + Environment.NewLine;
+
+			ScriptTxt.ActiveTextAreaControl.TextArea.InsertString(code);
+
+		}
+	
 		#endregion
 
 
@@ -360,6 +417,7 @@ public class entity : IEntity
 		Script Script;
 
 		#endregion
+
 
 	}
 
@@ -417,29 +475,29 @@ public class entity : IEntity
 			// Some random variables and methods are returned as completion data.
 
 			List<ICompletionData> completionData = new List<ICompletionData>
-      {
-        // Add some random variables
-        new DefaultCompletionData("a", "A local variable", 1),
-        new DefaultCompletionData("b", "A local variable", 1),
-        new DefaultCompletionData("variableX", "A local variable", 1),
-        new DefaultCompletionData("variableY", "A local variable", 1),
+			{
+				// Add some random variables
+				new DefaultCompletionData("a", "A local variable", 1),
+				new DefaultCompletionData("b", "A local variable", 1),
+				new DefaultCompletionData("variableX", "A local variable", 1),
+				new DefaultCompletionData("variableY", "A local variable", 1),
 
-        // Add some random methods
-        new DefaultCompletionData("MethodA", "A simple method.", 2),
-        new DefaultCompletionData("MethodB", "A simple method.", 2),
-        new DefaultCompletionData("MethodC", "A simple method.", 2)
-      };
+				// Add some random methods
+				new DefaultCompletionData("MethodA", "A simple method.", 2),
+				new DefaultCompletionData("MethodB", "A simple method.", 2),
+				new DefaultCompletionData("MethodC", "A simple method.", 2)
+			};
 
 
 			// Add some snippets (text templates).
 			List<Snippet> snippets = new List<Snippet>
-      {
-        new Snippet("for", "for (|)\n{\n}", "for loop"),
-        new Snippet("if", "if (|)\n{\n}", "if statement"),
-        new Snippet("ifel", "if (|)\n{\n}\nelse\n{\n}", "if-else statement"),
-        new Snippet("while", "while (|)\n{\n}", "while loop"),
-		  new Snippet("foreach", "foreach (|)\n{\n}\n", "foreach() statement"),
-      };
+				{
+				new Snippet("for", "for (|)\n{\n}", "for loop"),
+				new Snippet("if", "if (|)\n{\n}", "if statement"),
+				new Snippet("ifel", "if (|)\n{\n}\nelse\n{\n}", "if-else statement"),
+				new Snippet("while", "while (|)\n{\n}", "while loop"),
+				new Snippet("foreach", "foreach (|)\n{\n}\n", "foreach() statement"),
+			};
 
 			// Add the snippets to the completion data
 			foreach (Snippet snippet in snippets)

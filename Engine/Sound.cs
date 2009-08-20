@@ -125,15 +125,23 @@ namespace ArcEngine.Audio
 
 
 
+			// Make sure we have a sound device available.  If not, do not allow playing of sounds :)
+			if (AudioContext.AvailableDevices.Length > 0)
+			{
+				if (!string.IsNullOrEmpty(AudioContext.AvailableDevices[0]))
+				{
+					Context = new AudioContext();
+				}
+			}
 
-			Context = new AudioContext();
+		//	Context = new AudioContext();
 
 
-         ContextHandle handle = new ContextHandle();
+       //  ContextHandle handle = new ContextHandle();
 
 //         AlContext MyContext;
 
-
+/*
          AlDevice MyDevice = Alc.OpenDevice(null);
          if (MyDevice != null)
          {
@@ -147,7 +155,7 @@ namespace ArcEngine.Audio
 				//   Trace.WriteLine("Context allocation succeeded.");
 				//}
          }
-
+*/
 /*			
 			Alut.Init();
 
@@ -163,11 +171,17 @@ namespace ArcEngine.Audio
 
 
 		/// <summary>
-		/// 
+		/// Close audio context
 		/// </summary>
 		static internal void Close()
 		{
-			Alut.Exit();
+			if (Context != null)
+			{
+				Context.Dispose();
+			}
+
+
+	//		Alut.Exit();
 		}
 		#endregion
 
