@@ -22,6 +22,11 @@ namespace RenderToTexture
 	/// 
 	/// 
 	/// http://www.coder-studio.com/index.php?page=tutoriaux_aff&code=c_13
+	/// 
+	/// 
+	/// http://ogltotd.blogspot.com/2006/12/render-to-texture.html
+	/// http://www.opentk.com/doc/graphics/frame-buffer-objects
+	/// 
 	/// </summary>
 	public class RenderBuffer
 	{
