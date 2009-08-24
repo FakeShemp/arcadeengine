@@ -23,4 +23,10 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <StartWorkingDirectory>d:\Dev\ArcEngine\Ruff'n'Tumble\</StartWorkingDirectory>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <StartWorkingDirectory>D:\dev\ArcEngine\Ruff'n'Tumble</StartWorkingDirectory>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <StartWorkingDirectory>d:\Dev\ArcEngine\Ruff'n'Tumble\</StartWorkingDirectory>
+  </PropertyGroup>
 </Project>
