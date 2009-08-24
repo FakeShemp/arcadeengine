@@ -11,6 +11,15 @@ namespace ArcEngine
 	{
 
 
+        /// <summary>
+        /// Init sound manager
+        /// </summary>
+        static public bool Init()
+        {
+
+
+            return false;
+        }
 
 	}
 }
