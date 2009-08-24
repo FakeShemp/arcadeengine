@@ -1,0 +1,43 @@
+﻿Measurement Conventions
+
+ArcEngine uses a variety of units of measurement with which you
+should be familiar when setting properties, particularly those relating to
+character behavior.
+
+
+Distance
+Distance is measured in pixels. Appropriate distance-related properties can
+often be determined by considering the dimensions of the screen. For example,
+if the screen width is 1024 pixels, then a character's Maximum Viewing Distance
+would need to be about 512 in order for him to be able to see the player from
+halfway across the screen.
+
+
+Time
+Time is measured in units called ticks. There are normally 30 ticks per second.
+Accordingly, games created with ArcEngine normally display 30
+frames per second (though the frame rate may decrease on slower computers.)
+Ticks are often used to measure delays between events that occur repeatedly.
+Note that although the number of ticks per second is assumed to be 30, this value
+can be changed by adjusting the Target Frame Rate.
+
+
+Speed
+An object's speed is measured in pixels of movement per tick. Since there are
+normally 30 ticks per second, an entity moving at a speed of 15 pixels per
+tick is able to travel 450 pixels per second.
+
+
+Acceleration
+Acceleration is an expression of the increase in an object's speed over time. If an
+entity has a horizontal acceleration of 1, then his speed will be increased by 1 pixel 
+every timer tick. After a second, he would be moving at a rate of 30 pixels per tick.
+
+Sound Volume
+The volume of most sounds is determined by the game engine, which
+compares the location of the sound's origin to the camera location. A sound
+being emitted by an object located at the center of the screen will be louder
+than one being produced by an object near the side of the screen. It is possible
+for a user-designed routine to change the volume of a level's background
+music. In that case, the sound's volume can be set to any value between 100
+(loudest) and 0 (inaudible.)
