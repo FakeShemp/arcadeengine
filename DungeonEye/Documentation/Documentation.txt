@@ -1,0 +1,41 @@
+﻿
+
+/!\ ===> http://dmweb.free.fr  <====
+
+
+
+http://christiansarda.free.fr/anc_jeux/eob1_intro.html
+http://www.neoseeker.com/resourcelink.html?rlid=36463 (http://home.planet.nl/~scho3186/add.html.txt)
+
+
+
+
+// Exemple de generateur de donjon
+http://www.myth-weavers.com/dungeon.php
+
+
+http://ddo.mmodb.com/spells/
+
+
+http://www.gamewinners.com/walkthrough/eye_of_the_beholder/index.html
+
+
+http://www.geocities.com/takis76/
+
+
+
+
+Dangerous situations: (http://dmweb.free.fr/?q=node/692)
+Here is the simplified algorithm used to determine the experience you will earn by performing an action:
+Experience = Experience Gain associated to the action you perform (see table below) 
+If the Improved Skill associated to the action you perform is between 04 and 11 (hidden Fighter and Ninja skills) 
+and if no creature has attacked the party for at least 150 clock ticks (25 seconds), then Experience is divided by 2. 
+If the Experience Multiplier of the current level is not 0, then Experience is multiplied by the Experience Multiplier 
+If the Improved Skill associated to the action you perform is above 04 (any hidden skill) and if a creature has 
+attacked the party less then 25 clock ticks ago (about 4.17 seconds), then Experience is multipled by 2. 
+The computed Experience value is added to the Improved Skill associated to the action you performed. 
+If this Improved Skill is one of the hidden skills, then the experience is also added to the basic skill.
+
+2D Shadow / 2D line of sight
+http://www.gamedev.net/reference/articles/article2032.asp
+http://www.gamedev.net/reference/articles/article729.asp
