@@ -402,9 +402,9 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>copy $(TargetPath) $(SolutionDir)Editor\
-copy $(TargetPath) $(SolutionDir)Ruff'n'Tumble\
-copy $(TargetPath) $(SolutionDir)DungeonEye\</PostBuildEvent>
+    <PostBuildEvent>rem copy $(TargetPath) $(SolutionDir)Editor\
+rem copy $(TargetPath) $(SolutionDir)Ruff'n'Tumble\
+rem copy $(TargetPath) $(SolutionDir)DungeonEye\</PostBuildEvent>
     <PreBuildEvent>rem delete $(SolutionDir)Editor\$(TargetFileName)
 rem delete $(SolutionDir)Ruff'n'Tumble\$(TargetFileName)
 </PreBuildEvent>

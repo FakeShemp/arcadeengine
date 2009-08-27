@@ -47,7 +47,7 @@
 			this.label5 = new System.Windows.Forms.Label();
 			this.label6 = new System.Windows.Forms.Label();
 			this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-			this.LevelGlControl = new Tao.Platform.Windows.SimpleOpenGlControl();
+			this.LevelGlControl = new OpenTK.GLControl();
 			this.OpenTileDlg = new System.Windows.Forms.OpenFileDialog();
 			this.OpenDatatDlg = new System.Windows.Forms.OpenFileDialog();
 			this.TrackPosition = new System.Windows.Forms.TrackBar();
@@ -322,21 +322,13 @@
 			// 
 			// LevelGlControl
 			// 
-			this.LevelGlControl.AccumBits = ((byte)(0));
 			this.LevelGlControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
 						| System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
-			this.LevelGlControl.AutoCheckErrors = false;
-			this.LevelGlControl.AutoFinish = false;
-			this.LevelGlControl.AutoMakeCurrent = true;
-			this.LevelGlControl.AutoSwapBuffers = true;
 			this.LevelGlControl.BackColor = System.Drawing.Color.Black;
-			this.LevelGlControl.ColorBits = ((byte)(32));
-			this.LevelGlControl.DepthBits = ((byte)(16));
 			this.LevelGlControl.Location = new System.Drawing.Point(12, 110);
 			this.LevelGlControl.Name = "LevelGlControl";
 			this.LevelGlControl.Size = new System.Drawing.Size(991, 418);
-			this.LevelGlControl.StencilBits = ((byte)(0));
 			this.LevelGlControl.TabIndex = 0;
 			this.LevelGlControl.Paint += new System.Windows.Forms.PaintEventHandler(this.LevelGlControl_Paint);
 			this.LevelGlControl.Resize += new System.EventHandler(this.LevelGlControl_Resize);
@@ -436,7 +428,7 @@
 		private System.Windows.Forms.Label label5;
 		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.NumericUpDown numericUpDown1;
-		private Tao.Platform.Windows.SimpleOpenGlControl LevelGlControl;
+		private OpenTK.GLControl LevelGlControl;
 		private System.Windows.Forms.OpenFileDialog OpenTileDlg;
 		private System.Windows.Forms.OpenFileDialog OpenDatatDlg;
 		private System.Windows.Forms.TrackBar TrackPosition;

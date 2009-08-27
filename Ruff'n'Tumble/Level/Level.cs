@@ -32,7 +32,7 @@ namespace RuffnTumble.Asset
 	/// <summary>
 	/// 
 	/// </summary>
-	public class Level// : ResourceBase
+	public class Level : IAsset
 	{
 
 		/// <summary>
@@ -158,7 +158,7 @@ namespace RuffnTumble.Asset
 
 					default:
 					{
-						Log.Send(new LogEventArgs(LogLevel.Warning, "Level : Unknown node element found (" + node.Name + ")", null));
+						Trace.WriteLine("Level : Unknown node element found (" + node.Name + ")");
 					}
 					break;
 				}
@@ -339,17 +339,17 @@ namespace RuffnTumble.Asset
 		/// <summary>
 		/// Draws the level
 		/// </summary>
-		public void Draw(VideoRender device)
+		public void Draw()
 		{
 			// Begin the draw
-			device.Texturing = true;
-			device.Blending = true;
+			Display.Texturing = true;
+			Display.Blending = true;
 			//Video.ScissorZone = displayZone;
 			//Video.Scissor = true;
 			//Video.Translate = new Point(displayZone.X, displayZone.Y);
 
 			foreach (Layer layer in layers)
-				layer.Draw(device);
+				layer.Draw();
 
 			//Video.Offset = new Point();
 			//Video.Scissor = false;
@@ -379,8 +379,8 @@ namespace RuffnTumble.Asset
 		/// <returns>Position in screen coordinate</returns>
 		public Point LevelToScreen(Point pos)
 		{
-			return new Point(pos.X - Location.X + DisplayZone.Left,
-				pos.Y - Location.Y + DisplayZone.Top);
+			return new Point(pos.X - Location.X + ViewPort.Left,
+				pos.Y - Location.Y + ViewPort.Top);
 		}
 
 
@@ -392,8 +392,8 @@ namespace RuffnTumble.Asset
 		public Point ScreenToLevel(Point pos)
 		{
 			return new Point(
-				Location.X + pos.X - DisplayZone.Left,
-				Location.Y + pos.Y - DisplayZone.Top);
+				Location.X + pos.X - ViewPort.Left,
+				Location.Y + pos.Y - ViewPort.Top);
 		}
 
 
@@ -415,6 +415,15 @@ namespace RuffnTumble.Asset
 
 
 		#region Properties
+
+		/// <summary>
+		/// Name of the dungeon
+		/// </summary>
+		public string Name
+		{
+			get;
+			set;
+		}
 
 		/// <summary>
 		/// If true, level is ready to be used. Else call Init() to make it ready to use.
@@ -542,10 +551,10 @@ namespace RuffnTumble.Asset
 			{
 				location = value;
 
-				if (location.X > (Size.Width * BlockDimension.Width) - DisplayZone.Width)
-					location.X = Size.Width * BlockDimension.Width - DisplayZone.Width;
-				if (location.Y > (Size.Height * BlockDimension.Height) - DisplayZone.Height)
-					location.Y = Size.Height * BlockDimension.Height - DisplayZone.Height;
+				if (location.X > (Size.Width * BlockDimension.Width) - ViewPort.Width)
+					location.X = Size.Width * BlockDimension.Width - ViewPort.Width;
+				if (location.Y > (Size.Height * BlockDimension.Height) - ViewPort.Height)
+					location.Y = Size.Height * BlockDimension.Height - ViewPort.Height;
 
 				if (location.X < 0) location.X = 0;
 				if (location.Y < 0) location.Y = 0;
@@ -633,7 +642,7 @@ namespace RuffnTumble.Asset
 		/// <summary>
 		/// Rendering zone of the level on the screen
 		/// </summary>
-		public static Rectangle DisplayZone
+		public static Rectangle ViewPort
 		{
 			get;
 			set;

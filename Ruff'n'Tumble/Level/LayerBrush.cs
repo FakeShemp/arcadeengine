@@ -34,7 +34,7 @@ namespace RuffnTumble.Asset
 		/// <param name="location">Location in pixel on the screen</param>
 		/// <param name="tileset">Tileset to use</param>
 		/// <param name="blocksize">Size in pixel of each block</param>
-		public void Draw(VideoRender device, Point location, TileSet tileset, Size blocksize)
+		public void Draw(Point location, TileSet tileset, Size blocksize)
 		{
 			// Oops !
 			if (tileset == null)
@@ -146,7 +146,7 @@ namespace RuffnTumble.Asset
 
 					default:
 					{
-						Log.Send(new LogEventArgs(LogLevel.Warning, "Brush : Unknown node element found (" + node.Name + ")", null));
+						Trace.WriteLine("Brush : Unknown node element found (" + node.Name + ")");
 					}
 					break;
 				}

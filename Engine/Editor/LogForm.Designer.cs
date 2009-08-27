@@ -54,7 +54,7 @@
             this.CopyToClipboard});
 			this.LogMenuStrip.Name = "LogMenuStrip";
 			this.LogMenuStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-			this.LogMenuStrip.Size = new System.Drawing.Size(170, 70);
+			this.LogMenuStrip.Size = new System.Drawing.Size(170, 48);
 			this.LogMenuStrip.Text = "Clear log";
 			// 
 			// Clear
@@ -80,10 +80,12 @@
 			this.ClientSize = new System.Drawing.Size(292, 273);
 			this.ContextMenuStrip = this.LogMenuStrip;
 			this.Controls.Add(this.LogBox);
+			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.HideOnClose = true;
 			this.Name = "LogForm";
 			this.TabText = "LogForm";
 			this.Text = "LogForm";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LogForm_FormClosing);
 			this.LogMenuStrip.ResumeLayout(false);
 			this.ResumeLayout(false);
 

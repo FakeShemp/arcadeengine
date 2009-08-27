@@ -29,6 +29,7 @@ namespace ArcEngine
 			
 		}
 
+
 		#region Inventory
 
 
@@ -51,12 +52,12 @@ namespace ArcEngine
 			WriteLine("CLR : {0}", Environment.Version.ToString());
 			Unindent();
 
+/*
 
 			WriteLine("Video informations :");
 			Indent();
 			WriteLine("Graphics card vendor : {0}", GL.GetString(StringName.Vendor));
 			WriteLine("Renderer : {0}", GL.GetString(StringName.Renderer));
-
 			int major, minor;
 			GL.GetInteger(GetPName.MajorVersion, out major);
 			GL.GetInteger(GetPName.MinorVersion, out minor);
@@ -70,7 +71,7 @@ namespace ArcEngine
 				WriteLine(device.ToString());
 
 			Unindent();
-
+*/
 			Unindent();
 
 			// Look through each loaded dll
@@ -94,6 +95,7 @@ namespace ArcEngine
 		}
 
 		#endregion
+
 
 		#region Assert
 
@@ -289,6 +291,7 @@ namespace ArcEngine
 
 
 		#endregion
+
 
 		#region Properties
 

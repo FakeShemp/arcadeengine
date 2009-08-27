@@ -1,17 +1,16 @@
-﻿using RuffnTumble.Asset;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-
 using System.Drawing;
 using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
-using ArcEngine.Graphic;
 using ArcEngine;
-using WeifenLuo.WinFormsUI.Docking;
 using ArcEngine.Asset;
+using ArcEngine.Graphic;
+using RuffnTumble.Asset;
+using WeifenLuo.WinFormsUI.Docking;
 
 
 namespace RuffnTumble.Editor
@@ -35,23 +34,20 @@ namespace RuffnTumble.Editor
 		/// </summary>
 		/// <param name="form">Parent LevelForm</param>
 		/// <returns>Success or not</returns>
-		public bool Init(LevelForm form, VideoRender device)
+		public bool Init(LevelForm form)
 		{
 			if (form == null)
 				return false;
 			Form = form;
-			Device = device;
 
 
-			GlControl.InitializeContexts();
-			Device.ShareVideoContext();
-			Device.ClearColor = Color.Black;
-			Device.Texturing = true;
-			Device.Blending = true;
+			GlControl.MakeCurrent();
+			Display.Init();
+			GlControl_Resize(null, null);
 
 
 			// Preload texture resources
-			CheckerBoard = Device.CreateTexture();
+			CheckerBoard = new Texture();
 			Stream stream = ResourceManager.GetInternalResource("ArcEngine.Files.checkerboard.png");
 			CheckerBoard.LoadImage(stream);
 			stream.Close();
@@ -81,11 +77,11 @@ namespace RuffnTumble.Editor
 		/// TODO Paint tile by tile instead of pasting the texture
 		private void GlControl_Paint(object sender, PaintEventArgs e)
 		{
-			Device.ClearBuffers();
-			Device.Color = Color.White;
+			GlControl.MakeCurrent();
+			Display.ClearBuffers();
+			Display.Color = Color.White;
 
 			// Background texture
-		//	Video.Texture = CheckerBoard;
 			CheckerBoard.Blit(new Rectangle(Point.Empty, GlControl.Size), CheckerBoard.Rectangle, TextureLayout.Tile);
 
 			// No texture, byebye !
@@ -93,20 +89,20 @@ namespace RuffnTumble.Editor
 			//   return;
 
 			// Blit the texture
-			//Form.LayerPanel.CurrentLayer.Texture.Blit(new Point(0, 0));
+		//	Form.LayerPanel.CurrentLayer.Texture.Blit(new Point(0, 0));
 
 	
 			// Draw the selected brush
 			if (Form.TileMode == TileMode.Pen)
 			{
-				Device.Color = Color.Red;
+				Display.Color = Color.Red;
 				Rectangle rec = new Rectangle(
 					SelectedTiles.Left * Form.Level.BlockSize.Width,
 					SelectedTiles.Top * Form.Level.BlockSize.Height,
 					SelectedTiles.Width * Form.Level.BlockSize.Width,
 					SelectedTiles.Height * Form.Level.BlockSize.Height);
-				Device.Rectangle(rec, false);
-				Device.Color = Color.White;
+				Display.Rectangle(rec, false);
+				Display.Color = Color.White;
 			}
 
 
@@ -115,21 +111,23 @@ namespace RuffnTumble.Editor
 			{
 				Point from = Point.Empty;
 				Point to = Point.Empty;
-				Device.Color = Color.Red;
+				Display.Color = Color.Red;
 				for (int y = 0; y < Form.CurrentLayer.Texture.Size.Height; y += Form.Level.BlockSize.Height)
 				{
 					from.X = 0; from.Y = y;
 					to.X = Form.CurrentLayer.Texture.Size.Width; to.Y = y;
-					Device.Line(from, to);
+					Display.Line(from, to);
 				}
 				for (int x = 0; x < Form.CurrentLayer.Texture.Size.Width; x += Form.Level.BlockSize.Width)
 				{
 					from.X = x; from.Y = 0;
 					to.X = x; to.Y = Form.CurrentLayer.Texture.Size.Height;
-					Device.Line(from, to);
+					Display.Line(from, to);
 				}
 			}
 
+
+			GlControl.SwapBuffers();
 		}
 
 
@@ -142,6 +140,9 @@ namespace RuffnTumble.Editor
 		/// <param name="e"></param>
 		private void GlControl_MouseDown(object sender, MouseEventArgs e)
 		{
+			if (Form.CurrentLayer == null)
+				return;
+
 
 			// No texture selected...
 			if (Form.CurrentLayer.Texture == null)
@@ -151,7 +152,9 @@ namespace RuffnTumble.Editor
 			if (e.Button == MouseButtons.Left)
 			{
 				Point pos = e.Location;
-				Size size = Form.CurrentLayer.Texture.SizeInBlock(Form.Level.BlockSize);
+				Size size = new Size(Form.CurrentLayer.Texture.Size.Width / Form.Level.BlockSize.Width,
+					Form.CurrentLayer.Texture.Size.Height / Form.Level.BlockSize.Height);
+					//Form.CurrentLayer.Texture.SizeInBlock(Form.Level.BlockSize);
 
 				SelectedTiles = new Rectangle(
 					pos.X / Form.Level.BlockSize.Width,
@@ -190,7 +193,9 @@ namespace RuffnTumble.Editor
 										pos.Y / Form.Level.BlockSize.Height - SelectedTiles.Top + 1);
 
 
-				Size tilesize = Form.CurrentLayer.Texture.SizeInBlock(Form.Level.BlockSize);
+				Size tilesize = new Size(Form.CurrentLayer.Texture.Size.Width / Form.Level.BlockSize.Width,
+					Form.CurrentLayer.Texture.Size.Height / Form.Level.BlockSize.Height); 
+				//Form.CurrentLayer.Texture.SizeInBlock(Form.Level.BlockSize);
 
 
 				// Too wide
@@ -223,7 +228,9 @@ namespace RuffnTumble.Editor
 				Form.LayerBrush.Size = SelectedTiles.Size;
 
 				// Size of each block in pixel
-				Size blocksize = Form.CurrentLayer.Texture.SizeInBlock(Form.Level.BlockSize);
+				Size blocksize = new Size(Form.CurrentLayer.Texture.Size.Width / Form.Level.BlockSize.Width,
+					Form.CurrentLayer.Texture.Size.Height / Form.Level.BlockSize.Height); 
+				//Form.CurrentLayer.Texture.SizeInBlock(Form.Level.BlockSize);
 
 				for (int y = 0; y < SelectedTiles.Height; y++)
 				{
@@ -249,7 +256,7 @@ namespace RuffnTumble.Editor
 		private void GlControl_Resize(object sender, EventArgs e)
 		{
 			GlControl.MakeCurrent();
-			Device.ViewPort = new Rectangle(new Point(), GlControl.Size);
+			Display.ViewPort = new Rectangle(new Point(), GlControl.Size);
 		}
 
 
@@ -482,9 +489,6 @@ namespace RuffnTumble.Editor
 
 
 		#region Properties
-
-		VideoRender Device;
-
 
 		/// <summary>
 		/// Parent LevelForm

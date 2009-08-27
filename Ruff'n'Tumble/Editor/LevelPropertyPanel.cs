@@ -26,13 +26,12 @@ namespace RuffnTumble.Editor
 		/// </summary>
 		/// <param name="lvl">Level to edit</param>
 		/// <returns></returns>
-		public bool Init(LevelForm form, VideoRender device)
+		public bool Init(LevelForm form)
 		{
 			if (form == null)
 				return false;
 
 			Form = form;
-			Device = device;
 
 			PropertyBox.SelectedObject = Form.Level;
 			LevelWidthLabel.Text = Form.Level.Width.ToString();
@@ -92,8 +91,6 @@ namespace RuffnTumble.Editor
 
 		#region Properties
 
-
-		VideoRender Device;
 
 
 		/// <summary>

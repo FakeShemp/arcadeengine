@@ -29,16 +29,15 @@ namespace RuffnTumble.Asset
 	/// <summary>
 	/// Layer for levels
 	/// </summary>
-	public class Layer// : ResourceBase
+	public class Layer
 	{
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="name">Name of the layer</param>
 		/// <param name="lvl">Level in which the layer is</param>
-		public Layer( Level lvl)// : base(name)
+		public Layer( Level lvl)
 		{
-			level = lvl;
+			Level = lvl;
 			Visible = true;
 			Alpha = 255;
 			SpawnPoints = new Dictionary<string, SpawnPoint>();
@@ -49,11 +48,11 @@ namespace RuffnTumble.Asset
 
 
 			// Tiles
-			Tiles = new List<List<int>>(level.Size.Height);
-			for (int y = 0; y < level.Size.Height; y++)
+			Tiles = new List<List<int>>(Level.Size.Height);
+			for (int y = 0; y < Level.Size.Height; y++)
 			{
 				Tiles.Add(new List<int>());
-				for (int x = 0; x < level.Size.Width; x++)
+				for (int x = 0; x < Level.Size.Width; x++)
 					Tiles[y].Add(0);
 			}
 		}
@@ -67,7 +66,6 @@ namespace RuffnTumble.Asset
 		public bool Init()
 		{
 
-			tileSet.TextureName = textureName;
 
 			// Load the SpawnPoint texture
 			spTexture = new Texture();
@@ -77,18 +75,19 @@ namespace RuffnTumble.Asset
 
 
 			// If a texture is present, build tileset
+			tileSet.TextureName = textureName;
 			if (!string.IsNullOrEmpty(textureName))
 				BuildTileSet();
 
 
 			// Creates the script
-			if (!string.IsNullOrEmpty(scriptName))
+			if (!string.IsNullOrEmpty(ScriptName))
 			{
 				Script script = ResourceManager.CreateAsset<Script>(ScriptName);
 				if (script != null)
 				{
-					if (script.Compile(true))
-						ScriptInterface = (ILayer)script.FindInterface("RuffnTumble.Interface.ILayer");
+					//if (script.Compile())
+					//	ScriptInterface = (ILayer)script.FindInterface("RuffnTumble.Interface.ILayer");
 
 				}
 			}
@@ -123,11 +122,11 @@ namespace RuffnTumble.Asset
 			int start = 0;
 			int x = 0;
 			int y = 0;
-			for (y = 0; y < tileSet.Texture.Size.Height; y += level.BlockSize.Height)
-				for (x = 0; x < tileSet.Texture.Size.Width; x += level.BlockSize.Width)
+			for (y = 0; y < tileSet.Texture.Size.Height; y += Level.BlockSize.Height)
+				for (x = 0; x < tileSet.Texture.Size.Width; x += Level.BlockSize.Width)
 				{
 					Tile tile = tileSet.AddTile(start++);
-					tile.Rectangle = new Rectangle(x, y, level.BlockSize.Width, level.BlockSize.Height);
+					tile.Rectangle = new Rectangle(x, y, Level.BlockSize.Width, Level.BlockSize.Height);
 				}
 		}
 
@@ -137,7 +136,7 @@ namespace RuffnTumble.Asset
 		/// Draws the layer
 		/// </summary>
 		// http://www.gamedev.net/reference/articles/article743.asp
-		public void Draw(VideoRender device)
+		public void Draw()
 		{
 			// No tileset or layer not visible
 			if (tileSet == null || !Visible)
@@ -145,22 +144,22 @@ namespace RuffnTumble.Asset
 
 
 			// Taille de rendu du niveau
-			int renderwidth = Level.DisplayZone.Width / level.BlockDimension.Width;
-			int renderheight = Level.DisplayZone.Height / level.BlockDimension.Height;
-			if (renderwidth > level.Size.Width) renderwidth = level.Size.Width;
-			if (renderheight > level.Size.Height) renderheight = level.Size.Height;
+			int renderwidth = Level.ViewPort.Width / Level.BlockDimension.Width;
+			int renderheight = Level.ViewPort.Height / Level.BlockDimension.Height;
+			if (renderwidth > Level.Size.Width) renderwidth = Level.Size.Width;
+			if (renderheight > Level.Size.Height) renderheight = Level.Size.Height;
 
 			// On trouve la location en block pour le "pixel perfect scrolling"
-			int blockx = level.Location.X / level.BlockDimension.Width;
-			int blocky = level.Location.Y / level.BlockDimension.Height;
-			int deltax = level.Location.X % level.BlockDimension.Width;
-			int deltay = level.Location.Y % level.BlockDimension.Width;
+			int blockx = Level.Location.X / Level.BlockDimension.Width;
+			int blocky = Level.Location.Y / Level.BlockDimension.Height;
+			int deltax = Level.Location.X % Level.BlockDimension.Width;
+			int deltay = Level.Location.Y % Level.BlockDimension.Width;
 
 
 			// Draw tiles
 			//tileSet.Bind();
-			tileSet.Scale = level.Zoom;
-			device.Color = Color;
+			tileSet.Scale = Level.Zoom;
+			Display.Color = Color;
 			for (int yy = 0; yy < renderheight + 2; yy++)
 			{
 				for (int xx = 0; xx < renderwidth + 2; xx++)
@@ -175,8 +174,8 @@ namespace RuffnTumble.Asset
 					//   (yy * level.BlockDimension.Height) + Level.DisplayZone.Y - deltay));
 
 					Rectangle rect = new Rectangle(
-						new Point((xx * level.BlockDimension.Width) + Level.DisplayZone.X - deltax,
-									(yy * level.BlockDimension.Height) + Level.DisplayZone.Y - deltay),
+						new Point((xx * Level.BlockDimension.Width) + Level.ViewPort.X - deltax,
+									(yy * Level.BlockDimension.Height) + Level.ViewPort.Y - deltay),
 						new Size(32, 32)
 						);
 
@@ -190,22 +189,22 @@ namespace RuffnTumble.Asset
 			//
 			// Display tile grid
 			//
-			if (showGrid)
+			if (ShowGrid)
 			{
-				device.Color = Color.FromArgb(Alpha, Color.Red);
+				Display.Color = Color.FromArgb(Alpha, Color.Red);
 
 				for (int yy = 0; yy < renderheight + 2; yy++)
 				{
-					device.Line(
-						new Point(Level.DisplayZone.Left, (yy * level.BlockDimension.Height - deltay + Level.DisplayZone.Top)),
-						new Point(Level.DisplayZone.Right, (yy * level.BlockDimension.Height - deltay + Level.DisplayZone.Top))
+					Display.Line(
+						new Point(Level.ViewPort.Left, (yy * Level.BlockDimension.Height - deltay + Level.ViewPort.Top)),
+						new Point(Level.ViewPort.Right, (yy * Level.BlockDimension.Height - deltay + Level.ViewPort.Top))
 					);
 				}
 				for (int xx = 0; xx < renderwidth + 2; xx++)
 				{
-					device.Line(
-						new Point(xx * level.BlockDimension.Width - deltax + Level.DisplayZone.Left, Level.DisplayZone.Top),
-						new Point(xx * level.BlockDimension.Width - deltax + Level.DisplayZone.Left, Level.DisplayZone.Bottom)
+					Display.Line(
+						new Point(xx * Level.BlockDimension.Width - deltax + Level.ViewPort.Left, Level.ViewPort.Top),
+						new Point(xx * Level.BlockDimension.Width - deltax + Level.ViewPort.Left, Level.ViewPort.Bottom)
 					);
 				}
 			}
@@ -216,12 +215,12 @@ namespace RuffnTumble.Asset
 			//
 			// Draw entities
 			//
-			if (renderEntities)
+			if (RenderEntities)
 			{
-				device.Color = Color.White;
+				Display.Color = Color.White;
 				foreach (Entity entity in Entities.Values)
 				{
-					entity.Draw(device, Level.LevelToScreen(entity.Location));
+					entity.Draw(Level.LevelToScreen(entity.Location));
 				}
 			}
 
@@ -229,11 +228,11 @@ namespace RuffnTumble.Asset
 			//
 			// Draw paths
 			//
-			if (renderPaths)
+			if (RenderPaths)
 			{
 				foreach (Path path in paths.Values)
 				{
-					path.Draw(device, Level.Location);
+					path.Draw(Level.Location);
 				}
 			}
 
@@ -253,7 +252,7 @@ namespace RuffnTumble.Asset
 					if (spawn == null)
 						continue;
 
-					Point pos = level.LevelToScreen(spawn.Location);
+					Point pos = Level.LevelToScreen(spawn.Location);
 					pos.X = pos.X - 8;
 					pos.Y = pos.Y - 8;
 					spTexture.Blit(pos);
@@ -298,27 +297,27 @@ namespace RuffnTumble.Asset
 		internal void Resize(Size newsize)
 		{
 			// Rows
-			if (newsize.Height > level.Height)
+			if (newsize.Height > Level.Height)
 			{
-				for (int y = level.Height; y < newsize.Height; y++)
+				for (int y = Level.Height; y < newsize.Height; y++)
 					InsertRow(y, 0);
 			}
-			else if (newsize.Height < level.Height)
+			else if (newsize.Height < Level.Height)
 			{
-				for (int y = level.Height - 1; y >= newsize.Height; y--)
+				for (int y = Level.Height - 1; y >= newsize.Height; y--)
 					RemoveRow(y);
 			}
 
 
 			// Columns
-			if (newsize.Width > level.Width)
+			if (newsize.Width > Level.Width)
 			{
-				for (int x = level.Width; x < newsize.Width; x++)
+				for (int x = Level.Width; x < newsize.Width; x++)
 					InsertColumn(x, 0);
 			}
-			else if (newsize.Width < level.Width)
+			else if (newsize.Width < Level.Width)
 			{
-				for (int x = level.Width - 1; x >= newsize.Width; x--)
+				for (int x = Level.Width - 1; x >= newsize.Width; x--)
 					RemoveColumn(x);
 			}
 
@@ -334,8 +333,8 @@ namespace RuffnTumble.Asset
 		public void InsertRow(int rowid, int tileid)
 		{
 			// Build the row
-			List<int> row = new List<int>(level.Size.Width);
-			for (int x = 0; x < level.Size.Width; x++)
+			List<int> row = new List<int>(Level.Size.Width);
+			for (int x = 0; x < Level.Size.Width; x++)
 				row.Add(0);
 
 			// Adds the row at the end
@@ -350,8 +349,8 @@ namespace RuffnTumble.Asset
 				Tiles.Insert(rowid, row);
 
 				// Offset objects
-				Rectangle zone = new Rectangle(0, rowid * level.BlockDimension.Height, level.Dimension.Width, level.Dimension.Height);
-				OffsetObjects(zone, new Point(0, level.BlockDimension.Height));
+				Rectangle zone = new Rectangle(0, rowid * Level.BlockDimension.Height, Level.Dimension.Width, Level.Dimension.Height);
+				OffsetObjects(zone, new Point(0, Level.BlockDimension.Height));
 			}
 		}
 
@@ -369,8 +368,8 @@ namespace RuffnTumble.Asset
 			Tiles.RemoveAt(rowid);
 
 			// Offset objects
-			Rectangle zone = new Rectangle(0, rowid * level.BlockDimension.Height, level.Dimension.Width, level.Dimension.Height);
-			OffsetObjects(zone, new Point(0, -level.BlockDimension.Height));
+			Rectangle zone = new Rectangle(0, rowid * Level.BlockDimension.Height, Level.Dimension.Width, Level.Dimension.Height);
+			OffsetObjects(zone, new Point(0, -Level.BlockDimension.Height));
 		}
 
 
@@ -393,8 +392,8 @@ namespace RuffnTumble.Asset
 					row.Insert(columnid, tileid);
 
 					// Offset objects
-					Rectangle zone = new Rectangle(columnid * level.BlockDimension.Width, 0, level.Dimension.Width, level.Dimension.Height);
-					OffsetObjects(zone, new Point(level.BlockDimension.Width, 0));
+					Rectangle zone = new Rectangle(columnid * Level.BlockDimension.Width, 0, Level.Dimension.Width, Level.Dimension.Height);
+					OffsetObjects(zone, new Point(Level.BlockDimension.Width, 0));
 				}
 			}
 		}
@@ -414,9 +413,9 @@ namespace RuffnTumble.Asset
 
 			// Offset objects
 			Rectangle zone = new Rectangle(
-				columnid * level.BlockDimension.Width, 0,
-				level.Dimension.Width, level.Dimension.Height);
-			OffsetObjects(zone, new Point(-level.BlockDimension.Width, 0));
+				columnid * Level.BlockDimension.Width, 0,
+				Level.Dimension.Width, Level.Dimension.Height);
+			OffsetObjects(zone, new Point(-Level.BlockDimension.Width, 0));
 		}
 
 
@@ -468,7 +467,7 @@ namespace RuffnTumble.Asset
 				return false;
 
 			xml.WriteStartElement("layer");
-	//		xml.WriteAttributeString("name", Name);
+			xml.WriteAttributeString("name", Name);
 
 	//		base.SaveComment(xml);
 
@@ -478,7 +477,7 @@ namespace RuffnTumble.Asset
 			xml.WriteEndElement();	// Visibility
 
 			xml.WriteStartElement("zindex");
-			xml.WriteAttributeString("value", zIndex.ToString());
+			xml.WriteAttributeString("value", ZIndex.ToString());
 			xml.WriteEndElement();		// zindex
 
 			xml.WriteStartElement("alpha");
@@ -521,12 +520,12 @@ namespace RuffnTumble.Asset
 			xml.WriteEndElement();
 
 
-			for (int y = 0; y < level.Size.Height; y++)
+			for (int y = 0; y < Level.Size.Height; y++)
 			{
 				xml.WriteStartElement("row");
 				xml.WriteAttributeString("BufferID", y.ToString());
 
-				for (int x = 0; x < level.Size.Width; x++)
+				for (int x = 0; x < Level.Size.Width; x++)
 					xml.WriteString(Tiles[y][x].ToString() + " ");
 
 				xml.WriteEndElement();	// row
@@ -547,6 +546,11 @@ namespace RuffnTumble.Asset
 		/// <returns></returns>
 		public bool Load(XmlNode xml)
 		{
+			if (xml == null)
+				return false;
+
+			Name = xml.Attributes["name"].Value;
+
 			XmlNodeList nodes = xml.ChildNodes;
 			foreach (XmlNode node in nodes)
 			{
@@ -593,7 +597,7 @@ namespace RuffnTumble.Asset
 					// Shows/hides the grid
 					case "showgrid":
 					{
-						Boolean.TryParse(node.Attributes["value"].Value.ToString(), out showGrid);
+						ShowGrid = Boolean.Parse(node.Attributes["value"].Value.ToString());
 					}
 					break;
 
@@ -618,14 +622,14 @@ namespace RuffnTumble.Asset
 					// Script name
 					case "script":
 					{
-						scriptName = node.Attributes["name"].Value;
+						ScriptName = node.Attributes["name"].Value;
 					}
 					break;
 
 					// Zindex
 					case "zindex":
 					{
-						zIndex = Int32.Parse(node.Attributes["value"].Value);
+						ZIndex = Int32.Parse(node.Attributes["value"].Value);
 
 					}
 					break;
@@ -669,8 +673,7 @@ namespace RuffnTumble.Asset
 
 					default:
 					{
-						Log.Send(new LogEventArgs(LogLevel.Warning,
-							"Layer : Unknown node element \"" + node.Name + "\"", null));
+						Trace.WriteLine("Layer : Unknown node element \"" + node.Name + "\"");
 					}
 					break;
 				}
@@ -1029,10 +1032,10 @@ namespace RuffnTumble.Asset
 		/// <returns>ID of the tile</returns>
 		public int GetTileAtCoord(Point point)
 		{
-			if (level.BlockDimension.Width == 0 || level.BlockDimension.Height == 0)
+			if (Level.BlockDimension.Width == 0 || Level.BlockDimension.Height == 0)
 				return -1;
 
-			Point p = new Point(point.X / level.BlockDimension.Width, point.Y / level.BlockDimension.Height);
+			Point p = new Point(point.X / Level.BlockDimension.Width, point.Y / Level.BlockDimension.Height);
 
 			return GetTileAt(p);
 		}
@@ -1118,7 +1121,7 @@ namespace RuffnTumble.Asset
 			{
 				if (colblock.BottomLeft != 0 || colblock.BottomRight != 0)
 				{
-					res.FinalVelocity.Y = velocity.Y - (entity.Location.Y + velocity.Y) % layer.level.BlockDimension.Height - 1;
+					res.FinalVelocity.Y = velocity.Y - (entity.Location.Y + velocity.Y) % layer.Level.BlockDimension.Height - 1;
 				}
 				else
 					res.FinalVelocity.Y = velocity.Y;
@@ -1144,7 +1147,7 @@ namespace RuffnTumble.Asset
 				if (colblock.TopRight != 0 || colblock.BottomRight != 0)
 				{
 					res.FinalVelocity.X = velocity.X -
-						(entity.Location.X + velocity.X + entity.CollisionBox.Width) % layer.level.BlockDimension.Width;
+						(entity.Location.X + velocity.X + entity.CollisionBox.Width) % layer.Level.BlockDimension.Width;
 				}
 				else
 					res.FinalVelocity.X = velocity.X;
@@ -1154,7 +1157,7 @@ namespace RuffnTumble.Asset
 				if (colblock.TopLeft != 0 || colblock.BottomLeft != 0)
 				{
 					res.FinalVelocity.X = velocity.X +
-					   layer.level.BlockDimension.Width - (entity.CollisionBoxLocation.Left + velocity.X) % layer.level.BlockDimension.Width;
+					   layer.Level.BlockDimension.Width - (entity.CollisionBoxLocation.Left + velocity.X) % layer.Level.BlockDimension.Width;
 				}
 				else
 					res.FinalVelocity.X = velocity.X;
@@ -1217,7 +1220,7 @@ namespace RuffnTumble.Asset
 						LinearFill(new Point(x, range.Y - 1), id);
 
 					// Check downward
-					if (range.Y < level.Size.Height + 1 && GetTileAt(new Point(x, range.Y + 1)) == targetTile)
+					if (range.Y < Level.Size.Height + 1 && GetTileAt(new Point(x, range.Y + 1)) == targetTile)
 						LinearFill(new Point(x, range.Y + 1), id);
 				}
 
@@ -1260,7 +1263,7 @@ namespace RuffnTumble.Asset
 			minx++;
 
 			// Check on the right
-			for (maxx = pt.X + 1; maxx <= level.Size.Width; maxx++)
+			for (maxx = pt.X + 1; maxx <= Level.Size.Width; maxx++)
 			{
 				Point pos = new Point(maxx, pt.Y);
 				if (GetTileAt(pos) != targetId)
@@ -1279,6 +1282,12 @@ namespace RuffnTumble.Asset
 
 
 		#region Properties
+
+
+		/// <summary>
+		/// Layer's name
+		/// </summary>
+		public string Name;
 
 		/// <summary>
 		/// All path in the layer
@@ -1416,9 +1425,9 @@ namespace RuffnTumble.Asset
 		[Browsable(false)]
 		public Level Level
 		{
-			get { return level; }
+			get;
+			private set;
 		}
-		Level level;
 
 
 		/// <summary>
@@ -1427,16 +1436,9 @@ namespace RuffnTumble.Asset
 		[Browsable(false)]
 		public bool ShowGrid
 		{
-			get
-			{
-				return showGrid;
-			}
-			set
-			{
-				showGrid = value;
-			}
+			get;
+			set;
 		}
-		bool showGrid;
 
 
 		/// <summary>
@@ -1469,16 +1471,9 @@ namespace RuffnTumble.Asset
 		[TypeConverter(typeof(ScriptEnumerator))]
 		public string ScriptName
 		{
-			set
-			{
-				scriptName = value;
-			}
-			get
-			{
-				return scriptName;
-			}
+			set;
+			get;
 		}
-		string scriptName;
 
 
 		/// <summary>
@@ -1493,16 +1488,9 @@ namespace RuffnTumble.Asset
 		[Description("Layer draw order")]
 		public int ZIndex
 		{
-			get
-			{
-				return zIndex;
-			}
-			set
-			{
-				zIndex = value;
-			}
+			get;
+			set;
 		}
-		int zIndex;
 
 
 
@@ -1511,16 +1499,9 @@ namespace RuffnTumble.Asset
 		/// </summary>
 		public bool RenderEntities
 		{
-			get
-			{
-				return renderEntities;
-			}
-			set
-			{
-				renderEntities = value;
-			}
+			get;
+			set;
 		}
-		bool renderEntities = true;
 
 
 
@@ -1529,32 +1510,18 @@ namespace RuffnTumble.Asset
 		/// </summary>
 		public bool RenderPaths
 		{
-			get
-			{
-				return renderPaths;
-			}
-			set
-			{
-				renderPaths = value;
-			}
+			get;
+			set;
 		}
-		bool renderPaths;
 
 		/// <summary>
 		/// Displays or not SpawnPoints in the layer
 		/// </summary>
 		public bool RenderSpawnPoints
 		{
-			get
-			{
-				return renderSpawnPoints;
-			}
-			set
-			{
-				renderSpawnPoints = value;
-			}
+			get;
+			set;
 		}
-		bool renderSpawnPoints;
 
 
 		/// <summary>

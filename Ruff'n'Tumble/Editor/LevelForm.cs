@@ -1,21 +1,21 @@
-using ArcEngine.Asset;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
-using ArcEngine.Graphic;
-//using Tao.Platform.Windows;
-using WeifenLuo.WinFormsUI.Docking;
-using RuffnTumble.Asset;
+using System.Xml;
 using ArcEngine;
-
+using ArcEngine.Asset;
+using ArcEngine.Forms;
+using ArcEngine.Graphic;
+using RuffnTumble.Asset;
+using WeifenLuo.WinFormsUI.Docking;
 
 
 namespace RuffnTumble.Editor
 {
-	public partial class LevelForm : DockContent
+	public partial class LevelForm : AssetEditor
 	{
 
 		#region Misc
@@ -24,10 +24,14 @@ namespace RuffnTumble.Editor
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public LevelForm()
+		public LevelForm(XmlNode node)
 		{
 			InitializeComponent();
-			GlControl.InitializeContexts();
+
+			GlControl.MakeCurrent();
+			Display.Init();
+			GlLevelControl_Resize(null, null);
+
 
 			//layerBrush = new LayerBrush("internal");
 
@@ -35,37 +39,21 @@ namespace RuffnTumble.Editor
 			LayerPanel = new LevelLayerPanel();
 			PropertyPanel = new LevelPropertyPanel();
 			BrushPanel = new LevelBrushPanel();
-		}
 
 
-		/// <summary>
-		/// Initialize form
-		/// </summary>
-		/// <param name="level"></param>
-		/// <returns></returns>
-		public bool Init(Level lvl, VideoRender device)
-		{
+			Level = new Level();
+			Level.Load(node);
+			Level.Init();
 
-			//
-			if (lvl == null)
-				return false;
-			Level = lvl;
-			//		TabText = level.Name;
-			Device = device;
+		//	CurrentLayer = Level.Layers[0];
 
 			//Brush = new BrushTool(level);
 
 
-			GlControl.MakeCurrent();
-			Device.ShareVideoContext();
-			Device.ClearColor = Color.Black;
-			Device.Texturing = true;
-			Device.Blending = true;
-
 
 
 			// Preload texture resources
-			CheckerBoard = Device.CreateTexture();
+			CheckerBoard = new Texture();
 			Stream stream = ResourceManager.GetInternalResource("ArcEngine.Files.checkerboard.png");
 			CheckerBoard.LoadImage(stream);
 			stream.Close();
@@ -81,13 +69,12 @@ namespace RuffnTumble.Editor
 			//SpawnPointTexture.LoadImage(stream);
 			//stream.Dispose();
 
-			TilePanel.Init(this, Device);
-			LayerPanel.Init(this, Device);
-			PropertyPanel.Init(this, Device);
-			BrushPanel.Init(this, Device);
+			TilePanel.Init(this);
+			LayerPanel.Init(this);
+			PropertyPanel.Init(this);
+			BrushPanel.Init(this);
 
 
-			Level.Init();
 
 			// Rebuild ComboBoxes
 			RebuildEntityList(null, null);
@@ -99,7 +86,6 @@ namespace RuffnTumble.Editor
 			//	DrawTimer.Start();
 
 
-			return true;
 		}
 
 
@@ -141,7 +127,7 @@ namespace RuffnTumble.Editor
 			Level.Location = new Point(pos.X * Level.BlockSize.Width, pos.Y * Level.BlockSize.Height);
 
 			// Update the display to be smoothy
-			GlControl.Draw();
+			GlControl.Invalidate();
 		}
 
 
@@ -175,14 +161,14 @@ namespace RuffnTumble.Editor
 		private void ClearColor_OnClick(object sender, EventArgs e)
 		{
 			ColorDialog dlg = new ColorDialog();
-			dlg.Color = Device.ClearColor;
+			dlg.Color = Display.ClearColor;
 			dlg.AllowFullOpen = true;
 			dlg.AnyColor = true;
 			dlg.FullOpen = true;
 			dlg.ShowDialog();
 
-			Device.ClearColor = Color.FromArgb(dlg.Color.R, dlg.Color.G, dlg.Color.B);
-			GlControl.Draw();
+			Display.ClearColor = Color.FromArgb(dlg.Color.R, dlg.Color.G, dlg.Color.B);
+			GlControl.Invalidate();
 		}
 
 
@@ -219,7 +205,9 @@ namespace RuffnTumble.Editor
 		private void GlLevelControl_Resize(object sender, EventArgs e)
 		{
 			GlControl.MakeCurrent();
-			Device.ViewPort = new Rectangle(new Point(), GlControl.Size);
+			Display.ViewPort = new Rectangle(new Point(), GlControl.Size);
+			if (Level != null)
+				Level.ViewPort = new Rectangle(new Point(), GlControl.Size);
 			//	ResourceManager.DisplayZone = new Rectangle(new Point(), GlControl.Size);
 		}
 
@@ -235,9 +223,9 @@ namespace RuffnTumble.Editor
 			// If not floating panel and the panel is active and AutoRefresh is OK
 			if (this.DockAreas != DockAreas.Float && DockPanel.ActiveDocument == this && AutoRefresh)
 			{
-				GlControl.Draw();
-				TilePanel.Draw();
-				BrushPanel.Draw();
+				GlControl.Invalidate();
+				TilePanel.Invalidate();
+				BrushPanel.Invalidate();
 			}
 
 
@@ -267,6 +255,10 @@ namespace RuffnTumble.Editor
 		private void RebuildEntityList(object sender, EventArgs e)
 		{
 			ListEntitiesButton.Items.Clear();
+
+			if (CurrentLayer == null)
+				return;
+
 			foreach (string name in CurrentLayer.GetEntities())
 				ListEntitiesButton.Items.Add(name);
 		}
@@ -280,6 +272,10 @@ namespace RuffnTumble.Editor
 		private void RebuildSpawnPointsList(object sender, EventArgs e)
 		{
 			ListSpawnPointsBox.Items.Clear();
+
+			if (CurrentLayer == null)
+				return;
+
 			foreach (string name in CurrentLayer.GetSpawnPoints())
 				ListSpawnPointsBox.Items.Add(name);
 		}
@@ -398,7 +394,8 @@ namespace RuffnTumble.Editor
 			// Stop the drawtimer
 			DrawTimer.Stop();
 
-			Device.ClearBuffers();
+			GlControl.MakeCurrent();
+			Display.ClearBuffers();
 
 			// Background texture
 			//Video.Texture = CheckerBoard;
@@ -411,53 +408,54 @@ namespace RuffnTumble.Editor
 
 
 			// No layer selected
-			if (CurrentLayer == null)
-				return;
+			if (CurrentLayer != null)
+			{
+/*
+				//
+				// Draw Spawnpoints
+				//
+				if (CurrentLayer.RenderSpawnPoints)
+				{
+					SpawnPoint spawn;
 
-			/*
-						//
-						// Draw Spawnpoints
-						//
-						if (CurrentLayer.RenderSpawnPoints)
-						{
-							SpawnPoint spawn;
+					foreach (string name in CurrentLayer.GetSpawnPoints())
+					{
+						spawn = CurrentLayer.GetSpawnPoint(name);
+						if (spawn == null)
+							continue;
 
-							foreach (string name in CurrentLayer.GetSpawnPoints())
-							{
-								spawn = CurrentLayer.GetSpawnPoint(name);
-								if (spawn == null)
-									continue;
+						Point pos = level.LevelToScreen(spawn.Location);
+						pos.X = pos.X - 8;
+						pos.Y = pos.Y - 8;
+						Video.Blit(SpawnPointTexture, pos);
+					}
+					spawn = layerPanel.PropertyGridBox.SelectedObject as SpawnPoint;
+					if (spawn != null)
+					{
 
-								Point pos = level.LevelToScreen(spawn.Location);
-								pos.X = pos.X - 8;
-								pos.Y = pos.Y - 8;
-								Video.Blit(SpawnPointTexture, pos);
-							}
-							spawn = layerPanel.PropertyGridBox.SelectedObject as SpawnPoint;
-							if (spawn != null)
-							{
+						rect = SpawnPointTexture.Rectangle;
+						rect.Offset(spawn.CollisionBoxLocation.Location);
+						rect.Location = level.LevelToScreen(rect.Location);
+						Video.Rectangle(rect, false);
+					}
 
-								rect = SpawnPointTexture.Rectangle;
-								rect.Offset(spawn.CollisionBoxLocation.Location);
-								rect.Location = level.LevelToScreen(rect.Location);
-								Video.Rectangle(rect, false);
-							}
+				}
+*/ 
+			}
 
-						}
-			*/
 			// Draw a rectangle showing the brush selection in the layer
 			if (sizingBrush)
 			{
 
-				Device.Color = Color.Green;
+				Display.Color = Color.Green;
 				Rectangle rec = new Rectangle(
 					BrushRectangle.Left * Level.BlockDimension.Width,
 					BrushRectangle.Top * Level.BlockDimension.Height,
 					BrushRectangle.Width * Level.BlockDimension.Width,
 					BrushRectangle.Height * Level.BlockDimension.Height);
 				rec.Location = Level.LevelToScreen(rec.Location);
-				Device.Rectangle(rec, false);
-				Device.Color = Color.White;
+				Display.Rectangle(rec, false);
+				Display.Color = Color.White;
 
 			}
 
@@ -476,9 +474,10 @@ namespace RuffnTumble.Editor
 
 				// Draw the tile on the screen only if the cursor is in the form
 				if (pos.X > -Level.BlockDimension.Width)
-					LayerBrush.Draw(Device, pos, CurrentLayer.TileSet, Level.BlockDimension);
+					LayerBrush.Draw(pos, CurrentLayer.TileSet, Level.BlockDimension);
 			}
 
+			GlControl.SwapBuffers();
 
 			// Restart the draw timer
 			DrawTimer.Start();
@@ -607,6 +606,10 @@ namespace RuffnTumble.Editor
 			}
 
 
+			if (CurrentLayer == null)
+				return;
+
+
 			// Left mouse button and PasteTileButton checked ? => Paste tile in the layer
 			if (e.Button == MouseButtons.Left && TileMode == TileMode.Pen)
 			{
@@ -712,11 +715,14 @@ namespace RuffnTumble.Editor
 			// Display the tile coord
 			MousePos = e.Location;
 			Point pos = Level.ScreenToLevel(MousePos);
-			MouseCoordLabel.Text = "Mouse coord : " + pos.X + "x" + pos.Y;
-			TileIDLabel.Text = "Tile ID : " + CurrentLayer.GetTileAtCoord(pos).ToString();
-			pos = Level.PositionToBlock(pos);
-			TileCoordLabel.Text = "Tile coord : " + pos.X + "x" + pos.Y;
 
+			if (CurrentLayer != null)
+			{
+				MouseCoordLabel.Text = "Mouse coord : " + pos.X + "x" + pos.Y;
+				TileIDLabel.Text = "Tile ID : " + CurrentLayer.GetTileAtCoord(pos).ToString();
+				pos = Level.PositionToBlock(pos);
+				TileCoordLabel.Text = "Tile coord : " + pos.X + "x" + pos.Y;
+			}
 
 			// If scrolling with the middle mouse button
 			if (e.Button == MouseButtons.Middle)
@@ -1001,9 +1007,6 @@ namespace RuffnTumble.Editor
 
 		#region Properties
 
-		VideoRender Device;
-
-
 		/// <summary>
 		/// Auto refresh the level
 		/// </summary>
@@ -1069,6 +1072,7 @@ namespace RuffnTumble.Editor
 			get;
 			set;
 		}
+
 
 		/// <summary>
 		/// Brush rectangle in the layer

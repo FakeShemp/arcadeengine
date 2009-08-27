@@ -39,7 +39,7 @@ namespace RuffnTumble
 	/// <summary>
 	/// This is the main type for your game
 	/// </summary>
-	public class Ruff : Game
+	class Ruff : Game
 	{
 		/// <summary>
 		/// Game entry point
@@ -48,49 +48,53 @@ namespace RuffnTumble
 		[STAThread]
 		static void Main(string [] args)
 		{
-			using (Ruff game = new Ruff())
-				game.Run();
+			Ruff game = new Ruff();
+
+			//try
+			//{
+				game.LoadContent();
+				game.RunEditor();
+			//}
+			//catch (Exception e)
+			//{
+			//    Trace.WriteLine("");
+			//    Trace.WriteLine("!!!FATAL ERROR !!!");
+			//    Trace.WriteLine("Message : " + e.Message);
+			//    Trace.WriteLine("StackTrace : " + e.StackTrace);
+			//    Trace.WriteLine("");
+
+
+			//    MessageBox.Show(e.StackTrace, e.Message);
+			//}
+
+			game.Exit();
 		}
-
-
-
-
-		/// <summary>
-		/// Allows the game to perform any initialization it needs to before starting to run.
-		/// This is where it can query for any required services and load any non-graphic
-		/// related content.  Calling base.Initialize will enumerate through any components
-		/// and initialize them as well.
-		/// </summary>
-		protected override void Initialize()
-		{
-
-			Device = new OpenGLRender();
-			Window.Size = new Size(800, 600);
-			Window.Text = "Ruff'n'Tumble";
-
-			// Device settings
-			Device.Blending = true;
-
-	
-
-			// Enble the console
-			Terminal.Enable = true;
-	
-		}
-
 
 
 		/// <summary>
 		/// LoadContent will be called once per game and is the place to load
 		/// all of your content.
 		/// </summary>
-		protected override void LoadContent()
+		public override void LoadContent()
 		{
+
+			Window.ClientSize = new Size(800, 600);
+			Window.Text = "Ruff'n'Tumble";
+
+			// Device settings
+			Display.Blending = true;
+
+	
+
+			// Enble the console
+			Terminal.Enable = true;
 	
 			// Loads content
 			ResourceManager.AddProvider(new LevelProvider());
 			ResourceManager.LoadBank("data/world1.bnk");
 
+
+/*
 			// Sets the level
 			CurrentLevel = ResourceManager.CreateAsset<Level>("Level1_1");
 			CurrentLevel.Init();
@@ -98,8 +102,8 @@ namespace RuffnTumble
 
 
 			// Default rendering font
-			Font = new TTFFont(Device);
-			Font.LoadFromTTF("verdana.ttf", 12, FontStyle.Regular);
+			Font = new TextureFont();
+			//Font.LoadFromTTF("verdana.ttf", 12, FontStyle.Regular);
 
 
 			// Events 
@@ -108,7 +112,7 @@ namespace RuffnTumble
 
 
 			Icon = ResourceManager.CreateAsset<TileSet>("Layout");
-
+*/
 		}
 
 
@@ -116,7 +120,7 @@ namespace RuffnTumble
 		/// UnloadContent will be called once per game and is the place to unload
 		/// all content.
 		/// </summary>
-		protected override void UnloadContent()
+		public override void UnloadContent()
 		{
 			ResourceManager.ClearAssets();
 		}
@@ -127,11 +131,14 @@ namespace RuffnTumble
 		/// Allows the game to run logic such as updating the world,
 		/// checking for collisions, gathering input, and playing audio.
 		/// </summary>
-		protected override void Update(GameTime time)
+		public override void Update(GameTime time)
 		{
+
 			if (Keyboard.IsKeyPress(Keys.Insert))
 				RunEditor();
 
+			if (Keyboard.IsNewKeyPress(Keys.Escape))
+				Exit();
 	
 			
 			if (CurrentLevel == null)
@@ -152,8 +159,8 @@ namespace RuffnTumble
 				{
 					// Level layer
 					CurrentLevel.Location = new Point(
-							(int)(player.Location.X - Level.DisplayZone.Width / 2.0f),
-							(int)(player.Location.Y - Level.DisplayZone.Height / 2.0f));
+							(int)(player.Location.X - Level.ViewPort.Width / 2.0f),
+							(int)(player.Location.Y - Level.ViewPort.Height / 2.0f));
 
 				}
 
@@ -165,17 +172,17 @@ namespace RuffnTumble
 		/// <summary>
 		/// This is called when the game should draw itself.
 		/// </summary>
-		protected override void Draw(VideoRender device)
+		public override void Draw()
 		{
 			// Clears the background
-			device.ClearBuffers();
+			Display.ClearBuffers();
 
 			if (CurrentLevel == null)
 				return;
 
 
 			// Draw the level
-			CurrentLevel.Draw(device);
+			CurrentLevel.Draw();
 
 
 			// Draw the status bar
@@ -194,17 +201,17 @@ namespace RuffnTumble
 			if (DebugStat)
 			{
 
-				device.Color = Color.White;
+				Display.Color = Color.White;
 				Rectangle rect = player.CollisionBoxLocation;
 				rect.Location = CurrentLevel.LevelToScreen(rect.Location);
-				device.Rectangle(rect, false);
+				Display.Rectangle(rect, false);
 
 				Point tl = new Point(player.CollisionBoxLocation.Left, player.CollisionBoxLocation.Top);
 				Point tr = new Point(player.CollisionBoxLocation.Left + player.CollisionBoxLocation.Width, player.CollisionBoxLocation.Top);
 				Point bl = new Point(tl.X, tl.Y + player.CollisionBoxLocation.Height);
 				Point br = new Point(tr.X, bl.Y);
 
-				device.Color = Color.White;
+				Display.Color = Color.White;
 				Layer col = CurrentLevel.CollisionLayer;
 				Font.DrawText(new Point(400, 100), "tl : " + tl.ToString() + " = " + col.GetTileAtCoord(tl));
 				Font.DrawText(new Point(400, 120), "tr : " + tr.ToString() + " = " + col.GetTileAtCoord(tr));
@@ -234,7 +241,7 @@ namespace RuffnTumble
 
 				pos = new Point(10, 200);
 				pos.Y += Font.LineHeight;
-				//device.DrawText(pos, Video.Time.ElapsedGameTime.ToString());
+				//Display.DrawText(pos, Video.Time.ElapsedGameTime.ToString());
 
 				pos.Y += Font.LineHeight;
 				Font.DrawText(pos, "Jumping : " + player.IsJumping + " - " + player.Jump);
@@ -251,10 +258,10 @@ namespace RuffnTumble
 
 
 			// Hot spot
-			device.Color = Color.Red;
+			Display.Color = Color.Red;
 			Point off = CurrentLevel.LevelToScreen(player.Location);
-			device.Plot(off);
-			device.Color = Color.White;
+			Display.Plot(off);
+			Display.Color = Color.White;
 */
 			#endregion
 
@@ -267,7 +274,7 @@ namespace RuffnTumble
 		/// <param name="text"></param>
 		void ProcessConsoleCommands(string cmd)
 		{
-			Console.WriteLine(cmd);
+			Trace.WriteLine(cmd);
 		}
 
 
@@ -319,11 +326,11 @@ namespace RuffnTumble
 				break;
 
 
-				case Keys.F11:
-				{
-					Device.WaitVbl = !Device.WaitVbl;
-				}
-				break;
+				//case Keys.F11:
+				//{
+				//    Display.WaitVbl = !Display.WaitVbl;
+				//}
+				//break;
 
 				// 
 				case Keys.F12:
@@ -404,7 +411,7 @@ namespace RuffnTumble
 		/// <summary>
 		/// 
 		/// </summary>
-		TTFFont Font;
+		TextureFont Font;
 
 
 		/// <summary>
@@ -420,7 +427,7 @@ namespace RuffnTumble
 		public Level CurrentLevel
 		{
 			get;
-			set;
+			private set;
 		}
 
 

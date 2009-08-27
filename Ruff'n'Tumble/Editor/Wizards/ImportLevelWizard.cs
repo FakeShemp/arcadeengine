@@ -1,6 +1,4 @@
-﻿using ArcEngine.Graphic;
-using RuffnTumble.Asset;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -8,10 +6,12 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
+using System.Text;
 using System.Windows.Forms;
 using ArcEngine;
-using System.Text;
 using ArcEngine.Asset;
+using ArcEngine.Graphic;
+using RuffnTumble.Asset;
 
 //
 // MD5 :
@@ -218,8 +218,10 @@ namespace RuffnTumble.Editor.Wizards
 						worker.ReportProgress(1);
 
 
+						
+
 						// Collect pixels
-						BitmapData bmdata = FromTexture.LockBits(Src, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+						BitmapData bmdata = FromTexture.LockBits(Src, System.Drawing.Imaging.ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 						Marshal.Copy(bmdata.Scan0, pixels, 0, BlockSize.Width * BlockSize.Height * 4);
 
 						// Unlock the texture
@@ -265,7 +267,7 @@ namespace RuffnTumble.Editor.Wizards
 			}
 			catch (Exception ex)
 			{
-				Log.Send(new LogEventArgs(LogLevel.Error, "Failed to import level from game map \"" + dlg.FileName + "\" !", ex.StackTrace));
+				Trace.WriteLine( "Failed to import level from game map \"" + dlg.FileName + "\" ! " + ex.StackTrace);
 				return;
 			}
 
@@ -283,7 +285,7 @@ namespace RuffnTumble.Editor.Wizards
 			Binary bin = ResourceManager.CreateBinary(binname);
 			if (bin == null)
 			{
-				Log.Send(new LogEventArgs(LogLevel.Error, "Failed to create binary \"" + binname + "\" !", null));
+				Trace.WriteLine( "Failed to create binary \"" + binname + "\" !", null));
 				return;
 			}
 			MemoryStream ms = new MemoryStream();
@@ -336,7 +338,7 @@ namespace RuffnTumble.Editor.Wizards
 
 
 			// Create the final texture
-			Texture texture = ResourceManager.CreateAsset<Texture>(TextureNameBox.Text);
+			Texture texture = new Texture();//ResourceManager.CreateAsset<Texture>(TextureNameBox.Text);
 			if (texture != null)
 			{
 				string binname = TextureNameBox.Text;

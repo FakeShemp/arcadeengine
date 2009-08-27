@@ -131,7 +131,7 @@ namespace RuffnTumble.Asset
 
 					default:
 					{
-						Log.Send(new LogEventArgs(LogLevel.Warning, "Entity : Unknown node element found (" + node.Name + ")", null));
+						Trace.WriteLine("Entity : Unknown node element found (" + node.Name + ")");
 					}
 					break;
 				}
@@ -164,11 +164,11 @@ namespace RuffnTumble.Asset
 		/// Renders the entity
 		/// </summary>
 		///<param name="loc">Location of the entity relative to the layer coordinate</param>
-		public void Draw(VideoRender device, Point loc)
+		public void Draw(Point loc)
 		{
 			if (tileSet != null)
 			{
-				tileSet.Zoom = zoom;
+				tileSet.Scale = zoom;
 				//tileSet.Draw(TileId, loc);
 				tileSet.Draw(tileId, loc);
 			}
@@ -179,7 +179,7 @@ namespace RuffnTumble.Asset
 			{
                 Rectangle coll = CollisionBoxLocation;
                 coll.Location = parentLayer.Level.LevelToScreen(coll.Location);
-					 device.Rectangle(coll, false);
+					 Display.Rectangle(coll, false);
 			}
 
 		}
@@ -359,8 +359,8 @@ namespace RuffnTumble.Asset
 				Script script = ResourceManager.CreateAsset<Script>(model.ScriptName);
 				if (script != null)
 				{
-					if (script.Compile(true))
-						ScriptInterface = (IEntity)script.FindInterface("RuffnTumble.Interface.IEntity");
+					//if (script.Compile())
+					//	ScriptInterface = (IEntity)script.FindInterface("RuffnTumble.Interface.IEntity");
 				}
 
 				// zoom

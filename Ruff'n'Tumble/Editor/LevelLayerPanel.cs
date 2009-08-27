@@ -34,10 +34,9 @@ namespace RuffnTumble.Editor
 		/// </summary>
 		/// <param name="level"></param>
 		/// <returns></returns>
-		public bool Init(LevelForm form, VideoRender device)
+		public bool Init(LevelForm form)
 		{
 			Form = form;
-			Device = device;
 
 			UpdateLayerBox();
 
@@ -59,13 +58,13 @@ namespace RuffnTumble.Editor
 		{
 			// LayerBox
 			LayersBox.Items.Clear();
-			//foreach (Layer layer in Form.Level.Layers)
-			//{
-			//   LayersBox.Items.Add(layer.Name);
-			//}
+			foreach (Layer layer in Form.Level.Layers)
+			{
+				LayersBox.Items.Add(layer.Name);
+			}
 
-			//if (CurrentLayer != null)
-			//    LayersBox.SelectedItem = CurrentLayer.Name;
+			if (CurrentLayer != null)
+				LayersBox.SelectedItem = CurrentLayer.Name;
 
 		}
 
@@ -82,9 +81,9 @@ namespace RuffnTumble.Editor
 		private void LayerBox_OnSelectedIndexChanged(object sender, EventArgs e)
 		{
 			// Change the current layer
-			//currentLayer = Form.Level.GetLayer(LayersBox.SelectedItem.ToString());
+			currentLayer = Form.Level.GetLayer(LayersBox.SelectedItem.ToString());
 
-			//LayerPropertyGrid.SelectedObject = CurrentLayer;
+			LayerPropertyGrid.SelectedObject = CurrentLayer;
 
 			//ShowEntityButton.Checked = CurrentLayer.RenderEntities;
 			//RebuildSpawnPointsList(null, null);
@@ -229,11 +228,6 @@ namespace RuffnTumble.Editor
 			}
 		}
 
-
-		/// <summary>
-		/// 
-		/// </summary>
-		VideoRender Device;
 
 
 		#endregion

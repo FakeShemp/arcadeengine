@@ -66,6 +66,8 @@ namespace DungeonEye
 			ScreenManager.AddScreen(new OptionMenu());
 		}
 
+
+
 		/// <summary>
 		/// Quits the game
 		/// </summary>

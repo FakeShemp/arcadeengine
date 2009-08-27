@@ -24,16 +24,16 @@ namespace RuffnTumble.Editor.Wizards
 		public NewLayerWizard()
 		{
 			InitializeComponent();
-
+/*
 			// Populate the texture available
-			List<string> textures = ResourceManager.GetAssets(typeof(Texture));
+			List<string> textures = ResourceManager.GetAssets<Texture>();
 			TextureBox.Items.Add("");
 			foreach (string texture in textures)
 			{
 				TextureBox.Items.Add(texture);
 			}
 
-
+*/
 		}
 
 

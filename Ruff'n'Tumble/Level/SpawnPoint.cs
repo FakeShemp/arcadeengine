@@ -52,7 +52,7 @@ namespace RuffnTumble.Asset
 
 					default:
 					{
-						Log.Send(new LogEventArgs(LogLevel.Warning, "SpawnPoint : Unknown node element found (" + node.Name + ")", null));
+						Trace.WriteLine("SpawnPoint : Unknown node element found (" + node.Name + ")");
 					}
 					break;
 				}

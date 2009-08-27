@@ -58,6 +58,36 @@ namespace ArcEngine.Graphic
 			Culling = false;
 			DepthTest = false;
 			BlendingFunction(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+
+		}
+
+
+		/// <summary>
+		/// Display Graphic device informations
+		/// </summary>
+		public static void TraceInfos()
+		{
+			Trace.WriteLine("Video informations :");
+			Trace.Indent();
+			Trace.WriteLine("Graphics card vendor : {0}", GL.GetString(StringName.Vendor));
+			Trace.WriteLine("Renderer : {0}", GL.GetString(StringName.Renderer));
+
+			//int major, minor;
+			//GL.GetInteger(GetPName.MajorVersion, out major);
+			//GL.GetInteger(GetPName.MinorVersion, out minor);
+			//Trace.WriteLine("Version : {0} ({1}, {2})", GL.GetString(StringName.Version), major, minor);
+
+
+			Trace.WriteLine("Display modes");
+			Trace.Indent();
+
+			foreach (DisplayDevice device in DisplayDevice.AvailableDisplays)
+				Trace.WriteLine(device.ToString());
+
+			Trace.Unindent();
+			Trace.Unindent();
+
+
 		}
 
 

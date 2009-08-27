@@ -33,11 +33,6 @@ namespace DungeonEye
 				Trace.WriteLine("");
 
 				MessageBox.Show(e.StackTrace, e.Message);
-
-			}
-			finally
-			{
-				game.Exit();
 			}
 		}
 
@@ -51,9 +46,7 @@ namespace DungeonEye
 			KeyboardSchemeName = Settings.GetString("keyboardscheme");
 			LanguageName = Settings.GetString("language");
 
-
 			GSM = new ScreenManager(this);
-
 		}
 
 

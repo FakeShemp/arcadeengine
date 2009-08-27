@@ -1,9 +1,12 @@
-﻿using System;
+﻿using ArcEngine.Forms;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
 using ArcEngine.Asset;
 using ArcEngine.Providers;
+using ArcEngine;
+
 
 namespace RuffnTumble.Asset
 {
@@ -27,7 +30,7 @@ namespace RuffnTumble.Asset
 			Assets = new Type[] { 
 					typeof(Level),
 					typeof(Model),  
-					typeof(Layer)
+			//		typeof(Layer)
 				};
 			Version = new Version(0, 1);
 		}
@@ -43,11 +46,13 @@ namespace RuffnTumble.Asset
 		/// <param name="type"></param>
 		/// <param name="xml"></param>
 		/// <returns></returns>
-		public override void Save(Type type, XmlWriter xml)
+		public override bool Save(Type type, XmlWriter xml)
 		{
 			foreach (XmlNode node in Levels.Values)
 				node.WriteTo(xml);
 
+
+			return true;
 		}
 
 
@@ -58,7 +63,7 @@ namespace RuffnTumble.Asset
 		/// </summary>
 		/// <param name="xml"></param>
 		/// <returns></returns>
-		public override void Load(XmlNode xml)
+		public override bool Load(XmlNode xml)
 		{
 
 			switch (xml.Name.ToLower())
@@ -67,17 +72,19 @@ namespace RuffnTumble.Asset
 				{
 
 					string name = xml.Attributes["name"].Value;
-					Levels.Add(name, xml);
+					Levels[name] = xml;
 				}
 				break;
 
 				default:
 				{
-					ArcEngine.Log.Send(new ArcEngine.LogEventArgs(ArcEngine.LogLevel.Error, "?" + xml.Name, null));
+					Trace.WriteLine("?" + xml.Name);
 				}
 				break;
 			}
 
+
+			return true;
 		}
 
 
@@ -87,6 +94,31 @@ namespace RuffnTumble.Asset
 
 
 		#region Assets
+
+
+		/// <summary>
+		/// Edits an asset
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="name"></param>
+		/// <returns></returns>
+		public override AssetEditor EditAsset<T>(string name)
+		{
+			AssetEditor form = null;
+			XmlNode node = null;
+
+			if (typeof(T) == typeof(Level))
+			{
+				if (Levels.ContainsKey(name))
+					node = Levels[name];
+
+				form = new Editor.LevelForm(node);
+			}
+
+			form.TabText = name;
+			return form;
+		}
+
 
 		/// <summary>
 		/// Adds an asset definition to the provider
@@ -101,11 +133,12 @@ namespace RuffnTumble.Asset
 			Levels[name] = node;
 		}
 
+
 		/// <summary>
 		/// Returns an array of all available assets
 		/// </summary>
 		/// <returns>asset's name array</returns>
-		public override List<string> GetAssets(Type type)
+		public override List<string> GetAssets<T>()
 		{
 			List<string> list = new List<string>();
 

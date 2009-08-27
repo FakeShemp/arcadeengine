@@ -9,7 +9,7 @@ namespace RuffnTumble.Asset
 	/// <summary>
 	/// 
 	/// </summary>
-	public class Model// : ResourceBase
+	public class Model : IAsset
 	{
 		/// <summary>
 		/// 
@@ -170,7 +170,7 @@ namespace RuffnTumble.Asset
 					
 					default:
 					{
-						Log.Send(new LogEventArgs(LogLevel.Warning, "Model : Unknown node element found (" + node.Name + ")", null));
+						Trace.WriteLine("Model : Unknown node element found (" + node.Name + ")");
 					}
 					break;
 				}
@@ -185,7 +185,18 @@ namespace RuffnTumble.Asset
 
 
 		#region Properties
-		
+
+
+		/// <summary>
+		/// Name of the dungeon
+		/// </summary>
+		public string Name
+		{
+			get;
+			set;
+		}
+
+
 		/// <summary>
 		/// Nom du script a utiliser
 		/// </summary>
@@ -391,13 +402,14 @@ namespace RuffnTumble.Asset
 
 
 		/// <summary>
-		/// Retourne la liste de toutes les texture pour permettre de les selectionner
+		/// Retourne la liste de tous les models pour permettre de les selectionner
 		/// </summary>
 		/// <param name="context"></param>
 		/// <returns></returns>
 		public override StandardValuesCollection GetStandardValues(ITypeDescriptorContext context)
 		{
-			return new StandardValuesCollection(ResourceManager.GetAssets(typeof(Model)));
+			return new StandardValuesCollection(null);
+			//return new StandardValuesCollection(ResourceManager.GetAssets<Model>);
 		}
 
 	}

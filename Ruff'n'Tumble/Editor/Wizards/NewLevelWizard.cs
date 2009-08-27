@@ -21,15 +21,15 @@ namespace RuffnTumble.Editor.Wizards
 		public NewLevelWizard()
 		{
 			InitializeComponent();
-
+/*
 			// Populate the texture available
-			List<string> textures = ResourceManager.GetAssets(typeof(Texture));
+			List<string> textures = ResourceManager.GetAssets<Texture>();
 			TextureBox.Items.Add("");
 			foreach (string texture in textures)
 			{
 				TextureBox.Items.Add(texture);
 			}
-	
+*/	
 		}
 
 
@@ -82,7 +82,6 @@ namespace RuffnTumble.Editor.Wizards
 		}
 
 
-		VideoRender Device;
 
 
 	}

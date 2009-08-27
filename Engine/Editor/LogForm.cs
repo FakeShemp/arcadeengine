@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
@@ -63,6 +62,11 @@ namespace ArcEngine.Editor
 		}
 
 
+
+		private void LogForm_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			Trace.OnTrace -= new Trace.OnTraceEvent(Trace_OnTrace);
+		}
 	
 		#region Properties
 

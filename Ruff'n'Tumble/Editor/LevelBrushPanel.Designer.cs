@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LevelBrushPanel));
-			this.GlControl = new Tao.Platform.Windows.SimpleOpenGlControl();
+			this.GlControl = new OpenTK.GLControl();
 			this.MainToolStrip = new System.Windows.Forms.ToolStrip();
 			this.AddBrushButton = new System.Windows.Forms.ToolStripButton();
 			this.DeleteBrushButton = new System.Windows.Forms.ToolStripButton();
@@ -40,19 +40,11 @@
 			// 
 			// GlControl
 			// 
-			this.GlControl.AccumBits = ((byte)(0));
-			this.GlControl.AutoCheckErrors = false;
-			this.GlControl.AutoFinish = false;
-			this.GlControl.AutoMakeCurrent = true;
-			this.GlControl.AutoSwapBuffers = true;
 			this.GlControl.BackColor = System.Drawing.Color.Black;
-			this.GlControl.ColorBits = ((byte)(32));
-			this.GlControl.DepthBits = ((byte)(16));
 			this.GlControl.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.GlControl.Location = new System.Drawing.Point(0, 25);
 			this.GlControl.Name = "GlControl";
 			this.GlControl.Size = new System.Drawing.Size(267, 447);
-			this.GlControl.StencilBits = ((byte)(0));
 			this.GlControl.TabIndex = 0;
 			this.GlControl.Paint += new System.Windows.Forms.PaintEventHandler(this.GlControl_Paint);
 			this.GlControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.GlControl_MouseDown);
@@ -126,7 +118,7 @@
 
 		#endregion
 
-		private Tao.Platform.Windows.SimpleOpenGlControl GlControl;
+		private OpenTK.GLControl GlControl;
 		private System.Windows.Forms.ToolStrip MainToolStrip;
 		private System.Windows.Forms.ToolStripButton AddBrushButton;
 		private System.Windows.Forms.ToolStripButton DeleteBrushButton;

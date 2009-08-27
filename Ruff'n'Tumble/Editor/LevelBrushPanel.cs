@@ -10,7 +10,7 @@ using ArcEngine.Graphic;
 using ArcEngine;
 using RuffnTumble.Asset;
 using WeifenLuo.WinFormsUI.Docking;
-
+using OpenTK;
 
 namespace RuffnTumble.Editor
 {
@@ -26,7 +26,6 @@ namespace RuffnTumble.Editor
 		public LevelBrushPanel()
 		{
 			InitializeComponent();
-			GlControl.InitializeContexts();
 
 			Brushes = new Dictionary<Rectangle, LayerBrush>();
 		}
@@ -38,25 +37,21 @@ namespace RuffnTumble.Editor
 		/// </summary>
 		/// <param name="form"></param>
 		/// <returns></returns>
-		public bool Init(LevelForm form, VideoRender device)
+		public bool Init(LevelForm form)
 		{
 			Form = form;
-			Device = device;
 
 
 			GlControl.MakeCurrent();
-			Device.ShareVideoContext();
-			Device.ClearColor = Color.Black;
-			Device.Texturing = true;
-			Device.Blending = true;
-
+			Display.Init();
+			GlControl_Resize(null, null);
 
 
 
 
 
 			// Preload texture resources
-			CheckerBoard = Device.CreateTexture();
+			CheckerBoard = new Texture();
 			Stream stream = ResourceManager.GetInternalResource("ArcEngine.Files.checkerboard.png");
 			CheckerBoard.LoadImage(stream);
 			stream.Close();
@@ -78,7 +73,7 @@ namespace RuffnTumble.Editor
 		private void GlControl_Resize(object sender, EventArgs e)
 		{
 			GlControl.MakeCurrent();
-			Device.ViewPort = new Rectangle(new Point(), GlControl.Size);
+			Display.ViewPort = new Rectangle(new Point(), GlControl.Size);
 		}
 
 
@@ -90,7 +85,8 @@ namespace RuffnTumble.Editor
 		/// <param name="e"></param>
 		private void GlControl_Paint(object sender, PaintEventArgs e)
 		{
-			Device.ClearBuffers();
+			GlControl.MakeCurrent();
+			Display.ClearBuffers();
 
 			// Mouse coord
 			Point mouse = GlControl.PointToClient(Control.MousePosition); 
@@ -99,39 +95,43 @@ namespace RuffnTumble.Editor
 			Brushes.Clear();
 
 			// Background texture
-		//	Video.Texture = CheckerBoard;
 			Rectangle rect = new Rectangle(Point.Empty, GlControl.Size);
 			CheckerBoard.Blit(rect, rect);
 
-			Point pos = Point.Empty;
-			foreach (LayerBrush brush in Form.CurrentLayer.Brushes)
+			if (Form.CurrentLayer != null)
 			{
-
-				// Draw the brush
-				brush.Draw(Device, pos, Form.CurrentLayer.TileSet, Form.Level.BlockDimension);
-				
-				// zone detection
-				rect = new Rectangle(pos, new Size(brush.Size.Width * Form.Level.BlockDimension.Width, brush.Size.Height * Form.Level.BlockDimension.Height));
-				Brushes[rect] = brush;
-
-				if (brush == SelectedBrush)
+				Point pos = Point.Empty;
+				foreach (LayerBrush brush in Form.CurrentLayer.Brushes)
 				{
-					Device.Color = Color.Red;
-					Device.Rectangle(rect, false);
-					Device.Color = Color.White;
+
+					// Draw the brush
+					brush.Draw(pos, Form.CurrentLayer.TileSet, Form.Level.BlockDimension);
+
+					// zone detection
+					rect = new Rectangle(pos, new Size(brush.Size.Width * Form.Level.BlockDimension.Width, brush.Size.Height * Form.Level.BlockDimension.Height));
+					Brushes[rect] = brush;
+
+					if (brush == SelectedBrush)
+					{
+						Display.Color = Color.Red;
+						Display.Rectangle(rect, false);
+						Display.Color = Color.White;
+					}
+
+
+					// Somme blah blah
+					if (rect.Contains(mouse))
+					{
+						Display.Rectangle(rect, false);
+					}
+
+					// Move to the next location
+					pos.Y += brush.Size.Height * Form.Level.BlockDimension.Height + 32;
 				}
-
-
-				// Somme blah blah
-				if (rect.Contains(mouse))
-				{
-					Device.Rectangle(rect, false);
-				}
-
-				// Move to the next location
-				pos.Y += brush.Size.Height * Form.Level.BlockDimension.Height + 32;
 			}
 
+
+			GlControl.SwapBuffers();
 		}
 
 
@@ -228,9 +228,6 @@ namespace RuffnTumble.Editor
 
 
 		#region Properties
-
-
-		VideoRender Device;
 
 
 		/// <summary>

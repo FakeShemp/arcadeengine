@@ -34,21 +34,21 @@ namespace RuffnTumble.Asset
 		/// Draws the path on the screen
 		/// </summary>
 		/// <param name="location">Location of the level</param>
-		public void Draw(VideoRender device, Point location)
+		public void Draw(Point location)
 		{
 
-			device.Color = Color.Red;
-			device.LineWidth = LineWidth;
+			Display.Color = Color.Red;
+		//	Display.LineWidth = LineWidth;
 			for (int i = 0; i < points.Count - 1; i++)
 			{
-				device.Line(points[i], points[i + 1]);
+				Display.Line(points[i], points[i + 1]);
 			}
-			device.LineWidth = 1;
+		//	Display.LineWidth = 1;
 
-			device.Color = Color.Green;
-			device.Rectangle(Zone, false);
+			Display.Color = Color.Green;
+			Display.Rectangle(Zone, false);
 
-			device.Color = Color.White;
+			Display.Color = Color.White;
 		}
 
 
@@ -138,7 +138,7 @@ namespace RuffnTumble.Asset
 
 					default:
 					{
-						Log.Send(new LogEventArgs(LogLevel.Warning, "Path : Unknown node element \"" + node.Name + "\"", null));
+						Trace.WriteLine("Path : Unknown node element \"" + node.Name + "\"");
 					}
 					break;
 				}

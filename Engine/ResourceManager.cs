@@ -478,6 +478,7 @@ namespace ArcEngine
 
 
 			Trace.Unindent();
+			Trace.WriteLine("Loading finished !");
 			return true;
 		}
 

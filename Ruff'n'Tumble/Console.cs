@@ -67,7 +67,9 @@ namespace RuffnTumble
 		public bool IsActive;
 
 
+		TextureFont font;
 
+/*
 		/// <summary>
 		/// Gets / sets the font
 		/// </summary>
@@ -84,7 +86,7 @@ namespace RuffnTumble
 		}
 		Font2D font;
 
-
+*/
 
 
 		/// <summary>
@@ -129,7 +131,7 @@ namespace RuffnTumble
 		/// <returns></returns>
 		public bool Init()
 		{
-			font = ResourceManager.CreateAsset<Font2D>("Console");
+			font = ResourceManager.CreateAsset<TextureFont>("Console");
 			if (font == null)
 			{
 				return false;
@@ -156,34 +158,34 @@ namespace RuffnTumble
 		/// 
 		/// </summary>
 		/// <param name="gameTime"></param>
-		public void Draw(VideoRender device)
+		public void Draw()
 		{
 			if (!IsActive)
 				return;
 
-			device.Texturing = false;
-			device.Color = backgroundColor;
+			Display.Texturing = false;
+			Display.Color = backgroundColor;
 
-			device.Rectangle(rectangle, true);
-			device.Color = Color.White;
-			device.Texturing = true;
+			Display.Rectangle(rectangle, true);
+			Display.Color = Color.White;
+			Display.Texturing = true;
 
 
 			//if (font == null)
 			//   return;
-			//device.Font = font;
+			//Display.Font = font;
 
 			/*				
 						int fontheight = (int)font.MeasureString(prefix).Y;
 						int y = 0;
 
 						// Saves a copy of the current screen into the texture.  This allows the menus to be transparent
-						GraphicsDevice.ResolveBackBuffer(texture);
+						GraphicsDisplay.ResolveBackBuffer(texture);
 
 						batch.Begin();
 
 						// Clear the texture ?
-						batch.Draw(texture, new Rectangle(0, 0, width, GraphicsDevice.Viewport.Height), Color.White);
+						batch.Draw(texture, new Rectangle(0, 0, width, GraphicsDisplay.Viewport.Height), Color.White);
 
 						// Draw transparent menu
 						batch.Draw(texture, new Rectangle(0, 0, width, height), new Rectangle(0, 0, width, height), Color.Gray);
@@ -205,7 +207,7 @@ namespace RuffnTumble
 				pos.Y -= font.LineHeight;
 
 				// Draw text
-				Font.DrawText(pos, LogMsg[i]);
+				//Font.DrawText(pos, LogMsg[i]);
 			}
 
 

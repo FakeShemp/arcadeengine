@@ -25,15 +25,11 @@ namespace RuffnTumble.Editor.Wizards
 		{
 			InitializeComponent();
 
-			//Device = device;
-			LevelGlControl.InitializeContexts();
-
 
 			Tiles = new TileSet();
 			
 			
 			LevelGlControl.MakeCurrent();
-			//Device.ShareVideoContext();
 			Display.ClearColor = Color.Black;
 			Display.Texturing = true;
 			Display.Blending = true;
@@ -53,7 +49,7 @@ namespace RuffnTumble.Editor.Wizards
 		/// <param name="e"></param>
 		private void LevelGlControl_Paint(object sender, PaintEventArgs e)
 		{
-			Device.ClearBuffers();
+			Display.ClearBuffers();
 
 			if (Data == null)
 				return;
@@ -64,7 +60,7 @@ namespace RuffnTumble.Editor.Wizards
 				for (short x = 0; x < MapSize.Width; x++)
 				{
 					// Off limite
-					if (x * BlockSize.Width > Device.ViewPort.Width)
+					if (x * BlockSize.Width > Display.ViewPort.Width)
 						break;
 
 					ushort pos = (ushort)((y * MapSize.Height) + DataPos + x);
@@ -91,7 +87,7 @@ namespace RuffnTumble.Editor.Wizards
 		{
 			LevelGlControl.MakeCurrent();
 
-			Device.ViewPort = new Rectangle(new Point(), LevelGlControl.Size);
+			Display.ViewPort = new Rectangle(new Point(), LevelGlControl.Size);
 		}
 
 		#endregion
@@ -113,7 +109,7 @@ namespace RuffnTumble.Editor.Wizards
 			
 			Tiles.Clear();
 
-			Tiles.Texture = Device.CreateTexture();
+			Tiles.Texture = new Texture();
 			Tiles.Texture.LoadImage(OpenTileDlg.FileName);
 			int id = 0;
 			for (int y = 0; y < Tiles.Texture.Size.Height; y += BlockSize.Height)
@@ -237,7 +233,6 @@ namespace RuffnTumble.Editor.Wizards
 			}
 		}
 
-		VideoRender Device;
 
 		#endregion
 
