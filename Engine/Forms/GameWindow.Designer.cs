@@ -54,6 +54,8 @@
 			this.Controls.Add(this.glControl1);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+			this.MaximizeBox = false;
+			this.MinimizeBox = false;
 			this.Name = "GameWindow";
 			this.Text = "ArcEngine : http://arcengine.wordpress.com";
 			this.ResumeLayout(false);
