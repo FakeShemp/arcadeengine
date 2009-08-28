@@ -325,8 +325,6 @@
     <None Include="Data\Icons\public method.gif" />
     <None Include="Data\Icons\static.gif" />
     <None Include="Data\Icons\snippet.png" />
-    <Content Include="Editor changelog.txt" />
-    <Content Include="Framework changelog.txt" />
     <Content Include="Docs\Engines.txt" />
     <Content Include="Docs\Measurement Convention.txt" />
     <EmbeddedResource Include="Editor\AboutForm.resx">
