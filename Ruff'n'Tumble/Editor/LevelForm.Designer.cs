@@ -97,7 +97,7 @@ namespace RuffnTumble.Editor
 			// 
 			this.LevelVScroller.Dock = System.Windows.Forms.DockStyle.Right;
 			this.LevelVScroller.Location = new System.Drawing.Point(732, 0);
-			this.LevelVScroller.Maximum = 10000;
+			this.LevelVScroller.Maximum = 200;
 			this.LevelVScroller.Name = "LevelVScroller";
 			this.LevelVScroller.Size = new System.Drawing.Size(17, 604);
 			this.LevelVScroller.TabIndex = 10;
@@ -108,7 +108,7 @@ namespace RuffnTumble.Editor
 			// 
 			this.LevelHScroller.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.LevelHScroller.Location = new System.Drawing.Point(0, 587);
-			this.LevelHScroller.Maximum = 10000;
+			this.LevelHScroller.Maximum = 200;
 			this.LevelHScroller.Name = "LevelHScroller";
 			this.LevelHScroller.Size = new System.Drawing.Size(732, 17);
 			this.LevelHScroller.TabIndex = 9;
@@ -233,7 +233,7 @@ namespace RuffnTumble.Editor
 			// propertyGrid1
 			// 
 			this.propertyGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)));
+							| System.Windows.Forms.AnchorStyles.Left)));
 			this.propertyGrid1.CommandsVisibleIfAvailable = false;
 			this.propertyGrid1.Location = new System.Drawing.Point(0, 15);
 			this.propertyGrid1.Name = "propertyGrid1";
