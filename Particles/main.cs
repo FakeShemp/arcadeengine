@@ -17,15 +17,13 @@
 //along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 //
 #endregion
-using OpenTK.Graphics;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
 using ArcEngine;
-using ArcEngine.Asset;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
-using ArcEngine.Audio;
+using OpenTK.Graphics;
 
 
 namespace Particles
@@ -84,7 +82,7 @@ namespace Particles
 
 
 		/// <summary>
-		/// 
+		/// Load contents 
 		/// </summary>
 		public override void LoadContent()
 		{
@@ -109,7 +107,7 @@ namespace Particles
 
 
 		/// <summary>
-		/// 
+		/// Unload contents
 		/// </summary>
 		public override void UnloadContent()
 		{
@@ -118,7 +116,7 @@ namespace Particles
 
 
 		/// <summary>
-		/// 
+		/// Update the game logic
 		/// </summary>
 		/// <param name="gameTime"></param>
 		public override void Update(GameTime gameTime)
@@ -201,12 +199,13 @@ namespace Particles
 			printer.Begin();
 			GL.MatrixMode(MatrixMode.Texture);
 			GL.LoadIdentity();
-			printer.Print(msg, sans_serif, Color.SpringGreen, new RectangleF(100, 100, 0, 0));
+			printer.Print(msg, sans_serif, Color.SpringGreen, new RectangleF(10, 100, 0, 0));
 
 
-			printer.Print("DirectCall : " + Display.RenderStats.DirectCall.ToString(), sans_serif, Color.White, new RectangleF(100, 200, 0, 0));
-			printer.Print("BatchCall : " + Display.RenderStats.BatchCall.ToString(), sans_serif, Color.White, new RectangleF(100, 220, 0, 0));
-			printer.Print("TextureBinding : " + Display.RenderStats.TextureBinding.ToString(), sans_serif, Color.White, new RectangleF(100, 240, 0, 0));
+			printer.Print("Press 'D' key for direct draw", sans_serif, Color.White, new RectangleF(10, 180, 0, 0));
+			printer.Print("DirectCall : " + Display.RenderStats.DirectCall.ToString(), sans_serif, Color.White, new RectangleF(10, 200, 0, 0));
+			printer.Print("BatchCall : " + Display.RenderStats.BatchCall.ToString(), sans_serif, Color.White, new RectangleF(10, 220, 0, 0));
+			printer.Print("TextureBinding : " + Display.RenderStats.TextureBinding.ToString(), sans_serif, Color.White, new RectangleF(10, 240, 0, 0));
 
 
 			printer.End();
