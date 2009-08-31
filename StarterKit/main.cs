@@ -25,7 +25,7 @@ using ArcEngine.Graphic;
 using ArcEngine.Input;
 
 
-namespace Example
+namespace StarterKit
 {
 	/// <summary>
 	/// Main game class
