@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameStateExample", "GameSta
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RenderToTexture", "RenderToTexture\RenderToTexture.csproj", "{BFAA0E67-D319-4F49-A495-13C4FD130177}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template", "StarterKit\Template.csproj", "{D76ECEAA-859C-4B58-8134-5E4870E0E2CB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Starter Kit", "StarterKit\Starter Kit.csproj", "{D76ECEAA-859C-4B58-8134-5E4870E0E2CB}"
 EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
