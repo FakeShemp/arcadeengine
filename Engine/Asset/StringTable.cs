@@ -23,7 +23,17 @@ using System.Text;
 using System.Collections.Generic;
 using System.Xml;
 
-
+//
+// http://wiki.openttd.org/Format_of_langfiles
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 namespace ArcEngine.Asset
