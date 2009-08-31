@@ -58,7 +58,7 @@ namespace StarterKit
 		public Template()
 		{
 			Window.ClientSize = new Size(1024, 768);
-			Window.Text = "Template";
+			Window.Text = "Starter Kit";
 
 		}
 
