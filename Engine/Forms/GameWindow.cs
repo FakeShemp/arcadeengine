@@ -118,6 +118,7 @@ namespace ArcEngine.Forms
 
 		#endregion
 
+	
 		#region Properties
 
 
@@ -138,6 +139,24 @@ namespace ArcEngine.Forms
 				else
 					FormBorderStyle = FormBorderStyle.FixedDialog;
 			}
+		}
+
+
+		/// <summary>
+		/// Gets or sets a value indicating whether vsync is active.
+		/// </summary>
+		public bool VSync
+		{
+			get
+			{
+				return RenderControl.VSync;
+			}
+
+			set
+			{
+				RenderControl.VSync = value;
+			}
+
 		}
 
 		#endregion
