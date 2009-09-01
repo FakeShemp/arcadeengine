@@ -58,6 +58,18 @@ namespace ArcEngine.Asset
 		#endregion
 
 
+		/// <summary>
+		/// Loads a texture
+		/// </summary>
+		/// <param name="filename">File name of the image to load</param>
+		/// <returns>True if texture loaded, or false</returns>
+		public bool LoadTexture(string filename)
+		{
+			TextureName = filename;
+			return Texture.LoadImage(filename);
+		}
+
+
 		#region	IO operations
 
 
@@ -75,10 +87,10 @@ namespace ArcEngine.Asset
 
 
 
-			if (textureName != null)
+			if (!string.IsNullOrEmpty(TextureName))
 			{
 				xml.WriteStartElement("texture");
-				xml.WriteAttributeString("file", textureName);
+				xml.WriteAttributeString("file", TextureName);
 				xml.WriteEndElement();
 			}
 
@@ -247,7 +259,6 @@ namespace ArcEngine.Asset
 		#endregion
 
 
-
 		#region Tiles management
 
 		/// <summary>
@@ -397,7 +408,6 @@ namespace ArcEngine.Asset
 		#endregion
 
 
-
 		#region Rendering
 
 		/// <summary>
@@ -493,8 +503,6 @@ namespace ArcEngine.Asset
 		#endregion
 
 
-
-
 		#region Properties
 
 		/// <summary>
@@ -527,25 +535,13 @@ namespace ArcEngine.Asset
 
 
 		/// <summary>
-		/// Name of the texture
+		/// Name of the texture image to load
 		/// </summary>
-		[CategoryAttribute("TileSet")]
-		[DescriptionAttribute("Name of the texture to use")]
-		[TypeConverter(typeof(BinaryEnumerator))]
 		public string TextureName
 		{
-			set
-			{
-				textureName = value;
-				Texture.LoadImage(textureName);
-			}
-
-			get
-			{
-				return textureName;
-			}
+			get;
+			private set;
 		}
-		string textureName;
 
 		/// <summary>
 		/// Gets / sets the texture
@@ -596,8 +592,6 @@ namespace ArcEngine.Asset
 		}
 
 		#endregion
-
-
 	}
 
 

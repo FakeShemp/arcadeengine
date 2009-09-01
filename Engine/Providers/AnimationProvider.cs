@@ -41,8 +41,8 @@ namespace ArcEngine.Providers
 		/// </summary>
 		public AnimationProvider()
 		{
-			Animations = new Dictionary<string, XmlNode>();
-			SharedAnimations = new Dictionary<string, Animation>();
+			Animations = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
+			SharedAnimations = new Dictionary<string, Animation>(StringComparer.OrdinalIgnoreCase);
 			Name = "Animation";
 			Tags = new string[] { "animation" };
 			Assets = new Type[] { typeof(Animation) };

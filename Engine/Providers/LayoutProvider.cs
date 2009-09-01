@@ -42,8 +42,8 @@ namespace ArcEngine.Providers
 		/// </summary>
 		public LayoutProvider()
 		{
-			Layouts = new Dictionary<string, XmlNode>();
-			SharedLayouts = new Dictionary<string, Layout>();
+			Layouts = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
+			SharedLayouts = new Dictionary<string, Layout>(StringComparer.OrdinalIgnoreCase);
 
 
 			Name = "Layout";

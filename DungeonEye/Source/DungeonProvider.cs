@@ -39,12 +39,12 @@ namespace DungeonEye
 		/// </summary>
 		public DungeonProvider()
 		{
-			Dungeons = new Dictionary<string, XmlNode>();
-			SharedDungeons = new Dictionary<string, Dungeon>();
-			Monsters = new Dictionary<string, XmlNode>();
-			WallDecorations = new Dictionary<string, XmlNode>();
-			ItemSets = new Dictionary<string, XmlNode>();
-			SharedItemSets = new Dictionary<string, ItemSet>();
+			Dungeons = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
+			SharedDungeons = new Dictionary<string, Dungeon>(StringComparer.OrdinalIgnoreCase);
+			Monsters = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
+			WallDecorations = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
+			ItemSets = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
+			SharedItemSets = new Dictionary<string, ItemSet>(StringComparer.OrdinalIgnoreCase);
 
 
 

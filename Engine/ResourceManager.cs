@@ -509,7 +509,7 @@ namespace ArcEngine
 		/// First, look in preloaded banks and if not found, look in the filesystem
 		/// </summary>
 		/// <param name="resourcename">Name of the file to load</param>
-		/// <returns></returns>
+		/// <returns>Binary of the resource</returns>
 		static public byte[] LoadResource(string resourcename)
 		{
 			if (string.IsNullOrEmpty(resourcename))
@@ -539,7 +539,6 @@ namespace ArcEngine
 			stream.Read(data, 0, (int)stream.Length);
 			stream.Close();
 			return data;
-
 		}
 
 
@@ -551,7 +550,6 @@ namespace ArcEngine
 		{
 			if (Binaries.ContainsKey(name))
 				Binaries.Remove(name);
-
 		}
 
 
@@ -754,8 +752,6 @@ namespace ArcEngine
 		/// Registred tags
 		/// </summary>
 		static Dictionary<string, Provider> Tags;
-
-
 
 		#endregion
 

@@ -43,9 +43,9 @@ namespace ArcEngine.Providers
 		/// </summary>
 		public ScriptProvider()
 		{
-			Scripts = new Dictionary<string, XmlNode>();
-			SharedScripts = new Dictionary<string, Script>();
-			Models = new Dictionary<string, XmlNode>();
+			Scripts = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
+			SharedScripts = new Dictionary<string, Script>(StringComparer.OrdinalIgnoreCase);
+			Models = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
 
 			Name = "Script";
 			Tags = new string[] { "script", "scriptmodel" };

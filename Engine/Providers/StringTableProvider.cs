@@ -43,8 +43,8 @@ namespace ArcEngine.Providers
 		/// </summary>
 		public StringTableProvider()
 		{
-			Strings = new Dictionary<string, XmlNode>();
-			SharedStrings = new Dictionary<string, StringTable>();
+			Strings = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
+			SharedStrings = new Dictionary<string, StringTable>(StringComparer.OrdinalIgnoreCase);
 
 
 			Name = "StringTable";

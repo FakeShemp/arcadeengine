@@ -42,8 +42,8 @@ namespace ArcEngine.Providers
 		/// </summary>
 		public FontProvider()
 		{
-			Fonts = new Dictionary<string, XmlNode>();
-			SharedFonts = new Dictionary<string, TextureFont>();
+			Fonts = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
+			SharedFonts = new Dictionary<string, TextureFont>(StringComparer.OrdinalIgnoreCase);
 
 			Name = "Font";
 			Tags = new string[] {"texturefont" };

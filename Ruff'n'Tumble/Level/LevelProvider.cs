@@ -41,8 +41,8 @@ namespace RuffnTumble.Asset
 		/// </summary>
 		public LevelProvider()
 		{
-			Levels = new Dictionary<string, XmlNode>();
-			SharedLevels = new Dictionary<string, Level>();
+			Levels = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
+			SharedLevels = new Dictionary<string, Level>(StringComparer.OrdinalIgnoreCase);
 
 			Name = "ArcEngine Level";
 			Tags = new string[] { "level", "model" };

@@ -91,9 +91,8 @@ namespace RuffnTumble.Asset
 
 
 			// If a texture is present, build tileset
-			tileSet.TextureName = textureName;
-			if (!string.IsNullOrEmpty(textureName))
-				BuildTileSet();
+			tileSet.LoadTexture(TextureName);
+			BuildTileSet();
 
 
 			// Creates the script
@@ -532,7 +531,7 @@ namespace RuffnTumble.Asset
 
 			// Texture to use
 			xml.WriteStartElement("texture");
-			xml.WriteAttributeString("name", textureName);
+			xml.WriteAttributeString("name", TextureName);
 			xml.WriteEndElement();
 
 
@@ -1399,12 +1398,12 @@ namespace RuffnTumble.Asset
 	//	[TypeConverter(typeof(TextureEnumerator))]
 		public string TextureName
 		{
-			get { return textureName; }
+			get { return tileSet.TextureName; }
 			set
 			{
-				textureName = value;
+			//	textureName = value;
 
-				tileSet.TextureName = value;
+				tileSet.LoadTexture(value);
 				/*
 								if (texture != null)
 									texture.Unlock();
@@ -1420,7 +1419,7 @@ namespace RuffnTumble.Asset
 
 			}
 		}
-		string textureName;
+	//	string textureName;
 
 
 		/// <summary>

@@ -41,8 +41,8 @@ namespace ArcEngine.Providers
 		/// </summary>
 		public KeyboardSchemeProvider()
 		{
-			Schemes = new Dictionary<string, XmlNode>();
-			SharedSchemes = new Dictionary<string, KeyboardScheme>();
+			Schemes = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
+			SharedSchemes = new Dictionary<string, KeyboardScheme>(StringComparer.OrdinalIgnoreCase);
 
 			Name = "KeyboardScheme";
 			Tags = new string[] {"keyboardscheme" };

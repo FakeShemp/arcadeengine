@@ -45,8 +45,8 @@ namespace ArcEngine.Providers
 		/// </summary>
 		public TileSetProvider()
 		{
-			TileSets = new Dictionary<string, XmlNode>();
-			SharedTileSets = new Dictionary<string, TileSet>();
+			TileSets = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
+			SharedTileSets = new Dictionary<string, TileSet>(StringComparer.OrdinalIgnoreCase);
 
 			Name = "TileSet";
 			Tags = new string[] { "tileset" };
@@ -200,9 +200,9 @@ namespace ArcEngine.Providers
 		/// <summary>
 		/// Creates a new TileSet
 		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <param name="name"></param>
-		/// <returns></returns>
+		/// <typeparam name="T">Type of the asset</typeparam>
+		/// <param name="name">Name of the asset</param>
+		/// <returns>Asset or null</returns>
 		public override T Create<T>(string name)
 		{
 			CheckValue<T>(name);
