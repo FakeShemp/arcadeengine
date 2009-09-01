@@ -28,9 +28,8 @@ using ArcEngine.Forms;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
 using ArcEngine.Providers;
-using ArcEngine.Audio;
 using OpenTK.Graphics;
-
+using ArcEngine.Asset;
 
 namespace ArcEngine
 {
@@ -60,8 +59,16 @@ namespace ArcEngine
 			Window.Resize += new EventHandler(Window_Resize);
 
 			Window.RenderControl.MakeCurrent();
+
+
+
+			// Initialization
 			Display.Init();
 			Display.TraceInfos();
+			Mouse.Init(Window);
+			Sound.Init();
+			Sound.TraceInfos();
+			//	Joysticks.Init(Window.Form);
 		}
 
 
@@ -287,11 +294,6 @@ namespace ArcEngine
 		public void Run()
 		{
 			Trace.WriteLine("Running the game");
-
-			// Initialization
-			Mouse.Init(Window);
-		//	Joysticks.Init(Window.Form);
-			Sound.Init();
 
 
 

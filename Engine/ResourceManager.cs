@@ -99,6 +99,7 @@ namespace ArcEngine
 			AddProvider(new AnimationProvider());
 			AddProvider(new LayoutProvider());
 			AddProvider(new KeyboardSchemeProvider());
+			AddProvider(new AudioProvider());
 		}
 
 
@@ -129,12 +130,12 @@ namespace ArcEngine
 			// Register asset's tags
 			foreach (string tag in provider.Tags)
 			{
-				Tags.Add(tag, provider);
+				Tags[tag] = provider;
 			}
 			// Register assets
 			foreach (Type type in provider.Assets)
 			{
-				Assets.Add(type, provider);
+				Assets[type] = provider;
 				Trace.Write(type.ToString() + ", ");
 			}
 

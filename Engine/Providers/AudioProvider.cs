@@ -29,28 +29,28 @@ using ArcEngine.Asset;
 using ArcEngine.Editor;
 using ArcEngine.Graphic;
 using WeifenLuo.WinFormsUI.Docking;
-
+using OpenTK.Audio;
 
 namespace ArcEngine.Providers
 {
 
 	/// <summary>
-	/// Tileset provider
+	/// Audio provider
 	/// </summary>
-	public class TileSetProvider : Provider
+	public class AudioProvider : Provider
 	{
 
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public TileSetProvider()
+		public AudioProvider()
 		{
-			TileSets = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
-			SharedTileSets = new Dictionary<string, TileSet>(StringComparer.OrdinalIgnoreCase);
+			Sounds = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
+			SharedSounds = new Dictionary<string, Sound>(StringComparer.OrdinalIgnoreCase);
 
-			Name = "TileSet";
-			Tags = new string[] { "tileset" };
-			Assets = new Type[] { typeof(TileSet) };
+			Name = "Audio";
+			Tags = new string[] { "sound" };
+			Assets = new Type[] { typeof(Sound) };
 			Version = new Version(0, 1);
 			EditorImage = new Bitmap(ResourceManager.GetResource("ArcEngine.Data.Icons.TileSet.png"));
 
@@ -62,7 +62,7 @@ namespace ArcEngine.Providers
 
 
 		/// <summary>
-		/// Saves all scripts
+		/// Saves all audios
 		/// </summary>
 		/// <param name="type"></param>
 		/// <param name="xml"></param>
@@ -70,24 +70,24 @@ namespace ArcEngine.Providers
 		public override bool Save(Type type, XmlWriter xml)
 		{
 
-			if (type == typeof(TileSet))
+			if (type == typeof(Sound))
 			{
-				foreach (XmlNode node in TileSets.Values)
+				foreach (XmlNode node in Sounds.Values)
 					node.WriteTo(xml);
 			}
 
-/*	
-			foreach (KeyValuePair<string, XmlNode> kvp in TileSets)
-			{
-				xml.WriteStartElement("tileset");
-				xml.WriteAttributeString("name", kvp.Key);
+			/*	
+						foreach (KeyValuePair<string, XmlNode> kvp in Sound)
+						{
+							xml.WriteStartElement("tileset");
+							xml.WriteAttributeString("name", kvp.Key);
 
-				kvp.Value.WriteContentTo(xml);
+							kvp.Value.WriteContentTo(xml);
 
-				xml.WriteEndElement();
+							xml.WriteEndElement();
 
-			}
-*/
+						}
+			*/
 
 			return true;
 		}
@@ -96,7 +96,7 @@ namespace ArcEngine.Providers
 
 
 		/// <summary>
-		/// Loads a TileSet
+		/// Loads audio
 		/// </summary>
 		/// <param name="xml"></param>
 		/// <returns></returns>
@@ -109,10 +109,10 @@ namespace ArcEngine.Providers
 
 			switch (name)
 			{
-				case "tileset":
+				case "audio":
 				{
 
-					TileSets[xml.Attributes["name"].Value] = xml;
+					Sounds[xml.Attributes["name"].Value] = xml;
 					//string name = xml.Attributes["name"].Value;
 					//TileSet tileset = Create<TileSet>(name);
 					//if (tileset != null)
@@ -142,14 +142,14 @@ namespace ArcEngine.Providers
 		{
 			AssetEditor form = null;
 
-			if (typeof(T) == typeof(TileSet))
+			if (typeof(T) == typeof(Sound))
 			{
 				XmlNode node = null;
-				if (TileSets.ContainsKey(name))
-					node = TileSets[name];
+				if (Sounds.ContainsKey(name))
+					node = Sounds[name];
 
-				form = new TileSetForm(node);
-				form.TabText = name;
+			//	form = new SoundForm(node);
+			//	form.TabText = name;
 			}
 
 			return form;
@@ -170,26 +170,24 @@ namespace ArcEngine.Providers
 		public override void Add<T>(string name, XmlNode node)
 		{
 			CheckValue<T>(name);
-			TileSets[name] = node;
+			Sounds[name] = node;
 		}
 
 
 		/// <summary>
-		/// Returns an array of all available Tilesets
+		/// Returns an array of all available sound
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
-		/// <returns>Script's name array</returns>
+		/// <returns>Sound's name array</returns>
 		public override List<string> GetAssets<T>()
 		{
 			List<string> list = new List<string>();
 
 
-			if (typeof(T) == typeof(TileSet))
+			if (typeof(T) == typeof(Sound))
 			{
-				foreach (string key in TileSets.Keys)
-				{
+				foreach (string key in Sounds.Keys)
 					list.Add(key);
-				}
 			}
 
 			list.Sort();
@@ -198,7 +196,7 @@ namespace ArcEngine.Providers
 
 
 		/// <summary>
-		/// Creates a new TileSet
+		/// Creates a new Sound
 		/// </summary>
 		/// <typeparam name="T">Type of the asset</typeparam>
 		/// <param name="name">Name of the asset</param>
@@ -207,19 +205,19 @@ namespace ArcEngine.Providers
 		{
 			CheckValue<T>(name);
 
-			if (!TileSets.ContainsKey(name))
+			if (!Sounds.ContainsKey(name))
 				return default(T);
 
-			TileSet tileset = new TileSet();
-			tileset.Load(TileSets[name]);
+			Sound sound = new Sound();
+			sound.Load(Sounds[name]);
 
-			return (T)(object)tileset;
+			return (T)(object)sound;
 		}
 
 
 
 		/// <summary>
-		/// Returns a <c>Script</c>
+		/// Returns an asset definition
 		/// </summary>
 		/// <typeparam name="T">Type of the asset</typeparam>
 		/// <param name="name">Asset's name</param>
@@ -228,19 +226,16 @@ namespace ArcEngine.Providers
 		{
 			CheckValue<T>(name);
 
-			if (!TileSets.ContainsKey(name))
+			if (!Sounds.ContainsKey(name))
 				return null;
 
-			//TileSet ts = new TileSet();
-			//ts.Load(TileSets[name]);
-
-			return TileSets[name];
+			return Sounds[name];
 		}
 
 
 
 		/// <summary>
-		/// Removes a script
+		/// Removes a sound
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="name"></param>
@@ -252,7 +247,7 @@ namespace ArcEngine.Providers
 
 
 		/// <summary>
-		/// Removes a script
+		/// Removes a Sound
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		public override void Remove<T>()
@@ -265,7 +260,7 @@ namespace ArcEngine.Providers
 		/// </summary>
 		public override void Clear()
 		{
-			TileSets.Clear();
+			Sounds.Clear();
 		}
 
 		#endregion
@@ -282,16 +277,16 @@ namespace ArcEngine.Providers
 		/// <returns>The resource</returns>
 		public override T CreateShared<T>(string name)
 		{
-			if (typeof(T) == typeof(TileSet))
+			if (typeof(T) == typeof(Sound))
 			{
-				if (SharedTileSets.ContainsKey(name))
-					return (T)(object)SharedTileSets[name];
+				if (SharedSounds.ContainsKey(name))
+					return (T)(object)SharedSounds[name];
 
-				TileSet ts = new TileSet();
-				ts.Load(TileSets[name]);		
-				SharedTileSets[name] = ts;
+				Sound sound = new Sound();
+				sound.Load(Sounds[name]);
+				SharedSounds[name] = sound;
 
-				return (T)(object)ts;
+				return (T)(object)sound;
 			}
 
 			return default(T);
@@ -306,9 +301,9 @@ namespace ArcEngine.Providers
 		/// <param name="name">Name of the asset</param>
 		public override void RemoveShared<T>(string name)
 		{
-			if (typeof(T) == typeof(TileSet))
+			if (typeof(T) == typeof(Sound))
 			{
-				SharedTileSets[name] = null;
+				SharedSounds[name] = null;
 			}
 		}
 
@@ -323,7 +318,7 @@ namespace ArcEngine.Providers
 		{
 			if (typeof(T) == typeof(StringTable))
 			{
-				SharedTileSets.Clear();
+				SharedSounds.Clear();
 			}
 		}
 
@@ -334,7 +329,7 @@ namespace ArcEngine.Providers
 		/// </summary>
 		public override void ClearShared()
 		{
-			SharedTileSets.Clear();
+			SharedSounds.Clear();
 		}
 
 
@@ -347,14 +342,14 @@ namespace ArcEngine.Providers
 
 
 		/// <summary>
-		/// Tilesets
+		/// Sound
 		/// </summary>
-		Dictionary<string, XmlNode> TileSets;
+		Dictionary<string, XmlNode> Sounds;
 
 		/// <summary>
-		/// Shared tilesets
+		/// Shared Sounds
 		/// </summary>
-		Dictionary<string, TileSet> SharedTileSets;
+		Dictionary<string, Sound> SharedSounds;
 
 		#endregion
 	}

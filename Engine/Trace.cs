@@ -62,7 +62,7 @@ namespace ArcEngine
 			WriteLine("Hardware informations :");
 			Indent();
 			WriteLine("OS : {0}", Environment.OSVersion.ToString());
-			WriteLine("Platform : {0}", Environment.OSVersion.Platform.ToString());
+			WriteLine("Platform : {0}", IntPtr.Size == 4 ? "x86" : "x64");
 			WriteLine("SP : {0}", Environment.OSVersion.ServicePack);
 			WriteLine("Processor count : {0}", Environment.ProcessorCount);
 			Unindent();

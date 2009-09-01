@@ -234,6 +234,7 @@
     <Compile Include="Input\GamePad.cs" />
     <Compile Include="Input\GamePadCapabilities.cs" />
     <Compile Include="KeyboardScheme.cs" />
+    <Compile Include="Providers\AudioProvider.cs" />
     <Compile Include="Providers\KeyboardSchemeProvider.cs" />
     <Compile Include="ScreenManager\GameScreen.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -254,7 +255,6 @@
     <Compile Include="Asset\Layout.cs" />
     <Compile Include="ScriptManager.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="SoundManager.cs" />
     <Compile Include="Terminal.cs" />
     <Compile Include="Forms\TerminalForm.cs">
       <SubType>Form</SubType>
@@ -287,7 +287,7 @@
     <None Include="Network\NetServer.cs" />
     <None Include="Network\NetStatusEventArgs.cs" />
     <Compile Include="Asset\Animation.cs" />
-    <Compile Include="Sound.cs" />
+    <Compile Include="Asset\Sound.cs" />
     <Compile Include="Asset\Enumerators.cs" />
     <Compile Include="Asset\StringTable.cs" />
     <Compile Include="Asset\Tile.cs" />
