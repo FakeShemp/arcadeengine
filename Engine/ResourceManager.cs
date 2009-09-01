@@ -506,8 +506,7 @@ namespace ArcEngine
 
 
 		/// <summary>
-		/// Loads a resource from a bank first, and if not found, load it from disk
-		/// First, look in preloaded banks and if not found, look in the filesystem
+		/// Loads a resource from a bank first, and if not found, load it from disk.
 		/// </summary>
 		/// <param name="resourcename">Name of the file to load</param>
 		/// <returns>Binary of the resource</returns>
@@ -542,6 +541,37 @@ namespace ArcEngine
 			return data;
 		}
 
+
+		/// <summary>
+		/// Loads a resource from a bank first, and if not found, load it from disk.
+		/// </summary>
+		/// <param name="resourcename">Name of the file to load</param>
+		/// <returns>Stream to the resource. Don't forget to close it !</returns>
+		static public Stream GetStream(string resourcename)
+		{
+			if (string.IsNullOrEmpty(resourcename))
+				return null;
+
+			//
+			// 1° Look in binaries
+			//
+			if (Binaries.ContainsKey(resourcename))
+			{
+				return new MemoryStream(Binaries[resourcename]);
+			}
+
+			//
+			// 2° try to load it from disk
+			//
+			if (File.Exists(resourcename))
+			{
+				return File.Open(resourcename, FileMode.Open, FileAccess.Read);
+			}
+
+
+
+			return null;
+		}
 
 		/// <summary>
 		/// Unloads a binary resource

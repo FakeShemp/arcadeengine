@@ -18,6 +18,8 @@
 //
 #endregion
 
+
+using System.IO;
 using System;
 using System.Drawing;
 using System.Xml;
@@ -80,13 +82,20 @@ namespace ArcEngine.Asset
 		/// <returns></returns>
 		public bool LoadSound(string filename)
 		{
+			if (string.IsNullOrEmpty(filename))
+				return false;
 
-			using (AudioReader sound = new AudioReader(filename))
+			Stream stream = ResourceManager.GetStream(filename);
+			if (stream == null)
+				return false;
+
+			using (AudioReader sound = new AudioReader(stream))
 			{
 				AL.BufferData(Buffer, sound.ReadToEnd());
 				AL.Source(Source, ALSourcei.Buffer, Buffer);
 			}
 
+			stream.Close();
 			return AL.GetError() == ALError.NoError;
 		}
 
@@ -192,7 +201,7 @@ namespace ArcEngine.Asset
 
 			Name = xml.Attributes["name"].Value;
 
-/*
+
 			// Process datas
 			XmlNodeList nodes = xml.ChildNodes;
 			foreach (XmlNode node in nodes)
@@ -207,103 +216,14 @@ namespace ArcEngine.Asset
 				switch (node.Name.ToLower())
 				{
 					// Texture
-					case "texture":
+					case "file":
 					{
-						TextureName = node.Attributes["file"].Value;
+						LoadSound(node.Attributes["name"].Value);
 					}
 					break;
 
-
-
-					// Found a tile to add
-					case "tile":
-					{
-						Tile tile = new Tile();
-						int tileid = Int32.Parse(node.Attributes["id"].Value);
-
-
-						foreach (XmlNode subnode in node)
-						{
-							switch (subnode.Name.ToLower())
-							{
-								case "rectangle":
-								{
-									Rectangle rect = Rectangle.Empty;
-									rect.X = Int32.Parse(subnode.Attributes["x"].Value);
-									rect.Y = Int32.Parse(subnode.Attributes["y"].Value);
-									rect.Width = Int32.Parse(subnode.Attributes["width"].Value);
-									rect.Height = Int32.Parse(subnode.Attributes["height"].Value);
-
-									tile.Rectangle = rect;
-								}
-								break;
-
-								case "collisionbox":
-								{
-									Rectangle rect = Rectangle.Empty;
-									rect.X = Int32.Parse(subnode.Attributes["x"].Value);
-									rect.Y = Int32.Parse(subnode.Attributes["y"].Value);
-									rect.Width = Int32.Parse(subnode.Attributes["width"].Value);
-									rect.Height = Int32.Parse(subnode.Attributes["height"].Value);
-
-									tile.CollisionBox = rect;
-								}
-								break;
-
-								case "hotspot":
-								{
-									Point hotspot = Point.Empty;
-									hotspot.X = int.Parse(subnode.Attributes["x"].Value);
-									hotspot.Y = int.Parse(subnode.Attributes["y"].Value);
-
-									tile.HotSpot = hotspot;
-								}
-								break;
-
-								default:
-								{
-									//Log.Send(new LogEventArgs(LogLevel.Warning, "TileSet : Unknown node element found (" + node.Name + ")", null));
-									Trace.WriteLine("TileSet : Unknown node element found (" + node.Name + ")");
-
-								}
-								break;
-							}
-						}
-
-
-
-						// Add the tile
-						tiles[tileid] = tile;
-
-
-					}
-					break;
-
-					// Auto generate tiles
-					case "generate":
-					{
-						int width = Int32.Parse(node.Attributes["width"].Value);
-						int height = Int32.Parse(node.Attributes["height"].Value);
-						int start = Int32.Parse(node.Attributes["start"].Value);
-
-						int x = 0;
-						int y = 0;
-						for (y = 0; y < Texture.Size.Height; y += height)
-							for (x = 0; x < Texture.Size.Width; x += width)
-							{
-								tiles[start++] = new Tile(new Rectangle(x, y, width, height), Point.Empty);
-							}
-					}
-					break;
-
-					default:
-					{
-						//base.Load(node);
-					}
-					break;
 				}
 			}
-*/ 
 
 			return true;
 		}

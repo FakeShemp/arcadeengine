@@ -134,6 +134,8 @@ namespace DungeonEye
 			Location = Dungeon.StartLocation;
 			Move(Point.Empty);
 
+
+			sound = ResourceManager.CreateAsset<Sound>("ring");
 		}
 
 
@@ -732,6 +734,10 @@ namespace DungeonEye
 			{
 				ScreenManager.AddScreen(new AutoMap());
 			}
+
+
+			if (Keyboard.IsNewKeyPress(Keys.M))
+				sound.Play();
 
 			// Bye bye
 			if (Keyboard.IsNewKeyPress(Keys.Escape))
@@ -2613,8 +2619,15 @@ namespace DungeonEye
 			private set;
 		}
 
+
+		/// <summary>
+		/// Sound test
+		/// </summary>
+		Sound sound;
+
 		#endregion
 	}
+
 
 	#region Enums
 

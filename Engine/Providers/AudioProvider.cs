@@ -49,7 +49,7 @@ namespace ArcEngine.Providers
 			SharedSounds = new Dictionary<string, Sound>(StringComparer.OrdinalIgnoreCase);
 
 			Name = "Audio";
-			Tags = new string[] { "sound" };
+			Tags = new string[] { "audio" };
 			Assets = new Type[] { typeof(Sound) };
 			Version = new Version(0, 1);
 			EditorImage = new Bitmap(ResourceManager.GetResource("ArcEngine.Data.Icons.TileSet.png"));
@@ -170,7 +170,10 @@ namespace ArcEngine.Providers
 		public override void Add<T>(string name, XmlNode node)
 		{
 			CheckValue<T>(name);
-			Sounds[name] = node;
+
+			if (typeof(T) == typeof(Sound))
+				Sounds[name] = node;
+
 		}
 
 
@@ -205,13 +208,18 @@ namespace ArcEngine.Providers
 		{
 			CheckValue<T>(name);
 
-			if (!Sounds.ContainsKey(name))
-				return default(T);
+			if (typeof(T) == typeof(Sound))
+			{
+				if (!Sounds.ContainsKey(name))
+					return default(T);
 
-			Sound sound = new Sound();
-			sound.Load(Sounds[name]);
+				Sound sound = new Sound();
+				sound.Load(Sounds[name]);
 
-			return (T)(object)sound;
+				return (T)(object)sound;
+			}
+
+			return default(T);
 		}
 
 
@@ -226,10 +234,13 @@ namespace ArcEngine.Providers
 		{
 			CheckValue<T>(name);
 
-			if (!Sounds.ContainsKey(name))
-				return null;
+			if (typeof(T) == typeof(Sound))
+			{
+				if (Sounds.ContainsKey(name))
+					return Sounds[name];
+			}
 
-			return Sounds[name];
+			return null;
 		}
 
 
