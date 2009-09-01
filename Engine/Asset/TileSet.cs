@@ -49,6 +49,7 @@ namespace ArcEngine.Asset
 			tiles = new Dictionary<int, Tile>();
 
 			Texture = new Texture();
+			LoadTexture(TextureName);
 
 			// Ca fait tout planter
 		//	Batch = Game.Device.CreateBatch();
@@ -158,7 +159,7 @@ namespace ArcEngine.Asset
 					// Texture
 					case "texture":
 					{
-						TextureName = node.Attributes["file"].Value;
+						LoadTexture(node.Attributes["file"].Value);
 					}
 					break;
 
