@@ -52,7 +52,7 @@ namespace ArcEngine.Providers
 			Assets = new Type[] { typeof(StringTable) };
 			Version = new Version(0, 1);
 
-			EditorImage = new Bitmap(ResourceManager.GetInternalResource("ArcEngine.Data.Icons.StringTable.png"));
+			EditorImage = new Bitmap(ResourceManager.GetResource("ArcEngine.Data.Icons.StringTable.png"));
 		}
 
 

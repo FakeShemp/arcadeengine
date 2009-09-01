@@ -70,12 +70,8 @@ namespace RuffnTumble.Editor
 
 
 
-
 			// Preload texture resources
-			CheckerBoard = new Texture();
-			Stream stream = ResourceManager.GetInternalResource("ArcEngine.Files.checkerboard.png");
-			CheckerBoard.LoadImage(stream);
-			stream.Close();
+			CheckerBoard = new Texture(ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png"));
 
 			//Assembly a = Assembly.GetExecutingAssembly();
 			//Stream stream = a.GetManifestResourceStream("ArcEngine.Files.checkerboard.png");

@@ -98,7 +98,7 @@ namespace DungeonEye.Forms
 
 			// Preload background texture resource
 			CheckerBoard = new Texture();
-			stream = ResourceManager.GetInternalResource("ArcEngine.Files.checkerboard.png");
+			stream = ResourceManager.GetResource("ArcEngine.Files.checkerboard.png");
 			CheckerBoard.LoadImage(stream);
 			stream.Close();
 

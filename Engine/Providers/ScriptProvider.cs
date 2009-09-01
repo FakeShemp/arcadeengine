@@ -52,7 +52,7 @@ namespace ArcEngine.Providers
 			Assets = new Type[] { typeof(Script), typeof(ScriptModel) };
 			Version = new Version(0, 1);
 
-			EditorImage = new Bitmap(ResourceManager.GetInternalResource("ArcEngine.Data.Icons.Script.png"));
+			EditorImage = new Bitmap(ResourceManager.GetResource("ArcEngine.Data.Icons.Script.png"));
 	
 		}
 

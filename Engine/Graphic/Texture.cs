@@ -111,15 +111,10 @@ namespace ArcEngine.Graphic
 			Data = null;
 			UnlockTextureBits();
 
-	//		ErrorCode err = GL.GetError();
-
 			MinFilter = TextureMinFilter.Linear;
 			MagFilter = TextureMagFilter.Linear;
 			VerticalWrap = VerticalWrapFilter.Clamp;
 			HorizontalWrap = HorizontalWrapFilter.Clamp;
-
-
-
 		}
 
 		/// <summary>
@@ -133,6 +128,23 @@ namespace ArcEngine.Graphic
 			LoadImage(filename);
 		}
 
+
+		/// <summary>
+		/// Creates a texture from a Stream
+		/// </summary>
+		/// <param name="stream">Stream handle</param>
+		/// <remarks>The Stream is closed automatically</remarks>
+		public Texture(Stream stream)
+		{
+			GL.GenTextures(1, out Handle);
+
+			if (stream == null)
+				return;
+
+			LoadImage(stream);
+
+			stream.Close();
+		}
 
 		/// <summary>
 		/// Destructor

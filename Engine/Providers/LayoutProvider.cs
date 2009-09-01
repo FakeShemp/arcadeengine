@@ -50,7 +50,7 @@ namespace ArcEngine.Providers
 			Tags = new string[] { "layout" };
 			Assets = new Type[] { typeof(Layout) };
 			Version = new Version(0, 1);
-			EditorImage = new Bitmap(ResourceManager.GetInternalResource("ArcEngine.Data.Icons.TileSet.png"));
+			EditorImage = new Bitmap(ResourceManager.GetResource("ArcEngine.Data.Icons.TileSet.png"));
 		}
 
 

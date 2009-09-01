@@ -98,10 +98,7 @@ namespace ArcEngine.Editor
 
 			}
 
-			CheckerBoard = new Texture();
-			Stream stream = ResourceManager.GetInternalResource("ArcEngine.Files.checkerboard.png");
-			CheckerBoard.LoadImage(stream);
-			stream.Close();
+			CheckerBoard = new Texture(ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png"));
 
 
 			Time = Environment.TickCount;

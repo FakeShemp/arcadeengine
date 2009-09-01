@@ -559,11 +559,19 @@ namespace ArcEngine
 		/// Gets an internal resource
 		/// </summary>
 		/// <param name="name">Name of the resource</param>
-		/// <returns></returns>
+		/// <returns>Resource stream or null if not found</returns>
 		/// <remarks>Don't forget to Dispose the stream !!</remarks>
-		static public Stream GetInternalResource(string name)
+		static public Stream GetResource(string name)
 		{
-			return Assembly.GetExecutingAssembly().GetManifestResourceStream(name);
+			List<string> list = new List<string>(Assembly.GetExecutingAssembly().GetManifestResourceNames());
+			if (list.Contains(name))
+				return Assembly.GetExecutingAssembly().GetManifestResourceStream(name);
+
+			list = new List<string>(Assembly.GetEntryAssembly().GetManifestResourceNames());
+			if (list.Contains(name))
+				return Assembly.GetEntryAssembly().GetManifestResourceStream(name);
+
+			return null;
 		}
 
 
@@ -705,11 +713,16 @@ namespace ArcEngine
 		/// Returns a list of all internal resources
 		/// </summary>
 		/// <returns></returns>
-		static public string[] InternalResources
+		static public List<string> InternalResources
 		{
 			get
 			{
-				return Assembly.GetExecutingAssembly().GetManifestResourceNames();
+				List<string> list = new List<string>(Assembly.GetExecutingAssembly().GetManifestResourceNames());
+
+				list.AddRange(Assembly.GetEntryAssembly().GetManifestResourceNames());
+
+				list.Sort();
+				return list;
 			}
 		}
 

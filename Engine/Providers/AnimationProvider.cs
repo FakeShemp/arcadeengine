@@ -47,7 +47,7 @@ namespace ArcEngine.Providers
 			Tags = new string[] { "animation" };
 			Assets = new Type[] { typeof(Animation) };
 			Version = new Version(0, 1);
-			EditorImage = new Bitmap(ResourceManager.GetInternalResource("ArcEngine.Data.Icons.Animation.png"));
+			EditorImage = new Bitmap(ResourceManager.GetResource("ArcEngine.Data.Icons.Animation.png"));
 		}
 
 

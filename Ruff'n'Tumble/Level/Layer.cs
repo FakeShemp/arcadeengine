@@ -87,10 +87,7 @@ namespace RuffnTumble.Asset
 
 
 			// Load the SpawnPoint texture
-			spTexture = new Texture();
-			Stream stream = ResourceManager.GetInternalResource("ArcEngine.Files.SpawnPoint.png");
-			spTexture.LoadImage(stream);
-			stream.Close();
+			spTexture = new Texture(ResourceManager.GetResource("RuffnTumble.Resources.SpawnPoint.png"));
 
 
 			// If a texture is present, build tileset

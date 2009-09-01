@@ -48,7 +48,7 @@ namespace ArcEngine.Providers
 			Tags = new string[] {"keyboardscheme" };
 			Assets = new Type[] { typeof(KeyboardScheme) };
 			Version = new Version(0, 1);
-			EditorImage = new Bitmap(ResourceManager.GetInternalResource("ArcEngine.Data.Icons.Font.png"));
+			EditorImage = new Bitmap(ResourceManager.GetResource("ArcEngine.Data.Icons.Font.png"));
 
 		}
 

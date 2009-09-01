@@ -75,7 +75,7 @@ namespace ArcEngine.Editor
 
 			// Preload background texture resource
 			CheckerBoard = new Texture();
-			Stream stream = ResourceManager.GetInternalResource("ArcEngine.Files.checkerboard.png");
+			Stream stream = ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png");
 			CheckerBoard.LoadImage(stream);
 			stream.Close();
 
