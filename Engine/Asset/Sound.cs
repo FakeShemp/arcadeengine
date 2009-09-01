@@ -85,7 +85,7 @@ namespace ArcEngine.Asset
 			if (string.IsNullOrEmpty(filename))
 				return false;
 
-			Stream stream = ResourceManager.GetStream(filename);
+			Stream stream = ResourceManager.LoadResource(filename);
 			if (stream == null)
 				return false;
 
@@ -95,7 +95,6 @@ namespace ArcEngine.Asset
 				AL.Source(Source, ALSourcei.Buffer, Buffer);
 			}
 
-			stream.Close();
 			return AL.GetError() == ALError.NoError;
 		}
 

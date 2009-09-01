@@ -504,7 +504,7 @@ namespace ArcEngine
 		}
 
 
-
+/*
 		/// <summary>
 		/// Loads a resource from a bank first, and if not found, load it from disk.
 		/// </summary>
@@ -540,14 +540,14 @@ namespace ArcEngine
 			stream.Close();
 			return data;
 		}
-
+*/
 
 		/// <summary>
 		/// Loads a resource from a bank first, and if not found, load it from disk.
 		/// </summary>
 		/// <param name="resourcename">Name of the file to load</param>
 		/// <returns>Stream to the resource. Don't forget to close it !</returns>
-		static public Stream GetStream(string resourcename)
+		static public Stream LoadResource(string resourcename)
 		{
 			if (string.IsNullOrEmpty(resourcename))
 				return null;
