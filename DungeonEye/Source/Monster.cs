@@ -104,7 +104,7 @@ namespace DungeonEye
 
 			OpenTK.Graphics.TextureEnvMode mode = Display.TexEnv;
 
-
+			
 
 			// Monster was hit, redraw it
 			if (LastHit + TimeSpan.FromSeconds(0.25) > DateTime.Now)

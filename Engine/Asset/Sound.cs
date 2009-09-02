@@ -25,7 +25,7 @@ using System.Drawing;
 using System.Xml;
 using OpenTK;
 using OpenTK.Audio;
-using OpenTK.Math;
+//using OpenTK.Math;
 
 
 namespace ArcEngine.Asset
