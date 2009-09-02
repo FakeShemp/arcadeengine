@@ -20,6 +20,8 @@ http://www.phelios.com/ptk/index.html
 http://code.google.com/p/angel-engine/
 http://blueflamedev.com/projects/citrusengine/documentation.php
 http://cocos2d.org/
+http://love2d.org/docs/
+
 
 
 http://www.glbasic.com/
