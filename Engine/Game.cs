@@ -57,12 +57,14 @@ namespace ArcEngine
 
 			Window = new GameWindow();
 			Window.Resize += new EventHandler(Window_Resize);
+			Window.Show();
 
-			Window.RenderControl.MakeCurrent();
+			
 
 
 
 			// Initialization
+			Window.RenderControl.MakeCurrent();
 			Display.Init();
 			Display.TraceInfos();
 			Mouse.Init(Window);
