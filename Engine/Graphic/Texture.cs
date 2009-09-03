@@ -23,7 +23,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using OpenTK.Graphics;
-
+using OpenTK.Graphics.OpenGL;
 
 // Transparence d'une surface : http://cs-sdl.sourceforge.net/index.php/Surfaces
 //
@@ -292,8 +292,8 @@ namespace ArcEngine.Graphic
 		/// <returns></returns>
 		public static bool CheckTextureSize(Size size)
 		{
-			if (GL.SupportsExtension("ARB_texture_non_power_of_two"))
-				return true;
+		//	if (GL.SupportsExtension("ARB_texture_non_power_of_two"))
+		//		return true;
 
 			if (size.Width != NextPowerOfTwo(size.Width) || size.Height != NextPowerOfTwo(size.Height))
 				return false;

@@ -28,8 +28,8 @@ using ArcEngine;
 // - Ajouter un tag <gravity x="0.0" y="0.0" /> dans le tag <layer> pour definir la gravite du layer
 //
 //
-//
-//
+// http://citrusengine.com/manual/manual/props
+// http://citrusengine.com/manual/manual/levels
 //
 //
 //

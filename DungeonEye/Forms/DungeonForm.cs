@@ -31,7 +31,9 @@ using ArcEngine.Editor;
 using ArcEngine.Forms;
 using ArcEngine.Graphic;
 using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL;
 using WeifenLuo.WinFormsUI.Docking;
+
 
 namespace DungeonEye.Forms
 {

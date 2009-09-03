@@ -29,7 +29,7 @@ using ArcEngine.Asset;
 using ArcEngine.Forms;
 using ArcEngine.Graphic;
 using OpenTK.Graphics;
-
+using OpenTK.Graphics.OpenGL;
 
 namespace ArcEngine.Editor
 {

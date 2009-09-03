@@ -37,6 +37,7 @@ using System.ComponentModel;
 //
 //
 // http://www.sdltutorials.com/sdl-animation/
+// http://citrusengine.com/manual/manual/animation_system
 //
 namespace ArcEngine.Asset
 {

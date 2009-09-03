@@ -20,11 +20,10 @@
 
 using System;
 using System.Collections.Generic;
-
 using System.Drawing;
 using OpenTK.Graphics;
-
-
+using OpenTK;
+using OpenTK.Graphics.OpenGL;
 //
 //
 //

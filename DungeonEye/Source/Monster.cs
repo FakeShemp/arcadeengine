@@ -26,7 +26,7 @@ using System.Xml;
 using ArcEngine;
 using ArcEngine.Graphic;
 using ArcEngine.Asset;
-
+using OpenTK.Graphics.OpenGL;
 //
 // List of monsters : http://members.tripod.com/~stanislavs/games/eob1mons.htm
 // http://dmweb.free.fr/?q=node/1363
@@ -102,15 +102,15 @@ namespace DungeonEye
 		public virtual void Draw(CardinalPoint direction, ViewFieldPosition pos)
 		{
 
-			OpenTK.Graphics.TextureEnvMode mode = Display.TexEnv;
+			TextureEnvMode mode = Display.TexEnv;
 
-
+			
 
 			// Monster was hit, redraw it
 			if (LastHit + TimeSpan.FromSeconds(0.25) > DateTime.Now)
 			{
-				Display.BlendingFunction(OpenTK.Graphics.BlendingFactorSrc.SrcAlpha , OpenTK.Graphics.BlendingFactorDest.OneMinusSrcAlpha);
-				Display.TexEnv = OpenTK.Graphics.TextureEnvMode.Add;
+				Display.BlendingFunction(BlendingFactorSrc.SrcAlpha , BlendingFactorDest.OneMinusSrcAlpha);
+				Display.TexEnv = TextureEnvMode.Add;
 			}
 
 
@@ -185,7 +185,7 @@ namespace DungeonEye
 			if (LastHit + TimeSpan.FromSeconds(0.25) > DateTime.Now)
 			{
 				Display.TexEnv = mode;
-				Display.BlendingFunction(OpenTK.Graphics.BlendingFactorSrc.SrcAlpha, OpenTK.Graphics.BlendingFactorDest.OneMinusSrcAlpha);
+				Display.BlendingFunction(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 			}
 		}
 

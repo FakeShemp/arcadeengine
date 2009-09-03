@@ -27,6 +27,8 @@ using System.Text;
 using ArcEngine.Graphic;
 using System.Xml;
 using System.Drawing;
+using OpenTK.Graphics.OpenGL;
+
 
 namespace ArcEngine.Asset
 {

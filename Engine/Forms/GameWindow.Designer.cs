@@ -40,8 +40,7 @@
 			this.RenderControl.Name = "RenderControl";
 			this.RenderControl.Size = new System.Drawing.Size(821, 629);
 			this.RenderControl.TabIndex = 0;
-			this.RenderControl.VSync = false;
-			this.RenderControl.Load += new System.EventHandler(this.RenderControl_Load);
+			this.RenderControl.VSync = true;
 			this.RenderControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form_MouseMove);
 			this.RenderControl.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Form_MouseDoubleClick);
 			this.RenderControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form_MouseDown);
@@ -58,7 +57,8 @@
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "GameWindow";
-			this.Text = "ArcEngine : http://arcengine.wordpress.com";
+			this.Text = "ArcEngine : http://www.mimicprod.net";
+			this.Load += new System.EventHandler(this.RenderControl_Load);
 			this.ResumeLayout(false);
 
 		}
@@ -66,6 +66,7 @@
 		#endregion
 
 		private OpenTK.GLControl RenderControl;
+
 
 
 	}

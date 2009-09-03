@@ -147,7 +147,7 @@ namespace ArcEngine.Forms
 			Display.Init();
 			Display.TraceInfos();
 
-			base.OnLoad(e);
+		//	base.OnLoad(e);
 		}
 
 

@@ -24,8 +24,9 @@ using System;
 using System.Drawing;
 using System.Xml;
 using OpenTK;
+using OpenTK.Audio.OpenAL;
 using OpenTK.Audio;
-using OpenTK.Math;
+//using OpenTK.Math;
 
 
 namespace ArcEngine.Asset
@@ -89,11 +90,11 @@ namespace ArcEngine.Asset
 			if (stream == null)
 				return false;
 
-			using (AudioReader sound = new AudioReader(stream))
-			{
-				AL.BufferData(Buffer, sound.ReadToEnd());
-				AL.Source(Source, ALSourcei.Buffer, Buffer);
-			}
+			//using (AudioReader sound = new AudioReader(stream))
+			//{
+			//   AL.BufferData(Buffer, sound.ReadToEnd());
+			//   AL.Source(Source, ALSourcei.Buffer, Buffer);
+			//}
 
 			return AL.GetError() == ALError.NoError;
 		}
