@@ -26,7 +26,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using ArcEngine.Input;
-
+using ArcEngine.Graphic;
 
 namespace ArcEngine.Forms
 {
@@ -43,6 +43,27 @@ namespace ArcEngine.Forms
 			InitializeComponent();
 		}
 
+
+
+		/// <summary>
+		/// Make the GameWindow rendering context current
+		/// </summary>
+		public void MakeCurrent()
+		{
+			if (RenderControl != null)
+				RenderControl.MakeCurrent();
+		}
+
+
+
+		/// <summary>
+		/// Swap the render buffers
+		/// </summary>
+		public void SwapBuffers()
+		{
+			if (RenderControl != null)
+				RenderControl.SwapBuffers();
+		}
 
 
 		#region Events
@@ -114,6 +135,20 @@ namespace ArcEngine.Forms
 
 		}
 
+		/// <summary>
+		/// Control init
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void RenderControl_Load(object sender, EventArgs e)
+		{
+			// Initialization
+			RenderControl.MakeCurrent();
+			Display.Init();
+			Display.TraceInfos();
+
+			base.OnLoad(e);
+		}
 
 
 		#endregion

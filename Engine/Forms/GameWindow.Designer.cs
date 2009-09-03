@@ -32,15 +32,16 @@
 			this.RenderControl = new OpenTK.GLControl();
 			this.SuspendLayout();
 			// 
-			// glControl1
+			// RenderControl
 			// 
 			this.RenderControl.BackColor = System.Drawing.Color.Black;
 			this.RenderControl.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.RenderControl.Location = new System.Drawing.Point(0, 0);
-			this.RenderControl.Name = "glControl1";
+			this.RenderControl.Name = "RenderControl";
 			this.RenderControl.Size = new System.Drawing.Size(821, 629);
 			this.RenderControl.TabIndex = 0;
 			this.RenderControl.VSync = false;
+			this.RenderControl.Load += new System.EventHandler(this.RenderControl_Load);
 			this.RenderControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form_MouseMove);
 			this.RenderControl.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Form_MouseDoubleClick);
 			this.RenderControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form_MouseDown);
@@ -64,10 +65,8 @@
 
 		#endregion
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public OpenTK.GLControl RenderControl;
+		private OpenTK.GLControl RenderControl;
+
 
 	}
 }

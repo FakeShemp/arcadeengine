@@ -59,14 +59,6 @@ namespace ArcEngine
 			Window.Resize += new EventHandler(Window_Resize);
 			Window.Show();
 
-			
-
-
-
-			// Initialization
-			Window.RenderControl.MakeCurrent();
-			Display.Init();
-			Display.TraceInfos();
 			Mouse.Init(Window);
 			Sound.Init();
 			Sound.TraceInfos();
@@ -247,7 +239,7 @@ namespace ArcEngine
 
 				Draw();
 
-				Window.RenderControl.SwapBuffers();
+				Window.SwapBuffers();
 			}
 
 
@@ -469,7 +461,7 @@ namespace ArcEngine
 			EditorMode = false;
 
 
-			Window.RenderControl.MakeCurrent();
+			Window.MakeCurrent();
 			Mouse.Visible = mousestate;
 			Window.Show();
 			Window.BringToFront();
