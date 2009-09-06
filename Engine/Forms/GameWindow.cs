@@ -156,6 +156,16 @@ namespace ArcEngine.Forms
 	
 		#region Properties
 
+		/// <summary>
+		/// Does the game window have focus
+		/// </summary>
+		public bool HasFocus
+		{
+			get
+			{
+				return ContainsFocus;
+			}
+		}
 
 		/// <summary>
 		/// Gets / sets game window resizable
