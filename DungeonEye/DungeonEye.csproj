@@ -227,9 +227,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Documentation\Documentation.txt" />
     <Content Include="Documentation\Overlay tilesets.txt" />
-    <Content Include="Documentation\Quest.txt" />
     <EmbeddedResource Include="Forms\data\editor.png" />
     <EmbeddedResource Include="Forms\ItemSetForm.resx">
       <DependentUpon>ItemSetForm.cs</DependentUpon>
