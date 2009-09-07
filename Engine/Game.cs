@@ -176,7 +176,8 @@ namespace ArcEngine
 						GameTime.TotalGameTime = TotalGameTime;
 						GameTime.IsRunningSlowly = DrawRunningSlowly;
 
-						Keyboard.Update();
+						if (Window.HasFocus)
+							Keyboard.Update();
 						Mouse.Update();
 						Update(GameTime);
 
