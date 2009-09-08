@@ -39,6 +39,11 @@ using System.ComponentModel;
 // http://www.sdltutorials.com/sdl-animation/
 // http://citrusengine.com/manual/manual/animation_system
 //
+//
+// http://ams-a.mindmafya.com/1/Animation-1.php
+//
+// FLIC file format : http://www.compuphase.com/flic.htm
+//
 namespace ArcEngine.Asset
 {
 
