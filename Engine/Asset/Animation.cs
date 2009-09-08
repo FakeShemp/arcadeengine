@@ -51,7 +51,7 @@ namespace ArcEngine.Asset
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public Animation()//string name)//: base(name)
+		public Animation()
 		{
 			Tiles = new List<int>();
 		}
@@ -276,7 +276,7 @@ namespace ArcEngine.Asset
 		#region Properties
 
 		/// <summary>
-		/// 
+		/// Name of the animation
 		/// </summary>
 		public string Name
 		{

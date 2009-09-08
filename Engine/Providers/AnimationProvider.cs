@@ -43,9 +43,10 @@ namespace ArcEngine.Providers
 		{
 			Animations = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
 			SharedAnimations = new Dictionary<string, Animation>(StringComparer.OrdinalIgnoreCase);
+			KeyFrameAnimations = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
 			Name = "Animation";
-			Tags = new string[] { "animation" };
-			Assets = new Type[] { typeof(Animation) };
+			Tags = new string[] { "animation", "keyframeanimation" };
+			Assets = new Type[] { typeof(Animation), typeof(KeyFrameAnimation) };
 			Version = new Version(0, 1);
 			EditorImage = new Bitmap(ResourceManager.GetResource("ArcEngine.Data.Icons.Animation.png"));
 		}
@@ -153,7 +154,11 @@ namespace ArcEngine.Providers
 		public override void Add<T>(string name, XmlNode node)
 		{
 			CheckValue<T>(name);
-			Animations[name] = node;
+
+			if (typeof(T) == typeof(Animation))
+				Animations[name] = node;
+			else if (typeof(T) == typeof(KeyFrameAnimation))
+				KeyFrameAnimations[name] = node;
 		}
 
 		/// <summary>
@@ -168,6 +173,14 @@ namespace ArcEngine.Providers
 			if (typeof(T) == typeof(Animation))
 			{
 				foreach (string key in Animations.Keys)
+				{
+					list.Add(key);
+				}
+			}
+
+			else if (typeof(T) == typeof(KeyFrameAnimation))
+			{
+				foreach (string key in KeyFrameAnimations.Keys)
 				{
 					list.Add(key);
 				}
@@ -190,14 +203,26 @@ namespace ArcEngine.Providers
 		{
 			CheckValue<T>(name);
 
-			if (Animations.ContainsKey(name))
-				throw new ArgumentException("Animation already exists", name);
+			if (typeof(T) == typeof(Animation))
+			{
+				Animation anim = new Animation();
+				anim.Load(Animations[name]);
 
-			// Creates an Animation
-			Animation anim = new Animation();
-			anim.Load(Animations[name]);
+				return (T)(object)anim;
+			}
 
-			return (T)(object)anim;
+
+			if (typeof(T) == typeof(KeyFrameAnimation))
+			{
+				KeyFrameAnimation anim = new KeyFrameAnimation();
+				anim.Load(KeyFrameAnimations[name]);
+
+				return (T)(object)anim;
+			}
+
+
+
+			return default(T);
 		}
 
 
@@ -212,10 +237,21 @@ namespace ArcEngine.Providers
 		{
 			CheckValue<T>(name);
 
-			if (!Animations.ContainsKey(name))
-				return null;
+			if (typeof(T) == typeof(Animation))
+			{
+				if (Animations.ContainsKey(name))
+					return Animations[name];
+			}
 
-			return Animations[name];
+			if (typeof(T) == typeof(KeyFrameAnimation))
+			{
+				if (KeyFrameAnimations.ContainsKey(name))
+					return KeyFrameAnimations[name];
+			}
+
+
+
+			return null;
 		}
 
 
@@ -320,11 +356,11 @@ namespace ArcEngine.Providers
 		#endregion
 
 
-		#region Progerties
+		#region Properties
 
 
 		/// <summary>
-		/// Scripts
+		/// Animations
 		/// </summary>
 		Dictionary<string, XmlNode> Animations;
 
@@ -332,6 +368,14 @@ namespace ArcEngine.Providers
 		/// Shared animations
 		/// </summary>
 		Dictionary<string, Animation> SharedAnimations;
+
+
+
+		/// <summary>
+		/// Animations
+		/// </summary>
+		Dictionary<string, XmlNode> KeyFrameAnimations;
+
 
 
 		#endregion

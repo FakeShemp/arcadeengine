@@ -119,7 +119,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Asset\AnimationKeyFrame.cs" />
+    <Compile Include="Asset\AnimationLayer.cs" />
     <Compile Include="Asset\IAsset.cs" />
+    <Compile Include="Asset\KeyFrameAnimation.cs" />
     <Compile Include="Asset\Language.cs" />
     <Compile Include="Asset\ScriptModel.cs" />
     <Compile Include="Asset\TextureFont.cs" />
