@@ -23,13 +23,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Xml;
 using ArcEngine.Asset;
-using ArcEngine.Graphic;
 using ArcEngine.Providers;
 using ICSharpCode.SharpZipLib.Zip;
-
-
 
 // Drawing 2D circle and line : http://forums.xna.com/thread/39157.aspx
 // GamePad : http://sourceforge.net/projects/xnadirectinput/
@@ -106,6 +104,26 @@ namespace ArcEngine
 
 		#endregion
 
+
+		/// <summary>
+		/// Returns a list of binary matching a pattern using regular expression
+		/// </summary>
+		/// <param name="pattern">Pattern to apply (ie *.png, *.txt)</param>
+		/// <returns>A list of binaries found</returns>
+		static public List<string> GetBinaries(string pattern)
+		{
+			List<string> list = new List<string>();
+
+			foreach (string name in LoadedBinaries)
+			{
+				if (Regex.IsMatch(name, pattern))
+					list.Add(name);
+			}
+
+			list.Sort();
+
+			return list;
+		}
 
 		#region Providers
 
@@ -676,7 +694,16 @@ namespace ArcEngine
 						doc = XmlWriter.Create(ms, settings);
 						doc.WriteStartDocument(true);
 						doc.WriteStartElement("bank");
-						provider.Save(type, doc);
+
+					//	provider.Save(type, doc);
+
+						// Invoke the generic method like this : provider.Save<[Asset Type]>(XmlNode node);
+						object[] args = { doc };
+						Type[] types = new Type[] { typeof(XmlWriter) };
+						MethodInfo mi = provider.GetType().GetMethod("Save", types).MakeGenericMethod(type);
+						mi.Invoke(provider, args);
+
+		
 						doc.WriteEndElement();
 						doc.WriteEndDocument();
 						doc.Flush();
