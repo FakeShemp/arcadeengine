@@ -163,6 +163,7 @@
     <Compile Include="Source\AutoMap.cs" />
     <Compile Include="Source\CharGen.cs" />
     <Compile Include="Source\Compass.cs" />
+    <Compile Include="Source\IntroScreen.cs" />
     <Compile Include="Source\FlyingItem.cs" />
     <Compile Include="Source\SpellBook.cs" />
     <Compile Include="Source\GUI\Window.cs" />

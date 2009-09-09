@@ -350,7 +350,7 @@ namespace ArcEngine.Graphic
 
 			Display.Texture = this;
 
-			System.Drawing.Bitmap bitmap = new Bitmap(stream);			
+			Bitmap bitmap = new Bitmap(stream);			
 			System.Drawing.Imaging.BitmapData bmdata = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height),
 				 System.Drawing.Imaging.ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
@@ -435,24 +435,22 @@ namespace ArcEngine.Graphic
 		public bool LockTextureBits(ImageLockMode mode)
 		{
 			// No texture bounds
-			if (Handle == 0 || IsLocked )
+			if (Handle == 0 || IsLocked)
 				return false;
 
 			Data = new byte[Size.Width * Size.Height * 4];
+			Trace.WriteLine("New data buffer for LockTextureBits. Size : " + Data.Length + " octets. Texture size : " + Size.ToString());
 
 			LockMode = mode;
 			IsLocked = true;
 
-	//		if (mode == ImageLockMode.WriteOnly)
-	//			return true;
+			if (mode == ImageLockMode.WriteOnly)
+				return true;
 
 
 			Display.Texture = this;
-
-
-
-			GL.GetTexImage(TextureTarget.Texture2D, 0, PixelFormat.Bgra, PixelType.UnsignedByte, Data);
-
+			//GL.GetTexImage(TextureTarget.Texture2D, 0, PixelFormat.Bgra, PixelType.UnsignedByte, Data);
+			GL.GetTexImage<byte>(TextureTarget.Texture2D, 0, PixelFormat.Bgra, PixelType.UnsignedByte, Data);
 			return true;
 		}
 

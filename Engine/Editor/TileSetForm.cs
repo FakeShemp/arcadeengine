@@ -49,37 +49,30 @@ namespace ArcEngine.Editor
 		{
 			InitializeComponent();
 
-			TileBox = new SelectionBox();
-			CollisionBox = new SelectionBox();
-			BgColor = Color.GreenYellow;
-
-
-			GLTextureControl.MakeCurrent();
-			Display.ClearColor = Color.Black;
-			Display.Texturing = true;
-			Display.Blending = true;
-			Display.BlendingFunction(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
-
-
-
-			GLTileControl.MakeCurrent();
-			Display.ClearColor = Color.Black;
-			Display.Texturing = true;
-			Display.Blending = true;
-			Display.BlendingFunction(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
-
-
-
 			//
 			tileSet = new TileSet();
 			tileSet.Load(node);
 
 
+			TileBox = new SelectionBox();
+			CollisionBox = new SelectionBox();
+			BgColor = Color.GreenYellow;
+
+
+
+
+			// Available textures
+			TexturesBox.BeginUpdate();
+			TexturesBox.Items.Clear();
+			foreach (string name in ResourceManager.GetBinaries(".png$"))
+			{
+				TexturesBox.Items.Add(name);
+			}
+			TexturesBox.EndUpdate();
+
+
 			// Preload background texture resource
-			CheckerBoard = new Texture();
-			Stream stream = ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png");
-			CheckerBoard.LoadImage(stream);
-			stream.Close();
+			CheckerBoard = new Texture( ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png"));
 
 			
 			
@@ -563,6 +556,23 @@ namespace ArcEngine.Editor
 		#region Events
 
 		/// <summary>
+		/// Loads the form
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void TileSetForm_Load(object sender, EventArgs e)
+		{
+			GLTextureControl.MakeCurrent();
+			Display.Init();
+
+
+
+			GLTileControl.MakeCurrent();
+			Display.Init();
+
+		}
+
+		/// <summary>
 		/// Timer Tick
 		/// </summary>
 		/// <param name="sender"></param>
@@ -771,6 +781,20 @@ namespace ArcEngine.Editor
 		}
 
 
+		/// <summary>
+		/// Change the texture
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void TexturesBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (TexturesBox.SelectedItem == null)
+				return;
+
+			tileSet.LoadTexture(TexturesBox.SelectedItem as string);
+		}
+
+
 
 		#endregion
 
@@ -844,6 +868,8 @@ namespace ArcEngine.Editor
 
 
 		#endregion
+
+
 
 	}
 

@@ -1,18 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Drawing;
 using System.Xml;
-
 
 
 namespace ArcEngine.Asset
 {
-
 	/// <summary>
-	/// 
+	/// Class representing a layer in an animation
 	/// </summary>
-	public class AnimationKeyFrame
+	public class AnimationLayer
 	{
+
+		/// <summary>
+		/// Default construcor
+		/// </summary>
+		public AnimationLayer()
+		{
+
+		}
+
+
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="node"></param>
+		public AnimationLayer(XmlNode node)
+		{
+			Load(node);
+		}
+
 
 		#region IO routines
 
@@ -33,10 +51,11 @@ namespace ArcEngine.Asset
 
 			//		base.SaveComment(xml);
 
+
+
 			//xml.WriteStartElement("loop");
 			//xml.WriteAttributeString("value", type.ToString());
 			//xml.WriteEndElement();
-
 
 
 			xml.WriteEndElement();
@@ -56,7 +75,7 @@ namespace ArcEngine.Asset
 
 			if (xml.Name != "layer")
 			{
-				Trace.WriteLine("Expecting \"keyframeanimation\" in node header, found \"" + xml.Name + "\" when loading KeyFrameAnimation.");
+				Trace.WriteLine("Expecting \"layer\" in node header, found \"" + xml.Name + "\" when loading AnimationLayer.");
 				return false;
 			}
 
@@ -68,12 +87,20 @@ namespace ArcEngine.Asset
 			{
 				switch (node.Name.ToLower())
 				{
-					// loop
-					case "loop":
+					case "viewport":
 					{
+						Viewport = new Rectangle(int.Parse(node.Attributes["x"].Value),
+							int.Parse(node.Attributes["y"].Value),
+							int.Parse(node.Attributes["width"].Value),
+							int.Parse(node.Attributes["height"].Value));
 					}
 					break;
 
+					default:
+					{
+						Trace.WriteLine("AnimationLayer : Unknown node element found (" + node.Name + ")");
+					}
+					break;
 				}
 			}
 
@@ -84,11 +111,10 @@ namespace ArcEngine.Asset
 		#endregion
 
 
-
 		#region Properties
 
 		/// <summary>
-		/// Name
+		/// Name of the layer
 		/// </summary>
 		public string Name
 		{
@@ -97,7 +123,38 @@ namespace ArcEngine.Asset
 		}
 
 
-		#endregion
+		/// <summary>
+		/// ID of the tile
+		/// </summary>
+		public int TileID
+		{
+			get;
+			set;
+		}
 
+
+		/// <summary>
+		/// Location of the tile
+		/// </summary>
+		public Point Location
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Viewport of the layer
+		/// </summary>
+		public Rectangle Viewport
+		{
+			get;
+			set;
+		}
+
+
+
+
+
+		#endregion
 	}
 }

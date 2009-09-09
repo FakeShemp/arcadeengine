@@ -42,11 +42,11 @@ namespace ArcEngine.Providers
 		public AnimationProvider()
 		{
 			Animations = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
-			SharedAnimations = new Dictionary<string, Animation>(StringComparer.OrdinalIgnoreCase);
+			SharedAnimations = new Dictionary<string, AnimationA>(StringComparer.OrdinalIgnoreCase);
 			KeyFrameAnimations = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
 			Name = "Animation";
 			Tags = new string[] { "animation", "keyframeanimation" };
-			Assets = new Type[] { typeof(Animation), typeof(KeyFrameAnimation) };
+			Assets = new Type[] { typeof(AnimationA), typeof(Animation) };
 			Version = new Version(0, 1);
 			EditorImage = new Bitmap(ResourceManager.GetResource("ArcEngine.Data.Icons.Animation.png"));
 		}
@@ -62,11 +62,17 @@ namespace ArcEngine.Providers
 		/// <param name="type"></param>
 		/// <param name="xml"></param>
 		/// <returns></returns>
-		public override bool Save(Type type, XmlWriter xml)
+		public override bool Save<T>(XmlWriter xml)
 		{
-			if (type == typeof(Animation))
+			if (typeof(T) == typeof(AnimationA))
 			{
 				foreach (XmlNode node in Animations.Values)
+					node.WriteTo(xml);
+			}
+
+			if (typeof(T) == typeof(Animation))
+			{
+				foreach (XmlNode node in KeyFrameAnimations.Values)
 					node.WriteTo(xml);
 			}
 
@@ -93,9 +99,16 @@ namespace ArcEngine.Providers
 			{
 				case "animation":
 				{
-
 					string name = xml.Attributes["name"].Value;
 					Animations[name] = xml;
+				}
+				break;
+
+
+				case "keyframeanimation":
+				{
+					string name = xml.Attributes["name"].Value;
+					KeyFrameAnimations[name] = xml;
 				}
 				break;
 
@@ -126,7 +139,7 @@ namespace ArcEngine.Providers
 		{
 			AssetEditor form = null;
 
-			if (typeof(T) == typeof(Animation))
+			if (typeof(T) == typeof(AnimationA))
 			{
 				XmlNode node = null;
 				if (Animations.ContainsKey(name))
@@ -155,9 +168,9 @@ namespace ArcEngine.Providers
 		{
 			CheckValue<T>(name);
 
-			if (typeof(T) == typeof(Animation))
+			if (typeof(T) == typeof(AnimationA))
 				Animations[name] = node;
-			else if (typeof(T) == typeof(KeyFrameAnimation))
+			else if (typeof(T) == typeof(Animation))
 				KeyFrameAnimations[name] = node;
 		}
 
@@ -170,7 +183,7 @@ namespace ArcEngine.Providers
 		{
 			List<string> list = new List<string>();
 
-			if (typeof(T) == typeof(Animation))
+			if (typeof(T) == typeof(AnimationA))
 			{
 				foreach (string key in Animations.Keys)
 				{
@@ -178,7 +191,7 @@ namespace ArcEngine.Providers
 				}
 			}
 
-			else if (typeof(T) == typeof(KeyFrameAnimation))
+			else if (typeof(T) == typeof(Animation))
 			{
 				foreach (string key in KeyFrameAnimations.Keys)
 				{
@@ -203,18 +216,18 @@ namespace ArcEngine.Providers
 		{
 			CheckValue<T>(name);
 
-			if (typeof(T) == typeof(Animation))
+			if (typeof(T) == typeof(AnimationA))
 			{
-				Animation anim = new Animation();
+				AnimationA anim = new AnimationA();
 				anim.Load(Animations[name]);
 
 				return (T)(object)anim;
 			}
 
 
-			if (typeof(T) == typeof(KeyFrameAnimation))
+			if (typeof(T) == typeof(Animation))
 			{
-				KeyFrameAnimation anim = new KeyFrameAnimation();
+				Animation anim = new Animation();
 				anim.Load(KeyFrameAnimations[name]);
 
 				return (T)(object)anim;
@@ -237,13 +250,13 @@ namespace ArcEngine.Providers
 		{
 			CheckValue<T>(name);
 
-			if (typeof(T) == typeof(Animation))
+			if (typeof(T) == typeof(AnimationA))
 			{
 				if (Animations.ContainsKey(name))
 					return Animations[name];
 			}
 
-			if (typeof(T) == typeof(KeyFrameAnimation))
+			if (typeof(T) == typeof(Animation))
 			{
 				if (KeyFrameAnimations.ContainsKey(name))
 					return KeyFrameAnimations[name];
@@ -297,12 +310,12 @@ namespace ArcEngine.Providers
 		/// <returns>The resource</returns>
 		public override T CreateShared<T>(string name)
 		{
-			if (typeof(T) == typeof(Animation))
+			if (typeof(T) == typeof(AnimationA))
 			{
 				if (SharedAnimations.ContainsKey(name))
 					return (T)(object)SharedAnimations[name];
 
-				Animation anim = new Animation();
+				AnimationA anim = new AnimationA();
 				SharedAnimations[name] = anim;
 
 				return (T)(object)anim;
@@ -320,7 +333,7 @@ namespace ArcEngine.Providers
 		/// <param name="name">Name of the asset</param>
 		public override void RemoveShared<T>(string name)
 		{
-			if (typeof(T) == typeof(Animation))
+			if (typeof(T) == typeof(AnimationA))
 			{
 				SharedAnimations[name] = null;
 			}
@@ -367,7 +380,7 @@ namespace ArcEngine.Providers
 		/// <summary>
 		/// Shared animations
 		/// </summary>
-		Dictionary<string, Animation> SharedAnimations;
+		Dictionary<string, AnimationA> SharedAnimations;
 
 
 

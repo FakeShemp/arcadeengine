@@ -66,14 +66,14 @@ namespace ArcEngine.Providers
 		/// <param name="type"></param>
 		/// <param name="xml"></param>
 		/// <returns></returns>
-		public override bool Save(Type type, XmlWriter xml)
+		public override bool Save<T>(XmlWriter xml)
 		{
-			if (type == typeof(Script))
+			if (typeof(T) == typeof(Script))
 			{
 				foreach (XmlNode node in Scripts.Values)
 					node.WriteTo(xml);
 			}
-			else if (type == typeof(ScriptModel))
+			else if (typeof(T) == typeof(ScriptModel))
 			{
 				foreach (XmlNode node in Models.Values)
 					node.WriteTo(xml);

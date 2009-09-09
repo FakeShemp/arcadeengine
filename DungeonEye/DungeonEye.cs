@@ -97,8 +97,9 @@ namespace DungeonEye
 			//Settings.StringTable = ResourceManager.CreateSharedAsset<StringTable>(Settings.LanguageName);
 
 
-			GSM.AddScreen(new MainMenu());
-			GSM.AddScreen(new Team());
+			GSM.AddScreen(new IntroScreen());
+			//GSM.AddScreen(new MainMenu());
+			//GSM.AddScreen(new Team());
 		}
 
 

@@ -1,36 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Drawing;
 using System.Xml;
+
 
 
 namespace ArcEngine.Asset
 {
+
 	/// <summary>
-	/// Class representing a layer in an animation
+	/// 
 	/// </summary>
-	public class AnimationLayer
+	public class KeyFrame
 	{
-
-		/// <summary>
-		/// Default construcor
-		/// </summary>
-		public AnimationLayer()
-		{
-
-		}
-
-
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		/// <param name="node"></param>
-		public AnimationLayer(XmlNode node)
-		{
-			Load(node);
-		}
-
 
 		#region IO routines
 
@@ -51,11 +33,10 @@ namespace ArcEngine.Asset
 
 			//		base.SaveComment(xml);
 
-
-
 			//xml.WriteStartElement("loop");
 			//xml.WriteAttributeString("value", type.ToString());
 			//xml.WriteEndElement();
+
 
 
 			xml.WriteEndElement();
@@ -75,7 +56,7 @@ namespace ArcEngine.Asset
 
 			if (xml.Name != "layer")
 			{
-				Trace.WriteLine("Expecting \"layer\" in node header, found \"" + xml.Name + "\" when loading AnimationLayer.");
+				Trace.WriteLine("Expecting \"keyframeanimation\" in node header, found \"" + xml.Name + "\" when loading KeyFrameAnimation.");
 				return false;
 			}
 
@@ -93,12 +74,6 @@ namespace ArcEngine.Asset
 					}
 					break;
 
-
-					default:
-					{
-						Trace.WriteLine("Animation : Unknown node element found (" + node.Name + ")");
-					}
-					break;
 				}
 			}
 
@@ -109,10 +84,11 @@ namespace ArcEngine.Asset
 		#endregion
 
 
+
 		#region Properties
 
 		/// <summary>
-		/// Name of the layer
+		/// Name
 		/// </summary>
 		public string Name
 		{
@@ -121,25 +97,7 @@ namespace ArcEngine.Asset
 		}
 
 
-		/// <summary>
-		/// ID of the tile
-		/// </summary>
-		public int TileID
-		{
-			get;
-			set;
-		}
-
-
-		/// <summary>
-		/// Location of the tile
-		/// </summary>
-		public Point Location
-		{
-			get;
-			set;
-		}
-
 		#endregion
+
 	}
 }

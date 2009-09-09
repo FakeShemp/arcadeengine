@@ -66,21 +66,21 @@ namespace DungeonEye
 		/// <param name="type"></param>
 		/// <param name="xml"></param>
 		/// <returns></returns>
-		public override bool Save(Type type, XmlWriter writer)
+		public override bool Save<T>(XmlWriter writer)
 		{
 
 
-			if (type == typeof(Dungeon))
+			if (typeof(T) == typeof(Dungeon))
 			{
 				foreach (XmlNode node in Dungeons.Values)
 					node.WriteTo(writer);
 			}
-			else if (type == typeof(ItemSet))
+			else if (typeof(T) == typeof(ItemSet))
 			{
 				foreach (XmlNode node in ItemSets.Values)
 					node.WriteTo(writer);
 			}
-			else if (type == typeof(Monster))
+			else if (typeof(T) == typeof(Monster))
 			{
 				foreach (XmlNode node in Monsters.Values)
 					node.WriteTo(writer);

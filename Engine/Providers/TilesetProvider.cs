@@ -67,10 +67,10 @@ namespace ArcEngine.Providers
 		/// <param name="type"></param>
 		/// <param name="xml"></param>
 		/// <returns></returns>
-		public override bool Save(Type type, XmlWriter xml)
+		public override bool Save<T>(XmlWriter xml)
 		{
 
-			if (type == typeof(TileSet))
+			if (typeof(T) == typeof(TileSet))
 			{
 				foreach (XmlNode node in TileSets.Values)
 					node.WriteTo(xml);

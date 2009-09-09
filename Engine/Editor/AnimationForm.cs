@@ -48,7 +48,7 @@ namespace ArcEngine.Editor
 			InitializeComponent();
 
 
-			Animation = new Animation();
+			Animation = new AnimationA();
 			Animation.Load(node);
 			PropertyBox.SelectedObject = Animation;
 
@@ -120,7 +120,7 @@ namespace ArcEngine.Editor
 			XmlDocument doc = new XmlDocument();
 			doc.LoadXml(xml);
 
-			ResourceManager.AddAsset<Animation>(Animation.Name, doc.DocumentElement);
+			ResourceManager.AddAsset<AnimationA>(Animation.Name, doc.DocumentElement);
 		}
 
 
@@ -726,7 +726,7 @@ namespace ArcEngine.Editor
 		/// <summary>
 		/// Current animation to edit
 		/// </summary>
-		Animation Animation;
+		AnimationA Animation;
 
 
 		/// <summary>

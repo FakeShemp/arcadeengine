@@ -65,7 +65,7 @@ namespace RuffnTumble.Asset
 		/// <param name="type"></param>
 		/// <param name="xml"></param>
 		/// <returns></returns>
-		public override bool Save(Type type, XmlWriter xml)
+		public override bool Save<T>(XmlWriter xml)
 		{
 			foreach (XmlNode node in Levels.Values)
 				node.WriteTo(xml);

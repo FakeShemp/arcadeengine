@@ -62,6 +62,9 @@
 			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
 			this.BgColorButton = new System.Windows.Forms.ToolStripButton();
 			this.RenderTimer = new System.Windows.Forms.Timer(this.components);
+			this.TexturesBox = new System.Windows.Forms.ToolStripComboBox();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
 			this.TileGroupBox.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
 			this.TileToolStrip.SuspendLayout();
@@ -81,6 +84,7 @@
 			this.GLTextureControl.Name = "GLTextureControl";
 			this.GLTextureControl.Size = new System.Drawing.Size(523, 258);
 			this.GLTextureControl.TabIndex = 1;
+			this.GLTextureControl.VSync = false;
 			this.GLTextureControl.Paint += new System.Windows.Forms.PaintEventHandler(this.GLTextureControl_Paint);
 			this.GLTextureControl.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.OnPreviewKeyDown);
 			this.GLTextureControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GLTextureControl_MouseMove);
@@ -224,6 +228,7 @@
 			this.GLTileControl.Name = "GLTileControl";
 			this.GLTileControl.Size = new System.Drawing.Size(540, 220);
 			this.GLTileControl.TabIndex = 11;
+			this.GLTileControl.VSync = false;
 			this.GLTileControl.Paint += new System.Windows.Forms.PaintEventHandler(this.GLTileControl_Paint);
 			this.GLTileControl.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.OnPreviewKeyDown);
 			this.GLTileControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GLTileControl_MouseMove);
@@ -300,6 +305,9 @@
             this.ZoomInButton,
             this.ActualSizeButton,
             this.toolStripSeparator2,
+            this.toolStripLabel1,
+            this.TexturesBox,
+            this.toolStripSeparator1,
             this.PositionLabel,
             this.toolStripSeparator3,
             this.SizeLabel,
@@ -406,7 +414,7 @@
 			this.BgColorButton.Image = ((System.Drawing.Image)(resources.GetObject("BgColorButton.Image")));
 			this.BgColorButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.BgColorButton.Name = "BgColorButton";
-			this.BgColorButton.Size = new System.Drawing.Size(23, 22);
+			this.BgColorButton.Size = new System.Drawing.Size(23, 20);
 			this.BgColorButton.Text = "Background clear color...";
 			this.BgColorButton.Click += new System.EventHandler(this.BgColorButton_Click);
 			// 
@@ -416,13 +424,33 @@
 			this.RenderTimer.Interval = 66;
 			this.RenderTimer.Tick += new System.EventHandler(this.RenderTimer_Tick);
 			// 
+			// TexturesBox
+			// 
+			this.TexturesBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.TexturesBox.Name = "TexturesBox";
+			this.TexturesBox.Size = new System.Drawing.Size(121, 25);
+			this.TexturesBox.SelectedIndexChanged += new System.EventHandler(this.TexturesBox_SelectedIndexChanged);
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+			// 
+			// toolStripLabel1
+			// 
+			this.toolStripLabel1.Name = "toolStripLabel1";
+			this.toolStripLabel1.Size = new System.Drawing.Size(52, 22);
+			this.toolStripLabel1.Text = "Texture :";
+			// 
 			// TileSetForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(740, 524);
 			this.Controls.Add(this.splitContainer1);
+			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Name = "TileSetForm";
+			this.Load += new System.EventHandler(this.TileSetForm_Load);
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TileSetForm_FormClosing);
 			this.TileGroupBox.ResumeLayout(false);
 			this.TileGroupBox.PerformLayout();
@@ -473,5 +501,8 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
 		private System.Windows.Forms.ToolStripButton HotSpotButton;
 		private System.Windows.Forms.ToolStripButton CollisionButton;
+		private System.Windows.Forms.ToolStripComboBox TexturesBox;
+		private System.Windows.Forms.ToolStripLabel toolStripLabel1;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 	}
 }

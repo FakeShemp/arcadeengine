@@ -51,11 +51,6 @@ namespace DungeonEye.Forms
 			InitializeComponent();
 			PreviewLoc = new DungeonLocation();
 
-			GlPreviewControl.MakeCurrent();
-			Display.Init();
-
-			glControl.MakeCurrent();
-			Display.Init();
 
 
 			// Create the dungeon
@@ -92,17 +87,11 @@ namespace DungeonEye.Forms
 
 			// Preload texture resources
 			Icons = new TileSet();
-			Icons.Texture = new Texture();
-			Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("DungeonEye.Forms.data.editor.png");
-			Icons.Texture.LoadImage(stream);
-			stream.Close();
+			Icons.Texture = new Texture( Assembly.GetExecutingAssembly().GetManifestResourceStream("DungeonEye.Forms.data.editor.png"));
 
 
 			// Preload background texture resource
-			CheckerBoard = new Texture();
-			stream = ResourceManager.GetResource("ArcEngine.Files.checkerboard.png");
-			CheckerBoard.LoadImage(stream);
-			stream.Close();
+			CheckerBoard = new Texture(ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png"));
 
 
 			int id = 0;
@@ -200,6 +189,21 @@ namespace DungeonEye.Forms
 
 		#region Events
 
+
+		/// <summary>
+		/// On form loading
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void DungeonForm_Load(object sender, EventArgs e)
+		{
+			GlPreviewControl.MakeCurrent();
+			Display.Init();
+
+			glControl.MakeCurrent();
+			Display.Init();
+
+		}
 
 		/// <summary>
 		/// On mouse down
@@ -945,6 +949,7 @@ namespace DungeonEye.Forms
 
 
 		#endregion
+
 
 	}
 

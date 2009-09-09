@@ -64,9 +64,9 @@ namespace ArcEngine.Providers
 		/// <param name="type"></param>
 		/// <param name="xml"></param>
 		/// <returns></returns>
-		public override bool Save(Type type, XmlWriter xml)
+		public override bool Save<T>(XmlWriter xml)
 		{
-			if (type == typeof(TextureFont))
+			if (typeof(T) == typeof(TextureFont))
 			{
 				foreach (XmlNode node in Fonts.Values)
 					node.WriteTo(xml);

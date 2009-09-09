@@ -197,7 +197,7 @@ namespace ArcEngine.Providers
 		/// <param name="type"></param>
 		/// <param name="xml"></param>
 		/// <returns></returns>
-		public virtual bool Save(Type type, XmlWriter xml)
+		public virtual bool Save<T>(XmlWriter xml)
 		{
 
 			return false;

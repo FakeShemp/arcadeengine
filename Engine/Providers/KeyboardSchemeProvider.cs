@@ -63,9 +63,9 @@ namespace ArcEngine.Providers
 		/// <param name="type"></param>
 		/// <param name="xml"></param>
 		/// <returns></returns>
-		public override bool Save(Type type, XmlWriter xml)
+		public override bool Save<T>(XmlWriter xml)
 		{
-			if (type == typeof(KeyboardScheme))
+			if (typeof(T) == typeof(KeyboardScheme))
 			{
 				foreach (XmlNode node in Schemes.Values)
 					node.WriteTo(xml);

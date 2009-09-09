@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
-
+using System.Drawing;
 
 namespace ArcEngine.Asset
 {
@@ -10,8 +10,16 @@ namespace ArcEngine.Asset
 	/// <summary>
 	/// Key framed animation
 	/// </summary>
-	public class KeyFrameAnimation : IAsset
+	public class Animation : IAsset
 	{
+
+		/// <summary>
+		/// Default constructor
+		/// </summary>
+		public Animation()
+		{
+			Layers = new Dictionary<string, AnimationLayer>();
+		}
 
 
 		#region IO routines
@@ -70,12 +78,20 @@ namespace ArcEngine.Asset
 					case "tileset":
 					{
 						TileSetName = node.Attributes["name"].Value;
+						TileSet = ResourceManager.CreateAsset<TileSet>(TileSetName);
 					}
 					break;
 
 					case "framerate":
 					{
 						FrameRate = int.Parse(node.Attributes["value"].Value);
+					}
+					break;
+
+					case "layer":
+					{
+						AnimationLayer layer = new AnimationLayer(node);
+						Layers[layer.Name] = layer;
 					}
 					break;
 
@@ -93,6 +109,25 @@ namespace ArcEngine.Asset
 
 		#endregion
 
+		/// <summary>
+		/// Update animation
+		/// </summary>
+		/// <param name="time"></param>
+		public void Update(GameTime time)
+		{
+		}
+
+
+		/// <summary>
+		/// Draws the animation
+		/// </summary>
+		public void Draw()
+		{
+			if (TileSet == null)
+				return;
+
+			TileSet.Draw(0, new Point(100, 100));
+		}
 
 		#region Properties
 
@@ -131,6 +166,12 @@ namespace ArcEngine.Asset
 			set;
 		}
 
+
+		/// <summary>
+		/// Available layers
+		/// </summary>
+		Dictionary<string, AnimationLayer> Layers;
 		#endregion
+
 	}
 }
