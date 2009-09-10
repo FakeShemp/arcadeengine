@@ -18,6 +18,17 @@ namespace ArcEngine.Asset
 		/// </summary>
 		public AnimationLayer()
 		{
+			KeyFrames = new PriorityQueue<KeyFrame>();
+
+
+			KeyFrame frame = new KeyFrame();
+			frame.Frame = 10;
+			KeyFrames.Push(frame);
+
+
+			KeyFrame frame2 = new KeyFrame();
+			frame2.Frame = 2;
+			KeyFrames.Push(frame2);
 
 		}
 
@@ -63,6 +74,7 @@ namespace ArcEngine.Asset
 			return true;
 		}
 
+
 		/// <summary>
 		/// Loads the animation from a xml file
 		/// </summary>
@@ -93,6 +105,14 @@ namespace ArcEngine.Asset
 							int.Parse(node.Attributes["y"].Value),
 							int.Parse(node.Attributes["width"].Value),
 							int.Parse(node.Attributes["height"].Value));
+					}
+					break;
+
+					case "keyframe":
+					{
+						KeyFrame key = new KeyFrame();
+						key.Load(node);
+						
 					}
 					break;
 
@@ -153,6 +173,10 @@ namespace ArcEngine.Asset
 
 
 
+		/// <summary>
+		/// Keyframes of the layer
+		/// </summary>
+		PriorityQueue<KeyFrame> KeyFrames;
 
 
 		#endregion

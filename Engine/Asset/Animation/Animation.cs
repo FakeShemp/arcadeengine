@@ -19,6 +19,9 @@ namespace ArcEngine.Asset
 		public Animation()
 		{
 			Layers = new Dictionary<string, AnimationLayer>();
+
+
+			AnimationLayer layer = new AnimationLayer();
 		}
 
 

@@ -237,6 +237,7 @@
     <Compile Include="Input\GamePad.cs" />
     <Compile Include="Input\GamePadCapabilities.cs" />
     <Compile Include="KeyboardScheme.cs" />
+    <Compile Include="PriorityQueue.cs" />
     <Compile Include="Providers\AudioProvider.cs" />
     <Compile Include="Providers\KeyboardSchemeProvider.cs" />
     <Compile Include="ScreenManager\GameScreen.cs" />

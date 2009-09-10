@@ -1,8 +1,9 @@
-﻿using System;
+﻿using System.Drawing;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
-
+using System.Collections;
 
 
 namespace ArcEngine.Asset
@@ -11,7 +12,7 @@ namespace ArcEngine.Asset
 	/// <summary>
 	/// 
 	/// </summary>
-	public class KeyFrame
+	public class KeyFrame : IComparer
 	{
 
 		#region IO routines
@@ -54,13 +55,12 @@ namespace ArcEngine.Asset
 			if (xml == null)
 				return false;
 
-			if (xml.Name != "layer")
+			if (xml.Name != "keyframe")
 			{
-				Trace.WriteLine("Expecting \"keyframeanimation\" in node header, found \"" + xml.Name + "\" when loading KeyFrameAnimation.");
+				Trace.WriteLine("Expecting \"keyframe\" in node header, found \"" + xml.Name + "\" when loading KeyFrame.");
 				return false;
 			}
 
-			Name = xml.Attributes["name"].Value;
 
 			// Process datas
 			XmlNodeList nodes = xml.ChildNodes;
@@ -68,9 +68,21 @@ namespace ArcEngine.Asset
 			{
 				switch (node.Name.ToLower())
 				{
-					// loop
-					case "loop":
+					case "id":
 					{
+						TileID = int.Parse(node.Attributes["id"].Value);
+					}
+					break;
+
+					case "frame":
+					{
+						Frame = int.Parse(node.Attributes["id"].Value);
+					}
+					break;
+
+					case "location":
+					{
+						Location = new Point(int.Parse(node.Attributes["x"].Value), int.Parse(node.Attributes["y"].Value));
 					}
 					break;
 
@@ -84,6 +96,20 @@ namespace ArcEngine.Asset
 		#endregion
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <returns></returns>
+		public int Compare(object x, object y)
+		{
+			KeyFrame a = x as KeyFrame;
+			KeyFrame b = y as KeyFrame;
+
+			return a.Frame - b.Frame;
+		}
+
 
 		#region Properties
 
@@ -96,6 +122,34 @@ namespace ArcEngine.Asset
 			set;
 		}
 
+
+		/// <summary>
+		/// ID of the tile
+		/// </summary>
+		public int TileID
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// ID of the frame
+		/// </summary>
+		public int Frame
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// Location of the tile
+		/// </summary>
+		public Point Location
+		{
+			get;
+			set;
+		}
 
 		#endregion
 
