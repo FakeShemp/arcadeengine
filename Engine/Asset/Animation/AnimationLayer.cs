@@ -188,9 +188,8 @@ namespace ArcEngine.Asset
 					return KeyFrames[i];
 			}
 
-			return KeyFrames[KeyFrames.Count - 1];
+			return LastKeyFrame;
 		}
-
 
 
 		/// <summary>
@@ -206,7 +205,7 @@ namespace ArcEngine.Asset
 					return KeyFrames[i];
 			}
 
-			return KeyFrames[0];
+			return FirstKeyFrame;
 		}
 
 
@@ -218,11 +217,14 @@ namespace ArcEngine.Asset
 		/// <returns>Frame</returns>
 		public Frame GetFrame(TimeSpan time)
 		{
-			if (time.TotalMilliseconds < 0 || time > Length)
-				return null;
+		//	if (time.TotalMilliseconds < 0 || time > Length)
+		//		return null;
 
 			KeyFrame next = GetNextKeyFrame(time);
 			KeyFrame prev = GetPreviousKeyFrame(time);
+
+			if (next == null | prev == null)
+				return null;
 
 			// Length between to keyframes
 			float delta = (float)(time - prev.Time).TotalMilliseconds / (float)(next.Time - prev.Time).TotalMilliseconds;
@@ -315,6 +317,34 @@ namespace ArcEngine.Asset
 		/// </summary>
 		List<KeyFrame> KeyFrames = new List<KeyFrame>();
 
+		/// <summary>
+		/// Gets the first KeyFrame
+		/// </summary>
+		/// <returns></returns>
+		public KeyFrame FirstKeyFrame
+		{
+			get
+			{
+				if (KeyFrames.Count == 0)
+					return null;
+
+				return KeyFrames[0];
+			}
+		}
+
+		/// <summary>
+		/// Gets the last KeyFrame
+		/// </summary>
+		public KeyFrame LastKeyFrame
+		{
+			get
+			{
+				if (KeyFrames.Count == 0)
+					return null;
+
+				return KeyFrames[KeyFrames.Count - 1];
+			}
+		}
 
 		#endregion
 

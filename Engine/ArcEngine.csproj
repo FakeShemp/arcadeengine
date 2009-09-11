@@ -126,6 +126,7 @@
     <Compile Include="Asset\Animation\Animation.cs" />
     <Compile Include="Asset\Language.cs" />
     <Compile Include="Asset\ScriptModel.cs" />
+    <Compile Include="Asset\Storyboard.cs" />
     <Compile Include="Asset\TextureFont.cs" />
     <Compile Include="Editor\AboutForm.cs">
       <SubType>Form</SubType>

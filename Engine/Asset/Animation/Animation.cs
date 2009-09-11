@@ -202,6 +202,7 @@ namespace ArcEngine.Asset
 		/// <param name="id">Id of the layer</param>
 		public void RemoveLayer(int id)
 		{
+			Layers.RemoveAt(id);
 		}
 
 
@@ -211,6 +212,16 @@ namespace ArcEngine.Asset
 		/// <param name="layer">Layer</param>
 		public void RemoveLayer(AnimationLayer layer)
 		{
+			Layers.Remove(layer);
+		}
+
+
+		/// <summary>
+		/// Sorts layers
+		/// </summary>
+		public void SortLayers()
+		{
+			Layers.Sort();
 		}
 
 		#endregion
