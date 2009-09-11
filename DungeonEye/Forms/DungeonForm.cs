@@ -61,7 +61,7 @@ namespace DungeonEye.Forms
 			MazePropertyBox.Tag = Dungeon;
 			RebuildMazeList();
 
-
+			
 
 			KeyboardScheme = ResourceManager.CreateAsset<KeyboardScheme>(DungeonEye.KeyboardSchemeName);
 			if (KeyboardScheme == null)

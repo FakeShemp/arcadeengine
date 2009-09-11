@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
+using System.Windows.Forms;
 using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
@@ -42,7 +43,7 @@ namespace DungeonEye
 		/// </summary>
 		public IntroScreen()
 		{
-
+			Display.Init();
 		}
 
 
@@ -52,7 +53,10 @@ namespace DungeonEye
 		public override void LoadContent()
 		{
 			Animation = ResourceManager.CreateAsset<Animation>("intro");
+
+			Font = ResourceManager.CreateAsset<TextureFont>("intro");
 		}
+
 
 
 
@@ -73,8 +77,18 @@ namespace DungeonEye
 				return;
 
 			// Bye bye
-			if (Keyboard.IsNewKeyPress(System.Windows.Forms.Keys.Escape))
+			if (Keyboard.IsNewKeyPress(Keys.Escape))
 				ScreenManager.Game.Exit();
+
+			// Pause animation
+			if (Keyboard.IsNewKeyPress(Keys.Space))
+				Animation.Pause = !Animation.Pause;
+
+			// Rewind animation
+			if (Keyboard.IsNewKeyPress(Keys.Left))
+				Animation.Time = TimeSpan.Zero;
+
+
 
 			// Update animation 
 			Animation.Update(time);
@@ -82,7 +96,7 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Draws the scene
 		/// </summary>
 		/// <param name="device"></param>
 		public override void Draw()
@@ -93,6 +107,13 @@ namespace DungeonEye
 
 
 			Animation.Draw();
+
+
+			// Debug info
+			Font.Color = Color.White;
+			Font.DrawText(new Point(20, 360), Animation.Time.ToString());
+		//	Font.DrawText(new Point(20, 380), Animation.CurrentFrame.ToString());
+
 		}
 
 		#endregion
@@ -105,6 +126,12 @@ namespace DungeonEye
 		/// 
 		/// </summary>
 		Animation Animation;
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		TextureFont Font;
 
 		#endregion
 

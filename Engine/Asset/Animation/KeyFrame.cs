@@ -12,7 +12,7 @@ namespace ArcEngine.Asset
 	/// <summary>
 	/// 
 	/// </summary>
-	public class KeyFrame : IComparer
+	public class KeyFrame : IComparable<KeyFrame>
 	{
 
 		#region IO routines
@@ -68,21 +68,31 @@ namespace ArcEngine.Asset
 			{
 				switch (node.Name.ToLower())
 				{
-					case "id":
+					case "tile":
 					{
 						TileID = int.Parse(node.Attributes["id"].Value);
 					}
 					break;
 
-					case "frame":
+					case "time":
 					{
-						Frame = int.Parse(node.Attributes["id"].Value);
+						Time = TimeSpan.Parse(node.Attributes["value"].Value);
+
 					}
 					break;
 
 					case "location":
 					{
 						Location = new Point(int.Parse(node.Attributes["x"].Value), int.Parse(node.Attributes["y"].Value));
+					}
+					break;
+
+					case "bgcolor":
+					{
+						BgColor = Color.FromArgb(Byte.Parse(node.Attributes["r"].Value),
+							Byte.Parse(node.Attributes["g"].Value),
+							Byte.Parse(node.Attributes["b"].Value),
+							Byte.Parse(node.Attributes["a"].Value));
 					}
 					break;
 
@@ -95,20 +105,6 @@ namespace ArcEngine.Asset
 
 		#endregion
 
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="x"></param>
-		/// <param name="y"></param>
-		/// <returns></returns>
-		public int Compare(object x, object y)
-		{
-			KeyFrame a = x as KeyFrame;
-			KeyFrame b = y as KeyFrame;
-
-			return a.Frame - b.Frame;
-		}
 
 
 		#region Properties
@@ -133,9 +129,9 @@ namespace ArcEngine.Asset
 		}
 
 		/// <summary>
-		/// ID of the frame
+		/// Time of the KeyFrame
 		/// </summary>
-		public int Frame
+		public TimeSpan Time
 		{
 			get;
 			set;
@@ -151,7 +147,81 @@ namespace ArcEngine.Asset
 			set;
 		}
 
+
+		/// <summary>
+		/// Background color
+		/// </summary>
+		public Color BgColor
+		{
+			get;
+			set;
+		}
+		#endregion
+
+
+
+		#region Comparer
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		public static IComparer Sorter
+		{
+			get
+			{
+				return (IComparer)new KeyFrameComparer();
+			}
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="other"></param>
+		/// <returns></returns>
+		public int CompareTo(KeyFrame other)
+		{
+			if (other == null)
+				return 1;
+
+			if (other == this)
+				return 0;
+
+			if (Time > other.Time)
+				return 1;
+
+			return -1;
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		private class KeyFrameComparer : IComparer<KeyFrame>
+		{
+			public int Compare(KeyFrame x, KeyFrame y)
+			{
+				if (x == null && y == null)
+					return 0;
+		
+				else if (x == null)
+					return -1;
+				
+				else if (y == null)
+					return 1;
+
+				if (x == y)
+					return 0;
+
+				return (int) (x.Time.Ticks - y.Time.Ticks);
+			}
+
+		}
+
+
 		#endregion
 
 	}
+
 }
+

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
 using System.Xml;
+using System.Collections;
 
 
 namespace ArcEngine.Asset
@@ -10,7 +11,7 @@ namespace ArcEngine.Asset
 	/// <summary>
 	/// Class representing a layer in an animation
 	/// </summary>
-	public class AnimationLayer
+	public class AnimationLayer : IComparable<AnimationLayer>
 	{
 
 		/// <summary>
@@ -18,17 +19,8 @@ namespace ArcEngine.Asset
 		/// </summary>
 		public AnimationLayer()
 		{
-			KeyFrames = new PriorityQueue<KeyFrame>();
 
 
-			KeyFrame frame = new KeyFrame();
-			frame.Frame = 10;
-			KeyFrames.Push(frame);
-
-
-			KeyFrame frame2 = new KeyFrame();
-			frame2.Frame = 2;
-			KeyFrames.Push(frame2);
 
 		}
 
@@ -39,6 +31,7 @@ namespace ArcEngine.Asset
 		/// <param name="node"></param>
 		public AnimationLayer(XmlNode node)
 		{
+			
 			Load(node);
 		}
 
@@ -91,7 +84,6 @@ namespace ArcEngine.Asset
 				return false;
 			}
 
-			Name = xml.Attributes["name"].Value;
 
 			// Process datas
 			XmlNodeList nodes = xml.ChildNodes;
@@ -99,6 +91,12 @@ namespace ArcEngine.Asset
 			{
 				switch (node.Name.ToLower())
 				{
+					case "name":
+					{
+						Name = node.Attributes["value"].Value;
+					}
+					break;
+
 					case "viewport":
 					{
 						Viewport = new Rectangle(int.Parse(node.Attributes["x"].Value),
@@ -108,11 +106,17 @@ namespace ArcEngine.Asset
 					}
 					break;
 
+					case "id":
+					{
+						ID = int.Parse(node.Attributes["value"].Value);
+					}
+					break;
+
 					case "keyframe":
 					{
 						KeyFrame key = new KeyFrame();
 						key.Load(node);
-						
+						AddKeyFrame(key);
 					}
 					break;
 
@@ -131,7 +135,125 @@ namespace ArcEngine.Asset
 		#endregion
 
 
+		#region Frames management
+
+
+
+		/// <summary>
+		/// Adds a frame
+		/// </summary>
+		/// <param name="frame">KeyFrame to add</param>
+		public void AddKeyFrame(KeyFrame frame)
+		{
+			if (frame == null)
+				return;
+
+			KeyFrames.Add(frame);
+			KeyFrames.Sort();
+		}
+
+
+		/// <summary>
+		/// Removes a KeyFrame
+		/// </summary>
+		/// <param name="frame"></param>
+		public void RemoveKeyFrame(KeyFrame frame)
+		{
+		}
+
+
+
+		/// <summary>
+		/// Removes the KeyFrame at a given TimeSpan
+		/// </summary>
+		/// <param name="time"></param>
+		/// <returns></returns>
+		public bool RemoveKeyFrame(TimeSpan time)
+		{
+
+			return false;
+		}
+
+
+		/// <summary>
+		/// Returns the next Keyframe
+		/// </summary>
+		/// <param name="time"></param>
+		/// <returns>The next KeyFrame, or the last KeyFrame</returns>
+		public KeyFrame GetNextKeyFrame(TimeSpan time)
+		{
+			for (int i = 0; i < KeyFrames.Count; i++)
+			{
+				if (KeyFrames[i].Time > time)
+					return KeyFrames[i];
+			}
+
+			return KeyFrames[KeyFrames.Count - 1];
+		}
+
+
+
+		/// <summary>
+		/// Returns the previous Keyframe
+		/// </summary>
+		/// <param name="time"></param>
+		/// <returns>The previous KeyFrame, or the first KeyFrame</returns>
+		public KeyFrame GetPreviousKeyFrame(TimeSpan time)
+		{
+			for (int i = KeyFrames.Count - 1; i >= 0; i--)
+			{
+				if (KeyFrames[i].Time < time)
+					return KeyFrames[i];
+			}
+
+			return KeyFrames[0];
+		}
+
+
+
+		/// <summary>
+		/// Return the frame at a given time
+		/// </summary>
+		/// <param name="time">Frame time</param>
+		/// <returns>Frame</returns>
+		public Frame GetFrame(TimeSpan time)
+		{
+			if (time.TotalMilliseconds < 0 || time > Length)
+				return null;
+
+			KeyFrame next = GetNextKeyFrame(time);
+			KeyFrame prev = GetPreviousKeyFrame(time);
+
+			// Length between to keyframes
+			float delta = (float)(time - prev.Time).TotalMilliseconds / (float)(next.Time - prev.Time).TotalMilliseconds;
+
+
+			Point location = prev.Location;
+
+			location.Offset(
+				(int) ((next.Location.X - prev.Location.X) * delta),
+				(int) ((next.Location.Y - prev.Location.Y) * delta));
+
+
+
+			return new Frame(time, prev.TileID, location, prev.BgColor);	
+		}
+
+
+		#endregion
+
+
 		#region Properties
+
+		/// <summary>
+		/// ID of the layer
+		/// </summary>
+		public int ID
+		{
+			get;
+			set;
+		}
+
 
 		/// <summary>
 		/// Name of the layer
@@ -162,6 +284,7 @@ namespace ArcEngine.Asset
 			set;
 		}
 
+
 		/// <summary>
 		/// Viewport of the layer
 		/// </summary>
@@ -172,13 +295,89 @@ namespace ArcEngine.Asset
 		}
 
 
+		/// <summary>
+		/// Number of frame in the layer
+		/// </summary>
+		public TimeSpan Length
+		{
+			get
+			{
+				if (KeyFrames.Count == 0)
+					return TimeSpan.Zero;
+
+				return KeyFrames[KeyFrames.Count - 1].Time;
+			}
+		}
+
 
 		/// <summary>
 		/// Keyframes of the layer
 		/// </summary>
-		PriorityQueue<KeyFrame> KeyFrames;
+		List<KeyFrame> KeyFrames = new List<KeyFrame>();
 
 
 		#endregion
+
+
+		#region Comparer
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		public static IComparer Sorter
+		{
+			get
+			{
+				return (IComparer)new AnimationLayerComparer();
+			}
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="other"></param>
+		/// <returns></returns>
+		public int CompareTo(AnimationLayer other)
+		{
+			if (other == null)
+				return 1;
+
+			if (other == this)
+				return 0;
+
+			if (ID > other.ID)
+				return 1;
+
+			return -1;
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		private class AnimationLayerComparer : IComparer<AnimationLayer>
+		{
+			public int Compare(AnimationLayer x, AnimationLayer y)
+			{
+				if (x == null && y == null)
+					return 0;
+
+				else if (x == null)
+					return -1;
+
+				else if (y == null)
+					return 1;
+
+				if (x == y)
+					return 0;
+
+				return (int)(x.ID - y.ID);
+			}
+
+		}
+
+
+		#endregion	
 	}
 }

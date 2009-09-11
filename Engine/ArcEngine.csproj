@@ -119,6 +119,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Asset\Animation\Frame.cs" />
     <Compile Include="Asset\Animation\KeyFrame.cs" />
     <Compile Include="Asset\Animation\AnimationLayer.cs" />
     <Compile Include="Asset\IAsset.cs" />
@@ -237,7 +238,6 @@
     <Compile Include="Input\GamePad.cs" />
     <Compile Include="Input\GamePadCapabilities.cs" />
     <Compile Include="KeyboardScheme.cs" />
-    <Compile Include="PriorityQueue.cs" />
     <Compile Include="Providers\AudioProvider.cs" />
     <Compile Include="Providers\KeyboardSchemeProvider.cs" />
     <Compile Include="ScreenManager\GameScreen.cs" />
