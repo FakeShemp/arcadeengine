@@ -253,6 +253,20 @@ namespace ArcEngine.Providers
 			Fonts.Clear();
 		}
 
+		/// <summary>
+		/// Returns the number of known assets
+		/// </summary>
+		/// <typeparam name="T">Type of the asset</typeparam>
+		/// <returns>Number of available asset</returns>
+		public override int Count<T>()
+		{
+			if (typeof(T) == typeof(TextureFont))
+				return Fonts.Count;
+
+			return 0;
+		}
+
+
 
 		#endregion
 
@@ -292,9 +306,11 @@ namespace ArcEngine.Providers
 		/// <param name="name">Name of the asset</param>
 		public override void RemoveShared<T>(string name)
 		{
+			CheckValue<T>(name);
+			
 			if (typeof(T) == typeof(TextureFont))
 			{
-				SharedFonts[name] = null;
+				SharedFonts.Remove(name);
 			}
 		}
 
@@ -329,7 +345,7 @@ namespace ArcEngine.Providers
 
 
 
-		#region Progerties
+		#region Properties
 
 		/// <summary>
 		/// TTFFonts definition

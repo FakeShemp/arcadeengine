@@ -184,26 +184,16 @@ namespace ArcEngine.Providers
 			List<string> list = new List<string>();
 
 			if (typeof(T) == typeof(AnimationA))
-			{
 				foreach (string key in Animations.Keys)
-				{
 					list.Add(key);
-				}
-			}
 
 			else if (typeof(T) == typeof(Animation))
-			{
 				foreach (string key in KeyFrameAnimations.Keys)
-				{
 					list.Add(key);
-				}
-			}
 
 			list.Sort();
 			return list;
 		}
-
-
 
 
 		/// <summary>
@@ -216,7 +206,7 @@ namespace ArcEngine.Providers
 		{
 			CheckValue<T>(name);
 
-			if (typeof(T) == typeof(AnimationA))
+			if (typeof(T) == typeof(AnimationA) && Animations.ContainsKey(name))
 			{
 				AnimationA anim = new AnimationA();
 				anim.Load(Animations[name]);
@@ -225,7 +215,7 @@ namespace ArcEngine.Providers
 			}
 
 
-			if (typeof(T) == typeof(Animation))
+			if (typeof(T) == typeof(Animation) && KeyFrameAnimations.ContainsKey(name))
 			{
 				Animation anim = new Animation();
 				anim.Load(KeyFrameAnimations[name]);
@@ -250,19 +240,11 @@ namespace ArcEngine.Providers
 		{
 			CheckValue<T>(name);
 
-			if (typeof(T) == typeof(AnimationA))
-			{
-				if (Animations.ContainsKey(name))
-					return Animations[name];
-			}
+			if (typeof(T) == typeof(AnimationA) && Animations.ContainsKey(name))
+				return Animations[name];
 
-			if (typeof(T) == typeof(Animation))
-			{
-				if (KeyFrameAnimations.ContainsKey(name))
-					return KeyFrameAnimations[name];
-			}
-
-
+			if (typeof(T) == typeof(Animation) && KeyFrameAnimations.ContainsKey(name))
+				return KeyFrameAnimations[name];
 
 			return null;
 		}
@@ -270,21 +252,27 @@ namespace ArcEngine.Providers
 
 
 		/// <summary>
-		/// Flush unused scripts
+		/// Flush unused assets
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		public override void Remove<T>()
 		{
+			if (typeof(T) == typeof(Animation))
+				Animations.Clear();
 		}
 
 	
 		/// <summary>
-		/// Removes a script
+		/// Removes an asset
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="name"></param>
 		public override void Remove<T>(string name)
 		{
+			CheckValue<T>(name);
+
+			if (typeof(T) == typeof(Animation) && KeyFrameAnimations.ContainsKey(name))
+				KeyFrameAnimations.Remove(name);
 		}
 
 
@@ -296,6 +284,25 @@ namespace ArcEngine.Providers
 			Animations.Clear();
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <returns></returns>
+		public override int Count<T>()
+		{
+			if (typeof(T) == typeof(AnimationA))
+				return Animations.Count;
+
+
+			if (typeof(T) == typeof(Animation))
+				return KeyFrameAnimations.Count;
+
+			return 0;
+		}
+
+	
 		#endregion
 
 

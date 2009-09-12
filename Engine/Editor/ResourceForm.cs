@@ -30,10 +30,13 @@ using WeifenLuo.WinFormsUI.Docking;
 
 namespace ArcEngine.Editor
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	internal partial class ResourceForm : DockContent
 	{
 		/// <summary>
-		/// 
+		/// Cosntructor
 		/// </summary>
 		public ResourceForm()
 		{
@@ -47,10 +50,10 @@ namespace ArcEngine.Editor
 		/// </summary>
 		public void RebuildResourceTree()
 		{
-			RessourceTree.BeginUpdate();
+			ResourceTree.BeginUpdate();
 
-			RessourceTree.Nodes.Clear();
-			TreeNode bank = RessourceTree.Nodes.Add("Assets");
+			ResourceTree.Nodes.Clear();
+			TreeNode bank = ResourceTree.Nodes.Add("Assets");
 
 			// For each providers
 			foreach (Providers.Provider provider in ResourceManager.Providers)
@@ -58,10 +61,16 @@ namespace ArcEngine.Editor
 				// for each registred asset
 				foreach(Type type in provider.Assets)
 				{
-					TreeNode node = bank.Nodes.Add(type.Name);
+					// Get the number of asset
+					MethodInfo mi = provider.GetType().GetMethod("Count").MakeGenericMethod(type);
+					int count = (int) mi.Invoke(provider, null);
+					if (count == 0)
+						continue;
+
+					TreeNode node = bank.Nodes.Add(type.Name + " (" + count.ToString() + ")");
 
 					// Invoke the generic method like this : provider.GetAssets<[Asset Type]>();
-					MethodInfo mi = provider.GetType().GetMethod("GetAssets").MakeGenericMethod(type);
+					mi = provider.GetType().GetMethod("GetAssets").MakeGenericMethod(type);
 					List<string> list = mi.Invoke(provider, null) as List<string>;
 
 					foreach (string str in list)
@@ -74,12 +83,12 @@ namespace ArcEngine.Editor
 
 			// Binaries
 			TreeNode sub = bank.Nodes.Add("Binaries");
-			foreach (string name in ResourceManager.LoadedBinaries)
-				sub.Nodes.Add(name);
+			//foreach (string name in ResourceManager.LoadedBinaries)
+			//	sub.Nodes.Add(name);
 
 			// Trie le tout
-			RessourceTree.Sort();
-			RessourceTree.EndUpdate();
+			ResourceTree.Sort();
+			ResourceTree.EndUpdate();
 
 			bank.Expand();
 		}
@@ -90,7 +99,7 @@ namespace ArcEngine.Editor
 		/// </summary>
 		public void CollapseTree()
 		{
-			foreach (TreeNode node in RessourceTree.Nodes[0].Nodes)
+			foreach (TreeNode node in ResourceTree.Nodes[0].Nodes)
 			{
 				node.Collapse();
 			}
@@ -102,7 +111,7 @@ namespace ArcEngine.Editor
 		/// </summary>
 		public void ExpandTree()
 		{
-			RessourceTree.ExpandAll();
+			ResourceTree.ExpandAll();
 		}
 
 
@@ -120,10 +129,10 @@ namespace ArcEngine.Editor
 
 			if (e.Button == MouseButtons.Right)
 			{
-				TreeNode node = RessourceTree.GetNodeAt(e.X, e.Y);
+				TreeNode node = ResourceTree.GetNodeAt(e.X, e.Y);
 				BankContextMenu.Tag = node.Tag;
 
-				BankContextMenu.Show(RessourceTree, new Point(e.X, e.Y));
+				BankContextMenu.Show(ResourceTree, new Point(e.X, e.Y));
 			}
 		}
 
@@ -136,27 +145,27 @@ namespace ArcEngine.Editor
 		private void EraseMenu_Click(object sender, EventArgs e)
 		{
 			// Not an editable node
-			if (RessourceTree.SelectedNode == null)
+			if (ResourceTree.SelectedNode == null)
 				return;
 
 
-			if (MessageBox.Show("Do you really want to erase \"" + RessourceTree.SelectedNode.Text + "\" ?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+			if (MessageBox.Show("Do you really want to erase \"" + ResourceTree.SelectedNode.Text + "\" ?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
 				return;
 
 			// Get the provider
-			Providers.Provider provider = ResourceManager.GetAssetProvider(RessourceTree.SelectedNode.Tag as Type);
+			Providers.Provider provider = ResourceManager.GetAssetProvider(ResourceTree.SelectedNode.Tag as Type);
 			if (provider == null)
 				return;
 			
 			
-			object[] args = { RessourceTree.SelectedNode.Text };
+			object[] args = { ResourceTree.SelectedNode.Text };
 			Type[] types = new Type[]{typeof(string)};
-			MethodInfo mi = provider.GetType().GetMethod("Remove", types).MakeGenericMethod(RessourceTree.SelectedNode.Tag as Type);
+			MethodInfo mi = provider.GetType().GetMethod("Remove", types).MakeGenericMethod(ResourceTree.SelectedNode.Tag as Type);
 			mi.Invoke(provider, args);
 
 
-			RessourceTree.Nodes.Remove(RessourceTree.SelectedNode);
-			RessourceTree.Update();
+			ResourceTree.Nodes.Remove(ResourceTree.SelectedNode);
+			ResourceTree.Update();
 
 		}
 
@@ -169,19 +178,25 @@ namespace ArcEngine.Editor
 		private void OnTreeViewDoubleCick(object sender, EventArgs e)
 		{
 			// Not an editable node
-			if (RessourceTree.SelectedNode == null)
+			if (ResourceTree.SelectedNode == null)
 				return;
 
+			if (ResourceTree.SelectedNode.Text == "Binaries")
+			{
+				new BinaryForm().Show(DockPanel, DockState.Document);
+			}
+			
+
 			// Get the provider
-			Providers.Provider provider = ResourceManager.GetAssetProvider(RessourceTree.SelectedNode.Tag as Type);
+			Providers.Provider provider = ResourceManager.GetAssetProvider(ResourceTree.SelectedNode.Tag as Type);
 			if (provider == null)
 				return;
 
 			// Edit the asset
-			object[] args = { RessourceTree.SelectedNode.Text };
-			MethodInfo mi = provider.GetType().GetMethod("EditAsset").MakeGenericMethod(RessourceTree.SelectedNode.Tag as Type);
+			object[] args = { ResourceTree.SelectedNode.Text };
+			MethodInfo mi = provider.GetType().GetMethod("EditAsset").MakeGenericMethod(ResourceTree.SelectedNode.Tag as Type);
 			AssetEditor form = mi.Invoke(provider, args) as AssetEditor;
-			if (form == null)
+			if (form == null) 
 				return;
 
 			form.Show(DockPanel, DockState.Document);
@@ -193,7 +208,7 @@ namespace ArcEngine.Editor
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void RessourceTree_AfterLabelEdit(object sender, NodeLabelEditEventArgs e)
+		private void ResourceTree_AfterLabelEdit(object sender, NodeLabelEditEventArgs e)
 		{
 			e.CancelEdit = true;
 		}
@@ -204,9 +219,9 @@ namespace ArcEngine.Editor
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void RessourceTree_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+		private void ResourceTree_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
 		{
-			RessourceTree.SelectedNode = e.Node;
+			ResourceTree.SelectedNode = e.Node;
 		}
 
 		#endregion

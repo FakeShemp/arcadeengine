@@ -30,8 +30,8 @@ using ArcEngine.Asset;
 using ArcEngine.Forms;
 using ArcEngine.Graphic;
 using OpenTK.Graphics;
-using WeifenLuo.WinFormsUI.Docking;
 using OpenTK.Graphics.OpenGL;
+using WeifenLuo.WinFormsUI.Docking;
 
 namespace ArcEngine.Editor
 {

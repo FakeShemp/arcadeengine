@@ -163,7 +163,7 @@
     <Compile Include="Source\AutoMap.cs" />
     <Compile Include="Source\CharGen.cs" />
     <Compile Include="Source\Compass.cs" />
-    <Compile Include="Source\IntroScreen.cs" />
+    <Compile Include="IntroScreen.cs" />
     <Compile Include="Source\FlyingItem.cs" />
     <Compile Include="Source\SpellBook.cs" />
     <Compile Include="Source\GUI\Window.cs" />
@@ -180,7 +180,7 @@
     <Compile Include="Source\ForceField.cs" />
     <Compile Include="Source\Item.cs" />
     <Compile Include="Source\ItemSet.cs" />
-    <Compile Include="Source\MainMenu.cs" />
+    <Compile Include="MainMenu.cs" />
     <Compile Include="Source\Maze.cs">
     </Compile>
     <Compile Include="Source\Hero.cs" />
@@ -216,7 +216,7 @@
     </Compile>
     <Compile Include="Source\Spell.cs" />
     <Compile Include="Source\Stair.cs" />
-    <Compile Include="Source\Team.cs">
+    <Compile Include="Team.cs">
     </Compile>
     <Compile Include="Source\Teleporter.cs" />
     <Compile Include="Source\WallDecoration.cs" />

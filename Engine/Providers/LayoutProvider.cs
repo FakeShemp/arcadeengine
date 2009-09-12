@@ -193,13 +193,19 @@ namespace ArcEngine.Providers
 		{
 			CheckValue<T>(name);
 
-			if (!Layouts.ContainsKey(name))
-				return default(T);
+			if (typeof(T) == typeof(Layout))
+			{
+				if (!Layouts.ContainsKey(name))
+					return default(T);
 
-			Layout layout = new Layout();
-			layout.Load(Layouts[name]);
+				Layout layout = new Layout();
+				layout.Load(Layouts[name]);
 
-			return (T)(object)layout;
+				return (T)(object)layout;
+			}
+
+
+			return default(T);
 		}
 
 
@@ -214,10 +220,10 @@ namespace ArcEngine.Providers
 		{
 			CheckValue<T>(name);
 
-			if (!Layouts.ContainsKey(name))
-				return null;
+			if (typeof(T) == typeof(Layout) && Layouts.ContainsKey(name))
+					return Layouts[name];
 
-			return Layouts[name];
+			return null;
 		}
 
 
@@ -231,6 +237,11 @@ namespace ArcEngine.Providers
 		/// <param name="name"></param>
 		public override void Remove<T>(string name)
 		{
+			CheckValue<T>(name);
+
+			if (typeof(T) == typeof(Layout))
+				Layouts.Remove(name);
+
 		}
 
 
@@ -243,6 +254,8 @@ namespace ArcEngine.Providers
 		/// <typeparam name="T"></typeparam>
 		public override void Remove<T>()
 		{
+			if (typeof(T) == typeof(Layout))
+				Layouts.Clear();
 		}
 
 		/// <summary>
@@ -252,6 +265,21 @@ namespace ArcEngine.Providers
 		{
 			Layouts.Clear();
 		}
+
+
+		/// <summary>
+		/// Returns the number of known assets
+		/// </summary>
+		/// <typeparam name="T">Type of the asset</typeparam>
+		/// <returns>Number of available asset</returns>
+		public override int Count<T>()
+		{
+			if (typeof(T) == typeof(Layout))
+				return Layouts.Count;
+
+			return 0;
+		}
+
 
 		#endregion
 
@@ -324,6 +352,7 @@ namespace ArcEngine.Providers
 
 
 		#endregion
+
 
 		#region Progerties
 

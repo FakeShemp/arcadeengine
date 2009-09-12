@@ -122,9 +122,11 @@
     <Compile Include="Asset\Animation\Frame.cs" />
     <Compile Include="Asset\Animation\KeyFrame.cs" />
     <Compile Include="Asset\Animation\AnimationLayer.cs" />
+    <Compile Include="Asset\BinaryInformation.cs" />
     <Compile Include="Asset\IAsset.cs" />
     <Compile Include="Asset\Animation\Animation.cs" />
     <Compile Include="Asset\Language.cs" />
+    <Compile Include="Asset\Music.cs" />
     <Compile Include="Asset\ScriptModel.cs" />
     <Compile Include="Asset\Storyboard.cs" />
     <Compile Include="Asset\TextureFont.cs" />
@@ -139,6 +141,12 @@
     </Compile>
     <Compile Include="Editor\AnimationForm.Designer.cs">
       <DependentUpon>AnimationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editor\BinaryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor\BinaryForm.Designer.cs">
+      <DependentUpon>BinaryForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Editor\LayoutForm.cs">
       <SubType>Form</SubType>
@@ -338,6 +346,9 @@
     <EmbeddedResource Include="Editor\AnimationForm.resx">
       <DependentUpon>AnimationForm.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editor\BinaryForm.resx">
+      <DependentUpon>BinaryForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Editor\LayoutForm.resx">
       <DependentUpon>LayoutForm.cs</DependentUpon>

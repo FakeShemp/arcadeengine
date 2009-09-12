@@ -47,10 +47,12 @@ namespace ArcEngine.Providers
 		{
 			Sounds = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
 			SharedSounds = new Dictionary<string, Sound>(StringComparer.OrdinalIgnoreCase);
+			Musics = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
+			SharedMusics = new Dictionary<string, Music>(StringComparer.OrdinalIgnoreCase);
 
 			Name = "Audio";
-			Tags = new string[] { "audio" };
-			Assets = new Type[] { typeof(Sound) };
+			Tags = new string[] { "sound", "music" };
+			Assets = new Type[] { typeof(Sound), typeof(Music) };
 			Version = new Version(0, 1);
 			EditorImage = new Bitmap(ResourceManager.GetResource("ArcEngine.Data.Icons.TileSet.png"));
 
@@ -129,7 +131,6 @@ namespace ArcEngine.Providers
 		#endregion
 
 
-
 		#region Editor
 
 
@@ -174,6 +175,8 @@ namespace ArcEngine.Providers
 			if (typeof(T) == typeof(Sound))
 				Sounds[name] = node;
 
+			if (typeof(T) == typeof(Music))
+				Musics[name] = node;
 		}
 
 
@@ -188,10 +191,12 @@ namespace ArcEngine.Providers
 
 
 			if (typeof(T) == typeof(Sound))
-			{
 				foreach (string key in Sounds.Keys)
 					list.Add(key);
-			}
+
+			else if (typeof(T) == typeof(Music))
+				foreach (string key in Musics.Keys)
+					list.Add(key);
 
 			list.Sort();
 			return list;
@@ -208,15 +213,20 @@ namespace ArcEngine.Providers
 		{
 			CheckValue<T>(name);
 
-			if (typeof(T) == typeof(Sound))
+			if (typeof(T) == typeof(Sound) && Sounds.ContainsKey(name))
 			{
-				if (!Sounds.ContainsKey(name))
-					return default(T);
-
 				Sound sound = new Sound();
 				sound.Load(Sounds[name]);
 
 				return (T)(object)sound;
+			}
+
+			if (typeof(T) == typeof(Music) && Musics.ContainsKey(name))
+			{
+				Music music = new Music();
+				music.Load(Musics[name]);
+
+				return (T)(object)music;
 			}
 
 			return default(T);
@@ -234,11 +244,11 @@ namespace ArcEngine.Providers
 		{
 			CheckValue<T>(name);
 
-			if (typeof(T) == typeof(Sound))
-			{
-				if (Sounds.ContainsKey(name))
+			if (typeof(T) == typeof(Sound) && Sounds.ContainsKey(name))
 					return Sounds[name];
-			}
+
+			if (typeof(T) == typeof(Music) && Musics.ContainsKey(name))
+					return Musics[name];
 
 			return null;
 		}
@@ -252,6 +262,13 @@ namespace ArcEngine.Providers
 		/// <param name="name"></param>
 		public override void Remove<T>(string name)
 		{
+			CheckValue<T>(name);
+
+			if (typeof(T) == typeof(Music) && Musics.ContainsKey(name))
+				Musics.Remove(name);
+
+			if (typeof(T) == typeof(Sound) && Sounds.ContainsKey(name))
+				Sounds.Remove(name);
 		}
 
 
@@ -263,6 +280,11 @@ namespace ArcEngine.Providers
 		/// <typeparam name="T"></typeparam>
 		public override void Remove<T>()
 		{
+			if (typeof(T) == typeof(Music))
+				Musics.Clear();
+
+			if (typeof(T) == typeof(Sound))
+				Sounds.Clear();
 		}
 
 
@@ -272,6 +294,23 @@ namespace ArcEngine.Providers
 		public override void Clear()
 		{
 			Sounds.Clear();
+			Musics.Clear();
+		}
+
+		/// <summary>
+		/// Returns the number of known assets
+		/// </summary>
+		/// <typeparam name="T">Type of the asset</typeparam>
+		/// <returns>Number of available asset</returns>
+		public override int Count<T>()
+		{
+			if (typeof(T) == typeof(Sound))
+				return Sounds.Count;
+
+			if (typeof(T) == typeof(Music))
+				return Musics.Count;
+
+			return 0;
 		}
 
 		#endregion
@@ -348,8 +387,7 @@ namespace ArcEngine.Providers
 		#endregion
 
 
-
-		#region Progerties
+		#region Properties
 
 
 		/// <summary>
@@ -362,6 +400,16 @@ namespace ArcEngine.Providers
 		/// </summary>
 		Dictionary<string, Sound> SharedSounds;
 
+
+		/// <summary>
+		/// Music
+		/// </summary>
+		Dictionary<string, XmlNode> Musics;
+
+		/// <summary>
+		/// Shared Musics
+		/// </summary>
+		Dictionary<string, Music> SharedMusics;
 		#endregion
 	}
 }

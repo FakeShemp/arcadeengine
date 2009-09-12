@@ -152,7 +152,9 @@ namespace ArcEngine.Providers
 		public override void Add<T>(string name, XmlNode node)
 		{
 			CheckValue<T>(name);
-			Strings[name] = node;
+
+			if (typeof(T) == typeof(StringTable))
+				Strings[name] = node;
 		}
 
 
@@ -166,12 +168,9 @@ namespace ArcEngine.Providers
 			List<string> list = new List<string>();
 
 			if (typeof(T) == typeof(StringTable))
-			{
 				foreach (string key in Strings.Keys)
-				{
 					list.Add(key);
-				}
-			}
+
 
 			list.Sort();
 			return list;
@@ -189,14 +188,14 @@ namespace ArcEngine.Providers
 		{
 			CheckValue<T>(name);
 
-			if (!Strings.ContainsKey(name))
-				return default(T);
+			if (typeof(T) == typeof(KeyboardScheme) && Strings.ContainsKey(name))
+			{
+				StringTable str = new StringTable();
+				str.Load(Strings[name]);
+				return (T)(object)str;
+			}
 
-			// Creates a Texture
-			StringTable str = new StringTable();
-			str.Load(Strings[name]);
-
-			return (T)(object)str;
+			return default(T);
 		}
 
 
@@ -211,10 +210,10 @@ namespace ArcEngine.Providers
 		{
 			CheckValue<T>(name);
 
-			if (!Strings.ContainsKey(name))
-				return null;
+			if (typeof(T) == typeof(StringTable) && Strings.ContainsKey(name))
+				return Strings[name];
 
-			return Strings[name];
+			return null;
 		}
 
 
@@ -227,6 +226,11 @@ namespace ArcEngine.Providers
 		/// <param name="name"></param>
 		public override void Remove<T>(string name)
 		{
+			CheckValue<T>(name);
+
+			if (typeof(T) == typeof(StringTable) && Strings.ContainsKey(name))
+				Strings.Remove(name);
+			
 		}
 
 
@@ -237,6 +241,8 @@ namespace ArcEngine.Providers
 		/// <typeparam name="T"></typeparam>
 		public override void Remove<T>()
 		{
+			if (typeof(T) == typeof(StringTable))
+				Strings.Clear();
 		}
 
 
@@ -249,6 +255,21 @@ namespace ArcEngine.Providers
 			Strings.Clear();
 		}
 
+		/// <summary>
+		/// Returns the number of known assets
+		/// </summary>
+		/// <typeparam name="T">Type of the asset</typeparam>
+		/// <returns>Number of available asset</returns>
+		public override int Count<T>()
+		{
+			if (typeof(T) == typeof(StringTable))
+				return Strings.Count;
+
+			return 0;
+		}
+
+
+	
 		#endregion
 
 

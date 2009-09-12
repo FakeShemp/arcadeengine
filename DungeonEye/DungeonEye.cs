@@ -91,7 +91,7 @@ namespace DungeonEye
 			ResourceManager.AddProvider(new DungeonProvider());
 
 			// Load data
-			ResourceManager.LoadBank("data/data.bnk");
+		//	ResourceManager.LoadBank("data/data.bnk");
 
 			// Language to use
 			//Settings.StringTable = ResourceManager.CreateSharedAsset<StringTable>(Settings.LanguageName);

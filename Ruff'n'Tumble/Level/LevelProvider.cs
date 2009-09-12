@@ -111,7 +111,6 @@ namespace RuffnTumble.Asset
 		#endregion
 
 
-
 		#region Assets
 
 
@@ -149,7 +148,8 @@ namespace RuffnTumble.Asset
 		{
 			CheckValue<T>(name);
 
-			Levels[name] = node;
+			if(typeof(T) == typeof(Level))
+				Levels[name] = node;
 		}
 
 
@@ -161,17 +161,14 @@ namespace RuffnTumble.Asset
 		{
 			List<string> list = new List<string>();
 
-			foreach (string key in Levels.Keys)
-			{
-				list.Add(key);
-			}
 
+			if (typeof(T) == typeof(Level)) 
+				foreach (string key in Levels.Keys)
+					list.Add(key);
+	
 			list.Sort();
 			return list;
 		}
-
-
-
 
 
 
@@ -185,20 +182,21 @@ namespace RuffnTumble.Asset
 		{
 			CheckValue<T>(name);
 
-			if (!Levels.ContainsKey(name))
-				return default(T);
+			if (typeof(T) == typeof(Level) && Levels.ContainsKey(name))
+			{
+				Level level = new Level();
+				level.Load(Levels[name]);
 
-			// Creates a Texture
-			Level level = new Level();
-			level.Load(Levels[name]);
+				return (T)(object)level;
+			}
 
-			return (T)(object)level;
+			return default(T);
 		}
 
 
 
 		/// <summary>
-		/// Returns a <c>StringTable</c>
+		/// Returns an asset definition
 		/// </summary>
 		/// <typeparam name="T">Type of the asset</typeparam>
 		/// <param name="name">Asset's name</param>
@@ -207,32 +205,36 @@ namespace RuffnTumble.Asset
 		{
 			CheckValue<T>(name);
 
-			if (!Levels.ContainsKey(name))
-				return null;
+			if(typeof(T) == typeof(Level) && Levels.ContainsKey(name))
+				return Levels[name];
 
-			return Levels[name];
+			return null;
 		}
 
 
 
 		/// <summary>
-		/// Flush unused scripts
+		/// Flush unused assets
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		public override void Remove<T>()
 		{
+			if (typeof(T) == typeof(Level))
+				Levels.Clear();
 		}
 
 
 
 
 		/// <summary>
-		/// Removes a script
+		/// Removes an asset
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="name"></param>
 		public override void Remove<T>(string name)
 		{
+			if (typeof(T) == typeof(Level) && Levels.ContainsKey(name))
+				Levels.Remove(name);
 		}
 
 
@@ -242,7 +244,20 @@ namespace RuffnTumble.Asset
 		/// </summary>
 		public override void Clear()
 		{
+			Levels.Clear();
+		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <returns></returns>
+		public override int Count<T>()
+		{
+			if (typeof(T) == typeof(Level))
+				return Levels.Count;
+
+			return 0;
 		}
 
 
@@ -317,7 +332,7 @@ namespace RuffnTumble.Asset
 		#endregion
 
 
-		#region Progerties
+		#region Properties
 
 
 		/// <summary>

@@ -168,10 +168,9 @@ namespace ArcEngine.Providers
 			List<string> list = new List<string>();
 
 
-			foreach (string key in Schemes.Keys)
-			{
-				list.Add(key);
-			}
+			if (typeof(T) == typeof(KeyboardScheme))
+				foreach (string key in Schemes.Keys)
+					list.Add(key);
 
 
 			list.Sort();
@@ -190,17 +189,14 @@ namespace ArcEngine.Providers
 			CheckValue<T>(name);
 
 
-			if (!Schemes.ContainsKey(name))
-				return default(T);
+			if (typeof(T) == typeof(KeyboardScheme) && Schemes.ContainsKey(name))
+			{
+				KeyboardScheme scheme = new KeyboardScheme();
+				scheme.Load(Schemes[name]);
+				return (T)(object)scheme;
+			}
 
-
-			XmlNode node = Schemes[name];
-
-
-			KeyboardScheme scheme = new KeyboardScheme();
-			scheme.Load(node);
-
-			return (T)(object)scheme;
+			return default(T);
 		}
 
 
@@ -215,10 +211,10 @@ namespace ArcEngine.Providers
 		{
 			CheckValue<T>(name);
 
-			if (!Schemes.ContainsKey(name))
-				return null;
+			if (typeof(T) == typeof(KeyboardScheme) && Schemes.ContainsKey(name))
+				return Schemes[name];
 
-			return Schemes[name];
+			return null;
 		}
 
 
@@ -231,6 +227,10 @@ namespace ArcEngine.Providers
 		/// <param name="name"></param>
 		public override void Remove<T>(string name)
 		{
+			CheckValue<T>(name);
+
+			if (typeof(T) == typeof(KeyboardScheme) && Schemes.ContainsKey(name))
+				Schemes.Remove(name);
 		}
 
 
@@ -242,6 +242,8 @@ namespace ArcEngine.Providers
 		/// <typeparam name="T"></typeparam>
 		public override void Remove<T>()
 		{
+			if (typeof(T) == typeof(KeyboardScheme))
+				Schemes.Clear();
 		}
 
 
@@ -251,6 +253,20 @@ namespace ArcEngine.Providers
 		public override void Clear()
 		{
 			Schemes.Clear();
+		}
+
+
+		/// <summary>
+		/// Returns the number of known assets
+		/// </summary>
+		/// <typeparam name="T">Type of the asset</typeparam>
+		/// <returns>Number of available asset</returns>
+		public override int Count<T>()
+		{
+			if (typeof(T) == typeof(KeyboardScheme))
+				return Schemes.Count;
+
+			return 0;
 		}
 
 

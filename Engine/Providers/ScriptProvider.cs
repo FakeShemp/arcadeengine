@@ -275,6 +275,11 @@ namespace ArcEngine.Providers
 		/// <param name="name"></param>
 		public override void Remove<T>(string name)
 		{
+			CheckValue<T>(name);
+
+			if (typeof(T) == typeof(Script))
+				Scripts.Remove(name);
+
 		}
 
 
@@ -285,6 +290,8 @@ namespace ArcEngine.Providers
 		/// <typeparam name="T"></typeparam>
 		public override void Remove<T>()
 		{
+			if (typeof(T) == typeof(Script))
+				Scripts.Clear();
 		}
 
 
@@ -295,6 +302,19 @@ namespace ArcEngine.Providers
 		public override void Clear()
 		{
 			Scripts.Clear();
+		}
+
+		/// <summary>
+		/// Returns the number of known assets
+		/// </summary>
+		/// <typeparam name="T">Type of the asset</typeparam>
+		/// <returns>Number of available asset</returns>
+		public override int Count<T>()
+		{
+			if (typeof(T) == typeof(Script))
+				return Scripts.Count;
+
+			return 0;
 		}
 
 
@@ -335,9 +355,11 @@ namespace ArcEngine.Providers
 		/// <param name="name">Name of the asset</param>
 		public override void RemoveShared<T>(string name)
 		{
+			CheckValue<T>(name);
+
 			if (typeof(T) == typeof(Script))
 			{
-				SharedScripts[name] = null;
+				SharedScripts.Remove(name);
 			}
 		}
 

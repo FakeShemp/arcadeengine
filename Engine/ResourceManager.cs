@@ -586,8 +586,6 @@ namespace ArcEngine
 				return File.Open(resourcename, FileMode.Open, FileAccess.Read);
 			}
 
-
-
 			return null;
 		}
 
@@ -685,22 +683,28 @@ namespace ArcEngine
 				settings.Encoding = ASCIIEncoding.ASCII;
 
 		
+				// For each Provider
 				foreach (Provider provider in Providers)
 				{
-						// for each registred asset
+					// for each registred asset
 					foreach (Type type in provider.Assets)
 					{
+						// Get the number of asset
+						MethodInfo mi = provider.GetType().GetMethod("Count").MakeGenericMethod(type);
+						int count = (int)mi.Invoke(provider, null);
+						if (count == 0)
+							continue;
+
 						ms = new MemoryStream();
 						doc = XmlWriter.Create(ms, settings);
 						doc.WriteStartDocument(true);
 						doc.WriteStartElement("bank");
 
-					//	provider.Save(type, doc);
 
 						// Invoke the generic method like this : provider.Save<[Asset Type]>(XmlNode node);
 						object[] args = { doc };
 						Type[] types = new Type[] { typeof(XmlWriter) };
-						MethodInfo mi = provider.GetType().GetMethod("Save", types).MakeGenericMethod(type);
+						mi = provider.GetType().GetMethod("Save", types).MakeGenericMethod(type);
 						mi.Invoke(provider, args);
 
 		

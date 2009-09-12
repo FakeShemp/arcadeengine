@@ -214,21 +214,16 @@ namespace DungeonEye
 			List<string> list = new List<string>();
 
 			if (typeof(T) == typeof(Dungeon))
-			{
 				foreach (string key in Dungeons.Keys)
 					list.Add(key);
-			}
+
 			else if (typeof(T) == typeof(Monster))
-			{
 				foreach (string key in Monsters.Keys)
 					list.Add(key);
-			}
+
 			else if (typeof(T) == typeof(ItemSet))
-			{
 				foreach (string key in ItemSets.Keys)
 					list.Add(key);
-			}
-
 
 			list.Sort();
 			return list;
@@ -243,29 +238,26 @@ namespace DungeonEye
 		public override T Create<T>(string name)
 		{
 
-			Type type = typeof(T);
+			CheckValue<T>(name);
 
 
-			if (type == typeof(Dungeon) && Dungeons.ContainsKey(name))
+			if (typeof(T) == typeof(Dungeon) && Dungeons.ContainsKey(name))
 			{
-				CheckValue<T>(name);
 				Dungeon dungeon = new Dungeon();
 				dungeon.Load(Dungeons[name]);
 				return (T)(object)dungeon;
 			}
 
-			if (type == typeof(Monster) && Monsters.ContainsKey(name))
+			if (typeof(T) == typeof(Monster) && Monsters.ContainsKey(name))
 			{
-				CheckValue<T>(name);
 				Monster monster = new Monster();
 				monster.Load(Monsters[name]);
 				return (T)(object)monster;
 			}
 
 
-			if (type == typeof(ItemSet) && ItemSets.ContainsKey(name))
+			if (typeof(T) == typeof(ItemSet) && ItemSets.ContainsKey(name))
 			{
-				CheckValue<T>(name);
 				ItemSet item = new ItemSet();
 				item.Load(ItemSets[name]);
 				return (T)(object)item;
@@ -288,27 +280,14 @@ namespace DungeonEye
 		{
 			CheckValue<T>(name);
 
-			if (typeof(Dungeon) == typeof(T))
-			{
-				if (!Dungeons.ContainsKey(name))
-					return null;
-
+			if (typeof(Dungeon) == typeof(T) && Dungeons.ContainsKey(name))
 				return Dungeons[name];
-			}
-			else if (typeof(Monster) == typeof(T))
-			{
-				if (!Monsters.ContainsKey(name))
-					return null;
 
+			else if (typeof(Monster) == typeof(T) && Monsters.ContainsKey(name))
 				return Monsters[name];
-			}
-			else if (typeof(ItemSet) == typeof(T))
-			{
-				if (!ItemSets.ContainsKey(name))
-					return null;
 
+			else if (typeof(ItemSet) == typeof(T) && ItemSets.ContainsKey(name))
 				return ItemSets[name];
-			}
 
 			return null;
 		}
@@ -321,6 +300,14 @@ namespace DungeonEye
 		/// <typeparam name="T"></typeparam>
 		public override void Remove<T>()
 		{
+			if (typeof(Dungeon) == typeof(T))
+				Dungeons.Clear();
+
+			else if (typeof(Monster) == typeof(T))
+				Monsters.Clear();
+
+			else if (typeof(ItemSet) == typeof(T))
+				ItemSets.Clear();
 		}
 
 
@@ -331,6 +318,14 @@ namespace DungeonEye
 		/// <param name="name"></param>
 		public override void Remove<T>(string name)
 		{
+			if (typeof(Dungeon) == typeof(T) && Dungeons.ContainsKey(name))
+				Dungeons.Remove(name);
+
+			else if (typeof(Monster) == typeof(T) && Monsters.ContainsKey(name))
+				Monsters.Remove(name);
+
+			else if (typeof(ItemSet) == typeof(T) && ItemSets.ContainsKey(name))
+				ItemSets.Remove(name);
 		}
 
 
@@ -344,6 +339,27 @@ namespace DungeonEye
 			Monsters.Clear();
 			ItemSets.Clear();
 		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <returns></returns>
+		public override int Count<T>()
+		{
+			if (typeof(T) == typeof(Dungeon))
+				return Dungeons.Count;
+
+			if (typeof(T) == typeof(Monster))
+				return Monsters.Count;
+
+			if (typeof(T) == typeof(ItemSet))
+				return ItemSets.Count;
+
+			return 0;
+		}
+
 
 		#endregion
 

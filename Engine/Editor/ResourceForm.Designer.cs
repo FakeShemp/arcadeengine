@@ -30,7 +30,7 @@
 		{
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ResourceForm));
-			this.RessourceTree = new System.Windows.Forms.TreeView();
+			this.ResourceTree = new System.Windows.Forms.TreeView();
 			this.BankContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.EraseResourceItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.MainImageList = new System.Windows.Forms.ImageList(this.components);
@@ -39,25 +39,25 @@
 			// 
 			// RessourceTree
 			// 
-			this.RessourceTree.ContextMenuStrip = this.BankContextMenu;
-			this.RessourceTree.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.RessourceTree.FullRowSelect = true;
-			this.RessourceTree.HideSelection = false;
-			this.RessourceTree.HotTracking = true;
-			this.RessourceTree.ImageIndex = 0;
-			this.RessourceTree.ImageList = this.MainImageList;
-			this.RessourceTree.LabelEdit = true;
-			this.RessourceTree.Location = new System.Drawing.Point(0, 0);
-			this.RessourceTree.Name = "RessourceTree";
-			this.RessourceTree.SelectedImageIndex = 0;
-			this.RessourceTree.ShowRootLines = false;
-			this.RessourceTree.Size = new System.Drawing.Size(187, 273);
-			this.RessourceTree.TabIndex = 1;
-			this.RessourceTree.TabStop = false;
-			this.RessourceTree.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.RessourceTree_AfterLabelEdit);
-			this.RessourceTree.DoubleClick += new System.EventHandler(this.OnTreeViewDoubleCick);
-			this.RessourceTree.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp);
-			this.RessourceTree.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.RessourceTree_NodeMouseClick);
+			this.ResourceTree.ContextMenuStrip = this.BankContextMenu;
+			this.ResourceTree.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.ResourceTree.FullRowSelect = true;
+			this.ResourceTree.HideSelection = false;
+			this.ResourceTree.HotTracking = true;
+			this.ResourceTree.ImageIndex = 0;
+			this.ResourceTree.ImageList = this.MainImageList;
+			this.ResourceTree.LabelEdit = true;
+			this.ResourceTree.Location = new System.Drawing.Point(0, 0);
+			this.ResourceTree.Name = "RessourceTree";
+			this.ResourceTree.SelectedImageIndex = 0;
+			this.ResourceTree.ShowRootLines = false;
+			this.ResourceTree.Size = new System.Drawing.Size(187, 273);
+			this.ResourceTree.TabIndex = 1;
+			this.ResourceTree.TabStop = false;
+			this.ResourceTree.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.ResourceTree_AfterLabelEdit);
+			this.ResourceTree.DoubleClick += new System.EventHandler(this.OnTreeViewDoubleCick);
+			this.ResourceTree.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp);
+			this.ResourceTree.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.ResourceTree_NodeMouseClick);
 			// 
 			// BankContextMenu
 			// 
@@ -122,13 +122,13 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(187, 273);
-			this.Controls.Add(this.RessourceTree);
+			this.Controls.Add(this.ResourceTree);
 			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.HideOnClose = true;
 			this.Name = "ResourceForm";
 			this.ShowInTaskbar = false;
-			this.TabText = "ResourceForm";
-			this.Text = "ResourceForm";
+			this.TabText = "Assets :";
+			this.Text = "Assets :";
 			this.BankContextMenu.ResumeLayout(false);
 			this.ResumeLayout(false);
 
@@ -136,7 +136,7 @@
 
 		#endregion
 
-		public System.Windows.Forms.TreeView RessourceTree;
+		public System.Windows.Forms.TreeView ResourceTree;
 		private System.Windows.Forms.ContextMenuStrip BankContextMenu;
 		private System.Windows.Forms.ToolStripMenuItem EraseResourceItem;
 		private System.Windows.Forms.ImageList MainImageList;

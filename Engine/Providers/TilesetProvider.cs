@@ -129,7 +129,6 @@ namespace ArcEngine.Providers
 		#endregion
 
 
-
 		#region Editor
 
 
@@ -170,7 +169,9 @@ namespace ArcEngine.Providers
 		public override void Add<T>(string name, XmlNode node)
 		{
 			CheckValue<T>(name);
-			TileSets[name] = node;
+
+			if (typeof(T) == typeof(TileSet))
+				TileSets[name] = node;
 		}
 
 
@@ -185,12 +186,8 @@ namespace ArcEngine.Providers
 
 
 			if (typeof(T) == typeof(TileSet))
-			{
 				foreach (string key in TileSets.Keys)
-				{
 					list.Add(key);
-				}
-			}
 
 			list.Sort();
 			return list;
@@ -207,13 +204,14 @@ namespace ArcEngine.Providers
 		{
 			CheckValue<T>(name);
 
-			if (!TileSets.ContainsKey(name))
-				return default(T);
+			if (typeof(T) == typeof(TileSet) && TileSets.ContainsKey(name))
+			{
+				TileSet tileset = new TileSet();
+				tileset.Load(TileSets[name]);
+				return (T)(object)tileset;
+			}
 
-			TileSet tileset = new TileSet();
-			tileset.Load(TileSets[name]);
-
-			return (T)(object)tileset;
+			return default(T);
 		}
 
 
@@ -228,13 +226,11 @@ namespace ArcEngine.Providers
 		{
 			CheckValue<T>(name);
 
-			if (!TileSets.ContainsKey(name))
-				return null;
+			if (typeof(T) == typeof(TileSet) && TileSets.ContainsKey(name))
+				return TileSets[name];
 
-			//TileSet ts = new TileSet();
-			//ts.Load(TileSets[name]);
 
-			return TileSets[name];
+			return null;
 		}
 
 
@@ -246,6 +242,11 @@ namespace ArcEngine.Providers
 		/// <param name="name"></param>
 		public override void Remove<T>(string name)
 		{
+			CheckValue<T>(name);
+
+			if (typeof(T) == typeof(TileSet) && TileSets.ContainsKey(name))
+				TileSets.Remove(name);
+
 		}
 
 
@@ -257,7 +258,9 @@ namespace ArcEngine.Providers
 		/// <typeparam name="T"></typeparam>
 		public override void Remove<T>()
 		{
-		}
+			if (typeof(T) == typeof(TileSet))
+				TileSets.Clear();
+	}
 
 
 		/// <summary>
@@ -266,6 +269,19 @@ namespace ArcEngine.Providers
 		public override void Clear()
 		{
 			TileSets.Clear();
+		}
+
+		/// <summary>
+		/// Returns the number of known assets
+		/// </summary>
+		/// <typeparam name="T">Type of the asset</typeparam>
+		/// <returns>Number of available asset</returns>
+		public override int Count<T>()
+		{
+			if (typeof(T) == typeof(TileSet))
+				return TileSets.Count;
+
+			return 0;
 		}
 
 		#endregion
@@ -340,7 +356,6 @@ namespace ArcEngine.Providers
 
 
 		#endregion
-
 
 
 		#region Progerties

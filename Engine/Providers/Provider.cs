@@ -146,6 +146,13 @@ namespace ArcEngine.Providers
 		public abstract void Clear();
 
 
+		/// <summary>
+		/// Returns the number of known assets
+		/// </summary>
+		/// <typeparam name="T">Type of the asset</typeparam>
+		/// <returns>Number of available asset</returns>
+		public abstract int Count<T>();
+
 		#endregion
 
 
