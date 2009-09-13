@@ -69,7 +69,7 @@ namespace DungeonEye
 			Tileset = ResourceManager.CreateSharedAsset<TileSet>(TileSetName);
 			Tileset.Scale = new SizeF(2.0f, 2.0f);
 
-			Font = ResourceManager.CreateSharedAsset<TextureFont>("inventory");
+			Font = ResourceManager.CreateSharedAsset<Font2d>("inventory");
 
 			return true;
 		}
@@ -358,6 +358,18 @@ namespace DungeonEye
 
 
 		/// <summary>
+		/// Xml tag of the asset in bank
+		/// </summary>
+		public string XmlTag
+		{
+			get
+			{
+				return "monster";
+			}
+		}
+
+
+		/// <summary>
 		/// Is the monster dead
 		/// </summary>
 		public bool IsDead
@@ -508,7 +520,7 @@ namespace DungeonEye
 		/// <summary>
 		/// 
 		/// </summary>
-		TextureFont Font;
+		Font2d Font;
 
 		/// <summary>
 		/// Defines the size of the creature on the floor. 

@@ -143,6 +143,18 @@ namespace DungeonEye
 			set;
 		}
 
+
+		/// <summary>
+		/// Xml tag of the asset in bank
+		/// </summary>
+		public string XmlTag
+		{
+			get
+			{
+				return "walldecoration";
+			}
+		}
+
 		/// <summary>
 		/// TileSet of the decoration
 		/// </summary>

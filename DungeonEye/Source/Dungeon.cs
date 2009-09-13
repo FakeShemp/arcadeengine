@@ -254,6 +254,18 @@ namespace DungeonEye
 
 
 		/// <summary>
+		/// Xml tag of the asset in bank
+		/// </summary>
+		public string XmlTag
+		{
+			get
+			{
+				return "dungeon";
+			}
+		}
+
+
+		/// <summary>
 		/// Gets a list of all levels
 		/// </summary>
 		[Browsable(false)]

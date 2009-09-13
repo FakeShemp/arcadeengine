@@ -206,6 +206,10 @@ namespace ArcEngine.ScreenManager
 		/// <param name="time"></param>
 		public void Update(GameTime time)
 		{
+			// No screen to update
+			if (Screens.Count == 0)
+				return;
+
 			// Make a copy of the master screen list, to avoid confusion if
 			// the process of updating one screen adds or removes others.
 			Stack<GameScreen> screensToUpdate = new Stack<GameScreen>();
@@ -223,6 +227,10 @@ namespace ArcEngine.ScreenManager
 		/// </summary>
 		public void Draw()
 		{
+			// No screen to draw
+			if (Screens.Count == 0)
+				return;
+
 			Stack<GameScreen> screensToUpdate = new Stack<GameScreen>();
 			foreach (GameScreen scr in Screens)
 				screensToUpdate.Push(scr);

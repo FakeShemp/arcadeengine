@@ -216,6 +216,18 @@ namespace DungeonEye
 		}
 
 		/// <summary>
+		/// Xml tag of the asset in bank
+		/// </summary>
+		public string XmlTag
+		{
+			get
+			{
+				return "itemset";
+			}
+		}
+
+
+		/// <summary>
 		/// All items
 		/// </summary>
 		[Browsable(false)]

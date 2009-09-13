@@ -240,6 +240,18 @@ namespace ArcEngine.Asset
 
 
 		/// <summary>
+		/// Xml tag of the asset in bank
+		/// </summary>
+		public string XmlTag
+		{
+			get
+			{
+				return "animation";
+			}
+		}
+
+
+		/// <summary>
 		/// Name of the TileSet to use
 		/// </summary>
 		public string TileSetName

@@ -71,7 +71,7 @@ namespace RuffnTumble
 		/// <returns></returns>
 		public bool Init()
 		{
-			font = ResourceManager.CreateAsset<TextureFont>("Console");
+			font = ResourceManager.CreateAsset<Font2d>("Console");
 			if (font == null)
 			{
 				return false;
@@ -144,7 +144,7 @@ namespace RuffnTumble
 
 
 				// Y text location
-				pos.Y -= font.LineHeight;
+				pos.Y -= font.Size.Height;
 
 				// Draw text
 				//Font.DrawText(pos, LogMsg[i]);
@@ -317,7 +317,7 @@ namespace RuffnTumble
 		public bool IsActive;
 
 
-		TextureFont font;
+		Font2d font;
 
 /*
 		/// <summary>

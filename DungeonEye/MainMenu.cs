@@ -52,10 +52,13 @@ namespace DungeonEye
 		/// </summary>
 		public override void LoadContent()
 		{
+			ResourceManager.LoadBank("data/data.bnk");
+
+	
 			Tileset = ResourceManager.CreateAsset<TileSet>("Main Menu");
 			Tileset.Scale = new SizeF(2.0f, 2.0f);
 
-			Font = ResourceManager.CreateAsset<TextureFont>("intro");
+			Font = ResourceManager.CreateAsset<Font2d>("intro");
 
 
 			StringTable = ResourceManager.CreateAsset<StringTable>("main");
@@ -172,6 +175,11 @@ namespace DungeonEye
 			if (Keyboard.IsNewKeyPress(System.Windows.Forms.Keys.Escape))
 				ScreenManager.Game.Exit();
 
+
+			if (Keyboard.IsNewKeyPress(System.Windows.Forms.Keys.I))
+				ScreenManager.AddScreen(new IntroScreen());
+
+	
 			if (Keyboard.IsNewKeyPress(System.Windows.Forms.Keys.Up))
 			{
 				MenuID--;
@@ -251,7 +259,7 @@ namespace DungeonEye
 		/// <summary>
 		/// 
 		/// </summary>
-		TextureFont Font;
+		Font2d Font;
 
 		/// <summary>
 		/// List of buttons

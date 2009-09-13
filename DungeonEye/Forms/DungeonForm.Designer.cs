@@ -56,9 +56,11 @@
 			this.StrafeLeftBox = new System.Windows.Forms.Button();
 			this.TurnLeftBox = new System.Windows.Forms.Button();
 			this.GlPreviewControl = new OpenTK.GLControl();
+			this.panel1 = new System.Windows.Forms.Panel();
 			this.toolStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.groupBox1.SuspendLayout();
+			this.panel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// MazePropertyBox
@@ -70,9 +72,6 @@
 			// 
 			// toolStrip1
 			// 
-			this.toolStrip1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-							| System.Windows.Forms.AnchorStyles.Right)));
-			this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
 			this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ResetOffsetBox,
@@ -84,10 +83,11 @@
             this.toolStripSeparator3,
             this.EditWallButton,
             this.toolStripSeparator5});
-			this.toolStrip1.Location = new System.Drawing.Point(363, 0);
+			this.toolStrip1.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip1.Name = "toolStrip1";
 			this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-			this.toolStrip1.Size = new System.Drawing.Size(279, 25);
+			this.toolStrip1.Size = new System.Drawing.Size(456, 25);
+			this.toolStrip1.Stretch = true;
 			this.toolStrip1.TabIndex = 2;
 			this.toolStrip1.Text = "toolStrip1";
 			// 
@@ -166,7 +166,7 @@
             this.PreviewBox});
 			this.statusStrip1.Location = new System.Drawing.Point(0, 626);
 			this.statusStrip1.Name = "statusStrip1";
-			this.statusStrip1.Size = new System.Drawing.Size(1166, 22);
+			this.statusStrip1.Size = new System.Drawing.Size(836, 22);
 			this.statusStrip1.SizingGrip = false;
 			this.statusStrip1.TabIndex = 3;
 			this.statusStrip1.Text = "statusStrip1";
@@ -186,18 +186,18 @@
 			// hScrollBar1
 			// 
 			this.hScrollBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-							| System.Windows.Forms.AnchorStyles.Right)));
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.hScrollBar1.Location = new System.Drawing.Point(360, 609);
 			this.hScrollBar1.Maximum = 200;
 			this.hScrollBar1.Name = "hScrollBar1";
-			this.hScrollBar1.Size = new System.Drawing.Size(789, 17);
+			this.hScrollBar1.Size = new System.Drawing.Size(459, 17);
 			this.hScrollBar1.TabIndex = 4;
 			// 
 			// vScrollBar1
 			// 
 			this.vScrollBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-							| System.Windows.Forms.AnchorStyles.Right)));
-			this.vScrollBar1.Location = new System.Drawing.Point(1149, 25);
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.vScrollBar1.Location = new System.Drawing.Point(819, 25);
 			this.vScrollBar1.Maximum = 200;
 			this.vScrollBar1.Name = "vScrollBar1";
 			this.vScrollBar1.Size = new System.Drawing.Size(17, 584);
@@ -209,14 +209,12 @@
 			// 
 			// glControl
 			// 
-			this.glControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-							| System.Windows.Forms.AnchorStyles.Left)
-							| System.Windows.Forms.AnchorStyles.Right)));
 			this.glControl.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.glControl.BackColor = System.Drawing.Color.Black;
-			this.glControl.Location = new System.Drawing.Point(363, 25);
+			this.glControl.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.glControl.Location = new System.Drawing.Point(0, 25);
 			this.glControl.Name = "glControl";
-			this.glControl.Size = new System.Drawing.Size(786, 584);
+			this.glControl.Size = new System.Drawing.Size(456, 581);
 			this.glControl.TabIndex = 7;
 			this.glControl.VSync = true;
 			this.glControl.DoubleClick += new System.EventHandler(this.glControl_DoubleClick);
@@ -326,17 +324,28 @@
 			this.GlPreviewControl.VSync = true;
 			this.GlPreviewControl.Paint += new System.Windows.Forms.PaintEventHandler(this.GlPreviewControl_Paint);
 			// 
+			// panel1
+			// 
+			this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.panel1.Controls.Add(this.glControl);
+			this.panel1.Controls.Add(this.toolStrip1);
+			this.panel1.Location = new System.Drawing.Point(360, 0);
+			this.panel1.Name = "panel1";
+			this.panel1.Size = new System.Drawing.Size(456, 606);
+			this.panel1.TabIndex = 9;
+			// 
 			// DungeonForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1166, 648);
-			this.Controls.Add(this.glControl);
+			this.ClientSize = new System.Drawing.Size(836, 648);
+			this.Controls.Add(this.panel1);
 			this.Controls.Add(this.MazePropertyBox);
 			this.Controls.Add(this.vScrollBar1);
 			this.Controls.Add(this.hScrollBar1);
 			this.Controls.Add(this.statusStrip1);
-			this.Controls.Add(this.toolStrip1);
 			this.Controls.Add(this.groupBox1);
 			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Name = "DungeonForm";
@@ -350,6 +359,8 @@
 			this.statusStrip1.PerformLayout();
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
+			this.panel1.ResumeLayout(false);
+			this.panel1.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -383,5 +394,6 @@
 		private System.Windows.Forms.Button StrafeLeftBox;
 		private System.Windows.Forms.Button TurnLeftBox;
 		private System.Windows.Forms.ToolStripStatusLabel PreviewBox;
+		private System.Windows.Forms.Panel panel1;
 	}
 }

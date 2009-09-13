@@ -112,6 +112,18 @@ namespace ArcEngine.Asset
 
 
 		/// <summary>
+		/// Xml tag of the asset in bank
+		/// </summary>
+		public string XmlTag
+		{
+			get
+			{
+				return "scriptmodel";
+			}
+		}
+
+
+		/// <summary>
 		/// Source code of the model
 		/// </summary>
 		public string Source;

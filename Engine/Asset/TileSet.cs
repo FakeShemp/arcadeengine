@@ -517,6 +517,18 @@ namespace ArcEngine.Asset
 
 
 		/// <summary>
+		/// Xml tag of the asset in bank
+		/// </summary>
+		public string XmlTag
+		{
+			get
+			{
+				return "tileset";
+			}
+		}
+
+
+		/// <summary>
 		/// List of all tiles in the TileSet
 		/// </summary>
 		[Browsable(false)]

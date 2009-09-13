@@ -129,7 +129,7 @@
     <Compile Include="Asset\Music.cs" />
     <Compile Include="Asset\ScriptModel.cs" />
     <Compile Include="Asset\Storyboard.cs" />
-    <Compile Include="Asset\TextureFont.cs" />
+    <Compile Include="Asset\Font2d.cs" />
     <Compile Include="Editor\AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>

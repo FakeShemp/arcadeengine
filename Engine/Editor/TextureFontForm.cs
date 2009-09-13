@@ -48,7 +48,7 @@ namespace ArcEngine.Editor
 			
 			FontPropertyBox.SelectedObject = CurrentFont;
 
-			CurrentFont = new ArcEngine.Asset.TextureFont();
+			CurrentFont = new ArcEngine.Asset.Font2d();
 			CurrentFont.Load(node);
 
 
@@ -103,7 +103,7 @@ namespace ArcEngine.Editor
 			XmlDocument doc = new XmlDocument();
 			doc.LoadXml(xml);
 
-			ResourceManager.AddAsset<ArcEngine.Asset.TextureFont>(CurrentFont.Name, doc.DocumentElement);
+			ResourceManager.AddAsset<ArcEngine.Asset.Font2d>(CurrentFont.Name, doc.DocumentElement);
 		}
 
 
@@ -224,7 +224,7 @@ namespace ArcEngine.Editor
 		/// <summary>
 		/// Current font
 		/// </summary>
-		ArcEngine.Asset.TextureFont CurrentFont = null;
+		ArcEngine.Asset.Font2d CurrentFont = null;
 
 
 		// Background texture

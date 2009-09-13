@@ -289,6 +289,18 @@ namespace ArcEngine.Asset
 			set;
 		}
 
+
+		/// <summary>
+		/// Xml tag of the asset in bank
+		/// </summary>
+		public string XmlTag
+		{
+			get
+			{
+				return "animationA";
+			}
+		}
+
 		/// <summary>
 		/// Current Tile ID
 		/// </summary>

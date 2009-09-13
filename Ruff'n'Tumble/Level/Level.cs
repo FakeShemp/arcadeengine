@@ -444,6 +444,18 @@ namespace RuffnTumble.Asset
 			set;
 		}
 
+
+		/// <summary>
+		/// Xml tag of the asset in bank
+		/// </summary>
+		public string XmlTag
+		{
+			get
+			{
+				return "level";
+			}
+		}
+
 		/// <summary>
 		/// If true, level is ready to be used. Else call Init() to make it ready to use.
 		/// </summary>

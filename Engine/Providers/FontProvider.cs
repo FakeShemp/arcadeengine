@@ -43,11 +43,11 @@ namespace ArcEngine.Providers
 		public FontProvider()
 		{
 			Fonts = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
-			SharedFonts = new Dictionary<string, TextureFont>(StringComparer.OrdinalIgnoreCase);
+			SharedFonts = new Dictionary<string, Font2d>(StringComparer.OrdinalIgnoreCase);
 
 			Name = "Font";
-			Tags = new string[] {"texturefont" };
-			Assets = new Type[] { typeof(TextureFont) };
+			Tags = new string[] { "font2d" };
+			Assets = new Type[] { typeof(Font2d) };
 			Version = new Version(0, 1);
 			EditorImage = new Bitmap(ResourceManager.GetResource("ArcEngine.Data.Icons.Font.png"));
 
@@ -66,7 +66,7 @@ namespace ArcEngine.Providers
 		/// <returns></returns>
 		public override bool Save<T>(XmlWriter xml)
 		{
-			if (typeof(T) == typeof(TextureFont))
+			if (typeof(T) == typeof(Font2d))
 			{
 				foreach (XmlNode node in Fonts.Values)
 					node.WriteTo(xml);
@@ -88,7 +88,7 @@ namespace ArcEngine.Providers
 
 			switch (xml.Name.ToLower())
 			{
-				case "texturefont":
+				case "font2d":
 				{
 
 					string name = xml.Attributes["name"].Value;
@@ -125,7 +125,7 @@ namespace ArcEngine.Providers
 		{
 			AssetEditor form = null;
 
-			if (typeof(T) == typeof(TextureFont))
+			if (typeof(T) == typeof(Font2d))
 			{
 				XmlNode node = null;
 				if (Fonts.ContainsKey(name))
@@ -153,12 +153,9 @@ namespace ArcEngine.Providers
 		{
 			CheckValue<T>(name);
 
-			//if (typeof(T) == typeof(TTFFont))
-			//   TTFFonts[name] = node;
-
-			//if (typeof(T) == typeof(TextureFont))
-			//   TextureFonts[name] = node;
-
+			if (typeof(T) == typeof(Font2d))
+				Fonts[name] = node;
+	
 		}
 
 
@@ -197,7 +194,7 @@ namespace ArcEngine.Providers
 			if (!Fonts.ContainsKey(name))
 				return default(T);
 
-			TextureFont font = new TextureFont();
+			Font2d font = new Font2d();
 			font.Load(Fonts[name]);
 
 			return (T)(object)font;
@@ -260,7 +257,7 @@ namespace ArcEngine.Providers
 		/// <returns>Number of available asset</returns>
 		public override int Count<T>()
 		{
-			if (typeof(T) == typeof(TextureFont))
+			if (typeof(T) == typeof(Font2d))
 				return Fonts.Count;
 
 			return 0;
@@ -282,12 +279,12 @@ namespace ArcEngine.Providers
 		/// <returns>The resource</returns>
 		public override T CreateShared<T>(string name)
 		{
-			if (typeof(T) == typeof(TextureFont))
+			if (typeof(T) == typeof(Font2d))
 			{
 				if (SharedFonts.ContainsKey(name))
 					return (T)(object)SharedFonts[name];
 
-				TextureFont font = new TextureFont();
+				Font2d font = new Font2d();
 				font.Load(Fonts[name]);
 				SharedFonts[name] = font;
 
@@ -308,7 +305,7 @@ namespace ArcEngine.Providers
 		{
 			CheckValue<T>(name);
 			
-			if (typeof(T) == typeof(TextureFont))
+			if (typeof(T) == typeof(Font2d))
 			{
 				SharedFonts.Remove(name);
 			}
@@ -323,7 +320,7 @@ namespace ArcEngine.Providers
 		/// <typeparam name="T">Type of the asset to remove</typeparam>
 		public override void RemoveShared<T>()
 		{
-			if (typeof(T) == typeof(TextureFont))
+			if (typeof(T) == typeof(Font2d))
 			{
 				SharedFonts.Clear();
 			}
@@ -356,7 +353,7 @@ namespace ArcEngine.Providers
 		/// <summary>
 		/// Shared fonts
 		/// </summary>
-		Dictionary<string, TextureFont> SharedFonts;
+		Dictionary<string, Font2d> SharedFonts;
 
 		#endregion
 	}

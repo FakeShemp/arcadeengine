@@ -396,6 +396,18 @@ namespace ArcEngine.Asset
 		}
 
 		/// <summary>
+		/// Xml tag of the asset in bank
+		/// </summary>
+		public string XmlTag
+		{
+			get
+			{
+				return "sound";
+			}
+		}
+
+
+		/// <summary>
 		/// ID of the sound buffer
 		/// </summary>
 		int Buffer;

@@ -118,6 +118,18 @@ namespace DungeonEye.Source
 		}
 
 
+
+		/// <summary>
+		/// Xml tag of the asset in bank
+		/// </summary>
+		public string XmlTag
+		{
+			get
+			{
+				return "spell";
+			}
+		}
+
 		///// <summary>
 		///// Description of the spell
 		///// </summary>

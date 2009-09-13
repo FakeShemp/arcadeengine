@@ -52,7 +52,6 @@ namespace ArcEngine.Asset
 		#endregion
 
 
-
 		#region Properties
 
 
@@ -63,6 +62,15 @@ namespace ArcEngine.Asset
 		{
 			get;
 			set;
+		}
+
+
+		/// <summary>
+		/// Xml tag of the asset in bank file
+		/// </summary>
+		string XmlTag
+		{
+			get;
 		}
 
 

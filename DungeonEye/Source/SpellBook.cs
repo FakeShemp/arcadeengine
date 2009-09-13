@@ -52,7 +52,7 @@ namespace DungeonEye
 		/// </summary>
 		public void LoadContent()
 		{
-			Font = ResourceManager.CreateAsset<TextureFont>("inventory");
+			Font = ResourceManager.CreateAsset<Font2d>("inventory");
 		}
 
 
@@ -190,7 +190,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Display font
 		/// </summary>
-		TextureFont Font;
+		Font2d Font;
 
 
 		/// <summary>

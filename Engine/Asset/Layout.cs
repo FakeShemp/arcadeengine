@@ -274,6 +274,18 @@ namespace ArcEngine.Asset
 
 
 		/// <summary>
+		/// Xml tag of the asset in bank
+		/// </summary>
+		public string XmlTag
+		{
+			get
+			{
+				return "layout";
+			}
+		}
+
+
+		/// <summary>
 		/// Background Color
 		/// </summary>
 		public Color Color

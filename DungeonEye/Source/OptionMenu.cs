@@ -55,7 +55,7 @@ namespace DungeonEye
 			Tileset = ResourceManager.CreateAsset<TileSet>("Main Menu");
 			Tileset.Scale = new SizeF(2.0f, 2.0f);
 
-			Font = ResourceManager.CreateAsset<TextureFont>("intro");
+			Font = ResourceManager.CreateAsset<Font2d>("intro");
 
 
 			StringTable = ResourceManager.CreateAsset<StringTable>("option");
@@ -261,7 +261,7 @@ namespace DungeonEye
 		/// <summary>
 		/// 
 		/// </summary>
-		TextureFont Font;
+		Font2d Font;
 
 		/// <summary>
 		/// List of buttons

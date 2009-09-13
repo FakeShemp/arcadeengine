@@ -217,6 +217,18 @@ namespace RuffnTumble.Asset
 
 
 		/// <summary>
+		/// Xml tag of the asset in bank
+		/// </summary>
+		public string XmlTag
+		{
+			get
+			{
+				return "model";
+			}
+		}
+
+
+		/// <summary>
 		/// Nom du script a utiliser
 		/// </summary>
 		[CategoryAttribute("Script")]

@@ -188,7 +188,7 @@ namespace ArcEngine.Providers
 		{
 			CheckValue<T>(name);
 
-			if (typeof(T) == typeof(KeyboardScheme) && Strings.ContainsKey(name))
+			if (typeof(T) == typeof(StringTable) && Strings.ContainsKey(name))
 			{
 				StringTable str = new StringTable();
 				str.Load(Strings[name]);

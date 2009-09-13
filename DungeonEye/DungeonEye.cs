@@ -90,15 +90,13 @@ namespace DungeonEye
 			// Add the provider
 			ResourceManager.AddProvider(new DungeonProvider());
 
-			// Load data
-		//	ResourceManager.LoadBank("data/data.bnk");
 
 			// Language to use
 			//Settings.StringTable = ResourceManager.CreateSharedAsset<StringTable>(Settings.LanguageName);
 
 
-			GSM.AddScreen(new IntroScreen());
 			//GSM.AddScreen(new MainMenu());
+			GSM.AddScreen(new IntroScreen());
 			//GSM.AddScreen(new Team());
 		}
 

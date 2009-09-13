@@ -430,7 +430,7 @@ namespace RuffnTumble
 		/// <summary>
 		/// 
 		/// </summary>
-		TextureFont Font;
+		Font2d Font;
 
 
 		/// <summary>

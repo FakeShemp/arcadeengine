@@ -57,7 +57,7 @@ namespace DungeonEye
 			Tileset.Scale = new SizeF(2.0f, 2.0f);
 
 
-			Font = ResourceManager.CreateAsset<TextureFont>("intro");
+			Font = ResourceManager.CreateAsset<Font2d>("intro");
 
 
 			PlayButton = new ScreenButton(string.Empty, new Rectangle(48, 362, 166, 32));
@@ -174,7 +174,7 @@ namespace DungeonEye
 		/// <summary>
 		/// 
 		/// </summary>
-		TextureFont Font;
+		Font2d Font;
 
 
 		/// <summary>

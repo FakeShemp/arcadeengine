@@ -117,8 +117,8 @@ namespace DungeonEye
 
 
 
-			Font = ResourceManager.CreateSharedAsset<TextureFont>("inventory");
-			OutlinedFont = ResourceManager.CreateAsset<TextureFont>("outline");
+			Font = ResourceManager.CreateSharedAsset<Font2d>("inventory");
+			OutlinedFont = ResourceManager.CreateAsset<Font2d>("outline");
 
 			CampWindow.Init();
 			SpellBook.LoadContent();
@@ -2525,12 +2525,12 @@ namespace DungeonEye
 		/// <summary>
 		/// Display font
 		/// </summary>
-		TextureFont Font;
+		Font2d Font;
 
 		/// <summary>
 		/// Outlined font
 		/// </summary>
-		TextureFont OutlinedFont;
+		Font2d OutlinedFont;
 
 
 		/// <summary>

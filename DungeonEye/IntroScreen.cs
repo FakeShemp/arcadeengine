@@ -52,12 +52,12 @@ namespace DungeonEye
 		/// </summary>
 		public override void LoadContent()
 		{
-			ResourceManager.ClearAssets();
+			//ResourceManager.ClearAssets();
 			ResourceManager.LoadBank("data/intro.bnk");
 
 			Animation = ResourceManager.CreateAsset<Animation>("intro");
-
-			Font = ResourceManager.CreateAsset<TextureFont>("intro");
+			Font = ResourceManager.CreateAsset<Font2d>("intro");
+			Font.TileSet.Scale = new SizeF(2, 2);
 		}
 
 
@@ -81,6 +81,7 @@ namespace DungeonEye
 
 			// Bye bye
 			if (Keyboard.IsNewKeyPress(Keys.Escape))
+				//ScreenManager.RemoveScreen(this); 
 				ScreenManager.Game.Exit();
 
 			// Pause animation
@@ -137,7 +138,7 @@ namespace DungeonEye
 		/// <summary>
 		/// 
 		/// </summary>
-		TextureFont Font;
+		Font2d Font;
 
 		#endregion
 
