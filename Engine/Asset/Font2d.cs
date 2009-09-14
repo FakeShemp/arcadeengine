@@ -68,17 +68,24 @@ namespace ArcEngine.Asset
 			Batch.Begin();
 			foreach (char c in text)
 			{
+				// Get the tile
 				Tile tile = TileSet.GetTile(c - GlyphOffset);
 				if (tile == null)
 					continue;
 
+				// Scale the glyph
+			//	rect.Size = new Size((int)(tile.Rectangle.Width * TileSet.Scale.Width), (int)(tile.Rectangle.Height * TileSet.Scale.Height));
 
-				rect.Size = new Size((int)(tile.Rectangle.Width * TileSet.Scale.Width), (int)(tile.Rectangle.Height * TileSet.Scale.Height));
+				// Move the glyph according to its hot spot
+				Rectangle tmp = new Rectangle(
+					new Point(rect.X - (int)(tile.HotSpot.X * TileSet.Scale.Width), rect.Y - (int)(tile.HotSpot.Y * TileSet.Scale.Height)), 
+					new Size((int)(tile.Rectangle.Width * TileSet.Scale.Width), (int)(tile.Rectangle.Height * TileSet.Scale.Height)));
 
+				// Add glyph to the batch
+				Batch.Blit(tmp, tile.Rectangle, Color);
 
-				Batch.Blit(rect, tile.Rectangle, Color);
-
-				rect.Offset(rect.Size.Width + Advance, 0);
+				// Move to the next glyph
+				rect.Offset(tmp.Size.Width + Advance, 0);
 			}
 			Batch.End();
 

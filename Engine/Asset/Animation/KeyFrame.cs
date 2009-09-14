@@ -15,6 +15,16 @@ namespace ArcEngine.Asset
 	public class KeyFrame : IComparable<KeyFrame>
 	{
 
+		/// <summary>
+		/// Default constructor
+		/// </summary>
+		public KeyFrame()
+		{
+			TileID = -1;
+			TextID = -1;
+		}
+
+
 		#region IO routines
 
 		///
@@ -71,6 +81,7 @@ namespace ArcEngine.Asset
 					case "tile":
 					{
 						TileID = int.Parse(node.Attributes["id"].Value);
+						TileLocation = new Point(int.Parse(node.Attributes["x"].Value), int.Parse(node.Attributes["y"].Value));
 					}
 					break;
 
@@ -81,18 +92,25 @@ namespace ArcEngine.Asset
 					}
 					break;
 
-					case "location":
-					{
-						Location = new Point(int.Parse(node.Attributes["x"].Value), int.Parse(node.Attributes["y"].Value));
-					}
-					break;
-
 					case "bgcolor":
 					{
 						BgColor = Color.FromArgb(Byte.Parse(node.Attributes["r"].Value),
 							Byte.Parse(node.Attributes["g"].Value),
 							Byte.Parse(node.Attributes["b"].Value),
 							Byte.Parse(node.Attributes["a"].Value));
+					}
+					break;
+
+
+					case "text":
+					{
+						TextID = int.Parse(node.Attributes["id"].Value);
+						TextColor = Color.FromArgb(
+							byte.Parse(node.Attributes["a"].Value),
+							byte.Parse(node.Attributes["r"].Value),
+							byte.Parse(node.Attributes["g"].Value),
+							byte.Parse(node.Attributes["b"].Value));
+						TextLocation = new Point(int.Parse(node.Attributes["x"].Value), int.Parse(node.Attributes["y"].Value));
 					}
 					break;
 
@@ -141,7 +159,7 @@ namespace ArcEngine.Asset
 		/// <summary>
 		/// Location of the tile
 		/// </summary>
-		public Point Location
+		public Point TileLocation
 		{
 			get;
 			set;
@@ -152,6 +170,35 @@ namespace ArcEngine.Asset
 		/// Background color
 		/// </summary>
 		public Color BgColor
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Text to use in the StringTable
+		/// </summary>
+		public int TextID
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// Location of the text
+		/// </summary>
+		public Point TextLocation
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// Color of the text
+		/// </summary>
+		public Color TextColor
 		{
 			get;
 			set;

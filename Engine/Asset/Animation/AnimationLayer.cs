@@ -17,10 +17,10 @@ namespace ArcEngine.Asset
 		/// <summary>
 		/// Default construcor
 		/// </summary>
-		public AnimationLayer()
+		public AnimationLayer(Animation anim)
 		{
 
-
+			Animation = anim;
 
 		}
 
@@ -120,6 +120,7 @@ namespace ArcEngine.Asset
 					}
 					break;
 
+
 					default:
 					{
 						Trace.WriteLine("AnimationLayer : Unknown node element found (" + node.Name + ")");
@@ -210,42 +211,19 @@ namespace ArcEngine.Asset
 
 
 
-		/// <summary>
-		/// Return the frame at a given time
-		/// </summary>
-		/// <param name="time">Frame time</param>
-		/// <returns>Frame</returns>
-		public Frame GetFrame(TimeSpan time)
-		{
-		//	if (time.TotalMilliseconds < 0 || time > Length)
-		//		return null;
-
-			KeyFrame next = GetNextKeyFrame(time);
-			KeyFrame prev = GetPreviousKeyFrame(time);
-
-			if (next == null | prev == null)
-				return null;
-
-			// Length between to keyframes
-			float delta = (float)(time - prev.Time).TotalMilliseconds / (float)(next.Time - prev.Time).TotalMilliseconds;
-
-
-			Point location = prev.Location;
-
-			location.Offset(
-				(int) ((next.Location.X - prev.Location.X) * delta),
-				(int) ((next.Location.Y - prev.Location.Y) * delta));
-
-
-
-			return new Frame(time, prev.TileID, location, prev.BgColor);	
-		}
-
-
 		#endregion
 
 
 		#region Properties
+
+		/// <summary>
+		/// Parent animation
+		/// </summary>
+		public Animation Animation
+		{
+			get;
+			private set;
+		}
 
 		/// <summary>
 		/// ID of the layer

@@ -56,6 +56,8 @@ namespace DungeonEye
 			ResourceManager.LoadBank("data/intro.bnk");
 
 			Animation = ResourceManager.CreateAsset<Animation>("intro");
+			Animation.Font.TileSet.Scale = new SizeF(2, 2);
+
 			Font = ResourceManager.CreateAsset<Font2d>("intro");
 			Font.TileSet.Scale = new SizeF(2, 2);
 		}
@@ -116,11 +118,11 @@ namespace DungeonEye
 
 
 			// Debug info
-			if (Font != null)
-			{
-				Font.Color = Color.White;
-				Font.DrawText(new Point(20, 360), Animation.Time.ToString());
-			}
+			//if (Font != null)
+			//{
+			//   Font.Color = Color.White;
+			//   Font.DrawText(new Point(20, 160), Animation.Time.ToString());
+			//}
 		}
 
 		#endregion

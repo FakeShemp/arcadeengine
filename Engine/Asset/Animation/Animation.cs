@@ -97,8 +97,23 @@ namespace ArcEngine.Asset
 
 					case "layer":
 					{
-						AnimationLayer layer = new AnimationLayer(node);
-						AddLayer(layer);
+						AnimationLayer layer = CreateLayer();
+						layer.Load(node);
+					}
+					break;
+
+
+					case "stringtable":
+					{
+						StringTableName = node.Attributes["name"].Value;
+						StringTable = ResourceManager.CreateAsset<StringTable>(StringTableName);
+					}
+					break;
+
+					case "font":
+					{
+						FontName = node.Attributes["name"].Value;
+						Font = ResourceManager.CreateAsset<Font2d>(FontName);
 					}
 					break;
 
@@ -146,12 +161,12 @@ namespace ArcEngine.Asset
 			Display.Scissor = true;
 			foreach (AnimationLayer layer in Layers)
 			{
-				Frame frame = layer.GetFrame(Time);
-				if (frame == null)
-					break;
+			//	Frame frame = layer.GetFrame(Time);
+			//	if (frame == null)
+			//		break;
+				Frame frame = new Frame(layer, Time);
+				frame.Draw();
 
-				Display.ScissorZone = layer.Viewport;
-				TileSet.Draw(frame.TileID, frame.Location);
 			}
 
 			Display.Scissor = false;
@@ -185,14 +200,15 @@ namespace ArcEngine.Asset
 		/// <summary>
 		/// Add an AnimationLayer
 		/// </summary>
-		/// <param name="layer"></param>
-		public void AddLayer(AnimationLayer layer)
+		/// <returns>Created layer</returns>
+		public AnimationLayer CreateLayer()
 		{
-			if (layer == null)
-				return;
 
+			AnimationLayer layer = new AnimationLayer(this);
 			Layers.Add(layer);
-			Layers.Sort();	
+			Layers.Sort();
+
+			return layer;
 		}
 
 
@@ -232,11 +248,7 @@ namespace ArcEngine.Asset
 		/// <summary>
 		/// Name of the animation
 		/// </summary>
-		public string Name
-		{
-			get;
-			set;
-		}
+		public string Name { get; set; }
 
 
 		/// <summary>
@@ -260,11 +272,35 @@ namespace ArcEngine.Asset
 			set;
 		}
 
-
 		/// <summary>
 		/// Tileset
 		/// </summary>
-		TileSet TileSet;
+		public TileSet TileSet
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// Name of the Font to use
+		/// </summary>
+		public string FontName
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Font
+		/// </summary>
+		public Font2d Font
+		{
+			get;
+			private set;
+		}
+
+
 
 
 		/// <summary>
@@ -275,20 +311,28 @@ namespace ArcEngine.Asset
 		/// <summary>
 		/// Pause the animation
 		/// </summary>
-		public bool Pause
-		{
-			get;
-			set;
-		}
+		public bool Pause { get; set; }
 
 
 		/// <summary>
 		/// Current time position in the animation
 		/// </summary>
-		public TimeSpan Time
+		public TimeSpan Time { get; set; }
+
+
+		/// <summary>
+		/// Name of the StringTable to use
+		/// </summary>
+		public string StringTableName  { get; set; }
+
+
+		/// <summary>
+		/// StringTable
+		/// </summary>
+		public StringTable StringTable
 		{
 			get;
-			set;
+			private set;
 		}
 
 		#endregion

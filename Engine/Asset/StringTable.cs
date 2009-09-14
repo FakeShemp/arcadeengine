@@ -196,7 +196,12 @@ namespace ArcEngine.Asset
 		public string GetString(int id)
 		{
 			if (CurrentLanguage == null)
-				return string.Empty;
+			{
+				// Try default language
+				CurrentLanguage = GetLanguage(Default);
+				if (CurrentLanguage == null)
+					return string.Empty;
+			}
 
 			string str = string.Empty;
 
