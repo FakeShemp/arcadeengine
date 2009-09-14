@@ -219,7 +219,7 @@ namespace DungeonEye.Gui
 
 
 			Font.Color = Color.FromArgb(85, 255, 255);
-			Font.DrawText(new Point(8, 10), "Camp :");
+			Font.DrawText("Camp :", new Point(8, 10));
 
 
 
@@ -246,7 +246,7 @@ namespace DungeonEye.Gui
 				// Text
 				point.Offset(6, 6);
 				Font.Color = button.TextColor;
-				Font.DrawText(point, button.Text);
+				Font.DrawText(button.Text, point);
 
 
 			}

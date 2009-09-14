@@ -52,9 +52,9 @@ namespace ArcEngine.Asset
 		/// <summary>
 		/// Prints some text on the screen
 		/// </summary>
-		/// <param name="pos">Offset of the text</param>
 		/// <param name="text">Texte to print</param>
-		public void DrawText(Point pos, string text)
+		/// <param name="pos">Offset of the text</param>
+		public void DrawText(string text, Point pos)
 		{
 			if (string.IsNullOrEmpty(text))
 				return;
@@ -73,9 +73,6 @@ namespace ArcEngine.Asset
 				if (tile == null)
 					continue;
 
-				// Scale the glyph
-			//	rect.Size = new Size((int)(tile.Rectangle.Width * TileSet.Scale.Width), (int)(tile.Rectangle.Height * TileSet.Scale.Height));
-
 				// Move the glyph according to its hot spot
 				Rectangle tmp = new Rectangle(
 					new Point(rect.X - (int)(tile.HotSpot.X * TileSet.Scale.Width), rect.Y - (int)(tile.HotSpot.Y * TileSet.Scale.Height)), 
@@ -93,6 +90,99 @@ namespace ArcEngine.Asset
 			Display.DrawBatch(Batch, BeginMode.Quads);
 		}
 
+
+		/// <summary>
+		/// Prints some text on the screen within a rectangle with left justification
+		/// </summary>
+		/// <param name="text">Text to print</param>
+		/// <param name="rectangle">Rectangle of the text</param>
+		public void DrawText(string text, Rectangle rectangle)
+		{
+			DrawText(text, rectangle, TextJustification.Left);
+		}
+
+
+		/// <summary>
+		/// Prints some text on the screen within a rectangle with justification
+		/// </summary>
+		/// <param name="text">Text to print</param>
+		/// <param name="rectangle">Rectangle of the text</param>
+		/// <param name="justification">Needed justifcation</param>
+		public void DrawText(string text, Rectangle rectangle, TextJustification justification)
+		{
+			if (string.IsNullOrEmpty(text))
+				return;
+
+			Point loc = rectangle.Location;
+			Rectangle rect = Rectangle.Empty;
+
+			Batch.Size = text.Length;
+			Display.Texture = TileSet.Texture;
+
+
+			Batch.Begin();
+			foreach (char c in text)
+			{
+				// New line
+				if (c ==  10)
+				{
+					loc.X = rectangle.X;
+					loc.Y += (int)(14 * TileSet.Scale.Height);
+				}
+
+
+				// Get the tile
+				Tile tile = TileSet.GetTile(c - GlyphOffset);
+				if (tile == null)
+					continue;
+
+
+				switch (justification)
+				{
+					case TextJustification.Left:
+					{
+						// Move the glyph according to its hot spot
+						rect.X = loc.X - (int)(tile.HotSpot.X * TileSet.Scale.Width);
+						rect.Y = loc.Y - (int)(tile.HotSpot.Y * TileSet.Scale.Height);
+						rect.Width = (int)(tile.Rectangle.Width * TileSet.Scale.Width);
+						rect.Height = (int)(tile.Rectangle.Height * TileSet.Scale.Height);
+
+
+						// Out of the rectangle
+						if (rect.Left > rectangle.Right)
+						{
+							rect.X = rectangle.X;
+							rect.Y = rect.Y + (int) (14 * TileSet.Scale.Height);
+							loc.Y += (int)(14 * TileSet.Scale.Height);
+						}
+					}
+					break;
+					case TextJustification.Center:
+					{
+					}
+					break;
+					case TextJustification.Right:
+					{
+					}
+					break;
+					case TextJustification.Justify:
+					{
+					}
+					break;
+				}
+
+
+				// Add glyph to the batch
+				Batch.Blit(rect, tile.Rectangle, Color);
+
+				// Move to the next glyph
+				loc.X = rect.Right + Advance;
+			}
+			Batch.End();
+
+
+			Display.DrawBatch(Batch, BeginMode.Quads);
+		}
 
 
 
@@ -407,5 +497,32 @@ namespace ArcEngine.Asset
 		public int GlyphOffset { get; set; }
 
 		#endregion
+	}
+
+
+	/// <summary>
+	/// Text justification
+	/// </summary>
+	public enum TextJustification
+	{
+		/// <summary>
+		/// 
+		/// </summary>
+		Left,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Center,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Right,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Justify
 	}
 }

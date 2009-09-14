@@ -304,14 +304,14 @@ namespace DungeonEye
 			foreach (ScreenMessage msg in Messages)
 			{
 				Font.Color = msg.Color;
-				Font.DrawText(new Point(10, 358 + i * 12), msg.Message);
+				Font.DrawText(msg.Message, new Point(10, 358 + i * 12));
 				i++;
 			}
 
 
 			// Team location
 			Font.Color = Color.White;
-			Font.DrawText(new Point(0, 340), Location.Position.ToString());
+			Font.DrawText(Location.Position.ToString(), new Point(0, 340));
 
 
 			// Draw the spell window
@@ -384,23 +384,23 @@ namespace DungeonEye
 					if (HeroToSwap == hero)
 					{
 						Font.Color = Color.Red;
-						Font.DrawText(new Point(pos.X + 4, pos.Y + 6), " Swapping");
+						Font.DrawText(" Swapping", new Point(pos.X + 4, pos.Y + 6));
 						Font.Color = Color.Black;
 					}
 					else if (SelectedHero == hero)
 					{
 						Font.Color = Color.White;
-						Font.DrawText(new Point(pos.X + 4, pos.Y + 6), hero.Name);
+						Font.DrawText(hero.Name, new Point(pos.X + 4, pos.Y + 6));
 						Font.Color = Color.Black;
 					}
 					else
 					{
 						Font.Color = Color.Black;
-						Font.DrawText(new Point(pos.X + 4, pos.Y + 6), hero.Name);
+						Font.DrawText(hero.Name, new Point(pos.X + 4, pos.Y + 6));
 					}
 
 					// HP
-					Font.DrawText(new Point(pos.X + 4, pos.Y + 88), hero.HitPoint + " of " + hero.MaxHitPoint);
+					Font.DrawText(hero.HitPoint + " of " + hero.MaxHitPoint, new Point(pos.X + 4, pos.Y + 88));
 
 
 
@@ -422,9 +422,9 @@ namespace DungeonEye
 
 							Font.Color = Color.White;
 							if (attack.Result > 0)
-								Font.DrawText(new Point(pos.X + 90, pos.Y + 32), attack.Result.ToString());
+								Font.DrawText(attack.Result.ToString(), new Point(pos.X + 90, pos.Y + 32));
 							else
-								Font.DrawText(new Point(pos.X + 76, pos.Y + 32), "MISS");
+								Font.DrawText("MISS", new Point(pos.X + 76, pos.Y + 32));
 						}
 						else
 						{
@@ -462,9 +462,9 @@ namespace DungeonEye
 
 							Font.Color = Color.White;
 							if (attack.Result > 0)
-								Font.DrawText(new Point(pos.X + 90, pos.Y + 64), attack.Result.ToString());
+								Font.DrawText(attack.Result.ToString(), new Point(pos.X + 90, pos.Y + 64));
 							else
-								Font.DrawText(new Point(pos.X + 76, pos.Y + 64), "MISS");
+								Font.DrawText("MISS", new Point(pos.X + 76, pos.Y + 64));
 						}
 						else
 						{
@@ -479,7 +479,7 @@ namespace DungeonEye
 					{
 						TileSet.Draw(20, new Point(pos.X + 24, pos.Y + 66));
 						Font.Color = Color.White;
-						Font.DrawText(new Point(pos.X + 52, pos.Y + 86), hero.LastHit.ToString());
+						Font.DrawText(hero.LastHit.ToString(), new Point(pos.X + 52, pos.Y + 86));
 					}
 	
 				}
@@ -509,11 +509,11 @@ namespace DungeonEye
 
 			// Name
 			OutlinedFont.Color = Color.White;
-			OutlinedFont.DrawText(new Point(430, 12), SelectedHero.Name);
+			OutlinedFont.DrawText(SelectedHero.Name, new Point(430, 12));
 
 			// HP and Food
 			Font.Color = Color.Black;
-			Font.DrawText(new Point(500, 30), SelectedHero.HitPoint + " of " + SelectedHero.MaxHitPoint);
+			Font.DrawText(SelectedHero.HitPoint + " of " + SelectedHero.MaxHitPoint, new Point(500, 30));
 
 			// Food
 			if (SelectedHero.Food > 50)
@@ -542,9 +542,9 @@ namespace DungeonEye
 			// Quiver count
 			Font.Color = Color.White;
 			if (SelectedHero.Quiver > 99)
-				Font.DrawText(new Point(454, 128), "++");
+				Font.DrawText("++", new Point(454, 128));
 			else
-				Font.DrawText(new Point(454, 128), SelectedHero.Quiver.ToString());
+				Font.DrawText(SelectedHero.Quiver.ToString(), new Point(454, 128));
 
 			// Armor
 			if (SelectedHero.GetInventoryItem(InventoryPosition.Armor) != null)
@@ -627,12 +627,12 @@ namespace DungeonEye
 
 
 			OutlinedFont.Color = Color.White;
-			OutlinedFont.DrawText(new Point(430, 12), SelectedHero.Name);
-			OutlinedFont.DrawText(new Point(370, 80), "Character info");
+			OutlinedFont.DrawText(SelectedHero.Name, new Point(430, 12));
+			OutlinedFont.DrawText("Character info", new Point(370, 80));
 
 			// HP and Food
 			Font.Color = Color.Black;
-			Font.DrawText(new Point(500, 30), SelectedHero.HitPoint + " of " + SelectedHero.MaxHitPoint);
+			Font.DrawText(SelectedHero.HitPoint + " of " + SelectedHero.MaxHitPoint, new Point(500, 30));
 
 			// Food
 			if (SelectedHero.Food > 50)
@@ -646,29 +646,29 @@ namespace DungeonEye
 
 
 			Font.Color = Color.Black;
-			Font.DrawText(new Point(366, 110), SelectedHero.Professions[0].Classe.ToString());
-			Font.DrawText(new Point(366, 124), SelectedHero.Alignment.ToString());
-			Font.DrawText(new Point(366, 138), SelectedHero.Race.ToString());
+			Font.DrawText(SelectedHero.Professions[0].Classe.ToString(), new Point(366, 110));
+			Font.DrawText(SelectedHero.Alignment.ToString(), new Point(366, 124));
+			Font.DrawText(SelectedHero.Race.ToString(), new Point(366, 138));
 
-			Font.DrawText(new Point(366, 166), "Strength");
-			Font.DrawText(new Point(366, 180), "Intelligence");
-			Font.DrawText(new Point(366, 194), "Wisdom");
-			Font.DrawText(new Point(366, 208), "Dexterity");
-			Font.DrawText(new Point(366, 222), "Constitution");
-			Font.DrawText(new Point(366, 236), "Charisma");
-			Font.DrawText(new Point(366, 250), "Armor class");
+			Font.DrawText("Strength", new Point(366, 166));
+			Font.DrawText("Intelligence", new Point(366, 180));
+			Font.DrawText("Wisdom", new Point(366, 194));
+			Font.DrawText("Dexterity", new Point(366, 208));
+			Font.DrawText("Constitution", new Point(366, 222));
+			Font.DrawText("Charisma", new Point(366, 236));
+			Font.DrawText("Armor class", new Point(366, 250));
 
-			Font.DrawText(new Point(470, 280), "EXP");
-			Font.DrawText(new Point(550, 280), "LVL");
+			Font.DrawText("EXP", new Point(470, 280));
+			Font.DrawText("LVL", new Point(550, 280));
 
 			Font.Color = Color.White;
-			Font.DrawText(new Point(552, 166), SelectedHero.Strength.ToString() + "/" + SelectedHero.MaxStrength.ToString());
-			Font.DrawText(new Point(552, 180), SelectedHero.Intelligence.ToString());
-			Font.DrawText(new Point(552, 194), SelectedHero.Wisdom.ToString());
-			Font.DrawText(new Point(552, 208), SelectedHero.Dexterity.ToString());
-			Font.DrawText(new Point(552, 222), SelectedHero.Constitution.ToString());
-			Font.DrawText(new Point(552, 236), SelectedHero.Charisma.ToString());
-			Font.DrawText(new Point(552, 250), SelectedHero.ArmorClass.ToString());
+			Font.DrawText(SelectedHero.Strength.ToString() + "/" + SelectedHero.MaxStrength.ToString(), new Point(552, 166));
+			Font.DrawText(SelectedHero.Intelligence.ToString(), new Point(552, 180));
+			Font.DrawText(SelectedHero.Wisdom.ToString(), new Point(552, 194));
+			Font.DrawText(SelectedHero.Dexterity.ToString(), new Point(552, 208));
+			Font.DrawText(SelectedHero.Constitution.ToString(), new Point(552, 222));
+			Font.DrawText(SelectedHero.Charisma.ToString(), new Point(552, 236));
+			Font.DrawText(SelectedHero.ArmorClass.ToString(), new Point(552, 250));
 
 
 			int y = 0;
@@ -679,11 +679,11 @@ namespace DungeonEye
 
 
 				Font.Color = Color.Black;
-				Font.DrawText(new Point(366, 300 + y), SelectedHero.Professions[i].Classe.ToString());
+				Font.DrawText(SelectedHero.Professions[i].Classe.ToString(), new Point(366, 300 + y));
 
 				Font.Color = Color.White;
-				Font.DrawText(new Point(460, 300 + y), SelectedHero.Professions[i].Experience.ToString());
-				Font.DrawText(new Point(560, 300 + y), SelectedHero.Professions[i].Level.ToString());
+				Font.DrawText(SelectedHero.Professions[i].Experience.ToString(), new Point(460, 300 + y));
+				Font.DrawText(SelectedHero.Professions[i].Level.ToString(), new Point(560, 300 + y));
 
 				y += 12;
 			}

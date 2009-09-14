@@ -118,11 +118,11 @@ namespace DungeonEye
 
 
 			// Debug info
-			//if (Font != null)
-			//{
-			//   Font.Color = Color.White;
-			//   Font.DrawText(new Point(20, 160), Animation.Time.ToString());
-			//}
+			if (Font != null)
+			{
+				Font.Color = Color.White;
+				Font.DrawText(Animation.Time.Seconds.ToString(), new Point(20, 160));
+			}
 		}
 
 		#endregion

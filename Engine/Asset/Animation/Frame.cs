@@ -59,11 +59,11 @@ namespace ArcEngine.Asset
 
 			// Text
 			TextID = prev.TextID;
-			loc = prev.TextLocation;
-			loc.Offset(
-				(int)((next.TextLocation.X - prev.TextLocation.X) * delta),
-				(int)((next.TextLocation.Y - prev.TextLocation.Y) * delta));
-			TextLocation = loc;
+			Rectangle rect = prev.TextRectangle;
+			rect.Offset(
+				(int)((next.TextRectangle.X - prev.TextRectangle.X) * delta),
+				(int)((next.TextRectangle.Y - prev.TextRectangle.Y) * delta));
+			TextRectangle = rect;
 
 		}
 
@@ -83,7 +83,7 @@ namespace ArcEngine.Asset
 			// Display text
 			if (TextID != -1 && Layer.Animation.StringTable != null && Layer.Animation.Font != null)
 			{
-				Layer.Animation.Font.DrawText(TextLocation, Layer.Animation.StringTable.GetString(TextID));
+				Layer.Animation.Font.DrawText(Layer.Animation.StringTable.GetString(TextID), TextRectangle, TextJustification.Left);
 			}
 		}
 
@@ -144,7 +144,7 @@ namespace ArcEngine.Asset
 		/// <summary>
 		/// Location of the text
 		/// </summary>
-		public Point TextLocation
+		public Rectangle TextRectangle
 		{
 			get;
 			private set;

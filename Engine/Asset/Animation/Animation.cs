@@ -161,12 +161,8 @@ namespace ArcEngine.Asset
 			Display.Scissor = true;
 			foreach (AnimationLayer layer in Layers)
 			{
-			//	Frame frame = layer.GetFrame(Time);
-			//	if (frame == null)
-			//		break;
 				Frame frame = new Frame(layer, Time);
 				frame.Draw();
-
 			}
 
 			Display.Scissor = false;

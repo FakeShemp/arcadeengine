@@ -110,7 +110,8 @@ namespace ArcEngine.Asset
 							byte.Parse(node.Attributes["r"].Value),
 							byte.Parse(node.Attributes["g"].Value),
 							byte.Parse(node.Attributes["b"].Value));
-						TextLocation = new Point(int.Parse(node.Attributes["x"].Value), int.Parse(node.Attributes["y"].Value));
+						TextRectangle = new Rectangle(int.Parse(node.Attributes["x"].Value), int.Parse(node.Attributes["y"].Value),
+							int.Parse(node.Attributes["width"].Value), int.Parse(node.Attributes["height"].Value));
 					}
 					break;
 
@@ -186,9 +187,9 @@ namespace ArcEngine.Asset
 
 
 		/// <summary>
-		/// Location of the text
+		/// Rectangle of the text
 		/// </summary>
-		public Point TextLocation
+		public Rectangle TextRectangle
 		{
 			get;
 			set;

@@ -130,10 +130,10 @@ namespace DungeonEye
 			Display.Rectangle(new Rectangle(rectangle.Right - 2, rectangle.Y, 2, rectangle.Height - 2), true);
 
 			Font.Color = Color.Black;
-			Font.DrawText(new Point(rectangle.X + 4, rectangle.Y + 4), text);
+			Font.DrawText(text, new Point(rectangle.X + 4, rectangle.Y + 4));
 
 			Font.Color = Color.White;
-			Font.DrawText(new Point(146, 336), "abort spell");
+			Font.DrawText("abort spell", new Point(146, 336));
 		}
 
 

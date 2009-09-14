@@ -25,17 +25,6 @@ namespace ArcEngine.Asset
 		}
 
 
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		/// <param name="node"></param>
-		public AnimationLayer(XmlNode node)
-		{
-			
-			Load(node);
-		}
-
-
 		#region IO routines
 
 		///
@@ -160,6 +149,11 @@ namespace ArcEngine.Asset
 		/// <param name="frame"></param>
 		public void RemoveKeyFrame(KeyFrame frame)
 		{
+			if (frame == null)
+				return;
+
+			if (KeyFrames.Contains(frame))
+				KeyFrames.Remove(frame);
 		}
 
 
@@ -169,10 +163,26 @@ namespace ArcEngine.Asset
 		/// </summary>
 		/// <param name="time"></param>
 		/// <returns></returns>
-		public bool RemoveKeyFrame(TimeSpan time)
+		public void RemoveKeyFrame(TimeSpan time)
 		{
+			RemoveKeyFrame(GetKeyFrame(time));		
+		}
 
-			return false;
+
+		/// <summary>
+		/// Returns the KeyFrame at a given time
+		/// </summary>
+		/// <param name="time">Time span</param>
+		/// <returns>The KeyFrame or null if no KeyFrame</returns>
+		public KeyFrame GetKeyFrame(TimeSpan time)
+		{
+			for (int i = 0; i < KeyFrames.Count; i++)
+			{
+				if (KeyFrames[i].Time == time)
+					return KeyFrames[i];
+			}
+
+			return null;
 		}
 
 
@@ -188,6 +198,10 @@ namespace ArcEngine.Asset
 				if (KeyFrames[i].Time > time)
 					return KeyFrames[i];
 			}
+
+			return null;
+
+			return new KeyFrame();
 
 			return LastKeyFrame;
 		}
@@ -205,6 +219,10 @@ namespace ArcEngine.Asset
 				if (KeyFrames[i].Time < time)
 					return KeyFrames[i];
 			}
+
+			return null;
+
+			return new KeyFrame();
 
 			return FirstKeyFrame;
 		}

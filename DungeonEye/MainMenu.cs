@@ -229,14 +229,14 @@ namespace DungeonEye
 				else
 					Font.Color = Color.White;
 
-				Font.DrawText(point, button.Text);
+				Font.DrawText(button.Text, point);
 
 
 			}
 
 			// Version info
 			Font.Color = Color.White;
-			Font.DrawText(new Point(554, 380), "V 0.2");
+			Font.DrawText("V 0.2", new Point(554, 380));
 
 			// Draw the cursor or the item in the hand
 			Display.Color = Color.White;
