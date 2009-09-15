@@ -59,6 +59,8 @@
 			this.ListViewBox.TabIndex = 0;
 			this.ListViewBox.UseCompatibleStateImageBehavior = false;
 			this.ListViewBox.View = System.Windows.Forms.View.Details;
+			this.ListViewBox.DragDrop += new System.Windows.Forms.DragEventHandler(this.ListViewBox_DragDrop);
+			this.ListViewBox.DragEnter += new System.Windows.Forms.DragEventHandler(this.ListViewBox_DragEnter);
 			// 
 			// columnHeader1
 			// 

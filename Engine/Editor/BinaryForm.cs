@@ -75,6 +75,46 @@ namespace ArcEngine.Editor
 		}
 
 
+		/// <summary>
+		/// Drag and drop
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ListViewBox_DragDrop(object sender, DragEventArgs e)
+		{
+			// transfer the filenames to a string array
+			// (yes, everything to the left of the "=" can be put in the 
+			// foreach loop in place of "files", but this is easier to understand.)
+			string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+			// loop through the string array, adding each filename to the ListBox
+			foreach (string file in files)
+			{
+				if (ResourceManager.BinaryExist(Path.GetFileName(file)))
+					if (MessageBox.Show("Binary \"" + Path.GetFileName(file) + "\" already exists. Replace it ?", "File conflict", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+						continue;
+
+				ResourceManager.LoadBinary(file);
+			}
+
+
+			BuildList();
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ListViewBox_DragEnter(object sender, DragEventArgs e)
+		{
+			// make sure they're actually dropping files (not text or anything else)
+			if (e.Data.GetDataPresent(DataFormats.FileDrop, false) == true)
+				e.Effect = DragDropEffects.All;
+		}
+
+
 
 	}
 

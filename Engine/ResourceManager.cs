@@ -509,7 +509,7 @@ namespace ArcEngine
 					else
 					{
 						// Adds data to the list
-						Binaries[entry.Name] = data;
+						LoadBinary(entry.Name, data);
 					}
 				}
 			}
@@ -559,6 +559,60 @@ namespace ArcEngine
 			return data;
 		}
 */
+
+
+		/// <summary>
+		/// Load a file and add it to the manager
+		/// </summary>
+		/// <param name="filename">File name</param>
+		static public bool LoadBinary(string filename)
+		{
+			if (string.IsNullOrEmpty(filename))
+				return false;
+
+			if (!File.Exists(filename))
+				return false;
+	
+			FileStream stream = File.Open(filename, FileMode.Open, FileAccess.Read);
+			if (stream == null)
+				return false;
+
+			byte[] data = new byte[stream.Length];
+			stream.Read(data, 0, (int )stream.Length);
+			stream.Close();
+
+
+			LoadBinary(Path.GetFileName(filename), data);
+			return true;
+		}
+
+
+		/// <summary>
+		/// Loads a byte[]
+		/// </summary>
+		/// <param name="name">Name of the binary</param>
+		/// <param name="data">Data</param>
+		static public void LoadBinary(string name, byte[] data)
+		{
+			if (string.IsNullOrEmpty(name))
+				return;
+
+			Binaries[name] = data;
+		}
+
+
+		/// <summary>
+		/// checks if a Binary is already present
+		/// </summary>
+		/// <param name="name">Name of the binary</param>
+		/// <returns>True if present, or false</returns>
+		static public bool BinaryExist(string name)
+		{
+			if (string.IsNullOrEmpty(name))
+				return false;
+
+			return Binaries.ContainsKey(name);
+		}
 
 		/// <summary>
 		/// Loads a resource from a bank first, and if not found, load it from disk.
