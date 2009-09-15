@@ -248,14 +248,14 @@
     <Compile Include="Graphic\Batch.cs" />
     <Compile Include="Graphic\Texture.cs" />
     <Compile Include="Graphic\Display.cs" />
-    <Compile Include="GUI\GuiManager.cs" />
-    <Compile Include="GUI\Window.cs" />
+    <Compile Include="Utility\GUI\GuiManager.cs" />
+    <Compile Include="Utility\GUI\Window.cs" />
     <Compile Include="Input\GamePad.cs" />
     <Compile Include="Input\GamePadCapabilities.cs" />
     <Compile Include="Asset\KeyboardScheme.cs" />
     <Compile Include="Providers\AudioProvider.cs" />
     <Compile Include="Providers\KeyboardSchemeProvider.cs" />
-    <Compile Include="ScreenManager\GameScreen.cs" />
+    <Compile Include="Utility\ScreenManager\GameScreen.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -268,13 +268,13 @@
     <Compile Include="Providers\TilesetProvider.cs" />
     <Compile Include="Providers\Provider.cs" />
     <Compile Include="Providers\ScriptProvider.cs" />
-    <Compile Include="ScreenManager\ScreenManager.cs" />
-    <Compile Include="GUI\Button.cs" />
-    <Compile Include="GUI\GuiBase.cs" />
+    <Compile Include="Utility\ScreenManager\ScreenManager.cs" />
+    <Compile Include="Utility\GUI\Button.cs" />
+    <Compile Include="Utility\GUI\GuiBase.cs" />
     <Compile Include="Asset\Layout.cs" />
     <Compile Include="ScriptManager.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="Terminal.cs" />
+    <Compile Include="Utility\Terminal.cs" />
     <Compile Include="Forms\TerminalForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -411,7 +411,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <Content Include="Docs\Projects.txt" />
-    <Content Include="GUI\gui.txt" />
+    <Content Include="Utility\GUI\gui.txt" />
     <Content Include="Network\Documentation.txt" />
     <EmbeddedResource Include="Resources\checkerboard.png" />
   </ItemGroup>

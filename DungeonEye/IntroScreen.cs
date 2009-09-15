@@ -26,7 +26,7 @@ using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
-using ArcEngine.ScreenManager;
+using ArcEngine.Utility.ScreenManager;
 using DungeonEye.Gui;
 
 
@@ -121,7 +121,7 @@ namespace DungeonEye
 			if (Font != null)
 			{
 				Font.Color = Color.White;
-				Font.DrawText(Animation.Time.Seconds.ToString(), new Point(20, 160));
+				Font.DrawText(Animation.Time.TotalSeconds.ToString(), new Point(20, 160));
 			}
 		}
 

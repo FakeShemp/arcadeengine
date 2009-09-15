@@ -24,7 +24,7 @@ using System.Drawing;
 using System.Text;
 using ArcEngine.Graphic;
 
-namespace ArcEngine.ScreenManager
+namespace ArcEngine.Utility.ScreenManager
 {
 
 	/// <summary>

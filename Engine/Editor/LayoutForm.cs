@@ -18,7 +18,6 @@
 //
 #endregion
 
-using OpenTK.Graphics.OpenGL;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -31,9 +30,11 @@ using System.Xml;
 using ArcEngine.Asset;
 using ArcEngine.Forms;
 using ArcEngine.Graphic;
-using ArcEngine.GUI;
+using ArcEngine.Utility.GUI;
 using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL;
 using WeifenLuo.WinFormsUI.Docking;
+
 
 namespace ArcEngine.Editor
 {
@@ -275,11 +276,11 @@ namespace ArcEngine.Editor
 		private void ResizeToFitButton_Click(object sender, EventArgs e)
 		{
 			// Is it a Button ?
-			if (CurrentElement is GUI.Button)
-			{
-				GUI.Button button = CurrentElement as GUI.Button;
-				//button.ResizeToFitTexture();
-			}
+			//if (CurrentElement is Button)
+			//{
+			//   GUI.Button button = CurrentElement as GUI.Button;
+			//   //button.ResizeToFitTexture();
+			//}
 		}
 
 

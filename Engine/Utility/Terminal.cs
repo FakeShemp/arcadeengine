@@ -27,7 +27,7 @@ using System.Windows.Forms;
 using ArcEngine.Graphic;
 using ArcEngine.Forms;
 
-namespace ArcEngine
+namespace ArcEngine.Utility
 {
 	/// <summary>
 	/// 

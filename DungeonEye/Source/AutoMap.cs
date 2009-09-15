@@ -23,7 +23,7 @@ using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
-using ArcEngine.ScreenManager;
+using ArcEngine.Utility.ScreenManager;
 
 namespace DungeonEye
 {

@@ -77,55 +77,55 @@ namespace ArcEngine.Asset
 		///<summary>
 		/// Save the collection to a xml node
 		/// </summary>
-		public bool Save(XmlWriter xml)
+		public bool Save(XmlWriter writer)
 		{
-			if (xml == null)
+			if (writer == null)
 				return false;
 
 
-			xml.WriteStartElement("tileset");
-			xml.WriteAttributeString("name", Name);
+			writer.WriteStartElement(XmlTag);
+			writer.WriteAttributeString("name", Name);
 
 
 
 			if (!string.IsNullOrEmpty(TextureName))
 			{
-				xml.WriteStartElement("texture");
-				xml.WriteAttributeString("file", TextureName);
-				xml.WriteEndElement();
+				writer.WriteStartElement("texture");
+				writer.WriteAttributeString("file", TextureName);
+				writer.WriteEndElement();
 			}
 
 			// Loops throughs tile
 			foreach(KeyValuePair<int, Tile> val in tiles)
 			{
-				xml.WriteStartElement("tile");
+				writer.WriteStartElement("tile");
 
-				xml.WriteAttributeString("id", val.Key.ToString());
+				writer.WriteAttributeString("id", val.Key.ToString());
 
-				xml.WriteStartElement("rectangle");
-				xml.WriteAttributeString("x", val.Value.Rectangle.X.ToString());
-				xml.WriteAttributeString("y", val.Value.Rectangle.Y.ToString());
-				xml.WriteAttributeString("width", val.Value.Rectangle.Width.ToString());
-				xml.WriteAttributeString("height", val.Value.Rectangle.Height.ToString());
-				xml.WriteEndElement();
+				writer.WriteStartElement("rectangle");
+				writer.WriteAttributeString("x", val.Value.Rectangle.X.ToString());
+				writer.WriteAttributeString("y", val.Value.Rectangle.Y.ToString());
+				writer.WriteAttributeString("width", val.Value.Rectangle.Width.ToString());
+				writer.WriteAttributeString("height", val.Value.Rectangle.Height.ToString());
+				writer.WriteEndElement();
 
-				xml.WriteStartElement("hotspot");
-				xml.WriteAttributeString("x", val.Value.HotSpot.X.ToString());
-				xml.WriteAttributeString("y", val.Value.HotSpot.Y.ToString());
-				xml.WriteEndElement();
+				writer.WriteStartElement("hotspot");
+				writer.WriteAttributeString("x", val.Value.HotSpot.X.ToString());
+				writer.WriteAttributeString("y", val.Value.HotSpot.Y.ToString());
+				writer.WriteEndElement();
 
-				xml.WriteStartElement("collisionbox");
-				xml.WriteAttributeString("x", val.Value.CollisionBox.X.ToString());
-				xml.WriteAttributeString("y", val.Value.CollisionBox.Y.ToString());
-				xml.WriteAttributeString("width", val.Value.CollisionBox.Width.ToString());
-				xml.WriteAttributeString("height", val.Value.CollisionBox.Height.ToString());
-				xml.WriteEndElement();
+				writer.WriteStartElement("collisionbox");
+				writer.WriteAttributeString("x", val.Value.CollisionBox.X.ToString());
+				writer.WriteAttributeString("y", val.Value.CollisionBox.Y.ToString());
+				writer.WriteAttributeString("width", val.Value.CollisionBox.Width.ToString());
+				writer.WriteAttributeString("height", val.Value.CollisionBox.Height.ToString());
+				writer.WriteEndElement();
 
-				xml.WriteEndElement();
+				writer.WriteEndElement();
 			}
 
 
-			xml.WriteEndElement();
+			writer.WriteEndElement();
 
 			return true;
 		}

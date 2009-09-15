@@ -81,8 +81,8 @@ namespace ArcEngine.Input
 		/// <param name="e"></param>
 		static internal void KeyUp(KeyEventArgs e)
 		{
-			if (Terminal.Enable && e.KeyCode == Terminal.ToggleKey)
-				Terminal.Visible = true;
+			//if (Terminal.Enable && e.KeyCode == Terminal.ToggleKey)
+			//   Terminal.Visible = true;
 
 			if (OnKeyUp != null)
 			    OnKeyUp(null, e);

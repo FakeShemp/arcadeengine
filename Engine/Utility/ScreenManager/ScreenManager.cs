@@ -35,7 +35,7 @@ using System.Drawing;
 // http://www.gamedev.net/community/forums/topic.asp?topic_id=525171&whichpage=1?
 // - Game State : http://gamedevgeek.com/tutorials/managing-game-states-in-c/
 
-namespace ArcEngine.ScreenManager
+namespace ArcEngine.Utility.ScreenManager
 {
 
 	/// <summary>

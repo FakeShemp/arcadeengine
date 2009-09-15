@@ -27,7 +27,7 @@ using System.Xml;
 using ArcEngine.Graphic;
 
 
-namespace ArcEngine.GUI
+namespace ArcEngine.Utility.GUI
 {
 
 	/// <summary>

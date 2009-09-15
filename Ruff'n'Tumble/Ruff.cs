@@ -106,7 +106,7 @@ namespace RuffnTumble
 	
 
 			// Enble the console
-			Terminal.Enable = true;
+			//Terminal.Enable = true;
 	
 			// Loads content
 			ResourceManager.AddProvider(new LevelProvider());

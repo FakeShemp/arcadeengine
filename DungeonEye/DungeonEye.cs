@@ -23,7 +23,7 @@ using System.Windows.Forms;
 using ArcEngine;
 using ArcEngine.Input;
 using ArcEngine.Providers;
-using ArcEngine.ScreenManager;
+using ArcEngine.Utility.ScreenManager;
 
 
 namespace DungeonEye
@@ -82,7 +82,7 @@ namespace DungeonEye
 			Window.Text = "Dungeon Eye";
 
 			// Enble the console
-			Terminal.Enable = true;
+			//Terminal.Enable = true;
 
 			// Display settings
 			Mouse.Visible = false;

@@ -25,7 +25,7 @@ using System.Drawing;
 using System.Text;
 using System.Xml;
 using ArcEngine.Graphic;
-using ArcEngine.GUI;
+using ArcEngine.Utility.GUI;
 using ArcEngine.Asset;
 
 
@@ -153,10 +153,10 @@ namespace ArcEngine.Asset
 
 
 			xml.WriteStartElement("color");
-			xml.WriteAttributeString("r", color.R.ToString());
-			xml.WriteAttributeString("g", color.G.ToString());
-			xml.WriteAttributeString("b", color.B.ToString());
-			xml.WriteAttributeString("a", color.A.ToString());
+			xml.WriteAttributeString("r", Color.R.ToString());
+			xml.WriteAttributeString("g", Color.G.ToString());
+			xml.WriteAttributeString("b", Color.B.ToString());
+			xml.WriteAttributeString("a", Color.A.ToString());
 			xml.WriteEndElement();
 
 			xml.WriteStartElement("texture");
@@ -241,7 +241,7 @@ namespace ArcEngine.Asset
 		{
 			if (Color.A > 0)
 			{
-				Display.ClearColor = color;
+				Display.ClearColor = Color;
 				Display.ClearBuffers();
 			}
 
@@ -290,16 +290,9 @@ namespace ArcEngine.Asset
 		/// </summary>
 		public Color Color
 		{
-			get
-			{
-				return color;
-			}
-			set
-			{
-				color = value;
-			}
+			get;
+			set;
 		}
-		Color color = Color.FromArgb(0, Color.White);
 
 
 

@@ -29,7 +29,7 @@ using ArcEngine.Asset;
 
 
 
-namespace ArcEngine.GUI
+namespace ArcEngine.Utility.GUI
 {
 
 

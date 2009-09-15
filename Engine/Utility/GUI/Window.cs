@@ -27,7 +27,7 @@ using ArcEngine.Graphic;
 
 
 
-namespace ArcEngine.GUI
+namespace ArcEngine.Utility.GUI
 {
 	/// <summary>
 	/// Window class
