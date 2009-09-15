@@ -80,7 +80,7 @@ namespace ArcEngine.Editor
 		/// <param name="e"></param>
 		private void WebSiteMenu_Click(object sender, EventArgs e)
 		{
-			System.Diagnostics.Process.Start("http://arcengine.wordpress.com/");
+			System.Diagnostics.Process.Start("http://www.mimicprod.net/");
 
 		}
 
@@ -161,9 +161,18 @@ namespace ArcEngine.Editor
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void MenuCloseAllTabs_OnClick(object sender, EventArgs e)
+		private void CloseAllTabs_OnClick(object sender, EventArgs e)
 		{
+			List<DockContent> windows = new List<DockContent>();
 
+			foreach (DockContent window in dockPanel.Contents)
+				windows.Add(window);
+
+			foreach (DockContent window in windows)
+			{
+				if (window is AssetEditor)
+					window.Close();
+			}
 		}
 
 
@@ -241,7 +250,7 @@ namespace ArcEngine.Editor
 
 			// Erases all resources
 			ResourceManager.ClearAssets();
-			//Log.Clear();
+			CloseAllTabs_OnClick(null, null);
 
 			// Load bank
 			BankName = dlg.FileName;
@@ -320,6 +329,8 @@ namespace ArcEngine.Editor
 
 			if (res != DialogResult.Yes)
 				return;
+
+			CloseAllTabs_OnClick(null, null);
 			ResourceManager.ClearAssets();
 
 			// New bank name
@@ -365,7 +376,7 @@ namespace ArcEngine.Editor
 
 			// for each selected file, add it to the bank file
 			for (int i = 0; i < dlg.FileNames.Length; i++)
-				ResourceManager.LoadResource(dlg.SafeFileNames[i]);
+				ResourceManager.LoadBinary(dlg.SafeFileNames[i]);
 
 			ResourcePanel.RebuildResourceTree();
 
@@ -379,16 +390,15 @@ namespace ArcEngine.Editor
 		/// <param name="e"></param>
 		private void EditorForm_FormClosed(object sender, FormClosedEventArgs e)
 		{
-			List<DockContent> list = new List<DockContent>();
 
-			foreach (DockContent window in dockPanel.Contents)
-				list.Add(window);
 
-			foreach (DockContent window in list)
-			{
-				if (window is AssetEditor)
-					window.Close();
-			}
+			CloseAllTabs_OnClick(null, null);
+
+			//foreach (DockContent window in list)
+			//{
+			//   if (window is AssetEditor)
+			//      window.Close();
+			//}
 		}
 
 

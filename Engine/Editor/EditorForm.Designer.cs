@@ -419,7 +419,7 @@ namespace ArcEngine.Editor
 			  this.MenuCloseAll.Name = "MenuCloseAll";
 			  this.MenuCloseAll.Size = new System.Drawing.Size(148, 22);
 			  this.MenuCloseAll.Text = "Close All";
-			  this.MenuCloseAll.Click += new System.EventHandler(this.MenuCloseAllTabs_OnClick);
+			  this.MenuCloseAll.Click += new System.EventHandler(this.CloseAllTabs_OnClick);
 			  // 
 			  // MenuAbout
 			  // 
