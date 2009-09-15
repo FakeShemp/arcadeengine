@@ -120,18 +120,17 @@ namespace ArcEngine.Providers
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="name"></param>
-//		public override AssetEditor EditAsset(Type type, string name)
 		public override AssetEditor EditAsset<T>(string name)
 		{
 			AssetEditor form = null;
 
 			if (typeof(T) == typeof(KeyboardScheme))
 			{
-				//XmlNode node = null;
-				//if (Schemes.ContainsKey(name))
-				//   node = Schemes[name];
-				//form = new ArcEngine.Editor.TextureFontForm(node);
-				//form.TabText = name;
+				XmlNode node = null;
+				if (Schemes.ContainsKey(name))
+					node = Schemes[name];
+				form = new ArcEngine.Editor.KeyboardSchemeForm(node);
+				form.TabText = name;
 			}
 
 			return form;

@@ -148,6 +148,12 @@
     <Compile Include="Editor\BinaryForm.Designer.cs">
       <DependentUpon>BinaryForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Editor\KeyboardSchemeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor\KeyboardSchemeForm.Designer.cs">
+      <DependentUpon>KeyboardSchemeForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Editor\LayoutForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -246,7 +252,7 @@
     <Compile Include="GUI\Window.cs" />
     <Compile Include="Input\GamePad.cs" />
     <Compile Include="Input\GamePadCapabilities.cs" />
-    <Compile Include="KeyboardScheme.cs" />
+    <Compile Include="Asset\KeyboardScheme.cs" />
     <Compile Include="Providers\AudioProvider.cs" />
     <Compile Include="Providers\KeyboardSchemeProvider.cs" />
     <Compile Include="ScreenManager\GameScreen.cs" />
@@ -349,6 +355,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Editor\BinaryForm.resx">
       <DependentUpon>BinaryForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editor\KeyboardSchemeForm.resx">
+      <DependentUpon>KeyboardSchemeForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Editor\LayoutForm.resx">
       <DependentUpon>LayoutForm.cs</DependentUpon>

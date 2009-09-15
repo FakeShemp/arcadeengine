@@ -24,9 +24,8 @@ using System.Text;
 using System.Xml;
 using System.Windows.Forms;
 using System.Reflection;
-using ArcEngine.Asset;
 
-namespace ArcEngine
+namespace ArcEngine.Asset
 {
 
 	/// <summary>
@@ -36,13 +35,45 @@ namespace ArcEngine
 	{
 
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
 		public KeyboardScheme()
 		{
-			Inputs = new Dictionary<string, Keys>();
+			InputList = new Dictionary<string, Keys>();
 		}
 
+
+
+		/// <summary>
+		/// Adds a new input
+		/// </summary>
+		/// <param name="name">Name of the input</param>
+		/// <param name="key">Key</param>
+		public void AddInput(string name, Keys key)
+		{
+			if (string.IsNullOrEmpty(name))
+				return;
+
+			InputList[name] = key;
+		}
+
+
+		/// <summary>
+		/// Remove an input
+		/// </summary>
+		/// <param name="name">Name of the input</param>
+		public void RemoveInput(string name)
+		{
+			if (string.IsNullOrEmpty(name))
+				return;
+
+			if (InputList.ContainsKey(name))
+				InputList.Remove(name);
+		}
+
+
+
+		#region IO
 
 		/// <summary>
 		/// Load input scheme
@@ -51,6 +82,9 @@ namespace ArcEngine
 		/// <returns></returns>
 		public bool Load(XmlNode xml)
 		{
+			if (xml == null)
+				return false;
+
 			Name = xml.Attributes["name"].Value;
 
 			foreach (XmlNode node in xml)
@@ -61,10 +95,9 @@ namespace ArcEngine
 
 				switch (node.Name.ToLower())
 				{
-					// Level
 					case "input":
 					{
-						Inputs[node.Attributes["name"].Value] = (Keys)Enum.Parse(typeof(Keys), node.Attributes["key"].Value);
+						AddInput(node.Attributes["name"].Value, (Keys)Enum.Parse(typeof(Keys), node.Attributes["key"].Value));
 					}
 					break;
 
@@ -78,7 +111,6 @@ namespace ArcEngine
 
 
 
-
 		/// <summary>
 		/// Save input scheme
 		/// </summary>
@@ -86,16 +118,36 @@ namespace ArcEngine
 		/// <returns></returns>
 		public bool Save(XmlWriter writer)
 		{
-			return false;
+			if (writer == null)
+				return false;
+
+
+			writer.WriteStartElement(XmlTag);
+			writer.WriteAttributeString("name", Name);
+
+
+			foreach (KeyValuePair<string, Keys> kvp in InputList)
+			{
+				writer.WriteStartElement("input");
+				writer.WriteAttributeString("name", kvp.Key);
+				writer.WriteAttributeString("key", kvp.Value.ToString());
+				writer.WriteEndElement();
+			}
+
+			writer.WriteEndElement();
+
+			return true;
 		}
+
+		#endregion
 
 
 		/// <summary>
 		/// Defaults all inputs
 		/// </summary>
-		public void Reset()
+		public void Clear()
 		{
-			Inputs.Clear();
+			InputList.Clear();
 		}
 
 
@@ -108,11 +160,11 @@ namespace ArcEngine
 		{
 			get
 			{
-				return Inputs[name];
+				return InputList[name];
 			}
 			set
 			{
-				Inputs[name] = value;
+				InputList[name] = value;
 			}
 		}
 
@@ -133,9 +185,27 @@ namespace ArcEngine
 
 
 		/// <summary>
+		/// Gets a sorted list of all available inputs
+		/// </summary>
+		public List<string> Inputs
+		{
+			get
+			{
+				List<string> list = new List<string>();
+
+				foreach (string name in InputList.Keys)
+					list.Add(name);
+
+				list.Sort();
+				return list;
+			}
+		}
+
+
+		/// <summary>
 		/// 
 		/// </summary>
-		Dictionary<string, Keys> Inputs;
+		Dictionary<string, Keys> InputList;
 
 
 		/// <summary>
