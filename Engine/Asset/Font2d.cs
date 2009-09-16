@@ -226,6 +226,48 @@ namespace ArcEngine.Asset
 		}
 
 
+
+		/// <summary>
+		/// Loads a texture from a XmlNode
+		/// </summary>
+		/// <param name="xml">Node</param>
+		/// <returns></returns>
+		bool LoadFromTexture(XmlNode xml)
+		{
+			if (xml == null)
+				return false;
+
+			string name = xml.Attributes["filename"].Value;
+			Size size = Size.Empty;
+			Rectangle rectangle = Rectangle.Empty;
+
+
+			foreach (XmlNode node in xml.ChildNodes)
+			{
+				if (node.NodeType == XmlNodeType.Comment)
+					continue;
+
+
+				switch (node.Name.ToLower())
+				{
+					case "rectangle":
+					{
+						rectangle = new Rectangle(Int32.Parse(node.Attributes["x"].Value), Int32.Parse(node.Attributes["y"].Value),
+															Int32.Parse(node.Attributes["width"].Value), Int32.Parse(node.Attributes["height"].Value));
+					}
+					break;
+					case "size":
+					{
+						size = new Size(Int32.Parse(node.Attributes["width"].Value), Int32.Parse(node.Attributes["height"].Value));
+					}
+					break;
+				}
+			}
+
+			return LoadFromTexture(name, size, rectangle);
+
+		}
+
 		/// <summary>
 		/// Loads a Texture
 		/// </summary>
@@ -241,6 +283,22 @@ namespace ArcEngine.Asset
 
 			if (string.IsNullOrEmpty(name))
 				return false;
+
+
+			// Build tile set
+			TileSet.Clear();
+
+			// Load texture
+			TileSet.Texture.LoadImage(name);
+
+			int id = 32;
+			for (int y = zone.Top; y < zone.Bottom; y += size.Height)
+				for (int x = zone.Left; x < zone.Right; x += size.Width)
+				{
+					Tile tile = TileSet.AddTile(id++);
+
+					tile.Rectangle = new Rectangle(x, y, size.Width, size.Height);
+				}
 
 
 			return false;
@@ -314,10 +372,7 @@ namespace ArcEngine.Asset
 				{
 					case "texture":
 					{
-			//			Size = new Size(Int32.Parse(node.Attributes["width"].Value), Int32.Parse(node.Attributes["height"].Value));
-						//rectangle = new Rectangle(Int32.Parse(node.Attributes["x"].Value), Int32.Parse(node.Attributes["y"].Value),
-						//                                Int32.Parse(node.Attributes["width"].Value), Int32.Parse(node.Attributes["height"].Value));
-						LoadFromTexture(node.Attributes["filename"].Value, Size.Empty, Rectangle.Empty);
+						LoadFromTexture(node);
 					}
 					break;
 
