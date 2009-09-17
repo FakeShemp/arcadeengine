@@ -55,13 +55,40 @@ namespace ArcEngine.Providers
 
 
 
+
+		#region Init & Close
+
+
+		/// <summary>
+		/// Initialization
+		/// </summary>
+		/// <returns></returns>
+		public override bool Init()
+		{
+			return false;
+		}
+
+
+
+		/// <summary>
+		/// Close all opened resources
+		/// </summary>
+		public override void Close()
+		{
+
+		}
+
+		#endregion
+
+
+
 		#region IO routines
 
 
 		/// <summary>
 		/// Saves all textures
 		/// </summary>
-		/// <param name="type"></param>
+		///<typeparam name="T"></typeparam>
 		/// <param name="xml"></param>
 		/// <returns></returns>
 		public override bool Save<T>(XmlWriter xml)
@@ -130,7 +157,7 @@ namespace ArcEngine.Providers
 				XmlNode node = null;
 				if (Fonts.ContainsKey(name))
 					node = Fonts[name];
-				form = new ArcEngine.Editor.TextureFontForm(node);
+				form = new ArcEngine.Editor.Font2dForm(node);
 				form.TabText = name;
 			}
 

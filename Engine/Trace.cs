@@ -45,8 +45,8 @@ namespace ArcEngine
 			Diag.Trace.Listeners.Add(new Diag.TextWriterTraceListener(FileName));
 			Diag.Trace.AutoFlush = true;
 
-			TraceInventory();
-			
+			WriteLine("#####Trace()");
+		//	TraceInventory();	
 		}
 
 

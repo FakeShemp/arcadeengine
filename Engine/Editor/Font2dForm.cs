@@ -36,12 +36,12 @@ namespace ArcEngine.Editor
 	/// <summary>
 	/// 
 	/// </summary>
-	internal partial class TextureFontForm : AssetEditor
+	internal partial class Font2dForm : AssetEditor
 	{
 		/// <summary>
 		/// 
 		/// </summary>
-		public TextureFontForm(XmlNode node)
+		public Font2dForm(XmlNode node)
 		{
 			InitializeComponent();
 

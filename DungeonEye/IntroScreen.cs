@@ -83,8 +83,8 @@ namespace DungeonEye
 
 			// Bye bye
 			if (Keyboard.IsNewKeyPress(Keys.Escape))
-				//ScreenManager.RemoveScreen(this); 
-				ScreenManager.Game.Exit();
+				ScreenManager.RemoveScreen(this); 
+				//ScreenManager.Game.Exit();
 
 			// Pause animation
 			if (Keyboard.IsNewKeyPress(Keys.Space))

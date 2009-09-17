@@ -55,8 +55,8 @@ namespace DungeonEye
 			Tileset = ResourceManager.CreateAsset<TileSet>("Main Menu");
 			Tileset.Scale = new SizeF(2.0f, 2.0f);
 
-			Font = ResourceManager.CreateAsset<Font2d>("intro");
-
+			Font = ResourceManager.CreateSharedAsset<Font2d>("intro");
+		//	Font.TileSet.Scale =  new SizeF(2.0f, 2.0f);
 
 			StringTable = ResourceManager.CreateAsset<StringTable>("option");
 

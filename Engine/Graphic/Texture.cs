@@ -439,7 +439,7 @@ namespace ArcEngine.Graphic
 				return false;
 
 			Data = new byte[Size.Width * Size.Height * 4];
-			Trace.WriteLine("New data buffer for LockTextureBits. Size : " + Data.Length + " octets. Texture size : " + Size.ToString());
+	//		Trace.WriteLine("New data buffer for LockTextureBits. Size : " + Data.Length + " octets. Texture size : " + Size.ToString());
 
 			LockMode = mode;
 			IsLocked = true;

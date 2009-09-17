@@ -46,6 +46,9 @@ namespace ArcEngine
 		/// </summary>
 		public Game()
 		{
+			Trace.WriteLine("######Game()");
+			Trace.TraceInventory();
+
 			Clock = new GameClock();
 			GameTime = new GameTime();
 			MaximumElapsedTime = TimeSpan.FromMilliseconds(500.0);
@@ -57,10 +60,13 @@ namespace ArcEngine
 
 			Window = new GameWindow();
 			Window.Resize += new EventHandler(Window_Resize);
+			Window.Show();
+
+
 
 			Mouse.Init(Window);
-			Sound.Init();
-			Sound.TraceInfos();
+			//Audio.Init();
+			//Audio.TraceInfos();
 			//	Joysticks.Init(Window.Form);
 		}
 
@@ -71,6 +77,7 @@ namespace ArcEngine
 		/// </summary>
 		~Game()
 		{
+			Trace.WriteLine("~Game()");
 			Dispose(false);
 		}
 
@@ -290,7 +297,6 @@ namespace ArcEngine
 			Trace.WriteLine("Running the game");
 
 
-
 			LoadContent();
 
 
@@ -317,7 +323,7 @@ namespace ArcEngine
 			}
 
 
-			Sound.Close();
+			ResourceManager.Close();
 		}
 
 		#endregion

@@ -55,13 +55,40 @@ namespace ArcEngine.Providers
 
 
 
+
+		#region Init & Close
+
+
+		/// <summary>
+		/// Initialization
+		/// </summary>
+		/// <returns></returns>
+		public override bool Init()
+		{
+			return false;
+		}
+
+
+
+		/// <summary>
+		/// Close all opened resources
+		/// </summary>
+		public override void Close()
+		{
+
+		}
+
+		#endregion
+
+
+
 		#region IO routines
 
 
 		/// <summary>
 		/// Saves all assets
 		/// </summary>
-		/// <param name="type"></param>
+		///<typeparam name="T"></typeparam>
 		/// <param name="xml"></param>
 		/// <returns></returns>
 		public override bool Save<T>(XmlWriter xml)

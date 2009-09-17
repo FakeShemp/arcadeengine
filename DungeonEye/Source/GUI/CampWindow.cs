@@ -52,7 +52,8 @@ namespace DungeonEye.Gui
 		public bool Init()
 		{
 
-			Font = ResourceManager.CreateAsset<Font2d>("intro");
+			Font = ResourceManager.CreateSharedAsset<Font2d>("intro");
+
 
 			BgColor = Color.FromArgb(101, 105, 182);
 			Rectangle = new Rectangle(0, 0, 352, 288);

@@ -146,8 +146,6 @@ namespace ArcEngine.Forms
 			RenderControl.MakeCurrent();
 			Display.Init();
 			Display.TraceInfos();
-
-		//	base.OnLoad(e);
 		}
 
 

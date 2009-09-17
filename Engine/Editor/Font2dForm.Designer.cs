@@ -1,6 +1,6 @@
 ﻿namespace ArcEngine.Editor
 {
-	partial class TextureFontForm
+	partial class Font2dForm
 	{
 		/// <summary> 
 		/// Variable nécessaire au concepteur.

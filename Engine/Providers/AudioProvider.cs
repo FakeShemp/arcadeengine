@@ -22,14 +22,11 @@ using ArcEngine.Forms;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
 using System.Xml;
 using ArcEngine.Asset;
 using ArcEngine.Editor;
-using ArcEngine.Graphic;
-using WeifenLuo.WinFormsUI.Docking;
 using OpenTK.Audio;
+using OpenTK.Audio.OpenAL;
 
 namespace ArcEngine.Providers
 {
@@ -45,16 +42,99 @@ namespace ArcEngine.Providers
 		/// </summary>
 		public AudioProvider()
 		{
-			Sounds = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
-			SharedSounds = new Dictionary<string, Sound>(StringComparer.OrdinalIgnoreCase);
-			Musics = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
-			SharedMusics = new Dictionary<string, Music>(StringComparer.OrdinalIgnoreCase);
+			Audios = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
+			SharedAudios = new Dictionary<string, Audio>(StringComparer.OrdinalIgnoreCase);
 
 			Name = "Audio";
-			Tags = new string[] { "sound", "music" };
-			Assets = new Type[] { typeof(Sound), typeof(Music) };
+			Tags = new string[] { "audio" };
+			Assets = new Type[] { typeof(Audio) };
 			Version = new Version(0, 1);
 			EditorImage = new Bitmap(ResourceManager.GetResource("ArcEngine.Data.Icons.TileSet.png"));
+
+		}
+
+
+		#region Init & Close
+
+		/// <summary>
+		/// Init sound manager
+		/// </summary>
+		public override bool Init()
+		{
+			if (IsInit)
+			{
+				Trace.WriteLine("AudioContext already initialized !");
+				return true;
+			}
+
+			Trace.Write("Init sound system... ");
+			Trace.Indent();
+
+			Context = new AudioContext();
+			if (Context == null)
+			{
+				Trace.WriteLine("Failed to initialize AudioContext!");
+				Trace.Unindent();
+				return false;
+			}
+
+			Trace.WriteLine("OK !");
+			Trace.Unindent();
+			return true;
+		}
+
+
+
+		/// <summary>
+		/// Close audio context
+		/// </summary>
+		public override void Close()
+		{
+			if (Context != null)
+				Context.Dispose();
+			Context = null;
+
+			Trace.WriteLine("Audio closed.");
+
+		}
+		#endregion
+
+
+
+		/// <summary>
+		/// Trace audio informations
+		/// </summary>
+		public void TraceInfos()
+		{
+			if (!IsInit)
+			{
+				Trace.WriteLine("Audion Context not initialized !");
+				return;
+			}
+
+
+			Trace.WriteLine("--- Audio ---");
+			Trace.Indent();
+			{
+				//Trace.WriteLine("Used Device: " + Context.);
+				Trace.WriteLine("AL Renderer: " + AL.Get(ALGetString.Renderer));
+				Trace.WriteLine("AL Vendor: " + AL.Get(ALGetString.Vendor));
+				Trace.WriteLine("AL Version: " + AL.Get(ALGetString.Version));
+
+				Trace.WriteLine("AL Speed of sound: " + AL.Get(ALGetFloat.SpeedOfSound));
+				Trace.WriteLine("AL Distance Model: " + AL.GetDistanceModel().ToString());
+				//	Trace.WriteLine("AL Maximum simultanous Sources: " + MaxSources);
+
+				//		Trace.WriteLine("AL Extension string: " + ExtensionString);
+				//		Trace.WriteLine("Confirmed AL Extensions:");
+				//Trace.Indent();
+				//{
+				//   foreach (KeyValuePair<string, bool> pair in Extensions)
+				//      Trace.WriteLine(pair.Key + ": " + pair.Value);
+				//}
+				//Trace.Unindent();
+			}
+			Trace.Unindent();
 
 		}
 
@@ -66,15 +146,15 @@ namespace ArcEngine.Providers
 		/// <summary>
 		/// Saves all audios
 		/// </summary>
-		/// <param name="type"></param>
+		///<typeparam name="T"></typeparam>
 		/// <param name="xml"></param>
 		/// <returns></returns>
 		public override bool Save<T>(XmlWriter xml)
 		{
 
-			if (typeof(T) == typeof(Sound))
+			if (typeof(T) == typeof(Audio))
 			{
-				foreach (XmlNode node in Sounds.Values)
+				foreach (XmlNode node in Audios.Values)
 					node.WriteTo(xml);
 			}
 
@@ -114,7 +194,7 @@ namespace ArcEngine.Providers
 				case "audio":
 				{
 
-					Sounds[xml.Attributes["name"].Value] = xml;
+					Audios[xml.Attributes["name"].Value] = xml;
 					//string name = xml.Attributes["name"].Value;
 					//TileSet tileset = Create<TileSet>(name);
 					//if (tileset != null)
@@ -143,14 +223,14 @@ namespace ArcEngine.Providers
 		{
 			AssetEditor form = null;
 
-			if (typeof(T) == typeof(Sound))
+			if (typeof(T) == typeof(Audio))
 			{
 				XmlNode node = null;
-				if (Sounds.ContainsKey(name))
-					node = Sounds[name];
+				if (Audios.ContainsKey(name))
+					node = Audios[name];
 
-			//	form = new SoundForm(node);
-			//	form.TabText = name;
+				form = new AudioForm(node);
+				form.TabText = name;
 			}
 
 			return form;
@@ -172,11 +252,8 @@ namespace ArcEngine.Providers
 		{
 			CheckValue<T>(name);
 
-			if (typeof(T) == typeof(Sound))
-				Sounds[name] = node;
-
-			if (typeof(T) == typeof(Music))
-				Musics[name] = node;
+			if (typeof(T) == typeof(Audio))
+				Audios[name] = node;
 		}
 
 
@@ -190,13 +267,10 @@ namespace ArcEngine.Providers
 			List<string> list = new List<string>();
 
 
-			if (typeof(T) == typeof(Sound))
-				foreach (string key in Sounds.Keys)
+			if (typeof(T) == typeof(Audio))
+				foreach (string key in Audios.Keys)
 					list.Add(key);
 
-			else if (typeof(T) == typeof(Music))
-				foreach (string key in Musics.Keys)
-					list.Add(key);
 
 			list.Sort();
 			return list;
@@ -213,21 +287,14 @@ namespace ArcEngine.Providers
 		{
 			CheckValue<T>(name);
 
-			if (typeof(T) == typeof(Sound) && Sounds.ContainsKey(name))
+			if (typeof(T) == typeof(Audio) && Audios.ContainsKey(name))
 			{
-				Sound sound = new Sound();
-				sound.Load(Sounds[name]);
+				Audio sound = new Audio();
+				sound.Load(Audios[name]);
 
 				return (T)(object)sound;
 			}
 
-			if (typeof(T) == typeof(Music) && Musics.ContainsKey(name))
-			{
-				Music music = new Music();
-				music.Load(Musics[name]);
-
-				return (T)(object)music;
-			}
 
 			return default(T);
 		}
@@ -244,11 +311,8 @@ namespace ArcEngine.Providers
 		{
 			CheckValue<T>(name);
 
-			if (typeof(T) == typeof(Sound) && Sounds.ContainsKey(name))
-					return Sounds[name];
-
-			if (typeof(T) == typeof(Music) && Musics.ContainsKey(name))
-					return Musics[name];
+			if (typeof(T) == typeof(Audio) && Audios.ContainsKey(name))
+					return Audios[name];
 
 			return null;
 		}
@@ -264,11 +328,8 @@ namespace ArcEngine.Providers
 		{
 			CheckValue<T>(name);
 
-			if (typeof(T) == typeof(Music) && Musics.ContainsKey(name))
-				Musics.Remove(name);
-
-			if (typeof(T) == typeof(Sound) && Sounds.ContainsKey(name))
-				Sounds.Remove(name);
+			if (typeof(T) == typeof(Audio) && Audios.ContainsKey(name))
+				Audios.Remove(name);
 		}
 
 
@@ -280,11 +341,8 @@ namespace ArcEngine.Providers
 		/// <typeparam name="T"></typeparam>
 		public override void Remove<T>()
 		{
-			if (typeof(T) == typeof(Music))
-				Musics.Clear();
-
-			if (typeof(T) == typeof(Sound))
-				Sounds.Clear();
+			if (typeof(T) == typeof(Audio))
+				Audios.Clear();
 		}
 
 
@@ -293,8 +351,7 @@ namespace ArcEngine.Providers
 		/// </summary>
 		public override void Clear()
 		{
-			Sounds.Clear();
-			Musics.Clear();
+			Audios.Clear();
 		}
 
 		/// <summary>
@@ -304,11 +361,8 @@ namespace ArcEngine.Providers
 		/// <returns>Number of available asset</returns>
 		public override int Count<T>()
 		{
-			if (typeof(T) == typeof(Sound))
-				return Sounds.Count;
-
-			if (typeof(T) == typeof(Music))
-				return Musics.Count;
+			if (typeof(T) == typeof(Audio))
+				return Audios.Count;
 
 			return 0;
 		}
@@ -327,14 +381,14 @@ namespace ArcEngine.Providers
 		/// <returns>The resource</returns>
 		public override T CreateShared<T>(string name)
 		{
-			if (typeof(T) == typeof(Sound))
+			if (typeof(T) == typeof(Audio))
 			{
-				if (SharedSounds.ContainsKey(name))
-					return (T)(object)SharedSounds[name];
+				if (SharedAudios.ContainsKey(name))
+					return (T)(object)SharedAudios[name];
 
-				Sound sound = new Sound();
-				sound.Load(Sounds[name]);
-				SharedSounds[name] = sound;
+				Audio sound = new Audio();
+				sound.Load(Audios[name]);
+				SharedAudios[name] = sound;
 
 				return (T)(object)sound;
 			}
@@ -351,9 +405,9 @@ namespace ArcEngine.Providers
 		/// <param name="name">Name of the asset</param>
 		public override void RemoveShared<T>(string name)
 		{
-			if (typeof(T) == typeof(Sound))
+			if (typeof(T) == typeof(Audio))
 			{
-				SharedSounds[name] = null;
+				SharedAudios[name] = null;
 			}
 		}
 
@@ -366,9 +420,9 @@ namespace ArcEngine.Providers
 		/// <typeparam name="T">Type of the asset to remove</typeparam>
 		public override void RemoveShared<T>()
 		{
-			if (typeof(T) == typeof(StringTable))
+			if (typeof(T) == typeof(Audio))
 			{
-				SharedSounds.Clear();
+				SharedAudios.Clear();
 			}
 		}
 
@@ -379,7 +433,7 @@ namespace ArcEngine.Providers
 		/// </summary>
 		public override void ClearShared()
 		{
-			SharedSounds.Clear();
+			SharedAudios.Clear();
 		}
 
 
@@ -391,25 +445,38 @@ namespace ArcEngine.Providers
 
 
 		/// <summary>
+		/// Is Audio Context is initialized
+		/// </summary>
+		public bool IsInit
+		{
+			get
+			{
+				return Context != null;
+			}
+		}
+
+
+
+		/// <summary>
+		/// Audio Context
+		/// </summary>
+		public AudioContext Context
+		{
+			private set;
+			get;
+		}
+
+
+		/// <summary>
 		/// Sound
 		/// </summary>
-		Dictionary<string, XmlNode> Sounds;
+		Dictionary<string, XmlNode> Audios;
 
 		/// <summary>
 		/// Shared Sounds
 		/// </summary>
-		Dictionary<string, Sound> SharedSounds;
+		Dictionary<string, Audio> SharedAudios;
 
-
-		/// <summary>
-		/// Music
-		/// </summary>
-		Dictionary<string, XmlNode> Musics;
-
-		/// <summary>
-		/// Shared Musics
-		/// </summary>
-		Dictionary<string, Music> SharedMusics;
 		#endregion
 	}
 }

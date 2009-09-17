@@ -69,7 +69,6 @@ public static byte[] decompressTo(Stream s,int unpaksize)
 
 namespace ArcEngine
 {
-
 	/// <summary>
 	/// Resource manager
 	/// </summary>
@@ -80,10 +79,13 @@ namespace ArcEngine
 
 
 		/// <summary>
-		/// Constructor
+		/// Initializes static members of the ResourceManager class.
 		/// </summary>
 		static ResourceManager()
 		{
+			Trace.WriteLine("######ResourceManager()");
+			BinaryLock = new object();
+
 			UnknownAssets = new List<XmlNode>();
 			Assets = new Dictionary<Type, Provider>();
 			Providers = new List<Provider>();
@@ -104,6 +106,17 @@ namespace ArcEngine
 
 		#endregion
 
+		/// <summary>
+		/// Initialize each providers
+		/// </summary>
+		static public void Close()
+		{
+			foreach (Provider provider in Providers)
+			{
+				provider.Close();
+			}
+		}
+
 
 		/// <summary>
 		/// Returns a list of binary matching a pattern using regular expression
@@ -114,6 +127,7 @@ namespace ArcEngine
 		{
 			List<string> list = new List<string>();
 
+			// No need to lock() because LoadedBinaries do the work for us
 			foreach (string name in LoadedBinaries)
 			{
 				if (Regex.IsMatch(name, pattern))
@@ -125,6 +139,7 @@ namespace ArcEngine
 			return list;
 		}
 
+		
 		#region Providers
 
 
@@ -150,6 +165,8 @@ namespace ArcEngine
 			{
 				Tags[tag] = provider;
 			}
+
+
 			// Register assets
 			foreach (Type type in provider.Assets)
 			{
@@ -158,6 +175,9 @@ namespace ArcEngine
 			}
 
 			Trace.WriteLine("}");
+
+
+			provider.Init();
 		}
 
 
@@ -202,6 +222,7 @@ namespace ArcEngine
 		/// <returns>Provider of the asset or null</returns>
 		static public Provider GetAssetProvider(Type type)
 		{
+	
 			if (type == null)
 			//    throw new ArgumentNullException("type");
 			return null;
@@ -251,10 +272,13 @@ namespace ArcEngine
 			if (string.IsNullOrEmpty(name))
 				return;
 
-			if (!Assets.ContainsKey(typeof(T)))
-				throw new ArgumentException("Unknown asset type");
+			lock (BinaryLock)
+			{
+				if (!Assets.ContainsKey(typeof(T)))
+					throw new ArgumentException("Unknown asset type");
 
-			Assets[typeof(T)].Add<T>(name, node);
+				Assets[typeof(T)].Add<T>(name, node);
+			}
 		}
 
 
@@ -268,11 +292,13 @@ namespace ArcEngine
 			if (string.IsNullOrEmpty(name))
 				return null;
 
+			lock (BinaryLock)
+			{
+				if (!Assets.ContainsKey(typeof(T)))
+					throw new ArgumentException("Unknown asset type");
 
-			if (!Assets.ContainsKey(typeof(T)))
-				throw new ArgumentException("Unknown asset type");
-
-			return Assets[typeof(T)].Get<T>(name);
+				return Assets[typeof(T)].Get<T>(name);
+			}
 		}
 
 
@@ -287,15 +313,18 @@ namespace ArcEngine
 			if (string.IsNullOrEmpty(name))
 				return default(T);
 
-			if (!Assets.ContainsKey(typeof(T)))
-				throw new ArgumentException("Unknown asset type");
+			lock (BinaryLock)
+			{
+				if (!Assets.ContainsKey(typeof(T)))
+					throw new ArgumentException("Unknown asset type");
 
-			return Assets[typeof(T)].Create<T>(name);
+				return Assets[typeof(T)].Create<T>(name);
+			}
 		}
 
 
 		/// <summary>
-		/// Removes an asset
+		/// Removes an asset by name
 		/// </summary>
 		/// <typeparam name="T">Asset type</typeparam>
 		/// <param name="name">Name of the asset</param>
@@ -304,10 +333,13 @@ namespace ArcEngine
 			if (string.IsNullOrEmpty(name))
 				return;
 
-			if (!Assets.ContainsKey(typeof(T)))
-				throw new ArgumentException("Unknown asset type");
+			lock (BinaryLock)
+			{
+				if (!Assets.ContainsKey(typeof(T)))
+					throw new ArgumentException("Unknown asset type");
 
-			Assets[typeof(T)].Remove<T>(name);
+				Assets[typeof(T)].Remove<T>(name);
+			}
 		}
 
 
@@ -315,14 +347,17 @@ namespace ArcEngine
 		/// <summary>
 		/// Removes a specific asset
 		/// </summary>
-		/// <typeparam name="T"></typeparam>
+		/// <typeparam name="T">Asset type</typeparam>
 		static public void RemoveAsset<T>() where T : IAsset
 		{
-			Provider provider = GetAssetProvider(typeof(T));
-			if (provider == null)
-				return;
+			lock (BinaryLock)
+			{
+				Provider provider = GetAssetProvider(typeof(T));
+				if (provider == null)
+					return;
 
-			provider.Remove<T>();
+				provider.Remove<T>();
+			}
 		}
 
 
@@ -332,11 +367,14 @@ namespace ArcEngine
 		/// </summary>
 		static public void ClearAssets()
 		{
-			foreach (Provider provider in Providers)
-				provider.Clear();
+			lock (BinaryLock)
+			{
+				foreach (Provider provider in Providers)
+					provider.Clear();
 
-			Binaries.Clear();
-			UnknownAssets.Clear();
+				Binaries.Clear();
+				UnknownAssets.Clear();
+			}
 		}
 
 
@@ -348,10 +386,13 @@ namespace ArcEngine
 		/// <returns>Sorted list of available asset</returns>
 		static public List<string> GetAssets<T>() where T : IAsset
 		{
-			if (!Assets.ContainsKey(typeof(T)))
-				throw new ArgumentException("Unknown asset type");
+			lock (BinaryLock)
+			{
+				if (!Assets.ContainsKey(typeof(T)))
+					throw new ArgumentException("Unknown asset type");
 
-			return Assets[typeof(T)].GetAssets<T>();
+				return Assets[typeof(T)].GetAssets<T>();
+			}
 		}
 
 		#endregion
@@ -370,10 +411,13 @@ namespace ArcEngine
 			if (string.IsNullOrEmpty(name))
 				return default(T);
 
-			if (!Assets.ContainsKey(typeof(T)))
-				throw new ArgumentException("Unknown asset type");
+			lock (BinaryLock)
+			{
+				if (!Assets.ContainsKey(typeof(T)))
+					throw new ArgumentException("Unknown asset type");
 
-			return Assets[typeof(T)].CreateShared<T>(name);
+				return Assets[typeof(T)].CreateShared<T>(name);
+			}
 		}
 
 
@@ -387,10 +431,13 @@ namespace ArcEngine
 			if (string.IsNullOrEmpty(name))
 				return;
 
-			if (!Assets.ContainsKey(typeof(T)))
-				throw new ArgumentException("Unknown asset type");
+			lock (BinaryLock)
+			{
+				if (!Assets.ContainsKey(typeof(T)))
+					throw new ArgumentException("Unknown asset type");
 
-			Assets[typeof(T)].RemoveShared<T>(name);
+				Assets[typeof(T)].RemoveShared<T>(name);
+			}
 		}
 
 
@@ -401,13 +448,15 @@ namespace ArcEngine
 		/// <typeparam name="T">Type of the asset</typeparam>
 		static public void RemoveSharedAsset<T>() where T : IAsset
 		{
-			Provider provider = GetAssetProvider(typeof(T));
-			if (provider == null)
-				return;
+			lock (BinaryLock)
+			{
+				Provider provider = GetAssetProvider(typeof(T));
+				if (provider == null)
+					return;
 
-			provider.RemoveShared<T>();
+				provider.RemoveShared<T>();
+			}
 		}
-
 
 
 		/// <summary>
@@ -415,8 +464,11 @@ namespace ArcEngine
 		/// </summary>
 		static public void ClearSharedAssets()
 		{
-			foreach (Provider provider in Providers)
-				provider.ClearShared();
+			lock (BinaryLock)
+			{
+				foreach (Provider provider in Providers)
+					provider.ClearShared();
+			}
 		}
 
 
@@ -433,10 +485,9 @@ namespace ArcEngine
 		/// </summary>
 		/// <param name="filename">Name of the file to load</param>
 		/// <returns></returns>
-		///TODO Detecter si il s'agit d'un fichier .zip ou d'un fichier .xml 
-		///afin de permettre de chager juste un fichier xml tout seul
 		static public bool LoadBank(string filename)
 		{
+			
 			Trace.WriteLine("Loading resources from file \"" + filename + "\"...");
 
 			// File exists ??
@@ -502,7 +553,10 @@ namespace ArcEngine
 								continue;
 							}
 
-							provider.Load(node);
+							lock (BinaryLock)
+							{
+								provider.Load(node);
+							}
 						}
 	
 					}
@@ -521,6 +575,19 @@ namespace ArcEngine
 			return true;
 		}
 
+
+
+		/// <summary>
+		/// Loads a bank asynchronously
+		/// </summary>
+		/// <param name="filename">Name of the file to load</param>
+		/// <returns></returns>
+		static public bool LoadBankAsync(string filename)
+		{
+
+
+			return false;
+		}
 
 /*
 		/// <summary>
@@ -597,12 +664,15 @@ namespace ArcEngine
 			if (string.IsNullOrEmpty(name))
 				return;
 
-			Binaries[name] = data;
+			lock (BinaryLock)
+			{
+				Binaries[name] = data;
+			}
 		}
 
 
 		/// <summary>
-		/// checks if a Binary is already present
+		/// Checks if a Binary is already present
 		/// </summary>
 		/// <param name="name">Name of the binary</param>
 		/// <returns>True if present, or false</returns>
@@ -610,8 +680,13 @@ namespace ArcEngine
 		{
 			if (string.IsNullOrEmpty(name))
 				return false;
+			bool ret;
 
-			return Binaries.ContainsKey(name);
+			lock (BinaryLock)
+			{
+				ret = Binaries.ContainsKey(name);
+			}
+			return ret;
 		}
 
 		/// <summary>
@@ -627,7 +702,7 @@ namespace ArcEngine
 			//
 			// 1° Look in binaries
 			//
-			if (Binaries.ContainsKey(resourcename))
+			if (BinaryExist(resourcename))
 			{
 				return new MemoryStream(Binaries[resourcename]);
 			}
@@ -649,8 +724,11 @@ namespace ArcEngine
 		/// <param name="name">Name of the binary to remove</param>
 		static public void UnloadResource(string name)
 		{
-			if (Binaries.ContainsKey(name))
-				Binaries.Remove(name);
+			lock (BinaryLock)
+			{
+				if (Binaries.ContainsKey(name))
+					Binaries.Remove(name);
+			}
 		}
 
 
@@ -813,9 +891,11 @@ namespace ArcEngine
 			{
 				List<string> list = new List<string>();
 
-				foreach (string name in Binaries.Keys)
-					list.Add(name);
-
+				lock (BinaryLock)
+				{
+					foreach (string name in Binaries.Keys)
+						list.Add(name);
+				}
 				list.Sort();
 
 				return list;
@@ -868,6 +948,14 @@ namespace ArcEngine
 		/// Registred tags
 		/// </summary>
 		static Dictionary<string, Provider> Tags;
+
+
+		/// <summary>
+		/// Object used for thread locking
+		/// </summary>
+		static object BinaryLock;
+
+
 
 		#endregion
 

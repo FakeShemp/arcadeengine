@@ -66,6 +66,25 @@ namespace ArcEngine.Providers
 		}
 
 
+		#region Initialization
+
+
+		/// <summary>
+		/// Initialization
+		/// </summary>
+		/// <returns></returns>
+		public abstract bool Init();
+
+
+
+		/// <summary>
+		/// Close all opened resources
+		/// </summary>
+		public abstract void Close();
+
+		#endregion
+
+
 		#region Editor
 
 		/// <summary>
@@ -201,7 +220,7 @@ namespace ArcEngine.Providers
 		/// <summary>
 		/// Saves assets to a xml file
 		/// </summary>
-		/// <param name="type"></param>
+		///<typeparam name="T"></typeparam>
 		/// <param name="xml"></param>
 		/// <returns></returns>
 		public virtual bool Save<T>(XmlWriter xml)

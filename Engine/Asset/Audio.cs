@@ -36,20 +36,20 @@ namespace ArcEngine.Asset
 	/// http://www.devmaster.net/articles.php?catID=6
 	/// http://www.gamedev.net/reference/articles/article2008.asp
 	/// </summary>
-	public class Sound : IDisposable, IAsset
+	public class Audio : IDisposable, IAsset
 	{
 
 
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public Sound()
+		public Audio()
 		{
 			Buffer = AL.GenBuffer();
 			Source = AL.GenSource();
 
 			Pitch = 1.0f;
-			Gain = 1.0f;
+			MaxGain = 1.0f;
 			Position = Point.Empty;
 			Velocity = Point.Empty;
 		}
@@ -57,7 +57,7 @@ namespace ArcEngine.Asset
 		/// <summary>
 		/// Destructor
 		/// </summary>
-		~Sound()
+		~Audio()
 		{
 			Dispose();
 		}
@@ -215,7 +215,7 @@ namespace ArcEngine.Asset
 
 				switch (node.Name.ToLower())
 				{
-					// Texture
+					// file name
 					case "file":
 					{
 						LoadSound(node.Attributes["name"].Value);
@@ -231,88 +231,11 @@ namespace ArcEngine.Asset
 		#endregion
 	
 
-
 		#region Initialization
 
 
 
-		/// <summary>
-		/// Init sound manager
-		/// </summary>
-		static internal bool Init()
-		{
-			if (IsInit)
-			{
-				Trace.WriteLine("AudioContext already initialized !");
-				return true;
-			}
 
-			Trace.WriteLine("Init sound system... ");
-			Trace.Indent();
-
-			Context = new AudioContext();
-			if (Context == null)
-			{
-				Trace.WriteLine("Failed to initialize AudioContext!");
-				Trace.Unindent();
-				return false;
-			}
-
-
-			Trace.Unindent();
-			return true;
-		}
-
-
-		/// <summary>
-		/// Trace audio informations
-		/// </summary>
-		static public void TraceInfos()
-		{
-			if (!IsInit)
-			{
-				Trace.WriteLine("Audion Context not initialized !");
-				return;
-			}
-
-
-			Trace.WriteLine("--- Audio ---");
-			Trace.Indent();
-			{
-				//Trace.WriteLine("Used Device: " + Context.);
-				Trace.WriteLine("AL Renderer: " +  AL.Get(ALGetString.Renderer));
-				Trace.WriteLine("AL Vendor: " + AL.Get(ALGetString.Vendor));
-				Trace.WriteLine("AL Version: " + AL.Get(ALGetString.Version));
-
-				Trace.WriteLine("AL Speed of sound: " + AL.Get(ALGetFloat.SpeedOfSound));
-				Trace.WriteLine("AL Distance Model: " + AL.GetDistanceModel().ToString());
-			//	Trace.WriteLine("AL Maximum simultanous Sources: " + MaxSources);
-
-		//		Trace.WriteLine("AL Extension string: " + ExtensionString);
-		//		Trace.WriteLine("Confirmed AL Extensions:");
-				//Trace.Indent();
-				//{
-				//   foreach (KeyValuePair<string, bool> pair in Extensions)
-				//      Trace.WriteLine(pair.Key + ": " + pair.Value);
-				//}
-				//Trace.Unindent();
-			}
-			Trace.Unindent();
-
-		}
-
-
-		/// <summary>
-		/// Close audio context
-		/// </summary>
-		static internal void Close()
-		{
-			if (Context != null)
-				Context.Dispose();
-			Context = null;
-
-
-		}
 
 		#endregion
 
@@ -402,43 +325,30 @@ namespace ArcEngine.Asset
 		{
 			get
 			{
-				return "sound";
+				return "audio";
 			}
 		}
 
+
+		/// <summary>
+		/// Audio type
+		/// </summary>
+		public AudioType Type
+		{
+			get;
+			set;
+		}
 
 		/// <summary>
 		/// ID of the sound buffer
 		/// </summary>
 		int Buffer;
 
+
 		/// <summary>
 		/// Source ID
 		/// </summary>
 		int Source;
-
-
-
-		/// <summary>
-		/// Audio Context
-		/// </summary>
-		static public AudioContext Context
-		{
-			private set;
-			get;
-		}
-
-
-		/// <summary>
-		/// Is Audio Context is initialized
-		/// </summary>
-		static public bool IsInit
-		{
-			get
-			{
-				return Context != null;
-			}
-		}
 
 
 		/// <summary>
@@ -487,7 +397,26 @@ namespace ArcEngine.Asset
 		/// <summary>
 		/// Gain of the sound
 		/// </summary>
-		public float Gain
+		public float MaxGain
+		{
+			get
+			{
+				float val = 0;
+
+				//AL.GetSourcef(SourceID, AL.AL_GAIN, out val);
+
+				return val;
+			}
+			set
+			{
+				//AL.Sourcef(SourceID, AL.AL_GAIN, value);
+			}
+		}
+
+		/// <summary>
+		/// Gain of the sound
+		/// </summary>
+		public float MinGain
 		{
 			get
 			{
@@ -545,5 +474,22 @@ namespace ArcEngine.Asset
 
 
 		#endregion
+	}
+
+
+	/// <summary>
+	/// Type of Audio sound
+	/// </summary>
+	public enum AudioType
+	{
+		/// <summary>
+		/// Audio data are fully loaded in memory
+		/// </summary>
+		Sound,
+
+		/// <summary>
+		/// Audio data are streamed
+		/// </summary>
+		Music
 	}
 }

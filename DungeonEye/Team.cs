@@ -118,7 +118,9 @@ namespace DungeonEye
 
 
 			Font = ResourceManager.CreateSharedAsset<Font2d>("inventory");
-			OutlinedFont = ResourceManager.CreateAsset<Font2d>("outline");
+			Font.TileSet.Scale = new SizeF(2.0f, 2.0f);
+			OutlinedFont = ResourceManager.CreateSharedAsset<Font2d>("outline");
+			OutlinedFont.TileSet.Scale = new SizeF(2.0f, 2.0f);
 
 			CampWindow.Init();
 			SpellBook.LoadContent();
@@ -135,7 +137,7 @@ namespace DungeonEye
 			Move(Point.Empty);
 
 
-			sound = ResourceManager.CreateAsset<Sound>("ring");
+			sound = ResourceManager.CreateAsset<Audio>("ring");
 		}
 
 
@@ -2623,7 +2625,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Sound test
 		/// </summary>
-		Sound sound;
+		Audio sound;
 
 		#endregion
 	}

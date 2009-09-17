@@ -28,6 +28,7 @@ using ArcEngine.Utility.ScreenManager;
 
 namespace DungeonEye
 {
+
 	class DungeonEye : Game
 	{
 		/// <summary>
@@ -37,6 +38,7 @@ namespace DungeonEye
 		static void Main()
 		{
 			DungeonEye game = null;
+
 
 			try
 			{
@@ -65,8 +67,13 @@ namespace DungeonEye
 			KeyboardSchemeName = Settings.GetString("keyboardscheme");
 			LanguageName = Settings.GetString("language");
 
+			// Add the provider
+			ResourceManager.AddProvider(new DungeonProvider());
+
 			GSM = new ScreenManager(this);
+
 		}
+
 
 
 
@@ -87,17 +94,14 @@ namespace DungeonEye
 			// Display settings
 			Mouse.Visible = false;
 
-			// Add the provider
-			ResourceManager.AddProvider(new DungeonProvider());
-
 
 			// Language to use
 			//Settings.StringTable = ResourceManager.CreateSharedAsset<StringTable>(Settings.LanguageName);
 
 
-			//GSM.AddScreen(new MainMenu());
-			GSM.AddScreen(new IntroScreen());
-			//GSM.AddScreen(new Team());
+			GSM.AddScreen(new MainMenu());
+	//		GSM.AddScreen(new Team());
+		//	GSM.AddScreen(new IntroScreen());
 		}
 
 

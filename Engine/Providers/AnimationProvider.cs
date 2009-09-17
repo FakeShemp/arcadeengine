@@ -41,7 +41,7 @@ namespace ArcEngine.Providers
 		/// </summary>
 		public AnimationProvider()
 		{
-			Animations = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
+			//Animations = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
 			SharedAnimations = new Dictionary<string, AnimationA>(StringComparer.OrdinalIgnoreCase);
 			KeyFrameAnimations = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
 			Name = "Animation";
@@ -52,6 +52,30 @@ namespace ArcEngine.Providers
 		}
 
 
+		#region Init & Close
+
+
+		/// <summary>
+		/// Initialization
+		/// </summary>
+		/// <returns></returns>
+		public override bool Init()
+		{
+			return false;
+		}
+
+
+
+		/// <summary>
+		/// Close all opened resources
+		/// </summary>
+		public override void Close()
+		{
+
+		}
+
+		#endregion
+
 
 		#region IO routines
 
@@ -59,16 +83,16 @@ namespace ArcEngine.Providers
 		/// <summary>
 		/// Saves all assets
 		/// </summary>
-		/// <param name="type"></param>
+		///<typeparam name="T"></typeparam>
 		/// <param name="xml"></param>
 		/// <returns></returns>
 		public override bool Save<T>(XmlWriter xml)
 		{
-			if (typeof(T) == typeof(AnimationA))
-			{
-				foreach (XmlNode node in Animations.Values)
-					node.WriteTo(xml);
-			}
+			//if (typeof(T) == typeof(AnimationA))
+			//{
+			//   foreach (XmlNode node in Animations.Values)
+			//      node.WriteTo(xml);
+			//}
 
 			if (typeof(T) == typeof(Animation))
 			{
@@ -97,12 +121,12 @@ namespace ArcEngine.Providers
 			
 			switch (xml.Name.ToLower())
 			{
-				case "animation":
-				{
-					string name = xml.Attributes["name"].Value;
-					Animations[name] = xml;
-				}
-				break;
+				//case "animation":
+				//{
+				//   string name = xml.Attributes["name"].Value;
+				//   Animations[name] = xml;
+				//}
+				//break;
 
 
 				case "keyframeanimation":
@@ -139,11 +163,11 @@ namespace ArcEngine.Providers
 		{
 			AssetEditor form = null;
 
-			if (typeof(T) == typeof(AnimationA))
+			if (typeof(T) == typeof(Animation))
 			{
 				XmlNode node = null;
-				if (Animations.ContainsKey(name))
-					node = Animations[name];
+				if (KeyFrameAnimations.ContainsKey(name))
+					node = KeyFrameAnimations[name];
 				form = new ArcEngine.Editor.AnimationForm(node);
 				form.TabText = name;
 			}
@@ -168,9 +192,9 @@ namespace ArcEngine.Providers
 		{
 			CheckValue<T>(name);
 
-			if (typeof(T) == typeof(AnimationA))
-				Animations[name] = node;
-			else if (typeof(T) == typeof(Animation))
+			//if (typeof(T) == typeof(AnimationA))
+			//   Animations[name] = node;
+			if (typeof(T) == typeof(Animation))
 				KeyFrameAnimations[name] = node;
 		}
 
@@ -183,11 +207,11 @@ namespace ArcEngine.Providers
 		{
 			List<string> list = new List<string>();
 
-			if (typeof(T) == typeof(AnimationA))
-				foreach (string key in Animations.Keys)
-					list.Add(key);
+			//if (typeof(T) == typeof(AnimationA))
+			//   foreach (string key in Animations.Keys)
+			//      list.Add(key);
 
-			else if (typeof(T) == typeof(Animation))
+			if (typeof(T) == typeof(Animation))
 				foreach (string key in KeyFrameAnimations.Keys)
 					list.Add(key);
 
@@ -206,13 +230,13 @@ namespace ArcEngine.Providers
 		{
 			CheckValue<T>(name);
 
-			if (typeof(T) == typeof(AnimationA) && Animations.ContainsKey(name))
-			{
-				AnimationA anim = new AnimationA();
-				anim.Load(Animations[name]);
+			//if (typeof(T) == typeof(AnimationA) && Animations.ContainsKey(name))
+			//{
+			//   AnimationA anim = new AnimationA();
+			//   anim.Load(Animations[name]);
 
-				return (T)(object)anim;
-			}
+			//   return (T)(object)anim;
+			//}
 
 
 			if (typeof(T) == typeof(Animation) && KeyFrameAnimations.ContainsKey(name))
@@ -240,8 +264,8 @@ namespace ArcEngine.Providers
 		{
 			CheckValue<T>(name);
 
-			if (typeof(T) == typeof(AnimationA) && Animations.ContainsKey(name))
-				return Animations[name];
+			//if (typeof(T) == typeof(AnimationA) && Animations.ContainsKey(name))
+			//   return Animations[name];
 
 			if (typeof(T) == typeof(Animation) && KeyFrameAnimations.ContainsKey(name))
 				return KeyFrameAnimations[name];
@@ -258,7 +282,7 @@ namespace ArcEngine.Providers
 		public override void Remove<T>()
 		{
 			if (typeof(T) == typeof(Animation))
-				Animations.Clear();
+				KeyFrameAnimations.Clear();
 		}
 
 	
@@ -281,19 +305,19 @@ namespace ArcEngine.Providers
 		/// </summary>
 		public override void Clear()
 		{
-			Animations.Clear();
+			KeyFrameAnimations.Clear();
 		}
 
 
 		/// <summary>
-		/// 
+		/// Returns the number of asset
 		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <returns></returns>
+		/// <typeparam name="T">Asset type</typeparam>
+		/// <returns>Number of asset</returns>
 		public override int Count<T>()
 		{
-			if (typeof(T) == typeof(AnimationA))
-				return Animations.Count;
+			//if (typeof(T) == typeof(AnimationA))
+			//   return Animations.Count;
 
 
 			if (typeof(T) == typeof(Animation))
@@ -379,10 +403,10 @@ namespace ArcEngine.Providers
 		#region Properties
 
 
-		/// <summary>
-		/// Animations
-		/// </summary>
-		Dictionary<string, XmlNode> Animations;
+		///// <summary>
+		///// Animations
+		///// </summary>
+		//Dictionary<string, XmlNode> Animations;
 
 		/// <summary>
 		/// Shared animations

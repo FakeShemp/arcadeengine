@@ -55,6 +55,29 @@ namespace RuffnTumble.Asset
 		}
 
 
+		#region Init & Close
+
+
+		/// <summary>
+		/// Initialization
+		/// </summary>
+		/// <returns></returns>
+		public override bool Init()
+		{
+			return false;
+		}
+
+
+
+		/// <summary>
+		/// Close all opened resources
+		/// </summary>
+		public override void Close()
+		{
+
+		}
+
+		#endregion
 
 		#region IO routines
 
