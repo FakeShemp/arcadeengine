@@ -33,7 +33,7 @@ namespace Breakout
 	/// <summary>
 	/// 
 	/// </summary>
-	public class Level
+	public class Level : IAsset
 	{
 
 		/// <summary>
@@ -119,8 +119,7 @@ namespace Breakout
 				}
 
 
-			Tileset.Draw(points, ids);
-
+		//	Tileset.Draw(points, ids);
 			
 
 			// Draw the paddle
@@ -256,6 +255,27 @@ namespace Breakout
 
 
 		#region Properties
+		/// <summary>
+		/// Name of the sound
+		/// </summary>
+		public string Name
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Xml tag of the asset in bank
+		/// </summary>
+		public string XmlTag
+		{
+			get
+			{
+				return "level";
+			}
+		}
+
+
 
 		/// <summary>
 		/// Background texture
@@ -308,13 +328,6 @@ namespace Breakout
 		/// Next level
 		/// </summary>
 		public string NextLevel;
-
-
-		/// <summary>
-		/// Name of the level
-		/// </summary>
-		public string Name;
-
 
 		#endregion
 	}

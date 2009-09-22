@@ -81,13 +81,13 @@ namespace ArcEngine.Editor
 				}
 			}
 
-			// Binaries
-			TreeNode sub = bank.Nodes.Add("Binaries");
-			//foreach (string name in ResourceManager.LoadedBinaries)
-			//	sub.Nodes.Add(name);
-
 			// Trie le tout
 			ResourceTree.Sort();
+
+
+			// Binaries
+			TreeNode sub = bank.Nodes.Insert(0, "Binaries (" + ResourceManager.LoadedBinaries.Count + ")");
+
 			ResourceTree.EndUpdate();
 
 			bank.Expand();

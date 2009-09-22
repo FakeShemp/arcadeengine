@@ -18,16 +18,18 @@
 //
 #endregion
 
-using OpenTK.Graphics;
-using System.ComponentModel;
-using ArcEngine.Asset;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using ArcEngine.Graphic;
-using System.Xml;
+using System.ComponentModel;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.Drawing.Text;
+using System.IO;
+using System.Runtime.InteropServices;
+using System.Windows.Forms;
+using System.Xml;
+using ArcEngine.Graphic;
 using OpenTK.Graphics.OpenGL;
+
 
 
 namespace ArcEngine.Asset
@@ -191,8 +193,9 @@ namespace ArcEngine.Asset
 		/// </summary>
 		/// <param name="filename">Filename</param>
 		/// <param name="size">Size of the font</param>
+		/// <param name="style">Style of the font</param>
 		/// <returns></returns>
-		public bool LoadTTF(string filename, int size)
+		public bool LoadTTF(string filename, int size, FontStyle style)
 		{
 			TileSetName = string.Empty;
 			TextureName = string.Empty;
@@ -200,8 +203,153 @@ namespace ArcEngine.Asset
 			if (string.IsNullOrEmpty(filename))
 				return false;
 
-			return false;
+			TTFFileName = filename;
+			TTFSize = size;
+			TTFStyle = style;
+
+
+			// Clear TileSet
+			TileSet.Clear();
+
+			// Open the font
+			Stream data = ResourceManager.LoadResource(filename);
+			if (data == null)
+				return false;
+
+			// GdiFont
+			return Generate(new Font(LoadFontFamily(data), size, style));
+		
 		}
+
+
+
+		/// <summary>
+		/// Internal font generation
+		/// </summary>
+		/// <returns></returns>
+		/// <remarks>
+		/// Graphics.MeasureCharacterRanges 
+		/// TextRenderer.MeasureText 
+		/// Graphics.MeasureString 
+		/// 
+		/// </remarks>
+		bool Generate(Font font)
+		{
+			LineHeight = font.Height;
+			//	IsGenerated = false;
+
+			// Final Bitmap
+			Bitmap bm = new Bitmap(512, LineHeight, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+			Bitmap tmpbm = null;
+
+			// Offset of the glyph in the texture
+			Point pos = Point.Empty;
+
+			// Graphics device
+			System.Drawing.Graphics gfx = System.Drawing.Graphics.FromImage(bm);
+			gfx.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+			gfx.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBilinear;
+			gfx.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
+
+			SolidBrush brush = new SolidBrush(Color.White);
+
+			// Get informations for each glyph
+			for (byte i = 0; i < 255; i++)
+			{
+				string c = Convert.ToChar(Convert.ToInt32(i)).ToString();
+
+
+				// Add the tile to the TileSet
+				Tile tile = TileSet.AddTile(i);
+				tile.Rectangle = new Rectangle(pos, TextRenderer.MeasureText(gfx, c, font, new Size(int.MaxValue, int.MaxValue), TextFormatFlags.NoPrefix | TextFormatFlags.NoPadding | TextFormatFlags.ExternalLeading));
+
+
+				// Check if enough space left
+				if (pos.X + tile.Rectangle.Width >= bm.Width)
+				{
+					// Relocate the location
+					pos.X = 0;
+					pos.Y += LineHeight;
+
+					// Resize the bitmap
+					tmpbm = new Bitmap(bm.Width, bm.Height + LineHeight);
+					System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(tmpbm);
+					g.DrawImage(bm, Point.Empty);
+					bm = tmpbm;
+					gfx = System.Drawing.Graphics.FromImage(bm);
+					gfx.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+					gfx.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBilinear;
+					gfx.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
+
+					// Relocate the tile rectangle
+					tile.Rectangle = new Rectangle(pos, tile.Rectangle.Size);
+				}
+
+
+				// Draw the glyph to the texture
+				TextRenderer.DrawText(gfx, c, font, pos, Color.White, TextFormatFlags.NoPadding);
+				//gfx.DrawString(c, font, brush, pos);
+
+				// Offset of the new glyph in the texture
+				pos.X += tile.Rectangle.Width;
+
+				//bm.Save(i + ".png", ImageFormat.Png);
+			}
+
+			// Close the font
+			font.Dispose();
+			gfx.Dispose();
+
+
+			// Check the texture size (power of two size)
+			int powof2 = 1;
+			while (powof2 < bm.Height) powof2 <<= 1;
+			tmpbm = new Bitmap(bm.Width, powof2);
+			gfx = System.Drawing.Graphics.FromImage(tmpbm);
+			gfx.DrawImage(bm, Point.Empty);
+			bm = tmpbm;
+
+
+			// Save the image to the texture
+			MemoryStream ms = new MemoryStream();
+			bm.Save(ms, ImageFormat.Png);
+			TileSet.Texture.LoadImage(ms.ToArray());
+
+			//	bm.Save("final.png", ImageFormat.Png);
+
+			//IsGenerated = true;
+			return true;
+		}
+
+
+
+		/// <summary>
+		/// Loads font family from byte array
+		/// </summary>
+		/// <param name="buffer">Memory of the font</param>
+		/// <returns></returns>
+		private FontFamily LoadFontFamily(Stream buffer)
+		{
+			byte[] data = new byte[buffer.Length];
+			buffer.Read(data, 0, (int)buffer.Length);
+
+
+			var handle = GCHandle.Alloc(data, GCHandleType.Pinned);
+			var pfc = new PrivateFontCollection();
+
+			try
+			{
+				var ptr = Marshal.UnsafeAddrOfPinnedArrayElement(data, 0);
+				pfc.AddMemoryFont(ptr, data.Length);
+			}
+			finally
+			{
+				handle.Free();
+			}
+
+			return pfc.Families[0];
+		}
+
 
 
 		/// <summary>
@@ -267,6 +415,7 @@ namespace ArcEngine.Asset
 			return LoadFromTexture(name, size, rectangle);
 
 		}
+
 
 		/// <summary>
 		/// Loads a Texture
@@ -393,27 +542,16 @@ namespace ArcEngine.Asset
 						GlyphOffset = int.Parse(node.Attributes["value"].Value);
 					}
 					break;
+
+					case "ttf":
+					{
+						LoadTTF(node.Attributes["filename"].Value, int.Parse(node.Attributes["size"].Value), (FontStyle)(Enum.Parse(typeof(FontStyle), node.Attributes["style"].Value)));
+					}
+					break;
 				}
 
 			}
 
-/*
-			// Load texture
-			TileSet.LoadTexture(texture);
-
-			// Build tile set
-			TileSet.Clear();
-			int id = 32;
-			for(int y = rectangle.Top; y < rectangle.Bottom; y += Size.Height)
-				for (int x = rectangle.Left; x < rectangle.Right; x += Size.Width)
-				{
-					Tile tile = TileSet.AddTile(id++);
-
-					tile.Rectangle = new Rectangle(x, y, Size.Width, Size.Height);
-				}
-
-
-*/
 			return true;
 		}
 
@@ -458,6 +596,17 @@ namespace ArcEngine.Asset
 		/// </summary>
 		string TTFFileName;
 
+		/// <summary>
+		/// Size of the ttf
+		/// </summary>
+		int TTFSize;
+
+
+		/// <summary>
+		/// Style of the TTF
+		/// </summary>
+		FontStyle TTFStyle;
+
 		#endregion
 
 		#region From Texture
@@ -494,7 +643,7 @@ namespace ArcEngine.Asset
 
 		}
 
-
+*/
 		/// <summary>
 		/// Height of a line of text
 		/// </summary>
@@ -505,7 +654,7 @@ namespace ArcEngine.Asset
 			get;
 			protected set;
 		}
-*/
+
 		/// <summary>
 		/// Size of a glyph
 		/// </summary>

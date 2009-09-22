@@ -46,7 +46,17 @@ namespace Breakout
 
 		}
 
+		public override void Close()
+		{
+			
 
+		}
+
+
+		public override bool Init()
+		{
+			return true;
+		}
 
 		#region Assets
 
@@ -107,14 +117,18 @@ namespace Breakout
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <returns></returns>
-		public override List<string> GetAssets(Type type)
+		public override List<string> GetAssets<T>()
 		{
 			List<string> list = new List<string>();
 
-			foreach (string key in Levels.Keys)
+			if (typeof(T) == typeof(Level))
 			{
-				list.Add(key);
+				foreach (string key in Levels.Keys)
+				{
+					list.Add(key);
+				}
 			}
+
 			list.Sort();
 			return list;
 		}
@@ -230,11 +244,13 @@ namespace Breakout
 		/// <param name="type"></param>
 		/// <param name="xml"></param>
 		/// <returns></returns>
-		public override void Save(Type type, XmlWriter xml)
+		public override bool Save<T>(XmlWriter xml)
 		{
 			foreach (XmlNode node in Levels.Values)
 				node.WriteTo(xml);
 
+
+			return true;
 		}
 
 
@@ -245,7 +261,7 @@ namespace Breakout
 		/// </summary>
 		/// <param name="xml"></param>
 		/// <returns></returns>
-		public override void Load(XmlNode xml)
+		public override bool Load(XmlNode xml)
 		{
 
 			switch (xml.Name.ToLower())
@@ -263,6 +279,8 @@ namespace Breakout
 				break;
 			}
 
+
+			return true;
 		}
 
 
@@ -271,6 +289,19 @@ namespace Breakout
 
 
 		#region Properties
+
+		/// <summary>
+		/// Returns the number of known assets
+		/// </summary>
+		/// <typeparam name="T">Type of the asset</typeparam>
+		/// <returns>Number of available asset</returns>
+		public override int Count<T>()
+		{
+			if (typeof(T) == typeof(Level))
+				return Levels.Count;
+
+			return 0;
+		}
 
 
 		/// <summary>

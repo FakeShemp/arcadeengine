@@ -75,8 +75,13 @@ namespace DungeonEye
 
 			Buttons.Add(new ScreenButton("", new Rectangle(150, 372, 324, 14)));
 			Buttons[3].Selected += new EventHandler(QuitEvent);
+
+
+
+			font = ResourceManager.CreateAsset<Font2d>("ttf");
 		}
 
+		Font2d font;
 
 		/// <summary>
 		/// 
@@ -236,12 +241,14 @@ namespace DungeonEye
 
 			// Version info
 			Font.Color = Color.White;
-			Font.DrawText("V 0.2", new Point(554, 380));
+			Font.DrawText("V 0.2a", new Point(520, 380));
 
 			// Draw the cursor or the item in the hand
 			Display.Color = Color.White;
 			Tileset.Draw(0, Mouse.Location);
 
+
+			font.DrawText("toto", new Point(100, 100));
 		}
 
 		#endregion
