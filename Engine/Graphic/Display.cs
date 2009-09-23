@@ -182,6 +182,60 @@ namespace ArcEngine.Graphic
 		#endregion
 
 
+
+		/// <summary>
+		/// multiply the current matrix by a translation matrix.
+		/// </summary>
+		/// <param name="offset">The translation vector</param>
+		public static void Translate(Point offset)
+		{
+			GL.MatrixMode(MatrixMode.Projection);
+			GL.Translate(offset.X, offset.Y, 0);
+		}
+
+
+		/// <summary>
+		/// Multiply the current matrix by a rotation matrix
+		/// </summary>
+		/// <param name="angle">The angle of rotation, in degrees.</param>
+		public static void Rotate(float angle)
+		{
+
+			GL.MatrixMode(MatrixMode.Projection);
+			GL.Rotate(angle, 0, 0, 1.0f);
+
+		}
+
+
+		/// <summary>
+		/// Replaces the current matrix with the identity matrix.
+		/// </summary>
+		public static void Reset2d()
+		{
+			GL.MatrixMode(MatrixMode.Projection);
+			GL.LoadIdentity();
+			GL.Ortho(ViewPort.Left, ViewPort.Width, ViewPort.Height, ViewPort.Top, -1, 1);
+		}
+
+
+		/// <summary>
+		/// Draws a colored rectangle
+		/// </summary>
+		/// <param name="rect">Rectangle to draw</param>
+		/// <param name="fill">Fill in the rectangle or not</param>
+		/// <param name="angle">Angle of rotation</param>
+		/// <param name="origin">The origin of the rectangle. Specify (0,0) for the upper-left corner.</param>
+		public static void Rectangle(Rectangle rect, bool fill, float angle, Point origin)
+		{
+			Translate(new Point(rect.Location.X + origin.X, rect.Location.Y + origin.Y));
+			Rotate(angle);
+
+			Rectangle(new Rectangle(-origin.X, -origin.Y, rect.Size.Width, rect.Size.Height), fill);
+			Reset2d();
+		}
+
+
+
 		#region Drawing
 
 		/// <summary>
@@ -490,12 +544,14 @@ namespace ArcEngine.Graphic
 					rect.Width = 1;
 
 
+
 				GL.Viewport(0, 0, rect.Width, rect.Height);
-				GL.MatrixMode(MatrixMode.Projection);
-				GL.LoadIdentity();
-				GL.Ortho(rect.Left, rect.Width, rect.Height, rect.Top, -1, 1);
-				GL.MatrixMode(MatrixMode.Modelview);
-				GL.LoadIdentity();
+				//GL.MatrixMode(MatrixMode.Projection);
+				//GL.LoadIdentity();
+				//GL.Ortho(rect.Left, rect.Width, rect.Height, rect.Top, -1, 1);
+				Reset2d();
+		//		GL.MatrixMode(MatrixMode.Modelview);
+		//		GL.LoadIdentity();
 			}
 		}
 
@@ -558,42 +614,6 @@ namespace ArcEngine.Graphic
 			}
 		}
 
-/*
-		/// <summary>
-		/// Size of a point
-		/// </summary>
-		public static float PointSize
-		{
-			get
-			{
-				float size;
-				GL.GetFloat(GetPName.PointSize, out size);
-				return size;
-			}
-			set
-			{
-				GL.PointSize(value);
-			}
-		}
-
-
-		/// <summary>
-		/// Width of a line
-		/// </summary>
-		public static int LineWidth
-		{
-			get
-			{
-				float size;
-				GL.GetFloat(GetPName.LineWidth, out size);
-				return (int)size;
-			}
-			set
-			{
-				GL.LineWidth(value);
-			}
-		}
-*/
 
 		/// <summary>
 		/// Gets/sets blending state
