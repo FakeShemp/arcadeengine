@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Time Line Control", "Time L
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project T", "Project T\Project T.csproj", "{679B44A5-E89C-4A1C-AC8E-6686F536936F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimplePhysic", "SimplePhysic\SimplePhysic.csproj", "{D7A7B285-ABB3-486A-BD7B-637F462D5ABD}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -124,6 +126,14 @@ Global
 		{679B44A5-E89C-4A1C-AC8E-6686F536936F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{679B44A5-E89C-4A1C-AC8E-6686F536936F}.Release|x64.ActiveCfg = Release|Any CPU
 		{679B44A5-E89C-4A1C-AC8E-6686F536936F}.Release|x86.ActiveCfg = Release|Any CPU
+		{D7A7B285-ABB3-486A-BD7B-637F462D5ABD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7A7B285-ABB3-486A-BD7B-637F462D5ABD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7A7B285-ABB3-486A-BD7B-637F462D5ABD}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D7A7B285-ABB3-486A-BD7B-637F462D5ABD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D7A7B285-ABB3-486A-BD7B-637F462D5ABD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7A7B285-ABB3-486A-BD7B-637F462D5ABD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7A7B285-ABB3-486A-BD7B-637F462D5ABD}.Release|x64.ActiveCfg = Release|Any CPU
+		{D7A7B285-ABB3-486A-BD7B-637F462D5ABD}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
