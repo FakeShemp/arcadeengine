@@ -259,6 +259,30 @@ namespace ArcEngine.Graphic
 		}
 
 
+
+        /// <summary>
+        /// Push a copy of the current drawing state onto the drawing state stack 
+        /// </summary>
+        public static void Save()
+        {
+            GL.PushAttrib(AttribMask.AllAttribBits);
+
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.PushMatrix();
+        }
+
+
+        /// <summary>
+        /// Pop the top entry in the drawing state stack, and reset the drawing state it describes.
+        /// </summary>
+        public static void Restore()
+        {
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.PopMatrix();
+            GL.PopAttrib();
+        }
+
+
 		/// <summary>
 		/// Draws a colored rectangle
 		/// </summary>
