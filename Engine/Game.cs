@@ -77,7 +77,6 @@ namespace ArcEngine
 		/// </summary>
 		~Game()
 		{
-			Trace.WriteLine("~Game()");
 			Dispose(false);
 		}
 

@@ -229,8 +229,8 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 		{
 			foreach (Layer layer in layers)
 			{
-				//if (layer.Name == name)
-				//   return layer;
+				if (layer.Name == name)
+				   return layer;
 			}
 
 			return null;

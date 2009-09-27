@@ -107,6 +107,8 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 		/// <returns></returns>
 		public override bool Load(XmlNode xml)
 		{
+			if (xml == null)
+				return false;
 
 			switch (xml.Name.ToLower())
 			{

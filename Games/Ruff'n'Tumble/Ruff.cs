@@ -69,22 +69,23 @@ namespace ArcEngine.Games.RuffnTumble
 		{
 			Ruff game = new Ruff();
 
-			//try
-			//{
-				game.LoadContent();
-				game.RunEditor();
-			//}
-			//catch (Exception e)
-			//{
-			//    Trace.WriteLine("");
-			//    Trace.WriteLine("!!!FATAL ERROR !!!");
-			//    Trace.WriteLine("Message : " + e.Message);
-			//    Trace.WriteLine("StackTrace : " + e.StackTrace);
-			//    Trace.WriteLine("");
+            try
+            {
+                //game.LoadContent();
+                //game.RunEditor();
+                game.Run();
+            }
+            catch (Exception e)
+            {
+                Trace.WriteLine("");
+                Trace.WriteLine("!!!FATAL ERROR !!!");
+                Trace.WriteLine("Message : " + e.Message);
+                Trace.WriteLine("StackTrace : " + e.StackTrace);
+                Trace.WriteLine("");
 
 
-			//    MessageBox.Show(e.StackTrace, e.Message);
-			//}
+                MessageBox.Show(e.StackTrace, e.Message);
+            }
 
 			game.Exit();
 		}
@@ -113,25 +114,26 @@ namespace ArcEngine.Games.RuffnTumble
 			ResourceManager.LoadBank("data/world1.bnk");
 
 
-/*
+
 			// Sets the level
 			CurrentLevel = ResourceManager.CreateAsset<Level>("Level1_1");
-			CurrentLevel.Init();
-			Level.DisplayZone = new Rectangle(0, 56, 800, 544);
+			if (CurrentLevel != null)
+				CurrentLevel.Init();
+
+			//Level.DisplayZone = new Rectangle(0, 56, 800, 544);
 
 
 			// Default rendering font
-			Font = new TextureFont();
-			//Font.LoadFromTTF("verdana.ttf", 12, FontStyle.Regular);
+			Font = new Font2d();
+			Font.LoadTTF("verdana.ttf", 12, FontStyle.Regular);
 
 
 			// Events 
-			Keyboard.OnKeyDown += new EventHandler<PreviewKeyDownEventArgs>(OnKeyDown);
-			Terminal.OnProcessCommand += new ArcEngine.Forms.ProcessCommand(ProcessConsoleCommands);
+			//Keyboard.OnKeyDown += new EventHandler<PreviewKeyDownEventArgs>(OnKeyDown);
+			//Terminal.OnProcessCommand += new ArcEngine.Forms.ProcessCommand(ProcessConsoleCommands);
 
 
 			Icon = ResourceManager.CreateAsset<TileSet>("Layout");
-*/
 		}
 
 
