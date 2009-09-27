@@ -28,7 +28,7 @@ using System.Windows.Forms;
 
 
 
-namespace RuffnTumble.Editor.Wizards
+namespace ArcEngine.Games.RuffnTumble.Editor.Wizards
 {
 	public partial class NewModelWizard : Form
 	{

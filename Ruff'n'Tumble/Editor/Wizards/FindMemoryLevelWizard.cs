@@ -30,7 +30,7 @@ using System.IO;
 using ArcEngine.Asset;
 
 
-namespace RuffnTumble.Editor.Wizards
+namespace ArcEngine.Games.RuffnTumble.Editor.Wizards
 {
 	/// <summary>
 	/// 

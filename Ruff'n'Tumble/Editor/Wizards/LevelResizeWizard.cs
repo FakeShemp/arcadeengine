@@ -22,12 +22,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 
 using System.Drawing;
-using RuffnTumble.Asset;
+using ArcEngine.Games.RuffnTumble.Asset;
 using System.Text;
 using System.Windows.Forms;
 
 
-namespace RuffnTumble.Editor.Wizards
+namespace ArcEngine.Games.RuffnTumble.Editor.Wizards
 {
 	public partial class LevelResizeWizard : Form
 	{

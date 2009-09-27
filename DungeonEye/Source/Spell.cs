@@ -24,7 +24,7 @@ using ArcEngine.Asset;
 using System.Xml;
 
 
-namespace DungeonEye.Source
+namespace ArcEngine.Games.DungeonEye.Source
 {
 	/// <summary>
 	/// Spell class

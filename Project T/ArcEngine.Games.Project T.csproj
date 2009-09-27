@@ -8,7 +8,7 @@
     <ProjectGuid>{679B44A5-E89C-4A1C-AC8E-6686F536936F}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Project_T</RootNamespace>
+    <RootNamespace>ArcEngine.Games.ProjectT</RootNamespace>
     <AssemblyName>Project T</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

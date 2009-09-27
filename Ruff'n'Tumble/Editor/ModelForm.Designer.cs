@@ -1,4 +1,4 @@
-﻿namespace RuffnTumble.Editor
+﻿namespace ArcEngine.Games.RuffnTumble.Editor
 {
 	partial class ModelForm
 	{

@@ -30,7 +30,7 @@ using System.Windows.Forms;
 using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
-using RuffnTumble.Asset;
+using ArcEngine.Games.RuffnTumble.Asset;
 
 //
 // MD5 :
@@ -43,7 +43,7 @@ using RuffnTumble.Asset;
 //
 //
 
-namespace RuffnTumble.Editor.Wizards
+namespace ArcEngine.Games.RuffnTumble.Editor.Wizards
 {
 	public partial class ImportLevelWizard : Form
 	{

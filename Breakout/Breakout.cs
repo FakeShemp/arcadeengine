@@ -28,7 +28,7 @@ using ArcEngine.Asset;
 using System.Text;
 
 
-namespace Breakout
+namespace ArcEngine.Games.Breakout
 {
 	/// <summary>
 	/// Main game class

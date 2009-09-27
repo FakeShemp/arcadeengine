@@ -26,7 +26,7 @@ using ArcEngine;
 using ArcEngine.Asset;
 
 
-namespace DungeonEye
+namespace ArcEngine.Games.DungeonEye
 {
 	public class FloorPlate
 	{

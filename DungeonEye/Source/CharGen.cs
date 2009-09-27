@@ -27,9 +27,9 @@ using ArcEngine.Asset;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
 using ArcEngine.Utility.ScreenManager;
-using DungeonEye.Gui;
+using ArcEngine.Games.DungeonEye.Gui;
 
-namespace DungeonEye
+namespace ArcEngine.Games.DungeonEye
 {
 	/// <summary>
 	/// Charactere generation

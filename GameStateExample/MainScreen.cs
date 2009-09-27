@@ -25,13 +25,13 @@ using ArcEngine.Graphic;
 using System.Drawing;
 using ArcEngine.Input;
 using System.Windows.Forms;
-using ArcEngine.ScreenManager;
+using ArcEngine.Utility.ScreenManager;
 
 using ArcEngine.Asset;
 
 
 
-namespace GameStateExample
+namespace ArcEngine.Examples.GameState
 {
 	/// <summary>
 	/// Selection menu screen
@@ -125,10 +125,10 @@ namespace GameStateExample
 		/// 
 		/// </summary>
 		/// <param name="device"></param>
-		public override void Draw(VideoRender device)
+		public override void Draw()
 		{
-			device.Color = Color.White;
-			base.Draw(device);
+			Display.Color = Color.White;
+			base.Draw();
 
 		}
 

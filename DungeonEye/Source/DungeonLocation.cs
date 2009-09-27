@@ -20,7 +20,7 @@
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
 using System.Drawing.Design;
-using DungeonEye.Forms;
+using ArcEngine.Games.DungeonEye.Forms;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -32,7 +32,7 @@ using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
 
-namespace DungeonEye
+namespace ArcEngine.Games.DungeonEye
 {
 
 

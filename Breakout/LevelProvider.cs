@@ -24,7 +24,7 @@ using ArcEngine.Providers;
 using System.Xml;
 
 
-namespace Breakout
+namespace ArcEngine.Games.Breakout
 {
 	/// <summary>
 	/// 

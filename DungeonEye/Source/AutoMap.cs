@@ -25,7 +25,7 @@ using ArcEngine.Graphic;
 using ArcEngine.Input;
 using ArcEngine.Utility.ScreenManager;
 
-namespace DungeonEye
+namespace ArcEngine.Games.DungeonEye
 {
 	public class AutoMap : GameScreen
 	{

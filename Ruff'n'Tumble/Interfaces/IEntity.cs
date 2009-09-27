@@ -18,10 +18,10 @@
 //
 #endregion
 using System.Xml;
-using RuffnTumble.Asset;
+using ArcEngine.Games.RuffnTumble.Asset;
 using ArcEngine;
 
-namespace RuffnTumble.Interface
+namespace ArcEngine.Games.RuffnTumble.Interface
 {
 	/// <summary>
 	/// Interface pour la gestion des entite par scripting

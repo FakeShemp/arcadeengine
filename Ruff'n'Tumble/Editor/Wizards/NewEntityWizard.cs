@@ -20,7 +20,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using RuffnTumble.Asset;
+using ArcEngine.Games.RuffnTumble.Asset;
 using System.Drawing;
 using ArcEngine.Asset;
 using System.Text;
@@ -30,7 +30,7 @@ using System.Windows.Forms;
 
 
 
-namespace RuffnTumble.Editor.Wizards
+namespace ArcEngine.Games.RuffnTumble.Editor.Wizards
 {
 	public partial class NewEntityWizard : Form
 	{

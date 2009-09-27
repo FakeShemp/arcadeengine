@@ -1,4 +1,4 @@
-﻿namespace TimeLineControl
+﻿namespace ArcEngine.Controls.TimeLineControl
 {
 	partial class TimeLine
 	{

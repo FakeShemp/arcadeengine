@@ -28,11 +28,11 @@ using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Forms;
 using ArcEngine.Graphic;
-using RuffnTumble.Asset;
+using ArcEngine.Games.RuffnTumble.Asset;
 using WeifenLuo.WinFormsUI.Docking;
 
 
-namespace RuffnTumble.Editor
+namespace ArcEngine.Games.RuffnTumble.Editor
 {
 	public partial class LevelForm : AssetEditor
 	{

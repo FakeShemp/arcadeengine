@@ -5,15 +5,13 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{BFAA0E67-D319-4F49-A495-13C4FD130177}</ProjectGuid>
+    <ProjectGuid>{1D070180-2636-464E-8BED-DB26488658BD}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RenderToTexture</RootNamespace>
-    <AssemblyName>RenderToTexture</AssemblyName>
+    <RootNamespace>ArcEngine.Examples.GameState</RootNamespace>
+    <AssemblyName>GameStateExample</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <StartupObject>
-    </StartupObject>
     <TargetFrameworkSubset>
     </TargetFrameworkSubset>
   </PropertyGroup>
@@ -67,21 +65,17 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="OpenTK, Version=0.9.9.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Engine\Libraries\OpenTK\Debug\OpenTK.dll</HintPath>
-    </Reference>
-    <Reference Include="OpenTK.Utilities, Version=0.9.9.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Engine\Libraries\OpenTK\Debug\OpenTK.Utilities.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="RenderBuffer.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="GamePlayScreen.cs" />
+    <Compile Include="BackgroundScreen.cs" />
+    <Compile Include="MainScreen.cs" />
+    <Compile Include="OptionScreen.cs" />
+    <Compile Include="main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -91,6 +85,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
     <None Include="Properties\Settings.settings">
@@ -102,6 +97,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="QuitScreen.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Engine\ArcEngine.csproj">

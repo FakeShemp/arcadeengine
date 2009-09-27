@@ -19,15 +19,12 @@
 #endregion
 using ArcEngine.Input;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using ArcEngine;
 using ArcEngine.Graphic;
-using OpenTK;
-using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL;
 
-namespace RenderToTexture
+namespace ArcEngine.Examples.RenderToTexture
 {
 	class RTT : Game
 	{

@@ -21,9 +21,9 @@ using System;
 using System.Collections.Generic;
 using ArcEngine;
 using ArcEngine.Graphic;
-using ArcEngine.ScreenManager;
+using ArcEngine.Utility.ScreenManager;
 
-namespace GameStateExample
+namespace ArcEngine.Examples.GameState
 {
 	/// <summary>
 	/// 
@@ -71,7 +71,7 @@ namespace GameStateExample
 		/// 
 		/// </summary>
 		/// <param name="device"></param>
-		public override void Draw(VideoRender device)
+		public override void Draw()
 		{
 			BackgroundTexture.Blit(Game.Window.Rectangle, BackgroundTexture.Rectangle);
 		}

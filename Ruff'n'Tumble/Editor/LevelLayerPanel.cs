@@ -20,7 +20,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using RuffnTumble.Asset;
+using ArcEngine.Games.RuffnTumble.Asset;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
@@ -31,7 +31,7 @@ using ArcEngine.Asset;
 using WeifenLuo.WinFormsUI.Docking;
 
 
-namespace RuffnTumble.Editor
+namespace ArcEngine.Games.RuffnTumble.Editor
 {
 	public partial class LevelLayerPanel : DockContent
 	{

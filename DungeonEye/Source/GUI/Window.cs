@@ -21,7 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DungeonEye.Source.GUI
+namespace ArcEngine.Games.DungeonEye.Source.GUI
 {
 	public class Window
 	{

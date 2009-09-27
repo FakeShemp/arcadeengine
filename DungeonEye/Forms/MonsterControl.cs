@@ -29,7 +29,7 @@ using ArcEngine.Asset;
 using ArcEngine.Graphic;
 
 
-namespace DungeonEye.Forms
+namespace ArcEngine.Games.DungeonEye.Forms
 {
 	/// <summary>
 	/// 

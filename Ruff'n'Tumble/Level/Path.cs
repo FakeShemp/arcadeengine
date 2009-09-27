@@ -27,7 +27,7 @@ using System.Drawing;
 using ArcEngine.Graphic;
 
 
-namespace RuffnTumble.Asset
+namespace ArcEngine.Games.RuffnTumble.Asset
 {
 	/// <summary>
 	/// 

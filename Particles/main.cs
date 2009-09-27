@@ -21,12 +21,14 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using ArcEngine;
+using ArcEngine.Asset;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
 using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL;
 
 
-namespace Particles
+namespace ArcEngine.Examples.Particles
 {
 	/// <summary>
 	/// Main game class
@@ -35,9 +37,11 @@ namespace Particles
 	{
 
 		// Creates a new TextPrinter to draw text on the screen.
-		TextPrinter printer = new TextPrinter(TextQuality.Medium);
-		Font sans_serif = new Font(FontFamily.GenericSansSerif, 18.0f);
-	
+        //TextPrinter printer = new TextPrinter(TextQuality.Medium);
+        //Font sans_serif = new Font(FontFamily.GenericSansSerif, 18.0f);
+
+        Font2d Font;
+
 		/// <summary>
 		/// Point d'entrée principal de l'application.
 		/// </summary>
@@ -103,6 +107,9 @@ namespace Particles
 
 
 			Texture = new Texture("data/particle.png");
+
+            Font = new Font2d();
+            Font.LoadTTF(@"c:\windows\fonts\verdana.ttf", 14, FontStyle.Regular);
 		}
 
 
@@ -196,19 +203,16 @@ namespace Particles
 				msg = "Batch mode";
 			}
 
-			printer.Begin();
-			GL.MatrixMode(MatrixMode.Texture);
-			GL.LoadIdentity();
-			printer.Print(msg, sans_serif, Color.SpringGreen, new RectangleF(10, 100, 0, 0));
+            Font.Color = Color.SpringGreen;
+            Font.DrawText(msg, new Point(10, 100));
 
 
-			printer.Print("Press 'D' key for direct draw", sans_serif, Color.White, new RectangleF(10, 180, 0, 0));
-			printer.Print("DirectCall : " + Display.RenderStats.DirectCall.ToString(), sans_serif, Color.White, new RectangleF(10, 200, 0, 0));
-			printer.Print("BatchCall : " + Display.RenderStats.BatchCall.ToString(), sans_serif, Color.White, new RectangleF(10, 220, 0, 0));
-			printer.Print("TextureBinding : " + Display.RenderStats.TextureBinding.ToString(), sans_serif, Color.White, new RectangleF(10, 240, 0, 0));
+            Font.DrawText("Press 'D' key for direct mode", new Point(10, 180));
+            Font.DrawText("DirectCall : " + Display.RenderStats.DirectCall.ToString(), new Point(10, 200));
+            Font.DrawText("BatchCall : " + Display.RenderStats.BatchCall.ToString(), new Point(10, 220));
+            Font.DrawText("TextureBinding : " + Display.RenderStats.TextureBinding.ToString(), new Point(10, 240));
 
 
-			printer.End();
 
 
 		}

@@ -37,7 +37,7 @@
   <ItemGroup>
     <Reference Include="FarseerPhysics, Version=2.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Engine\Libraries\Farseer\Debug\FarseerPhysics.dll</HintPath>
+      <HintPath>.\FarseerPhysics.dll</HintPath>
     </Reference>
     <Reference Include="OpenTK, Version=0.9.9.2, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

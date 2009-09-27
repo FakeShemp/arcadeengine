@@ -22,9 +22,9 @@ using System.Collections.Generic;
 using System.Text;
 using ArcEngine;
 using ArcEngine.Graphic;
-using ArcEngine.ScreenManager;
+using ArcEngine.Utility.ScreenManager;
 
-namespace GameStateExample
+namespace ArcEngine.Examples.GameState
 {
 	public class QuitScreen : GameScreen
 	{

@@ -21,7 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DungeonEye
+namespace ArcEngine.Games.DungeonEye
 {
 	/// <summary>
 	/// Dice

@@ -38,7 +38,7 @@ using OpenTK.Graphics.OpenGL;
 //
 // http://nerg4l.ne.funpic.de/doku.php/wiki:tutorials:nergal:quickstartsample
 //
-namespace StarterKit
+namespace ArcEngine.Games.ProjectT
 {
 	/// <summary>
 	/// Main game class

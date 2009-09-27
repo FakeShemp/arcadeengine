@@ -33,7 +33,7 @@ using System.Reflection;
 using System.Text;
 
 
-namespace DungeonEye.Forms
+namespace ArcEngine.Games.DungeonEye.Forms
 {
 	public partial class ItemSetForm : AssetEditor
 	{

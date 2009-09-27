@@ -21,9 +21,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using ArcEngine;
-using ArcEngine.ScreenManager;
+using ArcEngine.Utility.ScreenManager;
 
-namespace GameStateExample
+namespace ArcEngine.Examples.GameState
 {
 	/// <summary>
 	/// 

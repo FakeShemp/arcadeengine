@@ -8,11 +8,11 @@
     <ProjectGuid>{3F1ACC3B-1FFC-43A7-9463-193615B4F3BE}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RuffnTumble</RootNamespace>
+    <RootNamespace>ArcEngine.Games.RuffnTumble</RootNamespace>
     <AssemblyName>RuffnTumble</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <StartupObject>RuffnTumble.Ruff</StartupObject>
+    <StartupObject>ArcEngine.Games.RuffnTumble.Ruff</StartupObject>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>

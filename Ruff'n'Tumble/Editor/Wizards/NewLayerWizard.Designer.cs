@@ -1,4 +1,4 @@
-﻿namespace RuffnTumble.Editor.Wizards
+﻿namespace ArcEngine.Games.RuffnTumble.Editor.Wizards
 {
 	partial class NewLayerWizard
 	{

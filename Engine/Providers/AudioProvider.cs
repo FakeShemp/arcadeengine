@@ -70,17 +70,27 @@ namespace ArcEngine.Providers
 			Trace.Write("Init sound system... ");
 			Trace.Indent();
 
-			Context = new AudioContext();
-			if (Context == null)
-			{
-				Trace.WriteLine("Failed to initialize AudioContext!");
-				Trace.Unindent();
-				return false;
-			}
+            try
+            {
+                Context = new AudioContext();
+                if (Context == null)
+                {
+                    Trace.WriteLine("Failed to initialize AudioContext <!");
+                    Trace.Unindent();
+                    return false;
+                }
 
-			Trace.WriteLine("OK !");
-			Trace.Unindent();
-			return true;
+                Trace.WriteLine("OK !");
+                Trace.Unindent();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Trace.WriteLine("Exception thrown when creating AudioContext !");
+                Trace.Unindent();
+            }
+
+            return false;
 		}
 
 

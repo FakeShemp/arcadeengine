@@ -26,12 +26,12 @@ using ArcEngine.Input;
 using ArcEngine.Asset;
 
 
-namespace StarterKit
+namespace ArcEngine.Games.ProjectT
 {
 	/// <summary>
 	/// Main game class
 	/// </summary>
-	public class Template : Game
+	public class ProjectT : Game
 	{
 
 
@@ -43,7 +43,7 @@ namespace StarterKit
 		{
 			try
 			{
-				using (Template game = new Template())
+				using (ProjectT game = new ProjectT())
 					game.Run();
 			}
 			catch (Exception e)
@@ -56,7 +56,7 @@ namespace StarterKit
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public Template()
+		public ProjectT()
 		{
 			Window.ClientSize = new Size(640, 768);
 			Window.Text = "Project T";

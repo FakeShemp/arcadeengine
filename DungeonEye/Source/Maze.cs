@@ -28,7 +28,7 @@ using ArcEngine.Asset;
 using ArcEngine.Graphic;
 
 
-namespace DungeonEye
+namespace ArcEngine.Games.DungeonEye
 {
 
 	/// <summary>

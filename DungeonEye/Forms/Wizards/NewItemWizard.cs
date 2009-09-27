@@ -25,7 +25,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
-namespace DungeonEye.Forms.Wizards
+namespace ArcEngine.Games.DungeonEye.Forms.Wizards
 {
 	/// <summary>
 	/// 

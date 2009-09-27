@@ -26,7 +26,7 @@ using ArcEngine.Providers;
 using ArcEngine.Utility.ScreenManager;
 
 
-namespace DungeonEye
+namespace ArcEngine.Games.DungeonEye
 {
 
 	class DungeonEye : Game

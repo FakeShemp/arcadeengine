@@ -8,7 +8,7 @@
     <ProjectGuid>{AF615530-818F-475B-B79D-5ED4A2D01D79}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DungeonEye</RootNamespace>
+    <RootNamespace>ArcEngine.Games.DungeonEye</RootNamespace>
     <AssemblyName>DungeonEye</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -202,6 +202,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
     <None Include="data\Data.bnk" />

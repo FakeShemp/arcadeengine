@@ -17,7 +17,7 @@
 //along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 //
 #endregion
-using RuffnTumble.Asset;
+using ArcEngine.Games.RuffnTumble.Asset;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -29,7 +29,7 @@ using System.Text;
 using System.Windows.Forms;
 using ArcEngine;
 
-namespace RuffnTumble.Editor.Wizards
+namespace ArcEngine.Games.RuffnTumble.Editor.Wizards
 {
 	/// <summary>
 	/// 

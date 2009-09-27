@@ -28,11 +28,11 @@ using System.Windows.Forms;
 using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
-using RuffnTumble.Asset;
+using ArcEngine.Games.RuffnTumble.Asset;
 using WeifenLuo.WinFormsUI.Docking;
 
 
-namespace RuffnTumble.Editor
+namespace ArcEngine.Games.RuffnTumble.Editor
 {
 	/// <summary>
 	/// 

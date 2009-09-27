@@ -8,7 +8,7 @@
     <ProjectGuid>{836F03CA-2542-48F2-9249-A1529BC7B0EF}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TimeLineControl</RootNamespace>
+    <RootNamespace>ArcEngine.Controls.TimeLineControl</RootNamespace>
     <AssemblyName>Time Line Control</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

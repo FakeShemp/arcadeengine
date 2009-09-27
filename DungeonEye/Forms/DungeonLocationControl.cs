@@ -26,7 +26,7 @@ using System.Text;
 using System.Windows.Forms;
 using ArcEngine.Graphic;
 
-namespace DungeonEye.Forms
+namespace ArcEngine.Games.DungeonEye.Forms
 {
 	public partial class DungeonLocationControl : UserControl
 	{

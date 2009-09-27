@@ -37,7 +37,7 @@ using System.Windows.Forms;
 //
 //
 //
-namespace RuffnTumble
+namespace ArcEngine.Games.RuffnTumble
 {
 	/// <summary>
 	/// 

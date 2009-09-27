@@ -187,10 +187,10 @@ namespace ArcEngine.Graphic
 		/// multiply the current matrix by a translation matrix.
 		/// </summary>
 		/// <param name="offset">The translation vector</param>
-		public static void Translate(Point offset)
+		public static void Translate(float x, float y)
 		{
 			GL.MatrixMode(MatrixMode.Projection);
-			GL.Translate(offset.X, offset.Y, 0);
+			GL.Translate(x, y, 0);
 		}
 
 
@@ -207,10 +207,51 @@ namespace ArcEngine.Graphic
 		}
 
 
+
+        /// <summary>
+        /// Apply a transformation matrix
+        /// </summary>
+        /// <remarks>http://en.wikipedia.org/wiki/Transformation_matrix#Examples_in_2D_graphics</remarks>
+        /// <param name="m11"></param>
+        /// <param name="m12"></param>
+        /// <param name="m21"></param>
+        /// <param name="m22"></param>
+        /// <param name="dx"></param>
+        /// <param name="dy"></param>
+        public static void Transform(float m11, float m12, float m21, float m22, float dx, float dy)
+        {
+            float[] val = new float[16];
+            GL.GetFloat(GetPName.ProjectionMatrix, val);
+            
+            float[] values = new float[]
+            {
+                m11, m12, dx, 0,
+                m21, m22, dy, 0,
+                0, 0, 1, 0,
+                0, 0, 0, 1
+            };
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.MultMatrix(values);
+        }
+
+
+        /// <summary>
+        /// Apply a scaling transformation matrix
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        public static void Scale(float x, float y)
+        {
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.Scale(x, y, 1.0f);
+        }
+
+
+
 		/// <summary>
 		/// Replaces the current matrix with the identity matrix.
 		/// </summary>
-		public static void Reset2d()
+		public static void DefaultMatrix()
 		{
 			GL.MatrixMode(MatrixMode.Projection);
 			GL.LoadIdentity();
@@ -227,11 +268,11 @@ namespace ArcEngine.Graphic
 		/// <param name="origin">The origin of the rectangle. Specify (0,0) for the upper-left corner.</param>
 		public static void Rectangle(Rectangle rect, bool fill, float angle, Point origin)
 		{
-			Translate(new Point(rect.Location.X + origin.X, rect.Location.Y + origin.Y));
+			Translate(rect.Location.X + origin.X, rect.Location.Y + origin.Y);
 			Rotate(angle);
 
 			Rectangle(new Rectangle(-origin.X, -origin.Y, rect.Size.Width, rect.Size.Height), fill);
-			Reset2d();
+			DefaultMatrix();
 		}
 
 
@@ -549,7 +590,7 @@ namespace ArcEngine.Graphic
 				//GL.MatrixMode(MatrixMode.Projection);
 				//GL.LoadIdentity();
 				//GL.Ortho(rect.Left, rect.Width, rect.Height, rect.Top, -1, 1);
-				Reset2d();
+				DefaultMatrix();
 		//		GL.MatrixMode(MatrixMode.Modelview);
 		//		GL.LoadIdentity();
 			}

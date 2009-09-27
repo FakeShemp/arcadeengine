@@ -27,10 +27,10 @@ using System.Text;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 using ArcEngine.Graphic;
-using RuffnTumble.Asset;
+using ArcEngine.Games.RuffnTumble.Asset;
 
 
-namespace RuffnTumble.Editor
+namespace ArcEngine.Games.RuffnTumble.Editor
 {
     public partial class LevelPropertyPanel : DockContent
 	{

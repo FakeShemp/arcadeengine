@@ -20,14 +20,14 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using RuffnTumble.Asset;
+using ArcEngine.Games.RuffnTumble.Asset;
 using System.Drawing;
 using System.Text;
 using ArcEngine.Asset;
 using System.Windows.Forms;
 
 
-namespace RuffnTumble.Editor.Wizards
+namespace ArcEngine.Games.RuffnTumble.Editor.Wizards
 {
 	public partial class NewLayerBrushWizard : Form
 	{

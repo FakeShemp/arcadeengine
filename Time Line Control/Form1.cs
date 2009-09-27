@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace TimeLineControl
+namespace ArcEngine.Controls.TimeLineControl
 {
 	public partial class Form1 : Form
 	{

@@ -519,5 +519,33 @@ namespace ArcEngine.Editor
 
 
 
+        /// <summary>
+        /// Import an animation from a GIF image
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ImportAnimationFromGIF(object sender, EventArgs e)
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.CheckFileExists = true;
+            dlg.CheckPathExists = true;
+            dlg.Multiselect = false;
+            dlg.Title = "Select GIF animation to import...";
+            dlg.Filter = "GIF Anim (*.gif)|*.gif|All files (*.*)|*.*";
+            if (dlg.ShowDialog() != DialogResult.OK)
+                return;
+
+            Image img = Image.FromFile(dlg.FileName);
+            if (img == null)
+                return;
+
+            FrameDimension framedim = new FrameDimension(img.FrameDimensionsList[0]);
+            int count = img.GetFrameCount(framedim);
+
+
+        }
+
+
+
 	}
 }

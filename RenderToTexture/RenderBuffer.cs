@@ -21,12 +21,12 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
-using OpenTK.Graphics;
 using ArcEngine.Graphic;
-//using ArcEngine.Input;
+using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL;
 
 
-namespace RenderToTexture
+namespace ArcEngine.Examples.RenderToTexture
 {
 	/// <summary>
 	/// http://www.gamedev.net/reference/articles/article2331.asp

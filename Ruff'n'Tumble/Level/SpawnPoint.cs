@@ -25,7 +25,7 @@ using ArcEngine.Asset;
 using ArcEngine;
 
 
-namespace RuffnTumble.Asset
+namespace ArcEngine.Games.RuffnTumble.Asset
 {
 	/// <summary>
 	/// 

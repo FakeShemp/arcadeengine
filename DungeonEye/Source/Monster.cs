@@ -37,7 +37,7 @@ using OpenTK.Graphics.OpenGL;
 //
 //
 //
-namespace DungeonEye
+namespace ArcEngine.Games.DungeonEye
 {
 
 	/// <summary>

@@ -503,6 +503,12 @@ namespace ArcEngine
 				//TODO check if the bank is a zip file
 				ZipInputStream zip = new ZipInputStream(fs);
 				
+                // if empty, skip
+                if (zip == null)
+                {
+
+                    return true;
+                }
 
 				// Foreach file in the bank
 				ZipEntry entry;

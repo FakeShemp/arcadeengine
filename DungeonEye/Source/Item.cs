@@ -39,7 +39,7 @@ using System.Xml;
 //
 //
 
-namespace DungeonEye
+namespace ArcEngine.Games.DungeonEye
 {
 
 

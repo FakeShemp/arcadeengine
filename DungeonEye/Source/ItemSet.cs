@@ -26,7 +26,7 @@ using System.Xml;
 using ArcEngine;
 
 
-namespace DungeonEye
+namespace ArcEngine.Games.DungeonEye
 {
 	/// <summary>
 	/// 

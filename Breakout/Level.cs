@@ -27,7 +27,7 @@ using ArcEngine.Graphic;
 using ArcEngine;
 
 
-namespace Breakout
+namespace ArcEngine.Games.Breakout
 {
 
 	/// <summary>

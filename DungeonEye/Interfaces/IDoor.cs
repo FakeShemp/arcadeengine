@@ -22,7 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DungeonEye.Interfaces
+namespace ArcEngine.Games.DungeonEye.Interfaces
 {
 
 

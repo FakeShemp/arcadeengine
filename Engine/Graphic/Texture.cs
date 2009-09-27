@@ -265,6 +265,23 @@ namespace ArcEngine.Graphic
 		}
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <param name="angle"></param>
+        /// <param name="origin"></param>
+        public void Blit(Point pos, float angle, Point origin)
+        {
+            Display.Translate(pos.X + origin.X, pos.Y + origin.Y);
+            Display.Rotate(angle);
+
+            Blit(new Point(-origin.X, -origin.Y));
+
+            Display.DefaultMatrix();
+        }
+
+
 		/// <summary>
 		/// 
 		/// </summary>
@@ -275,6 +292,7 @@ namespace ArcEngine.Graphic
 			Blit(rect, Rectangle, mode);
 			//Blit(device, rect, Rectangle, mode);
 		}
+
 
 
 		#endregion

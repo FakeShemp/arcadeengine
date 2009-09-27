@@ -25,9 +25,9 @@ using ArcEngine.Graphic;
 using System.Drawing;
 using System.Windows.Forms;
 using ArcEngine.Input;
-using ArcEngine.ScreenManager;
+using ArcEngine.Utility.ScreenManager;
 
-namespace GameStateExample
+namespace ArcEngine.Examples.GameState
 {
 	/// <summary>
 	/// Main screen of the game

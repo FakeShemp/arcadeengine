@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{1D070180-2636-464E-8BED-DB26488658BD}</ProjectGuid>
+    <ProjectGuid>{CCA8CE5B-8EDA-46D1-B4BD-CBE12FC3E595}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GameStateExample</RootNamespace>
-    <AssemblyName>GameStateExample</AssemblyName>
+    <RootNamespace>ArcEngine.Games.Breakout</RootNamespace>
+    <AssemblyName>Breakout</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkSubset>
@@ -19,7 +19,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>.\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -73,11 +73,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GamePlayScreen.cs" />
-    <Compile Include="BackgroundScreen.cs" />
-    <Compile Include="MainScreen.cs" />
-    <Compile Include="OptionScreen.cs" />
-    <Compile Include="main.cs" />
+    <Compile Include="Ball.cs" />
+    <Compile Include="Brick.cs" />
+    <Compile Include="Level.cs" />
+    <Compile Include="LevelProvider.cs" />
+    <Compile Include="Paddle.cs" />
+    <Compile Include="Breakout.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -87,6 +88,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
     <None Include="Properties\Settings.settings">
@@ -98,13 +100,15 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="QuitScreen.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Engine\ArcEngine.csproj">
       <Project>{9931BDE3-41D2-4065-9595-37020DD45E8D}</Project>
       <Name>ArcEngine</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Documentation.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -17,7 +17,7 @@
 //along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 //
 #endregion
-using DungeonEye.Interfaces;
+using ArcEngine.Games.DungeonEye.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -29,10 +29,10 @@ using ArcEngine.Asset;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
 using ArcEngine.Utility.ScreenManager;
-using DungeonEye.Gui;
+using ArcEngine.Games.DungeonEye.Gui;
 
 
-namespace DungeonEye
+namespace ArcEngine.Games.DungeonEye
 {
 
 	/// <summary>

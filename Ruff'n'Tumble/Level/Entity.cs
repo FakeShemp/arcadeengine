@@ -18,7 +18,7 @@
 //
 #endregion
 using ArcEngine;
-using RuffnTumble.Interface;
+using ArcEngine.Games.RuffnTumble.Interface;
 using System.ComponentModel;
 using System;
 using System.Drawing;
@@ -43,7 +43,7 @@ using ArcEngine.Asset;
 //
 //
 //
-namespace RuffnTumble.Asset
+namespace ArcEngine.Games.RuffnTumble.Asset
 {
 
 	/// <summary>

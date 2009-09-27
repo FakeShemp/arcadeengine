@@ -1,4 +1,4 @@
-﻿namespace DungeonEye.Forms
+﻿namespace ArcEngine.Games.DungeonEye.Forms
 {
 	partial class MonsterControl
 	{

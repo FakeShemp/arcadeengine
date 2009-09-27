@@ -1,4 +1,4 @@
-﻿namespace TimeLineControl
+﻿namespace ArcEngine.Controls.TimeLineControl
 {
 	partial class Form1
 	{
@@ -28,7 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.timeLine1 = new TimeLineControl.TimeLine();
+			this.timeLine1 = new ArcEngine.Controls.TimeLineControl.TimeLine();
 			this.SuspendLayout();
 			// 
 			// timeLine1

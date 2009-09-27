@@ -24,7 +24,7 @@ using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
-using RuffnTumble.Asset;
+using ArcEngine.Games.RuffnTumble.Asset;
 
 
 //
@@ -52,7 +52,7 @@ using RuffnTumble.Asset;
 //
 
 
-namespace RuffnTumble
+namespace ArcEngine.Games.RuffnTumble
 {
 
 	/// <summary>
