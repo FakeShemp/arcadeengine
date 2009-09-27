@@ -1,9 +1,0 @@
-﻿Overlay tileset list :
-
-
-0 => door jamb
-1 - 4 => ground pit
-5 - 8 => roof pit
-9 - 11 => floor plate
-
-12 - 14 => alcove
