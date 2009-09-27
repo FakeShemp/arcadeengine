@@ -182,11 +182,14 @@ namespace ArcEngine.Graphic
 		#endregion
 
 
+        #region Transformation matrix
 
-		/// <summary>
-		/// multiply the current matrix by a translation matrix.
+
+        /// <summary>
+        /// Changes the transformation matrix to apply a translation transformation with the given characteristics.
 		/// </summary>
-		/// <param name="offset">The translation vector</param>
+		/// <param name="x"></param>
+        /// <param name="y"></param>
 		public static void Translate(float x, float y)
 		{
 			GL.MatrixMode(MatrixMode.Projection);
@@ -195,7 +198,7 @@ namespace ArcEngine.Graphic
 
 
 		/// <summary>
-		/// Multiply the current matrix by a rotation matrix
+        /// Changes the transformation matrix to apply a rotation transformation with the given characteristics.
 		/// </summary>
 		/// <param name="angle">The angle of rotation, in degrees.</param>
 		public static void Rotate(float angle)
@@ -209,7 +212,7 @@ namespace ArcEngine.Graphic
 
 
         /// <summary>
-        /// Apply a transformation matrix
+        /// Changes the transformation matrix to apply the matrix given by the arguments as described below.
         /// </summary>
         /// <remarks>http://en.wikipedia.org/wiki/Transformation_matrix#Examples_in_2D_graphics</remarks>
         /// <param name="m11"></param>
@@ -236,7 +239,23 @@ namespace ArcEngine.Graphic
 
 
         /// <summary>
-        /// Apply a scaling transformation matrix
+        /// Changes the transformation matrix to the matrix given by the arguments as described below.
+        /// </summary>
+        /// <param name="m11"></param>
+        /// <param name="m12"></param>
+        /// <param name="m21"></param>
+        /// <param name="m22"></param>
+        /// <param name="dx"></param>
+        /// <param name="dy"></param>
+        public static void SetTransform(float m11, float m12, float m21, float m22, float dx, float dy)
+        {
+            DefaultMatrix();
+            Transform(m11, m12, m21, m22, dx, dy);
+        }
+
+
+        /// <summary>
+        /// Changes the transformation matrix to apply a scaling transformation with the given characteristics.
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
@@ -281,6 +300,9 @@ namespace ArcEngine.Graphic
             GL.PopMatrix();
             GL.PopAttrib();
         }
+
+
+        #endregion
 
 
 		/// <summary>

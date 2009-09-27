@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTitle("ArcEngine")]
 [assembly: AssemblyProduct("ArcEngine")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("2D gaming framework (www.mimicprod.net)")]
 [assembly: AssemblyCompany("MimicProd")]
 [assembly: AssemblyCopyright("Copyright ©  2008-2009")]
 [assembly: AssemblyTrademark("")]
@@ -28,4 +28,4 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyVersion("0.3.0.0")]
