@@ -1,0 +1,43 @@
+#####Trace()
+######Game()
+27/09/2009 12:30:27
+Hardware informations :
+    OS : Microsoft Windows NT 6.1.7600.0
+    Platform : x64
+    SP : 
+    Processor count : 2
+Software informations :
+    CLR : 2.0.50727.4927
+Referenced assemblies :
+    DigitalRune.Windows.TextEditor, Version=1.3.0.0, Culture=neutral, PublicKeyToken=null
+    ICSharpCode.SharpZipLib, Version=0.85.5.452, Culture=neutral, PublicKeyToken=1b03e6acf1164f73
+    mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    OpenTK, Version=0.9.9.2, Culture=neutral, PublicKeyToken=null
+    OpenTK.GLControl, Version=0.9.9.2, Culture=neutral, PublicKeyToken=null
+    System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
+    System.Web, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
+    System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    WeifenLuo.WinFormsUI.Docking, Version=2.3.1.24483, Culture=neutral, PublicKeyToken=null
+Video informations :
+    Graphics card vendor : NVIDIA Corporation
+    Renderer : GeForce 8800 GTS/PCI/SSE2
+    Display modes
+        Secondary: {X=1280,Y=0,Width=1280,Height=1024}x32@75Hz (180 modes available)
+        Primary: {X=0,Y=0,Width=1280,Height=1024}x32@75Hz (198 modes available)
+Init mouse...
+OK
+Running the game
+Exit requested !
+######ResourceManager()
+Adding new provider : ArcEngine.Providers.FontProvider {ArcEngine.Asset.Font2d, }
+Adding new provider : ArcEngine.Providers.ScriptProvider {ArcEngine.Asset.Script, ArcEngine.Asset.ScriptModel, }
+Adding new provider : ArcEngine.Providers.TileSetProvider {ArcEngine.Asset.TileSet, }
+Adding new provider : ArcEngine.Providers.StringTableProvider {ArcEngine.Asset.StringTable, }
+Adding new provider : ArcEngine.Providers.AnimationProvider {ArcEngine.Asset.AnimationA, ArcEngine.Asset.Animation, }
+Adding new provider : ArcEngine.Providers.LayoutProvider {ArcEngine.Asset.Layout, }
+Adding new provider : ArcEngine.Providers.KeyboardSchemeProvider {ArcEngine.Asset.KeyboardScheme, }
+Adding new provider : ArcEngine.Providers.AudioProvider {ArcEngine.Asset.Audio, }
+Init sound system... OK !
+Audio closed.
