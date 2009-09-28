@@ -26,7 +26,7 @@ using ArcEngine.Forms;
 using ArcEngine.Graphic;
 using ArcEngine.Providers;
 
-namespace ArcEngine.Games.DungeonEye
+namespace DungeonEye
 {
 	/// <summary>
 	/// 

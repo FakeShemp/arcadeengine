@@ -27,9 +27,9 @@ using ArcEngine.Asset;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
 using ArcEngine.Utility.ScreenManager;
-using ArcEngine.Games.DungeonEye.Gui;
+using DungeonEye.Gui;
 
-namespace ArcEngine.Games.DungeonEye
+namespace DungeonEye
 {
 	/// <summary>
 	/// Speel window

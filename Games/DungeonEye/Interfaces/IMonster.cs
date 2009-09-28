@@ -20,10 +20,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using ArcEngine.Games.DungeonEye;
+using DungeonEye;
 
 
-namespace ArcEngine.Games.DungeonEye.Interfaces
+namespace DungeonEye.Interfaces
 {
 
 	/// <summary>

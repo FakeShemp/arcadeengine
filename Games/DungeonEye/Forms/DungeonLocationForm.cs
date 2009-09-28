@@ -26,11 +26,11 @@ using ArcEngine.Forms;
 using ArcEngine.Graphic;
 using ArcEngine.Providers;
 using ArcEngine.Asset;
-using ArcEngine.Games.DungeonEye;
+using DungeonEye;
 
 
 
-namespace ArcEngine.Games.DungeonEye.Forms
+namespace DungeonEye.Forms
 {
 	public partial class DungeonLocationForm : Form
 	{

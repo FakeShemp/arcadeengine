@@ -25,7 +25,7 @@ using ArcEngine;
 using ArcEngine.Asset;
 
 
-namespace ArcEngine.Games.DungeonEye.Gui
+namespace DungeonEye.Gui
 {
 	/// <summary>
 	/// Gui buttons

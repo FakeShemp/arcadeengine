@@ -35,7 +35,7 @@ using OpenTK.Graphics.OpenGL;
 using WeifenLuo.WinFormsUI.Docking;
 
 
-namespace ArcEngine.Games.DungeonEye.Forms
+namespace DungeonEye.Forms
 {
 	/// <summary>
 	/// 

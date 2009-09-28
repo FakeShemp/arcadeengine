@@ -52,12 +52,6 @@ namespace ArcEngine.Editor
 			CurrentFont.Load(node);
 
 
-			GlControl.MakeCurrent();
-			Display.Init();
-			Display.ClearColor = Color.Green;
-			Display.Texturing = true;
-			Display.Blending = true;
-			Display.BlendingFunction(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 
 
 			// Preload background texture resource
@@ -201,6 +195,22 @@ namespace ArcEngine.Editor
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void Font2dForm_Load(object sender, EventArgs e)
+		{
+			GlControl.MakeCurrent();
+			Display.Init();
+			//Display.ClearColor = Color.Green;
+			//Display.Texturing = true;
+			//Display.Blending = true;
+			//Display.BlendingFunction(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+
+		}
+
 
 
 
@@ -232,6 +242,7 @@ namespace ArcEngine.Editor
 
 
 		#endregion
+
 
 
 	}

@@ -25,7 +25,7 @@ using System.ComponentModel;
 using System;
 using ArcEngine.Asset;
 
-namespace ArcEngine.Games.DungeonEye
+namespace DungeonEye
 {
 
 	/// <summary>

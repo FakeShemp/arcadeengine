@@ -28,7 +28,7 @@ using ArcEngine.Providers;
 using ArcEngine.Asset;
 
 
-namespace ArcEngine.Games.DungeonEye.Forms
+namespace DungeonEye.Forms
 {
 	/// <summary>
 	/// 

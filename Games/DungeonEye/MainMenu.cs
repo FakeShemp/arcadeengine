@@ -26,10 +26,10 @@ using ArcEngine.Asset;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
 using ArcEngine.Utility.ScreenManager;
-using ArcEngine.Games.DungeonEye.Gui;
+using DungeonEye.Gui;
 
 
-namespace ArcEngine.Games.DungeonEye
+namespace DungeonEye
 {
 	/// <summary>
 	/// 
@@ -78,10 +78,9 @@ namespace ArcEngine.Games.DungeonEye
 
 
 
-			font = ResourceManager.CreateAsset<Font2d>("ttf");
 		}
 
-		Font2d font;
+
 
 		/// <summary>
 		/// 
@@ -248,7 +247,6 @@ namespace ArcEngine.Games.DungeonEye
 			Tileset.Draw(0, Mouse.Location);
 
 
-			font.DrawText("toto", new Point(100, 100));
 		}
 
 		#endregion

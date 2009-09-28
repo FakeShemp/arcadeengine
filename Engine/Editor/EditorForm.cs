@@ -526,7 +526,8 @@ namespace ArcEngine.Editor
         /// <param name="e"></param>
         private void ImportAnimationFromGIF(object sender, EventArgs e)
         {
-			  new ImportGIFForm().ShowDialog();
+			new ImportGIFForm().ShowDialog();
+			ResourcePanel.RebuildResourceTree();
 
         }
 

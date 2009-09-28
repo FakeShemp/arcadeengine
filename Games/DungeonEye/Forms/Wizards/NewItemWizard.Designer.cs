@@ -1,4 +1,4 @@
-﻿namespace ArcEngine.Games.DungeonEye.Forms.Wizards
+﻿namespace DungeonEye.Forms.Wizards
 {
 	partial class NewItemWizard
 	{

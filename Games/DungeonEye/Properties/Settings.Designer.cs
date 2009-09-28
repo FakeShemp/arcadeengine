@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ArcEngine.Games.DungeonEye.Properties {
+namespace DungeonEye.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

@@ -26,7 +26,7 @@ using ArcEngine.Graphic;
 using ArcEngine;
 using System.Drawing;
 
-namespace ArcEngine.Games.DungeonEye.Gui
+namespace DungeonEye.Gui
 {
 	/// <summary>
 	/// Window GUI

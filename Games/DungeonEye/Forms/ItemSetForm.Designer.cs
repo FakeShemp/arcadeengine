@@ -1,4 +1,4 @@
-﻿namespace ArcEngine.Games.DungeonEye.Forms
+﻿namespace DungeonEye.Forms
 {
 	partial class ItemSetForm
 	{
@@ -939,6 +939,7 @@
 			this.Name = "ItemSetForm";
 			this.TabText = "ItemForm";
 			this.Text = "ItemForm";
+			this.Load += new System.EventHandler(this.ItemSetForm_Load);
 			this.Shown += new System.EventHandler(this.ItemSetForm_Shown);
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ItemForm_FormClosing);
 			this.toolStrip1.ResumeLayout(false);

@@ -1,0 +1,129 @@
+#####Trace()
+######Game()
+28/09/2009 22:07:37
+Hardware informations :
+    OS : Microsoft Windows NT 6.1.7600.0
+    Platform : x86
+    SP : 
+    Processor count : 2
+Software informations :
+    CLR : 2.0.50727.4927
+Referenced assemblies :
+    DigitalRune.Windows.TextEditor, Version=1.3.0.0, Culture=neutral, PublicKeyToken=null
+    ICSharpCode.SharpZipLib, Version=0.85.5.452, Culture=neutral, PublicKeyToken=1b03e6acf1164f73
+    mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    OpenTK, Version=0.9.9.2, Culture=neutral, PublicKeyToken=null
+    OpenTK.GLControl, Version=0.9.9.2, Culture=neutral, PublicKeyToken=null
+    System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
+    System.Web, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
+    System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    WeifenLuo.WinFormsUI.Docking, Version=2.3.1.24483, Culture=neutral, PublicKeyToken=null
+Video informations :
+    Graphics card vendor : NVIDIA Corporation
+    Renderer : GeForce 8800 GTS/PCI/SSE2
+    Display modes
+        Secondary: {X=1280,Y=0,Width=1280,Height=1024}x32@75Hz (180 modes available)
+        Primary: {X=0,Y=0,Width=1280,Height=1024}x32@75Hz (198 modes available)
+Init mouse...
+OK
+Loading settings from file "settings.xml"...OK
+Adding new provider : ArcEngine.Providers.FontProvider {ArcEngine.Asset.Font2d, }
+Adding new provider : ArcEngine.Providers.ScriptProvider {ArcEngine.Asset.Script, ArcEngine.Asset.ScriptModel, }
+Adding new provider : ArcEngine.Providers.TileSetProvider {ArcEngine.Asset.TileSet, }
+Adding new provider : ArcEngine.Providers.StringTableProvider {ArcEngine.Asset.StringTable, }
+Adding new provider : ArcEngine.Providers.AnimationProvider {ArcEngine.Asset.AnimationA, ArcEngine.Asset.Animation, }
+Adding new provider : ArcEngine.Providers.LayoutProvider {ArcEngine.Asset.Layout, }
+Adding new provider : ArcEngine.Providers.KeyboardSchemeProvider {ArcEngine.Asset.KeyboardScheme, }
+Adding new provider : ArcEngine.Providers.AudioProvider {ArcEngine.Asset.Audio, }
+Init sound system... OK !
+Adding new provider : DungeonEye.DungeonProvider {DungeonEye.Dungeon, DungeonEye.ItemSet, DungeonEye.Monster, DungeonEye.WallDecoration, }
+Creating new ScreenManager.
+Running the game
+Loading resources from file "data/data.bnk"...
+    + Animation.xml
+    + AnimationA.xml
+    + AutoMap.png
+    + chargen.png
+    + Doors.png
+    + Dungeon.xml
+    + Font-Intro.png
+    + Font-Outlined.png
+    + Font.png
+    + Font2d.xml
+    + Heroes.png
+    + IceCaps.ttf
+    + interface.png
+    + intro_d.png
+    + items.png
+    + ItemSet.xml
+    + KeyboardScheme.xml
+    + Layout.xml
+    + Main Menu.png
+    + Monster.xml
+    + Monsters.png
+    + Script.xml
+    + ScriptModel.xml
+    + Sound.xml
+    + StringTable.xml
+    + the_ring_that_fell.wav
+    + TileSet.xml
+    + wall-blue-overlay.png
+    + wall-blue.png
+    + wall-brick-overlay.png
+    + wall-brick.png
+    + wall-drow-overlay.png
+    + wall-drow.png
+    + wall-green-overlay.png
+    + wall-green.png
+    + wall-xhanata-overlay.png
+    + wall-xhanata.png
+    + WallDecoration.xml
+Loading finished !
+
+!!!FATAL ERROR !!!
+Message : Erreur lors de la création d'un handle de fenêtre.
+StackTrace :    à System.Windows.Forms.NativeWindow.CreateHandle(CreateParams cp)
+   à System.Windows.Forms.Control.CreateHandle()
+   à System.Windows.Forms.Control.CreateControl(Boolean fIgnoreVisible)
+   à System.Windows.Forms.Control.CreateControl(Boolean fIgnoreVisible)
+   à System.Windows.Forms.Control.CreateControl(Boolean fIgnoreVisible)
+   à System.Windows.Forms.Control.CreateControl(Boolean fIgnoreVisible)
+   à System.Windows.Forms.Control.CreateControl()
+   à System.Windows.Forms.Control.SetVisibleCore(Boolean value)
+   à System.Windows.Forms.Form.SetVisibleCore(Boolean value)
+   à System.Windows.Forms.Control.set_Visible(Boolean value)
+   à WeifenLuo.WinFormsUI.Docking.DockContentHandler.SetVisible()
+   à WeifenLuo.WinFormsUI.Docking.DockPane.set_ActiveContent(IDockContent value)
+   à WeifenLuo.WinFormsUI.Docking.DockPane.ValidateActiveContent()
+   à WeifenLuo.WinFormsUI.Docking.DockContentHandler.RefreshDockPane(DockPane pane)
+   à WeifenLuo.WinFormsUI.Docking.DockContentHandler.SetDockState(Boolean isHidden, DockState visibleState, DockPane oldPane)
+   à WeifenLuo.WinFormsUI.Docking.DockContentHandler.set_DockState(DockState value)
+   à WeifenLuo.WinFormsUI.Docking.DockContentHandler.Show(DockPanel dockPanel, DockState dockState)
+   à WeifenLuo.WinFormsUI.Docking.DockContent.Show(DockPanel dockPanel, DockState dockState)
+   à ArcEngine.Editor.ResourceForm.OnTreeViewDoubleCick(Object sender, EventArgs e) dans D:\Dev\ArcEngine\Engine\Editor\ResourceForm.cs:ligne 202
+   à System.Windows.Forms.Control.OnDoubleClick(EventArgs e)
+   à System.Windows.Forms.TreeView.WndProc(Message& m)
+   à System.Windows.Forms.Control.ControlNativeWindow.OnMessage(Message& m)
+   à System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message& m)
+   à System.Windows.Forms.NativeWindow.DebuggableCallback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)
+   à System.Windows.Forms.UnsafeNativeMethods.DispatchMessageW(MSG& msg)
+   à System.Windows.Forms.Application.ComponentManager.System.Windows.Forms.UnsafeNativeMethods.IMsoComponentManager.FPushMessageLoop(Int32 dwComponentID, Int32 reason, Int32 pvLoopData)
+   à System.Windows.Forms.Application.ThreadContext.RunMessageLoopInner(Int32 reason, ApplicationContext context)
+   à System.Windows.Forms.Application.ThreadContext.RunMessageLoop(Int32 reason, ApplicationContext context)
+   à System.Windows.Forms.Application.RunDialog(Form form)
+   à System.Windows.Forms.Form.ShowDialog(IWin32Window owner)
+   à System.Windows.Forms.Form.ShowDialog()
+   à ArcEngine.Game.RunEditor() dans D:\Dev\ArcEngine\Engine\Game.cs:ligne 465
+   à DungeonEye.DungeonEye.Update(GameTime gameTime) dans D:\Dev\ArcEngine\Games\DungeonEye\DungeonEye.cs:ligne 130
+   à ArcEngine.Game.Tick() dans D:\Dev\ArcEngine\Engine\Game.cs:ligne 188
+   à ArcEngine.Game.Application_Idle(Object sender, EventArgs e) dans D:\Dev\ArcEngine\Engine\Game.cs:ligne 377
+   à System.Windows.Forms.Application.ThreadContext.System.Windows.Forms.UnsafeNativeMethods.IMsoComponent.FDoIdle(Int32 grfidlef)
+   à System.Windows.Forms.Application.ComponentManager.System.Windows.Forms.UnsafeNativeMethods.IMsoComponentManager.FPushMessageLoop(Int32 dwComponentID, Int32 reason, Int32 pvLoopData)
+   à System.Windows.Forms.Application.ThreadContext.RunMessageLoopInner(Int32 reason, ApplicationContext context)
+   à System.Windows.Forms.Application.ThreadContext.RunMessageLoop(Int32 reason, ApplicationContext context)
+   à System.Windows.Forms.Application.Run(Form mainForm)
+   à ArcEngine.Game.Run() dans D:\Dev\ArcEngine\Engine\Game.cs:ligne 315
+   à DungeonEye.DungeonEye.Main() dans D:\Dev\ArcEngine\Games\DungeonEye\DungeonEye.cs:ligne 46
+

@@ -28,7 +28,7 @@ using ArcEngine.Asset;
 using System.Xml;
 
 
-namespace ArcEngine.Games.DungeonEye
+namespace DungeonEye
 {
 	/// <summary>
 	/// Represents a player in the team

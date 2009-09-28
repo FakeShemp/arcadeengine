@@ -23,7 +23,7 @@ using System.Text;
 using System.Drawing;
 
 
-namespace ArcEngine.Games.DungeonEye
+namespace DungeonEye
 {
 
 	/// <summary>

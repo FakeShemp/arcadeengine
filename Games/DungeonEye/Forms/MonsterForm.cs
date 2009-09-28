@@ -31,7 +31,7 @@ using ArcEngine.Asset;
 using ArcEngine.Graphic;
 
 
-namespace ArcEngine.Games.DungeonEye.Forms
+namespace DungeonEye.Forms
 {
 	public partial class MonsterForm : AssetEditor
 	{

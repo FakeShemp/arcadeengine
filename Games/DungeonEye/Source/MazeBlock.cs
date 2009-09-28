@@ -26,7 +26,7 @@ using System.Text;
 using System.Xml;
 
 
-namespace ArcEngine.Games.DungeonEye
+namespace DungeonEye
 {
 	/// <summary>
 	/// Represents a block in a maze

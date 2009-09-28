@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.CancelBox = new System.Windows.Forms.Button();
-			this.OkBox = new System.Windows.Forms.Button();
+			this.ImportBox = new System.Windows.Forms.Button();
 			this.PreviewBox = new System.Windows.Forms.PictureBox();
 			this.TextureGroup = new System.Windows.Forms.GroupBox();
 			this.TextureSizeLabel = new System.Windows.Forms.Label();
@@ -38,6 +38,8 @@
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.LoadAnimationBox = new System.Windows.Forms.Button();
 			this.FramesGroup = new System.Windows.Forms.GroupBox();
+			this.LastFrameBox = new System.Windows.Forms.NumericUpDown();
+			this.FirstFrameBox = new System.Windows.Forms.NumericUpDown();
 			this.label6 = new System.Windows.Forms.Label();
 			this.label5 = new System.Windows.Forms.Label();
 			this.FrameCountLabel = new System.Windows.Forms.Label();
@@ -48,15 +50,14 @@
 			this.label3 = new System.Windows.Forms.Label();
 			this.TextureNameBox = new System.Windows.Forms.TextBox();
 			this.label2 = new System.Windows.Forms.Label();
-			this.FirstFrameBox = new System.Windows.Forms.NumericUpDown();
-			this.LastFrameBox = new System.Windows.Forms.NumericUpDown();
+			this.AnimSizeLabel = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.PreviewBox)).BeginInit();
 			this.TextureGroup.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.FramesGroup.SuspendLayout();
-			this.NamesGroup.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.FirstFrameBox)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.LastFrameBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.FirstFrameBox)).BeginInit();
+			this.NamesGroup.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// CancelBox
@@ -70,16 +71,16 @@
 			this.CancelBox.Text = "Cancel";
 			this.CancelBox.UseVisualStyleBackColor = true;
 			// 
-			// OkBox
+			// ImportBox
 			// 
-			this.OkBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.OkBox.Location = new System.Drawing.Point(562, 387);
-			this.OkBox.Name = "OkBox";
-			this.OkBox.Size = new System.Drawing.Size(75, 23);
-			this.OkBox.TabIndex = 1;
-			this.OkBox.Text = "Import";
-			this.OkBox.UseVisualStyleBackColor = true;
-			this.OkBox.Click += new System.EventHandler(this.OkBox_Click);
+			this.ImportBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.ImportBox.Location = new System.Drawing.Point(562, 387);
+			this.ImportBox.Name = "ImportBox";
+			this.ImportBox.Size = new System.Drawing.Size(75, 23);
+			this.ImportBox.TabIndex = 1;
+			this.ImportBox.Text = "Import";
+			this.ImportBox.UseVisualStyleBackColor = true;
+			this.ImportBox.Click += new System.EventHandler(this.OkBox_Click);
 			// 
 			// PreviewBox
 			// 
@@ -144,8 +145,8 @@
 			// groupBox2
 			// 
 			this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-							| System.Windows.Forms.AnchorStyles.Left)
-							| System.Windows.Forms.AnchorStyles.Right)));
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.groupBox2.Controls.Add(this.PreviewBox);
 			this.groupBox2.Location = new System.Drawing.Point(274, 12);
 			this.groupBox2.Name = "groupBox2";
@@ -170,6 +171,7 @@
 			this.FramesGroup.Controls.Add(this.FirstFrameBox);
 			this.FramesGroup.Controls.Add(this.label6);
 			this.FramesGroup.Controls.Add(this.label5);
+			this.FramesGroup.Controls.Add(this.AnimSizeLabel);
 			this.FramesGroup.Controls.Add(this.FrameCountLabel);
 			this.FramesGroup.Enabled = false;
 			this.FramesGroup.Location = new System.Drawing.Point(12, 250);
@@ -178,6 +180,24 @@
 			this.FramesGroup.TabIndex = 5;
 			this.FramesGroup.TabStop = false;
 			this.FramesGroup.Text = "Frames :";
+			// 
+			// LastFrameBox
+			// 
+			this.LastFrameBox.Location = new System.Drawing.Point(112, 97);
+			this.LastFrameBox.Name = "LastFrameBox";
+			this.LastFrameBox.Size = new System.Drawing.Size(120, 20);
+			this.LastFrameBox.TabIndex = 3;
+			this.LastFrameBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.LastFrameBox.ThousandsSeparator = true;
+			// 
+			// FirstFrameBox
+			// 
+			this.FirstFrameBox.Location = new System.Drawing.Point(112, 64);
+			this.FirstFrameBox.Name = "FirstFrameBox";
+			this.FirstFrameBox.Size = new System.Drawing.Size(120, 20);
+			this.FirstFrameBox.TabIndex = 3;
+			this.FirstFrameBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.FirstFrameBox.ThousandsSeparator = true;
 			// 
 			// label6
 			// 
@@ -200,7 +220,7 @@
 			// FrameCountLabel
 			// 
 			this.FrameCountLabel.AutoSize = true;
-			this.FrameCountLabel.Location = new System.Drawing.Point(7, 16);
+			this.FrameCountLabel.Location = new System.Drawing.Point(7, 38);
 			this.FrameCountLabel.Name = "FrameCountLabel";
 			this.FrameCountLabel.Size = new System.Drawing.Size(75, 13);
 			this.FrameCountLabel.TabIndex = 0;
@@ -270,27 +290,18 @@
 			this.label2.TabIndex = 0;
 			this.label2.Text = "Texture\'s name :";
 			// 
-			// FirstFrameBox
+			// AnimSizeLabel
 			// 
-			this.FirstFrameBox.Location = new System.Drawing.Point(112, 64);
-			this.FirstFrameBox.Name = "FirstFrameBox";
-			this.FirstFrameBox.Size = new System.Drawing.Size(120, 20);
-			this.FirstFrameBox.TabIndex = 3;
-			this.FirstFrameBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.FirstFrameBox.ThousandsSeparator = true;
-			// 
-			// LastFrameBox
-			// 
-			this.LastFrameBox.Location = new System.Drawing.Point(112, 97);
-			this.LastFrameBox.Name = "LastFrameBox";
-			this.LastFrameBox.Size = new System.Drawing.Size(120, 20);
-			this.LastFrameBox.TabIndex = 3;
-			this.LastFrameBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.LastFrameBox.ThousandsSeparator = true;
+			this.AnimSizeLabel.AutoSize = true;
+			this.AnimSizeLabel.Location = new System.Drawing.Point(7, 16);
+			this.AnimSizeLabel.Name = "AnimSizeLabel";
+			this.AnimSizeLabel.Size = new System.Drawing.Size(83, 13);
+			this.AnimSizeLabel.TabIndex = 0;
+			this.AnimSizeLabel.Text = "Animation size : ";
 			// 
 			// ImportGIFForm
 			// 
-			this.AcceptButton = this.OkBox;
+			this.AcceptButton = this.ImportBox;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.CancelBox;
@@ -299,7 +310,7 @@
 			this.Controls.Add(this.FramesGroup);
 			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.TextureGroup);
-			this.Controls.Add(this.OkBox);
+			this.Controls.Add(this.ImportBox);
 			this.Controls.Add(this.LoadAnimationBox);
 			this.Controls.Add(this.CancelBox);
 			this.MaximizeBox = false;
@@ -316,10 +327,10 @@
 			this.groupBox2.ResumeLayout(false);
 			this.FramesGroup.ResumeLayout(false);
 			this.FramesGroup.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.LastFrameBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.FirstFrameBox)).EndInit();
 			this.NamesGroup.ResumeLayout(false);
 			this.NamesGroup.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.FirstFrameBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.LastFrameBox)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -327,7 +338,7 @@
 		#endregion
 
 		private System.Windows.Forms.Button CancelBox;
-		private System.Windows.Forms.Button OkBox;
+		private System.Windows.Forms.Button ImportBox;
 		private System.Windows.Forms.PictureBox PreviewBox;
 		private System.Windows.Forms.GroupBox TextureGroup;
 		private System.Windows.Forms.GroupBox groupBox2;
@@ -348,5 +359,6 @@
 		private System.Windows.Forms.Label FrameCountLabel;
 		private System.Windows.Forms.NumericUpDown LastFrameBox;
 		private System.Windows.Forms.NumericUpDown FirstFrameBox;
+		private System.Windows.Forms.Label AnimSizeLabel;
 	}
 }

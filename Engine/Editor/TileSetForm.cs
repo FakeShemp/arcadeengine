@@ -21,16 +21,12 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 using ArcEngine.Asset;
 using ArcEngine.Forms;
 using ArcEngine.Graphic;
-using OpenTK.Graphics;
-using WeifenLuo.WinFormsUI.Docking;
-using OpenTK.Graphics.OpenGL;
 
 
 namespace ArcEngine.Editor

@@ -70,13 +70,18 @@ namespace ArcEngine.Editor
 
 
 
-			FrameDimension FrameDim = new FrameDimension(Image.FrameDimensionsList[0]);
+			FrameDim = new FrameDimension(Image.FrameDimensionsList[0]);
 			FrameCount = Image.GetFrameCount(FrameDim);
 
 
 			NamesGroup.Enabled = true;
 			TextureGroup.Enabled = true;
 			FramesGroup.Enabled = true;
+
+			string name = dlg.SafeFileName.Substring(0, dlg.SafeFileName.Length - 4);
+			TextureNameBox.Text = name;
+			TileSetNameBox.Text = name;
+			AnimationNameBox.Text = name;
 
 			PreviewBox.Image = Image;
 
@@ -94,6 +99,7 @@ namespace ArcEngine.Editor
 				return;
 
 			WidthBox.SelectedItem = "256";
+			AnimSizeLabel.Text = "Animation size : " + Image.Width + " x " + Image.Height;
 			FrameCountLabel.Text = "Frame count : " + FrameCount;
 
 			FirstFrameBox.Maximum = FrameCount;
@@ -112,7 +118,63 @@ namespace ArcEngine.Editor
 		void Process()
 		{
 			if (Image == null)
+			{
+				MessageBox.Show("Load an image first", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 				return;
+			}
+
+			if (string.IsNullOrEmpty(TileSetNameBox.Text))
+			{
+				MessageBox.Show("Invalid TileSet name", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				return;
+			}
+			if (string.IsNullOrEmpty(AnimationNameBox.Text))
+			{
+				MessageBox.Show("Invalid Animation name", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				return;
+			}
+			if (string.IsNullOrEmpty(TextureNameBox.Text))
+			{
+				MessageBox.Show("Invalid Texture name", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				return;
+			}
+
+
+			Texture texture = new Texture(ComputeTextureSize());
+			TileSet tileset = new TileSet();
+			tileset.TextureName = TextureNameBox.Text;
+			tileset.Texture = texture;
+			Animation animation = new Animation();
+
+			int maxwidth = int.Parse(WidthBox.SelectedItem as string);
+			Point location = Point.Empty;
+			for (int f = 0; f < FrameCount; f++)
+			{
+				// Select the frame
+				SetFrame(f);
+				Bitmap bm = new Bitmap(Image);
+
+
+				//
+				// Blit the frame to the texture
+				texture.Blit(bm, location);
+				
+				// Move to the next free location
+				location.Offset(bm.Width, 0);
+				if (location.X > maxwidth)
+				{
+					location.X = 0;
+					location.Y += bm.Height;
+				}
+
+				// Add in the tileset
+				tileset.AddTile(f, new Rectangle(location, bm.Size));
+	
+			
+			}
+
+		//	texture.Save("texture.png");
+
 
 /*
 			int delay = 0;
@@ -126,14 +188,13 @@ namespace ArcEngine.Editor
 			}
 */
 
-	
-			
-			// Compute the size of the texture
-			Size size = new Size();
-			for (int i = 0; i < FrameCount; i++)
-			{
+			//
+			// Save assets to the manager
+			texture.SaveToBank(TextureNameBox.Text + ".png");
+			ResourceManager.AddAsset<TileSet>(TileSetNameBox.Text, tileset);
+			//ResourceManager.AddAsset<Animation>(AnimationNameBox.Text, animation);
 
-			}
+			Close();
 		}
 
 
@@ -141,36 +202,43 @@ namespace ArcEngine.Editor
 		/// Compute the texture size
 		/// </summary>
 		/// <returns></returns>
-		Size ComputeTextureSize(int width)
+		Size ComputeTextureSize()
 		{
 			if (Image == null)
 				return Size.Empty;
 
+			int maxwidth = int.Parse(WidthBox.SelectedItem as string);
 
-			Size size = new Size();
-
+			Size size = new Size(0, Image.Height);
 			for (int i = 0; i < FrameCount; i++)
 			{
+				size.Width += Image.Width;
+
+				if (size.Width > maxwidth)
+				{
+					size.Height += Image.Height;
+					size.Width = 0;
+				}
 			}
 
+			size.Width = maxwidth;
 
-			return size;
+			return Texture.GetNextPOT(size);
 		}
 
 
 
 		/// <summary>
-		/// 
+		/// Set the current frame
 		/// </summary>
 		/// <param name="id"></param>
 		/// <returns></returns>
-		Image GetFrame(int id)
+		void SetFrame(int id)
 		{
 			if (id < 0 || id > FrameCount)
-				return null;
-
-
-			return null;
+				return ;
+			
+			Image.SelectActiveFrame(FrameDim, id);
 		}
 
 
@@ -195,7 +263,7 @@ namespace ArcEngine.Editor
 			if (Image == null)
 				return;
 
-			Size size = ComputeTextureSize(int.Parse(WidthBox.SelectedItem as string));
+			Size size = ComputeTextureSize();
 			TextureSizeLabel.Text = "Texture size : " + size.Width + " x " + size.Height;
 		}
 
@@ -228,7 +296,10 @@ namespace ArcEngine.Editor
 		/// </summary>
 		Image Image;
 
-
+		/// <summary>
+		/// 
+		/// </summary>
+		FrameDimension FrameDim;
 
 		#endregion
 

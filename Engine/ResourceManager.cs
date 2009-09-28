@@ -83,7 +83,6 @@ namespace ArcEngine
 		/// </summary>
 		static ResourceManager()
 		{
-			Trace.WriteLine("######ResourceManager()");
 			BinaryLock = new object();
 
 			UnknownAssets = new List<XmlNode>();
@@ -281,6 +280,25 @@ namespace ArcEngine
 			}
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="name"></param>
+		/// <param name="asset"></param>
+		static public void AddAsset<T>(string name, IAsset asset) where T : IAsset
+		{
+			StringBuilder sb = new StringBuilder();
+			using (XmlWriter writer = XmlWriter.Create(sb))
+				asset.Save(writer);
+
+			string xml = sb.ToString();
+			XmlDocument doc = new XmlDocument();
+			doc.LoadXml(xml);
+
+			AddAsset<TileSet>(name, doc.DocumentElement);
+		}
 
 		/// <summary>
 		/// Returns all assets of a type
@@ -647,21 +665,35 @@ namespace ArcEngine
 				return false;
 	
 			FileStream stream = File.Open(filename, FileMode.Open, FileAccess.Read);
-			if (stream == null)
-				return false;
-
-			byte[] data = new byte[stream.Length];
-			stream.Read(data, 0, (int )stream.Length);
-			stream.Close();
-
-
-			LoadBinary(Path.GetFileName(filename), data);
-			return true;
+			return LoadBinary(Path.GetFileName(filename), stream);
 		}
 
 
 		/// <summary>
-		/// Loads a byte[]
+		/// Load a binary from a stream
+		/// </summary>
+		/// <param name="name">Name of the binary</param>
+		/// <param name="stream"></param>
+		/// <returns></returns>
+		static public bool LoadBinary(string name, Stream stream)
+		{
+			if (stream == null)
+				return false;
+
+
+			byte[] data = new byte[stream.Length];
+			int i = stream.Read(data, 0, (int)stream.Length);
+			stream.Close();
+
+
+			LoadBinary(name, data);
+			return true;
+		}
+
+
+
+		/// <summary>
+		/// Loads a binary from a byte[]
 		/// </summary>
 		/// <param name="name">Name of the binary</param>
 		/// <param name="data">Data</param>

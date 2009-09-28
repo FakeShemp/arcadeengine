@@ -287,6 +287,23 @@ namespace ArcEngine.Asset
 		}
 
 */
+
+		/// <summary>
+		/// Adds a tile
+		/// </summary>
+		/// <param name="id">ID of the tile</param>
+		/// <param name="rectangle">Rectangle of the tile</param>
+		/// <returns></returns>
+		public Tile AddTile(int id, Rectangle rectangle)
+		{
+			Tile tile = AddTile(id);
+			tile.Rectangle = rectangle;
+
+			return tile;
+		}
+
+
+
 		/// <summary>
 		/// Returns a list of all availble tiles
 		/// </summary>
@@ -553,7 +570,7 @@ namespace ArcEngine.Asset
 		public string TextureName
 		{
 			get;
-			private set;
+			set;
 		}
 
 		/// <summary>

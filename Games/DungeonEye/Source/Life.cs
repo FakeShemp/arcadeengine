@@ -23,7 +23,7 @@ using System.Text;
 using System.Xml;
 
 
-namespace ArcEngine.Games.DungeonEye
+namespace DungeonEye
 {
 	/// <summary>
 	/// Life struct

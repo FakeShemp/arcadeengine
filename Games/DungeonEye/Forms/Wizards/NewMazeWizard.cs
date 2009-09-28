@@ -28,7 +28,7 @@ using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
 
-namespace ArcEngine.Games.DungeonEye.Forms.Wizards
+namespace DungeonEye.Forms.Wizards
 {
 	public partial class NewMazeWizard : Form
 	{

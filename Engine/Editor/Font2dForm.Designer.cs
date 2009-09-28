@@ -186,7 +186,7 @@
 			this.DrawTimer.Enabled = true;
 			this.DrawTimer.Tick += new System.EventHandler(this.DrawTimer_Tick);
 			// 
-			// TextureFontForm
+			// Font2dForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -194,7 +194,8 @@
 			this.Controls.Add(this.PreviewBox);
 			this.Controls.Add(this.PropertyBox);
 			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.Name = "TextureFontForm";
+			this.Name = "Font2dForm";
+			this.Load += new System.EventHandler(this.Font2dForm_Load);
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnFormClosing);
 			this.PreviewBox.ResumeLayout(false);
 			this.PreviewBox.PerformLayout();

@@ -24,7 +24,7 @@ using System.Text;
 using System.Xml;
 
 
-namespace ArcEngine.Games.DungeonEye
+namespace DungeonEye
 {
 	/// <summary>
 	/// Invisible force moving the team

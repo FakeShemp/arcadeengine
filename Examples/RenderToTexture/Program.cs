@@ -112,7 +112,7 @@ namespace ArcEngine.Examples.RenderToTexture
 			RenderBuffer.DepthTexture.Blit(new Point(350, 50));
 
 
-			RenderBuffer.ColorTexture.Save("colorbuffer.png");
+			RenderBuffer.ColorTexture.SaveToDisk("colorbuffer.png");
 
 		}
 

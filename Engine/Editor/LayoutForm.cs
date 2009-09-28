@@ -54,14 +54,6 @@ namespace ArcEngine.Editor
 			SelectionBox = new SelectionBox();
 
 
-			// OpenGL control
-			//Device = new Display();
-			RenderControl.MakeCurrent();
-			//Display.ShareVideoContext();
-			Display.Texturing = true;
-			Display.Blending = true;
-			Display.BlendingFunction(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
-
 
 			CheckerBoard = new Texture(ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png"));
 
@@ -284,6 +276,19 @@ namespace ArcEngine.Editor
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void LayoutForm_Load(object sender, EventArgs e)
+		{
+			RenderControl.MakeCurrent();
+			Display.Init();
+
+
+		}
+
 		#endregion
 
 
@@ -426,5 +431,7 @@ namespace ArcEngine.Editor
 		/// </summary>
 		Texture CheckerBoard;
 		#endregion
+
+
 	}
 }

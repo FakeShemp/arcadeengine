@@ -22,10 +22,12 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
+using System.Runtime.InteropServices;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
+using Imaging = System.Drawing.Imaging;
 
-// Transparence d'une surface : http://cs-sdl.sourceforge.net/index.php/Surfaces
+
 //
 //
 //
@@ -75,9 +77,8 @@ namespace ArcEngine.Graphic
 	/// <summary>
 	/// Texture definition
 	/// </summary>
-	public class Texture
+	public class Texture : IDisposable
 	{
-
 
 		#region ctor / dtor
 
@@ -86,7 +87,7 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public Texture()
 		{
-			GL.GenTextures(1, out Handle);
+			Handle = GL.GenTexture();
 		}
 
 		/// <summary>
@@ -95,9 +96,9 @@ namespace ArcEngine.Graphic
 		/// <param name="size">Size of the texture to create</param>
 		public Texture(Size size)
 		{
-			Size = size;
+		//Size = size;
 
-			GL.GenTextures(1, out Handle);
+			Handle = GL.GenTexture();
 			GL.BindTexture(TextureTarget.Texture2D, Handle);
 
 
@@ -107,9 +108,10 @@ namespace ArcEngine.Graphic
 			// http://www.opengl.org/wiki/Common_Mistakes#Unsupported_formats_.234
 			//GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba8, Size.Width, Size.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, IntPtr.Zero);
 			//GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba8, Size.Width, Size.Height, 0, PixelFormat.Bgra, PixelType.UnsignedByte, IntPtr.Zero);
-			LockTextureBits(ImageLockMode.WriteOnly);
-			Data = null;
-			UnlockTextureBits();
+			//LockTextureBits(ImageLockMode.WriteOnly);
+			//Data = null;
+			//UnlockTextureBits();
+			SetSize(size);
 
 			MinFilter = TextureMinFilter.Linear;
 			MagFilter = TextureMagFilter.Linear;
@@ -123,7 +125,7 @@ namespace ArcEngine.Graphic
 		/// <param name="filename">Image's name</param>
 		public Texture(string filename)
 		{
-			GL.GenTextures(1, out Handle);
+			Handle = GL.GenTexture();
 
 			LoadImage(filename);
 		}
@@ -136,7 +138,7 @@ namespace ArcEngine.Graphic
 		/// <remarks>The Stream is closed automatically</remarks>
 		public Texture(Stream stream)
 		{
-			GL.GenTextures(1, out Handle);
+			Handle = GL.GenTexture();
 
 			if (stream == null)
 				return;
@@ -145,7 +147,7 @@ namespace ArcEngine.Graphic
 
 			stream.Close();
 		}
-
+/*
 		/// <summary>
 		/// Destructor
 		/// </summary>
@@ -153,10 +155,23 @@ namespace ArcEngine.Graphic
 		{
 			//GL.DeleteTextures(1, ref Handle);
 		}
+*/
 
 		#endregion
 
 
+		/// <summary>
+		/// Sets the size of the texture
+		/// </summary>
+		/// <param name="size"></param>
+		public void SetSize(Size size)
+		{
+			Size = size;
+
+			LockTextureBits(ImageLockMode.WriteOnly);
+			Data = null;
+			UnlockTextureBits();
+		}
 
 		#region Blitting
 
@@ -294,10 +309,67 @@ namespace ArcEngine.Graphic
 		}
 
 
+		/// <summary>
+		/// Blit a Bitmap on the texture
+		/// </summary>
+		/// <param name="bitmap">Bitmap handle</param>
+		/// <param name="location">Location on the texture</param>
+		public void Blit(Bitmap bitmap, Point location)
+		{
+			if (bitmap == null)
+			{
+				Trace.WriteLine("Bitmap == null");
+				return;
+			}
+
+			//Display.Texture = this;
+			ErrorCode error = GL.GetError();
+
+			Imaging.BitmapData bmdata = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height),
+				 Imaging.ImageLockMode.ReadOnly, Imaging.PixelFormat.Format32bppArgb);
+			
+			
+
+
+			byte[] data = new byte[bitmap.Size.Width * bitmap.Size.Height * 4];
+			Marshal.Copy(bmdata.Scan0, data, 0, bitmap.Size.Width * bitmap.Size.Height * 4);
+			bitmap.UnlockBits(bmdata);
+
+			GL.TexSubImage2D<byte>(TextureTarget.Texture2D, 0, 
+				location.X, location.Y, 
+				bitmap.Width, bitmap.Height,
+				PixelFormat.Bgra, PixelType.UnsignedByte,
+				data);
+			error = GL.GetError();
+
+			// Update texture content
+		//	if (LockTextureBits(ImageLockMode.WriteOnly))
+		//	{
+				//Data = data;
+
+/*
+				for (int y = 0; y < bitmap.Height; y++)
+				{
+					Array.Copy(
+						data, bitmap.Width * y * 4,
+						Data, Size.Width * y * 4 
+						+ location.X * 4 + location.Y * Size.Width * 4, 
+						bitmap.Width * 4);
+				}
+*/
+				
+		//		UnlockTextureBits();
+		//	}
+
+
+
+			
+			
+
+		}
+
 
 		#endregion
-
-
 
 
 		#region Helper
@@ -348,7 +420,6 @@ namespace ArcEngine.Graphic
 		#endregion
 
 
-
 		#region Image IO
 
 		/// <summary>
@@ -377,12 +448,16 @@ namespace ArcEngine.Graphic
 
 			Display.Texture = this;
 
-			Bitmap bitmap = new Bitmap(stream);			
+			Bitmap bitmap = new Bitmap(stream);
+
+			SetSize(new Size(bitmap.Width, bitmap.Height));
+
+			Blit(bitmap, Point.Empty);
+/*
 			System.Drawing.Imaging.BitmapData bmdata = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height),
 				 System.Drawing.Imaging.ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
 
-			Size = new Size(bmdata.Width, bmdata.Height);
 
 
 			byte[] data = new byte[bitmap.Size.Width * bitmap.Size.Height * 4];
@@ -396,7 +471,7 @@ namespace ArcEngine.Graphic
 			}
 
 			bitmap.UnlockBits(bmdata);
-
+*/
 
 			//MinFilter = MinifyFilter.Linear;
 			//MagFilter = MagnifyFilter.Linear;
@@ -422,7 +497,7 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		/// <param name="name">Name of the texture on the disk</param>
 		/// <returns>True if successful or false if an error occured</returns>
-		public bool Save(string name)
+		public bool SaveToDisk(string name)
 		{
 			if (string.IsNullOrEmpty(name))
 				return false;
@@ -447,9 +522,40 @@ namespace ArcEngine.Graphic
 			return true;
 		}
 
+		/// <summary>
+		/// Save the texture as a PNG image in the bank
+		/// </summary>
+		/// <param name="name">Name</param>
+		/// <returns></returns>
+		public bool SaveToBank(string name)
+		{
+			if (string.IsNullOrEmpty(name))
+				return false;
+
+
+			Bitmap bm = new Bitmap(Size.Width, Size.Height);
+
+			if (!LockTextureBits(ImageLockMode.ReadOnly))
+				return false;
+
+			System.Drawing.Imaging.BitmapData bmd = bm.LockBits(new Rectangle(Point.Empty, Size),
+				System.Drawing.Imaging.ImageLockMode.WriteOnly,
+				System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+			System.Runtime.InteropServices.Marshal.Copy(Data, 0, bmd.Scan0, Data.Length);
+			bm.UnlockBits(bmd);
+
+			UnlockTextureBits();
+
+			Stream stream = new MemoryStream();
+			bm.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+			stream.Seek(0, SeekOrigin.Begin);
+
+			return ResourceManager.LoadBinary(name, stream);
+		}
+
 
 		#endregion
-
 
 
 		#region Locking
@@ -466,7 +572,6 @@ namespace ArcEngine.Graphic
 				return false;
 
 			Data = new byte[Size.Width * Size.Height * 4];
-	//		Trace.WriteLine("New data buffer for LockTextureBits. Size : " + Data.Length + " octets. Texture size : " + Size.ToString());
 
 			LockMode = mode;
 			IsLocked = true;
@@ -488,7 +593,10 @@ namespace ArcEngine.Graphic
 		public void UnlockTextureBits()
 		{
 			if (!IsLocked || LockMode == ImageLockMode.ReadOnly)
+			{
+				IsLocked = false;
 				return;
+			}
 
 			Display.Texture = this;
 
@@ -515,7 +623,6 @@ namespace ArcEngine.Graphic
 		#endregion
 
 
-
 		#region Properties
 
 
@@ -539,7 +646,11 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Gets the internal RenderDevice ID of the texture
 		/// </summary>
-		public uint Handle;
+		public int Handle
+		{
+			get;
+			private set;
+		}
 
 
 
@@ -689,18 +800,7 @@ namespace ArcEngine.Graphic
 		public Size Size
 		{
 			get;
-			//{
-			//    int w, h;
-			//    GL.GetTexParameter(TextureTarget.Texture2D, GetTextureParameter.TextureWidth, out w);
-
-			//    GL.GetTexParameter(TextureTarget.Texture2D, GetTextureParameter.TextureHeight, out h);
-
-			//    return new Size(w, h);
-
-			//}
-			set;
-			//{
-			//}
+			private set;
 		}
 
 
@@ -730,6 +830,61 @@ namespace ArcEngine.Graphic
 
 		#endregion
 
+
+		#region Dispose
+
+		/// <summary>
+		/// Implement IDisposable.
+		/// </summary>
+		public void Dispose()
+		{
+			Dispose(true);
+			// This object will be cleaned up by the Dispose method.
+			// Therefore, you should call GC.SupressFinalize to
+			// take this object off the finalization queue
+			// and prevent finalization code for this object
+			// from executing a second time.
+			GC.SuppressFinalize(this);
+		}
+
+		/// <summary>
+		/// Dispose(bool disposing) executes in two distinct scenarios.
+		/// If disposing equals true, the method has been called directly
+		/// or indirectly by a user's code. Managed and unmanaged resources
+		/// can be disposed.
+		/// If disposing equals false, the method has been called by the
+		/// runtime from inside the finalizer and you should not reference
+		/// other objects. Only unmanaged resources can be disposed.
+		/// </summary>
+		/// <param name="disposing"></param>
+		private void Dispose(bool disposing)
+		{
+			// Check to see if Dispose has already been called.
+			if (!this.disposed)
+			{
+				// If disposing equals true, dispose all managed
+				// and unmanaged resources.
+				if (disposing)
+				{
+					// Dispose managed resources.
+				}
+
+				// Call the appropriate methods to clean up
+				// unmanaged resources here.
+				// If disposing is false,
+				// only the following code is executed.
+				GL.DeleteTexture(Handle);
+
+				// Note disposing has been done.
+				disposed = true;
+
+			}
+		}
+
+
+		private bool disposed = false;
+
+		#endregion
 
 
 	}

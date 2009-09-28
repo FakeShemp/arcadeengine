@@ -1,4 +1,4 @@
-﻿namespace ArcEngine.Games.DungeonEye.Forms
+﻿namespace DungeonEye.Forms
 {
 	partial class DungeonForm
 	{

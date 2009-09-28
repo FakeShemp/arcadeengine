@@ -21,19 +21,15 @@ using ArcEngine.Forms;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Windows.Forms;
 using System.Xml;
 using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
-//using WeifenLuo.WinFormsUI.Docking;
-using System.ComponentModel;
-using System.Reflection;
 using System.Text;
 
 
-namespace ArcEngine.Games.DungeonEye.Forms
+namespace DungeonEye.Forms
 {
 	public partial class ItemSetForm : AssetEditor
 	{
@@ -47,19 +43,6 @@ namespace ArcEngine.Games.DungeonEye.Forms
 			InitializeComponent();
 
 
-			GLInventoryTile.MakeCurrent();
-			Display.Init();
-
-			GLGroundTile.MakeCurrent();
-			Display.Init();
-
-			GLMoveAwayTile.MakeCurrent();
-			Display.Init();
-
-			GLIncomingTile.MakeCurrent();
-			Display.Init();
-
-
 			ItemSet = new ItemSet();
 			ItemSet.Load(node);
 
@@ -71,10 +54,10 @@ namespace ArcEngine.Games.DungeonEye.Forms
 			{
 				TileSetNameBox.Items.Add(name);
 			}
+			TileSetNameBox.EndUpdate();
 			if (!string.IsNullOrEmpty(ItemSet.TileSetName) && TileSetNameBox.Items.Contains(ItemSet.TileSetName))
 				TileSetNameBox.SelectedItem = ItemSet.TileSetName;
 
-			TileSetNameBox.EndUpdate();
 
 
 			// TileSetNameBox
@@ -297,6 +280,8 @@ namespace ArcEngine.Games.DungeonEye.Forms
 		/// <param name="e"></param>
 		private void Paint_Tiles(object sender, PaintEventArgs e)
 		{
+			if (GLGroundTile.Context == null)
+				return;
 
 			Point location;
 			Tile tile;
@@ -552,7 +537,27 @@ namespace ArcEngine.Games.DungeonEye.Forms
 
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ItemSetForm_Load(object sender, EventArgs e)
+		{
 
+			GLInventoryTile.MakeCurrent();
+			Display.Init();
+
+			GLGroundTile.MakeCurrent();
+			Display.Init();
+
+			GLMoveAwayTile.MakeCurrent();
+			Display.Init();
+
+			GLIncomingTile.MakeCurrent();
+			Display.Init();
+
+		}
 
 		#endregion
 
@@ -590,6 +595,7 @@ namespace ArcEngine.Games.DungeonEye.Forms
 		TileSet TileSet;
 
 		#endregion
+
 
 
 	}
