@@ -48,7 +48,10 @@ namespace ArcEngine.Examples.EmptyProject
 			try
 			{
 				using (EmptyProject game = new EmptyProject())
-					game.Run();
+				{
+					game.RunEditor();
+					//game.Run();
+				}
 			}
 			catch (Exception e)
 			{

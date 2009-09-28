@@ -153,6 +153,12 @@
     <Compile Include="Editor\AudioForm.Designer.cs">
       <DependentUpon>AudioForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Editor\ImportGIFForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor\ImportGIFForm.Designer.cs">
+      <DependentUpon>ImportGIFForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Editor\KeyboardSchemeForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -364,6 +370,9 @@
     <EmbeddedResource Include="Editor\AudioForm.resx">
       <DependentUpon>AudioForm.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editor\ImportGIFForm.resx">
+      <DependentUpon>ImportGIFForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Editor\KeyboardSchemeForm.resx">
       <DependentUpon>KeyboardSchemeForm.cs</DependentUpon>
