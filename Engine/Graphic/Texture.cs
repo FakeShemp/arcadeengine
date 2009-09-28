@@ -335,6 +335,15 @@ namespace ArcEngine.Graphic
 		}
 
 
+		/// <summary>
+		/// Returns the next Power Of Two size
+		/// </summary>
+		/// <param name="size"></param>
+		/// <returns></returns>
+		public static Size GetNextPOT(Size size)
+		{
+			return new Size(NextPowerOfTwo(size.Width), NextPowerOfTwo(size.Height));
+		}
 
 		#endregion
 
