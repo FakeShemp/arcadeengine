@@ -23,6 +23,7 @@ using System.Windows.Forms;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
 using OpenTK.Graphics.OpenGL;
+using ArcEngine;
 
 
 // http://www.opengl.org/resources/code/samples/mjktips/grid/index.html
@@ -31,7 +32,7 @@ using OpenTK.Graphics.OpenGL;
 //
 //
 
-namespace ArcEngine.Examples.EmptyProject
+namespace PathDemo
 {
 	/// <summary>
 	/// Main game class
@@ -81,8 +82,10 @@ namespace ArcEngine.Examples.EmptyProject
 
 			GL.Enable(EnableCap.Map2Vertex3);
 			GL.MapGrid2(gridsize, 0.0, 1.0, gridsize, 0.0, 1.0);
+
 		}
 
+			FufuWindow window;
 
 		/// <summary>
 		/// Unload contents

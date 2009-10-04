@@ -56,15 +56,15 @@
 			this.ZoomInButton = new System.Windows.Forms.ToolStripButton();
 			this.ActualSizeButton = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+			this.TexturesBox = new System.Windows.Forms.ToolStripComboBox();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.PositionLabel = new System.Windows.Forms.ToolStripLabel();
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.SizeLabel = new System.Windows.Forms.ToolStripLabel();
 			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
 			this.BgColorButton = new System.Windows.Forms.ToolStripButton();
 			this.RenderTimer = new System.Windows.Forms.Timer(this.components);
-			this.TexturesBox = new System.Windows.Forms.ToolStripComboBox();
-			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-			this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
 			this.TileGroupBox.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
 			this.TileToolStrip.SuspendLayout();
@@ -77,9 +77,11 @@
 			// 
 			// GLTextureControl
 			// 
+			this.GLTextureControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+							| System.Windows.Forms.AnchorStyles.Left)
+							| System.Windows.Forms.AnchorStyles.Right)));
 			this.GLTextureControl.BackColor = System.Drawing.Color.Black;
 			this.GLTextureControl.Cursor = System.Windows.Forms.Cursors.Cross;
-			this.GLTextureControl.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.GLTextureControl.Location = new System.Drawing.Point(200, 25);
 			this.GLTextureControl.Name = "GLTextureControl";
 			this.GLTextureControl.Size = new System.Drawing.Size(523, 258);
@@ -223,7 +225,6 @@
 			// 
 			this.GLTileControl.BackColor = System.Drawing.Color.Black;
 			this.GLTileControl.Cursor = System.Windows.Forms.Cursors.Cross;
-			this.GLTileControl.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.GLTileControl.Location = new System.Drawing.Point(200, 0);
 			this.GLTileControl.Name = "GLTileControl";
 			this.GLTileControl.Size = new System.Drawing.Size(540, 220);
@@ -375,6 +376,24 @@
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
 			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
 			// 
+			// toolStripLabel1
+			// 
+			this.toolStripLabel1.Name = "toolStripLabel1";
+			this.toolStripLabel1.Size = new System.Drawing.Size(52, 22);
+			this.toolStripLabel1.Text = "Texture :";
+			// 
+			// TexturesBox
+			// 
+			this.TexturesBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.TexturesBox.Name = "TexturesBox";
+			this.TexturesBox.Size = new System.Drawing.Size(121, 25);
+			this.TexturesBox.SelectedIndexChanged += new System.EventHandler(this.TexturesBox_SelectedIndexChanged);
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+			// 
 			// PositionLabel
 			// 
 			this.PositionLabel.AutoSize = false;
@@ -420,27 +439,8 @@
 			// 
 			// RenderTimer
 			// 
-			this.RenderTimer.Enabled = true;
 			this.RenderTimer.Interval = 66;
 			this.RenderTimer.Tick += new System.EventHandler(this.RenderTimer_Tick);
-			// 
-			// TexturesBox
-			// 
-			this.TexturesBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.TexturesBox.Name = "TexturesBox";
-			this.TexturesBox.Size = new System.Drawing.Size(121, 25);
-			this.TexturesBox.SelectedIndexChanged += new System.EventHandler(this.TexturesBox_SelectedIndexChanged);
-			// 
-			// toolStripSeparator1
-			// 
-			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-			// 
-			// toolStripLabel1
-			// 
-			this.toolStripLabel1.Name = "toolStripLabel1";
-			this.toolStripLabel1.Size = new System.Drawing.Size(52, 22);
-			this.toolStripLabel1.Text = "Texture :";
 			// 
 			// TileSetForm
 			// 
