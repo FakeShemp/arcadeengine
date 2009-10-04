@@ -518,27 +518,31 @@ namespace ArcEngine
 			Trace.Indent();
 			using (FileStream fs = File.OpenRead(filename))
 			{
-				//TODO check if the bank is a zip file
 				ZipInputStream zip = new ZipInputStream(fs);
 				
-                // if empty, skip
-                if (zip == null)
-                {
-
-                    return true;
-                }
-
 				// Foreach file in the bank
 				ZipEntry entry;
-				while ((entry = zip.GetNextEntry()) != null)
+				while (true) //((entry = zip.GetNextEntry()) != null)
 				{
-					//Log.Send(new LogEventArgs(LogLevel.Info, "+ " + entry.Name, null));
-					Trace.WriteLine("+ " + entry.Name);
+					try
+					{
+						entry = zip.GetNextEntry();
+					}
+					catch (Exception e)
+					{
+						Trace.WriteLine("Execption thrown \"{0}\" !", e.Message);
+						break;
+					}
+
+					// EOF
+					if (entry == null)
+						break; ;
 
 					// If it isn't a file, skip it
 					if (!entry.IsFile)
 						continue;
 
+					Trace.WriteLine("+ {0} ({1} octets)", entry.Name, entry.Size);
 
 					// Uncompress data to a buffer
 					byte[] data = new byte[entry.Size];
