@@ -327,8 +327,9 @@ namespace ArcEngine.Graphic
 
 			Imaging.BitmapData bmdata = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height),
 				 Imaging.ImageLockMode.ReadOnly, Imaging.PixelFormat.Format32bppArgb);
-			
-			
+
+
+
 
 
 			byte[] data = new byte[bitmap.Size.Width * bitmap.Size.Height * 4];

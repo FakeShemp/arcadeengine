@@ -25,8 +25,11 @@ using ArcEngine.Graphic;
 using ArcEngine.Input;
 using ArcEngine.Asset;
 
+//
+// http://gametuto.com/tetris-tutorial-in-c-render-independent/
+//
 
-namespace ArcEngine.Games.ProjectT
+namespace ProjectT
 {
 	/// <summary>
 	/// Main game class
@@ -58,8 +61,18 @@ namespace ArcEngine.Games.ProjectT
 		/// </summary>
 		public ProjectT()
 		{
+			// Setup the game window
 			Window.ClientSize = new Size(640, 768);
 			Window.Text = "Project T";
+
+			// Size of the board
+			BoardSize = new Size(10, 20);
+
+			Shape = new Shape();
+			Board = new Board(new Size(10, 20));
+			Board.Location = new Point(100, 20);
+
+
 		}
 
 
@@ -71,8 +84,8 @@ namespace ArcEngine.Games.ProjectT
 		{
 			ResourceManager.LoadBank("data/data.bnk");
 
-
-			TileSet = ResourceManager.CreateAsset<TileSet>("tiles");
+			Shape.Init();
+			Board.Init();
 		}
 
 
@@ -94,11 +107,11 @@ namespace ArcEngine.Games.ProjectT
 			if (Keyboard.IsKeyPress(Keys.Escape))
 				Exit();
 
-
-			if (Keyboard.IsKeyPress(Keys.Insert))
+			if (Keyboard.IsNewKeyPress(Keys.Insert))
 				RunEditor();
 
 
+			Board.Update(gameTime);
 		}
 
 
@@ -112,18 +125,13 @@ namespace ArcEngine.Games.ProjectT
 			// Clears the background
 			Display.ClearBuffers();
 
-			Display.Color = Color.White;
-			TileSet.Draw(0, Point.Empty);
 
-			
-			Size size = new Size(32, 32);
+			Board.Draw();
 
 
-			// A red rectangle
-			for(int x = 0; x < 10; x++)
-				TileSet.Draw(2, new Point(x * size.Width + x * 2, 10));
-		
-
+			// Next block
+			Display.Color = Color.Red;
+			Shape.Draw(new Point(450, 50), 2, 2);
 
 		}
 
@@ -132,11 +140,28 @@ namespace ArcEngine.Games.ProjectT
 
 		#region Properties
 
+		/// <summary>
+		/// Size of the board
+		/// </summary>
+		Size BoardSize;
+
+
+		/// <summary>
+		/// Next coming block
+		/// </summary>
+		byte NextBlock;
+
 
 		/// <summary>
 		/// 
 		/// </summary>
-		TileSet TileSet;
+		Shape Shape;
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Board Board;
 
 		#endregion
 

@@ -19,6 +19,8 @@
 #endregion
 
 using System.Drawing;
+using System.ComponentModel;
+
 
 namespace ArcEngine.Asset
 {
@@ -66,6 +68,7 @@ namespace ArcEngine.Asset
 		/// <summary>
 		/// Size of the tile
 		/// </summary>
+		[Browsable(false)]
 		public Size Size
 		{
 			get
@@ -101,6 +104,7 @@ namespace ArcEngine.Asset
 		/// <summary>
 		/// Get tile colors
 		/// </summary>
+		[Browsable(false)]
 		public Color[,] Data
 		{
 			get;

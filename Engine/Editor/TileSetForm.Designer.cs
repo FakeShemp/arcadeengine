@@ -45,9 +45,6 @@
 			this.HotSpotButton = new System.Windows.Forms.ToolStripButton();
 			this.CollisionButton = new System.Windows.Forms.ToolStripButton();
 			this.GLTileControl = new OpenTK.GLControl();
-			this.TileSetGroupBox = new System.Windows.Forms.GroupBox();
-			this.TileSetPropertyGrid = new System.Windows.Forms.PropertyGrid();
-			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.VertScroller = new System.Windows.Forms.VScrollBar();
 			this.HScroller = new System.Windows.Forms.HScrollBar();
 			this.TextureToolStrip = new System.Windows.Forms.ToolStrip();
@@ -65,26 +62,23 @@
 			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
 			this.BgColorButton = new System.Windows.Forms.ToolStripButton();
 			this.RenderTimer = new System.Windows.Forms.Timer(this.components);
+			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.TileGroupBox.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
 			this.TileToolStrip.SuspendLayout();
-			this.TileSetGroupBox.SuspendLayout();
-			this.splitContainer1.Panel1.SuspendLayout();
-			this.splitContainer1.Panel2.SuspendLayout();
-			this.splitContainer1.SuspendLayout();
 			this.TextureToolStrip.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// GLTextureControl
 			// 
 			this.GLTextureControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-							| System.Windows.Forms.AnchorStyles.Left)
-							| System.Windows.Forms.AnchorStyles.Right)));
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.GLTextureControl.BackColor = System.Drawing.Color.Black;
 			this.GLTextureControl.Cursor = System.Windows.Forms.Cursors.Cross;
-			this.GLTextureControl.Location = new System.Drawing.Point(200, 25);
+			this.GLTextureControl.Location = new System.Drawing.Point(0, 25);
 			this.GLTextureControl.Name = "GLTextureControl";
-			this.GLTextureControl.Size = new System.Drawing.Size(523, 258);
+			this.GLTextureControl.Size = new System.Drawing.Size(723, 126);
 			this.GLTextureControl.TabIndex = 1;
 			this.GLTextureControl.VSync = false;
 			this.GLTextureControl.Paint += new System.Windows.Forms.PaintEventHandler(this.GLTextureControl_Paint);
@@ -96,16 +90,16 @@
 			// 
 			// TileGroupBox
 			// 
+			this.TileGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.TileGroupBox.Controls.Add(this.CollisionButton2);
 			this.TileGroupBox.Controls.Add(this.button2);
 			this.TileGroupBox.Controls.Add(this.button1);
 			this.TileGroupBox.Controls.Add(this.numericUpDown1);
 			this.TileGroupBox.Controls.Add(this.TilePropertyGrid);
 			this.TileGroupBox.Controls.Add(this.TileToolStrip);
-			this.TileGroupBox.Dock = System.Windows.Forms.DockStyle.Left;
-			this.TileGroupBox.Location = new System.Drawing.Point(0, 0);
+			this.TileGroupBox.Location = new System.Drawing.Point(0, 154);
 			this.TileGroupBox.Name = "TileGroupBox";
-			this.TileGroupBox.Size = new System.Drawing.Size(200, 220);
+			this.TileGroupBox.Size = new System.Drawing.Size(200, 345);
 			this.TileGroupBox.TabIndex = 9;
 			this.TileGroupBox.TabStop = false;
 			this.TileGroupBox.Text = "Tile :";
@@ -148,7 +142,7 @@
 			// 
 			this.TilePropertyGrid.Location = new System.Drawing.Point(3, 83);
 			this.TilePropertyGrid.Name = "TilePropertyGrid";
-			this.TilePropertyGrid.Size = new System.Drawing.Size(194, 149);
+			this.TilePropertyGrid.Size = new System.Drawing.Size(191, 131);
 			this.TilePropertyGrid.TabIndex = 2;
 			this.TilePropertyGrid.ToolbarVisible = false;
 			// 
@@ -223,11 +217,13 @@
 			// 
 			// GLTileControl
 			// 
+			this.GLTileControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.GLTileControl.BackColor = System.Drawing.Color.Black;
 			this.GLTileControl.Cursor = System.Windows.Forms.Cursors.Cross;
-			this.GLTileControl.Location = new System.Drawing.Point(200, 0);
+			this.GLTileControl.Location = new System.Drawing.Point(206, 174);
 			this.GLTileControl.Name = "GLTileControl";
-			this.GLTileControl.Size = new System.Drawing.Size(540, 220);
+			this.GLTileControl.Size = new System.Drawing.Size(534, 325);
 			this.GLTileControl.TabIndex = 11;
 			this.GLTileControl.VSync = false;
 			this.GLTileControl.Paint += new System.Windows.Forms.PaintEventHandler(this.GLTileControl_Paint);
@@ -237,63 +233,22 @@
 			this.GLTileControl.Resize += new System.EventHandler(this.GLTileControl_Resize);
 			this.GLTileControl.MouseUp += new System.Windows.Forms.MouseEventHandler(this.GLTileControl_MouseUp);
 			// 
-			// TileSetGroupBox
-			// 
-			this.TileSetGroupBox.Controls.Add(this.TileSetPropertyGrid);
-			this.TileSetGroupBox.Dock = System.Windows.Forms.DockStyle.Left;
-			this.TileSetGroupBox.Location = new System.Drawing.Point(0, 0);
-			this.TileSetGroupBox.Name = "TileSetGroupBox";
-			this.TileSetGroupBox.Size = new System.Drawing.Size(200, 300);
-			this.TileSetGroupBox.TabIndex = 10;
-			this.TileSetGroupBox.TabStop = false;
-			this.TileSetGroupBox.Text = "TileSet :";
-			// 
-			// TileSetPropertyGrid
-			// 
-			this.TileSetPropertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.TileSetPropertyGrid.Location = new System.Drawing.Point(3, 16);
-			this.TileSetPropertyGrid.Name = "TileSetPropertyGrid";
-			this.TileSetPropertyGrid.Size = new System.Drawing.Size(194, 281);
-			this.TileSetPropertyGrid.TabIndex = 0;
-			this.TileSetPropertyGrid.ToolbarVisible = false;
-			// 
-			// splitContainer1
-			// 
-			this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-			this.splitContainer1.Name = "splitContainer1";
-			this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
-			// 
-			// splitContainer1.Panel1
-			// 
-			this.splitContainer1.Panel1.Controls.Add(this.GLTextureControl);
-			this.splitContainer1.Panel1.Controls.Add(this.VertScroller);
-			this.splitContainer1.Panel1.Controls.Add(this.HScroller);
-			this.splitContainer1.Panel1.Controls.Add(this.TextureToolStrip);
-			this.splitContainer1.Panel1.Controls.Add(this.TileSetGroupBox);
-			// 
-			// splitContainer1.Panel2
-			// 
-			this.splitContainer1.Panel2.Controls.Add(this.GLTileControl);
-			this.splitContainer1.Panel2.Controls.Add(this.TileGroupBox);
-			this.splitContainer1.Size = new System.Drawing.Size(740, 524);
-			this.splitContainer1.SplitterDistance = 300;
-			this.splitContainer1.TabIndex = 11;
-			// 
 			// VertScroller
 			// 
-			this.VertScroller.Dock = System.Windows.Forms.DockStyle.Right;
+			this.VertScroller.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.VertScroller.Location = new System.Drawing.Point(723, 25);
 			this.VertScroller.Name = "VertScroller";
-			this.VertScroller.Size = new System.Drawing.Size(17, 258);
+			this.VertScroller.Size = new System.Drawing.Size(17, 123);
 			this.VertScroller.TabIndex = 13;
 			// 
 			// HScroller
 			// 
-			this.HScroller.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.HScroller.Location = new System.Drawing.Point(200, 283);
+			this.HScroller.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.HScroller.Location = new System.Drawing.Point(206, 154);
 			this.HScroller.Name = "HScroller";
-			this.HScroller.Size = new System.Drawing.Size(540, 17);
+			this.HScroller.Size = new System.Drawing.Size(517, 17);
 			this.HScroller.TabIndex = 12;
 			// 
 			// TextureToolStrip
@@ -314,10 +269,10 @@
             this.SizeLabel,
             this.toolStripSeparator4,
             this.BgColorButton});
-			this.TextureToolStrip.Location = new System.Drawing.Point(200, 0);
+			this.TextureToolStrip.Location = new System.Drawing.Point(0, 0);
 			this.TextureToolStrip.Name = "TextureToolStrip";
 			this.TextureToolStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-			this.TextureToolStrip.Size = new System.Drawing.Size(540, 25);
+			this.TextureToolStrip.Size = new System.Drawing.Size(740, 25);
 			this.TextureToolStrip.TabIndex = 11;
 			this.TextureToolStrip.Text = "toolStrip2";
 			// 
@@ -433,21 +388,36 @@
 			this.BgColorButton.Image = ((System.Drawing.Image)(resources.GetObject("BgColorButton.Image")));
 			this.BgColorButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.BgColorButton.Name = "BgColorButton";
-			this.BgColorButton.Size = new System.Drawing.Size(23, 20);
+			this.BgColorButton.Size = new System.Drawing.Size(23, 22);
 			this.BgColorButton.Text = "Background clear color...";
 			this.BgColorButton.Click += new System.EventHandler(this.BgColorButton_Click);
 			// 
 			// RenderTimer
 			// 
+			this.RenderTimer.Enabled = true;
 			this.RenderTimer.Interval = 66;
 			this.RenderTimer.Tick += new System.EventHandler(this.RenderTimer_Tick);
+			// 
+			// statusStrip1
+			// 
+			this.statusStrip1.Location = new System.Drawing.Point(0, 502);
+			this.statusStrip1.Name = "statusStrip1";
+			this.statusStrip1.Size = new System.Drawing.Size(740, 22);
+			this.statusStrip1.TabIndex = 14;
+			this.statusStrip1.Text = "statusStrip1";
 			// 
 			// TileSetForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(740, 524);
-			this.Controls.Add(this.splitContainer1);
+			this.Controls.Add(this.statusStrip1);
+			this.Controls.Add(this.GLTextureControl);
+			this.Controls.Add(this.VertScroller);
+			this.Controls.Add(this.HScroller);
+			this.Controls.Add(this.TextureToolStrip);
+			this.Controls.Add(this.GLTileControl);
+			this.Controls.Add(this.TileGroupBox);
 			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Name = "TileSetForm";
 			this.Load += new System.EventHandler(this.TileSetForm_Load);
@@ -457,25 +427,19 @@
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
 			this.TileToolStrip.ResumeLayout(false);
 			this.TileToolStrip.PerformLayout();
-			this.TileSetGroupBox.ResumeLayout(false);
-			this.splitContainer1.Panel1.ResumeLayout(false);
-			this.splitContainer1.Panel2.ResumeLayout(false);
-			this.splitContainer1.ResumeLayout(false);
 			this.TextureToolStrip.ResumeLayout(false);
 			this.TextureToolStrip.PerformLayout();
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 
 		#endregion
 
 		private OpenTK.GLControl GLTextureControl;
-		private System.Windows.Forms.GroupBox TileGroupBox;
-		private System.Windows.Forms.GroupBox TileSetGroupBox;
-		private System.Windows.Forms.PropertyGrid TileSetPropertyGrid;
-		private System.Windows.Forms.PropertyGrid TilePropertyGrid;
 		private OpenTK.GLControl GLTileControl;
-		private System.Windows.Forms.SplitContainer splitContainer1;
+		private System.Windows.Forms.GroupBox TileGroupBox;
+		private System.Windows.Forms.PropertyGrid TilePropertyGrid;
 		private System.Windows.Forms.ToolStrip TextureToolStrip;
 		private System.Windows.Forms.ToolStripButton ZoomOutButton;
 		private System.Windows.Forms.ToolStripComboBox ZoomBox;
@@ -504,5 +468,6 @@
 		private System.Windows.Forms.ToolStripComboBox TexturesBox;
 		private System.Windows.Forms.ToolStripLabel toolStripLabel1;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+		private System.Windows.Forms.StatusStrip statusStrip1;
 	}
 }

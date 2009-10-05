@@ -1,6 +1,6 @@
 #####Trace()
 ######Game()
-28/09/2009 22:07:37
+04/10/2009 14:34:58
 Hardware informations :
     OS : Microsoft Windows NT 6.1.7600.0
     Platform : x86
@@ -42,88 +42,44 @@ Adding new provider : DungeonEye.DungeonProvider {DungeonEye.Dungeon, DungeonEye
 Creating new ScreenManager.
 Running the game
 Loading resources from file "data/data.bnk"...
-    + Animation.xml
-    + AnimationA.xml
-    + AutoMap.png
-    + chargen.png
-    + Doors.png
-    + Dungeon.xml
-    + Font-Intro.png
-    + Font-Outlined.png
-    + Font.png
-    + Font2d.xml
-    + Heroes.png
-    + IceCaps.ttf
-    + interface.png
-    + intro_d.png
-    + items.png
-    + ItemSet.xml
-    + KeyboardScheme.xml
-    + Layout.xml
-    + Main Menu.png
-    + Monster.xml
-    + Monsters.png
-    + Script.xml
-    + ScriptModel.xml
-    + Sound.xml
-    + StringTable.xml
-    + the_ring_that_fell.wav
-    + TileSet.xml
-    + wall-blue-overlay.png
-    + wall-blue.png
-    + wall-brick-overlay.png
-    + wall-brick.png
-    + wall-drow-overlay.png
-    + wall-drow.png
-    + wall-green-overlay.png
-    + wall-green.png
-    + wall-xhanata-overlay.png
-    + wall-xhanata.png
-    + WallDecoration.xml
+    + Animation.xml (1326 octets)
+    + AnimationA.xml (68 octets)
+    + AutoMap.png (17569 octets)
+    + chargen.png (84792 octets)
+    + Doors.png (38618 octets)
+    + Dungeon.xml (113115 octets)
+    + Font-Intro.png (2410 octets)
+    + Font-Outlined.png (1581 octets)
+    + Font.png (939 octets)
+    + Font2d.xml (911 octets)
+    + Heroes.png (36689 octets)
+    + IceCaps.ttf (28200 octets)
+    + interface.png (16287 octets)
+    + intro_d.png (63262 octets)
+    + items.png (53378 octets)
+    + ItemSet.xml (8054 octets)
+    + KeyboardScheme.xml (1219 octets)
+    + Layout.xml (68 octets)
+    + Main Menu.png (26050 octets)
+    + Monster.xml (4419 octets)
+    + Monsters.png (198637 octets)
+    + Script.xml (3298 octets)
+    + ScriptModel.xml (162 octets)
+    + Sound.xml (150 octets)
+    + StringTable.xml (1709 octets)
+    + the_ring_that_fell.wav (129000 octets)
+    + TileSet.xml (165346 octets)
+    + wall-blue-overlay.png (35729 octets)
+    + wall-blue.png (104194 octets)
+    + wall-brick-overlay.png (29451 octets)
+    + wall-brick.png (88685 octets)
+    + wall-drow-overlay.png (15722 octets)
+    + wall-drow.png (65916 octets)
+    + wall-green-overlay.png (19838 octets)
+    + wall-green.png (114804 octets)
+    + wall-xhanata-overlay.png (10597 octets)
+    + wall-xhanata.png (41280 octets)
+    + WallDecoration.xml (68 octets)
 Loading finished !
-
-!!!FATAL ERROR !!!
-Message : Erreur lors de la création d'un handle de fenêtre.
-StackTrace :    à System.Windows.Forms.NativeWindow.CreateHandle(CreateParams cp)
-   à System.Windows.Forms.Control.CreateHandle()
-   à System.Windows.Forms.Control.CreateControl(Boolean fIgnoreVisible)
-   à System.Windows.Forms.Control.CreateControl(Boolean fIgnoreVisible)
-   à System.Windows.Forms.Control.CreateControl(Boolean fIgnoreVisible)
-   à System.Windows.Forms.Control.CreateControl(Boolean fIgnoreVisible)
-   à System.Windows.Forms.Control.CreateControl()
-   à System.Windows.Forms.Control.SetVisibleCore(Boolean value)
-   à System.Windows.Forms.Form.SetVisibleCore(Boolean value)
-   à System.Windows.Forms.Control.set_Visible(Boolean value)
-   à WeifenLuo.WinFormsUI.Docking.DockContentHandler.SetVisible()
-   à WeifenLuo.WinFormsUI.Docking.DockPane.set_ActiveContent(IDockContent value)
-   à WeifenLuo.WinFormsUI.Docking.DockPane.ValidateActiveContent()
-   à WeifenLuo.WinFormsUI.Docking.DockContentHandler.RefreshDockPane(DockPane pane)
-   à WeifenLuo.WinFormsUI.Docking.DockContentHandler.SetDockState(Boolean isHidden, DockState visibleState, DockPane oldPane)
-   à WeifenLuo.WinFormsUI.Docking.DockContentHandler.set_DockState(DockState value)
-   à WeifenLuo.WinFormsUI.Docking.DockContentHandler.Show(DockPanel dockPanel, DockState dockState)
-   à WeifenLuo.WinFormsUI.Docking.DockContent.Show(DockPanel dockPanel, DockState dockState)
-   à ArcEngine.Editor.ResourceForm.OnTreeViewDoubleCick(Object sender, EventArgs e) dans D:\Dev\ArcEngine\Engine\Editor\ResourceForm.cs:ligne 202
-   à System.Windows.Forms.Control.OnDoubleClick(EventArgs e)
-   à System.Windows.Forms.TreeView.WndProc(Message& m)
-   à System.Windows.Forms.Control.ControlNativeWindow.OnMessage(Message& m)
-   à System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message& m)
-   à System.Windows.Forms.NativeWindow.DebuggableCallback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)
-   à System.Windows.Forms.UnsafeNativeMethods.DispatchMessageW(MSG& msg)
-   à System.Windows.Forms.Application.ComponentManager.System.Windows.Forms.UnsafeNativeMethods.IMsoComponentManager.FPushMessageLoop(Int32 dwComponentID, Int32 reason, Int32 pvLoopData)
-   à System.Windows.Forms.Application.ThreadContext.RunMessageLoopInner(Int32 reason, ApplicationContext context)
-   à System.Windows.Forms.Application.ThreadContext.RunMessageLoop(Int32 reason, ApplicationContext context)
-   à System.Windows.Forms.Application.RunDialog(Form form)
-   à System.Windows.Forms.Form.ShowDialog(IWin32Window owner)
-   à System.Windows.Forms.Form.ShowDialog()
-   à ArcEngine.Game.RunEditor() dans D:\Dev\ArcEngine\Engine\Game.cs:ligne 465
-   à DungeonEye.DungeonEye.Update(GameTime gameTime) dans D:\Dev\ArcEngine\Games\DungeonEye\DungeonEye.cs:ligne 130
-   à ArcEngine.Game.Tick() dans D:\Dev\ArcEngine\Engine\Game.cs:ligne 188
-   à ArcEngine.Game.Application_Idle(Object sender, EventArgs e) dans D:\Dev\ArcEngine\Engine\Game.cs:ligne 377
-   à System.Windows.Forms.Application.ThreadContext.System.Windows.Forms.UnsafeNativeMethods.IMsoComponent.FDoIdle(Int32 grfidlef)
-   à System.Windows.Forms.Application.ComponentManager.System.Windows.Forms.UnsafeNativeMethods.IMsoComponentManager.FPushMessageLoop(Int32 dwComponentID, Int32 reason, Int32 pvLoopData)
-   à System.Windows.Forms.Application.ThreadContext.RunMessageLoopInner(Int32 reason, ApplicationContext context)
-   à System.Windows.Forms.Application.ThreadContext.RunMessageLoop(Int32 reason, ApplicationContext context)
-   à System.Windows.Forms.Application.Run(Form mainForm)
-   à ArcEngine.Game.Run() dans D:\Dev\ArcEngine\Engine\Game.cs:ligne 315
-   à DungeonEye.DungeonEye.Main() dans D:\Dev\ArcEngine\Games\DungeonEye\DungeonEye.cs:ligne 46
-
+Exit requested !
+Audio closed.

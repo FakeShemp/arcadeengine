@@ -68,11 +68,11 @@ namespace ArcEngine.Editor
 
 
 			// Preload background texture resource
-			CheckerBoard = new Texture( ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png"));
+	//		CheckerBoard = new Texture( ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png"));
 
 			
 			
-			TileSetPropertyGrid.SelectedObject = tileSet;
+		//	TileSetPropertyGrid.SelectedObject = tileSet;
 
 			// Build Cell list
 			RebuildCellList();
@@ -196,7 +196,7 @@ namespace ArcEngine.Editor
 		private void GLTextureControl_Resize(object sender, EventArgs e)
 		{
 			GLTextureControl.MakeCurrent();
-			Display.ViewPort = new Rectangle(new Point(), GLTextureControl.Size);
+			Display.ViewPort = new Rectangle(Point.Empty, GLTextureControl.Size);
 		}
 
 		/// <summary>
@@ -363,7 +363,7 @@ namespace ArcEngine.Editor
 		private void GLTileControl_Resize(object sender, EventArgs e)
 		{
 			GLTileControl.MakeCurrent();
-			Display.ViewPort = new Rectangle(new Point(), GLTileControl.Size);
+			Display.ViewPort = new Rectangle(Point.Empty, GLTileControl.Size);
 		}
 
 		/// <summary>
@@ -558,11 +558,12 @@ namespace ArcEngine.Editor
 		/// <param name="e"></param>
 		private void TileSetForm_Load(object sender, EventArgs e)
 		{
+		//	GLTextureControl_Resize(null, null);
 			GLTextureControl.MakeCurrent();
 			Display.Init();
 
 
-
+		//	GLTileControl_Resize(null, null);
 			GLTileControl.MakeCurrent();
 			Display.Init();
 

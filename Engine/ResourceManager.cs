@@ -297,7 +297,7 @@ namespace ArcEngine
 			XmlDocument doc = new XmlDocument();
 			doc.LoadXml(xml);
 
-			AddAsset<TileSet>(name, doc.DocumentElement);
+			AddAsset<T>(name, doc.DocumentElement);
 		}
 
 		/// <summary>
@@ -522,7 +522,7 @@ namespace ArcEngine
 				
 				// Foreach file in the bank
 				ZipEntry entry;
-				while (true) //((entry = zip.GetNextEntry()) != null)
+				while (true)
 				{
 					try
 					{

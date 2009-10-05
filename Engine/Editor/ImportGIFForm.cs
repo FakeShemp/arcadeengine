@@ -39,6 +39,9 @@ namespace ArcEngine.Editor
 		/// <param name="e"></param>
 		private void LoadAnimationBox_Click(object sender, EventArgs e)
 		{
+			ClearStats();
+
+
 			OpenFileDialog dlg = new OpenFileDialog();
 			dlg.CheckFileExists = true;
 			dlg.CheckPathExists = true;
@@ -48,7 +51,16 @@ namespace ArcEngine.Editor
 			if (dlg.ShowDialog() != DialogResult.OK)
 				return;
 
-			Image = Image.FromFile(dlg.FileName);
+
+			try
+			{
+				Image = Image.FromFile(dlg.FileName);
+			}
+			catch (OutOfMemoryException ex)
+			{
+				MessageBox.Show("The file does not have a valid image format.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
 			if (Image == null)
 				return;
 
@@ -84,8 +96,38 @@ namespace ArcEngine.Editor
 			AnimationNameBox.Text = name;
 
 			PreviewBox.Image = Image;
+			ImportBox.Enabled = true;
 
 			DisplayStats();
+		}
+
+
+		/// <summary>
+		/// Clear statistics
+		/// </summary>
+		private void ClearStats()
+		{
+			Image = null;
+
+			PreviewBox.Image = null;
+			NamesGroup.Enabled = false;
+			TextureGroup.Enabled = false;
+			FramesGroup.Enabled = false;
+
+			WidthBox.SelectedItem = "256";
+			AnimSizeLabel.Text = "Animation size : ";
+			FrameCountLabel.Text = "Frame count : ";
+
+			FirstFrameBox.Value = 0;
+			LastFrameBox.Value = 0;
+
+			TextureNameBox.Text = string.Empty;
+			TileSetNameBox.Text = string.Empty;
+			AnimationNameBox.Text = string.Empty;
+			FrameCount = 0;
+			FrameDim = null;
+
+			ImportBox.Enabled = false;
 		}
 
 
@@ -142,39 +184,39 @@ namespace ArcEngine.Editor
 
 			Texture texture = new Texture(ComputeTextureSize());
 			TileSet tileset = new TileSet();
-			tileset.TextureName = TextureNameBox.Text;
+			tileset.Name = TileSetNameBox.Text;
+			tileset.TextureName = TextureNameBox.Text + ".png";
 			tileset.Texture = texture;
 			Animation animation = new Animation();
+			animation.Name = AnimationNameBox.Text;
+			animation.TileSetName = TileSetNameBox.Text;
 
-			int maxwidth = int.Parse(WidthBox.SelectedItem as string);
 			Point location = Point.Empty;
-			for (int f = 0; f < FrameCount; f++)
+			for (int f = int.Parse(FirstFrameBox.Value.ToString()); f < int.Parse(LastFrameBox.Value.ToString()); f++)
 			{
 				// Select the frame
 				SetFrame(f);
 				Bitmap bm = new Bitmap(Image);
 
-
-				//
-				// Blit the frame to the texture
-				texture.Blit(bm, location);
-				
-				// Move to the next free location
-				location.Offset(bm.Width, 0);
-				if (location.X > maxwidth)
+				if (location.X + bm.Width > texture.Size.Width)
 				{
 					location.X = 0;
 					location.Y += bm.Height;
 				}
 
+				//
+				// Blit the frame to the texture
+				texture.Blit(bm, location);
+
 				// Add in the tileset
 				tileset.AddTile(f, new Rectangle(location, bm.Size));
-	
-			
+				
+				// Move to the next free location
+				location.Offset(bm.Width, 0);
 			}
 
-		//	texture.Save("texture.png");
 
+	
 
 /*
 			int delay = 0;
@@ -192,7 +234,7 @@ namespace ArcEngine.Editor
 			// Save assets to the manager
 			texture.SaveToBank(TextureNameBox.Text + ".png");
 			ResourceManager.AddAsset<TileSet>(TileSetNameBox.Text, tileset);
-			//ResourceManager.AddAsset<Animation>(AnimationNameBox.Text, animation);
+			ResourceManager.AddAsset<Animation>(AnimationNameBox.Text, animation);
 
 			Close();
 		}
@@ -207,7 +249,7 @@ namespace ArcEngine.Editor
 			if (Image == null)
 				return Size.Empty;
 
-			int maxwidth = int.Parse(WidthBox.SelectedItem as string);
+			int maxwidth = int.Parse(WidthBox.Text);
 
 			Size size = new Size(0, Image.Height);
 			for (int i = 0; i < FrameCount; i++)

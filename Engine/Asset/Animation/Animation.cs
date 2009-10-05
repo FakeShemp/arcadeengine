@@ -37,8 +37,8 @@ namespace ArcEngine.Asset
 				return false;
 
 
-			//xml.WriteStartElement("animation");
-			//xml.WriteAttributeString("name", Name);
+			xml.WriteStartElement("animation");
+			xml.WriteAttributeString("name", Name);
 
 
 			//		base.SaveComment(xml);
