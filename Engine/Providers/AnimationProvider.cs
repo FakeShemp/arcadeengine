@@ -41,12 +41,13 @@ namespace ArcEngine.Providers
 		/// </summary>
 		public AnimationProvider()
 		{
-			//Animations = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
-			SharedAnimations = new Dictionary<string, AnimationA>(StringComparer.OrdinalIgnoreCase);
-			KeyFrameAnimations = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
+			Animations = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
+			SharedAnimations = new Dictionary<string, Animation>(StringComparer.OrdinalIgnoreCase);
+			Scenes = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
+			SharedScenes = new Dictionary<string, Scene>(StringComparer.OrdinalIgnoreCase);
 			Name = "Animation";
-			Tags = new string[] { "animation", "keyframeanimation" };
-			Assets = new Type[] { typeof(AnimationA), typeof(Animation) };
+			Tags = new string[] { "animation", "scene" };
+			Assets = new Type[] { typeof(Animation), typeof(Scene) };
 			Version = new Version(0, 1);
 			EditorImage = new Bitmap(ResourceManager.GetResource("ArcEngine.Data.Icons.Animation.png"));
 		}
@@ -88,15 +89,15 @@ namespace ArcEngine.Providers
 		/// <returns></returns>
 		public override bool Save<T>(XmlWriter xml)
 		{
-			//if (typeof(T) == typeof(AnimationA))
-			//{
-			//   foreach (XmlNode node in Animations.Values)
-			//      node.WriteTo(xml);
-			//}
-
 			if (typeof(T) == typeof(Animation))
 			{
-				foreach (XmlNode node in KeyFrameAnimations.Values)
+				foreach (XmlNode node in Animations.Values)
+					node.WriteTo(xml);
+			}
+
+			if (typeof(T) == typeof(Scene))
+			{
+				foreach (XmlNode node in Scenes.Values)
 					node.WriteTo(xml);
 			}
 
@@ -121,24 +122,18 @@ namespace ArcEngine.Providers
 			
 			switch (xml.Name.ToLower())
 			{
-				//case "animation":
-				//{
-				//   string name = xml.Attributes["name"].Value;
-				//   Animations[name] = xml;
-				//}
-				//break;
-
-
-				case "keyframeanimation":
+				case "animation":
 				{
 					string name = xml.Attributes["name"].Value;
-					KeyFrameAnimations[name] = xml;
+					Animations[name] = xml;
 				}
 				break;
 
-				default:
-				{
 
+				case "scene":
+				{
+					string name = xml.Attributes["name"].Value;
+					Scenes[name] = xml;
 				}
 				break;
 			}
@@ -166,8 +161,8 @@ namespace ArcEngine.Providers
 			if (typeof(T) == typeof(Animation))
 			{
 				XmlNode node = null;
-				if (KeyFrameAnimations.ContainsKey(name))
-					node = KeyFrameAnimations[name];
+				if (Scenes.ContainsKey(name))
+					node = Scenes[name];
 				form = new ArcEngine.Editor.AnimationForm(node);
 				form.TabText = name;
 			}
@@ -192,10 +187,10 @@ namespace ArcEngine.Providers
 		{
 			CheckValue<T>(name);
 
-			//if (typeof(T) == typeof(AnimationA))
-			//   Animations[name] = node;
 			if (typeof(T) == typeof(Animation))
-				KeyFrameAnimations[name] = node;
+				Animations[name] = node;
+			if (typeof(T) == typeof(Scene))
+				Scenes[name] = node;
 		}
 
 		/// <summary>
@@ -207,12 +202,12 @@ namespace ArcEngine.Providers
 		{
 			List<string> list = new List<string>();
 
-			//if (typeof(T) == typeof(AnimationA))
-			//   foreach (string key in Animations.Keys)
-			//      list.Add(key);
-
 			if (typeof(T) == typeof(Animation))
-				foreach (string key in KeyFrameAnimations.Keys)
+				foreach (string key in Animations.Keys)
+					list.Add(key);
+
+			if (typeof(T) == typeof(Scene))
+				foreach (string key in Scenes.Keys)
 					list.Add(key);
 
 			list.Sort();
@@ -230,21 +225,21 @@ namespace ArcEngine.Providers
 		{
 			CheckValue<T>(name);
 
-			//if (typeof(T) == typeof(AnimationA) && Animations.ContainsKey(name))
-			//{
-			//   AnimationA anim = new AnimationA();
-			//   anim.Load(Animations[name]);
-
-			//   return (T)(object)anim;
-			//}
-
-
-			if (typeof(T) == typeof(Animation) && KeyFrameAnimations.ContainsKey(name))
+			if (typeof(T) == typeof(Animation) && Animations.ContainsKey(name))
 			{
 				Animation anim = new Animation();
-				anim.Load(KeyFrameAnimations[name]);
+				anim.Load(Animations[name]);
 
 				return (T)(object)anim;
+			}
+
+
+			if (typeof(T) == typeof(Scene) && Scenes.ContainsKey(name))
+			{
+				Scene scene = new Scene();
+				scene.Load(Scenes[name]);
+
+				return (T)(object)scene;
 			}
 
 
@@ -264,11 +259,11 @@ namespace ArcEngine.Providers
 		{
 			CheckValue<T>(name);
 
-			//if (typeof(T) == typeof(AnimationA) && Animations.ContainsKey(name))
-			//   return Animations[name];
+			if (typeof(T) == typeof(Animation) && Animations.ContainsKey(name))
+				return Animations[name];
 
-			if (typeof(T) == typeof(Animation) && KeyFrameAnimations.ContainsKey(name))
-				return KeyFrameAnimations[name];
+			if (typeof(T) == typeof(Scene) && Scenes.ContainsKey(name))
+				return Scenes[name];
 
 			return null;
 		}
@@ -282,7 +277,9 @@ namespace ArcEngine.Providers
 		public override void Remove<T>()
 		{
 			if (typeof(T) == typeof(Animation))
-				KeyFrameAnimations.Clear();
+				Animations.Clear();
+			if (typeof(T) == typeof(Scene))
+				Scenes.Clear();
 		}
 
 	
@@ -295,8 +292,11 @@ namespace ArcEngine.Providers
 		{
 			CheckValue<T>(name);
 
-			if (typeof(T) == typeof(Animation) && KeyFrameAnimations.ContainsKey(name))
-				KeyFrameAnimations.Remove(name);
+			if (typeof(T) == typeof(Animation) && Animations.ContainsKey(name))
+				Animations.Remove(name);
+
+			if (typeof(T) == typeof(Scene) && Scenes.ContainsKey(name))
+				Scenes.Remove(name);
 		}
 
 
@@ -305,7 +305,8 @@ namespace ArcEngine.Providers
 		/// </summary>
 		public override void Clear()
 		{
-			KeyFrameAnimations.Clear();
+			Animations.Clear();
+			Scenes.Clear();
 		}
 
 
@@ -316,12 +317,12 @@ namespace ArcEngine.Providers
 		/// <returns>Number of asset</returns>
 		public override int Count<T>()
 		{
-			//if (typeof(T) == typeof(AnimationA))
-			//   return Animations.Count;
-
-
 			if (typeof(T) == typeof(Animation))
-				return KeyFrameAnimations.Count;
+				return Animations.Count;
+
+
+			if (typeof(T) == typeof(Scene))
+				return Scenes.Count;
 
 			return 0;
 		}
@@ -341,15 +342,26 @@ namespace ArcEngine.Providers
 		/// <returns>The resource</returns>
 		public override T CreateShared<T>(string name)
 		{
-			if (typeof(T) == typeof(AnimationA))
+			if (typeof(T) == typeof(Animation))
 			{
 				if (SharedAnimations.ContainsKey(name))
 					return (T)(object)SharedAnimations[name];
 
-				AnimationA anim = new AnimationA();
+				Animation anim = new Animation();
 				SharedAnimations[name] = anim;
 
 				return (T)(object)anim;
+			}
+
+			if (typeof(T) == typeof(Scene))
+			{
+				if (SharedScenes.ContainsKey(name))
+					return (T)(object)SharedScenes[name];
+
+				Scene scene = new Scene();
+				SharedScenes[name] = scene;
+
+				return (T)(object)scene;
 			}
 
 			return default(T);
@@ -364,10 +376,11 @@ namespace ArcEngine.Providers
 		/// <param name="name">Name of the asset</param>
 		public override void RemoveShared<T>(string name)
 		{
-			if (typeof(T) == typeof(AnimationA))
-			{
-				SharedAnimations[name] = null;
-			}
+			if (typeof(T) == typeof(Scene))
+				SharedScenes.Remove(name);
+
+			if (typeof(T) == typeof(Animation))
+				SharedAnimations.Remove(name);
 		}
 
 
@@ -379,10 +392,11 @@ namespace ArcEngine.Providers
 		/// <typeparam name="T">Type of the asset to remove</typeparam>
 		public override void RemoveShared<T>()
 		{
-			if (typeof(T) == typeof(StringTable))
-			{
+			if (typeof(T) == typeof(Animation))
 				SharedAnimations.Clear();
-			}
+
+			if (typeof(T) == typeof(Scene))
+				SharedScenes.Clear();
 		}
 
 
@@ -393,6 +407,7 @@ namespace ArcEngine.Providers
 		public override void ClearShared()
 		{
 			SharedAnimations.Clear();
+			SharedScenes.Clear();
 		}
 
 
@@ -403,24 +418,28 @@ namespace ArcEngine.Providers
 		#region Properties
 
 
-		///// <summary>
-		///// Animations
-		///// </summary>
-		//Dictionary<string, XmlNode> Animations;
+		/// <summary>
+		/// Animations
+		/// </summary>
+		Dictionary<string, XmlNode> Animations;
 
 		/// <summary>
 		/// Shared animations
 		/// </summary>
-		Dictionary<string, AnimationA> SharedAnimations;
+		Dictionary<string, Animation> SharedAnimations;
 
 
 
 		/// <summary>
-		/// Animations
+		/// Scenes
 		/// </summary>
-		Dictionary<string, XmlNode> KeyFrameAnimations;
+		Dictionary<string, XmlNode> Scenes;
 
 
+		/// <summary>
+		/// Shared scenes
+		/// </summary>
+		Dictionary<string, Scene> SharedScenes;
 
 		#endregion
 	}

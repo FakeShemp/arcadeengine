@@ -182,11 +182,16 @@ namespace ArcEngine.Editor
 			}
 
 
+			// The texture
 			Texture texture = new Texture(ComputeTextureSize());
+
+			// The tileset
 			TileSet tileset = new TileSet();
 			tileset.Name = TileSetNameBox.Text;
 			tileset.TextureName = TextureNameBox.Text + ".png";
 			tileset.Texture = texture;
+
+			// The animation
 			Animation animation = new Animation();
 			animation.Name = AnimationNameBox.Text;
 			animation.TileSetName = TileSetNameBox.Text;
@@ -213,6 +218,7 @@ namespace ArcEngine.Editor
 				
 				// Move to the next free location
 				location.Offset(bm.Width, 0);
+
 			}
 
 

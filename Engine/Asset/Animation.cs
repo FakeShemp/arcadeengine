@@ -50,13 +50,13 @@ namespace ArcEngine.Asset
 	/// <summary>
 	/// Defines an animation set.
 	/// </summary>
-	public class AnimationA : IAsset
+	public class Animation : IAsset
 	{
 
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public AnimationA()
+		public Animation()
 		{
 			Tiles = new List<int>();
 		}
