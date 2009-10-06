@@ -52,11 +52,10 @@ namespace DungeonEye
 		/// </summary>
 		public override void LoadContent()
 		{
-			//ResourceManager.ClearAssets();
 			ResourceManager.LoadBank("data/intro.bnk");
 
-			Animation = ResourceManager.CreateAsset<Animation>("intro");
-			Animation.Font.TileSet.Scale = new SizeF(2, 2);
+			Scene = ResourceManager.CreateAsset<Scene>("intro");
+			Scene.Font.TileSet.Scale = new SizeF(2, 2);
 
 			Font = ResourceManager.CreateAsset<Font2d>("intro");
 			Font.TileSet.Scale = new SizeF(2, 2);
@@ -88,17 +87,17 @@ namespace DungeonEye
 
 			// Pause animation
 			if (Keyboard.IsNewKeyPress(Keys.Space))
-				Animation.Pause = !Animation.Pause;
+				Scene.Pause = !Scene.Pause;
 
 			// Rewind animation
 			if (Keyboard.IsNewKeyPress(Keys.Left))
-				Animation.Time = TimeSpan.Zero;
+				Scene.Time = TimeSpan.Zero;
 
 
 
 			// Update animation 
-			if (Animation != null)
-				Animation.Update(time);
+			if (Scene != null)
+				Scene.Update(time);
 		}
 
 
@@ -113,15 +112,15 @@ namespace DungeonEye
 			Display.Color = Color.White;
 
 
-			if (Animation != null)
-			Animation.Draw();
+			if (Scene != null)
+			Scene.Draw();
 
 
 			// Debug info
 			if (Font != null)
 			{
 				Font.Color = Color.White;
-				Font.DrawText(Animation.Time.TotalSeconds.ToString(), new Point(20, 160));
+				Font.DrawText(Scene.Time.TotalSeconds.ToString(), new Point(20, 160));
 			}
 		}
 
@@ -134,7 +133,7 @@ namespace DungeonEye
 		/// <summary>
 		/// 
 		/// </summary>
-		Animation Animation;
+		Scene Scene;
 
 
 		/// <summary>
