@@ -11,7 +11,7 @@ namespace ArcEngine.Asset
 	/// <summary>
 	/// Frame animation
 	/// </summary>
-	public class Frame
+	public class SceneFrame
 	{
 
 		/// <summary>
@@ -20,7 +20,7 @@ namespace ArcEngine.Asset
 		/// <param name="layer">Layer to get the frame from</param>
 		/// <param name="time">Time of the frame</param>
 		/// <exception>ArgumentNullExecption</exception>
-		public Frame(SceneLayer layer, TimeSpan time)
+		public SceneFrame(SceneLayer layer, TimeSpan time)
 		{
 			if (layer == null)
 				throw new ArgumentNullException("layer");
@@ -38,7 +38,7 @@ namespace ArcEngine.Asset
 			}
 
 	
-			// Length between to keyframes
+			// Length between two keyframes
 			float delta;
 			if (next.Time - prev.Time == TimeSpan.Zero)
 				delta = 1.0f;
