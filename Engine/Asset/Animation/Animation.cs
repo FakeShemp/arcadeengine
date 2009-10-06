@@ -18,10 +18,10 @@
 //
 #endregion
 
-using System.Collections.Generic;
 using System;
-using System.Xml;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Xml;
 
 
 
@@ -58,7 +58,7 @@ namespace ArcEngine.Asset
 		/// </summary>
 		public Animation()
 		{
-			Tiles = new List<int>();
+			Frames = new List<int>();
 		}
 
 
@@ -78,23 +78,23 @@ namespace ArcEngine.Asset
 		/// Update the animation
 		/// </summary>
 		/// <param name="elapsed">Milliseconds elapsed since last update</param>
-		public void Update(int elapsed)
+		public void Update(GameTime time)
 		{
 			if (State != AnimationState.Play)
 				return;
 
 			// Update the chrono
-			Elapsed += elapsed;
+			Time += time.ElapsedGameTime;
 
 			// Not the time to change frame
-			if (Elapsed < FrameRate)
+			if (Time < FrameRate)
 				return;
-
+/*
 			while (Elapsed >= FrameRate)
 			{
 
 				// Next frame
-				frameID++;
+				CurrentFrame++;
 
 				switch (Type)
 				{
@@ -102,8 +102,8 @@ namespace ArcEngine.Asset
 					// Loop
 					case AnimationType.Loop:
 					{
-						if (frameID >= Tiles.Count)
-							frameID = 0;
+						if (CurrentFrame >= Frames.Count)
+							CurrentFrame = 0;
 					}
 					break;
 
@@ -111,7 +111,7 @@ namespace ArcEngine.Asset
 					// One way
 					case AnimationType.OneWay:
 					{
-						frameID = Math.Min(Tiles.Count - 1, frameID);
+						CurrentFrame = Math.Min(Frames.Count - 1, CurrentFrame);
 					}
 					break;
 
@@ -125,8 +125,69 @@ namespace ArcEngine.Asset
 
 				Elapsed -= FrameRate;
 			}
-
+*/
 		}
+
+
+
+		/// <summary>
+		/// Defines the tileset to use
+		/// </summary>
+		/// <param name="name">Name of the TileSet</param>
+		/// <returns>True if loaded, otherwise false</returns>
+		public bool SetTileSet(string name)
+		{
+			TileSetName = name;
+
+			TileSet = ResourceManager.CreateAsset<TileSet>(name);
+
+			return TileSet != null;
+		}
+
+
+		#region Frame management
+
+		/// <summary>
+		/// Adds a frame at the end of the animtion
+		/// </summary>
+		/// <param name="id">ID of the tile</param>
+		public void AddFrame(int id)
+		{
+			Frames.Add(id);
+		}
+
+
+
+		/// <summary>
+		/// Adds a frame in the animtion
+		/// </summary>
+		/// <param name="id">ID of the tile</param>
+		/// <param name="index">Position in the animation</param>
+		public void AddFrame(int id, int index)
+		{
+			Frames.Insert(index, id);
+		}
+
+
+		/// <summary>
+		/// Removes a frame
+		/// </summary>
+		/// <param name="index">Index of the frame</param>
+		public void RemoveFrame(int index)
+		{
+			Frames.Remove(index);
+		}
+
+
+		/// <summary>
+		/// Clear all frames
+		/// </summary>
+		public void ClearFrames()
+		{
+			Frames.Clear();
+		}
+
+		#endregion
 
 
 		#region Animation control
@@ -175,8 +236,8 @@ namespace ArcEngine.Asset
 				return false;
 
 
-			//xml.WriteStartElement("animation");
-			//xml.WriteAttributeString("name", Name);
+			xml.WriteStartElement(XmlTag);
+			xml.WriteAttributeString("name", Name);
 
 
 	//		base.SaveComment(xml);
@@ -188,18 +249,18 @@ namespace ArcEngine.Asset
 
 
 			xml.WriteStartElement("tileset");
-			xml.WriteAttributeString("name", tileSetName);
+			xml.WriteAttributeString("name", TileSetName);
 			xml.WriteEndElement();
 
 			xml.WriteStartElement("loop");
-			xml.WriteAttributeString("value", type.ToString());
+			xml.WriteAttributeString("value", Type.ToString());
 			xml.WriteEndElement();
 
 
-			foreach (int id in Tiles)
+			foreach (int id in Frames)
 			{
 				xml.WriteStartElement("tile");
-				xml.WriteAttributeString("BufferID", id.ToString());
+				xml.WriteAttributeString("id", id.ToString());
 				xml.WriteEndElement();
 			}
 
@@ -219,16 +280,20 @@ namespace ArcEngine.Asset
 			if (xml == null)
 				return false;
 
+			if (xml.Name != XmlTag)
+			{
+				Trace.WriteLine("Expecting \"" + XmlTag + "\" in node header, found \"" + xml.Name + "\" when loading Animation.");
+				return false;
+			}
+
+			Name = xml.Attributes["name"].Value;
 
 			// Process datas
 			XmlNodeList nodes = xml.ChildNodes;
 			foreach (XmlNode node in nodes)
 			{
 				if (node.NodeType == XmlNodeType.Comment)
-				{
-				//	base.LoadComment(node);
 					continue;
-				}
 
 
 				switch (node.Name.ToLower())
@@ -243,7 +308,7 @@ namespace ArcEngine.Asset
 					// framerate
 					case "framerate":
 					{
-						FrameRate = int.Parse(node.Attributes["value"].Value);
+						FrameRate = TimeSpan.Parse(node.Attributes["value"].Value);
 					}
 					break;
 
@@ -257,15 +322,14 @@ namespace ArcEngine.Asset
 					
 					case "tile":
 					{
-						Tiles.Add(int.Parse(node.Attributes["id"].Value));
+						Frames.Add(int.Parse(node.Attributes["id"].Value));
 					}
 					break;
 
 
 					default:
 					{
-						//Log.Send(new LogEventArgs(LogLevel.Warning, "Animation : Unknown node element found (" + node.Name + ")", null));
-						Trace.WriteLine("Animation : Unknown node element found (" + node.Name + ")");
+						Trace.WriteLine("Animation : Unknown node element found (\"{0}\")", node.Name);
 					}
 					break;
 				}
@@ -297,27 +361,10 @@ namespace ArcEngine.Asset
 		{
 			get
 			{
-				return "animationA";
-			}
-		}
-
-		/// <summary>
-		/// Current Tile ID
-		/// </summary>
-		[Browsable(false)]
-		public int TileID
-		{
-			get
-			{
-				if (TileSet == null || FrameID < 0)
-					return -1;
-
-
-				return Tiles[FrameID];
+				return "animation";
 			}
 		}
  
-         
 
 		/// <summary>
 		/// Current animation Tile
@@ -327,52 +374,43 @@ namespace ArcEngine.Asset
 		{
 			get
 			{
-				if (TileSet == null || FrameID < 0)
+				if (TileSet == null)
 					return null;
 
 
-				return TileSet.GetTile(Tiles[FrameID]);
+				return TileSet.GetTile(Frames[CurrentFrame]);
 			}
 		}
  
-         
+
+
 		/// <summary>
-		/// Framerate of the animation in miliseconds
+		/// Frame rate of the animation
 		/// </summary>
-		public int FrameRate
+		public TimeSpan FrameRate
 		{
-			get
-			{
-				return frameRate;
-			}
-			set
-			{
-				frameRate = value;
-				if (frameRate <= 0)
-					frameRate = 1;
-			}
+			get;
+			set;
 		}
-		int frameRate = 100;
 
 
 		/// <summary>
-		/// Number of ms elapsed since last update
+		/// Time of the animation
 		/// </summary>
-		int Elapsed;
+		public TimeSpan Time; 
 
 
 		/// <summary>
-		/// Current frame BufferID
+		/// Current frame ID
 		/// </summary>
 		[Browsable(false)]
-		public int FrameID
+		public int CurrentFrame
 		{
 			get
 			{
-				return frameID;
+				return 0;
 			}
 		}
-		int frameID = -1;
 
 
 		/// <summary>
@@ -380,19 +418,9 @@ namespace ArcEngine.Asset
 		/// </summary>
 		public AnimationState State
 		{
-			get
-			{
-				return state;
-			}
-			set
-			{
-				state = value;
-
-				if (state == AnimationState.Stop)
-					frameID = 0;
-			}
+			get;
+			private set;
 		}
-		AnimationState state;
  
          
 
@@ -402,16 +430,9 @@ namespace ArcEngine.Asset
 		/// </summary>
 		public AnimationType Type
 		{
-			get
-			{
-				return type;
-			}
-			set
-			{
-				type = value;
-			}
+			get;
+			set;
 		}
-		AnimationType type;
 
 
 
@@ -422,13 +443,9 @@ namespace ArcEngine.Asset
 		[Browsable(false)]
 		public TileSet TileSet
 		{
-			get
-
-			{
-				return tileSet;
-			}
+			get;
+			private set;
 		}
-		TileSet tileSet;
 
 
 
@@ -439,36 +456,21 @@ namespace ArcEngine.Asset
 		[DescriptionAttribute("TileSet name to use")]
 		public string TileSetName
 		{
-			get
-			{
-				return tileSetName;
-			}
-			set
-			{
-				tileSetName = value;
-				tileSet = ResourceManager.CreateAsset<TileSet>(value);
-			}
+			get;
+			private set;
 		}
-		string tileSetName;
 
 
 
 
 		/// <summary>
-		/// List of tiles
+		/// List of frames
 		/// </summary>
-		public List<int> Tiles
+		public List<int> Frames
 		{
-			get
-			{
-				return tiles;
-			}
-			set
-			{
-				tiles = value;
-			}
+			get;
+			private set;
 		}
-		List<int> tiles;
 
 												
 
