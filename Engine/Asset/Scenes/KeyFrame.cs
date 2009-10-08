@@ -5,6 +5,17 @@ using System.Text;
 using System.Xml;
 using System.Collections;
 
+//
+//
+// http://www.cutoutpro.com/docs/Time%20Line/index.html
+// http://ams-a.mindmafya.com/1/Animation-1.php
+//
+// FLIC file format : http://www.compuphase.com/flic.htm
+//
+//
+//
+//
+//
 
 namespace ArcEngine.Asset
 {

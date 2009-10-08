@@ -85,7 +85,7 @@
 			// groupBox2
 			// 
 			this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-							| System.Windows.Forms.AnchorStyles.Right)));
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.groupBox2.Controls.Add(this.GlPreviewControl);
 			this.groupBox2.Controls.Add(this.PreviewToolStrip);
 			this.groupBox2.Location = new System.Drawing.Point(206, 0);
@@ -221,8 +221,8 @@
 			// groupBox3
 			// 
 			this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-							| System.Windows.Forms.AnchorStyles.Left)
-							| System.Windows.Forms.AnchorStyles.Right)));
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.groupBox3.Controls.Add(this.GlTilesControl);
 			this.groupBox3.Controls.Add(this.toolStrip1);
 			this.groupBox3.Controls.Add(this.TilesHScroller);
@@ -309,7 +309,7 @@
 			// groupBox1
 			// 
 			this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-							| System.Windows.Forms.AnchorStyles.Right)));
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.groupBox1.Controls.Add(this.GlFramesControl);
 			this.groupBox1.Controls.Add(this.toolStrip2);
 			this.groupBox1.Location = new System.Drawing.Point(206, 183);
@@ -448,6 +448,7 @@
 			this.Name = "AnimationForm";
 			this.TabText = "Animation";
 			this.Text = "Animation";
+			this.Load += new System.EventHandler(this.AnimationForm_Load);
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AnimationForm_FormClosing);
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();

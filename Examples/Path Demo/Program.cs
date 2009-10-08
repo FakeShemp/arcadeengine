@@ -87,8 +87,6 @@ namespace PathDemo
 
 		}
 
-			FufuWindow window;
-
 		/// <summary>
 		/// Unload contents
 		/// </summary>

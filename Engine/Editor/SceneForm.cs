@@ -19,41 +19,50 @@
 #endregion
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.IO;
 using System.Text;
+using System.Windows.Forms;
+using System.Xml;
+using ArcEngine.Asset;
+using ArcEngine.Forms;
+using ArcEngine.Graphic;
+using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL;
+using WeifenLuo.WinFormsUI.Docking;
 
-namespace ArcEngine.Asset
+namespace ArcEngine.Editor
 {
-	/// <summary>
-	/// Frame in an <see cref="Animation"/>
-	/// </summary>
-	public struct AnimationFrame
+	public partial class SceneForm : AssetEditor
 	{
-
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="id"></param>
-		/// <param name="length"></param>
-		public AnimationFrame(int id, TimeSpan length)
+		public SceneForm(XmlNode node)
 		{
-			ID = id;
-			Length = length;
+			InitializeComponent();
 		}
-
 
 
 
 		#region Properties
 
 		/// <summary>
-		/// ID of the tile
+		/// 
 		/// </summary>
-		public int ID;
+		public override IAsset Asset
+		{
+			get
+			{
+				return Scene;
+			}
+		}
 
 		/// <summary>
-		/// Length
+		/// 
 		/// </summary>
-		public TimeSpan Length;
+		Scene Scene;
 
 		#endregion
 	}

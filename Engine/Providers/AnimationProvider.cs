@@ -161,9 +161,18 @@ namespace ArcEngine.Providers
 			if (typeof(T) == typeof(Animation))
 			{
 				XmlNode node = null;
+				if (Animations.ContainsKey(name))
+					node = Animations[name];
+				form = new ArcEngine.Editor.AnimationForm(node);
+				form.TabText = name;
+			}
+
+			if (typeof(T) == typeof(Scene))
+			{
+				XmlNode node = null;
 				if (Scenes.ContainsKey(name))
 					node = Scenes[name];
-				form = new ArcEngine.Editor.AnimationForm(node);
+				form = new ArcEngine.Editor.SceneForm(node);
 				form.TabText = name;
 			}
 

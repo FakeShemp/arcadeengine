@@ -161,7 +161,7 @@ namespace ArcEngine.Asset
 			Display.Scissor = true;
 			foreach (SceneLayer layer in Layers)
 			{
-				Frame frame = new Frame(layer, Time);
+				SceneFrame frame = new SceneFrame(layer, Time);
 				frame.Draw();
 			}
 

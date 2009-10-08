@@ -194,9 +194,19 @@ namespace ArcEngine.Editor
 			// The animation
 			Animation animation = new Animation();
 			animation.Name = AnimationNameBox.Text;
-			animation.TileSetName = TileSetNameBox.Text;
+			animation.SetTileSet(TileSetNameBox.Text);
+			SetFrame(0);
+			//Bitmap bm = new Bitmap(Image);
+			animation.FrameRate = TimeSpan.FromMilliseconds(BitConverter.ToInt32(Image.GetPropertyItem(20736).Value, 0) * 10);
+			if (animation.FrameRate < TimeSpan.FromMilliseconds(100))
+				animation.FrameRate = TimeSpan.FromMilliseconds(100);
+			if (BitConverter.ToInt16(Image.GetPropertyItem(20737).Value, 0) != 1)
+				animation.Type = AnimationType.Loop;
+
+
 
 			Point location = Point.Empty;
+			int id = 0;
 			for (int f = int.Parse(FirstFrameBox.Value.ToString()); f < int.Parse(LastFrameBox.Value.ToString()); f++)
 			{
 				// Select the frame
@@ -214,27 +224,21 @@ namespace ArcEngine.Editor
 				texture.Blit(bm, location);
 
 				// Add in the tileset
-				tileset.AddTile(f, new Rectangle(location, bm.Size));
+				tileset.AddTile(id, new Rectangle(location, bm.Size));
 				
 				// Move to the next free location
 				location.Offset(bm.Width, 0);
 
+				animation.AddFrame(id);
+
+				// Next id
+				id++;
 			}
 
 
 	
 
-/*
-			int delay = 0;
-			int this_delay = 0;
-			int index = 0;
-			for (int f = 0; f < FrameCount; f++)
-			{
-				this_delay = BitConverter.ToInt32(Image.GetPropertyItem(20736).Value, index) * 10;
-				delay += (this_delay < 100 ? 100 : this_delay);  // Minimum delay is 100 ms
-				index += 4;
-			}
-*/
+
 
 			//
 			// Save assets to the manager

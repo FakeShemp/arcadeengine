@@ -53,33 +53,6 @@ namespace ArcEngine.Editor
 			PropertyBox.SelectedObject = Animation;
 
 
-			//Device = new Display();
-
-			GlTilesControl.MakeCurrent();
-			//Display.ShareVideoContext();
-			Display.ClearColor = Color.Black;
-			Display.Texturing = true;
-			Display.Blending = true;
-			Display.BlendingFunction(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
-
-
-			GlFramesControl.MakeCurrent();
-			//Display.ShareVideoContext();
-			Display.ClearColor = Color.Black;
-			Display.Texturing = true;
-			Display.Blending = true;
-			//Display.ShareVideoContext();
-			Display.BlendingFunction(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
-
-
-
-			GlPreviewControl.MakeCurrent();
-			//Display.ShareVideoContext();
-			Display.ClearColor = Color.Black;
-			Display.Texturing = true;
-			Display.Blending = true;
-			Display.BlendingFunction(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
-
 
 
 			Animation.Init();
@@ -128,6 +101,25 @@ namespace ArcEngine.Editor
 
 		#region Events
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void AnimationForm_Load(object sender, EventArgs e)
+		{
+			GlTilesControl.MakeCurrent();
+			Display.Init();
+
+			GlFramesControl.MakeCurrent();
+			Display.Init();
+
+			GlPreviewControl.MakeCurrent();
+			Display.Init();
+		}
+
+	
 		/// <summary>
 		/// Draw Timer tick
 		/// </summary>
@@ -148,7 +140,7 @@ namespace ArcEngine.Editor
 				// Stop the drawtimer
 				DrawTimer.Stop();
 
-				Animation.Update(elapsed);
+				Animation.Update(TimeSpan.FromMilliseconds(elapsed));
 
 
 				GlFramesControl.Invalidate();
@@ -272,11 +264,16 @@ namespace ArcEngine.Editor
 			//
 			GlPreviewControl.MakeCurrent();
 			Display.ClearBuffers();
-
+/*
 			if (Animation.TileSet == null)
+			{
+				GlPreviewControl.SwapBuffers();
 				return;
+			}
+*/
 
-
+			Animation.Draw(AnimOffset);
+/*
 			Tile tile = Animation.CurrentTile;
 			if (tile == null)
 			{
@@ -285,8 +282,8 @@ namespace ArcEngine.Editor
 			}
 			Rectangle rect = new Rectangle(AnimOffset, tile.Size);
 
-			Animation.TileSet.Draw(Animation.TileID, AnimOffset);
-
+			Animation.TileSet.Draw(Animation.CurrentFrame, AnimOffset);
+*/
 			GlPreviewControl.SwapBuffers();
 		}
 
@@ -350,13 +347,13 @@ namespace ArcEngine.Editor
 				if (FrameID != -1)
 				{
 					// Inserts the tile
-					Animation.Tiles.Insert(FrameID, TileID);
+					Animation.Frames.Insert(FrameID, TileID);
 					FrameID++;
 				}
 				else
 				{
 					// Adds the tile
-					Animation.Tiles.Add(TileID);
+					Animation.Frames.Add(TileID);
 				}
 			}
 
@@ -374,8 +371,8 @@ namespace ArcEngine.Editor
 			if (FrameID == -1)
 				return;
 
-			Animation.Tiles.RemoveAt(FrameID);
-			FrameID = Math.Min(Animation.Tiles.Count - 1, FrameID);
+			Animation.Frames.RemoveAt(FrameID);
+			FrameID = Math.Min(Animation.Frames.Count - 1, FrameID);
 
 		}
 
@@ -386,12 +383,12 @@ namespace ArcEngine.Editor
 		/// <param name="e"></param>
 		private void MoveLeft_Click(object sender, EventArgs e)
 		{
-			if (FrameID <= 0 && Animation.Tiles.Count > 1)
+			if (FrameID <= 0 && Animation.Frames.Count > 1)
 				return;
 
-			int tmp = Animation.Tiles[FrameID - 1];
-			Animation.Tiles[FrameID - 1] = Animation.Tiles[FrameID];
-			Animation.Tiles[FrameID] = tmp;
+			int tmp = Animation.Frames[FrameID - 1];
+			Animation.Frames[FrameID - 1] = Animation.Frames[FrameID];
+			Animation.Frames[FrameID] = tmp;
 
 			FrameID--;
 		}
@@ -404,12 +401,12 @@ namespace ArcEngine.Editor
 		/// <param name="e"></param>
 		private void MoveRight_Click(object sender, EventArgs e)
 		{
-			if (FrameID >= Animation.Tiles.Count - 1)
+			if (FrameID >= Animation.Frames.Count - 1)
 				return;
 			
-			int tmp = Animation.Tiles[FrameID + 1];
-			Animation.Tiles[FrameID + 1] = Animation.Tiles[FrameID];
-			Animation.Tiles[FrameID] = tmp;
+			int tmp = Animation.Frames[FrameID + 1];
+			Animation.Frames[FrameID + 1] = Animation.Frames[FrameID];
+			Animation.Frames[FrameID] = tmp;
 
 			FrameID++;
 		}
@@ -429,14 +426,14 @@ namespace ArcEngine.Editor
 
 			// Find the Frame under the mouse and remove it
 			Rectangle rect = Rectangle.Empty;
-			for(int id = 0; id < Animation.Tiles.Count; id++)
+			for(int id = 0; id < Animation.Frames.Count; id++)
 			{
-				Tile tile = Animation.TileSet.GetTile(Animation.Tiles[id]);
+				Tile tile = Animation.TileSet.GetTile(Animation.Frames[id]);
 				rect.Size = tile.Size;
 
 				if (rect.Contains(e.Location))
 				{
-					Animation.Tiles.RemoveAt(id);
+					Animation.Frames.RemoveAt(id);
 					break;
 				}
 
@@ -459,9 +456,9 @@ namespace ArcEngine.Editor
 			// Find the FrameID to select
 			FrameID = -1;
 			Rectangle rect = Rectangle.Empty;
-			for (int id = 0; id < Animation.Tiles.Count; id++)
+			for (int id = 0; id < Animation.Frames.Count; id++)
 			{
-				Tile tile = Animation.TileSet.GetTile(Animation.Tiles[id]);
+				Tile tile = Animation.TileSet.GetTile(Animation.Frames[id]);
 				rect.Size = tile.Size;
 
 				if (rect.Contains(e.Location))
@@ -501,8 +498,10 @@ namespace ArcEngine.Editor
 
 			// Oops !
 			if (Animation.TileSet == null)
+			{
+				GlFramesControl.SwapBuffers();
 				return;
-
+			}
 
 			// Mouse location
 			Point mouse = GlFramesControl.PointToClient(Control.MousePosition);
@@ -513,9 +512,9 @@ namespace ArcEngine.Editor
 	
 			// Display each frames
 			Rectangle rect = Rectangle.Empty;
-			for (int id = 0; id < Animation.Tiles.Count; id++)
+			for (int id = 0; id < Animation.Frames.Count; id++)
 				{
-				Tile tile = Animation.TileSet.GetTile(Animation.Tiles[id]);
+				Tile tile = Animation.TileSet.GetTile(Animation.Frames[id]);
 				if (tile == null)
 					continue;
 
@@ -559,13 +558,13 @@ namespace ArcEngine.Editor
 				if (FrameID != -1)
 				{
 					// Inserts the tile
-					Animation.Tiles.Insert(FrameID, TileID);
+					Animation.Frames.Insert(FrameID, TileID);
 					FrameID++;
 				}
 				else
 				{
 					// Adds the tile
-					Animation.Tiles.Add(TileID);
+					Animation.Frames.Add(TileID);
 				}
 			}
 		}
@@ -753,6 +752,7 @@ namespace ArcEngine.Editor
 		Texture CheckerBoard;
 
 		#endregion
+
 
 	}
 

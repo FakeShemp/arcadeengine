@@ -22,7 +22,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Xml;
-
+using System.Drawing;
+using ArcEngine;
+using ArcEngine.Graphic;
+using ArcEngine.Asset;
 
 
 //
@@ -33,16 +36,12 @@ using System.Xml;
 //
 //
 // http://wiki.themanaworld.org/index.php/Animations
-// http://www.cutoutpro.com/docs/Time%20Line/index.html
 //
 //
 // http://www.sdltutorials.com/sdl-animation/
 // http://citrusengine.com/manual/manual/animation_system
 //
 //
-// http://ams-a.mindmafya.com/1/Animation-1.php
-//
-// FLIC file format : http://www.compuphase.com/flic.htm
 //
 namespace ArcEngine.Asset
 {
@@ -59,6 +58,7 @@ namespace ArcEngine.Asset
 		public Animation()
 		{
 			Frames = new List<int>();
+			Time = TimeSpan.Zero;
 		}
 
 
@@ -77,20 +77,20 @@ namespace ArcEngine.Asset
 		/// <summary>
 		/// Update the animation
 		/// </summary>
-		/// <param name="elapsed">Milliseconds elapsed since last update</param>
-		public void Update(GameTime time)
+		/// <param name="time">Milliseconds elapsed since last update</param>
+		public void Update(TimeSpan time)
 		{
 			if (State != AnimationState.Play)
 				return;
 
 			// Update the chrono
-			Time += time.ElapsedGameTime;
+			Time += time;
 
 			// Not the time to change frame
 			if (Time < FrameRate)
 				return;
-/*
-			while (Elapsed >= FrameRate)
+
+			while (Time >= FrameRate)
 			{
 
 				// Next frame
@@ -118,17 +118,52 @@ namespace ArcEngine.Asset
 					// Ping pong
 					case AnimationType.PingPong:
 					{
-
+						if (CurrentFrame >= Frames.Count)
+							CurrentFrame = 0;
 					}
 					break;
 				}
 
-				Elapsed -= FrameRate;
+				Time -= FrameRate;
 			}
-*/
+
 		}
 
 
+
+
+		/// <summary>
+		/// Draws the animation
+		/// </summary>
+		/// <param name="location">Location on the screen</param>
+		public void Draw(Point location)
+		{
+			Draw(location, 0.0f, false, false);
+		}
+
+
+
+		/// <summary>
+		/// Draws the animation
+		/// </summary>
+		/// <param name="location">Location on the scren</param>
+		/// <param name="rotate">Angle of rotation</param>
+		/// <param name="flipx">Horizontal flip</param>
+		/// <param name="flipy">Vertical flip</param>
+		public void Draw(Point location, float rotate, bool flipx, bool flipy)
+		{
+			if (TileSet == null)
+				return;
+
+
+			if (CurrentTile == null)
+				return;
+
+			//Rectangle rect = new Rectangle(location, CurrentTile.Size);
+
+			TileSet.Draw(CurrentFrame, location);
+
+		}
 
 		/// <summary>
 		/// Defines the tileset to use
@@ -315,7 +350,7 @@ namespace ArcEngine.Asset
 					// TileSet
 					case "tileset":
 					{
-						TileSetName = node.Attributes["name"].Value;
+						SetTileSet(node.Attributes["name"].Value);
 					}
 					break;
 
@@ -334,6 +369,10 @@ namespace ArcEngine.Asset
 					break;
 				}
 			}
+
+			if (FrameRate == TimeSpan.Zero)
+				FrameRate = TimeSpan.FromMilliseconds(250);
+
 
 			return true;
 		}
@@ -357,6 +396,7 @@ namespace ArcEngine.Asset
 		/// <summary>
 		/// Xml tag of the asset in bank
 		/// </summary>
+		[Browsable(false)]
 		public string XmlTag
 		{
 			get
@@ -397,7 +437,7 @@ namespace ArcEngine.Asset
 		/// <summary>
 		/// Time of the animation
 		/// </summary>
-		public TimeSpan Time; 
+		TimeSpan Time; 
 
 
 		/// <summary>
@@ -406,10 +446,8 @@ namespace ArcEngine.Asset
 		[Browsable(false)]
 		public int CurrentFrame
 		{
-			get
-			{
-				return 0;
-			}
+			get;
+			private set;
 		}
 
 
@@ -466,6 +504,7 @@ namespace ArcEngine.Asset
 		/// <summary>
 		/// List of frames
 		/// </summary>
+		[Browsable(false)]
 		public List<int> Frames
 		{
 			get;

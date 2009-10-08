@@ -119,7 +119,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Asset\Scenes\Frame.cs" />
+    <Compile Include="Asset\Animation\AnimationFrame.cs" />
+    <Compile Include="Asset\Scenes\SceneFrame.cs" />
     <Compile Include="Asset\Scenes\KeyFrame.cs" />
     <Compile Include="Asset\Scenes\SceneLayer.cs" />
     <Compile Include="Asset\BinaryInformation.cs" />
@@ -195,6 +196,12 @@
     </Compile>
     <Compile Include="Editor\ResourceForm.Designer.cs">
       <DependentUpon>ResourceForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editor\SceneForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor\SceneForm.Designer.cs">
+      <DependentUpon>SceneForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Editor\ScriptForm.cs">
       <SubType>Form</SubType>
@@ -316,7 +323,7 @@
     <None Include="Network\NetEnum.cs" />
     <None Include="Network\NetServer.cs" />
     <None Include="Network\NetStatusEventArgs.cs" />
-    <Compile Include="Asset\Animation.cs" />
+    <Compile Include="Asset\Animation\Animation.cs" />
     <Compile Include="Asset\Audio.cs" />
     <Compile Include="Asset\Enumerators.cs" />
     <Compile Include="Asset\StringTable.cs" />
