@@ -90,6 +90,8 @@ namespace ArcEngine.Graphic
 			Trace.Indent();
 			Trace.WriteLine("Graphics card vendor : {0}", GL.GetString(StringName.Vendor));
 			Trace.WriteLine("Renderer : {0}", GL.GetString(StringName.Renderer));
+			Trace.WriteLine("Version : {0}", GL.GetString(StringName.Version));
+			Trace.WriteLine("Shading Language Version : {0}", GL.GetString(StringName.ShadingLanguageVersion));
 
 			//int major, minor;
 			//GL.GetInteger(GetPName.MajorVersion, out major);
@@ -99,14 +101,16 @@ namespace ArcEngine.Graphic
 
 			Trace.WriteLine("Display modes");
 			Trace.Indent();
-
 			foreach (DisplayDevice device in DisplayDevice.AvailableDisplays)
 				Trace.WriteLine(device.ToString());
-
-			Trace.Unindent();
 			Trace.Unindent();
 
 
+			string ext = GL.GetString(StringName.Extensions);
+			Trace.WriteLine("Supported extension ({0}) : {1}", ext.Split(new char[] {' '}).Length, ext );
+	
+			
+			Trace.Unindent();
 		}
 
 

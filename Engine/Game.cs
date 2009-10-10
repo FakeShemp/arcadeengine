@@ -46,7 +46,6 @@ namespace ArcEngine
 		/// </summary>
 		public Game()
 		{
-			Trace.WriteLine("######Game()");
 			Trace.TraceInventory();
 
 			Clock = new GameClock();
