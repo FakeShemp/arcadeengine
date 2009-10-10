@@ -422,8 +422,8 @@ namespace ArcEngine
 		/// Creates and retruns a shared asset
 		/// </summary>
 		/// <typeparam name="T">Type of the asset</typeparam>
-		/// <param name="name">ASset name</param>
-		/// <returns>The asset or null</returns>
+		/// <param name="name">Asset name</param>
+		/// <returns>Handle to the asset</returns>
 		static public T CreateSharedAsset<T>(string name) where T : IAsset
 		{
 			if (string.IsNullOrEmpty(name))
@@ -436,6 +436,52 @@ namespace ArcEngine
 
 				return Assets[typeof(T)].CreateShared<T>(name);
 			}
+		}
+
+
+		/// <summary>
+		/// Creates and loads a shared asset
+		/// </summary>
+		/// <typeparam name="T">Type of the asset</typeparam>
+		/// <param name="name">New asset name</param>
+		/// <param name="asset">Asset to load</param>
+		/// <returns>Handle to the asset</returns>
+		static public T LoadSharedAsset<T>(string name, string asset) where T : IAsset
+		{
+			if (string.IsNullOrEmpty(name))
+				return default(T);
+
+			// Create the asset
+			T tmp = CreateAsset<T>(asset);
+			if (tmp == null)
+				return default(T);
+
+			// Add the asset to the shared list
+			AddSharedAsset<T>(name, tmp);
+
+			return tmp;
+		}
+
+
+		/// <summary>
+		/// Adds an asset to the Shared List
+		/// </summary>
+		/// <typeparam name="T">Type of the asset</typeparam>
+		/// <param name="name">Name of the asset</param>
+		/// <param name="asset">Asset to add</param>
+		static public void AddSharedAsset<T>(string name, T asset) where T : IAsset
+		{
+			if (string.IsNullOrEmpty(name))
+				return;
+
+			lock (BinaryLock)
+			{
+				if (!Assets.ContainsKey(typeof(T)))
+					throw new ArgumentException("Unknown asset type");
+
+				Assets[typeof(T)].AddShared<T>(name, asset);
+			}
+
 		}
 
 

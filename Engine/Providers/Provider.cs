@@ -66,6 +66,7 @@ namespace ArcEngine.Providers
 		}
 
 
+
 		#region Initialization
 
 
@@ -83,6 +84,7 @@ namespace ArcEngine.Providers
 		public abstract void Close();
 
 		#endregion
+
 
 
 		#region Editor
@@ -177,6 +179,15 @@ namespace ArcEngine.Providers
 
 
 		#region Shared assets
+
+
+		/// <summary>
+		/// Adds an asset as Shared
+		/// </summary>
+		/// <typeparam name="T">Asset type</typeparam>
+		/// <param name="name">Name of the asset to register</param>
+		/// <param name="asset">Asset's handle</param>
+		public abstract void AddShared<T>(string name, IAsset asset);
 
 
 		/// <summary>

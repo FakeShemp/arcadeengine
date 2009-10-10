@@ -79,8 +79,6 @@ namespace ArcEngine.Providers
 		#endregion
 
 
-
-
 		#region IO routines
 
 
@@ -301,6 +299,20 @@ namespace ArcEngine.Providers
 
 		#region Shared assets
 
+		/// <summary>
+		/// Adds an asset as Shared
+		/// </summary>
+		/// <typeparam name="T">Asset type</typeparam>
+		/// <param name="name">Name of the asset to register</param>
+		/// <param name="asset">Asset's handle</param>
+		public override void AddShared<T>(string name, IAsset asset)
+		{
+			if (string.IsNullOrEmpty(name))
+				return;
+			
+			if (typeof(T) == typeof(KeyboardScheme))
+				SharedSchemes[name] = asset as KeyboardScheme;
+		}
 
 		/// <summary>
 		/// Creates a shared resource
@@ -333,10 +345,11 @@ namespace ArcEngine.Providers
 		/// <param name="name">Name of the asset</param>
 		public override void RemoveShared<T>(string name)
 		{
+			if (string.IsNullOrEmpty(name))
+				return;
+
 			if (typeof(T) == typeof(KeyboardScheme))
-			{
-				SharedSchemes[name] = null;
-			}
+				SharedSchemes.Remove(name);
 		}
 
 
@@ -367,7 +380,6 @@ namespace ArcEngine.Providers
 
 
 		#endregion
-
 
 
 		#region Properties

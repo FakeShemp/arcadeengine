@@ -83,7 +83,6 @@ namespace ArcEngine.Providers
 		#endregion
 
 
-
 		#region IO routines
 
 
@@ -350,6 +349,21 @@ namespace ArcEngine.Providers
 
 		#region Shared assets
 
+		/// <summary>
+		/// Adds an asset as Shared
+		/// </summary>
+		/// <typeparam name="T">Asset type</typeparam>
+		/// <param name="name">Name of the asset to register</param>
+		/// <param name="asset">Asset's handle</param>
+		public override void AddShared<T>(string name, IAsset asset)
+		{
+			if (string.IsNullOrEmpty(name))
+				return;
+
+			if (typeof(T) == typeof(Script))
+				SharedScripts[name] = asset as Script;
+	
+		}
 
 		/// <summary>
 		/// Creates a shared resource
@@ -364,10 +378,9 @@ namespace ArcEngine.Providers
 				if (SharedScripts.ContainsKey(name))
 					return (T)(object)SharedScripts[name];
 
-				Script script = new Script();
-				SharedScripts[name] = script;
+				SharedScripts[name] = new Script();
 
-				return (T)(object)script;
+				return (T)(object)SharedScripts[name];
 			}
 
 			return default(T);
@@ -385,9 +398,7 @@ namespace ArcEngine.Providers
 			CheckValue<T>(name);
 
 			if (typeof(T) == typeof(Script))
-			{
 				SharedScripts.Remove(name);
-			}
 		}
 
 

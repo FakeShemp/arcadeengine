@@ -54,6 +54,45 @@ namespace ArcEngine.Providers
 		}
 
 
+
+		/// <summary>
+		/// Trace audio informations
+		/// </summary>
+		public void TraceInfos()
+		{
+			if (!IsInit)
+			{
+				Trace.WriteLine("Audion Context not initialized !");
+				return;
+			}
+
+
+			Trace.WriteLine("--- Audio ---");
+			Trace.Indent();
+			{
+				//Trace.WriteLine("Used Device: " + Context.);
+				Trace.WriteLine("AL Renderer: " + AL.Get(ALGetString.Renderer));
+				Trace.WriteLine("AL Vendor: " + AL.Get(ALGetString.Vendor));
+				Trace.WriteLine("AL Version: " + AL.Get(ALGetString.Version));
+
+				Trace.WriteLine("AL Speed of sound: " + AL.Get(ALGetFloat.SpeedOfSound));
+				Trace.WriteLine("AL Distance Model: " + AL.GetDistanceModel().ToString());
+				//	Trace.WriteLine("AL Maximum simultanous Sources: " + MaxSources);
+
+				//		Trace.WriteLine("AL Extension string: " + ExtensionString);
+				//		Trace.WriteLine("Confirmed AL Extensions:");
+				//Trace.Indent();
+				//{
+				//   foreach (KeyValuePair<string, bool> pair in Extensions)
+				//      Trace.WriteLine(pair.Key + ": " + pair.Value);
+				//}
+				//Trace.Unindent();
+			}
+			Trace.Unindent();
+
+		}
+
+
 		#region Init & Close
 
 		/// <summary>
@@ -108,46 +147,6 @@ namespace ArcEngine.Providers
 
 		}
 		#endregion
-
-
-
-		/// <summary>
-		/// Trace audio informations
-		/// </summary>
-		public void TraceInfos()
-		{
-			if (!IsInit)
-			{
-				Trace.WriteLine("Audion Context not initialized !");
-				return;
-			}
-
-
-			Trace.WriteLine("--- Audio ---");
-			Trace.Indent();
-			{
-				//Trace.WriteLine("Used Device: " + Context.);
-				Trace.WriteLine("AL Renderer: " + AL.Get(ALGetString.Renderer));
-				Trace.WriteLine("AL Vendor: " + AL.Get(ALGetString.Vendor));
-				Trace.WriteLine("AL Version: " + AL.Get(ALGetString.Version));
-
-				Trace.WriteLine("AL Speed of sound: " + AL.Get(ALGetFloat.SpeedOfSound));
-				Trace.WriteLine("AL Distance Model: " + AL.GetDistanceModel().ToString());
-				//	Trace.WriteLine("AL Maximum simultanous Sources: " + MaxSources);
-
-				//		Trace.WriteLine("AL Extension string: " + ExtensionString);
-				//		Trace.WriteLine("Confirmed AL Extensions:");
-				//Trace.Indent();
-				//{
-				//   foreach (KeyValuePair<string, bool> pair in Extensions)
-				//      Trace.WriteLine(pair.Key + ": " + pair.Value);
-				//}
-				//Trace.Unindent();
-			}
-			Trace.Unindent();
-
-		}
-
 
 
 		#region IO routines
@@ -382,6 +381,21 @@ namespace ArcEngine.Providers
 
 		#region Shared assets
 
+		/// <summary>
+		/// Adds an asset as Shared
+		/// </summary>
+		/// <typeparam name="T">Asset type</typeparam>
+		/// <param name="name">Name of the asset to register</param>
+		/// <param name="asset">Asset's handle</param>
+		public override void AddShared<T>(string name, IAsset asset)
+		{
+			if (string.IsNullOrEmpty(name))
+				return;
+
+			if (typeof(T) == typeof(Audio))
+				SharedAudios[name] = asset as Audio;
+	
+		}
 
 		/// <summary>
 		/// Creates a shared resource
@@ -415,10 +429,11 @@ namespace ArcEngine.Providers
 		/// <param name="name">Name of the asset</param>
 		public override void RemoveShared<T>(string name)
 		{
+			if (string.IsNullOrEmpty(name))
+				return;
+
 			if (typeof(T) == typeof(Audio))
-			{
-				SharedAudios[name] = null;
-			}
+				SharedAudios.Remove(name);
 		}
 
 

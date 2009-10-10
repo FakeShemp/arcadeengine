@@ -334,6 +334,7 @@
     <Compile Include="Asset\Script.cs" />
     <Compile Include="GameTime.cs" />
     <Compile Include="Trace.cs" />
+    <Compile Include="Utility\Webcam.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Forms\TerminalForm.resx">

@@ -54,8 +54,6 @@ namespace ArcEngine.Providers
 		}
 
 
-
-
 		#region Init & Close
 
 
@@ -79,7 +77,6 @@ namespace ArcEngine.Providers
 		}
 
 		#endregion
-
 
 
 		#region IO routines
@@ -195,12 +192,8 @@ namespace ArcEngine.Providers
 		{
 			List<string> list = new List<string>();
 
-			
 			foreach (string key in Fonts.Keys)
-			{
 				list.Add(key);
-			}
-
 
 			list.Sort();
 			return list;
@@ -217,14 +210,17 @@ namespace ArcEngine.Providers
 		{
 			CheckValue<T>(name);
 
+			if (typeof(T) == typeof(Font2d))
+			{
+				if (!Fonts.ContainsKey(name))
+					return default(T);
 
-			if (!Fonts.ContainsKey(name))
-				return default(T);
+				Font2d font = new Font2d();
+				font.Load(Fonts[name]);
+				return (T)(object)font;
+			}
 
-			Font2d font = new Font2d();
-			font.Load(Fonts[name]);
-
-			return (T)(object)font;
+			return default(T);
 		}
 
 
@@ -239,10 +235,15 @@ namespace ArcEngine.Providers
 		{
 			CheckValue<T>(name);
 
-			if (!Fonts.ContainsKey(name))
-				return null;
+			if (typeof(T) == typeof(Font2d))
+			{
+				if (!Fonts.ContainsKey(name))
+					return null;
 
-			return Fonts[name];
+				return Fonts[name];
+			}
+
+			return null;
 		}
 
 
@@ -255,6 +256,11 @@ namespace ArcEngine.Providers
 		/// <param name="name"></param>
 		public override void Remove<T>(string name)
 		{
+			CheckValue<T>(name);
+
+			if (typeof(T) == typeof(Font2d))
+				Fonts.Remove(name);
+
 		}
 
 
@@ -266,6 +272,8 @@ namespace ArcEngine.Providers
 		/// <typeparam name="T"></typeparam>
 		public override void Remove<T>()
 		{
+			if (typeof(T) == typeof(Script))
+				Fonts.Clear();
 		}
 
 
@@ -296,6 +304,22 @@ namespace ArcEngine.Providers
 
 
 		#region Shared assets
+
+		/// <summary>
+		/// Adds an asset as Shared
+		/// </summary>
+		/// <typeparam name="T">Asset type</typeparam>
+		/// <param name="name">Name of the asset to register</param>
+		/// <param name="asset">Asset's handle</param>
+		public override void AddShared<T>(string name, IAsset asset)
+		{
+			if (string.IsNullOrEmpty(name))
+				return;
+
+			if (typeof(T) == typeof(Font2d))
+				SharedFonts[name] = asset as Font2d;
+	
+		}
 
 
 		/// <summary>
@@ -333,9 +357,7 @@ namespace ArcEngine.Providers
 			CheckValue<T>(name);
 			
 			if (typeof(T) == typeof(Font2d))
-			{
 				SharedFonts.Remove(name);
-			}
 		}
 
 
@@ -348,9 +370,7 @@ namespace ArcEngine.Providers
 		public override void RemoveShared<T>()
 		{
 			if (typeof(T) == typeof(Font2d))
-			{
 				SharedFonts.Clear();
-			}
 		}
 
 
@@ -366,7 +386,6 @@ namespace ArcEngine.Providers
 
 
 		#endregion
-
 
 
 		#region Properties

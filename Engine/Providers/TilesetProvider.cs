@@ -84,7 +84,6 @@ namespace ArcEngine.Providers
 		#endregion
 
 
-
 		#region IO routines
 
 
@@ -316,6 +315,23 @@ namespace ArcEngine.Providers
 
 		#region Shared assets
 
+		/// <summary>
+		/// Adds an asset as Shared
+		/// </summary>
+		/// <typeparam name="T">Asset type</typeparam>
+		/// <param name="name">Name of the asset to register</param>
+		/// <param name="asset">Asset's handle</param>
+		public override void AddShared<T>(string name, IAsset asset)
+		{
+			if (string.IsNullOrEmpty(name))
+				return;
+
+			if (typeof(T) == typeof(TileSet))
+				SharedTileSets[name] = asset as TileSet;	
+		}
+
+
+
 
 		/// <summary>
 		/// Creates a shared resource
@@ -330,11 +346,8 @@ namespace ArcEngine.Providers
 				if (SharedTileSets.ContainsKey(name))
 					return (T)(object)SharedTileSets[name];
 
-				TileSet ts = new TileSet();
-				ts.Load(TileSets[name]);		
-				SharedTileSets[name] = ts;
-
-				return (T)(object)ts;
+				SharedTileSets[name] = new TileSet();
+				return (T)(object)SharedTileSets[name];
 			}
 
 			return default(T);
@@ -349,10 +362,11 @@ namespace ArcEngine.Providers
 		/// <param name="name">Name of the asset</param>
 		public override void RemoveShared<T>(string name)
 		{
+			if (string.IsNullOrEmpty(name))
+				return;
+
 			if (typeof(T) == typeof(TileSet))
-			{
-				SharedTileSets[name] = null;
-			}
+				SharedTileSets.Remove(name);
 		}
 
 

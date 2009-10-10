@@ -185,7 +185,6 @@ namespace ArcEngine.Providers
 
 		#region Assets
 
-
 		/// <summary>
 		/// Adds an asset definition to the provider
 		/// </summary>
@@ -341,6 +340,26 @@ namespace ArcEngine.Providers
 
 
 		#region Shared assets
+		
+
+
+		/// <summary>
+		/// Adds an asset as Shared
+		/// </summary>
+		/// <typeparam name="T">Asset type</typeparam>
+		/// <param name="name">Name of the asset to register</param>
+		/// <param name="asset">Asset's handle</param>
+		public override void AddShared<T>(string name, IAsset asset)
+		{
+			if (string.IsNullOrEmpty(name))
+				return;
+
+			if (typeof(T) == typeof(Animation))
+				SharedAnimations[name] = asset as Animation;
+			if (typeof(T) == typeof(Scene))
+				SharedScenes[name] = asset as Scene;
+			
+		}
 
 
 		/// <summary>
@@ -385,6 +404,9 @@ namespace ArcEngine.Providers
 		/// <param name="name">Name of the asset</param>
 		public override void RemoveShared<T>(string name)
 		{
+			if (string.IsNullOrEmpty(name))
+				return;
+
 			if (typeof(T) == typeof(Scene))
 				SharedScenes.Remove(name);
 
