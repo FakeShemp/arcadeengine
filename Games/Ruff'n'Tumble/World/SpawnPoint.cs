@@ -25,18 +25,18 @@ using ArcEngine.Asset;
 using ArcEngine;
 
 
-namespace ArcEngine.Games.RuffnTumble.Asset
+namespace RuffnTumble
 {
 	/// <summary>
 	/// 
 	/// </summary>
-	public class SpawnPoint// : ResourceBase
+	public class SpawnPoint
 	{
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="name"></param>
-		public SpawnPoint()//string name) : base(name)
+		public SpawnPoint()
 		{
 		}
 

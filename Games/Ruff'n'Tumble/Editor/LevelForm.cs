@@ -28,11 +28,11 @@ using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Forms;
 using ArcEngine.Graphic;
-using ArcEngine.Games.RuffnTumble.Asset;
+using RuffnTumble;
 using WeifenLuo.WinFormsUI.Docking;
 
 
-namespace ArcEngine.Games.RuffnTumble.Editor
+namespace RuffnTumble.Editor
 {
 	public partial class LevelForm : AssetEditor
 	{
@@ -120,7 +120,7 @@ namespace ArcEngine.Games.RuffnTumble.Editor
 			if (LevelHScroller != null)
 			{
 				LevelHScroller.LargeChange = GlControl.Width / (Level.BlockSize.Width);
-				LevelHScroller.Maximum = (Level.Dimension.Width - GlControl.Width) / (Level.BlockSize.Width * (int)Level.Zoom.Width) + LevelHScroller.LargeChange;
+				LevelHScroller.Maximum = (Level.SizeInPixel.Width - GlControl.Width) / (Level.BlockSize.Width * (int)Level.Scale.Width) + LevelHScroller.LargeChange;
 				LevelHScroller.Maximum = 1000;
 			}
 
@@ -128,7 +128,7 @@ namespace ArcEngine.Games.RuffnTumble.Editor
 			if (LevelVScroller != null)
 			{
 				LevelVScroller.LargeChange = GlControl.Height / Level.BlockSize.Height; //GlControl.Height;
-				LevelVScroller.Maximum = (Level.Dimension.Height - GlControl.Height) / (Level.BlockSize.Height * (int)Level.Zoom.Height) + LevelVScroller.LargeChange;
+				LevelVScroller.Maximum = (Level.SizeInPixel.Height - GlControl.Height) / (Level.BlockSize.Height * (int)Level.Scale.Height) + LevelVScroller.LargeChange;
 				LevelVScroller.Maximum = 1000;
 			}
 		}
@@ -222,7 +222,7 @@ namespace ArcEngine.Games.RuffnTumble.Editor
 			GlControl.MakeCurrent();
 			Display.ViewPort = new Rectangle(new Point(), GlControl.Size);
 			if (Level != null)
-				Level.ViewPort = new Rectangle(new Point(), GlControl.Size);
+				Level.Camera.ViewPort = new Rectangle(new Point(), GlControl.Size);
 			//	ResourceManager.DisplayZone = new Rectangle(new Point(), GlControl.Size);
 		}
 
@@ -274,7 +274,7 @@ namespace ArcEngine.Games.RuffnTumble.Editor
 			if (CurrentLayer == null)
 				return;
 
-			foreach (string name in CurrentLayer.GetEntities())
+			foreach (string name in Level.GetEntities())
 				ListEntitiesButton.Items.Add(name);
 		}
 
@@ -291,7 +291,7 @@ namespace ArcEngine.Games.RuffnTumble.Editor
 			if (CurrentLayer == null)
 				return;
 
-			foreach (string name in CurrentLayer.GetSpawnPoints())
+			foreach (string name in Level.GetSpawnPoints())
 				ListSpawnPointsBox.Items.Add(name);
 		}
 
@@ -306,7 +306,7 @@ namespace ArcEngine.Games.RuffnTumble.Editor
 			if (ListSpawnPointsBox.SelectedIndex == -1)
 				return;
 
-			SpawnPoint spawn = CurrentLayer.GetSpawnPoint((string)ListSpawnPointsBox.SelectedItem);
+			SpawnPoint spawn = Level.GetSpawnPoint((string)ListSpawnPointsBox.SelectedItem);
 
 			LayerPanel.PropertyGridBox.SelectedObject = spawn;
 
@@ -330,7 +330,7 @@ namespace ArcEngine.Games.RuffnTumble.Editor
 			if (ListEntitiesButton.SelectedIndex == -1)
 				return;
 
-			Entity entity = CurrentLayer.GetEntity((string)ListEntitiesButton.SelectedItem);
+			Entity entity = Level.GetEntity((string)ListEntitiesButton.SelectedItem);
 
 			LayerPanel.PropertyGridBox.SelectedObject = entity;
 
@@ -350,7 +350,7 @@ namespace ArcEngine.Games.RuffnTumble.Editor
 			if (ListSpawnPointsBox.SelectedIndex == -1)
 				return;
 
-			SpawnPoint spawn = CurrentLayer.GetSpawnPoint((string)ListSpawnPointsBox.SelectedItem);
+			SpawnPoint spawn = Level.GetSpawnPoint((string)ListSpawnPointsBox.SelectedItem);
 
 			int x = (spawn.Location.X - GlControl.Width / 2) / Level.BlockSize.Width;
 			int y = (spawn.Location.Y - GlControl.Height / 2) / Level.BlockSize.Height;
@@ -370,7 +370,7 @@ namespace ArcEngine.Games.RuffnTumble.Editor
 			if (ListEntitiesButton.SelectedIndex == -1)
 				return;
 
-			Entity entity = CurrentLayer.GetEntity((string)ListEntitiesButton.SelectedItem);
+			Entity entity = Level.GetEntity((string)ListEntitiesButton.SelectedItem);
 
 			int x = (entity.Location.X - GlControl.Width / 2) / Level.BlockSize.Width;
 			int y = (entity.Location.Y - GlControl.Height / 2) / Level.BlockSize.Height;
@@ -679,7 +679,7 @@ namespace ArcEngine.Games.RuffnTumble.Editor
 				pos.Y += Level.Location.Y;
 				//pos.Offset(CurrentLayer.Offset);
 
-				entity = CurrentLayer.FindEntity(pos);
+				entity = Level.FindEntity(pos);
 				LayerPanel.PropertyGridBox.SelectedObject = entity;
 				if (entity != null)
 				{
@@ -695,7 +695,7 @@ namespace ArcEngine.Games.RuffnTumble.Editor
 				}
 
 
-				SpawnPoint spawn = CurrentLayer.FindSpawnPoint(pos);
+				SpawnPoint spawn = Level.FindSpawnPoint(pos);
 				if (spawn != null)
 				{
 					LayerPanel.PropertyGridBox.SelectedObject = spawn;
@@ -734,7 +734,7 @@ namespace ArcEngine.Games.RuffnTumble.Editor
 			if (CurrentLayer != null)
 			{
 				MouseCoordLabel.Text = "Mouse coord : " + pos.X + "x" + pos.Y;
-				TileIDLabel.Text = "Tile ID : " + CurrentLayer.GetTileAtCoord(pos).ToString();
+				TileIDLabel.Text = "Tile ID : " + CurrentLayer.GetTileAtPixel(pos).ToString();
 				pos = Level.PositionToBlock(pos);
 				TileCoordLabel.Text = "Tile coord : " + pos.X + "x" + pos.Y;
 			}
@@ -829,14 +829,14 @@ namespace ArcEngine.Games.RuffnTumble.Editor
 				pos = Level.ScreenToLevel(e.Location);
 
 				// Entity under the mouse ?
-				entity = CurrentLayer.FindEntity(pos);
+				entity = Level.FindEntity(pos);
 				if (entity != null)
 				{
 					Cursor = Cursors.Hand;
 					return;
 				}
 
-				SpawnPoint spawn = CurrentLayer.FindSpawnPoint(pos);
+				SpawnPoint spawn = Level.FindSpawnPoint(pos);
 				if (spawn != null)
 				{
 					Cursor = Cursors.Hand;
@@ -917,7 +917,7 @@ namespace ArcEngine.Games.RuffnTumble.Editor
 					for (int x = 0; x < BrushRectangle.Width; x++)
 					{
 						//int BufferID = (BrushRectangle.Top + y) + BrushRectangle.Left + x;
-						LayerBrush.Tiles[y][x] = CurrentLayer.GetTileAt(new Point(BrushRectangle.Left + x, BrushRectangle.Top + y));
+						LayerBrush.Tiles[y][x] = CurrentLayer.GetTileAtBlock(new Point(BrushRectangle.Left + x, BrushRectangle.Top + y));
 					}
 				}
 

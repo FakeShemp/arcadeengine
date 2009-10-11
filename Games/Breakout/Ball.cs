@@ -26,7 +26,7 @@ using ArcEngine.Graphic;
 using ArcEngine.Asset;
 
 
-namespace ArcEngine.Games.Breakout
+namespace Breakout
 {
 	/// <summary>
 	/// 
@@ -37,10 +37,10 @@ namespace ArcEngine.Games.Breakout
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public Ball(Level level)
+		public Ball(Point location, Rectangle limits)
 		{
-			Level = level;
-			TileSet = ResourceManager.CreateAsset<TileSet>("Balls");
+			Location = location;
+
 		}
 
 
@@ -55,14 +55,14 @@ namespace ArcEngine.Games.Breakout
 				return;
 
 
-			if (Velocity.IsEmpty)
+/*			if (Velocity.IsEmpty)
 			{
 				// Stick the ball to the paddle
 				Location = new Point(Level.Paddle.Location.X + Level.Paddle.Rectangle.Width / 2 - Size.Width / 2, Level.Paddle.Location.Y - this.Size.Height);
 				return;
 			}
 
-
+*/
 			// Move the ball
 			Location.Offset(Velocity);
 
@@ -74,7 +74,7 @@ namespace ArcEngine.Games.Breakout
 			if (Location.Y < 0)
 				Velocity.Y = -Velocity.Y;
 
-
+/*
 			// Paddle collision
 			if (Rectangle.IntersectsWith(Level.Paddle.Rectangle))
 			{
@@ -87,7 +87,7 @@ namespace ArcEngine.Games.Breakout
 
 			}
 
-
+*/
 
 				// Ball out 
 				if (Location.Y > 600)
@@ -95,7 +95,7 @@ namespace ArcEngine.Games.Breakout
 		}
 
 
-
+/*
 		/// <summary>
 		/// Draws the ball
 		/// </summary>
@@ -107,7 +107,7 @@ namespace ArcEngine.Games.Breakout
 
 			TileSet.Draw(0, Location);
 		}
-
+*/
 
 
 		/// <summary>
@@ -129,7 +129,7 @@ namespace ArcEngine.Games.Breakout
 		/// <summary>
 		/// Tileset of the ball
 		/// </summary>
-		TileSet TileSet;
+	//	TileSet TileSet;
 
 
 		/// <summary>
@@ -137,7 +137,7 @@ namespace ArcEngine.Games.Breakout
 		/// </summary>
 		public Point Location;
 
-
+/*
 		/// <summary>
 		/// Size of the ball
 		/// </summary>
@@ -148,14 +148,14 @@ namespace ArcEngine.Games.Breakout
 				return TileSet.GetTile(0).Size;
 			}
 		}
-
+*/
 
 		/// <summary>
 		/// Velocity of the ball
 		/// </summary>
 		public Point Velocity;
 
-
+/*
 		/// <summary>
 		/// Rectangle of the ball
 		/// </summary>
@@ -166,12 +166,12 @@ namespace ArcEngine.Games.Breakout
 				return new Rectangle(Location, Size);
 			}
 		}
-
+*/
 
 		/// <summary>
 		/// Reference to the level
 		/// </summary>
-		Level Level;
+	//	Level Level;
 
 
 		/// <summary>
@@ -180,7 +180,7 @@ namespace ArcEngine.Games.Breakout
 		public bool Lost
 		{
 			get;
-			protected set;
+			private set;
 		}
 
 		#endregion

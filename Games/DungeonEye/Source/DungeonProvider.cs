@@ -80,6 +80,7 @@ namespace DungeonEye
 
 		#endregion
 
+
 		#region IO routines
 
 
@@ -389,6 +390,21 @@ namespace DungeonEye
 
 		#region Shared assets
 
+		/// <summary>
+		/// Adds an asset as Shared
+		/// </summary>
+		/// <typeparam name="T">Asset type</typeparam>
+		/// <param name="name">Name of the asset to register</param>
+		/// <param name="asset">Asset's handle</param>
+		public override void AddShared<T>(string name, IAsset asset)
+		{
+			if (string.IsNullOrEmpty(name))
+				return;
+
+			if (typeof(T) == typeof(Dungeon))
+				SharedDungeons[name] = asset as Dungeon;
+
+		}
 
 		/// <summary>
 		/// Creates a shared resource

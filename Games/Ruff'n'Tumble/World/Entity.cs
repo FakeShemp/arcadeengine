@@ -18,7 +18,7 @@
 //
 #endregion
 using ArcEngine;
-using ArcEngine.Games.RuffnTumble.Interface;
+using RuffnTumble.Interface;
 using System.ComponentModel;
 using System;
 using System.Drawing;
@@ -43,22 +43,22 @@ using ArcEngine.Asset;
 //
 //
 //
-namespace ArcEngine.Games.RuffnTumble.Asset
+namespace RuffnTumble
 {
 
 	/// <summary>
 	/// 
 	/// </summary>
-	public class Entity// : ResourceBase
+	public class Entity
 	{
 		/// <summary>
 		/// Constructor
 		/// </summary>
 		/// <param name="name">Name of the entity</param>
 		/// <param name="layer">Layer of the entity</param>
-		public Entity(Layer layer)// : base(name)
+		public Entity(Level level)
 		{
-			parentLayer = layer;
+			Level = level;
 		}
 
 
@@ -69,7 +69,7 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 		public bool Init()
 		{
 
-			Model = ResourceManager.CreateAsset<Model>(ModelName);
+			//Model = ResourceManager.CreateAsset<Model>(ModelName);
 
 
 			if (ScriptInterface != null)
@@ -100,8 +100,8 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 
 
 			xml.WriteStartElement("location");
-			xml.WriteAttributeString("x", location.X.ToString());
-			xml.WriteAttributeString("y", location.Y.ToString());
+			xml.WriteAttributeString("x", Location.X.ToString());
+			xml.WriteAttributeString("y", Location.Y.ToString());
 			xml.WriteEndElement();
 
 
@@ -138,7 +138,7 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 				{
 					case "location":
 					{
-						location = new Point(Int32.Parse(node.Attributes["x"].Value), Int32.Parse(node.Attributes["y"].Value));
+						Location = new Point(Int32.Parse(node.Attributes["x"].Value), Int32.Parse(node.Attributes["y"].Value));
 					}
 					break;
 
@@ -185,19 +185,19 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 		///<param name="loc">Location of the entity relative to the layer coordinate</param>
 		public void Draw(Point loc)
 		{
-			if (tileSet != null)
+			if (TileSet != null)
 			{
-				tileSet.Scale = zoom;
+				TileSet.Scale = zoom;
 				//tileSet.Draw(TileId, loc);
-				tileSet.Draw(tileId, loc);
+				TileSet.Draw(tileId, loc);
 			}
 
 
 			// Is entity in debug mode ?
-			if (debug)
+			if (Debug)
 			{
                 Rectangle coll = CollisionBoxLocation;
-                coll.Location = parentLayer.Level.LevelToScreen(coll.Location);
+                coll.Location = Level.LevelToScreen(coll.Location);
 					 Display.Rectangle(coll, false);
 			}
 
@@ -215,23 +215,8 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 		[TypeConverter(typeof(TileSetEnumerator))]
 		public string TileSetName
 		{
-			get
-			{
-				//if (tileSet != null) return tileSet.Name;
-				//else return null;
-
-				return string.Empty;
-			}
-			set
-			{
-				//if (tileSet != null)
-				//   tileSet.UnlockResource();
-
-				tileSet = ResourceManager.CreateAsset<TileSet>(value);
-				//if (tileSet != null)
-				//   tileSet.LockResource();
-			}
-
+			get;
+			set;
 		}
 
 
@@ -241,12 +226,9 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 		[Browsable(false)]
 		public TileSet TileSet
 		{
-			get
-			{
-				return tileSet;
-			}
+			get;
+			private set;
 		}
-		TileSet tileSet;
 
 
 		/// <summary>
@@ -262,10 +244,10 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 			{
 				tileId = value;
 
-				if (tileSet != null)
-					tile = tileSet.GetTile(tileId);
+				if (TileSet != null)
+					Tile = TileSet.GetTile(tileId);
 				else
-					tile = null;
+					Tile = null;
 			}
 		}
 		int tileId;
@@ -277,15 +259,9 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 		[Browsable(false)]
 		public Tile Tile
 		{
-			get
-			{
-				if (tile == null)
-					return null;
-
-				return tile;
-			}
+			get;
+			private set;
 		}
-		Tile tile;
 
 		/// <summary>
 		/// Gets the original collision box (without zoom)
@@ -339,19 +315,9 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 		[TypeConverter(typeof(ModelEnumerator))]
 		public string ModelName
 		{
-			get
-			{
-				return modelName;
-			}
-			set
-			{
-				//Model = ResourceManager.GetModel(value);
-				modelName = value;
-
-				Model = ResourceManager.CreateAsset<Model>(value);
-			}
+			get;
+			set;
 		}
-		string modelName;
 
 
 
@@ -372,7 +338,7 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 				if (model == null) return;
 
 				// tileset
-				tileSet = ResourceManager.CreateAsset<TileSet>(model.TileSetName);
+				TileSet = ResourceManager.CreateAsset<TileSet>(model.TileSetName);
 
 				// script
 				Script script = ResourceManager.CreateAsset<Script>(model.ScriptName);
@@ -429,14 +395,11 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 		/// The layer where the entity is
 		/// </summary>
 		[Browsable(false)]
-		public Layer ParentLayer
+		public Level Level
 		{
-			get
-			{
-				return parentLayer;
-			}
+			get;
+			private set;
 		}
-		Layer parentLayer;
 
 
 
@@ -444,18 +407,7 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 		/// Gets / sets the entity debug mode
 		/// </summary>
 		[Browsable(false)]
-		public bool Debug
-		{
-			get
-			{
-				return debug;
-			}
-			set
-			{
-				debug = value;
-			}
-		}
-		bool debug;
+		public bool Debug;
 
 
 
@@ -467,16 +419,9 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 		[Description("Entity is like a God")]
 		public bool God
 		{
-			get
-			{
-				return god;
-			}
-			set
-			{
-				god = value;
-			}
+			get;
+			set;
 		}
-		bool god;
 
 
 		/// <summary>
@@ -504,16 +449,9 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 		[Browsable(false)]
 		public int Velocity
 		{
-			get
-			{
-				return velocity;
-			}
-			set
-			{
-				velocity = value;
-			}
+			get;
+			set;
 		}
-		int velocity;
 
 
 
@@ -524,16 +462,9 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 		[Description("Offset of the entity")]
 		public Point Location
 		{
-			get
-			{
-				return location;
-			}
-			set
-			{
-				location = value;
-			}
+			get;
+			set;
 		}
-		Point location;
 
 
 
@@ -542,16 +473,9 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 		/// </summary>
 		public int Acceleration
 		{
-			get
-			{
-				return acceleration;
-			}
-			set
-			{
-				acceleration = value;
-			}
+			get;
+			set;
 		}
-		int acceleration;
 
 									
 
@@ -563,16 +487,9 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 		[Browsable(false)]
 		public Point Gravity
 		{
-			get
-			{
-				return gravity;
-			}
-			set
-			{
-				gravity = value;
-			}
+			get;
+			set;
 		}
-		Point gravity;
 
 									
 
@@ -583,16 +500,9 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 		[Browsable(false)]
 		public int JumpHeight
 		{
-			get
-			{
-				return jumpHeight;
-			}
-			set
-			{
-				jumpHeight = value;
-			}
+			get;
+			set;
 		}
-		int jumpHeight;
 
 
 
@@ -602,16 +512,9 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 		[Browsable(false)]
 		public bool IsJumping
 		{
-			get
-			{
-				return isJumping;
-			}
-            internal set
-            {
-                isJumping = value;
-            }
+			get;
+			set;
 		}
-		bool isJumping;
 
 
 
@@ -621,16 +524,9 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 		[Browsable(false)]
 		public bool IsFalling
 		{
-			get
-			{
-				return isFalling;
-			}
-			set
-			{
-				isFalling = value;
-			}
+			get;
+			set;
 		}
-		bool isFalling = false;
 
 									
 

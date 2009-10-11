@@ -17,7 +17,7 @@
 //along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 //
 #endregion
-using ArcEngine.Games.RuffnTumble.Asset;
+using RuffnTumble;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -29,7 +29,7 @@ using System.Text;
 using System.Windows.Forms;
 using ArcEngine;
 
-namespace ArcEngine.Games.RuffnTumble.Editor.Wizards
+namespace RuffnTumble.Editor.Wizards
 {
 	/// <summary>
 	/// 
@@ -68,7 +68,7 @@ namespace ArcEngine.Games.RuffnTumble.Editor.Wizards
 				return;
 
 			Level level = (Level)Tag;
-
+/*
 			// Level already exists ?
 			if (level.GetLayer(LayerNameBox.Text) != null || LayerNameBox.Text == "")
 			{
@@ -82,7 +82,7 @@ namespace ArcEngine.Games.RuffnTumble.Editor.Wizards
 				layer.TextureName = TextureBox.Text;
 				layer.Init();
 			}
-
+*/
 
 		}
 

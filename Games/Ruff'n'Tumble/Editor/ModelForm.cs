@@ -28,7 +28,7 @@ using System.Windows.Forms;
 
 
 
-namespace ArcEngine.Games.RuffnTumble.Editor
+namespace RuffnTumble.Editor
 {
 	public partial class ModelForm : DockContent
 	{

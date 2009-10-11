@@ -8,11 +8,11 @@
     <ProjectGuid>{3F1ACC3B-1FFC-43A7-9463-193615B4F3BE}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ArcEngine.Games.RuffnTumble</RootNamespace>
+    <RootNamespace>RuffnTumble</RootNamespace>
     <AssemblyName>RuffnTumble</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <StartupObject>ArcEngine.Games.RuffnTumble.Ruff</StartupObject>
+    <StartupObject>RuffnTumble.Ruff</StartupObject>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -190,17 +190,20 @@
     <Compile Include="Editor\Wizards\NewModelWizard.Designer.cs">
       <DependentUpon>NewModelWizard.cs</DependentUpon>
     </Compile>
-    <Compile Include="Level\Entity.cs" />
+    <Compile Include="World\Camera.cs" />
+    <Compile Include="World\Entity.cs" />
     <Compile Include="Interfaces\IEntity.cs" />
     <Compile Include="Interfaces\ILayer.cs" />
     <Compile Include="Interfaces\ILevel.cs" />
-    <Compile Include="Level\Layer.cs" />
-    <Compile Include="Level\LayerBrush.cs" />
-    <Compile Include="Level\Level.cs" />
-    <Compile Include="Level\Model.cs" />
-    <Compile Include="Level\Path.cs" />
-    <Compile Include="Level\SpawnPoint.cs" />
-    <Compile Include="Level\LevelProvider.cs" />
+    <Compile Include="World\Layer.cs" />
+    <Compile Include="World\LayerBrush.cs" />
+    <Compile Include="World\Level.cs" />
+    <Compile Include="World\Model.cs" />
+    <Compile Include="World\Path.cs" />
+    <Compile Include="World\SpawnPoint.cs" />
+    <Compile Include="World\WorldProvider.cs" />
+    <Compile Include="World\World.cs" />
+    <Compile Include="Player.cs" />
     <Compile Include="Ruff.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -213,6 +216,7 @@
       <HintPath>..\..\Engine\Libraries\OpenTK\Release\OpenTK.GLControl.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.XML" />

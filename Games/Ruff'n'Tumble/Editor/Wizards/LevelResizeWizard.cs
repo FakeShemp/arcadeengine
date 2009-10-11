@@ -22,12 +22,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 
 using System.Drawing;
-using ArcEngine.Games.RuffnTumble.Asset;
+using RuffnTumble;
 using System.Text;
 using System.Windows.Forms;
 
 
-namespace ArcEngine.Games.RuffnTumble.Editor.Wizards
+namespace RuffnTumble.Editor.Wizards
 {
 	public partial class LevelResizeWizard : Form
 	{
@@ -41,11 +41,11 @@ namespace ArcEngine.Games.RuffnTumble.Editor.Wizards
 
 
 
-			LevelWidthLabel.Text = Level.Width.ToString();
-			LevelHeightLabel.Text = Level.Height.ToString();
+			LevelWidthLabel.Text = Level.Size.Width.ToString();
+			LevelHeightLabel.Text = Level.Size.Height.ToString();
 
-			DesiredWidth.Value = Level.Width;
-			DesiredHeight.Value = Level.Height;
+			DesiredWidth.Value = Level.Size.Width;
+			DesiredHeight.Value = Level.Size.Height;
 
 		}
 
@@ -61,7 +61,7 @@ namespace ArcEngine.Games.RuffnTumble.Editor.Wizards
 		/// <param name="e"></param>
 		private void ResizeButton_Click(object sender, EventArgs e)
 		{
-			Level.Size = new Size((int)DesiredWidth.Value, (int)DesiredHeight.Value);
+			Level.Resize(new Size((int)DesiredWidth.Value, (int)DesiredHeight.Value));
 		}
 
 

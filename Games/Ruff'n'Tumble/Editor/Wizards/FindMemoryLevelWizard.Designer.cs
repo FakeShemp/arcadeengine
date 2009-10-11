@@ -1,4 +1,4 @@
-﻿namespace ArcEngine.Games.RuffnTumble.Editor.Wizards
+﻿namespace RuffnTumble.Editor.Wizards
 {
 	partial class FindMemoryLevelWizard
 	{

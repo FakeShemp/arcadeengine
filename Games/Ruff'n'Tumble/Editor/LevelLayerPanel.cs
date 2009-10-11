@@ -20,7 +20,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using ArcEngine.Games.RuffnTumble.Asset;
+using RuffnTumble;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
@@ -31,7 +31,7 @@ using ArcEngine.Asset;
 using WeifenLuo.WinFormsUI.Docking;
 
 
-namespace ArcEngine.Games.RuffnTumble.Editor
+namespace RuffnTumble.Editor
 {
 	public partial class LevelLayerPanel : DockContent
 	{
@@ -60,11 +60,11 @@ namespace ArcEngine.Games.RuffnTumble.Editor
 			UpdateLayerBox();
 
 			// Update Layerbox
-			if (Form.Level.Layers.Count > 0 && LayersBox.Items.Count > 0)
-			{
-				CurrentLayer = Form.Level.GetLayer(LayersBox.Items[0].ToString());
-				LayersBox.SelectedIndex = 0;
-			}
+			//if (Form.Level.Layers.Count > 0 && LayersBox.Items.Count > 0)
+			//{
+			//    CurrentLayer = Form.Level.GetLayer(LayersBox.Items[0].ToString());
+			//    LayersBox.SelectedIndex = 0;
+			//}
 
 			return true;
 		}
@@ -75,15 +75,16 @@ namespace ArcEngine.Games.RuffnTumble.Editor
 		/// </summary>
 		void UpdateLayerBox()
 		{
+/*	
 			// LayerBox
 			LayersBox.Items.Clear();
 			foreach (Layer layer in Form.Level.Layers)
 			{
 				LayersBox.Items.Add(layer.Name);
 			}
-
 			if (CurrentLayer != null)
 				LayersBox.SelectedItem = CurrentLayer.Name;
+*/
 
 		}
 
@@ -100,15 +101,15 @@ namespace ArcEngine.Games.RuffnTumble.Editor
 		private void LayerBox_OnSelectedIndexChanged(object sender, EventArgs e)
 		{
 			// Change the current layer
-			currentLayer = Form.Level.GetLayer(LayersBox.SelectedItem.ToString());
+			//currentLayer = Form.Level.GetLayer(LayersBox.SelectedItem.ToString());
 
-			LayerPropertyGrid.SelectedObject = CurrentLayer;
+			//LayerPropertyGrid.SelectedObject = CurrentLayer;
 
 			//ShowEntityButton.Checked = CurrentLayer.RenderEntities;
 			//RebuildSpawnPointsList(null, null);
 			//RebuildEntityList(null, null);
 
-			propertyGridBox.SelectedObject = null;
+			//propertyGridBox.SelectedObject = null;
 		}
 
 

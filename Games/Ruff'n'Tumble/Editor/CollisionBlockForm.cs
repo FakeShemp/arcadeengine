@@ -25,7 +25,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
-namespace ArcEngine.Games.RuffnTumble.Editor
+namespace RuffnTumble.Editor
 {
 	public partial class CollisionBlockForm : Form
 	{

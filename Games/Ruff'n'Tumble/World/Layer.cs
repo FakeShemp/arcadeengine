@@ -18,7 +18,7 @@
 //
 #endregion
 using ArcEngine;
-using ArcEngine.Games.RuffnTumble.Interface;
+using RuffnTumble.Interface;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -34,7 +34,7 @@ using ArcEngine.Asset;
 
 
 
-namespace ArcEngine.Games.RuffnTumble.Asset
+namespace RuffnTumble
 {
 
 
@@ -54,16 +54,10 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 		/// Constructor
 		/// </summary>
 		/// <param name="lvl">Level in which the layer is</param>
-		public Layer( Level lvl)
+		public Layer(Level lvl)
 		{
 			Level = lvl;
 			Visible = true;
-			Alpha = 255;
-			SpawnPoints = new Dictionary<string, SpawnPoint>();
-			Entities = new Dictionary<string, Entity>();
-			tileSet = new TileSet();
-			brushes = new Dictionary<string, LayerBrush>();
-			paths = new Dictionary<string, Path>();
 
 
 			// Tiles
@@ -77,7 +71,7 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 		}
 
 
-
+/*
 		/// <summary>
 		///  Inits the layer
 		/// </summary>
@@ -86,12 +80,9 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 		{
 
 
-			// Load the SpawnPoint texture
-			spTexture = new Texture(ResourceManager.GetResource("RuffnTumble.Resources.SpawnPoint.png"));
-
 
 			// If a texture is present, build tileset
-			tileSet.LoadTexture(TextureName);
+			TileSet.LoadTexture(TextureName);
 			BuildTileSet();
 
 
@@ -109,19 +100,13 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 			
 
 			// Init the script
-			if (ScriptInterface != null)
-				ScriptInterface.Init(this);
+			//if (ScriptInterface != null)
+			//    ScriptInterface.Init(this);
 
-
-			// Init all entities
-			foreach (Entity entity in Entities.Values)
-			{
-				entity.Init();
-			}
 
 			return true;
 		}
-
+*/
 
 
 		/// <summary>
@@ -129,18 +114,18 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 		/// </summary>
 		private void BuildTileSet()
 		{
-			tileSet.Clear();
+			TileSet.Clear();
 
-			if (tileSet.Texture == null)
+			if (TileSet.Texture == null)
 				return ;
 			
 			int start = 0;
 			int x = 0;
 			int y = 0;
-			for (y = 0; y < tileSet.Texture.Size.Height; y += Level.BlockSize.Height)
-				for (x = 0; x < tileSet.Texture.Size.Width; x += Level.BlockSize.Width)
+			for (y = 0; y < TileSet.Texture.Size.Height; y += Level.BlockSize.Height)
+				for (x = 0; x < TileSet.Texture.Size.Width; x += Level.BlockSize.Width)
 				{
-					Tile tile = tileSet.AddTile(start++);
+					Tile tile = TileSet.AddTile(start++);
 					tile.Rectangle = new Rectangle(x, y, Level.BlockSize.Width, Level.BlockSize.Height);
 				}
 		}
@@ -151,16 +136,16 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 		/// Draws the layer
 		/// </summary>
 		// http://www.gamedev.net/reference/articles/article743.asp
-		public void Draw()
+		public void Draw(Camera camera)
 		{
 			// No tileset or layer not visible
-			if (tileSet == null || !Visible)
+			if (TileSet == null || !Visible || camera == null)
 				return;
 
 
 			// Taille de rendu du niveau
-			int renderwidth = Level.ViewPort.Width / Level.BlockDimension.Width;
-			int renderheight = Level.ViewPort.Height / Level.BlockDimension.Height;
+			int renderwidth = camera.ViewPort.Width / Level.BlockDimension.Width;
+			int renderheight = camera.ViewPort.Height / Level.BlockDimension.Height;
 			if (renderwidth > Level.Size.Width) renderwidth = Level.Size.Width;
 			if (renderheight > Level.Size.Height) renderheight = Level.Size.Height;
 
@@ -172,14 +157,13 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 
 
 			// Draw tiles
-			//tileSet.Bind();
-			tileSet.Scale = Level.Zoom;
+			TileSet.Scale = Level.Scale;
 			Display.Color = Color;
 			for (int yy = 0; yy < renderheight + 2; yy++)
 			{
 				for (int xx = 0; xx < renderwidth + 2; xx++)
 				{
-					int id = GetTileAt(new Point(blockx + xx, blocky + yy));
+					int id = GetTileAtBlock(new Point(blockx + xx, blocky + yy));
 
 					if (id == -1)
 						continue;
@@ -189,12 +173,12 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 					//   (yy * level.BlockDimension.Height) + Level.DisplayZone.Y - deltay));
 
 					Rectangle rect = new Rectangle(
-						new Point((xx * Level.BlockDimension.Width) + Level.ViewPort.X - deltax,
-									(yy * Level.BlockDimension.Height) + Level.ViewPort.Y - deltay),
+						new Point((xx * Level.BlockDimension.Width) + camera.ViewPort.X - deltax,
+									(yy * Level.BlockDimension.Height) + camera.ViewPort.Y - deltay),
 						new Size(32, 32)
 						);
 
-					tileSet.Draw(id, rect, TextureLayout.Stretch);
+					TileSet.Draw(id, rect, TextureLayout.Stretch);
 
 		
 				
@@ -211,78 +195,25 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 				for (int yy = 0; yy < renderheight + 2; yy++)
 				{
 					Display.Line(
-						new Point(Level.ViewPort.Left, (yy * Level.BlockDimension.Height - deltay + Level.ViewPort.Top)),
-						new Point(Level.ViewPort.Right, (yy * Level.BlockDimension.Height - deltay + Level.ViewPort.Top))
+						new Point(camera.ViewPort.Left, (yy * Level.BlockDimension.Height - deltay + camera.ViewPort.Top)),
+						new Point(camera.ViewPort.Right, (yy * Level.BlockDimension.Height - deltay + camera.ViewPort.Top))
 					);
 				}
 				for (int xx = 0; xx < renderwidth + 2; xx++)
 				{
 					Display.Line(
-						new Point(xx * Level.BlockDimension.Width - deltax + Level.ViewPort.Left, Level.ViewPort.Top),
-						new Point(xx * Level.BlockDimension.Width - deltax + Level.ViewPort.Left, Level.ViewPort.Bottom)
+						new Point(xx * Level.BlockDimension.Width - deltax + camera.ViewPort.Left, camera.ViewPort.Top),
+						new Point(xx * Level.BlockDimension.Width - deltax + camera.ViewPort.Left, camera.ViewPort.Bottom)
 					);
 				}
-			}
 
-
-
-
-			//
-			// Draw entities
-			//
-			if (RenderEntities)
-			{
 				Display.Color = Color.White;
-				foreach (Entity entity in Entities.Values)
-				{
-					entity.Draw(Level.LevelToScreen(entity.Location));
-				}
-			}
-
-
-			//
-			// Draw paths
-			//
-			if (RenderPaths)
-			{
-				foreach (Path path in paths.Values)
-				{
-					path.Draw(Level.Location);
-				}
 			}
 
 
 
-			//
-			// Draw Spawnpoints
-			//
-			if (RenderSpawnPoints)
-			{
-				SpawnPoint spawn;
-				
 
-				foreach (string name in GetSpawnPoints())
-				{
-					spawn = GetSpawnPoint(name);
-					if (spawn == null)
-						continue;
 
-					Point pos = Level.LevelToScreen(spawn.Location);
-					pos.X = pos.X - 8;
-					pos.Y = pos.Y - 8;
-					spTexture.Blit(pos);
-				}
-				//spawn = layerPanel.PropertyGridBox.SelectedObject as SpawnPoint;
-				//if (spawn != null)
-				//{
-
-				//    rect = SpawnPointTexture.Rectangle;
-				//    rect.Offset(spawn.CollisionBoxLocation.Location);
-				//    rect.Location = level.LevelToScreen(rect.Location);
-				//    Video.Rectangle(rect, false);
-				//}
-
-			}
 
 
 
@@ -295,9 +226,6 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 		/// </summary>
 		public void Update(GameTime time)
 		{
-			// Ask all entities to update
-			foreach (Entity entity in Entities.Values)
-				entity.Update(time);
 		}
 
 
@@ -312,27 +240,27 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 		internal void Resize(Size newsize)
 		{
 			// Rows
-			if (newsize.Height > Level.Height)
+			if (newsize.Height > Level.Size.Height)
 			{
-				for (int y = Level.Height; y < newsize.Height; y++)
+				for (int y = Level.Size.Height; y < newsize.Height; y++)
 					InsertRow(y, 0);
 			}
-			else if (newsize.Height < Level.Height)
+			else if (newsize.Height < Level.Size.Height)
 			{
-				for (int y = Level.Height - 1; y >= newsize.Height; y--)
+				for (int y = Level.Size.Height - 1; y >= newsize.Height; y--)
 					RemoveRow(y);
 			}
 
 
 			// Columns
-			if (newsize.Width > Level.Width)
+			if (newsize.Width > Level.Size.Width)
 			{
-				for (int x = Level.Width; x < newsize.Width; x++)
+				for (int x = Level.Size.Width; x < newsize.Width; x++)
 					InsertColumn(x, 0);
 			}
-			else if (newsize.Width < Level.Width)
+			else if (newsize.Width < Level.Size.Width)
 			{
-				for (int x = Level.Width - 1; x >= newsize.Width; x--)
+				for (int x = Level.Size.Width - 1; x >= newsize.Width; x--)
 					RemoveColumn(x);
 			}
 
@@ -363,9 +291,9 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 			{
 				Tiles.Insert(rowid, row);
 
-				// Offset objects
-				Rectangle zone = new Rectangle(0, rowid * Level.BlockDimension.Height, Level.Dimension.Width, Level.Dimension.Height);
-				OffsetObjects(zone, new Point(0, Level.BlockDimension.Height));
+				//// Offset objects
+				//Rectangle zone = new Rectangle(0, rowid * Level.BlockDimension.Height, Level.Dimension.Width, Level.Dimension.Height);
+				//OffsetObjects(zone, new Point(0, Level.BlockDimension.Height));
 			}
 		}
 
@@ -382,9 +310,9 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 
 			Tiles.RemoveAt(rowid);
 
-			// Offset objects
-			Rectangle zone = new Rectangle(0, rowid * Level.BlockDimension.Height, Level.Dimension.Width, Level.Dimension.Height);
-			OffsetObjects(zone, new Point(0, -Level.BlockDimension.Height));
+			//// Offset objects
+			//Rectangle zone = new Rectangle(0, rowid * Level.BlockDimension.Height, Level.Dimension.Width, Level.Dimension.Height);
+			//OffsetObjects(zone, new Point(0, -Level.BlockDimension.Height));
 		}
 
 
@@ -406,9 +334,9 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 				{
 					row.Insert(columnid, tileid);
 
-					// Offset objects
-					Rectangle zone = new Rectangle(columnid * Level.BlockDimension.Width, 0, Level.Dimension.Width, Level.Dimension.Height);
-					OffsetObjects(zone, new Point(Level.BlockDimension.Width, 0));
+					//// Offset objects
+					//Rectangle zone = new Rectangle(columnid * Level.BlockDimension.Width, 0, Level.Dimension.Width, Level.Dimension.Height);
+					//OffsetObjects(zone, new Point(Level.BlockDimension.Width, 0));
 				}
 			}
 		}
@@ -426,45 +354,14 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 				row.RemoveAt(columnid);
 			}
 
-			// Offset objects
-			Rectangle zone = new Rectangle(
-				columnid * Level.BlockDimension.Width, 0,
-				Level.Dimension.Width, Level.Dimension.Height);
-			OffsetObjects(zone, new Point(-Level.BlockDimension.Width, 0));
+			//// Offset objects
+			//Rectangle zone = new Rectangle(
+			//    columnid * Level.BlockDimension.Width, 0,
+			//    Level.Dimension.Width, Level.Dimension.Height);
+			//OffsetObjects(zone, new Point(-Level.BlockDimension.Width, 0));
 		}
 
 
-		/// <summary>
-		/// Offsets EVERY objects (entities, spawnpoints...) in the layer
-		/// </summary>
-		/// <param name="zone">Each object in this rectangle</param>
-		/// <param name="offset">Offset to move</param>
-		void OffsetObjects(Rectangle zone, Point offset)
-		{
-			// Move entities
-			foreach (Entity entity in Entities.Values)
-			{
-				if (zone.Contains(entity.Location))
-				{
-					entity.Location = new Point(
-						entity.Location.X + offset.X,
-						entity.Location.Y + offset.Y);
-				}
-			}
-
-
-			// Mode SpawnPoints
-			foreach (SpawnPoint spawn in SpawnPoints.Values)
-			{
-				if (zone.Contains(spawn.Location))
-				{
-					spawn.Location = new Point(
-						spawn.Location.X + offset.X,
-						spawn.Location.Y + offset.Y);
-				}
-			}
-
-		}
 
 		#endregion
 
@@ -483,8 +380,6 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 
 			xml.WriteStartElement("layer");
 			xml.WriteAttributeString("name", Name);
-
-	//		base.SaveComment(xml);
 
 	
 			xml.WriteStartElement("visibility");
@@ -513,18 +408,7 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 				xml.WriteEndElement();
 			}
 
-			// Loops throughs level brushes
-			foreach (LayerBrush brush in brushes.Values)
-				brush.Save(xml);
 
-
-			// Loops throughs spawnpoints
-			foreach (SpawnPoint spawn in SpawnPoints.Values)
-				spawn.Save(xml);
-
-			// Loops throughs entity
-			foreach (Entity entity in Entities.Values)
-				entity.Save(xml);
 
 			// Loops throughs tiles
 			xml.WriteStartElement("tiles");
@@ -617,15 +501,6 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 					break;
 
 
-					// Start point
-					case "spawnpoint":
-					{
-						SpawnPoint point = AddSpawnPoint(node.Attributes["name"].Value);
-						if (point != null)
-							point.Load(node);
-
-					}
-					break;
 
 					// alpha transparency of the layer
 					case "alpha":
@@ -656,35 +531,7 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 					}
 					break;
 
-					// Add entity to the level
-					case "entity":
-					{
-						Entity ent = AddEntity(node.Attributes["name"].Value);
-						if (ent != null)
-							ent.Load(node);
-					}
-					break;
 
-					case "brush":
-					{
-						LayerBrush brush = CreateBrush(node.Attributes["name"].Value);
-						if (brush != null)
-						{
-							brush.Load(node);
-						}
-					}
-					break;
-
-
-					case "path":
-					{
-						Path path = CreatePath(node.Attributes["name"].Value);
-						if (path != null)
-						{
-							path.Load(node);
-						}
-					}
-					break;
 
 					default:
 					{
@@ -700,335 +547,15 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 		#endregion
 
 
-
-		#region Path
-
-
-		/// <summary>
-		/// Creates a new path
-		/// </summary>
-		/// <param name="name">Name of the path</param>
-		/// <returns></returns>
-		public Path CreatePath(string name)
-		{
-			if (paths.ContainsKey(name))
-				return null;
-
-
-			Path path = new Path();
-			paths[name] = path;
-
-			return path;
-		}
-
-
-		/// <summary>
-		/// Gets a specific path
-		/// </summary>
-		/// <param name="name">path name</param>
-		/// <returns>path handle or null if no path exists</returns>
-		public Path GetPath(string name)
-		{
-			if (!string.IsNullOrEmpty(name) && paths.ContainsKey(name))
-				return paths[name];
-			else
-				return null;
-
-		}
-
-
-		/// <summary>
-		/// Removes a specific path
-		/// </summary>
-		/// <param name="name">True if path destroyed, else false</param>
-		public bool DestroyPath(string name)
-		{
-			if (name == null)
-				return false;
-
-			return paths.Remove(name);
-		}
-
-		/// <summary>
-		/// Flush unused paths
-		/// </summary>
-		/// TODO
-		public void FlushPaths()
-		{
-		}
-
-
-		/// <summary>
-		/// Removes all paths
-		/// </summary>
-		public void DestroyPaths()
-		{
-			paths.Clear();
-		}
-
-
-
-
-		#endregion
-
-
-		#region Brushes
-
-
-		/// <summary>
-		/// Creates a new brush
-		/// </summary>
-		/// <param name="name">Name of the brush</param>
-		/// <returns></returns>
-		public LayerBrush CreateBrush(string name)
-		{
-			if (brushes.ContainsKey(name))
-				return null;
-
-
-			LayerBrush brush = new LayerBrush();
-			brushes[name] = brush;
-
-			return brush;
-		}
-
-
-		/// <summary>
-		/// Gets a specific brush
-		/// </summary>
-		/// <param name="name">brush name</param>
-		/// <returns>brush handle or null if no brush exists</returns>
-		public LayerBrush GetBrush(string name)
-		{
-			if (!string.IsNullOrEmpty(name) && brushes.ContainsKey(name))
-				return brushes[name];
-			else
-				return null;
-
-		}
-
-
-		/// <summary>
-		/// Removes a specific brush
-		/// </summary>
-		/// <param name="name">True if level destroyed, else false</param>
-		public bool DestroyBrush(string name)
-		{
-			if (name == null)
-				return false;
-
-			return brushes.Remove(name);
-		}
-
-		/// <summary>
-		/// Flush unused brushes
-		/// </summary>
-		/// TODO
-		public void FlushBrushes()
-		{
-		}
-
-
-		/// <summary>
-		/// Removes all brushes
-		/// </summary>
-		public void DestroyBrushes()
-		{
-			brushes.Clear();
-		}
-
-
-
-
-		#endregion
-
-
-		#region Entities
-
-		/// <summary>
-		/// Adds an entity to the layer
-		/// </summary>
-		/// <param name="name"></param>
-		/// <returns></returns>
-		public Entity AddEntity(string name)
-		{
-			if (Entities.ContainsKey(name))
-				return null;
-
-			Entity ent = new Entity(this);
-
-			Entities[name] = ent;
-			return ent;
-		}
-
-
-		/// <summary>
-		/// Gets a list of all entities in the level
-		/// </summary>
-		/// <returns></returns>
-		public List<string> GetEntities()
-		{
-			List<string> list = new List<string>();
-
-			foreach (string key in Entities.Keys)
-				list.Add(key);
-
-			list.Sort();
-			return list;
-		}
-
-
-		/// <summary>
-		/// Finds an entity by his location
-		/// </summary>
-		/// <param name="point"></param>
-		/// <returns></returns>
-		public Entity FindEntity(Point point)
-		{
-			foreach (Entity ent in Entities.Values)
-			{
-				// The entity has no sprite defined
-				//if (ent.SpriteCell == null)
-				//	continue;
-
-
-				Rectangle pos = ent.CollisionBoxLocation;
-				//pos.Offset(ent.Location);
-
-				if (pos.Contains(point))
-					return ent;
-			}
-
-			return null;
-		}
-
-
-
-		/// <summary>
-		/// Gets an entity
-		/// </summary>
-		/// <param name="name"></param>
-		/// <returns></returns>
-		public Entity GetEntity(string name)
-		{
-			if (Entities.ContainsKey(name))
-				return (Entity)Entities[name];
-			else
-				return null;
-		}
-
-
-
-
-		/// <summary>
-		/// Removes an entity from the layer
-		/// </summary>
-		/// <param name="name"></param>
-		/// <returns></returns>
-		public bool RemoveEntity(string name)
-		{
-			Entity ent = GetEntity(name);
-			if (ent == null)
-				return false;
-
-
-			Entities.Remove(name);
-
-			return true;
-		}
-
-		#endregion
-
-
-		#region Spawn points
-
-
-		/// <summary>
-		/// Adds a SpawnPoint to the layer
-		/// </summary>
-		/// <param name="name"></param>
-		public SpawnPoint AddSpawnPoint(string name)
-		{
-			SpawnPoint point = new SpawnPoint();
-			SpawnPoints[name] = point;
-
-			return point;
-		}
-
-		/// <summary>
-		/// Removes a SpawnPoint
-		/// </summary>
-		/// <param name="name"></param>
-		public void RemoveSpawnPoint(string name)
-		{
-			if (GetSpawnPoint(name) != null)
-				SpawnPoints.Remove(name);
-		}
-
-
-		/// <summary>
-		/// Returns a specific SpawnPoint
-		/// </summary>
-		/// <param name="name">Name of the SpawnPoint</param>
-		/// <returns>A SpawnPoint class</returns>
-		public SpawnPoint GetSpawnPoint(string name)
-		{
-			if (name == null && name.Length == 0)
-				return null;
-
-			if (SpawnPoints.ContainsKey(name))
-				return (SpawnPoint)SpawnPoints[name];
-			else
-				return null;
-		}
-
-
-		/// <summary>
-		/// Returns all SpawnPoints
-		/// </summary>
-		/// <returns></returns>
-		public List<string> GetSpawnPoints()
-		{
-			List<string> list = new List<string>();
-
-			foreach (string key in SpawnPoints.Keys)
-			{
-				list.Add(key);
-			}
-
-			return list;
-		}
-
-
-		/// <summary>
-		/// Finds an entity by his location
-		/// </summary>
-		/// <param name="point"></param>
-		/// <returns></returns>
-		public SpawnPoint FindSpawnPoint(Point point)
-		{
-			foreach (SpawnPoint spawn in SpawnPoints.Values)
-			{
-				if (spawn.CollisionBoxLocation.Contains(point))
-					return spawn;
-			}
-
-			return null;
-		}
-
-
-		#endregion
-
-
 		#region Tiles
 
 
 		/// <summary>
-		/// Returns the BufferID of the tile at location (in block) (x,y)
+		/// Returns the BufferID of the tile at block location
 		/// </summary>
 		/// <param name="point">Point in the layer in block</param>
 		/// <returns>ID of the block</returns>
-		public int GetTileAt(Point point)
+		public int GetTileAtBlock(Point point)
 		{
 			if (point.Y < 0 || point.Y >= Tiles.Count)
 				return -1;
@@ -1041,28 +568,28 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 
 
 		/// <summary>
-		/// Returns the BufferID of the tile at location (in pixel) (x,y)
+		/// Returns the id of the tile at pixel location
 		/// </summary>
 		/// <param name="point">Point in the layer in pixel</param>
 		/// <returns>ID of the tile</returns>
-		public int GetTileAtCoord(Point point)
+		public int GetTileAtPixel(Point point)
 		{
 			if (Level.BlockDimension.Width == 0 || Level.BlockDimension.Height == 0)
 				return -1;
 
 			Point p = new Point(point.X / Level.BlockDimension.Width, point.Y / Level.BlockDimension.Height);
 
-			return GetTileAt(p);
+			return GetTileAtBlock(p);
 		}
 
 
 
 		/// <summary>
-		/// Sets the tile BufferID at the given location (in block)
+		/// Sets the tile at the given location (in block)
 		/// </summary>
 		/// <param name="point">Offset in block in the layer</param>
 		/// <param name="BufferID">ID of the block to paste</param>
-		public void SetTileAt(Point point, int id)
+		public void SetTileAtBlock(Point point, int id)
 		{
 			// No tile
 			if (id < 0)
@@ -1084,11 +611,11 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 		/// </summary>
 		/// <param name="point">Point in the layer in pixel</param>
 		/// <param name="BufferID">ID of the block to paste</param>
-		public void SetTileAtCoord(Point point, int id)
+		public void SetTileAtPixel(Point point, int id)
 		{
 			Point p = Level.PositionToBlock(point);
 
-			SetTileAt(p, id);
+			SetTileAtBlock(p, id);
 		}
 
 
@@ -1108,9 +635,6 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 		// http://games.greggman.com/mckids/programming_mc_kids.htm
 		public CollisionResult CheckForCollision(Entity entity, Point velocity)
 		{
-			Layer layer = entity.ParentLayer;
-
-
 			// Adds the gravity
 			velocity.Offset(entity.Gravity);
 
@@ -1136,7 +660,7 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 			{
 				if (colblock.BottomLeft != 0 || colblock.BottomRight != 0)
 				{
-					res.FinalVelocity.Y = velocity.Y - (entity.Location.Y + velocity.Y) % layer.Level.BlockDimension.Height - 1;
+					res.FinalVelocity.Y = velocity.Y - (entity.Location.Y + velocity.Y) % Level.BlockDimension.Height - 1;
 				}
 				else
 					res.FinalVelocity.Y = velocity.Y;
@@ -1162,7 +686,7 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 				if (colblock.TopRight != 0 || colblock.BottomRight != 0)
 				{
 					res.FinalVelocity.X = velocity.X -
-						(entity.Location.X + velocity.X + entity.CollisionBox.Width) % layer.Level.BlockDimension.Width;
+						(entity.Location.X + velocity.X + entity.CollisionBox.Width) % Level.BlockDimension.Width;
 				}
 				else
 					res.FinalVelocity.X = velocity.X;
@@ -1172,7 +696,7 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 				if (colblock.TopLeft != 0 || colblock.BottomLeft != 0)
 				{
 					res.FinalVelocity.X = velocity.X +
-					   layer.Level.BlockDimension.Width - (entity.CollisionBoxLocation.Left + velocity.X) % layer.Level.BlockDimension.Width;
+					   Level.BlockDimension.Width - (entity.CollisionBoxLocation.Left + velocity.X) % Level.BlockDimension.Width;
 				}
 				else
 					res.FinalVelocity.X = velocity.X;
@@ -1218,7 +742,7 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 			ranges.Clear();
 
 			// Target tile
-			int targetTile = GetTileAt(pt);
+			int targetTile = GetTileAtBlock(pt);
 
 			// First fill
 			LinearFill(pt, id);
@@ -1231,11 +755,11 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 				for (int x = range.StartX; x <= range.EndX; x++)
 				{
 					// Check upward
-					if (range.Y > 0 && GetTileAt(new Point(x, range.Y - 1)) == targetTile)
+					if (range.Y > 0 && GetTileAtBlock(new Point(x, range.Y - 1)) == targetTile)
 						LinearFill(new Point(x, range.Y - 1), id);
 
 					// Check downward
-					if (range.Y < Level.Size.Height + 1 && GetTileAt(new Point(x, range.Y + 1)) == targetTile)
+					if (range.Y < Level.Size.Height + 1 && GetTileAtBlock(new Point(x, range.Y + 1)) == targetTile)
 						LinearFill(new Point(x, range.Y + 1), id);
 				}
 
@@ -1257,7 +781,7 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 		{
 
 			// ID of the tile to fill
-			int targetId = GetTileAt(pt);
+			int targetId = GetTileAtBlock(pt);
 			if (targetId == id)
 				return;
 
@@ -1270,10 +794,10 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 			for (minx = pt.X; minx >= 0; minx--)
 			{
 				Point pos = new Point(minx, pt.Y);
-				if (GetTileAt(pos) != targetId)
+				if (GetTileAtBlock(pos) != targetId)
 					break;
 
-				SetTileAt(pos, id);
+				SetTileAtBlock(pos, id);
 			}
 			minx++;
 
@@ -1281,10 +805,10 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 			for (maxx = pt.X + 1; maxx <= Level.Size.Width; maxx++)
 			{
 				Point pos = new Point(maxx, pt.Y);
-				if (GetTileAt(pos) != targetId)
+				if (GetTileAtBlock(pos) != targetId)
 					break;
 
-				SetTileAt(pos, id);
+				SetTileAtBlock(pos, id);
 			}
 			maxx--;
 
@@ -1304,40 +828,6 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 		/// </summary>
 		public string Name;
 
-		/// <summary>
-		/// All path in the layer
-		/// </summary>
-		[Browsable(false)]
-		public List<Path> Paths
-		{
-			get
-			{
-				List<Path> list = new List<Path>();
-
-				return list;
-			}
-		}
-		Dictionary<string, Path> paths;
-
-		/// <summary>
-		/// Layer Brushes
-		/// </summary>
-		[Browsable(false)]
-		public List<LayerBrush> Brushes
-		{
-			get
-			{
-				List<LayerBrush> list = new List<LayerBrush>();
-
-				foreach (LayerBrush brush in brushes.Values)
-					list.Add(brush);
-
-				//list.Sort();
-				return list;
-			}
-		}
-		Dictionary<string, LayerBrush> brushes;
-
 		
 		
 		/// <summary>
@@ -1345,17 +835,19 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 		/// </summary>
 		List<List<int>> Tiles;
 
+
+/*
 		/// <summary>
 		/// Private TileSet
 		/// </summary>
 		[Browsable(false)]
 		public TileSet TileSet
 		{
-			get { return tileSet; }
+			get;
+			private set;
 		}
-		TileSet tileSet;
 
-
+*/
 		/// <summary>
 		/// Gets/sets the layer visiblity / shall we draws it ?
 		/// </summary>
@@ -1363,33 +855,18 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 		[Description("Layer's visibility")]
 		public bool Visible
 		{
-			get
-			{
-				return visible;
-			}
-			set
-			{
-				visible = value;
-			}
+			get;
+			set;
 		}
-		bool visible;
 
 
 		/// <summary>
 		/// Gets the current texture
 		/// </summary>
-		[Browsable(false)]
-		public Texture Texture
-		{
-			get
-			{
-				if (tileSet == null) return null;
+	//	[Browsable(false)]
+	//	public Texture Texture;
 
-				return tileSet.Texture;
-			}
-		}
-
-
+/*
 		/// <summary>
 		/// Gets/sets the name of the texture to use with this layer
 		/// </summary>
@@ -1398,21 +875,21 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 	//	[TypeConverter(typeof(TextureEnumerator))]
 		public string TextureName
 		{
-			get { return tileSet.TextureName; }
+			get { return TileSet.TextureName; }
 			set
 			{
 			//	textureName = value;
 
-				tileSet.LoadTexture(value);
-				/*
-								if (texture != null)
-									texture.Unlock();
+				TileSet.LoadTexture(value);
+				
+								//if (texture != null)
+								//    texture.Unlock();
 
-								textureName = value;
-								texture = ResourceManager.Handle.GetTexture(textureName);
-								if (texture != null)
-									texture.Lock();
-				*/
+								//textureName = value;
+								//texture = ResourceManager.Handle.GetTexture(textureName);
+								//if (texture != null)
+								//    texture.Lock();
+				
 
 				// Rebuild the tileset
 				BuildTileSet();
@@ -1420,18 +897,8 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 			}
 		}
 	//	string textureName;
+*/
 
-
-		/// <summary>
-		/// Holds every spawn points of the level
-		/// </summary>
-		Dictionary<string, SpawnPoint> SpawnPoints;
-
-
-		/// <summary>
-		/// Holds a list of all entities in the map (while playing)
-		/// </summary>
-		Dictionary<string, Entity> Entities;
 
 
 		/// <summary>
@@ -1455,7 +922,7 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 			set;
 		}
 
-
+/*
 		/// <summary>
 		/// Gets/sets the transparency of the layer
 		/// </summary>
@@ -1476,8 +943,8 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 		}
 		Color Color;
 
-
-
+*/
+/*
 		/// <summary>
 		/// Gets/sets the script to use
 		/// </summary>
@@ -1489,13 +956,14 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 			set;
 			get;
 		}
-
+*/
 
 		/// <summary>
 		/// Script's handle
 		/// </summary>
-		ILayer ScriptInterface;
+	//	ILayer ScriptInterface;
 
+/*
 		/// <summary>
 		/// Draw Order of the layer
 		/// </summary>
@@ -1507,43 +975,7 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 			set;
 		}
 
-
-
-		/// <summary>
-		/// Displays or not entities in the layer
-		/// </summary>
-		public bool RenderEntities
-		{
-			get;
-			set;
-		}
-
-
-
-		/// <summary>
-		/// Displays or not paths in the layer
-		/// </summary>
-		public bool RenderPaths
-		{
-			get;
-			set;
-		}
-
-		/// <summary>
-		/// Displays or not SpawnPoints in the layer
-		/// </summary>
-		public bool RenderSpawnPoints
-		{
-			get;
-			set;
-		}
-
-
-		/// <summary>
-		/// SpawnPoint texture
-		/// </summary>
-		Texture spTexture;
-
+*/
 
 		#endregion
 	}
@@ -1655,10 +1087,9 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 		{
 			CollisionBlock col = new CollisionBlock();
 
-			if (entity == null || entity.ParentLayer == null)
+			if (entity == null)
 				return col;
 
-			Layer layer = entity.ParentLayer;
 
 			// Translate the collision box
 			//Rectangle rect = entity.CollisionBoxLocation;
@@ -1674,14 +1105,10 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 
 
 			// Collision blocks
-			layer = entity.ParentLayer.Level.CollisionLayer;
-			if (layer != null)
-			{
-				col.TopLeft = layer.GetTileAtCoord(topLeft);
-				col.TopRight = layer.GetTileAtCoord(topRight);
-				col.BottomLeft = layer.GetTileAtCoord(bottomLeft);
-				col.BottomRight = layer.GetTileAtCoord(bottomRight);
-			}
+			//col.TopLeft = Level.CollisionLayer.GetTileAtCoord(topLeft);
+			//col.TopRight = Level.CollisionLayer.GetTileAtCoord(topRight);
+			//col.BottomLeft = Level.CollisionLayer.GetTileAtCoord(bottomLeft);
+			//col.BottomRight = Level.CollisionLayer.GetTileAtCoord(bottomRight);
 
 
 			//
@@ -1695,10 +1122,6 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 		public void Check()
 		{
 			if (entity == null)
-				return;
-
-			Layer layer = entity.ParentLayer;
-			if (layer == null)
 				return;
 
 			// Translate the collision box
@@ -1715,21 +1138,21 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 
 
 			// Tile block under the collision points
-			Tile.TopLeft = layer.GetTileAtCoord(Location.TopLeft);
-			Tile.TopRight = layer.GetTileAtCoord(Location.TopRight);
-			Tile.BottomLeft = layer.GetTileAtCoord(Location.BottomLeft);
-			Tile.BottomRight = layer.GetTileAtCoord(Location.BottomRight);
+			//Tile.TopLeft = layer.GetTileAtCoord(Location.TopLeft);
+			//Tile.TopRight = layer.GetTileAtCoord(Location.TopRight);
+			//Tile.BottomLeft = layer.GetTileAtCoord(Location.BottomLeft);
+			//Tile.BottomRight = layer.GetTileAtCoord(Location.BottomRight);
 
 
 			// Collision blocks
-			layer = entity.ParentLayer.Level.CollisionLayer;
-			if (layer != null)
-			{
-				Collision.TopLeft = layer.GetTileAtCoord(Location.TopLeft);
-				Collision.TopRight = layer.GetTileAtCoord(Location.TopRight);
-				Collision.BottomLeft = layer.GetTileAtCoord(Location.BottomLeft);
-				Collision.BottomRight = layer.GetTileAtCoord(Location.BottomRight);
-			}
+			//layer = entity.ParentLayer.Level.CollisionLayer;
+			//if (layer != null)
+			//{
+			//    Collision.TopLeft = layer.GetTileAtCoord(Location.TopLeft);
+			//    Collision.TopRight = layer.GetTileAtCoord(Location.TopRight);
+			//    Collision.BottomLeft = layer.GetTileAtCoord(Location.BottomLeft);
+			//    Collision.BottomRight = layer.GetTileAtCoord(Location.BottomRight);
+			//}
 
 
 			//
@@ -1876,7 +1299,7 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 
 
 
-
+/*
 	/// <summary>
 	/// Layer enumerator for PropertyGrids
 	/// </summary>
@@ -1913,7 +1336,7 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 
 	}
 
-
+*/
 }
 
 

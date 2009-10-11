@@ -23,7 +23,7 @@ using System.Xml;
 using ArcEngine.Asset;
 using System.ComponentModel;
 
-namespace ArcEngine.Games.RuffnTumble.Asset
+namespace RuffnTumble
 {
 	/// <summary>
 	/// 

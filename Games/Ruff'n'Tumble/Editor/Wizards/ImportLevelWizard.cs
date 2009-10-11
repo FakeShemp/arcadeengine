@@ -30,7 +30,7 @@ using System.Windows.Forms;
 using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
-using ArcEngine.Games.RuffnTumble.Asset;
+using RuffnTumble;
 
 //
 // MD5 :
@@ -43,7 +43,7 @@ using ArcEngine.Games.RuffnTumble.Asset;
 //
 //
 
-namespace ArcEngine.Games.RuffnTumble.Editor.Wizards
+namespace RuffnTumble.Editor.Wizards
 {
 	public partial class ImportLevelWizard : Form
 	{
@@ -274,7 +274,7 @@ namespace ArcEngine.Games.RuffnTumble.Editor.Wizards
 
 						}
 
-						layer.SetTileAt(new Point(x / BlockSize.Width, y / BlockSize.Height), TilesMD5[hash]);
+						layer.SetTileAtBlock(new Point(x / BlockSize.Width, y / BlockSize.Height), TilesMD5[hash]);
 
 
 
@@ -344,7 +344,7 @@ namespace ArcEngine.Games.RuffnTumble.Editor.Wizards
 			if (e.Result == null)
 			{
 				// Remove the level
-				ResourceManager.RemoveAsset<Level>(LevelNameBox.Text);
+				//ResourceManager.RemoveAsset<Level>(LevelNameBox.Text);
 
 
 				// Report failure

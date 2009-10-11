@@ -22,9 +22,9 @@ using System.Collections.Generic;
 using System.Text;
 using ArcEngine.Providers;
 using System.Xml;
+using ArcEngine.Forms;
 
-
-namespace ArcEngine.Games.Breakout
+namespace Breakout
 {
 	/// <summary>
 	/// 
@@ -46,6 +46,10 @@ namespace ArcEngine.Games.Breakout
 
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
 		public override void Close()
 		{
 			
@@ -53,10 +57,16 @@ namespace ArcEngine.Games.Breakout
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
 		public override bool Init()
 		{
 			return true;
 		}
+
+
 
 		#region Assets
 
@@ -167,8 +177,38 @@ namespace ArcEngine.Games.Breakout
 		#endregion
 
 
+		#region Editor
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="name"></param>
+		/// <returns></returns>
+		public override AssetEditor EditAsset<T>(string name)
+		{
+
+
+			return null;
+		}
+
+		#endregion
+
+
 		#region Shared assets
 
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="name"></param>
+		/// <param name="asset"></param>
+		public override void AddShared<T>(string name, ArcEngine.Asset.IAsset asset)
+		{
+			
+		}
 
 		/// <summary>
 		/// Creates a shared resource

@@ -29,7 +29,7 @@ using ArcEngine.Asset;
 
 
 
-namespace ArcEngine.Games.Breakout
+namespace Breakout
 {
 	/// <summary>
 	/// 
@@ -38,7 +38,7 @@ namespace ArcEngine.Games.Breakout
 	{
 
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
 		public Paddle()
 		{
@@ -47,18 +47,17 @@ namespace ArcEngine.Games.Breakout
 			Size = new Size(100, 18);
 			Speed = 20;
 			Balls = new List<Ball>();
-
 		}
 
 
 
 		/// <summary>
-		/// 
+		/// Initialize the paddle
 		/// </summary>
 		/// <returns></returns>
 		public bool Init()
 		{
-			TileSet = ResourceManager.CreateAsset<TileSet>("Paddle");
+			TileSet = ResourceManager.CreateAsset<TileSet>("Tiles");
 
 			return true;
 		}
@@ -67,9 +66,9 @@ namespace ArcEngine.Games.Breakout
 
 
 		/// <summary>
-		/// 
+		/// Update the paddle
 		/// </summary>
-		/// <param name="time"></param>
+		/// <param name="time">Elapsed game time</param>
 		public void Update(GameTime time)
 		{
 
@@ -106,21 +105,20 @@ namespace ArcEngine.Games.Breakout
 
 
 		/// <summary>
-		/// Draws the ball
+		/// Draws the paddle
 		/// </summary>
 		/// <param name="device"></param>
 		public void Draw()
 		{
+	
+			// Left side 
 			TileSet.Draw(0, Location);
 
-			//device.Texture = TileSet.Texture;
-
-			Tile tile = TileSet.GetTile(1);
-			
+			// Middle
 			Rectangle rect = new Rectangle(Location.X + 16, Location.Y, Size.Width - 32, 18);
-			
-			TileSet.Draw(1, rect, TextureLayout.Tile);
+			TileSet.Draw(1, rect, TextureLayout.Stretch);
 
+			// Right side
 			TileSet.Draw(2, new Point(Location.X + Size.Width - 16, Location.Y));
 		}
 

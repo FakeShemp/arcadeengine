@@ -30,10 +30,8 @@ namespace ProjectT
 		public bool Init()
 		{
 			// Load tiles
-			Tiles = ResourceManager.CreateSharedAsset<TileSet>("Shapes");
-			if (Tiles == null)
-				return false;
-
+			Tiles = ResourceManager.CreateSharedAsset<TileSet>("Shapes", "Shapes");
+			
 			// Size of one piece
 			Size = Tiles.GetTile(0).Size;
 

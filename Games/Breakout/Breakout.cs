@@ -28,10 +28,10 @@ using ArcEngine.Asset;
 using System.Text;
 
 
-namespace ArcEngine.Games.Breakout
+namespace Breakout
 {
 	/// <summary>
-	/// Main game class
+	/// A breackout clone
 	/// </summary>
 	public class Breakout : Game
 	{
@@ -53,7 +53,7 @@ namespace ArcEngine.Games.Breakout
 		/// </summary>
 		public Breakout()
 		{
-			//Device = new OpenGLRender();
+			// Open the game window and hide the mouse cursor
 			Window.Size = new Size(800, 600);
 			Window.Text = "Breakout";
 			Mouse.Visible = false;
@@ -63,7 +63,7 @@ namespace ArcEngine.Games.Breakout
 
 
 		/// <summary>
-		/// 
+		/// Load every needed assets
 		/// </summary>
 		public override void LoadContent()
 		{
@@ -79,6 +79,7 @@ namespace ArcEngine.Games.Breakout
 			//Font.Color = Color.Black;
 
 
+			// Load the level
 			Level = ResourceManager.CreateAsset<Level>("Level_1");
 			Level.Init();
 
@@ -89,23 +90,23 @@ namespace ArcEngine.Games.Breakout
 
 
 			Lives = 5;
-
-	
 		}
 
 
 
 		/// <summary>
-		/// 
+		/// Update game logic
 		/// </summary>
 		/// <param name="gameTime"></param>
 		public override void Update(GameTime gameTime)
 		{
-
-
 			// Byebye
 			if (Keyboard.IsKeyPress(Keys.Escape))
 				Exit();
+
+			// Run the editor
+			if (Keyboard.IsKeyPress(Keys.Insert))
+				RunEditor();
 
 
 			if (Level != null)
@@ -116,7 +117,7 @@ namespace ArcEngine.Games.Breakout
 			{
 				Lives--;
 
-				Level.Balls.Add(new Ball(Level));
+				Level.Balls.Add(new Ball(new Point(), new Rectangle()));
 			}
 
 		}

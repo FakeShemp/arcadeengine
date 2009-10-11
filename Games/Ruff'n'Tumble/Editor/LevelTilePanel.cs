@@ -28,11 +28,11 @@ using System.Windows.Forms;
 using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
-using ArcEngine.Games.RuffnTumble.Asset;
+using RuffnTumble;
 using WeifenLuo.WinFormsUI.Docking;
 
 
-namespace ArcEngine.Games.RuffnTumble.Editor
+namespace RuffnTumble.Editor
 {
 	/// <summary>
 	/// 
@@ -122,7 +122,7 @@ namespace ArcEngine.Games.RuffnTumble.Editor
 			}
 
 
-			// If need to draw grid
+			// Draw grid ?
 			if (ShowGridButton.Checked)
 			{
 				Point from = Point.Empty;
@@ -434,8 +434,9 @@ namespace ArcEngine.Games.RuffnTumble.Editor
 		private void ShowGridButton_CheckedChanged(object sender, EventArgs e)
 		{
 
-			foreach (Layer layer in Form.Level.Layers)
-				layer.ShowGrid = ShowGridButton.Checked;
+	//		foreach (Layer layer in Form.Level.Layers)
+	//			layer.ShowGrid = ShowGridButton.Checked;
+			
 		}
 
 

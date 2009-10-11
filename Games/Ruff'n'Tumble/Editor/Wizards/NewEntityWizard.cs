@@ -20,7 +20,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using ArcEngine.Games.RuffnTumble.Asset;
+using RuffnTumble;
 using System.Drawing;
 using ArcEngine.Asset;
 using System.Text;
@@ -30,7 +30,7 @@ using System.Windows.Forms;
 
 
 
-namespace ArcEngine.Games.RuffnTumble.Editor.Wizards
+namespace RuffnTumble.Editor.Wizards
 {
 	public partial class NewEntityWizard : Form
 	{
@@ -70,22 +70,22 @@ namespace ArcEngine.Games.RuffnTumble.Editor.Wizards
 			}
 
 			// Entity already exists ?
-			if (string.IsNullOrEmpty(EntityBox.Text) || Layer.GetEntity(EntityBox.Text) != null)
-			{
-				MessageBox.Show("Entity name already in use or invalid. Use another name !");
-				e.Cancel = true;
-				return;
-			}
+			//if (string.IsNullOrEmpty(EntityBox.Text) || Layer.GetEntity(EntityBox.Text) != null)
+			//{
+			//    MessageBox.Show("Entity name already in use or invalid. Use another name !");
+			//    e.Cancel = true;
+			//    return;
+			//}
 
 
 			// Create entity
-			Entity ent = Layer.AddEntity(EntityBox.Text);
-			if (ent == null)
-				return;
+			//Entity ent = Layer.AddEntity(EntityBox.Text);
+			//if (ent == null)
+			//    return;
 
-			ent.ModelName = ModelBox.Text;
-			ent.Location = Layer.Level.ScreenToLevel(Position);
-			ent.TileId = 0;
+			//ent.ModelName = ModelBox.Text;
+			//ent.Location = Layer.Level.ScreenToLevel(Position);
+			//ent.TileId = 0;
 
 		}
 

@@ -24,7 +24,8 @@ using ArcEngine.Graphic;
 using ArcEngine.Input;
 using OpenTK.Graphics.OpenGL;
 using ArcEngine;
-
+using ArcEngine.Utility;
+using System.Collections.Generic;
 
 // http://www.opengl.org/resources/code/samples/mjktips/grid/index.html
 // http://www.opengl.org/resources/code/samples/mjktips/grid/editgrid.c
@@ -46,6 +47,10 @@ namespace PathDemo
 		[STAThread]
 		static void Main()
 		{
+
+			List<string> devices = Webcam.GetAllDevices();
+
+
 			try
 			{
 				using (EmptyProject game = new EmptyProject())

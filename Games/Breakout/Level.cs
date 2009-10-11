@@ -27,7 +27,7 @@ using ArcEngine.Graphic;
 using ArcEngine;
 
 
-namespace ArcEngine.Games.Breakout
+namespace Breakout
 {
 
 	/// <summary>
@@ -64,16 +64,16 @@ namespace ArcEngine.Games.Breakout
 
 
 			// Balls
-			Ball ball = new Ball(this);
+			Ball ball = new Ball(new Point(100, 100), new Rectangle());
 			Balls.Add(ball);
 
 			// Paddle
-			Paddle.Init();
-			Paddle.Balls.Add(ball);
+		//	Paddle.Init();
+		//	Paddle.Balls.Add(ball);
 
 
 			// Bricks
-			Brick.Init();
+		//	Brick.Init();
 
 			return true;
 		}
@@ -128,8 +128,9 @@ namespace ArcEngine.Games.Breakout
 
 			// Draw the balls
 			foreach (Ball ball in Balls)
-				ball.Draw();
-
+			{
+				//ball.Draw();
+			}
 
 
 
@@ -152,12 +153,13 @@ namespace ArcEngine.Games.Breakout
 			foreach (Ball ball in Balls)
 				ball.Update(gameTime);
 
+/*
 			// Removes lost balls
 			Balls.RemoveAll(delegate(Ball ball)
 			{
 				return ball.Lost;
 			});
-
+*/
 		}
 
 

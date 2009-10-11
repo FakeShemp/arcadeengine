@@ -1,4 +1,4 @@
-﻿namespace ArcEngine.Games.RuffnTumble.Editor
+﻿namespace RuffnTumble.Editor
 {
     partial class LevelLayerPanel
     {

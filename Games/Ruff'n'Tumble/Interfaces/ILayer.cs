@@ -18,11 +18,11 @@
 //
 #endregion
 
-using ArcEngine.Games.RuffnTumble.Asset;
+using RuffnTumble;
 
 
 
-namespace ArcEngine.Games.RuffnTumble.Interface
+namespace RuffnTumble.Interface
 {
 	/// <summary>
 	/// Interface pour la gestion des layers

@@ -446,7 +446,7 @@ namespace ArcEngine
 		/// <param name="name">New asset name</param>
 		/// <param name="asset">Asset to load</param>
 		/// <returns>Handle to the asset</returns>
-		static public T LoadSharedAsset<T>(string name, string asset) where T : IAsset
+		static public T CreateSharedAsset<T>(string name, string asset) where T : IAsset
 		{
 			if (string.IsNullOrEmpty(name))
 				return default(T);

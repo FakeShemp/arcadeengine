@@ -20,14 +20,14 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using ArcEngine.Games.RuffnTumble.Asset;
+using RuffnTumble;
 using System.Drawing;
 using System.Text;
 using ArcEngine.Asset;
 using System.Windows.Forms;
 
 
-namespace ArcEngine.Games.RuffnTumble.Editor.Wizards
+namespace RuffnTumble.Editor.Wizards
 {
 	public partial class NewLayerBrushWizard : Form
 	{
@@ -56,7 +56,7 @@ namespace ArcEngine.Games.RuffnTumble.Editor.Wizards
 			if (DialogResult != DialogResult.OK)
 				return;
 
-
+/*
 			// No name selected
 			if (Layer.GetBrush(NameBox.Text) != null)
 			{
@@ -64,12 +64,12 @@ namespace ArcEngine.Games.RuffnTumble.Editor.Wizards
 				e.Cancel = true;
 				return;
 			}
-
+*/
 
 			// Create the brush
-			LayerBrush brush= Layer.CreateBrush(NameBox.Text);
-			brush.Size = Brush.Size;
-			brush.Tiles = new List<List<int>>(Brush.Tiles);
+			//LayerBrush brush= Layer.CreateBrush(NameBox.Text);
+			//brush.Size = Brush.Size;
+			//brush.Tiles = new List<List<int>>(Brush.Tiles);
 		}
 
 

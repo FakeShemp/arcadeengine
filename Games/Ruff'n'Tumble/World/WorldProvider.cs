@@ -27,29 +27,27 @@ using ArcEngine.Providers;
 using ArcEngine;
 
 
-namespace ArcEngine.Games.RuffnTumble.Asset
+namespace RuffnTumble
 {
 
 	/// <summary>
 	/// Font2D provider
 	/// </summary>
-	public class LevelProvider : Provider
+	public class WorldProvider : Provider
 	{
 
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public LevelProvider()
+		public WorldProvider()
 		{
-			Levels = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
-			SharedLevels = new Dictionary<string, Level>(StringComparer.OrdinalIgnoreCase);
+			Worlds = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
+			SharedWorlds = new Dictionary<string, Level>(StringComparer.OrdinalIgnoreCase);
 
-			Name = "ArcEngine Level";
-			Tags = new string[] { "level", "model" };
+			Name = "ArcEngine World";
+			Tags = new string[] { "world" };
 			Assets = new Type[] { 
-					typeof(Level),
-					typeof(Model),  
-			//		typeof(Layer)
+					typeof(World),
 				};
 			Version = new Version(0, 1);
 		}
@@ -64,7 +62,7 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 		/// <returns></returns>
 		public override bool Init()
 		{
-			return false;
+			return true;
 		}
 
 
@@ -79,6 +77,7 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 
 		#endregion
 
+
 		#region IO routines
 
 
@@ -90,7 +89,10 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 		/// <returns></returns>
 		public override bool Save<T>(XmlWriter xml)
 		{
-			foreach (XmlNode node in Levels.Values)
+			if (xml == null)
+				return false;
+
+			foreach (XmlNode node in Worlds.Values)
 				node.WriteTo(xml);
 
 
@@ -112,11 +114,11 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 
 			switch (xml.Name.ToLower())
 			{
-				case "level":
+				case "world":
 				{
 
 					string name = xml.Attributes["name"].Value;
-					Levels[name] = xml;
+					Worlds[name] = xml;
 				}
 				break;
 
@@ -152,8 +154,8 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 
 			if (typeof(T) == typeof(Level))
 			{
-				if (Levels.ContainsKey(name))
-					node = Levels[name];
+				if (Worlds.ContainsKey(name))
+					node = Worlds[name];
 
 				form = new Editor.LevelForm(node);
 			}
@@ -174,7 +176,7 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 			CheckValue<T>(name);
 
 			if(typeof(T) == typeof(Level))
-				Levels[name] = node;
+				Worlds[name] = node;
 		}
 
 
@@ -188,7 +190,7 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 
 
 			if (typeof(T) == typeof(Level)) 
-				foreach (string key in Levels.Keys)
+				foreach (string key in Worlds.Keys)
 					list.Add(key);
 	
 			list.Sort();
@@ -207,12 +209,12 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 		{
 			CheckValue<T>(name);
 
-			if (typeof(T) == typeof(Level) && Levels.ContainsKey(name))
+			if (typeof(T) == typeof(World) && Worlds.ContainsKey(name))
 			{
-				Level level = new Level();
-				level.Load(Levels[name]);
+				World world = new World();
+				world.Load(Worlds[name]);
 
-				return (T)(object)level;
+				return (T)(object)world;
 			}
 
 			return default(T);
@@ -230,8 +232,8 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 		{
 			CheckValue<T>(name);
 
-			if(typeof(T) == typeof(Level) && Levels.ContainsKey(name))
-				return Levels[name];
+			if(typeof(T) == typeof(Level) && Worlds.ContainsKey(name))
+				return Worlds[name];
 
 			return null;
 		}
@@ -245,7 +247,7 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 		public override void Remove<T>()
 		{
 			if (typeof(T) == typeof(Level))
-				Levels.Clear();
+				Worlds.Clear();
 		}
 
 
@@ -258,8 +260,8 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 		/// <param name="name"></param>
 		public override void Remove<T>(string name)
 		{
-			if (typeof(T) == typeof(Level) && Levels.ContainsKey(name))
-				Levels.Remove(name);
+			if (typeof(T) == typeof(Level) && Worlds.ContainsKey(name))
+				Worlds.Remove(name);
 		}
 
 
@@ -269,7 +271,7 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 		/// </summary>
 		public override void Clear()
 		{
-			Levels.Clear();
+			Worlds.Clear();
 		}
 
 		/// <summary>
@@ -280,7 +282,7 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 		public override int Count<T>()
 		{
 			if (typeof(T) == typeof(Level))
-				return Levels.Count;
+				return Worlds.Count;
 
 			return 0;
 		}
@@ -290,6 +292,25 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 
 
 		#region Shared assets
+
+		/// <summary>
+		/// Adds an asset as Shared
+		/// </summary>
+		/// <typeparam name="T">Asset type</typeparam>
+		/// <param name="name">Name of the asset to register</param>
+		/// <param name="asset">Asset's handle</param>
+		public override void AddShared<T>(string name, IAsset asset)
+		{
+			if (string.IsNullOrEmpty(name))
+				return;
+
+			if (typeof(T) == typeof(Level))
+			{
+				SharedWorlds[name] = asset as Level;
+			}
+
+		}
+
 
 
 		/// <summary>
@@ -302,11 +323,11 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 		{
 			if (typeof(T) == typeof(Level))
 			{
-				if (SharedLevels.ContainsKey(name))
-					return (T)(object)SharedLevels[name];
+				if (SharedWorlds.ContainsKey(name))
+					return (T)(object)SharedWorlds[name];
 
 				Level level = new Level();
-				SharedLevels[name] = level;
+				SharedWorlds[name] = level;
 
 				return (T)(object)level;
 			}
@@ -325,7 +346,7 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 		{
 			if (typeof(T) == typeof(Level))
 			{
-				SharedLevels[name] = null;
+				SharedWorlds[name] = null;
 			}
 		}
 
@@ -339,7 +360,7 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 		public override void RemoveShared<T>()
 		{
 			if (typeof(T) == typeof(Level))
-				SharedLevels.Clear();
+				SharedWorlds.Clear();
 		}
 
 
@@ -349,7 +370,7 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 		/// </summary>
 		public override void ClearShared()
 		{
-			SharedLevels.Clear();
+			SharedWorlds.Clear();
 		}
 
 
@@ -361,15 +382,15 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 
 
 		/// <summary>
-		/// Scripts
+		/// Wolrds
 		/// </summary>
-		Dictionary<string, XmlNode> Levels;
+		Dictionary<string, XmlNode> Worlds;
 
 
 		/// <summary>
-		/// Shared levels
+		/// Shared Worlds
 		/// </summary>
-		Dictionary<string, Level> SharedLevels;
+		Dictionary<string, Level> SharedWorlds;
 
 		#endregion
 	}

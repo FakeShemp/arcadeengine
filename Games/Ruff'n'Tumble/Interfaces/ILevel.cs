@@ -19,7 +19,7 @@
 #endregion
 
 
-namespace ArcEngine.Games.RuffnTumble.Interface
+namespace RuffnTumble.Interface
 {
 	interface ILevel
 	{

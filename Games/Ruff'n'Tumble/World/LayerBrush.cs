@@ -27,7 +27,7 @@ using System.Drawing;
 using ArcEngine.Graphic;
 
 
-namespace ArcEngine.Games.RuffnTumble.Asset
+namespace RuffnTumble
 {
 	/// <summary>
 	/// Brush to ease level edition
@@ -84,7 +84,7 @@ namespace ArcEngine.Games.RuffnTumble.Asset
 			// Paste each tiles 
 			for (int y = 0; y < Size.Height; y++)
 				for (int x = 0; x < Size.Width; x++)
-					layer.SetTileAt(new Point(location.X + x, location.Y + y), Tiles[y][x]);
+					layer.SetTileAtBlock(new Point(location.X + x, location.Y + y), Tiles[y][x]);
 		}
 
 

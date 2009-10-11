@@ -27,11 +27,11 @@ using System.Text;
 using System.Windows.Forms;
 using ArcEngine.Graphic;
 using ArcEngine;
-using ArcEngine.Games.RuffnTumble.Asset;
+using RuffnTumble;
 using WeifenLuo.WinFormsUI.Docking;
 using OpenTK;
 
-namespace ArcEngine.Games.RuffnTumble.Editor
+namespace RuffnTumble.Editor
 {
 	/// <summary>
 	/// 
@@ -117,8 +117,9 @@ namespace ArcEngine.Games.RuffnTumble.Editor
 			if (Form.CurrentLayer != null)
 			{
 				Point pos = Point.Empty;
-				foreach (LayerBrush brush in Form.CurrentLayer.Brushes)
+				foreach (string name in Form.Level.GetBrushes())
 				{
+					LayerBrush brush = Form.Level.GetBrush(name);
 
 					// Draw the brush
 					brush.Draw(pos, Form.CurrentLayer.TileSet, Form.Level.BlockDimension);

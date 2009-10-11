@@ -26,8 +26,85 @@ using ArcEngine.Graphic;
 using ArcEngine.Asset;
 
 
-namespace ArcEngine.Games.Breakout
+namespace Breakout
 {
+	/// <summary>
+	/// 
+	/// </summary>
+	public class Brick
+	{
+/*
+		/// <summary>
+		/// Initialization
+		/// </summary>
+		/// <returns></returns>
+		static public bool Init()
+		{
+			if (Tileset == null)
+				Tileset = ResourceManager.CreateSharedAsset<TileSet>("Bricks");
+
+			return true;
+		}
+*/
+
+
+		/// <summary>
+		/// Updates the status of the brick
+		/// </summary>
+		/// <param name="time"></param>
+		public void Update(GameTime time)
+		{
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="device"></param>
+		/// <param name="location"></param>
+		public void Draw(Point location)
+		{
+			Tileset.Draw(14, location);
+
+
+
+		//	Tileset.Draw(15, new Rectangle(location, new Size(164, 64)), TextureLayout.Zoom);
+		}
+
+
+
+		#region Properties
+
+		/// <summary>
+		/// Bonus of the brick
+		/// </summary>
+		public BrickBonus Bonus;
+
+
+		/// <summary>
+		/// Brick destroyed
+		/// </summary>
+		public bool Hit;
+
+
+		/// <summary>
+		/// Tileset of the bricks
+		/// </summary>
+		static TileSet Tileset;
+
+
+		/// <summary>
+		/// Id of the tile
+		/// </summary>
+		public int TileID
+		{
+			get;
+			protected set;
+		}
+
+		#endregion
+	}
+
 
 	/// <summary>
 	/// Bonus given by a brick 
@@ -214,83 +291,4 @@ namespace ArcEngine.Games.Breakout
 		WeakBalls,
 	}
 
-
-
-	/// <summary>
-	/// 
-	/// </summary>
-	public class Brick
-	{
-
-		/// <summary>
-		/// Initialization
-		/// </summary>
-		/// <returns></returns>
-		static public bool Init()
-		{
-			if (Tileset == null)
-				Tileset = ResourceManager.CreateAsset<TileSet>("Bricks");
-
-			Tileset.Scale = new SizeF(2.0f, 2.0f);
-			return true;
-		}
-
-
-
-		/// <summary>
-		/// Updates the status of the brick
-		/// </summary>
-		/// <param name="time"></param>
-		public void Update(GameTime time)
-		{
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="device"></param>
-		/// <param name="location"></param>
-		public void Draw(Point location)
-		{
-			Tileset.Draw(14, location);
-
-
-
-		//	Tileset.Draw(15, new Rectangle(location, new Size(164, 64)), TextureLayout.Zoom);
-		}
-
-
-
-		#region Properties
-
-		/// <summary>
-		/// Bonus of the brick
-		/// </summary>
-		public BrickBonus Bonus;
-
-
-		/// <summary>
-		/// Brick destroyed
-		/// </summary>
-		public bool Hit;
-
-
-		/// <summary>
-		/// Tileset of the bricks
-		/// </summary>
-		static TileSet Tileset;
-
-
-		/// <summary>
-		/// Id of the tile
-		/// </summary>
-		public int TileID
-		{
-			get;
-			protected set;
-		}
-
-		#endregion
-	}
 }

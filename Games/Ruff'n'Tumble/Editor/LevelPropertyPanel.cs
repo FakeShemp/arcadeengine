@@ -27,10 +27,10 @@ using System.Text;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 using ArcEngine.Graphic;
-using ArcEngine.Games.RuffnTumble.Asset;
+using RuffnTumble;
 
 
-namespace ArcEngine.Games.RuffnTumble.Editor
+namespace RuffnTumble.Editor
 {
     public partial class LevelPropertyPanel : DockContent
 	{
@@ -53,10 +53,10 @@ namespace ArcEngine.Games.RuffnTumble.Editor
 			Form = form;
 
 			PropertyBox.SelectedObject = Form.Level;
-			LevelWidthLabel.Text = Form.Level.Width.ToString();
-			DesiredLevelWidth.Value = Form.Level.Width;
-			LevelHeightLabel.Text = Form.Level.Height.ToString();
-			DesiredLevelHeight.Value = Form.Level.Height;
+			LevelWidthLabel.Text = Form.Level.Size.Width.ToString();
+			DesiredLevelWidth.Value = Form.Level.Size.Width;
+			LevelHeightLabel.Text = Form.Level.Size.Height.ToString();
+			DesiredLevelHeight.Value = Form.Level.Size.Height;
 
 			BlockWidthLabel.Text = Form.Level.BlockSize.Width.ToString();
 			DesiredBlockWidth.Value = Form.Level.BlockSize.Width;
