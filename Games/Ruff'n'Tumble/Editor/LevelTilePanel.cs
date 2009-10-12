@@ -128,6 +128,7 @@ namespace RuffnTumble.Editor
 				Point from = Point.Empty;
 				Point to = Point.Empty;
 				Display.Color = Color.Red;
+/*
 				for (int y = 0; y < Form.CurrentLayer.Texture.Size.Height; y += Form.Level.BlockSize.Height)
 				{
 					from.X = 0; from.Y = y;
@@ -140,6 +141,7 @@ namespace RuffnTumble.Editor
 					to.X = x; to.Y = Form.CurrentLayer.Texture.Size.Height;
 					Display.Line(from, to);
 				}
+*/
 			}
 
 
@@ -161,12 +163,13 @@ namespace RuffnTumble.Editor
 
 
 			// No texture selected...
-			if (Form.CurrentLayer.Texture == null)
-				return;
+			//if (Form.CurrentLayer.Texture == null)
+			//   return;
 
 			// Left button => select tiles
 			if (e.Button == MouseButtons.Left)
 			{
+/*	
 				Point pos = e.Location;
 				Size size = new Size(Form.CurrentLayer.Texture.Size.Width / Form.Level.BlockSize.Width,
 					Form.CurrentLayer.Texture.Size.Height / Form.Level.BlockSize.Height);
@@ -188,6 +191,7 @@ namespace RuffnTumble.Editor
 
 
 				sizingBrush = true;
+*/
 			}
 		}
 
@@ -208,7 +212,7 @@ namespace RuffnTumble.Editor
 				Size size = new Size(pos.X / Form.Level.BlockSize.Width - SelectedTiles.Left + 1,
 										pos.Y / Form.Level.BlockSize.Height - SelectedTiles.Top + 1);
 
-
+/*
 				Size tilesize = new Size(Form.CurrentLayer.Texture.Size.Width / Form.Level.BlockSize.Width,
 					Form.CurrentLayer.Texture.Size.Height / Form.Level.BlockSize.Height); 
 				//Form.CurrentLayer.Texture.SizeInBlock(Form.Level.BlockSize);
@@ -222,7 +226,7 @@ namespace RuffnTumble.Editor
 				if (SelectedTiles.Top + size.Height >= tilesize.Height)
 					size.Height = tilesize.Height - SelectedTiles.Top;
 
-
+*/
 				SelectedTiles.Size = size;
 			}
 
@@ -242,7 +246,7 @@ namespace RuffnTumble.Editor
 			{
 				// Sert the size of the LayerBrush
 				Form.LayerBrush.Size = SelectedTiles.Size;
-
+/*
 				// Size of each block in pixel
 				Size blocksize = new Size(Form.CurrentLayer.Texture.Size.Width / Form.Level.BlockSize.Width,
 					Form.CurrentLayer.Texture.Size.Height / Form.Level.BlockSize.Height); 
@@ -258,7 +262,7 @@ namespace RuffnTumble.Editor
 				}
 
 				sizingBrush = false;
-
+*/
 				TileMode = TileMode.Pen;
 			}
 		}

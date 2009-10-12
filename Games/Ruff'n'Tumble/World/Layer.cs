@@ -58,16 +58,8 @@ namespace RuffnTumble
 		{
 			Level = lvl;
 			Visible = true;
+			TileSet = new TileSet();
 
-
-			// Tiles
-			Tiles = new List<List<int>>(Level.Size.Height);
-			for (int y = 0; y < Level.Size.Height; y++)
-			{
-				Tiles.Add(new List<int>());
-				for (int x = 0; x < Level.Size.Width; x++)
-					Tiles[y].Add(0);
-			}
 		}
 
 
@@ -108,7 +100,7 @@ namespace RuffnTumble
 		}
 */
 
-
+/*
 		/// <summary>
 		/// Build the tileset
 		/// </summary>
@@ -130,6 +122,23 @@ namespace RuffnTumble
 				}
 		}
 
+*/
+
+
+		/// <summary>
+		/// Resize the layer
+		/// </summary>
+		/// <param name="size">New size</param>
+		public void SetSize(Size size)
+		{
+			Tiles = new List<List<int>>(size.Height);
+			for (int y = 0; y < size.Height; y++)
+			{
+				Tiles.Add(new List<int>());
+				for (int x = 0; x < size.Width; x++)
+					Tiles[y].Add(0);
+			}
+		}
 
 
 		/// <summary>
@@ -150,15 +159,15 @@ namespace RuffnTumble
 			if (renderheight > Level.Size.Height) renderheight = Level.Size.Height;
 
 			// On trouve la location en block pour le "pixel perfect scrolling"
-			int blockx = Level.Location.X / Level.BlockDimension.Width;
-			int blocky = Level.Location.Y / Level.BlockDimension.Height;
-			int deltax = Level.Location.X % Level.BlockDimension.Width;
-			int deltay = Level.Location.Y % Level.BlockDimension.Width;
+			int blockx = camera.Location.X / Level.BlockDimension.Width;
+			int blocky = camera.Location.Y / Level.BlockDimension.Height;
+			int deltax = camera.Location.X % Level.BlockDimension.Width;
+			int deltay = camera.Location.Y % Level.BlockDimension.Width;
 
 
 			// Draw tiles
-			TileSet.Scale = Level.Scale;
-			Display.Color = Color;
+			TileSet.Scale = Level.Camera.Scale;
+			//Display.Color = Color;
 			for (int yy = 0; yy < renderheight + 2; yy++)
 			{
 				for (int xx = 0; xx < renderwidth + 2; xx++)
@@ -168,47 +177,16 @@ namespace RuffnTumble
 					if (id == -1)
 						continue;
 
-					//tileSet.Draw(id, new Point(
-					//   (xx * level.BlockDimension.Width) + Level.DisplayZone.X - deltax,
-					//   (yy * level.BlockDimension.Height) + Level.DisplayZone.Y - deltay));
-
 					Rectangle rect = new Rectangle(
-						new Point((xx * Level.BlockDimension.Width) + camera.ViewPort.X - deltax,
-									(yy * Level.BlockDimension.Height) + camera.ViewPort.Y - deltay),
+						new Point((int)(xx * Level.BlockDimension.Width) + camera.ViewPort.X - deltax,
+									(int)(yy * Level.BlockDimension.Height) + camera.ViewPort.Y - deltay),
 						new Size(32, 32)
 						);
 
 					TileSet.Draw(id, rect, TextureLayout.Stretch);
-
-		
-				
 				}
 			}
 
-			//
-			// Display tile grid
-			//
-			if (ShowGrid)
-			{
-				Display.Color = Color.FromArgb(Alpha, Color.Red);
-
-				for (int yy = 0; yy < renderheight + 2; yy++)
-				{
-					Display.Line(
-						new Point(camera.ViewPort.Left, (yy * Level.BlockDimension.Height - deltay + camera.ViewPort.Top)),
-						new Point(camera.ViewPort.Right, (yy * Level.BlockDimension.Height - deltay + camera.ViewPort.Top))
-					);
-				}
-				for (int xx = 0; xx < renderwidth + 2; xx++)
-				{
-					Display.Line(
-						new Point(xx * Level.BlockDimension.Width - deltax + camera.ViewPort.Left, camera.ViewPort.Top),
-						new Point(xx * Level.BlockDimension.Width - deltax + camera.ViewPort.Left, camera.ViewPort.Bottom)
-					);
-				}
-
-				Display.Color = Color.White;
-			}
 
 
 
@@ -237,7 +215,7 @@ namespace RuffnTumble
 		/// </summary>
 		/// <param name="newsize">new size</param>
 		/// <returns></returns>
-		internal void Resize(Size newsize)
+		public void Resize(Size newsize)
 		{
 			// Rows
 			if (newsize.Height > Level.Size.Height)
@@ -282,19 +260,9 @@ namespace RuffnTumble
 
 			// Adds the row at the end
 			if (rowid >= Tiles.Count)
-			{
 				Tiles.Add(row);
-			}
-
-			// Or insert the row
 			else
-			{
 				Tiles.Insert(rowid, row);
-
-				//// Offset objects
-				//Rectangle zone = new Rectangle(0, rowid * Level.BlockDimension.Height, Level.Dimension.Width, Level.Dimension.Height);
-				//OffsetObjects(zone, new Point(0, Level.BlockDimension.Height));
-			}
 		}
 
 
@@ -309,10 +277,6 @@ namespace RuffnTumble
 				return;
 
 			Tiles.RemoveAt(rowid);
-
-			//// Offset objects
-			//Rectangle zone = new Rectangle(0, rowid * Level.BlockDimension.Height, Level.Dimension.Width, Level.Dimension.Height);
-			//OffsetObjects(zone, new Point(0, -Level.BlockDimension.Height));
 		}
 
 
@@ -327,17 +291,9 @@ namespace RuffnTumble
 			foreach (List<int> row in Tiles)
 			{
 				if (columnid >= row.Count)
-				{
 					row.Add(tileid);
-				}
 				else
-				{
 					row.Insert(columnid, tileid);
-
-					//// Offset objects
-					//Rectangle zone = new Rectangle(columnid * Level.BlockDimension.Width, 0, Level.Dimension.Width, Level.Dimension.Height);
-					//OffsetObjects(zone, new Point(Level.BlockDimension.Width, 0));
-				}
 			}
 		}
 
@@ -353,12 +309,6 @@ namespace RuffnTumble
 			{
 				row.RemoveAt(columnid);
 			}
-
-			//// Offset objects
-			//Rectangle zone = new Rectangle(
-			//    columnid * Level.BlockDimension.Width, 0,
-			//    Level.Dimension.Width, Level.Dimension.Height);
-			//OffsetObjects(zone, new Point(-Level.BlockDimension.Width, 0));
 		}
 
 
@@ -379,58 +329,24 @@ namespace RuffnTumble
 				return false;
 
 			xml.WriteStartElement("layer");
-			xml.WriteAttributeString("name", Name);
+			xml.WriteAttributeString("texture", TextureName);
 
 	
 			xml.WriteStartElement("visibility");
 			xml.WriteAttributeString("value", Visible.ToString());
 			xml.WriteEndElement();	// Visibility
 
-			xml.WriteStartElement("zindex");
-			xml.WriteAttributeString("value", ZIndex.ToString());
-			xml.WriteEndElement();		// zindex
-
-			xml.WriteStartElement("alpha");
-			xml.WriteAttributeString("value", Color.A.ToString());
-			xml.WriteEndElement();		// alpha
-
-			if (!string.IsNullOrEmpty(ScriptName))
-			{
-				xml.WriteStartElement("script");
-				xml.WriteAttributeString("name", ScriptName);
-				xml.WriteEndElement();		// script
-			}
-
-			if (ShowGrid)
-			{
-				xml.WriteStartElement("showgrid");
-				xml.WriteAttributeString("value", ShowGrid.ToString());
-				xml.WriteEndElement();
-			}
-
-
-
 			// Loops throughs tiles
-			xml.WriteStartElement("tiles");
-
-			// Texture to use
-			xml.WriteStartElement("texture");
-			xml.WriteAttributeString("name", TextureName);
-			xml.WriteEndElement();
-
-
 			for (int y = 0; y < Level.Size.Height; y++)
 			{
 				xml.WriteStartElement("row");
-				xml.WriteAttributeString("BufferID", y.ToString());
+				xml.WriteAttributeString("id", y.ToString());
 
 				for (int x = 0; x < Level.Size.Width; x++)
 					xml.WriteString(Tiles[y][x].ToString() + " ");
 
 				xml.WriteEndElement();	// row
 			}
-
-
 			xml.WriteEndElement();	// tiles
 
 			xml.WriteEndElement();	// layer
@@ -448,81 +364,30 @@ namespace RuffnTumble
 			if (xml == null)
 				return false;
 
-			Name = xml.Attributes["name"].Value;
+			// Load texture
+			SetTexture(xml.Attributes["texture"].Value);
+
 
 			XmlNodeList nodes = xml.ChildNodes;
 			foreach (XmlNode node in nodes)
 			{
 				if (node.NodeType == XmlNodeType.Comment)
-				{
-				//	base.LoadComment(node);
 					continue;
-				}
-
 
 				switch (node.Name.ToLower())
 				{
-					// Tiles of the map
-					case "tiles":
+					// Add a row
+					case "row":
 					{
+						int rowid = Int32.Parse(node.Attributes["id"].Value);
+						int pos = 0;
 
-						foreach (XmlNode subnode in node)
-						{
-							switch (subnode.Name.ToLower())
-							{
-								// Texture to use
-								case "texture":
-								{
-									TextureName = subnode.Attributes["name"].Value;
-								}
-								break;
-
-								// Add a row
-								case "row":
-								{
-									int rowid = Int32.Parse(subnode.Attributes["id"].Value);
-									int pos = 0;
-
-									string[] val = subnode.InnerText.Split(null as char[], StringSplitOptions.RemoveEmptyEntries);
-									foreach (string id in val)
-										Tiles[rowid][pos++] = Int32.Parse(id);
-								}
-								break;
-							}
-						}
+						string[] val = node.InnerText.Split(null as char[], StringSplitOptions.RemoveEmptyEntries);
+						foreach (string id in val)
+							Tiles[rowid][pos++] = Int32.Parse(id);
 					}
 					break;
 
-					// Shows/hides the grid
-					case "showgrid":
-					{
-						ShowGrid = Boolean.Parse(node.Attributes["value"].Value.ToString());
-					}
-					break;
-
-
-
-					// alpha transparency of the layer
-					case "alpha":
-					{
-						Alpha = Byte.Parse(node.Attributes["value"].Value);
-					}
-					break;
-
-					// Script name
-					case "script":
-					{
-						ScriptName = node.Attributes["name"].Value;
-					}
-					break;
-
-					// Zindex
-					case "zindex":
-					{
-						ZIndex = Int32.Parse(node.Attributes["value"].Value);
-
-					}
-					break;
 
 					// Layer visibility
 					case "visibility":
@@ -535,7 +400,7 @@ namespace RuffnTumble
 
 					default:
 					{
-						Trace.WriteLine("Layer : Unknown node element \"" + node.Name + "\"");
+						Trace.WriteLine("Layer : Unknown node element \"{0}\"", node.Name);
 					}
 					break;
 				}
@@ -544,10 +409,42 @@ namespace RuffnTumble
 
 		}
 
+
 		#endregion
 
 
 		#region Tiles
+
+
+		/// <summary>
+		/// Sets the texture for the tileset
+		/// </summary>
+		/// <param name="name"></param>
+		/// <returns></returns>
+		public bool SetTexture(string name)
+		{
+			TextureName = name;
+
+			if (string.IsNullOrEmpty(TextureName))
+				return false;
+
+
+			TileSet.LoadTexture(name);
+			TileSet.Clear();
+
+
+			int start = 0;
+			int x = 0;
+			int y = 0;
+			for (y = 0; y < TileSet.Texture.Size.Height; y += Level.BlockSize.Height)
+				for (x = 0; x < TileSet.Texture.Size.Width; x += Level.BlockSize.Width)
+				{
+					Tile tile = TileSet.AddTile(start++);
+					tile.Rectangle = new Rectangle(x, y, Level.BlockSize.Width, Level.BlockSize.Height);
+				}
+
+			return true;
+		}
 
 
 		/// <summary>
@@ -728,6 +625,7 @@ namespace RuffnTumble
 		/// </summary>
 		Queue<FloodFillRange> ranges = new Queue<FloodFillRange>();
 
+
 		/// <summary>
 		/// Fills the specified point on the layer with the a selected tile.
 		/// </summary>
@@ -822,32 +720,19 @@ namespace RuffnTumble
 
 		#region Properties
 
-
-		/// <summary>
-		/// Layer's name
-		/// </summary>
-		public string Name;
-
-		
-		
 		/// <summary>
 		/// Contain all the tile of the layer
 		/// </summary>
 		List<List<int>> Tiles;
 
 
-/*
-		/// <summary>
-		/// Private TileSet
-		/// </summary>
-		[Browsable(false)]
-		public TileSet TileSet
-		{
-			get;
-			private set;
-		}
 
-*/
+		/// <summary>
+		/// TileSet
+		/// </summary>
+		TileSet TileSet;
+
+
 		/// <summary>
 		/// Gets/sets the layer visiblity / shall we draws it ?
 		/// </summary>
@@ -861,48 +746,16 @@ namespace RuffnTumble
 
 
 		/// <summary>
-		/// Gets the current texture
+		/// Name of the texture to use for the TileSet
 		/// </summary>
-	//	[Browsable(false)]
-	//	public Texture Texture;
-
-/*
-		/// <summary>
-		/// Gets/sets the name of the texture to use with this layer
-		/// </summary>
-		[Category("Tiles")]
-		[Description("Texture to use")]
-	//	[TypeConverter(typeof(TextureEnumerator))]
 		public string TextureName
 		{
-			get { return TileSet.TextureName; }
-			set
-			{
-			//	textureName = value;
-
-				TileSet.LoadTexture(value);
-				
-								//if (texture != null)
-								//    texture.Unlock();
-
-								//textureName = value;
-								//texture = ResourceManager.Handle.GetTexture(textureName);
-								//if (texture != null)
-								//    texture.Lock();
-				
-
-				// Rebuild the tileset
-				BuildTileSet();
-
-			}
+			get;
+			private set;
 		}
-	//	string textureName;
-*/
-
-
 
 		/// <summary>
-		/// Who is my parent level ?
+		/// Parent level ?
 		/// </summary>
 		[Browsable(false)]
 		public Level Level
@@ -913,69 +766,19 @@ namespace RuffnTumble
 
 
 		/// <summary>
-		/// Draws the grid of the layer
+		/// Size of the Layer
 		/// </summary>
-		[Browsable(false)]
-		public bool ShowGrid
-		{
-			get;
-			set;
-		}
-
-/*
-		/// <summary>
-		/// Gets/sets the transparency of the layer
-		/// </summary>
-		[CategoryAttribute("Layer")]
-		[Description("Transparency of the layer")]
-		[Editor(typeof(SliderEditor), typeof(UITypeEditor))]
-		public byte Alpha
+		public Size Size
 		{
 			get
 			{
-				return Color.A;
-			}
-			set
-			{
-				//alpha = value;
-				Color = Color.FromArgb(value, Color.White);
+				if (Tiles == null)
+					return Size.Empty;
+
+				return new Size(Tiles[0].Count, Tiles.Count);
 			}
 		}
-		Color Color;
 
-*/
-/*
-		/// <summary>
-		/// Gets/sets the script to use
-		/// </summary>
-		[CategoryAttribute("Script")]
-		[Description("Script's name to handle the layer events")]
-		[TypeConverter(typeof(ScriptEnumerator))]
-		public string ScriptName
-		{
-			set;
-			get;
-		}
-*/
-
-		/// <summary>
-		/// Script's handle
-		/// </summary>
-	//	ILayer ScriptInterface;
-
-/*
-		/// <summary>
-		/// Draw Order of the layer
-		/// </summary>
-		[CategoryAttribute("Layer")]
-		[Description("Layer draw order")]
-		public int ZIndex
-		{
-			get;
-			set;
-		}
-
-*/
 
 		#endregion
 	}

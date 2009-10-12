@@ -195,7 +195,9 @@
     <Compile Include="Interfaces\IEntity.cs" />
     <Compile Include="Interfaces\ILayer.cs" />
     <Compile Include="Interfaces\ILevel.cs" />
-    <Compile Include="World\Layer.cs" />
+    <Compile Include="World\Layer.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="World\LayerBrush.cs" />
     <Compile Include="World\Level.cs" />
     <Compile Include="World\Model.cs" />

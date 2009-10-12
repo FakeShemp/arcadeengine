@@ -53,7 +53,7 @@ namespace RuffnTumble
 		/// Draws the path on the screen
 		/// </summary>
 		/// <param name="location">Location of the level</param>
-		public void Draw(Point location)
+		public void Draw(Camera camera)
 		{
 
 			Display.Color = Color.Red;

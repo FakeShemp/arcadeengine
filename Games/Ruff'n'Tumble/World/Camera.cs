@@ -19,7 +19,7 @@ namespace RuffnTumble
 		{
 			// Hardcoded !!!
 			ViewPort = new Rectangle(0, 56, 800, 544);
-			Scale = new PointF(1.0f, 1.0f);
+			Scale = new SizeF(2.0f, 2.0f);
 		}
 
 
@@ -32,17 +32,26 @@ namespace RuffnTumble
 		}
 
 
+
+		/// <summary>
+		/// Translate the camera
+		/// </summary>
+		/// <param name="offset"></param>
+		public void Translate(int x, int y)
+		{
+			Location.Offset(x, y);
+		}
+
+
+
+
 		#region Properties
 
 
 		/// <summary>
 		/// Location of the camera
 		/// </summary>
-		public Point Location
-		{
-			get;
-			set;
-		}
+		public Point Location;
 
 
 		/// <summary>
@@ -77,11 +86,23 @@ namespace RuffnTumble
 		/// <summary>
 		/// Scale factor
 		/// </summary>
-		public PointF Scale
+		public SizeF Scale
 		{
 			get;
 			set;
 		}
+
+
+
+		/// <summary>
+		/// Limit camera to the level borders
+		/// </summary>
+		public bool ClampToEdges
+		{
+			get;
+			set;
+		}
+
 
 		#endregion
 	}

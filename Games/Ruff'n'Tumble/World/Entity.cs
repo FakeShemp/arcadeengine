@@ -187,7 +187,7 @@ namespace RuffnTumble
 		{
 			if (TileSet != null)
 			{
-				TileSet.Scale = zoom;
+				TileSet.Scale = Zoom;
 				//tileSet.Draw(TileId, loc);
 				TileSet.Draw(tileId, loc);
 			}
@@ -349,7 +349,7 @@ namespace RuffnTumble
 				}
 
 				// zoom
-				zoom = model.Zoom;
+				Zoom = model.Zoom;
 
 				// Movements
 				Velocity = model.MaxVelocity;
@@ -369,19 +369,9 @@ namespace RuffnTumble
 		[Description("Zoom factor of the entity")]
 		public SizeF Zoom
 		{
-			get
-			{
-				if (zoom.IsEmpty)
-					return new SizeF(1.0f, 1.0f);
-				else
-					return zoom;
-			}
-			set
-			{
-				zoom = value;
-			}
+			get;
+			set;
 		}
-		SizeF zoom = new SizeF(1,1);
 
 									
 

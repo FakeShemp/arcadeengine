@@ -51,7 +51,7 @@ namespace RuffnTumble
 	/// <summary>
 	/// A level
 	/// </summary>
-	public class Level// : IAsset
+	public class Level
 	{
 
 		/// <summary>
@@ -64,7 +64,6 @@ namespace RuffnTumble
 			Paths = new Dictionary<string, Path>();
 
 			Entities = new Dictionary<string, Entity>();
-		//	Layers = new List<Layer>();
 			Camera = new Camera(this);
 			Brushes = new Dictionary<string,LayerBrush>();
 			SpawnPoints = new Dictionary<string, SpawnPoint>();
@@ -86,9 +85,6 @@ namespace RuffnTumble
 
 
 			xml.WriteStartElement("level");
-			//xml.WriteAttributeString("name", Name);
-
-			//base.SaveComment(xml);
 
 
 			xml.WriteStartElement("size");
@@ -96,10 +92,10 @@ namespace RuffnTumble
 			xml.WriteAttributeString("height", Size.Height.ToString());
 			xml.WriteEndElement();
 
-			xml.WriteStartElement("zoom");
-			xml.WriteAttributeString("width", Scale.Width.ToString());
-			xml.WriteAttributeString("height", Scale.Height.ToString());
-			xml.WriteEndElement();
+			//xml.WriteStartElement("zoom");
+			//xml.WriteAttributeString("width", Scale.Width.ToString());
+			//xml.WriteAttributeString("height", Scale.Height.ToString());
+			//xml.WriteEndElement();
 
 			xml.WriteStartElement("blocksize");
 			xml.WriteAttributeString("width", BlockSize.Width.ToString());
@@ -178,18 +174,7 @@ namespace RuffnTumble
 							ent.Load(node);
 					}
 					break;
-/*
-					// Layer
-					case "layer":
-					{
-						string name = node.Attributes["name"].Value;
-						Layer layer = AddLayer(name);
-						if (layer != null)
-							layer.Load(node);
 
-					}
-					break;
-*/
 					case "path":
 					{
 						Path path = CreatePath(node.Attributes["name"].Value);
@@ -211,16 +196,16 @@ namespace RuffnTumble
 					// Size
 					case "size":
 					{
-						Size = new Size(int.Parse(node.Attributes["width"].Value), int.Parse(node.Attributes["height"].Value));
+						Resize(new Size(int.Parse(node.Attributes["width"].Value), int.Parse(node.Attributes["height"].Value)));
 					}
 					break;
 
-					case "zoom":
-					{
-						scale.Width = float.Parse(node.Attributes["width"].Value);
-						scale.Height = float.Parse(node.Attributes["height"].Value);
-					}
-					break;
+					//case "zoom":
+					//{
+					//   scale.Width = float.Parse(node.Attributes["width"].Value);
+					//   scale.Height = float.Parse(node.Attributes["height"].Value);
+					//}
+					//break;
 
 					case "blocksize":
 					{
@@ -310,17 +295,16 @@ namespace RuffnTumble
 		#region Resize, Insert and Delete
 
 		/// <summary>
-		/// Resize the level
+		/// Resize the level. Erase all layers
 		/// </summary>
 		/// <param name="newsize">Desired size</param>
 		public void Resize(Size newsize)
 		{
-			// Resize layers first
-			//foreach (Layer layer in Layers)
-			//	layer.Resize(newsize);
-
 			// Resize
 			Size = newsize;
+
+			TileLayer.SetSize(Size);
+			CollisionLayer.SetSize(Size);
 		}
 
 
@@ -332,9 +316,8 @@ namespace RuffnTumble
 		/// <param name="tileid">Tile BufferID</param>
 		public void InsertRow(int row, int tileid)
 		{
-			// Insert the row
-			//foreach (Layer layer in Layers)
-			//	layer.InsertRow(row, tileid);
+			TileLayer.InsertRow(row, tileid);
+			CollisionLayer.InsertRow(row, tileid);
 
 			// Resize the level
 			Size = new Size(Size.Width, Size.Height + 1);
@@ -352,8 +335,8 @@ namespace RuffnTumble
 		/// <param name="row">Row ID to remove</param>
 		public void RemoveRow(int row)
 		{
-			//foreach (Layer layer in Layers)
-			//	layer.RemoveRow(row);
+			TileLayer.RemoveRow(row);
+			CollisionLayer.RemoveRow(row);
 
 			Size = new Size(Size.Width, Size.Height - 1);
 
@@ -372,8 +355,8 @@ namespace RuffnTumble
 		/// <param name="tileid">Tile BufferID</param>
 		public void InsertColumn(int column, int tileid)
 		{
-			//foreach (Layer layer in Layers)
-			//	layer.InsertColumn(column, tileid);
+			TileLayer.InsertColumn(column, tileid);
+			CollisionLayer.InsertColumn(column, tileid);
 
 			Size = new Size(Size.Width + 1, Size.Height);
 
@@ -390,8 +373,8 @@ namespace RuffnTumble
 		/// <param name="column">Columns ID to remove</param>
 		public void RemoveColumn(int column)
 		{
-			//foreach (Layer layer in Layers)
-			//	layer.RemoveColumn(column);
+			TileLayer.RemoveColumn(column);
+			CollisionLayer.RemoveColumn(column);
 
 			Size = new Size(Size.Width - 1, Size.Height);
 
@@ -413,15 +396,15 @@ namespace RuffnTumble
 		{
 
 			//// Move entities
-			//foreach (Entity entity in Entities.Values)
-			//{
-			//    if (zone.Contains(entity.Location))
-			//    {
-			//        entity.Location = new Point(
-			//            entity.Location.X + offset.X,
-			//            entity.Location.Y + offset.Y);
-			//    }
-			//}
+			foreach (Entity entity in Entities.Values)
+			{
+				if (zone.Contains(entity.Location))
+				{
+					entity.Location = new Point(
+						 entity.Location.X + offset.X,
+						 entity.Location.Y + offset.Y);
+				}
+			}
 
 			// Mode SpawnPoints
 			foreach (SpawnPoint spawn in SpawnPoints.Values)
@@ -448,10 +431,6 @@ namespace RuffnTumble
 		{
 			if (LevelReady)
 				return true;
-
-			// Initialize all layers
-			//foreach(Layer layer in Layers)
-			//    layer.Init();
 
 
 			// Init all entities
@@ -483,6 +462,10 @@ namespace RuffnTumble
 
 			//foreach (Layer layer in Layers)
 			//    layer.Draw(Camera);
+
+
+			TileLayer.Draw(Camera);
+
 
 			//
 			// Draw Spawnpoints
@@ -535,7 +518,7 @@ namespace RuffnTumble
 			{
 				foreach (Path path in Paths.Values)
 				{
-					path.Draw(Location);
+					path.Draw(Camera);
 				}
 			}
 
@@ -551,9 +534,6 @@ namespace RuffnTumble
 		/// </summary>
 		public void Update(GameTime time)
 		{
-			//foreach (Layer layer in Layers)
-			//    layer.Update(time);
-
 			// Ask all entities to update
 			foreach (Entity entity in Entities.Values)
 				entity.Update(time);
@@ -573,8 +553,8 @@ namespace RuffnTumble
 		/// <returns>Position in screen coordinate</returns>
 		public Point LevelToScreen(Point pos)
 		{
-			return new Point(pos.X - Location.X + Camera.ViewPort.Left,
-				pos.Y - Location.Y + Camera.ViewPort.Top);
+			return new Point(pos.X - Camera.Location.X + Camera.ViewPort.Left,
+				pos.Y - Camera.Location.Y + Camera.ViewPort.Top);
 		}
 
 
@@ -586,8 +566,8 @@ namespace RuffnTumble
 		public Point ScreenToLevel(Point pos)
 		{
 			return new Point(
-				Location.X + pos.X - Camera.ViewPort.Left,
-				Location.Y + pos.Y - Camera.ViewPort.Top);
+				Camera.Location.X + pos.X - Camera.ViewPort.Left,
+				Camera.Location.Y + pos.Y - Camera.ViewPort.Top);
 		}
 
 
@@ -863,7 +843,6 @@ namespace RuffnTumble
 		#endregion
 
 
-
 		#region Path
 
 
@@ -927,7 +906,6 @@ namespace RuffnTumble
 		#endregion
 
 
-
 		#region Properties
 
 		/// <summary>
@@ -940,17 +918,6 @@ namespace RuffnTumble
 		}
 
 
-		///// <summary>
-		///// Xml tag of the asset in bank
-		///// </summary>
-		//public string XmlTag
-		//{
-		//    get
-		//    {
-		//        return "level";
-		//    }
-		//}
-
 
 		/// <summary>
 		/// If true, level is ready to be used. Else call Init() to make it ready to use.
@@ -961,13 +928,6 @@ namespace RuffnTumble
 			get;
 			private set;
 		}
-
-
-		/// <summary>
-		/// List of all layers
-		/// </summary>
-		//[Browsable(false)]
-		//public List<Layer> Layers;
 
 
 		/// <summary>
@@ -1014,11 +974,11 @@ namespace RuffnTumble
 		{
 			get
 			{
-				return new Size((int)(BlockSize.Width * Scale.Width), (int)(BlockSize.Height * Scale.Height));
+				return new Size((int)(BlockSize.Width * Camera.Scale.Width), (int)(BlockSize.Height * Camera.Scale.Height));
 			}
 		}
 
-
+/*
 		/// <summary>
 		/// Gets/sets the location (in pixel) in the layer (aka : scrolling).
 		/// </summary>
@@ -1040,29 +1000,8 @@ namespace RuffnTumble
 			}
 		}
 		Point location;
+*/
 
-
-		/// <summary>
-		/// Niveau de zoom du layer
-		/// </summary>
-		[CategoryAttribute("Layer")]
-		[Description("Zoom")]
-		public SizeF Scale
-		{
-			get
-			{
-				return scale;
-			}
-			set
-			{
-				scale = value;
-				if (scale.Width == 0.0f)
-					scale.Width = 1.0f;
-				if (scale.Height == 0.0f)
-					scale.Height = 1.0f;
-			}
-		}
-		SizeF scale = new SizeF(1.0f, 1.0f);
 
 
 
@@ -1095,7 +1034,7 @@ namespace RuffnTumble
 		public Camera Camera
 		{
 			get;
-			set;
+			private set;
 		}
 
 
@@ -1115,6 +1054,12 @@ namespace RuffnTumble
 
 
 		/// <summary>
+		/// SpawnPoint texture
+		/// </summary>
+		Texture spTexture;
+
+
+		/// <summary>
 		/// Displays or not SpawnPoints in the layer
 		/// </summary>
 		public bool RenderSpawnPoints
@@ -1122,12 +1067,6 @@ namespace RuffnTumble
 			get;
 			set;
 		}
-
-
-		/// <summary>
-		/// SpawnPoint texture
-		/// </summary>
-		Texture spTexture;
 
 
 		/// <summary>

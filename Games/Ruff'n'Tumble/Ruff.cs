@@ -197,6 +197,24 @@ namespace RuffnTumble
 				World.SetLevel("Level_5");
 			}
 
+
+			if (Keyboard.IsKeyPress(Keys.Right))
+			{
+				World.CurrentLevel.Camera.Location.Offset(1, 0);
+			}
+			if (Keyboard.IsKeyPress(Keys.Left))
+			{
+				World.CurrentLevel.Camera.Location.Offset(-1, 0);
+			}
+			if (Keyboard.IsKeyPress(Keys.Up))
+			{
+				World.CurrentLevel.Camera.Location.Offset(0, -1);
+			}
+			if (Keyboard.IsKeyPress(Keys.Down))
+			{
+				World.CurrentLevel.Camera.Location.Offset(0, 1);
+			}
+
 		}
 
 
@@ -217,6 +235,8 @@ namespace RuffnTumble
 			// Draw the status bar
 			Icons.Draw(0, Point.Empty);
 
+
+			Font.DrawText("Camera location : " + World.CurrentLevel.Camera.Location.ToString(), new Point(100, 100));
 
 			#region Stats
 			//Point pos = Point.Empty;

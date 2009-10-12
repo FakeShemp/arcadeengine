@@ -122,7 +122,7 @@ namespace RuffnTumble.Editor
 					LayerBrush brush = Form.Level.GetBrush(name);
 
 					// Draw the brush
-					brush.Draw(pos, Form.CurrentLayer.TileSet, Form.Level.BlockDimension);
+				//	brush.Draw(pos, Form.CurrentLayer.TileSet, Form.Level.BlockDimension);
 
 					// zone detection
 					rect = new Rectangle(pos, new Size(brush.Size.Width * Form.Level.BlockDimension.Width, brush.Size.Height * Form.Level.BlockDimension.Height));
