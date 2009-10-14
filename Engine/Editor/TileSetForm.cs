@@ -195,6 +195,7 @@ namespace ArcEngine.Editor
 		/// <param name="e"></param>
 		private void GLTextureControl_Resize(object sender, EventArgs e)
 		{
+			Trace.WriteLine("GLTextureControl_Resize");
 			GLTextureControl.MakeCurrent();
 			Display.ViewPort = new Rectangle(Point.Empty, GLTextureControl.Size);
 		}
@@ -362,6 +363,7 @@ namespace ArcEngine.Editor
 		/// <param name="e"></param>
 		private void GLTileControl_Resize(object sender, EventArgs e)
 		{
+			Trace.WriteLine("GLTileControl_Resize");
 			GLTileControl.MakeCurrent();
 			Display.ViewPort = new Rectangle(Point.Empty, GLTileControl.Size);
 		}
@@ -865,6 +867,16 @@ namespace ArcEngine.Editor
 
 
 		#endregion
+
+		private void GLTextureControl_Load(object sender, EventArgs e)
+		{
+			Trace.WriteLine("GLTextureControl_Load");
+		}
+
+		private void GLTileControl_Load(object sender, EventArgs e)
+		{
+			Trace.WriteLine("GLTileControl_Load");
+		}
 
 
 
