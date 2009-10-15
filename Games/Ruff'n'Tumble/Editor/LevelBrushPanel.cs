@@ -117,15 +117,15 @@ namespace RuffnTumble.Editor
 			if (Form.CurrentLayer != null)
 			{
 				Point pos = Point.Empty;
-				foreach (string name in Form.Level.GetBrushes())
+				foreach (string name in Form.World.CurrentLevel.GetBrushes())
 				{
-					LayerBrush brush = Form.Level.GetBrush(name);
+					LayerBrush brush = Form.World.CurrentLevel.GetBrush(name);
 
 					// Draw the brush
-				//	brush.Draw(pos, Form.CurrentLayer.TileSet, Form.Level.BlockDimension);
+				//	brush.Draw(pos, Form.CurrentLayer.TileSet, Form.World.CurrentLevel.BlockDimension);
 
 					// zone detection
-					rect = new Rectangle(pos, new Size(brush.Size.Width * Form.Level.BlockDimension.Width, brush.Size.Height * Form.Level.BlockDimension.Height));
+					rect = new Rectangle(pos, new Size(brush.Size.Width * Form.World.CurrentLevel.BlockDimension.Width, brush.Size.Height * Form.World.CurrentLevel.BlockDimension.Height));
 					Brushes[rect] = brush;
 
 					if (brush == SelectedBrush)
@@ -143,7 +143,7 @@ namespace RuffnTumble.Editor
 					}
 
 					// Move to the next location
-					pos.Y += brush.Size.Height * Form.Level.BlockDimension.Height + 32;
+					pos.Y += brush.Size.Height * Form.World.CurrentLevel.BlockDimension.Height + 32;
 				}
 			}
 

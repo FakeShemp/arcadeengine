@@ -52,16 +52,16 @@ namespace RuffnTumble.Editor
 
 			Form = form;
 
-			PropertyBox.SelectedObject = Form.Level;
-			//LevelWidthLabel.Text = Form.Level.Size.Width.ToString();
-			//DesiredLevelWidth.Value = Form.Level.Size.Width;
-			//LevelHeightLabel.Text = Form.Level.Size.Height.ToString();
-			//DesiredLevelHeight.Value = Form.Level.Size.Height;
+		//	PropertyBox.SelectedObject = Form.World.CurrentLevel;
+			//LevelWidthLabel.Text = Form.World.CurrentLevel.Size.Width.ToString();
+			//DesiredLevelWidth.Value = Form.World.CurrentLevel.Size.Width;
+			//LevelHeightLabel.Text = Form.World.CurrentLevel.Size.Height.ToString();
+			//DesiredLevelHeight.Value = Form.World.CurrentLevel.Size.Height;
 
-			//BlockWidthLabel.Text = Form.Level.BlockSize.Width.ToString();
-			//DesiredBlockWidth.Value = Form.Level.BlockSize.Width;
-			//BlockHeightLabel.Text = Form.Level.BlockSize.Height.ToString();
-			//DesiredBlockHeight.Value = Form.Level.BlockSize.Height;
+			//BlockWidthLabel.Text = Form.World.CurrentLevel.BlockSize.Width.ToString();
+			//DesiredBlockWidth.Value = Form.World.CurrentLevel.BlockSize.Width;
+			//BlockHeightLabel.Text = Form.World.CurrentLevel.BlockSize.Height.ToString();
+			//DesiredBlockHeight.Value = Form.World.CurrentLevel.BlockSize.Height;
 			return true;
 		}
 
@@ -76,7 +76,7 @@ namespace RuffnTumble.Editor
 		/// <param name="e"></param>
 		private void ResizeButton_Click(object sender, EventArgs e)
 		{
-			Form.Level.Resize(new Size((int)DesiredLevelWidth.Value, (int)DesiredLevelHeight.Value));
+			Form.World.CurrentLevel.Resize(new Size((int)DesiredLevelWidth.Value, (int)DesiredLevelHeight.Value));
 		}
 
 
@@ -87,7 +87,7 @@ namespace RuffnTumble.Editor
 		/// <param name="e"></param>
 		private void ResizeBlockButton_Click(object sender, EventArgs e)
 		{
-			Form.Level.BlockSize = new Size((int)DesiredBlockWidth.Value, (int)DesiredBlockHeight.Value);
+			Form.World.CurrentLevel.BlockSize = new Size((int)DesiredBlockWidth.Value, (int)DesiredBlockHeight.Value);
 		}
 
 

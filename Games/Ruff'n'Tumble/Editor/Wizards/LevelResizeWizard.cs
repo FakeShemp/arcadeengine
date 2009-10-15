@@ -31,14 +31,13 @@ namespace RuffnTumble.Editor.Wizards
 {
 	public partial class LevelResizeWizard : Form
 	{
-		public LevelResizeWizard(Level lvl)
+		public LevelResizeWizard(Level level)
 		{
 
 			InitializeComponent();
 
 
-			Level = lvl;
-
+			Level = Level;
 
 
 			LevelWidthLabel.Text = Level.Size.Width.ToString();
@@ -74,7 +73,11 @@ namespace RuffnTumble.Editor.Wizards
 		/// <summary>
 		/// Level to resize
 		/// </summary>
-		Level Level;
+		public Level Level
+		{
+			get;
+			private set;
+		}
 
 		#endregion
 

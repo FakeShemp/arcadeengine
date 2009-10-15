@@ -97,7 +97,7 @@
     </Reference>
     <Reference Include="OpenTK.GLControl, Version=0.9.9.2, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Libraries\OpenTK\Release\OpenTK.GLControl.dll</HintPath>
+      <HintPath>Libraries\OpenTK\Debug\OpenTK.GLControl.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Private>False</Private>

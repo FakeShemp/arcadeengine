@@ -81,6 +81,7 @@
 			this.GLTextureControl.Size = new System.Drawing.Size(740, 126);
 			this.GLTextureControl.TabIndex = 1;
 			this.GLTextureControl.VSync = false;
+			GLTextureControl.HandleCreated += new System.EventHandler(GLTextureControl_HandleCreated);
 			this.GLTextureControl.Load += new System.EventHandler(this.GLTextureControl_Load);
 			this.GLTextureControl.Paint += new System.Windows.Forms.PaintEventHandler(this.GLTextureControl_Paint);
 			this.GLTextureControl.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.OnPreviewKeyDown);
@@ -227,6 +228,7 @@
 			this.GLTileControl.Size = new System.Drawing.Size(534, 325);
 			this.GLTileControl.TabIndex = 11;
 			this.GLTileControl.VSync = false;
+			GLTileControl.HandleCreated += new System.EventHandler(GLTileControl_HandleCreated);
 			this.GLTileControl.Load += new System.EventHandler(this.GLTileControl_Load);
 			this.GLTileControl.Paint += new System.Windows.Forms.PaintEventHandler(this.GLTileControl_Paint);
 			this.GLTileControl.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.OnPreviewKeyDown);

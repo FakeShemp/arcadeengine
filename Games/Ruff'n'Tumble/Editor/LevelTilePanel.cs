@@ -113,10 +113,10 @@ namespace RuffnTumble.Editor
 			{
 				Display.Color = Color.Red;
 				Rectangle rec = new Rectangle(
-					SelectedTiles.Left * Form.Level.BlockSize.Width,
-					SelectedTiles.Top * Form.Level.BlockSize.Height,
-					SelectedTiles.Width * Form.Level.BlockSize.Width,
-					SelectedTiles.Height * Form.Level.BlockSize.Height);
+					SelectedTiles.Left * Form.World.CurrentLevel.BlockSize.Width,
+					SelectedTiles.Top * Form.World.CurrentLevel.BlockSize.Height,
+					SelectedTiles.Width * Form.World.CurrentLevel.BlockSize.Width,
+					SelectedTiles.Height * Form.World.CurrentLevel.BlockSize.Height);
 				Display.Rectangle(rec, false);
 				Display.Color = Color.White;
 			}
@@ -129,13 +129,13 @@ namespace RuffnTumble.Editor
 				Point to = Point.Empty;
 				Display.Color = Color.Red;
 /*
-				for (int y = 0; y < Form.CurrentLayer.Texture.Size.Height; y += Form.Level.BlockSize.Height)
+				for (int y = 0; y < Form.CurrentLayer.Texture.Size.Height; y += Form.World.CurrentLevel.BlockSize.Height)
 				{
 					from.X = 0; from.Y = y;
 					to.X = Form.CurrentLayer.Texture.Size.Width; to.Y = y;
 					Display.Line(from, to);
 				}
-				for (int x = 0; x < Form.CurrentLayer.Texture.Size.Width; x += Form.Level.BlockSize.Width)
+				for (int x = 0; x < Form.CurrentLayer.Texture.Size.Width; x += Form.World.CurrentLevel.BlockSize.Width)
 				{
 					from.X = x; from.Y = 0;
 					to.X = x; to.Y = Form.CurrentLayer.Texture.Size.Height;
@@ -171,13 +171,13 @@ namespace RuffnTumble.Editor
 			{
 /*	
 				Point pos = e.Location;
-				Size size = new Size(Form.CurrentLayer.Texture.Size.Width / Form.Level.BlockSize.Width,
-					Form.CurrentLayer.Texture.Size.Height / Form.Level.BlockSize.Height);
-					//Form.CurrentLayer.Texture.SizeInBlock(Form.Level.BlockSize);
+				Size size = new Size(Form.CurrentLayer.Texture.Size.Width / Form.World.CurrentLevel.BlockSize.Width,
+					Form.CurrentLayer.Texture.Size.Height / Form.World.CurrentLevel.BlockSize.Height);
+					//Form.CurrentLayer.Texture.SizeInBlock(Form.World.CurrentLevel.BlockSize);
 
 				SelectedTiles = new Rectangle(
-					pos.X / Form.Level.BlockSize.Width,
-					pos.Y / Form.Level.BlockSize.Height,
+					pos.X / Form.World.CurrentLevel.BlockSize.Width,
+					pos.Y / Form.World.CurrentLevel.BlockSize.Height,
 					1,
 					1);
 
@@ -209,13 +209,13 @@ namespace RuffnTumble.Editor
 			{
 				Point pos = e.Location;
 
-				Size size = new Size(pos.X / Form.Level.BlockSize.Width - SelectedTiles.Left + 1,
-										pos.Y / Form.Level.BlockSize.Height - SelectedTiles.Top + 1);
+				Size size = new Size(pos.X / Form.World.CurrentLevel.BlockSize.Width - SelectedTiles.Left + 1,
+										pos.Y / Form.World.CurrentLevel.BlockSize.Height - SelectedTiles.Top + 1);
 
 /*
-				Size tilesize = new Size(Form.CurrentLayer.Texture.Size.Width / Form.Level.BlockSize.Width,
-					Form.CurrentLayer.Texture.Size.Height / Form.Level.BlockSize.Height); 
-				//Form.CurrentLayer.Texture.SizeInBlock(Form.Level.BlockSize);
+				Size tilesize = new Size(Form.CurrentLayer.Texture.Size.Width / Form.World.CurrentLevel.BlockSize.Width,
+					Form.CurrentLayer.Texture.Size.Height / Form.World.CurrentLevel.BlockSize.Height); 
+				//Form.CurrentLayer.Texture.SizeInBlock(Form.World.CurrentLevel.BlockSize);
 
 
 				// Too wide
@@ -248,9 +248,9 @@ namespace RuffnTumble.Editor
 				Form.LayerBrush.Size = SelectedTiles.Size;
 /*
 				// Size of each block in pixel
-				Size blocksize = new Size(Form.CurrentLayer.Texture.Size.Width / Form.Level.BlockSize.Width,
-					Form.CurrentLayer.Texture.Size.Height / Form.Level.BlockSize.Height); 
-				//Form.CurrentLayer.Texture.SizeInBlock(Form.Level.BlockSize);
+				Size blocksize = new Size(Form.CurrentLayer.Texture.Size.Width / Form.World.CurrentLevel.BlockSize.Width,
+					Form.CurrentLayer.Texture.Size.Height / Form.World.CurrentLevel.BlockSize.Height); 
+				//Form.CurrentLayer.Texture.SizeInBlock(Form.World.CurrentLevel.BlockSize);
 
 				for (int y = 0; y < SelectedTiles.Height; y++)
 				{
@@ -438,7 +438,7 @@ namespace RuffnTumble.Editor
 		private void ShowGridButton_CheckedChanged(object sender, EventArgs e)
 		{
 
-	//		foreach (Layer layer in Form.Level.Layers)
+	//		foreach (Layer layer in Form.World.CurrentLevel.Layers)
 	//			layer.ShowGrid = ShowGridButton.Checked;
 			
 		}

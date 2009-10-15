@@ -45,7 +45,6 @@ namespace ArcEngine.Editor
 		{
 			InitializeComponent();
 
-
 			//
 			Node = node;
 			tileSet = new TileSet();
@@ -81,6 +80,16 @@ namespace ArcEngine.Editor
 			// Set zoom value
 			ZoomBox.SelectedIndex = 0;
 
+		}
+
+		void GLTextureControl_HandleCreated(object sender, EventArgs e)
+		{
+			Trace.WriteLine("GLTextureControl_HandleCreated");
+		}
+
+		void GLTileControl_HandleCreated(object sender, EventArgs e)
+		{
+			Trace.WriteLine("GLTileControl_HandleCreated");
 		}
 
 
@@ -196,20 +205,8 @@ namespace ArcEngine.Editor
 		/// <param name="e"></param>
 		private void GLTextureControl_Resize(object sender, EventArgs e)
 		{
-			Trace.WriteLine("GLTextureControl_Resize");
-			try
-			{
-				GLTextureControl.MakeCurrent();
-				Display.ViewPort = new Rectangle(Point.Empty, GLTextureControl.Size);
-			}
-			catch (Exception ex)
-			{
-				Trace.WriteLine("Exception \"{0}\"", ex.Message);
-			}
-			finally
-			{
-				Trace.WriteLine("~GLTextureControl_Resize");
-			}
+			GLTextureControl.MakeCurrent();
+			Display.ViewPort = new Rectangle(Point.Empty, GLTextureControl.Size);
 		}
 
 		/// <summary>
@@ -375,20 +372,8 @@ namespace ArcEngine.Editor
 		/// <param name="e"></param>
 		private void GLTileControl_Resize(object sender, EventArgs e)
 		{
-			Trace.WriteLine("GLTileControl_Resize");
-			try
-			{
-				GLTileControl.MakeCurrent();
-				Display.ViewPort = new Rectangle(Point.Empty, GLTileControl.Size);
-			}
-			catch (Exception ex)
-			{
-				Trace.WriteLine("Exception \"{0}\"", ex.Message);
-			}
-			finally
-			{
-				Trace.WriteLine("~GLTileControl_Resize");
-			}
+			GLTileControl.MakeCurrent();
+			Display.ViewPort = new Rectangle(Point.Empty, GLTileControl.Size);
 		}
 
 		/// <summary>

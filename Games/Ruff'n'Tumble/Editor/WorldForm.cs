@@ -57,15 +57,13 @@ namespace RuffnTumble.Editor
 			BrushPanel = new LevelBrushPanel();
 
 
-			//Level = new Level();
-			//Level.Load(node);
-			//Level.Init();
-
 
 			World = new World();
 			World.Load(node);
+			World.Init();
+		//	World.SetLevel("Level_1");
 
-		//	CurrentLayer = Level.Layers[0];
+		//	CurrentLayer = World.CurrentLevel.Layers[0];
 
 			//Brush = new BrushTool(level);
 
@@ -91,13 +89,13 @@ namespace RuffnTumble.Editor
 
 
 			// Rebuild ComboBoxes
-			RebuildEntityList(null, null);
+			RebuildLevelList(null, null);
 			RebuildSpawnPointsList(null, null);
 
 
 			//
-			//	DrawTimer.Interval = Config.LevelRefreshRate;
-			//	DrawTimer.Start();
+			//DrawTimer.Interval = Config.LevelRefreshRate;
+			//DrawTimer.Start();
 
 
 		}
@@ -113,21 +111,21 @@ namespace RuffnTumble.Editor
 				return;
 
 			// Blocks in layer are invalid
-			if (Level.BlockSize.IsEmpty)
+			if (World.CurrentLevel.BlockSize.IsEmpty)
 				return;
 
 			if (LevelHScroller != null)
 			{
-				LevelHScroller.LargeChange = GlControl.Width / (Level.BlockSize.Width);
-				LevelHScroller.Maximum = (Level.SizeInPixel.Width - GlControl.Width) / (Level.BlockSize.Width * (int)Level.Camera.Scale.Width) + LevelHScroller.LargeChange;
+				LevelHScroller.LargeChange = GlControl.Width / (World.CurrentLevel.BlockSize.Width);
+				LevelHScroller.Maximum = (World.CurrentLevel.SizeInPixel.Width - GlControl.Width) / (World.CurrentLevel.BlockSize.Width * (int)World.CurrentLevel.Camera.Scale.Width) + LevelHScroller.LargeChange;
 				LevelHScroller.Maximum = 1000;
 			}
 
 
 			if (LevelVScroller != null)
 			{
-				LevelVScroller.LargeChange = GlControl.Height / Level.BlockSize.Height; //GlControl.Height;
-				LevelVScroller.Maximum = (Level.SizeInPixel.Height - GlControl.Height) / (Level.BlockSize.Height * (int)Level.Camera.Scale.Height) + LevelVScroller.LargeChange;
+				LevelVScroller.LargeChange = GlControl.Height / World.CurrentLevel.BlockSize.Height; //GlControl.Height;
+				LevelVScroller.Maximum = (World.CurrentLevel.SizeInPixel.Height - GlControl.Height) / (World.CurrentLevel.BlockSize.Height * (int)World.CurrentLevel.Camera.Scale.Height) + LevelVScroller.LargeChange;
 				LevelVScroller.Maximum = 1000;
 			}
 		}
@@ -138,7 +136,7 @@ namespace RuffnTumble.Editor
 		/// </summary>
 		public void ScrollLayer(Point pos)
 		{
-		//	Level.Location = new Point(pos.X * Level.BlockSize.Width, pos.Y * Level.BlockSize.Height);
+			World.CurrentLevel.Camera.Location = new Point(pos.X * World.CurrentLevel.BlockSize.Width, pos.Y * World.CurrentLevel.BlockSize.Height);
 
 			// Update the display to be smoothy
 			GlControl.Invalidate();
@@ -152,22 +150,24 @@ namespace RuffnTumble.Editor
 
 		#region Events
 
+
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		void GlControl_Load(object sender, EventArgs e)
+		private void WorldForm_Load(object sender, EventArgs e)
 		{
 			GlControl.MakeCurrent();
 			Display.Init();
-			GlLevelControl_Resize(null, null);
+			GlControl_Resize(null, null);
 
 			// Preload texture resources
 			CheckerBoard = new Texture(ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png"));
 
+
 		}
-		
+
 		
 		/// <summary>
 		/// First time the form is shown
@@ -229,16 +229,16 @@ namespace RuffnTumble.Editor
 
 
 		/// <summary>
-		/// GlLevelControl resize event
+		/// GlControl resize event
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void GlLevelControl_Resize(object sender, EventArgs e)
+		private void GlControl_Resize(object sender, EventArgs e)
 		{
 			GlControl.MakeCurrent();
 			Display.ViewPort = new Rectangle(new Point(), GlControl.Size);
-			if (Level != null)
-				Level.Camera.ViewPort = new Rectangle(new Point(), GlControl.Size);
+			if (World.CurrentLevel != null)
+				World.CurrentLevel.Camera.ViewPort = new Rectangle(new Point(), GlControl.Size);
 			//	ResourceManager.DisplayZone = new Rectangle(new Point(), GlControl.Size);
 		}
 
@@ -283,15 +283,15 @@ namespace RuffnTumble.Editor
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void RebuildEntityList(object sender, EventArgs e)
+		private void RebuildLevelList(object sender, EventArgs e)
 		{
-			ListEntitiesButton.Items.Clear();
+			LevelsBox.Items.Clear();
 
-			if (CurrentLayer == null)
-				return;
+	//		if (CurrentLayer == null)
+	//			return;
 
-			foreach (string name in Level.GetEntities())
-				ListEntitiesButton.Items.Add(name);
+			foreach (string name in World.GetLevels())
+				LevelsBox.Items.Add(name);
 		}
 
 
@@ -307,7 +307,7 @@ namespace RuffnTumble.Editor
 			if (CurrentLayer == null)
 				return;
 
-			foreach (string name in Level.GetSpawnPoints())
+			foreach (string name in World.CurrentLevel.GetSpawnPoints())
 				ListSpawnPointsBox.Items.Add(name);
 		}
 
@@ -322,7 +322,7 @@ namespace RuffnTumble.Editor
 			if (ListSpawnPointsBox.SelectedIndex == -1)
 				return;
 
-			SpawnPoint spawn = Level.GetSpawnPoint((string)ListSpawnPointsBox.SelectedItem);
+			SpawnPoint spawn = World.CurrentLevel.GetSpawnPoint((string)ListSpawnPointsBox.SelectedItem);
 
 			LayerPanel.PropertyGridBox.SelectedObject = spawn;
 
@@ -337,20 +337,26 @@ namespace RuffnTumble.Editor
 		/// <param name="e"></param>
 		private void ListEntitiesButton_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if (LayerPanel.PropertyGridBox.SelectedObject != null)
-			{
-				((Entity)LayerPanel.PropertyGridBox.SelectedObject).Debug = false;
-			}
+			//if (LayerPanel.PropertyGridBox.SelectedObject != null)
+			//{
+			//    ((Entity)LayerPanel.PropertyGridBox.SelectedObject).Debug = false;
+			//}
 
 			// No index selected
-			if (ListEntitiesButton.SelectedIndex == -1)
+			if (LevelsBox.SelectedIndex == -1)
 				return;
 
-			Entity entity = Level.GetEntity((string)ListEntitiesButton.SelectedItem);
+			//Entity entity = World.CurrentLevel.GetEntity((string)LevelsBox.SelectedItem);
 
-			LayerPanel.PropertyGridBox.SelectedObject = entity;
+			//LayerPanel.PropertyGridBox.SelectedObject = entity;
 
-			entity.Debug = true;
+			//entity.Debug = true;
+
+
+			if (World == null)
+				return;
+
+			World.SetLevel((string)LevelsBox.SelectedItem);
 
 		}
 
@@ -366,10 +372,10 @@ namespace RuffnTumble.Editor
 			if (ListSpawnPointsBox.SelectedIndex == -1)
 				return;
 
-			SpawnPoint spawn = Level.GetSpawnPoint((string)ListSpawnPointsBox.SelectedItem);
+			SpawnPoint spawn = World.CurrentLevel.GetSpawnPoint((string)ListSpawnPointsBox.SelectedItem);
 
-			int x = (spawn.Location.X - GlControl.Width / 2) / Level.BlockSize.Width;
-			int y = (spawn.Location.Y - GlControl.Height / 2) / Level.BlockSize.Height;
+			int x = (spawn.Location.X - GlControl.Width / 2) / World.CurrentLevel.BlockSize.Width;
+			int y = (spawn.Location.Y - GlControl.Height / 2) / World.CurrentLevel.BlockSize.Height;
 			ScrollLayer(new Point(x, y));
 		}
 
@@ -383,13 +389,13 @@ namespace RuffnTumble.Editor
 		private void FindEntityButton_Click(object sender, EventArgs e)
 		{
 			// No index selected
-			if (ListEntitiesButton.SelectedIndex == -1)
+			if (LevelsBox.SelectedIndex == -1)
 				return;
 
-			Entity entity = Level.GetEntity((string)ListEntitiesButton.SelectedItem);
+			Entity entity = World.CurrentLevel.GetEntity((string)LevelsBox.SelectedItem);
 
-			int x = (entity.Location.X - GlControl.Width / 2) / Level.BlockSize.Width;
-			int y = (entity.Location.Y - GlControl.Height / 2) / Level.BlockSize.Height;
+			int x = (entity.Location.X - GlControl.Width / 2) / World.CurrentLevel.BlockSize.Width;
+			int y = (entity.Location.Y - GlControl.Height / 2) / World.CurrentLevel.BlockSize.Height;
 			ScrollLayer(new Point(x, y));
 		}
 
@@ -407,8 +413,8 @@ namespace RuffnTumble.Editor
 		private void PasteBrush(Point location)
 		{
 			// Find the location and paste it
-			Point pos = Level.ScreenToLevel(location);
-			pos = Level.PositionToBlock(pos);
+			Point pos = World.CurrentLevel.ScreenToLevel(location);
+			pos = World.CurrentLevel.PositionToBlock(pos);
 			LayerBrush.Paste(CurrentLayer, pos);
 		}
 
@@ -420,10 +426,10 @@ namespace RuffnTumble.Editor
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void GlLevelControl_Paint(object sender, PaintEventArgs e)
+		private void GlControl_Paint(object sender, PaintEventArgs e)
 		{
 			// Stop the drawtimer
-			DrawTimer.Stop();
+	//		DrawTimer.Stop();
 
 			GlControl.MakeCurrent();
 			Display.ClearBuffers();
@@ -431,12 +437,12 @@ namespace RuffnTumble.Editor
 			// Background texture
 			//Video.Texture = CheckerBoard;
 			Rectangle rect = new Rectangle(Point.Empty, GlControl.Size);
-			CheckerBoard.Blit(rect, rect);
+		//	CheckerBoard.Blit(rect, rect);
 
 
 			// Draw the level
-			if (Level != null)
-				Level.Draw();
+			if (World.CurrentLevel!= null)
+				World.CurrentLevel.Draw();
 
 
 			// No layer selected
@@ -456,7 +462,7 @@ namespace RuffnTumble.Editor
 						if (spawn == null)
 							continue;
 
-						Point pos = level.LevelToScreen(spawn.Location);
+						Point pos = World.CurrentLevel.LevelToScreen(spawn.Location);
 						pos.X = pos.X - 8;
 						pos.Y = pos.Y - 8;
 						Video.Blit(SpawnPointTexture, pos);
@@ -467,7 +473,7 @@ namespace RuffnTumble.Editor
 
 						rect = SpawnPointTexture.Rectangle;
 						rect.Offset(spawn.CollisionBoxLocation.Location);
-						rect.Location = level.LevelToScreen(rect.Location);
+						rect.Location = World.CurrentLevel.LevelToScreen(rect.Location);
 						Video.Rectangle(rect, false);
 					}
 
@@ -481,11 +487,11 @@ namespace RuffnTumble.Editor
 
 				Display.Color = Color.Green;
 				Rectangle rec = new Rectangle(
-					BrushRectangle.Left * Level.BlockDimension.Width,
-					BrushRectangle.Top * Level.BlockDimension.Height,
-					BrushRectangle.Width * Level.BlockDimension.Width,
-					BrushRectangle.Height * Level.BlockDimension.Height);
-				rec.Location = Level.LevelToScreen(rec.Location);
+					BrushRectangle.Left * World.CurrentLevel.BlockDimension.Width,
+					BrushRectangle.Top * World.CurrentLevel.BlockDimension.Height,
+					BrushRectangle.Width * World.CurrentLevel.BlockDimension.Width,
+					BrushRectangle.Height * World.CurrentLevel.BlockDimension.Height);
+				rec.Location = World.CurrentLevel.LevelToScreen(rec.Location);
 				Display.Rectangle(rec, false);
 				Display.Color = Color.White;
 
@@ -501,19 +507,19 @@ namespace RuffnTumble.Editor
 
 				// Find the good location
 				Point pos = GlControl.PointToClient(Control.MousePosition);
-				pos.X -= (Level.BlockDimension.Width - Level.Location.X % Level.BlockDimension.Width + pos.X) % Level.BlockDimension.Width;
-				pos.Y -= (Level.BlockDimension.Height - Level.Location.Y % Level.BlockDimension.Height + pos.Y) % Level.BlockDimension.Height;
+				pos.X -= (World.CurrentLevel.BlockDimension.Width - World.CurrentLevel.Location.X % World.CurrentLevel.BlockDimension.Width + pos.X) % World.CurrentLevel.BlockDimension.Width;
+				pos.Y -= (World.CurrentLevel.BlockDimension.Height - World.CurrentLevel.Location.Y % World.CurrentLevel.BlockDimension.Height + pos.Y) % World.CurrentLevel.BlockDimension.Height;
 
 				// Draw the tile on the screen only if the cursor is in the form
-				if (pos.X > -Level.BlockDimension.Width)
-					LayerBrush.Draw(pos, CurrentLayer.TileSet, Level.BlockDimension);
+				if (pos.X > -World.CurrentLevel.BlockDimension.Width)
+					LayerBrush.Draw(pos, CurrentLayer.TileSet, World.CurrentLevel.BlockDimension);
 */
 			}
 
 			GlControl.SwapBuffers();
 
 			// Restart the draw timer
-			DrawTimer.Start();
+		//	DrawTimer.Start();
 		}
 
 
@@ -523,7 +529,7 @@ namespace RuffnTumble.Editor
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void GlLevelControl_KeyDown(object sender, KeyEventArgs e)
+		private void GlControl_KeyDown(object sender, KeyEventArgs e)
 		{
 
 			switch (e.KeyCode)
@@ -569,7 +575,7 @@ namespace RuffnTumble.Editor
 					{
 						//	CurrentLayer.RemoveEntity(ent.Name);
 						LayerPanel.PropertyGridBox.SelectedObject = null;
-						RebuildEntityList(null, null);
+						RebuildLevelList(null, null);
 
 						return;
 					}
@@ -625,7 +631,7 @@ namespace RuffnTumble.Editor
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void GlLevelControl_OnMouseDown(object sender, MouseEventArgs e)
+		private void GlControl_OnMouseDown(object sender, MouseEventArgs e)
 		{
 			LastMousePos = e.Location;
 
@@ -656,9 +662,9 @@ namespace RuffnTumble.Editor
 			// Left mouse button and FloodFill checked ? => Fill tile in the layer
 			if (e.Button == MouseButtons.Left && TileMode == TileMode.Fill)
 			{
-				Point pos = Level.ScreenToLevel(e.Location);
+				Point pos = World.CurrentLevel.ScreenToLevel(e.Location);
 
-				CurrentLayer.FloodFill(Level.PositionToBlock(pos), LayerBrush);
+				CurrentLayer.FloodFill(World.CurrentLevel.PositionToBlock(pos), LayerBrush);
 				return;
 			}
 
@@ -669,11 +675,11 @@ namespace RuffnTumble.Editor
 			{
 
 				Point pos = e.Location;
-				pos.Offset(Level.Camera.Location);
+				pos.Offset(World.CurrentLevel.Camera.Location);
 
 				BrushRectangle = new Rectangle(
-					pos.X / Level.BlockDimension.Width,
-					pos.Y / Level.BlockDimension.Height,
+					pos.X / World.CurrentLevel.BlockDimension.Width,
+					pos.Y / World.CurrentLevel.BlockDimension.Height,
 					1,
 					1);
 
@@ -693,11 +699,11 @@ namespace RuffnTumble.Editor
 
 				// Find the entity under the mouse
 				Point pos = e.Location;
-				pos.X += Level.Camera.Location.X;
-				pos.Y += Level.Camera.Location.Y;
+				pos.X += World.CurrentLevel.Camera.Location.X;
+				pos.Y += World.CurrentLevel.Camera.Location.Y;
 				//pos.Offset(CurrentLayer.Offset);
 
-				entity = Level.FindEntity(pos);
+				entity = World.CurrentLevel.FindEntity(pos);
 				LayerPanel.PropertyGridBox.SelectedObject = entity;
 				if (entity != null)
 				{
@@ -713,7 +719,7 @@ namespace RuffnTumble.Editor
 				}
 
 
-				SpawnPoint spawn = Level.FindSpawnPoint(pos);
+				SpawnPoint spawn = World.CurrentLevel.FindSpawnPoint(pos);
 				if (spawn != null)
 				{
 					LayerPanel.PropertyGridBox.SelectedObject = spawn;
@@ -736,24 +742,24 @@ namespace RuffnTumble.Editor
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void GlLevelControl_OnMouseMove(object sender, MouseEventArgs e)
+		private void GlControl_OnMouseMove(object sender, MouseEventArgs e)
 		{
 			Entity entity;
 
 			// No layer ??
-			if (Size.IsEmpty || Level == null)
+			if (Size.IsEmpty || World.CurrentLevel == null)
 				return;
 
 
 			// Display the tile coord
 			MousePos = e.Location;
-			Point pos = Level.ScreenToLevel(MousePos);
+			Point pos = World.CurrentLevel.ScreenToLevel(MousePos);
 
 			if (CurrentLayer != null)
 			{
 				MouseCoordLabel.Text = "Mouse coord : " + pos.X + "x" + pos.Y;
 				TileIDLabel.Text = "Tile ID : " + CurrentLayer.GetTileAtPixel(pos).ToString();
-				pos = Level.PositionToBlock(pos);
+				pos = World.CurrentLevel.PositionToBlock(pos);
 				TileCoordLabel.Text = "Tile coord : " + pos.X + "x" + pos.Y;
 			}
 
@@ -761,9 +767,9 @@ namespace RuffnTumble.Editor
 			if (e.Button == MouseButtons.Middle)
 			{
 				// Find the new coord for the level
-				pos = Level.Camera.Location;
-				pos.X /= Level.BlockSize.Width;
-				pos.Y /= Level.BlockSize.Height;
+				pos = World.CurrentLevel.Camera.Location;
+				pos.X /= World.CurrentLevel.BlockSize.Width;
+				pos.Y /= World.CurrentLevel.BlockSize.Height;
 
 				// Smooth the value
 				pos.X += (LastMousePos.X - e.X) / 3;
@@ -788,7 +794,7 @@ namespace RuffnTumble.Editor
 			if (e.Button == MouseButtons.Left && TileMode == TileMode.Pen)
 			{
 				PasteBrush(e.Location);
-				//GlLevelControl.Draw();
+				//GlControl.Draw();
 
 				return;
 			}
@@ -831,10 +837,10 @@ namespace RuffnTumble.Editor
 			// Sizing the brush ?
 			if (sizingBrush)
 			{
-				pos = Level.ScreenToLevel(e.Location);
+				pos = World.CurrentLevel.ScreenToLevel(e.Location);
 
-				BrushRectangle.Size = new Size(pos.X / Level.BlockDimension.Width - BrushRectangle.Left + 1,
-												pos.Y / Level.BlockDimension.Height - BrushRectangle.Top + 1);
+				BrushRectangle.Size = new Size(pos.X / World.CurrentLevel.BlockDimension.Width - BrushRectangle.Left + 1,
+												pos.Y / World.CurrentLevel.BlockDimension.Height - BrushRectangle.Top + 1);
 
 				return;
 			}
@@ -844,17 +850,17 @@ namespace RuffnTumble.Editor
 			// Something under the mouse ?
 			if (CurrentLayer != null && TileMode == TileMode.NoAction)
 			{
-				pos = Level.ScreenToLevel(e.Location);
+				pos = World.CurrentLevel.ScreenToLevel(e.Location);
 
 				// Entity under the mouse ?
-				entity = Level.FindEntity(pos);
+				entity = World.CurrentLevel.FindEntity(pos);
 				if (entity != null)
 				{
 					Cursor = Cursors.Hand;
 					return;
 				}
 
-				SpawnPoint spawn = Level.FindSpawnPoint(pos);
+				SpawnPoint spawn = World.CurrentLevel.FindSpawnPoint(pos);
 				if (spawn != null)
 				{
 					Cursor = Cursors.Hand;
@@ -874,7 +880,7 @@ namespace RuffnTumble.Editor
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void GlLevelControl_OnMouseUp(object sender, MouseEventArgs e)
+		private void GlControl_OnMouseUp(object sender, MouseEventArgs e)
 		{
 
 			// Stop scrolling with the middle mouse button
@@ -975,7 +981,7 @@ namespace RuffnTumble.Editor
 		/// <param name="e"></param>
 		private void ResizeLevelMenu_Click(object sender, EventArgs e)
 		{
-			Wizards.LevelResizeWizard wizard = new Wizards.LevelResizeWizard(Level);
+			Wizards.LevelResizeWizard wizard = new Wizards.LevelResizeWizard(World.CurrentLevel);
 			wizard.ShowDialog();
 		}
 
@@ -988,9 +994,9 @@ namespace RuffnTumble.Editor
 		/// <param name="e"></param>
 		private void InsertRow_Click(object sender, EventArgs e)
 		{
-			Point pos = Level.ScreenToLevel(MousePos);
+			Point pos = World.CurrentLevel.ScreenToLevel(MousePos);
 
-			Level.InsertRow(Level.PositionToBlock(pos).Y, 0);
+			World.CurrentLevel.InsertRow(World.CurrentLevel.PositionToBlock(pos).Y, 0);
 		}
 
 
@@ -1001,9 +1007,9 @@ namespace RuffnTumble.Editor
 		/// <param name="e"></param>
 		private void DeleteRow_Click(object sender, EventArgs e)
 		{
-			Point pos = Level.ScreenToLevel(MousePos);
+			Point pos = World.CurrentLevel.ScreenToLevel(MousePos);
 
-			Level.RemoveRow(Level.PositionToBlock(pos).Y);
+			World.CurrentLevel.RemoveRow(World.CurrentLevel.PositionToBlock(pos).Y);
 
 		}
 
@@ -1014,9 +1020,9 @@ namespace RuffnTumble.Editor
 		/// <param name="e"></param>
 		private void InsertColumn_Click(object sender, EventArgs e)
 		{
-			Point pos = Level.ScreenToLevel(MousePos);
+			Point pos = World.CurrentLevel.ScreenToLevel(MousePos);
 
-			Level.InsertColumn(Level.PositionToBlock(pos).X, 0);
+			World.CurrentLevel.InsertColumn(World.CurrentLevel.PositionToBlock(pos).X, 0);
 		}
 
 		/// <summary>
@@ -1026,9 +1032,9 @@ namespace RuffnTumble.Editor
 		/// <param name="e"></param>
 		private void DeleteColumn_Click(object sender, EventArgs e)
 		{
-			Point pos = Level.ScreenToLevel(MousePos);
+			Point pos = World.CurrentLevel.ScreenToLevel(MousePos);
 
-			Level.RemoveColumn(Level.PositionToBlock(pos).X);
+			World.CurrentLevel.RemoveColumn(World.CurrentLevel.PositionToBlock(pos).X);
 
 		}
 
@@ -1068,7 +1074,7 @@ namespace RuffnTumble.Editor
 			}
 		}
 
-
+/*
 		/// <summary>
 		/// Level currently edited
 		/// </summary>
@@ -1077,7 +1083,7 @@ namespace RuffnTumble.Editor
 			get;
 			protected set;
 		}
-
+*/
 
 		/// <summary>
 		/// 
@@ -1185,6 +1191,12 @@ namespace RuffnTumble.Editor
 
 
 		#endregion
+
+		private void GlControl_Load(object sender, EventArgs e)
+		{
+
+		}
+
 
 	}
 
