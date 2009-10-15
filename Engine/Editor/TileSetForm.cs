@@ -45,9 +45,10 @@ namespace ArcEngine.Editor
 		{
 			InitializeComponent();
 
+
 			//
+			Node = node;
 			tileSet = new TileSet();
-			tileSet.Load(node);
 
 
 			TileBox = new SelectionBox();
@@ -198,6 +199,7 @@ namespace ArcEngine.Editor
 			Trace.WriteLine("GLTextureControl_Resize");
 			GLTextureControl.MakeCurrent();
 			Display.ViewPort = new Rectangle(Point.Empty, GLTextureControl.Size);
+			Trace.WriteLine("~GLTextureControl_Resize");
 		}
 
 		/// <summary>
@@ -366,6 +368,7 @@ namespace ArcEngine.Editor
 			Trace.WriteLine("GLTileControl_Resize");
 			GLTileControl.MakeCurrent();
 			Display.ViewPort = new Rectangle(Point.Empty, GLTileControl.Size);
+			Trace.WriteLine("~GLTileControl_Resize");
 		}
 
 		/// <summary>
@@ -568,6 +571,10 @@ namespace ArcEngine.Editor
 		//	GLTileControl_Resize(null, null);
 			GLTileControl.MakeCurrent();
 			Display.Init();
+
+
+
+			tileSet.Load(Node);
 
 		}
 
@@ -868,14 +875,21 @@ namespace ArcEngine.Editor
 
 		#endregion
 
+
+
+		XmlNode Node;
+
+
 		private void GLTextureControl_Load(object sender, EventArgs e)
 		{
 			Trace.WriteLine("GLTextureControl_Load");
+			Trace.WriteLine("~GLTextureControl_Load");
 		}
 
 		private void GLTileControl_Load(object sender, EventArgs e)
 		{
 			Trace.WriteLine("GLTileControl_Load");
+			Trace.WriteLine("~GLTileControl_Load");
 		}
 
 

@@ -30,6 +30,7 @@
 		{
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TileSetForm));
+			this.GLTileControl = new OpenTK.GLControl();
 			this.GLTextureControl = new OpenTK.GLControl();
 			this.TileGroupBox = new System.Windows.Forms.GroupBox();
 			this.CollisionButton2 = new System.Windows.Forms.Button();
@@ -44,7 +45,6 @@
 			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
 			this.HotSpotButton = new System.Windows.Forms.ToolStripButton();
 			this.CollisionButton = new System.Windows.Forms.ToolStripButton();
-			this.GLTileControl = new OpenTK.GLControl();
 			this.VertScroller = new System.Windows.Forms.VScrollBar();
 			this.HScroller = new System.Windows.Forms.HScrollBar();
 			this.TextureToolStrip = new System.Windows.Forms.ToolStrip();
@@ -78,7 +78,7 @@
 			this.GLTextureControl.Cursor = System.Windows.Forms.Cursors.Cross;
 			this.GLTextureControl.Location = new System.Drawing.Point(0, 25);
 			this.GLTextureControl.Name = "GLTextureControl";
-			this.GLTextureControl.Size = new System.Drawing.Size(723, 126);
+			this.GLTextureControl.Size = new System.Drawing.Size(740, 126);
 			this.GLTextureControl.TabIndex = 1;
 			this.GLTextureControl.VSync = false;
 			this.GLTextureControl.Load += new System.EventHandler(this.GLTextureControl_Load);
