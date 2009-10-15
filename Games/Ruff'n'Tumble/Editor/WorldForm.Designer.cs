@@ -1,6 +1,6 @@
 namespace RuffnTumble.Editor
 {
-	partial class LevelForm
+	partial class WorldForm
 	{
 		/// <summary> 
 		/// Required designer variable.
@@ -29,7 +29,7 @@ namespace RuffnTumble.Editor
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LevelForm));
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WorldForm));
 			WeifenLuo.WinFormsUI.Docking.DockPanelSkin dockPanelSkin1 = new WeifenLuo.WinFormsUI.Docking.DockPanelSkin();
 			WeifenLuo.WinFormsUI.Docking.AutoHideStripSkin autoHideStripSkin1 = new WeifenLuo.WinFormsUI.Docking.AutoHideStripSkin();
 			WeifenLuo.WinFormsUI.Docking.DockPanelGradient dockPanelGradient1 = new WeifenLuo.WinFormsUI.Docking.DockPanelGradient();
@@ -125,6 +125,7 @@ namespace RuffnTumble.Editor
 			this.GlControl.Size = new System.Drawing.Size(732, 562);
 			this.GlControl.TabIndex = 11;
 			this.GlControl.VSync = true;
+			this.GlControl.Load += new System.EventHandler(this.GlControl_Load);
 			this.GlControl.Paint += new System.Windows.Forms.PaintEventHandler(this.GlLevelControl_Paint);
 			this.GlControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GlLevelControl_OnMouseMove);
 			this.GlControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.GlLevelControl_OnMouseDown);
@@ -233,7 +234,7 @@ namespace RuffnTumble.Editor
 			// propertyGrid1
 			// 
 			this.propertyGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-							| System.Windows.Forms.AnchorStyles.Left)));
+						| System.Windows.Forms.AnchorStyles.Left)));
 			this.propertyGrid1.CommandsVisibleIfAvailable = false;
 			this.propertyGrid1.Location = new System.Drawing.Point(0, 15);
 			this.propertyGrid1.Name = "propertyGrid1";
@@ -495,7 +496,7 @@ namespace RuffnTumble.Editor
 			this.previewLevelToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
 			this.previewLevelToolStripMenuItem.Text = "Preview level";
 			// 
-			// LevelForm
+			// WorldForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -505,7 +506,7 @@ namespace RuffnTumble.Editor
 			this.Controls.Add(this.menuStrip1);
 			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.MainMenuStrip = this.menuStrip1;
-			this.Name = "LevelForm";
+			this.Name = "WorldForm";
 			this.ShowInTaskbar = false;
 			this.TabText = "Level";
 			this.Shown += new System.EventHandler(this.LevelForm_Shown);

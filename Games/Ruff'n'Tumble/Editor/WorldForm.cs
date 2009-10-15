@@ -34,7 +34,7 @@ using WeifenLuo.WinFormsUI.Docking;
 
 namespace RuffnTumble.Editor
 {
-	public partial class LevelForm : AssetEditor
+	public partial class WorldForm : AssetEditor
 	{
 
 		#region Misc
@@ -43,13 +43,10 @@ namespace RuffnTumble.Editor
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public LevelForm(XmlNode node)
+		public WorldForm(XmlNode node)
 		{
 			InitializeComponent();
 
-			GlControl.MakeCurrent();
-			Display.Init();
-			GlLevelControl_Resize(null, null);
 
 
 			//layerBrush = new LayerBrush("internal");
@@ -60,9 +57,13 @@ namespace RuffnTumble.Editor
 			BrushPanel = new LevelBrushPanel();
 
 
-			Level = new Level();
-			Level.Load(node);
-			Level.Init();
+			//Level = new Level();
+			//Level.Load(node);
+			//Level.Init();
+
+
+			World = new World();
+			World.Load(node);
 
 		//	CurrentLayer = Level.Layers[0];
 
@@ -70,8 +71,6 @@ namespace RuffnTumble.Editor
 
 
 
-			// Preload texture resources
-			CheckerBoard = new Texture(ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png"));
 
 			//Assembly a = Assembly.GetExecutingAssembly();
 			//Stream stream = a.GetManifestResourceStream("ArcEngine.Files.checkerboard.png");
@@ -153,6 +152,23 @@ namespace RuffnTumble.Editor
 
 		#region Events
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void GlControl_Load(object sender, EventArgs e)
+		{
+			GlControl.MakeCurrent();
+			Display.Init();
+			GlLevelControl_Resize(null, null);
+
+			// Preload texture resources
+			CheckerBoard = new Texture(ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png"));
+
+		}
+		
+		
 		/// <summary>
 		/// First time the form is shown
 		/// </summary>
@@ -419,7 +435,8 @@ namespace RuffnTumble.Editor
 
 
 			// Draw the level
-			Level.Draw();
+			if (Level != null)
+				Level.Draw();
 
 
 			// No layer selected
@@ -724,7 +741,7 @@ namespace RuffnTumble.Editor
 			Entity entity;
 
 			// No layer ??
-			if (Size.IsEmpty)
+			if (Size.IsEmpty || Level == null)
 				return;
 
 
@@ -1060,7 +1077,16 @@ namespace RuffnTumble.Editor
 			get;
 			protected set;
 		}
-		
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public World World
+		{
+			get;
+			private set;
+		}
 
 		/// <summary>
 		/// Offset of the mouse when scrolling with middle mouse button
@@ -1159,6 +1185,7 @@ namespace RuffnTumble.Editor
 
 
 		#endregion
+
 	}
 
 

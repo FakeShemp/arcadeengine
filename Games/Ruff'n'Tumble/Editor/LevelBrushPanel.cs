@@ -56,7 +56,7 @@ namespace RuffnTumble.Editor
 		/// </summary>
 		/// <param name="form"></param>
 		/// <returns></returns>
-		public bool Init(LevelForm form)
+		public bool Init(WorldForm form)
 		{
 			Form = form;
 
@@ -250,7 +250,7 @@ namespace RuffnTumble.Editor
 		/// <summary>
 		/// Parent level form
 		/// </summary>
-		LevelForm Form;
+		WorldForm Form;
 
 
 

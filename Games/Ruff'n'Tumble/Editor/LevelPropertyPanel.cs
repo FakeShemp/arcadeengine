@@ -45,7 +45,7 @@ namespace RuffnTumble.Editor
 		/// </summary>
 		/// <param name="lvl">Level to edit</param>
 		/// <returns></returns>
-		public bool Init(LevelForm form)
+		public bool Init(WorldForm form)
 		{
 			if (form == null)
 				return false;
@@ -53,15 +53,15 @@ namespace RuffnTumble.Editor
 			Form = form;
 
 			PropertyBox.SelectedObject = Form.Level;
-			LevelWidthLabel.Text = Form.Level.Size.Width.ToString();
-			DesiredLevelWidth.Value = Form.Level.Size.Width;
-			LevelHeightLabel.Text = Form.Level.Size.Height.ToString();
-			DesiredLevelHeight.Value = Form.Level.Size.Height;
+			//LevelWidthLabel.Text = Form.Level.Size.Width.ToString();
+			//DesiredLevelWidth.Value = Form.Level.Size.Width;
+			//LevelHeightLabel.Text = Form.Level.Size.Height.ToString();
+			//DesiredLevelHeight.Value = Form.Level.Size.Height;
 
-			BlockWidthLabel.Text = Form.Level.BlockSize.Width.ToString();
-			DesiredBlockWidth.Value = Form.Level.BlockSize.Width;
-			BlockHeightLabel.Text = Form.Level.BlockSize.Height.ToString();
-			DesiredBlockHeight.Value = Form.Level.BlockSize.Height;
+			//BlockWidthLabel.Text = Form.Level.BlockSize.Width.ToString();
+			//DesiredBlockWidth.Value = Form.Level.BlockSize.Width;
+			//BlockHeightLabel.Text = Form.Level.BlockSize.Height.ToString();
+			//DesiredBlockHeight.Value = Form.Level.BlockSize.Height;
 			return true;
 		}
 
@@ -115,7 +115,7 @@ namespace RuffnTumble.Editor
 		/// <summary>
 		/// Level form
 		/// </summary>
-		LevelForm Form;
+		WorldForm Form;
 
 
 		/// <summary>

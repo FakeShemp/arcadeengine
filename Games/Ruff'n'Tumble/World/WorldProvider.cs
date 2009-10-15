@@ -152,12 +152,12 @@ namespace RuffnTumble
 			AssetEditor form = null;
 			XmlNode node = null;
 
-			if (typeof(T) == typeof(Level))
+			if (typeof(T) == typeof(World))
 			{
 				if (Worlds.ContainsKey(name))
 					node = Worlds[name];
 
-				form = new Editor.LevelForm(node);
+				form = new Editor.WorldForm(node);
 			}
 
 			form.TabText = name;
@@ -189,7 +189,7 @@ namespace RuffnTumble
 			List<string> list = new List<string>();
 
 
-			if (typeof(T) == typeof(Level)) 
+			if (typeof(T) == typeof(World)) 
 				foreach (string key in Worlds.Keys)
 					list.Add(key);
 	
@@ -281,7 +281,7 @@ namespace RuffnTumble
 		/// <returns></returns>
 		public override int Count<T>()
 		{
-			if (typeof(T) == typeof(Level))
+			if (typeof(T) == typeof(World))
 				return Worlds.Count;
 
 			return 0;

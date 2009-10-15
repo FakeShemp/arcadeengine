@@ -112,11 +112,11 @@
     <Compile Include="Editor\LevelBrushPanel.Designer.cs">
       <DependentUpon>LevelBrushPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Editor\LevelForm.cs">
+    <Compile Include="Editor\WorldForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Editor\LevelForm.Designer.cs">
-      <DependentUpon>LevelForm.cs</DependentUpon>
+    <Compile Include="Editor\WorldForm.Designer.cs">
+      <DependentUpon>WorldForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Editor\LevelLayerPanel.cs">
       <SubType>Form</SubType>
@@ -264,8 +264,8 @@
     <EmbeddedResource Include="Editor\LevelBrushPanel.resx">
       <DependentUpon>LevelBrushPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Editor\LevelForm.resx">
-      <DependentUpon>LevelForm.cs</DependentUpon>
+    <EmbeddedResource Include="Editor\WorldForm.resx">
+      <DependentUpon>WorldForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Editor\LevelLayerPanel.resx">
