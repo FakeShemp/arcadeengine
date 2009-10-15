@@ -197,9 +197,19 @@ namespace ArcEngine.Editor
 		private void GLTextureControl_Resize(object sender, EventArgs e)
 		{
 			Trace.WriteLine("GLTextureControl_Resize");
-			GLTextureControl.MakeCurrent();
-			Display.ViewPort = new Rectangle(Point.Empty, GLTextureControl.Size);
-			Trace.WriteLine("~GLTextureControl_Resize");
+			try
+			{
+				GLTextureControl.MakeCurrent();
+				Display.ViewPort = new Rectangle(Point.Empty, GLTextureControl.Size);
+			}
+			catch (Exception ex)
+			{
+				Trace.WriteLine("Exception \"{0}\"", ex.Message);
+			}
+			finally
+			{
+				Trace.WriteLine("~GLTextureControl_Resize");
+			}
 		}
 
 		/// <summary>
@@ -366,9 +376,19 @@ namespace ArcEngine.Editor
 		private void GLTileControl_Resize(object sender, EventArgs e)
 		{
 			Trace.WriteLine("GLTileControl_Resize");
-			GLTileControl.MakeCurrent();
-			Display.ViewPort = new Rectangle(Point.Empty, GLTileControl.Size);
-			Trace.WriteLine("~GLTileControl_Resize");
+			try
+			{
+				GLTileControl.MakeCurrent();
+				Display.ViewPort = new Rectangle(Point.Empty, GLTileControl.Size);
+			}
+			catch (Exception ex)
+			{
+				Trace.WriteLine("Exception \"{0}\"", ex.Message);
+			}
+			finally
+			{
+				Trace.WriteLine("~GLTileControl_Resize");
+			}
 		}
 
 		/// <summary>
@@ -883,13 +903,11 @@ namespace ArcEngine.Editor
 		private void GLTextureControl_Load(object sender, EventArgs e)
 		{
 			Trace.WriteLine("GLTextureControl_Load");
-			Trace.WriteLine("~GLTextureControl_Load");
 		}
 
 		private void GLTileControl_Load(object sender, EventArgs e)
 		{
 			Trace.WriteLine("GLTileControl_Load");
-			Trace.WriteLine("~GLTileControl_Load");
 		}
 
 
