@@ -172,15 +172,18 @@ namespace DungeonEye.Forms
 		/// </summary>
 		public override void Save()
 		{
-			StringBuilder sb = new StringBuilder();
-			using (XmlWriter writer = XmlWriter.Create(sb))
-				Dungeon.Save(writer);
+			//StringBuilder sb = new StringBuilder();
+			//using (XmlWriter writer = XmlWriter.Create(sb))
+			//    Dungeon.Save(writer);
 
-			string xml = sb.ToString();
-			XmlDocument doc = new XmlDocument();
-			doc.LoadXml(xml);
+			//string xml = sb.ToString();
+			//XmlDocument doc = new XmlDocument();
+			//doc.LoadXml(xml);
 
-			ResourceManager.AddAsset<Dungeon>(Dungeon.Name, doc.DocumentElement);
+			//ResourceManager.AddAsset<Dungeon>(Dungeon.Name, doc.DocumentElement);
+
+			ResourceManager.AddAsset<Dungeon>(Dungeon.Name, ResourceManager.ConvertAsset(Dungeon));
+
 		}
 
 

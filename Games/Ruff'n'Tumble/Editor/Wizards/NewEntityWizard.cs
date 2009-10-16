@@ -35,11 +35,11 @@ namespace RuffnTumble.Editor.Wizards
 	public partial class NewEntityWizard : Form
 	{
 
-		public NewEntityWizard(Layer layer, Point pos)
+		public NewEntityWizard(Level level, Point pos)
 		{
 			InitializeComponent();
 
-			Layer = layer;
+			Level = level;
 			Position = pos;
 
 			// Gathers model names
@@ -92,7 +92,7 @@ namespace RuffnTumble.Editor.Wizards
 		/// <summary>
 		/// Current layer
 		/// </summary>
-		Layer Layer;
+		Level Level;
 
 
 		/// <summary>

@@ -114,7 +114,7 @@ namespace RuffnTumble.Editor
 			Rectangle rect = new Rectangle(Point.Empty, GlControl.Size);
 			CheckerBoard.Blit(rect, rect);
 
-			if (Form.CurrentLayer != null)
+			if (Form.World.CurrentLevel != null)
 			{
 				Point pos = Point.Empty;
 				foreach (string name in Form.World.CurrentLevel.GetBrushes())
@@ -211,7 +211,7 @@ namespace RuffnTumble.Editor
 			// Disable auto refresh on the form
 			Form.AutoRefresh = false;
 
-			new Wizards.NewLayerBrushWizard(Form.LayerBrush, Form.CurrentLayer).ShowDialog();
+			new Wizards.NewLayerBrushWizard(Form.LayerBrush, Form.World.CurrentLevel).ShowDialog();
 
 			Form.AutoRefresh = true;
 

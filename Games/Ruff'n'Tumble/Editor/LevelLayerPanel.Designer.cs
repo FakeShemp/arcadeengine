@@ -141,6 +141,9 @@
 			// LayersBox
 			// 
 			this.LayersBox.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.LayersBox.Items.AddRange(new object[] {
+            "Tiles",
+            "Collisions"});
 			this.LayersBox.Location = new System.Drawing.Point(3, 16);
 			this.LayersBox.Name = "LayersBox";
 			this.LayersBox.Size = new System.Drawing.Size(225, 82);

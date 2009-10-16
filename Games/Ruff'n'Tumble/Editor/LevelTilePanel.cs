@@ -158,7 +158,7 @@ namespace RuffnTumble.Editor
 		/// <param name="e"></param>
 		private void GlControl_MouseDown(object sender, MouseEventArgs e)
 		{
-			if (Form.CurrentLayer == null)
+			if (Form.World.CurrentLevel == null)
 				return;
 
 

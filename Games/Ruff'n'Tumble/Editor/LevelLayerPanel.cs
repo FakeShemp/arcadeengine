@@ -85,6 +85,7 @@ namespace RuffnTumble.Editor
 			if (CurrentLayer != null)
 				LayersBox.SelectedItem = CurrentLayer.Name;
 */
+			LayerPropertyGrid.SelectedObject = Form.CurrentLayer;
 
 		}
 
@@ -101,6 +102,17 @@ namespace RuffnTumble.Editor
 		private void LayerBox_OnSelectedIndexChanged(object sender, EventArgs e)
 		{
 			// Change the current layer
+			if (Form == null)
+				return;
+
+			if (LayersBox.SelectedIndex == 0)
+				Form.CurrentLayer = Form.Level.TileLayer;
+			else
+				Form.CurrentLayer = Form.Level.CollisionLayer;
+			
+
+
+			UpdateLayerBox();
 			//currentLayer = Form.Level.GetLayer(LayersBox.SelectedItem.ToString());
 
 			//LayerPropertyGrid.SelectedObject = CurrentLayer;
@@ -120,11 +132,7 @@ namespace RuffnTumble.Editor
 		/// <param name="e"></param>
 		private void ToolAddLayer_Click(object sender, EventArgs e)
 		{
-
-			Wizards.NewLayerWizard dlg = new Wizards.NewLayerWizard();
-		//	dlg.Tag = Form.Level;
-
-			dlg.ShowDialog();
+			new Wizards.NewLayerWizard().ShowDialog();
 
 			UpdateLayerBox();
 		}

@@ -261,6 +261,29 @@ namespace ArcEngine
 
 
 		/// <summary>
+		/// Convert an asset to a XmlNode
+		/// </summary>
+		/// <param name="asset">Asset to convert</param>
+		/// <returns>XmlNode</returns>
+		static public XmlNode ConvertAsset(IAsset asset)
+		{
+			if (asset == null)
+				return null;
+
+			StringBuilder sb = new StringBuilder();
+			using (XmlWriter writer = XmlWriter.Create(sb))
+				asset.Save(writer);
+
+			string xml = sb.ToString();
+			XmlDocument doc = new XmlDocument();
+			doc.LoadXml(xml);
+
+			return doc;
+		}
+
+
+
+		/// <summary>
 		/// Adds an asset definition
 		/// </summary>
 		/// <typeparam name="T">Type of the asset</typeparam>

@@ -67,14 +67,11 @@ namespace RuffnTumble.Editor
 			this.VisualSplitter = new System.Windows.Forms.SplitContainer();
 			this.dockPanel = new WeifenLuo.WinFormsUI.Docking.DockPanel();
 			this.GlControl = new OpenTK.GLControl();
-			this.MainToolStrip = new System.Windows.Forms.ToolStrip();
-			this.LevelsBox = new System.Windows.Forms.ToolStripComboBox();
-			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-			this.ListSpawnPointsBox = new System.Windows.Forms.ToolStripComboBox();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.TileCoordLabel = new System.Windows.Forms.ToolStripStatusLabel();
 			this.MouseCoordLabel = new System.Windows.Forms.ToolStripStatusLabel();
 			this.TileIDLabel = new System.Windows.Forms.ToolStripStatusLabel();
+			this.DebugLabel = new System.Windows.Forms.ToolStripStatusLabel();
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.levelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.totoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -88,7 +85,6 @@ namespace RuffnTumble.Editor
 			this.VisualSplitter.Panel1.SuspendLayout();
 			this.VisualSplitter.Panel2.SuspendLayout();
 			this.VisualSplitter.SuspendLayout();
-			this.MainToolStrip.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
@@ -96,7 +92,7 @@ namespace RuffnTumble.Editor
 			// LevelVScroller
 			// 
 			this.LevelVScroller.Dock = System.Windows.Forms.DockStyle.Right;
-			this.LevelVScroller.Location = new System.Drawing.Point(572, 0);
+			this.LevelVScroller.Location = new System.Drawing.Point(573, 0);
 			this.LevelVScroller.Maximum = 200;
 			this.LevelVScroller.Name = "LevelVScroller";
 			this.LevelVScroller.Size = new System.Drawing.Size(17, 604);
@@ -110,7 +106,7 @@ namespace RuffnTumble.Editor
 			this.LevelHScroller.Location = new System.Drawing.Point(0, 587);
 			this.LevelHScroller.Maximum = 200;
 			this.LevelHScroller.Name = "LevelHScroller";
-			this.LevelHScroller.Size = new System.Drawing.Size(572, 17);
+			this.LevelHScroller.Size = new System.Drawing.Size(573, 17);
 			this.LevelHScroller.TabIndex = 9;
 			this.LevelHScroller.Scroll += new System.Windows.Forms.ScrollEventHandler(this.Scroller_OnScroll);
 			this.LevelHScroller.Resize += new System.EventHandler(this.Scroller_OnResize);
@@ -210,7 +206,6 @@ namespace RuffnTumble.Editor
 			// 
 			// DrawTimer
 			// 
-			this.DrawTimer.Enabled = true;
 			this.DrawTimer.Interval = 150;
 			this.DrawTimer.Tick += new System.EventHandler(this.DrawTimer_Tick);
 			// 
@@ -276,16 +271,16 @@ namespace RuffnTumble.Editor
 			// VisualSplitter.Panel1
 			// 
 			this.VisualSplitter.Panel1.Controls.Add(this.dockPanel);
+			this.VisualSplitter.Panel1MinSize = 250;
 			// 
 			// VisualSplitter.Panel2
 			// 
 			this.VisualSplitter.Panel2.AutoScroll = true;
 			this.VisualSplitter.Panel2.Controls.Add(this.GlControl);
-			this.VisualSplitter.Panel2.Controls.Add(this.MainToolStrip);
 			this.VisualSplitter.Panel2.Controls.Add(this.LevelHScroller);
 			this.VisualSplitter.Panel2.Controls.Add(this.LevelVScroller);
 			this.VisualSplitter.Size = new System.Drawing.Size(844, 604);
-			this.VisualSplitter.SplitterDistance = 251;
+			this.VisualSplitter.SplitterDistance = 250;
 			this.VisualSplitter.TabIndex = 12;
 			// 
 			// dockPanel
@@ -295,8 +290,9 @@ namespace RuffnTumble.Editor
 			this.dockPanel.DockBackColor = System.Drawing.SystemColors.Control;
 			this.dockPanel.DocumentStyle = WeifenLuo.WinFormsUI.Docking.DocumentStyle.DockingWindow;
 			this.dockPanel.Location = new System.Drawing.Point(0, 0);
+			this.dockPanel.MinimumSize = new System.Drawing.Size(250, 600);
 			this.dockPanel.Name = "dockPanel";
-			this.dockPanel.Size = new System.Drawing.Size(251, 604);
+			this.dockPanel.Size = new System.Drawing.Size(250, 604);
 			dockPanelGradient4.EndColor = System.Drawing.SystemColors.ControlLight;
 			dockPanelGradient4.StartColor = System.Drawing.SystemColors.ControlLight;
 			autoHideStripSkin2.DockStripGradient = dockPanelGradient4;
@@ -346,13 +342,13 @@ namespace RuffnTumble.Editor
 			// GlControl
 			// 
 			this.GlControl.BackColor = System.Drawing.Color.Black;
+			this.GlControl.ContextMenuStrip = this.LevelContextMenuStrip;
 			this.GlControl.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.GlControl.Location = new System.Drawing.Point(0, 25);
+			this.GlControl.Location = new System.Drawing.Point(0, 0);
 			this.GlControl.Name = "GlControl";
-			this.GlControl.Size = new System.Drawing.Size(572, 562);
+			this.GlControl.Size = new System.Drawing.Size(573, 587);
 			this.GlControl.TabIndex = 13;
 			this.GlControl.VSync = false;
-			this.GlControl.Load += new System.EventHandler(this.GlControl_Load);
 			this.GlControl.Paint += new System.Windows.Forms.PaintEventHandler(this.GlControl_Paint);
 			this.GlControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GlControl_OnMouseMove);
 			this.GlControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.GlControl_OnMouseDown);
@@ -360,50 +356,13 @@ namespace RuffnTumble.Editor
 			this.GlControl.MouseUp += new System.Windows.Forms.MouseEventHandler(this.GlControl_OnMouseUp);
 			this.GlControl.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GlControl_KeyDown);
 			// 
-			// MainToolStrip
-			// 
-			this.MainToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-			this.MainToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.LevelsBox,
-            this.toolStripSeparator1,
-            this.ListSpawnPointsBox});
-			this.MainToolStrip.Location = new System.Drawing.Point(0, 0);
-			this.MainToolStrip.Name = "MainToolStrip";
-			this.MainToolStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-			this.MainToolStrip.Size = new System.Drawing.Size(572, 25);
-			this.MainToolStrip.TabIndex = 12;
-			this.MainToolStrip.Text = "toolStrip2";
-			// 
-			// LevelsBox
-			// 
-			this.LevelsBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.LevelsBox.DropDownWidth = 100;
-			this.LevelsBox.Name = "LevelsBox";
-			this.LevelsBox.Size = new System.Drawing.Size(100, 25);
-			this.LevelsBox.Sorted = true;
-			this.LevelsBox.SelectedIndexChanged += new System.EventHandler(this.ListEntitiesButton_SelectedIndexChanged);
-			this.LevelsBox.DropDown += new System.EventHandler(this.RebuildLevelList);
-			// 
-			// toolStripSeparator1
-			// 
-			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-			// 
-			// ListSpawnPointsBox
-			// 
-			this.ListSpawnPointsBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.ListSpawnPointsBox.DropDownWidth = 100;
-			this.ListSpawnPointsBox.Name = "ListSpawnPointsBox";
-			this.ListSpawnPointsBox.Size = new System.Drawing.Size(100, 25);
-			this.ListSpawnPointsBox.SelectedIndexChanged += new System.EventHandler(this.ListSpawnPointsBox_SelectedIndexChanged);
-			this.ListSpawnPointsBox.DropDown += new System.EventHandler(this.RebuildSpawnPointsList);
-			// 
 			// statusStrip1
 			// 
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.TileCoordLabel,
             this.MouseCoordLabel,
-            this.TileIDLabel});
+            this.TileIDLabel,
+            this.DebugLabel});
 			this.statusStrip1.Location = new System.Drawing.Point(0, 628);
 			this.statusStrip1.Name = "statusStrip1";
 			this.statusStrip1.Size = new System.Drawing.Size(844, 22);
@@ -433,6 +392,12 @@ namespace RuffnTumble.Editor
 			this.TileIDLabel.Size = new System.Drawing.Size(100, 17);
 			this.TileIDLabel.Text = "Tile ID :";
 			this.TileIDLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// DebugLabel
+			// 
+			this.DebugLabel.Name = "DebugLabel";
+			this.DebugLabel.Size = new System.Drawing.Size(118, 17);
+			this.DebugLabel.Text = "toolStripStatusLabel1";
 			// 
 			// menuStrip1
 			// 
@@ -511,14 +476,12 @@ namespace RuffnTumble.Editor
 			this.TabText = "Level";
 			this.Load += new System.EventHandler(this.WorldForm_Load);
 			this.Shown += new System.EventHandler(this.LevelForm_Shown);
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.WorldForm_FormClosing);
 			this.LevelContextMenuStrip.ResumeLayout(false);
 			this.groupBox2.ResumeLayout(false);
 			this.VisualSplitter.Panel1.ResumeLayout(false);
 			this.VisualSplitter.Panel2.ResumeLayout(false);
-			this.VisualSplitter.Panel2.PerformLayout();
 			this.VisualSplitter.ResumeLayout(false);
-			this.MainToolStrip.ResumeLayout(false);
-			this.MainToolStrip.PerformLayout();
 			this.statusStrip1.ResumeLayout(false);
 			this.statusStrip1.PerformLayout();
 			this.menuStrip1.ResumeLayout(false);
@@ -542,10 +505,6 @@ namespace RuffnTumble.Editor
 		private System.Windows.Forms.ContextMenuStrip LevelContextMenuStrip;
 		private System.Windows.Forms.ToolStripMenuItem AddSpawnPointMenu;
 		private System.Windows.Forms.ToolStripMenuItem AddEntityMenu;
-		private System.Windows.Forms.ToolStrip MainToolStrip;
-		private System.Windows.Forms.ToolStripComboBox LevelsBox;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-		private System.Windows.Forms.ToolStripComboBox ListSpawnPointsBox;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
 		private System.Windows.Forms.ToolStripMenuItem ColumnMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem RowMenuItem;
@@ -568,6 +527,7 @@ namespace RuffnTumble.Editor
 		private System.Windows.Forms.ToolStripMenuItem removeCurrentLayerToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem previewLevelToolStripMenuItem;
 		private OpenTK.GLControl GlControl;
+		private System.Windows.Forms.ToolStripStatusLabel DebugLabel;
 
 	}
 }

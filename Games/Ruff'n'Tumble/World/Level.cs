@@ -102,8 +102,14 @@ namespace RuffnTumble
 			xml.WriteAttributeString("height", BlockSize.Height.ToString());
 			xml.WriteEndElement();
 
+
+			xml.WriteStartElement("tiles");
 			TileLayer.Save(xml);
+			xml.WriteEndElement();
+			
+			xml.WriteStartElement("collisions");
 			CollisionLayer.Save(xml);
+			xml.WriteEndElement();
 
 			// Loops throughs layers
 			//foreach (Layer layer in Layers)
@@ -192,6 +198,12 @@ namespace RuffnTumble
 					}
 					break;
 
+					case "collision":
+					{
+						CollisionLayer.Load(node);
+					}
+					break;
+
 
 					// Size
 					case "size":
@@ -200,12 +212,6 @@ namespace RuffnTumble
 					}
 					break;
 
-					//case "zoom":
-					//{
-					//   scale.Width = float.Parse(node.Attributes["width"].Value);
-					//   scale.Height = float.Parse(node.Attributes["height"].Value);
-					//}
-					//break;
 
 					case "blocksize":
 					{
@@ -454,18 +460,15 @@ namespace RuffnTumble
 		public void Draw()
 		{
 			// Begin the draw
-		//	Display.Texturing = true;
-		//	Display.Blending = true;
 			//Video.ScissorZone = displayZone;
 			//Video.Scissor = true;
 			//Video.Translate = new Point(displayZone.X, displayZone.Y);
 
-			//foreach (Layer layer in Layers)
-			//    layer.Draw(Camera);
 
 
 			TileLayer.Draw(Camera);
 
+			CollisionLayer.Draw(Camera);
 
 			//
 			// Draw Spawnpoints

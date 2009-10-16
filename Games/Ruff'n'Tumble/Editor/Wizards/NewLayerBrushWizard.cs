@@ -35,12 +35,12 @@ namespace RuffnTumble.Editor.Wizards
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public NewLayerBrushWizard(LayerBrush brush, Layer layer)
+		public NewLayerBrushWizard(LayerBrush brush, Level level)
 		{
 			InitializeComponent();
 
 			Brush = brush;
-			Layer = layer;
+			Level = level;
 		}
 
 
@@ -96,9 +96,11 @@ namespace RuffnTumble.Editor.Wizards
 
 
 		/// <summary>
-		/// Layer to work with
+		/// Level to work with
 		/// </summary>
-		Layer Layer;
+		Level Level;
+
+
 		#endregion
 
 	}

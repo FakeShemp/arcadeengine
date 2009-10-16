@@ -167,7 +167,7 @@ namespace RuffnTumble
 
 			// Draw tiles
 			TileSet.Scale = Level.Camera.Scale;
-			//Display.Color = Color;
+			Display.Color = Color.FromArgb(Alpha, Color.White);
 			for (int yy = 0; yy < renderheight + 2; yy++)
 			{
 				for (int xx = 0; xx < renderwidth + 2; xx++)
@@ -186,7 +186,7 @@ namespace RuffnTumble
 					TileSet.Draw(id, rect, TextureLayout.Stretch);
 				}
 			}
-
+			Display.Color = Color.White;
 
 
 
@@ -336,7 +336,13 @@ namespace RuffnTumble
 			xml.WriteAttributeString("value", Visible.ToString());
 			xml.WriteEndElement();	// Visibility
 
+			xml.WriteStartElement("alpha");
+			xml.WriteAttributeString("value", Alpha.ToString());
+			xml.WriteEndElement();	// Alpha
+
+
 			// Loops throughs tiles
+			xml.WriteStartElement("tiles");
 			for (int y = 0; y < Level.Size.Height; y++)
 			{
 				xml.WriteStartElement("row");
@@ -348,6 +354,7 @@ namespace RuffnTumble
 				xml.WriteEndElement();	// row
 			}
 			xml.WriteEndElement();	// tiles
+
 
 			xml.WriteEndElement();	// layer
 
@@ -363,6 +370,9 @@ namespace RuffnTumble
 		{
 			if (xml == null)
 				return false;
+
+			//if (xml.Name.ToLower() != "layer")
+			//    return false;
 
 			// Load texture
 			SetTexture(xml.Attributes["texture"].Value);
@@ -396,7 +406,12 @@ namespace RuffnTumble
 					}
 					break;
 
-
+					// Alpha
+					case "alpha":
+					{
+						Alpha = byte.Parse(node.Attributes["value"].Value);
+					}
+					break;
 
 					default:
 					{
@@ -726,6 +741,14 @@ namespace RuffnTumble
 		List<List<int>> Tiles;
 
 
+		/// <summary>
+		/// Transparency of the layer
+		/// </summary>
+		public byte Alpha
+		{
+			get;
+			set;
+		}
 
 		/// <summary>
 		/// TileSet

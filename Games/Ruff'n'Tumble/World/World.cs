@@ -71,6 +71,7 @@ namespace RuffnTumble
 
 			xml.WriteStartElement("world");
 
+
 			foreach (Level level in Levels.Values)
 				level.Save(xml);
 
@@ -88,6 +89,8 @@ namespace RuffnTumble
 		{
 			if (xml == null)
 				return false;
+
+			Name = xml.Attributes["name"].Value;
 
 
 			// Process datas
@@ -211,6 +214,7 @@ namespace RuffnTumble
 			set;
 		}
 
+
 		/// <summary>
 		/// 
 		/// </summary>
@@ -231,6 +235,7 @@ namespace RuffnTumble
 			get;
 			private set;
 		}
+
 
 		/// <summary>
 		/// All levels in the world

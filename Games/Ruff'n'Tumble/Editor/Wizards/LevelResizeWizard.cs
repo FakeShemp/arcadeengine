@@ -37,8 +37,9 @@ namespace RuffnTumble.Editor.Wizards
 			InitializeComponent();
 
 
-			Level = Level;
-
+			Level = level;
+			if (Level == null)
+				return;
 
 			LevelWidthLabel.Text = Level.Size.Width.ToString();
 			LevelHeightLabel.Text = Level.Size.Height.ToString();
