@@ -47,7 +47,7 @@
 			// ButtonOk
 			// 
 			this.ButtonOk.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-							| System.Windows.Forms.AnchorStyles.Right)));
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.ButtonOk.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.ButtonOk.Location = new System.Drawing.Point(139, 280);
 			this.ButtonOk.Name = "ButtonOk";
@@ -60,12 +60,12 @@
 			// 
 			this.LabelLink.AutoSize = true;
 			this.LabelLink.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.LabelLink.Location = new System.Drawing.Point(65, 250);
+			this.LabelLink.Location = new System.Drawing.Point(97, 250);
 			this.LabelLink.Name = "LabelLink";
-			this.LabelLink.Size = new System.Drawing.Size(217, 20);
+			this.LabelLink.Size = new System.Drawing.Size(145, 20);
 			this.LabelLink.TabIndex = 2;
 			this.LabelLink.TabStop = true;
-			this.LabelLink.Text = "www.codeplex.com/arcengine";
+			this.LabelLink.Text = "www.mimicprod.net";
 			// 
 			// PluginList
 			// 
