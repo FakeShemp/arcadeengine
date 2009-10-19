@@ -27,6 +27,8 @@ using System.Text;
 using System.Windows.Forms;
 using ArcEngine.Input;
 using ArcEngine.Graphic;
+using OpenTK.Graphics;
+
 
 namespace ArcEngine.Forms
 {
@@ -40,7 +42,10 @@ namespace ArcEngine.Forms
 		/// </summary>
 		public GameWindow()
 		{
+			GraphicsMode mode = new GraphicsMode(new ColorFormat(32), 24, 8);
+			RenderControl = new OpenTK.GLControl(mode);
 			InitializeComponent();
+
 		}
 
 

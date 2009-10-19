@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GameWindow));
-			this.RenderControl = new OpenTK.GLControl();
+			//this.RenderControl = new OpenTK.GLControl();
 			this.SuspendLayout();
 			// 
 			// RenderControl
