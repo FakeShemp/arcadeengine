@@ -699,6 +699,26 @@ namespace ArcEngine.Graphic
 
 
 		/// <summary>
+		/// Enables/disables stencil test
+		/// </summary>
+		public static bool StencilTest
+		{
+			get
+			{
+				return GL.IsEnabled(EnableCap.StencilTest);
+			}
+
+			set
+			{
+				if (value)
+					GL.Enable(EnableCap.StencilTest);
+				else
+					GL.Disable(EnableCap.StencilTest);
+			}
+		}
+
+
+		/// <summary>
 		/// Gets/sets blending state
 		/// </summary>
 		public static bool Blending
