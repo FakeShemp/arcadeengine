@@ -278,7 +278,7 @@ namespace ArcEngine
 			XmlDocument doc = new XmlDocument();
 			doc.LoadXml(xml);
 
-			return doc;
+			return doc.DocumentElement;
 		}
 
 
