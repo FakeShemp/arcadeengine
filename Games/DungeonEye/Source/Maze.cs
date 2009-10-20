@@ -64,7 +64,7 @@ namespace DungeonEye
 		/// <returns></returns>
 		public bool Init()
 		{
-			WallTileset = ResourceManager.CreateSharedAsset<TileSet>(WallTilesetName);
+			WallTileset = ResourceManager.CreateSharedAsset<TileSet>(WallTilesetName, WallTilesetName);
 			if (WallTileset == null)
 			{
 				Trace.WriteLine("Failed to load wall tileset for the maze \"" + Name + "\".");
@@ -72,7 +72,7 @@ namespace DungeonEye
 			}
 			WallTileset.Scale = new SizeF(2.0f, 2.0f);
 
-			OverlayTileset = ResourceManager.CreateSharedAsset<TileSet>(OverlayTilesetName);
+			OverlayTileset = ResourceManager.CreateSharedAsset<TileSet>(OverlayTilesetName, OverlayTilesetName);
 			if (OverlayTileset == null)
 			{
 				Trace.WriteLine("Failed to load overlay tileset for the maze \"" + Name + "\".");
@@ -80,7 +80,7 @@ namespace DungeonEye
 			}
 			OverlayTileset.Scale = new SizeF(2.0f, 2.0f);
 
-			ItemsTileset = ResourceManager.CreateSharedAsset<TileSet>(ItemsTilesetName);
+			ItemsTileset = ResourceManager.CreateSharedAsset<TileSet>(ItemsTilesetName, ItemsTilesetName);
 			if (ItemsTileset == null)
 			{
 				Trace.WriteLine("Failed to load items tileset for the maze \"" + Name + "\".");

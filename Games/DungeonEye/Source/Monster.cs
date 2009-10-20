@@ -66,10 +66,10 @@ namespace DungeonEye
 		/// <returns></returns>
 		public bool Init()
 		{
-			Tileset = ResourceManager.CreateSharedAsset<TileSet>(TileSetName);
+			Tileset = ResourceManager.CreateSharedAsset<TileSet>(TileSetName, TileSetName);
 			Tileset.Scale = new SizeF(2.0f, 2.0f);
 
-			Font = ResourceManager.CreateSharedAsset<Font2d>("inventory");
+			Font = ResourceManager.CreateSharedAsset<Font2d>("inventory", "inventory");
 
 			return true;
 		}

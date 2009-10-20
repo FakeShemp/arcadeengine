@@ -162,14 +162,14 @@
     <Compile Include="Interfaces\IItem.cs" />
     <Compile Include="Interfaces\IMonster.cs" />
     <Compile Include="Source\AutoMap.cs" />
-    <Compile Include="Source\CharGen.cs" />
+    <Compile Include="CharGen.cs" />
     <Compile Include="Source\Compass.cs" />
     <Compile Include="IntroScreen.cs" />
     <Compile Include="Source\FlyingItem.cs" />
     <Compile Include="Source\SpellBook.cs" />
     <Compile Include="Source\GUI\Window.cs" />
     <Compile Include="Source\Life.cs" />
-    <Compile Include="Source\OptionMenu.cs" />
+    <Compile Include="OptionMenu.cs" />
     <Compile Include="Source\Dice.cs" />
     <Compile Include="Source\Door.cs" />
     <Compile Include="Source\Dungeon.cs" />

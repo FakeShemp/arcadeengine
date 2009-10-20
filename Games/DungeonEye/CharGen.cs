@@ -53,12 +53,12 @@ namespace DungeonEye
 		/// </summary>
 		public override void LoadContent()
 		{
-			Tileset = ResourceManager.CreateSharedAsset<TileSet>("CharGen");
+			Tileset = ResourceManager.CreateAsset<TileSet>("CharGen");
 			Tileset.Scale = new SizeF(2.0f, 2.0f);
 
 
-			Font = ResourceManager.CreateSharedAsset<Font2d>("intro");
-		//	Font.TileSet.Scale = new SizeF(2.0f, 2.0f);
+			Font = ResourceManager.CreateAsset<Font2d>("intro");
+			Font.TileSet.Scale = new SizeF(2.0f, 2.0f);
 
 			PlayButton = new ScreenButton(string.Empty, new Rectangle(48, 362, 166, 32));
 			PlayButton.Selected += new EventHandler(PlayButton_Selected);

@@ -42,7 +42,7 @@ namespace DungeonEye
 		public bool Init()
 		{
 			// If no tileset, then load it
-			TileSet = ResourceManager.CreateSharedAsset<TileSet>("Doors");
+			TileSet = ResourceManager.CreateSharedAsset<TileSet>("Doors", "Doors");
 			if (TileSet == null)
 			{
 				Trace.WriteLine("Unable to load TileSet for door");
