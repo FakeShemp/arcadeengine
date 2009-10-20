@@ -94,13 +94,9 @@ namespace ArcEngine.Graphic
 		/// Creates an empty texture
 		/// </summary>
 		/// <param name="size">Size of the texture to create</param>
-		public Texture(Size size)
+		public Texture(Size size) : this()
 		{
-		//Size = size;
-
-			Handle = GL.GenTexture();
-			GL.BindTexture(TextureTarget.Texture2D, Handle);
-
+			Display.Texture = this;
 
 
 			// The below is almost OK. The problem is the GL_RGBA. On certain platforms, the GPU prefers that red and blue be swapped (GL_BGRA).
@@ -123,10 +119,8 @@ namespace ArcEngine.Graphic
 		/// Loads an image from the disk
 		/// </summary>
 		/// <param name="filename">Image's name</param>
-		public Texture(string filename)
+		public Texture(string filename) : this()
 		{
-			Handle = GL.GenTexture();
-
 			LoadImage(filename);
 		}
 
@@ -136,10 +130,8 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		/// <param name="stream">Stream handle</param>
 		/// <remarks>The Stream is closed automatically</remarks>
-		public Texture(Stream stream)
+		public Texture(Stream stream) : this()
 		{
-			Handle = GL.GenTexture();
-
 			if (stream == null)
 				return;
 
