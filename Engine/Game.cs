@@ -320,6 +320,7 @@ namespace ArcEngine
 				//OnExiting(EventArgs.Empty);
 			}
 
+			UnloadContent();
 
 			ResourceManager.Close();
 		}
