@@ -33,17 +33,15 @@ using OpenTK.Graphics;
 namespace ArcEngine.Forms
 {
 	/// <summary>
-	/// 
+	/// GameWindow
 	/// </summary>
 	public partial class GameWindow : Form
 	{
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
 		public GameWindow()
 		{
-			GraphicsMode mode = new GraphicsMode(new ColorFormat(32), 24, 8);
-			RenderControl = new OpenTK.GLControl(mode);
 			InitializeComponent();
 
 		}

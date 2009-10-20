@@ -37,6 +37,7 @@ using ArcEngine.Asset;
 //
 // http://wiki.themanaworld.org/index.php/Animations
 //
+// http://www.sdltutorials.com/sdl-animation/
 //
 // http://www.sdltutorials.com/sdl-animation/
 // http://citrusengine.com/manual/manual/animation_system

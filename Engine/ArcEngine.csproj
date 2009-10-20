@@ -261,6 +261,9 @@
     <Compile Include="Forms\GameWindow.Designer.cs">
       <DependentUpon>GameWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\RenderControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Game.cs" />
     <Compile Include="GameClock.cs" />
     <Compile Include="Graphic\Batch.cs" />

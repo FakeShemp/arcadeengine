@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GameWindow));
-			//this.RenderControl = new OpenTK.GLControl();
+			this.RenderControl = new RenderControl();
 			this.SuspendLayout();
 			// 
 			// RenderControl
@@ -65,7 +65,7 @@
 
 		#endregion
 
-		private OpenTK.GLControl RenderControl;
+		private RenderControl RenderControl;
 
 
 
