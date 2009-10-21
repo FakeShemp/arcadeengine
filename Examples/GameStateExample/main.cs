@@ -51,7 +51,7 @@ namespace ArcEngine.Examples.GameState
 		public main()
 		{
 			Display.ClearColor = Color.CornflowerBlue;
-			Window.Size = new Size(1024, 768);
+			CreateGameWindow(new Size(1024, 768));
 
 			GSM = new ScreenManager(this);
 			GSM.AddScreen(new BackgroundScreen());

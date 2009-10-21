@@ -65,7 +65,7 @@ namespace ArcEngine.Examples.Particles
 		/// </summary>
 		public Fountain()
 		{
-			Window.ClientSize = new Size(1024, 768);
+			CreateGameWindow(new Size(1024, 768));
 			Window.Text = "Fountain";
 
 

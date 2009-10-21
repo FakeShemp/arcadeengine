@@ -21,22 +21,15 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using ArcEngine;
+using ArcEngine.Asset;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
-using ArcEngine.Asset;
+using OpenTK.Graphics.OpenGL;
 
-//
-// http://gametuto.com/tetris-tutorial-in-c-render-independent/
-//
-
-namespace ProjectT
+namespace Shader_Demo
 {
-	/// <summary>
-	/// Main game class
-	/// </summary>
-	public class ProjectT : Game
+	public class ShaderProject : Game
 	{
-
 
 		/// <summary>
 		/// Main entry point.
@@ -46,11 +39,12 @@ namespace ProjectT
 		{
 			try
 			{
-				using (ProjectT game = new ProjectT())
+				using (ShaderProject game = new ShaderProject())
 					game.Run();
 			}
 			catch (Exception e)
 			{
+				// Oops, an error happened !
 				MessageBox.Show(e.StackTrace, e.Message);
 			}
 		}
@@ -59,18 +53,11 @@ namespace ProjectT
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public ProjectT()
+		public ShaderProject()
 		{
-			// Setup the game window
-			CreateGameWindow(new Size(640, 768));
-			Window.Text = "Project T";
-
-			// Size of the board
-			BoardSize = new Size(10, 20);
-
-			Shape = new Shape();
-			Board = new Board(new Size(10, 20));
-			Board.Location = new Point(100, 20);
+			CreateGameWindow(new Size(800, 600));
+			Window.Text = "Shader demo";
+			Window.Resizable = true;
 
 
 		}
@@ -82,10 +69,16 @@ namespace ProjectT
 		/// </summary>
 		public override void LoadContent()
 		{
-			ResourceManager.LoadBank("data/data.bnk");
+			Shader = new Shader();
 
-			Shape.Init();
-			Board.Init();
+
+			Shader.LoadSource(ShaderType.VertexShader, "data/vertex.txt");
+			Shader.LoadSource(ShaderType.FragmentShader, "data/fragment.txt");
+
+
+			Shader.Compile();
+
+
 		}
 
 
@@ -94,6 +87,7 @@ namespace ProjectT
 		/// </summary>
 		public override void UnloadContent()
 		{
+			Shader.Dispose();
 		}
 
 
@@ -103,15 +97,37 @@ namespace ProjectT
 		/// <param name="gameTime"></param>
 		public override void Update(GameTime gameTime)
 		{
-			// Byebye
+			// Check if the Excape key is pressed
 			if (Keyboard.IsKeyPress(Keys.Escape))
 				Exit();
 
-			if (Keyboard.IsNewKeyPress(Keys.Insert))
-				RunEditor();
+
+			if (Keyboard.IsNewKeyPress(Keys.F1))
+			{
+				Shader.Use(Shader);
+
+				float[] brick_colour = new float[] { 1, 0.3f, 0.2f };
+				float[] mortar_colour = new float[] { 0.85f, 0.86f, 0.84f };
+				float[] brick_size = new float[] { 0.3f, 0.15f };
+				float[] brick_pct = new float[] { 0.9f, 0.85f };
+				float[] light_pos = new float[] { 0.0f, 0.0f, 4.3f };
+
+				Shader.SetUniform("BrickColor", brick_colour);
+				Shader.SetUniform("MortarColor", mortar_colour);
+				Shader.SetUniform("BrickSize", brick_size);
+				Shader.SetUniform("BrickPct", brick_pct);
+				Shader.SetUniform("LightPosition", light_pos);
+				Shader.SetUniform("Toto", 1.0f);
 
 
-			Board.Update(gameTime);
+			}
+			if (Keyboard.IsNewKeyPress(Keys.F2))
+				Shader.Use(null);
+
+
+
+
+
 		}
 
 
@@ -124,15 +140,12 @@ namespace ProjectT
 		{
 			// Clears the background
 			Display.ClearBuffers();
+			Display.Color = Color.White;
 
 
-			Board.Draw();
+			Display.Rectangle(new Rectangle(10, 10, 200, 200), true);
 
-
-			// Next block
-			Display.Color = Color.Red;
-			Shape.Draw(new Point(450, 50), 2, 2);
-
+			Display.Line(new Point(400, 100), new Point(500, 133));
 		}
 
 
@@ -141,31 +154,11 @@ namespace ProjectT
 		#region Properties
 
 		/// <summary>
-		/// Size of the board
+		/// Shader
 		/// </summary>
-		Size BoardSize;
-
-
-		/// <summary>
-		/// Next coming block
-		/// </summary>
-		byte NextBlock;
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		Shape Shape;
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		Board Board;
+		Shader Shader;
 
 		#endregion
 
 	}
-
-
 }

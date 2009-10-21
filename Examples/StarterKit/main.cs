@@ -59,7 +59,7 @@ namespace ArcEngine.Examples.StarterKit
 		public StarterKit()
 		{
             // Change the window size 
-			Window.ClientSize = new Size(1024, 768);
+			CreateGameWindow(new Size(1024, 768));
 
 
             // Change the window title

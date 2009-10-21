@@ -85,6 +85,7 @@ namespace RuffnTumble
 
 
 			xml.WriteStartElement("level");
+			xml.WriteAttributeString("name", Name);
 
 
 			xml.WriteStartElement("size");
@@ -194,13 +195,13 @@ namespace RuffnTumble
 					// Tiles of the level
 					case "tiles":
 					{
-						TileLayer.Load(node);
+						TileLayer.Load(node.FirstChild);
 					}
 					break;
 
-					case "collision":
+					case "collisions":
 					{
-						CollisionLayer.Load(node);
+						CollisionLayer.Load(node.FirstChild);
 					}
 					break;
 
@@ -798,7 +799,7 @@ namespace RuffnTumble
 				//	continue;
 
 
-				Rectangle pos = ent.CollisionBoxLocation;
+				Rectangle pos = Rectangle.Empty; //ent.CollisionBoxLocation;
 				//pos.Offset(ent.Location);
 
 				if (pos.Contains(point))

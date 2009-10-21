@@ -72,8 +72,8 @@ namespace RuffnTumble
 			//Model = ResourceManager.CreateAsset<Model>(ModelName);
 
 
-			if (ScriptInterface != null)
-				return ScriptInterface.Init(this);
+			//if (ScriptInterface != null)
+			//    return ScriptInterface.Init(this);
 
 
 
@@ -93,7 +93,7 @@ namespace RuffnTumble
 		{
 
 			xml.WriteStartElement("entity");
-	//		xml.WriteAttributeString("name", Name);
+			xml.WriteAttributeString("name", Name);
 
 
 	//		base.SaveComment(xml);
@@ -105,14 +105,16 @@ namespace RuffnTumble
 			xml.WriteEndElement();
 
 
-			xml.WriteStartElement("model");
-			xml.WriteAttributeString("name", ModelName);
-			xml.WriteEndElement();
-			xml.WriteEndElement();
+			//xml.WriteStartElement("model");
+			//xml.WriteAttributeString("name", ModelName);
+			//xml.WriteEndElement();
+			//xml.WriteEndElement();
 
 
-			if (ScriptInterface != null)
-				ScriptInterface.Save(this, xml);
+			//if (ScriptInterface != null)
+			//    ScriptInterface.Save(this, xml);
+
+			xml.WriteEndElement();
 
 			return true;
 		}
@@ -126,6 +128,12 @@ namespace RuffnTumble
 		/// <returns></returns>
 		public bool Load(XmlNode xml)
 		{
+			if (xml == null)
+				return false;
+
+			Name = xml.Attributes["name"].Value;
+
+
 			foreach (XmlNode node in xml)
 			{
 				if (node.NodeType == XmlNodeType.Comment)
@@ -142,11 +150,11 @@ namespace RuffnTumble
 					}
 					break;
 
-					case "model":
-					{
-						ModelName = node.Attributes["name"].Value;
-					}
-					break;
+					//case "model":
+					//{
+					//    ModelName = node.Attributes["name"].Value;
+					//}
+					//break;
 
 					default:
 					{
@@ -157,8 +165,8 @@ namespace RuffnTumble
 			}
 
 
-			if (ScriptInterface != null)
-				ScriptInterface.Load(this, xml);
+			//if (ScriptInterface != null)
+			//    ScriptInterface.Load(this, xml);
 
 			return true;
 		}
@@ -174,8 +182,8 @@ namespace RuffnTumble
 		public void Update(GameTime time)
 		{
 			// If script present, then call it's Update method
-			if (ScriptInterface != null)
-				ScriptInterface.Update(this, time);
+			//if (ScriptInterface != null)
+			//    ScriptInterface.Update(this, time);
 		}
 
 
@@ -185,6 +193,7 @@ namespace RuffnTumble
 		///<param name="loc">Location of the entity relative to the layer coordinate</param>
 		public void Draw(Point loc)
 		{
+/*
 			if (TileSet != null)
 			{
 				TileSet.Scale = Zoom;
@@ -200,7 +209,7 @@ namespace RuffnTumble
                 coll.Location = Level.LevelToScreen(coll.Location);
 					 Display.Rectangle(coll, false);
 			}
-
+*/
 		}
 
 		#endregion
@@ -208,6 +217,17 @@ namespace RuffnTumble
 
 		#region Properties
 
+		/// <summary>
+		/// Name of the entity
+		/// </summary>
+		public string Name
+		{
+			get;
+			set;
+		}
+
+
+/*
 
 		/// <summary>
 		/// Entity TileSet name
@@ -262,6 +282,8 @@ namespace RuffnTumble
 			get;
 			private set;
 		}
+
+
 
 		/// <summary>
 		/// Gets the original collision box (without zoom)
@@ -359,7 +381,7 @@ namespace RuffnTumble
 		}
 		Model model;
 
-
+*/
 
 
 		/// <summary>
@@ -378,7 +400,7 @@ namespace RuffnTumble
 		/// <summary>
 		/// Compiled script handle
 		/// </summary>
-		IEntity ScriptInterface;
+	//	IEntity ScriptInterface;
 
 
 		/// <summary>
@@ -413,7 +435,7 @@ namespace RuffnTumble
 			set;
 		}
 
-
+/*
 		/// <summary>
 		/// Gets the hotspot of the entity
 		/// </summary>
@@ -429,7 +451,7 @@ namespace RuffnTumble
 			}
 		}
 
-
+*/
 
 
 		/// <summary>
@@ -467,7 +489,7 @@ namespace RuffnTumble
 			set;
 		}
 
-									
+/*									
 
 
 		/// <summary>
@@ -481,7 +503,7 @@ namespace RuffnTumble
 			set;
 		}
 
-									
+*/									
 
 
 		/// <summary>

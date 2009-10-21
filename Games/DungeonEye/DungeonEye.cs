@@ -84,8 +84,7 @@ namespace DungeonEye
 		/// </summary>
 		public override void LoadContent()
 		{
-			
-			Window.ClientSize = new Size(640, 400);
+			CreateGameWindow(new Size(640, 400));
 			Window.Text = "Dungeon Eye";
 
 			// Enble the console

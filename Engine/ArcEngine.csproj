@@ -130,6 +130,7 @@
     <Compile Include="Asset\ScriptModel.cs" />
     <Compile Include="Asset\Scenes\Storyboard.cs" />
     <Compile Include="Asset\Font2d.cs" />
+    <Compile Include="Asset\Shader.cs" />
     <Compile Include="Editor\AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -260,9 +261,6 @@
     </Compile>
     <Compile Include="Forms\GameWindow.Designer.cs">
       <DependentUpon>GameWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\RenderControl.cs">
-      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Game.cs" />
     <Compile Include="GameClock.cs" />

@@ -54,7 +54,7 @@ namespace Breakout
 		public Breakout()
 		{
 			// Open the game window and hide the mouse cursor
-			Window.Size = new Size(800, 600);
+			CreateGameWindow(new Size(800, 600));
 			Window.Text = "Breakout";
 			Mouse.Visible = false;
 			

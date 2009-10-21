@@ -139,15 +139,17 @@ namespace ArcEngine.Graphic
 
 			stream.Close();
 		}
-/*
+
+
 		/// <summary>
 		/// Destructor
+		/// TODO
 		/// </summary>
 		~Texture()
 		{
-			//GL.DeleteTextures(1, ref Handle);
+		//	Dispose(false);
 		}
-*/
+
 
 		#endregion
 

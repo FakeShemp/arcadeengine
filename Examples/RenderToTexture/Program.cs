@@ -45,7 +45,7 @@ namespace ArcEngine.Examples.RenderToTexture
 		/// </summary>
 		public RTT()
 		{
-			Window.ClientSize = new Size(650, 350);
+			CreateGameWindow(new Size(650, 350));
 			
 		}
 

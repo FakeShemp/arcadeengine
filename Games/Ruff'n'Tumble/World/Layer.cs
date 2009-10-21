@@ -323,40 +323,43 @@ namespace RuffnTumble
 		/// Save the collection to a xml node
 		/// </summary>
 		///
-		public bool Save(XmlWriter xml)
+		public bool Save(XmlWriter writer)
 		{
-			if (xml == null)
+			if (writer == null)
 				return false;
 
-			xml.WriteStartElement("layer");
-			xml.WriteAttributeString("texture", TextureName);
+			writer.WriteStartElement("layer");
+
+			writer.WriteStartElement("texture");
+			writer.WriteAttributeString("name", TextureName);
+			writer.WriteEndElement();	// Texture
 
 	
-			xml.WriteStartElement("visibility");
-			xml.WriteAttributeString("value", Visible.ToString());
-			xml.WriteEndElement();	// Visibility
+			writer.WriteStartElement("visibility");
+			writer.WriteAttributeString("value", Visible.ToString());
+			writer.WriteEndElement();	// Visibility
 
-			xml.WriteStartElement("alpha");
-			xml.WriteAttributeString("value", Alpha.ToString());
-			xml.WriteEndElement();	// Alpha
+			writer.WriteStartElement("alpha");
+			writer.WriteAttributeString("value", Alpha.ToString());
+			writer.WriteEndElement();	// Alpha
 
 
 			// Loops throughs tiles
-			xml.WriteStartElement("tiles");
+			//writer.WriteStartElement("tiles");
 			for (int y = 0; y < Level.Size.Height; y++)
 			{
-				xml.WriteStartElement("row");
-				xml.WriteAttributeString("id", y.ToString());
+				writer.WriteStartElement("row");
+				writer.WriteAttributeString("id", y.ToString());
 
 				for (int x = 0; x < Level.Size.Width; x++)
-					xml.WriteString(Tiles[y][x].ToString() + " ");
+					writer.WriteString(Tiles[y][x].ToString() + " ");
 
-				xml.WriteEndElement();	// row
+				writer.WriteEndElement();	// row
 			}
-			xml.WriteEndElement();	// tiles
+			//writer.WriteEndElement();	// tiles
 
 
-			xml.WriteEndElement();	// layer
+			writer.WriteEndElement();	// layer
 
 			return true;
 		}
@@ -371,13 +374,6 @@ namespace RuffnTumble
 			if (xml == null)
 				return false;
 
-			//if (xml.Name.ToLower() != "layer")
-			//    return false;
-
-			// Load texture
-			SetTexture(xml.Attributes["texture"].Value);
-
-
 			XmlNodeList nodes = xml.ChildNodes;
 			foreach (XmlNode node in nodes)
 			{
@@ -386,6 +382,13 @@ namespace RuffnTumble
 
 				switch (node.Name.ToLower())
 				{
+					case "texture":
+					{
+						SetTexture(node.Attributes["name"].Value);
+					}
+					break;
+
+
 					// Add a row
 					case "row":
 					{
@@ -548,14 +551,14 @@ namespace RuffnTumble
 		public CollisionResult CheckForCollision(Entity entity, Point velocity)
 		{
 			// Adds the gravity
-			velocity.Offset(entity.Gravity);
+			//velocity.Offset(entity.Gravity);
 
 			// Jumping ?
-			if (entity.Jump > 0)
-			{
-				velocity.Offset(0, -entity.Jump / 2);
-				entity.Jump -= entity.Gravity.Y / 2;
-			}
+			//if (entity.Jump > 0)
+			//{
+			//    velocity.Offset(0, -entity.Jump / 2);
+			//    entity.Jump -= entity.Gravity.Y / 2;
+			//}
 
 			// Collision result
 			CollisionResult res = new CollisionResult(entity, velocity);
@@ -565,7 +568,7 @@ namespace RuffnTumble
 
 
 			// Check for vertical collision
-			Rectangle colrect = entity.CollisionBoxLocation;
+			Rectangle colrect = Rectangle.Empty;//entity.CollisionBoxLocation;
 			colrect.Offset(0, velocity.Y);
 			CollisionBlock colblock = res.CheckForCollision(colrect);
 			if (velocity.Y > 0)
@@ -587,10 +590,10 @@ namespace RuffnTumble
 					res.FinalVelocity.Y = velocity.Y;
 			}
 
-
+/*
 
 			// Check for horizontal collision
-			colrect = entity.CollisionBoxLocation;
+			colrect = Rectangle.Empty; //entity.CollisionBoxLocation;
 			colrect.Offset(velocity.X, res.FinalVelocity.Y);
 			colblock = res.CheckForCollision(colrect);
 			if (velocity.X > 0)  // Right
@@ -614,7 +617,7 @@ namespace RuffnTumble
 					res.FinalVelocity.X = velocity.X;
 			}
 
-
+*/
 
 			// Is entity falling ?
 			entity.IsFalling = res.FinalVelocity.Y > 0.0f;
@@ -951,9 +954,9 @@ namespace RuffnTumble
 				return;
 
 			// Translate the collision box
-			Rectangle col = entity.CollisionBoxLocation;
+			Rectangle col = Rectangle.Empty; //entity.CollisionBoxLocation;
 			col.Offset(InitialVelocity);
-			col.Offset(entity.Gravity);
+			//col.Offset(entity.Gravity);
 
 
 			// Collision points

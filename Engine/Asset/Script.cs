@@ -303,7 +303,8 @@ namespace ArcEngine.Asset
 
 
 			writer.WriteStartElement("source");
-			writer.WriteRaw(HttpUtility.HtmlEncode(SourceCode));
+//			writer.WriteRaw(HttpUtility.HtmlEncode(SourceCode));
+			writer.WriteString(SourceCode);
 			writer.WriteEndElement();
 
 			//writer.WriteStartElement("debug");
@@ -341,7 +342,8 @@ namespace ArcEngine.Asset
 
 					case "source":
 					{
-						sourceCode = HttpUtility.HtmlDecode(xml.InnerText);
+						//sourceCode = HttpUtility.HtmlDecode(xml.InnerText);
+						sourceCode = xml.InnerText;
 					}
 					break;
 
@@ -360,7 +362,7 @@ namespace ArcEngine.Asset
 
 					default:
 					{
-						Trace.WriteLine("Script : Unknown node element found (" + node.Name + ")");
+						Trace.WriteLine("{0} : Unknown node element found ({1}) !", XmlTag, node.Name);
 					}
 					break;
 				}

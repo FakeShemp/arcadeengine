@@ -51,6 +51,10 @@ namespace RuffnTumble
 		/// <returns></returns>
 		public bool Load(XmlNode xml)
 		{
+			if (xml == null)
+				return false;
+
+			Name = xml.Attributes["name"].Value;
 
 			foreach (XmlNode node in xml)
 			{
@@ -64,7 +68,7 @@ namespace RuffnTumble
 				{
 					case "location":
 					{
-						location = new Point(Int32.Parse(node.Attributes["x"].Value),
+						Location = new Point(Int32.Parse(node.Attributes["x"].Value),
 							Int32.Parse(node.Attributes["y"].Value));
 					}
 					break;
@@ -90,14 +94,14 @@ namespace RuffnTumble
 		{
 
 			xml.WriteStartElement("spawnpoint");
-		//	xml.WriteAttributeString("name", Name);
+			xml.WriteAttributeString("name", Name);
 
 		//	base.SaveComment(xml);
 
 
 			xml.WriteStartElement("location");
-			xml.WriteAttributeString("x", location.X.ToString());
-			xml.WriteAttributeString("y", location.Y.ToString());
+			xml.WriteAttributeString("x", Location.X.ToString());
+			xml.WriteAttributeString("y", Location.Y.ToString());
 			xml.WriteEndElement();
 
 			xml.WriteEndElement();
@@ -112,21 +116,21 @@ namespace RuffnTumble
 
 		#region Properties
 
+		public string Name
+		{
+			get;
+			set;
+		}
+
+
 		/// <summary>
 		/// Offset of the SpawnPoint
 		/// </summary>
 		public Point Location
 		{
-			get
-			{
-				return location;
-			}
-			set
-			{
-				location = value;
-			}
+			get;
+			set;
 		}
-		Point location = Point.Empty;
 
 
         /// <summary>

@@ -77,7 +77,7 @@ namespace ArcEngine.Graphic
 			Culling = false;
 			DepthTest = false;
 			BlendingFunction(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
-
+			GL.ClearStencil(0);
 		}
 
 
@@ -100,8 +100,9 @@ namespace ArcEngine.Graphic
 			Trace.Unindent();
 
 			string ext = GL.GetString(StringName.Extensions);
-			Trace.WriteLine("Supported extension ({0}) : {1}", ext.Split(new char[] {' '}).Length, ext );
-	
+			if (ext != null)
+				Trace.WriteLine("Supported extension ({0}) : {1}", ext.Split(new char[] { ' ' }).Length, ext);
+
 			Trace.Unindent();
 		}
 
@@ -140,7 +141,8 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public static void ClearBuffers()
 		{
-			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
+			GL.Clear(ClearBufferMask.AccumBufferBit | ClearBufferMask.ColorBufferBit | 
+				ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
 		}
 
 
@@ -301,6 +303,9 @@ namespace ArcEngine.Graphic
         #endregion
 
 
+		#region Drawing
+
+
 		/// <summary>
 		/// Draws a colored rectangle
 		/// </summary>
@@ -316,10 +321,6 @@ namespace ArcEngine.Graphic
 			Rectangle(new Rectangle(-origin.X, -origin.Y, rect.Size.Width, rect.Size.Height), fill);
 			DefaultMatrix();
 		}
-
-
-
-		#region Drawing
 
 		/// <summary>
 		/// Draws a colored rectangle
@@ -603,7 +604,6 @@ namespace ArcEngine.Graphic
 			}
 		}
 
-
 		/// <summary>
 		/// Gets/sets the viewport
 		/// </summary>
@@ -638,7 +638,6 @@ namespace ArcEngine.Graphic
 			}
 		}
 
-
 		/// <summary>
 		/// Gets/sets the cleacolor
 		/// </summary>
@@ -657,8 +656,6 @@ namespace ArcEngine.Graphic
 			}
 		}
 
-
-
 		/// <summary>
 		/// Enables/disables face culling
 		/// </summary>
@@ -676,27 +673,6 @@ namespace ArcEngine.Graphic
 					GL.Disable(EnableCap.CullFace);
 			}
 		}
-
-
-		/// <summary>
-		/// Enables/disables depth test
-		/// </summary>
-		public static bool DepthTest
-		{
-			get
-			{
-				return GL.IsEnabled(EnableCap.DepthTest);
-			}
-
-			set
-			{
-				if (value)
-					GL.Enable(EnableCap.DepthTest);
-				else
-					GL.Disable(EnableCap.DepthTest);
-			}
-		}
-
 
 		/// <summary>
 		/// Enables/disables stencil test
@@ -717,6 +693,61 @@ namespace ArcEngine.Graphic
 			}
 		}
 
+		/// <summary>
+		/// Enables/disables depth test
+		/// </summary>
+		public static bool DepthTest
+		{
+			get
+			{
+				return GL.IsEnabled(EnableCap.DepthTest);
+			}
+
+			set
+			{
+				if (value)
+					GL.Enable(EnableCap.DepthTest);
+				else
+					GL.Disable(EnableCap.DepthTest);
+			}
+		}
+
+		/// <summary>
+		/// Enable or disable writing into the depth buffer
+		/// </summary>
+		public static bool DepthMask
+		{
+			get
+			{
+				bool ret;
+				GL.GetBoolean(GetPName.DepthWritemask, out ret);
+
+				return ret;
+			}
+
+			set
+			{
+				GL.DepthMask(value);
+			}
+		}
+
+		/// <summary>
+		/// Gets/sets blending state
+		/// </summary>
+		public static bool AlphaTest
+		{
+			get
+			{
+				return GL.IsEnabled(EnableCap.AlphaTest);
+			}
+			set
+			{
+				if (value)
+					GL.Enable(EnableCap.AlphaTest);
+				else
+					GL.Disable(EnableCap.AlphaTest);
+			}
+		}
 
 		/// <summary>
 		/// Gets/sets blending state
@@ -735,7 +766,6 @@ namespace ArcEngine.Graphic
 					GL.Disable(EnableCap.Blend);
 			}
 		}
-
 
 		/// <summary>
 		/// Enables/disables 2d texture
@@ -756,7 +786,6 @@ namespace ArcEngine.Graphic
 			}
 		}
 
-
 		/// <summary>
 		/// Gets / sets the current color
 		/// </summary>
@@ -774,7 +803,6 @@ namespace ArcEngine.Graphic
 				GL.Color4(value);
 			}
 		}
-
 
 		/// <summary>
 		/// Gets/Sets the scissor test
@@ -795,7 +823,6 @@ namespace ArcEngine.Graphic
 			}
 		}
 
-
 		/// <summary>
 		/// Gets/sets the scissor zone
 		/// </summary>
@@ -815,16 +842,14 @@ namespace ArcEngine.Graphic
 			}
 		}
 
-
 		/// <summary>
-		/// 
+		/// Render device capabilities
 		/// </summary>
 		public static RenderDeviceCapabilities Capabilities
 		{
 			get;
 			private set;
 		}
-
 
 		/// <summary>
 		/// Rendering stats
@@ -915,7 +940,7 @@ namespace ArcEngine.Graphic
 
 
 	/// <summary>
-	/// 
+	/// Statistics for a rendered scene
 	/// </summary>
 	public class RenderStats
 	{

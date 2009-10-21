@@ -72,7 +72,7 @@ namespace PathDemo
 		/// </summary>
 		public EmptyProject()
 		{
-			Window.ClientSize = new Size(1024, 768);
+			CreateGameWindow(new Size(1024, 768));
 			Window.Resizable = true;
 
 			ResourceManager.LoadBank("data/data.bnk");

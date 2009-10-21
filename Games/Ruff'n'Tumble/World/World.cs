@@ -70,6 +70,7 @@ namespace RuffnTumble
 
 
 			xml.WriteStartElement("world");
+			xml.WriteAttributeString("name", Name);
 
 
 			foreach (Level level in Levels.Values)

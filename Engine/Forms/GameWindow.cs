@@ -19,16 +19,12 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
-using ArcEngine.Input;
 using ArcEngine.Graphic;
+using ArcEngine.Input;
+using OpenTK;
 using OpenTK.Graphics;
-
 
 namespace ArcEngine.Forms
 {
@@ -40,11 +36,23 @@ namespace ArcEngine.Forms
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public GameWindow()
+		public GameWindow(Size size, int major, int minor)
 		{
 			InitializeComponent();
 
+			// ADds the control to the form
+			RenderControl = new GLControl(new GraphicsMode(32, 24, 8),
+				major, minor,
+				GraphicsContextFlags.Default);
+			RenderControl.Dock = DockStyle.Fill;
+			Controls.Add(RenderControl);
+
+			// Resize the window
+			ClientSize = size;
+
+			VSync = true;
 		}
+
 
 
 
@@ -72,13 +80,27 @@ namespace ArcEngine.Forms
 		#region Events
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void OnResize(object sender, EventArgs e)
+		{
+			if (RenderControl == null)
+				return;
+
+			RenderControl.MakeCurrent();
+			Display.ViewPort = new Rectangle(Point.Empty, RenderControl.Size);
+		}
+
 
 		/// <summary>
 		/// On PreviewKeyDown
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		void Form_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+		void OnPreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
 		{
 			Keyboard.KeyDown(e);
 		}
@@ -89,7 +111,7 @@ namespace ArcEngine.Forms
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		void Form_KeyUp(object sender, KeyEventArgs e)
+		void OnKeyUp(object sender, KeyEventArgs e)
 		{
 			Keyboard.KeyUp(e);
 		}
@@ -100,9 +122,9 @@ namespace ArcEngine.Forms
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		void Form_MouseUp(object sender, MouseEventArgs e)
+		void OnMouseUp(object sender, MouseEventArgs e)
 		{
-
+			Mouse.ButtonUp(e);
 		}
 
 
@@ -111,7 +133,7 @@ namespace ArcEngine.Forms
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		void Form_MouseDoubleClick(object sender, MouseEventArgs e)
+		void OnMouseDoubleClick(object sender, MouseEventArgs e)
 		{
 			Mouse.DoubleClick(e);
 		}
@@ -122,9 +144,9 @@ namespace ArcEngine.Forms
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		void Form_MouseDown(object sender, MouseEventArgs e)
+		void OnMouseDown(object sender, MouseEventArgs e)
 		{
-
+			Mouse.ButtonDown(e);
 		}
 
 
@@ -133,9 +155,9 @@ namespace ArcEngine.Forms
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		void Form_MouseMove(object sender, MouseEventArgs e)
+		void OnMouseMove(object sender, MouseEventArgs e)
 		{
-
+			Mouse.Move(e);
 		}
 
 		/// <summary>
@@ -156,6 +178,12 @@ namespace ArcEngine.Forms
 
 	
 		#region Properties
+
+		/// <summary>
+		/// OpenTK control
+		/// </summary>
+		GLControl RenderControl;
+
 
 		/// <summary>
 		/// Does the game window have focus

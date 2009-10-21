@@ -70,7 +70,7 @@ namespace ArcEngine.Games.ProjectT
 		/// </summary>
 		public Template()
 		{
-			Window.ClientSize = new Size(1024, 768);
+			CreateGameWindow(new Size(1024, 768));
 			Window.Text = "Simple Physic";
 
 		}

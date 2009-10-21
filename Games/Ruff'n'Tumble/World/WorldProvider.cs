@@ -175,7 +175,7 @@ namespace RuffnTumble
 		{
 			CheckValue<T>(name);
 
-			if(typeof(T) == typeof(Level))
+			if(typeof(T) == typeof(World))
 				Worlds[name] = node;
 		}
 

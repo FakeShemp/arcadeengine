@@ -96,7 +96,7 @@ namespace RuffnTumble
 		public override void LoadContent()
 		{
 
-			Window.ClientSize = new Size(800, 600);
+			CreateGameWindow(new Size(800, 600));
 			Window.Text = "Ruff'n'Tumble";
 
 

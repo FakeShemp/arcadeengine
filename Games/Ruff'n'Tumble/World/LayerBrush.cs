@@ -101,7 +101,7 @@ namespace RuffnTumble
 				return false;
 
 			xml.WriteStartElement("brush");
-	//		xml.WriteAttributeString("name", Name);
+			xml.WriteAttributeString("name", Name);
 
 	//		base.SaveComment(xml);
 
@@ -115,7 +115,7 @@ namespace RuffnTumble
 			foreach (List<int> row in Tiles)
 			{
 				xml.WriteStartElement("row");
-				xml.WriteAttributeString("BufferID", rowid++.ToString());
+				xml.WriteAttributeString("id", rowid++.ToString());
 				foreach (int id in row)
 				{
 					xml.WriteString(id.ToString() + " ");
@@ -136,13 +136,16 @@ namespace RuffnTumble
 		/// <returns></returns>
 		public bool Load(XmlNode xml)
 		{
+			if (xml == null)
+				return false;
+
+			Name = xml.Attributes["name"].Value;
+			
+			
 			foreach (XmlNode node in xml)
 			{
 				if (node.NodeType == XmlNodeType.Comment)
-				{
-			//		base.LoadComment(node);
 					continue;
-				}
 
 				switch (node.Name.ToLower())
 				{
@@ -179,6 +182,16 @@ namespace RuffnTumble
 
 
 		#region Properties
+
+		/// <summary>
+		/// Name of the brush
+		/// </summary>
+		public string Name
+		{
+			get;
+			set;
+		}
+
 
 		/// <summary>
 		/// Brush size in block

@@ -26,12 +26,20 @@ using ArcEngine.Graphic;
 using ArcEngine.Input;
 
 
-namespace ArcEngine.Examples.EmptyProject
+using OpenTK.Graphics.OpenGL;
+
+
+
+
+// http://www.videotutorialsrock.com/opengl_tutorial/reflections/text.php
+// http://jerome.jouvie.free.fr/OpenGl/Tutorials/Tutorial23.php
+
+namespace StencilWipe
 {
     /// <summary>
     /// Main game class
     /// </summary>
-    public class EmptyProject : Game
+    public class StencilWipe : Game
     {
 
         /// <summary>
@@ -42,7 +50,7 @@ namespace ArcEngine.Examples.EmptyProject
         {
             try
             {
-                using (EmptyProject game = new EmptyProject())
+                using (StencilWipe game = new StencilWipe())
                     game.Run();
             }
             catch (Exception e)
@@ -56,9 +64,10 @@ namespace ArcEngine.Examples.EmptyProject
         /// <summary>
         /// Constructor
         /// </summary>
-        public EmptyProject()
+        public StencilWipe()
         {
-            CreateGameWindow(new Size(1024, 768));
+            CreateGameWindow(new Size(800, 600));
+			Window.Text = "Wipe effect";
         }
 
 
@@ -70,7 +79,24 @@ namespace ArcEngine.Examples.EmptyProject
         {
             Display.ClearColor = Color.CornflowerBlue;
 
-        }
+			Mask = new Texture("data/mask.png");
+
+
+			GL.ClearStencil(0);
+
+
+			// Check if Stencil buffer is ok
+			int value = 0;
+			GL.GetInteger(GetPName.StencilBits, out value);
+			if (value == 0)
+			{
+				MessageBox.Show("No stencil buffer found !!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				Exit();
+			}
+	
+
+
+      }
 
 
         /// <summary>
@@ -78,6 +104,7 @@ namespace ArcEngine.Examples.EmptyProject
         /// </summary>
         public override void UnloadContent()
         {
+			Mask.Dispose();
         }
 
 
@@ -91,7 +118,33 @@ namespace ArcEngine.Examples.EmptyProject
             if (Keyboard.IsKeyPress(Keys.Escape))
                 Exit();
 
+			// Copy stencil buffer to a texture
+			if (Keyboard.IsNewKeyPress(Keys.F1))
+			{
+				// Temp texture
+				Texture tmp = new Texture(Display.ViewPort.Size);
+				Display.Texture = tmp;
 
+
+				// Collect pixels
+				byte[] pixels = new byte[Display.ViewPort.Width * Display.ViewPort.Height*4];
+				GL.ReadPixels(
+					0, 0, Display.ViewPort.Width, Display.ViewPort.Height,
+					PixelFormat.Bgra, PixelType.UnsignedByte, pixels);
+
+
+
+
+				ErrorCode code = GL.GetError();
+
+				// Copy to the texture
+				tmp.LockTextureBits(ImageLockMode.WriteOnly);
+				tmp.Data = pixels;
+				tmp.UnlockTextureBits();
+				tmp.SaveToDisk("stencil.png");
+
+				tmp.Dispose();
+			}
         }
 
 
@@ -103,8 +156,28 @@ namespace ArcEngine.Examples.EmptyProject
         public override void Draw()
         {
             // Clears the background
-            Display.ClearBuffers();
+			GL.Clear(ClearBufferMask.AccumBufferBit | ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
+			Display.Color = Color.White;
 
+
+			GL.AlphaFunc(AlphaFunction.Greater, 0);
+			Display.AlphaTest = true;
+			Display.StencilTest = true;
+
+			GL.ColorMask(false, false, false, false);
+			GL.StencilFunc(StencilFunction.Always, 1, 1);
+			GL.StencilOp(StencilOp.Replace, StencilOp.Replace, StencilOp.Replace);
+			Mask.Blit(new Point(100, 100));
+
+
+
+
+			GL.ColorMask(true, true, true, true);
+			GL.StencilFunc(StencilFunction.Equal, 1, 1);
+			GL.StencilOp(StencilOp.Keep, StencilOp.Keep, StencilOp.Keep);
+			Display.Rectangle(new Rectangle(10, 10, 600, 600), true);
+
+			Display.StencilTest = false;
 
 
         }
@@ -113,6 +186,13 @@ namespace ArcEngine.Examples.EmptyProject
 
 
         #region Properties
+
+
+		/// <summary>
+		/// Mask texture
+		/// </summary>
+		Texture Mask;
+
 
         #endregion
 

@@ -57,8 +57,47 @@ namespace ArcEngine
 			Random = new Random((int)DateTime.Now.Ticks);
 
 
-			Window = new GameWindow();
-			Window.Resize += new EventHandler(Window_Resize);
+		}
+
+
+		/// <summary>
+		/// Destructor
+		/// </summary>
+		~Game()
+		{
+			Dispose(false);
+		}
+
+
+
+		#region GameWindow creation
+
+		/// <summary>
+		/// Create the GameWindow, with the highest compatible OpenGL version
+		/// </summary>
+		/// <param name="size">Size of the window</param>
+		public void CreateGameWindow(Size size)
+		{
+			CreateGameWindow(size, 99, 99);
+		}
+
+
+		/// <summary>
+		/// Create the GameWindow, and use a specific OpenGL version
+		/// </summary>
+		/// <param name="size">Size of the window</param>
+		/// <param name="major">Major version</param>
+		/// <param name="minor">Minor version</param>
+		public void CreateGameWindow(Size size, int major, int minor)
+		{
+			// Close the previous game window first
+			if (Window != null)
+			{
+				Window.Dispose();
+				Window = null;
+			}
+
+			Window = new GameWindow(size, major, minor);
 			Window.Show();
 
 
@@ -70,14 +109,7 @@ namespace ArcEngine
 		}
 
 
-
-		/// <summary>
-		/// Destructor
-		/// </summary>
-		~Game()
-		{
-			Dispose(false);
-		}
+		#endregion
 
 
 		#endregion
@@ -318,9 +350,10 @@ namespace ArcEngine
 				Application.Idle -= Application_Idle;
 				IsRunning = false;
 				//OnExiting(EventArgs.Empty);
+
+				UnloadContent();
 			}
 
-			UnloadContent();
 
 			ResourceManager.Close();
 		}
@@ -331,18 +364,6 @@ namespace ArcEngine
 
 
 		#region Events
-
-		/// <summary>
-		/// Window resize event
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		void Window_Resize(object sender, EventArgs e)
-		{
-			Display.ViewPort = new Rectangle(Point.Empty, Window.ClientSize);
-		}
-
-
 
 
 		/// <summary>
