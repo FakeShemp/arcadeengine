@@ -42,7 +42,7 @@
 			this.MinimizeBox = false;
 			this.Name = "GameWindow";
 			this.Text = "ArcEngine : http://www.mimicprod.net";
-			this.Load += new System.EventHandler(this.RenderControl_Load);
+			this.Load += new System.EventHandler(this.Form_Load);
 			this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp);
 			this.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.OnMouseDoubleClick);
 			this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OnMouseDown);

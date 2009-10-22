@@ -40,7 +40,9 @@ namespace ArcEngine.Forms
 		{
 			InitializeComponent();
 
-			// ADds the control to the form
+
+
+			// Adds the control to the form
 			RenderControl = new GLControl(new GraphicsMode(32, 24, 8),
 				major, minor,
 				GraphicsContextFlags.Default);
@@ -87,11 +89,32 @@ namespace ArcEngine.Forms
 		/// <param name="e"></param>
 		void OnResize(object sender, EventArgs e)
 		{
-			if (RenderControl == null)
+			if (RenderControl.Context == null)
 				return;
 
 			RenderControl.MakeCurrent();
 			Display.ViewPort = new Rectangle(Point.Empty, RenderControl.Size);
+		}
+
+
+		/// <summary>
+		/// Control init
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void Form_Load(object sender, EventArgs e)
+		{
+			if (RenderControl.Context == null)
+				return;
+
+
+			// Initialization
+			RenderControl.MakeCurrent();
+			Display.Init();
+			Display.TraceInfos();
+
+			// Force the resize of the GLControl
+			OnResize(null, null);
 		}
 
 
@@ -158,19 +181,6 @@ namespace ArcEngine.Forms
 		void OnMouseMove(object sender, MouseEventArgs e)
 		{
 			Mouse.Move(e);
-		}
-
-		/// <summary>
-		/// Control init
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void RenderControl_Load(object sender, EventArgs e)
-		{
-			// Initialization
-			RenderControl.MakeCurrent();
-			Display.Init();
-			Display.TraceInfos();
 		}
 
 
