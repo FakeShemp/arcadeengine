@@ -33,7 +33,7 @@ namespace ArcEngine.Examples.StarterKit
 	/// </summary>
 	public class StarterKit : Game
 	{
-	
+
 		/// <summary>
 		/// Main entry point.
 		/// </summary>
@@ -47,7 +47,7 @@ namespace ArcEngine.Examples.StarterKit
 			}
 			catch (Exception e)
 			{
-                // Oops, an error happened !
+				// Oops, an error happened !
 				MessageBox.Show(e.StackTrace, e.Message);
 			}
 		}
@@ -58,17 +58,17 @@ namespace ArcEngine.Examples.StarterKit
 		/// </summary>
 		public StarterKit()
 		{
-            // Change the window size 
+			// Create the game window
 			CreateGameWindow(new Size(1024, 768));
 
 
-            // Change the window title
+			// Change the window title
 			Window.Text = "Starter Kit";
 
-            // Reset our variables
-            elapsed = 0;
-            Effect = EffectMode.Shear;
-        }
+			// Reset our variables
+			elapsed = 0;
+			Effect = EffectMode.Shear;
+		}
 
 
 
@@ -77,22 +77,23 @@ namespace ArcEngine.Examples.StarterKit
 		/// </summary>
 		public override void LoadContent()
 		{
-            // Clear color of the screen
-            Display.ClearColor = Color.White;
 
-            // Load Verdana font
-            Font = new Font2d();
-            Font.LoadTTF(@"c:\windows\fonts\verdana.ttf", 12, FontStyle.Regular);
-            Font.Color = Color.Black;
+			// Clear color of the screen
+			Display.ClearColor = Color.White;
 
-            // Load a texture
-            Smiley = new Texture("smiley.png");
+			// Load Verdana font
+			Font = new Font2d();
+			Font.LoadTTF(@"c:\windows\fonts\verdana.ttf", 12, FontStyle.Regular);
+			Font.Color = Color.Black;
 
-            // Texture location on the screen
-            Location = new Point(
-                Display.ViewPort.Width / 2 - Smiley.Size.Width / 2,
-                Display.ViewPort.Height / 2 - Smiley.Size.Height / 2);
-        }
+			// Load a texture
+			Smiley = new Texture("smiley.png");
+
+			// Texture location on the screen
+			Location = new Point(
+				 Display.ViewPort.Width / 2 - Smiley.Size.Width / 2,
+				 Display.ViewPort.Height / 2 - Smiley.Size.Height / 2);
+		}
 
 
 		/// <summary>
@@ -113,15 +114,15 @@ namespace ArcEngine.Examples.StarterKit
 			if (Keyboard.IsKeyPress(Keys.Escape))
 				Exit();
 
-            // Update the motion
-            elapsed += gameTime.ElapsedGameTime.TotalSeconds;
-            SineWave = (float)(Math.Sin(elapsed) + 1) / 2;
+			// Update the motion
+			elapsed += gameTime.ElapsedGameTime.TotalSeconds;
+			SineWave = (float)(Math.Sin(elapsed) + 1) / 2;
 
 
-            // Check if a key is just pressed *once*
-            if (Keyboard.IsNewKeyPress(Keys.S)) Effect = EffectMode.Shear;
-            if (Keyboard.IsNewKeyPress(Keys.D)) Effect = EffectMode.Scale;
-            if (Keyboard.IsNewKeyPress(Keys.R)) Effect = EffectMode.Rotate;
+			// Check if a key is just pressed *once*
+			if (Keyboard.IsNewKeyPress(Keys.S)) Effect = EffectMode.Shear;
+			if (Keyboard.IsNewKeyPress(Keys.D)) Effect = EffectMode.Scale;
+			if (Keyboard.IsNewKeyPress(Keys.R)) Effect = EffectMode.Rotate;
 
 		}
 
@@ -137,42 +138,42 @@ namespace ArcEngine.Examples.StarterKit
 			Display.ClearBuffers();
 
 
-            // Display the desired effect
-            switch (Effect)
-            {
-                // Shear the smiley
-                case EffectMode.Shear:
-                {
-                    Display.Transform(1.0f, 0.0f, SineWave - 0.5f, 1.0f, 0.0f, 0.0f);
-                    Smiley.Blit(Location);
-                }
-                break;
+			// Display the desired effect
+			switch (Effect)
+			{
+				// Shear the smiley
+				case EffectMode.Shear:
+				{
+					Display.Transform(1.0f, 0.0f, SineWave - 0.5f, 1.0f, 0.0f, 0.0f);
+					Smiley.Blit(Location);
+				}
+				break;
 
-                // Scale the smiley a little bit
-                case EffectMode.Scale:
-                {
-                    Display.Scale(SineWave, SineWave);
-                    Display.Translate((Display.ViewPort.Width / 2.0f) * (1 - SineWave), (Display.ViewPort.Height / 2.0f) *(1 - SineWave));
-                    Smiley.Blit(Location);
-                }
-                break;
+				// Scale the smiley a little bit
+				case EffectMode.Scale:
+				{
+					Display.Scale(SineWave, SineWave);
+					Display.Translate((Display.ViewPort.Width / 2.0f) * (1 - SineWave), (Display.ViewPort.Height / 2.0f) * (1 - SineWave));
+					Smiley.Blit(Location);
+				}
+				break;
 
-                // Rotate the smiely
-                case EffectMode.Rotate:
-                {
-                    Smiley.Blit(Location, (float)(SineWave * Math.PI * 120.0f), new Point(Smiley.Size.Width / 2, Smiley.Size.Height / 2));
-                }
-                break;
-            }
+				// Rotate the smiely
+				case EffectMode.Rotate:
+				{
+					Smiley.Blit(Location, (float)(SineWave * Math.PI * 120.0f), new Point(Smiley.Size.Width / 2, Smiley.Size.Height / 2));
+				}
+				break;
+			}
 
-            // Restore default matrix
-            Display.DefaultMatrix();
+			// Restore default matrix
+			Display.DefaultMatrix();
 
 
-            // Print some text
-            Font.DrawText("Press S to Shear", new Point(10, 450));
-            Font.DrawText("Press R to Rotate", new Point(10, 470));
-            Font.DrawText("Press D to Scale", new Point(10, 490));
+			// Print some text
+			Font.DrawText("Press S to Shear", new Point(10, 450));
+			Font.DrawText("Press R to Rotate", new Point(10, 470));
+			Font.DrawText("Press D to Scale", new Point(10, 490));
 		}
 
 
@@ -180,63 +181,63 @@ namespace ArcEngine.Examples.StarterKit
 
 		#region Properties
 
-        /// <summary>
-        /// A value between 0 and 1, used to rotate rectangle
-        /// </summary>
-        float SineWave;
+		/// <summary>
+		/// A value between 0 and 1, used to rotate rectangle
+		/// </summary>
+		float SineWave;
 
 
-        /// <summary>
-        /// Effect to use
-        /// </summary>
-        EffectMode Effect;
+		/// <summary>
+		/// Effect to use
+		/// </summary>
+		EffectMode Effect;
 
-        /// <summary>
-        /// Elapsed gametime
-        /// </summary>
-        double elapsed;
-
-
-        /// <summary>
-        /// Texture to display
-        /// </summary>
-        Texture Smiley;
+		/// <summary>
+		/// Elapsed gametime
+		/// </summary>
+		double elapsed;
 
 
-        /// <summary>
-        /// Location of the texture
-        /// </summary>
-        Point Location;
+		/// <summary>
+		/// Texture to display
+		/// </summary>
+		Texture Smiley;
 
 
-        /// <summary>
-        /// Drawing font
-        /// </summary>
-        Font2d Font;
+		/// <summary>
+		/// Location of the texture
+		/// </summary>
+		Point Location;
+
+
+		/// <summary>
+		/// Drawing font
+		/// </summary>
+		Font2d Font;
 
 		#endregion
 
 	}
-    
-    /// <summary>
-    /// Effect to apply to the rectangle
-    /// </summary>
-    enum EffectMode
-    {
-        /// <summary>
-        /// 
-        /// </summary>
-        Shear,
 
-        /// <summary>
-        /// 
-        /// </summary>
-        Scale,
+	/// <summary>
+	/// Effect to apply to the rectangle
+	/// </summary>
+	enum EffectMode
+	{
+		/// <summary>
+		/// 
+		/// </summary>
+		Shear,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Scale,
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        Rotate
-    }
+		/// <summary>
+		/// 
+		/// </summary>
+		Rotate
+	}
 }
