@@ -82,11 +82,11 @@ namespace ArcEngine.Graphic
 			BlendingFunction(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 			GL.ClearStencil(0);
 
-			GL.Normal3(0.0f, 0.0f, -1.0f);
+			GL.Normal3(0.0f, 0.0f, 1.0f);
 
 
-
-			// Get OpenGL version
+/*
+			// Get OpenGL version for 2.x
 			Regex regex = new Regex(@"(\d+)\.(\d+)\.*(\d*)");
 			Match match = regex.Match(GL.GetString(StringName.Version));
 			if (match.Success)
@@ -94,7 +94,7 @@ namespace ArcEngine.Graphic
 				MajorVersion = Convert.ToInt32(match.Groups[1].Value);
 				MinorVersion = Convert.ToInt32(match.Groups[2].Value);
 			}
-
+*/
 		}
 
 
@@ -117,7 +117,7 @@ namespace ArcEngine.Graphic
 			Trace.Unindent();
 
 
-			if (MajorVersion <= 2)
+			if (RenderDeviceCapabilities.MajorVersion <= 2)
 			{
 				string ext = GL.GetString(StringName.Extensions);
 				if (ext != null)
@@ -496,6 +496,7 @@ namespace ArcEngine.Graphic
 		/// <param name="mode"></param>
 		public static void DrawBatch(Batch batch, BeginMode mode)
 		{
+
 			GL.EnableClientState(EnableCap.VertexArray);
 			GL.BindBuffer(BufferTarget.ArrayBuffer, batch.BufferID[0]);
 			GL.VertexPointer(2, VertexPointerType.Int, 0, IntPtr.Zero);
@@ -575,24 +576,34 @@ namespace ArcEngine.Graphic
 		{
 			set
 			{
-				if (texture == value)
-					return;
-
-				texture = value;
+				//if (value == null)
+				//    return;
 				if (value == null)
 				{
 					GL.BindTexture(TextureTarget.Texture2D, 0);
+					texture = null;
 					return;
 				}
 
-				GL.BindTexture(TextureTarget.Texture2D, value.Handle);
+				//int val;
+				//GL.GetInteger(GetPName.Texture2D, out val);
 
+				// Cache handle
+				//if (texture != null)
+				//    if (texture.Handle != value.Handle)
+					{
+						texture = value;
+						GL.BindTexture(TextureTarget.Texture2D, value.Handle);
+
+						RenderStats.TextureBinding++;
+					}
+
+	
 				GL.MatrixMode(MatrixMode.Texture);
 				GL.LoadIdentity();
 				GL.Scale(1.0f / value.Size.Width, 1.0f / value.Size.Height, 1.0f);
 
 
-				RenderStats.TextureBinding++;
 			}
 			get
 			{
@@ -600,7 +611,6 @@ namespace ArcEngine.Graphic
 			}
 		}
 		static Texture texture;
-
 
 		/// <summary>
 		/// Sets a texture environment 
@@ -879,22 +889,6 @@ namespace ArcEngine.Graphic
 		}
 
 
-
-		public static int MajorVersion
-		{
-			get;
-			private set;
-		}
-
-		/// <summary>
-		/// M
-		/// </summary>
-		public static int MinorVersion
-		{
-			get;
-			private set;
-		}
-
 		#endregion
 
 	}
@@ -966,6 +960,34 @@ namespace ArcEngine.Graphic
 		{
 			get;
 			internal set;
+		}
+
+		/// <summary>
+		/// Major version of the Context
+		/// </summary>
+		public static int MajorVersion
+		{
+			get
+			{
+				int version;
+				GL.GetInteger(GetPName.MajorVersion, out version);
+
+				return version;
+			}
+		}
+
+		/// <summary>
+		/// Minor version of the Context
+		/// </summary>
+		public static int MinorVersion
+		{
+			get
+			{
+				int version;
+				GL.GetInteger(GetPName.MinorVersion, out version);
+
+				return version;
+			}
 		}
 
 
