@@ -125,10 +125,10 @@ namespace DungeonEye
 
 			if (CurrentHero == null)
 			{
-				Font.DrawText("Select the box of", new Point(304, 160));
-				Font.DrawText("the character you", new Point(304, 178));
-				Font.DrawText("wish to create or", new Point(304, 196));
-				Font.DrawText("view.", new Point(304, 212));
+				Font.DrawText(new Point(304, 160), "Select the box of");
+				Font.DrawText(new Point(304, 178), "the character you");
+				Font.DrawText(new Point(304, 196), "wish to create or");
+				Font.DrawText(new Point(304, 212), "view.");
 			}
 
 

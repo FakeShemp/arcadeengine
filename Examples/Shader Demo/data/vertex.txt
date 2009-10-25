@@ -1,56 +1,35 @@
-/*
-uniform vec4 color;
-void main()
-{
-	gl_FrontColor = gl_Color;
-	//gl_FrontColor = color;
-	gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
-}
-*/
 //
-// Vertex shader for procedural bricks
+// Vertex shader for wobbling a texture
 //
-// Authors: Dave Baldwin, Steve Koren, Randi Rost
-//          based on a shader by Darwyn Peachey
+// Author: Antonio Tejada
 //
-// Copyright (c) 2002-2006 3Dlabs Inc. Ltd. 
+// Copyright (c) 2002-2006 3Dlabs Inc. Ltd.
 //
 // See 3Dlabs-License.txt for license information
 //
 
-
-// http://aviatrix3d.j3d.org/using/1.0/glsl_basic.html
-//
-
-uniform vec3 LightPosition;
-uniform float Toto;
-
-const float SpecularContribution = 0.3;
-const float DiffuseContribution  = 1.0 - SpecularContribution;
-
 varying float LightIntensity;
-varying vec2  MCposition;
+uniform vec3 LightPosition;
 
-void main()
+const float specularContribution = 0.1;
+const float diffuseContribution  = 1.0 - specularContribution;
+
+void main(void)
 {
-    vec3 ecPosition = vec3(gl_ModelViewMatrix * gl_Vertex);
+/*
+    vec3 ecPosition = vec3 (gl_ModelViewMatrix * gl_Vertex);
     vec3 tnorm      = normalize(gl_NormalMatrix * gl_Normal);
     vec3 lightVec   = normalize(LightPosition - ecPosition);
     vec3 reflectVec = reflect(-lightVec, tnorm);
     vec3 viewVec    = normalize(-ecPosition);
-    float diffuse   = max(dot(lightVec, tnorm), 0.0);
-    float spec      = Toto; //0.0;
 
-    if (diffuse > 0.0)
-    {
-        spec = max(dot(reflectVec, viewVec), 0.0);
-        spec = pow(spec, 16.0);
-    }
+    float spec      = clamp(dot(reflectVec, viewVec), 0.0, 1.0);
+    spec            = pow(spec, 16.0);
 
-    LightIntensity  = DiffuseContribution * diffuse +
-                      SpecularContribution * spec;
-
-    MCposition      = gl_Vertex.xy;
+    LightIntensity  = diffuseContribution * max(dot(lightVec, tnorm), 0.0)
+                      + specularContribution * spec;
+*/
+    gl_TexCoord[0]  = gl_MultiTexCoord0;
+    
     gl_Position     = ftransform();
 }
-

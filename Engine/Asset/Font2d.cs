@@ -49,14 +49,15 @@ namespace ArcEngine.Asset
 			Batch = new Batch();
 		}
 
+		#region Text drawing
 
 
 		/// <summary>
 		/// Prints some text on the screen
 		/// </summary>
-		/// <param name="text">Texte to print</param>
 		/// <param name="pos">Offset of the text</param>
-		public void DrawText(string text, Point pos)
+		/// <param name="text">Text to print</param>
+		public void DrawText(Point pos, string text)
 		{
 			if (string.IsNullOrEmpty(text))
 				return;
@@ -77,7 +78,7 @@ namespace ArcEngine.Asset
 
 				// Move the glyph according to its hot spot
 				Rectangle tmp = new Rectangle(
-					new Point(rect.X - (int)(tile.HotSpot.X * TileSet.Scale.Width), rect.Y - (int)(tile.HotSpot.Y * TileSet.Scale.Height)), 
+					new Point(rect.X - (int)(tile.HotSpot.X * TileSet.Scale.Width), rect.Y - (int)(tile.HotSpot.Y * TileSet.Scale.Height)),
 					new Size((int)(tile.Rectangle.Width * TileSet.Scale.Width), (int)(tile.Rectangle.Height * TileSet.Scale.Height)));
 
 				// Add glyph to the batch
@@ -94,23 +95,47 @@ namespace ArcEngine.Asset
 
 
 		/// <summary>
+		/// Prints some text on the screen
+		/// </summary>
+		/// <param name="pos">Offset of the text</param>
+		/// <param name="format">Text to print</param>
+		/// <param name="args"></param>
+		public void DrawText(Point pos, string format, params object[] args)
+		{
+			DrawText(pos, string.Format(format, args));
+		}
+
+
+		/// <summary>
 		/// Prints some text on the screen within a rectangle with left justification
 		/// </summary>
-		/// <param name="text">Text to print</param>
 		/// <param name="rectangle">Rectangle of the text</param>
-		public void DrawText(string text, Rectangle rectangle)
+		/// <param name="text">Text to print</param>
+		public void DrawText(Rectangle rectangle, string text)
 		{
-			DrawText(text, rectangle, TextJustification.Left);
+			DrawText(rectangle, TextJustification.Left, text);
+		}
+
+
+		/// <summary>
+		/// Prints some text on the screen
+		/// </summary>
+		/// <param name="rectangle">Rectangle of the text</param>
+		/// <param name="format">Text to print</param>
+		/// <param name="args"></param>
+		public void DrawText(Rectangle rectangle, string format, params object[] args)
+		{
+			DrawText(rectangle, string.Format(format, args));
 		}
 
 
 		/// <summary>
 		/// Prints some text on the screen within a rectangle with justification
 		/// </summary>
-		/// <param name="text">Text to print</param>
 		/// <param name="rectangle">Rectangle of the text</param>
 		/// <param name="justification">Needed justifcation</param>
-		public void DrawText(string text, Rectangle rectangle, TextJustification justification)
+		/// <param name="text">Text to print</param>
+		public void DrawText(Rectangle rectangle, TextJustification justification, string text)
 		{
 			if (string.IsNullOrEmpty(text))
 				return;
@@ -126,7 +151,7 @@ namespace ArcEngine.Asset
 			foreach (char c in text)
 			{
 				// New line
-				if (c ==  10)
+				if (c == 10)
 				{
 					loc.X = rectangle.X;
 					loc.Y += (int)(14 * TileSet.Scale.Height);
@@ -154,7 +179,7 @@ namespace ArcEngine.Asset
 						if (rect.Left > rectangle.Right)
 						{
 							rect.X = rectangle.X;
-							rect.Y = rect.Y + (int) (14 * TileSet.Scale.Height);
+							rect.Y = rect.Y + (int)(14 * TileSet.Scale.Height);
 							loc.Y += (int)(14 * TileSet.Scale.Height);
 						}
 					}
@@ -186,6 +211,19 @@ namespace ArcEngine.Asset
 			Display.DrawBatch(Batch, BeginMode.Quads);
 		}
 
+		/// <summary>
+		/// Prints some text on the screen within a rectangle with justification
+		/// </summary>
+		/// <param name="rectangle">Rectangle of the text</param>
+		/// <param name="justification">Needed justifcation</param>
+		/// <param name="format">Text to print</param>
+		/// <param name="args"></param>
+		public void DrawText(Rectangle rectangle, TextJustification justification, string format, params object[] args)
+		{
+			DrawText(rectangle, justification, string.Format(format, args));
+		}
+
+		#endregion
 
 
 		/// <summary>

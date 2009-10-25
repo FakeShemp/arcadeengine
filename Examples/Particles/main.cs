@@ -18,6 +18,7 @@
 //
 #endregion
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using ArcEngine;
@@ -27,7 +28,6 @@ using ArcEngine.Input;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 
-
 namespace ArcEngine.Examples.Particles
 {
 	/// <summary>
@@ -36,14 +36,10 @@ namespace ArcEngine.Examples.Particles
 	public class Fountain : Game
 	{
 
-		// Creates a new TextPrinter to draw text on the screen.
-        //TextPrinter printer = new TextPrinter(TextQuality.Medium);
-        //Font sans_serif = new Font(FontFamily.GenericSansSerif, 18.0f);
-
         Font2d Font;
 
 		/// <summary>
-		/// Point d'entrée principal de l'application.
+		/// Application entry point
 		/// </summary>
 		[STAThread]
 		static void Main()
@@ -65,15 +61,19 @@ namespace ArcEngine.Examples.Particles
 		/// </summary>
 		public Fountain()
 		{
+			ParticleCount = 2000;
+
+			// Open the window
 			CreateGameWindow(new Size(1024, 768));
 			Window.Text = "Fountain";
 
 
-			Particles = new Particle[1024 * 2];
+			// Create particles
+			Particles = new Particle[ParticleCount * 2];
 			for (int i = 0; i < Particles.Length; i++)
 				Particles[i] = new Particle();
 
-
+			// Colors for the particles
 			Colors = new Color[]
 			{
 				Color.Red,
@@ -81,6 +81,8 @@ namespace ArcEngine.Examples.Particles
 				Color.Green,
 				Color.Yellow
 			};
+
+			Watch = new Stopwatch();
 		}
 
 
@@ -102,12 +104,15 @@ namespace ArcEngine.Examples.Particles
 			}
 
 
+			// Creates the batch
 			Batch = new Batch();
 			Batch.Size = Particles.Length;
 
 
+			// Load the texture
 			Texture = new Texture("data/particle.png");
 
+			// Create a font
             Font = new Font2d();
             Font.LoadTTF(@"c:\windows\fonts\verdana.ttf", 14, FontStyle.Regular);
 		}
@@ -133,6 +138,7 @@ namespace ArcEngine.Examples.Particles
 			if (Keyboard.IsKeyPress(Keys.Escape))
 				Exit();
 
+			// Reset particles
 			if (Keyboard.IsKeyPress(Keys.Space))
 			{
 				foreach (Particle particle in Particles)
@@ -174,13 +180,16 @@ namespace ArcEngine.Examples.Particles
 
 			string msg;
 
+			Watch.Reset();
 			if (Keyboard.IsKeyPress(Keys.D))
 			{
+				Watch.Start();
 				foreach (Particle particle in Particles)
 				{
 					Display.Color = Color.FromArgb(particle.Alpha, particle.Color);
 					Texture.Blit(new Point((int)particle.Location.X, (int)particle.Location.Y));
 				}
+				Watch.Stop();
 
 
 				msg = "Direct mode";
@@ -189,6 +198,7 @@ namespace ArcEngine.Examples.Particles
 			{
 
 
+				Watch.Start();
 				Batch.Begin();
 				foreach (Particle particle in Particles)
 				{
@@ -198,23 +208,22 @@ namespace ArcEngine.Examples.Particles
 
 				Display.Texture = Texture;
 				Display.DrawBatch(Batch, BeginMode.Quads);
+				Watch.Stop();
 
 
 				msg = "Batch mode";
 			}
 
+
             Font.Color = Color.SpringGreen;
-            Font.DrawText(msg, new Point(10, 100));
+			Font.DrawText(new Point(10, 220), "BatchCall : {0}", Display.RenderStats.BatchCall.ToString());
+			Font.DrawText(new Point(10, 100), msg);
 
 
-            Font.DrawText("Press 'D' key for direct mode", new Point(10, 180));
-            Font.DrawText("DirectCall : " + Display.RenderStats.DirectCall.ToString(), new Point(10, 200));
-            Font.DrawText("BatchCall : " + Display.RenderStats.BatchCall.ToString(), new Point(10, 220));
-            Font.DrawText("TextureBinding : " + Display.RenderStats.TextureBinding.ToString(), new Point(10, 240));
-
-
-
-
+			Font.DrawText(new Point(10, 180), "Press 'D' key for direct mode");
+			Font.DrawText(new Point(10, 200), "DirectCall : {0}", Display.RenderStats.DirectCall.ToString());
+			Font.DrawText(new Point(10, 240), "TextureBinding {0}", Display.RenderStats.TextureBinding.ToString());
+			Font.DrawText(new Point(10, 260), "Elapsed time : {0} ms", Watch.ElapsedMilliseconds.ToString());
 		}
 
 
@@ -242,6 +251,11 @@ namespace ArcEngine.Examples.Particles
 
 		#region Properties
 
+		/// <summary>
+		/// Number of particle
+		/// </summary>
+		int ParticleCount;
+
 
 		/// <summary>
 		/// Particule texture
@@ -256,9 +270,9 @@ namespace ArcEngine.Examples.Particles
 
 
 		/// <summary>
-		/// Random generator
+		/// Stopwatch
 		/// </summary>
-	//	Random Random;
+		Stopwatch Watch;
 
 
 		/// <summary>
@@ -286,7 +300,7 @@ namespace ArcEngine.Examples.Particles
 
 
 	/// <summary>
-	/// Texture informations
+	/// Particle informations
 	/// </summary>
 	class Particle
 	{

@@ -50,7 +50,7 @@ namespace ArcEngine.Graphic
 
 
 		/// <summary>
-		/// 
+		/// Destructor
 		/// </summary>
 		~Batch()
 		{
@@ -58,7 +58,7 @@ namespace ArcEngine.Graphic
 		}
 
 		/// <summary>
-		/// 
+		/// Start a new batch
 		/// </summary>
 		public void Begin()
 		{
@@ -69,7 +69,7 @@ namespace ArcEngine.Graphic
 
 
 		/// <summary>
-		/// 
+		/// End batch
 		/// </summary>
 		public void End()
 		{
@@ -86,6 +86,7 @@ namespace ArcEngine.Graphic
 				// Update Color buffer
 				GL.BindBuffer(BufferTarget.ArrayBuffer, BufferID[2]);
 				GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(sizeof(byte) * Color.Length), Color, BufferUsageHint.StaticDraw);
+
 			}
 			catch (Exception e)
 			{
@@ -152,9 +153,9 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Adds a rectangle to the batch
 		/// </summary>
-		/// <param name="rect"></param>
-		/// <param name="tex"></param>
-		/// <param name="color"></param>
+		/// <param name="rect">Rectangle on the screen</param>
+		/// <param name="tex">Texture coordinate</param>
+		/// <param name="color">Drawing color</param>
 		public void Blit(Rectangle rect, Rectangle tex, Color color)
 		{
 			if (Offset >= Size)
@@ -305,18 +306,17 @@ namespace ArcEngine.Graphic
 
 		
 		/// <summary>
-		/// 
+		/// Vertex buffer
 		/// </summary>
 		int[] Vertex;
 		
 		/// <summary>
-		/// 
+		/// Texture buffer
 		/// </summary>
 		int[] Texture;
 
-
 		/// <summary>
-		/// 
+		/// Color buffer
 		/// </summary>
 		byte[] Color;
 

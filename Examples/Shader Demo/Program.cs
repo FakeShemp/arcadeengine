@@ -74,9 +74,12 @@ namespace Shader_Demo
 
 			Shader.LoadSource(ShaderType.VertexShader, "data/vertex.txt");
 			Shader.LoadSource(ShaderType.FragmentShader, "data/fragment.txt");
-
-
 			Shader.Compile();
+
+
+			Texture = new Texture("data/3dlabs.png");
+			Display.Texture = Texture;
+			Display.Culling = true;
 
 
 		}
@@ -106,19 +109,39 @@ namespace Shader_Demo
 			{
 				Shader.Use(Shader);
 
-				float[] brick_colour = new float[] { 1, 0.3f, 0.2f };
-				float[] mortar_colour = new float[] { 0.85f, 0.86f, 0.84f };
-				float[] brick_size = new float[] { 0.3f, 0.15f };
-				float[] brick_pct = new float[] { 0.9f, 0.85f };
-				float[] light_pos = new float[] { 0.0f, 0.0f, 4.3f };
+				float[] amplitude = new float[] { 0.05f, 0.05f };
+				float[] frequence = new float[] { 4.0f, 4.0f };
+				Shader.SetUniform("StartRad", 11.0f);
+				Shader.SetUniform("Amplitude", amplitude);
+				Shader.SetUniform("WobbleTex", 0);
+				Shader.SetUniform("Freq", 0.1f);
 
-				Shader.SetUniform("BrickColor", brick_colour);
-				Shader.SetUniform("MortarColor", mortar_colour);
-				Shader.SetUniform("BrickSize", brick_size);
-				Shader.SetUniform("BrickPct", brick_pct);
-				Shader.SetUniform("LightPosition", light_pos);
-				Shader.SetUniform("Toto", 1.0f);
+				//float[] firecolor1 = new float[] { 0.8f, 0.7f, 0.0f, 1.0f };
+				//float[] firecolor2 = new float[] { 0.6f, 0.1f, 0.0f, 1.0f };
+				//float[] offset = new float[] { 0.0f, -1.0f };
+				//Shader.SetUniform("FireColor1", firecolor1);
+				//Shader.SetUniform("FireColor2", firecolor2);
+				//Shader.SetUniform("Offset", offset);
+				//Shader.SetUniform("sampler3d", 0);
+				//Shader.SetUniform("Scale", 0.6f);
+				//Shader.SetUniform("Extent", 0.6f);
 
+				//float[] lightpos= new float[] { 0.0f, 0.0f, 4.0f};
+				//float[] zoom = new float[] { 0.0f, 0.1f};
+				//float[] innercolor = new float[] { 0.0f, 0.0f, 0.0f, 1.0f };
+				//float[] outercolor1 = new float[] { 0.5f, 0.0f, 1.5f, 1.0f };
+				//float[] outercolor2 = new float[] { 0.0f, 1.5f, 0.0f, 1.0f };
+				//Shader.SetUniform("LightPosition", lightpos);
+				//Shader.SetUniform("DiffuseContribution", 0.8f);
+				//Shader.SetUniform("SpecularContribution", 0.2f);
+				//Shader.SetUniform("Shininess", 16.0f);
+				//Shader.SetUniform("MaxIterations", 50.0f);
+				//Shader.SetUniform("Xcenter", -0.75f);
+				//Shader.SetUniform("Ycenter", -0.0f);
+				//Shader.SetUniform("Zoom", zoom);
+				//Shader.SetUniform("InnerColor", innercolor);
+				//Shader.SetUniform("OuterColor1",outercolor1);
+				//Shader.SetUniform("OuterColor2", outercolor2);
 
 			}
 			if (Keyboard.IsNewKeyPress(Keys.F2))
@@ -141,11 +164,11 @@ namespace Shader_Demo
 			// Clears the background
 			Display.ClearBuffers();
 			Display.Color = Color.White;
+			Display.Texturing = true;
 
+			Display.Rectangle(new Rectangle(10, 10, 600, 600), true);
+		//	Texture.Blit(Point.Empty);
 
-			Display.Rectangle(new Rectangle(10, 10, 200, 200), true);
-
-			Display.Line(new Point(400, 100), new Point(500, 133));
 		}
 
 
@@ -157,6 +180,12 @@ namespace Shader_Demo
 		/// Shader
 		/// </summary>
 		Shader Shader;
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Texture Texture;
 
 		#endregion
 

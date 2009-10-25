@@ -24,6 +24,9 @@ using System.Drawing;
 using OpenTK.Graphics;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
+using System.Text.RegularExpressions;
+
+
 //
 //
 //
@@ -78,6 +81,20 @@ namespace ArcEngine.Graphic
 			DepthTest = false;
 			BlendingFunction(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 			GL.ClearStencil(0);
+
+			GL.Normal3(0.0f, 0.0f, -1.0f);
+
+
+
+			// Get OpenGL version
+			Regex regex = new Regex(@"(\d+)\.(\d+)\.*(\d*)");
+			Match match = regex.Match(GL.GetString(StringName.Version));
+			if (match.Success)
+			{
+				MajorVersion = Convert.ToInt32(match.Groups[1].Value);
+				MinorVersion = Convert.ToInt32(match.Groups[2].Value);
+			}
+
 		}
 
 
@@ -99,9 +116,23 @@ namespace ArcEngine.Graphic
 				Trace.WriteLine(device.ToString());
 			Trace.Unindent();
 
-			string ext = GL.GetString(StringName.Extensions);
-			if (ext != null)
-				Trace.WriteLine("Supported extension ({0}) : {1}", ext.Split(new char[] { ' ' }).Length, ext);
+
+			if (MajorVersion <= 2)
+			{
+				string ext = GL.GetString(StringName.Extensions);
+				if (ext != null)
+					Trace.WriteLine("Supported extension ({0}) : {1}", ext.Split(new char[] { ' ' }).Length, ext);
+			}
+			else
+			{
+				int count = 0;
+				GL.GetInteger(GetPName.NumExtensions, out count);
+				Trace.Write("Supported extension ({0}) : ", count);
+				for (int i = 0; i < count; i++)
+					Trace.Write("{0}, ", GL.GetString(StringName.Extensions, i));
+
+				Trace.WriteLine("");
+			}
 
 			Trace.Unindent();
 		}
@@ -465,44 +496,31 @@ namespace ArcEngine.Graphic
 		/// <param name="mode"></param>
 		public static void DrawBatch(Batch batch, BeginMode mode)
 		{
-			//if (true)
-			//{
-				// Vertex
-				GL.EnableClientState(EnableCap.VertexArray);
-				GL.BindBuffer(BufferTarget.ArrayBuffer, batch.BufferID[0]);
-				GL.VertexPointer(2, VertexPointerType.Int, 0, IntPtr.Zero);
+			GL.EnableClientState(EnableCap.VertexArray);
+			GL.BindBuffer(BufferTarget.ArrayBuffer, batch.BufferID[0]);
+			GL.VertexPointer(2, VertexPointerType.Int, 0, IntPtr.Zero);
 
 
-				// Texture
-				GL.EnableClientState(EnableCap.TextureCoordArray);
-				GL.BindBuffer(BufferTarget.ArrayBuffer, batch.BufferID[1]);
-				GL.TexCoordPointer(2, TexCoordPointerType.Int, 0, IntPtr.Zero);
+			// Texture
+			GL.EnableClientState(EnableCap.TextureCoordArray);
+			GL.BindBuffer(BufferTarget.ArrayBuffer, batch.BufferID[1]);
+			GL.TexCoordPointer(2, TexCoordPointerType.Int, 0, IntPtr.Zero);
 
-				// Color
-				GL.EnableClientState(EnableCap.ColorArray);
-				GL.BindBuffer(BufferTarget.ArrayBuffer, batch.BufferID[2]);
-				GL.ColorPointer(4, ColorPointerType.UnsignedByte, 0, IntPtr.Zero);
+			// Color
+			GL.EnableClientState(EnableCap.ColorArray);
+			GL.BindBuffer(BufferTarget.ArrayBuffer, batch.BufferID[2]);
+			GL.ColorPointer(4, ColorPointerType.UnsignedByte, 0, IntPtr.Zero);
 
 
 
+			GL.DrawArrays(mode, 0, batch.Size * 8);
 
-				GL.DrawArrays(mode, 0, batch.Size * 8);
 
+			GL.DisableClientState(EnableCap.VertexArray);
+			GL.DisableClientState(EnableCap.TextureCoordArray);
+			GL.DisableClientState(EnableCap.ColorArray);
 
-				GL.DisableClientState(EnableCap.VertexArray);
-				GL.DisableClientState(EnableCap.TextureCoordArray);
-				GL.DisableClientState(EnableCap.ColorArray);
-			//}
-			//else
-			//{
-			//    GL.VertexPointer(2, VertexPointerType.Int, 0, batch.Vertex);
-			//    GL.TexCoordPointer(2, TexCoordPointerType.Int, 0, batch.Texture);
-			//    GL.ColorPointer(4, ColorPointerType.UnsignedByte, 0, batch.Color);
-
-			//    GL.DrawArrays(mode, 0, batch.Size);
-			//}
-
-				RenderStats.BatchCall++;
+			RenderStats.BatchCall++;
 		}
 
 
@@ -557,8 +575,8 @@ namespace ArcEngine.Graphic
 		{
 			set
 			{
-				//if (texture == value)
-				//	return;
+				if (texture == value)
+					return;
 
 				texture = value;
 				if (value == null)
@@ -860,6 +878,22 @@ namespace ArcEngine.Graphic
 			private set;
 		}
 
+
+
+		public static int MajorVersion
+		{
+			get;
+			private set;
+		}
+
+		/// <summary>
+		/// M
+		/// </summary>
+		public static int MinorVersion
+		{
+			get;
+			private set;
+		}
 
 		#endregion
 

@@ -236,7 +236,7 @@ namespace RuffnTumble
 			Icons.Draw(0, Point.Empty);
 
 
-			Font.DrawText("Camera location : " + World.CurrentLevel.Camera.Location.ToString(), new Point(100, 100));
+			Font.DrawText(new Point(100, 100), "Camera location : " + World.CurrentLevel.Camera.Location.ToString());
 
 			#region Stats
 			//Point pos = Point.Empty;

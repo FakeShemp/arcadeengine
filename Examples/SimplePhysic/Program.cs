@@ -215,7 +215,7 @@ namespace ArcEngine.Games.ProjectT
 			Display.Rectangle(rect, false);
 
 
-			Font.DrawText(boxBody2.TotalRotation.ToString(), new Point(10, 100));
+			Font.DrawText(new Point(10, 100), boxBody2.TotalRotation.ToString());
 		}
 
 

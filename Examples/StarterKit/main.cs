@@ -171,9 +171,9 @@ namespace ArcEngine.Examples.StarterKit
 
 
 			// Print some text
-			Font.DrawText("Press S to Shear", new Point(10, 450));
-			Font.DrawText("Press R to Rotate", new Point(10, 470));
-			Font.DrawText("Press D to Scale", new Point(10, 490));
+			Font.DrawText(new Point(10, 450), "Press S to Shear");
+			Font.DrawText(new Point(10, 470), "Press R to Rotate");
+			Font.DrawText(new Point(10, 490), "Press D to Scale");
 		}
 
 
