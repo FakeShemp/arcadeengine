@@ -496,6 +496,9 @@ namespace ArcEngine.Graphic
 		/// <param name="mode"></param>
 		public static void DrawBatch(Batch batch, BeginMode mode)
 		{
+			// No batch, or empty batch
+			if (batch == null || batch.Offset == 0)
+				return;
 
 			GL.EnableClientState(EnableCap.VertexArray);
 			GL.BindBuffer(BufferTarget.ArrayBuffer, batch.BufferID[0]);
@@ -514,7 +517,7 @@ namespace ArcEngine.Graphic
 
 
 
-			GL.DrawArrays(mode, 0, batch.Size * 8);
+			GL.DrawArrays(mode, 0, batch.Size * 4);
 
 
 			GL.DisableClientState(EnableCap.VertexArray);
