@@ -330,6 +330,8 @@ namespace ArcEngine.Graphic
 			Marshal.Copy(bmdata.Scan0, data, 0, bitmap.Size.Width * bitmap.Size.Height * 4);
 			bitmap.UnlockBits(bmdata);
 
+			Display.Texture = this;
+
 			GL.TexSubImage2D<byte>(TextureTarget.Texture2D, 0, 
 				location.X, location.Y, 
 				bitmap.Width, bitmap.Height,

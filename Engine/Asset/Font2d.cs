@@ -252,7 +252,10 @@ namespace ArcEngine.Asset
 			// Open the font
 			Stream data = ResourceManager.LoadResource(filename);
 			if (data == null)
+			{
+				Trace.WriteLine("Can't open TTF Font \"{0}\"", filename);
 				return false;
+			}
 
 			// GdiFont
 			return Generate(new Font(LoadFontFamily(data), size, style));
