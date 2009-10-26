@@ -313,6 +313,18 @@ namespace ArcEngine.Forms
 			get;
 			private set;
 		}
+
+
+		/// <summary>
+		/// Gets available displays mode
+		/// </summary>
+		static public DisplayDevice[] AvailableDisplays
+		{
+			get
+			{
+				return DisplayDevice.AvailableDisplays;
+			}
+		}
 		#endregion
 	}
 }
