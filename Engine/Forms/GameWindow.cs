@@ -79,6 +79,64 @@ namespace ArcEngine.Forms
 		}
 
 
+		#region FullScreen / Windowed mode
+
+		/// <summary>
+		/// Set in FullScreen mode
+		/// </summary>
+		public void SetFullScreen()
+		{
+			DisplayResolution res = DisplayDevice.Default.SelectResolution(Size.Width, Size.Height, 32, 60);
+			SetFullScreen(res);
+		}
+
+
+		/// <summary>
+		/// Set in FullScreen mode
+		/// </summary>
+		/// <param name="resolution">Desired resolution</param>
+		public void SetFullScreen(DisplayResolution resolution)
+		{
+			if (resolution == null)
+				return;
+
+			DisplayDevice.Default.ChangeResolution(resolution);
+
+			this.WindowState = FormWindowState.Maximized;
+			this.FormBorderStyle = FormBorderStyle.None;
+
+
+			IsFullScreen = true;
+		}
+
+		/// <summary>
+		/// Set in FullScreen mode
+		/// </summary>
+		/// <param name="size"></param>
+		/// <param name="bpp"></param>
+		public void SetFullScreen(Size size, int bpp)
+		{
+			DisplayResolution res = DisplayDevice.Default.SelectResolution(size.Width, size.Height, bpp, 60);
+			SetFullScreen(res);
+		}
+
+
+		/// <summary>
+		/// Change to windowed mode
+		/// </summary>
+		public void SetWindowed()
+		{
+
+			DisplayDevice.Default.RestoreResolution();
+			WindowState = FormWindowState.Normal;
+			Resizable = resizable;
+
+			IsFullScreen = false;
+		} 
+
+		#endregion
+
+
 		#region Events
 
 
@@ -213,7 +271,7 @@ namespace ArcEngine.Forms
 		{
 			get
 			{
-				return FormBorderStyle == FormBorderStyle.Sizable;
+				return resizable;
 			}
 
 			set
@@ -222,8 +280,11 @@ namespace ArcEngine.Forms
 					FormBorderStyle = FormBorderStyle.Sizable;
 				else
 					FormBorderStyle = FormBorderStyle.FixedDialog;
+
+				resizable = value;
 			}
 		}
+		bool resizable;
 
 
 		/// <summary>
@@ -243,6 +304,15 @@ namespace ArcEngine.Forms
 
 		}
 
+
+		/// <summary>
+		/// Gets if the window is in FullScreen mode
+		/// </summary>
+		public bool IsFullScreen
+		{
+			get;
+			private set;
+		}
 		#endregion
 	}
 }
