@@ -39,7 +39,6 @@
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MaximizeBox = false;
-			this.MinimizeBox = false;
 			this.Name = "GameWindow";
 			this.Text = "ArcEngine : http://www.mimicprod.net";
 			this.Load += new System.EventHandler(this.Form_Load);
