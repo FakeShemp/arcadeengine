@@ -227,12 +227,26 @@ namespace ArcEngine.Asset
 			return str;
 		}
 
+
+		/// <summary>
+		/// Returns a formated string with arguments
+		/// </summary>
+		/// <param name="id">string id</param>
+		/// <param name="args">Arguments</param>
+		/// <returns>Formated string</returns>
+		public string GetString(int id, params object[] args)
+		{
+			string str = GetString(id);
+			return string.Format(str, args);
+		}
+
+
 		/// <summary>
 		/// Returns a string in a specified language
 		/// </summary>
 		/// <param name="id">String id</param>
 		/// <param name="language">Language name</param>
-		/// <returns></returns>
+		/// <returns>Formated string</returns>
 		public string GetString(int id, string language)
 		{
 			if (!Languages.ContainsKey(language))
@@ -252,6 +266,22 @@ namespace ArcEngine.Asset
 
 			return str;
 		}
+
+
+
+		/// <summary>
+		/// Returns a formated string in a specified language
+		/// </summary>
+		/// <param name="id">String id</param>
+		/// <param name="language">Language name</param>
+		/// <param name="args">Arguments</param>
+		/// <returns>Formated string</returns>
+		public string GetString(int id, string language, params object[] args)
+		{
+			string str = GetString(id, language);
+			return string.Format(str, args);
+		}
+
 
 		/// <summary>
 		/// Sets the value of a string
