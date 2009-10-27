@@ -272,7 +272,7 @@ namespace ArcEngine.Providers
 		/// <typeparam name="T"></typeparam>
 		public override void Remove<T>()
 		{
-			if (typeof(T) == typeof(Script))
+			if (typeof(T) == typeof(Font2d))
 				Fonts.Clear();
 		}
 
