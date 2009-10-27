@@ -130,16 +130,16 @@ namespace RuffnTumble.Editor
 
 					if (brush == SelectedBrush)
 					{
-						Display.Color = Color.Red;
-						Display.Rectangle(rect, false);
-						Display.Color = Color.White;
+						//Display.Color = Color.Red;
+						Display.DrawRectangle(rect, Color.Red);
+						//Display.Color = Color.White;
 					}
 
 
 					// Somme blah blah
 					if (rect.Contains(mouse))
 					{
-						Display.Rectangle(rect, false);
+						Display.DrawRectangle(rect, Color.White);
 					}
 
 					// Move to the next location

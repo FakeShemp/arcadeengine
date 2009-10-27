@@ -555,7 +555,7 @@ namespace DungeonEye.Forms
 
 			// Surround the selected object
 			if (MazePropertyBox.SelectedObject != null)
-				Display.Rectangle(new Rectangle(BlockCoord.X * 25 + Offset.X, BlockCoord.Y * 25 + Offset.Y, 25, 25), false);
+				Display.DrawRectangle(new Rectangle(BlockCoord.X * 25 + Offset.X, BlockCoord.Y * 25 + Offset.Y, 25, 25), Color.White);
 
 
 

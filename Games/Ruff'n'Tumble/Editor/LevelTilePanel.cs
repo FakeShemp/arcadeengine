@@ -111,14 +111,14 @@ namespace RuffnTumble.Editor
 			// Draw the selected brush
 			if (Form.TileMode == TileMode.Pen)
 			{
-				Display.Color = Color.Red;
-				Rectangle rec = new Rectangle(
+				//Display.Color = Color.Red;
+				Display.DrawRectangle(
 					SelectedTiles.Left * Form.World.CurrentLevel.BlockSize.Width,
 					SelectedTiles.Top * Form.World.CurrentLevel.BlockSize.Height,
 					SelectedTiles.Width * Form.World.CurrentLevel.BlockSize.Width,
-					SelectedTiles.Height * Form.World.CurrentLevel.BlockSize.Height);
-				Display.Rectangle(rec, false);
-				Display.Color = Color.White;
+					SelectedTiles.Height * Form.World.CurrentLevel.BlockSize.Height,
+					Color.Red);
+				//Display.Color = Color.White;
 			}
 
 

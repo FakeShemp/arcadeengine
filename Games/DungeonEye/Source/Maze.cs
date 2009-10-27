@@ -1577,7 +1577,7 @@ namespace DungeonEye
 					if (team.Location.Position.X == x && team.Location.Position.Y == y && team.Maze == this)
 						Display.Color = Color.Blue;
 
-					Display.Rectangle(new Rectangle(location.X + x * 4, location.Y + +y * 4, 4, 4), true);
+					Display.FillRectangle(new Rectangle(location.X + x * 4, location.Y + +y * 4, 4, 4), Display.Color);
 
 				}
 

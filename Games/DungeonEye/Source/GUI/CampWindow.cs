@@ -215,8 +215,8 @@ namespace DungeonEye.Gui
 				return;
 
 
-			Display.Color = BgColor;
-			Display.Rectangle(Rectangle, true);
+			//Display.Color = BgColor;
+			Display.FillRectangle(Rectangle, BgColor);
 
 
 			Font.Color = Color.FromArgb(85, 255, 255);
@@ -231,17 +231,17 @@ namespace DungeonEye.Gui
 				Size size = button.Rectangle.Size;
 
 				// Rectangle
-				Display.Color = Color.FromArgb(138, 146, 207);
-				Display.Rectangle(new Rectangle(point.X + 2, point.Y, size.Width - 2, 2), true);
-				Display.Rectangle(new Rectangle(point.X + 4, point.Y + 2, size.Width - 4, 2), true);
-				Display.Rectangle(new Rectangle(button.Rectangle.Right - 4, point.Y + 4, 2, size.Height - 8), true);
-				Display.Rectangle(new Rectangle(button.Rectangle.Right - 2, point.Y + 4, 2, size.Height - 6), true);
+				//Display.Color = Color.FromArgb(138, 146, 207);
+				Display.FillRectangle(new Rectangle(point.X + 2, point.Y, size.Width - 2, 2), Color.FromArgb(138, 146, 207));
+				Display.FillRectangle(new Rectangle(point.X + 4, point.Y + 2, size.Width - 4, 2), Color.FromArgb(138, 146, 207));
+				Display.FillRectangle(new Rectangle(button.Rectangle.Right - 4, point.Y + 4, 2, size.Height - 8), Color.FromArgb(138, 146, 207));
+				Display.FillRectangle(new Rectangle(button.Rectangle.Right - 2, point.Y + 4, 2, size.Height - 6), Color.FromArgb(138, 146, 207));
 
-				Display.Color = Color.FromArgb(44, 48, 134);
-				Display.Rectangle(new Rectangle(point.X, point.Y + 26, size.Width, 2), true);
-				Display.Rectangle(new Rectangle(point.X, point.Y + 24, size.Width - 2, 2), true);
-				Display.Rectangle(new Rectangle(point.X, point.Y, 2, size.Height - 4), true);
-				Display.Rectangle(new Rectangle(point.X + 2, point.Y + 2, 2, size.Height - 6), true);
+				//Display.Color = Color.FromArgb(44, 48, 134);
+				Display.FillRectangle(new Rectangle(point.X, point.Y + 26, size.Width, 2), Color.FromArgb(44, 48, 134));
+				Display.FillRectangle(new Rectangle(point.X, point.Y + 24, size.Width - 2, 2), Color.FromArgb(44, 48, 134));
+				Display.FillRectangle(new Rectangle(point.X, point.Y, 2, size.Height - 4), Color.FromArgb(44, 48, 134));
+				Display.FillRectangle(new Rectangle(point.X + 2, point.Y + 2, 2, size.Height - 6), Color.FromArgb(44, 48, 134));
 
 
 				// Text

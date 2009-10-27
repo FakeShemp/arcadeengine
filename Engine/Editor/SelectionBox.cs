@@ -379,14 +379,14 @@ namespace ArcEngine.Editor
 			rect.Width = (int)(rect.Width * zoom);
 			rect.Height = (int)(rect.Height * zoom);
 
-			Display.Rectangle(new Rectangle(rect.X, rect.Y, 4, 4), true);
-			Display.Rectangle(new Rectangle(rect.X + (rect.Width / 2) - 2, rect.Y, 4, 4), true);
-			Display.Rectangle(new Rectangle(rect.X + rect.Width - 4, rect.Y, 4, 4), true);
-			Display.Rectangle(new Rectangle(rect.X, rect.Y + (rect.Height / 2) - 2, 4, 4), true);
-			Display.Rectangle(new Rectangle(rect.X + rect.Width - 4, (rect.Y + (rect.Height / 2) - 2), 4, 4), true);
-			Display.Rectangle(new Rectangle(rect.X, rect.Y + rect.Height - 4, 4, 4), true);
-			Display.Rectangle(new Rectangle(rect.X + (rect.Width / 2) - 2, rect.Y + rect.Height - 4, 4, 4), true);
-			Display.Rectangle(new Rectangle(rect.X + rect.Width - 4, rect.Y + rect.Height - 4, 4, 4), true);
+			Display.DrawRectangle(new Rectangle(rect.X, rect.Y, 4, 4), Color);
+			Display.DrawRectangle(new Rectangle(rect.X + (rect.Width / 2) - 2, rect.Y, 4, 4), Color);
+			Display.DrawRectangle(new Rectangle(rect.X + rect.Width - 4, rect.Y, 4, 4), Color);
+			Display.DrawRectangle(new Rectangle(rect.X, rect.Y + (rect.Height / 2) - 2, 4, 4), Color);
+			Display.DrawRectangle(new Rectangle(rect.X + rect.Width - 4, (rect.Y + (rect.Height / 2) - 2), 4, 4), Color);
+			Display.DrawRectangle(new Rectangle(rect.X, rect.Y + rect.Height - 4, 4, 4), Color);
+			Display.DrawRectangle(new Rectangle(rect.X + (rect.Width / 2) - 2, rect.Y + rect.Height - 4, 4, 4), Color);
+			Display.DrawRectangle(new Rectangle(rect.X + rect.Width - 4, rect.Y + rect.Height - 4, 4, 4), Color);
 		}
 
 
@@ -404,7 +404,6 @@ namespace ArcEngine.Editor
 			bool blending = Display.Blending;
 
 
-			Display.Color = Color;
 			Display.Blending = false;
 
 			Rectangle rect = Rectangle;
@@ -412,7 +411,7 @@ namespace ArcEngine.Editor
 			rect.Y = (int) (rect.Y * zoom + Offset.Y);
 			rect.Width = (int ) (rect.Width * zoom);
 			rect.Height = (int) (rect.Height * zoom);
-			Display.Rectangle(rect, false);
+			Display.DrawRectangle(rect, Color);
 
 			if (isMouseOver)
 				DrawSizeHandles();

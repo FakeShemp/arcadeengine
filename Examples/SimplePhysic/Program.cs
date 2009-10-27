@@ -195,24 +195,20 @@ namespace ArcEngine.Games.ProjectT
 
 
 			// box 1
-			Display.Color = Color.Red;
-			Display.Rectangle(new Rectangle((int)boxBody1.Position.X, (int)boxBody1.Position.Y, 190, 190), true, boxBody1.TotalRotation, new Point(size.Width / 2, size.Height / 2));
-			Display.Color = Color.Black;
-			Display.Rectangle(new Rectangle((int)boxBody1.Position.X, (int)boxBody1.Position.Y, 190, 190), false, boxBody1.TotalRotation, new Point(size.Width / 2, size.Height / 2));
+			Display.FillRectangle(new Rectangle((int)boxBody1.Position.X, (int)boxBody1.Position.Y, 190, 190), Color.Red, boxBody1.TotalRotation, new Point(size.Width / 2, size.Height / 2));
+			Display.DrawRectangle(new Rectangle((int)boxBody1.Position.X, (int)boxBody1.Position.Y, 190, 190), Color.Black, boxBody1.TotalRotation, new Point(size.Width / 2, size.Height / 2));
 
 	
 			// box 2
 			Display.Color = Color.Green;
-			Display.Rectangle(new Rectangle((int)boxBody2.Position.X, (int)boxBody2.Position.Y, 190, 190), true, boxBody2.TotalRotation, new Point(size.Width / 2, size.Height / 2));
-			Display.Color = Color.Black;
-			Display.Rectangle(new Rectangle((int)boxBody2.Position.X, (int)boxBody2.Position.Y, 190, 190), false, boxBody2.TotalRotation, new Point(size.Width / 2, size.Height / 2));
+			Display.FillRectangle(new Rectangle((int)boxBody2.Position.X, (int)boxBody2.Position.Y, 190, 190), Color.Green, boxBody2.TotalRotation, new Point(size.Width / 2, size.Height / 2));
+			Display.DrawRectangle(new Rectangle((int)boxBody2.Position.X, (int)boxBody2.Position.Y, 190, 190), Color.Black, boxBody2.TotalRotation, new Point(size.Width / 2, size.Height / 2));
 
 
 
 			Rectangle rect = new Rectangle(200, 200, 100, 100);
-			Display.Color = Color.Blue;
-			Display.Rectangle(rect, true, angle, new Point(50, 50));
-			Display.Rectangle(rect, false);
+			Display.FillRectangle(rect, Color.Blue, angle, new Point(50, 50));
+			Display.DrawRectangle(rect, Color.Blue);
 
 
 			Font.DrawText(new Point(10, 100), boxBody2.TotalRotation.ToString());

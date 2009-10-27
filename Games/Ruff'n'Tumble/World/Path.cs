@@ -56,18 +56,10 @@ namespace RuffnTumble
 		public void Draw(Camera camera)
 		{
 
-			Display.Color = Color.Red;
-		//	Display.LineWidth = LineWidth;
 			for (int i = 0; i < points.Count - 1; i++)
-			{
-				Display.Line(points[i], points[i + 1]);
-			}
-		//	Display.LineWidth = 1;
+				Display.DrawLine(points[i], points[i + 1], Color.Red);
 
-			Display.Color = Color.Green;
-			Display.Rectangle(Zone, false);
-
-			Display.Color = Color.White;
+			Display.DrawRectangle(Zone, Color.Green);
 		}
 
 

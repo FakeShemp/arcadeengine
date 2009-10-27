@@ -204,7 +204,7 @@ namespace ArcEngine.Editor
 				GuiBase elem = FindElementAt(RenderControl.PointToClient(Control.MousePosition));
 				if (elem != null)
 				{
-					Display.Rectangle(elem.Rectangle, false);
+					Display.DrawRectangle(elem.Rectangle, Color.White);
 				}
 			}
 

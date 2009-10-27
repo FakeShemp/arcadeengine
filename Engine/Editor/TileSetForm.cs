@@ -427,8 +427,7 @@ namespace ArcEngine.Editor
 				pos.Y = (int) (CurrentTile.HotSpot.Y * zoomvalue + TileOffset.Y);
 
 				Rectangle rect = new Rectangle(pos, new Size((int)zoomvalue, (int)zoomvalue));
-				Display.Color = Color.Red;
-				Display.Rectangle(rect, true);
+				Display.DrawRectangle(rect, Color.Red);
 				Display.Color = Color.White;
 
 			}

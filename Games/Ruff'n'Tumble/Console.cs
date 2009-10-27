@@ -103,12 +103,12 @@ namespace RuffnTumble
 			if (!IsActive)
 				return;
 
-			Display.Texturing = false;
-			Display.Color = BackgroundColor;
+			//Display.Texturing = false;
+			//Display.Color = BackgroundColor;
 
-			Display.Rectangle(Rectangle, true);
-			Display.Color = Color.White;
-			Display.Texturing = true;
+			Display.DrawRectangle(Rectangle, BackgroundColor);
+			//Display.Color = Color.White;
+			//Display.Texturing = true;
 
 
 			//if (font == null)

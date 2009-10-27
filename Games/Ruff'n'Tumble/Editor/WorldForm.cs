@@ -484,15 +484,15 @@ namespace RuffnTumble.Editor
 			if (sizingBrush)
 			{
 
-				Display.Color = Color.Green;
+				//Display.Color = Color.Green;
 				Rectangle rec = new Rectangle(
 					BrushRectangle.Left * Level.BlockDimension.Width,
 					BrushRectangle.Top * Level.BlockDimension.Height,
 					BrushRectangle.Width * Level.BlockDimension.Width,
 					BrushRectangle.Height * Level.BlockDimension.Height);
 				rec.Location = Level.LevelToScreen(rec.Location);
-				Display.Rectangle(rec, false);
-				Display.Color = Color.White;
+				Display.DrawRectangle(rec, Color.Green);
+				//Display.Color = Color.White;
 
 			}
 

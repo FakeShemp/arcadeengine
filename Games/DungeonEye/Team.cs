@@ -518,14 +518,15 @@ namespace DungeonEye
 			Font.DrawText(new Point(500, 30), SelectedHero.HitPoint + " of " + SelectedHero.MaxHitPoint);
 
 			// Food
+			Color color;
 			if (SelectedHero.Food > 50)
-				Display.Color = Color.Green;
+				color = Color.Green;
 			else if (SelectedHero.Food > 25)
-				Display.Color = Color.Yellow;
+				color = Color.Yellow;
 			else
-				Display.Color = Color.Red;
+				color = Color.Red;
 
-			Display.Rectangle(new Rectangle(498, 48, SelectedHero.Food, 10), true);
+			Display.FillRectangle(new Rectangle(498, 48, SelectedHero.Food, 10), color);
 
 
 			// Draw inventory
@@ -617,11 +618,11 @@ namespace DungeonEye
 		{
 			// Background
 			TileSet.Draw(18, new Point(356, 0));
-			Display.Color = Color.FromArgb(164, 164, 184);
-			Display.Rectangle(new Rectangle(360, 70, 186, 30), true);
-			Display.Rectangle(new Rectangle(360, 100, 276, 194), true);
-			Display.Rectangle(new Rectangle(360, 294, 242, 36), true);
-			Display.Color = Color.White;
+		//	Display.Color = Color.FromArgb(164, 164, 184);
+			Display.FillRectangle(new Rectangle(360, 70, 186, 30), Color.FromArgb(164, 164, 184));
+			Display.FillRectangle(new Rectangle(360, 100, 276, 194), Color.FromArgb(164, 164, 184));
+			Display.FillRectangle(new Rectangle(360, 294, 242, 36), Color.FromArgb(164, 164, 184));
+		//	Display.Color = Color.White;
 
 
 			// Hero head
@@ -637,14 +638,15 @@ namespace DungeonEye
 			Font.DrawText(new Point(500, 30), SelectedHero.HitPoint + " of " + SelectedHero.MaxHitPoint);
 
 			// Food
+			Color color;
 			if (SelectedHero.Food > 50)
-				Display.Color = Color.Green;
+				color = Color.Green;
 			else if (SelectedHero.Food > 25)
-				Display.Color = Color.Yellow;
+				color = Color.Yellow;
 			else
-				Display.Color = Color.Red;
+				color = Color.Red;
 
-			Display.Rectangle(new Rectangle(498, 48, SelectedHero.Food, 10), true);
+			Display.FillRectangle(new Rectangle(498, 48, SelectedHero.Food, 10), color);
 
 
 			Font.Color = Color.Black;

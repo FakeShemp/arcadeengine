@@ -51,8 +51,7 @@ namespace ArcEngine.Utility.GUI
 		/// </summary>
 		public void Draw()
 		{
-			Display.Color = BgColor;
-			Display.Rectangle(Rectangle, true);
+			Display.DrawRectangle(Rectangle, BgColor);
 		}
 
 

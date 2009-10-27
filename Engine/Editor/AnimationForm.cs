@@ -525,8 +525,7 @@ namespace ArcEngine.Editor
 
 				if (rect.Contains(mouse) || id == FrameID)
 				{
-					Display.Color = Color.White;
-					Display.Rectangle(rect, false);
+					Display.DrawRectangle(rect, Color.White);
 				}
 
 				rect.X += tile.Size.Width;
@@ -666,8 +665,7 @@ namespace ArcEngine.Editor
 				// Is mouse over or selected tile
 				if (rect.Contains(mouse) || TileID == id)
 				{
-					Display.Color = Color.White;
-					Display.Rectangle(rect, false);
+					Display.DrawRectangle(rect, Color.White);
 				}
 
 				// Move right

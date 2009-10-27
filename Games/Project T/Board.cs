@@ -60,8 +60,7 @@ namespace ProjectT
 		public void Draw()
 		{
 			// Background
-			Display.Color = Color.LightGray;
-			Display.Rectangle(new Rectangle(Location.X, Location.Y, 340, 680), true);
+			Display.FillRectangle(new Rectangle(Location.X, Location.Y, 340, 680), Color.LightGray);
 
 		}
 

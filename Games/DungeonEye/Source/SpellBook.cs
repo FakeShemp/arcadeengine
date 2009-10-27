@@ -108,26 +108,26 @@ namespace DungeonEye
 		void DrawWindow(Rectangle rectangle, string text, bool active)
 		{
 
-			if (active)
-				Display.Color = Color.FromArgb(101, 105, 182);
-			else
-				Display.Color = Color.FromArgb(166, 166, 186);
-			Display.Rectangle(rectangle, true);
+			//if (active)
+			//   Display.Color = Color.FromArgb(101, 105, 182);
+			//else
+			//   Display.Color = Color.FromArgb(166, 166, 186);
+			Display.FillRectangle(rectangle, active ? Color.FromArgb(101, 105, 182) : Color.FromArgb(166, 166, 186));
 
-			if (active)
-				Display.Color = Color.FromArgb(44, 48, 138);
-			else
-				Display.Color = Color.FromArgb(89, 89, 117);
+			//if (active)
+			//   Display.Color = Color.FromArgb(44, 48, 138);
+			//else
+			//   Display.Color = Color.FromArgb(89, 89, 117);
 
-			Display.Rectangle(new Rectangle(rectangle.X, rectangle.Y, 2, rectangle.Height), true);
-			Display.Rectangle(new Rectangle(rectangle.Left, rectangle.Bottom - 2, rectangle.Width, 2), true);
+			Display.FillRectangle(new Rectangle(rectangle.X, rectangle.Y, 2, rectangle.Height), active ? Color.FromArgb(44, 48, 138) : Color.FromArgb(89, 89, 117));
+			Display.FillRectangle(new Rectangle(rectangle.Left, rectangle.Bottom - 2, rectangle.Width, 2), active ? Color.FromArgb(44, 48, 138) : Color.FromArgb(89, 89, 117));
 
-			if (active)
-				Display.Color = Color.FromArgb(138, 146, 207);
-			else
-				Display.Color = Color.FromArgb(221, 211, 219);
-			Display.Rectangle(new Rectangle(rectangle.X + 2, rectangle.Y, rectangle.Width - 2, 2), true);
-			Display.Rectangle(new Rectangle(rectangle.Right - 2, rectangle.Y, 2, rectangle.Height - 2), true);
+			//if (active)
+			//   Display.Color = Color.FromArgb(138, 146, 207);
+			//else
+			//   Display.Color = Color.FromArgb(221, 211, 219);
+			Display.DrawRectangle(new Rectangle(rectangle.X + 2, rectangle.Y, rectangle.Width - 2, 2), active ? Color.FromArgb(138, 146, 207) : Color.FromArgb(221, 211, 219));
+			Display.DrawRectangle(new Rectangle(rectangle.Right - 2, rectangle.Y, 2, rectangle.Height - 2), active ? Color.FromArgb(138, 146, 207) : Color.FromArgb(221, 211, 219));
 
 			Font.Color = Color.Black;
 			Font.DrawText(new Point(rectangle.X + 4, rectangle.Y + 4), text);

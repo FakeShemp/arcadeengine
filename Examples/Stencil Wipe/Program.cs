@@ -175,7 +175,7 @@ namespace StencilWipe
 			GL.ColorMask(true, true, true, true);
 			GL.StencilFunc(StencilFunction.Equal, 1, 1);
 			GL.StencilOp(StencilOp.Keep, StencilOp.Keep, StencilOp.Keep);
-			Display.Rectangle(new Rectangle(10, 10, 600, 600), true);
+			Display.DrawRectangle(new Rectangle(10, 10, 600, 600), Color.White);
 
 			Display.StencilTest = false;
 

@@ -55,11 +55,9 @@ namespace Shader_Demo
 		/// </summary>
 		public ShaderProject()
 		{
-			CreateGameWindow(new Size(800, 600));
+			CreateGameWindow(new Size(1024, 768));
 			Window.Text = "Shader demo";
 			Window.Resizable = true;
-
-
 		}
 
 
@@ -79,8 +77,6 @@ namespace Shader_Demo
 
 			Texture = new Texture("data/3dlabs.png");
 			Display.Texture = Texture;
-			Display.Culling = true;
-
 
 		}
 
@@ -147,6 +143,11 @@ namespace Shader_Demo
 			if (Keyboard.IsNewKeyPress(Keys.F2))
 				Shader.Use(null);
 
+			if (Keyboard.IsNewKeyPress(Keys.F12))
+				Window.SetFullScreen(new Size(1024, 768), 32);
+			if (Keyboard.IsNewKeyPress(Keys.F11))
+				Window.SetWindowed();
+
 
 
 
@@ -166,13 +167,86 @@ namespace Shader_Demo
 			Display.Color = Color.White;
 			Display.Texturing = true;
 
-			Display.Rectangle(new Rectangle(10, 10, 600, 600), true);
+	//		Display.DrawRectangle(new Rectangle(10, 10, 600, 600), true);
 		//	Texture.Blit(Point.Empty);
 
+			Point[] points = new Point[]
+			{
+				new Point(20, 10),
+				new Point(100, 10),
+				new Point(120, 50),
+				new Point(100, 100),
+				new Point(20, 100),
+				new Point(10, 50)
+			};
+
+			//Display.FillPolygon(points, Color.Blue);
+			//Display.DrawPolygon(points, Color.Red);
+
+
+			Rectangle rect = new Rectangle(100, 150, 50, 50);
+			Display.FillRectangle(rect.X, rect.Y, rect.Width, rect.Height, Color.GreenYellow);
+			rect.Offset(75, 0);
+			Display.FillRectangle(rect.X, rect.Y, rect.Width, rect.Height, Color.GreenYellow, -angle, new Point(25, 25));
+			rect.Offset(75, 0);
+			Display.FillRectangle(rect, Color.GreenYellow, angle, Point.Empty);
+			rect.Offset(75, 0);
+			Display.FillRectangle(rect, Color.GreenYellow);
+
+
+
+
+			rect = new Rectangle(100, 250, 50, 50);
+			Display.DrawRectangle(rect.X, rect.Y, rect.Width, rect.Height, Color.Blue);
+			rect.Offset(75, 0);
+			Display.DrawRectangle(rect.X, rect.Y, rect.Width, rect.Height, Color.Blue, angle, Point.Empty);
+			rect.Offset(75, 0);
+			Display.DrawRectangle(rect, Color.Blue, -angle, new Point(25, 25));
+			rect.Offset(75, 0);
+			Display.DrawRectangle(rect, Color.Blue);
+
+			angle += 2.0f;
+			if (angle > 360.0f)
+				angle -= 360.0f;
+
+
+			Display.DrawEllipse(new Rectangle(0, 0, 1024, 768), Color.Tomato);
+			Display.FillEllipse(new Rectangle(300, 300, 300, 168), Color.Tomato);
+
+
+			points = new Point[]
+			{
+				new Point(200, 10), new Point(210, 10),
+				new Point(220, 10), new Point(230, 10),
+				new Point(240, 10), new Point(250, 10), 
+				new Point(260, 10), new Point(270, 10), 
+				new Point(280, 10), new Point(290, 10), 
+				new Point(300, 10), new Point(310, 10), 
+				new Point(320, 10), new Point(330, 10), 
+				new Point(340, 10), new Point(350, 10)
+			};
+			Display.DrawLineSegments(points, Color.SkyBlue);
+
+
+
+			points = new Point[]
+			{
+				new Point(500, 110), new Point(610, 210),
+				new Point(620, 110), new Point(630, 210),
+				new Point(640, 110), new Point(650, 210), 
+				new Point(660, 110), new Point(670, 210), 
+				new Point(680, 110), new Point(690, 210), 
+				new Point(700, 110), new Point(710, 210), 
+				new Point(720, 110), new Point(730, 210), 
+				new Point(740, 110), new Point(850, 210)
+			};
+			Display.DrawLines(points, Color.SkyBlue);
+		
 		}
 
 
 
+		float angle = 0;
 
 		#region Properties
 
