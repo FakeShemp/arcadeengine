@@ -96,7 +96,7 @@ namespace ArcEngine
 			AddProvider(new StringTableProvider());
 			AddProvider(new AnimationProvider());
 			AddProvider(new LayoutProvider());
-			AddProvider(new KeyboardSchemeProvider());
+			AddProvider(new InputSchemeProvider());
 			AddProvider(new AudioProvider());
 		}
 

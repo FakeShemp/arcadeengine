@@ -29,15 +29,16 @@ namespace ArcEngine.Asset
 {
 
 	/// <summary>
-	/// Keyboard scheme
+	/// Input scheme.
+	/// Allow an abstract between an input from any device and a name.
 	/// </summary>
-	public class KeyboardScheme : IAsset
+	public class InputScheme : IAsset
 	{
 
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public KeyboardScheme()
+		public InputScheme()
 		{
 			InputList = new Dictionary<string, Keys>();
 		}
@@ -179,7 +180,7 @@ namespace ArcEngine.Asset
 		{
 			get
 			{
-				return "keyboardscheme";
+				return "inputscheme";
 			}
 		}
 
@@ -219,4 +220,34 @@ namespace ArcEngine.Asset
 
 		#endregion
 	}
+
+
+
+
+	/// <summary>
+	/// all type of input
+	/// </summary>
+	public enum InputDevice
+	{
+		/// <summary>
+		/// Input from the Keyboard
+		/// </summary>
+		Keyboard,
+
+		/// <summary>
+		/// Input from the Mouse
+		/// </summary>
+		Mouse,
+
+		/// <summary>
+		/// Input from the Gamepad
+		/// </summary>
+		Gamepad
+	}
+
+
+
 }
+
+
+

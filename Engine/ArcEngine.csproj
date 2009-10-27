@@ -91,13 +91,13 @@
     <Reference Include="Microsoft.VisualBasic">
       <Private>False</Private>
     </Reference>
-    <Reference Include="OpenTK, Version=0.9.9.2, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="OpenTK, Version=0.9.9.3, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libraries\OpenTK\Release\OpenTK.dll</HintPath>
     </Reference>
-    <Reference Include="OpenTK.GLControl, Version=0.9.9.2, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="OpenTK.GLControl, Version=0.9.9.3, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Libraries\OpenTK\Debug\OpenTK.GLControl.dll</HintPath>
+      <HintPath>Libraries\OpenTK\Release\OpenTK.GLControl.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Private>False</Private>
@@ -271,9 +271,9 @@
     <Compile Include="Utility\GUI\Window.cs" />
     <Compile Include="Input\GamePad.cs" />
     <Compile Include="Input\GamePadCapabilities.cs" />
-    <Compile Include="Asset\KeyboardScheme.cs" />
+    <Compile Include="Asset\InputScheme.cs" />
     <Compile Include="Providers\AudioProvider.cs" />
-    <Compile Include="Providers\KeyboardSchemeProvider.cs" />
+    <Compile Include="Providers\InputSchemeProvider.cs" />
     <Compile Include="Utility\ScreenManager\GameScreen.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

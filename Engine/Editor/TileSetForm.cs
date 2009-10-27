@@ -47,7 +47,7 @@ namespace ArcEngine.Editor
 
 			//
 			Node = node;
-			tileSet = new TileSet();
+			//tileSet = new TileSet();
 
 
 			TileBox = new SelectionBox();
@@ -74,23 +74,12 @@ namespace ArcEngine.Editor
 			
 		//	TileSetPropertyGrid.SelectedObject = tileSet;
 
-			// Build Cell list
-			RebuildCellList();
 
 			// Set zoom value
 			ZoomBox.SelectedIndex = 0;
 
 		}
 
-		void GLTextureControl_HandleCreated(object sender, EventArgs e)
-		{
-			Trace.WriteLine("GLTextureControl_HandleCreated");
-		}
-
-		void GLTileControl_HandleCreated(object sender, EventArgs e)
-		{
-			Trace.WriteLine("GLTileControl_HandleCreated");
-		}
 
 
 		/// <summary>
@@ -169,7 +158,7 @@ namespace ArcEngine.Editor
 
 
 			// Background texture
-		//	CheckerBoard.Blit(new Rectangle(Point.Empty, GLTextureControl.Size), TextureLayout.Tile);
+			CheckerBoard.Blit(new Rectangle(Point.Empty, GLTextureControl.Size), TextureLayout.Tile);
 
 			// Draw the texture
 			Rectangle zoom = new Rectangle(
@@ -392,6 +381,8 @@ namespace ArcEngine.Editor
 			// Get zoom value
 			int zoomvalue = int.Parse((string)ZoomBox.SelectedItem);
 
+			// Background texture
+			CheckerBoard.Blit(new Rectangle(Point.Empty, GLTileControl.Size), TextureLayout.Tile);
 
 			if (TilesBox.Items.Count == 0)
 			{
@@ -399,8 +390,6 @@ namespace ArcEngine.Editor
 				return;
 			}
 
-			// Background texture
-			//CheckerBoard.Blit(new Rectangle(Point.Empty, GLTileControl.Size), TextureLayout.Tile);
 	
 			// Draw the tile
 			Rectangle zoom = Rectangle.Empty;
@@ -576,9 +565,14 @@ namespace ArcEngine.Editor
 			GLTileControl.MakeCurrent();
 			Display.Init();
 
+			CheckerBoard = new Texture(ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png"));
 
 
+			tileSet = new TileSet();
 			tileSet.Load(Node);
+
+			// Build Cell list
+			RebuildCellList();
 
 		}
 

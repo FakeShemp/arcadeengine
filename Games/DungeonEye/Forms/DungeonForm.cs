@@ -63,10 +63,10 @@ namespace DungeonEye.Forms
 
 			
 
-			KeyboardScheme = ResourceManager.CreateAsset<KeyboardScheme>(DungeonEye.KeyboardSchemeName);
+			KeyboardScheme = ResourceManager.CreateAsset<InputScheme>(DungeonEye.InputSchemeName);
 			if (KeyboardScheme == null)
 			{
-				KeyboardScheme = new KeyboardScheme();
+				KeyboardScheme = new InputScheme();
 				KeyboardScheme["MoveForward"] = Keys.Z;
 				KeyboardScheme["MoveBackward"] = Keys.S;
 				KeyboardScheme["StrafeLeft"] = Keys.Q;
@@ -83,29 +83,6 @@ namespace DungeonEye.Forms
 			}
 
 
-			Batch = new Batch();
-
-			// Preload texture resources
-			Icons = new TileSet();
-			Icons.Texture = new Texture( Assembly.GetExecutingAssembly().GetManifestResourceStream("DungeonEye.Forms.data.editor.png"));
-
-
-			// Preload background texture resource
-			CheckerBoard = new Texture(ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png"));
-
-
-			int id = 0;
-			for (int y = 0; y < Icons.Texture.Size.Height; y+= 25)
-			{
-				for (int x = 0; x < Icons.Texture.Size.Width; x += 25)
-				{
-					Tile tile = Icons.AddTile(id++);
-					tile.Rectangle = new Rectangle(x, y, 25, 25);
-				}
-			}
-
-
-			DrawTimer.Start();
 
 		}
 
@@ -206,6 +183,31 @@ namespace DungeonEye.Forms
 			glControl.MakeCurrent();
 			Display.Init();
 
+
+			Batch = new Batch();
+
+			// Preload texture resources
+			Icons = new TileSet();
+			//Icons.Texture = new Texture(Assembly.GetExecutingAssembly().GetManifestResourceStream("DungeonEye.Forms.data.editor.png"));
+			Icons.Texture = new Texture(ResourceManager.GetResource("DungeonEye.Forms.data.editor.png"));
+
+			// Preload background texture resource
+			CheckerBoard = new Texture(ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png"));
+
+
+			int id = 0;
+			for (int y = 0; y < Icons.Texture.Size.Height; y += 25)
+			{
+				for (int x = 0; x < Icons.Texture.Size.Width; x += 25)
+				{
+					Tile tile = Icons.AddTile(id++);
+					tile.Rectangle = new Rectangle(x, y, 25, 25);
+				}
+			}
+
+
+			DrawTimer.Start();
+		
 		}
 
 		/// <summary>
@@ -431,8 +433,7 @@ namespace DungeonEye.Forms
 
 
 			// Background texture
-			//CheckerBoard.Blit(new Rectangle(Point.Empty, glControl.Size), TextureLayout.Tile);
-			CheckerBoard.Blit(Point.Empty);
+			CheckerBoard.Blit(new Rectangle(Point.Empty, glControl.Size), TextureLayout.Tile);
 
 			if (Maze == null)
 			{
@@ -948,7 +949,7 @@ namespace DungeonEye.Forms
 		/// <summary>
 		/// Allow the player to personalize keyboard input shceme
 		/// </summary>
-		KeyboardScheme KeyboardScheme;
+		InputScheme KeyboardScheme;
 
 
 		#endregion

@@ -70,24 +70,24 @@ namespace DungeonEye
 			Language.LanguageName = DungeonEye.LanguageName;
 
 			// Keyboard input shceme
-			KeyboardScheme = ResourceManager.CreateAsset<KeyboardScheme>(DungeonEye.KeyboardSchemeName);
-			if (KeyboardScheme == null)
+			InputScheme = ResourceManager.CreateAsset<InputScheme>(DungeonEye.InputSchemeName);
+			if (InputScheme == null)
 			{
-				Trace.WriteLine("ERROR !!! No KeyboardSchema detected !!!");
-				KeyboardScheme = new KeyboardScheme();
-				KeyboardScheme["MoveForward"] = Keys.Z;
-				KeyboardScheme["MoveBackward"] = Keys.S;
-				KeyboardScheme["StrafeLeft"] = Keys.Q;
-				KeyboardScheme["StrafeRight"] = Keys.D;
-				KeyboardScheme["TurnLeft"] = Keys.A;
-				KeyboardScheme["TurnRight"] = Keys.E;
-				KeyboardScheme["Inventory"] = Keys.I;
-				KeyboardScheme["SelectHero1"] = Keys.D1;
-				KeyboardScheme["SelectHero2"] = Keys.D2;
-				KeyboardScheme["SelectHero3"] = Keys.D3;
-				KeyboardScheme["SelectHero4"] = Keys.D4;
-				KeyboardScheme["SelectHero5"] = Keys.D5;
-				KeyboardScheme["SelectHero6"] = Keys.D6;
+				Trace.WriteLine("ERROR !!! No InputSchema detected !!!");
+				InputScheme = new InputScheme();
+				InputScheme["MoveForward"] = Keys.Z;
+				InputScheme["MoveBackward"] = Keys.S;
+				InputScheme["StrafeLeft"] = Keys.Q;
+				InputScheme["StrafeRight"] = Keys.D;
+				InputScheme["TurnLeft"] = Keys.A;
+				InputScheme["TurnRight"] = Keys.E;
+				InputScheme["Inventory"] = Keys.I;
+				InputScheme["SelectHero1"] = Keys.D1;
+				InputScheme["SelectHero2"] = Keys.D2;
+				InputScheme["SelectHero3"] = Keys.D3;
+				InputScheme["SelectHero4"] = Keys.D4;
+				InputScheme["SelectHero5"] = Keys.D5;
+				InputScheme["SelectHero6"] = Keys.D6;
 			}
 
 			TileSet = ResourceManager.CreateAsset<TileSet>("Interface");
@@ -816,7 +816,7 @@ namespace DungeonEye
 			#region Team move & managment
 
 			// Display inventory
-			if (Keyboard.IsNewKeyPress(KeyboardScheme["Inventory"]))
+			if (Keyboard.IsNewKeyPress(InputScheme["Inventory"]))
 			{
 				if (Interface == TeamInterface.Inventory)
 					Interface = TeamInterface.Main;
@@ -826,55 +826,55 @@ namespace DungeonEye
 
 
 			// Turn left
-			if (Keyboard.IsNewKeyPress(KeyboardScheme["TurnLeft"]))
+			if (Keyboard.IsNewKeyPress(InputScheme["TurnLeft"]))
 				Location.Compass.Rotate(CompassRotation.Rotate270);
 
 
 			// Turn right
-			if (Keyboard.IsNewKeyPress(KeyboardScheme["TurnRight"]))
+			if (Keyboard.IsNewKeyPress(InputScheme["TurnRight"]))
 				Location.Compass.Rotate(CompassRotation.Rotate90);
 
 
 			// Move forward
-			if (Keyboard.IsNewKeyPress(KeyboardScheme["MoveForward"]))
+			if (Keyboard.IsNewKeyPress(InputScheme["MoveForward"]))
 				Walk(0, -1);
 
 
 			// Move backward
-			if (Keyboard.IsNewKeyPress(KeyboardScheme["MoveBackward"]))
+			if (Keyboard.IsNewKeyPress(InputScheme["MoveBackward"]))
 				Walk(0, 1);
 
 
 			// Strafe left
-			if (Keyboard.IsNewKeyPress(KeyboardScheme["StrafeLeft"]))
+			if (Keyboard.IsNewKeyPress(InputScheme["StrafeLeft"]))
 				Walk(-1, 0);
 
 			// Strafe right
-			if (Keyboard.IsNewKeyPress(KeyboardScheme["StrafeRight"]))
+			if (Keyboard.IsNewKeyPress(InputScheme["StrafeRight"]))
 				Walk(1, 0);
 
 			// Select Hero 1
-			if (Keyboard.IsNewKeyPress(KeyboardScheme["SelectHero1"]))
+			if (Keyboard.IsNewKeyPress(InputScheme["SelectHero1"]))
 				SelectedHero = Heroes[0];
 
 			// Select Hero 2
-			if (Keyboard.IsNewKeyPress(KeyboardScheme["SelectHero2"]))
+			if (Keyboard.IsNewKeyPress(InputScheme["SelectHero2"]))
 				SelectedHero = Heroes[1];
 
 			// Select Hero 3
-			if (Keyboard.IsNewKeyPress(KeyboardScheme["SelectHero3"]))
+			if (Keyboard.IsNewKeyPress(InputScheme["SelectHero3"]))
 				SelectedHero = Heroes[2];
 
 			// Select Hero 4
-			if (Keyboard.IsNewKeyPress(KeyboardScheme["SelectHero4"]))
+			if (Keyboard.IsNewKeyPress(InputScheme["SelectHero4"]))
 				SelectedHero = Heroes[3];
 
 			// Select Hero 5
-			if (Keyboard.IsNewKeyPress(KeyboardScheme["SelectHero5"]) && HeroCount >= 5)
+			if (Keyboard.IsNewKeyPress(InputScheme["SelectHero5"]) && HeroCount >= 5)
 				SelectedHero = Heroes[4];
 
 			// Select Hero 6
-			if (Keyboard.IsNewKeyPress(KeyboardScheme["SelectHero6"]) && HeroCount >= 6)
+			if (Keyboard.IsNewKeyPress(InputScheme["SelectHero6"]) && HeroCount >= 6)
 				SelectedHero = Heroes[5];
 			#endregion
 
@@ -2610,7 +2610,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Allow the player to personalize keyboard input shceme
 		/// </summary>
-		KeyboardScheme KeyboardScheme;
+		InputScheme InputScheme;
 
 
 

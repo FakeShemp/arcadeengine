@@ -851,12 +851,12 @@ namespace ArcEngine.Graphic
 				// Cache handle
 				//if (texture != null)
 				//    if (texture.Handle != value.Handle)
-					{
+				//	{
 						texture = value;
 						GL.BindTexture(TextureTarget.Texture2D, value.Handle);
 
 						RenderStats.TextureBinding++;
-					}
+				//	}
 
 	
 				GL.MatrixMode(MatrixMode.Texture);

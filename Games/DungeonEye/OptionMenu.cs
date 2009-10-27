@@ -65,12 +65,12 @@ namespace DungeonEye
 			Languages = StringTable.LanguagesList;
 
 			// Available keymaps
-			Keymaps = ResourceManager.GetAssets<KeyboardScheme>();
+			Keymaps = ResourceManager.GetAssets<InputScheme>();
 
 
 
 			// Buttons
-			Buttons.Add(new ScreenButton("Keyboard : " + DungeonEye.KeyboardSchemeName, new Rectangle(150, 318, 324, 14)));
+			Buttons.Add(new ScreenButton("Keyboard : " + DungeonEye.InputSchemeName, new Rectangle(150, 318, 324, 14)));
 			Buttons[0].Selected += new EventHandler(KeyboardEvent);
 
 			Buttons.Add(new ScreenButton("Language : " + DungeonEye.LanguageName, new Rectangle(150, 336, 324, 14)));
@@ -103,13 +103,13 @@ namespace DungeonEye
 		/// <param name="e"></param>
 		void KeyboardEvent(object sender, EventArgs e)
 		{
-			int id = Keymaps.IndexOf(DungeonEye.KeyboardSchemeName) + 1;
+			int id = Keymaps.IndexOf(DungeonEye.InputSchemeName) + 1;
 
 			if (id >= Keymaps.Count)
 				id = 0;
 
-			DungeonEye.KeyboardSchemeName = Keymaps[id];
-			Settings.SetToken("keyboardscheme", Keymaps[id]);
+			DungeonEye.InputSchemeName = Keymaps[id];
+			Settings.SetToken("inputscheme", Keymaps[id]);
 		}
 
 
@@ -151,7 +151,7 @@ namespace DungeonEye
 			if (StringTable.LanguageName != DungeonEye.LanguageName)
 				StringTable.LanguageName = DungeonEye.LanguageName;
 
-			Buttons[0].Text = StringTable.GetString(1) + DungeonEye.KeyboardSchemeName;
+			Buttons[0].Text = StringTable.GetString(1) + DungeonEye.InputSchemeName;
 			Buttons[1].Text = StringTable.GetString(2) + DungeonEye.LanguageName;
 			Buttons[2].Text = StringTable.GetString(3);
 

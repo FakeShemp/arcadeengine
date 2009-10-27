@@ -33,20 +33,20 @@ namespace ArcEngine.Providers
 	/// <summary>
 	/// 
 	/// </summary>
-	public class KeyboardSchemeProvider : Provider
+	public class InputSchemeProvider : Provider
 	{
 
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public KeyboardSchemeProvider()
+		public InputSchemeProvider()
 		{
 			Schemes = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
-			SharedSchemes = new Dictionary<string, KeyboardScheme>(StringComparer.OrdinalIgnoreCase);
+			SharedSchemes = new Dictionary<string, InputScheme>(StringComparer.OrdinalIgnoreCase);
 
-			Name = "KeyboardScheme";
-			Tags = new string[] {"keyboardscheme" };
-			Assets = new Type[] { typeof(KeyboardScheme) };
+			Name = "InputScheme";
+			Tags = new string[] {"inputscheme" };
+			Assets = new Type[] { typeof(InputScheme) };
 			Version = new Version(0, 1);
 			EditorImage = new Bitmap(ResourceManager.GetResource("ArcEngine.Data.Icons.Font.png"));
 
@@ -90,7 +90,7 @@ namespace ArcEngine.Providers
 		/// <returns></returns>
 		public override bool Save<T>(XmlWriter xml)
 		{
-			if (typeof(T) == typeof(KeyboardScheme))
+			if (typeof(T) == typeof(InputScheme))
 			{
 				foreach (XmlNode node in Schemes.Values)
 					node.WriteTo(xml);
@@ -113,7 +113,7 @@ namespace ArcEngine.Providers
 
 			switch (xml.Name.ToLower())
 			{
-				case "keyboardscheme":
+				case "inputscheme":
 				{
 
 					string name = xml.Attributes["name"].Value;
@@ -124,7 +124,7 @@ namespace ArcEngine.Providers
 
 				default:
 				{
-
+					Trace.WriteLine("Unknown asset \"{0}\"", xml.Name);
 				}
 				break;
 			}
@@ -149,7 +149,7 @@ namespace ArcEngine.Providers
 		{
 			AssetEditor form = null;
 
-			if (typeof(T) == typeof(KeyboardScheme))
+			if (typeof(T) == typeof(InputScheme))
 			{
 				XmlNode node = null;
 				if (Schemes.ContainsKey(name))
@@ -177,7 +177,7 @@ namespace ArcEngine.Providers
 		{
 			CheckValue<T>(name);
 
-			if (typeof(T) == typeof(KeyboardScheme))
+			if (typeof(T) == typeof(InputScheme))
 				Schemes[name] = node;
 		}
 
@@ -192,7 +192,7 @@ namespace ArcEngine.Providers
 			List<string> list = new List<string>();
 
 
-			if (typeof(T) == typeof(KeyboardScheme))
+			if (typeof(T) == typeof(InputScheme))
 				foreach (string key in Schemes.Keys)
 					list.Add(key);
 
@@ -213,9 +213,9 @@ namespace ArcEngine.Providers
 			CheckValue<T>(name);
 
 
-			if (typeof(T) == typeof(KeyboardScheme) && Schemes.ContainsKey(name))
+			if (typeof(T) == typeof(InputScheme) && Schemes.ContainsKey(name))
 			{
-				KeyboardScheme scheme = new KeyboardScheme();
+				InputScheme scheme = new InputScheme();
 				scheme.Load(Schemes[name]);
 				return (T)(object)scheme;
 			}
@@ -235,7 +235,7 @@ namespace ArcEngine.Providers
 		{
 			CheckValue<T>(name);
 
-			if (typeof(T) == typeof(KeyboardScheme) && Schemes.ContainsKey(name))
+			if (typeof(T) == typeof(InputScheme) && Schemes.ContainsKey(name))
 				return Schemes[name];
 
 			return null;
@@ -253,7 +253,7 @@ namespace ArcEngine.Providers
 		{
 			CheckValue<T>(name);
 
-			if (typeof(T) == typeof(KeyboardScheme) && Schemes.ContainsKey(name))
+			if (typeof(T) == typeof(InputScheme) && Schemes.ContainsKey(name))
 				Schemes.Remove(name);
 		}
 
@@ -266,7 +266,7 @@ namespace ArcEngine.Providers
 		/// <typeparam name="T"></typeparam>
 		public override void Remove<T>()
 		{
-			if (typeof(T) == typeof(KeyboardScheme))
+			if (typeof(T) == typeof(InputScheme))
 				Schemes.Clear();
 		}
 
@@ -287,7 +287,7 @@ namespace ArcEngine.Providers
 		/// <returns>Number of available asset</returns>
 		public override int Count<T>()
 		{
-			if (typeof(T) == typeof(KeyboardScheme))
+			if (typeof(T) == typeof(InputScheme))
 				return Schemes.Count;
 
 			return 0;
@@ -310,8 +310,8 @@ namespace ArcEngine.Providers
 			if (string.IsNullOrEmpty(name))
 				return;
 			
-			if (typeof(T) == typeof(KeyboardScheme))
-				SharedSchemes[name] = asset as KeyboardScheme;
+			if (typeof(T) == typeof(InputScheme))
+				SharedSchemes[name] = asset as InputScheme;
 		}
 
 		/// <summary>
@@ -322,12 +322,12 @@ namespace ArcEngine.Providers
 		/// <returns>The resource</returns>
 		public override T CreateShared<T>(string name)
 		{
-			if (typeof(T) == typeof(KeyboardScheme))
+			if (typeof(T) == typeof(InputScheme))
 			{
 				if (SharedSchemes.ContainsKey(name))
 					return (T)(object)SharedSchemes[name];
 
-				KeyboardScheme scheme = new KeyboardScheme();
+				InputScheme scheme = new InputScheme();
 				SharedSchemes[name] = scheme;
 
 				return (T)(object)scheme;
@@ -348,7 +348,7 @@ namespace ArcEngine.Providers
 			if (string.IsNullOrEmpty(name))
 				return;
 
-			if (typeof(T) == typeof(KeyboardScheme))
+			if (typeof(T) == typeof(InputScheme))
 				SharedSchemes.Remove(name);
 		}
 
@@ -361,7 +361,7 @@ namespace ArcEngine.Providers
 		/// <typeparam name="T">Type of the asset to remove</typeparam>
 		public override void RemoveShared<T>()
 		{
-			if (typeof(T) == typeof(KeyboardScheme))
+			if (typeof(T) == typeof(InputScheme))
 			{
 				SharedSchemes.Clear();
 			}
@@ -393,7 +393,7 @@ namespace ArcEngine.Providers
 		/// <summary>
 		/// Shared fonts
 		/// </summary>
-		Dictionary<string, KeyboardScheme> SharedSchemes;
+		Dictionary<string, InputScheme> SharedSchemes;
 
 		#endregion
 	}

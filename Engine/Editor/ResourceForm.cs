@@ -23,9 +23,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
-using ArcEngine.Providers;
-using ArcEngine.Asset;
 using ArcEngine.Forms;
+using ArcEngine.Providers;
 using WeifenLuo.WinFormsUI.Docking;
 
 
@@ -279,15 +278,18 @@ namespace ArcEngine.Editor
 		private bool EditAsset(TreeNode node)
 		{
 			// Not an editable node
-			if (node == null || node.Tag == null ||node.Nodes.Count > 0)
+			if (node == null ||node.Nodes.Count > 0)
 				return false;
 
-			if (node.Text == "Binaries")
+			if (node.Text.StartsWith("Binaries"))
 			{
 				new BinaryForm().Show(DockPanel, DockState.Document);
 				return true;
 			}
 
+
+			if (node.Tag == null)
+				return false;
 
 			// Get the provider
 			Providers.Provider provider = ResourceManager.GetAssetProvider(node.Tag as Type);

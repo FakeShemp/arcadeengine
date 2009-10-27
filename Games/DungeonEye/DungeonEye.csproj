@@ -8,7 +8,7 @@
     <ProjectGuid>{AF615530-818F-475B-B79D-5ED4A2D01D79}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ArcEngine.Games.DungeonEye</RootNamespace>
+    <RootNamespace>DungeonEye</RootNamespace>
     <AssemblyName>DungeonEye</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

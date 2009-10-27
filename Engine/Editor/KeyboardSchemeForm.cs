@@ -54,7 +54,7 @@ namespace ArcEngine.Editor
 
 
 
-			Scheme = new KeyboardScheme();
+			Scheme = new InputScheme();
 			Scheme.Load(node);
 
 			KeyBox.BeginUpdate();
@@ -103,7 +103,7 @@ namespace ArcEngine.Editor
 			XmlDocument doc = new XmlDocument();
 			doc.LoadXml(xml);
 
-			ResourceManager.AddAsset<KeyboardScheme>(Scheme.Name, doc.DocumentElement);
+			ResourceManager.AddAsset<InputScheme>(Scheme.Name, doc.DocumentElement);
 		}
 
 
@@ -154,7 +154,7 @@ namespace ArcEngine.Editor
 		/// <summary>
 		/// KeyboardScheme to edit
 		/// </summary>
-		KeyboardScheme Scheme;
+		InputScheme Scheme;
 
 		#endregion
 

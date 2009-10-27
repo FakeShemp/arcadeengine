@@ -48,14 +48,14 @@ namespace ArcEngine.Editor
 			
 			FontPropertyBox.SelectedObject = CurrentFont;
 
-			CurrentFont = new ArcEngine.Asset.Font2d();
+			CurrentFont = new Font2d();
 			CurrentFont.Load(node);
 
 
 
 
 			// Preload background texture resource
-			CheckerBoard = new Texture(ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png"));
+		//	CheckerBoard = new Texture(ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png"));
 
 
 			UpdatePropertyBoxes();
@@ -119,9 +119,7 @@ namespace ArcEngine.Editor
 			Display.ClearBuffers();
 
 			// Background texture
-			//Device.Texture = CheckerBoard;
-		//	Rectangle rect = new Rectangle(Point.Empty, GlControl.Size);
-		//	CheckerBoard.Blit(rect, rect);
+			CheckerBoard.Blit(new Rectangle(Point.Empty, GlControl.Size), TextureLayout.Tile);
 
 
 			// Prints the text
@@ -204,10 +202,8 @@ namespace ArcEngine.Editor
 		{
 			GlControl.MakeCurrent();
 			Display.Init();
-			//Display.ClearColor = Color.Green;
-			//Display.Texturing = true;
-			//Display.Blending = true;
-			//Display.BlendingFunction(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+
+			CheckerBoard = new Texture(ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png"));
 
 		}
 

@@ -64,7 +64,7 @@ namespace DungeonEye
 		public DungeonEye()
 		{
 			Settings.Load("settings.xml");
-			KeyboardSchemeName = Settings.GetString("keyboardscheme");
+			InputSchemeName = Settings.GetString("inputscheme");
 			LanguageName = Settings.GetString("language");
 
 			// Add the provider
@@ -171,7 +171,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Current keyboard schema
 		/// </summary>
-		static public string KeyboardSchemeName = "azerty";
+		static public string InputSchemeName = "azerty";
 
 		/// <summary>
 		/// Current language
