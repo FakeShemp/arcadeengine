@@ -33,7 +33,6 @@
 			this.ResourceTree = new System.Windows.Forms.TreeView();
 			this.ContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.RemoveMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.RemoveAllMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.MainImageList = new System.Windows.Forms.ImageList(this.components);
 			this.ContextMenu.SuspendLayout();
 			this.SuspendLayout();
@@ -58,18 +57,17 @@
 			this.ResourceTree.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.ResourceTree_AfterLabelEdit);
 			this.ResourceTree.DoubleClick += new System.EventHandler(this.OnTreeViewDoubleCick);
 			this.ResourceTree.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp);
+			this.ResourceTree.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.ResourceTree_PreviewKeyDown);
 			this.ResourceTree.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.ResourceTree_NodeMouseClick);
 			// 
 			// ContextMenu
 			// 
 			this.ContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.RemoveMenuItem,
-            this.RemoveAllMenuItem});
+            this.RemoveMenuItem});
 			this.ContextMenu.Name = "BankcontextMenu";
 			this.ContextMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-			this.ContextMenu.Size = new System.Drawing.Size(153, 70);
+			this.ContextMenu.Size = new System.Drawing.Size(153, 48);
 			this.ContextMenu.Text = "Resource";
-			this.ContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenu_Opening);
 			// 
 			// RemoveMenuItem
 			// 
@@ -78,13 +76,6 @@
 			this.RemoveMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.RemoveMenuItem.Text = "Remove";
 			this.RemoveMenuItem.Click += new System.EventHandler(this.EraseMenu_Click);
-			// 
-			// RemoveAllMenuItem
-			// 
-			this.RemoveAllMenuItem.Name = "RemoveAllMenuItem";
-			this.RemoveAllMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.RemoveAllMenuItem.Text = "Remove all";
-			this.RemoveAllMenuItem.Click += new System.EventHandler(this.RemoveAllMenuItem_Click);
 			// 
 			// MainImageList
 			// 
@@ -150,6 +141,5 @@
 		private System.Windows.Forms.ContextMenuStrip ContextMenu;
 		private System.Windows.Forms.ToolStripMenuItem RemoveMenuItem;
 		private System.Windows.Forms.ImageList MainImageList;
-		private System.Windows.Forms.ToolStripMenuItem RemoveAllMenuItem;
 	}
 }

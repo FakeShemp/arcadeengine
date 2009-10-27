@@ -122,6 +122,26 @@ namespace ArcEngine.Editor
 
 		#region Events
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ResourceTree_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+		{
+			if (ResourceTree.SelectedNode == null)
+				return;
+
+			if (e.KeyCode == Keys.Delete)
+				RemoveAsset(ResourceTree.SelectedNode);
+
+			if (e.KeyCode == Keys.Enter)
+				EditAsset(ResourceTree.SelectedNode);
+		}
+
+
+
 		/// <summary>
 		/// OnMouseUp ContextMenu
 		/// </summary>
@@ -140,6 +160,8 @@ namespace ArcEngine.Editor
 		}
 
 
+
+
 		/// <summary>
 		/// 
 		/// </summary>
@@ -147,96 +169,96 @@ namespace ArcEngine.Editor
 		/// <param name="e"></param>
 		private void EraseMenu_Click(object sender, EventArgs e)
 		{
+			RemoveAsset(ResourceTree.SelectedNode);
+		}
+
+
+
+		/// <summary>
+		/// Remove an asset
+		/// </summary>
+		/// <param name="node"></param>
+		/// <returns></returns>
+		private bool RemoveAsset(TreeNode node)
+		{
 			// Not an editable node
-			if (ResourceTree.SelectedNode == null)
-				return;
+			if (node == null || node.Tag == null)
+				return false;
 
 
-			if (MessageBox.Show("Do you really want to erase \"" + ResourceTree.SelectedNode.Text + "\" ?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
-				return;
-
-			// Get the provider
-			Providers.Provider provider = ResourceManager.GetAssetProvider(ResourceTree.SelectedNode.Tag as Type);
-			if (provider != null)
+			if (node.Nodes.Count == 0)
 			{
+				if (MessageBox.Show("Do you really want to erase \"" + node.Text + "\" ?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+					return false;
+
+				// Get the provider
+				Providers.Provider provider = ResourceManager.GetAssetProvider(node.Tag as Type);
+				if (provider == null)
+					return false;
 
 
 				object[] args = { ResourceTree.SelectedNode.Text };
 				Type[] types = new Type[] { typeof(string) };
-				MethodInfo mi = provider.GetType().GetMethod("Remove", types).MakeGenericMethod(ResourceTree.SelectedNode.Tag as Type);
+				MethodInfo mi = provider.GetType().GetMethod("Remove", types).MakeGenericMethod(node.Tag as Type);
 				mi.Invoke(provider, args);
 
 			}
+
+			else if (node.Nodes.Count >= 0)
+			{
+
+				string[] names = (node.Tag.ToString().Split('.'));
+				if (MessageBox.Show("Do you really want to erase all \"" + names[names.Length - 1] + "\" ?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+					return false;
+
+				Provider provider = ResourceManager.GetAssetProvider(node.Tag as Type);
+				if (provider == null)
+					return false;
+
+				Type type = provider.GetType();
+				MethodInfo mi = type.GetMethod("Remove", new Type[] { });
+
+				mi = mi.MakeGenericMethod(node.Tag as Type);
+				mi.Invoke(provider, new object[] { });
+
+			}
 			else
-			{
+				return false;
 
-				return;
-			}
 
-			ResourceTree.Nodes.Remove(ResourceTree.SelectedNode);
-		//	ResourceTree.Update();
-
+			RemoveNode(node);
+			return true;
 		}
 
 
 
 		/// <summary>
-		/// 
+		/// Remove a node
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void RemoveAllMenuItem_Click(object sender, EventArgs e)
+		/// <param name="node"></param>
+		private void RemoveNode(TreeNode node)
 		{
-			// Not an editable node
-			if (ResourceTree.SelectedNode == null)
+			if (node == null)
 				return;
 
+			TreeNode parent = node.Parent;
 
-			string[] names = (ResourceTree.SelectedNode.Tag.ToString().Split('.'));
-			if (MessageBox.Show("Do you really want to erase all \"" + names[names.Length-1] + "\" ?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
-				return;
+			// If children present, the rename the parent
+			if (node.Nodes.Count == 0)
+			{
+				string[] val = node.Parent.Text.Split(new char[]{'(', ')'});
+				int count = int.Parse(val[1]) - 1;
+				parent.Text = (node.Tag as Type).Name + " (" + count + ")";
 
-			Provider provider = ResourceManager.GetAssetProvider(ResourceTree.SelectedNode.Tag as Type);
-			if (provider == null)
-				return;
+			}
 
-			Type type = provider.GetType();
-			MethodInfo mi = type.GetMethod("Remove", new Type[] { });
+			ResourceTree.Nodes.Remove(node);
 
-			mi = mi.MakeGenericMethod(ResourceTree.SelectedNode.Tag as Type);
-			mi.Invoke(provider, new object[] { });
+			// If there is no child, then remove the parent node too
+			if (parent.Nodes.Count == 0)
+				ResourceTree.Nodes.Remove(parent);
 
-
-			ResourceTree.Nodes.Remove(ResourceTree.SelectedNode);
 		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void ContextMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
-		{
-			if (ResourceTree.SelectedNode.Nodes.Count == 0)
-			{
-				RemoveMenuItem.Enabled = true;
-				RemoveAllMenuItem.Enabled = false;
-			}
-			else if (ResourceTree.SelectedNode.Nodes.Count > 0)
-			{
-				RemoveMenuItem.Enabled = false;
-				RemoveAllMenuItem.Enabled = true;
-			}
-
-			if (ResourceTree.SelectedNode.Tag == null)
-			{
-				RemoveMenuItem.Enabled = false;
-				RemoveAllMenuItem.Enabled = false;
-			}
-		}
-
-
 
 		/// <summary>
 		/// When double click on an element in the treeview then open a new window
@@ -245,29 +267,43 @@ namespace ArcEngine.Editor
 		/// <param name="e"></param>
 		private void OnTreeViewDoubleCick(object sender, EventArgs e)
 		{
-			// Not an editable node
-			if (ResourceTree.SelectedNode == null)
-				return;
+			EditAsset(ResourceTree.SelectedNode);
+		}
 
-			if (ResourceTree.SelectedNode.Text == "Binaries")
+
+
+		/// <summary>
+		/// Edit an asset
+		/// </summary>
+		/// <param name="node"></param>
+		private bool EditAsset(TreeNode node)
+		{
+			// Not an editable node
+			if (node == null || node.Tag == null ||node.Nodes.Count > 0)
+				return false;
+
+			if (node.Text == "Binaries")
 			{
 				new BinaryForm().Show(DockPanel, DockState.Document);
+				return true;
 			}
-			
+
 
 			// Get the provider
-			Providers.Provider provider = ResourceManager.GetAssetProvider(ResourceTree.SelectedNode.Tag as Type);
+			Providers.Provider provider = ResourceManager.GetAssetProvider(node.Tag as Type);
 			if (provider == null)
-				return;
+				return false;
 
 			// Edit the asset
-			object[] args = { ResourceTree.SelectedNode.Text };
-			MethodInfo mi = provider.GetType().GetMethod("EditAsset").MakeGenericMethod(ResourceTree.SelectedNode.Tag as Type);
+			object[] args = { node.Text };
+			MethodInfo mi = provider.GetType().GetMethod("EditAsset").MakeGenericMethod(node.Tag as Type);
 			AssetEditor form = mi.Invoke(provider, args) as AssetEditor;
-			if (form == null) 
-				return;
+			if (form == null)
+				return false;
 
 			form.Show(DockPanel, DockState.Document);
+
+			return true;
 		}
 
 
@@ -293,6 +329,7 @@ namespace ArcEngine.Editor
 		}
 
 		#endregion
+
 
 
 	}
