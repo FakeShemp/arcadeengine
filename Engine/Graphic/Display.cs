@@ -211,7 +211,7 @@ namespace ArcEngine.Graphic
 		#endregion
 
 
-        #region Transformation matrix
+      #region Transformation matrix
 
 
         /// <summary>
@@ -336,62 +336,227 @@ namespace ArcEngine.Graphic
 
 		#region Drawing
 
-
 		/// <summary>
 		/// Draws a colored rectangle
 		/// </summary>
 		/// <param name="rect">Rectangle to draw</param>
-		/// <param name="fill">Fill in the rectangle or not</param>
-		/// <param name="angle">Angle of rotation</param>
-		/// <param name="origin">The origin of the rectangle. Specify (0,0) for the upper-left corner.</param>
-		public static void Rectangle(Rectangle rect, bool fill, float angle, Point origin)
+		/// <param name="color">Color</param>
+		public static void DrawRectangle(Rectangle rect, Color color)
 		{
-			Translate(rect.Location.X + origin.X, rect.Location.Y + origin.Y);
-			Rotate(angle);
-
-			Rectangle(new Rectangle(-origin.X, -origin.Y, rect.Size.Width, rect.Size.Height), fill);
-			DefaultMatrix();
+			DrawQuad(rect.Left, rect.Top, rect.Size.Width, rect.Size.Height, color, false, 0, Point.Empty);
 		}
 
+
 		/// <summary>
-		/// Draws a colored rectangle
+		/// Draws a rectangle
+		/// </summary>
+		/// <param name="x">X location</param>
+		/// <param name="y">Y location</param>
+		/// <param name="width">Width</param>
+		/// <param name="height">Height</param>
+		/// <param name="color">Color</param>
+		static public void DrawRectangle(int x, int y, int width, int height, Color color)
+		{
+			DrawQuad(x, y, width, height, color, false, 0, Point.Empty);
+		}
+
+
+		/// <summary>
+		/// Draws a rectangle
+		/// </summary>
+		/// <param name="x">X location</param>
+		/// <param name="y">Y location</param>
+		/// <param name="width">Width</param>
+		/// <param name="height">Height</param>
+		/// <param name="color">Color</param>
+		/// <param name="angle">Rotation angle</param>
+		/// <param name="pivot">Origin of rotation</param>
+		static public void DrawRectangle(int x, int y, int width, int height, Color color, float angle, Point pivot)
+		{
+			DrawQuad(x, y, width, height, color, false, angle, pivot);
+		}
+
+
+		/// <summary>
+		/// Draws a rectangle
 		/// </summary>
 		/// <param name="rect">Rectangle to draw</param>
-		/// <param name="fill">Fill in the rectangle or not</param>
-		public static void Rectangle(Rectangle rect, bool fill)
+		/// <param name="color">Color</param>
+		/// <param name="angle">Angle of rotation</param>
+		/// <param name="origin">The origin of the rectangle. Specify (0,0) for the upper-left corner.</param>
+		public static void DrawRectangle(Rectangle rect, Color color, float angle, Point origin)
+		{
+			DrawQuad(rect.Left, rect.Top, rect.Size.Width, rect.Size.Height, color, false, angle, origin);
+		}
+
+
+		/// <summary>
+		/// Draws a rectangle
+		/// </summary>
+		/// <param name="x">X location</param>
+		/// <param name="y">Y location</param>
+		/// <param name="width">Width</param>
+		/// <param name="height">Height</param>
+		/// <param name="color">Color</param>
+		/// <param name="fill">Fill the rectangle or not</param>
+		/// <param name="angle">Rotation angle</param>
+		/// <param name="pivot">Origin of rotation</param>
+		static void DrawQuad(int x, int y, int width, int height, Color color, bool fill, float angle, Point pivot)
 		{
 			Texturing = false;
+
+			// Backup color
+			Color col = Color;
+			Color = color;
+
+			// Translation & rotation
+			Translate(x + pivot.X, y + pivot.Y);
+			x = -pivot.X;
+			y = -pivot.Y;
+			Rotate(angle);
+
+
 
 			if (fill)
 				GL.Begin(BeginMode.Quads);
 			else
 				GL.Begin(BeginMode.LineLoop);
-			GL.Vertex2(rect.X, rect.Y);
-			GL.Vertex2(rect.X, rect.Bottom);
-			GL.Vertex2(rect.Right, rect.Bottom);
-			GL.Vertex2(rect.Right, rect.Y);
+			GL.Vertex2(x, y);
+			GL.Vertex2(x, y + height);
+			GL.Vertex2(x + width, y + height);
+			GL.Vertex2(x + width, y);
 			GL.End();
+
 			Texturing = true;
+			DefaultMatrix();
+			Color = col;
 
 			RenderStats.DirectCall += 4;
 		}
 
 
 		/// <summary>
+		/// Draw a filled rectangle
+		/// </summary>
+		/// <param name="rect">Rectangle</param>
+		/// <param name="color">Color</param>
+		public static void FillRectangle(Rectangle rect, Color color)
+		{
+			DrawQuad(rect.X, rect.Y, rect.Width, rect.Height, color, true, 0, Point.Empty);
+		}
+
+
+		/// <summary>
+		/// Draw a filled rectangle
+		/// </summary>
+		/// <param name="x">X location</param>
+		/// <param name="y">Y location</param>
+		/// <param name="width">Width</param>
+		/// <param name="height">Height</param>
+		/// <param name="color">Color</param>
+		public static void FillRectangle(int x, int y, int width, int height, Color color)
+		{
+			DrawQuad(x, y, height, width, color, true, 0, Point.Empty);
+		}
+
+
+		/// <summary>
+		/// Draw a filled rectangle
+		/// </summary>
+		/// <param name="rect">Rectangle</param>
+		/// <param name="color">Color</param>
+		/// <param name="angle">Rotation angle</param>
+		/// <param name="pivot">Origin of rotation</param>
+		public static void FillRectangle(Rectangle rect, Color color, float angle, Point pivot)
+		{
+			DrawQuad(rect.X, rect.Y, rect.Width, rect.Height, color, true, angle, pivot);
+		}
+
+
+		/// <summary>
+		/// Draw a filled rectangle
+		/// </summary>
+		/// <param name="x">X location</param>
+		/// <param name="y">Y location</param>
+		/// <param name="width">Width</param>
+		/// <param name="height">Height</param>
+		/// <param name="color">Color</param>
+		/// <param name="angle">Rotation angle</param>
+		/// <param name="pivot">Origin of rotation</param>
+		public static void FillRectangle(int x, int y, int width, int height, Color color, float angle, Point pivot)
+		{
+			DrawQuad(x, y, height, width, color, true, angle, pivot);
+		}
+
+
+		/// <summary>
 		/// Draws a line from point "from" to point "to"
 		/// </summary>
-		/// <param name="from"></param>
-		/// <param name="to"></param>
-		public static void Line(Point from, Point to)
+		/// <param name="from">Starting point</param>
+		/// <param name="to">Ending point</param>
+		/// <param name="color">Color</param>
+		public static void DrawLine(Point from, Point to, Color color)
 		{
+			DrawLine(from.X, from.Y, to.X, to.Y, color);
+		}
+
+
+		/// <summary>
+		/// Draws a line between the two points specified. 
+		/// </summary>
+		/// <param name="x1">Start x</param>
+		/// <param name="y1">Start y</param>
+		/// <param name="x2">End x</param>
+		/// <param name="y2">End y</param>
+		/// <param name="color">Color</param>
+		public static void DrawLine(int x1, int y1, int x2, int y2, Color color)
+		{
+			Color = color;
+
 			Texturing = false;
 			GL.Begin(BeginMode.Lines);
-			GL.Vertex2(from.X, from.Y);
-			GL.Vertex2(to.X, to.Y);
+			GL.Vertex2(x1, y1);
+			GL.Vertex2(x2, y2);
 			GL.End();
 			Texturing = true;
 
 			RenderStats.DirectCall += 2;
+		}
+
+
+		/// <summary>
+		/// Draws a bunch of connected lines. The last point and the first point are not connected. 
+		/// </summary>
+		/// <param name="points"></param>
+		/// <param name="color"></param>
+		public static void DrawLines(Point[] points, Color color)
+		{
+			int pos = 0;
+			for (pos = 0; pos < points.Length - 1; pos++)
+			{
+				DrawLine(points[pos], points[pos + 1], color);
+			}
+
+			RenderStats.DirectCall += pos;
+		}
+
+
+
+		/// <summary>
+		/// Draws a bunch of line segments. Each pair of points represents a line segment which is drawn.
+		/// No connections between the line segments are made, so there must be an even number of points. 
+		/// </summary>
+		/// <param name="points"></param>
+		/// <param name="color"></param>
+		public static void DrawLineSegments(Point[] points, Color color)
+		{
+			int pos = 0;
+			for (pos = 0; pos < points.Length - 1; pos += 2)
+			{	
+				DrawLine(points[pos], points[pos + 1], color);
+			}
+
+			RenderStats.DirectCall += pos;
 		}
 
 
@@ -410,6 +575,51 @@ namespace ArcEngine.Graphic
 			RenderStats.DirectCall++;
 		}
 
+
+		/// <summary>
+		/// Draw a polygon
+		/// </summary>
+		/// <param name="points">List of points</param>
+		/// <param name="color">Line color</param>
+		public static void DrawPolygon(Point[] points, Color color)
+		{
+			Texturing = false;
+			Culling = false;
+			Color = color;
+
+			GL.Begin(BeginMode.LineLoop);
+			for (int i = 0; i < points.Length; i++)
+			{
+				GL.Vertex2(points[i].X, points[i].Y);
+			}
+			GL.End();
+
+			Texturing = true;
+			RenderStats.DirectCall += points.Length;
+		}
+
+
+		/// <summary>
+		/// Draw a filled polygon
+		/// </summary>
+		/// <param name="points">List of points</param>
+		/// <param name="color">Fill color</param>
+		public static void FillPolygon(Point[] points, Color color)
+		{
+			Texturing = false;
+			Culling = false;
+			Color = color;
+
+			GL.Begin(BeginMode.TriangleFan);
+			for (int i = 0; i < points.Length; i++)
+			{
+				GL.Vertex2(points[i].X, points[i].Y);
+			}
+			GL.End();
+
+			Texturing = true;
+			RenderStats.DirectCall += points.Length;
+		}
 
 		/// <summary>
 		/// 
@@ -434,12 +644,59 @@ namespace ArcEngine.Graphic
 			}
 
 			GL.End();
-
 			Texturing = true;
-
 			RenderStats.DirectCall += 360;
 		}
 
+
+		/// <summary>
+		/// Draw an ellipse
+		/// </summary>
+		/// <param name="rect">Bounding rectangle</param>
+		/// <param name="color">Color</param>
+		public static void DrawEllipse(Rectangle rect, Color color)
+		{
+			float DEG2RAD = 3.141590f / 180.0f;
+
+			Point center = new Point(rect.Left + rect.Width / 2, rect.Top + rect.Height / 2);
+			Color = color;
+
+			GL.Begin(BeginMode.LineLoop);
+			for (int i = 0; i < 360; i++)
+			{
+				float degInRad = i * DEG2RAD;
+				GL.Vertex2(center.X + Math.Cos(degInRad) * rect.Width / 2, center.Y + Math.Sin(degInRad) * rect.Height / 2);
+			}
+			GL.End();
+
+			RenderStats.DirectCall += 360;
+
+		}
+
+	
+		/// <summary>
+		/// Draw an ellipse
+		/// </summary>
+		/// <param name="rect">Bounding rectangle</param>
+		/// <param name="color">Color</param>
+		public static void FillEllipse(Rectangle rect, Color color)
+		{
+			float DEG2RAD = 3.141590f / 180.0f;
+
+			Point center = new Point(rect.Left + rect.Width / 2, rect.Top + rect.Height / 2);
+			Color = color;
+
+			GL.Begin(BeginMode.Polygon);
+			for (int i = 0; i < 360; i++)
+			{
+				float degInRad = i * DEG2RAD;
+				GL.Vertex2(center.X + Math.Cos(degInRad) * rect.Width / 2, center.Y + Math.Sin(degInRad) * rect.Height / 2);
+			}
+			GL.End();
+
+			RenderStats.DirectCall += 360;
+
+		}
 
 		#endregion
 
@@ -824,16 +1081,21 @@ namespace ArcEngine.Graphic
 		{
 			get
 			{
-				float[] tab = new float[4];
-				GL.GetFloat(GetPName.CurrentColor, tab);
 
-				return Color.FromArgb((int)(tab[3] * 255), (int)(tab[0] * 255), (int)(tab[1] * 255), (int)(tab[2] * 255));
+				return color;
+				//float[] tab = new float[4];
+				//GL.GetFloat(GetPName.CurrentColor, tab);
+
+				//return Color.FromArgb((int)(tab[3] * 255), (int)(tab[0] * 255), (int)(tab[1] * 255), (int)(tab[2] * 255));
 			}
 			set
 			{
 				GL.Color4(value);
+				color = value;
 			}
 		}
+		static Color color;
+
 
 		/// <summary>
 		/// Gets/Sets the scissor test
