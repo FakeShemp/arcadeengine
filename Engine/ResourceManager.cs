@@ -29,7 +29,6 @@ using ArcEngine.Asset;
 using ArcEngine.Providers;
 using ICSharpCode.SharpZipLib.Zip;
 
-// Drawing 2D circle and line : http://forums.xna.com/thread/39157.aspx
 // GamePad : http://sourceforge.net/projects/xnadirectinput/
 //
 //
@@ -149,10 +148,13 @@ namespace ArcEngine
 		static public void AddProvider(Provider provider)
 		{
 			if (provider == null)
-				throw new ArgumentNullException("provider");
+				return;
 
 			if (Providers.Contains(provider))
-				throw new ArgumentException("Provider already present", "provider");
+			{
+				Trace.WriteLine("Provider \"{0}\" already present !!", provider.Name);
+				return;
+			}
 
 			Trace.Write("Adding new provider : " + provider.ToString() + " {");
 
@@ -205,7 +207,7 @@ namespace ArcEngine
 		static public Provider GetTagProvider(string tag)
 		{
 			if (string.IsNullOrEmpty(tag))
-				throw new ArgumentNullException("tag");
+				return null;
 
 			if (!Tags.ContainsKey(tag))
 				return null;
@@ -220,11 +222,9 @@ namespace ArcEngine
 		/// <param name="type">asset type</param>
 		/// <returns>Provider of the asset or null</returns>
 		static public Provider GetAssetProvider(Type type)
-		{
-	
+		{	
 			if (type == null)
-			//    throw new ArgumentNullException("type");
-			return null;
+				return null;
 
 			if (Assets.ContainsKey(type))
 				return Assets[type];
@@ -232,6 +232,26 @@ namespace ArcEngine
 			return null;
 		}
 
+
+		/// <summary>
+		/// Returns the <see cref="Provider"/> of an asset
+		/// </summary>
+		/// <param name="type">Name of the type</param>
+		/// <returns>Provider of the asset or null</returns>
+		static public Provider GetAssetProvider(string name)
+		{
+			if (string.IsNullOrEmpty(name))
+				return null;
+
+			foreach (KeyValuePair<Type, Provider> kvp in Assets)
+			{
+				if (kvp.Key.Name == name)
+					return kvp.Value;
+			}
+
+
+			return null;
+		}
 
 
 		/// <summary>
@@ -241,7 +261,7 @@ namespace ArcEngine
 		static public void RemoveProvider(Provider provider)
 		{
 			if (provider == null)
-				throw new ArgumentNullException("provider");
+				return;
 
 
 			// Remove tags

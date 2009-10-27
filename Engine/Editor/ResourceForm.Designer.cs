@@ -31,15 +31,16 @@
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ResourceForm));
 			this.ResourceTree = new System.Windows.Forms.TreeView();
-			this.BankContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-			this.EraseResourceItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.ContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.RemoveMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.RemoveAllMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.MainImageList = new System.Windows.Forms.ImageList(this.components);
-			this.BankContextMenu.SuspendLayout();
+			this.ContextMenu.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// RessourceTree
+			// ResourceTree
 			// 
-			this.ResourceTree.ContextMenuStrip = this.BankContextMenu;
+			this.ResourceTree.ContextMenuStrip = this.ContextMenu;
 			this.ResourceTree.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.ResourceTree.FullRowSelect = true;
 			this.ResourceTree.HideSelection = false;
@@ -48,7 +49,7 @@
 			this.ResourceTree.ImageList = this.MainImageList;
 			this.ResourceTree.LabelEdit = true;
 			this.ResourceTree.Location = new System.Drawing.Point(0, 0);
-			this.ResourceTree.Name = "RessourceTree";
+			this.ResourceTree.Name = "ResourceTree";
 			this.ResourceTree.SelectedImageIndex = 0;
 			this.ResourceTree.ShowRootLines = false;
 			this.ResourceTree.Size = new System.Drawing.Size(187, 273);
@@ -59,22 +60,31 @@
 			this.ResourceTree.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp);
 			this.ResourceTree.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.ResourceTree_NodeMouseClick);
 			// 
-			// BankContextMenu
+			// ContextMenu
 			// 
-			this.BankContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.EraseResourceItem});
-			this.BankContextMenu.Name = "BankcontextMenu";
-			this.BankContextMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-			this.BankContextMenu.Size = new System.Drawing.Size(102, 26);
-			this.BankContextMenu.Text = "Resource";
+			this.ContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.RemoveMenuItem,
+            this.RemoveAllMenuItem});
+			this.ContextMenu.Name = "BankcontextMenu";
+			this.ContextMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+			this.ContextMenu.Size = new System.Drawing.Size(153, 70);
+			this.ContextMenu.Text = "Resource";
+			this.ContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenu_Opening);
 			// 
-			// EraseResourceItem
+			// RemoveMenuItem
 			// 
-			this.EraseResourceItem.Image = ((System.Drawing.Image)(resources.GetObject("EraseResourceItem.Image")));
-			this.EraseResourceItem.Name = "EraseResourceItem";
-			this.EraseResourceItem.Size = new System.Drawing.Size(101, 22);
-			this.EraseResourceItem.Text = "Erase";
-			this.EraseResourceItem.Click += new System.EventHandler(this.EraseMenu_Click);
+			this.RemoveMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("RemoveMenuItem.Image")));
+			this.RemoveMenuItem.Name = "RemoveMenuItem";
+			this.RemoveMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.RemoveMenuItem.Text = "Remove";
+			this.RemoveMenuItem.Click += new System.EventHandler(this.EraseMenu_Click);
+			// 
+			// RemoveAllMenuItem
+			// 
+			this.RemoveAllMenuItem.Name = "RemoveAllMenuItem";
+			this.RemoveAllMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.RemoveAllMenuItem.Text = "Remove all";
+			this.RemoveAllMenuItem.Click += new System.EventHandler(this.RemoveAllMenuItem_Click);
 			// 
 			// MainImageList
 			// 
@@ -129,7 +139,7 @@
 			this.ShowInTaskbar = false;
 			this.TabText = "Assets :";
 			this.Text = "Assets :";
-			this.BankContextMenu.ResumeLayout(false);
+			this.ContextMenu.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -137,8 +147,9 @@
 		#endregion
 
 		public System.Windows.Forms.TreeView ResourceTree;
-		private System.Windows.Forms.ContextMenuStrip BankContextMenu;
-		private System.Windows.Forms.ToolStripMenuItem EraseResourceItem;
+		private System.Windows.Forms.ContextMenuStrip ContextMenu;
+		private System.Windows.Forms.ToolStripMenuItem RemoveMenuItem;
 		private System.Windows.Forms.ImageList MainImageList;
+		private System.Windows.Forms.ToolStripMenuItem RemoveAllMenuItem;
 	}
 }

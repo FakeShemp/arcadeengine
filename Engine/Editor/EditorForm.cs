@@ -19,19 +19,9 @@
 #endregion
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography;
-using System.Text;
 using System.Windows.Forms;
-using System.Xml;
-using ArcEngine.Asset;
 using ArcEngine.Forms;
-using ArcEngine.Graphic;
 using WeifenLuo.WinFormsUI.Docking;
 
 
@@ -175,6 +165,18 @@ namespace ArcEngine.Editor
 			}
 		}
 
+
+		/// <summary>
+		/// Import an animation from a GIF image
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ImportAnimationFromGIF(object sender, EventArgs e)
+		{
+			new ImportGIFForm().ShowDialog();
+			ResourcePanel.RebuildResourceTree();
+
+		}
 
 
 		/// <summary>
@@ -516,22 +518,6 @@ namespace ArcEngine.Editor
 
 	
 		#endregion
-
-
-
-        /// <summary>
-        /// Import an animation from a GIF image
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ImportAnimationFromGIF(object sender, EventArgs e)
-        {
-			new ImportGIFForm().ShowDialog();
-			ResourcePanel.RebuildResourceTree();
-
-        }
-
-
 
 	}
 }

@@ -23,6 +23,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
+using ArcEngine.Providers;
 using ArcEngine.Asset;
 using ArcEngine.Forms;
 using WeifenLuo.WinFormsUI.Docking;
@@ -68,6 +69,7 @@ namespace ArcEngine.Editor
 						continue;
 
 					TreeNode node = bank.Nodes.Add(type.Name + " (" + count.ToString() + ")");
+					node.Tag = type;
 
 					// Invoke the generic method like this : provider.GetAssets<[Asset Type]>();
 					mi = provider.GetType().GetMethod("GetAssets").MakeGenericMethod(type);
@@ -87,6 +89,7 @@ namespace ArcEngine.Editor
 
 			// Binaries
 			TreeNode sub = bank.Nodes.Insert(0, "Binaries (" + ResourceManager.LoadedBinaries.Count + ")");
+			sub.Tag = null;
 
 			ResourceTree.EndUpdate();
 
@@ -130,9 +133,9 @@ namespace ArcEngine.Editor
 			if (e.Button == MouseButtons.Right)
 			{
 				TreeNode node = ResourceTree.GetNodeAt(e.X, e.Y);
-				BankContextMenu.Tag = node.Tag;
+				ContextMenu.Tag = node.Tag;
 
-				BankContextMenu.Show(ResourceTree, new Point(e.X, e.Y));
+				ContextMenu.Show(ResourceTree, new Point(e.X, e.Y));
 			}
 		}
 
@@ -154,20 +157,85 @@ namespace ArcEngine.Editor
 
 			// Get the provider
 			Providers.Provider provider = ResourceManager.GetAssetProvider(ResourceTree.SelectedNode.Tag as Type);
+			if (provider != null)
+			{
+
+
+				object[] args = { ResourceTree.SelectedNode.Text };
+				Type[] types = new Type[] { typeof(string) };
+				MethodInfo mi = provider.GetType().GetMethod("Remove", types).MakeGenericMethod(ResourceTree.SelectedNode.Tag as Type);
+				mi.Invoke(provider, args);
+
+			}
+			else
+			{
+
+				return;
+			}
+
+			ResourceTree.Nodes.Remove(ResourceTree.SelectedNode);
+		//	ResourceTree.Update();
+
+		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void RemoveAllMenuItem_Click(object sender, EventArgs e)
+		{
+			// Not an editable node
+			if (ResourceTree.SelectedNode == null)
+				return;
+
+
+			string[] names = (ResourceTree.SelectedNode.Tag.ToString().Split('.'));
+			if (MessageBox.Show("Do you really want to erase all \"" + names[names.Length-1] + "\" ?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+				return;
+
+			Provider provider = ResourceManager.GetAssetProvider(ResourceTree.SelectedNode.Tag as Type);
 			if (provider == null)
 				return;
-			
-			
-			object[] args = { ResourceTree.SelectedNode.Text };
-			Type[] types = new Type[]{typeof(string)};
-			MethodInfo mi = provider.GetType().GetMethod("Remove", types).MakeGenericMethod(ResourceTree.SelectedNode.Tag as Type);
-			mi.Invoke(provider, args);
+
+			Type type = provider.GetType();
+			MethodInfo mi = type.GetMethod("Remove", new Type[] { });
+
+			mi = mi.MakeGenericMethod(ResourceTree.SelectedNode.Tag as Type);
+			mi.Invoke(provider, new object[] { });
 
 
 			ResourceTree.Nodes.Remove(ResourceTree.SelectedNode);
-			ResourceTree.Update();
-
 		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ContextMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			if (ResourceTree.SelectedNode.Nodes.Count == 0)
+			{
+				RemoveMenuItem.Enabled = true;
+				RemoveAllMenuItem.Enabled = false;
+			}
+			else if (ResourceTree.SelectedNode.Nodes.Count > 0)
+			{
+				RemoveMenuItem.Enabled = false;
+				RemoveAllMenuItem.Enabled = true;
+			}
+
+			if (ResourceTree.SelectedNode.Tag == null)
+			{
+				RemoveMenuItem.Enabled = false;
+				RemoveAllMenuItem.Enabled = false;
+			}
+		}
+
 
 
 		/// <summary>
@@ -225,7 +293,6 @@ namespace ArcEngine.Editor
 		}
 
 		#endregion
-
 
 
 	}
