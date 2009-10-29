@@ -22,6 +22,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
+using ArcEngine.PInvoke;
+
 
 namespace ArcEngine.Input
 {
@@ -29,37 +31,84 @@ namespace ArcEngine.Input
 	/// <summary>
 	/// Describes the capabilities of a gamepad.
 	/// </summary>
-	[StructLayout(LayoutKind.Sequential)]
-	public struct GamePadCapabilities
+	public class GamePadCapabilities
 	{
-
-		// <summary>
-		// The JOYCAPS structure contains information about the joystick capabilities.
-		// </summary>
-	//	Winmm.JOYCAPS Caps;
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="id"></param>
-		internal GamePadCapabilities(int id)
+		public GamePadCapabilities(int id)
 		{
-			//Winmm.joyGetDevCaps(ref id, ref Caps, sizeof(Winmm.JOYCAPS));
-			//Caps = new Winmm.JOYCAPS();
+			Caps = new Winmm.JOYCAPS();
+			int error = Winmm.joyGetDevCaps(id, ref Caps, Marshal.SizeOf(Caps));
+			if (error != Winmm.JOYERR_NOERROR)
+			{
+				Trace.WriteLine("Error while getting GamePad capabilities (id={0})", id);
+				IsConnected = false;
+				return;
+			}
+
+			//Winmm.JOYINFOEX ex = new Winmm.JOYINFOEX();
+			//ex.dwSize = Marshal.SizeOf(ex);
+			//Winmm.joyGetPosEx(id, ref ex);
+
+
+			IsConnected = true;
 		}
 
+
+		#region Properties
+
 		/// <summary>
-		/// 
+		/// The JOYCAPS structure contains information about the joystick capabilities.
 		/// </summary>
-		public bool IsConnected
+		Winmm.JOYCAPS Caps;
+
+		/// <summary>
+		/// Number of axes currently in use
+		/// </summary>
+		public int AxeCount
 		{
 			get
 			{
-				return false;
+				return Caps.wNumAxes;
 			}
 		}
 
+		/// <summary>
+		/// Number of button
+		/// </summary>
+		public int ButtonCount
+		{
+			get
+			{
+				return Caps.wNumButtons;
+			}
+		}
 
+		/// <summary>
+		/// Name of the device
+		/// </summary>
+		public string Name
+		{
+			get
+			{
+				return Caps.szPname;
+			}
+		}
+
+		/// <summary>
+		/// Is connected
+		/// </summary>
+		public bool IsConnected
+		{
+			get;
+			private set;
+		}
+
+
+		#endregion
 	}
 	
 

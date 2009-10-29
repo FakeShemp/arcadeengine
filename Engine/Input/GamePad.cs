@@ -21,26 +21,29 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Runtime.InteropServices;
+using ArcEngine.PInvoke;
+
+// http://msdn.microsoft.com/en-us/library/dd757116%28VS.85%29.aspx
+// http://msdn.microsoft.com/en-us/library/bb153253%28VS.85%29.aspx
 
 namespace ArcEngine.Input
 {
 	/// <summary>
-	/// GamePad
+	/// GamePad device management
 	/// </summary>
 	public static class GamePad
 	{
 
 
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
-		/// <returns></returns>
-		internal static bool Init()
+		static GamePad()
 		{
-
-
-			return true;
+			AvailableDevices = new List<int>();
 		}
+
 
 
 		/// <summary>
@@ -74,28 +77,71 @@ namespace ArcEngine.Input
 		{
 		}
 
-		#region Properties
+
 
 
 
 		/// <summary>
-		/// Returns the number of gamepads connected
+		/// Check for new devices
 		/// </summary>
-		public static int Count
+		public static void CheckForDevices()
+		{
+			AvailableDevices.Clear();
+
+			int max = Winmm.joyGetNumDevs();
+
+			for (int id = 0; id < max; id++)
+			{
+				if (IsDeviceConnected(id))		
+					AvailableDevices.Add(id);					
+			}
+
+		}
+
+
+
+		/// <summary>
+		/// Checks if a device is connected 
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
+		public static bool IsDeviceConnected(int id)
+		{
+			Winmm.JOYINFO info = new Winmm.JOYINFO();
+			return Winmm.joyGetPos(Winmm.JOYSTICKID1 + id, ref info) == Winmm.JOYERR_NOERROR;
+		}
+
+
+
+		#region Properties
+
+		/// <summary>
+		/// Number of available devices
+		/// </summary>
+		static public int Count
 		{
 			get
 			{
-				int count = 0; // Winmm.joyGetNumDevs();
-				//if (count == Winmm.JOYERR_UNPLUGGED)
-				//{
-				//   return 0;
-				//}
-
-
-				return count;
+				return AvailableDevices.Count;
 			}
 		}
 
+
+		/// <summary>
+		/// Returns a list of available id device
+		/// </summary>
+		static public List<int> AvailableDevices
+		{
+			get;
+			private set;
+		}
+
+
 		#endregion
+
+
+
+
+
 	}
 }

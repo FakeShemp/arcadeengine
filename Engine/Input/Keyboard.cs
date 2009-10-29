@@ -21,6 +21,7 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using ArcEngine.PInvoke;
 //using Microsoft.DirectX.DirectInput;
 
 
@@ -57,7 +58,7 @@ namespace ArcEngine.Input
 			for (int i = 0; i < 256; i++)
 			{
 				PreviousState[i] = CurrentState[i];
-				CurrentState[i] = (GetKeyState(i) & 0x8000) != 0;
+				CurrentState[i] = (User32.GetKeyState(i) & 0x8000) != 0;
 			}
 
 		}
@@ -175,19 +176,6 @@ namespace ArcEngine.Input
 		/// Previous state pf the keyboard
 		/// </summary>
 		static bool[] PreviousState;
-
-		#endregion
-
-
-		#region DllImport
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="keyCode"></param>
-		/// <returns></returns>
-		[DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
-		private static extern short GetKeyState(int keyCode);
 
 		#endregion
 

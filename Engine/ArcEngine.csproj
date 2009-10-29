@@ -267,6 +267,8 @@
     <Compile Include="Graphic\Batch.cs" />
     <Compile Include="Graphic\Texture.cs" />
     <Compile Include="Graphic\Display.cs" />
+    <Compile Include="PInvoke\User32.cs" />
+    <Compile Include="PInvoke\Winmm.cs" />
     <Compile Include="Utility\GUI\GuiManager.cs" />
     <Compile Include="Utility\GUI\Window.cs" />
     <Compile Include="Input\GamePad.cs" />
