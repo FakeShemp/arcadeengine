@@ -277,9 +277,15 @@ namespace ArcEngine.Forms
 			set
 			{
 				if (value)
+				{
 					FormBorderStyle = FormBorderStyle.Sizable;
+					MaximizeBox = true;
+				}
 				else
+				{
 					FormBorderStyle = FormBorderStyle.FixedDialog;
+					MaximizeBox = false;
+				}
 
 				resizable = value;
 			}
