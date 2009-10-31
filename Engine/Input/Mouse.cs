@@ -57,7 +57,9 @@ namespace ArcEngine.Input
 		{
 			PreviousState = Buttons;
 			Buttons = Form.MouseButtons;
-			
+
+
+		//	Trace.WriteLine("Mouse update");
 		}
 
 

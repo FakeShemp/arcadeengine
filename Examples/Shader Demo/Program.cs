@@ -150,14 +150,6 @@ namespace Shader_Demo
 			if (Keyboard.IsNewKeyPress(Keys.F11))
 				Window.SetWindowed();
 
-
-			if (Keyboard.IsNewKeyPress(Keys.F))
-				GamePad.CheckForDevices(Window);
-
-
-			GamePad.Update();
-	//		GamePadCapabilities caps =	GamePad.GetCapabilities(0);
-
 		}
 
 
@@ -252,9 +244,9 @@ namespace Shader_Demo
 
 
 
-		float angle = 0;
-
 		#region Properties
+
+		float angle = 0;
 
 		/// <summary>
 		/// Shader

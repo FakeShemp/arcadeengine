@@ -61,6 +61,8 @@ namespace ArcEngine.Input
 				CurrentState[i] = (User32.GetKeyState(i) & 0x8000) != 0;
 			}
 
+		//	Trace.WriteLine("Keyboard update");
+
 		}
 
 

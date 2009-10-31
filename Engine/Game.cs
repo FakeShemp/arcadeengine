@@ -68,6 +68,7 @@ namespace ArcEngine
 			Dispose(false);
 		}
 
+		#endregion
 
 
 		#region GameWindow creation
@@ -103,18 +104,13 @@ namespace ArcEngine
 
 
 			Mouse.Init(Window);
+			GamePad.CheckForDevices(Window);
 			//Audio.Init();
 			//Audio.TraceInfos();
-			//	Joysticks.Init(Window.Form);
 		}
 
 
 		#endregion
-
-
-		#endregion
-
-
 
 
 		#region Game logic
@@ -207,30 +203,24 @@ namespace ArcEngine
 				while ((num > 0) && !IsExiting)
 				{
 					num -= 1;
-					//try
-					//{
-						GameTime.ElapsedGameTime = TargetElapsedTime;
-						GameTime.TotalGameTime = TotalGameTime;
-						GameTime.IsRunningSlowly = DrawRunningSlowly;
 
-						if (Window.HasFocus)
-							Keyboard.Update();
-						Mouse.Update();
-						Update(GameTime);
+					GameTime.ElapsedGameTime = TargetElapsedTime;
+					GameTime.TotalGameTime = TotalGameTime;
+					GameTime.IsRunningSlowly = DrawRunningSlowly;
 
-						flag &= SuppressDraw;
-						SuppressDraw = false;
-					//}
-					//catch (Exception e)
-					//{
-					//   Trace.WriteLine(e.Message);
-					//   MessageBox.Show(e.StackTrace, e.Message);
-					//}
-					//finally
-					//{
-						LastFrameElapsedGameTime += TargetElapsedTime;
-						TotalGameTime += TargetElapsedTime;
-				//	}
+					if (Window.HasFocus)
+						Keyboard.Update();
+					Mouse.Update();
+					GamePad.Update();
+
+				//	Trace.WriteLine("#############################");
+					Update(GameTime);
+
+					flag &= SuppressDraw;
+					SuppressDraw = false;
+
+					LastFrameElapsedGameTime += TargetElapsedTime;
+					TotalGameTime += TargetElapsedTime;
 				}
 			}
 			else
@@ -246,8 +236,12 @@ namespace ArcEngine
 						GameTime.ElapsedGameTime = LastFrameElapsedGameTime = span3;
 						GameTime.TotalGameTime = TotalGameTime;
 						GameTime.IsRunningSlowly = false;
-						Keyboard.Update();
+
+						if (Window.HasFocus) 
+							Keyboard.Update();
 						Mouse.Update();
+						GamePad.Update();
+
 						Update(GameTime);
 						flag &= SuppressDraw;
 						SuppressDraw = false;
