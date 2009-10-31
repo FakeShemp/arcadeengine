@@ -21,9 +21,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Runtime.InteropServices;
-using ArcEngine.PInvoke;
-
+using SlimDX.DirectInput;
 
 namespace ArcEngine.Input
 {
@@ -37,77 +35,106 @@ namespace ArcEngine.Input
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="id"></param>
-		public GamePadCapabilities(int id)
+		/// <param name="joystick"></param>
+		internal GamePadCapabilities(Joystick joystick)
 		{
-			Caps = new Winmm.JOYCAPS();
-			int error = Winmm.joyGetDevCaps(id, ref Caps, Marshal.SizeOf(Caps));
-			if (error != Winmm.JOYERR_NOERROR)
-			{
-				Trace.WriteLine("Error while getting GamePad capabilities (id={0})", id);
-				IsConnected = false;
-				return;
-			}
+			if (joystick == null)
+				throw new ArgumentNullException("joystick");
 
-			//Winmm.JOYINFOEX ex = new Winmm.JOYINFOEX();
-			//ex.dwSize = Marshal.SizeOf(ex);
-			//Winmm.joyGetPosEx(id, ref ex);
+			Joystick = joystick;
 
-
-			IsConnected = true;
 		}
 
 
 		#region Properties
 
-		/// <summary>
-		/// The JOYCAPS structure contains information about the joystick capabilities.
-		/// </summary>
-		Winmm.JOYCAPS Caps;
 
 		/// <summary>
-		/// Number of axes currently in use
+		/// 
+		/// </summary>
+		Joystick Joystick;
+
+		/// <summary>
+		/// Gets the number of axes available on the device. 
 		/// </summary>
 		public int AxeCount
 		{
 			get
 			{
-				return Caps.wNumAxes;
+				return Joystick.Capabilities.AxesCount;
 			}
 		}
 
 		/// <summary>
-		/// Number of button
+		/// Gets the number of buttons available on the device. 
 		/// </summary>
 		public int ButtonCount
 		{
 			get
 			{
-				return Caps.wNumButtons;
+				return Joystick.Capabilities.ButtonCount;
 			}
 		}
 
+
 		/// <summary>
-		/// Name of the device
+		/// Gets the friendly instance name for the device.
 		/// </summary>
-		public string Name
+		public string InstanceName
 		{
 			get
 			{
-				return Caps.szPname;
+				return Joystick.Information.InstanceName;
 			}
 		}
 
 		/// <summary>
-		/// Is connected
+		/// Gets the friendly product name for the device.
 		/// </summary>
-		public bool IsConnected
+		public string ProductName
 		{
-			get;
-			private set;
+			get
+			{
+				return Joystick.Information.ProductName;
+			}
+		}
+
+		/*
+						/// <summary>
+						/// The device is physically attached to the user's computer. 
+						/// </summary>
+						public bool IsConnected
+						{
+							get
+							{
+								return (Joystick.Capabilities.Flags & DeviceFlags.Attached) == DeviceFlags.Attached;
+							}
+						}
+				*/
+
+
+		/// <summary>
+		/// The device supports force-feedback. 
+		/// </summary>
+		public bool ForceFeedback
+		{
+			get
+			{
+				return (Joystick.Capabilities.Flags & DeviceFlags.ForceFeedback) == DeviceFlags.ForceFeedback;
+			}
 		}
 
 
+		/// <summary>
+		/// Gets the number of Point-Of-View controllers available on the device. 
+		/// </summary>
+		public int PovCount
+		{
+			get
+			{
+				return Joystick.Capabilities.PovCount;
+			}
+		}
 		#endregion
 	}
 	
