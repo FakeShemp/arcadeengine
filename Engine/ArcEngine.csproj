@@ -99,6 +99,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libraries\OpenTK\Release\OpenTK.GLControl.dll</HintPath>
     </Reference>
+    <Reference Include="SlimDX, Version=2.0.8.42, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libraries\SlimDx\x86\SlimDX.dll</HintPath>
+    </Reference>
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
@@ -267,6 +271,7 @@
     <Compile Include="Graphic\Batch.cs" />
     <Compile Include="Graphic\Texture.cs" />
     <Compile Include="Graphic\Display.cs" />
+    <Compile Include="PInvoke\Kernel32.cs" />
     <Compile Include="PInvoke\User32.cs" />
     <Compile Include="PInvoke\Winmm.cs" />
     <Compile Include="Utility\GUI\GuiManager.cs" />
@@ -307,9 +312,6 @@
     </Compile>
     <Compile Include="Forms\DisplaySettingsWizard.Designer.cs">
       <DependentUpon>DisplaySettingsWizard.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Input\Joystick.cs">
-      <SubType>Code</SubType>
     </Compile>
     <Compile Include="Input\Keyboard.cs">
       <SubType>Code</SubType>

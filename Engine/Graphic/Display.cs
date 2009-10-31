@@ -302,8 +302,12 @@ namespace ArcEngine.Graphic
 		public static void DefaultMatrix()
 		{
 			GL.MatrixMode(MatrixMode.Projection);
-			GL.LoadIdentity();
-			GL.Ortho(ViewPort.Left, ViewPort.Width, ViewPort.Height, ViewPort.Top, -1, 1);
+			//GL.LoadIdentity();
+			//GL.Ortho(ViewPort.Left, ViewPort.Width, ViewPort.Height, ViewPort.Top, -1, 1);
+
+			Matrix4 projection = Matrix4.CreateOrthographicOffCenter(ViewPort.Left, ViewPort.Width, ViewPort.Height, ViewPort.Top, -1, 1);
+			GL.LoadMatrix(ref projection);
+
 		}
 
 

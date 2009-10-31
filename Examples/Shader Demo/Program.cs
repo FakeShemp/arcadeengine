@@ -58,6 +58,8 @@ namespace Shader_Demo
 			CreateGameWindow(new Size(1024, 768));
 			Window.Text = "Shader demo";
 			Window.Resizable = true;
+
+
 		}
 
 
@@ -149,8 +151,12 @@ namespace Shader_Demo
 				Window.SetWindowed();
 
 
+			if (Keyboard.IsNewKeyPress(Keys.F))
+				GamePad.CheckForDevices(Window);
 
 
+			GamePad.Update();
+	//		GamePadCapabilities caps =	GamePad.GetCapabilities(0);
 
 		}
 
