@@ -18,6 +18,7 @@
 //
 #endregion
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
@@ -56,6 +57,8 @@ namespace ArcEngine.Examples.Joystick
 		/// </summary>
 		public GamePadProject()
 		{
+			Messages = new List<string>();
+
 			CreateGameWindow(new Size(1024, 768));
 			Window.Text = "GamePad demo";
 			Window.Resizable = true;
@@ -74,7 +77,7 @@ namespace ArcEngine.Examples.Joystick
 			Font.LoadTTF(@"c:\windows\fonts\verdana.ttf", 14, FontStyle.Regular);
 
 
-			GamePad.CheckForDevices(Window);
+			CheckDevices();
 		}
 
 
@@ -99,18 +102,35 @@ namespace ArcEngine.Examples.Joystick
 
 
 			if (Keyboard.IsNewKeyPress(Keys.F1))
-				GamePad.CheckForDevices(Window);
+				CheckDevices();
 
 
 			if (Keyboard.IsNewKeyPress(Keys.K))
 				GamePad.SetVibration(0, 100, 100);
 
-
-			//if (GamePad.GetState(0).IsNewButtonDown(0))
-			//   Trace.WriteLine("New button down");
-
 		}
 
+
+		/// <summary>
+		/// Check for new devices
+		/// </summary>
+		void CheckDevices()
+		{
+			GamePad.CheckForDevices(Window);
+			GamePad.OnUnplug += new GamePad.UnpluggedDevice(GamePad_OnUnplug);
+
+			Messages.Clear();
+		}
+
+
+		/// <summary>
+		/// Unplugged device
+		/// </summary>
+		/// <param name="id"></param>
+		void GamePad_OnUnplug(int id)
+		{
+			Messages.Add("Device " + id.ToString() + " unplugged.");
+		}
 
 
 		/// <summary>
@@ -125,22 +145,23 @@ namespace ArcEngine.Examples.Joystick
 
 
 			Font.DrawText(new Point(100, 50), "Press F1 to detect new gamepads...");
-
-
 			Font.DrawText(new Point(100, 90), "Available device(s) : {0}", GamePad.Count);
+
+
+			int y = 100;
 			for(int id = 0; id < GamePad.Count; id++)
 			{
 				GamePadCapabilities caps = GamePad.GetCapabilities(id);
-				Font.DrawText(new Point(100, 120 + id * 20), "id {0} : \"{1}\"", id, caps.InstanceName);
+				Font.DrawText(new Point(100, y + 20 + id * 20), "id {0} : \"{1}\"", id, caps.InstanceName);
 
 				GamePadState state = GamePad.GetState(id);
-				Font.DrawText(new Point(100, 140 + id * 20), "X : {0}", state.X);
-				Font.DrawText(new Point(100, 160 + id * 20), "Y : {0}", state.Y);
-				Font.DrawText(new Point(100, 180 + id * 20), "Z : {0}", state.Z);
+				Font.DrawText(new Point(100, y + 40 + id * 20), "X : {0}", state.X);
+				Font.DrawText(new Point(100, y + 60 + id * 20), "Y : {0}", state.Y);
+				Font.DrawText(new Point(100, y + 80 + id * 20), "Z : {0}", state.Z);
 
-				Font.DrawText(new Point(300, 140 + id * 20), "Pov 0 : {0}", state.PovControllers[0]);
-				Font.DrawText(new Point(300, 160 + id * 20), "Pov 1 : {0}", state.PovControllers[1]);
-				Font.DrawText(new Point(300, 180 + id * 20), "Pov 2 : {0}", state.PovControllers[2]);
+				Font.DrawText(new Point(300, y + 40 + id * 20), "Pov 0 : {0}", state.PovControllers[0]);
+				Font.DrawText(new Point(300, y + 60 + id * 20), "Pov 1 : {0}", state.PovControllers[1]);
+				Font.DrawText(new Point(300, y + 80 + id * 20), "Pov 2 : {0}", state.PovControllers[2]);
 			
 
 				// Buttons state
@@ -153,9 +174,20 @@ namespace ArcEngine.Examples.Joystick
 						sb.Append(" ");
 					}
 				}
-				Font.DrawText(new Point(100, 200 + id * 20), "Pressed buttons : {0}", sb);
+				Font.DrawText(new Point(100, y + 100 + id * 20), "Pressed buttons : {0}", sb);
+
+
+				y += 120;
 			}
 
+
+			y = 400;
+			foreach (string str in Messages)
+			{
+				Font.DrawText(new Point(100, y), str);
+
+				y += 20;
+			}
 		}
 
 
@@ -168,6 +200,12 @@ namespace ArcEngine.Examples.Joystick
 		/// TTF font
 		/// </summary>
 		Font2d Font;
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		List<string> Messages;
 
 		#endregion
 

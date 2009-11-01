@@ -34,13 +34,25 @@ namespace ArcEngine.Input
 		/// </summary>
 		internal void Update()
 		{
+			// No joystick (unplugged ?)
+			if (Joystick == null)
+				return;
+
 			// Collect device state
-			if (Joystick.Acquire().IsFailure)
-				return;
+			try
+			{
+				if (Joystick.Acquire().IsFailure)
+					return;
 
-			if (Joystick.Poll().IsFailure)
+				if (Joystick.Poll().IsFailure)
+					return;
+			}
+			catch (DirectInputException e)
+			{
+				GamePad.UnplugDevice(Joystick);
+				Joystick = null;
 				return;
-
+			}
 
 			// Get current state
 			Joystick.GetCurrentState(ref States[StateIndex == 0 ? 1 : 0]);
@@ -53,6 +65,7 @@ namespace ArcEngine.Input
 
 		//	Trace.WriteLine(StateIndex.ToString());
 		}
+
 
 
 
@@ -136,6 +149,11 @@ namespace ArcEngine.Input
 		}
 
 
+		/// <summary>
+		/// Current state of the device
+		/// </summary>
+		JoystickState[] States;
+
 
 		/// <summary>
 		/// Joystick device
@@ -146,12 +164,18 @@ namespace ArcEngine.Input
 			private set;
 		}
 
+
 		/// <summary>
-		/// Current state of the device
+		/// Gets if the GamePad is unplugged
 		/// </summary>
-		JoystickState[] States;
-
-
+		public bool IsUnplugged
+		{
+			get
+			{
+				return Joystick == null;
+			}
+		}
+		
 		/// <summary>
 		/// Current state index
 		/// </summary>

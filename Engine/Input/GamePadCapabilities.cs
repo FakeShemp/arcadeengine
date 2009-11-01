@@ -38,8 +38,9 @@ namespace ArcEngine.Input
 		/// <param name="joystick"></param>
 		internal GamePadCapabilities(Joystick joystick)
 		{
+			// Joystick unplugged ?
 			if (joystick == null)
-				throw new ArgumentNullException("joystick");
+				return; // throw new ArgumentNullException("joystick");
 
 			Joystick = joystick;
 
@@ -84,6 +85,9 @@ namespace ArcEngine.Input
 		{
 			get
 			{
+				if (Joystick == null)
+					return string.Empty;
+
 				return Joystick.Information.InstanceName;
 			}
 		}
@@ -95,6 +99,9 @@ namespace ArcEngine.Input
 		{
 			get
 			{
+				if (Joystick == null)
+					return string.Empty;
+
 				return Joystick.Information.ProductName;
 			}
 		}
@@ -120,6 +127,9 @@ namespace ArcEngine.Input
 		{
 			get
 			{
+				if (Joystick == null)
+					return false;
+
 				return (Joystick.Capabilities.Flags & DeviceFlags.ForceFeedback) == DeviceFlags.ForceFeedback;
 			}
 		}
@@ -132,6 +142,9 @@ namespace ArcEngine.Input
 		{
 			get
 			{
+				if (Joystick == null)
+					return 0;
+
 				return Joystick.Capabilities.PovCount;
 			}
 		}

@@ -192,7 +192,46 @@ namespace ArcEngine.Input
 		}
 
 
+		#region Events
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="id"></param>
+		public delegate void UnpluggedDevice(int id);
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		static public event UnpluggedDevice OnUnplug;
+
+		#endregion
+
+
+
 		#region Privates & internals
+
+
+
+		/// <summary>
+		/// Unplug a device
+		/// </summary>
+		/// <param name="joystick"></param>
+		static internal void UnplugDevice(Joystick joystick)
+		{
+			for (int id = 0; id < Count; id++)
+			{
+				if (AvailableDevices[id].Joystick == joystick)
+				{
+					if (OnUnplug != null)
+						OnUnplug(id);
+
+					return;
+				}
+			}
+
+		}
 
 
 		/// <summary>
@@ -202,9 +241,6 @@ namespace ArcEngine.Input
 		{
 			foreach (GamePadState pad in AvailableDevices)
 				pad.Update();
-
-
-		//	Trace.WriteLine("GamePad update");
 		}
 
 
@@ -230,6 +266,9 @@ namespace ArcEngine.Input
 		{
 			foreach (GamePadState state in AvailableDevices)
 			{
+				if (state.Joystick == null)
+					continue;
+
 				state.Joystick.Unacquire();
 				state.Joystick.Dispose();
 			}
