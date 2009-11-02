@@ -49,6 +49,7 @@ namespace ArcEngine.Asset
 			Batch = new Batch();
 		}
 
+
 		#region Text drawing
 
 
@@ -222,6 +223,58 @@ namespace ArcEngine.Asset
 		{
 			DrawText(rectangle, justification, string.Format(format, args));
 		}
+
+		#endregion
+
+
+		#region Statics
+
+
+		/// <summary>
+		/// Creates a new Font2D from a TTF file
+		/// </summary>
+		/// <param name="filename">Filename</param>
+		/// <param name="size">Size of the font</param>
+		/// <param name="style">Style of the font</param>
+		/// <returns></returns>
+		static public Font2d CreateFromTTF(string filename, int size, FontStyle style)
+		{
+			Font2d font = new Font2d();
+			font.LoadTTF(filename, size, style);
+			return font;
+		}
+
+
+		/// <summary>
+		/// Creates a new Font2D from a texture
+		/// </summary>
+		/// <param name="name">Name of the texture</param>
+		/// <param name="size">Size of each glyph</param>
+		/// <param name="zone">Zone in the texture</param>
+		/// <returns></returns>
+		static public Font2d CreateFromTexture(string name, Size size, Rectangle zone)
+		{
+			Font2d font = new Font2d();
+			font.LoadFromTexture(name, size, zone);
+			return font;
+		}
+
+
+		/// <summary>
+		/// Creates a new Font2D from a TileSet
+		/// </summary>
+		/// <param name="name">Name of the TileSet</param>
+		/// <returns></returns>
+		static public Font2d CreateFromTileSet(string name)
+		{
+			Font2d font = new Font2d();
+			font.LoadFromTileSet(name);
+			return font;
+		}
+
+
+
+
 
 		#endregion
 
