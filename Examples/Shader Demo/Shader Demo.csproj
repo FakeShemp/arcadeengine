@@ -83,6 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="data\fragment.txt" />
+    <Content Include="data\geometry.txt" />
     <Content Include="data\vertex.txt" />
   </ItemGroup>
   <ItemGroup>
