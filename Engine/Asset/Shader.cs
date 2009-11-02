@@ -128,9 +128,6 @@ namespace ArcEngine.Asset
 				GL.CompileShader(GeometryID);
 				GeometryLog = GL.GetShaderInfoLog(GeometryID);
 				GL.AttachShader(ProgramID, GeometryID);
-
-
-
 			}
 
 
@@ -484,6 +481,24 @@ namespace ArcEngine.Asset
 		{
 			get;
 			private set;
+		}
+
+
+		/// <summary>
+		/// Gets the maximum number of vertices that a geometry program can output
+		/// </summary>
+		public int MaxGeometryOutputVertex
+		{
+			get
+			{
+				if (ProgramID == 0)
+					return 0;
+
+				int count = 0;
+				GL.GetProgram(ProgramID, ProgramParameter.GeometryVerticesOut, out count);
+
+				return count;
+			}
 		}
 
 

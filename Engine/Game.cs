@@ -204,9 +204,11 @@ namespace ArcEngine
 					GameTime.IsRunningSlowly = DrawRunningSlowly;
 
 					if (Window.HasFocus)
+					{
 						Keyboard.Update();
-					Mouse.Update();
-					GamePad.Update();
+						Mouse.Update();
+						GamePad.Update();
+					}
 
 				//	Trace.WriteLine("#############################");
 					Update(GameTime);
@@ -232,10 +234,12 @@ namespace ArcEngine
 						GameTime.TotalGameTime = TotalGameTime;
 						GameTime.IsRunningSlowly = false;
 
-						if (Window.HasFocus) 
+						if (Window.HasFocus)
+						{
 							Keyboard.Update();
-						Mouse.Update();
-						GamePad.Update();
+							Mouse.Update();
+							GamePad.Update();
+						}
 
 						Update(GameTime);
 						flag &= SuppressDraw;

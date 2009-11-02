@@ -150,7 +150,7 @@ namespace Shader_Demo
 			// Geometry shader
 			Shader.Use(GeomShader);
 			Display.DrawLine(500, 200, 500, 300, Color.White);
-			Display.DrawRectangle(new Rectangle(500, 400, 100, 50), Color.Blue);
+			Display.DrawRectangle(new Rectangle(500, 400, 100, 50), Color.Red);
 
 
 			Shader.Use(null);
