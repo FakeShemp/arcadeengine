@@ -93,7 +93,7 @@ namespace ArcEngine.Input
 		/// <returns>True if button up</returns>
 		static public bool IsButtonUp(MouseButtons button)
 		{
-			return Buttons != button;
+			return (Buttons & button) != button;
 		}
 
 
@@ -104,7 +104,7 @@ namespace ArcEngine.Input
 		/// <returns>True if button down</returns>
 		static public bool IsButtonDown(MouseButtons button)
 		{
-			return Buttons == button;
+			return (Buttons & button) == button;
 		}
 
 
