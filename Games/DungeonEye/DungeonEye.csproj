@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DungeonEye</RootNamespace>
     <AssemblyName>DungeonEye</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkSubset>
     </TargetFrameworkSubset>
@@ -85,22 +85,25 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="OpenTK, Version=0.9.9.2, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="OpenTK, Version=0.9.9.4, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Engine\Libraries\OpenTK\Release\OpenTK.dll</HintPath>
+      <HintPath>..\..\Framework\Libraries\OpenTK\Release\OpenTK.dll</HintPath>
     </Reference>
-    <Reference Include="OpenTK.GLControl, Version=0.9.9.2, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="OpenTK.GLControl, Version=0.9.9.4, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Engine\Libraries\OpenTK\Release\OpenTK.GLControl.dll</HintPath>
+      <HintPath>..\..\Framework\Libraries\OpenTK\Release\OpenTK.GLControl.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="WeifenLuo.WinFormsUI.Docking, Version=2.3.1.24483, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Engine\Libraries\DockPanel\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
+      <HintPath>..\..\Framework\Libraries\DockPanel\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

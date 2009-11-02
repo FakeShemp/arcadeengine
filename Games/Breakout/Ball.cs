@@ -68,8 +68,8 @@ namespace Breakout
 
 
 			// Check for ball collision
-			if (Location.X < 160 || Location.X + Size.Width > 800)
-				Velocity.X = -Velocity.X;
+		//	if (Location.X < 160 || Location.X + Size.Width > 800)
+		//		Velocity.X = -Velocity.X;
 
 			if (Location.Y < 0)
 				Velocity.Y = -Velocity.Y;
