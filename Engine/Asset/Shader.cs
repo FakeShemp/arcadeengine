@@ -54,12 +54,15 @@ namespace ArcEngine.Asset
 
 			SetSource(ShaderType.VertexShader,
 				"void main(){" +
+				//"gl_TexCoord[0] = gl_TextureMatrix[0] * gl_MultiTexCoord0;" + 
 				"gl_FrontColor = gl_Color;" +
 				"gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;" +
 				"}");
 
 			SetSource(ShaderType.FragmentShader,
+				"uniform sampler2D texture;" +
 				"void main(){"+
+				//"gl_FragColor = texture2D(texture, gl_TexCoord[0]);" +
 				"gl_FragColor = gl_Color;" +
 				"}");
 
@@ -214,7 +217,7 @@ namespace ArcEngine.Asset
 		public void SetUniform(string name, int value)
 		{
 			int id = GetUniform(name);
-			Trace.WriteLine("{0} = {1}", name, id);
+		//	Trace.WriteLine("{0} = {1}", name, id);
 
 			GL.Uniform1(id, value);
 		}
@@ -229,7 +232,7 @@ namespace ArcEngine.Asset
 			int id = GetUniform(name);
 
 
-			Trace.WriteLine("{0} = {1}", name, id);
+		//	Trace.WriteLine("{0} = {1}", name, id);
 
 			if (value.Length == 1)
 				GL.Uniform1(id, value[0]);
