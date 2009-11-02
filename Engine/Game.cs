@@ -27,9 +27,6 @@ using System.Windows.Forms;
 using ArcEngine.Forms;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
-using ArcEngine.Providers;
-using OpenTK.Graphics;
-using ArcEngine.Asset;
 
 namespace ArcEngine
 {
@@ -104,9 +101,6 @@ namespace ArcEngine
 
 
 			Mouse.Init(Window);
-			GamePad.CheckForDevices(Window);
-			//Audio.Init();
-			//Audio.TraceInfos();
 		}
 
 
@@ -125,6 +119,7 @@ namespace ArcEngine
 		private bool DrawRunningSlowly;
 		private TimeSpan TotalGameTime;
 		private bool SuppressDraw;
+
 
 		/// <summary>
 		/// Performs one complete frame for the game.
@@ -283,6 +278,9 @@ namespace ArcEngine
 		/// <param name="gameTime">The time passed since the last update.</param>
 		public virtual void Update(GameTime gameTime)
 		{
+			// Check if the Escape key is pressed
+			if (Keyboard.IsKeyPress(Keys.Escape))
+				Exit();
 		}
 
 
@@ -291,6 +289,8 @@ namespace ArcEngine
 		/// </summary>
 		public virtual void Draw()
 		{
+			Display.ClearColor = Color.CornflowerBlue;
+			Display.ClearBuffers();
 		}
 
 
@@ -320,6 +320,10 @@ namespace ArcEngine
 		{
 			Trace.WriteLine("Running the game");
 
+			// Initializations
+			//Audio.Init();
+			GamePad.Init(Window);
+
 
 			LoadContent();
 
@@ -348,6 +352,8 @@ namespace ArcEngine
 				UnloadContent();
 			}
 
+			//Audio.Release();
+			GamePad.Release();
 
 			ResourceManager.Close();
 		}

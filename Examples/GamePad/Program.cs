@@ -22,7 +22,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
@@ -105,8 +104,8 @@ namespace ArcEngine.Examples.Joystick
 				CheckDevices();
 
 
-			if (Keyboard.IsNewKeyPress(Keys.K))
-				GamePad.SetVibration(0, 100, 100);
+		//	if (Keyboard.IsNewKeyPress(Keys.K))
+		//		GamePad.SetVibration(0, 100, 100);
 
 		}
 
@@ -116,7 +115,7 @@ namespace ArcEngine.Examples.Joystick
 		/// </summary>
 		void CheckDevices()
 		{
-			GamePad.CheckForDevices(Window);
+			GamePad.CheckForDevices();
 			GamePad.OnUnplug += new GamePad.UnpluggedDevice(GamePad_OnUnplug);
 
 			Messages.Clear();
@@ -203,7 +202,7 @@ namespace ArcEngine.Examples.Joystick
 
 
 		/// <summary>
-		/// 
+		/// Events messages
 		/// </summary>
 		List<string> Messages;
 

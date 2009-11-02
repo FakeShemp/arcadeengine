@@ -20,13 +20,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Runtime.InteropServices;
-//using ArcEngine.PInvoke;
-using System.Windows.Forms;
-
 using ArcEngine.Forms;
-using SlimDX;
 using SlimDX.DirectInput;
 
 
@@ -48,28 +42,62 @@ namespace ArcEngine.Input
 		static GamePad()
 		{
 			AvailableDevices = new List<GamePadState>();
-			Device = new DirectInput();
 		}
+
+
+
+		/// <summary>
+		/// Initialization
+		/// </summary>
+		/// <param name="window">GameWindow handle</param>
+		/// <returns></returns>
+		static internal bool Init(GameWindow window)
+		{
+			if (window == null)
+				throw new ArgumentNullException("window");
+
+			Device = new DirectInput();
+
+			Window = window;
+
+			return true;
+		}
+
+
+		/// <summary>
+		/// Release all resources
+		/// </summary>
+		static internal void Release()
+		{
+			ReleaseDevices();
+
+			Device.Dispose();
+			Device = null;
+		}
+
 
 
 
 		/// <summary>
 		/// Check for new devices
 		/// </summary>
-		/// <param name="form">GameWindow handle</param>
-		static public void CheckForDevices(GameWindow form)
+		static public void CheckForDevices()
 		{
 			ReleaseDevices();
 
-			if (form == null)
+			if (Window == null)
+			{
+				Trace.WriteLine("GamePad not initialized. GameWindow is null !!");
 				return;
+			}
 
 			foreach (DeviceInstance device in Device.GetDevices(DeviceClass.GameController, DeviceEnumerationFlags.AttachedOnly))
 			{
 				try
 				{
 					Joystick joystick = new Joystick(Device, device.InstanceGuid);
-					joystick.SetCooperativeLevel(form, CooperativeLevel.Nonexclusive | CooperativeLevel.Background);
+					//joystick.SetCooperativeLevel(form, CooperativeLevel.Nonexclusive | CooperativeLevel.Background);
+					joystick.SetCooperativeLevel(Window, CooperativeLevel.Exclusive | CooperativeLevel.Background);
 					joystick.Acquire();
 
 					AvailableDevices.Add(new GamePadState(joystick));
@@ -163,13 +191,143 @@ namespace ArcEngine.Input
 		/// <param name="id"></param>
 		/// <param name="left"></param>
 		/// <param name="right"></param>
-		static public bool SetVibration(int id, float left, float right)
+		/// http://msdn.microsoft.com/en-us/library/ee417563%28VS.85%29.aspx
+		/// http://www.codeproject.com/KB/directx/forcefeedback.aspx
+		static public bool SetVibration(int id, int left, int right)
 		{
 			Joystick joystick = GetDevice(id);
 			if (joystick == null)
 				return false;
 
+			EffectParameters param = new EffectParameters();
+			param.Duration = 10000;
+			param.Gain = 10000;
+			param.SamplePeriod = 0;
+			param.TriggerButton = 0;
+			param.TriggerRepeatInterval = 10000;
+			param.Flags = EffectFlags.ObjectOffsets| EffectFlags.Cartesian;
 
+			int[] dirs;
+			int[] axes;
+			param.GetAxes(out axes, out dirs);
+			param.SetAxes(axes, dirs);
+
+
+
+			Effect effect = new Effect(joystick, EffectGuid.ConstantForce);
+			effect.SetParameters(param);
+			effect.Start(1);
+/*
+
+			int[] dwAxes = new int[2] { JoystickObjects.XAxis, JoystickObjects.YAxis };
+			int[] lDirection = new int[] { 18000, 0 };
+
+			ConstantForce diConstantForce = new ConstantForce();
+			diConstantForce.Magnitude = 100000;
+
+			SlimDX.DirectInput.
+			Effect effect = new Effect(joystick, EffectGuid.ConstantForce);
+			
+
+			effect.dwFlags         = DIEFF_POLAR | DIEFF_OBJECTOFFSETS;
+			effect.dwDuration = (DWORD)(0.5 * DI_SECONDS);
+			effect.dwSamplePeriod = 0;                 // = default 
+			effect.dwGain = DI_FFNOMINALMAX;   // No scaling
+			effect.dwTriggerButton = DIEB_NOTRIGGER;    // Not a button response
+			effect.dwTriggerRepeatInterval = 0;         // Not applicable
+			effect.cAxes = 2;
+			effect.rgdwAxes = &dwAxes[0];
+			effect.rglDirection = &lDirection[0];
+			effect.lpEnvelope = NULL;
+			effect.cbTypeSpecificParams = sizeof(DICONSTANTFORCE);
+			effect.lpvTypeSpecificParams = &diConstantForce;  
+
+			//joystick.CreateEffect(GUID_ConstantForce, &diEffect, &lpdiEffect, NULL);
+*/
+
+
+
+
+
+
+/*
+			Effect diEffect = null;
+			int[] diAxes = new int[2];
+			int[] diDirection = new int[] { 0, 0};
+			PeriodicForce periodic = new PeriodicForce();
+			EffectInfo diEffectInfo = new EffectInfo();
+
+			EffectParameters param = new EffectParameters();
+			param.Flags = EffectFlags.Polar | EffectFlags.ObjectOffsets;
+			param.Duration = 1000;
+			param.SamplePeriod = 1000;
+			param.Gain = 10000;
+			param.TriggerButton = 0;
+			param.TriggerRepeatInterval = 0;
+			param.SetAxes(diAxes, diDirection);
+			param.Envelope = null;
+
+
+			periodic.Magnitude = 10000;
+			periodic.Period = 500;
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+			int xAxisOffset = 0;
+			int yAxisOffset = 0;
+         int nextOffset = 0;
+			foreach (DeviceObjectInstance d in joystick.GetObjects())
+			{
+					 if ((d.ObjectType & ObjectDeviceType.ForceFeedbackActuator) != 0) 
+					 {
+						  if (nextOffset == 0)
+								xAxisOffset = d.Offset;
+						  else
+								yAxisOffset = d.Offset;
+						  nextOffset++;
+					 }
+			}
+
+         
+         int[] offsets = new int[2];
+         offsets[0] = xAxisOffset;
+         offsets[1] = yAxisOffset;
+         int[] coords = {left, right};
+
+         EffectParameters info = new EffectParameters();
+         info.Flags = EffectFlags.ObjectOffsets | EffectFlags.Cartesian;
+         info.Duration = 1000;
+			info.SamplePeriod = joystick.Capabilities.ForceFeedbackSamplePeriod;
+			info.Parameters = new ConstantForce(); ;
+         info.Gain = 5000;
+         info.SetAxes(offsets, coords);
+         info.StartDelay = 500;
+
+			Effect eff1 = new Effect(joystick, EffectGuid.ConstantForce);//, info); //This is the line i get the error on.
+			eff1.SetParameters(info, EffectParameterFlags.None);
+			eff1.Start();
+*/
 /*
 			EffectParameters param = new EffectParameters();
 			param.Duration = 300;
@@ -186,10 +344,11 @@ namespace ArcEngine.Input
 			effect.Start();
 */
 
-			IList<EffectInfo> f = joystick.GetEffects(EffectType.ConstantForce);
+	//		IList<EffectInfo> f = joystick.GetEffects(EffectType.ConstantForce);
 
 			return true;
 		}
+
 
 
 		#region Events
@@ -207,7 +366,6 @@ namespace ArcEngine.Input
 		static public event UnpluggedDevice OnUnplug;
 
 		#endregion
-
 
 
 		#region Privates & internals
@@ -306,6 +464,15 @@ namespace ArcEngine.Input
 			}
 		}
 
+
+		/// <summary>
+		/// GameWindow handle
+		/// </summary>
+		static internal GameWindow Window
+		{
+			get;
+			private set;
+		}
 
 		#endregion
 
