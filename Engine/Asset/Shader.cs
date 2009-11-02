@@ -53,12 +53,15 @@ namespace ArcEngine.Asset
 
 
 			SetSource(ShaderType.VertexShader,
-				//	"#version 130 \n" +
-				"void main(){gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;}");
+				"void main(){" +
+				"gl_FrontColor = gl_Color;" +
+				"gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;" +
+				"}");
 
 			SetSource(ShaderType.FragmentShader,
-				//	"#version 130 \n" +
-				"void main(){gl_FragColor = vec4(1.0,0.4,0.8,1.0);}");
+				"void main(){"+
+				"gl_FragColor = gl_Color;" +
+				"}");
 
 		}
 
