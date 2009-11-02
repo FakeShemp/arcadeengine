@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ruff'n'Tumble", "Games\Ruff'n'Tumble\Ruff'n'Tumble.csproj", "{3F1ACC3B-1FFC-43A7-9463-193615B4F3BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArcEngine", "Engine\ArcEngine.csproj", "{9931BDE3-41D2-4065-9595-37020DD45E8D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArcEngine", "Framework\ArcEngine.csproj", "{9931BDE3-41D2-4065-9595-37020DD45E8D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DungeonEye", "Games\DungeonEye\DungeonEye.csproj", "{AF615530-818F-475B-B79D-5ED4A2D01D79}"
 EndProject
