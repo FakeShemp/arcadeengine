@@ -19,6 +19,7 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using ArcEngine.Graphic;
@@ -324,11 +325,11 @@ namespace ArcEngine.Forms
 		/// <summary>
 		/// Gets available displays mode
 		/// </summary>
-		static public DisplayDevice[] AvailableDisplays
+		static public List<DisplayDevice> AvailableDisplays
 		{
 			get
 			{
-				return DisplayDevice.AvailableDisplays;
+				return new List<DisplayDevice>(DisplayDevice.AvailableDisplays);
 			}
 		}
 		#endregion
