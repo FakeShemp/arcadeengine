@@ -49,6 +49,7 @@ namespace ArcEngine.Asset
 		{
 			VertexID = GL.CreateShader(ShaderType.VertexShader);
 			FragmentID = GL.CreateShader(ShaderType.FragmentShader);
+			GeometryID = GL.CreateShader(ShaderType.GeometryShader);
 			ProgramID = GL.CreateProgram();
 
 
@@ -74,15 +75,34 @@ namespace ArcEngine.Asset
 
 
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
-		/// <param name="vertex"></param>
-		/// <param name="fragment"></param>
+		/// <param name="vertex">Vertex shader source code</param>
+		/// <param name="fragment">Fragment shader source code</param>
 		public Shader(string vertex, string fragment) : this()
 		{
 			VertexSource = vertex;
 			FragmentSource = fragment;
+
+			UseGeometryShader = false;
 		}
+
+
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="vertex">Vertex shader source code</param>
+		/// <param name="fragment">Fragment shader source code</param>
+		/// <param name="geometry">Geometry shader source code</param>
+		public Shader(string vertex, string fragment,string geometry) : this()
+		{
+			VertexSource = vertex;
+			FragmentSource = fragment;
+			GeometrySource = geometry;
+
+			UseGeometryShader = true;
+		}
+
 
 
 		/// <summary>
@@ -103,6 +123,17 @@ namespace ArcEngine.Asset
 			GL.AttachShader(ProgramID, VertexID);
 			GL.AttachShader(ProgramID, FragmentID);
 
+			if (UseGeometryShader && GeometryID != 0)
+			{
+				GL.CompileShader(GeometryID);
+				GeometryLog = GL.GetShaderInfoLog(GeometryID);
+				GL.AttachShader(ProgramID, GeometryID);
+
+
+
+			}
+
+
 			GL.LinkProgram(ProgramID);
 			ProgramLog = GL.GetProgramInfoLog(ProgramID);
 
@@ -116,6 +147,7 @@ namespace ArcEngine.Asset
 			{
 				Trace.WriteLine("Vertex : {0}", VertexLog);
 				Trace.WriteLine("Fragment : {0}", FragmentLog);
+				Trace.WriteLine("Geometry : {0}", GeometryLog);
 				Trace.WriteLine("Program : {0}", ProgramLog);
 			}
 
@@ -157,7 +189,9 @@ namespace ArcEngine.Asset
 				break;
 				case ShaderType.GeometryShader:
 				{
-					return;
+					GeometrySource = source;
+					id = GeometryID;
+					UseGeometryShader = true;
 				}
 				break;
 				case ShaderType.VertexShader:
@@ -170,6 +204,7 @@ namespace ArcEngine.Asset
 
 			GL.ShaderSource(id, source);
 		}
+
 
 		/// <summary>
 		/// Sets the source code for a shader from a file
@@ -194,6 +229,29 @@ namespace ArcEngine.Asset
 
 
 			return true;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="input"></param>
+		/// <param name="output"></param>
+		/// <param name="count"></param>
+		public void SetGeometryPrimitives(BeginMode input, BeginMode output, int count)
+		{
+			// Set the input type of the primitives we are going to feed the geometry shader, this should be the same as
+			// the primitive type given to GL.Begin. If the types do not match a GL error will occur (todo: verify GL_INVALID_ENUM, on glBegin)
+			GL.Ext.ProgramParameter(ProgramID, ExtGeometryShader4.GeometryInputTypeExt, (int)input);
+
+
+			// Set the output type of the geometry shader. Becasue we input Lines we will output LineStrip(s).
+			GL.Ext.ProgramParameter(ProgramID, ExtGeometryShader4.GeometryOutputTypeExt, (int)output);
+
+			// We must tell the shader program how much vertices the geometry shader will output (at most).
+			// One simple way is to query the maximum and use that.
+			GL.Ext.ProgramParameter(ProgramID, ExtGeometryShader4.GeometryVerticesOutExt, count);
+	
 		}
 
 		#region Uniforms
@@ -349,7 +407,6 @@ namespace ArcEngine.Asset
 		#endregion
 
 		
-
 		#region Properties
 
 		/// <summary>
@@ -407,13 +464,37 @@ namespace ArcEngine.Asset
 		/// <summary>
 		/// Fragment source
 		/// </summary>
-		public string FragmentSource 
+		public string FragmentSource
 		{
 			get;
 			private set;
 		}
 
 
+		/// <summary>
+		/// Geometry handle
+		/// </summary>
+		int GeometryID;
+
+
+		/// <summary>
+		/// Geomerty source
+		/// </summary>
+		public string GeometrySource
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// Enable or not the geometry shader
+		/// </summary>
+		public bool UseGeometryShader
+		{
+			get;
+			set;
+		}
 
 		/// <summary>
 		/// Program handle
@@ -427,7 +508,7 @@ namespace ArcEngine.Asset
 
 
 		/// <summary>
-		/// 
+		/// Vertex log
 		/// </summary>
 		public string VertexLog
 		{
@@ -436,7 +517,7 @@ namespace ArcEngine.Asset
 		}
 
 		/// <summary>
-		/// 
+		/// Fragment log
 		/// </summary>
 		public string FragmentLog
 		{
@@ -446,7 +527,17 @@ namespace ArcEngine.Asset
 
 
 		/// <summary>
-		/// 
+		/// Geometry log
+		/// </summary>
+		public string GeometryLog
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// Program log
 		/// </summary>
 		public string ProgramLog
 		{
@@ -455,7 +546,6 @@ namespace ArcEngine.Asset
 		}
 
 		#endregion
-
 
 
 		#region Dispose
@@ -499,6 +589,7 @@ namespace ArcEngine.Asset
 
 				GL.DeleteShader(FragmentID);
 				GL.DeleteShader(VertexID);
+				GL.DeleteShader(GeometryID);
 
 				GL.DeleteProgram(ProgramID);
 

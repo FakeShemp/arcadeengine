@@ -67,15 +67,35 @@ namespace Shader_Demo
 		/// </summary>
 		public override void LoadContent()
 		{
-			Shader = new Shader();
 
 			Font = Font2d.CreateFromTTF(@"c:\windows\fonts\verdana.ttf", 14, FontStyle.Regular);
 
 
-			// Setup the shader
-			Shader.LoadSource(ShaderType.VertexShader, "data/vertex.txt");
-			Shader.LoadSource(ShaderType.FragmentShader, "data/fragment.txt");
-			Shader.Compile();
+			// Setup the simple shader
+			SimpleShader = new Shader();
+			SimpleShader.LoadSource(ShaderType.VertexShader, "data/vertex.txt");
+			SimpleShader.LoadSource(ShaderType.FragmentShader, "data/fragment.txt");
+			SimpleShader.Compile();
+
+
+			// Setup the geometry shader
+			GeomShader = new Shader(@"
+				void main( void )
+				{
+					gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
+				}	
+			",
+			@"
+				void main( void )
+				{
+					gl_FragColor = vec4(1, 0, 0, 1);
+				}	
+			");
+
+			GeomShader.LoadSource(ShaderType.GeometryShader, "data/geometry.txt");
+			GeomShader.SetGeometryPrimitives(BeginMode.Lines, BeginMode.LineStrip, 50);
+			GeomShader.Compile();
+
 
 			// Load the texture
 			Texture = new Texture("data/checkerboard.png");
@@ -89,7 +109,7 @@ namespace Shader_Demo
 		/// </summary>
 		public override void UnloadContent()
 		{
-			Shader.Dispose();
+			SimpleShader.Dispose();
 		}
 
 
@@ -99,7 +119,7 @@ namespace Shader_Demo
 		/// <param name="gameTime"></param>
 		public override void Update(GameTime gameTime)
 		{
-			// Check if the Excape key is pressed
+			// Check if the Escape key is pressed
 			if (Keyboard.IsKeyPress(Keys.Escape))
 				Exit();
 		}
@@ -109,29 +129,32 @@ namespace Shader_Demo
 		/// <summary>
 		/// Called when it is time to draw a frame.
 		/// </summary>
-		/// <param name="device"></param>
 		public override void Draw()
 		{
 			// Clears the background
 			Display.ClearBuffers();
 			Display.Color = Color.White;
-			Display.Texturing = true;
 
 
+			// Simple shader
 			if (Mouse.IsButtonDown(MouseButtons.Left))
 			{
-				Shader.Use(Shader);
-
-				Shader.SetUniform("mouse", new float[2] { Mouse.Location.X, Mouse.Location.Y});
-
+				Shader.Use(SimpleShader);
+				SimpleShader.SetUniform("mouse", new float[2] { Mouse.Location.X, Display.ViewPort.Bottom - Mouse.Location.Y});
 			}
 
 			// Draw the texture
 			Texture.Blit(Display.ViewPort, TextureLayout.Tile);
 
 
+			// Geometry shader
+			Shader.Use(GeomShader);
+			Display.DrawLine(500, 200, 500, 300, Color.White);
+			Display.DrawRectangle(new Rectangle(500, 400, 100, 50), Color.Blue);
+
+
 			Shader.Use(null);
-			Font.DrawText(new Point(100, 100), "Press left mouse button to activate the shader");
+			Font.DrawText(new Point(50, 50), "Press left / right mouse button to activate the shaders");
 		}
 
 
@@ -141,7 +164,13 @@ namespace Shader_Demo
 		/// <summary>
 		/// Shader
 		/// </summary>
-		Shader Shader;
+		Shader SimpleShader;
+
+
+		/// <summary>
+		/// Geometry shader
+		/// </summary>
+		Shader GeomShader;
 
 
 		/// <summary>
