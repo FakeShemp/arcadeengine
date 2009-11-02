@@ -82,8 +82,7 @@ namespace ArcEngine.Examples.StarterKit
 			Display.ClearColor = Color.White;
 
 			// Load Verdana font
-			Font = new Font2d();
-			Font.LoadTTF(@"c:\windows\fonts\verdana.ttf", 12, FontStyle.Regular);
+			Font = Font2d.CreateFromTTF(@"c:\windows\fonts\verdana.ttf", 12, FontStyle.Regular);
 			Font.Color = Color.Black;
 
 			// Load a texture
@@ -95,13 +94,6 @@ namespace ArcEngine.Examples.StarterKit
 				 Display.ViewPort.Height / 2 - Smiley.Size.Height / 2);
 		}
 
-
-		/// <summary>
-		/// Unload contents
-		/// </summary>
-		public override void UnloadContent()
-		{
-		}
 
 
 		/// <summary>
