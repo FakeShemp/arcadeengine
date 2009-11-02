@@ -22,8 +22,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using ArcEngine.PInvoke;
-//using Microsoft.DirectX.DirectInput;
-
+using System.Collections.Generic;
 
 
 // http://blog.paranoidferret.com/index.php/2008/04/03/winforms-accessing-mouse-and-keyboard-state/
@@ -84,55 +83,38 @@ namespace ArcEngine.Input
 		/// <param name="e"></param>
 		static internal void KeyUp(KeyEventArgs e)
 		{
-			//if (Terminal.Enable && e.KeyCode == Terminal.ToggleKey)
-			//   Terminal.Visible = true;
-
 			if (OnKeyUp != null)
 			    OnKeyUp(null, e);
 		}
 
 
-/*
 
 		/// <summary>
-		/// Returns the state of a Key
+		/// Gets if a key is pressed
 		/// </summary>
-		/// <param name="key"></param>
-		/// <returns></returns>
-		public static KeyState GetKey(Keys key)
-		{
-
-			KeyState state = new KeyState();
-			state.CurrentState = CurrentState[(int)key];
-			state.PreviousState = PreviousState[(int)key];
-
-			
-	//		Trace.WriteLine(key.ToString() + " : " + state.CurrentState.ToString() + " " + state.PreviousState.ToString());
-
-			//if ((int)key == (int)Keys.E)
-			//    Trace.WriteLine(key.ToString() + " : " + 'e');
-
-			return state;
-		}
-*/
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="key"></param>
-		/// <returns></returns>
+		/// <param name="key">Key</param>
+		/// <returns>True if pressed</returns>
 		public static bool IsKeyPress(Keys key)
 		{
 			return CurrentState[(int)key];
 		}
 
+		/// <summary>
+		/// Gets if a key is released
+		/// </summary>
+		/// <param name="key">Key</param>
+		/// <returns>True if released</returns>
+		public static bool IsKeyReleased(Keys key)
+		{
+			return !CurrentState[(int)key];
+		}
+
 
 		/// <summary>
-		/// 
+		/// Gets if a new key is down
 		/// </summary>
-		/// <param name="key"></param>
-		/// <returns></returns>
+		/// <param name="key">Key</param>
+		/// <returns>True if down</returns>
 		public static bool IsNewKeyPress(Keys key)
 		{
 			return CurrentState[(int)key] && !PreviousState[(int)key];
@@ -140,14 +122,50 @@ namespace ArcEngine.Input
 
 
 		/// <summary>
-		/// 
+		/// Gets if a new key is up
 		/// </summary>
-		/// <param name="key"></param>
-		/// <returns></returns>
+		/// <param name="key">Key</param>
+		/// <returns>True if up</returns>
 		public static bool IsNewKeyUp(Keys key)
 		{
 			return !CurrentState[(int)key] && PreviousState[(int)key];
 		}
+
+
+
+		/// <summary>
+		/// Gets a list of all pressed keys
+		/// </summary>
+		/// <returns></returns>
+		public static List<Keys> GetPressedKeys()
+		{
+			List<Keys> list = new List<Keys>();
+
+			for (int i = 0; i < 254; i++)
+			{
+				if (IsKeyPress((Keys)i))
+					list.Add((Keys)i);
+			}
+			return list;
+		}
+
+
+		/// <summary>
+		/// Gets a list of all released keys
+		/// </summary>
+		/// <returns></returns>
+		public static List<Keys> GetReleasedKeys()
+		{
+			List<Keys> list = new List<Keys>();
+
+			for (int i = 0; i < 254; i++)
+			{
+				if (IsKeyReleased((Keys)i))
+					list.Add((Keys)i);
+			}
+			return list;
+		}
+
 
 
 		#region Events
