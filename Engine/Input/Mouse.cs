@@ -66,8 +66,8 @@ namespace ArcEngine.Input
 		/// <summary>
 		/// New mouse button Up
 		/// </summary>
-		/// <param name="button"></param>
-		/// <returns></returns>
+		/// <param name="button">Mouse button</param>
+		/// <returns>True if button up</returns>
 		static public bool IsNewButtonUp(MouseButtons button)
 		{
 			return (PreviousState == button) && (Buttons != button);
@@ -77,13 +77,35 @@ namespace ArcEngine.Input
 		/// <summary>
 		/// New mouse button Down
 		/// </summary>
-		/// <param name="button"></param>
-		/// <returns></returns>
+		/// <param name="button">Mouse button</param>
+		/// <returns>True if button down</returns>
 		static public bool IsNewButtonDown(MouseButtons button)
 		{
 			return (PreviousState != button) && (Buttons == button);
 		}
 
+
+
+		/// <summary>
+		/// Mouse button Up
+		/// </summary>
+		/// <param name="button">Mouse button</param>
+		/// <returns>True if button up</returns>
+		static public bool IsButtonUp(MouseButtons button)
+		{
+			return Buttons != button;
+		}
+
+
+		/// <summary>
+		/// Mouse button Down
+		/// </summary>
+		/// <param name="button">Mouse button</param>
+		/// <returns>True if button down</returns>
+		static public bool IsButtonDown(MouseButtons button)
+		{
+			return Buttons == button;
+		}
 
 
 
