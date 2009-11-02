@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTitle("ArcEngine")]
 [assembly: AssemblyProduct("ArcEngine")]
-[assembly: AssemblyDescription("2D gaming framework (www.mimicprod.net)")]
+[assembly: AssemblyDescription("2D .Net gaming framework - www.mimicprod.net")]
 [assembly: AssemblyCompany("MimicProd")]
 [assembly: AssemblyCopyright("Copyright ©  2008-2009")]
 [assembly: AssemblyTrademark("")]
