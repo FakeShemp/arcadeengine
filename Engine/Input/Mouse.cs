@@ -17,7 +17,7 @@
 //along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 //
 #endregion
-
+using System.Collections.Generic;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -108,6 +108,38 @@ namespace ArcEngine.Input
 		}
 
 
+		/// <summary>
+		/// Gets a list of all pressed buttons
+		/// </summary>
+		/// <returns></returns>
+		public static List<MouseButtons> GetPressedButtons()
+		{
+			List<MouseButtons> list = new List<MouseButtons>();
+
+			foreach(MouseButtons button in Enum.GetValues(typeof(MouseButtons)))
+			{
+				if (IsButtonDown(button))
+					list.Add(button);
+			}
+			return list;
+		}
+
+
+		/// <summary>
+		/// Gets a list of all released buttons
+		/// </summary>
+		/// <returns></returns>
+		public static List<MouseButtons> GetReleasedButtons()
+		{
+			List<MouseButtons> list = new List<MouseButtons>();
+
+			foreach (MouseButtons button in Enum.GetValues(typeof(MouseButtons)))
+			{
+				if (IsButtonUp(button))
+					list.Add(button);
+			}
+			return list;
+		}
 
 
 
@@ -242,15 +274,8 @@ namespace ArcEngine.Input
 		static public MouseButtons Buttons
 		{
 			get;
-			//{
-			//   if (Form == null)
-			//      throw new ArgumentNullException("Form", "You must initialize the class first !");
-
-			//   return buttons;
-			//}
 			private set;
 		}
-//		static MouseButtons buttons = new MouseButtons();
 
 		/// <summary>
 		/// Previous mouse buttons state
