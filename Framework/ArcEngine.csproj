@@ -1,0 +1,466 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9931BDE3-41D2-4065-9595-37020DD45E8D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ArcEngine</RootNamespace>
+    <AssemblyName>ArcEngine</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <TargetFrameworkSubset>
+    </TargetFrameworkSubset>
+    <ApplicationIcon>
+    </ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Any CPU\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\ArcEngine.XML</DocumentationFile>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Any CPU\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>bin\Debug\ArcEngine.XML</DocumentationFile>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>bin\Debug\ArcEngine.XML</DocumentationFile>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DigitalRune.Windows.TextEditor, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libraries\DigitalRune\DigitalRune.Windows.TextEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.85.5.452, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libraries\ICSharpLib\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="OpenTK, Version=0.9.9.3, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libraries\OpenTK\Release\OpenTK.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenTK.GLControl, Version=0.9.9.3, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libraries\OpenTK\Release\OpenTK.GLControl.dll</HintPath>
+    </Reference>
+    <Reference Include="SlimDX, Version=2.0.8.42, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libraries\SlimDx\x86\SlimDX.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="WeifenLuo.WinFormsUI.Docking, Version=2.3.1.24483, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libraries\DockPanel\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Asset\Animation\AnimationFrame.cs" />
+    <Compile Include="Asset\Scenes\SceneFrame.cs" />
+    <Compile Include="Asset\Scenes\KeyFrame.cs" />
+    <Compile Include="Asset\Scenes\SceneLayer.cs" />
+    <Compile Include="Asset\BinaryInformation.cs" />
+    <Compile Include="Asset\IAsset.cs" />
+    <Compile Include="Asset\Scenes\Scene.cs" />
+    <Compile Include="Asset\Language.cs" />
+    <Compile Include="Asset\ScriptModel.cs" />
+    <Compile Include="Asset\Scenes\Storyboard.cs" />
+    <Compile Include="Asset\Font2d.cs" />
+    <Compile Include="Asset\Shader.cs" />
+    <Compile Include="Editor\AboutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor\AboutForm.Designer.cs">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editor\AnimationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor\AnimationForm.Designer.cs">
+      <DependentUpon>AnimationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editor\BinaryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor\BinaryForm.Designer.cs">
+      <DependentUpon>BinaryForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editor\AudioForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor\AudioForm.Designer.cs">
+      <DependentUpon>AudioForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editor\ImportGIFForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor\ImportGIFForm.Designer.cs">
+      <DependentUpon>ImportGIFForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editor\KeyboardSchemeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor\KeyboardSchemeForm.Designer.cs">
+      <DependentUpon>KeyboardSchemeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editor\LayoutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor\LayoutForm.Designer.cs">
+      <DependentUpon>LayoutForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editor\ListViewColumnSorter.cs" />
+    <Compile Include="Editor\LogForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor\LogForm.Designer.cs">
+      <DependentUpon>LogForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editor\EditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor\EditorForm.Designer.cs">
+      <DependentUpon>EditorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editor\PreferencesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor\PreferencesForm.Designer.cs">
+      <DependentUpon>PreferencesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editor\ResourceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor\ResourceForm.Designer.cs">
+      <DependentUpon>ResourceForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editor\SceneForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor\SceneForm.Designer.cs">
+      <DependentUpon>SceneForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editor\ScriptForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor\ScriptForm.Designer.cs">
+      <DependentUpon>ScriptForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editor\ScriptModelForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor\ScriptModelForm.Designer.cs">
+      <DependentUpon>ScriptModelForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editor\SelectionBox.cs" />
+    <Compile Include="Editor\StringTableForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor\StringTableForm.Designer.cs">
+      <DependentUpon>StringTableForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editor\TilePropertyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor\TilePropertyForm.Designer.cs">
+      <DependentUpon>TilePropertyForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editor\TileSetForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor\TileSetForm.Designer.cs">
+      <DependentUpon>TileSetForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editor\Font2dForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor\Font2dForm.Designer.cs">
+      <DependentUpon>Font2dForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AboutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AboutForm.Designer.cs">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editor\WizardForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor\WizardForm.designer.cs">
+      <DependentUpon>WizardForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AssetEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\GameWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\GameWindow.Designer.cs">
+      <DependentUpon>GameWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Game.cs" />
+    <Compile Include="GameClock.cs" />
+    <Compile Include="Graphic\Batch.cs" />
+    <Compile Include="Graphic\Texture.cs" />
+    <Compile Include="Graphic\Display.cs" />
+    <Compile Include="Input\GamePadState.cs" />
+    <Compile Include="PInvoke\Kernel32.cs" />
+    <Compile Include="PInvoke\User32.cs" />
+    <Compile Include="PInvoke\Winmm.cs" />
+    <Compile Include="Utility\GUI\GuiManager.cs" />
+    <Compile Include="Utility\GUI\Window.cs" />
+    <Compile Include="Input\GamePad.cs" />
+    <Compile Include="Input\GamePadCapabilities.cs" />
+    <Compile Include="Asset\InputScheme.cs" />
+    <Compile Include="Providers\AudioProvider.cs" />
+    <Compile Include="Providers\InputSchemeProvider.cs" />
+    <Compile Include="Utility\ScreenManager\GameScreen.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Providers\AnimationProvider.cs" />
+    <Compile Include="Providers\FontProvider.cs" />
+    <Compile Include="Providers\LayoutProvider.cs" />
+    <Compile Include="Providers\StringTableProvider.cs" />
+    <Compile Include="Providers\TilesetProvider.cs" />
+    <Compile Include="Providers\Provider.cs" />
+    <Compile Include="Providers\ScriptProvider.cs" />
+    <Compile Include="Utility\ScreenManager\ScreenManager.cs" />
+    <Compile Include="Utility\GUI\Button.cs" />
+    <Compile Include="Utility\GUI\GuiBase.cs" />
+    <Compile Include="Asset\Layout.cs" />
+    <Compile Include="ScriptManager.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="Utility\Terminal.cs" />
+    <Compile Include="Forms\TerminalForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\TerminalForm.Designer.cs">
+      <DependentUpon>TerminalForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\DisplaySettingsWizard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DisplaySettingsWizard.Designer.cs">
+      <DependentUpon>DisplaySettingsWizard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Input\Keyboard.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Input\Mouse.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <None Include="app.config" />
+    <None Include="Network\NetBase.cs" />
+    <None Include="Network\NetBuffer.cs" />
+    <None Include="Network\NetClient.cs" />
+    <None Include="Network\NetConfiguration.cs" />
+    <None Include="Network\NetConnection.cs" />
+    <None Include="Network\NetEnum.cs" />
+    <None Include="Network\NetServer.cs" />
+    <None Include="Network\NetStatusEventArgs.cs" />
+    <Compile Include="Asset\Animation\Animation.cs" />
+    <Compile Include="Asset\Audio.cs" />
+    <Compile Include="Asset\Enumerators.cs" />
+    <Compile Include="Asset\StringTable.cs" />
+    <Compile Include="Asset\Tile.cs" />
+    <Compile Include="Asset\TileSet.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResourceManager.cs" />
+    <Compile Include="Asset\Script.cs" />
+    <Compile Include="GameTime.cs" />
+    <Compile Include="Trace.cs" />
+    <Compile Include="Utility\Webcam.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Forms\TerminalForm.resx">
+      <DependentUpon>TerminalForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DisplaySettingsWizard.resx">
+      <DependentUpon>DisplaySettingsWizard.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Data\Icons\Binary.png" />
+    <EmbeddedResource Include="Data\Icons\Animation.png" />
+    <EmbeddedResource Include="Data\Icons\Level.png" />
+    <EmbeddedResource Include="Data\Icons\Script.png" />
+    <EmbeddedResource Include="Data\Icons\StringTable.png" />
+    <EmbeddedResource Include="Data\Icons\Texture.png" />
+    <EmbeddedResource Include="Data\Icons\TileSet.png" />
+    <EmbeddedResource Include="Data\Icons\Font.png" />
+    <None Include="Data\Icons\class.gif" />
+    <None Include="Data\Icons\property.gif" />
+    <None Include="Data\Icons\protected method.gif" />
+    <None Include="Data\Icons\protected property.gif" />
+    <None Include="Data\Icons\public event.gif" />
+    <None Include="Data\Icons\public method.gif" />
+    <None Include="Data\Icons\static.gif" />
+    <None Include="Data\Icons\snippet.png" />
+    <Content Include="Docs\Engines.txt" />
+    <Content Include="Docs\Measurement Convention.txt" />
+    <EmbeddedResource Include="Editor\AboutForm.resx">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editor\AnimationForm.resx">
+      <DependentUpon>AnimationForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editor\BinaryForm.resx">
+      <DependentUpon>BinaryForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editor\AudioForm.resx">
+      <DependentUpon>AudioForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editor\ImportGIFForm.resx">
+      <DependentUpon>ImportGIFForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editor\KeyboardSchemeForm.resx">
+      <DependentUpon>KeyboardSchemeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editor\LayoutForm.resx">
+      <DependentUpon>LayoutForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editor\LogForm.resx">
+      <DependentUpon>LogForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editor\EditorForm.resx">
+      <DependentUpon>EditorForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editor\PreferencesForm.resx">
+      <DependentUpon>PreferencesForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editor\ResourceForm.resx">
+      <DependentUpon>ResourceForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editor\ScriptForm.resx">
+      <DependentUpon>ScriptForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editor\ScriptModelForm.resx">
+      <DependentUpon>ScriptModelForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editor\StringTableForm.resx">
+      <DependentUpon>StringTableForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editor\TileSetForm.resx">
+      <DependentUpon>TileSetForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editor\Font2dForm.resx">
+      <DependentUpon>Font2dForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AboutForm.resx">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editor\WizardForm.resx">
+      <DependentUpon>WizardForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\GameWindow.resx">
+      <DependentUpon>GameWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <Content Include="Docs\Projects.txt" />
+    <Content Include="Utility\GUI\gui.txt" />
+    <Content Include="Network\Documentation.txt" />
+    <EmbeddedResource Include="Resources\checkerboard.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PostBuildEvent>rem copy $(TargetPath) $(SolutionDir)Editor\
+rem copy $(TargetPath) $(SolutionDir)Ruff'n'Tumble\
+rem copy $(TargetPath) $(SolutionDir)DungeonEye\</PostBuildEvent>
+    <PreBuildEvent>rem delete $(SolutionDir)Editor\$(TargetFileName)
+rem delete $(SolutionDir)Ruff'n'Tumble\$(TargetFileName)
+</PreBuildEvent>
+  </PropertyGroup>
+</Project>
