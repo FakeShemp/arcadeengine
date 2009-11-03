@@ -123,7 +123,7 @@ namespace ArcEngine.Providers
                 Trace.Unindent();
                 return true;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 Trace.WriteLine("Exception thrown when creating AudioContext !");
                 Trace.Unindent();

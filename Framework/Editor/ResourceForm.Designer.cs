@@ -31,15 +31,15 @@
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ResourceForm));
 			this.ResourceTree = new System.Windows.Forms.TreeView();
-			this.ContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.MouseContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.RemoveMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.MainImageList = new System.Windows.Forms.ImageList(this.components);
-			this.ContextMenu.SuspendLayout();
+			this.MouseContextMenu.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// ResourceTree
 			// 
-			this.ResourceTree.ContextMenuStrip = this.ContextMenu;
+			this.ResourceTree.ContextMenuStrip = this.MouseContextMenu;
 			this.ResourceTree.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.ResourceTree.FullRowSelect = true;
 			this.ResourceTree.HideSelection = false;
@@ -60,14 +60,14 @@
 			this.ResourceTree.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.ResourceTree_PreviewKeyDown);
 			this.ResourceTree.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.ResourceTree_NodeMouseClick);
 			// 
-			// ContextMenu
+			// MouseContextMenu
 			// 
-			this.ContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.MouseContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.RemoveMenuItem});
-			this.ContextMenu.Name = "BankcontextMenu";
-			this.ContextMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-			this.ContextMenu.Size = new System.Drawing.Size(153, 48);
-			this.ContextMenu.Text = "Resource";
+			this.MouseContextMenu.Name = "BankcontextMenu";
+			this.MouseContextMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+			this.MouseContextMenu.Size = new System.Drawing.Size(153, 48);
+			this.MouseContextMenu.Text = "Resource";
 			// 
 			// RemoveMenuItem
 			// 
@@ -130,7 +130,7 @@
 			this.ShowInTaskbar = false;
 			this.TabText = "Assets :";
 			this.Text = "Assets :";
-			this.ContextMenu.ResumeLayout(false);
+			this.MouseContextMenu.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -138,7 +138,7 @@
 		#endregion
 
 		public System.Windows.Forms.TreeView ResourceTree;
-		private System.Windows.Forms.ContextMenuStrip ContextMenu;
+		private System.Windows.Forms.ContextMenuStrip MouseContextMenu;
 		private System.Windows.Forms.ToolStripMenuItem RemoveMenuItem;
 		private System.Windows.Forms.ImageList MainImageList;
 	}

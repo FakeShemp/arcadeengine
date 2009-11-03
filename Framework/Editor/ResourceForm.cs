@@ -152,9 +152,9 @@ namespace ArcEngine.Editor
 			if (e.Button == MouseButtons.Right)
 			{
 				TreeNode node = ResourceTree.GetNodeAt(e.X, e.Y);
-				ContextMenu.Tag = node.Tag;
+				MouseContextMenu.Tag = node.Tag;
 
-				ContextMenu.Show(ResourceTree, new Point(e.X, e.Y));
+				MouseContextMenu.Show(ResourceTree, new Point(e.X, e.Y));
 			}
 		}
 

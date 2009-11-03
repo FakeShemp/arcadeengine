@@ -1,5 +1,8 @@
 ﻿namespace ArcEngine.Editor
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	partial class SceneForm
 	{
 		/// <summary>

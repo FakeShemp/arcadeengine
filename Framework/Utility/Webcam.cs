@@ -21,6 +21,7 @@ namespace ArcEngine.Utility
 		/// Open a webcam
 		/// </summary>
 		/// <param name="id">ID of the device</param>
+		/// <param name="size">Size of the video stream</param>
 		public Webcam(int id, Size size)
 		{
 			ID = id;
@@ -126,7 +127,7 @@ namespace ArcEngine.Utility
 		/// <summary>
 		/// 
 		/// </summary>
-		public struct videohdr_tag
+		internal struct videohdr_tag
 		{
 			public byte[] lpData;
 			public int dwBufferLength;

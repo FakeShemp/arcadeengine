@@ -47,7 +47,7 @@ namespace ArcEngine.Input
 				if (Joystick.Poll().IsFailure)
 					return;
 			}
-			catch (DirectInputException e)
+			catch (DirectInputException)
 			{
 				GamePad.UnplugDevice(Joystick);
 				Joystick = null;

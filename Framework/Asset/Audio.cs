@@ -355,7 +355,7 @@ namespace ArcEngine.Asset
 		{
 			get
 			{
-				int ret = 0;
+				//int ret = 0;
 				//AL.GetSourcei(SourceID, AL.AL_LOOPING, out ret);
 
 				return  false;

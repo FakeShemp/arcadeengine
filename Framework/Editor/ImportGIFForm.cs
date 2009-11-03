@@ -56,7 +56,7 @@ namespace ArcEngine.Editor
 			{
 				Image = Image.FromFile(dlg.FileName);
 			}
-			catch (OutOfMemoryException ex)
+			catch (OutOfMemoryException)
 			{
 				MessageBox.Show("The file does not have a valid image format.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;

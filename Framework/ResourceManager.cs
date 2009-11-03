@@ -236,7 +236,7 @@ namespace ArcEngine
 		/// <summary>
 		/// Returns the <see cref="Provider"/> of an asset
 		/// </summary>
-		/// <param name="type">Name of the type</param>
+		/// <param name="name">Name of the type</param>
 		/// <returns>Provider of the asset or null</returns>
 		static public Provider GetAssetProvider(string name)
 		{

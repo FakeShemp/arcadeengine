@@ -219,7 +219,7 @@ namespace ArcEngine.Asset
 				SetSource(type, source);
 
 			}
-			catch (Exception e)
+			catch (Exception)
 			{
 				return false;
 			}

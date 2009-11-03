@@ -657,12 +657,12 @@ namespace ArcEngine.PInvoke
 			/// <summary>
 			///     Manufacturer identifier. Manufacturer identifiers are defined in Manufacturer and Product Identifiers.
 			/// </summary>
-			[CLSCompliant(false)]
+			//[CLSCompliant(false)]
 			public ushort wMid;
 			/// <summary>
 			///     Product identifier. Product identifiers are defined in Manufacturer and Product Identifiers.
 			/// </summary>
-			[CLSCompliant(false)]
+			//[CLSCompliant(false)]
 			public ushort wPid;
 			/// <summary>
 			///     Null-terminated string containing the joystick product name.
