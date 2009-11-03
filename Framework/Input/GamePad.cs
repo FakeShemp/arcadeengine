@@ -71,8 +71,11 @@ namespace ArcEngine.Input
 		{
 			ReleaseDevices();
 
-			Device.Dispose();
-			Device = null;
+			if (Device != null)
+			{
+				Device.Dispose();
+				Device = null;
+			}
 		}
 
 
