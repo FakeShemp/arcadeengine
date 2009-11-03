@@ -75,16 +75,8 @@ namespace ArcEngine.Examples.Joystick
 			Font = new Font2d();
 			Font.LoadTTF(@"c:\windows\fonts\verdana.ttf", 14, FontStyle.Regular);
 
-
+			GamePad.Init(Window);
 			CheckDevices();
-		}
-
-
-		/// <summary>
-		/// Unload contents
-		/// </summary>
-		public override void UnloadContent()
-		{
 		}
 
 

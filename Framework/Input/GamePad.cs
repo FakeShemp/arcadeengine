@@ -51,7 +51,7 @@ namespace ArcEngine.Input
 		/// </summary>
 		/// <param name="window">GameWindow handle</param>
 		/// <returns></returns>
-		static internal bool Init(GameWindow window)
+		static public bool Init(GameWindow window)
 		{
 			if (window == null)
 				throw new ArgumentNullException("window");

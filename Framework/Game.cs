@@ -324,13 +324,13 @@ namespace ArcEngine
 		{
 			Trace.WriteLine("Running the game");
 
+
 			// Initializations
 			//Audio.Init();
-			GamePad.Init(Window);
+		//	GamePad.Init(Window);
 
 
 			LoadContent();
-
 
 			IsRunning = true;
 			
