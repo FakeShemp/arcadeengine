@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
+using System.Drawing.Imaging;
 using System.Windows.Forms;
 using ArcEngine.Asset;
-using ArcEngine.Forms;
 using ArcEngine.Graphic;
-using System.Drawing.Imaging;
 
 //
 //
