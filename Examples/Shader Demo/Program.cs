@@ -82,13 +82,14 @@ namespace Shader_Demo
 			GeomShader = new Shader(@"
 				void main( void )
 				{
+					gl_FrontColor = gl_Color;
 					gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
 				}	
 			",
 			@"
 				void main( void )
 				{
-					gl_FragColor = vec4(1, 0, 0, 1);
+					gl_FragColor = gl_Color; // vec4(1, 0, 1, 1);
 				}	
 			");
 
@@ -135,7 +136,6 @@ namespace Shader_Demo
 			Display.ClearBuffers();
 			Display.Color = Color.White;
 
-
 			// Simple shader
 			if (Mouse.IsButtonDown(MouseButtons.Left))
 			{
@@ -146,15 +146,17 @@ namespace Shader_Demo
 			// Draw the texture
 			Texture.Blit(Display.ViewPort, TextureLayout.Tile);
 
+			Shader.Use(null);
 
 			// Geometry shader
-			Shader.Use(GeomShader);
+			if (Mouse.IsButtonDown(MouseButtons.Right))
+				Shader.Use(GeomShader);
 			Display.DrawLine(500, 200, 500, 300, Color.White);
-			Display.DrawRectangle(new Rectangle(500, 400, 100, 50), Color.Red);
+			Display.DrawRectangle(new Rectangle(500, 350, 100, 50), Color.Red);
 
 
 			Shader.Use(null);
-			Font.DrawText(new Point(50, 50), "Press left / right mouse button to activate the shaders");
+			Font.DrawText(new Point(25, 50), "Press left / right mouse button to activate the shaders");
 		}
 
 
