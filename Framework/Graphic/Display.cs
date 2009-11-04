@@ -308,6 +308,8 @@ namespace ArcEngine.Graphic
 			Matrix4 projection = Matrix4.CreateOrthographicOffCenter(ViewPort.Left, ViewPort.Width, ViewPort.Height, ViewPort.Top, -1, 1);
 			GL.LoadMatrix(ref projection);
 
+			// Exact pixelization is required, put a small translation in the ModelView matrix
+			GL.Translate(0.375f, 0.375f, 0);
 		}
 
 
