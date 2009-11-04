@@ -581,12 +581,27 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Draws a point
 		/// </summary>
-		/// <param name="point"></param>
-		public static void Plot(Point point)
+		/// <param name="point">Location of the point</param>
+		/// <param name="color">Color</param>
+		public static void DrawPoint(Point point, Color color)
+		{
+			DrawPoint(point.X, point.Y, color);
+		}
+
+
+
+		/// <summary>
+		/// Draws a point
+		/// </summary>
+		/// <param name="x">X</param>
+		/// <param name="y">Y</param>
+		/// <param name="color">Color</param>
+		public static void DrawPoint(int x, int y, Color color)
 		{
 			Texturing = false;
+			Color = color;
 			GL.Begin(BeginMode.Points);
-			GL.Vertex2(point.X, point.Y);
+			GL.Vertex2(x, y);
 			GL.End();
 			Texturing = true;
 
