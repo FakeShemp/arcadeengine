@@ -1127,6 +1127,46 @@ namespace ArcEngine.Graphic
 		}
 
 
+
+		/// <summary>
+		/// Line anti aliasing
+		/// </summary>
+		public static bool LineSmooth
+		{
+			get
+			{
+				return GL.IsEnabled(EnableCap.LineSmooth);
+			}
+			set
+			{
+				if (value)
+					GL.Enable(EnableCap.LineSmooth);
+				else
+					GL.Disable(EnableCap.LineSmooth);
+			}
+		}
+
+
+		/// <summary>
+		/// Point smooth
+		/// </summary>
+		public static bool PointSmooth
+		{
+			get
+			{
+				return GL.IsEnabled(EnableCap.PointSmooth);
+			}
+			set
+			{
+				if (value)
+					GL.Enable(EnableCap.PointSmooth);
+				else
+					GL.Disable(EnableCap.PointSmooth);
+			}
+		}
+
+
+
 		/// <summary>
 		/// Gets/Sets the scissor test
 		/// </summary>
@@ -1145,6 +1185,8 @@ namespace ArcEngine.Graphic
 					GL.Disable(EnableCap.ScissorTest);
 			}
 		}
+
+
 
 		/// <summary>
 		/// Gets/sets the scissor zone
