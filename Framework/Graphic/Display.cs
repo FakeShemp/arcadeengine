@@ -85,16 +85,16 @@ namespace ArcEngine.Graphic
 			GL.Normal3(0.0f, 0.0f, 1.0f);
 
 
-/*
-			// Get OpenGL version for 2.x
-			Regex regex = new Regex(@"(\d+)\.(\d+)\.*(\d*)");
-			Match match = regex.Match(GL.GetString(StringName.Version));
-			if (match.Success)
-			{
-				MajorVersion = Convert.ToInt32(match.Groups[1].Value);
-				MinorVersion = Convert.ToInt32(match.Groups[2].Value);
-			}
-*/
+			/*
+						// Get OpenGL version for 2.x
+						Regex regex = new Regex(@"(\d+)\.(\d+)\.*(\d*)");
+						Match match = regex.Match(GL.GetString(StringName.Version));
+						if (match.Success)
+						{
+							MajorVersion = Convert.ToInt32(match.Groups[1].Value);
+							MinorVersion = Convert.ToInt32(match.Groups[2].Value);
+						}
+			*/
 		}
 
 
@@ -172,7 +172,7 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public static void ClearBuffers()
 		{
-			GL.Clear(ClearBufferMask.AccumBufferBit | ClearBufferMask.ColorBufferBit | 
+			GL.Clear(ClearBufferMask.AccumBufferBit | ClearBufferMask.ColorBufferBit |
 				ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
 		}
 
@@ -211,14 +211,14 @@ namespace ArcEngine.Graphic
 		#endregion
 
 
-      #region Transformation matrix
+		#region Transformation matrix
 
 
-        /// <summary>
-        /// Changes the transformation matrix to apply a translation transformation with the given characteristics.
+		/// <summary>
+		/// Changes the transformation matrix to apply a translation transformation with the given characteristics.
 		/// </summary>
 		/// <param name="x"></param>
-        /// <param name="y"></param>
+		/// <param name="y"></param>
 		public static void Translate(float x, float y)
 		{
 			GL.MatrixMode(MatrixMode.Projection);
@@ -227,7 +227,7 @@ namespace ArcEngine.Graphic
 
 
 		/// <summary>
-        /// Changes the transformation matrix to apply a rotation transformation with the given characteristics.
+		/// Changes the transformation matrix to apply a rotation transformation with the given characteristics.
 		/// </summary>
 		/// <param name="angle">The angle of rotation, in degrees.</param>
 		public static void Rotate(float angle)
@@ -240,59 +240,59 @@ namespace ArcEngine.Graphic
 
 
 
-        /// <summary>
-        /// Changes the transformation matrix to apply the matrix given by the arguments as described below.
-        /// </summary>
-        /// <remarks>http://en.wikipedia.org/wiki/Transformation_matrix#Examples_in_2D_graphics</remarks>
-        /// <param name="m11"></param>
-        /// <param name="m12"></param>
-        /// <param name="m21"></param>
-        /// <param name="m22"></param>
-        /// <param name="dx"></param>
-        /// <param name="dy"></param>
-        public static void Transform(float m11, float m12, float m21, float m22, float dx, float dy)
-        {
-            float[] val = new float[16];
-            GL.GetFloat(GetPName.ProjectionMatrix, val);
-            
-            float[] values = new float[]
+		/// <summary>
+		/// Changes the transformation matrix to apply the matrix given by the arguments as described below.
+		/// </summary>
+		/// <remarks>http://en.wikipedia.org/wiki/Transformation_matrix#Examples_in_2D_graphics</remarks>
+		/// <param name="m11"></param>
+		/// <param name="m12"></param>
+		/// <param name="m21"></param>
+		/// <param name="m22"></param>
+		/// <param name="dx"></param>
+		/// <param name="dy"></param>
+		public static void Transform(float m11, float m12, float m21, float m22, float dx, float dy)
+		{
+			float[] val = new float[16];
+			GL.GetFloat(GetPName.ProjectionMatrix, val);
+
+			float[] values = new float[]
             {
                 m11, m12, dx, 0,
                 m21, m22, dy, 0,
                 0, 0, 1, 0,
                 0, 0, 0, 1
             };
-            GL.MatrixMode(MatrixMode.Projection);
-            GL.MultMatrix(values);
-        }
+			GL.MatrixMode(MatrixMode.Projection);
+			GL.MultMatrix(values);
+		}
 
 
-        /// <summary>
-        /// Changes the transformation matrix to the matrix given by the arguments as described below.
-        /// </summary>
-        /// <param name="m11"></param>
-        /// <param name="m12"></param>
-        /// <param name="m21"></param>
-        /// <param name="m22"></param>
-        /// <param name="dx"></param>
-        /// <param name="dy"></param>
-        public static void SetTransform(float m11, float m12, float m21, float m22, float dx, float dy)
-        {
-            DefaultMatrix();
-            Transform(m11, m12, m21, m22, dx, dy);
-        }
+		/// <summary>
+		/// Changes the transformation matrix to the matrix given by the arguments as described below.
+		/// </summary>
+		/// <param name="m11"></param>
+		/// <param name="m12"></param>
+		/// <param name="m21"></param>
+		/// <param name="m22"></param>
+		/// <param name="dx"></param>
+		/// <param name="dy"></param>
+		public static void SetTransform(float m11, float m12, float m21, float m22, float dx, float dy)
+		{
+			DefaultMatrix();
+			Transform(m11, m12, m21, m22, dx, dy);
+		}
 
 
-        /// <summary>
-        /// Changes the transformation matrix to apply a scaling transformation with the given characteristics.
-        /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        public static void Scale(float x, float y)
-        {
-            GL.MatrixMode(MatrixMode.Projection);
-            GL.Scale(x, y, 1.0f);
-        }
+		/// <summary>
+		/// Changes the transformation matrix to apply a scaling transformation with the given characteristics.
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		public static void Scale(float x, float y)
+		{
+			GL.MatrixMode(MatrixMode.Projection);
+			GL.Scale(x, y, 1.0f);
+		}
 
 
 
@@ -312,33 +312,45 @@ namespace ArcEngine.Graphic
 
 
 
-        /// <summary>
-        /// Push a copy of the current drawing state onto the drawing state stack 
-        /// </summary>
-        public static void Save()
-        {
-            GL.PushAttrib(AttribMask.AllAttribBits);
+		/// <summary>
+		/// Push a copy of the current drawing state onto the drawing state stack 
+		/// </summary>
+		public static void Save()
+		{
+			GL.PushAttrib(AttribMask.AllAttribBits);
 
-            GL.MatrixMode(MatrixMode.Projection);
-            GL.PushMatrix();
-        }
-
-
-        /// <summary>
-        /// Pop the top entry in the drawing state stack, and reset the drawing state it describes.
-        /// </summary>
-        public static void Restore()
-        {
-            GL.MatrixMode(MatrixMode.Projection);
-            GL.PopMatrix();
-            GL.PopAttrib();
-        }
+			GL.MatrixMode(MatrixMode.Projection);
+			GL.PushMatrix();
+		}
 
 
-        #endregion
+		/// <summary>
+		/// Pop the top entry in the drawing state stack, and reset the drawing state it describes.
+		/// </summary>
+		public static void Restore()
+		{
+			GL.MatrixMode(MatrixMode.Projection);
+			GL.PopMatrix();
+			GL.PopAttrib();
+		}
+
+
+		#endregion
 
 
 		#region Drawing
+
+
+		/// <summary>
+		/// Specify the line stipple pattern
+		/// </summary>
+		/// <param name="factor">Specifies a multiplier for each bit in the line stipple pattern</param>
+		/// <param name="pattern">16-bit integer whose bit pattern determines which fragments of a line will be drawn when the line is rasterized.</param>
+		public static void SetLineStipple(int factor, ushort pattern)
+		{
+			GL.LineStipple(factor, pattern);
+		}
+
 
 		/// <summary>
 		/// Draws a colored rectangle
@@ -556,7 +568,7 @@ namespace ArcEngine.Graphic
 		{
 			int pos = 0;
 			for (pos = 0; pos < points.Length - 1; pos += 2)
-			{	
+			{
 				DrawLine(points[pos], points[pos + 1], color);
 			}
 
@@ -677,7 +689,7 @@ namespace ArcEngine.Graphic
 
 		}
 
-	
+
 		/// <summary>
 		/// Draw an ellipse
 		/// </summary>
@@ -794,7 +806,7 @@ namespace ArcEngine.Graphic
 
 		#region Texture blits
 
-	
+
 
 		/// <summary>
 		/// Raw draw a textured quad on the screen
@@ -804,7 +816,7 @@ namespace ArcEngine.Graphic
 		static internal void RawBlit(Rectangle rect, Rectangle tex)
 		{
 			GL.Begin(BeginMode.Quads);
-			
+
 			GL.TexCoord2(tex.X, tex.Y);
 			GL.Vertex2(rect.X, rect.Y);
 
@@ -852,7 +864,7 @@ namespace ArcEngine.Graphic
 
 				RenderStats.TextureBinding++;
 
-	
+
 				GL.MatrixMode(MatrixMode.Texture);
 				GL.LoadIdentity();
 				GL.Scale(1.0f / value.Size.Width, 1.0f / value.Size.Height, 1.0f);
@@ -914,8 +926,8 @@ namespace ArcEngine.Graphic
 				//GL.LoadIdentity();
 				//GL.Ortho(rect.Left, rect.Width, rect.Height, rect.Top, -1, 1);
 				DefaultMatrix();
-		//		GL.MatrixMode(MatrixMode.Modelview);
-		//		GL.LoadIdentity();
+				//		GL.MatrixMode(MatrixMode.Modelview);
+				//		GL.LoadIdentity();
 			}
 		}
 
@@ -1186,6 +1198,25 @@ namespace ArcEngine.Graphic
 			}
 		}
 
+
+		/// <summary>
+		/// Gets/Sets the stipple pattern
+		/// </summary>
+		public static bool LineStipple
+		{
+			get
+			{
+				return GL.IsEnabled(EnableCap.LineStipple);
+
+			}
+			set
+			{
+				if (value)
+					GL.Enable(EnableCap.LineStipple);
+				else
+					GL.Disable(EnableCap.LineStipple);
+			}
+		}
 
 
 		/// <summary>
