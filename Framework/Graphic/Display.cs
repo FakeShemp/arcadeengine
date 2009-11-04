@@ -65,6 +65,7 @@ namespace ArcEngine.Graphic
 		static Display()
 		{
 			RenderStats = new RenderStats();
+			Capabilities = new RenderDeviceCapabilities();
 		}
 
 
@@ -105,10 +106,10 @@ namespace ArcEngine.Graphic
 		{
 			Trace.WriteLine("Video informations :");
 			Trace.Indent();
-			Trace.WriteLine("Graphics card vendor : {0}", GL.GetString(StringName.Vendor));
-			Trace.WriteLine("Renderer : {0}", GL.GetString(StringName.Renderer));
-			Trace.WriteLine("Version : {0}", GL.GetString(StringName.Version));
-			Trace.WriteLine("Shading Language Version : {0}", GL.GetString(StringName.ShadingLanguageVersion));
+			Trace.WriteLine("Graphics card vendor : {0}", Capabilities.VideoVendor);
+			Trace.WriteLine("Renderer : {0}", Capabilities.VideoRenderer);
+			Trace.WriteLine("Version : {0}", Capabilities.VideoVersion);
+			Trace.WriteLine("Shading Language Version : {0}", Capabilities.ShadingLanguageVersion);
 
 			Trace.WriteLine("Display modes");
 			Trace.Indent();
@@ -117,11 +118,11 @@ namespace ArcEngine.Graphic
 			Trace.Unindent();
 
 
-			if (RenderDeviceCapabilities.MajorVersion <= 2)
+			if (Capabilities.MajorVersion <= 2)
 			{
-				string ext = GL.GetString(StringName.Extensions);
-				if (ext != null)
-					Trace.WriteLine("Supported extension ({0}) : {1}", ext.Split(new char[] { ' ' }).Length, ext);
+				Trace.Write("Supported extensions ({0}) : ", Capabilities.Extensions.Count);
+				foreach(string name in Capabilities.Extensions)
+					Trace.Write("{0} ", name);
 			}
 			else
 			{
@@ -130,9 +131,8 @@ namespace ArcEngine.Graphic
 				Trace.Write("Supported extension ({0}) : ", count);
 				for (int i = 0; i < count; i++)
 					Trace.Write("{0}, ", GL.GetString(StringName.Extensions, i));
-
-				Trace.WriteLine("");
 			}
+			Trace.WriteLine("");
 
 			Trace.Unindent();
 		}
@@ -1286,6 +1286,20 @@ namespace ArcEngine.Graphic
 	{
 
 		/// <summary>
+		/// 
+		/// </summary>
+		public RenderDeviceCapabilities()
+		{
+			Extensions = new List<string>(GL.GetString(StringName.Extensions).Split(new char[] { ' ' }));
+
+
+			if (Extensions.Contains("GL_ARB_texture_non_power_of_two"))
+				NonPowerOfTwoTexture = true;
+		}
+
+
+
+		/// <summary>
 		/// Is texture size limited to power of two size ?
 		/// </summary>
 		public bool NonPowerOfTwoTexture
@@ -1296,35 +1310,39 @@ namespace ArcEngine.Graphic
 
 
 		/// <summary>
-		/// This function returns the name of the graphic card vendor. 
+		/// Returns the name of the graphic card vendor. 
 		/// </summary>
 		public string VideoVendor
 		{
-			get;
-			internal set;
+			get
+			{
+				return GL.GetString(StringName.Vendor);
+			}
 		}
 
 
 		/// <summary>
-		/// This function returns the name of the graphic card. 
+		/// Returns the name of the graphic card. 
 		/// </summary>
 		public string VideoRenderer
 		{
-			get;
-			internal set;
+			get
+			{
+				return GL.GetString(StringName.Renderer);
+			}
 		}
-
 
 
 		/// <summary>
-		/// This function returns OpenGL version
+		/// Returns OpenGL version
 		/// </summary>
 		public string VideoVersion
 		{
-			get;
-			internal set;
+			get
+			{
+				return GL.GetString(StringName.Version);
+			}
 		}
-
 
 
 		/// <summary>
@@ -1332,25 +1350,17 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public string ShadingLanguageVersion
 		{
-			get;
-			internal set;
+			get
+			{
+				return GL.GetString(StringName.ShadingLanguageVersion);
+			}
 		}
 
-
-
-		/// <summary>
-		/// This function returns a space-separated list of OpenGL supported extensions
-		/// </summary>
-		public string VideoExtensions
-		{
-			get;
-			internal set;
-		}
 
 		/// <summary>
 		/// Major version of the Context
 		/// </summary>
-		public static int MajorVersion
+		public int MajorVersion
 		{
 			get
 			{
@@ -1361,10 +1371,11 @@ namespace ArcEngine.Graphic
 			}
 		}
 
+
 		/// <summary>
 		/// Minor version of the Context
 		/// </summary>
-		public static int MinorVersion
+		public int MinorVersion
 		{
 			get
 			{
@@ -1376,6 +1387,21 @@ namespace ArcEngine.Graphic
 		}
 
 
+
+		#region Properties
+
+		
+		/// <summary>
+		/// List of extensions
+		/// </summary>
+		public List<string> Extensions
+		{
+			get;
+			private set;
+		}
+
+
+		#endregion
 
 	}
 
