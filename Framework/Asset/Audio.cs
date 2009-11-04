@@ -25,6 +25,7 @@ using System.Drawing;
 using System.Xml;
 using OpenTK;
 using OpenTK.Audio.OpenAL;
+using OpenTK.Audio;
 
 namespace ArcEngine.Asset
 {
@@ -71,6 +72,37 @@ namespace ArcEngine.Asset
 			Source = 0;
 			Buffer = 0;
 		}
+
+
+		#region Static
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		internal static bool Init()
+		{
+			Context = new AudioContext();
+			return true;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		internal static void Release()
+		{
+			if (Context != null)
+			{
+				Context.Dispose();
+				Context = null;
+			}
+		}
+
+		static AudioContext Context;
+
+
+		#endregion
 
 
 		/// <summary>
@@ -227,15 +259,6 @@ namespace ArcEngine.Asset
 
 		#endregion
 	
-
-		#region Initialization
-
-
-
-
-
-		#endregion
-
 
 		#region Listener Properties
 

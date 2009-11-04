@@ -27,6 +27,8 @@ using System.Windows.Forms;
 using ArcEngine.Forms;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
+using ArcEngine.Asset;
+
 
 namespace ArcEngine
 {
@@ -324,10 +326,7 @@ namespace ArcEngine
 		{
 			Trace.WriteLine("Running the game");
 
-
-			// Initializations
-			//Audio.Init();
-		//	GamePad.Init(Window);
+			Audio.Init();
 
 
 			LoadContent();

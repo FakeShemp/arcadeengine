@@ -37,7 +37,7 @@ namespace ArcEngine.Asset
 	/// <summary>
 	/// Texture font class
 	/// </summary>
-	public class Font2d : IAsset
+	public class Font2d : IAsset, IDisposable
 	{
 		/// <summary>
 		/// Constructor
@@ -66,10 +66,10 @@ namespace ArcEngine.Asset
 
 			Rectangle rect = new Rectangle(pos, new Size());
 
-			Batch.Size = text.Length;
+			//Batch.Size = text.Length;
 			Display.Texture = TileSet.Texture;
 
-			Batch.Begin();
+			Batch.Clear();
 			foreach (char c in text)
 			{
 				// Get the tile
@@ -83,12 +83,12 @@ namespace ArcEngine.Asset
 					new Size((int)(tile.Rectangle.Width * TileSet.Scale.Width), (int)(tile.Rectangle.Height * TileSet.Scale.Height)));
 
 				// Add glyph to the batch
-				Batch.Blit(tmp, tile.Rectangle, Color);
+				Batch.AddRectangle(tmp, Color, tile.Rectangle);
 
 				// Move to the next glyph
 				rect.Offset(tmp.Size.Width + Advance, 0);
 			}
-			Batch.End();
+			Batch.Apply();
 
 
 			Display.DrawBatch(Batch, BeginMode.Quads);
@@ -144,11 +144,11 @@ namespace ArcEngine.Asset
 			Point loc = rectangle.Location;
 			Rectangle rect = Rectangle.Empty;
 
-			Batch.Size = text.Length;
+			//Batch.Size = text.Length;
 			Display.Texture = TileSet.Texture;
 
 
-			Batch.Begin();
+			Batch.Clear();
 			foreach (char c in text)
 			{
 				// New line
@@ -201,12 +201,12 @@ namespace ArcEngine.Asset
 
 
 				// Add glyph to the batch
-				Batch.Blit(rect, tile.Rectangle, Color);
+				Batch.AddRectangle(rect, Color, tile.Rectangle);
 
 				// Move to the next glyph
 				loc.X = rect.Right + Advance;
 			}
-			Batch.End();
+			Batch.Apply();
 
 
 			Display.DrawBatch(Batch, BeginMode.Quads);
@@ -652,6 +652,52 @@ namespace ArcEngine.Asset
 		#endregion
 
 
+		#region Disposing
+
+		/// <summary>
+		/// 
+		/// </summary>
+		bool disposed;
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
+
+
+		// Dispose(bool disposing) executes in two distinct scenarios.
+		// If disposing equals true, the method has been called directly
+		// or indirectly by a user's code. Managed and unmanaged resources
+		// can be disposed.
+		// If disposing equals false, the method has been called by the
+		// runtime from inside the finalizer and you should not reference
+		// other objects. Only unmanaged resources can be disposed.
+		private void Dispose(bool disposing)
+		{
+			// Check to see if Dispose has already been called.
+			if (!this.disposed)
+			{
+				if (Batch != null)
+				{
+					Batch.Dispose();
+					Batch = null;
+				}
+
+				// Note disposing has been done.
+				disposed = true;
+			}
+		}
+
+
+		#endregion
+
+
 		#region Properties
 
 		/// <summary>
@@ -712,32 +758,7 @@ namespace ArcEngine.Asset
 
 		#endregion
 
-/*
-		/// <summary>
-		/// Gets/sets the rendering style of the font
-		/// </summary>
-		[Category("Font")]
-		[Description("Style of the font")]
-		public FontStyle Style
-		{
-			get;
-			protected set;
-		}
 
-
-		/// <summary>
-		/// Size of the font
-		/// </summary>
-		[Category("Font")]
-		[Description("Size of the caracters")]
-		public int Size
-		{
-			get;
-			protected set;
-
-		}
-
-*/
 		/// <summary>
 		/// Height of a line of text
 		/// </summary>

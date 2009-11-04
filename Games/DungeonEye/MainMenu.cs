@@ -28,6 +28,8 @@ using ArcEngine.Input;
 using ArcEngine.Utility.ScreenManager;
 using DungeonEye.Gui;
 
+using OpenTK.Graphics.OpenGL;
+
 
 namespace DungeonEye
 {
@@ -205,7 +207,7 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Drawing
 		/// </summary>
 		/// <param name="device"></param>
 		public override void Draw()
@@ -242,11 +244,10 @@ namespace DungeonEye
 			Font.Color = Color.White;
 			Font.DrawText(new Point(520, 380), "V 0.2b");
 
+
 			// Draw the cursor or the item in the hand
 			Display.Color = Color.White;
 			Tileset.Draw(0, Mouse.Location);
-
-
 		}
 
 		#endregion

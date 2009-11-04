@@ -267,6 +267,7 @@
     <Compile Include="Game.cs" />
     <Compile Include="GameClock.cs" />
     <Compile Include="Graphic\Batch.cs" />
+    <Compile Include="Graphic\Shape.cs" />
     <Compile Include="Graphic\Texture.cs" />
     <Compile Include="Graphic\Display.cs" />
     <Compile Include="Input\GamePadState.cs" />

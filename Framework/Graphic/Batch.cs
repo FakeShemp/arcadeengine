@@ -24,7 +24,7 @@ using System.Collections.Generic;
 using System.Text;
 using OpenTK.Graphics.OpenGL;
 using System.Drawing;
-
+using System.Runtime.InteropServices;
 
 namespace ArcEngine.Graphic
 {
@@ -42,10 +42,14 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public Batch()
 		{
-			BufferID = new int[] { -1, -1, -1 };
+			BufferID = new int[3];
+			GL.GenBuffers(3, BufferID);
 
-			GL.GenBuffers(3, out BufferID[0]);
-			Size = 0;
+
+
+			Vertex = new List<Point>();
+			Texture = new List<Point>();
+			ColorBuffer = new List<int>();
 		}
 
 
@@ -58,41 +62,41 @@ namespace ArcEngine.Graphic
 		}
 
 		/// <summary>
-		/// Start a new batch
+		/// Clear the batch
 		/// </summary>
-		public void Begin()
+		public void Clear()
 		{
-			Offset = 0;
+			Vertex.Clear();
+			ColorBuffer.Clear();
+			Texture.Clear();
 		}
 
 
 
 
 		/// <summary>
-		/// End batch
+		/// Apply updates
 		/// </summary>
-		public void End()
+		public void Apply()
 		{
 			try
 			{
 				// Update Vertex buffer
 				GL.BindBuffer(BufferTarget.ArrayBuffer, BufferID[0]);
-				GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(sizeof(int) * Vertex.Length), Vertex, BufferUsageHint.StaticDraw);
+				GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(Vertex.Count * sizeof(int) * 2), Vertex.ToArray(), BufferUsageHint.StaticDraw);
 
 				// Update Texture buffer
 				GL.BindBuffer(BufferTarget.ArrayBuffer, BufferID[1]);
-				GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(sizeof(int) * Texture.Length), Texture, BufferUsageHint.StaticDraw);
+				GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(Texture.Count * sizeof(int) * 2), Texture.ToArray(), BufferUsageHint.StaticDraw);
 
 				// Update Color buffer
 				GL.BindBuffer(BufferTarget.ArrayBuffer, BufferID[2]);
-				GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(sizeof(byte) * Color.Length), Color, BufferUsageHint.StaticDraw);
+				GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(ColorBuffer.Count * sizeof(int)), ColorBuffer.ToArray(), BufferUsageHint.StaticDraw);
 
 			}
 			catch (Exception e)
 			{
 				bool er = GL.IsBuffer(BufferID[0]);
-				
-				//Log.Send(new LogEventArgs(LogLevel.Fatal, e.Message, e.StackTrace));
 				Trace.WriteLine(e.Message + Environment.NewLine + e.StackTrace);
 			}
 
@@ -100,122 +104,62 @@ namespace ArcEngine.Graphic
 		}
 
 
-/*
 		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="mode"></param>
-		public void Draw9(BeginMode mode)
-		{
-
-			if (true)
-			{
-				// Vertex
-				GL.EnableClientState(EnableCap.VertexArray);
-				GL.BindBuffer(BufferTarget.ArrayBuffer, BufferID[0]);
-				GL.VertexPointer(2, VertexPointerType.Int, 0, IntPtr.Zero);
-
-
-				// Texture
-				GL.EnableClientState(EnableCap.TextureCoordArray);
-				GL.BindBuffer(BufferTarget.ArrayBuffer, BufferID[1]);
-				GL.TexCoordPointer(2, TexCoordPointerType.Int, 0, IntPtr.Zero);
-
-				// Color
-				GL.EnableClientState(EnableCap.ColorArray);
-				GL.BindBuffer(BufferTarget.ArrayBuffer, BufferID[2]);
-				GL.ColorPointer(4, ColorPointerType.UnsignedByte, 0, IntPtr.Zero);
-
-
-
-		
-				GL.DrawArrays(mode, 0, Size * 8);
-
-
-				GL.DisableClientState(EnableCap.VertexArray);
-				GL.DisableClientState(EnableCap.TextureCoordArray);
-				GL.DisableClientState(EnableCap.ColorArray);
-			}
-			else
-			{
-				GL.VertexPointer(2, VertexPointerType.Int, 0, Vertex);
-				GL.TexCoordPointer(2, TexCoordPointerType.Int, 0, Texture);
-				GL.ColorPointer(4, ColorPointerType.UnsignedByte, 0, Color);
-
-				GL.DrawArrays(mode, 0, Size);
-			}
-
-
-
-		}
-*/
-
-		/// <summary>
-		/// Adds a rectangle to the batch
+		/// Adds a rectangle
 		/// </summary>
 		/// <param name="rect">Rectangle on the screen</param>
-		/// <param name="tex">Texture coordinate</param>
 		/// <param name="color">Drawing color</param>
-		public void Blit(Rectangle rect, Rectangle tex, Color color)
+		/// <param name="tex">Texture coordinate</param>
+		public void AddRectangle(Rectangle rect, Color color, Rectangle tex)
 		{
-			if (Offset >= Size)
-			{
-				int newlength = Size + Size / 2;
-				Array.Resize<int>(ref Vertex, newlength * 8);
-				Array.Resize<int>(ref Texture, newlength * 8);
-				Array.Resize<byte>(ref Color, newlength * 16);
-			}
-			
-			Vertex[Offset * 8] = rect.Left;
-			Vertex[Offset * 8 + 1] = rect.Top;
-			Vertex[Offset * 8 + 2] = rect.Left;
-			Vertex[Offset * 8 + 3] = rect.Bottom;
-			Vertex[Offset * 8 + 4] = rect.Right;
-			Vertex[Offset * 8 + 5] = rect.Bottom;
-			Vertex[Offset * 8 + 6] = rect.Right;
-			Vertex[Offset * 8 + 7] = rect.Top;
+			AddPoint(rect.Location, color, tex.Location);
+			AddPoint(new Point(rect.Right, rect.Top), color, new Point(tex.Right, tex.Top));
+			AddPoint(new Point(rect.Right, rect.Bottom), color, new Point(tex.Right, tex.Bottom));
+			AddPoint(new Point(rect.X, rect.Bottom), color, new Point(tex.X, tex.Bottom));
+		}
 
 
+		/// <summary>
+		/// Adds a point
+		/// </summary>
+		/// <param name="point">Location on the screen</param>
+		/// <param name="color">Color of the point</param>
+		/// <param name="texture">Texture coordinate</param>
+		public void AddPoint(Point point, Color color, Point texture)
+		{
+			Vertex.Add(point);
+			Texture.Add(texture);
 
-			Texture[Offset * 8] = tex.Left;
-			Texture[Offset * 8 + 1] = tex.Top;
-			Texture[Offset * 8 + 2] = tex.Left;
-			Texture[Offset * 8 + 3] = tex.Bottom;
-			Texture[Offset * 8 + 4] = tex.Right;
-			Texture[Offset * 8 + 5] = tex.Bottom;
-			Texture[Offset * 8 + 6] = tex.Right;
-			Texture[Offset * 8 + 7] = tex.Top;
+			ColorBuffer.Add((color.A << 24) + (color.B << 16) + (color.G << 8) + (color.R));
+		}
 
 
+		/// <summary>
+		/// Adds a point
+		/// </summary>
+		/// <param name="point">Location on the screen</param>
+		/// <param name="color">Color of the point</param>
+		public void AddPoint(Point point, Color color)
+		{
+			AddPoint(point, color, Point.Empty);
+		}
 
 
-			Color[Offset * 16 + 0] = color.R;
-			Color[Offset * 16 + 1] = color.G;
-			Color[Offset * 16 + 2] = color.B;
-			Color[Offset * 16 + 3] = color.A;
-
-			Color[Offset * 16 + 4] = color.R;
-			Color[Offset * 16 + 5] = color.G;
-			Color[Offset * 16 + 6] = color.B;
-			Color[Offset * 16 + 7] = color.A;
-
-			Color[Offset * 16 + 8] = color.R;
-			Color[Offset * 16 + 9] = color.G;
-			Color[Offset * 16 + 10] = color.B;
-			Color[Offset * 16 + 11] = color.A;
-
-			Color[Offset * 16 + 12] = color.R;
-			Color[Offset * 16 + 13] = color.G;
-			Color[Offset * 16 + 14] = color.B;
-			Color[Offset * 16 + 15] = color.A;
-	
-			Offset++;
+		/// <summary>
+		/// Adds a line
+		/// </summary>
+		/// <param name="from"></param>
+		/// <param name="to"></param>
+		/// <param name="color"></param>
+		public void AddLine(Point from, Point to, Color color)
+		{
+			AddPoint(from, color);
+			AddPoint(to, color);
 		}
 
 
 
-
-		#region disposing
+		#region Disposing
 
 		/// <summary>
 		/// 
@@ -246,6 +190,7 @@ namespace ArcEngine.Graphic
 			// Check to see if Dispose has already been called.
 			if (!this.disposed)
 			{
+				//GL.DeleteBuffers(3, BufferID);
 				BufferID[0] = -1;
 				BufferID[1] = -1;
 				BufferID[2] = -1;
@@ -263,32 +208,14 @@ namespace ArcEngine.Graphic
 
 
 		/// <summary>
-		/// Gets / sets the size of the buffer
+		/// Gets the size of the buffer
 		/// </summary>
 		public int Size
 		{
 			get
 			{
-				return Vertex.Length / 8;
+				return Vertex.Count;
 			}
-
-			set
-			{
-				Offset = 0;
-				Vertex = new int[value * 8];
-				Texture = new int[value * 8];
-				Color = new byte[value * 16];
-			}
-		}
-
-
-		/// <summary>
-		/// Offset in the buffer
-		/// </summary>
-		public int Offset
-		{
-			get;
-			protected set;
 		}
 
 
@@ -308,17 +235,17 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Vertex buffer
 		/// </summary>
-		int[] Vertex;
+		List<Point> Vertex;
 		
 		/// <summary>
 		/// Texture buffer
 		/// </summary>
-		int[] Texture;
+		List<Point> Texture;
 
 		/// <summary>
 		/// Color buffer
 		/// </summary>
-		byte[] Color;
+		List<int> ColorBuffer;
 
 		#endregion
 

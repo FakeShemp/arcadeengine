@@ -106,7 +106,7 @@ namespace ArcEngine.Examples.Particles
 
 			// Creates the batch
 			Batch = new Batch();
-			Batch.Size = Particles.Length;
+			//Batch.Size = Particles.Length;
 
 
 			// Load the texture
@@ -199,12 +199,12 @@ namespace ArcEngine.Examples.Particles
 
 
 				Watch.Start();
-				Batch.Begin();
+				Batch.Clear();
 				foreach (Particle particle in Particles)
 				{
-					Batch.Blit(new Rectangle((int)particle.Location.X, (int)particle.Location.Y, Texture.Size.Width, Texture.Size.Height), Texture.Rectangle, Color.FromArgb(particle.Alpha, particle.Color));
+					Batch.AddRectangle(new Rectangle((int)particle.Location.X, (int)particle.Location.Y, Texture.Size.Width, Texture.Size.Height), Color.FromArgb(particle.Alpha, particle.Color), Texture.Rectangle);
 				}
-				Batch.End();
+				Batch.Apply();
 
 				Display.Texture = Texture;
 				Display.DrawBatch(Batch, BeginMode.Quads);

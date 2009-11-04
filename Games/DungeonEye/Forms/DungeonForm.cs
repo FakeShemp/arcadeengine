@@ -444,8 +444,8 @@ namespace DungeonEye.Forms
 
 			// Draw maze background
 			Display.Texture = Icons.Texture;
-			Batch.Size = Maze.Size.Width * Maze.Size.Height;
-			Batch.Begin();
+			//Batch.Size = Maze.Size.Width * Maze.Size.Height;
+			Batch.Clear();
 
 			Tile tile = null;
 
@@ -462,12 +462,12 @@ namespace DungeonEye.Forms
 					if (block.Type == BlockType.Fake)
 						color = Color.LightGreen; //Color.FromArgb(200, Color.Green);
 
-					Batch.Blit(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), tile.Rectangle, color);
+					Batch.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), color, tile.Rectangle);
 
 					if (block.GroundItemCount > 0)
 					{
 						tile = Icons.GetTile(19);
-						Batch.Blit(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), tile.Rectangle, color);
+						Batch.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), color, tile.Rectangle);
 					}
 
 
@@ -489,26 +489,26 @@ namespace DungeonEye.Forms
 
 						tile = Icons.GetTile(tileid);
 
-						Batch.Blit(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), tile.Rectangle, Color.White);
+						Batch.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), Color.White, tile.Rectangle);
 					}
 
 
 					if (block.FloorPlate != null)
 					{
 						tile = Icons.GetTile(18);
-						Batch.Blit(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), tile.Rectangle, Color.White);
+						Batch.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), Color.White, tile.Rectangle);
 					}
 
 					if (block.Pit != null)
 					{
 						tile = Icons.GetTile(9);
-						Batch.Blit(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), tile.Rectangle, Color.White);
+						Batch.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), Color.White, tile.Rectangle);
 					}
 
 					if (block.Teleporter != null)
 					{
 						tile = Icons.GetTile(11);
-						Batch.Blit(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), tile.Rectangle, Color.White);
+						Batch.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), Color.White, tile.Rectangle);
 					}
 
 					if (block.ForceField != null)
@@ -525,14 +525,14 @@ namespace DungeonEye.Forms
 
 						tile = Icons.GetTile(id);
 
-						Batch.Blit(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), tile.Rectangle, Color.White);
+						Batch.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), Color.White, tile.Rectangle);
 
 					}
 
 					if (block.Stair != null)
 					{
 						tile = Icons.GetTile(block.Stair.Type == StairType.Up ? 6 : 7);
-						Batch.Blit(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), tile.Rectangle, Color.White);
+						Batch.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), Color.White, tile.Rectangle);
 					}
 				}
 			}
@@ -540,15 +540,15 @@ namespace DungeonEye.Forms
 			// Draw monsters
 			tile = Icons.GetTile(8);
 			foreach (Monster monster in Maze.Monsters)
-				Batch.Blit(new Rectangle(Offset.X + monster.Location.Position.X * 25, Offset.Y + monster.Location.Position.Y * 25, 25, 25), tile.Rectangle, Color.White);
+				Batch.AddRectangle(new Rectangle(Offset.X + monster.Location.Position.X * 25, Offset.Y + monster.Location.Position.Y * 25, 25, 25), Color.White, tile.Rectangle);
 
 	
 
 			// Preview pos
 			tile = Icons.GetTile(22 + (int)PreviewLoc.Direction);
-			Batch.Blit(new Rectangle(Offset.X + PreviewLoc.Position.X * 25, Offset.Y + PreviewLoc.Position.Y * 25, 25, 25), tile.Rectangle, Color.White);
+			Batch.AddRectangle(new Rectangle(Offset.X + PreviewLoc.Position.X * 25, Offset.Y + PreviewLoc.Position.Y * 25, 25, 25), Color.White, tile.Rectangle);
 
-			Batch.End();
+			Batch.Apply();
 
 			Display.DrawBatch(Batch, BeginMode.Quads);
 
