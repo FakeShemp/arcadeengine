@@ -758,7 +758,7 @@ namespace ArcEngine.Graphic
 		public static void DrawBatch(Batch batch, BeginMode mode)
 		{
 			// No batch, or empty batch
-			if (batch == null || batch.Offset == 0)
+			if (batch == null || batch.Size == 0)
 				return;
 
 			GL.EnableClientState(EnableCap.VertexArray);
@@ -777,8 +777,8 @@ namespace ArcEngine.Graphic
 			GL.ColorPointer(4, ColorPointerType.UnsignedByte, 0, IntPtr.Zero);
 
 
-
-			GL.DrawArrays(mode, 0, batch.Size * 4);
+			//GL.DrawElements(mode, batch.Size, DrawElementsType.UnsignedInt, IntPtr.Zero);
+			GL.DrawArrays(mode, 0, batch.Size);
 
 
 			GL.DisableClientState(EnableCap.VertexArray);
@@ -840,8 +840,6 @@ namespace ArcEngine.Graphic
 		{
 			set
 			{
-				//if (value == null)
-				//    return;
 				if (value == null)
 				{
 					GL.BindTexture(TextureTarget.Texture2D, 0);
@@ -849,25 +847,15 @@ namespace ArcEngine.Graphic
 					return;
 				}
 
-				//int val;
-				//GL.GetInteger(GetPName.Texture2D, out val);
+				texture = value;
+				GL.BindTexture(TextureTarget.Texture2D, value.Handle);
 
-				// Cache handle
-				//if (texture != null)
-				//    if (texture.Handle != value.Handle)
-				//	{
-						texture = value;
-						GL.BindTexture(TextureTarget.Texture2D, value.Handle);
-
-						RenderStats.TextureBinding++;
-				//	}
+				RenderStats.TextureBinding++;
 
 	
 				GL.MatrixMode(MatrixMode.Texture);
 				GL.LoadIdentity();
 				GL.Scale(1.0f / value.Size.Width, 1.0f / value.Size.Height, 1.0f);
-
-
 			}
 			get
 			{
@@ -875,6 +863,7 @@ namespace ArcEngine.Graphic
 			}
 		}
 		static Texture texture;
+
 
 		/// <summary>
 		/// Sets a texture environment 
@@ -1099,6 +1088,43 @@ namespace ArcEngine.Graphic
 			}
 		}
 		static Color color;
+
+
+
+		/// <summary>
+		/// Gets / sets the point size
+		/// </summary>
+		public static int PointSize
+		{
+			get
+			{
+				int value;
+				GL.GetInteger(GetPName.PointSize, out value);
+				return value;
+			}
+			set
+			{
+				GL.PointSize(value);
+			}
+		}
+
+
+		/// <summary>
+		/// Gets / sets the line size
+		/// </summary>
+		public static int LineWidth
+		{
+			get
+			{
+				int value;
+				GL.GetInteger(GetPName.LineWidth, out value);
+				return value;
+			}
+			set
+			{
+				GL.LineWidth(value);
+			}
+		}
 
 
 		/// <summary>
