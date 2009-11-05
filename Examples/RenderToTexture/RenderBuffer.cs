@@ -61,12 +61,13 @@ namespace ArcEngine.Examples.RenderToTexture
 			Size = size;
 
 
-			GL.Enable(EnableCap.DepthTest);
-			GL.ClearDepth(1.0f);
-			GL.DepthFunc(DepthFunction.Lequal);
+			Display.DepthTest = true;
+			//GL.Enable(EnableCap.DepthTest);
+			//GL.ClearDepth(1.0f);
+			//GL.DepthFunc(DepthFunction.Lequal);
 
-			GL.Disable(EnableCap.CullFace);
-			GL.PolygonMode(MaterialFace.Back, PolygonMode.Line);
+			//GL.Disable(EnableCap.CullFace);
+			//GL.PolygonMode(MaterialFace.Back, PolygonMode.Line);
 
 			// Create Color Tex
 			ColorTexture = new Texture(size);

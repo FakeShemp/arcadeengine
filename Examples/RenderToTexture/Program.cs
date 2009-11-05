@@ -45,7 +45,6 @@ namespace ArcEngine.Examples.RenderToTexture
 		/// </summary>
 		public RTT()
 		{
-			CreateGameWindow(new Size(650, 350));
 			
 		}
 
@@ -59,11 +58,11 @@ namespace ArcEngine.Examples.RenderToTexture
 		/// <param name="e"></param>
 		public override void  LoadContent()
 		{
+			CreateGameWindow(new Size(1024, 768));
+
 
 			RenderBuffer = new RenderBuffer(new Size(256, 256));
-
 			Texture = new Texture("data/test.png");
-
 		}
 
 
@@ -84,35 +83,37 @@ namespace ArcEngine.Examples.RenderToTexture
 			Display.ClearColor = Color.Black;
 			Display.ClearBuffers();
 
+			Rectangle rect = new Rectangle(1, 1, 100, 100);
 
+			
 
-
+			// Bind the render buffer
 			RenderBuffer.Start();
-
 			Display.ClearColor = Color.CornflowerBlue;
 			Display.ClearBuffers();
 
-			//Texture.Blit(new Point(10, 10));
+			Texture.Blit(new Point(200, 10));
 
-	//		Display.Rectangle(new Rectangle(1,1, 10, 10), true);
-
-			Rectangle rect = new Rectangle(1, 1, 10, 10);
-			GL.Begin(BeginMode.Quads);
-			GL.Vertex2(rect.X, rect.Y);
-			GL.Vertex2(rect.X, rect.Bottom);
-			GL.Vertex2(rect.Right, rect.Bottom);
-			GL.Vertex2(rect.Right, rect.Y);
-			GL.End();
+			Display.DrawRectangle(rect, Color.Red);
+			Display.DrawCircle(new Point(100, 100), 25);
+			Display.FillEllipse(new Rectangle(25, 25, 200, 100), Color.Yellow);
 
 
 			RenderBuffer.End();
 
 			
+			// Blit both buffer on the screen
+			Display.Color = Color.White;
 			RenderBuffer.ColorTexture.Blit(new Point(50, 50));
 			RenderBuffer.DepthTexture.Blit(new Point(350, 50));
 
 
-			RenderBuffer.ColorTexture.SaveToDisk("colorbuffer.png");
+
+			//Display.DrawEllipse(new Rectangle(25, 25, 200, 100), Color.Yellow);
+			//Display.FillEllipse(new Rectangle(250, 250, 2000, 200), Color.Green);
+
+			// Save it to the disk
+	//		RenderBuffer.ColorTexture.SaveToDisk("colorbuffer.png");
 
 		}
 
