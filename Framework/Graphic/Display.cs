@@ -309,7 +309,7 @@ namespace ArcEngine.Graphic
 			GL.LoadMatrix(ref projection);
 
 			// Exact pixelization is required, put a small translation in the ModelView matrix
-			GL.Translate(0.375f, 0.375f, 0);
+			GL.Translate(0.001f, 0.001f, 0.0f);
 		}
 
 
@@ -663,20 +663,18 @@ namespace ArcEngine.Graphic
 		{
 
 			Texturing = false;
-
 			float DEG2RAD = 3.14159f / 180.0f;
 
 
 			GL.Begin(BeginMode.LineLoop);
-
 			for (int i = 0; i < 360; i++)
 			{
 				float degInRad = i * DEG2RAD;
 				GL.Vertex2(Math.Cos(degInRad) * radius + location.X, Math.Sin(degInRad) * radius + location.Y);
 
 			}
-
 			GL.End();
+
 			Texturing = true;
 			RenderStats.DirectCall += 360;
 		}
@@ -693,6 +691,7 @@ namespace ArcEngine.Graphic
 
 			Point center = new Point(rect.Left + rect.Width / 2, rect.Top + rect.Height / 2);
 			Color = color;
+			Texturing = false;
 
 			GL.Begin(BeginMode.LineLoop);
 			for (int i = 0; i < 360; i++)
@@ -702,8 +701,8 @@ namespace ArcEngine.Graphic
 			}
 			GL.End();
 
+			Texturing = true;
 			RenderStats.DirectCall += 360;
-
 		}
 
 
@@ -718,6 +717,7 @@ namespace ArcEngine.Graphic
 
 			Point center = new Point(rect.Left + rect.Width / 2, rect.Top + rect.Height / 2);
 			Color = color;
+			Texturing = false;
 
 			GL.Begin(BeginMode.Polygon);
 			for (int i = 0; i < 360; i++)
@@ -727,8 +727,8 @@ namespace ArcEngine.Graphic
 			}
 			GL.End();
 
+			Texturing = true;
 			RenderStats.DirectCall += 360;
-
 		}
 
 		#endregion
@@ -1294,15 +1294,28 @@ namespace ArcEngine.Graphic
 
 
 			if (Extensions.Contains("GL_ARB_texture_non_power_of_two"))
-				NonPowerOfTwoTexture = true;
+				HasNPOTTexture = true;
+
+			if (Extensions.Contains("GL_ARB_framebuffer_object"))
+				HasFBO = true;
 		}
 
 
 
 		/// <summary>
-		/// Is texture size limited to power of two size ?
+		/// Has non power of two texture support
 		/// </summary>
-		public bool NonPowerOfTwoTexture
+		public bool HasNPOTTexture
+		{
+			get;
+			internal set;
+		}
+
+
+		/// <summary>
+		/// Has Framebuffer Objects support
+		/// </summary>
+		public bool HasFBO
 		{
 			get;
 			internal set;
