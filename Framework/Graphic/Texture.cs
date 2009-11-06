@@ -561,7 +561,7 @@ namespace ArcEngine.Graphic
 		/// Locks the bitmap texture to system memory
 		/// </summary>
 		/// <param name="mode">Access mode</param>
-		/// <returns></returns>
+		/// <returns>True if locked, or false if an error occured</returns>
 		public bool LockTextureBits(ImageLockMode mode)
 		{
 			// No texture bounds

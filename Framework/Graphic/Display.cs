@@ -168,13 +168,42 @@ namespace ArcEngine.Graphic
 		#region OpenGL
 
 		/// <summary>
-		/// Clears buffers
+		/// Clears all buffers
 		/// </summary>
 		public static void ClearBuffers()
 		{
-			GL.Clear(ClearBufferMask.AccumBufferBit | ClearBufferMask.ColorBufferBit |
-				ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
+			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
 		}
+
+
+		/// <summary>
+		/// Clears the stencil buffer
+		/// </summary>
+		public static void ClearStencilBuffer()
+		{
+			GL.Clear(ClearBufferMask.StencilBufferBit);
+		}
+
+
+		/// <summary>
+		/// Clears the color buffer
+		/// </summary>
+		public static void ClearColorBuffer()
+		{
+			GL.Clear(ClearBufferMask.ColorBufferBit);
+		}
+
+
+		/// <summary>
+		/// Clears the depth buffer
+		/// </summary>
+		public static void ClearDepthBuffer()
+		{
+			GL.Clear(ClearBufferMask.DepthBufferBit);
+		}
+
+
+
 
 
 		/// <summary>
@@ -368,7 +397,7 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Push a copy of the current drawing state onto the drawing state stack 
 		/// </summary>
-		public static void Save()
+		public static void SaveState()
 		{
 			//GL.PushAttrib(AttribMask.AllAttribBits);
 
@@ -380,7 +409,7 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Pop the top entry in the drawing state stack, and reset the drawing state it describes.
 		/// </summary>
-		public static void Restore()
+		public static void RestoreState()
 		{
 			GL.MatrixMode(MatrixMode.Projection);
 			GL.PopMatrix();
@@ -479,7 +508,7 @@ namespace ArcEngine.Graphic
 			Color col = Color;
 			Color = color;
 
-			Save();
+			SaveState();
 
 			//GL.MatrixMode(MatrixMode.Projection);
 			//GL.PushMatrix();
@@ -504,7 +533,7 @@ namespace ArcEngine.Graphic
 
 			Texturing = true;
 			//GL.PopMatrix();
-			Restore();
+			RestoreState();
 			Color = col;
 
 			RenderStats.DirectCall += 4;
@@ -1061,6 +1090,25 @@ namespace ArcEngine.Graphic
 			}
 		}
 
+
+		/// <summary>
+		/// Gets/sets clear value for the stencil buffer 
+		/// </summary>
+		public static int StencilClearValue
+		{
+			get
+			{
+				int s;
+				GL.GetInteger(GetPName.StencilClearValue, out s);
+				return s;
+			}
+			set
+			{
+				GL.ClearStencil(value);
+			}
+		}
+
+	
 		/// <summary>
 		/// Enables/disables depth test
 		/// </summary>
@@ -1079,6 +1127,25 @@ namespace ArcEngine.Graphic
 					GL.Disable(EnableCap.DepthTest);
 			}
 		}
+
+
+		/// <summary>
+		/// Gets/sets clear value for the depth buffer 
+		/// </summary>
+		public static float DepthClearValue
+		{
+			get
+			{
+				int s;
+				GL.GetInteger(GetPName.DepthClearValue, out s);
+				return s;
+			}
+			set
+			{
+				GL.ClearDepth(value);
+			}
+		}
+
 
 		/// <summary>
 		/// Enable or disable writing into the depth buffer

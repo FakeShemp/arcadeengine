@@ -29,12 +29,9 @@ using System.Runtime.InteropServices;
 namespace ArcEngine.Graphic
 {
 	/// <summary>
-	/// http://www.taoframework.com/node/463
-	/// http://go-mono.com/forums/#nabble-td4124137
-	/// 
-	/// 
-	/// 
+	/// Btach drawing
 	/// </summary>
+	/// http://songho.ca/opengl/gl_vbo.html
 	public class Batch : IDisposable
 	{
 		/// <summary>

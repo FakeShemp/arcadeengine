@@ -156,25 +156,26 @@ namespace StencilWipe
         public override void Draw()
         {
             // Clears the background
-			GL.Clear(ClearBufferMask.AccumBufferBit | ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
+			//GL.Clear(ClearBufferMask.AccumBufferBit | ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
+			  Display.ClearBuffers();
 			Display.Color = Color.White;
 
 
-			GL.AlphaFunc(AlphaFunction.Greater, 0);
+			Display.AlphaFunction(AlphaFunction.Greater, 0);
 			Display.AlphaTest = true;
 			Display.StencilTest = true;
 
-			GL.ColorMask(false, false, false, false);
-			GL.StencilFunc(StencilFunction.Always, 1, 1);
-			GL.StencilOp(StencilOp.Replace, StencilOp.Replace, StencilOp.Replace);
+			Display.ColorMask(false, false, false, false);
+			Display.StencilFunction(StencilFunction.Always, 1, 1);
+			Display.StencilOp(StencilOp.Replace, StencilOp.Replace, StencilOp.Replace);
 			Mask.Blit(new Point(100, 100));
 
 
 
 
-			GL.ColorMask(true, true, true, true);
-			GL.StencilFunc(StencilFunction.Equal, 1, 1);
-			GL.StencilOp(StencilOp.Keep, StencilOp.Keep, StencilOp.Keep);
+			Display.ColorMask(true, true, true, true);
+			Display.StencilFunction(StencilFunction.Equal, 1, 1);
+			Display.StencilOp(StencilOp.Keep, StencilOp.Keep, StencilOp.Keep);
 			Display.DrawRectangle(new Rectangle(10, 10, 600, 600), Color.White);
 
 			Display.StencilTest = false;

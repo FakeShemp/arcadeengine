@@ -46,6 +46,8 @@ namespace ArcEngine.Examples.RenderToTexture
 	/// http://ogltotd.blogspot.com/2006/12/render-to-texture.html
 	/// http://www.opentk.com/doc/graphics/frame-buffer-objects
 	/// 
+	/// http://www.songho.ca/opengl/gl_fbo.html
+	/// http://www.songho.ca/opengl/gl_pbo.html
 	/// </summary>
 	public class RenderBuffer
 	{
@@ -53,21 +55,12 @@ namespace ArcEngine.Examples.RenderToTexture
 
 
 		/// <summary>
-		/// 
+		/// Create the RenderBuffer
 		/// </summary>
-		/// <param name="size"></param>
+		/// <param name="size">Desired size</param>
 		public RenderBuffer(Size size)
 		{
 			Size = size;
-
-
-			Display.DepthTest = true;
-			//GL.Enable(EnableCap.DepthTest);
-			//GL.ClearDepth(1.0f);
-			//GL.DepthFunc(DepthFunction.Lequal);
-
-			//GL.Disable(EnableCap.CullFace);
-			//GL.PolygonMode(MaterialFace.Back, PolygonMode.Line);
 
 			// Create Color Tex
 			ColorTexture = new Texture(size);
@@ -76,14 +69,21 @@ namespace ArcEngine.Examples.RenderToTexture
 			DepthTexture = new Texture(size);
 			GL.TexImage2D(TextureTarget.Texture2D, 0, (PixelInternalFormat)All.DepthComponent32, size.Width, size.Height, 0, PixelFormat.DepthComponent, PixelType.UnsignedInt, IntPtr.Zero);
 
+			// Create Stencil Tex
+			StencilTexture = new Texture(size);
+			GL.TexImage2D(TextureTarget.Texture2D, 0, (PixelInternalFormat)All.StencilIndex, size.Width, size.Height, 0, PixelFormat.StencilIndex, PixelType.UnsignedByte, IntPtr.Zero);
+
+
+			
 
 			// Create a FBO and attach the textures
-			GL.Ext.GenFramebuffers(1, out FBOHandle);
-			GL.Ext.BindFramebuffer(FramebufferTarget.FramebufferExt, FBOHandle);
-			GL.Ext.FramebufferTexture2D(FramebufferTarget.FramebufferExt, FramebufferAttachment.ColorAttachment0Ext, TextureTarget.Texture2D, ColorTexture.Handle, 0);
-			GL.Ext.FramebufferTexture2D(FramebufferTarget.FramebufferExt, FramebufferAttachment.DepthAttachmentExt, TextureTarget.Texture2D, DepthTexture.Handle, 0);
+			GL.GenFramebuffers(1, out Handle);
+			GL.BindFramebuffer(FramebufferTarget.Framebuffer, Handle);
+			GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment0, TextureTarget.Texture2D, ColorTexture.Handle, 0);
+			GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthAttachment, TextureTarget.Texture2D, DepthTexture.Handle, 0);
+			GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.StencilAttachment, TextureTarget.Texture2D, StencilTexture.Handle, 0);
 
-
+			
 
 			End();
 		}
@@ -106,11 +106,11 @@ namespace ArcEngine.Examples.RenderToTexture
 
 
 		/// <summary>
-		/// 
+		/// Make the Render buffer current 
 		/// </summary>
 		public void Start()
 		{
-			GL.Ext.BindFramebuffer(FramebufferTarget.FramebufferExt, FBOHandle);
+			GL.Ext.BindFramebuffer(FramebufferTarget.FramebufferExt, Handle);
 
 			GL.PushAttrib(AttribMask.ViewportBit);
 			GL.Viewport(0, 0, Size.Width, Size.Height);
@@ -118,7 +118,6 @@ namespace ArcEngine.Examples.RenderToTexture
 			GL.MatrixMode(MatrixMode.Projection);
 			GL.PushMatrix();
 			GL.LoadIdentity();
-//			GL.Ortho(0, Size.Width, Size.Height, 0, -1, 1);
 			GL.Ortho(0, Size.Width, 0, Size.Height, -1, 1);
 		}
 
@@ -142,9 +141,9 @@ namespace ArcEngine.Examples.RenderToTexture
 
 
 		/// <summary>
-		/// 
+		/// FBO handle
 		/// </summary>
-		uint FBOHandle;
+		int Handle;
 
 
 		/// <summary>
@@ -159,47 +158,47 @@ namespace ArcEngine.Examples.RenderToTexture
 				{
 					case FramebufferErrorCode.FramebufferCompleteExt:
 					{
-						Console.WriteLine("FBO: The framebuffer is complete and valid for rendering.");
+						Trace.WriteLine("FBO: The framebuffer is complete and valid for rendering.");
 						break;
 					}
 					case FramebufferErrorCode.FramebufferIncompleteAttachmentExt:
 					{
-						Console.WriteLine("FBO: One or more attachment points are not framebuffer attachment complete. This could mean there’s no texture attached or the format isn’t renderable. For color textures this means the base format must be RGB or RGBA and for depth textures it must be a DEPTH_COMPONENT format. Other causes of this error are that the width or height is zero or the z-offset is out of range in case of render to volume.");
+						Trace.WriteLine("FBO: One or more attachment points are not framebuffer attachment complete. This could mean there’s no texture attached or the format isn’t renderable. For color textures this means the base format must be RGB or RGBA and for depth textures it must be a DEPTH_COMPONENT format. Other causes of this error are that the width or height is zero or the z-offset is out of range in case of render to volume.");
 						break;
 					}
 					case FramebufferErrorCode.FramebufferIncompleteMissingAttachmentExt:
 					{
-						Console.WriteLine("FBO: There are no attachments.");
+						Trace.WriteLine("FBO: There are no attachments.");
 						break;
 					}
 					case FramebufferErrorCode.FramebufferIncompleteDimensionsExt:
 					{
-						Console.WriteLine("FBO: Attachments are of different size. All attachments must have the same width and height.");
+						Trace.WriteLine("FBO: Attachments are of different size. All attachments must have the same width and height.");
 						break;
 					}
 					case FramebufferErrorCode.FramebufferIncompleteFormatsExt:
 					{
-						Console.WriteLine("FBO: The color attachments have different format. All color attachments must have the same format.");
+						Trace.WriteLine("FBO: The color attachments have different format. All color attachments must have the same format.");
 						break;
 					}
 					case FramebufferErrorCode.FramebufferIncompleteDrawBufferExt:
 					{
-						Console.WriteLine("FBO: An attachment point referenced by GL.DrawBuffers() doesn’t have an attachment.");
+						Trace.WriteLine("FBO: An attachment point referenced by GL.DrawBuffers() doesn’t have an attachment.");
 						break;
 					}
 					case FramebufferErrorCode.FramebufferIncompleteReadBufferExt:
 					{
-						Console.WriteLine("FBO: The attachment point referenced by GL.ReadBuffers() doesn’t have an attachment.");
+						Trace.WriteLine("FBO: The attachment point referenced by GL.ReadBuffers() doesn’t have an attachment.");
 						break;
 					}
 					case FramebufferErrorCode.FramebufferUnsupportedExt:
 					{
-						Console.WriteLine("FBO: This particular FBO configuration is not supported by the implementation.");
+						Trace.WriteLine("FBO: This particular FBO configuration is not supported by the implementation.");
 						break;
 					}
 					default:
 					{
-						Console.WriteLine("FBO: Status unknown. (yes, this is really bad.)");
+						Trace.WriteLine("FBO: Status unknown. (yes, this is really bad.)");
 						break;
 					}
 				}
@@ -221,7 +220,7 @@ namespace ArcEngine.Examples.RenderToTexture
 
 
 		/// <summary>
-		/// 
+		/// Color texture
 		/// </summary>
 		public Texture ColorTexture
 		{
@@ -230,9 +229,8 @@ namespace ArcEngine.Examples.RenderToTexture
 		}
 
 
-
 		/// <summary>
-		/// 
+		/// Depth texture
 		/// </summary>
 		public Texture DepthTexture
 		{
@@ -242,7 +240,17 @@ namespace ArcEngine.Examples.RenderToTexture
 
 
 		/// <summary>
-		/// 
+		/// Stencil texture
+		/// </summary>
+		public Texture StencilTexture
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// Maximum allowed size
 		/// </summary>
 		static public Size MaxSize
 		{

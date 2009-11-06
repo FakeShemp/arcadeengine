@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Runtime.InteropServices;
 
+using ArcEngine.Graphic;
 
 namespace ArcEngine.Utility
 {
 	/// <summary>
 	/// Class to access the Webcam
 	/// </summary>
+	/// 
+	/// http://www.songho.ca/opengl/gl_pbo.html (streaming texture update)
 	public class Webcam
 	{
 

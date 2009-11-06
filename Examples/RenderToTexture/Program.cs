@@ -40,29 +40,26 @@ namespace ArcEngine.Examples.RenderToTexture
 		}
 
 
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		public RTT()
-		{
-			
-		}
-
-
 		#region Initialization
 
 
 		/// <summary>
-		/// 
+		/// Loads contents
 		/// </summary>
 		/// <param name="e"></param>
 		public override void  LoadContent()
 		{
 			CreateGameWindow(new Size(1024, 768));
+			Window.Text = "Render Buffers test";
 
+			// Write to the depth buffer to have something to display
+			Display.DepthTest = true;
 
 			RenderBuffer = new RenderBuffer(new Size(256, 256));
 			Texture = new Texture("data/test.png");
+
+
+			Display.StencilClearValue = 0;
 		}
 
 
@@ -80,23 +77,40 @@ namespace ArcEngine.Examples.RenderToTexture
 		public override void  Draw()
 		{
 
-			Display.ClearColor = Color.Black;
+			Display.ClearColor = Color.DarkViolet;
 			Display.ClearBuffers();
 
 			Rectangle rect = new Rectangle(1, 1, 100, 100);
-
-			
 
 			// Bind the render buffer
 			RenderBuffer.Start();
 			Display.ClearColor = Color.CornflowerBlue;
 			Display.ClearBuffers();
 
-			Texture.Blit(new Point(200, 10));
+			Texture.Blit(new Point(100, 10));
 
 			Display.DrawRectangle(rect, Color.Red);
-			Display.DrawCircle(new Point(100, 100), 25);
-			Display.FillEllipse(new Rectangle(25, 25, 200, 100), Color.Yellow);
+			Display.DrawCircle(new Point(100, 10), 25);
+
+
+			// Draw only in the stencil
+			Display.StencilTest = true;
+			Display.ColorMask(false, false, false, false);
+			Display.StencilFunction(StencilFunction.Always, 1, 1);
+			Display.StencilOp(StencilOp.Replace, StencilOp.Replace, StencilOp.Replace);
+
+
+			Display.FillEllipse(new Rectangle(25, 125, 200, 100), Color.Yellow);
+			Display.DrawRectangle(new Rectangle(25, 125, 200, 100), Color.Red);
+			
+						
+			Display.StencilTest = false;
+			Display.ColorMask(true, true, true, true);
+
+
+
+
+
 
 
 			RenderBuffer.End();
@@ -106,14 +120,7 @@ namespace ArcEngine.Examples.RenderToTexture
 			Display.Color = Color.White;
 			RenderBuffer.ColorTexture.Blit(new Point(50, 50));
 			RenderBuffer.DepthTexture.Blit(new Point(350, 50));
-
-
-
-			//Display.DrawEllipse(new Rectangle(25, 25, 200, 100), Color.Yellow);
-			//Display.FillEllipse(new Rectangle(250, 250, 2000, 200), Color.Green);
-
-			// Save it to the disk
-	//		RenderBuffer.ColorTexture.SaveToDisk("colorbuffer.png");
+			RenderBuffer.StencilTexture.Blit(new Point(700, 50));
 
 		}
 

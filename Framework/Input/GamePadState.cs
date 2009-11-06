@@ -59,9 +59,10 @@ namespace ArcEngine.Input
 
 
 			// Next state index
-			StateIndex++;
-			if (StateIndex > 1)
-				StateIndex = 0;
+			StateIndex = (byte)((StateIndex + 1) % 2);
+			//StateIndex++;
+			//if (StateIndex > 1)
+			//   StateIndex = 0;
 
 		//	Trace.WriteLine(StateIndex.ToString());
 		}
