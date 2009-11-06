@@ -17,12 +17,9 @@
 //along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 //
 #endregion
-using ArcEngine.Input;
 using System;
 using System.Drawing;
-using System.Windows.Forms;
 using ArcEngine.Graphic;
-using OpenTK.Graphics.OpenGL;
 
 namespace ArcEngine.Examples.RenderToTexture
 {
@@ -46,20 +43,16 @@ namespace ArcEngine.Examples.RenderToTexture
 		/// <summary>
 		/// Loads contents
 		/// </summary>
-		/// <param name="e"></param>
 		public override void  LoadContent()
 		{
 			CreateGameWindow(new Size(1024, 768));
-			Window.Text = "Render Buffers test";
+			Window.Text = "Frame Buffer example";
 
-			// Write to the depth buffer to have something to display
+			// Enable depth test
 			Display.DepthTest = true;
 
-			RenderBuffer = new RenderBuffer(new Size(256, 256));
+			Buffer = new FrameBuffer(new Size(256, 256));
 			Texture = new Texture("data/test.png");
-
-
-			Display.StencilClearValue = 0;
 		}
 
 
@@ -73,17 +66,15 @@ namespace ArcEngine.Examples.RenderToTexture
 		/// <summary>
 		/// Called when the game determines it is time to draw a frame.
 		/// </summary>
-		/// <param name="device">Rendering device</param>
-		public override void  Draw()
+		public override void Draw()
 		{
-
-			Display.ClearColor = Color.DarkViolet;
+			Display.ClearColor = Color.Black;
 			Display.ClearBuffers();
 
 			Rectangle rect = new Rectangle(1, 1, 100, 100);
 
 			// Bind the render buffer
-			RenderBuffer.Start();
+			Buffer.Bind();
 			Display.ClearColor = Color.CornflowerBlue;
 			Display.ClearBuffers();
 
@@ -93,52 +84,23 @@ namespace ArcEngine.Examples.RenderToTexture
 			Display.DrawCircle(new Point(100, 10), 25);
 
 
-			// Draw only in the stencil
-			Display.StencilTest = true;
+			// Draw only in the depth buffer
 			Display.ColorMask(false, false, false, false);
-			Display.StencilFunction(StencilFunction.Always, 1, 1);
-			Display.StencilOp(StencilOp.Replace, StencilOp.Replace, StencilOp.Replace);
-
 
 			Display.FillEllipse(new Rectangle(25, 125, 200, 100), Color.Yellow);
 			Display.DrawRectangle(new Rectangle(25, 125, 200, 100), Color.Red);
 			
-						
-			Display.StencilTest = false;
 			Display.ColorMask(true, true, true, true);
 
-
-
-
-
-
-
-			RenderBuffer.End();
+			Buffer.End();
 
 			
 			// Blit both buffer on the screen
 			Display.Color = Color.White;
-			RenderBuffer.ColorTexture.Blit(new Point(50, 50));
-			RenderBuffer.DepthTexture.Blit(new Point(350, 50));
-			RenderBuffer.StencilTexture.Blit(new Point(700, 50));
+			Buffer.ColorTexture.Blit(new Point(50, 50));
+			Buffer.DepthTexture.Blit(new Point(350, 50));
 
 		}
-
-
-
-		/// <summary>
-		/// Called when the game has determined that game logic needs to be processed.
-		/// </summary>
-		/// <param name="gameTime">The time passed since the last update.</param>
-		public override void  Update(GameTime gameTime)
-		{
-
-			// Byebye
-			if (Keyboard.IsKeyPress(Keys.Escape))
-				Exit();
-		}
-
-
 		#endregion
 
 
@@ -146,14 +108,14 @@ namespace ArcEngine.Examples.RenderToTexture
 
 
 		/// <summary>
-		/// 
+		/// Frame buffer
 		/// </summary>
-		RenderBuffer RenderBuffer;
+		FrameBuffer Buffer;
 
 
 
 		/// <summary>
-		/// 
+		/// Texture
 		/// </summary>
 		Texture Texture;
 
