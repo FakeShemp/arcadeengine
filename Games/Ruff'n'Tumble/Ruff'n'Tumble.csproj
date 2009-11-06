@@ -202,7 +202,7 @@
     <Compile Include="World\Level.cs" />
     <Compile Include="World\Model.cs" />
     <Compile Include="World\Path.cs" />
-    <Compile Include="World\SpawnPoint.cs" />
+    <Compile Include="World\SpawnLocation.cs" />
     <Compile Include="World\WorldProvider.cs" />
     <Compile Include="World\World.cs" />
     <Compile Include="Player.cs" />

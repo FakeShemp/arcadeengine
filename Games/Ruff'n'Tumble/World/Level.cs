@@ -66,7 +66,7 @@ namespace RuffnTumble
 			Entities = new Dictionary<string, Entity>();
 			Camera = new Camera(this);
 			Brushes = new Dictionary<string,LayerBrush>();
-			SpawnPoints = new Dictionary<string, SpawnPoint>();
+			SpawnPoints = new Dictionary<string, SpawnLocation>();
 			BlockSize = new Size(16, 16);
 		}
 
@@ -121,7 +121,7 @@ namespace RuffnTumble
 				brush.Save(xml);
 
 			// Loops through spawnpoints
-			foreach (SpawnPoint spawn in SpawnPoints.Values)
+			foreach (SpawnLocation spawn in SpawnPoints.Values)
 				spawn.Save(xml);
 
 
@@ -159,7 +159,7 @@ namespace RuffnTumble
 					// Start point
 					case "spawnpoint":
 					{
-						SpawnPoint point = AddSpawnPoint(node.Attributes["name"].Value);
+						SpawnLocation point = AddSpawnPoint(node.Attributes["name"].Value);
 						if (point != null)
 							point.Load(node);
 					}
@@ -414,7 +414,7 @@ namespace RuffnTumble
 			}
 
 			// Mode SpawnPoints
-			foreach (SpawnPoint spawn in SpawnPoints.Values)
+			foreach (SpawnLocation spawn in SpawnPoints.Values)
 			{
 				if (zone.Contains(spawn.Location))
 				{
@@ -476,7 +476,7 @@ namespace RuffnTumble
 			//
 			if (RenderSpawnPoints)
 			{
-				SpawnPoint spawn;
+				SpawnLocation spawn;
 
 
 				foreach (string name in GetSpawnPoints())
@@ -677,9 +677,9 @@ namespace RuffnTumble
 		/// Adds a SpawnPoint to the layer
 		/// </summary>
 		/// <param name="name"></param>
-		public SpawnPoint AddSpawnPoint(string name)
+		public SpawnLocation AddSpawnPoint(string name)
 		{
-			SpawnPoint point = new SpawnPoint();
+			SpawnLocation point = new SpawnLocation();
 			SpawnPoints[name] = point;
 
 			return point;
@@ -701,13 +701,13 @@ namespace RuffnTumble
 		/// </summary>
 		/// <param name="name">Name of the SpawnPoint</param>
 		/// <returns>A SpawnPoint class</returns>
-		public SpawnPoint GetSpawnPoint(string name)
+		public SpawnLocation GetSpawnPoint(string name)
 		{
 			if (name == null && name.Length == 0)
 				return null;
 
 			if (SpawnPoints.ContainsKey(name))
-				return (SpawnPoint)SpawnPoints[name];
+				return (SpawnLocation)SpawnPoints[name];
 			else
 				return null;
 		}
@@ -735,9 +735,9 @@ namespace RuffnTumble
 		/// </summary>
 		/// <param name="point"></param>
 		/// <returns></returns>
-		public SpawnPoint FindSpawnPoint(Point point)
+		public SpawnLocation FindSpawnPoint(Point point)
 		{
-			foreach (SpawnPoint spawn in SpawnPoints.Values)
+			foreach (SpawnLocation spawn in SpawnPoints.Values)
 			{
 				if (spawn.CollisionBoxLocation.Contains(point))
 					return spawn;
@@ -1054,7 +1054,7 @@ namespace RuffnTumble
 		/// <summary>
 		/// Holds every spawn points of the level
 		/// </summary>
-		Dictionary<string, SpawnPoint> SpawnPoints;
+		Dictionary<string, SpawnLocation> SpawnPoints;
 
 
 		/// <summary>

@@ -30,13 +30,13 @@ namespace RuffnTumble
 	/// <summary>
 	/// 
 	/// </summary>
-	public class SpawnPoint
+	public class SpawnLocation
 	{
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="name"></param>
-		public SpawnPoint()
+		public SpawnLocation()
 		{
 		}
 

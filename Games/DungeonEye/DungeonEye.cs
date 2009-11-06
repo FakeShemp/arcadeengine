@@ -86,6 +86,7 @@ namespace DungeonEye
 		{
 			CreateGameWindow(new Size(640, 400));
 			Window.Text = "Dungeon Eye";
+			//Window.SetFullScreen(new Size(640, 480), 3);
 
 			// Enble the console
 			//Terminal.Enable = true;

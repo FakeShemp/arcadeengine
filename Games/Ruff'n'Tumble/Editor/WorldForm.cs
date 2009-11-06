@@ -716,7 +716,7 @@ namespace RuffnTumble.Editor
 				}
 
 
-				SpawnPoint spawn = Level.FindSpawnPoint(pos);
+				SpawnLocation spawn = Level.FindSpawnPoint(pos);
 				if (spawn != null)
 				{
 				//	LayerPanel.PropertyGridBox.SelectedObject = spawn;
@@ -819,7 +819,7 @@ namespace RuffnTumble.Editor
 					//pos.Offset(offset);
 					entity.Location = pos;
 				}
-				SpawnPoint spawn = null; //LayerPanel.PropertyGridBox.SelectedObject as SpawnPoint;
+				SpawnLocation spawn = null; //LayerPanel.PropertyGridBox.SelectedObject as SpawnPoint;
 				if (spawn != null)
 				{
 					pos = spawn.Location;
@@ -860,7 +860,7 @@ namespace RuffnTumble.Editor
 					return;
 				}
 
-				SpawnPoint spawn = Level.FindSpawnPoint(pos);
+				SpawnLocation spawn = Level.FindSpawnPoint(pos);
 				if (spawn != null)
 				{
 					Cursor = Cursors.Hand;
