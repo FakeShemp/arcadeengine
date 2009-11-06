@@ -235,6 +235,18 @@ namespace ArcEngine.Graphic
 			GL.StencilOp(fail, zfail, zpass);
 		}
 
+
+		/// <summary>
+		/// Alpha test function
+		/// </summary>
+		/// <param name="function">Comparison function</param>
+		/// <param name="reference">Reference value</param>
+		public static void AlphaFunction(AlphaFunction function, float reference)
+		{
+			GL.AlphaFunc(function, reference);
+		}
+
+
 		#endregion
 
 
