@@ -201,8 +201,8 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Specifies blending arithmetic
 		/// </summary>
-		/// <param name="source"></param>
-		/// <param name="dest"></param>
+		/// <param name="source">Source factor</param>
+		/// <param name="dest">Destination factor</param>
 		public static void BlendingFunction(BlendingFactorSrc source, BlendingFactorDest dest)
 		{
 			GL.BlendFunc(source, dest);
@@ -319,7 +319,7 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public static void Save()
 		{
-			GL.PushAttrib(AttribMask.AllAttribBits);
+			//GL.PushAttrib(AttribMask.AllAttribBits);
 
 			GL.MatrixMode(MatrixMode.Projection);
 			GL.PushMatrix();
@@ -333,7 +333,8 @@ namespace ArcEngine.Graphic
 		{
 			GL.MatrixMode(MatrixMode.Projection);
 			GL.PopMatrix();
-			GL.PopAttrib();
+
+			//GL.PopAttrib();
 		}
 
 
@@ -427,6 +428,11 @@ namespace ArcEngine.Graphic
 			Color col = Color;
 			Color = color;
 
+			Save();
+
+			//GL.MatrixMode(MatrixMode.Projection);
+			//GL.PushMatrix();
+
 			// Translation & rotation
 			Translate(x + pivot.X, y + pivot.Y);
 			x = -pivot.X;
@@ -446,7 +452,8 @@ namespace ArcEngine.Graphic
 			GL.End();
 
 			Texturing = true;
-			DefaultMatrix();
+			//GL.PopMatrix();
+			Restore();
 			Color = col;
 
 			RenderStats.DirectCall += 4;
@@ -1298,6 +1305,9 @@ namespace ArcEngine.Graphic
 
 			if (Extensions.Contains("GL_ARB_framebuffer_object"))
 				HasFBO = true;
+
+			if (Extensions.Contains("GL_ARB_pixel_buffer_object"))
+				HasPBO = true;
 		}
 
 
@@ -1313,9 +1323,18 @@ namespace ArcEngine.Graphic
 
 
 		/// <summary>
-		/// Has Framebuffer Objects support
+		/// Has Frame Buffer Objects support
 		/// </summary>
 		public bool HasFBO
+		{
+			get;
+			internal set;
+		}
+
+		/// <summary>
+		/// Has Pixel Buffer Objects support
+		/// </summary>
+		public bool HasPBO
 		{
 			get;
 			internal set;
@@ -1485,5 +1504,4 @@ namespace ArcEngine.Graphic
 
 		#endregion
 	}
-
 }
