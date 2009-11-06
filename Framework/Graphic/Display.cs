@@ -208,6 +208,33 @@ namespace ArcEngine.Graphic
 			GL.BlendFunc(source, dest);
 		}
 
+
+
+		/// <summary>
+		/// Stencil test function
+		/// </summary>
+		/// <param name="function">Test function</param>
+		/// <param name="reference">Reference value</param>
+		/// <param name="mask">Mask</param>
+		public static void StencilFunction(StencilFunction function, int reference, int mask)
+		{
+			GL.StencilFunc(function, reference, mask);
+		}
+
+
+
+		/// <summary>
+		/// Stencil test action
+		/// </summary>
+		/// <param name="fail">Specifies the action to take when the stencil test fails</param>
+		/// <param name="zfail">Specifies the action when the stencil test passes, but the depth test fails</param>
+		/// <param name="zpass">Specifies the action when both the stencil test and the depth test pass, or when the 
+		/// stencil test passes and either there is no depth buffer or depth testing is not enabled</param>
+		public static void StencilOp(StencilOp fail, StencilOp zfail, StencilOp zpass)
+		{
+			GL.StencilOp(fail, zfail, zpass);
+		}
+
 		#endregion
 
 
