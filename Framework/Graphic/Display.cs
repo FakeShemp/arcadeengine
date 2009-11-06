@@ -247,6 +247,18 @@ namespace ArcEngine.Graphic
 		}
 
 
+		/// <summary>
+		/// enable and disable writing of frame buffer color components
+		/// </summary>
+		/// <param name="red">Red</param>
+		/// <param name="green">Green</param>
+		/// <param name="blue">Blue</param>
+		/// <param name="alpha">Alpha</param>
+		public static void ColorMask(bool red, bool green, bool blue, bool alpha)
+		{
+			GL.ColorMask(red, green, blue, alpha);
+		}
+
 		#endregion
 
 
