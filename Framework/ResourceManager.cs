@@ -586,13 +586,24 @@ namespace ArcEngine
 
 		#region I/O operations
 
-
 		/// <summary>
-		/// Loads ALL ressource from file in memory
+		/// Loads ressource from file
 		/// </summary>
 		/// <param name="filename">Name of the file to load</param>
-		/// <returns></returns>
+		/// <returns>True if loaded, otherwise false</returns>
 		static public bool LoadBank(string filename)
+		{
+			return LoadBank(filename, string.Empty);
+		}
+
+
+		/// <summary>
+		/// Loads ressource from file
+		/// </summary>
+		/// <param name="filename">Name of the file to load</param>
+		/// <param name="password">Password</param>
+		/// <returns>True if loaded, otherwise false</returns>
+		static public bool LoadBank(string filename, string password)
 		{
 			
 			Trace.WriteLine("Loading resources from file \"" + filename + "\"...");
@@ -605,90 +616,98 @@ namespace ArcEngine
 			}
 
 			Trace.Indent();
-			using (FileStream fs = File.OpenRead(filename))
+			try
 			{
-				ZipInputStream zip = new ZipInputStream(fs);
-				
-				// Foreach file in the bank
-				ZipEntry entry;
-				while (true)
+				using (FileStream fs = File.OpenRead(filename))
 				{
-					try
+					ZipInputStream zip = new ZipInputStream(fs);
+					zip.Password = password;
+
+					// Foreach file in the bank
+					ZipEntry entry;
+					while (true)
 					{
-						entry = zip.GetNextEntry();
-					}
-					catch (Exception e)
-					{
-						Trace.WriteLine("Execption thrown \"{0}\" !", e.Message);
-						break;
-					}
-
-					// EOF
-					if (entry == null)
-						break; ;
-
-					// If it isn't a file, skip it
-					if (!entry.IsFile)
-						continue;
-
-					Trace.WriteLine("+ {0} ({1} octets)", entry.Name, entry.Size);
-
-					// Uncompress data to a buffer
-					byte[] data = new byte[entry.Size];
-					zip.Read(data, 0, (int)entry.Size);
-
-
-					// If it ends with .xml, then adds it to the asset list to process
-					if (entry.Name.EndsWith(".xml", true, null))
-					{
-
-						XmlDocument doc = new XmlDocument();
-						doc.LoadXml(ASCIIEncoding.ASCII.GetString(data));
-
-						// Check the root node
-						XmlElement xml = doc.DocumentElement;
-						if (xml.Name.ToLower() != "bank")
+						try
 						{
-							Trace.WriteLine("\"" + filename + "\" is not a valid bank file !");
+							entry = zip.GetNextEntry();
+						}
+						catch (Exception e)
+						{
+							Trace.WriteLine("Execption thrown \"{0}\" !", e.Message);
+							break;
+						}
+
+						// EOF
+						if (entry == null)
+							break;
+
+						// If it isn't a file, skip it
+						if (!entry.IsFile)
 							continue;
-						}
 
+						Trace.Write("+ {0} ({1} octets)", entry.Name, entry.Size);
 
-						// For each nodes, process it
-						XmlNodeList nodes = xml.ChildNodes;
-						foreach (XmlNode node in nodes)
+						// Uncompress data to a buffer
+						byte[] data = new byte[entry.Size];
+						zip.Read(data, 0, (int)entry.Size);
+
+						// If it ends with .xml, then adds it to the asset list to process
+						if (entry.Name.EndsWith(".xml", true, null))
 						{
-							if (node.NodeType == XmlNodeType.Comment)
-								continue;
 
+							XmlDocument doc = new XmlDocument();
+							doc.LoadXml(ASCIIEncoding.ASCII.GetString(data));
 
-							Provider provider = GetTagProvider(node.Name);
-							if (provider == null)
+							// Check the root node
+							XmlElement xml = doc.DocumentElement;
+							if (xml.Name.ToLower() != "bank")
 							{
-								Trace.WriteLine("? No Provider found for asset \"<" + node.Name + ">\"...");
-								UnknownAssets.Add(node);
+								Trace.WriteLine("\"" + filename + "\" is not a valid bank file !");
 								continue;
 							}
 
-							lock (BinaryLock)
+
+							// For each nodes, process it
+							XmlNodeList nodes = xml.ChildNodes;
+							foreach (XmlNode node in nodes)
 							{
-								provider.Load(node);
+								if (node.NodeType == XmlNodeType.Comment)
+									continue;
+
+
+								Provider provider = GetTagProvider(node.Name);
+								if (provider == null)
+								{
+									Trace.WriteLine("? No Provider found for asset \"<" + node.Name + ">\"...");
+									UnknownAssets.Add(node);
+									continue;
+								}
+
+								lock (BinaryLock)
+								{
+									provider.Load(node);
+								}
 							}
+
 						}
-	
-					}
-					else
-					{
-						// Adds data to the list
-						LoadBinary(entry.Name, data);
+						else
+						{
+							// Adds data to the list
+							LoadBinary(entry.Name, data);
+						}
 					}
 				}
 			}
-
-
-
-			Trace.Unindent();
-			Trace.WriteLine("Loading finished !");
+			catch (ZipException e)
+			{
+				Trace.WriteLine(" {0}", e.Message);
+				return false;
+			}
+			finally
+			{
+				Trace.Unindent();
+				Trace.WriteLine("Loading finished !");
+			}
 			return true;
 		}
 
@@ -749,6 +768,7 @@ namespace ArcEngine
 		/// Load a file and add it to the manager
 		/// </summary>
 		/// <param name="filename">File name</param>
+		/// <returns></returns>
 		static public bool LoadBinary(string filename)
 		{
 			if (string.IsNullOrEmpty(filename))
@@ -893,7 +913,7 @@ namespace ArcEngine
 		/// <param name="resourcename">full path name of the resource in the bank</param>
 		/// <param name="data">Data to save</param>
 		/// <returns>True if everything went ok</returns>
-		static internal bool SaveResource(ZipOutputStream stream, string resourcename, byte[] data)
+		static bool SaveResource(ZipOutputStream stream, string resourcename, byte[] data)
 		{
 			// Bad args
 			if (stream == null || string.IsNullOrEmpty(resourcename) || data == null)
@@ -906,7 +926,6 @@ namespace ArcEngine
 		}
 
 
-
 		/// <summary>
 		/// Saves all resources to a bank file
 		/// </summary>
@@ -914,10 +933,21 @@ namespace ArcEngine
 		/// <returns>True if everything went ok</returns>
 		static public bool SaveResources(string filename)
 		{
+			return SaveResources(filename, string.Empty);
+		}
+
+
+		/// <summary>
+		/// Saves all resources to a bank file
+		/// </summary>
+		/// <param name="filename">The file name of the bank on disk</param>
+		/// <param name="password">Password</param>
+		/// <returns>True if everything went ok</returns>
+		static public bool SaveResources(string filename, string password)
+		{
 			// Return value
 			bool retval = false;
 
-			//Log.Send(new LogEventArgs(LogLevel.Info, "Saving all resources to bank \"" + filename + "\"...", null));
 			Trace.WriteLine("Saving all resources to bank \"" + filename + "\"...");
 
 			FileStream stream = null;
@@ -927,6 +957,7 @@ namespace ArcEngine
 
 				stream = File.Create(filename);
 				zip = new ZipOutputStream(stream);
+				zip.Password = password;
 				zip.SetLevel(5);
 
 
