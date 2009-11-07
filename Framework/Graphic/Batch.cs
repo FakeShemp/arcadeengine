@@ -29,7 +29,7 @@ using System.Runtime.InteropServices;
 namespace ArcEngine.Graphic
 {
 	/// <summary>
-	/// Btach drawing
+	/// An efficient way to render a batch of geometry
 	/// </summary>
 	/// http://songho.ca/opengl/gl_vbo.html
 	public class Batch : IDisposable
