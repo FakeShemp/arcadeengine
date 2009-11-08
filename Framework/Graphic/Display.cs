@@ -81,6 +81,8 @@ namespace ArcEngine.Graphic
 			ClearColor = Color.Black;
 			Culling = false;
 			DepthTest = false;
+			LineSmooth = true;
+			PointSmooth = true;
 			BlendingFunction(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 			GL.ClearStencil(0);
 
