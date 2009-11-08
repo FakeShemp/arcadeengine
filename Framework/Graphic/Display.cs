@@ -137,7 +137,7 @@ namespace ArcEngine.Graphic
 			Trace.Unindent();
 		}
 
-
+/*
 		#region Fading
 
 
@@ -163,7 +163,7 @@ namespace ArcEngine.Graphic
 
 
 		#endregion
-
+*/
 
 		#region OpenGL
 
@@ -297,8 +297,8 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Changes the transformation matrix to apply a translation transformation with the given characteristics.
 		/// </summary>
-		/// <param name="x"></param>
-		/// <param name="y"></param>
+		/// <param name="x">Horizontal translation</param>
+		/// <param name="y">Vertical translation</param>
 		public static void Translate(float x, float y)
 		{
 			GL.MatrixMode(MatrixMode.Projection);
@@ -324,12 +324,12 @@ namespace ArcEngine.Graphic
 		/// Changes the transformation matrix to apply the matrix given by the arguments as described below.
 		/// </summary>
 		/// <remarks>http://en.wikipedia.org/wiki/Transformation_matrix#Examples_in_2D_graphics</remarks>
-		/// <param name="m11"></param>
-		/// <param name="m12"></param>
-		/// <param name="m21"></param>
-		/// <param name="m22"></param>
-		/// <param name="dx"></param>
-		/// <param name="dy"></param>
+		/// <param name="m11">m11</param>
+		/// <param name="m12">m12</param>
+		/// <param name="m21">m21</param>
+		/// <param name="m22">m22</param>
+		/// <param name="dx">dx</param>
+		/// <param name="dy">dy</param>
 		public static void Transform(float m11, float m12, float m21, float m22, float dx, float dy)
 		{
 			float[] val = new float[16];
@@ -350,12 +350,12 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Changes the transformation matrix to the matrix given by the arguments as described below.
 		/// </summary>
-		/// <param name="m11"></param>
-		/// <param name="m12"></param>
-		/// <param name="m21"></param>
-		/// <param name="m22"></param>
-		/// <param name="dx"></param>
-		/// <param name="dy"></param>
+		/// <param name="m11">m11</param>
+		/// <param name="m12">m12</param>
+		/// <param name="m21">m21</param>
+		/// <param name="m22">m22</param>
+		/// <param name="dx">dx</param>
+		/// <param name="dy">dy</param>
 		public static void SetTransform(float m11, float m12, float m21, float m22, float dx, float dy)
 		{
 			DefaultMatrix();
@@ -366,8 +366,8 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Changes the transformation matrix to apply a scaling transformation with the given characteristics.
 		/// </summary>
-		/// <param name="x"></param>
-		/// <param name="y"></param>
+		/// <param name="x">X factor</param>
+		/// <param name="y">Y factor</param>
 		public static void Scale(float x, float y)
 		{
 			GL.MatrixMode(MatrixMode.Projection);
@@ -742,28 +742,85 @@ namespace ArcEngine.Graphic
 		}
 
 		/// <summary>
-		/// 
+		/// Draws a circle
 		/// </summary>
-		/// <param name="location"></param>
-		/// <param name="radius"></param>
-		public static void DrawCircle(Point location, float radius)
+		/// <param name="location">Location of the circle</param>
+		/// <param name="radius">Radius</param>
+		/// <param name="color">Color</param>
+		public static void DrawCircle(Point location, int radius, Color color)
 		{
+			DrawCircle(location.X, location.Y, radius, radius, color, false);
+		}
+
+		/// <summary>
+		/// Draws a circle
+		/// </summary>
+		/// <param name="x">X</param>
+		/// <param name="y">Y</param>
+		/// <param name="radius">Radius</param>
+		/// <param name="color">Color</param>
+		public static void DrawCircle(int x, int y, int radius, Color color)
+		{
+			DrawCircle(x, y, radius, radius, color, false);
+		}
+
+
+		/// <summary>
+		/// Draws a circle
+		/// </summary>
+		/// <param name="x">X location</param>
+		/// <param name="y">Y location</param>
+		/// <param name="xradius">X radius</param>
+		/// <param name="yradius">Y radius</param>
+		/// <param name="color">Color</param>
+		/// <param name="fill">Fill or not</param>
+		static void DrawCircle(int x, int y, int xradius, int yradius, Color color, bool fill)
+		{
+			int resolution = 100;
 
 			Texturing = false;
-			float DEG2RAD = 3.14159f / 180.0f;
+			Color = color;
 
-
-			GL.Begin(BeginMode.LineLoop);
-			for (int i = 0; i < 360; i++)
+			if (fill)
+				GL.Begin(BeginMode.Polygon);
+			else
+				GL.Begin(BeginMode.LineLoop);
+			float angle;
+			for (int i = 0; i < resolution; i++)
 			{
-				float degInRad = i * DEG2RAD;
-				GL.Vertex2(Math.Cos(degInRad) * radius + location.X, Math.Sin(degInRad) * radius + location.Y);
-
+				angle = i * 2.0f * (float)Math.PI / 100.0f;
+				GL.Vertex2(x + Math.Cos(angle) * xradius, y + Math.Sin(angle) * yradius);
 			}
 			GL.End();
 
+
 			Texturing = true;
-			RenderStats.DirectCall += 360;
+			RenderStats.DirectCall += resolution;
+		}
+
+
+		/// <summary>
+		/// Draws a disk
+		/// </summary>
+		/// <param name="location">Location of the circle</param>
+		/// <param name="radius">Radius</param>
+		/// <param name="color">Color</param>
+		public static void DrawDisk(Point location, int radius, Color color)
+		{
+			DrawCircle(location.X, location.Y, radius, radius, color, true);
+		}
+
+
+		/// <summary>
+		/// Draws a disk
+		/// </summary>
+		/// <param name="x">X</param>
+		/// <param name="y">Y</param>
+		/// <param name="radius">Radius</param>
+		/// <param name="color">Color</param>
+		public static void DrawDisk(int x, int y, int radius, Color color)
+		{
+			DrawCircle(x, y, radius, radius, color, true);
 		}
 
 
@@ -774,22 +831,21 @@ namespace ArcEngine.Graphic
 		/// <param name="color">Color</param>
 		public static void DrawEllipse(Rectangle rect, Color color)
 		{
-			float DEG2RAD = 3.141590f / 180.0f;
+			DrawCircle(rect.X + rect.Width / 2, rect.Y + rect.Height / 2, rect.Width / 2, rect.Height / 2, color, false);
+		}
 
-			Point center = new Point(rect.Left + rect.Width / 2, rect.Top + rect.Height / 2);
-			Color = color;
-			Texturing = false;
 
-			GL.Begin(BeginMode.LineLoop);
-			for (int i = 0; i < 360; i++)
-			{
-				float degInRad = i * DEG2RAD;
-				GL.Vertex2(center.X + Math.Cos(degInRad) * rect.Width / 2, center.Y + Math.Sin(degInRad) * rect.Height / 2);
-			}
-			GL.End();
-
-			Texturing = true;
-			RenderStats.DirectCall += 360;
+		/// <summary>
+		/// Draws an ellipse
+		/// </summary>
+		/// <param name="x">X</param>
+		/// <param name="y">Y</param>
+		/// <param name="radiusx">X radius</param>
+		/// <param name="radiusy">Y radius</param>
+		/// <param name="color">Color</param>
+		public static void DrawEllipse(int x, int y, int radiusx, int radiusy, Color color)
+		{
+			DrawCircle(x, y, radiusx, radiusy, color, false);
 		}
 
 
@@ -800,23 +856,24 @@ namespace ArcEngine.Graphic
 		/// <param name="color">Color</param>
 		public static void FillEllipse(Rectangle rect, Color color)
 		{
-			float DEG2RAD = 3.141590f / 180.0f;
-
-			Point center = new Point(rect.Left + rect.Width / 2, rect.Top + rect.Height / 2);
-			Color = color;
-			Texturing = false;
-
-			GL.Begin(BeginMode.Polygon);
-			for (int i = 0; i < 360; i++)
-			{
-				float degInRad = i * DEG2RAD;
-				GL.Vertex2(center.X + Math.Cos(degInRad) * rect.Width / 2, center.Y + Math.Sin(degInRad) * rect.Height / 2);
-			}
-			GL.End();
-
-			Texturing = true;
-			RenderStats.DirectCall += 360;
+			DrawCircle(rect.X + rect.Width / 2, rect.Y + rect.Height /2, rect.Width / 2, rect.Height / 2, color, true);
 		}
+
+
+
+		/// <summary>
+		/// Draws a filled ellipse
+		/// </summary>
+		/// <param name="x">X</param>
+		/// <param name="y">Y</param>
+		/// <param name="radiusx">X radius</param>
+		/// <param name="radiusy">Y radius</param>
+		/// <param name="color">Color</param>
+		public static void FillEllipse(int x, int y, int radiusx, int radiusy, Color color)
+		{
+			DrawCircle(x, y, radiusx, radiusy, color, true);
+		}
+
 
 		#endregion
 
@@ -827,8 +884,8 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Creates a shared texture
 		/// </summary>
-		/// <param name="name"></param>
-		/// <returns></returns>
+		/// <param name="name">Name of the texture</param>
+		/// <returns>Texture handle</returns>
 		public static Texture CreateSharedTexture(string name)
 		{
 
@@ -846,7 +903,7 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Deletes a shared texture
 		/// </summary>
-		/// <param name="name"></param>
+		/// <param name="name">Name of the texture</param>
 		public static void DeleteSharedTexture(string name)
 		{
 			SharedTextures[name] = null;
@@ -869,8 +926,8 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Draws a batch
 		/// </summary>
-		/// <param name="batch"></param>
-		/// <param name="mode"></param>
+		/// <param name="batch">Batch to draw</param>
+		/// <param name="mode">Drawing mode</param>
 		public static void DrawBatch(Batch batch, BeginMode mode)
 		{
 			// No batch, or empty batch
@@ -893,7 +950,6 @@ namespace ArcEngine.Graphic
 			GL.ColorPointer(4, ColorPointerType.UnsignedByte, 0, IntPtr.Zero);
 
 
-			//GL.DrawElements(mode, batch.Size, DrawElementsType.UnsignedInt, IntPtr.Zero);
 			GL.DrawArrays(mode, 0, batch.Size);
 
 
