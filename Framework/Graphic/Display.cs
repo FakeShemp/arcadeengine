@@ -66,6 +66,7 @@ namespace ArcEngine.Graphic
 		{
 			RenderStats = new RenderStats();
 			Capabilities = new RenderDeviceCapabilities();
+			CircleResolution = 50;
 		}
 
 
@@ -744,6 +745,39 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Draws a circle
 		/// </summary>
+		/// <param name="x">X location</param>
+		/// <param name="y">Y location</param>
+		/// <param name="xradius">X radius</param>
+		/// <param name="yradius">Y radius</param>
+		/// <param name="color">Color</param>
+		/// <param name="fill">Fill or not</param>
+		static void DrawCircle(int x, int y, int xradius, int yradius, Color color, bool fill)
+		{
+
+			Texturing = false;
+			Color = color;
+
+			if (fill)
+				GL.Begin(BeginMode.Polygon);
+			else
+				GL.Begin(BeginMode.LineLoop);
+			float angle;
+			for (int i = 0; i < CircleResolution; i++)
+			{
+				angle = i * 2.0f * (float)Math.PI / CircleResolution;
+				GL.Vertex2(x + Math.Cos(angle) * xradius, y + Math.Sin(angle) * yradius);
+			}
+			GL.End();
+
+
+			Texturing = true;
+			RenderStats.DirectCall += CircleResolution;
+		}
+
+
+		/// <summary>
+		/// Draws a circle
+		/// </summary>
 		/// <param name="location">Location of the circle</param>
 		/// <param name="radius">Radius</param>
 		/// <param name="color">Color</param>
@@ -751,6 +785,7 @@ namespace ArcEngine.Graphic
 		{
 			DrawCircle(location.X, location.Y, radius, radius, color, false);
 		}
+
 
 		/// <summary>
 		/// Draws a circle
@@ -762,40 +797,6 @@ namespace ArcEngine.Graphic
 		public static void DrawCircle(int x, int y, int radius, Color color)
 		{
 			DrawCircle(x, y, radius, radius, color, false);
-		}
-
-
-		/// <summary>
-		/// Draws a circle
-		/// </summary>
-		/// <param name="x">X location</param>
-		/// <param name="y">Y location</param>
-		/// <param name="xradius">X radius</param>
-		/// <param name="yradius">Y radius</param>
-		/// <param name="color">Color</param>
-		/// <param name="fill">Fill or not</param>
-		static void DrawCircle(int x, int y, int xradius, int yradius, Color color, bool fill)
-		{
-			int resolution = 100;
-
-			Texturing = false;
-			Color = color;
-
-			if (fill)
-				GL.Begin(BeginMode.Polygon);
-			else
-				GL.Begin(BeginMode.LineLoop);
-			float angle;
-			for (int i = 0; i < resolution; i++)
-			{
-				angle = i * 2.0f * (float)Math.PI / 100.0f;
-				GL.Vertex2(x + Math.Cos(angle) * xradius, y + Math.Sin(angle) * yradius);
-			}
-			GL.End();
-
-
-			Texturing = true;
-			RenderStats.DirectCall += resolution;
 		}
 
 
@@ -999,6 +1000,16 @@ namespace ArcEngine.Graphic
 
 
 		#region Properties
+
+
+		/// <summary>
+		/// Circle resolution
+		/// </summary>
+		static public int CircleResolution
+		{
+			get;
+			set;
+		}
 
 		/// <summary>
 		/// Shared textures
