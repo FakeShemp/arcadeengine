@@ -84,6 +84,7 @@ namespace ArcEngine.Graphic
 			BlendingFunction(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 			GL.ClearStencil(0);
 
+
 			GL.Normal3(0.0f, 0.0f, 1.0f);
 
 
@@ -138,33 +139,6 @@ namespace ArcEngine.Graphic
 			Trace.Unindent();
 		}
 
-/*
-		#region Fading
-
-
-		/// <summary>
-		/// Fades the screen to black
-		/// </summary>
-		/// <param name="speed">MaxVelocity in milliseconds</param>
-		public static void FadeToBlack(int speed)
-		{
-			System.Threading.Thread.Sleep(speed);
-		}
-
-
-		/// <summary>
-		/// Fades the screen to a specified color
-		/// </summary>
-		/// <param name="col">Fade to color</param>
-		/// <param name="speed">MaxVelocity in milliseconds</param>
-		public static void FadeTo(Color col, int speed)
-		{
-			System.Threading.Thread.Sleep(speed);
-		}
-
-
-		#endregion
-*/
 
 		#region OpenGL
 
@@ -742,6 +716,7 @@ namespace ArcEngine.Graphic
 			RenderStats.DirectCall += points.Length;
 		}
 
+
 		/// <summary>
 		/// Draws a circle
 		/// </summary>
@@ -773,6 +748,92 @@ namespace ArcEngine.Graphic
 			Texturing = true;
 			RenderStats.DirectCall += CircleResolution;
 		}
+
+
+
+		/// <summary>
+		/// Draws an arc
+		/// </summary>
+		/// <param name="x">X</param>
+		/// <param name="y">Y</param>
+		/// <param name="radius">Radius</param>
+		/// <param name="start">Start angle</param>
+		/// <param name="angle">Angle amount</param>
+		/// <param name="color">Color</param>
+		public static void DrawArc(float x, float y, float radius, float start, float angle, Color color)
+		{
+			DrawArc(x, y, radius, start, angle, color, false);
+		}
+
+
+		/// <summary>
+		/// Draws a filled arc
+		/// </summary>
+		/// <param name="x">X</param>
+		/// <param name="y">Y</param>
+		/// <param name="radius">Radius</param>
+		/// <param name="start">Start angle</param>
+		/// <param name="angle">Angle amount</param>
+		/// <param name="color">Color</param>
+		public static void FillArc(float x, float y, float radius, float start, float angle, Color color)
+		{
+			DrawArc(x, y, radius, start, angle, color, true);
+		}
+
+
+
+		/// <summary>
+		/// Draws an arc
+		/// </summary>
+		/// <param name="x">X</param>
+		/// <param name="y">Y</param>
+		/// <param name="radius">Radius</param>
+		/// <param name="start">Start angle</param>
+		/// <param name="angle">Angle amount</param>
+		/// <param name="color">Color</param>
+		/// <param name="fill">Filled or not</param>
+		static void DrawArc(float x, float y, float radius, float start, float angle, Color color, bool fill)
+		{
+
+			Color = color;
+			Texturing = false;
+
+			int real_segments = (int)(Math.Abs(angle) / (2 * Math.PI) * (float)CircleResolution) + 1;
+
+			float theta = angle / (float)(real_segments);
+			float tangetial_factor = (float)Math.Tan(theta);
+			float radial_factor = (float)(1 - Math.Cos(theta));
+
+			float xx = (float)(x + radius * Math.Cos(start));
+			float yy = (float)(y + radius * Math.Sin(start));
+
+			if (fill)
+				GL.Begin(BeginMode.Polygon);
+			else
+				GL.Begin(BeginMode.LineStrip);
+			for (int ii = 0; ii < real_segments + 1; ii++)
+			{
+				GL.Vertex2(xx, yy);
+
+				float tx = -(yy - y);
+				float ty = xx - x;
+
+				xx += tx * tangetial_factor;
+				yy += ty * tangetial_factor;
+
+				float rx = x - xx;
+				float ry = y - yy;
+
+				xx += rx * radial_factor;
+				yy += ry * radial_factor;
+			}
+			GL.End();
+
+			Texturing = true;
+			RenderStats.DirectCall += real_segments;
+		}
+
+
 
 
 		/// <summary>
