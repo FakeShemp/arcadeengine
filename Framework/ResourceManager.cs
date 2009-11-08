@@ -689,12 +689,15 @@ namespace ArcEngine
 								}
 							}
 
+
 						}
 						else
 						{
 							// Adds data to the list
 							LoadBinary(entry.Name, data);
 						}
+
+						Trace.WriteLine("");
 					}
 				}
 			}
@@ -840,6 +843,7 @@ namespace ArcEngine
 			return ret;
 		}
 
+
 		/// <summary>
 		/// Loads a resource from a bank first, and if not found, load it from disk.
 		/// </summary>
@@ -868,6 +872,7 @@ namespace ArcEngine
 
 			return null;
 		}
+
 
 		/// <summary>
 		/// Unloads a binary resource
