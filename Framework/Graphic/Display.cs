@@ -81,6 +81,12 @@ namespace ArcEngine.Graphic
 			ClearColor = Color.Black;
 			Culling = false;
 			DepthTest = false;
+
+			GL.Hint(HintTarget.PolygonSmoothHint, HintMode.Nicest);
+			GL.Hint(HintTarget.LineSmoothHint, HintMode.Nicest);
+			GL.Hint(HintTarget.PointSmoothHint, HintMode.Nicest);
+			GL.Enable(EnableCap.PolygonSmooth);
+
 			LineSmooth = true;
 			PointSmooth = true;
 			BlendingFunction(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
@@ -91,14 +97,14 @@ namespace ArcEngine.Graphic
 
 
 			/*
-						// Get OpenGL version for 2.x
-						Regex regex = new Regex(@"(\d+)\.(\d+)\.*(\d*)");
-						Match match = regex.Match(GL.GetString(StringName.Version));
-						if (match.Success)
-						{
-							MajorVersion = Convert.ToInt32(match.Groups[1].Value);
-							MinorVersion = Convert.ToInt32(match.Groups[2].Value);
-						}
+			// Get OpenGL version for 2.x
+			Regex regex = new Regex(@"(\d+)\.(\d+)\.*(\d*)");
+			Match match = regex.Match(GL.GetString(StringName.Version));
+			if (match.Success)
+			{
+				MajorVersion = Convert.ToInt32(match.Groups[1].Value);
+				MinorVersion = Convert.ToInt32(match.Groups[2].Value);
+			}
 			*/
 		}
 
@@ -365,8 +371,10 @@ namespace ArcEngine.Graphic
 			Matrix4 projection = Matrix4.CreateOrthographicOffCenter(ViewPort.Left, ViewPort.Width, ViewPort.Height, ViewPort.Top, -1, 1);
 			GL.LoadMatrix(ref projection);
 
+
 			// Exact pixelization is required, put a small translation in the ModelView matrix
-			GL.Translate(0.001f, 0.001f, 0.0f);
+			GL.MatrixMode(MatrixMode.Modelview);
+			GL.Translate(0.0001f, 0.0001f, 0.0f);
 		}
 
 
@@ -939,6 +947,67 @@ namespace ArcEngine.Graphic
 		}
 
 
+		/// <summary>
+		/// Draw a Bezier curve
+		/// </summary>
+		/// <param name="start">Start point</param>
+		/// <param name="end">End point</param>
+		/// <param name="control1">Control point 1</param>
+		/// <param name="control2">Control point 2</param>
+		/// <param name="color">Color</param>
+		public static void DrawBezier(Point start, Point end, Point control1, Point control2, Color color)
+		{
+			float[] points = new float[]
+			{
+				start.X, start.Y, 0,
+				control1.X, control1.Y, 0,
+				control2.X, control2.Y, 0,
+				end.X, end.Y, 0,
+			};
+
+
+			Color = color;
+			GL.Enable(EnableCap.Map1Vertex3);
+
+			GL.Map1(MapTarget.Map1Vertex3, 0, CircleResolution, 3, 4, points);
+			GL.Begin(BeginMode.LineStrip);
+			for (int i = 0; i <= CircleResolution; i++)
+				GL.EvalCoord1(i);
+			GL.End();
+
+			GL.Disable(EnableCap.Map1Vertex3);
+
+
+			//PointSize = 2;
+			//DrawPoint(start, Color.Red);
+			//DrawPoint(end, Color.Red);
+			//DrawPoint(control1, Color.Green);
+			//DrawPoint(control2, Color.Green);
+			//PointSize = 1;
+		}
+
+
+		/// <summary>
+		/// Draws a quadratic curve
+		/// </summary>
+		/// <param name="start">Start point</param>
+		/// <param name="end">End point</param>
+		/// <param name="control">Control point</param>
+		/// <param name="color">Color</param>
+		public static void QuadraticCurve(Point start, Point end, Point control, Color color)
+		{
+			Point control1 = new Point(
+				(int)(start.X  + 2.0f / 3.0f * (control.X - start.X)),
+				(int)(start.Y  + 2.0f / 3.0f * (control.Y - start.Y)));
+
+			Point control2 = new Point(
+				(int)(control1.X + (end.X - start.X) / 3.0f),
+				(int)(control1.Y + (end.Y - start.Y) / 3.0f));
+
+			DrawBezier(start, end, control1, control2, color);
+		}
+
+
 		#endregion
 
 
@@ -1358,12 +1427,7 @@ namespace ArcEngine.Graphic
 		{
 			get
 			{
-
 				return color;
-				//float[] tab = new float[4];
-				//GL.GetFloat(GetPName.CurrentColor, tab);
-
-				//return Color.FromArgb((int)(tab[3] * 255), (int)(tab[0] * 255), (int)(tab[1] * 255), (int)(tab[2] * 255));
 			}
 			set
 			{
