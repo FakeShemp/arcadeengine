@@ -799,18 +799,18 @@ namespace ArcEngine.Graphic
 		/// <param name="y">Y</param>
 		/// <param name="radius">Radius</param>
 		/// <param name="start">Start angle</param>
-		/// <param name="angle">Angle amount</param>
+		/// <param name="end">End angle</param>
 		/// <param name="color">Color</param>
 		/// <param name="fill">Filled or not</param>
-		static void DrawArc(float x, float y, float radius, float start, float angle, Color color, bool fill)
+		static void DrawArc(float x, float y, float radius, float start, float end, Color color, bool fill)
 		{
 
 			Color = color;
 			Texturing = false;
 
-			int real_segments = (int)(Math.Abs(angle) / (2 * Math.PI) * (float)CircleResolution) + 1;
+			int real_segments = (int)(Math.Abs(end) / (2 * Math.PI) * (float)CircleResolution) + 1;
 
-			float theta = angle / (float)(real_segments);
+			float theta = end / (float)(real_segments);
 			float tangetial_factor = (float)Math.Tan(theta);
 			float radial_factor = (float)(1 - Math.Cos(theta));
 
@@ -947,6 +947,7 @@ namespace ArcEngine.Graphic
 		}
 
 
+
 		/// <summary>
 		/// Draw a Bezier curve
 		/// </summary>
@@ -957,6 +958,21 @@ namespace ArcEngine.Graphic
 		/// <param name="color">Color</param>
 		public static void DrawBezier(Point start, Point end, Point control1, Point control2, Color color)
 		{
+			DrawBezier(start, end, control1, control2, color, color);
+		}
+
+
+		/// <summary>
+		/// Draw a Bezier curve
+		/// </summary>
+		/// <param name="start">Start point</param>
+		/// <param name="end">End point</param>
+		/// <param name="control1">Control point 1</param>
+		/// <param name="control2">Control point 2</param>
+		/// <param name="startcolor">Start color</param>
+		/// <param name="endcolor">End color</param>
+		public static void DrawBezier(Point start, Point end, Point control1, Point control2, Color startcolor, Color endcolor)
+		{
 			float[] points = new float[]
 			{
 				start.X, start.Y, 0,
@@ -965,18 +981,26 @@ namespace ArcEngine.Graphic
 				end.X, end.Y, 0,
 			};
 
+			float[] colors = new float[]
+			{
+				startcolor.R, startcolor.G, startcolor.B, startcolor.A,
+				endcolor.R, endcolor.G, endcolor.B, endcolor.A,
+			};
 
-			Color = color;
+
+			//Color = startcolor;
 			GL.Enable(EnableCap.Map1Vertex3);
+			GL.Enable(EnableCap.Map1Color4);
 
 			GL.Map1(MapTarget.Map1Vertex3, 0, CircleResolution, 3, 4, points);
+			GL.Map1(MapTarget.Map1Color4, 0, CircleResolution, 4, 2, colors);
 			GL.Begin(BeginMode.LineStrip);
 			for (int i = 0; i <= CircleResolution; i++)
 				GL.EvalCoord1(i);
 			GL.End();
 
 			GL.Disable(EnableCap.Map1Vertex3);
-
+			GL.Disable(EnableCap.Map1Color4);
 
 			//PointSize = 2;
 			//DrawPoint(start, Color.Red);
@@ -1004,7 +1028,7 @@ namespace ArcEngine.Graphic
 				(int)(control1.X + (end.X - start.X) / 3.0f),
 				(int)(control1.Y + (end.Y - start.Y) / 3.0f));
 
-			DrawBezier(start, end, control1, control2, color);
+			DrawBezier(start, end, control1, control2, color, color);
 		}
 
 

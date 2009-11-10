@@ -47,16 +47,11 @@ namespace PathDemo
 		[STAThread]
 		static void Main()
 		{
-
-			List<string> devices = Webcam.GetAllDevices();
-
-
 			try
 			{
 				using (EmptyProject game = new EmptyProject())
 				{
-					game.RunEditor();
-					//game.Run();
+					game.Run();
 				}
 			}
 			catch (Exception e)
@@ -74,8 +69,6 @@ namespace PathDemo
 		{
 			CreateGameWindow(new Size(1024, 768));
 			Window.Resizable = true;
-
-			ResourceManager.LoadBank("data/data.bnk");
 		}
 
 
@@ -86,52 +79,115 @@ namespace PathDemo
 		public override void LoadContent()
 		{
 			Display.ClearColor = Color.CornflowerBlue;
+			Shape = new Shape();
 
-			GL.Enable(EnableCap.Map2Vertex3);
-			GL.MapGrid2(gridsize, 0.0, 1.0, gridsize, 0.0, 1.0);
-
-		}
-
-		/// <summary>
-		/// Unload contents
-		/// </summary>
-		public override void UnloadContent()
-		{
-		}
-
-
-		/// <summary>
-		/// Update the game logic
-		/// </summary>
-		/// <param name="gameTime"></param>
-		public override void Update(GameTime gameTime)
-		{
-			// Check if the Excape key is pressed
-			if (Keyboard.IsKeyPress(Keys.Escape))
-				Exit();
-
-
-
+	//		GL.Enable(EnableCap.Map2Vertex3);
+	//		GL.MapGrid2(gridsize, 0.0, 1.0, gridsize, 0.0, 1.0);
 
 		}
-
 
 
 		/// <summary>
 		/// Called when it is time to draw a frame.
 		/// </summary>
-		/// <param name="device"></param>
 		public override void Draw()
 		{
 			// Clears the background
 			Display.ClearBuffers();
+
+	
+		//	Display.Color = Color.White;
+		//	GL.Map2(MapTarget.Map2Vertex3, 0, 1, 3, uSize, 0, 1, uSize * 3, vSize, grid4x4);
+		//	GL.EvalMesh2(MeshMode2.Line, 0, gridsize, 0, gridsize);
+
+
+
+			// Filled triangle 
+			Display.Color = Color.AntiqueWhite;
+			Shape.Begin(ShapeMode.Fill);
+			Display.Color = Color.Yellow;
+			Shape.MoveTo(225, 25);
+			Display.Color = Color.Blue;
+			Shape.LineTo(305, 25);
+			Display.Color = Color.Pink;
+			Shape.LineTo(225, 105);
+			Shape.ClosePath();
+			Shape.End();
+
+			// Empty triangle 
 			Display.Color = Color.White;
+			Shape.Begin(ShapeMode.Stroke);
+			Shape.MoveTo(325, 125);
+			Shape.LineTo(325, 45);
+			Shape.LineTo(245, 125);
+			Shape.ClosePath();
+			Shape.End();
 
 
-			GL.Map2(MapTarget.Map2Vertex3, 0, 1, 3, uSize, 0, 1, uSize * 3, vSize, grid4x4);
-			GL.EvalMesh2(MeshMode2.Line, 0, gridsize, 0, gridsize);
+			// Smiley
+			Display.Color = Color.Yellow;
+			Shape.Begin(ShapeMode.Stroke);
+			Shape.ArcTo(75, 75, 50, 0, (float)(Math.PI * 2.0f));
+			Shape.MoveTo(110, 75);
+			Shape.ArcTo(75, 75, 35, 0, (int)Math.PI);
+			Shape.MoveTo(65, 65);
+			Shape.ArcTo(60, 65, 5, 0, (float)(Math.PI * 2.0f));
+			Shape.MoveTo(95, 65);
+			Shape.ArcTo(90, 65, 5, 0, (float)(Math.PI * 2.0f));
+			Shape.End();
 
 
+			//Display.DrawCircle(700, 400, 40, Color.White);
+			//Display.DrawArc(600, 400, 40, (float)0.0f, (float)(Math.PI * 1.7f), Color.Red);
+			//Display.DrawArc(800, 400, 40, (float)Math.PI * 0.0f, (float)(Math.PI * -1.3f), Color.Green);
+
+
+			// Arcs
+			float angle = (float)(Math.PI * 0.2f); 
+			for (int x = 50; x < 550; x += 50)
+			{
+				Display.DrawArc(x, 170, 20, 0, angle, Color.Red);
+
+				angle += (float)(Math.PI * 0.2f); 
+			}
+
+
+			// Speech bubble
+			Display.QuadraticCurve(new Point(75, 225), new Point(25, 262), new Point(25, 225), Color.White);
+			Display.QuadraticCurve(new Point(25, 262), new Point(50, 300), new Point(25, 300), Color.White);
+			Display.QuadraticCurve(new Point(50, 300), new Point(30, 325), new Point(50, 320), Color.White);
+			Display.QuadraticCurve(new Point(30, 325), new Point(65, 300), new Point(60, 320), Color.White);
+			Display.QuadraticCurve(new Point(65, 300), new Point(125, 262), new Point(125, 300), Color.White);
+			Display.QuadraticCurve(new Point(125, 262), new Point(75, 225), new Point(125, 225), Color.White);
+
+			// Heart
+			Display.DrawBezier(new Point(275, 240), new Point(250, 225), new Point(275, 237), new Point(270, 225), Color.Pink);
+			Display.DrawBezier(new Point(250, 225), new Point(220, 262), new Point(220, 225), new Point(220, 262), Color.Pink);
+			Display.DrawBezier(new Point(220, 262), new Point(275, 320), new Point(220, 280), new Point(240, 302), Color.Pink);
+			Display.DrawBezier(new Point(275, 320), new Point(330, 262), new Point(310, 302), new Point(330, 280), Color.Pink);
+			Display.DrawBezier(new Point(330, 262), new Point(300, 225), new Point(330, 262), new Point(330, 225), Color.Pink);
+			Display.DrawBezier(new Point(300, 225), new Point(275, 240), new Point(285, 225), new Point(275, 237), Color.Pink);
+
+
+			// Bezier curve
+			Display.DrawBezier(new Point(610, 100), new Point(900, 100), new Point(600, 400), new Point(900, 500), Color.White, Color.Red);
+
+
+			Display.DrawBezier(new Point(300, 470), new Point(350, 520), new Point(316, 520), new Point(299, 503), Color.White, Color.White);
+
+			Shape.Begin(ShapeMode.Stroke);
+			Shape.MoveTo(600, 100);
+			Shape.BezierCurveTo(new Point(890, 100), new Point(590, 400), new Point(890, 500));
+			Shape.End();
+
+			// Rounded rectangle
+			Shape.Begin(ShapeMode.Stroke);
+			Shape.RoundedRectangle(new Rectangle(300, 500, 300, 20), 50);
+			Shape.End();
+
+
+
+			
 		}
 
 
@@ -140,8 +196,10 @@ namespace PathDemo
 		#region Properties
 
 
-
-
+		/// <summary>
+		/// Drawing shape
+		/// </summary>
+		Shape Shape;
 
 		/// <summary>
 		/// 
@@ -178,8 +236,6 @@ namespace PathDemo
 
 		int uSize = 4;
 		int vSize = 4;
-
-
 		#endregion
 
 	}
