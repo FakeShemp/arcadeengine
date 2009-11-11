@@ -101,7 +101,6 @@ namespace PathDemo
 		//	GL.EvalMesh2(MeshMode2.Line, 0, gridsize, 0, gridsize);
 
 
-
 			// Filled triangle 
 			Display.Color = Color.AntiqueWhite;
 			Shape.Begin(ShapeMode.Fill);
@@ -153,12 +152,12 @@ namespace PathDemo
 
 
 			// Speech bubble
-			Display.QuadraticCurve(new Point(75, 225), new Point(25, 262), new Point(25, 225), Color.White);
-			Display.QuadraticCurve(new Point(25, 262), new Point(50, 300), new Point(25, 300), Color.White);
-			Display.QuadraticCurve(new Point(50, 300), new Point(30, 325), new Point(50, 320), Color.White);
-			Display.QuadraticCurve(new Point(30, 325), new Point(65, 300), new Point(60, 320), Color.White);
-			Display.QuadraticCurve(new Point(65, 300), new Point(125, 262), new Point(125, 300), Color.White);
-			Display.QuadraticCurve(new Point(125, 262), new Point(75, 225), new Point(125, 225), Color.White);
+			Display.DrawQuadraticCurve(new Point(75, 225), new Point(25, 262), new Point(25, 225), Color.White);
+			Display.DrawQuadraticCurve(new Point(25, 262), new Point(50, 300), new Point(25, 300), Color.White);
+			Display.DrawQuadraticCurve(new Point(50, 300), new Point(30, 325), new Point(50, 320), Color.White);
+			Display.DrawQuadraticCurve(new Point(30, 325), new Point(65, 300), new Point(60, 320), Color.White);
+			Display.DrawQuadraticCurve(new Point(65, 300), new Point(125, 262), new Point(125, 300), Color.White);
+			Display.DrawQuadraticCurve(new Point(125, 262), new Point(75, 225), new Point(125, 225), Color.White);
 
 			// Heart
 			Display.DrawBezier(new Point(275, 240), new Point(250, 225), new Point(275, 237), new Point(270, 225), Color.Pink);
@@ -168,26 +167,40 @@ namespace PathDemo
 			Display.DrawBezier(new Point(330, 262), new Point(300, 225), new Point(330, 262), new Point(330, 225), Color.Pink);
 			Display.DrawBezier(new Point(300, 225), new Point(275, 240), new Point(285, 225), new Point(275, 237), Color.Pink);
 
+			Display.Color = Color.Pink;
+			Shape.Begin(ShapeMode.Fill);
+			Shape.MoveTo(275, 340);
+			Shape.BezierCurveTo(new Point(250, 325), new Point(275, 337), new Point(270, 325));
+			Shape.BezierCurveTo(new Point(220, 362), new Point(220, 325), new Point(220, 362));
+			Shape.BezierCurveTo(new Point(275, 420), new Point(220, 380), new Point(240, 402));
+			Shape.BezierCurveTo(new Point(330, 362), new Point(310, 402), new Point(330, 380));
+			Shape.BezierCurveTo(new Point(300, 325), new Point(330, 362), new Point(330, 325));
+			Shape.BezierCurveTo(new Point(275, 340), new Point(285, 325), new Point(275, 337));
+			Shape.End();
 
 			// Bezier curve
-			Display.DrawBezier(new Point(610, 100), new Point(900, 100), new Point(600, 400), new Point(900, 500), Color.White, Color.Red);
+			Display.DrawBezier(new Point(610, 100), new Point(900, 100), new Point(600, 400), new Point(900, 500), Color.White);
 
 
-			Display.DrawBezier(new Point(300, 470), new Point(350, 520), new Point(316, 520), new Point(299, 503), Color.White, Color.White);
-
+			Display.Color = Color.Red;
 			Shape.Begin(ShapeMode.Stroke);
 			Shape.MoveTo(600, 100);
 			Shape.BezierCurveTo(new Point(890, 100), new Point(590, 400), new Point(890, 500));
 			Shape.End();
 
 			// Rounded rectangle
+			Rectangle rectangle = new Rectangle(400, 250, 150, 50);
+			int radius = 15;
+			Display.Color = Color.SpringGreen;
+
 			Shape.Begin(ShapeMode.Stroke);
-			Shape.RoundedRectangle(new Rectangle(300, 500, 300, 20), 50);
+			Shape.RoundedRectangle(rectangle, radius);
 			Shape.End();
 
-
-
-			
+			rectangle.Offset(0, 75);
+			Shape.Begin(ShapeMode.Fill);
+			Shape.RoundedRectangle(rectangle, radius);
+			Shape.End();
 		}
 
 
