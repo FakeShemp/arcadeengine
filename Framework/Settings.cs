@@ -61,10 +61,10 @@ namespace ArcEngine
 		#region Tokens
 
 		/// <summary>
-		/// 
+		/// Sets a string token
 		/// </summary>
-		/// <param name="name"></param>
-		/// <param name="value"></param>
+		/// <param name="name">Token</param>
+		/// <param name="value">Value</param>
 		static public void SetToken(string name, string value)
 		{
 			Tokens[name] = value;
@@ -75,13 +75,39 @@ namespace ArcEngine
 		/// Gets a string token
 		/// </summary>
 		/// <param name="name">Token's name</param>
-		/// <returns>String value or string.Empty if not found</returns>
-		static public string GetString(string name)
+		/// <param name="defaultvalue">Default value</param>
+		/// <returns>String value or defaultvalue if not found</returns>
+		static public string GetString(string name, string defaultvalue)
 		{
 			if (Tokens.ContainsKey(name))
 				return Tokens[name];
 
 			return string.Empty;
+		}
+
+		/// <summary>
+		/// Gets a string token
+		/// </summary>
+		/// <param name="name">Token's name</param>
+		/// <returns>String value or string.Empty if not found</returns>
+		static public string GetString(string name)
+		{
+			return GetString(name, string.Empty);
+		}
+
+
+		/// <summary>
+		/// Gets an int token
+		/// </summary>
+		/// <param name="name">Token's name</param>
+		/// <param name="defaultvalue">Default value</param>
+		/// <returns>Int value, or defaultvalue if not found</returns>
+		static public int GetInt(string name, int defaultvalue)
+		{
+			if (Tokens.ContainsKey(name))
+				return int.Parse(Tokens[name]);
+			else 
+				return defaultvalue;
 		}
 
 
@@ -92,10 +118,7 @@ namespace ArcEngine
 		/// <returns>Int value, or 0 if not found</returns>
 		static public int GetInt(string name)
 		{
-			if (Tokens.ContainsKey(name))
-				return int.Parse(Tokens[name]);
-
-			return 0;
+			return GetInt(name, 0);
 		}
 
 
