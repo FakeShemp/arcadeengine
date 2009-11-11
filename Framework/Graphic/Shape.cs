@@ -15,22 +15,6 @@ namespace ArcEngine.Graphic
 	public class Shape
 	{
 
-/*
-		/// <summary>
-		/// Begins a new shape
-		/// </summary>
-		/// <param name="x">X start point</param>
-		/// <param name="y">Y start point</param>
-		/// <param name="mode">Shape drawing mode</param>
-		public void Begin(int x, int y, ShapeMode mode)
-		{
-			Begin(mode);
-			GL.Vertex2(x, y);
-
-			StartPoint = new Point(x, y);
-		}
-
-*/
 
 		/// <summary>
 		/// Begins a new shape
@@ -53,6 +37,7 @@ namespace ArcEngine.Graphic
 			IsOpen = true;
 		}
 
+
 		/// <summary>
 		/// End of the shape
 		/// </summary>
@@ -68,6 +53,7 @@ namespace ArcEngine.Graphic
 			StartPoint = Point.Empty;
 			LastPoint = Point.Empty;
 		}
+
 
 		/// <summary>
 		/// Closes the shape
@@ -111,19 +97,27 @@ namespace ArcEngine.Graphic
 
 
 		/// <summary>
-		/// 
+		/// Draws a quadratic curve
 		/// </summary>
-		/// <param name="point"></param>
-		/// <param name="control"></param>
+		/// <param name="point">End point</param>
+		/// <param name="control">Control point</param>
 		public void QuadraticCurveTo(Point point, Point control)
 		{
+			//Point control1 = new Point(
+			//   (int)(point.X + 2.0f / 3.0f * (control.X - point.X)),
+			//   (int)(point.Y + 2.0f / 3.0f * (control.Y - point.Y)));
+
+			//Point control2 = new Point(
+			//   (int)(control1.X + (LastPoint.X - point.X) / 3.0f),
+			//   (int)(control1.Y + (LastPoint.Y - point.Y) / 3.0f));
+
 			Point control1 = new Point(
-				(int)(point.X + 2.0f / 3.0f * (control.X - point.X)),
-				(int)(point.Y + 2.0f / 3.0f * (control.Y - point.Y)));
+				(int)(LastPoint.X + 2.0f / 3.0f * (control.X - LastPoint.X)),
+				(int)(LastPoint.Y + 2.0f / 3.0f * (control.Y - LastPoint.Y)));
 
 			Point control2 = new Point(
-				(int)(control1.X + (LastPoint.X - point.X) / 3.0f),
-				(int)(control1.Y + (LastPoint.Y - point.Y) / 3.0f));
+				(int)(control1.X + (point.X - LastPoint.X) / 3.0f),
+				(int)(control1.Y + (point.Y - LastPoint.Y) / 3.0f));
 
 			BezierCurveTo(point, control1, control2);
 		}
@@ -133,9 +127,9 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Draws a Bezier curve
 		/// </summary>
-		/// <param name="point"></param>
-		/// <param name="control1"></param>
-		/// <param name="control2"></param>
+		/// <param name="point">End point</param>
+		/// <param name="control1">Control point 1</param>
+		/// <param name="control2">Control point 2</param>
 		public void BezierCurveTo(Point point, Point control1, Point control2)
 		{
 			Vector2[] points = new Vector2[]
@@ -148,23 +142,12 @@ namespace ArcEngine.Graphic
 			BezierCurve curve = new BezierCurve(points);
 
 
-			//Display.Color = Color.White;
-
 			Vector2 pos = Vector2.One;
 			for (int p = 0; p <= Display.CircleResolution; p++)
 			{
 				pos = curve.CalculatePoint((float)p / (float)Display.CircleResolution);
 				GL.Vertex2(pos.X, pos.Y);
 			}
-
-
-			Display.PointSize = 2;
-			Display.DrawPoint(LastPoint, Color.Red);
-			Display.DrawPoint(point, Color.Red);
-			Display.DrawPoint(control1, Color.Green);
-			Display.DrawPoint(control2, Color.Green);
-			Display.PointSize = 1;
-
 
 			LastPoint.X = (int)pos.X;
 			LastPoint.Y = (int)pos.Y;
@@ -184,6 +167,7 @@ namespace ArcEngine.Graphic
 		{
 
 			int real_segments = (int)(Math.Abs(angle) / (2 * Math.PI) * (float)Display.CircleResolution) + 1;
+
 
 			float theta = angle / (float)(real_segments);
 			float tangetial_factor = (float)Math.Tan(theta);
@@ -209,6 +193,9 @@ namespace ArcEngine.Graphic
 				yy += ry * radial_factor;
 			}
 
+			LastPoint.X = (int)xx;
+			LastPoint.Y = (int)yy;
+
 		}
 
 
@@ -224,42 +211,36 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Draws a rounded rectangle
 		/// </summary>
-		/// <param name="rectangle"></param>
-		/// <param name="radius"></param>
+		/// <param name="rectangle">Rectangle</param>
+		/// <param name="radius">Round radius</param>
 		public void RoundedRectangle(Rectangle rectangle, int radius)
 		{
-
-			//function roundedRect(ctx, x, y, width, height, radius)
-			//ctx.beginPath();
-			//ctx.moveTo(x,y+radius);
-			
-			//ctx.lineTo(x,y+height-radius);
-			//ctx.quadraticCurveTo(x,y+height,x+radius,y+height);
-			
-			//ctx.lineTo(x+width-radius,y+height);
-			//ctx.quadraticCurveTo(x+width,y+height,x+width,y+height-radius);
-			
-			//ctx.lineTo(x+width,y+radius);
-			//ctx.quadraticCurveTo(x+width,y,x+width-radius,y);
-			
-			//ctx.lineTo(x+radius,y);
-			//ctx.quadraticCurveTo(x,y,x,y+radius);
-			//ctx.stroke();
-
-			MoveTo(rectangle.X, rectangle.Y + radius);
-			
+			// Bottom left
 			LineTo(rectangle.X, rectangle.Bottom - radius);
-			QuadraticCurveTo(new Point(rectangle.X + radius, rectangle.Bottom), new Point(rectangle.X, rectangle.Bottom));
+			QuadraticCurveTo(
+			   new Point(rectangle.X + radius, rectangle.Bottom),
+			   new Point(rectangle.X, rectangle.Bottom));
 
+			// Bottom right
 			LineTo(rectangle.Right - radius, rectangle.Bottom);
-			QuadraticCurveTo(new Point(rectangle.Right, rectangle.Bottom), new Point(rectangle.Right, rectangle.Bottom - radius));
-			
-			//LineTo(rectangle.Right, rectangle.Y + radius);
-			//QuadraticCurveTo(new Point(rectangle.Right, rectangle.Y), new Point(rectangle.Right - radius, rectangle.Y));
-			
-			//LineTo(rectangle.X + radius, rectangle.Y);
-			//QuadraticCurveTo(new Point(rectangle.X, rectangle.Y), new Point(rectangle.X, rectangle.Y + radius));
+			QuadraticCurveTo(
+			   new Point(rectangle.Right, rectangle.Bottom - radius),
+			   new Point(rectangle.Right, rectangle.Bottom));
 
+			// Top right
+			LineTo(rectangle.Right, rectangle.Y + radius);
+			QuadraticCurveTo(
+				new Point(rectangle.Right - radius, rectangle.Y),
+				new Point(rectangle.Right, rectangle.Y));
+
+			// Top left
+			LineTo(rectangle.X + radius, rectangle.Y);
+			QuadraticCurveTo(
+				new Point(rectangle.X, rectangle.Y + radius),
+				new Point(rectangle.X, rectangle.Y));
+
+			// Close the path
+			LineTo(rectangle.X, rectangle.Bottom - radius);
 		}
 
 

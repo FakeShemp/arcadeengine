@@ -947,7 +947,6 @@ namespace ArcEngine.Graphic
 		}
 
 
-
 		/// <summary>
 		/// Draw a Bezier curve
 		/// </summary>
@@ -958,21 +957,6 @@ namespace ArcEngine.Graphic
 		/// <param name="color">Color</param>
 		public static void DrawBezier(Point start, Point end, Point control1, Point control2, Color color)
 		{
-			DrawBezier(start, end, control1, control2, color, color);
-		}
-
-
-		/// <summary>
-		/// Draw a Bezier curve
-		/// </summary>
-		/// <param name="start">Start point</param>
-		/// <param name="end">End point</param>
-		/// <param name="control1">Control point 1</param>
-		/// <param name="control2">Control point 2</param>
-		/// <param name="startcolor">Start color</param>
-		/// <param name="endcolor">End color</param>
-		public static void DrawBezier(Point start, Point end, Point control1, Point control2, Color startcolor, Color endcolor)
-		{
 			float[] points = new float[]
 			{
 				start.X, start.Y, 0,
@@ -981,19 +965,19 @@ namespace ArcEngine.Graphic
 				end.X, end.Y, 0,
 			};
 
-			float[] colors = new float[]
-			{
-				startcolor.R, startcolor.G, startcolor.B, startcolor.A,
-				endcolor.R, endcolor.G, endcolor.B, endcolor.A,
-			};
+			//float[] colors = new float[]
+			//{
+			//   startcolor.R, startcolor.G, startcolor.B, startcolor.A,
+			//   endcolor.R, endcolor.G, endcolor.B, endcolor.A,
+			//};
 
 
-			//Color = startcolor;
+			Color = color;
 			GL.Enable(EnableCap.Map1Vertex3);
-			GL.Enable(EnableCap.Map1Color4);
+			//GL.Enable(EnableCap.Map1Color4);
 
 			GL.Map1(MapTarget.Map1Vertex3, 0, CircleResolution, 3, 4, points);
-			GL.Map1(MapTarget.Map1Color4, 0, CircleResolution, 4, 2, colors);
+			//GL.Map1(MapTarget.Map1Color4, 0, CircleResolution, 4, 2, colors);
 			GL.Begin(BeginMode.LineStrip);
 			for (int i = 0; i <= CircleResolution; i++)
 				GL.EvalCoord1(i);
@@ -1018,7 +1002,7 @@ namespace ArcEngine.Graphic
 		/// <param name="end">End point</param>
 		/// <param name="control">Control point</param>
 		/// <param name="color">Color</param>
-		public static void QuadraticCurve(Point start, Point end, Point control, Color color)
+		public static void DrawQuadraticCurve(Point start, Point end, Point control, Color color)
 		{
 			Point control1 = new Point(
 				(int)(start.X  + 2.0f / 3.0f * (control.X - start.X)),
@@ -1028,7 +1012,7 @@ namespace ArcEngine.Graphic
 				(int)(control1.X + (end.X - start.X) / 3.0f),
 				(int)(control1.Y + (end.Y - start.Y) / 3.0f));
 
-			DrawBezier(start, end, control1, control2, color, color);
+			DrawBezier(start, end, control1, control2, color);
 		}
 
 
