@@ -87,7 +87,7 @@ namespace ArcEngine.Examples.EmptyProject
         /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime)
         {
-            // Check if the Excape key is pressed
+            // Check if the Escape key is pressed
             if (Keyboard.IsKeyPress(Keys.Escape))
                 Exit();
 
@@ -99,7 +99,6 @@ namespace ArcEngine.Examples.EmptyProject
         /// <summary>
         /// Called when it is time to draw a frame.
         /// </summary>
-        /// <param name="device"></param>
         public override void Draw()
         {
             // Clears the background
