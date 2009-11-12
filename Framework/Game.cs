@@ -287,6 +287,9 @@ namespace ArcEngine
 			// Check if the Escape key is pressed
 			if (Keyboard.IsKeyPress(Keys.Escape))
 				Exit();
+
+			if (Keyboard.IsKeyPress(Keys.Insert))
+				RunEditor();
 		}
 
 
