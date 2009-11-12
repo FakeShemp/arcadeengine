@@ -61,7 +61,7 @@ namespace DungeonEye
 			Tileset.Scale = new SizeF(2.0f, 2.0f);
 
 			Font = ResourceManager.CreateSharedAsset<Font2d>("intro");
-			Font.TileSet.Scale = new SizeF(2.0f, 2.0f);
+			Font.GlyphTileset.Scale = new SizeF(2.0f, 2.0f);
 
 			StringTable = ResourceManager.CreateAsset<StringTable>("main");
 

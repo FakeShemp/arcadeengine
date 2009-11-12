@@ -58,7 +58,7 @@ namespace DungeonEye
 
 
 			Font = ResourceManager.CreateAsset<Font2d>("intro");
-			Font.TileSet.Scale = new SizeF(2.0f, 2.0f);
+			Font.GlyphTileset.Scale = new SizeF(2.0f, 2.0f);
 
 			PlayButton = new ScreenButton(string.Empty, new Rectangle(48, 362, 166, 32));
 			PlayButton.Selected += new EventHandler(PlayButton_Selected);

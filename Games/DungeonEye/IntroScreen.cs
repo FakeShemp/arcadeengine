@@ -55,10 +55,10 @@ namespace DungeonEye
 			ResourceManager.LoadBank("data/intro.bnk");
 
 			Scene = ResourceManager.CreateAsset<Scene>("intro");
-			Scene.Font.TileSet.Scale = new SizeF(2, 2);
+			Scene.Font.GlyphTileset.Scale = new SizeF(2, 2);
 
 			Font = ResourceManager.CreateAsset<Font2d>("intro");
-			Font.TileSet.Scale = new SizeF(2, 2);
+			Font.GlyphTileset.Scale = new SizeF(2, 2);
 		}
 
 

@@ -121,9 +121,9 @@ namespace DungeonEye
 
 
 			Font = ResourceManager.CreateSharedAsset<Font2d>("inventory");
-			Font.TileSet.Scale = new SizeF(2.0f, 2.0f);
+			Font.GlyphTileset.Scale = new SizeF(2.0f, 2.0f);
 			OutlinedFont = ResourceManager.CreateSharedAsset<Font2d>("outline");
-			OutlinedFont.TileSet.Scale = new SizeF(2.0f, 2.0f);
+			OutlinedFont.GlyphTileset.Scale = new SizeF(2.0f, 2.0f);
 
 			CampWindow.Init();
 			SpellBook.LoadContent();
