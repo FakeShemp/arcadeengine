@@ -61,9 +61,8 @@ namespace ArcEngine.Examples.StarterKit
 			// Create the game window
 			CreateGameWindow(new Size(1024, 768));
 
-
 			// Change the window title
-			Window.Text = "Starter Kit";
+			Window.Text = "ArcEngine Starter Kit";
 
 			// Reset our variables
 			elapsed = 0;
@@ -77,7 +76,6 @@ namespace ArcEngine.Examples.StarterKit
 		/// </summary>
 		public override void LoadContent()
 		{
-
 			// Clear color of the screen
 			Display.ClearColor = Color.White;
 
@@ -102,7 +100,7 @@ namespace ArcEngine.Examples.StarterKit
 		/// <param name="gameTime"></param>
 		public override void Update(GameTime gameTime)
 		{
-			// Check if the Excape key is pressed
+			// Check if the Escape key is pressed
 			if (Keyboard.IsKeyPress(Keys.Escape))
 				Exit();
 
@@ -123,7 +121,6 @@ namespace ArcEngine.Examples.StarterKit
 		/// <summary>
 		/// Called when it is time to draw a frame.
 		/// </summary>
-		/// <param name="device"></param>
 		public override void Draw()
 		{
 			// Clears the background
