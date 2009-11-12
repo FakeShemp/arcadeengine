@@ -60,6 +60,9 @@ namespace DungeonEye
 		/// </summary>
 		public override void LoadContent()
 		{
+			System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
+			watch.Start();
+
 			// Language
 			Language = ResourceManager.CreateAsset<StringTable>("game");
 			if (Language == null)
@@ -69,7 +72,7 @@ namespace DungeonEye
 			}
 			Language.LanguageName = DungeonEye.LanguageName;
 
-			// Keyboard input shceme
+			// Keyboard input scheme
 			InputScheme = ResourceManager.CreateAsset<InputScheme>(DungeonEye.InputSchemeName);
 			if (InputScheme == null)
 			{
@@ -138,6 +141,10 @@ namespace DungeonEye
 
 
 			sound = ResourceManager.CreateAsset<Audio>("ring");
+
+
+			watch.Stop();
+			Trace.WriteLine("Team::LoadContent() finished ! ({0} ms)", watch.ElapsedMilliseconds);
 		}
 
 
@@ -349,9 +356,8 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Drws the right side of the panel
 		/// </summary>
-		/// <param name="device"></param>
 		private void DrawMain()
 		{
 			Display.Color = Color.White;
@@ -497,9 +503,8 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Draws the inventory
 		/// </summary>
-		/// <param name="device"></param>
 		void DrawInventory()
 		{
 			// Background
@@ -611,18 +616,16 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Draws hero statistic
 		/// </summary>
 		/// <param name="device"></param>
 		void DrawStatistics()
 		{
 			// Background
 			TileSet.Draw(18, new Point(356, 0));
-		//	Display.Color = Color.FromArgb(164, 164, 184);
 			Display.FillRectangle(new Rectangle(360, 70, 186, 30), Color.FromArgb(164, 164, 184));
 			Display.FillRectangle(new Rectangle(360, 100, 276, 194), Color.FromArgb(164, 164, 184));
 			Display.FillRectangle(new Rectangle(360, 294, 242, 36), Color.FromArgb(164, 164, 184));
-		//	Display.Color = Color.White;
 
 
 			// Hero head
@@ -2643,32 +2646,32 @@ namespace DungeonEye
 	public enum HeroPosition
 	{
 		/// <summary>
-		/// 
+		/// Front left
 		/// </summary>
 		FrontLeft,
 
 		/// <summary>
-		/// 
+		/// Front right
 		/// </summary>
 		FrontRight,
 
 		/// <summary>
-		/// 
+		/// Middle left
 		/// </summary>
 		MiddleLeft,
 
 		/// <summary>
-		/// 
+		/// Middle right
 		/// </summary>
 		MiddleRight,
 
 		/// <summary>
-		/// 
+		/// Rear left
 		/// </summary>
 		RearLeft,
 
 		/// <summary>
-		/// 
+		/// Rear right
 		/// </summary>
 		RearRight
 	}

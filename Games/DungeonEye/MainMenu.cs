@@ -127,8 +127,6 @@ namespace DungeonEye
 		void LoadGameEvent(object sender, EventArgs e)
 		{
 			Team team = new Team();
-			team.LoadContent();
-
 			ScreenManager.AddScreen(team);
 		}
 
