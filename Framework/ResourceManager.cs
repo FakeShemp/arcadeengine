@@ -18,6 +18,7 @@
 //
 #endregion
 
+using System.Diagnostics;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -615,6 +616,7 @@ namespace ArcEngine
 				return false;
 			}
 
+			Stopwatch swatch = new Stopwatch();
 			Trace.Indent();
 			try
 			{
@@ -622,6 +624,9 @@ namespace ArcEngine
 				{
 					ZipInputStream zip = new ZipInputStream(fs);
 					zip.Password = password;
+
+
+					swatch.Start();
 
 					// Foreach file in the bank
 					ZipEntry entry;
@@ -708,8 +713,9 @@ namespace ArcEngine
 			}
 			finally
 			{
+				swatch.Stop();
 				Trace.Unindent();
-				Trace.WriteLine("Loading finished !");
+				Trace.WriteLine("Loading finished ! ({0} ms)", swatch.ElapsedMilliseconds);
 			}
 			return true;
 		}
