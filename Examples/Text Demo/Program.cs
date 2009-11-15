@@ -71,7 +71,7 @@ namespace ArcEngine.Examples.TextDemo
 			Display.ClearColor = Color.CornflowerBlue;
 
 			Font = Font2d.CreateFromTTF(@"c:\windows\fonts\verdana.ttf", 14, FontStyle.Regular);
-
+			Font.TextTileset = ResourceManager.CreateAsset<TileSet>("TextTileSet");
 		}
 
 
@@ -93,7 +93,6 @@ namespace ArcEngine.Examples.TextDemo
 		/// <summary>
 		/// Called when it is time to draw a frame.
 		/// </summary>
-		/// <param name="device"></param>
 		public override void Draw()
 		{
 			// Clears the background
@@ -113,12 +112,6 @@ namespace ArcEngine.Examples.TextDemo
 		/// Font
 		/// </summary>
 		Font2d Font;
-
-
-		/// <summary>
-		/// Tileset
-		/// </summary>
-		TileSet Tileset;
 
 		#endregion
 

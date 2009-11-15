@@ -45,7 +45,7 @@ namespace ArcEngine.Asset
 		public Font2d()
 		{
 			Color = Color.White;
-			TileSet = new TileSet();
+			GlyphTileset = new TileSet();
 			Batch = new Batch();
 		}
 
@@ -67,20 +67,20 @@ namespace ArcEngine.Asset
 			Rectangle rect = new Rectangle(pos, new Size());
 
 			//Batch.Size = text.Length;
-			Display.Texture = TileSet.Texture;
+			Display.Texture = GlyphTileset.Texture;
 
 			Batch.Clear();
 			foreach (char c in text)
 			{
 				// Get the tile
-				Tile tile = TileSet.GetTile(c - GlyphOffset);
+				Tile tile = GlyphTileset.GetTile(c - GlyphOffset);
 				if (tile == null)
 					continue;
 
 				// Move the glyph according to its hot spot
 				Rectangle tmp = new Rectangle(
-					new Point(rect.X - (int)(tile.HotSpot.X * TileSet.Scale.Width), rect.Y - (int)(tile.HotSpot.Y * TileSet.Scale.Height)),
-					new Size((int)(tile.Rectangle.Width * TileSet.Scale.Width), (int)(tile.Rectangle.Height * TileSet.Scale.Height)));
+					new Point(rect.X - (int)(tile.HotSpot.X * GlyphTileset.Scale.Width), rect.Y - (int)(tile.HotSpot.Y * GlyphTileset.Scale.Height)),
+					new Size((int)(tile.Rectangle.Width * GlyphTileset.Scale.Width), (int)(tile.Rectangle.Height * GlyphTileset.Scale.Height)));
 
 				// Add glyph to the batch
 				Batch.AddRectangle(tmp, Color, tile.Rectangle);
@@ -145,7 +145,7 @@ namespace ArcEngine.Asset
 			Rectangle rect = Rectangle.Empty;
 
 			//Batch.Size = text.Length;
-			Display.Texture = TileSet.Texture;
+			Display.Texture = GlyphTileset.Texture;
 
 
 			Batch.Clear();
@@ -155,12 +155,12 @@ namespace ArcEngine.Asset
 				if (c == 10)
 				{
 					loc.X = rectangle.X;
-					loc.Y += (int)(14 * TileSet.Scale.Height);
+					loc.Y += (int)(14 * GlyphTileset.Scale.Height);
 				}
 
 
 				// Get the tile
-				Tile tile = TileSet.GetTile(c - GlyphOffset);
+				Tile tile = GlyphTileset.GetTile(c - GlyphOffset);
 				if (tile == null)
 					continue;
 
@@ -170,18 +170,18 @@ namespace ArcEngine.Asset
 					case TextJustification.Left:
 					{
 						// Move the glyph according to its hot spot
-						rect.X = loc.X - (int)(tile.HotSpot.X * TileSet.Scale.Width);
-						rect.Y = loc.Y - (int)(tile.HotSpot.Y * TileSet.Scale.Height);
-						rect.Width = (int)(tile.Rectangle.Width * TileSet.Scale.Width);
-						rect.Height = (int)(tile.Rectangle.Height * TileSet.Scale.Height);
+						rect.X = loc.X - (int)(tile.HotSpot.X * GlyphTileset.Scale.Width);
+						rect.Y = loc.Y - (int)(tile.HotSpot.Y * GlyphTileset.Scale.Height);
+						rect.Width = (int)(tile.Rectangle.Width * GlyphTileset.Scale.Width);
+						rect.Height = (int)(tile.Rectangle.Height * GlyphTileset.Scale.Height);
 
 
 						// Out of the rectangle
 						if (rect.Left > rectangle.Right)
 						{
 							rect.X = rectangle.X;
-							rect.Y = rect.Y + (int)(14 * TileSet.Scale.Height);
-							loc.Y += (int)(14 * TileSet.Scale.Height);
+							rect.Y = rect.Y + (int)(14 * GlyphTileset.Scale.Height);
+							loc.Y += (int)(14 * GlyphTileset.Scale.Height);
 						}
 					}
 					break;
@@ -300,7 +300,7 @@ namespace ArcEngine.Asset
 
 
 			// Clear TileSet
-			TileSet.Clear();
+			GlyphTileset.Clear();
 
 			// Open the font
 			Stream data = ResourceManager.LoadResource(filename);
@@ -354,7 +354,7 @@ namespace ArcEngine.Asset
 
 
 				// Add the tile to the TileSet
-				Tile tile = TileSet.AddTile(i);
+				Tile tile = GlyphTileset.AddTile(i);
 				tile.Rectangle = new Rectangle(pos, TextRenderer.MeasureText(gfx, c, font, new Size(int.MaxValue, int.MaxValue), TextFormatFlags.NoPrefix | TextFormatFlags.NoPadding | TextFormatFlags.ExternalLeading));
 
 
@@ -407,7 +407,7 @@ namespace ArcEngine.Asset
 			// Save the image to the texture
 			MemoryStream ms = new MemoryStream();
 			bm.Save(ms, ImageFormat.Png);
-			TileSet.Texture.LoadImage(ms.ToArray());
+			GlyphTileset.Texture.LoadImage(ms.ToArray());
 
 			//	bm.Save("final.png", ImageFormat.Png);
 
@@ -460,8 +460,8 @@ namespace ArcEngine.Asset
 				return false;
 
 			TileSetName = name;
-			TileSet.Load(ResourceManager.GetAsset<TileSet>(name));
-			if (TileSet.Count == 0)
+			GlyphTileset.Load(ResourceManager.GetAsset<TileSet>(name));
+			if (GlyphTileset.Count == 0)
 				return false;
 
 			return true;
@@ -529,16 +529,16 @@ namespace ArcEngine.Asset
 
 
 			// Build tile set
-			TileSet.Clear();
+			GlyphTileset.Clear();
 
 			// Load texture
-			TileSet.Texture.LoadImage(name);
+			GlyphTileset.Texture.LoadImage(name);
 
 			int id = 32;
 			for (int y = zone.Top; y < zone.Bottom; y += size.Height)
 				for (int x = zone.Left; x < zone.Right; x += size.Width)
 				{
-					Tile tile = TileSet.AddTile(id++);
+					Tile tile = GlyphTileset.AddTile(id++);
 
 					tile.Rectangle = new Rectangle(x, y, size.Width, size.Height);
 				}
@@ -787,14 +787,26 @@ namespace ArcEngine.Asset
 
 
 		/// <summary>
-		/// TileSet of the font
+		/// TileSet of the glyphs
 		/// </summary>
 		[Browsable(false)]
-		public TileSet TileSet
+		public TileSet GlyphTileset
 		{
 			get;
 			private set;
 		}
+
+		/// <summary>
+		/// TileSet for the tiles in text
+		/// </summary>
+		[Browsable(false)]
+		public TileSet TextTileset
+		{
+			get;
+			set;
+		}
+
+
 
 		/// <summary>
 		/// Font Color
