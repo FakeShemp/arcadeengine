@@ -29,14 +29,14 @@ namespace ArcEngine.Input
 	/// <summary>
 	/// Describes the capabilities of a gamepad.
 	/// </summary>
-	public class GamePadCapabilities
+	public class GamepadCapabilities
 	{
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="joystick"></param>
-		internal GamePadCapabilities(Joystick joystick)
+		internal GamepadCapabilities(Joystick joystick)
 		{
 			// Joystick unplugged ?
 			if (joystick == null)

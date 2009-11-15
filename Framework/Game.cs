@@ -209,7 +209,7 @@ namespace ArcEngine
 					{
 						Keyboard.Update();
 						Mouse.Update();
-						GamePad.Update();
+						Gamepad.Update();
 					}
 
 				//	Trace.WriteLine("#############################");
@@ -240,7 +240,7 @@ namespace ArcEngine
 						{
 							Keyboard.Update();
 							Mouse.Update();
-							GamePad.Update();
+							Gamepad.Update();
 						}
 
 						Update(GameTime);
@@ -359,7 +359,7 @@ namespace ArcEngine
 			}
 
 			//Audio.Release();
-			GamePad.Release();
+			Gamepad.Release();
 
 			ResourceManager.Close();
 		}

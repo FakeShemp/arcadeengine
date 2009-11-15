@@ -49,7 +49,7 @@ namespace ArcEngine.Input
 			}
 			catch (DirectInputException)
 			{
-				GamePad.UnplugDevice(Joystick);
+				Gamepad.UnplugDevice(Joystick);
 				Joystick = null;
 				return;
 			}
@@ -167,7 +167,7 @@ namespace ArcEngine.Input
 
 
 		/// <summary>
-		/// Gets if the GamePad is unplugged
+		/// Gets if the Gamepad is unplugged
 		/// </summary>
 		public bool IsUnplugged
 		{

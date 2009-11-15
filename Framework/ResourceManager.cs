@@ -30,7 +30,7 @@ using ArcEngine.Asset;
 using ArcEngine.Providers;
 using ICSharpCode.SharpZipLib.Zip;
 
-// GamePad : http://sourceforge.net/projects/xnadirectinput/
+// Gamepad : http://sourceforge.net/projects/xnadirectinput/
 //
 //
 //

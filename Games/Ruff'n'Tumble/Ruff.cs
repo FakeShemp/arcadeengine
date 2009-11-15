@@ -99,7 +99,7 @@ namespace RuffnTumble
 			CreateGameWindow(new Size(800, 600));
 			Window.Text = "Ruff'n'Tumble";
 
-			GamePad.Init(Window);
+			Gamepad.Init(Window);
 
 			// Loads content
 			ResourceManager.AddProvider(new WorldProvider());

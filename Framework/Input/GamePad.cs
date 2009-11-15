@@ -30,16 +30,16 @@ using SlimDX.DirectInput;
 namespace ArcEngine.Input
 {
 	/// <summary>
-	/// GamePad device management
+	/// Gamepad device management
 	/// </summary>
-	public static class GamePad
+	public static class Gamepad
 	{
 
 
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		static GamePad()
+		static Gamepad()
 		{
 			AvailableDevices = new List<GamePadState>();
 		}
@@ -166,15 +166,15 @@ namespace ArcEngine.Input
 		/// Gets the capabilities of a gamepad.
 		/// </summary>
 		/// <param name="id"></param>
-		static public GamePadCapabilities GetCapabilities(int id)
+		static public GamepadCapabilities GetCapabilities(int id)
 		{
-			return new GamePadCapabilities(AvailableDevices[id].Joystick);
+			return new GamepadCapabilities(AvailableDevices[id].Joystick);
 		}
 
 
 	
 		/// <summary>
-		/// Returns the state of a GamePad
+		/// Returns the state of a Gamepad
 		/// </summary>
 		/// <param name="id">ID of the gamepad</param>
 		/// <returns></returns>
@@ -396,7 +396,7 @@ namespace ArcEngine.Input
 
 
 		/// <summary>
-		/// Update GamePad states
+		/// Update Gamepad states
 		/// </summary>
 		static internal void Update()
 		{

@@ -75,7 +75,7 @@ namespace ArcEngine.Examples.Joystick
 			Font = new Font2d();
 			Font.LoadTTF(@"c:\windows\fonts\verdana.ttf", 14, FontStyle.Regular);
 
-			GamePad.Init(Window);
+			Gamepad.Init(Window);
 			CheckDevices();
 		}
 
@@ -97,7 +97,7 @@ namespace ArcEngine.Examples.Joystick
 
 
 		//	if (Keyboard.IsNewKeyPress(Keys.K))
-		//		GamePad.SetVibration(0, 100, 100);
+		//		Gamepad.SetVibration(0, 100, 100);
 
 		}
 
@@ -107,8 +107,8 @@ namespace ArcEngine.Examples.Joystick
 		/// </summary>
 		void CheckDevices()
 		{
-			GamePad.CheckForDevices();
-			GamePad.OnUnplug += new GamePad.UnpluggedDevice(GamePad_OnUnplug);
+			Gamepad.CheckForDevices();
+			Gamepad.OnUnplug += new Gamepad.UnpluggedDevice(GamePad_OnUnplug);
 
 			Messages.Clear();
 		}
@@ -136,16 +136,16 @@ namespace ArcEngine.Examples.Joystick
 
 
 			Font.DrawText(new Point(100, 50), "Press F1 to detect new gamepads...");
-			Font.DrawText(new Point(100, 90), "Available device(s) : {0}", GamePad.Count);
+			Font.DrawText(new Point(100, 90), "Available device(s) : {0}", Gamepad.Count);
 
 
 			int y = 100;
-			for(int id = 0; id < GamePad.Count; id++)
+			for(int id = 0; id < Gamepad.Count; id++)
 			{
-				GamePadCapabilities caps = GamePad.GetCapabilities(id);
+				GamepadCapabilities caps = Gamepad.GetCapabilities(id);
 				Font.DrawText(new Point(100, y + 20 + id * 20), "id {0} : \"{1}\"", id, caps.InstanceName);
 
-				GamePadState state = GamePad.GetState(id);
+				GamePadState state = Gamepad.GetState(id);
 				Font.DrawText(new Point(100, y + 40 + id * 20), "X : {0}", state.X);
 				Font.DrawText(new Point(100, y + 60 + id * 20), "Y : {0}", state.Y);
 				Font.DrawText(new Point(100, y + 80 + id * 20), "Z : {0}", state.Z);
