@@ -377,7 +377,7 @@ namespace ArcEngine
 		{
 			Trace.WriteLine("Running the game");
 
-			Audio.Init();
+		//	Audio.Init();
 
 
 			LoadContent();

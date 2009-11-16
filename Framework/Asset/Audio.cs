@@ -23,9 +23,11 @@ using System.IO;
 using System;
 using System.Drawing;
 using System.Xml;
-using OpenTK;
-using OpenTK.Audio.OpenAL;
-using OpenTK.Audio;
+//using OpenTK;
+//using OpenTK.Audio.OpenAL;
+//using OpenTK.Audio;
+using System.Media;
+using System.ComponentModel;
 
 namespace ArcEngine.Asset
 {
@@ -43,15 +45,35 @@ namespace ArcEngine.Asset
 		/// </summary>
 		public Audio()
 		{
-			Buffer = AL.GenBuffer();
-			Source = AL.GenSource();
+			//Buffer = AL.GenBuffer();
+			//Source = AL.GenSource();
 
-			Pitch = 1.0f;
-			MaxGain = 1.0f;
-			Position = Point.Empty;
-			Velocity = Point.Empty;
+			//Pitch = 1.0f;
+			//MaxGain = 1.0f;
+			//Position = Point.Empty;
+			//Velocity = Point.Empty;
+
+			Player = new SoundPlayer();
+			Player.LoadCompleted += new AsyncCompletedEventHandler(Player_LoadCompleted);
 		}
 
+
+		/// <summary>
+		/// Load complete event
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void Player_LoadCompleted(object sender, AsyncCompletedEventArgs e)
+		{
+			IsLoaded = true;
+
+			if (OnLoadCompleted != null)
+			{
+				OnLoadCompleted(this);
+			}
+		}
+
+/*
 		/// <summary>
 		/// Destructor
 		/// </summary>
@@ -59,22 +81,28 @@ namespace ArcEngine.Asset
 		{
 			Dispose();
 		}
-
+*/
 
 		/// <summary>
-		/// 
+		/// Dispose
 		/// </summary>
 		public void Dispose()
 		{
-			AL.DeleteSource(Source);
-			AL.DeleteBuffer(Buffer);
+			//AL.DeleteSource(Source);
+			//AL.DeleteBuffer(Buffer);
 
-			Source = 0;
-			Buffer = 0;
+			//Source = 0;
+			//Buffer = 0;
+			if (Player != null)
+			{
+				Player.Dispose();
+				Player = null;
+			}
 		}
 
 
 		#region Static
+/*
 
 		/// <summary>
 		/// 
@@ -101,23 +129,39 @@ namespace ArcEngine.Asset
 
 		static AudioContext Context;
 
+*/
+		#endregion
+
+
+		#region Events
+
+		/// <summary>
+		/// On load completed event handler
+		/// </summary>
+		/// <param name="audio"></param>
+		public delegate void OnLoadCompletedEventHandler(Audio audio);
+
+		/// <summary>
+		/// OnLoadCompleted event
+		/// </summary>
+		public event OnLoadCompletedEventHandler OnLoadCompleted;
 
 		#endregion
+
 
 
 		/// <summary>
 		/// Loads a sound
 		/// </summary>
 		/// <param name="filename">File to load</param>
-		/// <returns></returns>
-		public bool LoadSound(string filename)
+		public void LoadSound(string filename)
 		{
 			if (string.IsNullOrEmpty(filename))
-				return false;
+				return;
 
-			Stream stream = ResourceManager.LoadResource(filename);
-			if (stream == null)
-				return false;
+			Player.Stream = ResourceManager.LoadResource(filename);
+			if (Player.Stream == null)
+				return;
 
 			//using (AudioReader sound = new AudioReader(stream))
 			//{
@@ -125,7 +169,10 @@ namespace ArcEngine.Asset
 			//   AL.Source(Source, ALSourcei.Buffer, Buffer);
 			//}
 
-			return AL.GetError() == ALError.NoError;
+			//return AL.GetError() == ALError.NoError;
+
+			IsLoaded = false;
+			Player.LoadAsync();
 		}
 
 
@@ -135,26 +182,34 @@ namespace ArcEngine.Asset
 		/// </summary>
 		public void Play()
 		{
-			AL.SourcePlay(Source);
+			if (!IsLoaded)
+				return;
+
+			if (Loop)
+				Player.PlayLooping();
+			else
+				Player.Play();
+			//AL.SourcePlay(Source);
 		}
 
-
+/*
 		/// <summary>
 		/// Pauses the sound
 		/// </summary>
 		public void Pause()
 		{
-			AL.SourcePause(Source);
+			//AL.SourcePause(Source);
 		}
-
+*/
 
 		/// <summary>
 		/// Stops the sound
 		/// </summary>
 		public void Stop()
 		{
-			AL.SourceStop(Source);
-			AL.SourceRewind(Source);
+			Player.Stop();
+			//AL.SourceStop(Source);
+			//AL.SourceRewind(Source);
 		}
 
 
@@ -214,7 +269,7 @@ namespace ArcEngine.Asset
 
 			xml.WriteEndElement();
 */
-			return true;
+			return false;
 		}
 
 
@@ -262,7 +317,7 @@ namespace ArcEngine.Asset
 
 		#region Listener Properties
 
-
+/*
 		/// <summary>
 		/// Listener position
 		/// </summary>
@@ -321,7 +376,7 @@ namespace ArcEngine.Asset
 			}
 		}
 
-
+*/
 
 
 		#endregion
@@ -359,6 +414,7 @@ namespace ArcEngine.Asset
 			set;
 		}
 
+/*
 		/// <summary>
 		/// ID of the sound buffer
 		/// </summary>
@@ -369,7 +425,7 @@ namespace ArcEngine.Asset
 		/// Source ID
 		/// </summary>
 		int Source;
-
+*/
 
 		/// <summary>
 		/// Turns sound looping on or off
@@ -394,7 +450,7 @@ namespace ArcEngine.Asset
 			}
 		}
 
-
+/*
 		/// <summary>
 		/// Pitch of the sound
 		/// </summary>
@@ -491,7 +547,21 @@ namespace ArcEngine.Asset
 				//AL.Source3i(SourceID, AL.AL_VELOCITY, value.X, value.Y, 0);
 			}
 		}
+*/
+		/// <summary>
+		/// Is sound loaded
+		/// </summary>
+		public bool IsLoaded
+		{
+			get;
+			private set;
+		}
 
+
+		/// <summary>
+		/// Sound player
+		/// </summary>
+		SoundPlayer Player;
 
 		#endregion
 	}
