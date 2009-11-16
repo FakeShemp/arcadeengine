@@ -55,6 +55,10 @@ namespace DungeonEye
 			// Zone of the button to open/close the door
 			Button = new Rectangle(254, 70, 20, 28);
 
+
+			OpenSound = ResourceManager.CreateSharedAsset<Audio>("door open");
+			CloseSound = ResourceManager.CreateSharedAsset<Audio>("door close");
+
 			return true;
 		}
 
@@ -157,6 +161,7 @@ namespace DungeonEye
 		public void Open()
 		{
 			State = DoorState.Opening;
+			OpenSound.Play();
 		}
 
 
@@ -170,6 +175,7 @@ namespace DungeonEye
 			//	return;
 
 			State = DoorState.Closing;
+			CloseSound.Play();
 		}
 
 
@@ -739,6 +745,11 @@ namespace DungeonEye
 		/// </summary>
 		Rectangle Button;
 
+
+		Audio OpenSound;
+
+
+		Audio CloseSound;
 
 		#endregion
 	}
