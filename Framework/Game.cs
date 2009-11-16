@@ -101,8 +101,56 @@ namespace ArcEngine
 			Window.Show();
 
 
-
+			// Events
+			Window.Activated += new EventHandler(Window_Activated);
+			Window.Deactivate += new EventHandler(Window_Deactivate);
+			Window.Resize += new EventHandler(Window_Resize);
 			Mouse.Init(Window);
+		}
+
+		#endregion
+
+
+		#region Event	handlers
+
+		/// <summary>
+		/// GameWindow resize event
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void Window_Resize(object sender, EventArgs e)
+		{
+			if (OnResize != null)
+			{
+				OnResize(this);
+			}
+		}
+
+
+		/// <summary>
+		/// GameWindow loses focus event
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void Window_Deactivate(object sender, EventArgs e)
+		{
+			if (OnDeactivated != null)
+			{
+				OnDeactivated(this);
+			}
+		}
+
+		/// <summary>
+		/// Gamewindow gains focus event
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void Window_Activated(object sender, EventArgs e)
+		{
+			if (OnActivated != null)
+			{
+				OnActivated(this);
+			}
 		}
 
 
@@ -373,15 +421,42 @@ namespace ArcEngine
 
 
 		/// <summary>
-		/// Raised when the game gains focus.
+		/// Gain focus event handler
 		/// </summary>
-		public event EventHandler Activated;
+		/// <param name="game">Game</param>
+		public delegate void OnActivatedEventHandler(Game game);
 
 
 		/// <summary>
+		/// Raised when the game gains focus.
+		/// </summary>
+		public event OnActivatedEventHandler OnActivated;
+
+
+		/// <summary>
+		/// Lost focus event handler
+		/// </summary>
+		/// <param name="game">Game</param>
+		public delegate void OnDeactivatedEventHandler(Game game);
+
+		
+		/// <summary>
 		/// Raised when the game loses focus.
 		/// </summary>
-		public event EventHandler Deactivated;
+		public event OnDeactivatedEventHandler OnDeactivated;
+
+
+		/// <summary>
+		/// Resize event handler
+		/// </summary>
+		/// <param name="game">Game</param>
+		public delegate void OnResizeEventHandler(Game game);
+
+
+		/// <summary>
+		/// GameWindow resize event
+		/// </summary>
+		public event OnResizeEventHandler OnResize;
 
 
 		#endregion
