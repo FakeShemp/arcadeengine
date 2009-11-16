@@ -21,6 +21,7 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Security;
+using System.Drawing;
 
 namespace ArcEngine.PInvoke
 {
@@ -32,6 +33,37 @@ namespace ArcEngine.PInvoke
 		/// <param name="keyCode"></param>
 		/// <returns></returns>
 		[DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
-		public static extern short GetKeyState(int keyCode);
+		internal static extern short GetKeyState(int keyCode);
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		[StructLayout(LayoutKind.Sequential)]
+		internal struct NativeMessage
+		{
+			public IntPtr hWnd;
+			public uint msg;
+			public IntPtr wParam;
+			public IntPtr lParam;
+			public uint time;
+			public Point p;
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="message"></param>
+		/// <param name="hwnd"></param>
+		/// <param name="messageFilterMin"></param>
+		/// <param name="messageFilterMax"></param>
+		/// <param name="flags"></param>
+		/// <returns></returns>
+		[SuppressUnmanagedCodeSecurityAttribute]
+		[DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = false)]
+		[return: MarshalAs(UnmanagedType.Bool)]
+		internal static extern bool PeekMessage(out NativeMessage message, IntPtr hwnd, uint messageFilterMin, uint messageFilterMax, uint flags);
+
+	
 	}
 }

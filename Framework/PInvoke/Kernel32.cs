@@ -33,7 +33,7 @@ namespace ArcEngine.PInvoke
 		/// <param name="lpFileName"></param>
 		/// <returns></returns>
 		[DllImport("kernel32", SetLastError=true)]
-		static public extern IntPtr LoadLibrary(string lpFileName);
+		internal static extern IntPtr LoadLibrary(string lpFileName);
 
 
 		/// <summary>
@@ -42,6 +42,6 @@ namespace ArcEngine.PInvoke
 		/// <param name="hModule"></param>
 		/// <returns></returns>
 		[DllImport("kernel32.dll", SetLastError = true)]
-		static public extern bool FreeLibrary(IntPtr hModule);
+		internal static extern bool FreeLibrary(IntPtr hModule);
 	}
 }
