@@ -69,26 +69,6 @@ namespace ArcEngine
 			WriteLine("CLR : {0}", Environment.Version.ToString());
 			Unindent();
 
-/*
-
-			WriteLine("Video informations :");
-			Indent();
-			WriteLine("Graphics card vendor : {0}", GL.GetString(StringName.Vendor));
-			WriteLine("Renderer : {0}", GL.GetString(StringName.Renderer));
-			int major, minor;
-			GL.GetInteger(GetPName.MajorVersion, out major);
-			GL.GetInteger(GetPName.MinorVersion, out minor);
-			WriteLine("Version : {0} ({1}, {2})", GL.GetString(StringName.Version), major, minor);
-
-
-			WriteLine("Display modes");
-			Indent();
-
-			foreach (DisplayDevice device in DisplayDevice.AvailableDisplays)
-				WriteLine(device.ToString());
-
-			Unindent();
-*/
 			Unindent();
 
 			// Look through each loaded dll
@@ -102,13 +82,6 @@ namespace ArcEngine
 			foreach (string name in list)
 				WriteLine(name);
 			Unindent();
-
-
-
-
-
-
-
 		}
 
 		#endregion
@@ -119,7 +92,7 @@ namespace ArcEngine
 		/// <summary>
 		/// Checks for a condition, and outputs the call stack if the condition is false.
 		/// </summary>
-		/// <param name="condition"></param>
+		/// <param name="condition">Condition</param>
 		public static void Assert(bool condition)
 		{
 			Diag.Trace.Assert(condition);
@@ -132,8 +105,8 @@ namespace ArcEngine
 		/// <summary>
 		/// Checks for a condition, and displays a message if the condition is false.
 		/// </summary>
-		/// <param name="condition"></param>
-		/// <param name="message"></param>
+		/// <param name="condition">Condition</param>
+		/// <param name="message">Message to trace</param>
 		public static void Assert(bool condition, string message)
 		{
 			Diag.Trace.Assert(condition, message);
@@ -148,9 +121,9 @@ namespace ArcEngine
 		#region Write
 
 		/// <summary>
-		/// 
+		/// Writes a message
 		/// </summary>
-		/// <param name="message"></param>
+		/// <param name="message">Message to write</param>
 		public static void Write(string message)
 		{
 			Diag.Trace.Write(message);
@@ -162,10 +135,10 @@ namespace ArcEngine
 
 
 		/// <summary>
-		/// Writes to the log
+		/// Writes to the log a formated string
 		/// </summary>
-		/// <param name="format"></param>
-		/// <param name="args"></param>
+		/// <param name="format">String format</param>
+		/// <param name="args">Arguments</param>
 		public static void Write(string format, params object[] args)
 		{
 			Write(string.Format(format, args));
@@ -174,10 +147,10 @@ namespace ArcEngine
 
 
 		/// <summary>
-		/// 
+		/// Writes a conditional message
 		/// </summary>
-		/// <param name="condition"></param>
-		/// <param name="message"></param>
+		/// <param name="condition">Condition</param>
+		/// <param name="message">Message</param>
 		public static void WriteIf(bool condition, string message)
 		{
 			Diag.Trace.WriteIf(condition, message);
@@ -187,10 +160,11 @@ namespace ArcEngine
 		}
 
 		/// <summary>
-		/// Writes a line to the log
+		/// Writes a conditional message
 		/// </summary>
-		/// <param name="format"></param>		/// <param name="args"></param>
-		/// <param name="condition"></param>
+		/// <param name="condition">Condition</param>
+		/// <param name="format">String format</param>
+		/// <param name="args">Arguments</param>
 		public static void WriteIf(bool condition, string format, params object[] args)
 		{
 			WriteIf(condition, string.Format(format, args));
@@ -205,7 +179,7 @@ namespace ArcEngine
 		/// <summary>
 		/// Writes a line to the log
 		/// </summary>
-		/// <param name="message"></param>
+		/// <param name="message">Message</param>
 		public static void WriteLine(string message)
 		{
 			Diag.Trace.WriteLine(message);
@@ -217,8 +191,8 @@ namespace ArcEngine
 		/// <summary>
 		/// Writes a line to the log
 		/// </summary>
-		/// <param name="format"></param>
-		/// <param name="args"></param>
+		/// <param name="format">String format</param>
+		/// <param name="args">Arguments</param>
 		public static void WriteLine(string format, params object[] args)
 		{
 			WriteLine(string.Format(format, args));
@@ -226,10 +200,10 @@ namespace ArcEngine
 
 
 		/// <summary>
-		/// 
+		/// Writes a conditional line
 		/// </summary>
-		/// <param name="condition"></param>
-		/// <param name="message"></param>
+		/// <param name="condition">Condition</param>
+		/// <param name="message">Message</param>
 		public static void WriteLineIf(bool condition, string message)
 		{
 			Diag.Trace.WriteLineIf(condition, message);
@@ -239,11 +213,11 @@ namespace ArcEngine
 		}
 
 		/// <summary>
-		/// Writes a line to the log
+		/// Writes a conditional line to the log
 		/// </summary>
-		/// <param name="format"></param>
-		/// <param name="args"></param>
-		/// <param name="condition"></param>
+		/// <param name="condition">Condition</param>
+		/// <param name="format">String format</param>
+		/// <param name="args">Arguments</param>
 		public static void WriteLineIf(bool condition, string format, params object[] args)
 		{
 			WriteLineIf(condition, string.Format(format, args));
@@ -257,7 +231,7 @@ namespace ArcEngine
 		#region Indent
 
 		/// <summary>
-		/// 
+		/// Indent
 		/// </summary>
 		public static void Indent()
 		{
@@ -266,7 +240,7 @@ namespace ArcEngine
 
 
 		/// <summary>
-		/// 
+		/// Unindent
 		/// </summary>
 		public static void Unindent()
 		{
@@ -281,7 +255,7 @@ namespace ArcEngine
 		#region Events
 
 		/// <summary>
-		/// 
+		/// Event fired when a trace occure
 		/// </summary>
 		/// <param name="message"></param>
 		/// <returns></returns>
@@ -294,7 +268,7 @@ namespace ArcEngine
 
 
 		/// <summary>
-		/// 
+		/// Event fired when an assert occure
 		/// </summary>
 		/// <returns></returns>
 		public delegate void OnAssertEvent();
