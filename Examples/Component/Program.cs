@@ -78,8 +78,6 @@ namespace ArcEngine.Examples.Component
 		public override void LoadContent()
 		{
 			Display.ClearColor = Color.Black;
-
-
 		}
 
 
