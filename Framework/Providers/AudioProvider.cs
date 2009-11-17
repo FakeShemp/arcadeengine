@@ -100,6 +100,8 @@ namespace ArcEngine.Providers
 		/// </summary>
 		public override bool Init()
 		{
+			return true;
+
 			if (IsInit)
 			{
 				Trace.WriteLine("AudioContext already initialized !");

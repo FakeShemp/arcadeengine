@@ -35,7 +35,7 @@ namespace ArcEngine.PInvoke
 	/// <summary>
 	/// Binds functions and definitions in winmm.dll.
 	/// </summary>
-	public class Winmm
+	internal class Winmm
 	{
 		// --- Fields ---
 		#region Private Constants
