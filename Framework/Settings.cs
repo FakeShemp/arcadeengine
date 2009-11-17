@@ -180,7 +180,7 @@ namespace ArcEngine
 		/// <summary>
 		/// Loads settings from a file
 		/// </summary>
-		/// <param name="filename">Filename to loade</param>
+		/// <param name="filename">Filename to load</param>
 		/// <returns></returns>
 		static public bool Load(string filename)
 		{
