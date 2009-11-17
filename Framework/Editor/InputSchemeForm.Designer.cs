@@ -1,6 +1,6 @@
 namespace ArcEngine.Editor
 {
-	partial class KeyboardSchemeForm
+	partial class InputSchemeForm
 	{
 		/// <summary> 
 		/// Required designer variable.

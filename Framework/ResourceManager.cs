@@ -631,9 +631,9 @@ namespace ArcEngine
 						{
 							entry = zip.GetNextEntry();
 						}
-						catch (Exception e)
+						catch (ZipException e)
 						{
-							Trace.WriteLine("Execption thrown \"{0}\" !", e.Message);
+							Trace.WriteLine("ZipException thrown \"{0}\" !", e.Message);
 							break;
 						}
 

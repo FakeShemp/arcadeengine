@@ -51,7 +51,7 @@ namespace ArcEngine
 		/// </summary>
 		/// <typeparam name="T">Type to check</typeparam>
 		/// <param name="name"><c>string</c> to check</param>
-		protected void CheckValue<T>(string name)
+		protected void CheckValue<T>(string name)  where T : IAsset
 		{
 			if (string.IsNullOrEmpty(name))
 				throw new ArgumentNullException("name");
@@ -94,7 +94,7 @@ namespace ArcEngine
 		/// </summary>
 		///<typeparam name="T"></typeparam>
 		/// <param name="name"></param>
-		public virtual AssetEditor EditAsset<T>(string name)
+		public virtual AssetEditor EditAsset<T>(string name) where T : IAsset
 		{
 			return null;
 		}
@@ -122,7 +122,7 @@ namespace ArcEngine
 		/// </summary>
 		/// <typeparam name="T">Type of the asset</typeparam>
 		/// <param name="name">Name of the asset</param>
-		public abstract void Remove<T>(string name);
+		public abstract void Remove<T>(string name) where T : IAsset;
 
 
 
@@ -133,7 +133,7 @@ namespace ArcEngine
 		/// <typeparam name="T">Type of the asset</typeparam>
 		/// <param name="name">Name of the asset</param>
 		/// <returns>Definition of an asset</returns>
-		public abstract XmlNode Get<T>(string name);
+		public abstract XmlNode Get<T>(string name) where T : IAsset;
 
 
 
@@ -143,7 +143,7 @@ namespace ArcEngine
 		/// <typeparam name="T">Asset type</typeparam>
 		/// <param name="name">Name of the asset</param>
 		/// <returns>The resource or null if asset not found</returns>
-		public abstract T Create<T>(string name);
+		public abstract T Create<T>(string name) where T : IAsset;
 
 	
 		/// <summary>
@@ -151,14 +151,14 @@ namespace ArcEngine
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <returns>List of available assets</returns>
-		public abstract List<string> GetAssets<T>();
+		public abstract List<string> GetAssets<T>() where T : IAsset;
 
 
 		/// <summary>
 		/// Removes a specific type of assets
 		/// </summary>
 		/// <typeparam name="T">Type of the asset to remove</typeparam>
-		public abstract void Remove<T>();
+		public abstract void Remove<T>() where T : IAsset;
 
 
 		/// <summary>
@@ -172,7 +172,7 @@ namespace ArcEngine
 		/// </summary>
 		/// <typeparam name="T">Type of the asset</typeparam>
 		/// <returns>Number of available asset</returns>
-		public abstract int Count<T>();
+		public abstract int Count<T>() where T : IAsset;
 
 		#endregion
 
@@ -187,7 +187,7 @@ namespace ArcEngine
 		/// <typeparam name="T">Asset type</typeparam>
 		/// <param name="name">Name of the asset to register</param>
 		/// <param name="asset">Asset's handle</param>
-		public abstract void AddShared<T>(string name, IAsset asset);
+		public abstract void AddShared<T>(string name, IAsset asset) where T : IAsset;
 
 
 		/// <summary>
@@ -196,7 +196,7 @@ namespace ArcEngine
 		/// <typeparam name="T">Asset type</typeparam>
 		/// <param name="name">Name of the shared asset</param>
 		/// <returns>The resource</returns>
-		public abstract T CreateShared<T>(string name);
+		public abstract T CreateShared<T>(string name) where T : IAsset;
 
 
 
@@ -205,7 +205,7 @@ namespace ArcEngine
 		/// </summary>
 		/// <typeparam name="T">Type of the asset</typeparam>
 		/// <param name="name">Name of the asset</param>
-		public abstract void RemoveShared<T>(string name);
+		public abstract void RemoveShared<T>(string name) where T : IAsset;
 
 
 
@@ -213,7 +213,7 @@ namespace ArcEngine
 		/// Removes a specific type of sharedassets
 		/// </summary>
 		/// <typeparam name="T">Type of the asset to remove</typeparam>
-		public abstract void RemoveShared<T>();
+		public abstract void RemoveShared<T>() where T : IAsset;
 
 
 		/// <summary>

@@ -29,6 +29,7 @@ using ArcEngine.Input;
 using ArcEngine.PInvoke;
 
 
+[assembly: CLSCompliant(true)]
 namespace ArcEngine
 {
 	/// <summary>

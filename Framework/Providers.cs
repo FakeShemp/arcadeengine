@@ -343,7 +343,7 @@ namespace ArcEngine
 			{
 				if (Schemes.ContainsKey(name))
 					node = Schemes[name];
-				form = new ArcEngine.Editor.KeyboardSchemeForm(node);
+				form = new ArcEngine.Editor.InputSchemeForm(node);
 			}
 
 			else if (typeof(T) == typeof(Layout))
@@ -373,7 +373,7 @@ namespace ArcEngine
 		/// <typeparam name="T">Type of the asset</typeparam>
 		/// <param name="name">Name of the asset</param>
 		/// <param name="node">Xml node definition</param>
-		public override void Add<T>(string name, XmlNode node)
+		public override void Add<T>(string name, XmlNode node) 
 		{
 			CheckValue<T>(name);
 

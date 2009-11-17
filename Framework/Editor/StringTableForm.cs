@@ -299,7 +299,7 @@ namespace ArcEngine.Editor
 			int newid = int.Parse(e.Label);
 
 			// Check if a string with the same id already exist
-			if (StringTable.GetString(newid) != string.Empty)
+			if (!string.IsNullOrEmpty(StringTable.GetString(newid)))
 			{
 				if (MessageBox.Show("A string with this ID already exists ! Replace it ?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
 				{

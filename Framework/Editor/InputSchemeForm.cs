@@ -27,10 +27,10 @@ using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
+using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Forms;
 using ArcEngine.Properties;
-using ArcEngine;
 using DigitalRune.Windows.TextEditor;
 using DigitalRune.Windows.TextEditor.Completion;
 using DigitalRune.Windows.TextEditor.Document;
@@ -43,12 +43,12 @@ namespace ArcEngine.Editor
 	/// <summary>
 	/// Edit script
 	/// </summary>
-	internal partial class KeyboardSchemeForm : AssetEditor
+	internal partial class InputSchemeForm : AssetEditor
 	{
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public KeyboardSchemeForm(XmlNode node)
+		public InputSchemeForm(XmlNode node)
 		{
 			InitializeComponent();
 

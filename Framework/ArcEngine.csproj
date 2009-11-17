@@ -164,11 +164,11 @@
     <Compile Include="Editor\ImportGIFForm.Designer.cs">
       <DependentUpon>ImportGIFForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Editor\KeyboardSchemeForm.cs">
+    <Compile Include="Editor\InputSchemeForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Editor\KeyboardSchemeForm.Designer.cs">
-      <DependentUpon>KeyboardSchemeForm.cs</DependentUpon>
+    <Compile Include="Editor\InputSchemeForm.Designer.cs">
+      <DependentUpon>InputSchemeForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Editor\LayoutForm.cs">
       <SubType>Form</SubType>
@@ -385,8 +385,8 @@
     <EmbeddedResource Include="Editor\ImportGIFForm.resx">
       <DependentUpon>ImportGIFForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Editor\KeyboardSchemeForm.resx">
-      <DependentUpon>KeyboardSchemeForm.cs</DependentUpon>
+    <EmbeddedResource Include="Editor\InputSchemeForm.resx">
+      <DependentUpon>InputSchemeForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Editor\LayoutForm.resx">
       <DependentUpon>LayoutForm.cs</DependentUpon>
