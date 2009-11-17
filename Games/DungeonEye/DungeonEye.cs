@@ -22,7 +22,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using ArcEngine;
 using ArcEngine.Input;
-using ArcEngine.Providers;
+using ArcEngine;
 using ArcEngine.Utility.ScreenManager;
 
 

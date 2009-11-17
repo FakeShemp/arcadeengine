@@ -41,7 +41,7 @@ namespace ArcEngine.Editor
 
 			textBoxDescription.Text += Environment.NewLine + "Registred asset :" + Environment.NewLine;
 
-			foreach (Providers.Provider provider in ResourceManager.Providers)
+			foreach (Provider provider in ResourceManager.Providers)
 			{
 				foreach (Type type in provider.Assets)
 				{

@@ -24,7 +24,7 @@ using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
 using ArcEngine.Forms;
-using ArcEngine.Providers;
+using ArcEngine;
 using WeifenLuo.WinFormsUI.Docking;
 
 
@@ -56,7 +56,7 @@ namespace ArcEngine.Editor
 			TreeNode bank = ResourceTree.Nodes.Add("Assets");
 
 			// For each providers
-			foreach (Providers.Provider provider in ResourceManager.Providers)
+			foreach (Provider provider in ResourceManager.Providers)
 			{
 				// for each registred asset
 				foreach(Type type in provider.Assets)
@@ -191,7 +191,7 @@ namespace ArcEngine.Editor
 					return false;
 
 				// Get the provider
-				Providers.Provider provider = ResourceManager.GetAssetProvider(node.Tag as Type);
+				Provider provider = ResourceManager.GetAssetProvider(node.Tag as Type);
 				if (provider == null)
 					return false;
 
@@ -292,7 +292,7 @@ namespace ArcEngine.Editor
 				return false;
 
 			// Get the provider
-			Providers.Provider provider = ResourceManager.GetAssetProvider(node.Tag as Type);
+			Provider provider = ResourceManager.GetAssetProvider(node.Tag as Type);
 			if (provider == null)
 				return false;
 

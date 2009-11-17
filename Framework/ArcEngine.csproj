@@ -279,26 +279,19 @@
     <Compile Include="PInvoke\Kernel32.cs" />
     <Compile Include="PInvoke\User32.cs" />
     <Compile Include="PInvoke\Winmm.cs" />
+    <Compile Include="Providers.cs" />
     <Compile Include="Utility\GUI\GuiManager.cs" />
     <Compile Include="Utility\GUI\Window.cs" />
     <Compile Include="Input\GamePad.cs" />
     <Compile Include="Input\GamePadCapabilities.cs" />
     <Compile Include="Asset\InputScheme.cs" />
-    <Compile Include="Providers\AudioProvider.cs" />
-    <Compile Include="Providers\InputSchemeProvider.cs" />
     <Compile Include="Utility\ScreenManager\GameScreen.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Providers\AnimationProvider.cs" />
-    <Compile Include="Providers\FontProvider.cs" />
-    <Compile Include="Providers\LayoutProvider.cs" />
-    <Compile Include="Providers\StringTableProvider.cs" />
-    <Compile Include="Providers\TilesetProvider.cs" />
-    <Compile Include="Providers\Provider.cs" />
-    <Compile Include="Providers\ScriptProvider.cs" />
+    <Compile Include="Provider.cs" />
     <Compile Include="Utility\ScreenManager\ScreenManager.cs" />
     <Compile Include="Utility\GUI\Button.cs" />
     <Compile Include="Utility\GUI\GuiBase.cs" />

@@ -30,7 +30,7 @@ using System.Xml;
 using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Forms;
-using ArcEngine.Providers;
+using ArcEngine;
 using WeifenLuo.WinFormsUI.Docking;
 
 
@@ -56,7 +56,7 @@ namespace ArcEngine.Editor
 			// Collect all asset type
 			TypesBox.SuspendLayout();
 			TypesBox.Items.Clear();
-			foreach (Providers.Provider provider in ResourceManager.Providers)
+			foreach (Provider provider in ResourceManager.Providers)
 			{
 				foreach (Type type in provider.Assets)
 				{
@@ -91,7 +91,7 @@ namespace ArcEngine.Editor
 
 			
 			// Create the asset
-			foreach (Providers.Provider provider in ResourceManager.Providers)
+			foreach (Provider provider in ResourceManager.Providers)
 			{
 				foreach (Type type in provider.Assets)
 				{

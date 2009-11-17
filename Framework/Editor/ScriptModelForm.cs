@@ -27,7 +27,7 @@ using System.Xml;
 using ArcEngine.Asset;
 using ArcEngine.Forms;
 using WeifenLuo.WinFormsUI.Docking;
-using ArcEngine.Providers;
+using ArcEngine;
 
 using System.Collections.Generic;
 

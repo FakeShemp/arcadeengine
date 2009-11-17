@@ -30,7 +30,7 @@ using System.Xml;
 using ArcEngine.Asset;
 using ArcEngine.Forms;
 using ArcEngine.Properties;
-using ArcEngine.Providers;
+using ArcEngine;
 using DigitalRune.Windows.TextEditor;
 using DigitalRune.Windows.TextEditor.Completion;
 using DigitalRune.Windows.TextEditor.Document;

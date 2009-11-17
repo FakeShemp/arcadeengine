@@ -24,7 +24,7 @@ using System.Windows.Forms;
 using ArcEngine;
 using ArcEngine.Forms;
 using ArcEngine.Graphic;
-using ArcEngine.Providers;
+using ArcEngine;
 using ArcEngine.Asset;
 using DungeonEye;
 

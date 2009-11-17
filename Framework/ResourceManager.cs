@@ -27,7 +27,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
 using ArcEngine.Asset;
-using ArcEngine.Providers;
+using ArcEngine;
 using ICSharpCode.SharpZipLib.Zip;
 
 // Gamepad : http://sourceforge.net/projects/xnadirectinput/
@@ -91,14 +91,9 @@ namespace ArcEngine
 			Tags = new Dictionary<string, Provider>();
 			Binaries = new Dictionary<string, byte[]>();
 
-			AddProvider(new FontProvider());
-			AddProvider(new ScriptProvider());
-			AddProvider(new TileSetProvider());
-			AddProvider(new StringTableProvider());
-			AddProvider(new AnimationProvider());
-			AddProvider(new LayoutProvider());
-			AddProvider(new InputSchemeProvider());
-			AddProvider(new AudioProvider());
+
+			AddProvider(new Providers());
+
 		}
 
 

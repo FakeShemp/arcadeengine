@@ -30,7 +30,7 @@ using ArcEngine.Graphic;
 using ArcEngine.Editor;
 using WeifenLuo.WinFormsUI.Docking;
 
-namespace ArcEngine.Providers
+namespace ArcEngine
 {
 	/// <summary>
 	/// Provider interface 
@@ -43,7 +43,7 @@ namespace ArcEngine.Providers
 		/// </summary>
 		public Provider()
 		{
-			Version = new Version();
+			//Version = new Version();
 		}
 
 		/// <summary>
@@ -306,6 +306,7 @@ namespace ArcEngine.Providers
 			get;
 			protected set;
 		}
+
 		#endregion
 
 
