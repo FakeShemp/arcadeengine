@@ -167,6 +167,7 @@ namespace ArcEngine.Graphic
 			UnlockTextureBits();
 		}
 
+
 		#region Blitting
 
 
@@ -274,28 +275,28 @@ namespace ArcEngine.Graphic
 		}
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="pos"></param>
-        /// <param name="angle"></param>
-        /// <param name="origin"></param>
-        public void Blit(Point pos, float angle, Point origin)
-        {
-            Display.Translate(pos.X + origin.X, pos.Y + origin.Y);
-            Display.Rotate(angle);
+		/// <summary>
+		/// Blits the texture on the screen
+		/// </summary>
+		/// <param name="pos">Location</param>
+		/// <param name="angle">Angle of rotation</param>
+		/// <param name="origin">Offset point</param>
+		public void Blit(Point pos, float angle, Point origin)
+		{
+			Display.Translate(pos.X + origin.X, pos.Y + origin.Y);
+			Display.Rotate(angle);
 
-            Blit(new Point(-origin.X, -origin.Y));
+			Blit(new Point(-origin.X, -origin.Y));
 
-            Display.DefaultMatrix();
-        }
+			Display.DefaultMatrix();
+		}
 
 
 		/// <summary>
-		/// 
+		/// Blits a region of the texture on the screen
 		/// </summary>
-		/// <param name="rect"></param>
-		/// <param name="mode"></param>
+		/// <param name="rect">Sub region of the texture</param>
+		/// <param name="mode">Display mode</param>
 		public void Blit(Rectangle rect, TextureLayout mode)
 		{
 			Blit(rect, Rectangle, mode);
@@ -376,7 +377,7 @@ namespace ArcEngine.Graphic
 		/// Checks if the texture size is valid (power of two)
 		/// </summary>
 		/// <param name="size">Size to check</param>
-		/// <returns></returns>
+		/// <returns>True if the texture is a power of two</returns>
 		public static bool CheckTextureSize(Size size)
 		{
 		//	if (GL.SupportsExtension("ARB_texture_non_power_of_two"))
@@ -392,8 +393,8 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Give the next power of two
 		/// </summary>
-		/// <param name="input"></param>
-		/// <returns></returns>
+		/// <param name="input">Value</param>
+		/// <returns>Newt power of two value</returns>
 		protected static int NextPowerOfTwo(int input)
 		{
 			int value = 1;
@@ -407,8 +408,8 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Returns the next Power Of Two size
 		/// </summary>
-		/// <param name="size"></param>
-		/// <returns></returns>
+		/// <param name="size">Size</param>
+		/// <returns>Next power of two size</returns>
 		public static Size GetNextPOT(Size size)
 		{
 			return new Size(NextPowerOfTwo(size.Width), NextPowerOfTwo(size.Height));
