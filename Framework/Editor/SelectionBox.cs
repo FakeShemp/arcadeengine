@@ -35,138 +35,19 @@ namespace ArcEngine.Editor
 	/// </summary>
 	internal class SelectionBox
 	{
+
 		/// <summary>
-		/// 
+		/// Default constructor
 		/// </summary>
-		public enum MouseTools
+		public SelectionBox()
 		{
-			NoTool,
-			MoveObject,
-			SizeUp,
-			SizeUpLeft,
-			SizeUpRight,
-			SizeDown,
-			SizeDownLeft,
-			SizeDownRight,
-			SizeLeft,
-			SizeRight
-		};
-
-
-		#region Properties
-		/// <summary>
-		/// The selection Rectangle
-		/// </summary>
-		public Rectangle Rectangle = Rectangle.Empty;
-
-
-		/// <summary>
-		/// Size of the rectangle
-		/// </summary>
-		public Size Size
-		{
-			get
-			{
-				return Rectangle.Size;
-			}
+			Alpha = 100;
 		}
-
-		/// <summary>
-		/// Color of the selection box
-		/// </summary>
-		public Color Color = Color.White;
-
-
-		/// <summary>
-		/// Gets if the mouse is over the control
-		/// </summary>
-		public bool IsMouseOver
-		{
-			get
-			{
-				return isMouseOver;
-			}
-		}
-		bool isMouseOver;
-
-
-		/// <summary>
-		/// Gets the current mouse tool
-		/// </summary>
-		public MouseTools MouseTool
-		{
-			get
-			{
-				return mouseTool;
-			}
-			set
-			{
-				mouseTool = value;
-			}
-		}
-		MouseTools mouseTool;
-
-
-
-		/// <summary>
-		/// Delta of the top left corner with the mouse on an OnMouseDown event
-		/// </summary>
-		Point ClickDelta = Point.Empty;
-
-
-		/// <summary>
-		/// True if left mouse button down
-		/// </summary>
-		bool MouseDown = false;
-
-
-		/// <summary>
-		/// Gets if location changed
-		/// </summary>
-		public bool LocationChanged
-		{
-			get
-			{
-				return locationChanged;
-			}
-		}
-		bool locationChanged;
-
-
-
-		/// <summary>
-		/// Zoom value
-		/// </summary>
-		public float Zoom
-		{
-			get
-			{
-				return zoom;
-			}
-			set
-			{
-				zoom = value;
-				if (zoom == 0.0f)
-					zoom = 1.0f;
-			}
-		}
-		float zoom = 1.0f;
-
-
-
-		/// <summary>
-		/// Translation value
-		/// </summary>
-		public Point Offset;
-
-		#endregion
-
-
 
 		/// <summary>
 		/// Checks the kind of action possible
 		/// </summary>
-		/// <param name="point"></param>
+		/// <param name="point">Point to test</param>
 		/// <returns>True if the point hit the rectangle box</returns>
 		bool IsHit(Point point)
 		{
@@ -184,11 +65,11 @@ namespace ArcEngine.Editor
 
 			if (rect.Contains(point))
 			{
-				isMouseOver = true;
+				IsMouseOver = true;
 				if (point.X >= rect.X + 4 && point.X <= rect.X + rect.Width - 4 && point.Y >= rect.Y + 4 && point.Y <= rect.Y + rect.Height - 4)
 				{
 					Cursor.Current = Cursors.SizeAll;
-					mouseTool = MouseTools.MoveObject;
+					MouseTool = MouseTools.MoveObject;
 					return true;
 				}
 				else
@@ -198,19 +79,19 @@ namespace ArcEngine.Editor
 						if (point.X >= rect.X + 4 && point.X <= rect.X + rect.Width - 4)
 						{
 							Cursor.Current = Cursors.SizeNS;
-							mouseTool = MouseTools.SizeDown;
+							MouseTool = MouseTools.SizeDown;
 							return true;
 						}
 						else if (point.X <= rect.X + 4)
 						{
 							Cursor.Current = Cursors.SizeNESW;
-							mouseTool = MouseTools.SizeDownLeft;
+							MouseTool = MouseTools.SizeDownLeft;
 							return true;
 						}
 						else if (point.X >= rect.X + rect.Width - 4)
 						{
 							Cursor.Current = Cursors.SizeNWSE;
-							mouseTool = MouseTools.SizeDownRight;
+							MouseTool = MouseTools.SizeDownRight;
 							return true;
 						}
 					}
@@ -219,19 +100,19 @@ namespace ArcEngine.Editor
 						if (point.X >= rect.X + 4 && point.X <= rect.X + rect.Width - 4)
 						{
 							Cursor.Current = Cursors.SizeNS;
-							mouseTool = MouseTools.SizeUp;
+							MouseTool = MouseTools.SizeUp;
 							return true;
 						}
 						else if (point.X <= rect.X + 4)
 						{
 							Cursor.Current = Cursors.SizeNWSE;
-							mouseTool = MouseTools.SizeUpLeft;
+							MouseTool = MouseTools.SizeUpLeft;
 							return true;
 						}
 						else if (point.X >= rect.X + rect.Width - 4)
 						{
 							Cursor.Current = Cursors.SizeNESW;
-							mouseTool = MouseTools.SizeUpRight;
+							MouseTool = MouseTools.SizeUpRight;
 							return true;
 						}
 					}
@@ -240,19 +121,19 @@ namespace ArcEngine.Editor
 						if (point.Y >= rect.Y + 4 && point.Y <= rect.Y + rect.Height - 4)
 						{
 							Cursor.Current = Cursors.SizeWE;
-							mouseTool = MouseTools.SizeRight;
+							MouseTool = MouseTools.SizeRight;
 							return true;
 						}
 						else if (point.Y <= rect.Y + 4)
 						{
 							Cursor.Current = Cursors.SizeNESW;
-							mouseTool = MouseTools.SizeUpRight;
+							MouseTool = MouseTools.SizeUpRight;
 							return true;
 						}
 						else if (point.Y >= rect.Y + rect.Height - 4)
 						{
 							Cursor.Current = Cursors.SizeNWSE;
-							mouseTool = MouseTools.SizeDownRight;
+							MouseTool = MouseTools.SizeDownRight;
 							return true;
 						}
 					}
@@ -261,19 +142,19 @@ namespace ArcEngine.Editor
 						if (point.Y >= rect.Y + 4 && point.Y <= rect.Y + rect.Height - 4)
 						{
 							Cursor.Current = Cursors.SizeWE;
-							mouseTool = MouseTools.SizeLeft;
+							MouseTool = MouseTools.SizeLeft;
 							return true;
 						}
 						else if (point.Y <= rect.Y + 4)
 						{
 							Cursor.Current = Cursors.SizeNWSE;
-							mouseTool = MouseTools.SizeUpLeft;
+							MouseTool = MouseTools.SizeUpLeft;
 							return true;
 						}
 						else if (point.Y >= rect.Y + rect.Height - 4)
 						{
 							Cursor.Current = Cursors.SizeNWSE;
-							mouseTool = MouseTools.SizeDownRight;
+							MouseTool = MouseTools.SizeDownRight;
 							return true;
 						}
 					}
@@ -281,8 +162,8 @@ namespace ArcEngine.Editor
 
 			}
 
-			isMouseOver = false;
-			mouseTool = MouseTools.NoTool;
+			IsMouseOver = false;
+			MouseTool = MouseTools.NoTool;
 			return false;
 		}
 
@@ -295,12 +176,12 @@ namespace ArcEngine.Editor
 		/// <returns></returns>
 		bool Move(Point location)
 		{
-			locationChanged = Rectangle.Location != location ;
+			LocationChanged = Rectangle.Location != location ;
 
 			Rectangle.X = location.X;
 			Rectangle.Y = location.Y;
 
-			return locationChanged;
+			return LocationChanged;
 		}
 
 
@@ -312,13 +193,13 @@ namespace ArcEngine.Editor
 		/// <returns></returns>
 		bool Resize(Size size)
 		{
-			locationChanged = !size.IsEmpty;
+			LocationChanged = !size.IsEmpty;
 
 
 			Point offset = new Point((int) (size.Width / zoom) - Rectangle.X - (int)(Offset.X / Zoom),
 									 (int) (size.Height / zoom)- Rectangle.Y - (int)(Offset.Y / Zoom));
 
-			switch (mouseTool)
+			switch (MouseTool)
 			{
 				case MouseTools.SizeUp:
 					Rectangle.Y += offset.Y;
@@ -363,7 +244,7 @@ namespace ArcEngine.Editor
 				Rectangle.Width = 0;
 					
 
-			return locationChanged;
+			return LocationChanged;
 		}
 
 
@@ -379,14 +260,14 @@ namespace ArcEngine.Editor
 			rect.Width = (int)(rect.Width * zoom);
 			rect.Height = (int)(rect.Height * zoom);
 
-			Display.DrawRectangle(new Rectangle(rect.X, rect.Y, 4, 4), Color);
-			Display.DrawRectangle(new Rectangle(rect.X + (rect.Width / 2) - 2, rect.Y, 4, 4), Color);
-			Display.DrawRectangle(new Rectangle(rect.X + rect.Width - 4, rect.Y, 4, 4), Color);
-			Display.DrawRectangle(new Rectangle(rect.X, rect.Y + (rect.Height / 2) - 2, 4, 4), Color);
-			Display.DrawRectangle(new Rectangle(rect.X + rect.Width - 4, (rect.Y + (rect.Height / 2) - 2), 4, 4), Color);
-			Display.DrawRectangle(new Rectangle(rect.X, rect.Y + rect.Height - 4, 4, 4), Color);
-			Display.DrawRectangle(new Rectangle(rect.X + (rect.Width / 2) - 2, rect.Y + rect.Height - 4, 4, 4), Color);
-			Display.DrawRectangle(new Rectangle(rect.X + rect.Width - 4, rect.Y + rect.Height - 4, 4, 4), Color);
+			Display.FillRectangle(new Rectangle(rect.X, rect.Y, 4, 4), Color);
+			Display.FillRectangle(new Rectangle(rect.X + (rect.Width / 2) - 2, rect.Y, 4, 4), Color);
+			Display.FillRectangle(new Rectangle(rect.X + rect.Width - 4, rect.Y, 4, 4), Color);
+			Display.FillRectangle(new Rectangle(rect.X, rect.Y + (rect.Height / 2) - 2, 4, 4), Color);
+			Display.FillRectangle(new Rectangle(rect.X + rect.Width - 4, (rect.Y + (rect.Height / 2) - 2), 4, 4), Color);
+			Display.FillRectangle(new Rectangle(rect.X, rect.Y + rect.Height - 4, 4, 4), Color);
+			Display.FillRectangle(new Rectangle(rect.X + (rect.Width / 2) - 2, rect.Y + rect.Height - 4, 4, 4), Color);
+			Display.FillRectangle(new Rectangle(rect.X + rect.Width - 4, rect.Y + rect.Height - 4, 4, 4), Color);
 		}
 
 
@@ -402,25 +283,29 @@ namespace ArcEngine.Editor
 
 			Color color = Display.Color;
 			bool blending = Display.Blending;
+			Display.Blending = true;
 
-
-			Display.Blending = false;
 
 			Rectangle rect = Rectangle;
 			rect.X = (int) (rect.X * zoom + Offset.X);
 			rect.Y = (int) (rect.Y * zoom + Offset.Y);
 			rect.Width = (int ) (rect.Width * zoom);
 			rect.Height = (int) (rect.Height * zoom);
-			Display.DrawRectangle(rect, Color);
+			Display.FillRectangle(rect, Color.FromArgb(Alpha, Color));
+			Display.Blending = false;
+			Display.DrawRectangle(rect, Color.FromArgb(Alpha, Color));
 
-			if (isMouseOver)
+			if (IsMouseOver)
 				DrawSizeHandles();
 
 
-			Display.Color = color;
+			Display.Color = Color.White;
 			Display.Blending = blending;
 		}
 
+
+
+		#region Events
 
 		/// <summary>
 		/// Update the selectionbox
@@ -439,7 +324,7 @@ namespace ArcEngine.Editor
 
 			if (MouseDown)
 			{
-				if (mouseTool == MouseTools.MoveObject)
+				if (MouseTool == MouseTools.MoveObject)
 				{
 					Move(new Point(pos.X - ClickDelta.X, pos.Y - ClickDelta.Y));
 					return true;
@@ -483,6 +368,132 @@ namespace ArcEngine.Editor
 				MouseDown = false;
 			}
 		}
+
+
+		#endregion
+
+
+		#region Properties
+
+		/// <summary>
+		/// The selection Rectangle
+		/// </summary>
+		public Rectangle Rectangle = Rectangle.Empty;
+
+
+		/// <summary>
+		/// Size of the rectangle
+		/// </summary>
+		public Size Size
+		{
+			get
+			{
+				return Rectangle.Size;
+			}
+		}
+
+		/// <summary>
+		/// Color of the selection box
+		/// </summary>
+		public Color Color = Color.White;
+
+
+		/// <summary>
+		/// Gets if the mouse is over the control
+		/// </summary>
+		public bool IsMouseOver
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// Gets the current mouse tool
+		/// </summary>
+		public MouseTools MouseTool
+		{
+			get;
+			set;
+		}
+
+
+
+		/// <summary>
+		/// Delta of the top left corner with the mouse on an OnMouseDown event
+		/// </summary>
+		Point ClickDelta = Point.Empty;
+
+
+		/// <summary>
+		/// True if left mouse button down
+		/// </summary>
+		bool MouseDown = false;
+
+
+		/// <summary>
+		/// Gets if location changed
+		/// </summary>
+		public bool LocationChanged
+		{
+			get;
+			private set;
+		}
+
+
+
+		/// <summary>
+		/// Zoom value
+		/// </summary>
+		public float Zoom
+		{
+			get
+			{
+				return zoom;
+			}
+			set
+			{
+				zoom = value;
+				if (zoom == 0.0f)
+					zoom = 1.0f;
+			}
+		}
+		float zoom = 1.0f;
+
+
+
+		/// <summary>
+		/// Translation value
+		/// </summary>
+		public Point Offset;
+
+
+		/// <summary>
+		/// Transparency
+		/// </summary>
+		public byte Alpha
+		{
+			get;
+			set;
+		}
+		#endregion
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public enum MouseTools
+		{
+			NoTool,
+			MoveObject,
+			SizeUp,
+			SizeUpLeft,
+			SizeUpRight,
+			SizeDown,
+			SizeDownLeft,
+			SizeDownRight,
+			SizeLeft,
+			SizeRight
+		};
 
 
 	}

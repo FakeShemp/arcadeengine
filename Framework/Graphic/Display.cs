@@ -495,9 +495,9 @@ namespace ArcEngine.Graphic
 			GL.Vertex2(x + width, y);
 			GL.End();
 
-			Texturing = true;
 			//GL.PopMatrix();
 			RestoreState();
+			Texturing = true;
 			Color = col;
 
 			RenderStats.DirectCall += 4;

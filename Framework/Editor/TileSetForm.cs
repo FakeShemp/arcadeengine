@@ -32,7 +32,7 @@ using ArcEngine.Graphic;
 namespace ArcEngine.Editor
 {
 	/// <summary>
-	/// 
+	/// TileSet form editor
 	/// </summary>
 	internal partial class TileSetForm : AssetEditor
 	{
@@ -48,7 +48,8 @@ namespace ArcEngine.Editor
 			//
 			Node = node;
 			//tileSet = new TileSet();
-
+			tileSet = new TileSet();
+			//tileSet.Load(node);
 
 			TileBox = new SelectionBox();
 			CollisionBox = new SelectionBox();
@@ -83,7 +84,7 @@ namespace ArcEngine.Editor
 
 
 		/// <summary>
-		/// save the asset to the manager
+		/// Save the asset to the manager
 		/// </summary>
 		public override void Save()
 		{
@@ -142,7 +143,7 @@ namespace ArcEngine.Editor
 			GLTextureControl.MakeCurrent();
 
 			// Background color
-			Display.ClearColor = BgColor;
+	//		Display.ClearColor = BgColor;
 			Display.ClearBuffers();
 
 			// No texture 
@@ -174,6 +175,7 @@ namespace ArcEngine.Editor
 				return;
 			}
 
+
 			// Draw the selection box with sizing handles
 			if (CurrentTile != null)
 			{
@@ -183,6 +185,8 @@ namespace ArcEngine.Editor
 				TileBox.Draw();
 			}
 
+	
+			
 			GLTextureControl.SwapBuffers();
 		}
 
@@ -263,10 +267,8 @@ namespace ArcEngine.Editor
 				TileBox.Rectangle.Y = (e.Location.Y - TextureOffset.Y) / zoomvalue;
 				TileBox.Rectangle.Width = 0;
 				TileBox.Rectangle.Height = 0;
-				
+
 				TileBox.MouseTool = SelectionBox.MouseTools.SizeDownRight;
-
-
 				
 			}
 
@@ -568,7 +570,7 @@ namespace ArcEngine.Editor
 			CheckerBoard = new Texture(ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png"));
 
 
-			tileSet = new TileSet();
+			//tileSet = new TileSet();
 			tileSet.Load(Node);
 
 			// Build Cell list
@@ -664,6 +666,8 @@ namespace ArcEngine.Editor
 				return;
 
 			BgColor = dlg.Color;
+			GLTextureControl.MakeCurrent();
+			Display.ClearColor = dlg.Color;
 
 			//GLTileControl.MakeCurrent();
 			//Video.ClearColor = dlg.Color;
@@ -807,7 +811,7 @@ namespace ArcEngine.Editor
 		#region Properties
 
 		/// <summary>
-		/// 
+		/// Handle to the asset
 		/// </summary>
 		public override IAsset Asset
 		{
@@ -816,6 +820,7 @@ namespace ArcEngine.Editor
 				return tileSet;
 			}
 		}
+
 
 		/// <summary>
 		/// Background texture
@@ -871,22 +876,15 @@ namespace ArcEngine.Editor
 		Point LastMousePos;
 
 
-		#endregion
-
-
-
+		/// <summary>
+		/// 
+		/// </summary>
 		XmlNode Node;
 
 
-		private void GLTextureControl_Load(object sender, EventArgs e)
-		{
-			Trace.WriteLine("GLTextureControl_Load");
-		}
 
-		private void GLTileControl_Load(object sender, EventArgs e)
-		{
-			Trace.WriteLine("GLTileControl_Load");
-		}
+		#endregion
+
 
 
 

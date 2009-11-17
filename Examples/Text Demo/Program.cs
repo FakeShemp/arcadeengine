@@ -70,9 +70,22 @@ namespace ArcEngine.Examples.TextDemo
 		{
 			Display.ClearColor = Color.CornflowerBlue;
 
+			// Load the bank
+			ResourceManager.LoadBank("data/data.bnk");
+
+			// Creates the font
 			Font = Font2d.CreateFromTTF(@"c:\windows\fonts\verdana.ttf", 14, FontStyle.Regular);
+			
+			// Attach the TileSet to the font
 			Font.TextTileset = ResourceManager.CreateAsset<TileSet>("TextTileSet");
+
+
+
+
+			Text = @"Text to display. <tile id='1'/><br>This is a < to display";
+
 		}
+
 
 
 		/// <summary>
@@ -98,7 +111,7 @@ namespace ArcEngine.Examples.TextDemo
 			// Clears the background
 			Display.ClearBuffers();
 
-			Font.DrawText(new Point(100, 50), "zeiodsiuposdiufosidufosiu");
+			Font.DrawText(new Point(100, 50), Text);
 
 		}
 
@@ -112,6 +125,12 @@ namespace ArcEngine.Examples.TextDemo
 		/// Font
 		/// </summary>
 		Font2d Font;
+
+
+		/// <summary>
+		/// Text to display
+		/// </summary>
+		string Text;
 
 		#endregion
 
