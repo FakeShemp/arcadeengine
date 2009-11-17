@@ -188,8 +188,6 @@ namespace ArcEngine
 		}
 
 
-
-
 		/// <summary>
 		/// Loads an asset
 		/// </summary>
@@ -284,8 +282,8 @@ namespace ArcEngine
 		/// <summary>
 		/// Edits an asset
 		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <param name="name"></param>
+		/// <typeparam name="T">Type of asset</typeparam>
+		/// <param name="name">Name of the asset</param>
 		public override AssetEditor EditAsset<T>(string name)
 		{
 			AssetEditor form = null;
@@ -404,10 +402,10 @@ namespace ArcEngine
 
 
 		/// <summary>
-		/// Returns an array of all available Tilesets
+		/// Returns an array of all available assets
 		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <returns>Script's name array</returns>
+		/// <typeparam name="T">Type of asset</typeparam>
+		/// <returns>asset's name array</returns>
 		public override List<string> GetAssets<T>()
 		{
 			List<string> list = new List<string>();
@@ -460,7 +458,7 @@ namespace ArcEngine
 
 
 		/// <summary>
-		/// Creates a new TileSet
+		/// Creates a new asset
 		/// </summary>
 		/// <typeparam name="T">Type of the asset</typeparam>
 		/// <param name="name">Name of the asset</param>
@@ -544,13 +542,12 @@ namespace ArcEngine
 		}
 
 
-
 		/// <summary>
-		/// Returns a <c>Script</c>
+		/// Returns an asset definition
 		/// </summary>
 		/// <typeparam name="T">Type of the asset</typeparam>
 		/// <param name="name">Asset's name</param>
-		/// <returns></returns>
+		/// <returns>Xml definition</returns>
 		public override XmlNode Get<T>(string name)
 		{
 			CheckValue<T>(name);
@@ -589,12 +586,11 @@ namespace ArcEngine
 		}
 
 
-
 		/// <summary>
-		/// Removes a script
+		/// Removes an asset
 		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <param name="name"></param>
+		/// <typeparam name="T">Type of teh asset</typeparam>
+		/// <param name="name">Name</param>
 		public override void Remove<T>(string name)
 		{
 			CheckValue<T>(name);
@@ -632,10 +628,8 @@ namespace ArcEngine
 		}
 
 
-
-
 		/// <summary>
-		/// Removes an asset
+		/// Removes assets of a specific type
 		/// </summary>
 		/// <typeparam name="T">Type of asset</typeparam>
 		public override void Remove<T>()
@@ -690,6 +684,7 @@ namespace ArcEngine
 			Layouts.Clear();
 
 		}
+
 
 		/// <summary>
 		/// Returns the number of known assets
@@ -777,10 +772,8 @@ namespace ArcEngine
 		}
 
 
-
-
 		/// <summary>
-		/// Creates a shared resource
+		/// Creates a shared asset
 		/// </summary>
 		/// <typeparam name="T">Asset type</typeparam>
 		/// <param name="name">Name of the shared asset</param>
@@ -891,7 +884,6 @@ namespace ArcEngine
 		}
 
 
-
 		/// <summary>
 		/// Removes a shared asset
 		/// </summary>
@@ -932,8 +924,6 @@ namespace ArcEngine
 		}
 
 
-
-
 		/// <summary>
 		/// Removes a specific type of shared assets
 		/// </summary>
@@ -969,7 +959,6 @@ namespace ArcEngine
 
 
 		}
-
 
 
 		/// <summary>
