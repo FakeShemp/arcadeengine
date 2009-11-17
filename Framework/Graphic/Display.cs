@@ -21,31 +21,10 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using OpenTK.Graphics;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
-using System.Text.RegularExpressions;
 
 
-//
-//
-//
-// - GameScreen.PrimaryScreen.WorkingArea property, which holds information about your screen width/height etc.
-// ChangeDisplaySettings : Permet de changer les réglages d’un périphérique d’affichage. Prend en entrée le nom du périphérique (retourné par EnumDisplayDevices) ainsi que les réglages désirés.
-// EnumDisplayDevices : Retourne les périphériques d’affichage de la session courante.
-// EnumDisplaySettings : Retourne les réglages actuel du périphérique donnés en entrée (EnumDisplayDevices)
-// http://www.pinvoke.net/default.aspx/user32/ChangeDisplaySettingsEx.html
-//
-// http://www.gamedev.net/community/forums/topic.asp?topic_id=418397
-// http://www.pinvoke.net/default.aspx/coredll/ChangeDisplaySettingsEx.html
-// http://www.codeproject.com/KB/cs/csdynamicscrres.aspx
-//
-//
-//
-// - http://hge.relishgames.com/
-//
-// - Rounded rectangle : http://www.experts-exchange.com/Programming/Game/Game_Graphics/OpenGL/Q_21660812.html
-//
 //
 //
 // http://gamasutra.com/features/20060804/boutros_01.shtml
