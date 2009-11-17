@@ -40,12 +40,18 @@ namespace ArcEngine.Graphic
 		public Batch()
 		{
 			BufferID = new int[3];
-			GL.GenBuffers(3, BufferID);
+
+			if (Display.Capabilities.HasVBO)
+			{
+				GL.GenBuffers(3, BufferID);
+			}
+			else
+			{
+			}
 
 
-
-			Vertex = new List<Point>();
-			Texture = new List<Point>();
+			VertexBuffer = new List<Point>();
+			TextureBuffer = new List<Point>();
 			ColorBuffer = new List<int>();
 		}
 
@@ -63,9 +69,9 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public void Clear()
 		{
-			Vertex.Clear();
+			VertexBuffer.Clear();
 			ColorBuffer.Clear();
-			Texture.Clear();
+			TextureBuffer.Clear();
 		}
 
 
@@ -76,15 +82,18 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public void Apply()
 		{
+			if (!Display.Capabilities.HasVBO)
+				return;
+
 			try
 			{
 				// Update Vertex buffer
 				GL.BindBuffer(BufferTarget.ArrayBuffer, BufferID[0]);
-				GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(Vertex.Count * sizeof(int) * 2), Vertex.ToArray(), BufferUsageHint.StaticDraw);
+				GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(VertexBuffer.Count * sizeof(int) * 2), VertexBuffer.ToArray(), BufferUsageHint.StaticDraw);
 
 				// Update Texture buffer
 				GL.BindBuffer(BufferTarget.ArrayBuffer, BufferID[1]);
-				GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(Texture.Count * sizeof(int) * 2), Texture.ToArray(), BufferUsageHint.StaticDraw);
+				GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(TextureBuffer.Count * sizeof(int) * 2), TextureBuffer.ToArray(), BufferUsageHint.StaticDraw);
 
 				// Update Color buffer
 				GL.BindBuffer(BufferTarget.ArrayBuffer, BufferID[2]);
@@ -124,8 +133,8 @@ namespace ArcEngine.Graphic
 		/// <param name="texture">Texture coordinate</param>
 		public void AddPoint(Point point, Color color, Point texture)
 		{
-			Vertex.Add(point);
-			Texture.Add(texture);
+			VertexBuffer.Add(point);
+			TextureBuffer.Add(texture);
 
 			ColorBuffer.Add((color.A << 24) + (color.B << 16) + (color.G << 8) + (color.R));
 		}
@@ -145,9 +154,9 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Adds a line
 		/// </summary>
-		/// <param name="from"></param>
-		/// <param name="to"></param>
-		/// <param name="color"></param>
+		/// <param name="from">Start point</param>
+		/// <param name="to">Ending point</param>
+		/// <param name="color">Color of the line</param>
 		public void AddLine(Point from, Point to, Color color)
 		{
 			AddPoint(from, color);
@@ -187,7 +196,10 @@ namespace ArcEngine.Graphic
 			// Check to see if Dispose has already been called.
 			if (!this.disposed)
 			{
-				//GL.DeleteBuffers(3, BufferID);
+				if (Display.Capabilities.HasVBO)
+				{
+					//GL.DeleteBuffers(3, BufferID);
+				}
 				BufferID[0] = -1;
 				BufferID[1] = -1;
 				BufferID[2] = -1;
@@ -211,7 +223,7 @@ namespace ArcEngine.Graphic
 		{
 			get
 			{
-				return Vertex.Count;
+				return VertexBuffer.Count;
 			}
 		}
 
@@ -232,17 +244,17 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Vertex buffer
 		/// </summary>
-		List<Point> Vertex;
+		internal List<Point> VertexBuffer;
 		
 		/// <summary>
 		/// Texture buffer
 		/// </summary>
-		List<Point> Texture;
+		internal List<Point> TextureBuffer;
 
 		/// <summary>
 		/// Color buffer
 		/// </summary>
-		List<int> ColorBuffer;
+		internal List<int> ColorBuffer;
 
 		#endregion
 

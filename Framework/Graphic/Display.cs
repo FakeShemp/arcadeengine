@@ -617,8 +617,8 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Draws a bunch of connected lines. The last point and the first point are not connected. 
 		/// </summary>
-		/// <param name="points"></param>
-		/// <param name="color"></param>
+		/// <param name="points">Points</param>
+		/// <param name="color">Color</param>
 		public static void DrawLines(Point[] points, Color color)
 		{
 			int pos = 0;
@@ -636,8 +636,8 @@ namespace ArcEngine.Graphic
 		/// Draws a bunch of line segments. Each pair of points represents a line segment which is drawn.
 		/// No connections between the line segments are made, so there must be an even number of points. 
 		/// </summary>
-		/// <param name="points"></param>
-		/// <param name="color"></param>
+		/// <param name="points">Points</param>
+		/// <param name="color">Color</param>
 		public static void DrawLineSegments(Point[] points, Color color)
 		{
 			int pos = 0;
@@ -1075,28 +1075,65 @@ namespace ArcEngine.Graphic
 			if (batch == null || batch.Size == 0)
 				return;
 
-			GL.EnableClientState(EnableCap.VertexArray);
-			GL.BindBuffer(BufferTarget.ArrayBuffer, batch.BufferID[0]);
-			GL.VertexPointer(2, VertexPointerType.Int, 0, IntPtr.Zero);
+			if (Capabilities.HasVBO)
+			{
+				// Vertex
+				GL.EnableClientState(EnableCap.VertexArray);
+				GL.BindBuffer(BufferTarget.ArrayBuffer, batch.BufferID[0]);
+				GL.VertexPointer(2, VertexPointerType.Int, 0, IntPtr.Zero);
 
 
-			// Texture
-			GL.EnableClientState(EnableCap.TextureCoordArray);
-			GL.BindBuffer(BufferTarget.ArrayBuffer, batch.BufferID[1]);
-			GL.TexCoordPointer(2, TexCoordPointerType.Int, 0, IntPtr.Zero);
+				// Texture
+				GL.EnableClientState(EnableCap.TextureCoordArray);
+				GL.BindBuffer(BufferTarget.ArrayBuffer, batch.BufferID[1]);
+				GL.TexCoordPointer(2, TexCoordPointerType.Int, 0, IntPtr.Zero);
 
-			// Color
-			GL.EnableClientState(EnableCap.ColorArray);
-			GL.BindBuffer(BufferTarget.ArrayBuffer, batch.BufferID[2]);
-			GL.ColorPointer(4, ColorPointerType.UnsignedByte, 0, IntPtr.Zero);
-
-
-			GL.DrawArrays(mode, 0, batch.Size);
+				// Color
+				GL.EnableClientState(EnableCap.ColorArray);
+				GL.BindBuffer(BufferTarget.ArrayBuffer, batch.BufferID[2]);
+				GL.ColorPointer(4, ColorPointerType.UnsignedByte, 0, IntPtr.Zero);
 
 
-			GL.DisableClientState(EnableCap.VertexArray);
-			GL.DisableClientState(EnableCap.TextureCoordArray);
-			GL.DisableClientState(EnableCap.ColorArray);
+				GL.DrawArrays(mode, 0, batch.Size);
+
+
+				GL.DisableClientState(EnableCap.VertexArray);
+				GL.DisableClientState(EnableCap.TextureCoordArray);
+				GL.DisableClientState(EnableCap.ColorArray);
+
+			}
+			else
+			{
+
+				GL.Begin(mode);
+				for (int id = 0; id < batch.Size; id++)
+				{
+					GL.TexCoord2(batch.TextureBuffer[id].X, batch.TextureBuffer[id].Y);
+					GL.Vertex2(batch.VertexBuffer[id].X, batch.VertexBuffer[id].Y);
+				}
+				GL.End();
+/*
+				// Vertex
+				GL.EnableClientState(EnableCap.VertexArray);
+				GL.VertexPointer(2, VertexPointerType.Int, 0, batch.VertexBuffer.ToArray());
+
+				// Texture
+				GL.EnableClientState(EnableCap.TextureCoordArray);
+				GL.TexCoordPointer(2, TexCoordPointerType.Int, 0, batch.TextureBuffer.ToArray());
+
+				// Color
+				GL.EnableClientState(EnableCap.ColorArray);
+				GL.ColorPointer(4, ColorPointerType.UnsignedByte, 0, batch.ColorBuffer.ToArray());
+
+
+				GL.DrawArrays(mode, 0, batch.Size);
+
+
+				GL.DisableClientState(EnableCap.VertexArray);
+				GL.DisableClientState(EnableCap.TextureCoordArray);
+				GL.DisableClientState(EnableCap.ColorArray);
+*/
+			}
 
 			RenderStats.BatchCall++;
 		}
@@ -1613,7 +1650,7 @@ namespace ArcEngine.Graphic
 	{
 
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
 		public RenderDeviceCapabilities()
 		{
@@ -1628,6 +1665,11 @@ namespace ArcEngine.Graphic
 
 			if (Extensions.Contains("GL_ARB_pixel_buffer_object"))
 				HasPBO = true;
+
+			if (Extensions.Contains("GL_ARB_vertex_buffer_object"))
+				HasVBO = true;
+
+
 		}
 
 
@@ -1646,6 +1688,16 @@ namespace ArcEngine.Graphic
 		/// Has Frame Buffer Objects support
 		/// </summary>
 		public bool HasFBO
+		{
+			get;
+			internal set;
+		}
+
+
+		/// <summary>
+		/// Has Vertex Buffer Objects support
+		/// </summary>
+		public bool HasVBO
 		{
 			get;
 			internal set;
