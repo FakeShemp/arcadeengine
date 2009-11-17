@@ -57,7 +57,7 @@ namespace ArcEngine
 
 
 		/// <summary>
-		/// 
+		/// Resets
 		/// </summary>
 		internal void Reset()
 		{
