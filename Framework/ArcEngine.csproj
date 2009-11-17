@@ -106,6 +106,7 @@
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing">
       <Private>False</Private>
     </Reference>
@@ -266,12 +267,14 @@
     </Compile>
     <Compile Include="Game.cs" />
     <Compile Include="GameClock.cs" />
+    <Compile Include="GameComponentCollection.cs" />
     <Compile Include="Graphic\Batch.cs" />
     <Compile Include="Graphic\PixelBuffer.cs" />
     <Compile Include="Graphic\FrameBuffer.cs" />
     <Compile Include="Graphic\Shape.cs" />
     <Compile Include="Graphic\Texture.cs" />
     <Compile Include="Graphic\Display.cs" />
+    <Compile Include="GameComponent.cs" />
     <Compile Include="Input\GamePadState.cs" />
     <Compile Include="PInvoke\Kernel32.cs" />
     <Compile Include="PInvoke\User32.cs" />

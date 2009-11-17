@@ -19,15 +19,14 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.Drawing;
-using System.Runtime.InteropServices;
-using System.Security;
 using System.Threading;
 using System.Windows.Forms;
 using ArcEngine.Forms;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
-using ArcEngine.Asset;
+using ArcEngine.PInvoke;
 
 
 namespace ArcEngine
@@ -54,8 +53,7 @@ namespace ArcEngine
 			IsFixedTimeStep = true;
 
 			Random = new Random((int)DateTime.Now.Ticks);
-
-
+			Components = new GameComponentCollection();
 		}
 
 
@@ -262,6 +260,12 @@ namespace ArcEngine
 
 				//	Trace.WriteLine("#############################");
 					Update(GameTime);
+					for (int i = 0; i < Components.Count; i++)
+					{
+						GameComponent component = Components[i];
+						if (component.Enabled)
+							component.Update(GameTime);
+					}
 
 					flag &= SuppressDraw;
 					SuppressDraw = false;
@@ -292,6 +296,13 @@ namespace ArcEngine
 						}
 
 						Update(GameTime);
+						for (int i = 0; i < Components.Count; i++)
+						{
+							GameComponent component = Components[i];
+							if (component.Enabled)
+								component.Update(GameTime);
+						}
+
 						flag &= SuppressDraw;
 						SuppressDraw = false;
 					}
@@ -318,6 +329,12 @@ namespace ArcEngine
 				Display.RenderStats.Reset();
 
 				Draw();
+				for (int i = 0; i < Components.Count; i++)
+				{
+					GameComponent component = Components[i];
+					if (component.IsVisible)
+						component.Draw();
+				}
 
 				Window.SwapBuffers();
 			}
@@ -415,8 +432,6 @@ namespace ArcEngine
 		#endregion
 
 
-
-
 		#region Events
 
 
@@ -470,8 +485,8 @@ namespace ArcEngine
 		/// <param name="e"></param>
 		void Application_Idle(object sender, EventArgs e)
 		{
-			NativeMessage message;
-			while (!PeekMessage(out message, IntPtr.Zero, 0, 0, 0))
+			User32.NativeMessage message;
+			while (!User32.PeekMessage(out message, IntPtr.Zero, 0, 0, 0))
 			{
 				if (IsExiting)
 					Window.Close();
@@ -549,8 +564,6 @@ namespace ArcEngine
 		#endregion
 
 
-
-
 		#region Editor
 
 		/// <summary>
@@ -577,10 +590,16 @@ namespace ArcEngine
 		#endregion
 
 
-
 		#region Properties
 
-
+		/// <summary>
+		/// Gets the collection of <see cref="IGameComponent"/> owned by the game. 
+		/// </summary>
+		public GameComponentCollection Components
+		{
+			get;
+			private set;
+		}
 
 		/// <summary>
 		/// Gets the game window.
@@ -619,7 +638,7 @@ namespace ArcEngine
 		/// <summary>
 		/// Gets or sets a value indicating whether this Game is active.
 		/// </summary>
-		/// <value>true if active; otherwise, false.</value>
+		/// <value>true if active, otherwise, false.</value>
 		public bool IsActive
 		{
 			get;
@@ -638,7 +657,7 @@ namespace ArcEngine
 
 
 		/// <summary>
-		/// Random number
+		/// Random number generator
 		/// </summary>
 		static public Random Random
 		{
@@ -648,42 +667,6 @@ namespace ArcEngine
 
 
 		#endregion
-
-
-
-		#region Win32 Interop
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		[StructLayout(LayoutKind.Sequential)]
-		struct NativeMessage
-		{
-			public IntPtr hWnd;
-			public uint msg;
-			public IntPtr wParam;
-			public IntPtr lParam;
-			public uint time;
-			public Point p;
-		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="message"></param>
-		/// <param name="hwnd"></param>
-		/// <param name="messageFilterMin"></param>
-		/// <param name="messageFilterMax"></param>
-		/// <param name="flags"></param>
-		/// <returns></returns>
-		[SuppressUnmanagedCodeSecurityAttribute]
-		[DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = false)]
-		[return: MarshalAs(UnmanagedType.Bool)]
-		static extern bool PeekMessage(out NativeMessage message, IntPtr hwnd, uint messageFilterMin, uint messageFilterMax, uint flags);
-
-		#endregion
-
 
 
 		#region Dispose
