@@ -41,14 +41,14 @@ namespace ArcEngine
 		#region ctor
 
 		/// <summary>
-		/// 
+		/// Default constructor
 		/// </summary>
 		public GameTime()
 		{
 		}
 
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
 		/// <param name="totalRealTime"></param>
 		/// <param name="elapsedRealTime"></param>
@@ -60,7 +60,7 @@ namespace ArcEngine
 		}
 
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
 		/// <param name="totalRealTime"></param>
 		/// <param name="elapsedRealTime"></param>
@@ -139,7 +139,7 @@ namespace ArcEngine
 
 
 		/// <summary>
-		/// 
+		/// Returns the current time
 		/// </summary>
 		public DateTime Now
 		{
