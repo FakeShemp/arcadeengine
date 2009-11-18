@@ -119,8 +119,7 @@ namespace DungeonEye
 			// Debug info
 			if (Font != null)
 			{
-				Font.Color = Color.White;
-				Font.DrawText(new Point(20, 160), Scene.Time.TotalSeconds.ToString());
+				Font.DrawText(new Point(20, 160), Color.White, Scene.Time.TotalSeconds.ToString());
 			}
 		}
 

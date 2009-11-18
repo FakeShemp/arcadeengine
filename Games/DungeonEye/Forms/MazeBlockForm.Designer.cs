@@ -58,7 +58,7 @@
 			this.label10 = new System.Windows.Forms.Label();
 			this.GroundLocationBox = new System.Windows.Forms.ComboBox();
 			this.label9 = new System.Windows.Forms.Label();
-			this.MonsterBox = new MonsterControl();
+			this.MonsterBox = new Forms.MonsterControl();
 			this.DecorationsTab = new System.Windows.Forms.TabPage();
 			this.DecorationGroupBox = new System.Windows.Forms.GroupBox();
 			this.groupBox6 = new System.Windows.Forms.GroupBox();
@@ -1004,6 +1004,7 @@
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Maze Block";
+			this.Load += new System.EventHandler(this.MazeBlockForm_Load);
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MazeBlockForm_KeyDown);
 			this.tabControl1.ResumeLayout(false);
 			this.ItemsTab.ResumeLayout(false);

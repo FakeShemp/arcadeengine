@@ -120,15 +120,12 @@ namespace DungeonEye
 			Tileset.Draw(0, Point.Empty);
 
 
-			Font.Color = Color.White;
-
-
 			if (CurrentHero == null)
 			{
-				Font.DrawText(new Point(304, 160), "Select the box of");
-				Font.DrawText(new Point(304, 178), "the character you");
-				Font.DrawText(new Point(304, 196), "wish to create or");
-				Font.DrawText(new Point(304, 212), "view.");
+				Font.DrawText(new Point(304, 160), Color.White, "Select the box of");
+				Font.DrawText(new Point(304, 178), Color.White, "the character you");
+				Font.DrawText(new Point(304, 196), Color.White, "wish to create or");
+				Font.DrawText(new Point(304, 212), Color.White, "view.");
 			}
 
 

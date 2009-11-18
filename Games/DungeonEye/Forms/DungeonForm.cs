@@ -306,7 +306,9 @@ namespace DungeonEye.Forms
 			if (Maze == null)
 				return;
 
-			Point pos = glControl.PointToClient(Control.MousePosition);
+			//	LabelBox.Text = new Point((e.Location.X - Offset.X) / 25, (e.Location.Y - Offset.Y) / 25).ToString();
+			Point pos = glControl.PointToClient(MousePosition);
+		//	pos = MousePosition;
 			pos = new Point((pos.X - Offset.X) / 25, (pos.Y - Offset.Y) / 25);
 			if (!Maze.Contains(pos))
 				return;

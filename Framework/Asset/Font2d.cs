@@ -18,6 +18,7 @@
 //
 #endregion
 
+using System.Collections.Generic;
 using System;
 using System.ComponentModel;
 using System.Drawing;
@@ -29,7 +30,7 @@ using System.Windows.Forms;
 using System.Xml;
 using ArcEngine.Graphic;
 using OpenTK.Graphics.OpenGL;
-
+using System.Text;
 
 
 namespace ArcEngine.Asset
@@ -44,7 +45,7 @@ namespace ArcEngine.Asset
 		/// </summary>
 		public Font2d()
 		{
-			Color = Color.White;
+			//Color = Color.White;
 			GlyphTileset = new TileSet();
 			Batch = new Batch();
 		}
@@ -52,21 +53,19 @@ namespace ArcEngine.Asset
 
 		#region Text drawing
 
-
+/*
 		/// <summary>
 		/// Prints some text on the screen
 		/// </summary>
 		/// <param name="pos">Offset of the text</param>
 		/// <param name="text">Text to print</param>
-		public void DrawText(Point pos, string text)
+		public void DrawText2(Point pos, string text)
 		{
 			if (string.IsNullOrEmpty(text))
 				return;
 
 
 			Rectangle rect = new Rectangle(pos, new Size());
-
-			//Batch.Size = text.Length;
 			Display.Texture = GlyphTileset.Texture;
 
 			Batch.Clear();
@@ -93,17 +92,144 @@ namespace ArcEngine.Asset
 
 			Display.DrawBatch(Batch, BeginMode.Quads);
 		}
+*/
+		/// <summary>
+		/// Prints some text on the screen
+		/// </summary>
+		/// <param name="pos">Offset of the text</param>
+		/// <param name="color">Color</param>
+		/// <param name="text">Text to print</param>
+		public void DrawText(Point pos, Color color, string text)
+		{
+
+			DrawText(new Rectangle(pos, Size.Empty), color, text);
+/*
+			if (string.IsNullOrEmpty(text))
+				return;
+
+
+			// Encode string to xml
+			string msg = "<?xml version=\"1.0\" encoding=\"unicode\" standalone=\"yes\"?><root>" + text + "</root>";
+			UnicodeEncoding utf8 = new UnicodeEncoding();
+			byte[] buffer = utf8.GetBytes(msg);
+			MemoryStream stream = new MemoryStream(buffer);
+			XmlTextReader reader = new XmlTextReader(stream);
+			reader.WhitespaceHandling = WhitespaceHandling.All;
+
+			Rectangle rect = new Rectangle(pos, new Size());
+			Batch.Clear();
+
+			// Extra offset when displaying tile
+			int tileoffset = 0;
+			try
+			{
+				// Skip the first tags "<?...?>" and "<root>"
+				reader.MoveToContent();
+
+				while (reader.Read())
+				{
+
+
+					switch (reader.NodeType)
+					{
+						case XmlNodeType.Attribute:
+						{
+						}
+						break;
+
+						case XmlNodeType.Element:
+						{
+							switch (reader.Name.ToLower())
+							{
+								case "tile":
+								{
+									if (TextTileset == null)
+										break;
+
+									int id = int.Parse(reader.GetAttribute("id"));
+									Tile tile = TextTileset.GetTile(id);
+									TextTileset.Draw(id, rect.Location);
+									rect.Offset(tile.Size.Width, 0);
+
+									tileoffset = tile.Size.Height - LineHeight;
+								}
+								break;
+
+								case "br":
+								{
+									rect.Location = new Point(pos.X, rect.Bottom + LineHeight + tileoffset);
+									tileoffset = 0;
+								}
+								break;
+							}
+						}
+						break;
+						case XmlNodeType.EndElement:
+						{
+
+						}
+
+						break;
+
+						case XmlNodeType.Text:
+						{
+
+							foreach (char c in reader.Value)
+							{
+								// Get the tile
+								Tile tile = GlyphTileset.GetTile(c - GlyphOffset);
+								if (tile == null)
+									continue;
+
+								// Move the glyph according to its hot spot
+								Rectangle tmp = new Rectangle(
+									new Point(rect.X - (int)(tile.HotSpot.X * GlyphTileset.Scale.Width), rect.Y - (int)(tile.HotSpot.Y * GlyphTileset.Scale.Height)),
+									new Size((int)(tile.Rectangle.Width * GlyphTileset.Scale.Width), (int)(tile.Rectangle.Height * GlyphTileset.Scale.Height)));
+
+								// Add glyph to the batch
+								Batch.AddRectangle(tmp, Color, tile.Rectangle);
+
+								// Move to the next glyph
+								rect.Offset(tmp.Size.Width + Advance, 0);
+							}
+						}
+						break;
+
+					}
+
+				}
+			}
+			catch (XmlException e)
+			{
+			}
+
+			finally
+			{
+				// Close streams
+				reader.Close();
+				stream.Close();
+
+				// Draw batch
+				Display.Texture = GlyphTileset.Texture;
+				Batch.Apply();
+				Display.DrawBatch(Batch, BeginMode.Quads);
+
+				Display.DrawRectangle(rect, Color.Red);
+			}
+*/
+		}
 
 
 		/// <summary>
 		/// Prints some text on the screen
 		/// </summary>
 		/// <param name="pos">Offset of the text</param>
+		/// <param name="color">Color</param>
 		/// <param name="format">Text to print</param>
 		/// <param name="args"></param>
-		public void DrawText(Point pos, string format, params object[] args)
+		public void DrawText(Point pos, Color color, string format, params object[] args)
 		{
-			DrawText(pos, string.Format(format, args));
+			DrawText(pos, color, string.Format(format, args));
 		}
 
 
@@ -111,10 +237,11 @@ namespace ArcEngine.Asset
 		/// Prints some text on the screen within a rectangle with left justification
 		/// </summary>
 		/// <param name="rectangle">Rectangle of the text</param>
+		/// <param name="color">Color</param>
 		/// <param name="text">Text to print</param>
-		public void DrawText(Rectangle rectangle, string text)
+		public void DrawText(Rectangle rectangle, Color color, string text)
 		{
-			DrawText(rectangle, TextJustification.Left, text);
+			DrawText(rectangle, TextJustification.Left, color, text);
 		}
 
 
@@ -122,11 +249,12 @@ namespace ArcEngine.Asset
 		/// Prints some text on the screen
 		/// </summary>
 		/// <param name="rectangle">Rectangle of the text</param>
+		/// <param name="color">Color</param>
 		/// <param name="format">Text to print</param>
 		/// <param name="args"></param>
-		public void DrawText(Rectangle rectangle, string format, params object[] args)
+		public void DrawText(Rectangle rectangle, Color color, string format, params object[] args)
 		{
-			DrawText(rectangle, string.Format(format, args));
+			DrawText(rectangle, color, string.Format(format, args));
 		}
 
 
@@ -135,12 +263,190 @@ namespace ArcEngine.Asset
 		/// </summary>
 		/// <param name="rectangle">Rectangle of the text</param>
 		/// <param name="justification">Needed justifcation</param>
+		/// <param name="color">Text color</param>
 		/// <param name="text">Text to print</param>
-		public void DrawText(Rectangle rectangle, TextJustification justification, string text)
+		public void DrawText(Rectangle rectangle, TextJustification justification, Color color, string text)
 		{
 			if (string.IsNullOrEmpty(text))
 				return;
 
+
+			// Encode string to xml
+			string msg = "<?xml version=\"1.0\" encoding=\"unicode\" standalone=\"yes\"?><root>" + text + "</root>";
+			UnicodeEncoding utf8 = new UnicodeEncoding();
+			byte[] buffer = utf8.GetBytes(msg);
+			MemoryStream stream = new MemoryStream(buffer);
+			XmlTextReader reader = new XmlTextReader(stream);
+			reader.WhitespaceHandling = WhitespaceHandling.All;
+
+
+			// Color stack
+			Stack<Color> ColorStack = new Stack<Color>();
+			ColorStack.Push(color);
+			Color currentcolor = color;
+			
+
+			Rectangle rect = rectangle; // new Rectangle(pos, new Size());
+			Batch.Clear();
+
+
+			// Extra offset when displaying tile
+			int tileoffset = 0;
+
+
+
+			try
+			{
+				// Skip the first tags "<?...?>" and "<root>"
+				reader.MoveToContent();
+
+				while (reader.Read())
+				{
+
+
+					switch (reader.NodeType)
+					{
+						case XmlNodeType.Attribute:
+						{
+						}
+						break;
+
+
+						#region control tags
+
+						// Special tags
+						case XmlNodeType.Element:
+						{
+							switch (reader.Name.ToLower())
+							{
+								case "tile":
+								{
+									if (TextTileset == null)
+										break;
+
+									Display.Color = Color.White;
+
+									int id = int.Parse(reader.GetAttribute("id"));
+									Tile tile = TextTileset.GetTile(id);
+									TextTileset.Draw(id, rect.Location);
+									rect.Offset(tile.Size.Width, 0);
+
+									tileoffset = tile.Size.Height - LineHeight;
+
+									Display.Color = currentcolor;
+								}
+								break;
+
+								case "br":
+								{
+									rect.X = rectangle.X;
+									rect.Y += (int)(LineHeight * GlyphTileset.Scale.Height) + tileoffset;
+									tileoffset = 0;
+								}
+								break;
+
+
+								// Change the color
+								case "color":
+								{
+									ColorStack.Push(currentcolor);
+
+									currentcolor = Color.FromArgb(int.Parse(reader.GetAttribute("a")),
+										int.Parse(reader.GetAttribute("r")),
+										int.Parse(reader.GetAttribute("g")),
+										int.Parse(reader.GetAttribute("b")));
+
+									Display.Color = currentcolor;
+								}
+								break;
+							}
+						}
+						break;
+
+						#endregion
+
+
+						#region closing control tags
+
+						case XmlNodeType.EndElement:
+						{
+							switch (reader.Name.ToLower())
+							{
+								case "color":
+								{
+									currentcolor = ColorStack.Pop();
+									Display.Color = currentcolor;
+								}
+								break;
+							}
+						}
+
+						break;
+
+						#endregion
+
+
+
+						// Raw text
+						case XmlNodeType.Text:
+						{
+
+							foreach (char c in reader.Value)
+							{
+								// Get the tile
+								Tile tile = GlyphTileset.GetTile(c - GlyphOffset);
+								if (tile == null)
+									continue;
+
+								// Move the glyph according to its hot spot
+								Rectangle tmp = new Rectangle(
+									new Point(rect.X - (int)(tile.HotSpot.X * GlyphTileset.Scale.Width), rect.Y - (int)(tile.HotSpot.Y * GlyphTileset.Scale.Height)),
+									new Size((int)(tile.Rectangle.Width * GlyphTileset.Scale.Width), (int)(tile.Rectangle.Height * GlyphTileset.Scale.Height)));
+
+								// Out of the bouding box => new line
+								if (tmp.Right >= rectangle.Right && !rectangle.Size.IsEmpty)
+								{
+									tmp.X = rectangle.X;
+									tmp.Y = tmp.Y + (int)(LineHeight * GlyphTileset.Scale.Height);
+
+									rect.X = rectangle.X;
+									rect.Y += (int)(LineHeight * GlyphTileset.Scale.Height) + tileoffset;
+									tileoffset = 0;
+
+								}
+
+								// Add glyph to the batch
+								Batch.AddRectangle(tmp, currentcolor, tile.Rectangle);
+
+								// Move to the next glyph
+								rect.Offset(tmp.Size.Width + Advance, 0);
+							}
+						}
+						break;
+
+					}
+
+				}
+			}
+			catch (XmlException e)
+			{
+			}
+
+			finally
+			{
+				// Close streams
+				reader.Close();
+				stream.Close();
+
+				// Draw batch
+				Batch.Apply();
+				Display.Texture = GlyphTileset.Texture;
+				Display.Blending = true;
+				Display.DrawBatch(Batch, BeginMode.Quads);
+
+				//Display.DrawRectangle(rectangle, Color.Red);
+			}
+/*
 			Point loc = rectangle.Location;
 			Rectangle rect = Rectangle.Empty;
 
@@ -155,7 +461,7 @@ namespace ArcEngine.Asset
 				if (c == 10)
 				{
 					loc.X = rectangle.X;
-					loc.Y += (int)(14 * GlyphTileset.Scale.Height);
+					loc.Y += (int)(LineHeight * GlyphTileset.Scale.Height);
 				}
 
 
@@ -177,11 +483,11 @@ namespace ArcEngine.Asset
 
 
 						// Out of the rectangle
-						if (rect.Left > rectangle.Right)
+						if (rect.Left >= rectangle.Right)
 						{
 							rect.X = rectangle.X;
-							rect.Y = rect.Y + (int)(14 * GlyphTileset.Scale.Height);
-							loc.Y += (int)(14 * GlyphTileset.Scale.Height);
+							rect.Y = rect.Y + (int)(LineHeight * GlyphTileset.Scale.Height);
+							loc.Y += (int)(LineHeight * GlyphTileset.Scale.Height);
 						}
 					}
 					break;
@@ -210,6 +516,10 @@ namespace ArcEngine.Asset
 
 
 			Display.DrawBatch(Batch, BeginMode.Quads);
+
+
+			Display.DrawRectangle(rectangle, Color.Red);
+*/
 		}
 
 		/// <summary>
@@ -807,14 +1117,14 @@ namespace ArcEngine.Asset
 		}
 
 
-
+/*
 		/// <summary>
 		/// Font Color
 		/// </summary>
 		[Category("Color")]
 		[Description("Color of the font")]
 		public Color Color { get; set; }
-
+*/
 
 		/// <summary>
 		/// Horizontal advance between each glyph

@@ -36,14 +36,13 @@ namespace DungeonEye.Forms
 	{
 
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
-		/// <param name="maze"></param>
-		/// <param name="position"></param>
+		/// <param name="maze">Maze</param>
+		/// <param name="position">Location of the block</param>
 		public MazeBlockForm(Maze maze, MazeBlock block)
 		{
 			InitializeComponent();
-			MonsterBox.Init();
 
 			if (block == null)
 			{
@@ -52,6 +51,10 @@ namespace DungeonEye.Forms
 			}
 			MazeBlock = block;
 			Maze = maze;
+
+
+			MonsterBox.Init();
+
 
 			#region Ground items
 
@@ -81,34 +84,34 @@ namespace DungeonEye.Forms
 			SEBox.EndUpdate();
 
 
-			NWItemsBox.BeginUpdate();
-			NWItemsBox.Items.Clear();
-			NEItemsBox.BeginUpdate();
-			NEItemsBox.Items.Clear();
-			SWItemsBox.BeginUpdate();
-			SWItemsBox.Items.Clear();
-			SEItemsBox.BeginUpdate();
-			SEItemsBox.Items.Clear();
-
-			foreach (string item in Itemset.Items.Keys)
+			if (Itemset != null)
 			{
-				NWItemsBox.Items.Add(item);
-				NEItemsBox.Items.Add(item);
-				SWItemsBox.Items.Add(item);
-				SEItemsBox.Items.Add(item);
+				NWItemsBox.BeginUpdate();
+				NWItemsBox.Items.Clear();
+				NEItemsBox.BeginUpdate();
+				NEItemsBox.Items.Clear();
+				SWItemsBox.BeginUpdate();
+				SWItemsBox.Items.Clear();
+				SEItemsBox.BeginUpdate();
+				SEItemsBox.Items.Clear();
+
+				foreach (string item in Itemset.Items.Keys)
+				{
+					NWItemsBox.Items.Add(item);
+					NEItemsBox.Items.Add(item);
+					SWItemsBox.Items.Add(item);
+					SEItemsBox.Items.Add(item);
+				}
+
+				NWItemsBox.EndUpdate();
+				NEItemsBox.EndUpdate();
+				SWItemsBox.EndUpdate();
+				SEItemsBox.EndUpdate();
 			}
-
-			NWItemsBox.EndUpdate();
-			NEItemsBox.EndUpdate();
-			SWItemsBox.EndUpdate();
-			SEItemsBox.EndUpdate();
-
 			#endregion
 
 
 			#region Monsters
-
-
 
 			// Add templates
 			MonsterTemplateBox.BeginUpdate();
@@ -119,14 +122,6 @@ namespace DungeonEye.Forms
 
 			MonsterTemplateBox.EndUpdate();
 
-
-			#endregion
-
-
-			#region Wall decoration
-
-			GlWallControl.MakeCurrent();
-			Display.Init();
 
 			#endregion
 
@@ -175,6 +170,7 @@ namespace DungeonEye.Forms
 
 			#endregion
 
+			
 			#region Force Field
 			ForceFieldTypeBox.BeginUpdate();
 			ForceFieldTypeBox.Items.Clear();
@@ -386,6 +382,25 @@ namespace DungeonEye.Forms
 
 		#region Form events
 
+		/// <summary>
+		/// OnLoad
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void MazeBlockForm_Load(object sender, EventArgs e)
+		{
+
+
+
+			#region Wall decoration
+
+		//	GlWallControl.MakeCurrent();
+		//	Display.Init();
+
+			#endregion
+
+
+		}
 
 		/// <summary>
 		/// OnKeyDown
@@ -913,6 +928,7 @@ namespace DungeonEye.Forms
 
 
 		#endregion
+
 
 
 	}

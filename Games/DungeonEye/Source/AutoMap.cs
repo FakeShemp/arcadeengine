@@ -77,7 +77,7 @@ namespace DungeonEye
 			// Background
 			Tileset.Draw(1, Point.Empty);
 
-			Font.DrawText(new Point(100, 100), "TODO...");
+			Font.DrawText(new Point(100, 100), Color.White, "TODO...");
 	
 			
 			// Draw the cursor or the item in the hand

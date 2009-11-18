@@ -267,6 +267,7 @@
 			this.Controls.Add(this.VisualGroupBox);
 			this.Name = "MonsterControl";
 			this.Size = new System.Drawing.Size(455, 434);
+			this.Load += new System.EventHandler(this.MonsterControl_Load);
 			this.VisualGroupBox.ResumeLayout(false);
 			this.VisualGroupBox.PerformLayout();
 			this.PocketGroupBox.ResumeLayout(false);

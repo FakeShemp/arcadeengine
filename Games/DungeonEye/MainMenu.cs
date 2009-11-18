@@ -229,18 +229,14 @@ namespace DungeonEye
 				point.Offset(6, 6);
 
 				if (id == MenuID)
-					Font.Color = Color.FromArgb(255, 85, 85);
+					Font.DrawText(point, Color.FromArgb(255, 85, 85), button.Text);
 				else
-					Font.Color = Color.White;
-
-				Font.DrawText(point, button.Text);
-
+					Font.DrawText(point, Color.White, button.Text);
 
 			}
 
 			// Version info
-			Font.Color = Color.White;
-			Font.DrawText(new Point(520, 380), "V 0.2b");
+			Font.DrawText(new Point(520, 380), Color.White, "V 0.2b");
 
 
 			// Draw the cursor or the item in the hand

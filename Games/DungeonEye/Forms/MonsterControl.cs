@@ -46,15 +46,7 @@ namespace DungeonEye.Forms
 
 		public bool Init()
 		{
-	
-			GlControl.MakeCurrent();
-			Display.Init();
-			GlControl_Resize(null, null);
-			Display.ClearBuffers();
-			GlControl.SwapBuffers();
-
-
-			// Facing box
+				// Facing box
 			FacingBox.BeginUpdate();
 			FacingBox.Items.Clear();
 			foreach (string name in Enum.GetNames(typeof(CardinalPoint)))
@@ -67,12 +59,14 @@ namespace DungeonEye.Forms
 
 			// Items
 			ItemSet itemset = ResourceManager.CreateAsset<ItemSet>("");
-			ItemsBox.BeginUpdate();
-			ItemsBox.Items.Clear();
-			foreach (string item in itemset.Items.Keys)
-				ItemsBox.Items.Add(item);
-			ItemsBox.EndUpdate();
-
+			if (itemset != null)
+			{
+				ItemsBox.BeginUpdate();
+				ItemsBox.Items.Clear();
+				foreach (string item in itemset.Items.Keys)
+					ItemsBox.Items.Add(item);
+				ItemsBox.EndUpdate();
+			}
 
 			UpdateControls();
 
@@ -81,7 +75,7 @@ namespace DungeonEye.Forms
 
 
 		/// <summary>
-		/// 
+		/// Update controls
 		/// </summary>
 		void UpdateControls()
 		{
@@ -158,6 +152,23 @@ namespace DungeonEye.Forms
 
 
 		#region Events
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void MonsterControl_Load(object sender, EventArgs e)
+		{
+			GlControl.MakeCurrent();
+			Display.Init();
+			GlControl_Resize(null, null);
+			Display.ClearBuffers();
+			GlControl.SwapBuffers();
+
+		}
+
 
 		/// <summary>
 		/// 

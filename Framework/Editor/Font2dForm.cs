@@ -126,7 +126,7 @@ namespace ArcEngine.Editor
 		//	Device.Font = CurrentFont;
 			if (CurrentFont != null)
 			{
-				CurrentFont.DrawText(Point.Empty, PreviewTextBox.Text);
+				CurrentFont.DrawText(Point.Empty, Color.White, PreviewTextBox.Text);
 			}
 
 			DrawTimer.Start();
