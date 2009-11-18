@@ -527,11 +527,12 @@ namespace ArcEngine.Asset
 		/// </summary>
 		/// <param name="rectangle">Rectangle of the text</param>
 		/// <param name="justification">Needed justifcation</param>
+		/// <param name="color">Color</param>
 		/// <param name="format">Text to print</param>
 		/// <param name="args"></param>
-		public void DrawText(Rectangle rectangle, TextJustification justification, string format, params object[] args)
+		public void DrawText(Rectangle rectangle, TextJustification justification, Color color, string format, params object[] args)
 		{
-			DrawText(rectangle, justification, string.Format(format, args));
+			DrawText(rectangle, justification, color, string.Format(format, args));
 		}
 
 		#endregion
@@ -765,14 +766,22 @@ namespace ArcEngine.Asset
 		{
 			TTFFileName = string.Empty;
 			TextureName = string.Empty;
+			TileSetName = name;
 
 			if (string.IsNullOrEmpty(name))
 				return false;
 
-			TileSetName = name;
 			GlyphTileset.Load(ResourceManager.GetAsset<TileSet>(name));
 			if (GlyphTileset.Count == 0)
 				return false;
+
+
+			// Get the line height
+			foreach (int id in GlyphTileset.Tiles)
+			{
+				Tile tile = GlyphTileset.GetTile(id);
+				LineHeight = Math.Max(LineHeight, tile.Size.Height);
+			}
 
 			return true;
 		}
