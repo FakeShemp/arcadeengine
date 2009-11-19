@@ -137,7 +137,7 @@ namespace ArcEngine.Asset
 		/// <summary>
 		/// Loads the collection from an xmlnode
 		/// </summary>
-		/// <param name="xml"></param>
+		/// <param name="xml">XML definition</param>
 		/// <returns></returns>
 		public bool Load(XmlNode xml)
 		{
@@ -159,7 +159,7 @@ namespace ArcEngine.Asset
 				{
 					case "string":
 					{
-						Strings[int.Parse(node.Attributes["id"].Value)] = node.InnerText;
+						Strings[int.Parse(node.Attributes["id"].Value)] = node.InnerXml;
 
 						if (int.Parse(node.Attributes["id"].Value) > LastStringID)
 							LastStringID = int.Parse(node.Attributes["id"].Value);

@@ -58,7 +58,7 @@
 			this.label10 = new System.Windows.Forms.Label();
 			this.GroundLocationBox = new System.Windows.Forms.ComboBox();
 			this.label9 = new System.Windows.Forms.Label();
-			this.MonsterBox = new Forms.MonsterControl();
+			this.MonsterBox = new MonsterControl();
 			this.DecorationsTab = new System.Windows.Forms.TabPage();
 			this.DecorationGroupBox = new System.Windows.Forms.GroupBox();
 			this.groupBox6 = new System.Windows.Forms.GroupBox();
@@ -557,6 +557,7 @@
 			this.GlWallControl.Size = new System.Drawing.Size(256, 192);
 			this.GlWallControl.TabIndex = 0;
 			this.GlWallControl.VSync = true;
+			this.GlWallControl.Load += new System.EventHandler(this.GlWallControl_Load);
 			this.GlWallControl.Paint += new System.Windows.Forms.PaintEventHandler(this.GlWallControl_Paint);
 			this.GlWallControl.Resize += new System.EventHandler(this.GlWallControl_Resize);
 			// 

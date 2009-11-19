@@ -391,15 +391,6 @@ namespace DungeonEye.Forms
 		{
 
 
-
-			#region Wall decoration
-
-		//	GlWallControl.MakeCurrent();
-		//	Display.Init();
-
-			#endregion
-
-
 		}
 
 		/// <summary>
@@ -481,6 +472,18 @@ namespace DungeonEye.Forms
 
 
 		#region Wall decoration
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void GlWallControl_Load(object sender, EventArgs e)
+		{
+			GlWallControl.MakeCurrent();
+			Display.Init();
+		}
 
 		/// <summary>
 		/// 
@@ -928,7 +931,6 @@ namespace DungeonEye.Forms
 
 
 		#endregion
-
 
 
 	}

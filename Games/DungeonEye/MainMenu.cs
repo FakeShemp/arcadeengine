@@ -40,7 +40,7 @@ namespace DungeonEye
 	{
 
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
 		public MainMenu()
 		{
@@ -50,7 +50,7 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Load content
 		/// </summary>
 		public override void LoadContent()
 		{
@@ -77,15 +77,12 @@ namespace DungeonEye
 
 			Buttons.Add(new ScreenButton("", new Rectangle(150, 372, 324, 14)));
 			Buttons[3].Selected += new EventHandler(QuitEvent);
-
-
-
 		}
 
 
 
 		/// <summary>
-		/// 
+		/// Option entry event
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -179,7 +176,7 @@ namespace DungeonEye
 			if (Keyboard.IsNewKeyPress(System.Windows.Forms.Keys.Escape))
 				ScreenManager.Game.Exit();
 
-
+			// Run intro
 			if (Keyboard.IsNewKeyPress(System.Windows.Forms.Keys.I))
 				ScreenManager.AddScreen(new IntroScreen());
 
@@ -234,9 +231,6 @@ namespace DungeonEye
 					Font.DrawText(point, Color.White, button.Text);
 
 			}
-
-			// Version info
-			Font.DrawText(new Point(520, 380), Color.White, "V 0.2b");
 
 
 			// Draw the cursor or the item in the hand

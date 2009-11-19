@@ -102,7 +102,7 @@ namespace ArcEngine.Asset
 		/// <summary>
 		/// Loads the collection from an xmlnode
 		/// </summary>
-		/// <param name="xml"></param>
+		/// <param name="xml">Xml definition</param>
 		/// <returns></returns>
 		public bool Load(XmlNode xml)
 		{

@@ -56,6 +56,7 @@ namespace DungeonEye
 
 			Scene = ResourceManager.CreateAsset<Scene>("intro");
 			Scene.Font.GlyphTileset.Scale = new SizeF(2, 2);
+			Scene.StringTable.LanguageName = DungeonEye.LanguageName;
 
 			Font = ResourceManager.CreateAsset<Font2d>("intro");
 			Font.GlyphTileset.Scale = new SizeF(2, 2);
@@ -104,7 +105,6 @@ namespace DungeonEye
 		/// <summary>
 		/// Draws the scene
 		/// </summary>
-		/// <param name="device"></param>
 		public override void Draw()
 		{
 			// Clears the background

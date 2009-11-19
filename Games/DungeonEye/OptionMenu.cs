@@ -38,7 +38,7 @@ namespace DungeonEye
 	{
 
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
 		public OptionMenu()
 		{
@@ -48,7 +48,7 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Load content
 		/// </summary>
 		public override void LoadContent()
 		{
