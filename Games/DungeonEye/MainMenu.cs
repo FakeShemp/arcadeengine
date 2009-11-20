@@ -77,7 +77,13 @@ namespace DungeonEye
 
 			Buttons.Add(new ScreenButton("", new Rectangle(150, 372, 324, 14)));
 			Buttons[3].Selected += new EventHandler(QuitEvent);
+
+
+			Display.Rotate(5);
 		}
+
+
+
 
 
 

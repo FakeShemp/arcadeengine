@@ -353,7 +353,8 @@ namespace ArcEngine.Graphic
 
 			// Exact pixelization is required, put a small translation in the ModelView matrix
 			GL.MatrixMode(MatrixMode.Modelview);
-			GL.Translate(0.0001f, 0.0001f, 0.0f);
+		//	GL.Translate(0.0001f, 0.0001f, 0.0f);
+
 		}
 
 
@@ -1538,6 +1539,25 @@ namespace ArcEngine.Graphic
 		}
 
 
+		/// <summary>
+		/// FSAA
+		/// </summary>
+		public static bool MultiSample
+		{
+			get
+			{
+				return GL.IsEnabled(EnableCap.Multisample);
+			}
+			set
+			{
+				if (value)
+					GL.Enable(EnableCap.Multisample);
+				else
+					GL.Disable(EnableCap.Multisample);
+			}
+		}
+
+
 
 		/// <summary>
 		/// Gets/Sets the scissor test
@@ -1648,10 +1668,35 @@ namespace ArcEngine.Graphic
 			if (Extensions.Contains("GL_ARB_vertex_buffer_object"))
 				HasVBO = true;
 
+			if (Extensions.Contains("GL_ARB_multisample"))
+			{
+				HasMultiSample = true;
+				GL.GetInteger(GetPName.Samples, out maxMultiSample);
+			}
 
 		}
 
+		/// <summary>
+		/// Has multi sample support
+		/// </summary>
+		public bool HasMultiSample
+		{
+			get;
+			internal set;
+		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public int MaxMultiSample
+		{
+			get
+			{
+				return maxMultiSample;
+			}
+		}
+		int maxMultiSample;
 
 		/// <summary>
 		/// Has non power of two texture support
@@ -1854,5 +1899,48 @@ namespace ArcEngine.Graphic
 
 
 		#endregion
+	}
+
+
+	/// <summary>
+	/// <see cref="GameWindow"/> creation parameters
+	/// </summary>
+	public class GameWindowParams
+	{
+
+		/// <summary>
+		/// Game window size
+		/// </summary>
+		public Size Size = new Size(1024, 768);
+
+		/// <summary>
+		/// Major version
+		/// </summary>
+		public int Major = 99;
+
+		/// <summary>
+		/// Minor version
+		/// </summary>
+		public int Minor = 99;
+
+		/// <summary>
+		/// FSAA buffer 
+		/// </summary>
+		public int Samples = 0;
+
+		/// <summary>
+		/// Color buffer depth
+		/// </summary>
+		public int Color = 32;
+
+		/// <summary>
+		/// Depth buffer depth
+		/// </summary>
+		public int Depth = 24;
+
+		/// <summary>
+		/// Stencil color depth
+		/// </summary>
+		public int Stencil = 8;
 	}
 }

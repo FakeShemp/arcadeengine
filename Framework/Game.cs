@@ -77,17 +77,17 @@ namespace ArcEngine
 		/// <param name="size">Size of the window</param>
 		public void CreateGameWindow(Size size)
 		{
-			CreateGameWindow(size, 99, 99);
+			GameWindowParams p = new GameWindowParams();
+			p.Size = size;
+			CreateGameWindow(p);
 		}
 
 
 		/// <summary>
 		/// Create the GameWindow, and use a specific OpenGL version
 		/// </summary>
-		/// <param name="size">Size of the window</param>
-		/// <param name="major">Major version</param>
-		/// <param name="minor">Minor version</param>
-		public void CreateGameWindow(Size size, int major, int minor)
+		/// <param name="param">GameWindow creation parameters</param>
+		public void CreateGameWindow(GameWindowParams param)
 		{
 			// Close the previous game window first
 			if (Window != null)
@@ -96,7 +96,7 @@ namespace ArcEngine
 				Window = null;
 			}
 
-			Window = new GameWindow(size, major, minor);
+			Window = new GameWindow(param);
 			Window.Show();
 
 
@@ -104,7 +104,26 @@ namespace ArcEngine
 			Window.Activated += new EventHandler(Window_Activated);
 			Window.Deactivate += new EventHandler(Window_Deactivate);
 			Window.Resize += new EventHandler(Window_Resize);
-			Mouse.Init(Window);
+			Mouse.Init(Window);		
+		}
+
+
+		/// <summary>
+		/// Closes the game window
+		/// </summary>
+		public void CloseGameWindow()
+		{
+			if (Window == null)
+				return;
+
+			Window.Activated -= Window_Activated;
+			Window.Deactivate -= Window_Deactivate;
+			Window.Resize -= Window_Resize;
+
+			Window.Hide();
+			Window.Close();
+			Window.Dispose();
+			Window = null;
 		}
 
 		#endregion

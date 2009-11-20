@@ -81,7 +81,7 @@ namespace ArcEngine.Examples.RenderToTexture
 			Texture.Blit(new Point(100, 10));
 
 			Display.DrawRectangle(rect, Color.Red);
-			Display.DrawCircle(new Point(100, 10), 25);
+			Display.DrawCircle(new Point(100, 10), 25, Color.Red);
 
 
 			// Draw only in the depth buffer

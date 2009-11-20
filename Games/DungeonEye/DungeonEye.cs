@@ -24,7 +24,7 @@ using ArcEngine;
 using ArcEngine.Input;
 using ArcEngine;
 using ArcEngine.Utility.ScreenManager;
-
+using ArcEngine.Graphic;
 
 namespace DungeonEye
 {
@@ -84,6 +84,9 @@ namespace DungeonEye
 		/// </summary>
 		public override void LoadContent()
 		{
+			GameWindowParams p = new GameWindowParams();
+			p.Samples = 8;
+
 			CreateGameWindow(new Size(640, 400));
 			Window.Text = "Dungeon Eye";
 			//Window.SetFullScreen(new Size(640, 480), 3);

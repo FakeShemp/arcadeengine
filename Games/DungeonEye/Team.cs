@@ -865,6 +865,10 @@ namespace DungeonEye
 			#endregion
 
 
+			if (Keyboard.IsNewKeyPress(Keys.N))
+				Display.MultiSample = !Display.MultiSample;
+
+
 			GroundPosition groundpos = GroundPosition.NorthEast;
 			Point mousePos = Mouse.Location;
 			Point pos = Point.Empty;

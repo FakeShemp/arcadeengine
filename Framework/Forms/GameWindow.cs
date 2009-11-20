@@ -37,21 +37,19 @@ namespace ArcEngine.Forms
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public GameWindow(Size size, int major, int minor)
+		public GameWindow(GameWindowParams param)
 		{
 			InitializeComponent();
 
-
-
 			// Adds the control to the form
-			RenderControl = new GLControl(new GraphicsMode(32, 24, 8),
-				major, minor,
+			RenderControl = new GLControl(new GraphicsMode(param.Color, param.Depth, param.Stencil, param.Stencil),
+				param.Major, param.Minor,
 				GraphicsContextFlags.Default);
 			RenderControl.Dock = DockStyle.Fill;
 			Controls.Add(RenderControl);
 
 			// Resize the window
-			ClientSize = size;
+			ClientSize = param.Size;
 
 			VSync = true;
 		}
@@ -142,7 +140,7 @@ namespace ArcEngine.Forms
 
 
 		/// <summary>
-		/// 
+		/// On resize
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -334,4 +332,5 @@ namespace ArcEngine.Forms
 		}
 		#endregion
 	}
+
 }
