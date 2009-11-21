@@ -300,12 +300,11 @@ namespace ArcEngine.Graphic
 		public void Blit(Rectangle rect, TextureLayout mode)
 		{
 			Blit(rect, Rectangle, mode);
-			//Blit(device, rect, Rectangle, mode);
 		}
 
 
 		/// <summary>
-		/// Blit a Bitmap on the texture
+		/// Blits a Bitmap on the texture
 		/// </summary>
 		/// <param name="bitmap">Bitmap handle</param>
 		/// <param name="location">Location on the texture</param>
@@ -317,14 +316,9 @@ namespace ArcEngine.Graphic
 				return;
 			}
 
-			//Display.Texture = this;
-			ErrorCode error = GL.GetError();
 
 			Imaging.BitmapData bmdata = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height),
 				 Imaging.ImageLockMode.ReadOnly, Imaging.PixelFormat.Format32bppArgb);
-
-
-
 
 
 			byte[] data = new byte[bitmap.Size.Width * bitmap.Size.Height * 4];
@@ -338,32 +332,6 @@ namespace ArcEngine.Graphic
 				bitmap.Width, bitmap.Height,
 				PixelFormat.Bgra, PixelType.UnsignedByte,
 				data);
-			error = GL.GetError();
-
-			// Update texture content
-		//	if (LockTextureBits(ImageLockMode.WriteOnly))
-		//	{
-				//Data = data;
-
-/*
-				for (int y = 0; y < bitmap.Height; y++)
-				{
-					Array.Copy(
-						data, bitmap.Width * y * 4,
-						Data, Size.Width * y * 4 
-						+ location.X * 4 + location.Y * Size.Width * 4, 
-						bitmap.Width * 4);
-				}
-*/
-				
-		//		UnlockTextureBits();
-		//	}
-
-
-
-			
-			
-
 		}
 
 
@@ -451,28 +419,6 @@ namespace ArcEngine.Graphic
 			SetSize(new Size(bitmap.Width, bitmap.Height));
 
 			Blit(bitmap, Point.Empty);
-/*
-			System.Drawing.Imaging.BitmapData bmdata = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height),
-				 System.Drawing.Imaging.ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-
-
-
-
-			byte[] data = new byte[bitmap.Size.Width * bitmap.Size.Height * 4];
-			System.Runtime.InteropServices.Marshal.Copy(bmdata.Scan0, data, 0, bitmap.Size.Width * bitmap.Size.Height * 4);
-
-			// Update texture content
-			if (LockTextureBits(ImageLockMode.WriteOnly))
-			{
-				Data = data;
-				UnlockTextureBits();
-			}
-
-			bitmap.UnlockBits(bmdata);
-*/
-
-			//MinFilter = MinifyFilter.Linear;
-			//MagFilter = MagnifyFilter.Linear;
 
 			return true;	
 		}

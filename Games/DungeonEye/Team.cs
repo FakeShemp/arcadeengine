@@ -865,16 +865,13 @@ namespace DungeonEye
 			#endregion
 
 
-			if (Keyboard.IsNewKeyPress(Keys.N))
-				Display.MultiSample = !Display.MultiSample;
-
-
 			GroundPosition groundpos = GroundPosition.NorthEast;
 			Point mousePos = Mouse.Location;
 			Point pos = Point.Empty;
 
 			// Get the block at team position
 			MazeBlock CurrentBlock = Maze.GetBlock(Location.Position);
+
 
 			#region Mouse
 
