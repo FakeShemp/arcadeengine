@@ -332,22 +332,6 @@ namespace DungeonEye
 			else
 				Items.Draw(0, Mouse.Location);
 
-			//Display.Color = Color.FromArgb(128, Color.Red);
-			//Display.Rectangle(new Rectangle(0, 0, 176, 108), true);
-			//Display.Color = Color.FromArgb(128, Color.Blue);
-			//Display.Rectangle(new Rectangle(176, 0, 176, 144), true);
-
-			//Display.Color = Color.FromArgb(128, Color.Red);
-			//Display.Rectangle(new Rectangle(0, 144, 176, 58), true);
-			//Display.Color = Color.FromArgb(128, Color.Blue);
-			//Display.Rectangle(new Rectangle(176, 144, 176, 58), true);
-
-			//Display.Color = Color.FromArgb(200, Color.Red);
-			//Display.Rectangle(new Rectangle(0, 202, 176, 38), true);
-			//Display.Color = Color.FromArgb(200, Color.Blue);
-			//Display.Rectangle(new Rectangle(176, 202, 176, 38), true);
-
-
 		}
 
 

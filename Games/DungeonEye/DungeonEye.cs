@@ -21,10 +21,9 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using ArcEngine;
-using ArcEngine.Input;
-using ArcEngine;
-using ArcEngine.Utility.ScreenManager;
 using ArcEngine.Graphic;
+using ArcEngine.Input;
+using ArcEngine.Utility.ScreenManager;
 
 namespace DungeonEye
 {
@@ -85,12 +84,19 @@ namespace DungeonEye
 		public override void LoadContent()
 		{
 			GameWindowParams p = new GameWindowParams();
-			p.Samples = 8;
+			p.Samples = 0;
+			p.Size = new Size(800, 600);
+			p.FullScreen = false;
 
-			CreateGameWindow(new Size(640, 400));
+			CreateGameWindow(p);
 			Window.Text = "Dungeon Eye";
-			//Window.SetFullScreen(new Size(640, 480), 3);
 
+
+			// Default texture parameters
+			Display.TextureParameters.BorderColor = Color.Black;
+			Display.TextureParameters.MagFilter = OpenTK.Graphics.OpenGL.TextureMagFilter.Linear;
+			Display.TextureParameters.MinFilter = OpenTK.Graphics.OpenGL.TextureMinFilter.Linear;
+	
 			// Enble the console
 			//Terminal.Enable = true;
 

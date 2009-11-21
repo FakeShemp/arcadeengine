@@ -79,7 +79,7 @@ namespace DungeonEye
 			Buttons[3].Selected += new EventHandler(QuitEvent);
 
 
-			Display.Rotate(1);
+		//	Display.Rotate(1);
 		}
 
 
