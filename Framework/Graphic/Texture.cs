@@ -595,24 +595,17 @@ namespace ArcEngine.Graphic
 		{
 			get
 			{
-				//GL.PushAttrib(AttribMask.TextureBit);
-				//GL.BindTexture(TextureTarget.Texture2D, Handle);
-
 				Display.Texture = this;
 
 				int value;
 				GL.GetTexParameter(TextureTarget.Texture2D, GetTextureParameter.TextureWrapS, out value);
-				//GL.PopAttrib();
 
 				return (HorizontalWrapFilter)value;
 			}
 			set
 			{
-			//	GL.PushAttrib(AttribMask.TextureBit);
-			//	GL.BindTexture(TextureTarget.Texture2D, Handle);
 				Display.Texture = this;
 				GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)value);
-			//	GL.PopAttrib();
 			}
 		}
 
@@ -624,24 +617,17 @@ namespace ArcEngine.Graphic
 		{
 			get
 			{
-				//GL.PushAttrib(AttribMask.TextureBit);
-				//GL.BindTexture(TextureTarget.Texture2D, Handle);
-
 				Display.Texture = this;
 
 				int value;
 				GL.GetTexParameter(TextureTarget.Texture2D, GetTextureParameter.TextureWrapT, out value);
-				//GL.PopAttrib();
 
 				return (VerticalWrapFilter)value;
 			}
 			set
 			{
-				//GL.PushAttrib(AttribMask.TextureBit);
-				//GL.BindTexture(TextureTarget.Texture2D, Handle);
 				Display.Texture = this;
 				GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)value);
-				//GL.PopAttrib();
 			}
 		}
 
@@ -654,24 +640,16 @@ namespace ArcEngine.Graphic
 		{
 			get
 			{
-				//GL.PushAttrib(AttribMask.TextureBit);
-				//GL.BindTexture(TextureTarget.Texture2D, Handle);
-
 				Display.Texture = this;
 
 				int[] color = new int[4];
 				GL.GetTexParameter(TextureTarget.Texture2D, GetTextureParameter.TextureBorderColor, color);
-
-				//GL.PopAttrib();
 
 				return Color.FromArgb(color[0], color[1], color[2], color[3]);
 
 			}
 			set
 			{
-			//	GL.PushAttrib(AttribMask.TextureBit);
-			//	GL.BindTexture(TextureTarget.Texture2D, Handle);
-
 				Display.Texture = this;
 
 				int[] color = new int[4];
@@ -681,7 +659,6 @@ namespace ArcEngine.Graphic
 				color[3] = value.B;
 
 				GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureBorderColor, color);
-		//		GL.PopAttrib();
 			}
 		}
 
@@ -693,27 +670,18 @@ namespace ArcEngine.Graphic
 		{
 			get
 			{
-				//GL.PushAttrib(AttribMask.TextureBit);
-				//GL.BindTexture(TextureTarget.Texture2D, Handle);
-
 				Display.Texture = this;
 
 				int value;
 				GL.GetTexParameter(TextureTarget.Texture2D, GetTextureParameter.TextureMinFilter, out value);
 
-				//GL.PopAttrib();
-
 				return (TextureMinFilter)value;
 			}
 			set
 			{
-			
-				//GL.PushAttrib(AttribMask.TextureBit);
-				//GL.BindTexture(TextureTarget.Texture2D, Handle);
 				Display.Texture = this;
 
 				GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)value);
-			//	GL.PopAttrib();
 			}
 		}
 
@@ -725,26 +693,17 @@ namespace ArcEngine.Graphic
 		{
 			get
 			{
-				//GL.PushAttrib(AttribMask.TextureBit);
-				//GL.BindTexture(TextureTarget.Texture2D, Handle);
-
 				Display.Texture = this;
 
 				int value;
 				GL.GetTexParameter(TextureTarget.Texture2D, GetTextureParameter.TextureMagFilter, out value);
-				//GL.PopAttrib();
 
 				return (TextureMagFilter)value;
 			}
 			set
 			{
-			//	GL.PushAttrib(AttribMask.TextureBit);
-			//	GL.BindTexture(TextureTarget.Texture2D, Handle);
-
 				Display.Texture = this;
 				GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)value);
-
-				//GL.PopAttrib();
 			}
 		}
 

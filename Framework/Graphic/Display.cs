@@ -1955,6 +1955,12 @@ namespace ArcEngine.Graphic
 		/// Stencil color depth
 		/// </summary>
 		public int Stencil = 8;
+
+
+		/// <summary>
+		/// Full screen mode
+		/// </summary>
+		public bool FullScreen = false;
 	}
 
 
