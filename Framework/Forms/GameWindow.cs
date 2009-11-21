@@ -39,6 +39,9 @@ namespace ArcEngine.Forms
 		/// </summary>
 		public GameWindow(GameWindowParams param)
 		{
+			if (param == null)
+				throw new ArgumentNullException("param");
+
 			InitializeComponent();
 
 			// Adds the control to the form
@@ -52,6 +55,9 @@ namespace ArcEngine.Forms
 			ClientSize = param.Size;
 
 			VSync = true;
+			if (param.FullScreen)
+				SetFullScreen(param.Size, param.Color);
+
 		}
 
 
@@ -85,7 +91,7 @@ namespace ArcEngine.Forms
 		/// </summary>
 		public void SetFullScreen()
 		{
-			DisplayResolution res = DisplayDevice.Default.SelectResolution(Size.Width, Size.Height, 32, 60);
+			DisplayResolution res = DisplayDevice.Default.SelectResolution(ClientSize.Width, ClientSize.Height, 32, 60);
 			SetFullScreen(res);
 		}
 
@@ -111,8 +117,8 @@ namespace ArcEngine.Forms
 		/// <summary>
 		/// Set in FullScreen mode
 		/// </summary>
-		/// <param name="size"></param>
-		/// <param name="bpp"></param>
+		/// <param name="size">Size</param>
+		/// <param name="bpp">Color depth</param>
 		public void SetFullScreen(Size size, int bpp)
 		{
 			DisplayResolution res = DisplayDevice.Default.SelectResolution(size.Width, size.Height, bpp, 60);
