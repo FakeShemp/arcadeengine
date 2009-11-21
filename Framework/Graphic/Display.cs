@@ -45,6 +45,8 @@ namespace ArcEngine.Graphic
 		{
 			RenderStats = new RenderStats();
 			Capabilities = new RenderDeviceCapabilities();
+			TextureParameters = new DefaultTextParameters();
+
 			CircleResolution = 50;
 		}
 
@@ -1173,6 +1175,17 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		static Dictionary<string, Texture> SharedTextures = new Dictionary<string, Texture>();
 
+
+		/// <summary>
+		/// Default texture parameters
+		/// </summary>
+		static public DefaultTextParameters TextureParameters
+		{
+			get;
+			private set;
+		}
+
+
 		/// <summary>
 		/// Current texture
 		/// </summary>
@@ -1942,5 +1955,77 @@ namespace ArcEngine.Graphic
 		/// Stencil color depth
 		/// </summary>
 		public int Stencil = 8;
+	}
+
+
+	/// <summary>
+	/// Default parameters applied to a new texture
+	/// </summary>
+	public class DefaultTextParameters
+	{
+
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		public DefaultTextParameters()
+		{
+			MagFilter = TextureMagFilter.Linear;
+			MinFilter = TextureMinFilter.Linear;
+			BorderColor = Color.Black;
+			HorizontalWrapFilter = HorizontalWrapFilter.Clamp;
+			VerticalWrapFilter = VerticalWrapFilter.Clamp;
+		}
+
+
+		/// <summary>
+		/// Magnify filter
+		/// </summary>
+		public TextureMagFilter MagFilter
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// Minify filter
+		/// </summary>
+		public TextureMinFilter MinFilter
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// Border color
+		/// </summary>
+		public Color BorderColor
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// Horizontal wrap filter
+		/// </summary>
+		public HorizontalWrapFilter HorizontalWrapFilter
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// Vertical wrap filter
+		/// </summary>
+		public VerticalWrapFilter VerticalWrapFilter
+		{
+			get;
+			set;
+		}
+
+
 	}
 }

@@ -88,6 +88,12 @@ namespace ArcEngine.Graphic
 		public Texture()
 		{
 			Handle = GL.GenTexture();
+
+			MagFilter = Display.TextureParameters.MagFilter;
+			MinFilter = Display.TextureParameters.MinFilter;
+			BorderColor = Display.TextureParameters.BorderColor;
+			HorizontalWrap = Display.TextureParameters.HorizontalWrapFilter;
+			VerticalWrap = Display.TextureParameters.VerticalWrapFilter;
 		}
 
 		/// <summary>
@@ -96,24 +102,9 @@ namespace ArcEngine.Graphic
 		/// <param name="size">Size of the texture to create</param>
 		public Texture(Size size) : this()
 		{
-			Display.Texture = this;
-
-
-			// The below is almost OK. The problem is the GL_RGBA. On certain platforms, the GPU prefers that red and blue be swapped (GL_BGRA).
-			// If you supply GL_RGBA, then the driver will do the swapping for you which is slow.
-			// http://www.opengl.org/wiki/Common_Mistakes#Unsupported_formats_.234
-			//GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba8, Size.Width, Size.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, IntPtr.Zero);
-			//GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba8, Size.Width, Size.Height, 0, PixelFormat.Bgra, PixelType.UnsignedByte, IntPtr.Zero);
-			//LockTextureBits(ImageLockMode.WriteOnly);
-			//Data = null;
-			//UnlockTextureBits();
 			SetSize(size);
-
-			MinFilter = TextureMinFilter.Linear;
-			MagFilter = TextureMagFilter.Linear;
-			VerticalWrap = VerticalWrapFilter.Clamp;
-			HorizontalWrap = HorizontalWrapFilter.Clamp;
 		}
+
 
 		/// <summary>
 		/// Loads an image from the disk
@@ -169,7 +160,6 @@ namespace ArcEngine.Graphic
 
 
 		#region Blitting
-
 
 
 		/// <summary>
@@ -605,17 +595,24 @@ namespace ArcEngine.Graphic
 		{
 			get
 			{
-				GL.BindTexture(TextureTarget.Texture2D, Handle);
+				//GL.PushAttrib(AttribMask.TextureBit);
+				//GL.BindTexture(TextureTarget.Texture2D, Handle);
+
+				Display.Texture = this;
 
 				int value;
 				GL.GetTexParameter(TextureTarget.Texture2D, GetTextureParameter.TextureWrapS, out value);
+				//GL.PopAttrib();
 
 				return (HorizontalWrapFilter)value;
 			}
 			set
 			{
-				GL.BindTexture(TextureTarget.Texture2D, Handle);
+			//	GL.PushAttrib(AttribMask.TextureBit);
+			//	GL.BindTexture(TextureTarget.Texture2D, Handle);
+				Display.Texture = this;
 				GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)value);
+			//	GL.PopAttrib();
 			}
 		}
 
@@ -627,19 +624,24 @@ namespace ArcEngine.Graphic
 		{
 			get
 			{
-				GL.BindTexture(TextureTarget.Texture2D, Handle);
+				//GL.PushAttrib(AttribMask.TextureBit);
+				//GL.BindTexture(TextureTarget.Texture2D, Handle);
+
+				Display.Texture = this;
 
 				int value;
-
-				//GL.GetInteger(GL.GL_TEXTURE_WRAP_T, out value[0]);
 				GL.GetTexParameter(TextureTarget.Texture2D, GetTextureParameter.TextureWrapT, out value);
+				//GL.PopAttrib();
 
 				return (VerticalWrapFilter)value;
 			}
 			set
 			{
-				GL.BindTexture(TextureTarget.Texture2D, Handle);
+				//GL.PushAttrib(AttribMask.TextureBit);
+				//GL.BindTexture(TextureTarget.Texture2D, Handle);
+				Display.Texture = this;
 				GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)value);
+				//GL.PopAttrib();
 			}
 		}
 
@@ -652,23 +654,25 @@ namespace ArcEngine.Graphic
 		{
 			get
 			{
-				GL.PushAttrib(AttribMask.TextureBit);
-				GL.BindTexture(TextureTarget.Texture2D, Handle);
+				//GL.PushAttrib(AttribMask.TextureBit);
+				//GL.BindTexture(TextureTarget.Texture2D, Handle);
+
+				Display.Texture = this;
 
 				int[] color = new int[4];
-
-				//GL.GetInteger(GL.GL_TEXTURE_BORDER_COLOR, out color[0]);
 				GL.GetTexParameter(TextureTarget.Texture2D, GetTextureParameter.TextureBorderColor, color);
 
-				GL.PopAttrib();
+				//GL.PopAttrib();
 
 				return Color.FromArgb(color[0], color[1], color[2], color[3]);
 
 			}
 			set
 			{
-				GL.PushAttrib(AttribMask.TextureBit);
-				GL.BindTexture(TextureTarget.Texture2D, Handle);
+			//	GL.PushAttrib(AttribMask.TextureBit);
+			//	GL.BindTexture(TextureTarget.Texture2D, Handle);
+
+				Display.Texture = this;
 
 				int[] color = new int[4];
 				color[0] = value.A;
@@ -677,7 +681,7 @@ namespace ArcEngine.Graphic
 				color[3] = value.B;
 
 				GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureBorderColor, color);
-				GL.PopAttrib();
+		//		GL.PopAttrib();
 			}
 		}
 
@@ -690,7 +694,9 @@ namespace ArcEngine.Graphic
 			get
 			{
 				//GL.PushAttrib(AttribMask.TextureBit);
-				GL.BindTexture(TextureTarget.Texture2D, Handle);
+				//GL.BindTexture(TextureTarget.Texture2D, Handle);
+
+				Display.Texture = this;
 
 				int value;
 				GL.GetTexParameter(TextureTarget.Texture2D, GetTextureParameter.TextureMinFilter, out value);
@@ -701,10 +707,13 @@ namespace ArcEngine.Graphic
 			}
 			set
 			{
+			
 				//GL.PushAttrib(AttribMask.TextureBit);
-				GL.BindTexture(TextureTarget.Texture2D, Handle);
+				//GL.BindTexture(TextureTarget.Texture2D, Handle);
+				Display.Texture = this;
+
 				GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)value);
-				//GL.PopAttrib();
+			//	GL.PopAttrib();
 			}
 		}
 
@@ -717,7 +726,9 @@ namespace ArcEngine.Graphic
 			get
 			{
 				//GL.PushAttrib(AttribMask.TextureBit);
-				GL.BindTexture(TextureTarget.Texture2D, Handle);
+				//GL.BindTexture(TextureTarget.Texture2D, Handle);
+
+				Display.Texture = this;
 
 				int value;
 				GL.GetTexParameter(TextureTarget.Texture2D, GetTextureParameter.TextureMagFilter, out value);
@@ -727,9 +738,10 @@ namespace ArcEngine.Graphic
 			}
 			set
 			{
-				//GL.PushAttrib(AttribMask.TextureBit);
-				GL.BindTexture(TextureTarget.Texture2D, Handle);
+			//	GL.PushAttrib(AttribMask.TextureBit);
+			//	GL.BindTexture(TextureTarget.Texture2D, Handle);
 
+				Display.Texture = this;
 				GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)value);
 
 				//GL.PopAttrib();
