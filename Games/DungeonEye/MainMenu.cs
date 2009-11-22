@@ -54,7 +54,7 @@ namespace DungeonEye
 		/// </summary>
 		public override void LoadContent()
 		{
-			ResourceManager.LoadBank("data/data.bnk");
+			ResourceManager.LoadBank("data/MainMenu.bnk");
 
 	
 			Tileset = ResourceManager.CreateAsset<TileSet>("Main Menu");
@@ -83,6 +83,18 @@ namespace DungeonEye
 		}
 
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public override void UnloadContent()
+		{
+			if (Tileset != null)
+				Tileset.Dispose();
+
+			if (Font != null)
+				Font.Dispose();
+		}
 
 
 
@@ -159,7 +171,6 @@ namespace DungeonEye
 
 				for (int id = 0; id < Buttons.Count; id++)
 					Buttons[id].Text = StringTable.GetString(id+1);
-
 			}
 
 			Point mousePos = Mouse.Location;

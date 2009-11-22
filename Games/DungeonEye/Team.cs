@@ -63,6 +63,9 @@ namespace DungeonEye
 			System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
 			watch.Start();
 
+			ResourceManager.ClearAssets();
+			ResourceManager.LoadBank("data/game.bnk");
+
 			// Language
 			Language = ResourceManager.CreateAsset<StringTable>("game");
 			if (Language == null)

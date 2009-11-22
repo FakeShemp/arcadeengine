@@ -860,8 +860,15 @@ namespace ArcEngine.Asset
 					Tile tile = GlyphTileset.AddTile(id++);
 
 					tile.Rectangle = new Rectangle(x, y, size.Width, size.Height);
+
+					LineHeight = Math.Max(LineHeight, tile.Size.Height);
 				}
 
+			// Get the line height
+			//foreach (int id in GlyphTileset.Tiles)
+			//{
+			//   Tile tile = GlyphTileset.GetTile(id);
+			//}
 
 			return false;
 		}

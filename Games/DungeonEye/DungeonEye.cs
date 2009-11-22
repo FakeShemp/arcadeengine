@@ -85,8 +85,7 @@ namespace DungeonEye
 		{
 			GameWindowParams p = new GameWindowParams();
 			p.Samples = 0;
-			p.Size = new Size(800, 600);
-			p.FullScreen = false;
+			p.Size = new Size(640, 400);
 
 			CreateGameWindow(p);
 			Window.Text = "Dungeon Eye";
@@ -109,9 +108,9 @@ namespace DungeonEye
 
 
 			GSM.AddScreen(new MainMenu());
-	//		GSM.AddScreen(new Team());
-		//	GSM.AddScreen(new IntroScreen());
-			//GSM.AddScreen(new CharGen());
+			//GSM.AddScreen(new Team());
+			//GSM.AddScreen(new IntroScreen());
+			GSM.AddScreen(new CharGen());
 		}
 
 

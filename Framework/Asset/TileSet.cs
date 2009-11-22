@@ -35,7 +35,7 @@ namespace ArcEngine.Asset
 	/// <remarks>
 	/// Tile texture flipping : http://www.gamedev.net/community/forums/topic.asp?topic_id=526339
 	/// </remarks>
-	public class TileSet : IAsset
+	public class TileSet : IAsset, IDisposable
 	{
 
 		#region Constructor
@@ -519,6 +519,62 @@ namespace ArcEngine.Asset
 
 
 		#endregion
+
+
+
+		#region Dispose
+
+		/// <summary>
+		/// Implement IDisposable.
+		/// </summary>
+		public void Dispose()
+		{
+			Dispose(true);
+			// This object will be cleaned up by the Dispose method.
+			// Therefore, you should call GC.SupressFinalize to
+			// take this object off the finalization queue
+			// and prevent finalization code for this object
+			// from executing a second time.
+			GC.SuppressFinalize(this);
+		}
+
+		/// <summary>
+		/// Dispose(bool disposing) executes in two distinct scenarios.
+		/// If disposing equals true, the method has been called directly
+		/// or indirectly by a user's code. Managed and unmanaged resources
+		/// can be disposed.
+		/// If disposing equals false, the method has been called by the
+		/// runtime from inside the finalizer and you should not reference
+		/// other objects. Only unmanaged resources can be disposed.
+		/// </summary>
+		/// <param name="disposing"></param>
+		private void Dispose(bool disposing)
+		{
+			// Check to see if Dispose has already been called.
+			if (!this.disposed)
+			{
+				// If disposing equals true, dispose all managed
+				// and unmanaged resources.
+				if (disposing)
+				{
+					Texture.Dispose();
+				}
+
+				// Call the appropriate methods to clean up
+				// unmanaged resources here.
+				// If disposing is false,
+				// only the following code is executed.
+
+				// Note disposing has been done.
+				disposed = true;
+			}
+		}
+
+
+		private bool disposed = false;
+
+		#endregion
+
 
 
 		#region Properties

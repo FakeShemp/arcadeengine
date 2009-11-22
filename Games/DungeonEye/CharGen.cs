@@ -42,7 +42,7 @@ namespace DungeonEye
 		/// </summary>
 		public CharGen()
 		{
-
+			Heroes = new Hero[4];
 		}
 
 
@@ -53,6 +53,8 @@ namespace DungeonEye
 		/// </summary>
 		public override void LoadContent()
 		{
+			ResourceManager.LoadBank("data/chargen.bnk");
+
 			Tileset = ResourceManager.CreateAsset<TileSet>("CharGen");
 			Tileset.Scale = new SizeF(2.0f, 2.0f);
 
@@ -62,8 +64,22 @@ namespace DungeonEye
 
 			PlayButton = new ScreenButton(string.Empty, new Rectangle(48, 362, 166, 32));
 			PlayButton.Selected += new EventHandler(PlayButton_Selected);
+
+			StringTable = ResourceManager.CreateAsset<StringTable>("Chargen");
+			StringTable.LanguageName = DungeonEye.LanguageName;
 		}
 
+
+		/// <summary>
+		/// Unload contents
+		/// </summary>
+		public override void UnloadContent()
+		{
+			if (Tileset != null)
+				Tileset.Dispose();
+			if (Font != null)
+				Font.Dispose();
+		}
 
 
 		#region Events
@@ -120,12 +136,15 @@ namespace DungeonEye
 			Tileset.Draw(0, Point.Empty);
 
 
+			string msg = string.Empty;
 			if (CurrentHero == null)
 			{
-				Font.DrawText(new Point(304, 160), Color.White, "Select the box of");
-				Font.DrawText(new Point(304, 178), Color.White, "the character you");
-				Font.DrawText(new Point(304, 196), Color.White, "wish to create or");
-				Font.DrawText(new Point(304, 212), Color.White, "view.");
+				msg = StringTable.GetString(1);
+				Font.DrawText(new Rectangle(304, 160, 300, 64), Color.White, msg);
+				//Font.DrawText(new Point(304, 160), Color.White, "Select the box of");
+				//Font.DrawText(new Point(304, 178), Color.White, "the character you");
+				//Font.DrawText(new Point(304, 196), Color.White, "wish to create or");
+				//Font.DrawText(new Point(304, 212), Color.White, "view.");
 			}
 
 
@@ -155,7 +174,13 @@ namespace DungeonEye
 		/// <returns></returns>
 		bool IsTeamReadyToPlay()
 		{
-			return false;
+			for (int id = 0; id < 4; id++)
+			{
+				if (Heroes[id] == null)
+					return false;
+			}
+
+			return true;
 		}
 
 
@@ -191,6 +216,11 @@ namespace DungeonEye
 		/// Currently selected hero
 		/// </summary>
 		Hero CurrentHero;
+
+		/// <summary>
+		/// String table for translations
+		/// </summary>
+		StringTable StringTable;
 
 		#endregion
 	}
