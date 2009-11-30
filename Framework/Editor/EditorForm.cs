@@ -201,7 +201,6 @@ namespace ArcEngine.Editor
 				return;
 
 			BankName = dlg.FileName;
-
 			ResourceManager.SaveResources(BankName);
 
 			ResourcePanel.RebuildResourceTree();
@@ -230,7 +229,7 @@ namespace ArcEngine.Editor
 
 
 		/// <summary>
-		/// Load resources from a file
+		/// Loads resources bank from a file
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -262,6 +261,8 @@ namespace ArcEngine.Editor
 			dlg = null;
 
 			ResourcePanel.RebuildResourceTree();
+
+			Text = "ArcEngine Editor " + BankName;
 
 			//if (Log.ErrorCount > 0)
 			//{
@@ -312,6 +313,7 @@ namespace ArcEngine.Editor
 			}
 
 
+			Text = "ArcEngine Editor " + BankName;
 			ResourceManager.SaveResources(BankName);
 
 			//RebuildResourceTree();
@@ -524,7 +526,20 @@ namespace ArcEngine.Editor
 		/// <summary>
 		/// Name of the opened bank
 		/// </summary>
-		public string BankName;
+		public string BankName
+		{
+
+			get
+			{
+				return bankName;
+			}
+			set
+			{
+				Text = "ArcEngine Editor " + bankName;
+				bankName = value;
+			}
+		}
+		string bankName;
 
 
 		/// <summary>

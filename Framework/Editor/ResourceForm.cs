@@ -93,6 +93,7 @@ namespace ArcEngine.Editor
 			ResourceTree.EndUpdate();
 
 			bank.Expand();
+
 		}
 
 
