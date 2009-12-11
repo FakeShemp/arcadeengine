@@ -317,6 +317,15 @@ namespace ArcEngine.Editor
 		/// <param name="e"></param>
 		private void ResourceTree_AfterLabelEdit(object sender, NodeLabelEditEventArgs e)
 		{
+			TreeNode node = e.Node;
+
+			if (node.Text.StartsWith("Binaries"))
+			{
+				e.CancelEdit = true;
+				return;
+			}
+			
+			
 			e.CancelEdit = true;
 		}
 

@@ -45,8 +45,9 @@ namespace ArcEngine.Asset
 		/// </summary>
 		public Font2d()
 		{
-			//Color = Color.White;
 			GlyphTileset = new TileSet();
+			GlyphTileset.Texture = new Texture(OpenTK.Graphics.OpenGL.PixelFormat.LuminanceAlpha);
+		//	GlyphTileset.Texture.PixelInternalFormat = PixelInternalFormat.LuminanceAlpha;
 			Batch = new Batch();
 		}
 
@@ -692,7 +693,8 @@ namespace ArcEngine.Asset
 
 
 				// Draw the glyph to the texture
-				TextRenderer.DrawText(gfx, c, font, pos, Color.White, TextFormatFlags.NoPadding);
+				//TextRenderer.DrawText(gfx, c, font, pos, Color.White, TextFormatFlags.NoPadding);
+				TextRenderer.DrawText(gfx, c, font, pos, Color.White, Color.Transparent, TextFormatFlags.NoPadding);
 				//gfx.DrawString(c, font, brush, pos);
 
 				// Offset of the new glyph in the texture
@@ -720,9 +722,6 @@ namespace ArcEngine.Asset
 			bm.Save(ms, ImageFormat.Png);
 			GlyphTileset.Texture.LoadImage(ms.ToArray());
 
-			//	bm.Save("final.png", ImageFormat.Png);
-
-			//IsGenerated = true;
 			return true;
 		}
 

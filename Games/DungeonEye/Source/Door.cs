@@ -741,14 +741,29 @@ namespace DungeonEye
 
 
 		/// <summary>
+		/// Opening / closing speed
+		/// </summary>
+		public TimeSpan Speed
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
 		/// Zone of the button
 		/// </summary>
 		Rectangle Button;
 
-
+		/// <summary>
+		/// 
+		/// </summary>
 		Audio OpenSound;
 
 
+		/// <summary>
+		/// 
+		/// </summary>
 		Audio CloseSound;
 
 		#endregion
