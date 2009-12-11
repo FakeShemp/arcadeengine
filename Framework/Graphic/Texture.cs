@@ -94,6 +94,9 @@ namespace ArcEngine.Graphic
 			BorderColor = Display.TextureParameters.BorderColor;
 			HorizontalWrap = Display.TextureParameters.HorizontalWrapFilter;
 			VerticalWrap = Display.TextureParameters.VerticalWrapFilter;
+
+			PixelInternalFormat = PixelInternalFormat.Rgba8;
+			PixelFormat = PixelFormat.Bgra;
 		}
 
 		/// <summary>
@@ -133,6 +136,27 @@ namespace ArcEngine.Graphic
 
 
 		/// <summary>
+		/// Creates a new texture with a speicific size and pixel format
+		/// </summary>
+		/// <param name="size">Desired size</param>
+		/// <param name="format">Desired pixel format</param>
+		public Texture(Size size, PixelFormat format) : this()
+		{
+			PixelFormat = format;
+			SetSize(size);
+		}
+
+
+		/// <summary>
+		/// Creates a texture with a specified pixel format
+		/// </summary>
+		/// <param name="format">Desired pixel format</param>
+		public Texture(PixelFormat format) : this()
+		{
+			PixelFormat = format;
+		}
+
+		/// <summary>
 		/// Destructor
 		/// TODO
 		/// </summary>
@@ -148,7 +172,7 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Sets the size of the texture
 		/// </summary>
-		/// <param name="size"></param>
+		/// <param name="size">Desired size</param>
 		public void SetSize(Size size)
 		{
 			Size = size;
@@ -539,7 +563,7 @@ namespace ArcEngine.Graphic
 			GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba8,
 				Size.Width, Size.Height,
 				0,
-				PixelFormat.Bgra,
+				PixelFormat,
 				PixelType.UnsignedByte,
 				Data);
 
@@ -586,6 +610,26 @@ namespace ArcEngine.Graphic
 			private set;
 		}
 
+
+
+
+		/// <summary>
+		/// Specifies the number of color components in the texture.
+		/// </summary>
+		public PixelInternalFormat PixelInternalFormat
+		{
+			get;
+			private set;
+		}
+
+		/// <summary>
+		/// Specifies the format of the pixel data.
+		/// </summary>
+		public PixelFormat PixelFormat
+		{
+			get;
+			private set;
+		}
 
 
 		/// <summary>
