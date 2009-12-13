@@ -215,15 +215,14 @@ namespace ArcEngine.Examples.Particles
 			}
 
 
-            Font.Color = Color.SpringGreen;
-			Font.DrawText(new Point(10, 220), "BatchCall : {0}", Display.RenderStats.BatchCall.ToString());
-			Font.DrawText(new Point(10, 100), msg);
+			Font.DrawText(new Point(10, 220), Color.SpringGreen, "BatchCall : {0}", Display.RenderStats.BatchCall.ToString());
+			Font.DrawText(new Point(10, 100), Color.SpringGreen, msg);
 
 
-			Font.DrawText(new Point(10, 180), "Press 'D' key for direct mode");
-			Font.DrawText(new Point(10, 200), "DirectCall : {0}", Display.RenderStats.DirectCall.ToString());
-			Font.DrawText(new Point(10, 240), "TextureBinding {0}", Display.RenderStats.TextureBinding.ToString());
-			Font.DrawText(new Point(10, 260), "Elapsed time : {0} ms", Watch.ElapsedMilliseconds.ToString());
+			Font.DrawText(new Point(10, 180), Color.SpringGreen, "Press 'D' key for direct mode");
+			Font.DrawText(new Point(10, 200), Color.SpringGreen, "DirectCall : {0}", Display.RenderStats.DirectCall.ToString());
+			Font.DrawText(new Point(10, 240), Color.SpringGreen, "TextureBinding {0}", Display.RenderStats.TextureBinding.ToString());
+			Font.DrawText(new Point(10, 260), Color.SpringGreen, "Elapsed time : {0} ms", Watch.ElapsedMilliseconds.ToString());
 		}
 
 

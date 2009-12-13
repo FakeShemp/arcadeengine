@@ -96,8 +96,8 @@ namespace ArcEngine.Examples.Joystick
 				CheckDevices();
 
 
-		//	if (Keyboard.IsNewKeyPress(Keys.K))
-		//		Gamepad.SetVibration(0, 100, 100);
+			if (Keyboard.IsNewKeyPress(Keys.K))
+				Gamepad.SetVibration(0, 100, 100);
 
 		}
 
@@ -135,24 +135,24 @@ namespace ArcEngine.Examples.Joystick
 			Display.Color = Color.White;
 
 
-			Font.DrawText(new Point(100, 50), "Press F1 to detect new gamepads...");
-			Font.DrawText(new Point(100, 90), "Available device(s) : {0}", Gamepad.Count);
+			Font.DrawText(new Point(100, 50), Color.White, "Press F1 to detect new gamepads...");
+			Font.DrawText(new Point(100, 90), Color.White, "Available device(s) : {0}", Gamepad.Count);
 
 
 			int y = 100;
 			for(int id = 0; id < Gamepad.Count; id++)
 			{
 				GamepadCapabilities caps = Gamepad.GetCapabilities(id);
-				Font.DrawText(new Point(100, y + 20 + id * 20), "id {0} : \"{1}\"", id, caps.InstanceName);
+				Font.DrawText(new Point(100, y + 20 + id * 20), Color.White, "id {0} : \"{1}\"", id, caps.InstanceName);
 
 				GamePadState state = Gamepad.GetState(id);
-				Font.DrawText(new Point(100, y + 40 + id * 20), "X : {0}", state.X);
-				Font.DrawText(new Point(100, y + 60 + id * 20), "Y : {0}", state.Y);
-				Font.DrawText(new Point(100, y + 80 + id * 20), "Z : {0}", state.Z);
+				Font.DrawText(new Point(100, y + 40 + id * 20), Color.White, "X : {0}", state.X);
+				Font.DrawText(new Point(100, y + 60 + id * 20), Color.White, "Y : {0}", state.Y);
+				Font.DrawText(new Point(100, y + 80 + id * 20), Color.White, "Z : {0}", state.Z);
 
-				Font.DrawText(new Point(300, y + 40 + id * 20), "Pov 0 : {0}", state.PovControllers[0]);
-				Font.DrawText(new Point(300, y + 60 + id * 20), "Pov 1 : {0}", state.PovControllers[1]);
-				Font.DrawText(new Point(300, y + 80 + id * 20), "Pov 2 : {0}", state.PovControllers[2]);
+				Font.DrawText(new Point(300, y + 40 + id * 20), Color.White, "Pov 0 : {0}", state.PovControllers[0]);
+				Font.DrawText(new Point(300, y + 60 + id * 20), Color.White, "Pov 1 : {0}", state.PovControllers[1]);
+				Font.DrawText(new Point(300, y + 80 + id * 20), Color.White, "Pov 2 : {0}", state.PovControllers[2]);
 			
 
 				// Buttons state
@@ -165,7 +165,7 @@ namespace ArcEngine.Examples.Joystick
 						sb.Append(" ");
 					}
 				}
-				Font.DrawText(new Point(100, y + 100 + id * 20), "Pressed buttons : {0}", sb);
+				Font.DrawText(new Point(100, y + 100 + id * 20), Color.White, "Pressed buttons : {0}", sb);
 
 
 				y += 120;
@@ -175,7 +175,7 @@ namespace ArcEngine.Examples.Joystick
 			y = 400;
 			foreach (string str in Messages)
 			{
-				Font.DrawText(new Point(100, y), str);
+				Font.DrawText(new Point(100, y), Color.White, str);
 
 				y += 20;
 			}

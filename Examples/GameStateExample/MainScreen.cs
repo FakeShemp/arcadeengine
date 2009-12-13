@@ -83,7 +83,7 @@ namespace ArcEngine.Examples.GameState
 			ScreenManager.AddScreen(new OptionScreen());
 		}
 
-
+/*
 		/// <summary>
 		/// When the user cancels the main menu, ask if they want to exit the sample.
 		/// </summary>
@@ -91,7 +91,7 @@ namespace ArcEngine.Examples.GameState
 		{
 			ScreenManager.Game.Exit();
 		}
-
+*/
 
 		/// <summary>
 		/// Event handler for when the user selects ok on the "are you sure

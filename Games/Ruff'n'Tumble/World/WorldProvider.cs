@@ -17,14 +17,13 @@
 //along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 //
 #endregion
-using ArcEngine.Forms;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
-using ArcEngine.Asset;
-using ArcEngine.Providers;
 using ArcEngine;
+using ArcEngine.Asset;
+using ArcEngine.Forms;
 
 
 namespace RuffnTumble

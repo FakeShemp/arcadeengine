@@ -50,12 +50,12 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Program.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\..\Framework\ArcEngine.csproj">
       <Project>{9931BDE3-41D2-4065-9595-37020DD45E8D}</Project>
       <Name>ArcEngine</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Program.cs" />
   </ItemGroup>
 </Project>

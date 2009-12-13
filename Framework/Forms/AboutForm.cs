@@ -27,7 +27,6 @@ using System.Text;
 using System.Windows.Forms;
 using ArcEngine;
 
-using ArcEngine;
 
 namespace ArcEngine.Editor.Forms
 {

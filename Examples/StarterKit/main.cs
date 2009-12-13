@@ -81,7 +81,6 @@ namespace ArcEngine.Examples.StarterKit
 
 			// Load Verdana font
 			Font = Font2d.CreateFromTTF(@"c:\windows\fonts\verdana.ttf", 12, FontStyle.Regular);
-			Font.Color = Color.Black;
 
 			// Load a texture
 			Smiley = new Texture("smiley.png");
@@ -160,9 +159,9 @@ namespace ArcEngine.Examples.StarterKit
 
 
 			// Print some text
-			Font.DrawText(new Point(10, 450), "Press S to Shear");
-			Font.DrawText(new Point(10, 470), "Press R to Rotate");
-			Font.DrawText(new Point(10, 490), "Press D to Scale");
+			Font.DrawText(new Point(10, 450), Color.White, "Press S to Shear");
+			Font.DrawText(new Point(10, 470), Color.White, "Press R to Rotate");
+			Font.DrawText(new Point(10, 490), Color.White, "Press D to Scale");
 		}
 
 

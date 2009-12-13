@@ -201,7 +201,7 @@ namespace ArcEngine.Input
 			Joystick joystick = GetDevice(id);
 			if (joystick == null)
 				return false;
-
+/*
 			EffectParameters param = new EffectParameters();
 			param.Duration = 10000;
 			param.Gain = 10000;
@@ -220,33 +220,47 @@ namespace ArcEngine.Input
 			Effect effect = new Effect(joystick, EffectGuid.ConstantForce);
 			effect.SetParameters(param);
 			effect.Start(1);
-/*
+*/
+
+
+
 
 			int[] dwAxes = new int[2] { JoystickObjects.XAxis, JoystickObjects.YAxis };
-			int[] lDirection = new int[] { 18000, 0 };
+			int[] lDirection = new int[] { 0, 0 };
 
 			ConstantForce diConstantForce = new ConstantForce();
 			diConstantForce.Magnitude = 100000;
 
-			SlimDX.DirectInput.
-			Effect effect = new Effect(joystick, EffectGuid.ConstantForce);
+			//SlimDX.DirectInput.
+			//Effect effect = new Effect(joystick, EffectGuid.ConstantForce);
 			
+			//effect.dwFlags         = DIEFF_POLAR | DIEFF_OBJECTOFFSETS;
+			//effect.dwDuration = (DWORD)(0.5 * DI_SECONDS);
+			//effect.dwSamplePeriod = 0;                 // = default 
+			//effect.dwGain = DI_FFNOMINALMAX;   // No scaling
+			//effect.dwTriggerButton = DIEB_NOTRIGGER;    // Not a button response
+			//effect.dwTriggerRepeatInterval = 0;         // Not applicable
+			//effect.cAxes = 2;
+			//effect.rgdwAxes = &dwAxes[0];
+			//effect.rglDirection = &lDirection[0];
+			//effect.lpEnvelope = NULL;
+			//effect.cbTypeSpecificParams = sizeof(DICONSTANTFORCE);
+			//effect.lpvTypeSpecificParams = &diConstantForce;  
 
-			effect.dwFlags         = DIEFF_POLAR | DIEFF_OBJECTOFFSETS;
-			effect.dwDuration = (DWORD)(0.5 * DI_SECONDS);
-			effect.dwSamplePeriod = 0;                 // = default 
-			effect.dwGain = DI_FFNOMINALMAX;   // No scaling
-			effect.dwTriggerButton = DIEB_NOTRIGGER;    // Not a button response
-			effect.dwTriggerRepeatInterval = 0;         // Not applicable
-			effect.cAxes = 2;
-			effect.rgdwAxes = &dwAxes[0];
-			effect.rglDirection = &lDirection[0];
-			effect.lpEnvelope = NULL;
-			effect.cbTypeSpecificParams = sizeof(DICONSTANTFORCE);
-			effect.lpvTypeSpecificParams = &diConstantForce;  
+			EffectParameters param = new EffectParameters();
+			param.Flags = EffectFlags.Cartesian | EffectFlags.ObjectOffsets;
+			param.Duration = 100;
+			param.SamplePeriod = 0;
+			param.Gain = 10000;
+			param.TriggerButton = -1;
+			param.TriggerRepeatInterval = 0;
+			param.Envelope = null;
+			param.StartDelay = 0;
+			
+			Effect effect = new Effect(joystick, EffectGuid.ConstantForce, param);
 
 			//joystick.CreateEffect(GUID_ConstantForce, &diEffect, &lpdiEffect, NULL);
-*/
+
 
 
 

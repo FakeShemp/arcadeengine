@@ -211,7 +211,7 @@ namespace ArcEngine.Games.ProjectT
 			Display.DrawRectangle(rect, Color.Blue);
 
 
-			Font.DrawText(new Point(10, 100), boxBody2.TotalRotation.ToString());
+			Font.DrawText(new Point(10, 100), Color.White, boxBody2.TotalRotation.ToString());
 		}
 
 

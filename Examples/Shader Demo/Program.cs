@@ -156,7 +156,7 @@ namespace Shader_Demo
 
 
 			Shader.Use(null);
-			Font.DrawText(new Point(25, 50), "Press left / right mouse button to activate the shaders");
+			Font.DrawText(new Point(25, 50), Color.White, "Press left / right mouse button to activate the shaders");
 		}
 
 
