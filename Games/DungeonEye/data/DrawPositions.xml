@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="us-ascii" standalone="yes"?>
+<draworder>
+	<decorations>
+		<input position="b" coordinate="east"  		x="62" y="8"   		tile=""/>
+		<input position="c" coordinate="south" 		x="72" y="82" 		tile=""/>
+		<input position="d" coordinate="south" 		x="172" y="83"		tile=""/>
+		<input position="e" coordinate="south" 		x="269" y="82"		tile=""/>
+		<input position="f" coordinate="west"  		x="290" y="8"  		tile=""/>
+		<input position="h" coordinate="east"  		x="120" y="88" 		tile=""/>
+		<input position="i" coordinate="south" 		x="12" y="84" 		tile=""/>
+		<input position="i" coordinate="east"  		x="116" y="82" 		tile=""/>
+		<input position="j" coordinate="south" 		x="175" y="85"		tile=""/>
+		<input position="k" coordinate="south" 		x="332" y="85"		tile=""/>
+		<input position="k" coordinate="west"  		x="232" y="82" 		tile=""/>		
+		<input position="l" coordinate="west"  		x="320" y="40" 		tile=""/>
+		<input position="m" coordinate="east"  		x="76" y="86"  		tile=""/>
+		<input position="n" coordinate="south" 		x="172" y="89"		tile=""/>
+		<input position="o" coordinate="west"  		x="276" y="86" 		tile=""/>
+	</decorations>
+	<walls>
+		<input position="a" coordinate="east" 		x="0" y="54"   		tile=""/>
+		<input position="b" coordinate="south" 		x="32" y="56"  		tile=""/>
+		<input position="b" coordinate="east"		x="-64" y="54" 		tile=""/>
+		<input position="c" coordinate="south"		x="32" y="54" 		tile=""/>
+		<input position="c" coordinate="east"		x="128" y="56" 		tile=""/>
+		<input position="d" coordinate="south" 		x="128" y="54" 		tile=""/>
+		<input position="e" coordinate="south" 		x="224" y="54" 		tile=""/>
+		<input position="e" coordinate="west"		x="208" y="56" 		tile=""/>
+		<input position="f" coordinate="south" 		x="320" y="54" 		tile=""/>
+		<input position="f" coordinate="west"		x="304" y="56" 		tile=""/>
+		<input position="g" coordinate="west"		x="336" y="54" 		tile=""/>
+		<input position="h" coordinate="east" 		x="0" y="40" 		tile=""/>		
+		<input position="i" coordinate="south" 		x="-64" y="40" 		tile=""/>
+		<input position="i" coordinate="east" 		x="96" y="40"  		tile=""/>
+		<input position="j" coordinate="south"		x="96" y="40"		tile=""/>
+		<input position="k" coordinate="south" 		x="256" y="40" 		tile=""/>
+		<input position="k" coordinate="west" 		x="224" y="40"  	tile=""/>
+		<input position="l" coordinate="west" 		x="320" y="40" 		tile=""/>
+		<input position="m" coordinate="south" 		x="-208" y="14"		tile=""/>
+		<input position="m" coordinate="east" 		x="48" y="14"  		tile=""/>
+		<input position="n" coordinate="south" 		x="48" y="14"  		tile=""/>
+		<input position="o" coordinate="south" 		x="304" y="14" 		tile=""/>
+		<input position="o" coordinate="west" 		x="256" y="14" 		tile=""/>
+		<input position="p" coordinate="east" 		x="0" y="0"   		tile=""/>
+		<input position="q" coordinate="west" 		x="304" y="0"   		tile=""/>
+	</walls> 
+	
+</draworder>
