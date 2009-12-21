@@ -77,6 +77,7 @@ namespace DungeonEye
 
 		}
 
+
 		#region I/O
 
 
@@ -107,8 +108,11 @@ namespace DungeonEye
 					case "script":
 					{
 						ScriptName = node.Attributes["name"].Value;
-						Script = ResourceManager.CreateAsset<Script>(ScriptName);
-						Script.Compile();
+						if (!string.IsNullOrEmpty(ScriptName))
+						{
+							Script = ResourceManager.CreateAsset<Script>(ScriptName);
+							Script.Compile();
+						}
 					}
 					break;
 
@@ -222,14 +226,6 @@ namespace DungeonEye
 
 
 		#endregion
-
-
-		
-		
-
-
-
-
 
 	}
 }

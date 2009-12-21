@@ -749,6 +749,26 @@ namespace DungeonEye
 			set;
 		}
 
+		/// <summary>
+		/// Thrown items can pass through
+		/// </summary>
+		public bool ThrownItemsPassThrough 
+		{
+			get;
+			set;
+		}
+
+
+
+		/// <summary>
+		/// Creatures can see the party through the door
+		/// </summary>
+		public bool CreaturesCanSeeThrough
+		{
+			get;
+			set;
+		}
+
 
 		/// <summary>
 		/// Zone of the button

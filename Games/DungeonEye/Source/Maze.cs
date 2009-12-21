@@ -367,6 +367,77 @@ namespace DungeonEye
 		}
 
 
+		/// <summary>
+		/// Returns the wall decoration location on the screen
+		/// </summary>
+		/// <param name="position">Block in the view field</param>
+		/// <param name="cardinal">Cardinal position</param>
+		/// <returns>Center location of the wall decoration</returns>
+		Point GetWallDecorationPosition(ViewFieldPosition position, CardinalPoint cardinal)
+		{
+			Point[,] locations = new Point[,]
+			{
+				// North					South							West							East
+				{Point.Empty,		Point.Empty,			Point.Empty,				Point.Empty},					// A
+				{Point.Empty,		Point.Empty,			Point.Empty,				new Point(62,8)},				// B
+				{Point.Empty,		Point.Empty,			new Point(77,82),			Point.Empty},					// C
+				{Point.Empty,		Point.Empty,			new Point(172,83),		Point.Empty},					// D
+				{Point.Empty,		Point.Empty,			new Point(269,82),		Point.Empty},					// E
+				{Point.Empty,		new Point(290,8),		Point.Empty,				Point.Empty},					// F
+				{Point.Empty,		Point.Empty,			Point.Empty,				Point.Empty},					// G
+				{Point.Empty,		Point.Empty,			Point.Empty,				new Point(120,88)},			// H
+				{Point.Empty,		Point.Empty,			new Point(12,84),			new Point(116,82)},			// I
+				{Point.Empty,		Point.Empty,			new Point(175,85),		Point.Empty},					// J
+				{Point.Empty,		new Point(232,82),	new Point(332,85),		Point.Empty},					// K
+				{Point.Empty,		Point.Empty,			Point.Empty,				Point.Empty},					// L
+				{Point.Empty,		Point.Empty,			Point.Empty,				new Point(76,86)},			// M
+				{Point.Empty,		Point.Empty,			new Point(172,89),		Point.Empty},					// N
+				{Point.Empty,		new Point(276,86),	Point.Empty,				Point.Empty},					// O
+				{Point.Empty,		Point.Empty,			Point.Empty,				Point.Empty},					// P
+				{Point.Empty,		Point.Empty,				Point.Empty,				Point.Empty},					// Team
+				{Point.Empty,		Point.Empty,			Point.Empty,				Point.Empty},					// Q
+			};
+
+
+			return locations[(int)position, (int)cardinal];
+		}
+
+		/// <summary>
+		/// Returns the wall location on the screen
+		/// </summary>
+		/// <param name="position">Block in the view field</param>
+		/// <param name="cardinal">Cardinal position</param>
+		/// <returns>Center location of the wall decoration</returns>
+		Point GetWallPosition(ViewFieldPosition position, CardinalPoint cardinal)
+		{
+			Point[,] locations = new Point[,]
+			{
+				// North					South							West							East
+				{Point.Empty,		Point.Empty,				Point.Empty,				new Point(0, 54)},			// A
+				{Point.Empty,		new Point(32, 56),		Point.Empty,				new Point(-64, 54)},			// B
+				{Point.Empty,		new Point(32,54),			Point.Empty,				new Point(128, 56)},			// C
+				{Point.Empty,		new Point(128,54),		Point.Empty,				Point.Empty},					// D
+				{Point.Empty,		new Point(224, 54),		new Point(208, 56),	 	Point.Empty},					// E
+				{Point.Empty,		new Point(320, 54),		new Point(304, 56),		Point.Empty},					// F
+				{Point.Empty,		Point.Empty,				new Point(336, 54),	 	Point.Empty},					// G
+				{Point.Empty,		Point.Empty,				Point.Empty,				new Point(320, 40)},			// H
+				{Point.Empty,		new Point(-64, 40),		Point.Empty,				new Point(96,40)},			// I
+				{Point.Empty,		new Point(96, 40),		Point.Empty,				Point.Empty},					// J
+				{Point.Empty,		new Point(256, 40),		new Point(224, 40),		Point.Empty},					// K
+				{Point.Empty,		Point.Empty,				Point.Empty,				Point.Empty},					// L
+				{Point.Empty,		new Point(-208, 14), 	Point.Empty,				new Point(48, 14)},			// M
+				{Point.Empty,		new Point(48, 14),		Point.Empty,				Point.Empty},					// N
+				{Point.Empty,		new Point(304, 14),		new Point(256, 14),		Point.Empty},					// O
+				{Point.Empty,		Point.Empty,				Point.Empty,				new Point(0, 0)},				// P
+				{Point.Empty,		Point.Empty,				Point.Empty,				Point.Empty},					// Team
+				{Point.Empty,		Point.Empty,				new Point(304, 0),		Point.Empty},					// Q
+			};
+
+
+			return locations[(int)position, (int)cardinal];
+		}
+
+
 		#endregion
 
 
@@ -486,6 +557,7 @@ namespace DungeonEye
 
 				// List of flying items
 				List<FlyingItem>[] flyings = null;
+
 
 				#region row -3
 
@@ -852,7 +924,9 @@ namespace DungeonEye
 				}
 				else if (block.IsWall)
 					WallTileset.Draw(6 + swap, new Point(0, 40));
+				#endregion
 
+				#region L 
 				// L
 				block = pov.Blocks[11];
 				if (block.Stair != null)
@@ -1009,8 +1083,8 @@ namespace DungeonEye
 				else if (block.Stair != null)
 				{
 					int id = block.Stair.Type == StairType.Up ? 20 : 33;
-					WallTileset.Draw(id, new Point(256, 40));
-					WallTileset.Draw(id + 4, new Point(224, 40), true, false);
+					WallTileset.Draw(id, GetWallPosition(ViewFieldPosition.K, CardinalPoint.South));
+					WallTileset.Draw(id + 4, GetWallPosition(ViewFieldPosition.K, CardinalPoint.West), true, false);
 				}
 				else if (block.Door != null && block.Door.IsDrawable(location.Direction))
 				{
@@ -1018,8 +1092,10 @@ namespace DungeonEye
 				}
 				else if (block.IsWall)
 				{
-					WallTileset.Draw(2 + swap, new Point(256, 40));
-					WallTileset.Draw(6 + swap, new Point(224, 40), true, false);
+					//WallTileset.Draw(2 + swap, new Point(256, 40));
+					//WallTileset.Draw(6 + swap, new Point(224, 40), true, false);
+					WallTileset.Draw(2 + swap, GetWallPosition(ViewFieldPosition.K, CardinalPoint.South));
+					WallTileset.Draw(6 + swap, GetWallPosition(ViewFieldPosition.K, CardinalPoint.West), true, false);
 				}
 
 
@@ -1120,15 +1196,16 @@ namespace DungeonEye
 				else if (block.Stair != null)
 				{
 					int id = block.Stair.Type == StairType.Up ? 20 : 33;
-					WallTileset.Draw(id, new Point(96, 40));
+					WallTileset.Draw(id, GetWallPosition(ViewFieldPosition.J, CardinalPoint.South));
 				}
 				else if (block.Door != null && block.Door.IsDrawable(location.Direction))
 				{
-					WallTileset.Draw(29, new Point(96, 40));
-					block.Door.Draw(new Point(96, 40), 2, location.Direction);
+					WallTileset.Draw(29, GetWallPosition(ViewFieldPosition.J, CardinalPoint.South));
+					block.Door.Draw(GetWallPosition(ViewFieldPosition.J, CardinalPoint.South), 2, location.Direction);
 				}
 				else if (block.IsWall)
-					WallTileset.Draw(2 + swap, new Point(96, 40));
+					//WallTileset.Draw(2 + swap, new Point(96, 40));
+					WallTileset.Draw(2 + swap, GetWallPosition(ViewFieldPosition.J, CardinalPoint.South));
 
 				//
 				// Monsters
@@ -1219,8 +1296,10 @@ namespace DungeonEye
 				else if (block.Stair != null)
 				{
 					int id = block.Stair.Type == StairType.Up ? 19 : 32;
-					WallTileset.Draw(id, new Point(-208, 14));
-					WallTileset.Draw(id + 4, new Point(48, 16));
+					//	WallTileset.Draw(id, new Point(-208, 14));
+					//	WallTileset.Draw(id + 4, new Point(48, 14));
+					WallTileset.Draw(id, GetWallPosition(ViewFieldPosition.M, CardinalPoint.South));
+					WallTileset.Draw(id + 4, GetWallPosition(ViewFieldPosition.M, CardinalPoint.East));
 				}
 				else if (block.Door != null && block.Door.IsDrawable(location.Direction))
 				{
@@ -1232,8 +1311,10 @@ namespace DungeonEye
 				}
 				else if (block.IsWall)
 				{
-					WallTileset.Draw(1 + swap, new Point(-208, 14));
-					WallTileset.Draw(5 + swap, new Point(48, 14));
+					//WallTileset.Draw(1 + swap, new Point(-208, 14));
+					//WallTileset.Draw(5 + swap, new Point(48, 14));
+					WallTileset.Draw(1 + swap, GetWallPosition(ViewFieldPosition.M, CardinalPoint.South));
+					WallTileset.Draw(5 + swap, GetWallPosition(ViewFieldPosition.M, CardinalPoint.East));
 				}
 
 				//
@@ -1293,8 +1374,8 @@ namespace DungeonEye
 				else if (block.Stair != null)
 				{
 					int id = block.Stair.Type == StairType.Up ? 19 : 32;
-					WallTileset.Draw(id, new Point(304, 14));
-					WallTileset.Draw(id + 4, new Point(256, 16), true, false);
+					WallTileset.Draw(id, GetWallPosition(ViewFieldPosition.O, CardinalPoint.South));
+					WallTileset.Draw(id + 4, GetWallPosition(ViewFieldPosition.O, CardinalPoint.West), true, false);
 				}
 				else if (block.FloorPlate != null && !block.FloorPlate.Invisible)
 				{
@@ -1306,8 +1387,10 @@ namespace DungeonEye
 				}
 				else if (block.IsWall)
 				{
-					WallTileset.Draw(1 + swap, new Point(304, 14));
-					WallTileset.Draw(5 + swap, new Point(256, 14), true, false);
+					//WallTileset.Draw(1 + swap, new Point(304, 14));
+					//WallTileset.Draw(5 + swap, new Point(256, 14), true, false);
+					WallTileset.Draw(1 + swap, GetWallPosition(ViewFieldPosition.O, CardinalPoint.South));
+					WallTileset.Draw(5 + swap, GetWallPosition(ViewFieldPosition.O, CardinalPoint.West), true, false);
 				}
 
 				//
@@ -1347,6 +1430,8 @@ namespace DungeonEye
 				#endregion
 
 				#region N 
+				DrawBlock(pov.Blocks[13], location.Direction, ViewFieldPosition.N);
+/*
 				block = pov.Blocks[13];
 
 				//
@@ -1371,12 +1456,12 @@ namespace DungeonEye
 				else if (block.Stair != null)
 				{
 					int id = block.Stair.Type == StairType.Up ? 19 : 32;
-					WallTileset.Draw(id, new Point(48, 14));
+					WallTileset.Draw(id, GetWallPosition(ViewFieldPosition.N, CardinalPoint.South));
 				}
 				else if (block.Door != null && block.Door.IsDrawable(location.Direction))
 				{
-					WallTileset.Draw(28, new Point(48, 14));
-					block.Door.Draw(new Point(48, 14), 1, location.Direction);
+					WallTileset.Draw(28, GetWallPosition(ViewFieldPosition.N, CardinalPoint.South));
+					block.Door.Draw(GetWallPosition(ViewFieldPosition.N, CardinalPoint.South), 1, location.Direction);
 				}
 				else if (block.FloorPlate != null && !block.FloorPlate.Invisible)
 				{
@@ -1385,7 +1470,8 @@ namespace DungeonEye
 				}
 				else if (block.IsWall)
 				{
-					WallTileset.Draw(1 + swap, new Point(48, 14));
+					//WallTileset.Draw(1 + swap, new Point(48, 14));
+					WallTileset.Draw(1 + swap, GetWallPosition(ViewFieldPosition.N, CardinalPoint.South));
 				}
 
 
@@ -1453,6 +1539,7 @@ namespace DungeonEye
 
 
 				
+*/
 				#endregion
 
 				#endregion
@@ -1468,23 +1555,17 @@ namespace DungeonEye
 				}
 				else if (block.IsWall)
 					WallTileset.Draw(4 + swap, new Point(0, 0));
-
-				// Current position
-				block = pov.Blocks[16];
-				if (block.Pit != null)
-				{
-					OverlayTileset.Draw(1, new Point(32, 214));
-					OverlayTileset.Draw(1, new Point(174, 214), true, false);
-				}
-				if (block.Door != null)
-				{
-					//TODO
-				}
 				#endregion
 
 				#region Current Team position
 				block = pov.Blocks[16];
 				
+				if (block.Pit != null)
+				{
+					OverlayTileset.Draw(1, new Point(32, 214));
+					OverlayTileset.Draw(1, new Point(174, 214), true, false);
+				}
+
 				// Ground items
 				list = block.GetGroundItems(location.Direction);
 				if (list[0].Count > 0)
@@ -1540,6 +1621,125 @@ namespace DungeonEye
 
 
 		/// <summary>
+		/// Draws a block
+		/// </summary>
+		/// <param name="block">Block informations</param>
+		/// <param name="view">Looking direction of the team</param>
+		/// <param name="position">Position in the view filed</param>
+		void DrawBlock(MazeBlock block, CardinalPoint view, ViewFieldPosition position)
+		{
+			if (block == null)
+				return;
+
+			//
+			// Items on ground
+			List<Item>[] list = block.GetGroundItems(view);
+			if (list[0].Count > 0)
+			{
+				foreach (Item item in list[0])
+					//ItemsTileset.Draw(item.GroundTileID + 1, new Point(116, 168));
+					ItemsTileset.Draw(item.GroundTileID + 1, MazeDisplayCoordinates.GetGroundItem(position, GroundPosition.NorthWest));
+			}
+			if (list[1].Count > 0)
+			{
+				foreach (Item item in list[1])
+					//ItemsTileset.Draw(item.GroundTileID + 1, new Point(214, 168));
+					ItemsTileset.Draw(item.GroundTileID + 1, MazeDisplayCoordinates.GetGroundItem(position, GroundPosition.NorthEast));
+			}
+
+			if (block.Pit != null)
+			{
+				OverlayTileset.Draw(2, new Point(90, 162));
+			}
+			else if (block.Stair != null)
+			{
+				int id = block.Stair.Type == StairType.Up ? 19 : 32;
+				WallTileset.Draw(id, GetWallPosition(position, CardinalPoint.South));
+			}
+			else if (block.Door != null && block.Door.IsDrawable(view))
+			{
+				WallTileset.Draw(28, GetWallPosition(position, CardinalPoint.South));
+				block.Door.Draw(GetWallPosition(position, CardinalPoint.South), 1, view);
+			}
+			else if (block.FloorPlate != null && !block.FloorPlate.Invisible)
+			{
+				OverlayTileset.Draw(9, new Point(124, 172));
+				OverlayTileset.Draw(9, new Point(172, 172), true, false);
+			}
+			else if (block.IsWall)
+			{
+				//WallTileset.Draw(1 + swap, new Point(48, 14));
+				WallTileset.Draw(1/* + swap*/, GetWallPosition(position, CardinalPoint.South));
+			}
+
+/*
+			//
+			// Monsters
+			foreach (Monster monster in pov.GetMonsters(ViewFieldPosition.N))
+			{
+				if (monster != null)
+					monster.Draw(location.Direction, ViewFieldPosition.N);
+			}
+
+*/
+			//
+			// Items on ground
+			if (list[2].Count > 0)
+			{
+				foreach (Item item in list[2])
+					ItemsTileset.Draw(item.GroundTileID + 1, new Point(106, 196));
+			}
+
+			if (list[3].Count > 0)
+			{
+				foreach (Item item in list[3])
+					ItemsTileset.Draw(item.GroundTileID + 1, new Point(234, 196));
+			}
+
+			//
+			// Flying items
+			List<FlyingItem>[] flyings = GetFlyingItems(block.Location, view);
+
+			// Left
+			if (flyings[0].Count > 0 || flyings[2].Count > 0)
+			{
+				Point pos = new Point(116, 100);
+				foreach (FlyingItem fi in flyings[0])
+					ItemsTileset.Draw(fi.Item.MoveAwayTileID, pos);
+
+				pos = new Point(104, 100);
+				foreach (FlyingItem fi in flyings[2])
+					ItemsTileset.Draw(fi.Item.MoveAwayTileID, pos);
+
+			}
+
+			// Right
+			if (flyings[1].Count > 0 || flyings[3].Count > 0)
+			{
+				Point pos = new Point(208, 100);
+				foreach (FlyingItem fi in flyings[1])
+					ItemsTileset.Draw(fi.Item.MoveAwayTileID, pos);
+
+				pos = new Point(220, 100);
+				foreach (FlyingItem fi in flyings[3])
+					ItemsTileset.Draw(fi.Item.MoveAwayTileID, pos);
+
+			}
+
+			// Middle
+			if (flyings[4].Count > 0)
+			{
+				Point pos = new Point(162, 100);
+				foreach (FlyingItem fi in flyings[4])
+					ItemsTileset.Draw(fi.Item.MoveAwayTileID, pos);
+
+			}
+
+
+
+		}
+
+		/// <summary>
 		/// Draws the minimap
 		/// </summary>
 		/// <param name="team">Team handle</param>
@@ -1592,7 +1792,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Loads the maze definition
 		/// </summary>
-		/// <param name="filename"></param>
+		/// <param name="xml"></param>
 		/// <returns></returns>
 		public bool Load(XmlNode xml)
 		{
@@ -1704,7 +1904,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Saves the maze definition
 		/// </summary>
-		/// <param name="filename"></param>
+		/// <param name="writer"></param>
 		/// <returns></returns>
 		public bool Save(XmlWriter writer)
 		{
@@ -2125,8 +2325,6 @@ namespace DungeonEye
 	}
 
 
-
-
 	/// <summary>
 	/// Get the walls and the monsters viewed from a point of view
 	/// </summary>
@@ -2444,6 +2642,7 @@ namespace DungeonEye
 		}
 
 
+
 	}
 
 
@@ -2483,6 +2682,7 @@ namespace DungeonEye
 		Team,
 		Q
 	}
+
 
 
 

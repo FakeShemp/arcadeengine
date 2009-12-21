@@ -183,17 +183,24 @@ namespace DungeonEye
 	/// </summary>
 	public enum CardinalPoint
 	{
-		//North = 0,
-
-		//East = 1,
-		
-		//South = 2,
-		
-		//West = 3,
-
+		/// <summary>
+		/// 
+		/// </summary>
 		North = 0,
+
+		/// <summary>
+		/// 
+		/// </summary>
 		South = 1,
+
+		/// <summary>
+		/// 
+		/// </summary>
 		West = 2,
+
+		/// <summary>
+		/// 
+		/// </summary>
 		East = 3,
 	}
 
