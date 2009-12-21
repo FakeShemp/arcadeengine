@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="us-ascii" standalone="yes"?>
+<displaycoordinate>
+	<decoration position="b"		coordinate="east"  		x="62"  	y="8"   	tile=""/>
+	<decoration position="c"		coordinate="south" 		x="72"  	y="82" 		tile=""/>
+	<decoration position="d"		coordinate="south" 		x="172" 	y="83"		tile=""/>
+	<decoration position="e"		coordinate="south" 		x="269" 	y="82"		tile=""/>
+	<decoration position="f"		coordinate="west"  		x="290" 	y="8"  		tile=""/>
+	<decoration position="h"		coordinate="east"  		x="120" 	y="88" 		tile=""/>
+	<decoration position="i"		coordinate="south" 		x="12"  	y="84" 		tile=""/>
+	<decoration position="i"		coordinate="east"  		x="116" 	y="82" 		tile=""/>
+	<decoration position="j"		coordinate="south" 		x="175" 	y="85"		tile=""/>
+	<decoration position="k"		coordinate="south" 		x="332" 	y="85"		tile=""/>
+	<decoration position="k"		coordinate="west"  		x="232" 	y="82" 		tile=""/>		
+	<decoration position="l"		coordinate="west"  		x="320" 	y="40" 		tile=""/>
+	<decoration position="m"		coordinate="east"  		x="76"  	y="86"  	tile=""/>
+	<decoration position="n"		coordinate="south" 		x="172" 	y="89"		tile=""/>
+	<decoration position="o"		coordinate="west"  		x="276" 	y="86" 		tile=""/>
+	
+	<wall position="a"				coordinate="east" 		x="0"   	y="54"   	tile="7"/>
+	<wall position="b"				coordinate="south" 		x="32"  	y="56"  	tile="7"/>
+	<wall position="b"				coordinate="east"		x="-64" 	y="54" 		tile="3"/>
+	<wall position="c"				coordinate="south"		x="32"  	y="54" 		tile="3"/>
+	<wall position="c"				coordinate="east"		x="128" 	y="56" 		tile="7"/>
+	<wall position="d"				coordinate="south" 		x="128" 	y="54" 		tile="3"/>
+	<wall position="e"				coordinate="south" 		x="224" 	y="54" 		tile="3"/>
+	<wall position="e"				coordinate="west"		x="208" 	y="56" 		tile="7" 	xswap="true"/>
+	<wall position="f"				coordinate="south" 		x="320" 	y="54" 		tile="3"/>
+	<wall position="f"				coordinate="west"		x="304" 	y="56" 		tile="7"	xswap="true"/>
+	<wall position="g"				coordinate="west"		x="336" 	y="54" 		tile="7"	xswap="true"/>
+	<wall position="h"				coordinate="east" 		x="0"   	y="40" 		tile="6"/>		
+	<wall position="i"				coordinate="south" 		x="-64" 	y="40" 		tile="2"/>
+	<wall position="i"				coordinate="east" 		x="96"  	y="40"  	tile="6"/>
+	<wall position="j"				coordinate="south"		x="96"  	y="40"		tile="2"/>
+	<wall position="k"				coordinate="south" 		x="256" 	y="40" 		tile="2"/>
+	<wall position="k"				coordinate="west" 		x="224" 	y="40"  	tile="6"	xswap="true"/>
+	<wall position="l"				coordinate="west" 		x="320" 	y="40" 		tile="6"	xswap="true"/>
+	<wall position="m"				coordinate="south" 		x="-208"	y="14"		tile="1"/>
+	<wall position="m"				coordinate="east" 		x="48"  	y="14"  	tile="5"/>
+	<wall position="n"				coordinate="south" 		x="48"  	y="14"  	tile="1"/>
+	<wall position="o"				coordinate="south" 		x="304" 	y="14" 		tile="1"/>
+	<wall position="o"				coordinate="west" 		x="256" 	y="14" 		tile="5"	xswap="true"/>
+	<wall position="p"				coordinate="east" 		x="0"   	y="0"   	tile="4"/>
+	<wall position="q"				coordinate="west" 		x="304" 	y="0"   	tile="4"	xswap="true"/>
+	
+	<grounditem position="b"		coordinate="SouthEast"			x="12"   	y="116" />
+	<grounditem position="c"		coordinate="SouthWest"			x="52"  	y="116" />
+	<grounditem position="c"		coordinate="SouthEast"			x="104" 	y="116" />
+	<grounditem position="d"		coordinate="SouthWest"			x="150"  	y="116" />
+	<grounditem position="d"		coordinate="SouthEast"			x="190" 	y="116" />
+	<grounditem position="e"		coordinate="SouthWest"			x="240" 	y="116" />
+	<grounditem position="e"		coordinate="SouthEast"			x="286" 	y="116" />
+	<grounditem position="f"		coordinate="SouthWest"			x="330" 	y="116" />
+	<grounditem position="i"		coordinate="NorthWest"			x="90"	 	y="128" />
+	<grounditem position="i"		coordinate="NorthEast"			x="30"	 	y="128" />
+	<grounditem position="i"		coordinate="SouthWest"			x="10"	 	y="146" />
+	<grounditem position="i"		coordinate="SouthEast"			x="76"   	y="146" />	
+	<grounditem position="j"		coordinate="NorthWest"			x="140" 	y="128" />
+	<grounditem position="j"		coordinate="NorthEast"			x="196"  	y="128" />
+	<grounditem position="j"		coordinate="SouthWest"			x="132"  	y="146"	/>
+	<grounditem position="j"		coordinate="SouthEast"			x="204" 	y="146" />
+	<grounditem position="k"		coordinate="NorthWest"			x="250" 	y="128" />
+	<grounditem position="k"		coordinate="NorthEast"			x="300" 	y="128" />
+	<grounditem position="k"		coordinate="SouthWest"			x="266"		y="146"	/>
+	<grounditem position="k"		coordinate="SouthEast"			x="320"  	y="146" />
+	<grounditem position="m"		coordinate="NorthEast"			x="50"  	y="168" />
+	<grounditem position="m"		coordinate="SouthEast"			x="30" 		y="196" />
+	<grounditem position="n"		coordinate="NorthWest"			x="116" 	y="168" />
+	<grounditem position="n"		coordinate="NorthEast"			x="214"   	y="168" />
+	<grounditem position="n"		coordinate="SouthWest"			x="106" 	y="196" />
+	<grounditem position="n"		coordinate="SouthEast"			x="234" 	y="196" />
+	<grounditem position="o"		coordinate="NorthWest"			x="280" 	y="168" />
+	<grounditem position="o"		coordinate="SouthWest"			x="298" 	y="196" />
+	<grounditem position="Team"		coordinate="NorthWest"			x="86" 		y="232" />
+	<grounditem position="Team"		coordinate="NorthEast"			x="262" 	y="232" />
+	
+</displaycoordinate>
