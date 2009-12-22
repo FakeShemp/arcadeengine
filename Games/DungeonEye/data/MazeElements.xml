@@ -42,31 +42,31 @@
 	<wall position="p"				coordinate="east" 		x="0"   	y="0"   	tile="4"/>
 	<wall position="q"				coordinate="west" 		x="304" 	y="0"   	tile="4"	xswap="true"/>
 	
-	<stair position="a"				coordinate="east" 		x=""   	y=""   		tile=""/>
-	<stair position="b"				coordinate="south" 		x=""  	y=""  		tile=""/>
-	<stair position="b"				coordinate="east"		x="" 	y="" 		tile=""/>
-	<stair position="c"				coordinate="south"		x=""  	y="" 		tile=""/>
-	<stair position="c"				coordinate="east"		x="" 	y="" 		tile=""/>
-	<stair position="d"				coordinate="south" 		x="" 	y="" 		tile=""/>
-	<stair position="e"				coordinate="south" 		x="" 	y="" 		tile=""/>
-	<stair position="e"				coordinate="west"		x="" 	y="" 		tile="" 	xswap="true"/>
-	<stair position="f"				coordinate="south" 		x="" 	y="" 		tile=""/>
-	<stair position="f"				coordinate="west"		x="" 	y="" 		tile=""		xswap="true"/>
-	<stair position="g"				coordinate="west"		x="" 	y="" 		tile=""		xswap="true"/>
-	<stair position="h"				coordinate="east" 		x=""   	y="" 		tile=""/>		
-	<stair position="i"				coordinate="south" 		x="" 	y="" 		tile=""/>
-	<stair position="i"				coordinate="east" 		x=""  	y=""  		tile=""/>
-	<stair position="j"				coordinate="south"		x=""  	y=""		tile=""/>
-	<stair position="k"				coordinate="south" 		x="" 	y="" 		tile=""/>
-	<stair position="k"				coordinate="west" 		x="" 	y=""  		tile=""		xswap="true"/>
-	<stair position="l"				coordinate="west" 		x="" 	y="" 		tile=""		xswap="true"/>
-	<stair position="m"				coordinate="south" 		x=""	y=""		tile=""/>
-	<stair position="m"				coordinate="east" 		x=""  	y=""  		tile=""/>
-	<stair position="n"				coordinate="south" 		x=""  	y=""  		tile=""/>
-	<stair position="o"				coordinate="south" 		x="" 	y="" 		tile=""/>
-	<stair position="o"				coordinate="west" 		x="" 	y="" 		tile=""		xswap="true"/>
-	<stair position="p"				coordinate="east" 		x=""   	y=""   		tile=""/>
-	<stair position="q"				coordinate="west" 		x="" 	y=""   		tile=""		xswap="true"/>
+	<stair position="a"			x="0"		y="54" 		tile="7"/>
+	<stair position="b"			x="32"		y="56" 		tile="21"/>
+	<stair position="b"			x="-64" 	y="56" 		tile="21"/>
+	<stair position="c"			x="32"  	y="54" 		tile="21"/>
+	<stair position="c"			x="128" 	y="56" 		tile="21"/>
+	<stair position="d"			x="128" 	y="54" 		tile="21"/>
+	<stair position="e"			x="224" 	y="54" 		tile="21"/>
+	<stair position="e"			x="208" 	y="56" 		tile="21" 		xswap="true"/>
+	<stair position="f"			x="320" 	y="54" 		tile="21"/>
+	<stair position="f"			x="304" 	y="56" 		tile="21"		xswap="true"/>
+	<stair position="g"			x="336" 	y="54" 		tile="7"		xswap="true"/>
+	<stair position="h"			x="0"   	y="40" 		tile="24"/>		
+	<stair position="i"			x="-64" 	y="40" 		tile="20"/>
+	<stair position="i"			x="96"  	y="40" 		tile="20"/>
+	<stair position="j"			x="96"  	y="40"		tile="20"/>
+	<stair position="k"			x="256" 	y="40" 		tile="20"/>
+	<stair position="k"			x="224" 	y="40" 		tile="20"		xswap="true"/>
+	<stair position="l"			x="320" 	y="40" 		tile="24"		xswap="true"/>
+	<stair position="m"			x="-208"	y="14"		tile="19"/>
+	<stair position="m"			x="48"  	y="14" 		tile="19"/>
+	<stair position="n"			x="48"  	y="14" 		tile="19"/>
+	<stair position="o"			x="304" 	y="14" 		tile="19"/>
+	<stair position="o"			x="256" 	y="14" 		tile="19"		xswap="true"/>
+	<stair position="p"			x="0"   	y="0"  		tile="22"/>
+	<stair position="q"			x="304" 	y="0"  		tile="22"		xswap="true"/>
 
 	<grounditem position="b"		coordinate="SouthEast"			x="12"   	y="116" />
 	<grounditem position="c"		coordinate="SouthWest"			x="52"  	y="116" />
