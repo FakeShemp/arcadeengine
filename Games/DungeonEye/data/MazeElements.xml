@@ -42,6 +42,32 @@
 	<wall position="p"				coordinate="east" 		x="0"   	y="0"   	tile="4"/>
 	<wall position="q"				coordinate="west" 		x="304" 	y="0"   	tile="4"	xswap="true"/>
 	
+	<stair position="a"				coordinate="east" 		x=""   	y=""   		tile=""/>
+	<stair position="b"				coordinate="south" 		x=""  	y=""  		tile=""/>
+	<stair position="b"				coordinate="east"		x="" 	y="" 		tile=""/>
+	<stair position="c"				coordinate="south"		x=""  	y="" 		tile=""/>
+	<stair position="c"				coordinate="east"		x="" 	y="" 		tile=""/>
+	<stair position="d"				coordinate="south" 		x="" 	y="" 		tile=""/>
+	<stair position="e"				coordinate="south" 		x="" 	y="" 		tile=""/>
+	<stair position="e"				coordinate="west"		x="" 	y="" 		tile="" 	xswap="true"/>
+	<stair position="f"				coordinate="south" 		x="" 	y="" 		tile=""/>
+	<stair position="f"				coordinate="west"		x="" 	y="" 		tile=""		xswap="true"/>
+	<stair position="g"				coordinate="west"		x="" 	y="" 		tile=""		xswap="true"/>
+	<stair position="h"				coordinate="east" 		x=""   	y="" 		tile=""/>		
+	<stair position="i"				coordinate="south" 		x="" 	y="" 		tile=""/>
+	<stair position="i"				coordinate="east" 		x=""  	y=""  		tile=""/>
+	<stair position="j"				coordinate="south"		x=""  	y=""		tile=""/>
+	<stair position="k"				coordinate="south" 		x="" 	y="" 		tile=""/>
+	<stair position="k"				coordinate="west" 		x="" 	y=""  		tile=""		xswap="true"/>
+	<stair position="l"				coordinate="west" 		x="" 	y="" 		tile=""		xswap="true"/>
+	<stair position="m"				coordinate="south" 		x=""	y=""		tile=""/>
+	<stair position="m"				coordinate="east" 		x=""  	y=""  		tile=""/>
+	<stair position="n"				coordinate="south" 		x=""  	y=""  		tile=""/>
+	<stair position="o"				coordinate="south" 		x="" 	y="" 		tile=""/>
+	<stair position="o"				coordinate="west" 		x="" 	y="" 		tile=""		xswap="true"/>
+	<stair position="p"				coordinate="east" 		x=""   	y=""   		tile=""/>
+	<stair position="q"				coordinate="west" 		x="" 	y=""   		tile=""		xswap="true"/>
+
 	<grounditem position="b"		coordinate="SouthEast"			x="12"   	y="116" />
 	<grounditem position="c"		coordinate="SouthWest"			x="52"  	y="116" />
 	<grounditem position="c"		coordinate="SouthEast"			x="104" 	y="116" />
@@ -72,5 +98,47 @@
 	<grounditem position="o"		coordinate="SouthWest"			x="298" 	y="196" />
 	<grounditem position="Team"		coordinate="NorthWest"			x="86" 		y="232" />
 	<grounditem position="Team"		coordinate="NorthEast"			x="262" 	y="232" />
+	
+	
+	<pit position="b"		x="-16"		y="112"	/>
+	<pit position="c"		x="64"		y="112"	/>
+	<pit position="d"		x="144"		y="112"	/>
+	<pit position="e"		x="224"		y="112"	/>
+	<pit position="f"		x="304"		y="112"	/>
+	<pit position="i"		x="10"		y="130"	/>
+	<pit position="j"		x="128"		y="130"	/>
+	<pit position="k"		x="242"		y="130"	/>
+	<pit position="m"		x="0"		y="162"	/>
+	<pit position="n"		x="90"		y="162"	/>
+	<pit position="o"		x="266"		y="162"	/>
+	<pit position="team"	x="32"		y="214"	/>
+	
+	
+	<door position="b"		x="-64"		y="54"	/>
+	<door position="c"		x="32"		y="54"	/>
+	<door position="d"		x="128"		y="54"	/>
+	<door position="e"		x="224"		y="54"	/>
+	<door position="f"		x="320"		y="54"	/>
+	<door position="i"		x="-32"		y="40"	/>
+	<door position="j"		x="96"		y="40"	/>
+	<door position="k"		x="204"		y="40"	/>
+	<door position="m"		x="-152"	y="14"	/>
+	<door position="n"		x="48"		y="14"	/>
+	<door position="o"		x="248"		y="14"	/>
+	<door position="team"	x="154"		y="0"	/>
+	
+	
+	<floorplate position="b"		x="-12"		y="114"	/>
+	<floorplate position="c"		x="64"		y="114"	/>
+	<floorplate position="d"		x="158"		y="114"	/>
+	<floorplate position="e"		x="260"		y="114"	/>
+	<floorplate position="f"		x="338"		y="114"	/>
+	<floorplate position="i"		x="20"		y="136"	/>
+	<floorplate position="j"		x="142"		y="136"	/>
+	<floorplate position="k"		x="280"		y="136"	/>
+	<floorplate position="m"		x="0"		y="172"	/>
+	<floorplate position="n"		x="124"		y="172"	/>
+	<floorplate position="o"		x="304"		y="172"	/>
+
 	
 </displaycoordinate>
