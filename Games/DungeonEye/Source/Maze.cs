@@ -1471,7 +1471,7 @@ namespace DungeonEye
 			Point point;
 			TileDrawing td = null;
 
-			// Drawing offset
+			#region Drawing offset
 			int offset = 1;
 			switch (position)
 			{
@@ -1502,10 +1502,11 @@ namespace DungeonEye
 					offset = 0;
 				break;
 			}
+			#endregion
 
 
-			//
-			// Items on ground
+
+			#region Items on ground
 			List<Item>[] list = block.GetGroundItems(view);
 			for (int i = 0; i < 2; i++)
 			{
@@ -1519,16 +1520,18 @@ namespace DungeonEye
 						ItemsTileset.Draw(item.GroundTileID + offset, point);
 				}
 			}
+			#endregion
 
-
-
-
+			#region Pit
 			if (block.Pit != null)
 			{
 				td = Coordinates.GetPit(position);
 				if (td != null)
 					OverlayTileset.Draw(td.ID, td.Location, td.SwapX, td.SwapY);
 			}
+			#endregion
+
+			#region Stair
 			else if (block.Stair != null)
 			{
 				// Upstair or downstair ?
@@ -1536,6 +1539,9 @@ namespace DungeonEye
 				foreach(TileDrawing tmp in Coordinates.GetStairs(position))
 					WallTileset.Draw(tmp.ID + delta, tmp.Location, tmp.SwapX, tmp.SwapY);
 			}
+			#endregion
+
+			#region Door
 			else if (block.Door != null)
 			{
 				if ((field.Maze.IsDoorNorthSouth(block.Location) && (view == CardinalPoint.North || view == CardinalPoint.South)) ||
@@ -1556,32 +1562,46 @@ namespace DungeonEye
 					}
 				}
 			}
+			#endregion
+
+			#region Floor plate 
 			else if (block.FloorPlate != null && !block.FloorPlate.Invisible)
 			{
 				td = Coordinates.GetFloorPlate(position);
 				if (td != null)
 					OverlayTileset.Draw(td.ID, td.Location, td.SwapX, td.SwapY);
 			}
+			#endregion
+
+			#region Walls
 			else if (block.IsWall)
 			{
+				// Walls
 				foreach (TileDrawing tmp in Coordinates.GetWalls(position))
 					WallTileset.Draw(tmp.ID, tmp.Location, tmp.SwapX, tmp.SwapY);
+
+				// Alcoves
+				if (block.HasAlcoves)
+				{
+					foreach (CardinalPoint cardinal in Enum.GetValues(typeof(CardinalPoint)))
+					{
+						td = Coordinates.GetDecoration(position, cardinal);
+						if (td != null && block.HasAlcove(view, cardinal))
+							OverlayTileset.Draw(td.ID, td.Location, td.SwapX, td.SwapY);
+					}
+				}
 			}
-			
-			
-			
-			//
-			// Monsters
+			#endregion
+
+			#region Monsters
 			foreach (Monster monster in field.GetMonsters(position))
 			{
 				if (monster != null)
 					monster.Draw(view, position);
 			}
+			#endregion
 
-
-
-			//
-			// Items on ground
+			#region Items on ground
 			for (int i = 2; i < 4; i++)
 			{
 				if (list[i].Count == 0)
@@ -1594,10 +1614,9 @@ namespace DungeonEye
 						ItemsTileset.Draw(item.GroundTileID + offset, point);
 				}
 			}
+			#endregion
 
-
-			//
-			// Flying items
+			#region Flying items
 			List<FlyingItem>[] flyings = GetFlyingItems(block.Location, view);
 			foreach(GroundPosition pos in Enum.GetValues(typeof(GroundPosition)))
 			{
@@ -1613,6 +1632,8 @@ namespace DungeonEye
 					ItemsTileset.Draw(fi.Item.MoveAwayTileID, Coordinates.GetFlyingItem(position, pos), swap, false);
 
 			}
+			#endregion
+
 
 		}
 
@@ -1635,7 +1656,7 @@ namespace DungeonEye
 						case BlockType.Wall:
 							Display.Color = Color.Black;
 						break;
-						case BlockType.Fake:
+						case BlockType.Trick:
 							Display.Color = Color.Gray;
 						break;
 						default:
@@ -2202,7 +2223,11 @@ namespace DungeonEye
 		/// <summary>
 		/// Maze display coordinates
 		/// </summary>
-		MazeDisplayCoordinates Coordinates;
+		public MazeDisplayCoordinates Coordinates
+		{
+			get;
+			private set;
+		}
 
 		#endregion
 

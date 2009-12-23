@@ -58,8 +58,8 @@
 			this.label10 = new System.Windows.Forms.Label();
 			this.GroundLocationBox = new System.Windows.Forms.ComboBox();
 			this.label9 = new System.Windows.Forms.Label();
-			this.MonsterBox = new MonsterControl();
-			this.DecorationsTab = new System.Windows.Forms.TabPage();
+			this.MonsterBox = new Forms.MonsterControl();
+			this.WallsTab = new System.Windows.Forms.TabPage();
 			this.DecorationGroupBox = new System.Windows.Forms.GroupBox();
 			this.groupBox6 = new System.Windows.Forms.GroupBox();
 			this.button1 = new System.Windows.Forms.Button();
@@ -106,6 +106,16 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.DoorStateBox = new System.Windows.Forms.ComboBox();
 			this.DoorTypeBox = new System.Windows.Forms.ComboBox();
+			this.groupBox7 = new System.Windows.Forms.GroupBox();
+			this.AlcoveNorthButton = new System.Windows.Forms.CheckBox();
+			this.AlcoveSouthButton = new System.Windows.Forms.CheckBox();
+			this.AlcoveWestButton = new System.Windows.Forms.CheckBox();
+			this.AlcoveEastButton = new System.Windows.Forms.CheckBox();
+			this.groupBox8 = new System.Windows.Forms.GroupBox();
+			this.ButtonEastButton = new System.Windows.Forms.CheckBox();
+			this.ButtonWestButton = new System.Windows.Forms.CheckBox();
+			this.ButtonSouthButton = new System.Windows.Forms.CheckBox();
+			this.ButtonNorthButton = new System.Windows.Forms.CheckBox();
 			this.tabControl1.SuspendLayout();
 			this.ItemsTab.SuspendLayout();
 			this.groupBox4.SuspendLayout();
@@ -113,7 +123,7 @@
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.MonstersTab.SuspendLayout();
-			this.DecorationsTab.SuspendLayout();
+			this.WallsTab.SuspendLayout();
 			this.DecorationGroupBox.SuspendLayout();
 			this.groupBox6.SuspendLayout();
 			this.groupBox5.SuspendLayout();
@@ -124,13 +134,15 @@
 			this.ForceFieldGroupBox.SuspendLayout();
 			this.TeleporterGroupBox.SuspendLayout();
 			this.DoorGroupBox.SuspendLayout();
+			this.groupBox7.SuspendLayout();
+			this.groupBox8.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tabControl1
 			// 
 			this.tabControl1.Controls.Add(this.ItemsTab);
 			this.tabControl1.Controls.Add(this.MonstersTab);
-			this.tabControl1.Controls.Add(this.DecorationsTab);
+			this.tabControl1.Controls.Add(this.WallsTab);
 			this.tabControl1.Controls.Add(this.tabPage1);
 			this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabControl1.Location = new System.Drawing.Point(0, 0);
@@ -482,20 +494,17 @@
 			this.MonsterBox.Size = new System.Drawing.Size(598, 491);
 			this.MonsterBox.TabIndex = 10;
 			// 
-			// DecorationsTab
+			// WallsTab
 			// 
-			this.DecorationsTab.Controls.Add(this.DecorationGroupBox);
-			this.DecorationsTab.Controls.Add(this.AddWallTemplateBox);
-			this.DecorationsTab.Controls.Add(this.WallTemplateBox);
-			this.DecorationsTab.Controls.Add(this.label11);
-			this.DecorationsTab.Controls.Add(this.WallSideBox);
-			this.DecorationsTab.Controls.Add(this.label12);
-			this.DecorationsTab.Location = new System.Drawing.Point(4, 22);
-			this.DecorationsTab.Name = "DecorationsTab";
-			this.DecorationsTab.Size = new System.Drawing.Size(609, 530);
-			this.DecorationsTab.TabIndex = 2;
-			this.DecorationsTab.Text = "Decorations";
-			this.DecorationsTab.UseVisualStyleBackColor = true;
+			this.WallsTab.Controls.Add(this.groupBox8);
+			this.WallsTab.Controls.Add(this.groupBox7);
+			this.WallsTab.Controls.Add(this.DecorationGroupBox);
+			this.WallsTab.Location = new System.Drawing.Point(4, 22);
+			this.WallsTab.Name = "WallsTab";
+			this.WallsTab.Size = new System.Drawing.Size(609, 530);
+			this.WallsTab.TabIndex = 2;
+			this.WallsTab.Text = "Walls";
+			this.WallsTab.UseVisualStyleBackColor = true;
 			// 
 			// DecorationGroupBox
 			// 
@@ -503,10 +512,15 @@
 							| System.Windows.Forms.AnchorStyles.Left)
 							| System.Windows.Forms.AnchorStyles.Right)));
 			this.DecorationGroupBox.Controls.Add(this.groupBox6);
+			this.DecorationGroupBox.Controls.Add(this.AddWallTemplateBox);
 			this.DecorationGroupBox.Controls.Add(this.groupBox5);
-			this.DecorationGroupBox.Location = new System.Drawing.Point(3, 34);
+			this.DecorationGroupBox.Controls.Add(this.WallTemplateBox);
+			this.DecorationGroupBox.Controls.Add(this.label11);
+			this.DecorationGroupBox.Controls.Add(this.label12);
+			this.DecorationGroupBox.Controls.Add(this.WallSideBox);
+			this.DecorationGroupBox.Location = new System.Drawing.Point(3, 3);
 			this.DecorationGroupBox.Name = "DecorationGroupBox";
-			this.DecorationGroupBox.Size = new System.Drawing.Size(603, 493);
+			this.DecorationGroupBox.Size = new System.Drawing.Size(492, 283);
 			this.DecorationGroupBox.TabIndex = 20;
 			this.DecorationGroupBox.TabStop = false;
 			this.DecorationGroupBox.Text = "Decoration";
@@ -515,7 +529,7 @@
 			// 
 			this.groupBox6.Controls.Add(this.button1);
 			this.groupBox6.Controls.Add(this.listBox1);
-			this.groupBox6.Location = new System.Drawing.Point(280, 19);
+			this.groupBox6.Location = new System.Drawing.Point(342, 46);
 			this.groupBox6.Name = "groupBox6";
 			this.groupBox6.Size = new System.Drawing.Size(137, 220);
 			this.groupBox6.TabIndex = 3;
@@ -542,9 +556,9 @@
 			// groupBox5
 			// 
 			this.groupBox5.Controls.Add(this.GlWallControl);
-			this.groupBox5.Location = new System.Drawing.Point(5, 19);
+			this.groupBox5.Location = new System.Drawing.Point(8, 46);
 			this.groupBox5.Name = "groupBox5";
-			this.groupBox5.Size = new System.Drawing.Size(269, 220);
+			this.groupBox5.Size = new System.Drawing.Size(328, 220);
 			this.groupBox5.TabIndex = 2;
 			this.groupBox5.TabStop = false;
 			this.groupBox5.Text = "Preview :";
@@ -554,7 +568,7 @@
 			this.GlWallControl.BackColor = System.Drawing.Color.Black;
 			this.GlWallControl.Location = new System.Drawing.Point(6, 19);
 			this.GlWallControl.Name = "GlWallControl";
-			this.GlWallControl.Size = new System.Drawing.Size(256, 192);
+			this.GlWallControl.Size = new System.Drawing.Size(316, 192);
 			this.GlWallControl.TabIndex = 0;
 			this.GlWallControl.VSync = true;
 			this.GlWallControl.Load += new System.EventHandler(this.GlWallControl_Load);
@@ -565,7 +579,7 @@
 			// 
 			this.AddWallTemplateBox.AutoSize = true;
 			this.AddWallTemplateBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.AddWallTemplateBox.Location = new System.Drawing.Point(445, 7);
+			this.AddWallTemplateBox.Location = new System.Drawing.Point(443, 19);
 			this.AddWallTemplateBox.Name = "AddWallTemplateBox";
 			this.AddWallTemplateBox.Size = new System.Drawing.Size(36, 23);
 			this.AddWallTemplateBox.TabIndex = 19;
@@ -575,7 +589,7 @@
 			// 
 			this.WallTemplateBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.WallTemplateBox.FormattingEnabled = true;
-			this.WallTemplateBox.Location = new System.Drawing.Point(318, 7);
+			this.WallTemplateBox.Location = new System.Drawing.Point(316, 19);
 			this.WallTemplateBox.Name = "WallTemplateBox";
 			this.WallTemplateBox.Size = new System.Drawing.Size(121, 21);
 			this.WallTemplateBox.TabIndex = 17;
@@ -583,7 +597,7 @@
 			// label11
 			// 
 			this.label11.AutoSize = true;
-			this.label11.Location = new System.Drawing.Point(230, 10);
+			this.label11.Location = new System.Drawing.Point(228, 22);
 			this.label11.Name = "label11";
 			this.label11.Size = new System.Drawing.Size(82, 13);
 			this.label11.TabIndex = 14;
@@ -598,7 +612,7 @@
             "South",
             "West",
             "East"});
-			this.WallSideBox.Location = new System.Drawing.Point(99, 7);
+			this.WallSideBox.Location = new System.Drawing.Point(97, 19);
 			this.WallSideBox.Name = "WallSideBox";
 			this.WallSideBox.Size = new System.Drawing.Size(121, 21);
 			this.WallSideBox.TabIndex = 16;
@@ -606,7 +620,7 @@
 			// label12
 			// 
 			this.label12.AutoSize = true;
-			this.label12.Location = new System.Drawing.Point(7, 12);
+			this.label12.Location = new System.Drawing.Point(5, 24);
 			this.label12.Name = "label12";
 			this.label12.Size = new System.Drawing.Size(86, 13);
 			this.label12.TabIndex = 15;
@@ -989,6 +1003,120 @@
 			this.DoorTypeBox.TabIndex = 0;
 			this.DoorTypeBox.SelectedIndexChanged += new System.EventHandler(this.DoorTypeBox_SelectedIndexChanged);
 			// 
+			// groupBox7
+			// 
+			this.groupBox7.Controls.Add(this.AlcoveEastButton);
+			this.groupBox7.Controls.Add(this.AlcoveWestButton);
+			this.groupBox7.Controls.Add(this.AlcoveSouthButton);
+			this.groupBox7.Controls.Add(this.AlcoveNorthButton);
+			this.groupBox7.Location = new System.Drawing.Point(8, 292);
+			this.groupBox7.Name = "groupBox7";
+			this.groupBox7.Size = new System.Drawing.Size(96, 118);
+			this.groupBox7.TabIndex = 21;
+			this.groupBox7.TabStop = false;
+			this.groupBox7.Text = "Alcoves :";
+			// 
+			// AlcoveNorthButton
+			// 
+			this.AlcoveNorthButton.AutoSize = true;
+			this.AlcoveNorthButton.Location = new System.Drawing.Point(9, 20);
+			this.AlcoveNorthButton.Name = "AlcoveNorthButton";
+			this.AlcoveNorthButton.Size = new System.Drawing.Size(52, 17);
+			this.AlcoveNorthButton.TabIndex = 0;
+			this.AlcoveNorthButton.Text = "North";
+			this.AlcoveNorthButton.UseVisualStyleBackColor = true;
+			this.AlcoveNorthButton.CheckedChanged += new System.EventHandler(this.AlcoveNorthButton_CheckedChanged);
+			// 
+			// AlcoveSouthButton
+			// 
+			this.AlcoveSouthButton.AutoSize = true;
+			this.AlcoveSouthButton.Location = new System.Drawing.Point(9, 44);
+			this.AlcoveSouthButton.Name = "AlcoveSouthButton";
+			this.AlcoveSouthButton.Size = new System.Drawing.Size(54, 17);
+			this.AlcoveSouthButton.TabIndex = 1;
+			this.AlcoveSouthButton.Text = "South";
+			this.AlcoveSouthButton.UseVisualStyleBackColor = true;
+			this.AlcoveSouthButton.CheckedChanged += new System.EventHandler(this.AlcoveSouthButton_CheckedChanged);
+			// 
+			// AlcoveWestButton
+			// 
+			this.AlcoveWestButton.AutoSize = true;
+			this.AlcoveWestButton.Location = new System.Drawing.Point(9, 68);
+			this.AlcoveWestButton.Name = "AlcoveWestButton";
+			this.AlcoveWestButton.Size = new System.Drawing.Size(51, 17);
+			this.AlcoveWestButton.TabIndex = 2;
+			this.AlcoveWestButton.Text = "West";
+			this.AlcoveWestButton.UseVisualStyleBackColor = true;
+			this.AlcoveWestButton.CheckedChanged += new System.EventHandler(this.AlcoveWestButton_CheckedChanged);
+			// 
+			// AlcoveEastButton
+			// 
+			this.AlcoveEastButton.AutoSize = true;
+			this.AlcoveEastButton.Location = new System.Drawing.Point(9, 92);
+			this.AlcoveEastButton.Name = "AlcoveEastButton";
+			this.AlcoveEastButton.Size = new System.Drawing.Size(47, 17);
+			this.AlcoveEastButton.TabIndex = 3;
+			this.AlcoveEastButton.Text = "East";
+			this.AlcoveEastButton.UseVisualStyleBackColor = true;
+			this.AlcoveEastButton.CheckedChanged += new System.EventHandler(this.AlcoveEastButton_CheckedChanged);
+			// 
+			// groupBox8
+			// 
+			this.groupBox8.Controls.Add(this.ButtonEastButton);
+			this.groupBox8.Controls.Add(this.ButtonWestButton);
+			this.groupBox8.Controls.Add(this.ButtonSouthButton);
+			this.groupBox8.Controls.Add(this.ButtonNorthButton);
+			this.groupBox8.Location = new System.Drawing.Point(110, 292);
+			this.groupBox8.Name = "groupBox8";
+			this.groupBox8.Size = new System.Drawing.Size(96, 118);
+			this.groupBox8.TabIndex = 21;
+			this.groupBox8.TabStop = false;
+			this.groupBox8.Text = "Buttons :";
+			// 
+			// ButtonEastButton
+			// 
+			this.ButtonEastButton.AutoSize = true;
+			this.ButtonEastButton.Location = new System.Drawing.Point(9, 92);
+			this.ButtonEastButton.Name = "ButtonEastButton";
+			this.ButtonEastButton.Size = new System.Drawing.Size(47, 17);
+			this.ButtonEastButton.TabIndex = 3;
+			this.ButtonEastButton.Text = "East";
+			this.ButtonEastButton.UseVisualStyleBackColor = true;
+			this.ButtonEastButton.CheckedChanged += new System.EventHandler(this.ButtonEastButton_CheckedChanged);
+			// 
+			// ButtonWestButton
+			// 
+			this.ButtonWestButton.AutoSize = true;
+			this.ButtonWestButton.Location = new System.Drawing.Point(9, 68);
+			this.ButtonWestButton.Name = "ButtonWestButton";
+			this.ButtonWestButton.Size = new System.Drawing.Size(51, 17);
+			this.ButtonWestButton.TabIndex = 2;
+			this.ButtonWestButton.Text = "West";
+			this.ButtonWestButton.UseVisualStyleBackColor = true;
+			this.ButtonWestButton.CheckedChanged += new System.EventHandler(this.ButtonWestButton_CheckedChanged);
+			// 
+			// ButtonSouthButton
+			// 
+			this.ButtonSouthButton.AutoSize = true;
+			this.ButtonSouthButton.Location = new System.Drawing.Point(9, 44);
+			this.ButtonSouthButton.Name = "ButtonSouthButton";
+			this.ButtonSouthButton.Size = new System.Drawing.Size(54, 17);
+			this.ButtonSouthButton.TabIndex = 1;
+			this.ButtonSouthButton.Text = "South";
+			this.ButtonSouthButton.UseVisualStyleBackColor = true;
+			this.ButtonSouthButton.CheckedChanged += new System.EventHandler(this.ButtonSouthButton_CheckedChanged);
+			// 
+			// ButtonNorthButton
+			// 
+			this.ButtonNorthButton.AutoSize = true;
+			this.ButtonNorthButton.Location = new System.Drawing.Point(9, 20);
+			this.ButtonNorthButton.Name = "ButtonNorthButton";
+			this.ButtonNorthButton.Size = new System.Drawing.Size(52, 17);
+			this.ButtonNorthButton.TabIndex = 0;
+			this.ButtonNorthButton.Text = "North";
+			this.ButtonNorthButton.UseVisualStyleBackColor = true;
+			this.ButtonNorthButton.CheckedChanged += new System.EventHandler(this.ButtonNorthButton_CheckedChanged);
+			// 
 			// MazeBlockForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1019,9 +1147,9 @@
 			this.groupBox2.PerformLayout();
 			this.MonstersTab.ResumeLayout(false);
 			this.MonstersTab.PerformLayout();
-			this.DecorationsTab.ResumeLayout(false);
-			this.DecorationsTab.PerformLayout();
+			this.WallsTab.ResumeLayout(false);
 			this.DecorationGroupBox.ResumeLayout(false);
+			this.DecorationGroupBox.PerformLayout();
 			this.groupBox6.ResumeLayout(false);
 			this.groupBox5.ResumeLayout(false);
 			this.tabPage1.ResumeLayout(false);
@@ -1038,6 +1166,10 @@
 			this.TeleporterGroupBox.PerformLayout();
 			this.DoorGroupBox.ResumeLayout(false);
 			this.DoorGroupBox.PerformLayout();
+			this.groupBox7.ResumeLayout(false);
+			this.groupBox7.PerformLayout();
+			this.groupBox8.ResumeLayout(false);
+			this.groupBox8.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -1047,7 +1179,7 @@
 		private System.Windows.Forms.TabControl tabControl1;
 		private System.Windows.Forms.TabPage ItemsTab;
 		private System.Windows.Forms.TabPage MonstersTab;
-		private System.Windows.Forms.TabPage DecorationsTab;
+		private System.Windows.Forms.TabPage WallsTab;
 		private System.Windows.Forms.TabPage tabPage1;
 		private System.Windows.Forms.GroupBox DoorGroupBox;
 		private System.Windows.Forms.Label label1;
@@ -1121,5 +1253,15 @@
 		private System.Windows.Forms.ComboBox OnEnterFloorPlateBox;
 		private System.Windows.Forms.Label label14;
 		private System.Windows.Forms.Label label13;
+		private System.Windows.Forms.GroupBox groupBox8;
+		private System.Windows.Forms.CheckBox ButtonEastButton;
+		private System.Windows.Forms.CheckBox ButtonWestButton;
+		private System.Windows.Forms.CheckBox ButtonSouthButton;
+		private System.Windows.Forms.CheckBox ButtonNorthButton;
+		private System.Windows.Forms.GroupBox groupBox7;
+		private System.Windows.Forms.CheckBox AlcoveEastButton;
+		private System.Windows.Forms.CheckBox AlcoveWestButton;
+		private System.Windows.Forms.CheckBox AlcoveSouthButton;
+		private System.Windows.Forms.CheckBox AlcoveNorthButton;
 	}
 }

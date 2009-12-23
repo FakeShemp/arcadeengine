@@ -6,6 +6,9 @@ using System.Drawing;
 using ArcEngine.Graphic;
 
 
+
+// http://dmweb.free.fr/?q=node/216
+
 namespace ArcEngine.Asset
 {
 

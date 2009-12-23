@@ -27,7 +27,7 @@ using System.Xml;
 namespace DungeonEye
 {
 	/// <summary>
-	/// 
+	/// Teleporter object
 	/// </summary>
 	public class Teleporter
 	{
@@ -123,8 +123,57 @@ namespace DungeonEye
 			set;
 		}
 
+
+		/// <summary>
+		/// Silent teleporter
+		/// </summary>
+		public bool UseSound
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// Scope
+		/// </summary>
+		public TeleporterScope Scope
+		{
+			get;
+			set;
+		}
+
 		#endregion
 
+
+	}
+
+
+	/// <summary>
+	/// Affected object by a teleporter
+	/// </summary>
+	[Flags]
+	public enum TeleporterScope
+	{
+		/// <summary>
+		/// Everything
+		/// </summary>
+		Everything,
+
+		/// <summary>
+		/// Only items
+		/// </summary>
+		Items,
+
+		/// <summary>
+		/// Only monsters
+		/// </summary>
+		Monsters,
+
+		/// <summary>
+		/// Only the team
+		/// </summary>
+		Team,
 
 	}
 }

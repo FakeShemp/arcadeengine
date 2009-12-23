@@ -140,7 +140,7 @@ namespace DungeonEye
 		}
 
 		/// <summary>
-		/// Type of turn on the team
+		/// Type of turn
 		/// </summary>
 		public CompassRotation Rotation
 		{
@@ -153,6 +153,15 @@ namespace DungeonEye
 		/// Moving value
 		/// </summary>
 		public CardinalPoint Move
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Scope
+		/// </summary>
+		public TeleporterScope Scope
 		{
 			get;
 			set;

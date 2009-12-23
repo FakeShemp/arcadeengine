@@ -461,7 +461,7 @@ namespace DungeonEye.Forms
 					
 
 					Color color = Color.White;
-					if (block.Type == BlockType.Fake)
+					if (block.Type == BlockType.Trick)
 						color = Color.LightGreen; //Color.FromArgb(200, Color.Green);
 
 					Batch.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), color, tile.Rectangle);

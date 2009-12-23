@@ -34,7 +34,7 @@ namespace DungeonEye
 	/// <summary>
 	/// Block drawing informations
 	/// </summary>
-	internal class MazeDisplayCoordinates
+	public class MazeDisplayCoordinates
 	{
 
 		/// <summary>
@@ -47,6 +47,7 @@ namespace DungeonEye
 			Doors = new TileDrawing[viewcount];
 			FloorPlates = new TileDrawing[viewcount];
 			GroundItems = new Point[viewcount, 4];
+			Decorations = new TileDrawing[viewcount, 3];
 			FlyingItems = new Point[viewcount, 5];
 			Walls = new List<TileDrawing>[viewcount];
 			for (int i = 0; i < viewcount; i++)
@@ -58,6 +59,8 @@ namespace DungeonEye
 				Stairs[i] = new List<TileDrawing>();
 		}
 
+
+		#region Getters
 
 		/// <summary>
 		/// Gets a draw order information
@@ -94,6 +97,21 @@ namespace DungeonEye
 		public Point GetFlyingItem(ViewFieldPosition view, GroundPosition ground)
 		{
 			return FlyingItems[(int)view, (int)ground];
+		}
+
+
+		/// <summary>
+		/// Gets a decoration coordinate
+		/// </summary>
+		/// <param name="view">Block position in the view field</param>
+		/// <param name="point">Wall side</param>
+		/// <returns></returns>
+		public TileDrawing GetDecoration(ViewFieldPosition view, CardinalPoint point)
+		{
+			if (point == CardinalPoint.North)
+				return null;
+
+			return Decorations[(int)view, (int)point - 1];
 		}
 
 
@@ -140,7 +158,7 @@ namespace DungeonEye
 			return Doors[(int)view];
 		}
 
-
+		#endregion
 
 
 		#region IO
@@ -179,7 +197,13 @@ namespace DungeonEye
 					{
 						case "decoration":
 						{
+							ViewFieldPosition view = (ViewFieldPosition)Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
+							CardinalPoint side = (CardinalPoint)Enum.Parse(typeof(CardinalPoint), node.Attributes["side"].Value, true);
+							if (side == CardinalPoint.North)
+								throw new ArgumentOutOfRangeException("side", "No north wall side decoration !");
 
+							Decorations[(int)view, (int)side - 1] = GetTileDrawing(node);
+								//new Point(int.Parse(node.Attributes["x"].Value), int.Parse(node.Attributes["y"].Value));
 						}
 						break;
 
@@ -285,7 +309,6 @@ namespace DungeonEye
 		#endregion
 
 
-
 		#region Properties
 
 		/// <summary>
@@ -325,6 +348,12 @@ namespace DungeonEye
 
 
 		/// <summary>
+		/// Decorations
+		/// </summary>
+		TileDrawing[,] Decorations;
+
+
+		/// <summary>
 		/// Flying items
 		/// </summary>
 		Point[,] FlyingItems;
@@ -335,99 +364,15 @@ namespace DungeonEye
 
 
 
-/*	
-	/// <summary>
-	/// Maze block render informations
-	/// </summary>
-	class BlockRenderInfos
-	{
-		public BlockRenderInfos()
-		{
-			Walls = new List<TileDrawing>();
-			Decorations = new List<TileDrawing>();
-			Stairs = new List<TileDrawing>();
-			Pits = new List<TileDrawing>();
-			FloorPlates = new List<TileDrawing>();
-			Doors = new List<TileDrawing>();
-			//Monsters = new List<Point>();
-			GroundItems = new Point[4];
-		}
-
-
-		/// <summary>
-		/// Clear informations
-		/// </summary>
-		public void Clear()
-		{
-			Walls.Clear();
-			Decorations.Clear();
-			Stairs.Clear();
-			Pits.Clear();
-			FloorPlates.Clear();
-			Doors.Clear();
-		//	Monsters.Clear();
-		//	GroundItems.Clear();
-		}
-
-		/// <summary>
-		/// Monsters locations
-		/// </summary>
-	//	public List<Point> Monsters;
-		
-		/// <summary>
-		/// Ground items
-		/// </summary>
-		public Point[] GroundItems;
-
-
-		/// <summary>
-		/// Walls locations
-		/// </summary>
-		public List<TileDrawing> Walls;
-
-
-		/// <summary>
-		/// Wall decorations locations
-		/// </summary>
-		public List<TileDrawing> Decorations;
-
-
-		/// <summary>
-		/// Stairs locations
-		/// </summary>
-		public List<TileDrawing> Stairs;
-
-
-		/// <summary>
-		/// Pits locations
-		/// </summary>
-		public List<TileDrawing> Pits;
-
-
-		/// <summary>
-		/// Floor plates locations
-		/// </summary>
-		public List<TileDrawing> FloorPlates;
-
-
-		/// <summary>
-		/// Doord locations
-		/// </summary>
-		public List<TileDrawing> Doors;
-
-
-	}
-*/
-
 
 	/// <summary>
 	/// Location on the screen of a tile
 	/// </summary>
 	/// <remarks>This class is used for drawing maze blocks</remarks>
-	class TileDrawing
+	public class TileDrawing
 	{
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
 		/// <param name="id">ID of the tile</param>
 		/// <param name="location">Location</param>
@@ -441,8 +386,8 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="id">ID of the tile</param>
 		/// <param name="location">Location</param>
-		/// <param name="swapx"></param>
-		/// <param name="swapy"></param>
+		/// <param name="swapx">Vertical flip</param>
+		/// <param name="swapy">Horizontal flip</param>
 		public TileDrawing(int id, Point location, bool swapx, bool swapy)
 		{
 			ID = id;

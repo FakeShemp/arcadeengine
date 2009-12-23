@@ -17,14 +17,11 @@
 //along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 //
 #endregion
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DungeonEye
 {
 	/// <summary>
-	/// 
+	/// Compass
 	/// </summary>
 	public class Compass
 	{
@@ -165,7 +162,7 @@ namespace DungeonEye
 		#region Properties
 
 		/// <summary>
-		/// 
+		/// Gets or sets the direction
 		/// </summary>
 		public CardinalPoint Direction
 		{
@@ -184,22 +181,22 @@ namespace DungeonEye
 	public enum CardinalPoint
 	{
 		/// <summary>
-		/// 
+		/// North
 		/// </summary>
 		North = 0,
 
 		/// <summary>
-		/// 
+		/// South
 		/// </summary>
 		South = 1,
 
 		/// <summary>
-		/// 
+		/// West
 		/// </summary>
 		West = 2,
 
 		/// <summary>
-		/// 
+		/// East
 		/// </summary>
 		East = 3,
 	}
@@ -210,10 +207,19 @@ namespace DungeonEye
 	/// </summary>
 	public enum CompassRotation
 	{
+		/// <summary>
+		/// Rotate 90°
+		/// </summary>
 		Rotate90,
 
+		/// <summary>
+		/// Rotate 180°
+		/// </summary>
 		Rotate180,
 
+		/// <summary>
+		/// Rotate 270°
+		/// </summary>
 		Rotate270,
 	}
 

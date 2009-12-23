@@ -54,13 +54,15 @@ namespace DungeonEye
 			Type = BlockType.Wall;
 
 			WallDecoration = new int[4];
-
+			Alcoves = new bool[4];
 
 			GroundItems = new List<Item>[4];
 			for (int i = 0; i < 4; i++)
 				GroundItems[i] = new List<Item>();
 
 		}
+
+
 
 
 
@@ -207,6 +209,31 @@ namespace DungeonEye
 
 
 
+		/// <summary>
+		/// Gets if the wall have an alcove
+		/// </summary>
+		/// <param name="from">Facing direction</param>
+		/// <param name="side">Wall side</param>
+		/// <returns></returns>
+		public bool HasAlcove(CardinalPoint from, CardinalPoint side)
+		{
+			if (!HasAlcoves)
+				return false;
+
+
+			CardinalPoint[,] tab = new CardinalPoint[,]
+			{
+				{CardinalPoint.North, CardinalPoint.South, CardinalPoint.West, CardinalPoint.East},
+				{CardinalPoint.South, CardinalPoint.North, CardinalPoint.East, CardinalPoint.West},
+				{CardinalPoint.West, CardinalPoint.East, CardinalPoint.South, CardinalPoint.North},
+				{CardinalPoint.East, CardinalPoint.West, CardinalPoint.North, CardinalPoint.South},
+			};
+
+
+			return Alcoves[(int)tab[(int)from, (int)side]];
+		}
+
+
 		#region IO
 
 		/// <summary>
@@ -263,6 +290,17 @@ namespace DungeonEye
 				}
 			}
 
+			// Alcoves
+			foreach(CardinalPoint cardinal in Enum.GetValues(typeof(CardinalPoint)))
+			{
+				if (Alcoves[(int)cardinal])
+				{
+					writer.WriteStartElement("alcove");
+					writer.WriteAttributeString("side", cardinal.ToString());
+					writer.WriteEndElement();
+				}
+			}
+
 
 			// Items
 			for (int i = 0; i < 4; i++)
@@ -290,7 +328,7 @@ namespace DungeonEye
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="filename"></param>
+		/// <param name="xml"></param>
 		/// <returns></returns>
 		public bool Load(XmlNode xml)
 		{
@@ -373,6 +411,15 @@ namespace DungeonEye
 					{
 						Stair = new Stair();
 						Stair.Load(node);
+					}
+					break;
+
+
+					case "alcove":
+					{
+						CardinalPoint side = (CardinalPoint)Enum.Parse(typeof(CardinalPoint), node.Attributes["side"].Value);
+
+						Alcoves[(int)side] = true;
 					}
 					break;
 				}
@@ -534,7 +581,19 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Returns true if the block is a wall or a fake wall
+		/// Gets if the wall have alcoves
+		/// </summary>
+		public bool HasAlcoves
+		{
+			get
+			{
+				return (Alcoves[0] || Alcoves[1] || Alcoves[2] || Alcoves[3]);
+			}
+		}
+
+
+		/// <summary>
+		/// Returns true if the block is a wall or a trick wall
 		/// </summary>
 		public bool IsWall
 		{
@@ -567,13 +626,13 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Is a fake block
+		/// Is a trick block
 		/// </summary>
-		public bool IsFake
+		public bool IsTrick
 		{
 			get
 			{
-				return Type == BlockType.Fake;
+				return Type == BlockType.Trick;
 			}
 
 		}
@@ -692,7 +751,18 @@ namespace DungeonEye
 			get;
 			set;
 		}
-		
+
+
+		/// <summary>
+		/// Alcoves
+		/// </summary>
+		public bool[] Alcoves
+		{
+			get;
+			set;
+		}
+
+
 		#endregion
 	}
 
@@ -715,7 +785,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Team can pass through the wall
 		/// </summary>
-		Fake,
+		Trick,
 
 	}
 

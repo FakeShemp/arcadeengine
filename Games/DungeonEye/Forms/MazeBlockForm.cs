@@ -126,7 +126,7 @@ namespace DungeonEye.Forms
 			#endregion
 
 
-			#region Specials
+			#region Walls
 
 			#region Door
 
@@ -192,6 +192,11 @@ namespace DungeonEye.Forms
 			ForceFieldMoveBox.EndUpdate();
 
 			#endregion
+
+			AlcoveNorthButton.Checked = MazeBlock.Alcoves[(int)CardinalPoint.North];
+			AlcoveSouthButton.Checked = MazeBlock.Alcoves[(int)CardinalPoint.South];
+			AlcoveWestButton.Checked = MazeBlock.Alcoves[(int)CardinalPoint.West];
+			AlcoveEastButton.Checked = MazeBlock.Alcoves[(int)CardinalPoint.East];
 
 			#endregion
 
@@ -471,7 +476,47 @@ namespace DungeonEye.Forms
 		#endregion
 
 
-		#region Wall decoration
+		#region Walls
+
+		private void AlcoveNorthButton_CheckedChanged(object sender, EventArgs e)
+		{
+			MazeBlock.Alcoves[(int)CardinalPoint.North] = AlcoveNorthButton.Checked;
+		}
+
+		private void AlcoveSouthButton_CheckedChanged(object sender, EventArgs e)
+		{
+			MazeBlock.Alcoves[(int)CardinalPoint.South] = AlcoveSouthButton.Checked;
+		}
+
+		private void AlcoveWestButton_CheckedChanged(object sender, EventArgs e)
+		{
+			MazeBlock.Alcoves[(int)CardinalPoint.West] = AlcoveWestButton.Checked;
+		}
+
+		private void AlcoveEastButton_CheckedChanged(object sender, EventArgs e)
+		{
+			MazeBlock.Alcoves[(int)CardinalPoint.East] = AlcoveEastButton.Checked;
+		}
+
+		private void ButtonNorthButton_CheckedChanged(object sender, EventArgs e)
+		{
+
+		}
+
+		private void ButtonSouthButton_CheckedChanged(object sender, EventArgs e)
+		{
+
+		}
+
+		private void ButtonWestButton_CheckedChanged(object sender, EventArgs e)
+		{
+
+		}
+
+		private void ButtonEastButton_CheckedChanged(object sender, EventArgs e)
+		{
+
+		}
 
 
 		/// <summary>
@@ -931,6 +976,7 @@ namespace DungeonEye.Forms
 
 
 		#endregion
+
 
 
 	}

@@ -354,6 +354,35 @@ namespace DungeonEye
 		}
 
 
+		/// <summary>
+		/// Is the item broken
+		/// </summary>
+		public bool IsBroken
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Is the item poisoned
+		/// </summary>
+		public bool IsPoisoned
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// Is the item cursed
+		/// </summary>
+		public bool IsCursed
+		{
+			get;
+			set;
+		}
+
+
 
 		#endregion
 	}

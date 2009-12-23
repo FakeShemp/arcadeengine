@@ -116,9 +116,9 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// A fake pit
+		/// A trick pit
 		/// </summary>
-		public bool IsFake
+		public bool IsTrick
 		{
 			get;
 			set;

@@ -565,12 +565,6 @@ namespace DungeonEye
 					Display.Scissor = false;
 				}
 				break;
-
-				default:
-				{
-					return;
-				}
-				break;
 			}
 
 		}
