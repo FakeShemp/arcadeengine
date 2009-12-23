@@ -730,8 +730,6 @@ namespace DungeonEye
 	/// | +---+ |
 	/// | C | D |
 	/// '-------'
-	///
-	/// 
 	/// </summary>
 	public enum GroundPosition
 	{

@@ -359,6 +359,26 @@ namespace ArcEngine
 		}
 
 
+
+/*
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="name">Name of the asset</param>
+		/// <returns></returns>
+		static public Stream GetAsset(string name)
+		{
+			if (string.IsNullOrEmpty(name))
+				return Stream.Null;
+
+			lock (BinaryLock)
+			{
+				return null;
+			}
+		}
+*/
+
+
 		/// <summary>
 		/// Creates an asset
 		/// </summary>
@@ -431,6 +451,8 @@ namespace ArcEngine
 
 				Binaries.Clear();
 				UnknownAssets.Clear();
+
+				Trace.WriteLine("Clearing assets !");
 			}
 		}
 
@@ -660,9 +682,11 @@ namespace ArcEngine
 
 							// Check the root node
 							XmlElement xml = doc.DocumentElement;
+
+							// If not a bank, add it as a binary
 							if (xml.Name.ToLower() != "bank")
 							{
-								Trace.WriteLine("\"" + filename + "\" is not a valid bank file !");
+								LoadBinary(entry.Name, data);
 								continue;
 							}
 

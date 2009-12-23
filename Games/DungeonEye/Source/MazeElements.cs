@@ -34,40 +34,28 @@ namespace DungeonEye
 	/// <summary>
 	/// Block drawing informations
 	/// </summary>
-	static class MazeDisplayCoordinates
+	internal class MazeDisplayCoordinates
 	{
 
 		/// <summary>
 		/// Default constructor 
 		/// </summary>
-		static MazeDisplayCoordinates()
+		public MazeDisplayCoordinates()
 		{
 			int viewcount = Enum.GetValues(typeof(ViewFieldPosition)).Length;
-			Blocks = new BlockRenderInfos[viewcount];
 
-
+			Doors = new TileDrawing[viewcount];
+			FloorPlates = new TileDrawing[viewcount];
+			GroundItems = new Point[viewcount, 4];
+			FlyingItems = new Point[viewcount, 5];
 			Walls = new List<TileDrawing>[viewcount];
 			for (int i = 0; i < viewcount; i++)
 				Walls[i] = new List<TileDrawing>();
 
-
-			GroundItems = new Point[viewcount, 4];
-
-
-
-
-			// Load file definition
-			Stream stream = ResourceManager.LoadResource("data/MazeElements.xml");
-			if (stream == null)
-			{
-				throw new FileNotFoundException("Can not find maze element coordinate file !!!. Aborting");
-			}
-			XmlDocument doc = new XmlDocument();
-			doc.Load(stream);
-			Load(doc.DocumentElement);
-
-			stream.Close();
-			stream.Dispose();
+			Pits = new TileDrawing[viewcount];
+			Stairs = new List<TileDrawing>[viewcount];
+			for (int i = 0; i < viewcount; i++)
+				Stairs[i] = new List<TileDrawing>();
 		}
 
 
@@ -76,23 +64,10 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="position">Block position in the view field</param>
 		/// <returns></returns>
-		static public BlockRenderInfos Get(ViewFieldPosition position)
+		public List<TileDrawing> GetWalls(ViewFieldPosition position)
 		{
-			return Blocks[(int)position];
+			return Walls[(int)position];
 		}
-
-
-
-		/// <summary>
-		/// Clear all informations
-		/// </summary>
-		static public void Clear()
-		{
-			foreach (BlockRenderInfos block in Blocks)
-				block.Clear();
-
-		}
-
 
 
 		/// <summary>
@@ -101,7 +76,7 @@ namespace DungeonEye
 		/// <param name="view">Block position in the view field</param>
 		/// <param name="ground">ground position</param>
 		/// <returns></returns>
-		static public Point GetGroundItem(ViewFieldPosition view, GroundPosition ground)
+		public Point GetGroundItem(ViewFieldPosition view, GroundPosition ground)
 		{
 			if (ground == GroundPosition.Middle)
 				throw new ArgumentOutOfRangeException("ground", "No ground item in the middle of a block !");
@@ -110,112 +85,257 @@ namespace DungeonEye
 		}
 
 
+		/// <summary>
+		/// Gets a flying item coordinate
+		/// </summary>
+		/// <param name="view">Block position in the view field</param>
+		/// <param name="ground">ground position</param>
+		/// <returns></returns>
+		public Point GetFlyingItem(ViewFieldPosition view, GroundPosition ground)
+		{
+			return FlyingItems[(int)view, (int)ground];
+		}
+
+
+		/// <summary>
+		/// Get stair
+		/// </summary>
+		/// <param name="view">Block position in the view field</param>
+		/// <returns></returns>
+		public List<TileDrawing> GetStairs(ViewFieldPosition view)
+		{
+			return Stairs[(int)view];
+		}
+
+
+		/// <summary>
+		/// Get pit
+		/// </summary>
+		/// <param name="view">Block position in the view field</param>
+		/// <returns></returns>
+		public TileDrawing GetPit(ViewFieldPosition view)
+		{
+			return Pits[(int)view];
+		}
+
+
+		/// <summary>
+		/// Gets floor plate
+		/// </summary>
+		/// <param name="view">Block position in the view field</param>
+		/// <returns></returns>
+		public TileDrawing GetFloorPlate(ViewFieldPosition view)
+		{
+			return FloorPlates[(int)view];
+		}
+
+
+		/// <summary>
+		/// Gets door
+		/// </summary>
+		/// <param name="view">Block position in the view field</param>
+		/// <returns></returns>
+		public TileDrawing GetDoor(ViewFieldPosition view)
+		{
+			return Doors[(int)view];
+		}
+
+
+
 
 		#region IO
 
 		/// <summary>
 		/// Loads the maze definition
 		/// </summary>
-		/// <param name="xml"></param>
 		/// <returns></returns>
-		static bool Load(XmlNode xml)
+		public bool Load()
 		{
-			if (xml == null)
-				return false;
+			
+			// Load file definition
+			Stream stream = ResourceManager.LoadResource("MazeElements.xml");
+			if (stream == null)
+				throw new FileNotFoundException("Can not find maze element coordinate file !!! Aborting.");
 
-			if (xml.Name != "displaycoordinate")
+			try
 			{
-				Trace.Write("Wrong header for MazeElements file");
-				return false;
-			}
-
-
-			foreach (XmlNode node in xml)
-			{
-				if (node.NodeType == XmlNodeType.Comment)
-					continue;
-
-
-				switch (node.Name.ToLower())
+				XmlDocument doc = new XmlDocument();
+				doc.Load(stream);
+				XmlNode xml = doc.DocumentElement;
+				if (xml.Name != "displaycoordinate")
 				{
-					case "decoration":
+					Trace.Write("Wrong header for MazeElements file");
+					return false;
+				}
+
+
+				foreach (XmlNode node in xml)
+				{
+					if (node.NodeType == XmlNodeType.Comment)
+						continue;
+
+
+					switch (node.Name.ToLower())
 					{
+						case "decoration":
+						{
+
+						}
+						break;
+
+
+						case "wall":
+						{
+							ViewFieldPosition view = (ViewFieldPosition)Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
+							Walls[(int)view].Add(GetTileDrawing(node));
+						}
+						break;
+
+
+						case "stair":
+						{
+							ViewFieldPosition view = (ViewFieldPosition)Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
+							Stairs[(int)view].Add(GetTileDrawing(node));
+						}
+						break;
+
+
+						case "grounditem":
+						{
+							ViewFieldPosition view = (ViewFieldPosition)Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
+							GroundPosition ground = (GroundPosition)Enum.Parse(typeof(GroundPosition), node.Attributes["coordinate"].Value, true);
+							if (ground == GroundPosition.Middle)
+								throw new ArgumentOutOfRangeException("ground", "No ground item in the middle of a block !");
+
+							GroundItems[(int)view, (int)ground] = new Point(int.Parse(node.Attributes["x"].Value), int.Parse(node.Attributes["y"].Value));
+						}
+						break;
+
+
+						case "flyingitem":
+						{
+							ViewFieldPosition view = (ViewFieldPosition)Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
+							GroundPosition ground = (GroundPosition)Enum.Parse(typeof(GroundPosition), node.Attributes["coordinate"].Value, true);
+
+							FlyingItems[(int)view, (int)ground] = new Point(int.Parse(node.Attributes["x"].Value), int.Parse(node.Attributes["y"].Value));
+						}
+						break;
+
+
+						case "pit":
+						{
+							ViewFieldPosition view = (ViewFieldPosition)Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
+							Pits[(int)view] = GetTileDrawing(node);
+						}
+						break;
+
+
+						case "floorplate":
+						{
+							ViewFieldPosition view = (ViewFieldPosition)Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
+							FloorPlates[(int)view] = GetTileDrawing(node);
+						}
+						break;
+
+						case "door":
+						{
+							ViewFieldPosition view = (ViewFieldPosition)Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
+							Doors[(int)view] = GetTileDrawing(node);
+						}
+						break;
 
 					}
-					break;
-
-
-					case "wall":
-					{
-						ViewFieldPosition view = (ViewFieldPosition)Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
-
-						bool swapx = false;
-						if (node.Attributes["swapx"] != null)
-							swapx = true;
-
-						int id = int.Parse(node.Attributes["tile"].Value);
-						Point point = new Point(int.Parse(node.Attributes["x"].Value), int.Parse(node.Attributes["y"].Value));
-						Walls[(int)view].Add(new TileDrawing(id, point, swapx, false));
-					}
-					break;
-
-
-					case "grounditem":
-					{
-						ViewFieldPosition view =(ViewFieldPosition) Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
-						GroundPosition ground = (GroundPosition)Enum.Parse(typeof(GroundPosition), node.Attributes["coordinate"].Value, true);
-						if (ground == GroundPosition.Middle)
-							throw new ArgumentOutOfRangeException("ground", "No ground item in the middle of a block !");
-
-						GroundItems[(int)view, (int)ground] = new Point(int.Parse(node.Attributes["x"].Value), int.Parse(node.Attributes["y"].Value));
-					}
-					break;
-
-
-
 				}
 			}
-
-
+			finally
+			{
+				stream.Close();
+				stream.Dispose();
+			}
 
 			return true;
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="node"></param>
+		/// <returns></returns>
+		TileDrawing GetTileDrawing(XmlNode node)
+		{
+			if (node == null)
+				return null;
+
+
+			bool swapx = false;
+			if (node.Attributes["swapx"] != null)
+				swapx = true;
+
+			bool swapy = false;
+			if (node.Attributes["swapy"] != null)
+				swapy = true;
+
+			int id = int.Parse(node.Attributes["tile"].Value);
+			Point point = new Point(int.Parse(node.Attributes["x"].Value), int.Parse(node.Attributes["y"].Value));
+			return new TileDrawing(id, point, swapx, swapy);
+
+		}
+
 		#endregion
 
 
 
+		#region Properties
 
 		/// <summary>
-		/// Draw orders
+		/// Pits
 		/// </summary>
-		static BlockRenderInfos[] Blocks;
+		TileDrawing[] Pits;
 
 
+		/// <summary>
+		/// Floorplates
+		/// </summary>
+		TileDrawing[] FloorPlates;
 
 
-
-
-
-
+		/// <summary>
+		/// Doors
+		/// </summary>
+		TileDrawing[] Doors;
 
 
 		/// <summary>
 		/// Walls
 		/// </summary>
-		static List<TileDrawing>[] Walls;
+		List<TileDrawing>[] Walls;
+
+
+		/// <summary>
+		/// Stairs
+		/// </summary>
+		List<TileDrawing>[] Stairs;
 
 
 		/// <summary>
 		/// Ground items
 		/// </summary>
-		static Point[,] GroundItems;
+		Point[,] GroundItems;
+
+
+		/// <summary>
+		/// Flying items
+		/// </summary>
+		Point[,] FlyingItems;
+
+		#endregion
+
 	}
 
 
 
-	
+/*	
 	/// <summary>
 	/// Maze block render informations
 	/// </summary>
@@ -249,12 +369,10 @@ namespace DungeonEye
 		//	GroundItems.Clear();
 		}
 
-/*
 		/// <summary>
 		/// Monsters locations
 		/// </summary>
-		public List<Point> Monsters;
-*/
+	//	public List<Point> Monsters;
 		
 		/// <summary>
 		/// Ground items
@@ -299,7 +417,7 @@ namespace DungeonEye
 
 
 	}
-
+*/
 
 
 	/// <summary>

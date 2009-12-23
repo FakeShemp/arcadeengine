@@ -97,8 +97,8 @@ namespace DungeonEye
 		/// <summary>
 		/// Draw the monster
 		/// </summary>
-		/// <param name="direction"></param>
-		/// <param name="pos"></param>
+		/// <param name="direction">Team's facing direction</param>
+		/// <param name="pos">Position of the monster in the field of view</param>
 		public virtual void Draw(CardinalPoint direction, ViewFieldPosition pos)
 		{
 

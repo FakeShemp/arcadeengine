@@ -70,7 +70,7 @@ namespace DungeonEye
 		/// <param name="location">Offset location for drawing</param>
 		/// <param name="distance">Distance of the door from the view point</param>
 		/// <param name="direction">View point of the team</param>
-		public virtual void Draw(Point location, int distance, CardinalPoint direction)
+		public virtual void Draw(Point location, ViewFieldPosition distance, CardinalPoint direction)
 		{
 
 			switch (Type)
@@ -186,12 +186,14 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="location"></param>
 		/// <param name="distance"></param>
-		void DrawEyeDoor(Point location, int distance)
+		void DrawEyeDoor(Point location, ViewFieldPosition distance)
 		{
 
 			switch (distance)
 			{
-				case 1:
+				case ViewFieldPosition.M:
+				case ViewFieldPosition.N:
+				case ViewFieldPosition.O:
 				{
 					Display.Scissor = true;
 					location.Offset(56, 14);
@@ -204,7 +206,11 @@ namespace DungeonEye
 				}
 				break;
 
-				case 2:
+				case ViewFieldPosition.H:
+				case ViewFieldPosition.I:
+				case ViewFieldPosition.J:
+				case ViewFieldPosition.K:
+				case ViewFieldPosition.L:
 				{
 					Display.Scissor = true;
 					location.Offset(32, 12);
@@ -217,7 +223,13 @@ namespace DungeonEye
 				}
 				break;
 
-				case 3:
+				case ViewFieldPosition.A:
+				case ViewFieldPosition.B:
+				case ViewFieldPosition.C:
+				case ViewFieldPosition.D:
+				case ViewFieldPosition.E:
+				case ViewFieldPosition.F:
+				case ViewFieldPosition.G:
 				{
 					Display.Scissor = true;
 					location.Offset(14, 4);
@@ -236,11 +248,13 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="location"></param>
 		/// <param name="distance"></param>
-		void DrawGridDoor(Point location, int distance)
+		void DrawGridDoor(Point location, ViewFieldPosition distance)
 		{
 			switch (distance)
 			{
-				case 1:
+				case ViewFieldPosition.M:
+				case ViewFieldPosition.N:
+				case ViewFieldPosition.O:
 				{
 					Display.Scissor = true;
 					location.Offset(54, 16);
@@ -254,7 +268,11 @@ namespace DungeonEye
 				}
 				break;
 
-				case 2:
+				case ViewFieldPosition.H:
+				case ViewFieldPosition.I:
+				case ViewFieldPosition.J:
+				case ViewFieldPosition.K:
+				case ViewFieldPosition.L:
 				{
 					Display.Scissor = true;
 					location.Offset(28, 8);
@@ -268,7 +286,13 @@ namespace DungeonEye
 				}
 				break;
 
-				case 3:
+				case ViewFieldPosition.A:
+				case ViewFieldPosition.B:
+				case ViewFieldPosition.C:
+				case ViewFieldPosition.D:
+				case ViewFieldPosition.E:
+				case ViewFieldPosition.F:
+				case ViewFieldPosition.G:
 				{
 					Display.Scissor = true;
 					location.Offset(16, 4);
@@ -287,15 +311,16 @@ namespace DungeonEye
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="device"></param>
 		/// <param name="location"></param>
 		/// <param name="distance"></param>
-		void DrawIronDoor(Point location, int distance)
+		void DrawIronDoor(Point location, ViewFieldPosition distance)
 		{
 
 			switch (distance)
 			{
-				case 1:
+				case ViewFieldPosition.M:
+				case ViewFieldPosition.N:
+				case ViewFieldPosition.O:
 				{
 					Display.Scissor = true;
 					location.Offset(54, 16);
@@ -312,7 +337,11 @@ namespace DungeonEye
 				}
 				break;
 
-				case 2:
+				case ViewFieldPosition.H:
+				case ViewFieldPosition.I:
+				case ViewFieldPosition.J:
+				case ViewFieldPosition.K:
+				case ViewFieldPosition.L:
 				{
 					Display.Scissor = true;
 					location.Offset(28, 8);
@@ -326,7 +355,13 @@ namespace DungeonEye
 				}
 				break;
 
-				case 3:
+				case ViewFieldPosition.A:
+				case ViewFieldPosition.B:
+				case ViewFieldPosition.C:
+				case ViewFieldPosition.D:
+				case ViewFieldPosition.E:
+				case ViewFieldPosition.F:
+				case ViewFieldPosition.G:
 				{
 					Display.Scissor = true;
 					location.Offset(14, 4);
@@ -344,14 +379,15 @@ namespace DungeonEye
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="device"></param>
 		/// <param name="location"></param>
 		/// <param name="distance"></param>
-		void DrawMonsterDoor(Point location, int distance)
+		void DrawMonsterDoor(Point location, ViewFieldPosition distance)
 		{
 			switch (distance)
 			{
-				case 1:
+				case ViewFieldPosition.M:
+				case ViewFieldPosition.N:
+				case ViewFieldPosition.O:
 				{
 					location.Offset(56, 14);
 					Display.Scissor = true;
@@ -367,7 +403,11 @@ namespace DungeonEye
 				}
 				break;
 
-				case 2:
+				case ViewFieldPosition.H:
+				case ViewFieldPosition.I:
+				case ViewFieldPosition.J:
+				case ViewFieldPosition.K:
+				case ViewFieldPosition.L:
 				{
 					location.Offset(28, 8);
 					Display.Scissor = true;
@@ -382,7 +422,13 @@ namespace DungeonEye
 				}
 				break;
 
-				case 3:
+				case ViewFieldPosition.A:
+				case ViewFieldPosition.B:
+				case ViewFieldPosition.C:
+				case ViewFieldPosition.D:
+				case ViewFieldPosition.E:
+				case ViewFieldPosition.F:
+				case ViewFieldPosition.G:
 				{
 					location.Offset(14, 4);
 					Display.Scissor = true;
@@ -400,14 +446,15 @@ namespace DungeonEye
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="device"></param>
 		/// <param name="location"></param>
 		/// <param name="distance"></param>
-		void DrawSpiderDoor(Point location, int distance)
+		void DrawSpiderDoor(Point location, ViewFieldPosition distance)
 		{
 			switch (distance)
 			{
-				case 1:
+				case ViewFieldPosition.M:
+				case ViewFieldPosition.N:
+				case ViewFieldPosition.O:
 				{
 					location.Offset(32, 24);
 					Display.Scissor = true;
@@ -420,7 +467,11 @@ namespace DungeonEye
 				}
 				break;
 
-				case 2:
+				case ViewFieldPosition.H:
+				case ViewFieldPosition.I:
+				case ViewFieldPosition.J:
+				case ViewFieldPosition.K:
+				case ViewFieldPosition.L:
 				{
 					location.Offset(32, 18);
 					Display.Scissor = true;
@@ -433,7 +484,13 @@ namespace DungeonEye
 				}
 				break;
 
-				case 3:
+				case ViewFieldPosition.A:
+				case ViewFieldPosition.B:
+				case ViewFieldPosition.C:
+				case ViewFieldPosition.D:
+				case ViewFieldPosition.E:
+				case ViewFieldPosition.F:
+				case ViewFieldPosition.G:
 				{
 					location.Offset(16, 10);
 					Display.ScissorZone = new Rectangle(location, new Size(64, 54));
@@ -452,14 +509,15 @@ namespace DungeonEye
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="device"></param>
 		/// <param name="location"></param>
 		/// <param name="distance"></param>
-		void DrawStoneDoor(Point location, int distance)
+		void DrawStoneDoor(Point location, ViewFieldPosition distance)
 		{
 			switch (distance)
 			{
-				case 1:
+				case ViewFieldPosition.M:
+				case ViewFieldPosition.N:
+				case ViewFieldPosition.O:
 				{
 					Display.Scissor = true;
 					location.Offset(32, 16);
@@ -473,7 +531,11 @@ namespace DungeonEye
 				}
 				break;
 
-				case 2:
+				case ViewFieldPosition.H:
+				case ViewFieldPosition.I:
+				case ViewFieldPosition.J:
+				case ViewFieldPosition.K:
+				case ViewFieldPosition.L:
 				{
 					Display.Scissor = true;
 					location.Offset(16, 8);
@@ -487,7 +549,13 @@ namespace DungeonEye
 				}
 				break;
 
-				case 3:
+				case ViewFieldPosition.A:
+				case ViewFieldPosition.B:
+				case ViewFieldPosition.C:
+				case ViewFieldPosition.D:
+				case ViewFieldPosition.E:
+				case ViewFieldPosition.F:
+				case ViewFieldPosition.G:
 				{
 					Display.Scissor = true;
 					location.Offset(8, 4);
@@ -498,6 +566,11 @@ namespace DungeonEye
 				}
 				break;
 
+				default:
+				{
+					return;
+				}
+				break;
 			}
 
 		}
@@ -611,8 +684,8 @@ namespace DungeonEye
 		/// <summary>
 		/// Returns true if the door can be displayed in the maze
 		/// </summary>
-		/// <param name="point"></param>
-		/// <returns></returns>
+		/// <param name="point">Looking direction</param>
+		/// <returns>True if drawable</returns>
 		public bool IsDrawable(CardinalPoint point)
 		{
 

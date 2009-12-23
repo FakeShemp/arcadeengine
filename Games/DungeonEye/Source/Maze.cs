@@ -48,13 +48,12 @@ namespace DungeonEye
 		{
 			Name = "No name";
 			Dungeon = dungeon;
-
+			Coordinates = new MazeDisplayCoordinates();
 
 			Blocks = new List<List<MazeBlock>>();
 			Monsters = new List<Monster>();
 			Doors = new List<Door>();
 			FlyingItems = new List<FlyingItem>();
-
 		}
 
 
@@ -64,6 +63,10 @@ namespace DungeonEye
 		/// <returns></returns>
 		public bool Init()
 		{
+			// Loads maze display coordinates
+			Coordinates.Load();
+
+
 			WallTileset = ResourceManager.CreateSharedAsset<TileSet>(WallTilesetName, WallTilesetName);
 			if (WallTileset == null)
 			{
@@ -323,17 +326,22 @@ namespace DungeonEye
 		}
 
 
-		/// Is the door North - South aligned.
-		/// If not, the the door is East - West aligned
+		
+
+
+		/// <summary>
+		/// Gets if a door is North-South aligned
+		/// </summary>
+		/// <param name="location">Door location in the maze</param>
+		/// <returns>True if the door is pointing north or south</returns>
 		public bool IsDoorNorthSouth(Point location)
 		{
-			Point point = new Point(location.X - 1, location.Y);	
-			if (!Contains(point))
+			Point left = new Point(location.X - 1, location.Y);	
+			if (!Contains(left))
 				return false;
 
-			MazeBlock block = GetBlock(point);
+			MazeBlock block = GetBlock(left);
 			return (block.IsWall);
-
 		}
 
 		/// <summary>
@@ -365,78 +373,6 @@ namespace DungeonEye
 
 			return false;
 		}
-
-
-		/// <summary>
-		/// Returns the wall decoration location on the screen
-		/// </summary>
-		/// <param name="position">Block in the view field</param>
-		/// <param name="cardinal">Cardinal position</param>
-		/// <returns>Center location of the wall decoration</returns>
-		Point GetWallDecorationPosition(ViewFieldPosition position, CardinalPoint cardinal)
-		{
-			Point[,] locations = new Point[,]
-			{
-				// North					South							West							East
-				{Point.Empty,		Point.Empty,			Point.Empty,				Point.Empty},					// A
-				{Point.Empty,		Point.Empty,			Point.Empty,				new Point(62,8)},				// B
-				{Point.Empty,		Point.Empty,			new Point(77,82),			Point.Empty},					// C
-				{Point.Empty,		Point.Empty,			new Point(172,83),		Point.Empty},					// D
-				{Point.Empty,		Point.Empty,			new Point(269,82),		Point.Empty},					// E
-				{Point.Empty,		new Point(290,8),		Point.Empty,				Point.Empty},					// F
-				{Point.Empty,		Point.Empty,			Point.Empty,				Point.Empty},					// G
-				{Point.Empty,		Point.Empty,			Point.Empty,				new Point(120,88)},			// H
-				{Point.Empty,		Point.Empty,			new Point(12,84),			new Point(116,82)},			// I
-				{Point.Empty,		Point.Empty,			new Point(175,85),		Point.Empty},					// J
-				{Point.Empty,		new Point(232,82),	new Point(332,85),		Point.Empty},					// K
-				{Point.Empty,		Point.Empty,			Point.Empty,				Point.Empty},					// L
-				{Point.Empty,		Point.Empty,			Point.Empty,				new Point(76,86)},			// M
-				{Point.Empty,		Point.Empty,			new Point(172,89),		Point.Empty},					// N
-				{Point.Empty,		new Point(276,86),	Point.Empty,				Point.Empty},					// O
-				{Point.Empty,		Point.Empty,			Point.Empty,				Point.Empty},					// P
-				{Point.Empty,		Point.Empty,				Point.Empty,				Point.Empty},					// Team
-				{Point.Empty,		Point.Empty,			Point.Empty,				Point.Empty},					// Q
-			};
-
-
-			return locations[(int)position, (int)cardinal];
-		}
-
-		/// <summary>
-		/// Returns the wall location on the screen
-		/// </summary>
-		/// <param name="position">Block in the view field</param>
-		/// <param name="cardinal">Cardinal position</param>
-		/// <returns>Center location of the wall decoration</returns>
-		Point GetWallPosition(ViewFieldPosition position, CardinalPoint cardinal)
-		{
-			Point[,] locations = new Point[,]
-			{
-				// North					South							West							East
-				{Point.Empty,		Point.Empty,				Point.Empty,				new Point(0, 54)},			// A
-				{Point.Empty,		new Point(32, 56),		Point.Empty,				new Point(-64, 54)},			// B
-				{Point.Empty,		new Point(32,54),			Point.Empty,				new Point(128, 56)},			// C
-				{Point.Empty,		new Point(128,54),		Point.Empty,				Point.Empty},					// D
-				{Point.Empty,		new Point(224, 54),		new Point(208, 56),	 	Point.Empty},					// E
-				{Point.Empty,		new Point(320, 54),		new Point(304, 56),		Point.Empty},					// F
-				{Point.Empty,		Point.Empty,				new Point(336, 54),	 	Point.Empty},					// G
-				{Point.Empty,		Point.Empty,				Point.Empty,				new Point(320, 40)},			// H
-				{Point.Empty,		new Point(-64, 40),		Point.Empty,				new Point(96,40)},			// I
-				{Point.Empty,		new Point(96, 40),		Point.Empty,				Point.Empty},					// J
-				{Point.Empty,		new Point(256, 40),		new Point(224, 40),		Point.Empty},					// K
-				{Point.Empty,		Point.Empty,				Point.Empty,				Point.Empty},					// L
-				{Point.Empty,		new Point(-208, 14), 	Point.Empty,				new Point(48, 14)},			// M
-				{Point.Empty,		new Point(48, 14),		Point.Empty,				Point.Empty},					// N
-				{Point.Empty,		new Point(304, 14),		new Point(256, 14),		Point.Empty},					// O
-				{Point.Empty,		Point.Empty,				Point.Empty,				new Point(0, 0)},				// P
-				{Point.Empty,		Point.Empty,				Point.Empty,				Point.Empty},					// Team
-				{Point.Empty,		Point.Empty,				new Point(304, 0),		Point.Empty},					// Q
-			};
-
-
-			return locations[(int)position, (int)cardinal];
-		}
-
 
 		#endregion
 
@@ -520,1100 +456,1000 @@ namespace DungeonEye
 		/// Draw the maze
 		/// </summary>
 		/// <param name="location">Location to display from</param>
-		/// <param name="direction">Direction</param>
 		/// <see cref="http://eob.wikispaces.com/eob.vmp"/>
 		public void Draw(DungeonLocation location)
 		{
+
+
+			if (WallTileset == null)
+				return;
 
 			//
 			// 
 			//
 			ViewField pov = new ViewField(this, location);
-			MazeBlock block = null;
-			
 
 
-			if (WallTileset != null)
-			{
+			// Backdrop
+			// The background is assumed to be x-flipped when party.x & party.y & party.direction = 1.
+			// I.e. all kind of moves and rotations from the current position will result in the background being x-flipped.
+			bool flipbackdrop = ((location.Position.X + location.Position.Y + (int)location.Direction) & 1) == 0;
 
-				// Draw the dungeon
-				Display.Color = Color.White;
+			Display.Color = Color.White;
+			WallTileset.Draw(0, Point.Empty, flipbackdrop, false);
 
-				// Backdrop
-				// The background is assumed to be x-flipped when party.x & party.y & party.direction = 1.
-				// I.e. all kind of moves and rotations from the current position will result in the background being x-flipped.
-				bool flipbackdrop = ((location.Position.X + location.Position.Y + (int)location.Direction) & 1) == 0;
 
-				Display.Color = Color.White;
-				WallTileset.Draw(0, Point.Empty, flipbackdrop, false);
+			// alternate the wall
+			int swap = (location.Position.Y % 2) * 9;
 
 
-				// alternate the wall
-				int swap = (location.Position.Y % 2) * 9;
+			// maze block draw order
+			// A G B F C E D
+			// H L I K J
+			// M O N
+			// P Team Q
 
-
-				// List of items on the ground
-				List<Item>[] list = null;
-
-				// List of flying items
-				List<FlyingItem>[] flyings = null;
-
-
-				#region row -3
-
-				#region A 
-				block = pov.Blocks[0];
-				if (block.Stair != null || block.IsWall)
-					WallTileset.Draw(7 + swap, new Point(0, 54));
-
-				#endregion
-
-				#region G 
-				block = pov.Blocks[6];
-				if (block.Stair != null || block.IsWall)
-					WallTileset.Draw(7 + swap, new Point(336, 54), true, false);
-				#endregion
-
-				#region B 
-				block = pov.Blocks[1];
-				if (block.Pit != null)
-				{
-					OverlayTileset.Draw(4, new Point(-16, 112));
-				}
-				else if (block.FloorPlate != null && !block.FloorPlate.Invisible)
-				{
-					OverlayTileset.Draw(11, new Point(-12, 114));
-				}
-				else if (block.Stair != null)
-				{
-					int id = block.Stair.Type == StairType.Up ? 21 : 34;
-					WallTileset.Draw(id, new Point(-64, 56));
-					WallTileset.Draw(id, new Point(32, 56));
-				}
-				else if (block.Door != null && block.Door.IsDrawable(location.Direction))
-				{
-					WallTileset.Draw(30, new Point(-64, 54));
-					block.Door.Draw(new Point(-64, 54), 3, location.Direction);
-				}
-				else if (block.IsWall)
-				{
-					WallTileset.Draw(7 + swap, new Point(32, 56));
-					WallTileset.Draw(3 + swap, new Point(-64, 54));
-				}
-
-				// Items on ground
-				list = block.GetGroundItems(location.Direction);
-				if (list[3].Count > 0)
-				{
-					foreach (Item item in list[3])
-						ItemsTileset.Draw(item.GroundTileID + 3, new Point(12, 116));
-				}
-
-				// Monsters
-				foreach (Monster monster in pov.GetMonsters(ViewFieldPosition.B))
-				{
-					if (monster != null)
-						monster.Draw(location.Direction, ViewFieldPosition.B);
-				}
-
-				#endregion
-
-				#region F 
-				block = pov.Blocks[5];
-				if (block.Pit != null)
-				{
-					OverlayTileset.Draw(4, new Point(304, 112));
-				}
-				else if (block.FloorPlate != null && !block.FloorPlate.Invisible)
-				{
-					OverlayTileset.Draw(11, new Point(338, 114));
-				}
-				else if (block.Stair != null)
-				{
-					int id = block.Stair.Type == StairType.Up ? 21 : 34;
-					WallTileset.Draw(id, new Point(320, 54));
-					WallTileset.Draw(id + 4, new Point(304, 56), true, false);
-				}
-				else if (block.Door != null && block.Door.IsDrawable(location.Direction))
-				{
-					WallTileset.Draw(30, new Point(320, 54));
-					block.Door.Draw(new Point(320, 54), 3, location.Direction);
-				}
-				else if (block.IsWall)
-				{
-					WallTileset.Draw(3 + swap, new Point(320, 54));
-					WallTileset.Draw(7 + swap, new Point(304, 56), true, false);
-				}
-
-				// Items on ground
-				list = block.GetGroundItems(location.Direction);
-				if (list[2].Count > 0)
-				{
-					foreach (Item item in list[2])
-						ItemsTileset.Draw(item.GroundTileID + 3, new Point(330, 116));
-				}
-
-				// Monsters
-				foreach (Monster monster in pov.GetMonsters(ViewFieldPosition.F))
-				{
-					if (monster != null)
-						monster.Draw(location.Direction, ViewFieldPosition.F);
-				}
-
-
-				#endregion
-
-				#region C 
-				block = pov.Blocks[2];
-				if (block.Pit != null)
-				{
-					OverlayTileset.Draw(4, new Point(64, 112));
-				}
-				else if (block.FloorPlate != null && !block.FloorPlate.Invisible)
-				{
-					OverlayTileset.Draw(11, new Point(64, 114));
-				}
-				else if (block.Stair != null)
-				{
-					int id = block.Stair.Type == StairType.Up ? 21 : 34;
-					WallTileset.Draw(id, new Point(32, 54));
-					WallTileset.Draw(id + 4, new Point(128, 56));
-				}
-				else if (block.Door != null && block.Door.IsDrawable(location.Direction))
-				{
-					WallTileset.Draw(30, new Point(32, 54));
-					block.Door.Draw(new Point(32, 54), 3, location.Direction);
-				}
-				else if (block.IsWall)
-				{
-					WallTileset.Draw(3 + swap, new Point(32, 54));
-					WallTileset.Draw(7 + swap, new Point(128, 56));
-				}
-
-				// Items on ground
-				list = block.GetGroundItems(location.Direction);
-				if (list[2].Count > 0)
-				{
-					foreach (Item item in list[2])
-						ItemsTileset.Draw(item.GroundTileID + 3, new Point(52, 116));
-				}
-
-				if (list[3].Count > 0)
-				{
-					foreach (Item item in list[3])
-						ItemsTileset.Draw(item.GroundTileID + 3, new Point(104, 116));
-				}
-
-				// Monsters
-				foreach (Monster monster in pov.GetMonsters(ViewFieldPosition.C))
-				{
-					if (monster != null)
-						monster.Draw(location.Direction, ViewFieldPosition.C);
-				}
-
-				//
-				// Flying items
-				flyings = GetFlyingItems(block.Location, location.Direction);
-
-				// Left
-				if (flyings[2].Count > 0)
-				{
-					Point pos = new Point(52, 100);
-					foreach (FlyingItem fi in flyings[2])
-						ItemsTileset.Draw(fi.Item.MoveAwayTileID + 3, pos);
-
-				}
-
-				// Right
-				if (flyings[3].Count > 0)
-				{
-					Point pos = new Point(104, 100);
-					foreach (FlyingItem fi in flyings[3])
-						ItemsTileset.Draw(fi.Item.MoveAwayTileID + 3, pos);
-
-				}
-
-				// Middle
-				if (flyings[4].Count > 0)
-				{
-					Point pos = new Point(78, 100);
-					foreach (FlyingItem fi in flyings[4])
-						ItemsTileset.Draw(fi.Item.MoveAwayTileID + 3, pos);
-
-				}
-
-
-				#endregion
-
-				#region E 
-				block = pov.Blocks[4];
-				if (block.Pit != null)
-				{
-					OverlayTileset.Draw(4, new Point(224, 112));
-				}
-				else if (block.FloorPlate != null && !block.FloorPlate.Invisible)
-				{
-					OverlayTileset.Draw(11, new Point(260, 114));
-				}
-				else if (block.Stair != null)
-				{
-					int id = block.Stair.Type == StairType.Up ? 21 : 34;
-					WallTileset.Draw(id, new Point(224, 54));
-					WallTileset.Draw(id + 4, new Point(208, 56), true, false);
-				}
-				else if (block.Door != null && block.Door.IsDrawable(location.Direction))
-				{
-					WallTileset.Draw(30, new Point(224, 54));
-					block.Door.Draw(new Point(224, 54), 3, location.Direction);
-				}
-				else if (block.IsWall)
-				{
-					WallTileset.Draw(3 + swap, new Point(224, 54));
-					WallTileset.Draw(7 + swap, new Point(208, 56), true, false);
-				}
-
-				// Monsters
-				foreach (Monster monster in pov.GetMonsters(ViewFieldPosition.E))
-				{
-					if (monster != null)
-						monster.Draw(location.Direction, ViewFieldPosition.E);
-				}
-
-		
-				// Items on ground
-				list = block.GetGroundItems(location.Direction);
-				if (list[2].Count > 0)
-				{
-					foreach (Item item in list[2])
-						ItemsTileset.Draw(item.GroundTileID + 3, new Point(240, 116));
-				}
-
-				if (list[3].Count > 0)
-				{
-					foreach (Item item in list[3])
-						ItemsTileset.Draw(item.GroundTileID + 3, new Point(286, 116));
-				}
-
-
-				//
-				// Flying items
-				flyings = GetFlyingItems(block.Location, location.Direction);
-
-				// Left
-				if (flyings[2].Count > 0)
-				{
-					Point pos = new Point(240, 100);
-					foreach (FlyingItem fi in flyings[2])
-						ItemsTileset.Draw(fi.Item.MoveAwayTileID + 3, pos);
-
-				}
-
-				// Right
-				if (flyings[3].Count > 0)
-				{
-					Point pos = new Point(286, 100);
-					foreach (FlyingItem fi in flyings[3])
-						ItemsTileset.Draw(fi.Item.MoveAwayTileID + 3, pos);
-
-				}
-
-				// Middle
-				if (flyings[4].Count > 0)
-				{
-					Point pos = new Point(260, 100);
-					foreach (FlyingItem fi in flyings[4])
-						ItemsTileset.Draw(fi.Item.MoveAwayTileID + 3, pos);
-
-				}
-
-
-				#endregion
-
-				#region  D 
- 				block = pov.Blocks[3];
-				if (block.Pit != null)
-				{
-					OverlayTileset.Draw(4, new Point(144, 112));
-				}
-				else if (block.FloorPlate != null && !block.FloorPlate.Invisible)
-				{
-					OverlayTileset.Draw(11, new Point(158, 114));
-				}
-				else if (block.Stair != null)
-				{
-					int id = block.Stair.Type == StairType.Up ? 21 : 34;
-					WallTileset.Draw(id, new Point(128, 54));
-				}
-				else if (block.Door != null && block.Door.IsDrawable(location.Direction))
-				{
-					WallTileset.Draw(30, new Point(128, 54));
-					block.Door.Draw(new Point(128, 54), 3, location.Direction);
-				}
-				else if (block.IsWall)
-					WallTileset.Draw(3 + swap, new Point(128, 54));
-
-				//
-				// Items on ground
-				list = block.GetGroundItems(location.Direction);
-				if (list[2].Count > 0)
-				{
-					foreach (Item item in list[2])
-						ItemsTileset.Draw(item.GroundTileID + 3, new Point(150, 116));
-				}
-
-				if (list[3].Count > 0)
-				{
-					foreach (Item item in list[3])
-						ItemsTileset.Draw(item.GroundTileID + 3, new Point(190, 116));
-				}
-
-				//
-				// Monsters
-				foreach (Monster monster in pov.GetMonsters(ViewFieldPosition.D))
-				{
-					if (monster != null)
-						monster.Draw(location.Direction, ViewFieldPosition.D);
-				}
-
-				//
-				// Flying items
-				flyings = GetFlyingItems(block.Location, location.Direction);
-
-				// Left
-				if (flyings[2].Count > 0)
-				{
-					Point pos = new Point(150, 100);
-					foreach (FlyingItem fi in flyings[2])
-						ItemsTileset.Draw(fi.Item.MoveAwayTileID + 3, pos);
-
-				}
-
-				// Right
-				if (flyings[3].Count > 0)
-				{
-					Point pos = new Point(190, 100);
-					foreach (FlyingItem fi in flyings[3])
-						ItemsTileset.Draw(fi.Item.MoveAwayTileID + 3, pos);
-
-				}
-
-				// Middle
-				if (flyings[4].Count > 0)
-				{
-					Point pos = new Point(170, 100);
-					foreach (FlyingItem fi in flyings[4])
-						ItemsTileset.Draw(fi.Item.MoveAwayTileID + 3, pos);
-
-				}
-
-
-
-				#endregion
-
-
-				#endregion
-
-
-				#region row -2
-
-				#region H 
-				block = pov.Blocks[7];
-				if (block.Stair != null)
-				{
-					WallTileset.Draw(24, new Point(0, 40));
-				}
-				else if (block.IsWall)
-					WallTileset.Draw(6 + swap, new Point(0, 40));
-				#endregion
-
-				#region L 
-				// L
-				block = pov.Blocks[11];
-				if (block.Stair != null)
-				{
-					WallTileset.Draw(24, new Point(320, 40), true, false);
-
-				}
-				else if (block.IsWall)
-					WallTileset.Draw(6 + swap, new Point(320, 40), true, false);
-				#endregion
-
-				#region I 
-				block = pov.Blocks[8];
-
-
-				if (block.Pit != null)
-				{
-					OverlayTileset.Draw(3, new Point(10, 130));
-					OverlayTileset.Draw(3, new Point(62, 130), true, false);
-				}
-				else if (block.FloorPlate != null && !block.FloorPlate.Invisible)
-				{
-					OverlayTileset.Draw(10, new Point(20, 136));
-					OverlayTileset.Draw(10, new Point(50, 136), true, false);
-				}
-				else if (block.Stair != null)
-				{
-					int id = block.Stair.Type == StairType.Up ? 20 : 33;
-					WallTileset.Draw(id, new Point(-64, 40));
-					WallTileset.Draw(id + 4, new Point(96, 40));
-				}
-				else if (block.Door != null && block.Door.IsDrawable(location.Direction))
-				{
-					block.Door.Draw(new Point(-32, 40), 2, location.Direction);
-				}
-				else if (block.IsWall)
-				{
-					WallTileset.Draw(2 + swap, new Point(-64, 40));
-					WallTileset.Draw(6 + swap, new Point(96, 40));
-				}
-
-
-				//
-				// Items on ground
-				list = block.GetGroundItems(location.Direction);
-				if (list[0].Count > 0)
-				{
-					foreach (Item item in list[0])
-						ItemsTileset.Draw(item.GroundTileID + 3, new Point(30, 128));
-				}
-
-				if (list[1].Count > 0)
-				{
-					foreach (Item item in list[1])
-						ItemsTileset.Draw(item.GroundTileID + 3, new Point(90, 128));
-				}
-
-				//
-				// Monsters
-				foreach (Monster monster in pov.GetMonsters(ViewFieldPosition.I))
-				{
-					if (monster != null)
-						monster.Draw(location.Direction, ViewFieldPosition.I);
-				}
-
-		
-				//
-				// Items on ground
-				if (list[2].Count > 0)
-				{
-					foreach (Item item in list[2])
-						ItemsTileset.Draw(item.GroundTileID + 2, new Point(10, 146));
-				}
-
-				if (list[3].Count > 0)
-				{
-					foreach (Item item in list[3])
-						ItemsTileset.Draw(item.GroundTileID + 2, new Point(76, 146));
-				}
-
-
-				//
-				// Flying items
-				flyings = GetFlyingItems(block.Location, location.Direction);
-
-				// Left
-				if (flyings[0].Count > 0 || flyings[2].Count > 0)
-				{
-					Point pos = new Point(30, 100);
-					foreach (FlyingItem fi in flyings[0])
-						ItemsTileset.Draw(fi.Item.MoveAwayTileID + 2, pos);
-
-					pos = new Point(90, 100);
-					foreach (FlyingItem fi in flyings[2])
-						ItemsTileset.Draw(fi.Item.MoveAwayTileID + 2, pos);
-
-				}
-
-				// Right
-				if (flyings[1].Count > 0 || flyings[3].Count > 0)
-				{
-					Point pos = new Point(76, 100);
-					foreach (FlyingItem fi in flyings[1])
-						ItemsTileset.Draw(fi.Item.MoveAwayTileID + 2, pos);
-
-					pos = new Point(10, 100);
-					foreach (FlyingItem fi in flyings[3])
-						ItemsTileset.Draw(fi.Item.MoveAwayTileID + 2, pos);
-
-				}
-
-				// Middle
-				if (flyings[4].Count > 0)
-				{
-					Point pos = new Point(58, 100);
-					foreach (FlyingItem fi in flyings[4])
-						ItemsTileset.Draw(fi.Item.MoveAwayTileID + 2, pos);
-
-				}
-
-
-
-				#endregion
-
-				#region K 
-				block = pov.Blocks[10];
-
-				//
-				// Items on ground
-				list = block.GetGroundItems(location.Direction);
-				if (list[0].Count > 0)
-				{
-					foreach (Item item in list[0])
-						ItemsTileset.Draw(item.GroundTileID + 3, new Point(250, 128));
-				}
-
-				if (list[1].Count > 0)
-				{
-					foreach (Item item in list[1])
-						ItemsTileset.Draw(item.GroundTileID + 3, new Point(300, 128));
-				}
-
-
-				if (block.Pit != null)
-				{
-					OverlayTileset.Draw(3, new Point(242, 130));
-					OverlayTileset.Draw(3, new Point(294, 130), true, false);
-				}
-				else if (block.FloorPlate != null && !block.FloorPlate.Invisible)
-				{
-					OverlayTileset.Draw(10, new Point(280, 136));
-					OverlayTileset.Draw(10, new Point(310, 136), true, false);
-				}
-				else if (block.Stair != null)
-				{
-					int id = block.Stair.Type == StairType.Up ? 20 : 33;
-					WallTileset.Draw(id, GetWallPosition(ViewFieldPosition.K, CardinalPoint.South));
-					WallTileset.Draw(id + 4, GetWallPosition(ViewFieldPosition.K, CardinalPoint.West), true, false);
-				}
-				else if (block.Door != null && block.Door.IsDrawable(location.Direction))
-				{
-					block.Door.Draw(new Point(204, 40), 2, location.Direction);
-				}
-				else if (block.IsWall)
-				{
-					//WallTileset.Draw(2 + swap, new Point(256, 40));
-					//WallTileset.Draw(6 + swap, new Point(224, 40), true, false);
-					WallTileset.Draw(2 + swap, GetWallPosition(ViewFieldPosition.K, CardinalPoint.South));
-					WallTileset.Draw(6 + swap, GetWallPosition(ViewFieldPosition.K, CardinalPoint.West), true, false);
-				}
-
-
-				// Monsters
-				foreach (Monster monster in pov.GetMonsters(ViewFieldPosition.K))
-				{
-					if (monster != null)
-						monster.Draw(location.Direction, ViewFieldPosition.K);
-				}
-
-
-				//
-				// Items on ground
-				if (list[2].Count > 0)
-				{
-					foreach (Item item in list[2])
-						ItemsTileset.Draw(item.GroundTileID + 2, new Point(266, 146));
-				}
-
-				if (list[3].Count > 0)
-				{
-					foreach (Item item in list[3])
-						ItemsTileset.Draw(item.GroundTileID + 2, new Point(320, 146));
-				}
-
-
-				// Flying items
-				flyings = GetFlyingItems(block.Location, location.Direction);
-
-				// Left
-				if (flyings[0].Count > 0 || flyings[2].Count > 0)
-				{
-					Point pos = new Point(250, 100);
-					foreach (FlyingItem fi in flyings[0])
-						ItemsTileset.Draw(fi.Item.MoveAwayTileID + 2, pos);
-
-					pos = new Point(300, 100);
-					foreach (FlyingItem fi in flyings[2])
-						ItemsTileset.Draw(fi.Item.MoveAwayTileID + 2, pos);
-
-				}
-
-				// Right
-				if (flyings[1].Count > 0 || flyings[3].Count > 0)
-				{
-					Point pos = new Point(260, 100);
-					foreach (FlyingItem fi in flyings[1])
-						ItemsTileset.Draw(fi.Item.MoveAwayTileID + 2, pos);
-
-					pos = new Point(320, 100);
-					foreach (FlyingItem fi in flyings[3])
-						ItemsTileset.Draw(fi.Item.MoveAwayTileID + 2, pos);
-
-				}
-
-				// Middle
-				if (flyings[4].Count > 0)
-				{
-					Point pos = new Point(274, 100);
-					foreach (FlyingItem fi in flyings[4])
-						ItemsTileset.Draw(fi.Item.MoveAwayTileID + 2, pos);
-
-				}
-
-
-
-				#endregion
-
-				#region J 
-				block = pov.Blocks[9];
-
-				//
-				// Items on ground
-				list = block.GetGroundItems(location.Direction);
-				if (list[0].Count > 0)
-				{
-					foreach (Item item in list[0])
-						ItemsTileset.Draw(item.GroundTileID + 3, new Point(140, 128));
-				}
-
-				if (list[1].Count > 0)
-				{
-					foreach (Item item in list[1])
-						ItemsTileset.Draw(item.GroundTileID + 3, new Point(196, 128));
-				}
-
-
-				if (block.Pit != null)
-				{
-					OverlayTileset.Draw(3, new Point(128, 130));
-					OverlayTileset.Draw(3, new Point(174, 130), true, false);
-				}
-				else if (block.FloorPlate != null && !block.FloorPlate.Invisible)
-				{
-					OverlayTileset.Draw(10, new Point(142, 136));
-					OverlayTileset.Draw(10, new Point(174, 136), true, false);
-				}
-				else if (block.Stair != null)
-				{
-					int id = block.Stair.Type == StairType.Up ? 20 : 33;
-					WallTileset.Draw(id, GetWallPosition(ViewFieldPosition.J, CardinalPoint.South));
-				}
-				else if (block.Door != null && block.Door.IsDrawable(location.Direction))
-				{
-					WallTileset.Draw(29, GetWallPosition(ViewFieldPosition.J, CardinalPoint.South));
-					block.Door.Draw(GetWallPosition(ViewFieldPosition.J, CardinalPoint.South), 2, location.Direction);
-				}
-				else if (block.IsWall)
-					//WallTileset.Draw(2 + swap, new Point(96, 40));
-					WallTileset.Draw(2 + swap, GetWallPosition(ViewFieldPosition.J, CardinalPoint.South));
-
-				//
-				// Monsters
-				foreach (Monster monster in pov.GetMonsters(ViewFieldPosition.J))
-				{
-					if (monster != null)
-						monster.Draw(location.Direction, ViewFieldPosition.J);
-				}
-
-				//
-				// Items on ground
-				if (list[2].Count > 0)
-				{
-					foreach (Item item in list[2])
-						ItemsTileset.Draw(item.GroundTileID + 2, new Point(132, 146));
-				}
-
-				if (list[3].Count > 0)
-				{
-					foreach (Item item in list[3])
-						ItemsTileset.Draw(item.GroundTileID + 2, new Point(204, 146));
-				}
-
-
-				//
-				// Flying items
-				flyings = GetFlyingItems(block.Location, location.Direction);
-
-				// Left
-				if (flyings[0].Count > 0 || flyings[2].Count > 0)
-				{
-					Point pos = new Point(140, 100);
-					foreach (FlyingItem fi in flyings[0])
-						ItemsTileset.Draw(fi.Item.MoveAwayTileID + 2, pos);
-
-					pos = new Point(132, 100);
-					foreach (FlyingItem fi in flyings[2])
-						ItemsTileset.Draw(fi.Item.MoveAwayTileID + 2, pos);
-
-				}
-
-				// Right
-				if (flyings[1].Count > 0 || flyings[3].Count > 0)
-				{
-					Point pos = new Point(196, 100);
-					foreach (FlyingItem fi in flyings[1])
-						ItemsTileset.Draw(fi.Item.MoveAwayTileID + 2, pos);
-
-					pos = new Point(204, 100);
-					foreach (FlyingItem fi in flyings[3])
-						ItemsTileset.Draw(fi.Item.MoveAwayTileID + 2, pos);
-
-				}
-
-				// Middle
-				if (flyings[4].Count > 0)
-				{
-					Point pos = new Point(168, 100);
-					foreach (FlyingItem fi in flyings[4])
-						ItemsTileset.Draw(fi.Item.MoveAwayTileID + 2, pos);
-
-				}
-
-
-				#endregion
-
-				#endregion
-
-
-				#region row -1
-
-				#region M 
-				block = pov.Blocks[12];
-
-				// Items on ground
-				list = block.GetGroundItems(location.Direction);
-				if (list[1].Count > 0)
-				{
-					foreach (Item item in list[1])
-						ItemsTileset.Draw(item.GroundTileID + 1, new Point(50, 168));
-				}
-
-
-				if (block.Pit != null)
-				{
-					OverlayTileset.Draw(2, new Point(0, 162), true, false);
-				}
-				else if (block.Stair != null)
-				{
-					int id = block.Stair.Type == StairType.Up ? 19 : 32;
-					//	WallTileset.Draw(id, new Point(-208, 14));
-					//	WallTileset.Draw(id + 4, new Point(48, 14));
-					WallTileset.Draw(id, GetWallPosition(ViewFieldPosition.M, CardinalPoint.South));
-					WallTileset.Draw(id + 4, GetWallPosition(ViewFieldPosition.M, CardinalPoint.East));
-				}
-				else if (block.Door != null && block.Door.IsDrawable(location.Direction))
-				{
-					block.Door.Draw(new Point(-152, 14), 1, location.Direction);
-				}
-				else if (block.FloorPlate != null && !block.FloorPlate.Invisible)
-				{
-					OverlayTileset.Draw(9, new Point(0, 172), true, false);
-				}
-				else if (block.IsWall)
-				{
-					//WallTileset.Draw(1 + swap, new Point(-208, 14));
-					//WallTileset.Draw(5 + swap, new Point(48, 14));
-					WallTileset.Draw(1 + swap, GetWallPosition(ViewFieldPosition.M, CardinalPoint.South));
-					WallTileset.Draw(5 + swap, GetWallPosition(ViewFieldPosition.M, CardinalPoint.East));
-				}
-
-				//
-				// Monsters
-				foreach (Monster monster in pov.GetMonsters(ViewFieldPosition.M))
-				{
-					if (monster != null)
-						monster.Draw(location.Direction, ViewFieldPosition.M);
-				}
-
-
-				// Items on ground
-				if (list[3].Count > 0)
-				{
-					foreach (Item item in list[3])
-						ItemsTileset.Draw(item.GroundTileID + 1, new Point(30, 196));
-				}
-
-
-				//
-				// Flying items
-				flyings = GetFlyingItems(block.Location, location.Direction);
-
-				// Right
-				if (flyings[1].Count > 0 || flyings[3].Count > 0)
-				{
-					Point pos = new Point(50, 100);
-					foreach (FlyingItem fi in flyings[1])
-						ItemsTileset.Draw(fi.Item.MoveAwayTileID + 1, pos);
-
-					pos = new Point(30, 100);
-					foreach (FlyingItem fi in flyings[3])
-						ItemsTileset.Draw(fi.Item.MoveAwayTileID + 1, pos);
-
-				}
-
-
-
-				#endregion
-
-				#region O 
-				block = pov.Blocks[14];
-
-				// Items on ground
-				list = block.GetGroundItems(location.Direction);
-				if (list[0].Count > 0)
-				{
-					foreach (Item item in list[0])
-						ItemsTileset.Draw(item.GroundTileID + 1, new Point(280, 168));
-				}
-
-		
-				if (block.Pit != null)
-				{
-					OverlayTileset.Draw(2, new Point(266, 162));
-				}
-				else if (block.Stair != null)
-				{
-					int id = block.Stair.Type == StairType.Up ? 19 : 32;
-					WallTileset.Draw(id, GetWallPosition(ViewFieldPosition.O, CardinalPoint.South));
-					WallTileset.Draw(id + 4, GetWallPosition(ViewFieldPosition.O, CardinalPoint.West), true, false);
-				}
-				else if (block.FloorPlate != null && !block.FloorPlate.Invisible)
-				{
-					OverlayTileset.Draw(9, new Point(304, 172));
-				}
-				else if (block.Door != null && block.Door.IsDrawable(location.Direction))
-				{
-					block.Door.Draw(new Point(248, 14), 1, location.Direction);
-				}
-				else if (block.IsWall)
-				{
-					//WallTileset.Draw(1 + swap, new Point(304, 14));
-					//WallTileset.Draw(5 + swap, new Point(256, 14), true, false);
-					WallTileset.Draw(1 + swap, GetWallPosition(ViewFieldPosition.O, CardinalPoint.South));
-					WallTileset.Draw(5 + swap, GetWallPosition(ViewFieldPosition.O, CardinalPoint.West), true, false);
-				}
-
-				//
-				// Monsters
-				foreach (Monster monster in pov.GetMonsters(ViewFieldPosition.O))
-				{
-					if (monster != null)
-						monster.Draw(location.Direction, ViewFieldPosition.O);
-				}
-
-
-				// Items on ground
-				if (list[2].Count > 0)
-				{
-					foreach (Item item in list[2])
-						ItemsTileset.Draw(item.GroundTileID + 1, new Point(298, 196));
-				}
-
-
-				//
-				// Flying items
-				flyings = GetFlyingItems(block.Location, location.Direction);
-
-				// Left
-				if (flyings[0].Count > 0 || flyings[2].Count > 0)
-				{
-					Point pos = new Point(280, 100);
-					foreach (FlyingItem fi in flyings[0])
-						ItemsTileset.Draw(fi.Item.MoveAwayTileID + 1, pos);
-
-					pos = new Point(298, 100);
-					foreach (FlyingItem fi in flyings[2])
-						ItemsTileset.Draw(fi.Item.MoveAwayTileID + 1, pos);
-
-				}
-
-				#endregion
-
-				#region N 
-				DrawBlock(pov.Blocks[13], location.Direction, ViewFieldPosition.N);
+			#region row -3
 /*
-				block = pov.Blocks[13];
+			#region A 
+			block = pov.Blocks[0];
+			if (block.Stair != null || block.IsWall)
+				WallTileset.Draw(7 + swap, new Point(0, 54));
 
-				//
-				// Items on ground
-				list = block.GetGroundItems(location.Direction);
-				if (list[0].Count > 0)
-				{
-					foreach (Item item in list[0])
-						ItemsTileset.Draw(item.GroundTileID + 1, new Point(116, 168));
-				}
-				if (list[1].Count > 0)
-				{
-					foreach (Item item in list[1])
-						ItemsTileset.Draw(item.GroundTileID + 1, new Point(214, 168));
-				}
+			#endregion
 
-				if (block.Pit != null)
-				{
-					OverlayTileset.Draw(2, new Point(90, 162));
-					OverlayTileset.Draw(2, new Point(174, 162), true, false);
-				}
-				else if (block.Stair != null)
-				{
-					int id = block.Stair.Type == StairType.Up ? 19 : 32;
-					WallTileset.Draw(id, GetWallPosition(ViewFieldPosition.N, CardinalPoint.South));
-				}
-				else if (block.Door != null && block.Door.IsDrawable(location.Direction))
-				{
-					WallTileset.Draw(28, GetWallPosition(ViewFieldPosition.N, CardinalPoint.South));
-					block.Door.Draw(GetWallPosition(ViewFieldPosition.N, CardinalPoint.South), 1, location.Direction);
-				}
-				else if (block.FloorPlate != null && !block.FloorPlate.Invisible)
-				{
-					OverlayTileset.Draw(9, new Point(124, 172));
-					OverlayTileset.Draw(9, new Point(172, 172), true, false);
-				}
-				else if (block.IsWall)
-				{
-					//WallTileset.Draw(1 + swap, new Point(48, 14));
-					WallTileset.Draw(1 + swap, GetWallPosition(ViewFieldPosition.N, CardinalPoint.South));
-				}
+			#region G 
+			block = pov.Blocks[6];
+			if (block.Stair != null || block.IsWall)
+				WallTileset.Draw(7 + swap, new Point(336, 54), true, false);
+			#endregion
 
-
-				//
-				// Monsters
-				foreach (Monster monster in pov.GetMonsters(ViewFieldPosition.N))
-				{
-					if (monster != null)
-						monster.Draw(location.Direction, ViewFieldPosition.N);
-				}
-
-
-				//
-				// Items on ground
-				if (list[2].Count > 0)
-				{
-					foreach (Item item in list[2])
-						ItemsTileset.Draw(item.GroundTileID + 1, new Point(106, 196));
-				}
-
-				if (list[3].Count > 0)
-				{
-					foreach (Item item in list[3])
-						ItemsTileset.Draw(item.GroundTileID + 1, new Point(234, 196));
-				}
-
-				//
-				// Flying items
-				flyings = GetFlyingItems(block.Location, location.Direction);
-
-				// Left
-				if (flyings[0].Count > 0 || flyings[2].Count > 0)
-				{
-					Point pos = new Point(116, 100);
-					foreach (FlyingItem fi in flyings[0])
-						ItemsTileset.Draw(fi.Item.MoveAwayTileID, pos);
-
-					pos = new Point(104, 100);
-					foreach (FlyingItem fi in flyings[2])
-						ItemsTileset.Draw(fi.Item.MoveAwayTileID, pos);
-		
-				}
-
-				// Right
-				if (flyings[1].Count > 0 || flyings[3].Count > 0)
-				{
-					Point pos = new Point(208, 100);
-					foreach (FlyingItem fi in flyings[1])
-						ItemsTileset.Draw(fi.Item.MoveAwayTileID, pos);
-
-					pos = new Point(220, 100);
-					foreach (FlyingItem fi in flyings[3])
-						ItemsTileset.Draw(fi.Item.MoveAwayTileID, pos);
-
-				}
-
-				// Middle
-				if (flyings[4].Count > 0)
-				{
-					Point pos = new Point(162, 100);
-					foreach (FlyingItem fi in flyings[4])
-						ItemsTileset.Draw(fi.Item.MoveAwayTileID, pos);
-
-				}
-
-
-				
-*/
-				#endregion
-
-				#endregion
-
-
-				#region row 0
-
-				#region P 
-				block = pov.Blocks[15];
-				if (block.Stair != null)
-				{
-					WallTileset.Draw(22, new Point(0, 0));
-				}
-				else if (block.IsWall)
-					WallTileset.Draw(4 + swap, new Point(0, 0));
-				#endregion
-
-				#region Current Team position
-				block = pov.Blocks[16];
-				
-				if (block.Pit != null)
-				{
-					OverlayTileset.Draw(1, new Point(32, 214));
-					OverlayTileset.Draw(1, new Point(174, 214), true, false);
-				}
-
-				// Ground items
-				list = block.GetGroundItems(location.Direction);
-				if (list[0].Count > 0)
-				{
-					foreach (Item item in list[0])
-					{
-						ItemsTileset.Draw(item.GroundTileID, new Point(86, 232));
-					}
-				}
-
-				if (list[1].Count > 0)
-				{
-					foreach (Item item in list[1])
-					{
-						ItemsTileset.Draw(item.GroundTileID, new Point(262, 232));
-					}
-				}
-
-				// Under a door 
-				if (block.Door != null)
-				{
-					// Get the walls left and right
-					MazeBlock left = pov.Blocks[15];
-					MazeBlock right = pov.Blocks[17];
-
-
-					if (!left.IsBlocking || !right.IsBlocking)
-					{
-						Tile tile = OverlayTileset.GetTile(0);
-						OverlayTileset.Draw(0, new Point(48 + 128 - tile.Size.Width * 2, 0));
-						OverlayTileset.Draw(0, new Point(48 + 128, 0), true, false);
-					}
-				}
-
-				#endregion
-
-				#region Q 
-				block = pov.Blocks[17];
-				if (block.Stair != null)
-				{
-					WallTileset.Draw(22, new Point(304, 0), true, false);
-				}
-				else if (block.IsWall)
-					WallTileset.Draw(4 + swap, new Point(304, 0), true, false);
-				#endregion
-
-				#endregion
+			#region B 
+			block = pov.Blocks[1];
+			if (block.Pit != null)
+			{
+				OverlayTileset.Draw(4, new Point(-16, 112));
 			}
+			else if (block.FloorPlate != null && !block.FloorPlate.Invisible)
+			{
+				OverlayTileset.Draw(11, new Point(-12, 114));
+			}
+			else if (block.Stair != null)
+			{
+				int id = block.Stair.Type == StairType.Up ? 21 : 34;
+				WallTileset.Draw(id, new Point(-64, 56));
+				WallTileset.Draw(id, new Point(32, 56));
+			}
+			else if (block.Door != null && block.Door.IsDrawable(location.Direction))
+			{
+				WallTileset.Draw(30, new Point(-64, 54));
+				block.Door.Draw(new Point(-64, 54), ViewFieldPosition.B, location.Direction);
+			}
+			else if (block.IsWall)
+			{
+				WallTileset.Draw(7 + swap, new Point(32, 56));
+				WallTileset.Draw(3 + swap, new Point(-64, 54));
+			}
+
+			// Items on ground
+			list = block.GetGroundItems(location.Direction);
+			if (list[3].Count > 0)
+			{
+				foreach (Item item in list[3])
+					ItemsTileset.Draw(item.GroundTileID + 3, new Point(12, 116));
+			}
+
+			// Monsters
+			foreach (Monster monster in pov.GetMonsters(ViewFieldPosition.B))
+			{
+				if (monster != null)
+					monster.Draw(location.Direction, ViewFieldPosition.B);
+			}
+
+			#endregion
+
+			#region F 
+			block = pov.Blocks[5];
+			if (block.Pit != null)
+			{
+				OverlayTileset.Draw(4, new Point(304, 112));
+			}
+			else if (block.FloorPlate != null && !block.FloorPlate.Invisible)
+			{
+				OverlayTileset.Draw(11, new Point(338, 114));
+			}
+			else if (block.Stair != null)
+			{
+				int id = block.Stair.Type == StairType.Up ? 21 : 34;
+				WallTileset.Draw(id, new Point(320, 54));
+				WallTileset.Draw(id + 4, new Point(304, 56), true, false);
+			}
+			else if (block.Door != null && block.Door.IsDrawable(location.Direction))
+			{
+				WallTileset.Draw(30, new Point(320, 54));
+				block.Door.Draw(new Point(320, 54), ViewFieldPosition.F, location.Direction);
+			}
+			else if (block.IsWall)
+			{
+				WallTileset.Draw(3 + swap, new Point(320, 54));
+				WallTileset.Draw(7 + swap, new Point(304, 56), true, false);
+			}
+
+			// Items on ground
+			list = block.GetGroundItems(location.Direction);
+			if (list[2].Count > 0)
+			{
+				foreach (Item item in list[2])
+					ItemsTileset.Draw(item.GroundTileID + 3, new Point(330, 116));
+			}
+
+			// Monsters
+			foreach (Monster monster in pov.GetMonsters(ViewFieldPosition.F))
+			{
+				if (monster != null)
+					monster.Draw(location.Direction, ViewFieldPosition.F);
+			}
+
+
+			#endregion
+
+			#region C 
+			block = pov.Blocks[2];
+			if (block.Pit != null)
+			{
+				OverlayTileset.Draw(4, new Point(64, 112));
+			}
+			else if (block.FloorPlate != null && !block.FloorPlate.Invisible)
+			{
+				OverlayTileset.Draw(11, new Point(64, 114));
+			}
+			else if (block.Stair != null)
+			{
+				int id = block.Stair.Type == StairType.Up ? 21 : 34;
+				WallTileset.Draw(id, new Point(32, 54));
+				WallTileset.Draw(id + 4, new Point(128, 56));
+			}
+			else if (block.Door != null && block.Door.IsDrawable(location.Direction))
+			{
+				WallTileset.Draw(30, new Point(32, 54));
+				block.Door.Draw(new Point(32, 54), ViewFieldPosition.C, location.Direction);
+			}
+			else if (block.IsWall)
+			{
+				WallTileset.Draw(3 + swap, new Point(32, 54));
+				WallTileset.Draw(7 + swap, new Point(128, 56));
+			}
+
+			// Items on ground
+			list = block.GetGroundItems(location.Direction);
+			if (list[2].Count > 0)
+			{
+				foreach (Item item in list[2])
+					ItemsTileset.Draw(item.GroundTileID + 3, new Point(52, 116));
+			}
+
+			if (list[3].Count > 0)
+			{
+				foreach (Item item in list[3])
+					ItemsTileset.Draw(item.GroundTileID + 3, new Point(104, 116));
+			}
+
+			// Monsters
+			foreach (Monster monster in pov.GetMonsters(ViewFieldPosition.C))
+			{
+				if (monster != null)
+					monster.Draw(location.Direction, ViewFieldPosition.C);
+			}
+
+			//
+			// Flying items
+			flyings = GetFlyingItems(block.Location, location.Direction);
+
+			// Left
+			if (flyings[2].Count > 0)
+			{
+				Point pos = new Point(52, 100);
+				foreach (FlyingItem fi in flyings[2])
+					ItemsTileset.Draw(fi.Item.MoveAwayTileID + 3, pos);
+
+			}
+
+			// Right
+			if (flyings[3].Count > 0)
+			{
+				Point pos = new Point(104, 100);
+				foreach (FlyingItem fi in flyings[3])
+					ItemsTileset.Draw(fi.Item.MoveAwayTileID + 3, pos);
+
+			}
+
+			// Middle
+			if (flyings[4].Count > 0)
+			{
+				Point pos = new Point(78, 100);
+				foreach (FlyingItem fi in flyings[4])
+					ItemsTileset.Draw(fi.Item.MoveAwayTileID + 3, pos);
+
+			}
+
+
+			#endregion
+
+			#region E 
+			block = pov.Blocks[4];
+			if (block.Pit != null)
+			{
+				OverlayTileset.Draw(4, new Point(224, 112));
+			}
+			else if (block.FloorPlate != null && !block.FloorPlate.Invisible)
+			{
+				OverlayTileset.Draw(11, new Point(260, 114));
+			}
+			else if (block.Stair != null)
+			{
+				int id = block.Stair.Type == StairType.Up ? 21 : 34;
+				WallTileset.Draw(id, new Point(224, 54));
+				WallTileset.Draw(id + 4, new Point(208, 56), true, false);
+			}
+			else if (block.Door != null && block.Door.IsDrawable(location.Direction))
+			{
+				WallTileset.Draw(30, new Point(224, 54));
+				block.Door.Draw(new Point(224, 54), ViewFieldPosition.E, location.Direction);
+			}
+			else if (block.IsWall)
+			{
+				WallTileset.Draw(3 + swap, new Point(224, 54));
+				WallTileset.Draw(7 + swap, new Point(208, 56), true, false);
+			}
+
+			// Monsters
+			foreach (Monster monster in pov.GetMonsters(ViewFieldPosition.E))
+			{
+				if (monster != null)
+					monster.Draw(location.Direction, ViewFieldPosition.E);
+			}
+
+	
+			// Items on ground
+			list = block.GetGroundItems(location.Direction);
+			if (list[2].Count > 0)
+			{
+				foreach (Item item in list[2])
+					ItemsTileset.Draw(item.GroundTileID + 3, new Point(240, 116));
+			}
+
+			if (list[3].Count > 0)
+			{
+				foreach (Item item in list[3])
+					ItemsTileset.Draw(item.GroundTileID + 3, new Point(286, 116));
+			}
+
+
+			//
+			// Flying items
+			flyings = GetFlyingItems(block.Location, location.Direction);
+
+			// Left
+			if (flyings[2].Count > 0)
+			{
+				Point pos = new Point(240, 100);
+				foreach (FlyingItem fi in flyings[2])
+					ItemsTileset.Draw(fi.Item.MoveAwayTileID + 3, pos);
+
+			}
+
+			// Right
+			if (flyings[3].Count > 0)
+			{
+				Point pos = new Point(286, 100);
+				foreach (FlyingItem fi in flyings[3])
+					ItemsTileset.Draw(fi.Item.MoveAwayTileID + 3, pos);
+
+			}
+
+			// Middle
+			if (flyings[4].Count > 0)
+			{
+				Point pos = new Point(260, 100);
+				foreach (FlyingItem fi in flyings[4])
+					ItemsTileset.Draw(fi.Item.MoveAwayTileID + 3, pos);
+
+			}
+
+
+			#endregion
+
+			#region  D 
+			block = pov.Blocks[3];
+			if (block.Pit != null)
+			{
+				OverlayTileset.Draw(4, new Point(144, 112));
+			}
+			else if (block.FloorPlate != null && !block.FloorPlate.Invisible)
+			{
+				OverlayTileset.Draw(11, new Point(158, 114));
+			}
+			else if (block.Stair != null)
+			{
+				int id = block.Stair.Type == StairType.Up ? 21 : 34;
+				WallTileset.Draw(id, new Point(128, 54));
+			}
+			else if (block.Door != null && block.Door.IsDrawable(location.Direction))
+			{
+				WallTileset.Draw(30, new Point(128, 54));
+				block.Door.Draw(new Point(128, 54), ViewFieldPosition.D, location.Direction);
+			}
+			else if (block.IsWall)
+				WallTileset.Draw(3 + swap, new Point(128, 54));
+
+			//
+			// Items on ground
+			list = block.GetGroundItems(location.Direction);
+			if (list[2].Count > 0)
+			{
+				foreach (Item item in list[2])
+					ItemsTileset.Draw(item.GroundTileID + 3, new Point(150, 116));
+			}
+
+			if (list[3].Count > 0)
+			{
+				foreach (Item item in list[3])
+					ItemsTileset.Draw(item.GroundTileID + 3, new Point(190, 116));
+			}
+
+			//
+			// Monsters
+			foreach (Monster monster in pov.GetMonsters(ViewFieldPosition.D))
+			{
+				if (monster != null)
+					monster.Draw(location.Direction, ViewFieldPosition.D);
+			}
+
+			//
+			// Flying items
+			flyings = GetFlyingItems(block.Location, location.Direction);
+
+			// Left
+			if (flyings[2].Count > 0)
+			{
+				Point pos = new Point(150, 100);
+				foreach (FlyingItem fi in flyings[2])
+					ItemsTileset.Draw(fi.Item.MoveAwayTileID + 3, pos);
+
+			}
+
+			// Right
+			if (flyings[3].Count > 0)
+			{
+				Point pos = new Point(190, 100);
+				foreach (FlyingItem fi in flyings[3])
+					ItemsTileset.Draw(fi.Item.MoveAwayTileID + 3, pos);
+
+			}
+
+			// Middle
+			if (flyings[4].Count > 0)
+			{
+				Point pos = new Point(170, 100);
+				foreach (FlyingItem fi in flyings[4])
+					ItemsTileset.Draw(fi.Item.MoveAwayTileID + 3, pos);
+
+			}
+
+
+
+			#endregion
+*/
+			#endregion
+			DrawBlock(pov, ViewFieldPosition.A, location.Direction);
+			DrawBlock(pov, ViewFieldPosition.G, location.Direction);
+			DrawBlock(pov, ViewFieldPosition.B, location.Direction);
+			DrawBlock(pov, ViewFieldPosition.F, location.Direction);
+			DrawBlock(pov, ViewFieldPosition.C, location.Direction);
+			DrawBlock(pov, ViewFieldPosition.E, location.Direction);
+			DrawBlock(pov, ViewFieldPosition.D, location.Direction);
+
+
+			#region row -2
+/*
+			#region H 
+			block = pov.Blocks[7];
+			if (block.Stair != null)
+			{
+				WallTileset.Draw(24, new Point(0, 40));
+			}
+			else if (block.IsWall)
+				WallTileset.Draw(6 + swap, new Point(0, 40));
+			#endregion
+
+			#region L 
+			// L
+			block = pov.Blocks[11];
+			if (block.Stair != null)
+			{
+				WallTileset.Draw(24, new Point(320, 40), true, false);
+
+			}
+			else if (block.IsWall)
+				WallTileset.Draw(6 + swap, new Point(320, 40), true, false);
+			#endregion
+
+			#region I 
+			block = pov.Blocks[8];
+
+
+			if (block.Pit != null)
+			{
+				OverlayTileset.Draw(3, new Point(10, 130));
+				OverlayTileset.Draw(3, new Point(62, 130), true, false);
+			}
+			else if (block.FloorPlate != null && !block.FloorPlate.Invisible)
+			{
+				OverlayTileset.Draw(10, new Point(20, 136));
+				OverlayTileset.Draw(10, new Point(50, 136), true, false);
+			}
+			else if (block.Stair != null)
+			{
+				int id = block.Stair.Type == StairType.Up ? 20 : 33;
+				WallTileset.Draw(id, new Point(-64, 40));
+				WallTileset.Draw(id + 4, new Point(96, 40));
+			}
+			else if (block.Door != null && block.Door.IsDrawable(location.Direction))
+			{
+				block.Door.Draw(new Point(-32, 40), ViewFieldPosition.I, location.Direction);
+			}
+			else if (block.IsWall)
+			{
+				WallTileset.Draw(2 + swap, new Point(-64, 40));
+				WallTileset.Draw(6 + swap, new Point(96, 40));
+			}
+
+
+			//
+			// Items on ground
+			list = block.GetGroundItems(location.Direction);
+			if (list[0].Count > 0)
+			{
+				foreach (Item item in list[0])
+					ItemsTileset.Draw(item.GroundTileID + 3, new Point(30, 128));
+			}
+
+			if (list[1].Count > 0)
+			{
+				foreach (Item item in list[1])
+					ItemsTileset.Draw(item.GroundTileID + 3, new Point(90, 128));
+			}
+
+			//
+			// Monsters
+			foreach (Monster monster in pov.GetMonsters(ViewFieldPosition.I))
+			{
+				if (monster != null)
+					monster.Draw(location.Direction, ViewFieldPosition.I);
+			}
+
+	
+			//
+			// Items on ground
+			if (list[2].Count > 0)
+			{
+				foreach (Item item in list[2])
+					ItemsTileset.Draw(item.GroundTileID + 2, new Point(10, 146));
+			}
+
+			if (list[3].Count > 0)
+			{
+				foreach (Item item in list[3])
+					ItemsTileset.Draw(item.GroundTileID + 2, new Point(76, 146));
+			}
+
+
+			//
+			// Flying items
+			flyings = GetFlyingItems(block.Location, location.Direction);
+
+			// Left
+			if (flyings[0].Count > 0 || flyings[2].Count > 0)
+			{
+				Point pos = new Point(30, 100);
+				foreach (FlyingItem fi in flyings[0])
+					ItemsTileset.Draw(fi.Item.MoveAwayTileID + 2, pos);
+
+				pos = new Point(90, 100);
+				foreach (FlyingItem fi in flyings[2])
+					ItemsTileset.Draw(fi.Item.MoveAwayTileID + 2, pos);
+
+			}
+
+			// Right
+			if (flyings[1].Count > 0 || flyings[3].Count > 0)
+			{
+				Point pos = new Point(76, 100);
+				foreach (FlyingItem fi in flyings[1])
+					ItemsTileset.Draw(fi.Item.MoveAwayTileID + 2, pos);
+
+				pos = new Point(10, 100);
+				foreach (FlyingItem fi in flyings[3])
+					ItemsTileset.Draw(fi.Item.MoveAwayTileID + 2, pos);
+
+			}
+
+			// Middle
+			if (flyings[4].Count > 0)
+			{
+				Point pos = new Point(58, 100);
+				foreach (FlyingItem fi in flyings[4])
+					ItemsTileset.Draw(fi.Item.MoveAwayTileID + 2, pos);
+
+			}
+
+
+
+			#endregion
+
+			#region K 
+			block = pov.Blocks[10];
+
+			//
+			// Items on ground
+			list = block.GetGroundItems(location.Direction);
+			if (list[0].Count > 0)
+			{
+				foreach (Item item in list[0])
+					ItemsTileset.Draw(item.GroundTileID + 3, new Point(250, 128));
+			}
+
+			if (list[1].Count > 0)
+			{
+				foreach (Item item in list[1])
+					ItemsTileset.Draw(item.GroundTileID + 3, new Point(300, 128));
+			}
+
+
+			if (block.Pit != null)
+			{
+				OverlayTileset.Draw(3, new Point(242, 130));
+				OverlayTileset.Draw(3, new Point(294, 130), true, false);
+			}
+			else if (block.FloorPlate != null && !block.FloorPlate.Invisible)
+			{
+				OverlayTileset.Draw(10, new Point(280, 136));
+				OverlayTileset.Draw(10, new Point(310, 136), true, false);
+			}
+			else if (block.Stair != null)
+			{
+				int id = block.Stair.Type == StairType.Up ? 20 : 33;
+				WallTileset.Draw(id, GetWallPosition(ViewFieldPosition.K, CardinalPoint.South));
+				WallTileset.Draw(id + 4, GetWallPosition(ViewFieldPosition.K, CardinalPoint.West), true, false);
+			}
+			else if (block.Door != null && block.Door.IsDrawable(location.Direction))
+			{
+				block.Door.Draw(new Point(204, 40), ViewFieldPosition.K, location.Direction);
+			}
+			else if (block.IsWall)
+			{
+				//WallTileset.Draw(2 + swap, new Point(256, 40));
+				//WallTileset.Draw(6 + swap, new Point(224, 40), true, false);
+				WallTileset.Draw(2 + swap, GetWallPosition(ViewFieldPosition.K, CardinalPoint.South));
+				WallTileset.Draw(6 + swap, GetWallPosition(ViewFieldPosition.K, CardinalPoint.West), true, false);
+			}
+
+
+			// Monsters
+			foreach (Monster monster in pov.GetMonsters(ViewFieldPosition.K))
+			{
+				if (monster != null)
+					monster.Draw(location.Direction, ViewFieldPosition.K);
+			}
+
+
+			//
+			// Items on ground
+			if (list[2].Count > 0)
+			{
+				foreach (Item item in list[2])
+					ItemsTileset.Draw(item.GroundTileID + 2, new Point(266, 146));
+			}
+
+			if (list[3].Count > 0)
+			{
+				foreach (Item item in list[3])
+					ItemsTileset.Draw(item.GroundTileID + 2, new Point(320, 146));
+			}
+
+
+			// Flying items
+			flyings = GetFlyingItems(block.Location, location.Direction);
+
+			// Left
+			if (flyings[0].Count > 0 || flyings[2].Count > 0)
+			{
+				Point pos = new Point(250, 100);
+				foreach (FlyingItem fi in flyings[0])
+					ItemsTileset.Draw(fi.Item.MoveAwayTileID + 2, pos);
+
+				pos = new Point(300, 100);
+				foreach (FlyingItem fi in flyings[2])
+					ItemsTileset.Draw(fi.Item.MoveAwayTileID + 2, pos);
+
+			}
+
+			// Right
+			if (flyings[1].Count > 0 || flyings[3].Count > 0)
+			{
+				Point pos = new Point(260, 100);
+				foreach (FlyingItem fi in flyings[1])
+					ItemsTileset.Draw(fi.Item.MoveAwayTileID + 2, pos);
+
+				pos = new Point(320, 100);
+				foreach (FlyingItem fi in flyings[3])
+					ItemsTileset.Draw(fi.Item.MoveAwayTileID + 2, pos);
+
+			}
+
+			// Middle
+			if (flyings[4].Count > 0)
+			{
+				Point pos = new Point(274, 100);
+				foreach (FlyingItem fi in flyings[4])
+					ItemsTileset.Draw(fi.Item.MoveAwayTileID + 2, pos);
+
+			}
+
+
+
+			#endregion
+
+			#region J 
+
+			block = pov.Blocks[9];
+
+			//
+			// Items on ground
+			list = block.GetGroundItems(location.Direction);
+			if (list[0].Count > 0)
+			{
+				foreach (Item item in list[0])
+					ItemsTileset.Draw(item.GroundTileID + 3, new Point(140, 128));
+			}
+
+			if (list[1].Count > 0)
+			{
+				foreach (Item item in list[1])
+					ItemsTileset.Draw(item.GroundTileID + 3, new Point(196, 128));
+			}
+
+
+			if (block.Pit != null)
+			{
+				OverlayTileset.Draw(3, new Point(128, 130));
+				OverlayTileset.Draw(3, new Point(174, 130), true, false);
+			}
+			else if (block.FloorPlate != null && !block.FloorPlate.Invisible)
+			{
+				OverlayTileset.Draw(10, new Point(142, 136));
+				OverlayTileset.Draw(10, new Point(174, 136), true, false);
+			}
+			else if (block.Stair != null)
+			{
+				int id = block.Stair.Type == StairType.Up ? 20 : 33;
+				WallTileset.Draw(id, GetWallPosition(ViewFieldPosition.J, CardinalPoint.South));
+			}
+			else if (block.Door != null && block.Door.IsDrawable(location.Direction))
+			{
+				WallTileset.Draw(29, GetWallPosition(ViewFieldPosition.J, CardinalPoint.South));
+				block.Door.Draw(GetWallPosition(ViewFieldPosition.J, CardinalPoint.South), 2, location.Direction);
+			}
+			else if (block.IsWall)
+				//WallTileset.Draw(2 + swap, new Point(96, 40));
+				WallTileset.Draw(2 + swap, GetWallPosition(ViewFieldPosition.J, CardinalPoint.South));
+
+			//
+			// Monsters
+			foreach (Monster monster in pov.GetMonsters(ViewFieldPosition.J))
+			{
+				if (monster != null)
+					monster.Draw(location.Direction, ViewFieldPosition.J);
+			}
+
+			//
+			// Items on ground
+			if (list[2].Count > 0)
+			{
+				foreach (Item item in list[2])
+					ItemsTileset.Draw(item.GroundTileID + 2, new Point(132, 146));
+			}
+
+			if (list[3].Count > 0)
+			{
+				foreach (Item item in list[3])
+					ItemsTileset.Draw(item.GroundTileID + 2, new Point(204, 146));
+			}
+
+
+			//
+			// Flying items
+			flyings = GetFlyingItems(block.Location, location.Direction);
+
+			// Left
+			if (flyings[0].Count > 0 || flyings[2].Count > 0)
+			{
+				Point pos = new Point(140, 100);
+				foreach (FlyingItem fi in flyings[0])
+					ItemsTileset.Draw(fi.Item.MoveAwayTileID + 2, pos);
+
+				pos = new Point(132, 100);
+				foreach (FlyingItem fi in flyings[2])
+					ItemsTileset.Draw(fi.Item.MoveAwayTileID + 2, pos);
+
+			}
+
+			// Right
+			if (flyings[1].Count > 0 || flyings[3].Count > 0)
+			{
+				Point pos = new Point(196, 100);
+				foreach (FlyingItem fi in flyings[1])
+					ItemsTileset.Draw(fi.Item.MoveAwayTileID + 2, pos);
+
+				pos = new Point(204, 100);
+				foreach (FlyingItem fi in flyings[3])
+					ItemsTileset.Draw(fi.Item.MoveAwayTileID + 2, pos);
+
+			}
+
+			// Middle
+			if (flyings[4].Count > 0)
+			{
+				Point pos = new Point(168, 100);
+				foreach (FlyingItem fi in flyings[4])
+					ItemsTileset.Draw(fi.Item.MoveAwayTileID + 2, pos);
+
+			}
+
+			#endregion
+
+*/
+			#endregion
+			DrawBlock(pov, ViewFieldPosition.H, location.Direction);
+			DrawBlock(pov, ViewFieldPosition.L, location.Direction);
+			DrawBlock(pov, ViewFieldPosition.I, location.Direction);
+			DrawBlock(pov, ViewFieldPosition.K, location.Direction);
+			DrawBlock(pov, ViewFieldPosition.J, location.Direction);
+
+
+
+			#region row -1
+/*
+			#region M 
+			block = pov.Blocks[12];
+
+			// Items on ground
+			list = block.GetGroundItems(location.Direction);
+			if (list[1].Count > 0)
+			{
+				foreach (Item item in list[1])
+					ItemsTileset.Draw(item.GroundTileID + 1, new Point(50, 168));
+			}
+
+
+			if (block.Pit != null)
+			{
+				OverlayTileset.Draw(2, new Point(0, 162), true, false);
+			}
+			else if (block.Stair != null)
+			{
+				int id = block.Stair.Type == StairType.Up ? 19 : 32;
+				//	WallTileset.Draw(id, new Point(-208, 14));
+				//	WallTileset.Draw(id + 4, new Point(48, 14));
+				WallTileset.Draw(id, GetWallPosition(ViewFieldPosition.M, CardinalPoint.South));
+				WallTileset.Draw(id + 4, GetWallPosition(ViewFieldPosition.M, CardinalPoint.East));
+			}
+			else if (block.Door != null && block.Door.IsDrawable(location.Direction))
+			{
+				block.Door.Draw(new Point(-152, 14), 1, location.Direction);
+			}
+			else if (block.FloorPlate != null && !block.FloorPlate.Invisible)
+			{
+				OverlayTileset.Draw(9, new Point(0, 172), true, false);
+			}
+			else if (block.IsWall)
+			{
+				//WallTileset.Draw(1 + swap, new Point(-208, 14));
+				//WallTileset.Draw(5 + swap, new Point(48, 14));
+				WallTileset.Draw(1 + swap, GetWallPosition(ViewFieldPosition.M, CardinalPoint.South));
+				WallTileset.Draw(5 + swap, GetWallPosition(ViewFieldPosition.M, CardinalPoint.East));
+			}
+
+			//
+			// Monsters
+			foreach (Monster monster in pov.GetMonsters(ViewFieldPosition.M))
+			{
+				if (monster != null)
+					monster.Draw(location.Direction, ViewFieldPosition.M);
+			}
+
+
+			// Items on ground
+			if (list[3].Count > 0)
+			{
+				foreach (Item item in list[3])
+					ItemsTileset.Draw(item.GroundTileID + 1, new Point(30, 196));
+			}
+
+
+			//
+			// Flying items
+			flyings = GetFlyingItems(block.Location, location.Direction);
+
+			// Right
+			if (flyings[1].Count > 0 || flyings[3].Count > 0)
+			{
+				Point pos = new Point(50, 100);
+				foreach (FlyingItem fi in flyings[1])
+					ItemsTileset.Draw(fi.Item.MoveAwayTileID + 1, pos);
+
+				pos = new Point(30, 100);
+				foreach (FlyingItem fi in flyings[3])
+					ItemsTileset.Draw(fi.Item.MoveAwayTileID + 1, pos);
+
+			}
+
+
+
+			#endregion
+
+			#region O 
+			block = pov.Blocks[14];
+
+			// Items on ground
+			list = block.GetGroundItems(location.Direction);
+			if (list[0].Count > 0)
+			{
+				foreach (Item item in list[0])
+					ItemsTileset.Draw(item.GroundTileID + 1, new Point(280, 168));
+			}
+
+	
+			if (block.Pit != null)
+			{
+				OverlayTileset.Draw(2, new Point(266, 162));
+			}
+			else if (block.Stair != null)
+			{
+				int id = block.Stair.Type == StairType.Up ? 19 : 32;
+				WallTileset.Draw(id, GetWallPosition(ViewFieldPosition.O, CardinalPoint.South));
+				WallTileset.Draw(id + 4, GetWallPosition(ViewFieldPosition.O, CardinalPoint.West), true, false);
+			}
+			else if (block.FloorPlate != null && !block.FloorPlate.Invisible)
+			{
+				OverlayTileset.Draw(9, new Point(304, 172));
+			}
+			else if (block.Door != null && block.Door.IsDrawable(location.Direction))
+			{
+				block.Door.Draw(new Point(248, 14), 1, location.Direction);
+			}
+			else if (block.IsWall)
+			{
+				//WallTileset.Draw(1 + swap, new Point(304, 14));
+				//WallTileset.Draw(5 + swap, new Point(256, 14), true, false);
+				WallTileset.Draw(1 + swap, GetWallPosition(ViewFieldPosition.O, CardinalPoint.South));
+				WallTileset.Draw(5 + swap, GetWallPosition(ViewFieldPosition.O, CardinalPoint.West), true, false);
+			}
+
+			//
+			// Monsters
+			foreach (Monster monster in pov.GetMonsters(ViewFieldPosition.O))
+			{
+				if (monster != null)
+					monster.Draw(location.Direction, ViewFieldPosition.O);
+			}
+
+
+			// Items on ground
+			if (list[2].Count > 0)
+			{
+				foreach (Item item in list[2])
+					ItemsTileset.Draw(item.GroundTileID + 1, new Point(298, 196));
+			}
+
+
+			//
+			// Flying items
+			flyings = GetFlyingItems(block.Location, location.Direction);
+
+			// Left
+			if (flyings[0].Count > 0 || flyings[2].Count > 0)
+			{
+				Point pos = new Point(280, 100);
+				foreach (FlyingItem fi in flyings[0])
+					ItemsTileset.Draw(fi.Item.MoveAwayTileID + 1, pos);
+
+				pos = new Point(298, 100);
+				foreach (FlyingItem fi in flyings[2])
+					ItemsTileset.Draw(fi.Item.MoveAwayTileID + 1, pos);
+
+			}
+
+			#endregion
+*/
+			#endregion
+			DrawBlock(pov, ViewFieldPosition.M, location.Direction);
+			DrawBlock(pov, ViewFieldPosition.O, location.Direction);
+			DrawBlock(pov, ViewFieldPosition.N, location.Direction);
+
+
+
+			#region row 0
+
+/*
+			#region P 
+			block = pov.Blocks[15];
+			if (block.Stair != null)
+			{
+				WallTileset.Draw(22, new Point(0, 0));
+			}
+			else if (block.IsWall)
+				WallTileset.Draw(4 + swap, new Point(0, 0));
+			#endregion
+
+			#region Current Team position
+			block = pov.Blocks[16];
+			
+			if (block.Pit != null)
+			{
+				OverlayTileset.Draw(1, new Point(32, 214));
+				OverlayTileset.Draw(1, new Point(174, 214), true, false);
+			}
+
+			// Ground items
+			list = block.GetGroundItems(location.Direction);
+			if (list[0].Count > 0)
+			{
+				foreach (Item item in list[0])
+				{
+					ItemsTileset.Draw(item.GroundTileID, new Point(86, 232));
+				}
+			}
+
+			if (list[1].Count > 0)
+			{
+				foreach (Item item in list[1])
+				{
+					ItemsTileset.Draw(item.GroundTileID, new Point(262, 232));
+				}
+			}
+
+			// Under a door 
+			if (block.Door != null)
+			{
+				// Get the walls left and right
+				MazeBlock left = pov.Blocks[15];
+				MazeBlock right = pov.Blocks[17];
+
+
+				if (!left.IsBlocking || !right.IsBlocking)
+				{
+					Tile tile = OverlayTileset.GetTile(0);
+					OverlayTileset.Draw(0, new Point(154, 0));
+				}
+			}
+
+			#endregion
+
+			#region Q 
+			block = pov.Blocks[17];
+			if (block.Stair != null)
+			{
+				WallTileset.Draw(22, new Point(304, 0), true, false);
+			}
+			else if (block.IsWall)
+				WallTileset.Draw(4 + swap, new Point(304, 0), true, false);
+			#endregion
+*/
+			#endregion
+			DrawBlock(pov, ViewFieldPosition.P, location.Direction);
+			DrawBlock(pov, ViewFieldPosition.Team, location.Direction);
+			DrawBlock(pov, ViewFieldPosition.Q, location.Direction);
 
 
 		}
@@ -1623,121 +1459,163 @@ namespace DungeonEye
 		/// <summary>
 		/// Draws a block
 		/// </summary>
-		/// <param name="block">Block informations</param>
-		/// <param name="view">Looking direction of the team</param>
+		/// <param name="field">View field</param>
 		/// <param name="position">Position in the view filed</param>
-		void DrawBlock(MazeBlock block, CardinalPoint view, ViewFieldPosition position)
+		/// <param name="view">Looking direction of the team</param>
+		void DrawBlock(ViewField field, ViewFieldPosition position, CardinalPoint view)
 		{
-			if (block == null)
+			if (field == null)
 				return;
+
+			MazeBlock block = field.Blocks[(int)position];
+			Point point;
+			TileDrawing td = null;
+
+			// Drawing offset
+			int offset = 1;
+			switch (position)
+			{
+				case ViewFieldPosition.A:
+				case ViewFieldPosition.B:
+				case ViewFieldPosition.C:
+				case ViewFieldPosition.D:
+				case ViewFieldPosition.E:
+				case ViewFieldPosition.F:
+				case ViewFieldPosition.G:
+					offset = 3;
+				break;
+				case ViewFieldPosition.H:
+				case ViewFieldPosition.I:
+				case ViewFieldPosition.J:
+				case ViewFieldPosition.K:
+				case ViewFieldPosition.L:
+					offset = 2;
+				break;
+				case ViewFieldPosition.M:
+				case ViewFieldPosition.N:
+				case ViewFieldPosition.O:
+					offset = 1;
+				break;
+				case ViewFieldPosition.P:
+				case ViewFieldPosition.Team:
+				case ViewFieldPosition.Q:
+					offset = 0;
+				break;
+			}
+
 
 			//
 			// Items on ground
 			List<Item>[] list = block.GetGroundItems(view);
-			if (list[0].Count > 0)
+			for (int i = 0; i < 2; i++)
 			{
-				foreach (Item item in list[0])
-					//ItemsTileset.Draw(item.GroundTileID + 1, new Point(116, 168));
-					ItemsTileset.Draw(item.GroundTileID + 1, MazeDisplayCoordinates.GetGroundItem(position, GroundPosition.NorthWest));
+				if (list[i].Count == 0)
+					continue;
+
+				foreach (Item item in list[i])
+				{
+					point = Coordinates.GetGroundItem(position, (GroundPosition)i);
+					if (!point.IsEmpty)
+						ItemsTileset.Draw(item.GroundTileID + offset, point);
+				}
 			}
-			if (list[1].Count > 0)
-			{
-				foreach (Item item in list[1])
-					//ItemsTileset.Draw(item.GroundTileID + 1, new Point(214, 168));
-					ItemsTileset.Draw(item.GroundTileID + 1, MazeDisplayCoordinates.GetGroundItem(position, GroundPosition.NorthEast));
-			}
+
+
+
 
 			if (block.Pit != null)
 			{
-				OverlayTileset.Draw(2, new Point(90, 162));
+				td = Coordinates.GetPit(position);
+				if (td != null)
+					OverlayTileset.Draw(td.ID, td.Location, td.SwapX, td.SwapY);
 			}
 			else if (block.Stair != null)
 			{
-				int id = block.Stair.Type == StairType.Up ? 19 : 32;
-				WallTileset.Draw(id, GetWallPosition(position, CardinalPoint.South));
+				// Upstair or downstair ?
+				int delta = block.Stair.Type == StairType.Up ? 0 : 13;
+				foreach(TileDrawing tmp in Coordinates.GetStairs(position))
+					WallTileset.Draw(tmp.ID + delta, tmp.Location, tmp.SwapX, tmp.SwapY);
 			}
-			else if (block.Door != null && block.Door.IsDrawable(view))
+			else if (block.Door != null)
 			{
-				WallTileset.Draw(28, GetWallPosition(position, CardinalPoint.South));
-				block.Door.Draw(GetWallPosition(position, CardinalPoint.South), 1, view);
+				if ((field.Maze.IsDoorNorthSouth(block.Location) && (view == CardinalPoint.North || view == CardinalPoint.South)) ||
+					(!field.Maze.IsDoorNorthSouth(block.Location) && (view == CardinalPoint.East || view == CardinalPoint.West)))
+				{
+					td = Coordinates.GetDoor(position);
+					if (td != null)
+					{
+						// Under the door
+						if (position == ViewFieldPosition.Team)
+						{
+						}
+						else
+						{
+							WallTileset.Draw(td.ID, td.Location, td.SwapX, td.SwapY);
+							block.Door.Draw(td.Location, position, view);
+						}
+					}
+				}
 			}
 			else if (block.FloorPlate != null && !block.FloorPlate.Invisible)
 			{
-				OverlayTileset.Draw(9, new Point(124, 172));
-				OverlayTileset.Draw(9, new Point(172, 172), true, false);
+				td = Coordinates.GetFloorPlate(position);
+				if (td != null)
+					OverlayTileset.Draw(td.ID, td.Location, td.SwapX, td.SwapY);
 			}
 			else if (block.IsWall)
 			{
-				//WallTileset.Draw(1 + swap, new Point(48, 14));
-				WallTileset.Draw(1/* + swap*/, GetWallPosition(position, CardinalPoint.South));
+				foreach (TileDrawing tmp in Coordinates.GetWalls(position))
+					WallTileset.Draw(tmp.ID, tmp.Location, tmp.SwapX, tmp.SwapY);
 			}
-
-/*
+			
+			
+			
 			//
 			// Monsters
-			foreach (Monster monster in pov.GetMonsters(ViewFieldPosition.N))
+			foreach (Monster monster in field.GetMonsters(position))
 			{
 				if (monster != null)
-					monster.Draw(location.Direction, ViewFieldPosition.N);
+					monster.Draw(view, position);
 			}
 
-*/
+
+
 			//
 			// Items on ground
-			if (list[2].Count > 0)
+			for (int i = 2; i < 4; i++)
 			{
-				foreach (Item item in list[2])
-					ItemsTileset.Draw(item.GroundTileID + 1, new Point(106, 196));
+				if (list[i].Count == 0)
+					continue;
+
+				foreach (Item item in list[i])
+				{
+					point = Coordinates.GetGroundItem(position, (GroundPosition)i);
+					if (!point.IsEmpty)
+						ItemsTileset.Draw(item.GroundTileID + offset, point);
+				}
 			}
 
-			if (list[3].Count > 0)
-			{
-				foreach (Item item in list[3])
-					ItemsTileset.Draw(item.GroundTileID + 1, new Point(234, 196));
-			}
 
 			//
 			// Flying items
 			List<FlyingItem>[] flyings = GetFlyingItems(block.Location, view);
-
-			// Left
-			if (flyings[0].Count > 0 || flyings[2].Count > 0)
+			foreach(GroundPosition pos in Enum.GetValues(typeof(GroundPosition)))
 			{
-				Point pos = new Point(116, 100);
-				foreach (FlyingItem fi in flyings[0])
-					ItemsTileset.Draw(fi.Item.MoveAwayTileID, pos);
+				if (Coordinates.GetFlyingItem(position, pos) == Point.Empty)
+					continue;
 
-				pos = new Point(104, 100);
-				foreach (FlyingItem fi in flyings[2])
-					ItemsTileset.Draw(fi.Item.MoveAwayTileID, pos);
+				// Swap the tile if throwing on the right side
+				bool swap = false;
+				if (pos == GroundPosition.NorthEast || pos == GroundPosition.SouthEast)
+					swap = true;
+
+				foreach (FlyingItem fi in flyings[(int)pos])
+					ItemsTileset.Draw(fi.Item.MoveAwayTileID, Coordinates.GetFlyingItem(position, pos), swap, false);
 
 			}
-
-			// Right
-			if (flyings[1].Count > 0 || flyings[3].Count > 0)
-			{
-				Point pos = new Point(208, 100);
-				foreach (FlyingItem fi in flyings[1])
-					ItemsTileset.Draw(fi.Item.MoveAwayTileID, pos);
-
-				pos = new Point(220, 100);
-				foreach (FlyingItem fi in flyings[3])
-					ItemsTileset.Draw(fi.Item.MoveAwayTileID, pos);
-
-			}
-
-			// Middle
-			if (flyings[4].Count > 0)
-			{
-				Point pos = new Point(162, 100);
-				foreach (FlyingItem fi in flyings[4])
-					ItemsTileset.Draw(fi.Item.MoveAwayTileID, pos);
-
-			}
-
-
 
 		}
+
 
 		/// <summary>
 		/// Draws the minimap
@@ -2320,6 +2198,12 @@ namespace DungeonEye
 		public byte ExperienceMultiplier;
 
 
+
+		/// <summary>
+		/// Maze display coordinates
+		/// </summary>
+		MazeDisplayCoordinates Coordinates;
+
 		#endregion
 
 	}
@@ -2333,11 +2217,11 @@ namespace DungeonEye
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="location"></param>
-		/// <param name="maze"></param>
+		/// <param name="maze">Maze</param>
+		/// <param name="location">Team's location</param>
 		public ViewField(Maze maze, DungeonLocation location)
 		{
-
+			Maze = maze;
 			Blocks = new MazeBlock[19];
 			Monsters = new Monster[19][];
 			for (int i = 0; i < Monsters.Length; i++)
@@ -2565,9 +2449,9 @@ namespace DungeonEye
 		}
 
 		/// <summary>
-		/// 
+		/// Returns a list of all monster
 		/// </summary>
-		/// <param name="pos"></param>
+		/// <param name="pos">Position in the view field</param>
 		/// <returns></returns>
 		public Monster[] GetMonsters(ViewFieldPosition pos)
 		{
@@ -2642,6 +2526,15 @@ namespace DungeonEye
 		}
 
 
+		/// <summary>
+		/// Current maze
+		/// </summary>
+		public Maze Maze
+		{
+			get;
+			private set;
+		}
+
 
 	}
 
@@ -2660,27 +2553,27 @@ namespace DungeonEye
 	/// </summary>
 	public enum ViewFieldPosition
 	{
-		A,
-		B,
-		C,
-		D,
-		E,
-		F,
-		G,
+		A = 0,
+		B = 1,
+		C = 2,
+		D = 3,
+		E = 4,
+		F = 5,
+		G = 6,
 
-		H,
-		I,
-		J,
-		K,
-		L,
+		H = 7,
+		I = 8,
+		J = 9,
+		K = 10,
+		L = 11,
 	
-		M,
-		N,
-		O,
+		M = 12,
+		N = 13,
+		O = 14,
 
-		P,
-		Team,
-		Q
+		P = 15,
+		Team = 16,
+		Q = 17
 	}
 
 
