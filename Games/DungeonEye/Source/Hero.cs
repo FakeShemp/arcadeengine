@@ -125,6 +125,10 @@ namespace DungeonEye
 		/// <returns>True if enough space, or false if full</returns>
 		public bool AddToInventory(Item item)
 		{
+			if (item == null)
+				return false;
+
+
 			// Arrow
 			if (item.Type == ItemType.Ammo)
 			{

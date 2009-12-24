@@ -34,13 +34,13 @@ namespace DungeonEye
 	/// <summary>
 	/// Block drawing informations
 	/// </summary>
-	public class MazeDisplayCoordinates
+	public static class MazeDisplayCoordinates
 	{
 
 		/// <summary>
 		/// Default constructor 
 		/// </summary>
-		public MazeDisplayCoordinates()
+		static MazeDisplayCoordinates()
 		{
 			int viewcount = Enum.GetValues(typeof(ViewFieldPosition)).Length;
 
@@ -67,7 +67,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="position">Block position in the view field</param>
 		/// <returns></returns>
-		public List<TileDrawing> GetWalls(ViewFieldPosition position)
+		static public List<TileDrawing> GetWalls(ViewFieldPosition position)
 		{
 			return Walls[(int)position];
 		}
@@ -79,7 +79,7 @@ namespace DungeonEye
 		/// <param name="view">Block position in the view field</param>
 		/// <param name="ground">ground position</param>
 		/// <returns></returns>
-		public Point GetGroundItem(ViewFieldPosition view, GroundPosition ground)
+		static public Point GetGroundItem(ViewFieldPosition view, GroundPosition ground)
 		{
 			if (ground == GroundPosition.Middle)
 				throw new ArgumentOutOfRangeException("ground", "No ground item in the middle of a block !");
@@ -94,7 +94,7 @@ namespace DungeonEye
 		/// <param name="view">Block position in the view field</param>
 		/// <param name="ground">ground position</param>
 		/// <returns></returns>
-		public Point GetFlyingItem(ViewFieldPosition view, GroundPosition ground)
+		static public Point GetFlyingItem(ViewFieldPosition view, GroundPosition ground)
 		{
 			return FlyingItems[(int)view, (int)ground];
 		}
@@ -106,7 +106,7 @@ namespace DungeonEye
 		/// <param name="view">Block position in the view field</param>
 		/// <param name="point">Wall side</param>
 		/// <returns></returns>
-		public TileDrawing GetDecoration(ViewFieldPosition view, CardinalPoint point)
+		static public TileDrawing GetDecoration(ViewFieldPosition view, CardinalPoint point)
 		{
 			if (point == CardinalPoint.North)
 				return null;
@@ -120,7 +120,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="view">Block position in the view field</param>
 		/// <returns></returns>
-		public List<TileDrawing> GetStairs(ViewFieldPosition view)
+		static public List<TileDrawing> GetStairs(ViewFieldPosition view)
 		{
 			return Stairs[(int)view];
 		}
@@ -131,7 +131,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="view">Block position in the view field</param>
 		/// <returns></returns>
-		public TileDrawing GetPit(ViewFieldPosition view)
+		static public TileDrawing GetPit(ViewFieldPosition view)
 		{
 			return Pits[(int)view];
 		}
@@ -142,7 +142,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="view">Block position in the view field</param>
 		/// <returns></returns>
-		public TileDrawing GetFloorPlate(ViewFieldPosition view)
+		static public TileDrawing GetFloorPlate(ViewFieldPosition view)
 		{
 			return FloorPlates[(int)view];
 		}
@@ -153,7 +153,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="view">Block position in the view field</param>
 		/// <returns></returns>
-		public TileDrawing GetDoor(ViewFieldPosition view)
+		static public TileDrawing GetDoor(ViewFieldPosition view)
 		{
 			return Doors[(int)view];
 		}
@@ -167,7 +167,7 @@ namespace DungeonEye
 		/// Loads the maze definition
 		/// </summary>
 		/// <returns></returns>
-		public bool Load()
+		static public bool Load()
 		{
 			
 			// Load file definition
@@ -286,7 +286,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="node"></param>
 		/// <returns></returns>
-		TileDrawing GetTileDrawing(XmlNode node)
+		static TileDrawing GetTileDrawing(XmlNode node)
 		{
 			if (node == null)
 				return null;
@@ -314,50 +314,61 @@ namespace DungeonEye
 		/// <summary>
 		/// Pits
 		/// </summary>
-		TileDrawing[] Pits;
+		static TileDrawing[] Pits;
 
 
 		/// <summary>
 		/// Floorplates
 		/// </summary>
-		TileDrawing[] FloorPlates;
+		static TileDrawing[] FloorPlates;
 
 
 		/// <summary>
 		/// Doors
 		/// </summary>
-		TileDrawing[] Doors;
+		static TileDrawing[] Doors;
 
 
 		/// <summary>
 		/// Walls
 		/// </summary>
-		List<TileDrawing>[] Walls;
+		static List<TileDrawing>[] Walls;
 
 
 		/// <summary>
 		/// Stairs
 		/// </summary>
-		List<TileDrawing>[] Stairs;
+		static List<TileDrawing>[] Stairs;
 
 
 		/// <summary>
 		/// Ground items
 		/// </summary>
-		Point[,] GroundItems;
+		static Point[,] GroundItems;
 
 
 		/// <summary>
 		/// Decorations
 		/// </summary>
-		TileDrawing[,] Decorations;
+		static TileDrawing[,] Decorations;
 
 
 		/// <summary>
 		/// Flying items
 		/// </summary>
-		Point[,] FlyingItems;
+		static Point[,] FlyingItems;
 
+
+		/// <summary>
+		/// Rectangle zone for alcoves
+		/// </summary>
+		static public Rectangle AlcoveZone
+		{
+			get
+			{
+				return new Rectangle(130, 64, 128, 44);
+			}
+		}
 		#endregion
 
 	}

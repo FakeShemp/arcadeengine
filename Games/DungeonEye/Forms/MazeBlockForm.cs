@@ -58,7 +58,7 @@ namespace DungeonEye.Forms
 
 			#region Ground items
 
-			Itemset = ResourceManager.CreateAsset<ItemSet>("");
+			Itemset = ResourceManager.CreateAsset<ItemSet>("Items");
 
 			NWBox.BeginUpdate();
 			NWBox.Items.Clear();
@@ -193,10 +193,10 @@ namespace DungeonEye.Forms
 
 			#endregion
 
-			AlcoveNorthButton.Checked = MazeBlock.Alcoves[(int)CardinalPoint.North];
-			AlcoveSouthButton.Checked = MazeBlock.Alcoves[(int)CardinalPoint.South];
-			AlcoveWestButton.Checked = MazeBlock.Alcoves[(int)CardinalPoint.West];
-			AlcoveEastButton.Checked = MazeBlock.Alcoves[(int)CardinalPoint.East];
+			AlcoveNorthButton.Checked = MazeBlock.HasAlcove(CardinalPoint.North);
+			AlcoveSouthButton.Checked = MazeBlock.HasAlcove(CardinalPoint.South);
+			AlcoveWestButton.Checked = MazeBlock.HasAlcove(CardinalPoint.West);
+			AlcoveEastButton.Checked = MazeBlock.HasAlcove(CardinalPoint.East);
 
 			#endregion
 
@@ -480,22 +480,23 @@ namespace DungeonEye.Forms
 
 		private void AlcoveNorthButton_CheckedChanged(object sender, EventArgs e)
 		{
-			MazeBlock.Alcoves[(int)CardinalPoint.North] = AlcoveNorthButton.Checked;
+
+			MazeBlock.SetAlcove(CardinalPoint.North, AlcoveNorthButton.Checked);
 		}
 
 		private void AlcoveSouthButton_CheckedChanged(object sender, EventArgs e)
 		{
-			MazeBlock.Alcoves[(int)CardinalPoint.South] = AlcoveSouthButton.Checked;
+			MazeBlock.SetAlcove(CardinalPoint.South, AlcoveSouthButton.Checked);
 		}
 
 		private void AlcoveWestButton_CheckedChanged(object sender, EventArgs e)
 		{
-			MazeBlock.Alcoves[(int)CardinalPoint.West] = AlcoveWestButton.Checked;
+			MazeBlock.SetAlcove(CardinalPoint.West, AlcoveWestButton.Checked);
 		}
 
 		private void AlcoveEastButton_CheckedChanged(object sender, EventArgs e)
 		{
-			MazeBlock.Alcoves[(int)CardinalPoint.East] = AlcoveEastButton.Checked;
+			MazeBlock.SetAlcove(CardinalPoint.East, AlcoveEastButton.Checked);
 		}
 
 		private void ButtonNorthButton_CheckedChanged(object sender, EventArgs e)

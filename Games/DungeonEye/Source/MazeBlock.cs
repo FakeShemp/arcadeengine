@@ -78,9 +78,24 @@ namespace DungeonEye
 		{
 
 			// A door
-			if (Door != null)
+			if (Door != null && team.ItemInHand == null)
+			{
 				Door.OnClick(team, location);
+			}
 
+			// An Alcove 
+			else if (HasAlcove(side) && MazeDisplayCoordinates.AlcoveZone.Contains(location))
+			{
+				if (team.ItemInHand != null)
+				{
+					DropAlcoveItem(side, team.ItemInHand);
+					team.ItemInHand = null;
+				}
+				else
+				{
+					team.ItemInHand = CollectAlcoveItem(side);
+				}
+			}
 		}
 
 
@@ -200,27 +215,44 @@ namespace DungeonEye
 		/// <summary>
 		/// Returns items on the ground at a specific corner
 		/// </summary>
-		/// <param name="position"></param>
-		/// <returns>ID of the item</returns>
+		/// <param name="position">Ground position</param>
+		/// <returns>List of items</returns>
 		public List<Item> GetItemsOnGround(GroundPosition position)
 		{
 			return GroundItems[(int)position];
 		}
 
 
+		/// <summary>
+		/// Returns items on the ground at a specific corner
+		/// </summary>
+		/// <param name="from">Facing position</param>
+		/// <param name="position">Ground position</param>
+		/// <returns>List of items</returns>
+		public List<Item> GetItemsOnGround(CardinalPoint from, GroundPosition position)
+		{
+			CardinalPoint[,] tab = new CardinalPoint[,]
+			{
+				{CardinalPoint.North, CardinalPoint.South, CardinalPoint.West, CardinalPoint.East},
+				{CardinalPoint.South, CardinalPoint.North, CardinalPoint.East, CardinalPoint.West},
+				{CardinalPoint.West, CardinalPoint.East, CardinalPoint.South, CardinalPoint.North},
+				{CardinalPoint.East, CardinalPoint.West, CardinalPoint.North, CardinalPoint.South},
+			};
+
+			return GetItemsOnGround((GroundPosition)tab[(int)from, (int)position]);
+		}
+
+
+		#region Alcoves
 
 		/// <summary>
 		/// Gets if the wall have an alcove
 		/// </summary>
 		/// <param name="from">Facing direction</param>
 		/// <param name="side">Wall side</param>
-		/// <returns></returns>
+		/// <returns>True if an alcove is present<returns>
 		public bool HasAlcove(CardinalPoint from, CardinalPoint side)
 		{
-			if (!HasAlcoves)
-				return false;
-
-
 			CardinalPoint[,] tab = new CardinalPoint[,]
 			{
 				{CardinalPoint.North, CardinalPoint.South, CardinalPoint.West, CardinalPoint.East},
@@ -232,6 +264,88 @@ namespace DungeonEye
 
 			return Alcoves[(int)tab[(int)from, (int)side]];
 		}
+
+		/// <summary>
+		/// Gets an alcove
+		/// </summary>
+		/// <param name="side">Side of the alcove</param>
+		/// <returns>True if an alcove is present<returns>
+		public bool HasAlcove(CardinalPoint side)
+		{
+			return Alcoves[(int)side];
+		}
+
+
+		/// <summary>
+		/// Creates or removes an alcove
+		/// </summary>
+		/// <param name="side">Side of the alcove</param>
+		/// <param name="create">Create or remove the alcove</param>
+		public void SetAlcove(CardinalPoint side, bool create)
+		{
+			Alcoves[(int)side] = create;
+		}
+
+
+		/// <summary>
+		/// Gets items from an alcove 
+		/// </summary>
+		/// <param name="side">Wall side</param>
+		/// <returns>List of items</returns>
+		public List<Item> GetAlcoveItems(CardinalPoint side)
+		{
+			return GroundItems[(int)side];
+		}
+
+
+		/// <summary>
+		/// Gets items from an alcove 
+		/// </summary>
+		/// <param name="from">View point</param>
+		/// <param name="side">Wall side</param>
+		/// <returns>List of items</returns>
+		public List<Item> GetAlcoveItems(CardinalPoint from, CardinalPoint side)
+		{
+			CardinalPoint[,] tab = new CardinalPoint[,]
+			{
+				{CardinalPoint.North, CardinalPoint.South, CardinalPoint.West, CardinalPoint.East},
+				{CardinalPoint.South, CardinalPoint.North, CardinalPoint.East, CardinalPoint.West},
+				{CardinalPoint.West, CardinalPoint.East, CardinalPoint.South, CardinalPoint.North},
+				{CardinalPoint.East, CardinalPoint.West, CardinalPoint.North, CardinalPoint.South},
+			};
+
+			return GetAlcoveItems(tab[(int)from, (int)side]);
+		}
+
+
+		/// <summary>
+		/// Collects an item in an alcove
+		/// </summary>
+		/// <param name="side">Wall side</param>
+		/// <returns>Item handle or null</returns>
+		public Item CollectAlcoveItem(CardinalPoint side)
+		{
+			return CollectItem((GroundPosition)side);
+		}
+
+
+		/// <summary>
+		/// Drops an item in an alcove
+		/// </summary>
+		/// <param name="side">Wall side</param>
+		/// <returns>True if the item can go in the alcove, or false</returns>
+		public bool DropAlcoveItem(CardinalPoint side, Item item)
+		{
+			if (item == null || !HasAlcove(side))
+				return false;
+
+			GroundItems[(int)side].Add(item);
+
+			return true;
+		}
+
+
+		#endregion
 
 
 		#region IO
@@ -291,12 +405,12 @@ namespace DungeonEye
 			}
 
 			// Alcoves
-			foreach(CardinalPoint cardinal in Enum.GetValues(typeof(CardinalPoint)))
+			foreach(CardinalPoint side in Enum.GetValues(typeof(CardinalPoint)))
 			{
-				if (Alcoves[(int)cardinal])
+				if (HasAlcove(side))
 				{
 					writer.WriteStartElement("alcove");
-					writer.WriteAttributeString("side", cardinal.ToString());
+					writer.WriteAttributeString("side", side.ToString());
 					writer.WriteEndElement();
 				}
 			}
@@ -326,9 +440,9 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Loads block defintion
 		/// </summary>
-		/// <param name="xml"></param>
+		/// <param name="xml">Xml handle</param>
 		/// <returns></returns>
 		public bool Load(XmlNode xml)
 		{
@@ -418,8 +532,7 @@ namespace DungeonEye
 					case "alcove":
 					{
 						CardinalPoint side = (CardinalPoint)Enum.Parse(typeof(CardinalPoint), node.Attributes["side"].Value);
-
-						Alcoves[(int)side] = true;
+						SetAlcove(side, true);
 					}
 					break;
 				}
@@ -433,7 +546,6 @@ namespace DungeonEye
 		#endregion
 
 
-
 		#region Ground items
 
 		/// <summary>
@@ -445,32 +557,14 @@ namespace DungeonEye
 		{
 			// No item in the middle of a block
 			if (position == GroundPosition.Middle)
+				throw new ArgumentOutOfRangeException("position", "No items in the middle of a maze block !");
+
+			int count = GroundItems[(int)position].Count;
+			if (count == 0)
 				return null;
 
-
-			List<Item> list = null;
-
-			switch (position)
-			{
-				case GroundPosition.NorthWest:
-					list = GroundItems[0];
-				break;
-				case GroundPosition.NorthEast:
-					list = GroundItems[1];
-				break;
-				case GroundPosition.SouthWest:
-					list = GroundItems[2];
-				break;
-				case GroundPosition.SouthEast:
-					list = GroundItems[3];
-				break;
-			}
-
-			if (list.Count == 0)
-				return null;
-
-			Item item = list[list.Count - 1];
-			list.RemoveAt(list.Count - 1);
+			Item item = GroundItems[(int)position][count - 1];
+			GroundItems[(int)position].RemoveAt(count - 1);
 
 			// Call the script
 			OnCollectedItem(item);
@@ -487,29 +581,16 @@ namespace DungeonEye
 		/// <returns>True if the item can be dropped</returns>
 		public bool DropItem(GroundPosition position, Item item)
 		{
+			// No item in the middle of a block
+			if (position == GroundPosition.Middle)
+				throw new ArgumentOutOfRangeException("position", "No items in the middle of a maze block !");
+
 			// Can drop item in wall
 			if (IsWall || Stair != null)
 				return false;
 
-			int pos = 0;
-			switch (position)
-			{
-				case GroundPosition.NorthWest:
-				pos = 0;
-				break;
-				case GroundPosition.NorthEast:
-				pos = 1;
-				break;
-				case GroundPosition.SouthWest:
-				pos = 2;
-				break;
-				case GroundPosition.SouthEast:
-				pos = 3;
-				break;
-			}
-
 			// Add the item to the ground
-			GroundItems[pos].Add(item);
+			GroundItems[(int)position].Add(item);
 
 			// Call the script
 			OnCollectedItem(item);
@@ -756,12 +837,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Alcoves
 		/// </summary>
-		public bool[] Alcoves
-		{
-			get;
-			set;
-		}
-
+		bool[] Alcoves;
 
 		#endregion
 	}
@@ -773,17 +849,17 @@ namespace DungeonEye
 	public enum BlockType
 	{
 		/// <summary>
-		/// 
+		/// Ground block
 		/// </summary>
 		Ground,
 
 		/// <summary>
-		/// 
+		/// Wall block
 		/// </summary>
 		Wall,
 		
 		/// <summary>
-		/// Team can pass through the wall
+		/// Team can pass through this kind of wall
 		/// </summary>
 		Trick,
 
@@ -803,14 +879,29 @@ namespace DungeonEye
 	/// </summary>
 	public enum GroundPosition
 	{
+		/// <summary>
+		/// North west
+		/// </summary>
 		NorthWest = 0,
 
+		/// <summary>
+		/// North east
+		/// </summary>
 		NorthEast = 1,
 
+		/// <summary>
+		/// South west
+		/// </summary>
 		SouthWest = 2,
 
+		/// <summary>
+		/// South east
+		/// </summary>
 		SouthEast = 3,
 
+		/// <summary>
+		/// Middle position (not for items !)
+		/// </summary>
 		Middle = 4
 	}
 

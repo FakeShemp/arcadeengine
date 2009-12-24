@@ -576,9 +576,9 @@ namespace DungeonEye
 		#region IO
 
 		/// <summary>
-		/// Loads the dorr's definition from a bank
+		/// Loads the door's definition from a bank
 		/// </summary>
-		/// <param name="filename"></param>
+		/// <param name="xml">Xml handle</param>
 		/// <returns></returns>
 		public bool Load(XmlNode xml)
 		{
@@ -628,9 +628,9 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Saves the door definition
 		/// </summary>
-		/// <param name="filename"></param>
+		/// <param name="writer">XML writer handle</param>
 		/// <returns></returns>
 		public bool Save(XmlWriter writer)
 		{

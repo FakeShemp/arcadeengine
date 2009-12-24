@@ -328,6 +328,16 @@ namespace DungeonEye
 			SpellBook.Draw();
 
 
+			
+			// Action zones
+			//Display.DrawRectangle(new Rectangle(0, 202, 176, 38), Color.Green);
+			//Display.DrawRectangle(new Rectangle(0, 144, 176, 58), Color.Red);
+			//Display.DrawRectangle(new Rectangle(176, 202, 176, 38), Color.LightGreen);
+			//Display.DrawRectangle(new Rectangle(176, 144, 176, 58), Color.LightBlue);
+			//Display.DrawRectangle(new Rectangle(0, 0, 176, 144), Color.Blue);
+			//Display.DrawRectangle(new Rectangle(176, 0, 176, 144), Color.Yellow);
+			//Display.DrawRectangle(new Rectangle(48, 14, 256, 192), Color.Yellow);
+
 			// Draw the cursor or the item in the hand
 			Display.Color = Color.White;
 			if (ItemInHand != null)
@@ -943,7 +953,7 @@ namespace DungeonEye
 				}
 
 				// In front of the team
-				else if (new Rectangle(0, 144, 176, 58).Contains(mousePos))
+				else if (!FrontBlock.IsWall && new Rectangle(0, 144, 176, 58).Contains(mousePos))
 				{
 					// Ground position
 					switch (Location.Direction)
@@ -1013,7 +1023,7 @@ namespace DungeonEye
 				}
 
 				// In front of the team
-				else if (new Rectangle(176, 144, 176, 58).Contains(mousePos))
+				else if (!FrontBlock.IsWall && new Rectangle(176, 144, 176, 58).Contains(mousePos))
 				{
 
 					// Ground position
@@ -1049,6 +1059,15 @@ namespace DungeonEye
 
 				#endregion
 
+
+				#region Action to process on the front block
+
+				// Click on the block in front of the team
+				else if(new Rectangle(48, 14, 256, 192).Contains(mousePos) && FrontBlock.IsWall)
+				{
+					FrontBlock.OnClick(this, mousePos, FrontWallSide);
+				}
+				#endregion
 
 				#region Throw an object left side
 				else if (new Rectangle(0, 0, 176, 144).Contains(mousePos) && ItemInHand != null)
@@ -1102,29 +1121,6 @@ namespace DungeonEye
 				#endregion
 
 
-				#region Action to process on the front block
-
-				// Click on the block in front of the team
-				else if(new Rectangle(56, 44, 256, 192).Contains(mousePos) && ItemInHand == null)
-				{
-					switch (Direction)
-					{
-						case CardinalPoint.North:
-						FrontBlock.OnClick(this, mousePos, CardinalPoint.South);
-						break;
-						case CardinalPoint.South:
-						FrontBlock.OnClick(this, mousePos, CardinalPoint.North);
-						break;
-						case CardinalPoint.West:
-						FrontBlock.OnClick(this, mousePos, CardinalPoint.East);
-						break;
-						case CardinalPoint.East:
-						FrontBlock.OnClick(this, mousePos, CardinalPoint.West);
-						break;
-					}
-
-				}
-				#endregion
 
 			}
 
@@ -1134,10 +1130,20 @@ namespace DungeonEye
 
 			else if (Mouse.IsNewButtonDown(MouseButtons.Right))
 			{
+				#region Action to process on the front block
+
+				// Click on the block in front of the team
+				if (MazeDisplayCoordinates.AlcoveZone.Contains(mousePos) && FrontBlock.IsWall)
+				{
+					//FrontBlock.OnClick(this, mousePos, FrontWallSide); 
+					SelectedHero.AddToInventory(FrontBlock.CollectAlcoveItem(FrontWallSide));
+				}
+				#endregion
+
 				#region Gather item on the ground Left
 
 				// Team's feet
-				if (new Rectangle(0, 202, 176, 38).Contains(mousePos))
+				else if (new Rectangle(0, 202, 176, 38).Contains(mousePos))
 				{
 					switch (Direction)
 					{
@@ -1168,7 +1174,7 @@ namespace DungeonEye
 				}
 
 				// In front of the team
-				else if (new Rectangle(0, 144, 176, 58).Contains(mousePos))
+				else if (new Rectangle(0, 144, 176, 58).Contains(mousePos) && !FrontBlock.IsWall)
 				{
 					// Ground position
 					switch (Location.Direction)
@@ -1237,7 +1243,7 @@ namespace DungeonEye
 				}
 
 				// In front of the team
-				else if (new Rectangle(176, 144, 176, 58).Contains(mousePos))
+				else if (new Rectangle(176, 144, 176, 58).Contains(mousePos) && !FrontBlock.IsWall)
 				{
 
 					// Ground position
@@ -1271,7 +1277,6 @@ namespace DungeonEye
 				}
 
 				#endregion
-
 			}
 
 			#endregion
@@ -1297,7 +1302,6 @@ namespace DungeonEye
 				if (Mouse.IsNewButtonDown(MouseButtons.Left) && !CampWindow.IsVisible)
 				{
 
-					//Point mousePos = Mouse.Location;
 					Item item = null;
 
 					// Update each hero interface
@@ -2451,6 +2455,26 @@ namespace DungeonEye
 			get
 			{
 				return Maze.GetBlock(FrontCoord);
+			}
+		}
+
+
+		/// <summary>
+		/// Gets the front wall side
+		/// </summary>
+		public CardinalPoint FrontWallSide
+		{
+			get
+			{
+				CardinalPoint[] points = new CardinalPoint[]
+					{
+						CardinalPoint.South,
+						CardinalPoint.North,
+						CardinalPoint.East,
+						CardinalPoint.West,
+					};
+
+				return points[(int)Direction];
 			}
 		}
 
