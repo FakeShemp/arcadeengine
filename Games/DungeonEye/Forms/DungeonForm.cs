@@ -550,8 +550,14 @@ namespace DungeonEye.Forms
 			tile = Icons.GetTile(22 + (int)PreviewLoc.Direction);
 			Batch.AddRectangle(new Rectangle(Offset.X + PreviewLoc.Position.X * 25, Offset.Y + PreviewLoc.Position.Y * 25, 25, 25), Color.White, tile.Rectangle);
 
-			Batch.Apply();
+			// Starting point
+			if (Dungeon.StartLocation.Maze == Maze.Name)
+			{
+				tile = Icons.GetTile(19);
+				Batch.AddRectangle(new Rectangle(Offset.X + Dungeon.StartLocation.Position.X * 25, Offset.Y + Dungeon.StartLocation.Position.Y * 25, 25, 25), Color.White, tile.Rectangle);
+			}
 
+			Batch.Apply();
 			Display.DrawBatch(Batch, BeginMode.Quads);
 
 
@@ -764,9 +770,18 @@ namespace DungeonEye.Forms
 		}
 
 
+		/// <summary>
+		/// Set the starting point
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void StartLocationMenu_Click(object sender, EventArgs e)
+		{
+			Dungeon.StartLocation = new DungeonLocation(PreviewLoc);
+		}
+
 
 		#endregion
-
 
 
 		#region Preview control events
@@ -866,7 +881,6 @@ namespace DungeonEye.Forms
 		#endregion
 
 
-
 		#region Properties
 
 		/// <summary>
@@ -955,7 +969,6 @@ namespace DungeonEye.Forms
 
 
 		#endregion
-
 
 	}
 
