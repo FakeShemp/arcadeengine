@@ -413,18 +413,18 @@ namespace DungeonEye
 					AttackResult attack = hero.GetLastAttack(HeroHand.Primary);
 					if (attack.Date + attack.OnHold > DateTime.Now)
 					{
-						if (attack.Monster != null)
+						// Ghost item
+						TileSet.Draw(3, new Point(pos.X + 66, pos.Y + 20));
+
+						// Monster hit ?
+						if (attack.Monster != null && attack.Date > DateTime.Now.AddMilliseconds(-1000))
 						{
 							TileSet.Draw(21, new Point(pos.X + 64, pos.Y + 20));
 
 							if (attack.Result > 0)
-								Font.DrawText(new Point(pos.X + 90, pos.Y + 32), Color.White, attack.Result.ToString());
-							else
-								Font.DrawText(new Point(pos.X + 76, pos.Y + 32), Color.White, "MISS");
-						}
-						else
-						{
-							TileSet.Draw(3, new Point(pos.X + 66, pos.Y + 20));
+									Font.DrawText(new Point(pos.X + 90, pos.Y + 32), Color.White, attack.Result.ToString());
+								else
+									Font.DrawText(new Point(pos.X + 76, pos.Y + 32), Color.White, "MISS");
 						}
 					}
 
@@ -451,20 +451,20 @@ namespace DungeonEye
 					attack = hero.GetLastAttack(HeroHand.Secondary);
 					if (attack.Date + attack.OnHold > DateTime.Now)
 					{
+						// Ghost item
+						TileSet.Draw(3, new Point(pos.X + 66, pos.Y + 52));
 
-						if (attack.Monster != null)
+						// Monster hit ?
+						if (attack.Monster != null && attack.Date > DateTime.Now.AddMilliseconds(-1000))
 						{
 							TileSet.Draw(21, new Point(pos.X + 64, pos.Y + 52));
 
 							if (attack.Result > 0)
 								Font.DrawText(new Point(pos.X + 90, pos.Y + 64), Color.White, attack.Result.ToString());
 							else
-								Font.DrawText(new Point(pos.X + 76, pos.Y + 64),  Color.White, "MISS");
+								Font.DrawText(new Point(pos.X + 76, pos.Y + 64), Color.White, "MISS");
 						}
-						else
-						{
-							TileSet.Draw(3, new Point(pos.X + 66, pos.Y + 52));
-						}
+
 					}
 
 
@@ -1396,7 +1396,7 @@ namespace DungeonEye
 								continue;
 
 
-							// Swap hero
+							#region Swap hero
 							if (new Rectangle(368 + 144 * x, y * 104 + 2, 126, 18).Contains(mousePos))
 							{
 								if (HeroToSwap == null)
@@ -1412,39 +1412,30 @@ namespace DungeonEye
 									HeroToSwap = null;
 								}
 							}
+							#endregion
 
-							// Show Hero inventory
+							#region Show Hero inventory
 							if (new Rectangle(370 + 144 * x, y * 104 + 22, 62, 64).Contains(mousePos))
 							{
 								SelectedHero = hero;
 								Interface = TeamInterface.Inventory;
 							}
+							#endregion
 
+							#region Use object in primary hand
+						//	AttackResult attack = null;
+							if (new Rectangle(434 + 144 * x, y * 104 + 22, 60, 32).Contains(mousePos) && hero.CanAttack(HeroHand.Primary))
+								hero.UseHand(HeroHand.Primary);
 
-							// Use object in primary hand
-							if (new Rectangle(434 + 144 * x, y * 104 + 22, 60, 32).Contains(mousePos))
-							{
-								hero.Attack(HeroHand.Primary);
+							#endregion
 
-								if (hero.GetLastAttack(HeroHand.Primary).Monster != null)
-								{
-									Monster monster = hero.GetLastAttack(HeroHand.Primary).Monster;
-									AddMessage(monster.Name + " : -" + hero.GetLastAttack(HeroHand.Primary).Result + " (" + monster.Life.Actual + "/" + monster.Life.Max + ")");
-								}
+							#region Use object in secondary hand
+							if (new Rectangle(434 + 144 * x, y * 104 + 54, 60, 32).Contains(mousePos) && hero.CanAttack(HeroHand.Secondary))
+								hero.UseHand(HeroHand.Secondary);
 
-							}
-
-							// Use object in secondary hand
-							if (new Rectangle(434 + 144 * x, y * 104 + 54, 60, 32).Contains(mousePos))
-							{
-								hero.Attack(HeroHand.Secondary);
-
-								if (hero.GetLastAttack(HeroHand.Secondary).Monster != null)
-								{
-									Monster monster = hero.GetLastAttack(HeroHand.Secondary).Monster;
-									AddMessage(monster.Name + " : -" + hero.GetLastAttack(HeroHand.Secondary).Result + " (" + monster.Life.Actual + "/" + monster.Life.Max + ")");
-								}
-							}
+							//if (attack != null && attack.Monster != null)
+							//   AddMessage(attack.Monster.Name + " : -" + attack.Result + " (" + attack.Monster.Life.Actual + "/" + attack.Monster.Life.Max + ")");
+							#endregion
 						}
 					}
 				}
@@ -1458,12 +1449,8 @@ namespace DungeonEye
 
 			// Update all heroes
 			foreach (Hero hero in Heroes)
-			{
-				if (hero == null)
-					continue;
-
+				if (hero != null)
 				hero.Update(time);
-			}
 
 			#endregion 
 
@@ -2067,7 +2054,7 @@ namespace DungeonEye
 		/// Returns the position of a hero in the team
 		/// </summary>
 		/// <param name="hero">Hero handle</param>
-		/// <returns></returns>
+		/// <returns>Position of the hero in the team</returns>
 		public HeroPosition GetHeroPosition(Hero hero)
 		{
 			int pos = -1;
@@ -2092,7 +2079,7 @@ namespace DungeonEye
 		/// Returns the ground position of a hero
 		/// </summary>
 		/// <param name="Hero">Hero handle</param>
-		/// <returns></returns>
+		/// <returns>Ground position of the hero</returns>
 		public GroundPosition GetHeroGroundPosition(Hero Hero)
 		{
 			GroundPosition groundpos = GroundPosition.Middle;
@@ -2164,7 +2151,7 @@ namespace DungeonEye
 		/// Returns the Hero at a given position in the team
 		/// </summary>
 		/// <param name="pos">Position rank</param>
-		/// <returns></returns>
+		/// <returns>Hero handle or null</returns>
 		public Hero GetHeroFromPosition(HeroPosition pos)
 		{
 			return Heroes[(int)pos];
@@ -2174,21 +2161,18 @@ namespace DungeonEye
 		/// <summary>
 		/// Returns the Hero under the mouse location
 		/// </summary>
-		/// <param name="location"></param>
-		/// <returns></returns>
+		/// <param name="location">Screen location</param>
+		/// <returns>Hero handle or null</returns>
 		public Hero GetHeroFromLocation(Point location)
 		{
 
 			for (int y = 0; y < 3; y++)
-			{
 				for (int x = 0; x < 2; x++)
 				{
 					// find the hero under the location 
 					if (new Rectangle(366 + x * 144, 2 + y * 104, 130, 104).Contains(location))
 						return Heroes[y * 2 + x];
-
 				}
-			}
 
 			return null;
 		}
@@ -2263,6 +2247,7 @@ namespace DungeonEye
 		/// Move the team
 		/// </summary>
 		/// <param name="offset">Offset</param>
+		/// <returns>True if the team moved, or false</returns>
 		private bool Move(Point offset)
 		{
 			// Can't move and force is false

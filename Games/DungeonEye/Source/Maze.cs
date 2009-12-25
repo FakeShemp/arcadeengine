@@ -1647,7 +1647,7 @@ namespace DungeonEye
 					swap = true;
 
 				foreach (FlyingItem fi in flyings[(int)pos])
-					ItemsTileset.Draw(fi.Item.MoveAwayTileID, MazeDisplayCoordinates.GetFlyingItem(position, pos), swap, false);
+					ItemsTileset.Draw(fi.Item.ThrowTileID, MazeDisplayCoordinates.GetFlyingItem(position, pos), swap, false);
 
 			}
 			#endregion

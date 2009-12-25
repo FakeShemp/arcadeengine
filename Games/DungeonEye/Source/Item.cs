@@ -56,13 +56,13 @@ namespace DungeonEye
 		#region Load & Save
 
 		/// <summary>
-		/// 
+		/// Loads an item definition
 		/// </summary>
-		/// <param name="filename"></param>
-		/// <returns></returns>
+		/// <param name="xml">Xml handle</param>
+		/// <returns>True if loaded, or false</returns>
 		public bool Load(XmlNode xml)
 		{
-			if (xml.Name != "item")
+			if (xml == null || xml.Name != "item")
 				return false;
 
 
@@ -126,13 +126,13 @@ namespace DungeonEye
 						TileID = int.Parse(node.Attributes["inventory"].Value);
 						GroundTileID = int.Parse(node.Attributes["ground"].Value);
 						IncomingTileID = int.Parse(node.Attributes["incoming"].Value);
-						MoveAwayTileID = int.Parse(node.Attributes["moveaway"].Value);
+						ThrowTileID = int.Parse(node.Attributes["moveaway"].Value);
 					}
 					break;
 
-					default:
+					case "usequiver":
 					{
-
+						UseQuiver = (bool)Boolean.Parse(node.Attributes["value"].Value);
 					}
 					break;
 				}
@@ -146,10 +146,10 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Saves the item definition
 		/// </summary>
-		/// <param name="writer"></param>
-		/// <returns></returns>
+		/// <param name="writer">Xml writer handle</param>
+		/// <returns>True if saved, or false</returns>
 		public bool Save(XmlWriter writer)
 		{
 			if (writer == null)
@@ -164,7 +164,7 @@ namespace DungeonEye
 			writer.WriteAttributeString("inventory", TileID.ToString());
 			writer.WriteAttributeString("ground", GroundTileID.ToString());
 			writer.WriteAttributeString("incoming", IncomingTileID.ToString());
-			writer.WriteAttributeString("moveaway", MoveAwayTileID.ToString());
+			writer.WriteAttributeString("moveaway", ThrowTileID.ToString());
 			writer.WriteEndElement();
 
 			writer.WriteStartElement("type");
@@ -173,6 +173,10 @@ namespace DungeonEye
 
 			writer.WriteStartElement("slot");
 			writer.WriteAttributeString("value", Slot.ToString());
+			writer.WriteEndElement();
+
+			writer.WriteStartElement("usequiver");
+			writer.WriteAttributeString("value", UseQuiver.ToString());
 			writer.WriteEndElement();
 
 			writer.WriteStartElement("weight");
@@ -197,8 +201,6 @@ namespace DungeonEye
 			writer.WriteStartElement("speed");
 			writer.WriteAttributeString("value", Speed.ToString());
 			writer.WriteEndElement();
-
-
 
 			writer.WriteEndElement();
 
@@ -305,7 +307,7 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Tile id of the item on the ground
 		/// </summary>
 		public int GroundTileID
 		{
@@ -347,7 +349,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Tiles when the item is thrown away
 		/// </summary>
-		public int MoveAwayTileID
+		public int ThrowTileID
 		{
 			get;
 			set;
@@ -383,7 +385,14 @@ namespace DungeonEye
 		}
 
 
-
+		/// <summary>
+		/// The item use quiver
+		/// </summary>
+		public bool UseQuiver
+		{
+			get;
+			set;
+		}
 		#endregion
 	}
 

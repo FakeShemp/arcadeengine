@@ -103,6 +103,7 @@
 			this.groupBox10 = new System.Windows.Forms.GroupBox();
 			this.ScriptNameBox = new System.Windows.Forms.ComboBox();
 			this.label16 = new System.Windows.Forms.Label();
+			this.UseQuiverBox = new System.Windows.Forms.CheckBox();
 			this.toolStrip1.SuspendLayout();
 			this.groupBox4.SuspendLayout();
 			this.groupBox5.SuspendLayout();
@@ -191,7 +192,7 @@
 			// GLGroundTile
 			// 
 			this.GLGroundTile.BackColor = System.Drawing.Color.Black;
-			this.GLGroundTile.Location = new System.Drawing.Point(203, 74);
+			this.GLGroundTile.Location = new System.Drawing.Point(203, 88);
 			this.GLGroundTile.Name = "GLGroundTile";
 			this.GLGroundTile.Size = new System.Drawing.Size(181, 165);
 			this.GLGroundTile.TabIndex = 2;
@@ -203,7 +204,7 @@
 			// GLInventoryTile
 			// 
 			this.GLInventoryTile.BackColor = System.Drawing.Color.Black;
-			this.GLInventoryTile.Location = new System.Drawing.Point(9, 74);
+			this.GLInventoryTile.Location = new System.Drawing.Point(9, 88);
 			this.GLInventoryTile.Name = "GLInventoryTile";
 			this.GLInventoryTile.Size = new System.Drawing.Size(181, 165);
 			this.GLInventoryTile.TabIndex = 2;
@@ -215,7 +216,7 @@
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(209, 50);
+			this.label2.Location = new System.Drawing.Point(209, 64);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(48, 13);
 			this.label2.TabIndex = 1;
@@ -224,7 +225,7 @@
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(6, 50);
+			this.label1.Location = new System.Drawing.Point(6, 64);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(57, 13);
 			this.label1.TabIndex = 1;
@@ -234,7 +235,7 @@
 			// 
 			this.GroundTileBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.GroundTileBox.FormattingEnabled = true;
-			this.GroundTileBox.Location = new System.Drawing.Point(262, 47);
+			this.GroundTileBox.Location = new System.Drawing.Point(262, 61);
 			this.GroundTileBox.Name = "GroundTileBox";
 			this.GroundTileBox.Size = new System.Drawing.Size(121, 21);
 			this.GroundTileBox.TabIndex = 0;
@@ -244,7 +245,7 @@
 			// 
 			this.InventoryTileBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.InventoryTileBox.FormattingEnabled = true;
-			this.InventoryTileBox.Location = new System.Drawing.Point(69, 47);
+			this.InventoryTileBox.Location = new System.Drawing.Point(69, 61);
 			this.InventoryTileBox.Name = "InventoryTileBox";
 			this.InventoryTileBox.Size = new System.Drawing.Size(121, 21);
 			this.InventoryTileBox.TabIndex = 0;
@@ -298,6 +299,7 @@
 			// 
 			// groupBox5
 			// 
+			this.groupBox5.Controls.Add(this.UseQuiverBox);
 			this.groupBox5.Controls.Add(this.WeightBox);
 			this.groupBox5.Controls.Add(this.SpeedBox);
 			this.groupBox5.Controls.Add(this.Weight);
@@ -306,7 +308,7 @@
 			this.groupBox5.Controls.Add(this.label5);
 			this.groupBox5.Location = new System.Drawing.Point(612, 287);
 			this.groupBox5.Name = "groupBox5";
-			this.groupBox5.Size = new System.Drawing.Size(202, 104);
+			this.groupBox5.Size = new System.Drawing.Size(202, 152);
 			this.groupBox5.TabIndex = 6;
 			this.groupBox5.TabStop = false;
 			this.groupBox5.Text = "Misc :";
@@ -354,6 +356,7 @@
 			this.TypeBox.Location = new System.Drawing.Point(56, 19);
 			this.TypeBox.Name = "TypeBox";
 			this.TypeBox.Size = new System.Drawing.Size(122, 21);
+			this.TypeBox.Sorted = true;
 			this.TypeBox.TabIndex = 0;
 			// 
 			// label6
@@ -587,7 +590,7 @@
 			this.groupBox8.Controls.Add(this.label10);
 			this.groupBox8.Location = new System.Drawing.Point(406, 265);
 			this.groupBox8.Name = "groupBox8";
-			this.groupBox8.Size = new System.Drawing.Size(200, 126);
+			this.groupBox8.Size = new System.Drawing.Size(200, 174);
 			this.groupBox8.TabIndex = 8;
 			this.groupBox8.TabStop = false;
 			this.groupBox8.Text = "Critical :";
@@ -676,7 +679,7 @@
 			this.groupBox2.Controls.Add(this.MoveAwayTileBox);
 			this.groupBox2.Location = new System.Drawing.Point(3, 28);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(397, 465);
+			this.groupBox2.Size = new System.Drawing.Size(397, 513);
 			this.groupBox2.TabIndex = 3;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Tiles :";
@@ -693,7 +696,7 @@
 			// GLIncomingTile
 			// 
 			this.GLIncomingTile.BackColor = System.Drawing.Color.Black;
-			this.GLIncomingTile.Location = new System.Drawing.Point(203, 290);
+			this.GLIncomingTile.Location = new System.Drawing.Point(203, 334);
 			this.GLIncomingTile.Name = "GLIncomingTile";
 			this.GLIncomingTile.Size = new System.Drawing.Size(181, 165);
 			this.GLIncomingTile.TabIndex = 2;
@@ -705,7 +708,7 @@
 			// GLMoveAwayTile
 			// 
 			this.GLMoveAwayTile.BackColor = System.Drawing.Color.Black;
-			this.GLMoveAwayTile.Location = new System.Drawing.Point(9, 290);
+			this.GLMoveAwayTile.Location = new System.Drawing.Point(9, 334);
 			this.GLMoveAwayTile.Name = "GLMoveAwayTile";
 			this.GLMoveAwayTile.Size = new System.Drawing.Size(181, 165);
 			this.GLMoveAwayTile.TabIndex = 2;
@@ -717,7 +720,7 @@
 			// label12
 			// 
 			this.label12.AutoSize = true;
-			this.label12.Location = new System.Drawing.Point(209, 266);
+			this.label12.Location = new System.Drawing.Point(209, 310);
 			this.label12.Name = "label12";
 			this.label12.Size = new System.Drawing.Size(56, 13);
 			this.label12.TabIndex = 1;
@@ -726,7 +729,7 @@
 			// label13
 			// 
 			this.label13.AutoSize = true;
-			this.label13.Location = new System.Drawing.Point(6, 266);
+			this.label13.Location = new System.Drawing.Point(6, 310);
 			this.label13.Name = "label13";
 			this.label13.Size = new System.Drawing.Size(68, 13);
 			this.label13.TabIndex = 1;
@@ -747,7 +750,7 @@
 			// 
 			this.IncomingTileBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.IncomingTileBox.FormattingEnabled = true;
-			this.IncomingTileBox.Location = new System.Drawing.Point(267, 263);
+			this.IncomingTileBox.Location = new System.Drawing.Point(267, 307);
 			this.IncomingTileBox.Name = "IncomingTileBox";
 			this.IncomingTileBox.Size = new System.Drawing.Size(122, 21);
 			this.IncomingTileBox.TabIndex = 0;
@@ -757,7 +760,7 @@
 			// 
 			this.MoveAwayTileBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.MoveAwayTileBox.FormattingEnabled = true;
-			this.MoveAwayTileBox.Location = new System.Drawing.Point(80, 263);
+			this.MoveAwayTileBox.Location = new System.Drawing.Point(80, 307);
 			this.MoveAwayTileBox.Name = "MoveAwayTileBox";
 			this.MoveAwayTileBox.Size = new System.Drawing.Size(110, 21);
 			this.MoveAwayTileBox.TabIndex = 0;
@@ -771,7 +774,7 @@
 			this.groupBox3.Controls.Add(this.RangerBox);
 			this.groupBox3.Controls.Add(this.PaladinBox);
 			this.groupBox3.Controls.Add(this.FighterBox);
-			this.groupBox3.Location = new System.Drawing.Point(406, 397);
+			this.groupBox3.Location = new System.Drawing.Point(406, 445);
 			this.groupBox3.Name = "groupBox3";
 			this.groupBox3.Size = new System.Drawing.Size(200, 96);
 			this.groupBox3.TabIndex = 7;
@@ -843,7 +846,7 @@
 			this.groupBox9.Controls.Add(this.SecondaryHandBox);
 			this.groupBox9.Controls.Add(this.TwoHandedBox);
 			this.groupBox9.Controls.Add(this.PrimaryHandBox);
-			this.groupBox9.Location = new System.Drawing.Point(612, 397);
+			this.groupBox9.Location = new System.Drawing.Point(612, 445);
 			this.groupBox9.Name = "groupBox9";
 			this.groupBox9.Size = new System.Drawing.Size(202, 96);
 			this.groupBox9.TabIndex = 7;
@@ -882,7 +885,7 @@
 			// 
 			// groupBox1
 			// 
-			this.groupBox1.Location = new System.Drawing.Point(406, 499);
+			this.groupBox1.Location = new System.Drawing.Point(406, 547);
 			this.groupBox1.Name = "groupBox1";
 			this.groupBox1.Size = new System.Drawing.Size(408, 121);
 			this.groupBox1.TabIndex = 9;
@@ -893,7 +896,7 @@
 			// 
 			this.groupBox10.Controls.Add(this.ScriptNameBox);
 			this.groupBox10.Controls.Add(this.label16);
-			this.groupBox10.Location = new System.Drawing.Point(3, 499);
+			this.groupBox10.Location = new System.Drawing.Point(3, 547);
 			this.groupBox10.Name = "groupBox10";
 			this.groupBox10.Size = new System.Drawing.Size(397, 121);
 			this.groupBox10.TabIndex = 9;
@@ -907,6 +910,7 @@
 			this.ScriptNameBox.Location = new System.Drawing.Point(82, 17);
 			this.ScriptNameBox.Name = "ScriptNameBox";
 			this.ScriptNameBox.Size = new System.Drawing.Size(148, 21);
+			this.ScriptNameBox.Sorted = true;
 			this.ScriptNameBox.TabIndex = 1;
 			this.ScriptNameBox.SelectedIndexChanged += new System.EventHandler(this.ScriptNameBox_SelectedIndexChanged);
 			// 
@@ -919,11 +923,22 @@
 			this.label16.TabIndex = 0;
 			this.label16.Text = "Script name :";
 			// 
+			// UseQuiverBox
+			// 
+			this.UseQuiverBox.AutoSize = true;
+			this.UseQuiverBox.Location = new System.Drawing.Point(6, 114);
+			this.UseQuiverBox.Name = "UseQuiverBox";
+			this.UseQuiverBox.Size = new System.Drawing.Size(77, 17);
+			this.UseQuiverBox.TabIndex = 3;
+			this.UseQuiverBox.Text = "Use quiver";
+			this.UseQuiverBox.UseVisualStyleBackColor = true;
+			this.UseQuiverBox.CheckedChanged += new System.EventHandler(this.UseQuiverBox_CheckedChanged);
+			// 
 			// ItemSetForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(821, 632);
+			this.ClientSize = new System.Drawing.Size(821, 680);
 			this.Controls.Add(this.groupBox10);
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.groupBox2);
@@ -1051,5 +1066,6 @@
 		private System.Windows.Forms.GroupBox groupBox10;
 		private System.Windows.Forms.ComboBox ScriptNameBox;
 		private System.Windows.Forms.Label label16;
+		private System.Windows.Forms.CheckBox UseQuiverBox;
 	}
 }

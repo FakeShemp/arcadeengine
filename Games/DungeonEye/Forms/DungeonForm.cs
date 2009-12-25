@@ -433,13 +433,6 @@ namespace DungeonEye.Forms
 			glControl.MakeCurrent();
 			Display.ClearBuffers();
 
-			Point[] alcoves = new Point[]
-			{
-				new Point(7, 0),
-				new Point(7, 19),
-				new Point(0, 7),
-				new Point(19, 7),
-			}
 
 			// Background texture
 			CheckerBoard.Blit(new Rectangle(Point.Empty, glControl.Size), TextureLayout.Tile);
@@ -546,12 +539,25 @@ namespace DungeonEye.Forms
 					// Alcoves
 					if (block.HasAlcoves)
 					{
+						// Alcoves coords
+						Point[] alcoves = new Point[]
+						{
+							new Point(7, 0),
+							new Point(7, 19),
+							new Point(0, 7),
+							new Point(19, 7),
+						};
+
+
 						foreach (CardinalPoint side in Enum.GetValues(typeof(CardinalPoint)))
 						{
 							if (block.HasAlcove(side))
 							{
-								tile = Icons.GetTile(100);
-								Batch.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25 + 7, tile.Size.Width, tile.Size.Height), Color.White, tile.Rectangle);
+								tile = Icons.GetTile(100 + ((int)side > 1 ? 0: 1));
+								Batch.AddRectangle(new Rectangle(
+									Offset.X + x * 25 + alcoves[(int)side].X, 
+									Offset.Y + y * 25 + alcoves[(int)side].Y,
+									tile.Size.Width, tile.Size.Height), Color.White, tile.Rectangle);
 							}
 						}
 					}

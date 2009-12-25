@@ -100,7 +100,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Updates hero
 		/// </summary>
-		/// <param name="time"></param>
+		/// <param name="time">Elapsed gametime</param>
 		public void Update(GameTime time)
 		{
 			Point mousePos = Mouse.Location;
@@ -221,6 +221,17 @@ namespace DungeonEye
 			Inventory[(int)position] = item;
 		}
 
+
+		/// <summary>
+		/// Gets the next item in the waist bag
+		/// </summary>
+		/// <returns>Item handle or null</returns>
+		public Item PopWaistItem()
+		{
+			return null;
+
+		}
+
 		#endregion
 
 
@@ -230,7 +241,7 @@ namespace DungeonEye
 		/// Hero attack with his hands
 		/// </summary>
 		/// <param name="hand">Attacking hand</param>
-		public void Attack(HeroHand hand)
+		public void UseHand(HeroHand hand)
 		{
 			if (IsUnconscious || IsDead)
 				return;
@@ -260,20 +271,26 @@ namespace DungeonEye
 			}
 
 
+			DungeonLocation loc = new DungeonLocation(Team.Location);
+			loc.GroundPosition = Team.GetHeroGroundPosition(this);
 			switch (item.Type)
 			{
 
 				// Throw the ammo
 				case ItemType.Ammo:
 				{
-					DungeonLocation loc = new DungeonLocation(Team.Location);
-					loc.GroundPosition = Team.GetHeroGroundPosition(this);
 					
+					// throw ammo
 					Team.Maze.FlyingItems.Add(new FlyingItem(item, loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
-					if (hand == HeroHand.Primary)
-						Inventory[20] = null;
-					else
-						Inventory[16] = null;
+
+					// Empty hand
+					Inventory[20 - (int)(hand) * 4] = null;
+
+					if (Quiver > 0)
+					{
+						Inventory[20 - (int)(hand) * 4] = ResourceManager.CreateAsset<ItemSet>("Items").GetItem("Arrow");
+						Quiver--;
+					}
 				}
 				break;
 
@@ -291,9 +308,19 @@ namespace DungeonEye
 				// Use the weapon
 				case ItemType.Weapon:
 				{
-					attack.OnHold = TimeSpan.FromMilliseconds(item.Speed);
+					if (item.Slot == ItemSlot.Waist)
+					{
+					}
 
+					else if (item.UseQuiver && Quiver > 0)
+					{
+						Team.Maze.FlyingItems.Add(
+							new FlyingItem(ResourceManager.CreateAsset<ItemSet>("Items").GetItem("Arrow"),
+							loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
+						Quiver--;
+					}
 
+					attack.OnHold = TimeSpan.FromMilliseconds(item.Speed + 3000);
 				}
 				break;
 

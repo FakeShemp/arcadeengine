@@ -49,12 +49,13 @@ namespace DungeonEye.Forms
 
 			// TileSetNameBox
 			TileSetNameBox.BeginUpdate();
-			TileSetNameBox.Items.Clear();
 			foreach (string name in ResourceManager.GetAssets<TileSet>())
 			{
 				TileSetNameBox.Items.Add(name);
 			}
 			TileSetNameBox.EndUpdate();
+
+
 			if (!string.IsNullOrEmpty(ItemSet.TileSetName) && TileSetNameBox.Items.Contains(ItemSet.TileSetName))
 				TileSetNameBox.SelectedItem = ItemSet.TileSetName;
 
@@ -165,6 +166,7 @@ namespace DungeonEye.Forms
 			HeadBox.Checked = false;
 			WaistBox.Checked = false;
 			NeckBox.Checked = false;
+			UseQuiverBox.Checked = false;
 			
 			
 			
@@ -182,8 +184,10 @@ namespace DungeonEye.Forms
 				TypeBox.SelectedItem = Item.Type.ToString();
 				GroundTileBox.SelectedItem = Item.GroundTileID;
 				InventoryTileBox.SelectedItem = Item.TileID;
-				MoveAwayTileBox.SelectedItem = Item.MoveAwayTileID;
+				MoveAwayTileBox.SelectedItem = Item.ThrowTileID;
 				IncomingTileBox.SelectedItem = Item.IncomingTileID;
+				UseQuiverBox.Checked = Item.UseQuiver;
+
 
 				PrimaryBox.Checked = (Item.Slot & ItemSlot.Primary) == ItemSlot.Primary;
 				SecondaryBox.Checked = (Item.Slot & ItemSlot.Secondary) == ItemSlot.Secondary;
@@ -452,7 +456,7 @@ namespace DungeonEye.Forms
 			Item.GroundTileID = int.Parse(GroundTileBox.SelectedItem.ToString());
 			Item.TileID = int.Parse(InventoryTileBox.SelectedItem.ToString());
 			Item.IncomingTileID = int.Parse(IncomingTileBox.SelectedItem.ToString());
-			Item.MoveAwayTileID = int.Parse(MoveAwayTileBox.SelectedItem.ToString());
+			Item.ThrowTileID = int.Parse(MoveAwayTileBox.SelectedItem.ToString());
 
 			if (PrimaryBox.Checked)
 				Item.Slot |= ItemSlot.Primary;			
@@ -479,9 +483,9 @@ namespace DungeonEye.Forms
 			// Add to the tileset
 			ItemSet.Items[Item.Name] = Item;
 
-			int id = ItemsBox.SelectedIndex;
-			RebuildLists();
-			ItemsBox.SelectedIndex = id;
+			//int id = ItemsBox.SelectedIndex;
+			//RebuildLists();
+			//ItemsBox.SelectedIndex = id;
 		}
 
 
@@ -538,7 +542,7 @@ namespace DungeonEye.Forms
 
 
 		/// <summary>
-		/// 
+		/// Form load
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -558,6 +562,15 @@ namespace DungeonEye.Forms
 			Display.Init();
 
 		}
+
+		private void UseQuiverBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Item == null)
+				return;
+
+			Item.UseQuiver = UseQuiverBox.Checked;
+		}
+
 
 		#endregion
 
@@ -595,6 +608,7 @@ namespace DungeonEye.Forms
 		TileSet TileSet;
 
 		#endregion
+
 
 
 
