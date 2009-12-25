@@ -57,6 +57,17 @@ namespace DungeonEye
 			Stairs = new List<TileDrawing>[viewcount];
 			for (int i = 0; i < viewcount; i++)
 				Stairs[i] = new List<TileDrawing>();
+
+
+			ThrowRight =  new Rectangle(176, 0, 176, 144);
+			ThrowLeft = new Rectangle(0, 0, 176, 144);
+			CampButton = new Rectangle(578, 354, 62, 42);
+			FrontBlock = new Rectangle(48, 14, 256, 192);
+			Alcove = new Rectangle(130, 64, 128, 44);
+			LeftFeetTeam = new Rectangle(0, 202, 176, 38);
+			LeftFrontTeamGround = new Rectangle(0, 144, 176, 58);
+			RightFeetTeam = new Rectangle(176, 202, 176, 38);
+			RightFrontTeamGround = new Rectangle(176, 144, 176, 58);
 		}
 
 
@@ -360,15 +371,96 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Rectangle zone for alcoves
+		/// Alcoves zone
 		/// </summary>
-		static public Rectangle AlcoveZone
+		static public Rectangle Alcove
 		{
-			get
-			{
-				return new Rectangle(130, 64, 128, 44);
-			}
+			get;
+			private set;
 		}
+
+
+		/// <summary>
+		/// Front block zone
+		/// </summary>
+		static public Rectangle FrontBlock
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// Camp button zone
+		/// </summary>
+		static public Rectangle CampButton
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// Throw left zone
+		/// </summary>
+		static public Rectangle ThrowLeft
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// Throw right zone
+		/// </summary>
+		static public Rectangle ThrowRight
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// Left team ground item zone
+		/// </summary>
+		static public Rectangle LeftFeetTeam
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// Right team ground item zone
+		/// </summary>
+		static public Rectangle RightFeetTeam
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// Left front team ground item zone
+		/// </summary>
+		static public Rectangle LeftFrontTeamGround
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// Right front team ground item zone
+		/// </summary>
+		static public Rectangle RightFrontTeamGround
+		{
+			get;
+			private set;
+		}
+
+
+
 		#endregion
 
 	}

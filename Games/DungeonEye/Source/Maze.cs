@@ -1547,21 +1547,22 @@ namespace DungeonEye
 			#region Door
 			else if (block.Door != null)
 			{
-				if ((field.Maze.IsDoorNorthSouth(block.Location) && (view == CardinalPoint.North || view == CardinalPoint.South)) ||
-					(!field.Maze.IsDoorNorthSouth(block.Location) && (view == CardinalPoint.East || view == CardinalPoint.West)))
+				// Under the door
+				if (field.GetBlock(ViewFieldPosition.N).IsWall && position == ViewFieldPosition.Team)
+				{
+					td = MazeDisplayCoordinates.GetDoor(ViewFieldPosition.Team);
+					if (td != null)
+						OverlayTileset.Draw(td.ID, td.Location, td.SwapX, td.SwapY);
+				}
+				else if (((field.Maze.IsDoorNorthSouth(block.Location) && (view == CardinalPoint.North || view == CardinalPoint.South)) ||
+					(!field.Maze.IsDoorNorthSouth(block.Location) && (view == CardinalPoint.East || view == CardinalPoint.West))) &&
+					position != ViewFieldPosition.Team)
 				{
 					td = MazeDisplayCoordinates.GetDoor(position);
 					if (td != null)
 					{
-						// Under the door
-						if (position == ViewFieldPosition.Team)
-						{
-						}
-						else
-						{
-							WallTileset.Draw(td.ID, td.Location, td.SwapX, td.SwapY);
-							block.Door.Draw(td.Location, position, view);
-						}
+						WallTileset.Draw(td.ID, td.Location, td.SwapX, td.SwapY);
+						block.Door.Draw(td.Location, position, view);
 					}
 				}
 			}
@@ -1583,6 +1584,7 @@ namespace DungeonEye
 				foreach (TileDrawing tmp in MazeDisplayCoordinates.GetWalls(position))
 					WallTileset.Draw(tmp.ID, tmp.Location, tmp.SwapX, tmp.SwapY);
 
+
 				// Alcoves
 				if (block.HasAlcoves)
 				{
@@ -1602,6 +1604,7 @@ namespace DungeonEye
 							ItemsTileset.Draw(item.GroundTileID + offset, td.Location);
 					}
 				}
+
 			}
 			#endregion
 
@@ -2536,7 +2539,18 @@ namespace DungeonEye
 		}
 
 
+		/// <summary>
+		/// Gets a block in the view field
+		/// </summary>
+		/// <param name="position">Block position</param>
+		/// <returns>Block handle</returns>
+		public MazeBlock GetBlock(ViewFieldPosition position)
+		{
+			return Blocks[(int)position];
+		}
 
+
+		#region Properties
 
 
 		/// <summary>
@@ -2575,7 +2589,7 @@ namespace DungeonEye
 			private set;
 		}
 
-
+		#endregion
 	}
 
 

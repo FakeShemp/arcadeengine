@@ -164,7 +164,7 @@
     <Compile Include="Source\AutoMap.cs" />
     <Compile Include="CharGen.cs" />
     <Compile Include="Source\Button.cs" />
-    <Compile Include="Source\MazeElements.cs" />
+    <Compile Include="Source\MazeDisplayCoordinates.cs" />
     <Compile Include="Source\Compass.cs" />
     <Compile Include="IntroScreen.cs" />
     <Compile Include="Source\FlyingItem.cs" />

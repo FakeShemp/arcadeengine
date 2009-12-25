@@ -84,7 +84,7 @@ namespace DungeonEye
 			}
 
 			// An Alcove 
-			else if (HasAlcove(side) && MazeDisplayCoordinates.AlcoveZone.Contains(location))
+			else if (HasAlcove(side) && MazeDisplayCoordinates.Alcove.Contains(location))
 			{
 				if (team.ItemInHand != null)
 				{
@@ -169,7 +169,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Item is dropped on the block
 		/// </summary>
-		/// <param name="item"></param>
+		/// <param name="item">Handle to the item</param>
 		public void OnDroppedItem(Item item)
 		{
 		}
@@ -178,7 +178,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Item is collected from the block
 		/// </summary>
-		/// <param name="item"></param>
+		/// <param name="item">Handle to the item</param>
 		public void OnCollectedItem(Item item)
 		{
 		}

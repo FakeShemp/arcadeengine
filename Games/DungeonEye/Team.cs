@@ -908,7 +908,7 @@ namespace DungeonEye
 				#endregion
 
 				#region Camp button
-				else if (new Rectangle(578, 354, 62, 42).Contains(mousePos))
+				else if (MazeDisplayCoordinates.CampButton.Contains(mousePos))
 				{
 					SpellBook.Close();
 					CampWindow.IsVisible = true;
@@ -920,7 +920,7 @@ namespace DungeonEye
 				#region Gather item on the ground Left
 
 				// Team's feet
-				else if (new Rectangle(0, 202, 176, 38).Contains(mousePos))
+				else if (MazeDisplayCoordinates.LeftFeetTeam.Contains(mousePos))
 				{
 					switch (Direction)
 					{
@@ -953,7 +953,7 @@ namespace DungeonEye
 				}
 
 				// In front of the team
-				else if (!FrontBlock.IsWall && new Rectangle(0, 144, 176, 58).Contains(mousePos))
+				else if (!FrontBlock.IsWall && MazeDisplayCoordinates.LeftFrontTeamGround.Contains(mousePos))
 				{
 					// Ground position
 					switch (Location.Direction)
@@ -990,7 +990,7 @@ namespace DungeonEye
 				#endregion
 
 				#region Gather item on the ground right
-				else if (new Rectangle(176, 202, 176, 38).Contains(mousePos))
+				else if (MazeDisplayCoordinates.RightFeetTeam.Contains(mousePos))
 				{
 					switch (Location.Direction)
 					{
@@ -1023,7 +1023,7 @@ namespace DungeonEye
 				}
 
 				// In front of the team
-				else if (!FrontBlock.IsWall && new Rectangle(176, 144, 176, 58).Contains(mousePos))
+				else if (!FrontBlock.IsWall && MazeDisplayCoordinates.RightFrontTeamGround.Contains(mousePos))
 				{
 
 					// Ground position
@@ -1063,14 +1063,15 @@ namespace DungeonEye
 				#region Action to process on the front block
 
 				// Click on the block in front of the team
-				else if(new Rectangle(48, 14, 256, 192).Contains(mousePos) && FrontBlock.IsWall)
+				else if(MazeDisplayCoordinates.FrontBlock.Contains(mousePos))// && FrontBlock.IsWall)
 				{
 					FrontBlock.OnClick(this, mousePos, FrontWallSide);
 				}
 				#endregion
 
+
 				#region Throw an object left side
-				else if (new Rectangle(0, 0, 176, 144).Contains(mousePos) && ItemInHand != null)
+				else if (MazeDisplayCoordinates.ThrowLeft.Contains(mousePos) && ItemInHand != null)
 				{
 					DungeonLocation loc = new DungeonLocation(Location);
 					switch (Location.Direction)
@@ -1094,7 +1095,7 @@ namespace DungeonEye
 				#endregion
 
 				#region Throw an object in the right side
-				else if (new Rectangle(176, 0, 176, 144).Contains(mousePos) && ItemInHand != null)
+				else if (MazeDisplayCoordinates.ThrowRight.Contains(mousePos) && ItemInHand != null)
 				{
 
 					DungeonLocation loc = new DungeonLocation(Location);
@@ -1119,9 +1120,6 @@ namespace DungeonEye
 					ItemInHand = null;
 				}
 				#endregion
-
-
-
 			}
 
 			#endregion
@@ -1133,7 +1131,7 @@ namespace DungeonEye
 				#region Action to process on the front block
 
 				// Click on the block in front of the team
-				if (MazeDisplayCoordinates.AlcoveZone.Contains(mousePos) && FrontBlock.IsWall)
+				if (MazeDisplayCoordinates.Alcove.Contains(mousePos) && FrontBlock.IsWall)
 				{
 					//FrontBlock.OnClick(this, mousePos, FrontWallSide); 
 					SelectedHero.AddToInventory(FrontBlock.CollectAlcoveItem(FrontWallSide));
@@ -1143,7 +1141,7 @@ namespace DungeonEye
 				#region Gather item on the ground Left
 
 				// Team's feet
-				else if (new Rectangle(0, 202, 176, 38).Contains(mousePos))
+				else if (MazeDisplayCoordinates.LeftFeetTeam.Contains(mousePos))
 				{
 					switch (Direction)
 					{
@@ -1174,7 +1172,7 @@ namespace DungeonEye
 				}
 
 				// In front of the team
-				else if (new Rectangle(0, 144, 176, 58).Contains(mousePos) && !FrontBlock.IsWall)
+				else if (MazeDisplayCoordinates.LeftFrontTeamGround.Contains(mousePos) && !FrontBlock.IsWall)
 				{
 					// Ground position
 					switch (Location.Direction)
@@ -1211,7 +1209,7 @@ namespace DungeonEye
 				#endregion
 
 				#region Gather item on the ground right
-				else if (new Rectangle(176, 202, 176, 38).Contains(mousePos))
+				else if (MazeDisplayCoordinates.RightFeetTeam.Contains(mousePos))
 				{
 					switch (Location.Direction)
 					{
@@ -1243,7 +1241,7 @@ namespace DungeonEye
 				}
 
 				// In front of the team
-				else if (new Rectangle(176, 144, 176, 58).Contains(mousePos) && !FrontBlock.IsWall)
+				else if (MazeDisplayCoordinates.RightFrontTeamGround.Contains(mousePos) && !FrontBlock.IsWall)
 				{
 
 					// Ground position
@@ -1506,8 +1504,7 @@ namespace DungeonEye
 			//   return;
 
 			if (CanMove)
-				MazeBlock.OnTeamStand(this);		
-	
+				MazeBlock.OnTeamStand(this);
 		}
 
 
