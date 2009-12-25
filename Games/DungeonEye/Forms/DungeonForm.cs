@@ -43,9 +43,9 @@ namespace DungeonEye.Forms
 	public partial class DungeonForm : AssetEditor
 	{
 		/// <summary>
-		/// 
+		/// Default constructor
 		/// </summary>
-		/// <param name="node"></param>
+		/// <param name="node">Dungeon node definition</param>
 		public DungeonForm(XmlNode node)
 		{
 			InitializeComponent();
@@ -196,7 +196,7 @@ namespace DungeonEye.Forms
 
 
 			int id = 0;
-			for (int y = 0; y < Icons.Texture.Size.Height; y += 25)
+			for (int y = 0; y < Icons.Texture.Size.Height - 50; y += 25)
 			{
 				for (int x = 0; x < Icons.Texture.Size.Width; x += 25)
 				{
@@ -204,7 +204,8 @@ namespace DungeonEye.Forms
 					tile.Rectangle = new Rectangle(x, y, 25, 25);
 				}
 			}
-
+			Icons.AddTile(100).Rectangle = new Rectangle(0, 245, 6, 11); // alcoves
+			Icons.AddTile(101).Rectangle = new Rectangle(6, 248, 11, 6); // alcoves
 
 			DrawTimer.Start();
 		
@@ -432,7 +433,13 @@ namespace DungeonEye.Forms
 			glControl.MakeCurrent();
 			Display.ClearBuffers();
 
-
+			Point[] alcoves = new Point[]
+			{
+				new Point(7, 0),
+				new Point(7, 19),
+				new Point(0, 7),
+				new Point(19, 7),
+			}
 
 			// Background texture
 			CheckerBoard.Blit(new Rectangle(Point.Empty, glControl.Size), TextureLayout.Tile);
@@ -446,7 +453,6 @@ namespace DungeonEye.Forms
 
 			// Draw maze background
 			Display.Texture = Icons.Texture;
-			//Batch.Size = Maze.Size.Width * Maze.Size.Height;
 			Batch.Clear();
 
 			Tile tile = null;
@@ -536,6 +542,20 @@ namespace DungeonEye.Forms
 						tile = Icons.GetTile(block.Stair.Type == StairType.Up ? 6 : 7);
 						Batch.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), Color.White, tile.Rectangle);
 					}
+
+					// Alcoves
+					if (block.HasAlcoves)
+					{
+						foreach (CardinalPoint side in Enum.GetValues(typeof(CardinalPoint)))
+						{
+							if (block.HasAlcove(side))
+							{
+								tile = Icons.GetTile(100);
+								Batch.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25 + 7, tile.Size.Width, tile.Size.Height), Color.White, tile.Rectangle);
+							}
+						}
+					}
+
 				}
 			}
 
@@ -553,9 +573,12 @@ namespace DungeonEye.Forms
 			// Starting point
 			if (Dungeon.StartLocation.Maze == Maze.Name)
 			{
-				tile = Icons.GetTile(19);
+				tile = Icons.GetTile(20);
 				Batch.AddRectangle(new Rectangle(Offset.X + Dungeon.StartLocation.Position.X * 25, Offset.Y + Dungeon.StartLocation.Position.Y * 25, 25, 25), Color.White, tile.Rectangle);
 			}
+
+
+
 
 			Batch.Apply();
 			Display.DrawBatch(Batch, BeginMode.Quads);
