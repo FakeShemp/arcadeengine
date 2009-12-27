@@ -69,7 +69,7 @@ namespace DungeonEye
 			Charisma = Game.Random.Next(3, 18);
 			ArmorClass = Game.Random.Next(0, 10);
 			MaxHitPoint = Game.Random.Next(6, 37);
-			HitPoint = MaxHitPoint;
+			HitPoint = Game.Random.Next(6, MaxHitPoint);
 			Level = 3;
 			Food = 75;
 			Profession prof = new Profession();

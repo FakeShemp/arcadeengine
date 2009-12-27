@@ -48,7 +48,7 @@ namespace ArcEngine.Editor
 			//
 			Node = node;
 			//tileSet = new TileSet();
-			tileSet = new TileSet();
+			//tileSet = new TileSet();
 			//tileSet.Load(node);
 
 			TileBox = new SelectionBox();
@@ -570,7 +570,7 @@ namespace ArcEngine.Editor
 			CheckerBoard = new Texture(ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png"));
 
 
-			//tileSet = new TileSet();
+			tileSet = new TileSet();
 			tileSet.Load(Node);
 
 			// Build Cell list
@@ -776,16 +776,15 @@ namespace ArcEngine.Editor
 		private void TileSetForm_FormClosing(object sender, FormClosingEventArgs e)
 		{
 			DialogResult result = MessageBox.Show("TileSet Editor", "Save modifciations ?", MessageBoxButtons.YesNoCancel);
-
-			if (result == DialogResult.Yes)
-			{
-
-				Save();
-			}
-			else if (result == DialogResult.Cancel)
+			if (result == DialogResult.Cancel)
 			{
 				e.Cancel = true;
+				return;
 			}
+			else if (result == DialogResult.Yes)
+				Save();
+
+			
 		}
 
 

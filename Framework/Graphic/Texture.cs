@@ -88,6 +88,9 @@ namespace ArcEngine.Graphic
 		public Texture()
 		{
 			Handle = GL.GenTexture();
+			ErrorCode code = GL.GetError();
+			if (code != ErrorCode.NoError)
+				Trace.WriteLine("Failed to create a new texture ({0})", code.ToString());
 
 			MagFilter = Display.TextureParameters.MagFilter;
 			MinFilter = Display.TextureParameters.MinFilter;

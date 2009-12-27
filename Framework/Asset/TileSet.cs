@@ -134,8 +134,8 @@ namespace ArcEngine.Asset
 		/// <summary>
 		/// Loads the collection from a xml node
 		/// </summary>
-		/// <param name="xml"></param>
-		/// <returns></returns>
+		/// <param name="xml">Xml handle</param>
+		/// <returns>True if loaded</returns>
 		public bool Load(XmlNode xml)
 		{
 			if (xml == null)

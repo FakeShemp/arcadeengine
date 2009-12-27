@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using ArcEngine.Asset;
+using System.Xml;
 
 namespace DungeonEye
 {
@@ -8,7 +10,7 @@ namespace DungeonEye
 	/// <summary>
 	/// Button class
 	/// </summary>
-	public class WallButton
+	public class WallButton : IAsset
 	{
 
 		public WallButton()
@@ -52,7 +54,7 @@ namespace DungeonEye
 				{
 					case "type":
 					{
-						Type = (ItemType)Enum.Parse(typeof(ItemType), node.Attributes["value"].Value, true);
+						//Type = (ItemType)Enum.Parse(typeof(ItemType), node.Attributes["value"].Value, true);
 					}
 					break;
 
@@ -97,6 +99,25 @@ namespace DungeonEye
 
 		#region Properties
 
+		/// <summary>
+		/// Name 
+		/// </summary>
+		public string Name
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Xml tag of the asset in bank
+		/// </summary>
+		public string XmlTag
+		{
+			get
+			{
+				return "wallbutton";
+			}
+		}
 
 		/// <summary>
 		/// Is button hidden

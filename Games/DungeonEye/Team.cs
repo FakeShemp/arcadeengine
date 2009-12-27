@@ -17,11 +17,9 @@
 //along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 //
 #endregion
-using DungeonEye.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 using ArcEngine;
@@ -50,6 +48,8 @@ namespace DungeonEye
 			CampWindow = new CampWindow();
 			TeamSpeed = TimeSpan.FromSeconds(0.15f);
 			SpellBook = new SpellBook();
+
+			DrawHPAsBar = true;
 		}
 
 
@@ -385,19 +385,32 @@ namespace DungeonEye
 					// Name
 					if (HeroToSwap == hero)
 					{
-						Font.DrawText(new Point(pos.X + 4, pos.Y + 6), Color.Red, " Swapping");
+						Font.DrawText(new Point(pos.X + 6, pos.Y + 6), Color.Red, " Swapping");
 					}
 					else if (SelectedHero == hero)
 					{
-						Font.DrawText(new Point(pos.X + 4, pos.Y + 6), Color.White, hero.Name);
+						Font.DrawText(new Point(pos.X + 6, pos.Y + 6), Color.White, hero.Name);
 					}
 					else
 					{
-						Font.DrawText(new Point(pos.X + 4, pos.Y + 6), Color.Black, hero.Name);
+						Font.DrawText(new Point(pos.X + 6, pos.Y + 6), Color.Black, hero.Name);
 					}
 
 					// HP
-					Font.DrawText(new Point(pos.X + 4, pos.Y + 88), Color.Black, hero.HitPoint + " of " + hero.MaxHitPoint);
+					if (DrawHPAsBar)
+					{
+						float percent = (float)hero.HitPoint / (float)hero.MaxHitPoint;
+						Color color = Color.Green;
+						if (percent < 0.15)
+							color = Color.Red;
+						else if (percent < 0.4)
+							color = Color.Yellow;
+
+						Font.DrawText(new Point(pos.X + 6, pos.Y + 88), Color.Black, "HP");
+						DrawProgressBar(hero.HitPoint, hero.MaxHitPoint, new Rectangle(pos.X + 30, pos.Y + 88, 92, 10), color);
+					}
+					else
+						Font.DrawText(new Point(pos.X + 6, pos.Y + 88), Color.Black, hero.HitPoint + " of " + hero.MaxHitPoint);
 
 
 
@@ -438,7 +451,7 @@ namespace DungeonEye
 						Items.Draw(85, new Point(pos.X + 96, pos.Y + 68));
 
 
-
+					// Dead or uncounscious
 					if (hero.IsUnconscious || hero.IsDead)
 					{
 						TileSet.Draw(3, new Point(pos.X + 66, pos.Y + 52));
@@ -487,6 +500,29 @@ namespace DungeonEye
 		}
 
 
+
+
+		/// <summary>
+		/// Draws a progress bar
+		/// </summary>
+		/// <param name="value">Current value</param>
+		/// <param name="max">Maximum value</param>
+		/// <param name="rectangle">Rectangle</param>
+		/// <param name="color">Bar color</param>
+		public void DrawProgressBar(int value, int max, Rectangle rectangle, Color color)
+		{
+			Display.FillRectangle(rectangle.Left + 1, rectangle.Top + 1, (int)((float)value / (float)max * (rectangle.Width - 1)), rectangle.Height - 2, color);
+
+			Display.DrawLine(rectangle.Left, rectangle.Top, rectangle.Left, rectangle.Bottom, Color.FromArgb(138, 146, 207));
+			Display.DrawLine(rectangle.Left, rectangle.Bottom, rectangle.Right + 2, rectangle.Bottom, Color.FromArgb(138, 146, 207));
+
+
+			Display.DrawLine(rectangle.Left + 1, rectangle.Top, rectangle.Right + 1, rectangle.Top, Color.FromArgb(44, 48, 138));
+			Display.DrawLine(rectangle.Right + 1, rectangle.Top, rectangle.Right + 1, rectangle.Bottom, Color.FromArgb(44, 48, 138));
+			Display.Color = Color.White;
+		}
+
+		
 
 		/// <summary>
 		/// Draws the inventory
@@ -2605,6 +2641,16 @@ namespace DungeonEye
 		/// Sound test
 		/// </summary>
 		Audio sound;
+
+
+		/// <summary>
+		/// Draw HP as bar
+		/// </summary>
+		public bool DrawHPAsBar
+		{
+			get;
+			set;
+		}
 
 		#endregion
 	}

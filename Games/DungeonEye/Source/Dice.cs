@@ -26,26 +26,57 @@ namespace DungeonEye
 	/// <summary>
 	/// Dice
 	/// </summary>
-	public static class Dice
+	public class Dice
 	{
+		/// <summary>
+		/// Default constructor
+		/// </summary>
+		public Dice() : this(0, 0, 0)
+		{
+		}
+
+	
+		/// <summary>
+		/// Default constructor
+		/// </summary>
+		/// <param name="rolls"></param>
+		/// <param name="faces"></param>
+		/// <param name="start"></param>
+		public Dice(int rolls, int sides, int start)
+		{
+			Random = new Random((int)DateTime.Now.Ticks);
+
+			Rolls = rolls;
+			Sides = sides;
+			Base = start;
+		}
+
+
+		/// <summary>
+		/// Returns a dice roll
+		/// </summary>
+		/// <returns>The value</returns>
+		public int Roll()
+		{
+			return Roll(Rolls);
+		}
 
 
 
 		/// <summary>
 		/// Returns a dice roll
 		/// </summary>
-		/// <param name="count">Number of roll</param>
-		/// <param name="face">Number of face of the dice</param>
-		/// <returns></returns>
-		static public int Roll(int count, int face)
+		/// <param name="rolls>Number of roll</param>
+		/// <returns>The value</returns>
+		public int Roll(int rolls)
 		{
 			int val = 0;
 
-			for (int i = 0; i < count; i++)
-				val += Random.Next(1, face);
+			for (int i = 0; i < rolls; i++)
+				val += Random.Next(1, Sides);
 
 
-			return val;
+			return val + Base;
 		}
 
 
@@ -56,7 +87,36 @@ namespace DungeonEye
 		/// <summary>
 		/// Random generator
 		/// </summary>
-		static Random Random = new Random((int)DateTime.Now.Ticks);
+		Random Random;
+
+
+		/// <summary>
+		/// Number of throw
+		/// </summary>
+		public int Rolls
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Number of sides
+		/// </summary>
+		public int Sides
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Base value
+		/// </summary>
+		public int Base
+		{
+			get;
+			set;
+		}
+
 
 
 		#endregion
