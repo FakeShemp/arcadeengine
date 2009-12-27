@@ -528,7 +528,7 @@ namespace ArcEngine.Graphic
 		/// <param name="color">Color</param>
 		public static void FillRectangle(int x, int y, int width, int height, Color color)
 		{
-			DrawQuad(x, y, height, width, color, true, 0, Point.Empty);
+			DrawQuad(x, y, width, height, color, true, 0, Point.Empty);
 		}
 
 
