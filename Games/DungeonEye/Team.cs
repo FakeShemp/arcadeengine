@@ -351,7 +351,7 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Drws the right side of the panel
+		/// Draws the right side of the panel
 		/// </summary>
 		private void DrawMain()
 		{

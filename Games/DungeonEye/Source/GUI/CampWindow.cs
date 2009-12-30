@@ -17,37 +17,38 @@
 //along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 //
 #endregion
-using ArcEngine.Input;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
+using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
-using ArcEngine;
-using System.Drawing;
+using ArcEngine.Input;
 
 namespace DungeonEye.Gui
 {
 	/// <summary>
-	/// Window GUI
+	/// Camp window class
 	/// </summary>
 	public class CampWindow
 	{
 
 		/// <summary>
-		/// 
+		/// Default constructor
 		/// </summary>
 		public CampWindow()
 		{
 			Buttons = new List<ScreenButton>();
-
+			Message = new MessageBox();
+			Message.Yes = "Yes";
+			Message.No = "No";
 		}
 
 
 		/// <summary>
 		/// Initializes the Window
 		/// </summary>
-		/// <param name="device"></param>
 		/// <returns></returns>
 		public bool Init()
 		{
@@ -91,7 +92,7 @@ namespace DungeonEye.Gui
 
 
 		/// <summary>
-		/// 
+		/// Exit button
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -99,6 +100,7 @@ namespace DungeonEye.Gui
 		{
 			IsVisible = false;
 		}
+
 
 		/// <summary>
 		/// Game options
@@ -165,7 +167,7 @@ namespace DungeonEye.Gui
 		/// <param name="e"></param>
 		void RestParty_Selected(object sender, EventArgs e)
 		{
-
+			
 		}
 
 		#endregion
@@ -177,7 +179,7 @@ namespace DungeonEye.Gui
 		/// <summary>
 		/// Updates the window
 		/// </summary>
-		/// <param name="time"></param>
+		/// <param name="time">Elapsed game time</param>
 		public void Update(GameTime time)
 		{
 			if (!IsVisible)
@@ -208,16 +210,13 @@ namespace DungeonEye.Gui
 		/// <summary>
 		/// Draws the Window
 		/// </summary>
-		/// <param name="device"></param>
 		public void Draw()
 		{
 			if (!IsVisible)
 				return;
 
 
-			//Display.Color = BgColor;
-			Display.FillRectangle(Rectangle, BgColor);
-
+			DrawBevel(Rectangle, BgColor, Color.FromArgb(138, 146, 207), Color.FromArgb(44, 48, 134));
 			Font.DrawText(new Point(8, 10), Color.FromArgb(85, 255, 255), "Camp :");
 
 
@@ -225,31 +224,42 @@ namespace DungeonEye.Gui
 			// Draw buttons
 			foreach (ScreenButton button in Buttons)
 			{
-				Point point = button.Rectangle.Location;
-				Size size = button.Rectangle.Size;
-
-				// Rectangle
-				//Display.Color = Color.FromArgb(138, 146, 207);
-				Display.FillRectangle(new Rectangle(point.X + 2, point.Y, size.Width - 2, 2), Color.FromArgb(138, 146, 207));
-				Display.FillRectangle(new Rectangle(point.X + 4, point.Y + 2, size.Width - 4, 2), Color.FromArgb(138, 146, 207));
-				Display.FillRectangle(new Rectangle(button.Rectangle.Right - 4, point.Y + 4, 2, size.Height - 8), Color.FromArgb(138, 146, 207));
-				Display.FillRectangle(new Rectangle(button.Rectangle.Right - 2, point.Y + 4, 2, size.Height - 6), Color.FromArgb(138, 146, 207));
-
-				//Display.Color = Color.FromArgb(44, 48, 134);
-				Display.FillRectangle(new Rectangle(point.X, point.Y + 26, size.Width, 2), Color.FromArgb(44, 48, 134));
-				Display.FillRectangle(new Rectangle(point.X, point.Y + 24, size.Width - 2, 2), Color.FromArgb(44, 48, 134));
-				Display.FillRectangle(new Rectangle(point.X, point.Y, 2, size.Height - 4), Color.FromArgb(44, 48, 134));
-				Display.FillRectangle(new Rectangle(point.X + 2, point.Y + 2, 2, size.Height - 6), Color.FromArgb(44, 48, 134));
-
+				DrawBevel(button.Rectangle, BgColor, Color.FromArgb(138, 146, 207), Color.FromArgb(44, 48, 134));
 
 				// Text
+				Point point = button.Rectangle.Location;
 				point.Offset(6, 6);
 				Font.DrawText(point, button.TextColor, button.Text);
-
-
 			}
 
 		}
+
+
+		/// <summary>
+		/// Draws a beveled rectangle
+		/// </summary>
+		/// <param name="rect">Rectangle</param>
+		/// <param name="bg">Background color</param>
+		/// <param name="light">Light color</param>
+		/// <param name="dark">Dark color</param>
+		public void DrawBevel(Rectangle rect, Color bg, Color light, Color dark)
+		{
+			Display.FillRectangle(rect, bg);
+
+			Point point = rect.Location;
+			Size size = rect.Size;
+
+			Display.FillRectangle(new Rectangle(point.X + 2, point.Y, size.Width - 2, 2), light);
+			Display.FillRectangle(new Rectangle(point.X + 4, point.Y + 2, size.Width - 4, 2), light);
+			Display.FillRectangle(new Rectangle(rect.Right - 4, point.Y + 4, 2, size.Height - 8), light);
+			Display.FillRectangle(new Rectangle(rect.Right - 2, point.Y + 4, 2, size.Height - 6), light);
+
+			Display.FillRectangle(new Rectangle(point.X, point.Y + 2, 2, size.Height - 4), dark);
+			Display.FillRectangle(new Rectangle(point.X + 2, point.Y + 4, 2, size.Height - 6), dark);
+			Display.FillRectangle(new Rectangle(point.X, point.Y + size.Height - 2, size.Width - 2, 2), dark);
+			Display.FillRectangle(new Rectangle(point.X, point.Y + size.Height - 4, size.Width - 4, 2), dark);
+		}
+
 
 		#endregion
 
@@ -270,6 +280,11 @@ namespace DungeonEye.Gui
 
 		
 		#region Properties
+
+		/// <summary>
+		/// Message box
+		/// </summary>
+		MessageBox Message;
 
 
 		/// <summary>

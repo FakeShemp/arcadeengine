@@ -25,7 +25,7 @@ namespace DungeonEye.Interfaces
 {
 
 	/// <summary>
-	/// Interface for item
+	/// Interface for items
 	/// </summary>
 	public interface IItem
 	{
@@ -34,23 +34,24 @@ namespace DungeonEye.Interfaces
 		/// When the team collect an item
 		/// </summary>
 		/// <param name="item">Item</param>
-		/// <param name="team">Team</param>
-		void OnCollect(Item item, Team team);
+		/// <param name="hero">Hero collecting the item</param>
+		void OnCollect(Item item, Hero hero);
 
 
 		/// <summary>
 		/// When an item is dropped
 		/// </summary>
 		/// <param name="item">Item</param>
-		/// <param name="team">Team</param>
+		/// <param name="hero">Hero dropping the item</param>
 		/// <param name="block">Block where the item is</param>
-		void OnDrop(Item item, Team team, MazeBlock block);
+		void OnDrop(Item item, Hero hero, MazeBlock block);
+
 
 		/// <summary>
 		/// When an item is used
 		/// </summary>
-		/// <param name="item"></param>
-		/// <param name="team"></param>
-		void OnUse(Item item, Team team);
+		/// <param name="item">Item</param>
+		/// <param name="hero">Hero using the item</param>
+		void OnUse(Item item, Hero hero);
 	}
 }

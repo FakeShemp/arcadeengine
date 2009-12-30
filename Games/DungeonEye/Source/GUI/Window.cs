@@ -20,22 +20,53 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using ArcEngine;
 
-namespace DungeonEye.Source.GUI
+namespace DungeonEye.Gui
 {
+	/// <summary>
+	/// This class represents a page in the camp menu
+	/// </summary>
 	public class Window
 	{
 
 		/// <summary>
-		/// 
+		/// Default constructor
 		/// </summary>
 		public Window()
 		{
-
+			Buttons = new List<ScreenButton>();
 		}
 
 
+		/// <summary>
+		/// Updates the window
+		/// </summary>
+		/// <param name="time"></param>
+		public void Update(GameTime time)
+		{
+		}
+
+
+		/// <summary>
+		/// Draws the window
+		/// </summary>
+		public void Draw()
+		{
+		}
+
+
+
 		#region Properties
+
+		/// <summary>
+		/// List of buttons
+		/// </summary>
+		public List<ScreenButton> Buttons
+		{
+			get;
+			private set;
+		}
 
 
 		#endregion

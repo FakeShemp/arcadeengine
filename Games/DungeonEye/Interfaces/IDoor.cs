@@ -32,20 +32,20 @@ namespace DungeonEye.Interfaces
 		/// <summary>
 		/// Update the door state
 		/// </summary>
-		/// <param name="door"></param>
+		/// <param name="door">Door handle</param>
 		void OnUpdate(Door door);
 
 
 		/// <summary>
 		/// Draw the door
 		/// </summary>
-		/// <param name="door"></param>
+		/// <param name="door">Door handle</param>
 		void OnDraw(Door door);
 
 		/// <summary>
 		/// Open the door
 		/// </summary>
-		/// <param name="door"></param>
+		/// <param name="door">Door handle</param>
 		void OnOpen(Door door);
 
 
@@ -53,14 +53,14 @@ namespace DungeonEye.Interfaces
 		/// <summary>
 		/// Close the door
 		/// </summary>
-		/// <param name="door"></param>
+		/// <param name="door">Door handle</param>
 		void OnClose(Door door);
 
 
 		/// <summary>
 		/// Mouse click on the door
 		/// </summary>
-		/// <param name="door"></param>
+		/// <param name="door">Door handle</param>
 		/// <param name="location"></param>
 		void OnClick(Door door, Point location);
 

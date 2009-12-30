@@ -33,16 +33,16 @@ namespace DungeonEye.Interfaces
 	{
 
 		/// <summary>
-		/// 
+		/// Updates monster state
 		/// </summary>
-		/// <param name="monster"></param>
+		/// <param name="monster">Monster handle</param>
 		void OnUpdate(Monster monster);
 
 
 		/// <summary>
-		/// 
+		/// Draws the monster
 		/// </summary>
-		/// <param name="monster"></param>
+		/// <param name="monster">Monster handle</param>
 		void OnDraw(Monster monster);
 
 

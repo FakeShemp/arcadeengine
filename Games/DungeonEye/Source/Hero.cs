@@ -31,7 +31,7 @@ using System.Xml;
 namespace DungeonEye
 {
 	/// <summary>
-	/// Represents a player in the team
+	/// Represents a hero in the team
 	/// 
 	/// 
 	/// 
@@ -40,7 +40,10 @@ namespace DungeonEye
 	/// </summary>
 	public class Hero
 	{
-
+		/// <summary>
+		/// Default constructor
+		/// </summary>
+		/// <param name="team">Team of the hero</param>
 		public Hero(Team team)
 		{
 			Team = team;
@@ -51,7 +54,6 @@ namespace DungeonEye
 			Attacks[0] = new AttackResult();
 			Attacks[1] = new AttackResult();
 		}
-
 
 
 		/// <summary>
@@ -93,8 +95,6 @@ namespace DungeonEye
 				SetInventoryItem(InventoryPosition.Inventory_02, itemset.GetItem("Spell book"));
 			}
 		}
-
-
 
 
 		/// <summary>
@@ -203,7 +203,7 @@ namespace DungeonEye
 		/// Returns the item at a given inventory location
 		/// </summary>
 		/// <param name="position">Inventory position</param>
-		/// <returns>Item</returns>
+		/// <returns>Item or null</returns>
 		public Item GetInventoryItem(InventoryPosition position)
 		{
 			return Inventory[(int)position];
@@ -353,7 +353,6 @@ namespace DungeonEye
 		#endregion
 
 
-
 		#region Helpers
 
 		/// <summary>
@@ -388,15 +387,15 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Loads a hero definition
 		/// </summary>
-		/// <param name="filename"></param>
-		/// <returns></returns>
+		/// <param name="xml">Xml handle</param>
+		/// <returns>True if loaded</returns>
 		public bool Load(XmlNode xml)
 		{
 			if (xml == null)
 				return false;
-			
+		
 
 			ItemSet itemset = ResourceManager.CreateSharedAsset<ItemSet>("Main");
 
@@ -531,10 +530,10 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Saves a hero definition
 		/// </summary>
-		/// <param name="writer"></param>
-		/// <returns></returns>
+		/// <param name="writer">Xml writer handle</param>
+		/// <returns>True if saved</returns>
 		public bool Save(XmlWriter writer)
 		{
 			if (writer == null)
@@ -636,7 +635,6 @@ namespace DungeonEye
 		#endregion
 
 
-
 		#region Hero properties
 
 
@@ -681,7 +679,7 @@ namespace DungeonEye
 		}
 
 		/// <summary>
-		/// 
+		/// Maximum strength
 		/// </summary>
 		public int MaxStrength
 		{
@@ -744,7 +742,7 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Armor class
 		/// </summary>
 		public int ArmorClass
 		{
@@ -764,7 +762,7 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Hero alignement
 		/// </summary>
 		public HeroAlignment Alignment
 		{
@@ -774,7 +772,7 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Hero class
 		/// </summary>
 		public HeroClass Class
 		{
@@ -784,7 +782,7 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Hero race
 		/// </summary>
 		public HeroRace Race
 		{
@@ -808,7 +806,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Number of arrows in the quiver
 		/// </summary>
-		public short Arrows
+		public byte Arrows
 		{
 			get;
 			set;
@@ -867,7 +865,11 @@ namespace DungeonEye
 		/// <summary>
 		/// Team of the hero
 		/// </summary>
-		Team Team;
+		public Team Team
+		{
+			get;
+			private set;
+		}
 
 
 		/// <summary>
@@ -900,7 +902,7 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// How many HP hero last by the last attack
+		/// How many HP hero lost by the last attack
 		/// </summary>
 		public int LastHit
 		{
@@ -919,6 +921,7 @@ namespace DungeonEye
 				return HitPoint > -10 && HitPoint <= 0;
 			}
 		}
+
 
 		/// <summary>
 		/// Returns true if hero is dead
@@ -971,7 +974,7 @@ namespace DungeonEye
 
 
 	/// <summary>
-	/// 
+	/// Available hero alignements
 	/// </summary>
 	public enum HeroAlignment
 	{

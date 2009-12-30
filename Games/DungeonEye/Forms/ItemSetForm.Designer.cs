@@ -48,6 +48,7 @@
 			this.label3 = new System.Windows.Forms.Label();
 			this.DescriptionBox = new System.Windows.Forms.TextBox();
 			this.groupBox5 = new System.Windows.Forms.GroupBox();
+			this.UseQuiverBox = new System.Windows.Forms.CheckBox();
 			this.WeightBox = new System.Windows.Forms.NumericUpDown();
 			this.SpeedBox = new System.Windows.Forms.NumericUpDown();
 			this.Weight = new System.Windows.Forms.Label();
@@ -103,7 +104,6 @@
 			this.groupBox10 = new System.Windows.Forms.GroupBox();
 			this.ScriptNameBox = new System.Windows.Forms.ComboBox();
 			this.label16 = new System.Windows.Forms.Label();
-			this.UseQuiverBox = new System.Windows.Forms.CheckBox();
 			this.toolStrip1.SuspendLayout();
 			this.groupBox4.SuspendLayout();
 			this.groupBox5.SuspendLayout();
@@ -312,6 +312,17 @@
 			this.groupBox5.TabIndex = 6;
 			this.groupBox5.TabStop = false;
 			this.groupBox5.Text = "Misc :";
+			// 
+			// UseQuiverBox
+			// 
+			this.UseQuiverBox.AutoSize = true;
+			this.UseQuiverBox.Location = new System.Drawing.Point(6, 114);
+			this.UseQuiverBox.Name = "UseQuiverBox";
+			this.UseQuiverBox.Size = new System.Drawing.Size(77, 17);
+			this.UseQuiverBox.TabIndex = 3;
+			this.UseQuiverBox.Text = "Use quiver";
+			this.UseQuiverBox.UseVisualStyleBackColor = true;
+			this.UseQuiverBox.CheckedChanged += new System.EventHandler(this.UseQuiverBox_CheckedChanged);
 			// 
 			// WeightBox
 			// 
@@ -731,9 +742,9 @@
 			this.label13.AutoSize = true;
 			this.label13.Location = new System.Drawing.Point(6, 310);
 			this.label13.Name = "label13";
-			this.label13.Size = new System.Drawing.Size(68, 13);
+			this.label13.Size = new System.Drawing.Size(49, 13);
 			this.label13.TabIndex = 1;
-			this.label13.Text = "Move away :";
+			this.label13.Text = "Thrown :";
 			// 
 			// TileSetNameBox
 			// 
@@ -922,17 +933,6 @@
 			this.label16.Size = new System.Drawing.Size(69, 13);
 			this.label16.TabIndex = 0;
 			this.label16.Text = "Script name :";
-			// 
-			// UseQuiverBox
-			// 
-			this.UseQuiverBox.AutoSize = true;
-			this.UseQuiverBox.Location = new System.Drawing.Point(6, 114);
-			this.UseQuiverBox.Name = "UseQuiverBox";
-			this.UseQuiverBox.Size = new System.Drawing.Size(77, 17);
-			this.UseQuiverBox.TabIndex = 3;
-			this.UseQuiverBox.Text = "Use quiver";
-			this.UseQuiverBox.UseVisualStyleBackColor = true;
-			this.UseQuiverBox.CheckedChanged += new System.EventHandler(this.UseQuiverBox_CheckedChanged);
 			// 
 			// ItemSetForm
 			// 

@@ -34,9 +34,10 @@ namespace DungeonEye.Gui
 	{
 
 		/// <summary>
-		/// 
+		/// Default constructor
 		/// </summary>
-		/// <param name="text"></param>
+		/// <param name="text">Text to display</param>
+		/// <param name="rectangle">Rectangle of the button</param>
 		public ScreenButton(string text, Rectangle rectangle)
 		{
 			Text = text;
