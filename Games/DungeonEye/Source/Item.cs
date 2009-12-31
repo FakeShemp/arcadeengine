@@ -25,6 +25,8 @@ using System.Drawing.Design;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
+using ArcEngine;
+using ArcEngine.Asset;
 
 
 //
@@ -65,7 +67,6 @@ namespace DungeonEye
 			if (xml == null || xml.Name != "item")
 				return false;
 
-
 			//ID = int.Parse(xml.Attributes["id"].Value);
 			Name = xml.Attributes["name"].Value;
 
@@ -77,6 +78,13 @@ namespace DungeonEye
 
 				switch (node.Name.ToLower())
 				{
+					case "script":
+					{
+
+						ResourceManager.CreateSharedAsset<Script>(ScriptName);
+					}
+					break;
+
 					case "type":
 					{
 						Type = (ItemType)Enum.Parse(typeof(ItemType), node.Attributes["value"].Value, true);
@@ -213,6 +221,24 @@ namespace DungeonEye
 
 		#region Properties
 
+
+		/// <summary>
+		/// Script name
+		/// </summary>
+		public string ScriptName
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Script of the item
+		/// </summary>
+		public Script Script
+		{
+			get;
+			private set;
+		}
 
 		/// <summary>
 		/// Name of the item

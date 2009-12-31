@@ -144,8 +144,10 @@ namespace DungeonEye.Forms
 		/// <summary>
 		/// New item selected
 		/// </summary>
-		void ItemSelected()
+		/// <param name="name">item name</param>
+		void ItemSelected(string name)
 		{
+			Item = null;
 			NameBox.Text = "";
 			DescriptionBox.Text = "";
 			ThrowBox.Value = 0;
@@ -168,8 +170,7 @@ namespace DungeonEye.Forms
 			NeckBox.Checked = false;
 			UseQuiverBox.Checked = false;
 			
-			
-			
+			Item = ItemSet.GetItem(name);
 			if (Item != null)
 			{
 				NameBox.Text = Item.Name;
@@ -235,8 +236,7 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void ItemsBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			Item = ItemSet.GetItem(ItemsBox.SelectedItem as string);
-			ItemSelected();
+			ItemSelected(ItemsBox.SelectedItem as string);
 		}
 
 
@@ -272,7 +272,7 @@ namespace DungeonEye.Forms
 			new Wizards.NewItemWizard(ItemSet).ShowDialog();
 
 			RebuildLists();
-			ItemSelected();
+			ItemSelected(string.Empty);
 		}
 
 
@@ -515,7 +515,7 @@ namespace DungeonEye.Forms
 
 			// Rebuild item list
 			RebuildLists();
-			ItemSelected();
+			ItemSelected(string.Empty);
 
 			// Select previous item
 			if (ItemsBox.Items.Count > 0)
@@ -563,13 +563,6 @@ namespace DungeonEye.Forms
 
 		}
 
-		private void UseQuiverBox_CheckedChanged(object sender, EventArgs e)
-		{
-			if (Item == null)
-				return;
-
-			Item.UseQuiver = UseQuiverBox.Checked;
-		}
 
 
 		#endregion
@@ -608,6 +601,222 @@ namespace DungeonEye.Forms
 		TileSet TileSet;
 
 		#endregion
+
+
+		private void UseQuiverBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Item == null)
+				return;
+
+			Item.UseQuiver = UseQuiverBox.Checked;
+		}
+
+		private void ThrowBox_ValueChanged(object sender, EventArgs e)
+		{
+
+		}
+
+		private void FaceBox_ValueChanged(object sender, EventArgs e)
+		{
+
+		}
+
+		private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+		{
+
+		}
+
+		private void PrimaryBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Item == null)
+				return;
+
+			if (PrimaryBox.Checked)
+				Item.Slot |= ItemSlot.Primary;
+			else
+				Item.Slot ^= ItemSlot.Primary;
+		}
+
+		private void AmmoBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Item == null)
+				return;
+
+			if (AmmoBox.Checked)
+				Item.Slot |= ItemSlot.Ammo;
+			else
+				Item.Slot ^= ItemSlot.Ammo;
+		}
+
+		private void NeckBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Item == null)
+				return;
+
+			if (NeckBox.Checked)
+				Item.Slot |= ItemSlot.Neck;
+			else
+				Item.Slot ^= ItemSlot.Neck;
+
+		}
+
+		private void WristBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Item == null)
+				return;
+
+			if (WristBox.Checked)
+				Item.Slot |= ItemSlot.Wrist;
+			else
+				Item.Slot ^= ItemSlot.Wrist;
+		}
+
+		private void HeadBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Item == null)
+				return;
+
+			if (HeadBox.Checked)
+				Item.Slot |= ItemSlot.Head;
+			else
+				Item.Slot ^= ItemSlot.Head;
+		}
+
+		private void SecondaryBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Item == null)
+				return;
+
+			if (SecondaryBox.Checked)
+				Item.Slot |= ItemSlot.Secondary;
+			else
+				Item.Slot ^= ItemSlot.Secondary;
+		}
+
+		private void BodyBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Item == null)
+				return;
+
+			if (BodyBox.Checked)
+				Item.Slot |= ItemSlot.Body;
+			else
+				Item.Slot ^= ItemSlot.Body;
+		}
+
+		private void RingBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Item == null)
+				return;
+
+			if (RingBox.Checked)
+				Item.Slot |= ItemSlot.Ring;
+			else
+				Item.Slot ^= ItemSlot.Ring;
+		}
+
+		private void FeetBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Item == null)
+				return;
+
+			if (FeetBox.Checked)
+				Item.Slot |= ItemSlot.Feet;
+			else
+				Item.Slot ^= ItemSlot.Feet;
+
+		}
+
+		private void WaistBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Item == null)
+				return;
+
+			if (WaistBox.Checked)
+				Item.Slot |= ItemSlot.Waist;
+			else
+				Item.Slot ^= ItemSlot.Waist;
+		}
+
+		private void TypeBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+
+		}
+
+		private void SpeedBox_ValueChanged(object sender, EventArgs e)
+		{
+
+		}
+
+		private void WeightBox_ValueChanged(object sender, EventArgs e)
+		{
+
+		}
+
+		private void FighterBox_CheckedChanged(object sender, EventArgs e)
+		{
+
+		}
+
+		private void PaladinBox_CheckedChanged(object sender, EventArgs e)
+		{
+
+		}
+
+		private void ClericBox_CheckedChanged(object sender, EventArgs e)
+		{
+
+		}
+
+		private void RangerBox_CheckedChanged(object sender, EventArgs e)
+		{
+
+		}
+
+		private void MageBox_CheckedChanged(object sender, EventArgs e)
+		{
+
+		}
+
+		private void ThiefBox_CheckedChanged(object sender, EventArgs e)
+		{
+
+		}
+
+		private void SecondaryHandBox_CheckedChanged(object sender, EventArgs e)
+		{
+
+		}
+
+		private void PrimaryHandBox_CheckedChanged(object sender, EventArgs e)
+		{
+
+		}
+
+		private void TwoHandedBox_CheckedChanged(object sender, EventArgs e)
+		{
+
+		}
+
+		private void CriticalMinBox_ValueChanged(object sender, EventArgs e)
+		{
+
+		}
+
+		private void CriticalMaxBox_ValueChanged(object sender, EventArgs e)
+		{
+
+		}
+
+		private void MultiplierBox_ValueChanged(object sender, EventArgs e)
+		{
+
+		}
+
+		private void DescriptionBox_TextChanged(object sender, EventArgs e)
+		{
+
+		}
 
 
 

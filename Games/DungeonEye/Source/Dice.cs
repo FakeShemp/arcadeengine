@@ -39,15 +39,15 @@ namespace DungeonEye
 		/// <summary>
 		/// Default constructor
 		/// </summary>
-		/// <param name="rolls"></param>
-		/// <param name="faces"></param>
-		/// <param name="start"></param>
-		public Dice(int rolls, int sides, int start)
+		/// <param name="throws">Throw count</param>
+		/// <param name="faces">Face count</param>
+		/// <param name="start">Base value</param>
+		public Dice(int throws, int sides, int start)
 		{
 			Random = new Random((int)DateTime.Now.Ticks);
 
-			Rolls = rolls;
-			Sides = sides;
+			Throws = throws;
+			Faces = sides;
 			Base = start;
 		}
 
@@ -58,7 +58,7 @@ namespace DungeonEye
 		/// <returns>The value</returns>
 		public int Roll()
 		{
-			return Roll(Rolls);
+			return Roll(Throws);
 		}
 
 
@@ -73,7 +73,7 @@ namespace DungeonEye
 			int val = 0;
 
 			for (int i = 0; i < rolls; i++)
-				val += Random.Next(1, Sides);
+				val += Random.Next(1, Faces);
 
 
 			return val + Base;
@@ -93,7 +93,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Number of throw
 		/// </summary>
-		public int Rolls
+		public int Throws
 		{
 			get;
 			set;
@@ -102,7 +102,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Number of sides
 		/// </summary>
-		public int Sides
+		public int Faces
 		{
 			get;
 			set;
@@ -117,6 +117,28 @@ namespace DungeonEye
 			set;
 		}
 
+
+		/// <summary>
+		/// Minimum value
+		/// </summary>
+		public int Minimum
+		{
+			get
+			{
+				return Base + Throws;
+			}
+		}
+
+		/// <summary>
+		/// Maximum value
+		/// </summary>
+		public int Maximum
+		{
+			get
+			{
+				return Base + (Faces * Throws);
+			}
+		}
 
 
 		#endregion

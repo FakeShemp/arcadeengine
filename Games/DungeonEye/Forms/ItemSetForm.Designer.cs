@@ -100,10 +100,16 @@
 			this.SecondaryHandBox = new System.Windows.Forms.CheckBox();
 			this.TwoHandedBox = new System.Windows.Forms.CheckBox();
 			this.PrimaryHandBox = new System.Windows.Forms.CheckBox();
-			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.groupBox10 = new System.Windows.Forms.GroupBox();
+			this.OnCollectBox = new System.Windows.Forms.ComboBox();
+			this.label19 = new System.Windows.Forms.Label();
+			this.OnDropBox = new System.Windows.Forms.ComboBox();
+			this.label18 = new System.Windows.Forms.Label();
+			this.OnUseBox = new System.Windows.Forms.ComboBox();
+			this.label17 = new System.Windows.Forms.Label();
 			this.ScriptNameBox = new System.Windows.Forms.ComboBox();
 			this.label16 = new System.Windows.Forms.Label();
+			this.diceForm1 = new DungeonEye.Forms.DiceForm();
 			this.toolStrip1.SuspendLayout();
 			this.groupBox4.SuspendLayout();
 			this.groupBox5.SuspendLayout();
@@ -192,7 +198,7 @@
 			// GLGroundTile
 			// 
 			this.GLGroundTile.BackColor = System.Drawing.Color.Black;
-			this.GLGroundTile.Location = new System.Drawing.Point(203, 88);
+			this.GLGroundTile.Location = new System.Drawing.Point(203, 74);
 			this.GLGroundTile.Name = "GLGroundTile";
 			this.GLGroundTile.Size = new System.Drawing.Size(181, 165);
 			this.GLGroundTile.TabIndex = 2;
@@ -204,7 +210,7 @@
 			// GLInventoryTile
 			// 
 			this.GLInventoryTile.BackColor = System.Drawing.Color.Black;
-			this.GLInventoryTile.Location = new System.Drawing.Point(9, 88);
+			this.GLInventoryTile.Location = new System.Drawing.Point(9, 74);
 			this.GLInventoryTile.Name = "GLInventoryTile";
 			this.GLInventoryTile.Size = new System.Drawing.Size(181, 165);
 			this.GLInventoryTile.TabIndex = 2;
@@ -216,7 +222,7 @@
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(209, 64);
+			this.label2.Location = new System.Drawing.Point(209, 50);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(48, 13);
 			this.label2.TabIndex = 1;
@@ -225,7 +231,7 @@
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(6, 64);
+			this.label1.Location = new System.Drawing.Point(6, 50);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(57, 13);
 			this.label1.TabIndex = 1;
@@ -235,7 +241,7 @@
 			// 
 			this.GroundTileBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.GroundTileBox.FormattingEnabled = true;
-			this.GroundTileBox.Location = new System.Drawing.Point(262, 61);
+			this.GroundTileBox.Location = new System.Drawing.Point(262, 47);
 			this.GroundTileBox.Name = "GroundTileBox";
 			this.GroundTileBox.Size = new System.Drawing.Size(121, 21);
 			this.GroundTileBox.TabIndex = 0;
@@ -245,7 +251,7 @@
 			// 
 			this.InventoryTileBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.InventoryTileBox.FormattingEnabled = true;
-			this.InventoryTileBox.Location = new System.Drawing.Point(69, 61);
+			this.InventoryTileBox.Location = new System.Drawing.Point(69, 47);
 			this.InventoryTileBox.Name = "InventoryTileBox";
 			this.InventoryTileBox.Size = new System.Drawing.Size(121, 21);
 			this.InventoryTileBox.TabIndex = 0;
@@ -296,6 +302,7 @@
 			this.DescriptionBox.Name = "DescriptionBox";
 			this.DescriptionBox.Size = new System.Drawing.Size(315, 53);
 			this.DescriptionBox.TabIndex = 4;
+			this.DescriptionBox.TextChanged += new System.EventHandler(this.DescriptionBox_TextChanged);
 			// 
 			// groupBox5
 			// 
@@ -308,7 +315,7 @@
 			this.groupBox5.Controls.Add(this.label5);
 			this.groupBox5.Location = new System.Drawing.Point(612, 287);
 			this.groupBox5.Name = "groupBox5";
-			this.groupBox5.Size = new System.Drawing.Size(202, 152);
+			this.groupBox5.Size = new System.Drawing.Size(202, 122);
 			this.groupBox5.TabIndex = 6;
 			this.groupBox5.TabStop = false;
 			this.groupBox5.Text = "Misc :";
@@ -316,7 +323,7 @@
 			// UseQuiverBox
 			// 
 			this.UseQuiverBox.AutoSize = true;
-			this.UseQuiverBox.Location = new System.Drawing.Point(6, 114);
+			this.UseQuiverBox.Location = new System.Drawing.Point(6, 99);
 			this.UseQuiverBox.Name = "UseQuiverBox";
 			this.UseQuiverBox.Size = new System.Drawing.Size(77, 17);
 			this.UseQuiverBox.TabIndex = 3;
@@ -336,6 +343,7 @@
 			this.WeightBox.Size = new System.Drawing.Size(122, 20);
 			this.WeightBox.TabIndex = 2;
 			this.WeightBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.WeightBox.ValueChanged += new System.EventHandler(this.WeightBox_ValueChanged);
 			// 
 			// SpeedBox
 			// 
@@ -350,6 +358,7 @@
 			this.SpeedBox.TabIndex = 2;
 			this.SpeedBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.SpeedBox.ThousandsSeparator = true;
+			this.SpeedBox.ValueChanged += new System.EventHandler(this.SpeedBox_ValueChanged);
 			// 
 			// Weight
 			// 
@@ -369,6 +378,7 @@
 			this.TypeBox.Size = new System.Drawing.Size(122, 21);
 			this.TypeBox.Sorted = true;
 			this.TypeBox.TabIndex = 0;
+			this.TypeBox.SelectedIndexChanged += new System.EventHandler(this.TypeBox_SelectedIndexChanged);
 			// 
 			// label6
 			// 
@@ -416,6 +426,7 @@
 			this.WaistBox.TabIndex = 0;
 			this.WaistBox.Text = "Waist";
 			this.WaistBox.UseVisualStyleBackColor = true;
+			this.WaistBox.CheckedChanged += new System.EventHandler(this.WaistBox_CheckedChanged);
 			// 
 			// HeadBox
 			// 
@@ -426,6 +437,7 @@
 			this.HeadBox.TabIndex = 0;
 			this.HeadBox.Text = "Head";
 			this.HeadBox.UseVisualStyleBackColor = true;
+			this.HeadBox.CheckedChanged += new System.EventHandler(this.HeadBox_CheckedChanged);
 			// 
 			// FeetBox
 			// 
@@ -436,6 +448,7 @@
 			this.FeetBox.TabIndex = 0;
 			this.FeetBox.Text = "Feet";
 			this.FeetBox.UseVisualStyleBackColor = true;
+			this.FeetBox.CheckedChanged += new System.EventHandler(this.FeetBox_CheckedChanged);
 			// 
 			// WristBox
 			// 
@@ -446,6 +459,7 @@
 			this.WristBox.TabIndex = 0;
 			this.WristBox.Text = "Wrist";
 			this.WristBox.UseVisualStyleBackColor = true;
+			this.WristBox.CheckedChanged += new System.EventHandler(this.WristBox_CheckedChanged);
 			// 
 			// RingBox
 			// 
@@ -456,6 +470,7 @@
 			this.RingBox.TabIndex = 0;
 			this.RingBox.Text = "Ring";
 			this.RingBox.UseVisualStyleBackColor = true;
+			this.RingBox.CheckedChanged += new System.EventHandler(this.RingBox_CheckedChanged);
 			// 
 			// BodyBox
 			// 
@@ -466,6 +481,7 @@
 			this.BodyBox.TabIndex = 0;
 			this.BodyBox.Text = "Body";
 			this.BodyBox.UseVisualStyleBackColor = true;
+			this.BodyBox.CheckedChanged += new System.EventHandler(this.BodyBox_CheckedChanged);
 			// 
 			// NeckBox
 			// 
@@ -476,6 +492,7 @@
 			this.NeckBox.TabIndex = 0;
 			this.NeckBox.Text = "Neck";
 			this.NeckBox.UseVisualStyleBackColor = true;
+			this.NeckBox.CheckedChanged += new System.EventHandler(this.NeckBox_CheckedChanged);
 			// 
 			// SecondaryBox
 			// 
@@ -486,6 +503,7 @@
 			this.SecondaryBox.TabIndex = 0;
 			this.SecondaryBox.Text = "Secondary";
 			this.SecondaryBox.UseVisualStyleBackColor = true;
+			this.SecondaryBox.CheckedChanged += new System.EventHandler(this.SecondaryBox_CheckedChanged);
 			// 
 			// AmmoBox
 			// 
@@ -496,6 +514,7 @@
 			this.AmmoBox.TabIndex = 0;
 			this.AmmoBox.Text = "Ammo";
 			this.AmmoBox.UseVisualStyleBackColor = true;
+			this.AmmoBox.CheckedChanged += new System.EventHandler(this.AmmoBox_CheckedChanged);
 			// 
 			// PrimaryBox
 			// 
@@ -506,6 +525,7 @@
 			this.PrimaryBox.TabIndex = 0;
 			this.PrimaryBox.Text = "Primary";
 			this.PrimaryBox.UseVisualStyleBackColor = true;
+			this.PrimaryBox.CheckedChanged += new System.EventHandler(this.PrimaryBox_CheckedChanged);
 			// 
 			// groupBox7
 			// 
@@ -517,7 +537,7 @@
 			this.groupBox7.Controls.Add(this.label7);
 			this.groupBox7.Location = new System.Drawing.Point(406, 139);
 			this.groupBox7.Name = "groupBox7";
-			this.groupBox7.Size = new System.Drawing.Size(200, 120);
+			this.groupBox7.Size = new System.Drawing.Size(200, 142);
 			this.groupBox7.TabIndex = 8;
 			this.groupBox7.TabStop = false;
 			this.groupBox7.Text = "Damage :";
@@ -534,6 +554,7 @@
 			this.numericUpDown1.Size = new System.Drawing.Size(104, 20);
 			this.numericUpDown1.TabIndex = 2;
 			this.numericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
 			// 
 			// label14
 			// 
@@ -557,6 +578,7 @@
 			this.FaceBox.Size = new System.Drawing.Size(104, 20);
 			this.FaceBox.TabIndex = 2;
 			this.FaceBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.FaceBox.ValueChanged += new System.EventHandler(this.FaceBox_ValueChanged);
 			// 
 			// label8
 			// 
@@ -580,6 +602,7 @@
 			this.ThrowBox.Size = new System.Drawing.Size(104, 20);
 			this.ThrowBox.TabIndex = 2;
 			this.ThrowBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.ThrowBox.ValueChanged += new System.EventHandler(this.ThrowBox_ValueChanged);
 			// 
 			// label7
 			// 
@@ -599,9 +622,9 @@
 			this.groupBox8.Controls.Add(this.label9);
 			this.groupBox8.Controls.Add(this.CriticalMinBox);
 			this.groupBox8.Controls.Add(this.label10);
-			this.groupBox8.Location = new System.Drawing.Point(406, 265);
+			this.groupBox8.Location = new System.Drawing.Point(406, 287);
 			this.groupBox8.Name = "groupBox8";
-			this.groupBox8.Size = new System.Drawing.Size(200, 174);
+			this.groupBox8.Size = new System.Drawing.Size(200, 122);
 			this.groupBox8.TabIndex = 8;
 			this.groupBox8.TabStop = false;
 			this.groupBox8.Text = "Critical :";
@@ -618,6 +641,7 @@
 			this.MultiplierBox.Size = new System.Drawing.Size(104, 20);
 			this.MultiplierBox.TabIndex = 2;
 			this.MultiplierBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.MultiplierBox.ValueChanged += new System.EventHandler(this.MultiplierBox_ValueChanged);
 			// 
 			// label11
 			// 
@@ -640,6 +664,7 @@
 			this.CriticalMaxBox.Size = new System.Drawing.Size(104, 20);
 			this.CriticalMaxBox.TabIndex = 2;
 			this.CriticalMaxBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.CriticalMaxBox.ValueChanged += new System.EventHandler(this.CriticalMaxBox_ValueChanged);
 			// 
 			// label9
 			// 
@@ -662,6 +687,7 @@
 			this.CriticalMinBox.Size = new System.Drawing.Size(104, 20);
 			this.CriticalMinBox.TabIndex = 2;
 			this.CriticalMinBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.CriticalMinBox.ValueChanged += new System.EventHandler(this.CriticalMinBox_ValueChanged);
 			// 
 			// label10
 			// 
@@ -690,7 +716,7 @@
 			this.groupBox2.Controls.Add(this.MoveAwayTileBox);
 			this.groupBox2.Location = new System.Drawing.Point(3, 28);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(397, 513);
+			this.groupBox2.Size = new System.Drawing.Size(397, 483);
 			this.groupBox2.TabIndex = 3;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Tiles :";
@@ -707,7 +733,7 @@
 			// GLIncomingTile
 			// 
 			this.GLIncomingTile.BackColor = System.Drawing.Color.Black;
-			this.GLIncomingTile.Location = new System.Drawing.Point(203, 334);
+			this.GLIncomingTile.Location = new System.Drawing.Point(203, 290);
 			this.GLIncomingTile.Name = "GLIncomingTile";
 			this.GLIncomingTile.Size = new System.Drawing.Size(181, 165);
 			this.GLIncomingTile.TabIndex = 2;
@@ -719,7 +745,7 @@
 			// GLMoveAwayTile
 			// 
 			this.GLMoveAwayTile.BackColor = System.Drawing.Color.Black;
-			this.GLMoveAwayTile.Location = new System.Drawing.Point(9, 334);
+			this.GLMoveAwayTile.Location = new System.Drawing.Point(9, 290);
 			this.GLMoveAwayTile.Name = "GLMoveAwayTile";
 			this.GLMoveAwayTile.Size = new System.Drawing.Size(181, 165);
 			this.GLMoveAwayTile.TabIndex = 2;
@@ -731,7 +757,7 @@
 			// label12
 			// 
 			this.label12.AutoSize = true;
-			this.label12.Location = new System.Drawing.Point(209, 310);
+			this.label12.Location = new System.Drawing.Point(209, 266);
 			this.label12.Name = "label12";
 			this.label12.Size = new System.Drawing.Size(56, 13);
 			this.label12.TabIndex = 1;
@@ -740,7 +766,7 @@
 			// label13
 			// 
 			this.label13.AutoSize = true;
-			this.label13.Location = new System.Drawing.Point(6, 310);
+			this.label13.Location = new System.Drawing.Point(6, 266);
 			this.label13.Name = "label13";
 			this.label13.Size = new System.Drawing.Size(49, 13);
 			this.label13.TabIndex = 1;
@@ -761,7 +787,7 @@
 			// 
 			this.IncomingTileBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.IncomingTileBox.FormattingEnabled = true;
-			this.IncomingTileBox.Location = new System.Drawing.Point(267, 307);
+			this.IncomingTileBox.Location = new System.Drawing.Point(267, 263);
 			this.IncomingTileBox.Name = "IncomingTileBox";
 			this.IncomingTileBox.Size = new System.Drawing.Size(122, 21);
 			this.IncomingTileBox.TabIndex = 0;
@@ -771,7 +797,7 @@
 			// 
 			this.MoveAwayTileBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.MoveAwayTileBox.FormattingEnabled = true;
-			this.MoveAwayTileBox.Location = new System.Drawing.Point(80, 307);
+			this.MoveAwayTileBox.Location = new System.Drawing.Point(80, 263);
 			this.MoveAwayTileBox.Name = "MoveAwayTileBox";
 			this.MoveAwayTileBox.Size = new System.Drawing.Size(110, 21);
 			this.MoveAwayTileBox.TabIndex = 0;
@@ -785,7 +811,7 @@
 			this.groupBox3.Controls.Add(this.RangerBox);
 			this.groupBox3.Controls.Add(this.PaladinBox);
 			this.groupBox3.Controls.Add(this.FighterBox);
-			this.groupBox3.Location = new System.Drawing.Point(406, 445);
+			this.groupBox3.Location = new System.Drawing.Point(406, 415);
 			this.groupBox3.Name = "groupBox3";
 			this.groupBox3.Size = new System.Drawing.Size(200, 96);
 			this.groupBox3.TabIndex = 7;
@@ -801,6 +827,7 @@
 			this.ThiefBox.TabIndex = 0;
 			this.ThiefBox.Text = "Thief";
 			this.ThiefBox.UseVisualStyleBackColor = true;
+			this.ThiefBox.CheckedChanged += new System.EventHandler(this.ThiefBox_CheckedChanged);
 			// 
 			// MageBox
 			// 
@@ -811,6 +838,7 @@
 			this.MageBox.TabIndex = 0;
 			this.MageBox.Text = "Mage";
 			this.MageBox.UseVisualStyleBackColor = true;
+			this.MageBox.CheckedChanged += new System.EventHandler(this.MageBox_CheckedChanged);
 			// 
 			// ClericBox
 			// 
@@ -821,6 +849,7 @@
 			this.ClericBox.TabIndex = 0;
 			this.ClericBox.Text = "Cleric";
 			this.ClericBox.UseVisualStyleBackColor = true;
+			this.ClericBox.CheckedChanged += new System.EventHandler(this.ClericBox_CheckedChanged);
 			// 
 			// RangerBox
 			// 
@@ -831,6 +860,7 @@
 			this.RangerBox.TabIndex = 0;
 			this.RangerBox.Text = "Ranger";
 			this.RangerBox.UseVisualStyleBackColor = true;
+			this.RangerBox.CheckedChanged += new System.EventHandler(this.RangerBox_CheckedChanged);
 			// 
 			// PaladinBox
 			// 
@@ -841,6 +871,7 @@
 			this.PaladinBox.TabIndex = 0;
 			this.PaladinBox.Text = "Paladin";
 			this.PaladinBox.UseVisualStyleBackColor = true;
+			this.PaladinBox.CheckedChanged += new System.EventHandler(this.PaladinBox_CheckedChanged);
 			// 
 			// FighterBox
 			// 
@@ -851,13 +882,14 @@
 			this.FighterBox.TabIndex = 0;
 			this.FighterBox.Text = "Fighter";
 			this.FighterBox.UseVisualStyleBackColor = true;
+			this.FighterBox.CheckedChanged += new System.EventHandler(this.FighterBox_CheckedChanged);
 			// 
 			// groupBox9
 			// 
 			this.groupBox9.Controls.Add(this.SecondaryHandBox);
 			this.groupBox9.Controls.Add(this.TwoHandedBox);
 			this.groupBox9.Controls.Add(this.PrimaryHandBox);
-			this.groupBox9.Location = new System.Drawing.Point(612, 445);
+			this.groupBox9.Location = new System.Drawing.Point(612, 415);
 			this.groupBox9.Name = "groupBox9";
 			this.groupBox9.Size = new System.Drawing.Size(202, 96);
 			this.groupBox9.TabIndex = 7;
@@ -873,6 +905,7 @@
 			this.SecondaryHandBox.TabIndex = 0;
 			this.SecondaryHandBox.Text = "Secondary";
 			this.SecondaryHandBox.UseVisualStyleBackColor = true;
+			this.SecondaryHandBox.CheckedChanged += new System.EventHandler(this.SecondaryHandBox_CheckedChanged);
 			// 
 			// TwoHandedBox
 			// 
@@ -883,6 +916,7 @@
 			this.TwoHandedBox.TabIndex = 0;
 			this.TwoHandedBox.Text = "Two hands";
 			this.TwoHandedBox.UseVisualStyleBackColor = true;
+			this.TwoHandedBox.CheckedChanged += new System.EventHandler(this.TwoHandedBox_CheckedChanged);
 			// 
 			// PrimaryHandBox
 			// 
@@ -893,26 +927,85 @@
 			this.PrimaryHandBox.TabIndex = 0;
 			this.PrimaryHandBox.Text = "Primary";
 			this.PrimaryHandBox.UseVisualStyleBackColor = true;
-			// 
-			// groupBox1
-			// 
-			this.groupBox1.Location = new System.Drawing.Point(406, 547);
-			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(408, 121);
-			this.groupBox1.TabIndex = 9;
-			this.groupBox1.TabStop = false;
-			this.groupBox1.Text = "Scripts :";
+			this.PrimaryHandBox.CheckedChanged += new System.EventHandler(this.PrimaryHandBox_CheckedChanged);
 			// 
 			// groupBox10
 			// 
+			this.groupBox10.Controls.Add(this.diceForm1);
+			this.groupBox10.Controls.Add(this.OnCollectBox);
+			this.groupBox10.Controls.Add(this.label19);
+			this.groupBox10.Controls.Add(this.OnDropBox);
+			this.groupBox10.Controls.Add(this.label18);
+			this.groupBox10.Controls.Add(this.OnUseBox);
+			this.groupBox10.Controls.Add(this.label17);
 			this.groupBox10.Controls.Add(this.ScriptNameBox);
 			this.groupBox10.Controls.Add(this.label16);
-			this.groupBox10.Location = new System.Drawing.Point(3, 547);
+			this.groupBox10.Location = new System.Drawing.Point(3, 517);
 			this.groupBox10.Name = "groupBox10";
-			this.groupBox10.Size = new System.Drawing.Size(397, 121);
+			this.groupBox10.Size = new System.Drawing.Size(811, 125);
 			this.groupBox10.TabIndex = 9;
 			this.groupBox10.TabStop = false;
 			this.groupBox10.Text = "Scripting :";
+			// 
+			// OnCollectBox
+			// 
+			this.OnCollectBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.OnCollectBox.FormattingEnabled = true;
+			this.OnCollectBox.Location = new System.Drawing.Point(82, 98);
+			this.OnCollectBox.Name = "OnCollectBox";
+			this.OnCollectBox.Size = new System.Drawing.Size(148, 21);
+			this.OnCollectBox.Sorted = true;
+			this.OnCollectBox.TabIndex = 1;
+			this.OnCollectBox.SelectedIndexChanged += new System.EventHandler(this.ScriptNameBox_SelectedIndexChanged);
+			// 
+			// label19
+			// 
+			this.label19.AutoSize = true;
+			this.label19.Location = new System.Drawing.Point(17, 101);
+			this.label19.Name = "label19";
+			this.label19.Size = new System.Drawing.Size(59, 13);
+			this.label19.TabIndex = 0;
+			this.label19.Text = "OnCollect :";
+			// 
+			// OnDropBox
+			// 
+			this.OnDropBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.OnDropBox.FormattingEnabled = true;
+			this.OnDropBox.Location = new System.Drawing.Point(82, 71);
+			this.OnDropBox.Name = "OnDropBox";
+			this.OnDropBox.Size = new System.Drawing.Size(148, 21);
+			this.OnDropBox.Sorted = true;
+			this.OnDropBox.TabIndex = 1;
+			this.OnDropBox.SelectedIndexChanged += new System.EventHandler(this.ScriptNameBox_SelectedIndexChanged);
+			// 
+			// label18
+			// 
+			this.label18.AutoSize = true;
+			this.label18.Location = new System.Drawing.Point(26, 74);
+			this.label18.Name = "label18";
+			this.label18.Size = new System.Drawing.Size(50, 13);
+			this.label18.TabIndex = 0;
+			this.label18.Text = "OnDrop :";
+			// 
+			// OnUseBox
+			// 
+			this.OnUseBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.OnUseBox.FormattingEnabled = true;
+			this.OnUseBox.Location = new System.Drawing.Point(82, 44);
+			this.OnUseBox.Name = "OnUseBox";
+			this.OnUseBox.Size = new System.Drawing.Size(148, 21);
+			this.OnUseBox.Sorted = true;
+			this.OnUseBox.TabIndex = 1;
+			this.OnUseBox.SelectedIndexChanged += new System.EventHandler(this.ScriptNameBox_SelectedIndexChanged);
+			// 
+			// label17
+			// 
+			this.label17.AutoSize = true;
+			this.label17.Location = new System.Drawing.Point(30, 47);
+			this.label17.Name = "label17";
+			this.label17.Size = new System.Drawing.Size(46, 13);
+			this.label17.TabIndex = 0;
+			this.label17.Text = "OnUse :";
 			// 
 			// ScriptNameBox
 			// 
@@ -934,13 +1027,21 @@
 			this.label16.TabIndex = 0;
 			this.label16.Text = "Script name :";
 			// 
+			// diceForm1
+			// 
+			this.diceForm1.ControlText = "Damage :";
+			this.diceForm1.Location = new System.Drawing.Point(341, 20);
+			this.diceForm1.MinimumSize = new System.Drawing.Size(260, 108);
+			this.diceForm1.Name = "diceForm1";
+			this.diceForm1.Size = new System.Drawing.Size(260, 108);
+			this.diceForm1.TabIndex = 2;
+			// 
 			// ItemSetForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(821, 680);
+			this.ClientSize = new System.Drawing.Size(821, 654);
 			this.Controls.Add(this.groupBox10);
-			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.groupBox8);
 			this.Controls.Add(this.groupBox7);
@@ -1062,10 +1163,16 @@
 		private System.Windows.Forms.Label label14;
 		private System.Windows.Forms.Label label15;
 		private System.Windows.Forms.ComboBox TileSetNameBox;
-		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.GroupBox groupBox10;
 		private System.Windows.Forms.ComboBox ScriptNameBox;
 		private System.Windows.Forms.Label label16;
 		private System.Windows.Forms.CheckBox UseQuiverBox;
+		private System.Windows.Forms.ComboBox OnCollectBox;
+		private System.Windows.Forms.Label label19;
+		private System.Windows.Forms.ComboBox OnDropBox;
+		private System.Windows.Forms.Label label18;
+		private System.Windows.Forms.ComboBox OnUseBox;
+		private System.Windows.Forms.Label label17;
+		private DiceForm diceForm1;
 	}
 }

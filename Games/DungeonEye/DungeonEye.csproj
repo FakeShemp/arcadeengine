@@ -104,6 +104,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\DiceForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\DiceForm.Designer.cs">
+      <DependentUpon>DiceForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\DungeonForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -237,6 +243,9 @@
   <ItemGroup>
     <Content Include="Documentation\Overlay tilesets.txt" />
     <EmbeddedResource Include="Forms\data\editor.png" />
+    <EmbeddedResource Include="Forms\DiceForm.resx">
+      <DependentUpon>DiceForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ItemSetForm.resx">
       <DependentUpon>ItemSetForm.cs</DependentUpon>
     </EmbeddedResource>
