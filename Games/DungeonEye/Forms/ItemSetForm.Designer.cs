@@ -73,7 +73,6 @@
 			this.label9 = new System.Windows.Forms.Label();
 			this.CriticalMinBox = new System.Windows.Forms.NumericUpDown();
 			this.label10 = new System.Windows.Forms.Label();
-			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.label15 = new System.Windows.Forms.Label();
 			this.GLIncomingTile = new OpenTK.GLControl();
 			this.GLMoveAwayTile = new OpenTK.GLControl();
@@ -93,7 +92,6 @@
 			this.SecondaryHandBox = new System.Windows.Forms.CheckBox();
 			this.TwoHandedBox = new System.Windows.Forms.CheckBox();
 			this.PrimaryHandBox = new System.Windows.Forms.CheckBox();
-			this.groupBox10 = new System.Windows.Forms.GroupBox();
 			this.OnCollectBox = new System.Windows.Forms.ComboBox();
 			this.label19 = new System.Windows.Forms.Label();
 			this.OnDropBox = new System.Windows.Forms.ComboBox();
@@ -125,10 +123,8 @@
 			((System.ComponentModel.ISupportInitialize)(this.MultiplierBox)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.CriticalMaxBox)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.CriticalMinBox)).BeginInit();
-			this.groupBox2.SuspendLayout();
 			this.groupBox3.SuspendLayout();
 			this.groupBox9.SuspendLayout();
-			this.groupBox10.SuspendLayout();
 			this.tabControl1.SuspendLayout();
 			this.VisualTab.SuspendLayout();
 			this.PropertiesTab.SuspendLayout();
@@ -141,7 +137,7 @@
 			// GLGroundTile
 			// 
 			this.GLGroundTile.BackColor = System.Drawing.Color.Black;
-			this.GLGroundTile.Location = new System.Drawing.Point(203, 74);
+			this.GLGroundTile.Location = new System.Drawing.Point(200, 73);
 			this.GLGroundTile.Name = "GLGroundTile";
 			this.GLGroundTile.Size = new System.Drawing.Size(181, 165);
 			this.GLGroundTile.TabIndex = 2;
@@ -153,7 +149,7 @@
 			// GLInventoryTile
 			// 
 			this.GLInventoryTile.BackColor = System.Drawing.Color.Black;
-			this.GLInventoryTile.Location = new System.Drawing.Point(9, 74);
+			this.GLInventoryTile.Location = new System.Drawing.Point(6, 73);
 			this.GLInventoryTile.Name = "GLInventoryTile";
 			this.GLInventoryTile.Size = new System.Drawing.Size(181, 165);
 			this.GLInventoryTile.TabIndex = 2;
@@ -165,7 +161,7 @@
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(209, 50);
+			this.label2.Location = new System.Drawing.Point(206, 49);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(48, 13);
 			this.label2.TabIndex = 1;
@@ -174,7 +170,7 @@
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(6, 50);
+			this.label1.Location = new System.Drawing.Point(3, 49);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(57, 13);
 			this.label1.TabIndex = 1;
@@ -184,7 +180,7 @@
 			// 
 			this.GroundTileBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.GroundTileBox.FormattingEnabled = true;
-			this.GroundTileBox.Location = new System.Drawing.Point(262, 47);
+			this.GroundTileBox.Location = new System.Drawing.Point(259, 46);
 			this.GroundTileBox.Name = "GroundTileBox";
 			this.GroundTileBox.Size = new System.Drawing.Size(121, 21);
 			this.GroundTileBox.TabIndex = 0;
@@ -194,7 +190,7 @@
 			// 
 			this.InventoryTileBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.InventoryTileBox.FormattingEnabled = true;
-			this.InventoryTileBox.Location = new System.Drawing.Point(69, 47);
+			this.InventoryTileBox.Location = new System.Drawing.Point(66, 46);
 			this.InventoryTileBox.Name = "InventoryTileBox";
 			this.InventoryTileBox.Size = new System.Drawing.Size(121, 21);
 			this.InventoryTileBox.TabIndex = 0;
@@ -641,34 +637,10 @@
 			this.label10.TabIndex = 1;
 			this.label10.Text = "Minimum :";
 			// 
-			// groupBox2
-			// 
-			this.groupBox2.Controls.Add(this.label15);
-			this.groupBox2.Controls.Add(this.GLGroundTile);
-			this.groupBox2.Controls.Add(this.GLInventoryTile);
-			this.groupBox2.Controls.Add(this.GLIncomingTile);
-			this.groupBox2.Controls.Add(this.label2);
-			this.groupBox2.Controls.Add(this.GLMoveAwayTile);
-			this.groupBox2.Controls.Add(this.label1);
-			this.groupBox2.Controls.Add(this.label12);
-			this.groupBox2.Controls.Add(this.GroundTileBox);
-			this.groupBox2.Controls.Add(this.label13);
-			this.groupBox2.Controls.Add(this.TileSetNameBox);
-			this.groupBox2.Controls.Add(this.InventoryTileBox);
-			this.groupBox2.Controls.Add(this.IncomingTileBox);
-			this.groupBox2.Controls.Add(this.MoveAwayTileBox);
-			this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.groupBox2.Location = new System.Drawing.Point(3, 3);
-			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(601, 594);
-			this.groupBox2.TabIndex = 3;
-			this.groupBox2.TabStop = false;
-			this.groupBox2.Text = "Tiles :";
-			// 
 			// label15
 			// 
 			this.label15.AutoSize = true;
-			this.label15.Location = new System.Drawing.Point(10, 16);
+			this.label15.Location = new System.Drawing.Point(7, 15);
 			this.label15.Name = "label15";
 			this.label15.Size = new System.Drawing.Size(44, 13);
 			this.label15.TabIndex = 3;
@@ -677,7 +649,7 @@
 			// GLIncomingTile
 			// 
 			this.GLIncomingTile.BackColor = System.Drawing.Color.Black;
-			this.GLIncomingTile.Location = new System.Drawing.Point(203, 290);
+			this.GLIncomingTile.Location = new System.Drawing.Point(200, 289);
 			this.GLIncomingTile.Name = "GLIncomingTile";
 			this.GLIncomingTile.Size = new System.Drawing.Size(181, 165);
 			this.GLIncomingTile.TabIndex = 2;
@@ -689,7 +661,7 @@
 			// GLMoveAwayTile
 			// 
 			this.GLMoveAwayTile.BackColor = System.Drawing.Color.Black;
-			this.GLMoveAwayTile.Location = new System.Drawing.Point(9, 290);
+			this.GLMoveAwayTile.Location = new System.Drawing.Point(6, 289);
 			this.GLMoveAwayTile.Name = "GLMoveAwayTile";
 			this.GLMoveAwayTile.Size = new System.Drawing.Size(181, 165);
 			this.GLMoveAwayTile.TabIndex = 2;
@@ -701,7 +673,7 @@
 			// label12
 			// 
 			this.label12.AutoSize = true;
-			this.label12.Location = new System.Drawing.Point(209, 266);
+			this.label12.Location = new System.Drawing.Point(206, 265);
 			this.label12.Name = "label12";
 			this.label12.Size = new System.Drawing.Size(56, 13);
 			this.label12.TabIndex = 1;
@@ -710,7 +682,7 @@
 			// label13
 			// 
 			this.label13.AutoSize = true;
-			this.label13.Location = new System.Drawing.Point(6, 266);
+			this.label13.Location = new System.Drawing.Point(3, 265);
 			this.label13.Name = "label13";
 			this.label13.Size = new System.Drawing.Size(49, 13);
 			this.label13.TabIndex = 1;
@@ -720,7 +692,7 @@
 			// 
 			this.TileSetNameBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.TileSetNameBox.FormattingEnabled = true;
-			this.TileSetNameBox.Location = new System.Drawing.Point(69, 11);
+			this.TileSetNameBox.Location = new System.Drawing.Point(66, 10);
 			this.TileSetNameBox.Name = "TileSetNameBox";
 			this.TileSetNameBox.Size = new System.Drawing.Size(121, 21);
 			this.TileSetNameBox.Sorted = true;
@@ -731,7 +703,7 @@
 			// 
 			this.IncomingTileBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.IncomingTileBox.FormattingEnabled = true;
-			this.IncomingTileBox.Location = new System.Drawing.Point(267, 263);
+			this.IncomingTileBox.Location = new System.Drawing.Point(264, 262);
 			this.IncomingTileBox.Name = "IncomingTileBox";
 			this.IncomingTileBox.Size = new System.Drawing.Size(122, 21);
 			this.IncomingTileBox.TabIndex = 0;
@@ -741,7 +713,7 @@
 			// 
 			this.MoveAwayTileBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.MoveAwayTileBox.FormattingEnabled = true;
-			this.MoveAwayTileBox.Location = new System.Drawing.Point(80, 263);
+			this.MoveAwayTileBox.Location = new System.Drawing.Point(77, 262);
 			this.MoveAwayTileBox.Name = "MoveAwayTileBox";
 			this.MoveAwayTileBox.Size = new System.Drawing.Size(110, 21);
 			this.MoveAwayTileBox.TabIndex = 0;
@@ -873,28 +845,11 @@
 			this.PrimaryHandBox.UseVisualStyleBackColor = true;
 			this.PrimaryHandBox.CheckedChanged += new System.EventHandler(this.PrimaryHandBox_CheckedChanged);
 			// 
-			// groupBox10
-			// 
-			this.groupBox10.Controls.Add(this.OnCollectBox);
-			this.groupBox10.Controls.Add(this.label19);
-			this.groupBox10.Controls.Add(this.OnDropBox);
-			this.groupBox10.Controls.Add(this.label18);
-			this.groupBox10.Controls.Add(this.OnUseBox);
-			this.groupBox10.Controls.Add(this.label17);
-			this.groupBox10.Controls.Add(this.ScriptNameBox);
-			this.groupBox10.Controls.Add(this.label16);
-			this.groupBox10.Location = new System.Drawing.Point(5, 11);
-			this.groupBox10.Name = "groupBox10";
-			this.groupBox10.Size = new System.Drawing.Size(265, 134);
-			this.groupBox10.TabIndex = 9;
-			this.groupBox10.TabStop = false;
-			this.groupBox10.Text = "Scripting :";
-			// 
 			// OnCollectBox
 			// 
 			this.OnCollectBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.OnCollectBox.FormattingEnabled = true;
-			this.OnCollectBox.Location = new System.Drawing.Point(82, 98);
+			this.OnCollectBox.Location = new System.Drawing.Point(82, 95);
 			this.OnCollectBox.Name = "OnCollectBox";
 			this.OnCollectBox.Size = new System.Drawing.Size(148, 21);
 			this.OnCollectBox.Sorted = true;
@@ -904,7 +859,7 @@
 			// label19
 			// 
 			this.label19.AutoSize = true;
-			this.label19.Location = new System.Drawing.Point(17, 101);
+			this.label19.Location = new System.Drawing.Point(17, 98);
 			this.label19.Name = "label19";
 			this.label19.Size = new System.Drawing.Size(59, 13);
 			this.label19.TabIndex = 0;
@@ -914,7 +869,7 @@
 			// 
 			this.OnDropBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.OnDropBox.FormattingEnabled = true;
-			this.OnDropBox.Location = new System.Drawing.Point(82, 71);
+			this.OnDropBox.Location = new System.Drawing.Point(82, 68);
 			this.OnDropBox.Name = "OnDropBox";
 			this.OnDropBox.Size = new System.Drawing.Size(148, 21);
 			this.OnDropBox.Sorted = true;
@@ -924,7 +879,7 @@
 			// label18
 			// 
 			this.label18.AutoSize = true;
-			this.label18.Location = new System.Drawing.Point(26, 74);
+			this.label18.Location = new System.Drawing.Point(26, 71);
 			this.label18.Name = "label18";
 			this.label18.Size = new System.Drawing.Size(50, 13);
 			this.label18.TabIndex = 0;
@@ -934,7 +889,7 @@
 			// 
 			this.OnUseBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.OnUseBox.FormattingEnabled = true;
-			this.OnUseBox.Location = new System.Drawing.Point(82, 44);
+			this.OnUseBox.Location = new System.Drawing.Point(82, 41);
 			this.OnUseBox.Name = "OnUseBox";
 			this.OnUseBox.Size = new System.Drawing.Size(148, 21);
 			this.OnUseBox.Sorted = true;
@@ -944,7 +899,7 @@
 			// label17
 			// 
 			this.label17.AutoSize = true;
-			this.label17.Location = new System.Drawing.Point(30, 47);
+			this.label17.Location = new System.Drawing.Point(30, 44);
 			this.label17.Name = "label17";
 			this.label17.Size = new System.Drawing.Size(46, 13);
 			this.label17.TabIndex = 0;
@@ -954,7 +909,7 @@
 			// 
 			this.ScriptNameBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.ScriptNameBox.FormattingEnabled = true;
-			this.ScriptNameBox.Location = new System.Drawing.Point(82, 17);
+			this.ScriptNameBox.Location = new System.Drawing.Point(82, 14);
 			this.ScriptNameBox.Name = "ScriptNameBox";
 			this.ScriptNameBox.Size = new System.Drawing.Size(148, 21);
 			this.ScriptNameBox.Sorted = true;
@@ -964,7 +919,7 @@
 			// label16
 			// 
 			this.label16.AutoSize = true;
-			this.label16.Location = new System.Drawing.Point(7, 20);
+			this.label16.Location = new System.Drawing.Point(7, 17);
 			this.label16.Name = "label16";
 			this.label16.Size = new System.Drawing.Size(69, 13);
 			this.label16.TabIndex = 0;
@@ -984,7 +939,20 @@
 			// 
 			// VisualTab
 			// 
-			this.VisualTab.Controls.Add(this.groupBox2);
+			this.VisualTab.Controls.Add(this.label15);
+			this.VisualTab.Controls.Add(this.GLGroundTile);
+			this.VisualTab.Controls.Add(this.GLInventoryTile);
+			this.VisualTab.Controls.Add(this.MoveAwayTileBox);
+			this.VisualTab.Controls.Add(this.GLIncomingTile);
+			this.VisualTab.Controls.Add(this.IncomingTileBox);
+			this.VisualTab.Controls.Add(this.label2);
+			this.VisualTab.Controls.Add(this.InventoryTileBox);
+			this.VisualTab.Controls.Add(this.GLMoveAwayTile);
+			this.VisualTab.Controls.Add(this.TileSetNameBox);
+			this.VisualTab.Controls.Add(this.label1);
+			this.VisualTab.Controls.Add(this.label13);
+			this.VisualTab.Controls.Add(this.label12);
+			this.VisualTab.Controls.Add(this.GroundTileBox);
 			this.VisualTab.Location = new System.Drawing.Point(4, 22);
 			this.VisualTab.Name = "VisualTab";
 			this.VisualTab.Padding = new System.Windows.Forms.Padding(3);
@@ -1005,17 +973,24 @@
 			this.PropertiesTab.Location = new System.Drawing.Point(4, 22);
 			this.PropertiesTab.Name = "PropertiesTab";
 			this.PropertiesTab.Padding = new System.Windows.Forms.Padding(3);
-			this.PropertiesTab.Size = new System.Drawing.Size(607, 575);
+			this.PropertiesTab.Size = new System.Drawing.Size(607, 600);
 			this.PropertiesTab.TabIndex = 1;
 			this.PropertiesTab.Text = "Properties";
 			this.PropertiesTab.UseVisualStyleBackColor = true;
 			// 
 			// ScriptTab
 			// 
-			this.ScriptTab.Controls.Add(this.groupBox10);
+			this.ScriptTab.Controls.Add(this.OnCollectBox);
+			this.ScriptTab.Controls.Add(this.label19);
+			this.ScriptTab.Controls.Add(this.label16);
+			this.ScriptTab.Controls.Add(this.OnDropBox);
+			this.ScriptTab.Controls.Add(this.ScriptNameBox);
+			this.ScriptTab.Controls.Add(this.label18);
+			this.ScriptTab.Controls.Add(this.label17);
+			this.ScriptTab.Controls.Add(this.OnUseBox);
 			this.ScriptTab.Location = new System.Drawing.Point(4, 22);
 			this.ScriptTab.Name = "ScriptTab";
-			this.ScriptTab.Size = new System.Drawing.Size(607, 575);
+			this.ScriptTab.Size = new System.Drawing.Size(607, 600);
 			this.ScriptTab.TabIndex = 2;
 			this.ScriptTab.Text = "Scripting";
 			this.ScriptTab.UseVisualStyleBackColor = true;
@@ -1117,18 +1092,16 @@
 			((System.ComponentModel.ISupportInitialize)(this.MultiplierBox)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.CriticalMaxBox)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.CriticalMinBox)).EndInit();
-			this.groupBox2.ResumeLayout(false);
-			this.groupBox2.PerformLayout();
 			this.groupBox3.ResumeLayout(false);
 			this.groupBox3.PerformLayout();
 			this.groupBox9.ResumeLayout(false);
 			this.groupBox9.PerformLayout();
-			this.groupBox10.ResumeLayout(false);
-			this.groupBox10.PerformLayout();
 			this.tabControl1.ResumeLayout(false);
 			this.VisualTab.ResumeLayout(false);
+			this.VisualTab.PerformLayout();
 			this.PropertiesTab.ResumeLayout(false);
 			this.ScriptTab.ResumeLayout(false);
+			this.ScriptTab.PerformLayout();
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			this.toolStrip2.ResumeLayout(false);
@@ -1183,7 +1156,6 @@
 		private System.Windows.Forms.Label label10;
 		private System.Windows.Forms.NumericUpDown MultiplierBox;
 		private System.Windows.Forms.Label label11;
-		private System.Windows.Forms.GroupBox groupBox2;
 		private System.Windows.Forms.Label label12;
 		private System.Windows.Forms.Label label13;
 		private System.Windows.Forms.ComboBox IncomingTileBox;
@@ -1203,7 +1175,6 @@
 		private System.Windows.Forms.Label label14;
 		private System.Windows.Forms.Label label15;
 		private System.Windows.Forms.ComboBox TileSetNameBox;
-		private System.Windows.Forms.GroupBox groupBox10;
 		private System.Windows.Forms.ComboBox ScriptNameBox;
 		private System.Windows.Forms.Label label16;
 		private System.Windows.Forms.CheckBox UseQuiverBox;
