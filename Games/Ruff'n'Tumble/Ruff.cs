@@ -58,7 +58,7 @@ namespace RuffnTumble
 	/// <summary>
 	/// This is the main type for your game
 	/// </summary>
-	class Ruff : Game
+	class Ruff : GameBase
 	{
 		/// <summary>
 		/// Game entry point

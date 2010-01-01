@@ -30,7 +30,7 @@ using ArcEngine.Asset;
 
 namespace ArcEngine.Examples.GameState
 {
-	class main : Game
+	class main : GameBase
 	{
 		/// <summary>
 		/// Main entry point.

@@ -33,7 +33,7 @@ namespace ArcEngine.Examples.Particles
 	/// <summary>
 	/// Main game class
 	/// </summary>
-	public class Fountain : Game
+	public class Fountain : GameBase
 	{
 
         Font2d Font;

@@ -27,21 +27,21 @@ using ArcEngine.Utility.ScreenManager;
 
 namespace DungeonEye
 {
-
-	class DungeonEye : Game
+	/// <summary>
+	/// DungeonEye base game class
+	/// </summary>
+	class Game : GameBase
 	{
 		/// <summary>
-		/// Point d'entrée principal de l'application.
+		/// Application entry point
 		/// </summary>
 		[STAThread]
 		static void Main()
 		{
-			DungeonEye game = null;
-
-
+			Game game = null;
 			try
 			{
-				using (game = new DungeonEye())
+				using (game = new Game())
 					game.Run();
 			}
 			catch (Exception e)
@@ -60,7 +60,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public DungeonEye()
+		public Game()
 		{
 			Settings.Load("settings.xml");
 			InputSchemeName = Settings.GetString("inputscheme");

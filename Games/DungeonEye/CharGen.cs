@@ -66,7 +66,7 @@ namespace DungeonEye
 			PlayButton.Selected += new EventHandler(PlayButton_Selected);
 
 			StringTable = ResourceManager.CreateAsset<StringTable>("Chargen");
-			StringTable.LanguageName = DungeonEye.LanguageName;
+			StringTable.LanguageName = Game.LanguageName;
 		}
 
 

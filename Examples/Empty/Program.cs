@@ -31,7 +31,7 @@ namespace ArcEngine.Examples.EmptyProject
     /// <summary>
     /// Main game class
     /// </summary>
-    public class EmptyProject : Game
+    public class EmptyProject : GameBase
     {
 
         /// <summary>

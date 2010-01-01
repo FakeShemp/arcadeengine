@@ -12,6 +12,9 @@ namespace DungeonEye.Forms
 	/// </summary>
 	public partial class DiceForm : UserControl
 	{
+		/// <summary>
+		/// Constructor
+		/// </summary>
 		public DiceForm()
 		{
 			InitializeComponent();
@@ -59,8 +62,18 @@ namespace DungeonEye.Forms
 		/// </summary>
 		public Dice Dice
 		{
-			get;
-			private set;
+			get
+			{
+				return new Dice((int)ThrowBox.Value, (int)FacesBox.Value, (int)BaseBox.Value);
+			}
+			set
+			{
+				if (value == null)
+					return;
+				Dice.Base = value.Base;
+				Dice.Faces = value.Faces;
+				Dice.Throws = value.Throws;
+			}
 		}
 
 

@@ -34,7 +34,7 @@ namespace ProjectT
 	/// <summary>
 	/// Main game class
 	/// </summary>
-	public class ProjectT : Game
+	public class ProjectT : GameBase
 	{
 
 

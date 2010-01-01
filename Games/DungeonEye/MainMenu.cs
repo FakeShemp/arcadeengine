@@ -165,9 +165,9 @@ namespace DungeonEye
 
 
 			// Does the default language changed ?
-			if (DungeonEye.LanguageName != StringTable.LanguageName)
+			if (Game.LanguageName != StringTable.LanguageName)
 			{
-				StringTable.LanguageName = DungeonEye.LanguageName;
+				StringTable.LanguageName = Game.LanguageName;
 
 				for (int id = 0; id < Buttons.Count; id++)
 					Buttons[id].Text = StringTable.GetString(id+1);

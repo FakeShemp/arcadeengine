@@ -116,7 +116,7 @@ namespace Breakout
 		public void Reset()
 		{
 		//	Location = new Point(512, 384);
-			Velocity = new Point(Game.Random.Next(-10, 10), Game.Random.Next(-10, 10));
+			Velocity = new Point(GameBase.Random.Next(-10, 10), GameBase.Random.Next(-10, 10));
 
 			Lost = false;
 		}

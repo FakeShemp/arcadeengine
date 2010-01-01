@@ -47,7 +47,7 @@ namespace ArcEngine.Examples.GameState
 		public override void LoadContent()
 		{
 
-			BackgroundTexture = Game.Device.CreateTexture();
+			BackgroundTexture = GameBase.Device.CreateTexture();
 			BackgroundTexture.LoadImage("background.png");
 		}
 
@@ -73,7 +73,7 @@ namespace ArcEngine.Examples.GameState
 		/// <param name="device"></param>
 		public override void Draw()
 		{
-			BackgroundTexture.Blit(Game.Window.Rectangle, BackgroundTexture.Rectangle);
+			BackgroundTexture.Blit(GameBase.Window.Rectangle, BackgroundTexture.Rectangle);
 		}
 
 

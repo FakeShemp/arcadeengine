@@ -9,7 +9,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace PathFinding
 {
-	class AStar : Game
+	class AStar : GameBase
 	{
 		/// <summary>
 		/// Main entry point.

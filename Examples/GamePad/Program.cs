@@ -29,7 +29,7 @@ using ArcEngine.Input;
 
 namespace ArcEngine.Examples.Joystick
 {
-	public class GamePadProject : Game
+	public class GamePadProject : GameBase
 	{
 
 		/// <summary>

@@ -23,7 +23,7 @@ using ArcEngine.Graphic;
 
 namespace ArcEngine.Examples.RenderToTexture
 {
-	class RTT : Game
+	class RTT : GameBase
 	{
 
 		/// <summary>

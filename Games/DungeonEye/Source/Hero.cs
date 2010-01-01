@@ -63,25 +63,25 @@ namespace DungeonEye
 		/// </summary>
 		public void Generate()
 		{
-			Strength = Game.Random.Next(9, 17);
-			Intelligence = Game.Random.Next(4, 17);
-			Wisdom = Game.Random.Next(4, 17);
-			Dexterity = Game.Random.Next(4, 17);
-			Constitution = Game.Random.Next(4, 17);
-			Charisma = Game.Random.Next(3, 18);
-			ArmorClass = Game.Random.Next(0, 10);
-			MaxHitPoint = Game.Random.Next(6, 37);
-			HitPoint = Game.Random.Next(6, MaxHitPoint);
+			Strength = GameBase.Random.Next(9, 17);
+			Intelligence = GameBase.Random.Next(4, 17);
+			Wisdom = GameBase.Random.Next(4, 17);
+			Dexterity = GameBase.Random.Next(4, 17);
+			Constitution = GameBase.Random.Next(4, 17);
+			Charisma = GameBase.Random.Next(3, 18);
+			ArmorClass = GameBase.Random.Next(0, 10);
+			MaxHitPoint = GameBase.Random.Next(6, 37);
+			HitPoint = GameBase.Random.Next(6, MaxHitPoint);
 			Level = 3;
 			Food = 75;
 			Profession prof = new Profession();
-			prof.Experience = Game.Random.Next(0, 99999);
-			prof.Level = Game.Random.Next(1, 18);
+			prof.Experience = GameBase.Random.Next(0, 99999);
+			prof.Level = GameBase.Random.Next(1, 18);
 			prof.Classe = HeroClass.Fighter;
 
 			Professions[0] = prof;
 
-			Head = Game.Random.Next(0, 32);
+			Head = GameBase.Random.Next(0, 32);
 
 
 			Quiver = 10;
@@ -259,7 +259,7 @@ namespace DungeonEye
 
 			// Trace this attack
 			attack.Date = DateTime.Now;
-			attack.Result = (short)Game.Random.Next(0, 10);
+			attack.Result = (short)GameBase.Random.Next(0, 10);
 			attack.Monster = Team.Maze.GetMonster(Team.FrontCoord, Team.GetHeroGroundPosition(this));
 
 

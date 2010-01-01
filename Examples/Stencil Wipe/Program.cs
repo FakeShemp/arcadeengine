@@ -39,7 +39,7 @@ namespace StencilWipe
     /// <summary>
     /// Main game class
     /// </summary>
-    public class StencilWipe : Game
+    public class StencilWipe : GameBase
     {
 
         /// <summary>

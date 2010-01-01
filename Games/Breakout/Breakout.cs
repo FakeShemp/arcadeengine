@@ -33,7 +33,7 @@ namespace Breakout
 	/// <summary>
 	/// A breackout clone
 	/// </summary>
-	public class Breakout : Game
+	public class Breakout : GameBase
 	{
 		/// <summary>
 		/// Point d'entrée principal de l'application.

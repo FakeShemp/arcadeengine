@@ -56,7 +56,7 @@ namespace DungeonEye
 			Life = new Life();
 			LastHit = new DateTime();
 
-			DrawOffsetDuration = TimeSpan.FromSeconds(1.0f + Game.Random.NextDouble());
+			DrawOffsetDuration = TimeSpan.FromSeconds(1.0f + GameBase.Random.NextDouble());
 		}
 
 
@@ -86,7 +86,7 @@ namespace DungeonEye
 			// Draw offset
 			if (LastDrawOffset + DrawOffsetDuration < DateTime.Now)
 			{
-				DrawOffset = new Point(Game.Random.Next(-10, 10), Game.Random.Next(-10, 10));
+				DrawOffset = new Point(GameBase.Random.Next(-10, 10), GameBase.Random.Next(-10, 10));
 				LastDrawOffset = DateTime.Now;
 			}
 		}

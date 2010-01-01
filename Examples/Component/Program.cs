@@ -31,7 +31,7 @@ namespace ArcEngine.Examples.Component
 	/// <summary>
 	/// A simple GameComponent example
 	/// </summary>
-	public class Example : Game
+	public class Example : GameBase
 	{
 
 		/// <summary>

@@ -28,7 +28,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace Shader_Demo
 {
-	public class ShaderProject : Game
+	public class ShaderProject : GameBase
 	{
 
 		/// <summary>

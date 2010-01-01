@@ -43,7 +43,7 @@ namespace ArcEngine.Games.ProjectT
 	/// <summary>
 	/// Main game class
 	/// </summary>
-	public class Template : Game
+	public class Template : GameBase
 	{
 
 

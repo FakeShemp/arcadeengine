@@ -63,7 +63,7 @@ namespace DungeonEye.Forms
 
 			
 
-			KeyboardScheme = ResourceManager.CreateAsset<InputScheme>(DungeonEye.InputSchemeName);
+			KeyboardScheme = ResourceManager.CreateAsset<InputScheme>(Game.InputSchemeName);
 			if (KeyboardScheme == null)
 			{
 				KeyboardScheme = new InputScheme();

@@ -50,7 +50,7 @@ namespace ArcEngine.Utility.ScreenManager
 		/// 
 		/// </summary>
 		/// <param name="game"></param>
-		public ScreenManager(Game game)
+		public ScreenManager(GameBase game)
 		{
 			Trace.WriteLine("Creating new ScreenManager.");
 			Screens = new List<GameScreen>();
@@ -278,7 +278,7 @@ namespace ArcEngine.Utility.ScreenManager
 		/// <summary>
 		/// 
 		/// </summary>
-		public Game Game
+		public GameBase Game
 		{
 			get;
 			private set;

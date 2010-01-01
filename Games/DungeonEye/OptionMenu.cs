@@ -69,10 +69,10 @@ namespace DungeonEye
 
 
 			// Buttons
-			Buttons.Add(new ScreenButton("Keyboard : " + DungeonEye.InputSchemeName, new Rectangle(150, 318, 324, 14)));
+			Buttons.Add(new ScreenButton("Keyboard : " + Game.InputSchemeName, new Rectangle(150, 318, 324, 14)));
 			Buttons[0].Selected += new EventHandler(KeyboardEvent);
 
-			Buttons.Add(new ScreenButton("Language : " + DungeonEye.LanguageName, new Rectangle(150, 336, 324, 14)));
+			Buttons.Add(new ScreenButton("Language : " + Game.LanguageName, new Rectangle(150, 336, 324, 14)));
 			Buttons[1].Selected += new EventHandler(LanguageEvent);
 
 			Buttons.Add(new ScreenButton("Back", new Rectangle(150, 354, 324, 14)));
@@ -102,12 +102,12 @@ namespace DungeonEye
 		/// <param name="e"></param>
 		void KeyboardEvent(object sender, EventArgs e)
 		{
-			int id = Keymaps.IndexOf(DungeonEye.InputSchemeName) + 1;
+			int id = Keymaps.IndexOf(Game.InputSchemeName) + 1;
 
 			if (id >= Keymaps.Count)
 				id = 0;
 
-			DungeonEye.InputSchemeName = Keymaps[id];
+			Game.InputSchemeName = Keymaps[id];
 			Settings.SetToken("inputscheme", Keymaps[id]);
 		}
 
@@ -120,12 +120,12 @@ namespace DungeonEye
 		/// <param name="e"></param>
 		void LanguageEvent(object sender, EventArgs e)
 		{
-			int id = Languages.IndexOf(DungeonEye.LanguageName) + 1;
+			int id = Languages.IndexOf(Game.LanguageName) + 1;
 
 			if (id >= Languages.Count)
 				id = 0;
 
-			DungeonEye.LanguageName = Languages[id];
+			Game.LanguageName = Languages[id];
 			Settings.SetToken("language", Languages[id]);
 		}
 
@@ -147,11 +147,11 @@ namespace DungeonEye
 				return;
 
 			// Does the default language changed ?
-			if (StringTable.LanguageName != DungeonEye.LanguageName)
-				StringTable.LanguageName = DungeonEye.LanguageName;
+			if (StringTable.LanguageName != Game.LanguageName)
+				StringTable.LanguageName = Game.LanguageName;
 
-			Buttons[0].Text = StringTable.GetString(1) + DungeonEye.InputSchemeName;
-			Buttons[1].Text = StringTable.GetString(2) + DungeonEye.LanguageName;
+			Buttons[0].Text = StringTable.GetString(1) + Game.InputSchemeName;
+			Buttons[1].Text = StringTable.GetString(2) + Game.LanguageName;
 			Buttons[2].Text = StringTable.GetString(3);
 
 

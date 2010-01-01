@@ -31,6 +31,9 @@ using System.Text;
 
 namespace DungeonEye.Forms
 {
+	/// <summary>
+	/// Itemset form editor class
+	/// </summary>
 	public partial class ItemSetForm : AssetEditor
 	{
 

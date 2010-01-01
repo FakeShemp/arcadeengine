@@ -1030,7 +1030,7 @@
 			// diceForm1
 			// 
 			this.diceForm1.ControlText = "Damage :";
-			this.diceForm1.Location = new System.Drawing.Point(341, 20);
+			this.diceForm1.Location = new System.Drawing.Point(399, 19);
 			this.diceForm1.MinimumSize = new System.Drawing.Size(260, 108);
 			this.diceForm1.Name = "diceForm1";
 			this.diceForm1.Size = new System.Drawing.Size(260, 108);

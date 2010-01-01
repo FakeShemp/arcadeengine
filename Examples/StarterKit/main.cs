@@ -31,7 +31,7 @@ namespace ArcEngine.Examples.StarterKit
 	/// <summary>
 	/// Main game class
 	/// </summary>
-	public class StarterKit : Game
+	public class StarterKit : GameBase
 	{
 
 		/// <summary>

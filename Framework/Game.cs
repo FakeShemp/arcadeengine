@@ -35,7 +35,7 @@ namespace ArcEngine
 	/// <summary>
 	/// Provides basic graphics device initialization, game logic, and rendering code.
 	/// </summary>
-	public class Game : IDisposable
+	public class GameBase : IDisposable
 	{
 
 		#region ctor
@@ -43,7 +43,7 @@ namespace ArcEngine
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public Game()
+		public GameBase()
 		{
 			Trace.TraceInventory();
 
@@ -61,7 +61,7 @@ namespace ArcEngine
 		/// <summary>
 		/// Destructor
 		/// </summary>
-		~Game()
+		~GameBase()
 		{
 			Dispose(false);
 		}
@@ -459,7 +459,7 @@ namespace ArcEngine
 		/// Gain focus event handler
 		/// </summary>
 		/// <param name="game">Game</param>
-		public delegate void OnActivatedEventHandler(Game game);
+		public delegate void OnActivatedEventHandler(GameBase game);
 
 
 		/// <summary>
@@ -472,7 +472,7 @@ namespace ArcEngine
 		/// Lost focus event handler
 		/// </summary>
 		/// <param name="game">Game</param>
-		public delegate void OnDeactivatedEventHandler(Game game);
+		public delegate void OnDeactivatedEventHandler(GameBase game);
 
 		
 		/// <summary>
@@ -485,7 +485,7 @@ namespace ArcEngine
 		/// Resize event handler
 		/// </summary>
 		/// <param name="game">Game</param>
-		public delegate void OnResizeEventHandler(Game game);
+		public delegate void OnResizeEventHandler(GameBase game);
 
 
 		/// <summary>

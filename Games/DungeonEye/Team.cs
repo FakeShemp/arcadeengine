@@ -73,10 +73,10 @@ namespace DungeonEye
 				Trace.WriteLine("ERROR !!! No StringTable defined for the game !!!");
 				ExitScreen();
 			}
-			Language.LanguageName = DungeonEye.LanguageName;
+			Language.LanguageName = Game.LanguageName;
 
 			// Keyboard input scheme
-			InputScheme = ResourceManager.CreateAsset<InputScheme>(DungeonEye.InputSchemeName);
+			InputScheme = ResourceManager.CreateAsset<InputScheme>(Game.InputSchemeName);
 			if (InputScheme == null)
 			{
 				Trace.WriteLine("ERROR !!! No InputSchema detected !!!");
@@ -737,7 +737,7 @@ namespace DungeonEye
 				Hero hero = GetHeroFromLocation(Mouse.Location);
 				if (hero != null)
 				{
-					hero.Hit(null, Game.Random.Next(1, 5));
+					hero.Hit(null, GameBase.Random.Next(1, 5));
 				}
 			}
 
