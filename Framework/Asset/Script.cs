@@ -126,7 +126,7 @@ namespace ArcEngine.Asset
 		/// <summary>
 		/// Returns all methods
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>Returns a list of method's name</returns>
 		public List<string> GetMethods()
 		{
 			List<string> list = new List<string>();
@@ -155,6 +155,76 @@ namespace ArcEngine.Asset
 			return list;
 		}
 
+
+
+		/// <summary>
+		/// Gets a list of specific methods
+		/// </summary>
+		/// <param name="types">An array of type's parameters</param>
+		/// <param name="ret">Retrun value</param>
+		/// <returns></returns>
+		public List<string> GetMethods(Type[] types, Type ret)
+		{
+			List<string> list = new List<string>();
+
+			if (!IsCompiled)
+				Compile();
+
+
+			if (CompiledAssembly == null)
+				return list;
+
+			// Loop through types looking for one that implements the given interface
+			foreach (Type t in CompiledAssembly.GetTypes())
+			{
+
+				foreach (MethodInfo m in t.GetMethods())
+				{
+					// return value
+					if (m.ReturnType != ret)
+						continue;
+
+					// Parameters
+					bool ok = false;
+					int id = 0;
+					foreach (ParameterInfo pi in m.GetParameters())
+					{
+						// Index overrun
+						if (id >= types.Length)
+						{
+							ok = false;
+							break;
+						}
+
+						// Parameters differents
+						if (pi.ParameterType != types[id])
+						{
+							ok = false;
+							break;
+						}
+
+						ok = true;
+
+						// Next
+						id++;
+					}
+
+					if (ok && id == types.Length)
+						list.Add(m.Name);
+
+					
+				}
+
+			}
+
+			return list;
+		}
+
+
+		bool CompareParameters()
+		{
+			return false;
+		}
 
 
 		/// <summary>

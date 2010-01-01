@@ -853,8 +853,8 @@
 			this.OnCollectBox.Name = "OnCollectBox";
 			this.OnCollectBox.Size = new System.Drawing.Size(148, 21);
 			this.OnCollectBox.Sorted = true;
-			this.OnCollectBox.TabIndex = 1;
-			this.OnCollectBox.SelectedIndexChanged += new System.EventHandler(this.ScriptNameBox_SelectedIndexChanged);
+			this.OnCollectBox.TabIndex = 4;
+			this.OnCollectBox.SelectedIndexChanged += new System.EventHandler(this.OnCollectBox_SelectedIndexChanged);
 			// 
 			// label19
 			// 
@@ -873,8 +873,8 @@
 			this.OnDropBox.Name = "OnDropBox";
 			this.OnDropBox.Size = new System.Drawing.Size(148, 21);
 			this.OnDropBox.Sorted = true;
-			this.OnDropBox.TabIndex = 1;
-			this.OnDropBox.SelectedIndexChanged += new System.EventHandler(this.ScriptNameBox_SelectedIndexChanged);
+			this.OnDropBox.TabIndex = 3;
+			this.OnDropBox.SelectedIndexChanged += new System.EventHandler(this.OnDropBox_SelectedIndexChanged);
 			// 
 			// label18
 			// 
@@ -893,8 +893,8 @@
 			this.OnUseBox.Name = "OnUseBox";
 			this.OnUseBox.Size = new System.Drawing.Size(148, 21);
 			this.OnUseBox.Sorted = true;
-			this.OnUseBox.TabIndex = 1;
-			this.OnUseBox.SelectedIndexChanged += new System.EventHandler(this.ScriptNameBox_SelectedIndexChanged);
+			this.OnUseBox.TabIndex = 2;
+			this.OnUseBox.SelectedIndexChanged += new System.EventHandler(this.OnUseBox_SelectedIndexChanged);
 			// 
 			// label17
 			// 

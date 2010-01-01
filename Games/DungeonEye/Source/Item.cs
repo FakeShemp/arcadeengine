@@ -80,7 +80,6 @@ namespace DungeonEye
 				{
 					case "script":
 					{
-
 						ResourceManager.CreateSharedAsset<Script>(ScriptName);
 					}
 					break;
@@ -143,6 +142,25 @@ namespace DungeonEye
 						UseQuiver = (bool)Boolean.Parse(node.Attributes["value"].Value);
 					}
 					break;
+
+					case "onuse":
+					{
+						OnUseScript = node.Attributes["value"].Value;
+					}
+					break;
+
+					case "ondrop":
+					{
+						OnDropScript = node.Attributes["value"].Value;
+					}
+					break;
+
+					case "oncollect":
+					{
+						OnCollectScript = node.Attributes["value"].Value;
+					}
+					break;
+
 				}
 			}
 
@@ -203,6 +221,28 @@ namespace DungeonEye
 			writer.WriteEndElement();
 
 
+			if (!string.IsNullOrEmpty(OnUseScript))
+			{
+				writer.WriteStartElement("onuse");
+				writer.WriteAttributeString("value", OnUseScript.ToString());
+				writer.WriteEndElement();
+			}
+
+			if (!string.IsNullOrEmpty(OnDropScript))
+			{
+				writer.WriteStartElement("ondrop");
+				writer.WriteAttributeString("value", OnDropScript.ToString());
+				writer.WriteEndElement();
+			}
+
+			if (!string.IsNullOrEmpty(OnCollectScript))
+			{
+				writer.WriteStartElement("oncollect");
+				writer.WriteAttributeString("value", OnCollectScript.ToString());
+				writer.WriteEndElement();
+			}
+
+
 			writer.WriteElementString("description", Description);
 
 
@@ -231,6 +271,37 @@ namespace DungeonEye
 			set;
 		}
 
+
+		/// <summary>
+		/// OnUse script name
+		/// </summary>
+		public string OnUseScript
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// OnDrop script name
+		/// </summary>
+		public string OnDropScript
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// OnCollect script name
+		/// </summary>
+		public string OnCollectScript
+		{
+			get;
+			set;
+		}
+
+		
 		/// <summary>
 		/// Script of the item
 		/// </summary>

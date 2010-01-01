@@ -212,7 +212,7 @@ namespace DungeonEye.Forms
 
 
 		/// <summary>
-		/// save the asset to the manager
+		/// Saves the asset to the manager
 		/// </summary>
 		public override void Save()
 		{
@@ -537,10 +537,43 @@ namespace DungeonEye.Forms
 			if (ScriptNameBox.SelectedIndex == -1)
 				return;
 
-
 			ItemSet.ScriptName = ScriptNameBox.SelectedItem as string;
+			RebuildScripts();
+
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		void RebuildScripts()
+		{
+			OnUseBox.Items.Clear();
+			OnDropBox.Items.Clear();
+			OnCollectBox.Items.Clear();
+
+
+			Script script = ResourceManager.CreateAsset<Script>(ItemSet.ScriptName);
+			if (script == null)
+				return;
+
+			List<string> list = null;
+
+			// OnUse
+			list = script.GetMethods(new Type[] { typeof(Item), typeof(Hero) }, typeof(void));
+			OnUseBox.Items.AddRange(list.ToArray());
+
+			// OnDrop
+			list = script.GetMethods(new Type[] { typeof(Item), typeof(Hero), typeof(MazeBlock) }, typeof(void));
+			OnDropBox.Items.AddRange(list.ToArray());
+
+			// OnCollect
+			list = script.GetMethods(new Type[] { typeof(Item), typeof(Hero) }, typeof(void));
+			OnCollectBox.Items.AddRange(list.ToArray());
+
+
+
+		}
 
 
 		/// <summary>
@@ -821,6 +854,33 @@ namespace DungeonEye.Forms
 		}
 
 
+		#region scripting events
+
+		private void OnUseBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (Item == null)
+				return;
+
+			Item.OnUseScript = (string)OnUseBox.SelectedItem;
+
+		}
+
+		private void OnDropBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (Item == null)
+				return;
+			Item.OnDropScript = (string)OnDropBox.SelectedItem;
+
+		}
+
+		private void OnCollectBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (Item == null)
+				return;
+			Item.OnCollectScript = (string)OnCollectBox.SelectedItem;
+		}
+
+		#endregion
 
 
 	}
