@@ -93,6 +93,8 @@ namespace DungeonEye
 				SetInventoryItem(InventoryPosition.Armor, itemset.GetItem("Leather Armor"));
 				SetInventoryItem(InventoryPosition.Inventory_01, itemset.GetItem("Test Item"));
 				SetInventoryItem(InventoryPosition.Inventory_02, itemset.GetItem("Spell book"));
+				SetInventoryItem(InventoryPosition.Helmet, itemset.GetItem("Helmet"));
+				SetInventoryItem(InventoryPosition.Feet, itemset.GetItem("Boots"));
 			}
 		}
 
@@ -180,9 +182,9 @@ namespace DungeonEye
 			}
 
 			// Boots
-			if (item.Slot == ItemSlot.Feet && GetInventoryItem(InventoryPosition.Shoes) == null)
+			if (item.Slot == ItemSlot.Feet && GetInventoryItem(InventoryPosition.Feet) == null)
 			{
-				SetInventoryItem(InventoryPosition.Shoes, item);
+				SetInventoryItem(InventoryPosition.Feet, item);
 				return true;
 			}
 
@@ -216,16 +218,19 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="position">Position in the inventory</param>
 		/// <param name="item">Item to set</param>
-		public void SetInventoryItem(InventoryPosition position, Item item)
+		/// <returns>True if the item can be set at the given inventory location</returns>
+		public bool SetInventoryItem(InventoryPosition position, Item item)
 		{
+			//if (item != null && item.Slot == position)
 			Inventory[(int)position] = item;
+			return true;
 		}
 
 
 		/// <summary>
 		/// Gets the next item in the waist bag
 		/// </summary>
-		/// <returns>Item handle or null</returns>
+		/// <returns>Item handle or null if empty</returns>
 		public Item PopWaistItem()
 		{
 			return null;
@@ -1089,7 +1094,7 @@ namespace DungeonEye
 		Secondary = 16,
 		Ring_1 = 17,
 		Ring_2 = 18,
-		Shoes = 19,
+		Feet = 19,
 		Primary = 20,
 		Belt_1 = 21,
 		Belt_2 = 22,

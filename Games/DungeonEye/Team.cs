@@ -595,8 +595,8 @@ namespace DungeonEye
 				Items.Draw(SelectedHero.GetInventoryItem(InventoryPosition.Ring_2).TileID, new Point(488, 278));
 
 			// Feet
-			if (SelectedHero.GetInventoryItem(InventoryPosition.Shoes) != null)
-				Items.Draw(SelectedHero.GetInventoryItem(InventoryPosition.Shoes).TileID, new Point(570, 288));
+			if (SelectedHero.GetInventoryItem(InventoryPosition.Feet) != null)
+				Items.Draw(SelectedHero.GetInventoryItem(InventoryPosition.Feet).TileID, new Point(570, 288));
 
 			// Secondary
 			if (SelectedHero.GetInventoryItem(InventoryPosition.Secondary) != null)
@@ -1536,7 +1536,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Updates inventory
 		/// </summary>
-		/// <param name="time"></param>
+		/// <param name="time">Elapsed game time</param>
 		void UpdateInventory(GameTime time)
 		{
 			Point mousePos = Mouse.Location;
@@ -1674,18 +1674,18 @@ namespace DungeonEye
 				// Feet 552,270,36,36
 				else if (new Rectangle(552, 270, 36, 36).Contains(mousePos))
 				{
-					item = SelectedHero.GetInventoryItem(InventoryPosition.Shoes);
+					item = SelectedHero.GetInventoryItem(InventoryPosition.Feet);
 
 					if (ItemInHand != null && ItemInHand.Slot == ItemSlot.Feet)
 					{
 						Item swap = ItemInHand;
 						ItemInHand = item;
-						SelectedHero.SetInventoryItem(InventoryPosition.Shoes, swap); 
+						SelectedHero.SetInventoryItem(InventoryPosition.Feet, swap); 
 					}
 					else if (ItemInHand == null &&item != null)
 					{
 						ItemInHand = item;
-						SelectedHero.SetInventoryItem(InventoryPosition.Shoes, null);
+						SelectedHero.SetInventoryItem(InventoryPosition.Feet, null);
 					}
 				}
 

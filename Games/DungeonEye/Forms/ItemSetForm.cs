@@ -17,16 +17,16 @@
 //along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 //
 #endregion
-using ArcEngine.Forms;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 using ArcEngine;
 using ArcEngine.Asset;
+using ArcEngine.Forms;
 using ArcEngine.Graphic;
-using System.Text;
 
 
 namespace DungeonEye.Forms
@@ -58,22 +58,22 @@ namespace DungeonEye.Forms
 			}
 			TileSetNameBox.EndUpdate();
 
-
+			// Tileset name
 			if (!string.IsNullOrEmpty(ItemSet.TileSetName) && TileSetNameBox.Items.Contains(ItemSet.TileSetName))
 				TileSetNameBox.SelectedItem = ItemSet.TileSetName;
 
 
 
-			// TileSetNameBox
+			// Scripts
 			ScriptNameBox.BeginUpdate();
 			ScriptNameBox.Items.Clear();
 			foreach (string name in ResourceManager.GetAssets<Script>())
 			{
 				ScriptNameBox.Items.Add(name);
 			}
-
 			ScriptNameBox.EndUpdate();
 
+			// Script name
 			if (!string.IsNullOrEmpty(ItemSet.ScriptName) && ScriptNameBox.Items.Contains(ItemSet.ScriptName))
 				ScriptNameBox.SelectedItem = ItemSet.ScriptName;
 			
@@ -224,8 +224,7 @@ namespace DungeonEye.Forms
 			XmlDocument doc = new XmlDocument();
 			doc.LoadXml(xml);
 
-			//HACK !!!!!!
-			ResourceManager.AddAsset<ItemSet>("Main", doc.DocumentElement);
+			ResourceManager.AddAsset<ItemSet>(ItemSet.Name, doc.DocumentElement);
 		}
 
 
