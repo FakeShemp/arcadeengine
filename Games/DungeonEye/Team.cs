@@ -1367,7 +1367,7 @@ namespace DungeonEye
 							{
 								item = hero.GetInventoryItem(InventoryPosition.Primary);
 
-								if (ItemInHand != null && ((ItemInHand.Slot & ItemSlot.Primary) == ItemSlot.Primary))
+								if (ItemInHand != null && ((ItemInHand.Slot & BodySlot.Primary) == BodySlot.Primary))
 								{
 									Item swap = ItemInHand;
 									ItemInHand = hero.GetInventoryItem(InventoryPosition.Primary);
@@ -1389,7 +1389,7 @@ namespace DungeonEye
 							{
 								item = hero.GetInventoryItem(InventoryPosition.Secondary);
 
-								if (ItemInHand != null && ((ItemInHand.Slot & ItemSlot.Secondary) == ItemSlot.Secondary))
+								if (ItemInHand != null && ((ItemInHand.Slot & BodySlot.Secondary) == BodySlot.Secondary))
 								{
 									Item swap = ItemInHand;
 									ItemInHand = hero.GetInventoryItem(InventoryPosition.Secondary);
@@ -1594,7 +1594,7 @@ namespace DungeonEye
 						SelectedHero.Quiver--;
 						ItemInHand = ResourceManager.CreateAsset<ItemSet>("Items").GetItem("Arrow");
 					}
-					else if (ItemInHand != null && (ItemInHand.Slot & ItemSlot.Ammo) == ItemSlot.Ammo)
+					else if (ItemInHand != null && (ItemInHand.Slot & BodySlot.Ammo) == BodySlot.Ammo)
 					{
 						SelectedHero.Quiver++;
 						ItemInHand = null;
@@ -1606,7 +1606,7 @@ namespace DungeonEye
 				{
 					item = SelectedHero.GetInventoryItem(InventoryPosition.Armor);
 
-					if (ItemInHand != null && ItemInHand.Slot == ItemSlot.Body)
+					if (ItemInHand != null && ItemInHand.Slot == BodySlot.Body)
 					{
 						Item swap = ItemInHand;
 						ItemInHand = item;
@@ -1622,7 +1622,7 @@ namespace DungeonEye
 				// Food 472,72,62,32
 				else if (new Rectangle(472, 72, 62, 30).Contains(mousePos))
 				{
-					if (ItemInHand != null && ItemInHand.Type == ItemType.Food)
+					if (ItemInHand != null && ItemInHand.Type == ItemType.Consumable)
 					{
 						SelectedHero.Food += 25;
 						ItemInHand = null;
@@ -1636,7 +1636,7 @@ namespace DungeonEye
 				{
 					item = SelectedHero.GetInventoryItem(InventoryPosition.Wrist);
 
-					if (ItemInHand != null && ItemInHand.Slot == ItemSlot.Wrist)
+					if (ItemInHand != null && ItemInHand.Slot == BodySlot.Wrist)
 					{
 						Item swap = ItemInHand;
 						ItemInHand = item; 
@@ -1655,7 +1655,7 @@ namespace DungeonEye
 				{
 					item = SelectedHero.GetInventoryItem(InventoryPosition.Primary);
 
-					if (ItemInHand != null && ((ItemInHand.Slot & ItemSlot.Primary) == ItemSlot.Primary || (ItemInHand.Slot & ItemSlot.Secondary) == ItemSlot.Secondary))
+					if (ItemInHand != null && ((ItemInHand.Slot & BodySlot.Primary) == BodySlot.Primary || (ItemInHand.Slot & BodySlot.Secondary) == BodySlot.Secondary))
 					{
 						Item swap = ItemInHand;
 						ItemInHand = item;
@@ -1676,7 +1676,7 @@ namespace DungeonEye
 				{
 					item = SelectedHero.GetInventoryItem(InventoryPosition.Feet);
 
-					if (ItemInHand != null && ItemInHand.Slot == ItemSlot.Feet)
+					if (ItemInHand != null && ItemInHand.Slot == BodySlot.Feet)
 					{
 						Item swap = ItemInHand;
 						ItemInHand = item;
@@ -1695,7 +1695,7 @@ namespace DungeonEye
 				{
 					item = SelectedHero.GetInventoryItem(InventoryPosition.Secondary);
 
-					if (ItemInHand != null && ((ItemInHand.Slot & ItemSlot.Primary) == ItemSlot.Primary || (ItemInHand.Slot & ItemSlot.Secondary) == ItemSlot.Secondary))
+					if (ItemInHand != null && ((ItemInHand.Slot & BodySlot.Primary) == BodySlot.Primary || (ItemInHand.Slot & BodySlot.Secondary) == BodySlot.Secondary))
 					{
 						Item swap = ItemInHand;
 						ItemInHand = item;
@@ -1715,7 +1715,7 @@ namespace DungeonEye
 				{
 					item = SelectedHero.GetInventoryItem(InventoryPosition.Neck);
 
-					if (ItemInHand != null && ItemInHand.Slot == ItemSlot.Neck)
+					if (ItemInHand != null && ItemInHand.Slot == BodySlot.Neck)
 					{
 						Item swap = ItemInHand;
 						ItemInHand = item;
@@ -1734,7 +1734,7 @@ namespace DungeonEye
 				{
 					item = SelectedHero.GetInventoryItem(InventoryPosition.Helmet);
 
-					if (ItemInHand != null && ItemInHand.Slot == ItemSlot.Head)
+					if (ItemInHand != null && ItemInHand.Slot == BodySlot.Head)
 					{
 						Item swap = ItemInHand;
 						ItemInHand = item;
@@ -1759,7 +1759,7 @@ namespace DungeonEye
 						{
 							item = SelectedHero.GetInventoryItem(InventoryPosition.Belt_1 + i);
 			
-							if (ItemInHand != null && (ItemInHand.Slot & ItemSlot.Waist) == ItemSlot.Waist)
+							if (ItemInHand != null && (ItemInHand.Slot & BodySlot.Waist) == BodySlot.Waist)
 							{
 								Item swap = ItemInHand;
 								ItemInHand = item;
@@ -1783,7 +1783,7 @@ namespace DungeonEye
 
 						if (new Rectangle(454 + i * 24, 268, 20, 20).Contains(mousePos))
 						{
-							if (ItemInHand != null && ItemInHand.Slot == ItemSlot.Ring)
+							if (ItemInHand != null && ItemInHand.Slot == BodySlot.Ring)
 							{
 								Item swap = ItemInHand;
 								ItemInHand = item;

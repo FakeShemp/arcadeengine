@@ -29,13 +29,6 @@
 		private void InitializeComponent()
 		{
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ItemSetForm));
-			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-			this.AddItemBox = new System.Windows.Forms.ToolStripButton();
-			this.RemoveItemBox = new System.Windows.Forms.ToolStripButton();
-			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-			this.ItemsBox = new System.Windows.Forms.ToolStripComboBox();
-			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-			this.ApplyBox = new System.Windows.Forms.ToolStripButton();
 			this.GLGroundTile = new OpenTK.GLControl();
 			this.GLInventoryTile = new OpenTK.GLControl();
 			this.label2 = new System.Windows.Forms.Label();
@@ -109,8 +102,16 @@
 			this.label17 = new System.Windows.Forms.Label();
 			this.ScriptNameBox = new System.Windows.Forms.ComboBox();
 			this.label16 = new System.Windows.Forms.Label();
-			this.diceForm1 = new DungeonEye.Forms.DiceForm();
-			this.toolStrip1.SuspendLayout();
+			this.tabControl1 = new System.Windows.Forms.TabControl();
+			this.VisualTab = new System.Windows.Forms.TabPage();
+			this.PropertiesTab = new System.Windows.Forms.TabPage();
+			this.ScriptTab = new System.Windows.Forms.TabPage();
+			this.ItemsBox = new System.Windows.Forms.ListBox();
+			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.toolStrip2 = new System.Windows.Forms.ToolStrip();
+			this.AddItem = new System.Windows.Forms.ToolStripButton();
+			this.RemoveItemBox = new System.Windows.Forms.ToolStripButton();
+			this.groupBox11 = new System.Windows.Forms.GroupBox();
 			this.groupBox4.SuspendLayout();
 			this.groupBox5.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.WeightBox)).BeginInit();
@@ -128,72 +129,14 @@
 			this.groupBox3.SuspendLayout();
 			this.groupBox9.SuspendLayout();
 			this.groupBox10.SuspendLayout();
+			this.tabControl1.SuspendLayout();
+			this.VisualTab.SuspendLayout();
+			this.PropertiesTab.SuspendLayout();
+			this.ScriptTab.SuspendLayout();
+			this.groupBox1.SuspendLayout();
+			this.toolStrip2.SuspendLayout();
+			this.groupBox11.SuspendLayout();
 			this.SuspendLayout();
-			// 
-			// toolStrip1
-			// 
-			this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-			this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.AddItemBox,
-            this.RemoveItemBox,
-            this.toolStripSeparator1,
-            this.ItemsBox,
-            this.toolStripSeparator2,
-            this.ApplyBox});
-			this.toolStrip1.Location = new System.Drawing.Point(0, 0);
-			this.toolStrip1.Name = "toolStrip1";
-			this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-			this.toolStrip1.Size = new System.Drawing.Size(821, 25);
-			this.toolStrip1.TabIndex = 1;
-			this.toolStrip1.Text = "toolStrip1";
-			// 
-			// AddItemBox
-			// 
-			this.AddItemBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.AddItemBox.Image = ((System.Drawing.Image)(resources.GetObject("AddItemBox.Image")));
-			this.AddItemBox.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.AddItemBox.Name = "AddItemBox";
-			this.AddItemBox.Size = new System.Drawing.Size(23, 22);
-			this.AddItemBox.Text = "Add a new item";
-			this.AddItemBox.Click += new System.EventHandler(this.AddItemBox_Click);
-			// 
-			// RemoveItemBox
-			// 
-			this.RemoveItemBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.RemoveItemBox.Image = ((System.Drawing.Image)(resources.GetObject("RemoveItemBox.Image")));
-			this.RemoveItemBox.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.RemoveItemBox.Name = "RemoveItemBox";
-			this.RemoveItemBox.Size = new System.Drawing.Size(23, 22);
-			this.RemoveItemBox.Text = "Remove current item";
-			this.RemoveItemBox.Click += new System.EventHandler(this.RemoveItem);
-			// 
-			// toolStripSeparator1
-			// 
-			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-			// 
-			// ItemsBox
-			// 
-			this.ItemsBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.ItemsBox.Name = "ItemsBox";
-			this.ItemsBox.Size = new System.Drawing.Size(121, 25);
-			this.ItemsBox.Sorted = true;
-			this.ItemsBox.SelectedIndexChanged += new System.EventHandler(this.ItemsBox_SelectedIndexChanged);
-			// 
-			// toolStripSeparator2
-			// 
-			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
-			// 
-			// ApplyBox
-			// 
-			this.ApplyBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-			this.ApplyBox.Image = ((System.Drawing.Image)(resources.GetObject("ApplyBox.Image")));
-			this.ApplyBox.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.ApplyBox.Name = "ApplyBox";
-			this.ApplyBox.Size = new System.Drawing.Size(42, 22);
-			this.ApplyBox.Text = "Apply";
-			this.ApplyBox.Click += new System.EventHandler(this.ApplyBox_Click);
 			// 
 			// GLGroundTile
 			// 
@@ -270,7 +213,7 @@
 			this.groupBox4.Controls.Add(this.label3);
 			this.groupBox4.Controls.Add(this.DescriptionBox);
 			this.groupBox4.Controls.Add(this.NameBox);
-			this.groupBox4.Location = new System.Drawing.Point(406, 28);
+			this.groupBox4.Location = new System.Drawing.Point(6, 6);
 			this.groupBox4.Name = "groupBox4";
 			this.groupBox4.Size = new System.Drawing.Size(408, 105);
 			this.groupBox4.TabIndex = 5;
@@ -313,7 +256,7 @@
 			this.groupBox5.Controls.Add(this.TypeBox);
 			this.groupBox5.Controls.Add(this.label6);
 			this.groupBox5.Controls.Add(this.label5);
-			this.groupBox5.Location = new System.Drawing.Point(612, 287);
+			this.groupBox5.Location = new System.Drawing.Point(212, 265);
 			this.groupBox5.Name = "groupBox5";
 			this.groupBox5.Size = new System.Drawing.Size(202, 122);
 			this.groupBox5.TabIndex = 6;
@@ -410,7 +353,7 @@
 			this.groupBox6.Controls.Add(this.SecondaryBox);
 			this.groupBox6.Controls.Add(this.AmmoBox);
 			this.groupBox6.Controls.Add(this.PrimaryBox);
-			this.groupBox6.Location = new System.Drawing.Point(612, 139);
+			this.groupBox6.Location = new System.Drawing.Point(212, 117);
 			this.groupBox6.Name = "groupBox6";
 			this.groupBox6.Size = new System.Drawing.Size(202, 142);
 			this.groupBox6.TabIndex = 7;
@@ -535,7 +478,7 @@
 			this.groupBox7.Controls.Add(this.label8);
 			this.groupBox7.Controls.Add(this.ThrowBox);
 			this.groupBox7.Controls.Add(this.label7);
-			this.groupBox7.Location = new System.Drawing.Point(406, 139);
+			this.groupBox7.Location = new System.Drawing.Point(6, 117);
 			this.groupBox7.Name = "groupBox7";
 			this.groupBox7.Size = new System.Drawing.Size(200, 142);
 			this.groupBox7.TabIndex = 8;
@@ -622,7 +565,7 @@
 			this.groupBox8.Controls.Add(this.label9);
 			this.groupBox8.Controls.Add(this.CriticalMinBox);
 			this.groupBox8.Controls.Add(this.label10);
-			this.groupBox8.Location = new System.Drawing.Point(406, 287);
+			this.groupBox8.Location = new System.Drawing.Point(6, 265);
 			this.groupBox8.Name = "groupBox8";
 			this.groupBox8.Size = new System.Drawing.Size(200, 122);
 			this.groupBox8.TabIndex = 8;
@@ -714,9 +657,10 @@
 			this.groupBox2.Controls.Add(this.InventoryTileBox);
 			this.groupBox2.Controls.Add(this.IncomingTileBox);
 			this.groupBox2.Controls.Add(this.MoveAwayTileBox);
-			this.groupBox2.Location = new System.Drawing.Point(3, 28);
+			this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.groupBox2.Location = new System.Drawing.Point(3, 3);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(397, 483);
+			this.groupBox2.Size = new System.Drawing.Size(601, 594);
 			this.groupBox2.TabIndex = 3;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Tiles :";
@@ -811,7 +755,7 @@
 			this.groupBox3.Controls.Add(this.RangerBox);
 			this.groupBox3.Controls.Add(this.PaladinBox);
 			this.groupBox3.Controls.Add(this.FighterBox);
-			this.groupBox3.Location = new System.Drawing.Point(406, 415);
+			this.groupBox3.Location = new System.Drawing.Point(6, 393);
 			this.groupBox3.Name = "groupBox3";
 			this.groupBox3.Size = new System.Drawing.Size(200, 96);
 			this.groupBox3.TabIndex = 7;
@@ -889,7 +833,7 @@
 			this.groupBox9.Controls.Add(this.SecondaryHandBox);
 			this.groupBox9.Controls.Add(this.TwoHandedBox);
 			this.groupBox9.Controls.Add(this.PrimaryHandBox);
-			this.groupBox9.Location = new System.Drawing.Point(612, 415);
+			this.groupBox9.Location = new System.Drawing.Point(212, 393);
 			this.groupBox9.Name = "groupBox9";
 			this.groupBox9.Size = new System.Drawing.Size(202, 96);
 			this.groupBox9.TabIndex = 7;
@@ -931,7 +875,6 @@
 			// 
 			// groupBox10
 			// 
-			this.groupBox10.Controls.Add(this.diceForm1);
 			this.groupBox10.Controls.Add(this.OnCollectBox);
 			this.groupBox10.Controls.Add(this.label19);
 			this.groupBox10.Controls.Add(this.OnDropBox);
@@ -940,9 +883,9 @@
 			this.groupBox10.Controls.Add(this.label17);
 			this.groupBox10.Controls.Add(this.ScriptNameBox);
 			this.groupBox10.Controls.Add(this.label16);
-			this.groupBox10.Location = new System.Drawing.Point(3, 517);
+			this.groupBox10.Location = new System.Drawing.Point(5, 11);
 			this.groupBox10.Name = "groupBox10";
-			this.groupBox10.Size = new System.Drawing.Size(811, 125);
+			this.groupBox10.Size = new System.Drawing.Size(265, 134);
 			this.groupBox10.TabIndex = 9;
 			this.groupBox10.TabStop = false;
 			this.groupBox10.Text = "Scripting :";
@@ -1027,30 +970,128 @@
 			this.label16.TabIndex = 0;
 			this.label16.Text = "Script name :";
 			// 
-			// diceForm1
+			// tabControl1
 			// 
-			this.diceForm1.ControlText = "Damage :";
-			this.diceForm1.Location = new System.Drawing.Point(399, 19);
-			this.diceForm1.MinimumSize = new System.Drawing.Size(260, 108);
-			this.diceForm1.Name = "diceForm1";
-			this.diceForm1.Size = new System.Drawing.Size(260, 108);
-			this.diceForm1.TabIndex = 2;
+			this.tabControl1.Controls.Add(this.VisualTab);
+			this.tabControl1.Controls.Add(this.PropertiesTab);
+			this.tabControl1.Controls.Add(this.ScriptTab);
+			this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tabControl1.Location = new System.Drawing.Point(3, 16);
+			this.tabControl1.Name = "tabControl1";
+			this.tabControl1.SelectedIndex = 0;
+			this.tabControl1.Size = new System.Drawing.Size(615, 626);
+			this.tabControl1.TabIndex = 10;
+			// 
+			// VisualTab
+			// 
+			this.VisualTab.Controls.Add(this.groupBox2);
+			this.VisualTab.Location = new System.Drawing.Point(4, 22);
+			this.VisualTab.Name = "VisualTab";
+			this.VisualTab.Padding = new System.Windows.Forms.Padding(3);
+			this.VisualTab.Size = new System.Drawing.Size(607, 600);
+			this.VisualTab.TabIndex = 0;
+			this.VisualTab.Text = "Visuals";
+			this.VisualTab.UseVisualStyleBackColor = true;
+			// 
+			// PropertiesTab
+			// 
+			this.PropertiesTab.Controls.Add(this.groupBox4);
+			this.PropertiesTab.Controls.Add(this.groupBox8);
+			this.PropertiesTab.Controls.Add(this.groupBox5);
+			this.PropertiesTab.Controls.Add(this.groupBox7);
+			this.PropertiesTab.Controls.Add(this.groupBox6);
+			this.PropertiesTab.Controls.Add(this.groupBox9);
+			this.PropertiesTab.Controls.Add(this.groupBox3);
+			this.PropertiesTab.Location = new System.Drawing.Point(4, 22);
+			this.PropertiesTab.Name = "PropertiesTab";
+			this.PropertiesTab.Padding = new System.Windows.Forms.Padding(3);
+			this.PropertiesTab.Size = new System.Drawing.Size(607, 575);
+			this.PropertiesTab.TabIndex = 1;
+			this.PropertiesTab.Text = "Properties";
+			this.PropertiesTab.UseVisualStyleBackColor = true;
+			// 
+			// ScriptTab
+			// 
+			this.ScriptTab.Controls.Add(this.groupBox10);
+			this.ScriptTab.Location = new System.Drawing.Point(4, 22);
+			this.ScriptTab.Name = "ScriptTab";
+			this.ScriptTab.Size = new System.Drawing.Size(607, 575);
+			this.ScriptTab.TabIndex = 2;
+			this.ScriptTab.Text = "Scripting";
+			this.ScriptTab.UseVisualStyleBackColor = true;
+			// 
+			// ItemsBox
+			// 
+			this.ItemsBox.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.ItemsBox.FormattingEnabled = true;
+			this.ItemsBox.Location = new System.Drawing.Point(3, 41);
+			this.ItemsBox.Name = "ItemsBox";
+			this.ItemsBox.Size = new System.Drawing.Size(194, 589);
+			this.ItemsBox.Sorted = true;
+			this.ItemsBox.TabIndex = 11;
+			this.ItemsBox.SelectedIndexChanged += new System.EventHandler(this.ItemsBox_SelectedIndexChanged);
+			// 
+			// groupBox1
+			// 
+			this.groupBox1.Controls.Add(this.ItemsBox);
+			this.groupBox1.Controls.Add(this.toolStrip2);
+			this.groupBox1.Dock = System.Windows.Forms.DockStyle.Left;
+			this.groupBox1.Location = new System.Drawing.Point(0, 0);
+			this.groupBox1.Name = "groupBox1";
+			this.groupBox1.Size = new System.Drawing.Size(200, 645);
+			this.groupBox1.TabIndex = 12;
+			this.groupBox1.TabStop = false;
+			this.groupBox1.Text = "Items :";
+			// 
+			// toolStrip2
+			// 
+			this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.AddItem,
+            this.RemoveItemBox});
+			this.toolStrip2.Location = new System.Drawing.Point(3, 16);
+			this.toolStrip2.Name = "toolStrip2";
+			this.toolStrip2.Size = new System.Drawing.Size(194, 25);
+			this.toolStrip2.TabIndex = 12;
+			this.toolStrip2.Text = "toolStrip2";
+			// 
+			// AddItem
+			// 
+			this.AddItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.AddItem.Image = ((System.Drawing.Image)(resources.GetObject("AddItem.Image")));
+			this.AddItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.AddItem.Name = "AddItem";
+			this.AddItem.Size = new System.Drawing.Size(23, 22);
+			this.AddItem.Text = "Adds an item";
+			this.AddItem.Click += new System.EventHandler(this.AddItemBox_Click);
+			// 
+			// RemoveItemBox
+			// 
+			this.RemoveItemBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.RemoveItemBox.Image = ((System.Drawing.Image)(resources.GetObject("RemoveItemBox.Image")));
+			this.RemoveItemBox.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.RemoveItemBox.Name = "RemoveItemBox";
+			this.RemoveItemBox.Size = new System.Drawing.Size(23, 22);
+			this.RemoveItemBox.Text = "Removes an item";
+			this.RemoveItemBox.Click += new System.EventHandler(this.RemoveItem);
+			// 
+			// groupBox11
+			// 
+			this.groupBox11.Controls.Add(this.tabControl1);
+			this.groupBox11.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.groupBox11.Location = new System.Drawing.Point(200, 0);
+			this.groupBox11.Name = "groupBox11";
+			this.groupBox11.Size = new System.Drawing.Size(621, 645);
+			this.groupBox11.TabIndex = 13;
+			this.groupBox11.TabStop = false;
+			this.groupBox11.Text = "Properties :";
 			// 
 			// ItemSetForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(821, 654);
-			this.Controls.Add(this.groupBox10);
-			this.Controls.Add(this.groupBox2);
-			this.Controls.Add(this.groupBox8);
-			this.Controls.Add(this.groupBox7);
-			this.Controls.Add(this.groupBox9);
-			this.Controls.Add(this.groupBox3);
-			this.Controls.Add(this.groupBox6);
-			this.Controls.Add(this.groupBox5);
-			this.Controls.Add(this.groupBox4);
-			this.Controls.Add(this.toolStrip1);
+			this.ClientSize = new System.Drawing.Size(821, 645);
+			this.Controls.Add(this.groupBox11);
+			this.Controls.Add(this.groupBox1);
 			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Name = "ItemSetForm";
 			this.TabText = "ItemForm";
@@ -1058,8 +1099,6 @@
 			this.Load += new System.EventHandler(this.ItemSetForm_Load);
 			this.Shown += new System.EventHandler(this.ItemSetForm_Shown);
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ItemForm_FormClosing);
-			this.toolStrip1.ResumeLayout(false);
-			this.toolStrip1.PerformLayout();
 			this.groupBox4.ResumeLayout(false);
 			this.groupBox4.PerformLayout();
 			this.groupBox5.ResumeLayout(false);
@@ -1086,18 +1125,21 @@
 			this.groupBox9.PerformLayout();
 			this.groupBox10.ResumeLayout(false);
 			this.groupBox10.PerformLayout();
+			this.tabControl1.ResumeLayout(false);
+			this.VisualTab.ResumeLayout(false);
+			this.PropertiesTab.ResumeLayout(false);
+			this.ScriptTab.ResumeLayout(false);
+			this.groupBox1.ResumeLayout(false);
+			this.groupBox1.PerformLayout();
+			this.toolStrip2.ResumeLayout(false);
+			this.toolStrip2.PerformLayout();
+			this.groupBox11.ResumeLayout(false);
 			this.ResumeLayout(false);
-			this.PerformLayout();
 
 		}
 
 		#endregion
 
-		private System.Windows.Forms.ToolStrip toolStrip1;
-		private System.Windows.Forms.ToolStripButton AddItemBox;
-		private System.Windows.Forms.ToolStripButton RemoveItemBox;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-		private System.Windows.Forms.ToolStripComboBox ItemsBox;
 		private OpenTK.GLControl GLGroundTile;
 		private OpenTK.GLControl GLInventoryTile;
 		private OpenTK.GLControl GLIncomingTile;
@@ -1141,8 +1183,6 @@
 		private System.Windows.Forms.Label label10;
 		private System.Windows.Forms.NumericUpDown MultiplierBox;
 		private System.Windows.Forms.Label label11;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-		private System.Windows.Forms.ToolStripButton ApplyBox;
 		private System.Windows.Forms.GroupBox groupBox2;
 		private System.Windows.Forms.Label label12;
 		private System.Windows.Forms.Label label13;
@@ -1173,6 +1213,15 @@
 		private System.Windows.Forms.Label label18;
 		private System.Windows.Forms.ComboBox OnUseBox;
 		private System.Windows.Forms.Label label17;
-		private DiceForm diceForm1;
+		private System.Windows.Forms.TabControl tabControl1;
+		private System.Windows.Forms.TabPage VisualTab;
+		private System.Windows.Forms.TabPage PropertiesTab;
+		private System.Windows.Forms.TabPage ScriptTab;
+		private System.Windows.Forms.ListBox ItemsBox;
+		private System.Windows.Forms.GroupBox groupBox1;
+		private System.Windows.Forms.ToolStrip toolStrip2;
+		private System.Windows.Forms.ToolStripButton AddItem;
+		private System.Windows.Forms.ToolStripButton RemoveItemBox;
+		private System.Windows.Forms.GroupBox groupBox11;
 	}
 }

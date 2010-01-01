@@ -93,7 +93,7 @@ namespace DungeonEye
 
 					case "slot":
 					{
-						Slot |= (ItemSlot)Enum.Parse(typeof(ItemSlot), node.Attributes["value"].Value, true);
+						Slot |= (BodySlot)Enum.Parse(typeof(BodySlot), node.Attributes["value"].Value, true);
 					}
 					break;
 
@@ -263,7 +263,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Allowed slot for the item
 		/// </summary>
-		public ItemSlot Slot
+		public BodySlot Slot
 		{
 			get;
 			set;
@@ -431,31 +431,30 @@ namespace DungeonEye
 		Adornment,
 		Ammo,
 		Armor,
-		Food,
+		Consumable,
 		Miscellaneous,
 		Potion,
-	//	Reagent,
 		Scroll,
 		Shield,
 		Wand,
 		Weapon,
-		Key
+		Key,
 	}
 
 
 	/// <summary>
-	/// Items slots
+	/// Body slots
 	/// </summary>
 	[Flags]
-	public enum ItemSlot
+	public enum BodySlot
 	{
 		/// <summary>
-		/// 
+		/// Left hand
 		/// </summary>
 		Primary = 0x1,
 
 		/// <summary>
-		/// 
+		/// Right hand
 		/// </summary>
 		Secondary = 0x2,
 
@@ -498,6 +497,11 @@ namespace DungeonEye
 		/// 
 		/// </summary>
 		Waist = 0x200,
+
+		/// <summary>
+		/// Slotless worn items, items which are not worn
+		/// </summary>
+		None = 0x400,
 	}
 
 
@@ -521,43 +525,37 @@ namespace DungeonEye
 	/// </summary>
 	public enum WeaponType
 	{
-		Axe,
-		BastardSword, 
-		BattleAxe,
-		Club,
-		Dagger, 
-		Dart,
-		DwarvenWarAxe, 
-		Falchion,
-		GreatAxe,
-		GreatClub,
-		GreatCrossbow,
-		GreatSword,
-		HeavyCrossbow,
-		HeavyMace,
-		HeavyPick,
-		Kama,
-		Khopesh,
-		Kukri,
-		LightCrossbow,
-		LightHammer,
-		LightMace,
-		LightPick,
-		LongBow, 
-		LongSword,
-		Maul,
-		Morningstar,
-		Quarterstaff,
-		Rapier,
-		RepeatingHeavyCrossbow,
-		RepeatingLightCrossbow,
-		Scimitar,
-		ShortBow,
-		ShortSword,
-		Shuriken,
-		Sickle,
-		ThrowingAxe,
-		ThrowingDagger,
-		WarHammer
+		/// <summary>
+		/// Contact weapon
+		/// </summary>
+		Melee,
+
+		/// <summary>
+		/// Ranged weapon
+		/// </summary>
+		Ranged,
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Throw
+	}
+
+
+	/// <summary>
+	/// 
+	/// </summary>
+	public enum WeaponCategory
+	{
+		/// <summary>
+		/// Can be used in either the primary or secondary hand 
+		/// </summary>
+		OneHanded,
+
+		/// <summary>
+		/// Can be used only with two hands
+		/// </summary>
+		TwoHanded,
 	}
 }

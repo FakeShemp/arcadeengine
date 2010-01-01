@@ -29,7 +29,7 @@ using ArcEngine;
 namespace DungeonEye
 {
 	/// <summary>
-	/// 
+	/// This class represents a pool of items
 	/// </summary>
 	public class ItemSet : IAsset
 	{

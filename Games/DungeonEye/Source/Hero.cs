@@ -139,14 +139,14 @@ namespace DungeonEye
 			}
 
 			// Neck
-			if (item.Slot == ItemSlot.Neck && GetInventoryItem(InventoryPosition.Neck) == null)
+			if (item.Slot == BodySlot.Neck && GetInventoryItem(InventoryPosition.Neck) == null)
 			{
 				SetInventoryItem(InventoryPosition.Wrist, item); 
 				return true;
 			}
 
 			// Armor
-			if (item.Slot == ItemSlot.Body && GetInventoryItem(InventoryPosition.Armor) == null)
+			if (item.Slot == BodySlot.Body && GetInventoryItem(InventoryPosition.Armor) == null)
 			{
 				SetInventoryItem(InventoryPosition.Armor, item);
 				return true;
@@ -154,35 +154,35 @@ namespace DungeonEye
 
 
 			// Wrist
-			if (item.Slot == ItemSlot.Wrist && GetInventoryItem(InventoryPosition.Wrist) == null)
+			if (item.Slot == BodySlot.Wrist && GetInventoryItem(InventoryPosition.Wrist) == null)
 			{
 				SetInventoryItem(InventoryPosition.Wrist, item);
 				return true;
 			}
 
 			// Helmet
-			if (item.Slot == ItemSlot.Head && GetInventoryItem(InventoryPosition.Helmet) == null)
+			if (item.Slot == BodySlot.Head && GetInventoryItem(InventoryPosition.Helmet) == null)
 			{
 				SetInventoryItem(InventoryPosition.Helmet, item);
 				return true;
 			}
 
 			// Primary
-			if ((item.Slot & ItemSlot.Primary) == ItemSlot.Primary && GetInventoryItem(InventoryPosition.Primary) == null)
+			if ((item.Slot & BodySlot.Primary) == BodySlot.Primary && GetInventoryItem(InventoryPosition.Primary) == null)
 			{
 				SetInventoryItem(InventoryPosition.Primary, item);
 				return true;
 			}
 
 			// Secondary
-			if ((item.Slot & ItemSlot.Secondary) == ItemSlot.Secondary && GetInventoryItem(InventoryPosition.Secondary) == null)
+			if ((item.Slot & BodySlot.Secondary) == BodySlot.Secondary && GetInventoryItem(InventoryPosition.Secondary) == null)
 			{
 				SetInventoryItem(InventoryPosition.Secondary, item);
 				return true;
 			}
 
 			// Boots
-			if (item.Slot == ItemSlot.Feet && GetInventoryItem(InventoryPosition.Feet) == null)
+			if (item.Slot == BodySlot.Feet && GetInventoryItem(InventoryPosition.Feet) == null)
 			{
 				SetInventoryItem(InventoryPosition.Feet, item);
 				return true;
@@ -313,7 +313,7 @@ namespace DungeonEye
 				// Use the weapon
 				case ItemType.Weapon:
 				{
-					if (item.Slot == ItemSlot.Waist)
+					if (item.Slot == BodySlot.Waist)
 					{
 					}
 

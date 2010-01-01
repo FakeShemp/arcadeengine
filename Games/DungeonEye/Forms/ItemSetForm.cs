@@ -193,16 +193,16 @@ namespace DungeonEye.Forms
 				UseQuiverBox.Checked = Item.UseQuiver;
 
 
-				PrimaryBox.Checked = (Item.Slot & ItemSlot.Primary) == ItemSlot.Primary;
-				SecondaryBox.Checked = (Item.Slot & ItemSlot.Secondary) == ItemSlot.Secondary;
-				AmmoBox.Checked = (Item.Slot & ItemSlot.Ammo) == ItemSlot.Ammo;
-				BodyBox.Checked = (Item.Slot & ItemSlot.Body) == ItemSlot.Body;
-				RingBox.Checked = (Item.Slot & ItemSlot.Ring) == ItemSlot.Ring;
-				WristBox.Checked = (Item.Slot & ItemSlot.Wrist) == ItemSlot.Wrist;
-				FeetBox.Checked = (Item.Slot & ItemSlot.Feet) == ItemSlot.Feet;
-				HeadBox.Checked = (Item.Slot & ItemSlot.Head) == ItemSlot.Head;
-				WaistBox.Checked = (Item.Slot & ItemSlot.Waist) == ItemSlot.Waist;
-				NeckBox.Checked = (Item.Slot & ItemSlot.Neck) == ItemSlot.Neck;
+				PrimaryBox.Checked = (Item.Slot & BodySlot.Primary) == BodySlot.Primary;
+				SecondaryBox.Checked = (Item.Slot & BodySlot.Secondary) == BodySlot.Secondary;
+				AmmoBox.Checked = (Item.Slot & BodySlot.Ammo) == BodySlot.Ammo;
+				BodyBox.Checked = (Item.Slot & BodySlot.Body) == BodySlot.Body;
+				RingBox.Checked = (Item.Slot & BodySlot.Ring) == BodySlot.Ring;
+				WristBox.Checked = (Item.Slot & BodySlot.Wrist) == BodySlot.Wrist;
+				FeetBox.Checked = (Item.Slot & BodySlot.Feet) == BodySlot.Feet;
+				HeadBox.Checked = (Item.Slot & BodySlot.Head) == BodySlot.Head;
+				WaistBox.Checked = (Item.Slot & BodySlot.Waist) == BodySlot.Waist;
+				NeckBox.Checked = (Item.Slot & BodySlot.Neck) == BodySlot.Neck;
 			}
 
 			Paint_Tiles(null, null);
@@ -461,25 +461,25 @@ namespace DungeonEye.Forms
 			Item.ThrowTileID = int.Parse(MoveAwayTileBox.SelectedItem.ToString());
 
 			if (PrimaryBox.Checked)
-				Item.Slot |= ItemSlot.Primary;			
+				Item.Slot |= BodySlot.Primary;			
 			if (SecondaryBox.Checked)
-				Item.Slot |= ItemSlot.Secondary;			
+				Item.Slot |= BodySlot.Secondary;			
 			if (AmmoBox.Checked)
-				Item.Slot |= ItemSlot.Ammo;				
+				Item.Slot |= BodySlot.Ammo;				
 			if (BodyBox.Checked)
-				Item.Slot |= ItemSlot.Body;				
+				Item.Slot |= BodySlot.Body;				
 			if (RingBox.Checked)
-				Item.Slot |= ItemSlot.Ring;				
+				Item.Slot |= BodySlot.Ring;				
 			if (WristBox.Checked)
-				Item.Slot |= ItemSlot.Wrist;				
+				Item.Slot |= BodySlot.Wrist;				
 			if (FeetBox.Checked)
-				Item.Slot |= ItemSlot.Feet;				
+				Item.Slot |= BodySlot.Feet;				
 			if (HeadBox.Checked)
-				Item.Slot |= ItemSlot.Head;				
+				Item.Slot |= BodySlot.Head;				
 			if (WaistBox.Checked)
-				Item.Slot |= ItemSlot.Waist;
+				Item.Slot |= BodySlot.Waist;
 			if (NeckBox.Checked)
-				Item.Slot |= ItemSlot.Neck;				
+				Item.Slot |= BodySlot.Neck;				
 
 
 			// Add to the tileset
@@ -634,9 +634,9 @@ namespace DungeonEye.Forms
 				return;
 
 			if (PrimaryBox.Checked)
-				Item.Slot |= ItemSlot.Primary;
+				Item.Slot |= BodySlot.Primary;
 			else
-				Item.Slot ^= ItemSlot.Primary;
+				Item.Slot ^= BodySlot.Primary;
 		}
 
 		private void AmmoBox_CheckedChanged(object sender, EventArgs e)
@@ -645,9 +645,9 @@ namespace DungeonEye.Forms
 				return;
 
 			if (AmmoBox.Checked)
-				Item.Slot |= ItemSlot.Ammo;
+				Item.Slot |= BodySlot.Ammo;
 			else
-				Item.Slot ^= ItemSlot.Ammo;
+				Item.Slot ^= BodySlot.Ammo;
 		}
 
 		private void NeckBox_CheckedChanged(object sender, EventArgs e)
@@ -656,9 +656,9 @@ namespace DungeonEye.Forms
 				return;
 
 			if (NeckBox.Checked)
-				Item.Slot |= ItemSlot.Neck;
+				Item.Slot |= BodySlot.Neck;
 			else
-				Item.Slot ^= ItemSlot.Neck;
+				Item.Slot ^= BodySlot.Neck;
 
 		}
 
@@ -668,9 +668,9 @@ namespace DungeonEye.Forms
 				return;
 
 			if (WristBox.Checked)
-				Item.Slot |= ItemSlot.Wrist;
+				Item.Slot |= BodySlot.Wrist;
 			else
-				Item.Slot ^= ItemSlot.Wrist;
+				Item.Slot ^= BodySlot.Wrist;
 		}
 
 		private void HeadBox_CheckedChanged(object sender, EventArgs e)
@@ -679,9 +679,9 @@ namespace DungeonEye.Forms
 				return;
 
 			if (HeadBox.Checked)
-				Item.Slot |= ItemSlot.Head;
+				Item.Slot |= BodySlot.Head;
 			else
-				Item.Slot ^= ItemSlot.Head;
+				Item.Slot ^= BodySlot.Head;
 		}
 
 		private void SecondaryBox_CheckedChanged(object sender, EventArgs e)
@@ -690,9 +690,9 @@ namespace DungeonEye.Forms
 				return;
 
 			if (SecondaryBox.Checked)
-				Item.Slot |= ItemSlot.Secondary;
+				Item.Slot |= BodySlot.Secondary;
 			else
-				Item.Slot ^= ItemSlot.Secondary;
+				Item.Slot ^= BodySlot.Secondary;
 		}
 
 		private void BodyBox_CheckedChanged(object sender, EventArgs e)
@@ -701,9 +701,9 @@ namespace DungeonEye.Forms
 				return;
 
 			if (BodyBox.Checked)
-				Item.Slot |= ItemSlot.Body;
+				Item.Slot |= BodySlot.Body;
 			else
-				Item.Slot ^= ItemSlot.Body;
+				Item.Slot ^= BodySlot.Body;
 		}
 
 		private void RingBox_CheckedChanged(object sender, EventArgs e)
@@ -712,9 +712,9 @@ namespace DungeonEye.Forms
 				return;
 
 			if (RingBox.Checked)
-				Item.Slot |= ItemSlot.Ring;
+				Item.Slot |= BodySlot.Ring;
 			else
-				Item.Slot ^= ItemSlot.Ring;
+				Item.Slot ^= BodySlot.Ring;
 		}
 
 		private void FeetBox_CheckedChanged(object sender, EventArgs e)
@@ -723,9 +723,9 @@ namespace DungeonEye.Forms
 				return;
 
 			if (FeetBox.Checked)
-				Item.Slot |= ItemSlot.Feet;
+				Item.Slot |= BodySlot.Feet;
 			else
-				Item.Slot ^= ItemSlot.Feet;
+				Item.Slot ^= BodySlot.Feet;
 
 		}
 
@@ -735,9 +735,9 @@ namespace DungeonEye.Forms
 				return;
 
 			if (WaistBox.Checked)
-				Item.Slot |= ItemSlot.Waist;
+				Item.Slot |= BodySlot.Waist;
 			else
-				Item.Slot ^= ItemSlot.Waist;
+				Item.Slot ^= BodySlot.Waist;
 		}
 
 		private void TypeBox_SelectedIndexChanged(object sender, EventArgs e)
