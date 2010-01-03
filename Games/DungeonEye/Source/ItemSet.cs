@@ -48,9 +48,9 @@ namespace DungeonEye
 		#region Load & Save
 
 		/// <summary>
-		/// Loads an asset
+		/// Loads an ItemSet definition
 		/// </summary>
-		/// <param name="xml">Asset definition</param>
+		/// <param name="xml">Xmlnode handle</param>
 		/// <returns>True if successful, or false if an error occured</returns>
 		public bool Load(XmlNode xml)
 		{
@@ -106,10 +106,10 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Saves the itemset
 		/// </summary>
-		/// <param name="writer"></param>
-		/// <returns></returns>
+		/// <param name="writer">XmlWriter handle</param>
+		/// <returns>True if saved</returns>
 		public bool Save(XmlWriter writer)
 		{
 			if (writer == null)
@@ -185,6 +185,34 @@ namespace DungeonEye
 			return null;
 		}
 */
+
+
+		/// <summary>
+		/// Removes an item
+		/// </summary>
+		/// <param name="name">Item name</param>
+		public void Remove(string name)
+		{
+			if (string.IsNullOrEmpty(name))
+				return;
+
+			Items.Remove(name);
+		}
+
+
+
+		/// <summary>
+		/// Adds an item
+		/// </summary>
+		/// <param name="item">Item's handle</param>
+		public void Add(Item item)
+		{
+			if (item == null || string.IsNullOrEmpty(item.Name))
+				return;
+
+			Items[item.Name] = item;
+		}
+
 
 		/// <summary>
 		/// Returns an item by its name

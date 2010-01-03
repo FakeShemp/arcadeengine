@@ -91,12 +91,7 @@ namespace DungeonEye.Forms
 		void RebuildLists()
 		{
 
-			// Items 
-			ItemsBox.BeginUpdate();
-			ItemsBox.Items.Clear();
-			foreach (KeyValuePair<string, Item> kvp in ItemSet.Items)
-				ItemsBox.Items.Add(kvp.Key);
-			ItemsBox.EndUpdate();
+			RebuildItemList();
 
 			// Types
 			TypeBox.BeginUpdate();
@@ -108,6 +103,16 @@ namespace DungeonEye.Forms
 			TypeBox.EndUpdate();
 
 
+		}
+
+		private void RebuildItemList()
+		{
+			// Items 
+			ItemsBox.BeginUpdate();
+			ItemsBox.Items.Clear();
+			foreach (KeyValuePair<string, Item> kvp in ItemSet.Items)
+				ItemsBox.Items.Add(kvp.Key);
+			ItemsBox.EndUpdate();
 		}
 
 
@@ -151,10 +156,7 @@ namespace DungeonEye.Forms
 		void ItemSelected(string name)
 		{
 			Item = null;
-			NameBox.Text = "";
 			DescriptionBox.Text = "";
-			ThrowBox.Value = 0;
-			FaceBox.Value = 0;
 			CriticalMinBox.Value = 0;
 			CriticalMaxBox.Value = 0;
 			MultiplierBox.Value = 0;
@@ -172,14 +174,21 @@ namespace DungeonEye.Forms
 			WaistBox.Checked = false;
 			NeckBox.Checked = false;
 			UseQuiverBox.Checked = false;
+			FighterBox.Checked = false;
+			PaladinBox.Checked = false;
+			ClericBox.Checked = false;
+			MageBox.Checked = false;
+			ThiefBox.Checked = false;
+			RangerBox.Checked = false;
+			DamageBox.Dice = null;
+			OnUseBox.SelectedItem = "";
+			OnCollectBox.SelectedItem = "";
+			OnDropBox.SelectedItem = "";
 			
 			Item = ItemSet.GetItem(name);
 			if (Item != null)
 			{
-				NameBox.Text = Item.Name;
 				DescriptionBox.Text = Item.Description;
-				ThrowBox.Value = Item.DiceThrow;
-				FaceBox.Value = Item.DiceFace;
 				CriticalMinBox.Value = Item.Critical.X;
 				CriticalMaxBox.Value = Item.Critical.Y;
 				MultiplierBox.Value = Item.CriticalMultiplier;
@@ -203,6 +212,19 @@ namespace DungeonEye.Forms
 				HeadBox.Checked = (Item.Slot & BodySlot.Head) == BodySlot.Head;
 				WaistBox.Checked = (Item.Slot & BodySlot.Waist) == BodySlot.Waist;
 				NeckBox.Checked = (Item.Slot & BodySlot.Neck) == BodySlot.Neck;
+
+				FighterBox.Checked = (Item.Classes & HeroClass.Fighter) == HeroClass.Fighter;
+				PaladinBox.Checked = (Item.Classes & HeroClass.Paladin) == HeroClass.Paladin;
+				ClericBox.Checked = (Item.Classes & HeroClass.Cleric) == HeroClass.Cleric;
+				MageBox.Checked = (Item.Classes & HeroClass.Mage) == HeroClass.Mage;
+				ThiefBox.Checked = (Item.Classes & HeroClass.Thief) == HeroClass.Thief;
+				RangerBox.Checked = (Item.Classes & HeroClass.Ranger) == HeroClass.Ranger;
+
+				OnDropBox.SelectedItem = Item.OnDropScript;
+				OnCollectBox.SelectedItem = Item.OnCollectScript;
+				OnUseBox.SelectedItem = Item.OnUseScript;
+
+				DamageBox.Dice = Item.Damage;
 			}
 
 			Paint_Tiles(null, null);
@@ -435,21 +457,20 @@ namespace DungeonEye.Forms
 			GLIncomingTile_Resize(null, null);
 		}
 
+
+/*
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void ApplyBox_Click(object sender, EventArgs e)
+		private void ApplyBox_Clicktt(object sender, EventArgs e)
 		{
-			if (Item == null || string.IsNullOrEmpty(NameBox.Text))
+			if (Item == null)
 				return;
 
 			// Save values
-			Item.Name = NameBox.Text;
 			Item.Description = DescriptionBox.Text;
-			Item.DiceThrow = int.Parse(ThrowBox.Value.ToString());
-			Item.DiceFace = int.Parse(FaceBox.Value.ToString());
 			Item.Critical = new Point(int.Parse(CriticalMinBox.Value.ToString()), int.Parse(CriticalMaxBox.Value.ToString()));
 			Item.CriticalMultiplier = int.Parse(MultiplierBox.Value.ToString());
 			Item.Type = (ItemType)Enum.Parse(typeof(ItemType), TypeBox.SelectedItem.ToString(), true);
@@ -459,6 +480,7 @@ namespace DungeonEye.Forms
 			Item.TileID = int.Parse(InventoryTileBox.SelectedItem.ToString());
 			Item.IncomingTileID = int.Parse(IncomingTileBox.SelectedItem.ToString());
 			Item.ThrowTileID = int.Parse(MoveAwayTileBox.SelectedItem.ToString());
+			
 
 			if (PrimaryBox.Checked)
 				Item.Slot |= BodySlot.Primary;			
@@ -490,7 +512,7 @@ namespace DungeonEye.Forms
 			//ItemsBox.SelectedIndex = id;
 		}
 
-
+*/
 		/// <summary>
 		/// Removes an item
 		/// 
@@ -554,25 +576,27 @@ namespace DungeonEye.Forms
 
 
 			Script script = ResourceManager.CreateAsset<Script>(ItemSet.ScriptName);
-			if (script == null)
-				return;
+			if (script != null)
+			{
 
-			List<string> list = null;
+				List<string> list = null;
 
-			// OnUse
-			list = script.GetMethods(new Type[] { typeof(Item), typeof(Hero) }, typeof(void));
-			OnUseBox.Items.AddRange(list.ToArray());
+				// OnUse
+				list = script.GetMethods(new Type[] { typeof(Item), typeof(Hero) }, typeof(void));
+				OnUseBox.Items.AddRange(list.ToArray());
 
-			// OnDrop
-			list = script.GetMethods(new Type[] { typeof(Item), typeof(Hero), typeof(MazeBlock) }, typeof(void));
-			OnDropBox.Items.AddRange(list.ToArray());
+				// OnDrop
+				list = script.GetMethods(new Type[] { typeof(Item), typeof(Hero), typeof(MazeBlock) }, typeof(void));
+				OnDropBox.Items.AddRange(list.ToArray());
 
-			// OnCollect
-			list = script.GetMethods(new Type[] { typeof(Item), typeof(Hero) }, typeof(void));
-			OnCollectBox.Items.AddRange(list.ToArray());
+				// OnCollect
+				list = script.GetMethods(new Type[] { typeof(Item), typeof(Hero) }, typeof(void));
+				OnCollectBox.Items.AddRange(list.ToArray());
+			}
 
-
-
+			OnUseBox.Items.Insert(0, "");
+			OnDropBox.Items.Insert(0, "");
+			OnCollectBox.Items.Insert(0, "");
 		}
 
 
@@ -660,6 +684,8 @@ namespace DungeonEye.Forms
 		{
 
 		}
+
+		#region Item slots
 
 		private void PrimaryBox_CheckedChanged(object sender, EventArgs e)
 		{
@@ -773,83 +799,158 @@ namespace DungeonEye.Forms
 				Item.Slot ^= BodySlot.Waist;
 		}
 
+		#endregion
+
+
 		private void TypeBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
+			if (Item == null)
+				return;
 
 		}
 
 		private void SpeedBox_ValueChanged(object sender, EventArgs e)
 		{
+			if (Item == null)
+				return;
 
 		}
 
 		private void WeightBox_ValueChanged(object sender, EventArgs e)
 		{
+			if (Item == null)
+				return;
 
 		}
 
+
+		#region Profesions
+
 		private void FighterBox_CheckedChanged(object sender, EventArgs e)
 		{
+			if (Item == null)
+				return;
 
+			if (FighterBox.Checked)
+				Item.Classes |= HeroClass.Fighter;
+			else
+				Item.Classes ^= HeroClass.Fighter;
 		}
 
 		private void PaladinBox_CheckedChanged(object sender, EventArgs e)
 		{
+			if (Item == null)
+				return;
+
+			if (PaladinBox.Checked)
+				Item.Classes |= HeroClass.Paladin;
+			else
+				Item.Classes ^= HeroClass.Paladin;
 
 		}
 
 		private void ClericBox_CheckedChanged(object sender, EventArgs e)
 		{
+			if (Item == null)
+				return;
 
+			if (ClericBox.Checked)
+				Item.Classes |= HeroClass.Cleric;
+			else
+				Item.Classes ^= HeroClass.Cleric;
 		}
 
 		private void RangerBox_CheckedChanged(object sender, EventArgs e)
 		{
+			if (Item == null)
+				return;
 
+
+			if (RangerBox.Checked)
+				Item.Classes |= HeroClass.Ranger;
+			else
+				Item.Classes ^= HeroClass.Ranger;
 		}
 
 		private void MageBox_CheckedChanged(object sender, EventArgs e)
 		{
+			if (Item == null)
+				return;
 
+
+			if (MageBox.Checked)
+				Item.Classes |= HeroClass.Mage;
+			else
+				Item.Classes ^= HeroClass.Mage;
 		}
 
 		private void ThiefBox_CheckedChanged(object sender, EventArgs e)
 		{
+			if (Item == null)
+				return;
+
+			if (ThiefBox.Checked)
+				Item.Classes |= HeroClass.Thief;
+			else
+				Item.Classes ^= HeroClass.Thief;
 
 		}
 
+		#endregion
+
+		#region Hands
+
 		private void SecondaryHandBox_CheckedChanged(object sender, EventArgs e)
 		{
+			if (Item == null)
+				return;
 
 		}
 
 		private void PrimaryHandBox_CheckedChanged(object sender, EventArgs e)
 		{
+			if (Item == null)
+				return;
 
 		}
 
 		private void TwoHandedBox_CheckedChanged(object sender, EventArgs e)
 		{
+			if (Item == null)
+				return;
 
 		}
 
+		#endregion
+
+		#region Critical
+
 		private void CriticalMinBox_ValueChanged(object sender, EventArgs e)
 		{
+			if (Item == null)
+				return;
 
 		}
 
 		private void CriticalMaxBox_ValueChanged(object sender, EventArgs e)
 		{
+			if (Item == null)
+				return;
 
 		}
 
 		private void MultiplierBox_ValueChanged(object sender, EventArgs e)
 		{
+			if (Item == null)
+				return;
 
 		}
+		#endregion
 
 		private void DescriptionBox_TextChanged(object sender, EventArgs e)
 		{
+			if (Item == null)
+				return;
 
 		}
 
@@ -881,6 +982,41 @@ namespace DungeonEye.Forms
 		}
 
 		#endregion
+
+		private void DamageBox_ValueChanged(object sender, EventArgs e)
+		{
+			if (Item == null)
+				return;
+
+
+	//		Item.Damage = DamageBox.Dice;
+		}
+
+
+
+		private void RenameBox_Click(object sender, EventArgs e)
+		{
+			if (Item == null)
+				return;
+
+
+			RenameForm form = new RenameForm();
+			form.DesiredName = Item.Name;
+			if (form.ShowDialog() != DialogResult.OK)
+				return;
+
+			// Check if this name is already in use
+			if (ItemSet.GetItem(form.DesiredName) != null)
+				return;
+
+			ItemSet.Remove(Item.Name);
+			Item.Name = form.DesiredName;
+			ItemSet.Add(Item);
+
+			RebuildItemList();
+		}
+
+
 
 
 	}

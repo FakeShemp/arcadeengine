@@ -74,10 +74,11 @@ namespace DungeonEye
 			HitPoint = GameBase.Random.Next(6, MaxHitPoint);
 			Level = 3;
 			Food = 75;
+
 			Profession prof = new Profession();
 			prof.Experience = GameBase.Random.Next(0, 99999);
 			prof.Level = GameBase.Random.Next(1, 18);
-			prof.Classe = HeroClass.Fighter;
+			prof.Classe = HeroClass.Cleric;
 
 			Professions[0] = prof;
 
@@ -88,7 +89,7 @@ namespace DungeonEye
 			ItemSet itemset = ResourceManager.CreateAsset<ItemSet>("Items");
 			if (itemset != null)
 			{
-				SetInventoryItem(InventoryPosition.Primary, itemset.GetItem("Short Sword"));
+				SetInventoryItem(InventoryPosition.Primary, itemset.GetItem("Spell book"));
 				SetInventoryItem(InventoryPosition.Secondary, itemset.GetItem("Short Bow"));
 				SetInventoryItem(InventoryPosition.Armor, itemset.GetItem("Leather Armor"));
 				SetInventoryItem(InventoryPosition.Inventory_01, itemset.GetItem("Test Item"));
@@ -1000,12 +1001,35 @@ namespace DungeonEye
 	[Flags]
 	public enum HeroClass
 	{
-		Fighter,
-		Ranger,
-		Paladin,
-		Mage,
-		Cleric,
-		Thief
+		/// <summary>
+		/// 
+		/// </summary>
+		Fighter = 0x1,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Ranger = 0x2,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Paladin = 0x4,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Mage = 0x8,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Cleric = 0x10,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Thief = 0x20,
 	}
 
 

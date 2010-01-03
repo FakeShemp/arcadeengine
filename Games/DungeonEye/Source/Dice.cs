@@ -20,6 +20,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Xml;
+
 
 namespace DungeonEye
 {
@@ -79,7 +81,67 @@ namespace DungeonEye
 			return val + Base;
 		}
 
+		#region IO
 
+
+		/// <summary>
+		/// Loads a dice properties
+		/// </summary>
+		/// <param name="node">Node</param>
+		/// <returns></returns>
+		public bool Load(XmlNode node)
+		{
+			if (node == null)
+				return false;
+
+			if (node.NodeType != XmlNodeType.Element)
+				return false;
+
+
+			if (node.Attributes["faces"] != null)
+				Faces = int.Parse(node.Attributes["faces"].Value);
+
+			if (node.Attributes["throws"] != null)
+				Throws = int.Parse(node.Attributes["throws"].Value);
+
+			if (node.Attributes["base"] != null)
+				Base = int.Parse(node.Attributes["base"].Value);
+
+			return true;
+		}
+
+
+
+		/// <summary>
+		/// Saves deice properties
+		/// </summary>
+		/// <param name="writer">XmlWriter</param>
+		public void Save(XmlWriter writer)
+		{
+			if (writer == null)
+				return;
+
+			bool writeheader = false;
+			if (writer.WriteState != WriteState.Element)
+				writeheader = true;
+
+			if (writeheader)
+				writer.WriteStartElement("dice");
+			writer.WriteAttributeString("throws", Throws.ToString());
+			writer.WriteAttributeString("faces", Faces.ToString());
+			writer.WriteAttributeString("base", Base.ToString());
+			if (writeheader)
+				writer.WriteEndElement();
+		}
+
+		#endregion
+
+
+
+		public override string ToString()
+		{
+			return string.Format("{0}d{1} + {2} ({3}~{4})", Throws, Faces, Base, Minimum, Maximum);
+		}
 
 		#region Properties
 

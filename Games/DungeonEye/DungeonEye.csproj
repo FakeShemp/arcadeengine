@@ -152,6 +152,12 @@
     <Compile Include="Forms\MonsterForm.Designer.cs">
       <DependentUpon>MonsterForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\RenameForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\RenameForm.Designer.cs">
+      <DependentUpon>RenameForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Wizards\NewItemWizard.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -263,6 +269,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MonsterForm.resx">
       <DependentUpon>MonsterForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\RenameForm.resx">
+      <DependentUpon>RenameForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Wizards\NewItemWizard.resx">
       <DependentUpon>NewItemWizard.cs</DependentUpon>

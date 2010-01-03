@@ -54,6 +54,16 @@ namespace DungeonEye
 	public class Item
 	{
 
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		public Item()
+		{
+			Classes = HeroClass.Cleric | HeroClass.Fighter | HeroClass.Mage | HeroClass.Paladin | HeroClass.Ranger | HeroClass.Thief;
+			Damage = new Dice();
+		}
+
+
 
 		#region Load & Save
 
@@ -104,8 +114,7 @@ namespace DungeonEye
 
 					case "damage":
 					{
-						DiceThrow = int.Parse(node.Attributes["throw"].Value);
-						DiceFace = int.Parse(node.Attributes["face"].Value);
+						Damage.Load(node);
 					}
 					break;
 
@@ -134,6 +143,12 @@ namespace DungeonEye
 						GroundTileID = int.Parse(node.Attributes["ground"].Value);
 						IncomingTileID = int.Parse(node.Attributes["incoming"].Value);
 						ThrowTileID = int.Parse(node.Attributes["moveaway"].Value);
+					}
+					break;
+
+					case "classes":
+					{
+						Classes = (HeroClass)Enum.Parse(typeof(HeroClass), node.Attributes["value"].Value);
 					}
 					break;
 
@@ -201,6 +216,10 @@ namespace DungeonEye
 			writer.WriteAttributeString("value", Slot.ToString());
 			writer.WriteEndElement();
 
+			writer.WriteStartElement("classes");
+			writer.WriteAttributeString("value", Classes.ToString());
+			writer.WriteEndElement();
+
 			writer.WriteStartElement("usequiver");
 			writer.WriteAttributeString("value", UseQuiver.ToString());
 			writer.WriteEndElement();
@@ -210,8 +229,7 @@ namespace DungeonEye
 			writer.WriteEndElement();
 
 			writer.WriteStartElement("damage");
-			writer.WriteAttributeString("throw", DiceThrow.ToString());
-			writer.WriteAttributeString("face", DiceFace.ToString());
+			Damage.Save(writer);
 			writer.WriteEndElement();
 
 			writer.WriteStartElement("critical");
@@ -342,6 +360,15 @@ namespace DungeonEye
 
 
 		/// <summary>
+		/// Allowed classes
+		/// </summary>
+		public HeroClass Classes
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
 		/// Weight of the item
 		/// </summary>
 		public int Weight
@@ -350,6 +377,15 @@ namespace DungeonEye
 			set;
 		}
 
+
+		/// <summary>
+		/// Damage
+		/// </summary>
+		public Dice Damage
+		{
+			get;
+			private set;
+		}
 
 
 		/// <summary>
@@ -407,26 +443,6 @@ namespace DungeonEye
 		/// Tile id of the item on the ground
 		/// </summary>
 		public int GroundTileID
-		{
-			get;
-			set;
-		}
-
-
-		/// <summary>
-		/// Number of face of the dice
-		/// </summary>
-		public int DiceFace
-		{
-			get;
-			set;
-		}
-
-
-		/// <summary>
-		/// Number od dice throw
-		/// </summary>
-		public int DiceThrow
 		{
 			get;
 			set;

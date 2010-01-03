@@ -34,9 +34,15 @@ namespace DungeonEye.Forms
 			MaximumBox.Text = Dice.Maximum.ToString();
 		}
 
-
-
 		#region Events
+
+		public event EventHandler ValueChanged;
+
+
+		#endregion
+
+
+		#region Form events
 
 
 		/// <summary>
@@ -50,6 +56,9 @@ namespace DungeonEye.Forms
 			Dice.Faces = (int)FacesBox.Value;
 			Dice.Throws = (int)ThrowBox.Value;
 			CalculateMinMax();
+
+			if (ValueChanged != null)
+				ValueChanged(this, null);
 		}
 
 		#endregion
