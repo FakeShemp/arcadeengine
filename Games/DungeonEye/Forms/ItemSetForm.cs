@@ -27,7 +27,7 @@ using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Forms;
 using ArcEngine.Graphic;
-
+using DungeonEye.Interfaces;
 
 namespace DungeonEye.Forms
 {
@@ -71,11 +71,12 @@ namespace DungeonEye.Forms
 			{
 				ScriptNameBox.Items.Add(name);
 			}
+			ScriptNameBox.Items.Insert(0, "");
 			ScriptNameBox.EndUpdate();
 
 			// Script name
-			if (!string.IsNullOrEmpty(ItemSet.ScriptName) && ScriptNameBox.Items.Contains(ItemSet.ScriptName))
-				ScriptNameBox.SelectedItem = ItemSet.ScriptName;
+		//	if (!string.IsNullOrEmpty(Item.ScriptName) && ScriptNameBox.Items.Contains(Item.ScriptName))
+		//		ScriptNameBox.SelectedItem = Item.ScriptName;
 			
 
 			RebuildLists();
@@ -86,7 +87,7 @@ namespace DungeonEye.Forms
 
 
 		/// <summary>
-		/// Rebuild availble tileset
+		/// Rebuild available tileset
 		/// </summary>
 		void RebuildLists()
 		{
@@ -105,6 +106,10 @@ namespace DungeonEye.Forms
 
 		}
 
+
+		/// <summary>
+		/// Rebuilds item list
+		/// </summary>
 		private void RebuildItemList()
 		{
 			// Items 
@@ -181,9 +186,8 @@ namespace DungeonEye.Forms
 			ThiefBox.Checked = false;
 			RangerBox.Checked = false;
 			DamageBox.Dice = null;
-			OnUseBox.SelectedItem = "";
-			OnCollectBox.SelectedItem = "";
-			OnDropBox.SelectedItem = "";
+			InterfaceNameBox.SelectedItem = "";
+			ScriptNameBox.SelectedItem = "";
 			
 			Item = ItemSet.GetItem(name);
 			if (Item != null)
@@ -220,9 +224,8 @@ namespace DungeonEye.Forms
 				ThiefBox.Checked = (Item.Classes & HeroClass.Thief) == HeroClass.Thief;
 				RangerBox.Checked = (Item.Classes & HeroClass.Ranger) == HeroClass.Ranger;
 
-				OnDropBox.SelectedItem = Item.OnDropScript;
-				OnCollectBox.SelectedItem = Item.OnCollectScript;
-				OnUseBox.SelectedItem = Item.OnUseScript;
+				ScriptNameBox.SelectedItem = Item.ScriptName;
+				InterfaceNameBox.SelectedItem = Item.InterfaceName;
 
 				DamageBox.Dice = Item.Damage;
 			}
@@ -548,56 +551,6 @@ namespace DungeonEye.Forms
 		}
 
 
-
-		/// <summary>
-		/// Change script name
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void ScriptNameBox_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			if (ScriptNameBox.SelectedIndex == -1)
-				return;
-
-			ItemSet.ScriptName = ScriptNameBox.SelectedItem as string;
-			RebuildScripts();
-
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		void RebuildScripts()
-		{
-			OnUseBox.Items.Clear();
-			OnDropBox.Items.Clear();
-			OnCollectBox.Items.Clear();
-
-
-			Script script = ResourceManager.CreateAsset<Script>(ItemSet.ScriptName);
-			if (script != null)
-			{
-
-				List<string> list = null;
-
-				// OnUse
-				list = script.GetMethods(new Type[] { typeof(Item), typeof(Hero) }, typeof(void));
-				OnUseBox.Items.AddRange(list.ToArray());
-
-				// OnDrop
-				list = script.GetMethods(new Type[] { typeof(Item), typeof(Hero), typeof(MazeBlock) }, typeof(void));
-				OnDropBox.Items.AddRange(list.ToArray());
-
-				// OnCollect
-				list = script.GetMethods(new Type[] { typeof(Item), typeof(Hero) }, typeof(void));
-				OnCollectBox.Items.AddRange(list.ToArray());
-			}
-
-			OnUseBox.Items.Insert(0, "");
-			OnDropBox.Items.Insert(0, "");
-			OnCollectBox.Items.Insert(0, "");
-		}
 
 
 		/// <summary>
@@ -936,29 +889,48 @@ namespace DungeonEye.Forms
 
 		#region scripting events
 
-		private void OnUseBox_SelectedIndexChanged(object sender, EventArgs e)
+		private void InterfaceNameBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (Item == null)
 				return;
 
-			Item.OnUseScript = (string)OnUseBox.SelectedItem;
-
+			Item.InterfaceName = (string)InterfaceNameBox.SelectedItem;
 		}
 
-		private void OnDropBox_SelectedIndexChanged(object sender, EventArgs e)
+		/// <summary>
+		/// Change script name
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ScriptNameBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if (Item == null)
+			if (ScriptNameBox.SelectedIndex == -1 || Item == null)
 				return;
-			Item.OnDropScript = (string)OnDropBox.SelectedItem;
+
+			Item.ScriptName = ScriptNameBox.SelectedItem as string;
+			RebuildFoundInterfaces();
 
 		}
 
-		private void OnCollectBox_SelectedIndexChanged(object sender, EventArgs e)
+
+		/// <summary>
+		/// Rebuild found interfaces
+		/// </summary>
+		void RebuildFoundInterfaces()
 		{
-			if (Item == null)
-				return;
-			Item.OnCollectScript = (string)OnCollectBox.SelectedItem;
+			InterfaceNameBox.Items.Clear();
+
+
+			Script script = ResourceManager.CreateAsset<Script>(Item.ScriptName);
+			if (script != null)
+			{
+				List<string> list = script.GetImplementedInterfaces(typeof(IItem));
+				InterfaceNameBox.Items.AddRange(list.ToArray());
+
+			}
+			InterfaceNameBox.Items.Insert(0, "");
 		}
+
 
 		#endregion
 

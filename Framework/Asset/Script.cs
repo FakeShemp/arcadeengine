@@ -221,11 +221,34 @@ namespace ArcEngine.Asset
 		}
 
 
-		bool CompareParameters()
+		/// <summary>
+		/// Gets all class implementing an interface
+		/// </summary>
+		/// <param name="type">Type of the interface</param>
+		/// <returns>List of classes</returns>
+		public List<string> GetImplementedInterfaces(Type type)
 		{
-			return false;
-		}
+			List<string> list = new List<string>();
 
+			if (!IsCompiled)
+				Compile();
+
+
+			if (CompiledAssembly == null)
+				return list;
+
+			// Loop through types looking for one that implements the given interface
+			foreach (Type t in CompiledAssembly.GetTypes())
+			{
+				foreach(Type ty in t.GetInterfaces())
+					if (ty == type)
+						list.Add(t.Name);
+			}
+
+			list.Sort();
+
+			return list;
+		}
 
 		/// <summary>
 		/// Compiles a given string script
@@ -350,6 +373,10 @@ namespace ArcEngine.Asset
 			// Create an instance
 			return Activator.CreateInstance(t) as T;
 		}
+
+
+
+
 
 
 		#region IO routines

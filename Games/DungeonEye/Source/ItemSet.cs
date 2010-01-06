@@ -88,11 +88,11 @@ namespace DungeonEye
 					}
 					break;
 
-					case "script":
-					{
-						ScriptName = node.Attributes["name"].Value;
-					}
-					break;
+					//case "script":
+					//{
+					//   ScriptName = node.Attributes["name"].Value;
+					//}
+					//break;
 
 				}
 
@@ -122,9 +122,9 @@ namespace DungeonEye
 			writer.WriteAttributeString("name", TileSetName);
 			writer.WriteEndElement();
 
-			writer.WriteStartElement("script");
-			writer.WriteAttributeString("name", ScriptName);
-			writer.WriteEndElement();
+			//writer.WriteStartElement("script");
+			//writer.WriteAttributeString("name", ScriptName);
+			//writer.WriteEndElement();
 		
 			foreach (KeyValuePair<string, Item> kvp in Items)
 				kvp.Value.Save(writer);
@@ -265,6 +265,7 @@ namespace DungeonEye
 			private set;
 		}
 
+
 		/// <summary>
 		/// Name of the Tileset
 		/// </summary>
@@ -276,7 +277,7 @@ namespace DungeonEye
 			set;
 		}
 
-
+/*
 		/// <summary>
 		/// Name of the script to use
 		/// </summary>
@@ -287,7 +288,7 @@ namespace DungeonEye
 			get;
 			set;
 		}
-
+*/
 		#endregion
 
 	}

@@ -28,7 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			DungeonEye.Dice dice1 = new DungeonEye.Dice();
+			DungeonEye.Dice dice2 = new DungeonEye.Dice();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ItemSetForm));
 			this.GLGroundTile = new OpenTK.GLControl();
 			this.GLInventoryTile = new OpenTK.GLControl();
@@ -89,11 +89,7 @@
 			this.SecondaryHandBox = new System.Windows.Forms.CheckBox();
 			this.TwoHandedBox = new System.Windows.Forms.CheckBox();
 			this.PrimaryHandBox = new System.Windows.Forms.CheckBox();
-			this.OnCollectBox = new System.Windows.Forms.ComboBox();
-			this.label19 = new System.Windows.Forms.Label();
-			this.OnDropBox = new System.Windows.Forms.ComboBox();
-			this.label18 = new System.Windows.Forms.Label();
-			this.OnUseBox = new System.Windows.Forms.ComboBox();
+			this.InterfaceNameBox = new System.Windows.Forms.ComboBox();
 			this.label17 = new System.Windows.Forms.Label();
 			this.ScriptNameBox = new System.Windows.Forms.ComboBox();
 			this.label16 = new System.Windows.Forms.Label();
@@ -103,7 +99,6 @@
 			this.DamageBox = new DungeonEye.Forms.DiceForm();
 			this.ScriptTab = new System.Windows.Forms.TabPage();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
-			this.checkBox1 = new System.Windows.Forms.CheckBox();
 			this.ItemsBox = new System.Windows.Forms.ListBox();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.toolStrip2 = new System.Windows.Forms.ToolStrip();
@@ -797,71 +792,31 @@
 			this.PrimaryHandBox.UseVisualStyleBackColor = true;
 			this.PrimaryHandBox.CheckedChanged += new System.EventHandler(this.PrimaryHandBox_CheckedChanged);
 			// 
-			// OnCollectBox
+			// InterfaceNameBox
 			// 
-			this.OnCollectBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.OnCollectBox.FormattingEnabled = true;
-			this.OnCollectBox.Location = new System.Drawing.Point(75, 98);
-			this.OnCollectBox.Name = "OnCollectBox";
-			this.OnCollectBox.Size = new System.Drawing.Size(148, 21);
-			this.OnCollectBox.Sorted = true;
-			this.OnCollectBox.TabIndex = 4;
-			this.OnCollectBox.SelectedIndexChanged += new System.EventHandler(this.OnCollectBox_SelectedIndexChanged);
-			// 
-			// label19
-			// 
-			this.label19.AutoSize = true;
-			this.label19.Location = new System.Drawing.Point(10, 101);
-			this.label19.Name = "label19";
-			this.label19.Size = new System.Drawing.Size(59, 13);
-			this.label19.TabIndex = 0;
-			this.label19.Text = "OnCollect :";
-			// 
-			// OnDropBox
-			// 
-			this.OnDropBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.OnDropBox.FormattingEnabled = true;
-			this.OnDropBox.Location = new System.Drawing.Point(75, 71);
-			this.OnDropBox.Name = "OnDropBox";
-			this.OnDropBox.Size = new System.Drawing.Size(148, 21);
-			this.OnDropBox.Sorted = true;
-			this.OnDropBox.TabIndex = 3;
-			this.OnDropBox.SelectedIndexChanged += new System.EventHandler(this.OnDropBox_SelectedIndexChanged);
-			// 
-			// label18
-			// 
-			this.label18.AutoSize = true;
-			this.label18.Location = new System.Drawing.Point(19, 74);
-			this.label18.Name = "label18";
-			this.label18.Size = new System.Drawing.Size(50, 13);
-			this.label18.TabIndex = 0;
-			this.label18.Text = "OnDrop :";
-			// 
-			// OnUseBox
-			// 
-			this.OnUseBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.OnUseBox.FormattingEnabled = true;
-			this.OnUseBox.Location = new System.Drawing.Point(75, 44);
-			this.OnUseBox.Name = "OnUseBox";
-			this.OnUseBox.Size = new System.Drawing.Size(148, 21);
-			this.OnUseBox.Sorted = true;
-			this.OnUseBox.TabIndex = 2;
-			this.OnUseBox.SelectedIndexChanged += new System.EventHandler(this.OnUseBox_SelectedIndexChanged);
+			this.InterfaceNameBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.InterfaceNameBox.FormattingEnabled = true;
+			this.InterfaceNameBox.Location = new System.Drawing.Point(81, 40);
+			this.InterfaceNameBox.Name = "InterfaceNameBox";
+			this.InterfaceNameBox.Size = new System.Drawing.Size(148, 21);
+			this.InterfaceNameBox.Sorted = true;
+			this.InterfaceNameBox.TabIndex = 2;
+			this.InterfaceNameBox.SelectedIndexChanged += new System.EventHandler(this.InterfaceNameBox_SelectedIndexChanged);
 			// 
 			// label17
 			// 
 			this.label17.AutoSize = true;
-			this.label17.Location = new System.Drawing.Point(23, 47);
+			this.label17.Location = new System.Drawing.Point(20, 43);
 			this.label17.Name = "label17";
-			this.label17.Size = new System.Drawing.Size(46, 13);
+			this.label17.Size = new System.Drawing.Size(55, 13);
 			this.label17.TabIndex = 0;
-			this.label17.Text = "OnUse :";
+			this.label17.Text = "Interface :";
 			// 
 			// ScriptNameBox
 			// 
 			this.ScriptNameBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.ScriptNameBox.FormattingEnabled = true;
-			this.ScriptNameBox.Location = new System.Drawing.Point(75, 17);
+			this.ScriptNameBox.Location = new System.Drawing.Point(81, 13);
 			this.ScriptNameBox.Name = "ScriptNameBox";
 			this.ScriptNameBox.Size = new System.Drawing.Size(148, 21);
 			this.ScriptNameBox.Sorted = true;
@@ -871,7 +826,7 @@
 			// label16
 			// 
 			this.label16.AutoSize = true;
-			this.label16.Location = new System.Drawing.Point(0, 20);
+			this.label16.Location = new System.Drawing.Point(6, 16);
 			this.label16.Name = "label16";
 			this.label16.Size = new System.Drawing.Size(69, 13);
 			this.label16.TabIndex = 0;
@@ -933,10 +888,10 @@
 			// DamageBox
 			// 
 			this.DamageBox.ControlText = "Damage :";
-			dice1.Base = 0;
-			dice1.Faces = 1;
-			dice1.Throws = 1;
-			this.DamageBox.Dice = dice1;
+			dice2.Base = 0;
+			dice2.Faces = 1;
+			dice2.Throws = 1;
+			this.DamageBox.Dice = dice2;
 			this.DamageBox.Location = new System.Drawing.Point(3, 371);
 			this.DamageBox.MinimumSize = new System.Drawing.Size(225, 100);
 			this.DamageBox.Name = "DamageBox";
@@ -957,30 +912,15 @@
 			// groupBox2
 			// 
 			this.groupBox2.Controls.Add(this.label16);
-			this.groupBox2.Controls.Add(this.checkBox1);
-			this.groupBox2.Controls.Add(this.OnUseBox);
-			this.groupBox2.Controls.Add(this.OnCollectBox);
+			this.groupBox2.Controls.Add(this.InterfaceNameBox);
 			this.groupBox2.Controls.Add(this.label17);
-			this.groupBox2.Controls.Add(this.label19);
-			this.groupBox2.Controls.Add(this.label18);
 			this.groupBox2.Controls.Add(this.ScriptNameBox);
-			this.groupBox2.Controls.Add(this.OnDropBox);
 			this.groupBox2.Location = new System.Drawing.Point(3, 12);
 			this.groupBox2.Name = "groupBox2";
 			this.groupBox2.Size = new System.Drawing.Size(263, 135);
 			this.groupBox2.TabIndex = 6;
 			this.groupBox2.TabStop = false;
-			this.groupBox2.Text = "                          ";
-			// 
-			// checkBox1
-			// 
-			this.checkBox1.AutoSize = true;
-			this.checkBox1.Location = new System.Drawing.Point(9, 0);
-			this.checkBox1.Name = "checkBox1";
-			this.checkBox1.Size = new System.Drawing.Size(79, 17);
-			this.checkBox1.TabIndex = 5;
-			this.checkBox1.Text = "Use script :";
-			this.checkBox1.UseVisualStyleBackColor = true;
+			this.groupBox2.Text = "Interface :";
 			// 
 			// ItemsBox
 			// 
@@ -1172,11 +1112,7 @@
 		private System.Windows.Forms.ComboBox ScriptNameBox;
 		private System.Windows.Forms.Label label16;
 		private System.Windows.Forms.CheckBox UseQuiverBox;
-		private System.Windows.Forms.ComboBox OnCollectBox;
-		private System.Windows.Forms.Label label19;
-		private System.Windows.Forms.ComboBox OnDropBox;
-		private System.Windows.Forms.Label label18;
-		private System.Windows.Forms.ComboBox OnUseBox;
+		private System.Windows.Forms.ComboBox InterfaceNameBox;
 		private System.Windows.Forms.Label label17;
 		private System.Windows.Forms.TabControl tabControl1;
 		private System.Windows.Forms.TabPage VisualTab;
@@ -1196,6 +1132,5 @@
 		private System.Windows.Forms.Label label4;
 		private DiceForm DamageBox;
 		private System.Windows.Forms.GroupBox groupBox2;
-		private System.Windows.Forms.CheckBox checkBox1;
 	}
 }

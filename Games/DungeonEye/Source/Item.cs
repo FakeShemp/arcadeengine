@@ -90,7 +90,8 @@ namespace DungeonEye
 				{
 					case "script":
 					{
-						ResourceManager.CreateSharedAsset<Script>(ScriptName);
+						ScriptName = node.Attributes["name"].Value;
+						InterfaceName = node.Attributes["interface"].Value;
 					}
 					break;
 
@@ -158,24 +159,6 @@ namespace DungeonEye
 					}
 					break;
 
-					case "onuse":
-					{
-						OnUseScript = node.Attributes["value"].Value;
-					}
-					break;
-
-					case "ondrop":
-					{
-						OnDropScript = node.Attributes["value"].Value;
-					}
-					break;
-
-					case "oncollect":
-					{
-						OnCollectScript = node.Attributes["value"].Value;
-					}
-					break;
-
 				}
 			}
 
@@ -238,27 +221,10 @@ namespace DungeonEye
 			writer.WriteAttributeString("multiplier", CriticalMultiplier.ToString());
 			writer.WriteEndElement();
 
-
-			if (!string.IsNullOrEmpty(OnUseScript))
-			{
-				writer.WriteStartElement("onuse");
-				writer.WriteAttributeString("value", OnUseScript.ToString());
-				writer.WriteEndElement();
-			}
-
-			if (!string.IsNullOrEmpty(OnDropScript))
-			{
-				writer.WriteStartElement("ondrop");
-				writer.WriteAttributeString("value", OnDropScript.ToString());
-				writer.WriteEndElement();
-			}
-
-			if (!string.IsNullOrEmpty(OnCollectScript))
-			{
-				writer.WriteStartElement("oncollect");
-				writer.WriteAttributeString("value", OnCollectScript.ToString());
-				writer.WriteEndElement();
-			}
+			writer.WriteStartElement("script");
+			writer.WriteAttributeString("name", ScriptName);
+			writer.WriteAttributeString("interface", InterfaceName);
+			writer.WriteEndElement();
 
 
 			writer.WriteElementString("description", Description);
@@ -289,37 +255,16 @@ namespace DungeonEye
 			set;
 		}
 
-
-		/// <summary>
-		/// OnUse script name
-		/// </summary>
-		public string OnUseScript
-		{
-			get;
-			set;
-		}
-
-
-		/// <summary>
-		/// OnDrop script name
-		/// </summary>
-		public string OnDropScript
-		{
-			get;
-			set;
-		}
-
-
-		/// <summary>
-		/// OnCollect script name
-		/// </summary>
-		public string OnCollectScript
-		{
-			get;
-			set;
-		}
-
 		
+		/// <summary>
+		/// Interface name for the script
+		/// </summary>
+		public string InterfaceName
+		{
+			get;
+			set;
+		}
+
 		/// <summary>
 		/// Script of the item
 		/// </summary>
@@ -328,6 +273,7 @@ namespace DungeonEye
 			get;
 			private set;
 		}
+
 
 		/// <summary>
 		/// Name of the item
