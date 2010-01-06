@@ -85,7 +85,7 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Loads a dice properties
+		/// Loads properties
 		/// </summary>
 		/// <param name="node">Node</param>
 		/// <returns></returns>
@@ -113,7 +113,7 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Saves deice properties
+		/// Saves properties
 		/// </summary>
 		/// <param name="writer">XmlWriter</param>
 		public void Save(XmlWriter writer)

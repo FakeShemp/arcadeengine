@@ -53,5 +53,23 @@ namespace DungeonEye.Interfaces
 		/// <param name="item">Item</param>
 		/// <param name="hero">Hero using the item</param>
 		void OnUse(Item item, Hero hero);
+
+
+
+		/// <summary>
+		/// When an item is equiped on a hero
+		/// </summary>
+		/// <param name="item">Item</param>
+		/// <param name="hero">Hero equiping the item</param>
+		void OnEquip(Item item, Hero hero);
+
+
+		/// <summary>
+		/// When an item is unequiped of a hero
+		/// </summary>
+		/// <param name="item">Item</param>
+		/// <param name="hero">Hero unequiping the item</param>
+		void OnUnequip(Item item, Hero hero);
+
 	}
 }

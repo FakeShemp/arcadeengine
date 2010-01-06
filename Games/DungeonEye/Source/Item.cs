@@ -606,43 +606,4 @@ namespace DungeonEye
 		TowerShield
 	}
 
-
-	/// <summary>
-	/// Type of weapon
-	/// </summary>
-	public enum WeaponType
-	{
-		/// <summary>
-		/// Contact weapon
-		/// </summary>
-		Melee,
-
-		/// <summary>
-		/// Ranged weapon
-		/// </summary>
-		Ranged,
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		Throw
-	}
-
-
-	/// <summary>
-	/// 
-	/// </summary>
-	public enum WeaponCategory
-	{
-		/// <summary>
-		/// Can be used in either the primary or secondary hand 
-		/// </summary>
-		OneHanded,
-
-		/// <summary>
-		/// Can be used only with two hands
-		/// </summary>
-		TwoHanded,
-	}
 }

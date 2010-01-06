@@ -175,6 +175,7 @@
     <Compile Include="Interfaces\IMonster.cs" />
     <Compile Include="Source\AutoMap.cs" />
     <Compile Include="CharGen.cs" />
+    <Compile Include="Source\CriticalHit.cs" />
     <Compile Include="Source\Gui\MessageBox.cs" />
     <Compile Include="Source\WallButton.cs" />
     <Compile Include="Source\MazeDisplayCoordinates.cs" />

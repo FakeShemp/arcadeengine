@@ -670,21 +670,6 @@ namespace DungeonEye.Forms
 			Item.UseQuiver = UseQuiverBox.Checked;
 		}
 
-		private void ThrowBox_ValueChanged(object sender, EventArgs e)
-		{
-
-		}
-
-		private void FaceBox_ValueChanged(object sender, EventArgs e)
-		{
-
-		}
-
-		private void numericUpDown1_ValueChanged(object sender, EventArgs e)
-		{
-
-		}
-
 		#region Item slots
 
 		private void PrimaryBox_CheckedChanged(object sender, EventArgs e)
@@ -814,6 +799,7 @@ namespace DungeonEye.Forms
 			if (Item == null)
 				return;
 
+			Item.Speed = (int)SpeedBox.Value;
 		}
 
 		private void WeightBox_ValueChanged(object sender, EventArgs e)
@@ -821,6 +807,7 @@ namespace DungeonEye.Forms
 			if (Item == null)
 				return;
 
+			Item.Weight = (int)WeightBox.Value;
 		}
 
 
@@ -947,14 +934,6 @@ namespace DungeonEye.Forms
 		}
 		#endregion
 
-		private void DescriptionBox_TextChanged(object sender, EventArgs e)
-		{
-			if (Item == null)
-				return;
-
-		}
-
-
 		#region scripting events
 
 		private void OnUseBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -983,17 +962,44 @@ namespace DungeonEye.Forms
 
 		#endregion
 
+
+		/// <summary>
+		/// Change description
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void DescriptionBox_TextChanged(object sender, EventArgs e)
+		{
+			if (Item == null)
+				return;
+
+			Item.Description = DescriptionBox.Text;
+		}
+
+
+		/// <summary>
+		/// Change damage
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void DamageBox_ValueChanged(object sender, EventArgs e)
 		{
 			if (Item == null)
 				return;
 
 
-	//		Item.Damage = DamageBox.Dice;
+			Item.Damage.Base = DamageBox.Dice.Base;
+			Item.Damage.Faces = DamageBox.Dice.Faces;
+			Item.Damage.Throws = DamageBox.Dice.Throws;
 		}
 
 
 
+		/// <summary>
+		/// Renames an item
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void RenameBox_Click(object sender, EventArgs e)
 		{
 			if (Item == null)
@@ -1014,6 +1020,14 @@ namespace DungeonEye.Forms
 			ItemSet.Add(Item);
 
 			RebuildItemList();
+		}
+
+
+		private void ACBonusBox_ValueChanged(object sender, EventArgs e)
+		{
+			if (Item == null)
+				return;
+
 		}
 
 
