@@ -56,6 +56,7 @@ namespace ArcEngine.Editor
 			this.CompileButton = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.InsertModelButton = new System.Windows.Forms.ToolStripSplitButton();
+			this.DebugBox = new System.Windows.Forms.ToolStripButton();
 			this.ReportStrip.SuspendLayout();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -178,6 +179,7 @@ namespace ArcEngine.Editor
             this.ReDoBox,
             this.toolStripSeparator2,
             this.toolStripSeparator1,
+            this.DebugBox,
             this.CompileButton,
             this.toolStripSeparator3,
             this.InsertModelButton});
@@ -303,6 +305,17 @@ namespace ArcEngine.Editor
 			this.InsertModelButton.Size = new System.Drawing.Size(130, 22);
 			this.InsertModelButton.Text = "Implement Interface";
 			// 
+			// DebugBox
+			// 
+			this.DebugBox.CheckOnClick = true;
+			this.DebugBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.DebugBox.Image = ((System.Drawing.Image)(resources.GetObject("DebugBox.Image")));
+			this.DebugBox.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.DebugBox.Name = "DebugBox";
+			this.DebugBox.Size = new System.Drawing.Size(80, 22);
+			this.DebugBox.Text = "Debug mode";
+			this.DebugBox.CheckedChanged += new System.EventHandler(this.DebugBox_CheckedChanged);
+			// 
 			// ScriptForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -355,5 +368,6 @@ namespace ArcEngine.Editor
 		private System.Windows.Forms.ToolStripButton ReDoBox;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		private System.Windows.Forms.ToolStripSplitButton InsertModelButton;
+		private System.Windows.Forms.ToolStripButton DebugBox;
 	}
 }

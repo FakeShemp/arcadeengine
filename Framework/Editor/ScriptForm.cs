@@ -59,7 +59,7 @@ namespace ArcEngine.Editor
 
 
 			ScriptTxt.Text = Script.SourceCode;
-
+			DebugBox.Checked = Script.DebugMode;
 
 
 			// Script models
@@ -412,7 +412,22 @@ public class entity : IEntity
 			ScriptTxt.ActiveTextAreaControl.TextArea.InsertString(code);
 
 		}
-	
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void DebugBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Script == null)
+				return;
+
+			Script.DebugMode = DebugBox.Checked;
+		}
+
+
 		#endregion
 
 
