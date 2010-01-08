@@ -638,7 +638,6 @@ namespace DungeonEye
 		/// <summary>
 		/// Draws hero statistic
 		/// </summary>
-		/// <param name="device"></param>
 		void DrawStatistics()
 		{
 			// Background
@@ -722,7 +721,6 @@ namespace DungeonEye
 		/// Update the Team status
 		/// </summary>
 		/// <param name="time">Time passed since the last call to the last update.</param>
-		//public override void Update(GameTime time)
 		public override void Update(GameTime time, bool hasFocus, bool isCovered)
 		{
 			HasMoved = false;
@@ -1011,11 +1009,7 @@ namespace DungeonEye
 							SetItemInHand(null);
 					}
 					else
-					{
 						SetItemInHand(FrontBlock.CollectItem(groundpos));
-						//if (ItemInHand != null)
-						//    AddMessage(Language.BuildMessage(2, ItemInHand.Name));
-					}
 				}
 
 
@@ -1315,6 +1309,7 @@ namespace DungeonEye
 			#endregion
 
 
+			#region Interface actions
 
 			if (Interface == TeamInterface.Inventory)
 			{
@@ -1477,6 +1472,8 @@ namespace DungeonEye
 
 			CampWindow.Update(time);
 
+			#endregion
+
 
 			#region Heros update
 
@@ -1526,8 +1523,6 @@ namespace DungeonEye
 			if (CanMove)
 				MazeBlock.OnTeamStand(this);
 		}
-
-
 
 
 		/// <summary>
@@ -1591,7 +1586,7 @@ namespace DungeonEye
 						SelectedHero.Quiver--;
 						SetItemInHand(ResourceManager.CreateAsset<ItemSet>("Items").GetItem("Arrow"));
 					}
-					else if (ItemInHand != null && (ItemInHand.Slot & BodySlot.Ammo) == BodySlot.Ammo)
+					else if (ItemInHand != null && (ItemInHand.Slot & BodySlot.Quiver) == BodySlot.Quiver)
 					{
 						SelectedHero.Quiver++;
 						SetItemInHand(null);
@@ -1805,7 +1800,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Updates statistics
 		/// </summary>
-		/// <param name="time"></param>
+		/// <param name="time">Elapsed game time</param>
 		void UpdateStatistics(GameTime time)
 		{
 			Point mousePos = Mouse.Location;
@@ -2212,6 +2207,7 @@ namespace DungeonEye
 
 		#endregion
 
+
 		#region Hand management
 
 
@@ -2229,6 +2225,7 @@ namespace DungeonEye
 		}
 
 		#endregion
+
 
 		#region Movement
 

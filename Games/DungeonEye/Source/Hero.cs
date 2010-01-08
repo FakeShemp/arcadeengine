@@ -124,7 +124,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Adds an item to the first free slot in the inventory
 		/// </summary>
-		/// <param name="item">Item</param>
+		/// <param name="item">Item handle</param>
 		/// <returns>True if enough space, or false if full</returns>
 		public bool AddToInventory(Item item)
 		{
@@ -133,7 +133,7 @@ namespace DungeonEye
 
 
 			// Arrow
-			if (item.Type == ItemType.Ammo)
+			if (item.Slot == BodySlot.Quiver)
 			{
 				Quiver++;
 				return true;
@@ -189,6 +189,7 @@ namespace DungeonEye
 				return true;
 			}
 
+			// Else anywhere in the bag...
 			for (int i = 0; i < 14; i++)
 			{
 				if (Inventory[i] == null)
@@ -198,6 +199,9 @@ namespace DungeonEye
 				}
 			}
 
+			Team.AddMessage("Bag is full !");
+
+			// Sorry no room !
 			return false;
 		}
 

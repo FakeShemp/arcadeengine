@@ -208,7 +208,7 @@ namespace DungeonEye.Forms
 
 				PrimaryBox.Checked = (Item.Slot & BodySlot.Primary) == BodySlot.Primary;
 				SecondaryBox.Checked = (Item.Slot & BodySlot.Secondary) == BodySlot.Secondary;
-				AmmoBox.Checked = (Item.Slot & BodySlot.Ammo) == BodySlot.Ammo;
+				AmmoBox.Checked = (Item.Slot & BodySlot.Quiver) == BodySlot.Quiver;
 				BodyBox.Checked = (Item.Slot & BodySlot.Body) == BodySlot.Body;
 				RingBox.Checked = (Item.Slot & BodySlot.Ring) == BodySlot.Ring;
 				WristBox.Checked = (Item.Slot & BodySlot.Wrist) == BodySlot.Wrist;
@@ -642,9 +642,9 @@ namespace DungeonEye.Forms
 				return;
 
 			if (AmmoBox.Checked)
-				Item.Slot |= BodySlot.Ammo;
+				Item.Slot |= BodySlot.Quiver;
 			else
-				Item.Slot ^= BodySlot.Ammo;
+				Item.Slot ^= BodySlot.Quiver;
 		}
 
 		private void NeckBox_CheckedChanged(object sender, EventArgs e)

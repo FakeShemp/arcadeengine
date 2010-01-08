@@ -221,7 +221,6 @@ namespace DungeonEye
 		/// <summary>
 		/// Drawing
 		/// </summary>
-		/// <param name="device"></param>
 		public override void Draw()
 		{
 			// Clears the background

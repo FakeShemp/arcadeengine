@@ -498,9 +498,9 @@ namespace DungeonEye
 		Secondary = 0x2,
 
 		/// <summary>
-		/// 
+		/// Quiver
 		/// </summary>
-		Ammo = 0x4,
+		Quiver = 0x4,
 
 		/// <summary>
 		/// 
