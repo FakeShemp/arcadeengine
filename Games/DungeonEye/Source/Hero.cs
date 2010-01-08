@@ -199,9 +199,8 @@ namespace DungeonEye
 				}
 			}
 
-			Team.AddMessage("Bag is full !");
-
 			// Sorry no room !
+			Team.AddMessage("Bag is full !");
 			return false;
 		}
 
@@ -226,9 +225,86 @@ namespace DungeonEye
 		/// <returns>True if the item can be set at the given inventory location</returns>
 		public bool SetInventoryItem(InventoryPosition position, Item item)
 		{
-			//if (item != null && item.Slot == position)
-			Inventory[(int)position] = item;
-			return true;
+			if (item == null)
+			{
+				Inventory[(int)position] = item;
+				return true;
+			}
+
+
+			bool res = false;
+			switch (position)
+			{
+				case InventoryPosition.Inventory_01:
+				case InventoryPosition.Inventory_02:
+				case InventoryPosition.Inventory_03:
+				case InventoryPosition.Inventory_04:
+				case InventoryPosition.Inventory_05:
+				case InventoryPosition.Inventory_06:
+				case InventoryPosition.Inventory_07:
+				case InventoryPosition.Inventory_08:
+				case InventoryPosition.Inventory_09:
+				case InventoryPosition.Inventory_10:
+				case InventoryPosition.Inventory_11:
+				case InventoryPosition.Inventory_12:
+				case InventoryPosition.Inventory_13:
+				case InventoryPosition.Inventory_14:
+					res = true;
+				break;
+
+				case InventoryPosition.Armor:
+				if ((item.Slot & BodySlot.Body) == BodySlot.Body)
+					res = true;
+				break;
+
+				case InventoryPosition.Wrist:
+				if ((item.Slot & BodySlot.Wrist) == BodySlot.Wrist)
+					res = true;
+				break;
+
+				case InventoryPosition.Secondary:
+				if ((item.Slot & BodySlot.Secondary) == BodySlot.Secondary)
+					res = true;
+				break;
+
+				case InventoryPosition.Ring_Left:
+				case InventoryPosition.Ring_Right:
+				if ((item.Slot & BodySlot.Ring) == BodySlot.Ring)
+					res = true;
+				break;
+
+				case InventoryPosition.Feet:
+				if ((item.Slot & BodySlot.Feet) == BodySlot.Feet)
+					res = true;
+				break;
+
+				case InventoryPosition.Primary:
+				if ((item.Slot & BodySlot.Primary) == BodySlot.Primary)
+					res = true;
+				break;
+
+				case InventoryPosition.Belt_1:
+				case InventoryPosition.Belt_2:
+				case InventoryPosition.Belt_3:
+				if ((item.Slot & BodySlot.Waist) == BodySlot.Waist)
+					res = true;
+				break;
+
+				case InventoryPosition.Neck:
+				if ((item.Slot & BodySlot.Neck) == BodySlot.Neck)
+					res = true;
+				break;
+
+				case InventoryPosition.Helmet:
+				if ((item.Slot & BodySlot.Head) == BodySlot.Head)
+					res = true;
+				break;
+			}
+
+			if (res)
+				Inventory[(int)position] = item;
+
+			return res;
 		}
 
 
@@ -1119,8 +1195,8 @@ namespace DungeonEye
 		Armor = 14,
 		Wrist = 15,
 		Secondary = 16,
-		Ring_1 = 17,
-		Ring_2 = 18,
+		Ring_Left = 17,
+		Ring_Right = 18,
 		Feet = 19,
 		Primary = 20,
 		Belt_1 = 21,

@@ -587,12 +587,12 @@ namespace DungeonEye
 				Items.Draw(SelectedHero.GetInventoryItem(InventoryPosition.Primary).TileID, new Point(476, 246));
 
 			// Ring 1
-			if (SelectedHero.GetInventoryItem(InventoryPosition.Ring_1) != null)
-				Items.Draw(SelectedHero.GetInventoryItem(InventoryPosition.Ring_1).TileID, new Point(464, 278));
+			if (SelectedHero.GetInventoryItem(InventoryPosition.Ring_Left) != null)
+				Items.Draw(SelectedHero.GetInventoryItem(InventoryPosition.Ring_Left).TileID, new Point(464, 278));
 
 			// Ring 2
-			if (SelectedHero.GetInventoryItem(InventoryPosition.Ring_2) != null)
-				Items.Draw(SelectedHero.GetInventoryItem(InventoryPosition.Ring_2).TileID, new Point(488, 278));
+			if (SelectedHero.GetInventoryItem(InventoryPosition.Ring_Right) != null)
+				Items.Draw(SelectedHero.GetInventoryItem(InventoryPosition.Ring_Right).TileID, new Point(488, 278));
 
 			// Feet
 			if (SelectedHero.GetInventoryItem(InventoryPosition.Feet) != null)
@@ -1370,10 +1370,6 @@ namespace DungeonEye
 									SetItemInHand(item);
 									hero.SetInventoryItem(InventoryPosition.Primary, null); 
 								}
-
-								//if (ItemInHand != null)
-								//    AddMessage(Language.BuildMessage(2, ItemInHand.Name));
-
 							}
 
 							// Take object in secondary hand
@@ -1393,10 +1389,6 @@ namespace DungeonEye
 									SetItemInHand(item);
 									hero.SetInventoryItem(InventoryPosition.Secondary, null); 
 								}
-
-								//if (ItemInHand != null)
-								//    AddMessage(Language.BuildMessage(2, ItemInHand.Name));
-
 							}
 						}
 					}
@@ -1557,28 +1549,24 @@ namespace DungeonEye
 
 
 
-				// Manage bag pack items
+				#region Manage bag pack items
 				int pos = 0;
 				for (int y = 70; y < 328; y += 36)
 					for (int x = 360; x < 426; x += 36)
 					{
-
 						if (new Rectangle(x, y, 36, 36).Contains(mousePos))
 						{
 							Item swap = ItemInHand;
 							SetItemInHand(SelectedHero.GetInventoryItem(InventoryPosition.Inventory_01 + pos));
 							SelectedHero.SetInventoryItem(InventoryPosition.Inventory_01 + pos, swap);
-
-							//if (ItemInHand != null)
-							//    AddMessage(ItemInHand.Name + " taken.");
 						}
 
 						// Next position
 						pos++;
 					}
+				#endregion
 
-
-				// Quiver
+				#region Quiver
 				if (new Rectangle(448, 108, 36, 36).Contains(mousePos))
 				{
 					if (ItemInHand == null && SelectedHero.Quiver > 0)
@@ -1592,26 +1580,24 @@ namespace DungeonEye
 						SetItemInHand(null);
 					}
 				}
+				#endregion
 
-				// Armor
+				#region Armor
 				else if (new Rectangle(446, 148, 36, 36).Contains(mousePos))
 				{
 					item = SelectedHero.GetInventoryItem(InventoryPosition.Armor);
 
-					if (ItemInHand != null && ItemInHand.Slot == BodySlot.Body)
-					{
-						Item swap = ItemInHand;
+					if (ItemInHand != null && SelectedHero.SetInventoryItem(InventoryPosition.Armor, ItemInHand))
 						SetItemInHand(item);
-						SelectedHero.SetInventoryItem(InventoryPosition.Armor, swap);
-					}
 					else if (ItemInHand == null && item != null)
 					{
 						SetItemInHand(item);
 						SelectedHero.SetInventoryItem(InventoryPosition.Armor, null);
 					}
 				}
+				#endregion
 
-				// Food 472,72,62,32
+				#region Food 472,72,62,32
 				else if (new Rectangle(472, 72, 62, 30).Contains(mousePos))
 				{
 					if (ItemInHand != null && ItemInHand.Type == ItemType.Consumable)
@@ -1620,128 +1606,101 @@ namespace DungeonEye
 						SetItemInHand(null);
 					}
 				}
+				#endregion
 
-
-
-				// Wrist 448,188,36,36
+				#region Wrist 448,188,36,36
 				else if (new Rectangle(448, 188, 36, 36).Contains(mousePos))
 				{
 					item = SelectedHero.GetInventoryItem(InventoryPosition.Wrist);
 
-					if (ItemInHand != null && ItemInHand.Slot == BodySlot.Wrist)
-					{
-						Item swap = ItemInHand;
+					if (ItemInHand != null && SelectedHero.SetInventoryItem(InventoryPosition.Wrist, ItemInHand))
 						SetItemInHand(item); 
-						SelectedHero.SetInventoryItem(InventoryPosition.Wrist, swap);
-					}
 					else if (ItemInHand == null && item != null)
 					{
 						SetItemInHand(item); 
 						SelectedHero.SetInventoryItem(InventoryPosition.Wrist, null);
 					}
 				}
+				#endregion
 
-
-				// Primary 458,228,36,36
+				#region Primary 458,228,36,36
 				else if (new Rectangle(458, 228, 36, 36).Contains(mousePos))
 				{
 					item = SelectedHero.GetInventoryItem(InventoryPosition.Primary);
 
-					if (ItemInHand != null && ((ItemInHand.Slot & BodySlot.Primary) == BodySlot.Primary || (ItemInHand.Slot & BodySlot.Secondary) == BodySlot.Secondary))
-					{
-						Item swap = ItemInHand;
+					if (ItemInHand != null && SelectedHero.SetInventoryItem(InventoryPosition.Primary, ItemInHand))
 						SetItemInHand(item);
-						SelectedHero.SetInventoryItem(InventoryPosition.Primary, swap); 
-					}
 					else if (ItemInHand == null &&item != null)
 					{
 						SetItemInHand(item);
 						SelectedHero.SetInventoryItem(InventoryPosition.Primary, null);
 					}
 				}
+				#endregion
 
-
-
-
-				// Feet 552,270,36,36
+				#region Feet 552,270,36,36
 				else if (new Rectangle(552, 270, 36, 36).Contains(mousePos))
 				{
 					item = SelectedHero.GetInventoryItem(InventoryPosition.Feet);
 
-					if (ItemInHand != null && ItemInHand.Slot == BodySlot.Feet)
-					{
-						Item swap = ItemInHand;
-						SetItemInHand(item);
-						SelectedHero.SetInventoryItem(InventoryPosition.Feet, swap); 
-					}
-					else if (ItemInHand == null &&item != null)
+					if (ItemInHand != null && SelectedHero.SetInventoryItem(InventoryPosition.Feet, ItemInHand))
+					    SetItemInHand(item);
+					else if (ItemInHand == null && item != null)
 					{
 						SetItemInHand(item);
 						SelectedHero.SetInventoryItem(InventoryPosition.Feet, null);
 					}
 				}
+				#endregion
 
-
-				// Secondary 554,228,36,36
+				#region Secondary 554,228,36,36
 				else if (new Rectangle(554, 228, 36, 36).Contains(mousePos))
 				{
 					item = SelectedHero.GetInventoryItem(InventoryPosition.Secondary);
 
-					if (ItemInHand != null && ((ItemInHand.Slot & BodySlot.Primary) == BodySlot.Primary || (ItemInHand.Slot & BodySlot.Secondary) == BodySlot.Secondary))
-					{
-						Item swap = ItemInHand;
+					if (ItemInHand != null && SelectedHero.SetInventoryItem(InventoryPosition.Secondary, ItemInHand))
 						SetItemInHand(item);
-						SelectedHero.SetInventoryItem(InventoryPosition.Secondary, swap);
-					}
 					else if (ItemInHand == null && item != null)
 					{
 						SetItemInHand(item);
 						SelectedHero.SetInventoryItem(InventoryPosition.Secondary, null);
 					}
 				}
+				#endregion
 
-
-
-				// Neck 572,146,36,36
+				#region Neck 572,146,36,36
 				else if (new Rectangle(572, 146, 36, 36).Contains(mousePos))
 				{
 					item = SelectedHero.GetInventoryItem(InventoryPosition.Neck);
 
-					if (ItemInHand != null && ItemInHand.Slot == BodySlot.Neck)
-					{
-						Item swap = ItemInHand;
+					if (ItemInHand != null && SelectedHero.SetInventoryItem(InventoryPosition.Neck, ItemInHand))
 						SetItemInHand(item);
-						SelectedHero.SetInventoryItem(InventoryPosition.Neck, swap);
-					}
 					else if (ItemInHand == null && item != null)
 					{
 						SetItemInHand(item);
 						SelectedHero.SetInventoryItem(InventoryPosition.Neck, null);
 					}
 				}
+				#endregion
 
-
-				// Head 594,106,36,36
+				#region Head 594,106,36,36
 				else if (new Rectangle(594, 106, 36, 36).Contains(mousePos))
 				{
 					item = SelectedHero.GetInventoryItem(InventoryPosition.Helmet);
 
-					if (ItemInHand != null && ItemInHand.Slot == BodySlot.Head)
-					{
-						Item swap = ItemInHand;
+					if (ItemInHand != null && SelectedHero.SetInventoryItem(InventoryPosition.Helmet, ItemInHand))
 						SetItemInHand(item);
-						SelectedHero.SetInventoryItem(InventoryPosition.Helmet, swap);
-					}
 					else if (ItemInHand == null && item != null)
 					{
 						SetItemInHand(item);
 						SelectedHero.SetInventoryItem(InventoryPosition.Helmet, null);
 					}
 				}
-
+				#endregion
 
 				else
 				{
+					#region Waist
 					// Back 1 598,184,36,36
 					// Back 2 598,220,36,36
 					// Back 3 598,256,36,36
@@ -1750,13 +1709,9 @@ namespace DungeonEye
 						if (new Rectangle(598, 184 + i * 36, 36, 36).Contains(mousePos))
 						{
 							item = SelectedHero.GetInventoryItem(InventoryPosition.Belt_1 + i);
-			
-							if (ItemInHand != null && (ItemInHand.Slot & BodySlot.Waist) == BodySlot.Waist)
-							{
-								Item swap = ItemInHand;
+
+							if (ItemInHand != null && SelectedHero.SetInventoryItem(InventoryPosition.Belt_1 + i, ItemInHand))
 								SetItemInHand(item);
-								SelectedHero.SetInventoryItem(InventoryPosition.Belt_1 + i, swap);
-							}
 							else if (ItemInHand == null && item != null)
 							{
 								SetItemInHand(item);
@@ -1764,31 +1719,27 @@ namespace DungeonEye
 							}
 						}
 					}
+					#endregion
 
-
-
+					#region Rings
 					// Ring 1 454,268,20,20
 					// Ring 2 478,268,20,20
 					for (int i = 0; i < 2; i++)
 					{
-						item = SelectedHero.GetInventoryItem(InventoryPosition.Ring_1 + i);
+						item = SelectedHero.GetInventoryItem(InventoryPosition.Ring_Left + i);
 
 						if (new Rectangle(454 + i * 24, 268, 20, 20).Contains(mousePos))
 						{
-							if (ItemInHand != null && ItemInHand.Slot == BodySlot.Ring)
-							{
-								Item swap = ItemInHand;
+							if (ItemInHand != null && SelectedHero.SetInventoryItem(InventoryPosition.Ring_Left + i, ItemInHand))
 								SetItemInHand(item);
-								SelectedHero.SetInventoryItem(InventoryPosition.Ring_1 + i, item);
-							}
 							else if (ItemInHand == null && item != null)
 							{
 								SetItemInHand(item);
-								SelectedHero.SetInventoryItem(InventoryPosition.Ring_1 + i, null);
+								SelectedHero.SetInventoryItem(InventoryPosition.Ring_Left + i, null);
 							}
 						}
 					}
-
+					#endregion
 				}
 			}
 
