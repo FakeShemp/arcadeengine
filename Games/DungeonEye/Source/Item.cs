@@ -453,6 +453,12 @@ namespace DungeonEye
 			set;
 		}
 		#endregion
+
+
+		public override string ToString()
+		{
+			return Name;
+		}
 	}
 
 

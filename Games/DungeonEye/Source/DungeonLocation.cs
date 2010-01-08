@@ -213,6 +213,12 @@ namespace DungeonEye
 		}
 
 		#endregion
+
+
+		public override string ToString()
+		{
+			return string.Format("{0}x{1} {2} {3}", Position.X, Position.Y, Maze, Direction.ToString());
+		}
 	}
 
 

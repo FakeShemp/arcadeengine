@@ -321,7 +321,7 @@ namespace DungeonEye
 
 
 			// Team location
-			Font.DrawText(new Point(0, 340), Color.White, Location.Position.ToString());
+			Font.DrawText(new Point(0, 340), Color.White, Location.ToString());
 
 
 			// Draw the spell window
@@ -976,15 +976,11 @@ namespace DungeonEye
 					if (ItemInHand != null)
 					{
 						if (CurrentBlock.DropItem(groundpos, ItemInHand))
-							ItemInHand = null;
+							SetItemInHand(null);
 					}
 					else
 					{
-						ItemInHand = CurrentBlock.CollectItem(groundpos);
-						if (ItemInHand != null)
-						{
-							AddMessage(Language.BuildMessage(2, ItemInHand.Name));
-						}
+						SetItemInHand(CurrentBlock.CollectItem(groundpos));
 					}
 				}
 
@@ -1012,13 +1008,13 @@ namespace DungeonEye
 					if (ItemInHand != null)
 					{
 						if (FrontBlock.DropItem(groundpos, ItemInHand))
-							ItemInHand = null;
+							SetItemInHand(null);
 					}
 					else
 					{
-						ItemInHand = FrontBlock.CollectItem(groundpos);
-						if (ItemInHand != null)
-							AddMessage(Language.BuildMessage(2, ItemInHand.Name));
+						SetItemInHand(FrontBlock.CollectItem(groundpos));
+						//if (ItemInHand != null)
+						//    AddMessage(Language.BuildMessage(2, ItemInHand.Name));
 					}
 				}
 
@@ -1047,13 +1043,13 @@ namespace DungeonEye
 					if (ItemInHand != null)
 					{
 						if (CurrentBlock.DropItem(groundpos, ItemInHand))
-							ItemInHand = null;
+							SetItemInHand(null);
 					}
 					else
 					{
-						ItemInHand = CurrentBlock.CollectItem(groundpos);
-						if (ItemInHand != null)
-							AddMessage(Language.BuildMessage(2, ItemInHand.Name));
+						SetItemInHand(CurrentBlock.CollectItem(groundpos));
+						//if (ItemInHand != null)
+						//    AddMessage(Language.BuildMessage(2, ItemInHand.Name));
 
 					}
 				}
@@ -1083,17 +1079,18 @@ namespace DungeonEye
 					if (ItemInHand != null)
 					{
 						if (FrontBlock.DropItem(groundpos, ItemInHand))
-							ItemInHand = null;
+							SetItemInHand ( null);
 					}
 					else
 					{
-						ItemInHand = FrontBlock.CollectItem(groundpos);
-						if (ItemInHand != null)
-							AddMessage(Language.BuildMessage(2, ItemInHand.Name));
+						SetItemInHand(FrontBlock.CollectItem(groundpos));
+						//if (ItemInHand != null)
+						//    AddMessage(Language.BuildMessage(2, ItemInHand.Name));
 					}
 				}
 
 				#endregion
+
 
 
 				#region Action to process on the front block
@@ -1101,59 +1098,59 @@ namespace DungeonEye
 				// Click on the block in front of the team
 				else if(MazeDisplayCoordinates.FrontBlock.Contains(mousePos))// && FrontBlock.IsWall)
 				{
-					FrontBlock.OnClick(this, mousePos, FrontWallSide);
-				}
-				#endregion
-
-
-				#region Throw an object left side
-				else if (MazeDisplayCoordinates.ThrowLeft.Contains(mousePos) && ItemInHand != null)
-				{
-					DungeonLocation loc = new DungeonLocation(Location);
-					switch (Location.Direction)
+					if (!FrontBlock.OnClick(this, mousePos, FrontWallSide))
 					{
-						case CardinalPoint.North:
-						loc.GroundPosition = GroundPosition.SouthWest;
-						break;
-						case CardinalPoint.East:
-						loc.GroundPosition = GroundPosition.NorthWest;
-						break;
-						case CardinalPoint.South:
-						loc.GroundPosition = GroundPosition.NorthEast;
-						break;
-						case CardinalPoint.West:
-						loc.GroundPosition = GroundPosition.SouthEast;
-						break;
+						#region Throw an object left side
+						if (MazeDisplayCoordinates.ThrowLeft.Contains(mousePos) && ItemInHand != null)
+						{
+							DungeonLocation loc = new DungeonLocation(Location);
+							switch (Location.Direction)
+							{
+								case CardinalPoint.North:
+								loc.GroundPosition = GroundPosition.SouthWest;
+								break;
+								case CardinalPoint.East:
+								loc.GroundPosition = GroundPosition.NorthWest;
+								break;
+								case CardinalPoint.South:
+								loc.GroundPosition = GroundPosition.NorthEast;
+								break;
+								case CardinalPoint.West:
+								loc.GroundPosition = GroundPosition.SouthEast;
+								break;
+							}
+							Maze.FlyingItems.Add(new FlyingItem(ItemInHand, loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
+							SetItemInHand(null);
+						}
+						#endregion
+
+						#region Throw an object in the right side
+						else if (MazeDisplayCoordinates.ThrowRight.Contains(mousePos) && ItemInHand != null)
+						{
+
+							DungeonLocation loc = new DungeonLocation(Location);
+
+							switch (Location.Direction)
+							{
+								case CardinalPoint.North:
+								loc.GroundPosition = GroundPosition.SouthEast;
+								break;
+								case CardinalPoint.East:
+								loc.GroundPosition = GroundPosition.SouthWest;
+								break;
+								case CardinalPoint.South:
+								loc.GroundPosition = GroundPosition.NorthWest;
+								break;
+								case CardinalPoint.West:
+								loc.GroundPosition = GroundPosition.NorthEast;
+								break;
+							}
+
+							Maze.FlyingItems.Add(new FlyingItem(ItemInHand, loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
+							SetItemInHand(null);
+						}
+						#endregion
 					}
-					Maze.FlyingItems.Add(new FlyingItem(ItemInHand, loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
-					ItemInHand = null;
-				}
-				#endregion
-
-				#region Throw an object in the right side
-				else if (MazeDisplayCoordinates.ThrowRight.Contains(mousePos) && ItemInHand != null)
-				{
-
-					DungeonLocation loc = new DungeonLocation(Location);
-
-					switch (Location.Direction)
-					{
-						case CardinalPoint.North:
-						loc.GroundPosition = GroundPosition.SouthEast;
-						break;
-						case CardinalPoint.East:
-						loc.GroundPosition = GroundPosition.SouthWest;
-						break;
-						case CardinalPoint.South:
-						loc.GroundPosition = GroundPosition.NorthWest;
-						break;
-						case CardinalPoint.West:
-						loc.GroundPosition = GroundPosition.NorthEast;
-						break;
-					}
-
-					Maze.FlyingItems.Add(new FlyingItem(ItemInHand, loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
-					ItemInHand = null;
 				}
 				#endregion
 			}
@@ -1370,17 +1367,17 @@ namespace DungeonEye
 								if (ItemInHand != null && ((ItemInHand.Slot & BodySlot.Primary) == BodySlot.Primary))
 								{
 									Item swap = ItemInHand;
-									ItemInHand = hero.GetInventoryItem(InventoryPosition.Primary);
+									SetItemInHand(hero.GetInventoryItem(InventoryPosition.Primary));
 									hero.SetInventoryItem(InventoryPosition.Primary, swap);
 								}
 								else if (ItemInHand == null && item != null)
 								{
-									ItemInHand = item;
+									SetItemInHand(item);
 									hero.SetInventoryItem(InventoryPosition.Primary, null); 
 								}
 
-								if (ItemInHand != null)
-									AddMessage(Language.BuildMessage(2, ItemInHand.Name));
+								//if (ItemInHand != null)
+								//    AddMessage(Language.BuildMessage(2, ItemInHand.Name));
 
 							}
 
@@ -1392,18 +1389,18 @@ namespace DungeonEye
 								if (ItemInHand != null && ((ItemInHand.Slot & BodySlot.Secondary) == BodySlot.Secondary))
 								{
 									Item swap = ItemInHand;
-									ItemInHand = hero.GetInventoryItem(InventoryPosition.Secondary);
+									SetItemInHand(hero.GetInventoryItem(InventoryPosition.Secondary));
 									hero.SetInventoryItem(InventoryPosition.Secondary, swap);
 
 								}
 								else if (ItemInHand == null && item != null)
 								{
-									ItemInHand = item;
+									SetItemInHand(item);
 									hero.SetInventoryItem(InventoryPosition.Secondary, null); 
 								}
 
-								if (ItemInHand != null)
-									AddMessage(Language.BuildMessage(2, ItemInHand.Name));
+								//if (ItemInHand != null)
+								//    AddMessage(Language.BuildMessage(2, ItemInHand.Name));
 
 							}
 						}
@@ -1574,11 +1571,11 @@ namespace DungeonEye
 						if (new Rectangle(x, y, 36, 36).Contains(mousePos))
 						{
 							Item swap = ItemInHand;
-							ItemInHand = SelectedHero.GetInventoryItem(InventoryPosition.Inventory_01 + pos);
+							SetItemInHand(SelectedHero.GetInventoryItem(InventoryPosition.Inventory_01 + pos));
 							SelectedHero.SetInventoryItem(InventoryPosition.Inventory_01 + pos, swap);
 
-							if (ItemInHand != null)
-								AddMessage(ItemInHand.Name + " taken.");
+							//if (ItemInHand != null)
+							//    AddMessage(ItemInHand.Name + " taken.");
 						}
 
 						// Next position
@@ -1592,12 +1589,12 @@ namespace DungeonEye
 					if (ItemInHand == null && SelectedHero.Quiver > 0)
 					{
 						SelectedHero.Quiver--;
-						ItemInHand = ResourceManager.CreateAsset<ItemSet>("Items").GetItem("Arrow");
+						SetItemInHand(ResourceManager.CreateAsset<ItemSet>("Items").GetItem("Arrow"));
 					}
 					else if (ItemInHand != null && (ItemInHand.Slot & BodySlot.Ammo) == BodySlot.Ammo)
 					{
 						SelectedHero.Quiver++;
-						ItemInHand = null;
+						SetItemInHand(null);
 					}
 				}
 
@@ -1609,12 +1606,12 @@ namespace DungeonEye
 					if (ItemInHand != null && ItemInHand.Slot == BodySlot.Body)
 					{
 						Item swap = ItemInHand;
-						ItemInHand = item;
+						SetItemInHand(item);
 						SelectedHero.SetInventoryItem(InventoryPosition.Armor, swap);
 					}
 					else if (ItemInHand == null && item != null)
 					{
-						ItemInHand = item;
+						SetItemInHand(item);
 						SelectedHero.SetInventoryItem(InventoryPosition.Armor, null);
 					}
 				}
@@ -1625,7 +1622,7 @@ namespace DungeonEye
 					if (ItemInHand != null && ItemInHand.Type == ItemType.Consumable)
 					{
 						SelectedHero.Food += 25;
-						ItemInHand = null;
+						SetItemInHand(null);
 					}
 				}
 
@@ -1639,12 +1636,12 @@ namespace DungeonEye
 					if (ItemInHand != null && ItemInHand.Slot == BodySlot.Wrist)
 					{
 						Item swap = ItemInHand;
-						ItemInHand = item; 
+						SetItemInHand(item); 
 						SelectedHero.SetInventoryItem(InventoryPosition.Wrist, swap);
 					}
 					else if (ItemInHand == null && item != null)
 					{
-						ItemInHand = item; 
+						SetItemInHand(item); 
 						SelectedHero.SetInventoryItem(InventoryPosition.Wrist, null);
 					}
 				}
@@ -1658,12 +1655,12 @@ namespace DungeonEye
 					if (ItemInHand != null && ((ItemInHand.Slot & BodySlot.Primary) == BodySlot.Primary || (ItemInHand.Slot & BodySlot.Secondary) == BodySlot.Secondary))
 					{
 						Item swap = ItemInHand;
-						ItemInHand = item;
+						SetItemInHand(item);
 						SelectedHero.SetInventoryItem(InventoryPosition.Primary, swap); 
 					}
 					else if (ItemInHand == null &&item != null)
 					{
-						ItemInHand = item;
+						SetItemInHand(item);
 						SelectedHero.SetInventoryItem(InventoryPosition.Primary, null);
 					}
 				}
@@ -1679,12 +1676,12 @@ namespace DungeonEye
 					if (ItemInHand != null && ItemInHand.Slot == BodySlot.Feet)
 					{
 						Item swap = ItemInHand;
-						ItemInHand = item;
+						SetItemInHand(item);
 						SelectedHero.SetInventoryItem(InventoryPosition.Feet, swap); 
 					}
 					else if (ItemInHand == null &&item != null)
 					{
-						ItemInHand = item;
+						SetItemInHand(item);
 						SelectedHero.SetInventoryItem(InventoryPosition.Feet, null);
 					}
 				}
@@ -1698,12 +1695,12 @@ namespace DungeonEye
 					if (ItemInHand != null && ((ItemInHand.Slot & BodySlot.Primary) == BodySlot.Primary || (ItemInHand.Slot & BodySlot.Secondary) == BodySlot.Secondary))
 					{
 						Item swap = ItemInHand;
-						ItemInHand = item;
+						SetItemInHand(item);
 						SelectedHero.SetInventoryItem(InventoryPosition.Secondary, swap);
 					}
 					else if (ItemInHand == null && item != null)
 					{
-						ItemInHand = item;
+						SetItemInHand(item);
 						SelectedHero.SetInventoryItem(InventoryPosition.Secondary, null);
 					}
 				}
@@ -1718,12 +1715,12 @@ namespace DungeonEye
 					if (ItemInHand != null && ItemInHand.Slot == BodySlot.Neck)
 					{
 						Item swap = ItemInHand;
-						ItemInHand = item;
+						SetItemInHand(item);
 						SelectedHero.SetInventoryItem(InventoryPosition.Neck, swap);
 					}
 					else if (ItemInHand == null && item != null)
 					{
-						ItemInHand = item;
+						SetItemInHand(item);
 						SelectedHero.SetInventoryItem(InventoryPosition.Neck, null);
 					}
 				}
@@ -1737,12 +1734,12 @@ namespace DungeonEye
 					if (ItemInHand != null && ItemInHand.Slot == BodySlot.Head)
 					{
 						Item swap = ItemInHand;
-						ItemInHand = item;
+						SetItemInHand(item);
 						SelectedHero.SetInventoryItem(InventoryPosition.Helmet, swap);
 					}
 					else if (ItemInHand == null && item != null)
 					{
-						ItemInHand = item;
+						SetItemInHand(item);
 						SelectedHero.SetInventoryItem(InventoryPosition.Helmet, null);
 					}
 				}
@@ -1762,12 +1759,12 @@ namespace DungeonEye
 							if (ItemInHand != null && (ItemInHand.Slot & BodySlot.Waist) == BodySlot.Waist)
 							{
 								Item swap = ItemInHand;
-								ItemInHand = item;
+								SetItemInHand(item);
 								SelectedHero.SetInventoryItem(InventoryPosition.Belt_1 + i, swap);
 							}
 							else if (ItemInHand == null && item != null)
 							{
-								ItemInHand = item;
+								SetItemInHand(item);
 								SelectedHero.SetInventoryItem(InventoryPosition.Belt_1 + i, null);
 							}
 						}
@@ -1786,12 +1783,12 @@ namespace DungeonEye
 							if (ItemInHand != null && ItemInHand.Slot == BodySlot.Ring)
 							{
 								Item swap = ItemInHand;
-								ItemInHand = item;
+								SetItemInHand(item);
 								SelectedHero.SetInventoryItem(InventoryPosition.Ring_1 + i, item);
 							}
 							else if (ItemInHand == null && item != null)
 							{
-								ItemInHand = item;
+								SetItemInHand(item);
 								SelectedHero.SetInventoryItem(InventoryPosition.Ring_1 + i, null);
 							}
 						}
@@ -2215,6 +2212,23 @@ namespace DungeonEye
 
 		#endregion
 
+		#region Hand management
+
+
+		/// <summary>
+		/// Sets the item in the hand
+		/// </summary>
+		/// <param name="item">Item handle</param>
+		public void SetItemInHand(Item item)
+		{
+			ItemInHand = item;
+
+			if (ItemInHand != null)
+				AddMessage(Language.BuildMessage(2, ItemInHand.Name));
+
+		}
+
+		#endregion
 
 		#region Movement
 
@@ -2354,8 +2368,9 @@ namespace DungeonEye
 				return false;
 
 			MazeBlock.OnTeamLeave(this);
-		   Location.Position = location.Position;
-		   Maze = maze;
+			Location.Position = location.Position;
+			Location.Maze = maze.Name;
+			Maze = maze;
 
 
 			MazeBlock = Maze.GetBlock(Location.Position);
@@ -2559,7 +2574,11 @@ namespace DungeonEye
 		/// <summary>
 		/// Item hold in the hand
 		/// </summary>
-		public Item ItemInHand;
+		public Item ItemInHand
+		{
+			get;
+			private set;
+		}
 
 
 		/// <summary>

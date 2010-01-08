@@ -74,13 +74,15 @@ namespace DungeonEye
 		/// <param name="team">Team</param>
 		/// <param name="location">Location of the mouse</param>
 		/// <param name="side">Wall side</param>
-		public void OnClick(Team team, Point location, CardinalPoint side)
+		/// <returns>True if the event is processed</returns>
+		public bool OnClick(Team team, Point location, CardinalPoint side)
 		{
 
 			// A door
 			if (Door != null && team.ItemInHand == null)
 			{
 				Door.OnClick(team, location);
+				return true;
 			}
 
 			// An Alcove 
@@ -89,13 +91,18 @@ namespace DungeonEye
 				if (team.ItemInHand != null)
 				{
 					DropAlcoveItem(side, team.ItemInHand);
-					team.ItemInHand = null;
+					team.SetItemInHand(null);
 				}
 				else
 				{
-					team.ItemInHand = CollectAlcoveItem(side);
+					team.SetItemInHand(CollectAlcoveItem(side));
 				}
+
+				return true;
 			}
+
+
+			return false;
 		}
 
 

@@ -864,7 +864,6 @@ namespace DungeonEye
 		#endregion
 
 
-
 		#region Properties
 
 
