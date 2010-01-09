@@ -185,6 +185,21 @@ namespace DungeonEye
 				return true;
 			}
 
+			// Ring
+			if (item.Slot == BodySlot.Ring)
+			{
+				if (GetInventoryItem(InventoryPosition.Ring_Left) == null)
+				{
+					SetInventoryItem(InventoryPosition.Ring_Right, item);
+					return true;
+				}
+				else if (GetInventoryItem(InventoryPosition.Ring_Right) == null)
+				{
+					SetInventoryItem(InventoryPosition.Ring_Left, item);
+					return true;
+				}
+			}
+
 			// Else anywhere in the bag...
 			for (int i = 0; i < 14; i++)
 			{

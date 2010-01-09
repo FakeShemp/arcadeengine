@@ -34,14 +34,14 @@ namespace DungeonEye.Forms
 	/// <summary>
 	/// Itemset form editor class
 	/// </summary>
-	public partial class ItemSetForm : AssetEditor
+	public partial class ItemForm : AssetEditor
 	{
 
 		/// <summary>
 		/// Constructor
 		/// </summary>
 		/// <param name="node">node to edit</param>
-		public ItemSetForm(XmlNode node)
+		public ItemForm(XmlNode node)
 		{
 			InitializeComponent();
 

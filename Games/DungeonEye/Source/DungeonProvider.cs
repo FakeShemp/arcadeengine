@@ -195,7 +195,7 @@ namespace DungeonEye
 				if (Items.ContainsKey(name))
 					node = Items[name];
 
-				form = new Forms.ItemSetForm(node);
+				form = new Forms.ItemForm(node);
 			}
 
 			form.TabText = name;

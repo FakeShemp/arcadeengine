@@ -321,7 +321,7 @@ namespace DungeonEye
 
 
 			// Team location
-			Font.DrawText(new Point(0, 340), Color.White, Location.ToString());
+			Font.DrawText(new Point(10, 340), Color.White, Location.ToString());
 
 
 			// Draw the spell window

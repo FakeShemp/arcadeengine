@@ -28,7 +28,7 @@ namespace ArcEngine.Editor
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("");
+			System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("");
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ScriptForm));
 			this.ErrorListView = new System.Windows.Forms.ListView();
 			this.ErrorColumn = new System.Windows.Forms.ColumnHeader();
@@ -53,10 +53,10 @@ namespace ArcEngine.Editor
 			this.ReDoBox = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.DebugBox = new System.Windows.Forms.ToolStripButton();
 			this.CompileButton = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.InsertModelButton = new System.Windows.Forms.ToolStripSplitButton();
-			this.DebugBox = new System.Windows.Forms.ToolStripButton();
 			this.ReportStrip.SuspendLayout();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -72,7 +72,7 @@ namespace ArcEngine.Editor
 			this.ErrorListView.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.ErrorListView.GridLines = true;
 			this.ErrorListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem2});
+            listViewItem1});
 			this.ErrorListView.Location = new System.Drawing.Point(0, 0);
 			this.ErrorListView.MultiSelect = false;
 			this.ErrorListView.Name = "ErrorListView";
@@ -284,6 +284,17 @@ namespace ArcEngine.Editor
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
 			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
 			// 
+			// DebugBox
+			// 
+			this.DebugBox.CheckOnClick = true;
+			this.DebugBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.DebugBox.Image = ((System.Drawing.Image)(resources.GetObject("DebugBox.Image")));
+			this.DebugBox.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.DebugBox.Name = "DebugBox";
+			this.DebugBox.Size = new System.Drawing.Size(80, 22);
+			this.DebugBox.Text = "Debug mode";
+			this.DebugBox.CheckedChanged += new System.EventHandler(this.DebugBox_CheckedChanged);
+			// 
 			// CompileButton
 			// 
 			this.CompileButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -304,17 +315,6 @@ namespace ArcEngine.Editor
 			this.InsertModelButton.Name = "InsertModelButton";
 			this.InsertModelButton.Size = new System.Drawing.Size(130, 22);
 			this.InsertModelButton.Text = "Implement Interface";
-			// 
-			// DebugBox
-			// 
-			this.DebugBox.CheckOnClick = true;
-			this.DebugBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-			this.DebugBox.Image = ((System.Drawing.Image)(resources.GetObject("DebugBox.Image")));
-			this.DebugBox.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.DebugBox.Name = "DebugBox";
-			this.DebugBox.Size = new System.Drawing.Size(80, 22);
-			this.DebugBox.Text = "Debug mode";
-			this.DebugBox.CheckedChanged += new System.EventHandler(this.DebugBox_CheckedChanged);
 			// 
 			// ScriptForm
 			// 

@@ -1,6 +1,6 @@
 ﻿namespace DungeonEye.Forms
 {
-	partial class ItemSetForm
+	partial class ItemForm
 	{
 		/// <summary>
 		/// Required designer variable.
