@@ -56,15 +56,11 @@ namespace DungeonEye.Forms
 		public bool Init()
 		{
 			// Items
-			ItemSet itemset = ResourceManager.CreateAsset<ItemSet>("items");
-			if (itemset != null)
-			{
-				ItemsBox.BeginUpdate();
-				ItemsBox.Items.Clear();
-				foreach (string item in itemset.Items.Keys)
-					ItemsBox.Items.Add(item);
-				ItemsBox.EndUpdate();
-			}
+			ItemsBox.BeginUpdate();
+			ItemsBox.Items.Clear();
+			foreach (string item in ResourceManager.GetAssets<Item>())
+				ItemsBox.Items.Add(item);
+			ItemsBox.EndUpdate();
 
 
 			ScriptNameBox.BeginUpdate();

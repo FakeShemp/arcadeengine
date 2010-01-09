@@ -86,17 +86,13 @@ namespace DungeonEye
 
 
 			Quiver = 10;
-			ItemSet itemset = ResourceManager.CreateAsset<ItemSet>("Items");
-			if (itemset != null)
-			{
-				SetInventoryItem(InventoryPosition.Primary, itemset.GetItem("Spell book"));
-				SetInventoryItem(InventoryPosition.Inventory_09, itemset.GetItem("Short Bow"));
-				SetInventoryItem(InventoryPosition.Armor, itemset.GetItem("Leather Armor"));
-				SetInventoryItem(InventoryPosition.Inventory_01, itemset.GetItem("Test Item"));
-				SetInventoryItem(InventoryPosition.Inventory_02, itemset.GetItem("Spell book"));
-				SetInventoryItem(InventoryPosition.Helmet, itemset.GetItem("Helmet"));
-				SetInventoryItem(InventoryPosition.Feet, itemset.GetItem("Boots"));
-			}
+			SetInventoryItem(InventoryPosition.Primary, ResourceManager.CreateAsset<Item>("Spell book"));
+			SetInventoryItem(InventoryPosition.Inventory_09, ResourceManager.CreateAsset<Item>("Short Bow"));
+			SetInventoryItem(InventoryPosition.Armor, ResourceManager.CreateAsset<Item>("Leather Armor"));
+			SetInventoryItem(InventoryPosition.Inventory_01, ResourceManager.CreateAsset<Item>("Test Item"));
+			SetInventoryItem(InventoryPosition.Inventory_02, ResourceManager.CreateAsset<Item>("Spell book"));
+			SetInventoryItem(InventoryPosition.Helmet, ResourceManager.CreateAsset<Item>("Helmet"));
+			SetInventoryItem(InventoryPosition.Feet, ResourceManager.CreateAsset<Item>("Boots"));
 		}
 
 
@@ -401,7 +397,7 @@ namespace DungeonEye
 					else if (item.UseQuiver && Quiver > 0)
 					{
 						Team.Maze.FlyingItems.Add(
-							new FlyingItem(ResourceManager.CreateAsset<ItemSet>("Items").GetItem("Arrow"),
+							new FlyingItem(ResourceManager.CreateAsset<Item>("Arrow"),
 							loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
 						Quiver--;
 					}
@@ -498,7 +494,7 @@ namespace DungeonEye
 				return false;
 		
 
-			ItemSet itemset = ResourceManager.CreateSharedAsset<ItemSet>("Main");
+			//ItemSet itemset = ResourceManager.CreateSharedAsset<ItemSet>("Main");
 
 			foreach (XmlNode node in xml)
 			{
@@ -516,7 +512,7 @@ namespace DungeonEye
 
 					case "inventory":
 					{
-						Inventory[int.Parse(node.Attributes["position"].Value)] =  itemset.GetItem(node.Attributes["value"].Value);
+						Inventory[int.Parse(node.Attributes["position"].Value)] = ResourceManager.CreateAsset<Item>(node.Attributes["value"].Value);
 					}
 					break;
 

@@ -28,8 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			DungeonEye.Dice dice1 = new DungeonEye.Dice();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ItemSetForm));
+			DungeonEye.Dice dice2 = new DungeonEye.Dice();
 			this.GLGroundTile = new OpenTK.GLControl();
 			this.GLInventoryTile = new OpenTK.GLControl();
 			this.label2 = new System.Windows.Forms.Label();
@@ -78,7 +77,7 @@
 			this.label13 = new System.Windows.Forms.Label();
 			this.TileSetNameBox = new System.Windows.Forms.ComboBox();
 			this.IncomingTileBox = new System.Windows.Forms.ComboBox();
-			this.MoveAwayTileBox = new System.Windows.Forms.ComboBox();
+			this.ThrownTileBox = new System.Windows.Forms.ComboBox();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
 			this.ThiefBox = new System.Windows.Forms.CheckBox();
 			this.MageBox = new System.Windows.Forms.CheckBox();
@@ -93,17 +92,10 @@
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.VisualTab = new System.Windows.Forms.TabPage();
 			this.PropertiesTab = new System.Windows.Forms.TabPage();
-			this.DamageBox = new DungeonEye.Forms.DiceForm();
 			this.ScriptTab = new System.Windows.Forms.TabPage();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
-			this.ItemsBox = new System.Windows.Forms.ListBox();
-			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.toolStrip2 = new System.Windows.Forms.ToolStrip();
-			this.AddItem = new System.Windows.Forms.ToolStripButton();
-			this.RemoveItemBox = new System.Windows.Forms.ToolStripButton();
-			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-			this.RenameBox = new System.Windows.Forms.ToolStripButton();
 			this.groupBox11 = new System.Windows.Forms.GroupBox();
+			this.DamageBox = new DungeonEye.Forms.DiceForm();
 			this.groupBox4.SuspendLayout();
 			this.groupBox5.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.ACBonusBox)).BeginInit();
@@ -121,8 +113,6 @@
 			this.PropertiesTab.SuspendLayout();
 			this.ScriptTab.SuspendLayout();
 			this.groupBox2.SuspendLayout();
-			this.groupBox1.SuspendLayout();
-			this.toolStrip2.SuspendLayout();
 			this.groupBox11.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -623,7 +613,7 @@
 			this.GLMoveAwayTile.VSync = true;
 			this.GLMoveAwayTile.Load += new System.EventHandler(this.GLInventoryTile_Resize);
 			this.GLMoveAwayTile.Paint += new System.Windows.Forms.PaintEventHandler(this.Paint_Tiles);
-			this.GLMoveAwayTile.Resize += new System.EventHandler(this.GLMoveAwayTile_Resize);
+			this.GLMoveAwayTile.Resize += new System.EventHandler(this.GLThrowTile_Resize);
 			// 
 			// label12
 			// 
@@ -664,15 +654,15 @@
 			this.IncomingTileBox.TabIndex = 0;
 			this.IncomingTileBox.SelectedIndexChanged += new System.EventHandler(this.OnSelectedTileIDChanged);
 			// 
-			// MoveAwayTileBox
+			// ThrownTileBox
 			// 
-			this.MoveAwayTileBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.MoveAwayTileBox.FormattingEnabled = true;
-			this.MoveAwayTileBox.Location = new System.Drawing.Point(77, 262);
-			this.MoveAwayTileBox.Name = "MoveAwayTileBox";
-			this.MoveAwayTileBox.Size = new System.Drawing.Size(110, 21);
-			this.MoveAwayTileBox.TabIndex = 0;
-			this.MoveAwayTileBox.SelectedIndexChanged += new System.EventHandler(this.OnSelectedTileIDChanged);
+			this.ThrownTileBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.ThrownTileBox.FormattingEnabled = true;
+			this.ThrownTileBox.Location = new System.Drawing.Point(77, 262);
+			this.ThrownTileBox.Name = "ThrownTileBox";
+			this.ThrownTileBox.Size = new System.Drawing.Size(110, 21);
+			this.ThrownTileBox.TabIndex = 0;
+			this.ThrownTileBox.SelectedIndexChanged += new System.EventHandler(this.OnSelectedTileIDChanged);
 			// 
 			// groupBox3
 			// 
@@ -804,7 +794,7 @@
 			this.tabControl1.Location = new System.Drawing.Point(3, 16);
 			this.tabControl1.Name = "tabControl1";
 			this.tabControl1.SelectedIndex = 0;
-			this.tabControl1.Size = new System.Drawing.Size(615, 626);
+			this.tabControl1.Size = new System.Drawing.Size(815, 626);
 			this.tabControl1.TabIndex = 10;
 			// 
 			// VisualTab
@@ -812,7 +802,7 @@
 			this.VisualTab.Controls.Add(this.label15);
 			this.VisualTab.Controls.Add(this.GLGroundTile);
 			this.VisualTab.Controls.Add(this.GLInventoryTile);
-			this.VisualTab.Controls.Add(this.MoveAwayTileBox);
+			this.VisualTab.Controls.Add(this.ThrownTileBox);
 			this.VisualTab.Controls.Add(this.GLIncomingTile);
 			this.VisualTab.Controls.Add(this.IncomingTileBox);
 			this.VisualTab.Controls.Add(this.label2);
@@ -826,7 +816,7 @@
 			this.VisualTab.Location = new System.Drawing.Point(4, 22);
 			this.VisualTab.Name = "VisualTab";
 			this.VisualTab.Padding = new System.Windows.Forms.Padding(3);
-			this.VisualTab.Size = new System.Drawing.Size(607, 600);
+			this.VisualTab.Size = new System.Drawing.Size(807, 600);
 			this.VisualTab.TabIndex = 0;
 			this.VisualTab.Text = "Visuals";
 			this.VisualTab.UseVisualStyleBackColor = true;
@@ -842,31 +832,17 @@
 			this.PropertiesTab.Location = new System.Drawing.Point(4, 22);
 			this.PropertiesTab.Name = "PropertiesTab";
 			this.PropertiesTab.Padding = new System.Windows.Forms.Padding(3);
-			this.PropertiesTab.Size = new System.Drawing.Size(607, 600);
+			this.PropertiesTab.Size = new System.Drawing.Size(807, 600);
 			this.PropertiesTab.TabIndex = 1;
 			this.PropertiesTab.Text = "Properties";
 			this.PropertiesTab.UseVisualStyleBackColor = true;
-			// 
-			// DamageBox
-			// 
-			this.DamageBox.ControlText = "Damage :";
-			dice1.Base = 0;
-			dice1.Faces = 1;
-			dice1.Throws = 1;
-			this.DamageBox.Dice = dice1;
-			this.DamageBox.Location = new System.Drawing.Point(3, 341);
-			this.DamageBox.MinimumSize = new System.Drawing.Size(225, 100);
-			this.DamageBox.Name = "DamageBox";
-			this.DamageBox.Size = new System.Drawing.Size(225, 104);
-			this.DamageBox.TabIndex = 9;
-			this.DamageBox.ValueChanged += new System.EventHandler(this.DamageBox_ValueChanged);
 			// 
 			// ScriptTab
 			// 
 			this.ScriptTab.Controls.Add(this.groupBox2);
 			this.ScriptTab.Location = new System.Drawing.Point(4, 22);
 			this.ScriptTab.Name = "ScriptTab";
-			this.ScriptTab.Size = new System.Drawing.Size(607, 600);
+			this.ScriptTab.Size = new System.Drawing.Size(807, 600);
 			this.ScriptTab.TabIndex = 2;
 			this.ScriptTab.Text = "Scripting";
 			this.ScriptTab.UseVisualStyleBackColor = true;
@@ -884,87 +860,30 @@
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Interface :";
 			// 
-			// ItemsBox
-			// 
-			this.ItemsBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.ItemsBox.FormattingEnabled = true;
-			this.ItemsBox.Location = new System.Drawing.Point(3, 41);
-			this.ItemsBox.Name = "ItemsBox";
-			this.ItemsBox.Size = new System.Drawing.Size(194, 589);
-			this.ItemsBox.Sorted = true;
-			this.ItemsBox.TabIndex = 11;
-			this.ItemsBox.SelectedIndexChanged += new System.EventHandler(this.ItemsBox_SelectedIndexChanged);
-			// 
-			// groupBox1
-			// 
-			this.groupBox1.Controls.Add(this.ItemsBox);
-			this.groupBox1.Controls.Add(this.toolStrip2);
-			this.groupBox1.Dock = System.Windows.Forms.DockStyle.Left;
-			this.groupBox1.Location = new System.Drawing.Point(0, 0);
-			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(200, 645);
-			this.groupBox1.TabIndex = 12;
-			this.groupBox1.TabStop = false;
-			this.groupBox1.Text = "Items :";
-			// 
-			// toolStrip2
-			// 
-			this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.AddItem,
-            this.RemoveItemBox,
-            this.toolStripSeparator1,
-            this.RenameBox});
-			this.toolStrip2.Location = new System.Drawing.Point(3, 16);
-			this.toolStrip2.Name = "toolStrip2";
-			this.toolStrip2.Size = new System.Drawing.Size(194, 25);
-			this.toolStrip2.TabIndex = 12;
-			this.toolStrip2.Text = "toolStrip2";
-			// 
-			// AddItem
-			// 
-			this.AddItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.AddItem.Image = ((System.Drawing.Image)(resources.GetObject("AddItem.Image")));
-			this.AddItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.AddItem.Name = "AddItem";
-			this.AddItem.Size = new System.Drawing.Size(23, 22);
-			this.AddItem.Text = "Adds an item";
-			this.AddItem.Click += new System.EventHandler(this.AddItemBox_Click);
-			// 
-			// RemoveItemBox
-			// 
-			this.RemoveItemBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.RemoveItemBox.Image = ((System.Drawing.Image)(resources.GetObject("RemoveItemBox.Image")));
-			this.RemoveItemBox.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.RemoveItemBox.Name = "RemoveItemBox";
-			this.RemoveItemBox.Size = new System.Drawing.Size(23, 22);
-			this.RemoveItemBox.Text = "Removes an item";
-			this.RemoveItemBox.Click += new System.EventHandler(this.RemoveItem);
-			// 
-			// toolStripSeparator1
-			// 
-			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-			// 
-			// RenameBox
-			// 
-			this.RenameBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-			this.RenameBox.Image = ((System.Drawing.Image)(resources.GetObject("RenameBox.Image")));
-			this.RenameBox.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.RenameBox.Name = "RenameBox";
-			this.RenameBox.Size = new System.Drawing.Size(54, 22);
-			this.RenameBox.Text = "Rename";
-			this.RenameBox.Click += new System.EventHandler(this.RenameBox_Click);
-			// 
 			// groupBox11
 			// 
 			this.groupBox11.Controls.Add(this.tabControl1);
 			this.groupBox11.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.groupBox11.Location = new System.Drawing.Point(200, 0);
+			this.groupBox11.Location = new System.Drawing.Point(0, 0);
 			this.groupBox11.Name = "groupBox11";
-			this.groupBox11.Size = new System.Drawing.Size(621, 645);
+			this.groupBox11.Size = new System.Drawing.Size(821, 645);
 			this.groupBox11.TabIndex = 13;
 			this.groupBox11.TabStop = false;
 			this.groupBox11.Text = "Properties :";
+			// 
+			// DamageBox
+			// 
+			this.DamageBox.ControlText = "Damage :";
+			dice2.Base = 0;
+			dice2.Faces = 1;
+			dice2.Throws = 1;
+			this.DamageBox.Dice = dice2;
+			this.DamageBox.Location = new System.Drawing.Point(3, 341);
+			this.DamageBox.MinimumSize = new System.Drawing.Size(225, 100);
+			this.DamageBox.Name = "DamageBox";
+			this.DamageBox.Size = new System.Drawing.Size(225, 104);
+			this.DamageBox.TabIndex = 9;
+			this.DamageBox.ValueChanged += new System.EventHandler(this.DamageBox_ValueChanged);
 			// 
 			// ItemSetForm
 			// 
@@ -972,7 +891,6 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(821, 645);
 			this.Controls.Add(this.groupBox11);
-			this.Controls.Add(this.groupBox1);
 			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Name = "ItemSetForm";
 			this.TabText = "ItemForm";
@@ -1004,10 +922,6 @@
 			this.ScriptTab.ResumeLayout(false);
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
-			this.groupBox1.ResumeLayout(false);
-			this.groupBox1.PerformLayout();
-			this.toolStrip2.ResumeLayout(false);
-			this.toolStrip2.PerformLayout();
 			this.groupBox11.ResumeLayout(false);
 			this.ResumeLayout(false);
 
@@ -1053,7 +967,7 @@
 		private System.Windows.Forms.Label label12;
 		private System.Windows.Forms.Label label13;
 		private System.Windows.Forms.ComboBox IncomingTileBox;
-		private System.Windows.Forms.ComboBox MoveAwayTileBox;
+		private System.Windows.Forms.ComboBox ThrownTileBox;
 		private System.Windows.Forms.GroupBox groupBox3;
 		private System.Windows.Forms.CheckBox ThiefBox;
 		private System.Windows.Forms.CheckBox MageBox;
@@ -1074,14 +988,7 @@
 		private System.Windows.Forms.TabPage VisualTab;
 		private System.Windows.Forms.TabPage PropertiesTab;
 		private System.Windows.Forms.TabPage ScriptTab;
-		private System.Windows.Forms.ListBox ItemsBox;
-		private System.Windows.Forms.GroupBox groupBox1;
-		private System.Windows.Forms.ToolStrip toolStrip2;
-		private System.Windows.Forms.ToolStripButton AddItem;
-		private System.Windows.Forms.ToolStripButton RemoveItemBox;
 		private System.Windows.Forms.GroupBox groupBox11;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-		private System.Windows.Forms.ToolStripButton RenameBox;
 		private System.Windows.Forms.NumericUpDown RangeBox;
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.ComboBox DamageTypeBox;

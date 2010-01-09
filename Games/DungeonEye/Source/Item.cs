@@ -45,7 +45,7 @@ namespace DungeonEye
 	/// http://eob.wikispaces.com/eob.itemtype
 	/// http://eob.wikispaces.com/eob.itemdat
 	/// </summary>
-	public class Item
+	public class Item : IAsset
 	{
 
 		/// <summary>
@@ -134,6 +134,7 @@ namespace DungeonEye
 
 					case "tile":
 					{
+						TileSetName = node.Attributes["name"].Value;
 						TileID = int.Parse(node.Attributes["inventory"].Value);
 						GroundTileID = int.Parse(node.Attributes["ground"].Value);
 						IncomingTileID = int.Parse(node.Attributes["incoming"].Value);
@@ -185,6 +186,7 @@ namespace DungeonEye
 
 
 			writer.WriteStartElement("tile");
+			writer.WriteAttributeString("name", TileSetName);
 			writer.WriteAttributeString("inventory", TileID.ToString());
 			writer.WriteAttributeString("ground", GroundTileID.ToString());
 			writer.WriteAttributeString("incoming", IncomingTileID.ToString());
@@ -246,6 +248,17 @@ namespace DungeonEye
 
 
 		#region Properties
+
+		/// <summary>
+		/// Xml tag of the asset in bank
+		/// </summary>
+		public string XmlTag
+		{
+			get
+			{
+				return "item";
+			}
+		}
 
 
 		/// <summary>

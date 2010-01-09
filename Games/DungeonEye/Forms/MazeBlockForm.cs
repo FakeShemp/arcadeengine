@@ -58,7 +58,7 @@ namespace DungeonEye.Forms
 
 			#region Ground items
 
-			Itemset = ResourceManager.CreateAsset<ItemSet>("Items");
+			//Itemset = ResourceManager.CreateAsset<ItemSet>("Items");
 
 			NWBox.BeginUpdate();
 			NWBox.Items.Clear();
@@ -84,8 +84,8 @@ namespace DungeonEye.Forms
 			SEBox.EndUpdate();
 
 
-			if (Itemset != null)
-			{
+			//if (Itemset != null)
+			//{
 				NWItemsBox.BeginUpdate();
 				NWItemsBox.Items.Clear();
 				NEItemsBox.BeginUpdate();
@@ -95,7 +95,7 @@ namespace DungeonEye.Forms
 				SEItemsBox.BeginUpdate();
 				SEItemsBox.Items.Clear();
 
-				foreach (string item in Itemset.Items.Keys)
+				foreach (string item in ResourceManager.GetAssets<Item>())
 				{
 					NWItemsBox.Items.Add(item);
 					NEItemsBox.Items.Add(item);
@@ -107,7 +107,7 @@ namespace DungeonEye.Forms
 				NEItemsBox.EndUpdate();
 				SWItemsBox.EndUpdate();
 				SEItemsBox.EndUpdate();
-			}
+			//}
 			#endregion
 
 
@@ -218,7 +218,7 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void NWAddItem_Click(object sender, EventArgs e)
 		{
-			MazeBlock.GroundItems[0].Add(Itemset.GetItem(NWItemsBox.SelectedItem as string));
+			MazeBlock.GroundItems[0].Add(ResourceManager.CreateAsset<Item>(NWItemsBox.SelectedItem as string));
 			NWBox.Items.Add(NWItemsBox.SelectedItem as string);
 		}
 
@@ -229,7 +229,7 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void NEAddItem_Click(object sender, EventArgs e)
 		{
-			MazeBlock.GroundItems[1].Add(Itemset.GetItem(NEItemsBox.SelectedItem as string));
+			MazeBlock.GroundItems[1].Add(ResourceManager.CreateAsset<Item>(NEItemsBox.SelectedItem as string));
 			NEBox.Items.Add(NEItemsBox.SelectedItem as string);
 		}
 
@@ -275,7 +275,7 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void SWAddItem_Click(object sender, EventArgs e)
 		{
-			MazeBlock.GroundItems[2].Add(Itemset.GetItem(SWItemsBox.SelectedItem as string));
+			MazeBlock.GroundItems[2].Add(ResourceManager.CreateAsset<Item>(SWItemsBox.SelectedItem as string));
 			SWBox.Items.Add(SWItemsBox.SelectedItem as string);
 		}
 
@@ -286,7 +286,7 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void SEAddItem_Click(object sender, EventArgs e)
 		{
-			MazeBlock.GroundItems[3].Add(Itemset.GetItem(SEItemsBox.SelectedItem as string));
+			MazeBlock.GroundItems[3].Add(ResourceManager.CreateAsset<Item>(SEItemsBox.SelectedItem as string));
 			SEBox.Items.Add(SEItemsBox.SelectedItem as string);
 
 		}
@@ -985,9 +985,9 @@ namespace DungeonEye.Forms
 
 
 		/// <summary>
-		/// Item set
+		/// Item
 		/// </summary>
-		ItemSet Itemset;
+		Item Item;
 
 
 		#endregion

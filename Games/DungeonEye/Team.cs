@@ -1580,7 +1580,7 @@ namespace DungeonEye
 					if (ItemInHand == null && SelectedHero.Quiver > 0)
 					{
 						SelectedHero.Quiver--;
-						SetItemInHand(ResourceManager.CreateAsset<ItemSet>("Items").GetItem("Arrow"));
+						SetItemInHand(ResourceManager.CreateAsset<Item>("Arrow"));
 					}
 					else if (ItemInHand != null && (ItemInHand.Slot & BodySlot.Quiver) == BodySlot.Quiver)
 					{

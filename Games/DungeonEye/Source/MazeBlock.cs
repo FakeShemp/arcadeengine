@@ -453,11 +453,11 @@ namespace DungeonEye
 		/// <returns></returns>
 		public bool Load(XmlNode xml)
 		{
-			ItemSet itemset = ResourceManager.CreateSharedAsset<ItemSet>("Items");
-			if (itemset == null)
-			{
-				Trace.WriteLine("MazeBlock::Load() : Failed to open ItemSet.");
-			}
+			//ItemSet itemset = ResourceManager.CreateSharedAsset<ItemSet>("Items");
+			//if (itemset == null)
+			//{
+			//    Trace.WriteLine("MazeBlock::Load() : Failed to open ItemSet.");
+			//}
 			
 			foreach (XmlNode node in xml)
 			{
@@ -472,7 +472,7 @@ namespace DungeonEye
 					case "item":
 					{
 						GroundPosition loc = (GroundPosition)Enum.Parse(typeof(GroundPosition), node.Attributes["location"].Value);
-						Item item = itemset.GetItem(node.Attributes["name"].Value);
+						Item item = ResourceManager.CreateAsset<Item>(node.Attributes["name"].Value);
 						if (item != null)
 							GroundItems[(int)loc].Add(item);
 

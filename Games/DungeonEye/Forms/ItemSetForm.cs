@@ -46,8 +46,8 @@ namespace DungeonEye.Forms
 			InitializeComponent();
 
 
-			ItemSet = new ItemSet();
-			ItemSet.Load(node);
+			Item = new Item();
+			Item.Load(node);
 
 
 			// TileSetNameBox
@@ -59,8 +59,8 @@ namespace DungeonEye.Forms
 			TileSetNameBox.EndUpdate();
 
 			// Tileset name
-			if (!string.IsNullOrEmpty(ItemSet.TileSetName) && TileSetNameBox.Items.Contains(ItemSet.TileSetName))
-				TileSetNameBox.SelectedItem = ItemSet.TileSetName;
+			if (!string.IsNullOrEmpty(Item.TileSetName) && TileSetNameBox.Items.Contains(Item.TileSetName))
+				TileSetNameBox.SelectedItem = Item.TileSetName;
 
 
 
@@ -79,158 +79,54 @@ namespace DungeonEye.Forms
 		//		ScriptNameBox.SelectedItem = Item.ScriptName;
 			
 
-			RebuildLists();
-			RebuildTilesList();
-
-		}
-
-
-
-		/// <summary>
-		/// Rebuild available tileset
-		/// </summary>
-		void RebuildLists()
-		{
-
-			RebuildItemList();
-
-			// Types
 			TypeBox.BeginUpdate();
 			TypeBox.Items.Clear();
 			foreach(string name in Enum.GetNames(typeof(ItemType)))
-			{
 				TypeBox.Items.Add(name);
-			}
 			TypeBox.EndUpdate();
 
 
-		}
+
+			#region UI update
+
+			DescriptionBox.Text = Item.Description;
+			CriticalMinBox.Value = Item.Critical.X;
+			CriticalMaxBox.Value = Item.Critical.Y;
+			MultiplierBox.Value = Item.CriticalMultiplier;
+			SpeedBox.Value = Item.Speed;
+			WeightBox.Value = Item.Weight;
+			TypeBox.SelectedItem = Item.Type.ToString();
+			GroundTileBox.SelectedItem = Item.GroundTileID;
+			InventoryTileBox.SelectedItem = Item.TileID;
+			ThrownTileBox.SelectedItem = Item.ThrowTileID;
+			IncomingTileBox.SelectedItem = Item.IncomingTileID;
+			UseQuiverBox.Checked = Item.UseQuiver;
+			TwoHandedBox.Checked = Item.TwoHanded;
 
 
-		/// <summary>
-		/// Rebuilds item list
-		/// </summary>
-		private void RebuildItemList()
-		{
-			// Items 
-			ItemsBox.BeginUpdate();
-			ItemsBox.Items.Clear();
-			foreach (KeyValuePair<string, Item> kvp in ItemSet.Items)
-				ItemsBox.Items.Add(kvp.Key);
-			ItemsBox.EndUpdate();
-		}
+			PrimaryBox.Checked = (Item.Slot & BodySlot.Primary) == BodySlot.Primary;
+			SecondaryBox.Checked = (Item.Slot & BodySlot.Secondary) == BodySlot.Secondary;
+			QuiverBox.Checked = (Item.Slot & BodySlot.Quiver) == BodySlot.Quiver;
+			BodyBox.Checked = (Item.Slot & BodySlot.Body) == BodySlot.Body;
+			RingBox.Checked = (Item.Slot & BodySlot.Ring) == BodySlot.Ring;
+			WristBox.Checked = (Item.Slot & BodySlot.Wrist) == BodySlot.Wrist;
+			FeetBox.Checked = (Item.Slot & BodySlot.Feet) == BodySlot.Feet;
+			HeadBox.Checked = (Item.Slot & BodySlot.Head) == BodySlot.Head;
+			WaistBox.Checked = (Item.Slot & BodySlot.Waist) == BodySlot.Waist;
+			NeckBox.Checked = (Item.Slot & BodySlot.Neck) == BodySlot.Neck;
 
+			FighterBox.Checked = (Item.Classes & HeroClass.Fighter) == HeroClass.Fighter;
+			PaladinBox.Checked = (Item.Classes & HeroClass.Paladin) == HeroClass.Paladin;
+			ClericBox.Checked = (Item.Classes & HeroClass.Cleric) == HeroClass.Cleric;
+			MageBox.Checked = (Item.Classes & HeroClass.Mage) == HeroClass.Mage;
+			ThiefBox.Checked = (Item.Classes & HeroClass.Thief) == HeroClass.Thief;
+			RangerBox.Checked = (Item.Classes & HeroClass.Ranger) == HeroClass.Ranger;
 
-		/// <summary>
-		/// When changing TileSet, rebuild tiles list
-		/// </summary>
-		void RebuildTilesList()
-		{
+			ScriptNameBox.SelectedItem = Item.ScriptName;
+			InterfaceNameBox.SelectedItem = Item.InterfaceName;
 
-			// Tiles
-			GroundTileBox.BeginUpdate();
-			GroundTileBox.Items.Clear();
-			InventoryTileBox.BeginUpdate();
-			InventoryTileBox.Items.Clear();
-			MoveAwayTileBox.BeginUpdate();
-			MoveAwayTileBox.Items.Clear();
-			IncomingTileBox.BeginUpdate();
-			IncomingTileBox.Items.Clear();
-			if (TileSet != null)
-			{
-				List<int> id = TileSet.GetTiles();
-				foreach (int i in id)
-				{
-					InventoryTileBox.Items.Add(i);
-					GroundTileBox.Items.Add(i);
-					MoveAwayTileBox.Items.Add(i);
-					IncomingTileBox.Items.Add(i);
-				}
-			}
-			GroundTileBox.EndUpdate();
-			InventoryTileBox.EndUpdate();
-			IncomingTileBox.EndUpdate();
-			MoveAwayTileBox.EndUpdate();
-
-		}
-
-		/// <summary>
-		/// New item selected
-		/// </summary>
-		/// <param name="name">item name</param>
-		void ItemSelected(string name)
-		{
-			Item = null;
-			DescriptionBox.Text = "";
-			CriticalMinBox.Value = 0;
-			CriticalMaxBox.Value = 0;
-			MultiplierBox.Value = 0;
-			TypeBox.SelectedText = "";
-			SpeedBox.Value = 0;
-			WeightBox.Value = 0;
-			PrimaryBox.Checked = false;
-			SecondaryBox.Checked = false;
-			QuiverBox.Checked = false;
-			BodyBox.Checked = false;
-			RingBox.Checked = false;
-			WristBox.Checked = false;
-			FeetBox.Checked = false;
-			HeadBox.Checked = false;
-			WaistBox.Checked = false;
-			NeckBox.Checked = false;
-			UseQuiverBox.Checked = false;
-			TwoHandedBox.Checked = false;
-			FighterBox.Checked = false;
-			PaladinBox.Checked = false;
-			ClericBox.Checked = false;
-			MageBox.Checked = false;
-			ThiefBox.Checked = false;
-			RangerBox.Checked = false;
-			DamageBox.Dice = null;
-			InterfaceNameBox.SelectedItem = "";
-			ScriptNameBox.SelectedItem = "";
-			
-			Item = ItemSet.GetItem(name);
-			if (Item != null)
-			{
-				DescriptionBox.Text = Item.Description;
-				CriticalMinBox.Value = Item.Critical.X;
-				CriticalMaxBox.Value = Item.Critical.Y;
-				MultiplierBox.Value = Item.CriticalMultiplier;
-				SpeedBox.Value = Item.Speed;
-				WeightBox.Value = Item.Weight;
-				TypeBox.SelectedItem = Item.Type.ToString();
-				GroundTileBox.SelectedItem = Item.GroundTileID;
-				InventoryTileBox.SelectedItem = Item.TileID;
-				MoveAwayTileBox.SelectedItem = Item.ThrowTileID;
-				IncomingTileBox.SelectedItem = Item.IncomingTileID;
-				UseQuiverBox.Checked = Item.UseQuiver;
-				TwoHandedBox.Checked = Item.TwoHanded;
-
-
-				PrimaryBox.Checked = (Item.Slot & BodySlot.Primary) == BodySlot.Primary;
-				SecondaryBox.Checked = (Item.Slot & BodySlot.Secondary) == BodySlot.Secondary;
-				QuiverBox.Checked = (Item.Slot & BodySlot.Quiver) == BodySlot.Quiver;
-				BodyBox.Checked = (Item.Slot & BodySlot.Body) == BodySlot.Body;
-				RingBox.Checked = (Item.Slot & BodySlot.Ring) == BodySlot.Ring;
-				WristBox.Checked = (Item.Slot & BodySlot.Wrist) == BodySlot.Wrist;
-				FeetBox.Checked = (Item.Slot & BodySlot.Feet) == BodySlot.Feet;
-				HeadBox.Checked = (Item.Slot & BodySlot.Head) == BodySlot.Head;
-				WaistBox.Checked = (Item.Slot & BodySlot.Waist) == BodySlot.Waist;
-				NeckBox.Checked = (Item.Slot & BodySlot.Neck) == BodySlot.Neck;
-
-				FighterBox.Checked = (Item.Classes & HeroClass.Fighter) == HeroClass.Fighter;
-				PaladinBox.Checked = (Item.Classes & HeroClass.Paladin) == HeroClass.Paladin;
-				ClericBox.Checked = (Item.Classes & HeroClass.Cleric) == HeroClass.Cleric;
-				MageBox.Checked = (Item.Classes & HeroClass.Mage) == HeroClass.Mage;
-				ThiefBox.Checked = (Item.Classes & HeroClass.Thief) == HeroClass.Thief;
-				RangerBox.Checked = (Item.Classes & HeroClass.Ranger) == HeroClass.Ranger;
-
-				ScriptNameBox.SelectedItem = Item.ScriptName;
-				InterfaceNameBox.SelectedItem = Item.InterfaceName;
-
-				DamageBox.Dice = Item.Damage;
-			}
+			DamageBox.Dice = Item.Damage;
+			#endregion
 
 			Paint_Tiles(null, null);
 		}
@@ -243,35 +139,17 @@ namespace DungeonEye.Forms
 		/// </summary>
 		public override void Save()
 		{
-			StringBuilder sb = new StringBuilder();
-			using (XmlWriter writer = XmlWriter.Create(sb))
-				ItemSet.Save(writer);
-
-			string xml = sb.ToString();
-			XmlDocument doc = new XmlDocument();
-			doc.LoadXml(xml);
-
-			ResourceManager.AddAsset<ItemSet>(ItemSet.Name, doc.DocumentElement);
+			ResourceManager.AddAsset<Dungeon>(Item.Name, ResourceManager.ConvertAsset(Item));
 		}
 
 
 		#region Events
 
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void ItemsBox_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			ItemSelected(ItemsBox.SelectedItem as string);
-		}
-
 
 	
 		/// <summary>
-		/// 
+		/// Form closing
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -282,6 +160,8 @@ namespace DungeonEye.Forms
 			if (result == DialogResult.Yes)
 			{
 				Save();
+				TileSet.Dispose();
+				TileSet = null;
 			}
 			else if (result == DialogResult.Cancel)
 			{
@@ -291,18 +171,6 @@ namespace DungeonEye.Forms
 		}
 
 
-		/// <summary>
-		/// Adds a new item
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void AddItemBox_Click(object sender, EventArgs e)
-		{
-			new Wizards.NewItemWizard(ItemSet).ShowDialog();
-
-			RebuildLists();
-			ItemSelected(string.Empty);
-		}
 
 
 
@@ -359,9 +227,9 @@ namespace DungeonEye.Forms
 
 			GLMoveAwayTile.MakeCurrent();
 			Display.ClearBuffers();
-			if (MoveAwayTileBox.SelectedItem != null)
+			if (ThrownTileBox.SelectedItem != null)
 			{
-				tileid = int.Parse(MoveAwayTileBox.SelectedItem.ToString());
+				tileid = int.Parse(ThrownTileBox.SelectedItem.ToString());
 				tile = TileSet.GetTile(tileid);
 				location = new Point((GLMoveAwayTile.Width - tile.Size.Width) / 2, (GLMoveAwayTile.Height - tile.Size.Height) / 2);
 				TileSet.Draw(tileid, location);
@@ -414,7 +282,7 @@ namespace DungeonEye.Forms
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void GLMoveAwayTile_Resize(object sender, EventArgs e)
+		private void GLThrowTile_Resize(object sender, EventArgs e)
 		{
 			GLMoveAwayTile.MakeCurrent();
 			Display.ViewPort = new Rectangle(new Point(), GLMoveAwayTile.Size);
@@ -442,13 +310,52 @@ namespace DungeonEye.Forms
 			if (TileSetNameBox.SelectedIndex == -1)
 				return;
 
-			ItemSet.TileSetName = TileSetNameBox.SelectedItem as string;
-			TileSet = ResourceManager.CreateAsset<TileSet>(ItemSet.TileSetName);
+			if (TileSet != null)
+				TileSet.Dispose();
+
+			Item.TileSetName = TileSetNameBox.SelectedItem as string;
+			TileSet = ResourceManager.CreateAsset<TileSet>(Item.TileSetName);
+
 			RebuildTilesList();
+
 			Paint_Tiles(null, null);
 		}
 
 
+		/// <summary>
+		/// When changing TileSet, rebuild tiles list
+		/// </summary>
+		void RebuildTilesList()
+		{
+
+			// Tiles
+			GroundTileBox.BeginUpdate();
+			GroundTileBox.Items.Clear();
+			InventoryTileBox.BeginUpdate();
+			InventoryTileBox.Items.Clear();
+			ThrownTileBox.BeginUpdate();
+			ThrownTileBox.Items.Clear();
+			IncomingTileBox.BeginUpdate();
+			IncomingTileBox.Items.Clear();
+			if (TileSet != null)
+			{
+				List<int> id = TileSet.GetTiles();
+				foreach (int i in id)
+				{
+					InventoryTileBox.Items.Add(i);
+					GroundTileBox.Items.Add(i);
+					ThrownTileBox.Items.Add(i);
+					IncomingTileBox.Items.Add(i);
+				}
+			}
+			GroundTileBox.EndUpdate();
+			InventoryTileBox.EndUpdate();
+			IncomingTileBox.EndUpdate();
+			ThrownTileBox.EndUpdate();
+
+		}
+	
+		
 		/// <summary>
 		/// 
 		/// </summary>
@@ -458,99 +365,10 @@ namespace DungeonEye.Forms
 		{
 			GLGroundTile_Resize(null, null);
 			GLInventoryTile_Resize(null, null);
-			GLMoveAwayTile_Resize(null, null);
+			GLThrowTile_Resize(null, null);
 			GLIncomingTile_Resize(null, null);
 		}
 
-
-/*
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void ApplyBox_Clicktt(object sender, EventArgs e)
-		{
-			if (Item == null)
-				return;
-
-			// Save values
-			Item.Description = DescriptionBox.Text;
-			Item.Critical = new Point(int.Parse(CriticalMinBox.Value.ToString()), int.Parse(CriticalMaxBox.Value.ToString()));
-			Item.CriticalMultiplier = int.Parse(MultiplierBox.Value.ToString());
-			Item.Type = (ItemType)Enum.Parse(typeof(ItemType), TypeBox.SelectedItem.ToString(), true);
-			Item.Speed = int.Parse(SpeedBox.Value.ToString());
-			Item.Weight = int.Parse(WeightBox.Value.ToString());
-			Item.GroundTileID = int.Parse(GroundTileBox.SelectedItem.ToString());
-			Item.TileID = int.Parse(InventoryTileBox.SelectedItem.ToString());
-			Item.IncomingTileID = int.Parse(IncomingTileBox.SelectedItem.ToString());
-			Item.ThrowTileID = int.Parse(MoveAwayTileBox.SelectedItem.ToString());
-			
-
-			if (PrimaryBox.Checked)
-				Item.Slot |= BodySlot.Primary;			
-			if (SecondaryBox.Checked)
-				Item.Slot |= BodySlot.Secondary;			
-			if (AmmoBox.Checked)
-				Item.Slot |= BodySlot.Ammo;				
-			if (BodyBox.Checked)
-				Item.Slot |= BodySlot.Body;				
-			if (RingBox.Checked)
-				Item.Slot |= BodySlot.Ring;				
-			if (WristBox.Checked)
-				Item.Slot |= BodySlot.Wrist;				
-			if (FeetBox.Checked)
-				Item.Slot |= BodySlot.Feet;				
-			if (HeadBox.Checked)
-				Item.Slot |= BodySlot.Head;				
-			if (WaistBox.Checked)
-				Item.Slot |= BodySlot.Waist;
-			if (NeckBox.Checked)
-				Item.Slot |= BodySlot.Neck;				
-
-
-			// Add to the tileset
-			ItemSet.Items[Item.Name] = Item;
-
-			//int id = ItemsBox.SelectedIndex;
-			//RebuildLists();
-			//ItemsBox.SelectedIndex = id;
-		}
-
-*/
-		/// <summary>
-		/// Removes an item
-		/// 
-		/// TODO
-		/// Quand on a effacé tous les items et qu'il ne reste plus rien, 
-		/// effacer toutes les box contenant des informations sur le dernier item.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void RemoveItem(object sender, EventArgs e)
-		{
-			if (Item == null)
-				return;
-
-			// Warning box
-			if (MessageBox.Show("Remove item \"" + Item.Name + "\" ?", "Remove item", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
-				return;
-
-			// Get position index
-			int pos = ItemsBox.SelectedIndex - 1;
-
-			// Remove item
-			ItemSet.Items.Remove(Item.Name);
-
-			// Rebuild item list
-			RebuildLists();
-			ItemSelected(string.Empty);
-
-			// Select previous item
-			if (ItemsBox.Items.Count > 0)
-				ItemsBox.SelectedIndex = Math.Max(pos, 0);
-
-		}
 
 
 
@@ -592,25 +410,19 @@ namespace DungeonEye.Forms
 		{
 			get
 			{
-				return ItemSet;
+				return Item;
 			}
 		}
 		
 		
 		/// <summary>
-		/// Current item
-		/// </summary>
-		ItemSet ItemSet;
-
-
-		/// <summary>
-		/// Item selected
+		/// Item 
 		/// </summary>
 		Item Item;
 
 
 		/// <summary>
-		/// 
+		/// Tileset
 		/// </summary>
 		TileSet TileSet;
 
@@ -952,32 +764,6 @@ namespace DungeonEye.Forms
 
 
 
-		/// <summary>
-		/// Renames an item
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void RenameBox_Click(object sender, EventArgs e)
-		{
-			if (Item == null)
-				return;
-
-
-			RenameForm form = new RenameForm();
-			form.DesiredName = Item.Name;
-			if (form.ShowDialog() != DialogResult.OK)
-				return;
-
-			// Check if this name is already in use
-			if (ItemSet.GetItem(form.DesiredName) != null)
-				return;
-
-			ItemSet.Remove(Item.Name);
-			Item.Name = form.DesiredName;
-			ItemSet.Add(Item);
-
-			RebuildItemList();
-		}
 
 
 		/// <summary>

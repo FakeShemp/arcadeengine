@@ -140,10 +140,10 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Saves the dungeon
 		/// </summary>
-		/// <param name="writer"></param>
-		/// <returns></returns>
+		/// <param name="writer">XmlWriter handle</param>
+		/// <returns>True if saved</returns>
 		public bool Save(XmlWriter writer)
 		{
 
@@ -167,7 +167,6 @@ namespace DungeonEye
 			writer.WriteEndElement();
 
 			return true;
-
 		}
 
 

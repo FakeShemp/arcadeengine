@@ -91,12 +91,12 @@ namespace DungeonEye
 			}
 			ItemsTileset.Scale = new SizeF(2.0f, 2.0f);
 
-			GroundItemSet = ResourceManager.CreateSharedAsset<ItemSet>("Items");
-			if (GroundItemSet == null)
-			{
-				Trace.WriteLine("Failed to load itemset for the maze \"" + Name + "\".");
-				return false;
-			}
+			//GroundItemSet = ResourceManager.CreateSharedAsset<ItemSet>("Items");
+			//if (GroundItemSet == null)
+			//{
+			//    Trace.WriteLine("Failed to load itemset for the maze \"" + Name + "\".");
+			//    return false;
+			//}
 
 
 			foreach (Monster monster in Monsters)
@@ -132,9 +132,9 @@ namespace DungeonEye
 					{
 						MazeBlock block = GetBlock(monster.Location.Position);
 
-						ItemSet itemset = ResourceManager.CreateSharedAsset<ItemSet>("Main");
+						//ItemSet itemset = ResourceManager.CreateSharedAsset<ItemSet>("Main");
 						foreach (string name in monster.ItemsInPocket)
-							block.DropItem(monster.Location.GroundPosition, itemset.GetItem(name));
+							block.DropItem(monster.Location.GroundPosition, ResourceManager.CreateAsset<Item>(name));
 					}
 
 					return true;
@@ -1284,7 +1284,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Ground itemset
 		/// </summary>
-		ItemSet GroundItemSet;
+		//ItemSet GroundItemSet;
 
 
 		/// <summary>

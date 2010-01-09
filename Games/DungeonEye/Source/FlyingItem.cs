@@ -246,9 +246,9 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Loads
 		/// </summary>
-		/// <param name="xml"></param>
+		/// <param name="xml">XmlNode handle</param>
 		public bool Load(XmlNode xml)
 		{
 			if (xml == null)
@@ -270,8 +270,8 @@ namespace DungeonEye
 
 					case "item":
 					{
-						ItemSet itemset = ResourceManager.CreateSharedAsset<ItemSet>("Main");
-						Item = itemset.GetItem(node.Attributes["name"].Value);
+						Item item = ResourceManager.CreateAsset<Item>("Main");
+						Item = ResourceManager.CreateAsset<Item>(node.Attributes["name"].Value);
 					}
 					break;
 

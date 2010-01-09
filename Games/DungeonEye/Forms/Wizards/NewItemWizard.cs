@@ -34,11 +34,9 @@ namespace DungeonEye.Forms.Wizards
 		/// <summary>
 		/// 
 		/// </summary>
-		public NewItemWizard(ItemSet set)
+		public NewItemWizard()
 		{
 			InitializeComponent();
-
-			ItemSet = set;
 		}
 
 
@@ -51,12 +49,13 @@ namespace DungeonEye.Forms.Wizards
 		/// <param name="e"></param>
 		private void OnFormClosing(object sender, FormClosingEventArgs e)
 		{
+/*
 			// 
 			if (DialogResult != DialogResult.OK)
 				return;
 
-			// Maze already exists ?
-			if (string.IsNullOrEmpty(ItemNameBox.Text) || ItemSet.GetItem(ItemNameBox.Text) != null)
+			// Item already exists ?
+			if (string.IsNullOrEmpty(ItemNameBox.Text) || Item.GetItem(ItemNameBox.Text) != null)
 			{
 				MessageBox.Show("Item name already in use or invalid. Use another name !", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				e.Cancel = true;
@@ -64,10 +63,11 @@ namespace DungeonEye.Forms.Wizards
 			}
 
 
-			// Create the maze
+			// Create the item
 			Item item = new Item();
 			item.Name = ItemNameBox.Text;
 			ItemSet.Items.Add(ItemNameBox.Text, item);
+*/
 		}
 
 
@@ -79,7 +79,7 @@ namespace DungeonEye.Forms.Wizards
 		/// <summary>
 		/// 
 		/// </summary>
-		ItemSet ItemSet;
+		Item Item;
 
 		#endregion
 

@@ -31,7 +31,7 @@ using OpenTK.Graphics.OpenGL;
 namespace DungeonEye.Forms
 {
 	/// <summary>
-	/// 
+	/// Dungeon form editor
 	/// </summary>
 	public partial class DungeonForm : AssetEditor
 	{
@@ -140,18 +140,7 @@ namespace DungeonEye.Forms
 		/// </summary>
 		public override void Save()
 		{
-			//StringBuilder sb = new StringBuilder();
-			//using (XmlWriter writer = XmlWriter.Create(sb))
-			//    Dungeon.Save(writer);
-
-			//string xml = sb.ToString();
-			//XmlDocument doc = new XmlDocument();
-			//doc.LoadXml(xml);
-
-			//ResourceManager.AddAsset<Dungeon>(Dungeon.Name, doc.DocumentElement);
-
 			ResourceManager.AddAsset<Dungeon>(Dungeon.Name, ResourceManager.ConvertAsset(Dungeon));
-
 		}
 
 
