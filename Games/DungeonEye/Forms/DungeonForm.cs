@@ -244,7 +244,12 @@ namespace DungeonEye.Forms
 				// Add wall
 				if (EditWallButton.Checked)
 				{
-					block.Type = BlockType.Wall;
+					if (block.Type == BlockType.Ground)
+						block.Type = BlockType.Wall;
+					else if (block.Type == BlockType.Wall)
+						block.Type = BlockType.Trick;
+					else if (block.Type == BlockType.Trick)
+						block.Type = BlockType.Wall;
 				}
 
 
@@ -255,29 +260,8 @@ namespace DungeonEye.Forms
 				// Select object
 				else
 				{
-			//		ObjectPropertyBox.SelectedObject = null;
-
-/*
-					// Select monster
-					foreach (Monster monster in Maze.Monsters)
-					{
-						if (monster.Location.Position == BlockCoord)
-						{
-							ObjectPropertyBox.SelectedObject = monster;
-							DragObjectByMouse = true;
-							return;
-						}
-					}
-*/
-
-
-
 					if (PreviewLoc.Position == BlockCoord)
 						DragPreview = true;
-
-					// Maze block
-				//	ObjectPropertyBox.SelectedObject = block;
-
 				}
 			}
 
@@ -302,12 +286,15 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void glControl_DoubleClick(object sender, EventArgs e)
 		{
-			if (Maze == null)
+			// No maze or not a double left mouse click
+			if (Maze == null || ((MouseEventArgs)e).Button != MouseButtons.Left)
 				return;
 
-			//	LabelBox.Text = new Point((e.Location.X - Offset.X) / 25, (e.Location.Y - Offset.Y) / 25).ToString();
+			// Not while editing walls
+			if (EditWallButton.Checked)
+				return;
+
 			Point pos = glControl.PointToClient(MousePosition);
-		//	pos = MousePosition;
 			pos = new Point((pos.X - Offset.X) / 25, (pos.Y - Offset.Y) / 25);
 			if (!Maze.Contains(pos))
 				return;
@@ -412,7 +399,6 @@ namespace DungeonEye.Forms
 			// Entity no more selected
 			if (e.Button == MouseButtons.Left)// && DragObjectByMouse)
 			{
-		//		DragObjectByMouse = false;
 				DragPreview = false;
 				return;
 			}
@@ -1019,6 +1005,7 @@ namespace DungeonEye.Forms
 
 
 		#endregion
+
 
 
 	}
