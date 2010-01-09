@@ -48,7 +48,6 @@
 			this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
 			this.DrawTimer = new System.Windows.Forms.Timer(this.components);
 			this.glControl = new OpenTK.GLControl();
-			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.StrafeRightBox = new System.Windows.Forms.Button();
 			this.TurnRightBox = new System.Windows.Forms.Button();
 			this.BackwardBox = new System.Windows.Forms.Button();
@@ -60,18 +59,26 @@
 			this.DungeonMenu = new System.Windows.Forms.MenuStrip();
 			this.dungeonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.StartLocationMenu = new System.Windows.Forms.ToolStripMenuItem();
+			this.tabControl1 = new System.Windows.Forms.TabControl();
+			this.PropertiesTab = new System.Windows.Forms.TabPage();
+			this.PreviewTab = new System.Windows.Forms.TabPage();
+			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.toolStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
-			this.groupBox1.SuspendLayout();
 			this.panel1.SuspendLayout();
 			this.DungeonMenu.SuspendLayout();
+			this.tabControl1.SuspendLayout();
+			this.PropertiesTab.SuspendLayout();
+			this.PreviewTab.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// MazePropertyBox
 			// 
-			this.MazePropertyBox.Location = new System.Drawing.Point(0, 27);
+			this.MazePropertyBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.MazePropertyBox.Location = new System.Drawing.Point(8, 6);
 			this.MazePropertyBox.Name = "MazePropertyBox";
-			this.MazePropertyBox.Size = new System.Drawing.Size(357, 210);
+			this.MazePropertyBox.Size = new System.Drawing.Size(344, 282);
 			this.MazePropertyBox.TabIndex = 1;
 			// 
 			// toolStrip1
@@ -90,7 +97,7 @@
 			this.toolStrip1.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip1.Name = "toolStrip1";
 			this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-			this.toolStrip1.Size = new System.Drawing.Size(456, 25);
+			this.toolStrip1.Size = new System.Drawing.Size(505, 25);
 			this.toolStrip1.Stretch = true;
 			this.toolStrip1.TabIndex = 2;
 			this.toolStrip1.Text = "toolStrip1";
@@ -170,7 +177,7 @@
             this.PreviewBox});
 			this.statusStrip1.Location = new System.Drawing.Point(0, 626);
 			this.statusStrip1.Name = "statusStrip1";
-			this.statusStrip1.Size = new System.Drawing.Size(836, 22);
+			this.statusStrip1.Size = new System.Drawing.Size(896, 22);
 			this.statusStrip1.SizingGrip = false;
 			this.statusStrip1.TabIndex = 3;
 			this.statusStrip1.Text = "statusStrip1";
@@ -190,18 +197,18 @@
 			// hScrollBar1
 			// 
 			this.hScrollBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-							| System.Windows.Forms.AnchorStyles.Right)));
-			this.hScrollBar1.Location = new System.Drawing.Point(360, 609);
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.hScrollBar1.Location = new System.Drawing.Point(368, 609);
 			this.hScrollBar1.Maximum = 200;
 			this.hScrollBar1.Name = "hScrollBar1";
-			this.hScrollBar1.Size = new System.Drawing.Size(459, 17);
+			this.hScrollBar1.Size = new System.Drawing.Size(508, 17);
 			this.hScrollBar1.TabIndex = 4;
 			// 
 			// vScrollBar1
 			// 
 			this.vScrollBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-							| System.Windows.Forms.AnchorStyles.Right)));
-			this.vScrollBar1.Location = new System.Drawing.Point(819, 25);
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.vScrollBar1.Location = new System.Drawing.Point(879, 22);
 			this.vScrollBar1.Maximum = 200;
 			this.vScrollBar1.Name = "vScrollBar1";
 			this.vScrollBar1.Size = new System.Drawing.Size(17, 584);
@@ -218,7 +225,7 @@
 			this.glControl.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.glControl.Location = new System.Drawing.Point(0, 25);
 			this.glControl.Name = "glControl";
-			this.glControl.Size = new System.Drawing.Size(456, 581);
+			this.glControl.Size = new System.Drawing.Size(505, 581);
 			this.glControl.TabIndex = 7;
 			this.glControl.VSync = false;
 			this.glControl.DoubleClick += new System.EventHandler(this.glControl_DoubleClick);
@@ -229,29 +236,12 @@
 			this.glControl.Resize += new System.EventHandler(this.GlControl_Resize);
 			this.glControl.MouseUp += new System.Windows.Forms.MouseEventHandler(this.GlControl_MouseUp);
 			// 
-			// groupBox1
-			// 
-			this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.groupBox1.Controls.Add(this.StrafeRightBox);
-			this.groupBox1.Controls.Add(this.TurnRightBox);
-			this.groupBox1.Controls.Add(this.BackwardBox);
-			this.groupBox1.Controls.Add(this.ForwardBox);
-			this.groupBox1.Controls.Add(this.StrafeLeftBox);
-			this.groupBox1.Controls.Add(this.TurnLeftBox);
-			this.groupBox1.Controls.Add(this.GlPreviewControl);
-			this.groupBox1.Location = new System.Drawing.Point(0, 255);
-			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(357, 368);
-			this.groupBox1.TabIndex = 8;
-			this.groupBox1.TabStop = false;
-			this.groupBox1.Text = "Preview :";
-			// 
 			// StrafeRightBox
 			// 
 			this.StrafeRightBox.AutoSize = true;
 			this.StrafeRightBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.StrafeRightBox.Image = ((System.Drawing.Image)(resources.GetObject("StrafeRightBox.Image")));
-			this.StrafeRightBox.Location = new System.Drawing.Point(108, 311);
+			this.StrafeRightBox.Location = new System.Drawing.Point(105, 298);
 			this.StrafeRightBox.Name = "StrafeRightBox";
 			this.StrafeRightBox.Size = new System.Drawing.Size(46, 40);
 			this.StrafeRightBox.TabIndex = 3;
@@ -263,7 +253,7 @@
 			this.TurnRightBox.AutoSize = true;
 			this.TurnRightBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.TurnRightBox.Image = ((System.Drawing.Image)(resources.GetObject("TurnRightBox.Image")));
-			this.TurnRightBox.Location = new System.Drawing.Point(108, 265);
+			this.TurnRightBox.Location = new System.Drawing.Point(105, 252);
 			this.TurnRightBox.Name = "TurnRightBox";
 			this.TurnRightBox.Size = new System.Drawing.Size(46, 40);
 			this.TurnRightBox.TabIndex = 3;
@@ -275,7 +265,7 @@
 			this.BackwardBox.AutoSize = true;
 			this.BackwardBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.BackwardBox.Image = ((System.Drawing.Image)(resources.GetObject("BackwardBox.Image")));
-			this.BackwardBox.Location = new System.Drawing.Point(56, 311);
+			this.BackwardBox.Location = new System.Drawing.Point(53, 298);
 			this.BackwardBox.Name = "BackwardBox";
 			this.BackwardBox.Size = new System.Drawing.Size(46, 40);
 			this.BackwardBox.TabIndex = 3;
@@ -287,7 +277,7 @@
 			this.ForwardBox.AutoSize = true;
 			this.ForwardBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.ForwardBox.Image = ((System.Drawing.Image)(resources.GetObject("ForwardBox.Image")));
-			this.ForwardBox.Location = new System.Drawing.Point(56, 265);
+			this.ForwardBox.Location = new System.Drawing.Point(53, 252);
 			this.ForwardBox.Name = "ForwardBox";
 			this.ForwardBox.Size = new System.Drawing.Size(46, 40);
 			this.ForwardBox.TabIndex = 3;
@@ -299,7 +289,7 @@
 			this.StrafeLeftBox.AutoSize = true;
 			this.StrafeLeftBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.StrafeLeftBox.Image = ((System.Drawing.Image)(resources.GetObject("StrafeLeftBox.Image")));
-			this.StrafeLeftBox.Location = new System.Drawing.Point(6, 311);
+			this.StrafeLeftBox.Location = new System.Drawing.Point(3, 298);
 			this.StrafeLeftBox.Name = "StrafeLeftBox";
 			this.StrafeLeftBox.Size = new System.Drawing.Size(44, 40);
 			this.StrafeLeftBox.TabIndex = 3;
@@ -311,7 +301,7 @@
 			this.TurnLeftBox.AutoSize = true;
 			this.TurnLeftBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.TurnLeftBox.Image = ((System.Drawing.Image)(resources.GetObject("TurnLeftBox.Image")));
-			this.TurnLeftBox.Location = new System.Drawing.Point(6, 265);
+			this.TurnLeftBox.Location = new System.Drawing.Point(3, 252);
 			this.TurnLeftBox.Name = "TurnLeftBox";
 			this.TurnLeftBox.Size = new System.Drawing.Size(44, 40);
 			this.TurnLeftBox.TabIndex = 3;
@@ -321,23 +311,25 @@
 			// GlPreviewControl
 			// 
 			this.GlPreviewControl.BackColor = System.Drawing.Color.Black;
-			this.GlPreviewControl.Location = new System.Drawing.Point(5, 19);
+			this.GlPreviewControl.Location = new System.Drawing.Point(3, 6);
 			this.GlPreviewControl.Name = "GlPreviewControl";
 			this.GlPreviewControl.Size = new System.Drawing.Size(352, 240);
 			this.GlPreviewControl.TabIndex = 2;
 			this.GlPreviewControl.VSync = false;
+			this.GlPreviewControl.Load += new System.EventHandler(this.GlPreviewControl_Load);
 			this.GlPreviewControl.Paint += new System.Windows.Forms.PaintEventHandler(this.GlPreviewControl_Paint);
+			this.GlPreviewControl.Resize += new System.EventHandler(this.GlPreviewControl_Resize);
 			// 
 			// panel1
 			// 
 			this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-							| System.Windows.Forms.AnchorStyles.Left)
-							| System.Windows.Forms.AnchorStyles.Right)));
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.panel1.Controls.Add(this.glControl);
 			this.panel1.Controls.Add(this.toolStrip1);
-			this.panel1.Location = new System.Drawing.Point(360, 0);
+			this.panel1.Location = new System.Drawing.Point(371, 0);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(456, 606);
+			this.panel1.Size = new System.Drawing.Size(505, 606);
 			this.panel1.TabIndex = 9;
 			// 
 			// DungeonMenu
@@ -346,7 +338,7 @@
             this.dungeonToolStripMenuItem});
 			this.DungeonMenu.Location = new System.Drawing.Point(0, 0);
 			this.DungeonMenu.Name = "DungeonMenu";
-			this.DungeonMenu.Size = new System.Drawing.Size(836, 24);
+			this.DungeonMenu.Size = new System.Drawing.Size(896, 24);
 			this.DungeonMenu.TabIndex = 10;
 			this.DungeonMenu.Text = "Dungeon";
 			// 
@@ -365,18 +357,70 @@
 			this.StartLocationMenu.Text = "Mark as start point";
 			this.StartLocationMenu.Click += new System.EventHandler(this.StartLocationMenu_Click);
 			// 
+			// tabControl1
+			// 
+			this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)));
+			this.tabControl1.Controls.Add(this.PropertiesTab);
+			this.tabControl1.Controls.Add(this.PreviewTab);
+			this.tabControl1.Location = new System.Drawing.Point(0, 27);
+			this.tabControl1.Name = "tabControl1";
+			this.tabControl1.SelectedIndex = 0;
+			this.tabControl1.Size = new System.Drawing.Size(365, 599);
+			this.tabControl1.TabIndex = 11;
+			// 
+			// PropertiesTab
+			// 
+			this.PropertiesTab.Controls.Add(this.groupBox1);
+			this.PropertiesTab.Controls.Add(this.MazePropertyBox);
+			this.PropertiesTab.Location = new System.Drawing.Point(4, 22);
+			this.PropertiesTab.Name = "PropertiesTab";
+			this.PropertiesTab.Padding = new System.Windows.Forms.Padding(3);
+			this.PropertiesTab.Size = new System.Drawing.Size(357, 573);
+			this.PropertiesTab.TabIndex = 0;
+			this.PropertiesTab.Text = "Properties";
+			this.PropertiesTab.UseVisualStyleBackColor = true;
+			// 
+			// PreviewTab
+			// 
+			this.PreviewTab.Controls.Add(this.StrafeRightBox);
+			this.PreviewTab.Controls.Add(this.TurnRightBox);
+			this.PreviewTab.Controls.Add(this.GlPreviewControl);
+			this.PreviewTab.Controls.Add(this.BackwardBox);
+			this.PreviewTab.Controls.Add(this.TurnLeftBox);
+			this.PreviewTab.Controls.Add(this.ForwardBox);
+			this.PreviewTab.Controls.Add(this.StrafeLeftBox);
+			this.PreviewTab.Location = new System.Drawing.Point(4, 22);
+			this.PreviewTab.Name = "PreviewTab";
+			this.PreviewTab.Padding = new System.Windows.Forms.Padding(3);
+			this.PreviewTab.Size = new System.Drawing.Size(357, 573);
+			this.PreviewTab.TabIndex = 1;
+			this.PreviewTab.Text = "Preview";
+			this.PreviewTab.UseVisualStyleBackColor = true;
+			// 
+			// groupBox1
+			// 
+			this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.groupBox1.Location = new System.Drawing.Point(6, 294);
+			this.groupBox1.Name = "groupBox1";
+			this.groupBox1.Size = new System.Drawing.Size(346, 273);
+			this.groupBox1.TabIndex = 2;
+			this.groupBox1.TabStop = false;
+			this.groupBox1.Text = "Summary :";
+			// 
 			// DungeonForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(836, 648);
+			this.ClientSize = new System.Drawing.Size(896, 648);
 			this.Controls.Add(this.panel1);
-			this.Controls.Add(this.MazePropertyBox);
 			this.Controls.Add(this.vScrollBar1);
 			this.Controls.Add(this.hScrollBar1);
-			this.Controls.Add(this.statusStrip1);
+			this.Controls.Add(this.tabControl1);
 			this.Controls.Add(this.DungeonMenu);
-			this.Controls.Add(this.groupBox1);
+			this.Controls.Add(this.statusStrip1);
 			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.MainMenuStrip = this.DungeonMenu;
 			this.Name = "DungeonForm";
@@ -390,12 +434,14 @@
 			this.toolStrip1.PerformLayout();
 			this.statusStrip1.ResumeLayout(false);
 			this.statusStrip1.PerformLayout();
-			this.groupBox1.ResumeLayout(false);
-			this.groupBox1.PerformLayout();
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
 			this.DungeonMenu.ResumeLayout(false);
 			this.DungeonMenu.PerformLayout();
+			this.tabControl1.ResumeLayout(false);
+			this.PropertiesTab.ResumeLayout(false);
+			this.PreviewTab.ResumeLayout(false);
+			this.PreviewTab.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -420,7 +466,6 @@
 		private System.Windows.Forms.Timer DrawTimer;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
 		private OpenTK.GLControl glControl;
-		private System.Windows.Forms.GroupBox groupBox1;
 		private OpenTK.GLControl GlPreviewControl;
 		private System.Windows.Forms.Button StrafeRightBox;
 		private System.Windows.Forms.Button TurnRightBox;
@@ -433,5 +478,9 @@
 		private System.Windows.Forms.MenuStrip DungeonMenu;
 		private System.Windows.Forms.ToolStripMenuItem dungeonToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem StartLocationMenu;
+		private System.Windows.Forms.TabControl tabControl1;
+		private System.Windows.Forms.TabPage PropertiesTab;
+		private System.Windows.Forms.TabPage PreviewTab;
+		private System.Windows.Forms.GroupBox groupBox1;
 	}
 }

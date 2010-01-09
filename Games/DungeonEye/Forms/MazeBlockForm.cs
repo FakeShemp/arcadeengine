@@ -198,6 +198,11 @@ namespace DungeonEye.Forms
 			AlcoveWestButton.Checked = MazeBlock.HasAlcove(CardinalPoint.West);
 			AlcoveEastButton.Checked = MazeBlock.HasAlcove(CardinalPoint.East);
 
+			WallTypeBox.BeginUpdate();
+			foreach(string name in Enum.GetNames(typeof(BlockType)))
+				WallTypeBox.Items.Add(name);
+			WallTypeBox.EndUpdate();
+			WallTypeBox.SelectedItem = MazeBlock.Type.ToString();
 			#endregion
 
 		}
@@ -558,6 +563,15 @@ namespace DungeonEye.Forms
 			GlWallControl.SwapBuffers();
 		}
 
+		/// <summary>
+		/// Changes the type of a maze block
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void WallTypeBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			MazeBlock.Type = (BlockType)Enum.Parse(typeof(BlockType), (string)WallTypeBox.SelectedItem);
+		}
 
 		#endregion
 
@@ -977,6 +991,7 @@ namespace DungeonEye.Forms
 
 
 		#endregion
+
 
 
 

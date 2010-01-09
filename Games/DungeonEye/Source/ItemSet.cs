@@ -217,8 +217,8 @@ namespace DungeonEye
 		/// <summary>
 		/// Returns an item by its name
 		/// </summary>
-		/// <param name="name"></param>
-		/// <returns></returns>
+		/// <param name="name">Item's name</param>
+		/// <returns>Item handle or null</returns>
 		public Item GetItem(string name)
 		{
 			if (!Items.ContainsKey(name))

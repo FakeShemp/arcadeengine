@@ -82,8 +82,6 @@ namespace DungeonEye.Forms
 				KeyboardScheme["SelectHero6"] = Keys.D6;
 			}
 
-
-
 		}
 
 
@@ -177,8 +175,6 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void DungeonForm_Load(object sender, EventArgs e)
 		{
-			GlPreviewControl.MakeCurrent();
-			Display.Init();
 
 			glControl.MakeCurrent();
 			Display.Init();
@@ -210,6 +206,8 @@ namespace DungeonEye.Forms
 			DrawTimer.Start();
 		
 		}
+
+
 
 		/// <summary>
 		/// On mouse down
@@ -602,30 +600,6 @@ namespace DungeonEye.Forms
 
 		}
 
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void GlPreviewControl_Paint(object sender, PaintEventArgs e)
-		{
-
-			GlPreviewControl.MakeCurrent();
-			Display.ClearBuffers();
-
-			if (Maze == null)
-			{
-				GlPreviewControl.SwapBuffers();
-				return;
-			}
-
-
-			Maze.Draw(PreviewLoc);
-
-			GlPreviewControl.SwapBuffers();
-		}
-
 		/// <summary>
 		/// 
 		/// </summary>
@@ -694,9 +668,6 @@ namespace DungeonEye.Forms
 			glControl.MakeCurrent();
 			Display.ViewPort = new Rectangle(new Point(), glControl.Size);
 
-
-			GlPreviewControl.MakeCurrent();
-			Display.ViewPort = new Rectangle(new Point(), GlPreviewControl.Size);
 		}
 
 
@@ -814,6 +785,56 @@ namespace DungeonEye.Forms
 
 
 		#region Preview control events
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void GlPreviewControl_Load(object sender, EventArgs e)
+		{
+			GlPreviewControl.MakeCurrent();
+			Display.Init();
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void GlPreviewControl_Paint(object sender, PaintEventArgs e)
+		{
+			if (GlPreviewControl.Context == null)
+				return;
+
+			GlPreviewControl.MakeCurrent();
+			Display.ClearBuffers();
+
+			if (Maze == null)
+			{
+				GlPreviewControl.SwapBuffers();
+				return;
+			}
+
+
+			Maze.Draw(PreviewLoc);
+
+			GlPreviewControl.SwapBuffers();
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void GlPreviewControl_Resize(object sender, EventArgs e)
+		{
+
+			GlPreviewControl.MakeCurrent();
+			Display.ViewPort = new Rectangle(new Point(), GlPreviewControl.Size);
+		}
 
 
 		/// <summary>
@@ -998,6 +1019,7 @@ namespace DungeonEye.Forms
 
 
 		#endregion
+
 
 	}
 
