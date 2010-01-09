@@ -422,6 +422,10 @@ namespace DungeonEye
 					else
 						Items.Draw(86, new Point(pos.X + 96, pos.Y + 36));
 
+					if (!hero.CanAttack(HeroHand.Primary))
+						TileSet.Draw(3, new Point(pos.X + 66, pos.Y + 20));
+
+
 					// Hero hit a monster a few moment ago
 					AttackResult attack = hero.GetLastAttack(HeroHand.Primary);
 					if (attack.Date + attack.OnHold > DateTime.Now)
@@ -449,6 +453,10 @@ namespace DungeonEye
 						Items.Draw(item.TileID, new Point(pos.X + 96, pos.Y + 68));
 					else
 						Items.Draw(85, new Point(pos.X + 96, pos.Y + 68));
+
+					if (!hero.CanAttack(HeroHand.Secondary))
+						TileSet.Draw(3, new Point(pos.X + 66, pos.Y + 52));
+
 
 
 					// Dead or uncounscious

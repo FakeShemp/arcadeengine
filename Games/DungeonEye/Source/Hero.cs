@@ -90,7 +90,7 @@ namespace DungeonEye
 			if (itemset != null)
 			{
 				SetInventoryItem(InventoryPosition.Primary, itemset.GetItem("Spell book"));
-				SetInventoryItem(InventoryPosition.Secondary, itemset.GetItem("Short Bow"));
+				SetInventoryItem(InventoryPosition.Inventory_09, itemset.GetItem("Short Bow"));
 				SetInventoryItem(InventoryPosition.Armor, itemset.GetItem("Leather Armor"));
 				SetInventoryItem(InventoryPosition.Inventory_01, itemset.GetItem("Test Item"));
 				SetInventoryItem(InventoryPosition.Inventory_02, itemset.GetItem("Spell book"));
@@ -133,7 +133,7 @@ namespace DungeonEye
 
 
 			// Arrow
-			if (item.Slot == BodySlot.Quiver)
+			if ((item.Slot & BodySlot.Quiver) == BodySlot.Quiver)
 			{
 				Quiver++;
 				return true;
@@ -365,18 +365,18 @@ namespace DungeonEye
 				// Throw the ammo
 				case ItemType.Ammo:
 				{
-					
 					// throw ammo
 					Team.Maze.FlyingItems.Add(new FlyingItem(item, loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
 
 					// Empty hand
-					Inventory[20 - (int)(hand) * 4] = null;
+					InventoryPosition pos = hand == HeroHand.Primary ? InventoryPosition.Primary : InventoryPosition.Secondary;
+					SetInventoryItem(pos, null);
 
-					if (Quiver > 0)
-					{
-						Inventory[20 - (int)(hand) * 4] = ResourceManager.CreateAsset<ItemSet>("Items").GetItem("Arrow");
-						Quiver--;
-					}
+					//if (Quiver > 0 && item.UseQuiver)
+					//{
+					//    SetInventoryItem(pos, ResourceManager.CreateAsset<ItemSet>("Items").GetItem("Arrow"));
+					//    Quiver--;
+					//}
 				}
 				break;
 
@@ -450,6 +450,21 @@ namespace DungeonEye
 		{
 			if (IsDead || IsUnconscious)
 				return false;
+
+			// Check the item in the other hand
+			Item item = null;
+			if (hand == HeroHand.Primary)
+			{
+				item = GetInventoryItem(InventoryPosition.Secondary);
+				if (item != null && item.TwoHanded)
+					return false;
+			}
+			else
+			{
+				item = GetInventoryItem(InventoryPosition.Primary);
+				if (item != null && item.TwoHanded)
+					return false;
+			}
 
 			return Attacks[(int)hand].Date + Attacks[(int)hand].OnHold < DateTime.Now;
 		}

@@ -18,21 +18,14 @@
 //
 #endregion
 using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
-using System.Reflection;
-using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 using ArcEngine;
 using ArcEngine.Asset;
-using ArcEngine.Editor;
 using ArcEngine.Forms;
 using ArcEngine.Graphic;
-using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
-using WeifenLuo.WinFormsUI.Docking;
 
 
 namespace DungeonEye.Forms
@@ -184,7 +177,6 @@ namespace DungeonEye.Forms
 
 			// Preload texture resources
 			Icons = new TileSet();
-			//Icons.Texture = new Texture(Assembly.GetExecutingAssembly().GetManifestResourceStream("DungeonEye.Forms.data.editor.png"));
 			Icons.Texture = new Texture(ResourceManager.GetResource("DungeonEye.Forms.data.editor.png"));
 
 			// Preload background texture resource
@@ -986,13 +978,6 @@ namespace DungeonEye.Forms
 
 
 		/// <summary>
-		/// Dragging an object (monster, door)
-		/// </summary>
-	//	bool DragObjectByMouse;
-
-
-
-		/// <summary>
 		/// Dragging preview position
 		/// </summary>
 		bool DragPreview;
@@ -1005,9 +990,6 @@ namespace DungeonEye.Forms
 
 
 		#endregion
-
-
-
 	}
 
 

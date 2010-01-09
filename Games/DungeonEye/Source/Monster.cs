@@ -55,6 +55,7 @@ namespace DungeonEye
 			ItemsInPocket = new List<string>();
 			Life = new Life();
 			LastHit = new DateTime();
+			Damage = new Dice();
 
 			DrawOffsetDuration = TimeSpan.FromSeconds(1.0f + GameBase.Random.NextDouble());
 		}
@@ -236,9 +237,9 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Loads monster definition
 		/// </summary>
-		/// <param name="node"></param>
+		/// <param name="xml">XmlNode handle</param>
 		/// <returns></returns>
 		public bool Load(XmlNode xml)
 		{
@@ -278,6 +279,19 @@ namespace DungeonEye
 						ItemsInPocket.Add(node.Attributes["item"].Value);
 					}
 					break;
+
+					case "script":
+					{
+						ScriptName = node.Attributes["name"].Value;
+						InterfaceName = node.Attributes["interface"].Value;
+					}
+					break;
+
+					case "damage":
+					{
+						Damage.Load(node);
+					}
+					break;
 				}
 
 			}
@@ -287,8 +301,9 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Saves monster definition
 		/// </summary>
+		/// <param name="writer">XmlWriter handle</param>
 		/// <returns></returns>
 		public bool Save(XmlWriter writer)
 		{
@@ -300,15 +315,17 @@ namespace DungeonEye
 			writer.WriteAttributeString("name", Name);
 
 
-			//writer.WriteStartElement("template");
-			//writer.WriteAttributeString("value", Type.ToString());
-			//writer.WriteEndElement();
+			writer.WriteStartElement("script");
+			writer.WriteAttributeString("name", ScriptName);
+			writer.WriteAttributeString("interface", InterfaceName);
+			writer.WriteEndElement();
 
 
 			writer.WriteStartElement("location");
 			Location.Save(writer);
 			writer.WriteEndElement();
 
+			Damage.Save("damage", writer);
 
 			Life.Save(writer);
 
@@ -434,6 +451,17 @@ namespace DungeonEye
 		}
 
 */
+
+		/// <summary>
+		/// Damage dice
+		/// </summary>
+		public Dice Damage
+		{
+			get;
+			private set;
+		}
+
+
 		/// <summary>
 		/// Holded items droped if killed
 		/// </summary>
@@ -447,6 +475,7 @@ namespace DungeonEye
 		/// The monster can absorb some items when they are thrown at him
 		/// </summary>
 		public float AbsorbItems;
+
 
 		/// <summary>
 		/// State of the monster
@@ -671,6 +700,25 @@ namespace DungeonEye
 		/// Name of the sound when the monster attack
 		/// </summary>
 		public string AttackSoundName;
+
+
+		/// <summary>
+		/// Script name
+		/// </summary>
+		public string ScriptName
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Interface name for the script
+		/// </summary>
+		public string InterfaceName
+		{
+			get;
+			set;
+		}
 
 		#endregion
 	}

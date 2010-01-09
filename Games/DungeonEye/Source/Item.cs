@@ -18,14 +18,8 @@
 //
 #endregion
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Drawing.Design;
-using System.Text;
-using System.Windows.Forms;
 using System.Xml;
-using ArcEngine;
 using ArcEngine.Asset;
 
 
@@ -159,6 +153,12 @@ namespace DungeonEye
 					}
 					break;
 
+					case "twohanded":
+					{
+						TwoHanded = (bool)Boolean.Parse(node.Attributes["value"].Value);
+					}
+					break;
+
 				}
 			}
 
@@ -207,13 +207,15 @@ namespace DungeonEye
 			writer.WriteAttributeString("value", UseQuiver.ToString());
 			writer.WriteEndElement();
 
+			writer.WriteStartElement("twohanded");
+			writer.WriteAttributeString("value", TwoHanded.ToString());
+			writer.WriteEndElement();
+
 			writer.WriteStartElement("weight");
 			writer.WriteAttributeString("value", Weight.ToString());
 			writer.WriteEndElement();
 
-			writer.WriteStartElement("damage");
-			Damage.Save(writer);
-			writer.WriteEndElement();
+			Damage.Save("damage", writer);
 
 			writer.WriteStartElement("critical");
 			writer.WriteAttributeString("min", Critical.X.ToString());
@@ -373,8 +375,18 @@ namespace DungeonEye
 			get;
 			set;
 		}
-	
-	
+
+
+
+		/// <summary>
+		/// Name of the Tileset
+		/// </summary>
+		public string TileSetName
+		{
+			get;
+			set;
+		}
+
 		/// <summary>
 		/// Tile ID of the item in inventory
 		/// </summary>
@@ -452,6 +464,16 @@ namespace DungeonEye
 			get;
 			set;
 		}
+
+		/// <summary>
+		/// Two handed item
+		/// </summary>
+		public bool TwoHanded
+		{
+			get;
+			set;
+		}
+
 		#endregion
 
 
@@ -543,7 +565,7 @@ namespace DungeonEye
 		None = 0x400,
 	}
 
-
+/*
 	/// <summary>
 	/// Type of armor
 	/// </summary>
@@ -557,5 +579,5 @@ namespace DungeonEye
 		SmallShield,
 		TowerShield
 	}
-
+*/
 }

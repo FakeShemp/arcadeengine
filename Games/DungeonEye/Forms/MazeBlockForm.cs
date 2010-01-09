@@ -53,7 +53,7 @@ namespace DungeonEye.Forms
 			Maze = maze;
 
 
-			MonsterBox.Init();
+		//	MonsterBox.Init();
 
 
 			#region Ground items
@@ -442,7 +442,7 @@ namespace DungeonEye.Forms
 
 
 			Maze.Monsters.Add(monster);
-			MonsterBox.Monster = monster;
+		//	MonsterBox.Monster = monster;
 		}
 
 
@@ -457,7 +457,7 @@ namespace DungeonEye.Forms
 				return;
 
 			Monster[] monsters = Maze.GetMonsters(MazeBlock.Location);
-			MonsterBox.Monster = monsters[GroundLocationBox.SelectedIndex];
+		//	MonsterBox.Monster = monsters[GroundLocationBox.SelectedIndex];
 		}
 
 
@@ -472,8 +472,8 @@ namespace DungeonEye.Forms
 			if (GroundLocationBox.SelectedIndex == -1)
 				return;
 
-			Maze.Monsters.Remove(MonsterBox.Monster);
-			MonsterBox.Monster = null;
+		//	Maze.Monsters.Remove(MonsterBox.Monster);
+		//	MonsterBox.Monster = null;
 
 		}
 

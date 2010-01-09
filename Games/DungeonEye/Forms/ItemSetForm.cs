@@ -170,7 +170,7 @@ namespace DungeonEye.Forms
 			WeightBox.Value = 0;
 			PrimaryBox.Checked = false;
 			SecondaryBox.Checked = false;
-			AmmoBox.Checked = false;
+			QuiverBox.Checked = false;
 			BodyBox.Checked = false;
 			RingBox.Checked = false;
 			WristBox.Checked = false;
@@ -179,6 +179,7 @@ namespace DungeonEye.Forms
 			WaistBox.Checked = false;
 			NeckBox.Checked = false;
 			UseQuiverBox.Checked = false;
+			TwoHandedBox.Checked = false;
 			FighterBox.Checked = false;
 			PaladinBox.Checked = false;
 			ClericBox.Checked = false;
@@ -204,11 +205,12 @@ namespace DungeonEye.Forms
 				MoveAwayTileBox.SelectedItem = Item.ThrowTileID;
 				IncomingTileBox.SelectedItem = Item.IncomingTileID;
 				UseQuiverBox.Checked = Item.UseQuiver;
+				TwoHandedBox.Checked = Item.TwoHanded;
 
 
 				PrimaryBox.Checked = (Item.Slot & BodySlot.Primary) == BodySlot.Primary;
 				SecondaryBox.Checked = (Item.Slot & BodySlot.Secondary) == BodySlot.Secondary;
-				AmmoBox.Checked = (Item.Slot & BodySlot.Quiver) == BodySlot.Quiver;
+				QuiverBox.Checked = (Item.Slot & BodySlot.Quiver) == BodySlot.Quiver;
 				BodyBox.Checked = (Item.Slot & BodySlot.Body) == BodySlot.Body;
 				RingBox.Checked = (Item.Slot & BodySlot.Ring) == BodySlot.Ring;
 				WristBox.Checked = (Item.Slot & BodySlot.Wrist) == BodySlot.Wrist;
@@ -615,14 +617,6 @@ namespace DungeonEye.Forms
 		#endregion
 
 
-		private void UseQuiverBox_CheckedChanged(object sender, EventArgs e)
-		{
-			if (Item == null)
-				return;
-
-			Item.UseQuiver = UseQuiverBox.Checked;
-		}
-
 		#region Item slots
 
 		private void PrimaryBox_CheckedChanged(object sender, EventArgs e)
@@ -636,12 +630,12 @@ namespace DungeonEye.Forms
 				Item.Slot ^= BodySlot.Primary;
 		}
 
-		private void AmmoBox_CheckedChanged(object sender, EventArgs e)
+		private void QuiverBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (Item == null)
 				return;
 
-			if (AmmoBox.Checked)
+			if (QuiverBox.Checked)
 				Item.Slot |= BodySlot.Quiver;
 			else
 				Item.Slot ^= BodySlot.Quiver;
@@ -744,7 +738,7 @@ namespace DungeonEye.Forms
 		{
 			if (Item == null)
 				return;
-
+			Item.Type = (ItemType)Enum.Parse(typeof(ItemType), (string)TypeBox.SelectedItem);
 		}
 
 		private void SpeedBox_ValueChanged(object sender, EventArgs e)
@@ -840,25 +834,16 @@ namespace DungeonEye.Forms
 
 		#region Hands
 
-		private void SecondaryHandBox_CheckedChanged(object sender, EventArgs e)
-		{
-			if (Item == null)
-				return;
-
-		}
-
-		private void PrimaryHandBox_CheckedChanged(object sender, EventArgs e)
-		{
-			if (Item == null)
-				return;
-
-		}
-
+		/// <summary>
+		/// Two handed item
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void TwoHandedBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (Item == null)
 				return;
-
+			Item.TwoHanded = TwoHandedBox.Checked;
 		}
 
 		#endregion
@@ -995,11 +980,30 @@ namespace DungeonEye.Forms
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void ACBonusBox_ValueChanged(object sender, EventArgs e)
 		{
 			if (Item == null)
 				return;
 
+		}
+
+
+		/// <summary>
+		/// The item use quiver
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void UseQuiverBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Item == null)
+				return;
+
+			Item.UseQuiver = UseQuiverBox.Checked;
 		}
 
 

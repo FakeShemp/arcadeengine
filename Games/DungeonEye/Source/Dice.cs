@@ -115,23 +115,21 @@ namespace DungeonEye
 		/// <summary>
 		/// Saves properties
 		/// </summary>
+		/// <param name="name">Name for the node</param>
 		/// <param name="writer">XmlWriter</param>
-		public void Save(XmlWriter writer)
+		/// <returns>True if saved</returns>
+		public bool Save(string name, XmlWriter writer)
 		{
-			if (writer == null)
-				return;
+			if (writer == null || string.IsNullOrEmpty(name))
+				return false;
 
-			bool writeheader = false;
-			if (writer.WriteState != WriteState.Element)
-				writeheader = true;
-
-			if (writeheader)
-				writer.WriteStartElement("dice");
+			writer.WriteStartElement(name);
 			writer.WriteAttributeString("throws", Throws.ToString());
 			writer.WriteAttributeString("faces", Faces.ToString());
 			writer.WriteAttributeString("base", Base.ToString());
-			if (writeheader)
-				writer.WriteEndElement();
+			writer.WriteEndElement();
+
+			return true;
 		}
 
 		#endregion

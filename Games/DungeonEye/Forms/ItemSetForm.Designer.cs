@@ -28,7 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			DungeonEye.Dice dice2 = new DungeonEye.Dice();
+			DungeonEye.Dice dice1 = new DungeonEye.Dice();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ItemSetForm));
 			this.GLGroundTile = new OpenTK.GLControl();
 			this.GLInventoryTile = new OpenTK.GLControl();
@@ -39,11 +39,12 @@
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
 			this.DescriptionBox = new System.Windows.Forms.TextBox();
 			this.groupBox5 = new System.Windows.Forms.GroupBox();
+			this.UseQuiverBox = new System.Windows.Forms.CheckBox();
 			this.ACBonusBox = new System.Windows.Forms.NumericUpDown();
+			this.TwoHandedBox = new System.Windows.Forms.CheckBox();
 			this.label14 = new System.Windows.Forms.Label();
 			this.DamageTypeBox = new System.Windows.Forms.ComboBox();
 			this.RangeBox = new System.Windows.Forms.NumericUpDown();
-			this.UseQuiverBox = new System.Windows.Forms.CheckBox();
 			this.WeightBox = new System.Windows.Forms.NumericUpDown();
 			this.SpeedBox = new System.Windows.Forms.NumericUpDown();
 			this.label3 = new System.Windows.Forms.Label();
@@ -61,7 +62,7 @@
 			this.BodyBox = new System.Windows.Forms.CheckBox();
 			this.NeckBox = new System.Windows.Forms.CheckBox();
 			this.SecondaryBox = new System.Windows.Forms.CheckBox();
-			this.AmmoBox = new System.Windows.Forms.CheckBox();
+			this.QuiverBox = new System.Windows.Forms.CheckBox();
 			this.PrimaryBox = new System.Windows.Forms.CheckBox();
 			this.groupBox8 = new System.Windows.Forms.GroupBox();
 			this.MultiplierBox = new System.Windows.Forms.NumericUpDown();
@@ -85,10 +86,6 @@
 			this.RangerBox = new System.Windows.Forms.CheckBox();
 			this.PaladinBox = new System.Windows.Forms.CheckBox();
 			this.FighterBox = new System.Windows.Forms.CheckBox();
-			this.groupBox9 = new System.Windows.Forms.GroupBox();
-			this.SecondaryHandBox = new System.Windows.Forms.CheckBox();
-			this.TwoHandedBox = new System.Windows.Forms.CheckBox();
-			this.PrimaryHandBox = new System.Windows.Forms.CheckBox();
 			this.InterfaceNameBox = new System.Windows.Forms.ComboBox();
 			this.label17 = new System.Windows.Forms.Label();
 			this.ScriptNameBox = new System.Windows.Forms.ComboBox();
@@ -119,7 +116,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.CriticalMaxBox)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.CriticalMinBox)).BeginInit();
 			this.groupBox3.SuspendLayout();
-			this.groupBox9.SuspendLayout();
 			this.tabControl1.SuspendLayout();
 			this.VisualTab.SuspendLayout();
 			this.PropertiesTab.SuspendLayout();
@@ -214,11 +210,12 @@
 			// 
 			// groupBox5
 			// 
+			this.groupBox5.Controls.Add(this.UseQuiverBox);
 			this.groupBox5.Controls.Add(this.ACBonusBox);
+			this.groupBox5.Controls.Add(this.TwoHandedBox);
 			this.groupBox5.Controls.Add(this.label14);
 			this.groupBox5.Controls.Add(this.DamageTypeBox);
 			this.groupBox5.Controls.Add(this.RangeBox);
-			this.groupBox5.Controls.Add(this.UseQuiverBox);
 			this.groupBox5.Controls.Add(this.WeightBox);
 			this.groupBox5.Controls.Add(this.SpeedBox);
 			this.groupBox5.Controls.Add(this.label3);
@@ -227,31 +224,53 @@
 			this.groupBox5.Controls.Add(this.label6);
 			this.groupBox5.Controls.Add(this.label4);
 			this.groupBox5.Controls.Add(this.label5);
-			this.groupBox5.Location = new System.Drawing.Point(237, 265);
+			this.groupBox5.Location = new System.Drawing.Point(3, 117);
 			this.groupBox5.Name = "groupBox5";
-			this.groupBox5.Size = new System.Drawing.Size(202, 206);
+			this.groupBox5.Size = new System.Drawing.Size(228, 218);
 			this.groupBox5.TabIndex = 6;
 			this.groupBox5.TabStop = false;
 			this.groupBox5.Text = "Misc :";
 			// 
+			// UseQuiverBox
+			// 
+			this.UseQuiverBox.AutoSize = true;
+			this.UseQuiverBox.Location = new System.Drawing.Point(6, 190);
+			this.UseQuiverBox.Name = "UseQuiverBox";
+			this.UseQuiverBox.Size = new System.Drawing.Size(77, 17);
+			this.UseQuiverBox.TabIndex = 10;
+			this.UseQuiverBox.Text = "Use quiver";
+			this.UseQuiverBox.UseVisualStyleBackColor = true;
+			this.UseQuiverBox.CheckedChanged += new System.EventHandler(this.UseQuiverBox_CheckedChanged);
+			// 
 			// ACBonusBox
 			// 
-			this.ACBonusBox.Location = new System.Drawing.Point(70, 160);
+			this.ACBonusBox.Location = new System.Drawing.Point(182, 73);
 			this.ACBonusBox.Maximum = new decimal(new int[] {
             1000000,
             0,
             0,
             0});
 			this.ACBonusBox.Name = "ACBonusBox";
-			this.ACBonusBox.Size = new System.Drawing.Size(59, 20);
+			this.ACBonusBox.Size = new System.Drawing.Size(39, 20);
 			this.ACBonusBox.TabIndex = 2;
 			this.ACBonusBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.ACBonusBox.ValueChanged += new System.EventHandler(this.ACBonusBox_ValueChanged);
 			// 
+			// TwoHandedBox
+			// 
+			this.TwoHandedBox.AutoSize = true;
+			this.TwoHandedBox.Location = new System.Drawing.Point(6, 167);
+			this.TwoHandedBox.Name = "TwoHandedBox";
+			this.TwoHandedBox.Size = new System.Drawing.Size(79, 17);
+			this.TwoHandedBox.TabIndex = 0;
+			this.TwoHandedBox.Text = "Two hands";
+			this.TwoHandedBox.UseVisualStyleBackColor = true;
+			this.TwoHandedBox.CheckedChanged += new System.EventHandler(this.TwoHandedBox_CheckedChanged);
+			// 
 			// label14
 			// 
 			this.label14.AutoSize = true;
-			this.label14.Location = new System.Drawing.Point(4, 162);
+			this.label14.Location = new System.Drawing.Point(116, 77);
 			this.label14.Name = "label14";
 			this.label14.Size = new System.Drawing.Size(60, 13);
 			this.label14.TabIndex = 1;
@@ -274,17 +293,6 @@
 			this.RangeBox.Size = new System.Drawing.Size(52, 20);
 			this.RangeBox.TabIndex = 4;
 			this.RangeBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			// 
-			// UseQuiverBox
-			// 
-			this.UseQuiverBox.AutoSize = true;
-			this.UseQuiverBox.Location = new System.Drawing.Point(116, 74);
-			this.UseQuiverBox.Name = "UseQuiverBox";
-			this.UseQuiverBox.Size = new System.Drawing.Size(77, 17);
-			this.UseQuiverBox.TabIndex = 3;
-			this.UseQuiverBox.Text = "Use quiver";
-			this.UseQuiverBox.UseVisualStyleBackColor = true;
-			this.UseQuiverBox.CheckedChanged += new System.EventHandler(this.UseQuiverBox_CheckedChanged);
 			// 
 			// WeightBox
 			// 
@@ -381,7 +389,7 @@
 			this.groupBox6.Controls.Add(this.BodyBox);
 			this.groupBox6.Controls.Add(this.NeckBox);
 			this.groupBox6.Controls.Add(this.SecondaryBox);
-			this.groupBox6.Controls.Add(this.AmmoBox);
+			this.groupBox6.Controls.Add(this.QuiverBox);
 			this.groupBox6.Controls.Add(this.PrimaryBox);
 			this.groupBox6.Location = new System.Drawing.Point(237, 117);
 			this.groupBox6.Name = "groupBox6";
@@ -478,16 +486,16 @@
 			this.SecondaryBox.UseVisualStyleBackColor = true;
 			this.SecondaryBox.CheckedChanged += new System.EventHandler(this.SecondaryBox_CheckedChanged);
 			// 
-			// AmmoBox
+			// QuiverBox
 			// 
-			this.AmmoBox.AutoSize = true;
-			this.AmmoBox.Location = new System.Drawing.Point(6, 42);
-			this.AmmoBox.Name = "AmmoBox";
-			this.AmmoBox.Size = new System.Drawing.Size(55, 17);
-			this.AmmoBox.TabIndex = 0;
-			this.AmmoBox.Text = "Ammo";
-			this.AmmoBox.UseVisualStyleBackColor = true;
-			this.AmmoBox.CheckedChanged += new System.EventHandler(this.AmmoBox_CheckedChanged);
+			this.QuiverBox.AutoSize = true;
+			this.QuiverBox.Location = new System.Drawing.Point(6, 42);
+			this.QuiverBox.Name = "QuiverBox";
+			this.QuiverBox.Size = new System.Drawing.Size(57, 17);
+			this.QuiverBox.TabIndex = 0;
+			this.QuiverBox.Text = "Quiver";
+			this.QuiverBox.UseVisualStyleBackColor = true;
+			this.QuiverBox.CheckedChanged += new System.EventHandler(this.QuiverBox_CheckedChanged);
 			// 
 			// PrimaryBox
 			// 
@@ -508,9 +516,9 @@
 			this.groupBox8.Controls.Add(this.label9);
 			this.groupBox8.Controls.Add(this.CriticalMinBox);
 			this.groupBox8.Controls.Add(this.label10);
-			this.groupBox8.Location = new System.Drawing.Point(3, 185);
+			this.groupBox8.Location = new System.Drawing.Point(237, 341);
 			this.groupBox8.Name = "groupBox8";
-			this.groupBox8.Size = new System.Drawing.Size(225, 104);
+			this.groupBox8.Size = new System.Drawing.Size(202, 104);
 			this.groupBox8.TabIndex = 8;
 			this.groupBox8.TabStop = false;
 			this.groupBox8.Text = "Critical :";
@@ -674,9 +682,9 @@
 			this.groupBox3.Controls.Add(this.RangerBox);
 			this.groupBox3.Controls.Add(this.PaladinBox);
 			this.groupBox3.Controls.Add(this.FighterBox);
-			this.groupBox3.Location = new System.Drawing.Point(3, 295);
+			this.groupBox3.Location = new System.Drawing.Point(237, 265);
 			this.groupBox3.Name = "groupBox3";
-			this.groupBox3.Size = new System.Drawing.Size(225, 70);
+			this.groupBox3.Size = new System.Drawing.Size(202, 70);
 			this.groupBox3.TabIndex = 7;
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Allowed professions :";
@@ -746,51 +754,6 @@
 			this.FighterBox.Text = "Fighter";
 			this.FighterBox.UseVisualStyleBackColor = true;
 			this.FighterBox.CheckedChanged += new System.EventHandler(this.FighterBox_CheckedChanged);
-			// 
-			// groupBox9
-			// 
-			this.groupBox9.Controls.Add(this.SecondaryHandBox);
-			this.groupBox9.Controls.Add(this.TwoHandedBox);
-			this.groupBox9.Controls.Add(this.PrimaryHandBox);
-			this.groupBox9.Location = new System.Drawing.Point(3, 117);
-			this.groupBox9.Name = "groupBox9";
-			this.groupBox9.Size = new System.Drawing.Size(225, 62);
-			this.groupBox9.TabIndex = 7;
-			this.groupBox9.TabStop = false;
-			this.groupBox9.Text = "Allowed hands :";
-			// 
-			// SecondaryHandBox
-			// 
-			this.SecondaryHandBox.AutoSize = true;
-			this.SecondaryHandBox.Location = new System.Drawing.Point(105, 19);
-			this.SecondaryHandBox.Name = "SecondaryHandBox";
-			this.SecondaryHandBox.Size = new System.Drawing.Size(77, 17);
-			this.SecondaryHandBox.TabIndex = 0;
-			this.SecondaryHandBox.Text = "Secondary";
-			this.SecondaryHandBox.UseVisualStyleBackColor = true;
-			this.SecondaryHandBox.CheckedChanged += new System.EventHandler(this.SecondaryHandBox_CheckedChanged);
-			// 
-			// TwoHandedBox
-			// 
-			this.TwoHandedBox.AutoSize = true;
-			this.TwoHandedBox.Location = new System.Drawing.Point(6, 42);
-			this.TwoHandedBox.Name = "TwoHandedBox";
-			this.TwoHandedBox.Size = new System.Drawing.Size(79, 17);
-			this.TwoHandedBox.TabIndex = 0;
-			this.TwoHandedBox.Text = "Two hands";
-			this.TwoHandedBox.UseVisualStyleBackColor = true;
-			this.TwoHandedBox.CheckedChanged += new System.EventHandler(this.TwoHandedBox_CheckedChanged);
-			// 
-			// PrimaryHandBox
-			// 
-			this.PrimaryHandBox.AutoSize = true;
-			this.PrimaryHandBox.Location = new System.Drawing.Point(6, 19);
-			this.PrimaryHandBox.Name = "PrimaryHandBox";
-			this.PrimaryHandBox.Size = new System.Drawing.Size(60, 17);
-			this.PrimaryHandBox.TabIndex = 0;
-			this.PrimaryHandBox.Text = "Primary";
-			this.PrimaryHandBox.UseVisualStyleBackColor = true;
-			this.PrimaryHandBox.CheckedChanged += new System.EventHandler(this.PrimaryHandBox_CheckedChanged);
 			// 
 			// InterfaceNameBox
 			// 
@@ -875,7 +838,6 @@
 			this.PropertiesTab.Controls.Add(this.groupBox8);
 			this.PropertiesTab.Controls.Add(this.groupBox5);
 			this.PropertiesTab.Controls.Add(this.groupBox6);
-			this.PropertiesTab.Controls.Add(this.groupBox9);
 			this.PropertiesTab.Controls.Add(this.groupBox3);
 			this.PropertiesTab.Location = new System.Drawing.Point(4, 22);
 			this.PropertiesTab.Name = "PropertiesTab";
@@ -888,14 +850,14 @@
 			// DamageBox
 			// 
 			this.DamageBox.ControlText = "Damage :";
-			dice2.Base = 0;
-			dice2.Faces = 1;
-			dice2.Throws = 1;
-			this.DamageBox.Dice = dice2;
-			this.DamageBox.Location = new System.Drawing.Point(3, 371);
+			dice1.Base = 0;
+			dice1.Faces = 1;
+			dice1.Throws = 1;
+			this.DamageBox.Dice = dice1;
+			this.DamageBox.Location = new System.Drawing.Point(3, 341);
 			this.DamageBox.MinimumSize = new System.Drawing.Size(225, 100);
 			this.DamageBox.Name = "DamageBox";
-			this.DamageBox.Size = new System.Drawing.Size(225, 100);
+			this.DamageBox.Size = new System.Drawing.Size(225, 104);
 			this.DamageBox.TabIndex = 9;
 			this.DamageBox.ValueChanged += new System.EventHandler(this.DamageBox_ValueChanged);
 			// 
@@ -1035,8 +997,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.CriticalMinBox)).EndInit();
 			this.groupBox3.ResumeLayout(false);
 			this.groupBox3.PerformLayout();
-			this.groupBox9.ResumeLayout(false);
-			this.groupBox9.PerformLayout();
 			this.tabControl1.ResumeLayout(false);
 			this.VisualTab.ResumeLayout(false);
 			this.VisualTab.PerformLayout();
@@ -1077,7 +1037,7 @@
 		private System.Windows.Forms.CheckBox BodyBox;
 		private System.Windows.Forms.CheckBox NeckBox;
 		private System.Windows.Forms.CheckBox SecondaryBox;
-		private System.Windows.Forms.CheckBox AmmoBox;
+		private System.Windows.Forms.CheckBox QuiverBox;
 		private System.Windows.Forms.CheckBox PrimaryBox;
 		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.NumericUpDown SpeedBox;
@@ -1101,9 +1061,6 @@
 		private System.Windows.Forms.CheckBox RangerBox;
 		private System.Windows.Forms.CheckBox PaladinBox;
 		private System.Windows.Forms.CheckBox FighterBox;
-		private System.Windows.Forms.GroupBox groupBox9;
-		private System.Windows.Forms.CheckBox SecondaryHandBox;
-		private System.Windows.Forms.CheckBox PrimaryHandBox;
 		private System.Windows.Forms.CheckBox TwoHandedBox;
 		private System.Windows.Forms.NumericUpDown ACBonusBox;
 		private System.Windows.Forms.Label label14;
@@ -1111,7 +1068,6 @@
 		private System.Windows.Forms.ComboBox TileSetNameBox;
 		private System.Windows.Forms.ComboBox ScriptNameBox;
 		private System.Windows.Forms.Label label16;
-		private System.Windows.Forms.CheckBox UseQuiverBox;
 		private System.Windows.Forms.ComboBox InterfaceNameBox;
 		private System.Windows.Forms.Label label17;
 		private System.Windows.Forms.TabControl tabControl1;
@@ -1132,5 +1088,6 @@
 		private System.Windows.Forms.Label label4;
 		private DiceForm DamageBox;
 		private System.Windows.Forms.GroupBox groupBox2;
+		private System.Windows.Forms.CheckBox UseQuiverBox;
 	}
 }

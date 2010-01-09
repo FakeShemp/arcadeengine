@@ -140,12 +140,6 @@
     <Compile Include="Forms\DungeonLocationForm.Designer.cs">
       <DependentUpon>DungeonLocationForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\MonsterControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Forms\MonsterControl.Designer.cs">
-      <DependentUpon>MonsterControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\MonsterForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -177,6 +171,9 @@
     <Compile Include="CharGen.cs" />
     <Compile Include="Source\CriticalHit.cs" />
     <Compile Include="Source\Gui\MessageBox.cs" />
+    <Compile Include="Source\ItemSet.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Source\WallButton.cs" />
     <Compile Include="Source\MazeDisplayCoordinates.cs" />
     <Compile Include="Source\Compass.cs" />
@@ -196,7 +193,6 @@
     <Compile Include="Source\Gui\CampWindow.cs" />
     <Compile Include="Source\ForceField.cs" />
     <Compile Include="Source\Item.cs" />
-    <Compile Include="Source\ItemSet.cs" />
     <Compile Include="MainMenu.cs" />
     <Compile Include="Source\Maze.cs">
     </Compile>
@@ -264,9 +260,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\DungeonLocationForm.resx">
       <DependentUpon>DungeonLocationForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\MonsterControl.resx">
-      <DependentUpon>MonsterControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MonsterForm.resx">
       <DependentUpon>MonsterForm.cs</DependentUpon>

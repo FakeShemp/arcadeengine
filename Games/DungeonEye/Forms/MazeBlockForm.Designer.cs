@@ -58,8 +58,9 @@
 			this.label10 = new System.Windows.Forms.Label();
 			this.GroundLocationBox = new System.Windows.Forms.ComboBox();
 			this.label9 = new System.Windows.Forms.Label();
-			this.MonsterBox = new DungeonEye.Forms.MonsterControl();
 			this.WallsTab = new System.Windows.Forms.TabPage();
+			this.groupBox9 = new System.Windows.Forms.GroupBox();
+			this.WallTypeBox = new System.Windows.Forms.ComboBox();
 			this.groupBox8 = new System.Windows.Forms.GroupBox();
 			this.ButtonEastButton = new System.Windows.Forms.CheckBox();
 			this.ButtonWestButton = new System.Windows.Forms.CheckBox();
@@ -116,8 +117,6 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.DoorStateBox = new System.Windows.Forms.ComboBox();
 			this.DoorTypeBox = new System.Windows.Forms.ComboBox();
-			this.groupBox9 = new System.Windows.Forms.GroupBox();
-			this.WallTypeBox = new System.Windows.Forms.ComboBox();
 			this.TabControlBox.SuspendLayout();
 			this.ItemsTab.SuspendLayout();
 			this.groupBox4.SuspendLayout();
@@ -126,6 +125,7 @@
 			this.groupBox2.SuspendLayout();
 			this.MonstersTab.SuspendLayout();
 			this.WallsTab.SuspendLayout();
+			this.groupBox9.SuspendLayout();
 			this.groupBox8.SuspendLayout();
 			this.groupBox7.SuspendLayout();
 			this.DecorationGroupBox.SuspendLayout();
@@ -138,7 +138,6 @@
 			this.ForceFieldGroupBox.SuspendLayout();
 			this.TeleporterGroupBox.SuspendLayout();
 			this.DoorGroupBox.SuspendLayout();
-			this.groupBox9.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// TabControlBox
@@ -412,7 +411,6 @@
 			this.MonstersTab.Controls.Add(this.label10);
 			this.MonstersTab.Controls.Add(this.GroundLocationBox);
 			this.MonstersTab.Controls.Add(this.label9);
-			this.MonstersTab.Controls.Add(this.MonsterBox);
 			this.MonstersTab.Location = new System.Drawing.Point(4, 22);
 			this.MonstersTab.Name = "MonstersTab";
 			this.MonstersTab.Padding = new System.Windows.Forms.Padding(3);
@@ -486,17 +484,6 @@
 			this.label9.TabIndex = 11;
 			this.label9.Text = "Select ground location :";
 			// 
-			// MonsterBox
-			// 
-			this.MonsterBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
-			this.MonsterBox.Location = new System.Drawing.Point(3, 33);
-			this.MonsterBox.Monster = null;
-			this.MonsterBox.Name = "MonsterBox";
-			this.MonsterBox.Size = new System.Drawing.Size(598, 491);
-			this.MonsterBox.TabIndex = 10;
-			// 
 			// WallsTab
 			// 
 			this.WallsTab.Controls.Add(this.groupBox9);
@@ -509,6 +496,27 @@
 			this.WallsTab.TabIndex = 2;
 			this.WallsTab.Text = "Walls";
 			this.WallsTab.UseVisualStyleBackColor = true;
+			// 
+			// groupBox9
+			// 
+			this.groupBox9.Controls.Add(this.WallTypeBox);
+			this.groupBox9.Location = new System.Drawing.Point(207, 292);
+			this.groupBox9.Name = "groupBox9";
+			this.groupBox9.Size = new System.Drawing.Size(106, 118);
+			this.groupBox9.TabIndex = 22;
+			this.groupBox9.TabStop = false;
+			this.groupBox9.Text = "Wall type :";
+			// 
+			// WallTypeBox
+			// 
+			this.WallTypeBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.WallTypeBox.FormattingEnabled = true;
+			this.WallTypeBox.Location = new System.Drawing.Point(6, 20);
+			this.WallTypeBox.Name = "WallTypeBox";
+			this.WallTypeBox.Size = new System.Drawing.Size(94, 21);
+			this.WallTypeBox.Sorted = true;
+			this.WallTypeBox.TabIndex = 0;
+			this.WallTypeBox.SelectedIndexChanged += new System.EventHandler(this.WallTypeBox_SelectedIndexChanged);
 			// 
 			// groupBox8
 			// 
@@ -1121,27 +1129,6 @@
 			this.DoorTypeBox.TabIndex = 0;
 			this.DoorTypeBox.SelectedIndexChanged += new System.EventHandler(this.DoorTypeBox_SelectedIndexChanged);
 			// 
-			// groupBox9
-			// 
-			this.groupBox9.Controls.Add(this.WallTypeBox);
-			this.groupBox9.Location = new System.Drawing.Point(207, 292);
-			this.groupBox9.Name = "groupBox9";
-			this.groupBox9.Size = new System.Drawing.Size(106, 118);
-			this.groupBox9.TabIndex = 22;
-			this.groupBox9.TabStop = false;
-			this.groupBox9.Text = "Wall type :";
-			// 
-			// WallTypeBox
-			// 
-			this.WallTypeBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.WallTypeBox.FormattingEnabled = true;
-			this.WallTypeBox.Location = new System.Drawing.Point(6, 20);
-			this.WallTypeBox.Name = "WallTypeBox";
-			this.WallTypeBox.Size = new System.Drawing.Size(94, 21);
-			this.WallTypeBox.Sorted = true;
-			this.WallTypeBox.TabIndex = 0;
-			this.WallTypeBox.SelectedIndexChanged += new System.EventHandler(this.WallTypeBox_SelectedIndexChanged);
-			// 
 			// MazeBlockForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1173,6 +1160,7 @@
 			this.MonstersTab.ResumeLayout(false);
 			this.MonstersTab.PerformLayout();
 			this.WallsTab.ResumeLayout(false);
+			this.groupBox9.ResumeLayout(false);
 			this.groupBox8.ResumeLayout(false);
 			this.groupBox8.PerformLayout();
 			this.groupBox7.ResumeLayout(false);
@@ -1195,7 +1183,6 @@
 			this.TeleporterGroupBox.PerformLayout();
 			this.DoorGroupBox.ResumeLayout(false);
 			this.DoorGroupBox.PerformLayout();
-			this.groupBox9.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -1255,7 +1242,6 @@
 		private System.Windows.Forms.Button NWAddItem;
 		private System.Windows.Forms.ComboBox NWItemsBox;
 		private System.Windows.Forms.Button NWRemoveItem;
-		private MonsterControl MonsterBox;
 		private System.Windows.Forms.ComboBox MonsterTemplateBox;
 		private System.Windows.Forms.Label label10;
 		private System.Windows.Forms.ComboBox GroundLocationBox;
