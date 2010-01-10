@@ -29,22 +29,22 @@ using ArcEngine;
 namespace DungeonEye
 {
 	/// <summary>
-	/// 
+	/// Main provider
 	/// </summary>
-	public class DungeonProvider : Provider
+	public class Providers : Provider
 	{
 
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
-		public DungeonProvider()
+		public Providers()
 		{
 			Dungeons = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
 			SharedDungeons = new Dictionary<string, Dungeon>(StringComparer.OrdinalIgnoreCase);
 			Monsters = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
 			WallDecorations = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
 			Items = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
-		//	SharedItemSets = new Dictionary<string, ItemSet>(StringComparer.OrdinalIgnoreCase);
+			SharedItems = new Dictionary<string, Item>(StringComparer.OrdinalIgnoreCase);
 
 
 
@@ -52,7 +52,6 @@ namespace DungeonEye
 			Tags = new string[] { "dungeon", "item", "monster", "walldecoration" };
 			Assets = new Type[] { typeof(Dungeon), typeof(Item), typeof(Monster), typeof(WallDecoration) };
 			Version = new Version(0, 1);
-
 		}
 
 
@@ -131,25 +130,25 @@ namespace DungeonEye
 			{
 				case "dungeon":
 				{
-					Dungeons.Add(xml.Attributes["name"].Value, xml);
+					Dungeons[xml.Attributes["name"].Value] = xml;
 				}
 				break;
 
 				case "monster":
 				{
-					Monsters.Add(xml.Attributes["name"].Value, xml);
+					Monsters[xml.Attributes["name"].Value] = xml;
 				}
 				break;
 
 				case "item":
 				{
-					Items.Add(xml.Attributes["name"].Value, xml);
+					Items[xml.Attributes["name"].Value] = xml;
 				}
 				break;
 
 				case "walldecoration":
 				{
-					WallDecorations.Add(xml.Attributes["name"].Value, xml);
+					WallDecorations[xml.Attributes["name"].Value] = xml;
 				}
 				break;
 			}
@@ -231,7 +230,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Returns an array of all available assets
 		/// </summary>
-		/// <typeparam name="T"></typeparam>
+		/// <typeparam name="T">Type of the asset</typeparam>
 		/// <returns>Asset's name array</returns>
 		public override List<string> GetAssets<T>()
 		{
@@ -252,6 +251,7 @@ namespace DungeonEye
 			list.Sort();
 			return list;
 		}
+
 
 		/// <summary>
 		/// Creates an asset
@@ -428,22 +428,22 @@ namespace DungeonEye
 				SharedDungeons[name] = dungeon;
 				return (T)(object)dungeon;
 			}
-/*
-			if (typeof(T) == typeof(ItemSet))
+
+			if (typeof(T) == typeof(Item))
 			{
-				if (SharedItemSets.ContainsKey(name))
-					return (T)(object)SharedItemSets[name];
+				if (SharedItems.ContainsKey(name))
+					return (T)(object)SharedItems[name];
 
 
-				if (!ItemSets.ContainsKey(name))
+				if (!Items.ContainsKey(name))
 					return default(T);
 
-				ItemSet ItemSet = new ItemSet();
-				ItemSet.Load(ItemSets[name]);
-				SharedItemSets[name] = ItemSet;
+				Item ItemSet = new Item();
+				ItemSet.Load(Items[name]);
+				SharedItems[name] = ItemSet;
 				return (T)(object)ItemSet;
 			}
-*/
+
 			return default(T);
 		}
 
@@ -459,8 +459,8 @@ namespace DungeonEye
 			if (typeof(T) == typeof(Dungeon))
 				SharedDungeons.Remove(name);
 
-			//if (typeof(T) == typeof(ItemSet))
-			//    ItemSets.Remove(name); ;
+			if (typeof(T) == typeof(Item))
+				Items.Remove(name); ;
 		}
 
 
@@ -475,8 +475,8 @@ namespace DungeonEye
 			if (typeof(T) == typeof(Dungeon))
 				SharedDungeons.Clear();
 
-			//if (typeof(T) == typeof(ItemSet))
-			//    SharedItemSets.Clear();
+			if (typeof(T) == typeof(Item))
+				SharedItems.Clear();
 		}
 
 
@@ -487,7 +487,7 @@ namespace DungeonEye
 		public override void ClearShared()
 		{
 			SharedDungeons.Clear();
-			//ItemSets.Clear();
+			Items.Clear();
 		}
 
 
@@ -515,11 +515,11 @@ namespace DungeonEye
 		/// </summary>
 		Dictionary<string, XmlNode> Items;
 
-/*		/// <summary>
+		/// <summary>
 		/// Shared ItemSet
 		/// </summary>
-		Dictionary<string, ItemSet> SharedItemSets;
-*/
+		Dictionary<string, Item> SharedItems;
+
 
 
 

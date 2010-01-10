@@ -395,7 +395,11 @@ namespace ArcEngine
 				if (!Assets.ContainsKey(typeof(T)))
 					throw new ArgumentException("Unknown asset type");
 
-				return Assets[typeof(T)].Create<T>(name);
+				IAsset asset = Assets[typeof(T)].Create<T>(name);
+				if (asset != null)
+					asset.Init();
+
+				return (T)(object)asset;
 			}
 		}
 

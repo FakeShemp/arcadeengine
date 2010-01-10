@@ -50,15 +50,23 @@ namespace ArcEngine.Asset
 
 			Texture = new Texture();
 			LoadTexture(TextureName);
-
-			// Ca fait tout planter
-		//	Batch = Game.Device.CreateBatch();
 		}
 
 
 		#endregion
 
 
+
+		/// <summary>
+		/// Initializes the asset
+		/// </summary>
+		/// <returns>True on success</returns>
+		public bool Init()
+		{
+			return true;
+		}
+
+	
 		/// <summary>
 		/// Loads a texture
 		/// </summary>

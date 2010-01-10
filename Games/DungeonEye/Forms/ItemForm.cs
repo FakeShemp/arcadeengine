@@ -139,7 +139,7 @@ namespace DungeonEye.Forms
 		/// </summary>
 		public override void Save()
 		{
-			ResourceManager.AddAsset<Dungeon>(Item.Name, ResourceManager.ConvertAsset(Item));
+			ResourceManager.AddAsset<Item>(Item.Name, ResourceManager.ConvertAsset(Item));
 		}
 
 
@@ -155,7 +155,7 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void ItemForm_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			DialogResult result = MessageBox.Show("Save modifications ?", "Dungeon Editor", MessageBoxButtons.YesNoCancel);
+			DialogResult result = MessageBox.Show("Save modifications ?", "Item Editor", MessageBoxButtons.YesNoCancel);
 
 			if (result == DialogResult.Yes)
 			{
@@ -706,7 +706,6 @@ namespace DungeonEye.Forms
 
 			Item.ScriptName = ScriptNameBox.SelectedItem as string;
 			RebuildFoundInterfaces();
-
 		}
 
 

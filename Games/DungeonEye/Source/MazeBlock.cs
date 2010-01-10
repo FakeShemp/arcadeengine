@@ -720,7 +720,7 @@ namespace DungeonEye
 		{
 			get
 			{
-				return Type == BlockType.Trick;
+				return Type == BlockType.Illusion;
 			}
 
 		}
@@ -866,9 +866,9 @@ namespace DungeonEye
 		Wall,
 		
 		/// <summary>
-		/// Team can pass through this kind of wall
+		/// Illusionary wall
 		/// </summary>
-		Trick,
+		Illusion,
 
 	}
 

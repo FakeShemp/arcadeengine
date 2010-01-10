@@ -35,6 +35,18 @@ namespace DungeonEye.Source
 
 
 
+		/// <summary>
+		/// Initializes the asset
+		/// </summary>
+		/// <returns>True on success</returns>
+		public bool Init()
+		{
+			return true;
+		}
+
+	
+
+
 		#region Load & Save
 
 		/// <summary>

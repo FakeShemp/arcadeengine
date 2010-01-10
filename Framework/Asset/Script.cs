@@ -48,15 +48,17 @@ namespace ArcEngine.Asset
 		/// </summary>
 		public Script()
 		{
+
+
 			// Configure parameters
 			Params = new CompilerParameters();
 			Params.GenerateExecutable = false;
 			Params.GenerateInMemory = true;
-			Params.IncludeDebugInformation = true;
 			Params.WarningLevel = 3;
 			Params.CompilerOptions = "/optimize /define:DEBUG;TRACE";
 			
 
+			DebugMode = false;
 
 
 			// Adds the executable itself
@@ -72,7 +74,7 @@ namespace ArcEngine.Asset
 	//		ass = Assembly.GetExecutingAssembly().GetReferencedAssemblies();
 
 
-
+/*
 
 			// Find all interfaces
 			foreach (Type t in Assembly.GetCallingAssembly().GetTypes())
@@ -82,8 +84,20 @@ namespace ArcEngine.Asset
 
 				}
 			}
+*/
 		}
 
+
+
+
+		/// <summary>
+		/// Initializes the asset
+		/// </summary>
+		/// <returns>True on success</returns>
+		public bool Init()
+		{
+			return true;
+		}
 
 
 		/// <summary>
@@ -250,6 +264,7 @@ namespace ArcEngine.Asset
 			return list;
 		}
 
+
 		/// <summary>
 		/// Compiles a given string script
 		/// </summary>
@@ -342,9 +357,9 @@ namespace ArcEngine.Asset
 		/// <summary>
 		/// Creates an instance of T
 		/// </summary>
-		/// <typeparam name="T">Type of the instance</typeparam>
+		/// <typeparam name="T">The type of object to create</typeparam>
 		/// <param name="name">Name of the class</param>
-		/// <returns>An instance of or default(T)</returns>
+		/// <returns>A reference to the newly created object.</returns>
 		public T CreateInstance<T>(string name) where T : class
 		{
 			if (!IsCompiled)
@@ -357,7 +372,7 @@ namespace ArcEngine.Asset
 			Type t = CompiledAssembly.GetType(name);
 			if (t == null)
 			{
-				Trace.WriteLine("Type \"" + Name + "\" not found.");
+				Trace.WriteLine("Type \"" + name + "\" not found.");
 				return default(T);
 			}
 
@@ -365,7 +380,7 @@ namespace ArcEngine.Asset
 			// Check interface
 			if (!typeof(T).IsAssignableFrom(t))
 			{
-				Trace.WriteLine("Type \"" + Name + "\" found, but not an instance of \"" + typeof(T).Name + "\".");
+				Trace.WriteLine("Type \"" + name + "\" found, but not an instance of \"" + typeof(T).Name + "\".");
 				return default(T);
 			}
 

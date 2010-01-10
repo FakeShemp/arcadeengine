@@ -27,6 +27,8 @@ using ArcEngine;
 using ArcEngine.Graphic;
 using ArcEngine.Asset;
 using OpenTK.Graphics.OpenGL;
+using DungeonEye.Interfaces;
+
 //
 // List of monsters : http://members.tripod.com/~stanislavs/games/eob1mons.htm
 // http://dmweb.free.fr/?q=node/1363
@@ -72,6 +74,14 @@ namespace DungeonEye
 
 			Font = ResourceManager.CreateSharedAsset<Font2d>("inventory", "inventory");
 
+			if (!string.IsNullOrEmpty(ScriptName) && !string.IsNullOrEmpty(InterfaceName))
+			{
+				Script script = ResourceManager.CreateAsset<Script>(ScriptName);
+				script.Compile();
+
+				Interface = script.CreateInstance<IMonster>(InterfaceName);
+			}
+
 			return true;
 		}
 
@@ -84,6 +94,10 @@ namespace DungeonEye
 		/// </summary>
 		public virtual void Update(GameTime time)
 		{
+			if (Interface != null)
+				Interface.OnUpdate(this);
+
+
 			// Draw offset
 			if (LastDrawOffset + DrawOffsetDuration < DateTime.Now)
 			{
@@ -243,10 +257,7 @@ namespace DungeonEye
 		/// <returns></returns>
 		public bool Load(XmlNode xml)
 		{
-			if (xml == null)
-				return false;
-
-			if (xml.Name.ToLower() != "monster")
+			if (xml == null || xml.Name.ToLower() != "monster")
 				return false;
 
 			Name = xml.Attributes["name"].Value;
@@ -369,6 +380,12 @@ namespace DungeonEye
 			return amount;
 		}
 
+
+
+		public override string ToString()
+		{
+			return string.Format("{0}", Name);
+		}
 
 
 		#region Properties
@@ -718,6 +735,16 @@ namespace DungeonEye
 		{
 			get;
 			set;
+		}
+
+
+		/// <summary>
+		/// Script interface
+		/// </summary>
+		public IMonster Interface
+		{
+			get;
+			private set;
 		}
 
 		#endregion

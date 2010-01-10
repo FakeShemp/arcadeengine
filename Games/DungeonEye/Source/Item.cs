@@ -21,6 +21,8 @@ using System;
 using System.Drawing;
 using System.Xml;
 using ArcEngine.Asset;
+using ArcEngine;
+using DungeonEye.Interfaces;
 
 
 //
@@ -57,6 +59,24 @@ namespace DungeonEye
 			Damage = new Dice();
 		}
 
+
+		/// <summary>
+		/// Initializes the item
+		/// </summary>
+		/// <returns></returns>
+		public bool Init()
+		{
+			if (!string.IsNullOrEmpty(ScriptName) && !string.IsNullOrEmpty(InterfaceName))
+			{
+				Script script = ResourceManager.CreateAsset<Script>(ScriptName);
+				script.Compile();
+
+				Interface = script.CreateInstance<IItem>(InterfaceName);
+			}
+
+
+			return true;
+		}
 
 
 		#region Load & Save
@@ -280,15 +300,15 @@ namespace DungeonEye
 			set;
 		}
 
+	
 		/// <summary>
-		/// Script of the item
+		/// 
 		/// </summary>
-		public Script Script
+		public IItem Interface
 		{
 			get;
 			private set;
 		}
-
 
 		/// <summary>
 		/// Name of the item
@@ -578,19 +598,4 @@ namespace DungeonEye
 		None = 0x400,
 	}
 
-/*
-	/// <summary>
-	/// Type of armor
-	/// </summary>
-	public enum ArmorType
-	{
-		Buckler,
-		Heavy,
-		LargeShield,
-		Light,
-		Medium,
-		SmallShield,
-		TowerShield
-	}
-*/
 }

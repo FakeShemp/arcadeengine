@@ -142,10 +142,10 @@ namespace DungeonEye
 
 
 
-			// Update doors
+			#region Doors
 			foreach (Door door in Doors)
 				door.Update(time);
-
+			#endregion
 
 
 			#region Flying items
@@ -742,7 +742,7 @@ namespace DungeonEye
 						case BlockType.Wall:
 							Display.Color = Color.Black;
 						break;
-						case BlockType.Trick:
+						case BlockType.Illusion:
 							Display.Color = Color.Gray;
 						break;
 						default:

@@ -228,8 +228,8 @@ namespace DungeonEye.Forms
 					if (block.Type == BlockType.Ground)
 						block.Type = BlockType.Wall;
 					else if (block.Type == BlockType.Wall)
-						block.Type = BlockType.Trick;
-					else if (block.Type == BlockType.Trick)
+						block.Type = BlockType.Illusion;
+					else if (block.Type == BlockType.Illusion)
 						block.Type = BlockType.Wall;
 				}
 
@@ -425,7 +425,7 @@ namespace DungeonEye.Forms
 					
 
 					Color color = Color.White;
-					if (block.Type == BlockType.Trick)
+					if (block.Type == BlockType.Illusion)
 						color = Color.LightGreen; //Color.FromArgb(200, Color.Green);
 
 					Batch.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), color, tile.Rectangle);

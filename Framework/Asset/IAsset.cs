@@ -33,6 +33,15 @@ namespace ArcEngine.Asset
 	public interface IAsset
 	{
 
+
+		/// <summary>
+		/// Initializes the asset
+		/// </summary>
+		/// <returns></returns>
+		bool Init();
+
+
+
 		#region IO
 		/// <summary>
 		/// Loads an asset

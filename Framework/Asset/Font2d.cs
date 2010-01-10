@@ -52,6 +52,18 @@ namespace ArcEngine.Asset
 		}
 
 
+
+		/// <summary>
+		/// Initializes the asset
+		/// </summary>
+		/// <returns>True on success</returns>
+		public bool Init()
+		{
+			return true;
+		}
+
+	
+
 		#region Text drawing
 
 /*

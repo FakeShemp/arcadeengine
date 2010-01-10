@@ -67,7 +67,7 @@ namespace DungeonEye
 			LanguageName = Settings.GetString("language");
 
 			// Add the provider
-			ResourceManager.AddProvider(new DungeonProvider());
+			ResourceManager.AddProvider(new Providers());
 
 			GSM = new ScreenManager(this);
 
