@@ -19,7 +19,7 @@ namespace DungeonEye.Forms
 		{
 			InitializeComponent();
 
-			Dice = new Dice((int)ThrowBox.Value, (int)FacesBox.Value, (int)BaseBox.Value);
+
 			CalculateMinMax();
 		}
 
@@ -33,6 +33,7 @@ namespace DungeonEye.Forms
 			MinimumBox.Text = Dice.Minimum.ToString();
 			MaximumBox.Text = Dice.Maximum.ToString();
 		}
+
 
 		#region Events
 
@@ -52,9 +53,6 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void OnValueChanged(object sender, EventArgs e)
 		{
-			Dice.Base = (int)BaseBox.Value;
-			Dice.Faces = (int)FacesBox.Value;
-			Dice.Throws = (int)ThrowBox.Value;
 			CalculateMinMax();
 
 			if (ValueChanged != null)
@@ -79,9 +77,9 @@ namespace DungeonEye.Forms
 			{
 				if (value == null)
 					return;
-				Dice.Base = value.Base;
-				Dice.Faces = value.Faces;
-				Dice.Throws = value.Throws;
+				BaseBox.Value = value.Base;
+				FacesBox.Value = value.Faces;
+				ThrowBox.Value = value.Throws;
 			}
 		}
 

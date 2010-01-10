@@ -44,12 +44,12 @@ namespace DungeonEye
 		/// <param name="throws">Throw count</param>
 		/// <param name="faces">Face count</param>
 		/// <param name="start">Base value</param>
-		public Dice(int throws, int sides, int start)
+		public Dice(int throws, int faces, int start)
 		{
 			Random = new Random((int)DateTime.Now.Ticks);
 
 			Throws = throws;
-			Faces = sides;
+			Faces = faces;
 			Base = start;
 		}
 
@@ -80,6 +80,33 @@ namespace DungeonEye
 
 			return val + Base;
 		}
+
+
+		/// <summary>
+		/// Resets the dice
+		/// </summary>
+		public void Reset()
+		{
+			Base = 0;
+			Throws = 1;
+			Faces = 1;
+		}
+
+
+		/// <summary>
+		/// Copy a dice
+		/// </summary>
+		/// <param name="dice">Dice to copy from</param>
+		public void Copy(Dice dice)
+		{
+			if (dice == null)
+				return;
+
+			Faces = dice.Faces;
+			Throws = dice.Throws;
+			Base = dice.Base;
+		}
+
 
 		#region IO
 

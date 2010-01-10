@@ -138,11 +138,6 @@
             0,
             0,
             0});
-			this.ThrowBox.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
 			this.ThrowBox.Name = "ThrowBox";
 			this.ThrowBox.Size = new System.Drawing.Size(49, 20);
 			this.ThrowBox.TabIndex = 3;
@@ -175,11 +170,6 @@
 			this.FacesBox.Location = new System.Drawing.Point(57, 19);
 			this.FacesBox.Maximum = new decimal(new int[] {
             10000,
-            0,
-            0,
-            0});
-			this.FacesBox.Minimum = new decimal(new int[] {
-            1,
             0,
             0,
             0});

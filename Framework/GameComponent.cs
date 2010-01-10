@@ -8,6 +8,9 @@ namespace ArcEngine
 	/// </summary>
 	public class GameComponent
 	{
+		/// <summary>
+		/// 
+		/// </summary>
 		public GameComponent()
 		{
 			IsVisible = true;

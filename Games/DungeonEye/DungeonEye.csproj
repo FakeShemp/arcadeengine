@@ -140,6 +140,12 @@
     <Compile Include="Forms\DungeonLocationForm.Designer.cs">
       <DependentUpon>DungeonLocationForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\MonsterControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\MonsterControl.Designer.cs">
+      <DependentUpon>MonsterControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\MonsterForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -257,6 +263,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\DungeonLocationForm.resx">
       <DependentUpon>DungeonLocationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MonsterControl.resx">
+      <DependentUpon>MonsterControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MonsterForm.resx">
       <DependentUpon>MonsterForm.cs</DependentUpon>

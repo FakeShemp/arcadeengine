@@ -138,7 +138,7 @@ namespace DungeonEye
 			// Neck
 			if (item.Slot == BodySlot.Neck && GetInventoryItem(InventoryPosition.Neck) == null)
 			{
-				SetInventoryItem(InventoryPosition.Wrist, item); 
+				SetInventoryItem(InventoryPosition.Neck, item); 
 				return true;
 			}
 
