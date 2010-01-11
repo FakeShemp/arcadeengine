@@ -50,7 +50,7 @@ namespace DungeonEye
 		public DungeonLocation()
 		{
 			Compass = new Compass();
-			Maze = string.Empty;
+			MazeName = string.Empty;
 			Position = Point.Empty;
 			GroundPosition = GroundPosition.NorthEast;
 		}
@@ -63,7 +63,7 @@ namespace DungeonEye
 		public DungeonLocation(DungeonLocation loc)
 		{
 			Compass = new Compass(loc.Compass);
-			Maze = loc.Maze;
+			MazeName = loc.MazeName;
 			Position = loc.Position;
 			GroundPosition = loc.GroundPosition;
 		}
@@ -78,7 +78,7 @@ namespace DungeonEye
 		/// <param name="direction"></param>
 		public DungeonLocation(string maze, Point location, CardinalPoint direction)
 		{
-			Maze = maze;
+			MazeName = maze;
 			Position = location;
 			Compass = new Compass();
 			Direction = direction;
@@ -100,9 +100,9 @@ namespace DungeonEye
 				return false;
 
 			if (xml.Attributes["maze"] != null)
-				Maze = xml.Attributes["maze"].Value;
+				MazeName = xml.Attributes["maze"].Value;
 			else
-				Maze = string.Empty;
+				MazeName = string.Empty;
 
 
 			if (xml.Attributes["x"] != null && xml.Attributes["y"] != null)
@@ -137,8 +137,8 @@ namespace DungeonEye
 
 
 			//writer.WriteStartElement("location");
-			if (!string.IsNullOrEmpty(Maze))
-				writer.WriteAttributeString("maze", Maze);
+			if (!string.IsNullOrEmpty(MazeName))
+				writer.WriteAttributeString("maze", MazeName);
 
 			writer.WriteAttributeString("x", Position.X.ToString());
 			writer.WriteAttributeString("y", Position.Y.ToString());
@@ -162,7 +162,7 @@ namespace DungeonEye
 		/// Name of the maze
 		/// </summary>
 		[DescriptionAttribute("Name of the maze")]
-		public string Maze
+		public string MazeName
 		{
 			get;
 			set;
@@ -172,13 +172,19 @@ namespace DungeonEye
 		/// <summary>
 		/// Handle of the maze
 		/// </summary>
-	//	Maze MazeHandle;
+		public Maze Maze
+		{
+			get;
+			private set;
+		}
 
 
 		/// <summary>
 		/// Location in the maze
 		/// </summary>
 		public Point Position;
+
+
 
 		/// <summary>
 		/// Facing direction
@@ -197,7 +203,7 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Compass
 		/// </summary>
 		[Browsable(false)]
 		public Compass Compass;
@@ -212,12 +218,13 @@ namespace DungeonEye
 			set;
 		}
 
+
 		#endregion
 
 
 		public override string ToString()
 		{
-			return string.Format("{0}x{1} {2} {3}", Position.X, Position.Y, Maze, Direction.ToString());
+			return string.Format("{0}x{1} {2} {3}", Position.X, Position.Y, MazeName, Direction.ToString());
 		}
 	}
 
@@ -236,10 +243,10 @@ namespace DungeonEye
 			{
 				DungeonLocation loc = value as DungeonLocation;
 
-				if (string.IsNullOrEmpty(loc.Maze))
+				if (string.IsNullOrEmpty(loc.MazeName))
 					return string.Empty;
 
-				return loc.Maze + " " + loc.Position.ToString() + "-" + loc.Direction.ToString();
+				return loc.MazeName + " " + loc.Position.ToString() + "-" + loc.Direction.ToString();
 			}
 
 			return base.ConvertTo(context, culture, value, destType);

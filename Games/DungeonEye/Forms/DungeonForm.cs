@@ -542,7 +542,7 @@ namespace DungeonEye.Forms
 			Batch.AddRectangle(new Rectangle(Offset.X + PreviewLoc.Position.X * 25, Offset.Y + PreviewLoc.Position.Y * 25, 25, 25), Color.White, tile.Rectangle);
 
 			// Starting point
-			if (Dungeon.StartLocation.Maze == Maze.Name)
+			if (Dungeon.StartLocation.MazeName == Maze.Name)
 			{
 				tile = Icons.GetTile(20);
 				Batch.AddRectangle(new Rectangle(Offset.X + Dungeon.StartLocation.Position.X * 25, Offset.Y + Dungeon.StartLocation.Position.Y * 25, 25, 25), Color.White, tile.Rectangle);
@@ -647,7 +647,7 @@ namespace DungeonEye.Forms
 		{
 			Maze = Dungeon.GetMaze(MazeListBox.SelectedItem.ToString());
 			MazePropertyBox.SelectedObject = Maze;
-			PreviewLoc.Maze = Maze.Name;
+			PreviewLoc.MazeName = Maze.Name;
 		}
 
 

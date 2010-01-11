@@ -29,7 +29,7 @@ using System.Xml;
 using Microsoft.VisualBasic;
 
 
-// TODO Pouvoir ajouter des references a des dll depuis soit le ResourceManager
+// TODO Pouvoir ajouter des references a des dll soit depuis le ResourceManager
 //      soit directement en parametre dans le fichier xml du script
 //
 // http://www.csscript.net/

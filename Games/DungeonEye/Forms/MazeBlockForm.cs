@@ -437,7 +437,7 @@ namespace DungeonEye.Forms
 			monster.Location = new DungeonLocation();
 			monster.Location.Position = MazeBlock.Location;
 			monster.Location.GroundPosition = (GroundPosition)Enum.ToObject(typeof(GroundPosition), GroundLocationBox.SelectedIndex);
-			monster.Location.Maze = Maze.Name;
+			monster.Location.MazeName = Maze.Name;
 			monster.Init();
 
 

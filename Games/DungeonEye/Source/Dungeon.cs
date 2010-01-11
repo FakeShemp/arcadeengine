@@ -123,7 +123,7 @@ namespace DungeonEye
 					// Start point
 					case "start":
 					{
-						StartLocation.Maze = node.Attributes["name"].Value;
+						StartLocation.MazeName = node.Attributes["name"].Value;
 						StartLocation.Position = new Point(int.Parse(node.Attributes["x"].Value), int.Parse(node.Attributes["y"].Value));
 						StartLocation.Direction = (CardinalPoint)Enum.Parse(typeof(CardinalPoint), node.Attributes["direction"].Value, true);
 					}
@@ -154,7 +154,7 @@ namespace DungeonEye
 			writer.WriteAttributeString("name", Name);
 
 			writer.WriteStartElement("start");
-			writer.WriteAttributeString("name", StartLocation.Maze);
+			writer.WriteAttributeString("name", StartLocation.MazeName);
 			writer.WriteAttributeString("x", StartLocation.Position.X.ToString());
 			writer.WriteAttributeString("y", StartLocation.Position.Y.ToString());
 			writer.WriteAttributeString("direction", StartLocation.Direction.ToString());

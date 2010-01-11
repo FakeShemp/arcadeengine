@@ -38,6 +38,7 @@ namespace ArcEngine.Asset
 	/// <summary>
 	/// Texture font class
 	/// </summary>
+	/// TODO: A renommer en BitmapFont
 	public class Font2d : IAsset, IDisposable
 	{
 		/// <summary>

@@ -50,6 +50,7 @@ namespace DungeonEye
 			SpellBook = new SpellBook();
 
 			DrawHPAsBar = true;
+			Location = new DungeonLocation();
 		}
 
 
@@ -65,6 +66,7 @@ namespace DungeonEye
 
 			ResourceManager.ClearAssets();
 			ResourceManager.LoadBank("data/game.bnk");
+			Trace.WriteLine("Content loaded ({0} ms)", watch.ElapsedMilliseconds);
 
 			// Language
 			Language = ResourceManager.CreateAsset<StringTable>("game");
@@ -95,23 +97,27 @@ namespace DungeonEye
 				InputScheme["SelectHero5"] = Keys.D5;
 				InputScheme["SelectHero6"] = Keys.D6;
 			}
+			Trace.WriteLine("InputScheme ({0} ms)", watch.ElapsedMilliseconds);
+
 
 			TileSet = ResourceManager.CreateAsset<TileSet>("Interface");
 			TileSet.Scale = new SizeF(2.0f, 2.0f);
+			Trace.WriteLine("Tileset ({0} ms)", watch.ElapsedMilliseconds);
 
 
 			Heads = ResourceManager.CreateAsset<TileSet>("Heroes");
 			Heads.Scale = new SizeF(2.0f, 2.0f);
-
+			Trace.WriteLine("Head ({0} ms)", watch.ElapsedMilliseconds);
 
 			Items = ResourceManager.CreateAsset<TileSet>("Items");
 			Items.Scale = new SizeF(2.0f, 2.0f);
+			Trace.WriteLine("Items ({0} ms)", watch.ElapsedMilliseconds);
 
 
 			//HACK: Load heroes
 			string[] name = new string[] { "Allabar", "Ariel", "Valanau", "Tenmiyana", "Bob", "Chuck" };
 			Heroes = new Hero[6];
-			for (int i = 0; i < 4; i++)
+			for (int i = 0; i < 6; i++)
 			{
 				Hero hero = new Hero(this);
 				hero.Name = name[i];
@@ -137,14 +143,8 @@ namespace DungeonEye
 			Dungeon = ResourceManager.CreateAsset<Dungeon>("Eye");
 			Dungeon.Init();
 
-
-			Maze = Dungeon.GetMaze(Dungeon.StartLocation.Maze);
-			Location = Dungeon.StartLocation;
-			Move(Point.Empty);
-
-
-			sound = ResourceManager.CreateAsset<Audio>("ring");
-
+			// Set location
+			Teleport(Dungeon.StartLocation);
 
 			watch.Stop();
 			Trace.WriteLine("Team::LoadContent() finished ! ({0} ms)", watch.ElapsedMilliseconds);
@@ -162,10 +162,7 @@ namespace DungeonEye
 		/// <returns>True if team successfuly loaded, otherwise false</returns>
 		public bool Load(XmlNode xml)
 		{
-			if (xml == null)
-				return false;
-
-			if (xml.Name.ToLower() != "team")
+			if (xml == null || xml.Name.ToLower() != "team")
 				return false;
 
 
@@ -185,7 +182,7 @@ namespace DungeonEye
 					{
 						Location.Position = new Point(int.Parse(node.Attributes["x"].Value), int.Parse(node.Attributes["y"].Value));
 						Location.Direction = (CardinalPoint)Enum.Parse(typeof(CardinalPoint), node.Attributes["direction"].Value, true);
-						Location.Maze= node.Attributes["name"].Value;
+						Location.MazeName= node.Attributes["name"].Value;
 					}
 					break;
 
@@ -229,7 +226,7 @@ namespace DungeonEye
 			writer.WriteAttributeString("x", Location.Position.X.ToString());
 			writer.WriteAttributeString("y", Location.Position.Y.ToString());
 			writer.WriteAttributeString("direction", Location.Direction.ToString());
-			writer.WriteAttributeString("name", Location.Maze);
+			writer.WriteAttributeString("name", Location.MazeName);
 			writer.WriteEndElement();
 
 
@@ -502,8 +499,8 @@ namespace DungeonEye
 
 
 			// Mini map
-			if (Maze != null)
-				Maze.DrawMiniMap(this, new Point(500, 220));
+			//if (Maze != null)
+			//	Maze.DrawMiniMap(this, new Point(500, 220));
 
 		}
 
@@ -761,9 +758,6 @@ namespace DungeonEye
 				ScreenManager.AddScreen(new AutoMap());
 			}
 
-
-			if (Keyboard.IsNewKeyPress(Keys.M))
-				sound.Play();
 
 			// Bye bye
 			if (Keyboard.IsNewKeyPress(Keys.Escape))
@@ -2319,13 +2313,14 @@ namespace DungeonEye
 		/// <returns>True if teleportion is ok, or false if M. Spoke failed !</returns>
 		public bool Teleport(DungeonLocation location)
 		{
-			Maze maze = Dungeon.GetMaze(location.Maze);
+			Maze maze = Dungeon.GetMaze(location.MazeName);
 			if (maze == null)
 				return false;
 
-			MazeBlock.OnTeamLeave(this);
+			if(MazeBlock != null)
+				MazeBlock.OnTeamLeave(this);
 			Location.Position = location.Position;
-			Location.Maze = maze.Name;
+			Location.MazeName = maze.Name;
 			Maze = maze;
 
 
@@ -2360,6 +2355,16 @@ namespace DungeonEye
 
 
 		/// <summary>
+		/// Location of the team
+		/// </summary>
+		public DungeonLocation Location
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
 		/// MazeBlock where the team is
 		/// </summary>
 		public MazeBlock MazeBlock
@@ -2370,9 +2375,26 @@ namespace DungeonEye
 
 
 		/// <summary>
+		/// Direction the team is facing
+		/// </summary>
+		public CardinalPoint Direction
+		{
+			get
+			{
+				return Location.Direction;
+			}
+			set
+			{
+				Location.Direction = value;
+			}
+		}
+
+
+		/// <summary>
 		/// Drawing Tileset
 		/// </summary>
 		TileSet TileSet;
+
 
 		/// <summary>
 		/// Heads of the Heroes
@@ -2384,6 +2406,7 @@ namespace DungeonEye
 		/// Items tilesets
 		/// </summary>
 		TileSet Items;
+
 
 		/// <summary>
 		/// All heros in the team
@@ -2406,32 +2429,6 @@ namespace DungeonEye
 				}
 
 				return count;
-			}
-		}
-
-
-		/// <summary>
-		/// Location of the team
-		/// </summary>
-		public DungeonLocation Location
-		{
-			get;
-			private set;
-		}
-
-
-		/// <summary>
-		/// Direction the team is facing
-		/// </summary>
-		public CardinalPoint Direction
-		{
-			get
-			{
-				return Location.Direction;
-			}
-			set
-			{
-				Location.Direction = value;
 			}
 		}
 
@@ -2514,6 +2511,7 @@ namespace DungeonEye
 		/// Display font
 		/// </summary>
 		Font2d Font;
+
 
 		/// <summary>
 		/// Outlined font
@@ -2610,12 +2608,6 @@ namespace DungeonEye
 			get;
 			private set;
 		}
-
-
-		/// <summary>
-		/// Sound test
-		/// </summary>
-		Audio sound;
 
 
 		/// <summary>

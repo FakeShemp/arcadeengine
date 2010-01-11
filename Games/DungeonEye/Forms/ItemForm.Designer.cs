@@ -28,7 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			DungeonEye.Dice dice2 = new DungeonEye.Dice();
+			DungeonEye.Dice dice1 = new DungeonEye.Dice();
 			this.GLGroundTile = new OpenTK.GLControl();
 			this.GLInventoryTile = new OpenTK.GLControl();
 			this.label2 = new System.Windows.Forms.Label();
@@ -92,10 +92,10 @@
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.VisualTab = new System.Windows.Forms.TabPage();
 			this.PropertiesTab = new System.Windows.Forms.TabPage();
+			this.DamageBox = new DungeonEye.Forms.DiceForm();
 			this.ScriptTab = new System.Windows.Forms.TabPage();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.groupBox11 = new System.Windows.Forms.GroupBox();
-			this.DamageBox = new DungeonEye.Forms.DiceForm();
 			this.groupBox4.SuspendLayout();
 			this.groupBox5.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.ACBonusBox)).BeginInit();
@@ -393,9 +393,9 @@
 			this.WaistBox.AutoSize = true;
 			this.WaistBox.Location = new System.Drawing.Point(92, 111);
 			this.WaistBox.Name = "WaistBox";
-			this.WaistBox.Size = new System.Drawing.Size(53, 17);
+			this.WaistBox.Size = new System.Drawing.Size(44, 17);
 			this.WaistBox.TabIndex = 0;
-			this.WaistBox.Text = "Waist";
+			this.WaistBox.Text = "Belt";
 			this.WaistBox.UseVisualStyleBackColor = true;
 			this.WaistBox.CheckedChanged += new System.EventHandler(this.WaistBox_CheckedChanged);
 			// 
@@ -837,6 +837,20 @@
 			this.PropertiesTab.Text = "Properties";
 			this.PropertiesTab.UseVisualStyleBackColor = true;
 			// 
+			// DamageBox
+			// 
+			this.DamageBox.ControlText = "Damage :";
+			dice1.Base = 0;
+			dice1.Faces = 1;
+			dice1.Throws = 1;
+			this.DamageBox.Dice = dice1;
+			this.DamageBox.Location = new System.Drawing.Point(3, 341);
+			this.DamageBox.MinimumSize = new System.Drawing.Size(225, 100);
+			this.DamageBox.Name = "DamageBox";
+			this.DamageBox.Size = new System.Drawing.Size(225, 104);
+			this.DamageBox.TabIndex = 9;
+			this.DamageBox.ValueChanged += new System.EventHandler(this.DamageBox_ValueChanged);
+			// 
 			// ScriptTab
 			// 
 			this.ScriptTab.Controls.Add(this.groupBox2);
@@ -871,28 +885,14 @@
 			this.groupBox11.TabStop = false;
 			this.groupBox11.Text = "Properties :";
 			// 
-			// DamageBox
-			// 
-			this.DamageBox.ControlText = "Damage :";
-			dice2.Base = 0;
-			dice2.Faces = 1;
-			dice2.Throws = 1;
-			this.DamageBox.Dice = dice2;
-			this.DamageBox.Location = new System.Drawing.Point(3, 341);
-			this.DamageBox.MinimumSize = new System.Drawing.Size(225, 100);
-			this.DamageBox.Name = "DamageBox";
-			this.DamageBox.Size = new System.Drawing.Size(225, 104);
-			this.DamageBox.TabIndex = 9;
-			this.DamageBox.ValueChanged += new System.EventHandler(this.DamageBox_ValueChanged);
-			// 
-			// ItemSetForm
+			// ItemForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(821, 645);
 			this.Controls.Add(this.groupBox11);
 			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.Name = "ItemSetForm";
+			this.Name = "ItemForm";
 			this.TabText = "ItemForm";
 			this.Text = "ItemForm";
 			this.Load += new System.EventHandler(this.ItemSetForm_Load);

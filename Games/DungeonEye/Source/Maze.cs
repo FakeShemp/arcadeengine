@@ -868,7 +868,7 @@ namespace DungeonEye
 						{
 							Monster monster = new Monster();
 							monster.Load(subnode);
-							monster.Location.Maze = Name;
+							monster.Location.MazeName = Name;
 							Monsters.Add(monster);
 						}
 

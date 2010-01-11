@@ -165,14 +165,18 @@ namespace DungeonEye
 			}
 
 			// Primary
-			if ((item.Slot & BodySlot.Primary) == BodySlot.Primary && GetInventoryItem(InventoryPosition.Primary) == null)
+			if ((item.Slot & BodySlot.Primary) == BodySlot.Primary && 
+				(item.Type == ItemType.Weapon || item.Type == ItemType.Shield || item.Type == ItemType.Wand) &&
+				GetInventoryItem(InventoryPosition.Primary) == null)
 			{
 				SetInventoryItem(InventoryPosition.Primary, item);
 				return true;
 			}
 
 			// Secondary
-			if ((item.Slot & BodySlot.Secondary) == BodySlot.Secondary && GetInventoryItem(InventoryPosition.Secondary) == null)
+			if ((item.Slot & BodySlot.Secondary) == BodySlot.Secondary &&
+				(item.Type == ItemType.Weapon || item.Type == ItemType.Shield || item.Type == ItemType.Wand) &&
+				GetInventoryItem(InventoryPosition.Secondary) == null)
 			{
 				SetInventoryItem(InventoryPosition.Secondary, item);
 				return true;
@@ -197,6 +201,19 @@ namespace DungeonEye
 				{
 					SetInventoryItem(InventoryPosition.Ring_Left, item);
 					return true;
+				}
+			}
+
+			// Waist
+			if ((item.Slot & BodySlot.Belt) == BodySlot.Belt)
+			{
+				for(int i = 0; i < 3; i++)
+				{
+					if (GetInventoryItem(InventoryPosition.Belt_1 + i) == null)
+					{
+						SetInventoryItem(InventoryPosition.Belt_1 + i, item);
+						return true;
+					}
 				}
 			}
 
@@ -297,7 +314,7 @@ namespace DungeonEye
 				case InventoryPosition.Belt_1:
 				case InventoryPosition.Belt_2:
 				case InventoryPosition.Belt_3:
-				if ((item.Slot & BodySlot.Waist) == BodySlot.Waist)
+				if ((item.Slot & BodySlot.Belt) == BodySlot.Belt)
 					res = true;
 				break;
 
@@ -405,7 +422,7 @@ namespace DungeonEye
 				// Use the weapon
 				case ItemType.Weapon:
 				{
-					if (item.Slot == BodySlot.Waist)
+					if (item.Slot == BodySlot.Belt)
 					{
 					}
 

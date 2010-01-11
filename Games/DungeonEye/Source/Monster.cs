@@ -72,8 +72,6 @@ namespace DungeonEye
 			Tileset = ResourceManager.CreateSharedAsset<TileSet>(TileSetName, TileSetName);
 			Tileset.Scale = new SizeF(2.0f, 2.0f);
 
-			Font = ResourceManager.CreateSharedAsset<Font2d>("inventory", "inventory");
-
 			if (!string.IsNullOrEmpty(ScriptName) && !string.IsNullOrEmpty(InterfaceName))
 			{
 				Script script = ResourceManager.CreateAsset<Script>(ScriptName);
@@ -206,6 +204,62 @@ namespace DungeonEye
 
 		#endregion
 
+
+		/// <summary>
+		/// Move the monster
+		/// </summary>
+		/// <param name="offset">Offset</param>
+		/// <returns>True if moved, or false</returns>
+		private bool Move(Point offset)
+		{
+			// Can't move and force is false
+			if (!CanMove)
+				return false;
+
+			// Get informations about the destination block
+			Point dst = Location.Position;
+			dst.Offset(offset);
+
+
+			// Check all blocking states
+			bool state = true;
+
+			// A wall
+			MazeBlock dstblock = Location.Maze.GetBlock(dst);
+			if (dstblock.IsBlocking)
+				state = false;
+
+			// Stairs
+			if (dstblock.Stair != null)
+				state = true;
+
+			// Monsters
+			if (Location.Maze.GetMonsterCount(dst) > 0)
+				state = false;
+
+			// blocking door
+			if (dstblock.Door != null && dstblock.Door.IsBlocking)
+				state = false;
+
+/*
+
+			// Leave the current block
+			if (MazeBlock != null)
+				MazeBlock.OnTeamLeave(this);
+*/
+
+			Location.Position.Offset(offset);
+			LastMove = DateTime.Now;
+			//HasMoved = true;
+
+			// Enter the new block
+			//MazeBlock = Maze.GetBlock(Location.Position);
+			//if (MazeBlock != null)
+			//   MazeBlock.OnTeamEnter(this);
+
+
+			return true;
+		}
 
 
 		#region Helpers
@@ -437,6 +491,15 @@ namespace DungeonEye
 
 
 		/// <summary>
+		/// 
+		/// </summary>
+		public Dungeon Dungeon
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
 		/// Name of the monster
 		/// </summary>
 		public string Name
@@ -564,11 +627,6 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
-		/// </summary>
-		Font2d Font;
-
-		/// <summary>
 		/// Defines the size of the creature on the floor. 
 		/// </summary>
 		/// <remarks>This value is ignored for non material creatures and the door always closes normally without causing any damage to such creatures</remarks>
@@ -577,8 +635,6 @@ namespace DungeonEye
 			get;
 			set;
 		}
-
-
 
 
 
@@ -628,6 +684,32 @@ namespace DungeonEye
 			get;
 			set;
 		}
+
+
+		/// <summary>
+		/// Last time the team moved
+		/// </summary>
+		DateTime LastMove
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Does the monster can move
+		/// </summary>
+		public bool CanMove
+		{
+			get
+			{
+				if (LastMove + MovementSpeed > DateTime.Now)
+					return false;
+
+				return true;
+			}
+		}
+
+
 
 
 		/// <summary>
