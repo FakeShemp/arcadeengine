@@ -613,7 +613,7 @@ namespace ArcEngine
 		#region Properties
 
 		/// <summary>
-		/// Gets the collection of <see cref="IGameComponent"/> owned by the game. 
+		/// Gets the collection of <see cref="GameComponent"/> owned by the game. 
 		/// </summary>
 		public GameComponentCollection Components
 		{

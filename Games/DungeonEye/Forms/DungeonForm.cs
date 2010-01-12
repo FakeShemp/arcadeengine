@@ -647,7 +647,7 @@ namespace DungeonEye.Forms
 		{
 			Maze = Dungeon.GetMaze(MazeListBox.SelectedItem.ToString());
 			MazePropertyBox.SelectedObject = Maze;
-			PreviewLoc.MazeName = Maze.Name;
+			PreviewLoc.SetMaze(Maze.Name);
 		}
 
 

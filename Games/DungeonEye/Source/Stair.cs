@@ -97,9 +97,7 @@ namespace DungeonEye
 			writer.WriteAttributeString("value", Type.ToString());
 			writer.WriteEndElement();
 
-			writer.WriteStartElement("target");
-			Target.Save(writer);
-			writer.WriteEndElement();
+			Target.Save("target", writer);
 
 			writer.WriteEndElement();
 

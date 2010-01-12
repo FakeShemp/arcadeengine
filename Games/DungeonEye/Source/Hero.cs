@@ -374,7 +374,7 @@ namespace DungeonEye
 			// Trace this attack
 			attack.Date = DateTime.Now;
 			attack.Result = (short)GameBase.Random.Next(0, 10);
-			attack.Monster = Team.Maze.GetMonster(Team.FrontCoord, Team.GetHeroGroundPosition(this));
+			attack.Monster = Team.Location.Maze.GetMonster(Team.FrontCoord, Team.GetHeroGroundPosition(this));
 
 
 			// Hand attack
@@ -394,7 +394,7 @@ namespace DungeonEye
 				case ItemType.Ammo:
 				{
 					// throw ammo
-					Team.Maze.FlyingItems.Add(new FlyingItem(item, loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
+					Team.Location.Maze.FlyingItems.Add(new FlyingItem(item, loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
 
 					// Empty hand
 					InventoryPosition pos = hand == HeroHand.Primary ? InventoryPosition.Primary : InventoryPosition.Secondary;
@@ -428,7 +428,7 @@ namespace DungeonEye
 
 					else if (item.UseQuiver && Quiver > 0)
 					{
-						Team.Maze.FlyingItems.Add(
+						Team.Location.Maze.FlyingItems.Add(
 							new FlyingItem(ResourceManager.CreateAsset<Item>("Arrow"),
 							loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
 						Quiver--;

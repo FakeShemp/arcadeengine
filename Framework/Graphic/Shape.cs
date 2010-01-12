@@ -245,7 +245,9 @@ namespace ArcEngine.Graphic
 
 
 
-
+		/// <summary>
+		/// 
+		/// </summary>
 		public void Clip()
 		{
 		}

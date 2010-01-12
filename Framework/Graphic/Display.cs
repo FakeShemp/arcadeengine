@@ -396,7 +396,7 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		/// <param name="factor">Specifies a multiplier for each bit in the line stipple pattern</param>
 		/// <param name="pattern">16-bit integer whose bit pattern determines which fragments of a line will be drawn when the line is rasterized.</param>
-		public static void SetLineStipple(int factor, ushort pattern)
+		public static void SetLineStipple(int factor, short pattern)
 		{
 			GL.LineStipple(factor, pattern);
 		}

@@ -50,7 +50,6 @@ namespace DungeonEye
 		public DungeonLocation()
 		{
 			Compass = new Compass();
-			MazeName = string.Empty;
 			Position = Point.Empty;
 			GroundPosition = GroundPosition.NorthEast;
 		}
@@ -63,9 +62,9 @@ namespace DungeonEye
 		public DungeonLocation(DungeonLocation loc)
 		{
 			Compass = new Compass(loc.Compass);
-			MazeName = loc.MazeName;
 			Position = loc.Position;
 			GroundPosition = loc.GroundPosition;
+			Maze = loc.Maze;
 		}
 
 
@@ -73,12 +72,12 @@ namespace DungeonEye
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="maze"></param>
+		/// <param name="name"></param>
 		/// <param name="location"></param>
 		/// <param name="direction"></param>
-		public DungeonLocation(string maze, Point location, CardinalPoint direction)
+		public DungeonLocation(string name, Point location, CardinalPoint direction)
 		{
-			MazeName = maze;
+			SetMaze(name);
 			Position = location;
 			Compass = new Compass();
 			Direction = direction;
@@ -92,33 +91,17 @@ namespace DungeonEye
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="node"></param>
+		/// <param name="node">Xml node</param>
 		/// <returns></returns>
 		public bool Load(XmlNode xml)
 		{
 			if (xml == null)
 				return false;
 
-			if (xml.Attributes["maze"] != null)
-				MazeName = xml.Attributes["maze"].Value;
-			else
-				MazeName = string.Empty;
-
-
-			if (xml.Attributes["x"] != null && xml.Attributes["y"] != null)
-				Position = new Point(int.Parse(xml.Attributes["x"].Value), int.Parse(xml.Attributes["y"].Value));
-			else
-				Position = Point.Empty;
-
-			if (xml.Attributes["direction"] != null)
-				Direction = (CardinalPoint)Enum.Parse(typeof(CardinalPoint), xml.Attributes["direction"].Value, true);
-			else
-				Direction = CardinalPoint.North;
-
-			if (xml.Attributes["position"] != null)
-				GroundPosition = (GroundPosition)Enum.Parse(typeof(GroundPosition), xml.Attributes["position"].Value, true);
-			else
-				GroundPosition = GroundPosition.NorthWest;
+			MazeName = xml.Attributes["maze"].Value;
+			Position = new Point(int.Parse(xml.Attributes["x"].Value), int.Parse(xml.Attributes["y"].Value));
+			Direction = (CardinalPoint)Enum.Parse(typeof(CardinalPoint), xml.Attributes["direction"].Value, true);
+			GroundPosition = (GroundPosition)Enum.Parse(typeof(GroundPosition), xml.Attributes["position"].Value, true);
 
 
 			return true;
@@ -126,26 +109,25 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Saves location
 		/// </summary>
+		/// <param name="name">Node's name</param>
+		/// <param name="writer">XmlWriter handle</param>
 		/// <returns></returns>
-		public bool Save(XmlWriter writer)
+		public bool Save(string name, XmlWriter writer)
 		{
-			if (writer == null)
+			if (writer == null || string.IsNullOrEmpty(name))
 				return false;
 
 
 
-			//writer.WriteStartElement("location");
-			if (!string.IsNullOrEmpty(MazeName))
-				writer.WriteAttributeString("maze", MazeName);
-
+			writer.WriteStartElement(name);
+			writer.WriteAttributeString("maze", MazeName);
 			writer.WriteAttributeString("x", Position.X.ToString());
 			writer.WriteAttributeString("y", Position.Y.ToString());
 			writer.WriteAttributeString("direction", Direction.ToString());
 			writer.WriteAttributeString("position", GroundPosition.ToString());
-
-			//writer.WriteEndElement();
+			writer.WriteEndElement();
 
 			return true;
 		}
@@ -155,24 +137,40 @@ namespace DungeonEye
 		#endregion
 
 
-
-		#region Properties
-
 		/// <summary>
-		/// Name of the maze
+		/// Changes the current maze
 		/// </summary>
-		[DescriptionAttribute("Name of the maze")]
-		public string MazeName
+		/// <param name="name">Desired maze name</param>
+		/// <returns>True if level found</returns>
+		public bool SetMaze(string name)
 		{
-			get;
-			set;
+			if (string.IsNullOrEmpty(name) || Team.Dungeon == null)
+				return false;
+
+			Maze = Team.Dungeon.GetMaze(name);
+
+			return Maze != null;
 		}
 
+
+
+
+		#region Properties
 
 		/// <summary>
 		/// Handle of the maze
 		/// </summary>
 		public Maze Maze
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// Gets current maze name
+		/// </summary>
+		public string MazeName
 		{
 			get;
 			private set;

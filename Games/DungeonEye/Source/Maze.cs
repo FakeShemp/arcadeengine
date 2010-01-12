@@ -759,7 +759,7 @@ namespace DungeonEye
 					if (block.Stair != null)
 						Display.Color = Color.LightGreen;
 
-					if (team.Location.Position.X == x && team.Location.Position.Y == y && team.Maze == this)
+					if (team.Location.Position.X == x && team.Location.Position.Y == y && team.Location.Maze == this)
 						Display.Color = Color.Blue;
 
 					Display.FillRectangle(new Rectangle(location.X + x * 4, location.Y + +y * 4, 4, 4), Display.Color);
@@ -868,7 +868,7 @@ namespace DungeonEye
 						{
 							Monster monster = new Monster();
 							monster.Load(subnode);
-							monster.Location.MazeName = Name;
+							monster.Location.SetMaze(Name);
 							Monsters.Add(monster);
 						}
 

@@ -386,9 +386,7 @@ namespace DungeonEye
 			writer.WriteEndElement();
 
 
-			writer.WriteStartElement("location");
-			Location.Save(writer);
-			writer.WriteEndElement();
+			Location.Save("location", writer);
 
 			Damage.Save("damage", writer);
 
@@ -489,15 +487,6 @@ namespace DungeonEye
 			set;
 		}
 
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public Dungeon Dungeon
-		{
-			get;
-			set;
-		}
 
 		/// <summary>
 		/// Name of the monster

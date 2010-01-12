@@ -73,7 +73,7 @@ namespace ArcEngine.Graphic
 		/// <returns></returns>
 		public bool MapTexture(Texture texture, BufferAccess access)
 		{
-			if (texture == null || IsLocked || Handle == null)
+			if (texture == null || IsLocked || Handle == 0)
 				return false;
 
 			Texture = texture;

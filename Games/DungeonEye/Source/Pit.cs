@@ -27,12 +27,12 @@ using System.ComponentModel;
 namespace DungeonEye
 {
 	/// <summary>
-	/// 
+	/// Pit class
 	/// </summary>
 	public class Pit
 	{
 		/// <summary>
-		/// 
+		/// Default constructor
 		/// </summary>
 		public Pit()
 		{
@@ -78,6 +78,7 @@ namespace DungeonEye
 		/// <summary>
 		/// 
 		/// </summary>
+		/// <param name="writer"></param>
 		/// <returns></returns>
 		public bool Save(XmlWriter writer)
 		{
@@ -86,12 +87,7 @@ namespace DungeonEye
 
 
 			writer.WriteStartElement("pit");
-
-
-			writer.WriteStartElement("target");
-			Target.Save(writer);
-			writer.WriteEndElement();
-
+			Target.Save("target", writer);
 			writer.WriteEndElement();
 
 			return true;

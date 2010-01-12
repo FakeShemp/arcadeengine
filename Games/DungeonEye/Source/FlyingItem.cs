@@ -225,7 +225,7 @@ namespace DungeonEye
 
 			writer.WriteStartElement("flyingitem");
 
-			Location.Save(writer);
+			Location.Save("location", writer);
 
 			writer.WriteStartElement("item");
 			writer.WriteAttributeString("name", Item.Name);

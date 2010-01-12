@@ -141,7 +141,8 @@ namespace DungeonEye
 			
 			// The dungeon
 			Dungeon = ResourceManager.CreateAsset<Dungeon>("Eye");
-			Dungeon.Init();
+			if (Dungeon != null)
+				Dungeon.Init();
 
 			// Set location
 			Teleport(Dungeon.StartLocation);
@@ -180,9 +181,10 @@ namespace DungeonEye
 				{
 					case "location":
 					{
-						Location.Position = new Point(int.Parse(node.Attributes["x"].Value), int.Parse(node.Attributes["y"].Value));
-						Location.Direction = (CardinalPoint)Enum.Parse(typeof(CardinalPoint), node.Attributes["direction"].Value, true);
-						Location.MazeName= node.Attributes["name"].Value;
+						Location.Load(node);
+						//Location.Position = new Point(int.Parse(node.Attributes["x"].Value), int.Parse(node.Attributes["y"].Value));
+						//Location.Direction = (CardinalPoint)Enum.Parse(typeof(CardinalPoint), node.Attributes["direction"].Value, true);
+						//Location.MazeName= node.Attributes["name"].Value;
 					}
 					break;
 
@@ -222,12 +224,13 @@ namespace DungeonEye
 
 			writer.WriteStartElement("team");
 
-			writer.WriteStartElement("location");
-			writer.WriteAttributeString("x", Location.Position.X.ToString());
-			writer.WriteAttributeString("y", Location.Position.Y.ToString());
-			writer.WriteAttributeString("direction", Location.Direction.ToString());
-			writer.WriteAttributeString("name", Location.MazeName);
-			writer.WriteEndElement();
+			//writer.WriteStartElement("location");
+			//writer.WriteAttributeString("x", Location.Position.X.ToString());
+			//writer.WriteAttributeString("y", Location.Position.Y.ToString());
+			//writer.WriteAttributeString("direction", Location.Direction.ToString());
+			//writer.WriteAttributeString("name", Location.MazeName);
+			//writer.WriteEndElement();
+			Location.Save("location", writer);
 
 
 			// Save each hero
@@ -277,8 +280,8 @@ namespace DungeonEye
 		{
 
 			// Draw the current maze
-			if (Maze != null)
-				Maze.Draw(Location);
+			if (Location.Maze != null)
+				Location.Maze.Draw(Location);
 
 
 			// The backdrop
@@ -516,7 +519,8 @@ namespace DungeonEye
 		/// <param name="color">Bar color</param>
 		public void DrawProgressBar(int value, int max, Rectangle rectangle, Color color)
 		{
-			Display.FillRectangle(rectangle.Left + 1, rectangle.Top + 1, (int)((float)value / (float)max * (rectangle.Width - 1)), rectangle.Height - 2, color);
+			if (value > 0)
+				Display.FillRectangle(rectangle.Left + 1, rectangle.Top + 1, (int)((float)value / (float)max * (rectangle.Width - 1)), rectangle.Height - 2, color);
 
 			Display.DrawLine(rectangle.Left, rectangle.Top, rectangle.Left, rectangle.Bottom, Color.FromArgb(138, 146, 207));
 			Display.DrawLine(rectangle.Left, rectangle.Bottom, rectangle.Right + 2, rectangle.Bottom, Color.FromArgb(138, 146, 207));
@@ -809,12 +813,15 @@ namespace DungeonEye
 					string lvl = "0" + id.ToString();
 					lvl = "maze_" + lvl.Substring(lvl.Length - 2, 2);
 
-					Maze maze = Dungeon.GetMaze(lvl);
-					if (maze != null)
-					{
-						Maze = maze;
-						AddMessage("Loading " + lvl + ":" + Maze.Description);
-					}
+					if (Location.SetMaze(lvl))
+						AddMessage("Loading " + lvl + ":" + Location.Maze.Description);
+
+					//Maze maze = Dungeon.GetMaze(lvl);
+					//if (maze != null)
+					//{
+					//   Maze = maze;
+					//   AddMessage("Loading " + lvl + ":" + Location.Maze.Description);
+					//}
 					break;
 				}
 			}
@@ -822,7 +829,8 @@ namespace DungeonEye
 			// Test maze
 			if (Keyboard.IsNewKeyPress(Keys.T))
 			{
-				Maze = Dungeon.GetMaze("test");
+				//Maze = Dungeon.GetMaze("test");
+				Location.SetMaze("test");
 				AddMessage("Loading maze test", Color.Blue);
 			}
 
@@ -903,7 +911,7 @@ namespace DungeonEye
 			Point pos = Point.Empty;
 
 			// Get the block at team position
-			MazeBlock CurrentBlock = Maze.GetBlock(Location.Position);
+			MazeBlock CurrentBlock = Location.Maze.GetBlock(Location.Position);
 
 
 			#region Mouse
@@ -1115,7 +1123,7 @@ namespace DungeonEye
 								loc.GroundPosition = GroundPosition.SouthEast;
 								break;
 							}
-							Maze.FlyingItems.Add(new FlyingItem(ItemInHand, loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
+							Location.Maze.FlyingItems.Add(new FlyingItem(ItemInHand, loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
 							SetItemInHand(null);
 						}
 						#endregion
@@ -1142,7 +1150,7 @@ namespace DungeonEye
 								break;
 							}
 
-							Maze.FlyingItems.Add(new FlyingItem(ItemInHand, loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
+							Location.Maze.FlyingItems.Add(new FlyingItem(ItemInHand, loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
 							SetItemInHand(null);
 						}
 						#endregion
@@ -1805,7 +1813,7 @@ namespace DungeonEye
 			Point dist = Point.Empty;
 
 			// Not the same maze
-			if (Maze != mz)
+			if (Location.Maze != mz)
 				return false;
 
 
@@ -1830,7 +1838,7 @@ namespace DungeonEye
 					float y = 0;
 					for (int pos = Location.Position.Y; pos >= loc.Y; pos--)
 					{
-						if (Maze.GetBlock(new Point(pos, Location.Position.Y + (int)y)).Type == BlockType.Wall)
+						if (Location.Maze.GetBlock(new Point(pos, Location.Position.Y + (int)y)).Type == BlockType.Wall)
 							return false;
 
 						y += delta;
@@ -1858,7 +1866,7 @@ namespace DungeonEye
 					float y = 0;
 					for (int pos = Location.Position.Y; pos <= loc.Y; pos++)
 					{
-						if (Maze.GetBlock(new Point(pos, Location.Position.Y + (int)y)).Type == BlockType.Wall)
+						if (Location.Maze.GetBlock(new Point(pos, Location.Position.Y + (int)y)).Type == BlockType.Wall)
 							return false;
 
 						y += delta;
@@ -1887,7 +1895,7 @@ namespace DungeonEye
 					float y = 0;
 					for (int pos = Location.Position.X; pos >= loc.X; pos--)
 					{
-						if (Maze.GetBlock(new Point(pos, Location.Position.Y + (int)y)).Type == BlockType.Wall)
+						if (Location.Maze.GetBlock(new Point(pos, Location.Position.Y + (int)y)).Type == BlockType.Wall)
 							return false;
 
 						y += delta;
@@ -1914,7 +1922,7 @@ namespace DungeonEye
 					float y = 0;
 					for (int pos = Location.Position.X; pos <= loc.X; pos++)
 					{
-						if (Maze.GetBlock(new Point(pos, Location.Position.Y + (int)y)).Type == BlockType.Wall)
+						if (Location.Maze.GetBlock(new Point(pos, Location.Position.Y + (int)y)).Type == BlockType.Wall)
 							return false;
 
 						y += delta;
@@ -2263,7 +2271,7 @@ namespace DungeonEye
 			bool state = true;
 
 			// A wall
-			MazeBlock dstblock = Maze.GetBlock(dst);
+			MazeBlock dstblock = Location.Maze.GetBlock(dst);
 			if (dstblock.IsBlocking)
 				state = false;
 
@@ -2272,7 +2280,7 @@ namespace DungeonEye
 				state = true;
 
 			// Monsters
-			if (Maze.GetMonsterCount(dst) > 0)
+			if (Location.Maze.GetMonsterCount(dst) > 0)
 				state = false;
 
 			// blocking door
@@ -2297,7 +2305,7 @@ namespace DungeonEye
 			HasMoved = true;
 
 			// Enter the new block
-			MazeBlock = Maze.GetBlock(Location.Position);
+			MazeBlock = Location.Maze.GetBlock(Location.Position);
 			if (MazeBlock != null)
 				MazeBlock.OnTeamEnter(this);
 
@@ -2313,6 +2321,9 @@ namespace DungeonEye
 		/// <returns>True if teleportion is ok, or false if M. Spoke failed !</returns>
 		public bool Teleport(DungeonLocation location)
 		{
+			if (Dungeon == null || location == null)
+				return false;
+
 			Maze maze = Dungeon.GetMaze(location.MazeName);
 			if (maze == null)
 				return false;
@@ -2320,11 +2331,11 @@ namespace DungeonEye
 			if(MazeBlock != null)
 				MazeBlock.OnTeamLeave(this);
 			Location.Position = location.Position;
-			Location.MazeName = maze.Name;
-			Maze = maze;
+			Location.SetMaze(maze.Name);
+			//Maze = maze;
 
 
-			MazeBlock = Maze.GetBlock(Location.Position);
+			MazeBlock = Location.Maze.GetBlock(Location.Position);
 
 			MazeBlock.OnTeamEnter(this);
 
@@ -2342,16 +2353,21 @@ namespace DungeonEye
 		/// </summary>
 		StringTable Language;
 
+
 		/// <summary>
 		/// Dungeon to use
 		/// </summary>
-		Dungeon Dungeon;
+		public static Dungeon Dungeon
+		{
+			get;
+			set;
+		}
 
 
 		/// <summary>
 		/// Current maze
 		/// </summary>
-		public Maze Maze;
+//		public Maze Maze;
 
 
 		/// <summary>
@@ -2440,7 +2456,7 @@ namespace DungeonEye
 		{
 			get
 			{
-				return Maze.GetBlock(FrontCoord);
+				return Location.Maze.GetBlock(FrontCoord);
 			}
 		}
 

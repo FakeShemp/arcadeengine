@@ -27,7 +27,7 @@ namespace ArcEngine
 
 
 		/// <summary>
-		/// Inserts a <see cref="IGameComponent"/> into the collection at the specified location. 
+		/// Inserts a <see cref="GameComponent"/> into the collection at the specified location. 
 		/// </summary>
 		/// <param name="index">Position</param>
 		/// <param name="item">Component</param>
@@ -47,7 +47,7 @@ namespace ArcEngine
 
 
 		/// <summary>
-		/// Removes a <see cref="IGameComponent"/> object in the collection. 
+		/// Removes a <see cref="GameComponent"/> object in the collection. 
 		/// </summary>
 		/// <param name="index">Position</param>
 		protected override void RemoveItem(int index)
@@ -62,7 +62,7 @@ namespace ArcEngine
 
 
 		/// <summary>
-		/// Modifies the specified <see cref="IGameComponent"/> object in the collection. 
+		/// Modifies the specified <see cref="GameComponent"/> object in the collection. 
 		/// </summary>
 		/// <param name="index">Position</param>
 		/// <param name="item">Component</param>

@@ -74,13 +74,6 @@ namespace DungeonEye.Forms.Wizards
 
 		#region Properties
 
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		Item Item;
-
 		#endregion
 
 	}

@@ -77,6 +77,7 @@ namespace DungeonEye
 		/// <summary>
 		/// 
 		/// </summary>
+		/// <param name="writer"></param>
 		/// <returns></returns>
 		public bool Save(XmlWriter writer)
 		{
@@ -85,12 +86,7 @@ namespace DungeonEye
 			
 
 			writer.WriteStartElement("teleporter");
-
-
-			writer.WriteStartElement("target");
-			Target.Save(writer);
-			writer.WriteEndElement();
-
+			Target.Save("target", writer);
 			writer.WriteEndElement();
 
 			return true;

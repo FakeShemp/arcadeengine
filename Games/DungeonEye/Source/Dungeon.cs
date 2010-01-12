@@ -47,6 +47,8 @@ namespace DungeonEye
 		/// <returns></returns>
 		public bool Init()
 		{
+			StartLocation.SetMaze(StartLocation.MazeName);
+
 			foreach (Maze maze in Mazes.Values)
 				maze.Init();
 
@@ -60,10 +62,9 @@ namespace DungeonEye
 		/// </summary>
 		public void Clear()
 		{
-			//StartDirection = CardinalPoint.North;
 			StartLocation = new DungeonLocation();
-			//StartMazeName = string.Empty;
 			Mazes.Clear();
+			StartLocation = new DungeonLocation();
 		}
 
 
@@ -93,9 +94,9 @@ namespace DungeonEye
 			if (xml == null)
 				return false;
 
-			if (xml.Name != "dungeon")
+			if (xml.Name != XmlTag)
 			{
-				Trace.WriteLine("Expecting \"dungeon\" in node header, found \"" + xml.Name + "\" when loading Dungeon.");
+				Trace.WriteLine("Expecting \"" + XmlTag + "\" in node header, found \"" + xml.Name + "\" when loading Dungeon.");
 				return false;
 			}
 
@@ -109,7 +110,6 @@ namespace DungeonEye
 
 				switch (node.Name.ToLower())
 				{
-					// Level
 					case "maze":
 					{
 						string name = node.Attributes["name"].Value;
@@ -120,12 +120,9 @@ namespace DungeonEye
 					}
 					break;
 
-					// Start point
 					case "start":
 					{
-						StartLocation.MazeName = node.Attributes["name"].Value;
-						StartLocation.Position = new Point(int.Parse(node.Attributes["x"].Value), int.Parse(node.Attributes["y"].Value));
-						StartLocation.Direction = (CardinalPoint)Enum.Parse(typeof(CardinalPoint), node.Attributes["direction"].Value, true);
+						StartLocation.Load(node);
 					}
 					break;
 
@@ -153,13 +150,7 @@ namespace DungeonEye
 			writer.WriteStartElement("dungeon");
 			writer.WriteAttributeString("name", Name);
 
-			writer.WriteStartElement("start");
-			writer.WriteAttributeString("name", StartLocation.MazeName);
-			writer.WriteAttributeString("x", StartLocation.Position.X.ToString());
-			writer.WriteAttributeString("y", StartLocation.Position.Y.ToString());
-			writer.WriteAttributeString("direction", StartLocation.Direction.ToString());
-			writer.WriteEndElement();
-
+			StartLocation.Save("start", writer);
 	
 			foreach (Maze maze in MazeList)
 				maze.Save(writer);
@@ -292,18 +283,6 @@ namespace DungeonEye
 		/// Starting location in the dungeon
 		/// </summary>
 		public DungeonLocation StartLocation
-		{
-			get;
-			set;
-		}
-
-
-		/// <summary>
-		/// Name of the Tileset
-		/// </summary>
-		[TypeConverter(typeof(TileSetEnumerator))]
-		[DescriptionAttribute("TileSet name to use for items")]
-		public string ItemSetName
 		{
 			get;
 			set;

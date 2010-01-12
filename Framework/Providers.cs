@@ -986,6 +986,9 @@ namespace ArcEngine
 		#region Progerties
 
 
+		/// <summary>
+		/// Scriptmodels
+		/// </summary>
 		public Dictionary<string, XmlNode> Models;
 
 
