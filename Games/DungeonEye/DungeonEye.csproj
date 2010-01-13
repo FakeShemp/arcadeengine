@@ -171,8 +171,10 @@
       <DependentUpon>NewMazeWizard.cs</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\IDoor.cs" />
+    <Compile Include="Interfaces\IFloorPlate.cs" />
     <Compile Include="Interfaces\IItem.cs" />
     <Compile Include="Interfaces\IMonster.cs" />
+    <Compile Include="Interfaces\IPit.cs" />
     <Compile Include="Source\AutoMap.cs" />
     <Compile Include="CharGen.cs" />
     <Compile Include="Source\CriticalHit.cs" />

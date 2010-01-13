@@ -20,68 +20,39 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using ArcEngine;
-using ArcEngine.Graphic;
-using System.Drawing;
 
-
-namespace DungeonEye.Gui
+namespace DungeonEye.Interfaces
 {
-	/// <summary>
-	/// Dialog box window asking for a simple yes no question
-	/// </summary>
-	public class MessageBox
+	public interface IFloorPlate
 	{
+		/// <summary>
+		/// 
+		/// </summary>
+		void OnTeamEnter();
+
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public void Draw()
-		{
-			Display.FillRectangle(new Rectangle(10, 10, 200, 200), Color.FromArgb(101, 105, 182));
-
-		}
+		void OnTeamLeave();
 
 
 		/// <summary>
-		/// Updates the window
+		/// When an item is droped
 		/// </summary>
-		/// <param name="time">Elapsed game time</param>
-		public void Update(GameTime time)
-		{
-		}
-
-
-		#region Properties
-
-		/// <summary>
-		/// Message
-		/// </summary>
-		public string Message
-		{
-			get;
-			set;
-		}
+		/// <param name="item">Item handle</param>
+		/// <param name="hero">Hero dropping the item</param>
+		/// <param name="block">Block</param>
+		void OnItemDrop(Item item, Hero hero, MazeBlock block);
 
 
 		/// <summary>
-		/// Yes string
+		/// When an item is collected
 		/// </summary>
-		public string Yes
-		{
-			get;
-			set;
-		}
+		/// <param name="item">Item handle</param>
+		/// <param name="hero">Hero dropping the item</param>
+		/// <param name="block">Block</param>
+		void OnItemCollect(Item item, Hero hero, MazeBlock block);
 
-		/// <summary>
-		/// No string
-		/// </summary>
-		public string No
-		{
-			get;
-			set;
-		}
-
-		#endregion
 	}
 }

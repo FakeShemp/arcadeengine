@@ -1,7 +1,7 @@
 ﻿#region Licence
 //
 //This file is part of ArcEngine.
-//Copyright (C)2008-2009 Adrien Hémery ( iliak@mimicprod.net )
+//Copyright (C)2008-2010 Adrien Hémery ( iliak@mimicprod.net )
 //
 //ArcEngine is free software: you can redistribute it and/or modify
 //it under the terms of the GNU General Public License as published by
@@ -91,20 +91,15 @@ namespace DungeonEye
 			}
 			ItemsTileset.Scale = new SizeF(2.0f, 2.0f);
 
-			//GroundItemSet = ResourceManager.CreateSharedAsset<ItemSet>("Items");
-			//if (GroundItemSet == null)
-			//{
-			//    Trace.WriteLine("Failed to load itemset for the maze \"" + Name + "\".");
-			//    return false;
-			//}
-
-
 			foreach (Monster monster in Monsters)
 				monster.Init();
 
 			foreach (Door door in Doors)
 				door.Init();
 
+			//foreach (Pit pit in Pits)
+			//{
+			//}
 
 			return true;
 		}
@@ -1281,11 +1276,6 @@ namespace DungeonEye
 		}
 
 
-		/// <summary>
-		/// Ground itemset
-		/// </summary>
-		//ItemSet GroundItemSet;
-
 
 		/// <summary>
 		/// Flying items in the maze
@@ -1305,16 +1295,6 @@ namespace DungeonEye
 		public byte ExperienceMultiplier;
 
 
-/*
-		/// <summary>
-		/// Maze display coordinates
-		/// </summary>
-		public MazeDisplayCoordinates Coordinates
-		{
-			get;
-			private set;
-		}
-*/
 		#endregion
 
 	}

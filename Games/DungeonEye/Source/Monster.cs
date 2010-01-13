@@ -1,7 +1,7 @@
 ﻿#region Licence
 //
 //This file is part of ArcEngine.
-//Copyright (C)2008-2009 Adrien Hémery ( iliak@mimicprod.net )
+//Copyright (C)2008-2010 Adrien Hémery ( iliak@mimicprod.net )
 //
 //ArcEngine is free software: you can redistribute it and/or modify
 //it under the terms of the GNU General Public License as published by
@@ -83,6 +83,62 @@ namespace DungeonEye
 			return true;
 		}
 
+
+		/// <summary>
+		/// Move the monster
+		/// </summary>
+		/// <param name="offset">Offset</param>
+		/// <returns>True if moved, or false</returns>
+		private bool Move(Point offset)
+		{
+			// Can't move and force is false
+			if (!CanMove)
+				return false;
+
+			// Get informations about the destination block
+			Point dst = Location.Position;
+			dst.Offset(offset);
+
+
+			// Check all blocking states
+			bool state = true;
+
+			// A wall
+			MazeBlock dstblock = Location.Maze.GetBlock(dst);
+			if (dstblock.IsBlocking)
+				state = false;
+
+			// Stairs
+			if (dstblock.Stair != null)
+				state = true;
+
+			// Monsters
+			if (Location.Maze.GetMonsterCount(dst) > 0)
+				state = false;
+
+			// blocking door
+			if (dstblock.Door != null && dstblock.Door.IsBlocking)
+				state = false;
+
+/*
+
+			// Leave the current block
+			if (MazeBlock != null)
+				MazeBlock.OnTeamLeave(this);
+*/
+
+			Location.Position.Offset(offset);
+			LastMove = DateTime.Now;
+			//HasMoved = true;
+
+			// Enter the new block
+			//MazeBlock = Maze.GetBlock(Location.Position);
+			//if (MazeBlock != null)
+			//   MazeBlock.OnTeamEnter(this);
+
+
+			return true;
+		}
 
 
 		#region Update & Draw
@@ -204,62 +260,6 @@ namespace DungeonEye
 
 		#endregion
 
-
-		/// <summary>
-		/// Move the monster
-		/// </summary>
-		/// <param name="offset">Offset</param>
-		/// <returns>True if moved, or false</returns>
-		private bool Move(Point offset)
-		{
-			// Can't move and force is false
-			if (!CanMove)
-				return false;
-
-			// Get informations about the destination block
-			Point dst = Location.Position;
-			dst.Offset(offset);
-
-
-			// Check all blocking states
-			bool state = true;
-
-			// A wall
-			MazeBlock dstblock = Location.Maze.GetBlock(dst);
-			if (dstblock.IsBlocking)
-				state = false;
-
-			// Stairs
-			if (dstblock.Stair != null)
-				state = true;
-
-			// Monsters
-			if (Location.Maze.GetMonsterCount(dst) > 0)
-				state = false;
-
-			// blocking door
-			if (dstblock.Door != null && dstblock.Door.IsBlocking)
-				state = false;
-
-/*
-
-			// Leave the current block
-			if (MazeBlock != null)
-				MazeBlock.OnTeamLeave(this);
-*/
-
-			Location.Position.Offset(offset);
-			LastMove = DateTime.Now;
-			//HasMoved = true;
-
-			// Enter the new block
-			//MazeBlock = Maze.GetBlock(Location.Position);
-			//if (MazeBlock != null)
-			//   MazeBlock.OnTeamEnter(this);
-
-
-			return true;
-		}
 
 
 		#region Helpers
@@ -508,18 +508,6 @@ namespace DungeonEye
 			protected set;
 		}
 
-
-/*
-		/// <summary>
-		/// Type of the monster
-		/// </summary>
-		public MonsterType Type
-		{
-			get;
-			set;
-		}
-
-*/
 
 		/// <summary>
 		/// Damage dice
@@ -860,34 +848,6 @@ namespace DungeonEye
 	}
 
 
-/*
-	/// <summary>
-	/// Type of monster
-	/// </summary>
-	public enum MonsterType
-	{
-		DisplacerBeast,
-		Drider,
-		DrowElf,
-		Dwarf,
-		Flind,
-		GiantLeech,
-		GiantSpider,
-		HellHound,
-		KenKu,
-		Kobold,
-		KuoToa,
-		MantisWarrior,
-		MindFlayer,
-		RustMonster,
-		SkeletalLord,
-		Skeleton,
-		StoneGolem,
-		Xanathar,
-		Xorn,
-		Zombie
-	}
-*/
 
 	/// <summary>
 	/// Defines the size of the creature on the floor. 
