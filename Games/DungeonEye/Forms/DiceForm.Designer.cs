@@ -48,11 +48,11 @@
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(14, 47);
+			this.label1.Location = new System.Drawing.Point(6, 47);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(37, 13);
+			this.label1.Size = new System.Drawing.Size(50, 13);
 			this.label1.TabIndex = 0;
-			this.label1.Text = "Base :";
+			this.label1.Text = "Modifier :";
 			// 
 			// label2
 			// 
@@ -87,14 +87,14 @@
 			this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupBox1.Location = new System.Drawing.Point(0, 0);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(225, 100);
+			this.groupBox1.Size = new System.Drawing.Size(250, 100);
 			this.groupBox1.TabIndex = 1;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Dice :";
 			// 
 			// MaximumBox
 			// 
-			this.MaximumBox.Location = new System.Drawing.Point(172, 44);
+			this.MaximumBox.Location = new System.Drawing.Point(203, 44);
 			this.MaximumBox.Name = "MaximumBox";
 			this.MaximumBox.ReadOnly = true;
 			this.MaximumBox.Size = new System.Drawing.Size(41, 20);
@@ -104,7 +104,7 @@
 			// 
 			// MinimumBox
 			// 
-			this.MinimumBox.Location = new System.Drawing.Point(172, 18);
+			this.MinimumBox.Location = new System.Drawing.Point(203, 18);
 			this.MinimumBox.Name = "MinimumBox";
 			this.MinimumBox.ReadOnly = true;
 			this.MinimumBox.Size = new System.Drawing.Size(41, 20);
@@ -115,7 +115,7 @@
 			// label5
 			// 
 			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(112, 47);
+			this.label5.Location = new System.Drawing.Point(143, 47);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(57, 13);
 			this.label5.TabIndex = 2;
@@ -124,7 +124,7 @@
 			// label4
 			// 
 			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(112, 21);
+			this.label4.Location = new System.Drawing.Point(143, 21);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(54, 13);
 			this.label4.TabIndex = 2;
@@ -132,7 +132,7 @@
 			// 
 			// ThrowBox
 			// 
-			this.ThrowBox.Location = new System.Drawing.Point(57, 71);
+			this.ThrowBox.Location = new System.Drawing.Point(68, 71);
 			this.ThrowBox.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -152,12 +152,17 @@
 			// 
 			// BaseBox
 			// 
-			this.BaseBox.Location = new System.Drawing.Point(57, 45);
+			this.BaseBox.Location = new System.Drawing.Point(68, 45);
 			this.BaseBox.Maximum = new decimal(new int[] {
             1000000,
             0,
             0,
             0});
+			this.BaseBox.Minimum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            -2147483648});
 			this.BaseBox.Name = "BaseBox";
 			this.BaseBox.Size = new System.Drawing.Size(49, 20);
 			this.BaseBox.TabIndex = 2;
@@ -167,7 +172,7 @@
 			// 
 			// FacesBox
 			// 
-			this.FacesBox.Location = new System.Drawing.Point(57, 19);
+			this.FacesBox.Location = new System.Drawing.Point(68, 19);
 			this.FacesBox.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -190,9 +195,9 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.groupBox1);
-			this.MinimumSize = new System.Drawing.Size(225, 100);
+			this.MinimumSize = new System.Drawing.Size(250, 100);
 			this.Name = "DiceForm";
-			this.Size = new System.Drawing.Size(225, 100);
+			this.Size = new System.Drawing.Size(250, 100);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.ThrowBox)).EndInit();

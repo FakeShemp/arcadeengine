@@ -28,7 +28,9 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			this.GlControlBox = new OpenTK.GLControl();
+			this.DrawTimer = new System.Windows.Forms.Timer(this.components);
 			this.SuspendLayout();
 			// 
 			// GlControlBox
@@ -39,12 +41,18 @@
 			this.GlControlBox.Name = "GlControlBox";
 			this.GlControlBox.Size = new System.Drawing.Size(633, 562);
 			this.GlControlBox.TabIndex = 2;
+			this.GlControlBox.VSync = false;
+			this.GlControlBox.Load += new System.EventHandler(this.GlControlBox_Load);
 			this.GlControlBox.DoubleClick += new System.EventHandler(this.GlControlBox_DoubleClick);
 			this.GlControlBox.Paint += new System.Windows.Forms.PaintEventHandler(this.GlControl_Paint);
 			this.GlControlBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GlControlBox_MouseMove);
 			this.GlControlBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.GlControlBox_MouseDown);
 			this.GlControlBox.Resize += new System.EventHandler(this.GlControl_Resize);
 			this.GlControlBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.GlControlBox_MouseUp);
+			// 
+			// DrawTimer
+			// 
+			this.DrawTimer.Tick += new System.EventHandler(this.DrawTimer_Tick);
 			// 
 			// DungeonLocationControl
 			// 
@@ -60,5 +68,6 @@
 		#endregion
 
 		private OpenTK.GLControl GlControlBox;
+		private System.Windows.Forms.Timer DrawTimer;
 	}
 }

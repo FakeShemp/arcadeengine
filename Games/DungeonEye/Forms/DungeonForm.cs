@@ -395,6 +395,10 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void GlControl_Paint(object sender, PaintEventArgs e)
 		{
+			if (glControl.Context == null)
+				return;
+
+
 			glControl.MakeCurrent();
 			Display.ClearBuffers();
 
@@ -935,7 +939,7 @@ namespace DungeonEye.Forms
 
 
 		/// <summary>
-		/// Rendergin batch
+		/// Rendering batch
 		/// </summary>
 		Batch Batch;
 

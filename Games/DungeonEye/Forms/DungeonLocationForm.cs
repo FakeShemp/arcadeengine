@@ -33,36 +33,100 @@ namespace DungeonEye.Forms
 {
 	public partial class DungeonLocationForm : Form
 	{
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="dungeon"></param>
+		/// <param name="location"></param>
 		public DungeonLocationForm(Dungeon dungeon, DungeonLocation location)
 		{
-			Dungeon = dungeon;
-			DungeonLocation = location;
-
 			InitializeComponent();
 
-			//DungeonControl
+			DungeonControl.Dungeon = dungeon;
+			Target = location;
+
+			DirectionBox.BeginUpdate();
+			foreach(string name in Enum.GetNames(typeof(CardinalPoint)))
+				DirectionBox.Items.Add(name);
+			DirectionBox.EndUpdate();
+
+
+			Init();
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		void Init()
+		{
+			if (DungeonControl.Dungeon == null)
+				return;
+
+			MazeBox.BeginUpdate();
+			MazeBox.Items.Clear();
+			foreach (Maze maze in DungeonControl.Dungeon.MazeList)
+				MazeBox.Items.Add(maze.Name);
+			MazeBox.EndUpdate();
+
+			if (Target.Maze != null)
+				MazeBox.SelectedItem = Target.Maze.Name;
+			DirectionBox.SelectedItem = Target.Direction.ToString();
+
+		}
+
+
+		#region Events
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void MazeBox_Click(object sender, EventArgs e)
+		{
+			if (DungeonControl.Dungeon == null)
+				return;
+
+			DungeonControl.Maze = DungeonControl.Dungeon.GetMaze((string)MazeBox.SelectedItem);
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void DirectionBox_Click(object sender, EventArgs e)
+		{
+
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void SelectBox_Click(object sender, EventArgs e)
+		{
+
+		}
+
+
+
+		#endregion
 
 
 
 		#region Properties
 
-		/// <summary>
-		/// Dungeon
-		/// </summary>
-		public Dungeon Dungeon
-		{
-			get;
-			private set;
-		}
-
 
 		/// <summary>
 		/// Location in the dungeon
 		/// </summary>
-		public DungeonLocation DungeonLocation
+		public DungeonLocation Target
 		{
 			get;
 			set;

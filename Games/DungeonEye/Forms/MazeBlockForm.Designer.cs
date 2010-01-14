@@ -52,6 +52,7 @@
 			this.NWItemsBox = new System.Windows.Forms.ComboBox();
 			this.NWRemoveItem = new System.Windows.Forms.Button();
 			this.MonstersTab = new System.Windows.Forms.TabPage();
+			this.MonsterBox = new DungeonEye.Forms.MonsterControl();
 			this.button2 = new System.Windows.Forms.Button();
 			this.ApplyMonsterTemplateBox = new System.Windows.Forms.Button();
 			this.MonsterTemplateBox = new System.Windows.Forms.ComboBox();
@@ -117,7 +118,6 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.DoorStateBox = new System.Windows.Forms.ComboBox();
 			this.DoorTypeBox = new System.Windows.Forms.ComboBox();
-			this.MonsterBox = new DungeonEye.Forms.MonsterControl();
 			this.TabControlBox.SuspendLayout();
 			this.ItemsTab.SuspendLayout();
 			this.groupBox4.SuspendLayout();
@@ -420,6 +420,17 @@
 			this.MonstersTab.TabIndex = 1;
 			this.MonstersTab.Text = "Monsters";
 			this.MonstersTab.UseVisualStyleBackColor = true;
+			// 
+			// MonsterBox
+			// 
+			this.MonsterBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+							| System.Windows.Forms.AnchorStyles.Left)
+							| System.Windows.Forms.AnchorStyles.Right)));
+			this.MonsterBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.MonsterBox.Location = new System.Drawing.Point(8, 35);
+			this.MonsterBox.Name = "MonsterBox";
+			this.MonsterBox.Size = new System.Drawing.Size(593, 487);
+			this.MonsterBox.TabIndex = 14;
 			// 
 			// button2
 			// 
@@ -947,6 +958,7 @@
 			this.StairTargetBox.TabIndex = 2;
 			this.StairTargetBox.Text = "Set destination";
 			this.StairTargetBox.UseVisualStyleBackColor = true;
+			this.StairTargetBox.Click += new System.EventHandler(this.StairTargetBox_Click);
 			// 
 			// StairTypeBox
 			// 
@@ -1130,17 +1142,6 @@
 			this.DoorTypeBox.Size = new System.Drawing.Size(121, 21);
 			this.DoorTypeBox.TabIndex = 0;
 			this.DoorTypeBox.SelectedIndexChanged += new System.EventHandler(this.DoorTypeBox_SelectedIndexChanged);
-			// 
-			// MonsterBox
-			// 
-			this.MonsterBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-							| System.Windows.Forms.AnchorStyles.Left)
-							| System.Windows.Forms.AnchorStyles.Right)));
-			this.MonsterBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.MonsterBox.Location = new System.Drawing.Point(8, 35);
-			this.MonsterBox.Name = "MonsterBox";
-			this.MonsterBox.Size = new System.Drawing.Size(593, 487);
-			this.MonsterBox.TabIndex = 14;
 			// 
 			// MazeBlockForm
 			// 

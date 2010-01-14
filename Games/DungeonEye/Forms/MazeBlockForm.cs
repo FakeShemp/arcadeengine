@@ -977,6 +977,27 @@ namespace DungeonEye.Forms
 		#endregion
 
 
+		#region Stairs
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void StairTargetBox_Click(object sender, EventArgs e)
+		{
+			if (MazeBlock.Stair == null)
+				return;
+
+			DungeonLocationForm form = new DungeonLocationForm(Maze.Dungeon, MazeBlock.Stair.Target);
+			form.ShowDialog();
+		}
+
+		#endregion
+
+
+
 		#region Properties
 
 		/// <summary>
@@ -991,9 +1012,6 @@ namespace DungeonEye.Forms
 
 
 		#endregion
-
-
-
 
 	}
 }

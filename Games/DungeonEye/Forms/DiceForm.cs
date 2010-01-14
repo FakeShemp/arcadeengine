@@ -96,7 +96,7 @@ namespace DungeonEye.Forms
 			{
 				if (value == null)
 					return;
-				BaseBox.Value = value.Base;
+				BaseBox.Value = value.Modifier;
 				FacesBox.Value = value.Faces;
 				ThrowBox.Value = value.Throws;
 			}

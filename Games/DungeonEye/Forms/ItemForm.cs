@@ -756,7 +756,7 @@ namespace DungeonEye.Forms
 				return;
 
 
-			Item.Damage.Base = DamageBox.Dice.Base;
+			Item.Damage.Modifier = DamageBox.Dice.Modifier;
 			Item.Damage.Faces = DamageBox.Dice.Faces;
 			Item.Damage.Throws = DamageBox.Dice.Throws;
 		}

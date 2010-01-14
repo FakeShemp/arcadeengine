@@ -43,14 +43,14 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="throws">Throw count</param>
 		/// <param name="faces">Face count</param>
-		/// <param name="start">Base value</param>
-		public Dice(int throws, int faces, int start)
+		/// <param name="mode">Modifier value</param>
+		public Dice(int throws, int faces, int modifier)
 		{
 			Random = new Random((int)DateTime.Now.Ticks);
 
 			Throws = throws;
 			Faces = faces;
-			Base = start;
+			Modifier = modifier;
 		}
 
 
@@ -78,7 +78,7 @@ namespace DungeonEye
 				val += Random.Next(1, Faces);
 
 
-			return val + Base;
+			return val + Modifier;
 		}
 
 
@@ -87,7 +87,7 @@ namespace DungeonEye
 		/// </summary>
 		public void Reset()
 		{
-			Base = 0;
+			Modifier = 0;
 			Throws = 1;
 			Faces = 1;
 		}
@@ -104,7 +104,7 @@ namespace DungeonEye
 
 			Faces = dice.Faces;
 			Throws = dice.Throws;
-			Base = dice.Base;
+			Modifier = dice.Modifier;
 		}
 
 
@@ -131,8 +131,8 @@ namespace DungeonEye
 			if (node.Attributes["throws"] != null)
 				Throws = int.Parse(node.Attributes["throws"].Value);
 
-			if (node.Attributes["base"] != null)
-				Base = int.Parse(node.Attributes["base"].Value);
+			if (node.Attributes["modifier"] != null)
+				Modifier = int.Parse(node.Attributes["modifier"].Value);
 
 			return true;
 		}
@@ -153,7 +153,7 @@ namespace DungeonEye
 			writer.WriteStartElement(name);
 			writer.WriteAttributeString("throws", Throws.ToString());
 			writer.WriteAttributeString("faces", Faces.ToString());
-			writer.WriteAttributeString("base", Base.ToString());
+			writer.WriteAttributeString("modifier", Modifier.ToString());
 			writer.WriteEndElement();
 
 			return true;
@@ -165,7 +165,7 @@ namespace DungeonEye
 
 		public override string ToString()
 		{
-			return string.Format("{0}d{1} + {2} ({3}~{4})", Throws, Faces, Base, Minimum, Maximum);
+			return string.Format("{0}d{1} + {2} ({3}~{4})", Throws, Faces, Modifier, Minimum, Maximum);
 		}
 
 		#region Properties
@@ -196,9 +196,9 @@ namespace DungeonEye
 		}
 
 		/// <summary>
-		/// Base value
+		/// Modifier value
 		/// </summary>
-		public int Base
+		public int Modifier
 		{
 			get;
 			set;
@@ -212,7 +212,7 @@ namespace DungeonEye
 		{
 			get
 			{
-				return Base + Throws;
+				return Modifier + Throws;
 			}
 		}
 
@@ -223,11 +223,63 @@ namespace DungeonEye
 		{
 			get
 			{
-				return Base + (Faces * Throws);
+				return Modifier + (Faces * Throws);
 			}
 		}
 
 
 		#endregion
+	}
+
+
+
+
+	/// <summary>
+	/// Difficulty Class
+	/// </summary>
+	/// <remarks>Some checks are made against a Difficulty Class (DC). 
+	/// The DC is a number (set using the skill rules as a guideline)
+	/// that you must score as a result on your skill check in order to succeed. </remarks>
+	public enum DC
+	{
+		/// <summary>
+		/// Notice something large in plain sight 
+		/// </summary>
+		VeryEasy = 0,
+
+		/// <summary>
+		/// Climb a knotted rope 
+		/// </summary>
+		Easy = 10,
+
+		/// <summary>
+		/// Hear an approaching guard 
+		/// </summary>
+		Average = 15,
+		
+		/// <summary>
+		/// Rig a wagon wheel to fall off (
+		/// </summary>
+		Tough = 15,
+		
+		/// <summary>
+		/// Swim in stormy water 
+		/// </summary>
+		Challenging = 20,
+		
+		/// <summary>
+		/// Open an average lock 
+		/// </summary>
+		Formidable = 25,
+		
+		/// <summary>
+		/// Leap across a 30-foot chasm 
+		/// </summary>
+		Heroic = 30,
+
+		/// <summary>
+		/// Track a squad of orcs across hard ground after 24 hours of rainfall 
+		/// </summary>
+		NearlyImpossible = 40,
 	}
 }

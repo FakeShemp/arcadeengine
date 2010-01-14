@@ -120,6 +120,18 @@
   <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="SelectBox.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAD+SURBVDhPY2DAAkJX/WfGJk60WErHY5n6+v9MRGtAV1g4
+        6/n/xGkflMg2JHfms/8J3ff+x096rUGWdzKmPP0/b//v/0ENN18ndD61JdmQhJ4n/2fv+/W/c+vf/26l
+        l/8n9j6yJ8mQyK5H/6ds+/W/ZOnf/wnT//63yT1LmiGBzQ//t659D9ZsXPLlv3T0tf/Gkcv+OxScjifK
+        JR5V9/+XzH0H16zo0vNfxntlINHRal96939gyzOwzSDN0t4rvIjWDFJokXfnv03BFbBmSZ9VNiRpBik2
+        zLoN0ey5zJVkzSANOmk3/kv5rPElSzNIk5T3Wj+G0FWUZSiybSdVIwDKVYaCgMREQgAAAABJRU5ErkJg
+        gg==
+</value>
+  </data>
   <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>122, 17</value>
   </metadata>

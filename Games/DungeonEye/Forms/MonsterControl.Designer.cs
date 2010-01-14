@@ -299,7 +299,7 @@
 			// DamageBox
 			// 
 			this.DamageBox.ControlText = "Damage :";
-			dice1.Base = 0;
+			dice1.Modifier = 0;
 			dice1.Faces = 1;
 			dice1.Throws = 1;
 			this.DamageBox.Dice = dice1;
