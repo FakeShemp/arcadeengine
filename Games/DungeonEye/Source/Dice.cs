@@ -28,7 +28,7 @@ namespace DungeonEye
 	/// <summary>
 	/// Dice
 	/// </summary>
-	public class Dice
+	public class Dice : ICloneable
 	{
 		/// <summary>
 		/// Default constructor
@@ -46,8 +46,6 @@ namespace DungeonEye
 		/// <param name="mode">Modifier value</param>
 		public Dice(int throws, int faces, int modifier)
 		{
-			Random = new Random((int)DateTime.Now.Ticks);
-
 			Throws = throws;
 			Faces = faces;
 			Modifier = modifier;
@@ -68,7 +66,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Returns a dice roll
 		/// </summary>
-		/// <param name="rolls>Number of roll</param>
+		/// <param name="rolls">Number of roll</param>
 		/// <returns>The value</returns>
 		public int Roll(int rolls)
 		{
@@ -97,7 +95,7 @@ namespace DungeonEye
 		/// Copy a dice
 		/// </summary>
 		/// <param name="dice">Dice to copy from</param>
-		public void Copy(Dice dice)
+		public void Clone(Dice dice)
 		{
 			if (dice == null)
 				return;
@@ -106,6 +104,55 @@ namespace DungeonEye
 			Throws = dice.Throws;
 			Modifier = dice.Modifier;
 		}
+
+
+
+
+		/// <summary>
+		/// Clone the dice
+		/// </summary>
+		/// <returns></returns>
+		public object Clone()
+		{
+			return MemberwiseClone();
+		}
+
+
+
+		#region Statics
+
+
+		/// <summary>
+		/// Gets the result of a 20 faces dice
+		/// </summary>
+		/// <param name="count">Number of throws</param>
+		/// <returns></returns>
+		public int GetD20(int count)
+		{
+			int res = 0;
+
+			for (int i = 0; i < count; i++)
+			{
+				res += Random.Next(1, 20);
+			}
+
+			return res;
+		}
+
+
+
+		/// <summary>
+		/// Gets a Saving Throw result
+		/// </summary>
+		/// <param name="type">Type of saving throw</param>
+		/// <returns></returns>
+		public int SavingThrow(SavingThrowType type)
+		{
+			return 0;
+		}
+
+		#endregion
+
 
 
 		#region IO
@@ -168,13 +215,15 @@ namespace DungeonEye
 			return string.Format("{0}d{1} + {2} ({3}~{4})", Throws, Faces, Modifier, Minimum, Maximum);
 		}
 
+
+
 		#region Properties
 
 
 		/// <summary>
 		/// Random generator
 		/// </summary>
-		Random Random;
+		static Random Random = new Random((int)DateTime.Now.Ticks);
 
 
 		/// <summary>
@@ -281,5 +330,37 @@ namespace DungeonEye
 		/// Track a squad of orcs across hard ground after 24 hours of rainfall 
 		/// </summary>
 		NearlyImpossible = 40,
+	}
+
+
+
+	/// <summary>
+	/// The different kinds of saving throws.
+	/// </summary>
+	/// <remarks>
+	/// http://www.12tomidnight.com/d20modernsrd/SavingThrows.php
+	/// </remarks>
+	public enum SavingThrowType
+	{
+
+		/// <summary>
+		/// These saves measure the character's ability to stand up to massive physical punishment
+		/// or attacks against his or her vitality and health such as poison and paralysis. 
+		/// Apply the character's Constitution modifier to his or her Fortitude saving throws.
+		/// </summary>
+		Fortitude,
+
+		/// <summary>
+		/// These saves test the character's ability to dodge massive attacks such as explosions or car wrecks.
+		/// (Often, when damage is inevitable, the character gets to make a Reflex save to take only half damage.)
+		/// Apply the character's Dexterity modifier to his or her Reflex saving throws.
+		/// </summary>
+		Reflex,
+
+		/// <summary>
+		/// These saves reflect the character's resistance to mental influence and domination as well as to many 
+		/// magical effects. Apply the character's Wisdom modifier to his or her Will saving throws.
+		/// </summary>
+		Will,
 	}
 }

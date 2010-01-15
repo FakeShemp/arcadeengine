@@ -409,7 +409,7 @@ namespace DungeonEye.Forms
 			if (Monster == null)
 				return;
 
-			Monster.Damage.Copy(DamageBox.Dice);
+			Monster.Damage.Clone(DamageBox.Dice);
 		}
 
 

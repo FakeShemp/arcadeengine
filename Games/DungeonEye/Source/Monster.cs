@@ -873,6 +873,59 @@ namespace DungeonEye
 
 
 	/// <summary>
+	/// The bigger an opponent is, the easier it is to hit in combat. 
+	/// The smaller it is, the harder it is to hit.
+	/// </summary>
+	public enum MonsterSizeModifier
+	{
+		/// <summary>
+		/// Blue whale
+		/// </summary>
+		Colossal = -8,
+
+		/// <summary>
+		/// Gray whale
+		/// </summary>
+		Gargantuan = -4,
+
+		/// <summary>
+		/// Elephant
+		/// </summary>
+		Huge = -2,
+
+		/// <summary>
+		/// Lion
+		/// </summary>
+		Large = -1,
+
+		/// <summary>
+		/// Human
+		/// </summary>
+		Medium = 0,
+
+		/// <summary>
+		/// German shepherd
+		/// </summary>
+		Small = 1,
+
+		/// <summary>
+		/// House cat
+		/// </summary>
+		Tiny = 2,
+
+		/// <summary>
+		/// Rat
+		/// </summary>
+		Diminutive = 4,
+
+		/// <summary>
+		/// Horsefly
+		/// </summary>
+		Fine = 8,
+	}
+
+
+	/// <summary>
 	/// define the height of the creature. It is used to check if missiles can fly over the creatures (for example Fireballs can fly over small creatures).
 	/// This value is also used to define how to animate a door that is closed upon the creature: 
 	/// </summary>
