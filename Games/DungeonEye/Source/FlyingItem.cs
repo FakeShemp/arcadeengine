@@ -113,7 +113,7 @@ namespace DungeonEye
 
 
 				// Block by an obstacle, but fall on the block
-				int monstercount = maze.GetMonsterCount(Location);
+				int monstercount = maze.GetMonsterCount(dst);
 				if ((blockinfo.Door != null && blockinfo.Door.State != DoorState.Opened) || monstercount > 0)
 				{
 					Distance = 0;
@@ -152,7 +152,7 @@ namespace DungeonEye
 					// Get monster and hit them
 					if (monstercount > 0)
 					{
-						Monster[] monsters = maze.GetMonsters(Location);
+						Monster[] monsters = maze.GetMonsters(Location.Position);
 						foreach(Monster monster in monsters)
 							if (monster != null)
 								monster.Attack(2);

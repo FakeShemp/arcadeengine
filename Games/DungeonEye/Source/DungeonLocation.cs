@@ -41,11 +41,7 @@ namespace DungeonEye
 		/// <param name="dungeon"></param>
 		public DungeonLocation(Dungeon dungeon)
 		{
-			//if (maze == null)
-			//    throw new ArgumentNullException("maze");
-
 			Dungeon = dungeon;
-			//Maze = maze;
 			Compass = new Compass();
 			Position = Point.Empty;
 			GroundPosition = GroundPosition.NorthEast;
@@ -59,10 +55,10 @@ namespace DungeonEye
 		/// <param name="loc">Location</param>
 		public DungeonLocation(DungeonLocation loc)
 		{
+			Dungeon = loc.Dungeon;
 			Compass = new Compass(loc.Compass);
 			Position = loc.Position;
 			GroundPosition = loc.GroundPosition;
-			Maze = loc.Maze;
 			SetMaze(loc.MazeName);
 		}
 

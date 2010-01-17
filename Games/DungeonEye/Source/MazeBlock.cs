@@ -57,6 +57,7 @@ namespace DungeonEye
 
 			//Maze = maze;
 			Location = new DungeonLocation(maze.Dungeon);
+			Location.SetMaze(maze.Name);
 			Type = BlockType.Wall;
 
 			WallDecoration = new int[4];

@@ -85,8 +85,8 @@ namespace DungeonEye
 			Head = GameBase.Random.Next(0, 32);
 
 
-			Quiver = 10;
-			SetInventoryItem(InventoryPosition.Primary, ResourceManager.CreateAsset<Item>("Spell book"));
+			Quiver = 100;
+			SetInventoryItem(InventoryPosition.Primary, ResourceManager.CreateAsset<Item>("Short Bow"));
 			SetInventoryItem(InventoryPosition.Inventory_09, ResourceManager.CreateAsset<Item>("Short Bow"));
 			SetInventoryItem(InventoryPosition.Armor, ResourceManager.CreateAsset<Item>("Leather Armor"));
 			SetInventoryItem(InventoryPosition.Inventory_01, ResourceManager.CreateAsset<Item>("Test Item"));

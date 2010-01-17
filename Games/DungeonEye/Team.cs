@@ -2284,7 +2284,7 @@ namespace DungeonEye
 				state = true;
 
 			// Monsters
-			if (Location.Maze.GetMonsterCount(dstblock.Location) > 0)
+			if (Location.Maze.GetMonsterCount(dstblock.Location.Position) > 0)
 				state = false;
 
 			// blocking door
