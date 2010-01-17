@@ -42,7 +42,6 @@ namespace DungeonEye.Forms
 		public DungeonForm(XmlNode node)
 		{
 			InitializeComponent();
-			PreviewLoc = new DungeonLocation();
 
 
 
@@ -50,6 +49,9 @@ namespace DungeonEye.Forms
 			Dungeon = new Dungeon();
 			Dungeon.Load(node);
 			Dungeon.Init();
+
+			PreviewLoc = new DungeonLocation(Dungeon.StartLocation);
+
 
 			MazePropertyBox.Tag = Dungeon;
 			RebuildMazeList();
@@ -447,7 +449,7 @@ namespace DungeonEye.Forms
 					{
 						int tileid = 0;
 						
-						if (Maze.IsDoorNorthSouth(new Point(x, y)))
+						if (Maze.IsDoorNorthSouth(block.Location))
 							tileid = 3;
 						else
 							tileid = 2;
@@ -670,6 +672,7 @@ namespace DungeonEye.Forms
 			if (result == DialogResult.Yes)
 			{
 				Save();
+		//		Dungeon.Dispose();
 			}
 			else if (result == DialogResult.Cancel)
 			{

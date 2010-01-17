@@ -205,10 +205,19 @@ namespace DungeonEye.Forms
 			WallTypeBox.SelectedItem = MazeBlock.Type.ToString();
 			#endregion
 
+
+			StairTypeBox.BeginUpdate();
+			StairTypeBox.Items.Clear();
+			foreach (string name in Enum.GetNames(typeof(StairType)))
+				StairTypeBox.Items.Add(name);
+			if (MazeBlock.Stair != null)
+				StairTypeBox.SelectedItem = MazeBlock.Stair.Type.ToString();
+			StairTypeBox.EndUpdate();
+
 		}
 
 
-		#region Ground Items events
+		#region Items events
 
 
 		/// <summary>
@@ -386,6 +395,27 @@ namespace DungeonEye.Forms
 		}
 
 
+		private void AlcoveNorthButton_CheckedChanged(object sender, EventArgs e)
+		{
+
+			MazeBlock.SetAlcove(CardinalPoint.North, AlcoveNorthButton.Checked);
+		}
+
+		private void AlcoveSouthButton_CheckedChanged(object sender, EventArgs e)
+		{
+			MazeBlock.SetAlcove(CardinalPoint.South, AlcoveSouthButton.Checked);
+		}
+
+		private void AlcoveWestButton_CheckedChanged(object sender, EventArgs e)
+		{
+			MazeBlock.SetAlcove(CardinalPoint.West, AlcoveWestButton.Checked);
+		}
+
+		private void AlcoveEastButton_CheckedChanged(object sender, EventArgs e)
+		{
+			MazeBlock.SetAlcove(CardinalPoint.East, AlcoveEastButton.Checked);
+		}
+
 
 		#endregion
 
@@ -434,8 +464,8 @@ namespace DungeonEye.Forms
 			
 
 			Monster monster = ResourceManager.CreateAsset<Monster>(MonsterTemplateBox.SelectedItem as string);
-			monster.Location = new DungeonLocation();
-			monster.Location.Position = MazeBlock.Location;
+			monster.Location = new DungeonLocation(MazeBlock.Location);
+			//monster.Location.Position = MazeBlock.Location;
 			monster.Location.GroundPosition = (GroundPosition)Enum.ToObject(typeof(GroundPosition), GroundLocationBox.SelectedIndex);
 			monster.Location.SetMaze(Maze.Name);
 			monster.Init();
@@ -489,26 +519,6 @@ namespace DungeonEye.Forms
 
 		#region Walls
 
-		private void AlcoveNorthButton_CheckedChanged(object sender, EventArgs e)
-		{
-
-			MazeBlock.SetAlcove(CardinalPoint.North, AlcoveNorthButton.Checked);
-		}
-
-		private void AlcoveSouthButton_CheckedChanged(object sender, EventArgs e)
-		{
-			MazeBlock.SetAlcove(CardinalPoint.South, AlcoveSouthButton.Checked);
-		}
-
-		private void AlcoveWestButton_CheckedChanged(object sender, EventArgs e)
-		{
-			MazeBlock.SetAlcove(CardinalPoint.West, AlcoveWestButton.Checked);
-		}
-
-		private void AlcoveEastButton_CheckedChanged(object sender, EventArgs e)
-		{
-			MazeBlock.SetAlcove(CardinalPoint.East, AlcoveEastButton.Checked);
-		}
 
 		private void ButtonNorthButton_CheckedChanged(object sender, EventArgs e)
 		{
@@ -680,7 +690,7 @@ namespace DungeonEye.Forms
 					if (MazeBlock.Pit == null)
 					{
 						MazeBlock.RemoveSpecials();
-						MazeBlock.Pit = new Pit();
+						MazeBlock.Pit = new Pit(MazeBlock);
 					}
 				}
 				break;
@@ -698,7 +708,7 @@ namespace DungeonEye.Forms
 					if (MazeBlock.Stair == null)
 					{
 						MazeBlock.RemoveSpecials();
-						MazeBlock.Stair = new Stair();
+						MazeBlock.Stair = new Stair(MazeBlock);
 					}
 				}
 				break;
@@ -716,7 +726,7 @@ namespace DungeonEye.Forms
 					if (MazeBlock.Teleporter == null)
 					{
 						MazeBlock.RemoveSpecials();
-						MazeBlock.Teleporter = new Teleporter();
+						MazeBlock.Teleporter = new Teleporter(MazeBlock);
 					}
 				}
 				break;
@@ -729,7 +739,7 @@ namespace DungeonEye.Forms
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void tabPage1_Enter(object sender, EventArgs e)
+		private void SpecialTab_Enter(object sender, EventArgs e)
 		{
 			if (MazeBlock.Door != null)
 			{
@@ -760,6 +770,7 @@ namespace DungeonEye.Forms
 			else if (MazeBlock.Stair != null)
 			{
 				SpecialTypeBox.SelectedItem = "Stair";
+				StairTargetLabel.Text = "Target : " + MazeBlock.Stair.Target.ToString();
 
 			}
 			else if (MazeBlock.Teleporter != null)
@@ -992,7 +1003,24 @@ namespace DungeonEye.Forms
 
 			DungeonLocationForm form = new DungeonLocationForm(Maze.Dungeon, MazeBlock.Stair.Target);
 			form.ShowDialog();
+
+			StairTargetLabel.Text = "Target : " + MazeBlock.Stair.Target.ToString();
 		}
+
+
+		/// <summary>
+		/// Stair direction
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void StairTypeBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (MazeBlock.Stair == null)
+				return;
+
+			MazeBlock.Stair.Type = (StairType)Enum.Parse(typeof(StairType), (string)StairTypeBox.SelectedItem);
+		}
+
 
 		#endregion
 
@@ -1012,6 +1040,7 @@ namespace DungeonEye.Forms
 
 
 		#endregion
+
 
 	}
 }

@@ -38,9 +38,15 @@ namespace DungeonEye
 		/// <summary>
 		/// Default constructor
 		/// </summary>
-		public FlyingItem()
+		/// <param name="block"></param>
+		public FlyingItem(MazeBlock block)
 		{
-			Location = new DungeonLocation();
+			//if (block == null)
+			//    throw new ArgumentNullException("block");
+
+		//	Block = block;
+			if (block != null)
+				Location = new DungeonLocation(block.Location);
 		}
 
 
@@ -107,7 +113,7 @@ namespace DungeonEye
 
 
 				// Block by an obstacle, but fall on the block
-				int monstercount = maze.GetMonsterCount(dst);
+				int monstercount = maze.GetMonsterCount(Location);
 				if ((blockinfo.Door != null && blockinfo.Door.State != DoorState.Opened) || monstercount > 0)
 				{
 					Distance = 0;
@@ -146,7 +152,7 @@ namespace DungeonEye
 					// Get monster and hit them
 					if (monstercount > 0)
 					{
-						Monster[] monsters = maze.GetMonsters(dst);
+						Monster[] monsters = maze.GetMonsters(Location);
 						foreach(Monster monster in monsters)
 							if (monster != null)
 								monster.Attack(2);
@@ -325,7 +331,16 @@ namespace DungeonEye
 			set;
 		}
 
-
+/*
+		/// <summary>
+		/// 
+		/// </summary>
+		public MazeBlock Block
+		{
+			get;
+			private set;
+		}
+*/
 		/// <summary>
 		/// Handle to the item
 		/// </summary>

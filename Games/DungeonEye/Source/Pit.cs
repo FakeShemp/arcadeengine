@@ -34,9 +34,13 @@ namespace DungeonEye
 		/// <summary>
 		/// Default constructor
 		/// </summary>
-		public Pit()
+		public Pit(MazeBlock block)
 		{
-			Target = new DungeonLocation();
+			if (block == null)
+				throw new ArgumentNullException("block");
+
+			Block = block;
+			Target = new DungeonLocation(Block.Location);
 
 		}
 
@@ -100,6 +104,12 @@ namespace DungeonEye
 
 
 		#region Properties
+
+		/// <summary>
+		/// 
+		/// </summary>
+		MazeBlock Block;
+
 
 		/// <summary>
 		/// Target of the pit

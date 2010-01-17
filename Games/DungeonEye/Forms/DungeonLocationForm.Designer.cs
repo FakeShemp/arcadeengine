@@ -35,12 +35,15 @@
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
 			this.DirectionBox = new System.Windows.Forms.ToolStripComboBox();
+			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.SelectBox = new System.Windows.Forms.ToolStripButton();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
 			this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
 			this.DungeonControl = new DungeonEye.Forms.DungeonLocationControl();
-			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-			this.SelectBox = new System.Windows.Forms.ToolStripButton();
+			this.GroundPositionBox = new System.Windows.Forms.ToolStripComboBox();
+			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+			this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
 			this.toolStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.SuspendLayout();
@@ -54,6 +57,9 @@
             this.toolStripLabel2,
             this.DirectionBox,
             this.toolStripSeparator2,
+            this.toolStripLabel3,
+            this.GroundPositionBox,
+            this.toolStripSeparator3,
             this.SelectBox});
 			this.toolStrip1.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip1.Name = "toolStrip1";
@@ -93,6 +99,20 @@
 			this.DirectionBox.Size = new System.Drawing.Size(121, 25);
 			this.DirectionBox.SelectedIndexChanged += new System.EventHandler(this.DirectionBox_Click);
 			// 
+			// toolStripSeparator2
+			// 
+			this.toolStripSeparator2.Name = "toolStripSeparator2";
+			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+			// 
+			// SelectBox
+			// 
+			this.SelectBox.Image = ((System.Drawing.Image)(resources.GetObject("SelectBox.Image")));
+			this.SelectBox.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.SelectBox.Name = "SelectBox";
+			this.SelectBox.Size = new System.Drawing.Size(58, 22);
+			this.SelectBox.Text = "Select";
+			this.SelectBox.Click += new System.EventHandler(this.SelectBox_Click);
+			// 
 			// statusStrip1
 			// 
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -118,25 +138,29 @@
 			// DungeonControl
 			// 
 			this.DungeonControl.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.DungeonControl.Dungeon = null;
 			this.DungeonControl.Location = new System.Drawing.Point(0, 25);
 			this.DungeonControl.Maze = null;
 			this.DungeonControl.Name = "DungeonControl";
 			this.DungeonControl.Size = new System.Drawing.Size(773, 504);
 			this.DungeonControl.TabIndex = 0;
+			this.DungeonControl.Target = null;
 			// 
-			// toolStripSeparator2
+			// GroundPositionBox
 			// 
-			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+			this.GroundPositionBox.Name = "GroundPositionBox";
+			this.GroundPositionBox.Size = new System.Drawing.Size(121, 25);
 			// 
-			// SelectBox
+			// toolStripSeparator3
 			// 
-			this.SelectBox.Image = ((System.Drawing.Image)(resources.GetObject("SelectBox.Image")));
-			this.SelectBox.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.SelectBox.Name = "SelectBox";
-			this.SelectBox.Size = new System.Drawing.Size(58, 22);
-			this.SelectBox.Text = "Select";
-			this.SelectBox.Click += new System.EventHandler(this.SelectBox_Click);
+			this.toolStripSeparator3.Name = "toolStripSeparator3";
+			this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+			// 
+			// toolStripLabel3
+			// 
+			this.toolStripLabel3.Name = "toolStripLabel3";
+			this.toolStripLabel3.Size = new System.Drawing.Size(53, 22);
+			this.toolStripLabel3.Text = "Ground :";
 			// 
 			// DungeonLocationForm
 			// 
@@ -174,5 +198,8 @@
 		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		private System.Windows.Forms.ToolStripButton SelectBox;
+		private System.Windows.Forms.ToolStripLabel toolStripLabel3;
+		private System.Windows.Forms.ToolStripComboBox GroundPositionBox;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
 	}
 }

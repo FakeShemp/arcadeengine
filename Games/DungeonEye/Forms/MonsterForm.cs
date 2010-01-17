@@ -37,7 +37,7 @@ namespace DungeonEye.Forms
 		{
 			InitializeComponent();
 
-			Monster = new Monster();
+			Monster = new Monster(null);
 			Monster.Load(node);
 			MonsterBox.SetMonster(Monster);
 		}

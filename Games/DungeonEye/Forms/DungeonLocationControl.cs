@@ -187,7 +187,7 @@ namespace DungeonEye.Forms
 						{
 							int tileid = 0;
 
-							if (Maze.IsDoorNorthSouth(new Point(x, y)))
+							if (Maze.IsDoorNorthSouth(block.Location))
 								tileid = 3;
 							else
 								tileid = 2;
@@ -391,7 +391,7 @@ namespace DungeonEye.Forms
 
 
 		/// <summary>
-		/// 
+		/// Dungeon
 		/// </summary>
 		public Dungeon Dungeon
 		{
@@ -411,7 +411,7 @@ namespace DungeonEye.Forms
 
 
 		/// <summary>
-		/// 
+		/// Target location
 		/// </summary>
 		public DungeonLocation Target
 		{
@@ -420,8 +420,11 @@ namespace DungeonEye.Forms
 		}
 
 
-
+		/// <summary>
+		/// Checkerboard background texture
+		/// </summary>
 		Texture CheckerBoard;
+
 
 		/// <summary>
 		/// Maze icons

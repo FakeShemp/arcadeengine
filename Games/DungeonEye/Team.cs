@@ -50,7 +50,6 @@ namespace DungeonEye
 			SpellBook = new SpellBook();
 
 			DrawHPAsBar = true;
-			Location = new DungeonLocation();
 		}
 
 
@@ -68,6 +67,15 @@ namespace DungeonEye
 			ResourceManager.LoadBank("data/game.bnk");
 			Trace.WriteLine("Content loaded ({0} ms)", watch.ElapsedMilliseconds);
 
+			// The dungeon
+			Dungeon = ResourceManager.CreateAsset<Dungeon>("Eye");
+			if (Dungeon == null)
+			{
+				Trace.WriteLine("Failed to load the dungeon !!");
+				throw new NullReferenceException();
+			}
+			Dungeon.Init();
+			
 			// Language
 			Language = ResourceManager.CreateAsset<StringTable>("game");
 			if (Language == null)
@@ -117,7 +125,7 @@ namespace DungeonEye
 			//HACK: Load heroes
 			string[] name = new string[] { "Allabar", "Ariel", "Valanau", "Tenmiyana", "Bob", "Chuck" };
 			Heroes = new Hero[6];
-			for (int i = 0; i < 6; i++)
+			for (int i = 0; i < 4; i++)
 			{
 				Hero hero = new Hero(this);
 				hero.Name = name[i];
@@ -139,12 +147,8 @@ namespace DungeonEye
 
 	
 			
-			// The dungeon
-			Dungeon = ResourceManager.CreateAsset<Dungeon>("Eye");
-			if (Dungeon != null)
-				Dungeon.Init();
-
 			// Set location
+			Location = new DungeonLocation(Dungeon);
 			Teleport(Dungeon.StartLocation);
 
 			watch.Stop();
@@ -502,8 +506,8 @@ namespace DungeonEye
 
 
 			// Mini map
-			//if (Maze != null)
-			//	Maze.DrawMiniMap(this, new Point(500, 220));
+			if (Location.Maze != null)
+				Location.Maze.DrawMiniMap(this, new Point(500, 220));
 
 		}
 
@@ -2280,7 +2284,7 @@ namespace DungeonEye
 				state = true;
 
 			// Monsters
-			if (Location.Maze.GetMonsterCount(dst) > 0)
+			if (Location.Maze.GetMonsterCount(dstblock.Location) > 0)
 				state = false;
 
 			// blocking door
@@ -2357,17 +2361,11 @@ namespace DungeonEye
 		/// <summary>
 		/// Dungeon to use
 		/// </summary>
-		public static Dungeon Dungeon
+		public Dungeon Dungeon
 		{
 			get;
-			set;
+			private set;
 		}
-
-
-		/// <summary>
-		/// Current maze
-		/// </summary>
-//		public Maze Maze;
 
 
 		/// <summary>

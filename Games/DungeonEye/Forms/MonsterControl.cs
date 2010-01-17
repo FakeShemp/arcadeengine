@@ -172,8 +172,10 @@ namespace DungeonEye.Forms
 		private void MonsterControl_Load(object sender, EventArgs e)
 		{
 			// Parent closing form
-			ParentForm.FormClosing += new FormClosingEventHandler(ParentForm_FormClosing);
-
+			if (!DesignMode)
+			{
+				ParentForm.FormClosing += new FormClosingEventHandler(ParentForm_FormClosing);
+			}
 		}
 
 		/// <summary>

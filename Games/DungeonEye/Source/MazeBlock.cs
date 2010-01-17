@@ -49,8 +49,14 @@ namespace DungeonEye
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public MazeBlock()
+		/// <param name="maze">Maze</param>
+		public MazeBlock(Maze maze)
 		{
+			if (maze == null)
+				throw new ArgumentNullException("maze");
+
+			//Maze = maze;
+			Location = new DungeonLocation(maze.Dungeon);
 			Type = BlockType.Wall;
 
 			WallDecoration = new int[4];
@@ -370,10 +376,11 @@ namespace DungeonEye
 			writer.WriteStartElement("block");
 
 			// Location
-			writer.WriteStartElement("location");
-			writer.WriteAttributeString("x", Location.X.ToString());
-			writer.WriteAttributeString("y", Location.Y.ToString());
-			writer.WriteEndElement();
+			Location.Save("location", writer);
+			//writer.WriteStartElement("location");
+			//writer.WriteAttributeString("x", Location.X.ToString());
+			//writer.WriteAttributeString("y", Location.Y.ToString());
+			//writer.WriteEndElement();
 
 
 			// Type of wall
@@ -482,7 +489,8 @@ namespace DungeonEye
 
 					case "location":
 					{
-						Location = new Point(Int32.Parse(node.Attributes["x"].Value), Int32.Parse(node.Attributes["y"].Value));
+						Location.Load(node);
+						//= new Point(Int32.Parse(node.Attributes["x"].Value), Int32.Parse(node.Attributes["y"].Value));
 					}
 					break;
 
@@ -502,7 +510,7 @@ namespace DungeonEye
 
 					case "teleporter":
 					{
-						Teleporter = new Teleporter();
+						Teleporter = new Teleporter(this);
 						Teleporter.Load(node);
 					}
 					break;
@@ -516,7 +524,7 @@ namespace DungeonEye
 
 					case "pit":
 					{
-						Pit = new Pit();
+						Pit = new Pit(this);
 						Pit.Load(node);
 					}
 					break;
@@ -530,7 +538,7 @@ namespace DungeonEye
 
 					case "stair":
 					{
-						Stair = new Stair();
+						Stair = new Stair(this);
 						Stair.Load(node);
 					}
 					break;
@@ -714,7 +722,7 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Is a trick block
+		/// Is an illusion block
 		/// </summary>
 		public bool IsTrick
 		{
@@ -773,11 +781,12 @@ namespace DungeonEye
 		/// <summary>
 		/// Location of the block in the maze
 		/// </summary>
-		public Point Location
+		public DungeonLocation Location
 		{
 			get;
-			set;
+			private set;
 		}
+
 
 
 		/// <summary>

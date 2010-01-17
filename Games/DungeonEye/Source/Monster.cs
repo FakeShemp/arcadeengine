@@ -51,9 +51,12 @@ namespace DungeonEye
 		/// <summary>
 		/// Default constructor
 		/// </summary>
-		public Monster()
+		/// <param name="maze"></param>
+		public Monster(Maze maze)
 		{
-			Location = new DungeonLocation();
+			if (maze!= null)
+				Location = new DungeonLocation(maze.Dungeon);
+			
 			ItemsInPocket = new List<string>();
 			Life = new Life();
 			LastHit = new DateTime();
@@ -113,7 +116,7 @@ namespace DungeonEye
 				state = true;
 
 			// Monsters
-			if (Location.Maze.GetMonsterCount(dst) > 0)
+			if (Location.Maze.GetMonsterCount(Location) > 0)
 				state = false;
 
 			// blocking door
@@ -486,6 +489,18 @@ namespace DungeonEye
 			get;
 			set;
 		}
+
+
+		/// <summary>
+		/// Location of the monster
+		/// </summary>
+		public MazeBlock Block
+		{
+			get;
+			private set;
+		}
+
+
 
 
 		/// <summary>

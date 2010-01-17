@@ -374,7 +374,7 @@ namespace DungeonEye
 			// Trace this attack
 			attack.Date = DateTime.Now;
 			attack.Result = (short)GameBase.Random.Next(0, 10);
-			attack.Monster = Team.Location.Maze.GetMonster(Team.FrontCoord, Team.GetHeroGroundPosition(this));
+		//	attack.Monster = Team.Location.Maze.GetMonster(Team.FrontCoord, Team.GetHeroGroundPosition(this));
 
 
 			// Hand attack

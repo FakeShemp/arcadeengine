@@ -17,20 +17,10 @@
 //along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 //
 #endregion
-using System.Windows.Forms;
-using System.Windows.Forms.Design;
-using System.Drawing.Design;
-using DungeonEye.Forms;
 using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Text;
-using System.Xml;
 using System.ComponentModel;
-using ArcEngine;
-using ArcEngine.Asset;
-using ArcEngine.Graphic;
+using System.Drawing;
+using System.Xml;
 
 namespace DungeonEye
 {
@@ -43,28 +33,37 @@ namespace DungeonEye
 	[TypeConverter(typeof(DungeonLocationConverter))]
 	public class DungeonLocation
 	{
+		#region constructors
 
 		/// <summary>
 		/// Default constructor
 		/// </summary>
-		public DungeonLocation()
+		/// <param name="dungeon"></param>
+		public DungeonLocation(Dungeon dungeon)
 		{
+			//if (maze == null)
+			//    throw new ArgumentNullException("maze");
+
+			Dungeon = dungeon;
+			//Maze = maze;
 			Compass = new Compass();
 			Position = Point.Empty;
 			GroundPosition = GroundPosition.NorthEast;
 		}
 
 
+
 		/// <summary>
 		/// Copy constructor
 		/// </summary>
-		/// <param name="loc"></param>
+		/// <param name="loc">Location</param>
 		public DungeonLocation(DungeonLocation loc)
 		{
 			Compass = new Compass(loc.Compass);
 			Position = loc.Position;
 			GroundPosition = loc.GroundPosition;
 			Maze = loc.Maze;
+			SetMaze(loc.MazeName);
 		}
 
 
@@ -77,12 +76,14 @@ namespace DungeonEye
 		/// <param name="direction"></param>
 		public DungeonLocation(string name, Point location, CardinalPoint direction)
 		{
-			SetMaze(name);
 			Position = location;
 			Compass = new Compass();
 			Direction = direction;
+			SetMaze(name);
 		}
 
+
+		#endregion
 
 
 		#region I/O
@@ -98,10 +99,15 @@ namespace DungeonEye
 			if (xml == null)
 				return false;
 
-			MazeName = xml.Attributes["maze"].Value;
+			if (xml.Attributes["maze"] != null)
+				SetMaze(xml.Attributes["maze"].Value);
 			Position = new Point(int.Parse(xml.Attributes["x"].Value), int.Parse(xml.Attributes["y"].Value));
-			Direction = (CardinalPoint)Enum.Parse(typeof(CardinalPoint), xml.Attributes["direction"].Value, true);
-			GroundPosition = (GroundPosition)Enum.Parse(typeof(GroundPosition), xml.Attributes["position"].Value, true);
+
+			if (xml.Attributes["direction"] != null)
+				Direction = (CardinalPoint)Enum.Parse(typeof(CardinalPoint), xml.Attributes["direction"].Value, true);
+
+			if (xml.Attributes["position"] != null)
+				GroundPosition = (GroundPosition)Enum.Parse(typeof(GroundPosition), xml.Attributes["position"].Value, true);
 
 
 			return true;
@@ -141,22 +147,84 @@ namespace DungeonEye
 		/// Changes the current maze
 		/// </summary>
 		/// <param name="name">Desired maze name</param>
-		/// <returns>True if level found</returns>
+		/// <returns>True if maze found</returns>
 		public bool SetMaze(string name)
 		{
-			if (string.IsNullOrEmpty(name) || Team.Dungeon == null)
-				return false;
+			MazeName = name;
 
-			Maze = Team.Dungeon.GetMaze(name);
+			if (Dungeon != null)
+				Maze = Dungeon.GetMaze(name);
+			else
+				Maze = null;
 
 			return Maze != null;
 		}
 
 
 
+		/// <summary>
+		/// Returns a String that represents the current location
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString()
+		{
+			return string.Format("{0}x{1} {2} {3}", Position.X, Position.Y, MazeName, Direction.ToString());
+		}
+
+/*
+		#region Operators override
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="from"></param>
+		/// <param name="to"></param>
+		/// <returns></returns>
+		static public bool operator ==(DungeonLocation from, DungeonLocation to)
+		{
+			if (from.MazeName != to.MazeName)
+				return false;
+
+			if (from.Direction != to.Direction)
+				return false;
+			
+			if (from.GroundPosition != to.GroundPosition)
+				return false;
+
+			if (from.Position != to.Position)
+				return false;
+
+			return true;
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="from"></param>
+		/// <param name="to"></param>
+		/// <returns></returns>
+		static public bool operator !=(DungeonLocation from, DungeonLocation to)
+		{
+
+			return !(from == to);
+		}
+
+		#endregion
+*/
 
 		#region Properties
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Dungeon Dungeon
+		{
+			get;
+			private set;
+		}
+
+	
 		/// <summary>
 		/// Handle of the maze
 		/// </summary>
@@ -181,7 +249,6 @@ namespace DungeonEye
 		/// Location in the maze
 		/// </summary>
 		public Point Position;
-
 
 
 		/// <summary>
@@ -219,11 +286,6 @@ namespace DungeonEye
 
 		#endregion
 
-
-		public override string ToString()
-		{
-			return string.Format("{0}x{1} {2} {3}", Position.X, Position.Y, MazeName, Direction.ToString());
-		}
 	}
 
 

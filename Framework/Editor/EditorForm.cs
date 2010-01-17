@@ -93,6 +93,7 @@ namespace ArcEngine.Editor
 		/// <param name="e"></param>
 		private void exitToolStripMenuItem_Click(object sender, EventArgs e)
 		{
+			GC.Collect();
 			Application.Exit();
 		}
 

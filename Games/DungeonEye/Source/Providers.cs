@@ -274,7 +274,7 @@ namespace DungeonEye
 
 			if (typeof(T) == typeof(Monster) && Monsters.ContainsKey(name))
 			{
-				Monster monster = new Monster();
+				Monster monster = new Monster(null);
 				monster.Load(Monsters[name]);
 				return (T)(object)monster;
 			}

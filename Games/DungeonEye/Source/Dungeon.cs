@@ -20,7 +20,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
 using System.Xml;
 using ArcEngine;
 using ArcEngine.Asset;
@@ -31,22 +30,26 @@ namespace DungeonEye
 	/// <summary>
 	/// Represent a dungeon which contains severals mazes
 	/// </summary>
-	public class Dungeon : IAsset
+	public class Dungeon : IAsset//, IDisposable
 	{
+		/// <summary>
+		/// Default constructor
+		/// </summary>
 		public Dungeon()
 		{
 			Mazes = new Dictionary<string, Maze>();
-			StartLocation = new DungeonLocation();
+			StartLocation = new DungeonLocation(this);
 		}
-
 
 
 		/// <summary>
 		/// Initialize the dungeon
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>True if all is OK</returns>
 		public bool Init()
 		{
+			Trace.WriteLine("Dungeon init");
+
 			StartLocation.SetMaze(StartLocation.MazeName);
 
 			foreach (Maze maze in Mazes.Values)
@@ -62,9 +65,8 @@ namespace DungeonEye
 		/// </summary>
 		public void Clear()
 		{
-			StartLocation = new DungeonLocation();
 			Mazes.Clear();
-			StartLocation = new DungeonLocation();
+			StartLocation = new DungeonLocation(StartLocation);
 		}
 
 
@@ -72,6 +74,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Update all elements in the dungeon
 		/// </summary>
+		/// <param name="time">Elapsed game time</param>
 		public void Update(GameTime time)
 		{
 			foreach (Maze maze in MazeList)
@@ -115,8 +118,8 @@ namespace DungeonEye
 						string name = node.Attributes["name"].Value;
 						Maze maze = new Maze(this);
 						maze.Name = name;
-						maze.Load(node);
 						Mazes[name] = maze;
+						maze.Load(node);
 					}
 					break;
 
@@ -150,10 +153,11 @@ namespace DungeonEye
 			writer.WriteStartElement("dungeon");
 			writer.WriteAttributeString("name", Name);
 
-			StartLocation.Save("start", writer);
 	
 			foreach (Maze maze in MazeList)
 				maze.Save(writer);
+
+			StartLocation.Save("start", writer);
 
 			writer.WriteEndElement();
 
@@ -212,6 +216,9 @@ namespace DungeonEye
 		/// <param name="maze">Maze to add</param>
 		public void AddMaze(Maze maze)
 		{
+			if (maze == null)
+				return;
+
 			Mazes[maze.Name] = maze;
 		}
 
@@ -222,6 +229,9 @@ namespace DungeonEye
 		/// <param name="name">Name of the maze</param>
 		public void RemoveMaze(string name)
 		{
+			if (string.IsNullOrEmpty(name))
+				return;
+
 			Mazes.Remove(name);
 		}
 
@@ -232,6 +242,11 @@ namespace DungeonEye
 
 
 		#region Properties
+
+		/// <summary>
+		/// Available dungeons
+		/// </summary>
+//		static List<Dungeon> Dungeons = new List<Dungeon>();
 
 		/// <summary>
 		/// Name of the dungeon

@@ -36,8 +36,8 @@ namespace DungeonEye.Forms
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="dungeon"></param>
-		/// <param name="location"></param>
+		/// <param name="dungeon">Dungeon handle</param>
+		/// <param name="location">Default location</param>
 		public DungeonLocationForm(Dungeon dungeon, DungeonLocation location)
 		{
 			InitializeComponent();
@@ -56,7 +56,7 @@ namespace DungeonEye.Forms
 
 
 		/// <summary>
-		/// 
+		/// Initialization
 		/// </summary>
 		void Init()
 		{
@@ -69,9 +69,11 @@ namespace DungeonEye.Forms
 				MazeBox.Items.Add(maze.Name);
 			MazeBox.EndUpdate();
 
-			if (Target.Maze != null)
-				MazeBox.SelectedItem = Target.Maze.Name;
+			if (!string.IsNullOrEmpty(Target.MazeName))
+				MazeBox.SelectedItem = Target.MazeName;
 			DirectionBox.SelectedItem = Target.Direction.ToString();
+
+
 
 		}
 
@@ -80,7 +82,7 @@ namespace DungeonEye.Forms
 
 
 		/// <summary>
-		/// 
+		/// Change maze
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -89,7 +91,7 @@ namespace DungeonEye.Forms
 			if (DungeonControl.Dungeon == null)
 				return;
 
-			DungeonControl.Maze = DungeonControl.Dungeon.GetMaze((string)MazeBox.SelectedItem);
+			DungeonControl.Target.SetMaze((string)MazeBox.SelectedItem);
 		}
 
 
@@ -100,7 +102,10 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void DirectionBox_Click(object sender, EventArgs e)
 		{
+			if (DirectionBox.SelectedIndex == -1)
+				return;
 
+			Target.Direction = (CardinalPoint)Enum.Parse(typeof(CardinalPoint), (string)DirectionBox.SelectedItem);
 		}
 
 
