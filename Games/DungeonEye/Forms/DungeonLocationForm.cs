@@ -99,6 +99,7 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		void GlControlBox_DoubleClick(object sender, EventArgs e)
 		{
+			DialogResult = DialogResult.OK;
 			Close();
 		}
 
@@ -110,7 +111,7 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		void DungeonControl_Click(object sender, EventArgs e)
 		{
-			DungeonControl.Target.Position = DungeonControl.BlockUnderMouse;// = DungeonControl.GetLocation(DungeonControl.BlockUnderMouse);
+			DungeonControl.Target.Position = DungeonControl.BlockUnderMouse;
 			DungeonControl.Target.SetMaze((string)MazeBox.SelectedItem);
 		}
 

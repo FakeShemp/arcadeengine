@@ -31,6 +31,11 @@
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MazeBlockForm));
 			this.TabControlBox = new System.Windows.Forms.TabControl();
 			this.ItemsTab = new System.Windows.Forms.TabPage();
+			this.groupBox7 = new System.Windows.Forms.GroupBox();
+			this.AlcoveEastButton = new System.Windows.Forms.CheckBox();
+			this.AlcoveWestButton = new System.Windows.Forms.CheckBox();
+			this.AlcoveSouthButton = new System.Windows.Forms.CheckBox();
+			this.AlcoveNorthButton = new System.Windows.Forms.CheckBox();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
 			this.SEBox = new System.Windows.Forms.ListBox();
 			this.SEAddItem = new System.Windows.Forms.Button();
@@ -52,6 +57,7 @@
 			this.NWItemsBox = new System.Windows.Forms.ComboBox();
 			this.NWRemoveItem = new System.Windows.Forms.Button();
 			this.MonstersTab = new System.Windows.Forms.TabPage();
+			this.MonsterBox = new DungeonEye.Forms.MonsterControl();
 			this.button2 = new System.Windows.Forms.Button();
 			this.ApplyMonsterTemplateBox = new System.Windows.Forms.Button();
 			this.MonsterTemplateBox = new System.Windows.Forms.ComboBox();
@@ -89,7 +95,7 @@
 			this.label3 = new System.Windows.Forms.Label();
 			this.HiddenPlateBox = new System.Windows.Forms.CheckBox();
 			this.PitGroupBox = new System.Windows.Forms.GroupBox();
-			this.PitDestinationLabel = new System.Windows.Forms.Label();
+			this.PitTargetLabel = new System.Windows.Forms.Label();
 			this.PitTargetBox = new System.Windows.Forms.Button();
 			this.StairGroupBox = new System.Windows.Forms.GroupBox();
 			this.StairTargetLabel = new System.Windows.Forms.Label();
@@ -112,14 +118,9 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.DoorStateBox = new System.Windows.Forms.ComboBox();
 			this.DoorTypeBox = new System.Windows.Forms.ComboBox();
-			this.groupBox7 = new System.Windows.Forms.GroupBox();
-			this.AlcoveEastButton = new System.Windows.Forms.CheckBox();
-			this.AlcoveWestButton = new System.Windows.Forms.CheckBox();
-			this.AlcoveSouthButton = new System.Windows.Forms.CheckBox();
-			this.AlcoveNorthButton = new System.Windows.Forms.CheckBox();
-			this.MonsterBox = new DungeonEye.Forms.MonsterControl();
 			this.TabControlBox.SuspendLayout();
 			this.ItemsTab.SuspendLayout();
+			this.groupBox7.SuspendLayout();
 			this.groupBox4.SuspendLayout();
 			this.groupBox3.SuspendLayout();
 			this.groupBox1.SuspendLayout();
@@ -138,7 +139,6 @@
 			this.ForceFieldGroupBox.SuspendLayout();
 			this.TeleporterGroupBox.SuspendLayout();
 			this.DoorGroupBox.SuspendLayout();
-			this.groupBox7.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// TabControlBox
@@ -169,6 +169,63 @@
 			this.ItemsTab.Text = "Items";
 			this.ItemsTab.UseVisualStyleBackColor = true;
 			// 
+			// groupBox7
+			// 
+			this.groupBox7.Controls.Add(this.AlcoveEastButton);
+			this.groupBox7.Controls.Add(this.AlcoveWestButton);
+			this.groupBox7.Controls.Add(this.AlcoveSouthButton);
+			this.groupBox7.Controls.Add(this.AlcoveNorthButton);
+			this.groupBox7.Location = new System.Drawing.Point(396, 6);
+			this.groupBox7.Name = "groupBox7";
+			this.groupBox7.Size = new System.Drawing.Size(96, 118);
+			this.groupBox7.TabIndex = 22;
+			this.groupBox7.TabStop = false;
+			this.groupBox7.Text = "Alcoves :";
+			// 
+			// AlcoveEastButton
+			// 
+			this.AlcoveEastButton.AutoSize = true;
+			this.AlcoveEastButton.Location = new System.Drawing.Point(9, 92);
+			this.AlcoveEastButton.Name = "AlcoveEastButton";
+			this.AlcoveEastButton.Size = new System.Drawing.Size(47, 17);
+			this.AlcoveEastButton.TabIndex = 3;
+			this.AlcoveEastButton.Text = "East";
+			this.AlcoveEastButton.UseVisualStyleBackColor = true;
+			this.AlcoveEastButton.CheckedChanged += new System.EventHandler(this.AlcoveEastButton_CheckedChanged);
+			// 
+			// AlcoveWestButton
+			// 
+			this.AlcoveWestButton.AutoSize = true;
+			this.AlcoveWestButton.Location = new System.Drawing.Point(9, 68);
+			this.AlcoveWestButton.Name = "AlcoveWestButton";
+			this.AlcoveWestButton.Size = new System.Drawing.Size(51, 17);
+			this.AlcoveWestButton.TabIndex = 2;
+			this.AlcoveWestButton.Text = "West";
+			this.AlcoveWestButton.UseVisualStyleBackColor = true;
+			this.AlcoveWestButton.CheckedChanged += new System.EventHandler(this.AlcoveWestButton_CheckedChanged);
+			// 
+			// AlcoveSouthButton
+			// 
+			this.AlcoveSouthButton.AutoSize = true;
+			this.AlcoveSouthButton.Location = new System.Drawing.Point(9, 44);
+			this.AlcoveSouthButton.Name = "AlcoveSouthButton";
+			this.AlcoveSouthButton.Size = new System.Drawing.Size(54, 17);
+			this.AlcoveSouthButton.TabIndex = 1;
+			this.AlcoveSouthButton.Text = "South";
+			this.AlcoveSouthButton.UseVisualStyleBackColor = true;
+			this.AlcoveSouthButton.CheckedChanged += new System.EventHandler(this.ButtonSouthButton_CheckedChanged);
+			// 
+			// AlcoveNorthButton
+			// 
+			this.AlcoveNorthButton.AutoSize = true;
+			this.AlcoveNorthButton.Location = new System.Drawing.Point(9, 20);
+			this.AlcoveNorthButton.Name = "AlcoveNorthButton";
+			this.AlcoveNorthButton.Size = new System.Drawing.Size(52, 17);
+			this.AlcoveNorthButton.TabIndex = 0;
+			this.AlcoveNorthButton.Text = "North";
+			this.AlcoveNorthButton.UseVisualStyleBackColor = true;
+			this.AlcoveNorthButton.CheckedChanged += new System.EventHandler(this.AlcoveNorthButton_CheckedChanged);
+			// 
 			// groupBox4
 			// 
 			this.groupBox4.Controls.Add(this.SEBox);
@@ -185,8 +242,8 @@
 			// SEBox
 			// 
 			this.SEBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+							| System.Windows.Forms.AnchorStyles.Left)
+							| System.Windows.Forms.AnchorStyles.Right)));
 			this.SEBox.FormattingEnabled = true;
 			this.SEBox.Location = new System.Drawing.Point(6, 47);
 			this.SEBox.Name = "SEBox";
@@ -219,7 +276,7 @@
 			// SERemoveItem
 			// 
 			this.SERemoveItem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+							| System.Windows.Forms.AnchorStyles.Right)));
 			this.SERemoveItem.Location = new System.Drawing.Point(6, 146);
 			this.SERemoveItem.Name = "SERemoveItem";
 			this.SERemoveItem.Size = new System.Drawing.Size(177, 23);
@@ -244,8 +301,8 @@
 			// SWBox
 			// 
 			this.SWBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+							| System.Windows.Forms.AnchorStyles.Left)
+							| System.Windows.Forms.AnchorStyles.Right)));
 			this.SWBox.FormattingEnabled = true;
 			this.SWBox.Location = new System.Drawing.Point(6, 47);
 			this.SWBox.Name = "SWBox";
@@ -278,7 +335,7 @@
 			// SWRemoveItem
 			// 
 			this.SWRemoveItem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+							| System.Windows.Forms.AnchorStyles.Right)));
 			this.SWRemoveItem.Location = new System.Drawing.Point(6, 146);
 			this.SWRemoveItem.Name = "SWRemoveItem";
 			this.SWRemoveItem.Size = new System.Drawing.Size(177, 23);
@@ -303,8 +360,8 @@
 			// NEBox
 			// 
 			this.NEBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+							| System.Windows.Forms.AnchorStyles.Left)
+							| System.Windows.Forms.AnchorStyles.Right)));
 			this.NEBox.FormattingEnabled = true;
 			this.NEBox.Location = new System.Drawing.Point(6, 47);
 			this.NEBox.Name = "NEBox";
@@ -337,7 +394,7 @@
 			// NERemoveItem
 			// 
 			this.NERemoveItem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+							| System.Windows.Forms.AnchorStyles.Right)));
 			this.NERemoveItem.Location = new System.Drawing.Point(6, 146);
 			this.NERemoveItem.Name = "NERemoveItem";
 			this.NERemoveItem.Size = new System.Drawing.Size(177, 23);
@@ -362,8 +419,8 @@
 			// NWBox
 			// 
 			this.NWBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+							| System.Windows.Forms.AnchorStyles.Left)
+							| System.Windows.Forms.AnchorStyles.Right)));
 			this.NWBox.FormattingEnabled = true;
 			this.NWBox.Location = new System.Drawing.Point(6, 47);
 			this.NWBox.Name = "NWBox";
@@ -396,7 +453,7 @@
 			// NWRemoveItem
 			// 
 			this.NWRemoveItem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+							| System.Windows.Forms.AnchorStyles.Right)));
 			this.NWRemoveItem.Location = new System.Drawing.Point(6, 146);
 			this.NWRemoveItem.Name = "NWRemoveItem";
 			this.NWRemoveItem.Size = new System.Drawing.Size(177, 23);
@@ -421,6 +478,17 @@
 			this.MonstersTab.TabIndex = 1;
 			this.MonstersTab.Text = "Monsters";
 			this.MonstersTab.UseVisualStyleBackColor = true;
+			// 
+			// MonsterBox
+			// 
+			this.MonsterBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+							| System.Windows.Forms.AnchorStyles.Left)
+							| System.Windows.Forms.AnchorStyles.Right)));
+			this.MonsterBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.MonsterBox.Location = new System.Drawing.Point(8, 35);
+			this.MonsterBox.Name = "MonsterBox";
+			this.MonsterBox.Size = new System.Drawing.Size(593, 487);
+			this.MonsterBox.TabIndex = 14;
 			// 
 			// button2
 			// 
@@ -580,8 +648,8 @@
 			// DecorationGroupBox
 			// 
 			this.DecorationGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+							| System.Windows.Forms.AnchorStyles.Left)
+							| System.Windows.Forms.AnchorStyles.Right)));
 			this.DecorationGroupBox.Controls.Add(this.groupBox6);
 			this.DecorationGroupBox.Controls.Add(this.AddWallTemplateBox);
 			this.DecorationGroupBox.Controls.Add(this.groupBox5);
@@ -832,7 +900,7 @@
 			// 
 			// PitGroupBox
 			// 
-			this.PitGroupBox.Controls.Add(this.PitDestinationLabel);
+			this.PitGroupBox.Controls.Add(this.PitTargetLabel);
 			this.PitGroupBox.Controls.Add(this.PitTargetBox);
 			this.PitGroupBox.Location = new System.Drawing.Point(222, 177);
 			this.PitGroupBox.Name = "PitGroupBox";
@@ -841,13 +909,13 @@
 			this.PitGroupBox.TabStop = false;
 			this.PitGroupBox.Text = "Pit :";
 			// 
-			// PitDestinationLabel
+			// PitTargetLabel
 			// 
-			this.PitDestinationLabel.Location = new System.Drawing.Point(6, 16);
-			this.PitDestinationLabel.Name = "PitDestinationLabel";
-			this.PitDestinationLabel.Size = new System.Drawing.Size(202, 23);
-			this.PitDestinationLabel.TabIndex = 3;
-			this.PitDestinationLabel.Text = "label5";
+			this.PitTargetLabel.Location = new System.Drawing.Point(6, 16);
+			this.PitTargetLabel.Name = "PitTargetLabel";
+			this.PitTargetLabel.Size = new System.Drawing.Size(202, 23);
+			this.PitTargetLabel.TabIndex = 3;
+			this.PitTargetLabel.Text = "label5";
 			// 
 			// PitTargetBox
 			// 
@@ -1076,74 +1144,6 @@
 			this.DoorTypeBox.TabIndex = 0;
 			this.DoorTypeBox.SelectedIndexChanged += new System.EventHandler(this.DoorTypeBox_SelectedIndexChanged);
 			// 
-			// groupBox7
-			// 
-			this.groupBox7.Controls.Add(this.AlcoveEastButton);
-			this.groupBox7.Controls.Add(this.AlcoveWestButton);
-			this.groupBox7.Controls.Add(this.AlcoveSouthButton);
-			this.groupBox7.Controls.Add(this.AlcoveNorthButton);
-			this.groupBox7.Location = new System.Drawing.Point(396, 6);
-			this.groupBox7.Name = "groupBox7";
-			this.groupBox7.Size = new System.Drawing.Size(96, 118);
-			this.groupBox7.TabIndex = 22;
-			this.groupBox7.TabStop = false;
-			this.groupBox7.Text = "Alcoves :";
-			// 
-			// AlcoveEastButton
-			// 
-			this.AlcoveEastButton.AutoSize = true;
-			this.AlcoveEastButton.Location = new System.Drawing.Point(9, 92);
-			this.AlcoveEastButton.Name = "AlcoveEastButton";
-			this.AlcoveEastButton.Size = new System.Drawing.Size(47, 17);
-			this.AlcoveEastButton.TabIndex = 3;
-			this.AlcoveEastButton.Text = "East";
-			this.AlcoveEastButton.UseVisualStyleBackColor = true;
-			this.AlcoveEastButton.CheckedChanged += new System.EventHandler(this.AlcoveEastButton_CheckedChanged);
-			// 
-			// AlcoveWestButton
-			// 
-			this.AlcoveWestButton.AutoSize = true;
-			this.AlcoveWestButton.Location = new System.Drawing.Point(9, 68);
-			this.AlcoveWestButton.Name = "AlcoveWestButton";
-			this.AlcoveWestButton.Size = new System.Drawing.Size(51, 17);
-			this.AlcoveWestButton.TabIndex = 2;
-			this.AlcoveWestButton.Text = "West";
-			this.AlcoveWestButton.UseVisualStyleBackColor = true;
-			this.AlcoveWestButton.CheckedChanged += new System.EventHandler(this.AlcoveWestButton_CheckedChanged);
-			// 
-			// AlcoveSouthButton
-			// 
-			this.AlcoveSouthButton.AutoSize = true;
-			this.AlcoveSouthButton.Location = new System.Drawing.Point(9, 44);
-			this.AlcoveSouthButton.Name = "AlcoveSouthButton";
-			this.AlcoveSouthButton.Size = new System.Drawing.Size(54, 17);
-			this.AlcoveSouthButton.TabIndex = 1;
-			this.AlcoveSouthButton.Text = "South";
-			this.AlcoveSouthButton.UseVisualStyleBackColor = true;
-			this.AlcoveSouthButton.CheckedChanged += new System.EventHandler(this.ButtonSouthButton_CheckedChanged);
-			// 
-			// AlcoveNorthButton
-			// 
-			this.AlcoveNorthButton.AutoSize = true;
-			this.AlcoveNorthButton.Location = new System.Drawing.Point(9, 20);
-			this.AlcoveNorthButton.Name = "AlcoveNorthButton";
-			this.AlcoveNorthButton.Size = new System.Drawing.Size(52, 17);
-			this.AlcoveNorthButton.TabIndex = 0;
-			this.AlcoveNorthButton.Text = "North";
-			this.AlcoveNorthButton.UseVisualStyleBackColor = true;
-			this.AlcoveNorthButton.CheckedChanged += new System.EventHandler(this.AlcoveNorthButton_CheckedChanged);
-			// 
-			// MonsterBox
-			// 
-			this.MonsterBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
-			this.MonsterBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.MonsterBox.Location = new System.Drawing.Point(8, 35);
-			this.MonsterBox.Name = "MonsterBox";
-			this.MonsterBox.Size = new System.Drawing.Size(593, 487);
-			this.MonsterBox.TabIndex = 14;
-			// 
 			// MazeBlockForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1164,6 +1164,8 @@
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MazeBlockForm_KeyDown);
 			this.TabControlBox.ResumeLayout(false);
 			this.ItemsTab.ResumeLayout(false);
+			this.groupBox7.ResumeLayout(false);
+			this.groupBox7.PerformLayout();
 			this.groupBox4.ResumeLayout(false);
 			this.groupBox4.PerformLayout();
 			this.groupBox3.ResumeLayout(false);
@@ -1196,8 +1198,6 @@
 			this.TeleporterGroupBox.PerformLayout();
 			this.DoorGroupBox.ResumeLayout(false);
 			this.DoorGroupBox.PerformLayout();
-			this.groupBox7.ResumeLayout(false);
-			this.groupBox7.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -1225,7 +1225,7 @@
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.Label StairTargetLabel;
 		private System.Windows.Forms.Button StairTargetBox;
-		private System.Windows.Forms.Label PitDestinationLabel;
+		private System.Windows.Forms.Label PitTargetLabel;
 		private System.Windows.Forms.Button PitTargetBox;
 		private System.Windows.Forms.Label TeleporterTargetLabel;
 		private System.Windows.Forms.Button TeleporterTargetBox;

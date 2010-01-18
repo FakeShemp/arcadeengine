@@ -936,8 +936,13 @@ namespace DungeonEye.Forms
 				return;
 
 			DungeonLocationForm form = new DungeonLocationForm(Maze.Dungeon, MazeBlock.Pit.Target);
-			form.ShowDialog();
+			if (form.ShowDialog() != DialogResult.OK)
+				return;
+
+			MazeBlock.Pit.Target = form.Target;
+			PitTargetLabel.Text = "Target : " + MazeBlock.Pit.Target.ToString();
 		}
+
 
 		#endregion
 
@@ -1002,9 +1007,10 @@ namespace DungeonEye.Forms
 				return;
 
 			DungeonLocationForm form = new DungeonLocationForm(Maze.Dungeon, MazeBlock.Stair.Target);
-			form.ShowDialog();
-			MazeBlock.Stair.Target = form.Target;
+			if (form.ShowDialog() != DialogResult.OK)
+				return;
 
+			MazeBlock.Stair.Target = form.Target;
 			StairTargetLabel.Text = "Target : " + MazeBlock.Stair.Target.ToString();
 		}
 
