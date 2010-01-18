@@ -36,14 +36,14 @@
 			this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
 			this.DirectionBox = new System.Windows.Forms.ToolStripComboBox();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
+			this.GroundPositionBox = new System.Windows.Forms.ToolStripComboBox();
+			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.SelectBox = new System.Windows.Forms.ToolStripButton();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
 			this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
 			this.DungeonControl = new DungeonEye.Forms.DungeonLocationControl();
-			this.GroundPositionBox = new System.Windows.Forms.ToolStripComboBox();
-			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-			this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
 			this.toolStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.SuspendLayout();
@@ -104,6 +104,24 @@
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
 			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
 			// 
+			// toolStripLabel3
+			// 
+			this.toolStripLabel3.Name = "toolStripLabel3";
+			this.toolStripLabel3.Size = new System.Drawing.Size(53, 22);
+			this.toolStripLabel3.Text = "Ground :";
+			// 
+			// GroundPositionBox
+			// 
+			this.GroundPositionBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.GroundPositionBox.Name = "GroundPositionBox";
+			this.GroundPositionBox.Size = new System.Drawing.Size(121, 25);
+			this.GroundPositionBox.SelectedIndexChanged += new System.EventHandler(this.GroundPositionBox_SelectedIndexChanged);
+			// 
+			// toolStripSeparator3
+			// 
+			this.toolStripSeparator3.Name = "toolStripSeparator3";
+			this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+			// 
 			// SelectBox
 			// 
 			this.SelectBox.Image = ((System.Drawing.Image)(resources.GetObject("SelectBox.Image")));
@@ -145,22 +163,6 @@
 			this.DungeonControl.Size = new System.Drawing.Size(773, 504);
 			this.DungeonControl.TabIndex = 0;
 			this.DungeonControl.Target = null;
-			// 
-			// GroundPositionBox
-			// 
-			this.GroundPositionBox.Name = "GroundPositionBox";
-			this.GroundPositionBox.Size = new System.Drawing.Size(121, 25);
-			// 
-			// toolStripSeparator3
-			// 
-			this.toolStripSeparator3.Name = "toolStripSeparator3";
-			this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
-			// 
-			// toolStripLabel3
-			// 
-			this.toolStripLabel3.Name = "toolStripLabel3";
-			this.toolStripLabel3.Size = new System.Drawing.Size(53, 22);
-			this.toolStripLabel3.Text = "Ground :";
 			// 
 			// DungeonLocationForm
 			// 

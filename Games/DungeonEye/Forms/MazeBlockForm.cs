@@ -1003,6 +1003,7 @@ namespace DungeonEye.Forms
 
 			DungeonLocationForm form = new DungeonLocationForm(Maze.Dungeon, MazeBlock.Stair.Target);
 			form.ShowDialog();
+			MazeBlock.Stair.Target = form.Target;
 
 			StairTargetLabel.Text = "Target : " + MazeBlock.Stair.Target.ToString();
 		}

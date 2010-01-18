@@ -46,7 +46,6 @@
 			this.GlControlBox.DoubleClick += new System.EventHandler(this.GlControlBox_DoubleClick);
 			this.GlControlBox.Paint += new System.Windows.Forms.PaintEventHandler(this.GlControl_Paint);
 			this.GlControlBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GlControlBox_MouseMove);
-			this.GlControlBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.GlControlBox_MouseDown);
 			this.GlControlBox.Resize += new System.EventHandler(this.GlControl_Resize);
 			this.GlControlBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.GlControlBox_MouseUp);
 			// 
@@ -67,7 +66,7 @@
 
 		#endregion
 
-		private OpenTK.GLControl GlControlBox;
 		private System.Windows.Forms.Timer DrawTimer;
+		public OpenTK.GLControl GlControlBox;
 	}
 }

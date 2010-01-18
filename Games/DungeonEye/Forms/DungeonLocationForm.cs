@@ -43,16 +43,25 @@ namespace DungeonEye.Forms
 			InitializeComponent();
 
 			DungeonControl.Dungeon = dungeon;
-			Target = location;
+			DungeonControl.Target = new DungeonLocation(location);
+			DungeonControl.GlControlBox.Click += new EventHandler(DungeonControl_Click);
+			DungeonControl.GlControlBox.DoubleClick += new EventHandler(GlControlBox_DoubleClick);
 
 			DirectionBox.BeginUpdate();
 			foreach(string name in Enum.GetNames(typeof(CardinalPoint)))
 				DirectionBox.Items.Add(name);
 			DirectionBox.EndUpdate();
 
+			GroundPositionBox.BeginUpdate();
+			GroundPositionBox.Items.Clear();
+			foreach (string name in Enum.GetNames(typeof(GroundPosition)))
+				GroundPositionBox.Items.Add(name);
+			GroundPositionBox.EndUpdate();
 
 			Init();
 		}
+
+
 
 
 		/// <summary>
@@ -69,10 +78,11 @@ namespace DungeonEye.Forms
 				MazeBox.Items.Add(maze.Name);
 			MazeBox.EndUpdate();
 
-			if (!string.IsNullOrEmpty(Target.MazeName))
-				MazeBox.SelectedItem = Target.MazeName;
-			DirectionBox.SelectedItem = Target.Direction.ToString();
 
+			if (!string.IsNullOrEmpty(DungeonControl.Target.MazeName))
+				MazeBox.SelectedItem = DungeonControl.Target.MazeName;
+			DirectionBox.SelectedItem = DungeonControl.Target.Direction.ToString();
+			GroundPositionBox.SelectedItem = DungeonControl.Target.GroundPosition.ToString();
 
 
 		}
@@ -81,6 +91,30 @@ namespace DungeonEye.Forms
 		#region Events
 
 
+
+		/// <summary>
+		/// OnDoubleClick
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void GlControlBox_DoubleClick(object sender, EventArgs e)
+		{
+			Close();
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void DungeonControl_Click(object sender, EventArgs e)
+		{
+			DungeonControl.Target.Position = DungeonControl.BlockUnderMouse;// = DungeonControl.GetLocation(DungeonControl.BlockUnderMouse);
+			DungeonControl.Target.SetMaze((string)MazeBox.SelectedItem);
+		}
+
+	
 		/// <summary>
 		/// Change maze
 		/// </summary>
@@ -91,7 +125,7 @@ namespace DungeonEye.Forms
 			if (DungeonControl.Dungeon == null)
 				return;
 
-			DungeonControl.Target.SetMaze((string)MazeBox.SelectedItem);
+			DungeonControl.Maze = DungeonControl.Dungeon.GetMaze((string)MazeBox.SelectedItem);
 		}
 
 
@@ -105,7 +139,7 @@ namespace DungeonEye.Forms
 			if (DirectionBox.SelectedIndex == -1)
 				return;
 
-			Target.Direction = (CardinalPoint)Enum.Parse(typeof(CardinalPoint), (string)DirectionBox.SelectedItem);
+			DungeonControl.Target.Direction = (CardinalPoint)Enum.Parse(typeof(CardinalPoint), (string)DirectionBox.SelectedItem);
 		}
 
 
@@ -120,6 +154,19 @@ namespace DungeonEye.Forms
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void GroundPositionBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (GroundPositionBox.SelectedIndex == -1)
+				return;
+
+			DungeonControl.Target.GroundPosition = (GroundPosition)Enum.Parse(typeof(GroundPosition), (string)GroundPositionBox.SelectedItem);
+		}
+
 
 		#endregion
 
@@ -127,16 +174,13 @@ namespace DungeonEye.Forms
 
 		#region Properties
 
-
-		/// <summary>
-		/// Location in the dungeon
-		/// </summary>
 		public DungeonLocation Target
 		{
-			get;
-			set;
+			get
+			{
+				return DungeonControl.Target;
+			}
 		}
-
 		#endregion
 
 	}

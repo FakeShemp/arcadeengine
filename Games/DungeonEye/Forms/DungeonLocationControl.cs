@@ -44,7 +44,21 @@ namespace DungeonEye.Forms
 
 
 
+		/// <summary>
+		/// Gets mazeblock location from a coordinate in the control
+		/// </summary>
+		/// <param name="point">Coordinate in the control</param>
+		/// <returns></returns>
+		public DungeonLocation GetLocation(Point point)
+		{
+			DungeonLocation loc = new DungeonLocation(Dungeon);
+			loc.SetMaze(Maze.Name);
 
+			loc.Position = point;
+
+
+			return loc;
+		}
 
 
 
@@ -250,12 +264,12 @@ namespace DungeonEye.Forms
 						{
 							// Alcoves coords
 							Point[] alcoves = new Point[]
-						{
-							new Point(7, 0),
-							new Point(7, 19),
-							new Point(0, 7),
-							new Point(19, 7),
-						};
+							{
+								new Point(7, 0),
+								new Point(7, 19),
+								new Point(0, 7),
+								new Point(19, 7),
+							};
 
 
 							foreach (CardinalPoint side in Enum.GetValues(typeof(CardinalPoint)))
@@ -274,47 +288,21 @@ namespace DungeonEye.Forms
 					}
 				}
 
+
 				// Draw monsters
 				tile = Icons.GetTile(8);
 				foreach (Monster monster in Maze.Monsters)
 					Batch.AddRectangle(new Rectangle(Offset.X + monster.Location.Position.X * 25, Offset.Y + monster.Location.Position.Y * 25, 25, 25), Color.White, tile.Rectangle);
-
-/*
-
-				// Preview pos
-				//tile = Icons.GetTile(22 + (int)Target.Direction);
-				//Batch.AddRectangle(new Rectangle(Offset.X + PreviewLoc.Position.X * 25, Offset.Y + PreviewLoc.Position.Y * 25, 25, 25), Color.White, tile.Rectangle);
-
-				// Starting point
-				if (Dungeon.StartLocation.MazeName == Maze.Name)
-				{
-					tile = Icons.GetTile(20);
-					Batch.AddRectangle(new Rectangle(Offset.X + Dungeon.StartLocation.Position.X * 25, Offset.Y + Dungeon.StartLocation.Position.Y * 25, 25, 25), Color.White, tile.Rectangle);
-				}
-*/
-
-
 
 				Batch.Apply();
 				Display.DrawBatch(Batch, BeginMode.Quads);
 
 
 
-				// Surround the selected object
-				//if (MazePropertyBox.SelectedObject != null)
-				//   Display.DrawRectangle(new Rectangle(BlockCoord.X * 25 + Offset.X, BlockCoord.Y * 25 + Offset.Y, 25, 25), Color.White);
+				// Target
+				if (Target.MazeName == Maze.Name)
+					Display.DrawRectangle(new Rectangle(Offset.X + Target.Position.X * 25, Offset.Y + Target.Position.Y * 25, 25, 25), Color.White);
 
-
-	
-			
-			
-			
-			
-			
-			
-			
-			
-			
 			
 			}
 			finally
@@ -346,26 +334,6 @@ namespace DungeonEye.Forms
 		}
 
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void GlControlBox_MouseDown(object sender, MouseEventArgs e)
-		{
-
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void GlControlBox_MouseMove(object sender, MouseEventArgs e)
-		{
-
-		}
 
 
 		/// <summary>
@@ -382,6 +350,19 @@ namespace DungeonEye.Forms
 
 			DrawTimer.Start();
 		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void GlControlBox_MouseMove(object sender, MouseEventArgs e)
+		{
+			BlockUnderMouse = new Point((e.Location.X - Offset.X) / 25, (e.Location.Y - Offset.Y) / 25);
+		}
+
+
 
 		#endregion
 
@@ -452,7 +433,18 @@ namespace DungeonEye.Forms
 		Point LastMousePos;
 
 
+
+		/// <summary>
+		/// Gets the block coordinate under the mouse
+		/// </summary>
+		public Point BlockUnderMouse
+		{
+			get;
+			private set;
+		}
+
 		#endregion
+
 
 
 	}
