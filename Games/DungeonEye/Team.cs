@@ -186,18 +186,15 @@ namespace DungeonEye
 					case "location":
 					{
 						Location.Load(node);
-						//Location.Position = new Point(int.Parse(node.Attributes["x"].Value), int.Parse(node.Attributes["y"].Value));
-						//Location.Direction = (CardinalPoint)Enum.Parse(typeof(CardinalPoint), node.Attributes["direction"].Value, true);
-						//Location.MazeName= node.Attributes["name"].Value;
 					}
 					break;
 
 
-					case "hero":
+					case "position":
 					{
-						HeroPosition position = (HeroPosition)Enum.Parse(typeof(HeroPosition), node.Attributes["position"].Value, true);
+						HeroPosition position = (HeroPosition)Enum.Parse(typeof(HeroPosition), node.Attributes["slot"].Value, true);
 						Heroes[(int)position] = new Hero(this);
-						Heroes[(int)position].Load(node);
+						Heroes[(int)position].Load(node.FirstChild);
 					}
 					break;
 
@@ -228,12 +225,6 @@ namespace DungeonEye
 
 			writer.WriteStartElement("team");
 
-			//writer.WriteStartElement("location");
-			//writer.WriteAttributeString("x", Location.Position.X.ToString());
-			//writer.WriteAttributeString("y", Location.Position.Y.ToString());
-			//writer.WriteAttributeString("direction", Location.Direction.ToString());
-			//writer.WriteAttributeString("name", Location.MazeName);
-			//writer.WriteEndElement();
 			Location.Save("location", writer);
 
 
@@ -242,8 +233,8 @@ namespace DungeonEye
 			{
 				if (hero != null)
 				{
-					writer.WriteStartElement("hero");
-					writer.WriteAttributeString("position", GetHeroPosition(hero).ToString());
+					writer.WriteStartElement("position");
+					writer.WriteAttributeString("slot", GetHeroPosition(hero).ToString());
 					hero.Save(writer);
 					writer.WriteEndElement();
 				}
@@ -403,7 +394,7 @@ namespace DungeonEye
 					// HP
 					if (DrawHPAsBar)
 					{
-						float percent = (float)hero.HitPoint / (float)hero.MaxHitPoint;
+						float percent = (float)hero.HitPoint.Current / (float)hero.HitPoint.Max;
 						Color color = Color.Green;
 						if (percent < 0.15)
 							color = Color.Red;
@@ -411,10 +402,10 @@ namespace DungeonEye
 							color = Color.Yellow;
 
 						Font.DrawText(new Point(pos.X + 6, pos.Y + 88), Color.Black, "HP");
-						DrawProgressBar(hero.HitPoint, hero.MaxHitPoint, new Rectangle(pos.X + 30, pos.Y + 88, 92, 10), color);
+						DrawProgressBar(hero.HitPoint.Current, hero.HitPoint.Max, new Rectangle(pos.X + 30, pos.Y + 88, 92, 10), color);
 					}
 					else
-						Font.DrawText(new Point(pos.X + 6, pos.Y + 88), Color.Black, hero.HitPoint + " of " + hero.MaxHitPoint);
+						Font.DrawText(new Point(pos.X + 6, pos.Y + 88), Color.Black, hero.HitPoint + " of " + hero.HitPoint.Max);
 
 
 
@@ -554,7 +545,7 @@ namespace DungeonEye
 
 			// HP and Food
 
-			Font.DrawText(new Point(500, 30), Color.Black, SelectedHero.HitPoint + " of " + SelectedHero.MaxHitPoint);
+			Font.DrawText(new Point(500, 30), Color.Black, SelectedHero.HitPoint.Current + " of " + SelectedHero.HitPoint.Max);
 
 			// Food
 			Color color;
@@ -668,7 +659,7 @@ namespace DungeonEye
 			OutlinedFont.DrawText(new Point(370, 80), Color.White, "Character info");
 
 			// HP and Food
-			Font.DrawText(new Point(500, 30), Color.Black, SelectedHero.HitPoint + " of " + SelectedHero.MaxHitPoint);
+			Font.DrawText(new Point(500, 30), Color.Black, SelectedHero.HitPoint.Current + " of " + SelectedHero.HitPoint.Max);
 
 			// Food
 			Color color;
@@ -681,8 +672,12 @@ namespace DungeonEye
 
 			Display.FillRectangle(new Rectangle(498, 48, SelectedHero.Food, 10), color);
 
+			string txt = string.Empty;
+			foreach (Profession prof in SelectedHero.Professions)
+				txt += prof.Class.ToString() + " / ";
+			txt = txt.Substring(0, txt.Length - 3);
 
-			Font.DrawText(new Point(366, 110), Color.Black, SelectedHero.Professions[0].Classe.ToString());
+			Font.DrawText(new Point(366, 110), Color.Black, txt);
 			Font.DrawText(new Point(366, 124), Color.Black, SelectedHero.Alignment.ToString());
 			Font.DrawText(new Point(366, 138), Color.Black, SelectedHero.Race.ToString());
 
@@ -697,25 +692,22 @@ namespace DungeonEye
 			Font.DrawText(new Point(470, 280), Color.Black, "EXP");
 			Font.DrawText(new Point(550, 280), Color.Black, "LVL");
 
-			Font.DrawText(new Point(552, 166), Color.Black, SelectedHero.Strength.ToString() + "/" + SelectedHero.MaxStrength.ToString());
-			Font.DrawText(new Point(552, 180), Color.Black, SelectedHero.Intelligence.ToString());
-			Font.DrawText(new Point(552, 194), Color.Black, SelectedHero.Wisdom.ToString());
-			Font.DrawText(new Point(552, 208), Color.Black, SelectedHero.Dexterity.ToString());
-			Font.DrawText(new Point(552, 222), Color.Black, SelectedHero.Constitution.ToString());
-			Font.DrawText(new Point(552, 236), Color.Black, SelectedHero.Charisma.ToString());
+			Font.DrawText(new Point(552, 166), Color.Black, SelectedHero.Strength.Value.ToString());// + "/" + SelectedHero.MaxStrength.ToString());
+			Font.DrawText(new Point(552, 180), Color.Black, SelectedHero.Intelligence.Value.ToString());
+			Font.DrawText(new Point(552, 194), Color.Black, SelectedHero.Wisdom.Value.ToString());
+			Font.DrawText(new Point(552, 208), Color.Black, SelectedHero.Dexterity.Value.ToString());
+			Font.DrawText(new Point(552, 222), Color.Black, SelectedHero.Constitution.Value.ToString());
+			Font.DrawText(new Point(552, 236), Color.Black, SelectedHero.Charisma.Value.ToString());
 			Font.DrawText(new Point(552, 250), Color.Black, SelectedHero.ArmorClass.ToString());
 
 
 			int y = 0;
-			for (int i = 0; i < SelectedHero.Professions.Length; i++)
+			//for (int i = 0; i < SelectedHero.Professions.Length; i++)
+			foreach(Profession prof in SelectedHero.Professions)
 			{
-				if (SelectedHero.Professions[i].Experience <= 0)
-					continue;
-
-				Font.DrawText(new Point(366, 300 + y), Color.Black, SelectedHero.Professions[i].Classe.ToString());
-
-				Font.DrawText(new Point(460, 300 + y), Color.White, SelectedHero.Professions[i].Experience.ToString());
-				Font.DrawText(new Point(560, 300 + y), Color.White, SelectedHero.Professions[i].Level.ToString());
+				Font.DrawText(new Point(366, 300 + y), Color.Black, prof.Class.ToString());
+				Font.DrawText(new Point(460, 300 + y), Color.White, prof.Experience.Points.ToString());
+				Font.DrawText(new Point(560, 300 + y), Color.White, prof.Experience.Level.ToString());
 
 				y += 12;
 			}

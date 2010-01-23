@@ -175,10 +175,15 @@
     <Compile Include="Interfaces\IItem.cs" />
     <Compile Include="Interfaces\IMonster.cs" />
     <Compile Include="Interfaces\IPit.cs" />
+    <Compile Include="Source\Ability.cs" />
     <Compile Include="Source\AutoMap.cs" />
     <Compile Include="CharGen.cs" />
     <Compile Include="Source\CriticalHit.cs" />
+    <Compile Include="Source\Entity.cs" />
+    <Compile Include="Source\Experience.cs" />
     <Compile Include="Source\Gui\MessageBox.cs" />
+    <Compile Include="Source\Profession.cs" />
+    <Compile Include="Source\HitPoint.cs" />
     <Compile Include="Source\WallButton.cs" />
     <Compile Include="Source\MazeDisplayCoordinates.cs" />
     <Compile Include="Source\Compass.cs" />
@@ -250,6 +255,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Documentation\Overlay tilesets.txt" />
+    <Content Include="settings.xml" />
+    <Content Include="team.xml" />
     <EmbeddedResource Include="Forms\data\editor.png" />
     <EmbeddedResource Include="Forms\DiceForm.resx">
       <DependentUpon>DiceForm.cs</DependentUpon>

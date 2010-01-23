@@ -38,7 +38,7 @@ namespace DungeonEye
 	/// 
 	/// http://uaf.wiki.sourceforge.net/Player%27s+Guide
 	/// </summary>
-	public class Hero
+	public class Hero : Entity
 	{
 		/// <summary>
 		/// Default constructor
@@ -48,7 +48,7 @@ namespace DungeonEye
 		{
 			Team = team;
 			Inventory = new Item[26];
-			Professions = new Profession[2];
+			Professions = new List<Profession>();
 
 			Attacks = new AttackResult[2];
 			Attacks[0] = new AttackResult();
@@ -63,29 +63,18 @@ namespace DungeonEye
 		/// </summary>
 		public void Generate()
 		{
-			Strength = GameBase.Random.Next(9, 17);
-			Intelligence = GameBase.Random.Next(4, 17);
-			Wisdom = GameBase.Random.Next(4, 17);
-			Dexterity = GameBase.Random.Next(4, 17);
-			Constitution = GameBase.Random.Next(4, 17);
-			Charisma = GameBase.Random.Next(3, 18);
-			ArmorClass = GameBase.Random.Next(0, 10);
-			MaxHitPoint = GameBase.Random.Next(6, 37);
-			HitPoint = GameBase.Random.Next(6, MaxHitPoint);
-			Level = 3;
+			ReRollAbilities();
+			HitPoint = new HitPoint(GameBase.Random.Next(6, 37), GameBase.Random.Next(6, 37));
 			Food = 75;
 
-			Profession prof = new Profession();
-			prof.Experience = GameBase.Random.Next(0, 99999);
-			prof.Level = GameBase.Random.Next(1, 18);
-			prof.Classe = HeroClass.Cleric;
+			Professions.Add(new Profession(GameBase.Random.Next(0, 999999), HeroClass.Cleric));
+			Professions.Add(new Profession(GameBase.Random.Next(0, 999999), HeroClass.Fighter));
 
-			Professions[0] = prof;
 
 			Head = GameBase.Random.Next(0, 32);
 
 
-			Quiver = 100;
+			Quiver = 10;
 			SetInventoryItem(InventoryPosition.Primary, ResourceManager.CreateAsset<Item>("Short Bow"));
 			SetInventoryItem(InventoryPosition.Inventory_09, ResourceManager.CreateAsset<Item>("Short Bow"));
 			SetInventoryItem(InventoryPosition.Armor, ResourceManager.CreateAsset<Item>("Leather Armor"));
@@ -459,7 +448,7 @@ namespace DungeonEye
 			LastHit = value;
 
 
-			HitPoint -= value;
+			HitPoint.Current -= value;
 		}
 
 
@@ -520,14 +509,11 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="xml">Xml handle</param>
 		/// <returns>True if loaded</returns>
-		public bool Load(XmlNode xml)
+		public override bool Load(XmlNode xml)
 		{
 			if (xml == null)
 				return false;
 		
-
-			//ItemSet itemset = ResourceManager.CreateSharedAsset<ItemSet>("Main");
-
 			foreach (XmlNode node in xml)
 			{
 				if (node.NodeType == XmlNodeType.Comment)
@@ -544,7 +530,9 @@ namespace DungeonEye
 
 					case "inventory":
 					{
-						Inventory[int.Parse(node.Attributes["position"].Value)] = ResourceManager.CreateAsset<Item>(node.Attributes["value"].Value);
+						SetInventoryItem(
+							(InventoryPosition)Enum.Parse(typeof(InventoryPosition), node.Attributes["position"].Value),
+							ResourceManager.CreateAsset<Item>(node.Attributes["value"].Value));
 					}
 					break;
 
@@ -566,73 +554,11 @@ namespace DungeonEye
 					}
 					break;
 
-					case "hp":
-					{
-						HitPoint = int.Parse(node.Attributes["actual"].Value);
-						MaxHitPoint = int.Parse(node.Attributes["max"].Value);
-					}
-					break;
-
-					case "strength":
-					{
-						Strength = int.Parse(node.Attributes["actual"].Value);
-						MaxStrength = int.Parse(node.Attributes["max"].Value);
-					}
-					break;
-
-					case "intelligence":
-					{
-						Intelligence = int.Parse(node.Attributes["value"].Value);
-					}
-					break;
-
-					case "wisdom":
-					{
-						Wisdom = int.Parse(node.Attributes["value"].Value);
-					}
-					break;
-
-					case "dexterity":
-					{
-						Dexterity = int.Parse(node.Attributes["value"].Value);
-					}
-					break;
-
-					case "constitution":
-					{
-						Constitution = int.Parse(node.Attributes["value"].Value);
-					}
-					break;
-
-					case "charisma":
-					{
-						Charisma = int.Parse(node.Attributes["value"].Value);
-					}
-					break;
-
-					case "armorclass":
-					{
-						ArmorClass = int.Parse(node.Attributes["value"].Value);
-					}
-					break;
-
-					case "level":
-					{
-						Level = int.Parse(node.Attributes["value"].Value);
-					}
-					break;
-
-					case "alignment":
-					{
-						Alignment = (HeroAlignment) Enum.Parse(typeof(HeroAlignment), node.Attributes["value"].Value, true);
-					}
-					break;
-
-					case "class":
-					{
-						Class = (HeroClass)Enum.Parse(typeof(HeroClass), node.Attributes["value"].Value, true);
-					}
-					break;
+					//case "class":
+					//{
+					//   Class = (HeroClass)Enum.Parse(typeof(HeroClass), node.Attributes["value"].Value, true);
+					//}
+					//break;
 
 					case "race":
 					{
@@ -642,14 +568,17 @@ namespace DungeonEye
 
 					case "profession":
 					{
-						int id = int.Parse(node.Attributes["id"].Value);
-						Professions[id].Experience = int.Parse(node.Attributes["xp"].Value);
-						Professions[id].Level = int.Parse(node.Attributes["level"].Value);
-						Professions[id].Classe = (HeroClass)Enum.Parse(typeof(HeroClass), node.Attributes["classe"].Value, true);
+						Profession prof = new Profession();
+						prof.Load(node);
+						Professions.Add(prof);
 					}
 					break;
 
-
+					default:
+					{
+						base.Load(node);
+					}
+					break;
 				}
 			}
 
@@ -663,10 +592,13 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="writer">Xml writer handle</param>
 		/// <returns>True if saved</returns>
-		public bool Save(XmlWriter writer)
+		public override bool Save(XmlWriter writer)
 		{
 			if (writer == null)
 				return false;
+
+			writer.WriteStartElement("hero");
+			base.Save(writer);
 
 			// Name
 			writer.WriteStartElement("name");
@@ -675,14 +607,17 @@ namespace DungeonEye
 
 		
 			// Inventory
-			for (int pos = 0; pos < Inventory.Length; pos++)
+			//for (int pos = 0; pos < Inventory.Length; pos++)
+			foreach(InventoryPosition pos in Enum.GetValues(typeof(InventoryPosition)))
 			{
-				if (Inventory[pos] == null)
+				Item item = GetInventoryItem(pos);
+				//if (Inventory[pos] == null)
+				if (item == null)
 					continue;
 
 				writer.WriteStartElement("inventory");
 				writer.WriteAttributeString("position", pos.ToString());
-				writer.WriteAttributeString("value", Inventory[pos].Name);
+				writer.WriteAttributeString("value", item.Name);
 				writer.WriteEndElement();
 			}
 
@@ -698,66 +633,18 @@ namespace DungeonEye
 			writer.WriteAttributeString("value", Food.ToString());
 			writer.WriteEndElement();
 
-			writer.WriteStartElement("hp");
-			writer.WriteAttributeString("actual", HitPoint.ToString());
-			writer.WriteAttributeString("max", MaxHitPoint.ToString());
-			writer.WriteEndElement();
-
-			writer.WriteStartElement("strength");
-			writer.WriteAttributeString("actual", Strength.ToString());
-			writer.WriteAttributeString("max", MaxStrength.ToString());
-			writer.WriteEndElement();
-
-			writer.WriteStartElement("intelligence");
-			writer.WriteAttributeString("value", Intelligence.ToString());
-			writer.WriteEndElement();
-
-			writer.WriteStartElement("wisdom");
-			writer.WriteAttributeString("value", Wisdom.ToString());
-			writer.WriteEndElement();
-
-			writer.WriteStartElement("dexterity");
-			writer.WriteAttributeString("value", Dexterity.ToString());
-			writer.WriteEndElement();
-
-			writer.WriteStartElement("constitution");
-			writer.WriteAttributeString("value", Constitution.ToString());
-			writer.WriteEndElement();
-
-			writer.WriteStartElement("charisma");
-			writer.WriteAttributeString("value", Charisma.ToString());
-			writer.WriteEndElement();
-
-			writer.WriteStartElement("armorclass");
-			writer.WriteAttributeString("value", ArmorClass.ToString());
-			writer.WriteEndElement();
-
-			writer.WriteStartElement("level");
-			writer.WriteAttributeString("value", Level.ToString());
-			writer.WriteEndElement();
-
-			writer.WriteStartElement("alignment");
-			writer.WriteAttributeString("value", Alignment.ToString());
-			writer.WriteEndElement();
-
-			writer.WriteStartElement("class");
-			writer.WriteAttributeString("value", Class.ToString());
-			writer.WriteEndElement();
+			//writer.WriteStartElement("class");
+			//writer.WriteAttributeString("value", Class.ToString());
+			//writer.WriteEndElement();
 
 			writer.WriteStartElement("race");
 			writer.WriteAttributeString("value", Race.ToString());
 			writer.WriteEndElement();
 
-			for(int id = 0; id < Professions.Length; id++)
-			{
-				writer.WriteStartElement("profession");
-				writer.WriteAttributeString("id", id.ToString());
-				writer.WriteAttributeString("xp", Professions[id].Experience.ToString());
-				writer.WriteAttributeString("level", Professions[id].Level.ToString());
-				writer.WriteAttributeString("classe", Professions[id].Classe.ToString());
-				writer.WriteEndElement();
-			}
+			foreach (Profession prof in Professions)
+				prof.Save(writer);
 
+			writer.WriteEndElement();
 			return true;
 		}
 
@@ -776,130 +663,7 @@ namespace DungeonEye
 			set;
 		}
 
-
-		/// <summary>
-		/// This value represents how much damage a champion can take before dying.
-		/// </summary>
-		public int HitPoint
-		{
-			get;
-			set;
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public int MaxHitPoint
-		{
-			get;
-			set;
-		}
-
-
-		/// <summary>
-		/// This value determines the load a hero can carry, how far items can be thrown 
-		/// and how much damage is done by melee attacks.
-		/// </summary>
-		public int Strength
-		{
-			get;
-			set;
-		}
-
-		/// <summary>
-		/// Maximum strength
-		/// </summary>
-		public int MaxStrength
-		{
-			get;
-			set;
-		}
-
-
-		/// <summary>
-		/// A vital attribute for mages as they learn spells. 
-		/// </summary>
-		public int Intelligence
-		{
-			get;
-			set;
-		}
-
-
-		/// <summary>
-		/// This value is important for spellcasters as it determines their ability to master Magic.
-		/// It also determines the speed of Mana recovery.
-		/// </summary>
-		public int Wisdom
-		{
-			get;
-			set;
-		}
-
-
-		/// <summary>
-		/// This value determines the accuracy of missiles and the odds of hitting opponents in combat. 
-		/// It also helps the champion to avoid or reduce physical damage improving their AC (armor class).
-		/// </summary>
-		public int Dexterity
-		{
-			get;
-			set;
-		}
-
-
-		/// <summary>
-		/// A character's health and toughness is determined by this. This has other effects outside of simply determining the HP
-		/// amount gained after every level, such as a character's resistance to certain physical effects. 
-		/// </summary>
-		public int Constitution
-		{
-			get;
-			set;
-		}
-
-
-		/// <summary>
-		/// This determines how attractive or repulsive a character is to everyone around them.
-		/// </summary>
-		public int Charisma
-		{
-			get;
-			set;
-		}
-
-
-		/// <summary>
-		/// Armor class
-		/// </summary>
-		public int ArmorClass
-		{
-			get;
-			set;
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public int Level
-		{
-			get;
-			set;
-		}
-
-
-		/// <summary>
-		/// Hero alignement
-		/// </summary>
-		public HeroAlignment Alignment
-		{
-			get;
-			set;
-		}
-
-
+/*
 		/// <summary>
 		/// Hero class
 		/// </summary>
@@ -908,7 +672,7 @@ namespace DungeonEye
 			get;
 			set;
 		}
-
+*/
 
 		/// <summary>
 		/// Hero race
@@ -923,8 +687,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Profression of the Hero
 		/// </summary>
-		public Profession[] Professions;
-
+		public List<Profession> Professions;
 
 		/// <summary>
 		/// ID of head tile
@@ -964,31 +727,8 @@ namespace DungeonEye
 		byte food;
 
 
-		/// <summary>
-		/// This value determines a hero's resistance to magic attacks.
-		/// </summary>
-		public byte AntiMagic
-		{
-			get;
-			set;
-		}
-
-		/// <summary>
-		/// This value determines a hero's resistance to fire damage.
-		/// </summary>
-		public byte AntiFire
-		{
-			get;
-			set;
-		}
-
 
 		
-		#endregion
-
-
-		#region Properties
-
 
 		/// <summary>
 		/// Team of the hero
@@ -1039,29 +779,6 @@ namespace DungeonEye
 		}
 
 
-		/// <summary>
-		/// Returns if the hero is unconscious
-		/// </summary>
-		public bool IsUnconscious
-		{
-			get
-			{
-				return HitPoint > -10 && HitPoint <= 0;
-			}
-		}
-
-
-		/// <summary>
-		/// Returns true if hero is dead
-		/// </summary>
-		public bool IsDead
-		{
-			get
-			{
-				return HitPoint <= -10;
-			}
-		}
-
 		#endregion
 	}
 
@@ -1104,7 +821,7 @@ namespace DungeonEye
 	/// <summary>
 	/// Available hero alignements
 	/// </summary>
-	public enum HeroAlignment
+	public enum EntityAlignment
 	{
 		LawfulGood,
 		NeutralGood,
@@ -1123,6 +840,11 @@ namespace DungeonEye
 	[Flags]
 	public enum HeroClass
 	{
+		/// <summary>
+		/// 
+		/// </summary>
+		Undefined = 0x0,
+	
 		/// <summary>
 		/// 
 		/// </summary>
@@ -1152,6 +874,7 @@ namespace DungeonEye
 		/// 
 		/// </summary>
 		Thief = 0x20,
+
 	}
 
 
@@ -1192,28 +915,6 @@ namespace DungeonEye
 
 	}
 
-
-	/// <summary>
-	/// Profession information
-	/// </summary>
-	public struct Profession
-	{
-		/// <summary>
-		/// Profression
-		/// </summary>
-		public HeroClass Classe;
-
-		/// <summary>
-		/// Experience points
-		/// </summary>
-		public int Experience;
-
-
-		/// <summary>
-		/// Level
-		/// </summary>
-		public int Level;
-	}
 
 
 	/// <summary>

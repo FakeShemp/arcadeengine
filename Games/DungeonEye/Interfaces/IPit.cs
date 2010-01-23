@@ -29,12 +29,16 @@ namespace DungeonEye.Interfaces
 		/// <summary>
 		/// 
 		/// </summary>
-		void OnTeamEnter();
+		/// <param name="pit"></param>
+		/// <param name="team"></param>
+		void OnTeamEnter(Pit pit, Team team);
 
 
 		/// <summary>
 		/// 
 		/// </summary>
-		void OnTeamLeave();
+		/// <param name="pit"></param>
+		/// <param name="team"></param>
+		void OnTeamLeave(Pit pit, Team team);
 	}
 }
