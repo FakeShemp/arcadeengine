@@ -417,12 +417,12 @@ namespace DungeonEye
 					else
 						Items.Draw(86, new Point(pos.X + 96, pos.Y + 36));
 
-					if (!hero.CanAttack(HeroHand.Primary))
+					if (!hero.CanAttack(EntityHand.Primary))
 						TileSet.Draw(3, new Point(pos.X + 66, pos.Y + 20));
 
 
 					// Hero hit a monster a few moment ago
-					AttackResult attack = hero.GetLastAttack(HeroHand.Primary);
+					AttackResult attack = hero.GetLastAttack(EntityHand.Primary);
 					if (attack.Date + attack.OnHold > DateTime.Now)
 					{
 						// Ghost item
@@ -449,7 +449,7 @@ namespace DungeonEye
 					else
 						Items.Draw(85, new Point(pos.X + 96, pos.Y + 68));
 
-					if (!hero.CanAttack(HeroHand.Secondary))
+					if (!hero.CanAttack(EntityHand.Secondary))
 						TileSet.Draw(3, new Point(pos.X + 66, pos.Y + 52));
 
 
@@ -464,7 +464,7 @@ namespace DungeonEye
 
 
 					// Hero hit a monster a few moment ago
-					attack = hero.GetLastAttack(HeroHand.Secondary);
+					attack = hero.GetLastAttack(EntityHand.Secondary);
 					if (attack.Date + attack.OnHold > DateTime.Now)
 					{
 						// Ghost item
@@ -565,8 +565,8 @@ namespace DungeonEye
 			for (int y = 94; y < 344; y += 36)
 				for (int x = 378; x < 442; x += 36)
 				{
-					if (SelectedHero.GetInventoryItem(InventoryPosition.Inventory_01 + pos) != null)
-						Items.Draw(SelectedHero.GetInventoryItem(InventoryPosition.Inventory_01 + pos).TileID, new Point(x, y));
+					if (SelectedHero.GetBackPackItem(pos) != null)
+						Items.Draw(SelectedHero.GetBackPackItem(pos).TileID, new Point(x, y));
 
 					pos++;
 				}
@@ -607,16 +607,16 @@ namespace DungeonEye
 				Items.Draw(SelectedHero.GetInventoryItem(InventoryPosition.Secondary).TileID, new Point(572, 246));
 
 			// Back 1 598,184,36,36
-			if (SelectedHero.GetInventoryItem(InventoryPosition.Belt_1) != null)
-				Items.Draw(SelectedHero.GetInventoryItem(InventoryPosition.Belt_1).TileID, new Point(616, 202));
+			if (SelectedHero.GetWaistPackItem(0) != null)
+				Items.Draw(SelectedHero.GetWaistPackItem(0).TileID, new Point(616, 202));
 
 			// Back 2 598,220,36,36
-			if (SelectedHero.GetInventoryItem(InventoryPosition.Belt_2) != null)
-				Items.Draw(SelectedHero.GetInventoryItem(InventoryPosition.Belt_2).TileID, new Point(616, 238));
+			if (SelectedHero.GetWaistPackItem(1) != null)
+				Items.Draw(SelectedHero.GetWaistPackItem(1).TileID, new Point(616, 238));
 
 			// Back 3 598,256,36,36
-			if (SelectedHero.GetInventoryItem(InventoryPosition.Belt_3) != null)
-				Items.Draw(SelectedHero.GetInventoryItem(InventoryPosition.Belt_3).TileID, new Point(616, 274));
+			if (SelectedHero.GetWaistPackItem(2) != null)
+				Items.Draw(SelectedHero.GetWaistPackItem(2).TileID, new Point(616, 274));
 
 			// Neck 572,146,36,36
 			if (SelectedHero.GetInventoryItem(InventoryPosition.Neck) != null)
@@ -1361,7 +1361,7 @@ namespace DungeonEye
 
 
 							// Take object in primary hand
-							if (new Rectangle(434 + 144 * x, y * 104 + 22, 60, 32).Contains(mousePos) && hero.CanAttack(HeroHand.Primary))
+							if (new Rectangle(434 + 144 * x, y * 104 + 22, 60, 32).Contains(mousePos) && hero.CanAttack(EntityHand.Primary))
 							{
 								item = hero.GetInventoryItem(InventoryPosition.Primary);
 
@@ -1379,7 +1379,7 @@ namespace DungeonEye
 							}
 
 							// Take object in secondary hand
-							if (new Rectangle(434 + 144 * x, y * 104 + 54, 60, 32).Contains(mousePos) && hero.CanAttack(HeroHand.Secondary))
+							if (new Rectangle(434 + 144 * x, y * 104 + 54, 60, 32).Contains(mousePos) && hero.CanAttack(EntityHand.Secondary))
 							{
 								item = hero.GetInventoryItem(InventoryPosition.Secondary);
 
@@ -1450,14 +1450,14 @@ namespace DungeonEye
 
 							#region Use object in primary hand
 						//	AttackResult attack = null;
-							if (new Rectangle(434 + 144 * x, y * 104 + 22, 60, 32).Contains(mousePos) && hero.CanAttack(HeroHand.Primary))
-								hero.UseHand(HeroHand.Primary);
+							if (new Rectangle(434 + 144 * x, y * 104 + 22, 60, 32).Contains(mousePos) && hero.CanAttack(EntityHand.Primary))
+								hero.UseHand(EntityHand.Primary);
 
 							#endregion
 
 							#region Use object in secondary hand
-							if (new Rectangle(434 + 144 * x, y * 104 + 54, 60, 32).Contains(mousePos) && hero.CanAttack(HeroHand.Secondary))
-								hero.UseHand(HeroHand.Secondary);
+							if (new Rectangle(434 + 144 * x, y * 104 + 54, 60, 32).Contains(mousePos) && hero.CanAttack(EntityHand.Secondary))
+								hero.UseHand(EntityHand.Secondary);
 
 							//if (attack != null && attack.Monster != null)
 							//   AddMessage(attack.Monster.Name + " : -" + attack.Result + " (" + attack.Monster.Life.Actual + "/" + attack.Monster.Life.Max + ")");
@@ -1563,8 +1563,8 @@ namespace DungeonEye
 						if (new Rectangle(x, y, 36, 36).Contains(mousePos))
 						{
 							Item swap = ItemInHand;
-							SetItemInHand(SelectedHero.GetInventoryItem(InventoryPosition.Inventory_01 + pos));
-							SelectedHero.SetInventoryItem(InventoryPosition.Inventory_01 + pos, swap);
+							SetItemInHand(SelectedHero.GetBackPackItem(pos));
+							SelectedHero.SetBackPackItem(pos, swap);
 						}
 
 						// Next position
@@ -1714,14 +1714,14 @@ namespace DungeonEye
 					{
 						if (new Rectangle(598, 184 + i * 36, 36, 36).Contains(mousePos))
 						{
-							item = SelectedHero.GetInventoryItem(InventoryPosition.Belt_1 + i);
+							item = SelectedHero.GetWaistPackItem(i);
 
-							if (ItemInHand != null && SelectedHero.SetInventoryItem(InventoryPosition.Belt_1 + i, ItemInHand))
+							if (ItemInHand != null && SelectedHero.SetWaistPackItem(i, ItemInHand))
 								SetItemInHand(item);
 							else if (ItemInHand == null && item != null)
 							{
 								SetItemInHand(item);
-								SelectedHero.SetInventoryItem(InventoryPosition.Belt_1 + i, null);
+								SelectedHero.SetWaistPackItem(i, null);
 							}
 						}
 					}

@@ -112,7 +112,7 @@ namespace DungeonEye.Forms
 			WristBox.Checked = (Item.Slot & BodySlot.Wrist) == BodySlot.Wrist;
 			FeetBox.Checked = (Item.Slot & BodySlot.Feet) == BodySlot.Feet;
 			HeadBox.Checked = (Item.Slot & BodySlot.Head) == BodySlot.Head;
-			WaistBox.Checked = (Item.Slot & BodySlot.Belt) == BodySlot.Belt;
+			WaistBox.Checked = (Item.Slot & BodySlot.Waist) == BodySlot.Waist;
 			NeckBox.Checked = (Item.Slot & BodySlot.Neck) == BodySlot.Neck;
 
 			FighterBox.Checked = (Item.Classes & HeroClass.Fighter) == HeroClass.Fighter;
@@ -538,9 +538,9 @@ namespace DungeonEye.Forms
 				return;
 
 			if (WaistBox.Checked)
-				Item.Slot |= BodySlot.Belt;
+				Item.Slot |= BodySlot.Waist;
 			else
-				Item.Slot ^= BodySlot.Belt;
+				Item.Slot ^= BodySlot.Waist;
 		}
 
 		#endregion

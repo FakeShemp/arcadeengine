@@ -21,7 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
-
+using ArcEngine;
 
 
 namespace DungeonEye
@@ -36,7 +36,7 @@ namespace DungeonEye
 		/// </summary>
 		public Entity()
 		{
-			//Experience = new Experience();
+			Inventory = new Item[26];
 			Charisma = new Ability();
 			Strength = new Ability();
 			Constitution = new Ability();
@@ -83,6 +83,109 @@ namespace DungeonEye
 		}
 
 
+		#region Inventory
+
+
+
+		/// <summary>
+		/// Returns the item at a given inventory location
+		/// </summary>
+		/// <param name="position">Inventory position</param>
+		/// <returns>Item or null</returns>
+		public Item GetInventoryItem(InventoryPosition position)
+		{
+			return Inventory[(int)position];
+		}
+
+
+
+		/// <summary>
+		/// Sets the item at a given inventory position
+		/// </summary>
+		/// <param name="position">Position in the inventory</param>
+		/// <param name="item">Item to set</param>
+		/// <returns>True if the item can be set at the given inventory location</returns>
+		public bool SetInventoryItem(InventoryPosition position, Item item)
+		{
+			if (item == null)
+			{
+				Inventory[(int)position] = item;
+				return true;
+			}
+
+
+			bool res = false;
+			switch (position)
+			{
+				case InventoryPosition.Armor:
+				if ((item.Slot & BodySlot.Body) == BodySlot.Body)
+					res = true;
+				break;
+
+				case InventoryPosition.Wrist:
+				if ((item.Slot & BodySlot.Wrist) == BodySlot.Wrist)
+					res = true;
+				break;
+
+				case InventoryPosition.Secondary:
+				if ((item.Slot & BodySlot.Secondary) == BodySlot.Secondary)
+					res = true;
+				break;
+
+				case InventoryPosition.Ring_Left:
+				case InventoryPosition.Ring_Right:
+				if ((item.Slot & BodySlot.Ring) == BodySlot.Ring)
+					res = true;
+				break;
+
+				case InventoryPosition.Feet:
+				if ((item.Slot & BodySlot.Feet) == BodySlot.Feet)
+					res = true;
+				break;
+
+				case InventoryPosition.Primary:
+				if ((item.Slot & BodySlot.Primary) == BodySlot.Primary)
+					res = true;
+				break;
+
+				//case InventoryPosition.Belt_1:
+				//case InventoryPosition.Belt_2:
+				//case InventoryPosition.Belt_3:
+				//if ((item.Slot & BodySlot.Belt) == BodySlot.Belt)
+				//   res = true;
+				//break;
+
+				case InventoryPosition.Neck:
+				if ((item.Slot & BodySlot.Neck) == BodySlot.Neck)
+					res = true;
+				break;
+
+				case InventoryPosition.Helmet:
+				if ((item.Slot & BodySlot.Head) == BodySlot.Head)
+					res = true;
+				break;
+			}
+
+			if (res)
+				Inventory[(int)position] = item;
+
+			return res;
+		}
+
+
+		/// <summary>
+		/// Gets the next item in the waist bag
+		/// </summary>
+		/// <returns>Item handle or null if empty</returns>
+		public Item PopWaistItem()
+		{
+			return null;
+
+		}
+
+		#endregion
+
+
 
 		#region IO
 
@@ -110,6 +213,24 @@ namespace DungeonEye
 			writer.WriteAttributeString("value", Alignment.ToString());
 			writer.WriteEndElement();
 
+			// Inventory
+			foreach (InventoryPosition pos in Enum.GetValues(typeof(InventoryPosition)))
+			{
+				Item item = GetInventoryItem(pos);
+				if (item == null)
+					continue;
+
+				writer.WriteStartElement("inventory");
+				writer.WriteAttributeString("position", pos.ToString());
+				writer.WriteAttributeString("value", item.Name);
+				writer.WriteEndElement();
+			}
+
+			writer.WriteStartElement("quiver");
+			writer.WriteAttributeString("count", Quiver.ToString());
+			writer.WriteEndElement();
+
+
 			return true;
 		}
 
@@ -129,6 +250,20 @@ namespace DungeonEye
 
 			switch (xml.Name.ToLower())
 			{
+				case "inventory":
+				{
+					SetInventoryItem(
+						(InventoryPosition)Enum.Parse(typeof(InventoryPosition), xml.Attributes["position"].Value),
+						ResourceManager.CreateAsset<Item>(xml.Attributes["value"].Value));
+				}
+				break;
+
+				case "quiver":
+				{
+					Quiver = int.Parse(xml.Attributes["count"].Value);
+				}
+				break;
+
 				case "strength":
 				{
 					Strength.Load(xml);
@@ -318,15 +453,6 @@ namespace DungeonEye
 		}
 
 
-		///// <summary>
-		///// Experience points.
-		///// </summary>
-		//public Experience Experience
-		//{
-		//   get;
-		//   private set;
-		//}
-
 
 		/// <summary>
 		/// Hero alignement
@@ -338,7 +464,74 @@ namespace DungeonEye
 		}
 
 
+		/// <summary>
+		/// Number of arrow in the quiver
+		/// </summary>
+		public int Quiver;
+
+
+		/// <summary>
+		/// Items in the bag
+		/// </summary>
+		Item[] Inventory;
+
 
 		#endregion
 	}
+
+
+	/// <summary>
+	/// Hand of Hero
+	/// </summary>
+	public enum EntityHand
+	{
+		/// <summary>
+		/// Right hand
+		/// </summary>
+		Primary = 0,
+
+		/// <summary>
+		/// Left hand
+		/// </summary>
+		Secondary = 1
+
+	}
+
+
+	/// <summary>
+	/// Position in the inventory of a Hero
+	/// </summary>
+	public enum InventoryPosition
+	{
+		Armor,
+		Wrist,
+		Secondary,
+		Ring_Left,
+		Ring_Right,
+		Feet,
+		Primary,
+		Neck,
+		Helmet,
+	}
+
+
+
+
+	/// <summary>
+	/// Available hero alignements
+	/// </summary>
+	public enum EntityAlignment
+	{
+		LawfulGood,
+		NeutralGood,
+		ChaoticGood,
+		LawfulNeutral,
+		TrueNeutral,
+		ChoaticNeutral,
+		LawfulEvil,
+		NeutralEvil,
+		ChaoticEvil
+	}
+
+
 }

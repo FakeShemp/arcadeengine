@@ -183,7 +183,7 @@
 			this.groupBox4.Controls.Add(this.DescriptionBox);
 			this.groupBox4.Location = new System.Drawing.Point(3, 6);
 			this.groupBox4.Name = "groupBox4";
-			this.groupBox4.Size = new System.Drawing.Size(436, 105);
+			this.groupBox4.Size = new System.Drawing.Size(460, 105);
 			this.groupBox4.TabIndex = 5;
 			this.groupBox4.TabStop = false;
 			this.groupBox4.Text = "Description :";
@@ -194,7 +194,7 @@
 			this.DescriptionBox.Location = new System.Drawing.Point(3, 16);
 			this.DescriptionBox.Multiline = true;
 			this.DescriptionBox.Name = "DescriptionBox";
-			this.DescriptionBox.Size = new System.Drawing.Size(430, 86);
+			this.DescriptionBox.Size = new System.Drawing.Size(454, 86);
 			this.DescriptionBox.TabIndex = 4;
 			this.DescriptionBox.TextChanged += new System.EventHandler(this.DescriptionBox_TextChanged);
 			// 
@@ -216,7 +216,7 @@
 			this.groupBox5.Controls.Add(this.label5);
 			this.groupBox5.Location = new System.Drawing.Point(3, 117);
 			this.groupBox5.Name = "groupBox5";
-			this.groupBox5.Size = new System.Drawing.Size(228, 218);
+			this.groupBox5.Size = new System.Drawing.Size(252, 218);
 			this.groupBox5.TabIndex = 6;
 			this.groupBox5.TabStop = false;
 			this.groupBox5.Text = "Misc :";
@@ -224,7 +224,7 @@
 			// UseQuiverBox
 			// 
 			this.UseQuiverBox.AutoSize = true;
-			this.UseQuiverBox.Location = new System.Drawing.Point(6, 190);
+			this.UseQuiverBox.Location = new System.Drawing.Point(167, 99);
 			this.UseQuiverBox.Name = "UseQuiverBox";
 			this.UseQuiverBox.Size = new System.Drawing.Size(77, 17);
 			this.UseQuiverBox.TabIndex = 10;
@@ -234,7 +234,7 @@
 			// 
 			// ACBonusBox
 			// 
-			this.ACBonusBox.Location = new System.Drawing.Point(182, 73);
+			this.ACBonusBox.Location = new System.Drawing.Point(70, 148);
 			this.ACBonusBox.Maximum = new decimal(new int[] {
             1000000,
             0,
@@ -249,7 +249,7 @@
 			// TwoHandedBox
 			// 
 			this.TwoHandedBox.AutoSize = true;
-			this.TwoHandedBox.Location = new System.Drawing.Point(6, 167);
+			this.TwoHandedBox.Location = new System.Drawing.Point(167, 76);
 			this.TwoHandedBox.Name = "TwoHandedBox";
 			this.TwoHandedBox.Size = new System.Drawing.Size(79, 17);
 			this.TwoHandedBox.TabIndex = 0;
@@ -260,7 +260,7 @@
 			// label14
 			// 
 			this.label14.AutoSize = true;
-			this.label14.Location = new System.Drawing.Point(116, 77);
+			this.label14.Location = new System.Drawing.Point(4, 152);
 			this.label14.Name = "label14";
 			this.label14.Size = new System.Drawing.Size(60, 13);
 			this.label14.TabIndex = 1;
@@ -273,41 +273,43 @@
 			this.DamageTypeBox.FormattingEnabled = true;
 			this.DamageTypeBox.Location = new System.Drawing.Point(70, 46);
 			this.DamageTypeBox.Name = "DamageTypeBox";
-			this.DamageTypeBox.Size = new System.Drawing.Size(121, 21);
+			this.DamageTypeBox.Size = new System.Drawing.Size(176, 21);
 			this.DamageTypeBox.TabIndex = 9;
 			// 
 			// RangeBox
 			// 
-			this.RangeBox.Location = new System.Drawing.Point(58, 125);
+			this.RangeBox.Location = new System.Drawing.Point(70, 125);
 			this.RangeBox.Name = "RangeBox";
-			this.RangeBox.Size = new System.Drawing.Size(52, 20);
+			this.RangeBox.Size = new System.Drawing.Size(77, 20);
 			this.RangeBox.TabIndex = 4;
 			this.RangeBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.RangeBox.ThousandsSeparator = true;
 			// 
 			// WeightBox
 			// 
-			this.WeightBox.Location = new System.Drawing.Point(58, 99);
+			this.WeightBox.Location = new System.Drawing.Point(70, 99);
 			this.WeightBox.Maximum = new decimal(new int[] {
             1000000,
             0,
             0,
             0});
 			this.WeightBox.Name = "WeightBox";
-			this.WeightBox.Size = new System.Drawing.Size(52, 20);
+			this.WeightBox.Size = new System.Drawing.Size(77, 20);
 			this.WeightBox.TabIndex = 2;
 			this.WeightBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.WeightBox.ThousandsSeparator = true;
 			this.WeightBox.ValueChanged += new System.EventHandler(this.WeightBox_ValueChanged);
 			// 
 			// SpeedBox
 			// 
-			this.SpeedBox.Location = new System.Drawing.Point(58, 73);
+			this.SpeedBox.Location = new System.Drawing.Point(70, 73);
 			this.SpeedBox.Maximum = new decimal(new int[] {
             10000,
             0,
             0,
             0});
 			this.SpeedBox.Name = "SpeedBox";
-			this.SpeedBox.Size = new System.Drawing.Size(52, 20);
+			this.SpeedBox.Size = new System.Drawing.Size(77, 20);
 			this.SpeedBox.TabIndex = 2;
 			this.SpeedBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.SpeedBox.ThousandsSeparator = true;
@@ -316,7 +318,7 @@
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(8, 127);
+			this.label3.Location = new System.Drawing.Point(20, 127);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(45, 13);
 			this.label3.TabIndex = 1;
@@ -325,7 +327,7 @@
 			// Weight
 			// 
 			this.Weight.AutoSize = true;
-			this.Weight.Location = new System.Drawing.Point(5, 101);
+			this.Weight.Location = new System.Drawing.Point(17, 101);
 			this.Weight.Name = "Weight";
 			this.Weight.Size = new System.Drawing.Size(47, 13);
 			this.Weight.TabIndex = 1;
@@ -337,7 +339,7 @@
 			this.TypeBox.FormattingEnabled = true;
 			this.TypeBox.Location = new System.Drawing.Point(70, 19);
 			this.TypeBox.Name = "TypeBox";
-			this.TypeBox.Size = new System.Drawing.Size(121, 21);
+			this.TypeBox.Size = new System.Drawing.Size(176, 21);
 			this.TypeBox.Sorted = true;
 			this.TypeBox.TabIndex = 0;
 			this.TypeBox.SelectedIndexChanged += new System.EventHandler(this.TypeBox_SelectedIndexChanged);
@@ -345,7 +347,7 @@
 			// label6
 			// 
 			this.label6.AutoSize = true;
-			this.label6.Location = new System.Drawing.Point(8, 75);
+			this.label6.Location = new System.Drawing.Point(20, 75);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(44, 13);
 			this.label6.TabIndex = 1;
@@ -381,7 +383,7 @@
 			this.groupBox6.Controls.Add(this.SecondaryBox);
 			this.groupBox6.Controls.Add(this.QuiverBox);
 			this.groupBox6.Controls.Add(this.PrimaryBox);
-			this.groupBox6.Location = new System.Drawing.Point(237, 117);
+			this.groupBox6.Location = new System.Drawing.Point(261, 117);
 			this.groupBox6.Name = "groupBox6";
 			this.groupBox6.Size = new System.Drawing.Size(202, 142);
 			this.groupBox6.TabIndex = 7;
@@ -506,7 +508,7 @@
 			this.groupBox8.Controls.Add(this.label9);
 			this.groupBox8.Controls.Add(this.CriticalMinBox);
 			this.groupBox8.Controls.Add(this.label10);
-			this.groupBox8.Location = new System.Drawing.Point(237, 341);
+			this.groupBox8.Location = new System.Drawing.Point(261, 341);
 			this.groupBox8.Name = "groupBox8";
 			this.groupBox8.Size = new System.Drawing.Size(202, 104);
 			this.groupBox8.TabIndex = 8;
@@ -672,7 +674,7 @@
 			this.groupBox3.Controls.Add(this.RangerBox);
 			this.groupBox3.Controls.Add(this.PaladinBox);
 			this.groupBox3.Controls.Add(this.FighterBox);
-			this.groupBox3.Location = new System.Drawing.Point(237, 265);
+			this.groupBox3.Location = new System.Drawing.Point(261, 265);
 			this.groupBox3.Name = "groupBox3";
 			this.groupBox3.Size = new System.Drawing.Size(202, 70);
 			this.groupBox3.TabIndex = 7;
@@ -840,14 +842,14 @@
 			// DamageBox
 			// 
 			this.DamageBox.ControlText = "Damage :";
-			dice1.Modifier = 0;
 			dice1.Faces = 1;
+			dice1.Modifier = 0;
 			dice1.Throws = 1;
 			this.DamageBox.Dice = dice1;
 			this.DamageBox.Location = new System.Drawing.Point(3, 341);
 			this.DamageBox.MinimumSize = new System.Drawing.Size(225, 100);
 			this.DamageBox.Name = "DamageBox";
-			this.DamageBox.Size = new System.Drawing.Size(225, 104);
+			this.DamageBox.Size = new System.Drawing.Size(252, 104);
 			this.DamageBox.TabIndex = 9;
 			this.DamageBox.ValueChanged += new System.EventHandler(this.DamageBox_ValueChanged);
 			// 

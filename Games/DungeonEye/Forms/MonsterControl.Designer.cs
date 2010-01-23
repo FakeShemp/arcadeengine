@@ -28,7 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			DungeonEye.Dice dice1 = new DungeonEye.Dice();
+			DungeonEye.Dice dice2 = new DungeonEye.Dice();
 			this.VisualGroupBox = new System.Windows.Forms.GroupBox();
 			this.label11 = new System.Windows.Forms.Label();
 			this.label12 = new System.Windows.Forms.Label();
@@ -50,6 +50,8 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.InterfaceNameBox = new System.Windows.Forms.ComboBox();
 			this.ScriptNameBox = new System.Windows.Forms.ComboBox();
+			this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+			this.label3 = new System.Windows.Forms.Label();
 			this.DamageBox = new DungeonEye.Forms.DiceForm();
 			this.VisualGroupBox.SuspendLayout();
 			this.PocketGroupBox.SuspendLayout();
@@ -57,6 +59,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.HPMaxBox)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.HPActualBox)).BeginInit();
 			this.groupBox1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// VisualGroupBox
@@ -296,17 +299,40 @@
 			this.ScriptNameBox.TabIndex = 0;
 			this.ScriptNameBox.SelectedIndexChanged += new System.EventHandler(this.ScriptNameBox_SelectedIndexChanged);
 			// 
+			// numericUpDown1
+			// 
+			this.numericUpDown1.Location = new System.Drawing.Point(106, 385);
+			this.numericUpDown1.Maximum = new decimal(new int[] {
+            1410065408,
+            2,
+            0,
+            0});
+			this.numericUpDown1.Name = "numericUpDown1";
+			this.numericUpDown1.Size = new System.Drawing.Size(56, 20);
+			this.numericUpDown1.TabIndex = 11;
+			this.numericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.numericUpDown1.ThousandsSeparator = true;
+			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Location = new System.Drawing.Point(6, 387);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(97, 13);
+			this.label3.TabIndex = 12;
+			this.label3.Text = "Experience points :";
+			// 
 			// DamageBox
 			// 
 			this.DamageBox.ControlText = "Damage :";
-			dice1.Modifier = 0;
-			dice1.Faces = 1;
-			dice1.Throws = 1;
-			this.DamageBox.Dice = dice1;
+			dice2.Faces = 1;
+			dice2.Modifier = 0;
+			dice2.Throws = 1;
+			this.DamageBox.Dice = dice2;
 			this.DamageBox.Location = new System.Drawing.Point(0, 268);
 			this.DamageBox.MinimumSize = new System.Drawing.Size(225, 100);
 			this.DamageBox.Name = "DamageBox";
-			this.DamageBox.Size = new System.Drawing.Size(231, 100);
+			this.DamageBox.Size = new System.Drawing.Size(230, 100);
 			this.DamageBox.TabIndex = 10;
 			this.DamageBox.ValueChanged += new System.EventHandler(this.DamageBox_ValueChanged);
 			// 
@@ -314,6 +340,8 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Controls.Add(this.label3);
+			this.Controls.Add(this.numericUpDown1);
 			this.Controls.Add(this.DamageBox);
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.groupBox6);
@@ -333,7 +361,9 @@
 			((System.ComponentModel.ISupportInitialize)(this.HPActualBox)).EndInit();
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 
@@ -361,5 +391,7 @@
 		private System.Windows.Forms.ComboBox InterfaceNameBox;
 		private System.Windows.Forms.ComboBox ScriptNameBox;
 		private DiceForm DamageBox;
+		private System.Windows.Forms.NumericUpDown numericUpDown1;
+		private System.Windows.Forms.Label label3;
 	}
 }

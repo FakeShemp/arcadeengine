@@ -3,129 +3,117 @@
 	<location maze="test" x="11" y="17" direction="North" position="NorthEast" />
 	<position slot="FrontLeft">
 		<hero>
-			<hitpoint current="9" max="16" />
-			<strength value="12" />
-			<intelligence value="11" />
+			<hitpoint current="22" max="22" />
+			<strength value="14" />
+			<intelligence value="12" />
 			<wisdom value="9" />
 			<dexterity value="12" />
 			<constitution value="8" />
-			<charisma value="15" />
+			<charisma value="13" />
 			<alignment value="LawfulGood" />
-			<name value="Allabar" />
-			<inventory position="Inventory_01" value="Test Item" />
-			<inventory position="Inventory_02" value="Spell book" />
-			<inventory position="Inventory_09" value="Short Bow" />
 			<inventory position="Armor" value="Leather Armor" />
 			<inventory position="Feet" value="Boots" />
 			<inventory position="Primary" value="Short Bow" />
 			<inventory position="Helmet" value="Helmet" />
 			<quiver count="10" />
-			<head id="14" />
+			<name value="Allabar" />
+			<head id="25" />
 			<food value="75" />
 			<race value="HumanMale" />
 			<profession>
 				<class name="Cleric" />
-				<xp points="806258" />
+				<xp points="117298" />
 			</profession>
 			<profession>
 				<class name="Fighter" />
-				<xp points="401767" />
+				<xp points="625551" />
 			</profession>
 		</hero>
 	</position>
 	<position slot="FrontRight">
 		<hero>
-			<hitpoint current="6" max="24" />
+			<hitpoint current="6" max="6" />
 			<strength value="6" />
-			<intelligence value="13" />
-			<wisdom value="8" />
-			<dexterity value="10" />
+			<intelligence value="10" />
+			<wisdom value="14" />
+			<dexterity value="5" />
 			<constitution value="8" />
-			<charisma value="12" />
+			<charisma value="10" />
 			<alignment value="LawfulGood" />
-			<name value="Ariel" />
-			<inventory position="Inventory_01" value="Test Item" />
-			<inventory position="Inventory_02" value="Spell book" />
-			<inventory position="Inventory_09" value="Short Bow" />
 			<inventory position="Armor" value="Leather Armor" />
 			<inventory position="Feet" value="Boots" />
 			<inventory position="Primary" value="Short Bow" />
 			<inventory position="Helmet" value="Helmet" />
 			<quiver count="10" />
-			<head id="20" />
+			<name value="Ariel" />
+			<head id="18" />
 			<food value="75" />
 			<race value="HumanMale" />
 			<profession>
 				<class name="Cleric" />
-				<xp points="93758" />
+				<xp points="963056" />
 			</profession>
 			<profession>
 				<class name="Fighter" />
-				<xp points="47805" />
+				<xp points="870982" />
 			</profession>
 		</hero>
 	</position>
 	<position slot="MiddleLeft">
 		<hero>
-			<hitpoint current="10" max="10" />
+			<hitpoint current="17" max="24" />
 			<strength value="9" />
-			<intelligence value="13" />
-			<wisdom value="9" />
-			<dexterity value="10" />
+			<intelligence value="9" />
+			<wisdom value="12" />
+			<dexterity value="6" />
 			<constitution value="12" />
-			<charisma value="11" />
+			<charisma value="9" />
 			<alignment value="LawfulGood" />
-			<name value="Valanau" />
-			<inventory position="Inventory_01" value="Test Item" />
-			<inventory position="Inventory_02" value="Spell book" />
-			<inventory position="Inventory_09" value="Short Bow" />
 			<inventory position="Armor" value="Leather Armor" />
 			<inventory position="Feet" value="Boots" />
 			<inventory position="Primary" value="Short Bow" />
 			<inventory position="Helmet" value="Helmet" />
 			<quiver count="10" />
-			<head id="4" />
+			<name value="Valanau" />
+			<head id="23" />
 			<food value="75" />
 			<race value="HumanMale" />
 			<profession>
 				<class name="Cleric" />
-				<xp points="543790" />
+				<xp points="867724" />
 			</profession>
 			<profession>
 				<class name="Fighter" />
-				<xp points="55330" />
+				<xp points="384424" />
 			</profession>
 		</hero>
 	</position>
 	<position slot="MiddleRight">
 		<hero>
-			<hitpoint current="29" max="29" />
-			<strength value="12" />
-			<intelligence value="10" />
-			<wisdom value="13" />
-			<dexterity value="10" />
-			<constitution value="10" />
-			<charisma value="12" />
+			<hitpoint current="6" max="22" />
+			<strength value="8" />
+			<intelligence value="9" />
+			<wisdom value="12" />
+			<dexterity value="9" />
+			<constitution value="12" />
+			<charisma value="9" />
 			<alignment value="LawfulGood" />
-			<name value="Tenmiyana" />
-			<inventory position="Inventory_01" value="Test Item" />
-			<inventory position="Inventory_02" value="Spell book" />
-			<inventory position="Inventory_09" value="Short Bow" />
 			<inventory position="Armor" value="Leather Armor" />
 			<inventory position="Feet" value="Boots" />
 			<inventory position="Primary" value="Short Bow" />
 			<inventory position="Helmet" value="Helmet" />
 			<quiver count="10" />
-			<head id="10" />
+			<name value="Tenmiyana" />
+			<head id="23" />
 			<food value="75" />
 			<race value="HumanMale" />
 			<profession>
 				<class name="Cleric" />
-				<xp points="217063" />
+				<xp points="119938" />
 			</profession>
 			<profession>
 				<class name="Fighter" />
-				<xp points="740050" />
+				<xp points="277369" />
 			</profession>
 		</hero>
 	</position>

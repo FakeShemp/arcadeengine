@@ -590,7 +590,7 @@ namespace DungeonEye
 		/// <summary>
 		/// 
 		/// </summary>
-		Belt = 0x200,
+		Waist = 0x200,
 
 		/// <summary>
 		/// Slotless worn items, items which are not worn

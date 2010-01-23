@@ -47,9 +47,10 @@ namespace DungeonEye
 		public Hero(Team team)
 		{
 			Team = team;
-			Inventory = new Item[26];
 			Professions = new List<Profession>();
 
+			BackPack = new Item[14];
+			WaistPack = new Item[3];
 			Attacks = new AttackResult[2];
 			Attacks[0] = new AttackResult();
 			Attacks[1] = new AttackResult();
@@ -76,12 +77,12 @@ namespace DungeonEye
 
 			Quiver = 10;
 			SetInventoryItem(InventoryPosition.Primary, ResourceManager.CreateAsset<Item>("Short Bow"));
-			SetInventoryItem(InventoryPosition.Inventory_09, ResourceManager.CreateAsset<Item>("Short Bow"));
 			SetInventoryItem(InventoryPosition.Armor, ResourceManager.CreateAsset<Item>("Leather Armor"));
-			SetInventoryItem(InventoryPosition.Inventory_01, ResourceManager.CreateAsset<Item>("Test Item"));
-			SetInventoryItem(InventoryPosition.Inventory_02, ResourceManager.CreateAsset<Item>("Spell book"));
 			SetInventoryItem(InventoryPosition.Helmet, ResourceManager.CreateAsset<Item>("Helmet"));
 			SetInventoryItem(InventoryPosition.Feet, ResourceManager.CreateAsset<Item>("Boots"));
+			SetBackPackItem(9, ResourceManager.CreateAsset<Item>("Short Bow"));
+			SetBackPackItem(1, ResourceManager.CreateAsset<Item>("Test Item"));
+			SetBackPackItem(2, ResourceManager.CreateAsset<Item>("Spell book"));
 		}
 
 
@@ -103,8 +104,7 @@ namespace DungeonEye
 		}
 
 
-		#region Inventory
-
+		#region Items
 
 		/// <summary>
 		/// Adds an item to the first free slot in the inventory
@@ -127,7 +127,7 @@ namespace DungeonEye
 			// Neck
 			if (item.Slot == BodySlot.Neck && GetInventoryItem(InventoryPosition.Neck) == null)
 			{
-				SetInventoryItem(InventoryPosition.Neck, item); 
+				SetInventoryItem(InventoryPosition.Neck, item);
 				return true;
 			}
 
@@ -154,7 +154,7 @@ namespace DungeonEye
 			}
 
 			// Primary
-			if ((item.Slot & BodySlot.Primary) == BodySlot.Primary && 
+			if ((item.Slot & BodySlot.Primary) == BodySlot.Primary &&
 				(item.Type == ItemType.Weapon || item.Type == ItemType.Shield || item.Type == ItemType.Wand) &&
 				GetInventoryItem(InventoryPosition.Primary) == null)
 			{
@@ -194,146 +194,100 @@ namespace DungeonEye
 			}
 
 			// Waist
-			if ((item.Slot & BodySlot.Belt) == BodySlot.Belt)
+			if ((item.Slot & BodySlot.Waist) == BodySlot.Waist)
 			{
-				for(int i = 0; i < 3; i++)
+				for (int i = 0; i < 3; i++)
 				{
-					if (GetInventoryItem(InventoryPosition.Belt_1 + i) == null)
+					if (GetWaistPackItem(i) == null)
 					{
-						SetInventoryItem(InventoryPosition.Belt_1 + i, item);
+						SetWaistPackItem(i, item);
 						return true;
 					}
 				}
 			}
 
+
 			// Else anywhere in the bag...
 			for (int i = 0; i < 14; i++)
 			{
-				if (Inventory[i] == null)
+				if (BackPack[i] == null)
 				{
-					Inventory[i] = item;
+					BackPack[i] = item;
 					return true;
 				}
 			}
-
 			// Sorry no room !
-			Team.AddMessage("Bag is full !");
 			return false;
 		}
 
-
+		
 		/// <summary>
-		/// Returns the item at a given inventory location
+		/// Sets an item in the back pack
 		/// </summary>
-		/// <param name="position">Inventory position</param>
-		/// <returns>Item or null</returns>
-		public Item GetInventoryItem(InventoryPosition position)
+		/// <param name="position">Position</param>
+		/// <param name="item">Item handle</param>
+		public void SetBackPackItem(int position, Item item)
 		{
-			return Inventory[(int)position];
+			if (position < 0 || position > 12)
+				return;
+
+			BackPack[position] = item;
 		}
 
 
+		/// <summary>
+		/// Gets an item from the backpack
+		/// </summary>
+		/// <param name="position">Position</param>
+		/// <returns>Item handle</returns>
+		public Item GetBackPackItem(int position)
+		{
+			if (position < 0 || position > 13)
+				return null;
+
+			return BackPack[position];
+		}
+
 
 		/// <summary>
-		/// Sets the item at a given inventory position
+		/// Sets an item in the waist pack
 		/// </summary>
-		/// <param name="position">Position in the inventory</param>
-		/// <param name="item">Item to set</param>
-		/// <returns>True if the item can be set at the given inventory location</returns>
-		public bool SetInventoryItem(InventoryPosition position, Item item)
+		/// <param name="position">Position</param>
+		/// <param name="item">Item handle</param>
+		/// <returns></returns>
+		public bool SetWaistPackItem(int position, Item item)
 		{
+			if (position < 0 || position > 2)
+				return false;
+
 			if (item == null)
 			{
-				Inventory[(int)position] = item;
+				WaistPack[position] = null;
 				return true;
 			}
 
-
-			bool res = false;
-			switch (position)
-			{
-				case InventoryPosition.Inventory_01:
-				case InventoryPosition.Inventory_02:
-				case InventoryPosition.Inventory_03:
-				case InventoryPosition.Inventory_04:
-				case InventoryPosition.Inventory_05:
-				case InventoryPosition.Inventory_06:
-				case InventoryPosition.Inventory_07:
-				case InventoryPosition.Inventory_08:
-				case InventoryPosition.Inventory_09:
-				case InventoryPosition.Inventory_10:
-				case InventoryPosition.Inventory_11:
-				case InventoryPosition.Inventory_12:
-				case InventoryPosition.Inventory_13:
-				case InventoryPosition.Inventory_14:
-					res = true;
-				break;
-
-				case InventoryPosition.Armor:
-				if ((item.Slot & BodySlot.Body) == BodySlot.Body)
-					res = true;
-				break;
-
-				case InventoryPosition.Wrist:
-				if ((item.Slot & BodySlot.Wrist) == BodySlot.Wrist)
-					res = true;
-				break;
-
-				case InventoryPosition.Secondary:
-				if ((item.Slot & BodySlot.Secondary) == BodySlot.Secondary)
-					res = true;
-				break;
-
-				case InventoryPosition.Ring_Left:
-				case InventoryPosition.Ring_Right:
-				if ((item.Slot & BodySlot.Ring) == BodySlot.Ring)
-					res = true;
-				break;
-
-				case InventoryPosition.Feet:
-				if ((item.Slot & BodySlot.Feet) == BodySlot.Feet)
-					res = true;
-				break;
-
-				case InventoryPosition.Primary:
-				if ((item.Slot & BodySlot.Primary) == BodySlot.Primary)
-					res = true;
-				break;
-
-				case InventoryPosition.Belt_1:
-				case InventoryPosition.Belt_2:
-				case InventoryPosition.Belt_3:
-				if ((item.Slot & BodySlot.Belt) == BodySlot.Belt)
-					res = true;
-				break;
-
-				case InventoryPosition.Neck:
-				if ((item.Slot & BodySlot.Neck) == BodySlot.Neck)
-					res = true;
-				break;
-
-				case InventoryPosition.Helmet:
-				if ((item.Slot & BodySlot.Head) == BodySlot.Head)
-					res = true;
-				break;
-			}
-
-			if (res)
-				Inventory[(int)position] = item;
-
-			return res;
+			if ((item.Slot & BodySlot.Waist) != BodySlot.Waist)
+				return false;
+			
+			WaistPack[position] = item;
+			return true;
 		}
 
 
 		/// <summary>
-		/// Gets the next item in the waist bag
+		/// Gets an item from the waistpack
 		/// </summary>
-		/// <returns>Item handle or null if empty</returns>
-		public Item PopWaistItem()
+		/// <param name="position">Position</param>
+		/// <returns>Item handle</returns>
+		public Item GetWaistPackItem(int position)
 		{
-			return null;
+			if (position < 0 || position > 3)
+				return null;
 
+			return WaistPack[position];
 		}
+
+
 
 		#endregion
 
@@ -344,7 +298,7 @@ namespace DungeonEye
 		/// Hero attack with his hands
 		/// </summary>
 		/// <param name="hand">Attacking hand</param>
-		public void UseHand(HeroHand hand)
+		public void UseHand(EntityHand hand)
 		{
 			if (IsUnconscious || IsDead)
 				return;
@@ -353,7 +307,7 @@ namespace DungeonEye
 
 
 			Item item = null;
-			if (hand == HeroHand.Primary)
+			if (hand == EntityHand.Primary)
 				item = GetInventoryItem(InventoryPosition.Primary);
 			else
 				item = GetInventoryItem(InventoryPosition.Secondary);
@@ -386,7 +340,7 @@ namespace DungeonEye
 					Team.Location.Maze.FlyingItems.Add(new FlyingItem(item, loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
 
 					// Empty hand
-					InventoryPosition pos = hand == HeroHand.Primary ? InventoryPosition.Primary : InventoryPosition.Secondary;
+					InventoryPosition pos = hand == EntityHand.Primary ? InventoryPosition.Primary : InventoryPosition.Secondary;
 					SetInventoryItem(pos, null);
 
 					//if (Quiver > 0 && item.UseQuiver)
@@ -411,7 +365,7 @@ namespace DungeonEye
 				// Use the weapon
 				case ItemType.Weapon:
 				{
-					if (item.Slot == BodySlot.Belt)
+					if (item.Slot == BodySlot.Waist)
 					{
 					}
 
@@ -463,14 +417,14 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="hand">Hand to attack</param>
 		/// <returns>True if the specified hand can attack</returns>
-		public bool CanAttack(HeroHand hand)
+		public bool CanAttack(EntityHand hand)
 		{
 			if (IsDead || IsUnconscious)
 				return false;
 
 			// Check the item in the other hand
 			Item item = null;
-			if (hand == HeroHand.Primary)
+			if (hand == EntityHand.Primary)
 			{
 				item = GetInventoryItem(InventoryPosition.Secondary);
 				if (item != null && item.TwoHanded)
@@ -492,7 +446,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="hand">Hand of the attack</param>
 		/// <returns>Attack result</returns>
-		public AttackResult GetLastAttack(HeroHand hand)
+		public AttackResult GetLastAttack(EntityHand hand)
 		{
 			return Attacks[(int)hand];
 		}
@@ -528,20 +482,6 @@ namespace DungeonEye
 					}
 					break;
 
-					case "inventory":
-					{
-						SetInventoryItem(
-							(InventoryPosition)Enum.Parse(typeof(InventoryPosition), node.Attributes["position"].Value),
-							ResourceManager.CreateAsset<Item>(node.Attributes["value"].Value));
-					}
-					break;
-
-					case "quiver":
-					{
-						Quiver = int.Parse(node.Attributes["count"].Value);
-					}
-					break;
-
 					case "head":
 					{
 						Head = int.Parse(node.Attributes["id"].Value);
@@ -553,12 +493,6 @@ namespace DungeonEye
 						Food = byte.Parse(node.Attributes["value"].Value);
 					}
 					break;
-
-					//case "class":
-					//{
-					//   Class = (HeroClass)Enum.Parse(typeof(HeroClass), node.Attributes["value"].Value, true);
-					//}
-					//break;
 
 					case "race":
 					{
@@ -605,26 +539,6 @@ namespace DungeonEye
 			writer.WriteAttributeString("value", Name);
 			writer.WriteEndElement();
 
-		
-			// Inventory
-			//for (int pos = 0; pos < Inventory.Length; pos++)
-			foreach(InventoryPosition pos in Enum.GetValues(typeof(InventoryPosition)))
-			{
-				Item item = GetInventoryItem(pos);
-				//if (Inventory[pos] == null)
-				if (item == null)
-					continue;
-
-				writer.WriteStartElement("inventory");
-				writer.WriteAttributeString("position", pos.ToString());
-				writer.WriteAttributeString("value", item.Name);
-				writer.WriteEndElement();
-			}
-
-			writer.WriteStartElement("quiver");
-			writer.WriteAttributeString("count", Quiver.ToString());
-			writer.WriteEndElement();
-
 			writer.WriteStartElement("head");
 			writer.WriteAttributeString("id", Head.ToString());
 			writer.WriteEndElement();
@@ -632,10 +546,6 @@ namespace DungeonEye
 			writer.WriteStartElement("food");
 			writer.WriteAttributeString("value", Food.ToString());
 			writer.WriteEndElement();
-
-			//writer.WriteStartElement("class");
-			//writer.WriteAttributeString("value", Class.ToString());
-			//writer.WriteEndElement();
 
 			writer.WriteStartElement("race");
 			writer.WriteAttributeString("value", Race.ToString());
@@ -663,16 +573,6 @@ namespace DungeonEye
 			set;
 		}
 
-/*
-		/// <summary>
-		/// Hero class
-		/// </summary>
-		public HeroClass Class
-		{
-			get;
-			set;
-		}
-*/
 
 		/// <summary>
 		/// Hero race
@@ -689,19 +589,31 @@ namespace DungeonEye
 		/// </summary>
 		public List<Profession> Professions;
 
+
 		/// <summary>
 		/// ID of head tile
 		/// </summary>
 		public int Head;
 
 
+
 		/// <summary>
-		/// Number of arrows in the quiver
+		/// Back pack items
 		/// </summary>
-		public byte Arrows
+		public Item[] BackPack
 		{
 			get;
-			set;
+			private set;
+		}
+
+
+		/// <summary>
+		/// Waist items
+		/// </summary>
+		public Item[] WaistPack
+		{
+			get;
+			private set;
 		}
 
 
@@ -744,19 +656,6 @@ namespace DungeonEye
 		/// Sums of last attacks
 		/// </summary>
 		AttackResult[] Attacks;
-
-
-		/// <summary>
-		/// Items in the bag
-		/// </summary>
-		Item[] Inventory;
-
-
-		/// <summary>
-		/// Number of arrow in the quiver
-		/// </summary>
-		public int Quiver;
-
 
 
 		/// <summary>
@@ -817,22 +716,6 @@ namespace DungeonEye
 
 	}
 
-
-	/// <summary>
-	/// Available hero alignements
-	/// </summary>
-	public enum EntityAlignment
-	{
-		LawfulGood,
-		NeutralGood,
-		ChaoticGood,
-		LawfulNeutral,
-		TrueNeutral,
-		ChoaticNeutral,
-		LawfulEvil,
-		NeutralEvil,
-		ChaoticEvil
-	}
 
 	/// <summary>
 	/// Class of the Hero
@@ -897,59 +780,6 @@ namespace DungeonEye
 		HalflingFemale
 	}
 
-
-	/// <summary>
-	/// Hand of Hero
-	/// </summary>
-	public enum HeroHand
-	{
-		/// <summary>
-		/// Right hand
-		/// </summary>
-		Primary = 0,
-
-		/// <summary>
-		/// Left hand
-		/// </summary>
-		Secondary = 1
-
-	}
-
-
-
-	/// <summary>
-	/// Position in the inventory of a Hero
-	/// </summary>
-	public enum InventoryPosition
-	{
-		Inventory_01 = 0,
-		Inventory_02 = 1,
-		Inventory_03 = 2,
-		Inventory_04 = 3,
-		Inventory_05 = 4,
-		Inventory_06 = 5,
-		Inventory_07 = 6,
-		Inventory_08 = 7,
-		Inventory_09 = 8,
-		Inventory_10 = 9,
-		Inventory_11 = 10,
-		Inventory_12 = 11,
-		Inventory_13 = 12,
-		Inventory_14 = 13,
-		Armor = 14,
-		Wrist = 15,
-		Secondary = 16,
-		Ring_Left = 17,
-		Ring_Right = 18,
-		Feet = 19,
-		Primary = 20,
-		Belt_1 = 21,
-		Belt_2 = 22,
-		Belt_3 = 23,
-		Neck = 24,
-		Helmet = 25,
-	//	Quiver,
-	}
 
 
 
