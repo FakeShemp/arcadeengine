@@ -53,6 +53,7 @@ namespace DungeonEye.Forms
 		public void SetMonster(Monster monster)
 		{
 			Monster = monster;
+			EntityBox.Entity = monster;
 			UpdateControls();
 		}
 
@@ -81,8 +82,7 @@ namespace DungeonEye.Forms
 			if (Monster == null)
 			{
 				PocketItemsBox.Items.Clear();
-				HPActualBox.Value = 0;
-				HPMaxBox.Value = 0;
+			//	HPBox.HitPoint = null;
 				ScriptNameBox.Items.Clear();
 				InterfaceNameBox.Items.Clear();
 				TileSetBox.Items.Clear();
@@ -111,8 +111,7 @@ namespace DungeonEye.Forms
 					PocketItemsBox.Items.Add(name);
 				PocketItemsBox.EndUpdate();
 
-				HPActualBox.Value = Monster.Life.Actual;
-				HPMaxBox.Value = Monster.Life.Max;
+			//	HPBox.HitPoint = Monster.HitPoint;
 
 				ScriptNameBox.SelectedItem = Monster.ScriptName;
 				InterfaceNameBox.SelectedItem = Monster.InterfaceName;
@@ -320,35 +319,6 @@ namespace DungeonEye.Forms
 
 
 		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void HPActualBox_ValueChanged(object sender, EventArgs e)
-		{
-			if (Monster == null)
-				return;
-			Monster.Life.Actual = (short)HPActualBox.Value;
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void HPMaxBox_ValueChanged(object sender, EventArgs e)
-		{
-			if (Monster == null)
-				return;
-
-			Monster.Life.Max = (short)HPMaxBox.Value;
-		}
-
-
 
 
 

@@ -234,14 +234,19 @@
 			// 
 			// ACBonusBox
 			// 
-			this.ACBonusBox.Location = new System.Drawing.Point(70, 148);
+			this.ACBonusBox.Location = new System.Drawing.Point(70, 151);
 			this.ACBonusBox.Maximum = new decimal(new int[] {
-            1000000,
+            127,
             0,
             0,
             0});
+			this.ACBonusBox.Minimum = new decimal(new int[] {
+            127,
+            0,
+            0,
+            -2147483648});
 			this.ACBonusBox.Name = "ACBonusBox";
-			this.ACBonusBox.Size = new System.Drawing.Size(39, 20);
+			this.ACBonusBox.Size = new System.Drawing.Size(77, 20);
 			this.ACBonusBox.TabIndex = 2;
 			this.ACBonusBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.ACBonusBox.ValueChanged += new System.EventHandler(this.ACBonusBox_ValueChanged);
@@ -260,7 +265,7 @@
 			// label14
 			// 
 			this.label14.AutoSize = true;
-			this.label14.Location = new System.Drawing.Point(4, 152);
+			this.label14.Location = new System.Drawing.Point(4, 155);
 			this.label14.Name = "label14";
 			this.label14.Size = new System.Drawing.Size(60, 13);
 			this.label14.TabIndex = 1;
@@ -395,9 +400,9 @@
 			this.WaistBox.AutoSize = true;
 			this.WaistBox.Location = new System.Drawing.Point(92, 111);
 			this.WaistBox.Name = "WaistBox";
-			this.WaistBox.Size = new System.Drawing.Size(44, 17);
+			this.WaistBox.Size = new System.Drawing.Size(53, 17);
 			this.WaistBox.TabIndex = 0;
-			this.WaistBox.Text = "Belt";
+			this.WaistBox.Text = "Waist";
 			this.WaistBox.UseVisualStyleBackColor = true;
 			this.WaistBox.CheckedChanged += new System.EventHandler(this.WaistBox_CheckedChanged);
 			// 
@@ -897,8 +902,8 @@
 			this.Name = "ItemForm";
 			this.TabText = "ItemForm";
 			this.Text = "ItemForm";
-			this.Load += new System.EventHandler(this.ItemSetForm_Load);
-			this.Shown += new System.EventHandler(this.ItemSetForm_Shown);
+			this.Load += new System.EventHandler(this.ItemForm_Load);
+			this.Shown += new System.EventHandler(this.ItemForm_Shown);
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ItemForm_FormClosing);
 			this.groupBox4.ResumeLayout(false);
 			this.groupBox4.PerformLayout();

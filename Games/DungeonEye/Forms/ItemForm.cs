@@ -115,16 +115,17 @@ namespace DungeonEye.Forms
 			WaistBox.Checked = (Item.Slot & BodySlot.Waist) == BodySlot.Waist;
 			NeckBox.Checked = (Item.Slot & BodySlot.Neck) == BodySlot.Neck;
 
-			FighterBox.Checked = (Item.Classes & HeroClass.Fighter) == HeroClass.Fighter;
-			PaladinBox.Checked = (Item.Classes & HeroClass.Paladin) == HeroClass.Paladin;
-			ClericBox.Checked = (Item.Classes & HeroClass.Cleric) == HeroClass.Cleric;
-			MageBox.Checked = (Item.Classes & HeroClass.Mage) == HeroClass.Mage;
-			ThiefBox.Checked = (Item.Classes & HeroClass.Thief) == HeroClass.Thief;
-			RangerBox.Checked = (Item.Classes & HeroClass.Ranger) == HeroClass.Ranger;
+			FighterBox.Checked = (Item.AllowedClasses & HeroClass.Fighter) == HeroClass.Fighter;
+			PaladinBox.Checked = (Item.AllowedClasses & HeroClass.Paladin) == HeroClass.Paladin;
+			ClericBox.Checked = (Item.AllowedClasses & HeroClass.Cleric) == HeroClass.Cleric;
+			MageBox.Checked = (Item.AllowedClasses & HeroClass.Mage) == HeroClass.Mage;
+			ThiefBox.Checked = (Item.AllowedClasses & HeroClass.Thief) == HeroClass.Thief;
+			RangerBox.Checked = (Item.AllowedClasses & HeroClass.Ranger) == HeroClass.Ranger;
 
 			ScriptNameBox.SelectedItem = Item.ScriptName;
 			InterfaceNameBox.SelectedItem = Item.InterfaceName;
 
+			ACBonusBox.Value = Item.ArmorClass;
 			DamageBox.Dice = Item.Damage;
 			#endregion
 
@@ -361,7 +362,7 @@ namespace DungeonEye.Forms
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void ItemSetForm_Shown(object sender, EventArgs e)
+		private void ItemForm_Shown(object sender, EventArgs e)
 		{
 			GLGroundTile_Resize(null, null);
 			GLInventoryTile_Resize(null, null);
@@ -378,7 +379,7 @@ namespace DungeonEye.Forms
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void ItemSetForm_Load(object sender, EventArgs e)
+		private void ItemForm_Load(object sender, EventArgs e)
 		{
 
 			GLInventoryTile.MakeCurrent();
@@ -578,9 +579,9 @@ namespace DungeonEye.Forms
 				return;
 
 			if (FighterBox.Checked)
-				Item.Classes |= HeroClass.Fighter;
+				Item.AllowedClasses |= HeroClass.Fighter;
 			else
-				Item.Classes ^= HeroClass.Fighter;
+				Item.AllowedClasses ^= HeroClass.Fighter;
 		}
 
 		private void PaladinBox_CheckedChanged(object sender, EventArgs e)
@@ -589,9 +590,9 @@ namespace DungeonEye.Forms
 				return;
 
 			if (PaladinBox.Checked)
-				Item.Classes |= HeroClass.Paladin;
+				Item.AllowedClasses |= HeroClass.Paladin;
 			else
-				Item.Classes ^= HeroClass.Paladin;
+				Item.AllowedClasses ^= HeroClass.Paladin;
 
 		}
 
@@ -601,9 +602,9 @@ namespace DungeonEye.Forms
 				return;
 
 			if (ClericBox.Checked)
-				Item.Classes |= HeroClass.Cleric;
+				Item.AllowedClasses |= HeroClass.Cleric;
 			else
-				Item.Classes ^= HeroClass.Cleric;
+				Item.AllowedClasses ^= HeroClass.Cleric;
 		}
 
 		private void RangerBox_CheckedChanged(object sender, EventArgs e)
@@ -613,9 +614,9 @@ namespace DungeonEye.Forms
 
 
 			if (RangerBox.Checked)
-				Item.Classes |= HeroClass.Ranger;
+				Item.AllowedClasses |= HeroClass.Ranger;
 			else
-				Item.Classes ^= HeroClass.Ranger;
+				Item.AllowedClasses ^= HeroClass.Ranger;
 		}
 
 		private void MageBox_CheckedChanged(object sender, EventArgs e)
@@ -625,9 +626,9 @@ namespace DungeonEye.Forms
 
 
 			if (MageBox.Checked)
-				Item.Classes |= HeroClass.Mage;
+				Item.AllowedClasses |= HeroClass.Mage;
 			else
-				Item.Classes ^= HeroClass.Mage;
+				Item.AllowedClasses ^= HeroClass.Mage;
 		}
 
 		private void ThiefBox_CheckedChanged(object sender, EventArgs e)
@@ -636,9 +637,9 @@ namespace DungeonEye.Forms
 				return;
 
 			if (ThiefBox.Checked)
-				Item.Classes |= HeroClass.Thief;
+				Item.AllowedClasses |= HeroClass.Thief;
 			else
-				Item.Classes ^= HeroClass.Thief;
+				Item.AllowedClasses ^= HeroClass.Thief;
 
 		}
 
@@ -775,6 +776,7 @@ namespace DungeonEye.Forms
 			if (Item == null)
 				return;
 
+			Item.ArmorClass = (byte)ACBonusBox.Value;
 		}
 
 

@@ -51,7 +51,7 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Reroll entity abilities
 		/// </summary>
 		public void ReRollAbilities()
 		{
@@ -173,16 +173,6 @@ namespace DungeonEye
 		}
 
 
-		/// <summary>
-		/// Gets the next item in the waist bag
-		/// </summary>
-		/// <returns>Item handle or null if empty</returns>
-		public Item PopWaistItem()
-		{
-			return null;
-
-		}
-
 		#endregion
 
 
@@ -213,6 +203,10 @@ namespace DungeonEye
 			writer.WriteAttributeString("value", Alignment.ToString());
 			writer.WriteEndElement();
 
+			writer.WriteStartElement("quiver");
+			writer.WriteAttributeString("count", Quiver.ToString());
+			writer.WriteEndElement();
+
 			// Inventory
 			foreach (InventoryPosition pos in Enum.GetValues(typeof(InventoryPosition)))
 			{
@@ -225,11 +219,6 @@ namespace DungeonEye
 				writer.WriteAttributeString("value", item.Name);
 				writer.WriteEndElement();
 			}
-
-			writer.WriteStartElement("quiver");
-			writer.WriteAttributeString("count", Quiver.ToString());
-			writer.WriteEndElement();
-
 
 			return true;
 		}
@@ -350,9 +339,87 @@ namespace DungeonEye
 		{
 			get
 			{
-				return 10;
+				return 10 + ArmorBonus + ShieldBonus + DodgeBonus + NaturalArmorBonus;
 			}
 		}
+
+
+		/// <summary>
+		/// Armor bonus
+		/// Provided by armor slot, head slot and bracers slot 
+		/// </summary>
+		public int ArmorBonus
+		{
+			get
+			{
+				byte value = 0;
+
+				Item item = GetInventoryItem(InventoryPosition.Helmet);
+				if (item != null)
+					value += item.ArmorClass;
+
+				item = GetInventoryItem(InventoryPosition.Armor);
+				if (item != null)
+					value += item.ArmorClass;
+
+				item = GetInventoryItem(InventoryPosition.Wrist);
+				if (item != null)
+					value += item.ArmorClass;
+
+				return value;
+			}
+		}
+
+		/// <summary>
+		/// Shield bonus
+		/// Provided by shield slot
+		/// </summary>
+		public int ShieldBonus
+		{
+			get
+			{
+				Item item = GetInventoryItem(InventoryPosition.Secondary);
+				if (item == null)
+					return 0;
+
+				return item.ArmorClass;
+			}
+		}
+
+		/// <summary>
+		/// Dodge bonus
+		/// Provided by boots slot
+		/// </summary>
+		public int DodgeBonus
+		{
+			get
+			{
+				Item item = GetInventoryItem(InventoryPosition.Feet);
+				if (item == null)
+					return 0;
+
+				return item.ArmorClass;
+			}
+		}
+
+
+		/// <summary>
+		/// Dodge bonus
+		/// provided by amulet slot
+		/// </summary>
+		public int NaturalArmorBonus
+		{
+			get
+			{
+				Item item = GetInventoryItem(InventoryPosition.Neck);
+				if (item == null)
+					return 0;
+
+				return item.ArmorClass;
+			}
+		}
+
+
 
 		/// <summary>
 		/// Hit Point

@@ -116,6 +116,24 @@
     <Compile Include="Forms\DungeonForm.Designer.cs">
       <DependentUpon>DungeonForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\EntityControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\EntityControl.Designer.cs">
+      <DependentUpon>EntityControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\HeroControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\HeroControl.Designer.cs">
+      <DependentUpon>HeroControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\HitPointControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\HitPointControl.Designer.cs">
+      <DependentUpon>HitPointControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ItemForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -191,7 +209,6 @@
     <Compile Include="Source\FlyingItem.cs" />
     <Compile Include="Source\SpellBook.cs" />
     <Compile Include="Source\Gui\Window.cs" />
-    <Compile Include="Source\Life.cs" />
     <Compile Include="OptionMenu.cs" />
     <Compile Include="Source\Dice.cs" />
     <Compile Include="Source\Door.cs" />
@@ -260,6 +277,12 @@
     <EmbeddedResource Include="Forms\data\editor.png" />
     <EmbeddedResource Include="Forms\DiceForm.resx">
       <DependentUpon>DiceForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EntityControl.resx">
+      <DependentUpon>EntityControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\HitPointControl.resx">
+      <DependentUpon>HitPointControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ItemForm.resx">
       <DependentUpon>ItemForm.cs</DependentUpon>

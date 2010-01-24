@@ -55,7 +55,7 @@ namespace DungeonEye
 		/// </summary>
 		public Item()
 		{
-			Classes = HeroClass.Cleric | HeroClass.Fighter | HeroClass.Mage | HeroClass.Paladin | HeroClass.Ranger | HeroClass.Thief;
+			AllowedClasses = HeroClass.Cleric | HeroClass.Fighter | HeroClass.Mage | HeroClass.Paladin | HeroClass.Ranger | HeroClass.Thief;
 			Damage = new Dice();
 		}
 
@@ -152,6 +152,12 @@ namespace DungeonEye
 					}
 					break;
 
+					case "ac":
+					{
+						ArmorClass = Byte.Parse(node.Attributes["value"].Value);
+					}
+					break;
+
 					case "tile":
 					{
 						TileSetName = node.Attributes["name"].Value;
@@ -164,7 +170,7 @@ namespace DungeonEye
 
 					case "classes":
 					{
-						Classes = (HeroClass)Enum.Parse(typeof(HeroClass), node.Attributes["value"].Value);
+						AllowedClasses = (HeroClass)Enum.Parse(typeof(HeroClass), node.Attributes["value"].Value);
 					}
 					break;
 
@@ -217,12 +223,16 @@ namespace DungeonEye
 			writer.WriteAttributeString("value", Type.ToString());
 			writer.WriteEndElement();
 
+			writer.WriteStartElement("ac");
+			writer.WriteAttributeString("value", ArmorClass.ToString());
+			writer.WriteEndElement();
+
 			writer.WriteStartElement("slot");
 			writer.WriteAttributeString("value", Slot.ToString());
 			writer.WriteEndElement();
 
 			writer.WriteStartElement("classes");
-			writer.WriteAttributeString("value", Classes.ToString());
+			writer.WriteAttributeString("value", AllowedClasses.ToString());
 			writer.WriteEndElement();
 
 			writer.WriteStartElement("usequiver");
@@ -302,7 +312,7 @@ namespace DungeonEye
 
 	
 		/// <summary>
-		/// 
+		/// Interface handle
 		/// </summary>
 		public IItem Interface
 		{
@@ -343,7 +353,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Allowed classes
 		/// </summary>
-		public HeroClass Classes
+		public HeroClass AllowedClasses
 		{
 			get;
 			set;
@@ -419,6 +429,7 @@ namespace DungeonEye
 			get;
 			set;
 		}
+
 
 		/// <summary>
 		/// Tile ID of the item in inventory
@@ -502,6 +513,16 @@ namespace DungeonEye
 		/// Two handed item
 		/// </summary>
 		public bool TwoHanded
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// Armor Class bonus
+		/// </summary>
+		public byte ArmorClass
 		{
 			get;
 			set;

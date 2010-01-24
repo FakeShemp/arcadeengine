@@ -76,7 +76,7 @@ namespace DungeonEye
 
 
 			Quiver = 10;
-			SetInventoryItem(InventoryPosition.Primary, ResourceManager.CreateAsset<Item>("Short Bow"));
+			SetInventoryItem(InventoryPosition.Primary, ResourceManager.CreateAsset<Item>("Short Sword"));
 			SetInventoryItem(InventoryPosition.Armor, ResourceManager.CreateAsset<Item>("Leather Armor"));
 			SetInventoryItem(InventoryPosition.Helmet, ResourceManager.CreateAsset<Item>("Helmet"));
 			SetInventoryItem(InventoryPosition.Feet, ResourceManager.CreateAsset<Item>("Boots"));
@@ -287,6 +287,16 @@ namespace DungeonEye
 			return WaistPack[position];
 		}
 
+
+		/// <summary>
+		/// Gets the next item in the waist bag
+		/// </summary>
+		/// <returns>Item handle or null if empty</returns>
+		public Item PopWaistItem()
+		{
+			return null;
+
+		}
 
 
 		#endregion

@@ -28,7 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			DungeonEye.Dice dice2 = new DungeonEye.Dice();
+			DungeonEye.Dice dice1 = new DungeonEye.Dice();
 			this.VisualGroupBox = new System.Windows.Forms.GroupBox();
 			this.label11 = new System.Windows.Forms.Label();
 			this.label12 = new System.Windows.Forms.Label();
@@ -40,11 +40,6 @@
 			this.AddPocketItemBox = new System.Windows.Forms.Button();
 			this.ItemsBox = new System.Windows.Forms.ComboBox();
 			this.RemovePocketItemBox = new System.Windows.Forms.Button();
-			this.groupBox6 = new System.Windows.Forms.GroupBox();
-			this.label9 = new System.Windows.Forms.Label();
-			this.label10 = new System.Windows.Forms.Label();
-			this.HPMaxBox = new System.Windows.Forms.NumericUpDown();
-			this.HPActualBox = new System.Windows.Forms.NumericUpDown();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.label2 = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
@@ -52,14 +47,20 @@
 			this.ScriptNameBox = new System.Windows.Forms.ComboBox();
 			this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
 			this.label3 = new System.Windows.Forms.Label();
+			this.tabControl1 = new System.Windows.Forms.TabControl();
+			this.VisualTab = new System.Windows.Forms.TabPage();
+			this.EntityTab = new System.Windows.Forms.TabPage();
+			this.EntityBox = new DungeonEye.Forms.EntityControl();
+			this.PropertiesTab = new System.Windows.Forms.TabPage();
 			this.DamageBox = new DungeonEye.Forms.DiceForm();
 			this.VisualGroupBox.SuspendLayout();
 			this.PocketGroupBox.SuspendLayout();
-			this.groupBox6.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.HPMaxBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.HPActualBox)).BeginInit();
 			this.groupBox1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+			this.tabControl1.SuspendLayout();
+			this.VisualTab.SuspendLayout();
+			this.EntityTab.SuspendLayout();
+			this.PropertiesTab.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// VisualGroupBox
@@ -69,7 +70,7 @@
 			this.VisualGroupBox.Controls.Add(this.GlControl);
 			this.VisualGroupBox.Controls.Add(this.TileIDBox);
 			this.VisualGroupBox.Controls.Add(this.TileSetBox);
-			this.VisualGroupBox.Location = new System.Drawing.Point(0, 0);
+			this.VisualGroupBox.Location = new System.Drawing.Point(6, 6);
 			this.VisualGroupBox.Name = "VisualGroupBox";
 			this.VisualGroupBox.Size = new System.Drawing.Size(232, 260);
 			this.VisualGroupBox.TabIndex = 6;
@@ -133,7 +134,7 @@
 			this.PocketGroupBox.Controls.Add(this.AddPocketItemBox);
 			this.PocketGroupBox.Controls.Add(this.ItemsBox);
 			this.PocketGroupBox.Controls.Add(this.RemovePocketItemBox);
-			this.PocketGroupBox.Location = new System.Drawing.Point(238, 3);
+			this.PocketGroupBox.Location = new System.Drawing.Point(240, 3);
 			this.PocketGroupBox.Name = "PocketGroupBox";
 			this.PocketGroupBox.Size = new System.Drawing.Size(189, 172);
 			this.PocketGroupBox.TabIndex = 7;
@@ -187,74 +188,13 @@
 			this.RemovePocketItemBox.UseVisualStyleBackColor = true;
 			this.RemovePocketItemBox.Click += new System.EventHandler(this.RemovePocketItemBox_Click);
 			// 
-			// groupBox6
-			// 
-			this.groupBox6.Controls.Add(this.label9);
-			this.groupBox6.Controls.Add(this.label10);
-			this.groupBox6.Controls.Add(this.HPMaxBox);
-			this.groupBox6.Controls.Add(this.HPActualBox);
-			this.groupBox6.Location = new System.Drawing.Point(238, 267);
-			this.groupBox6.Name = "groupBox6";
-			this.groupBox6.Size = new System.Drawing.Size(189, 101);
-			this.groupBox6.TabIndex = 8;
-			this.groupBox6.TabStop = false;
-			this.groupBox6.Text = "HP :";
-			// 
-			// label9
-			// 
-			this.label9.AutoSize = true;
-			this.label9.Location = new System.Drawing.Point(7, 47);
-			this.label9.Name = "label9";
-			this.label9.Size = new System.Drawing.Size(57, 13);
-			this.label9.TabIndex = 1;
-			this.label9.Text = "Maximum :";
-			// 
-			// label10
-			// 
-			this.label10.AutoSize = true;
-			this.label10.Location = new System.Drawing.Point(7, 25);
-			this.label10.Name = "label10";
-			this.label10.Size = new System.Drawing.Size(43, 13);
-			this.label10.TabIndex = 1;
-			this.label10.Text = "Actual :";
-			// 
-			// HPMaxBox
-			// 
-			this.HPMaxBox.Location = new System.Drawing.Point(86, 45);
-			this.HPMaxBox.Maximum = new decimal(new int[] {
-            999999,
-            0,
-            0,
-            0});
-			this.HPMaxBox.Name = "HPMaxBox";
-			this.HPMaxBox.Size = new System.Drawing.Size(54, 20);
-			this.HPMaxBox.TabIndex = 0;
-			this.HPMaxBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.HPMaxBox.ThousandsSeparator = true;
-			this.HPMaxBox.ValueChanged += new System.EventHandler(this.HPMaxBox_ValueChanged);
-			// 
-			// HPActualBox
-			// 
-			this.HPActualBox.Location = new System.Drawing.Point(86, 19);
-			this.HPActualBox.Maximum = new decimal(new int[] {
-            999999,
-            0,
-            0,
-            0});
-			this.HPActualBox.Name = "HPActualBox";
-			this.HPActualBox.Size = new System.Drawing.Size(54, 20);
-			this.HPActualBox.TabIndex = 0;
-			this.HPActualBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.HPActualBox.ThousandsSeparator = true;
-			this.HPActualBox.ValueChanged += new System.EventHandler(this.HPActualBox_ValueChanged);
-			// 
 			// groupBox1
 			// 
 			this.groupBox1.Controls.Add(this.label2);
 			this.groupBox1.Controls.Add(this.label1);
 			this.groupBox1.Controls.Add(this.InterfaceNameBox);
 			this.groupBox1.Controls.Add(this.ScriptNameBox);
-			this.groupBox1.Location = new System.Drawing.Point(238, 181);
+			this.groupBox1.Location = new System.Drawing.Point(240, 181);
 			this.groupBox1.Name = "groupBox1";
 			this.groupBox1.Size = new System.Drawing.Size(189, 80);
 			this.groupBox1.TabIndex = 9;
@@ -301,7 +241,7 @@
 			// 
 			// numericUpDown1
 			// 
-			this.numericUpDown1.Location = new System.Drawing.Point(106, 385);
+			this.numericUpDown1.Location = new System.Drawing.Point(115, 109);
 			this.numericUpDown1.Maximum = new decimal(new int[] {
             1410065408,
             2,
@@ -316,20 +256,77 @@
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(6, 387);
+			this.label3.Location = new System.Drawing.Point(12, 111);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(97, 13);
 			this.label3.TabIndex = 12;
 			this.label3.Text = "Experience points :";
 			// 
+			// tabControl1
+			// 
+			this.tabControl1.Controls.Add(this.VisualTab);
+			this.tabControl1.Controls.Add(this.EntityTab);
+			this.tabControl1.Controls.Add(this.PropertiesTab);
+			this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tabControl1.Location = new System.Drawing.Point(0, 0);
+			this.tabControl1.Name = "tabControl1";
+			this.tabControl1.SelectedIndex = 0;
+			this.tabControl1.Size = new System.Drawing.Size(539, 455);
+			this.tabControl1.TabIndex = 13;
+			// 
+			// VisualTab
+			// 
+			this.VisualTab.Controls.Add(this.VisualGroupBox);
+			this.VisualTab.Location = new System.Drawing.Point(4, 22);
+			this.VisualTab.Name = "VisualTab";
+			this.VisualTab.Padding = new System.Windows.Forms.Padding(3);
+			this.VisualTab.Size = new System.Drawing.Size(531, 429);
+			this.VisualTab.TabIndex = 0;
+			this.VisualTab.Text = "Visual";
+			this.VisualTab.UseVisualStyleBackColor = true;
+			// 
+			// EntityTab
+			// 
+			this.EntityTab.Controls.Add(this.EntityBox);
+			this.EntityTab.Location = new System.Drawing.Point(4, 22);
+			this.EntityTab.Name = "EntityTab";
+			this.EntityTab.Padding = new System.Windows.Forms.Padding(3);
+			this.EntityTab.Size = new System.Drawing.Size(531, 429);
+			this.EntityTab.TabIndex = 1;
+			this.EntityTab.Text = "Entity";
+			this.EntityTab.UseVisualStyleBackColor = true;
+			// 
+			// EntityBox
+			// 
+			this.EntityBox.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.EntityBox.Entity = null;
+			this.EntityBox.Location = new System.Drawing.Point(3, 3);
+			this.EntityBox.Name = "EntityBox";
+			this.EntityBox.Size = new System.Drawing.Size(525, 423);
+			this.EntityBox.TabIndex = 0;
+			// 
+			// PropertiesTab
+			// 
+			this.PropertiesTab.Controls.Add(this.label3);
+			this.PropertiesTab.Controls.Add(this.PocketGroupBox);
+			this.PropertiesTab.Controls.Add(this.numericUpDown1);
+			this.PropertiesTab.Controls.Add(this.groupBox1);
+			this.PropertiesTab.Controls.Add(this.DamageBox);
+			this.PropertiesTab.Location = new System.Drawing.Point(4, 22);
+			this.PropertiesTab.Name = "PropertiesTab";
+			this.PropertiesTab.Size = new System.Drawing.Size(531, 429);
+			this.PropertiesTab.TabIndex = 2;
+			this.PropertiesTab.Text = "Properties";
+			this.PropertiesTab.UseVisualStyleBackColor = true;
+			// 
 			// DamageBox
 			// 
 			this.DamageBox.ControlText = "Damage :";
-			dice2.Faces = 1;
-			dice2.Modifier = 0;
-			dice2.Throws = 1;
-			this.DamageBox.Dice = dice2;
-			this.DamageBox.Location = new System.Drawing.Point(0, 268);
+			dice1.Faces = 1;
+			dice1.Modifier = 0;
+			dice1.Throws = 1;
+			this.DamageBox.Dice = dice1;
+			this.DamageBox.Location = new System.Drawing.Point(4, 3);
 			this.DamageBox.MinimumSize = new System.Drawing.Size(225, 100);
 			this.DamageBox.Name = "DamageBox";
 			this.DamageBox.Size = new System.Drawing.Size(230, 100);
@@ -340,13 +337,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.Controls.Add(this.label3);
-			this.Controls.Add(this.numericUpDown1);
-			this.Controls.Add(this.DamageBox);
-			this.Controls.Add(this.groupBox1);
-			this.Controls.Add(this.groupBox6);
-			this.Controls.Add(this.PocketGroupBox);
-			this.Controls.Add(this.VisualGroupBox);
+			this.Controls.Add(this.tabControl1);
 			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Name = "MonsterControl";
 			this.Size = new System.Drawing.Size(539, 455);
@@ -355,15 +346,15 @@
 			this.VisualGroupBox.PerformLayout();
 			this.PocketGroupBox.ResumeLayout(false);
 			this.PocketGroupBox.PerformLayout();
-			this.groupBox6.ResumeLayout(false);
-			this.groupBox6.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.HPMaxBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.HPActualBox)).EndInit();
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+			this.tabControl1.ResumeLayout(false);
+			this.VisualTab.ResumeLayout(false);
+			this.EntityTab.ResumeLayout(false);
+			this.PropertiesTab.ResumeLayout(false);
+			this.PropertiesTab.PerformLayout();
 			this.ResumeLayout(false);
-			this.PerformLayout();
 
 		}
 
@@ -380,11 +371,6 @@
 		private System.Windows.Forms.Button AddPocketItemBox;
 		private System.Windows.Forms.ComboBox ItemsBox;
 		private System.Windows.Forms.Button RemovePocketItemBox;
-		private System.Windows.Forms.GroupBox groupBox6;
-		private System.Windows.Forms.Label label9;
-		private System.Windows.Forms.Label label10;
-		private System.Windows.Forms.NumericUpDown HPMaxBox;
-		private System.Windows.Forms.NumericUpDown HPActualBox;
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Label label1;
@@ -393,5 +379,10 @@
 		private DiceForm DamageBox;
 		private System.Windows.Forms.NumericUpDown numericUpDown1;
 		private System.Windows.Forms.Label label3;
+		private System.Windows.Forms.TabControl tabControl1;
+		private System.Windows.Forms.TabPage VisualTab;
+		private System.Windows.Forms.TabPage EntityTab;
+		private System.Windows.Forms.TabPage PropertiesTab;
+		private EntityControl EntityBox;
 	}
 }

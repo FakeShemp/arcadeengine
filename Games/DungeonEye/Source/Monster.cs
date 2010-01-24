@@ -45,20 +45,19 @@ namespace DungeonEye
 	/// <summary>
 	/// Base interface of all monster in the game
 	/// </summary>
-	public class Monster : IAsset
+	public class Monster : Entity, IAsset
 	{
 
 		/// <summary>
 		/// Default constructor
 		/// </summary>
-		/// <param name="maze"></param>
+		/// <param name="maze">Maze handle where the monster is</param>
 		public Monster(Maze maze)
 		{
 			if (maze!= null)
 				Location = new DungeonLocation(maze.Dungeon);
 			
 			ItemsInPocket = new List<string>();
-			Life = new Life();
 			LastHit = new DateTime();
 			Damage = new Dice();
 
@@ -312,7 +311,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="xml">XmlNode handle</param>
 		/// <returns></returns>
-		public bool Load(XmlNode xml)
+		public override bool Load(XmlNode xml)
 		{
 			if (xml == null || xml.Name.ToLower() != "monster")
 				return false;
@@ -325,13 +324,8 @@ namespace DungeonEye
 				{
 					case "location":
 					{
-						Location.Load(node);
-					}
-					break;
-
-					case "life":
-					{
-						Life.Load(node);
+						if (Location != null)
+							Location.Load(node);
 					}
 					break;
 
@@ -360,6 +354,12 @@ namespace DungeonEye
 						Damage.Load(node);
 					}
 					break;
+
+					default:
+					{
+						base.Load(node);
+					}
+					break;
 				}
 
 			}
@@ -373,7 +373,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="writer">XmlWriter handle</param>
 		/// <returns></returns>
-		public bool Save(XmlWriter writer)
+		public override bool Save(XmlWriter writer)
 		{
 			if (writer == null)
 				return false;
@@ -382,18 +382,17 @@ namespace DungeonEye
 			writer.WriteStartElement("monster");
 			writer.WriteAttributeString("name", Name);
 
+			base.Save(writer);
 
 			writer.WriteStartElement("script");
 			writer.WriteAttributeString("name", ScriptName);
 			writer.WriteAttributeString("interface", InterfaceName);
 			writer.WriteEndElement();
 
-
-			Location.Save("location", writer);
+			if (Location != null)
+				Location.Save("location", writer);
 
 			Damage.Save("damage", writer);
-
-			Life.Save(writer);
 
 			writer.WriteStartElement("tiles");
 			writer.WriteAttributeString("name", TileSetName);
@@ -429,7 +428,7 @@ namespace DungeonEye
 				return 0;
 
 
-			Life.Actual -= amount;
+			HitPoint.Current -= amount;
 			LastHit = DateTime.Now;
 
 			return amount;
@@ -456,20 +455,6 @@ namespace DungeonEye
 				return "monster";
 			}
 		}
-
-
-		/// <summary>
-		/// Is the monster dead
-		/// </summary>
-		public bool IsDead
-		{
-			get
-			{
-				return Life.Actual <= 0;
-			}
-		}
-
-
 
 		/// <summary>
 		/// Last time the monster was hit
@@ -582,17 +567,6 @@ namespace DungeonEye
 		/// Smaller the duration is, more the feeling of a over excited monster is
 		/// </summary>
 		TimeSpan DrawOffsetDuration;
-
-
-
-		/// <summary>
-		/// Life level
-		/// </summary>
-		public Life Life
-		{
-			get;
-			set;
-		}
 
 
 		/// <summary>
