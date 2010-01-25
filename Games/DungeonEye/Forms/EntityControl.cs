@@ -38,17 +38,6 @@ namespace DungeonEye.Forms
 			InitializeComponent();
 
 			AlignmentBox.DataSource = Enum.GetValues(typeof(EntityAlignment));
-			List<string> list = ResourceManager.GetAssets<Item>();
-			list.Insert(0, "");
-			HelmetBox.DataSource = new List<string>(list);
-			PrimaryBox.DataSource = new List<string>(list);
-			SecondaryBox.DataSource = new List<string>(list);
-			ArmorBox.DataSource = new List<string>(list);
-			WristBox.DataSource = new List<string>(list);
-			LeftRingBox.DataSource = new List<string>(list);
-			RightRingBox.DataSource = new List<string>(list);
-			FeetBox.DataSource = new List<string>(list);
-			NeckBox.DataSource = new List<string>(list);
 		}
 
 
@@ -66,16 +55,7 @@ namespace DungeonEye.Forms
 				IntelligenceBox.Value = 0;
 				WisdomBox.Value = 0;
 				CharismaBox.Value = 0;
-				QuiverBox.Value = 0;
-				HelmetBox.SelectedItem = string.Empty;
-				PrimaryBox.SelectedItem = string.Empty;
-				SecondaryBox.SelectedItem = string.Empty;
-				ArmorBox.SelectedItem = string.Empty;
-				WristBox.SelectedItem = string.Empty;
-				LeftRingBox.SelectedItem = string.Empty;
-				RightRingBox.SelectedItem = string.Empty;
-				FeetBox.SelectedItem = string.Empty;
-				NeckBox.SelectedItem = string.Empty;
+				SpeedBox.Value = 0;
 			}
 			else
 			{
@@ -87,26 +67,7 @@ namespace DungeonEye.Forms
 				WisdomBox.Value = entity.Wisdom.Value;
 				CharismaBox.Value = entity.Charisma.Value;
 				AlignmentBox.SelectedItem = entity.Alignment;
-				QuiverBox.Value = entity.Quiver;
-
-				Item item = entity.GetInventoryItem(InventoryPosition.Helmet);
-				HelmetBox.SelectedItem = item != null ? item.Name : string.Empty;
-				item = entity.GetInventoryItem(InventoryPosition.Primary);
-				PrimaryBox.SelectedItem = item != null ? item.Name : string.Empty;
-				item = entity.GetInventoryItem(InventoryPosition.Secondary);
-				SecondaryBox.SelectedItem = item != null ? item.Name : string.Empty;
-				item = entity.GetInventoryItem(InventoryPosition.Armor);
-				ArmorBox.SelectedItem = item != null ? item.Name : string.Empty;
-				item = entity.GetInventoryItem(InventoryPosition.Wrist);
-				WristBox.SelectedItem = item != null ? item.Name : string.Empty;
-				item = entity.GetInventoryItem(InventoryPosition.Ring_Left);
-				LeftRingBox.SelectedItem = item != null ? item.Name : string.Empty;
-				item = entity.GetInventoryItem(InventoryPosition.Ring_Right);
-				RightRingBox.SelectedItem = item != null ? item.Name : string.Empty;
-				item = entity.GetInventoryItem(InventoryPosition.Feet);
-				FeetBox.SelectedItem = item != null ? item.Name : string.Empty;
-				item = entity.GetInventoryItem(InventoryPosition.Neck);
-				NeckBox.SelectedItem = item != null ? item.Name : string.Empty;
+				SpeedBox.Value = entity.Speed;
 			}
 		}
 
@@ -184,7 +145,6 @@ namespace DungeonEye.Forms
 			entity.Charisma.Value = (int)CharismaBox.Value;
 		}
 
-
 		private void AlignmentBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (entity == null)
@@ -192,95 +152,6 @@ namespace DungeonEye.Forms
 
 			entity.Alignment = (EntityAlignment)AlignmentBox.SelectedItem;
 		}
-
-
-
-		private void numericUpDown1_ValueChanged(object sender, EventArgs e)
-		{
-			if (entity == null)
-				return;
-
-			entity.Quiver = (int)QuiverBox.Value;
-		}
-
-		private void ArmorBox_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			if (entity == null)
-				return;
-
-			entity.SetInventoryItem(InventoryPosition.Armor, ResourceManager.CreateAsset<Item>((string)ArmorBox.SelectedItem));
-		}
-
-		private void WristBox_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			if (entity == null)
-				return;
-
-			entity.SetInventoryItem(InventoryPosition.Wrist, ResourceManager.CreateAsset<Item>((string)WristBox.SelectedItem));
-
-		}
-
-		private void LeftRingBox_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			if (entity == null)
-				return;
-
-			entity.SetInventoryItem(InventoryPosition.Ring_Left, ResourceManager.CreateAsset<Item>((string)LeftRingBox.SelectedItem));
-
-		}
-
-		private void RightRingBox_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			if (entity == null)
-				return;
-
-			entity.SetInventoryItem(InventoryPosition.Ring_Right, ResourceManager.CreateAsset<Item>((string)RightRingBox.SelectedItem));
-
-		}
-
-		private void PrimaryBox_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			if (entity == null)
-				return;
-
-			entity.SetInventoryItem(InventoryPosition.Primary, ResourceManager.CreateAsset<Item>((string)PrimaryBox.SelectedItem));
-		}
-
-		private void SecondaryBox_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			if (entity == null)
-				return;
-
-			entity.SetInventoryItem(InventoryPosition.Secondary, ResourceManager.CreateAsset<Item>((string)SecondaryBox.SelectedItem));
-
-		}
-
-		private void FeetBox_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			if (entity == null)
-				return;
-
-			entity.SetInventoryItem(InventoryPosition.Feet, ResourceManager.CreateAsset<Item>((string)FeetBox.SelectedItem));
-		}
-
-		private void NeckBox_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			if (entity == null)
-				return;
-
-			entity.SetInventoryItem(InventoryPosition.Neck, ResourceManager.CreateAsset<Item>((string)NeckBox.SelectedItem));
-
-		}
-
-		private void HelmetBox_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			if (entity == null)
-				return;
-
-			entity.SetInventoryItem(InventoryPosition.Helmet, ResourceManager.CreateAsset<Item>((string)HelmetBox.SelectedItem));
-
-		}
-
 
 		private void RollAbilitiesBox_Click(object sender, EventArgs e)
 		{
@@ -291,6 +162,13 @@ namespace DungeonEye.Forms
 			Rebuild();
 		}
 
+		private void SpeedBox_ValueChanged(object sender, EventArgs e)
+		{
+			if (entity == null)
+				return;
+
+			entity.Speed = (int)SpeedBox.Value;
+		}
 
 		#endregion
 

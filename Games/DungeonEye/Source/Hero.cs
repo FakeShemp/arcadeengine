@@ -49,6 +49,7 @@ namespace DungeonEye
 			Team = team;
 			Professions = new List<Profession>();
 
+			Inventory = new Item[26];
 			BackPack = new Item[14];
 			WaistPack = new Item[3];
 			Attacks = new AttackResult[2];
@@ -102,6 +103,99 @@ namespace DungeonEye
 			//      return attack.Date + attack.Hold < DateTime.Now;
 			//   });
 		}
+
+
+		#region Inventory
+
+
+
+		/// <summary>
+		/// Returns the item at a given inventory location
+		/// </summary>
+		/// <param name="position">Inventory position</param>
+		/// <returns>Item or null</returns>
+		public Item GetInventoryItem(InventoryPosition position)
+		{
+			return Inventory[(int)position];
+		}
+
+
+
+		/// <summary>
+		/// Sets the item at a given inventory position
+		/// </summary>
+		/// <param name="position">Position in the inventory</param>
+		/// <param name="item">Item to set</param>
+		/// <returns>True if the item can be set at the given inventory location</returns>
+		public bool SetInventoryItem(InventoryPosition position, Item item)
+		{
+			if (item == null)
+			{
+				Inventory[(int)position] = item;
+				return true;
+			}
+
+
+			bool res = false;
+			switch (position)
+			{
+				case InventoryPosition.Armor:
+				if ((item.Slot & BodySlot.Body) == BodySlot.Body)
+					res = true;
+				break;
+
+				case InventoryPosition.Wrist:
+				if ((item.Slot & BodySlot.Wrist) == BodySlot.Wrist)
+					res = true;
+				break;
+
+				case InventoryPosition.Secondary:
+				if ((item.Slot & BodySlot.Secondary) == BodySlot.Secondary)
+					res = true;
+				break;
+
+				case InventoryPosition.Ring_Left:
+				case InventoryPosition.Ring_Right:
+				if ((item.Slot & BodySlot.Ring) == BodySlot.Ring)
+					res = true;
+				break;
+
+				case InventoryPosition.Feet:
+				if ((item.Slot & BodySlot.Feet) == BodySlot.Feet)
+					res = true;
+				break;
+
+				case InventoryPosition.Primary:
+				if ((item.Slot & BodySlot.Primary) == BodySlot.Primary)
+					res = true;
+				break;
+
+				//case InventoryPosition.Belt_1:
+				//case InventoryPosition.Belt_2:
+				//case InventoryPosition.Belt_3:
+				//if ((item.Slot & BodySlot.Belt) == BodySlot.Belt)
+				//   res = true;
+				//break;
+
+				case InventoryPosition.Neck:
+				if ((item.Slot & BodySlot.Neck) == BodySlot.Neck)
+					res = true;
+				break;
+
+				case InventoryPosition.Helmet:
+				if ((item.Slot & BodySlot.Head) == BodySlot.Head)
+					res = true;
+				break;
+			}
+
+			if (res)
+				Inventory[(int)position] = item;
+
+			return res;
+		}
+
+
+		#endregion
 
 
 		#region Items
@@ -486,6 +580,20 @@ namespace DungeonEye
 
 				switch (node.Name.ToLower())
 				{
+					case "inventory":
+					{
+						SetInventoryItem(
+							(InventoryPosition)Enum.Parse(typeof(InventoryPosition), node.Attributes["position"].Value),
+							ResourceManager.CreateAsset<Item>(node.Attributes["name"].Value));
+					}
+					break;
+
+					case "quiver":
+					{
+						Quiver = int.Parse(node.Attributes["count"].Value);
+					}
+					break;
+					
 					case "name":
 					{
 						Name = node.Attributes["value"].Value;
@@ -549,6 +657,10 @@ namespace DungeonEye
 			writer.WriteAttributeString("value", Name);
 			writer.WriteEndElement();
 
+			writer.WriteStartElement("quiver");
+			writer.WriteAttributeString("count", Quiver.ToString());
+			writer.WriteEndElement();
+
 			writer.WriteStartElement("head");
 			writer.WriteAttributeString("id", Head.ToString());
 			writer.WriteEndElement();
@@ -564,6 +676,39 @@ namespace DungeonEye
 			foreach (Profession prof in Professions)
 				prof.Save(writer);
 
+			// Inventory
+			foreach (InventoryPosition pos in Enum.GetValues(typeof(InventoryPosition)))
+			{
+				Item item = GetInventoryItem(pos);
+				if (item == null)
+					continue;
+
+				writer.WriteStartElement("inventory");
+				writer.WriteAttributeString("position", pos.ToString());
+				writer.WriteAttributeString("name", item.Name);
+				writer.WriteEndElement();
+			}
+
+			for (int id = 0; id < 3; id++)
+				if (WaistPack[id] != null)
+				{
+					writer.WriteStartElement("waist");
+					writer.WriteAttributeString("position", id.ToString());
+					writer.WriteAttributeString("name", WaistPack[id].Name);
+					writer.WriteEndElement();
+				}
+
+
+			for (int id = 0; id < 14; id++)
+				if (BackPack[id] != null)
+				{
+					writer.WriteStartElement("waist");
+					writer.WriteAttributeString("position", id.ToString());
+					writer.WriteAttributeString("name", BackPack[id].Name);
+					writer.WriteEndElement();
+				}
+
+
 			writer.WriteEndElement();
 			return true;
 		}
@@ -572,6 +717,98 @@ namespace DungeonEye
 
 
 		#region Hero properties
+
+		/// <summary>
+		/// Armor class
+		/// </summary>
+		public override int ArmorClass
+		{
+			get
+			{
+				return 10 + ArmorBonus + ShieldBonus + DodgeBonus + NaturalArmorBonus;
+			}
+			set
+			{
+			}
+		}
+
+		
+		/// <summary>
+		/// Armor bonus
+		/// Provided by armor slot, head slot and bracers slot 
+		/// </summary>
+		public int ArmorBonus
+		{
+			get
+			{
+				byte value = 0;
+
+				Item item = GetInventoryItem(InventoryPosition.Helmet);
+				if (item != null)
+					value += item.ArmorClass;
+
+				item = GetInventoryItem(InventoryPosition.Armor);
+				if (item != null)
+					value += item.ArmorClass;
+
+				item = GetInventoryItem(InventoryPosition.Wrist);
+				if (item != null)
+					value += item.ArmorClass;
+
+				return value;
+			}
+		}
+
+
+		/// <summary>
+		/// Shield bonus
+		/// Provided by shield slot
+		/// </summary>
+		public int ShieldBonus
+		{
+			get
+			{
+				Item item = GetInventoryItem(InventoryPosition.Secondary);
+				if (item == null)
+					return 0;
+
+				return item.ArmorClass;
+			}
+		}
+
+
+		/// <summary>
+		/// Dodge bonus
+		/// Provided by boots slot
+		/// </summary>
+		public int DodgeBonus
+		{
+			get
+			{
+				Item item = GetInventoryItem(InventoryPosition.Feet);
+				if (item == null)
+					return 0;
+
+				return item.ArmorClass;
+			}
+		}
+
+
+		/// <summary>
+		/// Natural armor bonus
+		/// provided by amulet slot
+		/// </summary>
+		public int NaturalArmorBonus
+		{
+			get
+			{
+				Item item = GetInventoryItem(InventoryPosition.Neck);
+				if (item == null)
+					return 0;
+
+				return item.ArmorClass;
+			}
+		}
 
 
 		/// <summary>
@@ -592,6 +829,12 @@ namespace DungeonEye
 			get;
 			set;
 		}
+
+
+		/// <summary>
+		/// Items in the bag
+		/// </summary>
+		Item[] Inventory;
 
 		
 		/// <summary>

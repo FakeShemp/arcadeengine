@@ -355,6 +355,12 @@ namespace DungeonEye
 					}
 					break;
 
+					case "armorclass":
+					{
+						ArmorClass = int.Parse(node.Attributes["value"].Value);
+					}
+					break;
+
 					default:
 					{
 						base.Load(node);
@@ -406,6 +412,10 @@ namespace DungeonEye
 				writer.WriteEndElement();
 			}
 
+			writer.WriteStartElement("armorclass");
+			writer.WriteAttributeString("value", ArmorClass.ToString());
+			writer.WriteEndElement();
+
 			writer.WriteEndElement();
 
 			return true;
@@ -454,6 +464,16 @@ namespace DungeonEye
 			{
 				return "monster";
 			}
+		}
+
+
+		/// <summary>
+		/// Armor class
+		/// </summary>
+		public override int ArmorClass
+		{
+			get;
+			set;
 		}
 
 		/// <summary>

@@ -28,7 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			DungeonEye.Dice dice1 = new DungeonEye.Dice();
+			DungeonEye.Dice dice2 = new DungeonEye.Dice();
 			this.GLGroundTile = new OpenTK.GLControl();
 			this.GLInventoryTile = new OpenTK.GLControl();
 			this.label2 = new System.Windows.Forms.Label();
@@ -270,6 +270,7 @@
 			this.RangeBox.TabIndex = 4;
 			this.RangeBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.RangeBox.ThousandsSeparator = true;
+			this.RangeBox.ValueChanged += new System.EventHandler(this.RangeBox_ValueChanged);
 			// 
 			// TwoHandedBox
 			// 
@@ -876,10 +877,10 @@
 			// DamageBox
 			// 
 			this.DamageBox.ControlText = "Damage :";
-			dice1.Faces = 1;
-			dice1.Modifier = 0;
-			dice1.Throws = 1;
-			this.DamageBox.Dice = dice1;
+			dice2.Faces = 1;
+			dice2.Modifier = 0;
+			dice2.Throws = 1;
+			this.DamageBox.Dice = dice2;
 			this.DamageBox.Location = new System.Drawing.Point(3, 341);
 			this.DamageBox.MinimumSize = new System.Drawing.Size(225, 100);
 			this.DamageBox.Name = "DamageBox";

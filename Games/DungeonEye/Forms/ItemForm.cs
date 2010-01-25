@@ -833,6 +833,14 @@ namespace DungeonEye.Forms
 
 		}
 
+		private void RangeBox_ValueChanged(object sender, EventArgs e)
+		{
+			if (Item == null)
+				return;
+
+			
+		}
+
 
 	}
 }

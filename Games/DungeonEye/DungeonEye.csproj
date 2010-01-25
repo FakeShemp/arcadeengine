@@ -281,6 +281,9 @@
     <EmbeddedResource Include="Forms\EntityControl.resx">
       <DependentUpon>EntityControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\HeroControl.resx">
+      <DependentUpon>HeroControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\HitPointControl.resx">
       <DependentUpon>HitPointControl.cs</DependentUpon>
     </EmbeddedResource>
