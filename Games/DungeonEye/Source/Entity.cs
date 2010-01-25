@@ -370,6 +370,7 @@ namespace DungeonEye
 			}
 		}
 
+
 		/// <summary>
 		/// Shield bonus
 		/// Provided by shield slot
@@ -385,6 +386,7 @@ namespace DungeonEye
 				return item.ArmorClass;
 			}
 		}
+
 
 		/// <summary>
 		/// Dodge bonus
@@ -420,7 +422,6 @@ namespace DungeonEye
 		}
 
 
-
 		/// <summary>
 		/// Hit Point
 		/// </summary>
@@ -429,6 +430,7 @@ namespace DungeonEye
 			get;
 			set;
 		}
+
 
 		/// <summary>
 		/// Returns if is unconscious

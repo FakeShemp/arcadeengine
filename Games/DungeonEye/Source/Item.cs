@@ -57,6 +57,7 @@ namespace DungeonEye
 		{
 			AllowedClasses = HeroClass.Cleric | HeroClass.Fighter | HeroClass.Mage | HeroClass.Paladin | HeroClass.Ranger | HeroClass.Thief;
 			Damage = new Dice();
+			DamageType = 0;
 		}
 
 
@@ -118,6 +119,12 @@ namespace DungeonEye
 					case "slot":
 					{
 						Slot |= (BodySlot)Enum.Parse(typeof(BodySlot), node.Attributes["value"].Value, true);
+					}
+					break;
+
+					case "damagetype":
+					{
+						DamageType|= (DamageType)Enum.Parse(typeof(DamageType), node.Attributes["value"].Value, true);
 					}
 					break;
 
@@ -223,6 +230,10 @@ namespace DungeonEye
 			writer.WriteAttributeString("value", Type.ToString());
 			writer.WriteEndElement();
 
+			writer.WriteStartElement("damagetype");
+			writer.WriteAttributeString("value", DamageType.ToString());
+			writer.WriteEndElement();
+
 			writer.WriteStartElement("ac");
 			writer.WriteAttributeString("value", ArmorClass.ToString());
 			writer.WriteEndElement();
@@ -288,6 +299,16 @@ namespace DungeonEye
 			{
 				return "item";
 			}
+		}
+
+
+		/// <summary>
+		/// Damage type
+		/// </summary>
+		public DamageType DamageType
+		{
+			get;
+			set;
 		}
 
 
@@ -617,6 +638,31 @@ namespace DungeonEye
 		/// Slotless worn items, items which are not worn
 		/// </summary>
 		None = 0x400,
+	}
+
+
+
+	/// <summary>
+	/// Weapons are classified according to the type of damage they deal.
+	/// Some monsters may be resistant or immune to attacks from certain types of weapons. 
+	/// </summary>
+	[Flags]
+	public enum DamageType
+	{
+		/// <summary>
+		/// 
+		/// </summary>
+		Slash = 0x1,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Bludge = 0x2,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Pierce = 0x4,
 	}
 
 }

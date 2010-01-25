@@ -919,7 +919,7 @@ namespace DungeonEye
 	/// This value is also used to define how to animate a door that is closed upon the creature: 
 	/// </summary>
 	/// <remarks>This value is ignored for non material creatures and the door always closes normally without causing any damage to such creatures</remarks>
-	public enum MonsterHeight
+	public enum EntityHeight
 	{
 		/// <summary>
 		/// the door is animated from half of its size to 3/4th of its size. This applies to small creatures. 
@@ -949,7 +949,7 @@ namespace DungeonEye
 	/// This value defines what kind of attack the creature uses. 
 	/// This value affects how the inflicted damage is computed.
 	/// </summary>
-	public enum DamageType
+	public enum AttackType
 	{
 		/// <summary>
 		/// The creature does not attack champions.
@@ -992,5 +992,6 @@ namespace DungeonEye
 		Psychic,
 
 	}
+
 }
 

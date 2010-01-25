@@ -40,17 +40,15 @@
 			this.groupBox5 = new System.Windows.Forms.GroupBox();
 			this.UseQuiverBox = new System.Windows.Forms.CheckBox();
 			this.ACBonusBox = new System.Windows.Forms.NumericUpDown();
-			this.TwoHandedBox = new System.Windows.Forms.CheckBox();
 			this.label14 = new System.Windows.Forms.Label();
-			this.DamageTypeBox = new System.Windows.Forms.ComboBox();
 			this.RangeBox = new System.Windows.Forms.NumericUpDown();
+			this.TwoHandedBox = new System.Windows.Forms.CheckBox();
 			this.WeightBox = new System.Windows.Forms.NumericUpDown();
 			this.SpeedBox = new System.Windows.Forms.NumericUpDown();
 			this.label3 = new System.Windows.Forms.Label();
 			this.Weight = new System.Windows.Forms.Label();
 			this.TypeBox = new System.Windows.Forms.ComboBox();
 			this.label6 = new System.Windows.Forms.Label();
-			this.label4 = new System.Windows.Forms.Label();
 			this.label5 = new System.Windows.Forms.Label();
 			this.groupBox6 = new System.Windows.Forms.GroupBox();
 			this.WaistBox = new System.Windows.Forms.CheckBox();
@@ -92,6 +90,10 @@
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.VisualTab = new System.Windows.Forms.TabPage();
 			this.PropertiesTab = new System.Windows.Forms.TabPage();
+			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.SlashBox = new System.Windows.Forms.CheckBox();
+			this.BludgeBox = new System.Windows.Forms.CheckBox();
+			this.PiercingBox = new System.Windows.Forms.CheckBox();
 			this.DamageBox = new DungeonEye.Forms.DiceForm();
 			this.ScriptTab = new System.Windows.Forms.TabPage();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -111,6 +113,7 @@
 			this.tabControl1.SuspendLayout();
 			this.VisualTab.SuspendLayout();
 			this.PropertiesTab.SuspendLayout();
+			this.groupBox1.SuspendLayout();
 			this.ScriptTab.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.groupBox11.SuspendLayout();
@@ -202,17 +205,15 @@
 			// 
 			this.groupBox5.Controls.Add(this.UseQuiverBox);
 			this.groupBox5.Controls.Add(this.ACBonusBox);
-			this.groupBox5.Controls.Add(this.TwoHandedBox);
 			this.groupBox5.Controls.Add(this.label14);
-			this.groupBox5.Controls.Add(this.DamageTypeBox);
 			this.groupBox5.Controls.Add(this.RangeBox);
+			this.groupBox5.Controls.Add(this.TwoHandedBox);
 			this.groupBox5.Controls.Add(this.WeightBox);
 			this.groupBox5.Controls.Add(this.SpeedBox);
 			this.groupBox5.Controls.Add(this.label3);
 			this.groupBox5.Controls.Add(this.Weight);
 			this.groupBox5.Controls.Add(this.TypeBox);
 			this.groupBox5.Controls.Add(this.label6);
-			this.groupBox5.Controls.Add(this.label4);
 			this.groupBox5.Controls.Add(this.label5);
 			this.groupBox5.Location = new System.Drawing.Point(3, 117);
 			this.groupBox5.Name = "groupBox5";
@@ -224,7 +225,7 @@
 			// UseQuiverBox
 			// 
 			this.UseQuiverBox.AutoSize = true;
-			this.UseQuiverBox.Location = new System.Drawing.Point(167, 99);
+			this.UseQuiverBox.Location = new System.Drawing.Point(167, 44);
 			this.UseQuiverBox.Name = "UseQuiverBox";
 			this.UseQuiverBox.Size = new System.Drawing.Size(77, 17);
 			this.UseQuiverBox.TabIndex = 10;
@@ -234,7 +235,7 @@
 			// 
 			// ACBonusBox
 			// 
-			this.ACBonusBox.Location = new System.Drawing.Point(70, 151);
+			this.ACBonusBox.Location = new System.Drawing.Point(70, 122);
 			this.ACBonusBox.Maximum = new decimal(new int[] {
             127,
             0,
@@ -251,10 +252,29 @@
 			this.ACBonusBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.ACBonusBox.ValueChanged += new System.EventHandler(this.ACBonusBox_ValueChanged);
 			// 
+			// label14
+			// 
+			this.label14.AutoSize = true;
+			this.label14.Location = new System.Drawing.Point(4, 126);
+			this.label14.Name = "label14";
+			this.label14.Size = new System.Drawing.Size(60, 13);
+			this.label14.TabIndex = 1;
+			this.label14.Text = "AC Bonus :";
+			this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			// 
+			// RangeBox
+			// 
+			this.RangeBox.Location = new System.Drawing.Point(70, 96);
+			this.RangeBox.Name = "RangeBox";
+			this.RangeBox.Size = new System.Drawing.Size(77, 20);
+			this.RangeBox.TabIndex = 4;
+			this.RangeBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.RangeBox.ThousandsSeparator = true;
+			// 
 			// TwoHandedBox
 			// 
 			this.TwoHandedBox.AutoSize = true;
-			this.TwoHandedBox.Location = new System.Drawing.Point(167, 76);
+			this.TwoHandedBox.Location = new System.Drawing.Point(167, 21);
 			this.TwoHandedBox.Name = "TwoHandedBox";
 			this.TwoHandedBox.Size = new System.Drawing.Size(79, 17);
 			this.TwoHandedBox.TabIndex = 0;
@@ -262,37 +282,9 @@
 			this.TwoHandedBox.UseVisualStyleBackColor = true;
 			this.TwoHandedBox.CheckedChanged += new System.EventHandler(this.TwoHandedBox_CheckedChanged);
 			// 
-			// label14
-			// 
-			this.label14.AutoSize = true;
-			this.label14.Location = new System.Drawing.Point(4, 155);
-			this.label14.Name = "label14";
-			this.label14.Size = new System.Drawing.Size(60, 13);
-			this.label14.TabIndex = 1;
-			this.label14.Text = "AC Bonus :";
-			this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			// 
-			// DamageTypeBox
-			// 
-			this.DamageTypeBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.DamageTypeBox.FormattingEnabled = true;
-			this.DamageTypeBox.Location = new System.Drawing.Point(70, 46);
-			this.DamageTypeBox.Name = "DamageTypeBox";
-			this.DamageTypeBox.Size = new System.Drawing.Size(176, 21);
-			this.DamageTypeBox.TabIndex = 9;
-			// 
-			// RangeBox
-			// 
-			this.RangeBox.Location = new System.Drawing.Point(70, 125);
-			this.RangeBox.Name = "RangeBox";
-			this.RangeBox.Size = new System.Drawing.Size(77, 20);
-			this.RangeBox.TabIndex = 4;
-			this.RangeBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.RangeBox.ThousandsSeparator = true;
-			// 
 			// WeightBox
 			// 
-			this.WeightBox.Location = new System.Drawing.Point(70, 99);
+			this.WeightBox.Location = new System.Drawing.Point(70, 70);
 			this.WeightBox.Maximum = new decimal(new int[] {
             1000000,
             0,
@@ -307,7 +299,7 @@
 			// 
 			// SpeedBox
 			// 
-			this.SpeedBox.Location = new System.Drawing.Point(70, 73);
+			this.SpeedBox.Location = new System.Drawing.Point(70, 44);
 			this.SpeedBox.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -323,7 +315,7 @@
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(20, 127);
+			this.label3.Location = new System.Drawing.Point(20, 98);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(45, 13);
 			this.label3.TabIndex = 1;
@@ -332,7 +324,7 @@
 			// Weight
 			// 
 			this.Weight.AutoSize = true;
-			this.Weight.Location = new System.Drawing.Point(17, 101);
+			this.Weight.Location = new System.Drawing.Point(17, 72);
 			this.Weight.Name = "Weight";
 			this.Weight.Size = new System.Drawing.Size(47, 13);
 			this.Weight.TabIndex = 1;
@@ -344,7 +336,7 @@
 			this.TypeBox.FormattingEnabled = true;
 			this.TypeBox.Location = new System.Drawing.Point(70, 19);
 			this.TypeBox.Name = "TypeBox";
-			this.TypeBox.Size = new System.Drawing.Size(176, 21);
+			this.TypeBox.Size = new System.Drawing.Size(77, 21);
 			this.TypeBox.Sorted = true;
 			this.TypeBox.TabIndex = 0;
 			this.TypeBox.SelectedIndexChanged += new System.EventHandler(this.TypeBox_SelectedIndexChanged);
@@ -352,20 +344,11 @@
 			// label6
 			// 
 			this.label6.AutoSize = true;
-			this.label6.Location = new System.Drawing.Point(20, 75);
+			this.label6.Location = new System.Drawing.Point(20, 46);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(44, 13);
 			this.label6.TabIndex = 1;
 			this.label6.Text = "Speed :";
-			// 
-			// label4
-			// 
-			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(11, 49);
-			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(53, 13);
-			this.label4.TabIndex = 1;
-			this.label4.Text = "Damage :";
 			// 
 			// label5
 			// 
@@ -830,6 +813,7 @@
 			// 
 			// PropertiesTab
 			// 
+			this.PropertiesTab.Controls.Add(this.groupBox1);
 			this.PropertiesTab.Controls.Add(this.DamageBox);
 			this.PropertiesTab.Controls.Add(this.groupBox4);
 			this.PropertiesTab.Controls.Add(this.groupBox8);
@@ -843,6 +827,51 @@
 			this.PropertiesTab.TabIndex = 1;
 			this.PropertiesTab.Text = "Properties";
 			this.PropertiesTab.UseVisualStyleBackColor = true;
+			// 
+			// groupBox1
+			// 
+			this.groupBox1.Controls.Add(this.SlashBox);
+			this.groupBox1.Controls.Add(this.BludgeBox);
+			this.groupBox1.Controls.Add(this.PiercingBox);
+			this.groupBox1.Location = new System.Drawing.Point(469, 6);
+			this.groupBox1.Name = "groupBox1";
+			this.groupBox1.Size = new System.Drawing.Size(111, 105);
+			this.groupBox1.TabIndex = 10;
+			this.groupBox1.TabStop = false;
+			this.groupBox1.Text = "Damage type :";
+			// 
+			// SlashBox
+			// 
+			this.SlashBox.AutoSize = true;
+			this.SlashBox.Location = new System.Drawing.Point(6, 73);
+			this.SlashBox.Name = "SlashBox";
+			this.SlashBox.Size = new System.Drawing.Size(52, 17);
+			this.SlashBox.TabIndex = 0;
+			this.SlashBox.Text = "Slash";
+			this.SlashBox.UseVisualStyleBackColor = true;
+			this.SlashBox.CheckedChanged += new System.EventHandler(this.SlashBox_CheckedChanged);
+			// 
+			// BludgeBox
+			// 
+			this.BludgeBox.AutoSize = true;
+			this.BludgeBox.Location = new System.Drawing.Point(6, 50);
+			this.BludgeBox.Name = "BludgeBox";
+			this.BludgeBox.Size = new System.Drawing.Size(59, 17);
+			this.BludgeBox.TabIndex = 0;
+			this.BludgeBox.Text = "Bludge";
+			this.BludgeBox.UseVisualStyleBackColor = true;
+			this.BludgeBox.CheckedChanged += new System.EventHandler(this.BludgeBox_CheckedChanged);
+			// 
+			// PiercingBox
+			// 
+			this.PiercingBox.AutoSize = true;
+			this.PiercingBox.Location = new System.Drawing.Point(6, 27);
+			this.PiercingBox.Name = "PiercingBox";
+			this.PiercingBox.Size = new System.Drawing.Size(56, 17);
+			this.PiercingBox.TabIndex = 0;
+			this.PiercingBox.Text = "Pierce";
+			this.PiercingBox.UseVisualStyleBackColor = true;
+			this.PiercingBox.CheckedChanged += new System.EventHandler(this.PiercingBox_CheckedChanged);
 			// 
 			// DamageBox
 			// 
@@ -926,6 +955,8 @@
 			this.VisualTab.ResumeLayout(false);
 			this.VisualTab.PerformLayout();
 			this.PropertiesTab.ResumeLayout(false);
+			this.groupBox1.ResumeLayout(false);
+			this.groupBox1.PerformLayout();
 			this.ScriptTab.ResumeLayout(false);
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
@@ -998,10 +1029,12 @@
 		private System.Windows.Forms.GroupBox groupBox11;
 		private System.Windows.Forms.NumericUpDown RangeBox;
 		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.ComboBox DamageTypeBox;
-		private System.Windows.Forms.Label label4;
 		private DiceForm DamageBox;
 		private System.Windows.Forms.GroupBox groupBox2;
 		private System.Windows.Forms.CheckBox UseQuiverBox;
+		private System.Windows.Forms.GroupBox groupBox1;
+		private System.Windows.Forms.CheckBox SlashBox;
+		private System.Windows.Forms.CheckBox BludgeBox;
+		private System.Windows.Forms.CheckBox PiercingBox;
 	}
 }

@@ -46,10 +46,6 @@ namespace DungeonEye.Forms
 			InitializeComponent();
 
 
-			Item = new Item();
-			Item.Load(node);
-
-
 			// TileSetNameBox
 			TileSetNameBox.BeginUpdate();
 			foreach (string name in ResourceManager.GetAssets<TileSet>())
@@ -57,11 +53,6 @@ namespace DungeonEye.Forms
 				TileSetNameBox.Items.Add(name);
 			}
 			TileSetNameBox.EndUpdate();
-
-			// Tileset name
-			if (!string.IsNullOrEmpty(Item.TileSetName) && TileSetNameBox.Items.Contains(Item.TileSetName))
-				TileSetNameBox.SelectedItem = Item.TileSetName;
-
 
 
 			// Scripts
@@ -74,6 +65,7 @@ namespace DungeonEye.Forms
 			ScriptNameBox.Items.Insert(0, "");
 			ScriptNameBox.EndUpdate();
 
+
 			// Script name
 		//	if (!string.IsNullOrEmpty(Item.ScriptName) && ScriptNameBox.Items.Contains(Item.ScriptName))
 		//		ScriptNameBox.SelectedItem = Item.ScriptName;
@@ -85,6 +77,13 @@ namespace DungeonEye.Forms
 				TypeBox.Items.Add(name);
 			TypeBox.EndUpdate();
 
+
+			Item = new Item();
+			Item.Load(node);
+
+			// Tileset name
+			if (!string.IsNullOrEmpty(Item.TileSetName) && TileSetNameBox.Items.Contains(Item.TileSetName))
+				TileSetNameBox.SelectedItem = Item.TileSetName;
 
 
 			#region UI update
@@ -127,6 +126,10 @@ namespace DungeonEye.Forms
 
 			ACBonusBox.Value = Item.ArmorClass;
 			DamageBox.Dice = Item.Damage;
+
+			PiercingBox.Checked = (Item.DamageType & DamageType.Pierce) == DamageType.Pierce;
+			SlashBox.Checked = (Item.DamageType & DamageType.Slash) == DamageType.Slash;
+			BludgeBox.Checked = (Item.DamageType & DamageType.Bludge) == DamageType.Bludge;
 			#endregion
 
 			Paint_Tiles(null, null);
@@ -794,6 +797,41 @@ namespace DungeonEye.Forms
 		}
 
 
+		private void PiercingBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Item == null)
+				return;
+
+			if (PiercingBox.Checked)
+				Item.DamageType |= DamageType.Pierce;
+			else
+				Item.DamageType ^= DamageType.Pierce;
+
+		}
+
+		private void BludgeBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Item == null)
+				return;
+
+			if (BludgeBox.Checked)
+				Item.DamageType |= DamageType.Bludge;
+			else
+				Item.DamageType ^= DamageType.Bludge;
+
+		}
+
+		private void SlashBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Item == null)
+				return;
+
+			if (SlashBox.Checked)
+				Item.DamageType |= DamageType.Slash;
+			else
+				Item.DamageType ^= DamageType.Slash;
+
+		}
 
 
 	}
