@@ -1449,7 +1449,7 @@ namespace DungeonEye
 							#endregion
 
 							#region Use object in primary hand
-						//	AttackResult attack = null;
+							//AttackResult attack = null;
 							if (new Rectangle(434 + 144 * x, y * 104 + 22, 60, 32).Contains(mousePos) && hero.CanAttack(EntityHand.Primary))
 								hero.UseHand(EntityHand.Primary);
 
@@ -2446,7 +2446,7 @@ namespace DungeonEye
 		{
 			get
 			{
-				return Location.Maze.GetBlock(FrontCoord);
+				return Location.Maze.GetBlock(FrontLocation.Position);
 			}
 		}
 
@@ -2474,31 +2474,32 @@ namespace DungeonEye
 		/// <summary>
 		/// Returns the location in front of the team
 		/// </summary>
-		public Point FrontCoord
+		public DungeonLocation FrontLocation
 		{
 			get
 			{
-				Point pos = Point.Empty;
+				DungeonLocation location = new DungeonLocation(Location);
 
 				switch (Location.Direction)
 				{
 					case CardinalPoint.North:
-					pos = new Point(Location.Position.X, Location.Position.Y - 1);
+					location.Position = new Point(Location.Position.X, Location.Position.Y - 1);
 					break;
 					case CardinalPoint.South:
-					pos = new Point(Location.Position.X, Location.Position.Y + 1);
+					location.Position = new Point(Location.Position.X, Location.Position.Y + 1);
 					break;
 					case CardinalPoint.West:
-					pos = new Point(Location.Position.X - 1, Location.Position.Y);
+					location.Position = new Point(Location.Position.X - 1, Location.Position.Y);
 					break;
 					case CardinalPoint.East:
-					pos = new Point(Location.Position.X + 1, Location.Position.Y);
+					location.Position = new Point(Location.Position.X + 1, Location.Position.Y);
 					break;
 				}
 
-				return pos;
+				return location;
 			}
 		}
+
 
 
 		/// <summary>

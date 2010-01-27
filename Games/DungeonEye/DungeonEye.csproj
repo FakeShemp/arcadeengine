@@ -194,6 +194,7 @@
     <Compile Include="Interfaces\IMonster.cs" />
     <Compile Include="Interfaces\IPit.cs" />
     <Compile Include="Source\Ability.cs" />
+    <Compile Include="Source\Attack.cs" />
     <Compile Include="Source\AutoMap.cs" />
     <Compile Include="CharGen.cs" />
     <Compile Include="Source\CriticalHit.cs" />

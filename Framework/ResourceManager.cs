@@ -646,8 +646,7 @@ namespace ArcEngine
 				{
 					ZipInputStream zip = new ZipInputStream(fs);
 					zip.Password = password;
-
-
+					
 					swatch.Start();
 
 					// Foreach file in the bank

@@ -421,7 +421,7 @@ namespace DungeonEye
 			// Trace this attack
 			attack.Date = DateTime.Now;
 			attack.Result = (short)GameBase.Random.Next(0, 10);
-		//	attack.Monster = Team.Location.Maze.GetMonster(Team.FrontCoord, Team.GetHeroGroundPosition(this));
+			attack.Monster = Team.Location.Maze.GetMonster(Team.FrontLocation, Team.GetHeroGroundPosition(this));
 
 
 			// Hand attack
@@ -446,12 +446,6 @@ namespace DungeonEye
 					// Empty hand
 					InventoryPosition pos = hand == EntityHand.Primary ? InventoryPosition.Primary : InventoryPosition.Secondary;
 					SetInventoryItem(pos, null);
-
-					//if (Quiver > 0 && item.UseQuiver)
-					//{
-					//    SetInventoryItem(pos, ResourceManager.CreateAsset<ItemSet>("Items").GetItem("Arrow"));
-					//    Quiver--;
-					//}
 				}
 				break;
 
@@ -937,37 +931,6 @@ namespace DungeonEye
 
 	#region Enums & Structures
 
-
-	/// <summary>
-	/// Result of the attack of a hero
-	/// </summary>
-	public class AttackResult
-	{
-		/// <summary>
-		/// Time of the attack
-		/// </summary>
-		public DateTime Date;
-
-
-		/// <summary>
-		/// Result of the attack.
-		/// </summary>
-		/// <remarks>If Result == 0 the attack missed</remarks>
-		public short Result;
-
-
-		/// <summary>
-		/// Monster involved in the fight.
-		/// </summary>
-		public Monster Monster;
-
-
-		/// <summary>
-		/// Hom many time the hero have to wait before attacking again with this hand
-		/// </summary>
-		public TimeSpan OnHold;
-
-	}
 
 
 	/// <summary>
