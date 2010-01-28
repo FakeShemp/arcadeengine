@@ -38,7 +38,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Default constructor
 		/// </summary>
-		/// <param name="block"></param>
+		/// <param name="block">Location</param>
 		public FlyingItem(MazeBlock block)
 		{
 			//if (block == null)
@@ -53,12 +53,14 @@ namespace DungeonEye
 		/// <summary>
 		/// Constructor
 		/// </summary>
+		/// <param name="owner">Entity who thrown the item</param>
 		/// <param name="item">Item</param>
 		/// <param name="location">Start location</param>
 		/// <param name="speed">Time in ms taken to cross a block</param>
 		/// <param name="distance">How many block the item have to fly before falling on the ground</param>
-		public FlyingItem(Item item, DungeonLocation location, TimeSpan speed, int distance)
+		public FlyingItem(Entity owner, Item item, DungeonLocation location, TimeSpan speed, int distance)
 		{
+			Owner = owner;
 			Item = item;
 			Location = new DungeonLocation(location);
 			Speed = speed;
@@ -155,7 +157,10 @@ namespace DungeonEye
 						Monster[] monsters = maze.GetMonsters(Location.Position);
 						foreach(Monster monster in monsters)
 							if (monster != null)
-								monster.Attack(2);
+							{
+								Attack attack = new Attack(Owner, monster, Item);
+								monster.Hit(attack);
+							}
 					}
 					return true;
 				}
@@ -307,6 +312,15 @@ namespace DungeonEye
 		#region Properties
 
 		/// <summary>
+		/// Owner of the flying item
+		/// </summary>
+		public Entity Owner
+		{
+			get;
+			private set;
+		}
+
+		/// <summary>
 		/// Speed of the object in ms to cross a block
 		/// </summary>
 		public TimeSpan Speed
@@ -331,16 +345,6 @@ namespace DungeonEye
 			set;
 		}
 
-/*
-		/// <summary>
-		/// 
-		/// </summary>
-		public MazeBlock Block
-		{
-			get;
-			private set;
-		}
-*/
 		/// <summary>
 		/// Handle to the item
 		/// </summary>

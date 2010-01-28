@@ -62,6 +62,7 @@ namespace DungeonEye
 			Wisdom.Value = RollForAbility();
 		}
 
+
 		/// <summary>
 		/// 
 		/// </summary>
@@ -81,6 +82,22 @@ namespace DungeonEye
 			return list[1] + list[2] + list[3];
 		}
 
+
+		/// <summary>
+		/// Attack the entity
+		/// </summary>
+		/// <param name="attack">Attack</param>
+		public void Hit(Attack attack)
+		{
+			if (attack == null)
+				return;
+
+			LastAttack = attack;
+			if (LastAttack.IsAMiss)
+				return;
+
+			HitPoint.Current -= LastAttack.Hit;
+		}
 
 
 		#region IO
@@ -246,6 +263,16 @@ namespace DungeonEye
 		{
 			get;
 			set;
+		}
+
+
+		/// <summary>
+		/// Last attack suffered
+		/// </summary>
+		public Attack LastAttack
+		{
+			get;
+			private set;
 		}
 
 

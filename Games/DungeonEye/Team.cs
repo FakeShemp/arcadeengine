@@ -422,19 +422,19 @@ namespace DungeonEye
 
 
 					// Hero hit a monster a few moment ago
-					AttackResult attack = hero.GetLastAttack(EntityHand.Primary);
-					if (attack.Date + attack.OnHold > DateTime.Now)
+					Attack attack = hero.GetLastAttack(EntityHand.Primary);
+					if (attack != null && attack.IsAHit && attack.Time + attack.ItemSpeed > DateTime.Now)
 					{
 						// Ghost item
 						TileSet.Draw(3, new Point(pos.X + 66, pos.Y + 20));
 
 						// Monster hit ?
-						if (attack.Monster != null && attack.Date > DateTime.Now.AddMilliseconds(-1000))
+						if (attack.Target != null && attack.Time > DateTime.Now.AddMilliseconds(-1000))
 						{
 							TileSet.Draw(21, new Point(pos.X + 64, pos.Y + 20));
 
-							if (attack.Result > 0)
-									Font.DrawText(new Point(pos.X + 90, pos.Y + 32), Color.White, attack.Result.ToString());
+							if (attack.IsAHit)
+									Font.DrawText(new Point(pos.X + 90, pos.Y + 32), Color.White, attack.Hit.ToString());
 								else
 									Font.DrawText(new Point(pos.X + 76, pos.Y + 32), Color.White, "MISS");
 						}
@@ -453,6 +453,26 @@ namespace DungeonEye
 						TileSet.Draw(3, new Point(pos.X + 66, pos.Y + 52));
 
 
+					// Hero hit a monster a few moment ago
+					attack = hero.GetLastAttack(EntityHand.Secondary);
+					if (attack != null && attack.IsAHit && attack.Time + attack.ItemSpeed > DateTime.Now)
+					{
+						// Ghost item
+						TileSet.Draw(3, new Point(pos.X + 66, pos.Y + 52));
+
+						// Monster hit ?
+						if (attack.Target != null && attack.Time > DateTime.Now.AddMilliseconds(-1000))
+						{
+							TileSet.Draw(21, new Point(pos.X + 64, pos.Y + 52));
+
+							if (attack.IsAHit)
+								Font.DrawText(new Point(pos.X + 90, pos.Y + 64), Color.White, attack.Hit.ToString());
+							else
+								Font.DrawText(new Point(pos.X + 76, pos.Y + 64), Color.White, "MISS");
+						}
+
+					}
+
 
 					// Dead or uncounscious
 					if (hero.IsUnconscious || hero.IsDead)
@@ -462,34 +482,11 @@ namespace DungeonEye
 					}
 
 
-
-					// Hero hit a monster a few moment ago
-					attack = hero.GetLastAttack(EntityHand.Secondary);
-					if (attack.Date + attack.OnHold > DateTime.Now)
-					{
-						// Ghost item
-						TileSet.Draw(3, new Point(pos.X + 66, pos.Y + 52));
-
-						// Monster hit ?
-						if (attack.Monster != null && attack.Date > DateTime.Now.AddMilliseconds(-1000))
-						{
-							TileSet.Draw(21, new Point(pos.X + 64, pos.Y + 52));
-
-							if (attack.Result > 0)
-								Font.DrawText(new Point(pos.X + 90, pos.Y + 64), Color.White, attack.Result.ToString());
-							else
-								Font.DrawText(new Point(pos.X + 76, pos.Y + 64), Color.White, "MISS");
-						}
-
-					}
-
-
-
 					// Hero was hit
-					if (hero.LastHitTime + TimeSpan.FromSeconds(1) > DateTime.Now)
+					if (hero.LastAttack != null && hero.LastAttack.Time+ TimeSpan.FromSeconds(1) > DateTime.Now)
 					{
 						TileSet.Draw(20, new Point(pos.X + 24, pos.Y + 66));
-						Font.DrawText(new Point(pos.X + 52, pos.Y + 86), Color.White, hero.LastHit.ToString());
+						Font.DrawText(new Point(pos.X + 52, pos.Y + 86), Color.White, hero.LastAttack.Hit.ToString());
 					}
 	
 				}
@@ -734,15 +731,6 @@ namespace DungeonEye
 			#region Keyboard
 
 
-			// Hit the hero under the mouse
-			if (Keyboard.IsNewKeyPress(Keys.O))
-			{
-				Hero hero = GetHeroFromLocation(Mouse.Location);
-				if (hero != null)
-				{
-					hero.Hit(null, GameBase.Random.Next(1, 5));
-				}
-			}
 
 			// Reload data banks
 			if (Keyboard.IsNewKeyPress(Keys.R))
@@ -1119,7 +1107,7 @@ namespace DungeonEye
 								loc.GroundPosition = GroundPosition.SouthEast;
 								break;
 							}
-							Location.Maze.FlyingItems.Add(new FlyingItem(ItemInHand, loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
+							Location.Maze.FlyingItems.Add(new FlyingItem(SelectedHero, ItemInHand, loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
 							SetItemInHand(null);
 						}
 						#endregion
@@ -1146,7 +1134,7 @@ namespace DungeonEye
 								break;
 							}
 
-							Location.Maze.FlyingItems.Add(new FlyingItem(ItemInHand, loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
+							Location.Maze.FlyingItems.Add(new FlyingItem(SelectedHero, ItemInHand, loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
 							SetItemInHand(null);
 						}
 						#endregion
@@ -1975,6 +1963,19 @@ namespace DungeonEye
 
 		#region Heroes
 
+
+		/// <summary>
+		/// Add experience to the whole team
+		/// </summary>
+		/// <param name="amount">Amount to be distributed among the entire team</param>
+		public void AddExperience(int amount)
+		{
+			int value = amount / HeroCount;
+			foreach (Hero hero in Heroes)
+				hero.AddExperience(value);
+		}
+
+
 		/// <summary>
 		/// Hit all heroes in the team
 		/// </summary>
@@ -1984,7 +1985,7 @@ namespace DungeonEye
 			foreach (Hero hero in Heroes)
 			{
 				if (hero != null)
-					hero.Hit(null, damage);
+					hero.HitPoint.Current -= damage;
 			}
 		}
 

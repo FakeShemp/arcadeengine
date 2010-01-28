@@ -52,9 +52,7 @@ namespace DungeonEye
 			Inventory = new Item[26];
 			BackPack = new Item[14];
 			WaistPack = new Item[3];
-			Attacks = new AttackResult[2];
-			Attacks[0] = new AttackResult();
-			Attacks[1] = new AttackResult();
+			HandsAttacks = new Attack[2];
 		}
 
 
@@ -69,8 +67,8 @@ namespace DungeonEye
 			HitPoint = new HitPoint(GameBase.Random.Next(6, 37), GameBase.Random.Next(6, 37));
 			Food = 75;
 
-			Professions.Add(new Profession(GameBase.Random.Next(0, 999999), HeroClass.Cleric));
-			Professions.Add(new Profession(GameBase.Random.Next(0, 999999), HeroClass.Fighter));
+			Professions.Add(new Profession(0, HeroClass.Cleric));
+			Professions.Add(new Profession(0, HeroClass.Fighter));
 
 
 			Head = GameBase.Random.Next(0, 32);
@@ -96,12 +94,36 @@ namespace DungeonEye
 			Point mousePos = Mouse.Location;
 
 
+			if (Food > 100)
+				Food = 100;
+
 			// Remove olds attacks
 			//Attacks.RemoveAll(
 			//   delegate(AttackResult attack)
 			//   {
 			//      return attack.Date + attack.Hold < DateTime.Now;
 			//   });
+		}
+
+
+
+		/// <summary>
+		/// Add experience to the hero
+		/// </summary>
+		/// <param name="amount">XP to add</param>
+		public void AddExperience(int amount)
+		{
+			foreach (Profession prof in Professions)
+			{
+				if (prof.AddXP(amount / ProfessionCount))
+				{
+
+					// New level gained
+					Team.AddMessage(Name + " gained a level !");
+				}
+			}
+
+
 		}
 
 
@@ -404,34 +426,33 @@ namespace DungeonEye
 		/// <param name="hand">Attacking hand</param>
 		public void UseHand(EntityHand hand)
 		{
+			// No action possible
 			if (IsUnconscious || IsDead)
 				return;
 
-			AttackResult attack = Attacks[(int)hand];
+
+			// Attacked entity
+			Entity target = Team.Location.Maze.GetMonster(Team.FrontLocation, Team.GetHeroGroundPosition(this));
 
 
-			Item item = null;
-			if (hand == EntityHand.Primary)
-				item = GetInventoryItem(InventoryPosition.Primary);
-			else
-				item = GetInventoryItem(InventoryPosition.Secondary);
-
-
-
-			// Trace this attack
-			attack.Date = DateTime.Now;
-			attack.Result = (short)GameBase.Random.Next(0, 10);
-			attack.Monster = Team.Location.Maze.GetMonster(Team.FrontLocation, Team.GetHeroGroundPosition(this));
-
+			// Which item is used for the attack
+			Item item = GetInventoryItem(hand == EntityHand.Primary ? InventoryPosition.Primary : InventoryPosition.Secondary);
 
 			// Hand attack
 			if (item == null)
 			{
-				attack.OnHold = TimeSpan.FromMilliseconds(500);
+				HandsAttacks[(int)hand] = new Attack(this, target, null);
 				return;
 			}
 
 
+
+
+			// Attack
+			HandsAttacks[(int)hand] = null;
+
+
+			// 
 			DungeonLocation loc = new DungeonLocation(Team.Location);
 			loc.GroundPosition = Team.GetHeroGroundPosition(this);
 			switch (item.Type)
@@ -441,11 +462,10 @@ namespace DungeonEye
 				case ItemType.Ammo:
 				{
 					// throw ammo
-					Team.Location.Maze.FlyingItems.Add(new FlyingItem(item, loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
+					Team.Location.Maze.FlyingItems.Add(new FlyingItem(this, item, loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
 
 					// Empty hand
-					InventoryPosition pos = hand == EntityHand.Primary ? InventoryPosition.Primary : InventoryPosition.Secondary;
-					SetInventoryItem(pos, null);
+					SetInventoryItem(hand == EntityHand.Primary ? InventoryPosition.Primary : InventoryPosition.Secondary, null);
 				}
 				break;
 
@@ -470,25 +490,33 @@ namespace DungeonEye
 					else if (item.UseQuiver && Quiver > 0)
 					{
 						Team.Location.Maze.FlyingItems.Add(
-							new FlyingItem(ResourceManager.CreateAsset<Item>("Arrow"),
+							new FlyingItem(this, ResourceManager.CreateAsset<Item>("Arrow"),
 							loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
 						Quiver--;
 					}
 
-					attack.OnHold = TimeSpan.FromMilliseconds(item.Speed + 3000);
+					HandsAttacks[(int)hand] = new Attack(this, target, item);
+
 				}
 				break;
 
 			}
 
 
-			if (attack.Monster != null)
+			// No attack
+			if (HandsAttacks[(int)hand] == null || target == null)
+				return;
+	
+			// Target entity is dead, add XP to the team
+			if (target.IsDead)
 			{
-				attack.Monster.Attack(attack.Result);
+
+				//Team.AddExperience((target as Monster).
 			}
+
 		}
 
-
+/*
 		/// <summary>
 		/// An item hit the hero
 		/// </summary>
@@ -503,7 +531,7 @@ namespace DungeonEye
 			HitPoint.Current -= value;
 		}
 
-
+*/
 
 		#endregion
 
@@ -521,21 +549,15 @@ namespace DungeonEye
 				return false;
 
 			// Check the item in the other hand
-			Item item = null;
-			if (hand == EntityHand.Primary)
-			{
-				item = GetInventoryItem(InventoryPosition.Secondary);
-				if (item != null && item.TwoHanded)
-					return false;
-			}
-			else
-			{
-				item = GetInventoryItem(InventoryPosition.Primary);
-				if (item != null && item.TwoHanded)
-					return false;
-			}
+			Item item = GetInventoryItem(hand == EntityHand.Primary ? InventoryPosition.Secondary : InventoryPosition.Primary);
+			if (item != null && item.TwoHanded)
+				return false;
 
-			return Attacks[(int)hand].Date + Attacks[(int)hand].OnHold < DateTime.Now;
+			Attack attack = GetLastAttack(hand);
+			if (attack == null)// || attack.Item == null)
+				return true;
+
+			return attack.Time + attack.ItemSpeed < DateTime.Now;
 		}
 
 
@@ -544,9 +566,9 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="hand">Hand of the attack</param>
 		/// <returns>Attack result</returns>
-		public AttackResult GetLastAttack(EntityHand hand)
+		public Attack GetLastAttack(EntityHand hand)
 		{
-			return Attacks[(int)hand];
+			return HandsAttacks[(int)hand];
 		}
 
 
@@ -832,10 +854,24 @@ namespace DungeonEye
 
 		
 		/// <summary>
-		/// Profression of the Hero
+		/// Profressions of the Hero
 		/// </summary>
 		public List<Profession> Professions;
 
+
+		/// <summary>
+		/// Number of profession
+		/// </summary>
+		public int ProfessionCount
+		{
+			get
+			{
+				if (Professions[0] != null && Professions[1] != null)
+					return 2;
+
+				return 1;
+			}
+		}
 
 		/// <summary>
 		/// ID of head tile
@@ -872,22 +908,10 @@ namespace DungeonEye
 		/// <remarks>Max food Level is 100</remarks>
 		public byte Food
 		{
-			get
-			{
-				return food;
-			}
-			set
-			{
-				food = value;
-				if (food > 100)
-					food = 100;
-			}
+			get;
+			set;
 		}
-		byte food;
 
-
-
-		
 
 		/// <summary>
 		/// Team of the hero
@@ -902,28 +926,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Sums of last attacks
 		/// </summary>
-		AttackResult[] Attacks;
-
-
-		/// <summary>
-		/// Last time the hero was hit by a monster
-		/// </summary>
-		public DateTime LastHitTime
-		{
-			get;
-			private set;
-		}
-
-
-		/// <summary>
-		/// How many HP hero lost by the last attack
-		/// </summary>
-		public int LastHit
-		{
-			get;
-			private set;
-		}
-
+		Attack[] HandsAttacks;
 
 		#endregion
 	}

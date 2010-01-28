@@ -58,7 +58,7 @@ namespace DungeonEye
 				Location = new DungeonLocation(maze.Dungeon);
 			
 			ItemsInPocket = new List<string>();
-			LastHit = new DateTime();
+			//LastHit = new DateTime();
 			Damage = new Dice();
 
 			DrawOffsetDuration = TimeSpan.FromSeconds(1.0f + GameBase.Random.NextDouble());
@@ -178,7 +178,7 @@ namespace DungeonEye
 			
 
 			// Monster was hit, redraw it
-			if (LastHit + TimeSpan.FromSeconds(0.25) > DateTime.Now)
+			if (LastAttack != null && LastAttack.Time + TimeSpan.FromSeconds(0.25) > DateTime.Now)
 			{
 				Display.BlendingFunction(BlendingFactorSrc.SrcAlpha , BlendingFactorDest.OneMinusSrcAlpha);
 				Display.TexEnv = TextureEnvMode.Add;
@@ -253,7 +253,7 @@ namespace DungeonEye
 			Display.Color = Color.White;
 
 			// finish special mode
-			if (LastHit + TimeSpan.FromSeconds(0.25) > DateTime.Now)
+			if (LastAttack != null && LastAttack.Time + TimeSpan.FromSeconds(0.25) > DateTime.Now)
 			{
 				Display.TexEnv = mode;
 				Display.BlendingFunction(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
@@ -426,7 +426,7 @@ namespace DungeonEye
 		#endregion
 
 
-
+/*
 		/// <summary>
 		/// Attacks the monster
 		/// </summary>
@@ -443,7 +443,7 @@ namespace DungeonEye
 
 			return amount;
 		}
-
+*/
 
 
 		public override string ToString()
@@ -476,6 +476,8 @@ namespace DungeonEye
 			set;
 		}
 
+
+/*
 		/// <summary>
 		/// Last time the monster was hit
 		/// </summary>
@@ -484,7 +486,7 @@ namespace DungeonEye
 			get;
 			private set;
 		}
-
+*/
 
 		/// <summary>
 		/// Location of the monster

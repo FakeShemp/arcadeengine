@@ -29,35 +29,130 @@ using System.Xml;
 
 namespace DungeonEye
 {
+
 	/// <summary>
-	/// Result of the attack of a hero
+	/// This class handle an attack between to entities
 	/// </summary>
-	public class AttackResult
+	public class Attack
 	{
+
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="striker">Striker entity</param>
+		/// <param name="Attacked">Attacked entity</param>
+		/// <param name="item">Item used as a weapon. Use null for a hand attack</param>
+		public Attack(Entity striker, Entity target, Item item)
+		{
+			Time = DateTime.Now;
+			Striker = striker;
+			Target = target;
+			Item = item;
+
+			if (striker == null || target == null)
+				return;
+
+			Dice dice = new Dice(1, 8, 0);
+			Hit = dice.Roll();
+			if (IsAHit)
+				Target.Hit(this);
+
+		}
+
+
+
+		#region Properties
+
 		/// <summary>
 		/// Time of the attack
 		/// </summary>
-		public DateTime Date;
+		public DateTime Time
+		{
+			get;
+			private set;
+		}
+
+		/// <summary>
+		/// Striker entity
+		/// </summary>
+		public Entity Striker
+		{
+			get;
+			private set;
+		}
 
 
 		/// <summary>
-		/// Result of the attack.
+		/// Target entity
 		/// </summary>
-		/// <remarks>If Result == 0 the attack missed</remarks>
-		public short Result;
+		public Entity Target
+		{
+			get;
+			private set;
+		}
 
 
 		/// <summary>
-		/// Monster involved in the fight.
+		/// Attacking item
 		/// </summary>
-		public Monster Monster;
+		public Item Item
+		{
+			get;
+			private set;
+		}
 
 
 		/// <summary>
-		/// Hom many time the hero have to wait before attacking again with this hand
+		/// HACK Speed usage of the item (blocking hero hand)
 		/// </summary>
-		public TimeSpan OnHold;
+		public TimeSpan ItemSpeed
+		{
+			get
+			{
+				if (Item == null)
+					return TimeSpan.FromMilliseconds(250);
 
+				return Item.Speed;
+			}
+		}
+
+
+
+		/// <summary>
+		/// Is the attack a success
+		/// </summary>
+		public bool IsAHit
+		{
+			get
+			{
+				return Hit > 0;
+			}
+		}
+
+
+		/// <summary>
+		/// Is the attack a success
+		/// </summary>
+		public bool IsAMiss
+		{
+			get
+			{
+				return Hit == 0;
+			}
+		}
+
+
+
+		/// <summary>
+		/// Damage inflicted
+		/// </summary>
+		public int Hit
+		{
+			get;
+			private set;
+		}
+
+		#endregion
 	}
 
 }

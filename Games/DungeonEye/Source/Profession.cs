@@ -62,6 +62,20 @@ namespace DungeonEye
 		}
 
 
+		/// <summary>
+		/// Add xp
+		/// </summary>
+		/// <param name="amount">Amount of points to add</param>
+		/// <returns>True if level up</returns>
+		public bool AddXP(int amount)
+		{
+			Experience.Points += amount;
+
+			return false;
+		}
+
+
+
 		#region IO
 
 
