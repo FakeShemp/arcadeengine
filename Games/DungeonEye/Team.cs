@@ -417,13 +417,13 @@ namespace DungeonEye
 					else
 						Items.Draw(86, new Point(pos.X + 96, pos.Y + 36));
 
-					if (!hero.CanAttack(EntityHand.Primary))
+					if (!hero.CanUseHand(EntityHand.Primary))
 						TileSet.Draw(3, new Point(pos.X + 66, pos.Y + 20));
 
 
 					// Hero hit a monster a few moment ago
 					Attack attack = hero.GetLastAttack(EntityHand.Primary);
-					if (attack != null && attack.IsAHit && attack.Time + attack.ItemSpeed > DateTime.Now)
+					if (attack != null && !hero.CanUseHand(EntityHand.Primary))// attack.Time + attack.ItemSpeed > DateTime.Now)
 					{
 						// Ghost item
 						TileSet.Draw(3, new Point(pos.X + 66, pos.Y + 20));
@@ -449,13 +449,13 @@ namespace DungeonEye
 					else
 						Items.Draw(85, new Point(pos.X + 96, pos.Y + 68));
 
-					if (!hero.CanAttack(EntityHand.Secondary))
+					if (!hero.CanUseHand(EntityHand.Secondary))
 						TileSet.Draw(3, new Point(pos.X + 66, pos.Y + 52));
 
 
 					// Hero hit a monster a few moment ago
 					attack = hero.GetLastAttack(EntityHand.Secondary);
-					if (attack != null && attack.IsAHit && attack.Time + attack.ItemSpeed > DateTime.Now)
+					if (attack != null && !hero.CanUseHand(EntityHand.Secondary))// && attack.IsAHit && SelectedHero.CanUseHand(EntityHand.Secondary))//attack.Time + attack.ItemSpeed > DateTime.Now)
 					{
 						// Ghost item
 						TileSet.Draw(3, new Point(pos.X + 66, pos.Y + 52));
@@ -541,8 +541,21 @@ namespace DungeonEye
 			OutlinedFont.DrawText(new Point(430, 12), Color.White, SelectedHero.Name);
 
 			// HP and Food
-
 			Font.DrawText(new Point(500, 30), Color.Black, SelectedHero.HitPoint.Current + " of " + SelectedHero.HitPoint.Max);
+
+
+			// HP and Food
+			if (SelectedHero.IsUnconscious)
+			{
+				OutlinedFont.DrawText(new Point(450, 316), Color.FromArgb(255, 85, 85), "UNCONSCIOUS");
+				TileSet.Draw(2, new Point(364, 4));
+			}
+			else if (SelectedHero.IsDead)
+			{
+				OutlinedFont.DrawText(new Point(500, 316), Color.FromArgb(255, 85, 85), "DEAD");
+				TileSet.Draw(4, new Point(364, 4));
+			}
+
 
 			// Food
 			Color color;
@@ -1349,7 +1362,7 @@ namespace DungeonEye
 
 
 							// Take object in primary hand
-							if (new Rectangle(434 + 144 * x, y * 104 + 22, 60, 32).Contains(mousePos) && hero.CanAttack(EntityHand.Primary))
+							if (new Rectangle(434 + 144 * x, y * 104 + 22, 60, 32).Contains(mousePos) && hero.CanUseHand(EntityHand.Primary))
 							{
 								item = hero.GetInventoryItem(InventoryPosition.Primary);
 
@@ -1367,7 +1380,7 @@ namespace DungeonEye
 							}
 
 							// Take object in secondary hand
-							if (new Rectangle(434 + 144 * x, y * 104 + 54, 60, 32).Contains(mousePos) && hero.CanAttack(EntityHand.Secondary))
+							if (new Rectangle(434 + 144 * x, y * 104 + 54, 60, 32).Contains(mousePos) && hero.CanUseHand(EntityHand.Secondary))
 							{
 								item = hero.GetInventoryItem(InventoryPosition.Secondary);
 
@@ -1438,13 +1451,13 @@ namespace DungeonEye
 
 							#region Use object in primary hand
 							//AttackResult attack = null;
-							if (new Rectangle(434 + 144 * x, y * 104 + 22, 60, 32).Contains(mousePos) && hero.CanAttack(EntityHand.Primary))
+							if (new Rectangle(434 + 144 * x, y * 104 + 22, 60, 32).Contains(mousePos) && hero.CanUseHand(EntityHand.Primary))
 								hero.UseHand(EntityHand.Primary);
 
 							#endregion
 
 							#region Use object in secondary hand
-							if (new Rectangle(434 + 144 * x, y * 104 + 54, 60, 32).Contains(mousePos) && hero.CanAttack(EntityHand.Secondary))
+							if (new Rectangle(434 + 144 * x, y * 104 + 54, 60, 32).Contains(mousePos) && hero.CanUseHand(EntityHand.Secondary))
 								hero.UseHand(EntityHand.Secondary);
 
 							//if (attack != null && attack.Monster != null)
@@ -1970,9 +1983,13 @@ namespace DungeonEye
 		/// <param name="amount">Amount to be distributed among the entire team</param>
 		public void AddExperience(int amount)
 		{
+			if (amount == 0)
+				return;
+
 			int value = amount / HeroCount;
 			foreach (Hero hero in Heroes)
-				hero.AddExperience(value);
+				if (hero != null)
+					hero.AddExperience(value);
 		}
 
 

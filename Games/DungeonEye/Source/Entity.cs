@@ -97,6 +97,12 @@ namespace DungeonEye
 				return;
 
 			HitPoint.Current -= LastAttack.Hit;
+
+			// Reward the team for having killed the entity
+			if (IsDead && attack.Striker is Hero)
+			{
+				(attack.Striker as Hero).Team.AddExperience(Experience);
+			}
 		}
 
 
@@ -124,6 +130,10 @@ namespace DungeonEye
 
 			writer.WriteStartElement("alignment");
 			writer.WriteAttributeString("value", Alignment.ToString());
+			writer.WriteEndElement();
+
+			writer.WriteStartElement("experience");
+			writer.WriteAttributeString("value", Experience.ToString());
 			writer.WriteEndElement();
 
 			writer.WriteStartElement("speed");
@@ -203,6 +213,12 @@ namespace DungeonEye
 					Speed = int.Parse(xml.Attributes["value"].Value);
 				}
 				break;
+
+				case "experience":
+				{
+					Experience = int.Parse(xml.Attributes["value"].Value);
+				}
+				break;
 			}
 
 
@@ -215,6 +231,16 @@ namespace DungeonEye
 
 
 		#region Properties
+
+
+		/// <summary>
+		/// Experience gained by killing the entity
+		/// </summary>
+		public int Experience
+		{
+			get;
+			set;
+		}
 
 		/// <summary>
 		/// This value determines a hero's resistance to magic attacks.

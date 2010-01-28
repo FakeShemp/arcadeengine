@@ -53,6 +53,9 @@ namespace DungeonEye
 			BackPack = new Item[14];
 			WaistPack = new Item[3];
 			HandsAttacks = new Attack[2];
+			HandPenality = new DateTime[2];
+			HandPenality[0] = DateTime.Now;
+			HandPenality[1] = DateTime.Now;
 		}
 
 
@@ -113,6 +116,9 @@ namespace DungeonEye
 		/// <param name="amount">XP to add</param>
 		public void AddExperience(int amount)
 		{
+			if (amount == 0)
+				return;
+
 			foreach (Profession prof in Professions)
 			{
 				if (prof.AddXP(amount / ProfessionCount))
@@ -420,6 +426,19 @@ namespace DungeonEye
 
 		#region Attacks & Damages
 
+
+		/// <summary>
+		/// Add a time penality to a hand
+		/// </summary>
+		/// <param name="hand">Hand</param>
+		/// <param name="duration">Duration in ms</param>
+		public void AddHandPenality(EntityHand hand, TimeSpan duration)
+		{
+
+			HandPenality[(int)hand] = DateTime.Now + duration;
+		}
+
+
 		/// <summary>
 		/// Hero attack with his hands
 		/// </summary>
@@ -427,7 +446,7 @@ namespace DungeonEye
 		public void UseHand(EntityHand hand)
 		{
 			// No action possible
-			if (IsUnconscious || IsDead)
+			if (IsUnconscious || IsDead || !CanUseHand(hand))
 				return;
 
 
@@ -442,14 +461,10 @@ namespace DungeonEye
 			if (item == null)
 			{
 				HandsAttacks[(int)hand] = new Attack(this, target, null);
+				AddHandPenality(hand, TimeSpan.FromMilliseconds(250));
 				return;
 			}
 
-
-
-
-			// Attack
-			HandsAttacks[(int)hand] = null;
 
 
 			// 
@@ -487,51 +502,33 @@ namespace DungeonEye
 					{
 					}
 
-					else if (item.UseQuiver && Quiver > 0)
+					else if (item.UseQuiver)
 					{
-						Team.Location.Maze.FlyingItems.Add(
-							new FlyingItem(this, ResourceManager.CreateAsset<Item>("Arrow"),
-							loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
-						Quiver--;
+						if (Quiver > 0)
+						{
+							Team.Location.Maze.FlyingItems.Add(
+								new FlyingItem(this, ResourceManager.CreateAsset<Item>("Arrow"),
+								loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
+							Quiver--;
+
+							AddHandPenality(hand, TimeSpan.FromMilliseconds(500));
+						}
+						else
+							AddHandPenality(hand, TimeSpan.FromMilliseconds(125));
 					}
 
-					HandsAttacks[(int)hand] = new Attack(this, target, item);
+					else
+					{
+						HandsAttacks[(int)hand] = new Attack(this, target, item);
+						AddHandPenality(hand, item.Speed);
 
+					}
 				}
 				break;
 
 			}
 
-
-			// No attack
-			if (HandsAttacks[(int)hand] == null || target == null)
-				return;
-	
-			// Target entity is dead, add XP to the team
-			if (target.IsDead)
-			{
-
-				//Team.AddExperience((target as Monster).
-			}
-
 		}
-
-/*
-		/// <summary>
-		/// An item hit the hero
-		/// </summary>
-		/// <param name="item">Item hitting the hero</param>
-		/// <param name="value">Amount of damage</param>
-		public void Hit(Item item, int value)
-		{
-			LastHitTime = DateTime.Now;
-			LastHit = value;
-
-
-			HitPoint.Current -= value;
-		}
-
-*/
 
 		#endregion
 
@@ -539,11 +536,11 @@ namespace DungeonEye
 		#region Helpers
 
 		/// <summary>
-		/// Does the hero can attack ?
+		/// Can use the hand
 		/// </summary>
 		/// <param name="hand">Hand to attack</param>
 		/// <returns>True if the specified hand can attack</returns>
-		public bool CanAttack(EntityHand hand)
+		public bool CanUseHand(EntityHand hand)
 		{
 			if (IsDead || IsUnconscious)
 				return false;
@@ -553,11 +550,7 @@ namespace DungeonEye
 			if (item != null && item.TwoHanded)
 				return false;
 
-			Attack attack = GetLastAttack(hand);
-			if (attack == null)// || attack.Item == null)
-				return true;
-
-			return attack.Time + attack.ItemSpeed < DateTime.Now;
+			return HandPenality[(int)hand] < DateTime.Now;
 		}
 
 
@@ -873,11 +866,11 @@ namespace DungeonEye
 			}
 		}
 
+
 		/// <summary>
 		/// ID of head tile
 		/// </summary>
 		public int Head;
-
 
 
 		/// <summary>
@@ -927,6 +920,15 @@ namespace DungeonEye
 		/// Sums of last attacks
 		/// </summary>
 		Attack[] HandsAttacks;
+
+		/// <summary>
+		/// Time penality on hands
+		/// </summary>
+		public DateTime[] HandPenality
+		{
+			get;
+			private set;
+		}
 
 		#endregion
 	}

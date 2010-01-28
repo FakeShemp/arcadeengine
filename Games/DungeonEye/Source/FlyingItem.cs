@@ -159,7 +159,7 @@ namespace DungeonEye
 							if (monster != null)
 							{
 								Attack attack = new Attack(Owner, monster, Item);
-								monster.Hit(attack);
+							//	monster.Hit(attack);
 							}
 					}
 					return true;

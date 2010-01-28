@@ -127,7 +127,6 @@ namespace DungeonEye
 			get
 			{
 				return (int) Math.Floor((1 + Math.Sqrt(Points / 125.0f + 1)) / 2);
-			//	return (1 + ((1 + (4 * (Points / 500))) ^ (1 / 2))) / (2 * 1);
 			}
 		}
 

@@ -102,21 +102,6 @@ namespace DungeonEye
 		}
 
 
-		/// <summary>
-		/// HACK Speed usage of the item (blocking hero hand)
-		/// </summary>
-		public TimeSpan ItemSpeed
-		{
-			get
-			{
-				if (Item == null)
-					return TimeSpan.FromMilliseconds(250);
-
-				return Item.Speed;
-			}
-		}
-
-
 
 		/// <summary>
 		/// Is the attack a success

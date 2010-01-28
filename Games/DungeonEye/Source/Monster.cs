@@ -426,25 +426,6 @@ namespace DungeonEye
 		#endregion
 
 
-/*
-		/// <summary>
-		/// Attacks the monster
-		/// </summary>
-		/// <param name="amount">HP to remove to the monster</param>
-		/// <returns>Amount of HP actually removed</returns>
-		public virtual int Attack(short amount)
-		{
-			if (amount <= 0)
-				return 0;
-
-
-			HitPoint.Current -= amount;
-			LastHit = DateTime.Now;
-
-			return amount;
-		}
-*/
-
 
 		public override string ToString()
 		{
