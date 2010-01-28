@@ -69,9 +69,11 @@ namespace DungeonEye
 		/// <returns>True if level up</returns>
 		public bool AddXP(int amount)
 		{
+			int level = Experience.Level;
+
 			Experience.Points += amount;
 
-			return false;
+			return level != Experience.Level;
 		}
 
 

@@ -45,7 +45,7 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.InterfaceNameBox = new System.Windows.Forms.ComboBox();
 			this.ScriptNameBox = new System.Windows.Forms.ComboBox();
-			this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+			this.ExperienceBox = new System.Windows.Forms.NumericUpDown();
 			this.label3 = new System.Windows.Forms.Label();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.VisualTab = new System.Windows.Forms.TabPage();
@@ -56,7 +56,7 @@
 			this.VisualGroupBox.SuspendLayout();
 			this.PocketGroupBox.SuspendLayout();
 			this.groupBox1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.ExperienceBox)).BeginInit();
 			this.tabControl1.SuspendLayout();
 			this.VisualTab.SuspendLayout();
 			this.EntityTab.SuspendLayout();
@@ -239,19 +239,20 @@
 			this.ScriptNameBox.TabIndex = 0;
 			this.ScriptNameBox.SelectedIndexChanged += new System.EventHandler(this.ScriptNameBox_SelectedIndexChanged);
 			// 
-			// numericUpDown1
+			// ExperienceBox
 			// 
-			this.numericUpDown1.Location = new System.Drawing.Point(115, 109);
-			this.numericUpDown1.Maximum = new decimal(new int[] {
+			this.ExperienceBox.Location = new System.Drawing.Point(115, 109);
+			this.ExperienceBox.Maximum = new decimal(new int[] {
             1410065408,
             2,
             0,
             0});
-			this.numericUpDown1.Name = "numericUpDown1";
-			this.numericUpDown1.Size = new System.Drawing.Size(56, 20);
-			this.numericUpDown1.TabIndex = 11;
-			this.numericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.numericUpDown1.ThousandsSeparator = true;
+			this.ExperienceBox.Name = "ExperienceBox";
+			this.ExperienceBox.Size = new System.Drawing.Size(99, 20);
+			this.ExperienceBox.TabIndex = 11;
+			this.ExperienceBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.ExperienceBox.ThousandsSeparator = true;
+			this.ExperienceBox.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
 			// 
 			// label3
 			// 
@@ -309,7 +310,7 @@
 			// 
 			this.PropertiesTab.Controls.Add(this.label3);
 			this.PropertiesTab.Controls.Add(this.PocketGroupBox);
-			this.PropertiesTab.Controls.Add(this.numericUpDown1);
+			this.PropertiesTab.Controls.Add(this.ExperienceBox);
 			this.PropertiesTab.Controls.Add(this.groupBox1);
 			this.PropertiesTab.Controls.Add(this.DamageBox);
 			this.PropertiesTab.Location = new System.Drawing.Point(4, 22);
@@ -348,7 +349,7 @@
 			this.PocketGroupBox.PerformLayout();
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.ExperienceBox)).EndInit();
 			this.tabControl1.ResumeLayout(false);
 			this.VisualTab.ResumeLayout(false);
 			this.EntityTab.ResumeLayout(false);
@@ -377,7 +378,7 @@
 		private System.Windows.Forms.ComboBox InterfaceNameBox;
 		private System.Windows.Forms.ComboBox ScriptNameBox;
 		private DiceForm DamageBox;
-		private System.Windows.Forms.NumericUpDown numericUpDown1;
+		private System.Windows.Forms.NumericUpDown ExperienceBox;
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.TabControl tabControl1;
 		private System.Windows.Forms.TabPage VisualTab;

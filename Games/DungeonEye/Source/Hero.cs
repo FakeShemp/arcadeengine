@@ -52,7 +52,7 @@ namespace DungeonEye
 			Inventory = new Item[26];
 			BackPack = new Item[14];
 			WaistPack = new Item[3];
-			HandsAttacks = new Attack[2];
+			Attacks = new Attack[2];
 			HandPenality = new DateTime[2];
 			HandPenality[0] = DateTime.Now;
 			HandPenality[1] = DateTime.Now;
@@ -125,7 +125,7 @@ namespace DungeonEye
 				{
 
 					// New level gained
-					Team.AddMessage(Name + " gained a level !");
+					Team.AddMessage(Name + " gained a level in " + prof.Class.ToString() + " !");
 				}
 			}
 
@@ -460,7 +460,7 @@ namespace DungeonEye
 			// Hand attack
 			if (item == null)
 			{
-				HandsAttacks[(int)hand] = new Attack(this, target, null);
+				Attacks[(int)hand] = new Attack(this, target, null);
 				AddHandPenality(hand, TimeSpan.FromMilliseconds(250));
 				return;
 			}
@@ -519,7 +519,7 @@ namespace DungeonEye
 
 					else
 					{
-						HandsAttacks[(int)hand] = new Attack(this, target, item);
+						Attacks[(int)hand] = new Attack(this, target, item);
 						AddHandPenality(hand, item.Speed);
 
 					}
@@ -561,7 +561,7 @@ namespace DungeonEye
 		/// <returns>Attack result</returns>
 		public Attack GetLastAttack(EntityHand hand)
 		{
-			return HandsAttacks[(int)hand];
+			return Attacks[(int)hand];
 		}
 
 
@@ -917,9 +917,9 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Sums of last attacks
+		/// Summary of last attacks
 		/// </summary>
-		Attack[] HandsAttacks;
+		Attack[] Attacks;
 
 		/// <summary>
 		/// Time penality on hands

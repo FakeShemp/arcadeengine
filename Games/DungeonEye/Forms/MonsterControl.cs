@@ -81,8 +81,8 @@ namespace DungeonEye.Forms
 
 			if (Monster == null)
 			{
+				ExperienceBox.Value = 0;
 				PocketItemsBox.Items.Clear();
-			//	HPBox.HitPoint = null;
 				ScriptNameBox.Items.Clear();
 				InterfaceNameBox.Items.Clear();
 				TileSetBox.Items.Clear();
@@ -111,7 +111,7 @@ namespace DungeonEye.Forms
 					PocketItemsBox.Items.Add(name);
 				PocketItemsBox.EndUpdate();
 
-			//	HPBox.HitPoint = Monster.HitPoint;
+				ExperienceBox.Value = Monster.Experience;
 
 				ScriptNameBox.SelectedItem = Monster.ScriptName;
 				InterfaceNameBox.SelectedItem = Monster.InterfaceName;
@@ -402,6 +402,19 @@ namespace DungeonEye.Forms
 				Monster.ItemsInPocket.Add(name);
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+		{
+			if (Monster == null)
+				return;
+			Monster.Experience = (int)ExperienceBox.Value;
+		}
+
 		#endregion
 
 
@@ -431,5 +444,6 @@ namespace DungeonEye.Forms
 
 
 		#endregion
+
 	}
 }
