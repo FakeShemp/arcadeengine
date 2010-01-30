@@ -125,7 +125,7 @@ namespace DungeonEye
 		{
 			get
 			{
-				return (int)Math.Floor(Value / 2.0f);
+				return (Value - 10) / 2;
 			}
 		}
 

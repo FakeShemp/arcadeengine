@@ -432,7 +432,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="hand">Hand</param>
 		/// <param name="duration">Duration in ms</param>
-		public void AddHandPenality(EntityHand hand, TimeSpan duration)
+		public void AddHandPenality(HeroHand hand, TimeSpan duration)
 		{
 
 			HandPenality[(int)hand] = DateTime.Now + duration;
@@ -443,7 +443,7 @@ namespace DungeonEye
 		/// Hero attack with his hands
 		/// </summary>
 		/// <param name="hand">Attacking hand</param>
-		public void UseHand(EntityHand hand)
+		public void UseHand(HeroHand hand)
 		{
 			// No action possible
 			if (IsUnconscious || IsDead || !CanUseHand(hand))
@@ -455,7 +455,7 @@ namespace DungeonEye
 
 
 			// Which item is used for the attack
-			Item item = GetInventoryItem(hand == EntityHand.Primary ? InventoryPosition.Primary : InventoryPosition.Secondary);
+			Item item = GetInventoryItem(hand == HeroHand.Primary ? InventoryPosition.Primary : InventoryPosition.Secondary);
 
 			// Hand attack
 			if (item == null)
@@ -480,7 +480,7 @@ namespace DungeonEye
 					Team.Location.Maze.FlyingItems.Add(new FlyingItem(this, item, loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
 
 					// Empty hand
-					SetInventoryItem(hand == EntityHand.Primary ? InventoryPosition.Primary : InventoryPosition.Secondary, null);
+					SetInventoryItem(hand == HeroHand.Primary ? InventoryPosition.Primary : InventoryPosition.Secondary, null);
 				}
 				break;
 
@@ -520,7 +520,7 @@ namespace DungeonEye
 					else
 					{
 						Attacks[(int)hand] = new Attack(this, target, item);
-						AddHandPenality(hand, item.Speed);
+						AddHandPenality(hand, item.AttackSpeed);
 
 					}
 				}
@@ -535,18 +535,36 @@ namespace DungeonEye
 
 		#region Helpers
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="classe"></param>
+		/// <returns></returns>
+		public bool CheckClass(HeroClass classe)
+		{
+			foreach(Profession prof in Professions)
+				if (prof != null)
+				{
+					if (prof.Class == classe)
+						return true;
+				}
+
+			return false;
+		}
+
 		/// <summary>
 		/// Can use the hand
 		/// </summary>
 		/// <param name="hand">Hand to attack</param>
 		/// <returns>True if the specified hand can attack</returns>
-		public bool CanUseHand(EntityHand hand)
+		public bool CanUseHand(HeroHand hand)
 		{
 			if (IsDead || IsUnconscious)
 				return false;
 
 			// Check the item in the other hand
-			Item item = GetInventoryItem(hand == EntityHand.Primary ? InventoryPosition.Secondary : InventoryPosition.Primary);
+			Item item = GetInventoryItem(hand == HeroHand.Primary ? InventoryPosition.Secondary : InventoryPosition.Primary);
 			if (item != null && item.TwoHanded)
 				return false;
 
@@ -559,7 +577,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="hand">Hand of the attack</param>
 		/// <returns>Attack result</returns>
-		public Attack GetLastAttack(EntityHand hand)
+		public Attack GetLastAttack(HeroHand hand)
 		{
 			return Attacks[(int)hand];
 		}
@@ -726,6 +744,12 @@ namespace DungeonEye
 
 
 		#region Hero properties
+
+		/// <summary>
+		/// Number of arrow in the quiver
+		/// </summary>
+		public int Quiver;
+
 
 		/// <summary>
 		/// Armor class
@@ -937,6 +961,23 @@ namespace DungeonEye
 	#region Enums & Structures
 
 
+	/// <summary>
+	/// Position in the inventory of a Hero
+	/// </summary>
+	public enum InventoryPosition
+	{
+		Armor,
+		Wrist,
+		Secondary,
+		Ring_Left,
+		Ring_Right,
+		Feet,
+		Primary,
+		Neck,
+		Helmet,
+	}
+
+
 
 	/// <summary>
 	/// Class of the Hero
@@ -1001,6 +1042,24 @@ namespace DungeonEye
 		HalflingFemale
 	}
 
+
+
+	/// <summary>
+	/// Hand of Hero
+	/// </summary>
+	public enum HeroHand
+	{
+		/// <summary>
+		/// Right hand
+		/// </summary>
+		Primary = 0,
+
+		/// <summary>
+		/// Left hand
+		/// </summary>
+		Secondary = 1
+
+	}
 
 
 

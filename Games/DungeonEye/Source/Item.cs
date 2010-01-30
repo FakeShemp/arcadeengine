@@ -155,7 +155,7 @@ namespace DungeonEye
 
 					case "speed":
 					{
-						Speed = TimeSpan.FromMilliseconds(int.Parse(node.Attributes["value"].Value));
+						AttackSpeed = TimeSpan.FromMilliseconds(int.Parse(node.Attributes["value"].Value));
 					}
 					break;
 
@@ -276,7 +276,7 @@ namespace DungeonEye
 
 
 			writer.WriteStartElement("speed");
-			writer.WriteAttributeString("value", Speed.TotalMilliseconds.ToString());
+			writer.WriteAttributeString("value", AttackSpeed.TotalMilliseconds.ToString());
 			writer.WriteEndElement();
 
 			writer.WriteEndElement();
@@ -445,9 +445,9 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Time to wait before next use of the item in ms
+		/// Denotes how fast the item does damage. 
 		/// </summary>
-		public TimeSpan Speed
+		public TimeSpan AttackSpeed
 		{
 			get;
 			set;

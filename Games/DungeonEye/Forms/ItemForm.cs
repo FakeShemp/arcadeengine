@@ -92,7 +92,7 @@ namespace DungeonEye.Forms
 			CriticalMinBox.Value = Item.Critical.X;
 			CriticalMaxBox.Value = Item.Critical.Y;
 			MultiplierBox.Value = Item.CriticalMultiplier;
-			SpeedBox.Value = (int)Item.Speed.TotalMilliseconds;
+			SpeedBox.Value = (int)Item.AttackSpeed.TotalMilliseconds;
 			WeightBox.Value = Item.Weight;
 			TypeBox.SelectedItem = Item.Type.ToString();
 			GroundTileBox.SelectedItem = Item.GroundTileID;
@@ -562,7 +562,7 @@ namespace DungeonEye.Forms
 			if (Item == null)
 				return;
 
-			Item.Speed = TimeSpan.FromMilliseconds((int)SpeedBox.Value);
+			Item.AttackSpeed = TimeSpan.FromMilliseconds((int)SpeedBox.Value);
 		}
 
 		private void WeightBox_ValueChanged(object sender, EventArgs e)

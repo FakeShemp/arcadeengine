@@ -27,6 +27,7 @@ namespace DungeonEye
 {
 	/// <summary>
 	/// A hit that strikes a vital area and therefore deals double damage or more.
+	/// http://nwn.wikia.com/wiki/Critical_hit
 	/// </summary>
 	public class CriticalHit
 	{
@@ -42,6 +43,17 @@ namespace DungeonEye
 
 
 		/// <summary>
+		/// Is a critical hit
+		/// </summary>
+		/// <param name="value">Attack roll value</param>
+		/// <returns></returns>
+		public bool IsCriticalHit(int value)
+		{
+			return value >= Minimum && value <= Maximum;
+		}
+
+
+		/// <summary>
 		/// ToString
 		/// </summary>
 		/// <returns></returns>
@@ -49,6 +61,7 @@ namespace DungeonEye
 		{
 			return string.Format("{0}-{1}(x{2})", Minimum, Maximum, Multiplier); 
 		}
+
 
 		#region IO
 
@@ -109,7 +122,7 @@ namespace DungeonEye
 		#region Properties
 
 		/// <summary>
-		/// Minimum value
+		/// Minimum threat
 		/// </summary>
 		public int Minimum
 		{
@@ -118,7 +131,7 @@ namespace DungeonEye
 		}
 
 		/// <summary>
-		/// Maximum value
+		/// Maximum threat
 		/// </summary>
 		public int Maximum
 		{

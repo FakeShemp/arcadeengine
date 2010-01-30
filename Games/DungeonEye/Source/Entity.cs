@@ -44,7 +44,7 @@ namespace DungeonEye
 			Intelligence = new Ability();
 			Wisdom = new Ability();
 
-			ReRollAbilities();
+		//	ReRollAbilities();
 		}
 
 
@@ -137,7 +137,7 @@ namespace DungeonEye
 			writer.WriteEndElement();
 
 			writer.WriteStartElement("speed");
-			writer.WriteAttributeString("value", Speed.ToString());
+			writer.WriteAttributeString("value", Speed.TotalMilliseconds.ToString());
 			writer.WriteEndElement();
 
 			return true;
@@ -210,7 +210,7 @@ namespace DungeonEye
 
 				case "speed":
 				{
-					Speed = int.Parse(xml.Attributes["value"].Value);
+					Speed = TimeSpan.FromMilliseconds(int.Parse(xml.Attributes["value"].Value));
 				}
 				break;
 
@@ -242,6 +242,7 @@ namespace DungeonEye
 			set;
 		}
 
+
 		/// <summary>
 		/// This value determines a hero's resistance to magic attacks.
 		/// </summary>
@@ -251,6 +252,7 @@ namespace DungeonEye
 			set;
 		}
 
+	
 		/// <summary>
 		/// This value determines a hero's resistance to fire damage.
 		/// </summary>
@@ -262,7 +264,8 @@ namespace DungeonEye
 
 		
 		/// <summary>
-		/// Armor class
+		/// Represents an entity's ability to avoid being hit in combat. 
+		/// An opponent's attack roll must equal or exceed the target entity's Armor Class to hit it. 
 		/// </summary>
 		public abstract int ArmorClass
 		{
@@ -272,14 +275,13 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Speed
+		/// Gives the entity’s tactical speed.
 		/// </summary>
-		public int Speed
+		public TimeSpan Speed
 		{
 			get;
 			set;
 		}
-
 
 
 		/// <summary>
@@ -326,6 +328,7 @@ namespace DungeonEye
 		}
 
 
+		#region Abilities
 
 		/// <summary>
 		/// This value determines the load a hero can carry, how far items can be thrown 
@@ -391,7 +394,7 @@ namespace DungeonEye
 			private set;
 		}
 
-
+		#endregion
 
 		/// <summary>
 		/// Hero alignement
@@ -403,48 +406,7 @@ namespace DungeonEye
 		}
 
 
-		/// <summary>
-		/// Number of arrow in the quiver
-		/// </summary>
-		public int Quiver;
-
-
 		#endregion
-	}
-
-
-	/// <summary>
-	/// Hand of Hero
-	/// </summary>
-	public enum EntityHand
-	{
-		/// <summary>
-		/// Right hand
-		/// </summary>
-		Primary = 0,
-
-		/// <summary>
-		/// Left hand
-		/// </summary>
-		Secondary = 1
-
-	}
-
-
-	/// <summary>
-	/// Position in the inventory of a Hero
-	/// </summary>
-	public enum InventoryPosition
-	{
-		Armor,
-		Wrist,
-		Secondary,
-		Ring_Left,
-		Ring_Right,
-		Feet,
-		Primary,
-		Neck,
-		Helmet,
 	}
 
 
@@ -464,6 +426,37 @@ namespace DungeonEye
 		LawfulEvil,
 		NeutralEvil,
 		ChaoticEvil
+	}
+
+
+
+	/// <summary>
+	/// define the height of the creature. It is used to check if missiles can fly over the creatures (for example Fireballs can fly over small creatures).
+	/// This value is also used to define how to animate a door that is closed upon the creature: 
+	/// </summary>
+	/// <remarks>This value is ignored for non material creatures and the door always closes normally without causing any damage to such creatures</remarks>
+	public enum EntityHeight
+	{
+		/// <summary>
+		/// the door is animated from half of its size to 3/4th of its size. This applies to small creatures. 
+		/// </summary>
+		Small,
+
+		/// <summary>
+		/// the door is animated between 1/4th of its size to half of its size. This applies to medium sized creatures. 
+		/// </summary>
+		Medium,
+
+		/// <summary>
+		/// the door is animated from the top to 1/4th of its size. This applies to tall creatures.
+		/// </summary>
+		Tall,
+
+
+		/// <summary>
+		/// the door is not animated and stays fully open. The creature still takes damage.
+		/// </summary>
+		Giant
 	}
 
 

@@ -106,8 +106,6 @@ namespace DungeonEye
 		}
 
 
-
-
 		/// <summary>
 		/// Clone the dice
 		/// </summary>
@@ -118,7 +116,6 @@ namespace DungeonEye
 		}
 
 
-
 		#region Statics
 
 
@@ -127,7 +124,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="count">Number of throws</param>
 		/// <returns></returns>
-		public int GetD20(int count)
+		static public int GetD20(int count)
 		{
 			int res = 0;
 
@@ -146,7 +143,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="type">Type of saving throw</param>
 		/// <returns></returns>
-		public int SavingThrow(SavingThrowType type)
+		static public int SavingThrow(SavingThrowType type)
 		{
 			return 0;
 		}

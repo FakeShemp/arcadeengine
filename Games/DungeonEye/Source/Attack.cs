@@ -31,7 +31,9 @@ namespace DungeonEye
 {
 
 	/// <summary>
-	/// This class handle an attack between to entities
+	/// This class handle an attack between to entities.
+	/// There is a difference between Attacking and damaging. If you attack a monster, it is an attempt to do damage to it.
+	/// It is not guaranteed that the attack is successful. In case of damage the attack was successful. 
 	/// </summary>
 	public class Attack
 	{
@@ -51,6 +53,76 @@ namespace DungeonEye
 
 			if (striker == null || target == null)
 				return;
+
+			// Ranged attack ?
+			DungeonLocation from = null;
+			DungeonLocation to = null;
+			if (striker is Hero)
+				from = ((Hero)striker).Team.Location;
+			else
+				from = ((Monster)striker).Location;
+
+			if (target is Hero)
+				to = ((Hero)target).Team.Location;
+			else
+				to = ((Monster)target).Location;
+
+			Range = (int)Math.Sqrt((from.Position.Y - to.Position.Y) * (from.Position.Y - to.Position.Y) +
+						(from.Position.X - to.Position.X) * (from.Position.X - to.Position.X));
+
+			// Attack roll
+			int attackdie = Dice.GetD20(1);
+			if (attackdie == 1)
+				attackdie = -100000;
+			if (attackdie == 20)
+				attackdie = 100000;
+
+
+			// Base attack bonus
+			int baseattackbonus = 0;
+			int modifier = 0;					// modifier
+			int sizemodifier = 0;			// Size modifier
+			int rangepenality = 0;			// Range penality
+
+
+			if (striker is Hero)
+			{
+				Hero hero = striker as Hero;
+				foreach (Profession prof in hero.Professions)
+				{
+					if (prof == null)
+						continue;
+
+					if (prof.Class == HeroClass.Fighter || prof.Class == HeroClass.Ranger || prof.Class == HeroClass.Paladin)
+						baseattackbonus += prof.Experience.Level;
+
+					if (prof.Class == HeroClass.Cleric || prof.Class == HeroClass.Mage || prof.Class == HeroClass.Thief)
+						baseattackbonus += (prof.Experience.Level * 4) / 3;
+				}
+			}
+			else
+			{
+				Monster monster = striker as Monster;
+				sizemodifier = (int)monster.Size;
+			}
+
+
+			// Range penality
+			if (RangedAttack)
+			{
+				modifier = striker.Dexterity.Modifier;
+
+				//TODO : Add range penality
+			}
+			else
+				modifier = striker.Strength.Modifier;
+
+			// Attack bonus
+			int attackbonus = baseattackbonus + modifier + sizemodifier + rangepenality;
+			if (target.ArmorClass > attackdie + attackbonus)
+				return;
+
+
 
 			Dice dice = new Dice(1, 8, 0);
 			Hit = dice.Roll();
@@ -126,6 +198,27 @@ namespace DungeonEye
 			}
 		}
 
+
+		/// <summary>
+		/// Ranged attack
+		/// </summary>
+		public bool RangedAttack
+		{
+			get
+			{
+				return Range > 1;
+			}
+		}
+
+
+		/// <summary>
+		/// Distance of the attack
+		/// </summary>
+		public int Range
+		{
+			get;
+			private set;
+		}
 
 
 		/// <summary>

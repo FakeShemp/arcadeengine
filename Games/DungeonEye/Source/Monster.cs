@@ -60,6 +60,7 @@ namespace DungeonEye
 			ItemsInPocket = new List<string>();
 			//LastHit = new DateTime();
 			Damage = new Dice();
+			HitDice = new Dice();
 
 			DrawOffsetDuration = TimeSpan.FromSeconds(1.0f + GameBase.Random.NextDouble());
 		}
@@ -355,9 +356,21 @@ namespace DungeonEye
 					}
 					break;
 
+					case "hitdice":
+					{
+						HitDice.Load(node);
+					}
+					break;
+
 					case "armorclass":
 					{
 						ArmorClass = int.Parse(node.Attributes["value"].Value);
+					}
+					break;
+
+					case "baseattack":
+					{
+						BaseAttack = int.Parse(node.Attributes["value"].Value);
 					}
 					break;
 
@@ -399,6 +412,7 @@ namespace DungeonEye
 				Location.Save("location", writer);
 
 			Damage.Save("damage", writer);
+			HitDice.Save("hitdice", writer);
 
 			writer.WriteStartElement("tiles");
 			writer.WriteAttributeString("name", TileSetName);
@@ -414,6 +428,10 @@ namespace DungeonEye
 
 			writer.WriteStartElement("armorclass");
 			writer.WriteAttributeString("value", ArmorClass.ToString());
+			writer.WriteEndElement();
+
+			writer.WriteStartElement("baseattack");
+			writer.WriteAttributeString("value", BaseAttack.ToString());
 			writer.WriteEndElement();
 
 			writer.WriteEndElement();
@@ -435,6 +453,14 @@ namespace DungeonEye
 
 		#region Properties
 
+		/// <summary>
+		/// Base attack bonus
+		/// </summary>
+		public int BaseAttack
+		{
+			get;
+			set;
+		}
 
 		/// <summary>
 		/// Xml tag of the asset in bank
@@ -457,22 +483,10 @@ namespace DungeonEye
 			set;
 		}
 
-
-/*
 		/// <summary>
-		/// Last time the monster was hit
+		/// Dice rolled to generate hit points
 		/// </summary>
-		public DateTime LastHit
-		{
-			get;
-			private set;
-		}
-*/
-
-		/// <summary>
-		/// Location of the monster
-		/// </summary>
-		public DungeonLocation Location
+		public Dice HitDice
 		{
 			get;
 			set;
@@ -482,12 +496,11 @@ namespace DungeonEye
 		/// <summary>
 		/// Location of the monster
 		/// </summary>
-		public MazeBlock Block
+		public DungeonLocation Location
 		{
 			get;
-			private set;
+			set;
 		}
-
 
 
 
@@ -534,7 +547,7 @@ namespace DungeonEye
 		/// <summary>
 		/// The monster can absorb some items when they are thrown at him
 		/// </summary>
-		public float AbsorbItems;
+		public float AbsorbItemRate;
 
 
 		/// <summary>
@@ -598,7 +611,8 @@ namespace DungeonEye
 		/// <summary>
 		/// Defines the size of the creature on the floor. 
 		/// </summary>
-		/// <remarks>This value is ignored for non material creatures and the door always closes normally without causing any damage to such creatures</remarks>
+		/// <remarks>This value is ignored for non material creatures and 
+		/// the door always closes normally without causing any damage to such creatures</remarks>
 		public MonsterSize Size
 		{
 			get;
@@ -642,19 +656,6 @@ namespace DungeonEye
 		}
 
 
-
-
-		/// <summary>
-		/// Defines the movement speed of the monster.
-		/// This is the minimum of time required between two movements.
-		/// </summary>
-		public TimeSpan MovementSpeed
-		{
-			get;
-			set;
-		}
-
-
 		/// <summary>
 		/// Last time the team moved
 		/// </summary>
@@ -671,7 +672,7 @@ namespace DungeonEye
 		{
 			get
 			{
-				if (LastMove + MovementSpeed > DateTime.Now)
+				if (LastMove + Speed > DateTime.Now)
 					return false;
 
 				return true;
@@ -840,9 +841,10 @@ namespace DungeonEye
 	}
 
 
-
 	/// <summary>
-	/// Defines the size of the creature on the floor. 
+	/// A size modifier applies to the creature’s Armor Class (AC) and attack bonus,
+	/// as well as to certain skills. A creature’s size also determines how far 
+	/// it can reach to make a melee attack and how much space it occupies in a block.
 	/// </summary>
 	public enum MonsterSize
 	{
@@ -916,35 +918,6 @@ namespace DungeonEye
 		Fine = 8,
 	}
 
-
-	/// <summary>
-	/// define the height of the creature. It is used to check if missiles can fly over the creatures (for example Fireballs can fly over small creatures).
-	/// This value is also used to define how to animate a door that is closed upon the creature: 
-	/// </summary>
-	/// <remarks>This value is ignored for non material creatures and the door always closes normally without causing any damage to such creatures</remarks>
-	public enum EntityHeight
-	{
-		/// <summary>
-		/// the door is animated from half of its size to 3/4th of its size. This applies to small creatures. 
-		/// </summary>
-		Small,
-
-		/// <summary>
-		/// the door is animated between 1/4th of its size to half of its size. This applies to medium sized creatures. 
-		/// </summary>
-		Medium,
-
-		/// <summary>
-		/// the door is animated from the top to 1/4th of its size. This applies to tall creatures.
-		/// </summary>
-		Tall,
-
-
-		/// <summary>
-		/// the door is not animated and stays fully open. The creature still takes damage.
-		/// </summary>
-		Giant
-	}
 
 
 

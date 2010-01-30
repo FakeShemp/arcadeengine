@@ -198,6 +198,7 @@
     <Compile Include="Source\AutoMap.cs" />
     <Compile Include="CharGen.cs" />
     <Compile Include="Source\CriticalHit.cs" />
+    <Compile Include="Source\Defense.cs" />
     <Compile Include="Source\Entity.cs" />
     <Compile Include="Source\Experience.cs" />
     <Compile Include="Source\Gui\MessageBox.cs" />

@@ -53,6 +53,8 @@
 			this.EntityBox = new DungeonEye.Forms.EntityControl();
 			this.PropertiesTab = new System.Windows.Forms.TabPage();
 			this.DamageBox = new DungeonEye.Forms.DiceForm();
+			this.ArmorClassBox = new System.Windows.Forms.NumericUpDown();
+			this.label4 = new System.Windows.Forms.Label();
 			this.VisualGroupBox.SuspendLayout();
 			this.PocketGroupBox.SuspendLayout();
 			this.groupBox1.SuspendLayout();
@@ -61,6 +63,7 @@
 			this.VisualTab.SuspendLayout();
 			this.EntityTab.SuspendLayout();
 			this.PropertiesTab.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.ArmorClassBox)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// VisualGroupBox
@@ -252,7 +255,7 @@
 			this.ExperienceBox.TabIndex = 11;
 			this.ExperienceBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.ExperienceBox.ThousandsSeparator = true;
-			this.ExperienceBox.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
+			this.ExperienceBox.ValueChanged += new System.EventHandler(this.ExperienceBox_ValueChanged);
 			// 
 			// label3
 			// 
@@ -308,8 +311,10 @@
 			// 
 			// PropertiesTab
 			// 
+			this.PropertiesTab.Controls.Add(this.label4);
 			this.PropertiesTab.Controls.Add(this.label3);
 			this.PropertiesTab.Controls.Add(this.PocketGroupBox);
+			this.PropertiesTab.Controls.Add(this.ArmorClassBox);
 			this.PropertiesTab.Controls.Add(this.ExperienceBox);
 			this.PropertiesTab.Controls.Add(this.groupBox1);
 			this.PropertiesTab.Controls.Add(this.DamageBox);
@@ -334,6 +339,30 @@
 			this.DamageBox.TabIndex = 10;
 			this.DamageBox.ValueChanged += new System.EventHandler(this.DamageBox_ValueChanged);
 			// 
+			// ArmorClassBox
+			// 
+			this.ArmorClassBox.Location = new System.Drawing.Point(115, 135);
+			this.ArmorClassBox.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+			this.ArmorClassBox.Name = "ArmorClassBox";
+			this.ArmorClassBox.Size = new System.Drawing.Size(99, 20);
+			this.ArmorClassBox.TabIndex = 11;
+			this.ArmorClassBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.ArmorClassBox.ThousandsSeparator = true;
+			this.ArmorClassBox.ValueChanged += new System.EventHandler(this.ArmorClassBox_ValueChanged);
+			// 
+			// label4
+			// 
+			this.label4.AutoSize = true;
+			this.label4.Location = new System.Drawing.Point(12, 137);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(68, 13);
+			this.label4.TabIndex = 12;
+			this.label4.Text = "Armor Class :";
+			// 
 			// MonsterControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -355,6 +384,7 @@
 			this.EntityTab.ResumeLayout(false);
 			this.PropertiesTab.ResumeLayout(false);
 			this.PropertiesTab.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.ArmorClassBox)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -385,5 +415,7 @@
 		private System.Windows.Forms.TabPage EntityTab;
 		private System.Windows.Forms.TabPage PropertiesTab;
 		private EntityControl EntityBox;
+		private System.Windows.Forms.Label label4;
+		private System.Windows.Forms.NumericUpDown ArmorClassBox;
 	}
 }

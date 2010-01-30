@@ -67,7 +67,7 @@ namespace DungeonEye.Forms
 				WisdomBox.Value = entity.Wisdom.Value;
 				CharismaBox.Value = entity.Charisma.Value;
 				AlignmentBox.SelectedItem = entity.Alignment;
-				SpeedBox.Value = entity.Speed;
+				SpeedBox.Value = (int)entity.Speed.TotalMilliseconds;
 			}
 		}
 
@@ -167,7 +167,7 @@ namespace DungeonEye.Forms
 			if (entity == null)
 				return;
 
-			entity.Speed = (int)SpeedBox.Value;
+			entity.Speed = TimeSpan.FromMilliseconds((int)SpeedBox.Value);
 		}
 
 		#endregion
