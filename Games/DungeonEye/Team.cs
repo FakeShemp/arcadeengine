@@ -436,7 +436,7 @@ namespace DungeonEye
 								TileSet.Draw(3, new Point(pos.X + 66, pos.Y + 20 + yoffset));
 
 								// Monster hit ?
-								if (attack.Target != null && attack.Time > DateTime.Now.AddMilliseconds(-1000))
+								if (attack.Target != null && !attack.IsOutdated(DateTime.Now, 1000))
 								{
 									TileSet.Draw(21, new Point(pos.X + 64, pos.Y + 20 + yoffset));
 
@@ -485,7 +485,7 @@ namespace DungeonEye
 
 
 					// Hero was hit
-					if (hero.LastAttack != null && hero.LastAttack.Time+ TimeSpan.FromSeconds(1) > DateTime.Now)
+					if (hero.LastAttack != null && !hero.LastAttack.IsOutdated(DateTime.Now, 1000))
 					{
 						TileSet.Draw(20, new Point(pos.X + 24, pos.Y + 66));
 						Font.DrawText(new Point(pos.X + 52, pos.Y + 86), Color.White, hero.LastAttack.Hit.ToString());
@@ -1969,6 +1969,21 @@ namespace DungeonEye
 		#region Heroes
 
 
+
+		/// <summary>
+		/// Make damage to the whole team
+		/// </summary>
+		/// <param name="damage">Attack roll</param>
+		/// <param name="type">Type of saving throw</param>
+		/// <param name="difficulty">Difficulty</param>
+		public void Damage(Dice damage, SavingThrowType type, int difficulty)
+		{
+			foreach (Hero hero in Heroes)
+				if (hero != null)
+					hero.Damage(damage, type, difficulty);
+		}
+
+
 		/// <summary>
 		/// Add experience to the whole team
 		/// </summary>
@@ -2079,6 +2094,7 @@ namespace DungeonEye
 		{
 			return GetHeroFromPosition(HeroPosition.FrontLeft) == hero || GetHeroFromPosition(HeroPosition.FrontRight) == hero;
 		}
+
 
 		/// <summary>
 		/// Returns the ground position of a hero

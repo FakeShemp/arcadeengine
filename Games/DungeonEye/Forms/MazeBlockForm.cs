@@ -53,9 +53,6 @@ namespace DungeonEye.Forms
 			Maze = maze;
 
 
-		//	MonsterBox.Init();
-
-
 			#region Ground items
 
 			//Itemset = ResourceManager.CreateAsset<ItemSet>("Items");
@@ -206,6 +203,7 @@ namespace DungeonEye.Forms
 			#endregion
 
 
+			#region Stais
 			StairTypeBox.BeginUpdate();
 			StairTypeBox.Items.Clear();
 			foreach (string name in Enum.GetNames(typeof(StairType)))
@@ -213,7 +211,7 @@ namespace DungeonEye.Forms
 			if (MazeBlock.Stair != null)
 				StairTypeBox.SelectedItem = MazeBlock.Stair.Type.ToString();
 			StairTypeBox.EndUpdate();
-
+			#endregion
 		}
 
 
@@ -764,8 +762,12 @@ namespace DungeonEye.Forms
 			}
 			else if (MazeBlock.Pit != null)
 			{
+				Pit pit = MazeBlock.Pit;
 				SpecialTypeBox.SelectedItem = "Pit";
-
+				PitTargetLabel.Text = "Target : " + pit.Target.ToString();
+				HiddenPitBox.Checked = pit.IsHidden;
+				PitDamageBox.Dice.Clone(pit.Damage);
+				PitDiffcultyBox.Value = pit.Difficulty;
 			}
 			else if (MazeBlock.Stair != null)
 			{
@@ -943,6 +945,43 @@ namespace DungeonEye.Forms
 			PitTargetLabel.Text = "Target : " + MazeBlock.Pit.Target.ToString();
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void HiddenBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (MazeBlock.Pit == null)
+				return;
+
+			MazeBlock.Pit.IsHidden = HiddenPitBox.Checked;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void DiffcultyBox_ValueChanged(object sender, EventArgs e)
+		{
+			if (MazeBlock.Pit == null)
+				return;
+
+			MazeBlock.Pit.Difficulty = (int)PitDiffcultyBox.Value;
+		}
+
+		private void diceForm1_ValueChanged(object sender, EventArgs e)
+		{
+			if (MazeBlock.Pit == null)
+				return;
+
+			MazeBlock.Pit.Damage.Modifier = PitDamageBox.Dice.Modifier;
+			MazeBlock.Pit.Damage.Faces = PitDamageBox.Dice.Faces;
+			MazeBlock.Pit.Damage.Throws = PitDamageBox.Dice.Throws;
+		}
 
 		#endregion
 

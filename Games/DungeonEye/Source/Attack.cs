@@ -44,6 +44,7 @@ namespace DungeonEye
 		/// <param name="striker">Striker entity</param>
 		/// <param name="Attacked">Attacked entity</param>
 		/// <param name="item">Item used as a weapon. Use null for a hand attack</param>
+		/// http://nwn2.wikia.com/wiki/Attack_sequence
 		public Attack(Entity striker, Entity target, Item item)
 		{
 			Time = DateTime.Now;
@@ -87,20 +88,9 @@ namespace DungeonEye
 
 			if (striker is Hero)
 			{
-				Hero hero = striker as Hero;
-				foreach (Profession prof in hero.Professions)
-				{
-					if (prof == null)
-						continue;
-
-					if (prof.Class == HeroClass.Fighter || prof.Class == HeroClass.Ranger || prof.Class == HeroClass.Paladin)
-						baseattackbonus += prof.Experience.Level;
-
-					if (prof.Class == HeroClass.Cleric || prof.Class == HeroClass.Mage || prof.Class == HeroClass.Thief)
-						baseattackbonus += (prof.Experience.Level * 4) / 3;
-				}
+				baseattackbonus = ((Hero)striker).BaseAttackBonus;
 			}
-			else
+			else if (striker is Monster)
 			{
 				Monster monster = striker as Monster;
 				sizemodifier = (int)monster.Size;
@@ -134,6 +124,18 @@ namespace DungeonEye
 			if (IsAHit)
 				Target.Hit(this);
 
+		}
+
+
+		/// <summary>
+		/// Gets whether the action is outdated
+		/// </summary>
+		/// <param name="time"></param>
+		/// <param name="length"></param>
+		/// <returns></returns>
+		public bool IsOutdated(DateTime time, int length)
+		{
+			return Time + TimeSpan.FromMilliseconds(length) < time;
 		}
 
 

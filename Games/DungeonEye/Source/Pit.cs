@@ -41,6 +41,7 @@ namespace DungeonEye
 
 			Block = block;
 			Target = new DungeonLocation(Block.Location);
+			Damage = new Dice();
 
 		}
 
@@ -71,6 +72,26 @@ namespace DungeonEye
 						Target.Load(node);
 					}
 					break;
+
+					case "damage":
+					{
+						Damage.Load(node);
+					}
+					break;
+
+					case "hidden":
+					{
+						IsHidden = bool.Parse(node.Attributes["value"].Value);
+					}
+					break;
+
+					case "difficulty":
+					{
+						Difficulty = int.Parse(node.Attributes["value"].Value);
+					}
+					break;
+
+
 				}
 
 			}
@@ -91,7 +112,21 @@ namespace DungeonEye
 
 
 			writer.WriteStartElement("pit");
-			Target.Save("target", writer);
+
+			if (Target != null)
+				Target.Save("target", writer);
+
+			writer.WriteStartElement("hidden");
+			writer.WriteAttributeString("value", IsHidden.ToString());
+			writer.WriteEndElement();
+
+			writer.WriteStartElement("difficulty");
+			writer.WriteAttributeString("value", Difficulty.ToString());
+			writer.WriteEndElement();
+
+			Damage.Save("damage", writer);
+
+
 			writer.WriteEndElement();
 
 			return true;
@@ -106,7 +141,7 @@ namespace DungeonEye
 		#region Properties
 
 		/// <summary>
-		/// 
+		/// Location of the pit
 		/// </summary>
 		MazeBlock Block;
 
@@ -122,12 +157,14 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// A trick pit
+		/// An illusion pit
 		/// </summary>
-		public bool IsTrick
+		public bool IsIllusion
 		{
-			get;
-			set;
+			get
+			{
+				return Target == null;
+			}
 		}
 
 
@@ -135,6 +172,26 @@ namespace DungeonEye
 		/// A hidden pit
 		/// </summary>
 		public bool IsHidden
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// Difficulty Class
+		/// </summary>
+		public int Difficulty
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// Damage
+		/// </summary>
+		public Dice Damage
 		{
 			get;
 			set;

@@ -433,6 +433,55 @@ namespace DungeonEye
 
 
 		/// <summary>
+		/// Make damage to the hero
+		/// </summary>
+		/// <param name="damage">Attack roll</param>
+		/// <param name="type">Type of saving throw</param>
+		/// <param name="difficulty">Difficulty</param>
+		public void Damage(Dice damage, SavingThrowType type, int difficulty)
+		{
+			if (damage == null)
+				return;
+
+			int save = Dice.GetD20(1);
+
+			// No damage
+			if (save == 20 || save + SavingThrow(type) > difficulty)
+				return;
+
+			HitPoint.Current -= damage.Roll();
+
+		}
+	
+
+		/// <summary>
+		/// Returns the result of a saving throw
+		/// </summary>
+		/// <param name="type"></param>
+		/// <returns></returns>
+		public int SavingThrow(SavingThrowType type)
+		{
+			int ret = BaseSaveBonus;
+
+			switch (type)
+			{
+				case SavingThrowType.Fortitude:
+				ret += Constitution.Modifier;
+				break;
+				case SavingThrowType.Reflex:
+				ret += Dexterity.Modifier;
+				break;
+				case SavingThrowType.Will:
+				ret += Wisdom.Modifier;
+				break;
+			}
+
+
+			return ret;
+		}
+
+
+		/// <summary>
 		/// Add a time penality to a hand
 		/// </summary>
 		/// <param name="hand">Hand</param>
@@ -775,6 +824,53 @@ namespace DungeonEye
 
 		#region Hero properties
 
+
+		/// <summary>
+		/// Base save bonus
+		/// </summary>
+		public int BaseSaveBonus
+		{
+			get
+			{
+				int value = 2;
+
+				foreach (Profession prof in Professions)
+				{
+					if (prof == null)
+						continue;
+					value += prof.Experience.Level / 2;
+				}
+				return value;
+			}
+		}
+
+
+		/// <summary>
+		/// Base attack bonus
+		/// </summary>
+		public int BaseAttackBonus
+		{
+			get
+			{
+				int value = 0;
+
+				foreach (Profession prof in Professions)
+				{
+					if (prof == null)
+						continue;
+
+					if (prof.Class == HeroClass.Fighter || prof.Class == HeroClass.Ranger || prof.Class == HeroClass.Paladin)
+						value += prof.Experience.Level;
+
+					if (prof.Class == HeroClass.Cleric || prof.Class == HeroClass.Mage || prof.Class == HeroClass.Thief)
+						value += (prof.Experience.Level * 4) / 3;
+				}
+
+				return value;
+			}
+		}
+	
+		
 		/// <summary>
 		/// Number of arrow in the quiver
 		/// </summary>
@@ -990,6 +1086,7 @@ namespace DungeonEye
 		HandAction[] HandActions;
 		
 		#endregion
+
 	}
 
 

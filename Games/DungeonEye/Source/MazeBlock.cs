@@ -148,7 +148,7 @@ namespace DungeonEye
 			else if (Pit != null)
 			{
 				if (team.Teleport(Pit.Target))
-					team.Hit(3);
+					team.Damage(Pit.Damage, SavingThrowType.Reflex, Pit.Difficulty);
 
 			}
 			else if (Teleporter != null)

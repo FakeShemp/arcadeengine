@@ -595,7 +595,7 @@ namespace DungeonEye
 			if (block.Pit != null)
 			{
 				td = MazeDisplayCoordinates.GetPit(position);
-				if (td != null)
+				if (td != null && !block.Pit.IsHidden)
 					OverlayTileset.Draw(td.ID, td.Location, td.SwapX, td.SwapY);
 			}
 			#endregion
