@@ -53,6 +53,9 @@ namespace DungeonEye
 			BackPack = new Item[14];
 			WaistPack = new Item[3];
 			Attacks = new Attack[2];
+			HandActions = new HandAction[2];
+			HandActions[0] = new HandAction(ActionResult.Ok);
+			HandActions[1] = new HandAction(ActionResult.Ok);
 			HandPenality = new DateTime[2];
 			HandPenality[0] = DateTime.Now;
 			HandPenality[1] = DateTime.Now;
@@ -77,8 +80,8 @@ namespace DungeonEye
 			Head = GameBase.Random.Next(0, 32);
 
 
-			Quiver = 10;
-			SetInventoryItem(InventoryPosition.Primary, ResourceManager.CreateAsset<Item>("Short Sword"));
+			Quiver = 0;
+			SetInventoryItem(InventoryPosition.Primary, ResourceManager.CreateAsset<Item>("Short Bow"));
 			SetInventoryItem(InventoryPosition.Armor, ResourceManager.CreateAsset<Item>("Leather Armor"));
 			SetInventoryItem(InventoryPosition.Helmet, ResourceManager.CreateAsset<Item>("Helmet"));
 			SetInventoryItem(InventoryPosition.Feet, ResourceManager.CreateAsset<Item>("Boots"));
@@ -278,7 +281,8 @@ namespace DungeonEye
 			// Primary
 			if ((item.Slot & BodySlot.Primary) == BodySlot.Primary &&
 				(item.Type == ItemType.Weapon || item.Type == ItemType.Shield || item.Type == ItemType.Wand) &&
-				GetInventoryItem(InventoryPosition.Primary) == null)
+				GetInventoryItem(InventoryPosition.Primary) == null &&
+				CanUseHand(HeroHand.Primary))
 			{
 				SetInventoryItem(InventoryPosition.Primary, item);
 				return true;
@@ -287,7 +291,8 @@ namespace DungeonEye
 			// Secondary
 			if ((item.Slot & BodySlot.Secondary) == BodySlot.Secondary &&
 				(item.Type == ItemType.Weapon || item.Type == ItemType.Shield || item.Type == ItemType.Wand) &&
-				GetInventoryItem(InventoryPosition.Secondary) == null)
+				GetInventoryItem(InventoryPosition.Secondary) == null &&
+				CanUseHand(HeroHand.Secondary))
 			{
 				SetInventoryItem(InventoryPosition.Secondary, item);
 				return true;
@@ -350,7 +355,7 @@ namespace DungeonEye
 		/// <param name="item">Item handle</param>
 		public void SetBackPackItem(int position, Item item)
 		{
-			if (position < 0 || position > 12)
+			if (position < 0 || position > 14)
 				return;
 
 			BackPack[position] = item;
@@ -431,7 +436,7 @@ namespace DungeonEye
 		/// Add a time penality to a hand
 		/// </summary>
 		/// <param name="hand">Hand</param>
-		/// <param name="duration">Duration in ms</param>
+		/// <param name="duration">Duration</param>
 		public void AddHandPenality(HeroHand hand, TimeSpan duration)
 		{
 
@@ -446,9 +451,8 @@ namespace DungeonEye
 		public void UseHand(HeroHand hand)
 		{
 			// No action possible
-			if (IsUnconscious || IsDead || !CanUseHand(hand))
+			if (!CanUseHand(hand))
 				return;
-
 
 			// Attacked entity
 			Entity target = Team.Location.Maze.GetMonster(Team.FrontLocation, Team.GetHeroGroundPosition(this));
@@ -457,10 +461,17 @@ namespace DungeonEye
 			// Which item is used for the attack
 			Item item = GetInventoryItem(hand == HeroHand.Primary ? InventoryPosition.Primary : InventoryPosition.Secondary);
 
+
 			// Hand attack
 			if (item == null)
 			{
-				Attacks[(int)hand] = new Attack(this, target, null);
+				if (Team.IsHeroInFront(this))
+				{
+					Attacks[(int)hand] = new Attack(this, target, null);
+				}
+				else
+					HandActions[(int)hand] = new HandAction(ActionResult.CantReach);
+
 				AddHandPenality(hand, TimeSpan.FromMilliseconds(250));
 				return;
 			}
@@ -502,6 +513,7 @@ namespace DungeonEye
 					{
 					}
 
+					// Weapon use quiver
 					else if (item.UseQuiver)
 					{
 						if (Quiver > 0)
@@ -510,18 +522,24 @@ namespace DungeonEye
 								new FlyingItem(this, ResourceManager.CreateAsset<Item>("Arrow"),
 								loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
 							Quiver--;
-
-							AddHandPenality(hand, TimeSpan.FromMilliseconds(500));
 						}
 						else
-							AddHandPenality(hand, TimeSpan.FromMilliseconds(125));
+							HandActions[(int)hand] = new HandAction(ActionResult.NoAmmo);
+						
+						AddHandPenality(hand, TimeSpan.FromMilliseconds(500));
 					}
 
 					else
 					{
-						Attacks[(int)hand] = new Attack(this, target, item);
+						// Check is the weapon can reach the target
+						if (!Team.IsHeroInFront(this) && item.Range == 0)
+						{
+							HandActions[(int)hand] = new HandAction(ActionResult.CantReach);
+						}
+						else
+							Attacks[(int)hand] = new Attack(this, target, item);
+	
 						AddHandPenality(hand, item.AttackSpeed);
-
 					}
 				}
 				break;
@@ -537,10 +555,10 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Checks if the hero belgons to a class
 		/// </summary>
-		/// <param name="classe"></param>
-		/// <returns></returns>
+		/// <param name="classe">Class</param>
+		/// <returns>True if the Hero belgons to this class</returns>
 		public bool CheckClass(HeroClass classe)
 		{
 			foreach(Profession prof in Professions)
@@ -553,11 +571,12 @@ namespace DungeonEye
 			return false;
 		}
 
+
 		/// <summary>
 		/// Can use the hand
 		/// </summary>
 		/// <param name="hand">Hand to attack</param>
-		/// <returns>True if the specified hand can attack</returns>
+		/// <returns>True if the specified hand can be used</returns>
 		public bool CanUseHand(HeroHand hand)
 		{
 			if (IsDead || IsUnconscious)
@@ -582,6 +601,17 @@ namespace DungeonEye
 			return Attacks[(int)hand];
 		}
 
+
+
+		/// <summary>
+		/// Gets the last action result
+		/// </summary>
+		/// <param name="hand">Hand</param>
+		/// <returns></returns>
+		public HandAction GetLastActionResult(HeroHand hand)
+		{
+			return HandActions[(int)hand];
+		}
 
 		#endregion
 
@@ -954,6 +984,11 @@ namespace DungeonEye
 			private set;
 		}
 
+		/// <summary>
+		/// Action result for each hands
+		/// </summary>
+		HandAction[] HandActions;
+		
 		#endregion
 	}
 

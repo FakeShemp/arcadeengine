@@ -408,69 +408,71 @@ namespace DungeonEye
 						Font.DrawText(new Point(pos.X + 6, pos.Y + 88), Color.Black, hero.HitPoint + " of " + hero.HitPoint.Max);
 
 
-
-
-					// Primary
-					Item item = hero.GetInventoryItem(InventoryPosition.Primary);
-					if (item != null)
-						Items.Draw(item.TileID, new Point(pos.X + 96, pos.Y + 36));
-					else
-						Items.Draw(86, new Point(pos.X + 96, pos.Y + 36));
-
-					if (!hero.CanUseHand(HeroHand.Primary))
-						TileSet.Draw(3, new Point(pos.X + 66, pos.Y + 20));
-
-
-					// Hero hit a monster a few moment ago
-					Attack attack = hero.GetLastAttack(HeroHand.Primary);
-					if (attack != null && !hero.CanUseHand(HeroHand.Primary))// attack.Time + attack.ItemSpeed > DateTime.Now)
+					// Hands
+					for (int i = 0; i < 2; i++)
 					{
-						// Ghost item
-						TileSet.Draw(3, new Point(pos.X + 66, pos.Y + 20));
+						HeroHand hand = (HeroHand)i;
+						int yoffset = i * 32;
 
-						// Monster hit ?
-						if (attack.Target != null && attack.Time > DateTime.Now.AddMilliseconds(-1000))
+						// Primary
+						Item item = hero.GetInventoryItem(hand == HeroHand.Primary ? InventoryPosition.Primary : InventoryPosition.Secondary);
+						if (item != null)
+							Items.Draw(item.TileID, new Point(pos.X + 96, pos.Y + 36 + yoffset));
+						else
+							Items.Draw(86, new Point(pos.X + 96, pos.Y + 36 + yoffset));
+
+						if (!hero.CanUseHand(hand))
+							TileSet.Draw(3, new Point(pos.X + 66, pos.Y + 20 + yoffset));
+
+
+						// Hero hit a monster a few moment ago
+						Attack attack = hero.GetLastAttack(hand);
+						if (attack != null)
 						{
-							TileSet.Draw(21, new Point(pos.X + 64, pos.Y + 20));
 
-							if (attack.IsAHit)
-									Font.DrawText(new Point(pos.X + 90, pos.Y + 32), Color.White, attack.Hit.ToString());
-								else
-									Font.DrawText(new Point(pos.X + 76, pos.Y + 32), Color.White, "MISS");
-						}
-					}
+							if (!hero.CanUseHand(hand))
+							{
+								// Ghost item
+								TileSet.Draw(3, new Point(pos.X + 66, pos.Y + 20 + yoffset));
 
+								// Monster hit ?
+								if (attack.Target != null && attack.Time > DateTime.Now.AddMilliseconds(-1000))
+								{
+									TileSet.Draw(21, new Point(pos.X + 64, pos.Y + 20 + yoffset));
 
-
-					// Secondary
-					item = hero.GetInventoryItem(InventoryPosition.Secondary);
-					if (item != null)
-						Items.Draw(item.TileID, new Point(pos.X + 96, pos.Y + 68));
-					else
-						Items.Draw(85, new Point(pos.X + 96, pos.Y + 68));
-
-					if (!hero.CanUseHand(HeroHand.Secondary))
-						TileSet.Draw(3, new Point(pos.X + 66, pos.Y + 52));
+									if (attack.IsAHit)
+										Font.DrawText(new Point(pos.X + 90, pos.Y + 32 + yoffset), Color.White, attack.Hit.ToString());
+									else if (attack.IsAMiss)
+										Font.DrawText(new Point(pos.X + 76, pos.Y + 32 + yoffset), Color.White, "MISS");
+								}
+							}
 
 
-					// Hero hit a monster a few moment ago
-					attack = hero.GetLastAttack(HeroHand.Secondary);
-					if (attack != null && !hero.CanUseHand(HeroHand.Secondary))// && attack.IsAHit && SelectedHero.CanUseHand(EntityHand.Secondary))//attack.Time + attack.ItemSpeed > DateTime.Now)
-					{
-						// Ghost item
-						TileSet.Draw(3, new Point(pos.X + 66, pos.Y + 52));
-
-						// Monster hit ?
-						if (attack.Target != null && attack.Time > DateTime.Now.AddMilliseconds(-1000))
-						{
-							TileSet.Draw(21, new Point(pos.X + 64, pos.Y + 52));
-
-							if (attack.IsAHit)
-								Font.DrawText(new Point(pos.X + 90, pos.Y + 64), Color.White, attack.Hit.ToString());
-							else
-								Font.DrawText(new Point(pos.X + 76, pos.Y + 64), Color.White, "MISS");
 						}
 
+
+
+						HandAction action = hero.GetLastActionResult(hand);
+						if (action.Result != ActionResult.Ok && !action.IsOutdated(DateTime.Now, 1000))
+						{
+							TileSet.Draw(22, new Point(pos.X + 66, pos.Y + 20 + yoffset));
+
+							switch (action.Result)
+							{
+								case ActionResult.NoAmmo:
+								{
+									Font.DrawText(new Point(pos.X + 86, pos.Y + 24 + yoffset), Color.White, "NO");
+									Font.DrawText(new Point(pos.X + 74, pos.Y + 38 + yoffset), Color.White, "AMMO");
+								}
+								break;
+								case ActionResult.CantReach:
+								{
+									Font.DrawText(new Point(pos.X + 68, pos.Y + 24 + yoffset), Color.White, "CAN'T");
+									Font.DrawText(new Point(pos.X + 68, pos.Y + 38 + yoffset), Color.White, "REACH");
+								}
+								break;
+							}
+						}
 					}
 
 
@@ -566,14 +568,14 @@ namespace DungeonEye
 			else
 				color = Color.Red;
 
-			Display.FillRectangle(new Rectangle(498, 48, SelectedHero.Food, 10), color);
+			Display.FillRectangle(new Rectangle(500, 48, SelectedHero.Food, 10), color);
 
 
 			// Draw inventory
 			Display.Color = Color.White;
 			int pos = 0;
 			for (int y = 94; y < 344; y += 36)
-				for (int x = 378; x < 442; x += 36)
+				for (int x = 380; x < 444; x += 36)
 				{
 					if (SelectedHero.GetBackPackItem(pos) != null)
 						Items.Draw(SelectedHero.GetBackPackItem(pos).TileID, new Point(x, y));
@@ -712,7 +714,6 @@ namespace DungeonEye
 
 
 			int y = 0;
-			//for (int i = 0; i < SelectedHero.Professions.Length; i++)
 			foreach(Profession prof in SelectedHero.Professions)
 			{
 				Font.DrawText(new Point(366, 300 + y), Color.Black, prof.Class.ToString());
@@ -1450,7 +1451,6 @@ namespace DungeonEye
 							#endregion
 
 							#region Use object in primary hand
-							//AttackResult attack = null;
 							if (new Rectangle(434 + 144 * x, y * 104 + 22, 60, 32).Contains(mousePos) && hero.CanUseHand(HeroHand.Primary))
 								hero.UseHand(HeroHand.Primary);
 
@@ -1459,9 +1459,6 @@ namespace DungeonEye
 							#region Use object in secondary hand
 							if (new Rectangle(434 + 144 * x, y * 104 + 54, 60, 32).Contains(mousePos) && hero.CanUseHand(HeroHand.Secondary))
 								hero.UseHand(HeroHand.Secondary);
-
-							//if (attack != null && attack.Monster != null)
-							//   AddMessage(attack.Monster.Name + " : -" + attack.Result + " (" + attack.Monster.Life.Actual + "/" + attack.Monster.Life.Max + ")");
 							#endregion
 						}
 					}
@@ -1513,11 +1510,6 @@ namespace DungeonEye
 			// Update the dungeon
 			Dungeon.Update(time);
 
-
-			// Now check where the team is and what it can do
-			// if IT has moved !!
-			//if (!HasMoved)
-			//   return;
 
 			if (CanMove)
 				MazeBlock.OnTeamStand(this);
@@ -2077,6 +2069,16 @@ namespace DungeonEye
 			return (HeroPosition)pos;
 		}
 
+
+		/// <summary>
+		/// Gets if the hero is in front row
+		/// </summary>
+		/// <param name="hero"></param>
+		/// <returns></returns>
+		public bool IsHeroInFront(Hero hero)
+		{
+			return GetHeroFromPosition(HeroPosition.FrontLeft) == hero || GetHeroFromPosition(HeroPosition.FrontRight) == hero;
+		}
 
 		/// <summary>
 		/// Returns the ground position of a hero

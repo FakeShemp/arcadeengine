@@ -123,9 +123,14 @@ namespace DungeonEye
 				return;
 
 
+			if (item != null)
+				Hit = item.Damage.Roll();
+			else
+			{
+				Dice dice = new Dice(1, 4, 0);
+				Hit = dice.Roll();
+			}
 
-			Dice dice = new Dice(1, 8, 0);
-			Hit = dice.Roll();
 			if (IsAHit)
 				Target.Hit(this);
 
@@ -232,5 +237,6 @@ namespace DungeonEye
 
 		#endregion
 	}
+
 
 }

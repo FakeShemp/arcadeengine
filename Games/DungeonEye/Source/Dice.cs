@@ -33,7 +33,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Default constructor
 		/// </summary>
-		public Dice() : this(0, 0, 0)
+		public Dice() : this(0, 1, 0)
 		{
 		}
 
@@ -70,6 +70,9 @@ namespace DungeonEye
 		/// <returns>The value</returns>
 		public int Roll(int rolls)
 		{
+			if (Faces == 0)
+				return 0;
+
 			int val = 0;
 
 			for (int i = 0; i < rolls; i++)
