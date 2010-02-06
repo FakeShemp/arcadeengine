@@ -45,7 +45,7 @@ namespace ArcEngine.Forms
 			InitializeComponent();
 
 			// Adds the control to the form
-			RenderControl = new GLControl(new GraphicsMode(param.Color, param.Depth, param.Stencil, param.Stencil),
+			RenderControl = new GLControl(new GraphicsMode(param.Color, param.Depth, param.Stencil, param.Samples),
 				param.Major, param.Minor,
 				GraphicsContextFlags.Default);
 			RenderControl.Dock = DockStyle.Fill;
