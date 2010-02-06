@@ -48,14 +48,13 @@ namespace DungeonEye
 				Trace.WriteLine("Unable to load TileSet for door");
 				return false;
 			}
-
 			TileSet.Scale = new SizeF(2.0f, 2.0f);
 
 
 			// Zone of the button to open/close the door
 			Button = new Rectangle(254, 70, 20, 28);
 
-
+			// Sounds
 			OpenSound = ResourceManager.CreateSharedAsset<Audio>("door open");
 			CloseSound = ResourceManager.CreateSharedAsset<Audio>("door close");
 
@@ -145,7 +144,7 @@ namespace DungeonEye
 			{
 				if (State == DoorState.Closed || State == DoorState.Closing)
 					Open();
-				else if (State == DoorState.Opening || State == DoorState.Opened)
+				else if (State == DoorState.Opened || State == DoorState.Opening)
 					Close();
 			}
 
@@ -603,6 +602,9 @@ namespace DungeonEye
 					case "state":
 					{
 						State = (DoorState)Enum.Parse(typeof(DoorState), node.Attributes["value"].Value, true);
+						if (State == DoorState.Opened)
+							VPosition = -30;
+
 					}
 					break;
 

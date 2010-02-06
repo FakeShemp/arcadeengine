@@ -80,7 +80,7 @@ namespace DungeonEye
 			Head = GameBase.Random.Next(0, 32);
 
 
-			Quiver = 0;
+			Quiver = 30;
 			SetInventoryItem(InventoryPosition.Primary, ResourceManager.CreateAsset<Item>("Short Sword"));
 			SetInventoryItem(InventoryPosition.Armor, ResourceManager.CreateAsset<Item>("Leather Armor"));
 			SetInventoryItem(InventoryPosition.Helmet, ResourceManager.CreateAsset<Item>("Helmet"));

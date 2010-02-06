@@ -772,11 +772,13 @@ namespace DungeonEye
 				start.X *= 4;
 				start.Y *= 4;
 				start.Offset(location);
+				start.Offset(2, 2);
 
 				Point end = monster.TargetLocation.Position;
 				end.X *= 4;
 				end.Y *= 4;
 				end.Offset(location);
+				end.Offset(2, 2);
 
 				Display.DrawLine(start, end, Color.Red);
 			}

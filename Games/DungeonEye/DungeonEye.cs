@@ -86,8 +86,8 @@ namespace DungeonEye
 			GameWindowParams param = new GameWindowParams();
 			param.Samples = 0;
 			param.Size = new Size(640, 400);
-
 			CreateGameWindow(param);
+
 			Window.Text = "Dungeon Eye";
 
 

@@ -153,7 +153,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Update the monster logic
 		/// </summary>
-        /// <param name="time"></param>
+        /// <param name="time">Elapsed game time</param>
 		public virtual void Update(GameTime time)
 		{
 			if (Interface != null)
@@ -170,7 +170,7 @@ namespace DungeonEye
             // Find a new target to reach
 			if (TargetRange == 0)
 			{
-				TargetRange = Dice.GetD20(1);
+				TargetRange = Game.Random.Next(5);
 
 				bool ok = false;
 				while (!ok)
