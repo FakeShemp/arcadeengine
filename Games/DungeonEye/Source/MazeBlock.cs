@@ -725,7 +725,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Is an illusion block
 		/// </summary>
-		public bool IsTrick
+		public bool IsIllusion
 		{
 			get
 			{

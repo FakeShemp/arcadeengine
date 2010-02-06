@@ -54,11 +54,12 @@ namespace DungeonEye
 		/// <param name="maze">Maze handle where the monster is</param>
 		public Monster(Maze maze)
 		{
-			if (maze!= null)
-				Location = new DungeonLocation(maze.Dungeon);
-			
+            if (maze != null)
+            {
+                Location = new DungeonLocation(maze.Dungeon);
+            }	
+
 			ItemsInPocket = new List<string>();
-			//LastHit = new DateTime();
 			Damage = new Dice();
 			HitDice = new Dice();
 
@@ -104,35 +105,36 @@ namespace DungeonEye
 
 
 			// Check all blocking states
-			bool state = true;
+			bool canmove = true;
 
 			// A wall
 			MazeBlock dstblock = Location.Maze.GetBlock(dst);
 			if (dstblock.IsBlocking)
-				state = false;
+				canmove = false;
 
 			// Stairs
 			if (dstblock.Stair != null)
-				state = true;
+				canmove = false;
 
 			// Monsters
-			if (Location.Maze.GetMonsterCount(Location.Position) > 0)
-				state = false;
+			if (Location.Maze.GetMonsterCount(dst) > 0)
+				canmove = false;
 
 			// blocking door
 			if (dstblock.Door != null && dstblock.Door.IsBlocking)
-				state = false;
+				canmove = false;
 
-/*
 
 			// Leave the current block
-			if (MazeBlock != null)
-				MazeBlock.OnTeamLeave(this);
-*/
+			//if (MazeBlock != null)
+			//    MazeBlock.OnTeamLeave(this);
 
-			Location.Position.Offset(offset);
-			LastMove = DateTime.Now;
-			//HasMoved = true;
+
+			if (canmove)
+			{
+				Location.Position.Offset(offset);
+				LastMove = DateTime.Now;
+			}
 
 			// Enter the new block
 			//MazeBlock = Maze.GetBlock(Location.Position);
@@ -140,8 +142,10 @@ namespace DungeonEye
 			//   MazeBlock.OnTeamEnter(this);
 
 
-			return true;
+			return canmove;
 		}
+
+
 
 
 		#region Update & Draw
@@ -149,6 +153,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Update the monster logic
 		/// </summary>
+        /// <param name="time"></param>
 		public virtual void Update(GameTime time)
 		{
 			if (Interface != null)
@@ -160,6 +165,126 @@ namespace DungeonEye
 			{
 				DrawOffset = new Point(GameBase.Random.Next(-10, 10), GameBase.Random.Next(-10, 10));
 				LastDrawOffset = DateTime.Now;
+			}
+
+            // Find a new target to reach
+			if (TargetRange == 0)
+			{
+				TargetRange = Dice.GetD20(1);
+
+				bool ok = false;
+				while (!ok)
+				{
+					int dir = Dice.GetD20(1);
+					Point vector = Location.Position;
+
+					switch (TargetDirection)
+					{
+						case CardinalPoint.North:
+						{
+							if (dir < 10)
+							{
+								TargetDirection = CardinalPoint.West;
+								vector.X--;
+							}
+							else
+							{
+								TargetDirection = CardinalPoint.East;
+								vector.X++;
+							}
+						}
+						break;
+						case CardinalPoint.South:
+						{
+							if (dir < 10)
+							{
+								TargetDirection = CardinalPoint.East;
+								vector.X++;
+							}
+							else
+							{
+								TargetDirection = CardinalPoint.West;
+								vector.X--;
+							}
+
+						}
+						break;
+						case CardinalPoint.West:
+						{
+							if (dir < 10)
+							{
+								TargetDirection = CardinalPoint.North;
+								vector.Y--;
+							}
+							else
+							{
+								TargetDirection = CardinalPoint.South;
+								vector.Y++;
+							}
+
+						}
+						break;
+						case CardinalPoint.East:
+						{
+							if (dir < 10)
+							{
+								TargetDirection = CardinalPoint.South;
+								vector.Y++;
+							}
+							else
+							{
+								TargetDirection = CardinalPoint.North;
+								vector.Y--;
+							}
+
+						}
+						break;
+					}
+
+					// Check the block
+					MazeBlock block = Location.Maze.GetBlock(vector);
+					if (block == null)
+						continue;
+
+					ok = !block.IsBlocking;
+				}
+			}
+
+
+			// Move the monster
+			if (CanMove)
+			{
+				// Change direction first
+				if (Location.Direction != TargetDirection)
+				{
+					Location.Direction = TargetDirection;
+					LastMove = DateTime.Now;
+				}
+				// Then move to the target
+				else
+				{
+					Point vector = Point.Empty;
+					switch (TargetDirection)
+					{
+						case CardinalPoint.North:
+						vector.Y = -1;
+						break;
+						case CardinalPoint.South:
+						vector.Y = 1;
+						break;
+						case CardinalPoint.West:
+						vector.X = -1;
+						break;
+						case CardinalPoint.East:
+						vector.X = 1;
+						break;
+					}
+					TargetRange--;
+
+
+					if (!Move(vector))
+						TargetRange = 0;
+				}
 			}
 		}
 
@@ -276,7 +401,7 @@ namespace DungeonEye
 		{			
 			int[,] id = new int[4,4];
 
-			// g	f						LOOKING	  FROM	 VIEW	
+			// g	f						LOOKING	  FROM	        VIEW	
 			id[0, 0] = 5;			//		N			N			N
 			id[0, 1] = 0;			//		N			S			S
 			id[0, 2] = 3;			//		N			W			W
@@ -299,6 +424,28 @@ namespace DungeonEye
 
 			return id[(int)Location.Direction, (int)point] + Tile;
 		}
+
+
+
+        /// <summary>
+        /// Gets if the monster can see the given location
+        /// </summary>
+        /// <returns>True if the point is in range of sight</returns>
+        public bool CanSee(DungeonLocation location)
+        {
+            if (location == null)
+                return false;
+
+            // Not in the same maze
+            if (Location.MazeName != location.MazeName)
+                return false;
+
+            // Pythagorean
+            int a = (Location.Position.X - location.Position.X);
+            int b = (Location.Position.Y - location.Position.Y);
+            return (a * a + b * b) > SightRange * SightRange;
+        }
+
 
 		#endregion
 
@@ -368,13 +515,19 @@ namespace DungeonEye
 					}
 					break;
 
-					case "baseattack":
-					{
-						BaseAttack = int.Parse(node.Attributes["value"].Value);
-					}
-					break;
+                    case "baseattack":
+                    {
+                        BaseAttack = int.Parse(node.Attributes["value"].Value);
+                    }
+                    break;
 
-					default:
+                    case "sightrange":
+                    {
+                        SightRange = byte.Parse(node.Attributes["value"].Value);
+                    }
+                    break;
+
+                    default:
 					{
 						base.Load(node);
 					}
@@ -430,11 +583,15 @@ namespace DungeonEye
 			writer.WriteAttributeString("value", ArmorClass.ToString());
 			writer.WriteEndElement();
 
-			writer.WriteStartElement("baseattack");
-			writer.WriteAttributeString("value", BaseAttack.ToString());
-			writer.WriteEndElement();
+            writer.WriteStartElement("baseattack");
+            writer.WriteAttributeString("value", BaseAttack.ToString());
+            writer.WriteEndElement();
 
-			writer.WriteEndElement();
+            writer.WriteStartElement("sightrange");
+            writer.WriteAttributeString("value", SightRange.ToString());
+            writer.WriteEndElement();
+
+            writer.WriteEndElement();
 
 			return true;
 		}
@@ -493,15 +650,55 @@ namespace DungeonEye
 		}
 
 
-		/// <summary>
-		/// Location of the monster
-		/// </summary>
-		public DungeonLocation Location
-		{
-			get;
-			set;
-		}
+        /// <summary>
+        /// Location of the monster
+        /// </summary>
+        public DungeonLocation Location
+        {
+            get;
+            set;
+        }
 
+
+        /// <summary>
+        /// Target location of the monster
+        /// </summary>
+        public DungeonLocation TargetLocation
+        {
+			get
+			{
+				DungeonLocation loc = new DungeonLocation(Location);
+
+				switch (TargetDirection)
+				{
+					case CardinalPoint.North:
+					loc.Position.Y -= TargetRange;
+					break;
+					case CardinalPoint.South:
+					loc.Position.Y += TargetRange;
+					break;
+					case CardinalPoint.West:
+					loc.Position.X -= TargetRange;
+					break;
+					case CardinalPoint.East:
+					loc.Position.X += TargetRange;
+					break;
+				}
+
+				return loc;
+			}
+        }
+
+		/// <summary>
+		/// Range remaining to reach the target
+		/// </summary>
+		int TargetRange;
+
+
+		/// <summary>
+		/// Direction of the target
+		/// </summary>
+		CardinalPoint TargetDirection;
 
 
 		/// <summary>

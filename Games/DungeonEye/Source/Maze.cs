@@ -760,10 +760,27 @@ namespace DungeonEye
 					if (team.Location.Position.X == x && team.Location.Position.Y == y && team.Location.Maze == this)
 						Display.Color = Color.Blue;
 
-					Display.FillRectangle(new Rectangle(location.X + x * 4, location.Y + +y * 4, 4, 4), Display.Color);
-
+					Display.FillRectangle(new Rectangle(location.X + x * 4, location.Y + y * 4, 4, 4), Display.Color);
 				}
 
+
+			// Draw monster target
+			Display.Blending = false;
+			foreach (Monster monster in Monsters)
+			{
+				Point start = monster.Location.Position;
+				start.X *= 4;
+				start.Y *= 4;
+				start.Offset(location);
+
+				Point end = monster.TargetLocation.Position;
+				end.X *= 4;
+				end.Y *= 4;
+				end.Offset(location);
+
+				Display.DrawLine(start, end, Color.Red);
+			}
+			Display.Blending = true;
 		}
 
 
@@ -1197,8 +1214,7 @@ namespace DungeonEye
 		/// </summary>
 		List<List<MazeBlock>> Blocks;
 
-		/// <summa
-		/// ry>
+		/// <summary>
 		/// Gets the size of the maze
 		/// </summary>
 		public Size Size

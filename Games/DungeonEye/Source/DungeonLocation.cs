@@ -212,7 +212,7 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Dungeon handle
 		/// </summary>
 		public Dungeon Dungeon
 		{
@@ -279,6 +279,20 @@ namespace DungeonEye
 			set;
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public MazeBlock Block
+		{
+			get
+			{
+				if (Maze == null)
+					return null;
+
+				return Maze.GetBlock(Position);
+			}
+		}
 
 		#endregion
 

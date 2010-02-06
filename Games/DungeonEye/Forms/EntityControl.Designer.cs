@@ -29,6 +29,8 @@
 		private void InitializeComponent()
 		{
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.SpeedBox = new System.Windows.Forms.NumericUpDown();
+			this.label8 = new System.Windows.Forms.Label();
 			this.label7 = new System.Windows.Forms.Label();
 			this.AlignmentBox = new System.Windows.Forms.ComboBox();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -45,10 +47,9 @@
 			this.ConstitutionBox = new System.Windows.Forms.NumericUpDown();
 			this.DexterityBox = new System.Windows.Forms.NumericUpDown();
 			this.StrengthBox = new System.Windows.Forms.NumericUpDown();
-			this.SpeedBox = new System.Windows.Forms.NumericUpDown();
-			this.label8 = new System.Windows.Forms.Label();
 			this.hitPointControl1 = new DungeonEye.Forms.HitPointControl();
 			this.groupBox1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.SpeedBox)).BeginInit();
 			this.groupBox2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.CharismaBox)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.WisdomBox)).BeginInit();
@@ -56,7 +57,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.ConstitutionBox)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.DexterityBox)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.StrengthBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.SpeedBox)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// groupBox1
@@ -74,6 +74,29 @@
 			this.groupBox1.TabIndex = 0;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Entity :";
+			// 
+			// SpeedBox
+			// 
+			this.SpeedBox.Location = new System.Drawing.Point(246, 64);
+			this.SpeedBox.Maximum = new decimal(new int[] {
+            100000000,
+            0,
+            0,
+            0});
+			this.SpeedBox.Name = "SpeedBox";
+			this.SpeedBox.Size = new System.Drawing.Size(75, 20);
+			this.SpeedBox.TabIndex = 4;
+			this.SpeedBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.SpeedBox.ValueChanged += new System.EventHandler(this.SpeedBox_ValueChanged);
+			// 
+			// label8
+			// 
+			this.label8.AutoSize = true;
+			this.label8.Location = new System.Drawing.Point(181, 66);
+			this.label8.Name = "label8";
+			this.label8.Size = new System.Drawing.Size(44, 13);
+			this.label8.TabIndex = 3;
+			this.label8.Text = "Speed :";
 			// 
 			// label7
 			// 
@@ -264,24 +287,6 @@
 			this.StrengthBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.StrengthBox.ValueChanged += new System.EventHandler(this.StrengthBox_ValueChanged);
 			// 
-			// SpeedBox
-			// 
-			this.SpeedBox.Location = new System.Drawing.Point(246, 64);
-			this.SpeedBox.Name = "SpeedBox";
-			this.SpeedBox.Size = new System.Drawing.Size(60, 20);
-			this.SpeedBox.TabIndex = 4;
-			this.SpeedBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.SpeedBox.ValueChanged += new System.EventHandler(this.SpeedBox_ValueChanged);
-			// 
-			// label8
-			// 
-			this.label8.AutoSize = true;
-			this.label8.Location = new System.Drawing.Point(181, 66);
-			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(44, 13);
-			this.label8.TabIndex = 3;
-			this.label8.Text = "Speed :";
-			// 
 			// hitPointControl1
 			// 
 			this.hitPointControl1.HitPoint = null;
@@ -299,6 +304,7 @@
 			this.Size = new System.Drawing.Size(621, 430);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.SpeedBox)).EndInit();
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.CharismaBox)).EndInit();
@@ -307,7 +313,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.ConstitutionBox)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.DexterityBox)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.StrengthBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.SpeedBox)).EndInit();
 			this.ResumeLayout(false);
 
 		}
