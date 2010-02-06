@@ -74,6 +74,7 @@ namespace DungeonEye
 				Trace.WriteLine("Failed to load the dungeon !!");
 				throw new NullReferenceException();
 			}
+			Dungeon.Team = this;
 			Dungeon.Init();
 			
 			// Language
@@ -2364,7 +2365,6 @@ namespace DungeonEye
 				MazeBlock.OnTeamLeave(this);
 			Location.Position = location.Position;
 			Location.SetMaze(maze.Name);
-			//Maze = maze;
 
 
 			MazeBlock = Location.Maze.GetBlock(Location.Position);

@@ -84,6 +84,8 @@ namespace DungeonEye
 		/// <returns>True if the event is processed</returns>
 		public bool OnClick(Team team, Point location, CardinalPoint side)
 		{
+			if (team == null)
+				return false;
 
 			// A door
 			if (Door != null && team.ItemInHand == null)
@@ -119,6 +121,19 @@ namespace DungeonEye
 		/// <param name="team">Team</param>
 		public void OnTeamStand(Team team)
 		{
+			if (team == null)
+				return;
+		}
+
+
+		/// <summary>
+		/// Monster stand on the block
+		/// </summary>
+		/// <param name="monster"></param>
+		public void OnMonsterStand(Monster monster)
+		{
+			if (monster == null)
+				return;
 		}
 
 
@@ -128,6 +143,10 @@ namespace DungeonEye
 		/// <param name="team">Team</param>
 		public void OnTeamEnter(Team team)
 		{
+			if (team == null)
+				return;
+
+	
 			if (ForceField != null)
 			{
 				switch (ForceField.Type)
@@ -164,7 +183,73 @@ namespace DungeonEye
 			}
 			else if (FloorPlate != null)
 			{
-				FloorPlate.OnTouch(team, this);
+				FloorPlate.OnTeamTouch(team, this);
+			}
+		}
+
+
+		/// <summary>
+		/// A monster enters on the block
+		/// </summary>
+		/// <param name="monster"></param>
+		public void OnMonsterEnter(Monster monster)
+		{
+			if (monster == null)
+				return;
+
+
+			if (ForceField != null)
+			{
+				switch (ForceField.Type)
+				{
+					case ForceFieldType.Turning:
+					{
+						monster.Location.Compass.Rotate(ForceField.Rotation);
+					}
+					break;
+
+					case ForceFieldType.Moving:
+					{
+
+						switch (ForceField.Move)
+						{
+							case CardinalPoint.North:
+							monster.Location.Position.Offset(0, -1);
+							break;
+							case CardinalPoint.South:
+							monster.Location.Position.Offset(0, 1);
+							break;
+							case CardinalPoint.West:
+							monster.Location.Position.Offset(-1, 0);
+							break;
+							case CardinalPoint.East:
+							monster.Location.Position.Offset(1, 0);
+							break;
+						}
+					}
+					break;
+				}
+			}
+			else if (Pit != null)
+			{
+				monster.Location = new DungeonLocation(Pit.Target);
+				monster.Damage(Pit.Damage, SavingThrowType.Reflex, Pit.Difficulty);
+
+			}
+			else if (Teleporter != null)
+			{
+				monster.Location = new DungeonLocation(Teleporter.Target);
+
+			}
+			else if (Stair != null)
+			{
+				monster.Location = new DungeonLocation(Stair.Target);
+				monster.Location.Direction = Stair.Target.Direction;
+
+			}
+			else if (FloorPlate != null)
+			{
+				FloorPlate.OnMonsterTouch(monster);
 			}
 		}
 
@@ -175,8 +260,22 @@ namespace DungeonEye
 		/// <param name="team">Team</param>
 		public void OnTeamLeave(Team team)
 		{
+			if (team == null)
+				return;
+
 			if (FloorPlate != null)
-				FloorPlate.OnLeave(team, this);
+				FloorPlate.OnTeamLeave(team, this);
+		}
+
+
+		/// <summary>
+		/// Monster leaves the block
+		/// </summary>
+		/// <param name="monster"></param>
+		public void OnMonsterLeave(Monster monster)
+		{
+			if (monster == null)
+				return;
 		}
 
 
@@ -186,6 +285,8 @@ namespace DungeonEye
 		/// <param name="item">Handle to the item</param>
 		public void OnDroppedItem(Item item)
 		{
+			if (item == null)
+				return;
 		}
 
 
@@ -195,6 +296,8 @@ namespace DungeonEye
 		/// <param name="item">Handle to the item</param>
 		public void OnCollectedItem(Item item)
 		{
+			if (item == null)
+				return;
 		}
 
 		#endregion

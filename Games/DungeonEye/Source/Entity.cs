@@ -87,22 +87,71 @@ namespace DungeonEye
 		/// Attack the entity
 		/// </summary>
 		/// <param name="attack">Attack</param>
-		public void Hit(Attack attack)
+		public abstract void Hit(Attack attack);
+		//{
+		//    if (attack == null)
+		//        return;
+
+		//    LastAttack = attack;
+		//    if (LastAttack.IsAMiss)
+		//        return;
+
+		//    HitPoint.Current -= LastAttack.Hit;
+
+		//    // Reward the team for having killed the entity
+		//    if (IsDead && attack.Striker is Hero)
+		//    {
+		//        (attack.Striker as Hero).Team.AddExperience(Reward);
+		//    }
+		//}
+
+
+		/// <summary>
+		/// Make damage to the hero
+		/// </summary>
+		/// <param name="damage">Attack roll</param>
+		/// <param name="type">Type of saving throw</param>
+		/// <param name="difficulty">Difficulty</param>
+		public void Damage(Dice damage, SavingThrowType type, int difficulty)
 		{
-			if (attack == null)
+			if (damage == null)
 				return;
 
-			LastAttack = attack;
-			if (LastAttack.IsAMiss)
+			int save = Dice.GetD20(1);
+
+			// No damage
+			if (save == 20 || save + SavingThrow(type) > difficulty)
 				return;
 
-			HitPoint.Current -= LastAttack.Hit;
+			HitPoint.Current -= damage.Roll();
 
-			// Reward the team for having killed the entity
-			if (IsDead && attack.Striker is Hero)
+		}
+
+
+		/// <summary>
+		/// Returns the result of a saving throw
+		/// </summary>
+		/// <param name="type"></param>
+		/// <returns></returns>
+		public int SavingThrow(SavingThrowType type)
+		{
+			int ret = BaseSaveBonus;
+
+			switch (type)
 			{
-				(attack.Striker as Hero).Team.AddExperience(Experience);
+				case SavingThrowType.Fortitude:
+				ret += Constitution.Modifier;
+				break;
+				case SavingThrowType.Reflex:
+				ret += Dexterity.Modifier;
+				break;
+				case SavingThrowType.Will:
+				ret += Wisdom.Modifier;
+				break;
 			}
+
+
+			return ret;
 		}
 
 
@@ -130,10 +179,6 @@ namespace DungeonEye
 
 			writer.WriteStartElement("alignment");
 			writer.WriteAttributeString("value", Alignment.ToString());
-			writer.WriteEndElement();
-
-			writer.WriteStartElement("experience");
-			writer.WriteAttributeString("value", Experience.ToString());
 			writer.WriteEndElement();
 
 			writer.WriteStartElement("speed");
@@ -213,12 +258,6 @@ namespace DungeonEye
 					Speed = TimeSpan.FromMilliseconds(int.Parse(xml.Attributes["value"].Value));
 				}
 				break;
-
-				case "experience":
-				{
-					Experience = int.Parse(xml.Attributes["value"].Value);
-				}
-				break;
 			}
 
 
@@ -231,16 +270,6 @@ namespace DungeonEye
 
 
 		#region Properties
-
-
-		/// <summary>
-		/// Experience gained by killing the entity
-		/// </summary>
-		public int Experience
-		{
-			get;
-			set;
-		}
 
 
 		/// <summary>
@@ -275,6 +304,14 @@ namespace DungeonEye
 
 
 		/// <summary>
+		/// Base save bonus
+		/// </summary>
+		public abstract int BaseSaveBonus
+		{
+			get;
+		}
+
+		/// <summary>
 		/// Gives the entity’s tactical speed.
 		/// </summary>
 		public TimeSpan Speed
@@ -300,7 +337,7 @@ namespace DungeonEye
 		public Attack LastAttack
 		{
 			get;
-			private set;
+			protected set;
 		}
 
 

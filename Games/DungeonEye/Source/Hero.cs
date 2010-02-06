@@ -433,52 +433,21 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Make damage to the hero
+		/// Attack the entity
 		/// </summary>
-		/// <param name="damage">Attack roll</param>
-		/// <param name="type">Type of saving throw</param>
-		/// <param name="difficulty">Difficulty</param>
-		public void Damage(Dice damage, SavingThrowType type, int difficulty)
+		/// <param name="attack">Attack</param>
+		public override void Hit(Attack attack)
 		{
-			if (damage == null)
+			if (attack == null)
 				return;
 
-			int save = Dice.GetD20(1);
-
-			// No damage
-			if (save == 20 || save + SavingThrow(type) > difficulty)
+			LastAttack = attack;
+			if (LastAttack.IsAMiss)
 				return;
 
-			HitPoint.Current -= damage.Roll();
-
+			HitPoint.Current -= LastAttack.Hit;
 		}
-	
 
-		/// <summary>
-		/// Returns the result of a saving throw
-		/// </summary>
-		/// <param name="type"></param>
-		/// <returns></returns>
-		public int SavingThrow(SavingThrowType type)
-		{
-			int ret = BaseSaveBonus;
-
-			switch (type)
-			{
-				case SavingThrowType.Fortitude:
-				ret += Constitution.Modifier;
-				break;
-				case SavingThrowType.Reflex:
-				ret += Dexterity.Modifier;
-				break;
-				case SavingThrowType.Will:
-				ret += Wisdom.Modifier;
-				break;
-			}
-
-
-			return ret;
-		}
 
 
 		/// <summary>
@@ -828,7 +797,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Base save bonus
 		/// </summary>
-		public int BaseSaveBonus
+		public override int BaseSaveBonus
 		{
 			get
 			{

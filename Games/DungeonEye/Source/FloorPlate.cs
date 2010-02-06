@@ -45,7 +45,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="team">Handle to the team</param>
 		/// <param name="block">Mazeblock of the fllor plate</param>
-		public void OnTouch(Team team, MazeBlock block)
+		public void OnTeamTouch(Team team, MazeBlock block)
 		{
 			// No script defined
 			if (string.IsNullOrEmpty(OnEnterScript) ||Script == null)
@@ -59,13 +59,22 @@ namespace DungeonEye
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="monster"></param>
+		public void OnMonsterTouch(Monster monster)
+		{
+			if (monster == null)
+				return;
+		}
 
 		/// <summary>
 		/// Team /item is leaving the Floor Plate
 		/// </summary>
 		/// <param name="team"></param>
 		/// <param name="item"></param>
-		public void OnLeave(Team team, MazeBlock block)
+		public void OnTeamLeave(Team team, MazeBlock block)
 		{
 			// No script defined
 			if (string.IsNullOrEmpty(OnEnterScript) || Script == null)
@@ -75,6 +84,17 @@ namespace DungeonEye
 
 			Script.Invoke(OnLeaveScript, team, block);
 
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="monster"></param>
+		public void OnMonsterLeave(Monster monster)
+		{
+			if (monster == null)
+				return;
 		}
 
 

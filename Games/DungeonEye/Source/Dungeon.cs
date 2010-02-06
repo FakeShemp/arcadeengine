@@ -30,7 +30,7 @@ namespace DungeonEye
 	/// <summary>
 	/// Represent a dungeon which contains severals mazes
 	/// </summary>
-	public class Dungeon : IAsset//, IDisposable
+	public class Dungeon : IAsset
 	{
 		/// <summary>
 		/// Default constructor
@@ -244,11 +244,6 @@ namespace DungeonEye
 		#region Properties
 
 		/// <summary>
-		/// Available dungeons
-		/// </summary>
-//		static List<Dungeon> Dungeons = new List<Dungeon>();
-
-		/// <summary>
 		/// Name of the dungeon
 		/// </summary>
 		public string Name
@@ -303,6 +298,15 @@ namespace DungeonEye
 			set;
 		}
 
+
+		/// <summary>
+		/// Handle to the team
+		/// </summary>
+		public Team Team
+		{
+			get;
+			set;
+		}
 		#endregion
 
 

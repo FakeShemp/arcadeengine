@@ -73,15 +73,19 @@ namespace DungeonEye
 
 			// Attack roll
 			int attackdie = Dice.GetD20(1);
+
+			// Fail ?
 			if (attackdie == 1)
 				attackdie = -100000;
+
+			// Critical Hit ?
 			if (attackdie == 20)
 				attackdie = 100000;
 
 
 			// Base attack bonus
 			int baseattackbonus = 0;
-			int modifier = 0;					// modifier
+			int modifier = 0;				// modifier
 			int sizemodifier = 0;			// Size modifier
 			int rangepenality = 0;			// Range penality
 

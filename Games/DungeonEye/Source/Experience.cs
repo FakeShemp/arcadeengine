@@ -63,6 +63,18 @@ namespace DungeonEye
 		}
 
 
+
+		/// <summary>
+		/// Get level from xp
+		/// </summary>
+		/// <param name="points">Points</param>
+		/// <returns></returns>
+		public static int GetLevelFromXP(int points)
+		{
+			return (int)Math.Floor((1 + Math.Sqrt(points / 125.0f + 1)) / 2);
+		}
+
+
 		#region IO
 
 
@@ -126,7 +138,7 @@ namespace DungeonEye
 		{
 			get
 			{
-				return (int) Math.Floor((1 + Math.Sqrt(Points / 125.0f + 1)) / 2);
+				return GetLevelFromXP(Points);
 			}
 		}
 

@@ -45,20 +45,20 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.InterfaceNameBox = new System.Windows.Forms.ComboBox();
 			this.ScriptNameBox = new System.Windows.Forms.ComboBox();
-			this.ExperienceBox = new System.Windows.Forms.NumericUpDown();
+			this.XPRewardBox = new System.Windows.Forms.NumericUpDown();
 			this.label3 = new System.Windows.Forms.Label();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.VisualTab = new System.Windows.Forms.TabPage();
 			this.EntityTab = new System.Windows.Forms.TabPage();
 			this.EntityBox = new DungeonEye.Forms.EntityControl();
 			this.PropertiesTab = new System.Windows.Forms.TabPage();
-			this.DamageBox = new DungeonEye.Forms.DiceForm();
-			this.ArmorClassBox = new System.Windows.Forms.NumericUpDown();
 			this.label4 = new System.Windows.Forms.Label();
+			this.ArmorClassBox = new System.Windows.Forms.NumericUpDown();
+			this.DamageBox = new DungeonEye.Forms.DiceForm();
 			this.VisualGroupBox.SuspendLayout();
 			this.PocketGroupBox.SuspendLayout();
 			this.groupBox1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.ExperienceBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.XPRewardBox)).BeginInit();
 			this.tabControl1.SuspendLayout();
 			this.VisualTab.SuspendLayout();
 			this.EntityTab.SuspendLayout();
@@ -147,8 +147,8 @@
 			// PocketItemsBox
 			// 
 			this.PocketItemsBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-							| System.Windows.Forms.AnchorStyles.Left)
-							| System.Windows.Forms.AnchorStyles.Right)));
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.PocketItemsBox.FormattingEnabled = true;
 			this.PocketItemsBox.Location = new System.Drawing.Point(6, 44);
 			this.PocketItemsBox.Name = "PocketItemsBox";
@@ -182,7 +182,7 @@
 			// RemovePocketItemBox
 			// 
 			this.RemovePocketItemBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-							| System.Windows.Forms.AnchorStyles.Right)));
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.RemovePocketItemBox.Location = new System.Drawing.Point(6, 143);
 			this.RemovePocketItemBox.Name = "RemovePocketItemBox";
 			this.RemovePocketItemBox.Size = new System.Drawing.Size(177, 23);
@@ -242,29 +242,29 @@
 			this.ScriptNameBox.TabIndex = 0;
 			this.ScriptNameBox.SelectedIndexChanged += new System.EventHandler(this.ScriptNameBox_SelectedIndexChanged);
 			// 
-			// ExperienceBox
+			// XPRewardBox
 			// 
-			this.ExperienceBox.Location = new System.Drawing.Point(115, 109);
-			this.ExperienceBox.Maximum = new decimal(new int[] {
+			this.XPRewardBox.Location = new System.Drawing.Point(115, 109);
+			this.XPRewardBox.Maximum = new decimal(new int[] {
             1410065408,
             2,
             0,
             0});
-			this.ExperienceBox.Name = "ExperienceBox";
-			this.ExperienceBox.Size = new System.Drawing.Size(99, 20);
-			this.ExperienceBox.TabIndex = 11;
-			this.ExperienceBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.ExperienceBox.ThousandsSeparator = true;
-			this.ExperienceBox.ValueChanged += new System.EventHandler(this.ExperienceBox_ValueChanged);
+			this.XPRewardBox.Name = "XPRewardBox";
+			this.XPRewardBox.Size = new System.Drawing.Size(99, 20);
+			this.XPRewardBox.TabIndex = 11;
+			this.XPRewardBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.XPRewardBox.ThousandsSeparator = true;
+			this.XPRewardBox.ValueChanged += new System.EventHandler(this.ExperienceBox_ValueChanged);
 			// 
 			// label3
 			// 
 			this.label3.AutoSize = true;
 			this.label3.Location = new System.Drawing.Point(12, 111);
 			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(97, 13);
+			this.label3.Size = new System.Drawing.Size(62, 13);
 			this.label3.TabIndex = 12;
-			this.label3.Text = "Experience points :";
+			this.label3.Text = "XP reward :";
 			// 
 			// tabControl1
 			// 
@@ -315,7 +315,7 @@
 			this.PropertiesTab.Controls.Add(this.label3);
 			this.PropertiesTab.Controls.Add(this.PocketGroupBox);
 			this.PropertiesTab.Controls.Add(this.ArmorClassBox);
-			this.PropertiesTab.Controls.Add(this.ExperienceBox);
+			this.PropertiesTab.Controls.Add(this.XPRewardBox);
 			this.PropertiesTab.Controls.Add(this.groupBox1);
 			this.PropertiesTab.Controls.Add(this.DamageBox);
 			this.PropertiesTab.Location = new System.Drawing.Point(4, 22);
@@ -325,19 +325,14 @@
 			this.PropertiesTab.Text = "Properties";
 			this.PropertiesTab.UseVisualStyleBackColor = true;
 			// 
-			// DamageBox
+			// label4
 			// 
-			this.DamageBox.ControlText = "Damage :";
-			dice1.Faces = 1;
-			dice1.Modifier = 0;
-			dice1.Throws = 1;
-			this.DamageBox.Dice = dice1;
-			this.DamageBox.Location = new System.Drawing.Point(4, 3);
-			this.DamageBox.MinimumSize = new System.Drawing.Size(225, 100);
-			this.DamageBox.Name = "DamageBox";
-			this.DamageBox.Size = new System.Drawing.Size(230, 100);
-			this.DamageBox.TabIndex = 10;
-			this.DamageBox.ValueChanged += new System.EventHandler(this.DamageBox_ValueChanged);
+			this.label4.AutoSize = true;
+			this.label4.Location = new System.Drawing.Point(12, 137);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(68, 13);
+			this.label4.TabIndex = 12;
+			this.label4.Text = "Armor Class :";
 			// 
 			// ArmorClassBox
 			// 
@@ -354,14 +349,19 @@
 			this.ArmorClassBox.ThousandsSeparator = true;
 			this.ArmorClassBox.ValueChanged += new System.EventHandler(this.ArmorClassBox_ValueChanged);
 			// 
-			// label4
+			// DamageBox
 			// 
-			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(12, 137);
-			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(68, 13);
-			this.label4.TabIndex = 12;
-			this.label4.Text = "Armor Class :";
+			this.DamageBox.ControlText = "Damage :";
+			dice1.Faces = 1;
+			dice1.Modifier = 0;
+			dice1.Throws = 1;
+			this.DamageBox.Dice = dice1;
+			this.DamageBox.Location = new System.Drawing.Point(4, 3);
+			this.DamageBox.MinimumSize = new System.Drawing.Size(225, 100);
+			this.DamageBox.Name = "DamageBox";
+			this.DamageBox.Size = new System.Drawing.Size(230, 100);
+			this.DamageBox.TabIndex = 10;
+			this.DamageBox.ValueChanged += new System.EventHandler(this.DamageBox_ValueChanged);
 			// 
 			// MonsterControl
 			// 
@@ -378,7 +378,7 @@
 			this.PocketGroupBox.PerformLayout();
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.ExperienceBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.XPRewardBox)).EndInit();
 			this.tabControl1.ResumeLayout(false);
 			this.VisualTab.ResumeLayout(false);
 			this.EntityTab.ResumeLayout(false);
@@ -408,7 +408,7 @@
 		private System.Windows.Forms.ComboBox InterfaceNameBox;
 		private System.Windows.Forms.ComboBox ScriptNameBox;
 		private DiceForm DamageBox;
-		private System.Windows.Forms.NumericUpDown ExperienceBox;
+		private System.Windows.Forms.NumericUpDown XPRewardBox;
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.TabControl tabControl1;
 		private System.Windows.Forms.TabPage VisualTab;

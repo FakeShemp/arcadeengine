@@ -82,7 +82,7 @@ namespace DungeonEye.Forms
 			if (Monster == null)
 			{
 				ArmorClassBox.Value = 0;
-				ExperienceBox.Value = 0;
+				XPRewardBox.Value = 0;
 				PocketItemsBox.Items.Clear();
 				ScriptNameBox.Items.Clear();
 				InterfaceNameBox.Items.Clear();
@@ -112,7 +112,7 @@ namespace DungeonEye.Forms
 					PocketItemsBox.Items.Add(name);
 				PocketItemsBox.EndUpdate();
 
-				ExperienceBox.Value = Monster.Experience;
+				XPRewardBox.Value = Monster.Reward;
 				ArmorClassBox.Value = Monster.ArmorClass;
 
 				ScriptNameBox.SelectedItem = Monster.ScriptName;
@@ -414,7 +414,7 @@ namespace DungeonEye.Forms
 		{
 			if (Monster == null)
 				return;
-			Monster.Experience = (int)ExperienceBox.Value;
+			Monster.Reward = (int)XPRewardBox.Value;
 		}
 
 

@@ -95,7 +95,7 @@ namespace DungeonEye
 		/// <returns>True if moved, or false</returns>
 		private bool Move(Point offset)
 		{
-			// Can't move and force is false
+			// Can't move
 			if (!CanMove)
 				return false;
 
@@ -106,6 +106,11 @@ namespace DungeonEye
 
 			// Check all blocking states
 			bool canmove = true;
+
+			// The team
+			if (Location.Dungeon.Team.Location.Maze == Location.Maze &&
+				Location.Dungeon.Team.Location.Position == dst)
+				canmove = false;
 
 			// A wall
 			MazeBlock dstblock = Location.Maze.GetBlock(dst);
@@ -125,26 +130,46 @@ namespace DungeonEye
 				canmove = false;
 
 
-			// Leave the current block
-			//if (MazeBlock != null)
-			//    MazeBlock.OnTeamLeave(this);
 
 
 			if (canmove)
 			{
+				// Leave the current block
+			    Location.Block.OnMonsterLeave(this);
+				
+
 				Location.Position.Offset(offset);
 				LastMove = DateTime.Now;
+
+				// Enter the new block
+				Location.Block.OnMonsterEnter(this);
 			}
-
-			// Enter the new block
-			//MazeBlock = Maze.GetBlock(Location.Position);
-			//if (MazeBlock != null)
-			//   MazeBlock.OnTeamEnter(this);
-
 
 			return canmove;
 		}
 
+
+		/// <summary>
+		/// Attack the entity
+		/// </summary>
+		/// <param name="attack">Attack</param>
+		public override void Hit(Attack attack)
+		{
+			if (attack == null)
+				return;
+
+			LastAttack = attack;
+			if (LastAttack.IsAMiss)
+				return;
+
+			HitPoint.Current -= LastAttack.Hit;
+
+			// Reward the team for having killed the entity
+			if (IsDead && attack.Striker is Hero)
+			{
+				(attack.Striker as Hero).Team.AddExperience(Reward);
+			}
+		}
 
 
 
@@ -166,6 +191,8 @@ namespace DungeonEye
 				DrawOffset = new Point(GameBase.Random.Next(-10, 10), GameBase.Random.Next(-10, 10));
 				LastDrawOffset = DateTime.Now;
 			}
+
+
 
             // Find a new target to reach
 			if (TargetRange == 0)
@@ -527,7 +554,13 @@ namespace DungeonEye
                     }
                     break;
 
-                    default:
+					case "reward":
+					{
+						Reward = int.Parse(node.Attributes["value"].Value);
+					}
+					break;
+					
+					default:
 					{
 						base.Load(node);
 					}
@@ -591,7 +624,11 @@ namespace DungeonEye
             writer.WriteAttributeString("value", SightRange.ToString());
             writer.WriteEndElement();
 
-            writer.WriteEndElement();
+			writer.WriteStartElement("reward");
+			writer.WriteAttributeString("value", Reward.ToString());
+			writer.WriteEndElement();
+
+			writer.WriteEndElement();
 
 			return true;
 		}
@@ -618,6 +655,19 @@ namespace DungeonEye
 			get;
 			set;
 		}
+
+
+		/// <summary>
+		/// Base save bonus
+		/// </summary>
+		public override int BaseSaveBonus
+		{
+			get
+			{
+				return 2 + Experience.GetLevelFromXP(Reward) / 2;
+			}
+		}
+
 
 		/// <summary>
 		/// Xml tag of the asset in bank
@@ -688,6 +738,7 @@ namespace DungeonEye
 				return loc;
 			}
         }
+
 
 		/// <summary>
 		/// Range remaining to reach the target
@@ -876,6 +927,16 @@ namespace DungeonEye
 			}
 		}
 
+
+
+		/// <summary>
+		/// Experience gained by killing the entity
+		/// </summary>
+		public int Reward
+		{
+			get;
+			set;
+		}
 
 
 
