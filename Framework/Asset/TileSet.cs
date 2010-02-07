@@ -331,8 +331,8 @@ namespace ArcEngine.Asset
 		/// <summary>
 		/// Return the information for a tile
 		/// </summary>
-		/// <param name="id"></param>
-		/// <returns></returns>
+		/// <param name="id">ID of the tile</param>
+		/// <returns>Tile handle or null</returns>
 		public Tile GetTile(int id)
 		{
 			if (tiles.ContainsKey(id))

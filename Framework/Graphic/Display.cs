@@ -1060,18 +1060,21 @@ namespace ArcEngine.Graphic
 			if (Capabilities.HasVBO)
 			{
 				// Vertex
-				GL.EnableClientState(EnableCap.VertexArray);
+				GL.EnableClientState(ArrayCap.VertexArray);
+				//GL.EnableClientState(EnableCap.VertexArray);
 				GL.BindBuffer(BufferTarget.ArrayBuffer, batch.BufferID[0]);
 				GL.VertexPointer(2, VertexPointerType.Int, 0, IntPtr.Zero);
 
 
 				// Texture
-				GL.EnableClientState(EnableCap.TextureCoordArray);
+				GL.EnableClientState(ArrayCap.TextureCoordArray);
+				//GL.EnableClientState(EnableCap.TextureCoordArray);
 				GL.BindBuffer(BufferTarget.ArrayBuffer, batch.BufferID[1]);
 				GL.TexCoordPointer(2, TexCoordPointerType.Int, 0, IntPtr.Zero);
 
 				// Color
-				GL.EnableClientState(EnableCap.ColorArray);
+				GL.EnableClientState(ArrayCap.ColorArray);
+				//GL.EnableClientState(EnableCap.ColorArray);
 				GL.BindBuffer(BufferTarget.ArrayBuffer, batch.BufferID[2]);
 				GL.ColorPointer(4, ColorPointerType.UnsignedByte, 0, IntPtr.Zero);
 
@@ -1079,9 +1082,12 @@ namespace ArcEngine.Graphic
 				GL.DrawArrays(mode, 0, batch.Size);
 
 
-				GL.DisableClientState(EnableCap.VertexArray);
-				GL.DisableClientState(EnableCap.TextureCoordArray);
-				GL.DisableClientState(EnableCap.ColorArray);
+				GL.DisableClientState(ArrayCap.VertexArray);
+				GL.DisableClientState(ArrayCap.TextureCoordArray);
+				GL.DisableClientState(ArrayCap.ColorArray);
+				//GL.DisableClientState(EnableCap.VertexArray);
+				//GL.DisableClientState(EnableCap.TextureCoordArray);
+				//GL.DisableClientState(EnableCap.ColorArray);
 
 			}
 			else

@@ -50,6 +50,9 @@
 			this.TilesNoZoom = new System.Windows.Forms.ToolStripButton();
 			this.TilesZoomIn = new System.Windows.Forms.ToolStripButton();
 			this.TilesZoomOut = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+			this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+			this.TileSetNameBox = new System.Windows.Forms.ToolStripComboBox();
 			this.TilesHScroller = new System.Windows.Forms.HScrollBar();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -65,9 +68,6 @@
 			this.FramesZoomIn = new System.Windows.Forms.ToolStripButton();
 			this.FramesZoomOut = new System.Windows.Forms.ToolStripButton();
 			this.DrawTimer = new System.Windows.Forms.Timer(this.components);
-			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-			this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
-			this.TileSetNameBox = new System.Windows.Forms.ToolStripComboBox();
 			this.groupBox2.SuspendLayout();
 			this.PreviewToolStrip.SuspendLayout();
 			this.groupBox3.SuspendLayout();
@@ -93,18 +93,20 @@
 			this.groupBox2.Controls.Add(this.PreviewToolStrip);
 			this.groupBox2.Location = new System.Drawing.Point(206, 0);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(665, 180);
+			this.groupBox2.Size = new System.Drawing.Size(960, 180);
 			this.groupBox2.TabIndex = 3;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Preview :";
 			// 
 			// GlPreviewControl
 			// 
+			this.GlPreviewControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.GlPreviewControl.BackColor = System.Drawing.Color.Black;
-			this.GlPreviewControl.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.GlPreviewControl.Location = new System.Drawing.Point(3, 41);
 			this.GlPreviewControl.Name = "GlPreviewControl";
-			this.GlPreviewControl.Size = new System.Drawing.Size(659, 136);
+			this.GlPreviewControl.Size = new System.Drawing.Size(954, 136);
 			this.GlPreviewControl.TabIndex = 2;
 			this.GlPreviewControl.VSync = false;
 			this.GlPreviewControl.Paint += new System.Windows.Forms.PaintEventHandler(this.GlPreviewControl_Paint);
@@ -130,7 +132,7 @@
 			this.PreviewToolStrip.Location = new System.Drawing.Point(3, 16);
 			this.PreviewToolStrip.Name = "PreviewToolStrip";
 			this.PreviewToolStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-			this.PreviewToolStrip.Size = new System.Drawing.Size(659, 25);
+			this.PreviewToolStrip.Size = new System.Drawing.Size(954, 25);
 			this.PreviewToolStrip.TabIndex = 1;
 			this.PreviewToolStrip.Text = "toolStrip1";
 			// 
@@ -231,18 +233,20 @@
 			this.groupBox3.Controls.Add(this.TilesHScroller);
 			this.groupBox3.Location = new System.Drawing.Point(0, 382);
 			this.groupBox3.Name = "groupBox3";
-			this.groupBox3.Size = new System.Drawing.Size(871, 207);
+			this.groupBox3.Size = new System.Drawing.Size(1166, 343);
 			this.groupBox3.TabIndex = 4;
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Tiles :";
 			// 
 			// GlTilesControl
 			// 
+			this.GlTilesControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.GlTilesControl.BackColor = System.Drawing.Color.Black;
-			this.GlTilesControl.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.GlTilesControl.Location = new System.Drawing.Point(3, 41);
 			this.GlTilesControl.Name = "GlTilesControl";
-			this.GlTilesControl.Size = new System.Drawing.Size(865, 146);
+			this.GlTilesControl.Size = new System.Drawing.Size(1160, 279);
 			this.GlTilesControl.TabIndex = 3;
 			this.GlTilesControl.VSync = false;
 			this.GlTilesControl.Paint += new System.Windows.Forms.PaintEventHandler(this.GlTilesControl_Paint);
@@ -263,7 +267,7 @@
 			this.toolStrip1.Location = new System.Drawing.Point(3, 16);
 			this.toolStrip1.Name = "toolStrip1";
 			this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-			this.toolStrip1.Size = new System.Drawing.Size(865, 25);
+			this.toolStrip1.Size = new System.Drawing.Size(1160, 25);
 			this.toolStrip1.TabIndex = 2;
 			this.toolStrip1.Text = "toolStrip1";
 			// 
@@ -294,12 +298,30 @@
 			this.TilesZoomOut.Size = new System.Drawing.Size(23, 22);
 			this.TilesZoomOut.Text = "Zoom out";
 			// 
+			// toolStripSeparator5
+			// 
+			this.toolStripSeparator5.Name = "toolStripSeparator5";
+			this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
+			// 
+			// toolStripLabel1
+			// 
+			this.toolStripLabel1.Name = "toolStripLabel1";
+			this.toolStripLabel1.Size = new System.Drawing.Size(50, 22);
+			this.toolStripLabel1.Text = "Tileset : ";
+			// 
+			// TileSetNameBox
+			// 
+			this.TileSetNameBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.TileSetNameBox.Name = "TileSetNameBox";
+			this.TileSetNameBox.Size = new System.Drawing.Size(121, 25);
+			this.TileSetNameBox.SelectedIndexChanged += new System.EventHandler(this.TileSetNameBox_SelectedIndexChanged);
+			// 
 			// TilesHScroller
 			// 
 			this.TilesHScroller.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.TilesHScroller.Location = new System.Drawing.Point(3, 187);
+			this.TilesHScroller.Location = new System.Drawing.Point(3, 323);
 			this.TilesHScroller.Name = "TilesHScroller";
-			this.TilesHScroller.Size = new System.Drawing.Size(865, 17);
+			this.TilesHScroller.Size = new System.Drawing.Size(1160, 17);
 			this.TilesHScroller.TabIndex = 1;
 			// 
 			// groupBox4
@@ -320,18 +342,20 @@
 			this.groupBox1.Controls.Add(this.toolStrip2);
 			this.groupBox1.Location = new System.Drawing.Point(206, 183);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(665, 193);
+			this.groupBox1.Size = new System.Drawing.Size(960, 193);
 			this.groupBox1.TabIndex = 6;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Frames :";
 			// 
 			// GlFramesControl
 			// 
+			this.GlFramesControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.GlFramesControl.BackColor = System.Drawing.Color.Black;
-			this.GlFramesControl.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.GlFramesControl.Location = new System.Drawing.Point(3, 41);
 			this.GlFramesControl.Name = "GlFramesControl";
-			this.GlFramesControl.Size = new System.Drawing.Size(659, 149);
+			this.GlFramesControl.Size = new System.Drawing.Size(954, 149);
 			this.GlFramesControl.TabIndex = 4;
 			this.GlFramesControl.VSync = false;
 			this.GlFramesControl.Paint += new System.Windows.Forms.PaintEventHandler(this.GlFramesControl_Paint);
@@ -355,7 +379,7 @@
 			this.toolStrip2.Location = new System.Drawing.Point(3, 16);
 			this.toolStrip2.Name = "toolStrip2";
 			this.toolStrip2.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-			this.toolStrip2.Size = new System.Drawing.Size(659, 25);
+			this.toolStrip2.Size = new System.Drawing.Size(954, 25);
 			this.toolStrip2.TabIndex = 3;
 			this.toolStrip2.Text = "toolStrip2";
 			// 
@@ -441,28 +465,11 @@
 			this.DrawTimer.Interval = 50;
 			this.DrawTimer.Tick += new System.EventHandler(this.DrawTimer_Tick);
 			// 
-			// toolStripSeparator5
-			// 
-			this.toolStripSeparator5.Name = "toolStripSeparator5";
-			this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
-			// 
-			// toolStripLabel1
-			// 
-			this.toolStripLabel1.Name = "toolStripLabel1";
-			this.toolStripLabel1.Size = new System.Drawing.Size(50, 22);
-			this.toolStripLabel1.Text = "Tileset : ";
-			// 
-			// TileSetNameBox
-			// 
-			this.TileSetNameBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.TileSetNameBox.Name = "TileSetNameBox";
-			this.TileSetNameBox.Size = new System.Drawing.Size(121, 25);
-			// 
 			// AnimationForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(855, 556);
+			this.ClientSize = new System.Drawing.Size(1169, 726);
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.groupBox4);
 			this.Controls.Add(this.groupBox3);

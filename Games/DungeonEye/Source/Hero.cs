@@ -49,6 +49,7 @@ namespace DungeonEye
 			Team = team;
 			Professions = new List<Profession>();
 
+			Head = -1;
 			Inventory = new Item[26];
 			BackPack = new Item[14];
 			WaistPack = new Item[3];

@@ -50,7 +50,7 @@ namespace ArcEngine.Asset
 	/// <summary>
 	/// Defines an animation set.
 	/// </summary>
-	public class Animation : IAsset
+	public class Animation : IAsset, IDisposable
 	{
 
 		/// <summary>
@@ -60,6 +60,7 @@ namespace ArcEngine.Asset
 		{
 			Frames = new List<int>();
 			Time = TimeSpan.Zero;
+
 		}
 
 
@@ -78,14 +79,14 @@ namespace ArcEngine.Asset
 		/// <summary>
 		/// Update the animation
 		/// </summary>
-		/// <param name="time">Milliseconds elapsed since last update</param>
-		public void Update(TimeSpan time)
+		/// <param name="time">Elapsed game time</param>
+		public void Update(GameTime time)
 		{
 			if (State != AnimationState.Play)
 				return;
 
 			// Update the chrono
-			Time += time;
+			Time += time.ElapsedGameTime;
 
 			// Not the time to change frame
 			if (Time < FrameRate)
@@ -153,16 +154,12 @@ namespace ArcEngine.Asset
 		/// <param name="flipy">Vertical flip</param>
 		public void Draw(Point location, float rotate, bool flipx, bool flipy)
 		{
-			if (TileSet == null)
-				return;
-
-
-			if (CurrentTile == null)
+			if (TileSet == null || CurrentTile == null)
 				return;
 
 			//Rectangle rect = new Rectangle(location, CurrentTile.Size);
 
-			TileSet.Draw(CurrentFrame, location);
+			TileSet.Draw(Frames[CurrentFrame], location);
 
 		}
 
@@ -259,6 +256,60 @@ namespace ArcEngine.Asset
 		#endregion
 
 
+		#region Dispose
+
+		/// <summary>
+		/// Implement IDisposable.
+		/// </summary>
+		public void Dispose()
+		{
+			Dispose(true);
+			// This object will be cleaned up by the Dispose method.
+			// Therefore, you should call GC.SupressFinalize to
+			// take this object off the finalization queue
+			// and prevent finalization code for this object
+			// from executing a second time.
+			GC.SuppressFinalize(this);
+		}
+
+		/// <summary>
+		/// Dispose(bool disposing) executes in two distinct scenarios.
+		/// If disposing equals true, the method has been called directly
+		/// or indirectly by a user's code. Managed and unmanaged resources
+		/// can be disposed.
+		/// If disposing equals false, the method has been called by the
+		/// runtime from inside the finalizer and you should not reference
+		/// other objects. Only unmanaged resources can be disposed.
+		/// </summary>
+		/// <param name="disposing"></param>
+		private void Dispose(bool disposing)
+		{
+			// Check to see if Dispose has already been called.
+			if (!this.disposed)
+			{
+				// If disposing equals true, dispose all managed
+				// and unmanaged resources.
+				if (disposing)
+				{
+					TileSet.Dispose();
+				}
+
+				// Call the appropriate methods to clean up
+				// unmanaged resources here.
+				// If disposing is false,
+				// only the following code is executed.
+
+				// Note disposing has been done.
+				disposed = true;
+			}
+		}
+
+
+		private bool disposed = false;
+
+		#endregion
+
+
 		#region IO routines
 
 		///
@@ -274,9 +325,6 @@ namespace ArcEngine.Asset
 
 			xml.WriteStartElement(XmlTag);
 			xml.WriteAttributeString("name", Name);
-
-
-	//		base.SaveComment(xml);
 
 
 			xml.WriteStartElement("framerate");
@@ -512,7 +560,25 @@ namespace ArcEngine.Asset
 			private set;
 		}
 
-												
+
+		///// <summary>
+		///// 
+		///// </summary>
+		//public bool Enabled
+		//{
+		//    get;
+		//    private set;
+		//}
+
+
+		///// <summary>
+		///// 
+		///// </summary>
+		//public int UpdateOrder
+		//{
+		//    get;
+		//    private set;
+		//}
 
 		#endregion
 	}

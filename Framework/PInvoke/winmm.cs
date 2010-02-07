@@ -1201,8 +1201,7 @@ namespace ArcEngine.PInvoke
 		///         minimum difference between successive values returned by <b>timeGetTime</b>
 		///         can be as large as the minimum period value set using
 		///         <see cref="timeBeginPeriod" /> and <see cref="timeEndPeriod" />.  Use the
-		///         <see cref="Kernel.QueryPerformanceCounter" /> and
-		///         <see cref="Kernel.QueryPerformanceFrequency" /> functions to measure short
+		///         Kernel.QueryPerformanceCounter and Kernel.QueryPerformanceFrequency functions to measure short
 		///         time intervals at a high resolution.
 		///     </para>
 		///     <para>
@@ -1213,8 +1212,6 @@ namespace ArcEngine.PInvoke
 		///         <b>timeEndPeriod</b> functions.
 		///     </para>
 		/// </remarks>
-		/// <seealso cref="Kernel.QueryPerformanceCounter" />
-		/// <seealso cref="Kernel.QueryPerformanceFrequency" />
 		/// <seealso cref="timeBeginPeriod" />
 		/// <seealso cref="timeEndPeriod" />
 		// <seealso cref="MMTIME" />

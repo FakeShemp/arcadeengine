@@ -55,6 +55,8 @@ namespace ArcEngine
 
 			Random = new Random((int)DateTime.Now.Ticks);
 			Components = new GameComponentCollection();
+			DrawableComponents = new List<IDrawable>();
+			UpdateableComponents = new List<IUpdateable>();
 		}
 
 
@@ -616,6 +618,26 @@ namespace ArcEngine
 		/// Gets the collection of <see cref="GameComponent"/> owned by the game. 
 		/// </summary>
 		public GameComponentCollection Components
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// List of updateable components
+		/// </summary>
+		public List<IUpdateable> UpdateableComponents
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// List of drawableable components
+		/// </summary>
+		public List<IDrawable> DrawableComponents
 		{
 			get;
 			private set;

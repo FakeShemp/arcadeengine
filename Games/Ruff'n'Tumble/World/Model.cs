@@ -39,6 +39,10 @@ namespace RuffnTumble
 		}
 
 
+		public bool Init()
+		{
+			return true;
+		}
 
 		#region IO routines
 

@@ -122,10 +122,10 @@ namespace ArcEngine.Editor
 			Display.Init();
 
 
-			Animation.Init();
+	//		Animation.Init();
 
 			// Draw timer
-		//	DrawTimer.Start();
+			DrawTimer.Start();
 		}
 
 	
@@ -148,8 +148,9 @@ namespace ArcEngine.Editor
 				// Stop the drawtimer
 				DrawTimer.Stop();
 
-				Animation.Update(TimeSpan.FromMilliseconds(elapsed));
+				//Animation.Update(TimeSpan.FromMilliseconds(elapsed));
 
+				Animation.Update(new GameTime(TimeSpan.Zero, TimeSpan.Zero, TimeSpan.Zero, TimeSpan.FromMilliseconds(elapsed)));
 
 				GlFramesControl.Invalidate();
 				GlTilesControl.Invalidate();
@@ -187,6 +188,22 @@ namespace ArcEngine.Editor
 
 		#endregion
 
+
+
+
+		/// <summary>
+		/// Change the tileset
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void TileSetNameBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (TileSetNameBox.SelectedIndex == -1 || Animation == null)
+				return;
+
+			Animation.SetTileSet((string)TileSetNameBox.SelectedItem);
+
+		}
 
 
 		#region GlPreviewControl
@@ -272,28 +289,32 @@ namespace ArcEngine.Editor
 			//
 			GlPreviewControl.MakeCurrent();
 			Display.ClearBuffers();
-			Display.ClearColor = Color.Red;
+
+
+			try
+			{
+				//if (Animation.TileSet == null)
+				//    return;
+
+				Animation.Draw(AnimOffset);
+
 /*
-			if (Animation.TileSet == null)
+				Tile tile = Animation.CurrentTile;
+				if (tile == null)
+				{
+					GlPreviewControl.SwapBuffers();
+					return;
+				}
+				Rectangle rect = new Rectangle(AnimOffset, tile.Size);
+
+				Animation.TileSet.Draw(Animation.CurrentFrame, AnimOffset);
+*/
+			}
+			finally
 			{
 				GlPreviewControl.SwapBuffers();
-				return;
 			}
-*/
 
-			//Animation.Draw(AnimOffset);
-/*
-			Tile tile = Animation.CurrentTile;
-			if (tile == null)
-			{
-				GlPreviewControl.SwapBuffers();
-				return;
-			}
-			Rectangle rect = new Rectangle(AnimOffset, tile.Size);
-
-			Animation.TileSet.Draw(Animation.CurrentFrame, AnimOffset);
-*/
-			GlPreviewControl.SwapBuffers();
 		}
 
 
@@ -505,9 +526,6 @@ namespace ArcEngine.Editor
 			GlFramesControl.MakeCurrent();
 			Display.ClearBuffers();
 
-			Display.ClearColor = Color.Green;
-
-
 			// Oops !
 			if (Animation.TileSet == null)
 			{
@@ -633,8 +651,8 @@ namespace ArcEngine.Editor
 		/// <param name="e"></param>
 		private void GlTilesControl_Resize(object sender, EventArgs e)
 		{
-			if (GlTilesControl.Context == null)
-				return;
+			//if (GlTilesControl.Context == null)
+			//    return;
 
 			GlTilesControl.MakeCurrent();
 			Display.ViewPort = new Rectangle(new Point(), GlTilesControl.Size);
@@ -651,16 +669,12 @@ namespace ArcEngine.Editor
 			GlTilesControl.MakeCurrent();
 			Display.ClearBuffers();
 
-			Display.ClearColor = Color.Blue;
-
 			if (Animation.TileSet == null)
 			{
 				GlTilesControl.SwapBuffers();
 				return;
 			}
 
-			// Bind the TileSet
-			//Animation.TileSet.Texture.Bind();
 
 			// Find the cursor location
 			Point mouse = GlTilesControl.PointToClient(Control.MousePosition);
@@ -675,8 +689,7 @@ namespace ArcEngine.Editor
 				rect.Size = tile.Size;
 
 				// Blit the tile
-			//	Video.Blit(rect, tile.Rectangle);
-				Animation.TileSet.Draw(id, new Point(rect.X + tile.HotSpot.X, tile.HotSpot.Y));
+				Animation.TileSet.Draw(id, new Point(rect.X + tile.HotSpot.X, rect.Y + tile.HotSpot.Y));
 
 				// Is mouse over or selected tile
 				if (rect.Contains(mouse) || TileID == id)
@@ -693,6 +706,7 @@ namespace ArcEngine.Editor
 				{
 					rect.X = 0;
 					rect.Y += maxheight + 10;
+					maxheight = 0;
 				}
 
 

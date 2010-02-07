@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{9931BDE3-41D2-4065-9595-37020DD45E8D}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -275,7 +275,9 @@
     <Compile Include="Graphic\Texture.cs" />
     <Compile Include="Graphic\Display.cs" />
     <Compile Include="GameComponent.cs" />
+    <Compile Include="IDrawable.cs" />
     <Compile Include="Input\GamePadState.cs" />
+    <Compile Include="IUpdateable.cs" />
     <Compile Include="PInvoke\Kernel32.cs" />
     <Compile Include="PInvoke\User32.cs" />
     <Compile Include="PInvoke\Winmm.cs" />
