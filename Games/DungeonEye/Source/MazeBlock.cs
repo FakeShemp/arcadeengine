@@ -481,11 +481,6 @@ namespace DungeonEye
 
 			// Location
 			Location.Save("location", writer);
-			//writer.WriteStartElement("location");
-			//writer.WriteAttributeString("x", Location.X.ToString());
-			//writer.WriteAttributeString("y", Location.Y.ToString());
-			//writer.WriteEndElement();
-
 
 			// Type of wall
 			writer.WriteStartElement("type");
@@ -564,11 +559,8 @@ namespace DungeonEye
 		/// <returns></returns>
 		public bool Load(XmlNode xml)
 		{
-			//ItemSet itemset = ResourceManager.CreateSharedAsset<ItemSet>("Items");
-			//if (itemset == null)
-			//{
-			//    Trace.WriteLine("MazeBlock::Load() : Failed to open ItemSet.");
-			//}
+			if (xml == null)
+				return false;
 			
 			foreach (XmlNode node in xml)
 			{
@@ -594,7 +586,6 @@ namespace DungeonEye
 					case "location":
 					{
 						Location.Load(node);
-						//= new Point(Int32.Parse(node.Attributes["x"].Value), Int32.Parse(node.Attributes["y"].Value));
 					}
 					break;
 

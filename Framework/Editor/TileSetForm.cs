@@ -47,9 +47,6 @@ namespace ArcEngine.Editor
 
 			//
 			Node = node;
-			//tileSet = new TileSet();
-			//tileSet = new TileSet();
-			//tileSet.Load(node);
 
 			TileBox = new SelectionBox();
 			CollisionBox = new SelectionBox();
@@ -66,15 +63,6 @@ namespace ArcEngine.Editor
 				TexturesBox.Items.Add(name);
 			}
 			TexturesBox.EndUpdate();
-
-
-			// Preload background texture resource
-	//		CheckerBoard = new Texture( ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png"));
-
-			
-			
-		//	TileSetPropertyGrid.SelectedObject = tileSet;
-
 
 			// Set zoom value
 			ZoomBox.SelectedIndex = 0;
@@ -558,12 +546,10 @@ namespace ArcEngine.Editor
 		/// <param name="e"></param>
 		private void TileSetForm_Load(object sender, EventArgs e)
 		{
-		//	GLTextureControl_Resize(null, null);
 			GLTextureControl.MakeCurrent();
 			Display.Init();
 
 
-		//	GLTileControl_Resize(null, null);
 			GLTileControl.MakeCurrent();
 			Display.Init();
 
@@ -575,7 +561,6 @@ namespace ArcEngine.Editor
 
 			// Build Cell list
 			RebuildCellList();
-
 		}
 
 		/// <summary>

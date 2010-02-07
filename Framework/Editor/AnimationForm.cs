@@ -55,12 +55,6 @@ namespace ArcEngine.Editor
 
 
 
-			Animation.Init();
-
-
-			// Draw timer
-			DrawTimer.Start();
-
 			if (Animation.TileSet != null)
 			{
 
@@ -71,14 +65,23 @@ namespace ArcEngine.Editor
 
 			}
 
-			CheckerBoard = new Texture(ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png"));
 
 
 			Time = Environment.TickCount;
-
+			BuildInterface();
 		}
 
 
+		/// <summary>
+		/// Build interface
+		/// </summary>
+		void BuildInterface()
+		{
+			TileSetNameBox.BeginUpdate();
+			TileSetNameBox.Items.Clear();
+			TileSetNameBox.Items.AddRange(ResourceManager.GetAssets<TileSet>().ToArray());
+			TileSetNameBox.EndUpdate();
+		}
 
 		/// <summary>
 		/// save the asset to the manager
@@ -117,6 +120,12 @@ namespace ArcEngine.Editor
 
 			GlPreviewControl.MakeCurrent();
 			Display.Init();
+
+
+			Animation.Init();
+
+			// Draw timer
+		//	DrawTimer.Start();
 		}
 
 	
@@ -127,7 +136,6 @@ namespace ArcEngine.Editor
 		/// <param name="e"></param>
 		private void DrawTimer_Tick(object sender, EventArgs e)
 		{
-
 			// If not floating panel and the panel is active and AutoRefresh is OK
 			if (this.DockAreas != DockAreas.Float && DockPanel.ActiveDocument == this)
 			{
@@ -264,6 +272,7 @@ namespace ArcEngine.Editor
 			//
 			GlPreviewControl.MakeCurrent();
 			Display.ClearBuffers();
+			Display.ClearColor = Color.Red;
 /*
 			if (Animation.TileSet == null)
 			{
@@ -272,7 +281,7 @@ namespace ArcEngine.Editor
 			}
 */
 
-			Animation.Draw(AnimOffset);
+			//Animation.Draw(AnimOffset);
 /*
 			Tile tile = Animation.CurrentTile;
 			if (tile == null)
@@ -496,6 +505,9 @@ namespace ArcEngine.Editor
 			GlFramesControl.MakeCurrent();
 			Display.ClearBuffers();
 
+			Display.ClearColor = Color.Green;
+
+
 			// Oops !
 			if (Animation.TileSet == null)
 			{
@@ -611,7 +623,6 @@ namespace ArcEngine.Editor
 				// Get the maximum height
 				maxheight = Math.Max(maxheight, rect.Height);
 			}
-
 		}
 
 
@@ -622,6 +633,9 @@ namespace ArcEngine.Editor
 		/// <param name="e"></param>
 		private void GlTilesControl_Resize(object sender, EventArgs e)
 		{
+			if (GlTilesControl.Context == null)
+				return;
+
 			GlTilesControl.MakeCurrent();
 			Display.ViewPort = new Rectangle(new Point(), GlTilesControl.Size);
 		}
@@ -636,6 +650,8 @@ namespace ArcEngine.Editor
 			// Draws all tiles
 			GlTilesControl.MakeCurrent();
 			Display.ClearBuffers();
+
+			Display.ClearColor = Color.Blue;
 
 			if (Animation.TileSet == null)
 			{
@@ -750,6 +766,7 @@ namespace ArcEngine.Editor
 		Texture CheckerBoard;
 
 		#endregion
+
 
 
 	}

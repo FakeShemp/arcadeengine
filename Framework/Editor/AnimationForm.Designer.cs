@@ -65,6 +65,9 @@
 			this.FramesZoomIn = new System.Windows.Forms.ToolStripButton();
 			this.FramesZoomOut = new System.Windows.Forms.ToolStripButton();
 			this.DrawTimer = new System.Windows.Forms.Timer(this.components);
+			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+			this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+			this.TileSetNameBox = new System.Windows.Forms.ToolStripComboBox();
 			this.groupBox2.SuspendLayout();
 			this.PreviewToolStrip.SuspendLayout();
 			this.groupBox3.SuspendLayout();
@@ -102,8 +105,8 @@
 			this.GlPreviewControl.Location = new System.Drawing.Point(3, 41);
 			this.GlPreviewControl.Name = "GlPreviewControl";
 			this.GlPreviewControl.Size = new System.Drawing.Size(659, 136);
-			this.GlPreviewControl.TabIndex = 0;
-			this.GlPreviewControl.VSync = true;
+			this.GlPreviewControl.TabIndex = 2;
+			this.GlPreviewControl.VSync = false;
 			this.GlPreviewControl.Paint += new System.Windows.Forms.PaintEventHandler(this.GlPreviewControl_Paint);
 			this.GlPreviewControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GlPreviewControl_MouseMove);
 			this.GlPreviewControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.GlPreviewControl_MouseDown);
@@ -240,8 +243,8 @@
 			this.GlTilesControl.Location = new System.Drawing.Point(3, 41);
 			this.GlTilesControl.Name = "GlTilesControl";
 			this.GlTilesControl.Size = new System.Drawing.Size(865, 146);
-			this.GlTilesControl.TabIndex = 0;
-			this.GlTilesControl.VSync = true;
+			this.GlTilesControl.TabIndex = 3;
+			this.GlTilesControl.VSync = false;
 			this.GlTilesControl.Paint += new System.Windows.Forms.PaintEventHandler(this.GlTilesControl_Paint);
 			this.GlTilesControl.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.GlTilesControl_MouseDoubleClick);
 			this.GlTilesControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.GlTilesControl_MouseDown);
@@ -253,7 +256,10 @@
 			this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.TilesNoZoom,
             this.TilesZoomIn,
-            this.TilesZoomOut});
+            this.TilesZoomOut,
+            this.toolStripSeparator5,
+            this.toolStripLabel1,
+            this.TileSetNameBox});
 			this.toolStrip1.Location = new System.Drawing.Point(3, 16);
 			this.toolStrip1.Name = "toolStrip1";
 			this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -326,8 +332,8 @@
 			this.GlFramesControl.Location = new System.Drawing.Point(3, 41);
 			this.GlFramesControl.Name = "GlFramesControl";
 			this.GlFramesControl.Size = new System.Drawing.Size(659, 149);
-			this.GlFramesControl.TabIndex = 0;
-			this.GlFramesControl.VSync = true;
+			this.GlFramesControl.TabIndex = 4;
+			this.GlFramesControl.VSync = false;
 			this.GlFramesControl.Paint += new System.Windows.Forms.PaintEventHandler(this.GlFramesControl_Paint);
 			this.GlFramesControl.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.GlFramesControl_MouseDoubleClick);
 			this.GlFramesControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.GlFramesControl_MouseDown);
@@ -435,6 +441,23 @@
 			this.DrawTimer.Interval = 50;
 			this.DrawTimer.Tick += new System.EventHandler(this.DrawTimer_Tick);
 			// 
+			// toolStripSeparator5
+			// 
+			this.toolStripSeparator5.Name = "toolStripSeparator5";
+			this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
+			// 
+			// toolStripLabel1
+			// 
+			this.toolStripLabel1.Name = "toolStripLabel1";
+			this.toolStripLabel1.Size = new System.Drawing.Size(50, 22);
+			this.toolStripLabel1.Text = "Tileset : ";
+			// 
+			// TileSetNameBox
+			// 
+			this.TileSetNameBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.TileSetNameBox.Name = "TileSetNameBox";
+			this.TileSetNameBox.Size = new System.Drawing.Size(121, 25);
+			// 
 			// AnimationForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -471,20 +494,17 @@
 
 		private System.Windows.Forms.PropertyGrid PropertyBox;
 		private System.Windows.Forms.GroupBox groupBox2;
-		private OpenTK.GLControl GlPreviewControl;
 		private System.Windows.Forms.ToolStrip PreviewToolStrip;
 		private System.Windows.Forms.ToolStripButton AnimPlay;
 		private System.Windows.Forms.ToolStripButton AnimPause;
 		private System.Windows.Forms.ToolStripButton AnimStop;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 		private System.Windows.Forms.GroupBox groupBox3;
-		private OpenTK.GLControl GlTilesControl;
 		private System.Windows.Forms.HScrollBar TilesHScroller;
 		private System.Windows.Forms.GroupBox groupBox4;
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.ToolStripButton AnimZoomIn;
 		private System.Windows.Forms.ToolStripButton AnimZoomOut;
-		private OpenTK.GLControl GlFramesControl;
 		private System.Windows.Forms.Timer DrawTimer;
 		private System.Windows.Forms.ToolStripButton AnimNoZoom;
 		private System.Windows.Forms.ToolStrip toolStrip1;
@@ -504,5 +524,11 @@
 		private System.Windows.Forms.ToolStripButton AnimPreviousFrame;
 		private System.Windows.Forms.ToolStripButton AnimNextFrame;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+		private OpenTK.GLControl GlPreviewControl;
+		private OpenTK.GLControl GlTilesControl;
+		private OpenTK.GLControl GlFramesControl;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+		private System.Windows.Forms.ToolStripLabel toolStripLabel1;
+		private System.Windows.Forms.ToolStripComboBox TileSetNameBox;
 	}
 }
