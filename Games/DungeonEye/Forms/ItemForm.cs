@@ -293,15 +293,6 @@ namespace DungeonEye.Forms
 		}
 
 
-		/// <summary>
-		/// Change TileSet
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnSelectedTileIDChanged(object sender, EventArgs e)
-		{
-			Paint_Tiles(null, null);
-		}
 
 
 		/// <summary>
@@ -372,8 +363,6 @@ namespace DungeonEye.Forms
 			GLThrowTile_Resize(null, null);
 			GLIncomingTile_Resize(null, null);
 		}
-
-
 
 
 
@@ -796,7 +785,6 @@ namespace DungeonEye.Forms
 			Item.UseQuiver = UseQuiverBox.Checked;
 		}
 
-
 		private void PiercingBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (Item == null)
@@ -838,7 +826,39 @@ namespace DungeonEye.Forms
 			if (Item == null)
 				return;
 
-			
+			Item.Range = (int)RangeBox.Value;
+		}
+
+		private void InventoryTileID_OnChange(object sender, EventArgs e)
+		{
+			if (Item != null)
+				Item.TileID = InventoryTileBox.SelectedIndex;
+
+			Paint_Tiles(null, null);
+		}
+
+		private void GroundTileID_OnChange(object sender, EventArgs e)
+		{
+			if (Item != null)
+				Item.GroundTileID = GroundTileBox.SelectedIndex;
+
+			Paint_Tiles(null, null);
+		}
+
+		private void ThrownID_OnChange(object sender, EventArgs e)
+		{
+			if (Item != null)
+				Item.ThrowTileID = ThrownTileBox.SelectedIndex;
+
+			Paint_Tiles(null, null);
+		}
+
+		private void IncomingTile_OnChange(object sender, EventArgs e)
+		{
+			if (Item != null)
+				Item.IncomingTileID = IncomingTileBox.SelectedIndex;
+
+			Paint_Tiles(null, null);
 		}
 
 

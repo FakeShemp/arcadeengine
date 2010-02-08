@@ -28,7 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			DungeonEye.Dice dice2 = new DungeonEye.Dice();
+			DungeonEye.Dice dice4 = new DungeonEye.Dice();
 			this.GLGroundTile = new OpenTK.GLControl();
 			this.GLInventoryTile = new OpenTK.GLControl();
 			this.label2 = new System.Windows.Forms.Label();
@@ -169,7 +169,7 @@
 			this.GroundTileBox.Name = "GroundTileBox";
 			this.GroundTileBox.Size = new System.Drawing.Size(121, 21);
 			this.GroundTileBox.TabIndex = 0;
-			this.GroundTileBox.SelectedIndexChanged += new System.EventHandler(this.OnSelectedTileIDChanged);
+			this.GroundTileBox.SelectedIndexChanged += new System.EventHandler(this.GroundTileID_OnChange);
 			// 
 			// InventoryTileBox
 			// 
@@ -179,7 +179,7 @@
 			this.InventoryTileBox.Name = "InventoryTileBox";
 			this.InventoryTileBox.Size = new System.Drawing.Size(121, 21);
 			this.InventoryTileBox.TabIndex = 0;
-			this.InventoryTileBox.SelectedIndexChanged += new System.EventHandler(this.OnSelectedTileIDChanged);
+			this.InventoryTileBox.SelectedIndexChanged += new System.EventHandler(this.InventoryTileID_OnChange);
 			// 
 			// groupBox4
 			// 
@@ -643,7 +643,7 @@
 			this.IncomingTileBox.Name = "IncomingTileBox";
 			this.IncomingTileBox.Size = new System.Drawing.Size(122, 21);
 			this.IncomingTileBox.TabIndex = 0;
-			this.IncomingTileBox.SelectedIndexChanged += new System.EventHandler(this.OnSelectedTileIDChanged);
+			this.IncomingTileBox.SelectedIndexChanged += new System.EventHandler(this.IncomingTile_OnChange);
 			// 
 			// ThrownTileBox
 			// 
@@ -653,7 +653,7 @@
 			this.ThrownTileBox.Name = "ThrownTileBox";
 			this.ThrownTileBox.Size = new System.Drawing.Size(110, 21);
 			this.ThrownTileBox.TabIndex = 0;
-			this.ThrownTileBox.SelectedIndexChanged += new System.EventHandler(this.OnSelectedTileIDChanged);
+			this.ThrownTileBox.SelectedIndexChanged += new System.EventHandler(this.ThrownID_OnChange);
 			// 
 			// groupBox3
 			// 
@@ -877,10 +877,10 @@
 			// DamageBox
 			// 
 			this.DamageBox.ControlText = "Damage :";
-			dice2.Faces = 1;
-			dice2.Modifier = 0;
-			dice2.Throws = 1;
-			this.DamageBox.Dice = dice2;
+			dice4.Faces = 1;
+			dice4.Modifier = 0;
+			dice4.Throws = 1;
+			this.DamageBox.Dice = dice4;
 			this.DamageBox.Location = new System.Drawing.Point(3, 341);
 			this.DamageBox.MinimumSize = new System.Drawing.Size(225, 100);
 			this.DamageBox.Name = "DamageBox";

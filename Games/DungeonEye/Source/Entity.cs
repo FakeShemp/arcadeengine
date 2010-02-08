@@ -52,7 +52,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Reroll entity abilities
 		/// </summary>
-		public void ReRollAbilities()
+		public void RollAbilities()
 		{
 			Charisma.Value = RollForAbility();
 			Strength.Value = RollForAbility();
@@ -60,6 +60,8 @@ namespace DungeonEye
 			Dexterity.Value = RollForAbility();
 			Intelligence.Value = RollForAbility();
 			Wisdom.Value = RollForAbility();
+
+			HitPoint = new HitPoint(GameBase.Random.Next(6, 37), GameBase.Random.Next(6, 37));
 		}
 
 

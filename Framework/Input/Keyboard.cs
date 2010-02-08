@@ -56,12 +56,16 @@ namespace ArcEngine.Input
 			// Scan each key
 			for (int i = 0; i < 256; i++)
 			{
+				if (PreviousState[i] != CurrentState[i])
+				{
+					if (CurrentState[i])
+						KeyDown(new PreviewKeyDownEventArgs((Keys)i));
+					else
+						KeyUp(new KeyEventArgs((Keys)i));
+				}					
 				PreviousState[i] = CurrentState[i];
 				CurrentState[i] = (User32.GetKeyState(i) & 0x8000) != 0;
 			}
-
-		//	Trace.WriteLine("Keyboard update");
-
 		}
 
 

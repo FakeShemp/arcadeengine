@@ -60,6 +60,8 @@ namespace DungeonEye
 			HandPenality = new DateTime[2];
 			HandPenality[0] = DateTime.Now;
 			HandPenality[1] = DateTime.Now;
+
+			RollAbilities();
 		}
 
 
@@ -70,8 +72,7 @@ namespace DungeonEye
 		/// </summary>
 		public void Generate()
 		{
-			ReRollAbilities();
-			HitPoint = new HitPoint(GameBase.Random.Next(6, 37), GameBase.Random.Next(6, 37));
+			RollAbilities();
 			Food = 75;
 
 			Professions.Add(new Profession(0, HeroClass.Cleric));
@@ -87,9 +88,7 @@ namespace DungeonEye
 			SetInventoryItem(InventoryPosition.Armor, ResourceManager.CreateAsset<Item>("Leather Armor"));
 			SetInventoryItem(InventoryPosition.Helmet, ResourceManager.CreateAsset<Item>("Helmet"));
 			SetInventoryItem(InventoryPosition.Feet, ResourceManager.CreateAsset<Item>("Boots"));
-			SetBackPackItem(9, ResourceManager.CreateAsset<Item>("Short Bow"));
-			SetBackPackItem(1, ResourceManager.CreateAsset<Item>("Test Item"));
-			SetBackPackItem(2, ResourceManager.CreateAsset<Item>("Spell book"));
+			SetBackPackItem(2, ResourceManager.CreateAsset<Item>("Iron Ration"));
 		}
 
 
@@ -962,6 +961,17 @@ namespace DungeonEye
 
 
 		/// <summary>
+		/// Gender
+		/// </summary>
+		public HeroGender Gender
+		{
+			get
+			{
+				return ((int)Race) % 2 == 0 ? HeroGender.Male : HeroGender.Female;
+			}
+		}
+
+		/// <summary>
 		/// Items in the bag
 		/// </summary>
 		Item[] Inventory;
@@ -1131,18 +1141,18 @@ namespace DungeonEye
 	/// </summary>
 	public enum HeroRace
 	{
-		HumanMale,
-		HumanFemale,
-		ElfMale,
-		ElfFemale,
-		HalfElfMale,
-		HalfElfFemale,
-		DwarfMale,
-		DwarfFemale,
-		GnomeMale,
-		GnomeFemale,
-		HalflingMale,
-		HalflingFemale
+		HumanMale = 0,
+		HumanFemale = 1,
+		ElfMale = 2,
+		ElfFemale = 3,
+		HalfElfMale = 4,
+		HalfElfFemale = 5,
+		DwarfMale = 6,
+		DwarfFemale = 7,
+		GnomeMale = 8,
+		GnomeFemale = 9,
+		HalflingMale = 10,
+		HalflingFemale = 11,
 	}
 
 
@@ -1165,6 +1175,14 @@ namespace DungeonEye
 	}
 
 
+	/// <summary>
+	/// Gender of a Hero
+	/// </summary>
+	public enum HeroGender
+	{
+		Male,
+		Female,
+	}
 
 
 	#endregion

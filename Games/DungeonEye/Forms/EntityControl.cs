@@ -158,7 +158,7 @@ namespace DungeonEye.Forms
 			if (entity == null)
 				return;
 
-			entity.ReRollAbilities();
+			entity.RollAbilities();
 			Rebuild();
 		}
 
