@@ -687,8 +687,8 @@ namespace DungeonEye
 
 			string txt = string.Empty;
 			foreach (Profession prof in SelectedHero.Professions)
-				txt += prof.Class.ToString() + " / ";
-			txt = txt.Substring(0, txt.Length - 3);
+				txt += prof.Class.ToString() + "/";
+			txt = txt.Substring(0, txt.Length - 1);
 
 			Font.DrawText(new Point(366, 110), Color.Black, txt);
 			Font.DrawText(new Point(366, 124), Color.Black, SelectedHero.Alignment.ToString());
@@ -702,8 +702,6 @@ namespace DungeonEye
 			Font.DrawText(new Point(366, 236), Color.Black, "Charisma");
 			Font.DrawText(new Point(366, 250), Color.Black, "Armor class");
 
-			Font.DrawText(new Point(470, 280), Color.Black, "EXP");
-			Font.DrawText(new Point(550, 280), Color.Black, "LVL");
 
 			Font.DrawText(new Point(552, 166), Color.Black, SelectedHero.Strength.Value.ToString());// + "/" + SelectedHero.MaxStrength.ToString());
 			Font.DrawText(new Point(552, 180), Color.Black, SelectedHero.Intelligence.Value.ToString());
@@ -714,12 +712,14 @@ namespace DungeonEye
 			Font.DrawText(new Point(552, 250), Color.Black, SelectedHero.ArmorClass.ToString());
 
 
+			Font.DrawText(new Point(470, 270), Color.Black, "EXP");
+			Font.DrawText(new Point(550, 270), Color.Black, "LVL");
 			int y = 0;
 			foreach(Profession prof in SelectedHero.Professions)
 			{
-				Font.DrawText(new Point(366, 300 + y), Color.Black, prof.Class.ToString());
-				Font.DrawText(new Point(460, 300 + y), Color.White, prof.Experience.Points.ToString());
-				Font.DrawText(new Point(560, 300 + y), Color.White, prof.Experience.Level.ToString());
+				Font.DrawText(new Point(366, 290 + y), Color.Black, prof.Class.ToString());
+				Font.DrawText(new Point(460, 290 + y), Color.White, prof.Experience.Points.ToString());
+				Font.DrawText(new Point(560, 290 + y), Color.White, prof.Experience.Level.ToString());
 
 				y += 12;
 			}

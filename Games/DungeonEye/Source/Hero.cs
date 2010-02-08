@@ -76,6 +76,7 @@ namespace DungeonEye
 
 			Professions.Add(new Profession(0, HeroClass.Cleric));
 			Professions.Add(new Profession(0, HeroClass.Fighter));
+			Professions.Add(new Profession(0, HeroClass.Mage));
 
 
 			Head = GameBase.Random.Next(0, 32);
