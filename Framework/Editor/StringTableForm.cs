@@ -55,6 +55,8 @@ namespace ArcEngine.Editor
 
 
 			Build();
+
+
 		}
 
 
@@ -76,11 +78,13 @@ namespace ArcEngine.Editor
 			DefaultLanguageBox.EndUpdate();
 
 			// Default language
-			if (StringTable.Default != null && DefaultLanguageBox.Items.Contains(StringTable.Default))
+			if (!string.IsNullOrEmpty(StringTable.Default) && DefaultLanguageBox.Items.Contains(StringTable.Default))
 				DefaultLanguageBox.SelectedItem = StringTable.Default;
 
-			if (!string.IsNullOrEmpty(StringTable.LanguageName) && CurrentLanguageBox.Items.Contains(StringTable.LanguageName))
-				CurrentLanguageBox.SelectedItem = StringTable.LanguageName;
+			//if (!string.IsNullOrEmpty(StringTable.LanguageName) && CurrentLanguageBox.Items.Contains(StringTable.LanguageName))
+			//    CurrentLanguageBox.SelectedItem = StringTable.LanguageName;
+			if (!string.IsNullOrEmpty(StringTable.Default) && CurrentLanguageBox.Items.Contains(StringTable.Default))
+				CurrentLanguageBox.SelectedItem = StringTable.Default;
 
 
 			BuildListString();
@@ -111,7 +115,7 @@ namespace ArcEngine.Editor
 				StringListBox.Items.Add(item);
 			}
 
-			// Compare the current language and teh default language
+			// Compare the current language and the default language
 			if (DefaultLanguageBox.SelectedItem != null && DefaultLanguageBox.SelectedItem as string != StringTable.LanguageName)
 			{
 				Language deflang = StringTable.GetLanguage(DefaultLanguageBox.SelectedItem as string);
@@ -208,6 +212,7 @@ namespace ArcEngine.Editor
 
 			// Add to the stringtable
 			StringTable.AddString(TranslatedTextBox.Text);
+			TranslatedTextBox.Text = string.Empty;
 
 			BuildListString();
 		}
