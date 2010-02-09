@@ -60,8 +60,6 @@ namespace DungeonEye
 			HandPenality = new DateTime[2];
 			HandPenality[0] = DateTime.Now;
 			HandPenality[1] = DateTime.Now;
-
-			Food = 100;
 		}
 
 
@@ -73,7 +71,7 @@ namespace DungeonEye
 		public void Generate()
 		{
 			RollAbilities();
-			Food = 75;
+			Food = 100;
 
 			Professions.Add(new Profession(0, HeroClass.Cleric));
 			Professions.Add(new Profession(0, HeroClass.Fighter));
@@ -83,7 +81,7 @@ namespace DungeonEye
 			Head = GameBase.Random.Next(0, 32);
 
 
-			Quiver = 30;
+			Quiver = 0;
 			SetInventoryItem(InventoryPosition.Primary, ResourceManager.CreateAsset<Item>("Short Sword"));
 			SetInventoryItem(InventoryPosition.Armor, ResourceManager.CreateAsset<Item>("Leather Armor"));
 			SetInventoryItem(InventoryPosition.Helmet, ResourceManager.CreateAsset<Item>("Helmet"));

@@ -643,8 +643,16 @@ namespace DungeonEye
 			}
 			#endregion
 
+			#region Monsters
+			foreach (Monster monster in field.GetMonsters(position))
+			{
+				if (monster != null)
+					monster.Draw(view, position);
+			}
+			#endregion
+
 			#region Walls
-			else if (block.IsWall)
+			if (block.IsWall)
 			{
 				// Walls
 				foreach (TileDrawing tmp in MazeDisplayCoordinates.GetWalls(position))
@@ -671,14 +679,6 @@ namespace DungeonEye
 					}
 				}
 
-			}
-			#endregion
-
-			#region Monsters
-			foreach (Monster monster in field.GetMonsters(position))
-			{
-				if (monster != null)
-					monster.Draw(view, position);
 			}
 			#endregion
 

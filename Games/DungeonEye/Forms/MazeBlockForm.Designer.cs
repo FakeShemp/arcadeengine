@@ -95,6 +95,9 @@
 			this.label3 = new System.Windows.Forms.Label();
 			this.HiddenPlateBox = new System.Windows.Forms.CheckBox();
 			this.PitGroupBox = new System.Windows.Forms.GroupBox();
+			this.label15 = new System.Windows.Forms.Label();
+			this.PitDiffcultyBox = new System.Windows.Forms.NumericUpDown();
+			this.HiddenPitBox = new System.Windows.Forms.CheckBox();
 			this.PitTargetLabel = new System.Windows.Forms.Label();
 			this.PitTargetBox = new System.Windows.Forms.Button();
 			this.StairGroupBox = new System.Windows.Forms.GroupBox();
@@ -118,9 +121,6 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.DoorStateBox = new System.Windows.Forms.ComboBox();
 			this.DoorTypeBox = new System.Windows.Forms.ComboBox();
-			this.HiddenPitBox = new System.Windows.Forms.CheckBox();
-			this.PitDiffcultyBox = new System.Windows.Forms.NumericUpDown();
-			this.label15 = new System.Windows.Forms.Label();
 			this.MonsterBox = new DungeonEye.Forms.MonsterControl();
 			this.PitDamageBox = new DungeonEye.Forms.DiceForm();
 			this.TabControlBox.SuspendLayout();
@@ -140,11 +140,11 @@
 			this.tabPage1.SuspendLayout();
 			this.PlateGroupBox.SuspendLayout();
 			this.PitGroupBox.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.PitDiffcultyBox)).BeginInit();
 			this.StairGroupBox.SuspendLayout();
 			this.ForceFieldGroupBox.SuspendLayout();
 			this.TeleporterGroupBox.SuspendLayout();
 			this.DoorGroupBox.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.PitDiffcultyBox)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// TabControlBox
@@ -219,7 +219,7 @@
 			this.AlcoveSouthButton.TabIndex = 1;
 			this.AlcoveSouthButton.Text = "South";
 			this.AlcoveSouthButton.UseVisualStyleBackColor = true;
-			this.AlcoveSouthButton.CheckedChanged += new System.EventHandler(this.ButtonSouthButton_CheckedChanged);
+			this.AlcoveSouthButton.CheckedChanged += new System.EventHandler(this.AlcoveSouthButton_CheckedChanged);
 			// 
 			// AlcoveNorthButton
 			// 
@@ -248,8 +248,8 @@
 			// SEBox
 			// 
 			this.SEBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-							| System.Windows.Forms.AnchorStyles.Left)
-							| System.Windows.Forms.AnchorStyles.Right)));
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.SEBox.FormattingEnabled = true;
 			this.SEBox.Location = new System.Drawing.Point(6, 47);
 			this.SEBox.Name = "SEBox";
@@ -282,7 +282,7 @@
 			// SERemoveItem
 			// 
 			this.SERemoveItem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-							| System.Windows.Forms.AnchorStyles.Right)));
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.SERemoveItem.Location = new System.Drawing.Point(6, 146);
 			this.SERemoveItem.Name = "SERemoveItem";
 			this.SERemoveItem.Size = new System.Drawing.Size(177, 23);
@@ -307,8 +307,8 @@
 			// SWBox
 			// 
 			this.SWBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-							| System.Windows.Forms.AnchorStyles.Left)
-							| System.Windows.Forms.AnchorStyles.Right)));
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.SWBox.FormattingEnabled = true;
 			this.SWBox.Location = new System.Drawing.Point(6, 47);
 			this.SWBox.Name = "SWBox";
@@ -341,7 +341,7 @@
 			// SWRemoveItem
 			// 
 			this.SWRemoveItem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-							| System.Windows.Forms.AnchorStyles.Right)));
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.SWRemoveItem.Location = new System.Drawing.Point(6, 146);
 			this.SWRemoveItem.Name = "SWRemoveItem";
 			this.SWRemoveItem.Size = new System.Drawing.Size(177, 23);
@@ -366,8 +366,8 @@
 			// NEBox
 			// 
 			this.NEBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-							| System.Windows.Forms.AnchorStyles.Left)
-							| System.Windows.Forms.AnchorStyles.Right)));
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.NEBox.FormattingEnabled = true;
 			this.NEBox.Location = new System.Drawing.Point(6, 47);
 			this.NEBox.Name = "NEBox";
@@ -400,7 +400,7 @@
 			// NERemoveItem
 			// 
 			this.NERemoveItem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-							| System.Windows.Forms.AnchorStyles.Right)));
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.NERemoveItem.Location = new System.Drawing.Point(6, 146);
 			this.NERemoveItem.Name = "NERemoveItem";
 			this.NERemoveItem.Size = new System.Drawing.Size(177, 23);
@@ -425,8 +425,8 @@
 			// NWBox
 			// 
 			this.NWBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-							| System.Windows.Forms.AnchorStyles.Left)
-							| System.Windows.Forms.AnchorStyles.Right)));
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.NWBox.FormattingEnabled = true;
 			this.NWBox.Location = new System.Drawing.Point(6, 47);
 			this.NWBox.Name = "NWBox";
@@ -459,7 +459,7 @@
 			// NWRemoveItem
 			// 
 			this.NWRemoveItem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-							| System.Windows.Forms.AnchorStyles.Right)));
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.NWRemoveItem.Location = new System.Drawing.Point(6, 146);
 			this.NWRemoveItem.Name = "NWRemoveItem";
 			this.NWRemoveItem.Size = new System.Drawing.Size(177, 23);
@@ -643,8 +643,8 @@
 			// DecorationGroupBox
 			// 
 			this.DecorationGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-							| System.Windows.Forms.AnchorStyles.Left)
-							| System.Windows.Forms.AnchorStyles.Right)));
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.DecorationGroupBox.Controls.Add(this.groupBox6);
 			this.DecorationGroupBox.Controls.Add(this.AddWallTemplateBox);
 			this.DecorationGroupBox.Controls.Add(this.groupBox5);
@@ -908,6 +908,40 @@
 			this.PitGroupBox.TabStop = false;
 			this.PitGroupBox.Text = "Pit :";
 			// 
+			// label15
+			// 
+			this.label15.AutoSize = true;
+			this.label15.Location = new System.Drawing.Point(6, 105);
+			this.label15.Name = "label15";
+			this.label15.Size = new System.Drawing.Size(53, 13);
+			this.label15.TabIndex = 6;
+			this.label15.Text = "Difficulty :";
+			// 
+			// PitDiffcultyBox
+			// 
+			this.PitDiffcultyBox.Location = new System.Drawing.Point(65, 103);
+			this.PitDiffcultyBox.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+			this.PitDiffcultyBox.Name = "PitDiffcultyBox";
+			this.PitDiffcultyBox.Size = new System.Drawing.Size(60, 20);
+			this.PitDiffcultyBox.TabIndex = 5;
+			this.PitDiffcultyBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.PitDiffcultyBox.ValueChanged += new System.EventHandler(this.DiffcultyBox_ValueChanged);
+			// 
+			// HiddenPitBox
+			// 
+			this.HiddenPitBox.AutoSize = true;
+			this.HiddenPitBox.Location = new System.Drawing.Point(9, 77);
+			this.HiddenPitBox.Name = "HiddenPitBox";
+			this.HiddenPitBox.Size = new System.Drawing.Size(69, 17);
+			this.HiddenPitBox.TabIndex = 4;
+			this.HiddenPitBox.Text = "Is hidden";
+			this.HiddenPitBox.UseVisualStyleBackColor = true;
+			this.HiddenPitBox.CheckedChanged += new System.EventHandler(this.HiddenBox_CheckedChanged);
+			// 
 			// PitTargetLabel
 			// 
 			this.PitTargetLabel.Location = new System.Drawing.Point(6, 16);
@@ -1143,45 +1177,11 @@
 			this.DoorTypeBox.TabIndex = 0;
 			this.DoorTypeBox.SelectedIndexChanged += new System.EventHandler(this.DoorTypeBox_SelectedIndexChanged);
 			// 
-			// HiddenPitBox
-			// 
-			this.HiddenPitBox.AutoSize = true;
-			this.HiddenPitBox.Location = new System.Drawing.Point(9, 77);
-			this.HiddenPitBox.Name = "HiddenPitBox";
-			this.HiddenPitBox.Size = new System.Drawing.Size(69, 17);
-			this.HiddenPitBox.TabIndex = 4;
-			this.HiddenPitBox.Text = "Is hidden";
-			this.HiddenPitBox.UseVisualStyleBackColor = true;
-			this.HiddenPitBox.CheckedChanged += new System.EventHandler(this.HiddenBox_CheckedChanged);
-			// 
-			// PitDiffcultyBox
-			// 
-			this.PitDiffcultyBox.Location = new System.Drawing.Point(65, 103);
-			this.PitDiffcultyBox.Maximum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
-			this.PitDiffcultyBox.Name = "PitDiffcultyBox";
-			this.PitDiffcultyBox.Size = new System.Drawing.Size(60, 20);
-			this.PitDiffcultyBox.TabIndex = 5;
-			this.PitDiffcultyBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.PitDiffcultyBox.ValueChanged += new System.EventHandler(this.DiffcultyBox_ValueChanged);
-			// 
-			// label15
-			// 
-			this.label15.AutoSize = true;
-			this.label15.Location = new System.Drawing.Point(6, 105);
-			this.label15.Name = "label15";
-			this.label15.Size = new System.Drawing.Size(53, 13);
-			this.label15.TabIndex = 6;
-			this.label15.Text = "Difficulty :";
-			// 
 			// MonsterBox
 			// 
 			this.MonsterBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-							| System.Windows.Forms.AnchorStyles.Left)
-							| System.Windows.Forms.AnchorStyles.Right)));
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.MonsterBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.MonsterBox.Location = new System.Drawing.Point(8, 35);
 			this.MonsterBox.Name = "MonsterBox";
@@ -1248,6 +1248,7 @@
 			this.PlateGroupBox.PerformLayout();
 			this.PitGroupBox.ResumeLayout(false);
 			this.PitGroupBox.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.PitDiffcultyBox)).EndInit();
 			this.StairGroupBox.ResumeLayout(false);
 			this.StairGroupBox.PerformLayout();
 			this.ForceFieldGroupBox.ResumeLayout(false);
@@ -1256,7 +1257,6 @@
 			this.TeleporterGroupBox.PerformLayout();
 			this.DoorGroupBox.ResumeLayout(false);
 			this.DoorGroupBox.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.PitDiffcultyBox)).EndInit();
 			this.ResumeLayout(false);
 
 		}
