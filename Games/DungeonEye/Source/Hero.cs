@@ -61,7 +61,7 @@ namespace DungeonEye
 			HandPenality[0] = DateTime.Now;
 			HandPenality[1] = DateTime.Now;
 
-			RollAbilities();
+			Food = 100;
 		}
 
 
@@ -990,10 +990,7 @@ namespace DungeonEye
 		{
 			get
 			{
-				if (Professions[0] != null && Professions[1] != null)
-					return 2;
-
-				return 1;
+				return Professions.Count;
 			}
 		}
 

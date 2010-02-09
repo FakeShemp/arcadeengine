@@ -38,9 +38,14 @@ namespace DungeonEye
 		/// </summary>
 		public HitPoint() : this(0,0)
 		{
-
 		}
 
+		/// <summary>
+		/// Default constructor
+		/// </summary>
+		public HitPoint(int max) : this(max, max)
+		{
+		}
 
 		/// <summary>
 		/// Constructor

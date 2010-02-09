@@ -42,7 +42,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public Team()
+		public Team(Hero[] heroes)
 		{
 			Messages = new List<ScreenMessage>();
 			CampWindow = new CampWindow();
@@ -50,6 +50,11 @@ namespace DungeonEye
 			SpellBook = new SpellBook();
 
 			DrawHPAsBar = true;
+
+			Heroes = new Hero[6];
+			if (heroes != null)
+				for (int i = 0; i < heroes.Length; i++ )
+					Heroes[i] = heroes[i];
 		}
 
 
@@ -123,16 +128,16 @@ namespace DungeonEye
 			Trace.WriteLine("Items ({0} ms)", watch.ElapsedMilliseconds);
 
 
-			//HACK: Load heroes
+			// If no heroes, the create a default one
 			string[] name = new string[] { "Allabar", "Ariel", "Valanau", "Tenmiyana", "Bob", "Chuck" };
-			Heroes = new Hero[6];
 			for (int i = 0; i < 4; i++)
 			{
-				Hero hero = new Hero(this);
-				hero.Name = name[i];
-				hero.Generate();
-
-				Heroes[i] = hero;
+				if (Heroes[i] == null)
+				{
+					Heroes[i] = new Hero(this);
+					Heroes[i].Name = name[i];
+					Heroes[i].Generate();
+				}
 			}
 			SelectedHero = Heroes[0];
 
@@ -151,6 +156,7 @@ namespace DungeonEye
 			// Set location
 			Location = new DungeonLocation(Dungeon);
 			Teleport(Dungeon.StartLocation);
+			Location.Direction = Dungeon.StartLocation.Direction;
 
 			watch.Stop();
 			Trace.WriteLine("Team::LoadContent() finished ! ({0} ms)", watch.ElapsedMilliseconds);
@@ -314,10 +320,6 @@ namespace DungeonEye
 				Font.DrawText(new Point(10, 358 + i * 12), msg.Color, msg.Message);
 				i++;
 			}
-
-
-			// Team location
-			Font.DrawText(new Point(10, 340), Color.White, Location.ToString());
 
 
 			// Draw the spell window
@@ -497,9 +499,13 @@ namespace DungeonEye
 
 
 			// Mini map
-			if (Location.Maze != null)
+			if (Debug)
+			{
 				Location.Maze.DrawMiniMap(this, new Point(500, 220));
 
+				// Team location
+				Font.DrawText(new Point(10, 340), Color.White, Location.ToString());
+			}
 		}
 
 
@@ -766,7 +772,9 @@ namespace DungeonEye
 			if (Keyboard.IsNewKeyPress(Keys.Escape))
 				ExitScreen();
 
-
+			// Debug
+			if (Keyboard.IsNewKeyPress(Keys.Space))
+				Debug = !Debug;
 
 			// Save team
 			if (Keyboard.IsNewKeyPress(Keys.J))
@@ -2429,6 +2437,16 @@ namespace DungeonEye
 			{
 				Location.Direction = value;
 			}
+		}
+
+
+		/// <summary>
+		/// Debug mode
+		/// </summary>
+		public bool Debug
+		{
+			get;
+			set;
 		}
 
 

@@ -46,10 +46,10 @@ namespace DungeonEye
 
 			HeroeBoxes = new Rectangle[] 
 			{
-				new Rectangle(32,  128, 124, 128),
-				new Rectangle(160, 128, 124, 128),
-				new Rectangle(32,  256, 124, 128),
-				new Rectangle(160, 256, 124, 128),
+				new Rectangle(32,  128, 64, 64),
+				new Rectangle(160, 128, 64, 64),
+				new Rectangle(32,  256, 64, 64),
+				new Rectangle(160, 256, 64, 64),
 			};
 			NameLocations = new Point[]
 			{
@@ -127,7 +127,7 @@ namespace DungeonEye
 		/// <param name="e"></param>
 		void PlayButton_Selected(object sender, EventArgs e)
 		{
-			ScreenManager.AddScreen(new Team());
+			ScreenManager.AddScreen(new Team(Heroes));
 			ExitScreen();
 		}
 
@@ -418,7 +418,6 @@ namespace DungeonEye
 				Heads.Draw(hero.Head, HeroeBoxes[i].Location);
 				NameFont.DrawText(NameLocations[i], Color.Blue, hero.Name);
 			}
-
 
 			switch (CurrentState)
 			{
@@ -789,14 +788,21 @@ namespace DungeonEye
 
 
 				case Keys.Return:
-					CurrentState = CharGenStates.SelectHero;
+
+				Keyboard.OnKeyDown -= new EventHandler<PreviewKeyDownEventArgs>(Keyboard_OnKeyDown);
+				CurrentState = CharGenStates.SelectHero;
 				break;
 
 				default:
+				{
+					if (CurrentHero.Name != null && CurrentHero.Name.Length > 11)
+						break;
+
 					if (Keyboard.IsKeyPress(Keys.ShiftKey))
 						CurrentHero.Name += e.KeyCode;
 					else
 						CurrentHero.Name += (char)(e.KeyCode + 32);
+				}
 				break;
 			}
 

@@ -20,7 +20,6 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Text;
 using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
@@ -28,13 +27,12 @@ using ArcEngine.Input;
 using ArcEngine.Utility.ScreenManager;
 using DungeonEye.Gui;
 
-using OpenTK.Graphics.OpenGL;
 
 
 namespace DungeonEye
 {
 	/// <summary>
-	/// 
+	/// Main menu class
 	/// </summary>
 	public class MainMenu : GameScreen
 	{
@@ -77,15 +75,12 @@ namespace DungeonEye
 
 			Buttons.Add(new ScreenButton("", new Rectangle(150, 372, 324, 14)));
 			Buttons[3].Selected += new EventHandler(QuitEvent);
-
-
-		//	Display.Rotate(1);
 		}
 
 
 
 		/// <summary>
-		/// 
+		/// Unload contents
 		/// </summary>
 		public override void UnloadContent()
 		{
@@ -141,7 +136,7 @@ namespace DungeonEye
 		/// <param name="e"></param>
 		void LoadGameEvent(object sender, EventArgs e)
 		{
-			Team team = new Team();
+			Team team = new Team(null);
 			ScreenManager.AddScreen(team);
 		}
 
