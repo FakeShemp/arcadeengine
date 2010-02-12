@@ -771,6 +771,7 @@ namespace DungeonEye
 		#region Properties
 
 
+
 		/// <summary>
 		/// Gets if the wall have alcoves
 		/// </summary>

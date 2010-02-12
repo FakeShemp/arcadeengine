@@ -69,17 +69,19 @@ namespace DungeonEye
 
 
 			// Buttons
-			Buttons.Add(new ScreenButton("Keyboard : " + Game.InputSchemeName, new Rectangle(150, 318, 324, 14)));
+			Buttons.Add(new ScreenButton("Keyboard : " + Game.InputSchemeName, new Rectangle(156, 324, 340, 14)));
 			Buttons[0].Selected += new EventHandler(KeyboardEvent);
 
-			Buttons.Add(new ScreenButton("Language : " + Game.LanguageName, new Rectangle(150, 336, 324, 14)));
+			Buttons.Add(new ScreenButton("Language : " + Game.LanguageName, new Rectangle(156, 342, 340, 14)));
 			Buttons[1].Selected += new EventHandler(LanguageEvent);
 
-			Buttons.Add(new ScreenButton("Back", new Rectangle(150, 354, 324, 14)));
+			Buttons.Add(new ScreenButton("Back", new Rectangle(156, 360, 340, 14)));
 			Buttons[2].Selected += new EventHandler(BackEvent);
 
 		}
 
+
+		#region Events
 
 		/// <summary>
 		///  Back to the game
@@ -129,7 +131,7 @@ namespace DungeonEye
 			Settings.SetToken("language", Languages[id]);
 		}
 
-
+		#endregion
 
 
 		#region Update & draw
@@ -222,19 +224,12 @@ namespace DungeonEye
 				Point point = button.Rectangle.Location;
 
 				// Text
-				point.Offset(6, 6);
-
-				if (id == MenuID)
-					Font.DrawText(point, Color.FromArgb(255, 85, 85), button.Text);
-				else
-					Font.DrawText(point, Color.White, button.Text);
-
-
-
+				Font.DrawText(point, id == MenuID ? Color.FromArgb(255, 85, 85) : Color.White, button.Text);
 			}
 
+
 			// Version info
-			Font.DrawText(new Point(554, 380), Color.White, "V 0.2");
+			Font.DrawText(new Point(554, 380), Color.White, "V 0.3");
 
 			// Draw the cursor or the item in the hand
 			Display.Color = Color.White;

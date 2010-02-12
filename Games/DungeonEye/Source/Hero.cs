@@ -27,6 +27,10 @@ using ArcEngine.Graphic;
 using ArcEngine.Asset;
 using System.Xml;
 
+// Generate a new hero with random values
+// <see cref="http://www.aidedd.org/regles-f97/creation-de-perso-t1456.html"/>
+// <see cref="http://christiansarda.free.fr/anc_jeux/eob1_intro.html"/>
+
 
 namespace DungeonEye
 {
@@ -43,7 +47,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Default constructor
 		/// </summary>
-		/// <param name="team">Team of the hero</param>
+		/// <param name="team">Team</param>
 		public Hero(Team team)
 		{
 			Team = team;
@@ -60,31 +64,11 @@ namespace DungeonEye
 			HandPenality = new DateTime[2];
 			HandPenality[0] = DateTime.Now;
 			HandPenality[1] = DateTime.Now;
+
+			Food = (byte)Game.Random.Next(50, 100);
 		}
 
 
-		/// <summary>
-		/// Generate a new hero with random values
-		/// <see cref="http://www.aidedd.org/regles-f97/creation-de-perso-t1456.html"/>
-		/// <see cref="http://christiansarda.free.fr/anc_jeux/eob1_intro.html"/>
-		/// </summary>
-		public void Generate()
-		{
-			RollAbilities();
-			Food = 100;
-
-			Professions.Add(new Profession(0, HeroClass.Cleric));
-			Professions.Add(new Profession(0, HeroClass.Fighter));
-			Professions.Add(new Profession(0, HeroClass.Mage));
-
-
-			Head = GameBase.Random.Next(0, 32);
-
-
-			Quiver = 0;
-			SetInventoryItem(InventoryPosition.Primary, ResourceManager.CreateAsset<Item>("Short Sword"));
-			SetBackPackItem(2, ResourceManager.CreateAsset<Item>("Iron Ration"));
-		}
 
 
 		/// <summary>
@@ -659,6 +643,21 @@ namespace DungeonEye
 					}
 					break;
 
+					case "waist":
+					{
+						SetWaistPackItem(int.Parse(node.Attributes["position"].Value),
+						ResourceManager.CreateAsset<Item>(node.Attributes["name"].Value));
+					}
+					break;
+
+
+					case "backpack":
+					{
+						SetBackPackItem(int.Parse(node.Attributes["position"].Value),
+						ResourceManager.CreateAsset<Item>(node.Attributes["name"].Value));
+					}
+					break;
+
 					case "quiver":
 					{
 						Quiver = int.Parse(node.Attributes["count"].Value);
@@ -773,7 +772,7 @@ namespace DungeonEye
 			for (int id = 0; id < 14; id++)
 				if (BackPack[id] != null)
 				{
-					writer.WriteStartElement("waist");
+					writer.WriteStartElement("backpack");
 					writer.WriteAttributeString("position", id.ToString());
 					writer.WriteAttributeString("name", BackPack[id].Name);
 					writer.WriteEndElement();

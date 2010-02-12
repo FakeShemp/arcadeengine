@@ -20,6 +20,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Xml;
 using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
@@ -64,16 +65,16 @@ namespace DungeonEye
 			StringTable = ResourceManager.CreateAsset<StringTable>("main");
 
 			
-			Buttons.Add(new ScreenButton("", new Rectangle(150, 318, 324, 14)));
+			Buttons.Add(new ScreenButton("", new Rectangle(156, 324, 340, 14)));
 			Buttons[0].Selected += new EventHandler(LoadGameEvent);
 
-			Buttons.Add(new ScreenButton("", new Rectangle(150, 336, 324, 14)));
+			Buttons.Add(new ScreenButton("", new Rectangle(156, 342, 340, 14)));
 			Buttons[1].Selected += new EventHandler(StartGameEvent);
 
-			Buttons.Add(new ScreenButton("", new Rectangle(150, 354, 324, 14)));
+			Buttons.Add(new ScreenButton("", new Rectangle(156, 360, 340, 14)));
 			Buttons[2].Selected += new EventHandler(OptionEvent);
 
-			Buttons.Add(new ScreenButton("", new Rectangle(150, 372, 324, 14)));
+			Buttons.Add(new ScreenButton("", new Rectangle(156, 378, 340, 14)));
 			Buttons[3].Selected += new EventHandler(QuitEvent);
 		}
 
@@ -136,7 +137,12 @@ namespace DungeonEye
 		/// <param name="e"></param>
 		void LoadGameEvent(object sender, EventArgs e)
 		{
+			if (!System.IO.File.Exists("team.xml"))
+				return;
 			Team team = new Team(null);
+			team.SaveGame = "team.xml";
+
+
 			ScreenManager.AddScreen(team);
 		}
 
@@ -234,12 +240,7 @@ namespace DungeonEye
 				Point point = button.Rectangle.Location;
 
 				// Text
-				point.Offset(6, 6);
-
-				if (id == MenuID)
-					Font.DrawText(point, Color.FromArgb(255, 85, 85), button.Text);
-				else
-					Font.DrawText(point, Color.White, button.Text);
+				Font.DrawText(point, id == MenuID ? Color.FromArgb(255, 85, 85) : Color.White, button.Text);
 
 			}
 
@@ -247,6 +248,7 @@ namespace DungeonEye
 			// Draw the cursor or the item in the hand
 			Display.Color = Color.White;
 			Tileset.Draw(0, Mouse.Location);
+	
 		}
 
 		#endregion

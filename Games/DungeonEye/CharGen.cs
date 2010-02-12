@@ -127,6 +127,7 @@ namespace DungeonEye
 		/// <param name="e"></param>
 		void PlayButton_Selected(object sender, EventArgs e)
 		{
+
 			ScreenManager.AddScreen(new Team(Heroes));
 			ExitScreen();
 		}
@@ -163,8 +164,15 @@ namespace DungeonEye
 						if (HeroeBoxes[id].Contains(Mouse.Location))
 						{
 							HeroID = id;
-							Heroes[id] = new Hero(null);
-							CurrentState = CharGenStates.SelectRace;
+
+							// Create a new hero or remove it
+							if (Heroes[id] == null)
+							{
+								Heroes[id] = new Hero(null);
+								CurrentState = CharGenStates.SelectRace;
+							}
+							else
+								CurrentState = CharGenStates.Delete;
 						}
 					}
 				}
@@ -377,6 +385,21 @@ namespace DungeonEye
 				#region Delete hero
 				case CharGenStates.Delete:
 				{
+					if (Mouse.IsNewButtonDown(MouseButtons.Left))
+					{
+						// Delete
+						if (new Rectangle(448, 344, 76, 32).Contains(Mouse.Location))
+						{
+							Heroes[HeroID] = null;
+							CurrentState = CharGenStates.SelectHero;
+						}
+
+						// Ok
+						if (new Rectangle(528, 344, 76, 32).Contains(Mouse.Location))
+						{
+							CurrentState = CharGenStates.SelectHero;
+						}
+					}
 				}
 				break;
 				#endregion
@@ -612,6 +635,34 @@ namespace DungeonEye
 				#region Delete hero
 				case CharGenStates.Delete:
 				{
+					Heads.Draw(CurrentHero.Head, new Point(438, 132));
+					Font.DrawText(new Rectangle(292, 190, 300, 64), Color.White, CurrentHero.Name);
+
+					// Class and professions
+					Font.DrawText(new Rectangle(300, 214, 300, 64), Color.White, CurrentHero.Race.ToString());
+					string txt = string.Empty;
+					foreach (Profession prof in CurrentHero.Professions)
+						txt += prof.Class.ToString() + "/";
+					txt = txt.Substring(0, txt.Length - 1);
+					Font.DrawText(new Rectangle(300, 232, 300, 64), Color.White, txt);
+
+					Font.DrawText(new Rectangle(294, 256, 300, 64), Color.White, "STR " + CurrentHero.Strength.Value.ToString());
+					Font.DrawText(new Rectangle(294, 276, 300, 64), Color.White, "INT " + CurrentHero.Intelligence.Value.ToString());
+					Font.DrawText(new Rectangle(294, 296, 300, 64), Color.White, "WIS " + CurrentHero.Wisdom.Value.ToString());
+					Font.DrawText(new Rectangle(294, 316, 300, 64), Color.White, "DEX " + CurrentHero.Dexterity.Value.ToString());
+					Font.DrawText(new Rectangle(294, 336, 300, 64), Color.White, "CON " + CurrentHero.Constitution.Value.ToString());
+					Font.DrawText(new Rectangle(294, 356, 300, 64), Color.White, "CHA " + CurrentHero.Charisma.Value.ToString());
+					Font.DrawText(new Rectangle(462, 256, 300, 64), Color.White, "AC  " + CurrentHero.ArmorClass.ToString());
+					Font.DrawText(new Rectangle(462, 276, 300, 64), Color.White, "HP  " + CurrentHero.HitPoint.Max.ToString());
+					Font.DrawText(new Rectangle(462, 296, 300, 64), Color.White, "LVL ");
+
+					// Delete
+					Tileset.Draw(7, new Point(448, 350));
+
+					// OK
+					Tileset.Draw(5, new Point(528, 350));
+					Tileset.Draw(15, new Point(558, 360));
+
 				}
 				break;
 				#endregion
@@ -795,7 +846,7 @@ namespace DungeonEye
 
 				default:
 				{
-					if (CurrentHero.Name != null && CurrentHero.Name.Length > 11)
+					if (CurrentHero.Name != null && CurrentHero.Name.Length > 10)
 						break;
 
 					if (Keyboard.IsKeyPress(Keys.ShiftKey))

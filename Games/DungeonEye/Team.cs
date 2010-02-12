@@ -72,15 +72,15 @@ namespace DungeonEye
 			ResourceManager.LoadBank("data/game.bnk");
 			Trace.WriteLine("Content loaded ({0} ms)", watch.ElapsedMilliseconds);
 
-			// The dungeon
-			Dungeon = ResourceManager.CreateAsset<Dungeon>("Eye");
-			if (Dungeon == null)
-			{
-				Trace.WriteLine("Failed to load the dungeon !!");
-				throw new NullReferenceException();
-			}
-			Dungeon.Team = this;
-			Dungeon.Init();
+			//// The dungeon
+			//Dungeon = ResourceManager.CreateAsset<Dungeon>("Eye");
+			//if (Dungeon == null)
+			//{
+			//    Trace.WriteLine("Failed to load the dungeon !!");
+			//    throw new NullReferenceException();
+			//}
+			//Dungeon.Team = this;
+			//Dungeon.Init();
 			
 			// Language
 			Language = ResourceManager.CreateAsset<StringTable>("game");
@@ -128,19 +128,6 @@ namespace DungeonEye
 			Trace.WriteLine("Items ({0} ms)", watch.ElapsedMilliseconds);
 
 
-			// If no heroes, the create a default one
-			string[] name = new string[] { "Allabar", "Ariel", "Valanau", "Tenmiyana", "Bob", "Chuck" };
-			for (int i = 0; i < 4; i++)
-			{
-				if (Heroes[i] == null)
-				{
-					Heroes[i] = new Hero(this);
-					Heroes[i].Name = name[i];
-					Heroes[i].Generate();
-				}
-			}
-			SelectedHero = Heroes[0];
-
 
 
 			Font = ResourceManager.CreateSharedAsset<Font2d>("inventory");
@@ -153,13 +140,41 @@ namespace DungeonEye
 
 	
 			
-			// Set location
-			Location = new DungeonLocation(Dungeon);
-			Teleport(Dungeon.StartLocation);
-			Location.Direction = Dungeon.StartLocation.Direction;
+
+			// Loads a saved game
+			if (!string.IsNullOrEmpty(SaveGame))
+			{
+				XmlDocument xml = new XmlDocument();
+				xml.Load("team.xml");
+				Load(xml.ChildNodes[1]);
+				Teleport(Location);
+			}
+			else
+			{
+				Dungeon = ResourceManager.CreateAsset<Dungeon>("Eye");
+				Dungeon.Team = this;
+
+				// Set initial location
+				Location = new DungeonLocation(Dungeon);
+				Teleport(Dungeon.StartLocation);
+				Location.Direction = Dungeon.StartLocation.Direction;
+			}
+
+			// The dungeon
+			if (Dungeon == null)
+			{
+				Trace.WriteLine("Failed to load the dungeon !!");
+				throw new NullReferenceException();
+			}
+			Dungeon.Init();
+
+			SelectedHero = Heroes[0];
+
+
 
 			watch.Stop();
 			Trace.WriteLine("Team::LoadContent() finished ! ({0} ms)", watch.ElapsedMilliseconds);
+
 		}
 
 
@@ -182,6 +197,8 @@ namespace DungeonEye
 			for (int i = 0; i < Heroes.Length; i++)
 				Heroes[i] = null;
 
+			Dungeon = null;
+
 			foreach (XmlNode node in xml)
 			{
 				if (node.NodeType == XmlNodeType.Comment)
@@ -190,8 +207,18 @@ namespace DungeonEye
 
 				switch (node.Name.ToLower())
 				{
+					case "dungeon":
+					{
+						Dungeon = ResourceManager.CreateAsset<Dungeon>(node.Attributes["name"].Value);
+						Dungeon.Team = this;
+					}
+					break;
+
 					case "location":
 					{
+						if (Location == null)
+							Location = new DungeonLocation(Dungeon);
+
 						Location.Load(node);
 					}
 					break;
@@ -232,8 +259,10 @@ namespace DungeonEye
 
 			writer.WriteStartElement("team");
 
+			writer.WriteStartElement("dungeon");
+			writer.WriteAttributeString("name", Location.Dungeon.Name);
+			writer.WriteEndElement();
 			Location.Save("location", writer);
-
 
 			// Save each hero
 			foreach (Hero hero in Heroes)
@@ -261,12 +290,12 @@ namespace DungeonEye
 			}
 
 
+			
 			writer.WriteEndElement();
-			writer.Flush();
-			writer.Close();
 	
 			return false;
 		}
+
 
 		#endregion
 
@@ -2681,6 +2710,16 @@ namespace DungeonEye
 			set;
 		}
 
+
+
+		/// <summary>
+		/// Name of the savegame file
+		/// </summary>
+		public string SaveGame
+		{
+			get;
+			set;
+		}
 		#endregion
 	}
 

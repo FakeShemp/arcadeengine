@@ -674,12 +674,16 @@ namespace DungeonEye
 			#endregion
 
 			#region Monsters
-			foreach (Monster monster in field.GetMonsters(position))
+			//if (GetMonsterCount(block.Location.Position) != 0)
 			{
-				if (monster != null)
-					monster.Draw(view, position);
+				foreach (Monster monster in field.GetMonsters(position))
+				{
+					if (monster != null)
+						monster.Draw(view, position);
+				}
 			}
 			#endregion
+
 
 			#region Items on ground
 			if (!block.IsWall)
