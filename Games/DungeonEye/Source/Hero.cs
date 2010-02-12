@@ -83,9 +83,6 @@ namespace DungeonEye
 
 			Quiver = 0;
 			SetInventoryItem(InventoryPosition.Primary, ResourceManager.CreateAsset<Item>("Short Sword"));
-			SetInventoryItem(InventoryPosition.Armor, ResourceManager.CreateAsset<Item>("Leather Armor"));
-			SetInventoryItem(InventoryPosition.Helmet, ResourceManager.CreateAsset<Item>("Helmet"));
-			SetInventoryItem(InventoryPosition.Feet, ResourceManager.CreateAsset<Item>("Boots"));
 			SetBackPackItem(2, ResourceManager.CreateAsset<Item>("Iron Ration"));
 		}
 

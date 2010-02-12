@@ -48,7 +48,6 @@ namespace DungeonEye
 		{
 			Name = "No name";
 			Dungeon = dungeon;
-		//	Coordinates = new MazeDisplayCoordinates();
 
 			Blocks = new List<List<MazeBlock>>();
 			Monsters = new List<Monster>();
@@ -643,16 +642,8 @@ namespace DungeonEye
 			}
 			#endregion
 
-			#region Monsters
-			foreach (Monster monster in field.GetMonsters(position))
-			{
-				if (monster != null)
-					monster.Draw(view, position);
-			}
-			#endregion
-
 			#region Walls
-			if (block.IsWall)
+			else if (block.IsWall)
 			{
 				// Walls
 				foreach (TileDrawing tmp in MazeDisplayCoordinates.GetWalls(position))
@@ -679,6 +670,14 @@ namespace DungeonEye
 					}
 				}
 
+			}
+			#endregion
+
+			#region Monsters
+			foreach (Monster monster in field.GetMonsters(position))
+			{
+				if (monster != null)
+					monster.Draw(view, position);
 			}
 			#endregion
 

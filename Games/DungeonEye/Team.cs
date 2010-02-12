@@ -757,6 +757,7 @@ namespace DungeonEye
 			if (Keyboard.IsNewKeyPress(Keys.R))
 			{
 				Dungeon = ResourceManager.CreateAsset<Dungeon>("Eye");
+				Dungeon.Team = this;
 				Dungeon.Init();
 				AddMessage("Dungeon reloaded...");
 			}
