@@ -275,7 +275,7 @@
   <ItemGroup>
     <Content Include="Documentation\Overlay tilesets.txt" />
     <Content Include="settings.xml" />
-    <Content Include="team.xml" />
+    <Content Include="savegame.xml" />
     <EmbeddedResource Include="Forms\data\editor.png" />
     <EmbeddedResource Include="Forms\DiceForm.resx">
       <DependentUpon>DiceForm.cs</DependentUpon>

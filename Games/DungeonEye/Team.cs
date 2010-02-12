@@ -17,6 +17,7 @@
 //along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 //
 #endregion
+using System.IO;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -72,16 +73,6 @@ namespace DungeonEye
 			ResourceManager.LoadBank("data/game.bnk");
 			Trace.WriteLine("Content loaded ({0} ms)", watch.ElapsedMilliseconds);
 
-			//// The dungeon
-			//Dungeon = ResourceManager.CreateAsset<Dungeon>("Eye");
-			//if (Dungeon == null)
-			//{
-			//    Trace.WriteLine("Failed to load the dungeon !!");
-			//    throw new NullReferenceException();
-			//}
-			//Dungeon.Team = this;
-			//Dungeon.Init();
-			
 			// Language
 			Language = ResourceManager.CreateAsset<StringTable>("game");
 			if (Language == null)
@@ -142,10 +133,10 @@ namespace DungeonEye
 			
 
 			// Loads a saved game
-			if (!string.IsNullOrEmpty(SaveGame))
+			if (!string.IsNullOrEmpty(SaveGame) && File.Exists(SaveGame))
 			{
 				XmlDocument xml = new XmlDocument();
-				xml.Load("team.xml");
+				xml.Load(SaveGame);
 				Load(xml.ChildNodes[1]);
 				Teleport(Location);
 			}
@@ -814,7 +805,7 @@ namespace DungeonEye
 				settings.OmitXmlDeclaration = false;
 				settings.IndentChars = "\t";
 				settings.Encoding = System.Text.ASCIIEncoding.ASCII;
-				XmlWriter xml = XmlWriter.Create(@"team.xml", settings);
+				XmlWriter xml = XmlWriter.Create(@"savegame.xml", settings);
 				Save(xml);
 				xml.Close();
 
@@ -824,10 +815,10 @@ namespace DungeonEye
 			// Load team
 			if (Keyboard.IsNewKeyPress(Keys.L))
 			{
-				if (System.IO.File.Exists("team.xml"))
+				if (System.IO.File.Exists("savegame.xml"))
 				{
 					XmlDocument xml = new XmlDocument();
-					xml.Load("team.xml");
+					xml.Load("savegame.xml");
 
 					foreach (XmlNode node in xml)
 					{
