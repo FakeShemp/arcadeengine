@@ -99,7 +99,6 @@ namespace ArcEngine
 			}
 
 			Window = new GameWindow(param);
-			Window.Show();
 
 
 			// Events
@@ -107,6 +106,10 @@ namespace ArcEngine
 			Window.Deactivate += new EventHandler(Window_Deactivate);
 			Window.Resize += new EventHandler(Window_Resize);
 			Mouse.Init(Window);		
+
+
+			Window.Show();
+			Window.Activate();
 		}
 
 
