@@ -73,6 +73,7 @@ namespace DungeonEye
 				Walls[i] = new List<TileDrawing>();
 
 			Pits = new TileDrawing[viewcount];
+			CeilingPits = new TileDrawing[viewcount];
 			Stairs = new List<TileDrawing>[viewcount];
 			for (int i = 0; i < viewcount; i++)
 				Stairs[i] = new List<TileDrawing>();
@@ -164,6 +165,17 @@ namespace DungeonEye
 		static public TileDrawing GetPit(ViewFieldPosition view)
 		{
 			return Pits[(int)view];
+		}
+
+
+		/// <summary>
+		/// Get ceiling pit
+		/// </summary>
+		/// <param name="view">Block position in the view field</param>
+		/// <returns></returns>
+		static public TileDrawing GetCeilingPit(ViewFieldPosition view)
+		{
+			return CeilingPits[(int)view];
 		}
 
 
@@ -284,6 +296,14 @@ namespace DungeonEye
 						break;
 
 
+						case "ceilingpit":
+						{
+							ViewFieldPosition view = (ViewFieldPosition)Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
+							CeilingPits[(int)view] = GetTileDrawing(node);
+						}
+						break;
+
+
 						case "floorplate":
 						{
 							ViewFieldPosition view = (ViewFieldPosition)Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
@@ -345,6 +365,11 @@ namespace DungeonEye
 		/// Pits
 		/// </summary>
 		static TileDrawing[] Pits;
+
+		/// <summary>
+		/// Ceiling pits
+		/// </summary>
+		static TileDrawing[] CeilingPits;
 
 
 		/// <summary>

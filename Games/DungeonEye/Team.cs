@@ -56,6 +56,9 @@ namespace DungeonEye
 			if (heroes != null)
 				for (int i = 0; i < heroes.Length; i++ )
 					Heroes[i] = heroes[i];
+
+			if (heroes == null)
+				SaveGame = "savegame.xml";
 		}
 
 

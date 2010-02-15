@@ -234,6 +234,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\DungeonForm.resx">
       <DependentUpon>DungeonForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -279,39 +280,51 @@
     <EmbeddedResource Include="Forms\data\editor.png" />
     <EmbeddedResource Include="Forms\DiceForm.resx">
       <DependentUpon>DiceForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\EntityControl.resx">
       <DependentUpon>EntityControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\HeroControl.resx">
       <DependentUpon>HeroControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\HitPointControl.resx">
       <DependentUpon>HitPointControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ItemForm.resx">
       <DependentUpon>ItemForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MazeBlockForm.resx">
       <DependentUpon>MazeBlockForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\DungeonLocationControl.resx">
       <DependentUpon>DungeonLocationControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\DungeonLocationForm.resx">
       <DependentUpon>DungeonLocationForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MonsterControl.resx">
       <DependentUpon>MonsterControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MonsterForm.resx">
       <DependentUpon>MonsterForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\RenameForm.resx">
       <DependentUpon>RenameForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Wizards\NewItemWizard.resx">
       <DependentUpon>NewItemWizard.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Wizards\NewMazeWizard.resx">
       <DependentUpon>NewMazeWizard.cs</DependentUpon>

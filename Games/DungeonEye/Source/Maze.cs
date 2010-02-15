@@ -96,10 +96,27 @@ namespace DungeonEye
 			foreach (Door door in Doors)
 				door.Init();
 
-			//foreach (Pit pit in Pits)
-			//{
-			//}
+			for (int y = 0; y < Size.Height; y++)
+				for (int x = 0; x < Size.Width; x++)
+				{
+					MazeBlock block = GetBlock(new Point(x, y));
 
+					#region Pits
+					if (block.Pit != null && block.Pit.Target != null)
+					{
+						Maze maze = Dungeon.GetMaze(block.Pit.Target.MazeName);
+						if (maze == null)
+							continue;
+
+						MazeBlock blk = maze.GetBlock(block.Pit.Target.Position);
+						if (blk == null)
+							continue;
+
+						blk.IsPitTarget = true;
+					}
+					#endregion
+				}
+		
 			return true;
 		}
 
@@ -195,7 +212,7 @@ namespace DungeonEye
 					return true;
 				});
 			#endregion
-	}
+		}
 
 
 		#region Monsters
@@ -570,6 +587,15 @@ namespace DungeonEye
 			#endregion
 
 
+			#region ceiling pit
+			if (block.IsPitTarget)
+			{
+				td = MazeDisplayCoordinates.GetCeilingPit(position);
+				if (td != null)
+					OverlayTileset.Draw(td.ID, td.Location, td.SwapX, td.SwapY);
+			}
+
+			#endregion
 
 			#region Items on ground
 			List<Item>[] list = block.GetGroundItems(view);

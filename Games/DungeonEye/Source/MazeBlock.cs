@@ -796,6 +796,17 @@ namespace DungeonEye
 		}
 
 
+
+		/// <summary>
+		/// Is the mazeblock is a pit target
+		/// </summary>
+		public bool IsPitTarget
+		{
+			get;
+			set;
+		}
+
+
 		/// <summary>
 		/// Does the block blocks the team
 		/// </summary>

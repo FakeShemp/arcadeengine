@@ -41,5 +41,11 @@ namespace DungeonEye.Interfaces
 		/// <param name="monster">Monster handle</param>
 		void OnDraw(Monster monster);
 
+
+		/// <summary>
+		/// Fired when the monster is killed
+		/// </summary>
+		/// <param name="monster">Monster handle</param>
+		void OnDeath(Monster monster);
 	}
 }
