@@ -118,7 +118,7 @@ namespace RuffnTumble
 
 
 			// Default rendering font
-			Font = new Font2d();
+			Font = new BitmapFont();
 			Font.LoadTTF("verdana.ttf", 12, FontStyle.Regular);
 
 
@@ -430,7 +430,7 @@ namespace RuffnTumble
 		/// <summary>
 		/// Drawing font
 		/// </summary>
-		Font2d Font;
+		BitmapFont Font;
 
 
 		/// <summary>

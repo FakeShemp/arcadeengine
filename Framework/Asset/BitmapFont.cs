@@ -39,12 +39,12 @@ namespace ArcEngine.Asset
 	/// Texture font class
 	/// </summary>
 	/// TODO: A renommer en BitmapFont
-	public class Font2d : IAsset, IDisposable
+	public class BitmapFont : IAsset, IDisposable
 	{
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public Font2d()
+		public BitmapFont()
 		{
 			GlyphTileset = new TileSet();
 			GlyphTileset.Texture = new Texture(OpenTK.Graphics.OpenGL.PixelFormat.LuminanceAlpha);
@@ -562,9 +562,9 @@ namespace ArcEngine.Asset
 		/// <param name="size">Size of the font</param>
 		/// <param name="style">Style of the font</param>
 		/// <returns></returns>
-		static public Font2d CreateFromTTF(string filename, int size, FontStyle style)
+		static public BitmapFont CreateFromTTF(string filename, int size, FontStyle style)
 		{
-			Font2d font = new Font2d();
+			BitmapFont font = new BitmapFont();
 			font.LoadTTF(filename, size, style);
 			return font;
 		}
@@ -577,9 +577,9 @@ namespace ArcEngine.Asset
 		/// <param name="size">Size of each glyph</param>
 		/// <param name="zone">Zone in the texture</param>
 		/// <returns></returns>
-		static public Font2d CreateFromTexture(string name, Size size, Rectangle zone)
+		static public BitmapFont CreateFromTexture(string name, Size size, Rectangle zone)
 		{
-			Font2d font = new Font2d();
+			BitmapFont font = new BitmapFont();
 			font.LoadFromTexture(name, size, zone);
 			return font;
 		}
@@ -590,9 +590,9 @@ namespace ArcEngine.Asset
 		/// </summary>
 		/// <param name="name">Name of the TileSet</param>
 		/// <returns></returns>
-		static public Font2d CreateFromTileSet(string name)
+		static public BitmapFont CreateFromTileSet(string name)
 		{
-			Font2d font = new Font2d();
+			BitmapFont font = new BitmapFont();
 			font.LoadFromTileSet(name);
 			return font;
 		}

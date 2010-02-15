@@ -36,7 +36,7 @@ namespace ArcEngine.Examples.Particles
 	public class Fountain : GameBase
 	{
 
-        Font2d Font;
+        BitmapFont Font;
 
 		/// <summary>
 		/// Application entry point
@@ -113,7 +113,7 @@ namespace ArcEngine.Examples.Particles
 			Texture = new Texture("data/particle.png");
 
 			// Create a font
-            Font = new Font2d();
+            Font = new BitmapFont();
             Font.LoadTTF(@"c:\windows\fonts\verdana.ttf", 14, FontStyle.Regular);
 		}
 

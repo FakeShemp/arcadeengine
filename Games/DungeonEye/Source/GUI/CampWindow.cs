@@ -53,7 +53,7 @@ namespace DungeonEye.Gui
 		public bool Init()
 		{
 
-			Font = ResourceManager.CreateSharedAsset<Font2d>("intro");
+			Font = ResourceManager.CreateSharedAsset<BitmapFont>("intro");
 
 
 			BgColor = Color.FromArgb(101, 105, 182);
@@ -296,7 +296,7 @@ namespace DungeonEye.Gui
 		/// <summary>
 		/// Font to use
 		/// </summary>
-		Font2d Font;
+		BitmapFont Font;
 
 
 		/// <summary>

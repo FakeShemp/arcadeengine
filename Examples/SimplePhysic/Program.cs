@@ -86,7 +86,7 @@ namespace ArcEngine.Games.ProjectT
 		{
 			Display.ClearColor = Color.CornflowerBlue;
 
-			Font = new Font2d();
+			Font = new BitmapFont();
 			Font.LoadTTF(@"C:\Windows\Fonts\verdana.ttf", 12, FontStyle.Regular);
 
 
@@ -233,7 +233,7 @@ namespace ArcEngine.Games.ProjectT
 
 		float angle = 0;
 
-		Font2d Font;
+		BitmapFont Font;
 
 		#endregion
 

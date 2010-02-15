@@ -58,7 +58,7 @@ namespace DungeonEye
 			Scene.Font.GlyphTileset.Scale = new SizeF(2, 2);
 			Scene.StringTable.LanguageName = Game.LanguageName;
 
-			Font = ResourceManager.CreateAsset<Font2d>("intro");
+			Font = ResourceManager.CreateAsset<BitmapFont>("intro");
 			Font.GlyphTileset.Scale = new SizeF(2, 2);
 		}
 
@@ -138,7 +138,7 @@ namespace DungeonEye
 		/// <summary>
 		/// 
 		/// </summary>
-		Font2d Font;
+		BitmapFont Font;
 
 		#endregion
 

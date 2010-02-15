@@ -80,7 +80,7 @@ namespace ArcEngine.Examples.StarterKit
 			Display.ClearColor = Color.White;
 
 			// Load Verdana font
-			Font = Font2d.CreateFromTTF(@"c:\windows\fonts\verdana.ttf", 12, FontStyle.Regular);
+			Font = BitmapFont.CreateFromTTF(@"c:\windows\fonts\verdana.ttf", 12, FontStyle.Regular);
 
 			// Load a texture
 			Smiley = new Texture("smiley.png");
@@ -201,7 +201,7 @@ namespace ArcEngine.Examples.StarterKit
 		/// <summary>
 		/// Drawing font
 		/// </summary>
-		Font2d Font;
+		BitmapFont Font;
 
 		#endregion
 

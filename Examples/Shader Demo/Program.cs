@@ -68,7 +68,7 @@ namespace Shader_Demo
 		public override void LoadContent()
 		{
 
-			Font = Font2d.CreateFromTTF(@"c:\windows\fonts\verdana.ttf", 14, FontStyle.Regular);
+			Font = BitmapFont.CreateFromTTF(@"c:\windows\fonts\verdana.ttf", 14, FontStyle.Regular);
 
 
 			// Setup the simple shader
@@ -184,7 +184,7 @@ namespace Shader_Demo
 		/// <summary>
 		/// Font to display text
 		/// </summary>
-		Font2d Font;
+		BitmapFont Font;
 
 
 		#endregion

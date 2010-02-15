@@ -90,22 +90,14 @@ namespace DungeonEye
 
 			Window.Text = "Dungeon Eye";
 
-
 			// Default texture parameters
 			Display.TextureParameters.BorderColor = Color.Black;
 			Display.TextureParameters.MagFilter = OpenTK.Graphics.OpenGL.TextureMagFilter.Linear;
 			Display.TextureParameters.MinFilter = OpenTK.Graphics.OpenGL.TextureMinFilter.Linear;
 	
-			// Enble the console
-			//Terminal.Enable = true;
 
 			// Display settings
 			Mouse.Visible = false;
-
-
-			// Language to use
-			//Settings.StringTable = ResourceManager.CreateSharedAsset<StringTable>(Settings.LanguageName);
-
 
 			GSM.AddScreen(new MainMenu());
 			//GSM.AddScreen(new Team());
@@ -151,19 +143,7 @@ namespace DungeonEye
 		public override void Draw()
 		{
 			GSM.Draw();
-
-
-			//if (Keyboard.IsKeyPress(Keys.LControlKey) ||Keyboard.IsKeyPress(Keys.RControlKey))
-			//{
-			//   printer.Begin();
-			//   GL.MatrixMode(MatrixMode.Texture);
-			//   GL.LoadIdentity();
-			//   printer.Print("DirectCall : " + Display.RenderStats.DirectCall.ToString(), sans_serif, Color.White, new RectangleF(10, 20, 0, 0));
-			//   printer.Print("BatchCall : " + Display.RenderStats.BatchCall.ToString(), sans_serif, Color.White, new RectangleF(10, 32, 0, 0));
-			//   printer.Print("TextureBinding : " + Display.RenderStats.TextureBinding.ToString(), sans_serif, Color.White, new RectangleF(10, 44, 0, 0));
-			//   printer.End();
-			//}
-		 }
+		}
 
 
 

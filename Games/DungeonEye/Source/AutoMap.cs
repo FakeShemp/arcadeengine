@@ -39,7 +39,7 @@ namespace DungeonEye
 			Tileset = ResourceManager.CreateAsset<TileSet>("AutoMap");
 			Tileset.Scale = new SizeF(2.0f, 2.0f);
 
-			Font = ResourceManager.CreateSharedAsset<Font2d>("intro");
+			Font = ResourceManager.CreateSharedAsset<BitmapFont>("intro");
 		//	Font.TileSet.Scale = new SizeF(2.0f, 2.0f);
 
 
@@ -99,7 +99,7 @@ namespace DungeonEye
 		/// <summary>
 		/// 
 		/// </summary>
-		Font2d Font;
+		BitmapFont Font;
 
 
 

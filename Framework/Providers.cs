@@ -62,7 +62,7 @@ namespace ArcEngine
 
 
 			SharedSchemes = new Dictionary<string, InputScheme>(StringComparer.OrdinalIgnoreCase);
-			SharedFonts = new Dictionary<string, Font2d>(StringComparer.OrdinalIgnoreCase);
+			SharedFonts = new Dictionary<string, BitmapFont>(StringComparer.OrdinalIgnoreCase);
 			SharedStrings = new Dictionary<string, StringTable>(StringComparer.OrdinalIgnoreCase);
 			SharedTileSets = new Dictionary<string, TileSet>(StringComparer.OrdinalIgnoreCase);
 			SharedAnimations = new Dictionary<string, Animation>(StringComparer.OrdinalIgnoreCase);
@@ -78,7 +78,7 @@ namespace ArcEngine
 			};
 			Assets = new Type[] {
 				typeof(TileSet), typeof(StringTable), typeof(Animation), typeof(Scene),
-				typeof(Font2d), typeof(Script), typeof(ScriptModel), typeof(Audio), typeof(InputScheme),
+				typeof(BitmapFont), typeof(Script), typeof(ScriptModel), typeof(Audio), typeof(InputScheme),
 				typeof(Layout)
 			};
 
@@ -148,7 +148,7 @@ namespace ArcEngine
 				foreach (XmlNode node in Scenes.Values)
 					node.WriteTo(xml);
 			}
-			else if (typeof(T) == typeof(Font2d))
+			else if (typeof(T) == typeof(BitmapFont))
 			{
 				foreach (XmlNode node in Fonts.Values)
 					node.WriteTo(xml);
@@ -315,7 +315,7 @@ namespace ArcEngine
 					node = Scenes[name];
 				form = new ArcEngine.Editor.SceneForm(node);
 			}
-			else if (typeof(T) == typeof(Font2d))
+			else if (typeof(T) == typeof(BitmapFont))
 			{
 				if (Fonts.ContainsKey(name))
 					node = Fonts[name];
@@ -385,7 +385,7 @@ namespace ArcEngine
 				Animations[name] = node;
 			else if (typeof(T) == typeof(Scene))
 				Scenes[name] = node;
-			else if (typeof(T) == typeof(Font2d))
+			else if (typeof(T) == typeof(BitmapFont))
 				Fonts[name] = node;
 			else if (typeof(T) == typeof(Script))
 				Scripts[name] = node;
@@ -427,7 +427,7 @@ namespace ArcEngine
 				foreach (string key in Scenes.Keys)
 					list.Add(key);
 
-			else if (typeof(T) == typeof(Font2d))
+			else if (typeof(T) == typeof(BitmapFont))
 				foreach (string key in Fonts.Keys)
 					list.Add(key);
 			
@@ -496,9 +496,9 @@ namespace ArcEngine
 				return (T)(object)scene;
 			}
 
-			else if (typeof(T) == typeof(Font2d) && Fonts.ContainsKey(name))
+			else if (typeof(T) == typeof(BitmapFont) && Fonts.ContainsKey(name))
 			{
-				Font2d font = new Font2d();
+				BitmapFont font = new BitmapFont();
 				font.Load(Fonts[name]);
 				return (T)(object)font;
 			}
@@ -564,7 +564,7 @@ namespace ArcEngine
 			else if (typeof(T) == typeof(Scene) && Scenes.ContainsKey(name))
 				return Scenes[name];
 
-			else if (typeof(T) == typeof(Font2d) && Fonts.ContainsKey(name))
+			else if (typeof(T) == typeof(BitmapFont) && Fonts.ContainsKey(name))
 				return Fonts[name];
 
 			else if (typeof(T) == typeof(Script) && Scripts.ContainsKey(name))
@@ -607,7 +607,7 @@ namespace ArcEngine
 			else if (typeof(T) == typeof(Scene) && Scenes.ContainsKey(name))
 				Scenes.Remove(name);
 
-			else if (typeof(T) == typeof(Font2d) && Fonts.ContainsKey(name))
+			else if (typeof(T) == typeof(BitmapFont) && Fonts.ContainsKey(name))
 				Fonts.Remove(name);
 
 			else if (typeof(T) == typeof(Script) && Scripts.ContainsKey(name))
@@ -646,7 +646,7 @@ namespace ArcEngine
 			else if (typeof(T) == typeof(Scene))
 				Scenes.Clear();
 
-			else if (typeof(T) == typeof(Font2d))
+			else if (typeof(T) == typeof(BitmapFont))
 				Fonts.Clear();
 
 			else if (typeof(T) == typeof(Script))
@@ -705,7 +705,7 @@ namespace ArcEngine
 			else if (typeof(T) == typeof(Scene))
 				return Scenes.Count;
 
-			else if (typeof(T) == typeof(Font2d))
+			else if (typeof(T) == typeof(BitmapFont))
 				return Fonts.Count;
 
 			else if (typeof(T) == typeof(Script))
@@ -754,8 +754,8 @@ namespace ArcEngine
 			else if (typeof(T) == typeof(Scene))
 				SharedScenes[name] = asset as Scene;
 
-			else if (typeof(T) == typeof(Font2d))
-				SharedFonts[name] = asset as Font2d;
+			else if (typeof(T) == typeof(BitmapFont))
+				SharedFonts[name] = asset as BitmapFont;
 
 			else if (typeof(T) == typeof(Script))
 				SharedScripts[name] = asset as Script;
@@ -824,12 +824,12 @@ namespace ArcEngine
 				return (T)(object)scene;
 			}
 
-			else if (typeof(T) == typeof(Font2d))
+			else if (typeof(T) == typeof(BitmapFont))
 			{
 				if (SharedFonts.ContainsKey(name))
 					return (T)(object)SharedFonts[name];
 
-				Font2d font = new Font2d();
+				BitmapFont font = new BitmapFont();
 				font.Load(Fonts[name]);
 				SharedFonts[name] = font;
 
@@ -906,7 +906,7 @@ namespace ArcEngine
 			else if (typeof(T) == typeof(Animation))
 				SharedAnimations.Remove(name);
 
-			else if (typeof(T) == typeof(Font2d))
+			else if (typeof(T) == typeof(BitmapFont))
 				SharedFonts.Remove(name);
 
 			else if (typeof(T) == typeof(Script))
@@ -942,7 +942,7 @@ namespace ArcEngine
 			else if (typeof(T) == typeof(Scene))
 				SharedScenes.Clear();
 
-			else if (typeof(T) == typeof(Font2d))
+			else if (typeof(T) == typeof(BitmapFont))
 				SharedFonts.Clear();
 
 			else if (typeof(T) == typeof(Script))
@@ -1015,7 +1015,7 @@ namespace ArcEngine
 		/// </summary>
 		Dictionary<string, Layout> SharedLayouts;
 		Dictionary<string, InputScheme> SharedSchemes;
-		Dictionary<string, Font2d> SharedFonts;
+		Dictionary<string, BitmapFont> SharedFonts;
 		Dictionary<string, TileSet> SharedTileSets;
 		Dictionary<string, StringTable> SharedStrings;
 		Dictionary<string, Animation> SharedAnimations;

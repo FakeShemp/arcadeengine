@@ -79,10 +79,10 @@ namespace DungeonEye
 			Heads = ResourceManager.CreateAsset<TileSet>("Heads");
 			Heads.Scale = new SizeF(2.0f, 2.0f);
 
-			Font = ResourceManager.CreateAsset<Font2d>("intro");
+			Font = ResourceManager.CreateAsset<BitmapFont>("intro");
 			Font.GlyphTileset.Scale = new SizeF(2.0f, 2.0f);
 
-			NameFont = ResourceManager.CreateAsset<Font2d>("name");
+			NameFont = ResourceManager.CreateAsset<BitmapFont>("name");
 			NameFont.GlyphTileset.Scale = new SizeF(2.0f, 2.0f);
 
 			PlayButton = new ScreenButton(string.Empty, new Rectangle(48, 362, 166, 32));
@@ -903,7 +903,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Bitmap font
 		/// </summary>
-		Font2d Font;
+		BitmapFont Font;
 
 
 		/// <summary>
@@ -978,7 +978,7 @@ namespace DungeonEye
 		/// <summary>
 		/// 
 		/// </summary>
-		Font2d NameFont;
+		BitmapFont NameFont;
 
 		#endregion
 	}

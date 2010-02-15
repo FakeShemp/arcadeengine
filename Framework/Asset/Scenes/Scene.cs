@@ -126,7 +126,7 @@ namespace ArcEngine.Asset
 					case "font":
 					{
 						FontName = node.Attributes["name"].Value;
-						Font = ResourceManager.CreateAsset<Font2d>(FontName);
+						Font = ResourceManager.CreateAsset<BitmapFont>(FontName);
 					}
 					break;
 
@@ -303,7 +303,7 @@ namespace ArcEngine.Asset
 		/// <summary>
 		/// Font
 		/// </summary>
-		public Font2d Font
+		public BitmapFont Font
 		{
 			get;
 			private set;

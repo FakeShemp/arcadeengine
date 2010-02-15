@@ -74,7 +74,7 @@ namespace ArcEngine.Examples.TextDemo
 			ResourceManager.LoadBank("data/data.bnk");
 
 			// Creates the font
-			Font = Font2d.CreateFromTTF(@"c:\windows\fonts\verdana.ttf", 14, FontStyle.Regular);
+			Font = BitmapFont.CreateFromTTF(@"c:\windows\fonts\verdana.ttf", 14, FontStyle.Regular);
 			
 			// Attach the TileSet to the font
 			Font.TextTileset = ResourceManager.CreateAsset<TileSet>("TextTileSet");
@@ -133,7 +133,7 @@ namespace ArcEngine.Examples.TextDemo
 		/// <summary>
 		/// Font
 		/// </summary>
-		Font2d Font;
+		BitmapFont Font;
 
 
 		/// <summary>

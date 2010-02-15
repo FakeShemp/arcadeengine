@@ -72,7 +72,7 @@ namespace ArcEngine.Examples.Joystick
 		/// </summary>
 		public override void LoadContent()
 		{
-			Font = new Font2d();
+			Font = new BitmapFont();
 			Font.LoadTTF(@"c:\windows\fonts\verdana.ttf", 14, FontStyle.Regular);
 
 			Gamepad.Init(Window);
@@ -190,7 +190,7 @@ namespace ArcEngine.Examples.Joystick
 		/// <summary>
 		/// TTF font
 		/// </summary>
-		Font2d Font;
+		BitmapFont Font;
 
 
 		/// <summary>

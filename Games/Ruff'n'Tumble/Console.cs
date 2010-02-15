@@ -71,7 +71,7 @@ namespace RuffnTumble
 		/// <returns></returns>
 		public bool Init()
 		{
-			font = ResourceManager.CreateAsset<Font2d>("Console");
+			font = ResourceManager.CreateAsset<BitmapFont>("Console");
 			if (font == null)
 			{
 				return false;
@@ -317,7 +317,7 @@ namespace RuffnTumble
 		public bool IsActive;
 
 
-		Font2d font;
+		BitmapFont font;
 
 /*
 		/// <summary>

@@ -121,9 +121,9 @@ namespace DungeonEye
 
 
 
-			Font = ResourceManager.CreateSharedAsset<Font2d>("inventory");
+			Font = ResourceManager.CreateSharedAsset<BitmapFont>("inventory");
 			Font.GlyphTileset.Scale = new SizeF(2.0f, 2.0f);
-			OutlinedFont = ResourceManager.CreateSharedAsset<Font2d>("outline");
+			OutlinedFont = ResourceManager.CreateSharedAsset<BitmapFont>("outline");
 			OutlinedFont.GlyphTileset.Scale = new SizeF(2.0f, 2.0f);
 
 			CampWindow.Init();
@@ -2592,13 +2592,13 @@ namespace DungeonEye
 		/// <summary>
 		/// Display font
 		/// </summary>
-		Font2d Font;
+		BitmapFont Font;
 
 
 		/// <summary>
 		/// Outlined font
 		/// </summary>
-		Font2d OutlinedFont;
+		BitmapFont OutlinedFont;
 
 
 		/// <summary>
