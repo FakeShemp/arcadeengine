@@ -282,6 +282,7 @@
     <Compile Include="PInvoke\User32.cs" />
     <Compile Include="PInvoke\Winmm.cs" />
     <Compile Include="Providers.cs" />
+    <Compile Include="RandomEnum.cs" />
     <Compile Include="Utility\GameState\State.cs" />
     <Compile Include="Utility\GameState\StateManager.cs" />
     <Compile Include="Utility\GUI\GuiManager.cs" />
