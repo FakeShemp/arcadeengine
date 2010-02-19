@@ -28,7 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			DungeonEye.Dice dice1 = new DungeonEye.Dice();
+			DungeonEye.Dice dice3 = new DungeonEye.Dice();
 			this.VisualGroupBox = new System.Windows.Forms.GroupBox();
 			this.label11 = new System.Windows.Forms.Label();
 			this.label12 = new System.Windows.Forms.Label();
@@ -49,21 +49,25 @@
 			this.label3 = new System.Windows.Forms.Label();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.VisualTab = new System.Windows.Forms.TabPage();
-			this.EntityTab = new System.Windows.Forms.TabPage();
+			this.AttributesTab = new System.Windows.Forms.TabPage();
 			this.EntityBox = new DungeonEye.Forms.EntityControl();
 			this.PropertiesTab = new System.Windows.Forms.TabPage();
 			this.label4 = new System.Windows.Forms.Label();
 			this.ArmorClassBox = new System.Windows.Forms.NumericUpDown();
 			this.DamageBox = new DungeonEye.Forms.DiceForm();
+			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.CowardBox = new System.Windows.Forms.CheckBox();
+			this.AggressiveBox = new System.Windows.Forms.CheckBox();
 			this.VisualGroupBox.SuspendLayout();
 			this.PocketGroupBox.SuspendLayout();
 			this.groupBox1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.XPRewardBox)).BeginInit();
 			this.tabControl1.SuspendLayout();
 			this.VisualTab.SuspendLayout();
-			this.EntityTab.SuspendLayout();
+			this.AttributesTab.SuspendLayout();
 			this.PropertiesTab.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.ArmorClassBox)).BeginInit();
+			this.groupBox2.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// VisualGroupBox
@@ -269,7 +273,7 @@
 			// tabControl1
 			// 
 			this.tabControl1.Controls.Add(this.VisualTab);
-			this.tabControl1.Controls.Add(this.EntityTab);
+			this.tabControl1.Controls.Add(this.AttributesTab);
 			this.tabControl1.Controls.Add(this.PropertiesTab);
 			this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabControl1.Location = new System.Drawing.Point(0, 0);
@@ -289,16 +293,16 @@
 			this.VisualTab.Text = "Visual";
 			this.VisualTab.UseVisualStyleBackColor = true;
 			// 
-			// EntityTab
+			// AttributesTab
 			// 
-			this.EntityTab.Controls.Add(this.EntityBox);
-			this.EntityTab.Location = new System.Drawing.Point(4, 22);
-			this.EntityTab.Name = "EntityTab";
-			this.EntityTab.Padding = new System.Windows.Forms.Padding(3);
-			this.EntityTab.Size = new System.Drawing.Size(531, 429);
-			this.EntityTab.TabIndex = 1;
-			this.EntityTab.Text = "Entity";
-			this.EntityTab.UseVisualStyleBackColor = true;
+			this.AttributesTab.Controls.Add(this.EntityBox);
+			this.AttributesTab.Location = new System.Drawing.Point(4, 22);
+			this.AttributesTab.Name = "AttributesTab";
+			this.AttributesTab.Padding = new System.Windows.Forms.Padding(3);
+			this.AttributesTab.Size = new System.Drawing.Size(531, 429);
+			this.AttributesTab.TabIndex = 1;
+			this.AttributesTab.Text = "Attributes";
+			this.AttributesTab.UseVisualStyleBackColor = true;
 			// 
 			// EntityBox
 			// 
@@ -311,6 +315,7 @@
 			// 
 			// PropertiesTab
 			// 
+			this.PropertiesTab.Controls.Add(this.groupBox2);
 			this.PropertiesTab.Controls.Add(this.label4);
 			this.PropertiesTab.Controls.Add(this.label3);
 			this.PropertiesTab.Controls.Add(this.PocketGroupBox);
@@ -352,16 +357,49 @@
 			// DamageBox
 			// 
 			this.DamageBox.ControlText = "Damage :";
-			dice1.Faces = 1;
-			dice1.Modifier = 0;
-			dice1.Throws = 1;
-			this.DamageBox.Dice = dice1;
+			dice3.Faces = 1;
+			dice3.Modifier = 0;
+			dice3.Throws = 1;
+			this.DamageBox.Dice = dice3;
 			this.DamageBox.Location = new System.Drawing.Point(4, 3);
 			this.DamageBox.MinimumSize = new System.Drawing.Size(225, 100);
 			this.DamageBox.Name = "DamageBox";
 			this.DamageBox.Size = new System.Drawing.Size(230, 100);
 			this.DamageBox.TabIndex = 10;
 			this.DamageBox.ValueChanged += new System.EventHandler(this.DamageBox_ValueChanged);
+			// 
+			// groupBox2
+			// 
+			this.groupBox2.Controls.Add(this.AggressiveBox);
+			this.groupBox2.Controls.Add(this.CowardBox);
+			this.groupBox2.Location = new System.Drawing.Point(3, 161);
+			this.groupBox2.Name = "groupBox2";
+			this.groupBox2.Size = new System.Drawing.Size(231, 231);
+			this.groupBox2.TabIndex = 13;
+			this.groupBox2.TabStop = false;
+			this.groupBox2.Text = "Behavior :";
+			// 
+			// CowardBox
+			// 
+			this.CowardBox.AutoSize = true;
+			this.CowardBox.Location = new System.Drawing.Point(7, 20);
+			this.CowardBox.Name = "CowardBox";
+			this.CowardBox.Size = new System.Drawing.Size(69, 17);
+			this.CowardBox.TabIndex = 0;
+			this.CowardBox.Text = "Cowardly";
+			this.CowardBox.UseVisualStyleBackColor = true;
+			this.CowardBox.Click += new System.EventHandler(this.CowardBox_Click);
+			// 
+			// AggressiveBox
+			// 
+			this.AggressiveBox.AutoSize = true;
+			this.AggressiveBox.Location = new System.Drawing.Point(6, 43);
+			this.AggressiveBox.Name = "AggressiveBox";
+			this.AggressiveBox.Size = new System.Drawing.Size(78, 17);
+			this.AggressiveBox.TabIndex = 0;
+			this.AggressiveBox.Text = "Aggressive";
+			this.AggressiveBox.UseVisualStyleBackColor = true;
+			this.AggressiveBox.Click += new System.EventHandler(this.AggressiveBox_Click);
 			// 
 			// MonsterControl
 			// 
@@ -381,10 +419,12 @@
 			((System.ComponentModel.ISupportInitialize)(this.XPRewardBox)).EndInit();
 			this.tabControl1.ResumeLayout(false);
 			this.VisualTab.ResumeLayout(false);
-			this.EntityTab.ResumeLayout(false);
+			this.AttributesTab.ResumeLayout(false);
 			this.PropertiesTab.ResumeLayout(false);
 			this.PropertiesTab.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.ArmorClassBox)).EndInit();
+			this.groupBox2.ResumeLayout(false);
+			this.groupBox2.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -412,10 +452,13 @@
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.TabControl tabControl1;
 		private System.Windows.Forms.TabPage VisualTab;
-		private System.Windows.Forms.TabPage EntityTab;
+		private System.Windows.Forms.TabPage AttributesTab;
 		private System.Windows.Forms.TabPage PropertiesTab;
 		private EntityControl EntityBox;
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.NumericUpDown ArmorClassBox;
+		private System.Windows.Forms.GroupBox groupBox2;
+		private System.Windows.Forms.CheckBox AggressiveBox;
+		private System.Windows.Forms.CheckBox CowardBox;
 	}
 }

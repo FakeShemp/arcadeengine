@@ -55,6 +55,7 @@ namespace DungeonEye.Forms
 
 			MazePropertyBox.Tag = Dungeon;
 			RebuildMazeList();
+			DungeonNoteBox.Text = Dungeon.Note;
 
 			
 
@@ -146,8 +147,20 @@ namespace DungeonEye.Forms
 		}
 
 
+		/// <summary>
+		/// Refresh zones
+		/// </summary>
+		public void RebuildZones()
+		{
+			MazeZonesBox.BeginUpdate();
+			MazeZonesBox.Items.Clear();
+			foreach (MazeZone zone in Maze.Zones)
+			{
+				MazeZonesBox.Items.Add(zone.Name);
+			}
 
-
+			MazeZonesBox.EndUpdate();
+		}
 
 		#region Events
 
@@ -205,7 +218,7 @@ namespace DungeonEye.Forms
 				return;
 
 			Point coord = new Point((e.Location.X - Offset.X) / 25, (e.Location.Y - Offset.Y) / 25);
-			if (!Maze.Contains(coord) || Maze == null)
+			if (!Maze.Contains(coord))
 				return;
 
 			MazeBlock block = Maze.GetBlock(coord);
@@ -222,8 +235,7 @@ namespace DungeonEye.Forms
 				BlockCoord = coord;
 
 
-				#region Adding
-
+				#region Mazeblock changing
 				// Add wall
 				if (EditWallButton.Checked)
 				{
@@ -234,8 +246,15 @@ namespace DungeonEye.Forms
 					else if (block.Type == BlockType.Illusion)
 						block.Type = BlockType.Wall;
 				}
+				#endregion
 
+				#region Zone
 
+				else if (CreateNewZoneBox.Checked)
+				{
+					CurrentZone = new MazeZone();
+					CurrentZone.Rectangle = new Rectangle(coord, new Size(1, 1));
+				}
 
 				#endregion
 
@@ -324,24 +343,13 @@ namespace DungeonEye.Forms
 					block.Type = BlockType.Wall;
 					return;
 				}
+				else if (CreateNewZoneBox.Checked)
+				{
+					CurrentZone.Rectangle = new Rectangle(CurrentZone.Rectangle.Location,
+						new Size(BlockCoord.X - CurrentZone.Rectangle.Left + 1, BlockCoord.Y - CurrentZone.Rectangle.Top + 1));
+				}
 
 
-				//if (DragObjectByMouse)
-				//{
-				//   // Find the delta mouse movement
-				//   Point offset = e.Location;
-				//   offset.X -= LastMousePos.X;
-				//   offset.Y -= LastMousePos.Y;
-
-				//   if (ObjectPropertyBox.SelectedObject is Monster)
-				//   {
-				//      Monster monster = ObjectPropertyBox.SelectedObject as Monster;
-				//      monster.Location.Position = BlockCoord;
-				//   }
-
-				//   return;
-				//}
-				//else
 				if (DragPreview)
 				{
 					PreviewLoc.Position = BlockCoord;
@@ -380,8 +388,25 @@ namespace DungeonEye.Forms
 			}
 
 			// Entity no more selected
-			if (e.Button == MouseButtons.Left)// && DragObjectByMouse)
+			if (e.Button == MouseButtons.Left)
 			{
+				if (CreateNewZoneBox.Checked)
+				{
+					DungeonEye.Forms.Wizards.NewNameWizard wizard = new DungeonEye.Forms.Wizards.NewNameWizard(string.Empty);
+					if (wizard.ShowDialog() == DialogResult.OK)
+					{
+						CurrentZone.Name = wizard.NewName;
+						Maze.Zones.Add(CurrentZone);
+						RebuildZones();
+					}
+					else
+					{
+						CurrentZone = null;
+					}
+
+					CreateNewZoneBox.Checked = false;
+				}
+
 				DragPreview = false;
 				return;
 			}
@@ -567,11 +592,35 @@ namespace DungeonEye.Forms
 				Display.DrawRectangle(new Rectangle(BlockCoord.X * 25 + Offset.X, BlockCoord.Y * 25 + Offset.Y, 25, 25), Color.White);
 
 
+			if (DisplayZonesBox.Checked)
+			{
 
+				foreach (MazeZone zone in Maze.Zones)
+				{
+					Rectangle rect = new Rectangle(zone.Rectangle.X * 25, zone.Rectangle.Y * 25, zone.Rectangle.Width * 25, zone.Rectangle.Height * 25);
+					Color color = Color.FromArgb(100, Color.Red);
+
+					if (CurrentZone == zone)
+					{
+						color = Color.FromArgb(100, Color.Red);
+						Display.DrawRectangle(rect, Color.White);
+					}
+
+					Display.FillRectangle(rect, color);
+				}
+			}
+
+			if (CurrentZone != null)
+			{
+				Rectangle rect = new Rectangle(CurrentZone.Rectangle.X * 25, CurrentZone.Rectangle.Y * 25, CurrentZone.Rectangle.Width * 25, CurrentZone.Rectangle.Height * 25);
+				Display.FillRectangle(rect, Color.FromArgb(128, Color.Blue));
+			}
 
 			glControl.SwapBuffers();
 
 		}
+
+
 
 		/// <summary>
 		/// 
@@ -641,6 +690,18 @@ namespace DungeonEye.Forms
 			glControl.MakeCurrent();
 			Display.ViewPort = new Rectangle(new Point(), glControl.Size);
 
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void DungeonNoteBox_TextChanged(object sender, EventArgs e)
+		{
+			if (Dungeon == null)
+				return;
+			Dungeon.Note = DungeonNoteBox.Text;
 		}
 
 
@@ -881,6 +942,7 @@ namespace DungeonEye.Forms
 		#endregion
 
 
+
 		#region Misc
 
 		/// <summary>
@@ -902,6 +964,15 @@ namespace DungeonEye.Forms
 			MazeListBox.SelectedItem = Maze.Name;
 		}
 
+		#endregion
+
+
+
+		#region Maze zone region
+
+
+
+		
 		#endregion
 
 
@@ -985,7 +1056,47 @@ namespace DungeonEye.Forms
 		InputScheme KeyboardScheme;
 
 
+
+		/// <summary>
+		/// Current maze zone
+		/// </summary>
+		MazeZone CurrentZone;
+
 		#endregion
+
+	
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void EditWallButton_Click(object sender, EventArgs e)
+		{
+			if (Maze == null)
+			{
+				EditWallButton.Checked = false;
+				return;
+			}
+
+			CreateNewZoneBox.Checked = false;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void CreateNewZoneBox_Click(object sender, EventArgs e)
+		{
+			if (Maze == null)
+			{
+				CreateNewZoneBox.Checked = false;
+				return;
+			}
+
+			EditWallButton.Checked = false;
+		}
 	}
 
 

@@ -73,7 +73,7 @@ namespace ArcEngine
 
 			Name = "ArcEngine providers";
 			Tags = new string[] { 
-				"tileset", "stringtable", "animation", "scene", "font2d",
+				"tileset", "stringtable", "animation", "scene", "bitmapfont",
 				"script", "scriptmodel", "audio", "inputscheme", "layout"
 			};
 			Assets = new Type[] {
@@ -225,7 +225,7 @@ namespace ArcEngine
 				}
 				break;
 
-				case "font2d":
+				case "bitmapfont":
 				{
 					Fonts[name] = xml;
 				}

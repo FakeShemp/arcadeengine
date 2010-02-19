@@ -82,6 +82,34 @@ namespace DungeonEye
 		#endregion
 
 
+
+		/// <summary>
+		/// Offset the location
+		/// </summary>
+		/// <param name="direction">Direction</param>
+		/// <param name="range">Range</param>
+		public void Offset(CardinalPoint direction, int range)
+		{
+			switch (direction)
+			{
+				case CardinalPoint.North:
+				Position.Y -= range;
+				break;
+				case CardinalPoint.South:
+				Position.Y += range;
+				break;
+				case CardinalPoint.West:
+				Position.X -= range;
+				break;
+				case CardinalPoint.East:
+				Position.X += range;
+				break;
+			}
+
+	
+		}
+
+
 		#region I/O
 
 
@@ -146,14 +174,16 @@ namespace DungeonEye
 		/// <returns>True if maze found</returns>
 		public bool SetMaze(string name)
 		{
+			if (string.IsNullOrEmpty(name))
+				return false;
+
+			if (Dungeon == null || Dungeon.GetMaze(name) == null)
+				return false;
+
 			MazeName = name;
+			Maze = Dungeon.GetMaze(name);
 
-			if (Dungeon != null)
-				Maze = Dungeon.GetMaze(name);
-			else
-				Maze = null;
-
-			return Maze != null;
+			return true;
 		}
 
 
@@ -167,46 +197,7 @@ namespace DungeonEye
 			return string.Format("{0}x{1} {2} {3}", Position.X, Position.Y, MazeName, Direction.ToString());
 		}
 
-/*
-		#region Operators override
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="from"></param>
-		/// <param name="to"></param>
-		/// <returns></returns>
-		static public bool operator ==(DungeonLocation from, DungeonLocation to)
-		{
-			if (from.MazeName != to.MazeName)
-				return false;
-
-			if (from.Direction != to.Direction)
-				return false;
-			
-			if (from.GroundPosition != to.GroundPosition)
-				return false;
-
-			if (from.Position != to.Position)
-				return false;
-
-			return true;
-		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="from"></param>
-		/// <param name="to"></param>
-		/// <returns></returns>
-		static public bool operator !=(DungeonLocation from, DungeonLocation to)
-		{
-
-			return !(from == to);
-		}
-
-		#endregion
-*/
 
 		#region Properties
 

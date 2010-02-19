@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <team>
 	<dungeon name="Eye" />
-	<location maze="maze_01" x="11" y="9" direction="East" position="NorthEast" />
+	<location maze="maze_01" x="5" y="12" direction="East" position="NorthEast" />
 	<position slot="FrontLeft">
 		<hero>
 			<hitpoint current="23" max="23" />
@@ -102,5 +102,5 @@
 			</profession>
 		</hero>
 	</position>
-	<message text="Key taken." R="255" G="255" B="255" A="255" />
+	<message text="Loading maze_01:Upper sewer level" R="255" G="255" B="255" A="255" />
 </team>

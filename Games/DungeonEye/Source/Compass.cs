@@ -158,6 +158,17 @@ namespace DungeonEye
 		}
 
 
+		/// <summary>
+		/// Is facing a specific directioen
+		/// </summary>
+		/// <param name="dir">Direction</param>
+		/// <returns>True if facing the same direction</returns>
+		public bool IsFacing(CardinalPoint dir)
+		{
+			return Direction == dir;
+		}
+
+
 
 		#region Properties
 

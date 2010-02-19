@@ -48,7 +48,7 @@ namespace DungeonEye
 		public void OnTeamTouch(Team team, MazeBlock block)
 		{
 			// No script defined
-			if (string.IsNullOrEmpty(OnEnterScript) ||Script == null)
+			if (string.IsNullOrEmpty(OnEnterScript) || Script == null)
 				return;
 
 			Script.Compile();
@@ -128,11 +128,7 @@ namespace DungeonEye
 					case "script":
 					{
 						ScriptName = node.Attributes["name"].Value;
-						if (!string.IsNullOrEmpty(ScriptName))
-						{
-							Script = ResourceManager.CreateAsset<Script>(ScriptName);
-							Script.Compile();
-						}
+						Script = Script.LoadFromBank(ScriptName);
 					}
 					break;
 

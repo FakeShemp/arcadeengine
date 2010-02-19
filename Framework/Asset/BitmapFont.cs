@@ -1053,7 +1053,7 @@ namespace ArcEngine.Asset
 		{
 			get
 			{
-				return "texturefont";
+				return "bitmapfont";
 			}
 		}
 

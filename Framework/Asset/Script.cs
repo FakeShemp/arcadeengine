@@ -89,6 +89,28 @@ namespace ArcEngine.Asset
 
 
 
+		#region Statics
+
+		/// <summary>
+		/// Loads and compile a script from a bank's asset
+		/// </summary>
+		/// <param name="name">Name of the script</param>
+		/// <returns>Script handle</returns>
+		public Script LoadFromBank(string name)
+		{
+			Script script = new Script();
+
+			if (!string.IsNullOrEmpty(name))
+			{
+				script = ResourceManager.CreateAsset<Script>(name);
+				script.Compile();
+			}
+
+			return script;
+		}
+
+		#endregion
+
 
 		/// <summary>
 		/// Initializes the asset
@@ -554,6 +576,7 @@ namespace ArcEngine.Asset
 				Params.IncludeDebugInformation = value;
 			}
 		}
+
 
 		/// <summary>
 		/// Is source code modified ?

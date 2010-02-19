@@ -94,6 +94,7 @@
       <HintPath>..\..\Framework\Libraries\OpenTK\Release\OpenTK.GLControl.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -187,11 +188,18 @@
     <Compile Include="Forms\Wizards\NewMazeWizard.Designer.cs">
       <DependentUpon>NewMazeWizard.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Wizards\NewNameWizard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Wizards\NewNameWizard.Designer.cs">
+      <DependentUpon>NewNameWizard.cs</DependentUpon>
+    </Compile>
     <Compile Include="Interfaces\IDoor.cs" />
     <Compile Include="Interfaces\IFloorPlate.cs" />
     <Compile Include="Interfaces\IItem.cs" />
     <Compile Include="Interfaces\IMonster.cs" />
     <Compile Include="Interfaces\IPit.cs" />
+    <Compile Include="Interfaces\IMazeZone.cs" />
     <Compile Include="Source\Ability.cs" />
     <Compile Include="Source\Attack.cs" />
     <Compile Include="Source\AutoMap.cs" />
@@ -202,6 +210,14 @@
     <Compile Include="Source\Experience.cs" />
     <Compile Include="Source\Gui\MessageBox.cs" />
     <Compile Include="Source\HandAction.cs" />
+    <Compile Include="Source\MazeZone.cs" />
+    <Compile Include="Source\MonsterState.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Source\MonsterStates\Attack.cs" />
+    <Compile Include="Source\MonsterStates\Hurt.cs" />
+    <Compile Include="Source\MonsterStates\Move.cs" />
+    <Compile Include="Source\MonsterStates\Idle.cs" />
     <Compile Include="Source\Profession.cs" />
     <Compile Include="Source\HitPoint.cs" />
     <Compile Include="Source\WallButton.cs" />
@@ -328,6 +344,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Wizards\NewMazeWizard.resx">
       <DependentUpon>NewMazeWizard.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Wizards\NewNameWizard.resx">
+      <DependentUpon>NewNameWizard.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>

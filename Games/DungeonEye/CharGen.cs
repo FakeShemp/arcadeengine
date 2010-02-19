@@ -615,7 +615,8 @@ namespace DungeonEye
 				case CharGenStates.SelectName:
 				{
 					//
-					Font.DrawText(new Rectangle(296, 200, 300, 64), Color.FromArgb(85, 255, 255), "Name: " + CurrentHero.Name);
+					Font.DrawText(new Rectangle(296, 200, 300, 64), Color.FromArgb(85, 255, 255), "Name: ");
+					Font.DrawText(new Rectangle(380, 200, 300, 64), Color.White, CurrentHero.Name);
 
 					Font.DrawText(new Rectangle(294, 256, 300, 64), Color.White, "STR " + CurrentHero.Strength.Value.ToString());
 					Font.DrawText(new Rectangle(294, 276, 300, 64), Color.White, "INT " + CurrentHero.Intelligence.Value.ToString());
@@ -849,10 +850,10 @@ namespace DungeonEye
 					if (CurrentHero.Name != null && CurrentHero.Name.Length > 10)
 						break;
 
-					if (Keyboard.IsKeyPress(Keys.ShiftKey))
-						CurrentHero.Name += e.KeyCode;
-					else
+					if ((int)e.KeyCode > (int)'Z')
 						CurrentHero.Name += (char)(e.KeyCode + 32);
+					else
+						CurrentHero.Name += e.KeyCode;
 				}
 				break;
 			}

@@ -26,7 +26,7 @@ using System.Xml;
 using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
-
+using DungeonEye.MonsterStates;
 
 namespace DungeonEye
 {
@@ -53,6 +53,9 @@ namespace DungeonEye
 			Monsters = new List<Monster>();
 			Doors = new List<Door>();
 			FlyingItems = new List<FlyingItem>();
+			Zones = new List<MazeZone>();
+
+
 		}
 
 
@@ -361,8 +364,8 @@ namespace DungeonEye
 		/// <summary>
 		/// Returns informations about a block in the maze
 		/// </summary>
-		/// <param name="location"></param>
-		/// <returns></returns>
+		/// <param name="location">Location of the block</param>
+		/// <returns>Block handle</returns>
 		public MazeBlock GetBlock(Point location)
 		{
 			if (!Rectangle.Contains(location))
@@ -803,13 +806,18 @@ namespace DungeonEye
 				start.Offset(location);
 				start.Offset(2, 2);
 
-				Point end = monster.TargetLocation.Position;
-				end.X *= 4;
-				end.Y *= 4;
-				end.Offset(location);
-				end.Offset(2, 2);
+				if (monster.StateManager.CurrentState is MoveState)
+				{
+					MoveState state = monster.StateManager.CurrentState as MoveState;
 
-				Display.DrawLine(start, end, Color.Red);
+					Point end = state.TargetLocation.Position;
+					end.X *= 4;
+					end.Y *= 4;
+					end.Offset(location);
+					end.Offset(2, 2);
+
+					Display.DrawLine(start, end, Color.Red);
+				}
 			}
 			Display.Blending = true;
 		}
@@ -868,6 +876,13 @@ namespace DungeonEye
 					}
 					break;
 
+					case "zone":
+					{
+						MazeZone zone = new MazeZone();
+						zone.Load(node);
+						Zones.Add(zone);
+					}
+					break;
 
 					#region Blocks
 
@@ -969,6 +984,9 @@ namespace DungeonEye
 
 			writer.WriteEndElement();
 
+			// Zones
+			foreach (MazeZone zone in Zones)
+				zone.Save(writer);
 
 
 
@@ -1170,6 +1188,7 @@ namespace DungeonEye
 
 		#region Properties
 
+		
 		/// <summary>
 		/// Wall TileSet to use
 		/// </summary>
@@ -1346,6 +1365,16 @@ namespace DungeonEye
 		/// </summary>
 		public byte ExperienceMultiplier;
 
+
+
+		/// <summary>
+		/// List of available zones
+		/// </summary>
+		public List<MazeZone> Zones
+		{
+			get;
+			private set;
+		}
 
 		#endregion
 

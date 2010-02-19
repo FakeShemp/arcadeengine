@@ -119,6 +119,8 @@ namespace DungeonEye.Forms
 				InterfaceNameBox.SelectedItem = Monster.InterfaceName;
 
 				DamageBox.Dice = Monster.Damage;
+				CowardBox.Checked = Monster.IsCoward;
+				AggressiveBox.Checked = Monster.IsAggressive;
 			}
 		}
 
@@ -462,5 +464,35 @@ namespace DungeonEye.Forms
 		#endregion
 
 
+		#region Behavior events
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void CowardBox_Click(object sender, EventArgs e)
+		{
+			if (Monster == null)
+				return;
+
+			Monster.IsCoward = CowardBox.Checked;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void AggressiveBox_Click(object sender, EventArgs e)
+		{
+			if (Monster == null)
+				return;
+
+			Monster.IsAggressive = AggressiveBox.Checked;
+		}
+
+		#endregion
 	}
 }

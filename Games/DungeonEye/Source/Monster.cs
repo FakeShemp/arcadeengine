@@ -17,17 +17,20 @@
 //along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 //
 #endregion
-using System.ComponentModel;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.ComponentModel;
 using System.Drawing;
+using System.Text;
 using System.Xml;
 using ArcEngine;
-using ArcEngine.Graphic;
 using ArcEngine.Asset;
-using OpenTK.Graphics.OpenGL;
+using ArcEngine.Graphic;
+using ArcEngine.Utility.GameState;
 using DungeonEye.Interfaces;
+using DungeonEye.MonsterStates;
+using OpenTK.Graphics.OpenGL;
+
 
 //
 // List of monsters : http://members.tripod.com/~stanislavs/games/eob1mons.htm
@@ -43,7 +46,7 @@ namespace DungeonEye
 {
 
 	/// <summary>
-	/// Base interface of all monster in the game
+	/// Base class of all monster in the game
 	/// </summary>
 	public class Monster : Entity, IAsset
 	{
@@ -64,6 +67,8 @@ namespace DungeonEye
 			HitDice = new Dice();
 
 			DrawOffsetDuration = TimeSpan.FromSeconds(1.0f + GameBase.Random.NextDouble());
+
+			StateManager = new StateManager();
 		}
 
 
@@ -84,6 +89,8 @@ namespace DungeonEye
 				Interface = script.CreateInstance<IMonster>(InterfaceName);
 			}
 
+
+			StateManager.SetState(new IdleState(this));
 			return true;
 		}
 
@@ -93,7 +100,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="offset">Offset</param>
 		/// <returns>True if moved, or false</returns>
-		private bool Move(Point offset)
+		public bool Move(Point offset)
 		{
 			// Can't move
 			if (!CanMove)
@@ -139,7 +146,7 @@ namespace DungeonEye
 				
 
 				Location.Position.Offset(offset);
-				LastMove = DateTime.Now;
+				LastAction = DateTime.Now;
 
 				// Enter the new block
 				Location.Block.OnMonsterEnter(this);
@@ -192,127 +199,8 @@ namespace DungeonEye
 				LastDrawOffset = DateTime.Now;
 			}
 
-
-
-            // Find a new target to reach
-			if (TargetRange == 0)
-			{
-				TargetRange = Game.Random.Next(5);
-
-				bool ok = false;
-				while (!ok)
-				{
-					int dir = Dice.GetD20(1);
-					Point vector = Location.Position;
-
-					switch (TargetDirection)
-					{
-						case CardinalPoint.North:
-						{
-							if (dir < 10)
-							{
-								TargetDirection = CardinalPoint.West;
-								vector.X--;
-							}
-							else
-							{
-								TargetDirection = CardinalPoint.East;
-								vector.X++;
-							}
-						}
-						break;
-						case CardinalPoint.South:
-						{
-							if (dir < 10)
-							{
-								TargetDirection = CardinalPoint.East;
-								vector.X++;
-							}
-							else
-							{
-								TargetDirection = CardinalPoint.West;
-								vector.X--;
-							}
-
-						}
-						break;
-						case CardinalPoint.West:
-						{
-							if (dir < 10)
-							{
-								TargetDirection = CardinalPoint.North;
-								vector.Y--;
-							}
-							else
-							{
-								TargetDirection = CardinalPoint.South;
-								vector.Y++;
-							}
-
-						}
-						break;
-						case CardinalPoint.East:
-						{
-							if (dir < 10)
-							{
-								TargetDirection = CardinalPoint.South;
-								vector.Y++;
-							}
-							else
-							{
-								TargetDirection = CardinalPoint.North;
-								vector.Y--;
-							}
-
-						}
-						break;
-					}
-
-					// Check the block
-					MazeBlock block = Location.Maze.GetBlock(vector);
-					if (block == null)
-						continue;
-
-					ok = !block.IsBlocking;
-				}
-			}
-
-
-			// Move the monster
-			if (CanMove)
-			{
-				// Change direction first
-				if (Location.Direction != TargetDirection)
-				{
-					Location.Direction = TargetDirection;
-					LastMove = DateTime.Now;
-				}
-				// Then move to the target
-				else
-				{
-					Point vector = Point.Empty;
-					switch (TargetDirection)
-					{
-						case CardinalPoint.North:
-						vector.Y = -1;
-						break;
-						case CardinalPoint.South:
-						vector.Y = 1;
-						break;
-						case CardinalPoint.West:
-						vector.X = -1;
-						break;
-						case CardinalPoint.East:
-						vector.X = 1;
-						break;
-					}
-					TargetRange--;
-
-
-					if (!Move(vector))
-						TargetRange = 0;
-				}
-			}
+			// Update current state
+			StateManager.Update(time);
 		}
 
 
@@ -474,6 +362,28 @@ namespace DungeonEye
         }
 
 
+		/// <summary>
+		/// Does the monster facing a given direction
+		/// </summary>
+		/// <param name="direction"></param>
+		/// <returns></returns>
+		public bool IsFacing(CardinalPoint direction)
+		{
+			return Location.Compass.IsFacing(direction);
+		}
+
+
+		/// <summary>
+		/// Turns the monster to a given direction
+		/// </summary>
+		/// <param name="direction">Direction to face to</param>
+		/// <returns>True if the monster facing the direction</returns>
+		public void TurnTo(CardinalPoint direction)
+		{
+			Location.Direction = direction;
+			LastAction = DateTime.Now;
+		}
+
 		#endregion
 
 
@@ -548,11 +458,23 @@ namespace DungeonEye
                     }
                     break;
 
-                    case "sightrange":
-                    {
-                        SightRange = byte.Parse(node.Attributes["value"].Value);
-                    }
-                    break;
+					case "sightrange":
+					{
+						SightRange = byte.Parse(node.Attributes["value"].Value);
+					}
+					break;
+
+					case "iscoward":
+					{
+						IsCoward = bool.Parse(node.Attributes["value"].Value);
+					}
+					break;
+
+					case "isaggressive":
+					{
+						IsAggressive = bool.Parse(node.Attributes["value"].Value);
+					}
+					break;
 
 					case "reward":
 					{
@@ -620,14 +542,42 @@ namespace DungeonEye
             writer.WriteAttributeString("value", BaseAttack.ToString());
             writer.WriteEndElement();
 
-            writer.WriteStartElement("sightrange");
-            writer.WriteAttributeString("value", SightRange.ToString());
-            writer.WriteEndElement();
+			writer.WriteStartElement("sightrange");
+			writer.WriteAttributeString("value", SightRange.ToString());
+			writer.WriteEndElement();
+
+			writer.WriteStartElement("isaggressive");
+			writer.WriteAttributeString("value", IsAggressive.ToString());
+			writer.WriteEndElement();
+
+			writer.WriteStartElement("iscoward");
+			writer.WriteAttributeString("value", IsCoward.ToString());
+			writer.WriteEndElement();
 
 			writer.WriteStartElement("reward");
 			writer.WriteAttributeString("value", Reward.ToString());
 			writer.WriteEndElement();
 
+			writer.WriteStartElement("sound");
+			writer.WriteAttributeString("event", "hit");
+			writer.WriteAttributeString("name", HitSoundName);
+			writer.WriteEndElement();
+
+			writer.WriteStartElement("sound");
+			writer.WriteAttributeString("event", "hurt");
+			writer.WriteAttributeString("name", HurtSoundName);
+			writer.WriteEndElement();
+
+			writer.WriteStartElement("sound");
+			writer.WriteAttributeString("event", "walk");
+			writer.WriteAttributeString("name", WalkSoundName);
+			writer.WriteEndElement();
+
+			writer.WriteStartElement("sound");
+			writer.WriteAttributeString("event", "die");
+			writer.WriteAttributeString("name", DieSoundName);
+			writer.WriteEndElement();
+			
 			writer.WriteEndElement();
 
 			return true;
@@ -646,6 +596,16 @@ namespace DungeonEye
 
 
 		#region Properties
+
+		/// <summary>
+		/// State manager
+		/// </summary>
+		public StateManager StateManager
+		{
+			get;
+			private set;
+		}
+		
 
 		/// <summary>
 		/// Base attack bonus
@@ -690,6 +650,7 @@ namespace DungeonEye
 			set;
 		}
 
+
 		/// <summary>
 		/// Dice rolled to generate hit points
 		/// </summary>
@@ -709,7 +670,7 @@ namespace DungeonEye
             set;
         }
 
-
+/*
         /// <summary>
         /// Target location of the monster
         /// </summary>
@@ -719,37 +680,26 @@ namespace DungeonEye
 			{
 				DungeonLocation loc = new DungeonLocation(Location);
 
-				switch (TargetDirection)
-				{
-					case CardinalPoint.North:
-					loc.Position.Y -= TargetRange;
-					break;
-					case CardinalPoint.South:
-					loc.Position.Y += TargetRange;
-					break;
-					case CardinalPoint.West:
-					loc.Position.X -= TargetRange;
-					break;
-					case CardinalPoint.East:
-					loc.Position.X += TargetRange;
-					break;
-				}
+				//switch (TargetDirection)
+				//{
+				//    case CardinalPoint.North:
+				//    loc.Position.Y -= TargetRange;
+				//    break;
+				//    case CardinalPoint.South:
+				//    loc.Position.Y += TargetRange;
+				//    break;
+				//    case CardinalPoint.West:
+				//    loc.Position.X -= TargetRange;
+				//    break;
+				//    case CardinalPoint.East:
+				//    loc.Position.X += TargetRange;
+				//    break;
+				//}
 
 				return loc;
 			}
         }
-
-
-		/// <summary>
-		/// Range remaining to reach the target
-		/// </summary>
-		int TargetRange;
-
-
-		/// <summary>
-		/// Direction of the target
-		/// </summary>
-		CardinalPoint TargetDirection;
+*/
 
 
 		/// <summary>
@@ -799,19 +749,9 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// State of the monster
-		/// </summary>
-		public MonsterState State
-		{
-			get;
-			set;
-		}
-
-
-		/// <summary>
 		/// Use to alternate frames when the monster walk
 		/// </summary>
-		public bool SwapFrame;
+		//public bool SwapFrame;
 
 
 		/// <summary>
@@ -905,9 +845,9 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Last time the team moved
+		/// Last time the monster made an action
 		/// </summary>
-		DateTime LastMove
+		DateTime LastAction
 		{
 			get;
 			set;
@@ -920,7 +860,7 @@ namespace DungeonEye
 		{
 			get
 			{
-				if (LastMove + Speed > DateTime.Now)
+				if (LastAction + Speed > DateTime.Now)
 					return false;
 
 				return true;
@@ -1013,20 +953,31 @@ namespace DungeonEye
 
 
 		/// <summary>
+		/// Does the monster attack without being provoked ?
+		/// </summary>
+		public bool IsAggressive
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// Does the monster flee when attacked? Values are "true" or "false". 
+		/// Combining aggressive="true" with cowardly="true" results in a monster 
+		/// that uses hit&run tactics (attacks unprovoked and flees when the target fights back).
+		/// </summary>
+		public bool IsCoward
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
 		/// The amount of time while the attack graphic is displayed. 
 		/// </summary>
 		public TimeSpan AttackDisplayDuration;
-
-
-		/// <summary>
-		/// Name of the sound when the monster move
-		/// </summary>
-		public string MovementSoundName;
-
-		/// <summary>
-		/// Name of the sound when the monster attack
-		/// </summary>
-		public string AttackSoundName;
 
 
 		/// <summary>
@@ -1057,45 +1008,53 @@ namespace DungeonEye
 			private set;
 		}
 
+
+		#region Sounds
+
+		/// <summary>
+		/// Name of the sound when the monster attacks
+		/// </summary>
+		public string HitSoundName
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Name of the sound when is hit by an attack
+		/// </summary>
+		public string HurtSoundName
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Name of the sound when the monster dies
+		/// </summary>
+		public string DieSoundName
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Name of the sound when the monster move
+		/// </summary>
+		public string WalkSoundName
+		{
+			get;
+			set;
+		}
+
+		Audio HitSound;
+		Audio HurtSound;
+		Audio DieSound;
+		Audio MoveSound;
+
 		#endregion
-	}
 
-
-	/// <summary>
-	/// Differents phase of the life of a monster
-	/// </summary>
-	public enum MonsterState
-	{
-		/// <summary>
-		/// No specific action, wandering in the maze
-		/// </summary>
-		Inactive,
-
-		/// <summary>
-		/// Walking
-		/// </summary>
-		Walk,
-
-		/// <summary>
-		/// Rising weapon to hit the team
-		/// </summary>
-		RaiseWeapon,
-
-		/// <summary>
-		/// Hit the team
-		/// </summary>
-		Hit,
-
-		/// <summary>
-		/// Monster hit by the team
-		/// </summary>
-		IsHit,
-
-
-		/// <summary>
-		/// The monster try to reach the team to attack them
-		/// </summary>
-		TrackTeam
+		#endregion
 	}
 
 

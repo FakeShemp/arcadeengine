@@ -129,6 +129,12 @@ namespace DungeonEye
 					}
 					break;
 
+
+					case "note":
+					{
+						Note = node.InnerText;
+					}
+					break;
 				}
 
 
@@ -158,6 +164,10 @@ namespace DungeonEye
 				maze.Save(writer);
 
 			StartLocation.Save("start", writer);
+
+			writer.WriteStartElement("note");
+			writer.WriteString(Note);
+			writer.WriteEndElement();
 
 			writer.WriteEndElement();
 
@@ -264,6 +274,15 @@ namespace DungeonEye
 			}
 		}
 
+
+		/// <summary>
+		/// Comments about the dungeon
+		/// </summary>
+		public string Note
+		{
+			get;
+			set;
+		}
 
 		/// <summary>
 		/// Gets a list of all levels

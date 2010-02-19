@@ -566,7 +566,7 @@ namespace DungeonEye
 			TileSet.Draw(18, new Point(356, 0));
 
 			// Head
-			Heads.Draw(SelectedHero.Head, new Point(360, 4));
+			Heads.Draw(SelectedHero.Head, new Point(362, 4));
 
 
 			// Name
@@ -847,12 +847,6 @@ namespace DungeonEye
 					if (Location.SetMaze(lvl))
 						AddMessage("Loading " + lvl + ":" + Location.Maze.Description);
 
-					//Maze maze = Dungeon.GetMaze(lvl);
-					//if (maze != null)
-					//{
-					//   Maze = maze;
-					//   AddMessage("Loading " + lvl + ":" + Location.Maze.Description);
-					//}
 					break;
 				}
 			}
@@ -860,7 +854,6 @@ namespace DungeonEye
 			// Test maze
 			if (Keyboard.IsNewKeyPress(Keys.T))
 			{
-				//Maze = Dungeon.GetMaze("test");
 				Location.SetMaze("test");
 				AddMessage("Loading maze test", Color.Blue);
 			}
