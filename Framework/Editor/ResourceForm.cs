@@ -87,8 +87,7 @@ namespace ArcEngine.Editor
 
 
 			// Binaries
-			TreeNode sub = bank.Nodes.Insert(0, "Binaries (" + ResourceManager.LoadedBinaries.Count + ")");
-			sub.Tag = null;
+			TreeNode sub = ResourceTree.Nodes.Insert(0, "Binaries (" + ResourceManager.LoadedBinaries.Count + ")");
 
 			ResourceTree.EndUpdate();
 
@@ -124,7 +123,7 @@ namespace ArcEngine.Editor
 
 
 		/// <summary>
-		/// 
+		/// OnKeyPreview
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -163,7 +162,7 @@ namespace ArcEngine.Editor
 
 
 		/// <summary>
-		/// 
+		/// Removes an asset
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -175,7 +174,7 @@ namespace ArcEngine.Editor
 
 
 		/// <summary>
-		/// Remove an asset
+		/// Removes an asset
 		/// </summary>
 		/// <param name="node"></param>
 		/// <returns></returns>
@@ -233,7 +232,7 @@ namespace ArcEngine.Editor
 
 
 		/// <summary>
-		/// Remove a node
+		/// Removes a node
 		/// </summary>
 		/// <param name="node"></param>
 		private void RemoveNode(TreeNode node)
@@ -260,8 +259,9 @@ namespace ArcEngine.Editor
 
 		}
 
+
 		/// <summary>
-		/// When double click on an element in the treeview then open a new window
+		/// When double click on an element in the treeview then opens up a new window
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -275,7 +275,8 @@ namespace ArcEngine.Editor
 		/// <summary>
 		/// Edit an asset
 		/// </summary>
-		/// <param name="node"></param>
+		/// <param name="node">Tree node</param>
+		/// <returns>True if asset is editable</returns>
 		private bool EditAsset(TreeNode node)
 		{
 			// Not an editable node

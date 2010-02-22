@@ -59,9 +59,9 @@ namespace DungeonEye.MonsterStates
 		}
 
 		/// <summary>
-		/// 
+		/// Update
 		/// </summary>
-		/// <param name="time"></param>
+		/// <param name="time">Elapsed game time</param>
 		public override void Update(GameTime time)
 		{
 			if (!Monster.CanMove)

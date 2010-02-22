@@ -1009,7 +1009,6 @@ namespace ArcEngine
 				settings.OmitXmlDeclaration = false;
 				settings.IndentChars = "\t";
 				settings.Encoding = ASCIIEncoding.ASCII;
-			//	settings.Encoding = Encoding.Unicode;
 		
 				// For each Provider
 				foreach (Provider provider in Providers)

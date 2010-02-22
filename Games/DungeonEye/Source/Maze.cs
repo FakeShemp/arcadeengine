@@ -131,7 +131,10 @@ namespace DungeonEye
 		{
 			// Update monsters
 			foreach (Monster monster in Monsters)
+			{
 				monster.Update(time);
+			}
+
 
 			// Remove dead monsters
 			Monsters.RemoveAll(
@@ -797,7 +800,6 @@ namespace DungeonEye
 
 
 			// Draw monster target
-			Display.Blending = false;
 			foreach (Monster monster in Monsters)
 			{
 				Point start = monster.Location.Position;
@@ -806,20 +808,26 @@ namespace DungeonEye
 				start.Offset(location);
 				start.Offset(2, 2);
 
+				// Sight zone
+				Rectangle zone = new Rectangle(monster.SightZone.X * 4 + location.X, monster.SightZone.Y * 4 + location.Y,
+					monster.SightZone.Width * 4, monster.SightZone.Height * 4);
+				Display.FillRectangle(zone, Color.FromArgb(128, Color.Red));
+
+	
+				//TODO a deplacer en tant que propriete de Monster
 				if (monster.StateManager.CurrentState is MoveState)
 				{
+					// Direction
 					MoveState state = monster.StateManager.CurrentState as MoveState;
-
 					Point end = state.TargetLocation.Position;
 					end.X *= 4;
 					end.Y *= 4;
 					end.Offset(location);
 					end.Offset(2, 2);
 
-					Display.DrawLine(start, end, Color.Red);
+					Display.DrawLine(start, end, Color.Blue);
 				}
 			}
-			Display.Blending = true;
 		}
 
 

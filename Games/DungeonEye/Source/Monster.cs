@@ -21,7 +21,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Text;
 using System.Xml;
 using ArcEngine;
 using ArcEngine.Asset;
@@ -201,6 +200,12 @@ namespace DungeonEye
 
 			// Update current state
 			StateManager.Update(time);
+
+			// Can see the team ?
+			if (CanSee(Location.Dungeon.Team.Location))
+			{
+				StateManager.PushState(new AttackState(this));
+			}
 		}
 
 
@@ -355,11 +360,31 @@ namespace DungeonEye
             if (Location.MazeName != location.MazeName)
                 return false;
 
-            // Pythagorean
-            int a = (Location.Position.X - location.Position.X);
-            int b = (Location.Position.Y - location.Position.Y);
-            return (a * a + b * b) > SightRange * SightRange;
+			// Not in sight zone
+			if (!SightZone.Contains(location.Position))
+				return false;
+
+			Point vector = new Point(Location.Position.X- location.Position.X, Location.Position.Y - location.Position.Y);
+			while (!vector.IsEmpty)
+			{
+				if (vector.X > 0)
+					vector.X--;
+				else if (vector.X < 0)
+					vector.X++;
+
+				if (vector.Y > 0)
+					vector.Y--;
+				else if (vector.Y < 0)
+					vector.Y++;
+
+				MazeBlock block = Location.Maze.GetBlock(new Point(location.Position.X + vector.X, Location.Position.Y + vector.Y));
+				if (block.IsWall)
+					return false;
+			}
+
+			return true;
         }
+
 
 
 		/// <summary>
@@ -670,6 +695,7 @@ namespace DungeonEye
             set;
         }
 
+
 /*
         /// <summary>
         /// Target location of the monster
@@ -741,6 +767,7 @@ namespace DungeonEye
 			get;
 			set;
 		}
+
 
 		/// <summary>
 		/// The monster can absorb some items when they are thrown at him
@@ -899,6 +926,47 @@ namespace DungeonEye
 		{
 			get;
 			set;
+		}
+
+
+
+		/// <summary>
+		/// Sight zone
+		/// </summary>
+		public Rectangle SightZone
+		{
+			get
+			{
+				Rectangle zone = Rectangle.Empty;
+
+				// Calculates the area view
+				switch (Location.Direction)
+				{
+					case CardinalPoint.North:
+					zone = new Rectangle(
+						Location.Position.X - 1, Location.Position.Y - SightRange,
+						3, SightRange);
+					break;
+					case CardinalPoint.South:
+					zone = new Rectangle(
+						Location.Position.X - 1, Location.Position.Y + 1,
+						3, SightRange);
+					break;
+					case CardinalPoint.West:
+					zone = new Rectangle(
+						Location.Position.X - SightRange, Location.Position.Y - 1,
+						SightRange, 3);
+					break;
+					case CardinalPoint.East:
+					zone = new Rectangle(
+						Location.Position.X + 1, Location.Position.Y - 1,
+						SightRange, 3);
+					break;
+				}
+
+				return zone;
+
+			}
 		}
 
 

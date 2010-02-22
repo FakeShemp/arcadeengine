@@ -44,22 +44,27 @@ namespace DungeonEye.MonsterStates
 
 
 		/// <summary>
-		/// 
+		/// Update
 		/// </summary>
-		/// <param name="time"></param>
+		/// <param name="time">Elapsed game time</param>
 		public override void Update(GameTime time)
 		{
 			// Target range
-			int range = Game.Random.Next(5);
+			int range = Game.Random.Next(Monster.SightRange);
 
 			// Direction to face to
-			CardinalPoint direction = CardinalPoint.North;
 
 			while (true)
 			{
-				int dir = Dice.GetD20(1);
+				CardinalPoint direction = RandomEnum.Get<CardinalPoint>();
+				if (direction == Monster.Location.Direction)
+					continue;
+
+				//int dir = Dice.GetD20(1);
 				Point vector = Monster.Location.Position;
 
+/*
+				// Depending the current direction
 				switch (Monster.Location.Direction)
 				{
 					case CardinalPoint.North:
@@ -122,10 +127,36 @@ namespace DungeonEye.MonsterStates
 					}
 					break;
 				}
+*/
+				// Depending the current direction
+				switch (direction)
+				{
+					case CardinalPoint.North:
+					{
+						vector.Y--;
+					}
+					break;
+					case CardinalPoint.South:
+					{
+						vector.Y++;
+					}
+					break;
+					case CardinalPoint.West:
+					{
+						vector.X--;
+					}
+					break;
+					case CardinalPoint.East:
+					{
+						vector.X++;
+					}
+					break;
+				}
+
 
 				// Check the block
 				MazeBlock block = Monster.Location.Maze.GetBlock(vector);
-				if (block != null) //&& !block.IsWall)
+				if (block != null)
 				{
 					Monster.StateManager.PushState(new MoveState(Monster, range, direction));
 					return;

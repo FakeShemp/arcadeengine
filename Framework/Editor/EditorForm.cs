@@ -316,8 +316,6 @@ namespace ArcEngine.Editor
 
 			Text = "ArcEngine Editor " + BankName;
 			ResourceManager.SaveResources(BankName);
-
-			//RebuildResourceTree();
 		}
 
 
@@ -425,7 +423,8 @@ namespace ArcEngine.Editor
 		/// <param name="e"></param>
 		private void OnExport(object sender, EventArgs e)
 		{
-
+			ExportWizard wizard = new ExportWizard();
+			wizard.ShowDialog();
 		}
 
 

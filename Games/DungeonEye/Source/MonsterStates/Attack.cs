@@ -32,8 +32,6 @@ namespace DungeonEye.MonsterStates
 	/// </summary>
 	public class AttackState : MonsterState
 	{
-
-
 		/// <summary>
 		/// 
 		/// </summary>
@@ -44,36 +42,17 @@ namespace DungeonEye.MonsterStates
 		}
 
 
-		public override void OnEnter()
-		{
 
-		}
-
-		public override void OnLeave()
-		{
-
-		}
-
+		/// <summary>
+		/// Update
+		/// </summary>
+		/// <param name="time">Elapsed game time</param>
 		public override void Update(GameTime time)
 		{
-
+			if (!Monster.CanSee(Monster.Location.Dungeon.Team.Location))
+				Exit = true;
 		}
 
-		public override void Draw()
-		{
-
-		}
-
-		public override void OnActivated()
-		{
-
-		}
-
-
-		public override void OnDeactivated()
-		{
-
-		}
 
 	}
 }
