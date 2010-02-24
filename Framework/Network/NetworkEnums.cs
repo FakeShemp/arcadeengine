@@ -56,14 +56,27 @@ namespace ArcEngine.Network
 
 
 		/// <summary>
+		/// Server accpets a connection request
+		/// </summary>
+		ConnectionAccept = 0x2,
+
+
+		/// <summary>
+		/// Server rejects a connection request
+		/// </summary>
+		ConnectionReject = 0x3,
+
+
+
+		/// <summary>
 		/// This is the request broadcasted by the client when you use the slist console command. 
 		/// </summary>
-		ServerInfo = 0x2,
+		ServerInfo = 0x10,
 
 
 		/// <summary>
 		/// You can get all the information on the players on a game
 		/// </summary>
-		PlayerInfoRequest = 0x3,
+		PlayerInfoRequest = 0x20,
 	}
 }

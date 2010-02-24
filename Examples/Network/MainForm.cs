@@ -30,23 +30,17 @@ namespace Network
 {
 	public partial class MainForm : Form
 	{
+		/// <summary>
+		/// 
+		/// </summary>
 		public MainForm()
 		{
 			InitializeComponent();
 
 			Server = new NetworkManager();
 			Server.OnLog += new NetworkManager.LogDelegate(Server_OnLog);
-
-
-			NetMessage msg = new NetMessage();
-
-			float value = 10.05f;
-			msg.Write(value);
-			msg.Write("toto");
-			msg.Write(18);
-			msg.Write(180);
-			msg.Write((byte)190);
-			msg.Write((byte)200);
+			Server.Listen(IPAddress.Any, 9050);
+			UpdateTimer.Start();
 		}
 
 
@@ -118,6 +112,7 @@ namespace Network
 
 	
 		#endregion
+
 
 
 		#region Properties

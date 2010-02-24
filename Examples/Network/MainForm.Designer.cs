@@ -135,8 +135,7 @@
 			// 
 			// CreateClientBox
 			// 
-			this.CreateClientBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.CreateClientBox.Location = new System.Drawing.Point(210, 117);
+			this.CreateClientBox.Location = new System.Drawing.Point(210, 123);
 			this.CreateClientBox.Name = "CreateClientBox";
 			this.CreateClientBox.Size = new System.Drawing.Size(75, 23);
 			this.CreateClientBox.TabIndex = 6;
@@ -152,7 +151,7 @@
 			this.groupBox2.Controls.Add(this.LogBox);
 			this.groupBox2.Location = new System.Drawing.Point(12, 152);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(914, 457);
+			this.groupBox2.Size = new System.Drawing.Size(653, 326);
 			this.groupBox2.TabIndex = 99;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Log";
@@ -165,7 +164,7 @@
 			this.LogBox.Name = "LogBox";
 			this.LogBox.ReadOnly = true;
 			this.LogBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.LogBox.Size = new System.Drawing.Size(908, 438);
+			this.LogBox.Size = new System.Drawing.Size(647, 307);
 			this.LogBox.TabIndex = 7;
 			this.LogBox.TabStop = false;
 			// 
@@ -178,11 +177,13 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(938, 621);
+			this.ClientSize = new System.Drawing.Size(677, 490);
 			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.CreateClientBox);
+			this.MinimumSize = new System.Drawing.Size(400, 500);
 			this.Name = "MainForm";
+			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
 			this.Text = "Network test";
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();

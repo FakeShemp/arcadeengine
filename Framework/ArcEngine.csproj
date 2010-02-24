@@ -284,9 +284,7 @@
     <Compile Include="IDrawable.cs" />
     <Compile Include="Input\GamePadState.cs" />
     <Compile Include="IUpdateable.cs" />
-    <Compile Include="Network\IncomingPacket.cs" />
     <Compile Include="Network\NetClient.cs" />
-    <Compile Include="Network\NetMessage.cs" />
     <Compile Include="Network\NetPacket.cs" />
     <Compile Include="Network\NetworkManager.cs" />
     <Compile Include="Network\NetworkEnums.cs" />

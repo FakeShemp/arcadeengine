@@ -31,7 +31,7 @@ namespace Network
 	public partial class ClientForm : Form
 	{
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
 		public ClientForm()
 		{
@@ -40,6 +40,11 @@ namespace Network
 
 			Manager = new NetworkManager();
 			Manager.Connect("localhost", 9050);
+
+
+			Packet = new NetPacket();
+
+			UpdateTimer.Start();
 		}
 
 
@@ -51,10 +56,44 @@ namespace Network
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void ExitBox_Click(object sender, EventArgs e)
+		private void SendMsgBox_Click(object sender, EventArgs e)
 		{
-			Manager.Shutdown();
-			Close();
+			Packet.Reset();
+			Packet.Write(MsgBox.Text);
+			MsgBox.Text = string.Empty;
+		}
+
+		#endregion
+
+
+
+		#region Events
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void timer1_Tick(object sender, EventArgs e)
+		{
+			Manager.Update();
+		}
+
+
+
+		/// <summary>
+		/// form closing
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ClientForm_FormClosed(object sender, FormClosedEventArgs e)
+		{
+			UpdateTimer.Stop();
+
+			if (Manager != null)
+				Manager.Shutdown();
+
 		}
 
 		#endregion
@@ -64,9 +103,15 @@ namespace Network
 		#region Properties
 
 		/// <summary>
-		/// 
+		/// Network manager
 		/// </summary>
 		NetworkManager Manager;
+
+
+		/// <summary>
+		/// Network packet
+		/// </summary>
+		NetPacket Packet;
 
 		#endregion
 

@@ -39,8 +39,29 @@ namespace ArcEngine.Network
 		/// </summary>
 		public NetworkManager()
 		{
-			IncomingBuffer = new byte[65556];
+			Buffer = new byte[65556];
+			Packet = new NetPacket();
 			Clients = new List<NetClient>();
+
+			Mode = NetworkManagerMode.Down;
+		}
+
+
+		/// <summary>
+		/// Shutdown server
+		/// </summary>
+		public void Shutdown()
+		{
+			if (!IsRunning)
+				return;
+
+			Log("Shutting down network manager.");
+			if (Socket != null)
+			{
+				Socket.Shutdown(SocketShutdown.Both);
+				Socket.Close();
+				Socket = null;
+			}
 
 			Mode = NetworkManagerMode.Down;
 		}
@@ -59,18 +80,25 @@ namespace ArcEngine.Network
 			while (Socket.Available != 0)
 			{
 
-				int size = Socket.ReceiveFrom(IncomingBuffer, ref endpoint);
-				IncomingBuffer[size] = 0;
+				int size = Socket.ReceiveFrom(Buffer, ref endpoint);
+				Packet.SetData(Buffer, size);
 
-
+				switch (Packet.Type)
+				{
+					case PacketType.ControlPacket:
+					break;
+					case PacketType.UserPacket:
+					break;
+				}
 				
-				OnLog(Encoding.ASCII.GetString(IncomingBuffer) + Environment.NewLine);
+				OnLog("New packet recieved !");
 			}
 
 		}
 
 
 
+		#region Server mode
 
 		/// <summary>
 		/// Setups the server mode
@@ -97,7 +125,11 @@ namespace ArcEngine.Network
 			return true;
 		}
 
+		#endregion
 
+
+
+		#region Client mode
 
 		/// <summary>
 		/// Connects to a server
@@ -125,50 +157,47 @@ namespace ArcEngine.Network
 
 			Socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 			Socket.Connect(host, port);
+			Mode = NetworkManagerMode.Client;
 
-			IPEndPoint ipep = new IPEndPoint(host, port);
-			string str = "Hello world";
-			byte[] data = Encoding.ASCII.GetBytes(str);
-			Socket.SendTo(data, data.Length, SocketFlags.None, ipep);
-
-			NetMessage msg = new NetMessage();
-			msg.Write("toto fait du velo sur le dos");
+			// Send initial handshake
+			NetPacket msg = new NetPacket();
+			msg.Type = PacketType.ControlPacket;
+			msg.Write((byte)RequestType.ConnectionRequest);
+			msg.Write("Game Name : Toto");
 			SendMessage(msg);
 
 
 			return true;
 		}
 
-
-
-		/// <summary>
-		/// Shutdown server
-		/// </summary>
-		public void Shutdown()
-		{
-			if (!IsRunning)
-				return;
-
-			Log("Shutting down server.");
-			Socket.Shutdown(SocketShutdown.Both);
-			Socket.Close();
-			Socket = null;
-
-	
-			Mode = NetworkManagerMode.Down;
-		}
+		#endregion
 
 
 
+		#region Message sending
 
 		/// <summary>
-		/// Sends a message
+		/// Sends a message to the server
 		/// </summary>
-		/// <param name="msg"></param>
-		public void SendMessage(NetMessage msg)
+		/// <param name="packet">Packet to send</param>
+		/// <returns>True if packet sent</returns>
+		/// <remarks>Works ONLY in client mode</remarks>
+		public bool SendMessage(NetPacket packet)
 		{
+			if (Mode != NetworkManagerMode.Client)
+				return false;
 
+			int size = Socket.Send(packet.Data, packet.Size, SocketFlags.None);
+			if (size != packet.Size)
+			{
+				return false;
+			}
+
+			return true;
 		}
+
+		#endregion
+
 
 
 		#region Events
@@ -199,22 +228,26 @@ namespace ArcEngine.Network
 		#endregion
 
 
+
 		#region Properties
 
-		/// <summary>
-		/// Recieve buffer
-		/// </summary>
-		byte[] IncomingBuffer;
+		byte[] Buffer;
 
 
 		/// <summary>
 		/// 
+		/// </summary>
+		NetPacket Packet;
+
+
+		/// <summary>
+		/// Socket connection
 		/// </summary>
 		Socket Socket;
 
 
 		/// <summary>
-		/// 
+		/// Listening port
 		/// </summary>
 		public int ListeningPort
 		{
@@ -231,6 +264,7 @@ namespace ArcEngine.Network
 			get;
 			private set;
 		}
+
 
 		/// <summary>
 		/// Is manager running
