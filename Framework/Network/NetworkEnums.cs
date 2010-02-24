@@ -19,40 +19,51 @@
 #endregion
 using System;
 using System.Collections.Generic;
-using System.Net;
+using System.Text;
 
 namespace ArcEngine.Network
 {
+
 	/// <summary>
-	/// Network clients connected to a NetServer
+	/// 
 	/// </summary>
-	public class NetClient
+	public enum PacketType
 	{
-
 		/// <summary>
-		/// Constructor
+		/// System control packet
 		/// </summary>
-		/// <param name="endpoint">IP end point</param>
-		public NetClient(IPEndPoint endpoint)
-		{
-			EndPoint = endpoint;
-		}
-
-
-
-
-		#region Properties
+		ControlPacket = 0x1,
 
 
 		/// <summary>
-		/// 
+		/// User packet
 		/// </summary>
-		public IPEndPoint EndPoint
-		{
-			get;
-			private set;
-		}
+		UserPacket = 0x10,
 
-		#endregion
+	}
+
+
+	/// <summary>
+	/// 
+	/// </summary>
+	public enum RequestType
+	{
+		/// <summary>
+		/// This is the first packet sent by a client to the server when requesting for a connection.
+		/// This is only used when joining a game. 
+		/// </summary>
+		ConnectionRequest = 0x1,
+
+
+		/// <summary>
+		/// This is the request broadcasted by the client when you use the slist console command. 
+		/// </summary>
+		ServerInfo = 0x2,
+
+
+		/// <summary>
+		/// You can get all the information on the players on a game
+		/// </summary>
+		PlayerInfoRequest = 0x3,
 	}
 }

@@ -19,40 +19,56 @@
 #endregion
 using System;
 using System.Collections.Generic;
-using System.Net;
+using System.ComponentModel;
+using System.Drawing;
+using System.Text;
+using System.Windows.Forms;
 
-namespace ArcEngine.Network
+using ArcEngine.Network;
+
+namespace Network
 {
-	/// <summary>
-	/// Network clients connected to a NetServer
-	/// </summary>
-	public class NetClient
+	public partial class ClientForm : Form
 	{
-
 		/// <summary>
-		/// Constructor
+		/// 
 		/// </summary>
-		/// <param name="endpoint">IP end point</param>
-		public NetClient(IPEndPoint endpoint)
+		public ClientForm()
 		{
-			EndPoint = endpoint;
+			InitializeComponent();
+
+
+			Manager = new NetworkManager();
+			Manager.Connect("localhost", 9050);
 		}
 
+
+
+		#region Events
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ExitBox_Click(object sender, EventArgs e)
+		{
+			Manager.Shutdown();
+			Close();
+		}
+
+		#endregion
 
 
 
 		#region Properties
 
-
 		/// <summary>
 		/// 
 		/// </summary>
-		public IPEndPoint EndPoint
-		{
-			get;
-			private set;
-		}
+		NetworkManager Manager;
 
 		#endregion
+
 	}
 }

@@ -19,23 +19,23 @@
 #endregion
 using System;
 using System.Collections.Generic;
-using System.Net;
+using System.Text;
 
 namespace ArcEngine.Network
 {
 	/// <summary>
-	/// Network clients connected to a NetServer
+	/// Base network packet
 	/// </summary>
-	public class NetClient
+	public abstract class NetPacket
 	{
 
+
 		/// <summary>
-		/// Constructor
+		/// Resets 
 		/// </summary>
-		/// <param name="endpoint">IP end point</param>
-		public NetClient(IPEndPoint endpoint)
+		public void Reset()
 		{
-			EndPoint = endpoint;
+			Size = 0;
 		}
 
 
@@ -45,13 +45,20 @@ namespace ArcEngine.Network
 
 
 		/// <summary>
-		/// 
+		/// Size of the packet
 		/// </summary>
-		public IPEndPoint EndPoint
+		public int Size
 		{
 			get;
-			private set;
+			protected set;
 		}
+
+
+		/// <summary>
+		/// Data
+		/// </summary>
+		protected byte[] Data;
+
 
 		#endregion
 	}

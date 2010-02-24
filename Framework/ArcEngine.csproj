@@ -284,6 +284,12 @@
     <Compile Include="IDrawable.cs" />
     <Compile Include="Input\GamePadState.cs" />
     <Compile Include="IUpdateable.cs" />
+    <Compile Include="Network\IncomingPacket.cs" />
+    <Compile Include="Network\NetClient.cs" />
+    <Compile Include="Network\NetMessage.cs" />
+    <Compile Include="Network\NetPacket.cs" />
+    <Compile Include="Network\NetworkManager.cs" />
+    <Compile Include="Network\NetworkEnums.cs" />
     <Compile Include="PInvoke\Kernel32.cs" />
     <Compile Include="PInvoke\User32.cs" />
     <Compile Include="PInvoke\Winmm.cs" />
@@ -329,14 +335,6 @@
       <SubType>Code</SubType>
     </Compile>
     <None Include="app.config" />
-    <None Include="Network\NetBase.cs" />
-    <None Include="Network\NetBuffer.cs" />
-    <None Include="Network\NetClient.cs" />
-    <None Include="Network\NetConfiguration.cs" />
-    <None Include="Network\NetConnection.cs" />
-    <None Include="Network\NetEnum.cs" />
-    <None Include="Network\NetServer.cs" />
-    <None Include="Network\NetStatusEventArgs.cs" />
     <Compile Include="Asset\Animation\Animation.cs" />
     <Compile Include="Asset\Audio.cs" />
     <Compile Include="Asset\Enumerators.cs" />

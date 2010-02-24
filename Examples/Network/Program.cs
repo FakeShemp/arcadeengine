@@ -19,40 +19,21 @@
 #endregion
 using System;
 using System.Collections.Generic;
-using System.Net;
+using System.Windows.Forms;
 
-namespace ArcEngine.Network
+namespace Network
 {
-	/// <summary>
-	/// Network clients connected to a NetServer
-	/// </summary>
-	public class NetClient
+	static class Program
 	{
-
 		/// <summary>
-		/// Constructor
+		/// Point d'entrée principal de l'application.
 		/// </summary>
-		/// <param name="endpoint">IP end point</param>
-		public NetClient(IPEndPoint endpoint)
+		[STAThread]
+		static void Main()
 		{
-			EndPoint = endpoint;
+			Application.EnableVisualStyles();
+			Application.SetCompatibleTextRenderingDefault(false);
+			Application.Run(new MainForm());
 		}
-
-
-
-
-		#region Properties
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public IPEndPoint EndPoint
-		{
-			get;
-			private set;
-		}
-
-		#endregion
 	}
 }

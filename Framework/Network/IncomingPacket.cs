@@ -19,39 +19,87 @@
 #endregion
 using System;
 using System.Collections.Generic;
-using System.Net;
+using System.Text;
 
 namespace ArcEngine.Network
 {
 	/// <summary>
-	/// Network clients connected to a NetServer
+	/// Incoming network packet
 	/// </summary>
-	public class NetClient
+	public class IncomingPacket : NetPacket
 	{
 
+
+
+
+		#region Reads
+
 		/// <summary>
-		/// Constructor
+		/// Reads a string
 		/// </summary>
-		/// <param name="endpoint">IP end point</param>
-		public NetClient(IPEndPoint endpoint)
+		public string ReadString()
 		{
-			EndPoint = endpoint;
+			string msg = ASCIIEncoding.ASCII.GetString(Data, Size, 16000);
+			Size += msg.Length;
+
+			return msg;
 		}
+
+
+		/// <summary>
+		/// REads a float
+		/// </summary>
+		public float ReadFloat()
+		{
+			float value = BitConverter.ToSingle(Data, Size);
+			Size += sizeof(float);
+
+			return value;
+		}
+
+
+		/// <summary>
+		/// Reads 4 bytes
+		/// </summary>
+		public int ReadInt()
+		{
+			int value = BitConverter.ToInt32(Data, Size);
+			Size += sizeof(int);
+
+			return value;
+		}
+
+
+		/// <summary>
+		/// Reads 2 bytes
+		/// </summary>
+		/// <returns></returns>
+		public short ReadShort()
+		{
+			short value = BitConverter.ToInt16(Data, Size);
+			Size += sizeof(short);
+
+			return value;
+		}
+
+
+		/// <summary>
+		/// Reads 1 byte
+		/// </summary>
+		public byte ReadByte()
+		{
+			return Data[Size++];
+		}
+
+
+
+		#endregion
 
 
 
 
 		#region Properties
 
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public IPEndPoint EndPoint
-		{
-			get;
-			private set;
-		}
 
 		#endregion
 	}
