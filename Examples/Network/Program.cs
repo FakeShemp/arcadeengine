@@ -19,11 +19,17 @@
 #endregion
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Net;
 using System.Windows.Forms;
+using ArcEngine;
+using ArcEngine.Graphic;
+using ArcEngine.Network;
+
 
 namespace Network
 {
-	static class Program
+	public static class NetworkGame
 	{
 		/// <summary>
 		/// Point d'entrée principal de l'application.
@@ -33,7 +39,78 @@ namespace Network
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new MainForm());
+			Application.Run(new ServerForm());
 		}
+
+/*
+		/// <summary>
+		/// 
+		/// </summary>
+		public NetworkGame()
+		{
+			ServerConfig config = new ServerConfig(IPAddress.Any, 9050, "Bradock's paradise !", 4);
+			Server = new NetworkManager();
+			Server.Server(config);
+
+			Form = new ServerForm(this);
+			Form.Show();
+		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public  void LoadContent()
+		{
+			GameWindowParams param = new GameWindowParams();
+			param.Samples = 0;
+			param.Size = new Size(200, 100);
+			CreateGameWindow(param);
+
+			Window.Resizable = true;
+			Window.Text = "Network server";
+			Window.Show();
+		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="time"></param>
+		public override void Update(GameTime time)
+		{
+			Window.Hide();
+
+
+			Server.Update(time.ElapsedRealTime);
+
+		}
+
+
+
+
+		#region Properties
+
+		/// <summary>
+		/// Network manager
+		/// </summary>
+		public NetworkManager Server
+		{
+			get;
+			private set;
+		}
+
+
+
+		/// <summary>
+		/// Main form
+		/// </summary>
+		ServerForm Form;
+
+
+		#endregion
+*/
 	}
 }

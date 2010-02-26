@@ -24,35 +24,9 @@ using System.Net;
 namespace ArcEngine.Network
 {
 	/// <summary>
-	/// Network clients connected to a NetServer
+	/// 
 	/// </summary>
-	public class NetClient
+	class NetServer
 	{
-
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		/// <param name="endpoint">IP end point</param>
-		public NetClient(IPEndPoint endpoint)
-		{
-			EndPoint = endpoint;
-		}
-
-
-
-
-		#region Properties
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public IPEndPoint EndPoint
-		{
-			get;
-			private set;
-		}
-
-		#endregion
 	}
 }

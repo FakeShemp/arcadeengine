@@ -41,7 +41,7 @@ namespace ArcEngine.Network
 		{
 			Buffer = new byte[65556];
 			Packet = new NetPacket();
-			Clients = new List<NetClient>();
+			Clients = new List<NetPlayer>();
 
 			Mode = NetworkManagerMode.Down;
 		}
@@ -55,7 +55,7 @@ namespace ArcEngine.Network
 			if (!IsRunning)
 				return;
 
-			Log("Shutting down network manager.");
+			Trace.WriteLine("Shutting down network manager.");
 			if (Socket != null)
 			{
 				Socket.Shutdown(SocketShutdown.Both);
@@ -71,29 +71,17 @@ namespace ArcEngine.Network
 		/// <summary>
 		/// Updates the server
 		/// </summary>
-		public void Update()
+		public void Update(TimeSpan elapsed)
 		{
-			if (!IsRunning)
-				return;
-
-			EndPoint endpoint = new IPEndPoint(IPAddress.Any, 0);
-			while (Socket.Available != 0)
+			switch (Mode)
 			{
-
-				int size = Socket.ReceiveFrom(Buffer, ref endpoint);
-				Packet.SetData(Buffer, size);
-
-				switch (Packet.Type)
-				{
-					case PacketType.ControlPacket:
-					break;
-					case PacketType.UserPacket:
-					break;
-				}
-				
-				OnLog("New packet recieved !");
+				case NetworkManagerMode.Server:
+				UpdateServerMode(elapsed);
+				break;
+				case NetworkManagerMode.Client:
+				UpdateClientMode(elapsed);
+				break;
 			}
-
 		}
 
 
@@ -103,27 +91,177 @@ namespace ArcEngine.Network
 		/// <summary>
 		/// Setups the server mode
 		/// </summary>
-		/// <param name="host">Host to bind to</param>
-		/// <param name="port">Port number</param>
+		/// <param name="config">Server configuration</param>
 		/// <returns></returns>
-		public bool Listen(IPAddress host, int port)
+		public bool Server(ServerConfig config)
 		{
-			if (IsRunning)
+			if (IsRunning ||config == null)
 				return false;
 
-			ListeningPort = port;
-			Host = host;
+			ServerConfig = config;
 
-			Log("Initializing server.");
+			Trace.WriteLine("Initializing server \"" + config.Name + "\".");
 
 	
 			Socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-			IPEndPoint end = new IPEndPoint(Host, ListeningPort);
+			IPEndPoint end = new IPEndPoint(ServerConfig.IP, ServerConfig.Port);
 			Socket.Bind(end);
 
 			Mode = NetworkManagerMode.Server;
 			return true;
 		}
+
+
+		/// <summary>
+		/// Update in server mode
+		/// </summary>
+		/// <param name="elapsed">Elapsed time since last update</param>
+		void UpdateServerMode(TimeSpan elapsed)
+		{
+
+			EndPoint sender = new IPEndPoint(IPAddress.Any, 0);
+			//NetClient client = null;
+
+			#region Receive datas
+
+			// While data available
+			while (Socket.Available != 0)
+			{
+				// Collect data
+				int size = Socket.ReceiveFrom(Buffer, ref sender);
+				Packet.SetData(Buffer, size);
+
+
+				// Process message
+				switch (Packet.Type)
+				{
+					#region Control Packet
+					case PacketType.ControlPacket:
+					{
+						switch ((RequestType)Packet.ReadByte())
+						{
+
+							//
+							// Connection request
+							case RequestType.ConnectionRequest:
+							{
+								NetPacket packet = new NetPacket();
+								packet.Type = PacketType.ControlPacket;
+
+
+								if (ClientCount >= ServerConfig.MaxClient)
+								{
+									// Too many clients
+									packet.Write((byte)RequestType.ConnectionReject);
+									packet.Write("Server full.");
+									Trace.WriteLine("Server : Too many connection request, discarding client.");
+								}
+								else
+								{
+									// Add client
+									NetPlayer newclient = new NetPlayer(sender as IPEndPoint);
+									Clients.Add(newclient);
+
+									// Accept connection
+									packet.Write((byte)RequestType.ConnectionAccept);
+									Trace.WriteLine("Server : Adding new client.");
+
+
+									if (OnPlayerJoin != null)
+										OnPlayerJoin(newclient);
+								}
+
+
+								// Send the response
+								SendMessage(packet, sender as IPEndPoint);
+
+
+								packet.Reset();
+								packet.Type = PacketType.UserPacket;
+								packet.Write("Toto 1");
+								packet.Write((byte)2);
+								packet.Write("Toto 2");
+								packet.Write(3.5f);
+								packet.Write("Toto 3");
+								SendMessage(packet, sender as IPEndPoint);
+							}
+							break;
+
+
+							//
+							// Ask for server informations
+							case RequestType.ServerInfo:
+							{
+							}
+							break;
+
+
+							//
+							// Request informations about a player
+							case RequestType.PlayerInfoRequest:
+							{
+							}
+							break;
+
+
+							default:
+							{
+								Trace.WriteLine("Server : Wrong control packet type received !");
+								continue;
+							}
+						}
+
+
+
+
+					}
+					break;
+					#endregion
+
+
+
+					#region User packet
+					case PacketType.UserPacket:
+					{
+						if (OnMessage != null)
+							OnMessage(Packet);
+					}
+					break;
+					#endregion
+				}
+
+			}
+			#endregion
+
+
+			#region Process clients
+
+
+			#endregion
+		}
+
+
+		/// <summary>
+		/// Gets the client handle from an IPEndPoint
+		/// </summary>
+		/// <param name="ip">Ip address</param>
+		/// <returns>Client handle or null</returns>
+		NetPlayer GetClientFromAddress(IPEndPoint ip)
+		{
+			if (ip == null)
+				return null;
+
+			foreach (NetPlayer client in Clients)
+			{
+				if (client.EndPoint == ip)
+					return client;
+			}
+
+
+			return null;
+		}
+
+
 
 		#endregion
 
@@ -155,6 +293,8 @@ namespace ArcEngine.Network
 			if (IsRunning)
 				return false;
 
+			ServerConfig = null;
+
 			Socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 			Socket.Connect(host, port);
 			Mode = NetworkManagerMode.Client;
@@ -169,6 +309,79 @@ namespace ArcEngine.Network
 
 			return true;
 		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="elapsed"></param>
+		void UpdateClientMode(TimeSpan elapsed)
+		{
+			EndPoint sender = new IPEndPoint(IPAddress.Any, 0);
+
+			#region Receive datas
+
+			// While data available
+			while (Socket.Available != 0)
+			{
+				// Collect data
+				int size = Socket.ReceiveFrom(Buffer, ref sender);
+				Packet.SetData(Buffer, size);
+
+
+				// Process message
+				switch (Packet.Type)
+				{
+					#region Control Packet
+					case PacketType.ControlPacket:
+					{
+						switch ((RequestType)Packet.ReadByte())
+						{
+
+							case RequestType.ConnectionAccept:
+							{
+							}
+							break;
+
+							case RequestType.ConnectionReject:
+							{
+								Trace.WriteLine("Client : Connection rejected :");
+								Packet.ReadByte();
+								Trace.WriteLine(Packet.ReadString());
+							}
+							break;
+
+							default:
+							{
+								Trace.WriteLine("Client : Wrong control packet type received !");
+								continue;
+							}
+						}
+
+
+
+
+					}
+					break;
+					#endregion
+
+
+
+					#region User packet
+					case PacketType.UserPacket:
+					{
+						if (OnMessage != null)
+							OnMessage(Packet);
+					}
+					break;
+					#endregion
+				}
+
+			}
+			#endregion
+		}
+
 
 		#endregion
 
@@ -187,8 +400,8 @@ namespace ArcEngine.Network
 			if (Mode != NetworkManagerMode.Client)
 				return false;
 
-			int size = Socket.Send(packet.Data, packet.Size, SocketFlags.None);
-			if (size != packet.Size)
+			int size = Socket.Send(packet.Data, packet.Offset, SocketFlags.None);
+			if (size != packet.Offset)
 			{
 				return false;
 			}
@@ -196,12 +409,81 @@ namespace ArcEngine.Network
 			return true;
 		}
 
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="packet"></param>
+		/// <param name="client"></param>
+		/// <returns></returns>
+		public bool SendMessage(NetPacket packet, NetPlayer client)
+		{
+			return SendMessage(packet, client.EndPoint);
+		}
+
+
+		/// <summary>
+		/// Sends a message
+		/// </summary>
+		/// <param name="packet">Packet</param>
+		/// <param name="dest">Destination</param>
+		/// <returns></returns>
+		public bool SendMessage(NetPacket packet, IPEndPoint dest)
+		{
+			if (Mode != NetworkManagerMode.Server)
+				return false;
+
+			int size = Socket.SendTo(packet.Data, packet.Size, SocketFlags.None, dest);
+			if (size != packet.Size)
+				return false;
+
+			return true;
+		}
+
+
 		#endregion
 
 
 
 		#region Events
 
+
+		public delegate void OnPlayerChatHandler(NetPlayer client);
+		public event OnPlayerChatHandler OnPlayerChat;
+
+		public delegate void OnPlayerLeaveHandler(NetPlayer client);
+		public event OnPlayerLeaveHandler OnPlayerLeave;
+
+
+
+		/// <summary>
+		/// A new client is connected
+		/// </summary>
+		/// <param name="client"></param>
+		/// <returns>Return false if the client should be kicked, or true if keep the client</returns>
+		public delegate bool OnPlayerJoinHandler(NetPlayer client);
+
+		/// <summary>
+		/// A new client is connected
+		/// </summary>
+		public event OnPlayerJoinHandler OnPlayerJoin;
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="packet"></param>
+		public delegate void OnMessageHandler(NetPacket packet);
+
+		/// <summary>
+		/// A new message is arrived
+		/// </summary>
+		public event OnMessageHandler OnMessage;
+
+/*
 		/// <summary>
 		/// 
 		/// </summary>
@@ -224,7 +506,7 @@ namespace ArcEngine.Network
 			if (OnLog != null)
 				OnLog(msg + Environment.NewLine);
 		}
-
+*/
 		#endregion
 
 
@@ -244,26 +526,6 @@ namespace ArcEngine.Network
 		/// Socket connection
 		/// </summary>
 		Socket Socket;
-
-
-		/// <summary>
-		/// Listening port
-		/// </summary>
-		public int ListeningPort
-		{
-			get;
-			private set;
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public IPAddress Host
-		{
-			get;
-			private set;
-		}
 
 
 		/// <summary>
@@ -293,7 +555,7 @@ namespace ArcEngine.Network
 		/// <summary>
 		/// List of clients
 		/// </summary>
-		List<NetClient> Clients;
+		List<NetPlayer> Clients;
 
 
 
@@ -307,6 +569,15 @@ namespace ArcEngine.Network
 		}
 
 
+
+		/// <summary>
+		/// Server configuration
+		/// </summary>
+		public ServerConfig ServerConfig
+		{
+			get;
+			private set;
+		}
 
 		#endregion
 	}

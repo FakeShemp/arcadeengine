@@ -70,7 +70,7 @@
 			// UpdateTimer
 			// 
 			this.UpdateTimer.Interval = 20;
-			this.UpdateTimer.Tick += new System.EventHandler(this.timer1_Tick);
+			this.UpdateTimer.Tick += new System.EventHandler(this.UpdateTimer_Tick);
 			// 
 			// ClientForm
 			// 

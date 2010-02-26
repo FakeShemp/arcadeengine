@@ -1,6 +1,6 @@
 ﻿namespace Network
 {
-	partial class MainForm
+	partial class ServerForm
 	{
 		/// <summary>
 		/// Variable nécessaire au concepteur.
@@ -41,9 +41,12 @@
 			this.CreateClientBox = new System.Windows.Forms.Button();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.LogBox = new System.Windows.Forms.TextBox();
+			this.groupBox3 = new System.Windows.Forms.GroupBox();
+			this.ClientsBox = new System.Windows.Forms.ListBox();
 			this.UpdateTimer = new System.Windows.Forms.Timer(this.components);
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
+			this.groupBox3.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// groupBox1
@@ -71,7 +74,6 @@
 			this.StartServerBox.TabIndex = 4;
 			this.StartServerBox.Text = "Start";
 			this.StartServerBox.UseVisualStyleBackColor = true;
-			this.StartServerBox.Click += new System.EventHandler(this.StartServerBox_Click);
 			// 
 			// StopServerBox
 			// 
@@ -81,7 +83,6 @@
 			this.StopServerBox.TabIndex = 5;
 			this.StopServerBox.Text = "Stop";
 			this.StopServerBox.UseVisualStyleBackColor = true;
-			this.StopServerBox.Click += new System.EventHandler(this.StopServerBox_Click);
 			// 
 			// label3
 			// 
@@ -135,9 +136,12 @@
 			// 
 			// CreateClientBox
 			// 
-			this.CreateClientBox.Location = new System.Drawing.Point(210, 123);
+			this.CreateClientBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.CreateClientBox.AutoSize = true;
+			this.CreateClientBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.CreateClientBox.Location = new System.Drawing.Point(280, 105);
 			this.CreateClientBox.Name = "CreateClientBox";
-			this.CreateClientBox.Size = new System.Drawing.Size(75, 23);
+			this.CreateClientBox.Size = new System.Drawing.Size(76, 23);
 			this.CreateClientBox.TabIndex = 6;
 			this.CreateClientBox.Text = "Create client";
 			this.CreateClientBox.UseVisualStyleBackColor = true;
@@ -151,44 +155,68 @@
 			this.groupBox2.Controls.Add(this.LogBox);
 			this.groupBox2.Location = new System.Drawing.Point(12, 152);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(653, 326);
+			this.groupBox2.Size = new System.Drawing.Size(560, 298);
 			this.groupBox2.TabIndex = 99;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Log";
 			// 
 			// LogBox
 			// 
+			this.LogBox.AcceptsReturn = true;
 			this.LogBox.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.LogBox.Location = new System.Drawing.Point(3, 16);
 			this.LogBox.Multiline = true;
 			this.LogBox.Name = "LogBox";
 			this.LogBox.ReadOnly = true;
 			this.LogBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.LogBox.Size = new System.Drawing.Size(647, 307);
+			this.LogBox.Size = new System.Drawing.Size(554, 279);
 			this.LogBox.TabIndex = 7;
 			this.LogBox.TabStop = false;
+			// 
+			// groupBox3
+			// 
+			this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.groupBox3.Controls.Add(this.ClientsBox);
+			this.groupBox3.Controls.Add(this.CreateClientBox);
+			this.groupBox3.Location = new System.Drawing.Point(210, 12);
+			this.groupBox3.Name = "groupBox3";
+			this.groupBox3.Size = new System.Drawing.Size(362, 134);
+			this.groupBox3.TabIndex = 100;
+			this.groupBox3.TabStop = false;
+			this.groupBox3.Text = "Clients :";
+			// 
+			// ClientsBox
+			// 
+			this.ClientsBox.FormattingEnabled = true;
+			this.ClientsBox.Location = new System.Drawing.Point(6, 19);
+			this.ClientsBox.Name = "ClientsBox";
+			this.ClientsBox.Size = new System.Drawing.Size(105, 108);
+			this.ClientsBox.TabIndex = 7;
 			// 
 			// UpdateTimer
 			// 
 			this.UpdateTimer.Interval = 20;
 			this.UpdateTimer.Tick += new System.EventHandler(this.UpdateTimer_Tick);
 			// 
-			// MainForm
+			// ServerForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(677, 490);
+			this.ClientSize = new System.Drawing.Size(584, 462);
+			this.Controls.Add(this.groupBox3);
 			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.groupBox1);
-			this.Controls.Add(this.CreateClientBox);
-			this.MinimumSize = new System.Drawing.Size(400, 500);
-			this.Name = "MainForm";
+			this.MinimumSize = new System.Drawing.Size(600, 500);
+			this.Name = "ServerForm";
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
 			this.Text = "Network test";
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
+			this.groupBox3.ResumeLayout(false);
+			this.groupBox3.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -207,6 +235,8 @@
 		private System.Windows.Forms.Button CreateClientBox;
 		private System.Windows.Forms.Button StartServerBox;
 		private System.Windows.Forms.Button StopServerBox;
+		private System.Windows.Forms.GroupBox groupBox3;
+		private System.Windows.Forms.ListBox ClientsBox;
 		private System.Windows.Forms.Timer UpdateTimer;
 	}
 }

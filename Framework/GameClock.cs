@@ -27,13 +27,10 @@ namespace ArcEngine
 {
 
 	/// <summary>
-	/// 
+	/// A mechanism for tracking elapsed time.
 	/// </summary>
 	internal class GameClock
 	{
-
-
-
 
 		/// <summary>
 		/// Constructor

@@ -24,22 +24,26 @@ using System.Drawing;
 using System.Net;
 using System.Windows.Forms;
 using ArcEngine.Network;
-
+using ArcEngine;
 
 namespace Network
 {
-	public partial class MainForm : Form
+	public partial class ServerForm : Form
 	{
 		/// <summary>
 		/// 
 		/// </summary>
-		public MainForm()
+		public ServerForm()
 		{
 			InitializeComponent();
 
+
+			ServerConfig config = new ServerConfig(IPAddress.Any, 9050, "Bradock's paradise !", 4);
 			Server = new NetworkManager();
-			Server.OnLog += new NetworkManager.LogDelegate(Server_OnLog);
-			Server.Listen(IPAddress.Any, 9050);
+			Server.Server(config);
+			Server.OnPlayerJoin += new NetworkManager.OnPlayerJoinHandler(Server_OnClientConnect);
+
+			LastUpdate = DateTime.Now;
 			UpdateTimer.Start();
 		}
 
@@ -48,55 +52,21 @@ namespace Network
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="msg"></param>
-		void Server_OnLog(string msg)
+		/// <param name="client"></param>
+		/// <returns></returns>
+		bool Server_OnClientConnect(NetPlayer client)
 		{
-			LogBox.Text += msg + Environment.NewLine;
+			LogBox.Text += "New client connected" + Environment.NewLine;
+
+
+			return true;
 		}
+
 
 
 
 
 		#region Events
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void UpdateTimer_Tick(object sender, EventArgs e)
-		{
-			if (!Server.IsRunning)
-				return;
-
-			Server.Update();
-		}
-
-
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void StartServerBox_Click(object sender, EventArgs e)
-		{
-			Server.Listen(IPAddress.Any, 9050);
-			UpdateTimer.Start();
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void StopServerBox_Click(object sender, EventArgs e)
-		{
-			UpdateTimer.Stop();
-			Server.Shutdown();
-		}
 
 
 		/// <summary>
@@ -106,21 +76,46 @@ namespace Network
 		/// <param name="e"></param>
 		private void CreateClientBox_Click(object sender, EventArgs e)
 		{
-			ClientForm form = new ClientForm();
-			form.Show();
+			new ClientForm().Show();
 		}
 
 	
-		#endregion
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void UpdateTimer_Tick(object sender, EventArgs e)
+		{
+			TimeSpan elapsed = DateTime.Now - LastUpdate;
+			LastUpdate = DateTime.Now;
+
+			Server.Update(elapsed);
+
+		}
+
+		#endregion
 
 
 		#region Properties
 
 		/// <summary>
-		/// 
+		/// Network manager
 		/// </summary>
-		NetworkManager Server;
+		public NetworkManager Server
+		{
+			get;
+			private set;
+		}
+
+
+
+		/// <summary>
+		/// Last update
+		/// </summary>
+		DateTime LastUpdate;
 
 		#endregion
 	}

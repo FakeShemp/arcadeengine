@@ -213,10 +213,13 @@ namespace ArcEngine
 				Thread.Sleep(20);
 
 
+		//	GameTime.Update();
+			bool flag = true;
+
 			// Update the clock
 			Clock.Step();
 
-			bool flag = true;
+			// Update the game time
 			GameTime.TotalRealTime = Clock.CurrentTime;
 			GameTime.ElapsedRealTime = Clock.ElapsedTime;
 			LastFrameElapsedRealTime += Clock.ElapsedTime;
@@ -224,22 +227,25 @@ namespace ArcEngine
 			if (elapsedAdjustedTime < TimeSpan.Zero)
 				elapsedAdjustedTime = TimeSpan.Zero;
 
+			// check if we should force the elapsed time
 			if (ForceElapsedTimeToZero)
 			{
 				GameTime.ElapsedRealTime = LastFrameElapsedRealTime = elapsedAdjustedTime = TimeSpan.Zero;
 				ForceElapsedTimeToZero = false;
 			}
 
+			// Cap the adjusted time
 			if (elapsedAdjustedTime > MaximumElapsedTime)
 				elapsedAdjustedTime = MaximumElapsedTime;
 
 
-			// Fixed time step clock
+			// check if we are using a fixed or variable time step
 			if (IsFixedTimeStep)
 			{
 				if (Math.Abs((long)(elapsedAdjustedTime.Ticks - TargetElapsedTime.Ticks)) < (TargetElapsedTime.Ticks >> 6))
 					elapsedAdjustedTime = TargetElapsedTime;
 
+				// update the timing state
 				AccumulatedElapsedGameTime += elapsedAdjustedTime;
 				long num = AccumulatedElapsedGameTime.Ticks / TargetElapsedTime.Ticks;
 				AccumulatedElapsedGameTime = TimeSpan.FromTicks(AccumulatedElapsedGameTime.Ticks % TargetElapsedTime.Ticks);
@@ -250,13 +256,16 @@ namespace ArcEngine
 				}
 				TimeSpan targetElapsedTime = TargetElapsedTime;
 
+				// check if the ratio is too large (ie. running slowly)
 				if (num > 1)
 				{
+					// Running slowy
 					UpdatesSinceRunningSlowly2 = UpdatesSinceRunningSlowly1;
 					UpdatesSinceRunningSlowly1 = 0;
 				}
 				else
 				{
+					// Not running slowly
 					if (UpdatesSinceRunningSlowly1 < int.MaxValue)
 						UpdatesSinceRunningSlowly1++;
 
@@ -264,14 +273,19 @@ namespace ArcEngine
 						UpdatesSinceRunningSlowly2++;
 
 				}
+
+				// check whether we are officially running slowly
 				DrawRunningSlowly = UpdatesSinceRunningSlowly2 < 20;
 
 
 				// update until it's time to draw the next frame
 				while ((num > 0) && !IsExiting)
 				{
+					// Decrement the ratio
 					num -= 1;
 
+
+					// fill out the rest of the game time
 					GameTime.ElapsedGameTime = TargetElapsedTime;
 					GameTime.TotalGameTime = TotalGameTime;
 					GameTime.IsRunningSlowly = DrawRunningSlowly;
@@ -283,7 +297,7 @@ namespace ArcEngine
 						Gamepad.Update();
 					}
 
-				//	Trace.WriteLine("#############################");
+					// Perform an update
 					Update(GameTime);
 					for (int i = 0; i < Components.Count; i++)
 					{
@@ -295,6 +309,7 @@ namespace ArcEngine
 					flag &= SuppressDraw;
 					SuppressDraw = false;
 
+					// update the total clocks
 					LastFrameElapsedGameTime += TargetElapsedTime;
 					TotalGameTime += TargetElapsedTime;
 				}
@@ -302,13 +317,18 @@ namespace ArcEngine
 			else
 			{
 				TimeSpan span3 = elapsedAdjustedTime;
+
+				// we can't be running slowly here
 				DrawRunningSlowly = false;
 				UpdatesSinceRunningSlowly1 = int.MaxValue;
 				UpdatesSinceRunningSlowly2 = int.MaxValue;
+
+				// make sure we shouldn't be exiting
 				if (!IsExiting)
 				{
 					try
 					{
+						// fill out the rest of the game time
 						GameTime.ElapsedGameTime = LastFrameElapsedGameTime = span3;
 						GameTime.TotalGameTime = TotalGameTime;
 						GameTime.IsRunningSlowly = false;
@@ -320,6 +340,7 @@ namespace ArcEngine
 							Gamepad.Update();
 						}
 
+						// Perform an update
 						Update(GameTime);
 						for (int i = 0; i < Components.Count; i++)
 						{
@@ -333,6 +354,7 @@ namespace ArcEngine
 					}
 					finally
 					{
+						// Update the total clocks
 						TotalGameTime += span3;
 					}
 				}
@@ -659,7 +681,7 @@ namespace ArcEngine
 
 
 		/// <summary>
-		/// Gets a value indicating whether this Game is exiting.
+		/// Gets whether this Game is exiting.
 		/// </summary>
 		/// <value>true if exiting; otherwise, false.</value>
 		public bool IsExiting

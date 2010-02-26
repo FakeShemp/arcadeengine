@@ -40,11 +40,13 @@ namespace ArcEngine
 
 		#region ctor
 
+
 		/// <summary>
 		/// Default constructor
 		/// </summary>
 		public GameTime()
 		{
+			Clock = new GameClock();
 		}
 
 		/// <summary>
@@ -67,7 +69,7 @@ namespace ArcEngine
 		/// <param name="totalGameTime"></param>
 		/// <param name="elapsedGameTime"></param>
 		/// <param name="isRunningSlowly"></param>
-		public GameTime(TimeSpan totalRealTime, TimeSpan elapsedRealTime, TimeSpan totalGameTime, TimeSpan elapsedGameTime, bool isRunningSlowly)
+		public GameTime(TimeSpan totalRealTime, TimeSpan elapsedRealTime, TimeSpan totalGameTime, TimeSpan elapsedGameTime, bool isRunningSlowly) : base()
 		{
 			TotalRealTime = totalRealTime;
 			ElapsedRealTime = elapsedRealTime;
@@ -77,6 +79,21 @@ namespace ArcEngine
 		}
 
 		#endregion
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public void Update()
+		{
+			Clock.Step();
+
+
+			TotalRealTime = Clock.CurrentTime;
+			ElapsedRealTime = Clock.ElapsedTime;
+
+		}
 
 
 		#region Properties
@@ -148,6 +165,14 @@ namespace ArcEngine
 				return DateTime.Now;
 			}
 		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		GameClock Clock;
+
 
 		#endregion
 	}

@@ -40,11 +40,24 @@ namespace Network
 
 			Manager = new NetworkManager();
 			Manager.Connect("localhost", 9050);
+			Manager.OnMessage += new NetworkManager.OnMessageHandler(Manager_OnMessage);
 
 
 			Packet = new NetPacket();
 
 			UpdateTimer.Start();
+		}
+
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="packet"></param>
+		void Manager_OnMessage(NetPacket packet)
+		{
+			LogBox.Text += packet.ReadString() + Environment.NewLine;
 		}
 
 
@@ -75,9 +88,12 @@ namespace Network
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void timer1_Tick(object sender, EventArgs e)
+		private void UpdateTimer_Tick(object sender, EventArgs e)
 		{
-			Manager.Update();
+			TimeSpan elapsed = DateTime.Now - LastUpdate;
+			LastUpdate = DateTime.Now;
+
+			Manager.Update(elapsed);
 		}
 
 
@@ -112,6 +128,13 @@ namespace Network
 		/// Network packet
 		/// </summary>
 		NetPacket Packet;
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		DateTime LastUpdate;
+
 
 		#endregion
 

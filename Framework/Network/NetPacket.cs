@@ -46,7 +46,7 @@ namespace ArcEngine.Network
 		public void SetData(byte[] data, int size)
 		{
 			Buffer.BlockCopy(data, 0, Data, 0, size);
-			Size = size;
+			Offset = 0;
 		}
 
 
@@ -55,7 +55,12 @@ namespace ArcEngine.Network
 		/// </summary>
 		public void Reset()
 		{
-			Size = 4;
+			Offset = 0;
+			Array.Clear(Data, 0, Data.Length);
+			Data[0] = 0xFF;
+			Data[1] = 0xFF;
+			Data[2] = 0xFF;
+			Data[3] = 0xFF;
 		}
 
 
@@ -67,8 +72,8 @@ namespace ArcEngine.Network
 		/// <param name="msg"></param>
 		public void Write(string msg)
 		{
-			ASCIIEncoding.ASCII.GetBytes(msg).CopyTo(Data, Size);
-			Size += msg.Length;
+			ASCIIEncoding.ASCII.GetBytes(msg).CopyTo(Data, Offset + HeaderSize);
+			Offset += msg.Length;
 		}
 
 
@@ -78,8 +83,8 @@ namespace ArcEngine.Network
 		/// <param name="value"></param>
 		public void Write(float value)
 		{
-			BitConverter.GetBytes(value).CopyTo(Data, Size);
-			Size += sizeof(float);
+			BitConverter.GetBytes(value).CopyTo(Data, Offset + HeaderSize);
+			Offset += sizeof(float);
 		}
 
 
@@ -89,8 +94,8 @@ namespace ArcEngine.Network
 		/// <param name="value"></param>
 		public void Write(int value)
 		{
-			BitConverter.GetBytes(value).CopyTo(Data, Size);
-			Size += sizeof(int);
+			BitConverter.GetBytes(value).CopyTo(Data, Offset + HeaderSize);
+			Offset += sizeof(int);
 		}
 
 
@@ -100,8 +105,8 @@ namespace ArcEngine.Network
 		/// <param name="value"></param>
 		public void Write(short value)
 		{
-			BitConverter.GetBytes(value).CopyTo(Data, Size);
-			Size += sizeof(short);
+			BitConverter.GetBytes(value).CopyTo(Data, Offset + HeaderSize);
+			Offset += sizeof(short);
 		}
 
 
@@ -111,8 +116,23 @@ namespace ArcEngine.Network
 		/// <param name="value"></param>
 		public void Write(byte value)
 		{
-			Data[Size++] = value;
+			Data[Offset + HeaderSize] = value;
+			Offset++;
 		}
+
+
+
+		/// <summary>
+		/// Writes 1 byte
+		/// </summary>
+		/// <param name="value"></param>
+		public void Write(bool value)
+		{
+			Data[Offset + HeaderSize] = Convert.ToByte(value);
+			Offset++;
+		}
+
+
 
 
 
@@ -127,8 +147,8 @@ namespace ArcEngine.Network
 		/// </summary>
 		public string ReadString()
 		{
-			string msg = ASCIIEncoding.ASCII.GetString(Data, Size, 16000);
-			Size += msg.Length;
+			string msg = ASCIIEncoding.ASCII.GetString(Data, Offset + HeaderSize, 16000);
+			Offset += msg.Length;
 
 			return msg;
 		}
@@ -139,8 +159,8 @@ namespace ArcEngine.Network
 		/// </summary>
 		public float ReadFloat()
 		{
-			float value = BitConverter.ToSingle(Data, Size);
-			Size += sizeof(float);
+			float value = BitConverter.ToSingle(Data, Offset + HeaderSize);
+			Offset += sizeof(float);
 
 			return value;
 		}
@@ -151,8 +171,8 @@ namespace ArcEngine.Network
 		/// </summary>
 		public int ReadInt()
 		{
-			int value = BitConverter.ToInt32(Data, Size);
-			Size += sizeof(int);
+			int value = BitConverter.ToInt32(Data, Offset + HeaderSize);
+			Offset += sizeof(int);
 
 			return value;
 		}
@@ -164,8 +184,8 @@ namespace ArcEngine.Network
 		/// <returns></returns>
 		public short ReadShort()
 		{
-			short value = BitConverter.ToInt16(Data, Size);
-			Size += sizeof(short);
+			short value = BitConverter.ToInt16(Data, Offset + HeaderSize);
+			Offset += sizeof(short);
 
 			return value;
 		}
@@ -176,7 +196,20 @@ namespace ArcEngine.Network
 		/// </summary>
 		public byte ReadByte()
 		{
-			return Data[Size++];
+			byte value = Data[Offset + HeaderSize];
+			Offset++;
+			return value;
+		}
+
+
+		/// <summary>
+		/// Reads 1 byte
+		/// </summary>
+		public bool ReadBoolean()
+		{
+			bool value = Convert.ToBoolean(Data[Offset + HeaderSize]);
+			Offset++;
+			return value;
 		}
 
 
@@ -190,10 +223,22 @@ namespace ArcEngine.Network
 		/// <summary>
 		/// Size of the user data
 		/// </summary>
-		public int Size
+		public int Offset
 		{
 			get;
 			private set;
+		}
+
+
+		/// <summary>
+		/// Size of the whole packet
+		/// </summary>
+		public int Size
+		{
+			get
+			{
+				return Offset + HeaderSize;
+			}
 		}
 
 
@@ -222,6 +267,19 @@ namespace ArcEngine.Network
 				Data[0] = (byte)value;
 			}
 		}
+
+
+		/// <summary>
+		/// Size of the header
+		/// </summary>
+		public int HeaderSize
+		{
+			get
+			{
+				return 4;
+			}
+		}
+
 
 		#endregion
 	}
