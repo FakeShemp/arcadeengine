@@ -50,6 +50,7 @@ using RuffnTumble;
 // - http://www.xs4all.nl/~gimbal/projects/levelbuilder.htm
 //
 //
+// http://msdn.microsoft.com/en-us/library/dd254918.aspx
 
 
 namespace RuffnTumble
