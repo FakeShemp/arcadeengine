@@ -1690,7 +1690,7 @@ namespace ArcEngine.Graphic
 			if (Extensions.Contains("GL_ARB_multisample"))
 			{
 				HasMultiSample = true;
-				GL.GetInteger(GetPName.Samples, out maxMultiSample);
+				GL.GetInteger(GetPName.MaxTextureCoords, out maxMultiSample);
 			}
 
 		}
