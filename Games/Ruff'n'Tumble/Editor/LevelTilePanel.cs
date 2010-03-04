@@ -60,14 +60,6 @@ namespace RuffnTumble.Editor
 			Form = form;
 
 
-			GlControl.MakeCurrent();
-			Display.Init();
-			GlControl_Resize(null, null);
-
-
-			// Preload texture resources
-			CheckerBoard = new Texture(ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png"));
-
 			
 			return true;
 		}
@@ -503,6 +495,22 @@ namespace RuffnTumble.Editor
 
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void LevelTilePanel_Load(object sender, EventArgs e)
+		{
+			GlControl.MakeCurrent();
+			Display.Init();
+			GlControl_Resize(null, null);
+
+
+			// Preload texture resources
+			CheckerBoard = new Texture(ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png"));
+
+		}
 
 
 		#endregion
@@ -575,6 +583,7 @@ namespace RuffnTumble.Editor
 		TileMode tileMode;
 
 		#endregion
+
 
 
 	}

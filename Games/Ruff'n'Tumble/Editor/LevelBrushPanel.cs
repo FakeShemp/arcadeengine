@@ -61,17 +61,6 @@ namespace RuffnTumble.Editor
 			Form = form;
 
 
-			GlControl.MakeCurrent();
-			Display.Init();
-			GlControl_Resize(null, null);
-
-
-
-
-
-			// Preload texture resources
-			CheckerBoard = new Texture(ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png"));
-
 
 			return true;
 		}
@@ -195,6 +184,23 @@ namespace RuffnTumble.Editor
 
 
 		#region Events
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void LevelBrushPanel_Load(object sender, EventArgs e)
+		{
+			GlControl.MakeCurrent();
+			Display.Init();
+			GlControl_Resize(null, null);
+
+
+			// Preload texture resources
+			CheckerBoard = new Texture(ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png"));
+
+		}
 
 
 		/// <summary>

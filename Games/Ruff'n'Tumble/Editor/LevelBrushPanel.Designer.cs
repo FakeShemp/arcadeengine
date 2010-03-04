@@ -46,6 +46,7 @@
 			this.GlControl.Name = "GlControl";
 			this.GlControl.Size = new System.Drawing.Size(267, 447);
 			this.GlControl.TabIndex = 0;
+			this.GlControl.VSync = false;
 			this.GlControl.Paint += new System.Windows.Forms.PaintEventHandler(this.GlControl_Paint);
 			this.GlControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.GlControl_MouseDown);
 			this.GlControl.Resize += new System.EventHandler(this.GlControl_Resize);
@@ -105,10 +106,12 @@
 			this.Controls.Add(this.GlControl);
 			this.Controls.Add(this.VScroller);
 			this.Controls.Add(this.MainToolStrip);
+			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.HideOnClose = true;
 			this.Name = "LevelBrushPanel";
 			this.TabText = "Brushes";
 			this.Text = "Brushes";
+			this.Load += new System.EventHandler(this.LevelBrushPanel_Load);
 			this.MainToolStrip.ResumeLayout(false);
 			this.MainToolStrip.PerformLayout();
 			this.ResumeLayout(false);

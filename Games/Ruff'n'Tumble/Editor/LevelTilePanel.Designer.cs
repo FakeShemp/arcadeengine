@@ -50,6 +50,7 @@
 			this.GlControl.Name = "GlControl";
 			this.GlControl.Size = new System.Drawing.Size(383, 438);
 			this.GlControl.TabIndex = 1;
+			this.GlControl.VSync = false;
 			this.GlControl.Paint += new System.Windows.Forms.PaintEventHandler(this.GlControl_Paint);
 			this.GlControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GlControl_MouseMove);
 			this.GlControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.GlControl_MouseDown);
@@ -157,10 +158,12 @@
 			this.Controls.Add(this.GlControl);
 			this.Controls.Add(this.ScrollBar);
 			this.Controls.Add(this.toolStrip1);
+			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.HideOnClose = true;
 			this.Name = "LevelTilePanel";
 			this.TabText = "Tiles";
 			this.Text = "Tiles Panel";
+			this.Load += new System.EventHandler(this.LevelTilePanel_Load);
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);
 			this.toolStrip1.ResumeLayout(false);
 			this.toolStrip1.PerformLayout();

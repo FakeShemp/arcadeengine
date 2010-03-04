@@ -199,7 +199,7 @@ namespace RuffnTumble
 					}
 					break;
 
-					case "collisions":
+					case "collision":
 					{
 						CollisionLayer.Load(node.FirstChild);
 					}

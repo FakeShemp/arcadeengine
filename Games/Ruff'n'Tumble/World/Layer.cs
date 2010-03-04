@@ -59,7 +59,7 @@ namespace RuffnTumble
 			Level = lvl;
 			Visible = true;
 			TileSet = new TileSet();
-
+			Alpha = 255;
 		}
 
 
