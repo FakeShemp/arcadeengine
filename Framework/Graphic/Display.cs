@@ -62,6 +62,7 @@ namespace ArcEngine.Graphic
 			ClearColor = Color.Black;
 			Culling = false;
 			DepthTest = false;
+			Color = Color.White;
 
 			GL.Hint(HintTarget.PolygonSmoothHint, HintMode.Nicest);
 			GL.Hint(HintTarget.LineSmoothHint, HintMode.Nicest);
