@@ -20,56 +20,63 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.ComponentModel;
 using System.Drawing;
+using System.Text;
 using System.Xml;
 using ArcEngine.Graphic;
 
 
-
 namespace ArcEngine.Utility.GUI
 {
+
 	/// <summary>
-	/// Window class
+	/// Base class for each GUI element
 	/// </summary>
-	public class Window : Control
+	public abstract class Control
 	{
-		/// <summary>
-		/// 
-		/// </summary>
-		public Window(GuiManager manager)
-		{
-			Manager = manager;
-		}
 
 
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="time"></param>
-		public override void Update(GameTime time)
+		public Control()
 		{
+			Rectangle = new Rectangle();
 		}
 
+
+
+
+		#region Update & Draw
+
+		/// <summary>
+		/// Updates the gadget
+		/// </summary>
+		/// <param name="time">Elapsed time</param>
+		public virtual void Update(GameTime time)
+		{
+		}
 
 
 		/// <summary>
-		/// 
+		/// Draws the button
 		/// </summary>
-		public override void Draw()
+		public virtual void Draw()
 		{
-			Display.FillRectangle(Rectangle, BgColor);
 		}
+
+
+
+		#endregion
 
 
 		#region IO routines
-
-
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <returns></returns>
-		public override bool Save(XmlWriter xml)
+		public virtual bool Save(XmlWriter xml)
 		{
 			if (xml == null)
 				return false;
@@ -90,7 +97,7 @@ namespace ArcEngine.Utility.GUI
 			xml.WriteAttributeString("a", Color.A.ToString());
 			xml.WriteEndElement();
 
-
+	
 
 			xml.WriteStartElement("bgcolor");
 			xml.WriteAttributeString("r", BgColor.R.ToString());
@@ -99,17 +106,17 @@ namespace ArcEngine.Utility.GUI
 			xml.WriteAttributeString("a", BgColor.A.ToString());
 			xml.WriteEndElement();
 
-
+	
 			return true;
 		}
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public override bool Load(XmlNode node)
+		public virtual bool Load(XmlNode node)
 		{
 			if (node == null)
-				return false;
+			return false;
 
 			switch (node.Name.ToLower())
 			{
@@ -118,9 +125,9 @@ namespace ArcEngine.Utility.GUI
 				case "color":
 				{
 					Color = Color.FromArgb(Int32.Parse(node.Attributes["a"].Value),
-					Int32.Parse(node.Attributes["r"].Value),
-					Int32.Parse(node.Attributes["g"].Value),
-					Int32.Parse(node.Attributes["b"].Value));
+											Int32.Parse(node.Attributes["r"].Value),
+											Int32.Parse(node.Attributes["g"].Value),
+											Int32.Parse(node.Attributes["b"].Value));														
 				}
 				break;
 
@@ -128,13 +135,13 @@ namespace ArcEngine.Utility.GUI
 				case "bgcolor":
 				{
 					BgColor = Color.FromArgb(Int32.Parse(node.Attributes["a"].Value),
-					Int32.Parse(node.Attributes["r"].Value),
-					Int32.Parse(node.Attributes["g"].Value),
-					Int32.Parse(node.Attributes["b"].Value));
+											Int32.Parse(node.Attributes["r"].Value),
+											Int32.Parse(node.Attributes["g"].Value),
+											Int32.Parse(node.Attributes["b"].Value));														
 				}
 				break;
 
-
+	
 				// Rectangle of the element
 				case "rectangle":
 				{
@@ -163,20 +170,79 @@ namespace ArcEngine.Utility.GUI
 		#endregion
 
 
-
-
 		#region Properties
 
+
 		/// <summary>
-		/// Manager
+		/// Rectangle
 		/// </summary>
-		public GuiManager Manager
+		public Rectangle Rectangle;
+
+
+
+		/// <summary>
+		/// Size of the element
+		/// </summary>
+		[Browsable(false)]
+		public Size Size
 		{
-			get;
-			private set;
+			get
+			{
+				return Rectangle.Size;
+			}
+			set
+			{
+				Rectangle.Size = value;
+			}
 		}
 
-		#endregion
 
+
+		/// <summary>
+		/// Location of the element
+		/// </summary>
+		[Browsable(false)]
+		public Point Location
+		{
+			get
+			{
+				return Rectangle.Location;
+			}
+			set
+			{
+				Rectangle.Location = value;
+			}
+		}
+
+
+
+
+		/// <summary>
+		/// Gets/Sets the color of the element
+		/// </summary>
+		[Category("Color")]
+		public Color Color
+		{
+			get;
+			set;
+		}
+ 
+         
+		/// <summary>
+		/// Gets/Sets the background color of the element
+		/// </summary>
+		[Category("Color")]
+		public Color BgColor
+		{
+			get;
+			set;
+		}
+
+         
+ 
+         
+
+		#endregion
 	}
+
 }

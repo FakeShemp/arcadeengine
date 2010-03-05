@@ -21,17 +21,17 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using ArcEngine.Asset;
 using ArcEngine.Graphic;
-
-
+using System.Drawing;
 
 namespace ArcEngine.Utility.GUI
 {
 
 	/// <summary>
-	/// 
+	/// Graphical User Interface manager
 	/// </summary>
-	public class GuiManager
+	public class GuiManager : IDisposable
 	{
 
 
@@ -40,7 +40,8 @@ namespace ArcEngine.Utility.GUI
 		/// </summary>
 		public GuiManager()
 		{
-			Elements = new List<GuiBase>();
+			Elements = new List<Control>();
+			Font = BitmapFont.CreateFromTTF(@"C:\Windows\Fonts\Verdana.ttf", 12, FontStyle.Regular);
 		}
 
 
@@ -51,10 +52,10 @@ namespace ArcEngine.Utility.GUI
 		/// <summary>
 		/// Updates elements
 		/// </summary>
-		/// <param name="time"></param>
-		internal void Update(GameTime time)
+		/// <param name="time">Elapsed game time</param>
+		public void Update(GameTime time)
 		{
-			foreach (GuiBase element in Elements)
+			foreach (Control element in Elements)
 				element.Update(time);
 		}
 
@@ -63,9 +64,9 @@ namespace ArcEngine.Utility.GUI
 		/// <summary>
 		/// Draws elements
 		/// </summary>
-		internal void Draw()
+		public void Draw()
 		{
-			foreach (GuiBase element in Elements)
+			foreach (Control element in Elements)
 				element.Draw();
 		}
 
@@ -89,8 +90,12 @@ namespace ArcEngine.Utility.GUI
 		/// Adds an element
 		/// </summary>
 		/// <param name="element"></param>
-		public void Add(GuiBase element)
+		public void Add(Control element)
 		{
+			if (element == null)
+				return;
+
+
 			Elements.Add(element);
 		}
 
@@ -99,14 +104,25 @@ namespace ArcEngine.Utility.GUI
 		/// Removes an element
 		/// </summary>
 		/// <param name="element"></param>
-		public void Remove(GuiBase element)
+		public void Remove(Control element)
 		{
+			if (element == null)
+				return;
+
 			Elements.Remove(element);
 		}
 
 
 		#endregion
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public void Dispose()
+		{
+			Font.Dispose();
+		}
 
 
 		#region Properties
@@ -115,7 +131,14 @@ namespace ArcEngine.Utility.GUI
 		/// <summary>
 		/// List of all gui elements
 		/// </summary>
-		List<GuiBase> Elements;
+		List<Control> Elements;
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public BitmapFont Font;
 
 		#endregion
 

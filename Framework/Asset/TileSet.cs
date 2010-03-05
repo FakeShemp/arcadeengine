@@ -17,7 +17,6 @@
 //along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 //
 #endregion
-
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -48,8 +47,6 @@ namespace ArcEngine.Asset
 			Scale = new SizeF(1.0f, 1.0f);
 			tiles = new Dictionary<int, Tile>();
 
-			Texture = new Texture();
-			LoadTexture(TextureName);
 		}
 
 
@@ -74,6 +71,9 @@ namespace ArcEngine.Asset
 		/// <returns>True if texture loaded, or false</returns>
 		public bool LoadTexture(string filename)
 		{
+			if (Texture == null)
+				Texture = new Texture();
+
 			TextureName = filename;
 			return Texture.LoadImage(filename);
 		}

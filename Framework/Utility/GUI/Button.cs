@@ -36,7 +36,7 @@ namespace ArcEngine.Utility.GUI
 	/// <summary>
 	/// A GUI button
 	/// </summary>
-	public class Button : GuiBase
+	public class Button : Control
 	{
 
 		/// <summary>

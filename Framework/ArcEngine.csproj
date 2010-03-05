@@ -134,6 +134,7 @@
     <Compile Include="Asset\Scenes\Storyboard.cs" />
     <Compile Include="Asset\BitmapFont.cs" />
     <Compile Include="Asset\Shader.cs" />
+    <Compile Include="Asset\Skin.cs" />
     <Compile Include="Editor\AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -288,7 +289,7 @@
     <Compile Include="Network\NetPlayer.cs" />
     <Compile Include="Network\NetPacket.cs" />
     <Compile Include="Network\NetServer.cs" />
-    <Compile Include="Network\NetworkManager.cs" />
+    <Compile Include="Network\NetworkBase.cs" />
     <Compile Include="Network\NetworkEnums.cs" />
     <Compile Include="Network\ServerConfig.cs" />
     <Compile Include="PInvoke\Kernel32.cs" />
@@ -312,7 +313,7 @@
     <Compile Include="Provider.cs" />
     <Compile Include="Utility\ScreenManager\ScreenManager.cs" />
     <Compile Include="Utility\GUI\Button.cs" />
-    <Compile Include="Utility\GUI\GuiBase.cs" />
+    <Compile Include="Utility\GUI\Control.cs" />
     <Compile Include="Asset\Layout.cs" />
     <Compile Include="ScriptManager.cs" />
     <Compile Include="Settings.cs" />

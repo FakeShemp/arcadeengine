@@ -21,103 +21,107 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Net;
-using System.Windows.Forms;
-using ArcEngine.Network;
-using ArcEngine;
+using System.Xml;
+using ArcEngine.Graphic;
 
-namespace Network
+
+namespace ArcEngine.Asset
 {
-	public partial class ServerForm : Form
+	/// <summary>
+	/// 
+	/// </summary>
+	class Skin: IAsset
 	{
+
+
+
+
+
+
 		/// <summary>
 		/// 
 		/// </summary>
-		public ServerForm()
+		/// <returns></returns>
+		public bool Init()
 		{
-			InitializeComponent();
 
 
-			ServerConfig config = new ServerConfig(IPAddress.Any, 9050, "Bradock's paradise !", 4);
-			Server = new NetServer();
-			Server.Server(config);
-			Server.OnPlayerJoin += new OnPlayerJoinHandler(Server_OnClientConnect);
-
-
-			LastUpdate = DateTime.Now;
-			UpdateTimer.Start();
+			return true;
 		}
 
+		#region IO
 
 
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="client"></param>
+		/// <param name="xml"></param>
 		/// <returns></returns>
-		bool Server_OnClientConnect(NetPlayer client)
+		public bool Load(XmlNode xml)
 		{
-			LogBox.Text += "New client connected" + Environment.NewLine;
 
 
 			return true;
 		}
 
 
-
-
-
-		#region Events
-
-
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void CreateClientBox_Click(object sender, EventArgs e)
+		/// <param name="writer"></param>
+		/// <returns></returns>
+		public bool Save(XmlWriter writer)
 		{
-			new ClientForm().Show();
-		}
-
-	
 
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void UpdateTimer_Tick(object sender, EventArgs e)
-		{
-			TimeSpan elapsed = DateTime.Now - LastUpdate;
-			LastUpdate = DateTime.Now;
-
-			Server.Update(elapsed);
-
+			return true;
 		}
 
 		#endregion
+
+
 
 
 		#region Properties
 
 		/// <summary>
-		/// Network manager
+		/// 
 		/// </summary>
-		public NetServer Server
+		public string Name
 		{
 			get;
-			private set;
+			set;
 		}
 
 
-
 		/// <summary>
-		/// Last update
+		/// 
 		/// </summary>
-		DateTime LastUpdate;
+		public string XmlTag
+		{
+			get { return "skin"; }
+		}
 
 		#endregion
+
+	}
+
+
+	/// <summary>
+	/// Skin position
+	/// </summary>
+	enum SkinPosition
+	{
+		TopLeft = 0,
+		Top,
+		TopRight,
+
+		Left,
+		Background,
+		Right,
+
+		BottomLeft,
+		Bottom,
+		BottomRight
 	}
 }

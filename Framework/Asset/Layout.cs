@@ -44,7 +44,7 @@ namespace ArcEngine.Asset
 		/// </summary>
 		public Layout()
 		{
-			elements = new Dictionary<string,GuiBase>();
+			elements = new Dictionary<string,Control>();
 		}
 
 
@@ -69,7 +69,7 @@ namespace ArcEngine.Asset
 		/// </summary>
 		/// <param name="name">Name of the Gui Element</param>
 		/// <returns>The GuiBase Element or null if not found</returns>
-		public GuiBase GetElement(string name)
+		public Control GetElement(string name)
 		{
 			if (string.IsNullOrEmpty(name))
 				return null;
@@ -129,7 +129,7 @@ namespace ArcEngine.Asset
 		/// Deletes an element
 		/// </summary>
 		/// <param name="gui">Gui Element to delete</param>
-		public void DeleteElement(GuiBase gui)
+		public void DeleteElement(Control gui)
 		{
 			if (gui == null)
 				return;
@@ -180,7 +180,7 @@ namespace ArcEngine.Asset
 			//xml.WriteEndElement();
 
 
-			foreach (GuiBase element in elements.Values)
+			foreach (Control element in elements.Values)
 				element.Save(xml);
 
 
@@ -265,7 +265,7 @@ namespace ArcEngine.Asset
 				Texture.Blit(Texture.Rectangle, TextureLayout);
 			}
 
-			foreach (GuiBase gui in elements.Values)
+			foreach (Control gui in elements.Values)
 			{
 				gui.Draw();
 			}
@@ -360,18 +360,18 @@ namespace ArcEngine.Asset
 		/// All GUI Elements
 		/// </summary>
 		[Browsable(false)]
-		public List<GuiBase> Elements
+		public List<Control> Elements
 		{
 			get
 			{
-				List<GuiBase> list = new List<GuiBase>();
+				List<Control> list = new List<Control>();
 
-				foreach (GuiBase element in elements.Values)
+				foreach (Control element in elements.Values)
 					list.Add(element);
 				return list;
 			}
 		}
-		Dictionary<string, GuiBase> elements;
+		Dictionary<string, Control> elements;
 
 		#endregion
 

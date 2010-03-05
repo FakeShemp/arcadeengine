@@ -1226,6 +1226,28 @@ namespace ArcEngine.Graphic
 
 
 		/// <summary>
+		/// Gets or sets the texture unit
+		/// </summary>
+		static public int TextureUnit
+		{
+			get
+			{
+				return textureUnit;
+			}
+
+			set
+			{
+				if (value > Capabilities.MaxMultiSample || value < 0)
+					return;
+
+				GL.ActiveTexture(OpenTK.Graphics.OpenGL.TextureUnit.Texture0 + value);
+				textureUnit = value;
+			}
+		}
+		static int textureUnit;
+
+
+		/// <summary>
 		/// Sets a texture environment 
 		/// </summary>
 		static public TextureEnvMode TexEnv

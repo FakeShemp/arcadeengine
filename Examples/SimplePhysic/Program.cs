@@ -87,7 +87,7 @@ namespace ArcEngine.Games.ProjectT
 			Display.ClearColor = Color.CornflowerBlue;
 
 			Font = new BitmapFont();
-			Font.LoadTTF(@"C:\Windows\Fonts\verdana.ttf", 12, FontStyle.Regular);
+			Font.LoadTTF(@"data/verdana.ttf", 12, FontStyle.Regular);
 
 
 

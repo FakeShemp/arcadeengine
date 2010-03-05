@@ -38,10 +38,9 @@ namespace Network
 			InitializeComponent();
 
 
-			Manager = new NetworkManager();
-			Manager.Connect("localhost", 9050);
-			Manager.OnMessage += new NetworkManager.OnMessageHandler(Manager_OnMessage);
-
+			Network = new NetClient();
+			Network.Connect("localhost", 9050);
+			//Manager.OnMessage += new OnMessageHandler(Manager_OnMessage);
 
 			Packet = new NetPacket();
 
@@ -93,7 +92,7 @@ namespace Network
 			TimeSpan elapsed = DateTime.Now - LastUpdate;
 			LastUpdate = DateTime.Now;
 
-			Manager.Update(elapsed);
+			Network.Update(elapsed);
 		}
 
 
@@ -107,8 +106,8 @@ namespace Network
 		{
 			UpdateTimer.Stop();
 
-			if (Manager != null)
-				Manager.Shutdown();
+			if (Network != null)
+				Network.Shutdown();
 
 		}
 
@@ -121,7 +120,7 @@ namespace Network
 		/// <summary>
 		/// Network manager
 		/// </summary>
-		NetworkManager Manager;
+		NetClient Network;
 
 
 		/// <summary>

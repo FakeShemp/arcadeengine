@@ -47,6 +47,7 @@ namespace ArcEngine.Editor
 
 			//
 			Node = node;
+			tileSet = new TileSet();
 
 			TileBox = new SelectionBox();
 			CollisionBox = new SelectionBox();
@@ -556,7 +557,7 @@ namespace ArcEngine.Editor
 			CheckerBoard = new Texture(ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png"));
 
 
-			tileSet = new TileSet();
+			//tileSet = new TileSet();
 			tileSet.Load(Node);
 
 			// Build Cell list

@@ -25,7 +25,7 @@ using System.Drawing;
 using System.IO;
 using System.Reflection;
 using System.Text;
-using System.Windows.Forms;
+//using System.Windows.Forms;
 using System.Xml;
 using ArcEngine.Asset;
 using ArcEngine.Forms;
@@ -139,15 +139,15 @@ namespace ArcEngine.Editor
 
 		#region Events
 
-		private void LayoutForm_FormClosing(object sender, FormClosingEventArgs e)
+		private void LayoutForm_FormClosing(object sender, System.Windows.Forms.FormClosingEventArgs e)
 		{
-			DialogResult result = MessageBox.Show("Layout Editor", "Save modifications ?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+			System.Windows.Forms.DialogResult result = System.Windows.Forms.MessageBox.Show("Layout Editor", "Save modifications ?", System.Windows.Forms.MessageBoxButtons.YesNoCancel, System.Windows.Forms.MessageBoxIcon.Question);
 
-			if (result == DialogResult.Yes)
+			if (result == System.Windows.Forms.DialogResult.Yes)
 			{
 				Save();
 			}
-			else if (result == DialogResult.Cancel)
+			else if (result == System.Windows.Forms.DialogResult.Cancel)
 			{
 				e.Cancel = true;
 			}
@@ -173,7 +173,7 @@ namespace ArcEngine.Editor
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void RenderControl_Paint(object sender, PaintEventArgs e)
+		private void RenderControl_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
 		{
 			RenderControl.MakeCurrent();
 
@@ -201,7 +201,7 @@ namespace ArcEngine.Editor
 			// If no action and mouse over an element, draw its bounding box
 			if (SelectionBox.MouseTool == SelectionBox.MouseTools.NoTool)
 			{
-				GuiBase elem = FindElementAt(RenderControl.PointToClient(Control.MousePosition));
+				Control elem = FindElementAt(RenderControl.PointToClient(System.Windows.Forms.Control.MousePosition));
 				if (elem != null)
 				{
 					Display.DrawRectangle(elem.Rectangle, Color.White);
@@ -301,7 +301,7 @@ namespace ArcEngine.Editor
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void RenderControl_MouseMove(object sender, MouseEventArgs e)
+		private void RenderControl_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
 		{
 			// If user resized the selectionbox, then resize the element
 			if (SelectionBox.OnMouseMove(e))
@@ -318,11 +318,11 @@ namespace ArcEngine.Editor
 		/// </summary>
 		/// <param name="Location">Location to loook at</param>
 		/// <rereturns>The GuiBase element or null if nothing</rereturns>
-		private GuiBase FindElementAt(Point Location)
+		private Control FindElementAt(Point Location)
 		{
 
 			// Find the element under the mouse
-			foreach (GuiBase element in CurrentLayout.Elements)
+			foreach (Control element in CurrentLayout.Elements)
 			{
 				if (element.Rectangle.Contains(Location))
 					return element;
@@ -338,13 +338,13 @@ namespace ArcEngine.Editor
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void RenderControl_MouseDown(object sender, MouseEventArgs e)
+		private void RenderControl_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
 		{
 
-			if (e.Button == MouseButtons.Left)
+			if (e.Button == System.Windows.Forms.MouseButtons.Left)
 			{
 				// Find the element under the mouse
-				GuiBase elem = FindElementAt(e.Location);
+				Control elem = FindElementAt(e.Location);
 				if (elem != null)
 				{
 				//	SelectElement(elem.Name);
@@ -365,7 +365,7 @@ namespace ArcEngine.Editor
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void RenderControl_MouseUp(object sender, MouseEventArgs e)
+		private void RenderControl_MouseUp(object sender, System.Windows.Forms.MouseEventArgs e)
 		{
 			SelectionBox.OnMouseUp(e);
 		}
@@ -376,7 +376,7 @@ namespace ArcEngine.Editor
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void RenderControl_MouseClick(object sender, MouseEventArgs e)
+		private void RenderControl_MouseClick(object sender, System.Windows.Forms.MouseEventArgs e)
 		{
 
 		}
@@ -387,7 +387,7 @@ namespace ArcEngine.Editor
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void RenderControl_MouseDoubleClick(object sender, MouseEventArgs e)
+		private void RenderControl_MouseDoubleClick(object sender, System.Windows.Forms.MouseEventArgs e)
 		{
 
 		}
@@ -418,7 +418,7 @@ namespace ArcEngine.Editor
 		/// <summary>
 		/// Current element
 		/// </summary>
-		GuiBase CurrentElement;
+		Control CurrentElement;
 
 
 		/// <summary>

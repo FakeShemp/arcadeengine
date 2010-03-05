@@ -415,7 +415,18 @@ namespace ArcEngine.Graphic
 			if (string.IsNullOrEmpty(filename))
 				return false;
 
-			return LoadImage(ResourceManager.LoadResource(filename));
+			Stream stream = ResourceManager.LoadResource(filename);
+			if (stream == null)
+				return false;
+			try
+			{
+				return LoadImage(stream);
+			}
+			finally
+			{
+				stream.Close();
+			}
+
 		}
 
 
