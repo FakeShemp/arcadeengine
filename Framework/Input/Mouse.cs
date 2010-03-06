@@ -43,10 +43,12 @@ namespace ArcEngine.Input
 				throw new ArgumentNullException("form");
 
 			Form = form;
+			Form.MouseWheel += new MouseEventHandler(Form_MouseWheel);
 
 			Trace.Unindent();
 			Trace.WriteLine("OK");
 		}
+
 
 
 
@@ -58,10 +60,11 @@ namespace ArcEngine.Input
 			PreviousState = Buttons;
 			Buttons = Form.MouseButtons;
 
-
 		//	Trace.WriteLine("Mouse update");
 		}
 
+
+		#region Buttons
 
 		/// <summary>
 		/// New mouse button Up
@@ -141,10 +144,22 @@ namespace ArcEngine.Input
 			return list;
 		}
 
+		#endregion
 
 
 		#region Updaters
 
+		/// <summary>
+		/// Mouse wheel event
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		internal static void Form_MouseWheel(object sender, MouseEventArgs e)
+		{
+			if (OnMouseWheel != null)
+				OnMouseWheel(null, e);
+		}
+		
 		/// <summary>
 		/// ButtonDown event
 		/// </summary>
@@ -277,6 +292,8 @@ namespace ArcEngine.Input
 			private set;
 		}
 
+
+
 		/// <summary>
 		/// Previous mouse buttons state
 		/// </summary>
@@ -306,6 +323,12 @@ namespace ArcEngine.Input
 		/// Event fired when a double click occurs
 		/// </summary>
 		public static event EventHandler<MouseEventArgs> OnDoubleClick;
+
+		/// <summary>
+		/// Occurs when the mouse wheel moves
+		/// </summary>
+		public static event EventHandler<MouseEventArgs> OnMouseWheel;
+
 
 		#endregion
 
