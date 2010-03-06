@@ -23,12 +23,12 @@ using System.Collections.Generic;
 using System.Drawing;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
-
+using ArcEngine.Asset;
 
 //
 //
 // http://gamasutra.com/features/20060804/boutros_01.shtml
-//
+// http://www.opengl.org/wiki/Common_Mistakes
 //
 namespace ArcEngine.Graphic
 {
@@ -269,6 +269,8 @@ namespace ArcEngine.Graphic
 			GL.MatrixMode(MatrixMode.Projection);
 			GL.Translate(x, y, 0);
 		}
+
+
 
 
 		/// <summary>
@@ -1062,23 +1064,32 @@ namespace ArcEngine.Graphic
 			{
 				// Vertex
 				GL.EnableClientState(ArrayCap.VertexArray);
-				//GL.EnableClientState(EnableCap.VertexArray);
 				GL.BindBuffer(BufferTarget.ArrayBuffer, batch.BufferID[0]);
 				GL.VertexPointer(2, VertexPointerType.Int, 0, IntPtr.Zero);
 
 
-				// Texture
-				GL.EnableClientState(ArrayCap.TextureCoordArray);
-				//GL.EnableClientState(EnableCap.TextureCoordArray);
-				GL.BindBuffer(BufferTarget.ArrayBuffer, batch.BufferID[1]);
-				GL.TexCoordPointer(2, TexCoordPointerType.Int, 0, IntPtr.Zero);
-
 				// Color
 				GL.EnableClientState(ArrayCap.ColorArray);
-				//GL.EnableClientState(EnableCap.ColorArray);
-				GL.BindBuffer(BufferTarget.ArrayBuffer, batch.BufferID[2]);
+				GL.BindBuffer(BufferTarget.ArrayBuffer, batch.BufferID[1]);
 				GL.ColorPointer(4, ColorPointerType.UnsignedByte, 0, IntPtr.Zero);
 
+
+				// Texture
+				// http://www.gamedev.net/community/forums/topic.asp?topic_id=184226
+				for (int id = 0; id < batch.TextureBufferCount; id++)
+				{
+					GL.ClientActiveTexture(OpenTK.Graphics.OpenGL.TextureUnit.Texture0 + id);
+					GL.EnableClientState(ArrayCap.TextureCoordArray);
+					GL.BindBuffer(BufferTarget.ArrayBuffer, batch.BufferID[2 + id]);
+					GL.TexCoordPointer(2, TexCoordPointerType.Int, 0, IntPtr.Zero);
+				}
+
+				// Deactivate other texture buffer
+				for (int id = batch.TextureBufferCount; id < Display.Capabilities.MaxMultiSample; id++)
+				{
+					GL.ClientActiveTexture(OpenTK.Graphics.OpenGL.TextureUnit.Texture0 + id);
+					GL.DisableClientState(ArrayCap.TextureCoordArray);
+				}
 
 				GL.DrawArrays(mode, 0, batch.Size);
 
@@ -1086,9 +1097,6 @@ namespace ArcEngine.Graphic
 				GL.DisableClientState(ArrayCap.VertexArray);
 				GL.DisableClientState(ArrayCap.TextureCoordArray);
 				GL.DisableClientState(ArrayCap.ColorArray);
-				//GL.DisableClientState(EnableCap.VertexArray);
-				//GL.DisableClientState(EnableCap.TextureCoordArray);
-				//GL.DisableClientState(EnableCap.ColorArray);
 
 			}
 			else
@@ -1097,7 +1105,7 @@ namespace ArcEngine.Graphic
 				GL.Begin(mode);
 				for (int id = 0; id < batch.Size; id++)
 				{
-					GL.TexCoord2(batch.TextureBuffer[id].X, batch.TextureBuffer[id].Y);
+					GL.TexCoord2(batch.TextureBuffer[2][id].X, batch.TextureBuffer[2][id].Y);
 					GL.Vertex2(batch.VertexBuffer[id].X, batch.VertexBuffer[id].Y);
 				}
 				GL.End();
@@ -1677,6 +1685,29 @@ namespace ArcEngine.Graphic
 			get;
 			private set;
 		}
+
+
+
+		/// <summary>
+		/// Gets/sets the current shader
+		/// </summary>
+		public static Shader Shader
+		{
+			get
+			{
+				return shader;
+			}
+			set
+			{
+				if (value == null)
+					GL.UseProgram(0);
+				else
+					GL.UseProgram(value.ProgramID);
+
+				shader = value;
+			}
+		}
+		static Shader shader;
 
 
 		#endregion

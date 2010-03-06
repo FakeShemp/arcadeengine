@@ -177,7 +177,7 @@ namespace DungeonEye.Forms
 			Display.Init();
 
 
-			Batch = new Batch();
+			Batch = new Batch(1);
 
 			// Preload texture resources
 			Icons = new TileSet();

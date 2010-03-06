@@ -49,7 +49,7 @@ namespace ArcEngine.Asset
 			GlyphTileset = new TileSet();
 			GlyphTileset.Texture = new Texture(OpenTK.Graphics.OpenGL.PixelFormat.LuminanceAlpha);
 		//	GlyphTileset.Texture.PixelInternalFormat = PixelInternalFormat.LuminanceAlpha;
-			Batch = new Batch();
+			Batch = new Batch(1);
 		}
 
 

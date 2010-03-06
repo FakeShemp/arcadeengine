@@ -63,17 +63,20 @@ namespace Drive
 			CreateGameWindow(param);
 
 			Window.Text = "Drive";
+			Window.Resizable = true;
 
 
-		//	ResourceManager.LoadBank("data/data.bnk");
-
-			tex1 = new Texture("data/texture0.bmp");
-			tex2 = new Texture("data/texture1.bmp");
-			tex3 = new Texture("data/texture2.bmp");
+			//tex1 = new Texture("data/dirt_01.png");
+			//tex2 = new Texture("data/grass_01.png");
+			//tex3 = new Texture("data/road_01.png");
 
 
 			Font = new BitmapFont();
-			Font.LoadTTF(@"c:/windows/font/verdana.ttf", 10, FontStyle.Regular);
+			Font.LoadTTF(@"data/verdana.ttf", 10, FontStyle.Regular);
+
+
+			Map = new Map();
+			CircleRadius = 32;
 		}
 
 
@@ -98,6 +101,8 @@ namespace Drive
 		{
 			base.Update(gameTime);
 
+			#region test
+/*
 			if (Keyboard.IsKeyPress(Keys.F1))
 			{
 				g_fContributionOfTex0 += 0.01f;
@@ -146,8 +151,8 @@ namespace Drive
 				if (g_fContributionOfTex2 < 0.0f)
 					g_fContributionOfTex2 = 0.0f;
 			}
-	
-			
+*/
+			#endregion
 
 		}
 
@@ -160,11 +165,20 @@ namespace Drive
 		{
 			Display.ClearBuffers();
 
+			Map.Draw();
 
+			Display.DrawCircle(Mouse.Location, CircleRadius, Color.Red);
+
+		}
+
+		#region Test
+		/*
+		private void Visual_01()
+		{
 			GL.ActiveTexture(TextureUnit.Texture0);
 			GL.Enable(EnableCap.Texture2D);
 			Display.Texture = tex1;
-			
+
 			GL.ActiveTexture(TextureUnit.Texture1);
 			GL.Enable(EnableCap.Texture2D);
 			Display.Texture = tex2;
@@ -246,7 +260,7 @@ namespace Drive
 
 			Font.DrawText(new Point(5, 15), Color.Yellow, "Contribution of each texture for blending:");
 			Font.DrawText(new Point(5, 30), Color.White, string.Format("Contribution of Tex 0 = {0} (Change: F1/F2)", g_fContributionOfTex0));
-			Font.DrawText(new Point(5, 45), Color.White, string.Format("Contribution of Tex 1 = {0} (Inferred by the values of Tex 0 & Tex 2)", g_fContributionOfTex1));
+			Font.DrawText(new Point(5, 45), Color.White, string.Format("Contribution of Tex 1 = {0} (Inferred by the values of Tex 0 + Tex 2)", g_fContributionOfTex1));
 			Font.DrawText(new Point(5, 60), Color.White, string.Format("Contribution of Tex 2 = {0} (Change: F3/F4)", g_fContributionOfTex2));
 
 
@@ -259,26 +273,37 @@ namespace Drive
 			Font.DrawText(new Point(5, 430), Color.White, string.Format("Alpha = {0}", alphaValue));
 
 		}
-
-
+*/
+		#endregion
 
 
 
 		#region Properties
 
 
-		Texture tex1;
+		//Texture tex1;
+		//Texture tex2;
+		//Texture tex3;
+		//float g_fContributionOfTex0 = 0.33f;
+		//float g_fContributionOfTex1 = 0.33f;
+		//float g_fContributionOfTex2 = 0.33f;
 
-		Texture tex2;
-
-		Texture tex3;
-
-
-		float g_fContributionOfTex0 = 0.33f;
-		float g_fContributionOfTex1 = 0.33f;
-		float g_fContributionOfTex2 = 0.33f;
-
+		/// <summary>
+		/// 
+		/// </summary>
 		BitmapFont Font;
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Map Map;
+
+
+		int CircleRadius;
+
+
+		float depth;
 
 		#endregion
 	}

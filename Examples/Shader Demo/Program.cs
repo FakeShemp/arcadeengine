@@ -139,23 +139,23 @@ namespace Shader_Demo
 			// Simple shader
 			if (Mouse.IsButtonDown(MouseButtons.Left))
 			{
-				Shader.Use(SimpleShader);
+				Display.Shader = SimpleShader;
 				SimpleShader.SetUniform("mouse", new float[2] { Mouse.Location.X, Display.ViewPort.Bottom - Mouse.Location.Y});
 			}
 
 			// Draw the texture
 			Texture.Blit(Display.ViewPort, TextureLayout.Tile);
 
-			Shader.Use(null);
+			Display.Shader = null;
 
 			// Geometry shader
 			if (Mouse.IsButtonDown(MouseButtons.Right))
-				Shader.Use(GeomShader);
+				Display.Shader = GeomShader;
 			Display.DrawLine(500, 200, 500, 300, Color.White);
 			Display.DrawRectangle(new Rectangle(500, 350, 100, 50), Color.Red);
 
 
-			Shader.Use(null);
+			Display.Shader = null;
 			Font.DrawText(new Point(25, 50), Color.White, "Press left / right mouse button to activate the shaders");
 		}
 

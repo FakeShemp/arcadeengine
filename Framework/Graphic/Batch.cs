@@ -37,13 +37,21 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public Batch()
+		/// <param name="texturecount">Number of texture buffer</param>
+		public Batch(int texturecount)
 		{
-			BufferID = new int[3];
+			// Not enough texture buffers
+			if (texturecount < 1 || texturecount > Display.Capabilities.MaxMultiSample)
+				throw new ArgumentOutOfRangeException("texturecount");
+
+
+			TextureBufferCount = texturecount;
+			int count = 2 + texturecount;
+			BufferID = new int[count];
 
 			if (Display.Capabilities.HasVBO)
 			{
-				GL.GenBuffers(3, BufferID);
+				GL.GenBuffers(count, BufferID);
 			}
 			else
 			{
@@ -51,18 +59,13 @@ namespace ArcEngine.Graphic
 
 
 			VertexBuffer = new List<Point>();
-			TextureBuffer = new List<Point>();
+			TextureBuffer = new List<Point>[texturecount];
+			for (int id = 0; id < texturecount; id++)
+				TextureBuffer[id] = new List<Point>();
+
 			ColorBuffer = new List<int>();
 		}
 
-
-		/// <summary>
-		/// Destructor
-		/// </summary>
-		~Batch()
-		{
-			Dispose(false);
-		}
 
 		/// <summary>
 		/// Clear the batch
@@ -71,7 +74,8 @@ namespace ArcEngine.Graphic
 		{
 			VertexBuffer.Clear();
 			ColorBuffer.Clear();
-			TextureBuffer.Clear();
+			foreach (List<Point> list in TextureBuffer)
+				list.Clear();
 		}
 
 
@@ -91,14 +95,16 @@ namespace ArcEngine.Graphic
 				GL.BindBuffer(BufferTarget.ArrayBuffer, BufferID[0]);
 				GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(VertexBuffer.Count * sizeof(int) * 2), VertexBuffer.ToArray(), BufferUsageHint.StaticDraw);
 
-				// Update Texture buffer
-				GL.BindBuffer(BufferTarget.ArrayBuffer, BufferID[1]);
-				GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(TextureBuffer.Count * sizeof(int) * 2), TextureBuffer.ToArray(), BufferUsageHint.StaticDraw);
-
 				// Update Color buffer
-				GL.BindBuffer(BufferTarget.ArrayBuffer, BufferID[2]);
+				GL.BindBuffer(BufferTarget.ArrayBuffer, BufferID[1]);
 				GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(ColorBuffer.Count * sizeof(int)), ColorBuffer.ToArray(), BufferUsageHint.StaticDraw);
 
+				// Update Texture buffers
+				for (int id = 0; id < TextureBufferCount; id++)
+				{
+					GL.BindBuffer(BufferTarget.ArrayBuffer, BufferID[id + 2]);
+					GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(TextureBuffer[id].Count * sizeof(int) * 2), TextureBuffer[id].ToArray(), BufferUsageHint.StaticDraw);
+				}
 			}
 			catch (Exception e)
 			{
@@ -109,6 +115,8 @@ namespace ArcEngine.Graphic
 
 		}
 
+
+		#region No multitexturing
 
 		/// <summary>
 		/// Adds a rectangle
@@ -134,7 +142,7 @@ namespace ArcEngine.Graphic
 		public void AddPoint(Point point, Color color, Point texture)
 		{
 			VertexBuffer.Add(point);
-			TextureBuffer.Add(texture);
+			TextureBuffer[0].Add(texture);
 
 			ColorBuffer.Add((color.A << 24) + (color.B << 16) + (color.G << 8) + (color.R));
 		}
@@ -163,6 +171,72 @@ namespace ArcEngine.Graphic
 			AddPoint(to, color);
 		}
 
+		#endregion
+
+
+		#region Multitexturing
+
+
+		/// <summary>
+		/// Adds a point
+		/// </summary>
+		/// <param name="point">Location on the screen</param>
+		/// <param name="color">Color of the point</param>
+		/// <param name="texture">Texture coordinates</param>
+		public void AddPoint(Point point, Color color, Point[] texture)
+		{
+			VertexBuffer.Add(point);
+			for (int id = 0; id < TextureBufferCount; id++)
+			{
+				if (id <= texture.Length)
+					TextureBuffer[id].Add(texture[id]);
+			}
+
+			ColorBuffer.Add((color.A << 24) + (color.B << 16) + (color.G << 8) + (color.R));
+		}
+
+
+		/// <summary>
+		/// Adds a rectangle
+		/// </summary>
+		/// <param name="rect">Rectangle on the screen</param>
+		/// <param name="color">Drawing color</param>
+		/// <param name="tex">Texture coordinates</param>
+		public void AddRectangle(Rectangle rect, Color color, Rectangle[] tex)
+		{
+			if (tex.Length < TextureBufferCount * 4)
+				throw new ArgumentOutOfRangeException("Not enough texture coordinates. Waiting for " + TextureBufferCount * 4 +", got " + tex.Length);
+			Point[] points = new Point[TextureBufferCount];
+
+			//AddPoint(rect.Location, color, tex.Location);
+			for (int id = 0; id < TextureBufferCount; id++)
+				points[id] = tex[id].Location;
+			AddPoint(rect.Location, color, points);
+
+
+			//AddPoint(new Point(rect.Right, rect.Top), color, new Point(tex.Right, tex.Top));
+			for (int id = 0; id < TextureBufferCount; id++)
+				points[id] = new Point(tex[id].Right, tex[id].Top);
+			AddPoint(new Point(rect.Right, rect.Top), color, points);
+
+
+			//AddPoint(new Point(rect.Right, rect.Bottom), color, new Point(tex.Right, tex.Bottom));
+			for (int id = 0; id < TextureBufferCount; id++)
+				points[id] = new Point(tex[id].Right, tex[id].Bottom);
+			AddPoint(new Point(rect.Right, rect.Bottom), color, points);
+
+
+			//AddPoint(new Point(rect.X, rect.Bottom), color, new Point(tex.X, tex.Bottom));
+			for (int id = 0; id < TextureBufferCount; id++)
+				points[id] = new Point(tex[id].X, tex[id].Bottom);
+			AddPoint(new Point(rect.X, rect.Bottom), color, points);
+		}
+
+
+
+		#endregion
+
+
 
 
 		#region Disposing
@@ -170,7 +244,7 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// 
 		/// </summary>
-		bool disposed;
+		//	bool disposed;
 
 
 
@@ -179,11 +253,20 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public void Dispose()
 		{
-			Dispose(true);
-			GC.SuppressFinalize(this);
+			if (Display.Capabilities.HasVBO)
+			{
+				//GL.DeleteBuffers(3, BufferID);
+			}
+			BufferID[0] = -1;
+			BufferID[1] = -1;
+			BufferID[2] = -1;
+
+
+			//Dispose(true);
+			//GC.SuppressFinalize(this);
 		}
 
-
+/*
 		// Dispose(bool disposing) executes in two distinct scenarios.
 		// If disposing equals true, the method has been called directly
 		// or indirectly by a user's code. Managed and unmanaged resources
@@ -209,7 +292,7 @@ namespace ArcEngine.Graphic
 			}
 		}
 
-
+*/
 		#endregion
 
 
@@ -249,7 +332,17 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Texture buffer
 		/// </summary>
-		internal List<Point> TextureBuffer;
+		internal List<Point>[] TextureBuffer;
+
+
+		/// <summary>
+		/// Number of texture buffers
+		/// </summary>
+		public int TextureBufferCount
+		{
+			get;
+			private set;
+		}
 
 		/// <summary>
 		/// Color buffer

@@ -33,7 +33,7 @@ using OpenTK.Graphics.OpenGL;
 
 
 // http://bakura.developpez.com/tutoriels/jeux/utilisation-shaders-avec-opengl-3-x/
-
+// http://www.siteduzero.com/tutoriel-3-8879-communiquer-avec-l-application-attributs-et-uniforms.html#ss_part_2
 namespace ArcEngine.Asset
 {
 	/// <summary>
@@ -57,17 +57,17 @@ namespace ArcEngine.Asset
 				@"
 				void main()
 				{
-					//gl_TexCoord[0] = gl_TextureMatrix[0] * gl_MultiTexCoord0;
-					gl_FrontColor = gl_Color;
-					gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
+					gl_TexCoord[0] = gl_TextureMatrix[0] * gl_MultiTexCoord0;
+					gl_Position = ftransform();
 				}");
 
 			SetSource(ShaderType.FragmentShader,
 				@"
-				uniform sampler2D texture;
-				void main(){
-					//gl_FragColor = texture2D(texture, gl_TexCoord[0]);
-					gl_FragColor = gl_Color;
+				uniform sampler2D tex;
+				void main()
+				{
+					vec4 color = texture2D(tex,gl_TexCoord[0].st);
+					gl_FragColor = color;
 				}");
 
 		}
@@ -163,21 +163,6 @@ namespace ArcEngine.Asset
 			return IsCompiled;
 		}
 
-
-
-
-		/// <summary>
-		/// Use the shader
-		/// </summary>
-		/// <returns></returns>
-		static public bool Use(Shader shader)
-		{
-			if (shader == null)
-				GL.UseProgram(0);
-			else 
-				GL.UseProgram(shader.ProgramID);
-			return true;
-		}
 
 
 		/// <summary>
@@ -293,7 +278,7 @@ namespace ArcEngine.Asset
 		}
 
 		/// <summary>
-		/// 
+		/// Sets a uniform value
 		/// </summary>
 		/// <param name="name"></param>
 		/// <param name="value"></param>
@@ -321,8 +306,8 @@ namespace ArcEngine.Asset
 		/// <summary>
 		/// Returns the ID of a uniform
 		/// </summary>
-		/// <param name="name"></param>
-		/// <returns></returns>
+		/// <param name="name">Name of the uniform</param>
+		/// <returns>Uniform's id</returns>
 		int GetUniform(string name)
 		{
 			return GL.GetUniformLocation(ProgramID, name);
@@ -332,8 +317,8 @@ namespace ArcEngine.Asset
 		/// <summary>
 		/// Returns the ID of an attribute
 		/// </summary>
-		/// <param name="name"></param>
-		/// <returns></returns>
+		/// <param name="name">Name of the attribute</param>
+		/// <returns>Attribute's id</returns>
 		int GetAttribute(string name)
 		{
 			return GL.GetAttribLocation(ProgramID, name);

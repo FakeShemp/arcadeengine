@@ -94,7 +94,7 @@ namespace DungeonEye.Forms
 			CheckerBoard = new Texture(ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png"));
 
 
-			Batch = new Batch();
+			Batch = new Batch(1);
 
 			// Preload texture resources
 			Icons = new TileSet();
