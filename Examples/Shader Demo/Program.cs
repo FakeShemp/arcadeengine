@@ -76,7 +76,7 @@ namespace Shader_Demo
 			SimpleShader.LoadSource(ShaderType.VertexShader, "data/vertex.txt");
 			SimpleShader.LoadSource(ShaderType.FragmentShader, "data/fragment.txt");
 			SimpleShader.Compile();
-
+			mouseID = SimpleShader.GetUniform("mouse");
 
 			// Setup the geometry shader
 			GeomShader = new Shader(@"
@@ -140,7 +140,7 @@ namespace Shader_Demo
 			if (Mouse.IsButtonDown(MouseButtons.Left))
 			{
 				Display.Shader = SimpleShader;
-				SimpleShader.SetUniform("mouse", new float[2] { Mouse.Location.X, Display.ViewPort.Bottom - Mouse.Location.Y});
+				SimpleShader.SetUniform(mouseID, new float[2] { Mouse.Location.X, Display.ViewPort.Bottom - Mouse.Location.Y });
 			}
 
 			// Draw the texture
@@ -185,6 +185,12 @@ namespace Shader_Demo
 		/// Font to display text
 		/// </summary>
 		BitmapFont Font;
+
+		/// <summary>
+		/// ID of the uniform value
+		/// </summary>
+		int mouseID;
+
 
 
 		#endregion

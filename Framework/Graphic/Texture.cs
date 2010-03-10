@@ -88,9 +88,9 @@ namespace ArcEngine.Graphic
 		public Texture()
 		{
 			Handle = GL.GenTexture();
-			ErrorCode code = GL.GetError();
-			if (code != ErrorCode.NoError)
-				Trace.WriteLine("Failed to create a new texture ({0})", code.ToString());
+			//ErrorCode code = GL.GetError();
+			//if (code != ErrorCode.NoError)
+			//    Trace.WriteLine("Failed to create a new texture ({0})", code.ToString());
 
 			MagFilter = Display.TextureParameters.MagFilter;
 			MinFilter = Display.TextureParameters.MinFilter;
@@ -811,15 +811,18 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public void Dispose()
 		{
-			Dispose(true);
+			//Dispose(true);
 			// This object will be cleaned up by the Dispose method.
 			// Therefore, you should call GC.SupressFinalize to
 			// take this object off the finalization queue
 			// and prevent finalization code for this object
 			// from executing a second time.
-			GC.SuppressFinalize(this);
+			//GC.SuppressFinalize(this);
+			GL.DeleteTexture(Handle);
+			Handle = -1;
 		}
 
+/*
 		/// <summary>
 		/// Dispose(bool disposing) executes in two distinct scenarios.
 		/// If disposing equals true, the method has been called directly
@@ -856,7 +859,7 @@ namespace ArcEngine.Graphic
 
 
 		private bool disposed = false;
-
+*/
 		#endregion
 
 

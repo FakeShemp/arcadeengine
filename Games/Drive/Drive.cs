@@ -303,7 +303,6 @@ namespace Drive
 		int CircleRadius;
 
 
-		float depth;
 
 		#endregion
 	}

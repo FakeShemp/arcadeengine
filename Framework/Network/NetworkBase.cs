@@ -32,8 +32,23 @@ namespace ArcEngine.Network
 	/// <param name="client"></param>
 	/// <returns>Return false if the client should be kicked, or true if keep the client</returns>
 	public delegate bool OnPlayerJoinHandler(NetPlayer client);
+
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="client"></param>
 	public delegate void OnPlayerLeaveHandler(NetPlayer client);
+
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="client"></param>
 	public delegate void OnPlayerChatHandler(NetPlayer client);
+
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="packet"></param>
 	public delegate void OnMessageHandler(NetPacket packet);
 
 	

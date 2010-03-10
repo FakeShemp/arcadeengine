@@ -34,17 +34,28 @@ namespace ArcEngine.Graphic
 	/// http://songho.ca/opengl/gl_vbo.html
 	public class Batch : IDisposable
 	{
+
+		/// <summary>
+		/// Default constructor.
+		/// </summary>
+		public Batch() : this(1, 0)
+		{
+
+		}
+
 		/// <summary>
 		/// Constructor
 		/// </summary>
 		/// <param name="texturecount">Number of texture buffer</param>
-		public Batch(int texturecount)
+		/// <param name="attribcount">Number of attrib buffer</param>
+		public Batch(int texturecount, int attribcount)
 		{
 			// Not enough texture buffers
 			if (texturecount < 1 || texturecount > Display.Capabilities.MaxMultiSample)
 				throw new ArgumentOutOfRangeException("texturecount");
 
 
+			// Textures
 			TextureBufferCount = texturecount;
 			int count = 2 + texturecount;
 			BufferID = new int[count];
@@ -56,6 +67,9 @@ namespace ArcEngine.Graphic
 			else
 			{
 			}
+
+			// Attribs
+			AttribBufferCount = attribcount;
 
 
 			VertexBuffer = new List<Point>();
@@ -339,6 +353,16 @@ namespace ArcEngine.Graphic
 		/// Number of texture buffers
 		/// </summary>
 		public int TextureBufferCount
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// Number of attrib buffers
+		/// </summary>
+		public int AttribBufferCount
 		{
 			get;
 			private set;

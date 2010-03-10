@@ -49,7 +49,7 @@ namespace ArcEngine.Asset
 			GlyphTileset = new TileSet();
 			GlyphTileset.Texture = new Texture(OpenTK.Graphics.OpenGL.PixelFormat.LuminanceAlpha);
 		//	GlyphTileset.Texture.PixelInternalFormat = PixelInternalFormat.LuminanceAlpha;
-			Batch = new Batch(1);
+			Batch = new Batch();
 		}
 
 
@@ -442,7 +442,7 @@ namespace ArcEngine.Asset
 
 				}
 			}
-			catch (XmlException e)
+			catch (XmlException)
 			{
 			}
 

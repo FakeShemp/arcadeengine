@@ -19,16 +19,8 @@
 #endregion
 
 using System;
-using System.CodeDom.Compiler;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
-using System.Reflection;
-using System.Text;
-using System.Web;
 using System.Xml;
-using Microsoft.VisualBasic;
-using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
 
@@ -248,18 +240,16 @@ namespace ArcEngine.Asset
 	
 		}
 
+
 		#region Uniforms
 
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="name"></param>
+		/// <param name="id"></param>
 		/// <param name="value"></param>
-		public void SetUniform(string name, float value)
+		public void SetUniform(int id, float value)
 		{
-			int id = GetUniform(name);
-			Trace.WriteLine("{0} = {1}", name, id);
-
 			GL.Uniform1(id, value);
 		}
 
@@ -267,28 +257,21 @@ namespace ArcEngine.Asset
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="name"></param>
+		/// <param name="id"></param>
 		/// <param name="value"></param>
-		public void SetUniform(string name, int value)
+		public void SetUniform(int id, int value)
 		{
-			int id = GetUniform(name);
-		//	Trace.WriteLine("{0} = {1}", name, id);
-
 			GL.Uniform1(id, value);
 		}
+
 
 		/// <summary>
 		/// Sets a uniform value
 		/// </summary>
-		/// <param name="name"></param>
-		/// <param name="value"></param>
-		public void SetUniform(string name, float[] value)
+		/// <param name="id">ID of the uniform</param>
+		/// <param name="value">Value</param>
+		public void SetUniform(int id, float[] value)
 		{
-			int id = GetUniform(name);
-
-
-		//	Trace.WriteLine("{0} = {1}", name, id);
-
 			if (value.Length == 1)
 				GL.Uniform1(id, value[0]);
 			else if (value.Length == 2)
@@ -301,17 +284,21 @@ namespace ArcEngine.Asset
 		}
 
 
-
-
 		/// <summary>
 		/// Returns the ID of a uniform
 		/// </summary>
 		/// <param name="name">Name of the uniform</param>
 		/// <returns>Uniform's id</returns>
-		int GetUniform(string name)
+		public int GetUniform(string name)
 		{
 			return GL.GetUniformLocation(ProgramID, name);
 		}
+
+
+		#endregion
+
+
+		#region Attributes
 
 
 		/// <summary>
@@ -319,11 +306,56 @@ namespace ArcEngine.Asset
 		/// </summary>
 		/// <param name="name">Name of the attribute</param>
 		/// <returns>Attribute's id</returns>
-		int GetAttribute(string name)
+		public int GetAttribute(string name)
 		{
 			return GL.GetAttribLocation(ProgramID, name);
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="id"></param>
+		/// <param name="value"></param>
+		public void SetAttribute(int id, float value)
+		{
+			GL.VertexAttrib1(id, value);
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="id"></param>
+		/// <param name="value"></param>
+		public void SetAttribute(int id, int value)
+		{
+			GL.VertexAttrib1(id, value);
+
+
+
+			
+		}
+
+
+
+		/// <summary>
+		/// Sets a uniform value
+		/// </summary>
+		/// <param name="id">ID of the uniform</param>
+		/// <param name="value">Value</param>
+		public void SetAttribute(int id, float[] value)
+		{
+			if (value.Length == 1)
+				GL.VertexAttrib1(id, value[0]);
+			else if (value.Length == 2)
+				GL.VertexAttrib2(id, value[0], value[1]);
+			else if (value.Length == 3)
+				GL.VertexAttrib3(id, value[0], value[1], value[2]);
+			else if (value.Length == 4)
+				GL.VertexAttrib4(id, value[0], value[1], value[2], value[3]);
+
+		}
 
 		#endregion
 
@@ -567,52 +599,15 @@ namespace ArcEngine.Asset
 		/// </summary>
 		public void Dispose()
 		{
-			Dispose(true);
-			// This object will be cleaned up by the Dispose method.
-			// Therefore, you should call GC.SupressFinalize to
-			// take this object off the finalization queue
-			// and prevent finalization code for this object
-			// from executing a second time.
-			GC.SuppressFinalize(this);
-		}
+			GL.DeleteShader(FragmentID);
+			GL.DeleteShader(VertexID);
+			GL.DeleteShader(GeometryID);
 
-		/// <summary>
-		/// Dispose(bool disposing) executes in two distinct scenarios.
-		/// If disposing equals true, the method has been called directly
-		/// or indirectly by a user's code. Managed and unmanaged resources
-		/// can be disposed.
-		/// If disposing equals false, the method has been called by the
-		/// runtime from inside the finalizer and you should not reference
-		/// other objects. Only unmanaged resources can be disposed.
-		/// </summary>
-		/// <param name="disposing"></param>
-		private void Dispose(bool disposing)
-		{
-			// Check to see if Dispose has already been called.
-			if (!this.disposed)
-			{
-				// If disposing equals true, dispose all managed
-				// and unmanaged resources.
-				if (disposing)
-				{
-					// Dispose managed resources.
-				}
+			GL.DeleteProgram(ProgramID);
 
-
-				GL.DeleteShader(FragmentID);
-				GL.DeleteShader(VertexID);
-				GL.DeleteShader(GeometryID);
-
-				GL.DeleteProgram(ProgramID);
-
-				// Note disposing has been done.
-				disposed = true;
-
-			}
 		}
 
 
-		private bool disposed = false;
 
 		#endregion
 	}
