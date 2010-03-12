@@ -120,7 +120,7 @@ namespace ArcEngine.Graphic
 			{
 				int count = 0;
 				GL.GetInteger(GetPName.NumExtensions, out count);
-				Trace.Write("Supported extension ({0}) : ", count);
+				Trace.Write("Supported extensions ({0}) : ", count);
 				for (int i = 0; i < count; i++)
 					Trace.Write("{0}, ", GL.GetString(StringName.Extensions, i));
 			}
