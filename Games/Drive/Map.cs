@@ -13,7 +13,7 @@ namespace Drive
 	/// http://stackoverflow.com/questions/1110844/multiple-texture-images-blended-together-onto-3d-ground
 	/// http://www.opengl.org/wiki_132/index.php?title=Texture_Combiners&oldid=2119#Example_:_Blend_tex1_and_tex2_based_on_alpha_of_tex0
 	/// </summary>
-	public class Map
+	public class Map : IDisposable
 	{
 		/// <summary>
 		/// 
@@ -25,18 +25,18 @@ namespace Drive
 
 			// Load alphamaps
 			AlphaMaps = new Texture[3];
-			AlphaMaps[0] = new Texture("data/alpha.png");
-			AlphaMaps[1] = new Texture("data/alphamap2.png");
-			AlphaMaps[2] = new Texture("data/alphamap3.png");
+			AlphaMaps[0] = new Texture("data/blendmap3.png");
+			AlphaMaps[1] = new Texture("data/blendmap2.png");
+			AlphaMaps[2] = new Texture("data/blendmap3.png");
 	
 			
 			// Load textures
 			Textures = new Texture[3];
-			Textures[0] = new Texture("data/grass_01.png");
+			Textures[0] = new Texture("data/grass.png");
 			Textures[0].MagFilter = TextureMagFilter.Linear;
 			Textures[0].MinFilter = TextureMinFilter.Linear;
-			Textures[1] = new Texture("data/dirt_01.png");
-			Textures[2] = new Texture("data/road_01.png");
+			Textures[1] = new Texture("data/graydirt.png");
+			Textures[2] = new Texture("data/rock.png");
 
 			// Generate the batch
 			Size gridsize = new Size(32, 32);
@@ -45,8 +45,8 @@ namespace Drive
 				for (int x = 0; x < Size.Width; x++)
 				{
 					Batch.AddRectangle(new Rectangle(x * gridsize.Width, y * gridsize.Height, gridsize.Width, gridsize.Height), Color.White,
-						//new Rectangle((x * gridsize.Width) % 1024, (y * gridsize.Height) % 1024, gridsize.Width, gridsize.Height));
-						new Rectangle(x * gridsize.Width, y * gridsize.Height, gridsize.Width, gridsize.Height));
+						new Rectangle((x * gridsize.Width) % 1024, (y * gridsize.Height) % 1024, gridsize.Width, gridsize.Height));
+						//new Rectangle(x * gridsize.Width, y * gridsize.Height, gridsize.Width, gridsize.Height));
 						//new Rectangle(0, 0, gridsize.Width, gridsize.Height));
 				}
 			Batch.Apply();
@@ -96,13 +96,19 @@ namespace Drive
 		}
 
 
+		public void Dispose()
+		{
+			Shader.Dispose();
+		}
+
+
 
 		/// <summary>
 		/// 
 		/// </summary>
 		public void Draw()
 		{
-
+			
 			for (int id = 0; id < 3; id++)
 			{
 				Display.TextureUnit = id;
@@ -117,35 +123,19 @@ namespace Drive
 			Shader.SetUniform(Shader.GetUniform("Rock"), 2); 
 			Shader.SetUniform(Shader.GetUniform("Alpha"), 3); 
 			
-			//Display.DrawBatch(Batch, BeginMode.Quads);
-			Rectangle tex = new Rectangle(0, 0, 128, 128);
-			Rectangle rect = new Rectangle(0, 0, 900, 600);
-			GL.Begin(BeginMode.Quads);
-
-			GL.TexCoord2(tex.X, tex.Y);
-			GL.Vertex2(rect.X, rect.Y);
-
-			GL.TexCoord2(tex.X, tex.Y + tex.Height);
-			GL.Vertex2(rect.X, rect.Y + rect.Height);
-
-			GL.TexCoord2(tex.X + tex.Width, tex.Y + tex.Height);
-			GL.Vertex2(rect.X + rect.Width, rect.Y + rect.Height);
-
-			GL.TexCoord2(tex.X + tex.Width, tex.Y);
-			GL.Vertex2(rect.X + rect.Width, rect.Y);
-
-			GL.End();
+			Display.DrawBatch(Batch, BeginMode.Quads);
 
 			Display.Shader = null;
 
-
-			for (int id = 0; id < 3; id++)
-			{
-				Display.TextureUnit = id;
-				Display.Texturing = false;
-			}
+			//for (int id = 3; id == 1; id--)
+			//{
+			//    Display.TextureUnit = id;
+			//    Display.Texturing = false;
+			//}
 
 			Display.TextureUnit = 0;
+			//Display.Texturing = true;
+
 		}
 
 
