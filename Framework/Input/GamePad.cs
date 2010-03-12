@@ -41,6 +41,7 @@ namespace ArcEngine.Input
 		/// </summary>
 		static Gamepad()
 		{
+			Device = null;
 			AvailableDevices = new List<GamePadState>();
 		}
 
