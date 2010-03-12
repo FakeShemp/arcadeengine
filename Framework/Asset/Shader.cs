@@ -604,6 +604,10 @@ namespace ArcEngine.Asset
 			GL.DeleteShader(GeometryID);
 
 			GL.DeleteProgram(ProgramID);
+			FragmentID = -1;
+			VertexID = -1;
+			GeometryID = -1;
+			ProgramID = -1;
 
 		}
 
