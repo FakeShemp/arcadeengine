@@ -96,6 +96,39 @@ namespace Drive
 		public override void Update(GameTime gameTime)
 		{
 			base.Update(gameTime);
+
+			if (Keyboard.IsKeyPress(Keys.PageUp))
+				Map.Scale += 0.0125f;
+			if (Keyboard.IsKeyPress(Keys.PageDown))
+				Map.Scale -= 0.0125f;
+
+
+			int speed = 6;
+
+			if (Keyboard.IsKeyPress(Keys.Left))
+			{
+				Map.Location.Offset(-speed, 0);
+				//if (Map.Location.X < 0)
+				//    Map.Location = new Point(0, Map.Location.Y);
+			}
+			if (Keyboard.IsKeyPress(Keys.Right))
+			{
+				Map.Location.Offset(speed, 0);
+				//if (Map.Location.X > Map.Size.Width)
+				//    Map.Location = new Point(Map.Size.Width, Map.Location.Y);
+			}
+			if (Keyboard.IsKeyPress(Keys.Up))
+			{
+				Map.Location.Offset(0, -speed);
+				//if (Map.Location.Y < 0)
+				//    Map.Location = new Point(Map.Location.X, 0);
+			}
+			if (Keyboard.IsKeyPress(Keys.Down))
+			{
+				Map.Location.Offset(0, speed);
+				//if (Map.Location.Y > Map.Size.Height)
+				//    Map.Location = new Point(Map.Location.X, Map.Size.Height);
+			}
 		}
 
 
@@ -105,12 +138,14 @@ namespace Drive
 		/// </summary>
 		public override void Draw()
 		{
+			Display.ClearColor = Color.CornflowerBlue;
 			Display.ClearBuffers();
 
 			Map.Draw();
 
 			Display.DrawCircle(Mouse.Location, CircleRadius, Color.Red);
-			Font.DrawText(new Point(10, 100), Color.White, GameTime.ElapsedRealTime.ToString());
+			Font.DrawText(new Point(10, 100), Color.White, Map.Scale.ToString());
+			Font.DrawText(new Point(10, 120), Color.White, Map.Location.ToString());
 		}
 
 

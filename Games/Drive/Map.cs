@@ -20,12 +20,13 @@ namespace Drive
 		/// </summary>
 		public Map()
 		{
-			Size = new Size(32, 32);
-			Scale = 1.0f;
+			Size = new Size(256, 256);
+			Scale = 4.0f;
+			Location = Point.Empty;
 
 			// Load alphamaps
 			AlphaMaps = new Texture[3];
-			AlphaMaps[0] = new Texture("data/blendmap3.png");
+			AlphaMaps[0] = new Texture("data/blendmap1.png");
 			AlphaMaps[1] = new Texture("data/blendmap2.png");
 			AlphaMaps[2] = new Texture("data/blendmap3.png");
 	
@@ -39,15 +40,16 @@ namespace Drive
 			Textures[2] = new Texture("data/rock.png");
 
 			// Generate the batch
-			Size gridsize = new Size(32, 32);
+			Size gridsize = new Size(4, 4);
 			Batch = new Batch(1, 4);
 			for (int y = 0; y < Size.Height; y++)
 				for (int x = 0; x < Size.Width; x++)
 				{
 					Batch.AddRectangle(new Rectangle(x * gridsize.Width, y * gridsize.Height, gridsize.Width, gridsize.Height), Color.White,
-						new Rectangle((x * gridsize.Width) % 1024, (y * gridsize.Height) % 1024, gridsize.Width, gridsize.Height));
+						//new Rectangle((x * gridsize.Width) % 1024, (y * gridsize.Height) % 1024, gridsize.Width, gridsize.Height));
 						//new Rectangle(x * gridsize.Width, y * gridsize.Height, gridsize.Width, gridsize.Height));
 						//new Rectangle(0, 0, gridsize.Width, gridsize.Height));
+						new Rectangle(x, y, 1, 1));
 				}
 			Batch.Apply();
 
@@ -72,12 +74,13 @@ namespace Drive
 				uniform sampler2D Grass;
 				uniform sampler2D Stone;
 				uniform sampler2D Rock;
+				uniform float scale;
 
 				varying vec4 texCoord0;
 
 				void main(void)
 				{
-				   float scale = 5.0f;
+				   //float scale = 5.0f;
 				   vec4 alpha   = texture2D( Alpha, texCoord0.xy );
 				   vec4 tex0    = texture2D( Grass, texCoord0.xy * scale ); // Tile
 				   vec4 tex1    = texture2D( Rock,  texCoord0.xy * scale ); // Tile
@@ -120,10 +123,14 @@ namespace Drive
 			Display.Shader = Shader;
 			Shader.SetUniform(Shader.GetUniform("Grass"), 0); 
 			Shader.SetUniform(Shader.GetUniform("Stone"), 1); 
-			Shader.SetUniform(Shader.GetUniform("Rock"), 2); 
-			Shader.SetUniform(Shader.GetUniform("Alpha"), 3); 
-			
+			Shader.SetUniform(Shader.GetUniform("Rock"), 2);
+			Shader.SetUniform(Shader.GetUniform("Alpha"), 3);
+			Shader.SetUniform(Shader.GetUniform("scale"), Scale);
+
+
+			Display.Translate(-Location.X, -Location.Y);
 			Display.DrawBatch(Batch, BeginMode.Quads);
+			Display.Translate(Location.X, Location.Y);
 
 			Display.Shader = null;
 
@@ -215,6 +222,11 @@ namespace Drive
 		/// </summary>
 		Shader Shader;
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Point Location;
 
 		#endregion
 
