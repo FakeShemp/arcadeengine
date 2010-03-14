@@ -43,7 +43,8 @@ namespace ArcEngine.Asset
 			FragmentID = GL.CreateShader(ShaderType.FragmentShader);
 			GeometryID = GL.CreateShader(ShaderType.GeometryShader);
 			ProgramID = GL.CreateProgram();
-
+			GeometryInput = BeginMode.Lines;
+			GeometryOutput = BeginMode.Lines;
 
 			SetSource(ShaderType.VertexShader,
 				@"
@@ -132,6 +133,9 @@ namespace ArcEngine.Asset
 				GL.CompileShader(GeometryID);
 				GeometryLog = GL.GetShaderInfoLog(GeometryID);
 				GL.AttachShader(ProgramID, GeometryID);
+
+				//GL.ProgramParameter(ProgramID, Version32.GeometryInputType, (int)GeometryInput);
+				//GL.ProgramParameter(ProgramID, Version32.GeometryOutputType, (int)GeometryOutput);
 			}
 
 
@@ -154,7 +158,6 @@ namespace ArcEngine.Asset
 
 			return IsCompiled;
 		}
-
 
 
 		/// <summary>
@@ -587,6 +590,27 @@ namespace ArcEngine.Asset
 		{
 			get;
 			private set;
+		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public BeginMode GeometryInput
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public BeginMode GeometryOutput
+		{
+			get;
+			set;
 		}
 
 		#endregion

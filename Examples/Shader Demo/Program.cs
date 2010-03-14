@@ -68,7 +68,13 @@ namespace Shader_Demo
 		public override void LoadContent()
 		{
 
+			// Something to display text
 			Font = BitmapFont.CreateFromTTF(@"c:\windows\fonts\verdana.ttf", 14, FontStyle.Regular);
+
+
+			// Load the texture
+			Texture = new Texture("data/checkerboard.png");
+			Display.Texture = Texture;
 
 
 			// Setup the simple shader
@@ -77,6 +83,7 @@ namespace Shader_Demo
 			SimpleShader.LoadSource(ShaderType.FragmentShader, "data/fragment.txt");
 			SimpleShader.Compile();
 			mouseID = SimpleShader.GetUniform("mouse");
+			SimpleShader.SetUniform(SimpleShader.GetUniform("texture"), 0);
 
 			// Setup the geometry shader
 			GeomShader = new Shader(@"
@@ -89,18 +96,13 @@ namespace Shader_Demo
 			@"
 				void main( void )
 				{
-					gl_FragColor = gl_Color; // vec4(1, 0, 1, 1);
+					gl_FragColor = gl_FrontColor;
 				}	
 			");
-
 			GeomShader.LoadSource(ShaderType.GeometryShader, "data/geometry.txt");
 			GeomShader.SetGeometryPrimitives(BeginMode.Lines, BeginMode.LineStrip, 50);
 			GeomShader.Compile();
 
-
-			// Load the texture
-			Texture = new Texture("data/checkerboard.png");
-			Display.Texture = Texture;
 
 		}
 
@@ -111,6 +113,9 @@ namespace Shader_Demo
 		public override void UnloadContent()
 		{
 			SimpleShader.Dispose();
+			GeomShader.Dispose();
+			Font.Dispose();
+			Texture.Dispose();
 		}
 
 
@@ -146,7 +151,10 @@ namespace Shader_Demo
 			// Draw the texture
 			Texture.Blit(Display.ViewPort, TextureLayout.Tile);
 
+			// No shader
 			Display.Shader = null;
+
+
 
 			// Geometry shader
 			if (Mouse.IsButtonDown(MouseButtons.Right))
@@ -154,8 +162,10 @@ namespace Shader_Demo
 			Display.DrawLine(500, 200, 500, 300, Color.White);
 			Display.DrawRectangle(new Rectangle(500, 350, 100, 50), Color.Red);
 
-
+			// No shader
 			Display.Shader = null;
+
+
 			Font.DrawText(new Point(25, 50), Color.White, "Press left / right mouse button to activate the shaders");
 		}
 

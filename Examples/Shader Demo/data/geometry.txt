@@ -11,21 +11,32 @@ void main(void)
 	// was used.
 	for(i=0; i< gl_VerticesIn; i++)
 	{
-		gl_Position = gl_PositionIn[i];
-		EmitVertex();
+		// copy color 
+		gl_FrontColor = gl_FrontColorIn[i]; 
+	 
+		// copy position 
+		gl_Position = gl_PositionIn[i]; 
+	 
+		// done with the vertex 
+		EmitVertex(); 
 	}
 	// End the one primitive with the original vertices
 	EndPrimitive();
 
 
 
-	// Now we generate some more! This translates 0.2 over
-	// the positive x axis.
+	// Now we generate some more !
 	for(i=0; i< gl_VerticesIn; i++)
 	{
-		gl_Position = gl_PositionIn[i];
+		// copy color 
+		gl_FrontColor = gl_FrontColorIn[i]; 
+
+		// copy position 
+		gl_Position = gl_PositionIn[i]; 
 		gl_Position.x += 0.5;
+
+		// done with the vertex 
 		EmitVertex();
-	}
+ 	}
 	EndPrimitive();
 }

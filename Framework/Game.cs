@@ -105,11 +105,11 @@ namespace ArcEngine
 			Window.Activated += new EventHandler(Window_Activated);
 			Window.Deactivate += new EventHandler(Window_Deactivate);
 			Window.Resize += new EventHandler(Window_Resize);
-			Mouse.Init(Window);		
-
+			Mouse.Init(Window);
 
 			Window.Show();
 			Window.Activate();
+
 		}
 
 

@@ -40,7 +40,7 @@ namespace Drive
 			Textures[2] = new Texture("data/rock.png");
 
 			// Generate the batch
-			Size gridsize = new Size(4, 4);
+			Size gridsize = new Size(16,16);
 			Batch = new Batch(1, 4);
 			for (int y = 0; y < Size.Height; y++)
 				for (int x = 0; x < Size.Width; x++)

@@ -1,23 +1,11 @@
-
 uniform sampler2D texture;
 uniform vec2 mouse;
-
-int delta = 100;
+vec2 lensRadius = vec2(150, 60);
 
 void main (void)
 {
-	vec2 coord = gl_TexCoord[0];
-	vec4 Color = texture2D(texture, coord);
-	
-	if (distance(mouse, gl_FragCoord) > delta)
-		discard;
-
-	if (distance(mouse, gl_FragCoord) > delta - 5)
-		Color.a /= 2.0;
-
-	if (distance(mouse, gl_FragCoord) > delta - 10)
-		Color.a /= 2.0;
-
-		
-	gl_FragColor = Color;	
+	vec4 color = texture2D(texture, gl_TexCoord[0]);
+	float distance = distance(mouse, gl_FragCoord);
+	color.a = smoothstep(lensRadius.x, lensRadius.y, distance);
+	gl_FragColor = color;
 }
