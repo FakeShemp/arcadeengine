@@ -52,15 +52,17 @@ namespace ArcEngine.Asset
 				{
 					gl_TexCoord[0] = gl_TextureMatrix[0] * gl_MultiTexCoord0;
 					gl_Position = ftransform();
+					gl_FrontColor = gl_Color;
 				}");
 
 			SetSource(ShaderType.FragmentShader,
 				@"
 				uniform sampler2D tex;
+
 				void main()
 				{
-					vec4 color = texture2D(tex,gl_TexCoord[0].st);
-					gl_FragColor = color;
+					vec4 color = texture2D(tex, gl_TexCoord[0].st);
+					gl_FragColor = gl_Color * color;
 				}");
 
 		}
@@ -133,9 +135,6 @@ namespace ArcEngine.Asset
 				GL.CompileShader(GeometryID);
 				GeometryLog = GL.GetShaderInfoLog(GeometryID);
 				GL.AttachShader(ProgramID, GeometryID);
-
-				//GL.ProgramParameter(ProgramID, Version32.GeometryInputType, (int)GeometryInput);
-				//GL.ProgramParameter(ProgramID, Version32.GeometryOutputType, (int)GeometryOutput);
 			}
 
 
@@ -222,25 +221,25 @@ namespace ArcEngine.Asset
 
 
 		/// <summary>
-		/// 
+		/// Tells what kind of geometry the shader will process
 		/// </summary>
-		/// <param name="input"></param>
-		/// <param name="output"></param>
-		/// <param name="count"></param>
+		/// <param name="input">Set the input type of the primitives we are going to feed the geometry shader</param>
+		/// <param name="output">Set the output type of the geometry shader</param>
+		/// <param name="count">We must tell the shader program how much vertices the geometry shader will output</param>
 		public void SetGeometryPrimitives(BeginMode input, BeginMode output, int count)
 		{
 			// Set the input type of the primitives we are going to feed the geometry shader, this should be the same as
 			// the primitive type given to GL.Begin. If the types do not match a GL error will occur (todo: verify GL_INVALID_ENUM, on glBegin)
 			GL.Ext.ProgramParameter(ProgramID, ExtGeometryShader4.GeometryInputTypeExt, (int)input);
+			GeometryInput = input;
 
-
-			// Set the output type of the geometry shader. Becasue we input Lines we will output LineStrip(s).
+			// Set the output type of the geometry shader. Because we input Lines we will output LineStrip(s).
 			GL.Ext.ProgramParameter(ProgramID, ExtGeometryShader4.GeometryOutputTypeExt, (int)output);
+			GeometryOutput = output;
 
 			// We must tell the shader program how much vertices the geometry shader will output (at most).
 			// One simple way is to query the maximum and use that.
-			GL.Ext.ProgramParameter(ProgramID, ExtGeometryShader4.GeometryVerticesOutExt, count);
-	
+			GL.Ext.ProgramParameter(ProgramID, ExtGeometryShader4.GeometryVerticesOutExt, count);			
 		}
 
 
@@ -600,7 +599,7 @@ namespace ArcEngine.Asset
 		public BeginMode GeometryInput
 		{
 			get;
-			set;
+			private set;
 		}
 
 
@@ -610,7 +609,7 @@ namespace ArcEngine.Asset
 		public BeginMode GeometryOutput
 		{
 			get;
-			set;
+			private set;
 		}
 
 		#endregion
