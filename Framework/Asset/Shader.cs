@@ -45,26 +45,6 @@ namespace ArcEngine.Asset
 			ProgramID = GL.CreateProgram();
 			GeometryInput = BeginMode.Lines;
 			GeometryOutput = BeginMode.Lines;
-
-			SetSource(ShaderType.VertexShader,
-				@"
-				void main()
-				{
-					gl_TexCoord[0] = gl_TextureMatrix[0] * gl_MultiTexCoord0;
-					gl_Position = ftransform();
-					gl_FrontColor = gl_Color;
-				}");
-
-			SetSource(ShaderType.FragmentShader,
-				@"
-				uniform sampler2D tex;
-
-				void main()
-				{
-					vec4 color = texture2D(tex, gl_TexCoord[0].st);
-					gl_FragColor = gl_Color * color;
-				}");
-
 		}
 
 
@@ -89,7 +69,7 @@ namespace ArcEngine.Asset
 		/// <param name="vertex">Vertex shader source code</param>
 		/// <param name="fragment">Fragment shader source code</param>
 		/// <param name="geometry">Geometry shader source code</param>
-		public Shader(string vertex, string fragment,string geometry) : this()
+		public Shader(string vertex, string fragment, string geometry) : this()
 		{
 			VertexSource = vertex;
 			FragmentSource = fragment;
@@ -239,9 +219,73 @@ namespace ArcEngine.Asset
 
 			// We must tell the shader program how much vertices the geometry shader will output (at most).
 			// One simple way is to query the maximum and use that.
-			GL.Ext.ProgramParameter(ProgramID, ExtGeometryShader4.GeometryVerticesOutExt, count);			
+			GL.Ext.ProgramParameter(ProgramID, ExtGeometryShader4.GeometryVerticesOutExt, count);
 		}
 
+
+
+		#region Statics 
+	
+
+		/// <summary>
+		/// Creates a simple color shader
+		/// </summary>
+		/// <returns></returns>
+		static public Shader ColorShader()
+		{
+			Shader shader = new Shader();
+			shader.SetSource(ShaderType.VertexShader,
+				@"
+				void main()
+				{
+					gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
+					gl_FrontColor = gl_Color;
+				}");
+
+			shader.SetSource(ShaderType.FragmentShader,
+				@"
+				void main()
+				{					
+					gl_FragColor = gl_Color;
+				}");
+
+
+			return shader;
+		}
+
+
+		/// <summary>
+		/// Creates a simple textured color shader
+		/// </summary>
+		/// <remarks>Sets uniform "texture" as the sampler2D</remarks>
+		/// <returns></returns>
+		static public Shader TextureShader()
+		{
+			Shader shader = new Shader();
+			shader.SetSource(ShaderType.VertexShader,
+				@"
+				void main()
+				{
+					gl_TexCoord[0] = gl_TextureMatrix[0] * gl_MultiTexCoord0;
+					gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
+					gl_FrontColor = gl_Color;
+				}");
+
+			shader.SetSource(ShaderType.FragmentShader,
+				@"
+				uniform sampler2D texture;
+
+				void main()
+				{
+					vec4 color = texture2D(texture, gl_TexCoord[0].st);
+					gl_FragColor = gl_Color * color;
+				}");
+
+
+			return shader;
+		}
+
+		#endregion
 
 		#region Uniforms
 
