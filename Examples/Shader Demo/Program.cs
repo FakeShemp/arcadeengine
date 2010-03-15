@@ -86,19 +86,7 @@ namespace Shader_Demo
 			SimpleShader.SetUniform(SimpleShader.GetUniform("texture"), 0);
 
 			// Setup the geometry shader
-			GeomShader = new Shader(@"
-				void main( void )
-				{
-					gl_FrontColor = gl_Color;
-					gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
-				}	
-			",
-			@"
-				void main( void )
-				{
-					gl_FragColor = gl_FrontColor;
-				}	
-			");
+			GeomShader = Shader.ColorShader();
 			GeomShader.LoadSource(ShaderType.GeometryShader, "data/geometry.txt");
 			GeomShader.SetGeometryPrimitives(BeginMode.Lines, BeginMode.LineStrip, 50);
 			GeomShader.Compile();
