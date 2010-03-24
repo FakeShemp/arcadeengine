@@ -142,19 +142,19 @@ namespace Shader_Demo
 			// No shader
 			Display.Shader = null;
 
-
-
 			// Geometry shader
 			if (Mouse.IsButtonDown(MouseButtons.Right))
 				Display.Shader = GeomShader;
 			Display.DrawLine(500, 200, 500, 300, Color.White);
 			Display.DrawRectangle(new Rectangle(500, 350, 100, 50), Color.Red);
+			Display.DrawEllipse(new Rectangle(500, 450, 100, 50), Color.Teal);
 
 			// No shader
 			Display.Shader = null;
 
 
-			Font.DrawText(new Point(25, 50), Color.White, "Press left / right mouse button to activate the shaders");
+			Font.DrawText(new Point(25, 50), Color.White, "Press left mouse button to activate the lens shaders");
+			Font.DrawText(new Point(25, 70), Color.White, "Press right mouse button to activate the geometry shaders");
 		}
 
 

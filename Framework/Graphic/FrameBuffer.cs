@@ -50,7 +50,7 @@ namespace ArcEngine.Graphic
 	/// 
 	/// http://www.songho.ca/opengl/gl_fbo.html
 	/// http://www.songho.ca/opengl/gl_pbo.html
-	public class FrameBuffer
+	public class FrameBuffer : IDisposable
 	{
 
 
@@ -93,16 +93,16 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// 
 		/// </summary>
-		~FrameBuffer()
+		public void Dispose()
 		{
-			//if (ColorTexture != null)
-			//   ColorTexture = null;
+			if (ColorTexture != null)
+				ColorTexture.Dispose();
 
-			//if (DepthTexture != 0)
-			//   GL.DeleteTextures(1, ref DepthTexture);
+			if (DepthTexture != null)
+				DepthTexture.Dispose();
 
 			//if (FBOHandle != 0)
-			//   GL.Ext.DeleteFramebuffers(1, ref FBOHandle);
+			//    GL.Ext.DeleteFramebuffers(1, ref FBOHandle);
 		}
 
 

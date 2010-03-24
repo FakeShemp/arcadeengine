@@ -48,13 +48,26 @@ namespace ArcEngine.Examples.RenderToTexture
 			CreateGameWindow(new Size(1024, 768));
 			Window.Text = "Frame Buffer example";
 
-			// Enable depth test
+			// Enable depth test writting
 			Display.DepthTest = true;
 
+			// Frame buffer
 			Buffer = new FrameBuffer(new Size(256, 256));
+
+			// Texture to display
 			Texture = new Texture("data/test.png");
 		}
 
+
+
+		/// <summary>
+		/// Unload
+		/// </summary>
+		public override void UnloadContent()
+		{
+			Buffer.Dispose();
+			Texture.Dispose();
+		}
 
 
 		#endregion
@@ -99,6 +112,8 @@ namespace ArcEngine.Examples.RenderToTexture
 			Display.Color = Color.White;
 			Buffer.ColorTexture.Blit(new Point(50, 50));
 			Buffer.DepthTexture.Blit(new Point(350, 50));
+
+			Texture.Blit(new Point(100, 100));
 
 		}
 		#endregion
