@@ -34,6 +34,9 @@ namespace ArcEngine.Examples
 	/// </summary>
 	class ColladaLoader
 	{
+		/// <summary>
+		/// 
+		/// </summary>
 		public ColladaLoader()
 		{
 
@@ -58,6 +61,12 @@ namespace ArcEngine.Examples
 				if (doc.DocumentElement.Name != "COLLADA")
 				{
 					Trace.WriteLine("Not a COLLADA file !");
+					return false;
+				}
+
+				if (doc.DocumentElement.Attributes["version"] == null || doc.DocumentElement.Attributes["version"].Value != "1.4.0")
+				{
+					Trace.WriteLine("Wrong format version. Only version 1.4.0 is supported !");
 					return false;
 				}
 
@@ -112,6 +121,24 @@ namespace ArcEngine.Examples
 
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="name"></param>
+		/// <returns></returns>
+		public Mesh GenerateMesh(string name)
+		{
+			if (string.IsNullOrEmpty(name))
+				return null;
+
+			if (!Geometries.ContainsKey(name))
+				return null;
+
+
+
+			return null;
+		}
+
 
 		#region Properties
 
@@ -123,623 +150,728 @@ namespace ArcEngine.Examples
 
 		#endregion
 
-	}
 
 
 
-
-	/// <summary>
-	/// Geometry of a mesh
-	/// </summary>
-	class Geometry
-	{
 
 		/// <summary>
-		/// 
+		/// Describes the visual shape and appearance of an object in a scene.
 		/// </summary>
-		/// <param name="xml"></param>
-		public Geometry(XmlNode xml)
+		class Geometry
 		{
-			if (xml == null)
-				throw new ArgumentNullException("xml");
 
-			Sources = new Dictionary<string, Source>();
-			ID = xml.Attributes["id"].Value;
-			Name = xml.Attributes["name"].Value;
-
-			// Mesh node
-			if (xml.FirstChild.Name != "mesh")
-				return;
-
-
-			foreach (XmlNode node in xml.FirstChild)
+			/// <summary>
+			/// 
+			/// </summary>
+			/// <param name="xml"></param>
+			public Geometry(XmlNode xml)
 			{
-				switch (node.Name)
+				if (xml == null || xml.Name != "geometry")
+					throw new ArgumentNullException("xml");
+
+				if (xml.Attributes["id"] != null)
+					ID = xml.Attributes["id"].Value;
+				if (xml.Attributes["name"] != null)
+					Name = xml.Attributes["name"].Value;
+
+
+				foreach (XmlNode node in xml.ChildNodes)
 				{
-					case "source":
+					switch (node.Name)
 					{
-						Source source = new Source(node);
-						Sources[source.Id] = source;
-					}
-					break;
-
-					case "vertices":
-					{
-						Vertices = new Vertices(node);
-					}
-					break;
-
-					case "triangles":
-					{
-						Triangles = new Triangles(node);
-					} 
-					break;
-				}
-			}
-		}
-
-
-
-		#region Properties
-
-
-		/// <summary>
-		/// Name of the geometry
-		/// </summary>
-		public string Name
-		{
-			get;
-			private set;
-		}
-
-		/// <summary>
-		/// ID of the geometry
-		/// </summary>
-		public string ID
-		{
-			get;
-			private set;
-		}
-
-
-		/// <summary>
-		/// Vertices
-		/// </summary>
-		public Vertices Vertices
-		{
-			get;
-			private set;
-		}
-
-		/// <summary>
-		/// Sources
-		/// </summary>
-		Dictionary<string, Source> Sources;
-
-
-		/// <summary>
-		/// Triangles
-		/// </summary>
-		public Triangles Triangles
-		{
-			get;
-			private set;
-		}
-		#endregion
-	}
-
-
-
-
-
-	/// <summary>
-	/// Source element
-	/// </summary>
-	class Source
-	{
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="xml"></param>
-		public Source(XmlNode xml)
-		{
-			if (xml == null || xml.Name != "source")
-				throw new ArgumentException("xml");
-
-			Id = xml.Attributes["id"].Value;
-
-
-			foreach (XmlNode node in xml.ChildNodes)
-			{
-				switch (node.Name)
-				{
-					case "float_array":
-					{
-						Array = new FloatArray(node);
-					}
-					break;
-
-					case "technique_common":
-					{
-						Technique = new Technique(node);
-					} 
-					break;
-				}
-			}
-		}
-
-
-		#region Properties
-
-
-		/// <summary>
-		/// ID
-		/// </summary>
-		public string Id
-		{
-			get;
-			private set;
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public FloatArray Array
-		{
-			get;
-			private set;
-		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public Technique Technique
-		{
-			get;
-			private set;
-		}
-
-		#endregion
-	}
-
-	/// <summary>
-	/// 
-	/// </summary>
-	class Technique
-	{
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="xml"></param>
-		public Technique(XmlNode xml)
-		{
-			if (xml == null || xml.Name != "technique_common")
-				throw new ArgumentException("xml");
-
-			foreach (XmlNode node in xml.ChildNodes)
-			{
-				switch (node.Name)
-				{
-					case "accessor":
-					{
-						Accessor = new Accessor(node);
-					}
-					break;
-				}
-			}
-		}
-
-
-		#region Properties
-
-
-		/// <summary>
-		/// Accessor
-		/// </summary>
-		public Accessor Accessor
-		{
-			get;
-			private set;
-		}
-
-
-
-		#endregion
-	}
-
-
-	/// <summary>
-	/// 
-	/// </summary>
-	class FloatArray
-	{
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="xml"></param>
-		public FloatArray(XmlNode xml)
-		{
-			if (xml == null || xml.Name != "float_array")
-				throw new ArgumentException("xml");
-
-			Count = int.Parse(xml.Attributes["count"].Value);
-			Id = xml.Attributes["id"].Value;
-
-			Data = new float[Count];
-			string[] arr = xml.InnerText.Replace('.', ',').Split(' ');
-			for (int i = 0; i < arr.Length; i++)
-			{
-				Data[i] = float.Parse(arr[i]);
-			}
-		}
-
-
-
-		#region Properties
-
-		/// <summary>
-		/// Datas
-		/// </summary>
-		public float[] Data
-		{
-			get;
-			private set;
-		}
-
-
-		/// <summary>
-		/// Count
-		/// </summary>
-		public int Count
-		{
-			get;
-			private set;
-		}
-
-
-		/// <summary>
-		/// Id
-		/// </summary>
-		public string Id
-		{
-			get;
-			private set;
-		}
-		#endregion
-	}
-
-
-	/// <summary>
-	/// 
-	/// </summary>
-	class Accessor
-	{
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="xml"></param>
-		public Accessor(XmlNode xml)
-		{
-			if (xml == null || xml.Name != "accessor")
-				throw new ArgumentException("xml");
-
-			Params = new List<Param>();
-			Source = xml.Attributes["source"].Value;
-			Stride = int.Parse(xml.Attributes["stride"].Value);
-			Count = int.Parse(xml.Attributes["count"].Value);
-
-			foreach (XmlNode node in xml.ChildNodes)
-			{
-				switch (node.Name)
-				{
-					case "param":
-					{
-						Params.Add(new Param(node));
-					}
-					break;
-				}
-			}
-		}
-
-
-		#region Properties
-
-		/// <summary>
-		/// Params
-		/// </summary>
-		public List<Param> Params
-		{
-			get;
-			private set;
-		}
-
-
-		/// <summary>
-		/// Source
-		/// </summary>
-		public string Source
-		{
-			get;
-			private set;
-		}
-
-
-
-		/// <summary>
-		/// Count
-		/// </summary>
-		public int Count
-		{
-			get;
-			private set;
-		}
-
-
-		/// <summary>
-		/// Stride
-		/// </summary>
-		public int Stride
-		{
-			get;
-			private set;
-		}
-
-
-		#endregion
-	}
-
-
-	/// <summary>
-	/// 
-	/// </summary>
-	class Param
-	{
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="xml"></param>
-		public Param(XmlNode xml)
-		{
-			if (xml == null || xml.Name != "param")
-				throw new ArgumentException("xml");
-
-			Name = xml.Attributes["name"].Value;
-
-		}
-
-
-		#region Properties
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public string Name
-		{
-			get;
-			private set;
-		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public Type Type
-		{
-			get;
-			private set;
-		}
-
-		#endregion
-	}
-
-
-	/// <summary>
-	/// 
-	/// </summary>
-	class Vertices
-	{
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="xml"></param>
-		public Vertices(XmlNode xml)
-		{
-			if (xml == null || xml.Name != "vertices")
-				throw new ArgumentException("xml");
-
-			Id = xml.Attributes["id"].Value;
-
-			foreach (XmlNode node in xml.ChildNodes)
-			{
-				switch (node.Name)
-				{
-					case "input":
-					{
-						Input = new Input(node);
-					}
-					break;
-				}
-			}
-		}
-
-
-		#region Properties
-
-
-		/// <summary>
-		/// Id
-		/// </summary>
-		public string Id
-		{
-			get;
-			private set;
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public Input Input
-		{
-			get;
-			private set;
-		}
-
-		#endregion
-	}
-
-
-	/// <summary>
-	/// 
-	/// </summary>
-	class Input
-	{
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="xml"></param>
-		public Input(XmlNode xml)
-		{
-			if (xml == null || xml.Name != "input")
-				throw new ArgumentException("xml");
-
-			if (xml.Attributes["offset"] != null)
-				Offset = int.Parse(xml.Attributes["offset"].Value);
-
-			if (xml.Attributes["semantic"] != null)
-				Semantic = xml.Attributes["semantic"].Value;
-
-			if (xml.Attributes["source"] != null)
-				Source = xml.Attributes["source"].Value;
-		}
-
-
-		#region Properties
-
-
-		/// <summary>
-		/// Offset
-		/// </summary>
-		public int Offset
-		{
-			get;
-			private set;
-		}
-
-
-		/// <summary>
-		/// Semantic
-		/// </summary>
-		public string Semantic
-		{
-			get;
-			private set;
-		}
-
-
-		/// <summary>
-		/// Source
-		/// </summary>
-		public string Source
-		{
-			get;
-			private set;
-		}
-
-
-
-		#endregion
-	}
-
-
-	/// <summary>
-	/// 
-	/// </summary>
-	class Triangles
-	{
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="xml"></param>
-		public Triangles(XmlNode xml)
-		{
-			if (xml == null || xml.Name != "triangles")
-				throw new ArgumentException("xml");
-			
-			
-			Inputs = new List<Input>();
-			Count = int.Parse(xml.Attributes["count"].Value);
-
-			if (xml.Attributes["material"] != null)
-				Material = xml.Attributes["material"].Value;
-
-			foreach (XmlNode node in xml.ChildNodes)
-			{
-				switch (node.Name)
-				{
-					case "input":
-					{
-						Inputs.Add(new Input(node));
-					}
-					break;
-
-					case "p":
-					{
-						Data = new int[Count * 3 * Inputs.Count];
-						
-						string[] arr = node.InnerText.Split(' ');
-						for (int i = 0; i < arr.Length; i++)
+						case "mesh":
 						{
-							Data[i] = int.Parse(arr[i]);
+							Mesh = new SubMesh(node);
 						}
+						break;
 					}
-					break;
 				}
 			}
+
+
+
+			#region Properties
+
+			/// <summary>
+			/// 
+			/// </summary>
+			public SubMesh Mesh
+			{
+				get;
+				private set;
+			}
+
+			/// <summary>
+			/// Name of the geometry
+			/// </summary>
+			public string Name
+			{
+				get;
+				private set;
+			}
+
+			/// <summary>
+			/// ID of the geometry
+			/// </summary>
+			public string ID
+			{
+				get;
+				private set;
+			}
+
+
+			#endregion
 		}
 
-
-		#region Properties
 
 		/// <summary>
-		/// Material
+		/// Describes basic geometric meshes using vertex and primitive information.
 		/// </summary>
-		public string Material
+		class SubMesh
 		{
-			get;
-			private set;
-		}
+			/// <summary>
+			/// 
+			/// </summary>
+			/// <param name="xml"></param>
+			public SubMesh(XmlNode xml)
+			{
+				if (xml == null || xml.Name != "mesh")
+					throw new ArgumentException("xml");
 
+				Sources = new Dictionary<string, Source>();
+
+				foreach (XmlNode node in xml.ChildNodes)
+				{
+					switch (node.Name)
+					{
+						case "source":
+						{
+							Source source = new Source(node);
+							Sources[source.Id] = source;
+						}
+						break;
+
+						case "vertices":
+						{
+							Vertices = new Vertices(node);
+						}
+						break;
+
+						case "triangles":
+						{
+							Triangles = new Triangles(node);
+						}
+						break;
+					}
+				}
+			}
+
+
+			#region Properties
+
+
+			/// <summary>
+			/// Vertices
+			/// </summary>
+			public Vertices Vertices
+			{
+				get;
+				private set;
+			}
+
+			/// <summary>
+			/// Sources
+			/// </summary>
+			Dictionary<string, Source> Sources;
+
+
+			/// <summary>
+			/// Triangles
+			/// </summary>
+			public Triangles Triangles
+			{
+				get;
+				private set;
+			}
+
+
+			#endregion
+		}
 
 
 		/// <summary>
-		/// Count
+		///Declares a data repository that provides values according 
+		///to the semantics of an <input> element that refers to it.
 		/// </summary>
-		public int Count
+		class Source
 		{
-			get;
-			private set;
+			/// <summary>
+			/// 
+			/// </summary>
+			/// <param name="xml"></param>
+			public Source(XmlNode xml)
+			{
+				if (xml == null || xml.Name != "source")
+					throw new ArgumentException("xml");
+
+				Id = xml.Attributes["id"].Value;
+				if (xml.Attributes["name"] != null)
+					Name = xml.Attributes["name"].Value;
+
+				foreach (XmlNode node in xml.ChildNodes)
+				{
+					switch (node.Name)
+					{
+						case "float_array":
+						{
+							Array = new FloatArray(node);
+						}
+						break;
+
+						case "technique_common":
+						{
+							Technique = new TechniqueCommon(node);
+						}
+						break;
+					}
+				}
+			}
+
+
+			#region Properties
+
+
+			/// <summary>
+			/// Unique identifier of the element.
+			/// </summary>
+			public string Id
+			{
+				get;
+				private set;
+			}
+
+
+			/// <summary>
+			/// Name
+			/// </summary>
+			public string Name
+			{
+				get;
+				private set;
+			}
+
+
+			/// <summary>
+			/// 
+			/// </summary>
+			public FloatArray Array
+			{
+				get;
+				private set;
+			}
+
+			/// <summary>
+			/// 
+			/// </summary>
+			public TechniqueCommon Technique
+			{
+				get;
+				private set;
+			}
+
+			#endregion
 		}
 
 
 		/// <summary>
-		/// Inputs
+		/// Specifies information for a specific element for the common profile that all COLLADA implementations must support.
 		/// </summary>
-		public List<Input> Inputs
+		class TechniqueCommon
 		{
-			get;
-			private set;
+			/// <summary>
+			/// 
+			/// </summary>
+			/// <param name="xml"></param>
+			public TechniqueCommon(XmlNode xml)
+			{
+				if (xml == null || xml.Name != "technique_common")
+					throw new ArgumentException("xml");
+
+				foreach (XmlNode node in xml.ChildNodes)
+				{
+					switch (node.Name)
+					{
+						case "accessor":
+						{
+							Accessor = new Accessor(node);
+						}
+						break;
+					}
+				}
+			}
+
+
+			#region Properties
+
+
+			/// <summary>
+			/// Accessor
+			/// </summary>
+			public Accessor Accessor
+			{
+				get;
+				private set;
+			}
+
+
+
+			#endregion
 		}
+
 
 		/// <summary>
-		/// 
+		/// Declares the storage for a homogenous array of floating-point values.
 		/// </summary>
-		public int[] Data
+		class FloatArray
 		{
-			get;
-			private set;
+			/// <summary>
+			/// 
+			/// </summary>
+			/// <param name="xml"></param>
+			public FloatArray(XmlNode xml)
+			{
+				if (xml == null || xml.Name != "float_array")
+					throw new ArgumentException("xml");
+
+				Count = int.Parse(xml.Attributes["count"].Value);
+				if (xml.Attributes["id"] != null)
+					Id = xml.Attributes["id"].Value;
+				if (xml.Attributes["name"] != null)
+					Name = xml.Attributes["name"].Value;
+
+
+				Data = new float[Count];
+				string[] arr = xml.InnerText.Replace('.', ',').Split(' ');
+				for (int i = 0; i < arr.Length; i++)
+				{
+					Data[i] = float.Parse(arr[i]);
+				}
+			}
+
+
+
+			#region Properties
+
+			/// <summary>
+			/// Datas
+			/// </summary>
+			public float[] Data
+			{
+				get;
+				private set;
+			}
+
+
+			/// <summary>
+			/// Count
+			/// </summary>
+			public int Count
+			{
+				get;
+				private set;
+			}
+
+
+			/// <summary>
+			/// Id
+			/// </summary>
+			public string Id
+			{
+				get;
+				private set;
+			}
+
+			/// <summary>
+			/// Name
+			/// </summary>
+			public string Name
+			{
+				get;
+				private set;
+			}
+
+			#endregion
 		}
 
-		#endregion
+
+		/// <summary>
+		/// Describes a stream of values from an array data source.
+		/// </summary>
+		class Accessor
+		{
+			/// <summary>
+			/// 
+			/// </summary>
+			/// <param name="xml"></param>
+			public Accessor(XmlNode xml)
+			{
+				if (xml == null || xml.Name != "accessor")
+					throw new ArgumentException("xml");
+
+				Params = new List<Param>();
+				Source = xml.Attributes["source"].Value;
+				if (xml.Attributes["stride"] != null) ;
+				Stride = int.Parse(xml.Attributes["stride"].Value);
+				Count = int.Parse(xml.Attributes["count"].Value);
+				if (xml.Attributes["offset"] != null)
+					Offset = int.Parse(xml.Attributes["offset"].Value);
+
+				foreach (XmlNode node in xml.ChildNodes)
+				{
+					switch (node.Name)
+					{
+						case "param":
+						{
+							Params.Add(new Param(node));
+						}
+						break;
+					}
+				}
+			}
+
+
+			#region Properties
+
+			/// <summary>
+			/// Params
+			/// </summary>
+			public List<Param> Params
+			{
+				get;
+				private set;
+			}
+
+
+			/// <summary>
+			/// Source
+			/// </summary>
+			public string Source
+			{
+				get;
+				private set;
+			}
+
+
+
+			/// <summary>
+			/// Count
+			/// </summary>
+			public int Count
+			{
+				get;
+				private set;
+			}
+
+
+			/// <summary>
+			/// Stride
+			/// </summary>
+			public int Stride
+			{
+				get;
+				private set;
+			}
+
+			/// <summary>
+			/// Offset
+			/// </summary>
+			public int Offset
+			{
+				get;
+				private set;
+			}
+
+
+			#endregion
+		}
+
+
+		/// <summary>
+		/// Declares parametric information for its parent element.
+		/// </summary>
+		class Param
+		{
+			/// <summary>
+			/// 
+			/// </summary>
+			/// <param name="xml"></param>
+			public Param(XmlNode xml)
+			{
+				if (xml == null || xml.Name != "param")
+					throw new ArgumentException("xml");
+
+				if (xml.Attributes["name"] != null)
+					Name = xml.Attributes["name"].Value;
+
+			}
+
+
+			#region Properties
+
+			/// <summary>
+			/// 
+			/// </summary>
+			public string Name
+			{
+				get;
+				private set;
+			}
+
+			/// <summary>
+			/// 
+			/// </summary>
+			public Type Type
+			{
+				get;
+				private set;
+			}
+
+			#endregion
+		}
+
+
+		/// <summary>
+		/// Declares the attributes and identity of mesh-vertices.
+		/// </summary>
+		class Vertices
+		{
+			/// <summary>
+			/// 
+			/// </summary>
+			/// <param name="xml"></param>
+			public Vertices(XmlNode xml)
+			{
+				if (xml == null || xml.Name != "vertices")
+					throw new ArgumentException("xml");
+
+				Id = xml.Attributes["id"].Value;
+				if (xml.Attributes["name"] != null)
+					Name = xml.Attributes["name"].Value;
+
+				foreach (XmlNode node in xml.ChildNodes)
+				{
+					switch (node.Name)
+					{
+						case "input":
+						{
+							Input = new Input(node);
+						}
+						break;
+					}
+				}
+			}
+
+
+			#region Properties
+
+
+			/// <summary>
+			/// Id
+			/// </summary>
+			public string Id
+			{
+				get;
+				private set;
+			}
+
+
+
+			/// <summary>
+			/// Name
+			/// </summary>
+			public string Name
+			{
+				get;
+				private set;
+			}
+
+
+			/// <summary>
+			/// 
+			/// </summary>
+			public Input Input
+			{
+				get;
+				private set;
+			}
+
+			#endregion
+		}
+
+
+		/// <summary>
+		/// Declares the input semantics of a data source and connects a consumer to that source.
+		/// </summary>
+		class Input
+		{
+			/// <summary>
+			/// 
+			/// </summary>
+			/// <param name="xml"></param>
+			public Input(XmlNode xml)
+			{
+				if (xml == null || xml.Name != "input")
+					throw new ArgumentException("xml");
+
+				if (xml.Attributes["offset"] != null)
+					Offset = int.Parse(xml.Attributes["offset"].Value);
+
+				Semantic = xml.Attributes["semantic"].Value;
+				Source = xml.Attributes["source"].Value;
+			}
+
+
+			#region Properties
+
+
+			/// <summary>
+			/// Offset
+			/// </summary>
+			public int Offset
+			{
+				get;
+				private set;
+			}
+
+
+			/// <summary>
+			/// Semantic
+			/// </summary>
+			public string Semantic
+			{
+				get;
+				private set;
+			}
+
+
+			/// <summary>
+			/// Source
+			/// </summary>
+			public string Source
+			{
+				get;
+				private set;
+			}
+
+
+
+			#endregion
+		}
+
+
+		/// <summary>
+		/// Provides the information needed to for a mesh to bind vertex attributes together and 
+		/// then organize those vertices into individual triangles.
+		/// </summary>
+		class Triangles
+		{
+			/// <summary>
+			/// 
+			/// </summary>
+			/// <param name="xml"></param>
+			public Triangles(XmlNode xml)
+			{
+				if (xml == null || xml.Name != "triangles")
+					throw new ArgumentException("xml");
+
+
+				Inputs = new List<Input>();
+				Count = int.Parse(xml.Attributes["count"].Value);
+
+				if (xml.Attributes["material"] != null)
+					Material = xml.Attributes["material"].Value;
+				if (xml.Attributes["name"] != null)
+					Name = xml.Attributes["name"].Value;
+
+				foreach (XmlNode node in xml.ChildNodes)
+				{
+					switch (node.Name)
+					{
+						case "input":
+						{
+							Inputs.Add(new Input(node));
+						}
+						break;
+
+						case "p":
+						{
+							Data = new int[Count * 3 * Inputs.Count];
+
+							string[] arr = node.InnerText.Split(' ');
+							for (int i = 0; i < arr.Length; i++)
+							{
+								Data[i] = int.Parse(arr[i]);
+							}
+						}
+						break;
+					}
+				}
+			}
+
+
+			#region Properties
+
+			/// <summary>
+			/// Material
+			/// </summary>
+			public string Material
+			{
+				get;
+				private set;
+			}
+
+
+			/// <summary>
+			/// Name
+			/// </summary>
+			public string Name
+			{
+				get;
+				private set;
+			}
+
+
+
+			/// <summary>
+			/// Count
+			/// </summary>
+			public int Count
+			{
+				get;
+				private set;
+			}
+
+
+			/// <summary>
+			/// Inputs
+			/// </summary>
+			public List<Input> Inputs
+			{
+				get;
+				private set;
+			}
+
+			/// <summary>
+			/// 
+			/// </summary>
+			public int[] Data
+			{
+				get;
+				private set;
+			}
+
+			#endregion
+		}
 	}
+
 }

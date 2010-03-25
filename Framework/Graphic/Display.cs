@@ -1060,6 +1060,7 @@ namespace ArcEngine.Graphic
 			if (batch == null || batch.Size == 0)
 				return;
 
+			// Vertex Array
 			if (Capabilities.HasVBO)
 			{
 				// Vertex

@@ -51,7 +51,7 @@ namespace ArcEngine.Graphic
 			if (texturecount < 1 || texturecount > Display.Capabilities.MaxMultiSample)
 				throw new ArgumentOutOfRangeException("texturecount");
 
-
+			
 			// Textures
 			TextureBufferCount = texturecount;
 			int count = 2 + texturecount;

@@ -18,6 +18,10 @@ namespace ArcEngine.Examples
 
 			IndexBuffer = new BufferObject<uint>();
 			VertexBuffer = new BufferObject<float>();
+
+
+
+
 		}
 
 
@@ -38,12 +42,24 @@ namespace ArcEngine.Examples
 		}
 
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public void Draw()
+		{
+		}
+
+
 		/// <summary>
 		/// 
 		/// </summary>
 		public void Dispose()
 		{
 		}
+
+
+
 
 
 		#region Properties
