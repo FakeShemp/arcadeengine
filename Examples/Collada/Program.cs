@@ -77,7 +77,7 @@ namespace ArcEngine.Examples
 
 			ColladaLoader loader = new ColladaLoader();
 			loader.Load("data/cube.dae");
-			Mesh mesh = loader.GenerateMesh("Cube_002");
+			Mesh = loader.GenerateMesh("Cube_002");
 
 		}
 
@@ -87,7 +87,8 @@ namespace ArcEngine.Examples
 		/// </summary>
 		public override void UnloadContent()
 		{
-			Mesh.Dispose();
+			if (Mesh != null)
+				Mesh.Dispose();
 		}
 
 

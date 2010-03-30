@@ -66,7 +66,9 @@ namespace ArcEngine.Graphic
 			{
 			}
 */
-			GL.GenBuffers(2, Handles);
+			int[] id = new int[1];
+			GL.GenBuffers(2, id);
+			Handle = id[0];
 			Buffer = new List<float>();
 
 			// Attribs
@@ -125,13 +127,13 @@ namespace ArcEngine.Graphic
 
 
 				// Update Vertex buffer
-				GL.BindBuffer(BufferTarget.ArrayBuffer, Handles[0]);
+				GL.BindBuffer(BufferTarget.ArrayBuffer, Handle);
 				GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(Buffer.Count * sizeof(float)), Buffer.ToArray(), BufferUsageHint.StaticDraw);
 
 			}
 			catch (Exception e)
 			{
-				bool er = GL.IsBuffer(Handles[0]);
+				bool er = GL.IsBuffer(Handle);
 				Trace.WriteLine(e.Message + Environment.NewLine + e.StackTrace);
 			}
 
@@ -289,9 +291,10 @@ namespace ArcEngine.Graphic
 			{
 				//GL.DeleteBuffers(3, BufferID);
 			}
-			GL.DeleteBuffers(2, Handles);
-			Handles[0] = -1;
-			Handles[1] = -1;
+			int[] id = new int[1];
+			id[0] = Handle;
+			GL.DeleteBuffers(1, id);
+			Handle = -1;
 			//BufferID[1] = -1;
 			//BufferID[2] = -1;
 
@@ -348,13 +351,13 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Buffer ID
 		/// </summary>
-		/// <remarks>Buffer 0 => Vertex
-		/// Buffer 1 => Attribs</remarks>
-		internal int[] Handles
+		public int Handle
 		{
 			get;
 			private set;
 		}
+		
+
 
 		
 		/// <summary>

@@ -1094,7 +1094,7 @@ namespace ArcEngine.Graphic
 				}
 */
 
-				GL.BindBuffer(BufferTarget.ArrayBuffer, batch.Handles[0]);
+				GL.BindBuffer(BufferTarget.ArrayBuffer, batch.Handle);
 				GL.BufferData<float>(BufferTarget.ArrayBuffer, (IntPtr) (sizeof(float) * batch.Buffer.Count), batch.Buffer.ToArray(), BufferUsageHint.StaticDraw);
 				GL.DrawArrays(mode, 0, batch.Size);
 

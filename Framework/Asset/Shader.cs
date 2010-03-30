@@ -348,6 +348,17 @@ namespace ArcEngine.Asset
 
 
 		/// <summary>
+		/// Associates a generic vertex attribute index with a named attribute variable
+		/// </summary>
+		/// <param name="id">Specifies the index of the generic vertex attribute to be bound.</param>
+		/// <param name="name">Name of the vertex shader attribute variable to which index is to be bound.</param>
+		public void BindAttrib(int index, string name)
+		{
+			GL.BindAttribLocation(ProgramID, index, name);
+		}
+
+
+		/// <summary>
 		/// Returns the ID of an attribute
 		/// </summary>
 		/// <param name="name">Name of the attribute</param>
@@ -377,10 +388,6 @@ namespace ArcEngine.Asset
 		public void SetAttribute(int id, int value)
 		{
 			GL.VertexAttrib1(id, value);
-
-
-
-			
 		}
 
 
