@@ -122,21 +122,20 @@ namespace ArcEngine.Examples
 
 
 		/// <summary>
-		/// 
+		/// Generates a mesh
 		/// </summary>
-		/// <param name="name"></param>
+		/// <param name="name">Name of the geometry</param>
 		/// <returns></returns>
 		public Mesh GenerateMesh(string name)
 		{
-			if (string.IsNullOrEmpty(name))
+			if (string.IsNullOrEmpty(name) || !Geometries.ContainsKey(name))
 				return null;
 
-			if (!Geometries.ContainsKey(name))
-				return null;
+			Mesh mesh = new Mesh();
 
 
 
-			return null;
+			return mesh;
 		}
 
 

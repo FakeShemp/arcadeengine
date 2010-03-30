@@ -38,8 +38,7 @@ namespace ArcEngine.Examples
 		public BufferObject()
 		{
 			GL.GenBuffers(1, out Handle);
-
-			Buffer = new List<T>();
+			Index = -1;
 			ElementSize = Marshal.SizeOf(typeof(T));
 		}
 
@@ -60,38 +59,16 @@ namespace ArcEngine.Examples
 
 
 
-		/// <summary>
-		/// Clears the buffer
-		/// </summary>
-		public void Clear()
-		{
-			Buffer.Clear();
-		}
-
-
-		/// <summary>
-		/// Adds a value to the buffer
-		/// </summary>
-		/// <param name="value">Value to add</param>
-		public void Add(T value)
-		{
-			Buffer.Add(value);
-		}
-
-
 
 		/// <summary>
 		/// Apply updates
 		/// </summary>
-		public void Apply()
+		public void Update(T[] data)
 		{
-			if (!Display.Capabilities.HasVBO)
-				return;
-
 			try
 			{
 				GL.BindBuffer(BufferTarget.ArrayBuffer, Handle);
-				GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(Count * ElementSize), Buffer.ToArray(), BufferUsageHint.StaticDraw);
+				GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(data.Length * ElementSize), data, BufferUsageHint.StaticDraw);
 			}
 			catch (Exception e)
 			{
@@ -104,6 +81,28 @@ namespace ArcEngine.Examples
 
 
 
+		/// <summary>
+		/// Enable the buffer
+		/// </summary>
+		/// <param name="index"></param>
+		public void Enable(int index)
+		{
+			Index = index;
+			GL.EnableVertexAttribArray(Index);
+		}
+
+
+
+		/// <summary>
+		/// Disable the buffer
+		/// </summary>
+		public void Disable()
+		{
+			GL.DisableVertexAttribArray(Index);
+			Index = -1;
+		}
+
+
 
 		#region Properties
 
@@ -113,28 +112,22 @@ namespace ArcEngine.Examples
 		int Handle;
 
 
-		/// <summary>
-		/// Internal buffer
-		/// </summary>
-		List<T> Buffer;
-
-
-		/// <summary>
-		/// Number of elements in the buffer
-		/// </summary>
-		public int Count
-		{
-			get
-			{
-				return Buffer.Count;
-			}
-		}
-
 
 		/// <summary>
 		/// Size of an element
 		/// </summary>
 		int ElementSize;
+
+
+
+		/// <summary>
+		/// Enable index
+		/// </summary>
+		public int Index
+		{
+			get;
+			private set;
+		}
 
 
 		#endregion

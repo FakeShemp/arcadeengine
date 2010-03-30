@@ -1063,6 +1063,7 @@ namespace ArcEngine.Graphic
 			// Vertex Array
 			if (Capabilities.HasVBO)
 			{
+/*
 				// Vertex
 				GL.EnableClientState(ArrayCap.VertexArray);
 				GL.BindBuffer(BufferTarget.ArrayBuffer, batch.BufferID[0]);
@@ -1091,18 +1092,21 @@ namespace ArcEngine.Graphic
 					GL.ClientActiveTexture(OpenTK.Graphics.OpenGL.TextureUnit.Texture0 + id);
 					GL.DisableClientState(ArrayCap.TextureCoordArray);
 				}
+*/
 
+				GL.BindBuffer(BufferTarget.ArrayBuffer, batch.Handles[0]);
+				GL.BufferData<float>(BufferTarget.ArrayBuffer, (IntPtr) (sizeof(float) * batch.Buffer.Count), batch.Buffer.ToArray(), BufferUsageHint.StaticDraw);
 				GL.DrawArrays(mode, 0, batch.Size);
 
 
-				GL.DisableClientState(ArrayCap.VertexArray);
-				GL.DisableClientState(ArrayCap.TextureCoordArray);
-				GL.DisableClientState(ArrayCap.ColorArray);
+				//GL.DisableClientState(ArrayCap.VertexArray);
+				//GL.DisableClientState(ArrayCap.TextureCoordArray);
+				//GL.DisableClientState(ArrayCap.ColorArray);
 
 			}
 			else
 			{
-
+/*
 				GL.Begin(mode);
 				for (int id = 0; id < batch.Size; id++)
 				{
@@ -1110,6 +1114,7 @@ namespace ArcEngine.Graphic
 					GL.Vertex2(batch.VertexBuffer[id].X, batch.VertexBuffer[id].Y);
 				}
 				GL.End();
+*/
 /*
 				// Vertex
 				GL.EnableClientState(EnableCap.VertexArray);
@@ -1748,6 +1753,22 @@ namespace ArcEngine.Graphic
 				GL.GetInteger(GetPName.MaxTextureCoords, out maxMultiSample);
 			}
 
+
+			string version = GL.GetString(StringName.Version);
+			if (version[0] - '0' >= 3)
+			{
+				int value = 0;
+				GL.GetInteger(GetPName.MajorVersion, out value);
+				MajorVersion = value;
+				GL.GetInteger(GetPName.MinorVersion, out value);
+				MinorVersion = value;
+			}
+			else
+			{
+				MajorVersion = version[0] - '0';
+				MinorVersion = version[2] - '0';
+			}
+
 		}
 
 		/// <summary>
@@ -1836,6 +1857,19 @@ namespace ArcEngine.Graphic
 
 
 		/// <summary>
+		/// 
+		/// </summary>
+		public int MaxTextureImageUnit
+		{
+			get
+			{
+				int count;
+				GL.GetInteger(GetPName.MaxTextureImageUnits, out count);
+				return count;
+			}
+		}
+
+		/// <summary>
 		/// Returns OpenGL version
 		/// </summary>
 		public string VideoVersion
@@ -1864,13 +1898,8 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public int MajorVersion
 		{
-			get
-			{
-				int version;
-				GL.GetInteger(GetPName.MajorVersion, out version);
-
-				return version;
-			}
+			get;
+			private set;
 		}
 
 
@@ -1879,13 +1908,8 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public int MinorVersion
 		{
-			get
-			{
-				int version;
-				GL.GetInteger(GetPName.MinorVersion, out version);
-
-				return version;
-			}
+			get;
+			private set;
 		}
 
 
@@ -1990,12 +2014,12 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Major version
 		/// </summary>
-		public int Major = 99;
+		public int Major = 3;
 
 		/// <summary>
 		/// Minor version
 		/// </summary>
-		public int Minor = 99;
+		public int Minor = 1;
 
 		/// <summary>
 		/// FSAA buffer 

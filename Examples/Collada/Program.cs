@@ -75,8 +75,10 @@ namespace ArcEngine.Examples
 		{
 			Display.ClearColor = Color.CornflowerBlue;
 
-			Mesh = new Mesh();
-			Mesh.Load("data/cube.dae");
+			ColladaLoader loader = new ColladaLoader();
+			loader.Load("data/cube.dae");
+			Mesh mesh = loader.GenerateMesh("Cube_002");
+
 		}
 
 
