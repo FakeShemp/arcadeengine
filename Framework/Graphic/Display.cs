@@ -1133,6 +1133,17 @@ namespace ArcEngine.Graphic
 		}
 
 
+		public static void EnableVertexAttrib(int id)
+		{
+			GL.EnableVertexAttribArray(id);
+		}
+
+
+		public static void DisableVertexAttrib(int id)
+		{
+			GL.DisableVertexAttribArray(id);
+		}
+
 		#endregion
 
 

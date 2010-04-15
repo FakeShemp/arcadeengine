@@ -37,8 +37,8 @@ namespace ArcEngine.Examples
 		/// </summary>
 		public Mesh()
 		{
-			IndexBuffer = new BufferObject<uint>();
-			VertexBuffer = new BufferObject<float>();
+			IndexBuffer = new ArrayBuffer<uint>();
+			VertexBuffer = new ArrayBuffer<float>();
 		}
 
 
@@ -69,14 +69,14 @@ namespace ArcEngine.Examples
 		/// </summary>
 		public void Draw()
 		{
-			VertexBuffer.Enable(1);
-			IndexBuffer.Enable(2);
+			//VertexBuffer.Enable(1);
+			//IndexBuffer.Enable(2);
 
 
 			//GL.DrawElements(BeginMode.Triangles, count, DrawElementsType.UnsignedInt, 0);
 
-			VertexBuffer.Disable();
-			IndexBuffer.Disable();
+			//VertexBuffer.Disable();
+			//IndexBuffer.Disable();
 		}
 
 
@@ -98,12 +98,12 @@ namespace ArcEngine.Examples
 		/// <summary>
 		/// Index buffer
 		/// </summary>
-		BufferObject<uint> IndexBuffer;
+		ArrayBuffer<uint> IndexBuffer;
 
 		/// <summary>
 		/// Vertex buffer
 		/// </summary>
-		BufferObject<float> VertexBuffer;
+		ArrayBuffer<float> VertexBuffer;
 
 
 		int VertexIndex;

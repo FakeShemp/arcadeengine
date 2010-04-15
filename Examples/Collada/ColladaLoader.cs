@@ -520,7 +520,9 @@ namespace ArcEngine.Examples
 
 				Params = new List<Param>();
 				Source = xml.Attributes["source"].Value;
-				if (xml.Attributes["stride"] != null) ;
+				if (xml.Attributes["stride"] != null)
+				{
+				}
 				Stride = int.Parse(xml.Attributes["stride"].Value);
 				Count = int.Parse(xml.Attributes["count"].Value);
 				if (xml.Attributes["offset"] != null)

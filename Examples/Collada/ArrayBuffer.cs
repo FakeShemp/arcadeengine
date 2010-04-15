@@ -28,18 +28,36 @@ using System.Runtime.InteropServices;
 namespace ArcEngine.Examples
 {
 	/// <summary>
-	/// Stores user datas in graphic card's memory
+	/// These buffers contain vertex attributes, such as vertex coordinates, texture coordinate data, per vertex-color data, and normals.
 	/// </summary>
-	public class BufferObject<T> : IDisposable where T : struct
+	public class ArrayBuffer<T> : IDisposable where T : struct
 	{
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public BufferObject()
+		public ArrayBuffer()
 		{
 			GL.GenBuffers(1, out Handle);
 			Index = -1;
 			ElementSize = Marshal.SizeOf(typeof(T));
+
+
+			if (typeof(T) == typeof(int))
+				Type = VertexAttribPointerType.Int;
+			else if (typeof(T) == typeof(sbyte))
+				Type = VertexAttribPointerType.Byte;
+			else if (typeof(T) == typeof(double))
+				Type = VertexAttribPointerType.Double;
+			else if (typeof(T) == typeof(short))
+				Type = VertexAttribPointerType.Short;
+			else if (typeof(T) == typeof(byte))
+				Type = VertexAttribPointerType.UnsignedByte;
+			else if (typeof(T) == typeof(uint))
+				Type = VertexAttribPointerType.UnsignedInt;
+			else if (typeof(T) == typeof(ushort))
+				Type = VertexAttribPointerType.UnsignedShort;
+			else
+				Type = VertexAttribPointerType.Float;
 		}
 
 
@@ -82,25 +100,17 @@ namespace ArcEngine.Examples
 
 
 		/// <summary>
-		/// Enable the buffer
+		/// Defines an array of generic vertex attribute data
 		/// </summary>
-		/// <param name="index"></param>
-		public void Enable(int index)
+		/// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
+		/// <param name="size">Specifies the number of components per generic vertex attribute. Must be 1, 2, 3, or 4.</param>
+		public void Bind(int index, int size)
 		{
-			Index = index;
-			GL.EnableVertexAttribArray(Index);
+			GL.EnableVertexAttribArray(index);
+			GL.BindBuffer(BufferTarget.ArrayBuffer, Handle);
+			GL.VertexAttribPointer(index, size, Type, true, ElementSize, 0);
 		}
 
-
-
-		/// <summary>
-		/// Disable the buffer
-		/// </summary>
-		public void Disable()
-		{
-			GL.DisableVertexAttribArray(Index);
-			Index = -1;
-		}
 
 
 
@@ -130,6 +140,11 @@ namespace ArcEngine.Examples
 		}
 
 
+		/// <summary>
+		/// Type of the data
+		/// </summary>
+		VertexAttribPointerType Type;
+		
 		#endregion
 	}
 }
