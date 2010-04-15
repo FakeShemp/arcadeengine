@@ -75,11 +75,146 @@ namespace ArcEngine.Examples
 		{
 			Display.ClearColor = Color.CornflowerBlue;
 
+/*
 			ColladaLoader loader = new ColladaLoader();
 			loader.Load("data/cube.dae");
 			Mesh = loader.GenerateMesh("Cube_002");
 
+
+			Batch = new Batch();
+			Batch.AddRectangle(new Rectangle(10, 10, 100, 100), Color.Red, Rectangle.Empty);
+			Batch.Apply();
+*/
+
+
+			#region Shader
+			Shader = new Shader();
+			Shader.SetSource(ShaderType.VertexShader,
+			@"
+			#version 130
+
+			precision highp float;
+
+			uniform mat4 mvp_matrix;
+
+			in vec2 in_position;
+			in vec4 in_color;
+
+			out vec4 out_color;
+
+			void main(void)
+			{
+				gl_Position = mvp_matrix * vec4(in_position, 0.0, 1.0);
+				
+				out_color = in_color;
+			}");
+
+
+			Shader.SetSource(ShaderType.FragmentShader,
+			@"
+			#version 130
+
+			precision highp float;
+
+			in vec4 out_color;
+
+			out vec4 out_frag_color;
+		
+			void main(void)
+			{
+				out_frag_color = out_color;
+			}
+			");
+			Shader.Compile();
+			Display.Shader = Shader;
+
+			// Matrix
+			Matrix4 projectionMatrix = Matrix4.CreateOrthographicOffCenter(0, Display.ViewPort.Width, Display.ViewPort.Height, 0, 0, 5);
+			Matrix4 modelviewMatrix = Matrix4.LookAt(new Vector3(0, 0, 1), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
+			Matrix4 mvpMatrix = modelviewMatrix * projectionMatrix;
+			Shader.SetUniform("mvp_matrix", mvpMatrix);
+
+			#endregion
+
+
+			#region Vertex Buffer
+			Vector2[] positionVboData = new Vector2[]
+			{
+				new Vector2( 100.0f,  100.0f),
+				new Vector2( 150.0f,  200.0f),
+				new Vector2( 50.0f,   200.0f),
+			};
+
+
+			Vector4[] colorVboData = new Vector4[]
+			{
+				new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
+				new Vector4(0.0f, 1.0f, 0.0f, 1.0f),
+				new Vector4(0.0f, 0.0f, 1.0f, 1.0f),
+			};
+
+
+			#region VBO
+			GL.GenBuffers(1, out positionVboHandle);
+			GL.BindBuffer(BufferTarget.ArrayBuffer, positionVboHandle);
+			GL.BufferData<Vector2>(BufferTarget.ArrayBuffer,
+				new IntPtr(positionVboData.Length * Vector2.SizeInBytes),
+				positionVboData, BufferUsageHint.StaticDraw);
+
+			GL.GenBuffers(1, out colorVboHandle);
+			GL.BindBuffer(BufferTarget.ArrayBuffer, colorVboHandle);
+			GL.BufferData<Vector4>(BufferTarget.ArrayBuffer,
+				new IntPtr(colorVboData.Length * Vector4.SizeInBytes),
+				colorVboData, BufferUsageHint.StaticDraw);
+
+			GL.GenBuffers(1, out eboHandle);
+			GL.BindBuffer(BufferTarget.ElementArrayBuffer, eboHandle);
+			GL.BufferData(BufferTarget.ElementArrayBuffer,
+				new IntPtr(sizeof(uint) * indicesVboData.Length),
+				indicesVboData, BufferUsageHint.StaticDraw);
+
+			GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+			GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
+			#endregion
+
+			#region VAO
+			GL.GenVertexArrays(1, out vaoHandle);
+			GL.BindVertexArray(vaoHandle);
+
+			GL.EnableVertexAttribArray(0);
+			GL.BindBuffer(BufferTarget.ArrayBuffer, positionVboHandle);
+			GL.VertexAttribPointer(0, 2, VertexAttribPointerType.Float, true, Vector2.SizeInBytes, 0);
+			Shader.BindAttrib(0, "in_position");
+
+			GL.EnableVertexAttribArray(1);
+			GL.BindBuffer(BufferTarget.ArrayBuffer, colorVboHandle);
+			GL.VertexAttribPointer(1, 4, VertexAttribPointerType.Float, true, Vector4.SizeInBytes, 0);
+			Shader.BindAttrib(1, "in_color");
+
+			GL.BindBuffer(BufferTarget.ElementArrayBuffer, eboHandle);
+
+			GL.BindVertexArray(0);
+			#endregion 
+
+			#endregion
+
+
 		}
+
+
+		int[] indicesVboData = new int[]
+		{
+			0, 1, 2,
+		};
+
+		int vaoHandle,
+		positionVboHandle,
+		colorVboHandle,
+		eboHandle;
+
+
+
+
 
 
 		/// <summary>
@@ -89,6 +224,12 @@ namespace ArcEngine.Examples
 		{
 			if (Mesh != null)
 				Mesh.Dispose();
+
+			if (Shader != null)
+				Shader.Dispose();
+
+			if (Batch != null)
+				Batch.Dispose();
 		}
 
 
@@ -115,8 +256,17 @@ namespace ArcEngine.Examples
 			// Clears the background
 			Display.ClearBuffers();
 
+			//Display.DrawBatch(Batch, BeginMode.Quads);
+
+			//Display.Shader = Shader;
+		//	GL.DrawArrays(BeginMode.Triangles, 0, 3);
 
 
+			GL.BindVertexArray(vaoHandle);
+			GL.DrawElements(BeginMode.Triangles, indicesVboData.Length,
+				DrawElementsType.UnsignedInt, IntPtr.Zero);
+
+			//Display.FillRectangle(new Rectangle(10, 10, 100, 100), Color.Red);
 		}
 
 
@@ -125,8 +275,26 @@ namespace ArcEngine.Examples
 		#region Properties
 
 
+		/// <summary>
+		/// 
+		/// </summary>
 		Mesh Mesh;
 
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Batch Batch;
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Shader Shader;
+
+
+		int bufferid;
 
 		#endregion
 

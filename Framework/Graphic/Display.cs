@@ -44,7 +44,6 @@ namespace ArcEngine.Graphic
 		static Display()
 		{
 			RenderStats = new RenderStats();
-			Capabilities = new RenderDeviceCapabilities();
 			TextureParameters = new DefaultTextParameters();
 
 			CircleResolution = 50;
@@ -57,6 +56,8 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public static void Init()
 		{
+			Capabilities = new RenderDeviceCapabilities();
+
 			Texturing = true;
 			Blending = true;
 			ClearColor = Color.Black;
@@ -76,18 +77,6 @@ namespace ArcEngine.Graphic
 
 
 			GL.Normal3(0.0f, 0.0f, 1.0f);
-
-
-			/*
-			// Get OpenGL version for 2.x
-			Regex regex = new Regex(@"(\d+)\.(\d+)\.*(\d*)");
-			Match match = regex.Match(GL.GetString(StringName.Version));
-			if (match.Success)
-			{
-				MajorVersion = Convert.ToInt32(match.Groups[1].Value);
-				MinorVersion = Convert.ToInt32(match.Groups[2].Value);
-			}
-			*/
 		}
 
 
@@ -1061,8 +1050,8 @@ namespace ArcEngine.Graphic
 				return;
 
 			// Vertex Array
-			if (Capabilities.HasVBO)
-			{
+			//if (Capabilities.HasVBO)
+			//{
 /*
 				// Vertex
 				GL.EnableClientState(ArrayCap.VertexArray);
@@ -1095,7 +1084,9 @@ namespace ArcEngine.Graphic
 */
 
 				GL.BindBuffer(BufferTarget.ArrayBuffer, batch.Handle);
-				GL.BufferData<float>(BufferTarget.ArrayBuffer, (IntPtr) (sizeof(float) * batch.Buffer.Count), batch.Buffer.ToArray(), BufferUsageHint.StaticDraw);
+				//GL.BufferData<float>(BufferTarget.ArrayBuffer, (IntPtr) (sizeof(float) * batch.Buffer.Count), batch.Buffer.ToArray(), BufferUsageHint.StaticDraw);
+
+				GL.VertexAttribPointer(1, 2, VertexAttribPointerType.Float, false, 0, 0);
 				GL.DrawArrays(mode, 0, batch.Size);
 
 
@@ -1103,9 +1094,9 @@ namespace ArcEngine.Graphic
 				//GL.DisableClientState(ArrayCap.TextureCoordArray);
 				//GL.DisableClientState(ArrayCap.ColorArray);
 
-			}
-			else
-			{
+			//}
+			//else
+			//{
 /*
 				GL.Begin(mode);
 				for (int id = 0; id < batch.Size; id++)
@@ -1136,7 +1127,7 @@ namespace ArcEngine.Graphic
 				GL.DisableClientState(EnableCap.TextureCoordArray);
 				GL.DisableClientState(EnableCap.ColorArray);
 */
-			}
+//			}
 
 			RenderStats.BatchCall++;
 		}
@@ -1732,7 +1723,36 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public RenderDeviceCapabilities()
 		{
-			Extensions = new List<string>(GL.GetString(StringName.Extensions).Split(new char[] { ' ' }));
+			//Extensions = new List<string>(); //GL.GetString(StringName.Extensions).Split(new char[] { ' ' }));
+
+
+
+			string version = GL.GetString(StringName.Version);
+			if (version[0] - '0' >= 3)
+			{
+				int value = 0;
+				GL.GetInteger(GetPName.MajorVersion, out value);
+				MajorVersion = value;
+				GL.GetInteger(GetPName.MinorVersion, out value);
+				MinorVersion = value;
+
+
+				Extensions = new List<string>();
+				int count = 0;
+				GL.GetInteger(GetPName.NumExtensions, out count);
+				for (int id = 0; id < count; id++)
+				{
+					Extensions.Add(GL.GetString(StringName.Extensions, id));
+				}
+			}
+			else
+			{
+				MajorVersion = version[0] - '0';
+				MinorVersion = version[2] - '0';
+
+				Extensions = new List<string>(GL.GetString(StringName.Extensions).Split(new char[] { ' ' }));
+		
+			}
 
 
 			if (Extensions.Contains("GL_ARB_texture_non_power_of_two"))
@@ -1753,20 +1773,21 @@ namespace ArcEngine.Graphic
 				GL.GetInteger(GetPName.MaxTextureCoords, out maxMultiSample);
 			}
 
-
-			string version = GL.GetString(StringName.Version);
-			if (version[0] - '0' >= 3)
+			if (Extensions.Contains("GL_NVX_gpu_memory_info"))
 			{
-				int value = 0;
-				GL.GetInteger(GetPName.MajorVersion, out value);
-				MajorVersion = value;
-				GL.GetInteger(GetPName.MinorVersion, out value);
-				MinorVersion = value;
-			}
-			else
-			{
-				MajorVersion = version[0] - '0';
-				MinorVersion = version[2] - '0';
+				Trace.Indent();
+				int val = 0;
+				GL.GetInteger((GetPName)0x9047, out val);
+				Trace.WriteLine("Dedicated video memory : " + val.ToString() + " Kb");
+				GL.GetInteger((GetPName)0x9048, out val);
+				Trace.WriteLine("Total available memory : " + val.ToString() + " Kb");
+				GL.GetInteger((GetPName)0x9049, out val);
+				Trace.WriteLine("Current available dedicated video memory  : " + val.ToString() + " Kb");
+				GL.GetInteger((GetPName)0x904A, out val);
+				Trace.WriteLine("Total evictions  : " + val.ToString() + " Kb");
+				GL.GetInteger((GetPName)0x904B, out val);
+				Trace.WriteLine("Total video memory evicted   : " + val.ToString() + " Kb");
+				Trace.Unindent();
 			}
 
 		}
@@ -2014,12 +2035,12 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Major version
 		/// </summary>
-		public int Major = 3;
+		public int Major = 99;
 
 		/// <summary>
 		/// Minor version
 		/// </summary>
-		public int Minor = 1;
+		public int Minor = 99;
 
 		/// <summary>
 		/// FSAA buffer 

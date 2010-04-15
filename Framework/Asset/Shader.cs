@@ -22,6 +22,7 @@ using System;
 using System.IO;
 using System.Xml;
 using OpenTK.Graphics.OpenGL;
+using OpenTK;
 
 
 // http://bakura.developpez.com/tutoriels/jeux/utilisation-shaders-avec-opengl-3-x/
@@ -287,6 +288,7 @@ namespace ArcEngine.Asset
 
 		#endregion
 
+	
 		#region Uniforms
 
 		/// <summary>
@@ -338,6 +340,18 @@ namespace ArcEngine.Asset
 		public int GetUniform(string name)
 		{
 			return GL.GetUniformLocation(ProgramID, name);
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="name"></param>
+		/// <param name="matrix"></param>
+		public void SetUniform(string name, Matrix4 matrix)
+		{
+			int id = GetUniform(name);
+			GL.UniformMatrix4(id, false, ref matrix);
 		}
 
 
@@ -596,7 +610,7 @@ namespace ArcEngine.Asset
 		/// <summary>
 		/// Program handle
 		/// </summary>
-		internal int ProgramID
+		public int ProgramID
 		{
 			get;
 			private set;
@@ -688,5 +702,6 @@ namespace ArcEngine.Asset
 
 
 		#endregion
+
 	}
 }

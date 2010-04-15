@@ -47,40 +47,10 @@ namespace ArcEngine.Graphic
 		/// <param name="attribcount">Number of attrib buffer</param>
 		public Batch(int texturecount, int attribcount)
 		{
-/*	
-			// Not enough texture buffers
-			if (texturecount < 1 || texturecount > Display.Capabilities.MaxMultiSample)
-				throw new ArgumentOutOfRangeException("texturecount");
-
-			
-			// Textures
-			TextureBufferCount = texturecount;
-			int count = 2 + texturecount;
-			BufferID = new int[count];
-
-			if (Display.Capabilities.HasVBO)
-			{
-				GL.GenBuffers(count, BufferID);
-			}
-			else
-			{
-			}
-*/
 			int[] id = new int[1];
-			GL.GenBuffers(2, id);
+			GL.GenBuffers(1, id);
 			Handle = id[0];
 			Buffer = new List<float>();
-
-			// Attribs
-			//AttribBufferCount = attribcount;
-
-
-			//VertexBuffer = new List<Point>();
-			//TextureBuffer = new List<Point>[texturecount];
-			//for (int id = 0; id < texturecount; id++)
-			//    TextureBuffer[id] = new List<Point>();
-
-			//ColorBuffer = new List<int>();
 		}
 
 
@@ -89,11 +59,6 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public void Clear()
 		{
-			//VertexBuffer.Clear();
-			//ColorBuffer.Clear();
-			//foreach (List<Point> list in TextureBuffer)
-			//    list.Clear();
-
 			Buffer.Clear();
 		}
 
@@ -105,39 +70,9 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public void Apply()
 		{
-			if (!Display.Capabilities.HasVBO)
-				return;
-
-			try
-			{
-				//// Update Vertex buffer
-				//GL.BindBuffer(BufferTarget.ArrayBuffer, BufferID[0]);
-				//GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(VertexBuffer.Count * sizeof(int) * 2), VertexBuffer.ToArray(), BufferUsageHint.StaticDraw);
-
-				//// Update Color buffer
-				//GL.BindBuffer(BufferTarget.ArrayBuffer, BufferID[1]);
-				//GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(ColorBuffer.Count * sizeof(int)), ColorBuffer.ToArray(), BufferUsageHint.StaticDraw);
-
-				//// Update Texture buffers
-				//for (int id = 0; id < TextureBufferCount; id++)
-				//{
-				//    GL.BindBuffer(BufferTarget.ArrayBuffer, BufferID[id + 2]);
-				//    GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(TextureBuffer[id].Count * sizeof(int) * 2), TextureBuffer[id].ToArray(), BufferUsageHint.StaticDraw);
-				//}
-
-
-				// Update Vertex buffer
-				GL.BindBuffer(BufferTarget.ArrayBuffer, Handle);
-				GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(Buffer.Count * sizeof(float)), Buffer.ToArray(), BufferUsageHint.StaticDraw);
-
-			}
-			catch (Exception e)
-			{
-				bool er = GL.IsBuffer(Handle);
-				Trace.WriteLine(e.Message + Environment.NewLine + e.StackTrace);
-			}
-
-
+			// Update buffer
+			GL.BindBuffer(BufferTarget.ArrayBuffer, Handle);
+			GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(Buffer.Count * sizeof(float)), Buffer.ToArray(), BufferUsageHint.StaticDraw);
 		}
 
 
@@ -170,8 +105,10 @@ namespace ArcEngine.Graphic
 			Buffer.Add(point.X);
 			Buffer.Add(point.Y);
 
+
+			return;
+
 			// Color
-			//Buffer.Add((color.A << 24) + (color.B << 16) + (color.G << 8) + (color.R));
 			Buffer.Add(color.R / 255);
 			Buffer.Add(color.G / 255);
 			Buffer.Add(color.B / 255);
@@ -180,11 +117,6 @@ namespace ArcEngine.Graphic
 			// Texture
 			Buffer.Add(texture.X);
 			Buffer.Add(texture.Y);
-
-
-			//VertexBuffer.Add(point);
-			//TextureBuffer[0].Add(texture);
-			//ColorBuffer.Add((color.A << 24) + (color.B << 16) + (color.G << 8) + (color.R));
 		}
 
 
@@ -287,49 +219,11 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public void Dispose()
 		{
-			if (Display.Capabilities.HasVBO)
-			{
-				//GL.DeleteBuffers(3, BufferID);
-			}
-			int[] id = new int[1];
-			id[0] = Handle;
+			int[] id = new int[]{Handle};
 			GL.DeleteBuffers(1, id);
 			Handle = -1;
-			//BufferID[1] = -1;
-			//BufferID[2] = -1;
-
-
-			//Dispose(true);
-			//GC.SuppressFinalize(this);
 		}
 
-/*
-		// Dispose(bool disposing) executes in two distinct scenarios.
-		// If disposing equals true, the method has been called directly
-		// or indirectly by a user's code. Managed and unmanaged resources
-		// can be disposed.
-		// If disposing equals false, the method has been called by the
-		// runtime from inside the finalizer and you should not reference
-		// other objects. Only unmanaged resources can be disposed.
-		private void Dispose(bool disposing)
-		{
-			// Check to see if Dispose has already been called.
-			if (!this.disposed)
-			{
-				if (Display.Capabilities.HasVBO)
-				{
-					//GL.DeleteBuffers(3, BufferID);
-				}
-				BufferID[0] = -1;
-				BufferID[1] = -1;
-				BufferID[2] = -1;
-
-				// Note disposing has been done.
-				disposed = true;
-			}
-		}
-
-*/
 		#endregion
 
 
@@ -359,39 +253,6 @@ namespace ArcEngine.Graphic
 		
 
 
-		
-		/// <summary>
-		/// Vertex buffer
-		/// </summary>
-		//internal List<Point> VertexBuffer;
-		
-		/// <summary>
-		/// Texture buffer
-		/// </summary>
-		//internal List<Point>[] TextureBuffer;
-
-/*
-		/// <summary>
-		/// Number of texture buffers
-		/// </summary>
-		public int TextureBufferCount
-		{
-			get;
-			private set;
-		}
-
-
-		/// <summary>
-		/// Number of attrib buffers
-		/// </summary>
-		public int AttribBufferCount
-		{
-			get;
-			private set;
-		}
-
-*/
-
 		/// <summary>
 		/// 
 		/// </summary>
@@ -401,10 +262,6 @@ namespace ArcEngine.Graphic
 			private set;
 		}
 
-		/// <summary>
-		/// Color buffer
-		/// </summary>
-	//	internal List<int> ColorBuffer;
 
 		#endregion
 

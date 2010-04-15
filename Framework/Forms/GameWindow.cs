@@ -44,6 +44,7 @@ namespace ArcEngine.Forms
 
 			InitializeComponent();
 
+
 			// Adds the control to the form
 			RenderControl = new GLControl(new GraphicsMode(param.Color, param.Depth, param.Stencil, param.Samples),
 				param.Major, param.Minor,
@@ -246,6 +247,19 @@ namespace ArcEngine.Forms
 			Mouse.Move(e);
 		}
 
+		/// <summary>
+		/// Form Closed
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void GameWindow_FormClosed(object sender, FormClosedEventArgs e)
+		{
+			if (RenderControl != null)
+			{
+				RenderControl.Dispose();
+				RenderControl = null;
+			}
+		}
 
 		#endregion
 
@@ -337,6 +351,7 @@ namespace ArcEngine.Forms
 			}
 		}
 		#endregion
+
 	}
 
 }
