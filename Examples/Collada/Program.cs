@@ -157,29 +157,15 @@ namespace ArcEngine.Examples
 			#region VBO
 			VertexBuffer = new ArrayBuffer<Vector2>();
 			VertexBuffer.Update(positionVboData);
-			//GL.GenBuffers(1, out positionVboHandle);
-			//GL.BindBuffer(BufferTarget.ArrayBuffer, positionVboHandle);
-			//GL.BufferData<Vector2>(BufferTarget.ArrayBuffer,
-			//    new IntPtr(positionVboData.Length * Vector2.SizeInBytes),
-			//    positionVboData, BufferUsageHint.StaticDraw);
 
 
 			ColorBuffer = new ArrayBuffer<Vector4>();
 			ColorBuffer.Update(colorVboData);
-			//GL.GenBuffers(1, out colorVboHandle);
-			//GL.BindBuffer(BufferTarget.ArrayBuffer, colorVboHandle);
-			//GL.BufferData<Vector4>(BufferTarget.ArrayBuffer,
-			//    new IntPtr(colorVboData.Length * Vector4.SizeInBytes),
-			//    colorVboData, BufferUsageHint.StaticDraw);
 
 
 			IndicesBuffer = new ElementBuffer();
 			IndicesBuffer.Update(indicesVboData);
-			//GL.GenBuffers(1, out eboHandle);
-			//GL.BindBuffer(BufferTarget.ElementArrayBuffer, eboHandle);
-			//GL.BufferData(BufferTarget.ElementArrayBuffer,
-			//    new IntPtr(sizeof(uint) * indicesVboData.Length),
-			//    indicesVboData, BufferUsageHint.StaticDraw);
+
 
 			GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
 			GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
@@ -192,19 +178,13 @@ namespace ArcEngine.Examples
 			GL.BindVertexArray(vaoHandle);
 
 			VertexBuffer.Bind(0, 2);
-			//GL.EnableVertexAttribArray(0);
-			//GL.BindBuffer(BufferTarget.ArrayBuffer, positionVboHandle);
-			//GL.VertexAttribPointer(0, 2, VertexAttribPointerType.Float, true, Vector2.SizeInBytes, 0);
 			Shader.BindAttrib(0, "in_position");
 
 			ColorBuffer.Bind(1, 4);
-			//GL.EnableVertexAttribArray(1);
-			//GL.BindBuffer(BufferTarget.ArrayBuffer, colorVboHandle);
-			//GL.VertexAttribPointer(1, 4, VertexAttribPointerType.Float, true, Vector4.SizeInBytes, 0);
 			Shader.BindAttrib(1, "in_color");
 
+
 			IndicesBuffer.Bind();
-			//GL.BindBuffer(BufferTarget.ElementArrayBuffer, IndicesBuffer.Handle);
 
 			GL.BindVertexArray(0);
 			#endregion 
@@ -225,9 +205,6 @@ namespace ArcEngine.Examples
 		};
 
 		int vaoHandle;
-		//positionVboHandle,
-		//colorVboHandle,
-		//eboHandle;
 
 
 

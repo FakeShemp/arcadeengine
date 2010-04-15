@@ -74,19 +74,22 @@ namespace ArcEngine.Examples
 
 
 		/// <summary>
-		/// Size of an element
-		/// </summary>
-		int ElementSize;
-
-
-
-		/// <summary>
 		/// Enable index
 		/// </summary>
 		public int Index
 		{
 			get;
 			private set;
+		}
+
+
+		/// <summary>
+		/// Usage mode
+		/// </summary>
+		public BufferUsageHint UsageMode
+		{
+			get;
+			set;
 		}
 
 
