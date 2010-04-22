@@ -174,8 +174,7 @@ namespace ArcEngine.Examples
 
 
 			#region VAO
-			GL.GenVertexArrays(1, out vaoHandle);
-			GL.BindVertexArray(vaoHandle);
+			Batch = new DrawBatch();
 
 			VertexBuffer.Bind(0, 2);
 			Shader.BindAttrib(0, "in_position");
@@ -199,14 +198,10 @@ namespace ArcEngine.Examples
 		ElementBuffer IndicesBuffer;
 
 
-		int[] indicesVboData = new int[]
+		uint[] indicesVboData = new uint[]
 		{
 			0, 1, 2,
 		};
-
-		int vaoHandle;
-
-
 
 
 
@@ -250,17 +245,12 @@ namespace ArcEngine.Examples
 			// Clears the background
 			Display.ClearBuffers();
 
-			//Display.DrawBatch(Batch, BeginMode.Quads);
+			Batch.Bind();
+			//GL.BindVertexArray(vaoHandle);
+			GL.DrawElements(BeginMode.Triangles, indicesVboData.Length, DrawElementsType.UnsignedInt, IntPtr.Zero);
 
-			//Display.Shader = Shader;
-		//	GL.DrawArrays(BeginMode.Triangles, 0, 3);
+			Batch.Draw(BeginMode.Triangles);
 
-
-			GL.BindVertexArray(vaoHandle);
-			GL.DrawElements(BeginMode.Triangles, indicesVboData.Length,
-				DrawElementsType.UnsignedInt, IntPtr.Zero);
-
-			//Display.FillRectangle(new Rectangle(10, 10, 100, 100), Color.Red);
 		}
 
 
@@ -279,7 +269,8 @@ namespace ArcEngine.Examples
 		/// <summary>
 		/// 
 		/// </summary>
-		Batch Batch;
+		//Batch Batch;
+		DrawBatch Batch;
 
 
 		/// <summary>

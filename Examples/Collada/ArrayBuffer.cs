@@ -113,7 +113,6 @@ namespace ArcEngine.Examples
 
 
 
-
 		#region Properties
 
 		/// <summary>

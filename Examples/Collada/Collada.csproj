@@ -76,6 +76,7 @@
   <ItemGroup>
     <Compile Include="ArrayBuffer.cs" />
     <Compile Include="ColladaLoader.cs" />
+    <Compile Include="DrawBatch.cs" />
     <Compile Include="ElementBuffer.cs" />
     <Compile Include="Mesh.cs" />
     <Compile Include="Program.cs" />

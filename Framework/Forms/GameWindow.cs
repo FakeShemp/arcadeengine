@@ -48,7 +48,7 @@ namespace ArcEngine.Forms
 			// Adds the control to the form
 			RenderControl = new GLControl(new GraphicsMode(param.Color, param.Depth, param.Stencil, param.Samples),
 				param.Major, param.Minor,
-				GraphicsContextFlags.ForwardCompatible);
+				GraphicsContextFlags.Default);
 			RenderControl.Dock = DockStyle.Fill;
 			Controls.Add(RenderControl);
 
@@ -153,8 +153,17 @@ namespace ArcEngine.Forms
 		/// <param name="e"></param>
 		void OnResize(object sender, EventArgs e)
 		{
-			if (RenderControl.Context == null)
+			if (RenderControl == null)
+			{
+				Trace.WriteLine("GameWindow:OnResize() : RenderControl is null !!");
 				return;
+			}
+
+			if (RenderControl.Context == null)
+			{
+				Trace.WriteLine("GameWindow:OnResize() : RenderControl.Context is null !!");
+				return;
+			}
 
 			RenderControl.MakeCurrent();
 			Display.ViewPort = new Rectangle(Point.Empty, RenderControl.Size);

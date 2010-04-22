@@ -15,7 +15,7 @@ namespace ArcEngine.Examples
 	/// <summary>
 	/// This type of buffer is used mainly for the element pointer. It contains only indices of elements. 
 	/// </summary>
-	public class ElementBuffer
+	public class ElementBuffer : IDisposable
 	{
 
 		/// <summary>
@@ -33,7 +33,7 @@ namespace ArcEngine.Examples
 		/// 
 		/// </summary>
 		/// <param name="data"></param>
-		public void Update(int[] data)
+		public void Update(uint[] data)
 		{
 			//GL.BindBuffer(BufferTarget.ElementArrayBuffer, eboHandle);
 			//GL.BufferData(BufferTarget.ElementArrayBuffer, new IntPtr(sizeof(uint) * indicesVboData.Length), indicesVboData, BufferUsageHint.StaticDraw);
@@ -50,7 +50,7 @@ namespace ArcEngine.Examples
 				Trace.WriteLine(e.Message + Environment.NewLine + e.StackTrace);
 			}
 
-
+			Count = data.Length;
 		}
 
 
@@ -61,6 +61,16 @@ namespace ArcEngine.Examples
 		{
 			GL.BindBuffer(BufferTarget.ElementArrayBuffer, Handle);
 		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public void Dispose()
+		{
+		}
+
 
 
 
@@ -92,6 +102,12 @@ namespace ArcEngine.Examples
 			set;
 		}
 
+
+		public int Count
+		{
+			get;
+			private set;
+		}
 
 		#endregion
 
