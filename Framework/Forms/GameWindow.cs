@@ -39,8 +39,13 @@ namespace ArcEngine.Forms
 		/// </summary>
 		public GameWindow(GameWindowParams param)
 		{
+			Trace.WriteDebugLine("[GameWindow] Constructor()");
+
 			if (param == null)
+			{
+				Trace.WriteDebugLine("[GameWindow] param == null !");
 				throw new ArgumentNullException("param");
+			}
 
 			InitializeComponent();
 
@@ -103,6 +108,8 @@ namespace ArcEngine.Forms
 		/// <param name="resolution">Desired resolution</param>
 		public void SetFullScreen(DisplayResolution resolution)
 		{
+			Trace.WriteDebugLine("[GameWindow] SetFullScreen()");
+
 			if (resolution == null)
 				return;
 
@@ -132,6 +139,7 @@ namespace ArcEngine.Forms
 		/// </summary>
 		public void SetWindowed()
 		{
+			Trace.WriteDebugLine("[GameWindow] SetWindowed()");
 
 			DisplayDevice.Default.RestoreResolution();
 			WindowState = FormWindowState.Normal;
@@ -153,15 +161,17 @@ namespace ArcEngine.Forms
 		/// <param name="e"></param>
 		void OnResize(object sender, EventArgs e)
 		{
+			Trace.WriteDebugLine("[GameWindow] OnResize()");
+			
 			if (RenderControl == null)
 			{
-				Trace.WriteLine("GameWindow:OnResize() : RenderControl is null !!");
+				Trace.WriteLine("[GameWindow] OnResize() : RenderControl is null !!");
 				return;
 			}
 
 			if (RenderControl.Context == null)
 			{
-				Trace.WriteLine("GameWindow:OnResize() : RenderControl.Context is null !!");
+				Trace.WriteLine("[GameWindow] OnResize() : RenderControl.Context is null !!");
 				return;
 			}
 
@@ -177,9 +187,19 @@ namespace ArcEngine.Forms
 		/// <param name="e"></param>
 		private void Form_Load(object sender, EventArgs e)
 		{
-			if (RenderControl.Context == null)
-				return;
+			Trace.WriteDebugLine("[GameWindow] Form_Load()");
 
+			if (RenderControl == null)
+			{
+				Trace.WriteLine("[GameWindow] Form_Load() : RenderControl is null !!");
+				return;
+			}
+			
+			if (RenderControl.Context == null)
+			{
+				Trace.WriteDebugLine("[GameWindow] Form_Load() : RenderControl.Context == null");
+				return;
+			}
 
 			// Initialization
 			RenderControl.MakeCurrent();
@@ -263,6 +283,8 @@ namespace ArcEngine.Forms
 		/// <param name="e"></param>
 		private void GameWindow_FormClosed(object sender, FormClosedEventArgs e)
 		{
+			Trace.WriteDebugLine("[GameWindow] Form_Closed()");
+			
 			if (RenderControl != null)
 			{
 				RenderControl.Dispose();

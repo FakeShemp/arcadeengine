@@ -43,6 +43,8 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		static Display()
 		{
+			Trace.WriteDebugLine("[Display] Constructor()");
+
 			RenderStats = new RenderStats();
 			TextureParameters = new DefaultTextParameters();
 
@@ -56,6 +58,7 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public static void Init()
 		{
+			Trace.WriteDebugLine("[Display] Init()");
 			Capabilities = new RenderDeviceCapabilities();
 
 			Texturing = true;

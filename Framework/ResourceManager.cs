@@ -83,6 +83,8 @@ namespace ArcEngine
 		/// </summary>
 		static ResourceManager()
 		{
+			Trace.WriteDebugLine("[ResourceManager] Constructor()");
+			
 			BinaryLock = new object();
 
 			UnknownAssets = new List<XmlNode>();
@@ -105,6 +107,8 @@ namespace ArcEngine
 		/// </summary>
 		static public void Close()
 		{
+			Trace.WriteDebugLine("[ResourceManager] Close()");
+			
 			foreach (Provider provider in Providers)
 			{
 				provider.Close();
@@ -119,6 +123,8 @@ namespace ArcEngine
 		/// <returns>A list of binaries found</returns>
 		static public List<string> GetBinaries(string pattern)
 		{
+			Trace.WriteDebugLine("[ResourceManager] GetBinaries (pattern = {0}", pattern);
+			
 			List<string> list = new List<string>();
 
 			// No need to lock() because LoadedBinaries do the work for us
@@ -145,6 +151,8 @@ namespace ArcEngine
 		{
 			if (provider == null)
 				return;
+
+			Trace.WriteDebugLine("[ResourceManager] AddProvider()");
 
 			if (Providers.Contains(provider))
 			{
@@ -286,6 +294,8 @@ namespace ArcEngine
 			if (asset == null)
 				return null;
 
+			Trace.WriteDebugLine("[ResourceManager] ConvertAsset");
+
 			StringBuilder sb = new StringBuilder();
 			using (XmlWriter writer = XmlWriter.Create(sb))
 				asset.Save(writer);
@@ -309,6 +319,8 @@ namespace ArcEngine
 		{
 			if (string.IsNullOrEmpty(name))
 				return;
+
+			Trace.WriteDebugLine("[ResourceManager] AddAsset (name = {0})", name);
 
 			lock (BinaryLock)
 			{
@@ -390,6 +402,8 @@ namespace ArcEngine
 			if (string.IsNullOrEmpty(name))
 				return default(T);
 
+			Trace.WriteDebugLine("[ResourceManager] CreateAsset (name = {0})", name);
+
 			lock (BinaryLock)
 			{
 				if (!Assets.ContainsKey(typeof(T)))
@@ -448,6 +462,9 @@ namespace ArcEngine
 		/// </summary>
 		static public void ClearAssets()
 		{
+			Trace.WriteDebugLine("[ResourceManager] ClearAssets");
+
+
 			lock (BinaryLock)
 			{
 				foreach (Provider provider in Providers)

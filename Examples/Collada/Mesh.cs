@@ -37,8 +37,12 @@ namespace ArcEngine.Examples
 		/// </summary>
 		public Mesh()
 		{
-			IndexBuffer = new ArrayBuffer<uint>();
-			VertexBuffer = new ArrayBuffer<float>();
+			//IndexBuffer = new ArrayBuffer<uint>();
+			//VertexBuffer = new ArrayBuffer<float>();
+
+			Index = new IndexBuffer();
+			Buffer = new ArrayBuffer<float>();
+
 		}
 
 
@@ -49,7 +53,7 @@ namespace ArcEngine.Examples
 		/// <param name="data"></param>
 		public void SetVertices(float[] data)
 		{
-			VertexBuffer.Update(data);
+			Buffer.Update(data);
 		}
 
 
@@ -57,9 +61,10 @@ namespace ArcEngine.Examples
 		/// 
 		/// </summary>
 		/// <param name="data"></param>
-		public void SetIndices(int[] data)
+		public void SetIndices(uint[] data)
 		{
-			//IndexBuffer.Update(data);
+			Index.Update(data);
+
 		}
 
 
@@ -85,8 +90,8 @@ namespace ArcEngine.Examples
 		/// </summary>
 		public void Dispose()
 		{
-			IndexBuffer.Dispose();
-			VertexBuffer.Dispose();
+			//IndexBuffer.Dispose();
+			//VertexBuffer.Dispose();
 		}
 
 
@@ -98,17 +103,19 @@ namespace ArcEngine.Examples
 		/// <summary>
 		/// Index buffer
 		/// </summary>
-		ArrayBuffer<uint> IndexBuffer;
+		//ArrayBuffer<uint> IndexBuffer;
+		IndexBuffer Index;
 
 		/// <summary>
 		/// Vertex buffer
 		/// </summary>
-		ArrayBuffer<float> VertexBuffer;
+		//ArrayBuffer<float> VertexBuffer;
+		ArrayBuffer<float> Buffer;
 
 
-		int VertexIndex;
+		//int VertexIndex;
 
-		int IndicesIndex;
+		//int IndicesIndex;
 
 		#endregion
 

@@ -45,6 +45,7 @@ namespace ArcEngine
 		/// </summary>
 		public GameBase()
 		{
+			Trace.WriteDebugLine("[GameBase] Constructor()");
 			Trace.TraceInventory();
 
 			Clock = new GameClock();
@@ -60,13 +61,6 @@ namespace ArcEngine
 		}
 
 
-		/// <summary>
-		/// Destructor
-		/// </summary>
-		~GameBase()
-		{
-			Dispose(false);
-		}
 
 		#endregion
 
@@ -91,9 +85,12 @@ namespace ArcEngine
 		/// <param name="param">GameWindow creation parameters</param>
 		public void CreateGameWindow(GameWindowParams param)
 		{
+			Trace.WriteDebugLine("[GameBase] CreateGameWindow()");
+
 			// Close the previous game window first
 			if (Window != null)
 			{
+				Trace.WriteDebugLine("[GameBase] CreateGameWindow() : Closing previous window");
 				Window.Dispose();
 				Window = null;
 			}
@@ -106,6 +103,7 @@ namespace ArcEngine
 			Window.Deactivate += new EventHandler(Window_Deactivate);
 			Window.Resize += new EventHandler(Window_Resize);
 			Mouse.Init(Window);
+			Gamepad.Init(Window);
 
 			Window.Show();
 			Window.Activate();
@@ -121,6 +119,9 @@ namespace ArcEngine
 			if (Window == null)
 				return;
 
+			Trace.WriteDebugLine("[GameBase] Closing GameWindow");
+
+			Mouse.Dispose();
 			Window.Activated -= Window_Activated;
 			Window.Deactivate -= Window_Deactivate;
 			Window.Resize -= Window_Resize;
@@ -471,9 +472,10 @@ namespace ArcEngine
 			}
 
 			//Audio.Release();
-			Gamepad.Release();
+			Gamepad.Dispose();
 
 			ResourceManager.Close();
+			CloseGameWindow();
 		}
 
 		#endregion
@@ -552,7 +554,7 @@ namespace ArcEngine
 		{
 			IsExiting = true;
 
-			Trace.WriteLine("Exit requested !");
+			Trace.WriteDebugLine("Exit requested !");
 		}
 
 
@@ -618,6 +620,9 @@ namespace ArcEngine
 		/// </summary>
 		public void RunEditor()
 		{
+			Trace.WriteDebugLine("[GameBase] RunEditor()");
+			
+			
 			bool mousestate = Mouse.Visible;
 			EditorMode = true;
 			Mouse.Visible = true;
@@ -746,33 +751,11 @@ namespace ArcEngine
 		/// <param name="disposing">true if disposing managed resources</param>
 		// http://www.dotnet2themax.com/blogs/fbalena/SearchView.aspx?q=Dispose/Finalize%20
 		// http://www.devx.com/dotnet/Article/33167/0/page/3
-		protected void Dispose(bool disposing)
-		{
-			if (disposing)
-			{
-				// Code to dispose the managed resources of the class
-			}
-
-
-			// Code to dispose the un-managed resources of the class
-
-			isDisposed = true;
-		}
-
-
-		/// <summary>
-		/// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-		/// </summary>
 		public void Dispose()
 		{
-			Dispose(true);
-			GC.SuppressFinalize(this);
+			Trace.WriteDebugLine("[GameBase] Dispose");
 		}
 
-		/// <summary>
-		/// 
-		/// </summary>
-		private bool isDisposed = false;
 
 		#endregion
 

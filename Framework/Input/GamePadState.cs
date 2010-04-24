@@ -19,12 +19,19 @@ namespace ArcEngine.Input
 		/// <param name="joystick"></param>
 		internal GamePadState(Joystick joystick)
 		{
+			Trace.WriteDebugLine("[GamePadState] Constructor");
+
+			if (joystick == null)
+			{
+				Trace.WriteDebugLine("[GamePadState] joystick == null !");
+			}
+
 			Joystick = joystick;
 			States = new JoystickState[]
-				{
-					new JoystickState(),
-					new JoystickState()
-				};
+			{
+				new JoystickState(),
+				new JoystickState()
+			};
 		}
 
 
@@ -47,8 +54,9 @@ namespace ArcEngine.Input
 				if (Joystick.Poll().IsFailure)
 					return;
 			}
-			catch (DirectInputException)
+			catch (DirectInputException e)
 			{
+				Trace.WriteDebugLine("[GamePadState] Update() : DirectInputException : {0}", e.Message);
 				Gamepad.UnplugDevice(Joystick);
 				Joystick = null;
 				return;

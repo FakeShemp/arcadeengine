@@ -41,6 +41,7 @@ namespace ArcEngine.Input
 		/// </summary>
 		static Gamepad()
 		{
+			Trace.WriteDebugLine("[GamePad] Constructor()");
 			Device = null;
 			AvailableDevices = new List<GamePadState>();
 		}
@@ -51,14 +52,18 @@ namespace ArcEngine.Input
 		/// Initialization
 		/// </summary>
 		/// <param name="window">GameWindow handle</param>
-		/// <returns></returns>
+		/// <returns>Returns true on success</returns>
 		static public bool Init(GameWindow window)
 		{
+			Trace.WriteDebugLine("[GamePad] Init");
+
 			if (window == null)
+			{
+				Trace.WriteDebugLine("[GamePad] window == null");
 				throw new ArgumentNullException("window");
+			}
 
 			Device = new DirectInput();
-
 			Window = window;
 
 			return true;
@@ -68,8 +73,9 @@ namespace ArcEngine.Input
 		/// <summary>
 		/// Release all resources
 		/// </summary>
-		static internal void Release()
+		static public void Dispose()
 		{
+			Trace.WriteDebugLine("[GamePad] Dispose()");
 			ReleaseDevices();
 
 			if (Device != null)
@@ -91,7 +97,7 @@ namespace ArcEngine.Input
 
 			if (Window == null)
 			{
-				Trace.WriteLine("GamePad not initialized. GameWindow is null !!");
+				Trace.WriteDebugLine("[GamePad] GamePad not initialized. GameWindow is null !!");
 				return;
 			}
 
@@ -108,7 +114,7 @@ namespace ArcEngine.Input
 				}
 				catch (DirectInputException ex)
 				{
-					Trace.WriteLine("Error while acquiring joystick : \"{0}\"", ex.Message);
+					Trace.WriteDebugLine("[GamePad] Error while acquiring joystick : \"{0}\"", ex.Message);
 				}
 			}
 
@@ -132,7 +138,10 @@ namespace ArcEngine.Input
 		{
 			Joystick joystick = GetDevice(id);
 			if (joystick == null)
+			{
+				Trace.WriteDebugLine("[GamePad] SetAxisRange() : joystick is null for id {0}", id);
 				return;
+			}
 
 			foreach (DeviceObjectInstance deviceObject in joystick.GetObjects())
 			{
@@ -152,7 +161,10 @@ namespace ArcEngine.Input
 		{
 			Joystick joystick = GetDevice(id);
 			if (joystick == null)
+			{
+				Trace.WriteDebugLine("[GamePad] SetDeadZone() : joystick is null for id {0}", id);
 				return;
+			}
 
 			foreach (DeviceObjectInstance deviceObject in joystick.GetObjects())
 			{
@@ -415,8 +427,11 @@ namespace ArcEngine.Input
 		/// </summary>
 		static internal void Update()
 		{
+			if (AvailableDevices == null)
+				Trace.WriteDebugLine("[GamePad] Update() : AvailableDevices == null!");
+
 			foreach (GamePadState pad in AvailableDevices)
-				pad.Update();
+			pad.Update();
 		}
 
 
@@ -440,6 +455,8 @@ namespace ArcEngine.Input
 		/// </summary>
 		static void ReleaseDevices()
 		{
+			Trace.WriteDebugLine("[GamePad] ReleaseDevices()");
+			
 			foreach (GamePadState state in AvailableDevices)
 			{
 				if (state.Joystick == null)

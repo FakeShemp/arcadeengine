@@ -24,6 +24,7 @@ using System.Text;
 using Diag = System.Diagnostics;
 using OpenTK.Graphics;
 using System.Reflection;
+using System.Diagnostics;
 
 namespace ArcEngine
 {
@@ -278,6 +279,64 @@ namespace ArcEngine
 		/// </summary>
 		public static event OnAssertEvent OnAssert;
 
+
+
+
+		#endregion
+
+
+		#region Debug
+
+		/// <summary>
+		/// Writes a line to the log
+		/// </summary>
+		/// <param name="message">Message</param>
+		[Conditional("DEBUG")]
+		public static void WriteDebugLine(string message)
+		{
+			Diag.Trace.WriteLine(message);
+
+			if (OnTrace != null)
+				OnTrace(message + Environment.NewLine);
+		}
+
+		/// <summary>
+		/// Writes a line to the log
+		/// </summary>
+		/// <param name="format">String format</param>
+		/// <param name="args">Arguments</param>
+		[Conditional("DEBUG")]
+		public static void WriteDebugLine(string format, params object[] args)
+		{
+			WriteLine(string.Format(format, args));
+		}
+
+
+		/// <summary>
+		/// Writes a conditional line
+		/// </summary>
+		/// <param name="condition">Condition</param>
+		/// <param name="message">Message</param>
+		[Conditional("DEBUG")]
+		public static void WriteDebugLineIf(bool condition, string message)
+		{
+			Diag.Trace.WriteLineIf(condition, message);
+
+			if (OnTrace != null)
+				OnTrace(message + Environment.NewLine);
+		}
+
+		/// <summary>
+		/// Writes a conditional line to the log
+		/// </summary>
+		/// <param name="condition">Condition</param>
+		/// <param name="format">String format</param>
+		/// <param name="args">Arguments</param>
+		[Conditional("DEBUG")]
+		public static void WriteDebugLineIf(bool condition, string format, params object[] args)
+		{
+			WriteLineIf(condition, string.Format(format, args));
+		}
 
 
 

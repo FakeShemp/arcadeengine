@@ -15,13 +15,13 @@ namespace ArcEngine.Examples
 	/// <summary>
 	/// This type of buffer is used mainly for the element pointer. It contains only indices of elements. 
 	/// </summary>
-	public class ElementBuffer : IDisposable
+	public class IndexBuffer : IDisposable
 	{
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public ElementBuffer()
+		public IndexBuffer()
 		{
 			GL.GenBuffers(1, out Handle);
 
@@ -82,7 +82,7 @@ namespace ArcEngine.Examples
 		int Handle;
 
 
-
+/*
 		/// <summary>
 		/// Enable index
 		/// </summary>
@@ -91,7 +91,7 @@ namespace ArcEngine.Examples
 			get;
 			private set;
 		}
-
+*/
 
 		/// <summary>
 		/// Usage mode

@@ -34,23 +34,34 @@ namespace ArcEngine.Input
 		/// <summary>
 		/// Initialize the mouse handler
 		/// </summary>
-		/// <param name="form"></param>
+		/// <param name="form">GameWindow handle</param>
 		static internal void Init(Form form)
 		{
-			Trace.WriteLine("Init mouse...");
-			Trace.Indent();
+			Trace.WriteDebugLine("[Mouse] Init()");
 			if (form == null)
+			{
+				Trace.WriteDebugLine("[Mouse] form = null !");
 				throw new ArgumentNullException("form");
+			}
 
 			Form = form;
 			Form.MouseWheel += new MouseEventHandler(Form_MouseWheel);
-
-			Trace.Unindent();
-			Trace.WriteLine("OK");
 		}
 
 
+		/// <summary>
+		/// Dispose
+		/// </summary>
+		static internal void Dispose()
+		{
+			if (Form == null)
+				return;
 
+			Trace.WriteDebugLine("[Mouse] Dispose");
+
+			Form.MouseWheel -= new MouseEventHandler(Form_MouseWheel);
+			Form = null;
+		}
 
 		/// <summary>
 		/// Updates the mouse state
@@ -59,8 +70,6 @@ namespace ArcEngine.Input
 		{
 			PreviousState = Buttons;
 			Buttons = Form.MouseButtons;
-
-		//	Trace.WriteLine("Mouse update");
 		}
 
 

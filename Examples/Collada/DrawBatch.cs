@@ -20,7 +20,7 @@ namespace ArcEngine.Examples
 		/// </summary>
 		public DrawBatch()
 		{
-			ElementBuffer = new ElementBuffer();
+			ElementBuffer = new IndexBuffer();
 
 			GL.GenVertexArrays(1, out Handle);
 			GL.BindVertexArray(Handle);
@@ -78,7 +78,7 @@ namespace ArcEngine.Examples
 		/// <summary>
 		/// 
 		/// </summary>
-		ElementBuffer ElementBuffer;
+		IndexBuffer ElementBuffer;
 
 
 		#endregion

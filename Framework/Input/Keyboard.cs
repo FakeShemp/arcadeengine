@@ -40,9 +40,9 @@ namespace ArcEngine.Input
 		/// </summary>
 		static Keyboard()
 		{
+			Trace.WriteDebugLine("[Keyboard] Constructor()");
 			PreviousState = new bool[256];
 			CurrentState = new bool[256];
-
 		}
 
 
@@ -92,7 +92,6 @@ namespace ArcEngine.Input
 		}
 
 
-
 		/// <summary>
 		/// Gets if a key is pressed
 		/// </summary>
@@ -103,6 +102,7 @@ namespace ArcEngine.Input
 			return CurrentState[(int)key];
 		}
 
+	
 		/// <summary>
 		/// Gets if a key is released
 		/// </summary>
@@ -140,7 +140,7 @@ namespace ArcEngine.Input
 		/// <summary>
 		/// Gets a list of all pressed keys
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>List of pressed keys</returns>
 		public static List<Keys> GetPressedKeys()
 		{
 			List<Keys> list = new List<Keys>();
@@ -157,7 +157,7 @@ namespace ArcEngine.Input
 		/// <summary>
 		/// Gets a list of all released keys
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>List of released keys</returns>
 		public static List<Keys> GetReleasedKeys()
 		{
 			List<Keys> list = new List<Keys>();

@@ -77,8 +77,8 @@ namespace ArcEngine.Examples
 
 /*
 			ColladaLoader loader = new ColladaLoader();
-			loader.Load("data/cube.dae");
-			Mesh = loader.GenerateMesh("Cube_002");
+			loader.Load("data/plane.dae");
+			Mesh = loader.GenerateMesh("Plane_001");
 
 
 			Batch = new Batch();
@@ -138,6 +138,11 @@ namespace ArcEngine.Examples
 
 
 			#region Vertex Buffer
+			indicesVboData = new uint[]
+			{
+				0, 1, 2,
+			};
+
 			Vector2[] positionVboData = new Vector2[]
 			{
 				new Vector2( 100.0f,  100.0f),
@@ -163,7 +168,7 @@ namespace ArcEngine.Examples
 			ColorBuffer.Update(colorVboData);
 
 
-			IndicesBuffer = new ElementBuffer();
+			IndicesBuffer = new IndexBuffer();
 			IndicesBuffer.Update(indicesVboData);
 
 
@@ -191,17 +196,17 @@ namespace ArcEngine.Examples
 			#endregion
 
 
+			Mesh = new Mesh();
+			Mesh.SetIndices(indicesVboData);
 		}
 
+
+		uint[] indicesVboData;
 		ArrayBuffer<Vector2> VertexBuffer;
 		ArrayBuffer<Vector4> ColorBuffer;
-		ElementBuffer IndicesBuffer;
+		IndexBuffer IndicesBuffer;
 
 
-		uint[] indicesVboData = new uint[]
-		{
-			0, 1, 2,
-		};
 
 
 
