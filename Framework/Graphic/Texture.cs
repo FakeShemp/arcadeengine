@@ -376,6 +376,18 @@ namespace ArcEngine.Graphic
 
 
 		/// <summary>
+		/// Gets if the value is a power of two
+		/// </summary>
+		/// <param name="value">Value to check</param>
+		/// <returns>True if power of two</returns>
+		protected static bool IsPowerOfTwo(int value)
+		{
+			return (value & (value - 1)) == 0;
+		}
+
+
+
+		/// <summary>
 		/// Give the next power of two
 		/// </summary>
 		/// <param name="input">Value</param>
@@ -384,7 +396,8 @@ namespace ArcEngine.Graphic
 		{
 			int value = 1;
 
-			while (value < input) value <<= 1;
+			while (value < input) 
+				value <<= 1;
 
 			return value;
 		}
