@@ -104,10 +104,9 @@ namespace ArcEngine.Asset
 			//Source = 0;
 			//Buffer = 0;
 			if (Player != null)
-			{
 				Player.Dispose();
-				Player = null;
-			}
+			Player = null;
+
 		}
 
 

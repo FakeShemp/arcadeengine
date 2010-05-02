@@ -77,12 +77,10 @@ namespace ArcEngine.Input
 		{
 			Trace.WriteDebugLine("[GamePad] Dispose()");
 			ReleaseDevices();
-
+			
 			if (Device != null)
-			{
 				Device.Dispose();
-				Device = null;
-			}
+			Device = null;
 		}
 
 

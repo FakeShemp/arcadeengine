@@ -54,12 +54,10 @@ namespace ArcEngine.Input
 		/// </summary>
 		static internal void Dispose()
 		{
-			if (Form == null)
-				return;
-
 			Trace.WriteDebugLine("[Mouse] Dispose");
 
-			Form.MouseWheel -= new MouseEventHandler(Form_MouseWheel);
+			if (Form != null)
+				Form.MouseWheel -= new MouseEventHandler(Form_MouseWheel);
 			Form = null;
 		}
 

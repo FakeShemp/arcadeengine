@@ -74,7 +74,7 @@ namespace ArcEngine.Asset
 		~TileSet()
 		{
 			if (Texture != null)
-				throw new Exception("TileSet : Texture not disposed, Call Dispose() !!");
+				throw new Exception("TileSet : Call Dispose() !!");
 		}
 
 		#endregion

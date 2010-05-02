@@ -1005,8 +1005,6 @@ namespace ArcEngine.Asset
 				GlyphTileset.Dispose();
 			GlyphTileset = null;
 
-
-
 			LineHeight = 0;
 			Advance = 0;
 

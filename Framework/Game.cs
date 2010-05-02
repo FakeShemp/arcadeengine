@@ -748,7 +748,6 @@ namespace ArcEngine
 		/// <summary>
 		/// Disposing resources
 		/// </summary>
-		/// <param name="disposing">true if disposing managed resources</param>
 		// http://www.dotnet2themax.com/blogs/fbalena/SearchView.aspx?q=Dispose/Finalize%20
 		// http://www.devx.com/dotnet/Article/33167/0/page/3
 		public void Dispose()

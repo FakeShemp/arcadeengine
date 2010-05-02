@@ -1136,12 +1136,20 @@ namespace ArcEngine.Graphic
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="id"></param>
 		public static void EnableVertexAttrib(int id)
 		{
 			GL.EnableVertexAttribArray(id);
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="id"></param>
 		public static void DisableVertexAttrib(int id)
 		{
 			GL.DisableVertexAttribArray(id);

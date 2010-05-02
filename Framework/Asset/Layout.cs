@@ -37,7 +37,7 @@ namespace ArcEngine.Asset
 	/// <summary>
 	/// A layout includes the title screen and dialog boxes, among other things,
 	/// </summary>
-	public class Layout : IAsset
+	public class Layout : IAsset, IDisposable
 	{
 		/// <summary>
 		/// Constructor
@@ -48,6 +48,26 @@ namespace ArcEngine.Asset
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		~Layout()
+		{
+			if (Texture != null)
+				throw new Exception("Layout : Call Dispose() !!");
+
+		}
+
+
+		/// <summary>
+		/// Dispose
+		/// </summary>
+		public void Dispose()
+		{
+			if (Texture != null)
+				Texture.Dispose();
+			Texture = null;
+		}
 
 
 		/// <summary>

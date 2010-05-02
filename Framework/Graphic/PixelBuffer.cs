@@ -9,7 +9,7 @@ namespace ArcEngine.Graphic
 	/// <summary>
 	/// Pixel Buffer
 	/// </summary>
-	public class PixelBuffer
+	public class PixelBuffer : IDisposable
 	{
 
 		/// <summary>
@@ -21,6 +21,31 @@ namespace ArcEngine.Graphic
 			//GL.BindBuffer(BufferTarget.PixelUnpackBuffer, Handle);
 			//GL.BufferData(BufferTarget.PixelUnpackBuffer, (IntPtr)(size.Width * size.Height * 4), IntPtr.Zero, BufferUsageHint.StreamDraw);
 			//GL.BindBuffer(BufferTarget.PixelUnpackBuffer, 0);
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		~PixelBuffer()
+		{
+			if (Handle != -1)
+				throw new Exception("PixelBuffer : Handle (id=" + Handle.ToString() + ") != -1, Call Dispose() !!");
+
+		}
+
+
+		/// <summary>
+		/// Dispose
+		/// </summary>
+		public void Dispose()
+		{
+			GL.DeleteBuffers(1, ref Handle);
+			Handle = -1;
+
+			if (Texture != null)
+				Texture.Dispose();
+			Texture = null;
 		}
 
 
@@ -172,6 +197,10 @@ namespace ArcEngine.Graphic
 		Rectangle Rectangle;
 
 
+
+		/// <summary>
+		/// 
+		/// </summary>
 		Texture Texture;
 
 
