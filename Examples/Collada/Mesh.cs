@@ -90,7 +90,9 @@ namespace ArcEngine.Examples
 		/// </summary>
 		public void Dispose()
 		{
-			//IndexBuffer.Dispose();
+			if (Index != null)
+				Index.Dispose();
+
 			//VertexBuffer.Dispose();
 		}
 

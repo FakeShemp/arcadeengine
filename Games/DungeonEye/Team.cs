@@ -37,7 +37,7 @@ namespace DungeonEye
 	/// <summary>
 	/// Represents the player's heroes in the dungeon
 	/// </summary>
-	public class Team : GameScreen
+	public class Team : GameScreen, IDisposable
 	{
 
 		/// <summary>
@@ -62,6 +62,50 @@ namespace DungeonEye
 		}
 
 
+		/// <summary>
+		/// Dispose
+		/// </summary>
+		public void Dispose()
+		{
+			if (Dungeon != null)
+				Dungeon.Dispose();
+			Dungeon = null;
+
+			if (OutlinedFont != null)
+				OutlinedFont.Dispose();
+			OutlinedFont = null;
+
+			if (Font != null)
+				Font.Dispose();
+			Font = null;
+
+			if (Items != null)
+				Items.Dispose();
+			Items = null;
+
+			if (Heads != null)
+				Heads.Dispose();
+			Heads = null;
+
+			if (TileSet != null)
+				TileSet.Dispose();
+			TileSet = null;
+
+			if (SpellBook != null)
+				SpellBook.Dispose();
+			SpellBook = null;
+
+			SaveGame = "";
+			SelectedHero = null;
+			Messages = null;
+			MazeBlock = null;
+			Location = null;
+			LastMove = DateTime.MinValue;
+			Language = null;
+			InputScheme = null;
+			CampWindow = null;
+
+		}
 
 
 		/// <summary>
@@ -170,7 +214,6 @@ namespace DungeonEye
 			Trace.WriteLine("Team::LoadContent() finished ! ({0} ms)", watch.ElapsedMilliseconds);
 
 		}
-
 
 
 		#region IO
@@ -774,6 +817,12 @@ namespace DungeonEye
 
 			#region Keyboard
 
+			// Bye bye
+			if (Keyboard.IsNewKeyPress(Keys.Escape))
+			{
+				ExitScreen();
+				return;
+			}
 
 
 			// Reload data banks
@@ -785,16 +834,13 @@ namespace DungeonEye
 				AddMessage("Dungeon reloaded...");
 			}
 
+
 			// AutoMap
 			if (Keyboard.IsNewKeyPress(Keys.Tab))
 			{
 				ScreenManager.AddScreen(new AutoMap());
 			}
 
-
-			// Bye bye
-			if (Keyboard.IsNewKeyPress(Keys.Escape))
-				ExitScreen();
 
 			// Debug
 			if (Keyboard.IsNewKeyPress(Keys.Space))

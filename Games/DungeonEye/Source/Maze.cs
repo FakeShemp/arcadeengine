@@ -38,7 +38,7 @@ namespace DungeonEye
 	/// 
 	/// http://dmweb.free.fr/?q=node/217
 	/// </summary>
-	public class Maze
+	public class Maze : IDisposable
 	{
 
 		/// <summary>
@@ -55,6 +55,48 @@ namespace DungeonEye
 			FlyingItems = new List<FlyingItem>();
 			Zones = new List<MazeZone>();
 
+
+		}
+
+
+
+		/// <summary>
+		/// Dispose
+		/// </summary>
+		public void Dispose()
+		{
+			if (Doors != null)
+				foreach (Door door in Doors)
+					door.Dispose();
+			Doors = null;
+
+			if (Monsters != null)
+				foreach (Monster monster in Monsters)
+					monster.Dispose();
+			Monsters = null;
+
+			if (ItemsTileset != null)
+				ItemsTileset.Dispose();
+			ItemsTileset = null;
+
+			if (OverlayTileset != null)
+				OverlayTileset.Dispose();
+			OverlayTileset = null;
+
+			if (WallTileset != null)
+				WallTileset.Dispose();
+			WallTileset = null;
+
+			Blocks = null;
+			Description = null;
+			Dungeon = null;
+			FlyingItems = null;
+			ItemsTilesetName = null;
+			OverlayTilesetName = null;
+			WallTilesetName = null;
+			size = Size.Empty;
+			Zones = null;
+			Name = "";
 
 		}
 

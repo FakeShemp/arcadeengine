@@ -30,7 +30,7 @@ namespace DungeonEye
 	/// <summary>
 	/// Represent a dungeon which contains severals mazes
 	/// </summary>
-	public class Dungeon : IAsset
+	public class Dungeon : IAsset, IDisposable
 	{
 		/// <summary>
 		/// Default constructor
@@ -39,6 +39,21 @@ namespace DungeonEye
 		{
 			Mazes = new Dictionary<string, Maze>();
 			StartLocation = new DungeonLocation(this);
+		}
+
+
+		/// <summary>
+		/// Dispose
+		/// </summary>
+		public void Dispose()
+		{
+			foreach (Maze maze in Mazes.Values)
+				maze.Dispose();
+			Mazes.Clear();
+
+			StartLocation = null;
+			Note = "";
+			Team = null;
 		}
 
 

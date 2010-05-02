@@ -38,7 +38,6 @@ namespace ArcEngine.Asset
 	/// <summary>
 	/// Texture font class
 	/// </summary>
-	/// TODO: A renommer en BitmapFont
 	public class BitmapFont : IAsset, IDisposable
 	{
 		/// <summary>
@@ -992,45 +991,28 @@ namespace ArcEngine.Asset
 
 		#region Disposing
 
-		/// <summary>
-		/// 
-		/// </summary>
-		bool disposed;
-
-
 
 		/// <summary>
 		/// 
 		/// </summary>
 		public void Dispose()
 		{
-			Dispose(true);
+			if (Batch != null)
+				Batch.Dispose();
+			Batch = null;
+
+			if (GlyphTileset != null)
+				GlyphTileset.Dispose();
+			GlyphTileset = null;
+
+
+
+			LineHeight = 0;
+			Advance = 0;
+
 			GC.SuppressFinalize(this);
 		}
 
-
-		// Dispose(bool disposing) executes in two distinct scenarios.
-		// If disposing equals true, the method has been called directly
-		// or indirectly by a user's code. Managed and unmanaged resources
-		// can be disposed.
-		// If disposing equals false, the method has been called by the
-		// runtime from inside the finalizer and you should not reference
-		// other objects. Only unmanaged resources can be disposed.
-		private void Dispose(bool disposing)
-		{
-			// Check to see if Dispose has already been called.
-			if (!this.disposed)
-			{
-				if (Batch != null)
-				{
-					Batch.Dispose();
-					Batch = null;
-				}
-
-				// Note disposing has been done.
-				disposed = true;
-			}
-		}
 
 
 		#endregion

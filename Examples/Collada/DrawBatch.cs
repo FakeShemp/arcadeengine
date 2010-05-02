@@ -63,6 +63,9 @@ namespace ArcEngine.Examples
 				GL.DeleteVertexArrays(1, ref Handle);
 				Handle = -1;
 			}
+
+			if (ElementBuffer != null)
+				ElementBuffer.Dispose();
 		}
 
 

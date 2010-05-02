@@ -159,15 +159,27 @@ namespace ArcEngine.Graphic
 			PixelFormat = format;
 		}
 
+
 		/// <summary>
 		/// Destructor
-		/// TODO
 		/// </summary>
 		~Texture()
 		{
-		//	Dispose(false);
+			if (Handle != -1)
+				throw new Exception("Texture : Handle (id=" + Handle.ToString() + ") != -1, Call Dispose() !!");
 		}
 
+
+		/// <summary>
+		/// Implement IDisposable.
+		/// </summary>
+		public void Dispose()
+		{
+			GL.DeleteTexture(Handle);
+			Handle = -1;
+
+			GC.SuppressFinalize(this);
+		}
 
 		#endregion
 
@@ -816,64 +828,6 @@ namespace ArcEngine.Graphic
 
 		#endregion
 
-
-		#region Dispose
-
-		/// <summary>
-		/// Implement IDisposable.
-		/// </summary>
-		public void Dispose()
-		{
-			//Dispose(true);
-			// This object will be cleaned up by the Dispose method.
-			// Therefore, you should call GC.SupressFinalize to
-			// take this object off the finalization queue
-			// and prevent finalization code for this object
-			// from executing a second time.
-			//GC.SuppressFinalize(this);
-			GL.DeleteTexture(Handle);
-			Handle = -1;
-		}
-
-/*
-		/// <summary>
-		/// Dispose(bool disposing) executes in two distinct scenarios.
-		/// If disposing equals true, the method has been called directly
-		/// or indirectly by a user's code. Managed and unmanaged resources
-		/// can be disposed.
-		/// If disposing equals false, the method has been called by the
-		/// runtime from inside the finalizer and you should not reference
-		/// other objects. Only unmanaged resources can be disposed.
-		/// </summary>
-		/// <param name="disposing"></param>
-		private void Dispose(bool disposing)
-		{
-			// Check to see if Dispose has already been called.
-			if (!this.disposed)
-			{
-				// If disposing equals true, dispose all managed
-				// and unmanaged resources.
-				if (disposing)
-				{
-					// Dispose managed resources.
-				}
-
-				// Call the appropriate methods to clean up
-				// unmanaged resources here.
-				// If disposing is false,
-				// only the following code is executed.
-				GL.DeleteTexture(Handle);
-
-				// Note disposing has been done.
-				disposed = true;
-
-			}
-		}
-
-
-		private bool disposed = false;
-*/
-		#endregion
 
 
 	}

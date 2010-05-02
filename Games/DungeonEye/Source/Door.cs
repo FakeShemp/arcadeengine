@@ -31,8 +31,24 @@ namespace DungeonEye
 	/// <summary>
 	/// Door in a maze
 	/// </summary>
-	public class Door
+	public class Door : IDisposable
 	{
+
+
+		/// <summary>
+		/// Dispose
+		/// </summary>
+		public void Dispose()
+		{
+			if (TileSet != null)
+				TileSet.Dispose();
+
+			if (OpenSound != null)
+				OpenSound.Dispose();
+
+			if (CloseSound != null)
+				CloseSound.Dispose();
+		}
 
 
 		/// <summary>

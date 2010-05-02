@@ -34,7 +34,7 @@ namespace DungeonEye
 	/// <summary>
 	/// Speel window
 	/// </summary>
-	public class SpellBook
+	public class SpellBook : IDisposable
 	{
 
 		/// <summary>
@@ -45,6 +45,16 @@ namespace DungeonEye
 			SpellLevel = 1;
 		}
 
+
+		/// <summary>
+		/// Dispose
+		/// </summary>
+		public void Dispose()
+		{
+			if (Font != null)
+				Font.Dispose();
+			Font = null;
+		}
 
 
 		/// <summary>

@@ -224,6 +224,9 @@ namespace ArcEngine.Examples
 
 			if (Batch != null)
 				Batch.Dispose();
+
+			if (IndicesBuffer != null)
+				IndicesBuffer.Dispose();
 		}
 
 

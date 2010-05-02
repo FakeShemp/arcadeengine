@@ -47,7 +47,7 @@ namespace DungeonEye
 	/// <summary>
 	/// Base class of all monster in the game
 	/// </summary>
-	public class Monster : Entity, IAsset
+	public class Monster : Entity, IAsset, IDisposable
 	{
 
 		/// <summary>
@@ -68,6 +68,28 @@ namespace DungeonEye
 			DrawOffsetDuration = TimeSpan.FromSeconds(1.0f + GameBase.Random.NextDouble());
 
 			StateManager = new StateManager();
+		}
+
+
+		/// <summary>
+		/// Dispose
+		/// </summary>
+		public void Dispose()
+		{
+			if (Tileset != null)
+				Tileset.Dispose();
+
+			if (HitSound != null)
+				HitSound.Dispose();
+
+			if (HurtSound != null)
+				HurtSound.Dispose();
+
+			if (DieSound != null)
+				DieSound.Dispose();
+
+			if (MoveSound != null)
+				MoveSound.Dispose();
 		}
 
 

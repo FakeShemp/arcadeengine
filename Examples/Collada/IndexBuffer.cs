@@ -24,9 +24,30 @@ namespace ArcEngine.Examples
 		public IndexBuffer()
 		{
 			GL.GenBuffers(1, out Handle);
-
 		}
 
+
+		/// <summary>
+		/// Destructor
+		/// </summary>
+		~IndexBuffer()
+		{
+			if (Handle != -1)
+				throw new Exception("IndexBuffer : Handle != -1, Call Dispose() !!");
+		}
+
+
+
+		/// <summary>
+		/// Destructor
+		/// </summary>
+		public void Dispose()
+		{
+			GL.DeleteBuffers(1, ref Handle);
+			Handle = -1;
+
+			GC.SuppressFinalize(this);
+		}
 
 
 		/// <summary>
@@ -60,15 +81,6 @@ namespace ArcEngine.Examples
 		public void Bind()
 		{
 			GL.BindBuffer(BufferTarget.ElementArrayBuffer, Handle);
-		}
-
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public void Dispose()
-		{
 		}
 
 
