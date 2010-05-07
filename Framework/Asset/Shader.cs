@@ -25,6 +25,7 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
 
+
 // http://bakura.developpez.com/tutoriels/jeux/utilisation-shaders-avec-opengl-3-x/
 // http://www.siteduzero.com/tutoriel-3-8879-communiquer-avec-l-application-attributs-et-uniforms.html#ss_part_2
 namespace ArcEngine.Asset
@@ -696,6 +697,14 @@ namespace ArcEngine.Asset
 			VertexID = -1;
 			GeometryID = -1;
 			ProgramID = -1;
+
+			FragmentLog = "";
+			FragmentSource = "";
+			VertexLog = "";
+			VertexSource = "";
+			ProgramLog = "";
+			GeometryLog = "";
+			GeometrySource = "";
 
 		}
 
