@@ -31,7 +31,7 @@ using OpenTK.Graphics.OpenGL;
 namespace ArcEngine.Asset
 {
 	/// <summary>
-	/// 
+	/// GLSL Shader
 	/// </summary>
 	public class Shader : IAsset, IDisposable
 	{

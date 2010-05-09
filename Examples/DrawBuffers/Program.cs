@@ -67,7 +67,7 @@ namespace ArcEngine.Examples
 
 
 		/// <summary>
-		/// Load contents 
+		/// Loads contents 
 		/// </summary>
 		public override void LoadContent()
 		{
@@ -166,17 +166,6 @@ namespace ArcEngine.Examples
 			IndicesBuffer.UpdateIndices(indicesVboData);
 			IndicesBuffer.UpdateVertices(mixedData);
 
-			// Vertex coords are at index 0 and are 2 floats. The stride between data is 6 floats and start at offset 0
-			Display.EnableBufferIndex(0);
-			Display.SetBufferDeclaration(0, 2, sizeof(float) * 6, 0);
-
-			// Vertex colors are at index 1 and are 4 floats. The stride between data is 6 floats and start at 2 floats from the start
-			Display.EnableBufferIndex(1);
-			Display.SetBufferDeclaration(1, 4, sizeof(float) * 6, sizeof(float) * 2);
-
-
-
-
 
 			#region VAO
 			/*			
@@ -240,6 +229,16 @@ namespace ArcEngine.Examples
 		{
 			// Clears the background
 			Display.ClearBuffers();
+
+
+			// Vertex coords are at index 0 and are 2 floats. The stride between data is 6 floats and start at offset 0
+			Display.EnableBufferIndex(0);
+			Display.SetBufferDeclaration(0, 2, sizeof(float) * 6, 0);
+
+			// Vertex colors are at index 1 and are 4 floats. The stride between data is 6 floats and start at 2 floats from the start
+			Display.EnableBufferIndex(1);
+			Display.SetBufferDeclaration(1, 4, sizeof(float) * 6, sizeof(float) * 2);
+
 
 			// Draws the buffer
 			Display.DrawIndexBuffer(IndicesBuffer, BeginMode.Triangles);

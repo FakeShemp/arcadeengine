@@ -16,12 +16,13 @@ namespace ArcEngine.Graphic
 	{
 
 		/// <summary>
-		/// Cosntructor
+		/// Constructor
 		/// </summary>
 		public IndexBuffer()
 		{
 			GL.GenBuffers(1, out indexHandle);
 			GL.GenBuffers(1, out vertexHandle);
+			//GL.GenVertexArrays(1, out vaoHandle);
 
 			UsageMode = BufferUsageHint.StaticDraw;
 		}
@@ -33,7 +34,7 @@ namespace ArcEngine.Graphic
 		~IndexBuffer()
 		{
 			if (indexHandle != -1)
-				throw new Exception("IndexBuffer : Handle != -1, Call Dispose() !!");
+				throw new Exception("IndexBuffer : Call Dispose() !!");
 		}
 
 
@@ -48,6 +49,8 @@ namespace ArcEngine.Graphic
 			GL.DeleteBuffers(1, ref vertexHandle);
 			vertexHandle = -1;
 
+			//GL.DeleteVertexArrays(1, ref vaoHandle);
+			//vaoHandle = -1;
 
 			Count = 0;
 
@@ -96,10 +99,11 @@ namespace ArcEngine.Graphic
 		#region Properties
 
 		/// <summary>
-		/// Buffer internal handle
+		/// Buffer internal handles
 		/// </summary>
 		int indexHandle;
 		int vertexHandle;
+		//int vaoHandle;
 
 
 		/// <summary>
