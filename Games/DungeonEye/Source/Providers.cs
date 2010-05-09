@@ -72,7 +72,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Close all opened resources
 		/// </summary>
-		public override void Close()
+		public override void Dispose()
 		{
 
 		}

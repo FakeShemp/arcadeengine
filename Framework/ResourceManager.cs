@@ -105,13 +105,13 @@ namespace ArcEngine
 		/// <summary>
 		/// Initialize each providers
 		/// </summary>
-		static public void Close()
+		static public void Dispose()
 		{
-			Trace.WriteDebugLine("[ResourceManager] Close()");
+			Trace.WriteDebugLine("[ResourceManager] Dispose()");
 			
 			foreach (Provider provider in Providers)
 			{
-				provider.Close();
+				provider.Dispose();
 			}
 		}
 

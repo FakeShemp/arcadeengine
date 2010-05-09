@@ -81,7 +81,7 @@ namespace ArcEngine
 		/// <summary>
 		/// Close all opened resources
 		/// </summary>
-		public abstract void Close();
+		public abstract void Dispose();
 
 		#endregion
 

@@ -102,6 +102,7 @@ namespace ArcEngine
 			Window.Activated += new EventHandler(Window_Activated);
 			Window.Deactivate += new EventHandler(Window_Deactivate);
 			Window.Resize += new EventHandler(Window_Resize);
+			Window.FormClosing += new FormClosingEventHandler(Window_FormClosing);
 			Mouse.Init(Window);
 			Gamepad.Init(Window);
 
@@ -164,6 +165,7 @@ namespace ArcEngine
 			}
 		}
 
+
 		/// <summary>
 		/// Gamewindow gains focus event
 		/// </summary>
@@ -177,6 +179,18 @@ namespace ArcEngine
 			}
 		}
 
+
+		/// <summary>
+		/// GameWindow is closing
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void Window_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			Trace.WriteDebugLine("[Game] Form_Closing()");
+			UnloadContent();
+		
+		}
 
 		#endregion
 
@@ -466,15 +480,12 @@ namespace ArcEngine
 			{
 				Application.Idle -= Application_Idle;
 				IsRunning = false;
-				//OnExiting(EventArgs.Empty);
-
-				UnloadContent();
 			}
 
 			//Audio.Release();
 			Gamepad.Dispose();
 
-			ResourceManager.Close();
+			ResourceManager.Dispose();
 			CloseGameWindow();
 		}
 
@@ -538,7 +549,9 @@ namespace ArcEngine
 			while (!User32.PeekMessage(out message, IntPtr.Zero, 0, 0, 0))
 			{
 				if (IsExiting)
-					Window.Close();
+					//Window.Close();
+					Application.Exit();
+
 				else
 					Tick();
 			}

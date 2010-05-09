@@ -28,14 +28,12 @@ using ArcEngine.Input;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
-// http://www.wazim.com/Collada_Tutorial_1.htm
-// http://www.wazim.com/Collada_Tutorial_2.htm
 namespace ArcEngine.Examples
 {
 	/// <summary>
 	/// Main game class
 	/// </summary>
-	public class Collada : GameBase
+	public class DrawBuffers : GameBase
 	{
 
 		/// <summary>
@@ -46,7 +44,7 @@ namespace ArcEngine.Examples
 		{
 			try
 			{
-				using (Collada game = new Collada())
+				using (DrawBuffers game = new DrawBuffers())
 					game.Run();
 			}
 			catch (Exception e)
@@ -60,10 +58,10 @@ namespace ArcEngine.Examples
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public Collada()
+		public DrawBuffers()
 		{
 			CreateGameWindow(new Size(1024, 768));
-			Window.Text = "Collada loader";
+			Window.Text = "Draw buffers example";
 		}
 
 
@@ -74,17 +72,6 @@ namespace ArcEngine.Examples
 		public override void LoadContent()
 		{
 			Display.ClearColor = Color.CornflowerBlue;
-
-/*
-			ColladaLoader loader = new ColladaLoader();
-			loader.Load("data/plane.dae");
-			Mesh = loader.GenerateMesh("Plane_001");
-
-
-			Batch = new Batch();
-			Batch.AddRectangle(new Rectangle(10, 10, 100, 100), Color.Red, Rectangle.Empty);
-			Batch.Apply();
-*/
 
 
 			#region Shader
@@ -136,14 +123,6 @@ namespace ArcEngine.Examples
 
 			#endregion
 
-
-			#region Vertex Buffer
-			indicesVboData = new uint[]
-			{
-				0, 1, 2,
-			};
-
-			
 			Vector2[] positionVboData = new Vector2[]
 			{
 				new Vector2( 300.0f,  100.0f),
@@ -160,7 +139,15 @@ namespace ArcEngine.Examples
 			};
 
 
-			// All data mixed
+			#region Index Buffer
+
+			uint[] indicesVboData = new uint[]
+			{
+				0, 1, 2,
+			};
+
+
+			// Vertex elements
 			float[] mixedData = new float[]
 			{
 				// Coord							Color
@@ -169,8 +156,6 @@ namespace ArcEngine.Examples
 				100.0f,  400.0f,				0.0f, 0.0f, 1.0f, 1.0f,
 			};
 
-
-			#region Index buffer
 
 
 			Shader.BindAttrib(0, "in_position");
@@ -191,12 +176,10 @@ namespace ArcEngine.Examples
 
 
 
-			#endregion
-
 
 
 			#region VAO
-/*			
+			/*			
 			Batch = new BatchBuffer();
 
 
@@ -208,24 +191,12 @@ namespace ArcEngine.Examples
 
 
 			GL.BindVertexArray(0);
-*/			
-			#endregion 
+*/
+			#endregion
 
 			#endregion
 
-
-		//	Mesh = new Mesh();
-		//	Mesh.SetIndices(indicesVboData);
 		}
-
-
-		uint[] indicesVboData;
-		ArrayBuffer<Vector2> VertexBuffer;
-		ArrayBuffer<Vector4> ColorBuffer;
-		IndexBuffer IndicesBuffer;
-
-
-
 
 
 
@@ -234,17 +205,9 @@ namespace ArcEngine.Examples
 		/// </summary>
 		public override void UnloadContent()
 		{
-			if (Mesh != null)
-				Mesh.Dispose();
-			Mesh = null;
-
 			if (Shader != null)
 				Shader.Dispose();
 			Shader = null;
-
-			if (Batch != null)
-				Batch.Dispose();
-			Batch = null;
 
 			if (IndicesBuffer != null)
 				IndicesBuffer.Dispose();
@@ -278,7 +241,7 @@ namespace ArcEngine.Examples
 			// Clears the background
 			Display.ClearBuffers();
 
-
+			// Draws the buffer
 			Display.DrawIndexBuffer(IndicesBuffer, BeginMode.Triangles);
 		}
 
@@ -288,22 +251,14 @@ namespace ArcEngine.Examples
 		#region Properties
 
 
+
 		/// <summary>
-		/// 
+		/// Index buffer
 		/// </summary>
-		Mesh Mesh;
-
-
+		IndexBuffer IndicesBuffer;
 
 		/// <summary>
-		/// 
-		/// </summary>
-		//Batch Batch;
-		BatchBuffer Batch;
-
-
-		/// <summary>
-		/// 
+		/// Shader
 		/// </summary>
 		Shader Shader;
 

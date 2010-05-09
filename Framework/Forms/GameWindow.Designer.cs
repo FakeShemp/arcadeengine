@@ -41,13 +41,13 @@
 			this.MaximizeBox = false;
 			this.Name = "GameWindow";
 			this.Text = "ArcEngine : http://www.mimicprod.net";
-			this.Load += new System.EventHandler(this.Form_Load);
-			this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp);
-			this.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.OnMouseDoubleClick);
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.GameWindow_FormClosed);
+			this.Load += new System.EventHandler(this.Form_Load);
+			this.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.OnMouseDoubleClick);
 			this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OnMouseDown);
-			this.Resize += new System.EventHandler(this.OnResize);
 			this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OnMouseMove);
+			this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp);
+			this.Resize += new System.EventHandler(this.OnResize);
 			this.ResumeLayout(false);
 
 		}

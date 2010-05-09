@@ -51,7 +51,7 @@ namespace Breakout
 		/// <summary>
 		/// 
 		/// </summary>
-		public override void Close()
+		public override void Dispose()
 		{
 			
 

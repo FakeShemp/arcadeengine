@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 
+using ArcEngine.Graphic;
+
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 

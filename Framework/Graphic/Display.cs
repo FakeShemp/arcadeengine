@@ -1041,6 +1041,38 @@ namespace ArcEngine.Graphic
 
 		#region Batchs
 
+
+		/// <summary>
+		/// Defines vertex attribute data
+		/// </summary>
+		/// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
+		/// <param name="size">Specifies the number of components per generic vertex attribute. Must be 1, 2, 3, or 4.</param>
+		/// <param name="stride">Specifies the byte offset between consecutive generic vertex attributes. 
+		/// If stride is 0, the generic vertex attributes are understood to be tightly packed in the array. </param>
+		/// <param name="offset">Specifies a pointer to the first component of the first generic vertex attribute in the array. </param>
+		public static void SetBufferDeclaration(int index, int size, int stride, int offset)
+		{
+			GL.VertexAttribPointer(index, size, VertexAttribPointerType.Float, false, stride, offset);
+		}
+
+
+
+		/// <summary>
+		/// Binds and draws an IndexBuffer
+		/// </summary>
+		/// <param name="buffer">Buffer handle</param>
+		/// <param name="mode">Drawing mode</param>
+		public static void DrawIndexBuffer(IndexBuffer buffer, BeginMode mode)
+		{
+			if (buffer == null)
+				return;
+
+			buffer.Bind();
+			GL.DrawElements(mode, buffer.Count, DrawElementsType.UnsignedInt, IntPtr.Zero);
+		}
+
+
+
 		/// <summary>
 		/// Draws a batch
 		/// </summary>
@@ -1140,7 +1172,7 @@ namespace ArcEngine.Graphic
 		/// 
 		/// </summary>
 		/// <param name="id"></param>
-		public static void EnableVertexAttrib(int id)
+		public static void EnableBufferIndex(int id)
 		{
 			GL.EnableVertexAttribArray(id);
 		}
@@ -1150,7 +1182,7 @@ namespace ArcEngine.Graphic
 		/// 
 		/// </summary>
 		/// <param name="id"></param>
-		public static void DisableVertexAttrib(int id)
+		public static void DisableBufferIndex(int id)
 		{
 			GL.DisableVertexAttribArray(id);
 		}
@@ -1730,6 +1762,7 @@ namespace ArcEngine.Graphic
 
 
 		#endregion
+
 
 	}
 
