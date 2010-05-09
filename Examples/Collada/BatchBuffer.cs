@@ -10,15 +10,15 @@ namespace ArcEngine.Examples
 {
 
 	/// <summary>
-	/// 
+	/// Batch buffer
 	/// </summary>
-	public class DrawBatch : IDisposable
+	public class BatchBuffer : IDisposable
 	{
 
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
-		public DrawBatch()
+		public BatchBuffer()
 		{
 			ElementBuffer = new IndexBuffer();
 
@@ -27,10 +27,15 @@ namespace ArcEngine.Examples
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public void Bind()
 		{
 			GL.BindVertexArray(Handle);
 		}
+
+
 
 		/// <summary>
 		/// 
@@ -49,23 +54,24 @@ namespace ArcEngine.Examples
 		/// <param name="buffer"></param>
 		public void SetIndices(uint[] buffer)
 		{
-			ElementBuffer.Update(buffer);
+			ElementBuffer.UpdateIndices(buffer);
 		}
 
 
+
 		/// <summary>
-		/// 
+		/// Dispose
 		/// </summary>
 		public void Dispose()
 		{
 			if (Handle != -1)
-			{
 				GL.DeleteVertexArrays(1, ref Handle);
-				Handle = -1;
-			}
+			Handle = -1;
 
 			if (ElementBuffer != null)
 				ElementBuffer.Dispose();
+			ElementBuffer = null;
+
 		}
 
 

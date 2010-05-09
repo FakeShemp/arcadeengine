@@ -143,11 +143,12 @@ namespace ArcEngine.Examples
 				0, 1, 2,
 			};
 
+			
 			Vector2[] positionVboData = new Vector2[]
 			{
-				new Vector2( 100.0f,  100.0f),
-				new Vector2( 150.0f,  200.0f),
-				new Vector2( 50.0f,   200.0f),
+				new Vector2( 300.0f,  100.0f),
+				new Vector2( 500.0f,  400.0f),
+				new Vector2( 100.0f,  400.0f),
 			};
 
 
@@ -159,27 +160,42 @@ namespace ArcEngine.Examples
 			};
 
 
-			#region VBO
-			VertexBuffer = new ArrayBuffer<Vector2>();
-			VertexBuffer.Update(positionVboData);
+			// All data mixed
+			float[] mixedData = new float[]
+			{
+				// Coord							Color
+				300.0f,  100.0f,				1.0f, 0.0f, 0.0f, 1.0f,
+				500.0f,  400.0f,				0.0f, 1.0f, 0.0f, 1.0f,
+				100.0f,  400.0f,				0.0f, 0.0f, 1.0f, 1.0f,
+			};
 
 
-			ColorBuffer = new ArrayBuffer<Vector4>();
-			ColorBuffer.Update(colorVboData);
+			#region Index buffer
+
+			Shader.BindAttrib(0, "in_position");
+			Shader.BindAttrib(1, "in_color");
 
 
 			IndicesBuffer = new IndexBuffer();
-			IndicesBuffer.Update(indicesVboData);
+			IndicesBuffer.UpdateIndices(indicesVboData);
+			IndicesBuffer.UpdateVertices(mixedData);
+
+			// Vertex coords are at index 0 and are 2 floats. The strid between data is 6 float and start at offset 0
+			IndicesBuffer.SetDeclaration(0, 2, sizeof(float) * 6, 0);
+
+			// Vertex colors are at index 1 and are 4 floats. The strid between data is 6 float and start at 2 float from the start
+			IndicesBuffer.SetDeclaration(1, 4, sizeof(float) * 6, sizeof(float) * 2);
 
 
-			GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
-			GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
+
 			#endregion
 
 
 
 			#region VAO
-			Batch = new DrawBatch();
+/*			
+			Batch = new BatchBuffer();
+
 
 			VertexBuffer.Bind(0, 2);
 			Shader.BindAttrib(0, "in_position");
@@ -188,16 +204,15 @@ namespace ArcEngine.Examples
 			Shader.BindAttrib(1, "in_color");
 
 
-			IndicesBuffer.Bind();
-
 			GL.BindVertexArray(0);
+*/			
 			#endregion 
 
 			#endregion
 
 
-			Mesh = new Mesh();
-			Mesh.SetIndices(indicesVboData);
+		//	Mesh = new Mesh();
+		//	Mesh.SetIndices(indicesVboData);
 		}
 
 
@@ -218,16 +233,23 @@ namespace ArcEngine.Examples
 		{
 			if (Mesh != null)
 				Mesh.Dispose();
+			Mesh = null;
 
 			if (Shader != null)
 				Shader.Dispose();
+			Shader = null;
 
 			if (Batch != null)
 				Batch.Dispose();
+			Batch = null;
 
 			if (IndicesBuffer != null)
 				IndicesBuffer.Dispose();
+			IndicesBuffer = null;
+
 		}
+
+
 
 
 		/// <summary>
@@ -253,12 +275,12 @@ namespace ArcEngine.Examples
 			// Clears the background
 			Display.ClearBuffers();
 
-			Batch.Bind();
-			//GL.BindVertexArray(vaoHandle);
-			GL.DrawElements(BeginMode.Triangles, indicesVboData.Length, DrawElementsType.UnsignedInt, IntPtr.Zero);
 
-			Batch.Draw(BeginMode.Triangles);
+			IndicesBuffer.Bind();
 
+
+
+			GL.DrawElements(BeginMode.Triangles, IndicesBuffer.Count, DrawElementsType.UnsignedInt, IntPtr.Zero);
 		}
 
 
@@ -278,7 +300,7 @@ namespace ArcEngine.Examples
 		/// 
 		/// </summary>
 		//Batch Batch;
-		DrawBatch Batch;
+		BatchBuffer Batch;
 
 
 		/// <summary>

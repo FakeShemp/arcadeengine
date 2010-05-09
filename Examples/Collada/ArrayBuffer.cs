@@ -86,7 +86,7 @@ namespace ArcEngine.Examples
 			try
 			{
 				GL.BindBuffer(BufferTarget.ArrayBuffer, Handle);
-				GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(data.Length * ElementSize), data, BufferUsageHint.StaticDraw);
+				GL.BufferData<T>(BufferTarget.ArrayBuffer, (IntPtr)(data.Length * ElementSize), data, BufferUsageHint.StaticDraw);
 			}
 			catch (Exception e)
 			{

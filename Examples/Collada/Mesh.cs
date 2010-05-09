@@ -63,7 +63,7 @@ namespace ArcEngine.Examples
 		/// <param name="data"></param>
 		public void SetIndices(uint[] data)
 		{
-			Index.Update(data);
+			Index.UpdateIndices(data);
 
 		}
 
