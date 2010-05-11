@@ -116,7 +116,9 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
-    <None Include="data\cube.DAE" />
+    <None Include="data\cube.DAE">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="data\plane.dae" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
