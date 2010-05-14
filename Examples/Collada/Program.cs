@@ -179,8 +179,8 @@ namespace ArcEngine.Examples
 			// Clears the background
 			Display.ClearBuffers();
 
-
-			Mesh.Draw();
+			if (Mesh != null)
+				Mesh.Draw();
 		}
 
 

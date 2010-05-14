@@ -83,6 +83,9 @@ namespace ArcEngine.Examples
 		/// </summary>
 		public void Update(T[] data)
 		{
+			if (data == null)
+				return;
+
 			try
 			{
 				GL.BindBuffer(BufferTarget.ArrayBuffer, Handle);

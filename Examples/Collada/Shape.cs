@@ -114,6 +114,82 @@ namespace ArcEngine.Examples
 
 
 
+		#region Statics
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="radius"></param>
+		/// <param name="slices"></param>
+		/// <param name="stacks"></param>
+		/// <returns></returns>
+		public static Shape MakeWireSphere(float radius, int slices, int stacks)
+		{
+			return null;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="radius"></param>
+		/// <param name="slices"></param>
+		/// <param name="stacks"></param>
+		/// <returns></returns>
+		public static Shape MakeSolidSphere(float radius, int slices, int stacks)
+		{
+			return null;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="size"></param>
+		/// <returns></returns>
+		public static Shape MakeWireCube(float size)
+		{
+			return null;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="size"></param>
+		/// <returns></returns>
+		public static Shape MakeSolidCube(float size)
+		{
+			return null;
+		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="size"></param>
+		/// <returns></returns>
+		public static Shape MakeWireCone(float radius, float height, int slice, int stacks)
+		{
+			return null;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="size"></param>
+		/// <returns></returns>
+		public static Shape MakeSolidCone(float radius, float height, int slice, int stacks)
+		{
+			return null;
+		}
+
+
+
+		#endregion
+
 
 
 		#region Properties

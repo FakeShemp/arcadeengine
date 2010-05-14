@@ -125,7 +125,7 @@ namespace ArcEngine.Examples
 		/// Generates a shape
 		/// </summary>
 		/// <param name="name">Name of the geometry</param>
-		/// <returns></returns>
+		/// <returns>Returns an handle to the shape or null</returns>
 		public Shape GenerateShape(string name)
 		{
 			if (string.IsNullOrEmpty(name) || !Geometries.ContainsKey(name))
@@ -136,35 +136,33 @@ namespace ArcEngine.Examples
 			// Get the geometry
 			Geometry geometry = Geometries[name];
 
+
+
+			// Data from collada
 			int[] indexsrc = geometry.Mesh.Triangles.Data;
 			float[] vertexsrc = geometry.Mesh.Sources[geometry.Mesh.Vertices.Input.Source].Array.Data;
 			float[] normalsrc = geometry.Mesh.Sources[geometry.Mesh.Triangles.Inputs[1].Source].Array.Data;
 
+
+			// Data for OpenGL
 			int baseLen = geometry.Mesh.Triangles.Count * 3;
 			float[] vertex = new float[baseLen * 3];
 			float[] normal = new float[baseLen * 3];
-			//float[] texture = new float[baseLen * 2];
 
-			for (int i = 0; i < baseLen * 3; i++)
+			for (int i = 0; i < baseLen; i++)
 			{
-				int vindex = indexsrc[i * 3];
+				int vindex = indexsrc[i * geometry.Mesh.Triangles.InputCount];
 				vertex[i * 3] = vertexsrc[vindex * 3];
-			//	vertex[i * 3 + 1] = vertexsrc[vindex * 3 + 1];
-			//	vertex[i * 3 + 2] = vertexsrc[vindex * 3 + 2];
+				vertex[i * 3 + 1] = vertexsrc[vindex * 3 + 1];
+				vertex[i * 3 + 2] = vertexsrc[vindex * 3 + 2];
 
-				int nindex = indexsrc[i * 3 + 1];
+				int nindex = indexsrc[i * geometry.Mesh.Triangles.InputCount + 1];
 				normal[i * 3] = normalsrc[nindex * 3];
-			//	normal[i * 3 + 1] = normalsrc[nindex * 3 + 1];
-			//	normal[i * 3 + 2] = normalsrc[nindex * 3 + 2];
-
-
-
-				//int tindex = geometry.Mesh.Triangles.Data[i * 3 + 2];
-				//texture[i * 2] = baseMesh.texcoord[tindex * 2];
-				//texture[i * 2 + 1] = baseMesh.texcoord[tindex * 2 + 1];
+				normal[i * 3 + 1] = normalsrc[nindex * 3 + 1];
+				normal[i * 3 + 2] = normalsrc[nindex * 3 + 2];
 			}
 
-
+			shape.SetVertices(null);
 			
 /*			
 			// Create each buffers
@@ -208,7 +206,7 @@ namespace ArcEngine.Examples
 		{
 
 			/// <summary>
-			/// 
+			/// Loads a geometry tag
 			/// </summary>
 			/// <param name="xml"></param>
 			public Geometry(XmlNode xml)
@@ -883,7 +881,7 @@ namespace ArcEngine.Examples
 
 
 			/// <summary>
-			/// Name
+			/// Name of this element
 			/// </summary>
 			public string Name
 			{
@@ -894,7 +892,7 @@ namespace ArcEngine.Examples
 
 
 			/// <summary>
-			/// Count
+			/// Number of triangle primitives
 			/// </summary>
 			public int Count
 			{
@@ -912,8 +910,20 @@ namespace ArcEngine.Examples
 				private set;
 			}
 
+
 			/// <summary>
-			/// 
+			/// Number of input for this element
+			/// </summary>
+			public int InputCount
+			{
+				get
+				{
+					return Inputs.Count;
+				}
+			}
+
+			/// <summary>
+			/// Indices that describes the vertex attributes for a number of triangles
 			/// </summary>
 			public int[] Data
 			{
