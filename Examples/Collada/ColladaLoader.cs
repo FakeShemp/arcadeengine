@@ -135,6 +135,71 @@ namespace ArcEngine.Examples
 
 			// Get the geometry
 			Geometry geometry = Geometries[name];
+			Mesh mesh = geometry.Mesh;
+
+
+
+
+			// Get the vertex buffer
+			Source vsource = mesh.GetVerticesSource();
+
+
+			// Get the size of the buffer
+			int stride = 0;
+			foreach (Source source in mesh.Sources.Values)
+				stride += source.Technique.Accessor.Stride;
+
+			// Destination buffer for OpenGL
+			float[] buffer = new float[stride * mesh.VertexCount];
+			for (int i = 0; i < buffer.Length; i++)
+				buffer[i] = 99.0f;
+
+			// Number of index
+			int indexCount = mesh.Triangles.Count * 3;
+
+			// Offset in the OpenGL buffer according to <inputs> strides
+			int offset = 0;
+
+			// For each <input> tag in the triangle
+			foreach (Input input in mesh.Triangles.Inputs)
+			{
+				// Get the <source> tag
+				Source source = mesh.GetSource(input.Source);
+				if (source == null)
+				{
+					// Index buffer from <vertices>
+					source = mesh.GetVerticesSource();
+				}
+
+				// For each index in the <p> tag
+				for (int i = 0; i < indexCount; i++)
+				{
+					// Position in the <p> tag
+					int pos = i * mesh.Triangles.Inputs.Count + input.Offset;
+
+					for (int sub = 0; sub < source.Technique.Accessor.Stride; sub++)
+					{
+						float value = source.Array.Data[(mesh.Triangles.Data[pos] * source.Technique.Accessor.Stride) + sub];
+						buffer[mesh.Triangles.Data[pos] * stride + offset + sub] = value;
+					}
+				}
+
+				//
+				offset += source.Technique.Accessor.Stride;
+			}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -145,11 +210,11 @@ namespace ArcEngine.Examples
 
 
 			// Data for OpenGL
-			int baseLen = geometry.Mesh.Triangles.Count * 3;
-			float[] vertex = new float[baseLen * 3];
-			float[] normal = new float[baseLen * 3];
+			//int baseLen = geometry.Mesh.Triangles.Count * 3;
+			float[] vertex = new float[indexCount * 3];
+			float[] normal = new float[indexCount * 3];
 
-			for (int i = 0; i < baseLen; i++)
+			for (int i = 0; i < indexCount; i++)
 			{
 				int vindex = indexsrc[i * geometry.Mesh.Triangles.InputCount];
 				vertex[i * 3] = vertexsrc[vindex * 3];
@@ -164,21 +229,6 @@ namespace ArcEngine.Examples
 
 			shape.SetVertices(null);
 			
-/*			
-			// Create each buffers
-			Dictionary<string, int> glhandles = new Dictionary<string, int>();
-			foreach (Source source in geometry.Mesh.Sources.Values)
-			{
-				int handle = 0;
-				GL.GenBuffers(1, out handle);
-				glhandles[source.Id] = handle;
-
-				GL.BindBuffer(BufferTarget.ArrayBuffer, handle);
-				GL.BufferData<float>(BufferTarget.ArrayBuffer, (IntPtr)(sizeof(float) * source.Array.Count), source.Array.Data, BufferUsageHint.StaticDraw);
-			}
-*/
-
-			int indexhandle = 0;
 
 			return shape;
 		}
@@ -226,7 +276,7 @@ namespace ArcEngine.Examples
 					{
 						case "mesh":
 						{
-							Mesh = new SubMesh(node);
+							Mesh = new Mesh(node);
 						}
 						break;
 					}
@@ -240,7 +290,7 @@ namespace ArcEngine.Examples
 			/// <summary>
 			/// 
 			/// </summary>
-			public SubMesh Mesh
+			public Mesh Mesh
 			{
 				get;
 				private set;
@@ -272,13 +322,13 @@ namespace ArcEngine.Examples
 		/// <summary>
 		/// Describes basic geometric meshes using vertex and primitive information.
 		/// </summary>
-		class SubMesh
+		class Mesh
 		{
 			/// <summary>
-			/// 
+			/// Constructor
 			/// </summary>
 			/// <param name="xml"></param>
-			public SubMesh(XmlNode xml)
+			public Mesh(XmlNode xml)
 			{
 				if (xml == null || xml.Name != "mesh")
 					throw new ArgumentException("xml");
@@ -312,6 +362,37 @@ namespace ArcEngine.Examples
 			}
 
 
+			/// <summary>
+			/// Returns a source by its name
+			/// </summary>
+			/// <param name="name">Name of the source</param>
+			/// <returns>Handle to the source or null</returns>
+			public Source GetSource(string name)
+			{
+				if (string.IsNullOrEmpty(name))
+					return null;
+
+				if (name.StartsWith("#"))
+					name = name.Substring(1, name.Length - 1);
+
+				if (Sources.ContainsKey(name))
+					return Sources[name];
+
+				
+				return null;
+			}
+
+
+			/// <summary>
+			/// Returns the source of the vertices for the mesh
+			/// </summary>
+			/// <returns></returns>
+			public Source GetVerticesSource()
+			{
+				return GetSource(Vertices.Input.Source);
+			}
+
+
 			#region Properties
 
 
@@ -338,6 +419,37 @@ namespace ArcEngine.Examples
 				get;
 				private set;
 			}
+
+
+			/// <summary>
+			/// Number of vertex in the mesh
+			/// </summary>
+			public int VertexCount
+			{
+				get
+				{
+					Source source = GetVerticesSource();
+					if (source == null)
+						return 0;
+
+					return source.Array.Count / 3;
+				}
+			}
+
+			/// <summary>
+			/// Number of face in the mesh
+			/// </summary>
+			public int FaceCount
+			{
+				get
+				{
+					if (Triangles == null)
+						return 0;
+
+					return Triangles.Count;
+				}
+			}
+
 
 
 			#endregion
@@ -775,8 +887,6 @@ namespace ArcEngine.Examples
 
 				Semantic = xml.Attributes["semantic"].Value;
 				Source = xml.Attributes["source"].Value;
-				if (Source.StartsWith("#"))
-					Source = Source.Substring(1, Source.Length - 1);
 			}
 
 

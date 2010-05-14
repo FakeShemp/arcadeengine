@@ -77,8 +77,8 @@ namespace ArcEngine.Examples
 
 
 			ColladaLoader loader = new ColladaLoader();
-			loader.Load("data/plane.dae");
-			Mesh = loader.GenerateShape("Plane_001");
+			loader.Load("data/cube.dae");
+			Mesh = loader.GenerateShape("Cube_002");
 
 
 			#region Shader
