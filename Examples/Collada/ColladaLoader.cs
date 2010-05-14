@@ -122,20 +122,67 @@ namespace ArcEngine.Examples
 
 
 		/// <summary>
-		/// Generates a mesh
+		/// Generates a shape
 		/// </summary>
 		/// <param name="name">Name of the geometry</param>
 		/// <returns></returns>
-		public Mesh GenerateMesh(string name)
+		public Shape GenerateShape(string name)
 		{
 			if (string.IsNullOrEmpty(name) || !Geometries.ContainsKey(name))
 				return null;
 
-			Mesh mesh = new Mesh();
+			Shape shape = new Shape();
+
+			// Get the geometry
+			Geometry geometry = Geometries[name];
+
+			int[] indexsrc = geometry.Mesh.Triangles.Data;
+			float[] vertexsrc = geometry.Mesh.Sources[geometry.Mesh.Vertices.Input.Source].Array.Data;
+			float[] normalsrc = geometry.Mesh.Sources[geometry.Mesh.Triangles.Inputs[1].Source].Array.Data;
+
+			int baseLen = geometry.Mesh.Triangles.Count * 3;
+			float[] vertex = new float[baseLen * 3];
+			float[] normal = new float[baseLen * 3];
+			//float[] texture = new float[baseLen * 2];
+
+			for (int i = 0; i < baseLen * 3; i++)
+			{
+				int vindex = indexsrc[i * 3];
+				vertex[i * 3] = vertexsrc[vindex * 3];
+			//	vertex[i * 3 + 1] = vertexsrc[vindex * 3 + 1];
+			//	vertex[i * 3 + 2] = vertexsrc[vindex * 3 + 2];
+
+				int nindex = indexsrc[i * 3 + 1];
+				normal[i * 3] = normalsrc[nindex * 3];
+			//	normal[i * 3 + 1] = normalsrc[nindex * 3 + 1];
+			//	normal[i * 3 + 2] = normalsrc[nindex * 3 + 2];
 
 
 
-			return mesh;
+				//int tindex = geometry.Mesh.Triangles.Data[i * 3 + 2];
+				//texture[i * 2] = baseMesh.texcoord[tindex * 2];
+				//texture[i * 2 + 1] = baseMesh.texcoord[tindex * 2 + 1];
+			}
+
+
+			
+/*			
+			// Create each buffers
+			Dictionary<string, int> glhandles = new Dictionary<string, int>();
+			foreach (Source source in geometry.Mesh.Sources.Values)
+			{
+				int handle = 0;
+				GL.GenBuffers(1, out handle);
+				glhandles[source.Id] = handle;
+
+				GL.BindBuffer(BufferTarget.ArrayBuffer, handle);
+				GL.BufferData<float>(BufferTarget.ArrayBuffer, (IntPtr)(sizeof(float) * source.Array.Count), source.Array.Data, BufferUsageHint.StaticDraw);
+			}
+*/
+
+			int indexhandle = 0;
+
+			return shape;
 		}
 
 
@@ -282,7 +329,7 @@ namespace ArcEngine.Examples
 			/// <summary>
 			/// Sources
 			/// </summary>
-			Dictionary<string, Source> Sources;
+			public Dictionary<string, Source> Sources;
 
 
 			/// <summary>
@@ -730,6 +777,8 @@ namespace ArcEngine.Examples
 
 				Semantic = xml.Attributes["semantic"].Value;
 				Source = xml.Attributes["source"].Value;
+				if (Source.StartsWith("#"))
+					Source = Source.Substring(1, Source.Length - 1);
 			}
 
 

@@ -75,16 +75,10 @@ namespace ArcEngine.Examples
 		{
 			Display.ClearColor = Color.CornflowerBlue;
 
-/*
+
 			ColladaLoader loader = new ColladaLoader();
 			loader.Load("data/plane.dae");
-			Mesh = loader.GenerateMesh("Plane_001");
-
-
-			Batch = new Batch();
-			Batch.AddRectangle(new Rectangle(10, 10, 100, 100), Color.Red, Rectangle.Empty);
-			Batch.Apply();
-*/
+			Mesh = loader.GenerateShape("Plane_001");
 
 
 			#region Shader
@@ -137,93 +131,8 @@ namespace ArcEngine.Examples
 			#endregion
 
 
-			#region Vertex Buffer
-			indicesVboData = new uint[]
-			{
-				0, 1, 2,
-			};
 
-			
-			Vector2[] positionVboData = new Vector2[]
-			{
-				new Vector2( 300.0f,  100.0f),
-				new Vector2( 500.0f,  400.0f),
-				new Vector2( 100.0f,  400.0f),
-			};
-
-
-			Vector4[] colorVboData = new Vector4[]
-			{
-				new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
-				new Vector4(0.0f, 1.0f, 0.0f, 1.0f),
-				new Vector4(0.0f, 0.0f, 1.0f, 1.0f),
-			};
-
-
-			// All data mixed
-			float[] mixedData = new float[]
-			{
-				// Coord							Color
-				300.0f,  100.0f,				1.0f, 0.0f, 0.0f, 1.0f,
-				500.0f,  400.0f,				0.0f, 1.0f, 0.0f, 1.0f,
-				100.0f,  400.0f,				0.0f, 0.0f, 1.0f, 1.0f,
-			};
-
-
-			#region Index buffer
-
-
-			Shader.BindAttrib(0, "in_position");
-			Shader.BindAttrib(1, "in_color");
-
-
-			IndicesBuffer = new IndexBuffer();
-			IndicesBuffer.UpdateIndices(indicesVboData);
-			IndicesBuffer.UpdateVertices(mixedData);
-
-			// Vertex coords are at index 0 and are 2 floats. The stride between data is 6 floats and start at offset 0
-			Display.EnableBufferIndex(0);
-			Display.SetBufferDeclaration(0, 2, sizeof(float) * 6, 0);
-
-			// Vertex colors are at index 1 and are 4 floats. The stride between data is 6 floats and start at 2 floats from the start
-			Display.EnableBufferIndex(1);
-			Display.SetBufferDeclaration(1, 4, sizeof(float) * 6, sizeof(float) * 2);
-
-
-
-			#endregion
-
-
-
-			#region VAO
-/*			
-			Batch = new BatchBuffer();
-
-
-			VertexBuffer.Bind(0, 2);
-			Shader.BindAttrib(0, "in_position");
-
-			ColorBuffer.Bind(1, 4);
-			Shader.BindAttrib(1, "in_color");
-
-
-			GL.BindVertexArray(0);
-*/			
-			#endregion 
-
-			#endregion
-
-
-		//	Mesh = new Mesh();
-		//	Mesh.SetIndices(indicesVboData);
 		}
-
-
-		uint[] indicesVboData;
-		ArrayBuffer<Vector2> VertexBuffer;
-		ArrayBuffer<Vector4> ColorBuffer;
-		IndexBuffer IndicesBuffer;
-
 
 
 
@@ -241,14 +150,6 @@ namespace ArcEngine.Examples
 			if (Shader != null)
 				Shader.Dispose();
 			Shader = null;
-
-			if (Batch != null)
-				Batch.Dispose();
-			Batch = null;
-
-			if (IndicesBuffer != null)
-				IndicesBuffer.Dispose();
-			IndicesBuffer = null;
 
 		}
 
@@ -279,7 +180,7 @@ namespace ArcEngine.Examples
 			Display.ClearBuffers();
 
 
-			Display.DrawIndexBuffer(IndicesBuffer, BeginMode.Triangles);
+			Mesh.Draw();
 		}
 
 
@@ -291,15 +192,7 @@ namespace ArcEngine.Examples
 		/// <summary>
 		/// 
 		/// </summary>
-		Mesh Mesh;
-
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		//Batch Batch;
-		BatchBuffer Batch;
+		Shape Mesh;
 
 
 		/// <summary>

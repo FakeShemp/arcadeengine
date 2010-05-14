@@ -23,19 +23,35 @@ using System.Text;
 using OpenTK.Graphics.OpenGL;
 using ArcEngine.Graphic;
 
-
+/*
+ * 
+ * http://old.nabble.com/OpenGL%27s-VBO-with-Haskell-td19148385.html
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+*/
 namespace ArcEngine.Examples
 {
 	/// <summary>
 	/// Mesh object
 	/// </summary>
-	public class Mesh : IDisposable
+	public class Shape : IDisposable
 	{
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public Mesh()
+		public Shape()
 		{
 			//IndexBuffer = new ArrayBuffer<uint>();
 			//VertexBuffer = new ArrayBuffer<float>();
