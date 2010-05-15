@@ -146,30 +146,52 @@ namespace ArcEngine.Examples
 
 			// Get the size of the buffer
 			int stride = 0;
-			foreach (Source source in mesh.Sources.Values)
-				stride += source.Technique.Accessor.Stride;
+			foreach (Source src in mesh.Sources.Values)
+				stride += src.Technique.Accessor.Stride;
 
+
+	
+			
+			// Create the index buffer first
+
+			// Number of index
+			int indexCount = mesh.Triangles.Count * 3;
+
+			int[] indexbuffer = new int[indexCount];
+			for (int i = 0; i < indexbuffer.Length; i++)
+				indexbuffer[i] = -1;
+
+			// For each index in the <p> tag
+			Input input = mesh.Triangles.GetInput("VERTEX");
+			for (int i = 0; i < indexCount; i++)
+			{
+				// Position in the <p> tag
+				int pos = i * mesh.Triangles.Inputs.Count + input.Offset;
+
+				// Fill the index buffer
+				indexbuffer[i] = mesh.Triangles.Data[pos];
+			}	
+			
+			
+			
+			
 			// Destination buffer for OpenGL
 			float[] buffer = new float[stride * mesh.VertexCount];
 			for (int i = 0; i < buffer.Length; i++)
 				buffer[i] = 99.0f;
 
-			// Number of index
-			int indexCount = mesh.Triangles.Count * 3;
 
 			// Offset in the OpenGL buffer according to <inputs> strides
 			int offset = 0;
 
 			// For each <input> tag in the triangle
-			foreach (Input input in mesh.Triangles.Inputs)
+			foreach (Input inpt in mesh.Triangles.Inputs)
 			{
 				// Get the <source> tag
-				Source source = mesh.GetSource(input.Source);
+				Source source = mesh.GetSource(inpt.Source);
 				if (source == null)
-				{
-					// Index buffer from <vertices>
-					source = mesh.GetVerticesSource();
-				}
+					continue;
+
 
 				// For each index in the <p> tag
 				for (int i = 0; i < indexCount; i++)
@@ -187,17 +209,6 @@ namespace ArcEngine.Examples
 				//
 				offset += source.Technique.Accessor.Stride;
 			}
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -975,6 +986,26 @@ namespace ArcEngine.Examples
 						break;
 					}
 				}
+			}
+
+
+			/// <summary>
+			/// Gets an <see cref="Input"/> from its name
+			/// </summary>
+			/// <param name="name">Semantic name</param>
+			/// <returns>Handle or null</returns>
+			public Input GetInput(string name)
+			{
+				if (string.IsNullOrEmpty(name))
+					return null;
+
+				foreach (Input input in Inputs)
+				{
+					if (input.Semantic == name)
+						return input;
+				}
+
+				return null;
 			}
 
 
