@@ -28,8 +28,6 @@ using ArcEngine.Input;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
-// http://www.wazim.com/Collada_Tutorial_1.htm
-// http://www.wazim.com/Collada_Tutorial_2.htm
 namespace ArcEngine.Examples
 {
 	/// <summary>
@@ -77,8 +75,8 @@ namespace ArcEngine.Examples
 
 
 			ColladaLoader loader = new ColladaLoader();
-			loader.Load("data/cube.dae");
-			Mesh = loader.GenerateShape("Cube_002");
+			loader.Load("data/duck.dae");
+			Shape = loader.GenerateShape("LOD3spShape");
 
 
 			#region Shader
@@ -143,9 +141,9 @@ namespace ArcEngine.Examples
 		/// </summary>
 		public override void UnloadContent()
 		{
-			if (Mesh != null)
-				Mesh.Dispose();
-			Mesh = null;
+			if (Shape != null)
+				Shape.Dispose();
+			Shape = null;
 
 			if (Shader != null)
 				Shader.Dispose();
@@ -179,8 +177,8 @@ namespace ArcEngine.Examples
 			// Clears the background
 			Display.ClearBuffers();
 
-			if (Mesh != null)
-				Mesh.Draw();
+			if (Shape != null)
+				Shape.Draw();
 		}
 
 
@@ -192,7 +190,7 @@ namespace ArcEngine.Examples
 		/// <summary>
 		/// 
 		/// </summary>
-		Shape Mesh;
+		Shape Shape;
 
 
 		/// <summary>

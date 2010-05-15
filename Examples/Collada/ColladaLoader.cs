@@ -26,6 +26,8 @@ using System.Runtime.InteropServices;
 using System.Xml;
 
 
+// http://www.wazim.com/Collada_Tutorial_1.htm
+// http://www.wazim.com/Collada_Tutorial_2.htm
 
 namespace ArcEngine.Examples
 {
@@ -139,108 +141,92 @@ namespace ArcEngine.Examples
 
 
 
-
-			// Get the vertex buffer
-			Source vsource = mesh.GetVerticesSource();
-
-
-			// Get the size of the buffer
-			int stride = 0;
+			// Get the size of one element (sum of all strides)
+			int stridesum = 0;
 			foreach (Source src in mesh.Sources.Values)
-				stride += src.Technique.Accessor.Stride;
+				stridesum += src.Technique.Accessor.Stride;
 
+
+			
+
+			// Create the index buffer
+			int indexCount = mesh.Triangles.Count * 3;
+			uint[] indexbuffer = new uint[indexCount];
+			//for (int i = 0; i < indexbuffer.Length; i++)
+			//   indexbuffer[i] = -1;
+
+			// Create the array buffer
+			float[] buffer = new float[stridesum * mesh.VertexCount];
+			//for (int i = 0; i < buffer.Length; i++)
+			//   buffer[i] = 99.0f;
 
 	
 			
-			// Create the index buffer first
-
-			// Number of index
-			int indexCount = mesh.Triangles.Count * 3;
-
-			int[] indexbuffer = new int[indexCount];
-			for (int i = 0; i < indexbuffer.Length; i++)
-				indexbuffer[i] = -1;
+			
+			// Offset in the <p> buffer according to <inputs> strides
+			int offset = mesh.Triangles.GetInput("VERTEX").Offset;
 
 			// For each index in the <p> tag
-			Input input = mesh.Triangles.GetInput("VERTEX");
 			for (int i = 0; i < indexCount; i++)
 			{
 				// Position in the <p> tag
-				int pos = i * mesh.Triangles.Inputs.Count + input.Offset;
+				int pos = i * mesh.Triangles.Inputs.Count + offset;
 
 				// Fill the index buffer
 				indexbuffer[i] = mesh.Triangles.Data[pos];
 			}	
 			
 			
-			
-			
-			// Destination buffer for OpenGL
-			float[] buffer = new float[stride * mesh.VertexCount];
-			for (int i = 0; i < buffer.Length; i++)
-				buffer[i] = 99.0f;
 
+			// Copy all vertices to the array buffer
+			Source source = mesh.GetVerticesSource();
+			for (int i = 0; i < source.Technique.Accessor.Count; i++)
+			{
+				buffer[i * stridesum] = source.Array.Data[i * 3];
+				buffer[i * stridesum + 1] = source.Array.Data[i * 3 + 1];
+				buffer[i * stridesum + 2] = source.Array.Data[i * 3 + 2];
+			}
 
-			// Offset in the OpenGL buffer according to <inputs> strides
-			int offset = 0;
+			
+
 
 			// For each <input> tag in the triangle
-			foreach (Input inpt in mesh.Triangles.Inputs)
+			foreach (Input input in mesh.Triangles.Inputs)
 			{
 				// Get the <source> tag
-				Source source = mesh.GetSource(inpt.Source);
+				source = mesh.GetSource(input.Source);
 				if (source == null)
 					continue;
-
-
+			
 				// For each index in the <p> tag
 				for (int i = 0; i < indexCount; i++)
 				{
 					// Position in the <p> tag
 					int pos = i * mesh.Triangles.Inputs.Count + input.Offset;
 
+
+					// For each param in the source
 					for (int sub = 0; sub < source.Technique.Accessor.Stride; sub++)
 					{
-						float value = source.Array.Data[(mesh.Triangles.Data[pos] * source.Technique.Accessor.Stride) + sub];
-						buffer[mesh.Triangles.Data[pos] * stride + offset + sub] = value;
+						try
+						{
+							float value = source.Array.Data[(mesh.Triangles.Data[pos] * source.Technique.Accessor.Stride) + sub];
+							//buffer[mesh.Triangles.Data[pos] * stridesum + offset + sub] = value;
+							buffer[mesh.Triangles.Data[pos] * stridesum + input.Offset * 3 + sub] = value;
+						}
+						catch
+						{
+						}
 					}
 				}
 
 				//
-				offset += source.Technique.Accessor.Stride;
+				//offset += source.Technique.Accessor.Stride;
 			}
 
 
-
-
-
-			// Data from collada
-			int[] indexsrc = geometry.Mesh.Triangles.Data;
-			float[] vertexsrc = geometry.Mesh.Sources[geometry.Mesh.Vertices.Input.Source].Array.Data;
-			float[] normalsrc = geometry.Mesh.Sources[geometry.Mesh.Triangles.Inputs[1].Source].Array.Data;
-
-
-			// Data for OpenGL
-			//int baseLen = geometry.Mesh.Triangles.Count * 3;
-			float[] vertex = new float[indexCount * 3];
-			float[] normal = new float[indexCount * 3];
-
-			for (int i = 0; i < indexCount; i++)
-			{
-				int vindex = indexsrc[i * geometry.Mesh.Triangles.InputCount];
-				vertex[i * 3] = vertexsrc[vindex * 3];
-				vertex[i * 3 + 1] = vertexsrc[vindex * 3 + 1];
-				vertex[i * 3 + 2] = vertexsrc[vindex * 3 + 2];
-
-				int nindex = indexsrc[i * geometry.Mesh.Triangles.InputCount + 1];
-				normal[i * 3] = normalsrc[nindex * 3];
-				normal[i * 3 + 1] = normalsrc[nindex * 3 + 1];
-				normal[i * 3 + 2] = normalsrc[nindex * 3 + 2];
-			}
-
-			shape.SetVertices(null);
-			
-
+			shape.SetIndices(indexbuffer);
+			shape.SetVertices(buffer);
 			return shape;
 		}
 
@@ -975,12 +961,12 @@ namespace ArcEngine.Examples
 
 						case "p":
 						{
-							Data = new int[Count * 3 * Inputs.Count];
+							Data = new uint[Count * 3 * Inputs.Count];
 
 							string[] arr = node.InnerText.Split(' ');
 							for (int i = 0; i < arr.Length; i++)
 							{
-								Data[i] = int.Parse(arr[i]);
+								Data[i] = uint.Parse(arr[i]);
 							}
 						}
 						break;
@@ -1066,7 +1052,7 @@ namespace ArcEngine.Examples
 			/// <summary>
 			/// Indices that describes the vertex attributes for a number of triangles
 			/// </summary>
-			public int[] Data
+			public uint[] Data
 			{
 				get;
 				private set;
