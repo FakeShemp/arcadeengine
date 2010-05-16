@@ -19,12 +19,13 @@
 #endregion
 using System;
 using System.Collections.Generic;
-using System.Text;
-using OpenTK.Graphics.OpenGL;
-using ArcEngine.Graphic;
+using System.ComponentModel;
+using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Xml;
-
+using ArcEngine.Graphic;
+using OpenTK.Graphics.OpenGL;
 
 // http://www.wazim.com/Collada_Tutorial_1.htm
 // http://www.wazim.com/Collada_Tutorial_2.htm
@@ -157,14 +158,14 @@ namespace ArcEngine.Examples
 
 			// Create the array buffer
 			float[] buffer = new float[stridesum * mesh.VertexCount];
-			//for (int i = 0; i < buffer.Length; i++)
-			//   buffer[i] = 99.0f;
+			for (int i = 0; i < buffer.Length; i++)
+			   buffer[i] = 99.0f;
 
 	
 			
 			
 			// Offset in the <p> buffer according to <inputs> strides
-			int offset = mesh.Triangles.GetInput("VERTEX").Offset;
+			int offset = mesh.Triangles.GetInput(InputSemantic.Vertex).Offset;
 
 			// For each index in the <p> tag
 			for (int i = 0; i < indexCount; i++)
@@ -191,13 +192,18 @@ namespace ArcEngine.Examples
 
 
 			// For each <input> tag in the triangle
+			offset = 0;
 			foreach (Input input in mesh.Triangles.Inputs)
 			{
 				// Get the <source> tag
 				source = mesh.GetSource(input.Source);
 				if (source == null)
+				{
+					offset += 3;
 					continue;
-			
+				}
+
+
 				// For each index in the <p> tag
 				for (int i = 0; i < indexCount; i++)
 				{
@@ -208,11 +214,15 @@ namespace ArcEngine.Examples
 					// For each param in the source
 					for (int sub = 0; sub < source.Technique.Accessor.Stride; sub++)
 					{
+						uint index = mesh.Triangles.Data[pos];
+
+						float value = source.Array.Data[(index * source.Technique.Accessor.Stride) + sub];
+
 						try
 						{
-							float value = source.Array.Data[(mesh.Triangles.Data[pos] * source.Technique.Accessor.Stride) + sub];
+
 							//buffer[mesh.Triangles.Data[pos] * stridesum + offset + sub] = value;
-							buffer[mesh.Triangles.Data[pos] * stridesum + input.Offset * 3 + sub] = value;
+							buffer[ index * stridesum + offset + sub] = value;
 						}
 						catch
 						{
@@ -221,7 +231,7 @@ namespace ArcEngine.Examples
 				}
 
 				//
-				//offset += source.Technique.Accessor.Stride;
+				offset += source.Technique.Accessor.Stride;
 			}
 
 
@@ -882,8 +892,50 @@ namespace ArcEngine.Examples
 				if (xml.Attributes["offset"] != null)
 					Offset = int.Parse(xml.Attributes["offset"].Value);
 
-				Semantic = xml.Attributes["semantic"].Value;
+				Semantic = GetSemantic(xml.Attributes["semantic"].Value);
 				Source = xml.Attributes["source"].Value;
+
+				if (xml.Attributes["set"] != null)
+					Set = int.Parse(xml.Attributes["set"].Value);
+			}
+
+			/// <summary>
+			/// 
+			/// </summary>
+			/// <param name="name"></param>
+			/// <returns></returns>
+			InputSemantic GetSemantic(string name)
+			{
+				Dictionary<string, InputSemantic> dic = new Dictionary<string,InputSemantic>();
+				dic["BINORMAL"] = InputSemantic.Binormal;
+				dic["COLOR"] = InputSemantic.Color;
+				dic["CONTINUITY"] = InputSemantic.Continuity;
+				dic["IMAGE"] = InputSemantic.Image;
+				dic["INPUT"] = InputSemantic.Input;
+				dic["IN_TANGENT"] = InputSemantic.InTangent;
+				dic["INTERPOLATION"] = InputSemantic.Interpolation;
+				dic["INV_BIND_MATRIX"] = InputSemantic.InvBindMatrix;
+				dic["JOINT"] = InputSemantic.Joint;
+				dic["LINEAR_STEPS"] = InputSemantic.LinearSteps;
+				dic["MORPH_TARGET"] = InputSemantic.MorphTarget;
+				dic["MORPH_WEIGHT"] = InputSemantic.MorphWeight;
+				dic["NORMAL"] = InputSemantic.Normal;
+				dic["OUTPUT"] = InputSemantic.Output;
+				dic["OUT_TANGENT"] = InputSemantic.OutTangent;
+				dic["POSITION"] = InputSemantic.Position;
+				dic["TANGENT"] = InputSemantic.Tangent;
+				dic["TEXBINORMAL"] = InputSemantic.TexBinormal;
+				dic["TEXCOORD"] = InputSemantic.TexCoord;
+				dic["TEXTANGENT"] = InputSemantic.TexTangent;
+				dic["UV"] = InputSemantic.UV;
+				dic["VERTEX"] = InputSemantic.Vertex;
+				dic["WEIGHT"] = InputSemantic.Weight;
+
+
+				if (!dic.ContainsKey(name))
+					throw new ArgumentOutOfRangeException();
+
+				return dic[name];
 			}
 
 
@@ -901,9 +953,18 @@ namespace ArcEngine.Examples
 
 
 			/// <summary>
+			/// 
+			/// </summary>
+			public int Set
+			{
+				get;
+				private set;
+			}
+
+			/// <summary>
 			/// Semantic
 			/// </summary>
-			public string Semantic
+			public InputSemantic Semantic
 			{
 				get;
 				private set;
@@ -924,6 +985,58 @@ namespace ArcEngine.Examples
 			#endregion
 		}
 
+
+		/// <summary>
+		/// Input semantic connection
+		/// </summary>
+		enum InputSemantic
+		{
+			Binormal,
+
+			Color,
+
+			Continuity,
+
+			Image,
+
+			Input,
+
+			InTangent,
+
+			Interpolation,
+
+			InvBindMatrix,
+
+			Joint,
+
+			LinearSteps,
+
+			MorphTarget,
+
+			MorphWeight,
+
+			Normal,
+
+			Output,
+
+			OutTangent,
+
+			Position,
+
+			Tangent,
+
+			TexBinormal,
+
+			TexCoord,
+
+			TexTangent,
+
+			UV,
+
+			Vertex,
+
+			Weight
+		}
 
 		/// <summary>
 		/// Provides the information needed to for a mesh to bind vertex attributes together and 
@@ -980,14 +1093,12 @@ namespace ArcEngine.Examples
 			/// </summary>
 			/// <param name="name">Semantic name</param>
 			/// <returns>Handle or null</returns>
-			public Input GetInput(string name)
+			public Input GetInput(InputSemantic semantic)
 			{
-				if (string.IsNullOrEmpty(name))
-					return null;
 
 				foreach (Input input in Inputs)
 				{
-					if (input.Semantic == name)
+					if (input.Semantic == semantic)
 						return input;
 				}
 

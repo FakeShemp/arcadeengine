@@ -27,11 +27,11 @@ using ArcEngine.Graphic;
  * 
  * http://old.nabble.com/OpenGL%27s-VBO-with-Haskell-td19148385.html
  * 
+ * http://learningwebgl.com/cookbook/index.php/How_to_draw_a_sphere 
  * 
+ * http://www.scenejs.org/docs/symbols/src/_home_lindsay_xeolabs_projects_scenejs_src_scenejs_loadCollada_loadCollada.js.html
  * 
- * 
- * 
- * 
+ * http://www.collada.org/public_forum/viewtopic.php?f=12&t=1568&p=5394&hilit=opengl#p5394
  * 
  * 
  * 
@@ -113,6 +113,28 @@ namespace ArcEngine.Examples
 		}
 
 
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="name"></param>
+		/// <param name="id"></param>
+		/// <param name="normalized"></param>
+		public void AddVertexAttribute(string name, int id, float[] normalized)
+		{
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="name"></param>
+		/// <param name="primitiveType"></param>
+		/// <param name="indices"></param>
+		public void AddIndexedTopology(string name, int primitiveType, uint[] indices) 
+		{
+		}
 
 		#region Statics
 

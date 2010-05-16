@@ -75,8 +75,8 @@ namespace ArcEngine.Examples
 
 
 			ColladaLoader loader = new ColladaLoader();
-			loader.Load("data/duck.dae");
-			Shape = loader.GenerateShape("LOD3spShape");
+			loader.Load("data/seymourplane_triangulate.dae");
+			Shape = loader.GenerateShape("propShape");
 
 
 			#region Shader
