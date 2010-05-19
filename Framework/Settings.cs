@@ -82,7 +82,7 @@ namespace ArcEngine
 			if (Tokens.ContainsKey(name))
 				return Tokens[name];
 
-			return string.Empty;
+			return defaultvalue;
 		}
 
 		/// <summary>
@@ -129,10 +129,21 @@ namespace ArcEngine
 		/// <returns>Float value, or 0.0f if not found</returns>
 		static float GetFloat(string name)
 		{
+			return GetFloat(name, 0.0f);
+		}
+
+		/// <summary>
+		/// Gets a float token
+		/// </summary>
+		/// <param name="name">Token's name</param>
+		/// <param name="defaultvalue">Default value if not found</param>
+		/// <returns>Float value, or 0.0f if not found</returns>
+		static float GetFloat(string name, float defaultvalue)
+		{
 			if (Tokens.ContainsKey(name))
 				return float.Parse(Tokens[name]);
 
-			return 0.0f;
+			return defaultvalue;
 		}
 
 
