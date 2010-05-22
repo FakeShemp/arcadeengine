@@ -1168,6 +1168,18 @@ namespace ArcEngine.Graphic
 		}
 
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="shape"></param>
+		/// <param name="shader"></param>
+		public static void DrawShape(Shape shape, Shader shader)
+		{
+
+		}
+
+
 		/// <summary>
 		/// 
 		/// </summary>

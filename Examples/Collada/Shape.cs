@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Text;
 using OpenTK.Graphics.OpenGL;
 using ArcEngine.Graphic;
+using ArcEngine.Asset;
 
 /*
  * 
@@ -43,7 +44,7 @@ using ArcEngine.Graphic;
 namespace ArcEngine.Examples
 {
 	/// <summary>
-	/// Mesh object
+	/// Defines a drawable convex shape 
 	/// </summary>
 	public class Shape : IDisposable
 	{
@@ -88,8 +89,13 @@ namespace ArcEngine.Examples
 		/// <summary>
 		/// 
 		/// </summary>
-		public void Draw()
+		/// <param name="shader">Shader to use</param>
+		public void Draw(Shader shader)
 		{
+
+			if (shader == null)
+				return;
+
 			//VertexBuffer.Enable(1);
 			//IndexBuffer.Enable(2);
 

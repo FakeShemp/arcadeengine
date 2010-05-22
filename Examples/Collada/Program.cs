@@ -178,7 +178,7 @@ namespace ArcEngine.Examples
 			Display.ClearBuffers();
 
 			if (Shape != null)
-				Shape.Draw();
+				Shape.Draw(Shader);
 		}
 
 
