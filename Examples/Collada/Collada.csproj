@@ -102,7 +102,7 @@
     <Compile Include="ArrayBuffer.cs" />
     <Compile Include="ColladaLoader.cs" />
     <Compile Include="BatchBuffer.cs" />
-    <Compile Include="Shape.cs" />
+    <Compile Include="Shape3d.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">

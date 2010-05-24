@@ -1823,7 +1823,7 @@ namespace ArcEngine.Graphic
 
 
 			if (Extensions.Contains("GL_ARB_texture_non_power_of_two"))
-				HasNPOTTexture = true;
+				HasNonPowerOf2Textures = true;
 
 			if (Extensions.Contains("GL_ARB_framebuffer_object"))
 				HasFBO = true;
@@ -1884,7 +1884,7 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Has non power of two texture support
 		/// </summary>
-		public bool HasNPOTTexture
+		public bool HasNonPowerOf2Textures
 		{
 			get;
 			internal set;

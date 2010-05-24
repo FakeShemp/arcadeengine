@@ -129,12 +129,12 @@ namespace ArcEngine.Examples
 		/// </summary>
 		/// <param name="name">Name of the geometry</param>
 		/// <returns>Returns an handle to the shape or null</returns>
-		public Shape GenerateShape(string name)
+		public Shape3d GenerateShape(string name)
 		{
 			if (string.IsNullOrEmpty(name) || !Geometries.ContainsKey(name))
 				return null;
 
-			Shape shape = new Shape();
+			Shape3d shape = new Shape3d();
 
 			// Get the geometry
 			Geometry geometry = Geometries[name];

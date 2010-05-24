@@ -190,7 +190,7 @@ namespace ArcEngine.Examples
 		/// <summary>
 		/// 
 		/// </summary>
-		Shape Shape;
+		Shape3d Shape;
 
 
 		/// <summary>
