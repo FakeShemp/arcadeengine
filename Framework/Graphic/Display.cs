@@ -1065,13 +1065,12 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		/// <param name="buffer">Buffer handle</param>
 		/// <param name="mode">Drawing mode</param>
-		/// <param name="shader">Shader to use</param>
-		public static void DrawIndexBuffer(IndexBuffer buffer, BeginMode mode, Shader shader)
+		public static void DrawIndexBuffer(IndexBuffer buffer, BeginMode mode)
 		{
 			if (buffer == null)
 				return;
 
-			buffer.Bind(shader);
+			buffer.Bind(Shader);
 
 			GL.DrawElements(mode, buffer.Count, DrawElementsType.UnsignedInt, IntPtr.Zero);
 		}

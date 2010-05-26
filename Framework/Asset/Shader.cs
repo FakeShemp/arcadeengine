@@ -293,34 +293,43 @@ namespace ArcEngine.Asset
 		#region Uniforms
 
 		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="id"></param>
-		/// <param name="value"></param>
-		public void SetUniform(int id, float value)
-		{
-			GL.Uniform1(id, value);
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="id"></param>
-		/// <param name="value"></param>
-		public void SetUniform(int id, int value)
-		{
-			GL.Uniform1(id, value);
-		}
-
-
-		/// <summary>
-		/// Sets a uniform value
+		/// Sets an uniform value
 		/// </summary>
 		/// <param name="id">ID of the uniform</param>
-		/// <param name="value">Value</param>
+		/// <param name="value">New value</param>
+		public void SetUniform(int id, float value)
+		{
+			if (id < 0)
+				return;
+
+			GL.Uniform1(id, value);
+		}
+
+
+		/// <summary>
+		/// Sets an uniform value
+		/// </summary>
+		/// <param name="id">ID of the uniform</param>
+		/// <param name="value">New value</param>
+		public void SetUniform(int id, int value)
+		{
+			if (id < 0)
+				return;
+
+			GL.Uniform1(id, value);
+		}
+
+
+		/// <summary>
+		/// Sets an uniform value
+		/// </summary>
+		/// <param name="id">ID of the uniform</param>
+		/// <param name="value">New value</param>
 		public void SetUniform(int id, float[] value)
 		{
+			if (id < 0)
+				return;
+
 			if (value.Length == 1)
 				GL.Uniform1(id, value[0]);
 			else if (value.Length == 2)
@@ -340,18 +349,24 @@ namespace ArcEngine.Asset
 		/// <returns>Uniform's id</returns>
 		public int GetUniform(string name)
 		{
+			if (string.IsNullOrEmpty(name))
+				return -1;
+
 			return GL.GetUniformLocation(ProgramID, name);
 		}
 
 
 		/// <summary>
-		/// 
+		/// Sets an uniform value
 		/// </summary>
-		/// <param name="name"></param>
-		/// <param name="matrix"></param>
+		/// <param name="id">ID of the uniform</param>
+		/// <param name="matrix">New value</param>
 		public void SetUniform(string name, Matrix4 matrix)
 		{
 			int id = GetUniform(name);
+			if (id < 0)
+				return;
+
 			GL.UniformMatrix4(id, false, ref matrix);
 		}
 
@@ -365,10 +380,13 @@ namespace ArcEngine.Asset
 		/// <summary>
 		/// Associates a generic vertex attribute index with a named attribute variable
 		/// </summary>
-		/// <param name="id">Specifies the index of the generic vertex attribute to be bound.</param>
+		/// <param name="index">Specifies the index of the generic vertex attribute to be bound.</param>
 		/// <param name="name">Name of the vertex shader attribute variable to which index is to be bound.</param>
 		public void BindAttrib(int index, string name)
 		{
+			if (index < 0 || string.IsNullOrEmpty(name))
+				return;
+
 			GL.BindAttribLocation(ProgramID, index, name);
 		}
 
@@ -380,40 +398,52 @@ namespace ArcEngine.Asset
 		/// <returns>Attribute's id</returns>
 		public int GetAttribute(string name)
 		{
+			if (string.IsNullOrEmpty(name))
+				return -1;
+
 			return GL.GetAttribLocation(ProgramID, name);
 		}
 
 
 		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="id"></param>
-		/// <param name="value"></param>
-		public void SetAttribute(int id, float value)
-		{
-			GL.VertexAttrib1(id, value);
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="id"></param>
-		/// <param name="value"></param>
-		public void SetAttribute(int id, int value)
-		{
-			GL.VertexAttrib1(id, value);
-		}
-
-
-
-		/// <summary>
-		/// Sets a uniform value
+		/// Sets an attribute value
 		/// </summary>
 		/// <param name="id">ID of the uniform</param>
-		/// <param name="value">Value</param>
+		/// <param name="value">New value</param>
+		public void SetAttribute(int id, float value)
+		{
+			if (id < 0)
+				return;
+
+			GL.VertexAttrib1(id, value);
+		}
+
+
+		/// <summary>
+		/// Sets an attribute value
+		/// </summary>
+		/// <param name="id">ID of the uniform</param>
+		/// <param name="value">New value</param>
+		public void SetAttribute(int id, int value)
+		{
+			if (id < 0)
+				return;
+
+			GL.VertexAttrib1(id, value);
+		}
+
+
+
+		/// <summary>
+		/// Sets an attribute value
+		/// </summary>
+		/// <param name="id">ID of the uniform</param>
+		/// <param name="value">New value</param>
 		public void SetAttribute(int id, float[] value)
 		{
+			if (id < 0)
+				return;
+
 			if (value.Length == 1)
 				GL.VertexAttrib1(id, value[0]);
 			else if (value.Length == 2)

@@ -217,7 +217,7 @@ namespace ArcEngine.Examples
 
 
 			// Draws the buffer
-			Display.DrawIndexBuffer(IndicesBuffer, BeginMode.Triangles, Shader);
+			Display.DrawIndexBuffer(IndicesBuffer, BeginMode.Triangles);
 		}
 
 
