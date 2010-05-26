@@ -62,26 +62,33 @@ namespace ArcEngine.Graphic
 
 
 		/// <summary>
-		/// Updates indices
+		/// Sets indices
 		/// </summary>
-		/// <param name="data"></param>
+		/// <param name="data">Data to send to the buffer</param>
 		public void SetIndices(int[] data)
 		{
-			GL.BindBuffer(BufferTarget.ElementArrayBuffer, indexHandle);
-			GL.BufferData<int>(BufferTarget.ElementArrayBuffer, (IntPtr)(data.Length * sizeof(uint)), data, BufferUsageHint.StaticDraw);
+			Count = 0;
+			if (data != null)
+				Count = data.Length;
 
-			Count = data.Length;
+			GL.BindBuffer(BufferTarget.ElementArrayBuffer, indexHandle);
+			GL.BufferData<int>(BufferTarget.ElementArrayBuffer, (IntPtr)(Count * sizeof(int)), data, BufferUsageHint.StaticDraw);
+
 		}
 
 
 		/// <summary>
-		/// Updates vertices
+		/// Sets vertices
 		/// </summary>
-		/// <param name="data"></param>
+		/// <param name="data">Data to send to the buffer</param>
 		public void SetVertices(float[] data)
 		{
+			int count = 0;
+			if (data != null)
+				count = data.Length;
+
 			GL.BindBuffer(BufferTarget.ArrayBuffer, vertexHandle);
-			GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(data.Length * sizeof(float)), data, UsageMode);
+			GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(count * sizeof(float)), data, UsageMode);
 		}
 
 
@@ -89,12 +96,11 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Binds the buffer
 		/// </summary>
-		/// <param name="shader"></param>
+		/// <param name="shader">Shader to use</param>
 		public void Bind(Shader shader)
 		{
 			GL.BindBuffer(BufferTarget.ArrayBuffer, vertexHandle);
 			GL.BindBuffer(BufferTarget.ElementArrayBuffer, indexHandle);
-
 
 			if (shader == null)
 				return;
@@ -111,10 +117,10 @@ namespace ArcEngine.Graphic
 
 
 		/// <summary>
-		/// 
+		/// Adds a vertex declation to the buffer
 		/// </summary>
-		/// <param name="attribut">Specifies the index of the generic vertex attribute to be modified.</param>
-		/// <param name="size">Specifies the number of components per generic vertex attribute. Must be 1, 2, 3, or 4.</param>
+		/// <param name="name">Specifies the name of the generic vertex attribute to be modified.</param>
+		/// <param name="size">Specifies the number of components per generic vertex attribute.</param>
 		/// <param name="stride">Specifies the byte offset between consecutive generic vertex attributes. 
 		/// If stride is 0, the generic vertex attributes are understood to be tightly packed in the array. </param>
 		/// <param name="offset">Specifies a pointer to the first component of the first generic vertex attribute in the array. </param>
@@ -156,7 +162,7 @@ namespace ArcEngine.Graphic
 
 
 		/// <summary>
-		/// Number of element
+		/// Number of indices
 		/// </summary>
 		public int Count
 		{
@@ -166,7 +172,7 @@ namespace ArcEngine.Graphic
 
 
 		/// <summary>
-		/// 
+		/// Vertex declarations
 		/// </summary>
 		List<VertexDeclaration> Declarations;
 
@@ -176,17 +182,18 @@ namespace ArcEngine.Graphic
 	}
 
 	/// <summary>
-	/// 
+	/// Declares the format of a set of vertex inputs
 	/// </summary>
 	struct VertexDeclaration
 	{
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
-		/// <param name="index"></param>
-		/// <param name="size"></param>
-		/// <param name="stride"></param>
-		/// <param name="offset"></param>
+		/// <param name="name">Specifies the name of the generic vertex attribute to be modified.</param>
+		/// <param name="size">Specifies the number of components per generic vertex attribute.</param>
+		/// <param name="stride">Specifies the byte offset between consecutive generic vertex attributes. 
+		/// If stride is 0, the generic vertex attributes are understood to be tightly packed in the array. </param>
+		/// <param name="offset">Specifies a pointer to the first component of the first generic vertex attribute in the array. </param>
 		public VertexDeclaration(string name, int size, int stride, int offset)
 		{
 			Name = name;
@@ -195,9 +202,26 @@ namespace ArcEngine.Graphic
 			Offset = offset;
 		}
 
+		/// <summary>
+		/// Name of the attribute
+		/// </summary>
 		public string Name;
+
+
+		/// <summary>
+		/// Size of the elements
+		/// </summary>
 		public int Size;
+
+		/// <summary>
+		/// Stride between elements
+		/// </summary>
 		public int Stride;
+
+
+		/// <summary>
+		/// Offset from the start
+		/// </summary>
 		public int Offset;
 	}
 
