@@ -46,13 +46,13 @@ namespace ArcEngine.Examples
 	/// <summary>
 	/// Class which holds the geometry of a 3d object.  
 	/// </summary>
-	public class Shape3d : IDisposable
+	public class Mesh : IDisposable
 	{
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public Shape3d()
+		public Mesh()
 		{
 			//IndexBuffer = new ArrayBuffer<uint>();
 			//VertexBuffer = new ArrayBuffer<float>();
@@ -78,9 +78,9 @@ namespace ArcEngine.Examples
 		/// 
 		/// </summary>
 		/// <param name="data"></param>
-		public void SetIndices(uint[] data)
+		public void SetIndices(int[] data)
 		{
-			Index.UpdateIndices(data);
+			Index.SetIndices(data);
 
 		}
 
@@ -151,7 +151,7 @@ namespace ArcEngine.Examples
 		/// <param name="slices"></param>
 		/// <param name="stacks"></param>
 		/// <returns></returns>
-		public static Shape3d MakeWireSphere(float radius, int slices, int stacks)
+		public static Mesh MakeWireSphere(float radius, int slices, int stacks)
 		{
 			return null;
 		}
@@ -164,7 +164,7 @@ namespace ArcEngine.Examples
 		/// <param name="slices"></param>
 		/// <param name="stacks"></param>
 		/// <returns></returns>
-		public static Shape3d MakeSolidSphere(float radius, int slices, int stacks)
+		public static Mesh MakeSolidSphere(float radius, int slices, int stacks)
 		{
 			return null;
 		}
@@ -175,7 +175,7 @@ namespace ArcEngine.Examples
 		/// </summary>
 		/// <param name="size"></param>
 		/// <returns></returns>
-		public static Shape3d MakeWireCube(float size)
+		public static Mesh MakeWireCube(float size)
 		{
 			return null;
 		}
@@ -186,7 +186,7 @@ namespace ArcEngine.Examples
 		/// </summary>
 		/// <param name="size"></param>
 		/// <returns></returns>
-		public static Shape3d MakeSolidCube(float size)
+		public static Mesh MakeSolidCube(float size)
 		{
 			return null;
 		}
@@ -198,7 +198,7 @@ namespace ArcEngine.Examples
 		/// </summary>
 		/// <param name="size"></param>
 		/// <returns></returns>
-		public static Shape3d MakeWireCone(float radius, float height, int slice, int stacks)
+		public static Mesh MakeWireCone(float radius, float height, int slice, int stacks)
 		{
 			return null;
 		}
@@ -209,7 +209,7 @@ namespace ArcEngine.Examples
 		/// </summary>
 		/// <param name="size"></param>
 		/// <returns></returns>
-		public static Shape3d MakeSolidCone(float radius, float height, int slice, int stacks)
+		public static Mesh MakeSolidCone(float radius, float height, int slice, int stacks)
 		{
 			return null;
 		}

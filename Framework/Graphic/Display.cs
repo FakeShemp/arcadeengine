@@ -1052,6 +1052,9 @@ namespace ArcEngine.Graphic
 		/// <param name="offset">Specifies a pointer to the first component of the first generic vertex attribute in the array. </param>
 		public static void SetBufferDeclaration(int index, int size, int stride, int offset)
 		{
+			if (index < 0)
+				return;
+
 			GL.VertexAttribPointer(index, size, VertexAttribPointerType.Float, false, stride, offset);
 		}
 
@@ -1062,12 +1065,14 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		/// <param name="buffer">Buffer handle</param>
 		/// <param name="mode">Drawing mode</param>
-		public static void DrawIndexBuffer(IndexBuffer buffer, BeginMode mode)
+		/// <param name="shader">Shader to use</param>
+		public static void DrawIndexBuffer(IndexBuffer buffer, BeginMode mode, Shader shader)
 		{
 			if (buffer == null)
 				return;
 
-			buffer.Bind();
+			buffer.Bind(shader);
+
 			GL.DrawElements(mode, buffer.Count, DrawElementsType.UnsignedInt, IntPtr.Zero);
 		}
 
@@ -1181,11 +1186,14 @@ namespace ArcEngine.Graphic
 
 
 		/// <summary>
-		/// 
+		/// Enables a buffer index 
 		/// </summary>
 		/// <param name="id"></param>
 		public static void EnableBufferIndex(int id)
 		{
+			if (id < 0)
+				return;
+
 			GL.EnableVertexAttribArray(id);
 		}
 

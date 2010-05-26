@@ -54,9 +54,9 @@ namespace ArcEngine.Examples
 		/// 
 		/// </summary>
 		/// <param name="buffer"></param>
-		public void SetIndices(uint[] buffer)
+		public void SetIndices(int[] buffer)
 		{
-			ElementBuffer.UpdateIndices(buffer);
+			ElementBuffer.SetIndices(buffer);
 		}
 
 

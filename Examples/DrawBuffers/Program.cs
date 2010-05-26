@@ -123,25 +123,11 @@ namespace ArcEngine.Examples
 
 			#endregion
 
-			Vector2[] positionVboData = new Vector2[]
-			{
-				new Vector2( 300.0f,  100.0f),
-				new Vector2( 500.0f,  400.0f),
-				new Vector2( 100.0f,  400.0f),
-			};
-
-
-			Vector4[] colorVboData = new Vector4[]
-			{
-				new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
-				new Vector4(0.0f, 1.0f, 0.0f, 1.0f),
-				new Vector4(0.0f, 0.0f, 1.0f, 1.0f),
-			};
-
-
+	
 			#region Index Buffer
 
-			uint[] indicesVboData = new uint[]
+			// Indices
+			int[] indicesVboData = new int[]
 			{
 				0, 1, 2,
 			};
@@ -158,17 +144,16 @@ namespace ArcEngine.Examples
 
 
 
-			Shader.BindAttrib(0, "in_position");
-			Shader.BindAttrib(1, "in_color");
-
 
 			IndicesBuffer = new IndexBuffer();
-			IndicesBuffer.UpdateIndices(indicesVboData);
-			IndicesBuffer.UpdateVertices(mixedData);
+			IndicesBuffer.SetIndices(indicesVboData);
+			IndicesBuffer.SetVertices(mixedData);
+			IndicesBuffer.AddDeclaration("in_position", 2, sizeof(float) * 6, 0);
+			IndicesBuffer.AddDeclaration("in_color", 4, sizeof(float) * 6, sizeof(float) * 2);
 
 
 			#region VAO
-			/*			
+/*			
 			Batch = new BatchBuffer();
 
 
@@ -231,25 +216,14 @@ namespace ArcEngine.Examples
 			Display.ClearBuffers();
 
 
-			// Vertex coords are at index 0 and are 2 floats. The stride between data is 6 floats and start at offset 0
-			Display.EnableBufferIndex(0);
-			Display.SetBufferDeclaration(0, 2, sizeof(float) * 6, 0);
-
-			// Vertex colors are at index 1 and are 4 floats. The stride between data is 6 floats and start at 2 floats from the start
-			Display.EnableBufferIndex(1);
-			Display.SetBufferDeclaration(1, 4, sizeof(float) * 6, sizeof(float) * 2);
-
-
 			// Draws the buffer
-			Display.DrawIndexBuffer(IndicesBuffer, BeginMode.Triangles);
+			Display.DrawIndexBuffer(IndicesBuffer, BeginMode.Triangles, Shader);
 		}
 
 
 
 
 		#region Properties
-
-
 
 		/// <summary>
 		/// Index buffer
@@ -265,5 +239,4 @@ namespace ArcEngine.Examples
 		#endregion
 
 	}
-
 }

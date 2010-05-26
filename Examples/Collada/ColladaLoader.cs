@@ -129,16 +129,16 @@ namespace ArcEngine.Examples
 		/// </summary>
 		/// <param name="name">Name of the geometry</param>
 		/// <returns>Returns an handle to the shape or null</returns>
-		public Shape3d GenerateShape(string name)
+		public Mesh GenerateShape(string name)
 		{
 			if (string.IsNullOrEmpty(name) || !Geometries.ContainsKey(name))
 				return null;
 
-			Shape3d shape = new Shape3d();
+			Mesh shape = new Mesh();
 
 			// Get the geometry
 			Geometry geometry = Geometries[name];
-			Mesh mesh = geometry.Mesh;
+			MeshDef mesh = geometry.Mesh;
 
 
 
@@ -152,7 +152,7 @@ namespace ArcEngine.Examples
 
 			// Create the index buffer
 			int indexCount = mesh.Triangles.Count * 3;
-			uint[] indexbuffer = new uint[indexCount];
+			int[] indexbuffer = new int[indexCount];
 			//for (int i = 0; i < indexbuffer.Length; i++)
 			//   indexbuffer[i] = -1;
 
@@ -214,7 +214,7 @@ namespace ArcEngine.Examples
 					// For each param in the source
 					for (int sub = 0; sub < source.Technique.Accessor.Stride; sub++)
 					{
-						uint index = mesh.Triangles.Data[pos];
+						int index = mesh.Triangles.Data[pos];
 
 						float value = source.Array.Data[(index * source.Technique.Accessor.Stride) + sub];
 
@@ -283,7 +283,7 @@ namespace ArcEngine.Examples
 					{
 						case "mesh":
 						{
-							Mesh = new Mesh(node);
+							Mesh = new MeshDef(node);
 						}
 						break;
 					}
@@ -297,7 +297,7 @@ namespace ArcEngine.Examples
 			/// <summary>
 			/// 
 			/// </summary>
-			public Mesh Mesh
+			public MeshDef Mesh
 			{
 				get;
 				private set;
@@ -329,13 +329,13 @@ namespace ArcEngine.Examples
 		/// <summary>
 		/// Describes basic geometric meshes using vertex and primitive information.
 		/// </summary>
-		class Mesh
+		class MeshDef
 		{
 			/// <summary>
 			/// Constructor
 			/// </summary>
 			/// <param name="xml"></param>
-			public Mesh(XmlNode xml)
+			public MeshDef(XmlNode xml)
 			{
 				if (xml == null || xml.Name != "mesh")
 					throw new ArgumentException("xml");
@@ -1074,12 +1074,12 @@ namespace ArcEngine.Examples
 
 						case "p":
 						{
-							Data = new uint[Count * 3 * Inputs.Count];
+							Data = new int[Count * 3 * Inputs.Count];
 
 							string[] arr = node.InnerText.Split(' ');
 							for (int i = 0; i < arr.Length; i++)
 							{
-								Data[i] = uint.Parse(arr[i]);
+								Data[i] = int.Parse(arr[i]);
 							}
 						}
 						break;
@@ -1163,7 +1163,7 @@ namespace ArcEngine.Examples
 			/// <summary>
 			/// Indices that describes the vertex attributes for a number of triangles
 			/// </summary>
-			public uint[] Data
+			public int[] Data
 			{
 				get;
 				private set;
