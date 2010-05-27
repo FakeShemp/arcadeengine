@@ -1842,27 +1842,30 @@ namespace ArcEngine.Graphic
 			if (Extensions.Contains("GL_ARB_multisample"))
 			{
 				HasMultiSample = true;
-				GL.GetInteger(GetPName.MaxTextureCoords, out integer);
+				GL.GetInteger(GetPName.SampleBuffers, out integer);
 				MaxMultiSample = integer;
 			}
 
 			GL.GetInteger(GetPName.MaxTextureUnits, out integer);
-			MaxMultiSample = integer;
+			MaxTextureUnits = integer;
+
+			GL.GetInteger(GetPName.MaxDrawBuffers, out integer);
+			MaxDrawBuffers = integer;
 
 			if (Extensions.Contains("GL_NVX_gpu_memory_info"))
 			{
 				Trace.Indent();
 				int val = 0;
 				GL.GetInteger((GetPName)0x9047, out val);
-				Trace.WriteLine("Dedicated video memory : " + val.ToString() + " Kb");
+				Trace.WriteLine("Dedicated video memory : {0} Kb", val);
 				GL.GetInteger((GetPName)0x9048, out val);
-				Trace.WriteLine("Total available memory : " + val.ToString() + " Kb");
+				Trace.WriteLine("Total available memory : {0} Kb", val);
 				GL.GetInteger((GetPName)0x9049, out val);
-				Trace.WriteLine("Current available dedicated video memory  : " + val.ToString() + " Kb");
+				Trace.WriteLine("Current available dedicated video memory : {0} Kb", val);
 				GL.GetInteger((GetPName)0x904A, out val);
-				Trace.WriteLine("Total evictions  : " + val.ToString() + " Kb");
+				Trace.WriteLine("Total evictions : {0} Kb", val);
 				GL.GetInteger((GetPName)0x904B, out val);
-				Trace.WriteLine("Total video memory evicted   : " + val.ToString() + " Kb");
+				Trace.WriteLine("Total video memory evicted : {0} Kb", val);
 				Trace.Unindent();
 			}
 
@@ -1879,7 +1882,7 @@ namespace ArcEngine.Graphic
 
 
 		/// <summary>
-		/// 
+		/// The maximum number of texture coordinate sets available to vertex and fragment shaders.
 		/// </summary>
 		public int MaxMultiSample
 		{
@@ -1888,6 +1891,14 @@ namespace ArcEngine.Graphic
 		}
 
 
+		/// <summary>
+		/// The maximum number of draw buffers supported.
+		/// </summary>
+		public int MaxDrawBuffers
+		{
+			get;
+			private set;
+		}
 
 
 
@@ -1895,7 +1906,7 @@ namespace ArcEngine.Graphic
 		/// Total number of texture image units from the fragment 
 		/// and vertex processor can access combined.
 		/// </summary>
-		public int MaxTextureUnit
+		public int MaxTextureUnits
 		{
 			get;
 			private set;
@@ -1910,7 +1921,7 @@ namespace ArcEngine.Graphic
 		public bool HasNonPowerOf2Textures
 		{
 			get;
-			internal set;
+			private set;
 		}
 
 
@@ -1966,19 +1977,6 @@ namespace ArcEngine.Graphic
 			}
 		}
 
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public int MaxTextureImageUnit
-		{
-			get
-			{
-				int count;
-				GL.GetInteger(GetPName.MaxTextureImageUnits, out count);
-				return count;
-			}
-		}
 
 		/// <summary>
 		/// Returns OpenGL version

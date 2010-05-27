@@ -102,10 +102,8 @@ namespace ArcEngine.Examples.TextDemo
 		public override void UnloadContent()
 		{
 			if (Font != null)
-			{
 				Font.Dispose();
-				Font = null;
-			}
+			Font = null;
 		}
 
 

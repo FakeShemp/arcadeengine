@@ -36,8 +36,6 @@ namespace ArcEngine.Examples.Particles
 	public class Fountain : GameBase
 	{
 
-        BitmapFont Font;
-
 		/// <summary>
 		/// Application entry point
 		/// </summary>
@@ -123,7 +121,17 @@ namespace ArcEngine.Examples.Particles
 		/// </summary>
 		public override void UnloadContent()
 		{
-			Batch.Dispose();
+			if (Batch != null)
+				Batch.Dispose();
+			Batch = null;
+
+			if (Font != null)
+				Font.Dispose();
+			Font = null;
+
+			if (Texture != null)
+				Texture.Dispose();
+			Texture = null;
 		}
 
 
@@ -290,7 +298,7 @@ namespace ArcEngine.Examples.Particles
 		/// <summary>
 		/// Font
 		/// </summary>
-		//TTFFont Font;
+		BitmapFont Font;
 
 		#endregion
 

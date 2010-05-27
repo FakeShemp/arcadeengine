@@ -113,6 +113,7 @@ namespace ArcEngine.Examples
 			precision highp float;
 
 			uniform sampler2D texture;
+			uniform mat4 tex_matrix;
 
 			smooth in vec4 out_color;
 			smooth in vec2 out_texture;

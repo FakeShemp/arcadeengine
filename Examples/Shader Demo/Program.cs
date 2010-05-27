@@ -100,10 +100,21 @@ namespace Shader_Demo
 		/// </summary>
 		public override void UnloadContent()
 		{
-			SimpleShader.Dispose();
-			GeomShader.Dispose();
-			Font.Dispose();
-			Texture.Dispose();
+			if (SimpleShader != null)
+				SimpleShader.Dispose();
+			SimpleShader = null;
+
+			if (GeomShader != null)
+				GeomShader.Dispose();
+			GeomShader = null;
+
+			if (Font != null)
+				Font.Dispose();
+			Font = null;
+
+			if (Texture != null)
+				Texture.Dispose();
+			Texture = null;
 		}
 
 

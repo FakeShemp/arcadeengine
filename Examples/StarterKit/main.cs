@@ -77,7 +77,7 @@ namespace ArcEngine.Examples.StarterKit
 		public override void LoadContent()
 		{
 			// Clear color of the screen
-			Display.ClearColor = Color.White;
+			Display.ClearColor = Color.CornflowerBlue;
 
 			// Load Verdana font
 			Font = BitmapFont.CreateFromTTF(@"c:\windows\fonts\verdana.ttf", 12, FontStyle.Regular);
@@ -91,6 +91,20 @@ namespace ArcEngine.Examples.StarterKit
 				 Display.ViewPort.Height / 2 - Smiley.Size.Height / 2);
 		}
 
+
+		/// <summary>
+		/// Unload contents
+		/// </summary>
+		public override void UnloadContent()
+		{
+			if (Smiley != null)
+				Smiley.Dispose();
+			Smiley = null;
+
+			if (Font != null)
+				Font.Dispose();
+			Font = null;
+		}
 
 
 		/// <summary>

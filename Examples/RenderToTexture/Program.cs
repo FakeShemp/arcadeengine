@@ -65,8 +65,13 @@ namespace ArcEngine.Examples.RenderToTexture
 		/// </summary>
 		public override void UnloadContent()
 		{
-			Buffer.Dispose();
-			Texture.Dispose();
+			if (Buffer != null)
+				Buffer.Dispose();
+			Buffer = null;
+
+			if (Texture != null)
+				Texture.Dispose();
+			Texture = null;
 		}
 
 

@@ -81,6 +81,16 @@ namespace ArcEngine.Examples.Joystick
 
 
 		/// <summary>
+		/// Unload contents
+		/// </summary>
+		public override void UnloadContent()
+		{
+			if (Font != null)
+				Font.Dispose();
+			Font = null;
+		}
+
+		/// <summary>
 		/// Update the game logic
 		/// </summary>
 		/// <param name="gameTime"></param>

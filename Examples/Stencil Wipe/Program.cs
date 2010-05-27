@@ -36,48 +36,48 @@ using OpenTK.Graphics.OpenGL;
 
 namespace StencilWipe
 {
-    /// <summary>
-    /// Main game class
-    /// </summary>
-    public class StencilWipe : GameBase
-    {
+	/// <summary>
+	/// Main game class
+	/// </summary>
+	public class StencilWipe : GameBase
+	{
 
-        /// <summary>
-        /// Main entry point.
-        /// </summary>
-        [STAThread]
-        static void Main()
-        {
-            try
-            {
-                using (StencilWipe game = new StencilWipe())
-                    game.Run();
-            }
-            catch (Exception e)
-            {
-                // Oops, an error happened !
-                MessageBox.Show(e.StackTrace, e.Message);
-            }
-        }
+		/// <summary>
+		/// Main entry point.
+		/// </summary>
+		[STAThread]
+		static void Main()
+		{
+			try
+			{
+				using (StencilWipe game = new StencilWipe())
+					game.Run();
+			}
+			catch (Exception e)
+			{
+				// Oops, an error happened !
+				MessageBox.Show(e.StackTrace, e.Message);
+			}
+		}
 
 
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public StencilWipe()
-        {
-            CreateGameWindow(new Size(800, 600));
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		public StencilWipe()
+		{
+			CreateGameWindow(new Size(800, 600));
 			Window.Text = "Wipe effect";
-        }
+		}
 
 
 
-        /// <summary>
-        /// Load contents 
-        /// </summary>
-        public override void LoadContent()
-        {
-            Display.ClearColor = Color.CornflowerBlue;
+		/// <summary>
+		/// Load contents 
+		/// </summary>
+		public override void LoadContent()
+		{
+			Display.ClearColor = Color.CornflowerBlue;
 
 			Mask = new Texture("data/mask.png");
 
@@ -93,30 +93,32 @@ namespace StencilWipe
 				MessageBox.Show("No stencil buffer found !!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				Exit();
 			}
-	
 
 
-      }
+
+		}
 
 
-        /// <summary>
-        /// Unload contents
-        /// </summary>
-        public override void UnloadContent()
-        {
-			Mask.Dispose();
-        }
+		/// <summary>
+		/// Unload contents
+		/// </summary>
+		public override void UnloadContent()
+		{
+			if (Mask != null)
+				Mask.Dispose();
+			Mask = null;
+		}
 
 
-        /// <summary>
-        /// Update the game logic
-        /// </summary>
-        /// <param name="gameTime"></param>
-        public override void Update(GameTime gameTime)
-        {
-            // Check if the Excape key is pressed
-            if (Keyboard.IsKeyPress(Keys.Escape))
-                Exit();
+		/// <summary>
+		/// Update the game logic
+		/// </summary>
+		/// <param name="gameTime"></param>
+		public override void Update(GameTime gameTime)
+		{
+			// Check if the Excape key is pressed
+			if (Keyboard.IsKeyPress(Keys.Escape))
+				Exit();
 
 			// Copy stencil buffer to a texture
 			if (Keyboard.IsNewKeyPress(Keys.F1))
@@ -127,7 +129,7 @@ namespace StencilWipe
 
 
 				// Collect pixels
-				byte[] pixels = new byte[Display.ViewPort.Width * Display.ViewPort.Height*4];
+				byte[] pixels = new byte[Display.ViewPort.Width * Display.ViewPort.Height * 4];
 				GL.ReadPixels(
 					0, 0, Display.ViewPort.Width, Display.ViewPort.Height,
 					PixelFormat.Bgra, PixelType.UnsignedByte, pixels);
@@ -145,19 +147,19 @@ namespace StencilWipe
 
 				tmp.Dispose();
 			}
-        }
+		}
 
 
 
-        /// <summary>
-        /// Called when it is time to draw a frame.
-        /// </summary>
-        /// <param name="device"></param>
-        public override void Draw()
-        {
-            // Clears the background
+		/// <summary>
+		/// Called when it is time to draw a frame.
+		/// </summary>
+		/// <param name="device"></param>
+		public override void Draw()
+		{
+			// Clears the background
 			//GL.Clear(ClearBufferMask.AccumBufferBit | ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
-			  Display.ClearBuffers();
+			Display.ClearBuffers();
 			Display.Color = Color.White;
 
 
@@ -181,12 +183,12 @@ namespace StencilWipe
 			Display.StencilTest = false;
 
 
-        }
+		}
 
 
 
 
-        #region Properties
+		#region Properties
 
 
 		/// <summary>
@@ -195,8 +197,8 @@ namespace StencilWipe
 		Texture Mask;
 
 
-        #endregion
+		#endregion
 
-    }
+	}
 
 }

@@ -123,6 +123,9 @@ namespace ArcEngine.Games.ProjectT
 		/// </summary>
 		public override void UnloadContent()
 		{
+			if (Font != null)
+				Font.Dispose();
+			Font = null;
 		}
 
 
