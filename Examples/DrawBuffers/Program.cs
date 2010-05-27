@@ -19,7 +19,6 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using ArcEngine.Asset;
@@ -27,6 +26,9 @@ using ArcEngine.Graphic;
 using ArcEngine.Input;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
+
+
+// http://bakura.developpez.com/tutoriels/jeux/utilisation-shaders-avec-opengl-3-x/
 
 namespace ArcEngine.Examples
 {
@@ -51,6 +53,8 @@ namespace ArcEngine.Examples
 			{
 				// Oops, an error happened !
 				MessageBox.Show(e.StackTrace, e.Message);
+				Trace.WriteLine(e.Message);
+				Trace.WriteLine(e.StackTrace);
 			}
 		}
 
@@ -86,14 +90,19 @@ namespace ArcEngine.Examples
 
 			in vec2 in_position;
 			in vec4 in_color;
+			in vec2 in_texture;
 
-			out vec4 out_color;
+			invariant gl_Position;
+
+			smooth out vec4 out_color;
+			smooth out vec2 out_texture;
 
 			void main(void)
 			{
 				gl_Position = mvp_matrix * vec4(in_position, 0.0, 1.0);
 				
 				out_color = in_color;
+				out_texture = in_texture;
 			}");
 
 
@@ -103,17 +112,21 @@ namespace ArcEngine.Examples
 
 			precision highp float;
 
-			in vec4 out_color;
+			uniform sampler2D texture;
 
-			out vec4 out_frag_color;
+			smooth in vec4 out_color;
+			smooth in vec2 out_texture;
+
+			out vec4 frag_color;
 		
 			void main(void)
 			{
-				out_frag_color = out_color;
+				frag_color = texture2D(texture, out_texture) * out_color;
 			}
 			");
 			Shader.Compile();
 			Display.Shader = Shader;
+
 
 			// Matrix
 			Matrix4 projectionMatrix = Matrix4.CreateOrthographicOffCenter(0, Display.ViewPort.Width, Display.ViewPort.Height, 0, 0, 5);
@@ -123,7 +136,17 @@ namespace ArcEngine.Examples
 
 			#endregion
 
-	
+
+			#region Texture
+
+			Texture = new Texture("data/texture.png");
+			Display.TextureUnit = 0;
+			Display.Texture = Texture;
+			Shader.SetUniform("texture", 0);
+
+			#endregion
+
+			
 			#region Index Buffer
 
 			// Indices
@@ -136,10 +159,10 @@ namespace ArcEngine.Examples
 			// Vertex elements
 			float[] mixedData = new float[]
 			{
-				// Coord							Color
-				300.0f,  100.0f,				1.0f, 0.0f, 0.0f, 1.0f,
-				500.0f,  400.0f,				0.0f, 1.0f, 0.0f, 1.0f,
-				100.0f,  400.0f,				0.0f, 0.0f, 1.0f, 1.0f,
+				// Coord							Color									Texture
+				300.0f,  100.0f,				1.0f, 0.0f, 0.0f, 1.0f,			0.5f, 0.0f,
+				500.0f,  400.0f,				0.0f, 1.0f, 0.0f, 1.0f,			1.0f, 0.0f,
+				100.0f,  400.0f,				0.0f, 0.0f, 1.0f, 1.0f,			0.0f, 1.0f
 			};
 
 
@@ -148,8 +171,9 @@ namespace ArcEngine.Examples
 			IndicesBuffer = new IndexBuffer();
 			IndicesBuffer.SetIndices(indicesVboData);
 			IndicesBuffer.SetVertices(mixedData);
-			IndicesBuffer.AddDeclaration("in_position", 2, sizeof(float) * 6, 0);
-			IndicesBuffer.AddDeclaration("in_color", 4, sizeof(float) * 6, sizeof(float) * 2);
+			IndicesBuffer.AddDeclaration("in_position", 2, sizeof(float) * 8, 0);
+			IndicesBuffer.AddDeclaration("in_color", 4, sizeof(float) * 8, sizeof(float) * 2);
+			IndicesBuffer.AddDeclaration("in_texture", 2, sizeof(float) * 8, sizeof(float) * 6);
 
 
 			#region VAO
@@ -186,6 +210,10 @@ namespace ArcEngine.Examples
 			if (IndicesBuffer != null)
 				IndicesBuffer.Dispose();
 			IndicesBuffer = null;
+
+			if (Texture != null)
+				Texture.Dispose();
+			Texture = null;
 
 		}
 
@@ -235,6 +263,11 @@ namespace ArcEngine.Examples
 		/// </summary>
 		Shader Shader;
 
+
+		/// <summary>
+		/// Texture
+		/// </summary>
+		Texture Texture;
 
 		#endregion
 

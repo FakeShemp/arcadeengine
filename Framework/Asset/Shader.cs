@@ -305,6 +305,16 @@ namespace ArcEngine.Asset
 			GL.Uniform1(id, value);
 		}
 
+		/// <summary>
+		/// Sets an uniform value
+		/// </summary>
+		/// <param name="name">Name of the uniform</param>
+		/// <param name="value">New value</param>
+		public void SetUniform(string name, float value)
+		{
+			SetUniform(GetUniform(name), value);
+		}
+
 
 		/// <summary>
 		/// Sets an uniform value
@@ -320,6 +330,17 @@ namespace ArcEngine.Asset
 		}
 
 
+		/// <summary>
+		/// Sets an uniform value
+		/// </summary>
+		/// <param name="name">Name of the uniform</param>
+		/// <param name="value">New value</param>
+		public void SetUniform(string name, int value)
+		{
+			SetUniform(GetUniform(name), value);
+		}
+
+	
 		/// <summary>
 		/// Sets an uniform value
 		/// </summary>
@@ -343,6 +364,17 @@ namespace ArcEngine.Asset
 
 
 		/// <summary>
+		/// Sets an uniform value
+		/// </summary>
+		/// <param name="name">Name of the uniform</param>
+		/// <param name="value">New value</param>
+		public void SetUniform(string name, float[] value)
+		{
+			SetUniform(GetUniform(name), value);
+		}
+
+
+		/// <summary>
 		/// Returns the ID of a uniform
 		/// </summary>
 		/// <param name="name">Name of the uniform</param>
@@ -359,7 +391,7 @@ namespace ArcEngine.Asset
 		/// <summary>
 		/// Sets an uniform value
 		/// </summary>
-		/// <param name="id">ID of the uniform</param>
+		/// <param name="name">ID of the uniform</param>
 		/// <param name="matrix">New value</param>
 		public void SetUniform(string name, Matrix4 matrix)
 		{

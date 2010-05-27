@@ -51,6 +51,7 @@ namespace ArcEngine.Forms
 
 
 			// Adds the control to the form
+			Trace.WriteDebugLine("[GameWindow] Creating a {0}.{1} Opengl Context (Color: {2}, Depth: {3}, Stencil:{4}, Sample: {5})", param.Major, param.Minor, param.Color, param.Depth, param.Stencil, param.Samples);
 			RenderControl = new GLControl(new GraphicsMode(param.Color, param.Depth, param.Stencil, param.Samples),
 				param.Major, param.Minor,
 				GraphicsContextFlags.Default);
@@ -185,7 +186,7 @@ namespace ArcEngine.Forms
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void Form_Load(object sender, EventArgs e)
+		private void OnLoad(object sender, EventArgs e)
 		{
 			Trace.WriteDebugLine("[GameWindow] Form_Load()");
 

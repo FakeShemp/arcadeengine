@@ -91,8 +91,7 @@ namespace ArcEngine
 			if (Window != null)
 			{
 				Trace.WriteDebugLine("[GameBase] CreateGameWindow() : Closing previous window");
-				Window.Dispose();
-				Window = null;
+				CloseGameWindow();
 			}
 
 			Window = new GameWindow(param);

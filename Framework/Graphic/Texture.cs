@@ -843,13 +843,14 @@ namespace ArcEngine.Graphic
 		/// Causes s coordinates to be clamped	to the range [0,1] and is useful
 		/// for preventing wrapping artifacts	when mapping a single image onto	an object.
 		/// </summary>
-		Clamp = 0,
+		Clamp = 0x812F,
+
 		/// <summary>
 		/// Causes the integer part of the s coordinate	to be ignored; the GL uses only 
 		/// the fractional part, thereby creating a repeating pattern. Border texture elements are 
 		/// accessed only if wrapping is set to GL_CLAMP.
 		/// </summary>
-		Repeat = 1
+		Repeat = 0x2901
 	}
 
 
@@ -863,13 +864,15 @@ namespace ArcEngine.Graphic
 		/// Causes s coordinates to be clamped	to the range [0,1] and is useful
 		/// for preventing wrapping artifacts	when mapping a single image onto	an object.
 		/// </summary>
-		Clamp = 0,
+		Clamp = 0x812F,
+
+
 		/// <summary>
 		/// Causes the integer part of the s coordinate	to be ignored; the GL uses only 
 		/// the fractional part, thereby creating a repeating pattern. Border texture elements are 
 		/// accessed only if wrapping is set to GL_CLAMP.
 		/// </summary>
-		Repeat = 1
+		Repeat = 0x2901
 	}
 
 

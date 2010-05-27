@@ -1797,9 +1797,7 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public RenderDeviceCapabilities()
 		{
-			//Extensions = new List<string>(); //GL.GetString(StringName.Extensions).Split(new char[] { ' ' }));
-
-
+			int integer = 0;
 
 			string version = GL.GetString(StringName.Version);
 			if (version[0] - '0' >= 3)
@@ -1844,8 +1842,12 @@ namespace ArcEngine.Graphic
 			if (Extensions.Contains("GL_ARB_multisample"))
 			{
 				HasMultiSample = true;
-				GL.GetInteger(GetPName.MaxTextureCoords, out maxMultiSample);
+				GL.GetInteger(GetPName.MaxTextureCoords, out integer);
+				MaxMultiSample = integer;
 			}
+
+			GL.GetInteger(GetPName.MaxTextureUnits, out integer);
+			MaxMultiSample = integer;
 
 			if (Extensions.Contains("GL_NVX_gpu_memory_info"))
 			{
@@ -1881,12 +1883,26 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public int MaxMultiSample
 		{
-			get
-			{
-				return maxMultiSample;
-			}
+			get;
+			private set;
 		}
-		int maxMultiSample;
+
+
+
+
+
+		/// <summary>
+		/// Total number of texture image units from the fragment 
+		/// and vertex processor can access combined.
+		/// </summary>
+		public int MaxTextureUnit
+		{
+			get;
+			private set;
+		}
+
+
+
 
 		/// <summary>
 		/// Has non power of two texture support
@@ -1904,7 +1920,7 @@ namespace ArcEngine.Graphic
 		public bool HasFBO
 		{
 			get;
-			internal set;
+			private set;
 		}
 
 
@@ -1914,7 +1930,7 @@ namespace ArcEngine.Graphic
 		public bool HasVBO
 		{
 			get;
-			internal set;
+			private set;
 		}
 
 		/// <summary>
@@ -1923,7 +1939,7 @@ namespace ArcEngine.Graphic
 		public bool HasPBO
 		{
 			get;
-			internal set;
+			private set;
 		}
 
 
@@ -2109,12 +2125,12 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Major version
 		/// </summary>
-		public int Major = 99;
+		public int Major = 3;
 
 		/// <summary>
 		/// Minor version
 		/// </summary>
-		public int Minor = 99;
+		public int Minor = 0;
 
 		/// <summary>
 		/// FSAA buffer 
