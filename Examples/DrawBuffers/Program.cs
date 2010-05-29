@@ -29,6 +29,8 @@ using OpenTK.Graphics.OpenGL;
 
 
 // http://bakura.developpez.com/tutoriels/jeux/utilisation-shaders-avec-opengl-3-x/
+// http://bakura.developpez.com/tutoriels/jeux/utilisation-vbo-avec-opengl-3-x/
+// http://bakura.developpez.com/tutoriels/jeux/utilisation-vertex-array-objects-avec-opengl-3-x/
 
 namespace ArcEngine.Examples
 {
@@ -81,48 +83,46 @@ namespace ArcEngine.Examples
 			#region Shader
 			Shader = new Shader();
 			Shader.SetSource(ShaderType.VertexShader,
-			@"
-			#version 130
+			@"#version 130
 
 			precision highp float;
 
 			uniform mat4 mvp_matrix;
+			uniform mat4 tex_matrix;
 
 			in vec2 in_position;
 			in vec4 in_color;
-			in vec2 in_texture;
+			in vec4 in_texture;
 
 			invariant gl_Position;
 
 			smooth out vec4 out_color;
-			smooth out vec2 out_texture;
+			smooth out vec4 out_texture;
 
 			void main(void)
 			{
 				gl_Position = mvp_matrix * vec4(in_position, 0.0, 1.0);
 				
 				out_color = in_color;
-				out_texture = in_texture;
+				out_texture = tex_matrix * in_texture;
 			}");
 
 
 			Shader.SetSource(ShaderType.FragmentShader,
-			@"
-			#version 130
+			@"#version 130
 
 			precision highp float;
 
 			uniform sampler2D texture;
-			uniform mat4 tex_matrix;
 
 			smooth in vec4 out_color;
-			smooth in vec2 out_texture;
+			smooth in vec4 out_texture;
 
 			out vec4 frag_color;
 		
 			void main(void)
 			{
-				frag_color = texture2D(texture, out_texture) * out_color;
+				frag_color = texture2D(texture, out_texture.st);// * out_color;
 			}
 			");
 			Shader.Compile();
@@ -133,7 +133,9 @@ namespace ArcEngine.Examples
 			Matrix4 projectionMatrix = Matrix4.CreateOrthographicOffCenter(0, Display.ViewPort.Width, Display.ViewPort.Height, 0, 0, 5);
 			Matrix4 modelviewMatrix = Matrix4.LookAt(new Vector3(0, 0, 1), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
 			Matrix4 mvpMatrix = modelviewMatrix * projectionMatrix;
+		
 			Shader.SetUniform("mvp_matrix", mvpMatrix);
+			Shader.SetUniform("tex_matrix", Matrix4.CreateRotationZ(45.0f));
 
 			#endregion
 
@@ -141,10 +143,12 @@ namespace ArcEngine.Examples
 			#region Texture
 
 			Texture = new Texture("data/texture.png");
+			Texture.HorizontalWrap = HorizontalWrapFilter.Repeat;
+			Texture.VerticalWrap = VerticalWrapFilter.Repeat;
 			Display.TextureUnit = 0;
 			Display.Texture = Texture;
 			Shader.SetUniform("texture", 0);
-
+			
 			#endregion
 
 			
@@ -153,7 +157,7 @@ namespace ArcEngine.Examples
 			// Indices
 			int[] indicesVboData = new int[]
 			{
-				0, 1, 2,
+				0, 1, 2, 1, 2, 3
 			};
 
 
@@ -161,9 +165,10 @@ namespace ArcEngine.Examples
 			float[] mixedData = new float[]
 			{
 				// Coord							Color									Texture
-				300.0f,  100.0f,				1.0f, 0.0f, 0.0f, 1.0f,			0.5f, 0.0f,
-				500.0f,  400.0f,				0.0f, 1.0f, 0.0f, 1.0f,			1.0f, 0.0f,
-				100.0f,  400.0f,				0.0f, 0.0f, 1.0f, 1.0f,			0.0f, 1.0f
+				100.0f,  100.0f,				1.0f, 0.0f, 0.0f, 1.0f,			0.0f, 0.0f,
+				500.0f,  100.0f,				0.0f, 1.0f, 0.0f, 1.0f,			1.0f, 0.0f,
+				100.0f,  500.0f,				0.0f, 0.0f, 1.0f, 1.0f,			0.0f, 1.0f,
+				500.0f,  500.0f,				0.0f, 0.0f, 1.0f, 1.0f,			1.0f, 1.0f
 			};
 
 
