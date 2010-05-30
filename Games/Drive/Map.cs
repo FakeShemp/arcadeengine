@@ -41,7 +41,7 @@ namespace Drive
 
 			// Generate the batch
 			Size gridsize = new Size(16,16);
-			Batch = new Batch(1, 4);
+			Batch = new BatchBuffer();
 			for (int y = 0; y < Size.Height; y++)
 				for (int x = 0; x < Size.Width; x++)
 				{
@@ -51,7 +51,7 @@ namespace Drive
 						//new Rectangle(0, 0, gridsize.Width, gridsize.Height));
 						new Rectangle(x, y, 1, 1));
 				}
-			Batch.Apply();
+			int count = Batch.Update();
 
 
 
@@ -129,7 +129,8 @@ namespace Drive
 
 
 			Display.Translate(-Location.X, -Location.Y);
-			Display.DrawBatch(Batch, BeginMode.Quads);
+			// Dummy value
+			Display.DrawBatch(Batch, BeginMode.Quads, 0, 400000);
 			Display.Translate(Location.X, Location.Y);
 
 			Display.Shader = null;
@@ -215,7 +216,7 @@ namespace Drive
 		/// <summary>
 		/// 
 		/// </summary>
-		Batch Batch;
+		BatchBuffer Batch;
 
 		/// <summary>
 		/// 

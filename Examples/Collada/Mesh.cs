@@ -57,7 +57,7 @@ namespace ArcEngine.Examples
 			//IndexBuffer = new ArrayBuffer<uint>();
 			//VertexBuffer = new ArrayBuffer<float>();
 
-			Index = new IndexBuffer();
+			//Index = new int[]();
 			Buffer = new ArrayBuffer<float>();
 
 		}
@@ -80,8 +80,8 @@ namespace ArcEngine.Examples
 		/// <param name="data"></param>
 		public void SetIndices(int[] data)
 		{
-			Index.SetIndices(data);
-
+			//Index.Update(data);
+			Index = data;
 		}
 
 
@@ -112,8 +112,6 @@ namespace ArcEngine.Examples
 		/// </summary>
 		public void Dispose()
 		{
-			if (Index != null)
-				Index.Dispose();
 
 			//VertexBuffer.Dispose();
 		}
@@ -226,7 +224,7 @@ namespace ArcEngine.Examples
 		/// Index buffer
 		/// </summary>
 		//ArrayBuffer<uint> IndexBuffer;
-		IndexBuffer Index;
+		int[] Index;
 
 		/// <summary>
 		/// Vertex buffer

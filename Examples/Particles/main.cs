@@ -103,7 +103,7 @@ namespace ArcEngine.Examples.Particles
 
 
 			// Creates the batch
-			Batch = new Batch();
+			Batch = new BatchBuffer();
 			//Batch.Size = Particles.Length;
 
 
@@ -212,10 +212,10 @@ namespace ArcEngine.Examples.Particles
 				{
 					Batch.AddRectangle(new Rectangle((int)particle.Location.X, (int)particle.Location.Y, Texture.Size.Width, Texture.Size.Height), Color.FromArgb(particle.Alpha, particle.Color), Texture.Rectangle);
 				}
-				Batch.Apply();
+				int count = Batch.Update();
 
 				Display.Texture = Texture;
-				Display.DrawBatch(Batch, BeginMode.Quads);
+				Display.DrawBatch(Batch, BeginMode.Quads, 0, count);
 				Watch.Stop();
 
 
@@ -291,7 +291,7 @@ namespace ArcEngine.Examples.Particles
 		/// <summary>
 		/// Rendering Batch
 		/// </summary>
-		Batch Batch;
+		BatchBuffer Batch;
 
 
 

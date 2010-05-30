@@ -650,7 +650,7 @@ namespace ArcEngine.Asset
 		/// Rendering batch
 		/// </summary>
 		[Browsable(false)]
-		public Batch Batch
+		public BatchBuffer Batch
 		{
 			get;
 			protected set;

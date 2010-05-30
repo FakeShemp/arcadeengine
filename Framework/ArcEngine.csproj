@@ -298,7 +298,7 @@
     <Compile Include="Game.cs" />
     <Compile Include="GameClock.cs" />
     <Compile Include="GameComponentCollection.cs" />
-    <Compile Include="Graphic\IndexBuffer.cs" />
+    <Compile Include="Graphic\BatchBuffer.cs" />
     <Compile Include="Graphic\PixelBuffer.cs" />
     <Compile Include="Graphic\FrameBuffer.cs" />
     <Compile Include="Graphic\Shape.cs" />

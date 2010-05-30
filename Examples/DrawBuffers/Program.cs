@@ -135,7 +135,7 @@ namespace ArcEngine.Examples
 			Matrix4 mvpMatrix = modelviewMatrix * projectionMatrix;
 		
 			Shader.SetUniform("mvp_matrix", mvpMatrix);
-			Shader.SetUniform("tex_matrix", Matrix4.CreateRotationZ(45.0f));
+			Shader.SetUniform("tex_matrix", Matrix4.Scale(1.0f / 256.0f, 1.0f / 256.0f, 1.0f));
 
 			#endregion
 
@@ -162,7 +162,7 @@ namespace ArcEngine.Examples
 			};
 
 
-			Buffer = new Batch();
+			Buffer = new BatchBuffer();
 			Buffer.AddDeclaration("in_position", 2, sizeof(float) * 8, 0);
 			Buffer.AddDeclaration("in_color", 4, sizeof(float) * 8, sizeof(float) * 2);
 			Buffer.AddDeclaration("in_texture", 2, sizeof(float) * 8, sizeof(float) * 6);
@@ -173,20 +173,21 @@ namespace ArcEngine.Examples
 			float[] vertices = new float[]
 			{
 				// Coord							Color									Texture
-				100.0f,  100.0f,				1.0f, 0.0f, 0.0f, 1.0f,			0.0f, 0.0f,
-				500.0f,  100.0f,				0.0f, 1.0f, 0.0f, 1.0f,			1.0f, 0.0f,
-				100.0f,  500.0f,				0.0f, 0.0f, 1.0f, 1.0f,			0.0f, 1.0f,
-				500.0f,  500.0f,				0.0f, 0.0f, 1.0f, 1.0f,			1.0f, 1.0f
+				100.0f,  100.0f,				1.0f, 0.0f, 0.0f, 1.0f,			0.0f,   0.0f,
+				500.0f,  100.0f,				0.0f, 1.0f, 0.0f, 1.0f,			256.0f, 0.0f,
+				100.0f,  500.0f,				0.0f, 0.0f, 1.0f, 1.0f,			0.0f,   256.0f,
+				500.0f,  500.0f,				0.0f, 0.0f, 1.0f, 1.0f,			256.0f, 256.0f
 			};
 			Buffer.SetVertices(vertices);
 
 
 			// Or set data one by one
 			Buffer.AddPoint(new Point(100, 100), Color.Red, new Point(0, 0));
-			Buffer.AddPoint(new Point(500, 100), Color.Green, new Point(1, 0));
-			Buffer.AddPoint(new Point(100, 500), Color.Blue, new Point(0, 1));
-			Buffer.AddPoint(new Point(500, 500), Color.Red, new Point(1, 1));
+			Buffer.AddPoint(new Point(500, 100), Color.Green, new Point(256, 0));
+			Buffer.AddPoint(new Point(100, 500), Color.Blue, new Point(0, 256));
+			Buffer.AddPoint(new Point(500, 500), Color.Red, new Point(256, 256));
 			Buffer.Update();
+
 
 			#region VAO
 /*			
@@ -277,7 +278,7 @@ namespace ArcEngine.Examples
 		/// <summary>
 		/// Index buffer
 		/// </summary>
-		Batch Buffer;
+		BatchBuffer Buffer;
 
 
 		/// <summary>

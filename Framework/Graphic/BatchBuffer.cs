@@ -13,13 +13,13 @@ namespace ArcEngine.Graphic
 	/// <summary>
 	/// Vertex buffer
 	/// </summary>
-	public class Batch : IDisposable
+	public class BatchBuffer : IDisposable
 	{
 
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public Batch()
+		public BatchBuffer()
 		{
 			int id = 0;
 			GL.GenBuffers(1, out id);
@@ -36,7 +36,7 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Destructor
 		/// </summary>
-		~Batch()
+		~BatchBuffer()
 		{
 			if (Handle != -1)
 				throw new Exception("IndexBuffer : Call Dispose() !!");
