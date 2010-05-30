@@ -1171,9 +1171,5 @@ namespace ArcEngine
 
 		#endregion
 
-
 	}
-
-
-
 }

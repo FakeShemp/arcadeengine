@@ -24,6 +24,8 @@ using System.Drawing;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using ArcEngine.Asset;
+using System.Xml;
+using System.Text;
 
 //
 //
@@ -49,6 +51,7 @@ namespace ArcEngine.Graphic
 			TextureParameters = new DefaultTextParameters();
 
 			CircleResolution = 50;
+
 		}
 
 
@@ -60,6 +63,12 @@ namespace ArcEngine.Graphic
 		{
 			Trace.WriteDebugLine("[Display] Init()");
 			Capabilities = new RenderDeviceCapabilities();
+
+
+			#region Shader
+			Shader = Shader.ColorShader();
+			#endregion
+
 
 			Texturing = true;
 			Blending = true;
@@ -81,6 +90,12 @@ namespace ArcEngine.Graphic
 			// Index buffer handle
 			GL.GenBuffers(1, out IndexBufferHandle);
 
+
+			// Matrices
+			modelViewMatrix = Matrix4.LookAt(new Vector3(0, 0, 1), new Vector3(0, 0, 0), new Vector3(0, 1, 0));;
+			projectionMatrix = Matrix4.CreateOrthographicOffCenter(0, ViewPort.Width, ViewPort.Height, 0, 0, 5); ;
+			textureMatrix = Matrix4.Identity;
+			UpdateMatrix();
 		}
 
 
@@ -380,6 +395,19 @@ namespace ArcEngine.Graphic
 			//GL.PopAttrib();
 		}
 
+
+
+		/// <summary>
+		/// Update matrix
+		/// </summary>
+		static void UpdateMatrix()
+		{
+			if (Shader == null)
+				return;
+
+			Shader.SetUniform("mvp_matrix", modelViewMatrix * projectionMatrix);
+			Shader.SetUniform("tex_matrix", TextureMatrix);
+		}
 
 		#endregion
 
@@ -1069,7 +1097,7 @@ namespace ArcEngine.Graphic
 		/// <param name="index">Index buffer</param>
 		public static void DrawIndexBuffer(BatchBuffer buffer, BeginMode mode, int[] index)
 		{
-			if (buffer == null)// || index == null)
+			if (buffer == null || index == null)
 				return;
 
 			// Set the index buffer
@@ -1209,6 +1237,61 @@ namespace ArcEngine.Graphic
 
 
 		/// <summary>
+		/// Projection matrix
+		/// </summary>
+		public static Matrix4 ProjectionMatrix
+		{
+			get
+			{
+				return projectionMatrix;
+			}
+			set
+			{
+				projectionMatrix = value;
+				UpdateMatrix();
+			}
+		}
+		static Matrix4 projectionMatrix;
+
+
+		/// <summary>
+		/// ModelView matrix
+		/// </summary>
+		public static Matrix4 ModelViewMatrix
+		{
+			get
+			{
+				return modelViewMatrix;
+			}
+			set
+			{
+				modelViewMatrix = value;
+				UpdateMatrix();
+			}
+		}
+		static Matrix4 modelViewMatrix;
+
+
+		/// <summary>
+		/// Texture matrix
+		/// </summary>
+		public static Matrix4 TextureMatrix
+		{
+			get
+			{
+				return textureMatrix;
+			}
+			set
+			{
+				textureMatrix = value;
+				UpdateMatrix();
+			}
+		}
+		static Matrix4 textureMatrix;
+
+
+
+		/// <summary>
 		/// Circle resolution
 		/// </summary>
 		static public int CircleResolution
@@ -1256,6 +1339,8 @@ namespace ArcEngine.Graphic
 				GL.MatrixMode(MatrixMode.Texture);
 				GL.LoadIdentity();
 				GL.Scale(1.0f / value.Size.Width, 1.0f / value.Size.Height, 1.0f);
+
+				TextureMatrix = Matrix4.Scale(1.0f / texture.Size.Width, 1.0f / texture.Size.Height, 1.0f);
 			}
 			get
 			{
@@ -1277,7 +1362,7 @@ namespace ArcEngine.Graphic
 
 			set
 			{
-				if (value > Capabilities.MaxMultiSample || value < 0)
+				if (value > Capabilities.MaxTextureUnits || value < 0)
 					return;
 
 				GL.ActiveTexture(OpenTK.Graphics.OpenGL.TextureUnit.Texture0 + value);

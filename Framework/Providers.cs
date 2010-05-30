@@ -20,15 +20,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
 using System.Xml;
 using ArcEngine.Asset;
 using ArcEngine.Editor;
 using ArcEngine.Forms;
 using ArcEngine.Graphic;
-using WeifenLuo.WinFormsUI.Docking;
 
 
 namespace ArcEngine
@@ -58,7 +54,7 @@ namespace ArcEngine
 			Audios = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
 			Schemes = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
 			Layouts = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
-
+			Shaders = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
 
 
 			SharedSchemes = new Dictionary<string, InputScheme>(StringComparer.OrdinalIgnoreCase);
@@ -70,24 +66,23 @@ namespace ArcEngine
 			SharedAudios = new Dictionary<string, Audio>(StringComparer.OrdinalIgnoreCase);
 			SharedScenes = new Dictionary<string, Scene>(StringComparer.OrdinalIgnoreCase);
 			SharedLayouts = new Dictionary<string, Layout>(StringComparer.OrdinalIgnoreCase);
+			SharedShaders = new Dictionary<string, Shader>(StringComparer.OrdinalIgnoreCase);
 
 			Name = "ArcEngine providers";
 			Tags = new string[] { 
 				"tileset", "stringtable", "animation", "scene", "bitmapfont",
-				"script", "scriptmodel", "audio", "inputscheme", "layout"
+				"script", "scriptmodel", "audio", "inputscheme", "layout", "shader"
 			};
 			Assets = new Type[] {
-				typeof(TileSet), typeof(StringTable), typeof(Animation), typeof(Scene),
+				typeof(TileSet), typeof(StringTable), typeof(Animation), typeof(Scene),typeof(Layout),
 				typeof(BitmapFont), typeof(Script), typeof(ScriptModel), typeof(Audio), typeof(InputScheme),
-				typeof(Layout)
+				typeof(Shader),
 			};
 
 
 
 
 		}
-
-
 
 
 		#region Init & Close
@@ -142,7 +137,6 @@ namespace ArcEngine
 				foreach (XmlNode node in Animations.Values)
 					node.WriteTo(xml);
 			}
-
 			else if (typeof(T) == typeof(Scene))
 			{
 				foreach (XmlNode node in Scenes.Values)
@@ -178,7 +172,11 @@ namespace ArcEngine
 				foreach (XmlNode node in Layouts.Values)
 					node.WriteTo(xml);
 			}
-
+			else if (typeof(T) == typeof(Shader))
+			{
+				foreach (XmlNode node in Shaders.Values)
+					node.WriteTo(xml);
+			}
 			else
 			{
 				return false;
@@ -216,6 +214,12 @@ namespace ArcEngine
 				case "animation":
 				{
 					Animations[name] = xml;
+				}
+				break;
+
+				case "shader":
+				{
+					Shaders[name] = xml;
 				}
 				break;
 
@@ -301,7 +305,12 @@ namespace ArcEngine
 					node = Strings[name];
 				form = new ArcEngine.Editor.StringTableForm(node);
 			}
-
+			else if (typeof(T) == typeof(Shader))
+			{
+				if (Shaders.ContainsKey(name))
+					node = Shaders[name];
+				//form = new ArcEngine.Editor.ShaderForm(node);
+			}
 			else if (typeof(T) == typeof(Animation))
 			{
 				if (Animations.ContainsKey(name))
@@ -381,6 +390,8 @@ namespace ArcEngine
 				TileSets[name] = node;
 			else if (typeof(T) == typeof(StringTable))
 				Strings[name] = node;
+			else if (typeof(T) == typeof(Shader))
+				Shaders[name] = node;
 			else if (typeof(T) == typeof(Animation))
 				Animations[name] = node;
 			else if (typeof(T) == typeof(Scene))
@@ -417,6 +428,10 @@ namespace ArcEngine
 
 			else if (typeof(T) == typeof(StringTable))
 				foreach (string key in Strings.Keys)
+					list.Add(key);
+
+			else if (typeof(T) == typeof(Shader))
+				foreach (string key in Shaders.Keys)
 					list.Add(key);
 
 			else if (typeof(T) == typeof(Animation))
@@ -479,6 +494,13 @@ namespace ArcEngine
 				StringTable str = new StringTable();
 				str.Load(Strings[name]);
 				return (T)(object)str;
+			}
+
+			else if (typeof(T) == typeof(Shader) && Shaders.ContainsKey(name))
+			{
+				Shader shader = new Shader();
+				shader.Load(Shaders[name]);
+				return (T)(object)shader;
 			}
 
 			else if (typeof(T) == typeof(Animation) && Animations.ContainsKey(name))
@@ -558,6 +580,9 @@ namespace ArcEngine
 			else if (typeof(T) == typeof(StringTable) && Strings.ContainsKey(name))
 				return Strings[name];
 
+			else if (typeof(T) == typeof(Shader) && Shaders.ContainsKey(name))
+				return Shaders[name];
+
 			else if (typeof(T) == typeof(Animation) && Animations.ContainsKey(name))
 				return Animations[name];
 
@@ -604,6 +629,9 @@ namespace ArcEngine
 			else if (typeof(T) == typeof(Animation) && Animations.ContainsKey(name))
 				Animations.Remove(name);
 
+			else if (typeof(T) == typeof(Shader) && Shaders.ContainsKey(name))
+				Shaders.Remove(name);
+
 			else if (typeof(T) == typeof(Scene) && Scenes.ContainsKey(name))
 				Scenes.Remove(name);
 
@@ -649,6 +677,9 @@ namespace ArcEngine
 			else if (typeof(T) == typeof(BitmapFont))
 				Fonts.Clear();
 
+			else if (typeof(T) == typeof(Shader))
+				Shaders.Clear();
+
 			else if (typeof(T) == typeof(Script))
 				Scripts.Clear();
 
@@ -682,7 +713,7 @@ namespace ArcEngine
 			Audios.Clear();
 			Schemes.Clear();
 			Layouts.Clear();
-
+			Shaders.Clear();
 		}
 
 
@@ -701,6 +732,9 @@ namespace ArcEngine
 
 			else if (typeof(T) == typeof(Animation))
 				return Animations.Count;
+
+			else if (typeof(T) == typeof(Shader))
+				return Shaders.Count;
 
 			else if (typeof(T) == typeof(Scene))
 				return Scenes.Count;
@@ -747,6 +781,9 @@ namespace ArcEngine
 
 			else if (typeof(T) == typeof(StringTable))
 				SharedStrings[name] = asset as StringTable;
+
+			else if (typeof(T) == typeof(Shader))
+				SharedShaders[name] = asset as Shader;
 
 			else if (typeof(T) == typeof(Animation))
 				SharedAnimations[name] = asset as Animation;
@@ -811,6 +848,17 @@ namespace ArcEngine
 				SharedAnimations[name] = anim;
 
 				return (T)(object)anim;
+			}
+
+			else if (typeof(T) == typeof(Shader))
+			{
+				if (SharedShaders.ContainsKey(name))
+					return (T)(object)SharedShaders[name];
+
+				Shader shader = new Shader();
+				SharedShaders[name] = shader;
+
+				return (T)(object)shader;
 			}
 
 			else if (typeof(T) == typeof(Scene))
@@ -896,9 +944,12 @@ namespace ArcEngine
 
 			if (typeof(T) == typeof(TileSet))
 				SharedTileSets.Remove(name);
-			
+
 			else if (typeof(T) == typeof(StringTable))
 				SharedStrings.Remove(name);
+
+			else if (typeof(T) == typeof(Shader))
+				SharedShaders.Remove(name);
 
 			else if (typeof(T) == typeof(Scene))
 				SharedScenes.Remove(name);
@@ -939,6 +990,9 @@ namespace ArcEngine
 			else if (typeof(T) == typeof(Animation))
 				SharedAnimations.Clear();
 
+			else if (typeof(T) == typeof(Shader))
+				SharedShaders.Clear();
+
 			else if (typeof(T) == typeof(Scene))
 				SharedScenes.Clear();
 
@@ -975,7 +1029,7 @@ namespace ArcEngine
 			SharedAudios.Clear();
 			SharedSchemes.Clear();
 			SharedLayouts.Clear();
-
+			SharedShaders.Clear();
 		}
 
 
@@ -1004,6 +1058,7 @@ namespace ArcEngine
 		Dictionary<string, XmlNode> Audios;
 		Dictionary<string, XmlNode> Schemes;
 		Dictionary<string, XmlNode> Layouts;
+		Dictionary<string, XmlNode> Shaders;
 
 
 
@@ -1022,6 +1077,7 @@ namespace ArcEngine
 		Dictionary<string, Audio> SharedAudios;
 		Dictionary<string, Scene> SharedScenes;
 		Dictionary<string, Script> SharedScripts;
+		Dictionary<string, Shader> SharedShaders;
 
 		#endregion
 	}

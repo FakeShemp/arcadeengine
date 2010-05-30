@@ -95,6 +95,7 @@ namespace ArcEngine.Editor
 			  this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
 			  this.MenuAboutAbout = new System.Windows.Forms.ToolStripMenuItem();
 			  this.dockPanel = new WeifenLuo.WinFormsUI.Docking.DockPanel();
+			  this.editDefaultShadersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			  this.MainToolStrip.SuspendLayout();
 			  this.MainStatusStrip.SuspendLayout();
 			  this.MainMenu.SuspendLayout();
@@ -204,7 +205,7 @@ namespace ArcEngine.Editor
 			  // 
 			  this.MenuFileNewBank.Image = ((System.Drawing.Image)(resources.GetObject("MenuFileNewBank.Image")));
 			  this.MenuFileNewBank.Name = "MenuFileNewBank";
-			  this.MenuFileNewBank.Size = new System.Drawing.Size(152, 22);
+			  this.MenuFileNewBank.Size = new System.Drawing.Size(127, 22);
 			  this.MenuFileNewBank.Text = "&New bank";
 			  this.MenuFileNewBank.Click += new System.EventHandler(this.CreateNewBank);
 			  // 
@@ -212,41 +213,41 @@ namespace ArcEngine.Editor
 			  // 
 			  this.MenuFileOpen.Image = ((System.Drawing.Image)(resources.GetObject("MenuFileOpen.Image")));
 			  this.MenuFileOpen.Name = "MenuFileOpen";
-			  this.MenuFileOpen.Size = new System.Drawing.Size(152, 22);
+			  this.MenuFileOpen.Size = new System.Drawing.Size(127, 22);
 			  this.MenuFileOpen.Text = "&Open...";
 			  this.MenuFileOpen.Click += new System.EventHandler(this.OpenBank);
 			  // 
 			  // MenuFileClose
 			  // 
 			  this.MenuFileClose.Name = "MenuFileClose";
-			  this.MenuFileClose.Size = new System.Drawing.Size(152, 22);
+			  this.MenuFileClose.Size = new System.Drawing.Size(127, 22);
 			  this.MenuFileClose.Text = "&Close";
 			  this.MenuFileClose.Click += new System.EventHandler(this.MenuFileClose_Click);
 			  // 
 			  // MenuFileSeparator1
 			  // 
 			  this.MenuFileSeparator1.Name = "MenuFileSeparator1";
-			  this.MenuFileSeparator1.Size = new System.Drawing.Size(149, 6);
+			  this.MenuFileSeparator1.Size = new System.Drawing.Size(124, 6);
 			  // 
 			  // MenuFileSave
 			  // 
 			  this.MenuFileSave.Image = ((System.Drawing.Image)(resources.GetObject("MenuFileSave.Image")));
 			  this.MenuFileSave.Name = "MenuFileSave";
-			  this.MenuFileSave.Size = new System.Drawing.Size(152, 22);
+			  this.MenuFileSave.Size = new System.Drawing.Size(127, 22);
 			  this.MenuFileSave.Text = "&Save";
 			  this.MenuFileSave.Click += new System.EventHandler(this.SaveResourcesToFile);
 			  // 
 			  // MenuFileSaveAs
 			  // 
 			  this.MenuFileSaveAs.Name = "MenuFileSaveAs";
-			  this.MenuFileSaveAs.Size = new System.Drawing.Size(152, 22);
+			  this.MenuFileSaveAs.Size = new System.Drawing.Size(127, 22);
 			  this.MenuFileSaveAs.Text = "Save &As...";
 			  this.MenuFileSaveAs.Click += new System.EventHandler(this.FileSaveAs_OnClick);
 			  // 
 			  // MenuFileSeparator2
 			  // 
 			  this.MenuFileSeparator2.Name = "MenuFileSeparator2";
-			  this.MenuFileSeparator2.Size = new System.Drawing.Size(149, 6);
+			  this.MenuFileSeparator2.Size = new System.Drawing.Size(124, 6);
 			  // 
 			  // MenuFile
 			  // 
@@ -269,26 +270,26 @@ namespace ArcEngine.Editor
 			  // ExportMenuItem
 			  // 
 			  this.ExportMenuItem.Name = "ExportMenuItem";
-			  this.ExportMenuItem.Size = new System.Drawing.Size(152, 22);
+			  this.ExportMenuItem.Size = new System.Drawing.Size(127, 22);
 			  this.ExportMenuItem.Text = "Export...";
 			  this.ExportMenuItem.Click += new System.EventHandler(this.OnExport);
 			  // 
 			  // ImportMenuItem
 			  // 
 			  this.ImportMenuItem.Name = "ImportMenuItem";
-			  this.ImportMenuItem.Size = new System.Drawing.Size(152, 22);
+			  this.ImportMenuItem.Size = new System.Drawing.Size(127, 22);
 			  this.ImportMenuItem.Text = "Import...";
 			  this.ImportMenuItem.Click += new System.EventHandler(this.OnImport);
 			  // 
 			  // toolStripSeparator3
 			  // 
 			  this.toolStripSeparator3.Name = "toolStripSeparator3";
-			  this.toolStripSeparator3.Size = new System.Drawing.Size(149, 6);
+			  this.toolStripSeparator3.Size = new System.Drawing.Size(124, 6);
 			  // 
 			  // MenuFileExit
 			  // 
 			  this.MenuFileExit.Name = "MenuFileExit";
-			  this.MenuFileExit.Size = new System.Drawing.Size(152, 22);
+			  this.MenuFileExit.Size = new System.Drawing.Size(127, 22);
 			  this.MenuFileExit.Text = "E&xit";
 			  this.MenuFileExit.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
 			  // 
@@ -408,7 +409,8 @@ namespace ArcEngine.Editor
 			  // toolStripMenuItem1
 			  // 
 			  this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.importAnimationFromGIFToolStripMenuItem});
+            this.importAnimationFromGIFToolStripMenuItem,
+            this.editDefaultShadersToolStripMenuItem});
 			  this.toolStripMenuItem1.Name = "toolStripMenuItem1";
 			  this.toolStripMenuItem1.Size = new System.Drawing.Size(52, 20);
 			  this.toolStripMenuItem1.Text = "Assets";
@@ -576,6 +578,12 @@ namespace ArcEngine.Editor
 			  this.dockPanel.Skin = dockPanelSkin1;
 			  this.dockPanel.TabIndex = 8;
 			  // 
+			  // editDefaultShadersToolStripMenuItem
+			  // 
+			  this.editDefaultShadersToolStripMenuItem.Name = "editDefaultShadersToolStripMenuItem";
+			  this.editDefaultShadersToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
+			  this.editDefaultShadersToolStripMenuItem.Text = "Edit default shaders";
+			  // 
 			  // EditorForm
 			  // 
 			  this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -655,6 +663,7 @@ namespace ArcEngine.Editor
 		  private System.Windows.Forms.ToolStripMenuItem ExportMenuItem;
 		  private System.Windows.Forms.ToolStripMenuItem ImportMenuItem;
 		  private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+		  private System.Windows.Forms.ToolStripMenuItem editDefaultShadersToolStripMenuItem;
 
     }
 }

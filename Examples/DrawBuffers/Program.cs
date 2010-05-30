@@ -80,79 +80,20 @@ namespace ArcEngine.Examples
 			Display.ClearColor = Color.CornflowerBlue;
 
 
-			#region Shader
-			Shader = new Shader();
-			Shader.SetSource(ShaderType.VertexShader,
-			@"#version 130
-
-			precision highp float;
-
-			uniform mat4 mvp_matrix;
-			uniform mat4 tex_matrix;
-
-			in vec2 in_position;
-			in vec4 in_color;
-			in vec4 in_texture;
-
-			invariant gl_Position;
-
-			smooth out vec4 out_color;
-			smooth out vec4 out_texture;
-
-			void main(void)
-			{
-				gl_Position = mvp_matrix * vec4(in_position, 0.0, 1.0);
-				
-				out_color = in_color;
-				out_texture = tex_matrix * in_texture;
-			}");
-
-
-			Shader.SetSource(ShaderType.FragmentShader,
-			@"#version 130
-
-			precision highp float;
-
-			uniform sampler2D texture;
-
-			smooth in vec4 out_color;
-			smooth in vec4 out_texture;
-
-			out vec4 frag_color;
-		
-			void main(void)
-			{
-				frag_color = texture2D(texture, out_texture.st);// * out_color;
-			}
-			");
-			Shader.Compile();
-			Display.Shader = Shader;
-
-
-			// Matrix
-			Matrix4 projectionMatrix = Matrix4.CreateOrthographicOffCenter(0, Display.ViewPort.Width, Display.ViewPort.Height, 0, 0, 5);
-			Matrix4 modelviewMatrix = Matrix4.LookAt(new Vector3(0, 0, 1), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
-			Matrix4 mvpMatrix = modelviewMatrix * projectionMatrix;
-		
-			Shader.SetUniform("mvp_matrix", mvpMatrix);
-			Shader.SetUniform("tex_matrix", Matrix4.Scale(1.0f / 256.0f, 1.0f / 256.0f, 1.0f));
-
-			#endregion
-
-
 			#region Texture
 
+			// Loads a texture and binds it to TUI 2
 			Texture = new Texture("data/texture.png");
 			Texture.HorizontalWrap = HorizontalWrapFilter.Repeat;
 			Texture.VerticalWrap = VerticalWrapFilter.Repeat;
-			Display.TextureUnit = 0;
+			Display.TextureUnit = 2;
 			Display.Texture = Texture;
-			Shader.SetUniform("texture", 0);
+			Display.Shader.SetUniform("texture", 2);
 			
 			#endregion
 
 			
-			#region Index Buffer
+			#region Buffer
 
 			// Indices
 			Indices = new int[]
@@ -161,12 +102,8 @@ namespace ArcEngine.Examples
 				1, 2, 3
 			};
 
-
-			Buffer = new BatchBuffer();
-			Buffer.AddDeclaration("in_position", 2, sizeof(float) * 8, 0);
-			Buffer.AddDeclaration("in_color", 4, sizeof(float) * 8, sizeof(float) * 2);
-			Buffer.AddDeclaration("in_texture", 2, sizeof(float) * 8, sizeof(float) * 6);
-
+			// Creates a position, color, texture buffer
+			Buffer = BatchBuffer.CreatePositionColorTextureBuffer();
 
 
 			// Vertex elements
@@ -182,10 +119,10 @@ namespace ArcEngine.Examples
 
 
 			// Or set data one by one
-			Buffer.AddPoint(new Point(100, 100), Color.Red, new Point(0, 0));
-			Buffer.AddPoint(new Point(500, 100), Color.Green, new Point(256, 0));
-			Buffer.AddPoint(new Point(100, 500), Color.Blue, new Point(0, 256));
-			Buffer.AddPoint(new Point(500, 500), Color.Red, new Point(256, 256));
+			Buffer.AddPoint(new Point(100, 100), Color.FromArgb(255, 0, 0), new Point(0, 0));
+			Buffer.AddPoint(new Point(500, 100), Color.FromArgb(0, 255, 0), new Point(256, 0));
+			Buffer.AddPoint(new Point(100, 500), Color.FromArgb(0, 0, 255), new Point(0, 256));
+			Buffer.AddPoint(new Point(500, 500), Color.FromArgb(0, 0, 255), new Point(256, 256));
 			Buffer.Update();
 
 
@@ -241,8 +178,6 @@ namespace ArcEngine.Examples
 			// Check if the Escape key is pressed
 			if (Keyboard.IsKeyPress(Keys.Escape))
 				Exit();
-
-
 		}
 
 

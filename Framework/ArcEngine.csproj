@@ -156,7 +156,7 @@
     <Compile Include="Asset\ScriptModel.cs" />
     <Compile Include="Asset\Scenes\Storyboard.cs" />
     <Compile Include="Asset\BitmapFont.cs" />
-    <Compile Include="Asset\Shader.cs" />
+    <Compile Include="Graphic\Shader.cs" />
     <Compile Include="Asset\Skin.cs" />
     <Compile Include="Editor\AboutForm.cs">
       <SubType>Form</SubType>
@@ -488,6 +488,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <Content Include="Docs\Projects.txt" />
+    <EmbeddedResource Include="Resources\Shaders.xml" />
     <Content Include="Utility\GUI\gui.txt" />
     <Content Include="Network\Documentation.txt" />
     <EmbeddedResource Include="Resources\checkerboard.png" />
@@ -509,6 +510,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

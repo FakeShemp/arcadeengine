@@ -23,17 +23,17 @@ using System.IO;
 using System.Xml;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
-
+using ArcEngine.Asset;
 
 
 // http://bakura.developpez.com/tutoriels/jeux/utilisation-shaders-avec-opengl-3-x/
 // http://www.siteduzero.com/tutoriel-3-8879-communiquer-avec-l-application-attributs-et-uniforms.html#ss_part_2
-namespace ArcEngine.Asset
+namespace ArcEngine.Graphic
 {
 	/// <summary>
 	/// GLSL Shader
 	/// </summary>
-	public class Shader : IAsset, IDisposable
+	public class Shader : IDisposable, IAsset
 	{
 
 		/// <summary>
@@ -237,20 +237,48 @@ namespace ArcEngine.Asset
 		{
 			Shader shader = new Shader();
 			shader.SetSource(ShaderType.VertexShader,
-				@"
-				void main()
+				@"#version 130
+
+				precision highp float;
+
+				uniform mat4 mvp_matrix;
+				uniform mat4 tex_matrix;
+
+				in vec2 in_position;
+				in vec4 in_color;
+				in vec4 in_texture;
+
+				invariant gl_Position;
+
+				smooth out vec4 out_color;
+				smooth out vec4 out_texture;
+
+				void main(void)
 				{
-					gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
-					gl_FrontColor = gl_Color;
+					gl_Position = mvp_matrix * vec4(in_position, 0.0, 1.0);
+
+					out_color = in_color;
+					out_texture = tex_matrix * in_texture;
 				}");
 
 			shader.SetSource(ShaderType.FragmentShader,
-				@"
-				void main()
-				{					
-					gl_FragColor = gl_Color;
+				@"#version 130
+
+				precision highp float;
+
+				uniform sampler2D texture;
+
+				smooth in vec4 out_color;
+				smooth in vec4 out_texture;
+
+				out vec4 frag_color;
+
+				void main(void)
+				{
+					frag_color = texture2D(texture, out_texture.st) * out_color;
 				}");
 
+			shader.Compile();
 
 			return shader;
 		}
@@ -264,6 +292,7 @@ namespace ArcEngine.Asset
 		static public Shader TextureShader()
 		{
 			Shader shader = new Shader();
+/*
 			shader.SetSource(ShaderType.VertexShader,
 				@"
 				void main()
@@ -282,8 +311,8 @@ namespace ArcEngine.Asset
 					vec4 color = texture2D(texture, gl_TexCoord[0].st);
 					gl_FragColor = gl_Color * color;
 				}");
-
-
+*/
+			
 			return shader;
 		}
 

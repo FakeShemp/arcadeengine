@@ -137,6 +137,19 @@ namespace ArcEngine.Graphic
 
 
 
+		/// <summary>
+		/// Creates a defaut buffer containing position, color and texture data
+		/// </summary>
+		/// <returns></returns>
+		public static BatchBuffer CreatePositionColorTextureBuffer()
+		{
+			BatchBuffer buffer = new BatchBuffer();
+			buffer.AddDeclaration("in_position", 2, sizeof(float) * 8, 0);
+			buffer.AddDeclaration("in_color", 4, sizeof(float) * 8, sizeof(float) * 2);
+			buffer.AddDeclaration("in_texture", 2, sizeof(float) * 8, sizeof(float) * 6);
+
+			return buffer;
+		}
 
 
 
@@ -179,10 +192,10 @@ namespace ArcEngine.Graphic
 			Buffer.Add(point.Y);
 
 			// Color
-			Buffer.Add(color.R / 255);
-			Buffer.Add(color.G / 255);
-			Buffer.Add(color.B / 255);
-			Buffer.Add(color.A / 255);
+			Buffer.Add(color.R / 256.0f);
+			Buffer.Add(color.G / 256.0f);
+			Buffer.Add(color.B / 256.0f);
+			Buffer.Add(color.A / 256.0f);
 
 			// Texture
 			Buffer.Add(texture.X);
