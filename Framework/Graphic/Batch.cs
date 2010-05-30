@@ -117,7 +117,6 @@ namespace ArcEngine.Graphic
 			Buffer.Add(point.X);
 			Buffer.Add(point.Y);
 
-
 			// Color
 			Buffer.Add(color.R / 255);
 			Buffer.Add(color.G / 255);

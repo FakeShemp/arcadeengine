@@ -1074,31 +1074,18 @@ namespace ArcEngine.Graphic
 			if (buffer == null)// || index == null)
 				return;
 
+			// Set the index buffer
+			GL.BindBuffer(BufferTarget.ElementArrayBuffer, IndexBufferHandle);
+			GL.BufferData<int>(BufferTarget.ElementArrayBuffer, (IntPtr)(index.Length * sizeof(int)), index, BufferUsageHint.StaticDraw);
+
 			// Bind shader
 			buffer.Bind(Shader);
 
-		//	SetIndexBuffer(index);
-
-
 			// Draw
-			GL.DrawElements(mode, buffer.Count, DrawElementsType.UnsignedInt, IntPtr.Zero);
+			GL.DrawElements(mode, index.Length, DrawElementsType.UnsignedInt, IntPtr.Zero);
 		}
 
 
-
-		/// <summary>
-		/// Updates Index buffer
-		/// </summary>
-		/// <param name="data"></param>
-		static void SetIndexBuffer(int[] data)
-		{
-			if (data == null)
-				return;
-
-			GL.BindBuffer(BufferTarget.ElementArrayBuffer, IndexBufferHandle);
-			GL.BufferData<int>(BufferTarget.ElementArrayBuffer, (IntPtr)(data.Length * sizeof(int)), data, BufferUsageHint.StaticDraw);
-
-		}
 
 		/// <summary>
 		/// Draws a batch
@@ -1205,7 +1192,7 @@ namespace ArcEngine.Graphic
 		/// <param name="mode">Drawing mode</param>
 		/// <param name="first">Specifies the starting index in the enabled arrays.</param>
 		/// <param name="count">Specifies the number of indices to be rendered.</param>
-		public static void DrawUserBatch(UserBuffer batch, BeginMode mode, int first, int count)
+		public static void DrawUserBatch(IndexBuffer batch, BeginMode mode, int first, int count)
 		{
 			// No batch, or empty batch
 			if (batch == null)
@@ -1214,7 +1201,7 @@ namespace ArcEngine.Graphic
 			// Bind shader
 			batch.Bind(Shader);
 
-			GL.BindBuffer(BufferTarget.ArrayBuffer, batch.vertexHandle);
+			GL.BindBuffer(BufferTarget.ArrayBuffer, batch.Handle);
 
 			GL.DrawArrays(mode, first, count);
 
@@ -1248,7 +1235,7 @@ namespace ArcEngine.Graphic
 
 
 		/// <summary>
-		/// 
+		/// Disables a buffer index
 		/// </summary>
 		/// <param name="id"></param>
 		public static void DisableBufferIndex(int id)
