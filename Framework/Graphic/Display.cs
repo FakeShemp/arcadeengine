@@ -1069,7 +1069,7 @@ namespace ArcEngine.Graphic
 		/// <param name="buffer">Buffer handle</param>
 		/// <param name="mode">Drawing mode</param>
 		/// <param name="index">Index buffer</param>
-		public static void DrawIndexBuffer(IndexBuffer buffer, BeginMode mode, int[] index)
+		public static void DrawIndexBuffer(Batch buffer, BeginMode mode, int[] index)
 		{
 			if (buffer == null)// || index == null)
 				return;
@@ -1097,88 +1097,15 @@ namespace ArcEngine.Graphic
 		public static void DrawBatch(Batch batch, BeginMode mode, int first, int count)
 		{
 			// No batch, or empty batch
-			if (batch == null || batch.Size == 0)
+			if (batch == null)
 				return;
 
-			// Vertex Array
-			//if (Capabilities.HasVBO)
-			//{
-			/*
-							// Vertex
-							GL.EnableClientState(ArrayCap.VertexArray);
-							GL.BindBuffer(BufferTarget.ArrayBuffer, batch.BufferID[0]);
-							GL.VertexPointer(2, VertexPointerType.Int, 0, IntPtr.Zero);
-
-
-							// Color
-							GL.EnableClientState(ArrayCap.ColorArray);
-							GL.BindBuffer(BufferTarget.ArrayBuffer, batch.BufferID[1]);
-							GL.ColorPointer(4, ColorPointerType.UnsignedByte, 0, IntPtr.Zero);
-
-
-							// Texture
-							// http://www.gamedev.net/community/forums/topic.asp?topic_id=184226
-							for (int id = 0; id < batch.TextureBufferCount; id++)
-							{
-								GL.ClientActiveTexture(OpenTK.Graphics.OpenGL.TextureUnit.Texture0 + id);
-								GL.EnableClientState(ArrayCap.TextureCoordArray);
-								GL.BindBuffer(BufferTarget.ArrayBuffer, batch.BufferID[2 + id]);
-								GL.TexCoordPointer(2, TexCoordPointerType.Int, 0, IntPtr.Zero);
-							}
-
-							// Deactivate other texture buffer
-							for (int id = batch.TextureBufferCount; id < Display.Capabilities.MaxMultiSample; id++)
-							{
-								GL.ClientActiveTexture(OpenTK.Graphics.OpenGL.TextureUnit.Texture0 + id);
-								GL.DisableClientState(ArrayCap.TextureCoordArray);
-							}
-			*/
 
 			GL.BindBuffer(BufferTarget.ArrayBuffer, batch.Handle);
-			//GL.BufferData<float>(BufferTarget.ArrayBuffer, (IntPtr) (sizeof(float) * batch.Buffer.Count), batch.Buffer.ToArray(), BufferUsageHint.StaticDraw);
 
 			//	GL.VertexAttribPointer(1, 2, VertexAttribPointerType.Float, false, 0, 0);
 			GL.DrawArrays(mode, first, count);
 
-
-			//GL.DisableClientState(ArrayCap.VertexArray);
-			//GL.DisableClientState(ArrayCap.TextureCoordArray);
-			//GL.DisableClientState(ArrayCap.ColorArray);
-
-			//}
-			//else
-			//{
-			/*
-							GL.Begin(mode);
-							for (int id = 0; id < batch.Size; id++)
-							{
-								GL.TexCoord2(batch.TextureBuffer[2][id].X, batch.TextureBuffer[2][id].Y);
-								GL.Vertex2(batch.VertexBuffer[id].X, batch.VertexBuffer[id].Y);
-							}
-							GL.End();
-			*/
-			/*
-							// Vertex
-							GL.EnableClientState(EnableCap.VertexArray);
-							GL.VertexPointer(2, VertexPointerType.Int, 0, batch.VertexBuffer.ToArray());
-
-							// Texture
-							GL.EnableClientState(EnableCap.TextureCoordArray);
-							GL.TexCoordPointer(2, TexCoordPointerType.Int, 0, batch.TextureBuffer.ToArray());
-
-							// Color
-							GL.EnableClientState(EnableCap.ColorArray);
-							GL.ColorPointer(4, ColorPointerType.UnsignedByte, 0, batch.ColorBuffer.ToArray());
-
-
-							GL.DrawArrays(mode, 0, batch.Size);
-
-
-							GL.DisableClientState(EnableCap.VertexArray);
-							GL.DisableClientState(EnableCap.TextureCoordArray);
-							GL.DisableClientState(EnableCap.ColorArray);
-			*/
-			//			}
 
 			RenderStats.BatchCall++;
 		}
@@ -1192,7 +1119,7 @@ namespace ArcEngine.Graphic
 		/// <param name="mode">Drawing mode</param>
 		/// <param name="first">Specifies the starting index in the enabled arrays.</param>
 		/// <param name="count">Specifies the number of indices to be rendered.</param>
-		public static void DrawUserBatch(IndexBuffer batch, BeginMode mode, int first, int count)
+		public static void DrawUserBatch(Batch batch, BeginMode mode, int first, int count)
 		{
 			// No batch, or empty batch
 			if (batch == null)

@@ -294,8 +294,8 @@ namespace DungeonEye.Forms
 				foreach (Monster monster in Maze.Monsters)
 					Batch.AddRectangle(new Rectangle(Offset.X + monster.Location.Position.X * 25, Offset.Y + monster.Location.Position.Y * 25, 25, 25), Color.White, tile.Rectangle);
 
-				Batch.Apply();
-				Display.DrawBatch(Batch, BeginMode.Quads);
+				int count = Batch.Update();
+				Display.DrawBatch(Batch, BeginMode.Quads, 0, count);
 
 
 

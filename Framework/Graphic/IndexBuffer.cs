@@ -13,13 +13,13 @@ namespace ArcEngine.Graphic
 	/// <summary>
 	/// Vertex buffer
 	/// </summary>
-	public class IndexBuffer : IDisposable
+	public class Batch : IDisposable
 	{
 
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public IndexBuffer()
+		public Batch()
 		{
 			int id = 0;
 			GL.GenBuffers(1, out id);
@@ -36,7 +36,7 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Destructor
 		/// </summary>
-		~IndexBuffer()
+		~Batch()
 		{
 			if (Handle != -1)
 				throw new Exception("IndexBuffer : Call Dispose() !!");
@@ -78,9 +78,15 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Updates the buffer with the internal vertex data
 		/// </summary>
-		public void Update()
+		/// <returns>Number of primitives</returns>
+		public int Update()
 		{
 			SetVertices(Buffer.ToArray());
+
+			int count = Buffer.Count / 8;
+			Buffer.Clear();
+
+			return count;
 		}
 
 
@@ -135,6 +141,15 @@ namespace ArcEngine.Graphic
 
 
 		#region Vertex PositionColorTexture helpers
+
+		/// <summary>
+		/// Clear the buffer
+		/// </summary>
+		public void Clear()
+		{
+			Buffer.Clear();
+		}
+
 
 		/// <summary>
 		/// Adds a rectangle

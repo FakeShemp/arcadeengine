@@ -162,7 +162,7 @@ namespace ArcEngine.Examples
 			};
 
 
-			Buffer = new IndexBuffer();
+			Buffer = new Batch();
 			Buffer.AddDeclaration("in_position", 2, sizeof(float) * 8, 0);
 			Buffer.AddDeclaration("in_color", 4, sizeof(float) * 8, sizeof(float) * 2);
 			Buffer.AddDeclaration("in_texture", 2, sizeof(float) * 8, sizeof(float) * 6);
@@ -180,6 +180,8 @@ namespace ArcEngine.Examples
 			};
 			Buffer.SetVertices(vertices);
 
+
+			// Or set data one by one
 			Buffer.AddPoint(new Point(100, 100), Color.Red, new Point(0, 0));
 			Buffer.AddPoint(new Point(500, 100), Color.Green, new Point(1, 0));
 			Buffer.AddPoint(new Point(100, 500), Color.Blue, new Point(0, 1));
@@ -275,7 +277,7 @@ namespace ArcEngine.Examples
 		/// <summary>
 		/// Index buffer
 		/// </summary>
-		IndexBuffer Buffer;
+		Batch Buffer;
 
 
 		/// <summary>

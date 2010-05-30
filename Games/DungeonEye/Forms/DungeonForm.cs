@@ -582,8 +582,8 @@ namespace DungeonEye.Forms
 
 
 
-			Batch.Apply();
-			Display.DrawBatch(Batch, BeginMode.Quads);
+			int count = Batch.Update();
+			Display.DrawBatch(Batch, BeginMode.Quads, 0, count);
 
 
 

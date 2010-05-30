@@ -306,8 +306,6 @@ namespace ArcEngine.Asset
 			// Extra offset when displaying tile
 			int tileoffset = 0;
 
-
-
 			try
 			{
 				// Skip the first tags "<?...?>" and "<root>"
@@ -452,10 +450,10 @@ namespace ArcEngine.Asset
 				stream.Close();
 
 				// Draw batch
-				Batch.Apply();
+				int count = Batch.Update();
 				Display.Texture = GlyphTileset.Texture;
 				Display.Blending = true;
-				Display.DrawBatch(Batch, BeginMode.Quads,0, Batch.Size);
+				Display.DrawBatch(Batch, BeginMode.Quads,0, count);
 
 				//Display.DrawRectangle(rectangle, Color.Red);
 			}
