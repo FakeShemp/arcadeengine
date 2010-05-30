@@ -1126,12 +1126,8 @@ namespace ArcEngine.Graphic
 			if (batch == null)
 				return;
 
-
 			GL.BindBuffer(BufferTarget.ArrayBuffer, batch.Handle);
-
-			//	GL.VertexAttribPointer(1, 2, VertexAttribPointerType.Float, false, 0, 0);
 			GL.DrawArrays(mode, first, count);
-
 
 			RenderStats.BatchCall++;
 		}

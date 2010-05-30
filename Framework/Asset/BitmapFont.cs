@@ -48,7 +48,7 @@ namespace ArcEngine.Asset
 			GlyphTileset = new TileSet();
 			GlyphTileset.Texture = new Texture(OpenTK.Graphics.OpenGL.PixelFormat.LuminanceAlpha);
 		//	GlyphTileset.Texture.PixelInternalFormat = PixelInternalFormat.LuminanceAlpha;
-			Batch = new BatchBuffer();
+			Batch = BatchBuffer.CreatePositionColorTextureBuffer();
 		}
 
 
@@ -114,122 +114,7 @@ namespace ArcEngine.Asset
 		/// <param name="text">Text to print</param>
 		public void DrawText(Point pos, Color color, string text)
 		{
-
 			DrawText(new Rectangle(pos, Size.Empty), color, text);
-/*
-			if (string.IsNullOrEmpty(text))
-				return;
-
-
-			// Encode string to xml
-			string msg = "<?xml version=\"1.0\" encoding=\"unicode\" standalone=\"yes\"?><root>" + text + "</root>";
-			UnicodeEncoding utf8 = new UnicodeEncoding();
-			byte[] buffer = utf8.GetBytes(msg);
-			MemoryStream stream = new MemoryStream(buffer);
-			XmlTextReader reader = new XmlTextReader(stream);
-			reader.WhitespaceHandling = WhitespaceHandling.All;
-
-			Rectangle rect = new Rectangle(pos, new Size());
-			Batch.Clear();
-
-			// Extra offset when displaying tile
-			int tileoffset = 0;
-			try
-			{
-				// Skip the first tags "<?...?>" and "<root>"
-				reader.MoveToContent();
-
-				while (reader.Read())
-				{
-
-
-					switch (reader.NodeType)
-					{
-						case XmlNodeType.Attribute:
-						{
-						}
-						break;
-
-						case XmlNodeType.Element:
-						{
-							switch (reader.Name.ToLower())
-							{
-								case "tile":
-								{
-									if (TextTileset == null)
-										break;
-
-									int id = int.Parse(reader.GetAttribute("id"));
-									Tile tile = TextTileset.GetTile(id);
-									TextTileset.Draw(id, rect.Location);
-									rect.Offset(tile.Size.Width, 0);
-
-									tileoffset = tile.Size.Height - LineHeight;
-								}
-								break;
-
-								case "br":
-								{
-									rect.Location = new Point(pos.X, rect.Bottom + LineHeight + tileoffset);
-									tileoffset = 0;
-								}
-								break;
-							}
-						}
-						break;
-						case XmlNodeType.EndElement:
-						{
-
-						}
-
-						break;
-
-						case XmlNodeType.Text:
-						{
-
-							foreach (char c in reader.Value)
-							{
-								// Get the tile
-								Tile tile = GlyphTileset.GetTile(c - GlyphOffset);
-								if (tile == null)
-									continue;
-
-								// Move the glyph according to its hot spot
-								Rectangle tmp = new Rectangle(
-									new Point(rect.X - (int)(tile.HotSpot.X * GlyphTileset.Scale.Width), rect.Y - (int)(tile.HotSpot.Y * GlyphTileset.Scale.Height)),
-									new Size((int)(tile.Rectangle.Width * GlyphTileset.Scale.Width), (int)(tile.Rectangle.Height * GlyphTileset.Scale.Height)));
-
-								// Add glyph to the batch
-								Batch.AddRectangle(tmp, Color, tile.Rectangle);
-
-								// Move to the next glyph
-								rect.Offset(tmp.Size.Width + Advance, 0);
-							}
-						}
-						break;
-
-					}
-
-				}
-			}
-			catch (XmlException e)
-			{
-			}
-
-			finally
-			{
-				// Close streams
-				reader.Close();
-				stream.Close();
-
-				// Draw batch
-				Display.Texture = GlyphTileset.Texture;
-				Batch.Apply();
-				Display.DrawBatch(Batch, BeginMode.Quads);
-
-				Display.DrawRectangle(rect, Color.Red);
-			}
-*/
 		}
 
 
@@ -299,7 +184,7 @@ namespace ArcEngine.Asset
 			Color currentcolor = color;
 			
 
-			Rectangle rect = rectangle; // new Rectangle(pos, new Size());
+			Rectangle rect = rectangle;
 			Batch.Clear();
 
 
@@ -451,86 +336,13 @@ namespace ArcEngine.Asset
 
 				// Draw batch
 				int count = Batch.Update();
+				Display.TextureUnit = 2;
 				Display.Texture = GlyphTileset.Texture;
 				Display.Blending = true;
 				Display.DrawBatch(Batch, BeginMode.Quads,0, count);
-
-				//Display.DrawRectangle(rectangle, Color.Red);
+	
 			}
-/*
-			Point loc = rectangle.Location;
-			Rectangle rect = Rectangle.Empty;
 
-			//Batch.Size = text.Length;
-			Display.Texture = GlyphTileset.Texture;
-
-
-			Batch.Clear();
-			foreach (char c in text)
-			{
-				// New line
-				if (c == 10)
-				{
-					loc.X = rectangle.X;
-					loc.Y += (int)(LineHeight * GlyphTileset.Scale.Height);
-				}
-
-
-				// Get the tile
-				Tile tile = GlyphTileset.GetTile(c - GlyphOffset);
-				if (tile == null)
-					continue;
-
-
-				switch (justification)
-				{
-					case TextJustification.Left:
-					{
-						// Move the glyph according to its hot spot
-						rect.X = loc.X - (int)(tile.HotSpot.X * GlyphTileset.Scale.Width);
-						rect.Y = loc.Y - (int)(tile.HotSpot.Y * GlyphTileset.Scale.Height);
-						rect.Width = (int)(tile.Rectangle.Width * GlyphTileset.Scale.Width);
-						rect.Height = (int)(tile.Rectangle.Height * GlyphTileset.Scale.Height);
-
-
-						// Out of the rectangle
-						if (rect.Left >= rectangle.Right)
-						{
-							rect.X = rectangle.X;
-							rect.Y = rect.Y + (int)(LineHeight * GlyphTileset.Scale.Height);
-							loc.Y += (int)(LineHeight * GlyphTileset.Scale.Height);
-						}
-					}
-					break;
-					case TextJustification.Center:
-					{
-					}
-					break;
-					case TextJustification.Right:
-					{
-					}
-					break;
-					case TextJustification.Justify:
-					{
-					}
-					break;
-				}
-
-
-				// Add glyph to the batch
-				Batch.AddRectangle(rect, Color, tile.Rectangle);
-
-				// Move to the next glyph
-				loc.X = rect.Right + Advance;
-			}
-			Batch.Apply();
-
-
-			Display.DrawBatch(Batch, BeginMode.Quads);
-
-
-			Display.DrawRectangle(rectangle, Color.Red);
-*/
 		}
 
 		/// <summary>
@@ -736,6 +548,7 @@ namespace ArcEngine.Asset
 		}
 
 
+		#region Loadings
 
 		/// <summary>
 		/// Loads font family from byte array
@@ -881,6 +694,8 @@ namespace ArcEngine.Asset
 
 			return false;
 		}
+
+		#endregion
 
 
 		#region IO routines

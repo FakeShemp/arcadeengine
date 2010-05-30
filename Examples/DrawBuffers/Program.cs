@@ -113,7 +113,7 @@ namespace ArcEngine.Examples
 				100.0f,  100.0f,				1.0f, 0.0f, 0.0f, 1.0f,			0.0f,   0.0f,
 				500.0f,  100.0f,				0.0f, 1.0f, 0.0f, 1.0f,			256.0f, 0.0f,
 				100.0f,  500.0f,				0.0f, 0.0f, 1.0f, 1.0f,			0.0f,   256.0f,
-				500.0f,  500.0f,				0.0f, 0.0f, 1.0f, 1.0f,			256.0f, 256.0f
+				500.0f,  500.0f,				1.0f, 1.0f, 1.0f, 1.0f,			256.0f, 256.0f
 			};
 			Buffer.SetVertices(vertices);
 
@@ -122,7 +122,7 @@ namespace ArcEngine.Examples
 			Buffer.AddPoint(new Point(100, 100), Color.FromArgb(255, 0, 0), new Point(0, 0));
 			Buffer.AddPoint(new Point(500, 100), Color.FromArgb(0, 255, 0), new Point(256, 0));
 			Buffer.AddPoint(new Point(100, 500), Color.FromArgb(0, 0, 255), new Point(0, 256));
-			Buffer.AddPoint(new Point(500, 500), Color.FromArgb(0, 0, 255), new Point(256, 256));
+			Buffer.AddPoint(new Point(500, 500), Color.FromArgb(255, 255, 255), new Point(256, 256));
 			Buffer.Update();
 
 
@@ -141,6 +141,13 @@ namespace ArcEngine.Examples
 			GL.BindVertexArray(0);
 */
 			#endregion
+
+			#endregion
+
+
+			#region Font
+
+			Font = BitmapFont.CreateFromTTF("c:\\windows\\fonts\\verdana.ttf", 16, FontStyle.Regular);
 
 			#endregion
 
@@ -164,6 +171,10 @@ namespace ArcEngine.Examples
 			if (Texture != null)
 				Texture.Dispose();
 			Texture = null;
+
+			if (Font != null)
+				Font.Dispose();
+			Font = null;
 		}
 
 
@@ -191,12 +202,17 @@ namespace ArcEngine.Examples
 			Display.ClearBuffers();
 
 
+			Display.Texture = Texture;
+
 			// Draws the index buffer
 			Display.DrawIndexBuffer(Buffer, BeginMode.Triangles, Indices);
 
 
 			// Draws the batch buffer
 			//Display.DrawUserBatch(Buffer, BeginMode.Triangles, 0, 3);
+
+
+		//	Font.DrawText(new Point(100, 25), Color.White, "Draw buffers");
 		}
 
 
@@ -226,6 +242,12 @@ namespace ArcEngine.Examples
 		/// Texture
 		/// </summary>
 		Texture Texture;
+
+
+		/// <summary>
+		/// Font
+		/// </summary>
+		BitmapFont Font;
 
 		#endregion
 

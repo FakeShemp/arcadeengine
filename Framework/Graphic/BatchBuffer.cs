@@ -192,10 +192,10 @@ namespace ArcEngine.Graphic
 			Buffer.Add(point.Y);
 
 			// Color
-			Buffer.Add(color.R / 256.0f);
-			Buffer.Add(color.G / 256.0f);
-			Buffer.Add(color.B / 256.0f);
-			Buffer.Add(color.A / 256.0f);
+			Buffer.Add(color.R / 255.0f);
+			Buffer.Add(color.G / 255.0f);
+			Buffer.Add(color.B / 255.0f);
+			Buffer.Add(color.A / 255.0f);
 
 			// Texture
 			Buffer.Add(texture.X);
