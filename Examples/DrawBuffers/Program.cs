@@ -155,14 +155,15 @@ namespace ArcEngine.Examples
 			#region Index Buffer
 
 			// Indices
-			int[] indicesVboData = new int[]
+			Indices = new int[]
 			{
-				0, 1, 2, 1, 2, 3
+				0, 1, 2, 
+				1, 2, 3
 			};
 
 
 			// Vertex elements
-			float[] mixedData = new float[]
+			Vertices = new float[]
 			{
 				// Coord							Color									Texture
 				100.0f,  100.0f,				1.0f, 0.0f, 0.0f, 1.0f,			0.0f, 0.0f,
@@ -175,8 +176,8 @@ namespace ArcEngine.Examples
 
 
 			IndicesBuffer = new IndexBuffer();
-			IndicesBuffer.SetIndices(indicesVboData);
-			IndicesBuffer.SetVertices(mixedData);
+			IndicesBuffer.SetIndices(Indices);
+			IndicesBuffer.SetVertices(Vertices);
 			IndicesBuffer.AddDeclaration("in_position", 2, sizeof(float) * 8, 0);
 			IndicesBuffer.AddDeclaration("in_color", 4, sizeof(float) * 8, sizeof(float) * 2);
 			IndicesBuffer.AddDeclaration("in_texture", 2, sizeof(float) * 8, sizeof(float) * 6);
@@ -200,6 +201,16 @@ namespace ArcEngine.Examples
 
 			#endregion
 
+
+			#region Batch buffer
+
+			BatchBuffer = new UserBuffer();
+			//BatchBuffer.AddRectangle(new Rectangle(50, 50, 50, 50), Color.White, new Rectangle(0, 0, 256, 256));
+			BatchBuffer.SetVertices(Vertices);
+			BatchBuffer.AddDeclaration("in_position", 2, sizeof(float) * 8, 0);
+			BatchBuffer.AddDeclaration("in_color", 4, sizeof(float) * 8, sizeof(float) * 2);
+			BatchBuffer.AddDeclaration("in_texture", 2, sizeof(float) * 8, sizeof(float) * 6);
+			#endregion
 		}
 
 
@@ -221,6 +232,9 @@ namespace ArcEngine.Examples
 				Texture.Dispose();
 			Texture = null;
 
+			if (BatchBuffer != null)
+				BatchBuffer.Dispose();
+			BatchBuffer = null;
 		}
 
 
@@ -250,8 +264,12 @@ namespace ArcEngine.Examples
 			Display.ClearBuffers();
 
 
-			// Draws the buffer
-			Display.DrawIndexBuffer(IndicesBuffer, BeginMode.Triangles);
+			// Draws the index buffer
+			Display.DrawIndexBuffer(IndicesBuffer, BeginMode.Triangles, Indices);
+
+
+			// Draws the batch buffer
+			//Display.DrawUserBatch(BatchBuffer, BeginMode.Triangles, 0, 3);
 		}
 
 
@@ -260,9 +278,28 @@ namespace ArcEngine.Examples
 		#region Properties
 
 		/// <summary>
+		/// Indices
+		/// </summary>
+		int[] Indices;
+
+
+		/// <summary>
+		/// Vertex data
+		/// </summary>
+		float[] Vertices;
+
+
+		/// <summary>
 		/// Index buffer
 		/// </summary>
 		IndexBuffer IndicesBuffer;
+
+
+		/// <summary>
+		/// Batch buffer
+		/// </summary>
+		UserBuffer BatchBuffer;
+
 
 		/// <summary>
 		/// Shader

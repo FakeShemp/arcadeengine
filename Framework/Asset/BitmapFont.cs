@@ -455,7 +455,7 @@ namespace ArcEngine.Asset
 				Batch.Apply();
 				Display.Texture = GlyphTileset.Texture;
 				Display.Blending = true;
-				Display.DrawBatch(Batch, BeginMode.Quads);
+				Display.DrawBatch(Batch, BeginMode.Quads,0, Batch.Size);
 
 				//Display.DrawRectangle(rectangle, Color.Red);
 			}

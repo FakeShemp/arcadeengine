@@ -23,34 +23,48 @@ using System.Collections.Generic;
 using System.Drawing;
 using OpenTK.Graphics.OpenGL;
 
+//
+// http://songho.ca/opengl/gl_vbo.html
+//
+//
 namespace ArcEngine.Graphic
 {
 	/// <summary>
 	/// An efficient way to render a batch of geometry
 	/// </summary>
-	/// http://songho.ca/opengl/gl_vbo.html
 	public class Batch : IDisposable
 	{
 
 		/// <summary>
-		/// Default constructor.
+		/// Default
 		/// </summary>
-		public Batch() : this(1, 0)
+		public Batch()
 		{
-
+			int id = 0;
+			GL.GenBuffers(1, out id);
+			Handle = id;
+			Buffer = new List<float>();
 		}
 
 		/// <summary>
-		/// Constructor
+		/// Destructor
 		/// </summary>
-		/// <param name="texturecount">Number of texture buffer</param>
-		/// <param name="attribcount">Number of attrib buffer</param>
-		public Batch(int texturecount, int attribcount)
+		~Batch()
 		{
-			int[] id = new int[1];
-			GL.GenBuffers(1, id);
-			Handle = id[0];
-			Buffer = new List<float>();
+			if (Handle != -1)
+				throw new Exception("Batch : Call Dispose() !!");
+		}
+
+		/// <summary>
+		/// Dispose content
+		/// </summary>
+		public void Dispose()
+		{
+			int[] id = new int[] { Handle };
+			GL.DeleteBuffers(1, id);
+			Handle = -1;
+
+			GC.SuppressFinalize(this);
 		}
 
 
@@ -61,8 +75,6 @@ namespace ArcEngine.Graphic
 		{
 			Buffer.Clear();
 		}
-
-
 
 
 		/// <summary>
@@ -106,8 +118,6 @@ namespace ArcEngine.Graphic
 			Buffer.Add(point.Y);
 
 
-			return;
-
 			// Color
 			Buffer.Add(color.R / 255);
 			Buffer.Add(color.G / 255);
@@ -147,84 +157,6 @@ namespace ArcEngine.Graphic
 
 
 
-/*
-		#region Multitexturing
-
-
-		/// <summary>
-		/// Adds a point
-		/// </summary>
-		/// <param name="point">Location on the screen</param>
-		/// <param name="color">Color of the point</param>
-		/// <param name="texture">Texture coordinates</param>
-		public void AddPoint(Point point, Color color, Point[] texture)
-		{
-			VertexBuffer.Add(point);
-			for (int id = 0; id < TextureBufferCount; id++)
-			{
-				if (id <= texture.Length)
-					TextureBuffer[id].Add(texture[id]);
-			}
-
-			ColorBuffer.Add((color.A << 24) + (color.B << 16) + (color.G << 8) + (color.R));
-		}
-
-
-		/// <summary>
-		/// Adds a rectangle
-		/// </summary>
-		/// <param name="rect">Rectangle on the screen</param>
-		/// <param name="color">Drawing color</param>
-		/// <param name="tex">Texture coordinates</param>
-		public void AddRectangle(Rectangle rect, Color color, Rectangle[] tex)
-		{
-			if (tex.Length < TextureBufferCount * 4)
-				throw new ArgumentOutOfRangeException("Not enough texture coordinates. Waiting for " + TextureBufferCount * 4 +", got " + tex.Length);
-			Point[] points = new Point[TextureBufferCount];
-
-			//AddPoint(rect.Location, color, tex.Location);
-			for (int id = 0; id < TextureBufferCount; id++)
-				points[id] = tex[id].Location;
-			AddPoint(rect.Location, color, points);
-
-
-			//AddPoint(new Point(rect.Right, rect.Top), color, new Point(tex.Right, tex.Top));
-			for (int id = 0; id < TextureBufferCount; id++)
-				points[id] = new Point(tex[id].Right, tex[id].Top);
-			AddPoint(new Point(rect.Right, rect.Top), color, points);
-
-
-			//AddPoint(new Point(rect.Right, rect.Bottom), color, new Point(tex.Right, tex.Bottom));
-			for (int id = 0; id < TextureBufferCount; id++)
-				points[id] = new Point(tex[id].Right, tex[id].Bottom);
-			AddPoint(new Point(rect.Right, rect.Bottom), color, points);
-
-
-			//AddPoint(new Point(rect.X, rect.Bottom), color, new Point(tex.X, tex.Bottom));
-			for (int id = 0; id < TextureBufferCount; id++)
-				points[id] = new Point(tex[id].X, tex[id].Bottom);
-			AddPoint(new Point(rect.X, rect.Bottom), color, points);
-		}
-
-
-
-		#endregion
-*/
-
-
-
-		#region Disposing
-		/// <summary>
-		/// 
-		/// </summary>
-		public void Dispose()
-		{
-			int[] id = new int[]{Handle};
-			GL.DeleteBuffers(1, id);
-			Handle = -1;
-		}
-
-		#endregion
 
 
 		#region Properties
@@ -245,7 +177,7 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Buffer ID
 		/// </summary>
-		public int Handle
+		internal int Handle
 		{
 			get;
 			private set;
@@ -254,7 +186,7 @@ namespace ArcEngine.Graphic
 
 
 		/// <summary>
-		/// 
+		/// Vertex buffer data
 		/// </summary>
 		internal List<float> Buffer
 		{

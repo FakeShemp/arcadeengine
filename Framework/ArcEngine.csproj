@@ -299,6 +299,7 @@
     <Compile Include="GameClock.cs" />
     <Compile Include="GameComponentCollection.cs" />
     <Compile Include="Graphic\Batch.cs" />
+    <Compile Include="Graphic\UserBuffer.cs" />
     <Compile Include="Graphic\IndexBuffer.cs" />
     <Compile Include="Graphic\PixelBuffer.cs" />
     <Compile Include="Graphic\FrameBuffer.cs" />
