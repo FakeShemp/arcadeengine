@@ -86,7 +86,7 @@ namespace Shader_Demo
 			SimpleShader.SetUniform(SimpleShader.GetUniform("texture"), 0);
 
 			// Setup the geometry shader
-			GeomShader = Shader.ColorShader();
+			GeomShader = Shader.CreateColorShader();
 			GeomShader.LoadSource(ShaderType.GeometryShader, "data/geometry.txt");
 			GeomShader.SetGeometryPrimitives(BeginMode.Lines, BeginMode.LineStrip, 50);
 			GeomShader.Compile();

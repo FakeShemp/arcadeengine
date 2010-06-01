@@ -39,7 +39,7 @@ namespace ArcEngine.Graphic
 		~BatchBuffer()
 		{
 			if (Handle != -1)
-				throw new Exception("IndexBuffer : Call Dispose() !!");
+				throw new Exception("BatchBuffer : Call Dispose() !!");
 		}
 
 

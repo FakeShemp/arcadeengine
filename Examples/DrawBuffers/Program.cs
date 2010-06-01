@@ -79,6 +79,7 @@ namespace ArcEngine.Examples
 		{
 			Display.ClearColor = Color.CornflowerBlue;
 
+			shad = Shader.CreateColorShader();
 
 			#region Texture
 
@@ -96,11 +97,15 @@ namespace ArcEngine.Examples
 			#region Buffer
 
 			// Indices
-			Indices = new int[]
+			int[] indices = new int[]
 			{
 				0, 1, 2, 
 				1, 2, 3
 			};
+
+			Index = new IndexBuffer();
+			Index.Update(indices);
+
 
 			// Creates a position, color, texture buffer
 			Buffer = BatchBuffer.CreatePositionColorTextureBuffer();
@@ -160,9 +165,9 @@ namespace ArcEngine.Examples
 		/// </summary>
 		public override void UnloadContent()
 		{
-			if (Shader != null)
-				Shader.Dispose();
-			Shader = null;
+			if (Index != null)
+				Index.Dispose();
+			Index = null;
 
 			if (Buffer != null)
 				Buffer.Dispose();
@@ -203,39 +208,34 @@ namespace ArcEngine.Examples
 
 
 			Display.Texture = Texture;
+		//	Display.Shader = Shader;
 
 			// Draws the index buffer
-			Display.DrawIndexBuffer(Buffer, BeginMode.Triangles, Indices);
+			Display.DrawIndexBuffer(Buffer, BeginMode.Triangles, Index);
 
 
 			// Draws the batch buffer
 			//Display.DrawUserBatch(Buffer, BeginMode.Triangles, 0, 3);
 
-
-		//	Font.DrawText(new Point(100, 25), Color.White, "Draw buffers");
+			//Display.Shader = shad;
+			Font.DrawText(new Point(100, 25), Color.White, "D");
 		}
 
 
+		Shader shad;
 
 
 		#region Properties
 
 		/// <summary>
-		/// Indices
+		/// Index buffer
 		/// </summary>
-		int[] Indices;
-
+		IndexBuffer Index;
 
 		/// <summary>
 		/// Index buffer
 		/// </summary>
 		BatchBuffer Buffer;
-
-
-		/// <summary>
-		/// Shader
-		/// </summary>
-		Shader Shader;
 
 
 		/// <summary>

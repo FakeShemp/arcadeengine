@@ -66,7 +66,7 @@ namespace ArcEngine.Graphic
 
 
 			#region Shader
-			Shader = Shader.ColorShader();
+			Shader = Shader.CreateTextureShader();
 			#endregion
 
 
@@ -86,10 +86,6 @@ namespace ArcEngine.Graphic
 			PointSmooth = true;
 			BlendingFunction(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 			GL.ClearStencil(0);
-
-			// Index buffer handle
-			GL.GenBuffers(1, out IndexBufferHandle);
-
 
 			// Matrices
 			modelViewMatrix = Matrix4.LookAt(new Vector3(0, 0, 1), new Vector3(0, 0, 0), new Vector3(0, 1, 0));;
@@ -1095,20 +1091,23 @@ namespace ArcEngine.Graphic
 		/// <param name="buffer">Buffer handle</param>
 		/// <param name="mode">Drawing mode</param>
 		/// <param name="index">Index buffer</param>
-		public static void DrawIndexBuffer(BatchBuffer buffer, BeginMode mode, int[] index)
+		public static bool DrawIndexBuffer(BatchBuffer buffer, BeginMode mode, IndexBuffer index)
 		{
 			if (buffer == null || index == null)
-				return;
+				return false;
 
+			index.Bind();
 			// Set the index buffer
-			GL.BindBuffer(BufferTarget.ElementArrayBuffer, IndexBufferHandle);
-			GL.BufferData<int>(BufferTarget.ElementArrayBuffer, (IntPtr)(index.Length * sizeof(int)), index, BufferUsageHint.StaticDraw);
+			//GL.BindBuffer(BufferTarget.ElementArrayBuffer, IndexBufferHandle);
+			//GL.BufferData<int>(BufferTarget.ElementArrayBuffer, (IntPtr)(index.Length * sizeof(int)), index, BufferUsageHint.StaticDraw);
 
 			// Bind shader
 			buffer.Bind(Shader);
 
 			// Draw
-			GL.DrawElements(mode, index.Length, DrawElementsType.UnsignedInt, IntPtr.Zero);
+			GL.DrawElements(mode, index.Count, DrawElementsType.UnsignedInt, IntPtr.Zero);
+
+			return true;
 		}
 
 
@@ -1827,7 +1826,7 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Handle for the index buffer
 		/// </summary>
-		static int IndexBufferHandle;
+	//	static int IndexBufferHandle;
 
 
 		#endregion

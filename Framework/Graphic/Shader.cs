@@ -81,6 +81,15 @@ namespace ArcEngine.Graphic
 		}
 
 
+		/// <summary>
+		/// Destructor
+		/// </summary>
+		~Shader()
+		{
+			//if (ProgramID != -1)
+			//	throw new Exception("Shader : Call Dispose() !!");
+		}
+
 
 
 		/// <summary>
@@ -233,7 +242,63 @@ namespace ArcEngine.Graphic
 		/// Creates a simple color shader
 		/// </summary>
 		/// <returns></returns>
-		static public Shader ColorShader()
+		static public Shader CreateColorShader()
+		{
+			Shader shader = new Shader();
+			shader.SetSource(ShaderType.VertexShader,
+				@"#version 130
+
+				precision highp float;
+
+				uniform mat4 mvp_matrix;
+				//uniform mat4 tex_matrix;
+
+				in vec2 in_position;
+				in vec4 in_color;
+				//in vec4 in_texture;
+
+				invariant gl_Position;
+
+				smooth out vec4 out_color;
+				//smooth out vec4 out_texture;
+
+				void main(void)
+				{
+					gl_Position = mvp_matrix * vec4(in_position, 0.0, 1.0);
+
+					out_color = in_color;
+					//out_texture = tex_matrix * in_texture;
+				}");
+
+			shader.SetSource(ShaderType.FragmentShader,
+				@"#version 130
+
+				precision highp float;
+
+				//uniform sampler2D texture;
+
+				smooth in vec4 out_color;
+				//smooth in vec4 out_texture;
+
+				out vec4 frag_color;
+
+				void main(void)
+				{
+					frag_color = out_color;
+				}");
+
+			shader.Compile();
+
+			return shader;
+		}
+
+
+		/// <summary>
+		/// Creates a simple textured color shader
+		/// </summary>
+		/// <remarks>Sets uniform "texture" as the sampler2D</remarks>
+		/// <returns></returns>
+		static public Shader CreateTextureShader()
 		{
 			Shader shader = new Shader();
 			shader.SetSource(ShaderType.VertexShader,
@@ -283,41 +348,91 @@ namespace ArcEngine.Graphic
 			return shader;
 		}
 
+		#endregion
+
+
+		#region Attributes
+
 
 		/// <summary>
-		/// Creates a simple textured color shader
+		/// Associates a generic vertex attribute index with a named attribute variable
 		/// </summary>
-		/// <remarks>Sets uniform "texture" as the sampler2D</remarks>
-		/// <returns></returns>
-		static public Shader TextureShader()
+		/// <param name="index">Specifies the index of the generic vertex attribute to be bound.</param>
+		/// <param name="name">Name of the vertex shader attribute variable to which index is to be bound.</param>
+		public void BindAttrib(int index, string name)
 		{
-			Shader shader = new Shader();
-/*
-			shader.SetSource(ShaderType.VertexShader,
-				@"
-				void main()
-				{
-					gl_TexCoord[0] = gl_TextureMatrix[0] * gl_MultiTexCoord0;
-					gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
-					gl_FrontColor = gl_Color;
-				}");
+			if (index < 0 || string.IsNullOrEmpty(name))
+				return;
 
-			shader.SetSource(ShaderType.FragmentShader,
-				@"
-				uniform sampler2D texture;
+			GL.BindAttribLocation(ProgramID, index, name);
+		}
 
-				void main()
-				{
-					vec4 color = texture2D(texture, gl_TexCoord[0].st);
-					gl_FragColor = gl_Color * color;
-				}");
-*/
-			
-			return shader;
+
+		/// <summary>
+		/// Returns the ID of an attribute
+		/// </summary>
+		/// <param name="name">Name of the attribute</param>
+		/// <returns>Attribute's id</returns>
+		public int GetAttribute(string name)
+		{
+			if (string.IsNullOrEmpty(name))
+				return -1;
+
+			return GL.GetAttribLocation(ProgramID, name);
+		}
+
+
+		/// <summary>
+		/// Sets an attribute value
+		/// </summary>
+		/// <param name="id">ID of the uniform</param>
+		/// <param name="value">New value</param>
+		public void SetAttribute(int id, float value)
+		{
+			if (id < 0)
+				return;
+
+			GL.VertexAttrib1(id, value);
+		}
+
+
+		/// <summary>
+		/// Sets an attribute value
+		/// </summary>
+		/// <param name="id">ID of the uniform</param>
+		/// <param name="value">New value</param>
+		public void SetAttribute(int id, int value)
+		{
+			if (id < 0)
+				return;
+
+			GL.VertexAttrib1(id, value);
+		}
+
+
+
+		/// <summary>
+		/// Sets an attribute value
+		/// </summary>
+		/// <param name="id">ID of the uniform</param>
+		/// <param name="value">New value</param>
+		public void SetAttribute(int id, float[] value)
+		{
+			if (id < 0)
+				return;
+
+			if (value.Length == 1)
+				GL.VertexAttrib1(id, value[0]);
+			else if (value.Length == 2)
+				GL.VertexAttrib2(id, value[0], value[1]);
+			else if (value.Length == 3)
+				GL.VertexAttrib3(id, value[0], value[1], value[2]);
+			else if (value.Length == 4)
+				GL.VertexAttrib4(id, value[0], value[1], value[2], value[3]);
+
 		}
 
 		#endregion
-
 	
 		#region Uniforms
 
@@ -431,90 +546,6 @@ namespace ArcEngine.Graphic
 			GL.UniformMatrix4(id, false, ref matrix);
 		}
 
-
-		#endregion
-
-
-		#region Attributes
-
-
-		/// <summary>
-		/// Associates a generic vertex attribute index with a named attribute variable
-		/// </summary>
-		/// <param name="index">Specifies the index of the generic vertex attribute to be bound.</param>
-		/// <param name="name">Name of the vertex shader attribute variable to which index is to be bound.</param>
-		public void BindAttrib(int index, string name)
-		{
-			if (index < 0 || string.IsNullOrEmpty(name))
-				return;
-
-			GL.BindAttribLocation(ProgramID, index, name);
-		}
-
-
-		/// <summary>
-		/// Returns the ID of an attribute
-		/// </summary>
-		/// <param name="name">Name of the attribute</param>
-		/// <returns>Attribute's id</returns>
-		public int GetAttribute(string name)
-		{
-			if (string.IsNullOrEmpty(name))
-				return -1;
-
-			return GL.GetAttribLocation(ProgramID, name);
-		}
-
-
-		/// <summary>
-		/// Sets an attribute value
-		/// </summary>
-		/// <param name="id">ID of the uniform</param>
-		/// <param name="value">New value</param>
-		public void SetAttribute(int id, float value)
-		{
-			if (id < 0)
-				return;
-
-			GL.VertexAttrib1(id, value);
-		}
-
-
-		/// <summary>
-		/// Sets an attribute value
-		/// </summary>
-		/// <param name="id">ID of the uniform</param>
-		/// <param name="value">New value</param>
-		public void SetAttribute(int id, int value)
-		{
-			if (id < 0)
-				return;
-
-			GL.VertexAttrib1(id, value);
-		}
-
-
-
-		/// <summary>
-		/// Sets an attribute value
-		/// </summary>
-		/// <param name="id">ID of the uniform</param>
-		/// <param name="value">New value</param>
-		public void SetAttribute(int id, float[] value)
-		{
-			if (id < 0)
-				return;
-
-			if (value.Length == 1)
-				GL.VertexAttrib1(id, value[0]);
-			else if (value.Length == 2)
-				GL.VertexAttrib2(id, value[0], value[1]);
-			else if (value.Length == 3)
-				GL.VertexAttrib3(id, value[0], value[1], value[2]);
-			else if (value.Length == 4)
-				GL.VertexAttrib4(id, value[0], value[1], value[2], value[3]);
-
-		}
 
 		#endregion
 
@@ -782,8 +813,8 @@ namespace ArcEngine.Graphic
 			GL.DeleteShader(FragmentID);
 			GL.DeleteShader(VertexID);
 			GL.DeleteShader(GeometryID);
-
 			GL.DeleteProgram(ProgramID);
+
 			FragmentID = -1;
 			VertexID = -1;
 			GeometryID = -1;
@@ -797,6 +828,8 @@ namespace ArcEngine.Graphic
 			GeometryLog = "";
 			GeometrySource = "";
 
+
+			GC.SuppressFinalize(this);
 		}
 
 

@@ -339,7 +339,8 @@ namespace ArcEngine.Asset
 				Display.TextureUnit = 2;
 				Display.Texture = GlyphTileset.Texture;
 				Display.Blending = true;
-				Display.DrawBatch(Batch, BeginMode.Quads,0, count);
+				Display.Shader.SetUniform("texture", 2);
+				Display.DrawBatch(Batch, BeginMode.Triangles, 0, count);
 	
 			}
 
