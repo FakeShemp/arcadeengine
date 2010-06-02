@@ -282,8 +282,7 @@ namespace ArcEngine.Asset
 						#endregion
 
 
-
-						// Raw text
+						#region Raw text
 						case XmlNodeType.Text:
 						{
 
@@ -319,6 +318,7 @@ namespace ArcEngine.Asset
 							}
 						}
 						break;
+						#endregion
 
 					}
 
@@ -338,7 +338,8 @@ namespace ArcEngine.Asset
 				int count = Batch.Update();
 				Display.TextureUnit = 2;
 				Display.Texture = GlyphTileset.Texture;
-				Display.Blending = true;
+
+
 				Display.Shader.SetUniform("texture", 2);
 				Display.DrawBatch(Batch, BeginMode.Triangles, 0, count);
 	

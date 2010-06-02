@@ -79,7 +79,6 @@ namespace ArcEngine.Examples
 		{
 			Display.ClearColor = Color.CornflowerBlue;
 
-			shad = Shader.CreateColorShader();
 
 			#region Texture
 
@@ -206,23 +205,19 @@ namespace ArcEngine.Examples
 			// Clears the background
 			Display.ClearBuffers();
 
+			// Some dummy text
+			Font.DrawText(new Point(100, 25), Color.White, "Here's an example of draw buffers.");
 
 			Display.Texture = Texture;
-		//	Display.Shader = Shader;
 
-			// Draws the index buffer
+			// Draws with the index buffer
 			Display.DrawIndexBuffer(Buffer, BeginMode.Triangles, Index);
 
 
-			// Draws the batch buffer
+			// Draws with the batch buffer
 			//Display.DrawUserBatch(Buffer, BeginMode.Triangles, 0, 3);
-
-			//Display.Shader = shad;
-			Font.DrawText(new Point(100, 25), Color.White, "D");
 		}
 
-
-		Shader shad;
 
 
 		#region Properties

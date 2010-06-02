@@ -1125,7 +1125,12 @@ namespace ArcEngine.Graphic
 			if (batch == null)
 				return;
 
-			GL.BindBuffer(BufferTarget.ArrayBuffer, batch.Handle);
+			// Bind buffer
+			//GL.BindBuffer(BufferTarget.ArrayBuffer, batch.Handle);
+			batch.Bind(Shader);
+
+
+
 			GL.DrawArrays(mode, first, count);
 
 			RenderStats.BatchCall++;

@@ -172,10 +172,31 @@ namespace ArcEngine.Graphic
 		/// <param name="tex">Texture coordinate</param>
 		public void AddRectangle(Rectangle rect, Color color, Rectangle tex)
 		{
-			AddPoint(rect.Location, color, tex.Location);
-			AddPoint(new Point(rect.Right, rect.Top), color, new Point(tex.Right, tex.Top));
-			AddPoint(new Point(rect.Right, rect.Bottom), color, new Point(tex.Right, tex.Bottom));
-			AddPoint(new Point(rect.X, rect.Bottom), color, new Point(tex.X, tex.Bottom));
+			AddPoint(new Point(rect.X, rect.Bottom), color, new Point(tex.X, tex.Bottom));				// D
+			AddPoint(rect.Location, color, tex.Location);															// A
+			AddPoint(new Point(rect.Right, rect.Bottom), color, new Point(tex.Right, tex.Bottom));		// C
+
+			AddPoint(rect.Location, color, tex.Location);															// A
+			AddPoint(new Point(rect.Right, rect.Bottom), color, new Point(tex.Right, tex.Bottom));		// C
+			AddPoint(new Point(rect.Right, rect.Top), color, new Point(tex.Right, tex.Top));				// B
+
+		}
+
+		/// <summary>
+		/// Adds a rectangle
+		/// </summary>
+		/// <param name="rect">Rectangle on the screen</param>
+		/// <param name="color">Drawing color for each corner</param>
+		/// <param name="tex">Texture coordinate</param>
+		public void AddRectangle(Rectangle rect, Color[] color, Rectangle tex)
+		{
+			if (color.Length != 4)
+				return;
+
+			AddPoint(rect.Location, color[0], tex.Location);
+			AddPoint(new Point(rect.Right, rect.Top), color[1], new Point(tex.Right, tex.Top));
+			AddPoint(new Point(rect.X, rect.Bottom), color[2], new Point(tex.X, tex.Bottom));
+			AddPoint(new Point(rect.Right, rect.Bottom), color[3], new Point(tex.Right, tex.Bottom));
 		}
 
 
