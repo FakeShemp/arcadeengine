@@ -32,7 +32,7 @@ namespace ArcEngine.Asset
 	/// Input scheme.
 	/// Allow an abstract between an input from any device and a name.
 	/// </summary>
-	/// http://flashpunk.net/?p=source&v=0_73&d=punk/util/&f=0_73/punk/util/Input.as
+	// http://flashpunk.net/?p=source&v=0_73&d=punk/util/&f=0_73/punk/util/Input.as
 	public class InputScheme : IAsset
 	{
 

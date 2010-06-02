@@ -47,7 +47,7 @@ namespace ArcEngine
 		}
 
 		/// <summary>
-		/// Checks if <paramref name="T"/> is a registred asset type, and if <paramref name="name"/> is not null or empty
+		/// Checks if <typeparamref name="T"/> is a registred asset type, and if <paramref name="name"/> is not null or empty
 		/// </summary>
 		/// <typeparam name="T">Type to check</typeparam>
 		/// <param name="name"><c>string</c> to check</param>

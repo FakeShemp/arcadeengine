@@ -18,19 +18,19 @@
 //
 #endregion
 
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Drawing.Text;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 using ArcEngine.Graphic;
 using OpenTK.Graphics.OpenGL;
-using System.Text;
 
 
 namespace ArcEngine.Asset
@@ -52,6 +52,35 @@ namespace ArcEngine.Asset
 		}
 
 
+		/// <summary>
+		/// Destructor
+		/// </summary>
+		~BitmapFont()
+		{
+			throw new Exception("BitmapFont : Call Dispose() !!");
+		}
+
+
+		/// <summary>
+		/// Dispose resources
+		/// </summary>
+		public void Dispose()
+		{
+			if (Batch != null)
+				Batch.Dispose();
+			Batch = null;
+
+			if (GlyphTileset != null)
+				GlyphTileset.Dispose();
+			GlyphTileset = null;
+
+			LineHeight = 0;
+			Advance = 0;
+			TTFFileName = string.Empty;
+			TTFSize = -1;
+
+			GC.SuppressFinalize(this);
+		}
 
 		/// <summary>
 		/// Initializes the asset
@@ -66,46 +95,6 @@ namespace ArcEngine.Asset
 
 		#region Text drawing
 
-/*
-		/// <summary>
-		/// Prints some text on the screen
-		/// </summary>
-		/// <param name="pos">Offset of the text</param>
-		/// <param name="text">Text to print</param>
-		public void DrawText2(Point pos, string text)
-		{
-			if (string.IsNullOrEmpty(text))
-				return;
-
-
-			Rectangle rect = new Rectangle(pos, new Size());
-			Display.Texture = GlyphTileset.Texture;
-
-			Batch.Clear();
-			foreach (char c in text)
-			{
-				// Get the tile
-				Tile tile = GlyphTileset.GetTile(c - GlyphOffset);
-				if (tile == null)
-					continue;
-
-				// Move the glyph according to its hot spot
-				Rectangle tmp = new Rectangle(
-					new Point(rect.X - (int)(tile.HotSpot.X * GlyphTileset.Scale.Width), rect.Y - (int)(tile.HotSpot.Y * GlyphTileset.Scale.Height)),
-					new Size((int)(tile.Rectangle.Width * GlyphTileset.Scale.Width), (int)(tile.Rectangle.Height * GlyphTileset.Scale.Height)));
-
-				// Add glyph to the batch
-				Batch.AddRectangle(tmp, Color, tile.Rectangle);
-
-				// Move to the next glyph
-				rect.Offset(tmp.Size.Width + Advance, 0);
-			}
-			Batch.Apply();
-
-
-			Display.DrawBatch(Batch, BeginMode.Quads);
-		}
-*/
 		/// <summary>
 		/// Prints some text on the screen
 		/// </summary>
@@ -341,11 +330,13 @@ namespace ArcEngine.Asset
 
 
 				Display.Shader.SetUniform("texture", 2);
-				Display.DrawBatch(Batch, BeginMode.Triangles, 0, count);
+				Display.DrawBatch(Batch, 0, count);
 	
 			}
 
 		}
+
+
 
 		/// <summary>
 		/// Prints some text on the screen within a rectangle with justification
@@ -414,6 +405,8 @@ namespace ArcEngine.Asset
 
 		#endregion
 
+
+		#region Loadings
 
 		/// <summary>
 		/// Loads a TrueType Font
@@ -549,8 +542,6 @@ namespace ArcEngine.Asset
 			return true;
 		}
 
-
-		#region Loadings
 
 		/// <summary>
 		/// Loads font family from byte array
@@ -804,33 +795,6 @@ namespace ArcEngine.Asset
 		#endregion
 
 
-		#region Disposing
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public void Dispose()
-		{
-			if (Batch != null)
-				Batch.Dispose();
-			Batch = null;
-
-			if (GlyphTileset != null)
-				GlyphTileset.Dispose();
-			GlyphTileset = null;
-
-			LineHeight = 0;
-			Advance = 0;
-
-			GC.SuppressFinalize(this);
-		}
-
-
-
-		#endregion
-
-
 		#region Properties
 
 		/// <summary>
@@ -970,22 +934,22 @@ namespace ArcEngine.Asset
 	public enum TextJustification
 	{
 		/// <summary>
-		/// 
+		/// Left aligns all text in the current element.
 		/// </summary>
 		Left,
 
 		/// <summary>
-		/// 
+		/// Center aligns all text in the current element.
 		/// </summary>
 		Center,
 
 		/// <summary>
-		/// 
+		/// Right aligns all text in the current element.
 		/// </summary>
 		Right,
 
 		/// <summary>
-		/// 
+		/// Applies text justification to all text content in the current element.
 		/// </summary>
 		Justify
 	}

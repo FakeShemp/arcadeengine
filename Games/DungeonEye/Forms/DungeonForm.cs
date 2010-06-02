@@ -583,7 +583,7 @@ namespace DungeonEye.Forms
 
 
 			int count = Batch.Update();
-			Display.DrawBatch(Batch, BeginMode.Quads, 0, count);
+			Display.DrawBatch(Batch, 0, count);
 
 
 

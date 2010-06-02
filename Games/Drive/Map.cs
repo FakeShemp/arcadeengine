@@ -130,7 +130,7 @@ namespace Drive
 
 			Display.Translate(-Location.X, -Location.Y);
 			// Dummy value
-			Display.DrawBatch(Batch, BeginMode.Quads, 0, 400000);
+			Display.DrawBatch(Batch, 0, 400000);
 			Display.Translate(Location.X, Location.Y);
 
 			Display.Shader = null;

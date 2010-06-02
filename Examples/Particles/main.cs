@@ -95,7 +95,7 @@ namespace ArcEngine.Examples.Particles
 
 
 			// Init all particles
-			for(int i = 0; i < Particles.Length; i++)
+			for (int i = 0; i < Particles.Length; i++)
 			{
 				Particles[i] = new Particle();
 				ResetParticle(Particles[i]);
@@ -103,16 +103,15 @@ namespace ArcEngine.Examples.Particles
 
 
 			// Creates the batch
-			Batch = new BatchBuffer();
-			//Batch.Size = Particles.Length;
+			Batch = BatchBuffer.CreatePositionColorTextureBuffer();
 
 
 			// Load the texture
 			Texture = new Texture("data/particle.png");
 
 			// Create a font
-            Font = new BitmapFont();
-            Font.LoadTTF(@"c:\windows\fonts\verdana.ttf", 14, FontStyle.Regular);
+			Font = new BitmapFont();
+			Font.LoadTTF(@"c:\windows\fonts\verdana.ttf", 14, FontStyle.Regular);
 		}
 
 
@@ -184,63 +183,58 @@ namespace ArcEngine.Examples.Particles
 		{
 			// Clears the background
 			Display.ClearBuffers();
-			Display.Color = Color.White;
 
 			string msg;
+
 
 			Watch.Reset();
 			if (Keyboard.IsKeyPress(Keys.D))
 			{
+				msg = "Direct mode";
+
 				Watch.Start();
 				foreach (Particle particle in Particles)
-				{
-					Display.Color = Color.FromArgb(particle.Alpha, particle.Color);
-					Texture.Blit(new Point((int)particle.Location.X, (int)particle.Location.Y));
-				}
+					Display.DrawTexture(Texture, new Point((int)particle.Location.X, (int)particle.Location.Y), Color.FromArgb(particle.Alpha, particle.Color));
+
 				Watch.Stop();
-
-
-				msg = "Direct mode";
 			}
 			else
 			{
+				msg = "Batch mode";
 
 
 				Watch.Start();
-				Batch.Clear();
 				foreach (Particle particle in Particles)
-				{
 					Batch.AddRectangle(new Rectangle((int)particle.Location.X, (int)particle.Location.Y, Texture.Size.Width, Texture.Size.Height), Color.FromArgb(particle.Alpha, particle.Color), Texture.Rectangle);
-				}
+
 				int count = Batch.Update();
 
+				// Bind the texture
 				Display.Texture = Texture;
-				Display.DrawBatch(Batch, BeginMode.Quads, 0, count);
+
+				// Draws the batch
+				Display.DrawBatch(Batch, 0, count);
 				Watch.Stop();
-
-
-				msg = "Batch mode";
 			}
 
 
-			Font.DrawText(new Point(10, 220), Color.SpringGreen, "BatchCall : {0}", Display.RenderStats.BatchCall.ToString());
-			Font.DrawText(new Point(10, 100), Color.SpringGreen, msg);
-
-
-			Font.DrawText(new Point(10, 180), Color.SpringGreen, "Press 'D' key for direct mode");
-			Font.DrawText(new Point(10, 200), Color.SpringGreen, "DirectCall : {0}", Display.RenderStats.DirectCall.ToString());
-			Font.DrawText(new Point(10, 240), Color.SpringGreen, "TextureBinding {0}", Display.RenderStats.TextureBinding.ToString());
-			Font.DrawText(new Point(10, 260), Color.SpringGreen, "Elapsed time : {0} ms", Watch.ElapsedMilliseconds.ToString());
+			// Some blah blah...
+			Font.DrawText(new Point(10, 220), Color.White, "BatchCall : {0}", Display.RenderStats.BatchCall.ToString());
+			Font.DrawText(new Point(10, 100), Color.White, msg);
+			Font.DrawText(new Point(10, 180), Color.White, "Press 'D' key for direct mode");
+			Font.DrawText(new Point(10, 200), Color.White, "DirectCall : {0}", Display.RenderStats.DirectCall.ToString());
+			Font.DrawText(new Point(10, 240), Color.White, "TextureBinding {0}", Display.RenderStats.TextureBinding.ToString());
+			Font.DrawText(new Point(10, 260), Color.White, "Elapsed time : {0} ms", Watch.ElapsedMilliseconds.ToString());
 		}
 
 
 		/// <summary>
 		/// Resets a particle
 		/// </summary>
-		/// <param name="part"></param>
+		/// <param name="part">Particle to reset</param>
 		void ResetParticle(Particle part)
 		{
-			part.Alpha = 255 ;
+			part.Alpha = 255;
 			part.AlphaFade = Random.Next(1, 255);
 
 			if (Mouse.Buttons == MouseButtons.Left)
@@ -292,7 +286,6 @@ namespace ArcEngine.Examples.Particles
 		/// Rendering Batch
 		/// </summary>
 		BatchBuffer Batch;
-
 
 
 		/// <summary>

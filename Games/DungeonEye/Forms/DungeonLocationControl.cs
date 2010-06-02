@@ -295,7 +295,7 @@ namespace DungeonEye.Forms
 					Batch.AddRectangle(new Rectangle(Offset.X + monster.Location.Position.X * 25, Offset.Y + monster.Location.Position.Y * 25, 25, 25), Color.White, tile.Rectangle);
 
 				int count = Batch.Update();
-				Display.DrawBatch(Batch, BeginMode.Quads, 0, count);
+				Display.DrawBatch(Batch, 0, count);
 
 
 

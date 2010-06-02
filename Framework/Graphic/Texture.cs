@@ -245,7 +245,7 @@ namespace ArcEngine.Graphic
 					//device.ScissorZone = rect;
 					//device.Scissor = true;
 
-					GL.Begin(BeginMode.Quads);
+					//GL.Begin(BeginMode.Quads);
 					for (int y = rect.Location.Y; y <= rect.Location.Y + rect.Height; y += tex.Size.Height)
 						for (int x = rect.Location.X; x <= rect.Location.X + rect.Width; x += tex.Size.Width)
 						{
@@ -255,7 +255,7 @@ namespace ArcEngine.Graphic
 
 
 						}
-					GL.End();
+					//GL.End();
 
 					//device.Scissor = false; 
  
@@ -340,10 +340,7 @@ namespace ArcEngine.Graphic
 		public void Blit(Bitmap bitmap, Point location)
 		{
 			if (bitmap == null)
-			{
-				Trace.WriteLine("Bitmap == null");
 				return;
-			}
 
 
 			Imaging.BitmapData bmdata = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height),

@@ -55,7 +55,6 @@ namespace ArcEngine.Graphic
 		}
 
 
-
 		/// <summary>
 		/// Resets default state
 		/// </summary>
@@ -92,6 +91,21 @@ namespace ArcEngine.Graphic
 			projectionMatrix = Matrix4.CreateOrthographicOffCenter(0, ViewPort.Width, ViewPort.Height, 0, 0, 5); ;
 			textureMatrix = Matrix4.Identity;
 			UpdateMatrix();
+
+			Buffer = BatchBuffer.CreatePositionColorTextureBuffer();
+		}
+
+
+		/// <summary>
+		/// Dispose resources
+		/// </summary>
+		internal static void Dispose()
+		{
+			Trace.WriteDebugLine("[Display] : Dispose()");
+
+			if (Buffer != null)
+				Buffer.Dispose();
+			Buffer = null;
 		}
 
 
@@ -172,9 +186,6 @@ namespace ArcEngine.Graphic
 		}
 
 
-
-
-
 		/// <summary>
 		/// Gets Opengl errors
 		/// </summary>
@@ -190,9 +201,7 @@ namespace ArcEngine.Graphic
 			string msg = command + " => " + error.ToString();
 
 
-			//Log.Send(new LogEventArgs(LogLevel.Error, "\"" + stack.GetFileName() + ":" + stack.GetFileLineNumber() + "\" => GL error : " + msg + " (" + error + ")", null));
 			Trace.WriteLine("\"" + stack.GetFileName() + ":" + stack.GetFileLineNumber() + "\" => GL error : " + msg + " (" + error + ")");
-
 		}
 
 
@@ -1091,15 +1100,14 @@ namespace ArcEngine.Graphic
 		/// <param name="buffer">Buffer handle</param>
 		/// <param name="mode">Drawing mode</param>
 		/// <param name="index">Index buffer</param>
-		public static bool DrawIndexBuffer(BatchBuffer buffer, BeginMode mode, IndexBuffer index)
+		/// <returns></returns>
+		public static void DrawIndexBuffer(BatchBuffer buffer, BeginMode mode, IndexBuffer index)
 		{
 			if (buffer == null || index == null)
-				return false;
+				return;
 
-			index.Bind();
 			// Set the index buffer
-			//GL.BindBuffer(BufferTarget.ElementArrayBuffer, IndexBufferHandle);
-			//GL.BufferData<int>(BufferTarget.ElementArrayBuffer, (IntPtr)(index.Length * sizeof(int)), index, BufferUsageHint.StaticDraw);
+			index.Bind();
 
 			// Bind shader
 			buffer.Bind(Shader);
@@ -1107,13 +1115,27 @@ namespace ArcEngine.Graphic
 			// Draw
 			GL.DrawElements(mode, index.Count, DrawElementsType.UnsignedInt, IntPtr.Zero);
 
-			return true;
+			RenderStats.BatchCall++;
 		}
 
 
 
 		/// <summary>
 		/// Draws a batch
+		/// </summary>
+		/// <param name="batch">Batch to draw</param>
+		/// <param name="first">Specifies the starting index in the enabled arrays.</param>
+		/// <param name="count">Specifies the number of indices to be rendered.</param>
+		/// <returns></returns>
+		public static void DrawBatch(BatchBuffer batch, int first, int count)
+		{
+			DrawBatch(batch, BeginMode.Triangles, first, count);
+		}
+
+
+
+		/// <summary>
+		/// Draws a user batch
 		/// </summary>
 		/// <param name="batch">Batch to draw</param>
 		/// <param name="mode">Drawing mode</param>
@@ -1126,39 +1148,13 @@ namespace ArcEngine.Graphic
 				return;
 
 			// Bind buffer
-			//GL.BindBuffer(BufferTarget.ArrayBuffer, batch.Handle);
 			batch.Bind(Shader);
-
-
 
 			GL.DrawArrays(mode, first, count);
 
 			RenderStats.BatchCall++;
-		}
 
-
-
-		/// <summary>
-		/// Draws a batch
-		/// </summary>
-		/// <param name="batch">Batch to draw</param>
-		/// <param name="mode">Drawing mode</param>
-		/// <param name="first">Specifies the starting index in the enabled arrays.</param>
-		/// <param name="count">Specifies the number of indices to be rendered.</param>
-		public static void DrawUserBatch(BatchBuffer batch, BeginMode mode, int first, int count)
-		{
-			// No batch, or empty batch
-			if (batch == null)
-				return;
-
-			// Bind shader
-			batch.Bind(Shader);
-
-			GL.BindBuffer(BufferTarget.ArrayBuffer, batch.Handle);
-
-			GL.DrawArrays(mode, first, count);
-
-			RenderStats.BatchCall++;
+			return;
 		}
 
 
@@ -1201,6 +1197,34 @@ namespace ArcEngine.Graphic
 
 		#region Texture blits
 
+		/// <summary>
+		/// Draws a texture on the screen
+		/// </summary>
+		/// <param name="texture">Texture to display</param>
+		/// <param name="location">Location on the screen</param>
+		static public void DrawTexture(Texture texture, Point location)
+		{
+			DrawTexture(texture, location, Color.White);
+		}
+
+
+		/// <summary>
+		/// Draws a texture on the screen
+		/// </summary>
+		/// <param name="texture">Texture to display</param>
+		/// <param name="location">Location on the screen</param>
+		/// <param name="color">Color to apply</param>
+		static public void DrawTexture(Texture texture, Point location, Color color)
+		{
+			if (texture == null)
+				return;
+
+			Texture = texture;
+
+			Buffer.AddRectangle(new Rectangle(location, texture.Size), color, texture.Rectangle);
+			int count = Buffer.Update();
+			DrawBatch(Buffer, 0, count);
+		}
 
 
 		/// <summary>
@@ -1234,6 +1258,12 @@ namespace ArcEngine.Graphic
 
 
 		#region Properties
+
+
+		/// <summary>
+		/// Internal batch buffer
+		/// </summary>
+		static BatchBuffer Buffer;
 
 
 		/// <summary>
@@ -1329,6 +1359,8 @@ namespace ArcEngine.Graphic
 					texture = null;
 					return;
 				}
+				if (texture == value)
+					return;
 
 				texture = value;
 				GL.BindTexture(TextureTarget.Texture2D, value.Handle);
@@ -1615,6 +1647,7 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Gets / sets the current color
 		/// </summary>
+		[Obsolete("Deprecated")]
 		public static Color Color
 		{
 			get
@@ -1652,6 +1685,7 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Gets / sets the line size
 		/// </summary>
+		[Obsolete("Deprecated")]
 		public static int LineWidth
 		{
 			get
@@ -1671,6 +1705,7 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Line anti aliasing
 		/// </summary>
+		[Obsolete("Deprecated")]
 		public static bool LineSmooth
 		{
 			get
@@ -1690,6 +1725,7 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Point smooth
 		/// </summary>
+		[Obsolete("Deprecated")]
 		public static bool PointSmooth
 		{
 			get
@@ -1749,6 +1785,7 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Gets/Sets the stipple pattern
 		/// </summary>
+		[Obsolete("Deprecated")]
 		public static bool LineStipple
 		{
 			get
@@ -1827,16 +1864,7 @@ namespace ArcEngine.Graphic
 		static Shader shader;
 
 
-
-		/// <summary>
-		/// Handle for the index buffer
-		/// </summary>
-	//	static int IndexBufferHandle;
-
-
 		#endregion
-
-
 	}
 
 
@@ -2109,7 +2137,6 @@ namespace ArcEngine.Graphic
 		{
 			DirectCall = 0;
 			BatchCall = 0;
-			BatchUpload = 0;
 			TextureBinding = 0;
 		}
 
@@ -2131,16 +2158,6 @@ namespace ArcEngine.Graphic
 		/// Number of batch render call
 		/// </summary>
 		public int BatchCall
-		{
-			get;
-			internal set;
-		}
-
-
-		/// <summary>
-		/// Number of modified batch
-		/// </summary>
-		public int BatchUpload
 		{
 			get;
 			internal set;
