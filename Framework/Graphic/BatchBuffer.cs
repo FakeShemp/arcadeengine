@@ -169,6 +169,17 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		/// <param name="rect">Rectangle on the screen</param>
 		/// <param name="color">Drawing color</param>
+		public void AddRectangle(Rectangle rect, Color color)
+		{
+			AddRectangle(rect, color, Rectangle.Empty);
+		}
+
+
+		/// <summary>
+		/// Adds a rectangle
+		/// </summary>
+		/// <param name="rect">Rectangle on the screen</param>
+		/// <param name="color">Drawing color</param>
 		/// <param name="tex">Texture coordinate</param>
 		public void AddRectangle(Rectangle rect, Color color, Rectangle tex)
 		{
@@ -181,6 +192,7 @@ namespace ArcEngine.Graphic
 			AddPoint(new Point(rect.Right, rect.Top), color, new Point(tex.Right, tex.Top));				// B
 
 		}
+
 
 		/// <summary>
 		/// Adds a rectangle

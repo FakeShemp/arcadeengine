@@ -84,11 +84,15 @@ namespace DungeonEye
 		/// </summary>
 		public override void UnloadContent()
 		{
+			Trace.WriteDebugLine("[MainMenu] : UnloadContent");
+
 			if (Tileset != null)
 				Tileset.Dispose();
+			Tileset = null;
 
 			if (Font != null)
 				Font.Dispose();
+			Font = null;
 		}
 
 
@@ -257,13 +261,13 @@ namespace DungeonEye
 		#region Properties
 
 		/// <summary>
-		/// 
+		/// Tileset
 		/// </summary>
 		TileSet Tileset;
 
 
 		/// <summary>
-		/// 
+		/// Font
 		/// </summary>
 		BitmapFont Font;
 

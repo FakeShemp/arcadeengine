@@ -47,6 +47,24 @@ namespace DungeonEye
 		}
 
 
+		/// <summary>
+		/// Unload content
+		/// </summary>
+		public override void UnloadContent()
+		{
+			Trace.WriteDebugLine("[AutoMap] : UnloadContent()");
+
+			if (Font != null)
+				Font.Dispose();
+			Font = null;
+
+
+			if (Tileset != null)
+				Tileset.Dispose();
+			Tileset = null;
+		}
+
+
 		#region Update & draw
 
 
@@ -70,17 +88,14 @@ namespace DungeonEye
 		{
 			// Clears the background
 			Display.ClearBuffers();
-			Display.Color = Color.White;
-
 
 			// Background
 			Tileset.Draw(1, Point.Empty);
 
+			// Some WIP
 			Font.DrawText(new Point(100, 100), Color.White, "TODO...");
-	
-			
+				
 			// Draw the cursor or the item in the hand
-			Display.Color = Color.White;
 			Tileset.Draw(0, Mouse.Location);
 		}
 
@@ -91,13 +106,13 @@ namespace DungeonEye
 		#region Properties
 
 		/// <summary>
-		/// 
+		/// Tileset
 		/// </summary>
 		TileSet Tileset;
 
 
 		/// <summary>
-		/// 
+		/// Font
 		/// </summary>
 		BitmapFont Font;
 

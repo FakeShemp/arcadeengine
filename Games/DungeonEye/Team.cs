@@ -37,7 +37,7 @@ namespace DungeonEye
 	/// <summary>
 	/// Represents the player's heroes in the dungeon
 	/// </summary>
-	public class Team : GameScreen, IDisposable
+	public class Team : GameScreen
 	{
 
 		/// <summary>
@@ -65,8 +65,10 @@ namespace DungeonEye
 		/// <summary>
 		/// Dispose
 		/// </summary>
-		public void Dispose()
+		public override void UnloadContent()
 		{
+			Trace.WriteDebugLine("[Team] : UnloadContent");
+			
 			if (Dungeon != null)
 				Dungeon.Dispose();
 			Dungeon = null;
@@ -96,6 +98,7 @@ namespace DungeonEye
 			SpellBook = null;
 
 			SaveGame = "";
+			Heroes = null;
 			SelectedHero = null;
 			Messages = null;
 			MazeBlock = null;
@@ -104,7 +107,6 @@ namespace DungeonEye
 			Language = null;
 			InputScheme = null;
 			CampWindow = null;
-
 		}
 
 
@@ -417,8 +419,6 @@ namespace DungeonEye
 		/// </summary>
 		private void DrawMain()
 		{
-			Display.Color = Color.White;
-
 			// Draw heroes
 			Point pos;
 			for (int y = 0; y < 3; y++)
@@ -593,7 +593,6 @@ namespace DungeonEye
 
 			Display.DrawLine(rectangle.Left + 1, rectangle.Top, rectangle.Right + 1, rectangle.Top, Color.FromArgb(44, 48, 138));
 			Display.DrawLine(rectangle.Right + 1, rectangle.Top, rectangle.Right + 1, rectangle.Bottom, Color.FromArgb(44, 48, 138));
-			Display.Color = Color.White;
 		}
 
 		
@@ -2542,6 +2541,9 @@ namespace DungeonEye
 		{
 			get
 			{
+				if (Heroes == null)
+					return 0;
+
 				int count = 0;
 				foreach (Hero hero in Heroes)
 				{

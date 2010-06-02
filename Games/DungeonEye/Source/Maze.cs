@@ -805,6 +805,8 @@ namespace DungeonEye
 		/// <param name="location">Location on the screen</param>
 		public void DrawMiniMap(Team team, Point location)
 		{
+			Display.Buffer.Clear();
+			Color color;
 
 			for (int y = 0; y < Size.Height; y++)
 				for (int x = 0; x < Size.Width; x++)
@@ -814,29 +816,30 @@ namespace DungeonEye
 					switch (block.Type)
 					{
 						case BlockType.Wall:
-							Display.Color = Color.Black;
+						color = Color.Black;
 						break;
 						case BlockType.Illusion:
-							Display.Color = Color.Gray;
+						color = Color.Gray;
 						break;
 						default:
-							Display.Color = Color.White;
+						color = Color.White;
 						break;
 					}
 
 
 					
 					if (GetMonsterCount(block.Location.Position) > 0)
-						Display.Color = Color.Red;
+						color = Color.Red;
 					if (block.Door != null)
-						Display.Color = Color.Yellow;
+						color = Color.Yellow;
 					if (block.Stair != null)
-						Display.Color = Color.LightGreen;
+						color = Color.LightGreen;
 
 					if (team.Location.Position.X == x && team.Location.Position.Y == y && team.Location.Maze == this)
-						Display.Color = Color.Blue;
+						color = Color.Blue;
 
-					Display.FillRectangle(new Rectangle(location.X + x * 4, location.Y + y * 4, 4, 4), Display.Color);
+					Display.Buffer.AddRectangle(new Rectangle(location.X + x * 4, location.Y + y * 4, 4, 4), color);
+					//Display.FillRectangle(new Rectangle(location.X + x * 4, location.Y + y * 4, 4, 4), color);
 				}
 
 
@@ -869,6 +872,12 @@ namespace DungeonEye
 					Display.DrawLine(start, end, Color.Blue);
 				}
 			}
+
+			Display.Texturing = false;
+
+			int count = Display.Buffer.Update();
+			Display.DrawBatch(Display.Buffer, 0, count);
+			Display.Texturing = true;
 		}
 
 

@@ -131,8 +131,7 @@ namespace ArcEngine.Utility.ScreenManager
 		/// </summary>
 		public void RemoveScreen(GameScreen screen)
 		{
-			if (screen is IDisposable)
-				((IDisposable)screen).Dispose();
+			screen.UnloadContent();
 
 			Screens.Remove(screen);
 		}
