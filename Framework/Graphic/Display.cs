@@ -1261,9 +1261,13 @@ namespace ArcEngine.Graphic
 
 
 		/// <summary>
-		/// Internal batch buffer
+		/// Batch buffer
 		/// </summary>
-		static BatchBuffer Buffer;
+		public static BatchBuffer Buffer
+		{
+			get;
+			private set;
+		}
 
 
 		/// <summary>

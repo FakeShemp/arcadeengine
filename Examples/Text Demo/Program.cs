@@ -83,12 +83,12 @@ namespace ArcEngine.Examples.TextDemo
 
 
 			//Text = "Simple text to display. <tile id=\"1\"/><br>This is a text to display";
-			Text = "Lorem ipsum dolor sit amet,   &lt;  &gt; &amp; consectetur adipiscing elit. Duis gravida mattis mi a euismod. " +
+			Text = @"Lorem ipsum dolor sit amet,   &lt;  &gt; &amp; consectetur adipiscing elit. Duis gravida mattis mi a euismod. " +
 				"Cras et sodales dolor. Nulla iaculis, elit quis mollis tempus, ante dui auctor erat, id aliquet quam sapien in ante. " +
 				"<color r=\"255\" g=\"0\" b=\"0\" a=\"255\">Ut ac mi turpis, vel pellentesque nisi.</color> Duis in eleifend turpis. Aliquam vel <tile id=\"7\" />lorem enim. " +
 				"Vestibulum auctor iaculis mauris, non gravida libero bibendum eu. Cras lacinia augue vel lectus accumsan dictum mattis lorem mollis. " +
-				"Quisque interdum placerat turpis sed vestibulum. Donec luctus pretium metus sit amet gravida. <br><br>" +
-				"Vivamus neque sapien, faucibus nec vestibulum ac, pharetra tempus odio. Maecenas porta porta eros in cursus.<br><br>" +
+				"Quisque interdum placerat turpis sed vestibulum. Donec luctus pretium metus sit amet gravida. <br /><br />" +
+				"Vivamus neque sapien, faucibus nec vestibulum ac, pharetra tempus odio. Maecenas porta porta eros in cursus.<br /><br />" +
 				"Sed tristique velit id diam varius aliquet. <color r=\"128\" g=\"0\" b=\"200\" a=\"255\">Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. " +
 				"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer eu dui tu</color>rpis, ut porta nibh. " +
 				"Quisque lacinia convallis elit, ac dapibus turpis tristique et. ";
@@ -104,6 +104,7 @@ namespace ArcEngine.Examples.TextDemo
 			if (Font != null)
 				Font.Dispose();
 			Font = null;
+
 		}
 
 

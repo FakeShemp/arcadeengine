@@ -126,9 +126,6 @@ namespace ArcEngine
 			Window.Deactivate -= Window_Deactivate;
 			Window.Resize -= Window_Resize;
 
-
-			Display.Dispose();
-
 			Window.Hide();
 			Window.Close();
 			Window.Dispose();

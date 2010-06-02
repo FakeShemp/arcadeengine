@@ -178,7 +178,6 @@ namespace ArcEngine.Examples.Particles
 		/// <summary>
 		/// Called when it is time to draw a frame.
 		/// </summary>
-		/// <param name="device"></param>
 		public override void Draw()
 		{
 			// Clears the background

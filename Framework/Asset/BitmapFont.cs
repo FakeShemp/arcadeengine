@@ -46,9 +46,8 @@ namespace ArcEngine.Asset
 		public BitmapFont()
 		{
 			GlyphTileset = new TileSet();
-			GlyphTileset.Texture = new Texture(OpenTK.Graphics.OpenGL.PixelFormat.LuminanceAlpha);
-		//	GlyphTileset.Texture.PixelInternalFormat = PixelInternalFormat.LuminanceAlpha;
-			Batch = BatchBuffer.CreatePositionColorTextureBuffer();
+			//GlyphTileset.Texture = new Texture(OpenTK.Graphics.OpenGL.PixelFormat.LuminanceAlpha);
+			GlyphTileset.Texture = new Texture();
 		}
 
 
@@ -66,13 +65,13 @@ namespace ArcEngine.Asset
 		/// </summary>
 		public void Dispose()
 		{
-			if (Batch != null)
-				Batch.Dispose();
-			Batch = null;
-
 			if (GlyphTileset != null)
 				GlyphTileset.Dispose();
 			GlyphTileset = null;
+
+			if (TextTileset != null)
+				TextTileset.Dispose();
+			TextTileset = null;
 
 			LineHeight = 0;
 			Advance = 0;
@@ -174,7 +173,7 @@ namespace ArcEngine.Asset
 			
 
 			Rectangle rect = rectangle;
-			Batch.Clear();
+			Display.Buffer.Clear();
 
 
 			// Extra offset when displaying tile
@@ -209,16 +208,12 @@ namespace ArcEngine.Asset
 									if (TextTileset == null)
 										break;
 
-									Display.Color = Color.White;
-
 									int id = int.Parse(reader.GetAttribute("id"));
 									Tile tile = TextTileset.GetTile(id);
 									TextTileset.Draw(id, rect.Location);
 									rect.Offset(tile.Size.Width, 0);
 
 									tileoffset = tile.Size.Height - LineHeight;
-
-									Display.Color = currentcolor;
 								}
 								break;
 
@@ -240,8 +235,6 @@ namespace ArcEngine.Asset
 										int.Parse(reader.GetAttribute("r")),
 										int.Parse(reader.GetAttribute("g")),
 										int.Parse(reader.GetAttribute("b")));
-
-									Display.Color = currentcolor;
 								}
 								break;
 							}
@@ -260,7 +253,6 @@ namespace ArcEngine.Asset
 								case "color":
 								{
 									currentcolor = ColorStack.Pop();
-									Display.Color = currentcolor;
 								}
 								break;
 							}
@@ -300,7 +292,7 @@ namespace ArcEngine.Asset
 								}
 
 								// Add glyph to the batch
-								Batch.AddRectangle(tmp, currentcolor, tile.Rectangle);
+								Display.Buffer.AddRectangle(tmp, currentcolor, tile.Rectangle);
 
 								// Move to the next glyph
 								rect.Offset(tmp.Size.Width + Advance, 0);
@@ -313,7 +305,7 @@ namespace ArcEngine.Asset
 
 				}
 			}
-			catch (XmlException)
+			catch (XmlException ex)
 			{
 			}
 
@@ -324,13 +316,13 @@ namespace ArcEngine.Asset
 				stream.Close();
 
 				// Draw batch
-				int count = Batch.Update();
+				int count = Display.Buffer.Update();
 				Display.TextureUnit = 2;
 				Display.Texture = GlyphTileset.Texture;
 
 
 				Display.Shader.SetUniform("texture", 2);
-				Display.DrawBatch(Batch, 0, count);
+				Display.DrawBatch(Display.Buffer, 0, count);
 	
 			}
 
@@ -878,12 +870,6 @@ namespace ArcEngine.Asset
 
 
 		/// <summary>
-		/// Drawing batch
-		/// </summary>
-		BatchBuffer Batch;
-
-
-		/// <summary>
 		/// TileSet of the glyphs
 		/// </summary>
 		[Browsable(false)]
@@ -903,15 +889,6 @@ namespace ArcEngine.Asset
 			set;
 		}
 
-
-/*
-		/// <summary>
-		/// Font Color
-		/// </summary>
-		[Category("Color")]
-		[Description("Color of the font")]
-		public Color Color { get; set; }
-*/
 
 		/// <summary>
 		/// Horizontal advance between each glyph
