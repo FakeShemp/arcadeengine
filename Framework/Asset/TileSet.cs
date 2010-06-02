@@ -470,19 +470,28 @@ namespace ArcEngine.Asset
 		/// <param name="pos">Position on the screen</param>
 		public void Draw(int id, Point pos)
 		{
+			Draw(id, pos, Color.White);
+		}
+
+
+
+		/// <summary>
+		/// Draws a tile on the screen
+		/// </summary>
+		/// <param name="id">Tile ID</param>
+		/// <param name="pos">Position on the screen</param>
+		/// <param name="color">Tint color</param>
+		public void Draw(int id, Point pos, Color color)
+		{
 			Tile tile = GetTile(id);
 			if (tile == null)
 				return;
 
-			Display.Texture = Texture;
-			//	Rectangle rect = new Rectangle(pos, new Size((int)(tile.Size.Width * Zoom.Width), (int)(tile.Size.Height * Zoom.Height)));
 			Rectangle rect = new Rectangle(pos.X - (int)(tile.HotSpot.X * Scale.Width), pos.Y - (int)(tile.HotSpot.Y * Scale.Height),
 				(int)(tile.Size.Width * Scale.Width), (int)(tile.Size.Height * Scale.Height));
 
-			//Texture.Blit(rect, new Rectangle(pos, tile.Size)); 
-			Texture.Blit(rect, tile.Rectangle); 
+			Display.DrawTexture(Texture, rect, tile.Rectangle);
 		}
-
 
 		/// <summary>
 		/// Draws a tile on the screen and flip it
@@ -528,8 +537,8 @@ namespace ArcEngine.Asset
 			}
 
 
-
-			Texture.Blit(dst, tex);
+			Display.DrawTexture(Texture, dst, tex);
+			//Texture.Blit(dst, tex);
 
 		}
 

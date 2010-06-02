@@ -207,6 +207,7 @@ namespace ArcEngine.Graphic
 		/// <param name="rect">Rectangle on the screen</param>
 		/// <param name="tex">Rectangle in the texture</param>
 		/// <param name="mode">Rendering mode</param>
+		[Obsolete("deprecated")]
 		public void Blit(Rectangle rect, Rectangle tex, TextureLayout mode)
 		{
 			Display.Texture = this;
@@ -286,6 +287,7 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		/// <param name="rect">Rectangle on the screen</param>
 		/// <param name="tex">Rectangle in the texture</param>
+		[Obsolete("deprecated")]
 		public void Blit(Rectangle rect, Rectangle tex)
 		{
 			Display.Texture = this;
@@ -297,6 +299,7 @@ namespace ArcEngine.Graphic
 		/// Blits a texture on the screen
 		/// </summary>
 		/// <param name="pos"></param>
+		[Obsolete("deprecated")]
 		public void Blit(Point pos)
 		{
 			Display.Texture = this;
@@ -310,6 +313,7 @@ namespace ArcEngine.Graphic
 		/// <param name="pos">Location</param>
 		/// <param name="angle">Angle of rotation</param>
 		/// <param name="origin">Offset point</param>
+		[Obsolete("deprecated")]
 		public void Blit(Point pos, float angle, Point origin)
 		{
 			Display.Translate(pos.X + origin.X, pos.Y + origin.Y);
@@ -326,6 +330,7 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		/// <param name="rect">Sub region of the texture</param>
 		/// <param name="mode">Display mode</param>
+		[Obsolete("deprecated")]
 		public void Blit(Rectangle rect, TextureLayout mode)
 		{
 			Blit(rect, Rectangle, mode);
@@ -337,6 +342,7 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		/// <param name="bitmap">Bitmap handle</param>
 		/// <param name="location">Location on the texture</param>
+		[Obsolete("deprecated")]
 		public void Blit(Bitmap bitmap, Point location)
 		{
 			if (bitmap == null)

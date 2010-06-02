@@ -537,7 +537,6 @@ namespace DungeonEye
 			// I.e. all kind of moves and rotations from the current position will result in the background being x-flipped.
 			bool flipbackdrop = ((location.Position.X + location.Position.Y + (int)location.Direction) & 1) == 0;
 
-			Display.Color = Color.White;
 			WallTileset.Draw(0, Point.Empty, flipbackdrop, false);
 
 

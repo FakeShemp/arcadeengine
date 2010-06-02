@@ -1228,6 +1228,40 @@ namespace ArcEngine.Graphic
 
 
 		/// <summary>
+		/// Draws a texture
+		/// </summary>
+		/// <param name="texture">Texture to display</param>
+		/// <param name="rect"></param>
+		/// <param name="color">Color to apply</param>
+		static public void DrawTexture(Texture texture, Rectangle rect, Rectangle tex)
+		{
+			DrawTexture(texture, rect, tex, Color.White);
+		}
+
+
+		/// <summary>
+		/// Draws a texture
+		/// </summary>
+		/// <param name="texture">Texture to display</param>
+		/// <param name="rect"></param>
+		/// <param name="tex"></param>
+		/// <param name="color">Color to apply</param>
+		static public void DrawTexture(Texture texture, Rectangle rect, Rectangle tex, Color color)
+		{
+			if (texture == null)
+				return;
+
+			Texture = texture;
+
+			Buffer.AddRectangle(rect, color, tex);
+			int count = Buffer.Update();
+			DrawBatch(Buffer, 0, count);
+		}
+
+
+
+
+		/// <summary>
 		/// Raw draw a textured quad on the screen
 		/// </summary>
 		/// <param name="rect">Rectangle on the screen</param>

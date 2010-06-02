@@ -353,7 +353,6 @@ namespace DungeonEye
 
 
 			// The backdrop
-			Display.Color = Color.White;
 			TileSet.Draw(0, Point.Empty);
 
 
@@ -403,7 +402,6 @@ namespace DungeonEye
 			//Display.DrawRectangle(new Rectangle(48, 14, 256, 192), Color.Yellow);
 
 			// Draw the cursor or the item in the hand
-			Display.Color = Color.White;
 			if (ItemInHand != null)
 				Items.Draw(ItemInHand.TileID, Mouse.Location);
 			else
