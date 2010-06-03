@@ -165,8 +165,7 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		~Texture()
 		{
-			if (Handle != -1)
-				throw new Exception("Texture : Handle (id=" + Handle.ToString() + ") != -1, Call Dispose() !!");
+			throw new Exception("Texture : Handle (id=" + Handle.ToString() + ") != -1, Call Dispose() !!");
 		}
 
 

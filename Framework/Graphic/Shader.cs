@@ -86,8 +86,7 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		~Shader()
 		{
-			//if (ProgramID != -1)
-			//	throw new Exception("Shader : Call Dispose() !!");
+			throw new Exception("Shader : Call Dispose() !!");
 		}
 
 

@@ -37,8 +37,7 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		~IndexBuffer()
 		{
-			if (Handle != -1)
-				throw new Exception("IndexBuffer : Call Dispose() !!");
+			throw new Exception("IndexBuffer : Call Dispose() !!");
 		}
 
 

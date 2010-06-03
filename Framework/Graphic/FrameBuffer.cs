@@ -89,6 +89,14 @@ namespace ArcEngine.Graphic
 		}
 
 
+		/// <summary>
+		/// Destructor
+		/// </summary>
+		~FrameBuffer()
+		{
+			throw new Exception("FrameBuffer : Call Dispose() !!");
+		}
+
 		
 		/// <summary>
 		/// 
@@ -103,6 +111,8 @@ namespace ArcEngine.Graphic
 
 			//if (FBOHandle != 0)
 			//    GL.Ext.DeleteFramebuffers(1, ref FBOHandle);
+
+			GC.SuppressFinalize(this);
 		}
 
 

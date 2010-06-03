@@ -25,13 +25,11 @@ namespace ArcEngine.Graphic
 
 
 		/// <summary>
-		/// 
+		/// Destructor
 		/// </summary>
 		~PixelBuffer()
 		{
-			if (Handle != -1)
-				throw new Exception("PixelBuffer : Handle (id=" + Handle.ToString() + ") != -1, Call Dispose() !!");
-
+			throw new Exception("PixelBuffer : Handle (id=" + Handle.ToString() + ") != -1, Call Dispose() !!");
 		}
 
 
@@ -46,6 +44,8 @@ namespace ArcEngine.Graphic
 			if (Texture != null)
 				Texture.Dispose();
 			Texture = null;
+
+			GC.SuppressFinalize(this);
 		}
 
 
