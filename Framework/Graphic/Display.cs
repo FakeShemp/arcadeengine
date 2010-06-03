@@ -105,6 +105,10 @@ namespace ArcEngine.Graphic
 			if (Buffer != null)
 				Buffer.Dispose();
 			Buffer = null;
+
+			if (Shader != null)
+				Shader.Dispose();
+			Shader = null;
 		}
 
 
