@@ -109,7 +109,6 @@ namespace DungeonEye
 		{
 			// Clears the background
 			Display.ClearBuffers();
-			Display.Color = Color.White;
 
 
 			if (Scene != null)

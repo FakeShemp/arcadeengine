@@ -507,7 +507,6 @@ namespace RuffnTumble
 			//
 			if (RenderEntities)
 			{
-				Display.Color = Color.White;
 				foreach (Entity entity in Entities.Values)
 				{
 					entity.Draw(LevelToScreen(entity.Location));

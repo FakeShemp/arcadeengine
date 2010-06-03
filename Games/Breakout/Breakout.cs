@@ -132,7 +132,6 @@ namespace Breakout
 		{
 			// Clears the background
 			Display.ClearBuffers();
-			Display.Color = Color.White;
 
 
 			Level.Draw();

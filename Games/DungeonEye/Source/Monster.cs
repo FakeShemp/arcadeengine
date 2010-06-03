@@ -257,32 +257,27 @@ namespace DungeonEye
 			{
 				case ViewFieldPosition.B:
 				Tileset.Scale = new SizeF(0.75f, 0.75f);
-				Display.Color = Color.Gray;
-				Tileset.Draw(GetTileID(direction), new Point(0 + DrawOffset.X / 4, 110 + DrawOffset.Y / 4));
+				Tileset.Draw(GetTileID(direction), new Point(0 + DrawOffset.X / 4, 110 + DrawOffset.Y / 4), Color.Gray);
 				Tileset.Scale = new SizeF(2.0f, 2.0f);
 				break;
 				case ViewFieldPosition.C:
 				Tileset.Scale = new SizeF(0.75f, 0.75f);
-				Display.Color = Color.Gray;
-				Tileset.Draw(GetTileID(direction), new Point(80 + DrawOffset.X / 4, 110 + DrawOffset.Y / 4));
+				Tileset.Draw(GetTileID(direction), new Point(80 + DrawOffset.X / 4, 110 + DrawOffset.Y / 4), Color.Gray);
 				Tileset.Scale = new SizeF(2.0f, 2.0f);
 				break;
 				case ViewFieldPosition.D:
 				Tileset.Scale = new SizeF(0.75f, 0.75f);
-				Display.Color = Color.Gray;
-				Tileset.Draw(GetTileID(direction), new Point(180 + DrawOffset.X / 4, 110 + DrawOffset.Y / 4));
+				Tileset.Draw(GetTileID(direction), new Point(180 + DrawOffset.X / 4, 110 + DrawOffset.Y / 4), Color.Gray);
 				Tileset.Scale = new SizeF(2.0f, 2.0f);
 				break;
 				case ViewFieldPosition.E:
 				Tileset.Scale = new SizeF(0.75f, 0.75f);
-				Display.Color = Color.Gray;
-				Tileset.Draw(GetTileID(direction), new Point(270 + DrawOffset.X / 4, 110 + DrawOffset.Y / 4));
+				Tileset.Draw(GetTileID(direction), new Point(270 + DrawOffset.X / 4, 110 + DrawOffset.Y / 4), Color.Gray);
 				Tileset.Scale = new SizeF(2.0f, 2.0f);
 				break;
 				case ViewFieldPosition.F:
 				Tileset.Scale = new SizeF(0.75f, 0.75f);
-				Display.Color = Color.Gray;
-				Tileset.Draw(GetTileID(direction), new Point(342 + DrawOffset.X / 4, 110 + DrawOffset.Y / 4));
+				Tileset.Draw(GetTileID(direction), new Point(342 + DrawOffset.X / 4, 110 + DrawOffset.Y / 4), Color.Gray);
 				Tileset.Scale = new SizeF(2.0f, 2.0f);
 				break;
 
@@ -318,7 +313,6 @@ namespace DungeonEye
 
 
 
-			Display.Color = Color.White;
 
 			// finish special mode
 			if (LastAttack != null && LastAttack.Time + TimeSpan.FromSeconds(0.25) > DateTime.Now)

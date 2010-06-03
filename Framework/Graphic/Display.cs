@@ -503,10 +503,6 @@ namespace ArcEngine.Graphic
 		{
 			Texturing = false;
 
-			// Backup color
-			Color col = Color;
-			Color = color;
-
 			SaveState();
 
 			//GL.MatrixMode(MatrixMode.Projection);
@@ -533,7 +529,6 @@ namespace ArcEngine.Graphic
 			//GL.PopMatrix();
 			RestoreState();
 			Texturing = true;
-			Color = col;
 
 			RenderStats.DirectCall += 4;
 		}
@@ -615,8 +610,6 @@ namespace ArcEngine.Graphic
 		/// <param name="color">Color</param>
 		public static void DrawLine(int x1, int y1, int x2, int y2, Color color)
 		{
-			Color = color;
-
 			Texturing = false;
 			GL.Begin(BeginMode.Lines);
 			GL.Vertex2(x1, y1);
@@ -685,7 +678,6 @@ namespace ArcEngine.Graphic
 		public static void DrawPoint(int x, int y, Color color)
 		{
 			Texturing = false;
-			Color = color;
 			GL.Begin(BeginMode.Points);
 			GL.Vertex2(x, y);
 			GL.End();
@@ -704,7 +696,6 @@ namespace ArcEngine.Graphic
 		{
 			Texturing = false;
 			Culling = false;
-			Color = color;
 
 			GL.Begin(BeginMode.LineLoop);
 			for (int i = 0; i < points.Length; i++)
@@ -727,7 +718,6 @@ namespace ArcEngine.Graphic
 		{
 			Texturing = false;
 			Culling = false;
-			Color = color;
 
 			GL.Begin(BeginMode.TriangleFan);
 			for (int i = 0; i < points.Length; i++)
@@ -754,7 +744,6 @@ namespace ArcEngine.Graphic
 		{
 
 			Texturing = false;
-			Color = color;
 
 			if (fill)
 				GL.Begin(BeginMode.Polygon);
@@ -819,7 +808,6 @@ namespace ArcEngine.Graphic
 		static void DrawArc(float x, float y, float radius, float start, float end, Color color, bool fill)
 		{
 
-			Color = color;
 			Texturing = false;
 
 			int real_segments = (int)(Math.Abs(end) / (2 * Math.PI) * (float)CircleResolution) + 1;
@@ -986,7 +974,6 @@ namespace ArcEngine.Graphic
 			//};
 
 
-			Color = color;
 			GL.Enable(EnableCap.Map1Vertex3);
 			//GL.Enable(EnableCap.Map1Color4);
 
@@ -1235,7 +1222,7 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		/// <param name="texture">Texture to display</param>
 		/// <param name="rect"></param>
-		/// <param name="color">Color to apply</param>
+		/// <param name="tex">Texture coords</param>
 		static public void DrawTexture(Texture texture, Rectangle rect, Rectangle tex)
 		{
 			DrawTexture(texture, rect, tex, Color.White);
@@ -1686,6 +1673,7 @@ namespace ArcEngine.Graphic
 			}
 		}
 
+/*
 		/// <summary>
 		/// Gets / sets the current color
 		/// </summary>
@@ -1703,7 +1691,7 @@ namespace ArcEngine.Graphic
 			}
 		}
 		static Color color;
-
+*/
 
 
 		/// <summary>

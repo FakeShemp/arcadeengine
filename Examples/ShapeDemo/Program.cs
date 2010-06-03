@@ -102,19 +102,19 @@ namespace PathDemo
 
 
 			// Filled triangle 
-			Display.Color = Color.AntiqueWhite;
+	//		Display.Color = Color.AntiqueWhite;
 			Shape.Begin(ShapeMode.Fill);
-			Display.Color = Color.Yellow;
+	//		Display.Color = Color.Yellow;
 			Shape.MoveTo(225, 25);
-			Display.Color = Color.Blue;
+	//		Display.Color = Color.Blue;
 			Shape.LineTo(305, 25);
-			Display.Color = Color.Pink;
+	//		Display.Color = Color.Pink;
 			Shape.LineTo(225, 105);
 			Shape.ClosePath();
 			Shape.End();
 
 			// Empty triangle 
-			Display.Color = Color.White;
+	//		Display.Color = Color.White;
 			Shape.Begin(ShapeMode.Stroke);
 			Shape.MoveTo(325, 125);
 			Shape.LineTo(325, 45);
@@ -124,7 +124,7 @@ namespace PathDemo
 
 
 			// Smiley
-			Display.Color = Color.Yellow;
+	//		Display.Color = Color.Yellow;
 			Shape.Begin(ShapeMode.Stroke);
 			Shape.ArcTo(75, 75, 50, 0, (float)(Math.PI * 2.0f));
 			Shape.MoveTo(110, 75);
@@ -167,7 +167,7 @@ namespace PathDemo
 			Display.DrawBezier(new Point(330, 262), new Point(300, 225), new Point(330, 262), new Point(330, 225), Color.Pink);
 			Display.DrawBezier(new Point(300, 225), new Point(275, 240), new Point(285, 225), new Point(275, 237), Color.Pink);
 
-			Display.Color = Color.Pink;
+	//		Display.Color = Color.Pink;
 			Shape.Begin(ShapeMode.Fill);
 			Shape.MoveTo(275, 340);
 			Shape.BezierCurveTo(new Point(250, 325), new Point(275, 337), new Point(270, 325));
@@ -182,7 +182,7 @@ namespace PathDemo
 			Display.DrawBezier(new Point(610, 100), new Point(900, 100), new Point(600, 400), new Point(900, 500), Color.White);
 
 
-			Display.Color = Color.Red;
+	//		Display.Color = Color.Red;
 			Shape.Begin(ShapeMode.Stroke);
 			Shape.MoveTo(600, 100);
 			Shape.BezierCurveTo(new Point(890, 100), new Point(590, 400), new Point(890, 500));
@@ -191,7 +191,7 @@ namespace PathDemo
 			// Rounded rectangle
 			Rectangle rectangle = new Rectangle(400, 250, 150, 50);
 			int radius = 15;
-			Display.Color = Color.SpringGreen;
+	//		Display.Color = Color.SpringGreen;
 
 			Shape.Begin(ShapeMode.Stroke);
 			Shape.RoundedRectangle(rectangle, radius);

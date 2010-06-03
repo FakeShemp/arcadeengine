@@ -71,7 +71,7 @@ namespace PathFinding
 			Display.ClearBuffers();
 
 
-			Display.Color = Color.Red;
+		//	Display.Color = Color.Red;
 			float[] grid2x2 = new float[12]
 			{
 				0.0f, 0.0f, 0.0f, 

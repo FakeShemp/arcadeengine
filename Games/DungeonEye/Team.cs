@@ -642,7 +642,6 @@ namespace DungeonEye
 
 
 			// Draw inventory
-			Display.Color = Color.White;
 			int pos = 0;
 			for (int y = 94; y < 344; y += 36)
 				for (int x = 380; x < 444; x += 36)

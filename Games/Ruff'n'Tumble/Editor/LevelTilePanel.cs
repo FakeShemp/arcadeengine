@@ -87,7 +87,6 @@ namespace RuffnTumble.Editor
 		{
 			GlControl.MakeCurrent();
 			Display.ClearBuffers();
-			Display.Color = Color.White;
 
 			// Background texture
 			CheckerBoard.Blit(new Rectangle(Point.Empty, GlControl.Size), CheckerBoard.Rectangle, TextureLayout.Tile);
@@ -119,7 +118,7 @@ namespace RuffnTumble.Editor
 			{
 				Point from = Point.Empty;
 				Point to = Point.Empty;
-				Display.Color = Color.Red;
+		//		Display.Color = Color.Red;
 /*
 				for (int y = 0; y < Form.CurrentLayer.Texture.Size.Height; y += Form.World.CurrentLevel.BlockSize.Height)
 				{

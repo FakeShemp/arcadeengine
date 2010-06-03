@@ -424,7 +424,6 @@ namespace DungeonEye
 		{
 			// Clears the background
 			Display.ClearBuffers();
-			Display.Color = Color.White;
 
 
 			// Background
@@ -674,7 +673,6 @@ namespace DungeonEye
 
 
 			// Draw the cursor or the item in the hand
-			Display.Color = Color.White;
 			Tileset.Draw(999, Mouse.Location);
 		}
 

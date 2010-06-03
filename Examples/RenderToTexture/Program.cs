@@ -96,7 +96,7 @@ namespace ArcEngine.Examples.RenderToTexture
 			Display.ClearColor = Color.CornflowerBlue;
 			Display.ClearBuffers();
 
-			Texture.Blit(new Point(100, 10));
+			Display.DrawTexture(Texture, new Point(100, 10));
 
 			Display.DrawRectangle(rect, Color.Red);
 			Display.DrawCircle(new Point(100, 10), 25, Color.Red);
@@ -114,11 +114,11 @@ namespace ArcEngine.Examples.RenderToTexture
 
 			
 			// Blit both buffer on the screen
-			Display.Color = Color.White;
-			Buffer.ColorTexture.Blit(new Point(50, 50));
-			Buffer.DepthTexture.Blit(new Point(350, 50));
+			Display.DrawTexture(Buffer.ColorTexture, new Point(50, 50));
+			Display.DrawTexture(Buffer.DepthTexture, new Point(350, 50));
 
-			Texture.Blit(new Point(100, 100));
+
+			Display.DrawTexture(Texture, new Point(100, 100));
 
 		}
 		#endregion

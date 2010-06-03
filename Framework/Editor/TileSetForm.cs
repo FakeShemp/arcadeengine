@@ -408,7 +408,6 @@ namespace ArcEngine.Editor
 
 				Rectangle rect = new Rectangle(pos, new Size((int)zoomvalue, (int)zoomvalue));
 				Display.DrawRectangle(rect, Color.Red);
-				Display.Color = Color.White;
 
 			}
 

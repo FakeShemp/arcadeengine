@@ -158,9 +158,7 @@ namespace StencilWipe
 		public override void Draw()
 		{
 			// Clears the background
-			//GL.Clear(ClearBufferMask.AccumBufferBit | ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
 			Display.ClearBuffers();
-			Display.Color = Color.White;
 
 
 			Display.AlphaFunction(AlphaFunction.Greater, 0);

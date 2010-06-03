@@ -198,14 +198,17 @@ namespace ArcEngine.Games.ProjectT
 
 
 			// box 1
-			Display.FillRectangle(new Rectangle((int)boxBody1.Position.X, (int)boxBody1.Position.Y, 190, 190), Color.Red, boxBody1.TotalRotation, new Point(size.Width / 2, size.Height / 2));
-			Display.DrawRectangle(new Rectangle((int)boxBody1.Position.X, (int)boxBody1.Position.Y, 190, 190), Color.Black, boxBody1.TotalRotation, new Point(size.Width / 2, size.Height / 2));
+			Display.FillRectangle(new Rectangle((int)boxBody1.Position.X, (int)boxBody1.Position.Y, 190, 190), 
+				Color.Red, boxBody1.TotalRotation, new Point(size.Width / 2, size.Height / 2));
+			Display.DrawRectangle(new Rectangle((int)boxBody1.Position.X, (int)boxBody1.Position.Y, 190, 190), 
+				Color.Black, boxBody1.TotalRotation, new Point(size.Width / 2, size.Height / 2));
 
 	
 			// box 2
-			Display.Color = Color.Green;
-			Display.FillRectangle(new Rectangle((int)boxBody2.Position.X, (int)boxBody2.Position.Y, 190, 190), Color.Green, boxBody2.TotalRotation, new Point(size.Width / 2, size.Height / 2));
-			Display.DrawRectangle(new Rectangle((int)boxBody2.Position.X, (int)boxBody2.Position.Y, 190, 190), Color.Black, boxBody2.TotalRotation, new Point(size.Width / 2, size.Height / 2));
+			Display.FillRectangle(new Rectangle((int)boxBody2.Position.X, (int)boxBody2.Position.Y, 190, 190),
+				Color.Green, boxBody2.TotalRotation, new Point(size.Width / 2, size.Height / 2));
+			Display.DrawRectangle(new Rectangle((int)boxBody2.Position.X, (int)boxBody2.Position.Y, 190, 190), 
+				Color.Black, boxBody2.TotalRotation, new Point(size.Width / 2, size.Height / 2));
 
 
 
@@ -236,6 +239,10 @@ namespace ArcEngine.Games.ProjectT
 
 		float angle = 0;
 
+
+		/// <summary>
+		/// 
+		/// </summary>
 		BitmapFont Font;
 
 		#endregion

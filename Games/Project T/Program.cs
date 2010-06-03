@@ -130,7 +130,7 @@ namespace ProjectT
 
 
 			// Next block
-			Display.Color = Color.Red;
+	//		Display.Color = Color.Red;
 			Shape.Draw(new Point(450, 50), 2, 2);
 
 		}

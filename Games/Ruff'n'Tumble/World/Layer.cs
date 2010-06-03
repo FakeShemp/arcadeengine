@@ -167,7 +167,7 @@ namespace RuffnTumble
 
 			// Draw tiles
 			TileSet.Scale = Level.Camera.Scale;
-			Display.Color = Color.FromArgb(Alpha, Color.White);
+	//		Display.Color = Color.FromArgb(Alpha, Color.White);
 			for (int yy = 0; yy < renderheight + 2; yy++)
 			{
 				for (int xx = 0; xx < renderwidth + 2; xx++)
@@ -186,7 +186,6 @@ namespace RuffnTumble
 					TileSet.Draw(id, rect, TextureLayout.Stretch);
 				}
 			}
-			Display.Color = Color.White;
 
 
 

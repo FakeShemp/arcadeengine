@@ -138,7 +138,6 @@ namespace Shader_Demo
 		{
 			// Clears the background
 			Display.ClearBuffers();
-			Display.Color = Color.White;
 
 			// Simple shader
 			if (Mouse.IsButtonDown(MouseButtons.Left))
