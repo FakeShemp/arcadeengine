@@ -74,7 +74,6 @@ namespace ArcEngine.Graphic
 			ClearColor = Color.Black;
 			Culling = false;
 			DepthTest = false;
-			Color = Color.White;
 
 			GL.Hint(HintTarget.PolygonSmoothHint, HintMode.Nicest);
 			GL.Hint(HintTarget.LineSmoothHint, HintMode.Nicest);
@@ -1397,20 +1396,21 @@ namespace ArcEngine.Graphic
 					texture = null;
 					return;
 				}
-				if (texture == value)
-					return;
+				if (texture != value)
+				{
 
-				texture = value;
-				GL.BindTexture(TextureTarget.Texture2D, value.Handle);
+					texture = value;
+					GL.BindTexture(TextureTarget.Texture2D, value.Handle);
 
-				RenderStats.TextureBinding++;
-
+					RenderStats.TextureBinding++;
+				}
 
 				GL.MatrixMode(MatrixMode.Texture);
 				GL.LoadIdentity();
 				GL.Scale(1.0f / value.Size.Width, 1.0f / value.Size.Height, 1.0f);
 
 				TextureMatrix = Matrix4.Scale(1.0f / texture.Size.Width, 1.0f / texture.Size.Height, 1.0f);
+
 			}
 			get
 			{

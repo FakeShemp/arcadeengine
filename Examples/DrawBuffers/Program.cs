@@ -79,7 +79,6 @@ namespace ArcEngine.Examples
 		{
 			Display.ClearColor = Color.CornflowerBlue;
 
-
 			#region Texture
 
 			// Loads a texture and binds it to TUI 2
@@ -94,6 +93,7 @@ namespace ArcEngine.Examples
 
 			
 			#region Buffer
+
 
 			// Indices
 			int[] indices = new int[]
@@ -131,19 +131,19 @@ namespace ArcEngine.Examples
 
 
 			#region VAO
-/*			
-			Batch = new BatchBuffer();
+
+			//Batch = new BatchBuffer();
 
 
-			VertexBuffer.Bind(0, 2);
-			Shader.BindAttrib(0, "in_position");
+			//VertexBuffer.Bind(0, 2);
+			//Shader.BindAttrib(0, "in_position");
 
-			ColorBuffer.Bind(1, 4);
-			Shader.BindAttrib(1, "in_color");
+			//ColorBuffer.Bind(1, 4);
+			//Shader.BindAttrib(1, "in_color");
 
 
-			GL.BindVertexArray(0);
-*/
+			//GL.BindVertexArray(0);
+
 			#endregion
 
 			#endregion

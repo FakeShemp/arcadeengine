@@ -317,11 +317,11 @@ namespace ArcEngine.Asset
 
 				// Draw batch
 				int count = Display.Buffer.Update();
-				Display.TextureUnit = 2;
+				Display.TextureUnit = 0;
 				Display.Texture = GlyphTileset.Texture;
 
 
-				Display.Shader.SetUniform("texture", 2);
+				Display.Shader.SetUniform("texture", 0);
 				Display.DrawBatch(Display.Buffer, 0, count);
 	
 			}
@@ -527,9 +527,7 @@ namespace ArcEngine.Asset
 
 
 			// Save the image to the texture
-			MemoryStream ms = new MemoryStream();
-			bm.Save(ms, ImageFormat.Png);
-			GlyphTileset.Texture.LoadImage(ms.ToArray());
+			GlyphTileset.Texture.LoadImage(bm);
 
 			return true;
 		}

@@ -26,7 +26,7 @@ using System.Runtime.InteropServices;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using Imaging = System.Drawing.Imaging;
-
+using OpenTK;
 
 //
 //
@@ -207,7 +207,7 @@ namespace ArcEngine.Graphic
 		/// <param name="rect">Rectangle on the screen</param>
 		/// <param name="tex">Rectangle in the texture</param>
 		/// <param name="mode">Rendering mode</param>
-		[Obsolete("deprecated")]
+		[Obsolete("deprecated. Use Display.DrawTexture() instead.")]
 		public void Blit(Rectangle rect, Rectangle tex, TextureLayout mode)
 		{
 			Display.Texture = this;
@@ -287,7 +287,7 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		/// <param name="rect">Rectangle on the screen</param>
 		/// <param name="tex">Rectangle in the texture</param>
-		[Obsolete("deprecated")]
+		[Obsolete("deprecated. Use Display.DrawTexture() instead.")]
 		public void Blit(Rectangle rect, Rectangle tex)
 		{
 			Display.Texture = this;
@@ -299,7 +299,7 @@ namespace ArcEngine.Graphic
 		/// Blits a texture on the screen
 		/// </summary>
 		/// <param name="pos"></param>
-		[Obsolete("deprecated")]
+		[Obsolete("deprecated. Use Display.DrawTexture() instead.")]
 		public void Blit(Point pos)
 		{
 			Display.Texture = this;
@@ -313,7 +313,7 @@ namespace ArcEngine.Graphic
 		/// <param name="pos">Location</param>
 		/// <param name="angle">Angle of rotation</param>
 		/// <param name="origin">Offset point</param>
-		[Obsolete("deprecated")]
+		[Obsolete("deprecated. Use Display.DrawTexture() instead.")]
 		public void Blit(Point pos, float angle, Point origin)
 		{
 			Display.Translate(pos.X + origin.X, pos.Y + origin.Y);
@@ -330,7 +330,7 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		/// <param name="rect">Sub region of the texture</param>
 		/// <param name="mode">Display mode</param>
-		[Obsolete("deprecated")]
+		[Obsolete("deprecated. Use Display.DrawTexture() instead.")]
 		public void Blit(Rectangle rect, TextureLayout mode)
 		{
 			Blit(rect, Rectangle, mode);
@@ -342,7 +342,7 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		/// <param name="bitmap">Bitmap handle</param>
 		/// <param name="location">Location on the texture</param>
-		[Obsolete("deprecated")]
+		[Obsolete("deprecated. Use Display.DrawTexture() instead.")]
 		public void Blit(Bitmap bitmap, Point location)
 		{
 			if (bitmap == null)
@@ -440,10 +440,13 @@ namespace ArcEngine.Graphic
 		/// <returns>True if success or false if something went wrong</returns>
 		public bool LoadImage(string filename)
 		{
-			if (string.IsNullOrEmpty(filename))
-				return false;
+			using (Stream stream = ResourceManager.LoadResource(filename))
+			{
+				return LoadImage(stream);
+			}
 
-			Stream stream = ResourceManager.LoadResource(filename);
+			return false;
+/*
 			if (stream == null)
 				return false;
 			try
@@ -454,29 +457,43 @@ namespace ArcEngine.Graphic
 			{
 				stream.Close();
 			}
-
+*/
 		}
 
 
 		/// <summary>
 		/// Load a texture from a stream (ie resource files)
 		/// </summary>
-		/// <param name="stream"></param>
+		/// <param name="stream">Stream</param>
 		/// <returns></returns>
 		public bool LoadImage(Stream stream)
 		{
-			if (stream == null)
+			return LoadImage(new Bitmap(stream));
+		}
+
+
+		/// <summary>
+		/// Loads a texture from a Bitmap
+		/// </summary>
+		/// <param name="bm"></param>
+		/// <returns></returns>
+		public bool LoadImage(Bitmap bitmap)
+		{
+			if (bitmap == null)
 				return false;
 
 			Display.Texture = this;
-
-			Bitmap bitmap = new Bitmap(stream);
 
 			SetSize(new Size(bitmap.Width, bitmap.Height));
 
 			Blit(bitmap, Point.Empty);
 
-			return true;	
+			
+			// Update texture matrix
+			Display.TextureMatrix = Matrix4.Scale(1.0f / Size.Width, 1.0f / Size.Height, 1.0f);
+
+
+			return true;
 		}
 
 		/// <summary>

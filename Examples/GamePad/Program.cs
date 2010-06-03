@@ -72,8 +72,9 @@ namespace ArcEngine.Examples.Joystick
 		/// </summary>
 		public override void LoadContent()
 		{
-			Font = new BitmapFont();
-			Font.LoadTTF(@"c:\windows\fonts\verdana.ttf", 14, FontStyle.Regular);
+			Display.ClearColor = Color.CornflowerBlue;
+
+			Font = BitmapFont.CreateFromTTF("c:\\windows\\fonts\\verdana.ttf", 16, FontStyle.Regular);
 
 			Gamepad.Init(Window);
 			CheckDevices();
@@ -142,8 +143,8 @@ namespace ArcEngine.Examples.Joystick
 		{
 			// Clears the background
 			Display.ClearBuffers();
-			Display.Color = Color.White;
 
+			Display.DrawRectangle(new Rectangle(100, 100, 100, 100), Color.Red);
 
 			Font.DrawText(new Point(100, 50), Color.White, "Press F1 to detect new gamepads...");
 			Font.DrawText(new Point(100, 90), Color.White, "Available device(s) : {0}", Gamepad.Count);

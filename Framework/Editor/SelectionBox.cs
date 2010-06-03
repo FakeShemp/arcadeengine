@@ -281,7 +281,6 @@ namespace ArcEngine.Editor
 				return;
 
 
-			Color color = Display.Color;
 			bool blending = Display.Blending;
 			Display.Blending = true;
 
@@ -299,7 +298,6 @@ namespace ArcEngine.Editor
 				DrawSizeHandles();
 
 
-			Display.Color = Color.White;
 			Display.Blending = blending;
 		}
 
