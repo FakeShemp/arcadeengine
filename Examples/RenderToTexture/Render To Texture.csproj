@@ -90,7 +90,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="OpenTK, Version=0.9.9.4, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="OpenTK, Version=1.0.0.201, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Framework\Libraries\OpenTK\Release\OpenTK.dll</HintPath>
     </Reference>

@@ -114,11 +114,11 @@
     <Reference Include="Microsoft.VisualBasic">
       <Private>False</Private>
     </Reference>
-    <Reference Include="OpenTK, Version=0.9.9.3, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="OpenTK, Version=1.0.0.201, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libraries\OpenTK\Release\OpenTK.dll</HintPath>
     </Reference>
-    <Reference Include="OpenTK.GLControl, Version=0.9.9.3, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="OpenTK.GLControl, Version=1.0.0.201, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libraries\OpenTK\Release\OpenTK.GLControl.dll</HintPath>
     </Reference>
@@ -373,6 +373,7 @@
     <Compile Include="GameTime.cs" />
     <Compile Include="Trace.cs" />
     <Compile Include="Utility\Webcam.cs" />
+    <EmbeddedResource Include="Graphic\shaders\bezier.vert" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Forms\TerminalForm.resx">

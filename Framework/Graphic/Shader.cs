@@ -347,6 +347,27 @@ namespace ArcEngine.Graphic
 			return shader;
 		}
 
+
+
+		/// <summary>
+		/// Gets the source code of predefined shader
+		/// </summary>
+		/// <param name="name">Name of the source</param>
+		/// <returns>Shader source code or empty</returns>
+		static public string GetShaderSource(string name)
+		{
+			Stream stream = ResourceManager.GetResource("ArcEngine.Graphic.shaders." + name);
+			if (stream == null)
+				return string.Empty;
+
+			StreamReader reader = new StreamReader( stream );
+			string text = reader.ReadToEnd();
+			reader.Close();
+			stream.Close();
+
+			return text;
+		}
+
 		#endregion
 
 
@@ -433,6 +454,7 @@ namespace ArcEngine.Graphic
 
 		#endregion
 	
+
 		#region Uniforms
 
 		/// <summary>

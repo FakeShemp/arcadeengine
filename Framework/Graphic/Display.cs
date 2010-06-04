@@ -1852,6 +1852,7 @@ namespace ArcEngine.Graphic
 			}
 		}
 
+
 		/// <summary>
 		/// Render device capabilities
 		/// </summary>
@@ -1861,6 +1862,7 @@ namespace ArcEngine.Graphic
 			private set;
 		}
 
+		
 		/// <summary>
 		/// Rendering stats
 		/// </summary>
