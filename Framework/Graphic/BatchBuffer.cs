@@ -152,6 +152,21 @@ namespace ArcEngine.Graphic
 
 
 
+		/// <summary>
+		/// Creates a defaut buffer containing position, color and texture data
+		/// </summary>
+		/// <returns></returns>
+		public static BatchBuffer CreatePositionColorBuffer()
+		{
+			BatchBuffer buffer = new BatchBuffer();
+			buffer.AddDeclaration("in_position", 2, sizeof(float) * 8, 0);
+			buffer.AddDeclaration("in_color", 4, sizeof(float) * 8, sizeof(float) * 2);
+
+			return buffer;
+		}
+
+
+
 		#region Vertex PositionColorTexture helpers
 
 		/// <summary>
