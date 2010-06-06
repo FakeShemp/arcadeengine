@@ -1,7 +1,7 @@
 ﻿#region Licence
 //
 //This file is part of ArcEngine.
-//Copyright (C)2008-2009 Adrien Hémery ( iliak@mimicprod.net )
+//Copyright (C)2008-2010 Adrien Hémery ( iliak@mimicprod.net )
 //
 //ArcEngine is free software: you can redistribute it and/or modify
 //it under the terms of the GNU General Public License as published by
@@ -28,6 +28,8 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System.Xml;
 
+
+// http://www.planet-dev.com/developpement/jeux-video/cel-shading-en-glsl
 
 namespace ArcEngine.Examples.CellShading
 {
@@ -75,6 +77,7 @@ namespace ArcEngine.Examples.CellShading
 		public override void LoadContent()
 		{
 			Display.ClearColor = Color.CornflowerBlue;
+			Display.DepthTest = true;
 
 			#region Shader
 
@@ -172,34 +175,42 @@ namespace ArcEngine.Examples.CellShading
 			float[] vertices = new float[]
 			{
 				// Vertex				// Normal			// Color
-				1,1,1,					0,0,1,				1,1,1,1,	
-				-1,1,1,					0,0,1,				1,1,0,1,
+				1,1,1,					0,0,1,				1,0,0,1,	
+				-1,1,1,					0,0,1,				1,0,0,1,
 				-1,-1,1,					0,0,1,				1,0,0,1,
-				1,-1,1,       			0,0,1,  				1,0,1,1,
-				1,1,1,					1,0,0,				1,1,1,1,	
-				1,-1,1,					1,0,0,				1,0,1,1,
+
+				1,-1,1,       			0,0,1,  				0,1,0,1,
+				1,1,1,					1,0,0,				0,1,0,1,	
+				1,-1,1,					1,0,0,				0,1,0,1,
+
 				1,-1,-1,					1,0,0,				0,0,1,1,
-				1,1,-1,       			1,0,0,  				0,1,1,1,
-				1,1,1,					0,1,0,				1,1,1,1,	
-				1,1,-1,					0,1,0,				0,1,1,1,
-				-1,1,-1,					0,1,0,				0,1,0,1,
-				-1,1,1,       			0,1,0,  				1,1,0,1,
-				-1,1,1,					-1,0,0, 				1,1,0,1,
+				1,1,-1,       			1,0,0,  				0,0,1,1,
+				1,1,1,					0,1,0,				0,0,1,1,	
+
+				1,1,-1,					0,1,0,				1,0,0,1,
+				-1,1,-1,					0,1,0,				1,0,0,1,
+				-1,1,1,       			0,1,0,  				1,0,0,1,
+
+				-1,1,1,					-1,0,0, 				0,1,0,1,
 				-1,1,-1,					-1,0,0,				0,1,0,1,
-				-1,-1,-1,				-1,0,0, 				0,0,0,1,
-				-1,-1,1,   				-1,0,0, 				1,0,0,1,
-				-1,-1,-1,				0,-1,0, 				0,0,0,1,
+				-1,-1,-1,				-1,0,0, 				0,1,0,1,
+
+				-1,-1,1,   				-1,0,0, 				0,0,1,1,
+				-1,-1,-1,				0,-1,0, 				0,0,1,1,
 				1,-1,-1,					0,-1,0, 				0,0,1,1,
-				1,-1,1,					0,-1,0, 				1,0,1,1,
+
+				1,-1,1,					0,-1,0, 				1,0,0,1,
 				-1,-1,1,   				0,-1,0, 				1,0,0,1,
-				1,-1,-1,					0,0,-1, 				0,0,1,1,
-				-1,-1,-1,				0,0,-1, 				0,0,0,1,
+				1,-1,-1,					0,0,-1, 				1,0,0,1,
+
+				-1,-1,-1,				0,0,-1, 				0,1,0,1,
 				-1,1,-1,					0,0,-1, 				0,1,0,1,
-				1,1,-1,					0,0,-1,				0,1,1,1,
+				1,1,-1,					0,0,-1,				0,1,0,1,
+
 			};
 
 
-			// index array of vertex array for glDrawElements()
+			// index array of vertex array
 			int[] indices = new int[]
 			{
 				0,1,2,3,
@@ -250,27 +261,12 @@ namespace ArcEngine.Examples.CellShading
 				Exit();
 
 
-			/*
-						if (Keyboard.IsKeyPress(Keys.Q))
-							Position.X -= Speed;
+			if (Keyboard.IsKeyPress(Keys.Left))
+				angle -= Speed;
 
-						if (Keyboard.IsKeyPress(Keys.D))
-							Position.X += Speed;
+			if (Keyboard.IsKeyPress(Keys.Right))
+				angle += Speed;
 
-						if (Keyboard.IsKeyPress(Keys.Z))
-							Position.Y -= Speed;
-
-						if (Keyboard.IsKeyPress(Keys.S))
-							Position.Y += Speed;
-
-
-						Display.ModelViewMatrix = Matrix4.LookAt(
-							Position,
-							Vector3.Zero,
-							Vector3.UnitY);
-			*/
-
-			//Display.ModelViewMatrix = Display.ModelViewMatrix * Matrix4.CreateRotationZ(0.01f);
 		}
 
 
@@ -286,14 +282,17 @@ namespace ArcEngine.Examples.CellShading
 			// Some dummy text
 		//	Font.DrawText(new Point(100, 25), Color.White, "Here's an example of draw buffers.");
 
+
 			// Draws with the index buffer
+			Display.PushMatrix(MatrixMode.Modelview);
+			Display.ModelViewMatrix = Matrix4.CreateRotationY(angle) * Display.ModelViewMatrix;
 			Display.DrawIndexBuffer(Buffer, BeginMode.Triangles, Index);
+			Display.PopMatrix(MatrixMode.Modelview);
 
-			//Display.DrawBatch(Buffer, 0, 24);
-
-			//Font.DrawText(new Point(10, 100), Color.White, Position.ToString());
 		}
 
+
+		float angle;
 
 
 		#region Properties

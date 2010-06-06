@@ -52,6 +52,9 @@ namespace ArcEngine.Graphic
 
 			CircleResolution = 50;
 
+			ModelViewStack = new Stack<Matrix4>();
+			ProjectionStack = new Stack<Matrix4>();
+			TextureStack = new Stack<Matrix4>();
 		}
 
 
@@ -272,7 +275,7 @@ namespace ArcEngine.Graphic
 		#endregion
 
 
-		#region Transformation matrix
+		#region Matrix
 
 
 		/// <summary>
@@ -416,6 +419,49 @@ namespace ArcEngine.Graphic
 			Shader.SetUniform("mvp_matrix", modelViewMatrix * projectionMatrix);
 			Shader.SetUniform("tex_matrix", TextureMatrix);
 		}
+
+
+		/// <summary>
+		/// Push matrix
+		/// </summary>
+		/// <param name="mode">Matrix mode</param>
+		public static void PushMatrix(MatrixMode mode)
+		{
+			switch (mode)
+			{
+				case MatrixMode.Modelview:
+				ModelViewStack.Push(ModelViewMatrix);
+				break;
+				case MatrixMode.Projection:
+				ProjectionStack.Push(ProjectionMatrix);
+				break;
+				case MatrixMode.Texture:
+				TextureStack.Push(TextureMatrix);
+				break;
+			}
+		}
+
+
+		/// <summary>
+		/// Pop matrix
+		/// </summary>
+		/// <param name="mode">Matrix mode</param>
+		public static void PopMatrix(MatrixMode mode)
+		{
+			switch (mode)
+			{
+				case MatrixMode.Modelview:
+				ModelViewMatrix = ModelViewStack.Pop();
+				break;
+				case MatrixMode.Projection:
+				ProjectionMatrix = ProjectionStack.Pop();
+				break;
+				case MatrixMode.Texture:
+				TextureMatrix = TextureStack.Pop();
+				break;
+			}
+		}
+
 
 		#endregion
 
@@ -1294,6 +1340,14 @@ namespace ArcEngine.Graphic
 		}
 
 
+		#region Matrix
+
+		// Matrix stacks
+		static Stack<Matrix4> ModelViewStack;
+		static Stack<Matrix4> ProjectionStack;
+		static Stack<Matrix4> TextureStack;
+
+
 		/// <summary>
 		/// Projection matrix
 		/// </summary>
@@ -1347,7 +1401,7 @@ namespace ArcEngine.Graphic
 		}
 		static Matrix4 textureMatrix;
 
-
+		#endregion
 
 		/// <summary>
 		/// Circle resolution
@@ -1672,26 +1726,6 @@ namespace ArcEngine.Graphic
 
 			}
 		}
-
-/*
-		/// <summary>
-		/// Gets / sets the current color
-		/// </summary>
-		[Obsolete("Deprecated")]
-		public static Color Color
-		{
-			get
-			{
-				return color;
-			}
-			set
-			{
-				GL.Color4(value);
-				color = value;
-			}
-		}
-		static Color color;
-*/
 
 
 		/// <summary>
