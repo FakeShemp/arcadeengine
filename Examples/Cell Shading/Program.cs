@@ -129,10 +129,6 @@ namespace ArcEngine.Examples.CellShading
 
 			#region Buffer
 
-			// Create index buffer
-			Index = new IndexBuffer();
-
-
 			// Creates vertex buffer
 			Buffer = new BatchBuffer();
 			Buffer.AddDeclaration("in_position", 3);
@@ -176,54 +172,48 @@ namespace ArcEngine.Examples.CellShading
 			float[] vertices = new float[]
 			{
 				// Vertex				// Normal			// Color
-				1,1,1,					0,0,1,				1,0,0,1,	
-				-1,1,1,					0,0,1,				1,0,0,1,
-				-1,-1,1,					0,0,1,				1,0,0,1,
+				1, 1, 1,					0,0,1,				1,0,0,1,		// Front
+				-1, 1, 1,				0,0,1,				1,0,0,1,
+				-1, -1, 1,				0,0,1,				1,0,0,1,
+				1, 1, 1,					0,0,1,				1,0,0,1,
+				-1, -1, 1,				0,0,1,				1,0,0,1,
+				1, -1, 1,				0,0,1,				1,0,0,1,
+				
+				1, 1, 1,					1,0,0,				0,1,0,1,		// Right
+				1, 1, -1,				1,0,0,				0,1,0,1,
+				1, -1, 1,				1,0,0,				0,1,0,1,
+				1, 1, -1,				1,0,0,				0,1,0,1,	
+				1, -1, 1,				1,0,0,				0,1,0,1,
+				1, -1, -1,				1,0,0,				0,1,0,1,
+																		
+				1, 1, -1,				0,1,0,				0,0,1,1,		// Back
+				-1, 1, -1,				0,1,0,				0,0,1,1,
+				-1, -1, -1,				0,1,0,				0,0,1,1,			
+				1, 1, -1,				0,1,0,				0,0,1,1,				
+				-1, -1, -1,				0,1,0,				0,0,1,1,
+				1, -1, -1,				0,1,0,				0,0,1,1,
 
-				1,-1,1,       			0,0,1,  				0,1,0,1,
-				1,1,1,					1,0,0,				0,1,0,1,	
-				1,-1,1,					1,0,0,				0,1,0,1,
+				-1, 1, 1,    			-1,0,0, 				1,1,0,1,		// Left
+				-1, 1, -1,				-1,0,0,				1,1,0,1,
+				-1, -1, -1,				-1,0,0, 				1,1,0,1,
+				-1, 1, 1,				-1,0,0, 				1,1,0,1,
+				-1, -1, 1,				-1,0,0,				1,1,0,1,
+				-1, -1, -1,				-1,0,0, 				1,1,0,1,
 
-				1,-1,-1,					1,0,0,				0,0,1,1,
-				1,1,-1,       			1,0,0,  				0,0,1,1,
-				1,1,1,					0,1,0,				0,0,1,1,	
+				-1, 1, 1,				0,-1,0, 				0,1,1,1,		// Top
+				-1, 1, -1,				0,-1,0, 				0,1,1,1,
+				1, 1, 1,					0,-1,0, 				0,1,1,1,
+				1, 1, -1,				0,-1,0, 				0,1,1,1,
+				-1, 1, -1,				0,-1,0, 				0,1,1,1,
+				1, 1, 1,					0,-1,0, 				0,1,1,1,
 
-				1,1,-1,					0,1,0,				1,0,0,1,
-				-1,1,-1,					0,1,0,				1,0,0,1,
-				-1,1,1,       			0,1,0,  				1,0,0,1,
-
-				-1,1,1,					-1,0,0, 				0,1,0,1,
-				-1,1,-1,					-1,0,0,				0,1,0,1,
-				-1,-1,-1,				-1,0,0, 				0,1,0,1,
-
-				-1,-1,1,   				-1,0,0, 				0,0,1,1,
-				-1,-1,-1,				0,-1,0, 				0,0,1,1,
-				1,-1,-1,					0,-1,0, 				0,0,1,1,
-
-				1,-1,1,					0,-1,0, 				1,0,0,1,
-				-1,-1,1,   				0,-1,0, 				1,0,0,1,
-				1,-1,-1,					0,0,-1, 				1,0,0,1,
-
-				-1,-1,-1,				0,0,-1, 				0,1,0,1,
-				-1,1,-1,					0,0,-1, 				0,1,0,1,
-				1,1,-1,					0,0,-1,				0,1,0,1,
-
+				-1, -1, 1,				0,0,-1, 				1,0,1,1,		// Bottom
+				-1, -1, -1,				0,0,-1, 				1,0,1,1,
+				1, -1, 1,				0,0,-1, 				1,0,1,1,
+				1, -1, 1,				0,0,-1, 				1,0,1,1,
+				-1, -1, -1,				0,0,-1, 				1,0,1,1,
+				1, -1, -1,				0,0,-1, 				1,0,1,1,
 			};
-
-
-			// index array of vertex array
-			int[] indices = new int[]
-			{
-				0,1,2,3,
-				4,5,6,7,
-				8,9,10,11,
-				12,13,14,15,
-				16,17,18,19,
-				20,21,22,23
-			};
-
-			// Update index buffer
-			Index.Update(indices);
 
 
 			// Update Vertex buffer
@@ -237,10 +227,6 @@ namespace ArcEngine.Examples.CellShading
 		/// </summary>
 		public override void UnloadContent()
 		{
-			if (Index != null)
-				Index.Dispose();
-			Index = null;
-
 			if (Buffer != null)
 				Buffer.Dispose();
 			Buffer = null;
@@ -275,6 +261,12 @@ namespace ArcEngine.Examples.CellShading
 			if (Keyboard.IsKeyPress(Keys.Down))
 				Pitch -= Speed;
 
+
+			if (Keyboard.IsKeyPress(Keys.Space))
+			{
+				Pitch = 0.0f;
+				Yaw = 0.0f;
+			}
 		}
 
 
@@ -295,7 +287,7 @@ namespace ArcEngine.Examples.CellShading
 			Display.PushMatrix(MatrixMode.Modelview);
 			Display.ModelViewMatrix = Matrix4.CreateRotationY(Yaw) * Display.ModelViewMatrix;
 			Display.ModelViewMatrix = Matrix4.CreateRotationX(Pitch) * Display.ModelViewMatrix;
-			Display.DrawIndexBuffer(Buffer, BeginMode.Quads, Index);
+			Display.DrawBatch(Buffer, 0, 36);
 			Display.PopMatrix(MatrixMode.Modelview);
 
 		}
@@ -305,11 +297,6 @@ namespace ArcEngine.Examples.CellShading
 		float Pitch;
 
 		#region Properties
-
-		/// <summary>
-		/// Index buffer
-		/// </summary>
-		IndexBuffer Index;
 
 		/// <summary>
 		/// Index buffer
