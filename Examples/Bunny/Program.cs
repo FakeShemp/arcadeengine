@@ -29,12 +29,12 @@ using OpenTK.Graphics.OpenGL;
 using System.Xml;
 
 
-namespace ArcEngine.Examples.Bunny
+namespace ArcEngine.Examples.CellShading
 {
 	/// <summary>
 	/// Main game class
 	/// </summary>
-	public class DrawBuffers : GameBase
+	public class Program : GameBase
 	{
 
 		/// <summary>
@@ -45,7 +45,7 @@ namespace ArcEngine.Examples.Bunny
 		{
 			try
 			{
-				using (DrawBuffers game = new DrawBuffers())
+				using (Program game = new Program())
 					game.Run();
 			}
 			catch (Exception e)
@@ -61,10 +61,10 @@ namespace ArcEngine.Examples.Bunny
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public DrawBuffers()
+		public Program()
 		{
 			CreateGameWindow(new Size(1024, 768));
-			Window.Text = "Bunny example";
+			Window.Text = "CellShading example";
 		}
 
 
@@ -76,6 +76,52 @@ namespace ArcEngine.Examples.Bunny
 		{
 			Display.ClearColor = Color.CornflowerBlue;
 
+			#region Shader
+
+			string vshader = @"
+				#version 130
+
+				precision highp float;
+
+				uniform mat4 mvp_matrix;
+				uniform mat4 tex_matrix;
+
+				in vec3 in_position;
+				in vec3 in_normal;
+				in vec4 in_color;
+
+				invariant gl_Position;
+
+				smooth out vec4 out_color;
+
+				void main(void)
+				{
+					gl_Position = mvp_matrix * vec4(in_position, 1.0);
+
+					out_color = in_color;
+				}";
+
+
+			string fshader = @"
+				#version 130
+
+				precision highp float;
+
+				smooth in vec4 out_color;
+
+				out vec4 frag_color;
+
+				void main(void)
+				{
+					frag_color = out_color;
+				}";
+
+			Display.Shader.SetSource(ShaderType.VertexShader, vshader);
+			Display.Shader.SetSource(ShaderType.FragmentShader, fshader);
+			Display.Shader.Compile();
+
+			#endregion
+
 
 			#region Buffer
 
@@ -85,11 +131,11 @@ namespace ArcEngine.Examples.Bunny
 
 			// Creates vertex buffer
 			Buffer = new BatchBuffer();
-			Buffer.AddDeclaration("in_position", 3, sizeof(float) * 10, 0);
-			Buffer.AddDeclaration("in_normal", 3, sizeof(float) * 10, sizeof(float) * 3);
-			Buffer.AddDeclaration("in_color", 4, sizeof(float) * 10, sizeof(float) * 7);
+			Buffer.AddDeclaration("in_position", 3);
+			Buffer.AddDeclaration("in_normal", 3);
+			Buffer.AddDeclaration("in_color", 4);
 
-			LoadBunny("data/bunny.xml");
+			InitializeCube();
 
 			#endregion
 
@@ -107,84 +153,69 @@ namespace ArcEngine.Examples.Bunny
 			Display.ProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4.0f, aspectRatio, 0.1f, 20.0f);
 
 
-			Position = new Vector3(0.0f, 0.0f, -1.5f);
+			Position = new Vector3(0.0f, 0.0f, 10.0f);
 			Display.ModelViewMatrix = Matrix4.LookAt(
-				Position, 
-				Vector3.Zero, 
+				Position,
+				Vector3.Zero,
 				Vector3.UnitY);
 
 			#endregion
 
 		}
 
-
 		/// <summary>
-		/// Loads bunny data
+		/// Creates an array of indexed position/normal/colored data.
 		/// </summary>
-		/// <param name="filename">File name to load</param>
-		void LoadBunny(string filename)
+		private void InitializeCube()
 		{
-			XmlDocument doc = new XmlDocument();
-			doc.Load(filename);
-			XmlElement root = doc.DocumentElement;
-			if (root.Name.ToLower() != "bunny")
-				return;
-
-			float[] buffer = null;
-			int[] indices = null;
-
-			foreach (XmlNode node in root.ChildNodes)
+			// vertex coords array
+			float[] vertices = new float[]
 			{
-
-				switch (node.Name.ToLower())
-				{
-					case "vertex":
-					{
-						buffer = new float[int.Parse(node.Attributes["count"].Value) * 10];
-						string[] split = node.InnerText.Split(new char[] { '\t', '\n' }, StringSplitOptions.RemoveEmptyEntries);
-
-						for (int i = 0; i < split.Length / 3; i++)
-						{
-							buffer[i * 10] = float.Parse(split[i]);
-							buffer[i * 10 + 1] = float.Parse(split[i + 1]);
-							buffer[i * 10 + 2] = float.Parse(split[i + 2]);
-						}
-					}
-					break;
-
-
-					case "index":
-					{
-						indices = new int[int.Parse(node.Attributes["count"].Value) * 3];
-						string[] split = node.InnerText.Split(new char[] { '\t', '\n' }, StringSplitOptions.RemoveEmptyEntries);
-
-						for (int i = 0; i < split.Length; i++)
-							indices[i] = int.Parse(split[i]);
-
-					}
-					break;
+				// Vertex				// Normal			// Color
+				1,1,1,					0,0,1,				1,1,1,1,	
+				-1,1,1,					0,0,1,				1,1,0,1,
+				-1,-1,1,					0,0,1,				1,0,0,1,
+				1,-1,1,       			0,0,1,  				1,0,1,1,
+				1,1,1,					1,0,0,				1,1,1,1,	
+				1,-1,1,					1,0,0,				1,0,1,1,
+				1,-1,-1,					1,0,0,				0,0,1,1,
+				1,1,-1,       			1,0,0,  				0,1,1,1,
+				1,1,1,					0,1,0,				1,1,1,1,	
+				1,1,-1,					0,1,0,				0,1,1,1,
+				-1,1,-1,					0,1,0,				0,1,0,1,
+				-1,1,1,       			0,1,0,  				1,1,0,1,
+				-1,1,1,					-1,0,0, 				1,1,0,1,
+				-1,1,-1,					-1,0,0,				0,1,0,1,
+				-1,-1,-1,				-1,0,0, 				0,0,0,1,
+				-1,-1,1,   				-1,0,0, 				1,0,0,1,
+				-1,-1,-1,				0,-1,0, 				0,0,0,1,
+				1,-1,-1,					0,-1,0, 				0,0,1,1,
+				1,-1,1,					0,-1,0, 				1,0,1,1,
+				-1,-1,1,   				0,-1,0, 				1,0,0,1,
+				1,-1,-1,					0,0,-1, 				0,0,1,1,
+				-1,-1,-1,				0,0,-1, 				0,0,0,1,
+				-1,1,-1,					0,0,-1, 				0,1,0,1,
+				1,1,-1,					0,0,-1,				0,1,1,1,
+			};
 
 
-					case "normal":
-					{
-						string[] split = node.InnerText.Split(new char[] { '\t', '\n' }, StringSplitOptions.RemoveEmptyEntries);
-
-						for (int i = 0; i < split.Length / 3; i++)
-						{
-							buffer[i * 10 + 3] = float.Parse(split[i]);
-							buffer[i * 10 + 4] = float.Parse(split[i + 1]);
-							buffer[i * 10 + 5] = float.Parse(split[i + 2]);
-						}
-					}
-					break;
-				}
-			}
+			// index array of vertex array for glDrawElements()
+			int[] indices = new int[]
+			{
+				0,1,2,3,
+				4,5,6,7,
+				8,9,10,11,
+				12,13,14,15,
+				16,17,18,19,
+				20,21,22,23
+			};
 
 			// Update index buffer
 			Index.Update(indices);
 
-			// Update vertex buffer
-			Buffer.SetVertices(buffer);
+
+			// Update Vertex buffer
+			Buffer.SetVertices(vertices);
 
 		}
 
@@ -219,27 +250,27 @@ namespace ArcEngine.Examples.Bunny
 				Exit();
 
 
-/*
-			if (Keyboard.IsKeyPress(Keys.Q))
-				Position.X -= Speed;
+			/*
+						if (Keyboard.IsKeyPress(Keys.Q))
+							Position.X -= Speed;
 
-			if (Keyboard.IsKeyPress(Keys.D))
-				Position.X += Speed;
+						if (Keyboard.IsKeyPress(Keys.D))
+							Position.X += Speed;
 
-			if (Keyboard.IsKeyPress(Keys.Z))
-				Position.Y -= Speed;
+						if (Keyboard.IsKeyPress(Keys.Z))
+							Position.Y -= Speed;
 
-			if (Keyboard.IsKeyPress(Keys.S))
-				Position.Y += Speed;
+						if (Keyboard.IsKeyPress(Keys.S))
+							Position.Y += Speed;
 
 
-			Display.ModelViewMatrix = Matrix4.LookAt(
-				Position,
-				Vector3.Zero,
-				Vector3.UnitY);
-*/
+						Display.ModelViewMatrix = Matrix4.LookAt(
+							Position,
+							Vector3.Zero,
+							Vector3.UnitY);
+			*/
 
-			Display.ModelViewMatrix = Display.ModelViewMatrix * Matrix4.CreateRotationZ(0.01f);
+			//Display.ModelViewMatrix = Display.ModelViewMatrix * Matrix4.CreateRotationZ(0.01f);
 		}
 
 
@@ -253,12 +284,12 @@ namespace ArcEngine.Examples.Bunny
 			Display.ClearBuffers();
 
 			// Some dummy text
-			Font.DrawText(new Point(100, 25), Color.White, "Here's an example of draw buffers.");
+		//	Font.DrawText(new Point(100, 25), Color.White, "Here's an example of draw buffers.");
 
 			// Draws with the index buffer
 			Display.DrawIndexBuffer(Buffer, BeginMode.Triangles, Index);
 
-			//Display.DrawBatch(Buffer, 0, 5000);
+			//Display.DrawBatch(Buffer, 0, 24);
 
 			//Font.DrawText(new Point(10, 100), Color.White, Position.ToString());
 		}

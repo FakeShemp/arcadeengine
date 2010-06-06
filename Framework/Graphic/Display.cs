@@ -1100,7 +1100,7 @@ namespace ArcEngine.Graphic
 			index.Bind();
 
 			// Bind shader
-			buffer.Bind(Shader);
+			buffer.Bind(shader);
 
 			// Draw
 			GL.DrawElements(mode, index.Count, DrawElementsType.UnsignedInt, IntPtr.Zero);

@@ -8,8 +8,8 @@
     <ProjectGuid>{34D717CA-679D-4896-B2DC-44B2845A1A32}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ArcEngine.Examples.Bunny</RootNamespace>
-    <AssemblyName>ArcEngine.Examples.Bunny</AssemblyName>
+    <RootNamespace>ArcEngine.Examples.CellShading</RootNamespace>
+    <AssemblyName>ArcEngine.Examples.CellShading</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -71,9 +71,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <Content Include="Data\Bunny.xml" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

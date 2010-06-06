@@ -55,7 +55,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Collada", "Examples\Collada
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrawBuffers", "Examples\DrawBuffers\DrawBuffers.csproj", "{130B9D68-5D3D-478B-82E4-F0431B956525}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bunny", "Examples\Bunny\Bunny.csproj", "{34D717CA-679D-4896-B2DC-44B2845A1A32}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cell Shading", "Examples\Bunny\Cell Shading.csproj", "{34D717CA-679D-4896-B2DC-44B2845A1A32}"
 EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ArcEngine.Examples.Bunny.Properties {
+namespace ArcEngine.Examples.CellShading.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

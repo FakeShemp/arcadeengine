@@ -100,12 +100,15 @@ namespace ArcEngine.Graphic
 			if (shader == null)
 				return;
 
+			int offset = 0;
 			foreach (VertexDeclaration dec in Declarations)
 			{
 				int id = shader.GetAttribute(dec.Name);
 
 				Display.EnableBufferIndex(id);
-				Display.SetBufferDeclaration(id, dec.Size, dec.Stride, dec.Offset);
+				Display.SetBufferDeclaration(id, dec.Size, Stride * sizeof(float), offset);
+
+				offset += dec.Size * sizeof(float);
 			}
 
 		}
@@ -116,13 +119,13 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		/// <param name="name">Specifies the name of the generic vertex attribute to be modified.</param>
 		/// <param name="size">Specifies the number of components per generic vertex attribute.</param>
-		/// <param name="stride">Specifies the byte offset between consecutive generic vertex attributes. 
-		/// If stride is 0, the generic vertex attributes are understood to be tightly packed in the array. </param>
-		/// <param name="offset">Specifies a pointer to the first component of the first generic vertex attribute in the array. </param>
-		public void AddDeclaration(string name, int size, int stride, int offset)
+		public void AddDeclaration(string name, int size)
 		{
-			Declarations.Add(new VertexDeclaration(name, size, stride, offset));
+			Declarations.Add(new VertexDeclaration(name, size));
+
+			Stride += size;
 		}
+
 
 
 		/// <summary>
@@ -131,6 +134,7 @@ namespace ArcEngine.Graphic
 		public void ClearDeclaration()
 		{
 			Declarations.Clear();
+			Stride = 0;
 		}
 
 
@@ -142,9 +146,9 @@ namespace ArcEngine.Graphic
 		public static BatchBuffer CreatePositionColorTextureBuffer()
 		{
 			BatchBuffer buffer = new BatchBuffer();
-			buffer.AddDeclaration("in_position", 2, sizeof(float) * 8, 0);
-			buffer.AddDeclaration("in_color", 4, sizeof(float) * 8, sizeof(float) * 2);
-			buffer.AddDeclaration("in_texture", 2, sizeof(float) * 8, sizeof(float) * 6);
+			buffer.AddDeclaration("in_position", 2);
+			buffer.AddDeclaration("in_color", 4);
+			buffer.AddDeclaration("in_texture", 2);
 
 			return buffer;
 		}
@@ -158,8 +162,8 @@ namespace ArcEngine.Graphic
 		public static BatchBuffer CreatePositionColorBuffer()
 		{
 			BatchBuffer buffer = new BatchBuffer();
-			buffer.AddDeclaration("in_position", 2, sizeof(float) * 8, 0);
-			buffer.AddDeclaration("in_color", 4, sizeof(float) * 8, sizeof(float) * 2);
+			buffer.AddDeclaration("in_position", 2);
+			buffer.AddDeclaration("in_color", 4);
 
 			return buffer;
 		}
@@ -314,6 +318,15 @@ namespace ArcEngine.Graphic
 		List<float> Buffer;
 
 
+		/// <summary>
+		/// Stride
+		/// </summary>
+		public int Stride
+		{
+			get;
+			private set;
+		}
+
 		#endregion
 
 
@@ -329,15 +342,10 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		/// <param name="name">Specifies the name of the generic vertex attribute to be modified.</param>
 		/// <param name="size">Specifies the number of components per generic vertex attribute.</param>
-		/// <param name="stride">Specifies the byte offset between consecutive generic vertex attributes. 
-		/// If stride is 0, the generic vertex attributes are understood to be tightly packed in the array. </param>
-		/// <param name="offset">Specifies a pointer to the first component of the first generic vertex attribute in the array. </param>
-		public VertexDeclaration(string name, int size, int stride, int offset)
+		public VertexDeclaration(string name, int size)
 		{
 			Name = name;
 			Size = size;
-			Stride = stride;
-			Offset = offset;
 		}
 
 		/// <summary>
@@ -351,16 +359,6 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public int Size;
 
-		/// <summary>
-		/// Stride between elements
-		/// </summary>
-		public int Stride;
-
-
-		/// <summary>
-		/// Offset from the start
-		/// </summary>
-		public int Offset;
 	}
 
 }
