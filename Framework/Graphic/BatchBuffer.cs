@@ -96,7 +96,6 @@ namespace ArcEngine.Graphic
 		public void Bind(Shader shader)
 		{
 			GL.BindBuffer(BufferTarget.ArrayBuffer, Handle);
-			//GL.BindBuffer(BufferTarget.ElementArrayBuffer, indexHandle);
 
 			if (shader == null)
 				return;

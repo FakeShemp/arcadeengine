@@ -85,9 +85,9 @@ namespace ArcEngine.Examples.Bunny
 
 			// Creates vertex buffer
 			Buffer = new BatchBuffer();
-			Buffer.AddDeclaration("in_position", 3, sizeof(float) * 9, 0);
-			Buffer.AddDeclaration("in_normal", 3, sizeof(float) * 9, sizeof(float) * 3);
-			Buffer.AddDeclaration("in_color", 4, sizeof(float) * 9, sizeof(float) * 7);
+			Buffer.AddDeclaration("in_position", 3, sizeof(float) * 10, 0);
+			Buffer.AddDeclaration("in_normal", 3, sizeof(float) * 10, sizeof(float) * 3);
+			Buffer.AddDeclaration("in_color", 4, sizeof(float) * 10, sizeof(float) * 7);
 
 			LoadBunny("data/bunny.xml");
 
@@ -97,6 +97,21 @@ namespace ArcEngine.Examples.Bunny
 			#region Font
 
 			Font = BitmapFont.CreateFromTTF("c:\\windows\\fonts\\verdana.ttf", 16, FontStyle.Regular);
+
+			#endregion
+
+
+			#region Matrices
+
+			float aspectRatio = (float)Display.ViewPort.Width / (float)Display.ViewPort.Height;
+			Display.ProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4.0f, aspectRatio, 0.1f, 20.0f);
+
+
+			Position = new Vector3(0.0f, 0.0f, -1.5f);
+			Display.ModelViewMatrix = Matrix4.LookAt(
+				Position, 
+				Vector3.Zero, 
+				Vector3.UnitY);
 
 			#endregion
 
@@ -193,8 +208,6 @@ namespace ArcEngine.Examples.Bunny
 		}
 
 
-
-
 		/// <summary>
 		/// Update the game logic
 		/// </summary>
@@ -204,6 +217,29 @@ namespace ArcEngine.Examples.Bunny
 			// Check if the Escape key is pressed
 			if (Keyboard.IsKeyPress(Keys.Escape))
 				Exit();
+
+
+/*
+			if (Keyboard.IsKeyPress(Keys.Q))
+				Position.X -= Speed;
+
+			if (Keyboard.IsKeyPress(Keys.D))
+				Position.X += Speed;
+
+			if (Keyboard.IsKeyPress(Keys.Z))
+				Position.Y -= Speed;
+
+			if (Keyboard.IsKeyPress(Keys.S))
+				Position.Y += Speed;
+
+
+			Display.ModelViewMatrix = Matrix4.LookAt(
+				Position,
+				Vector3.Zero,
+				Vector3.UnitY);
+*/
+
+			Display.ModelViewMatrix = Display.ModelViewMatrix * Matrix4.CreateRotationZ(0.01f);
 		}
 
 
@@ -222,6 +258,9 @@ namespace ArcEngine.Examples.Bunny
 			// Draws with the index buffer
 			Display.DrawIndexBuffer(Buffer, BeginMode.Triangles, Index);
 
+			//Display.DrawBatch(Buffer, 0, 5000);
+
+			//Font.DrawText(new Point(10, 100), Color.White, Position.ToString());
 		}
 
 
@@ -243,6 +282,18 @@ namespace ArcEngine.Examples.Bunny
 		/// Font
 		/// </summary>
 		BitmapFont Font;
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Vector3 Position;
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		float Speed = 1.0f / 60.0f;
 
 		#endregion
 
