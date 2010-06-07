@@ -112,10 +112,14 @@ namespace ArcEngine.Graphic
 
 			GL.CompileShader(VertexID);
 			VertexLog = GL.GetShaderInfoLog(VertexID);
+			if (!string.IsNullOrEmpty(VertexLog))
+				Trace.WriteLine("[VertexShader] : {0}", VertexLog);
 
 			GL.CompileShader(FragmentID);
 			FragmentLog = GL.GetShaderInfoLog(FragmentID);
-			
+			if (!string.IsNullOrEmpty(FragmentLog))
+				Trace.WriteLine("[FragmentShader] : {0}", FragmentLog);
+		
 
 			GL.AttachShader(ProgramID, VertexID);
 			GL.AttachShader(ProgramID, FragmentID);

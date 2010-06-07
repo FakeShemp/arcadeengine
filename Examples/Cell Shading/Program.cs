@@ -30,6 +30,7 @@ using System.Xml;
 
 
 // http://www.planet-dev.com/developpement/jeux-video/cel-shading-en-glsl
+// http://prideout.net/blog/?p=22
 
 namespace ArcEngine.Examples.CellShading
 {
@@ -78,51 +79,64 @@ namespace ArcEngine.Examples.CellShading
 		{
 			Display.ClearColor = Color.CornflowerBlue;
 			Display.DepthTest = true;
-			Display.Culling = false;
+	
 
 			#region Shader
 
 			string vshader = @"
 				#version 130
 
-				precision highp float;
-
 				uniform mat4 mvp_matrix;
-				uniform mat4 tex_matrix;
+				uniform mat3  NormalMatrix;
 
 				in vec3 in_position;
 				in vec3 in_normal;
 				in vec4 in_color;
 
-				invariant gl_Position;
-
-				smooth out vec4 out_color;
+				out vec4 out_color;
+				out vec3 EyespaceNormal;
 
 				void main(void)
 				{
 					gl_Position = mvp_matrix * vec4(in_position, 1.0);
 
 					out_color = in_color;
+					EyespaceNormal = NormalMatrix * in_normal;
 				}";
 
 
 			string fshader = @"
 				#version 130
 
-				precision highp float;
+				uniform vec3 LightDir;
 
-				smooth in vec4 out_color;
+				in vec4 out_color;
+				in vec3 EyespaceNormal;
 
 				out vec4 frag_color;
 
+				vec4 CelShading(vec4 color) 
+				{
+//					float Intensity = dot( LightDir , normalize(EyespaceNormal) );
+//					float factor = 1.0;
+//					if ( Intensity < 0.5 ) factor = 0.5;
+//					color = vec4 ( factor, factor, factor, 1.0 );
+
+					return color;
+				}
+
+
 				void main(void)
 				{
-					frag_color = out_color;
+					frag_color = CelShading(out_color);
 				}";
 
 			Display.Shader.SetSource(ShaderType.VertexShader, vshader);
 			Display.Shader.SetSource(ShaderType.FragmentShader, fshader);
 			Display.Shader.Compile();
+
+			Display.Shader.SetUniform("LightDir", new float[] { 0.5f, 0.5f, 0.0f });
+			Display.Shader.SetUniform("nNormalMatrix", Matrix4.Identity);
 
 			#endregion
 
@@ -135,7 +149,72 @@ namespace ArcEngine.Examples.CellShading
 			Buffer.AddDeclaration("in_normal", 3);
 			Buffer.AddDeclaration("in_color", 4);
 
-			InitializeCube();
+			int Slices = 128;
+			int Stacks = 32;
+			float ds = 1.0f / Slices;
+			float dt = 1.0f / Stacks;
+			int VertexCount = Slices * Stacks;
+
+			float[] buffer = new float[VertexCount * 10];
+			int pos = 0;
+
+			for (float s = 0; s < 1 - ds / 2; s += ds)
+			{
+				for (float t = 0; t < 1 - dt / 2; t += dt)
+				{
+					const float E = 0.01f;
+					Vector3 p = EvaluateTrefoil(s, t);
+					Vector3 u = EvaluateTrefoil(s + E, t) - p;
+					Vector3 v = EvaluateTrefoil(s, t + E) - p;
+					Vector3 n = Vector3.Normalize(Vector3.Cross(u, v));
+
+					// Position
+					buffer[pos++] = p.X;
+					buffer[pos++] = p.Y;
+					buffer[pos++] = p.Z;
+
+					// Normal
+					buffer[pos++] = n.X;
+					buffer[pos++] = n.Y;
+					buffer[pos++] = n.Z;
+
+
+					buffer[pos++] = 1.0f;
+					buffer[pos++] = 0.0f;
+					buffer[pos++] = 0.0f;
+					buffer[pos++] = 1.0f;
+				}
+			}
+
+			Buffer.SetVertices(buffer);
+
+			#endregion
+
+
+			#region Index
+
+			Index = new IndexBuffer();
+
+			int[] indices = new int[Slices * Stacks * 6];
+			pos = 0;
+			int m = 0;
+			for (int i = 0; i < Slices; i++)
+			{
+				for (int j = 0; j < Stacks; j++)
+				{
+					indices[pos++] = m + j;
+					indices[pos++] = m + (j + 1) % Stacks;
+					indices[pos++] = (m + j + Stacks) % VertexCount;
+
+					indices[pos++] = (m + j + Stacks) % VertexCount;
+					indices[pos++] = (m + (j + 1) % Stacks) % VertexCount;
+					indices[pos++] = (m + (j + 1) % Stacks + Stacks) % VertexCount;
+				}
+				m += Stacks;
+			}
+			Index.Update(indices);
+
+
 
 			#endregion
 
@@ -153,72 +232,58 @@ namespace ArcEngine.Examples.CellShading
 			Display.ProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4.0f, aspectRatio, 0.1f, 20.0f);
 
 
-			Position = new Vector3(0.0f, 0.0f, 10.0f);
+			Position = new Vector3(0.0f, 0.0f, -5.0f);
 			Display.ModelViewMatrix = Matrix4.LookAt(
 				Position,
 				Vector3.Zero,
 				Vector3.UnitY);
 
+			
+
 			#endregion
+
+
+
 
 		}
 
+
 		/// <summary>
-		/// Creates an array of indexed position/normal/colored data.
+		/// 
 		/// </summary>
-		private void InitializeCube()
+		/// <param name="s"></param>
+		/// <param name="t"></param>
+		/// <returns></returns>
+		Vector3 EvaluateTrefoil(float s, float t)
 		{
-			// vertex coords array
-			float[] vertices = new float[]
-			{
-				// Vertex				// Normal			// Color
-				1, 1, 1,					0,0,1,				1,0,0,1,		// Front
-				-1, 1, 1,				0,0,1,				1,0,0,1,
-				-1, -1, 1,				0,0,1,				1,0,0,1,
-				1, 1, 1,					0,0,1,				1,0,0,1,
-				-1, -1, 1,				0,0,1,				1,0,0,1,
-				1, -1, 1,				0,0,1,				1,0,0,1,
-				
-				1, 1, 1,					1,0,0,				0,1,0,1,		// Right
-				1, 1, -1,				1,0,0,				0,1,0,1,
-				1, -1, 1,				1,0,0,				0,1,0,1,
-				1, 1, -1,				1,0,0,				0,1,0,1,	
-				1, -1, 1,				1,0,0,				0,1,0,1,
-				1, -1, -1,				1,0,0,				0,1,0,1,
-																		
-				1, 1, -1,				0,1,0,				0,0,1,1,		// Back
-				-1, 1, -1,				0,1,0,				0,0,1,1,
-				-1, -1, -1,				0,1,0,				0,0,1,1,			
-				1, 1, -1,				0,1,0,				0,0,1,1,				
-				-1, -1, -1,				0,1,0,				0,0,1,1,
-				1, -1, -1,				0,1,0,				0,0,1,1,
+			float TwoPi = (float)Math.PI * 2.0f;
+			float a = 0.5f;
+			float b = 0.3f;
+			float c = 0.5f;
+			float d = 0.1f;
+			float u = (1.0f - s) * 2.0f * TwoPi;
+			float v = t * TwoPi;
+			float r = a + b * (float)Math.Cos(1.5f * u);
+			float x = r * (float)Math.Cos(u);
+			float y = r * (float)Math.Sin(u);
+			float z = c * (float)Math.Sin(1.5f * u);
 
-				-1, 1, 1,    			-1,0,0, 				1,1,0,1,		// Left
-				-1, 1, -1,				-1,0,0,				1,1,0,1,
-				-1, -1, -1,				-1,0,0, 				1,1,0,1,
-				-1, 1, 1,				-1,0,0, 				1,1,0,1,
-				-1, -1, 1,				-1,0,0,				1,1,0,1,
-				-1, -1, -1,				-1,0,0, 				1,1,0,1,
+			Vector3 dv;
+			dv.X = -1.5f * b * (float)Math.Sin(1.5f * u) * (float)Math.Cos(u) - (a + b * (float)Math.Cos(1.5f * u)) * (float)Math.Sin(u);
+			dv.Y = -1.5f * b * (float)Math.Sin(1.5f * u) * (float)Math.Sin(u) + (a + b * (float)Math.Cos(1.5f * u)) * (float)Math.Cos(u);
+			dv.Z = 1.5f * c * (float)Math.Cos(1.5f * u);
 
-				-1, 1, 1,				0,-1,0, 				0,1,1,1,		// Top
-				-1, 1, -1,				0,-1,0, 				0,1,1,1,
-				1, 1, 1,					0,-1,0, 				0,1,1,1,
-				1, 1, -1,				0,-1,0, 				0,1,1,1,
-				-1, 1, -1,				0,-1,0, 				0,1,1,1,
-				1, 1, 1,					0,-1,0, 				0,1,1,1,
+			Vector3 q = dv;
+			q.Normalize();
+			Vector3 qvn = Vector3.Normalize(new Vector3(q.Y, -q.X, 0));
+			Vector3 ww = Vector3.Cross(q, qvn);
+			
 
-				-1, -1, 1,				0,0,-1, 				1,0,1,1,		// Bottom
-				-1, -1, -1,				0,0,-1, 				1,0,1,1,
-				1, -1, 1,				0,0,-1, 				1,0,1,1,
-				1, -1, 1,				0,0,-1, 				1,0,1,1,
-				-1, -1, -1,				0,0,-1, 				1,0,1,1,
-				1, -1, -1,				0,0,-1, 				1,0,1,1,
-			};
-
-
-			// Update Vertex buffer
-			Buffer.SetVertices(vertices);
-
+			Vector3 range;
+			range.X = x + d * (qvn.X * (float)Math.Cos(v) + ww.X * (float)Math.Sin(v));
+			range.Y = y + d * (qvn.Y * (float)Math.Cos(v) + ww.Y * (float)Math.Sin(v));
+			range.Z = z + d * ww.Z * (float)Math.Sin(v);
+			return range;
 		}
 
 
@@ -230,6 +295,10 @@ namespace ArcEngine.Examples.CellShading
 			if (Buffer != null)
 				Buffer.Dispose();
 			Buffer = null;
+
+			if (Index != null)
+				Index.Dispose();
+			Index = null;
 
 			if (Font != null)
 				Font.Dispose();
@@ -287,7 +356,8 @@ namespace ArcEngine.Examples.CellShading
 			Display.PushMatrix(MatrixMode.Modelview);
 			Display.ModelViewMatrix = Matrix4.CreateRotationY(Yaw) * Display.ModelViewMatrix;
 			Display.ModelViewMatrix = Matrix4.CreateRotationX(Pitch) * Display.ModelViewMatrix;
-			Display.DrawBatch(Buffer, 0, 36);
+			//Display.DrawBatch(Buffer, 0, 24567);
+			Display.DrawIndexBuffer(Buffer, BeginMode.Triangles, Index);
 			Display.PopMatrix(MatrixMode.Modelview);
 
 		}
@@ -302,6 +372,12 @@ namespace ArcEngine.Examples.CellShading
 		/// Index buffer
 		/// </summary>
 		BatchBuffer Buffer;
+
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		IndexBuffer Index;
 
 
 		/// <summary>
