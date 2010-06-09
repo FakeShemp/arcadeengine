@@ -79,39 +79,45 @@ namespace ArcEngine.Examples.CellShading
 		{
 			Display.ClearColor = Color.CornflowerBlue;
 			Display.DepthTest = true;
-	
 
 			#region Shader
 
+			#region Vertex Shader
 			string vshader = @"
 				#version 130
 
+				uniform mat4 modelview;
 				uniform mat4 mvp_matrix;
-				uniform mat3  NormalMatrix;
+				vec3 DiffuseMaterial = vec3(0, 0.75, 0.75);
 
 				in vec3 in_position;
 				in vec3 in_normal;
-				in vec4 in_color;
 
-				out vec4 out_color;
 				out vec3 EyespaceNormal;
+				out vec3 Diffuse;
 
 				void main(void)
 				{
 					gl_Position = mvp_matrix * vec4(in_position, 1.0);
 
-					out_color = in_color;
+					Diffuse = DiffuseMaterial;
+
+					mat3 NormalMatrix = mat3(modelview);
 					EyespaceNormal = NormalMatrix * in_normal;
 				}";
+			#endregion
 
-
+			#region Fragment Shader
 			string fshader = @"
 				#version 130
 
-				uniform vec3 LightDir;
+				vec3 LightPosition = vec3(0.25, 0.25, 1);
+				vec3 AmbientMaterial = vec3(0.04, 0.04, 0.04);
+				vec3 SpecularMaterial = vec3(0.5, 0.5, 0.5);
+				float Shininess = 50.0;
 
-				in vec4 out_color;
 				in vec3 EyespaceNormal;
+				in vec3 Diffuse;
 
 				out vec4 frag_color;
 
@@ -126,18 +132,62 @@ namespace ArcEngine.Examples.CellShading
 				}
 
 
+
+
+				float stepmix(float edge0, float edge1, float E, float x)
+				{
+					 float T = clamp(0.5 * (x - edge0 + E) / E, 0.0, 1.0);
+					 return mix(edge0, edge1, T);
+				}
+
+
 				void main(void)
 				{
-					frag_color = CelShading(out_color);
+				 vec3 N = normalize(EyespaceNormal);
+				 vec3 L = normalize(LightPosition);
+				 vec3 Eye = vec3(0, 0, 1);
+				 vec3 H = normalize(L + Eye);
+    
+				 float df = max(0.0, dot(N, L));
+				 float sf = max(0.0, dot(N, H));
+				 sf = pow(sf, Shininess);
+
+				 const float A = 0.1;
+				 const float B = 0.3;
+				 const float C = 0.6;
+				 const float D = 1.0;
+				 float E = fwidth(df);
+
+				 if      (df > A - E && df < A + E) df = stepmix(A, B, E, df);
+				 else if (df > B - E && df < B + E) df = stepmix(B, C, E, df);
+				 else if (df > C - E && df < C + E) df = stepmix(C, D, E, df);
+				 else if (df < A) df = 0.0;
+				 else if (df < B) df = B;
+				 else if (df < C) df = C;
+				 else df = D;
+
+				 E = fwidth(sf);
+				 if (sf > 0.5 - E && sf < 0.5 + E)
+				 {
+					  sf = smoothstep(0.5 - E, 0.5 + E, sf);
+				 }
+				 else
+				 {
+					  sf = step(0.5, sf);
+				 }
+
+				 vec3 color = AmbientMaterial + df * Diffuse + sf * SpecularMaterial;
+				 frag_color = vec4(color, 1.0);
+
+
+				//	frag_color = CelShading(new vec4(1, 0, 1, 1));
 				}";
+			#endregion
+
 
 			Display.Shader.SetSource(ShaderType.VertexShader, vshader);
 			Display.Shader.SetSource(ShaderType.FragmentShader, fshader);
 			Display.Shader.Compile();
-
-			Display.Shader.SetUniform("LightDir", new float[] { 0.5f, 0.5f, 0.0f });
-			Display.Shader.SetUniform("nNormalMatrix", Matrix4.Identity);
-
 			#endregion
 
 
@@ -147,7 +197,6 @@ namespace ArcEngine.Examples.CellShading
 			Buffer = new BatchBuffer();
 			Buffer.AddDeclaration("in_position", 3);
 			Buffer.AddDeclaration("in_normal", 3);
-			Buffer.AddDeclaration("in_color", 4);
 
 			int Slices = 128;
 			int Stacks = 32;
@@ -155,7 +204,7 @@ namespace ArcEngine.Examples.CellShading
 			float dt = 1.0f / Stacks;
 			int VertexCount = Slices * Stacks;
 
-			float[] buffer = new float[VertexCount * 10];
+			float[] buffer = new float[VertexCount * 6];
 			int pos = 0;
 
 			for (float s = 0; s < 1 - ds / 2; s += ds)
@@ -177,12 +226,6 @@ namespace ArcEngine.Examples.CellShading
 					buffer[pos++] = n.X;
 					buffer[pos++] = n.Y;
 					buffer[pos++] = n.Z;
-
-
-					buffer[pos++] = 1.0f;
-					buffer[pos++] = 0.0f;
-					buffer[pos++] = 0.0f;
-					buffer[pos++] = 1.0f;
 				}
 			}
 
@@ -228,22 +271,19 @@ namespace ArcEngine.Examples.CellShading
 
 			#region Matrices
 
+			// Projection Matrix
 			float aspectRatio = (float)Display.ViewPort.Width / (float)Display.ViewPort.Height;
 			Display.ProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4.0f, aspectRatio, 0.1f, 20.0f);
 
-
-			Position = new Vector3(0.0f, 0.0f, -5.0f);
+			// Model view matrix
 			Display.ModelViewMatrix = Matrix4.LookAt(
-				Position,
+				new Vector3(0.0f, 0.0f, -2.5f),
 				Vector3.Zero,
 				Vector3.UnitY);
 
-			
-
+			// Normal matrix
+		//	Display.NormalMatrix = Display.ModelViewMatrix;
 			#endregion
-
-
-
 
 		}
 
@@ -312,6 +352,7 @@ namespace ArcEngine.Examples.CellShading
 		/// <param name="gameTime"></param>
 		public override void Update(GameTime gameTime)
 		{
+			#region Keyboard
 			// Check if the Escape key is pressed
 			if (Keyboard.IsKeyPress(Keys.Escape))
 				Exit();
@@ -336,6 +377,18 @@ namespace ArcEngine.Examples.CellShading
 				Pitch = 0.0f;
 				Yaw = 0.0f;
 			}
+			#endregion
+
+			Display.Shader.SetUniform("modelview", Display.ModelViewMatrix);
+			Display.Shader.SetUniform("DiffuseMaterial", new float[] { 0.0f, 0.75f, 0.75f });
+		
+			Display.Shader.SetUniform("LightPosition", new float[] { 0.25f, 0.25f, 1.0f, 0.0f });
+			Display.Shader.SetUniform("AmbientMaterial", new float[] { 0.04f, 0.04f, 0.04f });
+			Display.Shader.SetUniform("SpecularMaterial", new float[] { 0.5f, 0.5f, 0.5f });
+			Display.Shader.SetUniform("Shininess", 50);
+
+		//	Display.Shader.SetUniform("LightDir", new float[] { 0.5f, 0.5f, 0.0f });
+		//	Display.Shader.SetUniform("NormalMatrix", Matrix4.Identity);
 		}
 
 
@@ -352,11 +405,12 @@ namespace ArcEngine.Examples.CellShading
 		//	Font.DrawText(new Point(100, 25), Color.White, "Here's an example of draw buffers.");
 
 
-			// Draws with the index buffer
+			// Aplly a rotation
 			Display.PushMatrix(MatrixMode.Modelview);
 			Display.ModelViewMatrix = Matrix4.CreateRotationY(Yaw) * Display.ModelViewMatrix;
 			Display.ModelViewMatrix = Matrix4.CreateRotationX(Pitch) * Display.ModelViewMatrix;
-			//Display.DrawBatch(Buffer, 0, 24567);
+
+			// Draws with the index buffer
 			Display.DrawIndexBuffer(Buffer, BeginMode.Triangles, Index);
 			Display.PopMatrix(MatrixMode.Modelview);
 

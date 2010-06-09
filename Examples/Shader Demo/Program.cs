@@ -150,7 +150,7 @@ namespace Shader_Demo
 			Texture.Blit(Display.ViewPort, TextureLayout.Tile);
 
 			// No shader
-			Display.Shader = null;
+		//	Display.Shader = null;
 
 			// Geometry shader
 			if (Mouse.IsButtonDown(MouseButtons.Right))
@@ -160,7 +160,7 @@ namespace Shader_Demo
 			Display.DrawEllipse(new Rectangle(500, 450, 100, 50), Color.Teal);
 
 			// No shader
-			Display.Shader = null;
+		//	Display.Shader = null;
 
 
 			Font.DrawText(new Point(25, 50), Color.White, "Press left mouse button to activate the lens shaders");

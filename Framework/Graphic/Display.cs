@@ -1401,6 +1401,24 @@ namespace ArcEngine.Graphic
 		}
 		static Matrix4 textureMatrix;
 
+
+		/// <summary>
+		/// Normal matrix
+		/// </summary>
+		public static Matrix4 NormalMatrix
+		{
+			get
+			{
+				return normalMatrix;
+			}
+			set
+			{
+				normalMatrix = value;
+				UpdateMatrix();
+			}
+		}
+		static Matrix4 normalMatrix;
+
 		#endregion
 
 		/// <summary>

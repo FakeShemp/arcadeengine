@@ -110,16 +110,30 @@ namespace ArcEngine.Graphic
 		{
 			IsCompiled = false;
 
+			int success = 0;
+
 			GL.CompileShader(VertexID);
-			VertexLog = GL.GetShaderInfoLog(VertexID);
-			if (!string.IsNullOrEmpty(VertexLog))
-				Trace.WriteLine("[VertexShader] : {0}", VertexLog);
+			GL.GetShader(VertexID, ShaderParameter.CompileStatus, out success);
+			if (success != 1)
+			{
+				VertexLog = GL.GetShaderInfoLog(VertexID);
+				if (!string.IsNullOrEmpty(VertexLog))
+					Trace.WriteLine("[VertexShader] : {0}", VertexLog);
+
+				return false;
+			}
+
 
 			GL.CompileShader(FragmentID);
-			FragmentLog = GL.GetShaderInfoLog(FragmentID);
-			if (!string.IsNullOrEmpty(FragmentLog))
-				Trace.WriteLine("[FragmentShader] : {0}", FragmentLog);
-		
+			GL.GetShader(FragmentID, ShaderParameter.CompileStatus, out success);
+			if (success != 1)
+			{
+				FragmentLog = GL.GetShaderInfoLog(FragmentID);
+				if (!string.IsNullOrEmpty(FragmentLog))
+					Trace.WriteLine("[FragmentShader] : {0}", FragmentLog);
+
+				return false;
+			}
 
 			GL.AttachShader(ProgramID, VertexID);
 			GL.AttachShader(ProgramID, FragmentID);
@@ -528,7 +542,8 @@ namespace ArcEngine.Graphic
 				GL.Uniform3(id, value[0], value[1], value[2]);
 			else if (value.Length == 4)
 				GL.Uniform4(id, value[0], value[1], value[2], value[3]);
-			
+			else if (value.Length == 9)
+				GL.UniformMatrix3(id, 9, false, value);
 		}
 
 
@@ -552,8 +567,13 @@ namespace ArcEngine.Graphic
 		{
 			if (string.IsNullOrEmpty(name))
 				return -1;
+			
+			int id = GL.GetUniformLocation(ProgramID, name);
 
-			return GL.GetUniformLocation(ProgramID, name);
+	//		if (id == -1)
+	//			Trace.WriteDebugLine("Uniform {0} not found.", name);
+
+			return id;
 		}
 
 
