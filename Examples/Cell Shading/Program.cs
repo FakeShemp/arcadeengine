@@ -67,7 +67,7 @@ namespace ArcEngine.Examples.CellShading
 		public Program()
 		{
 			CreateGameWindow(new Size(1024, 768));
-			Window.Text = "CellShading example";
+			Window.Text = "Cell Shading example from http://prideout.net/blog/?p=22";
 		}
 
 
@@ -88,7 +88,7 @@ namespace ArcEngine.Examples.CellShading
 
 				uniform mat4 modelview;
 				uniform mat4 mvp_matrix;
-				vec3 DiffuseMaterial = vec3(0, 0.75, 0.75);
+				uniform vec3 DiffuseMaterial;
 
 				in vec3 in_position;
 				in vec3 in_normal;
@@ -111,27 +111,15 @@ namespace ArcEngine.Examples.CellShading
 			string fshader = @"
 				#version 130
 
-				vec3 LightPosition = vec3(0.25, 0.25, 1);
-				vec3 AmbientMaterial = vec3(0.04, 0.04, 0.04);
-				vec3 SpecularMaterial = vec3(0.5, 0.5, 0.5);
-				float Shininess = 50.0;
+				uniform vec3 LightPosition;
+				uniform vec3 AmbientMaterial;
+				uniform vec3 SpecularMaterial;
+				uniform float Shininess;
 
 				in vec3 EyespaceNormal;
 				in vec3 Diffuse;
 
 				out vec4 frag_color;
-
-				vec4 CelShading(vec4 color) 
-				{
-//					float Intensity = dot( LightDir , normalize(EyespaceNormal) );
-//					float factor = 1.0;
-//					if ( Intensity < 0.5 ) factor = 0.5;
-//					color = vec4 ( factor, factor, factor, 1.0 );
-
-					return color;
-				}
-
-
 
 
 				float stepmix(float edge0, float edge1, float E, float x)
@@ -143,44 +131,42 @@ namespace ArcEngine.Examples.CellShading
 
 				void main(void)
 				{
-				 vec3 N = normalize(EyespaceNormal);
-				 vec3 L = normalize(LightPosition);
-				 vec3 Eye = vec3(0, 0, 1);
-				 vec3 H = normalize(L + Eye);
+					vec3 N = normalize(EyespaceNormal);
+					vec3 L = normalize(LightPosition);
+					vec3 Eye = vec3(0, 0, 1);
+					vec3 H = normalize(L + Eye);
     
-				 float df = max(0.0, dot(N, L));
-				 float sf = max(0.0, dot(N, H));
-				 sf = pow(sf, Shininess);
+					float df = max(0.0, dot(N, L));
+					float sf = max(0.0, dot(N, H));
+					sf = pow(sf, Shininess);
 
-				 const float A = 0.1;
-				 const float B = 0.3;
-				 const float C = 0.6;
-				 const float D = 1.0;
-				 float E = fwidth(df);
+					const float A = 0.1;
+					const float B = 0.3;
+					const float C = 0.6;
+					const float D = 1.0;
+					float E = fwidth(df);
 
-				 if      (df > A - E && df < A + E) df = stepmix(A, B, E, df);
-				 else if (df > B - E && df < B + E) df = stepmix(B, C, E, df);
-				 else if (df > C - E && df < C + E) df = stepmix(C, D, E, df);
-				 else if (df < A) df = 0.0;
-				 else if (df < B) df = B;
-				 else if (df < C) df = C;
-				 else df = D;
+					if      (df > A - E && df < A + E) df = stepmix(A, B, E, df);
+					else if (df > B - E && df < B + E) df = stepmix(B, C, E, df);
+					else if (df > C - E && df < C + E) df = stepmix(C, D, E, df);
+					else if (df < A) df = 0.0;
+					else if (df < B) df = B;
+					else if (df < C) df = C;
+					else		df = D;
 
-				 E = fwidth(sf);
-				 if (sf > 0.5 - E && sf < 0.5 + E)
-				 {
-					  sf = smoothstep(0.5 - E, 0.5 + E, sf);
-				 }
-				 else
-				 {
-					  sf = step(0.5, sf);
-				 }
+					E = fwidth(sf);
+					if (sf > 0.5 - E && sf < 0.5 + E)
+					{
+						sf = smoothstep(0.5 - E, 0.5 + E, sf);
+					}
+					else
+					{
+						sf = step(0.5, sf);
+					}
 
-				 vec3 color = AmbientMaterial + df * Diffuse + sf * SpecularMaterial;
-				 frag_color = vec4(color, 1.0);
+					vec3 color = AmbientMaterial + df * Diffuse + sf * SpecularMaterial;
+					frag_color = vec4(color, 1.0);
 
-
-				//	frag_color = CelShading(new vec4(1, 0, 1, 1));
 				}";
 			#endregion
 
@@ -352,43 +338,19 @@ namespace ArcEngine.Examples.CellShading
 		/// <param name="gameTime"></param>
 		public override void Update(GameTime gameTime)
 		{
-			#region Keyboard
 			// Check if the Escape key is pressed
 			if (Keyboard.IsKeyPress(Keys.Escape))
 				Exit();
 
+			Yaw += 0.005f;
 
-			if (Keyboard.IsKeyPress(Keys.Left))
-				Yaw -= Speed;
-
-			if (Keyboard.IsKeyPress(Keys.Right))
-				Yaw += Speed;
-
-
-			if (Keyboard.IsKeyPress(Keys.Up))
-				Pitch += Speed;
-
-			if (Keyboard.IsKeyPress(Keys.Down))
-				Pitch -= Speed;
-
-
-			if (Keyboard.IsKeyPress(Keys.Space))
-			{
-				Pitch = 0.0f;
-				Yaw = 0.0f;
-			}
-			#endregion
-
+			// Uniforms
 			Display.Shader.SetUniform("modelview", Display.ModelViewMatrix);
-			Display.Shader.SetUniform("DiffuseMaterial", new float[] { 0.0f, 0.75f, 0.75f });
-		
-			Display.Shader.SetUniform("LightPosition", new float[] { 0.25f, 0.25f, 1.0f, 0.0f });
+			Display.Shader.SetUniform("DiffuseMaterial", new float[] { 0.0f, 0.75f, 0.75f });	
+			Display.Shader.SetUniform("LightPosition", new float[] { 0.25f, 0.25f, 1.0f});
 			Display.Shader.SetUniform("AmbientMaterial", new float[] { 0.04f, 0.04f, 0.04f });
 			Display.Shader.SetUniform("SpecularMaterial", new float[] { 0.5f, 0.5f, 0.5f });
-			Display.Shader.SetUniform("Shininess", 50);
-
-		//	Display.Shader.SetUniform("LightDir", new float[] { 0.5f, 0.5f, 0.0f });
-		//	Display.Shader.SetUniform("NormalMatrix", Matrix4.Identity);
+			Display.Shader.SetUniform("Shininess", 50.0f);
 		}
 
 
@@ -408,7 +370,6 @@ namespace ArcEngine.Examples.CellShading
 			// Aplly a rotation
 			Display.PushMatrix(MatrixMode.Modelview);
 			Display.ModelViewMatrix = Matrix4.CreateRotationY(Yaw) * Display.ModelViewMatrix;
-			Display.ModelViewMatrix = Matrix4.CreateRotationX(Pitch) * Display.ModelViewMatrix;
 
 			// Draws with the index buffer
 			Display.DrawIndexBuffer(Buffer, BeginMode.Triangles, Index);
@@ -417,10 +378,15 @@ namespace ArcEngine.Examples.CellShading
 		}
 
 
-		float Yaw;
-		float Pitch;
+
 
 		#region Properties
+
+		/// <summary>
+		/// Rotation
+		/// </summary>
+		float Yaw;
+
 
 		/// <summary>
 		/// Index buffer
@@ -429,7 +395,7 @@ namespace ArcEngine.Examples.CellShading
 
 		
 		/// <summary>
-		/// 
+		/// Index buffer
 		/// </summary>
 		IndexBuffer Index;
 
@@ -438,18 +404,6 @@ namespace ArcEngine.Examples.CellShading
 		/// Font
 		/// </summary>
 		BitmapFont Font;
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		Vector3 Position;
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		float Speed = 1.0f / 60.0f;
 
 		#endregion
 

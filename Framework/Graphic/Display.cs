@@ -451,13 +451,22 @@ namespace ArcEngine.Graphic
 			switch (mode)
 			{
 				case MatrixMode.Modelview:
-				ModelViewMatrix = ModelViewStack.Pop();
+				{
+					if (ModelViewStack.Count > 0)
+						ModelViewMatrix = ModelViewStack.Pop();
+				}
 				break;
 				case MatrixMode.Projection:
-				ProjectionMatrix = ProjectionStack.Pop();
+				{
+					if (ProjectionStack.Count > 0)
+						ProjectionMatrix = ProjectionStack.Pop();
+				}
 				break;
 				case MatrixMode.Texture:
-				TextureMatrix = TextureStack.Pop();
+				{
+					if (TextureStack.Count > 0)
+						TextureMatrix = TextureStack.Pop();
+				}
 				break;
 			}
 		}
