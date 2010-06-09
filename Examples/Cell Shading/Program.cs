@@ -102,7 +102,7 @@ namespace ArcEngine.Examples.CellShading
 
 					Diffuse = DiffuseMaterial;
 
-					mat3 NormalMatrix = mat3(modelview);
+					mat3 NormalMatrix = mat3(mvp_matrix);
 					EyespaceNormal = NormalMatrix * in_normal;
 				}";
 			#endregion
@@ -136,15 +136,15 @@ namespace ArcEngine.Examples.CellShading
 					vec3 Eye = vec3(0, 0, 1);
 					vec3 H = normalize(L + Eye);
     
-					float df = max(0.0, dot(N, L));
-					float sf = max(0.0, dot(N, H));
+					float df = max(0.0, dot(N, L));				// Diffuse factor
+					float sf = max(0.0, dot(N, H));				// Specular factor
 					sf = pow(sf, Shininess);
 
-					const float A = 0.1;
-					const float B = 0.3;
-					const float C = 0.6;
-					const float D = 1.0;
-					float E = fwidth(df);
+					const float A = 0.1;			// gradient regions
+					const float B = 0.3;		
+					const float C = 0.6;		
+					const float D = 1.0;		
+					float E = fwidth(df);		// Epsilon to smooth edges
 
 					if      (df > A - E && df < A + E) df = stepmix(A, B, E, df);
 					else if (df > B - E && df < B + E) df = stepmix(B, C, E, df);
@@ -166,7 +166,6 @@ namespace ArcEngine.Examples.CellShading
 
 					vec3 color = AmbientMaterial + df * Diffuse + sf * SpecularMaterial;
 					frag_color = vec4(color, 1.0);
-
 				}";
 			#endregion
 
@@ -342,12 +341,12 @@ namespace ArcEngine.Examples.CellShading
 			if (Keyboard.IsKeyPress(Keys.Escape))
 				Exit();
 
-			Yaw += 0.005f;
+			Yaw += 0.01f;
 
 			// Uniforms
 			Display.Shader.SetUniform("modelview", Display.ModelViewMatrix);
 			Display.Shader.SetUniform("DiffuseMaterial", new float[] { 0.0f, 0.75f, 0.75f });	
-			Display.Shader.SetUniform("LightPosition", new float[] { 0.25f, 0.25f, 1.0f});
+			Display.Shader.SetUniform("LightPosition", new float[] { 0.25f, 0.25f, -1.0f});
 			Display.Shader.SetUniform("AmbientMaterial", new float[] { 0.04f, 0.04f, 0.04f });
 			Display.Shader.SetUniform("SpecularMaterial", new float[] { 0.5f, 0.5f, 0.5f });
 			Display.Shader.SetUniform("Shininess", 50.0f);
