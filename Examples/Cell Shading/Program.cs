@@ -79,6 +79,8 @@ namespace ArcEngine.Examples.CellShading
 		{
 			Display.ClearColor = Color.CornflowerBlue;
 			Display.DepthTest = true;
+			Display.ViewPerspective((float)Math.PI / 4.0f, 0.1f, 20.0f);
+
 
 			#region Shader
 
@@ -254,21 +256,8 @@ namespace ArcEngine.Examples.CellShading
 			#endregion
 
 
-			#region Matrices
 
-			// Projection Matrix
-			float aspectRatio = (float)Display.ViewPort.Width / (float)Display.ViewPort.Height;
-			Display.ProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4.0f, aspectRatio, 0.1f, 20.0f);
 
-			// Model view matrix
-			Display.ModelViewMatrix = Matrix4.LookAt(
-				new Vector3(0.0f, 0.0f, -2.5f),
-				Vector3.Zero,
-				Vector3.UnitY);
-
-			// Normal matrix
-		//	Display.NormalMatrix = Display.ModelViewMatrix;
-			#endregion
 
 		}
 
@@ -363,7 +352,7 @@ namespace ArcEngine.Examples.CellShading
 			Display.ClearBuffers();
 
 			// Some dummy text
-		//	Font.DrawText(new Point(100, 25), Color.White, "Here's an example of draw buffers.");
+			Font.DrawText(new Point(100, 25), Color.White, "Here's an example of draw buffers.");
 
 
 			// Aplly a rotation

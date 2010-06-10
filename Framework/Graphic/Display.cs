@@ -55,6 +55,7 @@ namespace ArcEngine.Graphic
 			ModelViewStack = new Stack<Matrix4>();
 			ProjectionStack = new Stack<Matrix4>();
 			TextureStack = new Stack<Matrix4>();
+			ShaderStack = new Stack<Shader>();
 		}
 
 
@@ -72,6 +73,11 @@ namespace ArcEngine.Graphic
 			#endregion
 
 
+			ProjectionStack.Clear();
+			ModelViewStack.Clear();
+			TextureStack.Clear();
+			ShaderStack.Clear();
+
 			Texturing = true;
 			Blending = true;
 			ClearColor = Color.Black;
@@ -88,11 +94,8 @@ namespace ArcEngine.Graphic
 			BlendingFunction(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 			GL.ClearStencil(0);
 
-			// Matrices
-			modelViewMatrix = Matrix4.LookAt(new Vector3(0, 0, 1), new Vector3(0, 0, 0), new Vector3(0, 1, 0));;
-			projectionMatrix = Matrix4.CreateOrthographicOffCenter(0, ViewPort.Width, ViewPort.Height, 0, 0, 5); ;
-			textureMatrix = Matrix4.Identity;
-			UpdateMatrix();
+			// Swap to ortho modes
+			ViewOrtho();
 
 			Buffer = BatchBuffer.CreatePositionColorTextureBuffer();
 		}
@@ -152,6 +155,129 @@ namespace ArcEngine.Graphic
 
 			Trace.Unindent();
 		}
+
+		#region Shaders
+
+		/// <summary>
+		/// Push the current shader on the stack
+		/// </summary>
+		public static void PushShader()
+		{
+			ShaderStack.Push(shader);
+		}
+
+
+		/// <summary>
+		/// Pop the shader stack
+		/// </summary>
+		public static void PopShader()
+		{
+			Shader = ShaderStack.Pop();
+		}
+
+		#endregion
+
+
+		#region View modes
+
+
+		/// <summary>
+		/// Set Up An Ortho View
+		/// </summary>
+		static public void ViewOrtho()
+		{
+			ViewOrtho(ViewPort.Width, ViewPort.Height);
+		}
+
+
+		/// <summary>
+		/// Set Up An Ortho View
+		/// </summary>
+		/// <param name="width">Width</param>
+		/// <param name="height">Height</param>
+		static public void ViewOrtho(int width, int height)
+		{
+			modelViewMatrix = Matrix4.LookAt(new Vector3(0, 0, 1), new Vector3(0, 0, 0), new Vector3(0, 1, 0)); ;
+			projectionMatrix = Matrix4.CreateOrthographicOffCenter(0, width, height, 0, -1, 1); ;
+
+			UpdateMatrix();
+		}
+
+
+		/// <summary>
+		/// Push in ortho mode
+		/// </summary>
+		static public void PushOrtho()
+		{
+			PushOrtho(ViewPort.Width, ViewPort.Height);
+		}
+
+
+		/// <summary>
+		/// Push in ortho mode
+		/// </summary>
+		/// <param name="width">Width</param>
+		/// <param name="height">Height</param>
+		static public void PushOrtho(int width, int height)
+		{
+			ModelViewStack.Push(modelViewMatrix);
+			ProjectionStack.Push(projectionMatrix);
+
+			ViewOrtho(width, height);
+		}
+
+
+
+		/// <summary>
+		/// Pop matrices
+		/// </summary>
+		static public void PopMatrices()
+		{
+			modelViewMatrix = ModelViewStack.Pop();
+			projectionMatrix = ProjectionStack.Pop();
+
+			UpdateMatrix();
+		}
+
+
+		/// <summary>
+		/// Set up a perspective view
+		/// </summary>
+		/// <param name="fov">Field of view</param>
+		/// <param name="znear">Z near</param>
+		/// <param name="zfar">Z far</param>
+		static public void ViewPerspective(float fov, float znear, float zfar)
+		{
+			float aspectRatio = (float)Display.ViewPort.Width / (float)Display.ViewPort.Height;
+			Display.ProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView(fov, aspectRatio, znear, zfar);
+
+			// Model view matrix
+			Display.ModelViewMatrix = Matrix4.LookAt(
+				new Vector3(0.0f, 0.0f, -2.5f),
+				Vector3.Zero,
+				Vector3.UnitY);
+
+			UpdateMatrix();
+		}
+
+
+		/// <summary>
+		/// Set up a perspective view
+		/// </summary>
+		/// <param name="fov">Field of view</param>
+		/// <param name="znear">Z near</param>
+		/// <param name="zfar">Z far</param>
+		static public void PushPerspective(float fov, float znear, float zfar)
+		{
+			ModelViewStack.Push(modelViewMatrix);
+			ProjectionStack.Push(projectionMatrix);
+
+			ViewPerspective(fov, znear, zfar);
+		}
+
+
+
+		#endregion
 
 
 		#region OpenGL
@@ -1956,6 +2082,11 @@ namespace ArcEngine.Graphic
 		}
 		static Shader shader;
 
+
+		/// <summary>
+		/// Shader stack
+		/// </summary>
+		static Stack<Shader> ShaderStack;
 
 		#endregion
 	}
