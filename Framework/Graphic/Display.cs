@@ -156,6 +156,7 @@ namespace ArcEngine.Graphic
 			Trace.Unindent();
 		}
 
+
 		#region Shaders
 
 		/// <summary>
@@ -200,7 +201,7 @@ namespace ArcEngine.Graphic
 			modelViewMatrix = Matrix4.LookAt(new Vector3(0, 0, 1), new Vector3(0, 0, 0), new Vector3(0, 1, 0)); ;
 			projectionMatrix = Matrix4.CreateOrthographicOffCenter(0, width, height, 0, -1, 1); ;
 
-			UpdateMatrix();
+			UpdateMatrices();
 		}
 
 
@@ -236,7 +237,7 @@ namespace ArcEngine.Graphic
 			modelViewMatrix = ModelViewStack.Pop();
 			projectionMatrix = ProjectionStack.Pop();
 
-			UpdateMatrix();
+			UpdateMatrices();
 		}
 
 
@@ -257,7 +258,7 @@ namespace ArcEngine.Graphic
 				Vector3.Zero,
 				Vector3.UnitY);
 
-			UpdateMatrix();
+			UpdateMatrices();
 		}
 
 
@@ -537,13 +538,13 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Update matrix
 		/// </summary>
-		static void UpdateMatrix()
+		static public void UpdateMatrices()
 		{
 			if (Shader == null)
 				return;
 
-			Shader.SetUniform("mvp_matrix", modelViewMatrix * projectionMatrix);
-			Shader.SetUniform("tex_matrix", TextureMatrix);
+			shader.SetUniform("mvp_matrix", modelViewMatrix * projectionMatrix);
+			shader.SetUniform("tex_matrix", TextureMatrix);
 		}
 
 
@@ -1319,7 +1320,7 @@ namespace ArcEngine.Graphic
 				return;
 
 			// Bind buffer
-			batch.Bind(Shader);
+			batch.Bind(shader);
 
 			GL.DrawArrays(mode, first, count);
 
@@ -1495,7 +1496,7 @@ namespace ArcEngine.Graphic
 			set
 			{
 				projectionMatrix = value;
-				UpdateMatrix();
+				UpdateMatrices();
 			}
 		}
 		static Matrix4 projectionMatrix;
@@ -1513,7 +1514,7 @@ namespace ArcEngine.Graphic
 			set
 			{
 				modelViewMatrix = value;
-				UpdateMatrix();
+				UpdateMatrices();
 			}
 		}
 		static Matrix4 modelViewMatrix;
@@ -1531,7 +1532,7 @@ namespace ArcEngine.Graphic
 			set
 			{
 				textureMatrix = value;
-				UpdateMatrix();
+				UpdateMatrices();
 			}
 		}
 		static Matrix4 textureMatrix;
@@ -1549,7 +1550,7 @@ namespace ArcEngine.Graphic
 			set
 			{
 				normalMatrix = value;
-				UpdateMatrix();
+				UpdateMatrices();
 			}
 		}
 		static Matrix4 normalMatrix;
@@ -1564,6 +1565,7 @@ namespace ArcEngine.Graphic
 			get;
 			set;
 		}
+
 
 		/// <summary>
 		/// Shared textures
@@ -1603,9 +1605,9 @@ namespace ArcEngine.Graphic
 					RenderStats.TextureBinding++;
 				}
 
-				GL.MatrixMode(MatrixMode.Texture);
-				GL.LoadIdentity();
-				GL.Scale(1.0f / value.Size.Width, 1.0f / value.Size.Height, 1.0f);
+				//GL.MatrixMode(MatrixMode.Texture);
+				//GL.LoadIdentity();
+				//GL.Scale(1.0f / value.Size.Width, 1.0f / value.Size.Height, 1.0f);
 
 				TextureMatrix = Matrix4.Scale(1.0f / texture.Size.Width, 1.0f / texture.Size.Height, 1.0f);
 
@@ -2078,6 +2080,7 @@ namespace ArcEngine.Graphic
 					GL.UseProgram(value.ProgramID);
 
 				shader = value;
+				UpdateMatrices();
 			}
 		}
 		static Shader shader;
@@ -2524,4 +2527,17 @@ namespace ArcEngine.Graphic
 
 	}
 
+
+	/// <summary>
+	/// Batch drawing mode
+	/// </summary>
+	public enum DrawMode
+	{
+		Triangles = OpenTK.Graphics.OpenGL.BeginMode.Triangles,
+
+		TriangleFan = OpenTK.Graphics.OpenGL.BeginMode.TriangleFan,
+
+		Points = OpenTK.Graphics.OpenGL.BeginMode.Points,
+
+	}
 }

@@ -82,7 +82,7 @@ namespace ArcEngine.Graphic
 		{
 			SetVertices(Buffer.ToArray());
 
-			int count = Buffer.Count / 8;
+			int count = Buffer.Count / Stride;
 			Buffer.Clear();
 
 			return count;
@@ -169,9 +169,6 @@ namespace ArcEngine.Graphic
 		}
 
 
-
-		#region Vertex PositionColorTexture helpers
-
 		/// <summary>
 		/// Clear the buffer
 		/// </summary>
@@ -180,20 +177,29 @@ namespace ArcEngine.Graphic
 			Buffer.Clear();
 		}
 
+		#region Helpers
+
+
 
 		/// <summary>
-		/// Adds a rectangle
+		/// Adds a colored rectangle
 		/// </summary>
 		/// <param name="rect">Rectangle on the screen</param>
 		/// <param name="color">Drawing color</param>
 		public void AddRectangle(Rectangle rect, Color color)
 		{
-			AddRectangle(rect, color, Rectangle.Empty);
+			AddPoint(new Point(rect.X, rect.Bottom), color);				// D
+			AddPoint(rect.Location, color);										// A
+			AddPoint(new Point(rect.Right, rect.Bottom), color);			// C
+
+			AddPoint(rect.Location, color);										// A
+			AddPoint(new Point(rect.Right, rect.Bottom), color);			// C
+			AddPoint(new Point(rect.Right, rect.Top), color);				// B
 		}
 
 
 		/// <summary>
-		/// Adds a rectangle
+		/// Adds a textured rectangle
 		/// </summary>
 		/// <param name="rect">Rectangle on the screen</param>
 		/// <param name="color">Drawing color</param>
@@ -212,7 +218,7 @@ namespace ArcEngine.Graphic
 
 
 		/// <summary>
-		/// Adds a rectangle
+		/// Adds a textured rectangle
 		/// </summary>
 		/// <param name="rect">Rectangle on the screen</param>
 		/// <param name="color">Drawing color for each corner</param>
@@ -230,7 +236,7 @@ namespace ArcEngine.Graphic
 
 
 		/// <summary>
-		/// Adds a point
+		/// Adds a textured point
 		/// </summary>
 		/// <param name="point">Location on the screen</param>
 		/// <param name="color">Color of the point</param>
@@ -254,18 +260,26 @@ namespace ArcEngine.Graphic
 
 
 		/// <summary>
-		/// Adds a point
+		/// Adds a colored point
 		/// </summary>
 		/// <param name="point">Location on the screen</param>
 		/// <param name="color">Color of the point</param>
 		public void AddPoint(Point point, Color color)
 		{
-			AddPoint(point, color, Point.Empty);
+			// Vertex
+			Buffer.Add(point.X);
+			Buffer.Add(point.Y);
+
+			// Color
+			Buffer.Add(color.R / 255.0f);
+			Buffer.Add(color.G / 255.0f);
+			Buffer.Add(color.B / 255.0f);
+			Buffer.Add(color.A / 255.0f);
 		}
 
 
 		/// <summary>
-		/// Adds a line
+		/// Adds a colored line
 		/// </summary>
 		/// <param name="from">Start point</param>
 		/// <param name="to">Ending point</param>

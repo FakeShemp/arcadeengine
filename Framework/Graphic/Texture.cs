@@ -440,23 +440,7 @@ namespace ArcEngine.Graphic
 		public bool LoadImage(string filename)
 		{
 			using (Stream stream = ResourceManager.LoadResource(filename))
-			{
 				return LoadImage(stream);
-			}
-
-			return false;
-/*
-			if (stream == null)
-				return false;
-			try
-			{
-				return LoadImage(stream);
-			}
-			finally
-			{
-				stream.Close();
-			}
-*/
 		}
 
 
@@ -467,6 +451,9 @@ namespace ArcEngine.Graphic
 		/// <returns></returns>
 		public bool LoadImage(Stream stream)
 		{
+			if (stream == null)
+				return false;
+
 			return LoadImage(new Bitmap(stream));
 		}
 

@@ -28,6 +28,17 @@ using ArcEngine.Asset;
 
 // http://bakura.developpez.com/tutoriels/jeux/utilisation-shaders-avec-opengl-3-x/
 // http://www.siteduzero.com/tutoriel-3-8879-communiquer-avec-l-application-attributs-et-uniforms.html#ss_part_2
+
+//
+//
+// Type of shaders :
+// - BitmapFont shader
+// - Default 2d texture
+// - Default 2d no texture
+//
+//
+
+
 namespace ArcEngine.Graphic
 {
 	/// <summary>
@@ -268,34 +279,26 @@ namespace ArcEngine.Graphic
 				precision highp float;
 
 				uniform mat4 mvp_matrix;
-				//uniform mat4 tex_matrix;
 
 				in vec2 in_position;
 				in vec4 in_color;
-				//in vec4 in_texture;
 
 				invariant gl_Position;
 
 				smooth out vec4 out_color;
-				//smooth out vec4 out_texture;
 
 				void main(void)
 				{
 					gl_Position = mvp_matrix * vec4(in_position, 0.0, 1.0);
 
 					out_color = in_color;
-					//out_texture = tex_matrix * in_texture;
 				}");
 
 			shader.SetSource(ShaderType.FragmentShader,
 				@"#version 130
-
 				precision highp float;
 
-				//uniform sampler2D texture;
-
 				smooth in vec4 out_color;
-				//smooth in vec4 out_texture;
 
 				out vec4 frag_color;
 
