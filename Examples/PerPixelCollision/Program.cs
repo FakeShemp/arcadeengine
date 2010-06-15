@@ -1,7 +1,7 @@
 ﻿#region Licence
 //
 //This file is part of ArcEngine.
-//Copyright (C)2008-2009 Adrien Hémery ( iliak@mimicprod.net )
+//Copyright (C)2008-2010 Adrien Hémery ( iliak@mimicprod.net )
 //
 //ArcEngine is free software: you can redistribute it and/or modify
 //it under the terms of the GNU General Public License as published by
@@ -24,11 +24,13 @@ using ArcEngine;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
 using ArcEngine.Asset;
+using OpenTK.Graphics.OpenGL;
 
 
-// http://www.alpha-arts.net/blog/articles/view/18/moteur-de-lumieres
+// http://kometbomb.net/2008/07/23/collision-detection-with-occlusion-queries-redux/
+// http://blogs.msdn.com/b/shawnhar/archive/2008/12/31/pixel-perfect-collision-detection-using-gpu-occlusion-queries.aspx
 
-namespace ArcEngine.Examples.LightTest
+namespace ArcEngine.Examples.PerPixelCollision
 {
 	/// <summary>
 	/// Main game class
@@ -64,8 +66,7 @@ namespace ArcEngine.Examples.LightTest
 			CreateGameWindow(new Size(1024, 768));
 
 			// Change the window title
-			Window.Text = "2D light test";
-			Mouse.Visible = false;
+			Window.Text = "Per pixel perfect collision test";
 
 		}
 
@@ -81,21 +82,18 @@ namespace ArcEngine.Examples.LightTest
 			Display.Shader.Dispose();
 			Display.Shader = Shader.CreateColorShader();
 
+			// Check for availability
+			if (!Display.Capabilities.Extensions.Contains("GL_ARB_occlusion_query"))
+			{
+				MessageBox.Show("GL_ARB_occlusion_query not found !", "Unsupported extension");
+				Exit();
+			}
 
-			Lights = new Light[2];
-			Lights[0] = new Light();
-			Lights[0].Location = new Point(200, 200);
-
-			Manager = new LightManager();
-			Manager.AddLight(Lights[0]);
+			int id;
+			GL.GenQueries(1, out id);
 
 
-			Manager.AddWall(new Wall(new Point(300, 200), new Point(700, 500)));
-			Manager.AddWall(new Wall(new Point(700, 200), new Point(300, 500)));
-			Manager.AddWall(new Wall(new Point(100, 200), new Point(100, 500)));
-			Manager.AddWall(new Wall(new Point(900, 200), new Point(800, 500)));
-			Manager.AddWall(new Wall(new Point(300, 100), new Point(700, 100)));
-
+			GL.DeleteQueries(1, ref id);
 		}
 
 
@@ -104,9 +102,6 @@ namespace ArcEngine.Examples.LightTest
 		/// </summary>
 		public override void UnloadContent()
 		{
-			if (Manager != null)
-				Manager.Dispose();
-			Manager = null;
 		}
 
 
@@ -121,7 +116,6 @@ namespace ArcEngine.Examples.LightTest
 				Exit();
 
 
-			Lights[0].Location = Mouse.Location;
 		}
 
 
@@ -133,8 +127,9 @@ namespace ArcEngine.Examples.LightTest
 		{
 			// Clears the background
 			Display.ClearBuffers();
+			Display.DefaultMatrix();
 
-			Manager.Render();
+			Display.FillRectangle(10, 10, 100, 50, Color.White);
 		}
 
 
@@ -142,29 +137,9 @@ namespace ArcEngine.Examples.LightTest
 
 		#region Properties
 
-		
-		/// <summary>
-		/// Light manager
-		/// </summary>
-		LightManager Manager;
 
-
-		/// <summary>
-		/// Lights
-		/// </summary>
-		Light[] Lights;
 
 		#endregion
 
 	}
 }
-
-
-
-
-
-
-
-
-
-
