@@ -88,14 +88,16 @@ namespace ArcEngine.Examples.PerPixelCollision
 				Exit();
 			}
 
-			int id;
-			GL.GenQueries(1, out id);
+			// Query
+			GL.GenQueries(1, out QueryID);
 
 
-			GL.DeleteQueries(1, ref id);
-
+			// Textures
 			Logo = new Texture("data/logo.png");
 			Star = new Texture("data/star.png");
+
+			// Font
+			Font = BitmapFont.CreateFromTTF(@"c:\windows\fonts\verdana.ttf", 14, FontStyle.Regular);
 		}
 
 
@@ -104,11 +106,18 @@ namespace ArcEngine.Examples.PerPixelCollision
 		/// </summary>
 		public override void UnloadContent()
 		{
+			GL.DeleteQueries(1, ref QueryID);
+			QueryID = -1;
+			
+			
 			if (Logo != null)
 				Logo.Dispose();
 
 			if (Star != null)
 				Star.Dispose();
+
+			if (Font != null)
+				Font.Dispose();
 		}
 
 
@@ -136,12 +145,56 @@ namespace ArcEngine.Examples.PerPixelCollision
 			Display.ClearBuffers();
 			Display.DefaultMatrix();
 
+
+			#region First draw
+
 			// Draw logo
 			Display.DrawTexture(Logo, new Point(200, 200));
 
 			// Draw the star
 			Display.DrawTexture(Star, new Point(Mouse.Location.X, Mouse.Location.Y));
 
+			#endregion
+
+
+			#region Occlusion query
+
+			// Disable writing to the color buffer
+			Display.ColorMask(false, false, false, true);
+
+			// Activate stencil buffer
+			Display.StencilTest = true;
+			Display.AlphaTest = true;
+
+			// Draw the blue print
+			GL.StencilFunc(StencilFunction.Always, 1, 1);
+			GL.StencilOp(StencilOp.Keep, StencilOp.Keep, StencilOp.Replace);
+
+			Display.DrawTexture(Logo, new Point(200, 200));
+
+
+			// Begin the query
+			GL.StencilFunc(StencilFunction.Equal, 1, 1);
+			GL.StencilOp(StencilOp.Keep, StencilOp.Keep, StencilOp.Keep);
+
+
+			GL.BeginQuery(QueryTarget.SamplesPassed, QueryID);
+			Display.DrawTexture(Star, new Point(Mouse.Location.X, Mouse.Location.Y));
+			GL.EndQuery(QueryTarget.SamplesPassed);
+
+			GL.GetQueryObject(QueryID, GetQueryObjectParam.QueryResult, out Count);
+
+			// Deactivate stencil buffer
+			Display.StencilTest = false;
+
+			// Enable writing to the color buffer
+			Display.ColorMask(true, true, true, true);
+			#endregion
+
+
+
+			// Some text
+			Font.DrawText(new Point(10, 30), Color.Red, "Count {0}", Count);
 		}
 
 
@@ -160,6 +213,23 @@ namespace ArcEngine.Examples.PerPixelCollision
 		/// </summary>
 		Texture Star;
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		BitmapFont Font;
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		int QueryID;
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		int Count;
 
 		#endregion
 

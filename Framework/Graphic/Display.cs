@@ -243,9 +243,14 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		static public void PopMatrices()
 		{
-			modelViewMatrix = ModelViewStack.Pop();
-			projectionMatrix = ProjectionStack.Pop();
-			textureMatrix = TextureStack.Pop();
+			if (ModelViewStack.Count > 0)
+				ModelViewMatrix = ModelViewStack.Pop();
+
+			if (ProjectionStack.Count > 0)
+				ProjectionMatrix = ProjectionStack.Pop();
+
+			if (TextureStack.Count > 0)
+				TextureMatrix = TextureStack.Pop();
 
 			UpdateMatrices();
 		}
@@ -1596,7 +1601,7 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Specifies a reference value to use for the stencil test.
 		/// </summary>
-		public static int ReferenceStencil 
+		public static int StencilReference 
 		{
 			get
 			{
@@ -1680,6 +1685,7 @@ namespace ArcEngine.Graphic
 			}
 			set
 			{
+				GL.StencilFunc((OpenTK.Graphics.OpenGL.StencilFunction)value, StencilReference, StencilMask);
 			}
 		}
 
