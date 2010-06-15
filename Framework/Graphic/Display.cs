@@ -52,6 +52,12 @@ namespace ArcEngine.Graphic
 
 			CircleResolution = 50;
 
+
+			projectionMatrix = Matrix4.Identity;
+			modelViewMatrix = Matrix4.Identity;
+			DefaultModelViewMatrix = modelViewMatrix;
+			DefaultProjectionMatrix = projectionMatrix;
+
 			ModelViewStack = new Stack<Matrix4>();
 			ProjectionStack = new Stack<Matrix4>();
 			TextureStack = new Stack<Matrix4>();
@@ -183,7 +189,7 @@ namespace ArcEngine.Graphic
 
 
 		/// <summary>
-		/// Set Up An Ortho View
+		/// Set up a default ortho view
 		/// </summary>
 		static public void ViewOrtho()
 		{
@@ -192,7 +198,7 @@ namespace ArcEngine.Graphic
 
 
 		/// <summary>
-		/// Set Up An Ortho View
+		/// Set up an ortho view
 		/// </summary>
 		/// <param name="width">Width</param>
 		/// <param name="height">Height</param>
@@ -200,6 +206,9 @@ namespace ArcEngine.Graphic
 		{
 			modelViewMatrix = Matrix4.LookAt(new Vector3(0, 0, 1), new Vector3(0, 0, 0), new Vector3(0, 1, 0)); ;
 			projectionMatrix = Matrix4.CreateOrthographicOffCenter(0, width, height, 0, -1, 1); ;
+
+			DefaultProjectionMatrix = projectionMatrix;
+			DefaultModelViewMatrix = modelViewMatrix;
 
 			UpdateMatrices();
 		}
@@ -236,11 +245,23 @@ namespace ArcEngine.Graphic
 		{
 			modelViewMatrix = ModelViewStack.Pop();
 			projectionMatrix = ProjectionStack.Pop();
+			textureMatrix = TextureStack.Pop();
 
 			UpdateMatrices();
 		}
 
 
+		/// <summary>
+		/// Pushes alla matrices states
+		/// </summary>
+		static public void PushMatrices()
+		{
+			PushMatrix(MatrixMode.Modelview);
+			PushMatrix(MatrixMode.Projection);
+			PushMatrix(MatrixMode.Texture);
+		}
+
+	
 		/// <summary>
 		/// Set up a perspective view
 		/// </summary>
@@ -257,6 +278,10 @@ namespace ArcEngine.Graphic
 				new Vector3(0.0f, 0.0f, -2.5f),
 				Vector3.Zero,
 				Vector3.UnitY);
+
+
+			DefaultProjectionMatrix = projectionMatrix;
+			DefaultModelViewMatrix = modelViewMatrix;
 
 			UpdateMatrices();
 		}
@@ -412,11 +437,8 @@ namespace ArcEngine.Graphic
 		/// <param name="y">Vertical translation</param>
 		public static void Translate(float x, float y)
 		{
-			GL.MatrixMode(MatrixMode.Projection);
-			GL.Translate(x, y, 0);
+			ProjectionMatrix = Matrix4.CreateTranslation(x, y, 0.0f) * ProjectionMatrix;
 		}
-
-
 
 
 		/// <summary>
@@ -425,12 +447,30 @@ namespace ArcEngine.Graphic
 		/// <param name="angle">The angle of rotation, in degrees.</param>
 		public static void Rotate(float angle)
 		{
-
-			GL.MatrixMode(MatrixMode.Projection);
-			GL.Rotate(angle, 0, 0, 1.0f);
-
+			ProjectionMatrix = Matrix4.CreateRotationZ(DegreeToRadian(angle)) * ProjectionMatrix;
 		}
 
+
+		/// <summary>
+		/// Converts a degree angle to a radian angle
+		/// </summary>
+		/// <param name="angle">Degree angle</param>
+		/// <returns></returns>
+		static float DegreeToRadian(float angle)
+		{
+			return (float)Math.PI * angle / 180.0f;
+		}
+
+
+		/// <summary>
+		/// Converts a radian angle to a degree angle
+		/// </summary>
+		/// <param name="angle">Radian angle</param>
+		/// <returns></returns>
+		static float RadianToDegree(float angle)
+		{
+			return (float)Math.PI / angle * 180.0f;
+		}
 
 
 		/// <summary>
@@ -483,8 +523,7 @@ namespace ArcEngine.Graphic
 		/// <param name="y">Y factor</param>
 		public static void Scale(float x, float y)
 		{
-			GL.MatrixMode(MatrixMode.Projection);
-			GL.Scale(x, y, 1.0f);
+			ProjectionMatrix = Matrix4.Scale(x, y, 1.0f) * ProjectionMatrix;
 		}
 
 
@@ -494,18 +533,8 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public static void DefaultMatrix()
 		{
-			GL.MatrixMode(MatrixMode.Projection);
-			//GL.LoadIdentity();
-			//GL.Ortho(ViewPort.Left, ViewPort.Width, ViewPort.Height, ViewPort.Top, -1, 1);
-
-			Matrix4 projection = Matrix4.CreateOrthographicOffCenter(ViewPort.Left, ViewPort.Width, ViewPort.Height, ViewPort.Top, -1, 1);
-			GL.LoadMatrix(ref projection);
-
-
-			// Exact pixelization is required, put a small translation in the ModelView matrix
-			GL.MatrixMode(MatrixMode.Modelview);
-		//	GL.Translate(0.0001f, 0.0001f, 0.0f);
-
+			ProjectionMatrix = DefaultProjectionMatrix;
+			ModelViewMatrix = DefaultModelViewMatrix;
 		}
 
 
@@ -515,10 +544,8 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public static void SaveState()
 		{
-			//GL.PushAttrib(AttribMask.AllAttribBits);
-
-			GL.MatrixMode(MatrixMode.Projection);
-			GL.PushMatrix();
+			GL.PushAttrib(AttribMask.AllAttribBits);
+			PushMatrices();
 		}
 
 
@@ -527,10 +554,8 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public static void RestoreState()
 		{
-			GL.MatrixMode(MatrixMode.Projection);
-			GL.PopMatrix();
-
-			//GL.PopAttrib();
+			PopMatrices();
+			GL.PopAttrib();
 		}
 
 
@@ -679,7 +704,7 @@ namespace ArcEngine.Graphic
 		/// <param name="height">Height</param>
 		/// <param name="color">Color</param>
 		/// <param name="fill">Fill the rectangle or not</param>
-		/// <param name="angle">Rotation angle</param>
+		/// <param name="angle">Rotation angle in degree</param>
 		/// <param name="pivot">Origin of rotation</param>
 		static void DrawQuad(int x, int y, int width, int height, Color color, bool fill, float angle, Point pivot)
 		{
@@ -1500,6 +1525,11 @@ namespace ArcEngine.Graphic
 			}
 		}
 		static Matrix4 projectionMatrix;
+		
+		/// <summary>
+		/// Default projection matrix
+		/// </summary>
+		static Matrix4 DefaultProjectionMatrix;
 
 
 		/// <summary>
@@ -1518,6 +1548,11 @@ namespace ArcEngine.Graphic
 			}
 		}
 		static Matrix4 modelViewMatrix;
+
+		/// <summary>
+		/// Default model view matrix
+		/// </summary>
+		static Matrix4 DefaultModelViewMatrix;
 
 
 		/// <summary>
