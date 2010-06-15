@@ -374,33 +374,6 @@ namespace ArcEngine.Graphic
 		}
 
 
-
-		/// <summary>
-		/// Stencil test function
-		/// </summary>
-		/// <param name="function">Test function</param>
-		/// <param name="reference">Reference value</param>
-		/// <param name="mask">Mask</param>
-		public static void StencilFunction(StencilFunction function, int reference, int mask)
-		{
-			GL.StencilFunc(function, reference, mask);
-		}
-
-
-
-		/// <summary>
-		/// Stencil test action
-		/// </summary>
-		/// <param name="fail">Specifies the action to take when the stencil test fails</param>
-		/// <param name="zfail">Specifies the action when the stencil test passes, but the depth test fails</param>
-		/// <param name="zpass">Specifies the action when both the stencil test and the depth test pass, or when the 
-		/// stencil test passes and either there is no depth buffer or depth testing is not enabled</param>
-		public static void StencilOp(StencilOp fail, StencilOp zfail, StencilOp zpass)
-		{
-			GL.StencilOp(fail, zfail, zpass);
-		}
-
-
 		/// <summary>
 		/// Alpha test function
 		/// </summary>
@@ -1488,6 +1461,249 @@ namespace ArcEngine.Graphic
 		#endregion
 
 
+		#region Stencil
+/*
+		/// <summary>
+		/// Stencil test function
+		/// </summary>
+		/// <param name="function">Test function</param>
+		/// <param name="reference">Reference value</param>
+		/// <param name="mask">Mask</param>
+		public static void StencilFunction(StencilFunction function, int reference, int mask)
+		{
+			GL.StencilFunc(function, reference, mask);
+		}
+*/
+
+		/// <summary>
+		/// Stencil test action
+		/// </summary>
+		/// <param name="fail">Specifies the action to take when the stencil test fails</param>
+		/// <param name="zfail">Specifies the action when the stencil test passes, but the depth test fails</param>
+		/// <param name="zpass">Specifies the action when both the stencil test and the depth test pass, or when the 
+		/// stencil test passes and either there is no depth buffer or depth testing is not enabled</param>
+		public static void StencilOp(StencilOp fail, StencilOp zfail, StencilOp zpass)
+		{
+			GL.StencilOp(fail, zfail, zpass);
+		}
+
+
+
+		/// <summary>
+		/// Gets or sets stencil enabling. The default is false.
+		/// </summary>
+		public static bool StencilTest
+		{
+			get
+			{
+				return GL.IsEnabled(EnableCap.StencilTest);
+			}
+
+			set
+			{
+				if (value)
+					GL.Enable(EnableCap.StencilTest);
+				else
+					GL.Disable(EnableCap.StencilTest);
+			}
+		}
+
+
+		/// <summary>
+		/// Gets/sets clear value for the stencil buffer 
+		/// </summary>
+		public static int StencilClearValue
+		{
+			get
+			{
+				int s;
+				GL.GetInteger(GetPName.StencilClearValue, out s);
+				return s;
+			}
+			set
+			{
+				GL.ClearStencil(value);
+			}
+		}
+
+		/// <summary>
+		/// Gets or sets the mask applied to the reference value and each stencil
+		/// buffer entry to determine the significant bits for the stencil test. 
+		/// </summary>
+		public static int StencilMask
+		{
+			get
+			{
+				int mask;
+				GL.GetInteger(GetPName.StencilValueMask, out mask);
+				return mask;
+			}
+			set
+			{
+				GL.StencilMask(value);
+			}
+		}
+
+
+		/// <summary>
+		/// Gets or sets the stencil operation to perform if the stencil test passes.
+		/// </summary>
+		public static StencilOperation StencilPass
+		{
+			get
+			{
+				return StencilOperation.Keep;
+			}
+			set
+			{
+			}
+		}
+
+
+		/// <summary>
+		/// Gets or sets the write mask applied to values written into the stencil buffer.
+		/// </summary>
+		public static int StencilWriteMask 
+		{
+			get
+			{
+				int mask;
+				GL.GetInteger(GetPName.StencilWritemask, out mask);
+				return mask;
+			}
+			set
+			{
+				
+			}
+		}
+
+
+		/// <summary>
+		/// Enables or disables two-sided stenciling. 
+		/// </summary>
+		public static bool TwoSidedStencilMode 
+		{
+			get
+			{
+				return false;
+			}
+			set
+			{
+			}
+		}
+
+
+		/// <summary>
+		/// Specifies a reference value to use for the stencil test.
+		/// </summary>
+		public static int ReferenceStencil 
+		{
+			get
+			{
+				int mask;
+				GL.GetInteger(GetPName.StencilRef, out mask);
+				return mask;
+			}
+			set
+			{
+			}
+		}
+
+/*
+		/// <summary>
+		/// Gets or sets the stencil operation to perform if the stencil and 
+		/// z-tests pass for a counterclockwise triangle.
+		/// </summary>
+		public static StencilOperation CounterClockwiseStencilPass 
+		{
+			get
+			{
+			}
+			set
+			{
+			}
+		}
+
+
+		/// <summary>
+		/// Gets or sets the comparison function to use for counterclockwise stencil tests. 
+		/// </summary>
+		public static CompareFunction CounterClockwiseStencilFunction 
+		{
+			get
+			{
+			}
+			set
+			{
+			}
+		}
+
+
+		/// <summary>
+		/// Gets or sets the stencil operation to perform if the stencil 
+		/// test fails for a counterclockwise triangle. 
+		/// </summary>
+		public static StencilOperation CounterClockwiseStencilFail 
+		{
+			get
+			{
+			}
+			set
+			{
+			}
+		}
+
+
+		/// <summary>
+		/// Gets or sets the stencil operation to perform if the stencil test passes
+		/// and the depth-buffer test fails for a counterclockwise triangle.
+		/// </summary>
+		public static StencilOperation CounterClockwiseStencilDepthBufferFail 
+		{
+			get
+			{
+			}
+			set
+			{
+			}
+		}
+*/
+
+		/// <summary>
+		/// Gets or sets the comparison function for the stencil test. 
+		/// </summary>
+		public static CompareFunction StencilFunction 
+		{
+			get
+			{
+				return CompareFunction.Never;
+			}
+			set
+			{
+			}
+		}
+
+
+		/// <summary>
+		/// Gets or sets the stencil operation to perform if the stencil test fails. 
+		/// </summary>
+		public static StencilOperation StencilFail 
+		{
+			get
+			{
+				return StencilOperation.Keep;
+			}
+			set
+			{
+			}
+		}
+
+
+	
+		
+		#endregion
+
+
 		#region Properties
 
 
@@ -1591,6 +1807,7 @@ namespace ArcEngine.Graphic
 		static Matrix4 normalMatrix;
 
 		#endregion
+
 
 		/// <summary>
 		/// Circle resolution
@@ -1764,43 +1981,6 @@ namespace ArcEngine.Graphic
 					GL.Enable(EnableCap.CullFace);
 				else
 					GL.Disable(EnableCap.CullFace);
-			}
-		}
-
-		/// <summary>
-		/// Enables/disables stencil test
-		/// </summary>
-		public static bool StencilTest
-		{
-			get
-			{
-				return GL.IsEnabled(EnableCap.StencilTest);
-			}
-
-			set
-			{
-				if (value)
-					GL.Enable(EnableCap.StencilTest);
-				else
-					GL.Disable(EnableCap.StencilTest);
-			}
-		}
-
-
-		/// <summary>
-		/// Gets/sets clear value for the stencil buffer 
-		/// </summary>
-		public static int StencilClearValue
-		{
-			get
-			{
-				int s;
-				GL.GetInteger(GetPName.StencilClearValue, out s);
-				return s;
-			}
-			set
-			{
-				GL.ClearStencil(value);
 			}
 		}
 
@@ -2575,4 +2755,104 @@ namespace ArcEngine.Graphic
 		Points = OpenTK.Graphics.OpenGL.BeginMode.Points,
 
 	}
+
+
+	/// <summary>
+	/// Defines stencil buffer operations. 
+	/// </summary>
+	public enum StencilOperation
+	{
+		/// <summary>
+		/// Decrements the stencil-buffer entry, wrapping to the maximum value if the new value is less than 0.
+		/// </summary>
+		Decrement = OpenTK.Graphics.OpenGL.StencilOp.Decr,
+
+		/// <summary>
+		/// Decrements the stencil-buffer entry, clamping to 0.
+		/// </summary>
+		DecrementSaturation = OpenTK.Graphics.OpenGL.StencilOp.DecrWrap,
+
+		/// <summary>
+		/// Increments the stencil-buffer entry, wrapping to 0 if the new value exceeds the maximum value.
+		/// </summary>
+		Increment = OpenTK.Graphics.OpenGL.StencilOp.Incr,
+
+		/// <summary>
+		/// Increments the stencil-buffer entry, clamping to the maximum value.
+		/// </summary>
+		IncrementSaturation = OpenTK.Graphics.OpenGL.StencilOp.IncrWrap,
+
+		/// <summary>
+		/// Inverts the bits in the stencil-buffer entry.
+		/// </summary>
+		Invert = OpenTK.Graphics.OpenGL.StencilOp.Invert,
+
+		/// <summary>
+		/// 	Does not update the stencil-buffer entry. This is the default value.
+		/// </summary>
+		Keep = OpenTK.Graphics.OpenGL.StencilOp.Keep,
+
+		/// <summary>
+		/// Replaces the stencil-buffer entry with a reference value.
+		/// </summary>
+		Replace = OpenTK.Graphics.OpenGL.StencilOp.Replace,
+
+		/// <summary>
+		/// Sets the stencil-buffer entry to 0.
+		/// </summary>
+		Zero = OpenTK.Graphics.OpenGL.StencilOp.Zero,
+	}
+
+	/// <summary>
+	/// Defines comparison functions that can be chosen for alpha, stencil, or depth-buffer tests.
+	/// </summary>
+	public enum CompareFunction
+	{
+		/// <summary>
+		/// Always pass the test.
+		/// </summary>
+		Always = OpenTK.Graphics.OpenGL.StencilFunction.Always,
+		
+
+		/// <summary>
+		/// Accept the new pixel if its value is equal to the value of the current pixel.
+		/// </summary>
+		Equal = OpenTK.Graphics.OpenGL.StencilFunction.Equal,
+
+		/// <summary>
+		/// Accept the new pixel if its value is greater than the value of the current pixel.
+		/// </summary>
+		Greater = OpenTK.Graphics.OpenGL.StencilFunction.Greater,
+
+		/// <summary>
+		/// Accept the new pixel if its value is greater than or equal to the value of the current pixel.
+		/// </summary>
+		GreaterEqual = OpenTK.Graphics.OpenGL.StencilFunction.Gequal,
+
+		/// <summary>
+		/// 	Accept the new pixel if its value is less than the value of the current pixel.
+		/// </summary>
+		Less = OpenTK.Graphics.OpenGL.StencilFunction.Less,
+
+		/// <summary>
+		/// Accept the new pixel if its value is less than or equal to the value of the current pixel. 
+		/// </summary>
+		LessEqual = OpenTK.Graphics.OpenGL.StencilFunction.Lequal,
+
+		/// <summary>
+		/// Always fail the test.
+		/// </summary>
+		Never = OpenTK.Graphics.OpenGL.StencilFunction.Never,
+
+		/// <summary>
+		/// Accept the new pixel if its value does not equal the value of the current pixel.
+		/// </summary>
+		NotEqual = OpenTK.Graphics.OpenGL.StencilFunction.Notequal,
+	}
+
+ 
+
+ 
+
+
 }

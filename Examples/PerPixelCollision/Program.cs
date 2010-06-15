@@ -71,16 +71,15 @@ namespace ArcEngine.Examples.PerPixelCollision
 		}
 
 
-
 		/// <summary>
 		/// Load contents 
 		/// </summary>
 		public override void LoadContent()
 		{
 			// Clear color of the screen
-			Display.ClearColor = Color.Black;
-			Display.Shader.Dispose();
-			Display.Shader = Shader.CreateColorShader();
+			Display.ClearColor = Color.LightGray;
+			Mouse.Visible = false;
+
 
 			// Check for availability
 			if (!Display.Capabilities.Extensions.Contains("GL_ARB_occlusion_query"))
@@ -94,6 +93,9 @@ namespace ArcEngine.Examples.PerPixelCollision
 
 
 			GL.DeleteQueries(1, ref id);
+
+			Logo = new Texture("data/logo.png");
+			Star = new Texture("data/star.png");
 		}
 
 
@@ -102,6 +104,11 @@ namespace ArcEngine.Examples.PerPixelCollision
 		/// </summary>
 		public override void UnloadContent()
 		{
+			if (Logo != null)
+				Logo.Dispose();
+
+			if (Star != null)
+				Star.Dispose();
 		}
 
 
@@ -129,7 +136,12 @@ namespace ArcEngine.Examples.PerPixelCollision
 			Display.ClearBuffers();
 			Display.DefaultMatrix();
 
-			Display.FillRectangle(10, 10, 100, 50, Color.White);
+			// Draw logo
+			Display.DrawTexture(Logo, new Point(200, 200));
+
+			// Draw the star
+			Display.DrawTexture(Star, new Point(Mouse.Location.X, Mouse.Location.Y));
+
 		}
 
 
@@ -137,6 +149,16 @@ namespace ArcEngine.Examples.PerPixelCollision
 
 		#region Properties
 
+		/// <summary>
+		/// 
+		/// </summary>
+		Texture Logo;
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Texture Star;
 
 
 		#endregion

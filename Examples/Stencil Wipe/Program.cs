@@ -33,7 +33,11 @@ using OpenTK.Graphics.OpenGL;
 
 // http://www.videotutorialsrock.com/opengl_tutorial/reflections/text.php
 // http://jerome.jouvie.free.fr/OpenGl/Tutorials/Tutorial23.php
-
+// http://blogs.msdn.com/b/shawnhar/archive/2007/05/03/transitions-part-one-the-importance-of-curves.aspx
+// http://blogs.msdn.com/b/shawnhar/archive/2007/05/13/transitions-part-two-let-s-get-physical.aspx
+// http://blogs.msdn.com/b/shawnhar/archive/2007/05/17/transitions-part-three-stencil-swipes.aspx
+// http://blogs.msdn.com/b/shawnhar/archive/2007/05/23/transitions-part-four-rendertargets.aspx
+//
 namespace StencilWipe
 {
 	/// <summary>
