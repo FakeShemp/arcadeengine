@@ -24,11 +24,7 @@ using ArcEngine;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
 using ArcEngine.Asset;
-using OpenTK.Graphics.OpenGL;
-
-
-// http://kometbomb.net/2008/07/23/collision-detection-with-occlusion-queries-redux/
-// http://blogs.msdn.com/b/shawnhar/archive/2008/12/31/pixel-perfect-collision-detection-using-gpu-occlusion-queries.aspx
+using OpenTK;
 
 namespace ArcEngine.Examples.PerPixelCollision
 {
@@ -78,19 +74,13 @@ namespace ArcEngine.Examples.PerPixelCollision
 		{
 			// Clear color of the screen
 			Display.ClearColor = Color.LightGray;
-			//Mouse.Visible = false;
+			Mouse.Visible = false;
 
-
-			// Check for availability
-			if (!Display.Capabilities.Extensions.Contains("GL_ARB_occlusion_query"))
+			if (!PerPixelCollision.Init())
 			{
 				MessageBox.Show("GL_ARB_occlusion_query not found !", "Unsupported extension");
 				Exit();
 			}
-
-			// Query
-			GL.GenQueries(1, out QueryID);
-
 
 			// Textures
 			Logo = new Texture("data/logo.png");
@@ -106,9 +96,7 @@ namespace ArcEngine.Examples.PerPixelCollision
 		/// </summary>
 		public override void UnloadContent()
 		{
-			GL.DeleteQueries(1, ref QueryID);
-			QueryID = -1;
-			
+			PerPixelCollision.Dispose();			
 			
 			if (Logo != null)
 				Logo.Dispose();
@@ -131,7 +119,7 @@ namespace ArcEngine.Examples.PerPixelCollision
 			if (Keyboard.IsKeyPress(Keys.Escape))
 				Exit();
 
-
+			Angle += 0.5f;
 		}
 
 
@@ -148,92 +136,88 @@ namespace ArcEngine.Examples.PerPixelCollision
 
 			#region First draw
 
-			// Draw logo
-			Display.DrawTexture(Logo, new Point(200, 200));
+			// Draw the logo
+			DrawLogo();
 
 			// Draw the star
-	//		Display.DrawTexture(Star, new Point(Mouse.Location.X, Mouse.Location.Y));
+			if (PerPixelCollision.Count > 0)
+				StarColor = Color.Red;
+			else
+				StarColor = Color.White;
+			Display.DrawTexture(Star, new Point(Mouse.Location.X, Mouse.Location.Y), StarColor);
 
 			#endregion
 
 
 			#region Occlusion query
 
-			// Disable writing to the color buffer
-			Display.ColorMask(false, false, false, false);
+			PerPixelCollision.Begin(0.1f);
 
-			// Activate stencil buffer
-			Display.StencilTest = true;
-			GL.StencilFunc(StencilFunction.Always, 1, 1);
-			GL.StencilOp(StencilOp.Keep, StencilOp.Keep, StencilOp.Replace);
-
-			Display.AlphaTest = true;
-			Display.AlphaFunction(AlphaFunction.Greater, 0.5f);
-
-			// Draw the blue print
-			Display.DrawTexture(Logo, new Point(200, 200));
+			DrawLogo();
 
 
-
-
-			// Enable writing to the color buffer
-			Display.ColorMask(true, true, true, true);
-
-			// Begin the query
-			GL.StencilFunc(StencilFunction.Equal, 1, 1);
-			GL.StencilOp(StencilOp.Keep, StencilOp.Keep, StencilOp.Keep);
-
-
-			GL.BeginQuery(QueryTarget.SamplesPassed, QueryID);
+			// Begin query
+			PerPixelCollision.BeginQuery();
 			Display.DrawTexture(Star, new Point(Mouse.Location.X, Mouse.Location.Y));
-			GL.EndQuery(QueryTarget.SamplesPassed);
+			PerPixelCollision.EndQuery();
 
-			GL.GetQueryObject(QueryID, GetQueryObjectParam.QueryResult, out Count);
 
-			// Deactivate stencil buffer
-			Display.StencilTest = false;
-			Display.AlphaTest = false;
+
+			PerPixelCollision.End();
+
 			#endregion
 
 
 
 			// Some text
-			Font.DrawText(new Point(10, 30), Color.Red, "Count {0}", Count);
+			Font.DrawText(new Point(10, 30), Color.Red, "Count {0}", PerPixelCollision.Count);
 		}
 
+
+		/// <summary>
+		/// Draws the collision logo
+		/// </summary>
+		private void DrawLogo()
+		{
+			Display.PushMatrices();
+			Display.ProjectionMatrix = Matrix4.CreateRotationZ((float)Math.PI * Angle / 180.0f) * Matrix4.CreateTranslation(400, 400, 0.0f) * Display.ProjectionMatrix;
+			Display.DrawTexture(Logo, new Point(-200, -200));
+			Display.PopMatrices();
+		}
 
 
 
 		#region Properties
 
 		/// <summary>
-		/// 
+		/// Texture
 		/// </summary>
 		Texture Logo;
 
 
 		/// <summary>
-		/// 
+		/// Texture
 		/// </summary>
 		Texture Star;
 
 
 		/// <summary>
-		/// 
+		/// Font
 		/// </summary>
 		BitmapFont Font;
 
 
 		/// <summary>
-		/// 
+		/// Star drawing color
 		/// </summary>
-		int QueryID;
+		Color StarColor;
 
 
 		/// <summary>
-		/// 
+		/// Rotation angle of the logo
 		/// </summary>
-		int Count;
+		float Angle;
+
 
 		#endregion
 
