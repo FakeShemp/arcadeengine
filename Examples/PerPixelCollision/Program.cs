@@ -78,7 +78,7 @@ namespace ArcEngine.Examples.PerPixelCollision
 		{
 			// Clear color of the screen
 			Display.ClearColor = Color.LightGray;
-			Mouse.Visible = false;
+			//Mouse.Visible = false;
 
 
 			// Check for availability
@@ -152,7 +152,7 @@ namespace ArcEngine.Examples.PerPixelCollision
 			Display.DrawTexture(Logo, new Point(200, 200));
 
 			// Draw the star
-			Display.DrawTexture(Star, new Point(Mouse.Location.X, Mouse.Location.Y));
+	//		Display.DrawTexture(Star, new Point(Mouse.Location.X, Mouse.Location.Y));
 
 			#endregion
 
@@ -160,18 +160,24 @@ namespace ArcEngine.Examples.PerPixelCollision
 			#region Occlusion query
 
 			// Disable writing to the color buffer
-			Display.ColorMask(false, false, false, true);
+			Display.ColorMask(false, false, false, false);
 
 			// Activate stencil buffer
 			Display.StencilTest = true;
-			Display.AlphaTest = true;
-
-			// Draw the blue print
 			GL.StencilFunc(StencilFunction.Always, 1, 1);
 			GL.StencilOp(StencilOp.Keep, StencilOp.Keep, StencilOp.Replace);
 
+			Display.AlphaTest = true;
+			Display.AlphaFunction(AlphaFunction.Greater, 0.5f);
+
+			// Draw the blue print
 			Display.DrawTexture(Logo, new Point(200, 200));
 
+
+
+
+			// Enable writing to the color buffer
+			Display.ColorMask(true, true, true, true);
 
 			// Begin the query
 			GL.StencilFunc(StencilFunction.Equal, 1, 1);
@@ -186,9 +192,7 @@ namespace ArcEngine.Examples.PerPixelCollision
 
 			// Deactivate stencil buffer
 			Display.StencilTest = false;
-
-			// Enable writing to the color buffer
-			Display.ColorMask(true, true, true, true);
+			Display.AlphaTest = false;
 			#endregion
 
 
