@@ -17,15 +17,8 @@
 //along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 //
 #endregion
-using System;
-using System.Drawing;
-using System.Windows.Forms;
-using ArcEngine;
 using ArcEngine.Graphic;
-using ArcEngine.Input;
-using ArcEngine.Asset;
 using OpenTK.Graphics.OpenGL;
-using OpenTK;
 
 // http://kometbomb.net/2008/07/23/collision-detection-with-occlusion-queries-redux/
 // http://blogs.msdn.com/b/shawnhar/archive/2008/12/31/pixel-perfect-collision-detection-using-gpu-occlusion-queries.aspx
@@ -112,8 +105,8 @@ namespace ArcEngine.Examples.PerPixelCollision
 			// End blue print
 			GL.StencilFunc(StencilFunction.Equal, 1, 1);
 			GL.StencilOp(StencilOp.Keep, StencilOp.Keep, StencilOp.Keep);
-			
-			
+
+
 			//
 			GL.BeginQuery(QueryTarget.SamplesPassed, QueryID);
 		}

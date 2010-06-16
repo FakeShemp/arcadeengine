@@ -20,11 +20,10 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-using ArcEngine;
+using ArcEngine.Asset;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
-using ArcEngine.Asset;
-using OpenTK;
+
 
 namespace ArcEngine.Examples.PerPixelCollision
 {
@@ -180,8 +179,9 @@ namespace ArcEngine.Examples.PerPixelCollision
 		private void DrawLogo()
 		{
 			Display.PushMatrices();
-			Display.ProjectionMatrix = Matrix4.CreateRotationZ((float)Math.PI * Angle / 180.0f) * Matrix4.CreateTranslation(400, 400, 0.0f) * Display.ProjectionMatrix;
-			Display.DrawTexture(Logo, new Point(-200, -200));
+			Display.Translate(Display.ViewPort.Width / 2, Display.ViewPort.Height / 2);
+			Display.Rotate(Angle);
+			Display.DrawTexture(Logo, new Point(-Logo.Size.Width / 2, -Logo.Size.Height / 2));
 			Display.PopMatrices();
 		}
 
