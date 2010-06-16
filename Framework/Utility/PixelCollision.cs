@@ -23,12 +23,12 @@ using OpenTK.Graphics.OpenGL;
 // http://kometbomb.net/2008/07/23/collision-detection-with-occlusion-queries-redux/
 // http://blogs.msdn.com/b/shawnhar/archive/2008/12/31/pixel-perfect-collision-detection-using-gpu-occlusion-queries.aspx
 
-namespace ArcEngine.Examples.PerPixelCollision
+namespace ArcEngine.Utility
 {
 	/// <summary>
 	/// Per pixel perfect collision class
 	/// </summary>
-	static public class PerPixelCollision
+	static public class PixelCollision
 	{
 		/// <summary>
 		/// Initialization
@@ -43,7 +43,7 @@ namespace ArcEngine.Examples.PerPixelCollision
 			// Check for extension availability
 			if (!Display.Capabilities.Extensions.Contains("GL_ARB_occlusion_query"))
 			{
-				Trace.WriteLine("[PerPixelCollision] Init() : GL_ARB_occlusion_query not found !");
+				Trace.WriteLine("[PixelCollision] Init() : GL_ARB_occlusion_query not found !");
 				return false;
 			}
 

@@ -23,7 +23,7 @@ using System.Windows.Forms;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
-
+using ArcEngine.Utility;
 
 namespace ArcEngine.Examples.PerPixelCollision
 {
@@ -75,7 +75,7 @@ namespace ArcEngine.Examples.PerPixelCollision
 			Display.ClearColor = Color.LightGray;
 			Mouse.Visible = false;
 
-			if (!PerPixelCollision.Init())
+			if (!PixelCollision.Init())
 			{
 				MessageBox.Show("GL_ARB_occlusion_query not found !", "Unsupported extension");
 				Exit();
@@ -95,7 +95,7 @@ namespace ArcEngine.Examples.PerPixelCollision
 		/// </summary>
 		public override void UnloadContent()
 		{
-			PerPixelCollision.Dispose();			
+			PixelCollision.Dispose();			
 			
 			if (Logo != null)
 				Logo.Dispose();
@@ -139,7 +139,7 @@ namespace ArcEngine.Examples.PerPixelCollision
 			DrawLogo();
 
 			// Draw the star
-			if (PerPixelCollision.Count > 0)
+			if (PixelCollision.Count > 0)
 				StarColor = Color.Red;
 			else
 				StarColor = Color.White;
@@ -150,26 +150,26 @@ namespace ArcEngine.Examples.PerPixelCollision
 
 			#region Occlusion query
 
-			PerPixelCollision.Begin(0.1f);
+			PixelCollision.Begin(0.1f);
 
 			DrawLogo();
 
 
 			// Begin query
-			PerPixelCollision.BeginQuery();
+			PixelCollision.BeginQuery();
 			Display.DrawTexture(Star, new Point(Mouse.Location.X, Mouse.Location.Y));
-			PerPixelCollision.EndQuery();
+			PixelCollision.EndQuery();
 
 
 
-			PerPixelCollision.End();
+			PixelCollision.End();
 
 			#endregion
 
 
 
 			// Some text
-			Font.DrawText(new Point(10, 30), Color.Red, "Count {0}", PerPixelCollision.Count);
+			Font.DrawText(new Point(10, 30), Color.Red, "Count {0}", PixelCollision.Count);
 		}
 
 

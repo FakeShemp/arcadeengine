@@ -328,6 +328,7 @@
     <Compile Include="Input\GamePad.cs" />
     <Compile Include="Input\GamePadCapabilities.cs" />
     <Compile Include="Asset\InputScheme.cs" />
+    <Compile Include="Utility\PixelCollision.cs" />
     <Compile Include="Utility\ScreenManager\GameScreen.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
