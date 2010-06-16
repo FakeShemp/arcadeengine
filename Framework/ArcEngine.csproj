@@ -316,7 +316,6 @@
     <Compile Include="Network\NetworkBase.cs" />
     <Compile Include="Network\NetworkEnums.cs" />
     <Compile Include="Network\ServerConfig.cs" />
-    <Compile Include="PInvoke\Kernel32.cs" />
     <Compile Include="PInvoke\User32.cs" />
     <Compile Include="PInvoke\Winmm.cs" />
     <Compile Include="Providers.cs" />
@@ -403,8 +402,6 @@
     <None Include="Data\Icons\public method.gif" />
     <None Include="Data\Icons\static.gif" />
     <None Include="Data\Icons\snippet.png" />
-    <Content Include="Docs\Engines.txt" />
-    <Content Include="Docs\Measurement Convention.txt" />
     <EmbeddedResource Include="Editor\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -490,7 +487,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <Content Include="Docs\Projects.txt" />
     <EmbeddedResource Include="Resources\Shaders.xml" />
     <Content Include="Utility\GUI\gui.txt" />
     <Content Include="Network\Documentation.txt" />
