@@ -39,7 +39,7 @@ using ArcEngine.Asset;
  * 
  * 
  * 
- * 
+ * meshes are subdivided in  subsets , each corresponding to a portion of the mesh characterized by the same material. 
 */
 namespace ArcEngine.Examples
 {

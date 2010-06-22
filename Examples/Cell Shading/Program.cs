@@ -254,11 +254,6 @@ namespace ArcEngine.Examples.CellShading
 			Font = BitmapFont.CreateFromTTF("c:\\windows\\fonts\\verdana.ttf", 16, FontStyle.Regular);
 
 			#endregion
-
-
-
-
-
 		}
 
 
@@ -357,7 +352,7 @@ namespace ArcEngine.Examples.CellShading
 
 			// Aplly a rotation
 			Display.PushMatrix(MatrixMode.Modelview);
-			Display.ModelViewMatrix = Matrix4.CreateRotationY(Yaw) * Display.ModelViewMatrix;
+			Display.ModelViewMatrix = Matrix4.CreateRotationY(12.0f) * Display.ModelViewMatrix;
 
 			// Draws with the index buffer
 			Display.DrawIndexBuffer(Buffer, BeginMode.Triangles, Index);
