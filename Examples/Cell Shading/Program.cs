@@ -79,6 +79,7 @@ namespace ArcEngine.Examples.CellShading
 			Display.ClearColor = Color.CornflowerBlue;
 			Display.DepthTest = true;
 			Display.ViewPerspective((float)Math.PI / 4.0f, 0.1f, 20.0f);
+			ModelViewMatrix = Matrix4.LookAt(new Vector3(0.0f, 0.0f, -2.5f), Vector3.Zero, Vector3.UnitY);
 			float aspectRatio = (float)Display.ViewPort.Width / (float)Display.ViewPort.Height;
 			ProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4.0f, aspectRatio, 0.1f, 20.0f);
 
@@ -324,8 +325,9 @@ namespace ArcEngine.Examples.CellShading
 			if (Keyboard.IsKeyPress(Keys.Escape))
 				Exit();
 
-			Yaw += 0.01f;
 
+			// Rotation
+			Yaw += 0.01f;
 		}
 
 
@@ -343,13 +345,10 @@ namespace ArcEngine.Examples.CellShading
 
 
 			// Aplly a rotation
-			ModelViewMatrix = Matrix4.CreateRotationY(Yaw) * Matrix4.LookAt(
-				new Vector3(0.0f, 0.0f, -2.5f),
-				Vector3.Zero,
-				Vector3.UnitY);
+			Matrix4 mvp = Matrix4.CreateRotationY(Yaw) * ModelViewMatrix * ProjectionMatrix;
 
 			// Uniforms
-			Display.Shader.SetUniform("modelview", ModelViewMatrix * ProjectionMatrix);
+			Display.Shader.SetUniform("modelview", mvp);
 			Display.Shader.SetUniform("DiffuseMaterial", new float[] { 0.0f, 0.75f, 0.75f });	
 			Display.Shader.SetUniform("LightPosition", new float[] { 0.25f, 0.25f, -1.0f});
 			Display.Shader.SetUniform("AmbientMaterial", new float[] { 0.04f, 0.04f, 0.04f });
@@ -391,13 +390,13 @@ namespace ArcEngine.Examples.CellShading
 
 
 		/// <summary>
-		/// 
+		/// Model view matrix
 		/// </summary>
 		Matrix4 ModelViewMatrix;
 
 
 		/// <summary>
-		/// 
+		/// Projection matrix
 		/// </summary>
 		Matrix4 ProjectionMatrix;
 		#endregion
