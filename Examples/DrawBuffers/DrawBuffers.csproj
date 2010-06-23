@@ -35,7 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="OpenTK">
-      <HintPath>..\..\Framework\Libraries\OpenTK\Debug\OpenTK.dll</HintPath>
+      <HintPath>..\..\Framework\Libraries\OpenTK\Release\OpenTK.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
@@ -67,13 +67,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="data\texture.png" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\..\Framework\ArcEngine.csproj">
       <Project>{9931BDE3-41D2-4065-9595-37020DD45E8D}</Project>
       <Name>ArcEngine</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="data\texture.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

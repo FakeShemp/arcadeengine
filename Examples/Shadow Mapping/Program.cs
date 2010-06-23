@@ -156,7 +156,7 @@ namespace ArcEngine.Examples.ShadowMapping
 
 
 			// Uniforms
-			//Display.Shader.SetUniform("modelview", Display.ModelViewMatrix);
+			Display.Shader.SetUniform("modelview", Display.ModelViewMatrix);
 		}
 
 

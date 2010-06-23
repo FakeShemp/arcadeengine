@@ -130,7 +130,7 @@ namespace ArcEngine.Examples.PerPixelCollision
 		{
 			// Clears the background
 			Display.ClearBuffers();
-			Display.DefaultMatrix();
+		//	Display.DefaultMatrix();
 
 
 			#region First draw

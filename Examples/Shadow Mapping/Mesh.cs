@@ -58,6 +58,7 @@ namespace ArcEngine.Examples.ShadowMapping
 			Buffer = new BatchBuffer();
 
 			Position = new Vector3();
+			Rotation = new Vector3();
 		}
 
 
@@ -88,12 +89,13 @@ namespace ArcEngine.Examples.ShadowMapping
 		/// </summary>
 		public void Draw()
 		{
-			Display.PushMatrix(MatrixMode.Modelview);
-			Display.ModelViewMatrix = Matrix4.CreateTranslation(Position) * Display.ModelViewMatrix;
+			//Display.PushMatrix(MatrixMode.Modelview);
+			//Rotation.Normalize();
+		//	Display.ModelViewMatrix = Matrix4.CreateFromAxisAngle(Rotation, 1.0f) * Matrix4.CreateTranslation(Position) * Display.ModelViewMatrix;
 		
 			Display.DrawIndexBuffer(Buffer, BeginMode.Triangles, Index);
 			
-			Display.PopMatrix(MatrixMode.Modelview);
+		//	Display.PopMatrix(MatrixMode.Modelview);
 		}
 
 
@@ -275,6 +277,12 @@ namespace ArcEngine.Examples.ShadowMapping
 		/// 
 		/// </summary>
 		public Vector3 Position;
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Vector3 Rotation;
 
 
 		#endregion

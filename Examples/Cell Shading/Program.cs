@@ -172,10 +172,11 @@ namespace ArcEngine.Examples.CellShading
 				}";
 			#endregion
 
-
-			Display.Shader.SetSource(ShaderType.VertexShader, vshader);
-			Display.Shader.SetSource(ShaderType.FragmentShader, fshader);
-			Display.Shader.Compile();
+			Shader = new Shader();
+			Shader.SetSource(ShaderType.VertexShader, vshader);
+			Shader.SetSource(ShaderType.FragmentShader, fshader);
+			Shader.Compile();
+			Shader.Bind();
 			#endregion
 
 
@@ -313,6 +314,10 @@ namespace ArcEngine.Examples.CellShading
 			if (Font != null)
 				Font.Dispose();
 			Font = null;
+
+			if (Shader != null)
+				Shader.Dispose();
+			Shader = null;
 		}
 
 
@@ -349,15 +354,15 @@ namespace ArcEngine.Examples.CellShading
 			Matrix4 mvp = Matrix4.CreateRotationY(Yaw) * ModelViewMatrix * ProjectionMatrix;
 
 			// Uniforms
-			Display.Shader.SetUniform("modelview", mvp);
-			Display.Shader.SetUniform("DiffuseMaterial", new float[] { 0.0f, 0.75f, 0.75f });	
-			Display.Shader.SetUniform("LightPosition", new float[] { 0.25f, 0.25f, -1.0f});
-			Display.Shader.SetUniform("AmbientMaterial", new float[] { 0.04f, 0.04f, 0.04f });
-			Display.Shader.SetUniform("SpecularMaterial", new float[] { 0.5f, 0.5f, 0.5f });
-			Display.Shader.SetUniform("Shininess", 50.0f);
+			Shader.SetUniform("modelview", mvp);
+			Shader.SetUniform("DiffuseMaterial", new float[] { 0.0f, 0.75f, 0.75f });	
+			Shader.SetUniform("LightPosition", new float[] { 0.25f, 0.25f, -1.0f});
+			Shader.SetUniform("AmbientMaterial", new float[] { 0.04f, 0.04f, 0.04f });
+			Shader.SetUniform("SpecularMaterial", new float[] { 0.5f, 0.5f, 0.5f });
+			Shader.SetUniform("Shininess", 50.0f);
 
 			// Draws with the index buffer
-			Display.DrawIndexBuffer(Buffer, BeginMode.Triangles, Index);
+			Display.DrawIndexBuffer(Shader, Buffer, PrimitiveType.Triangles, Index);
 
 		}
 
@@ -398,6 +403,13 @@ namespace ArcEngine.Examples.CellShading
 		/// Projection matrix
 		/// </summary>
 		Matrix4 ProjectionMatrix;
+
+
+		/// <summary>
+		/// Shader
+		/// </summary>
+		Shader Shader;
+
 		#endregion
 
 	}

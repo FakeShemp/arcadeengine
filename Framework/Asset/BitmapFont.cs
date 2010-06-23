@@ -321,12 +321,12 @@ namespace ArcEngine.Asset
 				Display.Texture = GlyphTileset.Texture;
 
 
-				Display.PushOrtho();
+		//		Display.PushOrtho();
 
-				Display.Shader.SetUniform("texture", 0);
+		//		Display.Shader.SetUniform("texture", 0);
 				Display.DrawBatch(Display.Buffer, 0, count);
 
-				Display.PopMatrices();
+		//		Display.PopMatrices();
 			}
 
 		}

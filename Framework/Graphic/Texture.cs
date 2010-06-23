@@ -315,12 +315,12 @@ namespace ArcEngine.Graphic
 		[Obsolete("deprecated. Use Display.DrawTexture() instead.")]
 		public void Blit(Point pos, float angle, Point origin)
 		{
-			Display.Translate(pos.X + origin.X, pos.Y + origin.Y);
-			Display.Rotate(angle);
+	//		Display.Translate(pos.X + origin.X, pos.Y + origin.Y);
+	//		Display.Rotate(angle);
 
 			Blit(new Point(-origin.X, -origin.Y));
 
-			Display.DefaultMatrix();
+	//		Display.DefaultMatrix();
 		}
 
 
@@ -476,7 +476,7 @@ namespace ArcEngine.Graphic
 
 			
 			// Update texture matrix
-			Display.TextureMatrix = Matrix4.Scale(1.0f / Size.Width, 1.0f / Size.Height, 1.0f);
+	//		Display.TextureMatrix = Matrix4.Scale(1.0f / Size.Width, 1.0f / Size.Height, 1.0f);
 
 
 			return true;

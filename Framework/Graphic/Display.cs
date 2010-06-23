@@ -51,17 +51,6 @@ namespace ArcEngine.Graphic
 			TextureParameters = new DefaultTextParameters();
 
 			CircleResolution = 50;
-
-
-			projectionMatrix = Matrix4.Identity;
-			modelViewMatrix = Matrix4.Identity;
-			DefaultModelViewMatrix = modelViewMatrix;
-			DefaultProjectionMatrix = projectionMatrix;
-
-			ModelViewStack = new Stack<Matrix4>();
-			ProjectionStack = new Stack<Matrix4>();
-			TextureStack = new Stack<Matrix4>();
-			ShaderStack = new Stack<Shader>();
 		}
 
 
@@ -75,14 +64,10 @@ namespace ArcEngine.Graphic
 
 
 			#region Shader
-			Shader = Shader.CreateTextureShader();
+		//	Shader = Shader.CreateTextureShader();
 			#endregion
 
 
-			ProjectionStack.Clear();
-			ModelViewStack.Clear();
-			TextureStack.Clear();
-			ShaderStack.Clear();
 
 			Texturing = true;
 			Blending = true;
@@ -101,7 +86,7 @@ namespace ArcEngine.Graphic
 			GL.ClearStencil(0);
 
 			// Swap to ortho modes
-			ViewOrtho();
+		//	ViewOrtho();
 
 			Buffer = BatchBuffer.CreatePositionColorTextureBuffer();
 		}
@@ -117,10 +102,6 @@ namespace ArcEngine.Graphic
 			if (Buffer != null)
 				Buffer.Dispose();
 			Buffer = null;
-
-			if (Shader != null)
-				Shader.Dispose();
-			Shader = null;
 		}
 
 
@@ -162,153 +143,6 @@ namespace ArcEngine.Graphic
 			Trace.Unindent();
 		}
 
-
-		#region Shaders
-
-		/// <summary>
-		/// Push the current shader on the stack
-		/// </summary>
-		public static void PushShader()
-		{
-			ShaderStack.Push(shader);
-		}
-
-
-		/// <summary>
-		/// Pop the shader stack
-		/// </summary>
-		public static void PopShader()
-		{
-			Shader = ShaderStack.Pop();
-		}
-
-		#endregion
-
-
-		#region View modes
-
-
-		/// <summary>
-		/// Set up a default ortho view
-		/// </summary>
-		static public void ViewOrtho()
-		{
-			ViewOrtho(ViewPort.Width, ViewPort.Height);
-		}
-
-
-		/// <summary>
-		/// Set up an ortho view
-		/// </summary>
-		/// <param name="width">Width</param>
-		/// <param name="height">Height</param>
-		static public void ViewOrtho(int width, int height)
-		{
-			modelViewMatrix = Matrix4.LookAt(new Vector3(0, 0, 1), new Vector3(0, 0, 0), new Vector3(0, 1, 0)); ;
-			projectionMatrix = Matrix4.CreateOrthographicOffCenter(0, width, height, 0, -1, 1); ;
-
-			DefaultProjectionMatrix = projectionMatrix;
-			DefaultModelViewMatrix = modelViewMatrix;
-
-			UpdateMatrices();
-		}
-
-
-		/// <summary>
-		/// Push in ortho mode
-		/// </summary>
-		static public void PushOrtho()
-		{
-			PushOrtho(ViewPort.Width, ViewPort.Height);
-		}
-
-
-		/// <summary>
-		/// Push in ortho mode
-		/// </summary>
-		/// <param name="width">Width</param>
-		/// <param name="height">Height</param>
-		static public void PushOrtho(int width, int height)
-		{
-			ModelViewStack.Push(modelViewMatrix);
-			ProjectionStack.Push(projectionMatrix);
-
-			ViewOrtho(width, height);
-		}
-
-
-
-		/// <summary>
-		/// Pop matrices
-		/// </summary>
-		static public void PopMatrices()
-		{
-			if (ModelViewStack.Count > 0)
-				ModelViewMatrix = ModelViewStack.Pop();
-
-			if (ProjectionStack.Count > 0)
-				ProjectionMatrix = ProjectionStack.Pop();
-
-			if (TextureStack.Count > 0)
-				TextureMatrix = TextureStack.Pop();
-
-			UpdateMatrices();
-		}
-
-
-		/// <summary>
-		/// Pushes alla matrices states
-		/// </summary>
-		static public void PushMatrices()
-		{
-			PushMatrix(MatrixMode.Modelview);
-			PushMatrix(MatrixMode.Projection);
-			PushMatrix(MatrixMode.Texture);
-		}
-
-	
-		/// <summary>
-		/// Set up a perspective view
-		/// </summary>
-		/// <param name="fov">Field of view</param>
-		/// <param name="znear">Z near</param>
-		/// <param name="zfar">Z far</param>
-		static public void ViewPerspective(float fov, float znear, float zfar)
-		{
-			float aspectRatio = (float)Display.ViewPort.Width / (float)Display.ViewPort.Height;
-			Display.ProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView(fov, aspectRatio, znear, zfar);
-
-			// Model view matrix
-			Display.ModelViewMatrix = Matrix4.LookAt(
-				new Vector3(0.0f, 0.0f, -2.5f),
-				Vector3.Zero,
-				Vector3.UnitY);
-
-
-			DefaultProjectionMatrix = projectionMatrix;
-			DefaultModelViewMatrix = modelViewMatrix;
-
-			UpdateMatrices();
-		}
-
-
-		/// <summary>
-		/// Set up a perspective view
-		/// </summary>
-		/// <param name="fov">Field of view</param>
-		/// <param name="znear">Z near</param>
-		/// <param name="zfar">Z far</param>
-		static public void PushPerspective(float fov, float znear, float zfar)
-		{
-			ModelViewStack.Push(modelViewMatrix);
-			ProjectionStack.Push(projectionMatrix);
-
-			ViewPerspective(fov, znear, zfar);
-		}
-
-
-
-		#endregion
 
 
 		#region OpenGL
@@ -405,205 +239,6 @@ namespace ArcEngine.Graphic
 		#endregion
 
 
-		#region Matrix
-
-
-		/// <summary>
-		/// Changes the transformation matrix to apply a translation transformation with the given characteristics.
-		/// </summary>
-		/// <param name="x">Horizontal translation</param>
-		/// <param name="y">Vertical translation</param>
-		public static void Translate(float x, float y)
-		{
-			ProjectionMatrix = Matrix4.CreateTranslation(x, y, 0.0f) * ProjectionMatrix;
-		}
-
-
-		/// <summary>
-		/// Changes the transformation matrix to apply a rotation transformation with the given characteristics.
-		/// </summary>
-		/// <param name="angle">The angle of rotation, in degrees.</param>
-		public static void Rotate(float angle)
-		{
-			ProjectionMatrix = Matrix4.CreateRotationZ(DegreeToRadian(angle)) * ProjectionMatrix;
-		}
-
-
-		/// <summary>
-		/// Converts a degree angle to a radian angle
-		/// </summary>
-		/// <param name="angle">Degree angle</param>
-		/// <returns></returns>
-		static float DegreeToRadian(float angle)
-		{
-			return (float)Math.PI * angle / 180.0f;
-		}
-
-
-		/// <summary>
-		/// Converts a radian angle to a degree angle
-		/// </summary>
-		/// <param name="angle">Radian angle</param>
-		/// <returns></returns>
-		static float RadianToDegree(float angle)
-		{
-			return (float)Math.PI / angle * 180.0f;
-		}
-
-
-		/// <summary>
-		/// Changes the transformation matrix to apply the matrix given by the arguments as described below.
-		/// </summary>
-		/// <remarks>http://en.wikipedia.org/wiki/Transformation_matrix#Examples_in_2D_graphics</remarks>
-		/// <param name="m11">m11</param>
-		/// <param name="m12">m12</param>
-		/// <param name="m21">m21</param>
-		/// <param name="m22">m22</param>
-		/// <param name="dx">dx</param>
-		/// <param name="dy">dy</param>
-		public static void Transform(float m11, float m12, float m21, float m22, float dx, float dy)
-		{
-			float[] val = new float[16];
-			GL.GetFloat(GetPName.ProjectionMatrix, val);
-
-			float[] values = new float[]
-            {
-                m11, m12, dx, 0,
-                m21, m22, dy, 0,
-                0, 0, 1, 0,
-                0, 0, 0, 1
-            };
-			GL.MatrixMode(MatrixMode.Projection);
-			GL.MultMatrix(values);
-		}
-
-
-		/// <summary>
-		/// Changes the transformation matrix to the matrix given by the arguments as described below.
-		/// </summary>
-		/// <param name="m11">m11</param>
-		/// <param name="m12">m12</param>
-		/// <param name="m21">m21</param>
-		/// <param name="m22">m22</param>
-		/// <param name="dx">dx</param>
-		/// <param name="dy">dy</param>
-		public static void SetTransform(float m11, float m12, float m21, float m22, float dx, float dy)
-		{
-			DefaultMatrix();
-			Transform(m11, m12, m21, m22, dx, dy);
-		}
-
-
-		/// <summary>
-		/// Changes the transformation matrix to apply a scaling transformation with the given characteristics.
-		/// </summary>
-		/// <param name="x">X factor</param>
-		/// <param name="y">Y factor</param>
-		public static void Scale(float x, float y)
-		{
-			ProjectionMatrix = Matrix4.Scale(x, y, 1.0f) * ProjectionMatrix;
-		}
-
-
-
-		/// <summary>
-		/// Replaces the current matrix with the identity matrix.
-		/// </summary>
-		public static void DefaultMatrix()
-		{
-			ProjectionMatrix = DefaultProjectionMatrix;
-			ModelViewMatrix = DefaultModelViewMatrix;
-		}
-
-
-
-		/// <summary>
-		/// Push a copy of the current drawing state onto the drawing state stack 
-		/// </summary>
-		public static void SaveState()
-		{
-			GL.PushAttrib(AttribMask.AllAttribBits);
-			PushMatrices();
-		}
-
-
-		/// <summary>
-		/// Pop the top entry in the drawing state stack, and reset the drawing state it describes.
-		/// </summary>
-		public static void RestoreState()
-		{
-			PopMatrices();
-			GL.PopAttrib();
-		}
-
-
-
-		/// <summary>
-		/// Update matrix
-		/// </summary>
-		static public void UpdateMatrices()
-		{
-			if (Shader == null)
-				return;
-
-			shader.SetUniform("mvp_matrix", modelViewMatrix * projectionMatrix);
-			shader.SetUniform("tex_matrix", TextureMatrix);
-		}
-
-
-		/// <summary>
-		/// Push matrix
-		/// </summary>
-		/// <param name="mode">Matrix mode</param>
-		public static void PushMatrix(MatrixMode mode)
-		{
-			switch (mode)
-			{
-				case MatrixMode.Modelview:
-				ModelViewStack.Push(ModelViewMatrix);
-				break;
-				case MatrixMode.Projection:
-				ProjectionStack.Push(ProjectionMatrix);
-				break;
-				case MatrixMode.Texture:
-				TextureStack.Push(TextureMatrix);
-				break;
-			}
-		}
-
-
-		/// <summary>
-		/// Pop matrix
-		/// </summary>
-		/// <param name="mode">Matrix mode</param>
-		public static void PopMatrix(MatrixMode mode)
-		{
-			switch (mode)
-			{
-				case MatrixMode.Modelview:
-				{
-					if (ModelViewStack.Count > 0)
-						ModelViewMatrix = ModelViewStack.Pop();
-				}
-				break;
-				case MatrixMode.Projection:
-				{
-					if (ProjectionStack.Count > 0)
-						ProjectionMatrix = ProjectionStack.Pop();
-				}
-				break;
-				case MatrixMode.Texture:
-				{
-					if (TextureStack.Count > 0)
-						TextureMatrix = TextureStack.Pop();
-				}
-				break;
-			}
-		}
-
-
-		#endregion
-
 
 		#region Drawing
 
@@ -688,16 +323,16 @@ namespace ArcEngine.Graphic
 		{
 			Texturing = false;
 
-			SaveState();
+	//		SaveState();
 
 			//GL.MatrixMode(MatrixMode.Projection);
 			//GL.PushMatrix();
 
 			// Translation & rotation
-			Translate(x + pivot.X, y + pivot.Y);
+	//		Translate(x + pivot.X, y + pivot.Y);
 			x = -pivot.X;
 			y = -pivot.Y;
-			Rotate(angle);
+	//		Rotate(angle);
 
 
 
@@ -712,7 +347,7 @@ namespace ArcEngine.Graphic
 			GL.End();
 
 			//GL.PopMatrix();
-			RestoreState();
+		//	RestoreState();
 			Texturing = true;
 
 			RenderStats.DirectCall += 4;
@@ -1275,8 +910,9 @@ namespace ArcEngine.Graphic
 		/// <param name="buffer">Buffer handle</param>
 		/// <param name="mode">Drawing mode</param>
 		/// <param name="index">Index buffer</param>
+		/// <param name="shader"></param>
 		/// <returns></returns>
-		public static void DrawIndexBuffer(BatchBuffer buffer, BeginMode mode, IndexBuffer index)
+		public static void DrawIndexBuffer(Shader shader, BatchBuffer buffer, PrimitiveType mode, IndexBuffer index)
 		{
 			if (buffer == null || index == null)
 				return;
@@ -1288,7 +924,7 @@ namespace ArcEngine.Graphic
 			buffer.Bind(shader);
 
 			// Draw
-			GL.DrawElements(mode, index.Count, DrawElementsType.UnsignedInt, IntPtr.Zero);
+			GL.DrawElements((BeginMode)mode, index.Count, DrawElementsType.UnsignedInt, IntPtr.Zero);
 
 			RenderStats.BatchCall++;
 		}
@@ -1323,7 +959,7 @@ namespace ArcEngine.Graphic
 				return;
 
 			// Bind buffer
-			batch.Bind(shader);
+	//		batch.Bind(shader);
 
 			GL.DrawArrays(mode, first, count);
 
@@ -1723,98 +1359,6 @@ namespace ArcEngine.Graphic
 		}
 
 
-		#region Matrix
-
-		// Matrix stacks
-		static Stack<Matrix4> ModelViewStack;
-		static Stack<Matrix4> ProjectionStack;
-		static Stack<Matrix4> TextureStack;
-
-
-		/// <summary>
-		/// Projection matrix
-		/// </summary>
-		public static Matrix4 ProjectionMatrix
-		{
-			get
-			{
-				return projectionMatrix;
-			}
-			set
-			{
-				projectionMatrix = value;
-				UpdateMatrices();
-			}
-		}
-		static Matrix4 projectionMatrix;
-		
-		/// <summary>
-		/// Default projection matrix
-		/// </summary>
-		static Matrix4 DefaultProjectionMatrix;
-
-
-		/// <summary>
-		/// ModelView matrix
-		/// </summary>
-		public static Matrix4 ModelViewMatrix
-		{
-			get
-			{
-				return modelViewMatrix;
-			}
-			set
-			{
-				modelViewMatrix = value;
-				UpdateMatrices();
-			}
-		}
-		static Matrix4 modelViewMatrix;
-
-		/// <summary>
-		/// Default model view matrix
-		/// </summary>
-		static Matrix4 DefaultModelViewMatrix;
-
-
-		/// <summary>
-		/// Texture matrix
-		/// </summary>
-		public static Matrix4 TextureMatrix
-		{
-			get
-			{
-				return textureMatrix;
-			}
-			set
-			{
-				textureMatrix = value;
-				UpdateMatrices();
-			}
-		}
-		static Matrix4 textureMatrix;
-
-
-		/// <summary>
-		/// Normal matrix
-		/// </summary>
-		public static Matrix4 NormalMatrix
-		{
-			get
-			{
-				return normalMatrix;
-			}
-			set
-			{
-				normalMatrix = value;
-				UpdateMatrices();
-			}
-		}
-		static Matrix4 normalMatrix;
-
-		#endregion
-
-
 		/// <summary>
 		/// Circle resolution
 		/// </summary>
@@ -1867,7 +1411,7 @@ namespace ArcEngine.Graphic
 				//GL.LoadIdentity();
 				//GL.Scale(1.0f / value.Size.Width, 1.0f / value.Size.Height, 1.0f);
 
-				TextureMatrix = Matrix4.Scale(1.0f / texture.Size.Width, 1.0f / texture.Size.Height, 1.0f);
+			//	TextureMatrix = Matrix4.Scale(1.0f / texture.Size.Width, 1.0f / texture.Size.Height, 1.0f);
 
 			}
 			get
@@ -1948,7 +1492,7 @@ namespace ArcEngine.Graphic
 				//GL.MatrixMode(MatrixMode.Projection);
 				//GL.LoadIdentity();
 				//GL.Ortho(rect.Left, rect.Width, rect.Height, rect.Top, -1, 1);
-				DefaultMatrix();
+			//	DefaultMatrix();
 				//		GL.MatrixMode(MatrixMode.Modelview);
 				//		GL.LoadIdentity();
 			}
@@ -2282,35 +1826,6 @@ namespace ArcEngine.Graphic
 			private set;
 		}
 
-
-
-		/// <summary>
-		/// Gets/sets the current shader
-		/// </summary>
-		public static Shader Shader
-		{
-			get
-			{
-				return shader;
-			}
-			set
-			{
-				if (value == null)
-					GL.UseProgram(0);
-				else
-					GL.UseProgram(value.ProgramID);
-
-				shader = value;
-				UpdateMatrices();
-			}
-		}
-		static Shader shader;
-
-
-		/// <summary>
-		/// Shader stack
-		/// </summary>
-		static Stack<Shader> ShaderStack;
 
 		#endregion
 	}
@@ -2750,16 +2265,40 @@ namespace ArcEngine.Graphic
 
 
 	/// <summary>
-	/// Batch drawing mode
+	/// Defines how data in a vertex stream is interpreted during a draw call
 	/// </summary>
-	public enum DrawMode
+	public enum PrimitiveType
 	{
+		/// <summary>
+		/// Renders the specified vertices as a sequence of isolated triangles.
+		/// Each group of three vertices defines a separate triangle. 
+		/// </summary>
 		Triangles = OpenTK.Graphics.OpenGL.BeginMode.Triangles,
 
+		/// <summary>
+		/// Renders the vertices as a triangle fan.
+		/// </summary>
 		TriangleFan = OpenTK.Graphics.OpenGL.BeginMode.TriangleFan,
 
+		/// <summary>
+		/// Renders the vertices as a triangle strip
+		/// </summary>
+		TriangleStrip = OpenTK.Graphics.OpenGL.BeginMode.TriangleStrip,
+
+		/// <summary>
+		/// Renders the vertices as a collection of isolated points.
+		/// </summary>
 		Points = OpenTK.Graphics.OpenGL.BeginMode.Points,
 
+		/// <summary>
+		/// Renders the vertices as a list of isolated straight line segments
+		/// </summary>
+		Lines = OpenTK.Graphics.OpenGL.BeginMode.Lines,
+
+		/// <summary>
+		/// Renders the vertices as a single polyline
+		/// </summary>
+		LineStrip = OpenTK.Graphics.OpenGL.BeginMode.LineStrip,
 	}
 
 

@@ -111,7 +111,14 @@ namespace ArcEngine.Graphic
 			return true;
 		}
 
-	
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public void Bind()
+		{
+			GL.UseProgram(ProgramID);
+		}
 
 		/// <summary>
 		/// Compiles the shader
@@ -316,11 +323,12 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Creates a simple textured color shader
 		/// </summary>
-		/// <remarks>Sets uniform "texture" as the sampler2D</remarks>
 		/// <returns></returns>
 		static public Shader CreateTextureShader()
 		{
 			Shader shader = new Shader();
+
+			#region Vertex
 			shader.SetSource(ShaderType.VertexShader,
 				@"#version 130
 
@@ -345,7 +353,9 @@ namespace ArcEngine.Graphic
 					out_color = in_color;
 					out_texture = tex_matrix * in_texture;
 				}");
+			#endregion
 
+			#region Fragment
 			shader.SetSource(ShaderType.FragmentShader,
 				@"#version 130
 
@@ -362,6 +372,7 @@ namespace ArcEngine.Graphic
 				{
 					frag_color = texture2D(texture, out_texture.st) * out_color;
 				}");
+			#endregion
 
 			shader.Compile();
 
@@ -781,11 +792,7 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Program handle
 		/// </summary>
-		public int ProgramID
-		{
-			get;
-			private set;
-		}
+		int ProgramID;
 
 
 

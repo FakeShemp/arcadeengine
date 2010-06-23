@@ -27,7 +27,6 @@ using ArcEngine.Input;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
-
 // http://bakura.developpez.com/tutoriels/jeux/utilisation-shaders-avec-opengl-3-x/
 // http://bakura.developpez.com/tutoriels/jeux/utilisation-vbo-avec-opengl-3-x/
 // http://bakura.developpez.com/tutoriels/jeux/utilisation-vertex-array-objects-avec-opengl-3-x/
@@ -79,6 +78,13 @@ namespace ArcEngine.Examples
 		{
 			Display.ClearColor = Color.CornflowerBlue;
 
+
+
+			// Shader
+			Shader = Shader.CreateTextureShader();
+			Shader.Bind();
+
+
 			#region Texture
 
 			// Loads a texture and binds it to TUI 2
@@ -87,10 +93,13 @@ namespace ArcEngine.Examples
 			Texture.VerticalWrap = VerticalWrapFilter.Repeat;
 			Display.TextureUnit = 2;
 			Display.Texture = Texture;
-			Display.Shader.SetUniform("texture", 2);
 			
 			#endregion
 
+			// Matrices
+			ModelViewMatrix = Matrix4.LookAt(new Vector3(0, 0, 1), new Vector3(0, 0, 0), new Vector3(0, 1, 0)); ;
+			ProjectionMatrix = Matrix4.CreateOrthographicOffCenter(0, Display.ViewPort.Width, Display.ViewPort.Height, 0, -1.0f, 1.0f);
+			TextureMatrix = Matrix4.Scale(1.0f / Texture.Size.Width, 1.0f / Texture.Size.Height, 1.0f);
 			
 			#region Buffer
 
@@ -179,6 +188,10 @@ namespace ArcEngine.Examples
 			if (Font != null)
 				Font.Dispose();
 			Font = null;
+
+			if (Shader != null)
+				Shader.Dispose();
+			Shader = null;
 		}
 
 
@@ -206,12 +219,17 @@ namespace ArcEngine.Examples
 			Display.ClearBuffers();
 
 			// Some dummy text
-			Font.DrawText(new Point(100, 25), Color.White, "Here's an example of draw buffers.");
+		//	Font.DrawText(new Point(100, 25), Color.White, "Here's an example of draw buffers.");
+
+
 
 			Display.Texture = Texture;
 
 			// Draws with the index buffer
-			Display.DrawIndexBuffer(Buffer, BeginMode.Triangles, Index);
+			Shader.SetUniform("mvp_matrix", ModelViewMatrix * ProjectionMatrix);
+			Shader.SetUniform("tex_matrix", TextureMatrix);
+			Shader.SetUniform("texture", 2);
+			Display.DrawIndexBuffer(Shader, Buffer, PrimitiveType.Triangles, Index);
 
 
 			// Draws with the batch buffer
@@ -243,6 +261,30 @@ namespace ArcEngine.Examples
 		/// Font
 		/// </summary>
 		BitmapFont Font;
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Shader Shader;
+
+		/// <summary>
+		/// Model view matrix
+		/// </summary>
+		Matrix4 ModelViewMatrix;
+
+
+		/// <summary>
+		/// Projection matrix
+		/// </summary>
+		Matrix4 ProjectionMatrix;
+
+
+		/// <summary>
+		/// Texture matrix
+		/// </summary>
+		Matrix4 TextureMatrix;
+
 
 		#endregion
 
