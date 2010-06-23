@@ -78,7 +78,8 @@ namespace ArcEngine.Examples.CellShading
 		{
 			Display.ClearColor = Color.CornflowerBlue;
 			Display.DepthTest = true;
-			Display.ViewPerspective((float)Math.PI / 4.0f, 0.1f, 20.0f);
+
+			// Matrices
 			ModelViewMatrix = Matrix4.LookAt(new Vector3(0.0f, 0.0f, -2.5f), Vector3.Zero, Vector3.UnitY);
 			float aspectRatio = (float)Display.ViewPort.Width / (float)Display.ViewPort.Height;
 			ProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4.0f, aspectRatio, 0.1f, 20.0f);
@@ -359,8 +360,6 @@ namespace ArcEngine.Examples.CellShading
 			Display.DrawIndexBuffer(Buffer, BeginMode.Triangles, Index);
 
 		}
-
-
 
 
 		#region Properties
