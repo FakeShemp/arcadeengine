@@ -26,7 +26,6 @@ using ArcEngine.Graphic;
 using ArcEngine.Input;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
-using System.Xml;
 
 
 // http://www.planet-dev.com/developpement/jeux-video/cel-shading-en-glsl
@@ -80,7 +79,8 @@ namespace ArcEngine.Examples.CellShading
 			Display.ClearColor = Color.CornflowerBlue;
 			Display.DepthTest = true;
 			Display.ViewPerspective((float)Math.PI / 4.0f, 0.1f, 20.0f);
-
+			float aspectRatio = (float)Display.ViewPort.Width / (float)Display.ViewPort.Height;
+			ProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4.0f, aspectRatio, 0.1f, 20.0f);
 
 			#region Shader
 
@@ -89,7 +89,6 @@ namespace ArcEngine.Examples.CellShading
 				#version 130
 
 				uniform mat4 modelview;
-				uniform mat4 mvp_matrix;
 				uniform vec3 DiffuseMaterial;
 
 				in vec3 in_position;
@@ -100,11 +99,11 @@ namespace ArcEngine.Examples.CellShading
 
 				void main(void)
 				{
-					gl_Position = mvp_matrix * vec4(in_position, 1.0);
+					gl_Position = modelview * vec4(in_position, 1.0);
 
 					Diffuse = DiffuseMaterial;
 
-					mat3 NormalMatrix = mat3(mvp_matrix);
+					mat3 NormalMatrix = mat3(modelview);
 					EyespaceNormal = NormalMatrix * in_normal;
 				}";
 			#endregion
@@ -344,11 +343,13 @@ namespace ArcEngine.Examples.CellShading
 
 
 			// Aplly a rotation
-			Display.PushMatrix(MatrixMode.Modelview);
-			Display.ModelViewMatrix = Matrix4.CreateRotationY(Yaw) * Display.ModelViewMatrix;
+			ModelViewMatrix = Matrix4.CreateRotationY(Yaw) * Matrix4.LookAt(
+				new Vector3(0.0f, 0.0f, -2.5f),
+				Vector3.Zero,
+				Vector3.UnitY);
 
 			// Uniforms
-			Display.Shader.SetUniform("modelview", Display.ModelViewMatrix);
+			Display.Shader.SetUniform("modelview", ModelViewMatrix * ProjectionMatrix);
 			Display.Shader.SetUniform("DiffuseMaterial", new float[] { 0.0f, 0.75f, 0.75f });	
 			Display.Shader.SetUniform("LightPosition", new float[] { 0.25f, 0.25f, -1.0f});
 			Display.Shader.SetUniform("AmbientMaterial", new float[] { 0.04f, 0.04f, 0.04f });
@@ -357,7 +358,6 @@ namespace ArcEngine.Examples.CellShading
 
 			// Draws with the index buffer
 			Display.DrawIndexBuffer(Buffer, BeginMode.Triangles, Index);
-			Display.PopMatrix(MatrixMode.Modelview);
 
 		}
 
@@ -389,6 +389,17 @@ namespace ArcEngine.Examples.CellShading
 		/// </summary>
 		BitmapFont Font;
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Matrix4 ModelViewMatrix;
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Matrix4 ProjectionMatrix;
 		#endregion
 
 	}
