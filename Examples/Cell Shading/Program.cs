@@ -327,13 +327,6 @@ namespace ArcEngine.Examples.CellShading
 
 			Yaw += 0.01f;
 
-			// Uniforms
-			Display.Shader.SetUniform("modelview", Display.ModelViewMatrix);
-			Display.Shader.SetUniform("DiffuseMaterial", new float[] { 0.0f, 0.75f, 0.75f });	
-			Display.Shader.SetUniform("LightPosition", new float[] { 0.25f, 0.25f, -1.0f});
-			Display.Shader.SetUniform("AmbientMaterial", new float[] { 0.04f, 0.04f, 0.04f });
-			Display.Shader.SetUniform("SpecularMaterial", new float[] { 0.5f, 0.5f, 0.5f });
-			Display.Shader.SetUniform("Shininess", 50.0f);
 		}
 
 
@@ -352,7 +345,15 @@ namespace ArcEngine.Examples.CellShading
 
 			// Aplly a rotation
 			Display.PushMatrix(MatrixMode.Modelview);
-			Display.ModelViewMatrix = Matrix4.CreateRotationY(12.0f) * Display.ModelViewMatrix;
+			Display.ModelViewMatrix = Matrix4.CreateRotationY(Yaw) * Display.ModelViewMatrix;
+
+			// Uniforms
+			Display.Shader.SetUniform("modelview", Display.ModelViewMatrix);
+			Display.Shader.SetUniform("DiffuseMaterial", new float[] { 0.0f, 0.75f, 0.75f });	
+			Display.Shader.SetUniform("LightPosition", new float[] { 0.25f, 0.25f, -1.0f});
+			Display.Shader.SetUniform("AmbientMaterial", new float[] { 0.04f, 0.04f, 0.04f });
+			Display.Shader.SetUniform("SpecularMaterial", new float[] { 0.5f, 0.5f, 0.5f });
+			Display.Shader.SetUniform("Shininess", 50.0f);
 
 			// Draws with the index buffer
 			Display.DrawIndexBuffer(Buffer, BeginMode.Triangles, Index);
