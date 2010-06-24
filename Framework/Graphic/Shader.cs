@@ -52,9 +52,9 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public Shader()
 		{
-			VertexID = GL.CreateShader(ShaderType.VertexShader);
-			FragmentID = GL.CreateShader(ShaderType.FragmentShader);
-			GeometryID = GL.CreateShader(ShaderType.GeometryShader);
+			VertexID = GL.CreateShader((OpenTK.Graphics.OpenGL.ShaderType)ShaderType.VertexShader);
+			FragmentID = GL.CreateShader((OpenTK.Graphics.OpenGL.ShaderType)ShaderType.FragmentShader);
+			GeometryID = GL.CreateShader((OpenTK.Graphics.OpenGL.ShaderType)ShaderType.GeometryShader);
 			ProgramID = GL.CreateProgram();
 			GeometryInput = BeginMode.Lines;
 			GeometryOutput = BeginMode.Lines;
@@ -602,7 +602,8 @@ namespace ArcEngine.Graphic
 			if (id < 0)
 				return;
 
-			GL.UniformMatrix4(id, false, ref matrix);
+			OpenTK.Matrix4 m = matrix;
+			GL.UniformMatrix4(id, false, ref m);
 		}
 
 
@@ -892,4 +893,27 @@ namespace ArcEngine.Graphic
 		#endregion
 
 	}
+
+
+	/// <summary>
+	/// Shader type
+	/// </summary>
+	public enum ShaderType
+	{
+		/// <summary>
+		/// Fragment shader
+		/// </summary>
+		FragmentShader = OpenTK.Graphics.OpenGL.ShaderType.FragmentShader,
+
+		/// <summary>
+		/// Vertex shader
+		/// </summary>
+		VertexShader = OpenTK.Graphics.OpenGL.ShaderType.VertexShader,
+
+		/// <summary>
+		/// Geometry shader
+		/// </summary>
+		GeometryShader = OpenTK.Graphics.OpenGL.ShaderType.GeometryShader,
+	}
+
 }

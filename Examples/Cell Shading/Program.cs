@@ -24,8 +24,6 @@ using System.Windows.Forms;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
-using OpenTK;
-using OpenTK.Graphics.OpenGL;
 
 
 // http://www.planet-dev.com/developpement/jeux-video/cel-shading-en-glsl

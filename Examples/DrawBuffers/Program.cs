@@ -24,8 +24,6 @@ using System.Windows.Forms;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
-using OpenTK;
-using OpenTK.Graphics.OpenGL;
 
 // http://bakura.developpez.com/tutoriels/jeux/utilisation-shaders-avec-opengl-3-x/
 // http://bakura.developpez.com/tutoriels/jeux/utilisation-vbo-avec-opengl-3-x/

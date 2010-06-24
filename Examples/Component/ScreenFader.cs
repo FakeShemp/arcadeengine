@@ -9,12 +9,12 @@ using System.Drawing;
 namespace ArcEngine.Examples.Component
 {
 	/// <summary>
-	/// 
+	/// Fade the screen to a specified color
 	/// </summary>
 	public class ScreenFader : GameComponent
 	{
 		/// <summary>
-		/// 
+		/// Init
 		/// </summary>
 		public override void Initialize()
 		{

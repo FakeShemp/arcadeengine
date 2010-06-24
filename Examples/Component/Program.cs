@@ -20,8 +20,6 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-using ArcEngine;
-using ArcEngine.Asset;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
 

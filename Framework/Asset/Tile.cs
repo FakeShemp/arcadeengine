@@ -83,6 +83,7 @@ namespace ArcEngine.Asset
 		/// <summary>
 		/// HotSpot of the tile
 		/// </summary>
+		/// TODO: Rename to Origin
 		public Point HotSpot
 		{
 			get;

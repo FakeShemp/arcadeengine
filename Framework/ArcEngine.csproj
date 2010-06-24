@@ -51,7 +51,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Debug\ArcEngine.XML</DocumentationFile>
-    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
@@ -63,6 +63,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
     <DebugSymbols>true</DebugSymbols>
@@ -73,6 +74,7 @@
     <PlatformTarget>x64</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
     <OutputPath>bin\x64\Release\</OutputPath>
@@ -82,6 +84,7 @@
     <PlatformTarget>x64</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -92,6 +95,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <OutputPath>bin\x86\Release\</OutputPath>
@@ -101,6 +105,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DigitalRune.Windows.TextEditor, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -303,12 +308,31 @@
     <Compile Include="Graphic\PixelBuffer.cs" />
     <Compile Include="Graphic\FrameBuffer.cs" />
     <Compile Include="Graphic\Shape.cs" />
+    <Compile Include="Graphic\SpriteBatch.cs" />
     <Compile Include="Graphic\Texture.cs" />
     <Compile Include="Graphic\Display.cs" />
     <Compile Include="GameComponent.cs" />
     <Compile Include="IDrawable.cs" />
     <Compile Include="Input\GamePadState.cs" />
     <Compile Include="IUpdateable.cs" />
+    <Compile Include="Maths\MathHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Maths\Matrix4.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Maths\Quaternion.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Maths\Vector2.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Maths\Vector3.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Maths\Vector4.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Network\NetClient.cs" />
     <Compile Include="Network\NetPlayer.cs" />
     <Compile Include="Network\NetPacket.cs" />
@@ -488,6 +512,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Shaders.xml" />
+    <Content Include="Maths\OpenTK License.txt" />
     <Content Include="Utility\GUI\gui.txt" />
     <Content Include="Network\Documentation.txt" />
     <EmbeddedResource Include="Resources\checkerboard.png" />

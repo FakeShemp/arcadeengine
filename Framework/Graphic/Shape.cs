@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Text;
 
 using OpenTK.Graphics.OpenGL;
-using OpenTK;
 
 
 namespace ArcEngine.Graphic
@@ -132,17 +131,17 @@ namespace ArcEngine.Graphic
 		/// <param name="control2">Control point 2</param>
 		public void BezierCurveTo(Point point, Point control1, Point control2)
 		{
-			Vector2[] points = new Vector2[]
+			OpenTK.Vector2[] points = new OpenTK.Vector2[]
 			{
-				new Vector2(LastPoint.X, LastPoint.Y),
-				new Vector2(control1.X, control1.Y),
-				new Vector2(control2.X, control2.Y),
-				new Vector2(point.X, point.Y),
+				new OpenTK.Vector2(LastPoint.X, LastPoint.Y),
+				new OpenTK.Vector2(control1.X, control1.Y),
+				new OpenTK.Vector2(control2.X, control2.Y),
+				new OpenTK.Vector2(point.X, point.Y),
 			};
-			BezierCurve curve = new BezierCurve(points);
+			OpenTK.BezierCurve curve = new OpenTK.BezierCurve(points);
 
 
-			Vector2 pos = Vector2.One;
+			OpenTK.Vector2 pos = OpenTK.Vector2.One;
 			for (int p = 0; p <= Display.CircleResolution; p++)
 			{
 				pos = curve.CalculatePoint((float)p / (float)Display.CircleResolution);
