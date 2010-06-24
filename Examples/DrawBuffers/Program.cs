@@ -74,7 +74,7 @@ namespace ArcEngine.Examples
 		/// </summary>
 		public override void LoadContent()
 		{
-			Display.ClearColor = Color.CornflowerBlue;
+			Display.RenderState.ClearColor = Color.CornflowerBlue;
 
 
 

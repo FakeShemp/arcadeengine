@@ -100,13 +100,6 @@ namespace ArcEngine.Examples.Particles
 				ResetParticle(Particles[i]);
 			}
 
-
-
-			// Matrices
-			ModelViewMatrix = Matrix4.LookAt(new Vector3(0, 0, 1), new Vector3(0, 0, 0), new Vector3(0, 1, 0)); ;
-			ProjectionMatrix = Matrix4.CreateOrthographicOffCenter(0, Display.ViewPort.Width, Display.ViewPort.Height, 0, -1.0f, 1.0f);
-			TextureMatrix = Matrix4.Scale(1.0f / Texture.Size.Width, 1.0f / Texture.Size.Height, 1.0f);
-
 	
 			// Creates the batch
 			Batch = BatchBuffer.CreatePositionColorTextureBuffer();
@@ -118,7 +111,13 @@ namespace ArcEngine.Examples.Particles
 			// Create a font
 			Font = new BitmapFont();
 			Font.LoadTTF(@"c:\windows\fonts\verdana.ttf", 14, FontStyle.Regular);
-		}
+
+			// Matrices
+			ModelViewMatrix = Matrix4.LookAt(new Vector3(0, 0, 1), new Vector3(0, 0, 0), new Vector3(0, 1, 0)); ;
+			ProjectionMatrix = Matrix4.CreateOrthographicOffCenter(0, Display.ViewPort.Width, Display.ViewPort.Height, 0, -1.0f, 1.0f);
+			TextureMatrix = Matrix4.Scale(1.0f / Texture.Size.Width, 1.0f / Texture.Size.Height, 1.0f);
+
+	}
 
 
 		/// <summary>

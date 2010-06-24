@@ -85,7 +85,7 @@ namespace Breakout
 
 
 			// Display settings
-			Display.Blending = true;
+			Display.RenderState.Blending = true;
 			Display.ClearColor = Color.Black;
 
 

@@ -51,7 +51,7 @@ namespace RuffnTumble.Editor.Wizards
 			LevelGlControl.MakeCurrent();
 			Display.ClearColor = Color.Black;
 			Display.Texturing = true;
-			Display.Blending = true;
+			Display.RenderState.Blending = true;
 
 		}
 

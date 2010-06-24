@@ -273,7 +273,7 @@ namespace ArcEngine.Asset
 		{
 			if (Color.A > 0)
 			{
-				Display.ClearColor = Color;
+				Display.RenderState.ClearColor = Color;
 				Display.ClearBuffers();
 			}
 

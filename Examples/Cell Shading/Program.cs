@@ -74,8 +74,8 @@ namespace ArcEngine.Examples.CellShading
 		/// </summary>
 		public override void LoadContent()
 		{
-			Display.ClearColor = Color.CornflowerBlue;
-			Display.DepthTest = true;
+			Display.RenderState.ClearColor = Color.CornflowerBlue;
+			Display.RenderState.DepthTest = true;
 
 			// Matrices
 			ModelViewMatrix = Matrix4.LookAt(new Vector3(0.0f, 0.0f, -2.5f), Vector3.Zero, Vector3.UnitY);

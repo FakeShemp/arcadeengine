@@ -281,8 +281,8 @@ namespace ArcEngine.Editor
 				return;
 
 
-			bool blending = Display.Blending;
-			Display.Blending = true;
+			bool blending = Display.RenderState.Blending;
+			Display.RenderState.Blending = true;
 
 
 			Rectangle rect = Rectangle;
@@ -291,14 +291,14 @@ namespace ArcEngine.Editor
 			rect.Width = (int ) (rect.Width * zoom);
 			rect.Height = (int) (rect.Height * zoom);
 			Display.FillRectangle(rect, Color.FromArgb(Alpha, Color));
-			Display.Blending = false;
+			Display.RenderState.Blending = false;
 			Display.DrawRectangle(rect, Color.FromArgb(Alpha, Color));
 
 			if (IsMouseOver)
 				DrawSizeHandles();
 
 
-			Display.Blending = blending;
+			Display.RenderState.Blending = blending;
 		}
 
 

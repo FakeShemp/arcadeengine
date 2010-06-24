@@ -44,7 +44,7 @@ namespace PathFinding
 		public override void LoadContent()
 		{
 			Display.ClearColor = Color.LightGray;
-			Display.Blending = false;
+			Display.RenderState.Blending = false;
 		}
 
 

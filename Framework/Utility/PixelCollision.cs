@@ -75,12 +75,12 @@ namespace ArcEngine.Utility
 			Display.ColorMask(false, false, false, false);
 
 			// Activate stencil buffer
-			Display.StencilTest = true;
+			Display.RenderState.StencilTest = true;
 			GL.StencilFunc(StencilFunction.Always, 1, 1);
 			GL.StencilOp(StencilOp.Keep, StencilOp.Keep, StencilOp.Replace);
 
 			// Activate alpha test
-			Display.AlphaTest = true;
+			Display.RenderState.AlphaTest = true;
 			Display.AlphaFunction(AlphaFunction.Greater, treshold);
 		}
 
@@ -91,8 +91,8 @@ namespace ArcEngine.Utility
 		static public void End()
 		{
 			// Deactivate stencil buffer and write to the color buffer
-			Display.StencilTest = false;
-			Display.AlphaTest = false;
+			Display.RenderState.StencilTest = false;
+			Display.RenderState.AlphaTest = false;
 			Display.ColorMask(true, true, true, true);
 		}
 

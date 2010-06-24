@@ -75,7 +75,7 @@ namespace ArcEngine.Examples.Component
 		/// </summary>
 		public override void LoadContent()
 		{
-			Display.ClearColor = Color.Black;
+			Display.RenderState.ClearColor = Color.Black;
 		}
 
 

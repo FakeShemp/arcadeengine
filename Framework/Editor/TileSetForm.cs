@@ -366,7 +366,7 @@ namespace ArcEngine.Editor
 			GLTileControl.MakeCurrent();
 
 
-			Display.ClearColor = BgColor;
+			Display.RenderState.ClearColor = BgColor;
 			Display.ClearBuffers();
 
 			// Get zoom value
@@ -652,7 +652,7 @@ namespace ArcEngine.Editor
 
 			BgColor = dlg.Color;
 			GLTextureControl.MakeCurrent();
-			Display.ClearColor = dlg.Color;
+			Display.RenderState.ClearColor = dlg.Color;
 
 			//GLTileControl.MakeCurrent();
 			//Video.ClearColor = dlg.Color;

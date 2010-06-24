@@ -81,7 +81,7 @@ namespace StencilWipe
 		/// </summary>
 		public override void LoadContent()
 		{
-			Display.ClearColor = Color.CornflowerBlue;
+			Display.RenderState.ClearColor = Color.CornflowerBlue;
 
 			Mask = new Texture("data/mask.png");
 
@@ -166,8 +166,8 @@ namespace StencilWipe
 
 
 			Display.AlphaFunction(AlphaFunction.Greater, 0);
-			Display.AlphaTest = true;
-			Display.StencilTest = true;
+			Display.RenderState.AlphaTest = true;
+			Display.RenderState.StencilTest = true;
 
 			Display.ColorMask(false, false, false, false);
 			Display.StencilFunction(StencilFunction.Always, 1, 1);
@@ -178,11 +178,11 @@ namespace StencilWipe
 
 
 			Display.ColorMask(true, true, true, true);
-			Display.StencilFunction(StencilFunction.Equal, 1, 1);
-			Display.StencilOp(StencilOp.Keep, StencilOp.Keep, StencilOp.Keep);
-			Display.DrawRectangle(new Rectangle(10, 10, 600, 600), Color.White);
+			Display.RenderState.StencilFunction(StencilFunction.Equal, 1, 1);
+			Display.RenderState.StencilOp(StencilOp.Keep, StencilOp.Keep, StencilOp.Keep);
+			Display.RenderState.DrawRectangle(new Rectangle(10, 10, 600, 600), Color.White);
 
-			Display.StencilTest = false;
+			Display.RenderState.StencilTest = false;
 
 
 		}

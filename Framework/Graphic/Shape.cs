@@ -142,9 +142,9 @@ namespace ArcEngine.Graphic
 
 
 			OpenTK.Vector2 pos = OpenTK.Vector2.One;
-			for (int p = 0; p <= Display.CircleResolution; p++)
+			for (int p = 0; p <= 50; p++)
 			{
-				pos = curve.CalculatePoint((float)p / (float)Display.CircleResolution);
+				pos = curve.CalculatePoint((float)p / 50.0f);
 				GL.Vertex2(pos.X, pos.Y);
 			}
 
@@ -165,7 +165,7 @@ namespace ArcEngine.Graphic
 		public void ArcTo(int x, int y, int radius, float start, float angle)
 		{
 
-			int real_segments = (int)(Math.Abs(angle) / (2 * Math.PI) * (float)Display.CircleResolution) + 1;
+			int real_segments = (int)(Math.Abs(angle) / (2.0f * Math.PI) * 50.0f) + 1;
 
 
 			float theta = angle / (float)(real_segments);

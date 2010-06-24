@@ -171,14 +171,14 @@ namespace ArcEngine.Asset
 				return;
 
 
-			Display.Scissor = true;
+			Display.RenderState.Scissor = true;
 			foreach (SceneLayer layer in Layers)
 			{
 				SceneFrame frame = new SceneFrame(layer, Time);
 				frame.Draw();
 			}
 
-			Display.Scissor = false;
+			Display.RenderState.Scissor = false;
 		}
 
 

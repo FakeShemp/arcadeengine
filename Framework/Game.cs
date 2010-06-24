@@ -424,7 +424,7 @@ namespace ArcEngine
 		/// </summary>
 		public virtual void Draw()
 		{
-			Display.ClearColor = Color.CornflowerBlue;
+			Display.RenderState.ClearColor = Color.CornflowerBlue;
 			Display.ClearBuffers();
 		}
 

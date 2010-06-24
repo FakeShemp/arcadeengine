@@ -50,7 +50,7 @@ namespace ArcEngine.Graphic
 			RenderStats = new RenderStats();
 			TextureParameters = new DefaultTextParameters();
 
-			CircleResolution = 50;
+			RenderState = new RenderState();
 		}
 
 
@@ -70,18 +70,18 @@ namespace ArcEngine.Graphic
 
 
 			Texturing = true;
-			Blending = true;
-			ClearColor = Color.Black;
-			Culling = false;
-			DepthTest = false;
+			RenderState.Blending = true;
+			RenderState.ClearColor = Color.Black;
+			RenderState.Culling = false;
+			RenderState.DepthTest = false;
 
 			GL.Hint(HintTarget.PolygonSmoothHint, HintMode.Nicest);
 			GL.Hint(HintTarget.LineSmoothHint, HintMode.Nicest);
 			GL.Hint(HintTarget.PointSmoothHint, HintMode.Nicest);
 			GL.Enable(EnableCap.PolygonSmooth);
 
-			LineSmooth = true;
-			PointSmooth = true;
+			RenderState.LineSmooth = true;
+			RenderState.PointSmooth = true;
 			BlendingFunction(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 			GL.ClearStencil(0);
 
@@ -515,7 +515,7 @@ namespace ArcEngine.Graphic
 		public static void DrawPolygon(Point[] points, Color color)
 		{
 			Texturing = false;
-			Culling = false;
+			RenderState.Culling = false;
 
 			GL.Begin(BeginMode.LineLoop);
 			for (int i = 0; i < points.Length; i++)
@@ -537,7 +537,7 @@ namespace ArcEngine.Graphic
 		public static void FillPolygon(Point[] points, Color color)
 		{
 			Texturing = false;
-			Culling = false;
+			RenderState.Culling = false;
 
 			GL.Begin(BeginMode.TriangleFan);
 			for (int i = 0; i < points.Length; i++)
@@ -570,16 +570,16 @@ namespace ArcEngine.Graphic
 			else
 				GL.Begin(BeginMode.LineLoop);
 			float angle;
-			for (int i = 0; i < CircleResolution; i++)
+			for (int i = 0; i < 50.0f; i++)
 			{
-				angle = i * 2.0f * (float)Math.PI / CircleResolution;
+				angle = i * 2.0f * (float)Math.PI / 50.0f;
 				GL.Vertex2(x + Math.Cos(angle) * xradius, y + Math.Sin(angle) * yradius);
 			}
 			GL.End();
 
 
 			Texturing = true;
-			RenderStats.DirectCall += CircleResolution;
+			RenderStats.DirectCall += 50;
 		}
 
 
@@ -630,7 +630,7 @@ namespace ArcEngine.Graphic
 
 			Texturing = false;
 
-			int real_segments = (int)(Math.Abs(end) / (2 * Math.PI) * (float)CircleResolution) + 1;
+			int real_segments = (int)(Math.Abs(end) / (2.0f * Math.PI) * 50.0f) + 1;
 
 			float theta = end / (float)(real_segments);
 			float tangetial_factor = (float)Math.Tan(theta);
@@ -797,10 +797,10 @@ namespace ArcEngine.Graphic
 			GL.Enable(EnableCap.Map1Vertex3);
 			//GL.Enable(EnableCap.Map1Color4);
 
-			GL.Map1(MapTarget.Map1Vertex3, 0, CircleResolution, 3, 4, points);
+			GL.Map1(MapTarget.Map1Vertex3, 0, 50, 3, 4, points);
 			//GL.Map1(MapTarget.Map1Color4, 0, CircleResolution, 4, 2, colors);
 			GL.Begin(BeginMode.LineStrip);
-			for (int i = 0; i <= CircleResolution; i++)
+			for (int i = 0; i <= 50; i++)
 				GL.EvalCoord1(i);
 			GL.End();
 
@@ -1102,19 +1102,6 @@ namespace ArcEngine.Graphic
 		#endregion
 
 
-		#region Stencil
-/*
-		/// <summary>
-		/// Stencil test function
-		/// </summary>
-		/// <param name="function">Test function</param>
-		/// <param name="reference">Reference value</param>
-		/// <param name="mask">Mask</param>
-		public static void StencilFunction(StencilFunction function, int reference, int mask)
-		{
-			GL.StencilFunc(function, reference, mask);
-		}
-*/
 
 		/// <summary>
 		/// Stencil test action
@@ -1129,222 +1116,26 @@ namespace ArcEngine.Graphic
 		}
 
 
-
 		/// <summary>
-		/// Gets or sets stencil enabling. The default is false.
+		/// Stencil test function
 		/// </summary>
-		public static bool StencilTest
+		/// <param name="function">Test function</param>
+		/// <param name="reference">Reference value</param>
+		/// <param name="mask">Mask</param>
+		public static void StencilFunction(StencilFunction function, int reference, int mask)
 		{
-			get
-			{
-				return GL.IsEnabled(EnableCap.StencilTest);
-			}
-
-			set
-			{
-				if (value)
-					GL.Enable(EnableCap.StencilTest);
-				else
-					GL.Disable(EnableCap.StencilTest);
-			}
+			GL.StencilFunc(function, reference, mask);
 		}
 
 
 		/// <summary>
-		/// Gets/sets clear value for the stencil buffer 
+		/// Defines the render state of a graphics device.
 		/// </summary>
-		public static int StencilClearValue
+		public static RenderState RenderState
 		{
-			get
-			{
-				int s;
-				GL.GetInteger(GetPName.StencilClearValue, out s);
-				return s;
-			}
-			set
-			{
-				GL.ClearStencil(value);
-			}
+			get;
+			private set;
 		}
-
-		/// <summary>
-		/// Gets or sets the mask applied to the reference value and each stencil
-		/// buffer entry to determine the significant bits for the stencil test. 
-		/// </summary>
-		public static int StencilMask
-		{
-			get
-			{
-				int mask;
-				GL.GetInteger(GetPName.StencilValueMask, out mask);
-				return mask;
-			}
-			set
-			{
-				GL.StencilMask(value);
-			}
-		}
-
-
-		/// <summary>
-		/// Gets or sets the stencil operation to perform if the stencil test passes.
-		/// </summary>
-		public static StencilOperation StencilPass
-		{
-			get
-			{
-				return StencilOperation.Keep;
-			}
-			set
-			{
-			}
-		}
-
-
-		/// <summary>
-		/// Gets or sets the write mask applied to values written into the stencil buffer.
-		/// </summary>
-		public static int StencilWriteMask 
-		{
-			get
-			{
-				int mask;
-				GL.GetInteger(GetPName.StencilWritemask, out mask);
-				return mask;
-			}
-			set
-			{
-				
-			}
-		}
-
-
-		/// <summary>
-		/// Enables or disables two-sided stenciling. 
-		/// </summary>
-		public static bool TwoSidedStencilMode 
-		{
-			get
-			{
-				return false;
-			}
-			set
-			{
-			}
-		}
-
-
-		/// <summary>
-		/// Specifies a reference value to use for the stencil test.
-		/// </summary>
-		public static int StencilReference 
-		{
-			get
-			{
-				int mask;
-				GL.GetInteger(GetPName.StencilRef, out mask);
-				return mask;
-			}
-			set
-			{
-			}
-		}
-
-/*
-		/// <summary>
-		/// Gets or sets the stencil operation to perform if the stencil and 
-		/// z-tests pass for a counterclockwise triangle.
-		/// </summary>
-		public static StencilOperation CounterClockwiseStencilPass 
-		{
-			get
-			{
-			}
-			set
-			{
-			}
-		}
-
-
-		/// <summary>
-		/// Gets or sets the comparison function to use for counterclockwise stencil tests. 
-		/// </summary>
-		public static CompareFunction CounterClockwiseStencilFunction 
-		{
-			get
-			{
-			}
-			set
-			{
-			}
-		}
-
-
-		/// <summary>
-		/// Gets or sets the stencil operation to perform if the stencil 
-		/// test fails for a counterclockwise triangle. 
-		/// </summary>
-		public static StencilOperation CounterClockwiseStencilFail 
-		{
-			get
-			{
-			}
-			set
-			{
-			}
-		}
-
-
-		/// <summary>
-		/// Gets or sets the stencil operation to perform if the stencil test passes
-		/// and the depth-buffer test fails for a counterclockwise triangle.
-		/// </summary>
-		public static StencilOperation CounterClockwiseStencilDepthBufferFail 
-		{
-			get
-			{
-			}
-			set
-			{
-			}
-		}
-*/
-
-		/// <summary>
-		/// Gets or sets the comparison function for the stencil test. 
-		/// </summary>
-		public static CompareFunction StencilFunction 
-		{
-			get
-			{
-				return CompareFunction.Never;
-			}
-			set
-			{
-				GL.StencilFunc((OpenTK.Graphics.OpenGL.StencilFunction)value, StencilReference, StencilMask);
-			}
-		}
-
-
-		/// <summary>
-		/// Gets or sets the stencil operation to perform if the stencil test fails. 
-		/// </summary>
-		public static StencilOperation StencilFail 
-		{
-			get
-			{
-				return StencilOperation.Keep;
-			}
-			set
-			{
-			}
-		}
-
-
-	
-		
-		#endregion
-
 
 		#region Properties
 
@@ -1358,15 +1149,6 @@ namespace ArcEngine.Graphic
 			private set;
 		}
 
-
-		/// <summary>
-		/// Circle resolution
-		/// </summary>
-		static public int CircleResolution
-		{
-			get;
-			set;
-		}
 
 
 		/// <summary>
@@ -1499,136 +1281,6 @@ namespace ArcEngine.Graphic
 		}
 
 		/// <summary>
-		/// Gets/sets the cleacolor
-		/// </summary>
-		public static Color ClearColor
-		{
-			get
-			{
-				float[] tab = new float[4];
-				GL.GetFloat(GetPName.ColorClearValue, tab);
-
-				return Color.FromArgb((int)(tab[3] * 255), (int)(tab[0] * 255), (int)(tab[1] * 255), (int)(tab[2] * 255));
-			}
-			set
-			{
-				GL.ClearColor(value.R / 255.0f, value.G / 255.0f, value.B / 255.0f, value.A / 255.0f);
-			}
-		}
-
-		/// <summary>
-		/// Enables/disables face culling
-		/// </summary>
-		public static bool Culling
-		{
-			get
-			{
-				return GL.IsEnabled(EnableCap.CullFace);
-			}
-			set
-			{
-				if (value)
-					GL.Enable(EnableCap.CullFace);
-				else
-					GL.Disable(EnableCap.CullFace);
-			}
-		}
-
-	
-		/// <summary>
-		/// Enables/disables depth test
-		/// </summary>
-		public static bool DepthTest
-		{
-			get
-			{
-				return GL.IsEnabled(EnableCap.DepthTest);
-			}
-
-			set
-			{
-				if (value)
-					GL.Enable(EnableCap.DepthTest);
-				else
-					GL.Disable(EnableCap.DepthTest);
-			}
-		}
-
-
-		/// <summary>
-		/// Gets/sets clear value for the depth buffer 
-		/// </summary>
-		public static float DepthClearValue
-		{
-			get
-			{
-				int s;
-				GL.GetInteger(GetPName.DepthClearValue, out s);
-				return s;
-			}
-			set
-			{
-				GL.ClearDepth(value);
-			}
-		}
-
-
-		/// <summary>
-		/// Enable or disable writing into the depth buffer
-		/// </summary>
-		public static bool DepthMask
-		{
-			get
-			{
-				bool ret;
-				GL.GetBoolean(GetPName.DepthWritemask, out ret);
-
-				return ret;
-			}
-
-			set
-			{
-				GL.DepthMask(value);
-			}
-		}
-
-		/// <summary>
-		/// Gets/sets blending state
-		/// </summary>
-		public static bool AlphaTest
-		{
-			get
-			{
-				return GL.IsEnabled(EnableCap.AlphaTest);
-			}
-			set
-			{
-				if (value)
-					GL.Enable(EnableCap.AlphaTest);
-				else
-					GL.Disable(EnableCap.AlphaTest);
-			}
-		}
-
-		/// <summary>
-		/// Gets/sets blending state
-		/// </summary>
-		public static bool Blending
-		{
-			get
-			{
-				return GL.IsEnabled(EnableCap.Blend);
-			}
-			set
-			{
-				if (value)
-					GL.Enable(EnableCap.Blend);
-				else
-					GL.Disable(EnableCap.Blend);
-			}
-		}
-
-		/// <summary>
 		/// Enables/disables 2d texture
 		/// </summary>
 		public static bool Texturing
@@ -1644,145 +1296,6 @@ namespace ArcEngine.Graphic
 				else
 					GL.Disable(EnableCap.Texture2D);
 
-			}
-		}
-
-
-		/// <summary>
-		/// Gets / sets the point size
-		/// </summary>
-		public static int PointSize
-		{
-			get
-			{
-				int value;
-				GL.GetInteger(GetPName.PointSize, out value);
-				return value;
-			}
-			set
-			{
-				GL.PointSize(value);
-			}
-		}
-
-
-		/// <summary>
-		/// Gets / sets the line size
-		/// </summary>
-		[Obsolete("Deprecated")]
-		public static int LineWidth
-		{
-			get
-			{
-				int value;
-				GL.GetInteger(GetPName.LineWidth, out value);
-				return value;
-			}
-			set
-			{
-				GL.LineWidth(value);
-			}
-		}
-
-
-
-		/// <summary>
-		/// Line anti aliasing
-		/// </summary>
-		[Obsolete("Deprecated")]
-		public static bool LineSmooth
-		{
-			get
-			{
-				return GL.IsEnabled(EnableCap.LineSmooth);
-			}
-			set
-			{
-				if (value)
-					GL.Enable(EnableCap.LineSmooth);
-				else
-					GL.Disable(EnableCap.LineSmooth);
-			}
-		}
-
-
-		/// <summary>
-		/// Point smooth
-		/// </summary>
-		[Obsolete("Deprecated")]
-		public static bool PointSmooth
-		{
-			get
-			{
-				return GL.IsEnabled(EnableCap.PointSmooth);
-			}
-			set
-			{
-				if (value)
-					GL.Enable(EnableCap.PointSmooth);
-				else
-					GL.Disable(EnableCap.PointSmooth);
-			}
-		}
-
-
-		/// <summary>
-		/// FSAA
-		/// </summary>
-		public static bool MultiSample
-		{
-			get
-			{
-				return GL.IsEnabled(EnableCap.Multisample);
-			}
-			set
-			{
-				if (value)
-					GL.Enable(EnableCap.Multisample);
-				else
-					GL.Disable(EnableCap.Multisample);
-			}
-		}
-
-
-
-		/// <summary>
-		/// Gets/Sets the scissor test
-		/// </summary>
-		public static bool Scissor
-		{
-			get
-			{
-				return GL.IsEnabled(EnableCap.ScissorTest);
-
-			}
-			set
-			{
-				if (value)
-					GL.Enable(EnableCap.ScissorTest);
-				else
-					GL.Disable(EnableCap.ScissorTest);
-			}
-		}
-
-
-		/// <summary>
-		/// Gets/Sets the stipple pattern
-		/// </summary>
-		[Obsolete("Deprecated")]
-		public static bool LineStipple
-		{
-			get
-			{
-				return GL.IsEnabled(EnableCap.LineStipple);
-
-			}
-			set
-			{
-				if (value)
-					GL.Enable(EnableCap.LineStipple);
-				else
-					GL.Disable(EnableCap.LineStipple);
 			}
 		}
 
