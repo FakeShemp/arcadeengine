@@ -399,6 +399,8 @@
     <Compile Include="Trace.cs" />
     <Compile Include="Utility\Webcam.cs" />
     <EmbeddedResource Include="Graphic\shaders\bezier.vert" />
+    <EmbeddedResource Include="Graphic\shaders\SpriteBatch.frag" />
+    <EmbeddedResource Include="Graphic\shaders\SpriteBatch.vert" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Forms\TerminalForm.resx">

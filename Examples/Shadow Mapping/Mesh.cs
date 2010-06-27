@@ -87,13 +87,13 @@ namespace ArcEngine.Examples.ShadowMapping
 		/// <summary>
 		/// Draws the mesh
 		/// </summary>
-		public void Draw()
+		public void Draw(Shader shader)
 		{
 			//Display.PushMatrix(MatrixMode.Modelview);
 			//Rotation.Normalize();
 		//	Display.ModelViewMatrix = Matrix4.CreateFromAxisAngle(Rotation, 1.0f) * Matrix4.CreateTranslation(Position) * Display.ModelViewMatrix;
 		
-			Display.DrawIndexBuffer(Buffer, BeginMode.Triangles, Index);
+			Display.DrawIndexBuffer(shader, Buffer, PrimitiveType.Triangles, Index);
 			
 		//	Display.PopMatrix(MatrixMode.Modelview);
 		}

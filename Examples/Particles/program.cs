@@ -100,17 +100,18 @@ namespace ArcEngine.Examples.Particles
 				ResetParticle(Particles[i]);
 			}
 
-	
-			// Creates the batch
-			Batch = BatchBuffer.CreatePositionColorTextureBuffer();
-
-
 			// Load the texture
 			Texture = new Texture("data/particle.png");
 
 			// Create a font
 			Font = new BitmapFont();
 			Font.LoadTTF(@"c:\windows\fonts\verdana.ttf", 14, FontStyle.Regular);
+
+			// SpriteBatch
+			Sprite = new SpriteBatch();
+
+			// Creates the batch
+			Batch = BatchBuffer.CreatePositionColorTextureBuffer();
 
 			// Matrices
 			ModelViewMatrix = Matrix4.LookAt(new Vector3(0, 0, 1), new Vector3(0, 0, 0), new Vector3(0, 1, 0)); ;
@@ -125,6 +126,10 @@ namespace ArcEngine.Examples.Particles
 		/// </summary>
 		public override void UnloadContent()
 		{
+			if (Sprite != null)
+				Sprite.Dispose();
+			Sprite = null;
+
 			if (Batch != null)
 				Batch.Dispose();
 			Batch = null;
@@ -188,9 +193,12 @@ namespace ArcEngine.Examples.Particles
 			// Clears the background
 			Display.ClearBuffers();
 
+			Sprite.Begin();
+
+			Sprite.End();
+
+/*
 			string msg;
-
-
 
 			Watch.Reset();
 			if (Keyboard.IsKeyPress(Keys.D))
@@ -230,6 +238,7 @@ namespace ArcEngine.Examples.Particles
 			Font.DrawText(new Point(10, 200), Color.White, "DirectCall : {0}", Display.RenderStats.DirectCall.ToString());
 			Font.DrawText(new Point(10, 240), Color.White, "TextureBinding {0}", Display.RenderStats.TextureBinding.ToString());
 			Font.DrawText(new Point(10, 260), Color.White, "Elapsed time : {0} ms", Watch.ElapsedMilliseconds.ToString());
+*/
 		}
 
 
@@ -285,6 +294,12 @@ namespace ArcEngine.Examples.Particles
 		/// Available colors
 		/// </summary>
 		Color[] Colors;
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		SpriteBatch Sprite;
 
 
 		/// <summary>

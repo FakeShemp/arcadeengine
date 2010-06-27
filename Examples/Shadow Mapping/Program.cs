@@ -24,8 +24,8 @@ using System.Windows.Forms;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
-using OpenTK;
-using OpenTK.Graphics.OpenGL;
+//using OpenTK;
+//using OpenTK.Graphics.OpenGL;
 using System.Xml;
 
 
@@ -70,9 +70,15 @@ namespace ArcEngine.Examples.ShadowMapping
 		/// </summary>
 		public override void LoadContent()
 		{
-			Display.ClearColor = Color.CornflowerBlue;
-			Display.DepthTest = true;
-			Display.ViewPerspective((float)Math.PI / 4.0f, 0.1f, 20.0f);
+			Display.RenderState.ClearColor = Color.CornflowerBlue;
+			Display.RenderState.DepthTest = true;
+	
+			
+			// Matrices
+			ModelViewMatrix = Matrix4.LookAt(new Vector3(0.0f, 0.0f, -2.5f), Vector3.Zero, Vector3.UnitY);
+			float aspectRatio = (float)Display.ViewPort.Width / (float)Display.ViewPort.Height;
+			ProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4.0f, aspectRatio, 0.1f, 20.0f);
+
 
 
 			//Mesh = PlyLoader.LoadPly("data/bunny.ply");
@@ -106,16 +112,16 @@ namespace ArcEngine.Examples.ShadowMapping
 				}";
 			#endregion
 
-
-			Display.Shader.SetSource(ShaderType.VertexShader, vshader);
-			Display.Shader.SetSource(ShaderType.FragmentShader, fshader);
-			Display.Shader.Compile();
+			Shader = new Shader();
+			Shader.SetSource(ShaderType.VertexShader, vshader);
+			Shader.SetSource(ShaderType.FragmentShader, fshader);
+			Shader.Compile();
 			#endregion
 
 
 			#region Font
 
-			Font = BitmapFont.CreateFromTTF("c:\\windows\\fonts\\verdana.ttf", 16, FontStyle.Regular);
+			//Font = BitmapFont.CreateFromTTF("c:\\windows\\fonts\\verdana.ttf", 16, FontStyle.Regular);
 
 			#endregion
 		}
@@ -130,6 +136,9 @@ namespace ArcEngine.Examples.ShadowMapping
 				Mesh.Dispose();
 			Mesh = null;
 
+			if (Shader != null)
+				Shader.Dispose();
+			Shader = null;
 
 			if (Font != null)
 				Font.Dispose();
@@ -152,11 +161,6 @@ namespace ArcEngine.Examples.ShadowMapping
 
 			if (Keyboard.IsKeyPress(Keys.Right))
 				Mesh.Position.X -= 0.01f;
-
-
-
-			// Uniforms
-			Display.Shader.SetUniform("modelview", Display.ModelViewMatrix);
 		}
 
 
@@ -169,9 +173,11 @@ namespace ArcEngine.Examples.ShadowMapping
 			// Clears the background
 			Display.ClearBuffers();
 
+			// Uniforms
+			Shader.SetUniform("modelview", ModelViewMatrix);
 
 			// Draws with the index buffer
-			Mesh.Draw();
+			Mesh.Draw(Shader);
 
 
 			// Some dummy text
@@ -192,6 +198,21 @@ namespace ArcEngine.Examples.ShadowMapping
 		Mesh Mesh;
 
 
+		/// <summary>
+		/// Model view matrix
+		/// </summary>
+		Matrix4 ModelViewMatrix;
+
+
+		/// <summary>
+		/// Projection matrix
+		/// </summary>
+		Matrix4 ProjectionMatrix;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Shader Shader;
 		#endregion
 
 

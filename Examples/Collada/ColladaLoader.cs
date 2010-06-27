@@ -30,6 +30,7 @@ using OpenTK.Graphics.OpenGL;
 // http://www.wazim.com/Collada_Tutorial_1.htm
 // http://www.wazim.com/Collada_Tutorial_2.htm
 // http://www.developpez.net/forums/d488364/applications/developpement-2d-3d-jeux/api-graphiques/opengl/tableau-dindices-opengl-etre-vbo/
+// http://colladamaya.sourceforge.net/
 
 namespace ArcEngine.Examples
 {
