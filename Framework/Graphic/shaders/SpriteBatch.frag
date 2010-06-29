@@ -1,9 +1,15 @@
-﻿
+﻿#version 130
 
-out FragColor;
+uniform sampler2D in_texture;
+uniform mat4 texture_matrix;
 
+in vec2 out_texture;
+in vec4 out_color;
+
+out vec4 frag_color;
 
 void main()
 {
-	FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+	//frag_color = texture2D(in_texture, out_texture.st) * out_color;
+	frag_color = out_color;
 }

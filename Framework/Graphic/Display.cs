@@ -62,13 +62,6 @@ namespace ArcEngine.Graphic
 			Trace.WriteDebugLine("[Display] Init()");
 			Capabilities = new RenderDeviceCapabilities();
 
-
-			#region Shader
-		//	Shader = Shader.CreateTextureShader();
-			#endregion
-
-
-
 			Texturing = true;
 			RenderState.Blending = true;
 			RenderState.ClearColor = Color.Black;
@@ -85,8 +78,6 @@ namespace ArcEngine.Graphic
 			BlendingFunction(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 			GL.ClearStencil(0);
 
-			// Swap to ortho modes
-		//	ViewOrtho();
 
 			Buffer = BatchBuffer.CreatePositionColorTextureBuffer();
 		}

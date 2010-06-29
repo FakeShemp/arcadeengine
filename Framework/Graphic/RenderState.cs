@@ -1,7 +1,7 @@
 ﻿using System;
 using OpenTK.Graphics.OpenGL;
 using System.Drawing;
-
+using ArcEngine.Graphic;
 
 namespace ArcEngine.Graphic
 {
@@ -11,6 +11,63 @@ namespace ArcEngine.Graphic
 	public sealed class RenderState
 	{
 
+		/// <summary>
+		/// Captures the current value of states that are included in a state block.
+		/// </summary>
+		/// <returns>State block</returns>
+		public StateBlock Capture()
+		{
+			StateBlock state = new StateBlock();
+			state.Blending = Blending;
+			state.ClearColor = ClearColor;
+			state.Culling = Culling;
+			state.DepthClearValue = DepthClearValue;
+			state.DepthMask = DepthMask;
+			state.DepthTest = DepthTest;
+			state.MultiSample = MultiSample;
+			state.PointSize = PointSize;
+			state.Scissor = Scissor;
+			state.StencilClearValue = StencilClearValue;
+			state.StencilFail = StencilFail;
+			state.StencilFunction = StencilFunction;
+			state.StencilMask = StencilMask;
+			state.StencilPass = StencilPass;
+			state.StencilReference = StencilReference;
+			state.StencilTest = StencilTest;
+			state.StencilWriteMask = StencilWriteMask;
+			state.TwoSidedStencilMode = TwoSidedStencilMode;
+
+			return state;
+		}
+
+
+		/// <summary>
+		/// Applies the state block 
+		/// </summary>
+		/// <param name="state">Stateblock to apply</param>
+		public void Apply(StateBlock state)
+		{
+			Blending = state.Blending;
+			ClearColor = state.ClearColor;
+			Culling = state.Culling;
+			DepthClearValue = state.DepthClearValue;
+			DepthMask = state.DepthMask;
+			DepthTest = state.DepthTest;
+			MultiSample = state.MultiSample;
+			PointSize = state.PointSize;
+			Scissor = state.Scissor;
+			StencilClearValue = state.StencilClearValue;
+			StencilFail = state.StencilFail;
+			StencilFunction = state.StencilFunction;
+			StencilMask = state.StencilMask;
+			StencilPass = state.StencilPass;
+			StencilReference = state.StencilReference;
+			StencilTest = state.StencilTest;
+			StencilWriteMask = state.StencilWriteMask;
+			TwoSidedStencilMode = state.TwoSidedStencilMode;	
+		}
+
+		#region Properties
 
 		/// <summary>
 		/// Gets/sets blending state
@@ -29,8 +86,6 @@ namespace ArcEngine.Graphic
 					GL.Disable(EnableCap.AlphaTest);
 			}
 		}
-
-
 
 
 		/// <summary>
@@ -284,6 +339,8 @@ namespace ArcEngine.Graphic
 					GL.Disable(EnableCap.Blend);
 			}
 		}
+
+	
 		#region Stencil
 
 
@@ -502,6 +559,134 @@ namespace ArcEngine.Graphic
 
 		#endregion
 
+		#endregion
 
 	}
+
+
+
+	/// <summary>
+	/// 
+	/// </summary>
+	public struct StateBlock
+	{
+
+		/// <summary>
+		/// Gets/sets blending state
+		/// </summary>
+		bool AlphaTest;
+
+
+		/// <summary>
+		/// Gets/Sets the scissor test
+		/// </summary>
+		public bool Scissor;
+
+
+		/// <summary>
+		/// Gets / sets the point size
+		/// </summary>
+		public int PointSize;
+
+
+		/// <summary>
+		/// FSAA
+		/// </summary>
+		public bool MultiSample;
+
+
+		/// <summary>
+		/// Gets/sets the cleacolor
+		/// </summary>
+		public Color ClearColor;
+
+		/// <summary>
+		/// Enables/disables face culling
+		/// </summary>
+		public bool Culling;
+
+
+		/// <summary>
+		/// Enables/disables depth test
+		/// </summary>
+		public bool DepthTest;
+
+
+		/// <summary>
+		/// Gets/sets clear value for the depth buffer 
+		/// </summary>
+		public float DepthClearValue;
+
+
+		/// <summary>
+		/// Enable or disable writing into the depth buffer
+		/// </summary>
+		public bool DepthMask;
+
+
+		/// <summary>
+		/// Gets/sets blending state
+		/// </summary>
+		public bool Blending;
+
+	
+		#region Stencil
+
+
+		/// <summary>
+		/// Gets or sets stencil enabling. The default is false.
+		/// </summary>
+		public bool StencilTest;
+
+
+		/// <summary>
+		/// Gets/sets clear value for the stencil buffer 
+		/// </summary>
+		public int StencilClearValue;
+
+		/// <summary>
+		/// Gets or sets the mask applied to the reference value and each stencil
+		/// buffer entry to determine the significant bits for the stencil test. 
+		/// </summary>
+		public int StencilMask;
+
+
+		/// <summary>
+		/// Gets or sets the stencil operation to perform if the stencil test passes.
+		/// </summary>
+		public StencilOperation StencilPass;
+
+
+		/// <summary>
+		/// Gets or sets the write mask applied to values written into the stencil buffer.
+		/// </summary>
+		public int StencilWriteMask;
+
+
+		/// <summary>
+		/// Enables or disables two-sided stenciling. 
+		/// </summary>
+		public bool TwoSidedStencilMode;
+
+
+		/// <summary>
+		/// Specifies a reference value to use for the stencil test.
+		/// </summary>
+		public int StencilReference;
+
+
+		/// <summary>
+		/// Gets or sets the comparison function for the stencil test. 
+		/// </summary>
+		public CompareFunction StencilFunction;
+
+
+		/// <summary>
+		/// Gets or sets the stencil operation to perform if the stencil test fails. 
+		/// </summary>
+		public StencilOperation StencilFail;
+
+		#endregion
+	}
+
 }

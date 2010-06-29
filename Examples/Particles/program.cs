@@ -61,7 +61,11 @@ namespace ArcEngine.Examples.Particles
 			ParticleCount = 2000;
 
 			// Open the window
-			CreateGameWindow(new Size(1024, 768));
+			GameWindowParams param = new GameWindowParams();
+			param.Size = new Size(1024, 768);
+			param.Major = 3;
+			param.Minor = 0;
+			CreateGameWindow(param);
 			Window.Text = "Fountain";
 
 
@@ -114,9 +118,9 @@ namespace ArcEngine.Examples.Particles
 			Batch = BatchBuffer.CreatePositionColorTextureBuffer();
 
 			// Matrices
-			ModelViewMatrix = Matrix4.LookAt(new Vector3(0, 0, 1), new Vector3(0, 0, 0), new Vector3(0, 1, 0)); ;
-			ProjectionMatrix = Matrix4.CreateOrthographicOffCenter(0, Display.ViewPort.Width, Display.ViewPort.Height, 0, -1.0f, 1.0f);
-			TextureMatrix = Matrix4.Scale(1.0f / Texture.Size.Width, 1.0f / Texture.Size.Height, 1.0f);
+			//ModelViewMatrix = Matrix4.LookAt(new Vector3(0, 0, 1), new Vector3(0, 0, 0), new Vector3(0, 1, 0)); ;
+			//ProjectionMatrix = Matrix4.CreateOrthographicOffCenter(0, Display.ViewPort.Width, Display.ViewPort.Height, 0, -1.0f, 1.0f);
+			//TextureMatrix = Matrix4.Scale(1.0f / Texture.Size.Width, 1.0f / Texture.Size.Height, 1.0f);
 
 	}
 
@@ -194,7 +198,7 @@ namespace ArcEngine.Examples.Particles
 			Display.ClearBuffers();
 
 			Sprite.Begin();
-
+			Sprite.Draw(Texture, new Vector2(100, 100), Color.White);
 			Sprite.End();
 
 /*
@@ -312,23 +316,6 @@ namespace ArcEngine.Examples.Particles
 		/// Font
 		/// </summary>
 		BitmapFont Font;
-
-		/// <summary>
-		/// Model view matrix
-		/// </summary>
-		Matrix4 ModelViewMatrix;
-
-
-		/// <summary>
-		/// Projection matrix
-		/// </summary>
-		Matrix4 ProjectionMatrix;
-
-
-		/// <summary>
-		/// Texture matrix
-		/// </summary>
-		Matrix4 TextureMatrix;
 
 
 		#endregion

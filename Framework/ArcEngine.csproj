@@ -313,6 +313,10 @@
     <Compile Include="Graphic\Texture.cs" />
     <Compile Include="Graphic\Display.cs" />
     <Compile Include="GameComponent.cs" />
+    <Compile Include="Graphic\VertexPositionColor.cs" />
+    <Compile Include="Graphic\VertexPositionColorTexture.cs" />
+    <Compile Include="Graphic\VertexPositionNormalTexture.cs" />
+    <Compile Include="Graphic\VertexPositionTexture.cs" />
     <Compile Include="IDrawable.cs" />
     <Compile Include="Input\GamePadState.cs" />
     <Compile Include="IUpdateable.cs" />
@@ -398,9 +402,9 @@
     <Compile Include="GameTime.cs" />
     <Compile Include="Trace.cs" />
     <Compile Include="Utility\Webcam.cs" />
-    <EmbeddedResource Include="Graphic\shaders\bezier.vert" />
-    <EmbeddedResource Include="Graphic\shaders\SpriteBatch.frag" />
-    <EmbeddedResource Include="Graphic\shaders\SpriteBatch.vert" />
+    <EmbeddedResource Include="Graphic\Shaders\bezier.vert" />
+    <EmbeddedResource Include="Graphic\Shaders\SpriteBatch.frag" />
+    <EmbeddedResource Include="Graphic\Shaders\SpriteBatch.vert" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Forms\TerminalForm.resx">
