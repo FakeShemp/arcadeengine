@@ -1,8 +1,27 @@
-﻿using System;
+﻿#region Licence
+//
+//This file is part of ArcEngine.
+//Copyright (C)2008-2010 Adrien Hémery ( iliak@mimicprod.net )
+//
+//ArcEngine is free software: you can redistribute it and/or modify
+//it under the terms of the GNU General Public License as published by
+//the Free Software Foundation, either version 3 of the License, or
+//any later version.
+//
+//ArcEngine is distributed in the hope that it will be useful,
+//but WITHOUT ANY WARRANTY; without even the implied warranty of
+//MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//GNU General Public License for more details.
+//
+//You should have received a copy of the GNU General Public License
+//along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+//
+#endregion
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using ArcEngine.Graphic;
+using ArcEngine.Asset;
 
 
 namespace ArcEngine.Graphic
@@ -19,6 +38,9 @@ namespace ArcEngine.Graphic
 		{
 			Sprites = new SpriteVertex[2048];
 			Buffer = BatchBuffer.CreatePositionColorTextureBuffer();
+			BackToFrontComp = new BackToFrontComparer();
+			FrontToBackComp = new FrontToBackComparer();
+			TextureComp = new TextureComparer();
 
 			Shader = new Shader();
 			using (Stream stream = ResourceManager.GetResource("ArcEngine.Graphic.Shaders.SpriteBatch.vert"))
@@ -140,12 +162,63 @@ namespace ArcEngine.Graphic
 			}
 			else
 			{
-				List<SpriteVertex> queue;
+				SpriteVertex[] queue;
+				if (SortMode == SpriteSortMode.Deferred)
+					queue = Sprites;
+				else
+				{
+					Sort();
+					//queue = sortedSprites;
+				}
 
+				int offset = 0;
+				Texture texture = CurrentTexture;
+				for (int i = 0; i < spriteQueueCount; i++)
+				{
+					if (Sprites[i].Texture != texture)
+					{
+						RenderBatch(texture, Sprites, offset, i - offset);
+						texture = Sprites[i].Texture;
+						offset = i;
+					}
+				}
+				RenderBatch(texture, Sprites, offset, this.spriteQueueCount - offset);
 
 			}
 
 			spriteQueueCount = 0;
+		}
+
+
+		/// <summary>
+		/// Sort sprite list
+		/// </summary>
+		void Sort()
+		{
+			IComparer<SpriteVertex> comparer = null;
+
+			// Enough space ?
+			if (sortedSprites == null || sortedSprites.Length < spriteQueueCount)
+			{
+				sortedSprites = new SpriteVertex[spriteQueueCount];
+			}
+
+			switch (SortMode)
+			{
+				case SpriteSortMode.Texture:
+				comparer = TextureComp;
+				break;
+
+				case SpriteSortMode.BackToFront:
+				comparer = BackToFrontComp;
+				break;
+
+				case SpriteSortMode.FrontToBack:
+				comparer = FrontToBackComp;
+				break;
+			}
+
+			Array.Sort<SpriteVertex>(Sprites, 0, spriteQueueCount, comparer);
 		}
 
 
@@ -169,14 +242,17 @@ namespace ArcEngine.Graphic
 
 
 		/// <summary>
-		/// 
+		/// Renders sprites
 		/// </summary>
-		/// <param name="texture"></param>
-		/// <param name="vertices"></param>
-		/// <param name="offset"></param>
-		/// <param name="count"></param>
+		/// <param name="texture">Texture to use</param>
+		/// <param name="vertices">Sprite array</param>
+		/// <param name="offset">First element in the array</param>
+		/// <param name="count">Number of element in the array</param>
 		void RenderBatch(Texture texture, SpriteVertex[] vertices, int offset, int count)
 		{
+			if (count == 0 ||texture == null)
+				return;
+
 			Display.TextureUnit = 0;
 			Display.Texture = texture;
 			Display.Shader = Shader;
@@ -185,7 +261,7 @@ namespace ArcEngine.Graphic
 			Matrix4 projectionMatrix = Matrix4.CreateOrthographicOffCenter(0, Display.ViewPort.Width, Display.ViewPort.Height, 0.0f, -1.0f, 1.0f); ;
 			Shader.SetUniform("modelview_matrix", modelViewMatrix * projectionMatrix);
 
-			Matrix4 textureMatrix = Matrix4.Scale(1.0f / CurrentTexture.Size.Width, 1.0f / CurrentTexture.Size.Height, 1.0f);
+			Matrix4 textureMatrix = Matrix4.Scale(1.0f / texture.Size.Width, 1.0f / texture.Size.Height, 1.0f);
 			Shader.SetUniform("texture_matrix", textureMatrix);
 
 
@@ -224,12 +300,14 @@ namespace ArcEngine.Graphic
 			if (texture == null || !InUse) 
 				return;
 
+			// If immediate mode AND texture is not the same
 			if (SortMode == SpriteSortMode.Immediate && CurrentTexture != texture)
 			{
 				if (spriteQueueCount > 0)
 					Flush();
 				CurrentTexture = texture;
 			}
+
 
 			// Buffer too short ?
 			if (spriteQueueCount >= Sprites.Length)
@@ -245,12 +323,12 @@ namespace ArcEngine.Graphic
 			sprite.Effects = effect;
 			sprite.Origin = origin;
 			sprite.Rotation = rotation;
+			sprite.Texture = texture;
 
 			Sprites[spriteQueueCount++] = sprite;
 		}
 
 		#endregion
-
 
 
 		#region Draw
@@ -279,13 +357,267 @@ namespace ArcEngine.Graphic
 			source.W = texture.Size.Height;
 
 			this.InternalDraw(texture, ref destination, ref source, color, 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f);
-
 		}
 
 		#endregion
 
 
 
+		#region Text drawing
+
+		/// <summary>
+		/// Prints some text on the screen
+		/// </summary>
+		/// <param name="pos">Offset of the text</param>
+		/// <param name="color">Color</param>
+		/// <param name="text">Text to print</param>
+		public void DrawString(BitmapFont font, Vector2 pos, Color color, string text)
+		{
+			DrawString(font, new Vector4(pos.X, pos.Y, 0.0f, 0.0f), color, text);
+		}
+
+
+		/// <summary>
+		/// Prints some text on the screen
+		/// </summary>
+		/// <param name="position">Offset of the text</param>
+		/// <param name="color">Color</param>
+		/// <param name="format">Text to print</param>
+		/// <param name="args"></param>
+		public void DrawString(BitmapFont font, Vector2 position, Color color, string format, params object[] args)
+		{
+			DrawString(font, position, color, string.Format(format, args));
+		}
+
+
+		/// <summary>
+		/// Prints some text on the screen within a zone with left justification
+		/// </summary>
+		/// <param name="rectangle">Rectangle of the text</param>
+		/// <param name="color">Color</param>
+		/// <param name="text">Text to print</param>
+		public void DrawString(BitmapFont font, Vector4 rectangle, Color color, string text)
+		{
+			DrawString(font, rectangle, TextJustification.Left, color, text);
+		}
+
+
+		/// <summary>
+		/// Prints some text on the screen
+		/// </summary>
+		/// <param name="rectangle">Rectangle of the text</param>
+		/// <param name="color">Color</param>
+		/// <param name="format">Text to print</param>
+		/// <param name="args"></param>
+		public void DrawString(BitmapFont font, Vector4 rectangle, Color color, string format, params object[] args)
+		{
+			DrawString(font, rectangle, color, string.Format(format, args));
+		}
+
+
+		/// <summary>
+		/// Prints some text on the screen within a rectangle with justification
+		/// </summary>
+		/// <param name="rectangle">Rectangle of the text</param>
+		/// <param name="justification">Needed justifcation</param>
+		/// <param name="color">Text color</param>
+		/// <param name="text">Text to print</param>
+		public void DrawString(BitmapFont font, Vector4 rectangle, TextJustification justification, Color color, string text)
+		{
+			if (string.IsNullOrEmpty(text))
+				return;
+
+/*
+			// Encode string to xml
+			string msg = "<?xml version=\"1.0\" encoding=\"unicode\" standalone=\"yes\"?><root>" + text + "</root>";
+			UnicodeEncoding utf8 = new UnicodeEncoding();
+			byte[] buffer = utf8.GetBytes(msg);
+			MemoryStream stream = new MemoryStream(buffer);
+			XmlTextReader reader = new XmlTextReader(stream);
+			reader.WhitespaceHandling = WhitespaceHandling.All;
+
+
+			// Color stack
+			Stack<Color> ColorStack = new Stack<Color>();
+			ColorStack.Push(color);
+			Color currentcolor = color;
+
+
+			Rectangle rect = rectangle;
+			Display.Buffer.Clear();
+
+
+			// Extra offset when displaying tile
+			int tileoffset = 0;
+
+			try
+			{
+				// Skip the first tags "<?...?>" and "<root>"
+				reader.MoveToContent();
+
+				while (reader.Read())
+				{
+
+
+					switch (reader.NodeType)
+					{
+						case XmlNodeType.Attribute:
+						{
+						}
+						break;
+
+
+						#region control tags
+
+						// Special tags
+						case XmlNodeType.Element:
+						{
+							switch (reader.Name.ToLower())
+							{
+								case "tile":
+								{
+									if (TextTileset == null)
+										break;
+
+									int id = int.Parse(reader.GetAttribute("id"));
+									Tile tile = TextTileset.GetTile(id);
+									TextTileset.Draw(id, rect.Location);
+									rect.Offset(tile.Size.Width, 0);
+
+									tileoffset = tile.Size.Height - LineHeight;
+								}
+								break;
+
+								case "br":
+								{
+									rect.X = rectangle.X;
+									rect.Y += (int)(LineHeight * GlyphTileset.Scale.Height) + tileoffset;
+									tileoffset = 0;
+								}
+								break;
+
+
+								// Change the color
+								case "color":
+								{
+									ColorStack.Push(currentcolor);
+
+									currentcolor = Color.FromArgb(int.Parse(reader.GetAttribute("a")),
+										int.Parse(reader.GetAttribute("r")),
+										int.Parse(reader.GetAttribute("g")),
+										int.Parse(reader.GetAttribute("b")));
+								}
+								break;
+							}
+						}
+						break;
+
+						#endregion
+
+
+						#region closing control tags
+
+						case XmlNodeType.EndElement:
+						{
+							switch (reader.Name.ToLower())
+							{
+								case "color":
+								{
+									currentcolor = ColorStack.Pop();
+								}
+								break;
+							}
+						}
+
+						break;
+
+						#endregion
+
+
+						#region Raw text
+						case XmlNodeType.Text:
+						{
+
+							foreach (char c in reader.Value)
+							{
+								// Get the tile
+								Tile tile = GlyphTileset.GetTile(c - GlyphOffset);
+								if (tile == null)
+									continue;
+
+								// Move the glyph according to its hot spot
+								Rectangle tmp = new Rectangle(
+									new Point(rect.X - (int)(tile.HotSpot.X * GlyphTileset.Scale.Width), rect.Y - (int)(tile.HotSpot.Y * GlyphTileset.Scale.Height)),
+									new Size((int)(tile.Rectangle.Width * GlyphTileset.Scale.Width), (int)(tile.Rectangle.Height * GlyphTileset.Scale.Height)));
+
+								// Out of the bouding box => new line
+								if (tmp.Right >= rectangle.Right && !rectangle.Size.IsEmpty)
+								{
+									tmp.X = rectangle.X;
+									tmp.Y = tmp.Y + (int)(LineHeight * GlyphTileset.Scale.Height);
+
+									rect.X = rectangle.X;
+									rect.Y += (int)(LineHeight * GlyphTileset.Scale.Height) + tileoffset;
+									tileoffset = 0;
+
+								}
+
+								// Add glyph to the batch
+								Display.Buffer.AddRectangle(tmp, currentcolor, tile.Rectangle);
+
+								// Move to the next glyph
+								rect.Offset(tmp.Size.Width + Advance, 0);
+							}
+						}
+						break;
+						#endregion
+
+					}
+
+				}
+			}
+			catch (XmlException ex)
+			{
+			}
+
+			finally
+			{
+				// Close streams
+				reader.Close();
+				stream.Close();
+
+				// Draw batch
+				int count = Display.Buffer.Update();
+				Display.TextureUnit = 0;
+				Display.Texture = GlyphTileset.Texture;
+
+
+				//		Display.PushOrtho();
+
+				//		Display.Shader.SetUniform("texture", 0);
+				Display.DrawBatch(Display.Buffer, 0, count);
+
+				//		Display.PopMatrices();
+			}
+*/
+		}
+
+
+
+		/// <summary>
+		/// Prints some text on the screen within a rectangle with justification
+		/// </summary>
+		/// <param name="rectangle">Rectangle of the text</param>
+		/// <param name="justification">Needed justifcation</param>
+		/// <param name="color">Color</param>
+		/// <param name="format">Text to print</param>
+		/// <param name="args"></param>
+		public void DrawText(Rectangle rectangle, TextJustification justification, Color color, string format, params object[] args)
+		{
+			DrawText(rectangle, justification, color, string.Format(format, args));
+		}
+
+		#endregion
 
 
 		#region Properties
@@ -344,10 +676,110 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		SpriteVertex[] Sprites;
 
+
+		/// <summary>
+		/// Sorted sprite queue
+		/// </summary>
+		SpriteVertex[] sortedSprites;
+
+
 		/// <summary>
 		/// Number of sprite in the buffer
 		/// </summary>
 		int spriteQueueCount;
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		BackToFrontComparer BackToFrontComp;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		FrontToBackComparer FrontToBackComp;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		TextureComparer TextureComp;
+
+		#endregion
+
+
+		#region Comparers
+
+		/// <summary>
+		/// 
+		/// </summary>
+		private class BackToFrontComparer : IComparer<SpriteVertex>
+		{
+			/// <summary>
+			/// 
+			/// </summary>
+			/// <param name="left"></param>
+			/// <param name="right"></param>
+			/// <returns></returns>
+			public int Compare(SpriteVertex left, SpriteVertex right)
+			{
+				if (left.Depth > right.Depth)
+					return -1;
+
+				if (left.Depth < right.Depth)
+					return 1;
+
+				return 0;
+			}
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		private class FrontToBackComparer : IComparer<SpriteVertex>
+		{
+			/// <summary>
+			/// 
+			/// </summary>
+			/// <param name="left"></param>
+			/// <param name="right"></param>
+			/// <returns></returns>
+			public int Compare(SpriteVertex left, SpriteVertex right)
+			{
+				if (left.Depth > right.Depth)
+					return 1;
+
+				if (left.Depth < right.Depth)
+					return -1;
+
+				return 0;
+			}
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		private class TextureComparer : IComparer<SpriteVertex>
+		{
+			/// <summary>
+			/// 
+			/// </summary>
+			/// <param name="left"></param>
+			/// <param name="right"></param>
+			/// <returns></returns>
+			public int Compare(SpriteVertex left, SpriteVertex right)
+			{
+				if (left.Texture.Handle > right.Texture.Handle)
+					return -1;
+
+				if (left.Texture.Handle < right.Texture.Handle)
+					return 1;
+
+				return 0;
+			}
+		}
+
 
 		#endregion
 
@@ -392,10 +824,12 @@ namespace ArcEngine.Graphic
 		/// The color channel modulation to use
 		/// </summary>
 		public Color Color;
+
+		/// <summary>
+		/// Texture
+		/// </summary>
+		public Texture Texture;
 	}
-
-
-
 
 
 	/// <summary>
@@ -479,5 +913,7 @@ namespace ArcEngine.Graphic
 
 
 
+
+ 
 
 }

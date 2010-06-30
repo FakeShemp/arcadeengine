@@ -95,15 +95,18 @@ namespace ArcEngine.Examples.Particles
 			Display.BlendingFunction(BlendingFactorSource.SrcAlpha, BlendingFactorDest.One);
 
 
+
+			// Load the texture
+			Textures = new Texture[2];
+			Textures[0] = new Texture("data/particle.png");
+			Textures[1] = new Texture("data/particle2.png");
+
 			// Init all particles
 			for (int i = 0; i < Particles.Length; i++)
 			{
 				Particles[i] = new Particle();
 				ResetParticle(Particles[i]);
 			}
-
-			// Load the texture
-			Texture = new Texture("data/particle.png");
 
 			// Create a font
 			Font = new BitmapFont();
@@ -127,9 +130,12 @@ namespace ArcEngine.Examples.Particles
 				Font.Dispose();
 			Font = null;
 
-			if (Texture != null)
-				Texture.Dispose();
-			Texture = null;
+			for (int i = 0; i < Textures.Length; i++)
+			{
+				if (Textures[i] != null)
+					Textures[i].Dispose();
+				Textures[i] = null;
+			}
 		}
 
 
@@ -190,33 +196,32 @@ namespace ArcEngine.Examples.Particles
 			{
 				msg = "Immediate mode";
 
-				Watch.Start();
 				Sprite.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Immediate, false);
+				Watch.Start();
 				foreach (Particle particle in Particles)
-					Sprite.Draw(Texture, particle.Location, Color.FromArgb(particle.Alpha, particle.Color));
-				Sprite.End();
+					Sprite.Draw(particle.Texture, particle.Location, Color.FromArgb(particle.Alpha, particle.Color));
 				Watch.Stop();
 			}
 			else
 			{
 				msg = "Deferred mode";
 
+				Sprite.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Texture, false);
 				Watch.Start();
-				Sprite.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Deferred, false);
 				foreach (Particle particle in Particles)
-					Sprite.Draw(Texture, particle.Location, Color.FromArgb(particle.Alpha, particle.Color));
-				Sprite.End();
+					Sprite.Draw(particle.Texture, particle.Location, Color.FromArgb(particle.Alpha, particle.Color));
 				Watch.Stop();
 			}
 
 
 			// Some blah blah...
-			//Font.DrawText(new Point(10, 220), Color.White, "BatchCall : {0}", Display.RenderStats.BatchCall.ToString());
-			//Font.DrawText(new Point(10, 100), Color.White, msg);
-			//Font.DrawText(new Point(10, 180), Color.White, "Press 'D' key for direct mode");
-			//Font.DrawText(new Point(10, 200), Color.White, "DirectCall : {0}", Display.RenderStats.DirectCall.ToString());
-			//Font.DrawText(new Point(10, 240), Color.White, "TextureBinding {0}", Display.RenderStats.TextureBinding.ToString());
-			//Font.DrawText(new Point(10, 260), Color.White, "Elapsed time : {0} ms", Watch.ElapsedMilliseconds.ToString());
+			Sprite.DrawString(Font, new Vector2(10, 220), Color.White, "BatchCall : {0}", Display.RenderStats.BatchCall.ToString());
+			Sprite.DrawString(Font, new Vector2(10, 100), Color.White, msg);
+			Sprite.DrawString(Font, new Vector2(10, 180), Color.White, "Press 'D' key for direct mode");
+			Sprite.DrawString(Font, new Vector2(10, 200), Color.White, "DirectCall : {0}", Display.RenderStats.DirectCall.ToString());
+			Sprite.DrawString(Font, new Vector2(10, 240), Color.White, "TextureBinding {0}", Display.RenderStats.TextureBinding.ToString());
+			Sprite.DrawString(Font, new Vector2(10, 260), Color.White, "Elapsed time : {0} ms", Watch.ElapsedMilliseconds.ToString());
+			Sprite.End();
 
 		}
 
@@ -229,15 +234,18 @@ namespace ArcEngine.Examples.Particles
 		{
 			part.Alpha = 255;
 			part.AlphaFade = Random.Next(1, 255);
+			part.Texture = Textures[Random.Next(100) > 90 ? 1 : 0];
+			part.Velocity = new Vector2(Random.Next(-3, 3), Random.Next(-8, 1));
+			part.Color = Colors[Random.Next(0, Colors.Length)];
+			part.Rotation = Random.Next(100) / 100.0f;
 
 			if (Mouse.Buttons == MouseButtons.Left)
 				part.Location = new Vector2(Mouse.Location.X + Random.Next(-15, 15), Mouse.Location.Y + Random.Next(-15, 15));
-
 			else
 				part.Location = new Vector2(Window.Size.Width / 2.0f + Random.Next(-15, 15), Window.Size.Height / 2.0f + Random.Next(-15, 15));
 
-			part.Velocity = new Vector2(Random.Next(-3, 3), Random.Next(-8, 1));
-			part.Color = Colors[Random.Next(0, Colors.Length)];
+			part.Location = Vector2.Add(part.Location, new Vector2(-part.Texture.Size.Width / 2.0f, -part.Texture.Size.Height / 2.0f));
+
 		}
 
 
@@ -254,7 +262,7 @@ namespace ArcEngine.Examples.Particles
 		/// <summary>
 		/// Particule texture
 		/// </summary>
-		Texture Texture;
+		Texture[] Textures;
 
 
 		/// <summary>
@@ -322,6 +330,16 @@ namespace ArcEngine.Examples.Particles
 		/// Texture color
 		/// </summary>
 		public Color Color;
+
+		/// <summary>
+		/// Texture to use
+		/// </summary>
+		public Texture Texture;
+
+		/// <summary>
+		/// Rotation angle
+		/// </summary>
+		public float Rotation;
 	};
 
 }
