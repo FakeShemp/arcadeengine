@@ -251,6 +251,7 @@ namespace ArcEngine.Examples.CellShading
 
 			#region Font
 
+			Sprite = new SpriteBatch();
 			Font = BitmapFont.CreateFromTTF("c:\\windows\\fonts\\verdana.ttf", 16, FontStyle.Regular);
 
 			#endregion
@@ -316,6 +317,10 @@ namespace ArcEngine.Examples.CellShading
 			if (Shader != null)
 				Shader.Dispose();
 			Shader = null;
+
+			if (Sprite != null)
+				Sprite.Dispose();
+			Sprite = null;
 		}
 
 
@@ -344,12 +349,10 @@ namespace ArcEngine.Examples.CellShading
 			// Clears the background
 			Display.ClearBuffers();
 
-			// Some dummy text
-		//	Font.DrawText(new Point(100, 25), Color.White, "Here's an example of draw buffers.");
-
-
 			// Aplly a rotation
 			Matrix4 mvp = Matrix4.CreateRotationY(Yaw) * ModelViewMatrix * ProjectionMatrix;
+
+			Display.Shader = Shader;
 
 			// Uniforms
 			Shader.SetUniform("modelview", mvp);
@@ -361,6 +364,12 @@ namespace ArcEngine.Examples.CellShading
 
 			// Draws with the index buffer
 			Display.DrawIndexBuffer(Shader, Buffer, PrimitiveType.Triangles, Index);
+
+
+			// Some dummy text
+			Sprite.Begin();
+			Sprite.DrawString(Font, new Vector2(50, 25), Color.White, "Here's an example of draw buffers.");
+			Sprite.End();
 
 		}
 
@@ -389,6 +398,11 @@ namespace ArcEngine.Examples.CellShading
 		/// Font
 		/// </summary>
 		BitmapFont Font;
+
+		/// <summary>
+		/// Sprite batch
+		/// </summary>
+		SpriteBatch Sprite;
 
 
 		/// <summary>

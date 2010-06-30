@@ -321,17 +321,6 @@ namespace ArcEngine.Asset
 				// Close streams
 				reader.Close();
 				stream.Close();
-
-				// Draw batch
-		//		int count = Display.Buffer.Update();
-		//		Display.TextureUnit = 0;
-		//		Display.Texture = GlyphTileset.Texture;
-
-
-		//		Display.PushOrtho();
-		//		Display.Shader.SetUniform("texture", 0);
-		//		Display.DrawBatch(Display.Buffer, 0, count);
-		//		Display.PopMatrices();
 			}
 
 		}
