@@ -72,7 +72,7 @@ namespace ArcEngine.Examples.PerPixelCollision
 		public override void LoadContent()
 		{
 			// Clear color of the screen
-			Display.ClearColor = Color.LightGray;
+			Display.RenderState.ClearColor = Color.LightGray;
 			Mouse.Visible = false;
 
 			if (!PixelCollision.Init())
@@ -130,7 +130,6 @@ namespace ArcEngine.Examples.PerPixelCollision
 		{
 			// Clears the background
 			Display.ClearBuffers();
-		//	Display.DefaultMatrix();
 
 
 			#region First draw

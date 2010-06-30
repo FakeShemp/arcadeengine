@@ -194,47 +194,6 @@ namespace ArcEngine.Graphic
 
 
 		/// <summary>
-		/// Line anti aliasing
-		/// </summary>
-		[Obsolete("Deprecated")]
-		public bool LineSmooth
-		{
-			get
-			{
-				return GL.IsEnabled(EnableCap.LineSmooth);
-			}
-			set
-			{
-				if (value)
-					GL.Enable(EnableCap.LineSmooth);
-				else
-					GL.Disable(EnableCap.LineSmooth);
-			}
-		}
-
-
-		/// <summary>
-		/// Point smooth
-		/// </summary>
-		[Obsolete("Deprecated")]
-		public bool PointSmooth
-		{
-			get
-			{
-				return GL.IsEnabled(EnableCap.PointSmooth);
-			}
-			set
-			{
-				if (value)
-					GL.Enable(EnableCap.PointSmooth);
-				else
-					GL.Disable(EnableCap.PointSmooth);
-			}
-		}
-
-
-
-		/// <summary>
 		/// FSAA
 		/// </summary>
 		public bool MultiSample

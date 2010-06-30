@@ -24,8 +24,6 @@ using System.Windows.Forms;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
-//using OpenTK;
-//using OpenTK.Graphics.OpenGL;
 
 namespace ArcEngine.Examples.Particles
 {
