@@ -191,27 +191,6 @@ namespace ArcEngine
 
         #endregion
 
-        #region public float LengthFast
-
-        /// <summary>
-        /// Gets an approximation of the vector length (magnitude).
-        /// </summary>
-        /// <remarks>
-        /// This property uses an approximation of the square root function to calculate vector magnitude, with
-        /// an upper error bound of 0.001.
-        /// </remarks>
-        /// <see cref="Length"/>
-        /// <seealso cref="LengthSquared"/>
-        public float LengthFast
-        {
-            get
-            {
-                return 1.0f / MathHelper.InverseSqrtFast(X * X + Y * Y);
-            }
-        }
-
-        #endregion
-
         #region public float LengthSquared
 
         /// <summary>
@@ -271,20 +250,6 @@ namespace ArcEngine
         public void Normalize()
         {
             float scale = 1.0f / this.Length;
-            X *= scale;
-            Y *= scale;
-        }
-
-        #endregion
-
-        #region public void NormalizeFast()
-
-        /// <summary>
-        /// Scales the Vector2 to approximately unit length.
-        /// </summary>
-        public void NormalizeFast()
-        {
-            float scale = MathHelper.InverseSqrtFast(X * X + Y * Y);
             X *= scale;
             Y *= scale;
         }
@@ -754,35 +719,6 @@ namespace ArcEngine
         public static void Normalize(ref Vector2 vec, out Vector2 result)
         {
             float scale = 1.0f / vec.Length;
-            result.X = vec.X * scale;
-            result.Y = vec.Y * scale;
-        }
-
-        #endregion
-
-        #region NormalizeFast
-
-        /// <summary>
-        /// Scale a vector to approximately unit length
-        /// </summary>
-        /// <param name="vec">The input vector</param>
-        /// <returns>The normalized vector</returns>
-        public static Vector2 NormalizeFast(Vector2 vec)
-        {
-            float scale = MathHelper.InverseSqrtFast(vec.X * vec.X + vec.Y * vec.Y);
-            vec.X *= scale;
-            vec.Y *= scale;
-            return vec;
-        }
-
-        /// <summary>
-        /// Scale a vector to approximately unit length
-        /// </summary>
-        /// <param name="vec">The input vector</param>
-        /// <param name="result">The normalized vector</param>
-        public static void NormalizeFast(ref Vector2 vec, out Vector2 result)
-        {
-            float scale = MathHelper.InverseSqrtFast(vec.X * vec.X + vec.Y * vec.Y);
             result.X = vec.X * scale;
             result.Y = vec.Y * scale;
         }

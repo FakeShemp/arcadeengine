@@ -112,6 +112,7 @@ namespace ArcEngine.Graphic
 		}
 
 
+/*
 		/// <summary>
 		/// 
 		/// </summary>
@@ -119,6 +120,7 @@ namespace ArcEngine.Graphic
 		{
 			GL.UseProgram(ProgramID);
 		}
+*/
 
 		/// <summary>
 		/// Compiles the shader
@@ -793,7 +795,11 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Program handle
 		/// </summary>
-		int ProgramID;
+		internal int ProgramID
+		{
+			get;
+			private set;
+		}
 
 
 

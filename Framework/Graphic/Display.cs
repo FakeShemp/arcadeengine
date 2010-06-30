@@ -912,7 +912,7 @@ namespace ArcEngine.Graphic
 			index.Bind();
 
 			// Bind shader
-			buffer.Bind(shader);
+			buffer.Bind();
 
 			// Draw
 			GL.DrawElements((BeginMode)mode, index.Count, DrawElementsType.UnsignedInt, IntPtr.Zero);
@@ -950,7 +950,7 @@ namespace ArcEngine.Graphic
 				return;
 
 			// Bind buffer
-	//		batch.Bind(shader);
+			batch.Bind();
 
 			GL.DrawArrays(mode, first, count);
 
@@ -1119,6 +1119,9 @@ namespace ArcEngine.Graphic
 		}
 
 
+		#region Properties
+
+
 		/// <summary>
 		/// Defines the render state of a graphics device.
 		/// </summary>
@@ -1127,8 +1130,6 @@ namespace ArcEngine.Graphic
 			get;
 			private set;
 		}
-
-		#region Properties
 
 
 		/// <summary>
@@ -1141,6 +1142,23 @@ namespace ArcEngine.Graphic
 		}
 
 
+		/// <summary>
+		/// Gets or sets the current Shader
+		/// </summary>
+		public static Shader Shader
+		{
+			get
+			{
+				return shader;
+			}
+			set
+			{
+				shader = value;
+				GL.UseProgram(shader == null ? 0 : shader.ProgramID);
+
+			}
+		}
+		static Shader shader;
 
 		/// <summary>
 		/// Shared textures

@@ -17,11 +17,11 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public SpriteBatch()
 		{
-			Sprites = new List<SpriteVertex>();
-
+			Sprites = new SpriteVertex[2048];
+			Vertices = new VertexPositionColorTexture[8192];
 			Buffer = BatchBuffer.CreatePositionColorTextureBuffer();
-			Shader = new Shader();
 
+			Shader = new Shader();
 			using (Stream stream = ResourceManager.GetResource("ArcEngine.Graphic.Shaders.SpriteBatch.vert"))
 			{
 				StreamReader reader = new StreamReader(stream);
@@ -114,7 +114,8 @@ namespace ArcEngine.Graphic
 				SetRenderState();
 			}
 
-			Flush();
+			if (spriteQueueCount > 0)
+				Flush();
 
 
 			// Restore graphic states
@@ -134,7 +135,7 @@ namespace ArcEngine.Graphic
 		{
 			if (SortMode == SpriteSortMode.Immediate)
 			{
-				RenderBatch(CurrentTexture, Sprites, 0, Sprites.Count);
+				RenderBatch(CurrentTexture, Sprites, 0, spriteQueueCount);
 				CurrentTexture = null;
 			}
 			else
@@ -144,7 +145,7 @@ namespace ArcEngine.Graphic
 
 			}
 
-			CurrentTexture = null;
+			spriteQueueCount = 0;
 		}
 
 
@@ -157,16 +158,15 @@ namespace ArcEngine.Graphic
 		/// <param name="vertices"></param>
 		/// <param name="offset"></param>
 		/// <param name="count"></param>
-		void RenderBatch(Texture texture, List<SpriteVertex> vertices, int offset, int count)
+		void RenderBatch(Texture texture, SpriteVertex[] vertices, int offset, int count)
 		{
 			Display.TextureUnit = 0;
 			Display.Texture = texture;
-
-			Shader.Bind();
+			Display.Shader = Shader;
 
 			Matrix4 modelViewMatrix = Matrix4.Identity;
 			Matrix4 projectionMatrix = Matrix4.CreateOrthographicOffCenter(0, Display.ViewPort.Width, Display.ViewPort.Height, 0.0f, -1.0f, 1.0f); ;
-			Shader.SetUniform("mvp", modelViewMatrix * projectionMatrix);
+			Shader.SetUniform("modelview_matrix", modelViewMatrix * projectionMatrix);
 
 			Matrix4 textureMatrix = Matrix4.Scale(1.0f / CurrentTexture.Size.Width, 1.0f / CurrentTexture.Size.Height, 1.0f);
 			Shader.SetUniform("texture_matrix", textureMatrix);
@@ -174,7 +174,19 @@ namespace ArcEngine.Graphic
 
 			for (int i = 0; i < count; i++)
 			{
+				float cos = 1.0f;
+				float sin = 0.0f;
+				if (Sprites[i].Rotation != 0)
+				{
+					sin = (float)Math.Sin(Sprites[i].Rotation);
+					cos = (float)Math.Cos(Sprites[i].Rotation);
+				}
+
+				Buffer.AddRectangle(Sprites[i].Destination, Sprites[i].Color, Sprites[i].Source);
 			}
+
+			count = Buffer.Update();
+			Display.DrawBatch(Buffer, 0, count);
 
 		}
 
@@ -197,7 +209,8 @@ namespace ArcEngine.Graphic
 
 			if (SortMode == SpriteSortMode.Immediate && CurrentTexture != texture)
 			{
-				Flush();
+				if (spriteQueueCount > 0)
+					Flush();
 				CurrentTexture = texture;
 			}
 
@@ -211,7 +224,7 @@ namespace ArcEngine.Graphic
 			sprite.Origin = origin;
 			sprite.Rotation = rotation;
 
-			Sprites.Add(sprite);
+			Sprites[spriteQueueCount++] = sprite;
 		}
 
 
@@ -324,9 +337,17 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Queue of sprites to draw
 		/// </summary>
-		List<SpriteVertex> Sprites;
+		SpriteVertex[] Sprites;
 
+		/// <summary>
+		/// Number of sprite in the buffer
+		/// </summary>
+		int spriteQueueCount;
 
+		/// <summary>
+		/// Vertex buffer 
+		/// </summary>
+		VertexPositionColorTexture[] Vertices;
 
 		#endregion
 

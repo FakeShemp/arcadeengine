@@ -157,7 +157,7 @@ namespace ArcEngine
         #endregion
 
         #region InverseSqrtFast
-
+/*
         /// <summary>
         /// Returns an approximation of the inverse square root of left number.
         /// </summary>
@@ -181,6 +181,7 @@ namespace ArcEngine
                 return x;
             }
         }
+*/
 
         /// <summary>
         /// Returns an approximation of the inverse square root of left number.

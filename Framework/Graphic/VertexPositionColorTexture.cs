@@ -50,13 +50,13 @@ namespace ArcEngine.Graphic
 
 
 		/// <summary>
-		/// 
+		/// Size of the structure in bytes
 		/// </summary>
 		public static int SizeInBytes
 		{
 			get
 			{
-				return sizeof(VertexPositionColorTexture);
+				return 36;
 			}
 		}
 

@@ -283,27 +283,6 @@ namespace ArcEngine
 
 		#endregion
 
-		#region public float LengthFast
-
-		/// <summary>
-		/// Gets an approximation of the vector length (magnitude).
-		/// </summary>
-		/// <remarks>
-		/// This property uses an approximation of the square root function to calculate vector magnitude, with
-		/// an upper error bound of 0.001.
-		/// </remarks>
-		/// <see cref="Length"/>
-		/// <seealso cref="LengthSquared"/>
-		public float LengthFast
-		{
-			get
-			{
-				return 1.0f / MathHelper.InverseSqrtFast(X * X + Y * Y + Z * Z + W * W);
-			}
-		}
-
-		#endregion
-
 		#region public float LengthSquared
 
 		/// <summary>
@@ -333,22 +312,6 @@ namespace ArcEngine
 		public void Normalize()
 		{
 			float scale = 1.0f / this.Length;
-			X *= scale;
-			Y *= scale;
-			Z *= scale;
-			W *= scale;
-		}
-
-		#endregion
-
-		#region public void NormalizeFast()
-
-		/// <summary>
-		/// Scales the Vector4 to approximately unit length.
-		/// </summary>
-		public void NormalizeFast()
-		{
-			float scale = MathHelper.InverseSqrtFast(X * X + Y * Y + Z * Z + W * W);
 			X *= scale;
 			Y *= scale;
 			Z *= scale;
@@ -403,111 +366,6 @@ namespace ArcEngine
 		#endregion
 
 		#region Static
-
-		#region Obsolete
-
-		#region Sub
-
-		/// <summary>
-		/// Subtract one Vector from another
-		/// </summary>
-		/// <param name="a">First operand</param>
-		/// <param name="b">Second operand</param>
-		/// <returns>Result of subtraction</returns>
-		public static Vector4 Sub(Vector4 a, Vector4 b)
-		{
-			a.X -= b.X;
-			a.Y -= b.Y;
-			a.Z -= b.Z;
-			a.W -= b.W;
-			return a;
-		}
-
-		/// <summary>
-		/// Subtract one Vector from another
-		/// </summary>
-		/// <param name="a">First operand</param>
-		/// <param name="b">Second operand</param>
-		/// <param name="result">Result of subtraction</param>
-		public static void Sub(ref Vector4 a, ref Vector4 b, out Vector4 result)
-		{
-			result.X = a.X - b.X;
-			result.Y = a.Y - b.Y;
-			result.Z = a.Z - b.Z;
-			result.W = a.W - b.W;
-		}
-
-		#endregion
-
-		#region Mult
-
-		/// <summary>
-		/// Multiply a vector and a scalar
-		/// </summary>
-		/// <param name="a">Vector operand</param>
-		/// <param name="f">Scalar operand</param>
-		/// <returns>Result of the multiplication</returns>
-		public static Vector4 Mult(Vector4 a, float f)
-		{
-			a.X *= f;
-			a.Y *= f;
-			a.Z *= f;
-			a.W *= f;
-			return a;
-		}
-
-		/// <summary>
-		/// Multiply a vector and a scalar
-		/// </summary>
-		/// <param name="a">Vector operand</param>
-		/// <param name="f">Scalar operand</param>
-		/// <param name="result">Result of the multiplication</param>
-		public static void Mult(ref Vector4 a, float f, out Vector4 result)
-		{
-			result.X = a.X * f;
-			result.Y = a.Y * f;
-			result.Z = a.Z * f;
-			result.W = a.W * f;
-		}
-
-		#endregion
-
-		#region Div
-
-		/// <summary>
-		/// Divide a vector by a scalar
-		/// </summary>
-		/// <param name="a">Vector operand</param>
-		/// <param name="f">Scalar operand</param>
-		/// <returns>Result of the division</returns>
-		public static Vector4 Div(Vector4 a, float f)
-		{
-			float mult = 1.0f / f;
-			a.X *= mult;
-			a.Y *= mult;
-			a.Z *= mult;
-			a.W *= mult;
-			return a;
-		}
-
-		/// <summary>
-		/// Divide a vector by a scalar
-		/// </summary>
-		/// <param name="a">Vector operand</param>
-		/// <param name="f">Scalar operand</param>
-		/// <param name="result">Result of the division</param>
-		public static void Div(ref Vector4 a, float f, out Vector4 result)
-		{
-			float mult = 1.0f / f;
-			result.X = a.X * mult;
-			result.Y = a.Y * mult;
-			result.Z = a.Z * mult;
-			result.W = a.W * mult;
-		}
-
-		#endregion
-
-		#endregion
 
 		#region Add
 
@@ -797,39 +655,6 @@ namespace ArcEngine
 
 		#endregion
 
-		#region NormalizeFast
-
-		/// <summary>
-		/// Scale a vector to approximately unit length
-		/// </summary>
-		/// <param name="vec">The input vector</param>
-		/// <returns>The normalized vector</returns>
-		public static Vector4 NormalizeFast(Vector4 vec)
-		{
-			float scale = MathHelper.InverseSqrtFast(vec.X * vec.X + vec.Y * vec.Y + vec.Z * vec.Z + vec.W * vec.W);
-			vec.X *= scale;
-			vec.Y *= scale;
-			vec.Z *= scale;
-			vec.W *= scale;
-			return vec;
-		}
-
-		/// <summary>
-		/// Scale a vector to approximately unit length
-		/// </summary>
-		/// <param name="vec">The input vector</param>
-		/// <param name="result">The normalized vector</param>
-		public static void NormalizeFast(ref Vector4 vec, out Vector4 result)
-		{
-			float scale = MathHelper.InverseSqrtFast(vec.X * vec.X + vec.Y * vec.Y + vec.Z * vec.Z + vec.W * vec.W);
-			result.X = vec.X * scale;
-			result.Y = vec.Y * scale;
-			result.Z = vec.Z * scale;
-			result.W = vec.W * scale;
-		}
-
-		#endregion
-
 		#region Dot
 
 		/// <summary>
@@ -1024,6 +849,93 @@ namespace ArcEngine
 			}
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		[XmlIgnore]
+		public float Height
+		{
+			get
+			{
+				return W;
+			}
+		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		[XmlIgnore]
+		public float Bottom
+		{
+			get
+			{
+				return Y + Height;
+			}
+		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		[XmlIgnore]
+		public float Left
+		{
+			get
+			{
+				return X;
+			}
+		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		[XmlIgnore]
+		public float Right
+		{
+			get
+			{
+				return X + Width;
+			}
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		[XmlIgnore]
+		public float Top
+		{
+			get
+			{
+				return Y;
+			}
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		[XmlIgnore]
+		public float Width
+		{
+			get
+			{
+				return W;
+			}
+		}
+
+
+
+
+
+
+
 		#endregion
 
 		#region Operators
@@ -1140,6 +1052,7 @@ namespace ArcEngine
 			return !left.Equals(right);
 		}
 
+/*	
 		/// <summary>
 		/// Returns a pointer to the first element of the specified instance.
 		/// </summary>
@@ -1150,7 +1063,8 @@ namespace ArcEngine
 		{
 			return &v.X;
 		}
-
+*/
+/*
 		/// <summary>
 		/// Returns a pointer to the first element of the specified instance.
 		/// </summary>
@@ -1163,7 +1077,7 @@ namespace ArcEngine
 				return (IntPtr)(&v.X);
 			}
 		}
-
+*/
 		#endregion
 
 		#region Overrides

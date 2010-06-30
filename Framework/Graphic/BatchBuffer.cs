@@ -92,18 +92,17 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Binds the buffer
 		/// </summary>
-		/// <param name="shader">Shader to use</param>
-		public void Bind(Shader shader)
+		public void Bind()
 		{
 			GL.BindBuffer(BufferTarget.ArrayBuffer, Handle);
 
-			if (shader == null)
+			if (Display.Shader == null)
 				return;
 
 			int offset = 0;
 			foreach (VertexDeclaration dec in Declarations)
 			{
-				int id = shader.GetAttribute(dec.Name);
+				int id = Display.Shader.GetAttribute(dec.Name);
 
 				Display.EnableBufferIndex(id);
 				Display.SetBufferDeclaration(id, dec.Size, Stride * sizeof(float), offset);
@@ -127,7 +126,6 @@ namespace ArcEngine.Graphic
 		}
 
 
-
 		/// <summary>
 		/// Clear vertex declarations
 		/// </summary>
@@ -136,7 +134,6 @@ namespace ArcEngine.Graphic
 			Declarations.Clear();
 			Stride = 0;
 		}
-
 
 
 		/// <summary>
@@ -152,7 +149,6 @@ namespace ArcEngine.Graphic
 
 			return buffer;
 		}
-
 
 
 		/// <summary>
@@ -177,9 +173,10 @@ namespace ArcEngine.Graphic
 			Buffer.Clear();
 		}
 
+
 		#region Helpers
 
-
+		#region Rectangles
 
 		/// <summary>
 		/// Adds a colored rectangle
@@ -188,8 +185,8 @@ namespace ArcEngine.Graphic
 		/// <param name="color">Drawing color</param>
 		public void AddRectangle(Rectangle rect, Color color)
 		{
-			AddPoint(new Point(rect.X, rect.Bottom), color);				// D
 			AddPoint(rect.Location, color);										// A
+			AddPoint(new Point(rect.X, rect.Bottom), color);				// D
 			AddPoint(new Point(rect.Right, rect.Bottom), color);			// C
 
 			AddPoint(rect.Location, color);										// A
@@ -206,34 +203,79 @@ namespace ArcEngine.Graphic
 		/// <param name="tex">Texture coordinate</param>
 		public void AddRectangle(Rectangle rect, Color color, Rectangle tex)
 		{
-			AddPoint(new Point(rect.X, rect.Bottom), color, new Point(tex.X, tex.Bottom));				// D
 			AddPoint(rect.Location, color, tex.Location);															// A
+			AddPoint(new Point(rect.X, rect.Bottom), color, new Point(tex.X, tex.Bottom));				// D
 			AddPoint(new Point(rect.Right, rect.Bottom), color, new Point(tex.Right, tex.Bottom));		// C
 
 			AddPoint(rect.Location, color, tex.Location);															// A
 			AddPoint(new Point(rect.Right, rect.Bottom), color, new Point(tex.Right, tex.Bottom));		// C
 			AddPoint(new Point(rect.Right, rect.Top), color, new Point(tex.Right, tex.Top));				// B
-
 		}
 
 
 		/// <summary>
 		/// Adds a textured rectangle
 		/// </summary>
-		/// <param name="rect">Rectangle on the screen</param>
+		/// <param name="destination">Rectangle on the screen</param>
 		/// <param name="color">Drawing color for each corner</param>
-		/// <param name="tex">Texture coordinate</param>
-		public void AddRectangle(Rectangle rect, Color[] color, Rectangle tex)
+		/// <param name="texture">Texture coordinate</param>
+		public void AddRectangle(Rectangle destination, Color[] color, Rectangle texture)
 		{
 			if (color.Length != 4)
 				return;
 
-			AddPoint(rect.Location, color[0], tex.Location);
-			AddPoint(new Point(rect.Right, rect.Top), color[1], new Point(tex.Right, tex.Top));
-			AddPoint(new Point(rect.X, rect.Bottom), color[2], new Point(tex.X, tex.Bottom));
-			AddPoint(new Point(rect.Right, rect.Bottom), color[3], new Point(tex.Right, tex.Bottom));
+			AddPoint(destination.Location, color[0], texture.Location);																			// A
+			AddPoint(new Point(destination.X, destination.Bottom), color[3], new Point(texture.X, texture.Bottom));				// D
+			AddPoint(new Point(destination.Right, destination.Bottom), color[2], new Point(texture.Right, texture.Bottom));	// C
+
+			AddPoint(destination.Location, color[0], texture.Location);																			// A
+			AddPoint(new Point(destination.Right, destination.Bottom), color[2], new Point(texture.Right, texture.Bottom));	// C
+			AddPoint(new Point(destination.Right, destination.Top), color[1], new Point(texture.Right, texture.Top));			// B
 		}
 
+
+		/// <summary>
+		/// Adds a textured rectangle
+		/// </summary>
+		/// <param name="destination">Rectangle on the screen</param>
+		/// <param name="color">Drawing color for each corner</param>
+		/// <param name="texture">Texture coordinate</param>
+		public void AddRectangle(Vector4 destination, Color color, Vector4 texture)
+		{
+			AddPoint(destination.Xy, color, texture.Xy);																								// A
+			AddPoint(new Vector2(destination.X, destination.Bottom), color, new Vector2(texture.X, texture.Bottom));				// D
+			AddPoint(new Vector2(destination.Right, destination.Bottom), color, new Vector2(texture.Right, texture.Bottom));	// C
+
+			AddPoint(destination.Xy, color, texture.Xy);																									// A
+			AddPoint(new Vector2(destination.Right, destination.Bottom), color, new Vector2(texture.Right, texture.Bottom));		// C
+			AddPoint(new Vector2(destination.Right, destination.Top), color, new Vector2(texture.Right, texture.Top));				// B
+		}
+
+
+		/// <summary>
+		/// Adds a textured rectangle
+		/// </summary>
+		/// <param name="destination">Rectangle on the screen</param>
+		/// <param name="color">Drawing color for each corner</param>
+		/// <param name="texture">Texture coordinate</param>
+		public void AddRectangle(Vector4 destination, Color[] color, Vector4 texture)
+		{
+			if (color.Length != 4)
+				return;
+
+			AddPoint(new Vector2(destination.X, destination.Bottom), color[3], new Vector2(texture.X, texture.Bottom));				// D
+			AddPoint(destination.Xy, color[0], texture.Xy);																								// A
+			AddPoint(new Vector2(destination.Right, destination.Bottom), color[2], new Vector2(texture.Right, texture.Bottom));	// C
+
+			AddPoint(destination.Xy, color[0], texture.Xy);																									// A
+			AddPoint(new Vector2(destination.Right, destination.Bottom), color[2], new Vector2(texture.Right, texture.Bottom));		// C
+			AddPoint(new Vector2(destination.Right, destination.Top), color[1], new Vector2(texture.Right, texture.Top));				// B
+		}
+
+		#endregion
+
+
+		#region Points
 
 		/// <summary>
 		/// Adds a textured point
@@ -258,6 +300,30 @@ namespace ArcEngine.Graphic
 			Buffer.Add(texture.Y);
 		}
 
+		/// <summary>
+		/// Adds a textured point
+		/// </summary>
+		/// <param name="point">Location on the screen</param>
+		/// <param name="color">Color of the point</param>
+		/// <param name="texture">Texture coordinate</param>
+		public void AddPoint(Vector2 point, Color color, Vector2 texture)
+		{
+			// Vertex
+			Buffer.Add(point.X);
+			Buffer.Add(point.Y);
+
+			// Color
+			Buffer.Add(color.R / 255.0f);
+			Buffer.Add(color.G / 255.0f);
+			Buffer.Add(color.B / 255.0f);
+			Buffer.Add(color.A / 255.0f);
+
+			// Texture
+			Buffer.Add(texture.X);
+			Buffer.Add(texture.Y);
+		}
+
+
 
 		/// <summary>
 		/// Adds a colored point
@@ -276,6 +342,8 @@ namespace ArcEngine.Graphic
 			Buffer.Add(color.B / 255.0f);
 			Buffer.Add(color.A / 255.0f);
 		}
+
+		#endregion
 
 
 		/// <summary>

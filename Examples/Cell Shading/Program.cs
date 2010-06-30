@@ -174,7 +174,7 @@ namespace ArcEngine.Examples.CellShading
 			Shader.SetSource(ShaderType.VertexShader, vshader);
 			Shader.SetSource(ShaderType.FragmentShader, fshader);
 			Shader.Compile();
-			Shader.Bind();
+			Display.Shader = Shader;
 			#endregion
 
 

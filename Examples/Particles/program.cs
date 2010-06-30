@@ -197,9 +197,10 @@ namespace ArcEngine.Examples.Particles
 			// Clears the background
 			Display.ClearBuffers();
 
-			Sprite.Begin();
-			Sprite.Draw(Texture, new Vector2(100, 100), Color.White);
+			Sprite.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Immediate, false);
+			Sprite.Draw(Texture, new Vector2(100, 200), Color.White);
 			Sprite.End();
+
 
 /*
 			string msg;
