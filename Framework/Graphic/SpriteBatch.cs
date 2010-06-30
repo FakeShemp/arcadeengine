@@ -280,7 +280,6 @@ namespace ArcEngine.Graphic
 
 			count = Buffer.Update();
 			Display.DrawBatch(Buffer, 0, count);
-
 		}
 
 
@@ -303,6 +302,7 @@ namespace ArcEngine.Graphic
 			// If immediate mode AND texture is not the same
 			if (SortMode == SpriteSortMode.Immediate && CurrentTexture != texture)
 			{
+			
 				if (spriteQueueCount > 0)
 					Flush();
 				CurrentTexture = texture;
@@ -314,18 +314,17 @@ namespace ArcEngine.Graphic
 			{
 				Array.Resize<SpriteVertex>(ref Sprites, Sprites.Length * 2);
 			}
-			
-			SpriteVertex sprite = new SpriteVertex();
-			sprite.Source = source;
-			sprite.Destination = destination;
-			sprite.Color = color;
-			sprite.Depth = depth;
-			sprite.Effects = effect;
-			sprite.Origin = origin;
-			sprite.Rotation = rotation;
-			sprite.Texture = texture;
 
-			Sprites[spriteQueueCount++] = sprite;
+			Sprites[spriteQueueCount].Source = source;
+			Sprites[spriteQueueCount].Destination = destination;
+			Sprites[spriteQueueCount].Color = color;
+			Sprites[spriteQueueCount].Depth = depth;
+			Sprites[spriteQueueCount].Effects = effect;
+			Sprites[spriteQueueCount].Origin = origin;
+			Sprites[spriteQueueCount].Rotation = rotation;
+			Sprites[spriteQueueCount].Texture = texture;
+
+			spriteQueueCount++;
 		}
 
 		#endregion

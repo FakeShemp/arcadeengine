@@ -1147,9 +1147,13 @@ namespace ArcEngine.Graphic
 			}
 			set
 			{
+				if (shader == value)
+					return;
+
 				shader = value;
 				TK.GL.UseProgram(shader == null ? 0 : shader.ProgramID);
 
+				RenderStats.ShaderBinding++;
 			}
 		}
 		static Shader shader;
@@ -1191,13 +1195,6 @@ namespace ArcEngine.Graphic
 
 					RenderStats.TextureBinding++;
 				}
-
-				//GL.MatrixMode(MatrixMode.Texture);
-				//GL.LoadIdentity();
-				//GL.Scale(1.0f / value.Size.Width, 1.0f / value.Size.Height, 1.0f);
-
-			//	TextureMatrix = Matrix4.Scale(1.0f / texture.Size.Width, 1.0f / texture.Size.Height, 1.0f);
-
 			}
 			get
 			{
@@ -1617,11 +1614,20 @@ namespace ArcEngine.Graphic
 			DirectCall = 0;
 			BatchCall = 0;
 			TextureBinding = 0;
+			ShaderBinding = 0;
 		}
 
 
 		#region Properties
 
+		/// <summary>
+		/// Number of shader binding
+		/// </summary>
+		public int ShaderBinding
+		{
+			get;
+			internal set;
+		}
 
 		/// <summary>
 		/// Number of direct call (bad !)

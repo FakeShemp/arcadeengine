@@ -283,7 +283,6 @@ namespace ArcEngine.Asset
 									tile.Rectangle.Width * GlyphTileset.Scale.Width, tile.Rectangle.Height * GlyphTileset.Scale.Height);
 
 								// Out of the bouding box => new line
-								//if (tmp.Right >= zone.Right && !zone.Size.IsEmpty)
 								if (tmp.Right >= zone.Right && zone.Size != Vector2.Zero)
 								{
 									tmp.X = zone.X;

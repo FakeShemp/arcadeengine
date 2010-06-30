@@ -191,36 +191,33 @@ namespace ArcEngine.Examples.Particles
 
 			string msg = "empty";
 
-			Watch.Reset();
 			if (Keyboard.IsKeyPress(Keys.D))
 			{
 				msg = "Immediate mode";
-
 				Sprite.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Immediate, false);
-				Watch.Start();
-				foreach (Particle particle in Particles)
-					Sprite.Draw(particle.Texture, particle.Location, Color.FromArgb(particle.Alpha, particle.Color));
-				Watch.Stop();
 			}
 			else
 			{
-				msg = "Deferred mode";
-
+				msg = "Texture sort mode";
 				Sprite.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Texture, false);
-				Watch.Start();
-				foreach (Particle particle in Particles)
-					Sprite.Draw(particle.Texture, particle.Location, Color.FromArgb(particle.Alpha, particle.Color));
-				Watch.Stop();
 			}
 
+			Watch.Reset();
+			Watch.Start();
+			foreach (Particle particle in Particles)
+				Sprite.Draw(particle.Texture, particle.Location, Color.FromArgb(particle.Alpha, particle.Color));
+			Watch.Stop();
+			Sprite.End();
 
 			// Some blah blah...
+			Sprite.Begin();
 			Sprite.DrawString(Font, new Vector2(10, 220), Color.White, "BatchCall : {0}", Display.RenderStats.BatchCall);
 			Sprite.DrawString(Font, new Vector2(10, 100), Color.White, msg);
 			Sprite.DrawString(Font, new Vector2(10, 180), Color.White, "Press 'D' key for direct mode");
-			Sprite.DrawString(Font, new Vector2(10, 200), Color.White, "DirectCall : {0}", Display.RenderStats.DirectCall);
+			Sprite.DrawString(Font, new Vector2(10, 200), Color.White, "Shader binding : {0}", Display.RenderStats.ShaderBinding);
 			Sprite.DrawString(Font, new Vector2(10, 240), Color.White, "TextureBinding {0}", Display.RenderStats.TextureBinding);
 			Sprite.DrawString(Font, new Vector2(10, 260), Color.White, "Elapsed time : {0} ms", Watch.ElapsedMilliseconds);
+
 			Sprite.End();
 
 		}

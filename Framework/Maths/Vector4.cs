@@ -926,7 +926,7 @@ namespace ArcEngine
 		{
 			get
 			{
-				return W;
+				return Z;
 			}
 		}
 
