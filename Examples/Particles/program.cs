@@ -111,15 +111,6 @@ namespace ArcEngine.Examples.Particles
 
 			// SpriteBatch
 			Sprite = new SpriteBatch();
-
-			// Creates the batch
-			Batch = BatchBuffer.CreatePositionColorTextureBuffer();
-
-			// Matrices
-			//ModelViewMatrix = Matrix4.LookAt(new Vector3(0, 0, 1), new Vector3(0, 0, 0), new Vector3(0, 1, 0)); ;
-			//ProjectionMatrix = Matrix4.CreateOrthographicOffCenter(0, Display.ViewPort.Width, Display.ViewPort.Height, 0, -1.0f, 1.0f);
-			//TextureMatrix = Matrix4.Scale(1.0f / Texture.Size.Width, 1.0f / Texture.Size.Height, 1.0f);
-
 	}
 
 
@@ -131,10 +122,6 @@ namespace ArcEngine.Examples.Particles
 			if (Sprite != null)
 				Sprite.Dispose();
 			Sprite = null;
-
-			if (Batch != null)
-				Batch.Dispose();
-			Batch = null;
 
 			if (Font != null)
 				Font.Dispose();
@@ -196,43 +183,29 @@ namespace ArcEngine.Examples.Particles
 			Display.ClearBuffers();
 
 
-/*
 			string msg;
 
 			Watch.Reset();
 			if (Keyboard.IsKeyPress(Keys.D))
 			{
-				msg = "Direct mode";
+				msg = "Immediate mode";
 
 				Watch.Start();
-*/
-				Sprite.Begin(SpriteBlendMode.Additive, SpriteSortMode.Immediate, false);
-//				Sprite.Draw(Texture, new Vector2(100, 200), Color.White);
+				Sprite.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Immediate, false);
 				foreach (Particle particle in Particles)
-				{
-					//Display.DrawTexture(Texture, new Point((int)particle.Location.X, (int)particle.Location.Y), Color.FromArgb(particle.Alpha, particle.Color));
 					Sprite.Draw(Texture, particle.Location, Color.FromArgb(particle.Alpha, particle.Color));
-				}
 				Sprite.End();
-/*
 				Watch.Stop();
 			}
 			else
 			{
-				msg = "Batch mode";
-
+				msg = "Deferred mode";
 
 				Watch.Start();
+				Sprite.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Deferred, false);
 				foreach (Particle particle in Particles)
-					Batch.AddRectangle(new Rectangle((int)particle.Location.X, (int)particle.Location.Y, Texture.Size.Width, Texture.Size.Height), Color.FromArgb(particle.Alpha, particle.Color), Texture.Rectangle);
-
-				int count = Batch.Update();
-
-				// Bind the texture
-				Display.Texture = Texture;
-
-				// Draws the batch
-				Display.DrawBatch(Batch, 0, count);
+					Sprite.Draw(Texture, particle.Location, Color.FromArgb(particle.Alpha, particle.Color));
+				Sprite.End();
 				Watch.Stop();
 			}
 
@@ -244,8 +217,8 @@ namespace ArcEngine.Examples.Particles
 			//Font.DrawText(new Point(10, 200), Color.White, "DirectCall : {0}", Display.RenderStats.DirectCall.ToString());
 			//Font.DrawText(new Point(10, 240), Color.White, "TextureBinding {0}", Display.RenderStats.TextureBinding.ToString());
 			//Font.DrawText(new Point(10, 260), Color.White, "Elapsed time : {0} ms", Watch.ElapsedMilliseconds.ToString());
-*/
-			}
+
+		}
 
 
 		/// <summary>
@@ -303,15 +276,9 @@ namespace ArcEngine.Examples.Particles
 
 
 		/// <summary>
-		/// 
+		/// Sprite batch
 		/// </summary>
 		SpriteBatch Sprite;
-
-
-		/// <summary>
-		/// Rendering Batch
-		/// </summary>
-		BatchBuffer Batch;
 
 
 		/// <summary>

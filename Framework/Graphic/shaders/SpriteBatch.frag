@@ -10,5 +10,4 @@ out vec4 frag_color;
 void main()
 {
 	frag_color = texture2D(texture, out_texture.st) * out_color;
-	//frag_color = out_color;
 }

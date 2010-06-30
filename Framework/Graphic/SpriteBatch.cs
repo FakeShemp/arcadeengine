@@ -18,7 +18,6 @@ namespace ArcEngine.Graphic
 		public SpriteBatch()
 		{
 			Sprites = new SpriteVertex[2048];
-			Vertices = new VertexPositionColorTexture[8192];
 			Buffer = BatchBuffer.CreatePositionColorTextureBuffer();
 
 			Shader = new Shader();
@@ -127,6 +126,7 @@ namespace ArcEngine.Graphic
 		}
 
 
+		#region Internal
 
 		/// <summary>
 		/// Flush all pending data
@@ -149,6 +149,23 @@ namespace ArcEngine.Graphic
 		}
 
 
+		/// <summary>
+		/// Apply render states
+		/// </summary>
+		void SetRenderState()
+		{
+			// Preserve render states
+			if (SaveState)
+			{
+				StateBlock = Display.RenderState.Capture();
+			}
+
+			Display.RenderState.Culling = true;
+			Display.RenderState.DepthTest = false;
+			Display.RenderState.Blending = true;
+			Display.Texturing = true;
+
+		}
 
 
 		/// <summary>
@@ -232,6 +249,8 @@ namespace ArcEngine.Graphic
 			Sprites[spriteQueueCount++] = sprite;
 		}
 
+		#endregion
+
 
 
 		#region Draw
@@ -266,25 +285,6 @@ namespace ArcEngine.Graphic
 		#endregion
 
 
-
-
-		/// <summary>
-		/// Apply render states
-		/// </summary>
-		void SetRenderState()
-		{
-			// Preserve render states
-			if (SaveState)
-			{
-				StateBlock = Display.RenderState.Capture();
-			}
-
-			Display.RenderState.Culling = true;
-			Display.RenderState.DepthTest = false;
-			Display.RenderState.Blending = true;
-			Display.Texturing = true;
-
-		}
 
 
 
@@ -348,11 +348,6 @@ namespace ArcEngine.Graphic
 		/// Number of sprite in the buffer
 		/// </summary>
 		int spriteQueueCount;
-
-		/// <summary>
-		/// Vertex buffer 
-		/// </summary>
-		VertexPositionColorTexture[] Vertices;
 
 		#endregion
 

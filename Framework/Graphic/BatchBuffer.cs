@@ -21,7 +21,7 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public BatchBuffer()
 		{
-			int id = 0;
+			int id = -1;
 			GL.GenBuffers(1, out id);
 			Handle = id;
 
@@ -29,7 +29,8 @@ namespace ArcEngine.Graphic
 
 			Declarations = new List<VertexDeclaration>();
 
-			Buffer = new List<float>();
+			Buffer = new float[8192];
+			Offset = 0;
 		}
 
 
@@ -80,10 +81,10 @@ namespace ArcEngine.Graphic
 		/// <returns>Number of primitives</returns>
 		public int Update()
 		{
-			SetVertices(Buffer.ToArray());
+			SetVertices(Buffer);
 
-			int count = Buffer.Count / Stride;
-			Buffer.Clear();
+			int count = Offset / Stride;
+			Offset = 0;
 
 			return count;
 		}
@@ -170,7 +171,7 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public void Clear()
 		{
-			Buffer.Clear();
+			Offset = 0;
 		}
 
 
@@ -275,6 +276,16 @@ namespace ArcEngine.Graphic
 		#endregion
 
 
+		/// <summary>
+		/// Check for buffer overflow
+		/// </summary>
+		void CheckForOverflow()
+		{
+			if (Offset + Stride >= Buffer.Length)
+				Array.Resize<float>(ref Buffer, Buffer.Length * 2);
+		}
+
+
 		#region Points
 
 		/// <summary>
@@ -285,19 +296,21 @@ namespace ArcEngine.Graphic
 		/// <param name="texture">Texture coordinate</param>
 		public void AddPoint(Point point, Color color, Point texture)
 		{
+			CheckForOverflow();
+
 			// Vertex
-			Buffer.Add(point.X);
-			Buffer.Add(point.Y);
+			Buffer[Offset++] = (point.X);
+			Buffer[Offset++] = (point.Y);
 
 			// Color
-			Buffer.Add(color.R / 255.0f);
-			Buffer.Add(color.G / 255.0f);
-			Buffer.Add(color.B / 255.0f);
-			Buffer.Add(color.A / 255.0f);
+			Buffer[Offset++] = (color.R / 255.0f);
+			Buffer[Offset++] = (color.G / 255.0f);
+			Buffer[Offset++] = (color.B / 255.0f);
+			Buffer[Offset++] = (color.A / 255.0f);
 
 			// Texture
-			Buffer.Add(texture.X);
-			Buffer.Add(texture.Y);
+			Buffer[Offset++] = (texture.X);
+			Buffer[Offset++] = (texture.Y);
 		}
 
 		/// <summary>
@@ -308,19 +321,21 @@ namespace ArcEngine.Graphic
 		/// <param name="texture">Texture coordinate</param>
 		public void AddPoint(Vector2 point, Color color, Vector2 texture)
 		{
+			CheckForOverflow();
+
 			// Vertex
-			Buffer.Add(point.X);
-			Buffer.Add(point.Y);
+			Buffer[Offset++] = (point.X);
+			Buffer[Offset++] = (point.Y);
 
 			// Color
-			Buffer.Add(color.R / 255.0f);
-			Buffer.Add(color.G / 255.0f);
-			Buffer.Add(color.B / 255.0f);
-			Buffer.Add(color.A / 255.0f);
+			Buffer[Offset++] = (color.R / 255.0f);
+			Buffer[Offset++] = (color.G / 255.0f);
+			Buffer[Offset++] = (color.B / 255.0f);
+			Buffer[Offset++] = (color.A / 255.0f);
 
 			// Texture
-			Buffer.Add(texture.X);
-			Buffer.Add(texture.Y);
+			Buffer[Offset++] = (texture.X);
+			Buffer[Offset++] = (texture.Y);
 		}
 
 
@@ -332,15 +347,17 @@ namespace ArcEngine.Graphic
 		/// <param name="color">Color of the point</param>
 		public void AddPoint(Point point, Color color)
 		{
+			CheckForOverflow();
+
 			// Vertex
-			Buffer.Add(point.X);
-			Buffer.Add(point.Y);
+			Buffer[Offset++] = (point.X);
+			Buffer[Offset++] = (point.Y);
 
 			// Color
-			Buffer.Add(color.R / 255.0f);
-			Buffer.Add(color.G / 255.0f);
-			Buffer.Add(color.B / 255.0f);
-			Buffer.Add(color.A / 255.0f);
+			Buffer[Offset++] = (color.R / 255.0f);
+			Buffer[Offset++] = (color.G / 255.0f);
+			Buffer[Offset++] = (color.B / 255.0f);
+			Buffer[Offset++] = (color.A / 255.0f);
 		}
 
 		#endregion
@@ -397,7 +414,13 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Vertex buffer data
 		/// </summary>
-		List<float> Buffer;
+		float[] Buffer;
+
+
+		/// <summary>
+		/// Offset in the buffer
+		/// </summary>
+		int Offset;
 
 
 		/// <summary>
