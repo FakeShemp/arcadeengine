@@ -24,8 +24,8 @@ using System.Windows.Forms;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
-using OpenTK;
-using OpenTK.Graphics.OpenGL;
+//using OpenTK;
+//using OpenTK.Graphics.OpenGL;
 
 namespace ArcEngine.Examples.Particles
 {
@@ -94,7 +94,7 @@ namespace ArcEngine.Examples.Particles
 		public override void LoadContent()
 		{
 			// Display settings
-			Display.BlendingFunction(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.One);
+			Display.BlendingFunction(BlendingFactorSource.SrcAlpha, BlendingFactorDest.One);
 
 
 			// Init all particles
@@ -197,10 +197,6 @@ namespace ArcEngine.Examples.Particles
 			// Clears the background
 			Display.ClearBuffers();
 
-			Sprite.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Immediate, false);
-			Sprite.Draw(Texture, new Vector2(100, 200), Color.White);
-			Sprite.End();
-
 
 /*
 			string msg;
@@ -211,9 +207,16 @@ namespace ArcEngine.Examples.Particles
 				msg = "Direct mode";
 
 				Watch.Start();
+*/
+				Sprite.Begin(SpriteBlendMode.Additive, SpriteSortMode.Immediate, false);
+//				Sprite.Draw(Texture, new Vector2(100, 200), Color.White);
 				foreach (Particle particle in Particles)
-					Display.DrawTexture(Texture, new Point((int)particle.Location.X, (int)particle.Location.Y), Color.FromArgb(particle.Alpha, particle.Color));
-
+				{
+					//Display.DrawTexture(Texture, new Point((int)particle.Location.X, (int)particle.Location.Y), Color.FromArgb(particle.Alpha, particle.Color));
+					Sprite.Draw(Texture, particle.Location, Color.FromArgb(particle.Alpha, particle.Color));
+				}
+				Sprite.End();
+/*
 				Watch.Stop();
 			}
 			else
@@ -237,14 +240,14 @@ namespace ArcEngine.Examples.Particles
 
 
 			// Some blah blah...
-			Font.DrawText(new Point(10, 220), Color.White, "BatchCall : {0}", Display.RenderStats.BatchCall.ToString());
-			Font.DrawText(new Point(10, 100), Color.White, msg);
-			Font.DrawText(new Point(10, 180), Color.White, "Press 'D' key for direct mode");
-			Font.DrawText(new Point(10, 200), Color.White, "DirectCall : {0}", Display.RenderStats.DirectCall.ToString());
-			Font.DrawText(new Point(10, 240), Color.White, "TextureBinding {0}", Display.RenderStats.TextureBinding.ToString());
-			Font.DrawText(new Point(10, 260), Color.White, "Elapsed time : {0} ms", Watch.ElapsedMilliseconds.ToString());
+			//Font.DrawText(new Point(10, 220), Color.White, "BatchCall : {0}", Display.RenderStats.BatchCall.ToString());
+			//Font.DrawText(new Point(10, 100), Color.White, msg);
+			//Font.DrawText(new Point(10, 180), Color.White, "Press 'D' key for direct mode");
+			//Font.DrawText(new Point(10, 200), Color.White, "DirectCall : {0}", Display.RenderStats.DirectCall.ToString());
+			//Font.DrawText(new Point(10, 240), Color.White, "TextureBinding {0}", Display.RenderStats.TextureBinding.ToString());
+			//Font.DrawText(new Point(10, 260), Color.White, "Elapsed time : {0} ms", Watch.ElapsedMilliseconds.ToString());
 */
-		}
+			}
 
 
 		/// <summary>
@@ -257,12 +260,12 @@ namespace ArcEngine.Examples.Particles
 			part.AlphaFade = Random.Next(1, 255);
 
 			if (Mouse.Buttons == MouseButtons.Left)
-				part.Location = new PointF(Mouse.Location.X + Random.Next(-15, 15), Mouse.Location.Y + Random.Next(-15, 15));
+				part.Location = new Vector2(Mouse.Location.X + Random.Next(-15, 15), Mouse.Location.Y + Random.Next(-15, 15));
 
 			else
-				part.Location = new PointF(Window.Size.Width / 2 + Random.Next(-15, 15), Window.Size.Height / 2 + Random.Next(-15, 15));
+				part.Location = new Vector2(Window.Size.Width / 2.0f + Random.Next(-15, 15), Window.Size.Height / 2.0f + Random.Next(-15, 15));
 
-			part.Velocity = new PointF(Random.Next(-3, 3), Random.Next(-8, 1));
+			part.Velocity = new Vector2(Random.Next(-3, 3), Random.Next(-8, 1));
 			part.Color = Colors[Random.Next(0, Colors.Length)];
 		}
 
@@ -333,12 +336,12 @@ namespace ArcEngine.Examples.Particles
 		/// <summary>
 		/// Location
 		/// </summary>
-		public PointF Location;
+		public Vector2 Location;
 
 		/// <summary>
 		/// Velocity
 		/// </summary>
-		public PointF Velocity;
+		public Vector2 Velocity;
 
 		/// <summary>
 		/// alpha value 

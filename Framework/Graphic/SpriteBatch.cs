@@ -214,6 +214,11 @@ namespace ArcEngine.Graphic
 				CurrentTexture = texture;
 			}
 
+			// Buffer too short ?
+			if (spriteQueueCount >= Sprites.Length)
+			{
+				Array.Resize<SpriteVertex>(ref Sprites, Sprites.Length * 2);
+			}
 			
 			SpriteVertex sprite = new SpriteVertex();
 			sprite.Source = source;
@@ -278,7 +283,7 @@ namespace ArcEngine.Graphic
 			Display.RenderState.DepthTest = false;
 			Display.RenderState.Blending = true;
 			Display.Texturing = true;
-		
+
 		}
 
 

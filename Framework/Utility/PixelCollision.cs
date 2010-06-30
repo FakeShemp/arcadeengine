@@ -18,7 +18,7 @@
 //
 #endregion
 using ArcEngine.Graphic;
-using OpenTK.Graphics.OpenGL;
+//using OpenTK.Graphics.OpenGL;
 
 // http://kometbomb.net/2008/07/23/collision-detection-with-occlusion-queries-redux/
 // http://blogs.msdn.com/b/shawnhar/archive/2008/12/31/pixel-perfect-collision-detection-using-gpu-occlusion-queries.aspx
@@ -48,7 +48,7 @@ namespace ArcEngine.Utility
 			}
 
 			// Query
-			GL.GenQueries(1, out QueryID);
+			OpenTK.Graphics.OpenGL.GL.GenQueries(1, out QueryID);
 
 			return true;
 		}
@@ -60,7 +60,7 @@ namespace ArcEngine.Utility
 		public static void Dispose()
 		{
 			if (QueryID != -1)
-				GL.DeleteQueries(1, ref QueryID);
+				OpenTK.Graphics.OpenGL.GL.DeleteQueries(1, ref QueryID);
 			QueryID = -1;
 		}
 
@@ -76,8 +76,11 @@ namespace ArcEngine.Utility
 
 			// Activate stencil buffer
 			Display.RenderState.StencilTest = true;
-			GL.StencilFunc(StencilFunction.Always, 1, 1);
-			GL.StencilOp(StencilOp.Keep, StencilOp.Keep, StencilOp.Replace);
+			Display.StencilFunction(StencilFunction.Always, 1, 1);
+			//GL.StencilFunc(StencilFunction.Always, 1, 1);
+
+			Display.StencilOp(StencilOp.Keep, StencilOp.Keep, StencilOp.Replace);
+			//GL.StencilOp(StencilOp.Keep, StencilOp.Keep, StencilOp.Replace);
 
 			// Activate alpha test
 			Display.RenderState.AlphaTest = true;
@@ -103,12 +106,14 @@ namespace ArcEngine.Utility
 		static public void BeginQuery()
 		{
 			// End blue print
-			GL.StencilFunc(StencilFunction.Equal, 1, 1);
-			GL.StencilOp(StencilOp.Keep, StencilOp.Keep, StencilOp.Keep);
+			//GL.StencilFunc(StencilFunction.Equal, 1, 1);
+			Display.StencilFunction(StencilFunction.Equal, 1, 1);
 
+			//GL.StencilOp(StencilOp.Keep, StencilOp.Keep, StencilOp.Keep);
+			Display.StencilOp(StencilOp.Keep, StencilOp.Keep, StencilOp.Keep);
 
 			//
-			GL.BeginQuery(QueryTarget.SamplesPassed, QueryID);
+			OpenTK.Graphics.OpenGL.GL.BeginQuery(OpenTK.Graphics.OpenGL.QueryTarget.SamplesPassed, QueryID);
 		}
 
 
@@ -117,7 +122,7 @@ namespace ArcEngine.Utility
 		/// </summary>
 		static public void EndQuery()
 		{
-			GL.EndQuery(QueryTarget.SamplesPassed);
+			OpenTK.Graphics.OpenGL.GL.EndQuery(OpenTK.Graphics.OpenGL.QueryTarget.SamplesPassed);
 		}
 
 
@@ -129,7 +134,7 @@ namespace ArcEngine.Utility
 			get
 			{
 				int count = 0;
-				GL.GetQueryObject(QueryID, GetQueryObjectParam.QueryResult, out count);
+				OpenTK.Graphics.OpenGL.GL.GetQueryObject(QueryID, OpenTK.Graphics.OpenGL.GetQueryObjectParam.QueryResult, out count);
 				return count;
 			}
 		}

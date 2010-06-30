@@ -67,6 +67,8 @@ namespace ArcEngine.Graphic
 			TwoSidedStencilMode = state.TwoSidedStencilMode;	
 		}
 
+
+
 		#region Properties
 
 		/// <summary>
@@ -86,6 +88,30 @@ namespace ArcEngine.Graphic
 					GL.Disable(EnableCap.AlphaTest);
 			}
 		}
+
+
+		#region Blending
+
+		/// <summary>
+		/// Gets/sets blending state
+		/// </summary>
+		public bool Blending
+		{
+			get
+			{
+				return GL.IsEnabled(EnableCap.Blend);
+			}
+			set
+			{
+				if (value)
+					GL.Enable(EnableCap.Blend);
+				else
+					GL.Disable(EnableCap.Blend);
+			}
+		}
+
+
+		#endregion
 
 
 		/// <summary>
@@ -322,24 +348,6 @@ namespace ArcEngine.Graphic
 		}
 
 
-		/// <summary>
-		/// Gets/sets blending state
-		/// </summary>
-		public bool Blending
-		{
-			get
-			{
-				return GL.IsEnabled(EnableCap.Blend);
-			}
-			set
-			{
-				if (value)
-					GL.Enable(EnableCap.Blend);
-				else
-					GL.Disable(EnableCap.Blend);
-			}
-		}
-
 	
 		#region Stencil
 
@@ -566,7 +574,7 @@ namespace ArcEngine.Graphic
 
 
 	/// <summary>
-	/// 
+	/// Encapsulates render states
 	/// </summary>
 	public struct StateBlock
 	{
@@ -689,4 +697,250 @@ namespace ArcEngine.Graphic
 		#endregion
 	}
 
+
+
+
+	/// <summary>
+	/// Defines stencil buffer operations. 
+	/// </summary>
+	public enum StencilOperation
+	{
+		/// <summary>
+		/// Decrements the stencil-buffer entry, wrapping to the maximum value if the new value is less than 0.
+		/// </summary>
+		Decrement = OpenTK.Graphics.OpenGL.StencilOp.Decr,
+
+		/// <summary>
+		/// Decrements the stencil-buffer entry, clamping to 0.
+		/// </summary>
+		DecrementSaturation = OpenTK.Graphics.OpenGL.StencilOp.DecrWrap,
+
+		/// <summary>
+		/// Increments the stencil-buffer entry, wrapping to 0 if the new value exceeds the maximum value.
+		/// </summary>
+		Increment = OpenTK.Graphics.OpenGL.StencilOp.Incr,
+
+		/// <summary>
+		/// Increments the stencil-buffer entry, clamping to the maximum value.
+		/// </summary>
+		IncrementSaturation = OpenTK.Graphics.OpenGL.StencilOp.IncrWrap,
+
+		/// <summary>
+		/// Inverts the bits in the stencil-buffer entry.
+		/// </summary>
+		Invert = OpenTK.Graphics.OpenGL.StencilOp.Invert,
+
+		/// <summary>
+		/// 	Does not update the stencil-buffer entry. This is the default value.
+		/// </summary>
+		Keep = OpenTK.Graphics.OpenGL.StencilOp.Keep,
+
+		/// <summary>
+		/// Replaces the stencil-buffer entry with a reference value.
+		/// </summary>
+		Replace = OpenTK.Graphics.OpenGL.StencilOp.Replace,
+
+		/// <summary>
+		/// Sets the stencil-buffer entry to 0.
+		/// </summary>
+		Zero = OpenTK.Graphics.OpenGL.StencilOp.Zero,
+	}
+
+	/// <summary>
+	/// Defines comparison functions that can be chosen for alpha, stencil, or depth-buffer tests.
+	/// </summary>
+	public enum CompareFunction
+	{
+		/// <summary>
+		/// Always pass the test.
+		/// </summary>
+		Always = OpenTK.Graphics.OpenGL.StencilFunction.Always,
+
+
+		/// <summary>
+		/// Accept the new pixel if its value is equal to the value of the current pixel.
+		/// </summary>
+		Equal = OpenTK.Graphics.OpenGL.StencilFunction.Equal,
+
+		/// <summary>
+		/// Accept the new pixel if its value is greater than the value of the current pixel.
+		/// </summary>
+		Greater = OpenTK.Graphics.OpenGL.StencilFunction.Greater,
+
+		/// <summary>
+		/// Accept the new pixel if its value is greater than or equal to the value of the current pixel.
+		/// </summary>
+		GreaterEqual = OpenTK.Graphics.OpenGL.StencilFunction.Gequal,
+
+		/// <summary>
+		/// 	Accept the new pixel if its value is less than the value of the current pixel.
+		/// </summary>
+		Less = OpenTK.Graphics.OpenGL.StencilFunction.Less,
+
+		/// <summary>
+		/// Accept the new pixel if its value is less than or equal to the value of the current pixel. 
+		/// </summary>
+		LessEqual = OpenTK.Graphics.OpenGL.StencilFunction.Lequal,
+
+		/// <summary>
+		/// Always fail the test.
+		/// </summary>
+		Never = OpenTK.Graphics.OpenGL.StencilFunction.Never,
+
+		/// <summary>
+		/// Accept the new pixel if its value does not equal the value of the current pixel.
+		/// </summary>
+		NotEqual = OpenTK.Graphics.OpenGL.StencilFunction.Notequal,
+	}
+
+
+
+	/// <summary>
+	/// Defines how to combine a source color with the destination color 
+	/// already on the render target for color blending.
+	/// </summary>
+	public enum BlendingFactorSource
+	{
+		/// <summary>
+		/// 
+		/// </summary>
+		Zero = OpenTK.Graphics.OpenGL.BlendingFactorSrc.Zero,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		One = OpenTK.Graphics.OpenGL.BlendingFactorSrc.One,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		SrcAlpha = OpenTK.Graphics.OpenGL.BlendingFactorSrc.SrcAlpha,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		OneMinusSrcAlpha = OpenTK.Graphics.OpenGL.BlendingFactorSrc.OneMinusSrcAlpha,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		DstAlpha = OpenTK.Graphics.OpenGL.BlendingFactorSrc.DstAlpha,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		OneMinusDstAlpha = OpenTK.Graphics.OpenGL.BlendingFactorSrc.OneMinusDstAlpha,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		DstColor = OpenTK.Graphics.OpenGL.BlendingFactorSrc.DstColor,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		OneMinusDstColor = OpenTK.Graphics.OpenGL.BlendingFactorSrc.OneMinusDstColor,
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		SrcAlphaSaturate = OpenTK.Graphics.OpenGL.BlendingFactorSrc.SrcAlphaSaturate,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		ConstantColor = OpenTK.Graphics.OpenGL.BlendingFactorSrc.ConstantColor,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		OneMinusConstantColor = OpenTK.Graphics.OpenGL.BlendingFactorSrc.OneMinusConstantColor,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		ConstantAlpha = OpenTK.Graphics.OpenGL.BlendingFactorSrc.ConstantAlpha,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		OneMinusConstantAlpha = OpenTK.Graphics.OpenGL.BlendingFactorSrc.OneMinusConstantAlpha,
+	}
+
+
+	/// <summary>
+	/// 
+	/// </summary>
+	public enum BlendingFactorDest
+	{
+		/// <summary>
+		/// 
+		/// </summary>
+		Zero = OpenTK.Graphics.OpenGL.BlendingFactorDest.Zero,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		One = OpenTK.Graphics.OpenGL.BlendingFactorDest.One,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		SrcColor = OpenTK.Graphics.OpenGL.BlendingFactorDest.SrcColor,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		OneMinusSrcColor = OpenTK.Graphics.OpenGL.BlendingFactorDest.OneMinusSrcColor,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		SrcAlpha = OpenTK.Graphics.OpenGL.BlendingFactorDest.SrcAlpha,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		OneMinusSrcAlpha = OpenTK.Graphics.OpenGL.BlendingFactorDest.OneMinusSrcAlpha,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		DstAlpha = OpenTK.Graphics.OpenGL.BlendingFactorDest.DstAlpha,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		OneMinusDstAlpha = OpenTK.Graphics.OpenGL.BlendingFactorDest.OneMinusDstAlpha,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		DstColor = OpenTK.Graphics.OpenGL.BlendingFactorDest.DstColor,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		OneMinusDstColor = OpenTK.Graphics.OpenGL.BlendingFactorDest.OneMinusDstColor,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		ConstantColor = OpenTK.Graphics.OpenGL.BlendingFactorDest.ConstantColor,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		OneMinusConstantColor = OpenTK.Graphics.OpenGL.BlendingFactorDest.OneMinusConstantColor,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		ConstantAlpha = OpenTK.Graphics.OpenGL.BlendingFactorDest.ConstantAlpha,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		OneMinusConstantAlpha = OpenTK.Graphics.OpenGL.BlendingFactorDest.OneMinusConstantAlpha,
+	}
 }

@@ -21,11 +21,6 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using OpenTK;
-using OpenTK.Graphics.OpenGL;
-using ArcEngine.Asset;
-using System.Xml;
-using System.Text;
 
 //
 //
@@ -68,15 +63,15 @@ namespace ArcEngine.Graphic
 			RenderState.Culling = false;
 			RenderState.DepthTest = false;
 
-			GL.Hint(HintTarget.PolygonSmoothHint, HintMode.Nicest);
-			GL.Hint(HintTarget.LineSmoothHint, HintMode.Nicest);
-			GL.Hint(HintTarget.PointSmoothHint, HintMode.Nicest);
-			GL.Enable(EnableCap.PolygonSmooth);
+			OpenTK.Graphics.OpenGL.GL.Hint(OpenTK.Graphics.OpenGL.HintTarget.PolygonSmoothHint, OpenTK.Graphics.OpenGL.HintMode.Nicest);
+			OpenTK.Graphics.OpenGL.GL.Hint(OpenTK.Graphics.OpenGL.HintTarget.LineSmoothHint, OpenTK.Graphics.OpenGL.HintMode.Nicest);
+			OpenTK.Graphics.OpenGL.GL.Hint(OpenTK.Graphics.OpenGL.HintTarget.PointSmoothHint, OpenTK.Graphics.OpenGL.HintMode.Nicest);
+			OpenTK.Graphics.OpenGL.GL.Enable(OpenTK.Graphics.OpenGL.EnableCap.PolygonSmooth);
 
 			RenderState.LineSmooth = true;
 			RenderState.PointSmooth = true;
-			BlendingFunction(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
-			GL.ClearStencil(0);
+			BlendingFunction(BlendingFactorSource.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+			OpenTK.Graphics.OpenGL.GL.ClearStencil(0);
 
 
 			Buffer = BatchBuffer.CreatePositionColorTextureBuffer();
@@ -110,7 +105,7 @@ namespace ArcEngine.Graphic
 
 			Trace.WriteLine("Display modes");
 			Trace.Indent();
-			foreach (DisplayDevice device in DisplayDevice.AvailableDisplays)
+			foreach (OpenTK.DisplayDevice device in OpenTK.DisplayDevice.AvailableDisplays)
 				Trace.WriteLine(device.ToString());
 			Trace.Unindent();
 
@@ -124,10 +119,10 @@ namespace ArcEngine.Graphic
 			else
 			{
 				int count = 0;
-				GL.GetInteger(GetPName.NumExtensions, out count);
+				OpenTK.Graphics.OpenGL.GL.GetInteger(OpenTK.Graphics.OpenGL.GetPName.NumExtensions, out count);
 				Trace.Write("Supported extensions ({0}) : ", count);
 				for (int i = 0; i < count; i++)
-					Trace.Write("{0}, ", GL.GetString(StringName.Extensions, i));
+					Trace.Write("{0}, ", OpenTK.Graphics.OpenGL.GL.GetString(OpenTK.Graphics.OpenGL.StringName.Extensions, i));
 			}
 			Trace.WriteLine("");
 
@@ -143,7 +138,7 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public static void ClearBuffers()
 		{
-			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
+			OpenTK.Graphics.OpenGL.GL.Clear(OpenTK.Graphics.OpenGL.ClearBufferMask.ColorBufferBit | OpenTK.Graphics.OpenGL.ClearBufferMask.DepthBufferBit | OpenTK.Graphics.OpenGL.ClearBufferMask.StencilBufferBit);
 		}
 
 
@@ -152,7 +147,7 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public static void ClearStencilBuffer()
 		{
-			GL.Clear(ClearBufferMask.StencilBufferBit);
+			OpenTK.Graphics.OpenGL.GL.Clear(OpenTK.Graphics.OpenGL.ClearBufferMask.StencilBufferBit);
 		}
 
 
@@ -161,7 +156,7 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public static void ClearColorBuffer()
 		{
-			GL.Clear(ClearBufferMask.ColorBufferBit);
+			OpenTK.Graphics.OpenGL.GL.Clear(OpenTK.Graphics.OpenGL.ClearBufferMask.ColorBufferBit);
 		}
 
 
@@ -170,7 +165,7 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public static void ClearDepthBuffer()
 		{
-			GL.Clear(ClearBufferMask.DepthBufferBit);
+			OpenTK.Graphics.OpenGL.GL.Clear(OpenTK.Graphics.OpenGL.ClearBufferMask.DepthBufferBit);
 		}
 
 
@@ -179,8 +174,8 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public static void GetLastError(string command)
 		{
-			ErrorCode error = GL.GetError();
-			if (error == ErrorCode.NoError)
+			OpenTK.Graphics.OpenGL.ErrorCode error = OpenTK.Graphics.OpenGL.GL.GetError();
+			if (error == OpenTK.Graphics.OpenGL.ErrorCode.NoError)
 				return;
 
 
@@ -198,9 +193,9 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		/// <param name="source">Source factor</param>
 		/// <param name="dest">Destination factor</param>
-		public static void BlendingFunction(BlendingFactorSrc source, BlendingFactorDest dest)
+		public static void BlendingFunction(BlendingFactorSource source, BlendingFactorDest dest)
 		{
-			GL.BlendFunc(source, dest);
+			OpenTK.Graphics.OpenGL.GL.BlendFunc((OpenTK.Graphics.OpenGL.BlendingFactorSrc)source, (OpenTK.Graphics.OpenGL.BlendingFactorDest)dest);
 		}
 
 
@@ -211,7 +206,7 @@ namespace ArcEngine.Graphic
 		/// <param name="reference">Reference value</param>
 		public static void AlphaFunction(AlphaFunction function, float reference)
 		{
-			GL.AlphaFunc(function, reference);
+			OpenTK.Graphics.OpenGL.GL.AlphaFunc((OpenTK.Graphics.OpenGL.AlphaFunction)function, reference);
 		}
 
 
@@ -224,7 +219,7 @@ namespace ArcEngine.Graphic
 		/// <param name="alpha">Alpha</param>
 		public static void ColorMask(bool red, bool green, bool blue, bool alpha)
 		{
-			GL.ColorMask(red, green, blue, alpha);
+			OpenTK.Graphics.OpenGL.GL.ColorMask(red, green, blue, alpha);
 		}
 
 		#endregion
@@ -241,7 +236,7 @@ namespace ArcEngine.Graphic
 		/// <param name="pattern">16-bit integer whose bit pattern determines which fragments of a line will be drawn when the line is rasterized.</param>
 		public static void SetLineStipple(int factor, short pattern)
 		{
-			GL.LineStipple(factor, pattern);
+			OpenTK.Graphics.OpenGL.GL.LineStipple(factor, pattern);
 		}
 
 
@@ -328,14 +323,14 @@ namespace ArcEngine.Graphic
 
 
 			if (fill)
-				GL.Begin(BeginMode.Quads);
+				OpenTK.Graphics.OpenGL.GL.Begin(OpenTK.Graphics.OpenGL.BeginMode.Quads);
 			else
-				GL.Begin(BeginMode.LineLoop);
-			GL.Vertex2(x, y);
-			GL.Vertex2(x, y + height);
-			GL.Vertex2(x + width, y + height);
-			GL.Vertex2(x + width, y);
-			GL.End();
+				OpenTK.Graphics.OpenGL.GL.Begin(OpenTK.Graphics.OpenGL.BeginMode.LineLoop);
+			OpenTK.Graphics.OpenGL.GL.Vertex2(x, y);
+			OpenTK.Graphics.OpenGL.GL.Vertex2(x, y + height);
+			OpenTK.Graphics.OpenGL.GL.Vertex2(x + width, y + height);
+			OpenTK.Graphics.OpenGL.GL.Vertex2(x + width, y);
+			OpenTK.Graphics.OpenGL.GL.End();
 
 			//GL.PopMatrix();
 		//	RestoreState();
@@ -422,10 +417,10 @@ namespace ArcEngine.Graphic
 		public static void DrawLine(int x1, int y1, int x2, int y2, Color color)
 		{
 			Texturing = false;
-			GL.Begin(BeginMode.Lines);
-			GL.Vertex2(x1, y1);
-			GL.Vertex2(x2, y2);
-			GL.End();
+			OpenTK.Graphics.OpenGL.GL.Begin(OpenTK.Graphics.OpenGL.BeginMode.Lines);
+			OpenTK.Graphics.OpenGL.GL.Vertex2(x1, y1);
+			OpenTK.Graphics.OpenGL.GL.Vertex2(x2, y2);
+			OpenTK.Graphics.OpenGL.GL.End();
 			Texturing = true;
 
 			RenderStats.DirectCall += 2;
@@ -489,9 +484,9 @@ namespace ArcEngine.Graphic
 		public static void DrawPoint(int x, int y, Color color)
 		{
 			Texturing = false;
-			GL.Begin(BeginMode.Points);
-			GL.Vertex2(x, y);
-			GL.End();
+			OpenTK.Graphics.OpenGL.GL.Begin(OpenTK.Graphics.OpenGL.BeginMode.Points);
+			OpenTK.Graphics.OpenGL.GL.Vertex2(x, y);
+			OpenTK.Graphics.OpenGL.GL.End();
 			Texturing = true;
 
 			RenderStats.DirectCall++;
@@ -508,12 +503,12 @@ namespace ArcEngine.Graphic
 			Texturing = false;
 			RenderState.Culling = false;
 
-			GL.Begin(BeginMode.LineLoop);
+			OpenTK.Graphics.OpenGL.GL.Begin(OpenTK.Graphics.OpenGL.BeginMode.LineLoop);
 			for (int i = 0; i < points.Length; i++)
 			{
-				GL.Vertex2(points[i].X, points[i].Y);
+				OpenTK.Graphics.OpenGL.GL.Vertex2(points[i].X, points[i].Y);
 			}
-			GL.End();
+			OpenTK.Graphics.OpenGL.GL.End();
 
 			Texturing = true;
 			RenderStats.DirectCall += points.Length;
@@ -530,12 +525,12 @@ namespace ArcEngine.Graphic
 			Texturing = false;
 			RenderState.Culling = false;
 
-			GL.Begin(BeginMode.TriangleFan);
+			OpenTK.Graphics.OpenGL.GL.Begin(OpenTK.Graphics.OpenGL.BeginMode.TriangleFan);
 			for (int i = 0; i < points.Length; i++)
 			{
-				GL.Vertex2(points[i].X, points[i].Y);
+				OpenTK.Graphics.OpenGL.GL.Vertex2(points[i].X, points[i].Y);
 			}
-			GL.End();
+			OpenTK.Graphics.OpenGL.GL.End();
 
 			Texturing = true;
 			RenderStats.DirectCall += points.Length;
@@ -557,16 +552,16 @@ namespace ArcEngine.Graphic
 			Texturing = false;
 
 			if (fill)
-				GL.Begin(BeginMode.Polygon);
+				OpenTK.Graphics.OpenGL.GL.Begin(OpenTK.Graphics.OpenGL.BeginMode.Polygon);
 			else
-				GL.Begin(BeginMode.LineLoop);
+				OpenTK.Graphics.OpenGL.GL.Begin(OpenTK.Graphics.OpenGL.BeginMode.LineLoop);
 			float angle;
 			for (int i = 0; i < 50.0f; i++)
 			{
 				angle = i * 2.0f * (float)Math.PI / 50.0f;
-				GL.Vertex2(x + Math.Cos(angle) * xradius, y + Math.Sin(angle) * yradius);
+				OpenTK.Graphics.OpenGL.GL.Vertex2(x + Math.Cos(angle) * xradius, y + Math.Sin(angle) * yradius);
 			}
-			GL.End();
+			OpenTK.Graphics.OpenGL.GL.End();
 
 
 			Texturing = true;
@@ -631,12 +626,12 @@ namespace ArcEngine.Graphic
 			float yy = (float)(y + radius * Math.Sin(start));
 
 			if (fill)
-				GL.Begin(BeginMode.Polygon);
+				OpenTK.Graphics.OpenGL.GL.Begin(OpenTK.Graphics.OpenGL.BeginMode.Polygon);
 			else
-				GL.Begin(BeginMode.LineStrip);
+				OpenTK.Graphics.OpenGL.GL.Begin(OpenTK.Graphics.OpenGL.BeginMode.LineStrip);
 			for (int ii = 0; ii < real_segments + 1; ii++)
 			{
-				GL.Vertex2(xx, yy);
+				OpenTK.Graphics.OpenGL.GL.Vertex2(xx, yy);
 
 				float tx = -(yy - y);
 				float ty = xx - x;
@@ -650,7 +645,7 @@ namespace ArcEngine.Graphic
 				xx += rx * radial_factor;
 				yy += ry * radial_factor;
 			}
-			GL.End();
+			OpenTK.Graphics.OpenGL.GL.End();
 
 			Texturing = true;
 			RenderStats.DirectCall += real_segments;
@@ -785,18 +780,18 @@ namespace ArcEngine.Graphic
 			//};
 
 
-			GL.Enable(EnableCap.Map1Vertex3);
+			OpenTK.Graphics.OpenGL.GL.Enable(OpenTK.Graphics.OpenGL.EnableCap.Map1Vertex3);
 			//GL.Enable(EnableCap.Map1Color4);
 
-			GL.Map1(MapTarget.Map1Vertex3, 0, 50, 3, 4, points);
+			OpenTK.Graphics.OpenGL.GL.Map1(OpenTK.Graphics.OpenGL.MapTarget.Map1Vertex3, 0, 50, 3, 4, points);
 			//GL.Map1(MapTarget.Map1Color4, 0, CircleResolution, 4, 2, colors);
-			GL.Begin(BeginMode.LineStrip);
+			OpenTK.Graphics.OpenGL.GL.Begin(OpenTK.Graphics.OpenGL.BeginMode.LineStrip);
 			for (int i = 0; i <= 50; i++)
-				GL.EvalCoord1(i);
-			GL.End();
+				OpenTK.Graphics.OpenGL.GL.EvalCoord1(i);
+			OpenTK.Graphics.OpenGL.GL.End();
 
-			GL.Disable(EnableCap.Map1Vertex3);
-			GL.Disable(EnableCap.Map1Color4);
+			OpenTK.Graphics.OpenGL.GL.Disable(OpenTK.Graphics.OpenGL.EnableCap.Map1Vertex3);
+			OpenTK.Graphics.OpenGL.GL.Disable(OpenTK.Graphics.OpenGL.EnableCap.Map1Color4);
 
 			//PointSize = 2;
 			//DrawPoint(start, Color.Red);
@@ -890,7 +885,7 @@ namespace ArcEngine.Graphic
 			if (index < 0)
 				return;
 
-			GL.VertexAttribPointer(index, size, VertexAttribPointerType.Float, false, stride, offset);
+			OpenTK.Graphics.OpenGL.GL.VertexAttribPointer(index, size, OpenTK.Graphics.OpenGL.VertexAttribPointerType.Float, false, stride, offset);
 		}
 
 
@@ -915,7 +910,7 @@ namespace ArcEngine.Graphic
 			buffer.Bind();
 
 			// Draw
-			GL.DrawElements((BeginMode)mode, index.Count, DrawElementsType.UnsignedInt, IntPtr.Zero);
+			OpenTK.Graphics.OpenGL.GL.DrawElements((OpenTK.Graphics.OpenGL.BeginMode)mode, index.Count, OpenTK.Graphics.OpenGL.DrawElementsType.UnsignedInt, IntPtr.Zero);
 
 			RenderStats.BatchCall++;
 		}
@@ -931,7 +926,7 @@ namespace ArcEngine.Graphic
 		/// <returns></returns>
 		public static void DrawBatch(BatchBuffer batch, int first, int count)
 		{
-			DrawBatch(batch, BeginMode.Triangles, first, count);
+			DrawBatch(batch, PrimitiveType.Triangles, first, count);
 		}
 
 
@@ -943,7 +938,7 @@ namespace ArcEngine.Graphic
 		/// <param name="mode">Drawing mode</param>
 		/// <param name="first">Specifies the starting index in the enabled arrays.</param>
 		/// <param name="count">Specifies the number of indices to be rendered.</param>
-		public static void DrawBatch(BatchBuffer batch, BeginMode mode, int first, int count)
+		public static void DrawBatch(BatchBuffer batch, PrimitiveType mode, int first, int count)
 		{
 			// No batch, or empty batch
 			if (batch == null)
@@ -952,7 +947,7 @@ namespace ArcEngine.Graphic
 			// Bind buffer
 			batch.Bind();
 
-			GL.DrawArrays(mode, first, count);
+			OpenTK.Graphics.OpenGL.GL.DrawArrays((OpenTK.Graphics.OpenGL.BeginMode)mode, first, count);
 
 			RenderStats.BatchCall++;
 
@@ -981,7 +976,7 @@ namespace ArcEngine.Graphic
 			if (id < 0)
 				return;
 
-			GL.EnableVertexAttribArray(id);
+			OpenTK.Graphics.OpenGL.GL.EnableVertexAttribArray(id);
 		}
 
 
@@ -991,7 +986,7 @@ namespace ArcEngine.Graphic
 		/// <param name="id"></param>
 		public static void DisableBufferIndex(int id)
 		{
-			GL.DisableVertexAttribArray(id);
+			OpenTK.Graphics.OpenGL.GL.DisableVertexAttribArray(id);
 		}
 
 		#endregion
@@ -1070,21 +1065,21 @@ namespace ArcEngine.Graphic
 		/// <param name="tex">Rectangle in the texture</param>
 		static internal void RawBlit(Rectangle rect, Rectangle tex)
 		{
-			GL.Begin(BeginMode.Quads);
+			OpenTK.Graphics.OpenGL.GL.Begin(OpenTK.Graphics.OpenGL.BeginMode.Quads);
 
-			GL.TexCoord2(tex.X, tex.Y);
-			GL.Vertex2(rect.X, rect.Y);
+			OpenTK.Graphics.OpenGL.GL.TexCoord2(tex.X, tex.Y);
+			OpenTK.Graphics.OpenGL.GL.Vertex2(rect.X, rect.Y);
 
-			GL.TexCoord2(tex.X, tex.Y + tex.Height);
-			GL.Vertex2(rect.X, rect.Y + rect.Height);
+			OpenTK.Graphics.OpenGL.GL.TexCoord2(tex.X, tex.Y + tex.Height);
+			OpenTK.Graphics.OpenGL.GL.Vertex2(rect.X, rect.Y + rect.Height);
 
-			GL.TexCoord2(tex.X + tex.Width, tex.Y + tex.Height);
-			GL.Vertex2(rect.X + rect.Width, rect.Y + rect.Height);
+			OpenTK.Graphics.OpenGL.GL.TexCoord2(tex.X + tex.Width, tex.Y + tex.Height);
+			OpenTK.Graphics.OpenGL.GL.Vertex2(rect.X + rect.Width, rect.Y + rect.Height);
 
-			GL.TexCoord2(tex.X + tex.Width, tex.Y);
-			GL.Vertex2(rect.X + rect.Width, rect.Y);
+			OpenTK.Graphics.OpenGL.GL.TexCoord2(tex.X + tex.Width, tex.Y);
+			OpenTK.Graphics.OpenGL.GL.Vertex2(rect.X + rect.Width, rect.Y);
 
-			GL.End();
+			OpenTK.Graphics.OpenGL.GL.End();
 
 			RenderStats.DirectCall += 4;
 		}
@@ -1103,7 +1098,7 @@ namespace ArcEngine.Graphic
 		/// stencil test passes and either there is no depth buffer or depth testing is not enabled</param>
 		public static void StencilOp(StencilOp fail, StencilOp zfail, StencilOp zpass)
 		{
-			GL.StencilOp(fail, zfail, zpass);
+			OpenTK.Graphics.OpenGL.GL.StencilOp((OpenTK.Graphics.OpenGL.StencilOp)fail, (OpenTK.Graphics.OpenGL.StencilOp)zfail, (OpenTK.Graphics.OpenGL.StencilOp)zpass);
 		}
 
 
@@ -1115,7 +1110,7 @@ namespace ArcEngine.Graphic
 		/// <param name="mask">Mask</param>
 		public static void StencilFunction(StencilFunction function, int reference, int mask)
 		{
-			GL.StencilFunc(function, reference, mask);
+			OpenTK.Graphics.OpenGL.GL.StencilFunc((OpenTK.Graphics.OpenGL.StencilFunction)function, reference, mask);
 		}
 
 
@@ -1154,7 +1149,7 @@ namespace ArcEngine.Graphic
 			set
 			{
 				shader = value;
-				GL.UseProgram(shader == null ? 0 : shader.ProgramID);
+				OpenTK.Graphics.OpenGL.GL.UseProgram(shader == null ? 0 : shader.ProgramID);
 
 			}
 		}
@@ -1185,7 +1180,7 @@ namespace ArcEngine.Graphic
 			{
 				if (value == null)
 				{
-					GL.BindTexture(TextureTarget.Texture2D, 0);
+					OpenTK.Graphics.OpenGL.GL.BindTexture(OpenTK.Graphics.OpenGL.TextureTarget.Texture2D, 0);
 					texture = null;
 					return;
 				}
@@ -1193,7 +1188,7 @@ namespace ArcEngine.Graphic
 				{
 
 					texture = value;
-					GL.BindTexture(TextureTarget.Texture2D, value.Handle);
+					OpenTK.Graphics.OpenGL.GL.BindTexture(OpenTK.Graphics.OpenGL.TextureTarget.Texture2D, value.Handle);
 
 					RenderStats.TextureBinding++;
 				}
@@ -1228,7 +1223,7 @@ namespace ArcEngine.Graphic
 				if (value > Capabilities.MaxTextureUnits || value < 0)
 					return;
 
-				GL.ActiveTexture(OpenTK.Graphics.OpenGL.TextureUnit.Texture0 + value);
+				OpenTK.Graphics.OpenGL.GL.ActiveTexture(OpenTK.Graphics.OpenGL.TextureUnit.Texture0 + value);
 				textureUnit = value;
 			}
 		}
@@ -1244,14 +1239,14 @@ namespace ArcEngine.Graphic
 			{
 				float[] mode = new float[1];
 
-				GL.GetTexEnv(TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, mode);
+				OpenTK.Graphics.OpenGL.GL.GetTexEnv(OpenTK.Graphics.OpenGL.TextureEnvTarget.TextureEnv, OpenTK.Graphics.OpenGL.TextureEnvParameter.TextureEnvMode, mode);
 
 				return (TextureEnvMode)mode[0];
 			}
 
 			set
 			{
-				GL.TexEnv(TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, (float)value);
+				OpenTK.Graphics.OpenGL.GL.TexEnv(OpenTK.Graphics.OpenGL.TextureEnvTarget.TextureEnv, OpenTK.Graphics.OpenGL.TextureEnvParameter.TextureEnvMode, (float)value);
 			}
 		}
 
@@ -1264,7 +1259,7 @@ namespace ArcEngine.Graphic
 			{
 				int[] tab = new int[4];
 
-				GL.GetInteger(GetPName.Viewport, tab);
+				OpenTK.Graphics.OpenGL.GL.GetInteger(OpenTK.Graphics.OpenGL.GetPName.Viewport, tab);
 
 				return new Rectangle(tab[0], tab[1], tab[2], tab[3]);
 			}
@@ -1279,7 +1274,7 @@ namespace ArcEngine.Graphic
 
 
 
-				GL.Viewport(0, 0, rect.Width, rect.Height);
+				OpenTK.Graphics.OpenGL.GL.Viewport(0, 0, rect.Width, rect.Height);
 				//GL.MatrixMode(MatrixMode.Projection);
 				//GL.LoadIdentity();
 				//GL.Ortho(rect.Left, rect.Width, rect.Height, rect.Top, -1, 1);
@@ -1296,14 +1291,14 @@ namespace ArcEngine.Graphic
 		{
 			get
 			{
-				return GL.IsEnabled(EnableCap.Texture2D);
+				return OpenTK.Graphics.OpenGL.GL.IsEnabled(OpenTK.Graphics.OpenGL.EnableCap.Texture2D);
 			}
 			set
 			{
 				if (value)
-					GL.Enable(EnableCap.Texture2D);
+					OpenTK.Graphics.OpenGL.GL.Enable(OpenTK.Graphics.OpenGL.EnableCap.Texture2D);
 				else
-					GL.Disable(EnableCap.Texture2D);
+					OpenTK.Graphics.OpenGL.GL.Disable(OpenTK.Graphics.OpenGL.EnableCap.Texture2D);
 
 			}
 		}
@@ -1317,14 +1312,14 @@ namespace ArcEngine.Graphic
 			get
 			{
 				int[] rect = new int[4];
-				GL.GetInteger(GetPName.ScissorBox, rect);
+				OpenTK.Graphics.OpenGL.GL.GetInteger(OpenTK.Graphics.OpenGL.GetPName.ScissorBox, rect);
 
 				return new Rectangle(rect[0], rect[1], rect[2], rect[3]);
 			}
 			set
 			{
 				//GL.Scissor(scissorZone.X,scissorZone.Bottom, scissorZone.Width,  scissorZone.Top - scissorZone.Bottom);
-				GL.Scissor(value.X, ViewPort.Height - value.Top - value.Height, value.Width, value.Height);
+				OpenTK.Graphics.OpenGL.GL.Scissor(value.X, ViewPort.Height - value.Top - value.Height, value.Width, value.Height);
 			}
 		}
 
@@ -1366,22 +1361,22 @@ namespace ArcEngine.Graphic
 		{
 			int integer = 0;
 
-			string version = GL.GetString(StringName.Version);
+			string version = OpenTK.Graphics.OpenGL.GL.GetString(OpenTK.Graphics.OpenGL.StringName.Version);
 			if (version[0] - '0' >= 3)
 			{
 				int value = 0;
-				GL.GetInteger(GetPName.MajorVersion, out value);
+				OpenTK.Graphics.OpenGL.GL.GetInteger(OpenTK.Graphics.OpenGL.GetPName.MajorVersion, out value);
 				MajorVersion = value;
-				GL.GetInteger(GetPName.MinorVersion, out value);
+				OpenTK.Graphics.OpenGL.GL.GetInteger(OpenTK.Graphics.OpenGL.GetPName.MinorVersion, out value);
 				MinorVersion = value;
 
 
 				Extensions = new List<string>();
 				int count = 0;
-				GL.GetInteger(GetPName.NumExtensions, out count);
+				OpenTK.Graphics.OpenGL.GL.GetInteger(OpenTK.Graphics.OpenGL.GetPName.NumExtensions, out count);
 				for (int id = 0; id < count; id++)
 				{
-					Extensions.Add(GL.GetString(StringName.Extensions, id));
+					Extensions.Add(OpenTK.Graphics.OpenGL.GL.GetString(OpenTK.Graphics.OpenGL.StringName.Extensions, id));
 				}
 			}
 			else
@@ -1389,7 +1384,7 @@ namespace ArcEngine.Graphic
 				MajorVersion = version[0] - '0';
 				MinorVersion = version[2] - '0';
 
-				Extensions = new List<string>(GL.GetString(StringName.Extensions).Split(new char[] { ' ' }));
+				Extensions = new List<string>(OpenTK.Graphics.OpenGL.GL.GetString(OpenTK.Graphics.OpenGL.StringName.Extensions).Split(new char[] { ' ' }));
 		
 			}
 
@@ -1409,29 +1404,29 @@ namespace ArcEngine.Graphic
 			if (Extensions.Contains("GL_ARB_multisample"))
 			{
 				HasMultiSample = true;
-				GL.GetInteger(GetPName.SampleBuffers, out integer);
+				OpenTK.Graphics.OpenGL.GL.GetInteger(OpenTK.Graphics.OpenGL.GetPName.SampleBuffers, out integer);
 				MaxMultiSample = integer;
 			}
 
-			GL.GetInteger(GetPName.MaxTextureUnits, out integer);
+			OpenTK.Graphics.OpenGL.GL.GetInteger(OpenTK.Graphics.OpenGL.GetPName.MaxTextureUnits, out integer);
 			MaxTextureUnits = integer;
 
-			GL.GetInteger(GetPName.MaxDrawBuffers, out integer);
+			OpenTK.Graphics.OpenGL.GL.GetInteger(OpenTK.Graphics.OpenGL.GetPName.MaxDrawBuffers, out integer);
 			MaxDrawBuffers = integer;
 
 			if (Extensions.Contains("GL_NVX_gpu_memory_info"))
 			{
 				Trace.Indent();
 				int val = 0;
-				GL.GetInteger((GetPName)0x9047, out val);
+				OpenTK.Graphics.OpenGL.GL.GetInteger((OpenTK.Graphics.OpenGL.GetPName)0x9047, out val);
 				Trace.WriteLine("Dedicated video memory : {0} Kb", val);
-				GL.GetInteger((GetPName)0x9048, out val);
+				OpenTK.Graphics.OpenGL.GL.GetInteger((OpenTK.Graphics.OpenGL.GetPName)0x9048, out val);
 				Trace.WriteLine("Total available memory : {0} Kb", val);
-				GL.GetInteger((GetPName)0x9049, out val);
+				OpenTK.Graphics.OpenGL.GL.GetInteger((OpenTK.Graphics.OpenGL.GetPName)0x9049, out val);
 				Trace.WriteLine("Current available dedicated video memory : {0} Kb", val);
-				GL.GetInteger((GetPName)0x904A, out val);
+				OpenTK.Graphics.OpenGL.GL.GetInteger((OpenTK.Graphics.OpenGL.GetPName)0x904A, out val);
 				Trace.WriteLine("Total evictions : {0} Kb", val);
-				GL.GetInteger((GetPName)0x904B, out val);
+				OpenTK.Graphics.OpenGL.GL.GetInteger((OpenTK.Graphics.OpenGL.GetPName)0x904B, out val);
 				Trace.WriteLine("Total video memory evicted : {0} Kb", val);
 				Trace.Unindent();
 			}
@@ -1528,7 +1523,7 @@ namespace ArcEngine.Graphic
 		{
 			get
 			{
-				return GL.GetString(StringName.Vendor);
+				return OpenTK.Graphics.OpenGL.GL.GetString(OpenTK.Graphics.OpenGL.StringName.Vendor);
 			}
 		}
 
@@ -1540,7 +1535,7 @@ namespace ArcEngine.Graphic
 		{
 			get
 			{
-				return GL.GetString(StringName.Renderer);
+				return OpenTK.Graphics.OpenGL.GL.GetString(OpenTK.Graphics.OpenGL.StringName.Renderer);
 			}
 		}
 
@@ -1552,7 +1547,7 @@ namespace ArcEngine.Graphic
 		{
 			get
 			{
-				return GL.GetString(StringName.Version);
+				return OpenTK.Graphics.OpenGL.GL.GetString(OpenTK.Graphics.OpenGL.StringName.Version);
 			}
 		}
 
@@ -1564,7 +1559,7 @@ namespace ArcEngine.Graphic
 		{
 			get
 			{
-				return GL.GetString(StringName.ShadingLanguageVersion);
+				return OpenTK.Graphics.OpenGL.GL.GetString(OpenTK.Graphics.OpenGL.StringName.ShadingLanguageVersion);
 			}
 		}
 
@@ -1825,101 +1820,231 @@ namespace ArcEngine.Graphic
 
 
 	/// <summary>
-	/// Defines stencil buffer operations. 
+	/// 
 	/// </summary>
-	public enum StencilOperation
+	public enum StencilOp
 	{
 		/// <summary>
-		/// Decrements the stencil-buffer entry, wrapping to the maximum value if the new value is less than 0.
+		/// 
 		/// </summary>
-		Decrement = OpenTK.Graphics.OpenGL.StencilOp.Decr,
+		Zero = OpenTK.Graphics.OpenGL.StencilOp.Zero,
 
 		/// <summary>
-		/// Decrements the stencil-buffer entry, clamping to 0.
-		/// </summary>
-		DecrementSaturation = OpenTK.Graphics.OpenGL.StencilOp.DecrWrap,
-
-		/// <summary>
-		/// Increments the stencil-buffer entry, wrapping to 0 if the new value exceeds the maximum value.
-		/// </summary>
-		Increment = OpenTK.Graphics.OpenGL.StencilOp.Incr,
-
-		/// <summary>
-		/// Increments the stencil-buffer entry, clamping to the maximum value.
-		/// </summary>
-		IncrementSaturation = OpenTK.Graphics.OpenGL.StencilOp.IncrWrap,
-
-		/// <summary>
-		/// Inverts the bits in the stencil-buffer entry.
+		/// 
 		/// </summary>
 		Invert = OpenTK.Graphics.OpenGL.StencilOp.Invert,
 
 		/// <summary>
-		/// 	Does not update the stencil-buffer entry. This is the default value.
+		/// 
 		/// </summary>
 		Keep = OpenTK.Graphics.OpenGL.StencilOp.Keep,
 
 		/// <summary>
-		/// Replaces the stencil-buffer entry with a reference value.
+		/// 
 		/// </summary>
 		Replace = OpenTK.Graphics.OpenGL.StencilOp.Replace,
 
 		/// <summary>
-		/// Sets the stencil-buffer entry to 0.
+		/// 
 		/// </summary>
-		Zero = OpenTK.Graphics.OpenGL.StencilOp.Zero,
+		Incr = OpenTK.Graphics.OpenGL.StencilOp.Incr,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Decr = OpenTK.Graphics.OpenGL.StencilOp.Decr,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		IncrWrap = OpenTK.Graphics.OpenGL.StencilOp.IncrWrap,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		DecrWrap = OpenTK.Graphics.OpenGL.StencilOp.DecrWrap,
 	}
 
+
 	/// <summary>
-	/// Defines comparison functions that can be chosen for alpha, stencil, or depth-buffer tests.
+	/// 
 	/// </summary>
-	public enum CompareFunction
+	public enum StencilFunction
 	{
 		/// <summary>
-		/// Always pass the test.
-		/// </summary>
-		Always = OpenTK.Graphics.OpenGL.StencilFunction.Always,
-		
-
-		/// <summary>
-		/// Accept the new pixel if its value is equal to the value of the current pixel.
-		/// </summary>
-		Equal = OpenTK.Graphics.OpenGL.StencilFunction.Equal,
-
-		/// <summary>
-		/// Accept the new pixel if its value is greater than the value of the current pixel.
-		/// </summary>
-		Greater = OpenTK.Graphics.OpenGL.StencilFunction.Greater,
-
-		/// <summary>
-		/// Accept the new pixel if its value is greater than or equal to the value of the current pixel.
-		/// </summary>
-		GreaterEqual = OpenTK.Graphics.OpenGL.StencilFunction.Gequal,
-
-		/// <summary>
-		/// 	Accept the new pixel if its value is less than the value of the current pixel.
-		/// </summary>
-		Less = OpenTK.Graphics.OpenGL.StencilFunction.Less,
-
-		/// <summary>
-		/// Accept the new pixel if its value is less than or equal to the value of the current pixel. 
-		/// </summary>
-		LessEqual = OpenTK.Graphics.OpenGL.StencilFunction.Lequal,
-
-		/// <summary>
-		/// Always fail the test.
+		/// 
 		/// </summary>
 		Never = OpenTK.Graphics.OpenGL.StencilFunction.Never,
 
 		/// <summary>
-		/// Accept the new pixel if its value does not equal the value of the current pixel.
+		/// 
 		/// </summary>
-		NotEqual = OpenTK.Graphics.OpenGL.StencilFunction.Notequal,
+		Less = OpenTK.Graphics.OpenGL.StencilFunction.Less,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Equal = OpenTK.Graphics.OpenGL.StencilFunction.Equal,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Lequal = OpenTK.Graphics.OpenGL.StencilFunction.Lequal,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Greater = OpenTK.Graphics.OpenGL.StencilFunction.Greater,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Notequal = OpenTK.Graphics.OpenGL.StencilFunction.Notequal,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Gequal = OpenTK.Graphics.OpenGL.StencilFunction.Gequal,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Always = OpenTK.Graphics.OpenGL.StencilFunction.Always,
 	}
 
- 
 
- 
+	/// <summary>
+	/// 
+	/// </summary>
+	public enum AlphaFunction
+	{
+		/// <summary>
+		/// 
+		/// </summary>
+		Never = OpenTK.Graphics.OpenGL.AlphaFunction.Never,
 
+		/// <summary>
+		/// 
+		/// </summary>
+		Less = OpenTK.Graphics.OpenGL.AlphaFunction.Less,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Equal = OpenTK.Graphics.OpenGL.AlphaFunction.Equal,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Lequal = OpenTK.Graphics.OpenGL.AlphaFunction.Lequal,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Greater = OpenTK.Graphics.OpenGL.AlphaFunction.Greater,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Notequal = OpenTK.Graphics.OpenGL.AlphaFunction.Notequal,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Gequal = OpenTK.Graphics.OpenGL.AlphaFunction.Gequal,
+		Always = 519,
+	}
+
+
+	/// <summary>
+	/// 
+	/// </summary>
+	public enum TextureEnvMode
+	{
+		/// <summary>
+		/// 
+		/// </summary>
+		Add = OpenTK.Graphics.OpenGL.TextureEnvMode.Add,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Blend = OpenTK.Graphics.OpenGL.TextureEnvMode.Blend,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Replace = OpenTK.Graphics.OpenGL.TextureEnvMode.Replace,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Modulate = OpenTK.Graphics.OpenGL.TextureEnvMode.Modulate,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Decal = OpenTK.Graphics.OpenGL.TextureEnvMode.Decal,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Combine = OpenTK.Graphics.OpenGL.TextureEnvMode.Combine,
+	}
+
+
+	/// <summary>
+	/// 
+	/// </summary>
+	public enum TextureMagFilter
+	{
+		/// <summary>
+		/// 
+		/// </summary>
+		Nearest = OpenTK.Graphics.OpenGL.TextureMagFilter.Nearest,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Linear = OpenTK.Graphics.OpenGL.TextureMagFilter.Linear,
+	}
+
+
+	/// <summary>
+	/// 
+	/// </summary>
+	public enum TextureMinFilter
+	{
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Nearest = OpenTK.Graphics.OpenGL.TextureMinFilter.Nearest,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Linear = OpenTK.Graphics.OpenGL.TextureMinFilter.Linear,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		NearestMipmapNearest = OpenTK.Graphics.OpenGL.TextureMinFilter.NearestMipmapNearest,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		LinearMipmapNearest = OpenTK.Graphics.OpenGL.TextureMinFilter.LinearMipmapNearest,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		NearestMipmapLinear = OpenTK.Graphics.OpenGL.TextureMinFilter.NearestMipmapLinear,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		LinearMipmapLinear = OpenTK.Graphics.OpenGL.TextureMinFilter.LinearMipmapLinear,
+	}
 
 }
