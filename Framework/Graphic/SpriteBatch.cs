@@ -331,6 +331,7 @@ namespace ArcEngine.Graphic
 		#endregion
 
 
+
 		#region Draw
 
 		/// <summary>
@@ -359,6 +360,61 @@ namespace ArcEngine.Graphic
 			this.InternalDraw(texture, ref destination, ref source, color, 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f);
 		}
 
+
+		/// <summary>
+		/// Adds a sprite to the batch of sprites to be rendered, specifying the texture, destination rectangle, and color tint
+		/// </summary>
+		/// <param name="texture">The sprite texture</param>
+		/// <param name="destination">A rectangle specifying, in screen coordinates, where the sprite will be drawn. 
+		/// If this rectangle is not the same size as sourcerectangle, the sprite is scaled to fit.</param>
+		/// <param name="color">The color channel modulation to use. Use Color.White for full color with no tinting</param>
+		public void Draw(Texture texture, Rectangle destination, Color color)
+		{
+			Vector4 vector;
+			vector.X = destination.X;
+			vector.Y = destination.Y;
+			vector.Z = destination.Width;
+			vector.W = destination.Height;
+
+			InternalDraw(texture, ref vector, ref Vector4.Zero, color, 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f);
+		}
+
+
+		/// <summary>
+		/// Adds a sprite to the batch of sprites to be rendered, specifying the texture, destination and source rectangles, and color tint
+		/// </summary>
+		/// <param name="texture">The sprite texture</param>
+		/// <param name="destination">A rectangle specifying, in screen coordinates, where the sprite will be drawn.
+		/// If this rectangle is not the same size as sourcerectangle the sprite will be scaled to fit</param>
+		/// <param name="source">A rectangle specifying, in texels, which section of the rectangle to draw. 
+		/// Use null to draw the entire texture.</param>
+		/// <param name="color">The color channel modulation to use. Use Color.White for full color with no tinting.</param>
+		public void Draw(Texture texture, Rectangle destination, Rectangle? source, Color color)
+		{
+			Vector4 vector;
+			vector.X = destination.X;
+			vector.Y = destination.Y;
+			vector.Z = destination.Width;
+			vector.W = destination.Height;
+
+			InternalDraw(texture, ref vector, ref Vector4.Zero, color, 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f);
+		}
+
+
+		/// <summary>
+		/// Adds a sprite to the batch of sprites to be rendered, specifying the texture, destination and source rectangles, and color tint
+		/// </summary>
+		/// <param name="texture">The sprite texture</param>
+		/// <param name="destination">A rectangle specifying, in screen coordinates, where the sprite will be drawn.
+		/// If this rectangle is not the same size as sourcerectangle the sprite will be scaled to fit</param>
+		/// <param name="source">A rectangle specifying, in texels, which section of the rectangle to draw. 
+		/// Use null to draw the entire texture.</param>
+		/// <param name="color">The color channel modulation to use. Use Color.White for full color with no tinting.</param>
+		public void Draw(Texture texture, Vector4 destination, Vector4 source, Color color)
+		{
+			InternalDraw(texture, ref destination, ref source, color, 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f);
+		}
+
 		#endregion
 
 
@@ -368,6 +424,7 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Prints some text on the screen
 		/// </summary>
+		/// <param name="font">Font to use</param>
 		/// <param name="pos">Offset of the text</param>
 		/// <param name="color">Color</param>
 		/// <param name="text">Text to print</param>
@@ -380,6 +437,7 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Prints some text on the screen
 		/// </summary>
+		/// <param name="font">Font to use</param>
 		/// <param name="position">Offset of the text</param>
 		/// <param name="color">Color</param>
 		/// <param name="format">Text to print</param>
@@ -393,6 +451,7 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Prints some text on the screen within a zone with left justification
 		/// </summary>
+		/// <param name="font">Font to use</param>
 		/// <param name="rectangle">Rectangle of the text</param>
 		/// <param name="color">Color</param>
 		/// <param name="text">Text to print</param>
@@ -405,6 +464,7 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Prints some text on the screen
 		/// </summary>
+		/// <param name="font">Font to use</param>
 		/// <param name="rectangle">Rectangle of the text</param>
 		/// <param name="color">Color</param>
 		/// <param name="format">Text to print</param>
@@ -418,16 +478,20 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Prints some text on the screen within a rectangle with justification
 		/// </summary>
+		/// <param name="font">Font to use</param>
 		/// <param name="rectangle">Rectangle of the text</param>
 		/// <param name="justification">Needed justifcation</param>
 		/// <param name="color">Text color</param>
 		/// <param name="text">Text to print</param>
 		public void DrawString(BitmapFont font, Vector4 rectangle, TextJustification justification, Color color, string text)
 		{
+			font.DrawText(this, rectangle, justification, color, text);
+
+/*
 			if (string.IsNullOrEmpty(text))
 				return;
 
-/*
+
 			// Encode string to xml
 			string msg = "<?xml version=\"1.0\" encoding=\"unicode\" standalone=\"yes\"?><root>" + text + "</root>";
 			UnicodeEncoding utf8 = new UnicodeEncoding();
@@ -607,14 +671,15 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Prints some text on the screen within a rectangle with justification
 		/// </summary>
+		/// <param name="font">Font to use</param>
 		/// <param name="rectangle">Rectangle of the text</param>
 		/// <param name="justification">Needed justifcation</param>
 		/// <param name="color">Color</param>
 		/// <param name="format">Text to print</param>
 		/// <param name="args"></param>
-		public void DrawText(Rectangle rectangle, TextJustification justification, Color color, string format, params object[] args)
+		public void DrawString(BitmapFont font, Rectangle rectangle, TextJustification justification, Color color, string format, params object[] args)
 		{
-			DrawText(rectangle, justification, color, string.Format(format, args));
+			DrawString(font, rectangle, justification, color, string.Format(format, args));
 		}
 
 		#endregion

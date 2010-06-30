@@ -931,7 +931,17 @@ namespace ArcEngine
 		}
 
 
-
+		/// <summary>
+		/// 
+		/// </summary>
+		[XmlIgnore]
+		public Vector2 Size
+		{
+			get
+			{
+				return new Vector2(Z, W);
+			}
+		}
 
 
 

@@ -177,6 +177,7 @@ namespace ArcEngine.Graphic
 
 		#region Helpers
 
+
 		#region Rectangles
 
 		/// <summary>

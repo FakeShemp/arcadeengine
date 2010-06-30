@@ -345,7 +345,7 @@ namespace ArcEngine.Examples.CellShading
 			Display.ClearBuffers();
 
 			// Some dummy text
-			Font.DrawText(new Point(100, 25), Color.White, "Here's an example of draw buffers.");
+		//	Font.DrawText(new Point(100, 25), Color.White, "Here's an example of draw buffers.");
 
 
 			// Aplly a rotation

@@ -46,7 +46,6 @@ namespace ArcEngine.Asset
 		public BitmapFont()
 		{
 			GlyphTileset = new TileSet();
-			//GlyphTileset.Texture = new Texture(OpenTK.Graphics.OpenGL.PixelFormat.LuminanceAlpha);
 			GlyphTileset.Texture = new Texture();
 		}
 
@@ -81,6 +80,7 @@ namespace ArcEngine.Asset
 			GC.SuppressFinalize(this);
 		}
 
+
 		/// <summary>
 		/// Initializes the asset
 		/// </summary>
@@ -94,6 +94,7 @@ namespace ArcEngine.Asset
 
 		#region Text drawing
 
+/*
 		/// <summary>
 		/// Prints some text on the screen
 		/// </summary>
@@ -143,17 +144,18 @@ namespace ArcEngine.Asset
 			DrawText(rectangle, color, string.Format(format, args));
 		}
 
-
+*/
 		/// <summary>
 		/// Prints some text on the screen within a rectangle with justification
 		/// </summary>
-		/// <param name="rectangle">Rectangle of the text</param>
+		/// <param name="batch">Spritebatch handle</param>
+		/// <param name="zone">Rectangle of the text</param>
 		/// <param name="justification">Needed justifcation</param>
 		/// <param name="color">Text color</param>
 		/// <param name="text">Text to print</param>
-		public void DrawText(Rectangle rectangle, TextJustification justification, Color color, string text)
+		public void DrawText(SpriteBatch batch, Vector4 zone, TextJustification justification, Color color, string text)
 		{
-			if (string.IsNullOrEmpty(text))
+			if (string.IsNullOrEmpty(text) || batch == null)
 				return;
 
 
@@ -172,7 +174,7 @@ namespace ArcEngine.Asset
 			Color currentcolor = color;
 			
 
-			Rectangle rect = rectangle;
+			Vector4 rect = zone;
 			Display.Buffer.Clear();
 
 
@@ -210,8 +212,9 @@ namespace ArcEngine.Asset
 
 									int id = int.Parse(reader.GetAttribute("id"));
 									Tile tile = TextTileset.GetTile(id);
-									TextTileset.Draw(id, rect.Location);
-									rect.Offset(tile.Size.Width, 0);
+									TextTileset.Draw(id, new Point((int)rect.X, (int)rect.Y));
+									rect = Vector4.Add(rect, new Vector4(tile.Size.Width, 0.0f, 0.0f, 0.0f));
+									//rect.Offset(tile.Size.Width, 0);
 
 									tileoffset = tile.Size.Height - LineHeight;
 								}
@@ -219,7 +222,7 @@ namespace ArcEngine.Asset
 
 								case "br":
 								{
-									rect.X = rectangle.X;
+									rect.X = zone.X;
 									rect.Y += (int)(LineHeight * GlyphTileset.Scale.Height) + tileoffset;
 									tileoffset = 0;
 								}
@@ -275,27 +278,32 @@ namespace ArcEngine.Asset
 									continue;
 
 								// Move the glyph according to its hot spot
-								Rectangle tmp = new Rectangle(
-									new Point(rect.X - (int)(tile.HotSpot.X * GlyphTileset.Scale.Width), rect.Y - (int)(tile.HotSpot.Y * GlyphTileset.Scale.Height)),
-									new Size((int)(tile.Rectangle.Width * GlyphTileset.Scale.Width), (int)(tile.Rectangle.Height * GlyphTileset.Scale.Height)));
+								Vector4 tmp = new Vector4(
+									rect.X - tile.HotSpot.X * GlyphTileset.Scale.Width, rect.Y - tile.HotSpot.Y * GlyphTileset.Scale.Height,
+									tile.Rectangle.Width * GlyphTileset.Scale.Width, tile.Rectangle.Height * GlyphTileset.Scale.Height);
 
 								// Out of the bouding box => new line
-								if (tmp.Right >= rectangle.Right && !rectangle.Size.IsEmpty)
+								//if (tmp.Right >= zone.Right && !zone.Size.IsEmpty)
+								if (tmp.Right >= zone.Right && zone.Size != Vector2.Zero)
 								{
-									tmp.X = rectangle.X;
+									tmp.X = zone.X;
 									tmp.Y = tmp.Y + (int)(LineHeight * GlyphTileset.Scale.Height);
 
-									rect.X = rectangle.X;
+									rect.X = zone.X;
 									rect.Y += (int)(LineHeight * GlyphTileset.Scale.Height) + tileoffset;
 									tileoffset = 0;
 
 								}
 
 								// Add glyph to the batch
-								Display.Buffer.AddRectangle(tmp, currentcolor, tile.Rectangle);
+							//	Display.Buffer.AddRectangle(tmp, currentcolor, tile.Rectangle);
+
+								Vector4 source = new Vector4(tile.Rectangle.X, tile.Rectangle.Y, tile.Rectangle.Width, tile.Rectangle.Height);
+								batch.Draw(GlyphTileset.Texture, tmp, source, currentcolor);
 
 								// Move to the next glyph
-								rect.Offset(tmp.Size.Width + Advance, 0);
+								//rect.Offset(tmp.Size.Width + Advance, 0);
+								rect = Vector4.Add(rect, new Vector4(tmp.Width + Advance, 0.0f, 0.0f, 0.0f));
 							}
 						}
 						break;
@@ -316,22 +324,20 @@ namespace ArcEngine.Asset
 				stream.Close();
 
 				// Draw batch
-				int count = Display.Buffer.Update();
-				Display.TextureUnit = 0;
-				Display.Texture = GlyphTileset.Texture;
+		//		int count = Display.Buffer.Update();
+		//		Display.TextureUnit = 0;
+		//		Display.Texture = GlyphTileset.Texture;
 
 
 		//		Display.PushOrtho();
-
 		//		Display.Shader.SetUniform("texture", 0);
-				Display.DrawBatch(Display.Buffer, 0, count);
-
+		//		Display.DrawBatch(Display.Buffer, 0, count);
 		//		Display.PopMatrices();
 			}
 
 		}
 
-
+/*
 
 		/// <summary>
 		/// Prints some text on the screen within a rectangle with justification
@@ -345,7 +351,7 @@ namespace ArcEngine.Asset
 		{
 			DrawText(rectangle, justification, color, string.Format(format, args));
 		}
-
+*/
 		#endregion
 
 

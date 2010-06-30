@@ -83,7 +83,7 @@ namespace ArcEngine.Asset
 			// Display text
 			if (TextID != -1 && Layer.Animation.StringTable != null && Layer.Animation.Font != null)
 			{
-				Layer.Animation.Font.DrawText(TextRectangle, TextJustification.Left, Color.White, Layer.Animation.StringTable.GetString(TextID));
+				//Layer.Animation.Font.DrawText(TextRectangle, TextJustification.Left, Color.White, Layer.Animation.StringTable.GetString(TextID));
 			}
 		}
 
