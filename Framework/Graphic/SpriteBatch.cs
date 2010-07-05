@@ -155,6 +155,9 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		void Flush()
 		{
+			if (spriteQueueCount == 0)
+				return;
+
 			if (SortMode == SpriteSortMode.Immediate)
 			{
 				RenderBatch(CurrentTexture, Sprites, 0, spriteQueueCount);
@@ -167,25 +170,17 @@ namespace ArcEngine.Graphic
 					Sort();
 
 				int offset = 0;
-				Texture texture = CurrentTexture;
+				CurrentTexture = Sprites[0].Texture;
 				for (int i = 0; i < spriteQueueCount; i++)
 				{
-					Texture texture2 = null;
-					if (SortMode == SpriteSortMode.Deferred)
+					if (CurrentTexture != Sprites[i].Texture)
 					{
-						texture2 = Sprites[i].Texture;
-					}
-
-					if (texture2 != texture)
-					{
-						RenderBatch(texture, Sprites, offset, i - offset);
-						texture = Sprites[i].Texture;
+						RenderBatch(CurrentTexture, Sprites, offset, i - offset);
+						CurrentTexture = Sprites[i].Texture;
 						offset = i;
-
-						texture = texture2;
 					}
 				}
-				RenderBatch(texture, Sprites, offset, spriteQueueCount - offset);
+				RenderBatch(CurrentTexture, Sprites, offset, spriteQueueCount - offset);
 
 			}
 
@@ -267,19 +262,14 @@ namespace ArcEngine.Graphic
 			Matrix4 textureMatrix = Matrix4.Scale(1.0f / texture.Size.Width, 1.0f / texture.Size.Height, 1.0f);
 			Shader.SetUniform("texture_matrix", textureMatrix);
 
-
-			for (int i = 0; i < count; i++)
+			for (int i = offset; i < offset + count; i++)
 			{
-				float cos = 1.0f;
-				float sin = 0.0f;
-				if (Sprites[i].Rotation != 0)
-				{
-					sin = (float)Math.Sin(Sprites[i].Rotation);
-					cos = (float)Math.Cos(Sprites[i].Rotation);
-				}
+				Vector4 dst = new Vector4(Sprites[i].Destination.X - Sprites[i].Origin.X, Sprites[i].Destination.Y - Sprites[i].Origin.Y,
+					Sprites[i].Destination.Z, Sprites[i].Destination.W);
 
-				Buffer.AddRectangle(Sprites[i].Destination, Sprites[i].Color, Sprites[i].Source);
+				Buffer.AddRectangle(dst, Sprites[i].Color, Sprites[i].Source);
 			}
+
 
 			count = Buffer.Update();
 			Display.DrawBatch(Buffer, 0, count);
@@ -311,16 +301,16 @@ namespace ArcEngine.Graphic
 			}
 
 
-			// Buffer too short ?
+			// Buffer too small ?
 			if (spriteQueueCount >= Sprites.Length)
 			{
 				Array.Resize<SpriteVertex>(ref Sprites, Sprites.Length * 2);
 			}
 
+
+			// Add to queue
 			Sprites[spriteQueueCount].Source = source.HasValue ? source.Value : new Vector4(0.0f, 0.0f, texture.Size.Width, texture.Size.Height);
 			Sprites[spriteQueueCount].Destination = destination;
-			Sprites[spriteQueueCount].Destination.X -= origin.X;
-			Sprites[spriteQueueCount].Destination.Y -= origin.Y;
 			Sprites[spriteQueueCount].Color = color;
 			Sprites[spriteQueueCount].Depth = depth;
 			Sprites[spriteQueueCount].Effects = effect;

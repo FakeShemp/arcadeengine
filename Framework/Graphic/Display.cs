@@ -1429,36 +1429,20 @@ namespace ArcEngine.Graphic
 
 
 			string[] tmp = ShadingLanguageVersion.Split(new char[] { ' ' });
-			switch (tmp[0])
-			{
-				case "1.20":
+			if (tmp[0].StartsWith("1.20"))
 				ShaderVersion = ShaderVersion.GLSL_1_20;
-				break;
-
-				case "1.30":
+			else if (tmp[0].StartsWith("1.30"))
 				ShaderVersion = ShaderVersion.GLSL_1_30;
-				break;
-
-				case "1.40":
+			else if (tmp[0].StartsWith("1.40"))
 				ShaderVersion = ShaderVersion.GLSL_1_40;
-				break;
-
-				case "1.50":
+			else if (tmp[0].StartsWith("1.50"))
 				ShaderVersion = ShaderVersion.GLSL_1_50;
-				break;
-
-				case "3.30":
+			else if (tmp[0].StartsWith("3.30"))
 				ShaderVersion = ShaderVersion.GLSL_3_30;
-				break;
-
-				case "4.000":
+			else if (tmp[0].StartsWith("4.00"))
 				ShaderVersion = ShaderVersion.GLSL_4_00;
-				break;
-
-				default:
+			else
 				ShaderVersion = ShaderVersion.Unsuported;
-				break;
-			}
 
 		}
 
@@ -1875,32 +1859,32 @@ namespace ArcEngine.Graphic
 		Unsuported = 0,
 
 		/// <summary>
-		/// Version 1.20
+		/// Version 1.20, OpenGL 2.1
 		/// </summary>
 		GLSL_1_20,
 
 		/// <summary>
-		/// Version 1.30
+		/// Version 1.30, OpenGL 3.0
 		/// </summary>
 		GLSL_1_30,
 
 		/// <summary>
-		/// Version 1.40
+		/// Version 1.40, OpenGL 3.1
 		/// </summary>
 		GLSL_1_40,
 
 		/// <summary>
-		/// Version 1.05
+		/// Version 1.05, OpenGL 3.2
 		/// </summary>
 		GLSL_1_50,
 
 		/// <summary>
-		/// Version 3.30
+		/// Version 3.30, OpenGL 3.3
 		/// </summary>
 		GLSL_3_30,
 
 		/// <summary>
-		/// Versoin 4.00
+		/// Versoin 4.00, OpenGL 4.0
 		/// </summary>
 		GLSL_4_00,
 	}

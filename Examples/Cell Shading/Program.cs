@@ -63,7 +63,11 @@ namespace ArcEngine.Examples.CellShading
 		/// </summary>
 		public Program()
 		{
-			CreateGameWindow(new Size(1024, 768));
+			GameWindowParams param = new GameWindowParams();
+			param.Size = new Size(1024, 768);
+			param.Major = 3;
+			param.Minor = 0;
+			CreateGameWindow(param);
 			Window.Text = "Cell Shading example from http://prideout.net/blog/?p=22";
 		}
 

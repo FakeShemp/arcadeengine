@@ -158,43 +158,39 @@ namespace ArcEngine.Examples.PerPixelCollision
 
 			// Draws the star
 			Sprite.Draw(Star, new Vector2(Mouse.Location.X, Mouse.Location.Y), StarColor);
-	//		Sprite.Draw(Star, new Vector2(Mouse.Location.X, Mouse.Location.Y), StarColor);
-
-			int c = Sprite.spriteQueueCount;
 
 			Sprite.End();
 
 			#endregion
 
-/*
 
 			#region Occlusion query
 
 			PixelCollision.Begin(0.1f);
 
+			Sprite.Begin();
 			DrawLogo();
-
+			Sprite.End();
 
 			// Begin query
 			PixelCollision.BeginQuery();
-			Display.DrawTexture(Star, new Point(Mouse.Location.X, Mouse.Location.Y));
+			Sprite.Begin();
+			Sprite.Draw(Star, new Vector2(Mouse.Location.X, Mouse.Location.Y), StarColor);
+			Sprite.End();
 			PixelCollision.EndQuery();
-
 
 
 			PixelCollision.End();
 
 			#endregion
-*/
 
-/*
+
 			// Some text
 			Sprite.Begin();
 			Sprite.DrawString(Font, new Vector2(10, 30), Color.Red, "Count {0}", PixelCollision.Count);
 			Sprite.DrawString(Font, new Vector2(10, 45), Color.Red, "Mouse {0}", new Vector2(Mouse.Location.X, Mouse.Location.Y));
-			Sprite.DrawString(Font, new Vector2(10, 60), Color.Red, "SpriteQueueCount {0}", c);
 			Sprite.End();
-*/
+
 		}
 
 
@@ -203,8 +199,11 @@ namespace ArcEngine.Examples.PerPixelCollision
 		/// </summary>
 		private void DrawLogo()
 		{
-			Sprite.Draw(Logo, new Vector2(Display.ViewPort.Width / 2, Display.ViewPort.Height / 2), null, Color.White, Angle, 
-				new Vector2(Logo.Size.Width / 2, Logo.Size.Height / 2), 1.0f, SpriteEffects.None, 0.0f);
+			Vector2 dst = new Vector2(Display.ViewPort.Width / 2.0f, Display.ViewPort.Height / 2.0f);
+	//		dst = new Vector2(200, 200);
+	//		dst = new Vector2(Mouse.Location.X, Mouse.Location.Y);
+
+			Sprite.Draw(Logo, dst, null, Color.White, Angle, new Vector2(Logo.Size.Width / 2, Logo.Size.Height / 2), 1.0f, SpriteEffects.None, 0.0f);
 		}
 
 
