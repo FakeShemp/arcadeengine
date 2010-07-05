@@ -835,6 +835,10 @@ namespace ArcEngine.Graphic
 		#endregion
 
 
+		public string ToString()
+		{
+			return String.Format("Texture {0}", Handle);
+		}
 
 	}
 

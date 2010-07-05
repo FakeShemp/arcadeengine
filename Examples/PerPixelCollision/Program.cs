@@ -58,7 +58,11 @@ namespace ArcEngine.Examples.PerPixelCollision
 		public Program()
 		{
 			// Create the game window
-			CreateGameWindow(new Size(1024, 768));
+			GameWindowParams param = new GameWindowParams();
+			param.Size = new Size(1024, 768);
+			param.Major = 3;
+			param.Minor = 0;
+			CreateGameWindow(param);
 
 			// Change the window title
 			Window.Text = "Per pixel perfect collision test";
@@ -73,7 +77,7 @@ namespace ArcEngine.Examples.PerPixelCollision
 		{
 			// Clear color of the screen
 			Display.RenderState.ClearColor = Color.LightGray;
-			Mouse.Visible = false;
+		//	Mouse.Visible = false;
 
 			if (!PixelCollision.Init())
 			{
@@ -86,6 +90,7 @@ namespace ArcEngine.Examples.PerPixelCollision
 			Star = new Texture("data/star.png");
 
 			// Font
+			Sprite = new SpriteBatch();
 			Font = BitmapFont.CreateFromTTF(@"c:\windows\fonts\verdana.ttf", 14, FontStyle.Regular);
 		}
 
@@ -105,6 +110,10 @@ namespace ArcEngine.Examples.PerPixelCollision
 
 			if (Font != null)
 				Font.Dispose();
+
+			if (Sprite != null)
+				Sprite.Dispose();
+			Sprite = null;
 		}
 
 
@@ -117,6 +126,7 @@ namespace ArcEngine.Examples.PerPixelCollision
 			// Check if the Escape key is pressed
 			if (Keyboard.IsKeyPress(Keys.Escape))
 				Exit();
+
 
 			Angle += 0.5f;
 		}
@@ -133,6 +143,8 @@ namespace ArcEngine.Examples.PerPixelCollision
 
 
 			#region First draw
+		//	Sprite.Begin(SpriteBlendMode.Additive, SpriteSortMode.Deferred, false);
+			Sprite.Begin();
 
 			// Draw the logo
 			DrawLogo();
@@ -142,10 +154,19 @@ namespace ArcEngine.Examples.PerPixelCollision
 				StarColor = Color.Red;
 			else
 				StarColor = Color.White;
-			Display.DrawTexture(Star, new Point(Mouse.Location.X, Mouse.Location.Y), StarColor);
+	
+
+			// Draws the star
+			Sprite.Draw(Star, new Vector2(Mouse.Location.X, Mouse.Location.Y), StarColor);
+	//		Sprite.Draw(Star, new Vector2(Mouse.Location.X, Mouse.Location.Y), StarColor);
+
+			int c = Sprite.spriteQueueCount;
+
+			Sprite.End();
 
 			#endregion
 
+/*
 
 			#region Occlusion query
 
@@ -164,11 +185,16 @@ namespace ArcEngine.Examples.PerPixelCollision
 			PixelCollision.End();
 
 			#endregion
+*/
 
-
-
+/*
 			// Some text
-			Font.DrawText(new Point(10, 30), Color.Red, "Count {0}", PixelCollision.Count);
+			Sprite.Begin();
+			Sprite.DrawString(Font, new Vector2(10, 30), Color.Red, "Count {0}", PixelCollision.Count);
+			Sprite.DrawString(Font, new Vector2(10, 45), Color.Red, "Mouse {0}", new Vector2(Mouse.Location.X, Mouse.Location.Y));
+			Sprite.DrawString(Font, new Vector2(10, 60), Color.Red, "SpriteQueueCount {0}", c);
+			Sprite.End();
+*/
 		}
 
 
@@ -177,16 +203,18 @@ namespace ArcEngine.Examples.PerPixelCollision
 		/// </summary>
 		private void DrawLogo()
 		{
-			Display.PushMatrices();
-			Display.Translate(Display.ViewPort.Width / 2, Display.ViewPort.Height / 2);
-			Display.Rotate(Angle);
-			Display.DrawTexture(Logo, new Point(-Logo.Size.Width / 2, -Logo.Size.Height / 2));
-			Display.PopMatrices();
+			Sprite.Draw(Logo, new Vector2(Display.ViewPort.Width / 2, Display.ViewPort.Height / 2), null, Color.White, Angle, 
+				new Vector2(Logo.Size.Width / 2, Logo.Size.Height / 2), 1.0f, SpriteEffects.None, 0.0f);
 		}
 
 
 
 		#region Properties
+
+		/// <summary>
+		/// Sprite batch
+		/// </summary>
+		SpriteBatch Sprite;
 
 		/// <summary>
 		/// Texture

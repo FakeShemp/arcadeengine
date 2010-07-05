@@ -43,14 +43,14 @@ namespace ArcEngine.Graphic
 			TextureComp = new TextureComparer();
 
 			Shader = new Shader();
-			using (Stream stream = ResourceManager.GetResource("ArcEngine.Graphic.Shaders.SpriteBatch.vert"))
+			using (Stream stream = ResourceManager.GetResource("ArcEngine.Graphic.Shaders.V1_30.SpriteBatch.vert"))
 			{
 				StreamReader reader = new StreamReader(stream);
 				string src = reader.ReadToEnd();
 				Shader.SetSource(ShaderType.VertexShader, src);
 			}
 
-			using (Stream stream = ResourceManager.GetResource("ArcEngine.Graphic.Shaders.SpriteBatch.frag"))
+			using (Stream stream = ResourceManager.GetResource("ArcEngine.Graphic.Shaders.V1_30.SpriteBatch.frag"))
 			{
 				StreamReader reader = new StreamReader(stream);
 				string src = reader.ReadToEnd();
@@ -162,27 +162,30 @@ namespace ArcEngine.Graphic
 			}
 			else
 			{
-				SpriteVertex[] queue;
-				if (SortMode == SpriteSortMode.Deferred)
-					queue = Sprites;
-				else
-				{
+				// Sort sprites
+				if (SortMode != SpriteSortMode.Deferred)
 					Sort();
-					//queue = sortedSprites;
-				}
 
 				int offset = 0;
 				Texture texture = CurrentTexture;
 				for (int i = 0; i < spriteQueueCount; i++)
 				{
-					if (Sprites[i].Texture != texture)
+					Texture texture2 = null;
+					if (SortMode == SpriteSortMode.Deferred)
+					{
+						texture2 = Sprites[i].Texture;
+					}
+
+					if (texture2 != texture)
 					{
 						RenderBatch(texture, Sprites, offset, i - offset);
 						texture = Sprites[i].Texture;
 						offset = i;
+
+						texture = texture2;
 					}
 				}
-				RenderBatch(texture, Sprites, offset, this.spriteQueueCount - offset);
+				RenderBatch(texture, Sprites, offset, spriteQueueCount - offset);
 
 			}
 
@@ -250,7 +253,7 @@ namespace ArcEngine.Graphic
 		/// <param name="count">Number of element in the array</param>
 		void RenderBatch(Texture texture, SpriteVertex[] vertices, int offset, int count)
 		{
-			if (count == 0 ||texture == null)
+			if (count == 0 || texture == null)
 				return;
 
 			Display.TextureUnit = 0;
@@ -294,7 +297,7 @@ namespace ArcEngine.Graphic
 		/// <param name="origin">The origin of the sprite. Specify (0,0) for the upper-left corner.</param>
 		/// <param name="effect">Rotations to apply prior to rendering.</param>
 		/// <param name="depth">The sorting depth of the sprite</param>
-		void InternalDraw(Texture texture, ref Vector4 destination, ref Vector4 source, Color color, float rotation, Vector2 origin, SpriteEffects effect, float depth)
+		void InternalDraw(Texture texture, ref Vector4 destination, ref Vector4? source, Color color, float rotation, Vector2 origin, SpriteEffects effect, float depth)
 		{
 			if (texture == null || !InUse) 
 				return;
@@ -302,7 +305,6 @@ namespace ArcEngine.Graphic
 			// If immediate mode AND texture is not the same
 			if (SortMode == SpriteSortMode.Immediate && CurrentTexture != texture)
 			{
-			
 				if (spriteQueueCount > 0)
 					Flush();
 				CurrentTexture = texture;
@@ -315,8 +317,10 @@ namespace ArcEngine.Graphic
 				Array.Resize<SpriteVertex>(ref Sprites, Sprites.Length * 2);
 			}
 
-			Sprites[spriteQueueCount].Source = source;
+			Sprites[spriteQueueCount].Source = source.HasValue ? source.Value : new Vector4(0.0f, 0.0f, texture.Size.Width, texture.Size.Height);
 			Sprites[spriteQueueCount].Destination = destination;
+			Sprites[spriteQueueCount].Destination.X -= origin.X;
+			Sprites[spriteQueueCount].Destination.Y -= origin.Y;
 			Sprites[spriteQueueCount].Color = color;
 			Sprites[spriteQueueCount].Depth = depth;
 			Sprites[spriteQueueCount].Effects = effect;
@@ -328,7 +332,6 @@ namespace ArcEngine.Graphic
 		}
 
 		#endregion
-
 
 
 		#region Draw
@@ -350,13 +353,9 @@ namespace ArcEngine.Graphic
 			destination.Z = texture.Size.Width;
 			destination.W = texture.Size.Height;
 
-			Vector4 source;
-			source.X = 0.0f;
-			source.Y = 0.0f;
-			source.Z = texture.Size.Width;
-			source.W = texture.Size.Height;
+			Vector4? source = null;
 
-			this.InternalDraw(texture, ref destination, ref source, color, 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f);
+			InternalDraw(texture, ref destination, ref source, color, 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f);
 		}
 
 
@@ -375,10 +374,13 @@ namespace ArcEngine.Graphic
 			vector.Z = destination.Width;
 			vector.W = destination.Height;
 
-			InternalDraw(texture, ref vector, ref Vector4.Zero, color, 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f);
+			Vector4? source = null;
+
+			InternalDraw(texture, ref vector, ref source, color, 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f);
 		}
 
 
+/*
 		/// <summary>
 		/// Adds a sprite to the batch of sprites to be rendered, specifying the texture, destination and source rectangles, and color tint
 		/// </summary>
@@ -396,9 +398,10 @@ namespace ArcEngine.Graphic
 			vector.Z = destination.Width;
 			vector.W = destination.Height;
 
+
 			InternalDraw(texture, ref vector, ref Vector4.Zero, color, 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f);
 		}
-
+*/
 
 		/// <summary>
 		/// Adds a sprite to the batch of sprites to be rendered, specifying the texture, destination and source rectangles, and color tint
@@ -409,13 +412,41 @@ namespace ArcEngine.Graphic
 		/// <param name="source">A rectangle specifying, in texels, which section of the rectangle to draw. 
 		/// Use null to draw the entire texture.</param>
 		/// <param name="color">The color channel modulation to use. Use Color.White for full color with no tinting.</param>
-		public void Draw(Texture texture, Vector4 destination, Vector4 source, Color color)
+		public void Draw(Texture texture, Vector4 destination, Vector4? source, Color color)
 		{
 			InternalDraw(texture, ref destination, ref source, color, 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f);
 		}
 
-		#endregion
 
+		/// <summary>
+		/// Adds a sprite to the batch of sprites to be rendered, specifying the texture, screen position,
+		/// optional source rectangle, color tint, rotation, origin, scale, effects, and sort depth.
+		/// </summary>
+		/// <param name="texture">The sprite texture.</param>
+		/// <param name="position">The location, in screen coordinates, where the sprite will be drawn.</param>
+		/// <param name="source">A rectangle specifying, in texels, which section of the rectangle to draw. Use null to draw the entire texture.</param>
+		/// <param name="color">The color channel modulation to use. Use Color.White for full color with no tinting.</param>
+		/// <param name="rotation">The angle, in radians, to rotate the sprite around the origin.</param>
+		/// <param name="origin">The origin of the sprite. Specify (0,0) for the upper-left corner.</param>
+		/// <param name="scale">Uniform multiple by which to scale the sprite width and height</param>
+		/// <param name="effects">Rotations to apply prior to rendering.</param>
+		/// <param name="layerDepth">The sorting depth of the sprite, between 0 (front) and 1 (back).</param>
+		public void Draw(Texture texture, Vector2 position, Vector4? source, Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects, float layerDepth)
+		{
+			Vector4 vector;
+			vector.X = position.X;
+			vector.Y = position.Y;
+			vector.Z = texture.Size.Width;
+			vector.W = texture.Size.Height;
+
+			InternalDraw(texture, ref vector, ref source, color, rotation, origin, effects, layerDepth);
+		}
+
+ 
+
+ 
+
+		#endregion
 
 
 		#region Text drawing
@@ -750,7 +781,7 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Number of sprite in the buffer
 		/// </summary>
-		int spriteQueueCount;
+	public	int spriteQueueCount;
 
 
 		/// <summary>

@@ -403,8 +403,8 @@
     <Compile Include="Trace.cs" />
     <Compile Include="Utility\Webcam.cs" />
     <EmbeddedResource Include="Graphic\Shaders\bezier.vert" />
-    <EmbeddedResource Include="Graphic\Shaders\SpriteBatch.frag" />
-    <EmbeddedResource Include="Graphic\Shaders\SpriteBatch.vert" />
+    <EmbeddedResource Include="Graphic\Shaders\V1_30\SpriteBatch.frag" />
+    <EmbeddedResource Include="Graphic\Shaders\V1_30\SpriteBatch.vert" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Forms\TerminalForm.resx">
@@ -541,7 +541,9 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Graphic\Shaders\V1_20\" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

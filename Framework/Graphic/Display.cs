@@ -44,7 +44,7 @@ namespace ArcEngine.Graphic
 			Trace.WriteDebugLine("[Display] Constructor()");
 
 			RenderStats = new RenderStats();
-			TextureParameters = new DefaultTextParameters();
+			TextureParameters = new DefaultTextureParameters();
 
 			RenderState = new RenderState();
 		}
@@ -1167,7 +1167,7 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Default texture parameters
 		/// </summary>
-		static public DefaultTextParameters TextureParameters
+		static public DefaultTextureParameters TextureParameters
 		{
 			get;
 			private set;
@@ -1427,6 +1427,39 @@ namespace ArcEngine.Graphic
 				Trace.Unindent();
 			}
 
+
+			string[] tmp = ShadingLanguageVersion.Split(new char[] { ' ' });
+			switch (tmp[0])
+			{
+				case "1.20":
+				ShaderVersion = ShaderVersion.GLSL_1_20;
+				break;
+
+				case "1.30":
+				ShaderVersion = ShaderVersion.GLSL_1_30;
+				break;
+
+				case "1.40":
+				ShaderVersion = ShaderVersion.GLSL_1_40;
+				break;
+
+				case "1.50":
+				ShaderVersion = ShaderVersion.GLSL_1_50;
+				break;
+
+				case "3.30":
+				ShaderVersion = ShaderVersion.GLSL_3_30;
+				break;
+
+				case "4.000":
+				ShaderVersion = ShaderVersion.GLSL_4_00;
+				break;
+
+				default:
+				ShaderVersion = ShaderVersion.Unsuported;
+				break;
+			}
+
 		}
 
 		/// <summary>
@@ -1580,6 +1613,14 @@ namespace ArcEngine.Graphic
 		}
 
 
+		/// <summary>
+		/// Shader language version
+		/// </summary>
+		public ShaderVersion ShaderVersion
+		{
+			get;
+			private set;
+		}
 
 		#region Properties
 
@@ -1717,13 +1758,13 @@ namespace ArcEngine.Graphic
 	/// <summary>
 	/// Default parameters applied to a new texture
 	/// </summary>
-	public class DefaultTextParameters
+	public class DefaultTextureParameters
 	{
 
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public DefaultTextParameters()
+		public DefaultTextureParameters()
 		{
 			MagFilter = TextureMagFilter.Linear;
 			MinFilter = TextureMinFilter.Linear;
@@ -1821,6 +1862,47 @@ namespace ArcEngine.Graphic
 		/// Renders the vertices as a single polyline
 		/// </summary>
 		LineStrip = TK.BeginMode.LineStrip,
+	}
+
+	/// <summary>
+	/// GLSL Shader language version
+	/// </summary>
+	public enum ShaderVersion
+	{
+		/// <summary>
+		/// Unsuported
+		/// </summary>
+		Unsuported = 0,
+
+		/// <summary>
+		/// Version 1.20
+		/// </summary>
+		GLSL_1_20,
+
+		/// <summary>
+		/// Version 1.30
+		/// </summary>
+		GLSL_1_30,
+
+		/// <summary>
+		/// Version 1.40
+		/// </summary>
+		GLSL_1_40,
+
+		/// <summary>
+		/// Version 1.05
+		/// </summary>
+		GLSL_1_50,
+
+		/// <summary>
+		/// Version 3.30
+		/// </summary>
+		GLSL_3_30,
+
+		/// <summary>
+		/// Versoin 4.00
+		/// </summary>
+		GLSL_4_00,
 	}
 
 
