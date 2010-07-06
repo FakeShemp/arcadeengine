@@ -153,7 +153,7 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Flush all pending data
 		/// </summary>
-		void Flush()
+		public void Flush()
 		{
 			if (spriteQueueCount == 0)
 				return;
@@ -161,7 +161,6 @@ namespace ArcEngine.Graphic
 			if (SortMode == SpriteSortMode.Immediate)
 			{
 				RenderBatch(CurrentTexture, Sprites, 0, spriteQueueCount);
-				CurrentTexture = null;
 			}
 			else
 			{
@@ -181,10 +180,10 @@ namespace ArcEngine.Graphic
 					}
 				}
 				RenderBatch(CurrentTexture, Sprites, offset, spriteQueueCount - offset);
-
 			}
 
 			spriteQueueCount = 0;
+			CurrentTexture = null;
 		}
 
 

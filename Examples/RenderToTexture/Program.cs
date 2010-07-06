@@ -49,13 +49,15 @@ namespace ArcEngine.Examples.RenderToTexture
 			Window.Text = "Frame Buffer example";
 
 			// Enable depth test writting
-			Display.DepthTest = true;
+			Display.RenderState.DepthTest = true;
 
 			// Frame buffer
 			Buffer = new FrameBuffer(new Size(256, 256));
 
 			// Texture to display
 			Texture = new Texture("data/test.png");
+
+			SpriteBatch = new SpriteBatch();
 		}
 
 
@@ -72,6 +74,10 @@ namespace ArcEngine.Examples.RenderToTexture
 			if (Texture != null)
 				Texture.Dispose();
 			Texture = null;
+
+			if (SpriteBatch != null)
+				SpriteBatch.Dispose();
+			SpriteBatch = null;
 		}
 
 
@@ -86,30 +92,32 @@ namespace ArcEngine.Examples.RenderToTexture
 		/// </summary>
 		public override void Draw()
 		{
-			Display.ClearColor = Color.Black;
+			Display.RenderState.ClearColor = Color.Black;
 			Display.ClearBuffers();
 
 			Rectangle rect = new Rectangle(1, 1, 100, 100);
 
 			// Bind the render buffer
 			Buffer.Bind();
-			Display.ClearColor = Color.CornflowerBlue;
+			Display.RenderState.ClearColor = Color.CornflowerBlue;
 			Display.ClearBuffers();
 
-			Display.DrawTexture(Texture, new Point(100, 10));
+			SpriteBatch.Begin();
+			SpriteBatch.Draw(Texture, new Vector2(100, 10), Color.White);
 
-			Display.DrawRectangle(rect, Color.Red);
-			Display.DrawCircle(new Point(100, 10), 25, Color.Red);
+		//	Display.DrawRectangle(rect, Color.Red);
+		//	Display.DrawCircle(new Point(100, 10), 25, Color.Red);
 
 
 			// Draw only in the depth buffer
 			Display.ColorMask(false, false, false, false);
 
-			Display.FillEllipse(new Rectangle(25, 125, 200, 100), Color.Yellow);
-			Display.DrawRectangle(new Rectangle(25, 125, 200, 100), Color.Red);
+	//		Display.FillEllipse(new Rectangle(25, 125, 200, 100), Color.Yellow);
+	//		Display.DrawRectangle(new Rectangle(25, 125, 200, 100), Color.Red);
 			
 			Display.ColorMask(true, true, true, true);
 
+			SpriteBatch.End();
 			Buffer.End();
 
 			
@@ -132,6 +140,11 @@ namespace ArcEngine.Examples.RenderToTexture
 		/// </summary>
 		FrameBuffer Buffer;
 
+
+		/// <summary>
+		/// SpriteBatch
+		/// </summary>
+		SpriteBatch SpriteBatch;
 
 
 		/// <summary>

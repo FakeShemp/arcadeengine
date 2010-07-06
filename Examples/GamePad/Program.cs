@@ -72,9 +72,10 @@ namespace ArcEngine.Examples.Joystick
 		/// </summary>
 		public override void LoadContent()
 		{
-			Display.ClearColor = Color.CornflowerBlue;
+			Display.RenderState.ClearColor = Color.CornflowerBlue;
 
-			Font = BitmapFont.CreateFromTTF("c:\\windows\\fonts\\verdana.ttf", 16, FontStyle.Regular);
+			SpriteBatch = new Graphic.SpriteBatch();
+			Font = BitmapFont.CreateFromTTF(@"c:\windows\fonts\verdana.ttf", 16, FontStyle.Regular);
 
 			Gamepad.Init(Window);
 			CheckDevices();
@@ -89,6 +90,10 @@ namespace ArcEngine.Examples.Joystick
 			if (Font != null)
 				Font.Dispose();
 			Font = null;
+
+			if (SpriteBatch != null)
+				SpriteBatch.Dispose();
+			SpriteBatch = null;
 		}
 
 		/// <summary>
@@ -146,24 +151,26 @@ namespace ArcEngine.Examples.Joystick
 
 			Display.DrawRectangle(new Rectangle(100, 100, 100, 100), Color.Red);
 
-			Font.DrawText(new Point(100, 50), Color.White, "Press F1 to detect new gamepads...");
-			Font.DrawText(new Point(100, 90), Color.White, "Available device(s) : {0}", Gamepad.Count);
+			SpriteBatch.Begin();
+
+			SpriteBatch.DrawString(Font, new Vector2(100, 50), Color.White, "Press F1 to detect new gamepads...");
+			SpriteBatch.DrawString(Font, new Vector2(100, 90), Color.White, "Available device(s) : {0}", Gamepad.Count);
 
 
 			int y = 100;
 			for(int id = 0; id < Gamepad.Count; id++)
 			{
 				GamepadCapabilities caps = Gamepad.GetCapabilities(id);
-				Font.DrawText(new Point(100, y + 20 + id * 20), Color.White, "id {0} : \"{1}\"", id, caps.InstanceName);
+				SpriteBatch.DrawString(Font, new Vector2(100, y + 20 + id * 20), Color.White, "id {0} : \"{1}\"", id, caps.InstanceName);
 
 				GamePadState state = Gamepad.GetState(id);
-				Font.DrawText(new Point(100, y + 40 + id * 20), Color.White, "X : {0}", state.X);
-				Font.DrawText(new Point(100, y + 60 + id * 20), Color.White, "Y : {0}", state.Y);
-				Font.DrawText(new Point(100, y + 80 + id * 20), Color.White, "Z : {0}", state.Z);
+				SpriteBatch.DrawString(Font, new Vector2(100, y + 40 + id * 20), Color.White, "X : {0}", state.X);
+				SpriteBatch.DrawString(Font, new Vector2(100, y + 60 + id * 20), Color.White, "Y : {0}", state.Y);
+				SpriteBatch.DrawString(Font, new Vector2(100, y + 80 + id * 20), Color.White, "Z : {0}", state.Z);
 
-				Font.DrawText(new Point(300, y + 40 + id * 20), Color.White, "Pov 0 : {0}", state.PovControllers[0]);
-				Font.DrawText(new Point(300, y + 60 + id * 20), Color.White, "Pov 1 : {0}", state.PovControllers[1]);
-				Font.DrawText(new Point(300, y + 80 + id * 20), Color.White, "Pov 2 : {0}", state.PovControllers[2]);
+				SpriteBatch.DrawString(Font, new Vector2(300, y + 40 + id * 20), Color.White, "Pov 0 : {0}", state.PovControllers[0]);
+				SpriteBatch.DrawString(Font, new Vector2(300, y + 60 + id * 20), Color.White, "Pov 1 : {0}", state.PovControllers[1]);
+				SpriteBatch.DrawString(Font, new Vector2(300, y + 80 + id * 20), Color.White, "Pov 2 : {0}", state.PovControllers[2]);
 			
 
 				// Buttons state
@@ -176,7 +183,7 @@ namespace ArcEngine.Examples.Joystick
 						sb.Append(" ");
 					}
 				}
-				Font.DrawText(new Point(100, y + 100 + id * 20), Color.White, "Pressed buttons : {0}", sb);
+				SpriteBatch.DrawString(Font, new Vector2(100, y + 100 + id * 20), Color.White, "Pressed buttons : {0}", sb);
 
 
 				y += 120;
@@ -186,10 +193,12 @@ namespace ArcEngine.Examples.Joystick
 			y = 400;
 			foreach (string str in Messages)
 			{
-				Font.DrawText(new Point(100, y), Color.White, str);
+				SpriteBatch.DrawString(Font, new Vector2(100, y), Color.White, str);
 
 				y += 20;
 			}
+
+			SpriteBatch.End();
 		}
 
 
@@ -202,6 +211,12 @@ namespace ArcEngine.Examples.Joystick
 		/// TTF font
 		/// </summary>
 		BitmapFont Font;
+
+
+		/// <summary>
+		/// SpriteBatch
+		/// </summary>
+		SpriteBatch SpriteBatch;
 
 
 		/// <summary>

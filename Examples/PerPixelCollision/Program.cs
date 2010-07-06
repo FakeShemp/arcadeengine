@@ -174,9 +174,11 @@ namespace ArcEngine.Examples.PerPixelCollision
 
 			// Begin query
 			PixelCollision.BeginQuery();
+
 			Sprite.Begin();
 			Sprite.Draw(Star, new Vector2(Mouse.Location.X, Mouse.Location.Y), StarColor);
 			Sprite.End();
+			
 			PixelCollision.EndQuery();
 
 

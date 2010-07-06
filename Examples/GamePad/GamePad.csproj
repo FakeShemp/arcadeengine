@@ -8,7 +8,7 @@
     <ProjectGuid>{3928A3C2-C01F-4F32-855D-B47A677245F4}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GamePad</RootNamespace>
+    <RootNamespace>ArcEngine.Examples.GamePad</RootNamespace>
     <AssemblyName>GamePad</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

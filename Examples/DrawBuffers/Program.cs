@@ -80,7 +80,7 @@ namespace ArcEngine.Examples
 
 			// Shader
 			Shader = Shader.CreateTextureShader();
-			Shader.Bind();
+			Display.Shader = Shader;
 
 
 			#region Texture
@@ -158,6 +158,7 @@ namespace ArcEngine.Examples
 
 			#region Font
 
+			SpriteBatch = new Graphic.SpriteBatch();
 			Font = BitmapFont.CreateFromTTF("c:\\windows\\fonts\\verdana.ttf", 16, FontStyle.Regular);
 
 			#endregion
@@ -190,6 +191,10 @@ namespace ArcEngine.Examples
 			if (Shader != null)
 				Shader.Dispose();
 			Shader = null;
+
+			if (SpriteBatch != null)
+				SpriteBatch.Dispose();
+			SpriteBatch = null;
 		}
 
 
@@ -217,8 +222,9 @@ namespace ArcEngine.Examples
 			Display.ClearBuffers();
 
 			// Some dummy text
-		//	Font.DrawText(new Point(100, 25), Color.White, "Here's an example of draw buffers.");
-
+			SpriteBatch.Begin();
+			SpriteBatch.DrawString(Font, new Vector2(100, 25), Color.White, "Here's an example of draw buffers :");
+			SpriteBatch.End();
 
 
 			Display.Texture = Texture;
@@ -228,10 +234,6 @@ namespace ArcEngine.Examples
 			Shader.SetUniform("tex_matrix", TextureMatrix);
 			Shader.SetUniform("texture", 2);
 			Display.DrawIndexBuffer(Shader, Buffer, PrimitiveType.Triangles, Index);
-
-
-			// Draws with the batch buffer
-			//Display.DrawUserBatch(Buffer, BeginMode.Triangles, 0, 3);
 		}
 
 
@@ -242,6 +244,7 @@ namespace ArcEngine.Examples
 		/// Index buffer
 		/// </summary>
 		IndexBuffer Index;
+
 
 		/// <summary>
 		/// Index buffer
@@ -256,15 +259,22 @@ namespace ArcEngine.Examples
 
 
 		/// <summary>
+		/// SpriteBatch
+		/// </summary>
+		SpriteBatch SpriteBatch;
+
+
+		/// <summary>
 		/// Font
 		/// </summary>
 		BitmapFont Font;
 
 
 		/// <summary>
-		/// 
+		///  Shader
 		/// </summary>
 		Shader Shader;
+
 
 		/// <summary>
 		/// Model view matrix
