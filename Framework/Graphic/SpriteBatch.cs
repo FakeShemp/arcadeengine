@@ -701,6 +701,19 @@ namespace ArcEngine.Graphic
 			DrawString(font, rectangle, justification, color, string.Format(format, args));
 		}
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Font"></param>
+        /// <param name="rectangle"></param>
+        /// <param name="color"></param>
+        /// <param name="Text"></param>
+        public void DrawString(BitmapFont Font, Rectangle rectangle, Color color, string Text)
+        {
+
+        }
+
 		#endregion
 
 
@@ -867,7 +880,7 @@ namespace ArcEngine.Graphic
 
 		#endregion
 
-	}
+    }
 
 	/// <summary>
 	/// Sprite vertex definition

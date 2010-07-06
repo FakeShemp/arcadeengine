@@ -64,15 +64,14 @@ namespace ArcEngine
 		/// </summary>
 		/// <param name="v"></param>
 		/// <returns></returns>
-		public static implicit operator OpenTK.Matrix4(Matrix4 v)
+		internal static OpenTK.Matrix4 Matrix4ToTKMatrix4(Matrix4 v)
 		{
 			return new OpenTK.Matrix4(
-				(OpenTK.Vector4)v.Row0, 
-				(OpenTK.Vector4)v.Row1, 
-				(OpenTK.Vector4)v.Row2, 
-				(OpenTK.Vector4)v.Row3);
+                v.M11, v.M12, v.M13, v.M14,
+                v.M21, v.M22, v.M23, v.M24,
+                v.M31, v.M32, v.M33, v.M34,
+                v.M41, v.M42, v.M43, v.M44);
 		}
-
 
 
 

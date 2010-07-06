@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using OpenTK.Graphics.OpenGL;
-using System.Text;
+using TK = OpenTK.Graphics.OpenGL;
 
 namespace ArcEngine.Graphic
 {
@@ -15,8 +13,8 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public IndexBuffer()
 		{
-			Usage = BufferUsageHint.StaticDraw;
-			GL.GenBuffers(1, out Handle);
+			Usage = BufferUsage.StaticDraw;
+			TK.GL.GenBuffers(1, out Handle);
 		}
 
 
@@ -26,7 +24,7 @@ namespace ArcEngine.Graphic
 		public void Dispose()
 		{
 			if (Handle != -1)
-				GL.DeleteBuffers(1, ref Handle);
+                TK.GL.DeleteBuffers(1, ref Handle);
 			Handle = -1;
 
 			GC.SuppressFinalize(this);
@@ -54,7 +52,7 @@ namespace ArcEngine.Graphic
 			Bind();
 
 			// Update data
-			GL.BufferData<int>(BufferTarget.ElementArrayBuffer, (IntPtr)(buffer.Length * sizeof(int)), buffer, Usage);
+            TK.GL.BufferData<int>(TK.BufferTarget.ElementArrayBuffer, (IntPtr)(buffer.Length * sizeof(int)), buffer, (TK.BufferUsageHint) Usage);
 
 			Count = buffer.Length;
 		}
@@ -69,7 +67,7 @@ namespace ArcEngine.Graphic
 			if (Handle == -1)
 				return false;
 
-			GL.BindBuffer(BufferTarget.ElementArrayBuffer, Handle);
+            TK.GL.BindBuffer(TK.BufferTarget.ElementArrayBuffer, Handle);
 
 			return true;
 		}
@@ -87,7 +85,7 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Usage of the buffer
 		/// </summary>
-		public BufferUsageHint Usage
+		public BufferUsage Usage
 		{
 			get;
 			set;

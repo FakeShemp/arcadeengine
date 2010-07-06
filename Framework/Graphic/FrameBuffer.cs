@@ -18,13 +18,8 @@
 //
 #endregion
 using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Text;
-using ArcEngine.Graphic;
-using OpenTK.Graphics;
-using OpenTK.Graphics.OpenGL;
-
+using TK = OpenTK.Graphics.OpenGL;
 
 namespace ArcEngine.Graphic
 {
@@ -69,21 +64,21 @@ namespace ArcEngine.Graphic
 
 			// Create Depth Tex
 			DepthTexture = new Texture(size);
-			GL.TexImage2D(TextureTarget.Texture2D, 0, (PixelInternalFormat)All.DepthComponent32, size.Width, size.Height, 0, PixelFormat.DepthComponent, PixelType.UnsignedInt, IntPtr.Zero);
+            TK.GL.TexImage2D(TK.TextureTarget.Texture2D, 0, (TK.PixelInternalFormat)TK.All.DepthComponent32, size.Width, size.Height, 0, TK.PixelFormat.DepthComponent, TK.PixelType.UnsignedInt, IntPtr.Zero);
 
 			// Create Stencil Tex
 		//	StencilTexture = new Texture(size);
-		//	GL.TexImage2D(TextureTarget.Texture2D, 0, (PixelInternalFormat)All.StencilIndex, size.Width, size.Height, 0, PixelFormat.StencilIndex, PixelType.UnsignedByte, IntPtr.Zero);
+		//	TK.GL.TexImage2D(TextureTarget.Texture2D, 0, (PixelInternalFormat)All.StencilIndex, size.Width, size.Height, 0, PixelFormat.StencilIndex, PixelType.UnsignedByte, IntPtr.Zero);
 
 
 			
 
 			// Create a FBO and attach the textures
-			GL.GenFramebuffers(1, out Handle);
-			GL.BindFramebuffer(FramebufferTarget.Framebuffer, Handle);
-			GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment0, TextureTarget.Texture2D, ColorTexture.Handle, 0);
-			GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthAttachment, TextureTarget.Texture2D, DepthTexture.Handle, 0);
-		//	GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.StencilAttachment, TextureTarget.Texture2D, StencilTexture.Handle, 0);
+			TK.GL.GenFramebuffers(1, out Handle);
+            TK.GL.BindFramebuffer(TK.FramebufferTarget.Framebuffer, Handle);
+            TK.GL.FramebufferTexture2D(TK.FramebufferTarget.Framebuffer, TK.FramebufferAttachment.ColorAttachment0, TK.TextureTarget.Texture2D, ColorTexture.Handle, 0);
+            TK.GL.FramebufferTexture2D(TK.FramebufferTarget.Framebuffer, TK.FramebufferAttachment.DepthAttachment, TK.TextureTarget.Texture2D, DepthTexture.Handle, 0);
+		//	TK.GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.StencilAttachment, TextureTarget.Texture2D, StencilTexture.Handle, 0);
 
 			End();
 		}
@@ -110,7 +105,7 @@ namespace ArcEngine.Graphic
 				DepthTexture.Dispose();
 
 			//if (FBOHandle != 0)
-			//    GL.Ext.DeleteFramebuffers(1, ref FBOHandle);
+			//    TK.GL.Ext.DeleteFramebuffers(1, ref FBOHandle);
 
 			GC.SuppressFinalize(this);
 		}
@@ -121,15 +116,15 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public void Bind()
 		{
-			GL.Ext.BindFramebuffer(FramebufferTarget.FramebufferExt, Handle);
+            TK.GL.Ext.BindFramebuffer(TK.FramebufferTarget.FramebufferExt, Handle);
 
-			GL.PushAttrib(AttribMask.ViewportBit);
-			GL.Viewport(0, 0, Size.Width, Size.Height);
+            TK.GL.PushAttrib(TK.AttribMask.ViewportBit);
+			TK.GL.Viewport(0, 0, Size.Width, Size.Height);
 
-			GL.MatrixMode(MatrixMode.Projection);
-			GL.PushMatrix();
-			GL.LoadIdentity();
-			GL.Ortho(0, Size.Width, 0, Size.Height, -1, 1);
+            TK.GL.MatrixMode(TK.MatrixMode.Projection);
+            TK.GL.PushMatrix();
+            TK.GL.LoadIdentity();
+            TK.GL.Ortho(0, Size.Width, 0, Size.Height, -1, 1);
 		}
 
 
@@ -139,11 +134,11 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public void End()
 		{
-			GL.MatrixMode(MatrixMode.Projection);
-			GL.PopMatrix();
+            TK.GL.MatrixMode(TK.MatrixMode.Projection);
+			TK.GL.PopMatrix();
 
-			GL.PopAttrib();
-			GL.Ext.BindFramebuffer(FramebufferTarget.FramebufferExt, 0);
+			TK.GL.PopAttrib();
+            TK.GL.Ext.BindFramebuffer(TK.FramebufferTarget.FramebufferExt, 0);
 		}
 
 
@@ -157,52 +152,53 @@ namespace ArcEngine.Graphic
 		int Handle;
 
 
+/*
 		/// <summary>
 		/// State of the frame buffer
 		/// </summary>
-		public FramebufferErrorCode Status
+		public TK.FramebufferErrorCode Status
 		{
 			get
 			{
 
-				switch (GL.Ext.CheckFramebufferStatus(FramebufferTarget.FramebufferExt))
+				switch (TK.GL.Ext.CheckFramebufferStatus(TK.FramebufferTarget.FramebufferExt))
 				{
-					case FramebufferErrorCode.FramebufferCompleteExt:
+                    case FramebufferTarget.FramebufferCompleteExt:
 					{
 						Trace.WriteLine("FBO: The framebuffer is complete and valid for rendering.");
 						break;
 					}
-					case FramebufferErrorCode.FramebufferIncompleteAttachmentExt:
+                    case TK.FramebufferTarget.FramebufferIncompleteAttachmentExt:
 					{
 						Trace.WriteLine("FBO: One or more attachment points are not framebuffer attachment complete. This could mean there’s no texture attached or the format isn’t renderable. For color textures this means the base format must be RGB or RGBA and for depth textures it must be a DEPTH_COMPONENT format. Other causes of this error are that the width or height is zero or the z-offset is out of range in case of render to volume.");
 						break;
 					}
-					case FramebufferErrorCode.FramebufferIncompleteMissingAttachmentExt:
+                    case TK.FramebufferTarget.FramebufferIncompleteMissingAttachmentExt:
 					{
 						Trace.WriteLine("FBO: There are no attachments.");
 						break;
 					}
-					case FramebufferErrorCode.FramebufferIncompleteDimensionsExt:
+                    case TK.FramebufferTarget.FramebufferIncompleteDimensionsExt:
 					{
 						Trace.WriteLine("FBO: Attachments are of different size. All attachments must have the same width and height.");
 						break;
 					}
-					case FramebufferErrorCode.FramebufferIncompleteFormatsExt:
+                    case TK.FramebufferTarget.FramebufferIncompleteFormatsExt:
 					{
 						Trace.WriteLine("FBO: The color attachments have different format. All color attachments must have the same format.");
 						break;
 					}
-					case FramebufferErrorCode.FramebufferIncompleteDrawBufferExt:
+                    case TK.FramebufferTarget.FramebufferIncompleteDrawBufferExt:
 					{
 						Trace.WriteLine("FBO: An attachment point referenced by GL.DrawBuffers() doesn’t have an attachment.");
 						break;
 					}
-					case FramebufferErrorCode.FramebufferIncompleteReadBufferExt:
+                    case TK.FramebufferTarget.FramebufferIncompleteReadBufferExt:
 					{
 						Trace.WriteLine("FBO: The attachment point referenced by GL.ReadBuffers() doesn’t have an attachment.");
 						break;
 					}
-					case FramebufferErrorCode.FramebufferUnsupportedExt:
+                    case FramebufferTarget.FramebufferUnsupportedExt:
 					{
 						Trace.WriteLine("FBO: This particular FBO configuration is not supported by the implementation.");
 						break;
@@ -214,11 +210,11 @@ namespace ArcEngine.Graphic
 					}
 				}
 
-				return GL.Ext.CheckFramebufferStatus(FramebufferTarget.FramebufferExt);
+                return TK.GL.Ext.CheckFramebufferStatus(TK.FramebufferTarget.FramebufferExt);
 
 			}
 		}
-
+*/
 
 		/// <summary>
 		/// Size of the FrameBuffer
@@ -270,8 +266,8 @@ namespace ArcEngine.Graphic
 				int width;
 				int height;
 
-				GL.GetRenderbufferParameter(RenderbufferTarget.Renderbuffer, RenderbufferParameterName.RenderbufferWidthExt, out width);
-				GL.GetRenderbufferParameter(RenderbufferTarget.Renderbuffer, RenderbufferParameterName.RenderbufferHeight, out height);
+                TK.GL.GetRenderbufferParameter(TK.RenderbufferTarget.Renderbuffer, TK.RenderbufferParameterName.RenderbufferWidthExt, out width);
+                TK.GL.GetRenderbufferParameter(TK.RenderbufferTarget.Renderbuffer, TK.RenderbufferParameterName.RenderbufferHeight, out height);
 
 				return new Size(width, height);
 			}

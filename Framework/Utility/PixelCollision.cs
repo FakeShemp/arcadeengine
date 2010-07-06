@@ -18,7 +18,6 @@
 //
 #endregion
 using ArcEngine.Graphic;
-//using OpenTK.Graphics.OpenGL;
 
 // http://kometbomb.net/2008/07/23/collision-detection-with-occlusion-queries-redux/
 // http://blogs.msdn.com/b/shawnhar/archive/2008/12/31/pixel-perfect-collision-detection-using-gpu-occlusion-queries.aspx

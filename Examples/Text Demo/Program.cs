@@ -20,10 +20,8 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
-using ArcEngine.Input;
 
 
 namespace ArcEngine.Examples.TextDemo
@@ -68,7 +66,7 @@ namespace ArcEngine.Examples.TextDemo
 		/// </summary>
 		public override void LoadContent()
 		{
-			Display.ClearColor = Color.CornflowerBlue;
+			Display.RenderState.ClearColor = Color.CornflowerBlue;
 
 			// Load the bank
 			ResourceManager.LoadBank("data/data.bnk");
@@ -79,7 +77,7 @@ namespace ArcEngine.Examples.TextDemo
 			// Attach the TileSet to the font
 			Font.TextTileset = ResourceManager.CreateAsset<TileSet>("TextTileSet");
 
-
+            SpriteBatch = new SpriteBatch();
 
 
 			//Text = "Simple text to display. <tile id=\"1\"/><br>This is a text to display";
@@ -105,6 +103,10 @@ namespace ArcEngine.Examples.TextDemo
 				Font.Dispose();
 			Font = null;
 
+            if (SpriteBatch != null)
+                SpriteBatch.Dispose();
+            SpriteBatch = null;
+
 		}
 
 
@@ -118,9 +120,12 @@ namespace ArcEngine.Examples.TextDemo
 			// Clears the background
 			Display.ClearBuffers();
 
-			Rectangle rectangle = new Rectangle(100, 100, 800, 300);
-			Font.DrawText(rectangle, Color.White, Text);
+            SpriteBatch.Begin();
 
+			Rectangle rectangle = new Rectangle(100, 100, 800, 300);
+			SpriteBatch.DrawString(Font, rectangle, Color.White, Text);
+
+            SpriteBatch.End();
 		}
 
 
@@ -133,6 +138,12 @@ namespace ArcEngine.Examples.TextDemo
 		/// Font
 		/// </summary>
 		BitmapFont Font;
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        SpriteBatch SpriteBatch;
 
 
 		/// <summary>

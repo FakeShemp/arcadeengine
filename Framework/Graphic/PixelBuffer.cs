@@ -1,8 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using OpenTK.Graphics.OpenGL;
+﻿#region Licence
+//
+//This file is part of ArcEngine.
+//Copyright (C)2008-2010 Adrien Hémery ( iliak@mimicprod.net )
+//
+//ArcEngine is free software: you can redistribute it and/or modify
+//it under the terms of the GNU General Public License as published by
+//the Free Software Foundation, either version 3 of the License, or
+//any later version.
+//
+//ArcEngine is distributed in the hope that it will be useful,
+//but WITHOUT ANY WARRANTY; without even the implied warranty of
+//MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//GNU General Public License for more details.
+//
+//You should have received a copy of the GNU General Public License
+//along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+//
+#endregion
+using System;
 using System.Drawing;
-using System.Runtime.InteropServices;
+using TK = OpenTK.Graphics.OpenGL;
 
 namespace ArcEngine.Graphic
 {
@@ -17,7 +34,7 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public PixelBuffer()
 		{
-			GL.GenBuffers(1, out Handle);
+            TK.GL.GenBuffers(1, out Handle);
 			//GL.BindBuffer(BufferTarget.PixelUnpackBuffer, Handle);
 			//GL.BufferData(BufferTarget.PixelUnpackBuffer, (IntPtr)(size.Width * size.Height * 4), IntPtr.Zero, BufferUsageHint.StreamDraw);
 			//GL.BindBuffer(BufferTarget.PixelUnpackBuffer, 0);
@@ -38,7 +55,7 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public void Dispose()
 		{
-			GL.DeleteBuffers(1, ref Handle);
+            TK.GL.DeleteBuffers(1, ref Handle);
 			Handle = -1;
 
 			if (Texture != null)
@@ -56,7 +73,7 @@ namespace ArcEngine.Graphic
 		/// <param name="rectangle">Rectangle</param>
 		/// <param name="access">Access mode</param>
 		/// <returns></returns>
-		public bool MapFrameBuffer(Rectangle rectangle, BufferAccess access)
+        public bool MapFrameBuffer(Rectangle rectangle, BufferAccess access)
 		{
 			Texture = null;
 			Rectangle = Rectangle.Empty;
@@ -78,10 +95,10 @@ namespace ArcEngine.Graphic
 				return true;
 
 			// Read the frame buffer
-			GL.MapBuffer(BufferTarget.PixelPackBuffer, access);
-			GL.ReadPixels(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height, PixelFormat.Bgra, PixelType.UnsignedByte, IntPtr.Zero);
+            TK.GL.MapBuffer(TK.BufferTarget.PixelPackBuffer, (TK.BufferAccess)access);
+            TK.GL.ReadPixels(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height, TK.PixelFormat.Bgra, TK.PixelType.UnsignedByte, IntPtr.Zero);
 
-			GL.BindBuffer(BufferTarget.PixelPackBuffer, 0);
+            TK.GL.BindBuffer(TK.BufferTarget.PixelPackBuffer, 0);
 			return true;
 
 			
@@ -106,16 +123,16 @@ namespace ArcEngine.Graphic
 			IsLocked = true;
 
 			// Bind PBO
-			GL.BindBuffer(BufferTarget.PixelUnpackBuffer, Handle);
+            TK.GL.BindBuffer(TK.BufferTarget.PixelUnpackBuffer, Handle);
 
 			// Copy the texture to the PBO
-			GL.TexSubImage2D(TextureTarget.Texture2D, 0, 0, 0, Texture.Size.Width, Texture.Size.Height, PixelFormat.Bgra, PixelType.UnsignedByte, IntPtr.Zero);
+            TK.GL.TexSubImage2D(TK.TextureTarget.Texture2D, 0, 0, 0, Texture.Size.Width, Texture.Size.Height, TK.PixelFormat.Bgra, TK.PixelType.UnsignedByte, IntPtr.Zero);
 
 		//	if (Data == null || Data.Length != Size.Width * Size.Height * 4)
 		//		Data = new byte[Size.Width * Size.Height * 4];
 
 			// Map PBO to client memory
-			IntPtr ptr = GL.MapBuffer(BufferTarget.PixelUnpackBuffer, BufferAccess.ReadWrite);
+            IntPtr ptr = TK.GL.MapBuffer(TK.BufferTarget.PixelUnpackBuffer, (TK.BufferAccess)BufferAccess.ReadWrite);
 
 			
 
@@ -128,7 +145,7 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public void Unmap()
 		{
-			GL.BindBuffer(BufferTarget.PixelUnpackBuffer, Handle);
+            TK.GL.BindBuffer(TK.BufferTarget.PixelUnpackBuffer, Handle);
 
 			if (Texture != null)
 			{
@@ -136,11 +153,11 @@ namespace ArcEngine.Graphic
 			}
 			else
 			{
-				GL.UnmapBuffer(BufferTarget.PixelPackBuffer);
+                TK.GL.UnmapBuffer(TK.BufferTarget.PixelPackBuffer);
 			}
 
 			IsLocked = false;
-			GL.BindBuffer(BufferTarget.PixelPackBuffer, 0);
+            TK.GL.BindBuffer(TK.BufferTarget.PixelPackBuffer, 0);
 		}
 
 
@@ -167,7 +184,7 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Access mode
 		/// </summary>
-		BufferAccess Access;
+        BufferAccess Access;
 
 
 		/// <summary>
@@ -206,4 +223,28 @@ namespace ArcEngine.Graphic
 
 		#endregion
 	}
+
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public enum BufferAccess
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        ReadOnly = TK.BufferAccess.ReadOnly,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        WriteOnly = TK.BufferAccess.WriteOnly,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ReadWrite = TK.BufferAccess.ReadWrite,
+    }
+
 }

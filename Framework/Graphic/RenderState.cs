@@ -1,7 +1,25 @@
-﻿using System;
-using OpenTK.Graphics.OpenGL;
+﻿#region Licence
+//
+//This file is part of ArcEngine.
+//Copyright (C)2008-2010 Adrien Hémery ( iliak@mimicprod.net )
+//
+//ArcEngine is free software: you can redistribute it and/or modify
+//it under the terms of the GNU General Public License as published by
+//the Free Software Foundation, either version 3 of the License, or
+//any later version.
+//
+//ArcEngine is distributed in the hope that it will be useful,
+//but WITHOUT ANY WARRANTY; without even the implied warranty of
+//MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//GNU General Public License for more details.
+//
+//You should have received a copy of the GNU General Public License
+//along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+//
+#endregion
+using System;
 using System.Drawing;
-using ArcEngine.Graphic;
+using TK = OpenTK.Graphics.OpenGL;
 
 namespace ArcEngine.Graphic
 {
@@ -78,14 +96,14 @@ namespace ArcEngine.Graphic
 		{
 			get
 			{
-				return GL.IsEnabled(EnableCap.AlphaTest);
+                return TK.GL.IsEnabled(TK.EnableCap.AlphaTest);
 			}
 			set
 			{
 				if (value)
-					GL.Enable(EnableCap.AlphaTest);
+                    TK.GL.Enable(TK.EnableCap.AlphaTest);
 				else
-					GL.Disable(EnableCap.AlphaTest);
+                    TK.GL.Disable(TK.EnableCap.AlphaTest);
 			}
 		}
 
@@ -99,14 +117,14 @@ namespace ArcEngine.Graphic
 		{
 			get
 			{
-				return GL.IsEnabled(EnableCap.Blend);
+				return TK.GL.IsEnabled(TK.EnableCap.Blend);
 			}
 			set
 			{
 				if (value)
-					GL.Enable(EnableCap.Blend);
+					TK.GL.Enable(TK.EnableCap.Blend);
 				else
-					GL.Disable(EnableCap.Blend);
+					TK.GL.Disable(TK.EnableCap.Blend);
 			}
 		}
 
@@ -121,15 +139,15 @@ namespace ArcEngine.Graphic
 		{
 			get
 			{
-				return GL.IsEnabled(EnableCap.ScissorTest);
+                return TK.GL.IsEnabled(TK.EnableCap.ScissorTest);
 
 			}
 			set
 			{
 				if (value)
-					GL.Enable(EnableCap.ScissorTest);
+                    TK.GL.Enable(TK.EnableCap.ScissorTest);
 				else
-					GL.Disable(EnableCap.ScissorTest);
+                    TK.GL.Disable(TK.EnableCap.ScissorTest);
 			}
 		}
 
@@ -142,15 +160,15 @@ namespace ArcEngine.Graphic
 		{
 			get
 			{
-				return GL.IsEnabled(EnableCap.LineStipple);
+                return TK.GL.IsEnabled(TK.EnableCap.LineStipple);
 
 			}
 			set
 			{
 				if (value)
-					GL.Enable(EnableCap.LineStipple);
+                    TK.GL.Enable(TK.EnableCap.LineStipple);
 				else
-					GL.Disable(EnableCap.LineStipple);
+                    TK.GL.Disable(TK.EnableCap.LineStipple);
 			}
 		}
 
@@ -163,12 +181,12 @@ namespace ArcEngine.Graphic
 			get
 			{
 				int value;
-				GL.GetInteger(GetPName.PointSize, out value);
+                TK.GL.GetInteger(TK.GetPName.PointSize, out value);
 				return value;
 			}
 			set
 			{
-				GL.PointSize(value);
+                TK.GL.PointSize(value);
 			}
 		}
 
@@ -182,12 +200,12 @@ namespace ArcEngine.Graphic
 			get
 			{
 				int value;
-				GL.GetInteger(GetPName.LineWidth, out value);
+                TK.GL.GetInteger(TK.GetPName.LineWidth, out value);
 				return value;
 			}
 			set
 			{
-				GL.LineWidth(value);
+                TK.GL.LineWidth(value);
 			}
 		}
 
@@ -200,14 +218,14 @@ namespace ArcEngine.Graphic
 		{
 			get
 			{
-				return GL.IsEnabled(EnableCap.Multisample);
+                return TK.GL.IsEnabled(TK.EnableCap.Multisample);
 			}
 			set
 			{
 				if (value)
-					GL.Enable(EnableCap.Multisample);
+                    TK.GL.Enable(TK.EnableCap.Multisample);
 				else
-					GL.Disable(EnableCap.Multisample);
+                    TK.GL.Disable(TK.EnableCap.Multisample);
 			}
 		}
 
@@ -220,13 +238,13 @@ namespace ArcEngine.Graphic
 			get
 			{
 				float[] tab = new float[4];
-				GL.GetFloat(GetPName.ColorClearValue, tab);
+				TK.GL.GetFloat(TK.GetPName.ColorClearValue, tab);
 
 				return Color.FromArgb((int)(tab[3] * 255), (int)(tab[0] * 255), (int)(tab[1] * 255), (int)(tab[2] * 255));
 			}
 			set
 			{
-				GL.ClearColor(value.R / 255.0f, value.G / 255.0f, value.B / 255.0f, value.A / 255.0f);
+				TK.GL.ClearColor(value.R / 255.0f, value.G / 255.0f, value.B / 255.0f, value.A / 255.0f);
 			}
 		}
 
@@ -237,14 +255,14 @@ namespace ArcEngine.Graphic
 		{
 			get
 			{
-				return GL.IsEnabled(EnableCap.CullFace);
+				return TK.GL.IsEnabled(TK.EnableCap.CullFace);
 			}
 			set
 			{
 				if (value)
-					GL.Enable(EnableCap.CullFace);
+					TK.GL.Enable(TK.EnableCap.CullFace);
 				else
-					GL.Disable(EnableCap.CullFace);
+					TK.GL.Disable(TK.EnableCap.CullFace);
 			}
 		}
 
@@ -256,15 +274,15 @@ namespace ArcEngine.Graphic
 		{
 			get
 			{
-				return GL.IsEnabled(EnableCap.DepthTest);
+				return TK.GL.IsEnabled(TK.EnableCap.DepthTest);
 			}
 
 			set
 			{
 				if (value)
-					GL.Enable(EnableCap.DepthTest);
+					TK.GL.Enable(TK.EnableCap.DepthTest);
 				else
-					GL.Disable(EnableCap.DepthTest);
+					TK.GL.Disable(TK.EnableCap.DepthTest);
 			}
 		}
 
@@ -277,12 +295,12 @@ namespace ArcEngine.Graphic
 			get
 			{
 				int s;
-				GL.GetInteger(GetPName.DepthClearValue, out s);
+				TK.GL.GetInteger(TK.GetPName.DepthClearValue, out s);
 				return s;
 			}
 			set
 			{
-				GL.ClearDepth(value);
+				TK.GL.ClearDepth(value);
 			}
 		}
 
@@ -295,14 +313,14 @@ namespace ArcEngine.Graphic
 			get
 			{
 				bool ret;
-				GL.GetBoolean(GetPName.DepthWritemask, out ret);
+				TK.GL.GetBoolean(TK.GetPName.DepthWritemask, out ret);
 
 				return ret;
 			}
 
 			set
 			{
-				GL.DepthMask(value);
+				TK.GL.DepthMask(value);
 			}
 		}
 
@@ -318,15 +336,15 @@ namespace ArcEngine.Graphic
 		{
 			get
 			{
-				return GL.IsEnabled(EnableCap.StencilTest);
+				return TK.GL.IsEnabled(TK.EnableCap.StencilTest);
 			}
 
 			set
 			{
 				if (value)
-					GL.Enable(EnableCap.StencilTest);
+					TK.GL.Enable(TK.EnableCap.StencilTest);
 				else
-					GL.Disable(EnableCap.StencilTest);
+					TK.GL.Disable(TK.EnableCap.StencilTest);
 			}
 		}
 
@@ -339,12 +357,12 @@ namespace ArcEngine.Graphic
 			get
 			{
 				int s;
-				GL.GetInteger(GetPName.StencilClearValue, out s);
+				TK.GL.GetInteger(TK.GetPName.StencilClearValue, out s);
 				return s;
 			}
 			set
 			{
-				GL.ClearStencil(value);
+				TK.GL.ClearStencil(value);
 			}
 		}
 
@@ -357,12 +375,12 @@ namespace ArcEngine.Graphic
 			get
 			{
 				int mask;
-				GL.GetInteger(GetPName.StencilValueMask, out mask);
+				TK.GL.GetInteger(TK.GetPName.StencilValueMask, out mask);
 				return mask;
 			}
 			set
 			{
-				GL.StencilMask(value);
+				TK.GL.StencilMask(value);
 			}
 		}
 
@@ -390,7 +408,7 @@ namespace ArcEngine.Graphic
 			get
 			{
 				int mask;
-				GL.GetInteger(GetPName.StencilWritemask, out mask);
+				TK.GL.GetInteger(TK.GetPName.StencilWritemask, out mask);
 				return mask;
 			}
 			set
@@ -423,7 +441,7 @@ namespace ArcEngine.Graphic
 			get
 			{
 				int mask;
-				GL.GetInteger(GetPName.StencilRef, out mask);
+				TK.GL.GetInteger(TK.GetPName.StencilRef, out mask);
 				return mask;
 			}
 			set
@@ -502,7 +520,7 @@ namespace ArcEngine.Graphic
 			}
 			set
 			{
-				GL.StencilFunc((OpenTK.Graphics.OpenGL.StencilFunction)value, StencilReference, StencilMask);
+				TK.GL.StencilFunc((TK.StencilFunction)value, StencilReference, StencilMask);
 			}
 		}
 

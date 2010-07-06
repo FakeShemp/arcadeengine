@@ -101,7 +101,7 @@ namespace ArcEngine
 		/// </summary>
 		/// <param name="v"></param>
 		/// <returns></returns>
-		public static implicit operator OpenTK.Vector4(Vector4 v)
+		internal static OpenTK.Vector4 Vector4ToOpenTK(Vector4 v)
 		{
 			return new OpenTK.Vector4(v.X, v.Y, v.Z, v.W);
 		}

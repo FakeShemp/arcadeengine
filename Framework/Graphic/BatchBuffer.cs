@@ -1,8 +1,27 @@
-﻿using System;
-using OpenTK.Graphics.OpenGL;
+﻿#region Licence
+//
+//This file is part of ArcEngine.
+//Copyright (C)2008-2010 Adrien Hémery ( iliak@mimicprod.net )
+//
+//ArcEngine is free software: you can redistribute it and/or modify
+//it under the terms of the GNU General Public License as published by
+//the Free Software Foundation, either version 3 of the License, or
+//any later version.
+//
+//ArcEngine is distributed in the hope that it will be useful,
+//but WITHOUT ANY WARRANTY; without even the implied warranty of
+//MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//GNU General Public License for more details.
+//
+//You should have received a copy of the GNU General Public License
+//along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+//
+#endregion
+
+using System;
 using System.Collections.Generic;
-using ArcEngine.Asset;
 using System.Drawing;
+using TK = OpenTK.Graphics.OpenGL;
 
 //
 // http://www.spec.org/gwpg/gpc.static/vbo_whitepaper.html
@@ -22,10 +41,10 @@ namespace ArcEngine.Graphic
 		public BatchBuffer()
 		{
 			int id = -1;
-			GL.GenBuffers(1, out id);
+            TK.GL.GenBuffers(1, out id);
 			Handle = id;
 
-			UsageMode = BufferUsageHint.StaticDraw;
+            UsageMode = BufferUsage.StaticDraw;
 
 			Declarations = new List<VertexDeclaration>();
 
@@ -49,7 +68,7 @@ namespace ArcEngine.Graphic
 		public void Dispose()
 		{
 			int id = Handle;
-			GL.DeleteBuffers(1, ref id);
+            TK.GL.DeleteBuffers(1, ref id);
 			Handle = -1;
 
 			//GL.DeleteVertexArrays(1, ref vaoHandle);
@@ -70,8 +89,8 @@ namespace ArcEngine.Graphic
 			if (data != null)
 				count = data.Length;
 
-			GL.BindBuffer(BufferTarget.ArrayBuffer, Handle);
-			GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(count * sizeof(float)), data, UsageMode);
+            TK.GL.BindBuffer(TK.BufferTarget.ArrayBuffer, Handle);
+            TK.GL.BufferData(TK.BufferTarget.ArrayBuffer, (IntPtr)(count * sizeof(float)), data, (TK.BufferUsageHint)UsageMode);
 		}
 
 
@@ -95,7 +114,7 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public void Bind()
 		{
-			GL.BindBuffer(BufferTarget.ArrayBuffer, Handle);
+            TK.GL.BindBuffer(TK.BufferTarget.ArrayBuffer, Handle);
 
 			if (Display.Shader == null)
 				return;
@@ -397,7 +416,7 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Usage mode
 		/// </summary>
-		public BufferUsageHint UsageMode
+		public BufferUsage UsageMode
 		{
 			get;
 			set;
@@ -467,4 +486,20 @@ namespace ArcEngine.Graphic
 
 	}
 
+
+    /// <summary>
+    /// Specifies special usage of the buffer contents
+    /// </summary>
+    public enum BufferUsage
+    {
+        StreamDraw = TK.BufferUsageHint.StreamDraw,
+        StreamRead = TK.BufferUsageHint.StreamRead,
+        StreamCopy = TK.BufferUsageHint.StreamCopy,
+        StaticDraw = TK.BufferUsageHint.StaticDraw,
+        StaticRead = TK.BufferUsageHint.StaticRead,
+        StaticCopy = TK.BufferUsageHint.StaticCopy,
+        DynamicDraw = TK.BufferUsageHint.DynamicDraw,
+        DynamicRead = TK.BufferUsageHint.DynamicRead,
+        DynamicCopy = TK.BufferUsageHint.DynamicCopy,
+    }
 }

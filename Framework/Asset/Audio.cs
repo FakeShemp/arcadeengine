@@ -19,15 +19,10 @@
 #endregion
 
 
-using System.IO;
 using System;
-using System.Drawing;
-using System.Xml;
-//using OpenTK;
-//using OpenTK.Audio.OpenAL;
-//using OpenTK.Audio;
-using System.Media;
 using System.ComponentModel;
+using System.Media;
+using System.Xml;
 
 namespace ArcEngine.Asset
 {

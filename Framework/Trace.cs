@@ -20,11 +20,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using Diag = System.Diagnostics;
-using OpenTK.Graphics;
-using System.Reflection;
 using System.Diagnostics;
+using System.Reflection;
+using Diag = System.Diagnostics;
 
 namespace ArcEngine
 {

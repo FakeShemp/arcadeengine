@@ -18,15 +18,6 @@
 //
 #endregion
 
-using System;
-using System.CodeDom.Compiler;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Reflection;
-using System.Text;
-using System.Web;
-using System.Xml;
-using Microsoft.VisualBasic;
 
 namespace ArcEngine
 {

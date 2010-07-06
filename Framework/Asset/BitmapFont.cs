@@ -22,7 +22,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.Drawing.Text;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -30,7 +29,6 @@ using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 using ArcEngine.Graphic;
-using OpenTK.Graphics.OpenGL;
 
 
 namespace ArcEngine.Asset

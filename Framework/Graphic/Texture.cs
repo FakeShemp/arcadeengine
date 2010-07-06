@@ -23,10 +23,8 @@ using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
-using OpenTK.Graphics;
-using OpenTK.Graphics.OpenGL;
 using Imaging = System.Drawing.Imaging;
-using OpenTK;
+using TK = OpenTK.Graphics.OpenGL;
 
 //
 //
@@ -87,7 +85,7 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public Texture()
 		{
-			Handle = GL.GenTexture();
+			Handle = TK.GL.GenTexture();
 			//ErrorCode code = GL.GetError();
 			//if (code != ErrorCode.NoError)
 			//    Trace.WriteLine("Failed to create a new texture ({0})", code.ToString());
@@ -98,7 +96,7 @@ namespace ArcEngine.Graphic
 			HorizontalWrap = Display.TextureParameters.HorizontalWrapFilter;
 			VerticalWrap = Display.TextureParameters.VerticalWrapFilter;
 
-			PixelInternalFormat = PixelInternalFormat.Rgba8;
+            PixelInternalFormat = TK.PixelInternalFormat.Rgba8;
 			PixelFormat = PixelFormat.Bgra;
 		}
 
@@ -174,7 +172,7 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public void Dispose()
 		{
-			GL.DeleteTexture(Handle);
+            TK.GL.DeleteTexture(Handle);
 			Handle = -1;
 
 			GC.SuppressFinalize(this);
@@ -358,10 +356,10 @@ namespace ArcEngine.Graphic
 
 			Display.Texture = this;
 
-			GL.TexSubImage2D<byte>(TextureTarget.Texture2D, 0, 
+            TK.GL.TexSubImage2D<byte>(TK.TextureTarget.Texture2D, 0, 
 				location.X, location.Y, 
 				bitmap.Width, bitmap.Height,
-				PixelFormat.Bgra, PixelType.UnsignedByte,
+                TK.PixelFormat.Bgra, TK.PixelType.UnsignedByte,
 				data);
 		}
 
@@ -585,7 +583,7 @@ namespace ArcEngine.Graphic
 
 			Display.Texture = this;
 			//GL.GetTexImage(TextureTarget.Texture2D, 0, PixelFormat.Bgra, PixelType.UnsignedByte, Data);
-			GL.GetTexImage<byte>(TextureTarget.Texture2D, 0, PixelFormat.Bgra, PixelType.UnsignedByte, Data);
+            TK.GL.GetTexImage<byte>(TK.TextureTarget.Texture2D, 0, TK.PixelFormat.Bgra, TK.PixelType.UnsignedByte, Data);
 			return true;
 		}
 
@@ -605,11 +603,11 @@ namespace ArcEngine.Graphic
 
 			// The below is almost OK. The problem is the GL_RGBA. On certain platforms, the GPU prefers that red and blue be swapped (GL_BGRA).
 			// If you supply GL_RGBA, then the driver will do the swapping for you which is slow.
-			GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba8,
+            TK.GL.TexImage2D(TK.TextureTarget.Texture2D, 0, TK.PixelInternalFormat.Rgba8,
 				Size.Width, Size.Height,
 				0,
-				PixelFormat,
-				PixelType.UnsignedByte,
+				(TK.PixelFormat)PixelFormat,
+                TK.PixelType.UnsignedByte,
 				Data);
 
 			MinFilter = TextureMinFilter.Nearest;
@@ -661,11 +659,8 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Specifies the number of color components in the texture.
 		/// </summary>
-		public PixelInternalFormat PixelInternalFormat
-		{
-			get;
-			private set;
-		}
+        TK.PixelInternalFormat PixelInternalFormat;
+
 
 		/// <summary>
 		/// Specifies the format of the pixel data.
@@ -687,14 +682,14 @@ namespace ArcEngine.Graphic
 				Display.Texture = this;
 
 				int value;
-				GL.GetTexParameter(TextureTarget.Texture2D, GetTextureParameter.TextureWrapS, out value);
+                TK.GL.GetTexParameter(TK.TextureTarget.Texture2D, TK.GetTextureParameter.TextureWrapS, out value);
 
 				return (HorizontalWrapFilter)value;
 			}
 			set
 			{
 				Display.Texture = this;
-				GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)value);
+                TK.GL.TexParameter(TK.TextureTarget.Texture2D, TK.TextureParameterName.TextureWrapS, (int)value);
 			}
 		}
 
@@ -709,14 +704,14 @@ namespace ArcEngine.Graphic
 				Display.Texture = this;
 
 				int value;
-				GL.GetTexParameter(TextureTarget.Texture2D, GetTextureParameter.TextureWrapT, out value);
+                TK.GL.GetTexParameter(TK.TextureTarget.Texture2D, TK.GetTextureParameter.TextureWrapT, out value);
 
 				return (VerticalWrapFilter)value;
 			}
 			set
 			{
 				Display.Texture = this;
-				GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)value);
+                TK.GL.TexParameter(TK.TextureTarget.Texture2D, TK.TextureParameterName.TextureWrapT, (int)value);
 			}
 		}
 
@@ -732,7 +727,7 @@ namespace ArcEngine.Graphic
 				Display.Texture = this;
 
 				int[] color = new int[4];
-				GL.GetTexParameter(TextureTarget.Texture2D, GetTextureParameter.TextureBorderColor, color);
+                TK.GL.GetTexParameter(TK.TextureTarget.Texture2D, TK.GetTextureParameter.TextureBorderColor, color);
 
 				return Color.FromArgb(color[0], color[1], color[2], color[3]);
 
@@ -747,7 +742,7 @@ namespace ArcEngine.Graphic
 				color[2] = value.G;
 				color[3] = value.B;
 
-				GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureBorderColor, color);
+                TK.GL.TexParameter(TK.TextureTarget.Texture2D, TK.TextureParameterName.TextureBorderColor, color);
 			}
 		}
 
@@ -762,7 +757,7 @@ namespace ArcEngine.Graphic
 				Display.Texture = this;
 
 				int value;
-				GL.GetTexParameter(TextureTarget.Texture2D, GetTextureParameter.TextureMinFilter, out value);
+                TK.GL.GetTexParameter(TK.TextureTarget.Texture2D, TK.GetTextureParameter.TextureMinFilter, out value);
 
 				return (TextureMinFilter)value;
 			}
@@ -770,7 +765,7 @@ namespace ArcEngine.Graphic
 			{
 				Display.Texture = this;
 
-				GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)value);
+                TK.GL.TexParameter(TK.TextureTarget.Texture2D, TK.TextureParameterName.TextureMinFilter, (int)value);
 			}
 		}
 
@@ -785,14 +780,14 @@ namespace ArcEngine.Graphic
 				Display.Texture = this;
 
 				int value;
-				GL.GetTexParameter(TextureTarget.Texture2D, GetTextureParameter.TextureMagFilter, out value);
+                TK.GL.GetTexParameter(TK.TextureTarget.Texture2D, TK.GetTextureParameter.TextureMagFilter, out value);
 
 				return (TextureMagFilter)value;
 			}
 			set
 			{
 				Display.Texture = this;
-				GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)value);
+                TK.GL.TexParameter(TK.TextureTarget.Texture2D, TK.TextureParameterName.TextureMagFilter, (int)value);
 			}
 		}
 
@@ -913,5 +908,61 @@ namespace ArcEngine.Graphic
 		ReadWrite = 3,
 	}
 
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public enum PixelFormat
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        DepthComponent = TK.PixelFormat.DepthComponent,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        Red = TK.PixelFormat.Red,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        Green = TK.PixelFormat.Green,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        Blue = TK.PixelFormat.Blue,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        Alpha = TK.PixelFormat.Alpha,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        Rgb = TK.PixelFormat.Rgb,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        Rgba = TK.PixelFormat.Rgba,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        Bgr = TK.PixelFormat.Bgr,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        Bgra = TK.PixelFormat.Bgra,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        DepthStencil = TK.PixelFormat.DepthStencil,
+    }
 
 }

@@ -8,7 +8,7 @@
     <ProjectGuid>{7481BB86-AE2B-44F1-91B8-6E9E2EF6F383}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Text_Demo</RootNamespace>
+    <RootNamespace>ArcEngine.Examples.TextDemo</RootNamespace>
     <AssemblyName>Text Demo</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

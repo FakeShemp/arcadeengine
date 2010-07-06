@@ -18,17 +18,12 @@
 //
 #endregion
 
-using ArcEngine.Forms;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
 using System.Xml;
 using ArcEngine.Asset;
-using ArcEngine.Graphic;
-using ArcEngine.Editor;
-using WeifenLuo.WinFormsUI.Docking;
+using ArcEngine.Forms;
 
 namespace ArcEngine
 {

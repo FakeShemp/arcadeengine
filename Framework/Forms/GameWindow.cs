@@ -24,8 +24,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
-using OpenTK;
-using OpenTK.Graphics;
+using TK = OpenTK.Graphics;
 
 namespace ArcEngine.Forms
 {
@@ -52,9 +51,9 @@ namespace ArcEngine.Forms
 
 			// Adds the control to the form
 			Trace.WriteDebugLine("[GameWindow] Requesting a {0}.{1} Opengl context (Color: {2}, Depth: {3}, Stencil:{4}, Sample: {5})", param.Major, param.Minor, param.Color, param.Depth, param.Stencil, param.Samples);
-			RenderControl = new GLControl(new GraphicsMode(param.Color, param.Depth, param.Stencil, param.Samples),
+            RenderControl = new OpenTK.GLControl(new OpenTK.Graphics.GraphicsMode(param.Color, param.Depth, param.Stencil, param.Samples),
 				param.Major, param.Minor,
-				GraphicsContextFlags.Default);
+                OpenTK.Graphics.GraphicsContextFlags.Default);
 			RenderControl.Dock = DockStyle.Fill;
 			Controls.Add(RenderControl);
 
@@ -99,7 +98,7 @@ namespace ArcEngine.Forms
 		/// </summary>
 		public void SetFullScreen()
 		{
-			DisplayResolution res = DisplayDevice.Default.SelectResolution(ClientSize.Width, ClientSize.Height, 32, 60);
+            OpenTK.DisplayResolution res = OpenTK.DisplayDevice.Default.SelectResolution(ClientSize.Width, ClientSize.Height, 32, 60);
 			SetFullScreen(res);
 		}
 
@@ -108,14 +107,14 @@ namespace ArcEngine.Forms
 		/// Set in FullScreen mode
 		/// </summary>
 		/// <param name="resolution">Desired resolution</param>
-		public void SetFullScreen(DisplayResolution resolution)
+        void SetFullScreen(OpenTK.DisplayResolution resolution)
 		{
 			Trace.WriteDebugLine("[GameWindow] SetFullScreen()");
 
 			if (resolution == null)
 				return;
 
-			DisplayDevice.Default.ChangeResolution(resolution);
+            OpenTK.DisplayDevice.Default.ChangeResolution(resolution);
 
 			this.WindowState = FormWindowState.Maximized;
 			this.FormBorderStyle = FormBorderStyle.None;
@@ -124,14 +123,15 @@ namespace ArcEngine.Forms
 			IsFullScreen = true;
 		}
 
+
 		/// <summary>
 		/// Set in FullScreen mode
 		/// </summary>
 		/// <param name="size">Size</param>
 		/// <param name="bpp">Color depth</param>
-		public void SetFullScreen(Size size, int bpp)
+		void SetFullScreen(Size size, int bpp)
 		{
-			DisplayResolution res = DisplayDevice.Default.SelectResolution(size.Width, size.Height, bpp, 60);
+            OpenTK.DisplayResolution res = OpenTK.DisplayDevice.Default.SelectResolution(size.Width, size.Height, bpp, 60);
 			SetFullScreen(res);
 		}
 
@@ -143,7 +143,7 @@ namespace ArcEngine.Forms
 		{
 			Trace.WriteDebugLine("[GameWindow] SetWindowed()");
 
-			DisplayDevice.Default.RestoreResolution();
+            OpenTK.DisplayDevice.Default.RestoreResolution();
 			WindowState = FormWindowState.Normal;
 			Resizable = resizable;
 
@@ -306,7 +306,7 @@ namespace ArcEngine.Forms
 		/// <summary>
 		/// OpenTK control
 		/// </summary>
-		GLControl RenderControl;
+        OpenTK.GLControl RenderControl;
 
 
 		/// <summary>
@@ -376,18 +376,19 @@ namespace ArcEngine.Forms
 			private set;
 		}
 
-
+/*
 		/// <summary>
 		/// Gets available displays mode
 		/// </summary>
-		static public List<DisplayDevice> AvailableDisplays
+        static List<OpenTK.DisplayDevice> AvailableDisplays
 		{
 			get
 			{
-				return new List<DisplayDevice>(DisplayDevice.AvailableDisplays);
+                return new List<OpenTK.DisplayDevice>(OpenTK.DisplayDevice.AvailableDisplays);
 			}
 		}
-		#endregion
+*/
+        #endregion
 
 	}
 

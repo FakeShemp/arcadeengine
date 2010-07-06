@@ -21,9 +21,8 @@
 using System;
 using System.IO;
 using System.Xml;
-using OpenTK;
-using OpenTK.Graphics.OpenGL;
 using ArcEngine.Asset;
+using TK = OpenTK.Graphics.OpenGL;
 
 
 // http://bakura.developpez.com/tutoriels/jeux/utilisation-shaders-avec-opengl-3-x/
@@ -52,12 +51,12 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public Shader()
 		{
-			VertexID = GL.CreateShader((OpenTK.Graphics.OpenGL.ShaderType)ShaderType.VertexShader);
-			FragmentID = GL.CreateShader((OpenTK.Graphics.OpenGL.ShaderType)ShaderType.FragmentShader);
-			GeometryID = GL.CreateShader((OpenTK.Graphics.OpenGL.ShaderType)ShaderType.GeometryShader);
-			ProgramID = GL.CreateProgram();
-			GeometryInput = BeginMode.Lines;
-			GeometryOutput = BeginMode.Lines;
+			VertexID = TK.GL.CreateShader((TK.ShaderType)ShaderType.VertexShader);
+			FragmentID = TK.GL.CreateShader((TK.ShaderType)ShaderType.FragmentShader);
+			GeometryID = TK.GL.CreateShader((TK.ShaderType)ShaderType.GeometryShader);
+			ProgramID = TK.GL.CreateProgram();
+			GeometryInput = PrimitiveType.Lines;
+			GeometryOutput = PrimitiveType.Lines;
 		}
 
 
@@ -132,11 +131,11 @@ namespace ArcEngine.Graphic
 
 			int success = 0;
 
-			GL.CompileShader(VertexID);
-			GL.GetShader(VertexID, ShaderParameter.CompileStatus, out success);
+			TK.GL.CompileShader(VertexID);
+			TK.GL.GetShader(VertexID, TK.ShaderParameter.CompileStatus, out success);
 			if (success != 1)
 			{
-				VertexLog = GL.GetShaderInfoLog(VertexID);
+				VertexLog = TK.GL.GetShaderInfoLog(VertexID);
 				if (!string.IsNullOrEmpty(VertexLog))
 					Trace.WriteLine("[VertexShader] : {0}", VertexLog);
 
@@ -144,35 +143,35 @@ namespace ArcEngine.Graphic
 			}
 
 
-			GL.CompileShader(FragmentID);
-			GL.GetShader(FragmentID, ShaderParameter.CompileStatus, out success);
+			TK.GL.CompileShader(FragmentID);
+			TK.GL.GetShader(FragmentID, TK.ShaderParameter.CompileStatus, out success);
 			if (success != 1)
 			{
-				FragmentLog = GL.GetShaderInfoLog(FragmentID);
+				FragmentLog = TK.GL.GetShaderInfoLog(FragmentID);
 				if (!string.IsNullOrEmpty(FragmentLog))
 					Trace.WriteLine("[FragmentShader] : {0}", FragmentLog);
 
 				return false;
 			}
 
-			GL.AttachShader(ProgramID, VertexID);
-			GL.AttachShader(ProgramID, FragmentID);
+			TK.GL.AttachShader(ProgramID, VertexID);
+			TK.GL.AttachShader(ProgramID, FragmentID);
 
 			if (UseGeometryShader && GeometryID != 0)
 			{
-				GL.CompileShader(GeometryID);
-				GeometryLog = GL.GetShaderInfoLog(GeometryID);
-				GL.AttachShader(ProgramID, GeometryID);
+				TK.GL.CompileShader(GeometryID);
+				GeometryLog = TK.GL.GetShaderInfoLog(GeometryID);
+				TK.GL.AttachShader(ProgramID, GeometryID);
 			}
 
 
-			GL.LinkProgram(ProgramID);
-			ProgramLog = GL.GetProgramInfoLog(ProgramID);
+			TK.GL.LinkProgram(ProgramID);
+			ProgramLog = TK.GL.GetProgramInfoLog(ProgramID);
 
 
 			// Is program compiled ?
 			int value;
-			GL.GetProgram(ProgramID, ProgramParameter.ValidateStatus, out value);
+            TK.GL.GetProgram(ProgramID, TK.ProgramParameter.ValidateStatus, out value);
 			if (value == 1)
 				IsCompiled = true;
 			else
@@ -218,7 +217,7 @@ namespace ArcEngine.Graphic
 				break;
 			}
 
-			GL.ShaderSource(id, source);
+			TK.GL.ShaderSource(id, source);
 		}
 
 
@@ -254,20 +253,20 @@ namespace ArcEngine.Graphic
 		/// <param name="input">Set the input type of the primitives we are going to feed the geometry shader</param>
 		/// <param name="output">Set the output type of the geometry shader</param>
 		/// <param name="count">We must tell the shader program how much vertices the geometry shader will output</param>
-		public void SetGeometryPrimitives(BeginMode input, BeginMode output, int count)
+		public void SetGeometryPrimitives(PrimitiveType input, PrimitiveType output, int count)
 		{
 			// Set the input type of the primitives we are going to feed the geometry shader, this should be the same as
 			// the primitive type given to GL.Begin. If the types do not match a GL error will occur (todo: verify GL_INVALID_ENUM, on glBegin)
-			GL.Ext.ProgramParameter(ProgramID, ExtGeometryShader4.GeometryInputTypeExt, (int)input);
+			TK.GL.Ext.ProgramParameter(ProgramID, TK.ExtGeometryShader4.GeometryInputTypeExt, (int)input);
 			GeometryInput = input;
 
 			// Set the output type of the geometry shader. Because we input Lines we will output LineStrip(s).
-			GL.Ext.ProgramParameter(ProgramID, ExtGeometryShader4.GeometryOutputTypeExt, (int)output);
+			TK.GL.Ext.ProgramParameter(ProgramID, TK.ExtGeometryShader4.GeometryOutputTypeExt, (int)output);
 			GeometryOutput = output;
 
 			// We must tell the shader program how much vertices the geometry shader will output (at most).
 			// One simple way is to query the maximum and use that.
-			GL.Ext.ProgramParameter(ProgramID, ExtGeometryShader4.GeometryVerticesOutExt, count);
+			TK.GL.Ext.ProgramParameter(ProgramID, TK.ExtGeometryShader4.GeometryVerticesOutExt, count);
 		}
 
 
@@ -418,7 +417,7 @@ namespace ArcEngine.Graphic
 			if (index < 0 || string.IsNullOrEmpty(name))
 				return;
 
-			GL.BindAttribLocation(ProgramID, index, name);
+			TK.GL.BindAttribLocation(ProgramID, index, name);
 		}
 
 
@@ -432,7 +431,7 @@ namespace ArcEngine.Graphic
 			if (string.IsNullOrEmpty(name))
 				return -1;
 
-			return GL.GetAttribLocation(ProgramID, name);
+			return TK.GL.GetAttribLocation(ProgramID, name);
 		}
 
 
@@ -446,7 +445,7 @@ namespace ArcEngine.Graphic
 			if (id < 0)
 				return;
 
-			GL.VertexAttrib1(id, value);
+			TK.GL.VertexAttrib1(id, value);
 		}
 
 
@@ -460,7 +459,7 @@ namespace ArcEngine.Graphic
 			if (id < 0)
 				return;
 
-			GL.VertexAttrib1(id, value);
+			TK.GL.VertexAttrib1(id, value);
 		}
 
 
@@ -476,13 +475,13 @@ namespace ArcEngine.Graphic
 				return;
 
 			if (value.Length == 1)
-				GL.VertexAttrib1(id, value[0]);
+				TK.GL.VertexAttrib1(id, value[0]);
 			else if (value.Length == 2)
-				GL.VertexAttrib2(id, value[0], value[1]);
+				TK.GL.VertexAttrib2(id, value[0], value[1]);
 			else if (value.Length == 3)
-				GL.VertexAttrib3(id, value[0], value[1], value[2]);
+				TK.GL.VertexAttrib3(id, value[0], value[1], value[2]);
 			else if (value.Length == 4)
-				GL.VertexAttrib4(id, value[0], value[1], value[2], value[3]);
+				TK.GL.VertexAttrib4(id, value[0], value[1], value[2], value[3]);
 
 		}
 
@@ -501,7 +500,7 @@ namespace ArcEngine.Graphic
 			if (id < 0)
 				return;
 
-			GL.Uniform1(id, value);
+			TK.GL.Uniform1(id, value);
 		}
 
 		/// <summary>
@@ -525,7 +524,7 @@ namespace ArcEngine.Graphic
 			if (id < 0)
 				return;
 
-			GL.Uniform1(id, value);
+			TK.GL.Uniform1(id, value);
 		}
 
 
@@ -551,15 +550,15 @@ namespace ArcEngine.Graphic
 				return;
 
 			if (value.Length == 1)
-				GL.Uniform1(id, value[0]);
+				TK.GL.Uniform1(id, value[0]);
 			else if (value.Length == 2)
-				GL.Uniform2(id, value[0], value[1]);
+				TK.GL.Uniform2(id, value[0], value[1]);
 			else if (value.Length == 3)
-				GL.Uniform3(id, value[0], value[1], value[2]);
+				TK.GL.Uniform3(id, value[0], value[1], value[2]);
 			else if (value.Length == 4)
-				GL.Uniform4(id, value[0], value[1], value[2], value[3]);
+				TK.GL.Uniform4(id, value[0], value[1], value[2], value[3]);
 			else if (value.Length == 9)
-				GL.UniformMatrix3(id, 9, false, value);
+				TK.GL.UniformMatrix3(id, 9, false, value);
 		}
 
 
@@ -584,7 +583,7 @@ namespace ArcEngine.Graphic
 			if (string.IsNullOrEmpty(name))
 				return -1;
 			
-			int id = GL.GetUniformLocation(ProgramID, name);
+			int id = TK.GL.GetUniformLocation(ProgramID, name);
 
 	//		if (id == -1)
 	//			Trace.WriteDebugLine("Uniform {0} not found.", name);
@@ -604,8 +603,8 @@ namespace ArcEngine.Graphic
 			if (id < 0)
 				return;
 
-			OpenTK.Matrix4 m = matrix;
-			GL.UniformMatrix4(id, false, ref m);
+            OpenTK.Matrix4 m = Matrix4.Matrix4ToTKMatrix4(matrix); 
+			TK.GL.UniformMatrix4(id, false, ref m);
 		}
 
 
@@ -776,7 +775,7 @@ namespace ArcEngine.Graphic
 					return 0;
 
 				int count = 0;
-				GL.GetProgram(ProgramID, ProgramParameter.GeometryVerticesOut, out count);
+                TK.GL.GetProgram(ProgramID, TK.ProgramParameter.GeometryVerticesOut, out count);
 
 				return count;
 			}
@@ -846,7 +845,7 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// 
 		/// </summary>
-		public BeginMode GeometryInput
+		public PrimitiveType GeometryInput
 		{
 			get;
 			private set;
@@ -856,7 +855,7 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// 
 		/// </summary>
-		public BeginMode GeometryOutput
+		public PrimitiveType GeometryOutput
 		{
 			get;
 			private set;
@@ -872,10 +871,10 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public void Dispose()
 		{
-			GL.DeleteShader(FragmentID);
-			GL.DeleteShader(VertexID);
-			GL.DeleteShader(GeometryID);
-			GL.DeleteProgram(ProgramID);
+			TK.GL.DeleteShader(FragmentID);
+			TK.GL.DeleteShader(VertexID);
+			TK.GL.DeleteShader(GeometryID);
+			TK.GL.DeleteProgram(ProgramID);
 
 			FragmentID = -1;
 			VertexID = -1;
@@ -909,17 +908,17 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Fragment shader
 		/// </summary>
-		FragmentShader = OpenTK.Graphics.OpenGL.ShaderType.FragmentShader,
+		FragmentShader = TK.ShaderType.FragmentShader,
 
 		/// <summary>
 		/// Vertex shader
 		/// </summary>
-		VertexShader = OpenTK.Graphics.OpenGL.ShaderType.VertexShader,
+		VertexShader = TK.ShaderType.VertexShader,
 
 		/// <summary>
 		/// Geometry shader
 		/// </summary>
-		GeometryShader = OpenTK.Graphics.OpenGL.ShaderType.GeometryShader,
+		GeometryShader = TK.ShaderType.GeometryShader,
 	}
 
 }

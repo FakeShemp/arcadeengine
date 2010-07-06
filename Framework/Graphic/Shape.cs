@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Text;
-
-using OpenTK.Graphics.OpenGL;
+using TK = OpenTK.Graphics.OpenGL;
 
 
 namespace ArcEngine.Graphic
@@ -28,9 +25,9 @@ namespace ArcEngine.Graphic
 
 			Display.Texturing = false;
 			if (mode == ShapeMode.Fill)
-				GL.Begin(BeginMode.Polygon);
+                TK.GL.Begin(TK.BeginMode.Polygon);
 			else
-				GL.Begin(BeginMode.LineStrip);
+                TK.GL.Begin(TK.BeginMode.LineStrip);
 
 			Mode = mode;
 			IsOpen = true;
@@ -45,7 +42,7 @@ namespace ArcEngine.Graphic
 			if (!IsOpen)
 				return;
 
-			GL.End();
+            TK.GL.End();
 			Display.Texturing = true;
 
 			IsOpen = false;
@@ -59,7 +56,7 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public void ClosePath()
 		{
-			GL.Vertex2(StartPoint.X, StartPoint.Y);
+            TK.GL.Vertex2(StartPoint.X, StartPoint.Y);
 			LastPoint = StartPoint;
 
 			End();
@@ -75,7 +72,7 @@ namespace ArcEngine.Graphic
 		{
 			End();
 			Begin(Mode);
-			GL.Vertex2(x, y);
+            TK.GL.Vertex2(x, y);
 			StartPoint.X = x;
 			StartPoint.Y = y;
 			LastPoint = StartPoint;
@@ -89,7 +86,7 @@ namespace ArcEngine.Graphic
 		/// <param name="y">Y</param>
 		public void LineTo(int x, int y)
 		{
-			GL.Vertex2(x, y);
+            TK.GL.Vertex2(x, y);
 			LastPoint.X = x;
 			LastPoint.Y = y;
 		}
@@ -145,7 +142,7 @@ namespace ArcEngine.Graphic
 			for (int p = 0; p <= 50; p++)
 			{
 				pos = curve.CalculatePoint((float)p / 50.0f);
-				GL.Vertex2(pos.X, pos.Y);
+                TK.GL.Vertex2(pos.X, pos.Y);
 			}
 
 			LastPoint.X = (int)pos.X;
@@ -177,7 +174,7 @@ namespace ArcEngine.Graphic
 
 			for (int ii = 0; ii < real_segments + 1; ii++)
 			{
-				GL.Vertex2(xx, yy);
+                TK.GL.Vertex2(xx, yy);
 
 				float tx = -(yy - y);
 				float ty = xx - x;

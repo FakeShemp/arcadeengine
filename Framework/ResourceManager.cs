@@ -18,16 +18,15 @@
 //
 #endregion
 
-using System.Diagnostics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
 using ArcEngine.Asset;
-using ArcEngine;
 using ICSharpCode.SharpZipLib.Zip;
 
 // Gamepad : http://sourceforge.net/projects/xnadirectinput/
