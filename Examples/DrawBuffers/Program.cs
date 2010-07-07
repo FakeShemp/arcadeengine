@@ -29,12 +29,12 @@ using ArcEngine.Input;
 // http://bakura.developpez.com/tutoriels/jeux/utilisation-vbo-avec-opengl-3-x/
 // http://bakura.developpez.com/tutoriels/jeux/utilisation-vertex-array-objects-avec-opengl-3-x/
 
-namespace ArcEngine.Examples
+namespace ArcEngine.Examples.DrawBufer
 {
 	/// <summary>
 	/// Main game class
 	/// </summary>
-	public class DrawBuffers : GameBase
+	public class Program : GameBase
 	{
 
 		/// <summary>
@@ -45,7 +45,7 @@ namespace ArcEngine.Examples
 		{
 			try
 			{
-				using (DrawBuffers game = new DrawBuffers())
+				using (Program game = new Program())
 					game.Run();
 			}
 			catch (Exception e)
@@ -61,7 +61,7 @@ namespace ArcEngine.Examples
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public DrawBuffers()
+		public Program()
 		{
 			CreateGameWindow(new Size(1024, 768));
 			Window.Text = "Draw buffers example";
@@ -233,7 +233,7 @@ namespace ArcEngine.Examples
 			Shader.SetUniform("mvp_matrix", ModelViewMatrix * ProjectionMatrix);
 			Shader.SetUniform("tex_matrix", TextureMatrix);
 			Shader.SetUniform("texture", 2);
-			Display.DrawIndexBuffer(Shader, Buffer, PrimitiveType.Triangles, Index);
+			Display.DrawIndexBuffer(Buffer, PrimitiveType.Triangles, Index);
 		}
 
 

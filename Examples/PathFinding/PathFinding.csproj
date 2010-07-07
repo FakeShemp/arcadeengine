@@ -8,7 +8,7 @@
     <ProjectGuid>{2A35AB52-7986-4F67-9426-E995831F6125}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PathFinding</RootNamespace>
+    <RootNamespace>ArcEngine.Examples.PathFinding</RootNamespace>
     <AssemblyName>PathFinding</AssemblyName>
     <TargetFrameworkVersion>v3.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

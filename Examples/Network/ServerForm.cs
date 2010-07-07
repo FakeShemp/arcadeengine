@@ -26,7 +26,7 @@ using System.Windows.Forms;
 using ArcEngine.Network;
 using ArcEngine;
 
-namespace Network
+namespace ArcEngine.Examples.Network
 {
 	public partial class ServerForm : Form
 	{

@@ -8,7 +8,7 @@
     <ProjectGuid>{D7A7B285-ABB3-486A-BD7B-637F462D5ABD}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SimplePhysic</RootNamespace>
+    <RootNamespace>ArcEngine.Examples.SimplePhysic</RootNamespace>
     <AssemblyName>SimplePhysic</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

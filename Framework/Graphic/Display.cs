@@ -895,9 +895,9 @@ namespace ArcEngine.Graphic
 		/// <param name="buffer">Buffer handle</param>
 		/// <param name="mode">Drawing mode</param>
 		/// <param name="index">Index buffer</param>
-		/// <param name="shader"></param>
+		/// 
 		/// <returns></returns>
-		public static void DrawIndexBuffer(Shader shader, BatchBuffer buffer, PrimitiveType mode, IndexBuffer index)
+		public static void DrawIndexBuffer(BatchBuffer buffer, PrimitiveType mode, IndexBuffer index)
 		{
 			if (buffer == null || index == null)
 				return;
@@ -953,7 +953,7 @@ namespace ArcEngine.Graphic
 			return;
 		}
 
-
+/*
 
 		/// <summary>
 		/// 
@@ -964,7 +964,7 @@ namespace ArcEngine.Graphic
 		{
 
 		}
-
+*/
 
 		/// <summary>
 		/// Enables a buffer index 

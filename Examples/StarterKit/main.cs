@@ -77,7 +77,7 @@ namespace ArcEngine.Examples.StarterKit
 		public override void LoadContent()
 		{
 			// Clear color of the screen
-			Display.ClearColor = Color.CornflowerBlue;
+			Display.RenderState.ClearColor = Color.CornflowerBlue;
 
 			// Load Verdana font
 			Font = BitmapFont.CreateFromTTF(@"c:\windows\fonts\verdana.ttf", 12, FontStyle.Regular);

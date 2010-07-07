@@ -27,9 +27,9 @@ using ArcEngine.Graphic;
 using ArcEngine.Input;
 
 
-namespace ArcEngine.Examples.Joystick
+namespace ArcEngine.Examples.GamePad
 {
-	public class GamePadProject : GameBase
+	public class Program : GameBase
 	{
 
 		/// <summary>
@@ -40,7 +40,7 @@ namespace ArcEngine.Examples.Joystick
 		{
 			try
 			{
-				using (GamePadProject game = new GamePadProject())
+				using (Program game = new Program())
 					game.Run();
 			}
 			catch (Exception e)
@@ -54,7 +54,7 @@ namespace ArcEngine.Examples.Joystick
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public GamePadProject()
+		public Program()
 		{
 			Messages = new List<string>();
 

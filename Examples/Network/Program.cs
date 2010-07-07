@@ -27,7 +27,7 @@ using ArcEngine.Graphic;
 using ArcEngine.Network;
 
 
-namespace Network
+namespace ArcEngine.Examples.Network
 {
 	public static class NetworkGame
 	{

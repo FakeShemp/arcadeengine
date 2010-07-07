@@ -5,9 +5,8 @@ using System.Windows.Forms;
 using ArcEngine;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
-using OpenTK.Graphics.OpenGL;
 
-namespace PathFinding
+namespace ArcEngine.Examples.PathFinding
 {
 	class AStar : GameBase
 	{

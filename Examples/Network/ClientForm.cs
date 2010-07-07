@@ -26,7 +26,7 @@ using System.Windows.Forms;
 
 using ArcEngine.Network;
 
-namespace Network
+namespace ArcEngine.Examples.Network
 {
 	public partial class ClientForm : Form
 	{

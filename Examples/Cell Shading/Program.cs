@@ -367,7 +367,7 @@ namespace ArcEngine.Examples.CellShading
 			Shader.SetUniform("Shininess", 50.0f);
 
 			// Draws with the index buffer
-			Display.DrawIndexBuffer(Shader, Buffer, PrimitiveType.Triangles, Index);
+			Display.DrawIndexBuffer(Buffer, PrimitiveType.Triangles, Index);
 
 
 			// Some dummy text

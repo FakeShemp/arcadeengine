@@ -8,7 +8,7 @@
     <ProjectGuid>{D33157EA-8505-4083-9EB2-1E412CC386F5}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ArcEngine.Examples</RootNamespace>
+    <RootNamespace>ArcEngine.Examples.Collada</RootNamespace>
     <AssemblyName>Collada</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

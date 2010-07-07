@@ -8,7 +8,7 @@
     <ProjectGuid>{130B9D68-5D3D-478B-82E4-F0431B956525}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DrawBuffers</RootNamespace>
+    <RootNamespace>ArcEngine.Examples.DrawBuffers</RootNamespace>
     <AssemblyName>DrawBuffers</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

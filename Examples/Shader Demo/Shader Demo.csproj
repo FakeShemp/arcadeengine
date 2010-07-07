@@ -8,7 +8,7 @@
     <ProjectGuid>{BBB7DD68-BDB8-48EA-8C58-32A376E44E03}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Shader_Demo</RootNamespace>
+    <RootNamespace>ArcEngine.Examples.ShaderDemo</RootNamespace>
     <AssemblyName>Shader Demo</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

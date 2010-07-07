@@ -24,11 +24,10 @@ using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
-using OpenTK.Graphics.OpenGL;
 
-namespace Shader_Demo
+namespace ArcEngine.Examples.ShaderDemo
 {
-	public class ShaderProject : GameBase
+	public class Program : GameBase
 	{
 
 		/// <summary>
@@ -39,7 +38,7 @@ namespace Shader_Demo
 		{
 			try
 			{
-				using (ShaderProject game = new ShaderProject())
+				using (Program game = new Program())
 					game.Run();
 			}
 			catch (Exception e)
@@ -53,7 +52,7 @@ namespace Shader_Demo
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public ShaderProject()
+		public Program()
 		{
 			CreateGameWindow(new Size(1024, 768));
 			Window.Text = "Shader demo";

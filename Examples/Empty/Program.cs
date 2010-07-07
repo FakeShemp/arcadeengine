@@ -26,12 +26,12 @@ using ArcEngine.Graphic;
 using ArcEngine.Input;
 
 
-namespace ArcEngine.Examples.EmptyProject
+namespace ArcEngine.Examples.Empty
 {
     /// <summary>
     /// Main game class
     /// </summary>
-    public class EmptyProject : GameBase
+    public class Program : GameBase
     {
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace ArcEngine.Examples.EmptyProject
         {
             try
             {
-                using (EmptyProject game = new EmptyProject())
+                using (Program game = new Program())
                     game.Run();
             }
             catch (Exception e)
@@ -56,7 +56,7 @@ namespace ArcEngine.Examples.EmptyProject
         /// <summary>
         /// Constructor
         /// </summary>
-        public EmptyProject()
+        public Program()
         {
             CreateGameWindow(new Size(1024, 768));
         }

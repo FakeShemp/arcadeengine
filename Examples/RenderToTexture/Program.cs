@@ -23,7 +23,7 @@ using ArcEngine.Graphic;
 
 namespace ArcEngine.Examples.RenderToTexture
 {
-	class RTT : GameBase
+	class Program : GameBase
 	{
 
 		/// <summary>
@@ -32,8 +32,8 @@ namespace ArcEngine.Examples.RenderToTexture
 		[STAThread]
 		static void Main()
 		{
-			using (RTT rtt = new RTT())
-				rtt.Run();
+			using (Program game = new Program())
+				game.Run();
 		}
 
 

@@ -29,7 +29,7 @@ namespace ArcEngine.Examples.Component
 	/// <summary>
 	/// A simple GameComponent example
 	/// </summary>
-	public class Example : GameBase
+	public class Program : GameBase
 	{
 
 		/// <summary>
@@ -40,7 +40,7 @@ namespace ArcEngine.Examples.Component
 		{
 			try
 			{
-				using (Example game = new Example())
+				using (Program game = new Program())
 					game.Run();
 			}
 			catch (Exception e)
@@ -54,7 +54,7 @@ namespace ArcEngine.Examples.Component
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public Example()
+		public Program()
 		{
 			CreateGameWindow(new Size(1024, 768));
 

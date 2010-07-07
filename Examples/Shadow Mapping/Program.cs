@@ -80,9 +80,8 @@ namespace ArcEngine.Examples.ShadowMapping
 			ProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4.0f, aspectRatio, 0.1f, 20.0f);
 
 
-
 			//Mesh = PlyLoader.LoadPly("data/bunny.ply");
-			Mesh = Mesh.MakeSolidCube(0.05f);
+			Mesh = Mesh.MakeSolidCube(0.5f);
 
 			#region Shader
 
@@ -108,7 +107,7 @@ namespace ArcEngine.Examples.ShadowMapping
 
 				void main(void)
 				{
-					frag_color = vec4(1.0, 1.0, 1.0, 1.0);
+					frag_color = vec4(gl_FragCoord.x/1024.0, gl_FragCoord.y / 800.0, gl_FragCoord.z / 20.0, 1.0);
 				}";
 			#endregion
 
@@ -121,9 +120,12 @@ namespace ArcEngine.Examples.ShadowMapping
 
 			#region Font
 
-			//Font = BitmapFont.CreateFromTTF("c:\\windows\\fonts\\verdana.ttf", 16, FontStyle.Regular);
+			SpriteBatch = new SpriteBatch();
+			Font = BitmapFont.CreateFromTTF("c:\\windows\\fonts\\verdana.ttf", 10, FontStyle.Regular);
 
 			#endregion
+
+			yaw = 0.0f;
 		}
 
 
@@ -143,6 +145,10 @@ namespace ArcEngine.Examples.ShadowMapping
 			if (Font != null)
 				Font.Dispose();
 			Font = null;
+
+			if (SpriteBatch != null)
+				SpriteBatch.Dispose();
+			SpriteBatch = null;
 		}
 
 
@@ -161,6 +167,9 @@ namespace ArcEngine.Examples.ShadowMapping
 
 			if (Keyboard.IsKeyPress(Keys.Right))
 				Mesh.Position.X -= 0.01f;
+
+
+			yaw += 0.005f;
 		}
 
 
@@ -173,16 +182,23 @@ namespace ArcEngine.Examples.ShadowMapping
 			// Clears the background
 			Display.ClearBuffers();
 
-			// Uniforms
-			Shader.SetUniform("modelview", ModelViewMatrix);
+			// Aplly a rotation
+			Matrix4 mvp = Matrix4.CreateRotationY(yaw) * Matrix4.CreateRotationZ(yaw) * ModelViewMatrix * ProjectionMatrix;
+
+			Display.Shader = Shader;
+			Shader.SetUniform("mvp_matrix", mvp);
 
 			// Draws with the index buffer
-			Mesh.Draw(Shader);
+			Mesh.Draw();
 
 
 			// Some dummy text
-			//Font.DrawText(new Point(100, 25), Color.White, "Here's an example of draw buffers.");
+			SpriteBatch.Begin();
+			SpriteBatch.DrawString(Font, new Vector2(10, 15), Color.White, "Here's an example of shadow mapping.");
+			SpriteBatch.End();
 		}
+
+		float yaw;
 
 		#region Properties
 
@@ -191,6 +207,11 @@ namespace ArcEngine.Examples.ShadowMapping
 		/// </summary>
 		BitmapFont Font;
 
+
+		/// <summary>
+		/// SpriteBatch
+		/// </summary>
+		SpriteBatch SpriteBatch;
 
 		/// <summary>
 		/// 

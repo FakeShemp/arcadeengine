@@ -1,4 +1,4 @@
-﻿namespace UserInterface
+﻿namespace ArcEngine.Examples.UserInterface
 {
 	partial class Form1
 	{

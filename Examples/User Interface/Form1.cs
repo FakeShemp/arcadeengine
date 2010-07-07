@@ -5,7 +5,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
-namespace UserInterface
+namespace ArcEngine.Examples.UserInterface
 {
 	public partial class Form1 : Form
 	{

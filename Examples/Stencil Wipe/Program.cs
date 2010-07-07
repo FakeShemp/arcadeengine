@@ -26,8 +26,6 @@ using ArcEngine.Graphic;
 using ArcEngine.Input;
 
 
-using OpenTK.Graphics.OpenGL;
-
 
 
 
@@ -38,12 +36,12 @@ using OpenTK.Graphics.OpenGL;
 // http://blogs.msdn.com/b/shawnhar/archive/2007/05/17/transitions-part-three-stencil-swipes.aspx
 // http://blogs.msdn.com/b/shawnhar/archive/2007/05/23/transitions-part-four-rendertargets.aspx
 //
-namespace StencilWipe
+namespace ArcEngine.Examples.StencilWipe
 {
 	/// <summary>
 	/// Main game class
 	/// </summary>
-	public class StencilWipe : GameBase
+	public class Program : GameBase
 	{
 
 		/// <summary>
@@ -54,7 +52,7 @@ namespace StencilWipe
 		{
 			try
 			{
-				using (StencilWipe game = new StencilWipe())
+				using (Program game = new Program())
 					game.Run();
 			}
 			catch (Exception e)
@@ -68,7 +66,7 @@ namespace StencilWipe
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public StencilWipe()
+		public Program()
 		{
 			CreateGameWindow(new Size(800, 600));
 			Window.Text = "Wipe effect";

@@ -308,7 +308,7 @@ namespace ArcEngine.Graphic
 
 
 			// Add to queue
-			Sprites[spriteQueueCount].Source = source.HasValue ? source.Value : new Vector4(0.0f, 0.0f, texture.Size.Width, texture.Size.Height);
+			Sprites[spriteQueueCount].Source = source ?? new Vector4(0.0f, 0.0f, texture.Size.Width, texture.Size.Height);
 			Sprites[spriteQueueCount].Destination = destination;
 			Sprites[spriteQueueCount].Color = color;
 			Sprites[spriteQueueCount].Depth = depth;

@@ -20,10 +20,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using OpenTK.Graphics.OpenGL;
-using ArcEngine.Graphic;
 using ArcEngine.Asset;
-using OpenTK;
+using ArcEngine.Graphic;
 /*
  * 
  * http://old.nabble.com/OpenGL%27s-VBO-with-Haskell-td19148385.html
@@ -87,13 +85,13 @@ namespace ArcEngine.Examples.ShadowMapping
 		/// <summary>
 		/// Draws the mesh
 		/// </summary>
-		public void Draw(Shader shader)
+		public void Draw()
 		{
 			//Display.PushMatrix(MatrixMode.Modelview);
 			//Rotation.Normalize();
 		//	Display.ModelViewMatrix = Matrix4.CreateFromAxisAngle(Rotation, 1.0f) * Matrix4.CreateTranslation(Position) * Display.ModelViewMatrix;
-		
-			Display.DrawIndexBuffer(shader, Buffer, PrimitiveType.Triangles, Index);
+
+			Display.DrawIndexBuffer(Buffer, PrimitiveType.Triangles, Index);
 			
 		//	Display.PopMatrix(MatrixMode.Modelview);
 		}

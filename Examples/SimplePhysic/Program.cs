@@ -32,18 +32,17 @@ using FarseerGames.FarseerPhysics.Dynamics.Joints;
 using FarseerGames.FarseerPhysics.Factories;
 using FarseerGames.FarseerPhysics.Interfaces;
 using FarseerGames.FarseerPhysics.Mathematics;
-using OpenTK.Graphics.OpenGL;
 
 
 //
 // http://nerg4l.ne.funpic.de/doku.php/wiki:tutorials:nergal:quickstartsample
 //
-namespace ArcEngine.Games.ProjectT
+namespace ArcEngine.Games.SimplePhysic
 {
 	/// <summary>
 	/// Main game class
 	/// </summary>
-	public class Template : GameBase
+	public class Program : GameBase
 	{
 
 
@@ -55,7 +54,7 @@ namespace ArcEngine.Games.ProjectT
 		{
 			try
 			{
-				using (Template game = new Template())
+				using (Program game = new Program())
 					game.Run();
 			}
 			catch (Exception e)
@@ -68,7 +67,7 @@ namespace ArcEngine.Games.ProjectT
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public Template()
+		public Program()
 		{
 			CreateGameWindow(new Size(1024, 768));
 			Window.Text = "Simple Physic";

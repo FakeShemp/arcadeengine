@@ -8,7 +8,7 @@ namespace ArcEngine.Graphic
 	/// <summary>
 	/// A drawable convex shape
 	/// </summary>
-	public class Shape
+	class Shape
 	{
 
 

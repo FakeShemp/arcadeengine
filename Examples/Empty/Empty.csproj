@@ -8,7 +8,7 @@
     <ProjectGuid>{9DC56A80-A1D7-4A83-BE99-C098E0C0DAD8}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Empty</RootNamespace>
+    <RootNamespace>ArcEngine.Examples.Empty</RootNamespace>
     <AssemblyName>Empty</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

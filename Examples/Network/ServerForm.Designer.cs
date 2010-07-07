@@ -1,4 +1,4 @@
-﻿namespace Network
+﻿namespace ArcEngine.Examples.Network
 {
 	partial class ServerForm
 	{

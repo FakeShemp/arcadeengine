@@ -20,12 +20,8 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-using ArcEngine.Graphic;
-using ArcEngine.Input;
-using OpenTK.Graphics.OpenGL;
 using ArcEngine;
-using ArcEngine.Utility;
-using System.Collections.Generic;
+using ArcEngine.Graphic;
 
 // http://www.opengl.org/resources/code/samples/mjktips/grid/index.html
 // http://www.opengl.org/resources/code/samples/mjktips/grid/editgrid.c

@@ -8,7 +8,7 @@
     <ProjectGuid>{C89A18A9-6573-4932-8F4E-D57995C0E2B6}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Network</RootNamespace>
+    <RootNamespace>ArcEngine.Examples.Network</RootNamespace>
     <AssemblyName>Network</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
