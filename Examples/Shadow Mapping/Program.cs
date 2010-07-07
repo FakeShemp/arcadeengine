@@ -80,8 +80,12 @@ namespace ArcEngine.Examples.ShadowMapping
 			ProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 2.0f, aspectRatio, 0.1f, 20.0f);
 
 
+			#region Mesh
 			//Mesh = PlyLoader.LoadPly("data/bunny.ply");
-			Mesh = Mesh.CreateTorus(0.5f, 1.0f, 32, 32);
+			Torus = Mesh.CreateTorus(0.5f, 1.0f, 32, 32);
+			Plane = Mesh.CreatePlane(10.0f);
+			#endregion
+
 
 			#region Shader
 
@@ -89,13 +93,22 @@ namespace ArcEngine.Examples.ShadowMapping
 			string vshader = @"
 				#version 130
 
+				uniform mat4 modelview_matrix;
+				uniform mat4 projection_matrix;
 				uniform mat4 mvp_matrix;
 
 				in vec3 in_position;
+				in vec3 in_normal;
+				in vec3 in_tangent;
+				in vec2 in_texcoord;
+
+				out vec4 out_color;
 
 				void main(void)
 				{
 					gl_Position = mvp_matrix * vec4(in_position, 1.0);
+					
+					out_color = modelview_matrix * vec4(in_normal, 1.0);
 				}";
 			#endregion
 
@@ -103,11 +116,13 @@ namespace ArcEngine.Examples.ShadowMapping
 			string fshader = @"
 				#version 130
 
+				in vec4 out_color;
+
 				out vec4 frag_color;
 
 				void main(void)
 				{
-					frag_color = vec4(1.0, 1.0, 1.0, 1.0);
+					frag_color = out_color;
 				}";
 			#endregion
 
@@ -134,9 +149,13 @@ namespace ArcEngine.Examples.ShadowMapping
 		/// </summary>
 		public override void UnloadContent()
 		{
-			if (Mesh != null)
-				Mesh.Dispose();
-			Mesh = null;
+			if (Plane != null)
+				Plane.Dispose();
+			Plane = null;
+
+			if (Torus != null)
+				Torus.Dispose();
+			Torus = null;
 
 			if (Shader != null)
 				Shader.Dispose();
@@ -163,10 +182,10 @@ namespace ArcEngine.Examples.ShadowMapping
 				Exit();
 
 			if (Keyboard.IsKeyPress(Keys.Left))
-				Mesh.Position.X += 0.01f;
+				Plane.Position.X += 0.01f;
 
 			if (Keyboard.IsKeyPress(Keys.Right))
-				Mesh.Position.X -= 0.01f;
+				Plane.Position.X -= 0.01f;
 
 
 			Yaw += 0.005f;
@@ -182,16 +201,18 @@ namespace ArcEngine.Examples.ShadowMapping
 			// Clears the background
 			Display.ClearBuffers();
 
-			// Aplly a rotation
-			Matrix4 mvp = Matrix4.CreateRotationY(Yaw) * ModelViewMatrix * ProjectionMatrix;
 
 			Display.Shader = Shader;
-			Shader.SetUniform("mvp_matrix", mvp);
 
 
 			// Draws with the index buffer
-			if (Mesh != null)
-				Mesh.Draw();
+			Shader.SetUniform("modelview_matrix", ModelViewMatrix);
+			Shader.SetUniform("projection_matrix", ProjectionMatrix);
+			Shader.SetUniform("mvp_matrix", ModelViewMatrix * ProjectionMatrix);
+			//Plane.Draw();
+
+			Shader.SetUniform("mvp_matrix", Matrix4.CreateRotationY(Yaw) * ModelViewMatrix * ProjectionMatrix);
+			Torus.Draw();
 
 
 			// Some dummy text
@@ -219,8 +240,13 @@ namespace ArcEngine.Examples.ShadowMapping
 		/// <summary>
 		/// Mesh to draw
 		/// </summary>
-		Mesh Mesh;
+		Mesh Plane;
 
+
+		/// <summary>
+		/// Torus
+		/// </summary>
+		Mesh Torus;
 
 		/// <summary>
 		/// Model view matrix
