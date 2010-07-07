@@ -114,7 +114,10 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public void Bind()
 		{
-            TK.GL.BindBuffer(TK.BufferTarget.ArrayBuffer, Handle);
+			if (Handle == -1)
+				return;
+
+         TK.GL.BindBuffer(TK.BufferTarget.ArrayBuffer, Handle);
 
 			if (Display.Shader == null)
 				return;

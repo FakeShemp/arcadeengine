@@ -77,11 +77,11 @@ namespace ArcEngine.Examples.ShadowMapping
 			// Matrices
 			ModelViewMatrix = Matrix4.LookAt(new Vector3(0.0f, 0.0f, -2.5f), Vector3.Zero, Vector3.UnitY);
 			float aspectRatio = (float)Display.ViewPort.Width / (float)Display.ViewPort.Height;
-			ProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4.0f, aspectRatio, 0.1f, 20.0f);
+			ProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 2.0f, aspectRatio, 0.1f, 20.0f);
 
 
 			//Mesh = PlyLoader.LoadPly("data/bunny.ply");
-			Mesh = Mesh.MakeSolidCube(0.5f);
+			Mesh = Mesh.CreateTorus(0.5f, 1.0f, 32, 32);
 
 			#region Shader
 
@@ -107,7 +107,7 @@ namespace ArcEngine.Examples.ShadowMapping
 
 				void main(void)
 				{
-					frag_color = vec4(gl_FragCoord.x/1024.0, gl_FragCoord.y / 800.0, gl_FragCoord.z / 20.0, 1.0);
+					frag_color = vec4(1.0, 1.0, 1.0, 1.0);
 				}";
 			#endregion
 
@@ -121,11 +121,11 @@ namespace ArcEngine.Examples.ShadowMapping
 			#region Font
 
 			SpriteBatch = new SpriteBatch();
-			Font = BitmapFont.CreateFromTTF("c:\\windows\\fonts\\verdana.ttf", 10, FontStyle.Regular);
+			Font = BitmapFont.CreateFromTTF(@"c:\windows\fonts\verdana.ttf", 10, FontStyle.Regular);
 
 			#endregion
 
-			yaw = 0.0f;
+			Yaw = 0.0f;
 		}
 
 
@@ -169,7 +169,7 @@ namespace ArcEngine.Examples.ShadowMapping
 				Mesh.Position.X -= 0.01f;
 
 
-			yaw += 0.005f;
+			Yaw += 0.005f;
 		}
 
 
@@ -183,13 +183,15 @@ namespace ArcEngine.Examples.ShadowMapping
 			Display.ClearBuffers();
 
 			// Aplly a rotation
-			Matrix4 mvp = Matrix4.CreateRotationY(yaw) * Matrix4.CreateRotationZ(yaw) * ModelViewMatrix * ProjectionMatrix;
+			Matrix4 mvp = Matrix4.CreateRotationY(Yaw) * ModelViewMatrix * ProjectionMatrix;
 
 			Display.Shader = Shader;
 			Shader.SetUniform("mvp_matrix", mvp);
 
+
 			// Draws with the index buffer
-			Mesh.Draw();
+			if (Mesh != null)
+				Mesh.Draw();
 
 
 			// Some dummy text
@@ -198,7 +200,7 @@ namespace ArcEngine.Examples.ShadowMapping
 			SpriteBatch.End();
 		}
 
-		float yaw;
+
 
 		#region Properties
 
@@ -213,8 +215,9 @@ namespace ArcEngine.Examples.ShadowMapping
 		/// </summary>
 		SpriteBatch SpriteBatch;
 
+
 		/// <summary>
-		/// 
+		/// Mesh to draw
 		/// </summary>
 		Mesh Mesh;
 
@@ -230,10 +233,19 @@ namespace ArcEngine.Examples.ShadowMapping
 		/// </summary>
 		Matrix4 ProjectionMatrix;
 
+
 		/// <summary>
-		/// 
+		/// Shader
 		/// </summary>
 		Shader Shader;
+
+
+		/// <summary>
+		/// Rotation angle
+		/// </summary>
+		float Yaw;
+
+
 		#endregion
 
 

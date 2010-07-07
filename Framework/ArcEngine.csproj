@@ -315,6 +315,7 @@
     <Compile Include="GameComponent.cs" />
     <Compile Include="Graphic\VertexPositionColor.cs" />
     <Compile Include="Graphic\VertexPositionColorTexture.cs" />
+    <Compile Include="Graphic\VertexPositionNormalTangentTexture.cs" />
     <Compile Include="Graphic\VertexPositionNormalTexture.cs" />
     <Compile Include="Graphic\VertexPositionTexture.cs" />
     <Compile Include="IDrawable.cs" />
