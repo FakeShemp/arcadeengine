@@ -182,76 +182,9 @@ namespace ArcEngine.Examples.CellShading
 			#endregion
 
 
-			#region Buffer
-
-			// Creates vertex buffer
-			Buffer = new BatchBuffer();
-			Buffer.AddDeclaration("in_position", 3);
-			Buffer.AddDeclaration("in_normal", 3);
-
-			int Slices = 128;
-			int Stacks = 32;
-			float ds = 1.0f / Slices;
-			float dt = 1.0f / Stacks;
-			int VertexCount = Slices * Stacks;
-
-			float[] buffer = new float[VertexCount * 6];
-			int pos = 0;
-
-			for (float s = 0; s < 1 - ds / 2; s += ds)
-			{
-				for (float t = 0; t < 1 - dt / 2; t += dt)
-				{
-					const float E = 0.01f;
-					Vector3 p = EvaluateTrefoil(s, t);
-					Vector3 u = EvaluateTrefoil(s + E, t) - p;
-					Vector3 v = EvaluateTrefoil(s, t + E) - p;
-					Vector3 n = Vector3.Normalize(Vector3.Cross(u, v));
-
-					// Position
-					buffer[pos++] = p.X;
-					buffer[pos++] = p.Y;
-					buffer[pos++] = p.Z;
-
-					// Normal
-					buffer[pos++] = n.X;
-					buffer[pos++] = n.Y;
-					buffer[pos++] = n.Z;
-				}
-			}
-
-			Buffer.SetVertices(buffer);
-
-			#endregion
-
-
-			#region Index
-
-			Index = new IndexBuffer();
-
-			int[] indices = new int[Slices * Stacks * 6];
-			pos = 0;
-			int m = 0;
-			for (int i = 0; i < Slices; i++)
-			{
-				for (int j = 0; j < Stacks; j++)
-				{
-					indices[pos++] = m + j;
-					indices[pos++] = m + (j + 1) % Stacks;
-					indices[pos++] = (m + j + Stacks) % VertexCount;
-
-					indices[pos++] = (m + j + Stacks) % VertexCount;
-					indices[pos++] = (m + (j + 1) % Stacks) % VertexCount;
-					indices[pos++] = (m + (j + 1) % Stacks + Stacks) % VertexCount;
-				}
-				m += Stacks;
-			}
-			Index.Update(indices);
-
-
-
-			#endregion
-
+			// Mesh
+			Mesh = Mesh.CreateTrefoil(128, 32);
+			//Mesh = Mesh.CreateTorus(0.25f, 0.5f, 32, 32);
 
 			#region Font
 
@@ -263,56 +196,17 @@ namespace ArcEngine.Examples.CellShading
 
 
 		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="s"></param>
-		/// <param name="t"></param>
-		/// <returns></returns>
-		Vector3 EvaluateTrefoil(float s, float t)
-		{
-			float TwoPi = (float)Math.PI * 2.0f;
-			float a = 0.5f;
-			float b = 0.3f;
-			float c = 0.5f;
-			float d = 0.1f;
-			float u = (1.0f - s) * 2.0f * TwoPi;
-			float v = t * TwoPi;
-			float r = a + b * (float)Math.Cos(1.5f * u);
-			float x = r * (float)Math.Cos(u);
-			float y = r * (float)Math.Sin(u);
-			float z = c * (float)Math.Sin(1.5f * u);
-
-			Vector3 dv;
-			dv.X = -1.5f * b * (float)Math.Sin(1.5f * u) * (float)Math.Cos(u) - (a + b * (float)Math.Cos(1.5f * u)) * (float)Math.Sin(u);
-			dv.Y = -1.5f * b * (float)Math.Sin(1.5f * u) * (float)Math.Sin(u) + (a + b * (float)Math.Cos(1.5f * u)) * (float)Math.Cos(u);
-			dv.Z = 1.5f * c * (float)Math.Cos(1.5f * u);
-
-			Vector3 q = dv;
-			q.Normalize();
-			Vector3 qvn = Vector3.Normalize(new Vector3(q.Y, -q.X, 0));
-			Vector3 ww = Vector3.Cross(q, qvn);
-			
-
-			Vector3 range;
-			range.X = x + d * (qvn.X * (float)Math.Cos(v) + ww.X * (float)Math.Sin(v));
-			range.Y = y + d * (qvn.Y * (float)Math.Cos(v) + ww.Y * (float)Math.Sin(v));
-			range.Z = z + d * ww.Z * (float)Math.Sin(v);
-			return range;
-		}
-
-
-		/// <summary>
 		/// Unload contents
 		/// </summary>
 		public override void UnloadContent()
 		{
-			if (Buffer != null)
-				Buffer.Dispose();
-			Buffer = null;
+			//if (Buffer != null)
+			//   Buffer.Dispose();
+			//Buffer = null;
 
-			if (Index != null)
-				Index.Dispose();
-			Index = null;
+			//if (Index != null)
+			//   Index.Dispose();
+			//Index = null;
 
 			if (Font != null)
 				Font.Dispose();
@@ -325,6 +219,10 @@ namespace ArcEngine.Examples.CellShading
 			if (Sprite != null)
 				Sprite.Dispose();
 			Sprite = null;
+
+			if (Mesh != null)
+				Mesh.Dispose();
+			Mesh = null;
 		}
 
 
@@ -342,7 +240,6 @@ namespace ArcEngine.Examples.CellShading
 			// Rotation
 			Yaw += 0.01f;
 		}
-
 
 
 		/// <summary>
@@ -367,8 +264,9 @@ namespace ArcEngine.Examples.CellShading
 			Shader.SetUniform("Shininess", 50.0f);
 
 			// Draws with the index buffer
-			Display.DrawIndexBuffer(Buffer, PrimitiveType.Triangles, Index);
+	//		Display.DrawIndexBuffer(Buffer, PrimitiveType.Triangles, Index);
 
+			Mesh.Draw();
 
 			// Some dummy text
 			Sprite.Begin();
@@ -387,15 +285,21 @@ namespace ArcEngine.Examples.CellShading
 
 
 		/// <summary>
+		/// 
+		/// </summary>
+		Mesh Mesh;
+
+
+		/// <summary>
 		/// Index buffer
 		/// </summary>
-		BatchBuffer Buffer;
+//		BatchBuffer Buffer;
 
 		
 		/// <summary>
 		/// Index buffer
 		/// </summary>
-		IndexBuffer Index;
+//		IndexBuffer Index;
 
 
 		/// <summary>

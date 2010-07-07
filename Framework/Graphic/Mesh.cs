@@ -39,7 +39,7 @@ using ArcEngine.Graphic;
  * 
  * meshes are subdivided in  subsets , each corresponding to a portion of the mesh characterized by the same material. 
 */
-namespace ArcEngine.Examples.ShadowMapping
+namespace ArcEngine.Graphic
 {
 	/// <summary>
 	/// Class which holds the geometry of a 3d object.  
@@ -301,15 +301,17 @@ namespace ArcEngine.Examples.ShadowMapping
 					// tangent vector can be calculated with a cross product between the helper vector, and the normal vector
 					// We must take care if both the normal and helper are parallel (cross product = 0, that's not a valid tangent!)			
 					Vector3 tangent = Vector3.Cross(normal, Vector3.UnitY);
-					vertices[indexVertices++] = tangent.X;
-					vertices[indexVertices++] = tangent.Y;
-					vertices[indexVertices++] = tangent.Z;
-
 					if (tangent.Length == 0.0f)
 					{
 						vertices[indexVertices++] = 1.0f;
 						vertices[indexVertices++] = 0.0f;
 						vertices[indexVertices++] = 0.0f;
+					}
+					else
+					{
+						vertices[indexVertices++] = tangent.X;
+						vertices[indexVertices++] = tangent.Y;
+						vertices[indexVertices++] = tangent.Z;
 					}
 
 					// generate texture coordinates and stores it in the right position
@@ -360,6 +362,147 @@ namespace ArcEngine.Examples.ShadowMapping
 
 			return mesh;
 		}
+
+
+
+		/// <summary>
+		/// Creates a Trefoil mesh
+		/// </summary>
+		/// <param name="slices">Number of slices</param>
+		/// <param name="stacks">Number of stacks</param>
+		/// <returns></returns>
+		/// <remarks>http://prideout.net/blog/?p=22</remarks>
+		public static Mesh CreateTrefoil(int slices, int stacks)
+		{
+
+			#region Vertices
+
+			float ds = 1.0f / slices;
+			float dt = 1.0f / stacks;
+			int VertexCount = slices * stacks;
+
+			float[] vertices = new float[VertexCount * 11];
+			int pos = 0;
+
+			for (float s = 0; s < 1 - ds / 2; s += ds)
+			{
+				for (float t = 0; t < 1 - dt / 2; t += dt)
+				{
+					const float E = 0.01f;
+					Vector3 p = EvaluateTrefoil(s, t);
+					Vector3 u = EvaluateTrefoil(s + E, t) - p;
+					Vector3 v = EvaluateTrefoil(s, t + E) - p;
+					Vector3 n = Vector3.Normalize(Vector3.Cross(u, v));
+
+					// Position
+					vertices[pos++] = p.X;
+					vertices[pos++] = p.Y;
+					vertices[pos++] = p.Z;
+
+					// Normal
+					vertices[pos++] = n.X;
+					vertices[pos++] = n.Y;
+					vertices[pos++] = n.Z;
+
+					// Tangent
+					Vector3 tangent = Vector3.Cross(n, Vector3.UnitY);
+					if (tangent.Length == 0.0f)
+					{
+						vertices[pos++] = 1.0f;
+						vertices[pos++] = 0.0f;
+						vertices[pos++] = 0.0f;
+					}
+					else
+					{
+						vertices[pos++] = tangent.X;
+						vertices[pos++] = tangent.Y;
+						vertices[pos++] = tangent.Z;
+					}
+
+					// Texture			
+					vertices[pos++] = 0.0f;
+					vertices[pos++] = 0.0f;
+				}
+			}
+			#endregion
+
+
+			#region Indices
+
+			int[] indices = new int[slices * stacks * 6];
+			pos = 0;
+			int m = 0;
+			for (int i = 0; i < slices; i++)
+			{
+				for (int j = 0; j < stacks; j++)
+				{
+					indices[pos++] = m + j;
+					indices[pos++] = m + (j + 1) % stacks;
+					indices[pos++] = (m + j + stacks) % VertexCount;
+
+					indices[pos++] = (m + j + stacks) % VertexCount;
+					indices[pos++] = (m + (j + 1) % stacks) % VertexCount;
+					indices[pos++] = (m + (j + 1) % stacks + stacks) % VertexCount;
+				}
+				m += stacks;
+			}
+
+
+			#endregion
+
+			Mesh mesh = new Mesh();
+			mesh.Buffer.AddDeclaration("in_position", 3);
+			mesh.Buffer.AddDeclaration("in_normal", 3);
+			mesh.Buffer.AddDeclaration("in_tangent", 3);
+			mesh.Buffer.AddDeclaration("in_texcoord", 2);
+
+			mesh.SetVertices(vertices);
+			mesh.SetIndices(indices);
+			mesh.PrimitiveType = PrimitiveType.Triangles;
+
+			return mesh;
+
+		}
+
+
+		/// <summary>
+		/// Evaluate a trefoil
+		/// </summary>
+		/// <param name="s">S</param>
+		/// <param name="t">T</param>
+		/// <returns></returns>
+		static private Vector3 EvaluateTrefoil(float s, float t)
+		{
+			float TwoPi = (float)Math.PI * 2.0f;
+			float a = 0.5f;
+			float b = 0.3f;
+			float c = 0.5f;
+			float d = 0.1f;
+			float u = (1.0f - s) * 2.0f * TwoPi;
+			float v = t * TwoPi;
+			float r = a + b * (float)Math.Cos(1.5f * u);
+			float x = r * (float)Math.Cos(u);
+			float y = r * (float)Math.Sin(u);
+			float z = c * (float)Math.Sin(1.5f * u);
+
+			Vector3 dv;
+			dv.X = -1.5f * b * (float)Math.Sin(1.5f * u) * (float)Math.Cos(u) - (a + b * (float)Math.Cos(1.5f * u)) * (float)Math.Sin(u);
+			dv.Y = -1.5f * b * (float)Math.Sin(1.5f * u) * (float)Math.Sin(u) + (a + b * (float)Math.Cos(1.5f * u)) * (float)Math.Cos(u);
+			dv.Z = 1.5f * c * (float)Math.Cos(1.5f * u);
+
+			Vector3 q = dv;
+			q.Normalize();
+			Vector3 qvn = Vector3.Normalize(new Vector3(q.Y, -q.X, 0));
+			Vector3 ww = Vector3.Cross(q, qvn);
+
+
+			Vector3 range;
+			range.X = x + d * (qvn.X * (float)Math.Cos(v) + ww.X * (float)Math.Sin(v));
+			range.Y = y + d * (qvn.Y * (float)Math.Cos(v) + ww.Y * (float)Math.Sin(v));
+			range.Z = z + d * ww.Z * (float)Math.Sin(v);
+			return range;
+		}
+
 
 		#endregion
 

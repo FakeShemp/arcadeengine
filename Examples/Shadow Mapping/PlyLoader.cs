@@ -19,6 +19,7 @@
 #endregion
 using System;
 using System.Collections.Generic;
+using ArcEngine.Graphic;
 using System.IO;
 
 namespace ArcEngine.Examples.ShadowMapping
