@@ -86,6 +86,7 @@ namespace ArcEngine.Examples.CellShading
 			float aspectRatio = (float)Display.ViewPort.Width / (float)Display.ViewPort.Height;
 			ProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4.0f, aspectRatio, 0.1f, 20.0f);
 
+
 			#region Shader
 
 			#region Vertex Shader
@@ -182,9 +183,12 @@ namespace ArcEngine.Examples.CellShading
 			#endregion
 
 
-			// Mesh
-			Mesh = Mesh.CreateTrefoil(128, 32);
-			//Mesh = Mesh.CreateTorus(0.25f, 0.5f, 32, 32);
+			#region Mesh
+
+			Trefoil = Mesh.CreateTrefoil(128, 32);
+			Torus = Mesh.CreateTorus(0.25f, 0.5f, 32, 32);
+			#endregion
+
 
 			#region Font
 
@@ -200,14 +204,6 @@ namespace ArcEngine.Examples.CellShading
 		/// </summary>
 		public override void UnloadContent()
 		{
-			//if (Buffer != null)
-			//   Buffer.Dispose();
-			//Buffer = null;
-
-			//if (Index != null)
-			//   Index.Dispose();
-			//Index = null;
-
 			if (Font != null)
 				Font.Dispose();
 			Font = null;
@@ -220,9 +216,13 @@ namespace ArcEngine.Examples.CellShading
 				Sprite.Dispose();
 			Sprite = null;
 
-			if (Mesh != null)
-				Mesh.Dispose();
-			Mesh = null;
+			if (Trefoil != null)
+				Trefoil.Dispose();
+			Trefoil = null;
+
+			if (Torus != null)
+				Torus.Dispose();
+			Torus = null;
 		}
 
 
@@ -236,6 +236,9 @@ namespace ArcEngine.Examples.CellShading
 			if (Keyboard.IsKeyPress(Keys.Escape))
 				Exit();
 
+			// Swap the mesh
+			if (Keyboard.IsNewKeyPress(Keys.Space))
+				swap = !swap;
 
 			// Rotation
 			Yaw += 0.01f;
@@ -263,14 +266,15 @@ namespace ArcEngine.Examples.CellShading
 			Shader.SetUniform("SpecularMaterial", new float[] { 0.5f, 0.5f, 0.5f });
 			Shader.SetUniform("Shininess", 50.0f);
 
-			// Draws with the index buffer
-	//		Display.DrawIndexBuffer(Buffer, PrimitiveType.Triangles, Index);
-
-			Mesh.Draw();
+			if (swap)
+				Torus.Draw();
+			else
+				Trefoil.Draw();
 
 			// Some dummy text
 			Sprite.Begin();
 			Sprite.DrawString(Font, new Vector2(50, 25), Color.White, "Here's an example of draw buffers.");
+			Sprite.DrawString(Font, new Vector2(50, 50), Color.White, "Press space key to  swap mesh.");
 			Sprite.End();
 
 		}
@@ -285,27 +289,28 @@ namespace ArcEngine.Examples.CellShading
 
 
 		/// <summary>
-		/// 
+		/// Swap between to meshes
 		/// </summary>
-		Mesh Mesh;
+		bool swap;
 
 
 		/// <summary>
-		/// Index buffer
+		/// Trefoil
 		/// </summary>
-//		BatchBuffer Buffer;
+		Mesh Trefoil;
 
-		
+
 		/// <summary>
-		/// Index buffer
+		/// Torus
 		/// </summary>
-//		IndexBuffer Index;
+		Mesh Torus;
 
 
 		/// <summary>
 		/// Font
 		/// </summary>
 		BitmapFont Font;
+
 
 		/// <summary>
 		/// Sprite batch

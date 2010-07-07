@@ -88,13 +88,7 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public void Draw()
 		{
-			//Display.PushMatrix(MatrixMode.Modelview);
-			//Rotation.Normalize();
-		//	Display.ModelViewMatrix = Matrix4.CreateFromAxisAngle(Rotation, 1.0f) * Matrix4.CreateTranslation(Position) * Display.ModelViewMatrix;
-
 			Display.DrawIndexBuffer(Buffer, PrimitiveType, Index);
-			
-		//	Display.PopMatrix(MatrixMode.Modelview);
 		}
 
 
@@ -140,15 +134,93 @@ namespace ArcEngine.Graphic
 		#region Statics
 
 		/// <summary>
-		/// 
+		/// Creates a sphere mesh
 		/// </summary>
-		/// <param name="radius"></param>
-		/// <param name="slices"></param>
-		/// <param name="stacks"></param>
+		/// <param name="radius">Radius</param>
+		/// <param name="slices">Number of slices</param>
 		/// <returns></returns>
-		public static Mesh CreateSphere(float radius, int slices, int stacks)
+		/// <remarks>From nopper.tv</remarks>
+		public static Mesh CreateSphere(float radius, int slices)
 		{
-			return null;
+
+			#region Vertex
+			int numberParallels = slices;
+			float[] vertices = new float[(numberParallels + 1) * (slices + 1) * 11];
+
+			float angleStep = (2.0f * (float)Math.PI) / ((float)slices);
+			int offset = 0;
+			for (int i = 0; i < numberParallels + 1; i++)
+			{
+				for (int j = 0; j < slices + 1; j++)
+				{
+					// Vertices
+					Vector3 vertex = new Vector3(radius * (float)Math.Sin(angleStep * (float)i) * (float)Math.Sin(angleStep * (float)j),
+														  radius * (float)Math.Cos(angleStep * (float)i),
+														  radius * (float)Math.Sin(angleStep * (float)i) * (float)Math.Cos(angleStep * (float)j));
+					vertices[offset++] = vertex.X;
+					vertices[offset++] = vertex.Y;
+					vertices[offset++] = vertex.Z;
+					
+					// Normals
+					Vector3 normal = vertex / radius;
+					vertices[offset++] = normal.X;
+					vertices[offset++] = normal.Y;
+					vertices[offset++] = normal.Z;
+
+					// Tangent
+					Vector3 tangent = Vector3.Cross(normal, Vector3.UnitY);
+					if (tangent.Length == 0.0f)
+					{
+						vertices[offset++] = 1.0f;
+						vertices[offset++] = 0.0f;
+						vertices[offset++] = 0.0f;
+					}
+					else
+					{
+						vertices[offset++] = tangent.X;
+						vertices[offset++] = tangent.Y;
+						vertices[offset++] = tangent.Z;
+					}
+
+					// Texture
+					vertices[offset++] = (float)j / (float)slices;
+					vertices[offset++] = (1.0f - (float)i) / (float)(numberParallels - 1);
+				}
+			}
+
+			#endregion
+
+
+			#region Index
+			int[] indices = new int[numberParallels * slices * 6];
+			offset = 0;
+			for (int i = 0; i < numberParallels; i++)
+			{
+				for (int j = 0; j < slices; j++)
+				{
+					indices[offset++] = i * (slices + 1) + j;
+					indices[offset++] = (i + 1) * (slices + 1) + j;
+					indices[offset++] = (i + 1) * (slices + 1) + (j + 1);
+
+					indices[offset++] = i * (slices + 1) + j;
+					indices[offset++] = (i + 1) * (slices + 1) + (j + 1);
+					indices[offset++] = i * (slices + 1) + (j + 1);
+				}
+			}
+
+			#endregion
+
+			Mesh mesh = new Mesh();
+			mesh.Buffer.AddDeclaration("in_position", 3);
+			mesh.Buffer.AddDeclaration("in_normal", 3);
+			mesh.Buffer.AddDeclaration("in_tangent", 3);
+			mesh.Buffer.AddDeclaration("in_texcoord", 2);
+
+			mesh.SetVertices(vertices);
+			mesh.SetIndices(indices);
+			mesh.PrimitiveType = PrimitiveType.Triangles;
+
+			return mesh;
 		}
 
 
@@ -247,20 +319,20 @@ namespace ArcEngine.Graphic
 		/// <param name="faces">Number of faces</param>
 		/// <returns></returns>
 		/// <remarks>@author Pablo Alonso-Villaverde Roza (www.nopper.tv)</remarks>
-		public static Mesh CreateTorus(float innerRadius, float outerRadius, int numSides, int numFaces)
+		public static Mesh CreateTorus(float inner, float outter, int sides, int faces)
 		{
-			if (numSides < 3 || numFaces < 3)
+			if (sides < 3 || faces < 3)
 				return null;
 
 
-			int numberVertices = (numFaces + 1) * (numSides + 1);
-			int numberIndices = numFaces * numSides * 2 * 3;
+			int numberVertices = (faces + 1) * (sides + 1);
+			int numberIndices = faces * sides * 2 * 3;
 
 			#region Vertices
 			
 			float[] vertices = new float[numberVertices * 11];
-			float tIncr = 1.0f / (float)numFaces;
-			float sIncr = 1.0f / (float)numSides;
+			float tIncr = 1.0f / (float)faces;
+			float sIncr = 1.0f / (float)sides;
 			float s = 0.0f;
 			float t = 0.0f;
 			float cos2PIt = 0.0f;
@@ -272,23 +344,23 @@ namespace ArcEngine.Graphic
 
 
 			// generate vertices and its attributes
-			for (int sideCount = 0; sideCount <= numSides; ++sideCount, s += sIncr)
+			for (int sideCount = 0; sideCount <= sides; ++sideCount, s += sIncr)
 			{
 				// precompute some values
 				cos2PIs = (float)Math.Cos(2.0f * Math.PI * s);
 				sin2PIs = (float)Math.Sin(2.0f * Math.PI * s);
 
 				t = 0.0f;
-				for (int faceCount = 0; faceCount <= numFaces; ++faceCount, t += tIncr)
+				for (int faceCount = 0; faceCount <= faces; ++faceCount, t += tIncr)
 				{
 					// precompute some values
 					cos2PIt = (float)Math.Cos(2.0f * Math.PI * t);
 					sin2PIt = (float)Math.Sin(2.0f * Math.PI * t);
 
 					// generate vertex and stores it in the right position
-					vertices[indexVertices++] = (outerRadius + innerRadius * cos2PIt) * cos2PIs;
-					vertices[indexVertices++] = (outerRadius + innerRadius * cos2PIt) * sin2PIs;
-					vertices[indexVertices++] = innerRadius * sin2PIt;
+					vertices[indexVertices++] = (outter + inner * cos2PIt) * cos2PIs;
+					vertices[indexVertices++] = (outter + inner * cos2PIt) * sin2PIs;
+					vertices[indexVertices++] = inner * sin2PIt;
 
 					// generate normal and stores it in the right position
 					// NOTE: cos (2PIx) = cos (x) and sin (2PIx) = sin (x) so, we can use this formula
@@ -326,15 +398,15 @@ namespace ArcEngine.Graphic
 			#region Indices
 			int[] indices = new int[numberIndices];
 			int indexIndices = 0;
-			for (int sideCount = 0; sideCount < numSides; sideCount++)
+			for (int sideCount = 0; sideCount < sides; sideCount++)
 			{
-				for (int faceCount = 0; faceCount < numFaces; faceCount++)
+				for (int faceCount = 0; faceCount < faces; faceCount++)
 				{
 					// get the number of the vertices for a face of the torus. They must be < numVertices
-					int v0 = ((sideCount * (numFaces + 1)) + faceCount);
-					int v1 = (((sideCount + 1) * (numFaces + 1)) + faceCount);
-					int v2 = (((sideCount + 1) * (numFaces + 1)) + (faceCount + 1));
-					int v3 = ((sideCount * (numFaces + 1)) + (faceCount + 1));
+					int v0 = ((sideCount * (faces + 1)) + faceCount);
+					int v1 = (((sideCount + 1) * (faces + 1)) + faceCount);
+					int v2 = (((sideCount + 1) * (faces + 1)) + (faceCount + 1));
+					int v3 = ((sideCount * (faces + 1)) + (faceCount + 1));
 				
 					// first triangle of the face, counter clock wise winding		
 					indices[indexIndices++] = v0;
@@ -349,6 +421,43 @@ namespace ArcEngine.Graphic
 			}
 			#endregion
 
+
+			Mesh mesh = new Mesh();
+			mesh.Buffer.AddDeclaration("in_position", 3);
+			mesh.Buffer.AddDeclaration("in_normal", 3);
+			mesh.Buffer.AddDeclaration("in_tangent", 3);
+			mesh.Buffer.AddDeclaration("in_texcoord", 2);
+
+			mesh.SetVertices(vertices);
+			mesh.SetIndices(indices);
+			mesh.PrimitiveType = PrimitiveType.Triangles;
+
+			return mesh;
+		}
+
+
+		/// <summary>
+		/// Creates a plane mesh
+		/// </summary>
+		/// <param name="radius">Radius of the plane</param>
+		/// <returns></returns>
+		static public Mesh CreatePlane(float radius)
+		{
+			// Vertices
+			float[] vertices = new float[]
+			{
+				-radius, -radius, 0.0f,		0.0f, 0.0f, 1.0f,			1.0f, 0.0f, 0.0f,				0.0f, 0.0f,
+				+radius, -radius, 0.0f,		0.0f, 0.0f, 1.0f,			1.0f, 0.0f, 0.0f,				1.0f, 0.0f,	
+				-radius, +radius, 0.0f,		0.0f, 0.0f, 1.0f,			1.0f, 0.0f, 0.0f,				0.0f, 1.0f,	
+				+radius, +radius, 0.0f,		0.0f, 0.0f, 1.0f,			1.0f, 0.0f, 0.0f,				1.0f, 1.0f,
+			};
+
+			// Indices
+			int[] indices = new int[]
+			{
+				0, 1, 2,
+				1, 3, 2,
+			};
 
 			Mesh mesh = new Mesh();
 			mesh.Buffer.AddDeclaration("in_position", 3);
