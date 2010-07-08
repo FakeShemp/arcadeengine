@@ -751,8 +751,8 @@ namespace ArcEngine
 		/// </exception>
 		public static void CreatePerspectiveFieldOfView(float fovy, float aspect, float zNear, float zFar, out Matrix4 result)
 		{
-			if (fovy <= 0 || fovy > Math.PI)
-				throw new ArgumentOutOfRangeException("fovy");
+	//		if (fovy <= 0 || fovy > Math.PI)
+	//			throw new ArgumentOutOfRangeException("fovy");
 			if (aspect <= 0)
 				throw new ArgumentOutOfRangeException("aspect");
 			if (zNear <= 0)

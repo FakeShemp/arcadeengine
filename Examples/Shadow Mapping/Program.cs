@@ -24,9 +24,6 @@ using System.Windows.Forms;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
-//using OpenTK;
-//using OpenTK.Graphics.OpenGL;
-using System.Xml;
 
 
 namespace ArcEngine.Examples.ShadowMapping
@@ -59,7 +56,7 @@ namespace ArcEngine.Examples.ShadowMapping
 		/// </summary>
 		public Program()
 		{
-			CreateGameWindow(new Size(1024, 768));
+			CreateGameWindow(new Size(640, 480));
 			Window.Text = "Shadow mapping example";
 		}
 
@@ -73,11 +70,6 @@ namespace ArcEngine.Examples.ShadowMapping
 			Display.RenderState.ClearColor = Color.CornflowerBlue;
 			Display.RenderState.DepthTest = true;
 	
-			
-			// Matrices
-			ModelViewMatrix = Matrix4.LookAt(new Vector3(0.0f, 0.0f, -2.5f), Vector3.Zero, Vector3.UnitY);
-			float aspectRatio = (float)Display.ViewPort.Width / (float)Display.ViewPort.Height;
-			ProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 2.0f, aspectRatio, 0.1f, 20.0f);
 
 
 			#region Mesh
@@ -96,6 +88,7 @@ namespace ArcEngine.Examples.ShadowMapping
 				uniform mat4 modelview_matrix;
 				uniform mat4 projection_matrix;
 				uniform mat4 mvp_matrix;
+				uniform mat4 shadowMatrix;
 
 				in vec3 in_position;
 				in vec3 in_normal;
@@ -140,6 +133,21 @@ namespace ArcEngine.Examples.ShadowMapping
 
 			#endregion
 
+
+			// Frame buffer
+			FrameBuffer = new FrameBuffer(new Size(512, 512));
+
+
+			Camera = new Vector3(-5.0f, 5.0f, 10.0f);
+			Light = new Vector3(0.0f, 0.0f, 10.0f);
+
+			
+			// Matrices
+			ModelViewMatrix = Matrix4.LookAt(Camera, Vector3.Zero, Vector3.UnitY);
+			float aspectRatio = (float)Display.ViewPort.Width / (float)Display.ViewPort.Height;
+			ProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(40.0f), aspectRatio, 1.0f, 100.0f);
+
+			// Rotation
 			Yaw = 0.0f;
 		}
 
@@ -168,6 +176,10 @@ namespace ArcEngine.Examples.ShadowMapping
 			if (SpriteBatch != null)
 				SpriteBatch.Dispose();
 			SpriteBatch = null;
+
+			if (FrameBuffer != null)
+				FrameBuffer.Dispose();
+			FrameBuffer = null;
 		}
 
 
@@ -188,7 +200,7 @@ namespace ArcEngine.Examples.ShadowMapping
 				Plane.Position.X -= 0.01f;
 
 
-			Yaw += 0.005f;
+			Yaw += 0.01f;
 		}
 
 
@@ -208,8 +220,10 @@ namespace ArcEngine.Examples.ShadowMapping
 			// Draws with the index buffer
 			Shader.SetUniform("modelview_matrix", ModelViewMatrix);
 			Shader.SetUniform("projection_matrix", ProjectionMatrix);
-			Shader.SetUniform("mvp_matrix", ModelViewMatrix * ProjectionMatrix);
-			//Plane.Draw();
+
+			Vector3 Position = new Vector3(0.0f, 0.0f, -5.0f);
+			Shader.SetUniform("mvp_matrix", Matrix4.CreateTranslation(Position) * ModelViewMatrix * ProjectionMatrix);
+			Plane.Draw();
 
 			Shader.SetUniform("mvp_matrix", Matrix4.CreateRotationY(Yaw) * ModelViewMatrix * ProjectionMatrix);
 			Torus.Draw();
@@ -224,6 +238,25 @@ namespace ArcEngine.Examples.ShadowMapping
 
 
 		#region Properties
+
+
+		/// <summary>
+		/// Camera position
+		/// </summary>
+		Vector3 Camera;
+
+
+		/// <summary>
+		/// Light position
+		/// </summary>
+		Vector3 Light;
+
+
+		/// <summary>
+		/// Frame buffer
+		/// </summary>
+		FrameBuffer FrameBuffer;
+
 
 		/// <summary>
 		/// Font

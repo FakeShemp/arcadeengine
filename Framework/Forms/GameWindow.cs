@@ -51,9 +51,9 @@ namespace ArcEngine.Forms
 
 			// Adds the control to the form
 			Trace.WriteDebugLine("[GameWindow] Requesting a {0}.{1} Opengl context (Color: {2}, Depth: {3}, Stencil:{4}, Sample: {5})", param.Major, param.Minor, param.Color, param.Depth, param.Stencil, param.Samples);
-            RenderControl = new OpenTK.GLControl(new OpenTK.Graphics.GraphicsMode(param.Color, param.Depth, param.Stencil, param.Samples),
-				param.Major, param.Minor,
-                OpenTK.Graphics.GraphicsContextFlags.Default);
+            RenderControl = new OpenTK.GLControl(new TK.GraphicsMode(param.Color, param.Depth, param.Stencil, param.Samples),
+				param.Major, param.Minor, TK.GraphicsContextFlags.ForwardCompatible);
+			Trace.WriteDebugLine("[GameWindow] Got GraphicsMode {0}", RenderControl.GraphicsMode);
 			RenderControl.Dock = DockStyle.Fill;
 			Controls.Add(RenderControl);
 

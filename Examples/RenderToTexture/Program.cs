@@ -20,6 +20,10 @@
 using System;
 using System.Drawing;
 using ArcEngine.Graphic;
+using ArcEngine.Asset;
+using ArcEngine.Input;
+using System.Windows.Forms;
+
 
 namespace ArcEngine.Examples.RenderToTexture
 {
@@ -48,16 +52,79 @@ namespace ArcEngine.Examples.RenderToTexture
 			CreateGameWindow(new Size(1024, 768));
 			Window.Text = "Frame Buffer example";
 
+			// Matrices
+			ModelViewMatrix = Matrix4.LookAt(new Vector3(0.0f, 0.0f, -2.5f), Vector3.Zero, Vector3.UnitY);
+			float aspectRatio = (float)Display.ViewPort.Width / (float)Display.ViewPort.Height;
+			ProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4.0f, aspectRatio, 0.1f, 20.0f);
+
+
+			#region Shader
+
+
+			#region Vertex Shader
+			string vshader = @"
+				#version 130
+
+				uniform mat4 modelview_matrix;
+				uniform mat4 projection_matrix;
+				uniform mat4 mvp_matrix;
+
+				in vec3 in_position;
+				in vec3 in_normal;
+				in vec3 in_tangent;
+				in vec2 in_texcoord;
+
+				out vec4 out_color;
+
+				void main(void)
+				{
+					gl_Position = mvp_matrix * vec4(in_position, 1.0);
+					
+					out_color = modelview_matrix * vec4(in_normal, 1.0);
+				}";
+			#endregion
+
+			#region Fragment Shader
+			string fshader = @"
+				#version 130
+
+				in vec4 out_color;
+
+				out vec4 frag_color;
+
+				void main(void)
+				{
+					frag_color = out_color;
+				}";
+			#endregion
+
+			Shader = new Shader();
+			Shader.SetSource(ShaderType.VertexShader, vshader);
+			Shader.SetSource(ShaderType.FragmentShader, fshader);
+			Shader.Compile();
+			Display.Shader = Shader;
+			#endregion
+
+
 			// Enable depth test writting
 			Display.RenderState.DepthTest = true;
 
 			// Frame buffer
-			Buffer = new FrameBuffer(new Size(256, 256));
+			Buffer = new FrameBuffer(new Size(512, 512));
 
 			// Texture to display
 			Texture = new Texture("data/test.png");
 
+			// Mesh
+			Mesh = Mesh.CreateTrefoil(128, 32);
+
+
+			#region Font
+
 			SpriteBatch = new SpriteBatch();
+			Font = BitmapFont.CreateFromTTF(@"c:\windows\fonts\verdana.ttf", 12, FontStyle.Regular);
+
+			#endregion
 		}
 
 
@@ -67,6 +134,10 @@ namespace ArcEngine.Examples.RenderToTexture
 		/// </summary>
 		public override void UnloadContent()
 		{
+			if (Shader != null)
+				Shader.Dispose();
+			Shader = null;
+
 			if (Buffer != null)
 				Buffer.Dispose();
 			Buffer = null;
@@ -78,13 +149,29 @@ namespace ArcEngine.Examples.RenderToTexture
 			if (SpriteBatch != null)
 				SpriteBatch.Dispose();
 			SpriteBatch = null;
+
+			if (Font != null)
+				Font.Dispose();
+			Font = null;
+
+			if (Mesh != null)
+				Mesh.Dispose();
+			Mesh = null;
 		}
 
 
 		#endregion
 
 
-		#region Game logic
+		public override void Update(GameTime gameTime)
+		{
+			// Check if the Escape key is pressed
+			if (Keyboard.IsKeyPress(Keys.Escape))
+				Exit();
+
+			// Rotation
+			Yaw += 0.01f;
+		}
 
 
 		/// <summary>
@@ -97,11 +184,21 @@ namespace ArcEngine.Examples.RenderToTexture
 
 			Rectangle rect = new Rectangle(1, 1, 100, 100);
 
+			#region Render target
 			// Bind the render buffer
 			Buffer.Bind();
 			Display.RenderState.ClearColor = Color.CornflowerBlue;
 			Display.ClearBuffers();
 
+
+
+			// Aplly a rotation
+			Display.Shader = Shader;
+			Shader.SetUniform("modelview_matrix", ModelViewMatrix);
+			Shader.SetUniform("projection_matrix", ProjectionMatrix);
+			Shader.SetUniform("mvp_matrix", Matrix4.CreateRotationY(Yaw) * ModelViewMatrix * ProjectionMatrix);
+			Mesh.Draw();
+/*
 			SpriteBatch.Begin();
 			SpriteBatch.Draw(Texture, new Vector2(100, 10), Color.White);
 
@@ -118,22 +215,38 @@ namespace ArcEngine.Examples.RenderToTexture
 			Display.ColorMask(true, true, true, true);
 
 			SpriteBatch.End();
+*/ 
 			Buffer.End();
+			#endregion
 
-			
+
+
+			SpriteBatch.Begin();
+
 			// Blit both buffer on the screen
-			Display.DrawTexture(Buffer.ColorTexture, new Point(50, 50));
-			Display.DrawTexture(Buffer.DepthTexture, new Point(350, 50));
+			SpriteBatch.Draw(Buffer.ColorTexture, new Vector2(10, 50), Color.White);
+			SpriteBatch.Draw(Buffer.DepthTexture, new Vector2(550, 50), Color.White);
 
 
-			Display.DrawTexture(Texture, new Point(100, 100));
+
+			SpriteBatch.DrawString(Font, new Vector2(10, 10), Color.White, "Render target example");
+			SpriteBatch.End();
 
 		}
-		#endregion
+
 
 
 		#region Properties
 
+		/// <summary>
+		/// Rotation
+		/// </summary>
+		float Yaw;
+
+		/// <summary>
+		/// Shader
+		/// </summary>
+		Shader Shader;
 
 		/// <summary>
 		/// Frame buffer
@@ -151,6 +264,30 @@ namespace ArcEngine.Examples.RenderToTexture
 		/// Texture
 		/// </summary>
 		Texture Texture;
+
+		
+		/// <summary>
+		/// Mesh to draw
+		/// </summary>
+		Mesh Mesh;
+
+
+		/// <summary>
+		///  font
+		/// </summary>
+		BitmapFont Font;
+
+
+		/// <summary>
+		/// Model view matrix
+		/// </summary>
+		Matrix4 ModelViewMatrix;
+
+
+		/// <summary>
+		/// Projection matrix
+		/// </summary>
+		Matrix4 ProjectionMatrix;
 
 		#endregion
 	}
