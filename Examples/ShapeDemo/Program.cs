@@ -29,12 +29,12 @@ using ArcEngine.Graphic;
 //
 //
 
-namespace PathDemo
+namespace ArcEngine.Examples.ShapeDemo
 {
 	/// <summary>
 	/// Main game class
 	/// </summary>
-	public class EmptyProject : GameBase
+	public class Program : GameBase
 	{
 
 		/// <summary>
@@ -45,7 +45,7 @@ namespace PathDemo
 		{
 			try
 			{
-				using (EmptyProject game = new EmptyProject())
+				using (Program game = new Program())
 				{
 					game.Run();
 				}
@@ -61,7 +61,7 @@ namespace PathDemo
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public EmptyProject()
+		public Program()
 		{
 			CreateGameWindow(new Size(1024, 768));
 			Window.Resizable = true;

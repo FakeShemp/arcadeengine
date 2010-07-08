@@ -608,7 +608,39 @@ namespace ArcEngine.Graphic
 		}
 
 
-		#endregion
+        /// <summary>
+        /// Sets an uniform value
+        /// </summary>
+        /// <param name="name">ID of the uniform</param>
+        /// <param name="vector">New value</param>
+        public void SetUniform(string name, Vector3 vector)
+        {
+            SetUniform(name, new float[] { vector.X, vector.Y, vector.Z });
+        }
+
+        /// <summary>
+        /// Sets an uniform value
+        /// </summary>
+        /// <param name="name">ID of the uniform</param>
+        /// <param name="vector">New value</param>
+        public void SetUniform(string name, Vector2 vector)
+        {
+            SetUniform(name, new float[] { vector.X, vector.Y});
+        }
+
+        /// <summary>
+        /// Sets an uniform value
+        /// </summary>
+        /// <param name="name">ID of the uniform</param>
+        /// <param name="vector">New value</param>
+        public void SetUniform(string name, Vector4 vector)
+        {
+            SetUniform(name, new float[] { vector.X, vector.Y, vector.Z, vector.W});
+        }
+
+
+
+        #endregion
 
 
 		#region IO routines

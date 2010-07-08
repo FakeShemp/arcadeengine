@@ -88,20 +88,23 @@ namespace ArcEngine.Examples.ShadowMapping
 				uniform mat4 modelview_matrix;
 				uniform mat4 projection_matrix;
 				uniform mat4 mvp_matrix;
-				uniform mat4 shadowMatrix;
 
 				in vec3 in_position;
 				in vec3 in_normal;
 				in vec3 in_tangent;
 				in vec2 in_texcoord;
 
-				out vec4 out_color;
+                out vec3 normal;
+                out vec3 fragmentEye;
 
 				void main(void)
 				{
-					gl_Position = mvp_matrix * vec4(in_position, 1.0);
-					
-					out_color = modelview_matrix * vec4(in_normal, 1.0);
+              		gl_Position = mvp_matrix * vec4(in_position, 1.0);
+                    
+                    normal = (modelview_matrix * vec4(in_normal, 0.0)).xyz;
+	                fragmentEye = (modelview_matrix * vec4(in_position, 0.0)).xyz;
+	                fragmentEye = -normalize(fragmentEye);
+
 				}";
 			#endregion
 
@@ -109,13 +112,44 @@ namespace ArcEngine.Examples.ShadowMapping
 			string fshader = @"
 				#version 130
 
-				in vec4 out_color;
+            //    uniform vec3 Light;
+
+                in vec3 normal;
+                in vec3 fragmentEye;
 
 				out vec4 frag_color;
 
 				void main(void)
 				{
-					frag_color = out_color;
+            //        float intensity = max(dot(normal, Light), 0.0);
+            //        frag_color =  vec4(intensity, 0.0, 0.0, 1.0) ;
+
+
+	                float diffuseIntensity;
+	                float specularItensity;
+
+	                vec3 light;
+
+	                vec3 normal;
+	                vec3 eye;
+	
+	                vec3 reflection;
+
+	                light = normalize(vec3(5.0, 5.0, 10.0));
+
+	                normal = normalize(normal);
+	                eye = normalize(fragmentEye);
+
+	                diffuseIntensity = clamp(max(dot(normal, light), 0.0), 0.0, 1.0);
+	
+	                reflection = normalize(reflect(-light, normal));
+	                specularItensity = pow(clamp(max(dot(reflection, eye), 0.0), 0.0, 1.0), 20.0 );
+
+	                frag_color = vec4(0.0, 0.0, 0.0, 1.0) + 
+				                vec4(0.1, 0.1, 0.1, 1.0) + 
+				                vec4(1.0, 0.0, 0.0, 1.0)*diffuseIntensity + 
+				                vec4(1.0, 0.9, 0.9, 1.0)*specularItensity;
+
 				}";
 			#endregion
 
@@ -139,7 +173,7 @@ namespace ArcEngine.Examples.ShadowMapping
 
 
 			Camera = new Vector3(-5.0f, 5.0f, 10.0f);
-			Light = new Vector3(0.0f, 0.0f, 10.0f);
+			Light = new Vector3(0.0f, 0.0f, 1.0f);
 
 			
 			// Matrices
@@ -218,14 +252,18 @@ namespace ArcEngine.Examples.ShadowMapping
 
 
 			// Draws with the index buffer
+            Matrix4 mvp = ModelViewMatrix * ProjectionMatrix;
 			Shader.SetUniform("modelview_matrix", ModelViewMatrix);
-			Shader.SetUniform("projection_matrix", ProjectionMatrix);
+            Shader.SetUniform("projection_matrix", ProjectionMatrix);
+            Shader.SetUniform("normal_matrix", Matrix4.Transpose(Matrix4.Invert((mvp))));
+            Shader.SetUniform("Light", Light);
+
 
 			Vector3 Position = new Vector3(0.0f, 0.0f, -5.0f);
-			Shader.SetUniform("mvp_matrix", Matrix4.CreateTranslation(Position) * ModelViewMatrix * ProjectionMatrix);
+			Shader.SetUniform("mvp_matrix", Matrix4.CreateTranslation(Position) * mvp);
 			Plane.Draw();
 
-			Shader.SetUniform("mvp_matrix", Matrix4.CreateRotationY(Yaw) * ModelViewMatrix * ProjectionMatrix);
+			Shader.SetUniform("mvp_matrix", Matrix4.CreateRotationY(Yaw) * mvp);
 			Torus.Draw();
 
 

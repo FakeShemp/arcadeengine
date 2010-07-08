@@ -44,7 +44,7 @@
     <ProjectGuid>{5974C040-5987-4F1E-AB9A-60E43D124002}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PathDemo</RootNamespace>
+    <RootNamespace>ArcEngine.Examples.ShapeDemo</RootNamespace>
     <AssemblyName>Path Demo</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
