@@ -58,6 +58,7 @@ namespace ArcEngine.Examples.ShadowMapping
 		{
 			CreateGameWindow(new Size(640, 480));
 			Window.Text = "Shadow mapping example";
+	//		Window.Resizable = true;
 		}
 
 
@@ -81,82 +82,9 @@ namespace ArcEngine.Examples.ShadowMapping
 
 			#region Shader
 
-			#region Vertex Shader
-			string vshader = @"
-				#version 130
+			SceneShader = Shader.CreateFromFile("shaders/scene.vert", "shaders/scene.frag");
+			SceneShader.Compile();
 
-				uniform mat4 modelview_matrix;
-				uniform mat4 projection_matrix;
-				uniform mat4 mvp_matrix;
-
-				in vec3 in_position;
-				in vec3 in_normal;
-				in vec3 in_tangent;
-				in vec2 in_texcoord;
-
-                out vec3 normal;
-                out vec3 fragmentEye;
-
-				void main(void)
-				{
-              		gl_Position = mvp_matrix * vec4(in_position, 1.0);
-                    
-                    normal = (modelview_matrix * vec4(in_normal, 0.0)).xyz;
-	                fragmentEye = (modelview_matrix * vec4(in_position, 0.0)).xyz;
-	                fragmentEye = -normalize(fragmentEye);
-
-				}";
-			#endregion
-
-			#region Fragment Shader
-			string fshader = @"
-				#version 130
-
-            //    uniform vec3 Light;
-
-                in vec3 normal;
-                in vec3 fragmentEye;
-
-				out vec4 frag_color;
-
-				void main(void)
-				{
-            //        float intensity = max(dot(normal, Light), 0.0);
-            //        frag_color =  vec4(intensity, 0.0, 0.0, 1.0) ;
-
-
-	                float diffuseIntensity;
-	                float specularItensity;
-
-	                vec3 light;
-
-	                vec3 normal;
-	                vec3 eye;
-	
-	                vec3 reflection;
-
-	                light = normalize(vec3(5.0, 5.0, 10.0));
-
-	                normal = normalize(normal);
-	                eye = normalize(fragmentEye);
-
-	                diffuseIntensity = clamp(max(dot(normal, light), 0.0), 0.0, 1.0);
-	
-	                reflection = normalize(reflect(-light, normal));
-	                specularItensity = pow(clamp(max(dot(reflection, eye), 0.0), 0.0, 1.0), 20.0 );
-
-	                frag_color = vec4(0.0, 0.0, 0.0, 1.0) + 
-				                vec4(0.1, 0.1, 0.1, 1.0) + 
-				                vec4(1.0, 0.0, 0.0, 1.0)*diffuseIntensity + 
-				                vec4(1.0, 0.9, 0.9, 1.0)*specularItensity;
-
-				}";
-			#endregion
-
-			Shader = new Shader();
-			Shader.SetSource(ShaderType.VertexShader, vshader);
-			Shader.SetSource(ShaderType.FragmentShader, fshader);
-			Shader.Compile();
 			#endregion
 
 
@@ -173,7 +101,7 @@ namespace ArcEngine.Examples.ShadowMapping
 
 
 			Camera = new Vector3(-5.0f, 5.0f, 10.0f);
-			Light = new Vector3(0.0f, 0.0f, 1.0f);
+			Light = new Vector3(0.0f, 0.0f, 10.0f);
 
 			
 			// Matrices
@@ -199,9 +127,9 @@ namespace ArcEngine.Examples.ShadowMapping
 				Torus.Dispose();
 			Torus = null;
 
-			if (Shader != null)
-				Shader.Dispose();
-			Shader = null;
+			if (SceneShader != null)
+				SceneShader.Dispose();
+			SceneShader = null;
 
 			if (Font != null)
 				Font.Dispose();
@@ -248,22 +176,18 @@ namespace ArcEngine.Examples.ShadowMapping
 			Display.ClearBuffers();
 
 
-			Display.Shader = Shader;
+			Display.Shader = SceneShader;
 
 
 			// Draws with the index buffer
-            Matrix4 mvp = ModelViewMatrix * ProjectionMatrix;
-			Shader.SetUniform("modelview_matrix", ModelViewMatrix);
-            Shader.SetUniform("projection_matrix", ProjectionMatrix);
-            Shader.SetUniform("normal_matrix", Matrix4.Transpose(Matrix4.Invert((mvp))));
-            Shader.SetUniform("Light", Light);
-
+			SceneShader.SetUniform("modelview_matrix", ModelViewMatrix);
+			SceneShader.SetUniform("projection_matrix", ProjectionMatrix);
 
 			Vector3 Position = new Vector3(0.0f, 0.0f, -5.0f);
-			Shader.SetUniform("mvp_matrix", Matrix4.CreateTranslation(Position) * mvp);
+			SceneShader.SetUniform("mvp_matrix", Matrix4.CreateTranslation(Position) * ModelViewMatrix * ProjectionMatrix);
 			Plane.Draw();
 
-			Shader.SetUniform("mvp_matrix", Matrix4.CreateRotationY(Yaw) * mvp);
+			SceneShader.SetUniform("mvp_matrix", Matrix4.CreateRotationY(Yaw) * ModelViewMatrix * ProjectionMatrix);
 			Torus.Draw();
 
 
@@ -334,7 +258,7 @@ namespace ArcEngine.Examples.ShadowMapping
 		/// <summary>
 		/// Shader
 		/// </summary>
-		Shader Shader;
+		Shader SceneShader;
 
 
 		/// <summary>
