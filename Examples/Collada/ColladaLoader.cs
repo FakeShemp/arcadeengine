@@ -30,6 +30,8 @@ using ArcEngine.Graphic;
 // http://www.wazim.com/Collada_Tutorial_2.htm
 // http://www.developpez.net/forums/d488364/applications/developpement-2d-3d-jeux/api-graphiques/opengl/tableau-dindices-opengl-etre-vbo/
 // http://colladamaya.sourceforge.net/
+// http://www.opengl.org/discussion_boards/ubbthreads.php?ubb=showflat&Number=265744
+
 
 namespace ArcEngine.Examples.Collada
 {

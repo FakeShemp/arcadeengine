@@ -28,7 +28,6 @@ using ArcEngine.Graphic;
 using ArcEngine.Utility.GameState;
 using DungeonEye.Interfaces;
 using DungeonEye.MonsterStates;
-using OpenTK.Graphics.OpenGL;
 
 
 //
@@ -236,9 +235,10 @@ namespace DungeonEye
 		/// <summary>
 		/// Draw the monster
 		/// </summary>
+		/// <param name="batch">SpriteBatch to use</param>
 		/// <param name="direction">Team's facing direction</param>
 		/// <param name="pos">Position of the monster in the field of view</param>
-		public virtual void Draw(CardinalPoint direction, ViewFieldPosition pos)
+		public virtual void Draw(SpriteBatch batch, CardinalPoint direction, ViewFieldPosition pos)
 		{
 
 			TextureEnvMode mode = Display.TexEnv;
@@ -248,7 +248,7 @@ namespace DungeonEye
 			// Monster was hit, redraw it
 			if (LastAttack != null && LastAttack.Time + TimeSpan.FromSeconds(0.25) > DateTime.Now)
 			{
-				Display.BlendingFunction(BlendingFactorSrc.SrcAlpha , BlendingFactorDest.OneMinusSrcAlpha);
+				Display.BlendingFunction(BlendingFactorSource.SrcAlpha , BlendingFactorDest.OneMinusSrcAlpha);
 				Display.TexEnv = TextureEnvMode.Add;
 			}
 
@@ -257,27 +257,27 @@ namespace DungeonEye
 			{
 				case ViewFieldPosition.B:
 				Tileset.Scale = new SizeF(0.75f, 0.75f);
-				Tileset.Draw(GetTileID(direction), new Point(0 + DrawOffset.X / 4, 110 + DrawOffset.Y / 4), Color.Gray);
+				batch.DrawTile(Tileset, GetTileID(direction), new Point(0 + DrawOffset.X / 4, 110 + DrawOffset.Y / 4), Color.Gray);
 				Tileset.Scale = new SizeF(2.0f, 2.0f);
 				break;
 				case ViewFieldPosition.C:
 				Tileset.Scale = new SizeF(0.75f, 0.75f);
-				Tileset.Draw(GetTileID(direction), new Point(80 + DrawOffset.X / 4, 110 + DrawOffset.Y / 4), Color.Gray);
+				batch.DrawTile(Tileset, GetTileID(direction), new Point(80 + DrawOffset.X / 4, 110 + DrawOffset.Y / 4), Color.Gray);
 				Tileset.Scale = new SizeF(2.0f, 2.0f);
 				break;
 				case ViewFieldPosition.D:
 				Tileset.Scale = new SizeF(0.75f, 0.75f);
-				Tileset.Draw(GetTileID(direction), new Point(180 + DrawOffset.X / 4, 110 + DrawOffset.Y / 4), Color.Gray);
+				batch.DrawTile(Tileset, GetTileID(direction), new Point(180 + DrawOffset.X / 4, 110 + DrawOffset.Y / 4), Color.Gray);
 				Tileset.Scale = new SizeF(2.0f, 2.0f);
 				break;
 				case ViewFieldPosition.E:
 				Tileset.Scale = new SizeF(0.75f, 0.75f);
-				Tileset.Draw(GetTileID(direction), new Point(270 + DrawOffset.X / 4, 110 + DrawOffset.Y / 4), Color.Gray);
+				batch.DrawTile(Tileset, GetTileID(direction), new Point(270 + DrawOffset.X / 4, 110 + DrawOffset.Y / 4), Color.Gray);
 				Tileset.Scale = new SizeF(2.0f, 2.0f);
 				break;
 				case ViewFieldPosition.F:
 				Tileset.Scale = new SizeF(0.75f, 0.75f);
-				Tileset.Draw(GetTileID(direction), new Point(342 + DrawOffset.X / 4, 110 + DrawOffset.Y / 4), Color.Gray);
+				batch.DrawTile(Tileset, GetTileID(direction), new Point(342 + DrawOffset.X / 4, 110 + DrawOffset.Y / 4), Color.Gray);
 				Tileset.Scale = new SizeF(2.0f, 2.0f);
 				break;
 
@@ -285,29 +285,29 @@ namespace DungeonEye
 
 				case ViewFieldPosition.I:
 				Tileset.Scale = new SizeF(1.25f, 1.25f);
-				Tileset.Draw(GetTileID(direction), new Point(50 + DrawOffset.X / 2, 136 + DrawOffset.Y / 2));
+				batch.DrawTile(Tileset, GetTileID(direction), new Point(50 + DrawOffset.X / 2, 136 + DrawOffset.Y / 2));
 				Tileset.Scale = new SizeF(2.0f, 2.0f);
 				break;
 				case ViewFieldPosition.J:
 				Tileset.Scale = new SizeF(1.25f, 1.25f);
-				Tileset.Draw(GetTileID(direction), new Point(180 + DrawOffset.X / 2, 136 + DrawOffset.Y / 2));
+				batch.DrawTile(Tileset, GetTileID(direction), new Point(180 + DrawOffset.X / 2, 136 + DrawOffset.Y / 2));
 				Tileset.Scale = new SizeF(2.0f, 2.0f);
 				break;
 				case ViewFieldPosition.K:
 				Tileset.Scale = new SizeF(1.25f, 1.25f);
-				Tileset.Draw(GetTileID(direction), new Point(300 + DrawOffset.X / 2, 136 + DrawOffset.Y / 2));
+				batch.DrawTile(Tileset, GetTileID(direction), new Point(300 + DrawOffset.X / 2, 136 + DrawOffset.Y / 2));
 				Tileset.Scale = new SizeF(2.0f, 2.0f);
 				break;
 
 
 				case ViewFieldPosition.M:
-				Tileset.Draw(GetTileID(direction), new Point(-20 + DrawOffset.X, 190));
+				batch.DrawTile(Tileset, GetTileID(direction), new Point(-20 + DrawOffset.X, 190));
 				break;
 				case ViewFieldPosition.N:
-				Tileset.Draw(GetTileID(direction), new Point(180 + DrawOffset.X, 190));
+				batch.DrawTile(Tileset, GetTileID(direction), new Point(180 + DrawOffset.X, 190));
 				break;
 				case ViewFieldPosition.O:
-				Tileset.Draw(GetTileID(direction), new Point(370 + DrawOffset.X, 190));
+				batch.DrawTile(Tileset, GetTileID(direction), new Point(370 + DrawOffset.X, 190));
 				break;
 			}
 
@@ -318,7 +318,7 @@ namespace DungeonEye
 			if (LastAttack != null && LastAttack.Time + TimeSpan.FromSeconds(0.25) > DateTime.Now)
 			{
 				Display.TexEnv = mode;
-				Display.BlendingFunction(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+				Display.BlendingFunction(BlendingFactorSource.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 			}
 		}
 

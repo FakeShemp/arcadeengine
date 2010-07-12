@@ -517,12 +517,11 @@ namespace DungeonEye
 		/// <summary>
 		/// Draw the maze
 		/// </summary>
+		/// <param name="batch"></param>
 		/// <param name="location">Location to display from</param>
 		/// <see cref="http://eob.wikispaces.com/eob.vmp"/>
-		public void Draw(DungeonLocation location)
+		public void Draw(SpriteBatch batch, DungeonLocation location)
 		{
-
-
 			if (WallTileset == null)
 				return;
 
@@ -535,9 +534,11 @@ namespace DungeonEye
 			// Backdrop
 			// The background is assumed to be x-flipped when party.x & party.y & party.direction = 1.
 			// I.e. all kind of moves and rotations from the current position will result in the background being x-flipped.
-			bool flipbackdrop = ((location.Position.X + location.Position.Y + (int)location.Direction) & 1) == 0;
+			//bool flipbackdrop = ((location.Position.X + location.Position.Y + (int)location.Direction) & 1) == 0;
+			SpriteEffects effect = ((location.Position.X + location.Position.Y + (int)location.Direction) & 1) == 0 ? SpriteEffects.FlipHorizontally: SpriteEffects.None;
 
-			WallTileset.Draw(0, Point.Empty, flipbackdrop, false);
+			batch.DrawTile(WallTileset, 0, Point.Empty, Color.White, 0.0f, effect, 0.0f);
+
 
 
 			// alternate the wall
@@ -551,33 +552,33 @@ namespace DungeonEye
 			// P Team Q
 
 			#region row -3
-			DrawBlock(pov, ViewFieldPosition.A, location.Direction);
-			DrawBlock(pov, ViewFieldPosition.G, location.Direction);
-			DrawBlock(pov, ViewFieldPosition.B, location.Direction);
-			DrawBlock(pov, ViewFieldPosition.F, location.Direction);
-			DrawBlock(pov, ViewFieldPosition.C, location.Direction);
-			DrawBlock(pov, ViewFieldPosition.E, location.Direction);
-			DrawBlock(pov, ViewFieldPosition.D, location.Direction);
+			DrawBlock(batch, pov, ViewFieldPosition.A, location.Direction);
+			DrawBlock(batch, pov, ViewFieldPosition.G, location.Direction);
+			DrawBlock(batch, pov, ViewFieldPosition.B, location.Direction);
+			DrawBlock(batch, pov, ViewFieldPosition.F, location.Direction);
+			DrawBlock(batch, pov, ViewFieldPosition.C, location.Direction);
+			DrawBlock(batch, pov, ViewFieldPosition.E, location.Direction);
+			DrawBlock(batch, pov, ViewFieldPosition.D, location.Direction);
 			#endregion
 
 			#region row -2
-			DrawBlock(pov, ViewFieldPosition.H, location.Direction);
-			DrawBlock(pov, ViewFieldPosition.L, location.Direction);
-			DrawBlock(pov, ViewFieldPosition.I, location.Direction);
-			DrawBlock(pov, ViewFieldPosition.K, location.Direction);
-			DrawBlock(pov, ViewFieldPosition.J, location.Direction);
+			DrawBlock(batch, pov, ViewFieldPosition.H, location.Direction);
+			DrawBlock(batch, pov, ViewFieldPosition.L, location.Direction);
+			DrawBlock(batch, pov, ViewFieldPosition.I, location.Direction);
+			DrawBlock(batch, pov, ViewFieldPosition.K, location.Direction);
+			DrawBlock(batch, pov, ViewFieldPosition.J, location.Direction);
 			#endregion
 
 			#region row -1
-			DrawBlock(pov, ViewFieldPosition.M, location.Direction);
-			DrawBlock(pov, ViewFieldPosition.O, location.Direction);
-			DrawBlock(pov, ViewFieldPosition.N, location.Direction);
+			DrawBlock(batch, pov, ViewFieldPosition.M, location.Direction);
+			DrawBlock(batch, pov, ViewFieldPosition.O, location.Direction);
+			DrawBlock(batch, pov, ViewFieldPosition.N, location.Direction);
 			#endregion
 
 			#region row 0
-			DrawBlock(pov, ViewFieldPosition.P, location.Direction);
-			DrawBlock(pov, ViewFieldPosition.Team, location.Direction);
-			DrawBlock(pov, ViewFieldPosition.Q, location.Direction);
+			DrawBlock(batch, pov, ViewFieldPosition.P, location.Direction);
+			DrawBlock(batch, pov, ViewFieldPosition.Team, location.Direction);
+			DrawBlock(batch, pov, ViewFieldPosition.Q, location.Direction);
 			#endregion
 
 
@@ -588,10 +589,11 @@ namespace DungeonEye
 		/// <summary>
 		/// Draws a block
 		/// </summary>
+		/// <param name="batch"></param>
 		/// <param name="field">View field</param>
 		/// <param name="position">Position in the view filed</param>
 		/// <param name="view">Looking direction of the team</param>
-		void DrawBlock(ViewField field, ViewFieldPosition position, CardinalPoint view)
+		void DrawBlock(SpriteBatch batch, ViewField field, ViewFieldPosition position, CardinalPoint view)
 		{
 			if (field == null)
 				return;
@@ -639,7 +641,8 @@ namespace DungeonEye
 			{
 				td = MazeDisplayCoordinates.GetCeilingPit(position);
 				if (td != null)
-					OverlayTileset.Draw(td.ID, td.Location, td.SwapX, td.SwapY);
+					batch.DrawTile(OverlayTileset, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);
+			//	batch.DrawTile(ItemsTileset, td.ID, td.Location, td.SwapX, td.SwapY);
 			}
 
 			#endregion
@@ -657,7 +660,7 @@ namespace DungeonEye
 					{
 						point = MazeDisplayCoordinates.GetGroundItem(position, (GroundPosition)i);
 						if (!point.IsEmpty)
-							ItemsTileset.Draw(item.GroundTileID + offset, point);
+							batch.DrawTile(ItemsTileset, item.GroundTileID + offset, point);
 					}
 				}
 			}
@@ -668,7 +671,7 @@ namespace DungeonEye
 			{
 				td = MazeDisplayCoordinates.GetPit(position);
 				if (td != null && !block.Pit.IsHidden)
-					OverlayTileset.Draw(td.ID, td.Location, td.SwapX, td.SwapY);
+					batch.DrawTile(ItemsTileset, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);
 			}
 			#endregion
 
@@ -678,7 +681,7 @@ namespace DungeonEye
 				// Upstair or downstair ?
 				int delta = block.Stair.Type == StairType.Up ? 0 : 13;
 				foreach (TileDrawing tmp in MazeDisplayCoordinates.GetStairs(position))
-					WallTileset.Draw(tmp.ID + delta, tmp.Location, tmp.SwapX, tmp.SwapY);
+					batch.DrawTile(ItemsTileset, tmp.ID + delta, tmp.Location, Color.White, 0.0f, td.Effect, 0.0f);
 			}
 			#endregion
 
@@ -690,7 +693,7 @@ namespace DungeonEye
 				{
 					td = MazeDisplayCoordinates.GetDoor(ViewFieldPosition.Team);
 					if (td != null)
-						OverlayTileset.Draw(td.ID, td.Location, td.SwapX, td.SwapY);
+						batch.DrawTile(ItemsTileset, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);
 				}
 				else if (((field.Maze.IsDoorNorthSouth(block.Location) && (view == CardinalPoint.North || view == CardinalPoint.South)) ||
 					(!field.Maze.IsDoorNorthSouth(block.Location) && (view == CardinalPoint.East || view == CardinalPoint.West))) &&
@@ -699,8 +702,8 @@ namespace DungeonEye
 					td = MazeDisplayCoordinates.GetDoor(position);
 					if (td != null)
 					{
-						WallTileset.Draw(td.ID, td.Location, td.SwapX, td.SwapY);
-						block.Door.Draw(td.Location, position, view);
+						batch.DrawTile(WallTileset, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);
+						block.Door.Draw(batch, td.Location, position, view);
 					}
 				}
 			}
@@ -711,7 +714,7 @@ namespace DungeonEye
 			{
 				td = MazeDisplayCoordinates.GetFloorPlate(position);
 				if (td != null)
-					OverlayTileset.Draw(td.ID, td.Location, td.SwapX, td.SwapY);
+					batch.DrawTile(ItemsTileset, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);
 			}
 			#endregion
 
@@ -720,7 +723,7 @@ namespace DungeonEye
 			{
 				// Walls
 				foreach (TileDrawing tmp in MazeDisplayCoordinates.GetWalls(position))
-					WallTileset.Draw(tmp.ID, tmp.Location, tmp.SwapX, tmp.SwapY);
+					batch.DrawTile(WallTileset, tmp.ID, tmp.Location, Color.White, 0.0f, td.Effect, 0.0f);
 
 
 				// Alcoves
@@ -731,7 +734,7 @@ namespace DungeonEye
 					{
 						td = MazeDisplayCoordinates.GetDecoration(position, side);
 						if (td != null && block.HasAlcove(view, side))
-							OverlayTileset.Draw(td.ID, td.Location, td.SwapX, td.SwapY);
+							batch.DrawTile(ItemsTileset, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);
 					}
 
 					// Draw items in the alcove in front of the team
@@ -739,7 +742,7 @@ namespace DungeonEye
 					if (td != null)
 					{
 						foreach (Item item in block.GetAlcoveItems(view, CardinalPoint.South))
-							ItemsTileset.Draw(item.GroundTileID + offset, td.Location);
+							batch.DrawTile(ItemsTileset, item.GroundTileID + offset, td.Location);
 					}
 				}
 
@@ -752,7 +755,7 @@ namespace DungeonEye
 				foreach (Monster monster in field.GetMonsters(position))
 				{
 					if (monster != null)
-						monster.Draw(view, position);
+						monster.Draw(batch, view, position);
 				}
 			}
 			#endregion
@@ -770,7 +773,7 @@ namespace DungeonEye
 					{
 						point = MazeDisplayCoordinates.GetGroundItem(position, (GroundPosition)i);
 						if (!point.IsEmpty)
-							ItemsTileset.Draw(item.GroundTileID + offset, point);
+							batch.DrawTile(ItemsTileset, item.GroundTileID + offset, point);
 					}
 				}
 			}
@@ -789,7 +792,7 @@ namespace DungeonEye
 					swap = true;
 
 				foreach (FlyingItem fi in flyings[(int)pos])
-					ItemsTileset.Draw(fi.Item.ThrowTileID + offset, MazeDisplayCoordinates.GetFlyingItem(position, pos), swap, false);
+					batch.DrawTile(ItemsTileset, fi.Item.ThrowTileID + offset, MazeDisplayCoordinates.GetFlyingItem(position, pos), Color.White, 0.0f, SpriteEffects.None, 0.0f);
 
 			}
 			#endregion

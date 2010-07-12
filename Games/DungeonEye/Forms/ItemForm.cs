@@ -164,8 +164,13 @@ namespace DungeonEye.Forms
 			if (result == DialogResult.Yes)
 			{
 				Save();
-				TileSet.Dispose();
+				if (TileSet != null) 
+					TileSet.Dispose();
 				TileSet = null;
+
+				if (SpriteBatch != null) 
+					SpriteBatch.Dispose();
+				SpriteBatch = null;
 			}
 			else if (result == DialogResult.Cancel)
 			{
@@ -185,8 +190,8 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void Paint_Tiles(object sender, PaintEventArgs e)
 		{
-			if (GLGroundTile.Context == null)
-				return;
+		//	if (GLGroundTile.Context == null)
+		//		return;
 
 			Point location;
 			Tile tile;
@@ -196,10 +201,12 @@ namespace DungeonEye.Forms
 			Display.ClearBuffers();
 			if (GroundTileBox.SelectedItem != null)
 			{
+				SpriteBatch.Begin();
 				tileid = int.Parse(GroundTileBox.SelectedItem.ToString());
 				tile = TileSet.GetTile(tileid);
 				location = new Point((GLGroundTile.Width - tile.Size.Width) / 2, (GLGroundTile.Height - tile.Size.Height) / 2);
-				TileSet.Draw(tileid, location);
+				SpriteBatch.DrawTile(TileSet, tileid, location);
+				SpriteBatch.End();
 			}
 			GLGroundTile.SwapBuffers();
 
@@ -209,10 +216,12 @@ namespace DungeonEye.Forms
 			Display.ClearBuffers();
 			if (InventoryTileBox.SelectedItem != null)
 			{
+				SpriteBatch.Begin();
 				tileid = int.Parse(InventoryTileBox.SelectedItem.ToString());
 				tile = TileSet.GetTile(tileid);
 				location = new Point((GLInventoryTile.Width - tile.Size.Width) / 2, (GLInventoryTile.Height - tile.Size.Height) / 2);
-				TileSet.Draw(tileid, location);
+				SpriteBatch.DrawTile(TileSet, tileid, location);
+				SpriteBatch.End();
 			}
 			GLInventoryTile.SwapBuffers();
 
@@ -221,10 +230,12 @@ namespace DungeonEye.Forms
 			Display.ClearBuffers();
 			if (IncomingTileBox.SelectedItem != null)
 			{
+				SpriteBatch.Begin();
 				tileid = int.Parse(IncomingTileBox.SelectedItem.ToString());
 				tile = TileSet.GetTile(tileid);
 				location = new Point((GLIncomingTile.Width - tile.Size.Width) / 2, (GLIncomingTile.Height - tile.Size.Height) / 2);
-				TileSet.Draw(tileid, location);
+				SpriteBatch.DrawTile(TileSet, tileid, location);
+				SpriteBatch.End();
 			}
 			GLIncomingTile.SwapBuffers();
 
@@ -233,10 +244,12 @@ namespace DungeonEye.Forms
 			Display.ClearBuffers();
 			if (ThrownTileBox.SelectedItem != null)
 			{
+				SpriteBatch.Begin();
 				tileid = int.Parse(ThrownTileBox.SelectedItem.ToString());
 				tile = TileSet.GetTile(tileid);
 				location = new Point((GLMoveAwayTile.Width - tile.Size.Width) / 2, (GLMoveAwayTile.Height - tile.Size.Height) / 2);
-				TileSet.Draw(tileid, location);
+				SpriteBatch.DrawTile(TileSet, tileid, location);
+				SpriteBatch.End();
 			}
 			GLMoveAwayTile.SwapBuffers();
 
@@ -386,6 +399,7 @@ namespace DungeonEye.Forms
 			GLIncomingTile.MakeCurrent();
 			Display.Init();
 
+			SpriteBatch = new SpriteBatch();
 		}
 
 
@@ -418,6 +432,12 @@ namespace DungeonEye.Forms
 		/// Tileset
 		/// </summary>
 		TileSet TileSet;
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		SpriteBatch SpriteBatch;
 
 		#endregion
 
@@ -637,6 +657,7 @@ namespace DungeonEye.Forms
 
 		#endregion
 
+
 		#region Hands
 
 		/// <summary>
@@ -652,6 +673,7 @@ namespace DungeonEye.Forms
 		}
 
 		#endregion
+
 
 		#region Critical
 
@@ -676,6 +698,7 @@ namespace DungeonEye.Forms
 
 		}
 		#endregion
+
 
 		#region scripting events
 

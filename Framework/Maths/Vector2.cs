@@ -24,6 +24,7 @@ SOFTWARE.
 
 using System;
 using System.Runtime.InteropServices;
+using System.Drawing;
 
 namespace ArcEngine
 {
@@ -1008,7 +1009,17 @@ namespace ArcEngine
 
         #endregion
 
-        #endregion
+		  /// <summary>
+		  /// 
+		  /// </summary>
+		  /// <param name="v"></param>
+		  /// <returns></returns>
+		  public static explicit operator PointF(Vector2 v)
+		  {
+			  return new PointF(v.X, v.Y);
+		  }
+
+		  #endregion
 
         #region IEquatable<Vector2> Members
 

@@ -59,6 +59,7 @@ namespace DungeonEye
 
 			StringTable = ResourceManager.CreateAsset<StringTable>("option");
 
+			SpriteBatch = new SpriteBatch();
 
 			// Available languages
 			Languages = StringTable.LanguagesList;
@@ -78,6 +79,25 @@ namespace DungeonEye
 			Buttons.Add(new ScreenButton("Back", new Rectangle(156, 360, 340, 14)));
 			Buttons[2].Selected += new EventHandler(BackEvent);
 
+		}
+
+
+		/// <summary>
+		/// Unload content
+		/// </summary>
+		public override void UnloadContent()
+		{
+			if (SpriteBatch != null)
+				SpriteBatch.Dispose();
+			SpriteBatch = null;
+
+			if (Tileset != null)
+				Tileset.Dispose();
+			Tileset = null;
+
+			if (Font != null)
+				Font.Dispose();
+			Font = null;
 		}
 
 
@@ -210,9 +230,10 @@ namespace DungeonEye
 			// Clears the background
 			Display.ClearBuffers();
 
+			SpriteBatch.Begin();
 
 			// Background
-			Tileset.Draw(1, Point.Empty);
+			SpriteBatch.DrawTile(Tileset, 1, Point.Empty);
 
 
 			// Draw buttons
@@ -223,16 +244,18 @@ namespace DungeonEye
 				Point point = button.Rectangle.Location;
 
 				// Text
-				Font.DrawText(point, id == MenuID ? Color.FromArgb(255, 85, 85) : Color.White, button.Text);
+				SpriteBatch.DrawString(Font, point, id == MenuID ? Color.FromArgb(255, 85, 85) : Color.White, button.Text);
 			}
 
 
 			// Version info
-			Font.DrawText(new Point(554, 380), Color.White, "V 0.3");
+			SpriteBatch.DrawString(Font, new Point(554, 380), Color.White, "V 0.3");
 
 			// Draw the cursor or the item in the hand
-			Tileset.Draw(0, Mouse.Location);
+			SpriteBatch.DrawTile(Tileset, 0, Mouse.Location);
 
+
+			SpriteBatch.End();
 		}
 
 		#endregion
@@ -242,15 +265,16 @@ namespace DungeonEye
 		#region Properties
 
 		/// <summary>
-		/// 
+		/// Tile set
 		/// </summary>
 		TileSet Tileset;
 
 
 		/// <summary>
-		/// 
+		/// Font
 		/// </summary>
 		BitmapFont Font;
+
 
 		/// <summary>
 		/// List of buttons
@@ -277,9 +301,16 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// String table
 		/// </summary>
 		StringTable StringTable;
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		SpriteBatch SpriteBatch;
+
 
 		#endregion
 

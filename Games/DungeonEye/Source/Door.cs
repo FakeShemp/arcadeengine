@@ -82,31 +82,32 @@ namespace DungeonEye
 		/// <summary>
 		/// Draw the door
 		/// </summary>
+		/// <param name="batch"></param>
 		/// <param name="location">Offset location for drawing</param>
 		/// <param name="distance">Distance of the door from the view point</param>
 		/// <param name="direction">View point of the team</param>
-		public virtual void Draw(Point location, ViewFieldPosition distance, CardinalPoint direction)
+		public virtual void Draw(SpriteBatch batch, Point location, ViewFieldPosition distance, CardinalPoint direction)
 		{
 
 			switch (Type)
 			{
 				case DoorType.Grid:
-					DrawGridDoor(location, distance);
+					DrawGridDoor(batch, location, distance);
 				break;
 				case DoorType.Iron:
-					DrawIronDoor(location, distance);
+				DrawIronDoor(batch, location, distance);
 				break;
 				case DoorType.Monster:
-					DrawMonsterDoor(location, distance);
+				DrawMonsterDoor(batch, location, distance);
 				break;
 				case DoorType.Spider:
-					DrawSpiderDoor(location, distance);
+				DrawSpiderDoor(batch, location, distance);
 				break;
 				case DoorType.Stone:
-					DrawStoneDoor(location, distance);
+				DrawStoneDoor(batch, location, distance);
 				break;
 				case DoorType.Eye:
-					DrawEyeDoor(location, distance);
+				DrawEyeDoor(batch, location, distance);
 				break;
 			}
 
@@ -201,7 +202,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="location"></param>
 		/// <param name="distance"></param>
-		void DrawEyeDoor(Point location, ViewFieldPosition distance)
+		void DrawEyeDoor(SpriteBatch batch, Point location, ViewFieldPosition distance)
 		{
 
 			switch (distance)
@@ -213,11 +214,11 @@ namespace DungeonEye
 					Display.RenderState.Scissor = true;
 					location.Offset(56, 14);
 					Display.ScissorZone = new Rectangle(location, new Size(144, 150));
-					TileSet.Draw(15, new Point(location.X, location.Y + VPosition * 5));
+				 	batch.DrawTile(TileSet, 15, new Point(location.X, location.Y + VPosition * 5));
 					Display.RenderState.Scissor = false;
 
 					if (HasButton)
-						TileSet.Draw(41, new Point(260, 72));
+						batch.DrawTile(TileSet, 41, new Point(260, 72));
 				}
 				break;
 
@@ -230,11 +231,11 @@ namespace DungeonEye
 					Display.RenderState.Scissor = true;
 					location.Offset(32, 12);
 					Display.ScissorZone = new Rectangle(location, new Size(102, 96));
-					TileSet.Draw(16, new Point(location.X, location.Y + VPosition * 3));
+					batch.DrawTile(TileSet, 16, new Point(location.X, location.Y + VPosition * 3));
 					Display.RenderState.Scissor = false;
 
 					if (HasButton)
-						TileSet.Draw(42, new Point(234, 80));
+						batch.DrawTile(TileSet, 42, new Point(234, 80));
 				}
 				break;
 
@@ -249,7 +250,7 @@ namespace DungeonEye
 					Display.RenderState.Scissor = true;
 					location.Offset(14, 4);
 					Display.ScissorZone = new Rectangle(location, new Size(64, 58));
-					TileSet.Draw(17, new Point(location.X, location.Y + VPosition * 2));
+					batch.DrawTile(TileSet, 17, new Point(location.X, location.Y + VPosition * 2));
 					Display.RenderState.Scissor = false;
 				}
 				break;
@@ -263,7 +264,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="location"></param>
 		/// <param name="distance"></param>
-		void DrawGridDoor(Point location, ViewFieldPosition distance)
+		void DrawGridDoor(SpriteBatch batch, Point location, ViewFieldPosition distance)
 		{
 			switch (distance)
 			{
@@ -275,11 +276,11 @@ namespace DungeonEye
 					location.Offset(54, 16);
 					Display.ScissorZone = new Rectangle(location, new Size(148, 142));
 					location.Offset(0, VPosition * 5);
-					TileSet.Draw(9, location);
+					batch.DrawTile(TileSet, 9, location);
 					Display.RenderState.Scissor = false;
 
 					if (HasButton)
-						TileSet.Draw(30, new Point(260, 72));
+						batch.DrawTile(TileSet, 30, new Point(260, 72));
 				}
 				break;
 
@@ -293,11 +294,11 @@ namespace DungeonEye
 					location.Offset(28, 8);
 					Display.ScissorZone = new Rectangle(location, new Size(104, 86));
 					location.Offset(0, VPosition * 3);
-					TileSet.Draw(10, location);
+					batch.DrawTile(TileSet, 10, location);
 					Display.RenderState.Scissor = false;
 
 					if (HasButton)
-						TileSet.Draw(31, new Point(234, 80));
+						batch.DrawTile(TileSet, 31, new Point(234, 80));
 				}
 				break;
 
@@ -313,7 +314,7 @@ namespace DungeonEye
 					location.Offset(16, 4);
 					Display.ScissorZone = new Rectangle(location, new Size(64, 58));
 					location.Offset(0, VPosition * 2);
-					TileSet.Draw(11, location);
+					batch.DrawTile(TileSet, 11, location);
 					Display.RenderState.Scissor = false;
 				}
 				break;
@@ -328,7 +329,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="location"></param>
 		/// <param name="distance"></param>
-		void DrawIronDoor(Point location, ViewFieldPosition distance)
+		void DrawIronDoor(SpriteBatch batch, Point location, ViewFieldPosition distance)
 		{
 
 			switch (distance)
@@ -343,12 +344,12 @@ namespace DungeonEye
 					{
 						Display.ScissorZone = new Rectangle(location, new Size(148, 144));
 						Display.RenderState.Scissor = true;
-						TileSet.Draw(18, new Point(location.X, location.Y + VPosition * 5));
+						batch.DrawTile(TileSet, 18, new Point(location.X, location.Y + VPosition * 5));
 					}
 					Display.RenderState.Scissor = false;
 
 					if (HasButton)
-						TileSet.Draw(30, new Point(260, 72));
+						batch.DrawTile(TileSet, 30, new Point(260, 72));
 				}
 				break;
 
@@ -362,11 +363,11 @@ namespace DungeonEye
 					location.Offset(28, 8);
 					Display.ScissorZone = new Rectangle(location, new Size(104, 96));
 					Display.RenderState.Scissor = true;
-					TileSet.Draw(19, new Point(location.X, location.Y + VPosition * 3));
+					batch.DrawTile(TileSet, 19, new Point(location.X, location.Y + VPosition * 3));
 					Display.RenderState.Scissor = false;
 
 					if (HasButton)
-						TileSet.Draw(31, new Point(234, 80));
+						batch.DrawTile(TileSet, 31, new Point(234, 80));
 				}
 				break;
 
@@ -382,7 +383,7 @@ namespace DungeonEye
 					location.Offset(14, 4);
 					Display.ScissorZone = new Rectangle(location, new Size(64, 58));
 					Display.RenderState.Scissor = true;
-					TileSet.Draw(20, new Point(location.X, location.Y + VPosition * 2));
+					batch.DrawTile(TileSet, 20, new Point(location.X, location.Y + VPosition * 2));
 					Display.RenderState.Scissor = false;
 				}
 				break;
@@ -396,7 +397,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="location"></param>
 		/// <param name="distance"></param>
-		void DrawMonsterDoor(Point location, ViewFieldPosition distance)
+		void DrawMonsterDoor(SpriteBatch batch, Point location, ViewFieldPosition distance)
 		{
 			switch (distance)
 			{
@@ -407,12 +408,12 @@ namespace DungeonEye
 					location.Offset(56, 14);
 					Display.RenderState.Scissor = true;
 					Display.ScissorZone = new Rectangle(location, new Size(144, 142));
-					TileSet.Draw(0, new Point(location.X, location.Y + VPosition * 5));
-					TileSet.Draw(1, new Point(location.X, location.Y + 86 + VPosition * -2));
+					batch.DrawTile(TileSet, 0, new Point(location.X, location.Y + VPosition * 5));
+					batch.DrawTile(TileSet, 1, new Point(location.X, location.Y + 86 + VPosition * -2));
 					Display.RenderState.Scissor = false;
 
 					if (HasButton)
-						TileSet.Draw(36, new Point(260, 72));
+						batch.DrawTile(TileSet, 36, new Point(260, 72));
 
 
 				}
@@ -427,12 +428,12 @@ namespace DungeonEye
 					location.Offset(28, 8);
 					Display.RenderState.Scissor = true;
 					Display.ScissorZone = new Rectangle(location, new Size(104, 96));
-					TileSet.Draw(2, new Point(location.X, location.Y + VPosition * 3));
-					TileSet.Draw(3, new Point(location.X, location.Y + 56 + VPosition * -1));
+					batch.DrawTile(TileSet, 2, new Point(location.X, location.Y + VPosition * 3));
+					batch.DrawTile(TileSet, 3, new Point(location.X, location.Y + 56 + VPosition * -1));
 					Display.RenderState.Scissor = false;
 
 					if (HasButton)
-						TileSet.Draw(37, new Point(234, 80));
+						batch.DrawTile(TileSet, 37, new Point(234, 80));
 
 				}
 				break;
@@ -448,8 +449,8 @@ namespace DungeonEye
 					location.Offset(14, 4);
 					Display.RenderState.Scissor = true;
 					Display.ScissorZone = new Rectangle(location, new Size(68, 60));
-					TileSet.Draw(4, new Point(location.X, location.Y + VPosition * 2));
-					TileSet.Draw(5, new Point(location.X, location.Y + 36 + VPosition * -1));
+					batch.DrawTile(TileSet, 4, new Point(location.X, location.Y + VPosition * 2));
+					batch.DrawTile(TileSet, 5, new Point(location.X, location.Y + 36 + VPosition * -1));
 					Display.RenderState.Scissor = false;
 				}
 				break;
@@ -463,7 +464,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="location"></param>
 		/// <param name="distance"></param>
-		void DrawSpiderDoor(Point location, ViewFieldPosition distance)
+		void DrawSpiderDoor(SpriteBatch batch, Point location, ViewFieldPosition distance)
 		{
 			switch (distance)
 			{
@@ -474,11 +475,11 @@ namespace DungeonEye
 					location.Offset(32, 24);
 					Display.RenderState.Scissor = true;
 					Display.ScissorZone = new Rectangle(location, new Size(192, 142));
-					TileSet.Draw(12, new Point(location.X, location.Y + VPosition * 5));
+					batch.DrawTile(TileSet, 12, new Point(location.X, location.Y + VPosition * 5));
 					Display.RenderState.Scissor = false;
 
 					if (HasButton)
-						TileSet.Draw(39, new Point(260, 72));
+						batch.DrawTile(TileSet, 39, new Point(260, 72));
 				}
 				break;
 
@@ -491,11 +492,11 @@ namespace DungeonEye
 					location.Offset(32, 18);
 					Display.RenderState.Scissor = true;
 					Display.ScissorZone = new Rectangle(location, new Size(96, 82));
-					TileSet.Draw(13, new Point(location.X, location.Y + VPosition * 3));
+					batch.DrawTile(TileSet, 13, new Point(location.X, location.Y + VPosition * 3));
 					Display.RenderState.Scissor = false;
 
 					if (HasButton)
-						TileSet.Draw(40, new Point(234, 80));
+						batch.DrawTile(TileSet, 40, new Point(234, 80));
 				}
 				break;
 
@@ -510,8 +511,8 @@ namespace DungeonEye
 					location.Offset(16, 10);
 					Display.ScissorZone = new Rectangle(location, new Size(64, 54));
 					Display.RenderState.Scissor = true;
-					//					TileSet.Draw(14, location);
-					TileSet.Draw(14, new Point(location.X, location.Y + VPosition * 2));
+					//					batch.DrawTile(TileSet, 14, location);
+					batch.DrawTile(TileSet, 14, new Point(location.X, location.Y + VPosition * 2));
 					Display.RenderState.Scissor = false;
 				}
 				break;
@@ -526,7 +527,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="location"></param>
 		/// <param name="distance"></param>
-		void DrawStoneDoor(Point location, ViewFieldPosition distance)
+		void DrawStoneDoor(SpriteBatch batch, Point location, ViewFieldPosition distance)
 		{
 			switch (distance)
 			{
@@ -537,12 +538,12 @@ namespace DungeonEye
 					Display.RenderState.Scissor = true;
 					location.Offset(32, 16);
 					Display.ScissorZone = new Rectangle(location.X + 26 , location.Y, 140, 142);
-					TileSet.Draw(6, new Point(location.X + VPosition * 3, location.Y));
-					TileSet.Draw(6, new Point(location.X - VPosition * 3 + 96, location.Y), true, false);
+					batch.DrawTile(TileSet, 6, new Point(location.X + VPosition * 3, location.Y));
+					batch.DrawTile(TileSet, 6, new Point(location.X - VPosition * 3 + 96, location.Y), Color.White, 0.0f, SpriteEffects.FlipHorizontally, 0.0f);
 					Display.RenderState.Scissor = false;
 
 					if (HasButton)
-						TileSet.Draw(33, new Point(254, 72));
+						batch.DrawTile(TileSet, 33, new Point(254, 72));
 				}
 				break;
 
@@ -555,12 +556,12 @@ namespace DungeonEye
 					Display.RenderState.Scissor = true;
 					location.Offset(16, 8);
 					Display.ScissorZone = new Rectangle(location.X + 14, location.Y, 100, 94);
-					TileSet.Draw(7, new Point(location.X + VPosition * 2, location.Y));
-					TileSet.Draw(7, new Point(location.X - VPosition * 2 + 64, location.Y), true, false);
+					batch.DrawTile(TileSet, 7, new Point(location.X + VPosition * 2, location.Y));
+					batch.DrawTile(TileSet, 7, new Point(location.X - VPosition * 2 + 64, location.Y), Color.White, 0.0f, SpriteEffects.FlipHorizontally, 0.0f);
 					Display.RenderState.Scissor = false;
 
 					if (HasButton)
-						TileSet.Draw(34, new Point(234, 80));
+						batch.DrawTile(TileSet, 34, new Point(234, 80));
 				}
 				break;
 
@@ -575,8 +576,8 @@ namespace DungeonEye
 					Display.RenderState.Scissor = true;
 					location.Offset(8, 4);
 					Display.ScissorZone = new Rectangle(location.X + 10, location.Y, 60, 58);
-					TileSet.Draw(8, new Point(location.X + VPosition, location.Y));
-					TileSet.Draw(8, new Point(location.X - VPosition + 40, location.Y), true, false);
+					batch.DrawTile(TileSet, 8, new Point(location.X + VPosition, location.Y));
+					batch.DrawTile(TileSet, 8, new Point(location.X - VPosition + 40, location.Y), Color.White, 0.0f, SpriteEffects.FlipHorizontally, 0.0f);
 					Display.RenderState.Scissor = false;
 				}
 				break;
@@ -917,16 +918,34 @@ namespace DungeonEye
 	/// </summary>
 	public enum DoorType
 	{
+		/// <summary>
+		/// 
+		/// </summary>
 		Grid,
 
+		/// <summary>
+		/// 
+		/// </summary>
 		Iron,
 
+		/// <summary>
+		/// 
+		/// </summary>
 		Monster,
 
+		/// <summary>
+		/// 
+		/// </summary>
 		Spider,
 
+		/// <summary>
+		/// 
+		/// </summary>
 		Stone,
 
+		/// <summary>
+		/// 
+		/// </summary>
 		Eye
 	}
 

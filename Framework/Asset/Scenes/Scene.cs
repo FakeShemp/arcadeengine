@@ -163,7 +163,7 @@ namespace ArcEngine.Asset
 		/// <summary>
 		/// Draws the animation
 		/// </summary>
-		public void Draw()
+		public void Draw(SpriteBatch batch)
 		{
 			Display.ClearBuffers();
 

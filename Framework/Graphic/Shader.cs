@@ -96,7 +96,7 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		~Shader()
 		{
-			throw new Exception("Shader : Call Dispose() !!");
+		//	throw new Exception("Shader : Call Dispose() !!");
 		}
 
 
@@ -929,6 +929,22 @@ namespace ArcEngine.Graphic
 
 		#endregion
 
+
+
+		/// <summary>
+		/// Creates a new shader from file
+		/// </summary>
+		/// <param name="vertex"></param>
+		/// <param name="fragment"></param>
+		/// <returns></returns>
+		public static Shader CreateFromFile(string vertex, string fragment)
+		{
+			Shader shader = new Shader();
+			shader.LoadSource(ShaderType.VertexShader, vertex);
+			shader.LoadSource(ShaderType.FragmentShader, fragment);
+
+			return shader;
+		}
 	}
 
 

@@ -159,7 +159,7 @@ namespace ArcEngine.Asset
 
 			//Rectangle rect = new Rectangle(location, CurrentTile.Size);
 
-			TileSet.Draw(Frames[CurrentFrame], location);
+	//		TileSet.Draw(Frames[CurrentFrame], location);
 
 		}
 

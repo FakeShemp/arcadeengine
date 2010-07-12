@@ -34,12 +34,12 @@ namespace ArcEngine.Asset
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="rect"></param>
-		/// <param name="hotspot"></param>
-		public Tile(Rectangle rect, Point hotspot)
+		/// <param name="source"></param>
+		/// <param name="origin"></param>
+		public Tile(Rectangle source, Point origin)
 		{
-			Rectangle = rect;
-			HotSpot = hotspot;
+			Rectangle = source;
+			HotSpot = origin;
 		}
 
 		/// <summary>
@@ -63,6 +63,7 @@ namespace ArcEngine.Asset
 			get;
 			set;
 		}
+
 
 
 		/// <summary>

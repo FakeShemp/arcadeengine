@@ -689,7 +689,7 @@ namespace ArcEngine.Editor
 				rect.Size = tile.Size;
 
 				// Blit the tile
-				Animation.TileSet.Draw(id, new Point(rect.X + tile.HotSpot.X, rect.Y + tile.HotSpot.Y));
+			//	Animation.TileSet.Draw(id, new Point(rect.X + tile.HotSpot.X, rect.Y + tile.HotSpot.Y));
 
 				// Is mouse over or selected tile
 				if (rect.Contains(mouse) || TileID == id)

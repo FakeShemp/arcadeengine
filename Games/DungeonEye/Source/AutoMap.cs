@@ -42,7 +42,7 @@ namespace DungeonEye
 			Font = ResourceManager.CreateSharedAsset<BitmapFont>("intro");
 		//	Font.TileSet.Scale = new SizeF(2.0f, 2.0f);
 
-
+			SpriteBatch = new SpriteBatch();
 
 		}
 
@@ -62,6 +62,10 @@ namespace DungeonEye
 			if (Tileset != null)
 				Tileset.Dispose();
 			Tileset = null;
+
+			if (SpriteBatch != null)
+				SpriteBatch.Dispose();
+			SpriteBatch = null;
 		}
 
 
@@ -89,14 +93,21 @@ namespace DungeonEye
 			// Clears the background
 			Display.ClearBuffers();
 
+			SpriteBatch.Begin();
+
 			// Background
-			Tileset.Draw(1, Point.Empty);
+			SpriteBatch.DrawTile(Tileset, 1, Point.Empty, Color.White);
+			//Tileset.Draw(1, Point.Empty);
 
 			// Some WIP
-			Font.DrawText(new Point(100, 100), Color.White, "TODO...");
-				
+			//Font.DrawText(new Point(100, 100), Color.White, "TODO...");
+			SpriteBatch.DrawString(Font, new Vector2(100, 100), Color.White, "TODO...");	
+
 			// Draw the cursor or the item in the hand
-			Tileset.Draw(0, Mouse.Location);
+			//Tileset.Draw(0, Mouse.Location);
+			SpriteBatch.DrawTile(Tileset, 0, Mouse.Location, Color.White);
+
+			SpriteBatch.End();
 		}
 
 		#endregion
@@ -117,6 +128,10 @@ namespace DungeonEye
 		BitmapFont Font;
 
 
+		/// <summary>
+		/// Spritebatch
+		/// </summary>
+		SpriteBatch SpriteBatch;
 
 		#endregion
 

@@ -25,6 +25,7 @@ SOFTWARE.
 using System;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
+using System.Drawing;
 
 namespace ArcEngine
 {
@@ -107,6 +108,15 @@ namespace ArcEngine
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="v"></param>
+		/// <returns></returns>
+		public static explicit operator RectangleF(Vector4 v)
+		{
+			return new RectangleF(v.X, v.Y, v.Z, v.W);
+		}
 
 
 		#region Constructors
@@ -939,7 +949,7 @@ namespace ArcEngine
 		{
 			get
 			{
-				return new Vector2(Z, W);
+				return new Vector2(Width, Height);
 			}
 		}
 

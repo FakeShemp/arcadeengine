@@ -58,7 +58,7 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		~BatchBuffer()
 		{
-			throw new Exception("BatchBuffer : Call Dispose() !!");
+		//	throw new Exception("BatchBuffer : Call Dispose() !!");
 		}
 
 

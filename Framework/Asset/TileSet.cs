@@ -73,8 +73,8 @@ namespace ArcEngine.Asset
 		/// </summary>
 		~TileSet()
 		{
-			if (Texture != null)
-				throw new Exception("TileSet : Call Dispose() !!");
+		//	if (Texture != null)
+		//		throw new Exception("TileSet : Call Dispose() !!");
 		}
 
 		#endregion
@@ -463,6 +463,7 @@ namespace ArcEngine.Asset
 
 		#region Rendering
 
+/*
 		/// <summary>
 		/// Draws a tile on the screen
 		/// </summary>
@@ -561,7 +562,7 @@ namespace ArcEngine.Asset
 
 		}
 
-
+*/
 		#endregion
 
 

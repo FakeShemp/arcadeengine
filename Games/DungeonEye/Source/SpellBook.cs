@@ -92,19 +92,20 @@ namespace DungeonEye
 		/// <summary>
 		/// Display the window
 		/// </summary>
-		public void Draw()
+		/// <param name="batch"></param>
+		public void Draw(SpriteBatch batch)
 		{
 			if (!IsVisible)
 			return;
 
 			// Main window
-			DrawWindow(MainRectangle, string.Empty, true);
+			DrawWindow(batch, MainRectangle, string.Empty, true);
 
 			// Levels
 			string[] title = new string[]{"1ST", "2ND", "3RD", "4TH", "5TH"};
 			for (int level = 0; level < 5; level++)
 			{
-				DrawWindow(new Rectangle(MainRectangle.X + level * 42, MainRectangle.Top - 18, 42, 18), title[level], SpellLevel - 1 == level);
+				DrawWindow(batch, new Rectangle(MainRectangle.X + level * 42, MainRectangle.Top - 18, 42, 18), title[level], SpellLevel - 1 == level);
 			}
 		}
 
@@ -112,10 +113,11 @@ namespace DungeonEye
 		/// <summary>
 		/// Draw a window
 		/// </summary>
+		/// <param name="batch"></param>
 		/// <param name="rectangle">Rectangle of the window</param>
 		/// <param name="text">Test to display</param>
 		/// <param name="active">True if the window is active, or false</param>
-		void DrawWindow(Rectangle rectangle, string text, bool active)
+		void DrawWindow(SpriteBatch batch, Rectangle rectangle, string text, bool active)
 		{
 
 			//if (active)
@@ -139,9 +141,9 @@ namespace DungeonEye
 			Display.DrawRectangle(new Rectangle(rectangle.X + 2, rectangle.Y, rectangle.Width - 2, 2), active ? Color.FromArgb(138, 146, 207) : Color.FromArgb(221, 211, 219));
 			Display.DrawRectangle(new Rectangle(rectangle.Right - 2, rectangle.Y, 2, rectangle.Height - 2), active ? Color.FromArgb(138, 146, 207) : Color.FromArgb(221, 211, 219));
 
-			Font.DrawText(new Point(rectangle.X + 4, rectangle.Y + 4), Color.Black, text);
+			batch.DrawString(Font, new Point(rectangle.X + 4, rectangle.Y + 4), Color.Black, text);
 
-			Font.DrawText(new Point(146, 336), Color.White, "abort spell");
+			batch.DrawString(Font, new Point(146, 336), Color.White, "abort spell");
 		}
 
 

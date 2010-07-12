@@ -24,7 +24,7 @@ using System.IO;
 using System.Text;
 using System.Xml;
 using ArcEngine;
-
+using ArcEngine.Graphic;
 
 //
 //
@@ -341,18 +341,21 @@ namespace DungeonEye
 			if (node == null)
 				return null;
 
+			//HACK!!!!
+			SpriteEffects effect = SpriteEffects.None;
 
-			bool swapx = false;
+	//		bool swapx = false;
 			if (node.Attributes["swapx"] != null)
-				swapx = true;
+				effect |= SpriteEffects.FlipHorizontally;
 
-			bool swapy = false;
+	//		bool swapy = false;
 			if (node.Attributes["swapy"] != null)
-				swapy = true;
+				effect |= SpriteEffects.FlipVertically;
 
 			int id = int.Parse(node.Attributes["tile"].Value);
 			Point point = new Point(int.Parse(node.Attributes["x"].Value), int.Parse(node.Attributes["y"].Value));
-			return new TileDrawing(id, point, swapx, swapy);
+
+			return new TileDrawing(id, point, effect);
 
 		}
 
@@ -523,7 +526,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="id">ID of the tile</param>
 		/// <param name="location">Location</param>
-		public TileDrawing(int id, Point location) : this(id, location, false, false)
+		public TileDrawing(int id, Point location) : this(id, location, SpriteEffects.None)
 		{
 		}
 
@@ -533,14 +536,12 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="id">ID of the tile</param>
 		/// <param name="location">Location</param>
-		/// <param name="swapx">Vertical flip</param>
-		/// <param name="swapy">Horizontal flip</param>
-		public TileDrawing(int id, Point location, bool swapx, bool swapy)
+		/// <param name="effect">Display effect</param>
+		public TileDrawing(int id, Point location, SpriteEffects effect)
 		{
 			ID = id;
 			Location = location;
-			SwapX = swapx;
-			SwapY = swapy;
+			Effect = effect;
 		}
 
 		/// <summary>
@@ -562,18 +563,9 @@ namespace DungeonEye
 		}
 
 		/// <summary>
-		/// Swap horizontally
+		/// Display effect
 		/// </summary>
-		public bool SwapX
-		{
-			get;
-			private set;
-		}
-
-		/// <summary>
-		/// Swap vertically
-		/// </summary>
-		public bool SwapY
+		public SpriteEffects Effect
 		{
 			get;
 			private set;

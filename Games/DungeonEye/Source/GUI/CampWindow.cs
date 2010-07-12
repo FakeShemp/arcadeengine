@@ -210,14 +210,15 @@ namespace DungeonEye.Gui
 		/// <summary>
 		/// Draws the Window
 		/// </summary>
-		public void Draw()
+		/// <param name="batch"></param>
+		public void Draw(SpriteBatch batch)
 		{
 			if (!IsVisible)
 				return;
 
 
 			DrawBevel(Rectangle, BgColor, Color.FromArgb(138, 146, 207), Color.FromArgb(44, 48, 134));
-			Font.DrawText(new Point(8, 10), Color.FromArgb(85, 255, 255), "Camp :");
+			batch.DrawString(Font, new Point(8, 10), Color.FromArgb(85, 255, 255), "Camp :");
 
 
 
@@ -229,7 +230,7 @@ namespace DungeonEye.Gui
 				// Text
 				Point point = button.Rectangle.Location;
 				point.Offset(6, 6);
-				Font.DrawText(point, button.TextColor, button.Text);
+				batch.DrawString(Font, point, button.TextColor, button.Text);
 			}
 
 		}

@@ -97,6 +97,11 @@ namespace DungeonEye
 				SpellBook.Dispose();
 			SpellBook = null;
 
+			if (SpriteBatch != null)
+				SpriteBatch.Dispose();
+			SpriteBatch = null;
+
+
 			SaveGame = "";
 			Heroes = null;
 			SelectedHero = null;
@@ -117,6 +122,8 @@ namespace DungeonEye
 		{
 			System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
 			watch.Start();
+			
+			SpriteBatch = new SpriteBatch();
 
 			ResourceManager.ClearAssets();
 			ResourceManager.LoadBank("data/game.bnk");
@@ -351,31 +358,31 @@ namespace DungeonEye
 
 			// Draw the current maze
 			if (Location.Maze != null)
-				Location.Maze.Draw(Location);
+				Location.Maze.Draw(SpriteBatch, Location);
 
 
 			// The backdrop
-			TileSet.Draw(0, Point.Empty);
+			SpriteBatch.DrawTile(TileSet, 0, Point.Empty);
 
 
 			// Display the compass
-			TileSet.Draw(5 + (int)Location.Direction * 3, new Point(224, 254));
-			TileSet.Draw(6 + (int)Location.Direction * 3, new Point(154, 308));
-			TileSet.Draw(7 + (int)Location.Direction * 3, new Point(298, 308));
+			SpriteBatch.DrawTile(TileSet, 5 + (int)Location.Direction * 3, new Point(224, 254));
+			SpriteBatch.DrawTile(TileSet, 6 + (int)Location.Direction * 3, new Point(154, 308));
+			SpriteBatch.DrawTile(TileSet, 7 + (int)Location.Direction * 3, new Point(298, 308));
 
 
 			// Interfaces
 			if (Interface == TeamInterface.Inventory)
-				DrawInventory();
+				DrawInventory(SpriteBatch);
 
 			else if (Interface == TeamInterface.Statistic)
-				DrawStatistics();
+				DrawStatistics(SpriteBatch);
 
 			else
 			{
-				DrawMain();
+				DrawMain(SpriteBatch);
 
-				CampWindow.Draw();
+				CampWindow.Draw(SpriteBatch);
 			}
 
 
@@ -384,13 +391,13 @@ namespace DungeonEye
 			int i = 0;
 			foreach (ScreenMessage msg in Messages)
 			{
-				Font.DrawText(new Point(10, 358 + i * 12), msg.Color, msg.Message);
+				SpriteBatch.DrawString(Font, new Point(10, 358 + i * 12), msg.Color, msg.Message);
 				i++;
 			}
 
 
 			// Draw the spell window
-			SpellBook.Draw();
+			SpellBook.Draw(SpriteBatch);
 
 
 			
@@ -405,9 +412,9 @@ namespace DungeonEye
 
 			// Draw the cursor or the item in the hand
 			if (ItemInHand != null)
-				Items.Draw(ItemInHand.TileID, Mouse.Location);
+				SpriteBatch.DrawTile(Items, ItemInHand.TileID, Mouse.Location);
 			else
-				Items.Draw(0, Mouse.Location);
+				SpriteBatch.DrawTile(Items, 0, Mouse.Location);
 
 		}
 
@@ -417,7 +424,8 @@ namespace DungeonEye
 		/// <summary>
 		/// Draws the right side of the panel
 		/// </summary>
-		private void DrawMain()
+		/// <param name="batch"></param>
+		private void DrawMain(SpriteBatch batch)
 		{
 			// Draw heroes
 			Point pos;
@@ -432,30 +440,30 @@ namespace DungeonEye
 					pos = new Point(366 + 144 * x, y * 104 + 2);
 
 					// Backdrop
-					TileSet.Draw(17, pos);
+					batch.DrawTile(TileSet, 17, pos);
 
 					// Head
 					if (hero.IsDead)
-						TileSet.Draw(4, new Point(pos.X + 2, pos.Y + 20));
+						batch.DrawTile(TileSet, 4, new Point(pos.X + 2, pos.Y + 20));
 					else
-						Heads.Draw(hero.Head, new Point(pos.X + 2, pos.Y + 20));
+						batch.DrawTile(Heads, hero.Head, new Point(pos.X + 2, pos.Y + 20));
 
 					// Hero uncouncious
 					if (hero.IsUnconscious)
-						TileSet.Draw(2, new Point(pos.X + 4, pos.Y + 20));
+						batch.DrawTile(TileSet, 2, new Point(pos.X + 4, pos.Y + 20));
 
 					// Name
 					if (HeroToSwap == hero)
 					{
-						Font.DrawText(new Point(pos.X + 6, pos.Y + 6), Color.Red, " Swapping");
+						batch.DrawString(Font, new Point(pos.X + 6, pos.Y + 6), Color.Red, " Swapping");
 					}
 					else if (SelectedHero == hero)
 					{
-						Font.DrawText(new Point(pos.X + 6, pos.Y + 6), Color.White, hero.Name);
+						batch.DrawString(Font, new Point(pos.X + 6, pos.Y + 6), Color.White, hero.Name);
 					}
 					else
 					{
-						Font.DrawText(new Point(pos.X + 6, pos.Y + 6), Color.Black, hero.Name);
+						batch.DrawString(Font, new Point(pos.X + 6, pos.Y + 6), Color.Black, hero.Name);
 					}
 
 					// HP
@@ -468,11 +476,11 @@ namespace DungeonEye
 						else if (percent < 0.4)
 							color = Color.Yellow;
 
-						Font.DrawText(new Point(pos.X + 6, pos.Y + 88), Color.Black, "HP");
+						batch.DrawString(Font, new Point(pos.X + 6, pos.Y + 88), Color.Black, "HP");
 						DrawProgressBar(hero.HitPoint.Current, hero.HitPoint.Max, new Rectangle(pos.X + 30, pos.Y + 88, 92, 10), color);
 					}
 					else
-						Font.DrawText(new Point(pos.X + 6, pos.Y + 88), Color.Black, hero.HitPoint + " of " + hero.HitPoint.Max);
+						batch.DrawString(Font, new Point(pos.X + 6, pos.Y + 88), Color.Black, hero.HitPoint + " of " + hero.HitPoint.Max);
 
 
 					// Hands
@@ -484,12 +492,12 @@ namespace DungeonEye
 						// Primary
 						Item item = hero.GetInventoryItem(hand == HeroHand.Primary ? InventoryPosition.Primary : InventoryPosition.Secondary);
 						if (item != null)
-							Items.Draw(item.TileID, new Point(pos.X + 96, pos.Y + 36 + yoffset));
+							batch.DrawTile(Items, item.TileID, new Point(pos.X + 96, pos.Y + 36 + yoffset));
 						else
-							Items.Draw(86, new Point(pos.X + 96, pos.Y + 36 + yoffset));
+							batch.DrawTile(Items, 86, new Point(pos.X + 96, pos.Y + 36 + yoffset));
 
 						if (!hero.CanUseHand(hand))
-							TileSet.Draw(3, new Point(pos.X + 66, pos.Y + 20 + yoffset));
+							batch.DrawTile(TileSet, 3, new Point(pos.X + 66, pos.Y + 20 + yoffset));
 
 
 						// Hero hit a monster a few moment ago
@@ -500,17 +508,17 @@ namespace DungeonEye
 							if (!hero.CanUseHand(hand))
 							{
 								// Ghost item
-								TileSet.Draw(3, new Point(pos.X + 66, pos.Y + 20 + yoffset));
+								batch.DrawTile(TileSet, 3, new Point(pos.X + 66, pos.Y + 20 + yoffset));
 
 								// Monster hit ?
 								if (attack.Target != null && !attack.IsOutdated(DateTime.Now, 1000))
 								{
-									TileSet.Draw(21, new Point(pos.X + 64, pos.Y + 20 + yoffset));
+									batch.DrawTile(TileSet, 21, new Point(pos.X + 64, pos.Y + 20 + yoffset));
 
 									if (attack.IsAHit)
-										Font.DrawText(new Point(pos.X + 90, pos.Y + 32 + yoffset), Color.White, attack.Hit.ToString());
+										batch.DrawString(Font, new Point(pos.X + 90, pos.Y + 32 + yoffset), Color.White, attack.Hit.ToString());
 									else if (attack.IsAMiss)
-										Font.DrawText(new Point(pos.X + 76, pos.Y + 32 + yoffset), Color.White, "MISS");
+										batch.DrawString(Font, new Point(pos.X + 76, pos.Y + 32 + yoffset), Color.White, "MISS");
 								}
 							}
 
@@ -522,20 +530,20 @@ namespace DungeonEye
 						HandAction action = hero.GetLastActionResult(hand);
 						if (action.Result != ActionResult.Ok && !action.IsOutdated(DateTime.Now, 1000))
 						{
-							TileSet.Draw(22, new Point(pos.X + 66, pos.Y + 20 + yoffset));
+							batch.DrawTile(TileSet, 22, new Point(pos.X + 66, pos.Y + 20 + yoffset));
 
 							switch (action.Result)
 							{
 								case ActionResult.NoAmmo:
 								{
-									Font.DrawText(new Point(pos.X + 86, pos.Y + 24 + yoffset), Color.White, "NO");
-									Font.DrawText(new Point(pos.X + 74, pos.Y + 38 + yoffset), Color.White, "AMMO");
+									batch.DrawString(Font, new Point(pos.X + 86, pos.Y + 24 + yoffset), Color.White, "NO");
+									batch.DrawString(Font, new Point(pos.X + 74, pos.Y + 38 + yoffset), Color.White, "AMMO");
 								}
 								break;
 								case ActionResult.CantReach:
 								{
-									Font.DrawText(new Point(pos.X + 68, pos.Y + 24 + yoffset), Color.White, "CAN'T");
-									Font.DrawText(new Point(pos.X + 68, pos.Y + 38 + yoffset), Color.White, "REACH");
+									batch.DrawString(Font, new Point(pos.X + 68, pos.Y + 24 + yoffset), Color.White, "CAN'T");
+									batch.DrawString(Font, new Point(pos.X + 68, pos.Y + 38 + yoffset), Color.White, "REACH");
 								}
 								break;
 							}
@@ -546,16 +554,16 @@ namespace DungeonEye
 					// Dead or uncounscious
 					if (hero.IsUnconscious || hero.IsDead)
 					{
-						TileSet.Draw(3, new Point(pos.X + 66, pos.Y + 52));
-						TileSet.Draw(3, new Point(pos.X + 66, pos.Y + 20));
+						batch.DrawTile(TileSet, 3, new Point(pos.X + 66, pos.Y + 52));
+						batch.DrawTile(TileSet, 3, new Point(pos.X + 66, pos.Y + 20));
 					}
 
 
 					// Hero was hit
 					if (hero.LastAttack != null && !hero.LastAttack.IsOutdated(DateTime.Now, 1000))
 					{
-						TileSet.Draw(20, new Point(pos.X + 24, pos.Y + 66));
-						Font.DrawText(new Point(pos.X + 52, pos.Y + 86), Color.White, hero.LastAttack.Hit.ToString());
+						batch.DrawTile(TileSet, 20, new Point(pos.X + 24, pos.Y + 66));
+						batch.DrawString(Font, new Point(pos.X + 52, pos.Y + 86), Color.White, hero.LastAttack.Hit.ToString());
 					}
 	
 				}
@@ -568,7 +576,7 @@ namespace DungeonEye
 				Location.Maze.DrawMiniMap(this, new Point(500, 220));
 
 				// Team location
-				Font.DrawText(new Point(10, 340), Color.White, Location.ToString());
+				batch.DrawString(Font, new Point(10, 340), Color.White, Location.ToString());
 			}
 		}
 
@@ -600,32 +608,33 @@ namespace DungeonEye
 		/// <summary>
 		/// Draws the inventory
 		/// </summary>
-		void DrawInventory()
+		/// <param name="batch"></param>
+		void DrawInventory(SpriteBatch batch)
 		{
 			// Background
-			TileSet.Draw(18, new Point(356, 0));
+			batch.DrawTile(TileSet, 18, new Point(356, 0));
 
 			// Head
-			Heads.Draw(SelectedHero.Head, new Point(362, 4));
+			batch.DrawTile(Heads, SelectedHero.Head, new Point(362, 4));
 
 
 			// Name
-			OutlinedFont.DrawText(new Point(430, 12), Color.White, SelectedHero.Name);
+			batch.DrawString(OutlinedFont, new Point(430, 12), Color.White, SelectedHero.Name);
 
 			// HP and Food
-			Font.DrawText(new Point(500, 30), Color.Black, SelectedHero.HitPoint.Current + " of " + SelectedHero.HitPoint.Max);
+			batch.DrawString(Font, new Point(500, 30), Color.Black, SelectedHero.HitPoint.Current + " of " + SelectedHero.HitPoint.Max);
 
 
 			// HP and Food
 			if (SelectedHero.IsUnconscious)
 			{
-				OutlinedFont.DrawText(new Point(450, 316), Color.FromArgb(255, 85, 85), "UNCONSCIOUS");
-				TileSet.Draw(2, new Point(364, 4));
+				batch.DrawString(OutlinedFont, new Point(450, 316), Color.FromArgb(255, 85, 85), "UNCONSCIOUS");
+				batch.DrawTile(TileSet, 2, new Point(364, 4));
 			}
 			else if (SelectedHero.IsDead)
 			{
-				OutlinedFont.DrawText(new Point(500, 316), Color.FromArgb(255, 85, 85), "DEAD");
-				TileSet.Draw(4, new Point(364, 4));
+				batch.DrawString(OutlinedFont, new Point(500, 316), Color.FromArgb(255, 85, 85), "DEAD");
+				batch.DrawTile(TileSet, 4, new Point(364, 4));
 			}
 
 
@@ -647,7 +656,7 @@ namespace DungeonEye
 				for (int x = 380; x < 444; x += 36)
 				{
 					if (SelectedHero.GetBackPackItem(pos) != null)
-						Items.Draw(SelectedHero.GetBackPackItem(pos).TileID, new Point(x, y));
+						batch.DrawTile(Items, SelectedHero.GetBackPackItem(pos).TileID, new Point(x, y));
 
 					pos++;
 				}
@@ -655,57 +664,57 @@ namespace DungeonEye
 
 			// Quiver count
 			if (SelectedHero.Quiver > 99)
-				Font.DrawText(new Point(454, 128), Color.White, "++");
+				batch.DrawString(Font, new Point(454, 128), Color.White, "++");
 			else
-				Font.DrawText(new Point(454, 128), Color.White, SelectedHero.Quiver.ToString());
+				batch.DrawString(Font, new Point(454, 128), Color.White, SelectedHero.Quiver.ToString());
 
 			// Armor
 			if (SelectedHero.GetInventoryItem(InventoryPosition.Armor) != null)
-				Items.Draw(SelectedHero.GetInventoryItem(InventoryPosition.Armor).TileID, new Point(464, 166));
+				batch.DrawTile(Items, SelectedHero.GetInventoryItem(InventoryPosition.Armor).TileID, new Point(464, 166));
 
 			// Wrist
 			if (SelectedHero.GetInventoryItem(InventoryPosition.Wrist) != null)
-				Items.Draw(SelectedHero.GetInventoryItem(InventoryPosition.Wrist).TileID, new Point(466, 206));
+				batch.DrawTile(Items, SelectedHero.GetInventoryItem(InventoryPosition.Wrist).TileID, new Point(466, 206));
 
 			// Primary
 			if (SelectedHero.GetInventoryItem(InventoryPosition.Primary) != null)
-				Items.Draw(SelectedHero.GetInventoryItem(InventoryPosition.Primary).TileID, new Point(476, 246));
+				batch.DrawTile(Items, SelectedHero.GetInventoryItem(InventoryPosition.Primary).TileID, new Point(476, 246));
 
 			// Ring 1
 			if (SelectedHero.GetInventoryItem(InventoryPosition.Ring_Left) != null)
-				Items.Draw(SelectedHero.GetInventoryItem(InventoryPosition.Ring_Left).TileID, new Point(464, 278));
+				batch.DrawTile(Items, SelectedHero.GetInventoryItem(InventoryPosition.Ring_Left).TileID, new Point(464, 278));
 
 			// Ring 2
 			if (SelectedHero.GetInventoryItem(InventoryPosition.Ring_Right) != null)
-				Items.Draw(SelectedHero.GetInventoryItem(InventoryPosition.Ring_Right).TileID, new Point(488, 278));
+				batch.DrawTile(Items, SelectedHero.GetInventoryItem(InventoryPosition.Ring_Right).TileID, new Point(488, 278));
 
 			// Feet
 			if (SelectedHero.GetInventoryItem(InventoryPosition.Feet) != null)
-				Items.Draw(SelectedHero.GetInventoryItem(InventoryPosition.Feet).TileID, new Point(570, 288));
+				batch.DrawTile(Items, SelectedHero.GetInventoryItem(InventoryPosition.Feet).TileID, new Point(570, 288));
 
 			// Secondary
 			if (SelectedHero.GetInventoryItem(InventoryPosition.Secondary) != null)
-				Items.Draw(SelectedHero.GetInventoryItem(InventoryPosition.Secondary).TileID, new Point(572, 246));
+				batch.DrawTile(Items, SelectedHero.GetInventoryItem(InventoryPosition.Secondary).TileID, new Point(572, 246));
 
 			// Back 1 598,184,36,36
 			if (SelectedHero.GetWaistPackItem(0) != null)
-				Items.Draw(SelectedHero.GetWaistPackItem(0).TileID, new Point(616, 202));
+				batch.DrawTile(Items, SelectedHero.GetWaistPackItem(0).TileID, new Point(616, 202));
 
 			// Back 2 598,220,36,36
 			if (SelectedHero.GetWaistPackItem(1) != null)
-				Items.Draw(SelectedHero.GetWaistPackItem(1).TileID, new Point(616, 238));
+				batch.DrawTile(Items, SelectedHero.GetWaistPackItem(1).TileID, new Point(616, 238));
 
 			// Back 3 598,256,36,36
 			if (SelectedHero.GetWaistPackItem(2) != null)
-				Items.Draw(SelectedHero.GetWaistPackItem(2).TileID, new Point(616, 274));
+				batch.DrawTile(Items, SelectedHero.GetWaistPackItem(2).TileID, new Point(616, 274));
 
 			// Neck 572,146,36,36
 			if (SelectedHero.GetInventoryItem(InventoryPosition.Neck) != null)
-				Items.Draw(SelectedHero.GetInventoryItem(InventoryPosition.Neck).TileID, new Point(590, 164));
+				batch.DrawTile(Items, SelectedHero.GetInventoryItem(InventoryPosition.Neck).TileID, new Point(590, 164));
 
 			// Head 594,106,36,36
 			if (SelectedHero.GetInventoryItem(InventoryPosition.Helmet) != null)
-				Items.Draw(SelectedHero.GetInventoryItem(InventoryPosition.Helmet).TileID, new Point(612, 124));
+				batch.DrawTile(Items, SelectedHero.GetInventoryItem(InventoryPosition.Helmet).TileID, new Point(612, 124));
 
 
 			// Ring 1 454,268,20,20
@@ -723,24 +732,25 @@ namespace DungeonEye
 		/// <summary>
 		/// Draws hero statistic
 		/// </summary>
-		void DrawStatistics()
+		/// <param name="batch"></param>
+		void DrawStatistics(SpriteBatch batch)
 		{
 			// Background
-			TileSet.Draw(18, new Point(356, 0));
+			batch.DrawTile(TileSet, 18, new Point(356, 0));
 			Display.FillRectangle(new Rectangle(360, 70, 186, 30), Color.FromArgb(164, 164, 184));
 			Display.FillRectangle(new Rectangle(360, 100, 276, 194), Color.FromArgb(164, 164, 184));
 			Display.FillRectangle(new Rectangle(360, 294, 242, 36), Color.FromArgb(164, 164, 184));
 
 
 			// Hero head
-			Heads.Draw(SelectedHero.Head, new Point(360, 4));
+			batch.DrawTile(Heads, SelectedHero.Head, new Point(360, 4));
 
 
-			OutlinedFont.DrawText(new Point(430, 12), Color.White, SelectedHero.Name);
-			OutlinedFont.DrawText(new Point(370, 80), Color.White, "Character info");
+			batch.DrawString(OutlinedFont, new Point(430, 12), Color.White, SelectedHero.Name);
+			batch.DrawString(OutlinedFont, new Point(370, 80), Color.White, "Character info");
 
 			// HP and Food
-			Font.DrawText(new Point(500, 30), Color.Black, SelectedHero.HitPoint.Current + " of " + SelectedHero.HitPoint.Max);
+			batch.DrawString(Font, new Point(500, 30), Color.Black, SelectedHero.HitPoint.Current + " of " + SelectedHero.HitPoint.Max);
 
 			// Food
 			Color color;
@@ -758,36 +768,36 @@ namespace DungeonEye
 				txt += prof.Class.ToString() + "/";
 			txt = txt.Substring(0, txt.Length - 1);
 
-			Font.DrawText(new Point(366, 110), Color.Black, txt);
-			Font.DrawText(new Point(366, 124), Color.Black, SelectedHero.Alignment.ToString());
-			Font.DrawText(new Point(366, 138), Color.Black, SelectedHero.Race.ToString());
+			batch.DrawString(Font, new Point(366, 110), Color.Black, txt);
+			batch.DrawString(Font, new Point(366, 124), Color.Black, SelectedHero.Alignment.ToString());
+			batch.DrawString(Font, new Point(366, 138), Color.Black, SelectedHero.Race.ToString());
 
-			Font.DrawText(new Point(366, 166), Color.Black, "Strength");
-			Font.DrawText(new Point(366, 180), Color.Black, "Intelligence");
-			Font.DrawText(new Point(366, 194), Color.Black, "Wisdom");
-			Font.DrawText(new Point(366, 208), Color.Black, "Dexterity");
-			Font.DrawText(new Point(366, 222), Color.Black, "Constitution");
-			Font.DrawText(new Point(366, 236), Color.Black, "Charisma");
-			Font.DrawText(new Point(366, 250), Color.Black, "Armor class");
-
-
-			Font.DrawText(new Point(552, 166), Color.Black, SelectedHero.Strength.Value.ToString());// + "/" + SelectedHero.MaxStrength.ToString());
-			Font.DrawText(new Point(552, 180), Color.Black, SelectedHero.Intelligence.Value.ToString());
-			Font.DrawText(new Point(552, 194), Color.Black, SelectedHero.Wisdom.Value.ToString());
-			Font.DrawText(new Point(552, 208), Color.Black, SelectedHero.Dexterity.Value.ToString());
-			Font.DrawText(new Point(552, 222), Color.Black, SelectedHero.Constitution.Value.ToString());
-			Font.DrawText(new Point(552, 236), Color.Black, SelectedHero.Charisma.Value.ToString());
-			Font.DrawText(new Point(552, 250), Color.Black, SelectedHero.ArmorClass.ToString());
+			batch.DrawString(Font, new Point(366, 166), Color.Black, "Strength");
+			batch.DrawString(Font, new Point(366, 180), Color.Black, "Intelligence");
+			batch.DrawString(Font, new Point(366, 194), Color.Black, "Wisdom");
+			batch.DrawString(Font, new Point(366, 208), Color.Black, "Dexterity");
+			batch.DrawString(Font, new Point(366, 222), Color.Black, "Constitution");
+			batch.DrawString(Font, new Point(366, 236), Color.Black, "Charisma");
+			batch.DrawString(Font, new Point(366, 250), Color.Black, "Armor class");
 
 
-			Font.DrawText(new Point(470, 270), Color.Black, "EXP");
-			Font.DrawText(new Point(550, 270), Color.Black, "LVL");
+			batch.DrawString(Font, new Point(552, 166), Color.Black, SelectedHero.Strength.Value.ToString());// + "/" + SelectedHero.MaxStrength.ToString());
+			batch.DrawString(Font, new Point(552, 180), Color.Black, SelectedHero.Intelligence.Value.ToString());
+			batch.DrawString(Font, new Point(552, 194), Color.Black, SelectedHero.Wisdom.Value.ToString());
+			batch.DrawString(Font, new Point(552, 208), Color.Black, SelectedHero.Dexterity.Value.ToString());
+			batch.DrawString(Font, new Point(552, 222), Color.Black, SelectedHero.Constitution.Value.ToString());
+			batch.DrawString(Font, new Point(552, 236), Color.Black, SelectedHero.Charisma.Value.ToString());
+			batch.DrawString(Font, new Point(552, 250), Color.Black, SelectedHero.ArmorClass.ToString());
+
+
+			batch.DrawString(Font, new Point(470, 270), Color.Black, "EXP");
+			batch.DrawString(Font, new Point(550, 270), Color.Black, "LVL");
 			int y = 0;
 			foreach(Profession prof in SelectedHero.Professions)
 			{
-				Font.DrawText(new Point(366, 290 + y), Color.Black, prof.Class.ToString());
-				Font.DrawText(new Point(460, 290 + y), Color.White, prof.Experience.Points.ToString());
-				Font.DrawText(new Point(560, 290 + y), Color.White, prof.Experience.Level.ToString());
+				batch.DrawString(Font, new Point(366, 290 + y), Color.Black, prof.Class.ToString());
+				batch.DrawString(Font, new Point(460, 290 + y), Color.White, prof.Experience.Points.ToString());
+				batch.DrawString(Font, new Point(560, 290 + y), Color.White, prof.Experience.Level.ToString());
 
 				y += 12;
 			}
@@ -2628,6 +2638,11 @@ namespace DungeonEye
 		/// Interface to display
 		/// </summary>
 		public TeamInterface Interface;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		SpriteBatch SpriteBatch;
 
 
 		/// <summary>

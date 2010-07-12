@@ -179,7 +179,10 @@ namespace DungeonEye.Forms
 			{
 				ParentForm.FormClosing += new FormClosingEventHandler(ParentForm_FormClosing);
 			}
+
+			SpriteBatch = new SpriteBatch();
 		}
+
 
 		/// <summary>
 		/// Form closing
@@ -189,10 +192,12 @@ namespace DungeonEye.Forms
 		void ParentForm_FormClosing(object sender, FormClosingEventArgs e)
 		{
 			if (TileSet != null)
-			{
 				TileSet.Dispose();
-				TileSet = null;
-			}
+			TileSet = null;
+
+			if (SpriteBatch != null)
+				SpriteBatch.Dispose();
+			SpriteBatch = null;
 		}
 
 
@@ -253,8 +258,9 @@ namespace DungeonEye.Forms
 			GlControl.MakeCurrent();
 			try
 			{
+				SpriteBatch.Begin();
 				// Background texture
-				CheckerBoard.Blit(new Rectangle(Point.Empty, GlControl.Size), TextureLayout.Tile);
+				SpriteBatch.Draw(CheckerBoard, new Rectangle(Point.Empty, GlControl.Size), Color.White);
 
 				if (Monster == null)
 					return;
@@ -263,8 +269,10 @@ namespace DungeonEye.Forms
 				{
 					Tile tile = TileSet.GetTile(Monster.Tile);
 					Point pos = new Point((GlControl.Width - tile.Size.Width) / 2 + tile.Size.Width / 2, (GlControl.Height - tile.Size.Height) / 2 + tile.Size.Height);
-					TileSet.Draw(Monster.Tile, pos);
+					SpriteBatch.DrawTile(TileSet, Monster.Tile, pos);
 				}
+
+				SpriteBatch.End();
 			}
 			finally
 			{
@@ -453,6 +461,11 @@ namespace DungeonEye.Forms
 		/// </summary>
 		TileSet TileSet;
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		SpriteBatch SpriteBatch;
 
 
 		/// <summary>

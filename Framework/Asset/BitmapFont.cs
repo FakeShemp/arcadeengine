@@ -143,16 +143,19 @@ namespace ArcEngine.Asset
 		}
 
 */
+
+	
 		/// <summary>
 		/// Prints some text on the screen within a rectangle with justification
 		/// </summary>
 		/// <param name="batch">Spritebatch handle</param>
 		/// <param name="zone">Rectangle of the text</param>
-		/// <param name="justification">Needed justifcation</param>
+		/// <param name="justification">Text justifcation</param>
 		/// <param name="color">Text color</param>
 		/// <param name="text">Text to print</param>
-		public void DrawText(SpriteBatch batch, Vector4 zone, TextJustification justification, Color color, string text)
+		internal void DrawText(SpriteBatch batch, Vector4 zone, TextJustification justification, Color color, string text)
 		{
+
 			if (string.IsNullOrEmpty(text) || batch == null)
 				return;
 
@@ -210,8 +213,9 @@ namespace ArcEngine.Asset
 
 									int id = int.Parse(reader.GetAttribute("id"));
 									Tile tile = TextTileset.GetTile(id);
-									TextTileset.Draw(id, new Point((int)rect.X, (int)rect.Y));
-									rect = Vector4.Add(rect, new Vector4(tile.Size.Width, 0.0f, 0.0f, 0.0f));
+									batch.DrawTile(TextTileset, id, rect.Xy, Color.White);
+
+									rect.X += tile.Size.Width;
 									//rect.Offset(tile.Size.Width, 0);
 
 									tileoffset = tile.Size.Height - LineHeight;
@@ -275,7 +279,7 @@ namespace ArcEngine.Asset
 								if (tile == null)
 									continue;
 
-								// Move the glyph according to its hot spot
+								// Move the glyph according to its origin
 								Vector4 tmp = new Vector4(
 									rect.X - tile.HotSpot.X * GlyphTileset.Scale.Width, rect.Y - tile.HotSpot.Y * GlyphTileset.Scale.Height,
 									tile.Rectangle.Width * GlyphTileset.Scale.Width, tile.Rectangle.Height * GlyphTileset.Scale.Height);
@@ -284,23 +288,21 @@ namespace ArcEngine.Asset
 								if (tmp.Right >= zone.Right && zone.Size != Vector2.Zero)
 								{
 									tmp.X = zone.X;
-									tmp.Y = tmp.Y + (int)(LineHeight * GlyphTileset.Scale.Height);
+									tmp.Y = tmp.Y + (LineHeight * GlyphTileset.Scale.Height);
 
 									rect.X = zone.X;
-									rect.Y += (int)(LineHeight * GlyphTileset.Scale.Height) + tileoffset;
+									rect.Y += (LineHeight * GlyphTileset.Scale.Height) + tileoffset;
 									tileoffset = 0;
 
 								}
 
 								// Add glyph to the batch
-							//	Display.Buffer.AddRectangle(tmp, currentcolor, tile.Rectangle);
-
-								Vector4 source = new Vector4(tile.Rectangle.X, tile.Rectangle.Y, tile.Rectangle.Width, tile.Rectangle.Height);
-								batch.Draw(GlyphTileset.Texture, tmp, source, currentcolor);
+								batch.DrawTile(GlyphTileset, c - GlyphOffset, tmp.Xy, currentcolor);
+								
 
 								// Move to the next glyph
-								//rect.Offset(tmp.Size.Width + Advance, 0);
-								rect = Vector4.Add(rect, new Vector4(tmp.Width + Advance, 0.0f, 0.0f, 0.0f));
+								rect.X += tmp.Width + Advance;
+								//rect = Vector4.Add(rect, new Vector4(tmp.Width + Advance, 0.0f, 0.0f, 0.0f));
 							}
 						}
 						break;
@@ -322,6 +324,7 @@ namespace ArcEngine.Asset
 			}
 
 		}
+
 
 /*
 

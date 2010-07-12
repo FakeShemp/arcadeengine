@@ -54,6 +54,7 @@ namespace DungeonEye
 		{
 			ResourceManager.LoadBank("data/MainMenu.bnk");
 
+			SpriteBatch = new SpriteBatch();
 	
 			Tileset = ResourceManager.CreateAsset<TileSet>("Main Menu");
 			Tileset.Scale = new SizeF(2.0f, 2.0f);
@@ -93,6 +94,10 @@ namespace DungeonEye
 			if (Font != null)
 				Font.Dispose();
 			Font = null;
+
+			if (SpriteBatch != null)
+				SpriteBatch.Dispose();
+			SpriteBatch = null;
 		}
 
 
@@ -230,26 +235,29 @@ namespace DungeonEye
 			// Clears the background
 			Display.ClearBuffers();
 
+			SpriteBatch.Begin();
 
 			// Background
-			Tileset.Draw(1, Point.Empty);
+			SpriteBatch.DrawTile(Tileset, 1, Point.Empty);
+
 
 			// Draw buttons
 			for (int id = 0; id < Buttons.Count; id++)
 			{
 				ScreenButton button = Buttons[id];
 
-				Point point = button.Rectangle.Location;
 
-				// Text
-				Font.DrawText(point, id == MenuID ? Color.FromArgb(255, 85, 85) : Color.White, button.Text);
-
+				SpriteBatch.DrawString(Font,
+					new Vector2(button.Rectangle.Location.X, button.Rectangle.Location.Y), 
+					id == MenuID ? Color.FromArgb(255, 85, 85) : Color.White, 
+					button.Text);
 			}
 
 
 			// Draw the cursor or the item in the hand
-			Tileset.Draw(0, Mouse.Location);
-	
+			SpriteBatch.DrawTile(Tileset, 0, Mouse.Location, Color.White);
+
+			SpriteBatch.End();
 		}
 
 		#endregion
@@ -269,6 +277,7 @@ namespace DungeonEye
 		/// </summary>
 		BitmapFont Font;
 
+
 		/// <summary>
 		/// List of buttons
 		/// </summary>
@@ -280,10 +289,17 @@ namespace DungeonEye
 		/// </summary>
 		int MenuID;
 
+
 		/// <summary>
 		/// String table
 		/// </summary>
 		StringTable StringTable;
+
+
+		/// <summary>
+		/// Spritebatch
+		/// </summary>
+		SpriteBatch SpriteBatch;
 
 
 		#endregion

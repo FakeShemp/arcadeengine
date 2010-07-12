@@ -26,7 +26,7 @@ using System.Windows.Forms;
 using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
-using OpenTK.Graphics.OpenGL;
+using OpenTK;
 
 namespace DungeonEye.Forms
 {
@@ -143,8 +143,8 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void GlControl_Paint(object sender, PaintEventArgs e)
 		{
-			if (GlControlBox.Context == null)
-				return;
+		//	if (GlControlBox.Context == null)
+		//		return;
 
 			GlControlBox.MakeCurrent();
 

@@ -61,6 +61,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Shaders\scene.frag" />
+    <None Include="Shaders\scene.vert" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Framework\ArcEngine.csproj">

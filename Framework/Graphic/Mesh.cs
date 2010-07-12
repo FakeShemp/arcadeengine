@@ -126,7 +126,7 @@ namespace ArcEngine.Graphic
 		/// <param name="name"></param>
 		/// <param name="primitiveType"></param>
 		/// <param name="indices"></param>
-		public void AddIndexedTopology(string name, int primitiveType, uint[] indices) 
+		public void AddIndexedTopology(string name, int primitiveType, int[] indices) 
 		{
 		}
 
@@ -302,7 +302,10 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="size"></param>
+		/// <param name="radius"></param>
+		/// <param name="height"></param>
+		/// <param name="slice"></param>
+		/// <param name="stacks"></param>
 		/// <returns></returns>
 		public static Mesh CreateCone(float radius, float height, int slice, int stacks)
 		{

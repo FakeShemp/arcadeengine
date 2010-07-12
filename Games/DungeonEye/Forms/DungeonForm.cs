@@ -25,7 +25,6 @@ using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Forms;
 using ArcEngine.Graphic;
-using OpenTK.Graphics.OpenGL;
 
 
 namespace DungeonEye.Forms
@@ -176,7 +175,7 @@ namespace DungeonEye.Forms
 			glControl.MakeCurrent();
 			Display.Init();
 
-
+			SpriteBatch = new SpriteBatch();
 			Batch = new BatchBuffer();
 
 			// Preload texture resources
@@ -422,8 +421,8 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void GlControl_Paint(object sender, PaintEventArgs e)
 		{
-			if (glControl.Context == null)
-				return;
+		//	if (glControl.Context == null)
+		//		return;
 
 
 			glControl.MakeCurrent();
@@ -734,6 +733,9 @@ namespace DungeonEye.Forms
 			{
 				Save();
 		//		Dungeon.Dispose();
+				if (SpriteBatch != null)
+					SpriteBatch.Dispose();
+				SpriteBatch = null;
 			}
 			else if (result == DialogResult.Cancel)
 			{
@@ -841,8 +843,8 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void GlPreviewControl_Paint(object sender, PaintEventArgs e)
 		{
-			if (GlPreviewControl.Context == null)
-				return;
+		//	if (GlPreviewControl.Context == null)
+		//		return;
 
 			GlPreviewControl.MakeCurrent();
 			Display.ClearBuffers();
@@ -854,7 +856,7 @@ namespace DungeonEye.Forms
 			}
 
 
-			Maze.Draw(PreviewLoc);
+			Maze.Draw(SpriteBatch, PreviewLoc);
 
 			GlPreviewControl.SwapBuffers();
 		}
@@ -1005,6 +1007,13 @@ namespace DungeonEye.Forms
 		/// Preview location
 		/// </summary>
 		DungeonLocation PreviewLoc;
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		SpriteBatch SpriteBatch;
+
 
 		/// <summary>
 		/// Maze icons

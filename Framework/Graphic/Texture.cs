@@ -163,7 +163,7 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		~Texture()
 		{
-			throw new Exception("Texture : Handle (id=" + Handle.ToString() + ") != -1, Call Dispose() !!");
+		//	throw new Exception("Texture : Handle (id=" + Handle.ToString() + ") != -1, Call Dispose() !!");
 		}
 
 
@@ -830,7 +830,7 @@ namespace ArcEngine.Graphic
 		#endregion
 
 
-		public string ToString()
+		public override string ToString()
 		{
 			return String.Format("Texture {0}", Handle);
 		}

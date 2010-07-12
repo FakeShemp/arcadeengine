@@ -77,8 +77,8 @@ namespace ArcEngine.Asset
 			Display.ScissorZone = Layer.Viewport;
 
 			// Display tile
-			if(Layer.Animation.TileSet != null && TileID != -1)
-				Layer.Animation.TileSet.Draw(TileID, TileLocation);
+	//		if(Layer.Animation.TileSet != null && TileID != -1)
+	//			Layer.Animation.TileSet.Draw(TileID, TileLocation);
 
 			// Display text
 			if (TextID != -1 && Layer.Animation.StringTable != null && Layer.Animation.Font != null)

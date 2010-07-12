@@ -92,15 +92,15 @@ namespace DungeonEye
 
 			// Default texture parameters
 			Display.TextureParameters.BorderColor = Color.Black;
-			Display.TextureParameters.MagFilter = OpenTK.Graphics.OpenGL.TextureMagFilter.Linear;
-			Display.TextureParameters.MinFilter = OpenTK.Graphics.OpenGL.TextureMinFilter.Linear;
+			Display.TextureParameters.MagFilter = TextureMagFilter.Linear;
+			Display.TextureParameters.MinFilter = TextureMinFilter.Linear;
 	
 
 			// Display settings
 			Mouse.Visible = false;
 
 			GSM.AddScreen(new MainMenu());
-			GSM.AddScreen(new Team(null));
+			//GSM.AddScreen(new Team(null));
 			//GSM.AddScreen(new IntroScreen());
 			//GSM.AddScreen(new CharGen());
 		}

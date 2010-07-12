@@ -60,10 +60,25 @@ namespace DungeonEye
 
 			Font = ResourceManager.CreateAsset<BitmapFont>("intro");
 			Font.GlyphTileset.Scale = new SizeF(2, 2);
+
+			SpriteBatch = new SpriteBatch();
 		}
 
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		public override void UnloadContent()
+		{
+			if (SpriteBatch != null)
+				SpriteBatch.Dispose();
+			SpriteBatch = null;
+
+			if (Font != null)
+				Font.Dispose();
+			Font = null;
+		}
 
 
 		#region Update & draw
@@ -110,16 +125,16 @@ namespace DungeonEye
 			// Clears the background
 			Display.ClearBuffers();
 
+			SpriteBatch.Begin();
 
 			if (Scene != null)
-			Scene.Draw();
+			Scene.Draw(SpriteBatch);
 
 
 			// Debug info
-			if (Font != null)
-			{
-				Font.DrawText(new Point(20, 160), Color.White, Scene.Time.TotalSeconds.ToString());
-			}
+			SpriteBatch.DrawString(Font, new Vector2(20, 160), Color.White, Scene.Time.TotalSeconds.ToString());
+
+			SpriteBatch.End();
 		}
 
 		#endregion
@@ -138,6 +153,13 @@ namespace DungeonEye
 		/// 
 		/// </summary>
 		BitmapFont Font;
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		SpriteBatch SpriteBatch;
+
 
 		#endregion
 
