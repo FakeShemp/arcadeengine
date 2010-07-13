@@ -138,9 +138,9 @@ namespace ArcEngine.Asset
 		/// Draws the animation
 		/// </summary>
 		/// <param name="location">Location on the screen</param>
-		public void Draw(Point location)
+		public void Draw(SpriteBatch batch, Point location)
 		{
-			Draw(location, 0.0f, false, false);
+			Draw(batch, location, 0.0f, false, false);
 		}
 
 
@@ -148,18 +148,19 @@ namespace ArcEngine.Asset
 		/// <summary>
 		/// Draws the animation
 		/// </summary>
+        /// <param name="batch"></param>
 		/// <param name="location">Location on the scren</param>
 		/// <param name="rotate">Angle of rotation</param>
 		/// <param name="flipx">Horizontal flip</param>
 		/// <param name="flipy">Vertical flip</param>
-		public void Draw(Point location, float rotate, bool flipx, bool flipy)
+        public void Draw(SpriteBatch batch, Point location, float rotate, bool flipx, bool flipy)
 		{
-			if (TileSet == null || CurrentTile == null)
+			if (TileSet == null || CurrentTile == null ||batch == null)
 				return;
 
-			//Rectangle rect = new Rectangle(location, CurrentTile.Size);
+			Rectangle rect = new Rectangle(location, CurrentTile.Size);
 
-	//		TileSet.Draw(Frames[CurrentFrame], location);
+	    	batch.DrawTile(TileSet, Frames[CurrentFrame], location);
 
 		}
 

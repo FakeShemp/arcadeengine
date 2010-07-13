@@ -40,11 +40,14 @@ namespace DungeonEye
 	public class Team : GameScreen
 	{
 
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		public Team(Hero[] heroes)
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="batch">SpriteBatch to use</param>
+        /// <param name="heroes">Heroes</param>
+        public Team(SpriteBatch batch, Hero[] heroes)
 		{
+            Batch = batch;
 			Messages = new List<ScreenMessage>();
 			CampWindow = new CampWindow();
 			TeamSpeed = TimeSpan.FromSeconds(0.15f);
@@ -97,11 +100,6 @@ namespace DungeonEye
 				SpellBook.Dispose();
 			SpellBook = null;
 
-			if (SpriteBatch != null)
-				SpriteBatch.Dispose();
-			SpriteBatch = null;
-
-
 			SaveGame = "";
 			Heroes = null;
 			SelectedHero = null;
@@ -123,8 +121,6 @@ namespace DungeonEye
 			System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
 			watch.Start();
 			
-			SpriteBatch = new SpriteBatch();
-
 			ResourceManager.ClearAssets();
 			ResourceManager.LoadBank("data/game.bnk");
 			Trace.WriteLine("Content loaded ({0} ms)", watch.ElapsedMilliseconds);
@@ -356,33 +352,35 @@ namespace DungeonEye
 		public override void Draw()
 		{
 
+            Batch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Deferred, false);
+
 			// Draw the current maze
-			if (Location.Maze != null)
-				Location.Maze.Draw(SpriteBatch, Location);
+            if (Location.Maze != null)
+                Location.Maze.Draw(Batch, Location);
 
 
 			// The backdrop
-			SpriteBatch.DrawTile(TileSet, 0, Point.Empty);
+			Batch.DrawTile(TileSet, 0, Point.Empty);
 
 
 			// Display the compass
-			SpriteBatch.DrawTile(TileSet, 5 + (int)Location.Direction * 3, new Point(224, 254));
-			SpriteBatch.DrawTile(TileSet, 6 + (int)Location.Direction * 3, new Point(154, 308));
-			SpriteBatch.DrawTile(TileSet, 7 + (int)Location.Direction * 3, new Point(298, 308));
+			Batch.DrawTile(TileSet, 5 + (int)Location.Direction * 3, new Point(224, 254));
+			Batch.DrawTile(TileSet, 6 + (int)Location.Direction * 3, new Point(154, 308));
+			Batch.DrawTile(TileSet, 7 + (int)Location.Direction * 3, new Point(298, 308));
 
 
 			// Interfaces
 			if (Interface == TeamInterface.Inventory)
-				DrawInventory(SpriteBatch);
+				DrawInventory(Batch);
 
 			else if (Interface == TeamInterface.Statistic)
-				DrawStatistics(SpriteBatch);
+				DrawStatistics(Batch);
 
 			else
 			{
-				DrawMain(SpriteBatch);
+				DrawMain(Batch);
 
-				CampWindow.Draw(SpriteBatch);
+				CampWindow.Draw(Batch);
 			}
 
 
@@ -391,13 +389,13 @@ namespace DungeonEye
 			int i = 0;
 			foreach (ScreenMessage msg in Messages)
 			{
-				SpriteBatch.DrawString(Font, new Point(10, 358 + i * 12), msg.Color, msg.Message);
+				Batch.DrawString(Font, new Point(10, 358 + i * 12), msg.Color, msg.Message);
 				i++;
 			}
 
 
 			// Draw the spell window
-			SpellBook.Draw(SpriteBatch);
+			SpellBook.Draw(Batch);
 
 
 			
@@ -412,10 +410,11 @@ namespace DungeonEye
 
 			// Draw the cursor or the item in the hand
 			if (ItemInHand != null)
-				SpriteBatch.DrawTile(Items, ItemInHand.TileID, Mouse.Location);
+				Batch.DrawTile(Items, ItemInHand.TileID, Mouse.Location);
 			else
-				SpriteBatch.DrawTile(Items, 0, Mouse.Location);
+				Batch.DrawTile(Items, 0, Mouse.Location);
 
+            Batch.End();
 		}
 
 
@@ -2642,7 +2641,7 @@ namespace DungeonEye
 		/// <summary>
 		/// 
 		/// </summary>
-		SpriteBatch SpriteBatch;
+		SpriteBatch Batch;
 
 
 		/// <summary>

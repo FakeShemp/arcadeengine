@@ -517,7 +517,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Draw the maze
 		/// </summary>
-		/// <param name="batch"></param>
+		/// <param name="batch">SpriteBatch to use</param>
 		/// <param name="location">Location to display from</param>
 		/// <see cref="http://eob.wikispaces.com/eob.vmp"/>
 		public void Draw(SpriteBatch batch, DungeonLocation location)
@@ -723,7 +723,7 @@ namespace DungeonEye
 			{
 				// Walls
 				foreach (TileDrawing tmp in MazeDisplayCoordinates.GetWalls(position))
-					batch.DrawTile(WallTileset, tmp.ID, tmp.Location, Color.White, 0.0f, td.Effect, 0.0f);
+					batch.DrawTile(WallTileset, tmp.ID, tmp.Location, Color.White, 0.0f, tmp.Effect, 0.0f);
 
 
 				// Alcoves

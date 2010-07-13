@@ -593,10 +593,10 @@ namespace ArcEngine.Graphic
 		/// <param name="text">Text to print</param>
 		public void DrawString(BitmapFont font, Vector4 rectangle, TextJustification justification, Color color, string text)
 		{
-		//	RectangleF zone = new RectangleF(rectangle.X, rectangle.Y, rectangle.Z, rectangle.W);
+            if (font == null)
+                return;
 
 			font.DrawText(this, rectangle, justification, color, text);
-
 		}
 
 
@@ -617,15 +617,21 @@ namespace ArcEngine.Graphic
 
 
 		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="Font"></param>
-		/// <param name="rectangle"></param>
-		/// <param name="color"></param>
-		/// <param name="Text"></param>
-		public void DrawString(BitmapFont Font, Rectangle rectangle, Color color, string Text)
+        /// Prints some text on the screen 
+        /// </summary>
+        /// <param name="font">Font to use</param>
+        /// <param name="rectangle">Rectangle of the text</param>
+        /// <param name="color">Color</param>
+        /// <param name="text">Text to print</param>
+        public void DrawString(BitmapFont font, Rectangle rectangle, Color color, string text)
 		{
+            Vector4 zone = new Vector4();
+            zone.X = rectangle.X;
+            zone.Y = rectangle.Y;
+            zone.Z = rectangle.Right;
+            zone.W = rectangle.Width;
 
+            DrawString(font, zone, TextJustification.Left, color, text);
 		}
 
 		#endregion

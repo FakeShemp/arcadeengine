@@ -40,8 +40,9 @@ namespace DungeonEye
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public CharGen()
+		public CharGen(SpriteBatch batch)
 		{
+            Batch = batch;
 			Heroes = new Hero[4];
 
 			HeroeBoxes = new Rectangle[] 
@@ -95,8 +96,6 @@ namespace DungeonEye
 			Anims.TileSet.Scale = new SizeF(2.0f, 2.0f);
 			Anims.Play();
 
-			SpriteBatch = new SpriteBatch();
-
 			CurrentState = CharGenStates.SelectHero;
 		}
 
@@ -108,19 +107,22 @@ namespace DungeonEye
 		{
 			if (Tileset != null)
 				Tileset.Dispose();
+			Tileset = null;
+
+            if (Heads != null)
+                Heads.Dispose();
+            Heads = null;
 
 			if (Font != null)
 				Font.Dispose();
+			Font = null;
+
+            if (NameFont != null)
+                NameFont.Dispose();
+            NameFont = null;
 
 			if (Anims != null)
 				Anims.Dispose();
-
-			if (SpriteBatch != null)
-				SpriteBatch.Dispose();
-			SpriteBatch = null;
-
-			Tileset = null;
-			Font = null;
 			Anims = null;
 		}
 
@@ -136,7 +138,7 @@ namespace DungeonEye
 		void PlayButton_Selected(object sender, EventArgs e)
 		{
 
-			ScreenManager.AddScreen(new Team(Heroes));
+			ScreenManager.AddScreen(new Team(Batch, Heroes));
 			ExitScreen();
 		}
 
@@ -433,11 +435,12 @@ namespace DungeonEye
 			// Clears the background
 			Display.ClearBuffers();
 
-			SpriteBatch.Begin();
+            Batch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Immediate, false);
+
 
 			// Background
 			//Tileset.Draw(0, Point.Empty);
-			SpriteBatch.DrawTile(Tileset, 0, Point.Empty, Color.White);
+			Batch.DrawTile(Tileset, 0, Point.Empty, Color.White);
 
 			// Heroes faces and names
 			for (int i = 0; i < 4; i++)
@@ -446,10 +449,10 @@ namespace DungeonEye
 				if (hero == null)
 					continue;
 
-				SpriteBatch.DrawTile(Heads, hero.Head, HeroeBoxes[i].Location);
+				Batch.DrawTile(Heads, hero.Head, HeroeBoxes[i].Location);
 				//Heads.Draw(hero.Head, HeroeBoxes[i].Location);
 
-				SpriteBatch.DrawString(NameFont, NameLocations[i], Color.Blue, hero.Name);
+				Batch.DrawString(NameFont, NameLocations[i], Color.Blue, hero.Name);
 				//NameFont.DrawText(NameLocations[i], Color.Blue, hero.Name);
 			}
 
@@ -458,12 +461,11 @@ namespace DungeonEye
 				#region Select hero
 				case CharGenStates.SelectHero:
 				{
-					SpriteBatch.DrawString(Font, new Rectangle(304, 160, 300, 64), Color.White, StringTable.GetString(1));
+					Batch.DrawString(Font, new Rectangle(304, 160, 300, 64), Color.White, StringTable.GetString(1));
 
 					// Team is ready, game can begin...
 					if (IsTeamReadyToPlay)
-						//Tileset.Draw(1, new Point(48, 362));
-						SpriteBatch.DrawTile(Tileset, 1, new Point(48, 362));
+						Batch.DrawTile(Tileset, 1, new Point(48, 362));
 				}
 				break;
 				#endregion
@@ -471,8 +473,8 @@ namespace DungeonEye
 				#region Select race
 				case CharGenStates.SelectRace:
 				{
-					Anims.Draw(HeroeBoxes[HeroID].Location);
-					SpriteBatch.DrawString(Font, new Rectangle(294, 134, 300, 64), Color.FromArgb(85, 255, 255), StringTable.GetString(34));
+					Anims.Draw(Batch, HeroeBoxes[HeroID].Location);
+					Batch.DrawString(Font, new Rectangle(294, 134, 300, 64), Color.FromArgb(85, 255, 255), StringTable.GetString(34));
 
 					Point point = new Point(300, 140);
 					Color color;
@@ -484,7 +486,7 @@ namespace DungeonEye
 						else
 							color = Color.White;
 
-						SpriteBatch.DrawString(Font, point, color, StringTable.GetString(i + 22));
+						Batch.DrawString(Font, point, color, StringTable.GetString(i + 22));
 					}
 
 				}
@@ -494,8 +496,8 @@ namespace DungeonEye
 				#region Select class
 				case CharGenStates.SelectClass:
 				{
-					Anims.Draw(HeroeBoxes[HeroID].Location);
-					SpriteBatch.DrawString(Font, new Rectangle(304, 140, 300, 64), Color.FromArgb(85, 255, 255), StringTable.GetString(2));
+					Anims.Draw(Batch, HeroeBoxes[HeroID].Location);
+					Batch.DrawString(Font, new Rectangle(304, 140, 300, 64), Color.FromArgb(85, 255, 255), StringTable.GetString(2));
 
 					Point point = new Point(304, 0);
 					Color color;
@@ -507,12 +509,12 @@ namespace DungeonEye
 						else
 							color = Color.White;
 
-						SpriteBatch.DrawString(Font, point, color, StringTable.GetString(i + 3));
+						Batch.DrawString(Font, point, color, StringTable.GetString(i + 3));
 					}
 
 					// Back
-					SpriteBatch.DrawTile(Tileset, 3, BackButton.Location);
-					SpriteBatch.DrawTile(Tileset, 12, new Point(BackButton.Location.X + 12, BackButton.Location.Y + 12));
+					Batch.DrawTile(Tileset, 3, BackButton.Location);
+					Batch.DrawTile(Tileset, 12, new Point(BackButton.Location.X + 12, BackButton.Location.Y + 12));
 				}
 				break;
 				#endregion
@@ -520,8 +522,8 @@ namespace DungeonEye
 				#region Select alignment
 				case CharGenStates.SelectAlignment:
 				{
-					Anims.Draw(HeroeBoxes[HeroID].Location);
-					SpriteBatch.DrawString(Font, new Rectangle(304, 140, 300, 64), Color.FromArgb(85, 255, 255), StringTable.GetString(12));
+                    Anims.Draw(Batch, HeroeBoxes[HeroID].Location);
+					Batch.DrawString(Font, new Rectangle(304, 140, 300, 64), Color.FromArgb(85, 255, 255), StringTable.GetString(12));
 
 					Point point = new Point(304, 0);
 					Color color;
@@ -533,12 +535,12 @@ namespace DungeonEye
 						else
 							color = Color.White;
 
-						SpriteBatch.DrawString(Font, point, color, StringTable.GetString(i + 13));
+						Batch.DrawString(Font, point, color, StringTable.GetString(i + 13));
 					}
 
 					// Back
-					SpriteBatch.DrawTile(Tileset, 3, BackButton.Location);
-					SpriteBatch.DrawTile(Tileset, 12, new Point(BackButton.Location.X + 12, BackButton.Location.Y + 12));
+					Batch.DrawTile(Tileset, 3, BackButton.Location);
+					Batch.DrawTile(Tileset, 12, new Point(BackButton.Location.X + 12, BackButton.Location.Y + 12));
 				}
 				break;
 				#endregion
@@ -546,36 +548,36 @@ namespace DungeonEye
 				#region Select face
 				case CharGenStates.SelectFace:
 				{
-					Anims.Draw(HeroeBoxes[HeroID].Location);
+                    Anims.Draw(Batch, HeroeBoxes[HeroID].Location);
 
 					// Class and professions
-					SpriteBatch.DrawString(Font, new Rectangle(300, 210, 300, 64), Color.White, CurrentHero.Race.ToString());
+					Batch.DrawString(Font, new Rectangle(300, 210, 300, 64), Color.White, CurrentHero.Race.ToString());
 					string txt = string.Empty;
 					foreach (Profession prof in CurrentHero.Professions)
 						txt += prof.Class.ToString() + "/";
 					txt = txt.Substring(0, txt.Length - 1);
-					SpriteBatch.DrawString(Font, new Rectangle(300, 228, 300, 64), Color.White, txt);
+					Batch.DrawString(Font, new Rectangle(300, 228, 300, 64), Color.White, txt);
 
-					SpriteBatch.DrawString(Font, new Rectangle(294, 256, 300, 64), Color.White, "STR " + CurrentHero.Strength.Value.ToString());
-					SpriteBatch.DrawString(Font, new Rectangle(294, 276, 300, 64), Color.White, "INT " + CurrentHero.Intelligence.Value.ToString());
-					SpriteBatch.DrawString(Font, new Rectangle(294, 296, 300, 64), Color.White, "WIS " + CurrentHero.Wisdom.Value.ToString());
-					SpriteBatch.DrawString(Font, new Rectangle(294, 316, 300, 64), Color.White, "DEX " + CurrentHero.Dexterity.Value.ToString());
-					SpriteBatch.DrawString(Font, new Rectangle(294, 336, 300, 64), Color.White, "CON " + CurrentHero.Constitution.Value.ToString());
-					SpriteBatch.DrawString(Font, new Rectangle(294, 356, 300, 64), Color.White, "CHA " + CurrentHero.Charisma.Value.ToString());
-					SpriteBatch.DrawString(Font, new Rectangle(462, 256, 300, 64), Color.White, "AC  " + CurrentHero.ArmorClass.ToString());
-					SpriteBatch.DrawString(Font, new Rectangle(462, 276, 300, 64), Color.White, "HP  " + CurrentHero.HitPoint.Max.ToString());
-					SpriteBatch.DrawString(Font, new Rectangle(462, 296, 300, 64), Color.White, "LVL ");
+					Batch.DrawString(Font, new Rectangle(294, 256, 300, 64), Color.White, "STR " + CurrentHero.Strength.Value.ToString());
+					Batch.DrawString(Font, new Rectangle(294, 276, 300, 64), Color.White, "INT " + CurrentHero.Intelligence.Value.ToString());
+					Batch.DrawString(Font, new Rectangle(294, 296, 300, 64), Color.White, "WIS " + CurrentHero.Wisdom.Value.ToString());
+					Batch.DrawString(Font, new Rectangle(294, 316, 300, 64), Color.White, "DEX " + CurrentHero.Dexterity.Value.ToString());
+					Batch.DrawString(Font, new Rectangle(294, 336, 300, 64), Color.White, "CON " + CurrentHero.Constitution.Value.ToString());
+					Batch.DrawString(Font, new Rectangle(294, 356, 300, 64), Color.White, "CHA " + CurrentHero.Charisma.Value.ToString());
+					Batch.DrawString(Font, new Rectangle(462, 256, 300, 64), Color.White, "AC  " + CurrentHero.ArmorClass.ToString());
+					Batch.DrawString(Font, new Rectangle(462, 276, 300, 64), Color.White, "HP  " + CurrentHero.HitPoint.Max.ToString());
+					Batch.DrawString(Font, new Rectangle(462, 296, 300, 64), Color.White, "LVL ");
 
 
 					// Left/right box
-					SpriteBatch.DrawTile(Tileset, 3, new Point(288, 132));
-					SpriteBatch.DrawTile(Tileset, 18, new Point(300, 140));
-					SpriteBatch.DrawTile(Tileset, 3, new Point(288, 164));
-					SpriteBatch.DrawTile(Tileset, 19, new Point(300, 172));
+					Batch.DrawTile(Tileset, 3, new Point(288, 132));
+					Batch.DrawTile(Tileset, 18, new Point(300, 140));
+					Batch.DrawTile(Tileset, 3, new Point(288, 164));
+					Batch.DrawTile(Tileset, 19, new Point(300, 172));
 
 					// Faces
 					for (int i = 0; i < 4; i++)
-						SpriteBatch.DrawTile(Heads, i + FaceOffset, new Point(354 + i * 64, 132));
+						Batch.DrawTile(Heads, i + FaceOffset, new Point(354 + i * 64, 132));
 
 				}
 				break;
@@ -585,40 +587,40 @@ namespace DungeonEye
 				case CharGenStates.Confirm:
 				{
 					// Class and professions
-					SpriteBatch.DrawString(Font, new Rectangle(300, 210, 300, 64), Color.White, CurrentHero.Race.ToString());
+					Batch.DrawString(Font, new Rectangle(300, 210, 300, 64), Color.White, CurrentHero.Race.ToString());
 					string txt = string.Empty;
 					foreach (Profession prof in CurrentHero.Professions)
 						txt += prof.Class.ToString() + "/";
 					txt = txt.Substring(0, txt.Length - 1);
-					SpriteBatch.DrawString(Font, new Rectangle(300, 228, 300, 64), Color.White, txt);
+					Batch.DrawString(Font, new Rectangle(300, 228, 300, 64), Color.White, txt);
 
-					SpriteBatch.DrawString(Font, new Rectangle(294, 256, 300, 64), Color.White, "STR " + CurrentHero.Strength.Value.ToString());
-					SpriteBatch.DrawString(Font, new Rectangle(294, 276, 300, 64), Color.White, "INT " + CurrentHero.Intelligence.Value.ToString());
-					SpriteBatch.DrawString(Font, new Rectangle(294, 296, 300, 64), Color.White, "WIS " + CurrentHero.Wisdom.Value.ToString());
-					SpriteBatch.DrawString(Font, new Rectangle(294, 316, 300, 64), Color.White, "DEX " + CurrentHero.Dexterity.Value.ToString());
-					SpriteBatch.DrawString(Font, new Rectangle(294, 336, 300, 64), Color.White, "CON " + CurrentHero.Constitution.Value.ToString());
-					SpriteBatch.DrawString(Font, new Rectangle(294, 356, 300, 64), Color.White, "CHA " + CurrentHero.Charisma.Value.ToString());
-					SpriteBatch.DrawString(Font, new Rectangle(462, 256, 300, 64), Color.White, "AC  " + CurrentHero.ArmorClass.ToString());
-					SpriteBatch.DrawString(Font, new Rectangle(462, 276, 300, 64), Color.White, "HP  " + CurrentHero.HitPoint.Max.ToString());
-					SpriteBatch.DrawString(Font, new Rectangle(462, 296, 300, 64), Color.White, "LVL ");
+					Batch.DrawString(Font, new Rectangle(294, 256, 300, 64), Color.White, "STR " + CurrentHero.Strength.Value.ToString());
+					Batch.DrawString(Font, new Rectangle(294, 276, 300, 64), Color.White, "INT " + CurrentHero.Intelligence.Value.ToString());
+					Batch.DrawString(Font, new Rectangle(294, 296, 300, 64), Color.White, "WIS " + CurrentHero.Wisdom.Value.ToString());
+					Batch.DrawString(Font, new Rectangle(294, 316, 300, 64), Color.White, "DEX " + CurrentHero.Dexterity.Value.ToString());
+					Batch.DrawString(Font, new Rectangle(294, 336, 300, 64), Color.White, "CON " + CurrentHero.Constitution.Value.ToString());
+					Batch.DrawString(Font, new Rectangle(294, 356, 300, 64), Color.White, "CHA " + CurrentHero.Charisma.Value.ToString());
+					Batch.DrawString(Font, new Rectangle(462, 256, 300, 64), Color.White, "AC  " + CurrentHero.ArmorClass.ToString());
+					Batch.DrawString(Font, new Rectangle(462, 276, 300, 64), Color.White, "HP  " + CurrentHero.HitPoint.Max.ToString());
+					Batch.DrawString(Font, new Rectangle(462, 296, 300, 64), Color.White, "LVL ");
 
-					SpriteBatch.DrawTile(Heads, CurrentHero.Head, new Point(438, 132));
+					Batch.DrawTile(Heads, CurrentHero.Head, new Point(438, 132));
 
 					// Reroll
-					SpriteBatch.DrawTile(Tileset, 5, new Point(448, 318));
-					SpriteBatch.DrawTile(Tileset, 11, new Point(462, 330));
+					Batch.DrawTile(Tileset, 5, new Point(448, 318));
+					Batch.DrawTile(Tileset, 11, new Point(462, 330));
 
 					// Faces
-					SpriteBatch.DrawTile(Tileset, 5, new Point(448, 350));
-					SpriteBatch.DrawTile(Tileset, 20, new Point(466, 362));
+					Batch.DrawTile(Tileset, 5, new Point(448, 350));
+					Batch.DrawTile(Tileset, 20, new Point(466, 362));
 
 					// Modify
-					SpriteBatch.DrawTile(Tileset, 5, new Point(528, 316));
-					SpriteBatch.DrawTile(Tileset, 14, new Point(540, 328));
+					Batch.DrawTile(Tileset, 5, new Point(528, 316));
+					Batch.DrawTile(Tileset, 14, new Point(540, 328));
 
 					// Keep
-					SpriteBatch.DrawTile(Tileset, 5, new Point(528, 350));
-					SpriteBatch.DrawTile(Tileset, 13, new Point(550, 360));
+					Batch.DrawTile(Tileset, 5, new Point(528, 350));
+					Batch.DrawTile(Tileset, 13, new Point(550, 360));
 				}
 				break;
 				#endregion
@@ -627,20 +629,20 @@ namespace DungeonEye
 				case CharGenStates.SelectName:
 				{
 					//
-					SpriteBatch.DrawString(Font, new Rectangle(296, 200, 300, 64), Color.FromArgb(85, 255, 255), "Name: ");
-					SpriteBatch.DrawString(Font, new Rectangle(380, 200, 300, 64), Color.White, CurrentHero.Name);
+					Batch.DrawString(Font, new Rectangle(296, 200, 300, 64), Color.FromArgb(85, 255, 255), "Name: ");
+					Batch.DrawString(Font, new Rectangle(380, 200, 300, 64), Color.White, CurrentHero.Name);
 
-					SpriteBatch.DrawString(Font, new Rectangle(294, 256, 300, 64), Color.White, "STR " + CurrentHero.Strength.Value.ToString());
-					SpriteBatch.DrawString(Font, new Rectangle(294, 276, 300, 64), Color.White, "INT " + CurrentHero.Intelligence.Value.ToString());
-					SpriteBatch.DrawString(Font, new Rectangle(294, 296, 300, 64), Color.White, "WIS " + CurrentHero.Wisdom.Value.ToString());
-					SpriteBatch.DrawString(Font, new Rectangle(294, 316, 300, 64), Color.White, "DEX " + CurrentHero.Dexterity.Value.ToString());
-					SpriteBatch.DrawString(Font, new Rectangle(294, 336, 300, 64), Color.White, "CON " + CurrentHero.Constitution.Value.ToString());
-					SpriteBatch.DrawString(Font, new Rectangle(294, 356, 300, 64), Color.White, "CHA " + CurrentHero.Charisma.Value.ToString());
-					SpriteBatch.DrawString(Font, new Rectangle(462, 256, 300, 64), Color.White, "AC  " + CurrentHero.ArmorClass.ToString());
-					SpriteBatch.DrawString(Font, new Rectangle(462, 276, 300, 64), Color.White, "HP  " + CurrentHero.HitPoint.Max.ToString());
-					SpriteBatch.DrawString(Font, new Rectangle(462, 296, 300, 64), Color.White, "LVL ");
+					Batch.DrawString(Font, new Rectangle(294, 256, 300, 64), Color.White, "STR " + CurrentHero.Strength.Value.ToString());
+					Batch.DrawString(Font, new Rectangle(294, 276, 300, 64), Color.White, "INT " + CurrentHero.Intelligence.Value.ToString());
+					Batch.DrawString(Font, new Rectangle(294, 296, 300, 64), Color.White, "WIS " + CurrentHero.Wisdom.Value.ToString());
+					Batch.DrawString(Font, new Rectangle(294, 316, 300, 64), Color.White, "DEX " + CurrentHero.Dexterity.Value.ToString());
+					Batch.DrawString(Font, new Rectangle(294, 336, 300, 64), Color.White, "CON " + CurrentHero.Constitution.Value.ToString());
+					Batch.DrawString(Font, new Rectangle(294, 356, 300, 64), Color.White, "CHA " + CurrentHero.Charisma.Value.ToString());
+					Batch.DrawString(Font, new Rectangle(462, 256, 300, 64), Color.White, "AC  " + CurrentHero.ArmorClass.ToString());
+					Batch.DrawString(Font, new Rectangle(462, 276, 300, 64), Color.White, "HP  " + CurrentHero.HitPoint.Max.ToString());
+					Batch.DrawString(Font, new Rectangle(462, 296, 300, 64), Color.White, "LVL ");
 
-					SpriteBatch.DrawTile(Heads, CurrentHero.Head, new Point(438, 132));
+					Batch.DrawTile(Heads, CurrentHero.Head, new Point(438, 132));
 				}
 				break;
 				#endregion
@@ -648,33 +650,33 @@ namespace DungeonEye
 				#region Delete hero
 				case CharGenStates.Delete:
 				{
-					SpriteBatch.DrawTile(Heads, CurrentHero.Head, new Point(438, 132));
-					SpriteBatch.DrawString(Font, new Rectangle(292, 190, 300, 64), Color.White, CurrentHero.Name);
+					Batch.DrawTile(Heads, CurrentHero.Head, new Point(438, 132));
+					Batch.DrawString(Font, new Rectangle(292, 190, 300, 64), Color.White, CurrentHero.Name);
 
 					// Class and professions
-					SpriteBatch.DrawString(Font, new Rectangle(300, 214, 300, 64), Color.White, CurrentHero.Race.ToString());
+					Batch.DrawString(Font, new Rectangle(300, 214, 300, 64), Color.White, CurrentHero.Race.ToString());
 					string txt = string.Empty;
 					foreach (Profession prof in CurrentHero.Professions)
 						txt += prof.Class.ToString() + "/";
 					txt = txt.Substring(0, txt.Length - 1);
-					SpriteBatch.DrawString(Font, new Rectangle(300, 232, 300, 64), Color.White, txt);
+					Batch.DrawString(Font, new Rectangle(300, 232, 300, 64), Color.White, txt);
 
-					SpriteBatch.DrawString(Font, new Rectangle(294, 256, 300, 64), Color.White, "STR " + CurrentHero.Strength.Value.ToString());
-					SpriteBatch.DrawString(Font, new Rectangle(294, 276, 300, 64), Color.White, "INT " + CurrentHero.Intelligence.Value.ToString());
-					SpriteBatch.DrawString(Font, new Rectangle(294, 296, 300, 64), Color.White, "WIS " + CurrentHero.Wisdom.Value.ToString());
-					SpriteBatch.DrawString(Font, new Rectangle(294, 316, 300, 64), Color.White, "DEX " + CurrentHero.Dexterity.Value.ToString());
-					SpriteBatch.DrawString(Font, new Rectangle(294, 336, 300, 64), Color.White, "CON " + CurrentHero.Constitution.Value.ToString());
-					SpriteBatch.DrawString(Font, new Rectangle(294, 356, 300, 64), Color.White, "CHA " + CurrentHero.Charisma.Value.ToString());
-					SpriteBatch.DrawString(Font, new Rectangle(462, 256, 300, 64), Color.White, "AC  " + CurrentHero.ArmorClass.ToString());
-					SpriteBatch.DrawString(Font, new Rectangle(462, 276, 300, 64), Color.White, "HP  " + CurrentHero.HitPoint.Max.ToString());
-					SpriteBatch.DrawString(Font, new Rectangle(462, 296, 300, 64), Color.White, "LVL ");
+					Batch.DrawString(Font, new Rectangle(294, 256, 300, 64), Color.White, "STR " + CurrentHero.Strength.Value.ToString());
+					Batch.DrawString(Font, new Rectangle(294, 276, 300, 64), Color.White, "INT " + CurrentHero.Intelligence.Value.ToString());
+					Batch.DrawString(Font, new Rectangle(294, 296, 300, 64), Color.White, "WIS " + CurrentHero.Wisdom.Value.ToString());
+					Batch.DrawString(Font, new Rectangle(294, 316, 300, 64), Color.White, "DEX " + CurrentHero.Dexterity.Value.ToString());
+					Batch.DrawString(Font, new Rectangle(294, 336, 300, 64), Color.White, "CON " + CurrentHero.Constitution.Value.ToString());
+					Batch.DrawString(Font, new Rectangle(294, 356, 300, 64), Color.White, "CHA " + CurrentHero.Charisma.Value.ToString());
+					Batch.DrawString(Font, new Rectangle(462, 256, 300, 64), Color.White, "AC  " + CurrentHero.ArmorClass.ToString());
+					Batch.DrawString(Font, new Rectangle(462, 276, 300, 64), Color.White, "HP  " + CurrentHero.HitPoint.Max.ToString());
+					Batch.DrawString(Font, new Rectangle(462, 296, 300, 64), Color.White, "LVL ");
 
 					// Delete
-					SpriteBatch.DrawTile(Tileset, 7, new Point(448, 350));
+					Batch.DrawTile(Tileset, 7, new Point(448, 350));
 
 					// OK
-					SpriteBatch.DrawTile(Tileset, 5, new Point(528, 350));
-					SpriteBatch.DrawTile(Tileset, 15, new Point(558, 360));
+					Batch.DrawTile(Tileset, 5, new Point(528, 350));
+					Batch.DrawTile(Tileset, 15, new Point(558, 360));
 
 				}
 				break;
@@ -686,9 +688,9 @@ namespace DungeonEye
 
 
 			// Draw the cursor or the item in the hand
-			SpriteBatch.DrawTile(Tileset, 999, Mouse.Location);
+			Batch.DrawTile(Tileset, 999, Mouse.Location);
 
-			SpriteBatch.End();
+			Batch.End();
 		}
 
 
@@ -998,7 +1000,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Spritebatch
 		/// </summary>
-		SpriteBatch SpriteBatch;
+		SpriteBatch Batch;
 
 		#endregion
 	}

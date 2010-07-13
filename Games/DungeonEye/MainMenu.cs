@@ -54,7 +54,7 @@ namespace DungeonEye
 		{
 			ResourceManager.LoadBank("data/MainMenu.bnk");
 
-			SpriteBatch = new SpriteBatch();
+			Batch = new SpriteBatch();
 	
 			Tileset = ResourceManager.CreateAsset<TileSet>("Main Menu");
 			Tileset.Scale = new SizeF(2.0f, 2.0f);
@@ -95,9 +95,9 @@ namespace DungeonEye
 				Font.Dispose();
 			Font = null;
 
-			if (SpriteBatch != null)
-				SpriteBatch.Dispose();
-			SpriteBatch = null;
+			if (Batch != null)
+				Batch.Dispose();
+			Batch = null;
 		}
 
 
@@ -110,7 +110,7 @@ namespace DungeonEye
 		/// <param name="e"></param>
 		void OptionEvent(object sender, EventArgs e)
 		{
-			ScreenManager.AddScreen(new OptionMenu());
+			ScreenManager.AddScreen(new OptionMenu(Batch));
 		}
 
 
@@ -133,7 +133,7 @@ namespace DungeonEye
 		/// <param name="e"></param>
 		void StartGameEvent(object sender, EventArgs e)
 		{
-			ScreenManager.AddScreen(new CharGen());
+			ScreenManager.AddScreen(new CharGen(Batch));
 		}
 
 
@@ -147,7 +147,7 @@ namespace DungeonEye
 		{
 			if (!System.IO.File.Exists("savegame.xml"))
 				return;
-			Team team = new Team(null);
+			Team team = new Team(Batch, null);
 			team.SaveGame = "savegame.xml";
 
 
@@ -207,19 +207,21 @@ namespace DungeonEye
 				ScreenManager.AddScreen(new IntroScreen());
 
 	
+            // Key up
 			if (Keyboard.IsNewKeyPress(System.Windows.Forms.Keys.Up))
 			{
 				MenuID--;
 				if (MenuID < 0)
 					MenuID = Buttons.Count - 1;
 			}
+            // Key down
 			else if (Keyboard.IsNewKeyPress(System.Windows.Forms.Keys.Down))
 			{
 				MenuID++;
 				if (MenuID >= Buttons.Count)
 					MenuID = 0;
-
 			}
+            // Enter
 			else if (Keyboard.IsNewKeyPress(System.Windows.Forms.Keys.Enter))
 			{
 				Buttons[MenuID].OnSelectEntry();
@@ -235,10 +237,10 @@ namespace DungeonEye
 			// Clears the background
 			Display.ClearBuffers();
 
-			SpriteBatch.Begin();
+			Batch.Begin();
 
 			// Background
-			SpriteBatch.DrawTile(Tileset, 1, Point.Empty);
+			Batch.DrawTile(Tileset, 1, Point.Empty);
 
 
 			// Draw buttons
@@ -247,7 +249,7 @@ namespace DungeonEye
 				ScreenButton button = Buttons[id];
 
 
-				SpriteBatch.DrawString(Font,
+				Batch.DrawString(Font,
 					new Vector2(button.Rectangle.Location.X, button.Rectangle.Location.Y), 
 					id == MenuID ? Color.FromArgb(255, 85, 85) : Color.White, 
 					button.Text);
@@ -255,9 +257,9 @@ namespace DungeonEye
 
 
 			// Draw the cursor or the item in the hand
-			SpriteBatch.DrawTile(Tileset, 0, Mouse.Location, Color.White);
+			Batch.DrawTile(Tileset, 0, Mouse.Location, Color.White);
 
-			SpriteBatch.End();
+			Batch.End();
 		}
 
 		#endregion
@@ -299,7 +301,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Spritebatch
 		/// </summary>
-		SpriteBatch SpriteBatch;
+		SpriteBatch Batch;
 
 
 		#endregion

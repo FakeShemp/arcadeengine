@@ -40,10 +40,10 @@ namespace DungeonEye
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public OptionMenu()
+		public OptionMenu(SpriteBatch batch)
 		{
 			Buttons = new List<ScreenButton>(3);
-
+            Batch = batch;
 		}
 
 
@@ -59,7 +59,6 @@ namespace DungeonEye
 
 			StringTable = ResourceManager.CreateAsset<StringTable>("option");
 
-			SpriteBatch = new SpriteBatch();
 
 			// Available languages
 			Languages = StringTable.LanguagesList;
@@ -87,18 +86,7 @@ namespace DungeonEye
 		/// </summary>
 		public override void UnloadContent()
 		{
-			if (SpriteBatch != null)
-				SpriteBatch.Dispose();
-			SpriteBatch = null;
-
-			if (Tileset != null)
-				Tileset.Dispose();
-			Tileset = null;
-
-			if (Font != null)
-				Font.Dispose();
-			Font = null;
-		}
+        }
 
 
 		#region Events
@@ -201,7 +189,7 @@ namespace DungeonEye
 				ScreenManager.RemoveScreen(this);
 			}
 
-			if (Keyboard.IsNewKeyPress(System.Windows.Forms.Keys.Up))
+			else if (Keyboard.IsNewKeyPress(System.Windows.Forms.Keys.Up))
 			{
 				MenuID--;
 				if (MenuID < 0)
@@ -230,10 +218,10 @@ namespace DungeonEye
 			// Clears the background
 			Display.ClearBuffers();
 
-			SpriteBatch.Begin();
+			Batch.Begin();
 
 			// Background
-			SpriteBatch.DrawTile(Tileset, 1, Point.Empty);
+            Batch.DrawTile(Tileset, 1, Point.Empty);
 
 
 			// Draw buttons
@@ -244,18 +232,18 @@ namespace DungeonEye
 				Point point = button.Rectangle.Location;
 
 				// Text
-				SpriteBatch.DrawString(Font, point, id == MenuID ? Color.FromArgb(255, 85, 85) : Color.White, button.Text);
+                Batch.DrawString(Font, point, id == MenuID ? Color.FromArgb(255, 85, 85) : Color.White, button.Text);
 			}
 
 
 			// Version info
-			SpriteBatch.DrawString(Font, new Point(554, 380), Color.White, "V 0.3");
+            Batch.DrawString(Font, new Point(554, 380), Color.White, "V 0.3");
 
 			// Draw the cursor or the item in the hand
-			SpriteBatch.DrawTile(Tileset, 0, Mouse.Location);
+            Batch.DrawTile(Tileset, 0, Mouse.Location);
 
 
-			SpriteBatch.End();
+            Batch.End();
 		}
 
 		#endregion
@@ -306,10 +294,10 @@ namespace DungeonEye
 		StringTable StringTable;
 
 
-		/// <summary>
-		/// 
-		/// </summary>
-		SpriteBatch SpriteBatch;
+        /// <summary>
+        /// 
+        /// </summary>
+        SpriteBatch Batch;
 
 
 		#endregion

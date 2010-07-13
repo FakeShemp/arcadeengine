@@ -121,6 +121,7 @@ namespace ArcEngine.Editor
 			GlPreviewControl.MakeCurrent();
 			Display.Init();
 
+            SpriteBatch = new SpriteBatch();
 
 	//		Animation.Init();
 
@@ -174,6 +175,10 @@ namespace ArcEngine.Editor
 			if (result == DialogResult.Yes)
 			{
 				Save();
+                if (SpriteBatch != null)
+                    SpriteBatch.Dispose();
+                SpriteBatch = null;
+
 			}
 			else if (result == DialogResult.Cancel)
 			{
@@ -296,7 +301,7 @@ namespace ArcEngine.Editor
 				//if (Animation.TileSet == null)
 				//    return;
 
-				Animation.Draw(AnimOffset);
+				Animation.Draw(SpriteBatch, AnimOffset);
 
 /*
 				Tile tile = Animation.CurrentTile;
@@ -778,6 +783,12 @@ namespace ArcEngine.Editor
 		/// Checkerboard texture
 		/// </summary>
 		Texture CheckerBoard;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        SpriteBatch SpriteBatch;
+
 
 		#endregion
 
