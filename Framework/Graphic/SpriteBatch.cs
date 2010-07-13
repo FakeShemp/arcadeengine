@@ -263,11 +263,27 @@ namespace ArcEngine.Graphic
 
 			for (int i = offset; i < offset + count; i++)
 			{
+                // Destination on the screen
 				Vector4 dst = new Vector4(
 					Sprites[i].Destination.X - Sprites[i].Origin.X, Sprites[i].Destination.Y - Sprites[i].Origin.Y,
 					Sprites[i].Destination.Width, Sprites[i].Destination.Height);
 
-				Buffer.AddRectangle(dst, Sprites[i].Color, Sprites[i].Source);
+                // Texture coordinate
+                Vector4 src = new Vector4(Sprites[i].Source);
+                if ((Sprites[i].Effects & SpriteEffects.FlipHorizontally) == SpriteEffects.FlipHorizontally)
+                {
+                    src.X += src.Z;
+                    src.Z = -src.Z;
+                }
+
+                if ((Sprites[i].Effects & SpriteEffects.FlipVertically) == SpriteEffects.FlipVertically)
+                {
+                    src.Y += src.W;
+                    src.W = -src.W;
+                }
+
+
+				Buffer.AddRectangle(dst, Sprites[i].Color, src);
 			}
 
 
@@ -347,9 +363,10 @@ namespace ArcEngine.Graphic
 				Sprites[spriteQueueCount].Source.Y = source.Y;
 				Sprites[spriteQueueCount].Source.Z = source.Width;
 				Sprites[spriteQueueCount].Source.W = source.Height;
-			}
+            }
 
-			// Add to queue
+
+            // Add to queue
 			Sprites[spriteQueueCount].Destination.X = destination.X;
 			Sprites[spriteQueueCount].Destination.Y = destination.Y;
 			Sprites[spriteQueueCount].Destination.Z = destination.Width;
@@ -483,29 +500,54 @@ namespace ArcEngine.Graphic
 		}
 
 
-		/// <summary>
-		/// Adds a sprite to the batch of sprites to be rendered, specifying the texture, screen position,
-		/// optional source rectangle, color tint, rotation, origin, scale, effects, and sort depth.
-		/// </summary>
-		/// <param name="texture">The sprite texture.</param>
-		/// <param name="position">The location, in screen coordinates, where the sprite will be drawn.</param>
-		/// <param name="source">A rectangle specifying, in texels, which section of the rectangle to draw. Use Rectangle.Empty to draw the entire texture.</param>
-		/// <param name="color">The color channel modulation to use. Use Color.White for full color with no tinting.</param>
-		/// <param name="rotation">The angle, in radians, to rotate the sprite around the origin.</param>
-		/// <param name="origin">The origin of the sprite. Specify (0,0) for the upper-left corner.</param>
-		/// <param name="scale">Uniform multiple by which to scale the sprite width and height</param>
-		/// <param name="effects">Rotations to apply prior to rendering.</param>
-		/// <param name="layerDepth">The sorting depth of the sprite, between 0 (front) and 1 (back).</param>
-		public void Draw(Texture texture, Point position, Rectangle source, Color color, float rotation, Point origin, float scale, SpriteEffects effects, float layerDepth)
-		{
-			Rectangle src = new Rectangle();
-			src.X = position.X;
-			src.Y = position.Y;
-			src.Width = texture.Size.Width;
-			src.Height = texture.Size.Height;
+        /// <summary>
+        /// Adds a sprite to the batch of sprites to be rendered, specifying the texture, screen position,
+        /// optional source rectangle, color tint, rotation, origin, scale, effects, and sort depth.
+        /// </summary>
+        /// <param name="texture">The sprite texture.</param>
+        /// <param name="position">The location, in screen coordinates, where the sprite will be drawn.</param>
+        /// <param name="source">A rectangle specifying, in texels, which section of the rectangle to draw. Use Rectangle.Empty to draw the entire texture.</param>
+        /// <param name="color">The color channel modulation to use. Use Color.White for full color with no tinting.</param>
+        /// <param name="rotation">The angle, in radians, to rotate the sprite around the origin.</param>
+        /// <param name="origin">The origin of the sprite. Specify (0,0) for the upper-left corner.</param>
+        /// <param name="scale">Uniform multiple by which to scale the sprite width and height</param>
+        /// <param name="effects">Rotations to apply prior to rendering.</param>
+        /// <param name="layerDepth">The sorting depth of the sprite, between 0 (front) and 1 (back).</param>
+        public void Draw(Texture texture, Point position, Rectangle source, Color color, float rotation, Point origin, float scale, SpriteEffects effects, float layerDepth)
+        {
+            Rectangle src = new Rectangle();
+            src.X = position.X;
+            src.Y = position.Y;
+            src.Width = texture.Size.Width;
+            src.Height = texture.Size.Height;
 
-			InternalDraw(texture, ref src, ref source, color, rotation, origin, effects, layerDepth);
-		}
+            InternalDraw(texture, ref src, ref source, color, rotation, origin, effects, layerDepth);
+        }
+
+
+        /// <summary>
+        /// Adds a sprite to the batch of sprites to be rendered, specifying the texture, screen position,
+        /// optional source rectangle, color tint, rotation, origin, scale, effects, and sort depth.
+        /// </summary>
+        /// <param name="texture">The sprite texture.</param>
+        /// <param name="position">The location, in screen coordinates, where the sprite will be drawn.</param>
+        /// <param name="source">A rectangle specifying, in texels, which section of the rectangle to draw. Use Rectangle.Empty to draw the entire texture.</param>
+        /// <param name="color">The color channel modulation to use. Use Color.White for full color with no tinting.</param>
+        /// <param name="rotation">The angle, in radians, to rotate the sprite around the origin.</param>
+        /// <param name="origin">The origin of the sprite. Specify (0,0) for the upper-left corner.</param>
+        /// <param name="scale">Uniform multiple by which to scale the sprite width and height</param>
+        /// <param name="effects">Rotations to apply prior to rendering.</param>
+        /// <param name="layerDepth">The sorting depth of the sprite, between 0 (front) and 1 (back).</param>
+        public void Draw(Texture texture, Vector2 position, Vector4 source, Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects, float layerDepth)
+        {
+            Vector4 src = new Vector4();
+            src.X = position.X;
+            src.Y = position.Y;
+            src.Z = texture.Size.Width;
+            src.W = texture.Size.Height;
+
+            InternalDraw(texture, ref src, ref source, color, rotation, origin, effects, layerDepth);
+        }
 
  
 
@@ -789,12 +831,15 @@ namespace ArcEngine.Graphic
 			Vector4 dst = new Vector4();
 			dst.X = position.X;
 			dst.Y = position.Y;
-			dst.Z = tile.Rectangle.Width * tileset.Scale.Width;
-			dst.W = tile.Rectangle.Height * tileset.Scale.Height;
+			dst.Z = tile.Rectangle.Width * tileset.Scale.X;
+			dst.W = tile.Rectangle.Height * tileset.Scale.Y;
 
 			Vector4 src = new Vector4(tile.Rectangle.X, tile.Rectangle.Y, tile.Rectangle.Width, tile.Rectangle.Height);
 
-			Draw(tileset.Texture, dst, src, color);
+            Vector2 origin = new Vector2(tile.HotSpot.X, tile.HotSpot.Y);
+
+            //Draw(tileset.Texture, dst, src, color, rotation, origin, tileset.Scale, effect, depth);
+            InternalDraw(tileset.Texture, ref dst, ref src, color, rotation, origin, effect, depth);
 		}
 
 

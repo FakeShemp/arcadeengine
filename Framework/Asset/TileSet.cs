@@ -44,7 +44,7 @@ namespace ArcEngine.Asset
 		/// </summary>
 		public TileSet() 
 		{
-			Scale = new SizeF(1.0f, 1.0f);
+            Scale = new Vector2(1.0f, 1.0f);
 			tiles = new Dictionary<int, Tile>();
 
 		}
@@ -59,7 +59,7 @@ namespace ArcEngine.Asset
 				Texture.Dispose();
 			Texture = null;
 
-			Scale = new SizeF(1, 1);
+            Scale = new Vector2(1, 1);
 			tiles.Clear();
 			TextureName = "";
 			Name = "";
@@ -649,7 +649,7 @@ namespace ArcEngine.Asset
 		/// Gets/sets the zoom factor of the tiles
 		/// </summary>
 		[Browsable(false)]
-		public SizeF Scale
+		public Vector2 Scale
 		{
 			get;
 			set;

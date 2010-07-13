@@ -158,25 +158,25 @@ namespace DungeonEye
 
 
 			TileSet = ResourceManager.CreateAsset<TileSet>("Interface");
-			TileSet.Scale = new SizeF(2.0f, 2.0f);
+            TileSet.Scale = new Vector2(2.0f, 2.0f);
 			Trace.WriteLine("Tileset ({0} ms)", watch.ElapsedMilliseconds);
 
 
 			Heads = ResourceManager.CreateAsset<TileSet>("Heroes");
-			Heads.Scale = new SizeF(2.0f, 2.0f);
+            Heads.Scale = new Vector2(2.0f, 2.0f);
 			Trace.WriteLine("Head ({0} ms)", watch.ElapsedMilliseconds);
 
 			Items = ResourceManager.CreateAsset<TileSet>("Items");
-			Items.Scale = new SizeF(2.0f, 2.0f);
+            Items.Scale = new Vector2(2.0f, 2.0f);
 			Trace.WriteLine("Items ({0} ms)", watch.ElapsedMilliseconds);
 
 
 
 
 			Font = ResourceManager.CreateSharedAsset<BitmapFont>("inventory");
-			Font.GlyphTileset.Scale = new SizeF(2.0f, 2.0f);
+            Font.GlyphTileset.Scale = new Vector2(2.0f, 2.0f);
 			OutlinedFont = ResourceManager.CreateSharedAsset<BitmapFont>("outline");
-			OutlinedFont.GlyphTileset.Scale = new SizeF(2.0f, 2.0f);
+            OutlinedFont.GlyphTileset.Scale = new Vector2(2.0f, 2.0f);
 
 			CampWindow.Init();
 			SpellBook.LoadContent();

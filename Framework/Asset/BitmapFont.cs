@@ -225,7 +225,7 @@ namespace ArcEngine.Asset
 								case "br":
 								{
 									rect.X = zone.X;
-									rect.Y += (int)(LineHeight * GlyphTileset.Scale.Height) + tileoffset;
+									rect.Y += (int)(LineHeight * GlyphTileset.Scale.Y) + tileoffset;
 									tileoffset = 0;
 								}
 								break;
@@ -281,17 +281,17 @@ namespace ArcEngine.Asset
 
 								// Move the glyph according to its origin
 								Vector4 tmp = new Vector4(
-									rect.X - tile.HotSpot.X * GlyphTileset.Scale.Width, rect.Y - tile.HotSpot.Y * GlyphTileset.Scale.Height,
-									tile.Rectangle.Width * GlyphTileset.Scale.Width, tile.Rectangle.Height * GlyphTileset.Scale.Height);
+									rect.X - tile.HotSpot.X * GlyphTileset.Scale.X, rect.Y - tile.HotSpot.Y * GlyphTileset.Scale.Y,
+									tile.Rectangle.Width * GlyphTileset.Scale.X, tile.Rectangle.Height * GlyphTileset.Scale.Y);
 
 								// Out of the bouding box => new line
 								if (tmp.Right >= zone.Right && zone.Size != Vector2.Zero)
 								{
 									tmp.X = zone.X;
-									tmp.Y = tmp.Y + (LineHeight * GlyphTileset.Scale.Height);
+									tmp.Y = tmp.Y + (LineHeight * GlyphTileset.Scale.Y);
 
 									rect.X = zone.X;
-									rect.Y += (LineHeight * GlyphTileset.Scale.Height) + tileoffset;
+									rect.Y += (LineHeight * GlyphTileset.Scale.Y) + tileoffset;
 									tileoffset = 0;
 
 								}

@@ -341,22 +341,18 @@ namespace DungeonEye
 			if (node == null)
 				return null;
 
-			//HACK!!!!
-			SpriteEffects effect = SpriteEffects.None;
-
-	//		bool swapx = false;
-			if (node.Attributes["swapx"] != null)
-				effect |= SpriteEffects.FlipHorizontally;
-
-	//		bool swapy = false;
-			if (node.Attributes["swapy"] != null)
-				effect |= SpriteEffects.FlipVertically;
-
+            // Tile id
 			int id = int.Parse(node.Attributes["tile"].Value);
-			Point point = new Point(int.Parse(node.Attributes["x"].Value), int.Parse(node.Attributes["y"].Value));
 
-			return new TileDrawing(id, point, effect);
+            // Location
+			Point location = new Point(int.Parse(node.Attributes["x"].Value), int.Parse(node.Attributes["y"].Value));
 
+			// effect
+			SpriteEffects effect = SpriteEffects.None;
+            if (node.Attributes["effect"] != null)
+                effect = (SpriteEffects)Enum.Parse(typeof(SpriteEffects), node.Attributes["effect"].Value);
+
+			return new TileDrawing(id, location, effect);
 		}
 
 		#endregion

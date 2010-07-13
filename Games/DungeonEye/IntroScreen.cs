@@ -55,11 +55,11 @@ namespace DungeonEye
 			ResourceManager.LoadBank("data/intro.bnk");
 
 			Scene = ResourceManager.CreateAsset<Scene>("intro");
-			Scene.Font.GlyphTileset.Scale = new SizeF(2, 2);
+            Scene.Font.GlyphTileset.Scale = new Vector2(2, 2);
 			Scene.StringTable.LanguageName = Game.LanguageName;
 
 			Font = ResourceManager.CreateAsset<BitmapFont>("intro");
-			Font.GlyphTileset.Scale = new SizeF(2, 2);
+            Font.GlyphTileset.Scale = new Vector2(2, 2);
 
 			SpriteBatch = new SpriteBatch();
 		}

@@ -97,11 +97,11 @@ namespace ArcEngine.Asset
 						if (TileSet == null)
 							break;
 
-						SizeF size = new SizeF(1.0f, 1.0f);
+                        Vector2 size = new Vector2(1.0f, 1.0f);
 						if (node.Attributes["scalew"].Value != null)
-							size.Width = float.Parse(node.Attributes["scalew"].Value);
+							size.X = float.Parse(node.Attributes["scalew"].Value);
 						if (node.Attributes["scaleh"].Value != null)
-							size.Height = float.Parse(node.Attributes["scaleh"].Value);
+							size.Y= float.Parse(node.Attributes["scaleh"].Value);
 
 						TileSet.Scale = size;
 					}

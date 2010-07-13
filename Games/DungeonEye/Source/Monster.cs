@@ -99,7 +99,7 @@ namespace DungeonEye
 		public bool Init()
 		{
 			Tileset = ResourceManager.CreateSharedAsset<TileSet>(TileSetName, TileSetName);
-			Tileset.Scale = new SizeF(2.0f, 2.0f);
+            Tileset.Scale = new Vector2(2.0f, 2.0f);
 
 			if (!string.IsNullOrEmpty(ScriptName) && !string.IsNullOrEmpty(InterfaceName))
 			{
@@ -256,47 +256,47 @@ namespace DungeonEye
 			switch (pos)
 			{
 				case ViewFieldPosition.B:
-				Tileset.Scale = new SizeF(0.75f, 0.75f);
+                Tileset.Scale = new Vector2(0.75f, 0.75f);
 				batch.DrawTile(Tileset, GetTileID(direction), new Point(0 + DrawOffset.X / 4, 110 + DrawOffset.Y / 4), Color.Gray);
-				Tileset.Scale = new SizeF(2.0f, 2.0f);
+                Tileset.Scale = new Vector2(2.0f, 2.0f);
 				break;
 				case ViewFieldPosition.C:
-				Tileset.Scale = new SizeF(0.75f, 0.75f);
+                Tileset.Scale = new Vector2(0.75f, 0.75f);
 				batch.DrawTile(Tileset, GetTileID(direction), new Point(80 + DrawOffset.X / 4, 110 + DrawOffset.Y / 4), Color.Gray);
-				Tileset.Scale = new SizeF(2.0f, 2.0f);
+                Tileset.Scale = new Vector2(2.0f, 2.0f);
 				break;
 				case ViewFieldPosition.D:
-				Tileset.Scale = new SizeF(0.75f, 0.75f);
+                Tileset.Scale = new Vector2(0.75f, 0.75f);
 				batch.DrawTile(Tileset, GetTileID(direction), new Point(180 + DrawOffset.X / 4, 110 + DrawOffset.Y / 4), Color.Gray);
-				Tileset.Scale = new SizeF(2.0f, 2.0f);
+                Tileset.Scale = new Vector2(2.0f, 2.0f);
 				break;
 				case ViewFieldPosition.E:
-				Tileset.Scale = new SizeF(0.75f, 0.75f);
+                Tileset.Scale = new Vector2(0.75f, 0.75f);
 				batch.DrawTile(Tileset, GetTileID(direction), new Point(270 + DrawOffset.X / 4, 110 + DrawOffset.Y / 4), Color.Gray);
-				Tileset.Scale = new SizeF(2.0f, 2.0f);
+                Tileset.Scale = new Vector2(2.0f, 2.0f);
 				break;
 				case ViewFieldPosition.F:
-				Tileset.Scale = new SizeF(0.75f, 0.75f);
+                Tileset.Scale = new Vector2(0.75f, 0.75f);
 				batch.DrawTile(Tileset, GetTileID(direction), new Point(342 + DrawOffset.X / 4, 110 + DrawOffset.Y / 4), Color.Gray);
-				Tileset.Scale = new SizeF(2.0f, 2.0f);
+                Tileset.Scale = new Vector2(2.0f, 2.0f);
 				break;
 
 
 
 				case ViewFieldPosition.I:
-				Tileset.Scale = new SizeF(1.25f, 1.25f);
+                Tileset.Scale = new Vector2(1.25f, 1.25f);
 				batch.DrawTile(Tileset, GetTileID(direction), new Point(50 + DrawOffset.X / 2, 136 + DrawOffset.Y / 2));
-				Tileset.Scale = new SizeF(2.0f, 2.0f);
+                Tileset.Scale = new Vector2(2.0f, 2.0f);
 				break;
 				case ViewFieldPosition.J:
-				Tileset.Scale = new SizeF(1.25f, 1.25f);
+                Tileset.Scale = new Vector2(1.25f, 1.25f);
 				batch.DrawTile(Tileset, GetTileID(direction), new Point(180 + DrawOffset.X / 2, 136 + DrawOffset.Y / 2));
-				Tileset.Scale = new SizeF(2.0f, 2.0f);
+                Tileset.Scale = new Vector2(2.0f, 2.0f);
 				break;
 				case ViewFieldPosition.K:
-				Tileset.Scale = new SizeF(1.25f, 1.25f);
+                Tileset.Scale = new Vector2(1.25f, 1.25f);
 				batch.DrawTile(Tileset, GetTileID(direction), new Point(300 + DrawOffset.X / 2, 136 + DrawOffset.Y / 2));
-				Tileset.Scale = new SizeF(2.0f, 2.0f);
+                Tileset.Scale = new Vector2(2.0f, 2.0f);
 				break;
 
 

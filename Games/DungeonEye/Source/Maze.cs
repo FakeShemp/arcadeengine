@@ -117,7 +117,7 @@ namespace DungeonEye
 				Trace.WriteLine("Failed to load wall tileset for the maze \"" + Name + "\".");
 				return false;
 			}
-			WallTileset.Scale = new SizeF(2.0f, 2.0f);
+            WallTileset.Scale = new Vector2(2.0f, 2.0f);
 
 			OverlayTileset = ResourceManager.CreateSharedAsset<TileSet>(OverlayTilesetName, OverlayTilesetName);
 			if (OverlayTileset == null)
@@ -125,7 +125,7 @@ namespace DungeonEye
 				Trace.WriteLine("Failed to load overlay tileset for the maze \"" + Name + "\".");
 				return false;
 			}
-			OverlayTileset.Scale = new SizeF(2.0f, 2.0f);
+            OverlayTileset.Scale = new Vector2(2.0f, 2.0f);
 
 			ItemsTileset = ResourceManager.CreateSharedAsset<TileSet>(ItemsTilesetName, ItemsTilesetName);
 			if (ItemsTileset == null)
@@ -133,7 +133,7 @@ namespace DungeonEye
 				Trace.WriteLine("Failed to load items tileset for the maze \"" + Name + "\".");
 				return false;
 			}
-			ItemsTileset.Scale = new SizeF(2.0f, 2.0f);
+            ItemsTileset.Scale = new Vector2(2.0f, 2.0f);
 
 			foreach (Monster monster in Monsters)
 				monster.Init();
@@ -681,7 +681,7 @@ namespace DungeonEye
 				// Upstair or downstair ?
 				int delta = block.Stair.Type == StairType.Up ? 0 : 13;
 				foreach (TileDrawing tmp in MazeDisplayCoordinates.GetStairs(position))
-					batch.DrawTile(ItemsTileset, tmp.ID + delta, tmp.Location, Color.White, 0.0f, td.Effect, 0.0f);
+					batch.DrawTile(ItemsTileset, tmp.ID + delta, tmp.Location, Color.White, 0.0f, tmp.Effect, 0.0f);
 			}
 			#endregion
 
