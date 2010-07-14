@@ -176,7 +176,7 @@ namespace DungeonEye.Forms
 			Display.Init();
 
 			SpriteBatch = new SpriteBatch();
-			Batch = new BatchBuffer();
+			Buffer = new BatchBuffer();
 
 			// Preload texture resources
 			Icons = new TileSet();
@@ -428,12 +428,16 @@ namespace DungeonEye.Forms
 			glControl.MakeCurrent();
 			Display.ClearBuffers();
 
+            Batch.Begin();
 
-			// Background texture
-			CheckerBoard.Blit(new Rectangle(Point.Empty, glControl.Size), TextureLayout.Tile);
+            // Background texture
+            Rectangle dst = new Rectangle(Point.Empty, glControl.Size);
+            Batch.Draw(CheckerBoard, dst, dst, Color.White);
+
 
 			if (Maze == null)
 			{
+                Batch.End();
 				glControl.SwapBuffers();
 				return;
 			}
@@ -441,7 +445,7 @@ namespace DungeonEye.Forms
 
 			// Draw maze background
 			Display.Texture = Icons.Texture;
-			Batch.Clear();
+			Buffer.Clear();
 
 			Tile tile = null;
 
@@ -458,12 +462,12 @@ namespace DungeonEye.Forms
 					if (block.Type == BlockType.Illusion)
 						color = Color.LightGreen; //Color.FromArgb(200, Color.Green);
 
-					Batch.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), color, tile.Rectangle);
+					Buffer.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), color, tile.Rectangle);
 
 					if (block.GroundItemCount > 0)
 					{
 						tile = Icons.GetTile(19);
-						Batch.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), color, tile.Rectangle);
+						Buffer.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), color, tile.Rectangle);
 					}
 
 
@@ -485,26 +489,26 @@ namespace DungeonEye.Forms
 
 						tile = Icons.GetTile(tileid);
 
-						Batch.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), Color.White, tile.Rectangle);
+						Buffer.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), Color.White, tile.Rectangle);
 					}
 
 
 					if (block.FloorPlate != null)
 					{
 						tile = Icons.GetTile(18);
-						Batch.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), Color.White, tile.Rectangle);
+						Buffer.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), Color.White, tile.Rectangle);
 					}
 
 					if (block.Pit != null)
 					{
 						tile = Icons.GetTile(9);
-						Batch.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), Color.White, tile.Rectangle);
+						Buffer.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), Color.White, tile.Rectangle);
 					}
 
 					if (block.Teleporter != null)
 					{
 						tile = Icons.GetTile(11);
-						Batch.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), Color.White, tile.Rectangle);
+						Buffer.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), Color.White, tile.Rectangle);
 					}
 
 					if (block.ForceField != null)
@@ -521,14 +525,14 @@ namespace DungeonEye.Forms
 
 						tile = Icons.GetTile(id);
 
-						Batch.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), Color.White, tile.Rectangle);
+						Buffer.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), Color.White, tile.Rectangle);
 
 					}
 
 					if (block.Stair != null)
 					{
 						tile = Icons.GetTile(block.Stair.Type == StairType.Up ? 6 : 7);
-						Batch.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), Color.White, tile.Rectangle);
+						Buffer.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), Color.White, tile.Rectangle);
 					}
 
 					// Alcoves
@@ -549,7 +553,7 @@ namespace DungeonEye.Forms
 							if (block.HasAlcove(side))
 							{
 								tile = Icons.GetTile(100 + ((int)side > 1 ? 0: 1));
-								Batch.AddRectangle(new Rectangle(
+								Buffer.AddRectangle(new Rectangle(
 									Offset.X + x * 25 + alcoves[(int)side].X, 
 									Offset.Y + y * 25 + alcoves[(int)side].Y,
 									tile.Size.Width, tile.Size.Height), Color.White, tile.Rectangle);
@@ -563,26 +567,26 @@ namespace DungeonEye.Forms
 			// Draw monsters
 			tile = Icons.GetTile(8);
 			foreach (Monster monster in Maze.Monsters)
-				Batch.AddRectangle(new Rectangle(Offset.X + monster.Location.Position.X * 25, Offset.Y + monster.Location.Position.Y * 25, 25, 25), Color.White, tile.Rectangle);
+				Buffer.AddRectangle(new Rectangle(Offset.X + monster.Location.Position.X * 25, Offset.Y + monster.Location.Position.Y * 25, 25, 25), Color.White, tile.Rectangle);
 
 	
 
 			// Preview pos
 			tile = Icons.GetTile(22 + (int)PreviewLoc.Direction);
-			Batch.AddRectangle(new Rectangle(Offset.X + PreviewLoc.Position.X * 25, Offset.Y + PreviewLoc.Position.Y * 25, 25, 25), Color.White, tile.Rectangle);
+			Buffer.AddRectangle(new Rectangle(Offset.X + PreviewLoc.Position.X * 25, Offset.Y + PreviewLoc.Position.Y * 25, 25, 25), Color.White, tile.Rectangle);
 
 			// Starting point
 			if (Dungeon.StartLocation.MazeName == Maze.Name)
 			{
 				tile = Icons.GetTile(20);
-				Batch.AddRectangle(new Rectangle(Offset.X + Dungeon.StartLocation.Position.X * 25, Offset.Y + Dungeon.StartLocation.Position.Y * 25, 25, 25), Color.White, tile.Rectangle);
+				Buffer.AddRectangle(new Rectangle(Offset.X + Dungeon.StartLocation.Position.X * 25, Offset.Y + Dungeon.StartLocation.Position.Y * 25, 25, 25), Color.White, tile.Rectangle);
 			}
 
 
 
 
-			int count = Batch.Update();
-			Display.DrawBatch(Batch, 0, count);
+			int count = Buffer.Update();
+			Display.DrawBatch(Buffer, 0, count);
 
 
 
@@ -615,6 +619,8 @@ namespace DungeonEye.Forms
 				Display.FillRectangle(rect, Color.FromArgb(128, Color.Blue));
 			}
 
+
+            Batch.End();
 			glControl.SwapBuffers();
 
 		}
@@ -1024,7 +1030,7 @@ namespace DungeonEye.Forms
 		/// <summary>
 		/// Rendering batch
 		/// </summary>
-		BatchBuffer Batch;
+		BatchBuffer Buffer;
 
 
 
@@ -1064,6 +1070,10 @@ namespace DungeonEye.Forms
 		/// </summary>
 		InputScheme KeyboardScheme;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        SpriteBatch Batch;
 
 
 		/// <summary>

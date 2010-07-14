@@ -265,8 +265,10 @@ namespace ArcEngine.Graphic
 			{
                 // Destination on the screen
 				Vector4 dst = new Vector4(
-					Sprites[i].Destination.X - Sprites[i].Origin.X, Sprites[i].Destination.Y - Sprites[i].Origin.Y,
-					Sprites[i].Destination.Width, Sprites[i].Destination.Height);
+					Sprites[i].Destination.X - Sprites[i].Origin.X, 
+                    Sprites[i].Destination.Y - Sprites[i].Origin.Y,
+					Sprites[i].Destination.Width, 
+                    Sprites[i].Destination.Height);
 
                 // Texture coordinate
                 Vector4 src = new Vector4(Sprites[i].Source);
@@ -679,93 +681,6 @@ namespace ArcEngine.Graphic
 		#endregion
 
 
-		#region Properties
-
-
-		/// <summary>
-		/// In Begin/End pair
-		/// </summary>
-		bool InUse;
-
-
-		/// <summary>
-		/// Batch buffer
-		/// </summary>
-		BatchBuffer Buffer;
-
-
-		/// <summary>
-		/// Shader
-		/// </summary>
-		Shader Shader;
-
-
-		/// <summary>
-		/// Current texture in use
-		/// </summary>
-		Texture CurrentTexture;
-
-
-		/// <summary>
-		/// Sort mode
-		/// </summary>
-		SpriteSortMode SortMode;
-
-
-		/// <summary>
-		/// Sprite blend mode
-		/// </summary>
-		SpriteBlendMode BlendMode;
-
-
-		/// <summary>
-		/// Preserve state or not
-		/// </summary>
-		bool SaveState;
-
-
-		/// <summary>
-		/// Preserve renderstate
-		/// </summary>
-		StateBlock StateBlock;
-
-
-		/// <summary>
-		/// Queue of sprites to draw
-		/// </summary>
-		SpriteVertex[] Sprites;
-
-
-		/// <summary>
-		/// Sorted sprite queue
-		/// </summary>
-		SpriteVertex[] sortedSprites;
-
-
-		/// <summary>
-		/// Number of sprite in the buffer
-		/// </summary>
-	public	int spriteQueueCount;
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		BackToFrontComparer BackToFrontComp;
-
-		/// <summary>
-		/// 
-		/// </summary>
-		FrontToBackComparer FrontToBackComp;
-
-		/// <summary>
-		/// 
-		/// </summary>
-		TextureComparer TextureComp;
-
-		#endregion
-
-
 		#region Tiles
 
 		/// <summary>
@@ -836,7 +751,7 @@ namespace ArcEngine.Graphic
 
 			Vector4 src = new Vector4(tile.Rectangle.X, tile.Rectangle.Y, tile.Rectangle.Width, tile.Rectangle.Height);
 
-            Vector2 origin = new Vector2(tile.HotSpot.X, tile.HotSpot.Y);
+            Vector2 origin = new Vector2(tile.Origin.X, tile.Origin.Y);
 
             //Draw(tileset.Texture, dst, src, color, rotation, origin, tileset.Scale, effect, depth);
             InternalDraw(tileset.Texture, ref dst, ref src, color, rotation, origin, effect, depth);
@@ -855,6 +770,93 @@ namespace ArcEngine.Graphic
 			DrawTile(tileset, id, position, color, 0.0f, SpriteEffects.None, 0.0f);
 		}
 
+
+		#endregion
+
+
+		#region Properties
+
+
+		/// <summary>
+		/// In Begin/End pair
+		/// </summary>
+		bool InUse;
+
+
+		/// <summary>
+		/// Batch buffer
+		/// </summary>
+		BatchBuffer Buffer;
+
+
+		/// <summary>
+		/// Shader
+		/// </summary>
+		Shader Shader;
+
+
+		/// <summary>
+		/// Current texture in use
+		/// </summary>
+		Texture CurrentTexture;
+
+
+		/// <summary>
+		/// Sort mode
+		/// </summary>
+		SpriteSortMode SortMode;
+
+
+		/// <summary>
+		/// Sprite blend mode
+		/// </summary>
+		SpriteBlendMode BlendMode;
+
+
+		/// <summary>
+		/// Preserve state or not
+		/// </summary>
+		bool SaveState;
+
+
+		/// <summary>
+		/// Preserve renderstate
+		/// </summary>
+		StateBlock StateBlock;
+
+
+		/// <summary>
+		/// Queue of sprites to draw
+		/// </summary>
+		SpriteVertex[] Sprites;
+
+
+		/// <summary>
+		/// Sorted sprite queue
+		/// </summary>
+		SpriteVertex[] sortedSprites;
+
+
+		/// <summary>
+		/// Number of sprite in the buffer
+		/// </summary>
+	    public	int spriteQueueCount;
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		BackToFrontComparer BackToFrontComp;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		FrontToBackComparer FrontToBackComp;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		TextureComparer TextureComp;
 
 		#endregion
 

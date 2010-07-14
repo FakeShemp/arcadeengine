@@ -139,6 +139,11 @@ namespace ArcEngine.Editor
 
 		#region Events
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
 		private void LayoutForm_FormClosing(object sender, System.Windows.Forms.FormClosingEventArgs e)
 		{
 			System.Windows.Forms.DialogResult result = System.Windows.Forms.MessageBox.Show("Layout Editor", "Save modifications ?", System.Windows.Forms.MessageBoxButtons.YesNoCancel, System.Windows.Forms.MessageBoxIcon.Question);
@@ -146,6 +151,10 @@ namespace ArcEngine.Editor
 			if (result == System.Windows.Forms.DialogResult.Yes)
 			{
 				Save();
+
+                if (Batch != null)
+                    Batch.Dispose();
+                Batch = null;
 			}
 			else if (result == System.Windows.Forms.DialogResult.Cancel)
 			{
@@ -183,20 +192,22 @@ namespace ArcEngine.Editor
 			// Clear the background
 			Display.ClearBuffers();
 
+            Batch.Begin();
 
 			// Background texture
-		//	Display.Texture = CheckerBoard;
-			Rectangle rect = new Rectangle(Point.Empty, RenderControl.Size);
-			CheckerBoard.Blit(rect, rect);
 
 
+            // Background texture
+            Rectangle dst = new Rectangle(Point.Empty, RenderControl.Size);
+            Batch.Draw(CheckerBoard, dst, dst, Color.White);
 
-			// Draw the layout
-			CurrentLayout.Draw();
+
+            // Draw the layout
+			CurrentLayout.Draw(Batch);
 
 
 			// Draw the selection box
-			SelectionBox.Draw();
+			SelectionBox.Draw(Batch);
 
 			// If no action and mouse over an element, draw its bounding box
 			if (SelectionBox.MouseTool == SelectionBox.MouseTools.NoTool)
@@ -204,15 +215,16 @@ namespace ArcEngine.Editor
 				Control elem = FindElementAt(RenderControl.PointToClient(System.Windows.Forms.Control.MousePosition));
 				if (elem != null)
 				{
-					Display.DrawRectangle(elem.Rectangle, Color.White);
+					//Display.DrawRectangle(elem.Rectangle, Color.White);
 				}
 			}
 
+            Batch.End();
+			RenderControl.SwapBuffers();
 
 			// Start the draw timer
 			DrawTimer.Start();
 
-			RenderControl.SwapBuffers();
 		}
 
 
@@ -286,6 +298,7 @@ namespace ArcEngine.Editor
 			RenderControl.MakeCurrent();
 			Display.Init();
 
+            Batch = new SpriteBatch();
 
 		}
 
@@ -430,6 +443,14 @@ namespace ArcEngine.Editor
 		/// Background texture
 		/// </summary>
 		Texture CheckerBoard;
+
+
+        /// <summary>
+        /// SpriteBatch
+        /// </summary>
+        SpriteBatch Batch;
+
+
 		#endregion
 
 

@@ -274,10 +274,10 @@ namespace ArcEngine.Editor
 		/// <summary>
 		/// Renders the selectionbox
 		/// </summary>
-		public void Draw()
+		public void Draw(SpriteBatch batch)
 		{
 			// No size ? No Draw !
-			if (Rectangle.IsEmpty)
+			if (Rectangle.IsEmpty || batch == null)
 				return;
 
 

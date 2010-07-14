@@ -39,7 +39,7 @@ namespace ArcEngine.Asset
 		public Tile(Rectangle source, Point origin)
 		{
 			Rectangle = source;
-			HotSpot = origin;
+			Origin = origin;
 		}
 
 		/// <summary>
@@ -48,7 +48,7 @@ namespace ArcEngine.Asset
 		public Tile()
 		{
 			Rectangle = Rectangle.Empty;
-			HotSpot = Point.Empty;
+			Origin = Point.Empty;
 		}
 
 
@@ -85,7 +85,7 @@ namespace ArcEngine.Asset
 		/// HotSpot of the tile
 		/// </summary>
 		/// TODO: Rename to Origin
-		public Point HotSpot
+		public Point Origin
 		{
 			get;
 			set;

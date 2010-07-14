@@ -73,6 +73,14 @@ namespace DungeonEye.Forms
 		void ParentForm_FormClosing(object sender, FormClosingEventArgs e)
 		{
 			DrawTimer.Stop();
+
+            if (Batch != null)
+                Batch.Dispose();
+            Batch = null;
+
+            if (Buffer != null)
+                Buffer.Dispose();
+            Buffer = null;
 		}
 
 
@@ -93,8 +101,8 @@ namespace DungeonEye.Forms
 			// Preload background texture resource
 			CheckerBoard = new Texture(ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png"));
 
-
-			Batch = new BatchBuffer();
+            Batch = new SpriteBatch();
+			Buffer = new BatchBuffer();
 
 			// Preload texture resources
 			Icons = new TileSet();
@@ -152,15 +160,15 @@ namespace DungeonEye.Forms
 			{
 				Display.ClearBuffers();
 
-
 				if (DesignMode)
 					return;
 
+                Batch.Begin();
 
 				// Background texture
-				if (CheckerBoard != null)
-					CheckerBoard.Blit(new Rectangle(Point.Empty, GlControlBox.Size), TextureLayout.Tile);
-
+                // Background texture
+                Rectangle dst = new Rectangle(Point.Empty, GlControlBox.Size);
+                Batch.Draw(CheckerBoard, dst, dst, Color.White);
 
 
 				if (Maze == null)
@@ -169,7 +177,7 @@ namespace DungeonEye.Forms
 
 				// Draw maze background
 				Display.Texture = Icons.Texture;
-				Batch.Clear();
+				Buffer.Clear();
 
 				Tile tile = null;
 
@@ -186,12 +194,12 @@ namespace DungeonEye.Forms
 						if (block.Type == BlockType.Illusion)
 							color = Color.LightGreen; //Color.FromArgb(200, Color.Green);
 
-						Batch.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), color, tile.Rectangle);
+						Buffer.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), color, tile.Rectangle);
 
 						if (block.GroundItemCount > 0)
 						{
 							tile = Icons.GetTile(19);
-							Batch.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), color, tile.Rectangle);
+							Buffer.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), color, tile.Rectangle);
 						}
 
 
@@ -213,26 +221,26 @@ namespace DungeonEye.Forms
 
 							tile = Icons.GetTile(tileid);
 
-							Batch.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), Color.White, tile.Rectangle);
+							Buffer.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), Color.White, tile.Rectangle);
 						}
 
 
 						if (block.FloorPlate != null)
 						{
 							tile = Icons.GetTile(18);
-							Batch.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), Color.White, tile.Rectangle);
+							Buffer.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), Color.White, tile.Rectangle);
 						}
 
 						if (block.Pit != null)
 						{
 							tile = Icons.GetTile(9);
-							Batch.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), Color.White, tile.Rectangle);
+							Buffer.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), Color.White, tile.Rectangle);
 						}
 
 						if (block.Teleporter != null)
 						{
 							tile = Icons.GetTile(11);
-							Batch.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), Color.White, tile.Rectangle);
+							Buffer.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), Color.White, tile.Rectangle);
 						}
 
 						if (block.ForceField != null)
@@ -249,14 +257,14 @@ namespace DungeonEye.Forms
 
 							tile = Icons.GetTile(id);
 
-							Batch.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), Color.White, tile.Rectangle);
+							Buffer.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), Color.White, tile.Rectangle);
 
 						}
 
 						if (block.Stair != null)
 						{
 							tile = Icons.GetTile(block.Stair.Type == StairType.Up ? 6 : 7);
-							Batch.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), Color.White, tile.Rectangle);
+							Buffer.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), Color.White, tile.Rectangle);
 						}
 
 						// Alcoves
@@ -277,7 +285,7 @@ namespace DungeonEye.Forms
 								if (block.HasAlcove(side))
 								{
 									tile = Icons.GetTile(100 + ((int)side > 1 ? 0 : 1));
-									Batch.AddRectangle(new Rectangle(
+									Buffer.AddRectangle(new Rectangle(
 										Offset.X + x * 25 + alcoves[(int)side].X,
 										Offset.Y + y * 25 + alcoves[(int)side].Y,
 										tile.Size.Width, tile.Size.Height), Color.White, tile.Rectangle);
@@ -292,10 +300,10 @@ namespace DungeonEye.Forms
 				// Draw monsters
 				tile = Icons.GetTile(8);
 				foreach (Monster monster in Maze.Monsters)
-					Batch.AddRectangle(new Rectangle(Offset.X + monster.Location.Position.X * 25, Offset.Y + monster.Location.Position.Y * 25, 25, 25), Color.White, tile.Rectangle);
+					Buffer.AddRectangle(new Rectangle(Offset.X + monster.Location.Position.X * 25, Offset.Y + monster.Location.Position.Y * 25, 25, 25), Color.White, tile.Rectangle);
 
-				int count = Batch.Update();
-				Display.DrawBatch(Batch, 0, count);
+				int count = Buffer.Update();
+				Display.DrawBatch(Buffer, 0, count);
 
 
 
@@ -307,6 +315,7 @@ namespace DungeonEye.Forms
 			}
 			finally
 			{
+                Batch.End();
 				GlControlBox.SwapBuffers();
 			}
 		}
@@ -416,7 +425,7 @@ namespace DungeonEye.Forms
 		/// <summary>
 		/// Rendering batch
 		/// </summary>
-		BatchBuffer Batch;
+		BatchBuffer Buffer;
 
 
 
@@ -432,6 +441,11 @@ namespace DungeonEye.Forms
 		/// </summary>
 		Point LastMousePos;
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        SpriteBatch Batch;
 
 
 		/// <summary>

@@ -145,8 +145,8 @@ namespace ArcEngine.Asset
 				writer.WriteEndElement();
 
 				writer.WriteStartElement("hotspot");
-				writer.WriteAttributeString("x", val.Value.HotSpot.X.ToString());
-				writer.WriteAttributeString("y", val.Value.HotSpot.Y.ToString());
+				writer.WriteAttributeString("x", val.Value.Origin.X.ToString());
+				writer.WriteAttributeString("y", val.Value.Origin.Y.ToString());
 				writer.WriteEndElement();
 
 				writer.WriteStartElement("collisionbox");
@@ -237,11 +237,11 @@ namespace ArcEngine.Asset
 
 								case "hotspot":
 								{
-									Point hotspot = Point.Empty;
-									hotspot.X = int.Parse(subnode.Attributes["x"].Value);
-									hotspot.Y = int.Parse(subnode.Attributes["y"].Value);
+									Point origin = Point.Empty;
+									origin.X = int.Parse(subnode.Attributes["x"].Value);
+									origin.Y = int.Parse(subnode.Attributes["y"].Value);
 
-									tile.HotSpot = hotspot;
+									tile.Origin = origin;
 								}
 								break;
 

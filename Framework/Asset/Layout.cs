@@ -269,7 +269,8 @@ namespace ArcEngine.Asset
 		/// <summary>
 		/// Draw the layout
 		/// </summary>
-		public void Draw()
+        /// <param name="batch"></param>
+		public void Draw(SpriteBatch batch)
 		{
 			if (Color.A > 0)
 			{
@@ -282,7 +283,8 @@ namespace ArcEngine.Asset
 			{
 				//device.Texture = Texture;
 				//Texture.Blit(Texture.Rectangle, TextureLayout);
-				Texture.Blit(Texture.Rectangle, TextureLayout);
+			//	Texture.Blit(Texture.Rectangle, TextureLayout);
+                batch.Draw(Texture, Point.Empty, Color);
 			}
 
 			foreach (Control gui in elements.Values)

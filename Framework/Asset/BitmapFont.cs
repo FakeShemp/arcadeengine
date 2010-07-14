@@ -281,7 +281,7 @@ namespace ArcEngine.Asset
 
 								// Move the glyph according to its origin
 								Vector4 tmp = new Vector4(
-									rect.X - tile.HotSpot.X * GlyphTileset.Scale.X, rect.Y - tile.HotSpot.Y * GlyphTileset.Scale.Y,
+									rect.X - tile.Origin.X * GlyphTileset.Scale.X, rect.Y - tile.Origin.Y * GlyphTileset.Scale.Y,
 									tile.Rectangle.Width * GlyphTileset.Scale.X, tile.Rectangle.Height * GlyphTileset.Scale.Y);
 
 								// Out of the bouding box => new line

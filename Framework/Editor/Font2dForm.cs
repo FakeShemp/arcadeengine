@@ -118,18 +118,18 @@ namespace ArcEngine.Editor
 			GlControl.MakeCurrent();
 			Display.ClearBuffers();
 
+            Batch.Begin();
+            
 			// Background texture
-			CheckerBoard.Blit(new Rectangle(Point.Empty, GlControl.Size), TextureLayout.Tile);
+            Rectangle dst = new Rectangle(Point.Empty, GlControl.Size);
+            Batch.Draw(CheckerBoard, dst, dst, Color.White); ;
 
 
-			// Prints the text
-		//	Device.Font = CurrentFont;
-			if (CurrentFont != null)
-			{
-				//CurrentFont.DrawText(Point.Empty, Color.White, PreviewTextBox.Text);
-			}
+            Batch.DrawString(CurrentFont, Point.Empty, Color.White, PreviewTextBox.Text);
+            Batch.End();
 
 			DrawTimer.Start();
+
 
 			GlControl.SwapBuffers();
 		}
@@ -186,6 +186,9 @@ namespace ArcEngine.Editor
 			if (result == DialogResult.Yes)
 			{
 				Save();
+                if (Batch != null)
+                    Batch.Dispose();
+                Batch = null;
 			}
 			else if (result == DialogResult.Cancel)
 			{
@@ -202,6 +205,8 @@ namespace ArcEngine.Editor
 		{
 			GlControl.MakeCurrent();
 			Display.Init();
+
+            Batch = new SpriteBatch();
 
 			CheckerBoard = new Texture(ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png"));
 
@@ -230,12 +235,16 @@ namespace ArcEngine.Editor
 		/// <summary>
 		/// Current font
 		/// </summary>
-		ArcEngine.Asset.BitmapFont CurrentFont = null;
+		BitmapFont CurrentFont = null;
 
 
 		// Background texture
 		Texture CheckerBoard;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        SpriteBatch Batch;
 
 		#endregion
 

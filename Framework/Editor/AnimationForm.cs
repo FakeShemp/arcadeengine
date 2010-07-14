@@ -555,8 +555,9 @@ namespace ArcEngine.Editor
 
 				rect.Size = tile.Size;
 
-				Animation.TileSet.Texture.Blit(rect, tile.Rectangle);
+				//Animation.TileSet.Texture.Blit(rect, tile.Rectangle);
 				//Display.BlitTexture(Animation.TileSet.Texture, rect, tile.Rectangle);
+                SpriteBatch.Draw(Animation.TileSet.Texture, rect, tile.Rectangle, Color.White);
 
 				if (rect.Contains(mouse) || id == FrameID)
 				{

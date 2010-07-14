@@ -216,7 +216,7 @@ namespace ArcEngine.Editor
 
 				//
 				// Blit the frame to the texture
-				texture.Blit(bm, location);
+				texture.SetData(bm, location);
 
 				// Add in the tileset
 				tileset.AddTile(id, new Rectangle(location, bm.Size));
@@ -347,6 +347,7 @@ namespace ArcEngine.Editor
 		/// 
 		/// </summary>
 		FrameDimension FrameDim;
+
 
 		#endregion
 

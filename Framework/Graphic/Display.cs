@@ -1261,22 +1261,11 @@ namespace ArcEngine.Graphic
 			}
 			set
 			{
-				if (value.Size.IsEmpty)
-					return;
-
 				Rectangle rect = value;
 				if (rect.Width == 0)
 					rect.Width = 1;
 
-
-
 				TK.GL.Viewport(0, 0, rect.Width, rect.Height);
-				//GL.MatrixMode(MatrixMode.Projection);
-				//GL.LoadIdentity();
-				//GL.Ortho(rect.Left, rect.Width, rect.Height, rect.Top, -1, 1);
-			//	DefaultMatrix();
-				//		GL.MatrixMode(MatrixMode.Modelview);
-				//		GL.LoadIdentity();
 			}
 		}
 

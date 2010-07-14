@@ -197,7 +197,7 @@ namespace ArcEngine.Graphic
 
 		#region Blitting
 
-
+/*
 		/// <summary>
 		/// Draws a Texture on the screen and resize it
 		/// </summary>
@@ -333,14 +333,13 @@ namespace ArcEngine.Graphic
 			Blit(rect, Rectangle, mode);
 		}
 
-
+*/
 		/// <summary>
 		/// Blits a Bitmap on the texture
 		/// </summary>
 		/// <param name="bitmap">Bitmap handle</param>
 		/// <param name="location">Location on the texture</param>
-		[Obsolete("deprecated. Use Display.DrawTexture() instead.")]
-		public void Blit(Bitmap bitmap, Point location)
+        public void SetData(Bitmap bitmap, Point location)
 		{
 			if (bitmap == null)
 				return;
@@ -459,7 +458,7 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Loads a texture from a Bitmap
 		/// </summary>
-		/// <param name="bm"></param>
+		/// <param name="bitmap"></param>
 		/// <returns></returns>
 		public bool LoadImage(Bitmap bitmap)
 		{
@@ -470,7 +469,7 @@ namespace ArcEngine.Graphic
 
 			SetSize(new Size(bitmap.Width, bitmap.Height));
 
-			Blit(bitmap, Point.Empty);
+            SetData(bitmap, Point.Empty);
 
 			
 			// Update texture matrix

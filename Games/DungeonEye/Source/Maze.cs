@@ -733,8 +733,8 @@ namespace DungeonEye
 					foreach (CardinalPoint side in Enum.GetValues(typeof(CardinalPoint)))
 					{
 						td = MazeDisplayCoordinates.GetDecoration(position, side);
-						if (td != null && block.HasAlcove(view, side))
-							batch.DrawTile(ItemsTileset, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);
+                        if (td != null && block.HasAlcove(view, side))
+                            batch.DrawTile(OverlayTileset, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);
 					}
 
 					// Draw items in the alcove in front of the team

@@ -132,8 +132,8 @@ namespace ArcEngine.Editor
 			GLTextureControl.MakeCurrent();
 
 			// Background color
-	//		Display.ClearColor = BgColor;
 			Display.ClearBuffers();
+
 
 			// No texture 
 			if (tileSet.Texture == null)
@@ -142,40 +142,47 @@ namespace ArcEngine.Editor
 				return;
 			}
 
-
-			// Get zoom value
-			int zoomvalue = int.Parse((string)ZoomBox.SelectedItem);
+            Batch.Begin();
 
 
 			// Background texture
-			CheckerBoard.Blit(new Rectangle(Point.Empty, GLTextureControl.Size), TextureLayout.Tile);
+            Rectangle dst = new Rectangle(Point.Empty, GLTextureControl.Size);
+            Batch.Draw(CheckerBoard, dst, dst, Color.White);
 
-			// Draw the texture
-			Rectangle zoom = new Rectangle(
-			TextureOffset.X, TextureOffset.Y,
-			tileSet.Texture.Rectangle.Width * zoomvalue, tileSet.Texture.Rectangle.Height * zoomvalue);
-			tileSet.Texture.Blit(zoom, tileSet.Texture.Rectangle);
+            Batch.End();
+            GLTextureControl.SwapBuffers();
+            return;
 
+			// Get zoom value
+			float zoomvalue = float.Parse((string)ZoomBox.SelectedItem);
 
-			// If no tile then byebye
-			if (tileSet.Count == 0)
-			{
-				GLTextureControl.SwapBuffers();
-				return;
-			}
-
-
-			// Draw the selection box with sizing handles
-			if (CurrentTile != null)
-			{
-				TileBox.Zoom = zoomvalue;
-				TileBox.Offset = TextureOffset;
-				CurrentTile.Rectangle = TileBox.Rectangle;
-				TileBox.Draw();
-			}
-
-	
+			// Draw the tile texture
+			Vector4 zoom = new Vector4(
+			TextureOffset.X, 
+            TextureOffset.Y,
+			tileSet.Texture.Rectangle.Width * zoomvalue, 
+            tileSet.Texture.Rectangle.Height * zoomvalue);
 			
+            Vector4 src = new Vector4( 0.0f, 0.0f, tileSet.Texture.Size.Width, tileSet.Texture.Size.Height);
+
+            Batch.Draw(tileSet.Texture, zoom, src, Color.White);
+
+
+			// If we have some tiles to draw
+            if (tileSet.Count != 0)
+            {
+                // Draw the selection box with sizing handles
+                if (CurrentTile != null)
+                {
+                    TileBox.Zoom = zoomvalue;
+                    TileBox.Offset = TextureOffset;
+                    CurrentTile.Rectangle = TileBox.Rectangle;
+                    TileBox.Draw(Batch);
+                }
+
+            }
+
+            Batch.End();
 			GLTextureControl.SwapBuffers();
 		}
 
@@ -356,6 +363,7 @@ namespace ArcEngine.Editor
 			Display.ViewPort = new Rectangle(Point.Empty, GLTileControl.Size);
 		}
 
+
 		/// <summary>
 		/// OnPaint event
 		/// </summary>
@@ -369,48 +377,55 @@ namespace ArcEngine.Editor
 			Display.RenderState.ClearColor = BgColor;
 			Display.ClearBuffers();
 
+
+            Batch.Begin();
+
 			// Get zoom value
-			int zoomvalue = int.Parse((string)ZoomBox.SelectedItem);
+			float zoomvalue = float.Parse((string)ZoomBox.SelectedItem);
 
 			// Background texture
-			CheckerBoard.Blit(new Rectangle(Point.Empty, GLTileControl.Size), TextureLayout.Tile);
+            Rectangle dst = new Rectangle(Point.Empty, GLTileControl.Size);
+            Batch.Draw(CheckerBoard, dst, dst, Color.White);
 
-			if (TilesBox.Items.Count == 0)
-			{
-				GLTileControl.SwapBuffers();
-				return;
-			}
 
-	
-			// Draw the tile
-			Rectangle zoom = Rectangle.Empty;
-			zoom.X = TileOffset.X;
-			zoom.Y = TileOffset.Y;
-			zoom.Width = CurrentTile.Rectangle.Width * zoomvalue;
-			zoom.Height = CurrentTile.Rectangle.Height * zoomvalue;
+/*
+            // No tiles, no draw !
+            if (TilesBox.Items.Count != 0)
+            {
+                // Draw the tile
+                Vector4 zoom = new Vector4();
+                zoom.X = TileOffset.X;
+                zoom.Y = TileOffset.Y;
+                zoom.Z = CurrentTile.Rectangle.Width * zoomvalue;
+                zoom.W = CurrentTile.Rectangle.Height * zoomvalue;
 
-			tileSet.Texture.Blit(zoom, CurrentTile.Rectangle);
-			// Draw Collision box
-			if (CollisionBox != null &&  CollisionButton.Checked)
-			{
-				CollisionBox.Zoom = zoomvalue;
-				CollisionBox.Offset = TileOffset;
-				CurrentTile.CollisionBox = CollisionBox.Rectangle;
-				CollisionBox.Draw();
-			}
-			
-			// Draw HotSpot
-			if (HotSpotButton.Checked)
-			{
-				Point pos = Point.Empty;
-				pos.X = (int) (CurrentTile.HotSpot.X * zoomvalue + TileOffset.X);
-				pos.Y = (int) (CurrentTile.HotSpot.Y * zoomvalue + TileOffset.Y);
+                Vector4 src = new Vector4(0.0f, 0.0f, tileSet.Texture.Size.Width, tileSet.Texture.Size.Height);
+                Batch.Draw(tileSet.Texture, zoom, src, Color.White);
 
-				Rectangle rect = new Rectangle(pos, new Size((int)zoomvalue, (int)zoomvalue));
-				Display.DrawRectangle(rect, Color.Red);
+                // Draw Collision box
+                if (CollisionBox != null && CollisionButton.Checked)
+                {
+                    CollisionBox.Zoom = zoomvalue;
+                    CollisionBox.Offset = TileOffset;
+                    CurrentTile.CollisionBox = CollisionBox.Rectangle;
+                    CollisionBox.Draw(Batch);
+                }
 
-			}
+                // Draw HotSpot
+                if (HotSpotButton.Checked)
+                {
+                    Point pos = Point.Empty;
+                    pos.X = (int)(CurrentTile.Origin.X * zoomvalue + TileOffset.X);
+                    pos.Y = (int)(CurrentTile.Origin.Y * zoomvalue + TileOffset.Y);
 
+                    Rectangle rect = new Rectangle(pos, new Size((int)zoomvalue, (int)zoomvalue));
+                    Display.DrawRectangle(rect, Color.Red);
+
+                }
+            }
+*/
+
+            Batch.End();
 			GLTileControl.SwapBuffers();
 		}
 
@@ -462,7 +477,7 @@ namespace ArcEngine.Editor
 					pos.X = (e.Location.X - TileOffset.X) / zoomvalue;
 					pos.Y = (e.Location.Y - TileOffset.Y) / zoomvalue;
 
-					CurrentTile.HotSpot = pos;
+					CurrentTile.Origin = pos;
 				}
 
 			}
@@ -510,7 +525,7 @@ namespace ArcEngine.Editor
 					pos.X = (e.Location.X - TileOffset.X) / zoomvalue;
 					pos.Y = (e.Location.Y - TileOffset.Y) / zoomvalue;
 
-					CurrentTile.HotSpot = pos;
+					CurrentTile.Origin = pos;
 				}
 
 			}
@@ -553,8 +568,11 @@ namespace ArcEngine.Editor
 			GLTileControl.MakeCurrent();
 			Display.Init();
 
-			CheckerBoard = new Texture(ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png"));
+            Batch = new SpriteBatch();
 
+			CheckerBoard = new Texture(ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png"));
+            CheckerBoard.HorizontalWrap = HorizontalWrapFilter.Repeat;
+            CheckerBoard.VerticalWrap = VerticalWrapFilter.Repeat;
 
 			//tileSet = new TileSet();
 			tileSet.Load(Node);
@@ -562,6 +580,7 @@ namespace ArcEngine.Editor
 			// Build Cell list
 			RebuildCellList();
 		}
+
 
 		/// <summary>
 		/// Timer Tick
@@ -769,6 +788,9 @@ namespace ArcEngine.Editor
 			else if (result == DialogResult.Yes)
 				Save();
 
+            if (Batch != null)
+                Batch.Dispose();
+            Batch = null;
 			
 		}
 
@@ -866,11 +888,13 @@ namespace ArcEngine.Editor
 		XmlNode Node;
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        SpriteBatch Batch;
+
 
 		#endregion
-
-
-
 
 	}
 
