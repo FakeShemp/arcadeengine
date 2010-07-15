@@ -147,11 +147,11 @@ namespace ArcEngine.Editor
 
 			// Background texture
             Rectangle dst = new Rectangle(Point.Empty, GLTextureControl.Size);
-            Batch.Draw(CheckerBoard, dst, dst, Color.White);
+      //      Batch.Draw(CheckerBoard, dst, dst, Color.White);
 
-            Batch.End();
-            GLTextureControl.SwapBuffers();
-            return;
+			//Batch.End();
+			//GLTextureControl.SwapBuffers();
+			//return;
 
 			// Get zoom value
 			float zoomvalue = float.Parse((string)ZoomBox.SelectedItem);
@@ -165,8 +165,8 @@ namespace ArcEngine.Editor
 			
             Vector4 src = new Vector4( 0.0f, 0.0f, tileSet.Texture.Size.Width, tileSet.Texture.Size.Height);
 
-            Batch.Draw(tileSet.Texture, zoom, src, Color.White);
-
+            //Batch.Draw(tileSet.Texture, zoom, src, Color.White);
+			Batch.Draw(tileSet.Texture, TextureOffset, Color.White);
 
 			// If we have some tiles to draw
             if (tileSet.Count != 0)
@@ -373,6 +373,20 @@ namespace ArcEngine.Editor
 		{
 			GLTileControl.MakeCurrent();
 
+			// Background color
+			Display.ClearBuffers();
+
+
+			Batch.Begin();
+
+
+			// Background texture
+			Rectangle dst = new Rectangle(Point.Empty, GLTextureControl.Size);
+			Batch.Draw(CheckerBoard, dst, dst, Color.White);
+
+/*
+			GLTileControl.MakeCurrent();
+
 
 			Display.RenderState.ClearColor = BgColor;
 			Display.ClearBuffers();
@@ -386,7 +400,7 @@ namespace ArcEngine.Editor
 			// Background texture
             Rectangle dst = new Rectangle(Point.Empty, GLTileControl.Size);
             Batch.Draw(CheckerBoard, dst, dst, Color.White);
-
+*/
 
 /*
             // No tiles, no draw !
@@ -561,12 +575,12 @@ namespace ArcEngine.Editor
 		/// <param name="e"></param>
 		private void TileSetForm_Load(object sender, EventArgs e)
 		{
-			GLTextureControl.MakeCurrent();
-			Display.Init();
+			//GLTextureControl.MakeCurrent();
+			//Display.Init();
 
 
-			GLTileControl.MakeCurrent();
-			Display.Init();
+			//GLTileControl.MakeCurrent();
+			//Display.Init();
 
             Batch = new SpriteBatch();
 

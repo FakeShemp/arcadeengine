@@ -186,14 +186,19 @@ namespace ArcEngine.Editor
 			if (result == DialogResult.Yes)
 			{
 				Save();
-                if (Batch != null)
-                    Batch.Dispose();
-                Batch = null;
 			}
 			else if (result == DialogResult.Cancel)
 			{
 				e.Cancel = true;
 			}
+
+			if (Batch != null)
+				Batch.Dispose();
+			Batch = null;
+
+			if (Font != null)
+				Font.Dispose();
+			Font = null;
 		}
 
 		/// <summary>
@@ -209,7 +214,8 @@ namespace ArcEngine.Editor
             Batch = new SpriteBatch();
 
 			CheckerBoard = new Texture2D(ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png"));
-
+			CheckerBoard.VerticalWrap = VerticalWrapFilter.Repeat;
+			CheckerBoard.HorizontalWrap = HorizontalWrapFilter.Repeat;
 		}
 
 

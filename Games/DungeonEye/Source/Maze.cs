@@ -647,7 +647,7 @@ namespace DungeonEye
 			{
 				td = MazeDisplayCoordinates.GetCeilingPit(position);
 				if (td != null)
-					batch.DrawTile(OverlayTileset, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);
+                    batch.DrawTile(OverlayTileset, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);
 			//	batch.DrawTile(ItemsTileset, td.ID, td.Location, td.SwapX, td.SwapY);
 			}
 
@@ -677,7 +677,7 @@ namespace DungeonEye
 			{
 				td = MazeDisplayCoordinates.GetPit(position);
 				if (td != null && !block.Pit.IsHidden)
-					batch.DrawTile(ItemsTileset, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);
+                    batch.DrawTile(OverlayTileset, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);
 			}
 			#endregion
 
@@ -687,7 +687,7 @@ namespace DungeonEye
 				// Upstair or downstair ?
 				int delta = block.Stair.Type == StairType.Up ? 0 : 13;
 				foreach (TileDrawing tmp in MazeDisplayCoordinates.GetStairs(position))
-					batch.DrawTile(ItemsTileset, tmp.ID + delta, tmp.Location, Color.White, 0.0f, tmp.Effect, 0.0f);
+					batch.DrawTile(WallTileset, tmp.ID + delta, tmp.Location, Color.White, 0.0f, tmp.Effect, 0.0f);
 			}
 			#endregion
 
@@ -720,7 +720,7 @@ namespace DungeonEye
 			{
 				td = MazeDisplayCoordinates.GetFloorPlate(position);
 				if (td != null)
-					batch.DrawTile(ItemsTileset, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);
+                    batch.DrawTile(OverlayTileset, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);
 			}
 			#endregion
 
@@ -747,8 +747,12 @@ namespace DungeonEye
 					td = MazeDisplayCoordinates.GetDecoration(position, CardinalPoint.South);
 					if (td != null)
 					{
-						foreach (Item item in block.GetAlcoveItems(view, CardinalPoint.South))
-							batch.DrawTile(ItemsTileset, item.GroundTileID + offset, td.Location);
+                        foreach (Item item in block.GetAlcoveItems(view, CardinalPoint.South))
+                        {
+                            Point loc = td.Location;
+                            loc.Offset(new Point(30, 20));
+                            batch.DrawTile(ItemsTileset, item.GroundTileID + offset, loc);
+                        }
 					}
 				}
 

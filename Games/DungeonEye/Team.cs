@@ -843,7 +843,7 @@ namespace DungeonEye
 			// AutoMap
 			if (Keyboard.IsNewKeyPress(Keys.Tab))
 			{
-				ScreenManager.AddScreen(new AutoMap());
+				ScreenManager.AddScreen(new AutoMap(Batch));
 			}
 
 

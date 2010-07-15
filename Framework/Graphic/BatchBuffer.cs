@@ -102,7 +102,9 @@ namespace ArcEngine.Graphic
 		{
 			SetVertices(Buffer);
 
-			int count = Offset / Stride;
+			int count = 0;
+			if (Stride > 0)
+				count = Offset / Stride;
 			Offset = 0;
 
 			return count;

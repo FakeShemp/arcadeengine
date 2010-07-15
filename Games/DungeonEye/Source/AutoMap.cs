@@ -30,6 +30,14 @@ namespace DungeonEye
 	public class AutoMap : GameScreen
 	{
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="batch">SpriteBatch to use</param>
+        public AutoMap(SpriteBatch batch)
+        {
+            Batch = batch;
+        }
 
 		/// <summary>
 		/// 
@@ -40,9 +48,8 @@ namespace DungeonEye
 			Tileset.Scale = new Vector2(2.0f, 2.0f);
 
 			Font = ResourceManager.CreateSharedAsset<BitmapFont>("intro");
-		//	Font.TileSet.Scale = new SizeF(2.0f, 2.0f);
 
-			SpriteBatch = new SpriteBatch();
+			Batch = new SpriteBatch();
 
 		}
 
@@ -54,18 +61,13 @@ namespace DungeonEye
 		{
 			Trace.WriteDebugLine("[AutoMap] : UnloadContent()");
 
-			if (Font != null)
-				Font.Dispose();
 			Font = null;
-
 
 			if (Tileset != null)
 				Tileset.Dispose();
 			Tileset = null;
 
-			if (SpriteBatch != null)
-				SpriteBatch.Dispose();
-			SpriteBatch = null;
+            Batch = null;
 		}
 
 
@@ -93,21 +95,21 @@ namespace DungeonEye
 			// Clears the background
 			Display.ClearBuffers();
 
-			SpriteBatch.Begin();
+			Batch.Begin();
 
 			// Background
-			SpriteBatch.DrawTile(Tileset, 1, Point.Empty, Color.White);
+			Batch.DrawTile(Tileset, 1, Point.Empty, Color.White);
 			//Tileset.Draw(1, Point.Empty);
 
 			// Some WIP
 			//Font.DrawText(new Point(100, 100), Color.White, "TODO...");
-			SpriteBatch.DrawString(Font, new Vector2(100, 100), Color.White, "TODO...");	
+			Batch.DrawString(Font, new Vector2(100, 100), Color.White, "TODO...");	
 
 			// Draw the cursor or the item in the hand
 			//Tileset.Draw(0, Mouse.Location);
-			SpriteBatch.DrawTile(Tileset, 0, Mouse.Location, Color.White);
+			Batch.DrawTile(Tileset, 0, Mouse.Location, Color.White);
 
-			SpriteBatch.End();
+			Batch.End();
 		}
 
 		#endregion
@@ -131,7 +133,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Spritebatch
 		/// </summary>
-		SpriteBatch SpriteBatch;
+		SpriteBatch Batch;
 
 		#endregion
 
