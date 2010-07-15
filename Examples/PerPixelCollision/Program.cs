@@ -86,8 +86,8 @@ namespace ArcEngine.Examples.PerPixelCollision
 			}
 
 			// Textures
-			Logo = new Texture("data/logo.png");
-			Star = new Texture("data/star.png");
+			Logo = new Texture2D("data/logo.png");
+			Star = new Texture2D("data/star.png");
 
 			// Font
 			Sprite = new SpriteBatch();
@@ -220,13 +220,13 @@ namespace ArcEngine.Examples.PerPixelCollision
 		/// <summary>
 		/// Texture
 		/// </summary>
-		Texture Logo;
+		Texture2D Logo;
 
 
 		/// <summary>
 		/// Texture
 		/// </summary>
-		Texture Star;
+		Texture2D Star;
 
 
 		/// <summary>

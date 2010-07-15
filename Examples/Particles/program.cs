@@ -97,9 +97,9 @@ namespace ArcEngine.Examples.Particles
 
 
 			// Load the texture
-			Textures = new Texture[2];
-			Textures[0] = new Texture("data/particle.png");
-			Textures[1] = new Texture("data/particle2.png");
+			Textures = new Texture2D[2];
+			Textures[0] = new Texture2D("data/particle.png");
+			Textures[1] = new Texture2D("data/particle2.png");
 
 			// Init all particles
 			for (int i = 0; i < Particles.Length; i++)
@@ -258,7 +258,7 @@ namespace ArcEngine.Examples.Particles
 		/// <summary>
 		/// Particule texture
 		/// </summary>
-		Texture[] Textures;
+		Texture2D[] Textures;
 
 
 		/// <summary>
@@ -330,7 +330,7 @@ namespace ArcEngine.Examples.Particles
 		/// <summary>
 		/// Texture to use
 		/// </summary>
-		public Texture Texture;
+		public Texture2D Texture;
 
 		/// <summary>
 		/// Rotation angle

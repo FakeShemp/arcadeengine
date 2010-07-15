@@ -81,7 +81,7 @@ namespace ArcEngine.Examples.StencilWipe
 		{
 			Display.RenderState.ClearColor = Color.CornflowerBlue;
 
-			Mask = new Texture("data/mask.png");
+			Mask = new Texture2D("data/mask.png");
 
 
 			GL.ClearStencil(0);
@@ -126,7 +126,7 @@ namespace ArcEngine.Examples.StencilWipe
 			if (Keyboard.IsNewKeyPress(Keys.F1))
 			{
 				// Temp texture
-				Texture tmp = new Texture(Display.ViewPort.Size);
+				Texture2D tmp = new Texture2D(Display.ViewPort.Size);
 				Display.Texture = tmp;
 
 
@@ -194,7 +194,7 @@ namespace ArcEngine.Examples.StencilWipe
 		/// <summary>
 		/// Mask texture
 		/// </summary>
-		Texture Mask;
+		Texture2D Mask;
 
 
 		#endregion

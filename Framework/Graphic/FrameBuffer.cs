@@ -59,11 +59,11 @@ namespace ArcEngine.Graphic
 			Size = size;
 
 			// Create Color Tex
-			ColorTexture = new Texture(size);
+			ColorTexture = new Texture2D(size);
 
 
 			// Create Depth Tex
-			DepthTexture = new Texture(size);
+			DepthTexture = new Texture2D(size);
             TK.GL.TexImage2D(TK.TextureTarget.Texture2D, 0, (TK.PixelInternalFormat)TK.All.DepthComponent32, size.Width, size.Height, 0, TK.PixelFormat.DepthComponent, TK.PixelType.UnsignedInt, IntPtr.Zero);
 
 			// Create Stencil Tex
@@ -229,7 +229,7 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Color texture
 		/// </summary>
-		public Texture ColorTexture
+		public Texture2D ColorTexture
 		{
 			get;
 			private set;
@@ -239,7 +239,7 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Depth texture
 		/// </summary>
-		public Texture DepthTexture
+		public Texture2D DepthTexture
 		{
 			get;
 			private set;

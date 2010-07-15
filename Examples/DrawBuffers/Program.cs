@@ -86,7 +86,7 @@ namespace ArcEngine.Examples.DrawBufer
 			#region Texture
 
 			// Loads a texture and binds it to TUI 2
-			Texture = new Texture("data/texture.png");
+			Texture = new Texture2D("data/texture.png");
 			Texture.HorizontalWrap = HorizontalWrapFilter.Repeat;
 			Texture.VerticalWrap = VerticalWrapFilter.Repeat;
 			Display.TextureUnit = 2;
@@ -255,7 +255,7 @@ namespace ArcEngine.Examples.DrawBufer
 		/// <summary>
 		/// Texture
 		/// </summary>
-		Texture Texture;
+		Texture2D Texture;
 
 
 		/// <summary>

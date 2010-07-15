@@ -44,7 +44,7 @@ namespace ArcEngine.Asset
 		public BitmapFont()
 		{
 			GlyphTileset = new TileSet();
-			GlyphTileset.Texture = new Texture();
+			GlyphTileset.Texture = new Texture2D();
 		}
 
 

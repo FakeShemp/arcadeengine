@@ -357,7 +357,7 @@ namespace RuffnTumble.Editor.Wizards
 
 
 			// Create the final texture
-			Texture texture = new Texture();//ResourceManager.CreateAsset<Texture>(TextureNameBox.Text);
+			Texture2D texture = new Texture2D();//ResourceManager.CreateAsset<Texture>(TextureNameBox.Text);
 			if (texture != null)
 			{
 				string binname = TextureNameBox.Text;

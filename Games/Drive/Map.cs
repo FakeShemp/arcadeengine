@@ -25,19 +25,19 @@ namespace Drive
 			Location = Point.Empty;
 
 			// Load alphamaps
-			AlphaMaps = new Texture[3];
-			AlphaMaps[0] = new Texture("data/blendmap1.png");
-			AlphaMaps[1] = new Texture("data/blendmap2.png");
-			AlphaMaps[2] = new Texture("data/blendmap3.png");
+			AlphaMaps = new Texture2D[3];
+			AlphaMaps[0] = new Texture2D("data/blendmap1.png");
+			AlphaMaps[1] = new Texture2D("data/blendmap2.png");
+			AlphaMaps[2] = new Texture2D("data/blendmap3.png");
 	
 			
 			// Load textures
-			Textures = new Texture[3];
-			Textures[0] = new Texture("data/grass.png");
+			Textures = new Texture2D[3];
+			Textures[0] = new Texture2D("data/grass.png");
 			Textures[0].MagFilter = TextureMagFilter.Linear;
 			Textures[0].MinFilter = TextureMinFilter.Linear;
-			Textures[1] = new Texture("data/graydirt.png");
-			Textures[2] = new Texture("data/rock.png");
+			Textures[1] = new Texture2D("data/graydirt.png");
+			Textures[2] = new Texture2D("data/rock.png");
 
 			// Generate the batch
 			Size gridsize = new Size(16,16);
@@ -185,13 +185,13 @@ namespace Drive
 		/// <summary>
 		/// 
 		/// </summary>
-		Texture[] Textures;
+		Texture2D[] Textures;
 
 
 		/// <summary>
 		/// 
 		/// </summary>
-		Texture[] AlphaMaps;
+		Texture2D[] AlphaMaps;
 
 		/// <summary>
 		/// Size of the level in block

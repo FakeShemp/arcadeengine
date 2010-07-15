@@ -86,7 +86,7 @@ namespace ArcEngine.Examples.GameState
 		/// <summary>
 		/// Background texture
 		/// </summary>
-		Texture BackgroundTexture;
+		Texture2D BackgroundTexture;
 
 		#endregion
 	}

@@ -180,10 +180,10 @@ namespace DungeonEye.Forms
 
 			// Preload texture resources
 			Icons = new TileSet();
-			Icons.Texture = new Texture(ResourceManager.GetResource("DungeonEye.Forms.data.editor.png"));
+			Icons.Texture = new Texture2D(ResourceManager.GetResource("DungeonEye.Forms.data.editor.png"));
 
 			// Preload background texture resource
-			CheckerBoard = new Texture(ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png"));
+			CheckerBoard = new Texture2D(ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png"));
 
 
 			int id = 0;
@@ -1050,7 +1050,7 @@ namespace DungeonEye.Forms
 		/// <summary>
 		/// Background texture
 		/// </summary>
-		Texture CheckerBoard;
+		Texture2D CheckerBoard;
 
 
 		/// <summary>

@@ -446,7 +446,7 @@ namespace RuffnTumble
 
 
 			// Load the SpawnPoint texture
-			spTexture = new Texture(ResourceManager.GetResource("RuffnTumble.Resources.SpawnPoint.png"));
+			spTexture = new Texture2D(ResourceManager.GetResource("RuffnTumble.Resources.SpawnPoint.png"));
 
 
 			// All ok
@@ -1059,7 +1059,7 @@ namespace RuffnTumble
 		/// <summary>
 		/// SpawnPoint texture
 		/// </summary>
-		Texture spTexture;
+		Texture2D spTexture;
 
 
 		/// <summary>

@@ -99,7 +99,7 @@ namespace ArcEngine.Asset
 		public bool LoadTexture(string filename)
 		{
 			if (Texture == null)
-				Texture = new Texture();
+				Texture = new Texture2D();
 
 			TextureName = filename;
 			return Texture.LoadImage(filename);
@@ -622,7 +622,7 @@ namespace ArcEngine.Asset
 		/// Gets / sets the texture
 		/// </summary>
 		[Browsable(false)]
-		public Texture Texture
+		public Texture2D Texture
 		{
 			get;
 			set;

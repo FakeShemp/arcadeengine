@@ -128,7 +128,7 @@ namespace RuffnTumble.Editor.Wizards
 			
 			Tiles.Clear();
 
-			Tiles.Texture = new Texture();
+			Tiles.Texture = new Texture2D();
 			Tiles.Texture.LoadImage(OpenTileDlg.FileName);
 			int id = 0;
 			for (int y = 0; y < Tiles.Texture.Size.Height; y += BlockSize.Height)

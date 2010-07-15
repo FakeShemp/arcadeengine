@@ -865,7 +865,7 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		/// <param name="name">Name of the texture</param>
 		/// <returns>Texture handle</returns>
-		public static Texture CreateSharedTexture(string name)
+		public static Texture2D CreateSharedTexture(string name)
 		{
 
 			// Texture already exist, so return it
@@ -873,7 +873,7 @@ namespace ArcEngine.Graphic
 				return SharedTextures[name];
 
 			// Else create the texture
-			SharedTextures[name] = new Texture();
+			SharedTextures[name] = new Texture2D();
 			return SharedTextures[name];
 		}
 
@@ -1030,7 +1030,7 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		/// <param name="texture">Texture to display</param>
 		/// <param name="location">Location on the screen</param>
-		static public void DrawTexture(Texture texture, Point location)
+		static public void DrawTexture(Texture2D texture, Point location)
 		{
 			DrawTexture(texture, location, Color.White);
 		}
@@ -1042,7 +1042,7 @@ namespace ArcEngine.Graphic
 		/// <param name="texture">Texture to display</param>
 		/// <param name="location">Location on the screen</param>
 		/// <param name="color">Color to apply</param>
-		static public void DrawTexture(Texture texture, Point location, Color color)
+		static public void DrawTexture(Texture2D texture, Point location, Color color)
 		{
 			if (texture == null)
 				return;
@@ -1061,7 +1061,7 @@ namespace ArcEngine.Graphic
 		/// <param name="texture">Texture to display</param>
 		/// <param name="rect"></param>
 		/// <param name="tex">Texture coords</param>
-		static public void DrawTexture(Texture texture, Rectangle rect, Rectangle tex)
+		static public void DrawTexture(Texture2D texture, Rectangle rect, Rectangle tex)
 		{
 			DrawTexture(texture, rect, tex, Color.White);
 		}
@@ -1074,7 +1074,7 @@ namespace ArcEngine.Graphic
 		/// <param name="rect"></param>
 		/// <param name="tex"></param>
 		/// <param name="color">Color to apply</param>
-		static public void DrawTexture(Texture texture, Rectangle rect, Rectangle tex, Color color)
+		static public void DrawTexture(Texture2D texture, Rectangle rect, Rectangle tex, Color color)
 		{
 			if (texture == null)
 				return;
@@ -1193,7 +1193,7 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Shared textures
 		/// </summary>
-		static Dictionary<string, Texture> SharedTextures = new Dictionary<string, Texture>();
+		static Dictionary<string, Texture2D> SharedTextures = new Dictionary<string, Texture2D>();
 
 
 		/// <summary>
@@ -1209,7 +1209,7 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Current texture
 		/// </summary>
-		static public Texture Texture
+		static public Texture2D Texture
 		{
 			set
 			{
@@ -1233,7 +1233,7 @@ namespace ArcEngine.Graphic
 				return texture;
 			}
 		}
-		static Texture texture;
+		static Texture2D texture;
 
 
 		/// <summary>

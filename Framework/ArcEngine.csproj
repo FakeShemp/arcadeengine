@@ -311,7 +311,7 @@
     <Compile Include="Graphic\FrameBuffer.cs" />
     <Compile Include="Graphic\Shape.cs" />
     <Compile Include="Graphic\SpriteBatch.cs" />
-    <Compile Include="Graphic\Texture.cs" />
+    <Compile Include="Graphic\Texture2D.cs" />
     <Compile Include="Graphic\Display.cs" />
     <Compile Include="GameComponent.cs" />
     <Compile Include="Graphic\VertexPositionColor.cs" />

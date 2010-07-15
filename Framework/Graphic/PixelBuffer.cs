@@ -113,7 +113,7 @@ namespace ArcEngine.Graphic
 		/// <param name="texture">Texture to map</param>
 		/// <param name="access">Access mode</param>
 		/// <returns></returns>
-		public bool MapTexture(Texture texture, BufferAccess access)
+		public bool MapTexture(Texture2D texture, BufferAccess access)
 		{
 			if (texture == null || IsLocked || Handle == 0)
 				return false;
@@ -218,7 +218,7 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// 
 		/// </summary>
-		Texture Texture;
+		Texture2D Texture;
 
 
 		#endregion

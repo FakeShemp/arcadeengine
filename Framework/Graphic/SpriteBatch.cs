@@ -245,7 +245,7 @@ namespace ArcEngine.Graphic
 		/// <param name="vertices">Sprite array</param>
 		/// <param name="offset">First element in the array</param>
 		/// <param name="count">Number of element in the array</param>
-		void RenderBatch(Texture texture, SpriteVertex[] vertices, int offset, int count)
+		void RenderBatch(Texture2D texture, SpriteVertex[] vertices, int offset, int count)
 		{
 			if (count == 0 || texture == null)
 				return;
@@ -305,7 +305,7 @@ namespace ArcEngine.Graphic
 		/// <param name="origin">The origin of the sprite. Specify (0,0) for the upper-left corner.</param>
 		/// <param name="effect">Rotations to apply prior to rendering.</param>
 		/// <param name="depth">The sorting depth of the sprite</param>
-		void InternalDraw(Texture texture, ref Rectangle destination, ref Rectangle source, Color color, float rotation, Point origin, SpriteEffects effect, float depth)
+		void InternalDraw(Texture2D texture, ref Rectangle destination, ref Rectangle source, Color color, float rotation, Point origin, SpriteEffects effect, float depth)
 		{
 			Vector4 src = new Vector4(source.X, source.Y, source.Width, source.Height);
 
@@ -329,7 +329,7 @@ namespace ArcEngine.Graphic
 		/// <param name="origin">The origin of the sprite. Specify (0,0) for the upper-left corner.</param>
 		/// <param name="effect">Rotations to apply prior to rendering.</param>
 		/// <param name="depth">The sorting depth of the sprite</param>
-		void InternalDraw(Texture texture, ref Vector4 destination, ref Vector4 source, Color color, float rotation, Vector2 origin, SpriteEffects effect, float depth)
+		void InternalDraw(Texture2D texture, ref Vector4 destination, ref Vector4 source, Color color, float rotation, Vector2 origin, SpriteEffects effect, float depth)
 		{
 			if (texture == null || !InUse) 
 				return;
@@ -395,7 +395,7 @@ namespace ArcEngine.Graphic
 		/// <param name="texture">The sprite texture</param>
 		/// <param name="position">The location, in screen coordinates, where the sprite will be drawn.</param>
 		/// <param name="color">The color channel modulation to use. Use Color.White  for full color with no tinting. </param>
-		public void Draw(Texture texture, Point position, Color color)
+		public void Draw(Texture2D texture, Point position, Color color)
 		{
 			Rectangle destination = new Rectangle(position.X, position.Y, texture.Size.Width, texture.Size.Height);
 
@@ -411,7 +411,7 @@ namespace ArcEngine.Graphic
 		/// <param name="texture">The sprite texture</param>
 		/// <param name="position">The location, in screen coordinates, where the sprite will be drawn.</param>
 		/// <param name="color">The color channel modulation to use. Use Color.White  for full color with no tinting. </param>
-		public void Draw(Texture texture, Vector2 position, Color color)
+		public void Draw(Texture2D texture, Vector2 position, Color color)
 		{
 			Vector4 dst = new Vector4(position.X, position.Y, texture.Size.Width, texture.Size.Height);
 
@@ -428,7 +428,7 @@ namespace ArcEngine.Graphic
 		/// <param name="destination">A rectangle specifying, in screen coordinates, where the sprite will be drawn. 
 		/// If this rectangle is not the same size as sourcerectangle, the sprite is scaled to fit.</param>
 		/// <param name="color">The color channel modulation to use. Use Color.White for full color with no tinting</param>
-		public void Draw(Texture texture, Rectangle destination, Color color)
+		public void Draw(Texture2D texture, Rectangle destination, Color color)
 		{
 			Rectangle source = Rectangle.Empty;
 
@@ -444,7 +444,7 @@ namespace ArcEngine.Graphic
 		/// <param name="source">A rectangle specifying, in texels, which section of the rectangle to draw. 
 		/// Use Rectangle.Empty to draw the entire texture.</param>
 		/// <param name="color">The color channel modulation to use. Use Color.White for full color with no tinting.</param>
-		public void Draw(Texture texture, Point position, Rectangle source, Color color)
+		public void Draw(Texture2D texture, Point position, Rectangle source, Color color)
 		{
 			Rectangle destination = new Rectangle(position.X, position.Y, texture.Size.Width, texture.Size.Height);
 
@@ -461,7 +461,7 @@ namespace ArcEngine.Graphic
 		/// <param name="source">A rectangle specifying, in texels, which section of the rectangle to draw. 
 		/// Use Rectangle.Empty to draw the entire texture.</param>
 		/// <param name="color">The color channel modulation to use. Use Color.White for full color with no tinting.</param>
-		public void Draw(Texture texture, Vector2 position, Vector4 source, Color color)
+		public void Draw(Texture2D texture, Vector2 position, Vector4 source, Color color)
 		{
 			Vector4 dst = new Vector4(position.X, position.Y, texture.Size.Width, texture.Size.Height);
 
@@ -481,7 +481,7 @@ namespace ArcEngine.Graphic
 		/// <param name="source">A rectangle specifying, in texels, which section of the rectangle to draw. 
 		/// Use Rectangle.Empty to draw the entire texture.</param>
 		/// <param name="color">The color channel modulation to use. Use Color.White for full color with no tinting.</param>
-		public void Draw(Texture texture, Rectangle destination, Rectangle source, Color color)
+		public void Draw(Texture2D texture, Rectangle destination, Rectangle source, Color color)
 		{
 			InternalDraw(texture, ref destination, ref source, color, 0.0f, Point.Empty, SpriteEffects.None, 0.0f);
 		}
@@ -496,7 +496,7 @@ namespace ArcEngine.Graphic
 		/// <param name="source">A rectangle specifying, in texels, which section of the rectangle to draw. 
 		/// Use Rectangle.Empty to draw the entire texture.</param>
 		/// <param name="color">The color channel modulation to use. Use Color.White for full color with no tinting.</param>
-		public void Draw(Texture texture, Vector4 destination, Vector4 source, Color color)
+		public void Draw(Texture2D texture, Vector4 destination, Vector4 source, Color color)
 		{
 			InternalDraw(texture, ref destination, ref source, color, 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f);
 		}
@@ -515,7 +515,7 @@ namespace ArcEngine.Graphic
         /// <param name="scale">Uniform multiple by which to scale the sprite width and height</param>
         /// <param name="effects">Rotations to apply prior to rendering.</param>
         /// <param name="layerDepth">The sorting depth of the sprite, between 0 (front) and 1 (back).</param>
-        public void Draw(Texture texture, Point position, Rectangle source, Color color, float rotation, Point origin, float scale, SpriteEffects effects, float layerDepth)
+        public void Draw(Texture2D texture, Point position, Rectangle source, Color color, float rotation, Point origin, float scale, SpriteEffects effects, float layerDepth)
         {
             Rectangle src = new Rectangle();
             src.X = position.X;
@@ -540,7 +540,7 @@ namespace ArcEngine.Graphic
         /// <param name="scale">Uniform multiple by which to scale the sprite width and height</param>
         /// <param name="effects">Rotations to apply prior to rendering.</param>
         /// <param name="layerDepth">The sorting depth of the sprite, between 0 (front) and 1 (back).</param>
-        public void Draw(Texture texture, Vector2 position, Vector4 source, Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects, float layerDepth)
+        public void Draw(Texture2D texture, Vector2 position, Vector4 source, Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects, float layerDepth)
         {
             Vector4 src = new Vector4();
             src.X = position.X;
@@ -798,7 +798,7 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Current texture in use
 		/// </summary>
-		Texture CurrentTexture;
+		Texture2D CurrentTexture;
 
 
 		/// <summary>
@@ -982,7 +982,7 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Texture
 		/// </summary>
-		public Texture Texture;
+		public Texture2D Texture;
 	}
 
 

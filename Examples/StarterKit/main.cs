@@ -83,7 +83,7 @@ namespace ArcEngine.Examples.StarterKit
 			Font = BitmapFont.CreateFromTTF(@"c:\windows\fonts\verdana.ttf", 12, FontStyle.Regular);
 
 			// Load a texture
-			Smiley = new Texture("smiley.png");
+			Smiley = new Texture2D("smiley.png");
 
 			// Texture location on the screen
 			Location = new Point(
@@ -203,7 +203,7 @@ namespace ArcEngine.Examples.StarterKit
 		/// <summary>
 		/// Texture to display
 		/// </summary>
-		Texture Smiley;
+		Texture2D Smiley;
 
 
 		/// <summary>

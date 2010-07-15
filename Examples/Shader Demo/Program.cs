@@ -72,7 +72,7 @@ namespace ArcEngine.Examples.ShaderDemo
 
 
 			// Load the texture
-			Texture = new Texture("data/checkerboard.png");
+			Texture = new Texture2D("data/checkerboard.png");
 			Display.Texture = Texture;
 
 
@@ -185,7 +185,7 @@ namespace ArcEngine.Examples.ShaderDemo
 		/// <summary>
 		/// Texture to use
 		/// </summary>
-		Texture Texture;
+		Texture2D Texture;
 
 
 		/// <summary>

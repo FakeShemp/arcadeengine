@@ -113,7 +113,7 @@ namespace ArcEngine.Examples.RenderToTexture
 			Buffer = new FrameBuffer(new Size(512, 512));
 
 			// Texture to display
-			Texture = new Texture("data/test.png");
+			Texture = new Texture2D("data/test.png");
 
 			// Mesh
 			Mesh = Mesh.CreateTrefoil(128, 32);
@@ -263,7 +263,7 @@ namespace ArcEngine.Examples.RenderToTexture
 		/// <summary>
 		/// Texture
 		/// </summary>
-		Texture Texture;
+		Texture2D Texture;
 
 		
 		/// <summary>

@@ -348,7 +348,7 @@ namespace ArcEngine.Asset
 					Texture = null;
 				else
 					//texture = ResourceManager.CreateAsset<Texture>(value);
-					Texture = new Texture(value);
+					Texture = new Texture2D(value);
 			}
 		}
 		string textureName;
@@ -360,7 +360,7 @@ namespace ArcEngine.Asset
 		/// Background texture
 		/// </summary>
 		[Browsable(false)]
-		public Texture Texture
+		public Texture2D Texture
 		{
 			get;
 			private set;

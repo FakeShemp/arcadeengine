@@ -160,7 +160,7 @@ namespace RuffnTumble.Editor
 			GlControl_Resize(null, null);
 
 			// Preload texture resources
-			CheckerBoard = new Texture(ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png"));
+			CheckerBoard = new Texture2D(ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png"));
 
 
 			//stream = a.GetManifestResourceStream("ArcEngine.Editor.Resources.SpawnPoint.png");
@@ -1127,7 +1127,7 @@ namespace RuffnTumble.Editor
 		/// <summary>
 		/// Checkerboard texture
 		/// </summary>
-		Texture CheckerBoard;
+		Texture2D CheckerBoard;
 
 
 

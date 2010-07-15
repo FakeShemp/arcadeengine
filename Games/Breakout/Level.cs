@@ -57,7 +57,7 @@ namespace Breakout
 		/// <returns></returns>
 		public bool Init()
 		{
-			Background = new Texture("background.png");
+			Background = new Texture2D("background.png");
 
 
 			Tileset = ResourceManager.CreateAsset<TileSet>(TilesetName);
@@ -282,7 +282,7 @@ namespace Breakout
 		/// <summary>
 		/// Background texture
 		/// </summary>
-		Texture Background;
+		Texture2D Background;
 
 
 		/// <summary>

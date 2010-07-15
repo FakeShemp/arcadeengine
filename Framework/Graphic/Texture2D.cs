@@ -43,7 +43,7 @@ namespace ArcEngine.Graphic
 	/// <summary>
 	/// Texture definition
 	/// </summary>
-	public class Texture : IDisposable
+	public class Texture2D : IDisposable
 	{
 
 		#region ctor / dtor
@@ -51,7 +51,7 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public Texture()
+		public Texture2D()
 		{
 			Handle = TK.GL.GenTexture();
 			//ErrorCode code = GL.GetError();
@@ -72,7 +72,7 @@ namespace ArcEngine.Graphic
 		/// Creates an empty texture
 		/// </summary>
 		/// <param name="size">Size of the texture to create</param>
-		public Texture(Size size) : this()
+		public Texture2D(Size size) : this()
 		{
 			SetSize(size);
 		}
@@ -82,7 +82,7 @@ namespace ArcEngine.Graphic
 		/// Loads an image from the disk
 		/// </summary>
 		/// <param name="filename">Image's name</param>
-		public Texture(string filename) : this()
+		public Texture2D(string filename) : this()
 		{
 			LoadImage(filename);
 		}
@@ -93,7 +93,7 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		/// <param name="stream">Stream handle</param>
 		/// <remarks>The Stream is closed automatically</remarks>
-		public Texture(Stream stream) : this()
+		public Texture2D(Stream stream) : this()
 		{
 			if (stream == null)
 				return;
@@ -109,7 +109,7 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		/// <param name="size">Desired size</param>
 		/// <param name="format">Desired pixel format</param>
-		public Texture(Size size, PixelFormat format) : this()
+		public Texture2D(Size size, PixelFormat format) : this()
 		{
 			PixelFormat = format;
 			SetSize(size);
@@ -120,7 +120,7 @@ namespace ArcEngine.Graphic
 		/// Creates a texture with a specified pixel format
 		/// </summary>
 		/// <param name="format">Desired pixel format</param>
-		public Texture(PixelFormat format) : this()
+		public Texture2D(PixelFormat format) : this()
 		{
 			PixelFormat = format;
 		}
@@ -129,7 +129,7 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Destructor
 		/// </summary>
-		~Texture()
+		~Texture2D()
 		{
 		//	throw new Exception("Texture : Handle (id=" + Handle.ToString() + ") != -1, Call Dispose() !!");
 		}
@@ -203,9 +203,9 @@ namespace ArcEngine.Graphic
         /// Create a 1x1 white texture. Useful for drawing uniform filled element
         /// </summary>
         /// <returns>A 1x1 white texture</returns>
-        public static Texture CreateWhite1x1()
+        public static Texture2D CreateWhite1x1()
         {
-            Texture texture = new Texture(new Size(1, 1));
+            Texture2D texture = new Texture2D(new Size(1, 1));
 
             Bitmap bm = new Bitmap(1, 1);
             bm.SetPixel(0, 0, Color.White);

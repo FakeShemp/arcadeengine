@@ -570,7 +570,7 @@ namespace ArcEngine.Editor
 
             Batch = new SpriteBatch();
 
-			CheckerBoard = new Texture(ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png"));
+			CheckerBoard = new Texture2D(ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png"));
             CheckerBoard.HorizontalWrap = HorizontalWrapFilter.Repeat;
             CheckerBoard.VerticalWrap = VerticalWrapFilter.Repeat;
 
@@ -831,7 +831,7 @@ namespace ArcEngine.Editor
 		/// <summary>
 		/// Background texture
 		/// </summary>
-		Texture CheckerBoard;
+		Texture2D CheckerBoard;
 
 
 		/// <summary>

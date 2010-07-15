@@ -783,7 +783,7 @@ namespace ArcEngine.Editor
 		/// <summary>
 		/// Checkerboard texture
 		/// </summary>
-		Texture CheckerBoard;
+		Texture2D CheckerBoard;
 
         /// <summary>
         /// 

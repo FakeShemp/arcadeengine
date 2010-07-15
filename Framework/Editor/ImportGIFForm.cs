@@ -178,7 +178,7 @@ namespace ArcEngine.Editor
 
 
 			// The texture
-			Texture texture = new Texture(ComputeTextureSize());
+			Texture2D texture = new Texture2D(ComputeTextureSize());
 
 			// The tileset
 			TileSet tileset = new TileSet();
@@ -270,7 +270,7 @@ namespace ArcEngine.Editor
 
 			size.Width = maxwidth;
 
-			return Texture.GetNextPOT(size);
+			return Texture2D.GetNextPOT(size);
 		}
 
 

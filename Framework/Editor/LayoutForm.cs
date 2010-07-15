@@ -55,7 +55,7 @@ namespace ArcEngine.Editor
 
 
 
-			CheckerBoard = new Texture(ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png"));
+			CheckerBoard = new Texture2D(ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png"));
 
 
 
@@ -442,7 +442,7 @@ namespace ArcEngine.Editor
 		/// <summary>
 		/// Background texture
 		/// </summary>
-		Texture CheckerBoard;
+		Texture2D CheckerBoard;
 
 
         /// <summary>

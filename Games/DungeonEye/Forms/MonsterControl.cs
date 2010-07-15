@@ -212,7 +212,7 @@ namespace DungeonEye.Forms
 			Display.Init();
 			Display.ClearBuffers();
 
-			CheckerBoard = new Texture(ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png"));
+			CheckerBoard = new Texture2D(ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png"));
 		}
 
 
@@ -471,7 +471,7 @@ namespace DungeonEye.Forms
 		/// <summary>
 		/// Background texture
 		/// </summary>
-		Texture CheckerBoard;
+		Texture2D CheckerBoard;
 
 
 		#endregion

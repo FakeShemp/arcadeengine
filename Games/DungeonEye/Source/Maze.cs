@@ -166,7 +166,7 @@ namespace DungeonEye
 					#endregion
 				}
 
-            White = Texture.CreateWhite1x1();
+            White = Texture2D.CreateWhite1x1();
 
 			return true;
 		}
@@ -1252,7 +1252,7 @@ namespace DungeonEye
         /// <summary>
         /// White texture
         /// </summary>
-        Texture White;
+        Texture2D White;
 
 	
 		/// <summary>
