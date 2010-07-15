@@ -87,6 +87,10 @@ namespace DungeonEye
 				WallTileset.Dispose();
 			WallTileset = null;
 
+            if (White != null)
+                White.Dispose();
+            White = null;
+
 			Blocks = null;
 			Description = null;
 			Dungeon = null;
@@ -161,7 +165,9 @@ namespace DungeonEye
 					}
 					#endregion
 				}
-		
+
+            White = Texture.CreateWhite1x1();
+
 			return true;
 		}
 
@@ -806,9 +812,11 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="team">Team handle</param>
 		/// <param name="location">Location on the screen</param>
-		public void DrawMiniMap(Team team, Point location)
+		public void DrawMiniMap(SpriteBatch batch, Team team, Point location)
 		{
-			Display.Buffer.Clear();
+            if (batch == null)
+                return;
+
 			Color color;
 
 			for (int y = 0; y < Size.Height; y++)
@@ -841,8 +849,7 @@ namespace DungeonEye
 					if (team.Location.Position.X == x && team.Location.Position.Y == y && team.Location.Maze == this)
 						color = Color.Blue;
 
-					Display.Buffer.AddRectangle(new Rectangle(location.X + x * 4, location.Y + y * 4, 4, 4), color);
-					//Display.FillRectangle(new Rectangle(location.X + x * 4, location.Y + y * 4, 4, 4), color);
+                    batch.Draw(White, new Rectangle(location.X + x * 4, location.Y + y * 4, 4, 4), color);
 				}
 
 
@@ -858,8 +865,7 @@ namespace DungeonEye
 				// Sight zone
 				Rectangle zone = new Rectangle(monster.SightZone.X * 4 + location.X, monster.SightZone.Y * 4 + location.Y,
 					monster.SightZone.Width * 4, monster.SightZone.Height * 4);
-				Display.FillRectangle(zone, Color.FromArgb(128, Color.Red));
-
+                batch.Draw(White, zone, Color.FromArgb(128, Color.Red));
 	
 				//TODO a deplacer en tant que propriete de Monster
 				if (monster.StateManager.CurrentState is MoveState)
@@ -875,12 +881,6 @@ namespace DungeonEye
 					Display.DrawLine(start, end, Color.Blue);
 				}
 			}
-
-			Display.Texturing = false;
-
-			int count = Display.Buffer.Update();
-			Display.DrawBatch(Display.Buffer, 0, count);
-			Display.Texturing = true;
 		}
 
 
@@ -1249,7 +1249,12 @@ namespace DungeonEye
 
 		#region Properties
 
-		
+        /// <summary>
+        /// White texture
+        /// </summary>
+        Texture White;
+
+	
 		/// <summary>
 		/// Wall TileSet to use
 		/// </summary>
@@ -1781,6 +1786,7 @@ namespace DungeonEye
 			get;
 			private set;
 		}
+
 
 		#endregion
 	}

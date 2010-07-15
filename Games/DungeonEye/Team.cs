@@ -572,7 +572,7 @@ namespace DungeonEye
 			// Mini map
 			if (Debug)
 			{
-				Location.Maze.DrawMiniMap(this, new Point(500, 220));
+				Location.Maze.DrawMiniMap(batch, this, new Point(500, 220));
 
 				// Team location
 				batch.DrawString(Font, new Point(10, 340), Color.White, Location.ToString());

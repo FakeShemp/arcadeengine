@@ -233,7 +233,8 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		/// <param name="factor">Specifies a multiplier for each bit in the line stipple pattern</param>
 		/// <param name="pattern">16-bit integer whose bit pattern determines which fragments of a line will be drawn when the line is rasterized.</param>
-		public static void SetLineStipple(int factor, short pattern)
+        [Obsolete]
+        public static void SetLineStipple(int factor, short pattern)
 		{
 			TK.GL.LineStipple(factor, pattern);
 		}
@@ -244,7 +245,8 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		/// <param name="rect">Rectangle to draw</param>
 		/// <param name="color">Color</param>
-		public static void DrawRectangle(Rectangle rect, Color color)
+        [Obsolete]
+        public static void DrawRectangle(Rectangle rect, Color color)
 		{
 			DrawQuad(rect.Left, rect.Top, rect.Size.Width, rect.Size.Height, color, false, 0, Point.Empty);
 		}
@@ -258,7 +260,8 @@ namespace ArcEngine.Graphic
 		/// <param name="width">Width</param>
 		/// <param name="height">Height</param>
 		/// <param name="color">Color</param>
-		static public void DrawRectangle(int x, int y, int width, int height, Color color)
+        [Obsolete]
+        static public void DrawRectangle(int x, int y, int width, int height, Color color)
 		{
 			DrawQuad(x, y, width, height, color, false, 0, Point.Empty);
 		}
@@ -274,7 +277,8 @@ namespace ArcEngine.Graphic
 		/// <param name="color">Color</param>
 		/// <param name="angle">Rotation angle</param>
 		/// <param name="pivot">Origin of rotation</param>
-		static public void DrawRectangle(int x, int y, int width, int height, Color color, float angle, Point pivot)
+        [Obsolete]
+        static public void DrawRectangle(int x, int y, int width, int height, Color color, float angle, Point pivot)
 		{
 			DrawQuad(x, y, width, height, color, false, angle, pivot);
 		}
@@ -287,7 +291,8 @@ namespace ArcEngine.Graphic
 		/// <param name="color">Color</param>
 		/// <param name="angle">Angle of rotation</param>
 		/// <param name="origin">The origin of the rectangle. Specify (0,0) for the upper-left corner.</param>
-		public static void DrawRectangle(Rectangle rect, Color color, float angle, Point origin)
+        [Obsolete]
+        public static void DrawRectangle(Rectangle rect, Color color, float angle, Point origin)
 		{
 			DrawQuad(rect.Left, rect.Top, rect.Size.Width, rect.Size.Height, color, false, angle, origin);
 		}
@@ -304,7 +309,8 @@ namespace ArcEngine.Graphic
 		/// <param name="fill">Fill the rectangle or not</param>
 		/// <param name="angle">Rotation angle in degree</param>
 		/// <param name="pivot">Origin of rotation</param>
-		static void DrawQuad(int x, int y, int width, int height, Color color, bool fill, float angle, Point pivot)
+        [Obsolete]
+        static void DrawQuad(int x, int y, int width, int height, Color color, bool fill, float angle, Point pivot)
 		{
 			Texturing = false;
 
@@ -344,7 +350,8 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		/// <param name="rect">Rectangle</param>
 		/// <param name="color">Color</param>
-		public static void FillRectangle(Rectangle rect, Color color)
+        [Obsolete]
+        public static void FillRectangle(Rectangle rect, Color color)
 		{
 			DrawQuad(rect.X, rect.Y, rect.Width, rect.Height, color, true, 0, Point.Empty);
 		}
@@ -358,7 +365,8 @@ namespace ArcEngine.Graphic
 		/// <param name="width">Width</param>
 		/// <param name="height">Height</param>
 		/// <param name="color">Color</param>
-		public static void FillRectangle(int x, int y, int width, int height, Color color)
+        [Obsolete]
+        public static void FillRectangle(int x, int y, int width, int height, Color color)
 		{
 			DrawQuad(x, y, width, height, color, true, 0, Point.Empty);
 		}
@@ -371,7 +379,8 @@ namespace ArcEngine.Graphic
 		/// <param name="color">Color</param>
 		/// <param name="angle">Rotation angle</param>
 		/// <param name="pivot">Origin of rotation</param>
-		public static void FillRectangle(Rectangle rect, Color color, float angle, Point pivot)
+        [Obsolete]
+        public static void FillRectangle(Rectangle rect, Color color, float angle, Point pivot)
 		{
 			DrawQuad(rect.X, rect.Y, rect.Width, rect.Height, color, true, angle, pivot);
 		}
@@ -387,7 +396,8 @@ namespace ArcEngine.Graphic
 		/// <param name="color">Color</param>
 		/// <param name="angle">Rotation angle</param>
 		/// <param name="pivot">Origin of rotation</param>
-		public static void FillRectangle(int x, int y, int width, int height, Color color, float angle, Point pivot)
+        [Obsolete]
+        public static void FillRectangle(int x, int y, int width, int height, Color color, float angle, Point pivot)
 		{
 			DrawQuad(x, y, height, width, color, true, angle, pivot);
 		}
@@ -399,6 +409,7 @@ namespace ArcEngine.Graphic
 		/// <param name="from">Starting point</param>
 		/// <param name="to">Ending point</param>
 		/// <param name="color">Color</param>
+        [Obsolete]
 		public static void DrawLine(Point from, Point to, Color color)
 		{
 			DrawLine(from.X, from.Y, to.X, to.Y, color);
@@ -413,7 +424,8 @@ namespace ArcEngine.Graphic
 		/// <param name="x2">End x</param>
 		/// <param name="y2">End y</param>
 		/// <param name="color">Color</param>
-		public static void DrawLine(int x1, int y1, int x2, int y2, Color color)
+        [Obsolete]
+        public static void DrawLine(int x1, int y1, int x2, int y2, Color color)
 		{
 			Texturing = false;
 			TK.GL.Begin(TK.BeginMode.Lines);
@@ -431,7 +443,8 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		/// <param name="points">Points</param>
 		/// <param name="color">Color</param>
-		public static void DrawLines(Point[] points, Color color)
+        [Obsolete]
+        public static void DrawLines(Point[] points, Color color)
 		{
 			int pos = 0;
 			for (pos = 0; pos < points.Length - 1; pos++)
@@ -450,7 +463,8 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		/// <param name="points">Points</param>
 		/// <param name="color">Color</param>
-		public static void DrawLineSegments(Point[] points, Color color)
+        [Obsolete]
+        public static void DrawLineSegments(Point[] points, Color color)
 		{
 			int pos = 0;
 			for (pos = 0; pos < points.Length - 1; pos += 2)
@@ -467,7 +481,8 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		/// <param name="point">Location of the point</param>
 		/// <param name="color">Color</param>
-		public static void DrawPoint(Point point, Color color)
+        [Obsolete]
+        public static void DrawPoint(Point point, Color color)
 		{
 			DrawPoint(point.X, point.Y, color);
 		}
@@ -480,7 +495,8 @@ namespace ArcEngine.Graphic
 		/// <param name="x">X</param>
 		/// <param name="y">Y</param>
 		/// <param name="color">Color</param>
-		public static void DrawPoint(int x, int y, Color color)
+        [Obsolete]
+        public static void DrawPoint(int x, int y, Color color)
 		{
 			Texturing = false;
 			TK.GL.Begin(TK.BeginMode.Points);
@@ -497,7 +513,8 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		/// <param name="points">List of points</param>
 		/// <param name="color">Line color</param>
-		public static void DrawPolygon(Point[] points, Color color)
+        [Obsolete]
+        public static void DrawPolygon(Point[] points, Color color)
 		{
 			Texturing = false;
 			RenderState.Culling = false;
@@ -519,7 +536,8 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		/// <param name="points">List of points</param>
 		/// <param name="color">Fill color</param>
-		public static void FillPolygon(Point[] points, Color color)
+        [Obsolete]
+        public static void FillPolygon(Point[] points, Color color)
 		{
 			Texturing = false;
 			RenderState.Culling = false;
@@ -545,7 +563,8 @@ namespace ArcEngine.Graphic
 		/// <param name="yradius">Y radius</param>
 		/// <param name="color">Color</param>
 		/// <param name="fill">Fill or not</param>
-		static void DrawCircle(int x, int y, int xradius, int yradius, Color color, bool fill)
+        [Obsolete]
+        static void DrawCircle(int x, int y, int xradius, int yradius, Color color, bool fill)
 		{
 
 			Texturing = false;
@@ -578,7 +597,8 @@ namespace ArcEngine.Graphic
 		/// <param name="start">Start angle</param>
 		/// <param name="angle">Angle amount</param>
 		/// <param name="color">Color</param>
-		public static void DrawArc(float x, float y, float radius, float start, float angle, Color color)
+        [Obsolete]
+        public static void DrawArc(float x, float y, float radius, float start, float angle, Color color)
 		{
 			DrawArc(x, y, radius, start, angle, color, false);
 		}
@@ -593,7 +613,8 @@ namespace ArcEngine.Graphic
 		/// <param name="start">Start angle</param>
 		/// <param name="angle">Angle amount</param>
 		/// <param name="color">Color</param>
-		public static void FillArc(float x, float y, float radius, float start, float angle, Color color)
+        [Obsolete]
+        public static void FillArc(float x, float y, float radius, float start, float angle, Color color)
 		{
 			DrawArc(x, y, radius, start, angle, color, true);
 		}
@@ -610,7 +631,8 @@ namespace ArcEngine.Graphic
 		/// <param name="end">End angle</param>
 		/// <param name="color">Color</param>
 		/// <param name="fill">Filled or not</param>
-		static void DrawArc(float x, float y, float radius, float start, float end, Color color, bool fill)
+        [Obsolete]
+        static void DrawArc(float x, float y, float radius, float start, float end, Color color, bool fill)
 		{
 
 			Texturing = false;
@@ -659,7 +681,8 @@ namespace ArcEngine.Graphic
 		/// <param name="location">Location of the circle</param>
 		/// <param name="radius">Radius</param>
 		/// <param name="color">Color</param>
-		public static void DrawCircle(Point location, int radius, Color color)
+        [Obsolete]
+        public static void DrawCircle(Point location, int radius, Color color)
 		{
 			DrawCircle(location.X, location.Y, radius, radius, color, false);
 		}
@@ -672,7 +695,8 @@ namespace ArcEngine.Graphic
 		/// <param name="y">Y</param>
 		/// <param name="radius">Radius</param>
 		/// <param name="color">Color</param>
-		public static void DrawCircle(int x, int y, int radius, Color color)
+        [Obsolete]
+        public static void DrawCircle(int x, int y, int radius, Color color)
 		{
 			DrawCircle(x, y, radius, radius, color, false);
 		}
@@ -684,7 +708,8 @@ namespace ArcEngine.Graphic
 		/// <param name="location">Location of the circle</param>
 		/// <param name="radius">Radius</param>
 		/// <param name="color">Color</param>
-		public static void DrawDisk(Point location, int radius, Color color)
+        [Obsolete]
+        public static void DrawDisk(Point location, int radius, Color color)
 		{
 			DrawCircle(location.X, location.Y, radius, radius, color, true);
 		}
@@ -697,7 +722,8 @@ namespace ArcEngine.Graphic
 		/// <param name="y">Y</param>
 		/// <param name="radius">Radius</param>
 		/// <param name="color">Color</param>
-		public static void DrawDisk(int x, int y, int radius, Color color)
+        [Obsolete]
+        public static void DrawDisk(int x, int y, int radius, Color color)
 		{
 			DrawCircle(x, y, radius, radius, color, true);
 		}
@@ -708,7 +734,8 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		/// <param name="rect">Bounding rectangle</param>
 		/// <param name="color">Color</param>
-		public static void DrawEllipse(Rectangle rect, Color color)
+        [Obsolete]
+        public static void DrawEllipse(Rectangle rect, Color color)
 		{
 			DrawCircle(rect.X + rect.Width / 2, rect.Y + rect.Height / 2, rect.Width / 2, rect.Height / 2, color, false);
 		}
@@ -722,7 +749,8 @@ namespace ArcEngine.Graphic
 		/// <param name="radiusx">X radius</param>
 		/// <param name="radiusy">Y radius</param>
 		/// <param name="color">Color</param>
-		public static void DrawEllipse(int x, int y, int radiusx, int radiusy, Color color)
+        [Obsolete]
+        public static void DrawEllipse(int x, int y, int radiusx, int radiusy, Color color)
 		{
 			DrawCircle(x, y, radiusx, radiusy, color, false);
 		}
@@ -733,7 +761,8 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		/// <param name="rect">Bounding rectangle</param>
 		/// <param name="color">Color</param>
-		public static void FillEllipse(Rectangle rect, Color color)
+        [Obsolete]
+        public static void FillEllipse(Rectangle rect, Color color)
 		{
 			DrawCircle(rect.X + rect.Width / 2, rect.Y + rect.Height /2, rect.Width / 2, rect.Height / 2, color, true);
 		}
@@ -748,7 +777,8 @@ namespace ArcEngine.Graphic
 		/// <param name="radiusx">X radius</param>
 		/// <param name="radiusy">Y radius</param>
 		/// <param name="color">Color</param>
-		public static void FillEllipse(int x, int y, int radiusx, int radiusy, Color color)
+        [Obsolete]
+        public static void FillEllipse(int x, int y, int radiusx, int radiusy, Color color)
 		{
 			DrawCircle(x, y, radiusx, radiusy, color, true);
 		}
@@ -762,7 +792,8 @@ namespace ArcEngine.Graphic
 		/// <param name="control1">Control point 1</param>
 		/// <param name="control2">Control point 2</param>
 		/// <param name="color">Color</param>
-		public static void DrawBezier(Point start, Point end, Point control1, Point control2, Color color)
+        [Obsolete]
+        public static void DrawBezier(Point start, Point end, Point control1, Point control2, Color color)
 		{
 			float[] points = new float[]
 			{
@@ -808,7 +839,8 @@ namespace ArcEngine.Graphic
 		/// <param name="end">End point</param>
 		/// <param name="control">Control point</param>
 		/// <param name="color">Color</param>
-		public static void DrawQuadraticCurve(Point start, Point end, Point control, Color color)
+        [Obsolete]
+        public static void DrawQuadraticCurve(Point start, Point end, Point control, Color color)
 		{
 			Point control1 = new Point(
 				(int)(start.X  + 2.0f / 3.0f * (control.X - start.X)),

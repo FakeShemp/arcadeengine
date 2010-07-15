@@ -39,38 +39,6 @@ using TK = OpenTK.Graphics.OpenGL;
 namespace ArcEngine.Graphic
 {
 
-	/// <summary>
-	/// Spécifie la position de l'image sur le contrôle.
-	/// </summary>
-	public enum TextureLayout
-	{
-		/// <summary>
-		/// Image is top left aligned
-		/// </summary>
-		None = 0,
-
-		/// <summary>
-		/// The image is tiled
-		/// </summary>
-		Tile = 1,
-
-		/// <summary>
-		/// The image is centered
-		/// </summary>
-		Center = 2,
-
-		/// <summary>
-		/// The image is stretched
-		/// </summary>
-		Stretch = 3,
-
-		/// <summary>
-		/// The image is zoomed (proportions keeped)
-		/// </summary>
-		Zoom = 4,
-	}
-
-
 
 	/// <summary>
 	/// Texture definition
@@ -197,143 +165,6 @@ namespace ArcEngine.Graphic
 
 		#region Blitting
 
-/*
-		/// <summary>
-		/// Draws a Texture on the screen and resize it
-		/// </summary>
-		/// <param name="rect">Rectangle on the screen</param>
-		/// <param name="tex">Rectangle in the texture</param>
-		/// <param name="mode">Rendering mode</param>
-		[Obsolete("deprecated. Use Display.DrawTexture() instead.")]
-		public void Blit(Rectangle rect, Rectangle tex, TextureLayout mode)
-		{
-			Display.Texture = this;
-
-			// Display mode
-			switch (mode)
-			{
-				default:
-				{
-					Blit(tex, tex);
-				}
-				break;
-
-
-				case TextureLayout.Stretch:
-				{
-					Blit(rect, tex);
-				}
-				break;
-
-
-				case TextureLayout.Center:
-				{
-					Point pos = new Point(
-						(rect.Width - Size.Width) / 2,
-						(rect.Height - Size.Height) / 2
-						);
-					pos.Offset(rect.Location);
-					Blit(pos);
-				}
-				break;
-
-
-				case TextureLayout.Tile:
-				{
-					//device.ScissorZone = rect;
-					//device.Scissor = true;
-
-					//GL.Begin(BeginMode.Quads);
-					for (int y = rect.Location.Y; y <= rect.Location.Y + rect.Height; y += tex.Size.Height)
-						for (int x = rect.Location.X; x <= rect.Location.X + rect.Width; x += tex.Size.Width)
-						{
-							//	Blit(Texture, new Point(x, y));
-
-							Display.RawBlit(new Rectangle(x, y, tex.Width, tex.Height), tex);
-
-
-						}
-					//GL.End();
-
-					//device.Scissor = false; 
- 
-				}
-				break;
-
-				case TextureLayout.Zoom:
-				{
-					int value = Math.Min(rect.Width - Size.Width, rect.Height - Size.Height);
-
-					Rectangle final = new Rectangle(
-						0, 0,
-						Size.Width + value, Size.Height + value);
-
-					final.Location = new Point((rect.Width - final.Width) / 2,
-												(rect.Height - final.Height) / 2);
-
-					Blit(final, Rectangle);
-
-				}
-				break;
-			}
-		}
-
-
-		/// <summary>
-		/// Blits a texture to the screen.
-		/// </summary>
-		/// <param name="rect">Rectangle on the screen</param>
-		/// <param name="tex">Rectangle in the texture</param>
-		[Obsolete("deprecated. Use Display.DrawTexture() instead.")]
-		public void Blit(Rectangle rect, Rectangle tex)
-		{
-			Display.Texture = this;
-			Display.RawBlit(rect, tex);
-		}
-
-
-		/// <summary>
-		/// Blits a texture on the screen
-		/// </summary>
-		/// <param name="pos"></param>
-		[Obsolete("deprecated. Use Display.DrawTexture() instead.")]
-		public void Blit(Point pos)
-		{
-			Display.Texture = this;
-			Display.RawBlit(new Rectangle(pos, Size), Rectangle);
-		}
-
-
-		/// <summary>
-		/// Blits the texture on the screen
-		/// </summary>
-		/// <param name="pos">Location</param>
-		/// <param name="angle">Angle of rotation</param>
-		/// <param name="origin">Offset point</param>
-		[Obsolete("deprecated. Use Display.DrawTexture() instead.")]
-		public void Blit(Point pos, float angle, Point origin)
-		{
-	//		Display.Translate(pos.X + origin.X, pos.Y + origin.Y);
-	//		Display.Rotate(angle);
-
-			Blit(new Point(-origin.X, -origin.Y));
-
-	//		Display.DefaultMatrix();
-		}
-
-
-		/// <summary>
-		/// Blits a region of the texture on the screen
-		/// </summary>
-		/// <param name="rect">Sub region of the texture</param>
-		/// <param name="mode">Display mode</param>
-		[Obsolete("deprecated. Use Display.DrawTexture() instead.")]
-		public void Blit(Rectangle rect, TextureLayout mode)
-		{
-			Blit(rect, Rectangle, mode);
-		}
-
-*/
 		/// <summary>
 		/// Blits a Bitmap on the texture
 		/// </summary>
@@ -367,6 +198,23 @@ namespace ArcEngine.Graphic
 
 
 		#region Helper
+
+        /// <summary>
+        /// Create a 1x1 white texture. Useful for drawing uniform filled element
+        /// </summary>
+        /// <returns>A 1x1 white texture</returns>
+        public static Texture CreateWhite1x1()
+        {
+            Texture texture = new Texture(new Size(1, 1));
+
+            Bitmap bm = new Bitmap(1, 1);
+            bm.SetPixel(0, 0, Color.White);
+            texture.SetData(bm, Point.Empty);
+            bm.Dispose();
+
+
+            return texture;
+        }
 
 
 		/// <summary>
@@ -835,6 +683,40 @@ namespace ArcEngine.Graphic
 		}
 
 	}
+
+
+
+	/// <summary>
+	/// Spécifie la position de l'image sur le contrôle.
+	/// </summary>
+	public enum TextureLayout
+	{
+		/// <summary>
+		/// Image is top left aligned
+		/// </summary>
+		None = 0,
+
+		/// <summary>
+		/// The image is tiled
+		/// </summary>
+		Tile = 1,
+
+		/// <summary>
+		/// The image is centered
+		/// </summary>
+		Center = 2,
+
+		/// <summary>
+		/// The image is stretched
+		/// </summary>
+		Stretch = 3,
+
+		/// <summary>
+		/// The image is zoomed (proportions keeped)
+		/// </summary>
+		Zoom = 4,
+	}
+
 
 
 	/// <summary>
