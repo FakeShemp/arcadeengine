@@ -62,7 +62,8 @@ namespace ArcEngine.Utility.GUI
 		/// <summary>
 		/// Draws the button
 		/// </summary>
-		public virtual void Draw()
+		/// <param name="batch">SpriteBatch to use</param>
+		public virtual void Draw(SpriteBatch batch)
 		{
 		}
 

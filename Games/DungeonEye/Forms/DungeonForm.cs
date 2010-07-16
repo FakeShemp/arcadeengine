@@ -628,14 +628,14 @@ namespace DungeonEye.Forms
 						Display.DrawRectangle(rect, Color.White);
 					}
 
-					Display.FillRectangle(rect, color);
+					Batch.FillRectangle(rect, color);
 				}
 			}
 
 			if (CurrentZone != null)
 			{
 				Rectangle rect = new Rectangle(CurrentZone.Rectangle.X * 25, CurrentZone.Rectangle.Y * 25, CurrentZone.Rectangle.Width * 25, CurrentZone.Rectangle.Height * 25);
-				Display.FillRectangle(rect, Color.FromArgb(128, Color.Blue));
+				Batch.FillRectangle(rect, Color.FromArgb(128, Color.Blue));
 			}
 
 

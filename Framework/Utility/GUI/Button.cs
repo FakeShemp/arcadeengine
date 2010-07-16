@@ -143,9 +143,10 @@ namespace ArcEngine.Utility.GUI
 		/// <summary>
 		/// Draws the button
 		/// </summary>
-		public override void Draw()
+		/// <param name="batch">SpriteBatch to use</param>
+		public override void Draw(SpriteBatch batch)
 		{
-			base.Draw();
+			base.Draw(batch);
 /*
 			// Background color
 			if (BgColor.A > 0)

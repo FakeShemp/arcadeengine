@@ -64,10 +64,14 @@ namespace ArcEngine.Utility.GUI
 		/// <summary>
 		/// Draws elements
 		/// </summary>
-		public void Draw()
+		/// <param name="batch">SpriteBatch to use</param>
+		public void Draw(SpriteBatch batch)
 		{
+			if (batch == null)
+				return;
+
 			foreach (Control element in Elements)
-				element.Draw();
+				element.Draw(batch);
 		}
 
 

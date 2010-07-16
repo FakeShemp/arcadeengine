@@ -217,7 +217,7 @@ namespace DungeonEye.Gui
 				return;
 
 
-			DrawBevel(Rectangle, BgColor, Color.FromArgb(138, 146, 207), Color.FromArgb(44, 48, 134));
+			DrawBevel(batch, Rectangle, BgColor, Color.FromArgb(138, 146, 207), Color.FromArgb(44, 48, 134));
 			batch.DrawString(Font, new Point(8, 10), Color.FromArgb(85, 255, 255), "Camp :");
 
 
@@ -225,7 +225,7 @@ namespace DungeonEye.Gui
 			// Draw buttons
 			foreach (ScreenButton button in Buttons)
 			{
-				DrawBevel(button.Rectangle, BgColor, Color.FromArgb(138, 146, 207), Color.FromArgb(44, 48, 134));
+				DrawBevel(batch, button.Rectangle, BgColor, Color.FromArgb(138, 146, 207), Color.FromArgb(44, 48, 134));
 
 				// Text
 				Point point = button.Rectangle.Location;
@@ -239,26 +239,27 @@ namespace DungeonEye.Gui
 		/// <summary>
 		/// Draws a beveled rectangle
 		/// </summary>
+		/// <param name="batch">SpriteBatch to use</param>
 		/// <param name="rect">Rectangle</param>
 		/// <param name="bg">Background color</param>
 		/// <param name="light">Light color</param>
 		/// <param name="dark">Dark color</param>
-		public void DrawBevel(Rectangle rect, Color bg, Color light, Color dark)
+		public void DrawBevel(SpriteBatch batch, Rectangle rect, Color bg, Color light, Color dark)
 		{
-			Display.FillRectangle(rect, bg);
+			batch.FillRectangle(rect, bg);
 
 			Point point = rect.Location;
 			Size size = rect.Size;
 
-			Display.FillRectangle(new Rectangle(point.X + 2, point.Y, size.Width - 2, 2), light);
-			Display.FillRectangle(new Rectangle(point.X + 4, point.Y + 2, size.Width - 4, 2), light);
-			Display.FillRectangle(new Rectangle(rect.Right - 4, point.Y + 4, 2, size.Height - 8), light);
-			Display.FillRectangle(new Rectangle(rect.Right - 2, point.Y + 4, 2, size.Height - 6), light);
+			batch.FillRectangle(new Rectangle(point.X + 2, point.Y, size.Width - 2, 2), light);
+			batch.FillRectangle(new Rectangle(point.X + 4, point.Y + 2, size.Width - 4, 2), light);
+			batch.FillRectangle(new Rectangle(rect.Right - 4, point.Y + 4, 2, size.Height - 8), light);
+			batch.FillRectangle(new Rectangle(rect.Right - 2, point.Y + 4, 2, size.Height - 6), light);
 
-			Display.FillRectangle(new Rectangle(point.X, point.Y + 2, 2, size.Height - 4), dark);
-			Display.FillRectangle(new Rectangle(point.X + 2, point.Y + 4, 2, size.Height - 6), dark);
-			Display.FillRectangle(new Rectangle(point.X, point.Y + size.Height - 2, size.Width - 2, 2), dark);
-			Display.FillRectangle(new Rectangle(point.X, point.Y + size.Height - 4, size.Width - 4, 2), dark);
+			batch.FillRectangle(new Rectangle(point.X, point.Y + 2, 2, size.Height - 4), dark);
+			batch.FillRectangle(new Rectangle(point.X + 2, point.Y + 4, 2, size.Height - 6), dark);
+			batch.FillRectangle(new Rectangle(point.X, point.Y + size.Height - 2, size.Width - 2, 2), dark);
+			batch.FillRectangle(new Rectangle(point.X, point.Y + size.Height - 4, size.Width - 4, 2), dark);
 		}
 
 

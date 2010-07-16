@@ -224,7 +224,6 @@ namespace ArcEngine.Graphic
 		#endregion
 
 
-
 		#region Drawing
 
 
@@ -342,64 +341,6 @@ namespace ArcEngine.Graphic
 			Texturing = true;
 
 			RenderStats.DirectCall += 4;
-		}
-
-
-		/// <summary>
-		/// Draw a filled rectangle
-		/// </summary>
-		/// <param name="rect">Rectangle</param>
-		/// <param name="color">Color</param>
-        [Obsolete]
-        public static void FillRectangle(Rectangle rect, Color color)
-		{
-			DrawQuad(rect.X, rect.Y, rect.Width, rect.Height, color, true, 0, Point.Empty);
-		}
-
-
-		/// <summary>
-		/// Draw a filled rectangle
-		/// </summary>
-		/// <param name="x">X location</param>
-		/// <param name="y">Y location</param>
-		/// <param name="width">Width</param>
-		/// <param name="height">Height</param>
-		/// <param name="color">Color</param>
-        [Obsolete]
-        public static void FillRectangle(int x, int y, int width, int height, Color color)
-		{
-			DrawQuad(x, y, width, height, color, true, 0, Point.Empty);
-		}
-
-
-		/// <summary>
-		/// Draw a filled rectangle
-		/// </summary>
-		/// <param name="rect">Rectangle</param>
-		/// <param name="color">Color</param>
-		/// <param name="angle">Rotation angle</param>
-		/// <param name="pivot">Origin of rotation</param>
-        [Obsolete]
-        public static void FillRectangle(Rectangle rect, Color color, float angle, Point pivot)
-		{
-			DrawQuad(rect.X, rect.Y, rect.Width, rect.Height, color, true, angle, pivot);
-		}
-
-
-		/// <summary>
-		/// Draw a filled rectangle
-		/// </summary>
-		/// <param name="x">X location</param>
-		/// <param name="y">Y location</param>
-		/// <param name="width">Width</param>
-		/// <param name="height">Height</param>
-		/// <param name="color">Color</param>
-		/// <param name="angle">Rotation angle</param>
-		/// <param name="pivot">Origin of rotation</param>
-        [Obsolete]
-        public static void FillRectangle(int x, int y, int width, int height, Color color, float angle, Point pivot)
-		{
-			DrawQuad(x, y, height, width, color, true, angle, pivot);
 		}
 
 
@@ -1119,6 +1060,7 @@ namespace ArcEngine.Graphic
 		#endregion
 
 
+		#region Stencil
 
 		/// <summary>
 		/// Stencil test action
@@ -1143,6 +1085,8 @@ namespace ArcEngine.Graphic
 		{
 			TK.GL.StencilFunc((TK.StencilFunction)function, reference, mask);
 		}
+
+		#endregion
 
 
 		#region Properties

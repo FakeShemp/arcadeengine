@@ -36,9 +36,13 @@ namespace DungeonEye.Gui
 		/// <summary>
 		/// 
 		/// </summary>
-		public void Draw()
+		/// <param name="batch">SpriteBatch to use</param>
+		public void Draw(SpriteBatch batch)
 		{
-			Display.FillRectangle(new Rectangle(10, 10, 200, 200), Color.FromArgb(101, 105, 182));
+			if (batch == null)
+				return;
+
+			batch.FillRectangle(new Rectangle(10, 10, 200, 200), Color.FromArgb(101, 105, 182));
 
 		}
 

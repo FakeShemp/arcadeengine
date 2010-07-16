@@ -166,7 +166,10 @@ namespace DungeonEye
 					#endregion
 				}
 
-            White = Texture2D.CreateWhite1x1();
+
+			// HACK
+			White = new Texture2D(new Size(1, 1));
+
 
 			return true;
 		}

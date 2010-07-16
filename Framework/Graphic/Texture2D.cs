@@ -199,24 +199,6 @@ namespace ArcEngine.Graphic
 
 		#region Helper
 
-        /// <summary>
-        /// Create a 1x1 white texture. Useful for drawing uniform filled element
-        /// </summary>
-        /// <returns>A 1x1 white texture</returns>
-        public static Texture2D CreateWhite1x1()
-        {
-            Texture2D texture = new Texture2D(new Size(1, 1));
-
-            Bitmap bm = new Bitmap(1, 1);
-            bm.SetPixel(0, 0, Color.White);
-            texture.SetData(bm, Point.Empty);
-            bm.Dispose();
-
-
-            return texture;
-        }
-
-
 		/// <summary>
 		/// Checks if the texture size is valid (power of two)
 		/// </summary>

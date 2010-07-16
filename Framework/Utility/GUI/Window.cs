@@ -56,9 +56,13 @@ namespace ArcEngine.Utility.GUI
 		/// <summary>
 		/// 
 		/// </summary>
-		public override void Draw()
+		/// <param name="batch">SpriteBatch to use</param>
+		public override void Draw(SpriteBatch batch)
 		{
-			Display.FillRectangle(Rectangle, BgColor);
+			if (batch == null)
+				return;
+
+			batch.FillRectangle(Rectangle, BgColor);
 		}
 
 

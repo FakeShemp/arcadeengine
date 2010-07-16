@@ -252,22 +252,26 @@ namespace ArcEngine.Editor
 		/// <summary>
 		/// Draws size handles
 		/// </summary>
-		void DrawSizeHandles()
+		/// <param name="batch">SpriteBatch to use</param>
+		void DrawSizeHandles(SpriteBatch batch)
 		{
+			if (batch == null)
+				return;
+
 			Rectangle rect = Rectangle;
 			rect.X = (int) (rect.X * zoom + Offset.X);
 			rect.Y = (int) (rect.Y * zoom + Offset.Y);
 			rect.Width = (int)(rect.Width * zoom);
 			rect.Height = (int)(rect.Height * zoom);
 
-			Display.FillRectangle(new Rectangle(rect.X, rect.Y, 4, 4), Color);
-			Display.FillRectangle(new Rectangle(rect.X + (rect.Width / 2) - 2, rect.Y, 4, 4), Color);
-			Display.FillRectangle(new Rectangle(rect.X + rect.Width - 4, rect.Y, 4, 4), Color);
-			Display.FillRectangle(new Rectangle(rect.X, rect.Y + (rect.Height / 2) - 2, 4, 4), Color);
-			Display.FillRectangle(new Rectangle(rect.X + rect.Width - 4, (rect.Y + (rect.Height / 2) - 2), 4, 4), Color);
-			Display.FillRectangle(new Rectangle(rect.X, rect.Y + rect.Height - 4, 4, 4), Color);
-			Display.FillRectangle(new Rectangle(rect.X + (rect.Width / 2) - 2, rect.Y + rect.Height - 4, 4, 4), Color);
-			Display.FillRectangle(new Rectangle(rect.X + rect.Width - 4, rect.Y + rect.Height - 4, 4, 4), Color);
+			batch.FillRectangle(new Rectangle(rect.X, rect.Y, 4, 4), Color);
+			batch.FillRectangle(new Rectangle(rect.X + (rect.Width / 2) - 2, rect.Y, 4, 4), Color);
+			batch.FillRectangle(new Rectangle(rect.X + rect.Width - 4, rect.Y, 4, 4), Color);
+			batch.FillRectangle(new Rectangle(rect.X, rect.Y + (rect.Height / 2) - 2, 4, 4), Color);
+			batch.FillRectangle(new Rectangle(rect.X + rect.Width - 4, (rect.Y + (rect.Height / 2) - 2), 4, 4), Color);
+			batch.FillRectangle(new Rectangle(rect.X, rect.Y + rect.Height - 4, 4, 4), Color);
+			batch.FillRectangle(new Rectangle(rect.X + (rect.Width / 2) - 2, rect.Y + rect.Height - 4, 4, 4), Color);
+			batch.FillRectangle(new Rectangle(rect.X + rect.Width - 4, rect.Y + rect.Height - 4, 4, 4), Color);
 		}
 
 
@@ -290,12 +294,12 @@ namespace ArcEngine.Editor
 			rect.Y = (int) (rect.Y * zoom + Offset.Y);
 			rect.Width = (int ) (rect.Width * zoom);
 			rect.Height = (int) (rect.Height * zoom);
-			Display.FillRectangle(rect, Color.FromArgb(Alpha, Color));
+			batch.FillRectangle(rect, Color.FromArgb(Alpha, Color));
 			Display.RenderState.Blending = false;
 			Display.DrawRectangle(rect, Color.FromArgb(Alpha, Color));
 
 			if (IsMouseOver)
-				DrawSizeHandles();
+				DrawSizeHandles(batch);
 
 
 			Display.RenderState.Blending = blending;

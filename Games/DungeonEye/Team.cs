@@ -476,7 +476,7 @@ namespace DungeonEye
 							color = Color.Yellow;
 
 						batch.DrawString(Font, new Point(pos.X + 6, pos.Y + 88), Color.Black, "HP");
-						DrawProgressBar(hero.HitPoint.Current, hero.HitPoint.Max, new Rectangle(pos.X + 30, pos.Y + 88, 92, 10), color);
+						DrawProgressBar(batch, hero.HitPoint.Current, hero.HitPoint.Max, new Rectangle(pos.X + 30, pos.Y + 88, 92, 10), color);
 					}
 					else
 						batch.DrawString(Font, new Point(pos.X + 6, pos.Y + 88), Color.Black, hero.HitPoint + " of " + hero.HitPoint.Max);
@@ -493,7 +493,7 @@ namespace DungeonEye
 						if (item != null)
 							batch.DrawTile(Items, item.TileID, new Point(pos.X + 96, pos.Y + 36 + yoffset));
 						else
-							batch.DrawTile(Items, 86, new Point(pos.X + 96, pos.Y + 36 + yoffset));
+							batch.DrawTile(Items, 86, new Point(pos.X + 80, pos.Y + 28 + yoffset));
 
 						if (!hero.CanUseHand(hand))
 							batch.DrawTile(TileSet, 3, new Point(pos.X + 66, pos.Y + 20 + yoffset));
@@ -585,14 +585,23 @@ namespace DungeonEye
 		/// <summary>
 		/// Draws a progress bar
 		/// </summary>
+		/// <param name="batch">SpriteBatch to use</param>
 		/// <param name="value">Current value</param>
 		/// <param name="max">Maximum value</param>
 		/// <param name="rectangle">Rectangle</param>
 		/// <param name="color">Bar color</param>
-		public void DrawProgressBar(int value, int max, Rectangle rectangle, Color color)
+		public void DrawProgressBar(SpriteBatch batch, int value, int max, Rectangle rectangle, Color color)
 		{
 			if (value > 0)
-				Display.FillRectangle(rectangle.Left + 1, rectangle.Top + 1, (int)((float)value / (float)max * (rectangle.Width - 1)), rectangle.Height - 2, color);
+			{
+				Vector4 zone = new Vector4(
+					rectangle.Left + 1, 
+					rectangle.Top + 1,
+					((float)value / (float)max * (rectangle.Width - 1)),
+					rectangle.Height - 2
+					);
+				batch.FillRectangle(zone, color);
+			}
 
 			Display.DrawLine(rectangle.Left, rectangle.Top, rectangle.Left, rectangle.Bottom, Color.FromArgb(138, 146, 207));
 			Display.DrawLine(rectangle.Left, rectangle.Bottom, rectangle.Right + 2, rectangle.Bottom, Color.FromArgb(138, 146, 207));
@@ -646,7 +655,7 @@ namespace DungeonEye
 			else
 				color = Color.Red;
 
-			Display.FillRectangle(new Rectangle(500, 48, SelectedHero.Food, 10), color);
+			batch.FillRectangle(new Rectangle(500, 48, SelectedHero.Food, 10), color);
 
 
 			// Draw inventory
@@ -736,9 +745,9 @@ namespace DungeonEye
 		{
 			// Background
 			batch.DrawTile(TileSet, 18, new Point(356, 0));
-			Display.FillRectangle(new Rectangle(360, 70, 186, 30), Color.FromArgb(164, 164, 184));
-			Display.FillRectangle(new Rectangle(360, 100, 276, 194), Color.FromArgb(164, 164, 184));
-			Display.FillRectangle(new Rectangle(360, 294, 242, 36), Color.FromArgb(164, 164, 184));
+			batch.FillRectangle(new Rectangle(360, 70, 186, 30), Color.FromArgb(164, 164, 184));
+			batch.FillRectangle(new Rectangle(360, 100, 276, 194), Color.FromArgb(164, 164, 184));
+			batch.FillRectangle(new Rectangle(360, 294, 242, 36), Color.FromArgb(164, 164, 184));
 
 
 			// Hero head
@@ -760,7 +769,7 @@ namespace DungeonEye
 			else
 				color = Color.Red;
 
-			Display.FillRectangle(new Rectangle(498, 48, SelectedHero.Food, 10), color);
+			batch.FillRectangle(new Rectangle(498, 48, SelectedHero.Food, 10), color);
 
 			string txt = string.Empty;
 			foreach (Profession prof in SelectedHero.Professions)

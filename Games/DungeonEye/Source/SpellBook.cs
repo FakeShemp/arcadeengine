@@ -124,15 +124,15 @@ namespace DungeonEye
 			//   Display.Color = Color.FromArgb(101, 105, 182);
 			//else
 			//   Display.Color = Color.FromArgb(166, 166, 186);
-			Display.FillRectangle(rectangle, active ? Color.FromArgb(101, 105, 182) : Color.FromArgb(166, 166, 186));
+			batch.FillRectangle(rectangle, active ? Color.FromArgb(101, 105, 182) : Color.FromArgb(166, 166, 186));
 
 			//if (active)
 			//   Display.Color = Color.FromArgb(44, 48, 138);
 			//else
 			//   Display.Color = Color.FromArgb(89, 89, 117);
 
-			Display.FillRectangle(new Rectangle(rectangle.X, rectangle.Y, 2, rectangle.Height), active ? Color.FromArgb(44, 48, 138) : Color.FromArgb(89, 89, 117));
-			Display.FillRectangle(new Rectangle(rectangle.Left, rectangle.Bottom - 2, rectangle.Width, 2), active ? Color.FromArgb(44, 48, 138) : Color.FromArgb(89, 89, 117));
+			batch.FillRectangle(new Rectangle(rectangle.X, rectangle.Y, 2, rectangle.Height), active ? Color.FromArgb(44, 48, 138) : Color.FromArgb(89, 89, 117));
+			batch.FillRectangle(new Rectangle(rectangle.Left, rectangle.Bottom - 2, rectangle.Width, 2), active ? Color.FromArgb(44, 48, 138) : Color.FromArgb(89, 89, 117));
 
 			//if (active)
 			//   Display.Color = Color.FromArgb(138, 146, 207);

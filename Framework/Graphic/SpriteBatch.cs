@@ -57,6 +57,15 @@ namespace ArcEngine.Graphic
 				Shader.SetSource(ShaderType.FragmentShader, src);
 			}
 			Shader.Compile();
+
+
+			// Create a 1x1 empty texture
+			NoTexture = new Texture2D(new Size(1, 1));
+			Bitmap bm = new Bitmap(1, 1);
+			bm.SetPixel(0, 0, Color.White);
+			NoTexture.SetData(bm, Point.Empty);
+			bm.Dispose();
+
 		}
 
 
@@ -68,6 +77,10 @@ namespace ArcEngine.Graphic
 			if (Buffer != null)
 				Buffer.Dispose();
 			Buffer = null;
+
+			if (NoTexture != null)
+				NoTexture.Dispose();
+			NoTexture = null;
 
 			if (Shader != null)
 				Shader.Dispose();
@@ -290,7 +303,7 @@ namespace ArcEngine.Graphic
 
 
 			count = Buffer.Update();
-			Display.DrawBatch(Buffer, 0, count);
+			Display.DrawBatch(Buffer, Sprites[offset].Type, 0, count);
 		}
 
 
@@ -305,7 +318,7 @@ namespace ArcEngine.Graphic
 		/// <param name="origin">The origin of the sprite. Specify (0,0) for the upper-left corner.</param>
 		/// <param name="effect">Rotations to apply prior to rendering.</param>
 		/// <param name="depth">The sorting depth of the sprite</param>
-		void InternalDraw(Texture2D texture, ref Rectangle destination, ref Rectangle source, Color color, float rotation, Point origin, SpriteEffects effect, float depth)
+		void InternalDraw(Texture2D texture, ref Rectangle destination, ref Rectangle source, Color color, float rotation, Point origin, SpriteEffects effect, float depth, PrimitiveType type)
 		{
 			Vector4 src = new Vector4(source.X, source.Y, source.Width, source.Height);
 
@@ -314,7 +327,7 @@ namespace ArcEngine.Graphic
 			Vector2 ori = new Vector2(origin.X, origin.Y);
 			
 
-			InternalDraw(texture, ref dst, ref src, color, rotation, ori, effect, depth);
+			InternalDraw(texture, ref dst, ref src, color, rotation, ori, effect, depth, type);
 		}
 
 
@@ -329,7 +342,8 @@ namespace ArcEngine.Graphic
 		/// <param name="origin">The origin of the sprite. Specify (0,0) for the upper-left corner.</param>
 		/// <param name="effect">Rotations to apply prior to rendering.</param>
 		/// <param name="depth">The sorting depth of the sprite</param>
-		void InternalDraw(Texture2D texture, ref Vector4 destination, ref Vector4 source, Color color, float rotation, Vector2 origin, SpriteEffects effect, float depth)
+		/// <param name="type">Type of rendering</param>
+		void InternalDraw(Texture2D texture, ref Vector4 destination, ref Vector4 source, Color color, float rotation, Vector2 origin, SpriteEffects effect, float depth, PrimitiveType type)
 		{
 			if (texture == null || !InUse) 
 				return;
@@ -380,6 +394,7 @@ namespace ArcEngine.Graphic
 			Sprites[spriteQueueCount].Origin.Y = origin.Y;
 			Sprites[spriteQueueCount].Rotation = rotation;
 			Sprites[spriteQueueCount].Texture = texture;
+			Sprites[spriteQueueCount].Type = type;
 
 			spriteQueueCount++;
 		}
@@ -401,7 +416,7 @@ namespace ArcEngine.Graphic
 
 			Rectangle source = Rectangle.Empty;
 
-			InternalDraw(texture, ref destination, ref source, color, 0.0f, Point.Empty, SpriteEffects.None, 0.0f);
+			InternalDraw(texture, ref destination, ref source, color, 0.0f, Point.Empty, SpriteEffects.None, 0.0f, PrimitiveType.Triangles);
 		}
 
 
@@ -417,7 +432,7 @@ namespace ArcEngine.Graphic
 
 			Vector4 src = Vector4.Zero;
 
-			InternalDraw(texture, ref dst, ref src, color, 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f);
+			InternalDraw(texture, ref dst, ref src, color, 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f, PrimitiveType.Triangles);
 		}
 
 
@@ -432,7 +447,7 @@ namespace ArcEngine.Graphic
 		{
 			Rectangle source = Rectangle.Empty;
 
-			InternalDraw(texture, ref destination, ref source, color, 0.0f, Point.Empty, SpriteEffects.None, 0.0f);
+			InternalDraw(texture, ref destination, ref source, color, 0.0f, Point.Empty, SpriteEffects.None, 0.0f, PrimitiveType.Triangles);
 		}
 
 
@@ -448,7 +463,7 @@ namespace ArcEngine.Graphic
 		{
 			Rectangle destination = new Rectangle(position.X, position.Y, texture.Size.Width, texture.Size.Height);
 
-			InternalDraw(texture, ref destination, ref source, color, 0.0f, Point.Empty, SpriteEffects.None, 0.0f);
+			InternalDraw(texture, ref destination, ref source, color, 0.0f, Point.Empty, SpriteEffects.None, 0.0f, PrimitiveType.Triangles);
 		}
 
 
@@ -467,7 +482,7 @@ namespace ArcEngine.Graphic
 
 			Vector4 src = new Vector4(source.X, source.Y, source.Width, source.Height);
 
-			InternalDraw(texture, ref dst, ref src, color, 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f);
+			InternalDraw(texture, ref dst, ref src, color, 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f, PrimitiveType.Triangles);
 		}
 
 
@@ -483,7 +498,7 @@ namespace ArcEngine.Graphic
 		/// <param name="color">The color channel modulation to use. Use Color.White for full color with no tinting.</param>
 		public void Draw(Texture2D texture, Rectangle destination, Rectangle source, Color color)
 		{
-			InternalDraw(texture, ref destination, ref source, color, 0.0f, Point.Empty, SpriteEffects.None, 0.0f);
+			InternalDraw(texture, ref destination, ref source, color, 0.0f, Point.Empty, SpriteEffects.None, 0.0f, PrimitiveType.Triangles);
 		}
 
 
@@ -498,7 +513,7 @@ namespace ArcEngine.Graphic
 		/// <param name="color">The color channel modulation to use. Use Color.White for full color with no tinting.</param>
 		public void Draw(Texture2D texture, Vector4 destination, Vector4 source, Color color)
 		{
-			InternalDraw(texture, ref destination, ref source, color, 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f);
+			InternalDraw(texture, ref destination, ref source, color, 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f, PrimitiveType.Triangles);
 		}
 
 
@@ -523,7 +538,7 @@ namespace ArcEngine.Graphic
             src.Width = texture.Size.Width;
             src.Height = texture.Size.Height;
 
-            InternalDraw(texture, ref src, ref source, color, rotation, origin, effects, layerDepth);
+			InternalDraw(texture, ref src, ref source, color, rotation, origin, effects, layerDepth, PrimitiveType.Triangles);
         }
 
 
@@ -548,7 +563,7 @@ namespace ArcEngine.Graphic
             src.Z = texture.Size.Width;
             src.W = texture.Size.Height;
 
-            InternalDraw(texture, ref src, ref source, color, rotation, origin, effects, layerDepth);
+			InternalDraw(texture, ref src, ref source, color, rotation, origin, effects, layerDepth, PrimitiveType.Triangles);
         }
 
  
@@ -753,7 +768,7 @@ namespace ArcEngine.Graphic
 
             Vector2 origin = new Vector2(tile.Origin.X, tile.Origin.Y);
 
-            InternalDraw(tileset.Texture, ref dst, ref src, color, rotation, origin, effect, depth);
+			InternalDraw(tileset.Texture, ref dst, ref src, color, rotation, origin, effect, depth, PrimitiveType.Triangles);
 		}
 
 
@@ -769,6 +784,34 @@ namespace ArcEngine.Graphic
 			DrawTile(tileset, id, position, color, 0.0f, SpriteEffects.None, 0.0f);
 		}
 
+
+		#endregion
+
+
+		#region Untextured
+
+
+
+		/// <summary>
+		/// Draw a filled rectangle
+		/// </summary>
+		/// <param name="rect">Rectangle</param>
+		/// <param name="color">Color</param>
+		public void FillRectangle(Rectangle rect, Color color)
+		{
+			Draw(NoTexture, rect, rect, color);
+		}
+
+
+		/// <summary>
+		/// Draw a filled rectangle
+		/// </summary>
+		/// <param name="rect">Rectangle</param>
+		/// <param name="color">Color</param>
+		public void FillRectangle(Vector4 rect, Color color)
+		{
+			Draw(NoTexture, rect, rect, color);
+		}
 
 		#endregion
 
@@ -856,6 +899,12 @@ namespace ArcEngine.Graphic
 		/// 
 		/// </summary>
 		TextureComparer TextureComp;
+
+
+		/// <summary>
+		/// Uniform texture
+		/// </summary>
+		Texture2D NoTexture;
 
 		#endregion
 
@@ -982,6 +1031,11 @@ namespace ArcEngine.Graphic
 		/// Texture
 		/// </summary>
 		public Texture2D Texture;
+
+		/// <summary>
+		/// Type of rendering
+		/// </summary>
+		public PrimitiveType Type;
 	}
 
 
