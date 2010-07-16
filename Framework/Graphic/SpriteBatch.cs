@@ -60,10 +60,10 @@ namespace ArcEngine.Graphic
 
 
 			// Create a 1x1 empty texture
-			NoTexture = new Texture2D(new Size(1, 1));
+			WhiteTexture = new Texture2D(new Size(1, 1));
 			Bitmap bm = new Bitmap(1, 1);
 			bm.SetPixel(0, 0, Color.White);
-			NoTexture.SetData(bm, Point.Empty);
+			WhiteTexture.SetData(bm, Point.Empty);
 			bm.Dispose();
 
 		}
@@ -78,9 +78,9 @@ namespace ArcEngine.Graphic
 				Buffer.Dispose();
 			Buffer = null;
 
-			if (NoTexture != null)
-				NoTexture.Dispose();
-			NoTexture = null;
+			if (WhiteTexture != null)
+				WhiteTexture.Dispose();
+			WhiteTexture = null;
 
 			if (Shader != null)
 				Shader.Dispose();
@@ -302,6 +302,7 @@ namespace ArcEngine.Graphic
 
 				switch (Sprites[i].Type)
 				{
+
 					// Lines
 					case PrimitiveType.Lines:
 					{
@@ -831,7 +832,7 @@ namespace ArcEngine.Graphic
 		/// <param name="color">Color</param>
 		public void FillRectangle(Rectangle rect, Color color)
 		{
-			Draw(NoTexture, rect, rect, color);
+			Draw(WhiteTexture, rect, rect, color);
 		}
 
 
@@ -842,7 +843,7 @@ namespace ArcEngine.Graphic
 		/// <param name="color">Color</param>
 		public void FillRectangle(Vector4 rect, Color color)
 		{
-			Draw(NoTexture, rect, rect, color);
+			Draw(WhiteTexture, rect, rect, color);
 		}
 
 
@@ -853,7 +854,7 @@ namespace ArcEngine.Graphic
 		/// <param name="color">Color</param>
 		public void DrawRectangle(Rectangle rect, Color color)
 		{
-			InternalDraw(NoTexture, ref rect, ref rect, color, 0.0f, Point.Empty, SpriteEffects.None, 0.0f, PrimitiveType.LineStrip);
+			InternalDraw(WhiteTexture, ref rect, ref rect, color, 0.0f, Point.Empty, SpriteEffects.None, 0.0f, PrimitiveType.LineStrip);
 		}
 
 
@@ -867,7 +868,7 @@ namespace ArcEngine.Graphic
 		/// <param name="origin">Origin of rotation</param>
 		public void DrawRectangle(Vector4 destination, Color color, float rotation, Vector2 origin)
 		{
-			InternalDraw(NoTexture, ref destination, ref destination, color, rotation, origin, SpriteEffects.None, 0.0f, PrimitiveType.LineStrip);
+			InternalDraw(WhiteTexture, ref destination, ref destination, color, rotation, origin, SpriteEffects.None, 0.0f, PrimitiveType.LineStrip);
 		}
 
 
@@ -895,7 +896,7 @@ namespace ArcEngine.Graphic
 		{
 			Rectangle rect = new Rectangle(x1, y1, x2 - x1, y2 - y1);
 
-			InternalDraw(NoTexture, ref rect, ref rect, color, 0.0f, Point.Empty, SpriteEffects.None, 0.0f, PrimitiveType.Lines);
+			InternalDraw(WhiteTexture, ref rect, ref rect, color, 0.0f, Point.Empty, SpriteEffects.None, 0.0f, PrimitiveType.Lines);
 		}
 
 
@@ -923,7 +924,7 @@ namespace ArcEngine.Graphic
 		{
 			Vector4 rect = new Vector4(x1, y1, x2 - x1, y2 - y1);
 
-			InternalDraw(NoTexture, ref rect, ref rect, color, 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f, PrimitiveType.Lines);
+			InternalDraw(WhiteTexture, ref rect, ref rect, color, 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f, PrimitiveType.Lines);
 		}
 
 
@@ -1037,7 +1038,7 @@ namespace ArcEngine.Graphic
 		{
 			Vector4 rect = new Vector4(x, y, 0.0f, 0.0f);
 
-			InternalDraw(NoTexture, ref rect, ref rect, color, 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f, PrimitiveType.Points);
+			InternalDraw(WhiteTexture, ref rect, ref rect, color, 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f, PrimitiveType.Points);
 		}
 
 
@@ -1058,7 +1059,7 @@ namespace ArcEngine.Graphic
 				dst.Z = (float)(radius.X * Math.Cos(i + 0.1) + location.X) - dst.X;
 				dst.W = (float)(radius.Y * Math.Sin(i + 0.1) + location.Y) - dst.Y;
 
-				InternalDraw(NoTexture, ref dst, ref dst, color, 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f, PrimitiveType.Lines);
+				InternalDraw(WhiteTexture, ref dst, ref dst, color, 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f, PrimitiveType.Lines);
 			}
 		}
 
@@ -1080,7 +1081,7 @@ namespace ArcEngine.Graphic
 				dst.Z = (float)(radius.X * Math.Cos(i + 0.1) + location.X) - dst.X;
 				dst.W = (float)(radius.Y * Math.Sin(i + 0.1) + location.Y) - dst.Y;
 
-				InternalDraw(NoTexture, ref dst, ref dst, color, 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f, PrimitiveType.Lines);
+				InternalDraw(WhiteTexture, ref dst, ref dst, color, 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f, PrimitiveType.Lines);
 			}
 		}
 
@@ -1176,7 +1177,7 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Uniform texture
 		/// </summary>
-		Texture2D NoTexture;
+		Texture2D WhiteTexture;
 
 		#endregion
 

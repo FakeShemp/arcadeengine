@@ -41,7 +41,7 @@ namespace ArcEngine.Editor
 		/// </summary>
 		public SelectionBox()
 		{
-			Alpha = 100;
+			Color = Color.FromArgb(128, Color.White);
 		}
 
 		/// <summary>
@@ -284,25 +284,18 @@ namespace ArcEngine.Editor
 			if (Rectangle.IsEmpty || batch == null)
 				return;
 
-
-			bool blending = Display.RenderState.Blending;
-			Display.RenderState.Blending = true;
-
-
 			Rectangle rect = Rectangle;
 			rect.X = (int) (rect.X * zoom + Offset.X);
 			rect.Y = (int) (rect.Y * zoom + Offset.Y);
 			rect.Width = (int ) (rect.Width * zoom);
 			rect.Height = (int) (rect.Height * zoom);
-			batch.FillRectangle(rect, Color.FromArgb(Alpha, Color));
-			Display.RenderState.Blending = false;
-			batch.DrawRectangle(rect, Color.FromArgb(Alpha, Color));
+			batch.FillRectangle(rect, Color);
+
+			batch.DrawRectangle(rect, Color);
 
 			if (IsMouseOver)
 				DrawSizeHandles(batch);
 
-
-			Display.RenderState.Blending = blending;
 		}
 
 
@@ -397,7 +390,7 @@ namespace ArcEngine.Editor
 		/// <summary>
 		/// Color of the selection box
 		/// </summary>
-		public Color Color = Color.White;
+		public Color Color;
 
 
 		/// <summary>
@@ -469,15 +462,7 @@ namespace ArcEngine.Editor
 		/// </summary>
 		public Point Offset;
 
-
-		/// <summary>
-		/// Transparency
-		/// </summary>
-		public byte Alpha
-		{
-			get;
-			set;
-		}
+	
 		#endregion
 
 		/// <summary>

@@ -470,7 +470,7 @@ namespace DungeonEye.Forms
 					if (block.Type == BlockType.Illusion)
 						color = Color.LightGreen; //Color.FromArgb(200, Color.Green);
 
-					Batch.DrawTile(Icons, tileid, location);
+					Batch.DrawTile(Icons, tileid, location, color);
 					//Buffer.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), color, tile.Rectangle);
 
 					if (block.GroundItemCount > 0)

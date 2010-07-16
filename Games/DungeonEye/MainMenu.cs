@@ -239,6 +239,7 @@ namespace DungeonEye
 
 			Batch.Begin();
 
+
 			// Background
 			Batch.DrawTile(Tileset, 1, Point.Empty);
 

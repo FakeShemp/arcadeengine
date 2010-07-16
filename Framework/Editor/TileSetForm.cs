@@ -130,6 +130,8 @@ namespace ArcEngine.Editor
 		private void GLTextureControl_Paint(object sender, PaintEventArgs e)
 		{
 			GLTextureControl.MakeCurrent();
+			Display.ViewPort = new Rectangle(Point.Empty, GLTextureControl.Size);
+
 
 			// Background color
 			Display.ClearBuffers();
@@ -147,14 +149,12 @@ namespace ArcEngine.Editor
 
 			// Background texture
             Rectangle dst = new Rectangle(Point.Empty, GLTextureControl.Size);
-      //      Batch.Draw(CheckerBoard, dst, dst, Color.White);
+            Batch.Draw(CheckerBoard, dst, dst, Color.White);
 
-			//Batch.End();
-			//GLTextureControl.SwapBuffers();
-			//return;
 
 			// Get zoom value
 			float zoomvalue = float.Parse((string)ZoomBox.SelectedItem);
+
 
 			// Draw the tile texture
 			Vector4 zoom = new Vector4(
@@ -165,8 +165,9 @@ namespace ArcEngine.Editor
 			
             Vector4 src = new Vector4( 0.0f, 0.0f, tileSet.Texture.Size.Width, tileSet.Texture.Size.Height);
 
-            //Batch.Draw(tileSet.Texture, zoom, src, Color.White);
-			Batch.Draw(tileSet.Texture, TextureOffset, Color.White);
+			Batch.Draw(tileSet.Texture, zoom, src, Color.White);
+
+
 
 			// If we have some tiles to draw
             if (tileSet.Count != 0)
@@ -381,26 +382,11 @@ namespace ArcEngine.Editor
 
 
 			// Background texture
-			Rectangle dst = new Rectangle(Point.Empty, GLTextureControl.Size);
+			Rectangle dst = new Rectangle(Point.Empty, GLTileControl.Size);
 			Batch.Draw(CheckerBoard, dst, dst, Color.White);
 
-/*
-			GLTileControl.MakeCurrent();
+			Batch.DrawRectangle(new Rectangle(10, 10, 100, 100), Color.Red);
 
-
-			Display.RenderState.ClearColor = BgColor;
-			Display.ClearBuffers();
-
-
-            Batch.Begin();
-
-			// Get zoom value
-			float zoomvalue = float.Parse((string)ZoomBox.SelectedItem);
-
-			// Background texture
-            Rectangle dst = new Rectangle(Point.Empty, GLTileControl.Size);
-            Batch.Draw(CheckerBoard, dst, dst, Color.White);
-*/
 
 /*
             // No tiles, no draw !
@@ -575,12 +561,14 @@ namespace ArcEngine.Editor
 		/// <param name="e"></param>
 		private void TileSetForm_Load(object sender, EventArgs e)
 		{
-			//GLTextureControl.MakeCurrent();
-			//Display.Init();
-
-
 			//GLTileControl.MakeCurrent();
-			//Display.Init();
+			//Display.RenderState.Blending = true;
+			//Display.BlendingFunction(BlendingFactorSource.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+
+			//GLTextureControl.MakeCurrent();
+			//Display.RenderState.Blending = true;
+			//Display.BlendingFunction(BlendingFactorSource.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+
 
             Batch = new SpriteBatch();
 
@@ -909,6 +897,18 @@ namespace ArcEngine.Editor
 
 
 		#endregion
+
+		private void GLTextureControl_Load(object sender, EventArgs e)
+		{
+			GLTextureControl.MakeCurrent();
+			Display.Init();
+		}
+
+		private void GLTileControl_Load(object sender, EventArgs e)
+		{
+			GLTileControl.MakeCurrent();
+			Display.Init();
+		}
 
 	}
 

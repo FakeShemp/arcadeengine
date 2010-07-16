@@ -56,7 +56,8 @@ namespace ArcEngine.Graphic
 		public static void Init()
 		{
 			Trace.WriteDebugLine("[Display] Init()");
-			Capabilities = new RenderDeviceCapabilities();
+			if (Capabilities == null)
+				Capabilities = new RenderDeviceCapabilities();
 
 			Texturing = true;
 			RenderState.Blending = true;
@@ -72,8 +73,8 @@ namespace ArcEngine.Graphic
 			BlendingFunction(BlendingFactorSource.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 			TK.GL.ClearStencil(0);
 
-
-			Buffer = BatchBuffer.CreatePositionColorTextureBuffer();
+			if (Buffer == null)
+				Buffer = BatchBuffer.CreatePositionColorTextureBuffer();
 		}
 
 
@@ -171,7 +172,8 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Gets Opengl errors
 		/// </summary>
-		public static void GetLastError(string command)
+		/// <param name="message"></param>
+		public static void GetLastError(string message)
 		{
 			TK.ErrorCode error = TK.GL.GetError();
 			if (error == TK.ErrorCode.NoError)
@@ -180,7 +182,7 @@ namespace ArcEngine.Graphic
 
 			System.Diagnostics.StackFrame stack = new System.Diagnostics.StackFrame(1, true);
 
-			string msg = command + " => " + error.ToString();
+			string msg = message + " => " + error.ToString();
 
 
 			Trace.WriteLine("\"" + stack.GetFileName() + ":" + stack.GetFileLineNumber() + "\" => GL error : " + msg + " (" + error + ")");

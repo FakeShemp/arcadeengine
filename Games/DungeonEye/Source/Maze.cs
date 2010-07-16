@@ -87,10 +87,6 @@ namespace DungeonEye
 				WallTileset.Dispose();
 			WallTileset = null;
 
-            if (White != null)
-                White.Dispose();
-            White = null;
-
 			Blocks = null;
 			Description = null;
 			Dungeon = null;
@@ -165,11 +161,6 @@ namespace DungeonEye
 					}
 					#endregion
 				}
-
-
-			// HACK
-			White = new Texture2D(new Size(1, 1));
-
 
 			return true;
 		}
@@ -856,7 +847,7 @@ namespace DungeonEye
 					if (team.Location.Position.X == x && team.Location.Position.Y == y && team.Location.Maze == this)
 						color = Color.Blue;
 
-                    batch.Draw(White, new Rectangle(location.X + x * 4, location.Y + y * 4, 4, 4), color);
+					batch.FillRectangle(new Rectangle(location.X + x * 4, location.Y + y * 4, 4, 4), color);
 				}
 
 
@@ -872,7 +863,7 @@ namespace DungeonEye
 				// Sight zone
 				Rectangle zone = new Rectangle(monster.SightZone.X * 4 + location.X, monster.SightZone.Y * 4 + location.Y,
 					monster.SightZone.Width * 4, monster.SightZone.Height * 4);
-                batch.Draw(White, zone, Color.FromArgb(128, Color.Red));
+                batch.FillRectangle(zone, Color.FromArgb(128, Color.Red));
 	
 				//TODO a deplacer en tant que propriete de Monster
 				if (monster.StateManager.CurrentState is MoveState)
@@ -1256,12 +1247,6 @@ namespace DungeonEye
 
 		#region Properties
 
-        /// <summary>
-        /// White texture
-        /// </summary>
-        Texture2D White;
-
-	
 		/// <summary>
 		/// Wall TileSet to use
 		/// </summary>
