@@ -30,8 +30,6 @@
 		{
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TileSetForm));
-			this.GLTileControl = new OpenTK.GLControl();
-			this.GLTextureControl = new OpenTK.GLControl();
 			this.TileGroupBox = new System.Windows.Forms.GroupBox();
 			this.CollisionButton2 = new System.Windows.Forms.Button();
 			this.button2 = new System.Windows.Forms.Button();
@@ -63,50 +61,13 @@
 			this.BgColorButton = new System.Windows.Forms.ToolStripButton();
 			this.RenderTimer = new System.Windows.Forms.Timer(this.components);
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+			this.GLTileControl = new OpenTK.GLControl();
+			this.GLTextureControl = new OpenTK.GLControl();
 			this.TileGroupBox.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
 			this.TileToolStrip.SuspendLayout();
 			this.TextureToolStrip.SuspendLayout();
 			this.SuspendLayout();
-			// 
-			// GLTileControl
-			// 
-			this.GLTileControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
-			this.GLTileControl.BackColor = System.Drawing.Color.Black;
-			this.GLTileControl.Cursor = System.Windows.Forms.Cursors.Cross;
-			this.GLTileControl.Location = new System.Drawing.Point(206, 174);
-			this.GLTileControl.Name = "GLTileControl";
-			this.GLTileControl.Size = new System.Drawing.Size(534, 325);
-			this.GLTileControl.TabIndex = 11;
-			this.GLTileControl.VSync = false;
-			this.GLTileControl.Load += new System.EventHandler(this.GLTileControl_Load);
-			this.GLTileControl.Paint += new System.Windows.Forms.PaintEventHandler(this.GLTileControl_Paint);
-			this.GLTileControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.GLTileControl_MouseDown);
-			this.GLTileControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GLTileControl_MouseMove);
-			this.GLTileControl.MouseUp += new System.Windows.Forms.MouseEventHandler(this.GLTileControl_MouseUp);
-			this.GLTileControl.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.OnPreviewKeyDown);
-			this.GLTileControl.Resize += new System.EventHandler(this.GLTileControl_Resize);
-			// 
-			// GLTextureControl
-			// 
-			this.GLTextureControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
-			this.GLTextureControl.BackColor = System.Drawing.Color.Black;
-			this.GLTextureControl.Cursor = System.Windows.Forms.Cursors.Cross;
-			this.GLTextureControl.Location = new System.Drawing.Point(0, 25);
-			this.GLTextureControl.Name = "GLTextureControl";
-			this.GLTextureControl.Size = new System.Drawing.Size(740, 126);
-			this.GLTextureControl.TabIndex = 1;
-			this.GLTextureControl.VSync = false;
-			this.GLTextureControl.Load += new System.EventHandler(this.GLTextureControl_Load);
-			this.GLTextureControl.Paint += new System.Windows.Forms.PaintEventHandler(this.GLTextureControl_Paint);
-			this.GLTextureControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.GLTextureControl_MouseDown);
-			this.GLTextureControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GLTextureControl_MouseMove);
-			this.GLTextureControl.MouseUp += new System.Windows.Forms.MouseEventHandler(this.GLTextureControl_MouseUp);
-			this.GLTextureControl.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.OnPreviewKeyDown);
-			this.GLTextureControl.Resize += new System.EventHandler(this.GLTextureControl_Resize);
 			// 
 			// TileGroupBox
 			// 
@@ -409,17 +370,54 @@
 			this.statusStrip1.TabIndex = 14;
 			this.statusStrip1.Text = "statusStrip1";
 			// 
+			// GLTileControl
+			// 
+			this.GLTileControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.GLTileControl.BackColor = System.Drawing.Color.Black;
+			this.GLTileControl.Location = new System.Drawing.Point(206, 174);
+			this.GLTileControl.Name = "GLTileControl";
+			this.GLTileControl.Size = new System.Drawing.Size(534, 325);
+			this.GLTileControl.TabIndex = 15;
+			this.GLTileControl.VSync = false;
+			this.GLTileControl.Load += new System.EventHandler(this.GLTileControl_Load);
+			this.GLTileControl.Paint += new System.Windows.Forms.PaintEventHandler(this.GLTileControl_Paint);
+			this.GLTileControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.GLTileControl_MouseDown);
+			this.GLTileControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GLTileControl_MouseMove);
+			this.GLTileControl.MouseUp += new System.Windows.Forms.MouseEventHandler(this.GLTileControl_MouseUp);
+			this.GLTileControl.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.OnPreviewKeyDown);
+			this.GLTileControl.Resize += new System.EventHandler(this.GLTileControl_Resize);
+			// 
+			// GLTextureControl
+			// 
+			this.GLTextureControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.GLTextureControl.BackColor = System.Drawing.Color.Black;
+			this.GLTextureControl.Location = new System.Drawing.Point(3, 28);
+			this.GLTextureControl.Name = "GLTextureControl";
+			this.GLTextureControl.Size = new System.Drawing.Size(717, 120);
+			this.GLTextureControl.TabIndex = 16;
+			this.GLTextureControl.VSync = false;
+			this.GLTextureControl.Load += new System.EventHandler(this.GLTextureControl_Load);
+			this.GLTextureControl.Paint += new System.Windows.Forms.PaintEventHandler(this.GLTextureControl_Paint);
+			this.GLTextureControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.GLTextureControl_MouseDown);
+			this.GLTextureControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GLTextureControl_MouseMove);
+			this.GLTextureControl.MouseUp += new System.Windows.Forms.MouseEventHandler(this.GLTextureControl_MouseUp);
+			this.GLTextureControl.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.OnPreviewKeyDown);
+			this.GLTextureControl.Resize += new System.EventHandler(this.GLTextureControl_Resize);
+			// 
 			// TileSetForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(740, 524);
-			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.GLTextureControl);
+			this.Controls.Add(this.GLTileControl);
+			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.VertScroller);
 			this.Controls.Add(this.HScroller);
 			this.Controls.Add(this.TextureToolStrip);
-			this.Controls.Add(this.GLTileControl);
 			this.Controls.Add(this.TileGroupBox);
 			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Name = "TileSetForm";
@@ -439,8 +437,6 @@
 
 		#endregion
 
-		private OpenTK.GLControl GLTextureControl;
-		private OpenTK.GLControl GLTileControl;
 		private System.Windows.Forms.GroupBox TileGroupBox;
 		private System.Windows.Forms.PropertyGrid TilePropertyGrid;
 		private System.Windows.Forms.ToolStrip TextureToolStrip;
@@ -472,5 +468,7 @@
 		private System.Windows.Forms.ToolStripLabel toolStripLabel1;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 		private System.Windows.Forms.StatusStrip statusStrip1;
+		private OpenTK.GLControl GLTileControl;
+		private OpenTK.GLControl GLTextureControl;
 	}
 }
