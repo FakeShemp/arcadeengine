@@ -227,307 +227,6 @@ namespace ArcEngine.Graphic
 		#region Drawing
 
 
-		/// <summary>
-		/// Specify the line stipple pattern
-		/// </summary>
-		/// <param name="factor">Specifies a multiplier for each bit in the line stipple pattern</param>
-		/// <param name="pattern">16-bit integer whose bit pattern determines which fragments of a line will be drawn when the line is rasterized.</param>
-        [Obsolete]
-        public static void SetLineStipple(int factor, short pattern)
-		{
-			TK.GL.LineStipple(factor, pattern);
-		}
-
-
-		/// <summary>
-		/// Draws a colored rectangle
-		/// </summary>
-		/// <param name="rect">Rectangle to draw</param>
-		/// <param name="color">Color</param>
-        [Obsolete]
-        public static void DrawRectangle(Rectangle rect, Color color)
-		{
-			DrawQuad(rect.Left, rect.Top, rect.Size.Width, rect.Size.Height, color, false, 0, Point.Empty);
-		}
-
-
-		/// <summary>
-		/// Draws a rectangle
-		/// </summary>
-		/// <param name="x">X location</param>
-		/// <param name="y">Y location</param>
-		/// <param name="width">Width</param>
-		/// <param name="height">Height</param>
-		/// <param name="color">Color</param>
-        [Obsolete]
-        static public void DrawRectangle(int x, int y, int width, int height, Color color)
-		{
-			DrawQuad(x, y, width, height, color, false, 0, Point.Empty);
-		}
-
-
-		/// <summary>
-		/// Draws a rectangle
-		/// </summary>
-		/// <param name="x">X location</param>
-		/// <param name="y">Y location</param>
-		/// <param name="width">Width</param>
-		/// <param name="height">Height</param>
-		/// <param name="color">Color</param>
-		/// <param name="angle">Rotation angle</param>
-		/// <param name="pivot">Origin of rotation</param>
-        [Obsolete]
-        static public void DrawRectangle(int x, int y, int width, int height, Color color, float angle, Point pivot)
-		{
-			DrawQuad(x, y, width, height, color, false, angle, pivot);
-		}
-
-
-		/// <summary>
-		/// Draws a rectangle
-		/// </summary>
-		/// <param name="rect">Rectangle to draw</param>
-		/// <param name="color">Color</param>
-		/// <param name="angle">Angle of rotation</param>
-		/// <param name="origin">The origin of the rectangle. Specify (0,0) for the upper-left corner.</param>
-        [Obsolete]
-        public static void DrawRectangle(Rectangle rect, Color color, float angle, Point origin)
-		{
-			DrawQuad(rect.Left, rect.Top, rect.Size.Width, rect.Size.Height, color, false, angle, origin);
-		}
-
-
-		/// <summary>
-		/// Draws a rectangle
-		/// </summary>
-		/// <param name="x">X location</param>
-		/// <param name="y">Y location</param>
-		/// <param name="width">Width</param>
-		/// <param name="height">Height</param>
-		/// <param name="color">Color</param>
-		/// <param name="fill">Fill the rectangle or not</param>
-		/// <param name="angle">Rotation angle in degree</param>
-		/// <param name="pivot">Origin of rotation</param>
-        [Obsolete]
-        static void DrawQuad(int x, int y, int width, int height, Color color, bool fill, float angle, Point pivot)
-		{
-			Texturing = false;
-
-	//		SaveState();
-
-			//GL.MatrixMode(MatrixMode.Projection);
-			//GL.PushMatrix();
-
-			// Translation & rotation
-	//		Translate(x + pivot.X, y + pivot.Y);
-			x = -pivot.X;
-			y = -pivot.Y;
-	//		Rotate(angle);
-
-
-
-			if (fill)
-				TK.GL.Begin(TK.BeginMode.Quads);
-			else
-				TK.GL.Begin(TK.BeginMode.LineLoop);
-			TK.GL.Vertex2(x, y);
-			TK.GL.Vertex2(x, y + height);
-			TK.GL.Vertex2(x + width, y + height);
-			TK.GL.Vertex2(x + width, y);
-			TK.GL.End();
-
-			//GL.PopMatrix();
-		//	RestoreState();
-			Texturing = true;
-
-			RenderStats.DirectCall += 4;
-		}
-
-
-		/// <summary>
-		/// Draws a line from point "from" to point "to"
-		/// </summary>
-		/// <param name="from">Starting point</param>
-		/// <param name="to">Ending point</param>
-		/// <param name="color">Color</param>
-        [Obsolete]
-		public static void DrawLine(Point from, Point to, Color color)
-		{
-			DrawLine(from.X, from.Y, to.X, to.Y, color);
-		}
-
-
-		/// <summary>
-		/// Draws a line between the two points specified. 
-		/// </summary>
-		/// <param name="x1">Start x</param>
-		/// <param name="y1">Start y</param>
-		/// <param name="x2">End x</param>
-		/// <param name="y2">End y</param>
-		/// <param name="color">Color</param>
-        [Obsolete]
-        public static void DrawLine(int x1, int y1, int x2, int y2, Color color)
-		{
-			Texturing = false;
-			TK.GL.Begin(TK.BeginMode.Lines);
-			TK.GL.Vertex2(x1, y1);
-			TK.GL.Vertex2(x2, y2);
-			TK.GL.End();
-			Texturing = true;
-
-			RenderStats.DirectCall += 2;
-		}
-
-
-		/// <summary>
-		/// Draws a bunch of connected lines. The last point and the first point are not connected. 
-		/// </summary>
-		/// <param name="points">Points</param>
-		/// <param name="color">Color</param>
-        [Obsolete]
-        public static void DrawLines(Point[] points, Color color)
-		{
-			int pos = 0;
-			for (pos = 0; pos < points.Length - 1; pos++)
-			{
-				DrawLine(points[pos], points[pos + 1], color);
-			}
-
-			RenderStats.DirectCall += pos;
-		}
-
-
-
-		/// <summary>
-		/// Draws a bunch of line segments. Each pair of points represents a line segment which is drawn.
-		/// No connections between the line segments are made, so there must be an even number of points. 
-		/// </summary>
-		/// <param name="points">Points</param>
-		/// <param name="color">Color</param>
-        [Obsolete]
-        public static void DrawLineSegments(Point[] points, Color color)
-		{
-			int pos = 0;
-			for (pos = 0; pos < points.Length - 1; pos += 2)
-			{
-				DrawLine(points[pos], points[pos + 1], color);
-			}
-
-			RenderStats.DirectCall += pos;
-		}
-
-
-		/// <summary>
-		/// Draws a point
-		/// </summary>
-		/// <param name="point">Location of the point</param>
-		/// <param name="color">Color</param>
-        [Obsolete]
-        public static void DrawPoint(Point point, Color color)
-		{
-			DrawPoint(point.X, point.Y, color);
-		}
-
-
-
-		/// <summary>
-		/// Draws a point
-		/// </summary>
-		/// <param name="x">X</param>
-		/// <param name="y">Y</param>
-		/// <param name="color">Color</param>
-        [Obsolete]
-        public static void DrawPoint(int x, int y, Color color)
-		{
-			Texturing = false;
-			TK.GL.Begin(TK.BeginMode.Points);
-			TK.GL.Vertex2(x, y);
-			TK.GL.End();
-			Texturing = true;
-
-			RenderStats.DirectCall++;
-		}
-
-
-		/// <summary>
-		/// Draw a polygon
-		/// </summary>
-		/// <param name="points">List of points</param>
-		/// <param name="color">Line color</param>
-        [Obsolete]
-        public static void DrawPolygon(Point[] points, Color color)
-		{
-			Texturing = false;
-			RenderState.Culling = false;
-
-			TK.GL.Begin(TK.BeginMode.LineLoop);
-			for (int i = 0; i < points.Length; i++)
-			{
-				TK.GL.Vertex2(points[i].X, points[i].Y);
-			}
-			TK.GL.End();
-
-			Texturing = true;
-			RenderStats.DirectCall += points.Length;
-		}
-
-
-		/// <summary>
-		/// Draw a filled polygon
-		/// </summary>
-		/// <param name="points">List of points</param>
-		/// <param name="color">Fill color</param>
-        [Obsolete]
-        public static void FillPolygon(Point[] points, Color color)
-		{
-			Texturing = false;
-			RenderState.Culling = false;
-
-			TK.GL.Begin(TK.BeginMode.TriangleFan);
-			for (int i = 0; i < points.Length; i++)
-			{
-				TK.GL.Vertex2(points[i].X, points[i].Y);
-			}
-			TK.GL.End();
-
-			Texturing = true;
-			RenderStats.DirectCall += points.Length;
-		}
-
-
-		/// <summary>
-		/// Draws a circle
-		/// </summary>
-		/// <param name="x">X location</param>
-		/// <param name="y">Y location</param>
-		/// <param name="xradius">X radius</param>
-		/// <param name="yradius">Y radius</param>
-		/// <param name="color">Color</param>
-		/// <param name="fill">Fill or not</param>
-        [Obsolete]
-        static void DrawCircle(int x, int y, int xradius, int yradius, Color color, bool fill)
-		{
-
-			Texturing = false;
-
-			if (fill)
-				TK.GL.Begin(TK.BeginMode.Polygon);
-			else
-				TK.GL.Begin(TK.BeginMode.LineLoop);
-			float angle;
-			for (int i = 0; i < 50.0f; i++)
-			{
-				angle = i * 2.0f * (float)Math.PI / 50.0f;
-				TK.GL.Vertex2(x + Math.Cos(angle) * xradius, y + Math.Sin(angle) * yradius);
-			}
-			TK.GL.End();
-
-
-			Texturing = true;
-			RenderStats.DirectCall += 50;
-		}
-
-
 
 		/// <summary>
 		/// Draws an arc
@@ -617,33 +316,6 @@ namespace ArcEngine.Graphic
 
 
 		/// <summary>
-		/// Draws a circle
-		/// </summary>
-		/// <param name="location">Location of the circle</param>
-		/// <param name="radius">Radius</param>
-		/// <param name="color">Color</param>
-        [Obsolete]
-        public static void DrawCircle(Point location, int radius, Color color)
-		{
-			DrawCircle(location.X, location.Y, radius, radius, color, false);
-		}
-
-
-		/// <summary>
-		/// Draws a circle
-		/// </summary>
-		/// <param name="x">X</param>
-		/// <param name="y">Y</param>
-		/// <param name="radius">Radius</param>
-		/// <param name="color">Color</param>
-        [Obsolete]
-        public static void DrawCircle(int x, int y, int radius, Color color)
-		{
-			DrawCircle(x, y, radius, radius, color, false);
-		}
-
-
-		/// <summary>
 		/// Draws a disk
 		/// </summary>
 		/// <param name="location">Location of the circle</param>
@@ -652,7 +324,7 @@ namespace ArcEngine.Graphic
         [Obsolete]
         public static void DrawDisk(Point location, int radius, Color color)
 		{
-			DrawCircle(location.X, location.Y, radius, radius, color, true);
+			//DrawCircle(location.X, location.Y, radius, radius, color, true);
 		}
 
 
@@ -666,7 +338,7 @@ namespace ArcEngine.Graphic
         [Obsolete]
         public static void DrawDisk(int x, int y, int radius, Color color)
 		{
-			DrawCircle(x, y, radius, radius, color, true);
+			//DrawCircle(x, y, radius, radius, color, true);
 		}
 
 
@@ -678,7 +350,7 @@ namespace ArcEngine.Graphic
         [Obsolete]
         public static void DrawEllipse(Rectangle rect, Color color)
 		{
-			DrawCircle(rect.X + rect.Width / 2, rect.Y + rect.Height / 2, rect.Width / 2, rect.Height / 2, color, false);
+			//DrawCircle(rect.X + rect.Width / 2, rect.Y + rect.Height / 2, rect.Width / 2, rect.Height / 2, color, false);
 		}
 
 
@@ -693,7 +365,7 @@ namespace ArcEngine.Graphic
         [Obsolete]
         public static void DrawEllipse(int x, int y, int radiusx, int radiusy, Color color)
 		{
-			DrawCircle(x, y, radiusx, radiusy, color, false);
+			//DrawCircle(x, y, radiusx, radiusy, color, false);
 		}
 
 
@@ -705,7 +377,7 @@ namespace ArcEngine.Graphic
         [Obsolete]
         public static void FillEllipse(Rectangle rect, Color color)
 		{
-			DrawCircle(rect.X + rect.Width / 2, rect.Y + rect.Height /2, rect.Width / 2, rect.Height / 2, color, true);
+			//DrawCircle(rect.X + rect.Width / 2, rect.Y + rect.Height /2, rect.Width / 2, rect.Height / 2, color, true);
 		}
 
 
@@ -721,7 +393,7 @@ namespace ArcEngine.Graphic
         [Obsolete]
         public static void FillEllipse(int x, int y, int radiusx, int radiusy, Color color)
 		{
-			DrawCircle(x, y, radiusx, radiusy, color, true);
+			//DrawCircle(x, y, radiusx, radiusy, color, true);
 		}
 
 
@@ -971,6 +643,7 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		/// <param name="texture">Texture to display</param>
 		/// <param name="location">Location on the screen</param>
+		[Obsolete]
 		static public void DrawTexture(Texture2D texture, Point location)
 		{
 			DrawTexture(texture, location, Color.White);
@@ -983,6 +656,7 @@ namespace ArcEngine.Graphic
 		/// <param name="texture">Texture to display</param>
 		/// <param name="location">Location on the screen</param>
 		/// <param name="color">Color to apply</param>
+		[Obsolete]
 		static public void DrawTexture(Texture2D texture, Point location, Color color)
 		{
 			if (texture == null)
@@ -1002,6 +676,7 @@ namespace ArcEngine.Graphic
 		/// <param name="texture">Texture to display</param>
 		/// <param name="rect"></param>
 		/// <param name="tex">Texture coords</param>
+		[Obsolete]
 		static public void DrawTexture(Texture2D texture, Rectangle rect, Rectangle tex)
 		{
 			DrawTexture(texture, rect, tex, Color.White);
@@ -1015,6 +690,7 @@ namespace ArcEngine.Graphic
 		/// <param name="rect"></param>
 		/// <param name="tex"></param>
 		/// <param name="color">Color to apply</param>
+		[Obsolete]
 		static public void DrawTexture(Texture2D texture, Rectangle rect, Rectangle tex, Color color)
 		{
 			if (texture == null)
@@ -1035,6 +711,7 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		/// <param name="rect">Rectangle on the screen</param>
 		/// <param name="tex">Rectangle in the texture</param>
+		[Obsolete]
 		static internal void RawBlit(Rectangle rect, Rectangle tex)
 		{
 			TK.GL.Begin(TK.BeginMode.Quads);
@@ -1810,7 +1487,7 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Renders the vertices as a single polyline
 		/// </summary>
-		LineStrip = TK.BeginMode.LineStrip,
+		LineStrip = TK.BeginMode.LineLoop,
 	}
 
 	/// <summary>

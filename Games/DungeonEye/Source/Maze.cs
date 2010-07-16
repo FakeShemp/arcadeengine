@@ -885,7 +885,7 @@ namespace DungeonEye
 					end.Offset(location);
 					end.Offset(2, 2);
 
-					Display.DrawLine(start, end, Color.Blue);
+					batch.DrawLine(start, end, Color.Blue);
 				}
 			}
 		}

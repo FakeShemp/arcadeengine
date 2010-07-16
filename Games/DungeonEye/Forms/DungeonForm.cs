@@ -611,7 +611,7 @@ namespace DungeonEye.Forms
 
 			// Surround the selected object
 			if (MazePropertyBox.SelectedObject != null)
-				Display.DrawRectangle(new Rectangle(BlockCoord.X * 25 + Offset.X, BlockCoord.Y * 25 + Offset.Y, 25, 25), Color.White);
+				Batch.DrawRectangle(new Rectangle(BlockCoord.X * 25 + Offset.X, BlockCoord.Y * 25 + Offset.Y, 25, 25), Color.White);
 
 
 			if (DisplayZonesBox.Checked)
@@ -625,7 +625,7 @@ namespace DungeonEye.Forms
 					if (CurrentZone == zone)
 					{
 						color = Color.FromArgb(100, Color.Red);
-						Display.DrawRectangle(rect, Color.White);
+						Batch.DrawRectangle(rect, Color.White);
 					}
 
 					Batch.FillRectangle(rect, color);

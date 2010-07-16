@@ -309,7 +309,7 @@ namespace DungeonEye.Forms
 
 				// Target
 				if (Target.MazeName == Maze.Name)
-					Display.DrawRectangle(new Rectangle(Offset.X + Target.Position.X * 25, Offset.Y + Target.Position.Y * 25, 25, 25), Color.White);
+					Batch.DrawRectangle(new Rectangle(Offset.X + Target.Position.X * 25, Offset.Y + Target.Position.Y * 25, 25, 25), Color.White);
 
 			
 			}

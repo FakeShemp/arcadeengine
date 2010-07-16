@@ -296,7 +296,7 @@ namespace ArcEngine.Editor
 			rect.Height = (int) (rect.Height * zoom);
 			batch.FillRectangle(rect, Color.FromArgb(Alpha, Color));
 			Display.RenderState.Blending = false;
-			Display.DrawRectangle(rect, Color.FromArgb(Alpha, Color));
+			batch.DrawRectangle(rect, Color.FromArgb(Alpha, Color));
 
 			if (IsMouseOver)
 				DrawSizeHandles(batch);

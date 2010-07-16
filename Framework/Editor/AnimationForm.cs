@@ -561,7 +561,7 @@ namespace ArcEngine.Editor
 
 				if (rect.Contains(mouse) || id == FrameID)
 				{
-					Display.DrawRectangle(rect, Color.White);
+					SpriteBatch.DrawRectangle(rect, Color.White);
 				}
 
 				rect.X += tile.Size.Width;
@@ -700,7 +700,7 @@ namespace ArcEngine.Editor
 				// Is mouse over or selected tile
 				if (rect.Contains(mouse) || TileID == id)
 				{
-					Display.DrawRectangle(rect, Color.White);
+					SpriteBatch.DrawRectangle(rect, Color.White);
 				}
 
 				// Move right
@@ -786,7 +786,7 @@ namespace ArcEngine.Editor
 		Texture2D CheckerBoard;
 
         /// <summary>
-        /// 
+        /// SpriteBatch
         /// </summary>
         SpriteBatch SpriteBatch;
 

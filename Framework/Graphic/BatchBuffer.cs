@@ -250,12 +250,12 @@ namespace ArcEngine.Graphic
 			if (color.Length != 4)
 				return;
 
-			AddPoint(destination.Location, color[0], texture.Location);																			// A
+			AddPoint(destination.Location, color[0], texture.Location);															// A
 			AddPoint(new Point(destination.X, destination.Bottom), color[3], new Point(texture.X, texture.Bottom));				// D
-			AddPoint(new Point(destination.Right, destination.Bottom), color[2], new Point(texture.Right, texture.Bottom));	// C
+			AddPoint(new Point(destination.Right, destination.Bottom), color[2], new Point(texture.Right, texture.Bottom));		// C
 
-			AddPoint(destination.Location, color[0], texture.Location);																			// A
-			AddPoint(new Point(destination.Right, destination.Bottom), color[2], new Point(texture.Right, texture.Bottom));	// C
+			AddPoint(destination.Location, color[0], texture.Location);															// A
+			AddPoint(new Point(destination.Right, destination.Bottom), color[2], new Point(texture.Right, texture.Bottom));		// C
 			AddPoint(new Point(destination.Right, destination.Top), color[1], new Point(texture.Right, texture.Top));			// B
 		}
 
@@ -268,13 +268,13 @@ namespace ArcEngine.Graphic
 		/// <param name="texture">Texture coordinate</param>
 		public void AddRectangle(Vector4 destination, Color color, Vector4 texture)
 		{
-			AddPoint(destination.Xy, color, texture.Xy);																								// A
-			AddPoint(new Vector2(destination.X, destination.Bottom), color, new Vector2(texture.X, texture.Bottom));				// D
-			AddPoint(new Vector2(destination.Right, destination.Bottom), color, new Vector2(texture.Right, texture.Bottom));	// C
+			AddPoint(destination.Xy, texture.Xy, color);																			// A
+			AddPoint(new Vector2(destination.X, destination.Bottom), new Vector2(texture.X, texture.Bottom), color);				// D
+			AddPoint(new Vector2(destination.Right, destination.Bottom), new Vector2(texture.Right, texture.Bottom), color);		// C
 
-			AddPoint(destination.Xy, color, texture.Xy);																									// A
-			AddPoint(new Vector2(destination.Right, destination.Bottom), color, new Vector2(texture.Right, texture.Bottom));		// C
-			AddPoint(new Vector2(destination.Right, destination.Top), color, new Vector2(texture.Right, texture.Top));				// B
+			AddPoint(destination.Xy, texture.Xy, color);																			// A
+			AddPoint(new Vector2(destination.Right, destination.Bottom), new Vector2(texture.Right, texture.Bottom), color);		// C
+			AddPoint(new Vector2(destination.Right, destination.Top), new Vector2(texture.Right, texture.Top), color);				// B
 		}
 
 
@@ -289,13 +289,13 @@ namespace ArcEngine.Graphic
 			if (color.Length != 4)
 				return;
 
-			AddPoint(new Vector2(destination.X, destination.Bottom), color[3], new Vector2(texture.X, texture.Bottom));				// D
-			AddPoint(destination.Xy, color[0], texture.Xy);																								// A
-			AddPoint(new Vector2(destination.Right, destination.Bottom), color[2], new Vector2(texture.Right, texture.Bottom));	// C
+			AddPoint(new Vector2(destination.X, destination.Bottom), new Vector2(texture.X, texture.Bottom), color[3]);				// D
+			AddPoint(destination.Xy, texture.Xy, color[0]);																			// A
+			AddPoint(new Vector2(destination.Right, destination.Bottom), new Vector2(texture.Right, texture.Bottom), color[2]);		// C
 
-			AddPoint(destination.Xy, color[0], texture.Xy);																									// A
-			AddPoint(new Vector2(destination.Right, destination.Bottom), color[2], new Vector2(texture.Right, texture.Bottom));		// C
-			AddPoint(new Vector2(destination.Right, destination.Top), color[1], new Vector2(texture.Right, texture.Top));				// B
+			AddPoint(destination.Xy, texture.Xy, color[0]);																			// A
+			AddPoint(new Vector2(destination.Right, destination.Bottom), new Vector2(texture.Right, texture.Bottom), color[2]);		// C
+			AddPoint(new Vector2(destination.Right, destination.Top), new Vector2(texture.Right, texture.Top), color[1]);			// B
 		}
 
 		#endregion
@@ -342,9 +342,9 @@ namespace ArcEngine.Graphic
 		/// Adds a textured point
 		/// </summary>
 		/// <param name="point">Location on the screen</param>
-		/// <param name="color">Color of the point</param>
 		/// <param name="texture">Texture coordinate</param>
-		public void AddPoint(Vector2 point, Color color, Vector2 texture)
+		/// <param name="color">Color of the point</param>
+		public void AddPoint(Vector2 point, Vector2 texture, Color color)
 		{
 			CheckForOverflow();
 

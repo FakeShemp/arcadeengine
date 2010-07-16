@@ -603,12 +603,12 @@ namespace DungeonEye
 				batch.FillRectangle(zone, color);
 			}
 
-			Display.DrawLine(rectangle.Left, rectangle.Top, rectangle.Left, rectangle.Bottom, Color.FromArgb(138, 146, 207));
-			Display.DrawLine(rectangle.Left, rectangle.Bottom, rectangle.Right + 2, rectangle.Bottom, Color.FromArgb(138, 146, 207));
+			batch.DrawLine(rectangle.Left, rectangle.Top, rectangle.Left, rectangle.Bottom, Color.FromArgb(138, 146, 207));
+			batch.DrawLine(rectangle.Left, rectangle.Bottom, rectangle.Right + 2, rectangle.Bottom, Color.FromArgb(138, 146, 207));
 
 
-			Display.DrawLine(rectangle.Left + 1, rectangle.Top, rectangle.Right + 1, rectangle.Top, Color.FromArgb(44, 48, 138));
-			Display.DrawLine(rectangle.Right + 1, rectangle.Top, rectangle.Right + 1, rectangle.Bottom, Color.FromArgb(44, 48, 138));
+			batch.DrawLine(rectangle.Left + 1, rectangle.Top, rectangle.Right + 1, rectangle.Top, Color.FromArgb(44, 48, 138));
+			batch.DrawLine(rectangle.Right + 1, rectangle.Top, rectangle.Right + 1, rectangle.Bottom, Color.FromArgb(44, 48, 138));
 		}
 
 		

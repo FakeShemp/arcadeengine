@@ -25,6 +25,11 @@ SOFTWARE.
 using System;
 using System.Runtime.InteropServices;
 
+
+//
+// The Normal matrix is the transpose of the inverse of the top three rows/columns of the ModelView matrix.
+//
+//
 namespace ArcEngine
 {
 #if true

@@ -138,8 +138,8 @@ namespace DungeonEye
 			//   Display.Color = Color.FromArgb(138, 146, 207);
 			//else
 			//   Display.Color = Color.FromArgb(221, 211, 219);
-			Display.DrawRectangle(new Rectangle(rectangle.X + 2, rectangle.Y, rectangle.Width - 2, 2), active ? Color.FromArgb(138, 146, 207) : Color.FromArgb(221, 211, 219));
-			Display.DrawRectangle(new Rectangle(rectangle.Right - 2, rectangle.Y, 2, rectangle.Height - 2), active ? Color.FromArgb(138, 146, 207) : Color.FromArgb(221, 211, 219));
+			batch.DrawRectangle(new Rectangle(rectangle.X + 2, rectangle.Y, rectangle.Width - 2, 2), active ? Color.FromArgb(138, 146, 207) : Color.FromArgb(221, 211, 219));
+			batch.DrawRectangle(new Rectangle(rectangle.Right - 2, rectangle.Y, 2, rectangle.Height - 2), active ? Color.FromArgb(138, 146, 207) : Color.FromArgb(221, 211, 219));
 
 			batch.DrawString(Font, new Point(rectangle.X + 4, rectangle.Y + 4), Color.Black, text);
 

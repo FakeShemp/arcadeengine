@@ -182,13 +182,15 @@ namespace ArcEngine.Graphic
 					Sort();
 
 				int offset = 0;
+				PrimitiveType type = Sprites[0].Type;
 				CurrentTexture = Sprites[0].Texture;
 				for (int i = 0; i < spriteQueueCount; i++)
 				{
-					if (CurrentTexture != Sprites[i].Texture)
+					if (CurrentTexture != Sprites[i].Texture || Sprites[i].Type != type)
 					{
 						RenderBatch(CurrentTexture, Sprites, offset, i - offset);
 						CurrentTexture = Sprites[i].Texture;
+						type = Sprites[i].Type;
 						offset = i;
 					}
 				}
@@ -298,7 +300,37 @@ namespace ArcEngine.Graphic
                 }
 
 
-				Buffer.AddRectangle(dst, Sprites[i].Color, src);
+				switch (Sprites[i].Type)
+				{
+					// Lines
+					case PrimitiveType.Lines:
+					{
+						Buffer.AddPoint(dst.Xy, src.Xy, Sprites[i].Color);																// A
+						Buffer.AddPoint(new Vector2(dst.Right, dst.Bottom), new Vector2(src.Right, src.Bottom), Sprites[i].Color);		// C
+					}
+					break;
+
+					// Rectangles
+					case PrimitiveType.LineStrip:
+					{
+						Buffer.AddPoint(dst.Xy, src.Xy, Sprites[i].Color);																// A
+						Buffer.AddPoint(new Vector2(dst.X, dst.Bottom), new Vector2(src.X, src.Bottom), Sprites[i].Color);				// D
+						Buffer.AddPoint(new Vector2(dst.Right, dst.Bottom), new Vector2(src.Right, src.Bottom), Sprites[i].Color);		// C
+						Buffer.AddPoint(new Vector2(dst.Right, dst.Top), new Vector2(src.Right, src.Top), Sprites[i].Color);			// B
+					}
+					break;
+
+					case PrimitiveType.Points:
+					{
+						Buffer.AddPoint(dst.Xy, src.Xy, Sprites[i].Color);																// A
+					}
+					break;
+
+					default:
+						Buffer.AddRectangle(dst, Sprites[i].Color, src);
+					break;
+				}
+				
 			}
 
 
@@ -813,6 +845,246 @@ namespace ArcEngine.Graphic
 			Draw(NoTexture, rect, rect, color);
 		}
 
+
+		/// <summary>
+		/// Draws a colored rectangle
+		/// </summary>
+		/// <param name="rect">Rectangle to draw</param>
+		/// <param name="color">Color</param>
+		public void DrawRectangle(Rectangle rect, Color color)
+		{
+			InternalDraw(NoTexture, ref rect, ref rect, color, 0.0f, Point.Empty, SpriteEffects.None, 0.0f, PrimitiveType.LineStrip);
+		}
+
+
+
+		/// <summary>
+		/// Draws a rectangle
+		/// </summary>
+		/// <param name="destination">Destination</param>
+		/// <param name="color">Color</param>
+		/// <param name="rotation">Rotation angle in radian</param>
+		/// <param name="origin">Origin of rotation</param>
+		public void DrawRectangle(Vector4 destination, Color color, float rotation, Vector2 origin)
+		{
+			InternalDraw(NoTexture, ref destination, ref destination, color, rotation, origin, SpriteEffects.None, 0.0f, PrimitiveType.LineStrip);
+		}
+
+
+		/// <summary>
+		/// Draws a line from point "from" to point "to"
+		/// </summary>
+		/// <param name="from">Starting point</param>
+		/// <param name="to">Ending point</param>
+		/// <param name="color">Color</param>
+		public void DrawLine(Point from, Point to, Color color)
+		{
+			DrawLine(from.X, from.Y, to.X, to.Y, color);
+		}
+
+
+		/// <summary>
+		/// Draws a line from point "from" to point "to"
+		/// </summary>
+		/// <param name="x1">X start</param>
+		/// <param name="x2">Y start</param>
+		/// <param name="y1">X end</param>
+		/// <param name="y2">Y end</param>
+		/// <param name="color">Color of the line</param>
+		public void DrawLine(int x1, int y1, int x2, int y2, Color color)
+		{
+			Rectangle rect = new Rectangle(x1, y1, x2 - x1, y2 - y1);
+
+			InternalDraw(NoTexture, ref rect, ref rect, color, 0.0f, Point.Empty, SpriteEffects.None, 0.0f, PrimitiveType.Lines);
+		}
+
+
+		/// <summary>
+		/// Draws a line from point "from" to point "to"
+		/// </summary>
+		/// <param name="from">Starting point</param>
+		/// <param name="to">Ending point</param>
+		/// <param name="color">Color</param>
+		public void DrawLine(Vector2 from, Vector2 to, Color color)
+		{
+			DrawLine(from.X, from.Y, to.X, to.Y, color);
+		}
+
+
+		/// <summary>
+		/// Draws a line from point "from" to point "to"
+		/// </summary>
+		/// <param name="x1">X start</param>
+		/// <param name="x2">Y start</param>
+		/// <param name="y1">X end</param>
+		/// <param name="y2">Y end</param>
+		/// <param name="color">Color</param>
+		public void DrawLine(float x1, float y1, float x2, float y2, Color color)
+		{
+			Vector4 rect = new Vector4(x1, y1, x2 - x1, y2 - y1);
+
+			InternalDraw(NoTexture, ref rect, ref rect, color, 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f, PrimitiveType.Lines);
+		}
+
+
+		/// <summary>
+		/// Draws a bunch of connected lines. The last point and the first point are not connected. 
+		/// </summary>
+		/// <param name="points">Points</param>
+		/// <param name="color">Color</param>
+		public void DrawLines(Point[] points, Color color)
+		{
+			int pos = 0;
+			for (pos = 0; pos < points.Length - 1; pos++)
+			{
+				DrawLine(points[pos], points[pos + 1], color);
+			}
+		}
+
+
+		/// <summary>
+		/// Draws a bunch of line segments. Each pair of points represents a line segment which is drawn.
+		/// No connections between the line segments are made, so there must be an even number of points. 
+		/// </summary>
+		/// <param name="points">Points</param>
+		/// <param name="color">Color</param>
+		public void DrawLineSegments(Point[] points, Color color)
+		{
+			int pos = 0;
+			for (pos = 0; pos < points.Length - 1; pos += 2)
+			{
+				DrawLine(points[pos], points[pos + 1], color);
+			}
+		}
+
+
+
+		/// <summary>
+		/// Draws a bunch of connected lines. The last point and the first point are not connected. 
+		/// </summary>
+		/// <param name="points">Points</param>
+		/// <param name="color">Color</param>
+		public void DrawLines(Vector2[] points, Color color)
+		{
+			int pos = 0;
+			for (pos = 0; pos < points.Length - 1; pos++)
+			{
+				DrawLine(points[pos], points[pos + 1], color);
+			}
+		}
+
+
+
+		/// <summary>
+		/// Draws a bunch of line segments. Each pair of points represents a line segment which is drawn.
+		/// No connections between the line segments are made, so there must be an even number of points. 
+		/// </summary>
+		/// <param name="points">Points</param>
+		/// <param name="color">Color</param>
+		public void DrawLineSegments(Vector2[] points, Color color)
+		{
+			int pos = 0;
+			for (pos = 0; pos < points.Length - 1; pos += 2)
+			{
+				DrawLine(points[pos], points[pos + 1], color);
+			}
+		}
+
+
+		/// <summary>
+		/// Draws a point
+		/// </summary>
+		/// <param name="point">Location of the point</param>
+		/// <param name="color">Color</param>
+		public void DrawPoint(Point point, Color color)
+		{
+			DrawPoint(point.X, point.Y, color);
+		}
+
+
+
+		/// <summary>
+		/// Draws a point
+		/// </summary>
+		/// <param name="x">X</param>
+		/// <param name="y">Y</param>
+		/// <param name="color">Color</param>
+		public void DrawPoint(int x, int y, Color color)
+		{
+			DrawPoint((float)x, (float)y, color);
+		}
+
+
+		/// <summary>
+		/// Draws a point
+		/// </summary>
+		/// <param name="point">Location of the point</param>
+		/// <param name="color">Color</param>
+		public void DrawPoint(Vector2 point, Color color)
+		{
+			DrawPoint(point.X, point.Y, color);
+		}
+
+
+
+		/// <summary>
+		/// Draws a point
+		/// </summary>
+		/// <param name="x">X</param>
+		/// <param name="y">Y</param>
+		/// <param name="color">Color</param>
+		public void DrawPoint(float x, float y, Color color)
+		{
+			Vector4 rect = new Vector4(x, y, 0.0f, 0.0f);
+
+			InternalDraw(NoTexture, ref rect, ref rect, color, 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f, PrimitiveType.Points);
+		}
+
+
+		/// <summary>
+		/// Draws a circle
+		/// </summary>
+		/// <param name="location">Location of the circle on the screen</param>
+		/// <param name="radius">Circle radius</param>
+		/// <param name="color">Color</param>
+		public void DrawCircle(Point location, Point radius, Color color)
+		{
+			Vector4 dst = new Vector4();
+			for (int i = 0; i < 180; i++)
+			{
+				dst.X = (float)(radius.X * Math.Cos(i) + location.X);
+				dst.Y = (float)(radius.Y * Math.Sin(i) + location.Y);
+
+				dst.Z = (float)(radius.X * Math.Cos(i + 0.1) + location.X) - dst.X;
+				dst.W = (float)(radius.Y * Math.Sin(i + 0.1) + location.Y) - dst.Y;
+
+				InternalDraw(NoTexture, ref dst, ref dst, color, 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f, PrimitiveType.Lines);
+			}
+		}
+
+
+		/// <summary>
+		/// Draws a circle
+		/// </summary>
+		/// <param name="location">Location of the circle on the screen</param>
+		/// <param name="radius">Circle radius</param>
+		/// <param name="color">Color</param>
+		public void DrawCircle(Vector2 location, Vector2 radius, Color color)
+		{
+			Vector4 dst = new Vector4();
+			for (int i = 0; i < 180; i++)
+			{
+				dst.X = (float)(radius.X * Math.Cos(i) + location.X);
+				dst.Y = (float)(radius.Y * Math.Sin(i) + location.Y);
+
+				dst.Z = (float)(radius.X * Math.Cos(i + 0.1) + location.X) - dst.X;
+				dst.W = (float)(radius.Y * Math.Sin(i + 0.1) + location.Y) - dst.Y;
+
+				InternalDraw(NoTexture, ref dst, ref dst, color, 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f, PrimitiveType.Lines);
+			}
+		}
+
+
 		#endregion
 
 
@@ -912,7 +1184,7 @@ namespace ArcEngine.Graphic
 		#region Comparers
 
 		/// <summary>
-		/// 
+		/// Compare by depth (back first)
 		/// </summary>
 		private class BackToFrontComparer : IComparer<SpriteVertex>
 		{
@@ -936,7 +1208,7 @@ namespace ArcEngine.Graphic
 
 
 		/// <summary>
-		/// 
+		/// Compair by depth (front first)
 		/// </summary>
 		private class FrontToBackComparer : IComparer<SpriteVertex>
 		{
@@ -960,7 +1232,7 @@ namespace ArcEngine.Graphic
 
 
 		/// <summary>
-		/// 
+		/// Compare by texture
 		/// </summary>
 		private class TextureComparer : IComparer<SpriteVertex>
 		{
@@ -972,13 +1244,15 @@ namespace ArcEngine.Graphic
 			/// <returns></returns>
 			public int Compare(SpriteVertex left, SpriteVertex right)
 			{
+				int ret = 0;
+
 				if (left.Texture.Handle > right.Texture.Handle)
-					return -1;
+					ret = -1;
 
 				if (left.Texture.Handle < right.Texture.Handle)
-					return 1;
+					ret = 1;
 
-				return 0;
+				return ret;
 			}
 		}
 
