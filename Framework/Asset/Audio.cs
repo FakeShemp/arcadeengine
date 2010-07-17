@@ -50,6 +50,8 @@ namespace ArcEngine.Asset
 
 			Player = new SoundPlayer();
 			Player.LoadCompleted += new AsyncCompletedEventHandler(Player_LoadCompleted);
+
+			IsDisposed = false;
 		}
 
 
@@ -396,6 +398,13 @@ namespace ArcEngine.Asset
 			get;
 			set;
 		}
+
+
+		/// <summary>
+		/// Is asset disposed
+		/// </summary>
+		public bool IsDisposed { get; private set; }
+
 
 		/// <summary>
 		/// Xml tag of the asset in bank

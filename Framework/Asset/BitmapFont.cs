@@ -45,6 +45,8 @@ namespace ArcEngine.Asset
 		{
 			GlyphTileset = new TileSet();
 			GlyphTileset.Texture = new Texture2D();
+
+			IsDisposed = false;
 		}
 
 
@@ -74,6 +76,8 @@ namespace ArcEngine.Asset
 			Advance = 0;
 			TTFFileName = string.Empty;
 			TTFSize = -1;
+
+			IsDisposed = true;
 
 			GC.SuppressFinalize(this);
 		}
@@ -791,6 +795,12 @@ namespace ArcEngine.Asset
 		[Category("Font")]
 		[Description("Name of the TTF font")]
 		public string Name { get; set; }
+
+
+		/// <summary>
+		/// Is asset disposed
+		/// </summary>
+		public bool IsDisposed { get; private set; }
 
 
 		/// <summary>

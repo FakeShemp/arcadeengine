@@ -42,6 +42,8 @@ namespace ArcEngine.Asset
 		public InputScheme()
 		{
 			InputList = new Dictionary<string, Keys>();
+
+			IsDisposed = false;
 		}
 
 
@@ -195,6 +197,12 @@ namespace ArcEngine.Asset
 				return "inputscheme";
 			}
 		}
+
+
+		/// <summary>
+		/// Is asset disposed
+		/// </summary>
+		public bool IsDisposed { get; private set; }
 
 
 		/// <summary>

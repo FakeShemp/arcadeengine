@@ -33,10 +33,13 @@ namespace ArcEngine.Asset
 	class Skin: IAsset
 	{
 
-
-
-
-
+		/// <summary>
+		/// 
+		/// </summary>
+		public Skin()
+		{
+			IsDisposed = false;
+		}
 
 		/// <summary>
 		/// 
@@ -92,6 +95,11 @@ namespace ArcEngine.Asset
 			get;
 			set;
 		}
+
+		/// <summary>
+		/// Is asset disposed
+		/// </summary>
+		public bool IsDisposed { get; private set; }
 
 
 		/// <summary>

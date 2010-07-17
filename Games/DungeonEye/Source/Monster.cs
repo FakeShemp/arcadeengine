@@ -67,6 +67,8 @@ namespace DungeonEye
 			DrawOffsetDuration = TimeSpan.FromSeconds(1.0f + GameBase.Random.NextDouble());
 
 			StateManager = new StateManager();
+
+			IsDisposed = false;
 		}
 
 
@@ -77,18 +79,25 @@ namespace DungeonEye
 		{
 			if (Tileset != null)
 				Tileset.Dispose();
+			Tileset = null;
 
 			if (HitSound != null)
 				HitSound.Dispose();
+			HitSound = null;
 
 			if (HurtSound != null)
 				HurtSound.Dispose();
+			HurtSound = null;
 
 			if (DieSound != null)
 				DieSound.Dispose();
+			DieSound = null;
 
 			if (MoveSound != null)
 				MoveSound.Dispose();
+			MoveSound = null;
+
+			IsDisposed = true;
 		}
 
 
@@ -646,7 +655,13 @@ namespace DungeonEye
 			get;
 			private set;
 		}
-		
+
+
+		/// <summary>
+		/// Is asset disposed
+		/// </summary>
+		public bool IsDisposed { get; private set; }
+
 
 		/// <summary>
 		/// Base attack bonus

@@ -83,6 +83,14 @@ namespace ArcEngine.Asset
 		}
 
 
+		/// <summary>
+		/// Is asset disposed
+		/// </summary>
+		bool IsDisposed
+		{
+			get;
+		}
+
 		#endregion
 	}
 }

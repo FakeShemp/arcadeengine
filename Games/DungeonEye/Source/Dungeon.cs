@@ -39,6 +39,8 @@ namespace DungeonEye
 		{
 			Mazes = new Dictionary<string, Maze>();
 			StartLocation = new DungeonLocation(this);
+
+			IsDisposed = false;
 		}
 
 
@@ -54,6 +56,8 @@ namespace DungeonEye
 			StartLocation = null;
 			Note = "";
 			Team = null;
+
+			IsDisposed = true;
 		}
 
 
@@ -276,6 +280,12 @@ namespace DungeonEye
 			get;
 			set;
 		}
+
+
+		/// <summary>
+		/// Is asset disposed
+		/// </summary>
+		public bool IsDisposed { get; private set; }
 
 
 		/// <summary>

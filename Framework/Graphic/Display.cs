@@ -802,9 +802,6 @@ namespace ArcEngine.Graphic
 			}
 			set
 			{
-				if (shader == value)
-					return;
-
 				shader = value;
 				TK.GL.UseProgram(shader == null ? 0 : shader.ProgramID);
 

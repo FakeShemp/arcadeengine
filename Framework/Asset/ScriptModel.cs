@@ -32,7 +32,13 @@ namespace ArcEngine.Asset
 	public class ScriptModel : IAsset
 	{
 
-
+		/// <summary>
+		/// 
+		/// </summary>
+		public ScriptModel()
+		{
+			IsDisposed = false;
+		}
 
 		/// <summary>
 		/// Initializes the asset
@@ -121,6 +127,12 @@ namespace ArcEngine.Asset
 			get;
 			set;
 		}
+
+		/// <summary>
+		/// Is asset disposed
+		/// </summary>
+		public bool IsDisposed { get; private set; }
+
 
 
 		/// <summary>

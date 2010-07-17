@@ -32,7 +32,13 @@ namespace DungeonEye.Source
 	class Spell : IAsset
 	{
 
-
+		/// <summary>
+		/// 
+		/// </summary>
+		public Spell()
+		{
+			IsDisposed = false;
+		}
 
 
 		/// <summary>
@@ -128,6 +134,11 @@ namespace DungeonEye.Source
 			get;
 			set;
 		}
+
+		/// <summary>
+		/// Is asset disposed
+		/// </summary>
+		public bool IsDisposed { get; private set; }
 
 
 

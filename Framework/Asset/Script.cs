@@ -85,6 +85,8 @@ namespace ArcEngine.Asset
 				}
 			}
 */
+
+			IsDisposed = false;
 		}
 
 
@@ -520,6 +522,11 @@ namespace ArcEngine.Asset
 			get;
 			set;
 		}
+
+		/// <summary>
+		/// Is asset disposed
+		/// </summary>
+		public bool IsDisposed { get; private set; }
 
 
 		/// <summary>

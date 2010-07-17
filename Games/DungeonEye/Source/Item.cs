@@ -58,6 +58,8 @@ namespace DungeonEye
 			AllowedClasses = HeroClass.Cleric | HeroClass.Fighter | HeroClass.Mage | HeroClass.Paladin | HeroClass.Ranger | HeroClass.Thief;
 			Damage = new Dice();
 			DamageType = 0;
+
+			IsDisposed = false;
 		}
 
 
@@ -300,6 +302,12 @@ namespace DungeonEye
 				return "item";
 			}
 		}
+
+		/// <summary>
+		/// Is asset disposed
+		/// </summary>
+		public bool IsDisposed { get; private set; }
+
 
 		/// <summary>
 		/// Any attack at less than this distance is not penalized for range. 

@@ -57,6 +57,8 @@ namespace ArcEngine.Graphic
 			ProgramID = TK.GL.CreateProgram();
 			GeometryInput = PrimitiveType.Lines;
 			GeometryOutput = PrimitiveType.Lines;
+
+			IsDisposed = false;
 		}
 
 
@@ -727,6 +729,13 @@ namespace ArcEngine.Graphic
 			set;
 		}
 
+
+		/// <summary>
+		/// Is asset disposed
+		/// </summary>
+		public bool IsDisposed { get; private set; }
+
+
 		/// <summary>
 		/// Xml tag of the asset in bank
 		/// </summary>
@@ -921,6 +930,7 @@ namespace ArcEngine.Graphic
 			GeometryLog = "";
 			GeometrySource = "";
 
+			IsDisposed = true;
 
 			GC.SuppressFinalize(this);
 		}

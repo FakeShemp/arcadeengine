@@ -516,7 +516,14 @@ namespace ArcEngine
 				if (!Assets.ContainsKey(typeof(T)))
 					throw new ArgumentException("Unknown asset type");
 
-				return Assets[typeof(T)].CreateShared<T>(name);
+				T asset = Assets[typeof(T)].CreateShared<T>(name);
+				if (asset.IsDisposed)
+				{
+					RemoveSharedAsset<T>(name);
+					return CreateSharedAsset<T>(name);
+				}
+
+				return asset;
 			}
 		}
 

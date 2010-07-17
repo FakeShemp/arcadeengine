@@ -35,6 +35,7 @@ namespace DungeonEye
 		public WallButton()
 		{
 			AccpetedItems = new List<Item>();
+			IsDisposed = false;
 		}
 
 
@@ -138,6 +139,11 @@ namespace DungeonEye
 			get;
 			set;
 		}
+
+		/// <summary>
+		/// Is asset disposed
+		/// </summary>
+		public bool IsDisposed { get; private set; }
 
 		/// <summary>
 		/// Xml tag of the asset in bank

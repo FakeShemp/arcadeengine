@@ -45,6 +45,8 @@ namespace ArcEngine.Asset
 		public Layout()
 		{
 			elements = new Dictionary<string,Control>();
+
+			IsDisposed = false;
 		}
 
 
@@ -67,6 +69,10 @@ namespace ArcEngine.Asset
 			if (Texture != null)
 				Texture.Dispose();
 			Texture = null;
+
+			IsDisposed = true;
+
+			GC.SuppressFinalize(this);
 		}
 
 
@@ -305,6 +311,11 @@ namespace ArcEngine.Asset
 			get;
 			set;
 		}
+
+		/// <summary>
+		/// Is asset disposed
+		/// </summary>
+		public bool IsDisposed { get; private set; }
 
 
 		/// <summary>

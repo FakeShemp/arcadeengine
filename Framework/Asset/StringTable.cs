@@ -51,6 +51,8 @@ namespace ArcEngine.Asset
 		public StringTable()
 		{
 			Languages = new Dictionary<string, Language>();
+			IsDisposed = false;
+
 		}
 
 
@@ -385,6 +387,11 @@ namespace ArcEngine.Asset
 			get;
 			set;
 		}
+
+		/// <summary>
+		/// Is asset disposed
+		/// </summary>
+		public bool IsDisposed { get; private set; }
 
 
 		/// <summary>

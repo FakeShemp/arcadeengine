@@ -47,6 +47,7 @@ namespace ArcEngine.Asset
             Scale = new Vector2(1.0f, 1.0f);
 			tiles = new Dictionary<int, Tile>();
 
+			IsDisposed = false;
 		}
 
 
@@ -63,6 +64,8 @@ namespace ArcEngine.Asset
 			tiles.Clear();
 			TextureName = "";
 			Name = "";
+
+			IsDisposed = true;
 
 			GC.SuppressFinalize(this);
 		}
@@ -579,6 +582,13 @@ namespace ArcEngine.Asset
 
 
 		/// <summary>
+		/// Is asset disposed
+		/// </summary>
+		public bool IsDisposed { get; private set; }
+
+
+	
+		/// <summary>
 		/// Xml tag of the asset in bank
 		/// </summary>
 		public string XmlTag
@@ -655,7 +665,7 @@ namespace ArcEngine.Asset
 			set;
 		}
 
-
+/*
 		/// <summary>
 		/// Rendering batch
 		/// </summary>
@@ -665,7 +675,7 @@ namespace ArcEngine.Asset
 			get;
 			protected set;
 		}
-
+*/
 		#endregion
 	}
 

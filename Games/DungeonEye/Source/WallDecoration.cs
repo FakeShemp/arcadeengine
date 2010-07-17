@@ -42,7 +42,7 @@ namespace DungeonEye
 		/// </summary>
 		public WallDecoration()
 		{
-
+			IsDisposed = false;
 		}
 
 
@@ -154,6 +154,12 @@ namespace DungeonEye
 			get;
 			set;
 		}
+
+
+		/// <summary>
+		/// Is asset disposed
+		/// </summary>
+		public bool IsDisposed { get; private set; }
 
 
 		/// <summary>

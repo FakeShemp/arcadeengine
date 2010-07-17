@@ -15,7 +15,7 @@ namespace ArcEngine.Asset
 	/// <summary>
 	/// Key framed animation
 	/// </summary>
-	public class Scene : IAsset
+	public class Scene : IAsset, IDisposable
 	{
 
 		/// <summary>
@@ -24,6 +24,7 @@ namespace ArcEngine.Asset
 		public Scene()
 		{
 			Layers = new List<SceneLayer>();
+			IsDisposed = false;
 		}
 
 
@@ -34,6 +35,23 @@ namespace ArcEngine.Asset
 		public bool Init()
 		{
 			return true;
+		}
+
+
+		/// <summary>
+		/// Dispose asset
+		/// </summary>
+		public void Dispose()
+		{
+			if (TileSet != null)
+				TileSet.Dispose();
+			TileSet = null;
+
+			if (Font != null)
+				Font.Dispose();
+			Font = null;
+
+			IsDisposed = true;
 		}
 
 
@@ -258,6 +276,12 @@ namespace ArcEngine.Asset
 		/// Name of the animation
 		/// </summary>
 		public string Name { get; set; }
+
+
+		/// <summary>
+		/// Is asset disposed
+		/// </summary>
+		public bool IsDisposed { get; private set; }
 
 
 		/// <summary>
