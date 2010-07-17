@@ -43,7 +43,7 @@ namespace ArcEngine.Graphic
 		{
 			Trace.WriteDebugLine("[Display] Constructor()");
 
-			RenderStats = new RenderStats();
+			Statistics = new RenderStats();
 			TextureParameters = new DefaultTextureParameters();
 
 			RenderState = new RenderState();
@@ -59,6 +59,9 @@ namespace ArcEngine.Graphic
 			if (Capabilities == null)
 				Capabilities = new RenderDeviceCapabilities();
 
+			if (Buffer == null)
+				Buffer = BatchBuffer.CreatePositionColorTextureBuffer();
+
 			Texturing = true;
 			RenderState.Blending = true;
 			RenderState.ClearColor = Color.Black;
@@ -73,8 +76,6 @@ namespace ArcEngine.Graphic
 			BlendingFunction(BlendingFactorSource.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 			TK.GL.ClearStencil(0);
 
-			if (Buffer == null)
-				Buffer = BatchBuffer.CreatePositionColorTextureBuffer();
 		}
 
 
@@ -88,6 +89,10 @@ namespace ArcEngine.Graphic
 			if (Buffer != null)
 				Buffer.Dispose();
 			Buffer = null;
+
+			Shader = null;
+			Texture = null;
+
 		}
 
 
@@ -311,7 +316,7 @@ namespace ArcEngine.Graphic
 			TK.GL.End();
 
 			Texturing = true;
-			RenderStats.DirectCall += real_segments;
+	//		RenderStats.DirectCall += real_segments;
 		}
 
 
@@ -558,7 +563,7 @@ namespace ArcEngine.Graphic
 			// Draw
 			TK.GL.DrawElements((TK.BeginMode)mode, index.Count, TK.DrawElementsType.UnsignedInt, IntPtr.Zero);
 
-			RenderStats.BatchCall++;
+			Statistics.BatchCall++;
 		}
 
 
@@ -595,7 +600,7 @@ namespace ArcEngine.Graphic
 
 			TK.GL.DrawArrays((TK.BeginMode)mode, first, count);
 
-			RenderStats.BatchCall++;
+			Statistics.BatchCall++;
 
 			return;
 		}
@@ -732,7 +737,7 @@ namespace ArcEngine.Graphic
 
 			TK.GL.End();
 
-			RenderStats.DirectCall += 4;
+	//		RenderStats.DirectCall += 4;
 		}
 
 
@@ -805,7 +810,7 @@ namespace ArcEngine.Graphic
 				shader = value;
 				TK.GL.UseProgram(shader == null ? 0 : shader.ProgramID);
 
-				RenderStats.ShaderBinding++;
+				Statistics.ShaderBinding++;
 			}
 		}
 		static Shader shader;
@@ -845,7 +850,7 @@ namespace ArcEngine.Graphic
 					texture = value;
 					TK.GL.BindTexture(TK.TextureTarget.Texture2D, value.Handle);
 
-					RenderStats.TextureBinding++;
+					Statistics.TextureBinding++;
 				}
 			}
 			get
@@ -974,7 +979,7 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Rendering stats
 		/// </summary>
-		public static RenderStats RenderStats
+		public static RenderStats Statistics
 		{
 			get;
 			private set;
@@ -1277,7 +1282,6 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		internal void Reset()
 		{
-			DirectCall = 0;
 			BatchCall = 0;
 			TextureBinding = 0;
 			ShaderBinding = 0;
@@ -1294,16 +1298,6 @@ namespace ArcEngine.Graphic
 			get;
 			internal set;
 		}
-
-		/// <summary>
-		/// Number of direct call (bad !)
-		/// </summary>
-		public int DirectCall
-		{
-			get;
-			internal set;
-		}
-
 
 		/// <summary>
 		/// Number of batch render call

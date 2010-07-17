@@ -138,7 +138,7 @@ namespace DungeonEye
 		void PlayButton_Selected(object sender, EventArgs e)
 		{
 
-			ScreenManager.AddScreen(new Team(Batch, Heroes));
+			ScreenManager.AddScreen(new Team(Heroes));
 			ExitScreen();
 		}
 

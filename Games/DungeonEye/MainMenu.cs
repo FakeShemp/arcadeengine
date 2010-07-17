@@ -147,7 +147,7 @@ namespace DungeonEye
 		{
 			if (!System.IO.File.Exists("savegame.xml"))
 				return;
-			Team team = new Team(Batch, null);
+			Team team = new Team(null);
 			team.SaveGame = "savegame.xml";
 
 

@@ -791,12 +791,12 @@ namespace DungeonEye
 					continue;
 
 				// Swap the tile if throwing on the right side
-				bool swap = false;
+				SpriteEffects fx = SpriteEffects.None;
 				if (pos == GroundPosition.NorthEast || pos == GroundPosition.SouthEast)
-					swap = true;
+					fx = SpriteEffects.FlipHorizontally;
 
 				foreach (FlyingItem fi in flyings[(int)pos])
-					batch.DrawTile(ItemsTileset, fi.Item.ThrowTileID + offset, MazeDisplayCoordinates.GetFlyingItem(position, pos), Color.White, 0.0f, SpriteEffects.None, 0.0f);
+					batch.DrawTile(ItemsTileset, fi.Item.ThrowTileID + offset, MazeDisplayCoordinates.GetFlyingItem(position, pos), Color.White, 0.0f, fx, 0.0f);
 
 			}
 			#endregion

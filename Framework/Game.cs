@@ -387,7 +387,7 @@ namespace ArcEngine
 				GameTime.ElapsedGameTime = LastFrameElapsedGameTime;
 				GameTime.IsRunningSlowly = DrawRunningSlowly;
 
-				Display.RenderStats.Reset();
+				Display.Statistics.Reset();
 
 				Draw();
 				for (int i = 0; i < Components.Count; i++)
