@@ -665,17 +665,6 @@ namespace ArcEngine.Asset
 			set;
 		}
 
-/*
-		/// <summary>
-		/// Rendering batch
-		/// </summary>
-		[Browsable(false)]
-		public BatchBuffer Batch
-		{
-			get;
-			protected set;
-		}
-*/
 		#endregion
 	}
 

@@ -186,6 +186,19 @@ namespace DungeonEye
 
 
 		/// <summary>
+		/// Try to attack a location
+		/// </summary>
+		/// <param name="location">Location to attack</param>
+		/// <returns></returns>
+		public bool Attack(DungeonLocation location)
+		{
+
+
+			return false;
+		}
+
+
+		/// <summary>
 		/// Attack the entity
 		/// </summary>
 		/// <param name="attack">Attack</param>
@@ -231,11 +244,6 @@ namespace DungeonEye
 			// Update current state
 			StateManager.Update(time);
 
-			// Can see the team ?
-			if (CanSee(Location.Dungeon.Team.Location))
-			{
-				StateManager.PushState(new AttackState(this));
-			}
 		}
 
 
@@ -389,6 +397,7 @@ namespace DungeonEye
 			if (!SightZone.Contains(location.Position))
 				return false;
 
+			// Check in straight line
 			Point vector = new Point(Location.Position.X- location.Position.X, Location.Position.Y - location.Position.Y);
 			while (!vector.IsEmpty)
 			{
@@ -407,20 +416,35 @@ namespace DungeonEye
 					return false;
 			}
 
+
+			// Location is visible
 			return true;
         }
 
+
+		/// <summary>
+		/// Can the monster detect a presence near him
+		/// </summary>
+		/// <param name="location">Location to detect</param>
+		/// <returns></returns>
+		public bool CanDetect(DungeonLocation location)
+		{
+
+
+			return false;
+		}
 
 
 		/// <summary>
 		/// Does the monster facing a given direction
 		/// </summary>
-		/// <param name="direction"></param>
-		/// <returns></returns>
+		/// <param name="direction">Direction to check</param>
+		/// <returns>True if facing, or false</returns>
 		public bool IsFacing(CardinalPoint direction)
 		{
 			return Location.Compass.IsFacing(direction);
 		}
+
 
 
 		/// <summary>
@@ -428,11 +452,37 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="direction">Direction to face to</param>
 		/// <returns>True if the monster facing the direction</returns>
-		public void TurnTo(CardinalPoint direction)
+		public bool TurnTo(CardinalPoint direction)
 		{
+			if (!CanMove)
+				return false;
+
 			Location.Direction = direction;
 			LastAction = DateTime.Now;
+
+			return true;
 		}
+
+
+		/// <summary>
+		/// Turns the monster to a given location
+		/// </summary>
+		/// <param name="location">Location to face to</param>
+		/// <returns>True if facing the location, or false</returns>
+		public bool TurnTo(DungeonLocation location)
+		{
+			// Still facing
+			if (Location.IsFacing(location))
+				return true;
+
+			// Face to the location
+			Location.Compass.Rotate(CompassRotation.Rotate90);
+
+
+			// Does the monster face the direction
+			return location.IsFacing(location);
+		}
+
 
 		#endregion
 
@@ -637,8 +687,11 @@ namespace DungeonEye
 
 		#endregion
 
-
-
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
 		public override string ToString()
 		{
 			return string.Format("{0}", Name);
@@ -974,25 +1027,66 @@ namespace DungeonEye
 				switch (Location.Direction)
 				{
 					case CardinalPoint.North:
-					zone = new Rectangle(
-						Location.Position.X - 1, Location.Position.Y - SightRange,
-						3, SightRange);
-					break;
+						zone = new Rectangle(
+							Location.Position.X - 1, Location.Position.Y - SightRange,
+							3, SightRange);
+						break;
 					case CardinalPoint.South:
-					zone = new Rectangle(
-						Location.Position.X - 1, Location.Position.Y + 1,
-						3, SightRange);
-					break;
+						zone = new Rectangle(
+							Location.Position.X - 1, Location.Position.Y + 1,
+							3, SightRange);
+						break;
 					case CardinalPoint.West:
-					zone = new Rectangle(
-						Location.Position.X - SightRange, Location.Position.Y - 1,
-						SightRange, 3);
-					break;
+						zone = new Rectangle(
+							Location.Position.X - SightRange, Location.Position.Y - 1,
+							SightRange, 3);
+						break;
 					case CardinalPoint.East:
-					zone = new Rectangle(
-						Location.Position.X + 1, Location.Position.Y - 1,
-						SightRange, 3);
-					break;
+						zone = new Rectangle(
+							Location.Position.X + 1, Location.Position.Y - 1,
+							SightRange, 3);
+						break;
+				}
+
+				return zone;
+
+			}
+		}
+
+
+
+		/// <summary>
+		/// Detection zone
+		/// </summary>
+		public Rectangle DetectionZone
+		{
+			get
+			{
+				Rectangle zone = Rectangle.Empty;
+
+				// Calculates the area view
+				switch (Location.Direction)
+				{
+					case CardinalPoint.North:
+						zone = new Rectangle(
+							Location.Position.X - 1, Location.Position.Y - DetectionRange,
+							3, DetectionRange);
+						break;
+					case CardinalPoint.South:
+						zone = new Rectangle(
+							Location.Position.X - 1, Location.Position.Y + 1,
+							3, DetectionRange);
+						break;
+					case CardinalPoint.West:
+						zone = new Rectangle(
+							Location.Position.X - DetectionRange, Location.Position.Y - 1,
+							DetectionRange, 3);
+						break;
+					case CardinalPoint.East:
+						zone = new Rectangle(
+							Location.Position.X + 1, Location.Position.Y - 1,
+							DetectionRange, 3);
+						break;
 				}
 
 				return zone;

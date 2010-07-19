@@ -38,7 +38,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Default constructor
 		/// </summary>
-		/// <param name="dungeon"></param>
+		/// <param name="dungeon">Initial dungeon</param>
 		public DungeonLocation(Dungeon dungeon)
 		{
 			Dungeon = dungeon;
@@ -65,11 +65,11 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
-		/// <param name="name"></param>
-		/// <param name="location"></param>
-		/// <param name="direction"></param>
+		/// <param name="name">Name of the maze</param>
+		/// <param name="location">Location</param>
+		/// <param name="direction">Direction</param>
 		public DungeonLocation(string name, Point location, CardinalPoint direction)
 		{
 			Position = location;
@@ -86,8 +86,8 @@ namespace DungeonEye
 		/// <summary>
 		/// Offset the location
 		/// </summary>
-		/// <param name="direction">Direction</param>
-		/// <param name="range">Range</param>
+		/// <param name="direction">Direction of the move</param>
+		/// <param name="range">Number of block to move</param>
 		public void Offset(CardinalPoint direction, int range)
 		{
 			switch (direction)
@@ -107,6 +107,47 @@ namespace DungeonEye
 			}
 
 	
+		}
+
+
+		/// <summary>
+		/// Facing a given location
+		/// </summary>
+		/// <param name="location">Location to check</param>
+		/// <returns>True if facing, or false</returns>
+		public bool IsFacing(DungeonLocation location)
+		{
+			Point offset = new Point(location.Position.X - Position.X, location.Position.Y - Position.Y);
+
+			switch (Direction)
+			{
+				case CardinalPoint.North:
+				{
+					if (offset.X <= 0 && offset.Y <= 0)
+					return true;
+				}
+				break;
+				case CardinalPoint.South:
+				{
+					if (offset.X >= 0 && offset.Y >= 0)
+						return true;
+				}
+				break;
+				case CardinalPoint.West:
+				{
+					if (offset.X <= 0 && offset.Y >= 0)
+						return true;
+				}
+				break;
+				case CardinalPoint.East:
+				{
+					if (offset.X >= 0 && offset.Y <= 0)
+						return true;
+				}
+				break;
+			}
+
+			return false;
 		}
 
 

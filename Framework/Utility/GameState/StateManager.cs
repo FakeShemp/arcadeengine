@@ -94,13 +94,13 @@ namespace ArcEngine.Utility.GameState
 		public void Update(GameTime time)
 		{
 			// Removes expired states
-			while(CurrentState != null && CurrentState.Exit)
+			while (CurrentState != null && CurrentState.Exit)
 				PopState();
 
-			if (CurrentState == null)
-				return;
 
-			CurrentState.Update(time);
+			if (CurrentState != null)
+				CurrentState.Update(time);
+
 		}
 
 

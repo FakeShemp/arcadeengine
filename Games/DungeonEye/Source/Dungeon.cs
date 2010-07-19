@@ -67,7 +67,7 @@ namespace DungeonEye
 		/// <returns>True if all is OK</returns>
 		public bool Init()
 		{
-			Trace.WriteLine("Dungeon init");
+			Trace.WriteLine("[Dungeon] : Init()");
 
 			StartLocation.SetMaze(StartLocation.MazeName);
 

@@ -17,11 +17,10 @@
 //along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 //
 #endregion
-using System.ComponentModel;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
-using System.Text;
 using System.Xml;
 using ArcEngine;
 using ArcEngine.Asset;
@@ -32,7 +31,7 @@ namespace DungeonEye
 {
 
 	/// <summary>
-	/// 
+	///  A maze in a Dungeon
 	/// 
 	/// 
 	/// 
@@ -55,6 +54,7 @@ namespace DungeonEye
 			FlyingItems = new List<FlyingItem>();
 			Zones = new List<MazeZone>();
 
+			IsDisposed = false;
 
 		}
 
@@ -98,6 +98,7 @@ namespace DungeonEye
 			Zones = null;
 			Name = "";
 
+			IsDisposed = true;
 		}
 
 
@@ -379,9 +380,7 @@ namespace DungeonEye
 		/// <returns>True if the point is in the maze, false if the point is outside the maze</returns>
 		public bool Contains(Point pos)
 		{
-			Rectangle rect = new Rectangle(Point.Empty, Size);
-
-			return rect.Contains(pos);
+			return new Rectangle(Point.Empty, Size).Contains(pos);
 		}
 
 
@@ -1246,6 +1245,12 @@ namespace DungeonEye
 
 
 		#region Properties
+
+		/// <summary>
+		/// Is asset disposed
+		/// </summary>
+		public bool IsDisposed { get; private set; }
+
 
 		/// <summary>
 		/// Wall TileSet to use

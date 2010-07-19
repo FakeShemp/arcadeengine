@@ -58,6 +58,7 @@ namespace DungeonEye.MonsterStates
 
 		}
 
+
 		/// <summary>
 		/// Update
 		/// </summary>
@@ -66,6 +67,23 @@ namespace DungeonEye.MonsterStates
 		{
 			if (!Monster.CanMove)
 				return;
+
+
+			Team team = Monster.Location.Dungeon.Team;
+
+
+			// Can see the team ?
+			if (Monster.CanSee(team.Location))
+				Monster.StateManager.PushState(new AttackState(Monster));
+
+
+			// Can detect the team
+			if (Monster.CanDetect(team.Location))
+			{
+				Monster.TurnTo(team.Location);
+				return;
+			}
+
 
 			// Then move to the target
 			Point vector = Point.Empty;
@@ -87,6 +105,7 @@ namespace DungeonEye.MonsterStates
 			TargetRange--;
 
 
+			// Move the monster
 			if (!Monster.Move(vector))
 				Exit = true;
 
