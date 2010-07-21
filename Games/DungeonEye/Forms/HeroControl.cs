@@ -27,11 +27,14 @@ using ArcEngine;
 
 namespace DungeonEye.Forms
 {
+	/// <summary>
+	/// Control to edit Hero's parameters
+	/// </summary>
 	public partial class HeroControl : UserControl
 	{
 
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
 		public HeroControl()
 		{
@@ -99,6 +102,11 @@ namespace DungeonEye.Forms
 		#region Events
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void numericUpDown1_ValueChanged(object sender, EventArgs e)
 		{
 			if (hero == null)
@@ -107,6 +115,12 @@ namespace DungeonEye.Forms
 			hero.Quiver = (int)QuiverBox.Value;
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void ArmorBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (hero == null)
@@ -115,6 +129,12 @@ namespace DungeonEye.Forms
 			hero.SetInventoryItem(InventoryPosition.Armor, ResourceManager.CreateAsset<Item>((string)ArmorBox.SelectedItem));
 		}
 
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void WristBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (hero == null)
@@ -124,6 +144,12 @@ namespace DungeonEye.Forms
 
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void LeftRingBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (hero == null)
@@ -133,6 +159,12 @@ namespace DungeonEye.Forms
 
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void RightRingBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (hero == null)
@@ -142,6 +174,12 @@ namespace DungeonEye.Forms
 
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void PrimaryBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (hero == null)
@@ -150,15 +188,26 @@ namespace DungeonEye.Forms
 			hero.SetInventoryItem(InventoryPosition.Primary, ResourceManager.CreateAsset<Item>((string)PrimaryBox.SelectedItem));
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void SecondaryBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (hero == null)
 				return;
 
 			hero.SetInventoryItem(InventoryPosition.Secondary, ResourceManager.CreateAsset<Item>((string)SecondaryBox.SelectedItem));
-
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void FeetBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (hero == null)
@@ -167,6 +216,12 @@ namespace DungeonEye.Forms
 			hero.SetInventoryItem(InventoryPosition.Feet, ResourceManager.CreateAsset<Item>((string)FeetBox.SelectedItem));
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void NeckBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (hero == null)
@@ -176,6 +231,12 @@ namespace DungeonEye.Forms
 
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void HelmetBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (hero == null)
@@ -191,6 +252,9 @@ namespace DungeonEye.Forms
 
 		#region Properties
 
+		/// <summary>
+		/// Hero to edit
+		/// </summary>
 		public Hero Hero
 		{
 			get
@@ -205,6 +269,10 @@ namespace DungeonEye.Forms
 			}
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
 		Hero hero;
 
 		#endregion

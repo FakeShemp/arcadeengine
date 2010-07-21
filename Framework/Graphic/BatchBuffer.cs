@@ -497,14 +497,50 @@ namespace ArcEngine.Graphic
     /// </summary>
     public enum BufferUsage
     {
-        StreamDraw = TK.BufferUsageHint.StreamDraw,
-        StreamRead = TK.BufferUsageHint.StreamRead,
-        StreamCopy = TK.BufferUsageHint.StreamCopy,
-        StaticDraw = TK.BufferUsageHint.StaticDraw,
-        StaticRead = TK.BufferUsageHint.StaticRead,
-        StaticCopy = TK.BufferUsageHint.StaticCopy,
-        DynamicDraw = TK.BufferUsageHint.DynamicDraw,
-        DynamicRead = TK.BufferUsageHint.DynamicRead,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		StreamDraw = TK.BufferUsageHint.StreamDraw,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		StreamRead = TK.BufferUsageHint.StreamRead,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		StreamCopy = TK.BufferUsageHint.StreamCopy,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		StaticDraw = TK.BufferUsageHint.StaticDraw,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		StaticRead = TK.BufferUsageHint.StaticRead,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		StaticCopy = TK.BufferUsageHint.StaticCopy,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		DynamicDraw = TK.BufferUsageHint.DynamicDraw,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		DynamicRead = TK.BufferUsageHint.DynamicRead,
+
+		/// <summary>
+		/// 
+		/// </summary>
         DynamicCopy = TK.BufferUsageHint.DynamicCopy,
     }
 }

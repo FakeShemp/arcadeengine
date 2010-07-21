@@ -28,7 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			DungeonEye.Dice dice3 = new DungeonEye.Dice();
+			DungeonEye.Dice dice2 = new DungeonEye.Dice();
 			this.VisualGroupBox = new System.Windows.Forms.GroupBox();
 			this.label11 = new System.Windows.Forms.Label();
 			this.label12 = new System.Windows.Forms.Label();
@@ -52,12 +52,12 @@
 			this.AttributesTab = new System.Windows.Forms.TabPage();
 			this.EntityBox = new DungeonEye.Forms.EntityControl();
 			this.PropertiesTab = new System.Windows.Forms.TabPage();
+			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.AggressiveBox = new System.Windows.Forms.CheckBox();
+			this.CowardBox = new System.Windows.Forms.CheckBox();
 			this.label4 = new System.Windows.Forms.Label();
 			this.ArmorClassBox = new System.Windows.Forms.NumericUpDown();
 			this.DamageBox = new DungeonEye.Forms.DiceForm();
-			this.groupBox2 = new System.Windows.Forms.GroupBox();
-			this.CowardBox = new System.Windows.Forms.CheckBox();
-			this.AggressiveBox = new System.Windows.Forms.CheckBox();
 			this.VisualGroupBox.SuspendLayout();
 			this.PocketGroupBox.SuspendLayout();
 			this.groupBox1.SuspendLayout();
@@ -66,8 +66,8 @@
 			this.VisualTab.SuspendLayout();
 			this.AttributesTab.SuspendLayout();
 			this.PropertiesTab.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.ArmorClassBox)).BeginInit();
 			this.groupBox2.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.ArmorClassBox)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// VisualGroupBox
@@ -79,7 +79,7 @@
 			this.VisualGroupBox.Controls.Add(this.TileSetBox);
 			this.VisualGroupBox.Location = new System.Drawing.Point(6, 6);
 			this.VisualGroupBox.Name = "VisualGroupBox";
-			this.VisualGroupBox.Size = new System.Drawing.Size(232, 260);
+			this.VisualGroupBox.Size = new System.Drawing.Size(309, 343);
 			this.VisualGroupBox.TabIndex = 6;
 			this.VisualGroupBox.TabStop = false;
 			this.VisualGroupBox.Text = "Visual :";
@@ -107,7 +107,7 @@
 			this.GlControl.BackColor = System.Drawing.Color.Black;
 			this.GlControl.Location = new System.Drawing.Point(6, 78);
 			this.GlControl.Name = "GlControl";
-			this.GlControl.Size = new System.Drawing.Size(220, 176);
+			this.GlControl.Size = new System.Drawing.Size(297, 259);
 			this.GlControl.TabIndex = 1;
 			this.GlControl.VSync = true;
 			this.GlControl.Load += new System.EventHandler(this.GlControl_Load);
@@ -120,7 +120,7 @@
 			this.TileIDBox.FormattingEnabled = true;
 			this.TileIDBox.Location = new System.Drawing.Point(64, 50);
 			this.TileIDBox.Name = "TileIDBox";
-			this.TileIDBox.Size = new System.Drawing.Size(162, 21);
+			this.TileIDBox.Size = new System.Drawing.Size(239, 21);
 			this.TileIDBox.TabIndex = 2;
 			this.TileIDBox.SelectedIndexChanged += new System.EventHandler(this.TileIDBox_SelectedIndexChanged);
 			// 
@@ -130,7 +130,7 @@
 			this.TileSetBox.FormattingEnabled = true;
 			this.TileSetBox.Location = new System.Drawing.Point(64, 22);
 			this.TileSetBox.Name = "TileSetBox";
-			this.TileSetBox.Size = new System.Drawing.Size(162, 21);
+			this.TileSetBox.Size = new System.Drawing.Size(239, 21);
 			this.TileSetBox.Sorted = true;
 			this.TileSetBox.TabIndex = 2;
 			this.TileSetBox.SelectedIndexChanged += new System.EventHandler(this.TileSetBox_SelectedIndexChanged);
@@ -330,6 +330,39 @@
 			this.PropertiesTab.Text = "Properties";
 			this.PropertiesTab.UseVisualStyleBackColor = true;
 			// 
+			// groupBox2
+			// 
+			this.groupBox2.Controls.Add(this.AggressiveBox);
+			this.groupBox2.Controls.Add(this.CowardBox);
+			this.groupBox2.Location = new System.Drawing.Point(3, 161);
+			this.groupBox2.Name = "groupBox2";
+			this.groupBox2.Size = new System.Drawing.Size(231, 100);
+			this.groupBox2.TabIndex = 13;
+			this.groupBox2.TabStop = false;
+			this.groupBox2.Text = "Behavior :";
+			// 
+			// AggressiveBox
+			// 
+			this.AggressiveBox.AutoSize = true;
+			this.AggressiveBox.Location = new System.Drawing.Point(6, 43);
+			this.AggressiveBox.Name = "AggressiveBox";
+			this.AggressiveBox.Size = new System.Drawing.Size(78, 17);
+			this.AggressiveBox.TabIndex = 0;
+			this.AggressiveBox.Text = "Aggressive";
+			this.AggressiveBox.UseVisualStyleBackColor = true;
+			this.AggressiveBox.Click += new System.EventHandler(this.AggressiveBox_Click);
+			// 
+			// CowardBox
+			// 
+			this.CowardBox.AutoSize = true;
+			this.CowardBox.Location = new System.Drawing.Point(7, 20);
+			this.CowardBox.Name = "CowardBox";
+			this.CowardBox.Size = new System.Drawing.Size(69, 17);
+			this.CowardBox.TabIndex = 0;
+			this.CowardBox.Text = "Cowardly";
+			this.CowardBox.UseVisualStyleBackColor = true;
+			this.CowardBox.Click += new System.EventHandler(this.CowardBox_Click);
+			// 
 			// label4
 			// 
 			this.label4.AutoSize = true;
@@ -357,49 +390,16 @@
 			// DamageBox
 			// 
 			this.DamageBox.ControlText = "Damage :";
-			dice3.Faces = 1;
-			dice3.Modifier = 0;
-			dice3.Throws = 1;
-			this.DamageBox.Dice = dice3;
+			dice2.Faces = 1;
+			dice2.Modifier = 0;
+			dice2.Throws = 1;
+			this.DamageBox.Dice = dice2;
 			this.DamageBox.Location = new System.Drawing.Point(4, 3);
 			this.DamageBox.MinimumSize = new System.Drawing.Size(225, 100);
 			this.DamageBox.Name = "DamageBox";
 			this.DamageBox.Size = new System.Drawing.Size(230, 100);
 			this.DamageBox.TabIndex = 10;
 			this.DamageBox.ValueChanged += new System.EventHandler(this.DamageBox_ValueChanged);
-			// 
-			// groupBox2
-			// 
-			this.groupBox2.Controls.Add(this.AggressiveBox);
-			this.groupBox2.Controls.Add(this.CowardBox);
-			this.groupBox2.Location = new System.Drawing.Point(3, 161);
-			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(231, 231);
-			this.groupBox2.TabIndex = 13;
-			this.groupBox2.TabStop = false;
-			this.groupBox2.Text = "Behavior :";
-			// 
-			// CowardBox
-			// 
-			this.CowardBox.AutoSize = true;
-			this.CowardBox.Location = new System.Drawing.Point(7, 20);
-			this.CowardBox.Name = "CowardBox";
-			this.CowardBox.Size = new System.Drawing.Size(69, 17);
-			this.CowardBox.TabIndex = 0;
-			this.CowardBox.Text = "Cowardly";
-			this.CowardBox.UseVisualStyleBackColor = true;
-			this.CowardBox.Click += new System.EventHandler(this.CowardBox_Click);
-			// 
-			// AggressiveBox
-			// 
-			this.AggressiveBox.AutoSize = true;
-			this.AggressiveBox.Location = new System.Drawing.Point(6, 43);
-			this.AggressiveBox.Name = "AggressiveBox";
-			this.AggressiveBox.Size = new System.Drawing.Size(78, 17);
-			this.AggressiveBox.TabIndex = 0;
-			this.AggressiveBox.Text = "Aggressive";
-			this.AggressiveBox.UseVisualStyleBackColor = true;
-			this.AggressiveBox.Click += new System.EventHandler(this.AggressiveBox_Click);
 			// 
 			// MonsterControl
 			// 
@@ -422,9 +422,9 @@
 			this.AttributesTab.ResumeLayout(false);
 			this.PropertiesTab.ResumeLayout(false);
 			this.PropertiesTab.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.ArmorClassBox)).EndInit();
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.ArmorClassBox)).EndInit();
 			this.ResumeLayout(false);
 
 		}

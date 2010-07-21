@@ -213,6 +213,8 @@ namespace DungeonEye.Forms
 			Display.ClearBuffers();
 
 			CheckerBoard = new Texture2D(ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png"));
+			CheckerBoard.HorizontalWrap = HorizontalWrapFilter.Repeat;
+			CheckerBoard.VerticalWrap = VerticalWrapFilter.Repeat;
 		}
 
 
@@ -255,29 +257,26 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void GlControl_Paint(object sender, PaintEventArgs e)
 		{
+			if (CheckerBoard == null)
+				return;
+
 			GlControl.MakeCurrent();
-			try
+
+			SpriteBatch.Begin();
+
+			// Background texture
+			SpriteBatch.Draw(CheckerBoard, new Rectangle(Point.Empty, GlControl.Size), Color.White);
+
+			if (Monster != null && TileSet != null)
 			{
-				SpriteBatch.Begin();
-				// Background texture
-				SpriteBatch.Draw(CheckerBoard, new Rectangle(Point.Empty, GlControl.Size), Color.White);
-
-				if (Monster == null)
-					return;
-
-				if (TileSet != null)
-				{
-					Tile tile = TileSet.GetTile(Monster.Tile);
-					Point pos = new Point((GlControl.Width - tile.Size.Width) / 2 + tile.Size.Width / 2, (GlControl.Height - tile.Size.Height) / 2 + tile.Size.Height);
-					SpriteBatch.DrawTile(TileSet, Monster.Tile, pos);
-				}
-
-				SpriteBatch.End();
+				Tile tile = TileSet.GetTile(Monster.Tile);
+				Point pos = new Point((GlControl.Width - tile.Size.Width) / 2, (GlControl.Height - tile.Size.Height) / 2);
+				SpriteBatch.DrawTile(TileSet, Monster.Tile, pos);
 			}
-			finally
-			{
-				GlControl.SwapBuffers();
-			}
+
+			SpriteBatch.End();
+
+			GlControl.SwapBuffers();
 		}
 
 
@@ -290,7 +289,7 @@ namespace DungeonEye.Forms
 		{
 			if (Monster == null)
 				return;
-			
+
 
 			Monster.Tile = (int)TileIDBox.SelectedItem;
 			GlControl.Invalidate();
@@ -306,7 +305,7 @@ namespace DungeonEye.Forms
 		{
 			if (Monster == null || ItemsBox.SelectedItem == null)
 				return;
-			
+
 			Monster.ItemsInPocket.Add(ItemsBox.SelectedItem as string);
 			PocketItemsBox.Items.Add(ItemsBox.SelectedItem as string);
 		}
@@ -321,7 +320,7 @@ namespace DungeonEye.Forms
 		{
 			if (Monster == null || PocketItemsBox.SelectedItem == null)
 				return;
-			
+
 
 			PocketItemsBox.Items.RemoveAt(PocketItemsBox.SelectedIndex);
 

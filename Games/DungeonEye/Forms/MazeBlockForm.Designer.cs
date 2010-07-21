@@ -58,7 +58,6 @@
 			this.NWItemsBox = new System.Windows.Forms.ComboBox();
 			this.NWRemoveItem = new System.Windows.Forms.Button();
 			this.MonstersTab = new System.Windows.Forms.TabPage();
-			this.MonsterBox = new DungeonEye.Forms.MonsterControl();
 			this.button2 = new System.Windows.Forms.Button();
 			this.ApplyMonsterTemplateBox = new System.Windows.Forms.Button();
 			this.MonsterTemplateBox = new System.Windows.Forms.ComboBox();
@@ -96,7 +95,6 @@
 			this.label3 = new System.Windows.Forms.Label();
 			this.HiddenPlateBox = new System.Windows.Forms.CheckBox();
 			this.PitGroupBox = new System.Windows.Forms.GroupBox();
-			this.PitDamageBox = new DungeonEye.Forms.DiceForm();
 			this.label15 = new System.Windows.Forms.Label();
 			this.PitDiffcultyBox = new System.Windows.Forms.NumericUpDown();
 			this.HiddenPitBox = new System.Windows.Forms.CheckBox();
@@ -124,6 +122,8 @@
 			this.DoorStateBox = new System.Windows.Forms.ComboBox();
 			this.DoorTypeBox = new System.Windows.Forms.ComboBox();
 			this.CloseBox = new System.Windows.Forms.Button();
+			this.MonsterBox = new DungeonEye.Forms.MonsterControl();
+			this.PitDamageBox = new DungeonEye.Forms.DiceForm();
 			this.TabControlBox.SuspendLayout();
 			this.ItemsTab.SuspendLayout();
 			this.groupBox7.SuspendLayout();
@@ -160,7 +160,7 @@
 			this.TabControlBox.Location = new System.Drawing.Point(0, 0);
 			this.TabControlBox.Name = "TabControlBox";
 			this.TabControlBox.SelectedIndex = 0;
-			this.TabControlBox.Size = new System.Drawing.Size(905, 724);
+			this.TabControlBox.Size = new System.Drawing.Size(1200, 724);
 			this.TabControlBox.TabIndex = 0;
 			// 
 			// ItemsTab
@@ -173,7 +173,7 @@
 			this.ItemsTab.Location = new System.Drawing.Point(4, 22);
 			this.ItemsTab.Name = "ItemsTab";
 			this.ItemsTab.Padding = new System.Windows.Forms.Padding(3);
-			this.ItemsTab.Size = new System.Drawing.Size(897, 698);
+			this.ItemsTab.Size = new System.Drawing.Size(1192, 698);
 			this.ItemsTab.TabIndex = 0;
 			this.ItemsTab.Text = "Items";
 			this.ItemsTab.UseVisualStyleBackColor = true;
@@ -483,21 +483,10 @@
 			this.MonstersTab.Location = new System.Drawing.Point(4, 22);
 			this.MonstersTab.Name = "MonstersTab";
 			this.MonstersTab.Padding = new System.Windows.Forms.Padding(3);
-			this.MonstersTab.Size = new System.Drawing.Size(897, 739);
+			this.MonstersTab.Size = new System.Drawing.Size(1192, 698);
 			this.MonstersTab.TabIndex = 1;
 			this.MonstersTab.Text = "Monsters";
 			this.MonstersTab.UseVisualStyleBackColor = true;
-			// 
-			// MonsterBox
-			// 
-			this.MonsterBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
-			this.MonsterBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.MonsterBox.Location = new System.Drawing.Point(8, 35);
-			this.MonsterBox.Name = "MonsterBox";
-			this.MonsterBox.Size = new System.Drawing.Size(881, 696);
-			this.MonsterBox.TabIndex = 14;
 			// 
 			// button2
 			// 
@@ -571,7 +560,7 @@
 			this.WallsTab.Controls.Add(this.DecorationGroupBox);
 			this.WallsTab.Location = new System.Drawing.Point(4, 22);
 			this.WallsTab.Name = "WallsTab";
-			this.WallsTab.Size = new System.Drawing.Size(897, 739);
+			this.WallsTab.Size = new System.Drawing.Size(1192, 698);
 			this.WallsTab.TabIndex = 2;
 			this.WallsTab.Text = "Walls";
 			this.WallsTab.UseVisualStyleBackColor = true;
@@ -787,7 +776,7 @@
 			this.tabPage1.Location = new System.Drawing.Point(4, 22);
 			this.tabPage1.Name = "tabPage1";
 			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage1.Size = new System.Drawing.Size(897, 739);
+			this.tabPage1.Size = new System.Drawing.Size(1192, 698);
 			this.tabPage1.TabIndex = 3;
 			this.tabPage1.Text = "Specials";
 			this.tabPage1.UseVisualStyleBackColor = true;
@@ -921,20 +910,6 @@
 			this.PitGroupBox.TabIndex = 0;
 			this.PitGroupBox.TabStop = false;
 			this.PitGroupBox.Text = "Pit :";
-			// 
-			// PitDamageBox
-			// 
-			this.PitDamageBox.ControlText = "Damage :";
-			dice1.Faces = 1;
-			dice1.Modifier = 0;
-			dice1.Throws = 1;
-			this.PitDamageBox.Dice = dice1;
-			this.PitDamageBox.Location = new System.Drawing.Point(5, 129);
-			this.PitDamageBox.MinimumSize = new System.Drawing.Size(230, 100);
-			this.PitDamageBox.Name = "PitDamageBox";
-			this.PitDamageBox.Size = new System.Drawing.Size(230, 100);
-			this.PitDamageBox.TabIndex = 3;
-			this.PitDamageBox.ValueChanged += new System.EventHandler(this.diceForm1_ValueChanged);
 			// 
 			// label15
 			// 
@@ -1209,19 +1184,45 @@
 			// 
 			this.CloseBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.CloseBox.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.CloseBox.Location = new System.Drawing.Point(818, 730);
+			this.CloseBox.Location = new System.Drawing.Point(1113, 730);
 			this.CloseBox.Name = "CloseBox";
 			this.CloseBox.Size = new System.Drawing.Size(75, 23);
 			this.CloseBox.TabIndex = 1;
 			this.CloseBox.Text = "Close";
 			this.CloseBox.UseVisualStyleBackColor = true;
 			// 
+			// MonsterBox
+			// 
+			this.MonsterBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.MonsterBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.MonsterBox.Location = new System.Drawing.Point(8, 35);
+			this.MonsterBox.Name = "MonsterBox";
+			this.MonsterBox.Size = new System.Drawing.Size(1176, 657);
+			this.MonsterBox.TabIndex = 14;
+			this.MonsterBox.Visible = false;
+			// 
+			// PitDamageBox
+			// 
+			this.PitDamageBox.ControlText = "Damage :";
+			dice1.Faces = 1;
+			dice1.Modifier = 0;
+			dice1.Throws = 1;
+			this.PitDamageBox.Dice = dice1;
+			this.PitDamageBox.Location = new System.Drawing.Point(5, 129);
+			this.PitDamageBox.MinimumSize = new System.Drawing.Size(230, 100);
+			this.PitDamageBox.Name = "PitDamageBox";
+			this.PitDamageBox.Size = new System.Drawing.Size(230, 100);
+			this.PitDamageBox.TabIndex = 3;
+			this.PitDamageBox.ValueChanged += new System.EventHandler(this.diceForm1_ValueChanged);
+			// 
 			// MazeBlockForm
 			// 
 			this.AcceptButton = this.CloseBox;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(905, 765);
+			this.ClientSize = new System.Drawing.Size(1200, 765);
 			this.Controls.Add(this.CloseBox);
 			this.Controls.Add(this.TabControlBox);
 			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
