@@ -60,6 +60,7 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		/// <param name="position">Position</param>
 		/// <param name="normal">Normal</param>
+		/// <param name="tangent"></param>
 		/// <param name="textureCoordinate">Texture coordinate</param>
 		public VertexPositionNormalTangentTexture(Vector3 position, Vector3 normal, Vector3 tangent, Vector2 textureCoordinate)
 		{

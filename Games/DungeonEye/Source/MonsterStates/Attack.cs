@@ -33,12 +33,11 @@ namespace DungeonEye.MonsterStates
 	public class AttackState : MonsterState
 	{
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
-		/// <param name="manager"></param>
+		/// <param name="monster">Handle to the monster</param>
 		public AttackState(Monster monster) : base(monster)
 		{
-
 		}
 
 

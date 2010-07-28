@@ -68,6 +68,10 @@ namespace DungeonEye.MonsterStates
 			if (!Monster.CanMove)
 				return;
 
+			// Is the monster facing the good direction ?
+			if (Monster.Location.Direction != TargetDirection)
+				Monster.Location.Direction = TargetDirection;
+
 
 			Team team = Monster.Location.Dungeon.Team;
 

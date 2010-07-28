@@ -426,12 +426,22 @@ namespace DungeonEye
 		/// Can the monster detect a presence near him
 		/// </summary>
 		/// <param name="location">Location to detect</param>
-		/// <returns></returns>
+		/// <returns>True if the monster can fell the location</returns>
 		public bool CanDetect(DungeonLocation location)
 		{
+			if (location == null)
+				return false;
+
+			// Not in the same maze
+			if (Location.MazeName != location.MazeName)
+				return false;
+
+			// Not in sight zone
+			if (!DetectionZone.Contains(location.Position))
+				return false;
 
 
-			return false;
+			return true;
 		}
 
 
@@ -1062,35 +1072,10 @@ namespace DungeonEye
 		{
 			get
 			{
-				Rectangle zone = Rectangle.Empty;
-
-				// Calculates the area view
-				switch (Location.Direction)
-				{
-					case CardinalPoint.North:
-						zone = new Rectangle(
-							Location.Position.X - 1, Location.Position.Y - DetectionRange,
-							3, DetectionRange);
-						break;
-					case CardinalPoint.South:
-						zone = new Rectangle(
-							Location.Position.X - 1, Location.Position.Y + 1,
-							3, DetectionRange);
-						break;
-					case CardinalPoint.West:
-						zone = new Rectangle(
-							Location.Position.X - DetectionRange, Location.Position.Y - 1,
-							DetectionRange, 3);
-						break;
-					case CardinalPoint.East:
-						zone = new Rectangle(
-							Location.Position.X + 1, Location.Position.Y - 1,
-							DetectionRange, 3);
-						break;
-				}
-
-				return zone;
-
+				return new Rectangle(
+				Location.Position.X - DetectionRange / 2, 
+				Location.Position.Y - DetectionRange / 2,
+				DetectionRange, DetectionRange);
 			}
 		}
 

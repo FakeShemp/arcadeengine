@@ -158,6 +158,9 @@ namespace DungeonEye.MonsterStates
 				MazeBlock block = Monster.Location.Maze.GetBlock(vector);
 				if (block != null)
 				{
+					// Automatic direction changing
+					//Monster.Location.Direction = direction;
+
 					Monster.StateManager.PushState(new MoveState(Monster, range, direction));
 					return;
 				}

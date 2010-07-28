@@ -351,6 +351,7 @@ namespace ArcEngine.Graphic
 		/// <param name="origin">The origin of the sprite. Specify (0,0) for the upper-left corner.</param>
 		/// <param name="effect">Rotations to apply prior to rendering.</param>
 		/// <param name="depth">The sorting depth of the sprite</param>
+		/// <param name="type"></param>
 		void InternalDraw(Texture2D texture, ref Rectangle destination, ref Rectangle source, Color color, float rotation, Point origin, SpriteEffects effect, float depth, PrimitiveType type)
 		{
 			Vector4 src = new Vector4(source.X, source.Y, source.Width, source.Height);
