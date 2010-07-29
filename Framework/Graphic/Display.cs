@@ -1092,6 +1092,42 @@ namespace ArcEngine.Graphic
 			}
 
 
+			if (Extensions.Contains("GL_ATI_meminfo"))
+			{
+				Trace.Indent();
+				int[] val = new int[4];
+
+				const int VBO_FREE_MEMORY_ATI = 0x87FB;
+				const int TEXTURE_FREE_MEMORY_ATI = 0x87FC;
+				const int RENDERBUFFER_FREE_MEMORY_ATI = 0x87FD;
+
+				TK.GL.GetInteger((TK.GetPName)VBO_FREE_MEMORY_ATI, val);
+				Trace.WriteLine("VBO_FREE_MEMORY_ATI");
+				Trace.WriteLine("total memory free in the pool : {0} Kb", val[0]);
+				Trace.WriteLine("largest available free block in the pool : {0} Kb", val[1]);
+				Trace.WriteLine("total auxiliary memory free : {0} Kb", val[2]);
+				Trace.WriteLine("largest auxiliary free block : {0} Kb", val[3]);
+
+				val = new int[4];
+				TK.GL.GetInteger((TK.GetPName)TEXTURE_FREE_MEMORY_ATI, val);
+				Trace.WriteLine("TEXTURE_FREE_MEMORY_ATI");
+				Trace.WriteLine("total memory free in the pool : {0} Kb", val[0]);
+				Trace.WriteLine("largest available free block in the pool : {0} Kb", val[1]);
+				Trace.WriteLine("total auxiliary memory free : {0} Kb", val[2]);
+				Trace.WriteLine("largest auxiliary free block : {0} Kb", val[3]);
+
+				val = new int[4];
+				TK.GL.GetInteger((TK.GetPName)RENDERBUFFER_FREE_MEMORY_ATI, val);
+				Trace.WriteLine("RENDERBUFFER_FREE_MEMORY_ATI");
+				Trace.WriteLine("total memory free in the pool : {0} Kb", val[0]);
+				Trace.WriteLine("largest available free block in the pool : {0} Kb", val[1]);
+				Trace.WriteLine("total auxiliary memory free : {0} Kb", val[2]);
+				Trace.WriteLine("largest auxiliary free block : {0} Kb", val[3]);
+
+				Trace.Unindent();
+
+			}
+
 			string[] tmp = ShadingLanguageVersion.Split(new char[] { ' ' });
 			if (tmp[0].StartsWith("1.20"))
 				ShaderVersion = ShaderVersion.GLSL_1_20;
