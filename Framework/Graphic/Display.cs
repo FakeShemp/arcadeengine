@@ -1078,15 +1078,22 @@ namespace ArcEngine.Graphic
 			{
 				Trace.Indent();
 				int val = 0;
-				TK.GL.GetInteger((TK.GetPName)0x9047, out val);
+
+				const int GPU_MEMORY_INFO_DEDICATED_VIDMEM_NVX = 0x9047;
+				const int GPU_MEMORY_INFO_TOTAL_AVAILABLE_MEMORY_NVX = 0x9048;
+				const int GPU_MEMORY_INFO_CURRENT_AVAILABLE_VIDMEM_NVX = 0x9049;
+				const int GPU_MEMORY_INFO_EVICTION_COUNT_NVX = 0x904A;
+				const int GPU_MEMORY_INFO_EVICTED_MEMORY_NVX = 0x904B;
+
+				TK.GL.GetInteger((TK.GetPName)GPU_MEMORY_INFO_DEDICATED_VIDMEM_NVX, out val);
 				Trace.WriteLine("Dedicated video memory : {0} Kb", val);
-				TK.GL.GetInteger((TK.GetPName)0x9048, out val);
+				TK.GL.GetInteger((TK.GetPName)GPU_MEMORY_INFO_TOTAL_AVAILABLE_MEMORY_NVX, out val);
 				Trace.WriteLine("Total available memory : {0} Kb", val);
-				TK.GL.GetInteger((TK.GetPName)0x9049, out val);
+				TK.GL.GetInteger((TK.GetPName)GPU_MEMORY_INFO_CURRENT_AVAILABLE_VIDMEM_NVX, out val);
 				Trace.WriteLine("Current available dedicated video memory : {0} Kb", val);
-				TK.GL.GetInteger((TK.GetPName)0x904A, out val);
+				TK.GL.GetInteger((TK.GetPName)GPU_MEMORY_INFO_EVICTION_COUNT_NVX, out val);
 				Trace.WriteLine("Total evictions : {0} Kb", val);
-				TK.GL.GetInteger((TK.GetPName)0x904B, out val);
+				TK.GL.GetInteger((TK.GetPName)GPU_MEMORY_INFO_EVICTED_MEMORY_NVX, out val);
 				Trace.WriteLine("Total video memory evicted : {0} Kb", val);
 				Trace.Unindent();
 			}
@@ -1141,6 +1148,8 @@ namespace ArcEngine.Graphic
 				ShaderVersion = ShaderVersion.GLSL_3_30;
 			else if (tmp[0].StartsWith("4.00"))
 				ShaderVersion = ShaderVersion.GLSL_4_00;
+			else if (tmp[0].StartsWith("4.10"))
+				ShaderVersion = ShaderVersion.GLSL_4_10;
 			else
 				ShaderVersion = ShaderVersion.Unsuported;
 
@@ -1573,9 +1582,14 @@ namespace ArcEngine.Graphic
 		GLSL_3_30,
 
 		/// <summary>
-		/// Versoin 4.00, OpenGL 4.0
+		/// Version 4.00, OpenGL 4.0
 		/// </summary>
 		GLSL_4_00,
+
+		/// <summary>
+		/// Version 4.10, OpenGL 4.1
+		/// </summary>
+		GLSL_4_10,
 	}
 
 
