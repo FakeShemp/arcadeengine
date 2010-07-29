@@ -103,6 +103,24 @@ namespace ArcEngine.Graphic
 		{
 			Trace.WriteLine("Video informations :");
 			Trace.Indent();
+
+
+			try
+			{
+
+				System.Diagnostics.FileVersionInfo dll = System.Diagnostics.FileVersionInfo.GetVersionInfo(@"C:\Windows\System32\nvcpl.dll");
+				if (dll != null)
+				{
+					Trace.WriteLine("Dll infos : {0}", dll.FileName);
+					Trace.WriteLine("Dll infos : {0}", dll.ProductName);
+					Trace.WriteLine("Dll infos : {0}", dll.ProductVersion);
+				}
+			}
+			catch (Exception e)
+			{
+
+			}
+
 			Trace.WriteLine("Graphics card vendor : {0}", Capabilities.VideoVendor);
 			Trace.WriteLine("Renderer : {0}", Capabilities.VideoRenderer);
 			Trace.WriteLine("Version : {0}", Capabilities.VideoVersion);
