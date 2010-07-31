@@ -1572,7 +1572,7 @@ namespace ArcEngine.Graphic
 		GLSL_1_40,
 
 		/// <summary>
-		/// Version 1.05, OpenGL 3.2
+		/// Version 1.50, OpenGL 3.2
 		/// </summary>
 		GLSL_1_50,
 

@@ -605,13 +605,13 @@ namespace ArcEngine.Editor
 		/// <param name="e"></param>
 		private void TileSetForm_Load(object sender, EventArgs e)
 		{
-			//GLTileControl.MakeCurrent();
-			//Display.RenderState.Blending = true;
-			//Display.BlendingFunction(BlendingFactorSource.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+			GLTileControl.MakeCurrent();
+			Display.RenderState.Blending = true;
+			Display.BlendingFunction(BlendingFactorSource.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 
-			//GLTextureControl.MakeCurrent();
-			//Display.RenderState.Blending = true;
-			//Display.BlendingFunction(BlendingFactorSource.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+			GLTextureControl.MakeCurrent();
+			Display.RenderState.Blending = true;
+			Display.BlendingFunction(BlendingFactorSource.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 
 
 			Batch = new SpriteBatch();
@@ -620,7 +620,6 @@ namespace ArcEngine.Editor
 			CheckerBoard.HorizontalWrap = HorizontalWrapFilter.Repeat;
 			CheckerBoard.VerticalWrap = VerticalWrapFilter.Repeat;
 
-			//tileSet = new TileSet();
 			tileSet.Load(Node);
 
 			// Build Cell list
