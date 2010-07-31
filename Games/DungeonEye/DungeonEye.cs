@@ -62,7 +62,7 @@ namespace DungeonEye
 		/// </summary>
 		public Game()
 		{
-			Settings.Load("settings.xml");
+			Settings.Load("data/settings.xml");
 			InputSchemeName = Settings.GetString("inputscheme");
 			LanguageName = Settings.GetString("language");
 

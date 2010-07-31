@@ -59,7 +59,7 @@ namespace DungeonEye
 					Heroes[i] = heroes[i];
 
 			if (heroes == null)
-				SaveGame = "savegame.xml";
+				SaveGame = "data/savegame.xml";
 		}
 
 
@@ -872,7 +872,7 @@ namespace DungeonEye
 				settings.OmitXmlDeclaration = false;
 				settings.IndentChars = "\t";
 				settings.Encoding = System.Text.ASCIIEncoding.ASCII;
-				XmlWriter xml = XmlWriter.Create(@"savegame.xml", settings);
+				XmlWriter xml = XmlWriter.Create(@"data/savegame.xml", settings);
 				Save(xml);
 				xml.Close();
 
@@ -882,10 +882,10 @@ namespace DungeonEye
 			// Load team
 			if (Keyboard.IsNewKeyPress(Keys.L))
 			{
-				if (System.IO.File.Exists("savegame.xml"))
+				if (System.IO.File.Exists("data/savegame.xml"))
 				{
 					XmlDocument xml = new XmlDocument();
-					xml.Load("savegame.xml");
+					xml.Load("data/savegame.xml");
 
 					foreach (XmlNode node in xml)
 					{
