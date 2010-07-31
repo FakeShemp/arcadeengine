@@ -65,10 +65,6 @@ namespace DungeonEye.Forms
 			ScriptNameBox.Items.Insert(0, "");
 			ScriptNameBox.EndUpdate();
 
-
-			// Script name
-		//	if (!string.IsNullOrEmpty(Item.ScriptName) && ScriptNameBox.Items.Contains(Item.ScriptName))
-		//		ScriptNameBox.SelectedItem = Item.ScriptName;
 			
 
 			TypeBox.BeginUpdate();
@@ -80,10 +76,6 @@ namespace DungeonEye.Forms
 
 			Item = new Item();
 			Item.Load(node);
-
-			// Tileset name
-			if (!string.IsNullOrEmpty(Item.TileSetName) && TileSetNameBox.Items.Contains(Item.TileSetName))
-				TileSetNameBox.SelectedItem = Item.TileSetName;
 
 
 			#region UI update
@@ -131,8 +123,6 @@ namespace DungeonEye.Forms
 			SlashBox.Checked = (Item.DamageType & DamageType.Slash) == DamageType.Slash;
 			BludgeBox.Checked = (Item.DamageType & DamageType.Bludge) == DamageType.Bludge;
 			#endregion
-
-			Paint_Tiles(null, null);
 		}
 
 
@@ -157,7 +147,7 @@ namespace DungeonEye.Forms
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void ItemForm_FormClosing(object sender, FormClosingEventArgs e)
+		private void Form_FormClosing(object sender, FormClosingEventArgs e)
 		{
 			DialogResult result = MessageBox.Show("Save modifications ?", "Item Editor", MessageBoxButtons.YesNoCancel);
 
@@ -184,80 +174,139 @@ namespace DungeonEye.Forms
 
 
 		/// <summary>
-		/// 
+		/// Draws all visual
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void Paint_Tiles(object sender, PaintEventArgs e)
 		{
-		//	if (GLGroundTile.Context == null)
-		//		return;
+			DrawTiles(GLInventoryTile, InventoryTileBox.SelectedItem == null ? -1 : (int) InventoryTileBox.SelectedItem);
+			DrawTiles(GLGroundTile, GroundTileBox.SelectedItem == null ? -1 : (int) GroundTileBox.SelectedItem);
+			DrawTiles(GLThrownTile, ThrownTileBox.SelectedItem == null ? -1 : (int) ThrownTileBox.SelectedItem);
+			DrawTiles(GLIncomingTile, IncomingTileBox.SelectedItem == null ? -1 : (int) IncomingTileBox.SelectedItem);
+		}
 
-			Point location;
-			Tile tile;
-			int tileid;
 
-			GLGroundTile.MakeCurrent();
+		/// <summary>
+		/// Paint a control
+		/// </summary>
+		/// <param name="control">Control to paint</param>
+		/// <param name="tileid">Id of the tile to draw</param>
+		private void DrawTiles(OpenTK.GLControl control, int tileid)
+		{
+			control.MakeCurrent();
 			Display.ClearBuffers();
-			if (GroundTileBox.SelectedItem != null)
+
+			SpriteBatch.Begin();
+
+			// Background texture
+			Rectangle dst = new Rectangle(Point.Empty, control.Size);
+			SpriteBatch.Draw(CheckerBoard, dst, dst, Color.White);
+
+
+			// Tile to draw
+			if (tileid >= 0)
 			{
-				SpriteBatch.Begin();
-				tileid = int.Parse(GroundTileBox.SelectedItem.ToString());
-				tile = TileSet.GetTile(tileid);
-				location = new Point((GLGroundTile.Width - tile.Size.Width) / 2, (GLGroundTile.Height - tile.Size.Height) / 2);
+				Tile tile = TileSet.GetTile(tileid);
+				Point location = new Point((control.Width - tile.Size.Width) / 2, (control.Height - tile.Size.Height) / 2);
 				SpriteBatch.DrawTile(TileSet, tileid, location);
-				SpriteBatch.End();
 			}
-			GLGroundTile.SwapBuffers();
 
+			SpriteBatch.End();
 
-
-			GLInventoryTile.MakeCurrent();
-			Display.ClearBuffers();
-			if (InventoryTileBox.SelectedItem != null)
-			{
-				SpriteBatch.Begin();
-				tileid = int.Parse(InventoryTileBox.SelectedItem.ToString());
-				tile = TileSet.GetTile(tileid);
-				location = new Point((GLInventoryTile.Width - tile.Size.Width) / 2, (GLInventoryTile.Height - tile.Size.Height) / 2);
-				SpriteBatch.DrawTile(TileSet, tileid, location);
-				SpriteBatch.End();
-			}
-			GLInventoryTile.SwapBuffers();
-
-
-			GLIncomingTile.MakeCurrent();
-			Display.ClearBuffers();
-			if (IncomingTileBox.SelectedItem != null)
-			{
-				SpriteBatch.Begin();
-				tileid = int.Parse(IncomingTileBox.SelectedItem.ToString());
-				tile = TileSet.GetTile(tileid);
-				location = new Point((GLIncomingTile.Width - tile.Size.Width) / 2, (GLIncomingTile.Height - tile.Size.Height) / 2);
-				SpriteBatch.DrawTile(TileSet, tileid, location);
-				SpriteBatch.End();
-			}
-			GLIncomingTile.SwapBuffers();
-
-
-			GLMoveAwayTile.MakeCurrent();
-			Display.ClearBuffers();
-			if (ThrownTileBox.SelectedItem != null)
-			{
-				SpriteBatch.Begin();
-				tileid = int.Parse(ThrownTileBox.SelectedItem.ToString());
-				tile = TileSet.GetTile(tileid);
-				location = new Point((GLMoveAwayTile.Width - tile.Size.Width) / 2, (GLMoveAwayTile.Height - tile.Size.Height) / 2);
-				SpriteBatch.DrawTile(TileSet, tileid, location);
-				SpriteBatch.End();
-			}
-			GLMoveAwayTile.SwapBuffers();
-
-
-
+			control.SwapBuffers();
 
 		}
 
+
+		/// <summary>
+		/// Form load
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void Form_Load(object sender, EventArgs e)
+		{
+
+			SpriteBatch = new SpriteBatch();
+
+			// Preload background texture resource
+			CheckerBoard = new Texture2D(ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png"));
+			CheckerBoard.HorizontalWrap = HorizontalWrapFilter.Repeat;
+			CheckerBoard.VerticalWrap = VerticalWrapFilter.Repeat;
+
+
+			if (Item == null)
+				return;
+
+			// Script name
+			if (!string.IsNullOrEmpty(Item.ScriptName) && ScriptNameBox.Items.Contains(Item.ScriptName))
+				ScriptNameBox.SelectedItem = Item.ScriptName;
+
+			// Tileset name
+			if (!string.IsNullOrEmpty(Item.TileSetName) && TileSetNameBox.Items.Contains(Item.TileSetName))
+				TileSetNameBox.SelectedItem = Item.TileSetName;
+
+
+			ThrownTileBox.SelectedItem = Item.ThrowTileID;
+			IncomingTileBox.SelectedItem = Item.IncomingTileID;
+			GroundTileBox.SelectedItem = Item.GroundTileID;
+			InventoryTileBox.SelectedItem = Item.TileID;
+		}
+
+
+
+		#region Control loadings
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void GLInventoryTile_Load(object sender, EventArgs e)
+		{
+			GLInventoryTile.MakeCurrent();
+			Display.Init();
+
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void GLGroundTile_Load(object sender, EventArgs e)
+		{
+			GLGroundTile.MakeCurrent();
+			Display.Init();
+
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void GLThrownTile_Load(object sender, EventArgs e)
+		{
+			GLThrownTile.MakeCurrent();
+			Display.Init();
+
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void GLIncomingTile_Load(object sender, EventArgs e)
+		{
+			GLIncomingTile.MakeCurrent();
+			Display.Init();
+
+		}
 
 
 		/// <summary>
@@ -268,6 +317,8 @@ namespace DungeonEye.Forms
 		private void GLInventoryTile_Resize(object sender, EventArgs e)
 		{
 			GLInventoryTile.MakeCurrent();
+			Display.Init();
+			
 			Display.ViewPort = new Rectangle(new Point(), GLInventoryTile.Size);
 		}
 
@@ -280,6 +331,8 @@ namespace DungeonEye.Forms
 		private void GLGroundTile_Resize(object sender, EventArgs e)
 		{
 			GLGroundTile.MakeCurrent();
+			Display.Init();
+
 			Display.ViewPort = new Rectangle(new Point(), GLGroundTile.Size);
 		}
 
@@ -291,6 +344,8 @@ namespace DungeonEye.Forms
 		private void GLIncomingTile_Resize(object sender, EventArgs e)
 		{
 			GLIncomingTile.MakeCurrent();
+			Display.Init();
+
 			Display.ViewPort = new Rectangle(new Point(), GLIncomingTile.Size);
 		}
 
@@ -299,13 +354,16 @@ namespace DungeonEye.Forms
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void GLThrowTile_Resize(object sender, EventArgs e)
+		private void GLThrownTile_Resize(object sender, EventArgs e)
 		{
-			GLMoveAwayTile.MakeCurrent();
-			Display.ViewPort = new Rectangle(new Point(), GLMoveAwayTile.Size);
+			GLThrownTile.MakeCurrent();
+			Display.Init();
+
+			Display.ViewPort = new Rectangle(new Point(), GLThrownTile.Size);
 		}
 
 
+		#endregion
 
 
 		/// <summary>
@@ -313,7 +371,7 @@ namespace DungeonEye.Forms
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnSelectedTileSetChanged(object sender, EventArgs e)
+		private void TileSetOnSelectedChanged(object sender, EventArgs e)
 		{
 			if (TileSetNameBox.SelectedIndex == -1)
 				return;
@@ -362,82 +420,7 @@ namespace DungeonEye.Forms
 			ThrownTileBox.EndUpdate();
 
 		}
-	
-		
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void ItemForm_Shown(object sender, EventArgs e)
-		{
-			GLGroundTile_Resize(null, null);
-			GLInventoryTile_Resize(null, null);
-			GLThrowTile_Resize(null, null);
-			GLIncomingTile_Resize(null, null);
-		}
 
-
-
-		/// <summary>
-		/// Form load
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void ItemForm_Load(object sender, EventArgs e)
-		{
-
-			GLInventoryTile.MakeCurrent();
-			Display.Init();
-
-			GLGroundTile.MakeCurrent();
-			Display.Init();
-
-			GLMoveAwayTile.MakeCurrent();
-			Display.Init();
-
-			GLIncomingTile.MakeCurrent();
-			Display.Init();
-
-			SpriteBatch = new SpriteBatch();
-		}
-
-
-
-		#endregion
-
-
-
-		#region Properties
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public override IAsset Asset
-		{
-			get
-			{
-				return Item;
-			}
-		}
-		
-		
-		/// <summary>
-		/// Item 
-		/// </summary>
-		Item Item;
-
-
-		/// <summary>
-		/// Tileset
-		/// </summary>
-		TileSet TileSet;
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		SpriteBatch SpriteBatch;
 
 		#endregion
 
@@ -559,6 +542,11 @@ namespace DungeonEye.Forms
 		#endregion
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void TypeBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (Item == null)
@@ -566,6 +554,12 @@ namespace DungeonEye.Forms
 			Item.Type = (ItemType)Enum.Parse(typeof(ItemType), (string)TypeBox.SelectedItem);
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void SpeedBox_ValueChanged(object sender, EventArgs e)
 		{
 			if (Item == null)
@@ -574,6 +568,12 @@ namespace DungeonEye.Forms
 			Item.AttackSpeed = TimeSpan.FromMilliseconds((int)SpeedBox.Value);
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void WeightBox_ValueChanged(object sender, EventArgs e)
 		{
 			if (Item == null)
@@ -778,9 +778,6 @@ namespace DungeonEye.Forms
 		}
 
 
-
-
-
 		/// <summary>
 		/// 
 		/// </summary>
@@ -808,6 +805,12 @@ namespace DungeonEye.Forms
 			Item.UseQuiver = UseQuiverBox.Checked;
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void PiercingBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (Item == null)
@@ -820,6 +823,12 @@ namespace DungeonEye.Forms
 
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void BludgeBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (Item == null)
@@ -832,6 +841,12 @@ namespace DungeonEye.Forms
 
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void SlashBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (Item == null)
@@ -844,6 +859,12 @@ namespace DungeonEye.Forms
 
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void RangeBox_ValueChanged(object sender, EventArgs e)
 		{
 			if (Item == null)
@@ -852,6 +873,12 @@ namespace DungeonEye.Forms
 			Item.Range = (int)RangeBox.Value;
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void InventoryTileID_OnChange(object sender, EventArgs e)
 		{
 			if (Item != null)
@@ -860,6 +887,12 @@ namespace DungeonEye.Forms
 			Paint_Tiles(null, null);
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void GroundTileID_OnChange(object sender, EventArgs e)
 		{
 			if (Item != null)
@@ -868,6 +901,12 @@ namespace DungeonEye.Forms
 			Paint_Tiles(null, null);
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void ThrownID_OnChange(object sender, EventArgs e)
 		{
 			if (Item != null)
@@ -876,6 +915,12 @@ namespace DungeonEye.Forms
 			Paint_Tiles(null, null);
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void IncomingTile_OnChange(object sender, EventArgs e)
 		{
 			if (Item != null)
@@ -883,6 +928,48 @@ namespace DungeonEye.Forms
 
 			Paint_Tiles(null, null);
 		}
+
+
+
+		#region Properties
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public override IAsset Asset
+		{
+			get
+			{
+				return Item;
+			}
+		}
+
+
+		/// <summary>
+		/// Item 
+		/// </summary>
+		Item Item;
+
+
+		/// <summary>
+		/// Tileset
+		/// </summary>
+		TileSet TileSet;
+
+
+		/// <summary>
+		/// Spritebatch
+		/// </summary>
+		SpriteBatch SpriteBatch;
+
+
+		/// <summary>
+		/// Background texture
+		/// </summary>
+		Texture2D CheckerBoard;
+
+		#endregion
+
 
 
 	}

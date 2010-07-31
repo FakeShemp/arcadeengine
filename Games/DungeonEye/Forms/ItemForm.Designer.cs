@@ -28,7 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			DungeonEye.Dice dice4 = new DungeonEye.Dice();
+			DungeonEye.Dice dice1 = new DungeonEye.Dice();
 			this.GLGroundTile = new OpenTK.GLControl();
 			this.GLInventoryTile = new OpenTK.GLControl();
 			this.label2 = new System.Windows.Forms.Label();
@@ -70,7 +70,7 @@
 			this.label10 = new System.Windows.Forms.Label();
 			this.label15 = new System.Windows.Forms.Label();
 			this.GLIncomingTile = new OpenTK.GLControl();
-			this.GLMoveAwayTile = new OpenTK.GLControl();
+			this.GLThrownTile = new OpenTK.GLControl();
 			this.label12 = new System.Windows.Forms.Label();
 			this.label13 = new System.Windows.Forms.Label();
 			this.TileSetNameBox = new System.Windows.Forms.ComboBox();
@@ -94,21 +94,21 @@
 			this.SlashBox = new System.Windows.Forms.CheckBox();
 			this.BludgeBox = new System.Windows.Forms.CheckBox();
 			this.PiercingBox = new System.Windows.Forms.CheckBox();
-			this.DamageBox = new DungeonEye.Forms.DiceForm();
 			this.ScriptTab = new System.Windows.Forms.TabPage();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.groupBox11 = new System.Windows.Forms.GroupBox();
+			this.DamageBox = new DungeonEye.Forms.DiceForm();
 			this.groupBox4.SuspendLayout();
 			this.groupBox5.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.ACBonusBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.RangeBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.WeightBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.SpeedBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize) (this.ACBonusBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize) (this.RangeBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize) (this.WeightBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize) (this.SpeedBox)).BeginInit();
 			this.groupBox6.SuspendLayout();
 			this.groupBox8.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.MultiplierBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.CriticalMaxBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.CriticalMinBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize) (this.MultiplierBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize) (this.CriticalMaxBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize) (this.CriticalMinBox)).BeginInit();
 			this.groupBox3.SuspendLayout();
 			this.tabControl1.SuspendLayout();
 			this.VisualTab.SuspendLayout();
@@ -127,7 +127,7 @@
 			this.GLGroundTile.Size = new System.Drawing.Size(181, 165);
 			this.GLGroundTile.TabIndex = 2;
 			this.GLGroundTile.VSync = true;
-			this.GLGroundTile.Load += new System.EventHandler(this.GLGroundTile_Resize);
+			this.GLGroundTile.Load += new System.EventHandler(this.GLGroundTile_Load);
 			this.GLGroundTile.Paint += new System.Windows.Forms.PaintEventHandler(this.Paint_Tiles);
 			this.GLGroundTile.Resize += new System.EventHandler(this.GLGroundTile_Resize);
 			// 
@@ -139,7 +139,7 @@
 			this.GLInventoryTile.Size = new System.Drawing.Size(181, 165);
 			this.GLInventoryTile.TabIndex = 2;
 			this.GLInventoryTile.VSync = true;
-			this.GLInventoryTile.Load += new System.EventHandler(this.GLInventoryTile_Resize);
+			this.GLInventoryTile.Load += new System.EventHandler(this.GLInventoryTile_Load);
 			this.GLInventoryTile.Paint += new System.Windows.Forms.PaintEventHandler(this.Paint_Tiles);
 			this.GLInventoryTile.Resize += new System.EventHandler(this.GLInventoryTile_Resize);
 			// 
@@ -590,21 +590,21 @@
 			this.GLIncomingTile.Size = new System.Drawing.Size(181, 165);
 			this.GLIncomingTile.TabIndex = 2;
 			this.GLIncomingTile.VSync = true;
-			this.GLIncomingTile.Load += new System.EventHandler(this.GLGroundTile_Resize);
+			this.GLIncomingTile.Load += new System.EventHandler(this.GLIncomingTile_Load);
 			this.GLIncomingTile.Paint += new System.Windows.Forms.PaintEventHandler(this.Paint_Tiles);
 			this.GLIncomingTile.Resize += new System.EventHandler(this.GLIncomingTile_Resize);
 			// 
-			// GLMoveAwayTile
+			// GLThrownTile
 			// 
-			this.GLMoveAwayTile.BackColor = System.Drawing.Color.Black;
-			this.GLMoveAwayTile.Location = new System.Drawing.Point(6, 289);
-			this.GLMoveAwayTile.Name = "GLMoveAwayTile";
-			this.GLMoveAwayTile.Size = new System.Drawing.Size(181, 165);
-			this.GLMoveAwayTile.TabIndex = 2;
-			this.GLMoveAwayTile.VSync = true;
-			this.GLMoveAwayTile.Load += new System.EventHandler(this.GLInventoryTile_Resize);
-			this.GLMoveAwayTile.Paint += new System.Windows.Forms.PaintEventHandler(this.Paint_Tiles);
-			this.GLMoveAwayTile.Resize += new System.EventHandler(this.GLThrowTile_Resize);
+			this.GLThrownTile.BackColor = System.Drawing.Color.Black;
+			this.GLThrownTile.Location = new System.Drawing.Point(6, 289);
+			this.GLThrownTile.Name = "GLThrownTile";
+			this.GLThrownTile.Size = new System.Drawing.Size(181, 165);
+			this.GLThrownTile.TabIndex = 2;
+			this.GLThrownTile.VSync = true;
+			this.GLThrownTile.Load += new System.EventHandler(this.GLThrownTile_Load);
+			this.GLThrownTile.Paint += new System.Windows.Forms.PaintEventHandler(this.Paint_Tiles);
+			this.GLThrownTile.Resize += new System.EventHandler(this.GLThrownTile_Resize);
 			// 
 			// label12
 			// 
@@ -633,7 +633,7 @@
 			this.TileSetNameBox.Size = new System.Drawing.Size(121, 21);
 			this.TileSetNameBox.Sorted = true;
 			this.TileSetNameBox.TabIndex = 0;
-			this.TileSetNameBox.SelectedIndexChanged += new System.EventHandler(this.OnSelectedTileSetChanged);
+			this.TileSetNameBox.SelectedIndexChanged += new System.EventHandler(this.TileSetOnSelectedChanged);
 			// 
 			// IncomingTileBox
 			// 
@@ -798,7 +798,7 @@
 			this.VisualTab.Controls.Add(this.IncomingTileBox);
 			this.VisualTab.Controls.Add(this.label2);
 			this.VisualTab.Controls.Add(this.InventoryTileBox);
-			this.VisualTab.Controls.Add(this.GLMoveAwayTile);
+			this.VisualTab.Controls.Add(this.GLThrownTile);
 			this.VisualTab.Controls.Add(this.TileSetNameBox);
 			this.VisualTab.Controls.Add(this.label1);
 			this.VisualTab.Controls.Add(this.label13);
@@ -815,12 +815,12 @@
 			// PropertiesTab
 			// 
 			this.PropertiesTab.Controls.Add(this.groupBox1);
-			this.PropertiesTab.Controls.Add(this.DamageBox);
 			this.PropertiesTab.Controls.Add(this.groupBox4);
 			this.PropertiesTab.Controls.Add(this.groupBox8);
 			this.PropertiesTab.Controls.Add(this.groupBox5);
 			this.PropertiesTab.Controls.Add(this.groupBox6);
 			this.PropertiesTab.Controls.Add(this.groupBox3);
+			this.PropertiesTab.Controls.Add(this.DamageBox);
 			this.PropertiesTab.Location = new System.Drawing.Point(4, 22);
 			this.PropertiesTab.Name = "PropertiesTab";
 			this.PropertiesTab.Padding = new System.Windows.Forms.Padding(3);
@@ -874,20 +874,6 @@
 			this.PiercingBox.UseVisualStyleBackColor = true;
 			this.PiercingBox.CheckedChanged += new System.EventHandler(this.PiercingBox_CheckedChanged);
 			// 
-			// DamageBox
-			// 
-			this.DamageBox.ControlText = "Damage :";
-			dice4.Faces = 1;
-			dice4.Modifier = 0;
-			dice4.Throws = 1;
-			this.DamageBox.Dice = dice4;
-			this.DamageBox.Location = new System.Drawing.Point(3, 341);
-			this.DamageBox.MinimumSize = new System.Drawing.Size(225, 100);
-			this.DamageBox.Name = "DamageBox";
-			this.DamageBox.Size = new System.Drawing.Size(252, 104);
-			this.DamageBox.TabIndex = 9;
-			this.DamageBox.ValueChanged += new System.EventHandler(this.DamageBox_ValueChanged);
-			// 
 			// ScriptTab
 			// 
 			this.ScriptTab.Controls.Add(this.groupBox2);
@@ -922,34 +908,47 @@
 			this.groupBox11.TabStop = false;
 			this.groupBox11.Text = "Properties :";
 			// 
+			// DamageBox
+			// 
+			this.DamageBox.ControlText = "Damage :";
+			dice1.Faces = 1;
+			dice1.Modifier = 0;
+			dice1.Throws = 1;
+			this.DamageBox.Dice = dice1;
+			this.DamageBox.Location = new System.Drawing.Point(3, 341);
+			this.DamageBox.MinimumSize = new System.Drawing.Size(225, 100);
+			this.DamageBox.Name = "DamageBox";
+			this.DamageBox.Size = new System.Drawing.Size(252, 104);
+			this.DamageBox.TabIndex = 9;
+			this.DamageBox.ValueChanged += new System.EventHandler(this.DamageBox_ValueChanged);
+			// 
 			// ItemForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(821, 645);
 			this.Controls.Add(this.groupBox11);
-			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 			this.Name = "ItemForm";
 			this.TabText = "ItemForm";
 			this.Text = "ItemForm";
-			this.Load += new System.EventHandler(this.ItemForm_Load);
-			this.Shown += new System.EventHandler(this.ItemForm_Shown);
-			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ItemForm_FormClosing);
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form_FormClosing);
+			this.Load += new System.EventHandler(this.Form_Load);
 			this.groupBox4.ResumeLayout(false);
 			this.groupBox4.PerformLayout();
 			this.groupBox5.ResumeLayout(false);
 			this.groupBox5.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.ACBonusBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.RangeBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.WeightBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.SpeedBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize) (this.ACBonusBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize) (this.RangeBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize) (this.WeightBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize) (this.SpeedBox)).EndInit();
 			this.groupBox6.ResumeLayout(false);
 			this.groupBox6.PerformLayout();
 			this.groupBox8.ResumeLayout(false);
 			this.groupBox8.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.MultiplierBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.CriticalMaxBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.CriticalMinBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize) (this.MultiplierBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize) (this.CriticalMaxBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize) (this.CriticalMinBox)).EndInit();
 			this.groupBox3.ResumeLayout(false);
 			this.groupBox3.PerformLayout();
 			this.tabControl1.ResumeLayout(false);
@@ -971,7 +970,7 @@
 		private OpenTK.GLControl GLGroundTile;
 		private OpenTK.GLControl GLInventoryTile;
 		private OpenTK.GLControl GLIncomingTile;
-		private OpenTK.GLControl GLMoveAwayTile;
+		private OpenTK.GLControl GLThrownTile;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.ComboBox GroundTileBox;
