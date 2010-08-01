@@ -920,4 +920,23 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		OneMinusConstantAlpha = OpenTK.Graphics.OpenGL.BlendingFactorDest.OneMinusConstantAlpha,
 	}
+
+
+    /// <summary>
+    /// Defines winding orders that may be used to identify back faces for culling. 
+    /// </summary>
+    public enum CullMode
+    {
+        /// <summary>
+        /// Cull back faces with clockwise vertices. 
+        /// </summary>
+        CullClockwiseFace = TK.FrontFaceDirection.Cw;
+
+
+        /// <summary>
+        /// Cull back faces with counterclockwise vertices. 
+        /// </summary>
+        CullCounterClockwiseFace = TK.FrontFaceDirection.Ccw;
+
+    }
 }

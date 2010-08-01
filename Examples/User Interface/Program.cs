@@ -55,6 +55,7 @@ namespace ArcEngine.Examples.UserInterface
 		public override void LoadContent()
 		{
 			Display.RenderState.ClearColor = Color.CornflowerBlue;
+            
 
 			ResourceManager.LoadBank("data/data.bnk");
 
