@@ -408,7 +408,7 @@ namespace ArcEngine.Asset
 		/// <param name="filename">Filename</param>
 		/// <param name="size">Size of the font</param>
 		/// <param name="style">Style of the font</param>
-		/// <returns></returns>
+		/// <returns>True if loaded, or false</returns>
 		public bool LoadTTF(string filename, int size, FontStyle style)
 		{
 			TileSetName = string.Empty;
@@ -434,8 +434,13 @@ namespace ArcEngine.Asset
 			}
 
 			// GdiFont
-			return Generate(new Font(LoadFontFamily(data), size, style));
-		
+			Font font = new Font(LoadFontFamily(data), size, style);
+			bool ret = Generate(font);
+			font.Dispose();
+
+			data.Dispose();
+
+			return ret;
 		}
 
 
