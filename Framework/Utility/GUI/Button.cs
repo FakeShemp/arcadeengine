@@ -130,10 +130,11 @@ namespace ArcEngine.Utility.GUI
 		/// <summary>
 		/// 
 		/// </summary>
+		/// <param name="manager">Gui manager handle</param>
 		/// <param name="time"></param>
-		public override void Update(GameTime time)
+		public override void Update(GuiManager manager, GameTime time)
 		{
-			base.Update(time);
+			base.Update(manager, time);
 
 
 		}
@@ -143,10 +144,11 @@ namespace ArcEngine.Utility.GUI
 		/// <summary>
 		/// Draws the button
 		/// </summary>
+		/// <param name="manager">Gui manager handle</param>
 		/// <param name="batch">SpriteBatch to use</param>
-		public override void Draw(SpriteBatch batch)
+		public override void Draw(GuiManager manager, SpriteBatch batch)
 		{
-			base.Draw(batch);
+			base.Draw(manager, batch);
 /*
 			// Background color
 			if (BgColor.A > 0)

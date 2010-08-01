@@ -25,7 +25,7 @@ using System.Drawing;
 using System.Text;
 using System.Xml;
 using ArcEngine.Graphic;
-
+using ArcEngine.Asset;
 
 namespace ArcEngine.Utility.GUI
 {
@@ -44,9 +44,19 @@ namespace ArcEngine.Utility.GUI
 		{
 			Rectangle = new Rectangle();
 			Color = Color.White;
+			Visible = true;
 		}
 
 
+		/// <summary>
+		/// Dispose resource
+		/// </summary>
+		public virtual void Dispose()
+		{
+			if (Font != null)
+				Font.Dispose();
+			Font = null;
+		}
 
 
 		#region Update & Draw
@@ -54,8 +64,9 @@ namespace ArcEngine.Utility.GUI
 		/// <summary>
 		/// Updates the gadget
 		/// </summary>
+		/// <param name="manager">Gui manager handle</param>
 		/// <param name="time">Elapsed time</param>
-		public virtual void Update(GameTime time)
+		public virtual void Update(GuiManager manager, GameTime time)
 		{
 		}
 
@@ -63,8 +74,9 @@ namespace ArcEngine.Utility.GUI
 		/// <summary>
 		/// Draws the button
 		/// </summary>
+		/// <param name="manager">Gui manager handle</param>
 		/// <param name="batch">SpriteBatch to use</param>
-		public virtual void Draw(SpriteBatch batch)
+		public virtual void Draw(GuiManager manager, SpriteBatch batch)
 		{
 		}
 
@@ -174,6 +186,21 @@ namespace ArcEngine.Utility.GUI
 
 		#region Properties
 
+		/// <summary>
+		/// Parent control
+		/// </summary>
+		public Control Parent
+		{
+			get;
+			internal set;
+		}
+
+
+		/// <summary>
+		/// Name of the control
+		/// </summary>
+		public string Name;
+
 
 		/// <summary>
 		/// Rectangle
@@ -240,9 +267,18 @@ namespace ArcEngine.Utility.GUI
 			set;
 		}
 
-         
- 
-         
+
+
+		/// <summary>
+		/// Is control visible
+		/// </summary>
+		public bool Visible;
+
+
+		/// <summary>
+		/// Font to use
+		/// </summary>
+		public BitmapFont Font;
 
 		#endregion
 	}

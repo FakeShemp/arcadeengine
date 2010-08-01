@@ -295,7 +295,7 @@ namespace ArcEngine.Asset
 
 			foreach (Control gui in elements.Values)
 			{
-				gui.Draw(batch);
+			//	gui.Draw(batch);
 			}
 
 		}

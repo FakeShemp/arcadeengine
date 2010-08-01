@@ -32,12 +32,13 @@
 			this.ButtonOk = new System.Windows.Forms.Button();
 			this.LabelLink = new System.Windows.Forms.LinkLabel();
 			this.PluginList = new System.Windows.Forms.ListBox();
+			this.checkBox1 = new System.Windows.Forms.CheckBox();
 			this.SuspendLayout();
 			// 
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 			this.label1.Location = new System.Drawing.Point(64, 30);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(189, 25);
@@ -46,8 +47,8 @@
 			// 
 			// ButtonOk
 			// 
-			this.ButtonOk.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.ButtonOk.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.ButtonOk.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.ButtonOk.Location = new System.Drawing.Point(139, 280);
 			this.ButtonOk.Name = "ButtonOk";
@@ -59,7 +60,7 @@
 			// LabelLink
 			// 
 			this.LabelLink.AutoSize = true;
-			this.LabelLink.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.LabelLink.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 			this.LabelLink.Location = new System.Drawing.Point(97, 250);
 			this.LabelLink.Name = "LabelLink";
 			this.LabelLink.Size = new System.Drawing.Size(145, 20);
@@ -76,11 +77,23 @@
 			this.PluginList.Sorted = true;
 			this.PluginList.TabIndex = 3;
 			// 
+			// checkBox1
+			// 
+			this.checkBox1.AutoSize = true;
+			this.checkBox1.Location = new System.Drawing.Point(31, 13);
+			this.checkBox1.Name = "checkBox1";
+			this.checkBox1.Size = new System.Drawing.Size(80, 17);
+			this.checkBox1.TabIndex = 4;
+			this.checkBox1.Text = "checkBox1";
+			this.checkBox1.TextAlign = System.Drawing.ContentAlignment.BottomRight;
+			this.checkBox1.UseVisualStyleBackColor = true;
+			// 
 			// AboutForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(348, 315);
+			this.Controls.Add(this.checkBox1);
 			this.Controls.Add(this.PluginList);
 			this.Controls.Add(this.LabelLink);
 			this.Controls.Add(this.ButtonOk);
@@ -104,5 +117,6 @@
 		private System.Windows.Forms.Button ButtonOk;
 		private System.Windows.Forms.LinkLabel LabelLink;
 		private System.Windows.Forms.ListBox PluginList;
+		private System.Windows.Forms.CheckBox checkBox1;
 	}
 }

@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using ArcEngine;
-using ArcEngine.Graphic;
-using System.Windows.Forms;
 using System.Drawing;
-using ArcEngine.Utility.GUI;
 using ArcEngine.Asset;
+using ArcEngine.Graphic;
+using ArcEngine.Utility.GUI;
 
 
 
@@ -27,7 +24,7 @@ namespace ArcEngine.Examples.UserInterface
 			catch (Exception e)
 			{
 				// Oops, an error happened !
-				MessageBox.Show(e.StackTrace, e.Message);
+				System.Windows.Forms.MessageBox.Show(e.StackTrace, e.Message);
 			}
 		}
 
@@ -62,13 +59,21 @@ namespace ArcEngine.Examples.UserInterface
 
 			Manager = new GuiManager();
 			Manager.TileSet = ResourceManager.CreateAsset<TileSet>("Skin");
+			Manager.Font = BitmapFont.CreateFromTTF(@"C:\Windows\Fonts\Verdana.ttf", 12, FontStyle.Regular);
 
 
-			window = new Window(Manager);
+			window = new Window();
 			window.BgColor = Color.LightCoral;
 			window.Location = new Point(100, 100);
 			window.Size = new Size(320, 240);
 			Manager.Add(window);
+
+
+			CheckBox checkbox = new CheckBox();
+			checkbox.Location = new Point(50, 50);
+			checkbox.Font = BitmapFont.CreateFromTTF(@"C:\Windows\Fonts\Verdana.ttf", 9, FontStyle.Regular);
+			window.Add(checkbox);
+
 		}
 
 

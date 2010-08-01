@@ -32,26 +32,23 @@ namespace ArcEngine.Utility.GUI
 	/// <summary>
 	/// Window class
 	/// </summary>
-	public class Window : Control
+	public class Window : Container
 	{
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="manager">Gui manager</param>
-		public Window(GuiManager manager)
+		/// <param name="title">Title of the window</param>
+		public Window(string title)
 		{
-			if (manager == null)
-				throw new ArgumentNullException("manager");
-
-			Manager = manager;
 		}
 
 
 		/// <summary>
 		/// Update the window
 		/// </summary>
+		/// <param name="manager">Gui manager handle</param>
 		/// <param name="time">Elapsed time</param>
-		public override void Update(GameTime time)
+		public override void Update(GuiManager manager, GameTime time)
 		{
 		}
 
@@ -60,57 +57,64 @@ namespace ArcEngine.Utility.GUI
 		/// <summary>
 		/// Draws the window
 		/// </summary>
+		/// <param name="manager">Gui manager handle</param>
 		/// <param name="batch">SpriteBatch to use</param>
-		public override void Draw(SpriteBatch batch)
+		public override void Draw(GuiManager manager, SpriteBatch batch)
 		{
-			if (batch == null)
+			if (!Visible)
 				return;
 
+
 			// No skinning
-			if (Manager.TileSet == null)
+			if (manager.TileSet == null)
 			{
 				batch.FillRectangle(Rectangle, BgColor);
 			}
 			else
 			{
 				// Corner tiles
-				Tile tiletl = Manager.TileSet.GetTile(0);
-				Tile tiletr = Manager.TileSet.GetTile(2);
-				Tile tilebl = Manager.TileSet.GetTile(6);
-				Tile tilebr = Manager.TileSet.GetTile(8);
+				Tile tiletl = manager.TileSet.GetTile(0);
+				Tile tiletr = manager.TileSet.GetTile(2);
+				Tile tilebl = manager.TileSet.GetTile(6);
+				Tile tilebr = manager.TileSet.GetTile(8);
 
 
 				// Draw corners
-				batch.DrawTile(Manager.TileSet, 0, new Point(Rectangle.Left - tiletl.Size.Width, Rectangle.Top - tiletl.Size.Height), Color);
-				batch.DrawTile(Manager.TileSet, 2, new Point(Rectangle.Right, Rectangle.Top - tiletr.Size.Height), Color);
-				batch.DrawTile(Manager.TileSet, 8, new Point(Rectangle.Right, Rectangle.Bottom), Color);
-				batch.DrawTile(Manager.TileSet, 6, new Point(Rectangle.Left - tiletl.Size.Width, Rectangle.Bottom), Color);
+				batch.DrawTile(manager.TileSet, 0, new Point(Rectangle.Left - tiletl.Size.Width, Rectangle.Top - tiletl.Size.Height), Color);
+				batch.DrawTile(manager.TileSet, 2, new Point(Rectangle.Right, Rectangle.Top - tiletr.Size.Height), Color);
+				batch.DrawTile(manager.TileSet, 8, new Point(Rectangle.Right, Rectangle.Bottom), Color);
+				batch.DrawTile(manager.TileSet, 6, new Point(Rectangle.Left - tiletl.Size.Width, Rectangle.Bottom), Color);
 
 				// Top bar
-				Tile tile = Manager.TileSet.GetTile(1);
+				Tile tile = manager.TileSet.GetTile(1);
 				Rectangle dst = new Rectangle(Rectangle.Left, Rectangle.Top - tile.Size.Height, Rectangle.Width, tile.Size.Height);
-				batch.DrawTile(Manager.TileSet, 1, dst.Location, dst, Color);
+				batch.DrawTile(manager.TileSet, 1, dst.Location, dst, Color);
 
 
 				// Bottom bar
-				tile = Manager.TileSet.GetTile(7);
+				tile = manager.TileSet.GetTile(7);
 				dst = new Rectangle(Rectangle.Left, Rectangle.Bottom, Rectangle.Width, tile.Size.Height);
-				batch.DrawTile(Manager.TileSet, 7, dst.Location, dst, Color);
+				batch.DrawTile(manager.TileSet, 7, dst.Location, dst, Color);
 
 
 				// Right side
-				tile = Manager.TileSet.GetTile(5);
+				tile = manager.TileSet.GetTile(5);
 				dst = new Rectangle(Rectangle.Right, Rectangle.Top, tiletr.Size.Width, Rectangle.Height);
-				batch.DrawTile(Manager.TileSet, 5, dst.Location, dst, Color);
+				batch.DrawTile(manager.TileSet, 5, dst.Location, dst, Color);
 
 
 				// Left side
-				tile = Manager.TileSet.GetTile(3);
+				tile = manager.TileSet.GetTile(3);
 				dst = new Rectangle(Rectangle.Left - tiletl.Size.Height, Rectangle.Top, tiletl.Size.Width, Rectangle.Height);
-				batch.DrawTile(Manager.TileSet, 3, dst.Location, dst, Color);
+				batch.DrawTile(manager.TileSet, 3, dst.Location, dst, Color);
 
 				// Background
-				batch.DrawTile(Manager.TileSet, 4, Rectangle.Location, Rectangle, Color);
+				batch.DrawTile(manager.TileSet, 4, Rectangle.Location, Rectangle, Color);
+
+
+
+				// Draw all controls in the window
+				base.Draw(manager, batch);
 			}
 		}
 
@@ -225,14 +229,11 @@ namespace ArcEngine.Utility.GUI
 
 		#region Properties
 
+
 		/// <summary>
-		/// Manager
+		/// Tile of the window
 		/// </summary>
-		public GuiManager Manager
-		{
-			get;
-			private set;
-		}
+		public string Title;
 
 		#endregion
 

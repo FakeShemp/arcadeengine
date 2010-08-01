@@ -31,6 +31,8 @@ namespace ArcEngine.Utility.GUI
 	/// <summary>
 	/// Graphical User Interface manager
 	/// </summary>
+	/// <remarks>The GUIManager handles resource deallocation of all Control's it contains. 
+	/// Once you add a Control you don't own anymore the pointer. Deleting the Control outside of the GUIManager will result in crashes.</remarks>
 	public class GuiManager : IDisposable
 	{
 
@@ -41,7 +43,6 @@ namespace ArcEngine.Utility.GUI
 		public GuiManager()
 		{
 			Elements = new List<Control>();
-			Font = BitmapFont.CreateFromTTF(@"C:\Windows\Fonts\Verdana.ttf", 12, FontStyle.Regular);
 
 			Batch = new SpriteBatch();
 		}
@@ -58,7 +59,7 @@ namespace ArcEngine.Utility.GUI
 		public void Update(GameTime time)
 		{
 			foreach (Control element in Elements)
-				element.Update(time);
+				element.Update(this, time);
 		}
 
 
@@ -71,7 +72,7 @@ namespace ArcEngine.Utility.GUI
 			Batch.Begin();
 
 			foreach (Control element in Elements)
-				element.Draw(Batch);
+				element.Draw(this, Batch);
 
 			Batch.End();
 		}
@@ -153,11 +154,7 @@ namespace ArcEngine.Utility.GUI
 		/// <summary>
 		/// Font to draw text
 		/// </summary>
-		internal BitmapFont Font
-		{
-			get;
-			private set;
-		}
+		public BitmapFont Font;
 
 
 		/// <summary>
