@@ -930,13 +930,13 @@ namespace ArcEngine.Graphic
         /// <summary>
         /// Cull back faces with clockwise vertices. 
         /// </summary>
-        CullClockwiseFace = TK.FrontFaceDirection.Cw;
+        CullClockwiseFace = TK.FrontFaceDirection.Cw,
 
 
         /// <summary>
         /// Cull back faces with counterclockwise vertices. 
         /// </summary>
-        CullCounterClockwiseFace = TK.FrontFaceDirection.Ccw;
+        CullCounterClockwiseFace = TK.FrontFaceDirection.Ccw,
 
     }
 }
