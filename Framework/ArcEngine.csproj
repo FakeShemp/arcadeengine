@@ -353,6 +353,7 @@
     <Compile Include="RandomEnum.cs" />
     <Compile Include="Utility\GameState\State.cs" />
     <Compile Include="Utility\GameState\StateManager.cs" />
+    <Compile Include="Utility\GUI\Container.cs" />
     <Compile Include="Utility\GUI\GuiManager.cs" />
     <Compile Include="Utility\GUI\Window.cs" />
     <Compile Include="Input\GamePad.cs" />
