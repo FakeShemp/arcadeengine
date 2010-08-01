@@ -42,6 +42,8 @@ namespace ArcEngine.Utility.GUI
 		{
 			Elements = new List<Control>();
 			Font = BitmapFont.CreateFromTTF(@"C:\Windows\Fonts\Verdana.ttf", 12, FontStyle.Regular);
+
+			Batch = new SpriteBatch();
 		}
 
 
@@ -64,14 +66,14 @@ namespace ArcEngine.Utility.GUI
 		/// <summary>
 		/// Draws elements
 		/// </summary>
-		/// <param name="batch">SpriteBatch to use</param>
-		public void Draw(SpriteBatch batch)
+		public void Draw()
 		{
-			if (batch == null)
-				return;
+			Batch.Begin();
 
 			foreach (Control element in Elements)
-				element.Draw(batch);
+				element.Draw(Batch);
+
+			Batch.End();
 		}
 
 
@@ -121,11 +123,20 @@ namespace ArcEngine.Utility.GUI
 
 
 		/// <summary>
-		/// 
+		/// Disposes resources
 		/// </summary>
 		public void Dispose()
 		{
-			Font.Dispose();
+			if (Font != null)
+				Font.Dispose();
+			Font = null;
+
+			if (Batch != null)
+				Batch.Dispose();
+			Batch = null;
+
+
+			IsDisposed= true;
 		}
 
 
@@ -140,9 +151,35 @@ namespace ArcEngine.Utility.GUI
 
 
 		/// <summary>
-		/// 
+		/// Font to draw text
 		/// </summary>
-		public BitmapFont Font;
+		internal BitmapFont Font
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// Tileset to use
+		/// </summary>
+		public TileSet TileSet;
+
+
+		/// <summary>
+		/// Resource disposed
+		/// </summary>
+		public bool IsDisposed
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// SpriteBatch
+		/// </summary>
+		SpriteBatch Batch;
 
 		#endregion
 

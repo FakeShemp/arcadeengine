@@ -43,6 +43,7 @@ namespace ArcEngine.Utility.GUI
 		public Control()
 		{
 			Rectangle = new Rectangle();
+			Color = Color.White;
 		}
 
 

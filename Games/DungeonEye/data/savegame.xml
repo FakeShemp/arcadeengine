@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <team>
 	<dungeon name="Eye" />
-	<location maze="maze_01" x="5" y="12" direction="East" position="NorthEast" />
+	<location maze="test" x="14" y="8" direction="North" position="NorthEast" />
 	<position slot="FrontLeft">
 		<hero>
 			<hitpoint current="23" max="23" />
@@ -22,6 +22,7 @@
 				<class name="Fighter" />
 				<xp points="0" />
 			</profession>
+			<inventory position="Primary" name="Spell book" />
 		</hero>
 	</position>
 	<position slot="FrontRight">
@@ -48,6 +49,7 @@
 				<class name="Thief" />
 				<xp points="0" />
 			</profession>
+			<inventory position="Primary" name="Spell book" />
 		</hero>
 	</position>
 	<position slot="MiddleLeft">
@@ -78,6 +80,7 @@
 				<class name="Thief" />
 				<xp points="0" />
 			</profession>
+			<inventory position="Primary" name="Spell book" />
 		</hero>
 	</position>
 	<position slot="MiddleRight">
@@ -100,7 +103,8 @@
 				<class name="Cleric" />
 				<xp points="0" />
 			</profession>
+			<inventory position="Secondary" name="Spell book" />
+			<inventory position="Primary" name="Cleric Holy Symbol" />
 		</hero>
 	</position>
-	<message text="Loading maze_01:Upper sewer level" R="255" G="255" B="255" A="255" />
 </team>

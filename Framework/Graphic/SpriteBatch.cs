@@ -807,17 +807,42 @@ namespace ArcEngine.Graphic
 
 
 		/// <summary>
-		/// 
+		/// Draws a tile from a TileSet
 		/// </summary>
-		/// <param name="tileset"></param>
-		/// <param name="id"></param>
-		/// <param name="position"></param>
-		/// <param name="color"></param>
+		/// <param name="tileset">TileSet to use</param>
+		/// <param name="id">Tile id</param>
+		/// <param name="position">Location on the screen</param>
+		/// <param name="color">The color channel modulation to use. Use Color.White for full color with no tinting.</param>
 		public void DrawTile(TileSet tileset, int id, Vector2 position, Color color)
 		{
 			DrawTile(tileset, id, position, color, 0.0f, SpriteEffects.None, 0.0f);
 		}
 
+
+
+		/// <summary>
+		/// Draws a stretched tile from a TileSet
+		/// </summary>
+		/// <param name="tileset">TileSet to use</param>
+		/// <param name="id">Tile id</param>
+		/// <param name="position">Location on the screen</param>
+		/// <param name="rectangle">Destination zone</param>
+		/// <param name="color">The color channel modulation to use. Use Color.White for full color with no tinting.</param>
+		public void DrawTile(TileSet tileset, int id, Point position, Rectangle rectangle, Color color)
+		{
+			if (tileset == null || id < 0)
+				return;
+
+			Tile tile = tileset.GetTile(id);
+			if (tile == null)
+				return;
+
+			Vector4 dst = new Vector4(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
+
+			Vector4 src = new Vector4(tile.Rectangle.X, tile.Rectangle.Y, tile.Rectangle.Width, tile.Rectangle.Height);
+
+			InternalDraw(tileset.Texture, ref dst, ref src, color, 0.0f, new Vector2(0.0f, 0.0f), SpriteEffects.None, 0.0f, PrimitiveType.Triangles);
+		}
 
 		#endregion
 

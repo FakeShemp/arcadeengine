@@ -98,7 +98,7 @@ namespace ArcEngine.Graphic
 			if (stream == null)
 				return;
 
-			LoadImage(stream);
+			FromStream(stream);
 
 			stream.Close();
 		}
@@ -267,7 +267,7 @@ namespace ArcEngine.Graphic
 		public bool LoadImage(string filename)
 		{
 			using (Stream stream = ResourceManager.LoadResource(filename))
-				return LoadImage(stream);
+				return FromStream(stream);
 		}
 
 
@@ -276,12 +276,12 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		/// <param name="stream">Stream</param>
 		/// <returns></returns>
-		public bool LoadImage(Stream stream)
+		public bool FromStream(Stream stream)
 		{
 			if (stream == null)
 				return false;
 
-			return LoadImage(new Bitmap(stream));
+			return FromBitmap(new Bitmap(stream));
 		}
 
 
@@ -290,7 +290,7 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		/// <param name="bitmap"></param>
 		/// <returns></returns>
-		public bool LoadImage(Bitmap bitmap)
+		public bool FromBitmap(Bitmap bitmap)
 		{
 			if (bitmap == null)
 				return false;
@@ -309,6 +309,7 @@ namespace ArcEngine.Graphic
 			return true;
 		}
 
+
 		/// <summary>
 		/// Loads a Png picture from a byte[]
 		/// </summary>
@@ -319,8 +320,9 @@ namespace ArcEngine.Graphic
 			if (data == null)
 				return false;
 
-			return LoadImage(new MemoryStream(data));
+			return FromStream(new MemoryStream(data));
 		}
+
 
 		/// <summary>
 		/// Save the texture to the disk as a PNG file
@@ -351,6 +353,7 @@ namespace ArcEngine.Graphic
 
 			return true;
 		}
+
 
 		/// <summary>
 		/// Save the texture as a PNG image in the bank

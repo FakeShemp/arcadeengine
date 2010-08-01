@@ -529,7 +529,7 @@ namespace ArcEngine.Asset
 
 
 			// Save the image to the texture
-			GlyphTileset.Texture.LoadImage(bm);
+			GlyphTileset.Texture.FromBitmap(bm);
 
 			return true;
 		}

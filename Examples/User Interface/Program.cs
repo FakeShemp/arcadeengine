@@ -5,7 +5,7 @@ using ArcEngine.Graphic;
 using System.Windows.Forms;
 using System.Drawing;
 using ArcEngine.Utility.GUI;
-
+using ArcEngine.Asset;
 
 
 
@@ -50,11 +50,19 @@ namespace ArcEngine.Examples.UserInterface
 
 
 		/// <summary>
-		/// 
+		/// Load content
 		/// </summary>
 		public override void LoadContent()
 		{
+			Display.RenderState.ClearColor = Color.CornflowerBlue;
+
+			ResourceManager.LoadBank("data/data.bnk");
+
+
 			Manager = new GuiManager();
+			Manager.TileSet = ResourceManager.CreateAsset<TileSet>("Skin");
+
+
 			window = new Window(Manager);
 			window.BgColor = Color.LightCoral;
 			window.Location = new Point(100, 100);
@@ -63,6 +71,16 @@ namespace ArcEngine.Examples.UserInterface
 		}
 
 
+
+		/// <summary>
+		/// Unload content
+		/// </summary>
+		public override void UnloadContent()
+		{
+			if (Manager != null)
+				Manager.Dispose();
+			Manager = null;
+		}
 
 
 		/// <summary>
@@ -83,26 +101,24 @@ namespace ArcEngine.Examples.UserInterface
 		/// </summary>
 		public override void Draw()
 		{
+			Display.ClearBuffers();
+
 
 			Manager.Draw();
 		}
 
 
 
-
-
-
-
 		#region Properties
 
 		/// <summary>
-		/// 
+		/// Main GUI manager
 		/// </summary>
 		GuiManager Manager;
 
 
 		/// <summary>
-		/// 
+		/// Window
 		/// </summary>
 		Window window;
 

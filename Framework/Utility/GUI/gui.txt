@@ -2,10 +2,10 @@
 
 GUI system :
 http://legendofmazzeroth.wikidot.com/gui-system
-
-
-
-
+http://xnainterfaceelements.codeplex.com/
+http://www.cegui.org.uk/wiki/index.php/Main_Page
+http://nuclexframework.codeplex.com/wikipage?title=GuiManager&referringTitle=Nuclex.UserInterface
+http://simplegui.codeplex.com/
 
 
 
