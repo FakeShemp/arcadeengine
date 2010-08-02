@@ -5,14 +5,14 @@ using System.Text;
 using System.Drawing;
 
 using ArcEngine.Asset;
-
+using ArcEngine.Input;
 
 namespace ArcEngine.Utility.GUI
 {
 	/// <summary>
-	/// Checkbox
+	/// A standard Check Box.
 	/// </summary>
-	public class CheckBox : Control
+	public class CheckBox : ButtonBase
 	{
 		/// <summary>
 		/// 
@@ -64,23 +64,57 @@ namespace ArcEngine.Utility.GUI
 		/// <param name="time"></param>
 		public override void Update(GuiManager manager, GameTime time)
 		{
+
+			// Mouse outside the control
+			Rectangle dst = Rectangle;
+			if (Parent != null)
+				dst.Offset(Parent.Location);
+
+			if (!dst.Contains(Mouse.Location))
+			{
+				base.Update(manager, time);
+				return;
+			}
+			
+
+			if (Mouse.IsNewButtonUp(System.Windows.Forms.MouseButtons.Left))
+			{
+				if (Checked)
+				{
+				}
+				else
+				{
+				}
+
+				if (CheckedChanged != null)
+					CheckedChanged(this, new EventArgs());
+
+				Checked = !Checked;
+			}
+
+
 			base.Update(manager, time);
 		}
 
 
-		#region
+		#region Events
+
+		/// <summary>
+		/// Occurs when the value of the Checked property changes. 
+		/// </summary>
+		public event EventHandler CheckedChanged;
+
+
+		#endregion
+
+
+
+		#region Properties
 
 		/// <summary>
 		/// Is checked
 		/// </summary>
 		public bool Checked;
-
-
-
-		/// <summary>
-		/// Text to display
-		/// </summary>
-		public string Text;
 
 
 		#endregion

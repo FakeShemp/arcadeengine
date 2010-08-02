@@ -62,7 +62,7 @@ namespace ArcEngine.Examples.UserInterface
 			Manager.Font = BitmapFont.CreateFromTTF(@"C:\Windows\Fonts\Verdana.ttf", 12, FontStyle.Regular);
 
 
-			window = new Window();
+			window = new Window("Title...");
 			window.BgColor = Color.LightCoral;
 			window.Location = new Point(100, 100);
 			window.Size = new Size(320, 240);
@@ -72,8 +72,16 @@ namespace ArcEngine.Examples.UserInterface
 			CheckBox checkbox = new CheckBox();
 			checkbox.Location = new Point(50, 50);
 			checkbox.Font = BitmapFont.CreateFromTTF(@"C:\Windows\Fonts\Verdana.ttf", 9, FontStyle.Regular);
+			checkbox.CheckedChanged +=new EventHandler(checkbox_CheckedChanged);
 			window.Add(checkbox);
 
+		}
+
+
+
+		void checkbox_CheckedChanged(object sender, EventArgs e)
+		{
+			Trace.WriteLine("Checked !!");	
 		}
 
 

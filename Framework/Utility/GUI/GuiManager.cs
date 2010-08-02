@@ -42,7 +42,7 @@ namespace ArcEngine.Utility.GUI
 		/// </summary>
 		public GuiManager()
 		{
-			Elements = new List<Control>();
+			Controls = new List<Control>();
 
 			Batch = new SpriteBatch();
 		}
@@ -58,8 +58,8 @@ namespace ArcEngine.Utility.GUI
 		/// <param name="time">Elapsed game time</param>
 		public void Update(GameTime time)
 		{
-			foreach (Control element in Elements)
-				element.Update(this, time);
+			foreach (Control control in Controls)
+				control.Update(this, time);
 		}
 
 
@@ -71,7 +71,7 @@ namespace ArcEngine.Utility.GUI
 		{
 			Batch.Begin();
 
-			foreach (Control element in Elements)
+			foreach (Control element in Controls)
 				element.Draw(this, Batch);
 
 			Batch.End();
@@ -89,7 +89,7 @@ namespace ArcEngine.Utility.GUI
 		/// </summary>
 		public void Clear()
 		{
-			Elements.Clear();
+			Controls.Clear();
 		}
 
 
@@ -103,7 +103,7 @@ namespace ArcEngine.Utility.GUI
 				return;
 
 
-			Elements.Add(element);
+			Controls.Add(element);
 		}
 
 
@@ -116,7 +116,7 @@ namespace ArcEngine.Utility.GUI
 			if (element == null)
 				return;
 
-			Elements.Remove(element);
+			Controls.Remove(element);
 		}
 
 
@@ -147,7 +147,7 @@ namespace ArcEngine.Utility.GUI
 		/// <summary>
 		/// List of all gui elements
 		/// </summary>
-		List<Control> Elements;
+		List<Control> Controls;
 
 
 

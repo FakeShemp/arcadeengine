@@ -30,7 +30,8 @@ using ArcEngine.Asset;
 namespace ArcEngine.Utility.GUI
 {
 	/// <summary>
-	/// Window class
+	/// Basic Window object. 
+	/// Provides a Client area which new Controls are added to.
 	/// </summary>
 	public class Window : Container
 	{
@@ -50,6 +51,11 @@ namespace ArcEngine.Utility.GUI
 		/// <param name="time">Elapsed time</param>
 		public override void Update(GuiManager manager, GameTime time)
 		{
+			// Update window
+
+
+			// Update container
+			base.Update(manager, time);
 		}
 
 

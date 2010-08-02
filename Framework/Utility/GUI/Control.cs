@@ -26,19 +26,21 @@ using System.Text;
 using System.Xml;
 using ArcEngine.Graphic;
 using ArcEngine.Asset;
+using ArcEngine.Input;
+
 
 namespace ArcEngine.Utility.GUI
 {
 
 	/// <summary>
-	/// Base class for each GUI element
+	/// Defines the base class for controls, which are components with visual representation
 	/// </summary>
 	public abstract class Control
 	{
 
 
 		/// <summary>
-		/// 
+		/// Initializes a new instance of the Control class with default settings.
 		/// </summary>
 		public Control()
 		{
@@ -49,7 +51,7 @@ namespace ArcEngine.Utility.GUI
 
 
 		/// <summary>
-		/// Dispose resource
+		/// Releases the unmanaged resources.
 		/// </summary>
 		public virtual void Dispose()
 		{
@@ -68,6 +70,18 @@ namespace ArcEngine.Utility.GUI
 		/// <param name="time">Elapsed time</param>
 		public virtual void Update(GuiManager manager, GameTime time)
 		{
+
+			// Mouse inside the control
+			if (ScreenRectangle.Contains(Mouse.Location))
+			{
+				if ((Mouse.Buttons | System.Windows.Forms.MouseButtons.None) != System.Windows.Forms.MouseButtons.None)
+				{
+					OnClick(new System.Windows.Forms.MouseEventArgs(Mouse.Buttons, 1, Mouse.Location.X, Mouse.Location.Y, 0));
+				}
+
+
+
+			}
 		}
 
 
@@ -78,11 +92,221 @@ namespace ArcEngine.Utility.GUI
 		/// <param name="batch">SpriteBatch to use</param>
 		public virtual void Draw(GuiManager manager, SpriteBatch batch)
 		{
+			OnPaint(EventArgs.Empty);
 		}
 
 
 
 		#endregion
+
+
+
+		#region Methods
+
+
+		/// <summary>
+		/// Conceals the control from the user. 
+		/// </summary>
+		public void Hide()
+		{
+			Visible = false;
+		}
+
+
+		/// <summary>
+		/// Displays the control to the user. 
+		/// </summary>
+		public void Show()
+		{
+			Visible = true;
+		}
+
+
+		/// <summary>
+		/// Computes the location of the specified client point into screen coordinates.
+		/// </summary>
+		/// <param name="p">The client coordinate point to convert.</param>
+		/// <returns>A Point that represents the converted point in screen coordinates. </returns>
+		public Point PointToScreen(Point p)
+		{
+
+
+			return p;
+		}
+
+
+		/// <summary>
+		/// Computes the location of the specified screen point into client coordinates.
+		/// </summary>
+		/// <param name="p">The screen coordinate Point to convert.</param>
+		/// <returns>A Point that represents the converted Point, p, in client coordinates.</returns>
+		public Point PointToClient(Point p)
+		{
+
+			return p;
+		}
+
+
+
+		/// <summary>
+		/// Computes the size and location of the specified client rectangle in screen coordinates.
+		/// </summary>
+		/// <param name="r">The screen coordinate Rectangle to convert.</param>
+		/// <returns>A Rectangle that represents the converted Rectangle, p, in screen coordinates.</returns>
+		public Rectangle RectangleToScreen(Rectangle r)
+		{
+
+
+			return r;
+		}
+
+
+		/// <summary>
+		/// Computes the size and location of the specified screen rectangle in client coordinates.
+		/// </summary>
+		/// <param name="r">The screen coordinate Rectangle to convert.</param>
+		/// <returns>A Rectangle that represents the converted Rectangle, r, in client coordinates.</returns>
+		public Rectangle RectangleToClient(Rectangle r)
+		{
+			return r;
+
+		}
+
+		#endregion
+
+
+		#region
+
+		/// <summary>
+		/// Raises the Click event. 
+		/// </summary>
+		/// <param name="e">An EventArgs that contains the event data</param>
+		protected virtual void OnClick(EventArgs e)
+		{
+			if (Click != null)
+				Click(this, e);
+		}
+
+
+		/// <summary>
+		/// Raises the Paint event. 
+		/// </summary>
+		/// <param name="e">An EventArgs that contains the event data</param>
+		protected virtual void OnPaint(EventArgs e)
+		{
+			if (Paint != null)
+				Paint(this, e);
+		}
+
+
+
+		/// <summary>
+		/// Raises the MouseDown event. 
+		/// </summary>
+		/// <param name="e">An EventArgs that contains the event data</param>
+		protected virtual void OnMouseDown(EventArgs e)
+		{
+			if (MouseDown != null)
+				MouseDown(this, e);
+		}
+
+
+		/// <summary>
+		/// Raises the MouseEnter event. 
+		/// </summary>
+		/// <param name="e">An EventArgs that contains the event data</param>
+		protected virtual void OnMouseEnter(EventArgs e)
+		{
+			if (MouseEnter != null)
+				MouseEnter(this, e);
+		}
+
+
+
+		/// <summary>
+		/// Raises the MouseUp event. 
+		/// </summary>
+		/// <param name="e">An EventArgs that contains the event data</param>
+		protected virtual void OnMouseUp(EventArgs e)
+		{
+			if (MouseUp != null)
+				MouseUp(this, e);
+		}
+
+
+		/// <summary>
+		/// Raises the MouseMove event. 
+		/// </summary>
+		/// <param name="e">An EventArgs that contains the event data</param>
+		protected virtual void OnMouseMove(EventArgs e)
+		{
+			if (MouseMove != null)
+				MouseMove(this, e);
+		}
+
+
+
+
+		#endregion
+
+
+		#region Events
+
+		/// <summary>
+		/// Occurs when the Text property value changes. 
+		/// </summary>
+		public event EventHandler TextChanged;
+
+
+		/// <summary>
+		/// Occurs when the Visible property value changes. 
+		/// </summary>
+		public event EventHandler VisibleChanged;
+
+
+		/// <summary>
+		/// Occurs when the control is redrawn.  
+		/// </summary>
+		public event EventHandler Paint;
+
+
+		/// <summary>
+		/// Occurs when the control is clicked.
+		/// </summary>
+		public event EventHandler Click;
+
+
+		/// <summary>
+		/// Occurs when the mouse pointer is over the control and a mouse button is pressed.
+		/// </summary>
+		public event EventHandler MouseDown;
+
+
+		/// <summary>
+		/// Occurs when the mouse pointer is over the control and a mouse button is released.
+		/// </summary>
+		public event EventHandler MouseUp;
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public event EventHandler MouseMove;
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public event EventHandler MouseEnter;
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public event EventHandler MouseLeave;
+
+		#endregion
+
 
 
 		#region IO routines
@@ -184,10 +408,11 @@ namespace ArcEngine.Utility.GUI
 		#endregion
 
 
+
 		#region Properties
 
 		/// <summary>
-		/// Parent control
+		/// Gets or sets the parent container of the control. 
 		/// </summary>
 		public Control Parent
 		{
@@ -208,6 +433,22 @@ namespace ArcEngine.Utility.GUI
 		public Rectangle Rectangle;
 
 
+		/// <summary>
+		/// Rectangle of the control in screen coordinate
+		/// </summary>
+		public Rectangle ScreenRectangle
+		{
+			get
+			{
+				Rectangle rect = Rectangle;
+
+				if (Parent != null)
+					rect.Offset(Parent.ScreenRectangle.Location);
+
+				return rect;
+			}
+		}
+
 
 		/// <summary>
 		/// Size of the element
@@ -226,7 +467,6 @@ namespace ArcEngine.Utility.GUI
 		}
 
 
-
 		/// <summary>
 		/// Location of the element
 		/// </summary>
@@ -242,8 +482,6 @@ namespace ArcEngine.Utility.GUI
 				Rectangle.Location = value;
 			}
 		}
-
-
 
 
 		/// <summary>
@@ -268,17 +506,61 @@ namespace ArcEngine.Utility.GUI
 		}
 
 
-
 		/// <summary>
-		/// Is control visible
+		/// Gets or sets a value indicating whether the control and all its parent controls are displayed.
 		/// </summary>
-		public bool Visible;
+		public bool Visible
+		{
+			get
+			{
+				return visible;
+			}
+			set
+			{
+				visible = value;
+
+				if (VisibleChanged != null)
+					VisibleChanged(this, EventArgs.Empty);
+
+			}
+		}
+		private bool visible;
 
 
 		/// <summary>
 		/// Font to use
 		/// </summary>
 		public BitmapFont Font;
+
+
+		/// <summary>
+		/// Gets or sets the text associated with this control.
+		/// </summary>
+		public string Text
+		{
+			get
+			{
+				if (text != null)
+				{
+					return text;
+				}
+				return "";
+			}
+			set
+			{
+				if (value == null)
+					value = "";
+
+				if (text == value)
+					return;
+
+				text = value;
+
+				if (TextChanged != null)
+					TextChanged(this, EventArgs.Empty);
+			}
+		}
+		private string text;
 
 		#endregion
 	}

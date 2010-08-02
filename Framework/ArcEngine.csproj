@@ -353,9 +353,13 @@
     <Compile Include="RandomEnum.cs" />
     <Compile Include="Utility\GameState\State.cs" />
     <Compile Include="Utility\GameState\StateManager.cs" />
+    <Compile Include="Utility\GUI\ButtonBase.cs" />
     <Compile Include="Utility\GUI\CheckBox.cs" />
     <Compile Include="Utility\GUI\Container.cs" />
     <Compile Include="Utility\GUI\GuiManager.cs" />
+    <Compile Include="Utility\GUI\Label.cs" />
+    <Compile Include="Utility\GUI\ProgressBar.cs" />
+    <Compile Include="Utility\GUI\RadioButton.cs" />
     <Compile Include="Utility\GUI\Window.cs" />
     <Compile Include="Input\GamePad.cs" />
     <Compile Include="Input\GamePadCapabilities.cs" />

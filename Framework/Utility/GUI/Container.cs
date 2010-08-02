@@ -7,7 +7,7 @@ using ArcEngine.Graphic;
 namespace ArcEngine.Utility.GUI
 {
 	/// <summary>
-	/// Container class for GUI element
+	/// Special control that contains other Control types.
 	/// </summary>
 	public abstract class Container : Control
 	{
@@ -68,12 +68,20 @@ namespace ArcEngine.Utility.GUI
 		/// Removes a control from the container
 		/// </summary>
 		/// <param name="control">Control to remove</param>
-		public void Remove(Control control)
+		/// <remarks>The control is no more valid after a successfull to this method</remarks>
+		public bool Remove(Control control)
 		{
 			if (control == null)
-				return;
+				return false;
+
+			if (Controls.Contains(control))
+				return false;
 
 			Controls.Remove(control);
+
+			control.Dispose();
+
+			return true;
 		}
 
 
@@ -95,6 +103,8 @@ namespace ArcEngine.Utility.GUI
 
 			return null;
 		}
+
+
 
 		#region Properties
 
