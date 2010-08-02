@@ -80,7 +80,15 @@ namespace ArcEngine.Input
 		/// <returns>True if button up</returns>
 		static public bool IsNewButtonUp(MouseButtons button)
 		{
-			return (PreviousState == button) && (Buttons != button);
+
+			if (PreviousState == Buttons)
+				return false;
+
+
+			return 
+				( (PreviousState & button) == button) && 
+				( (Buttons & button) != button);
+
 		}
 
 

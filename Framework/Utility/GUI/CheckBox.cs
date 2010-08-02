@@ -1,11 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using ArcEngine.Graphic;
-using System.Text;
 using System.Drawing;
-
 using ArcEngine.Asset;
+using ArcEngine.Graphic;
 using ArcEngine.Input;
+
+
+using System.Windows.Forms;
+
 
 namespace ArcEngine.Utility.GUI
 {
@@ -64,7 +65,7 @@ namespace ArcEngine.Utility.GUI
 		/// <param name="time"></param>
 		public override void Update(GuiManager manager, GameTime time)
 		{
-
+/*
 			// Mouse outside the control
 			Rectangle dst = Rectangle;
 			if (Parent != null)
@@ -91,10 +92,39 @@ namespace ArcEngine.Utility.GUI
 
 				Checked = !Checked;
 			}
-
+*/
 
 			base.Update(manager, time);
 		}
+
+
+		#region 
+
+
+		/// <summary>
+		/// Raises the Click event.
+		/// </summary>
+		/// <param name="e">An EventArgs that contains the event data.</param>
+		protected override void OnMouseClick(EventArgs e)
+		{
+			switch (checkState)
+			{
+				case CheckState.Checked:
+					CheckState = CheckState.Unchecked;
+				break;
+				case CheckState.Unchecked:
+					CheckState = CheckState.Checked;
+				break;
+				default:
+					CheckState = CheckState.Unchecked;
+				break;
+			}
+
+
+			base.OnMouseClick(e);
+		}
+
+		#endregion
 
 
 		#region Events
@@ -105,8 +135,26 @@ namespace ArcEngine.Utility.GUI
 		public event EventHandler CheckedChanged;
 
 
+
+
 		#endregion
 
+
+		#region
+
+		/// <summary>
+		/// Raises the Click event. 
+		/// </summary>
+		/// <param name="e">An EventArgs that contains the event data</param>
+		protected virtual void OnCheckChanged(EventArgs e)
+		{
+			if (CheckedChanged!= null)
+				CheckedChanged(this, e);
+		}
+
+
+
+		#endregion
 
 
 		#region Properties
@@ -116,6 +164,26 @@ namespace ArcEngine.Utility.GUI
 		/// </summary>
 		public bool Checked;
 
+
+		/// <summary>
+		/// Gets or sets the state of the CheckBox. 
+		/// </summary>
+		public CheckState CheckState
+		{
+			get
+			{
+				return checkState;
+			}
+			set
+			{
+				if (checkState == value)
+					return;
+
+				checkState = value;
+				OnCheckChanged(EventArgs.Empty);
+			}
+		}
+		CheckState checkState;
 
 		#endregion
 	}

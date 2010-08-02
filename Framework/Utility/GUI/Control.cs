@@ -74,11 +74,28 @@ namespace ArcEngine.Utility.GUI
 			// Mouse inside the control
 			if (ScreenRectangle.Contains(Mouse.Location))
 			{
+
+				// MouseDown event
 				if ((Mouse.Buttons | System.Windows.Forms.MouseButtons.None) != System.Windows.Forms.MouseButtons.None)
 				{
-					OnClick(new System.Windows.Forms.MouseEventArgs(Mouse.Buttons, 1, Mouse.Location.X, Mouse.Location.Y, 0));
+					OnMouseDown(new System.Windows.Forms.MouseEventArgs(Mouse.Buttons, 1, Mouse.Location.X, Mouse.Location.Y, 0));
+
+					// MouseClick event
+					if ((Mouse.Buttons | System.Windows.Forms.MouseButtons.Left) == System.Windows.Forms.MouseButtons.Left)
+						OnMouseClick(EventArgs.Empty);
 				}
 
+
+				// MouseUp event
+				foreach (System.Windows.Forms.MouseButtons button in Enum.GetValues(typeof(System.Windows.Forms.MouseButtons)))
+				{
+					if (button == System.Windows.Forms.MouseButtons.None)
+						continue;
+
+
+					if (Mouse.IsNewButtonUp(button))
+						OnMouseUp(new System.Windows.Forms.MouseEventArgs(button, 1, Mouse.Location.X, Mouse.Location.Y, 0));
+				}
 
 
 			}
@@ -181,10 +198,10 @@ namespace ArcEngine.Utility.GUI
 		/// Raises the Click event. 
 		/// </summary>
 		/// <param name="e">An EventArgs that contains the event data</param>
-		protected virtual void OnClick(EventArgs e)
+		protected virtual void OnMouseClick(EventArgs e)
 		{
-			if (Click != null)
-				Click(this, e);
+			if (MouseClick != null)
+				MouseClick(this, e);
 		}
 
 
@@ -271,9 +288,9 @@ namespace ArcEngine.Utility.GUI
 
 
 		/// <summary>
-		/// Occurs when the control is clicked.
+		/// Occurs when the control is clicked by the mouse.
 		/// </summary>
-		public event EventHandler Click;
+		public event EventHandler MouseClick;
 
 
 		/// <summary>
