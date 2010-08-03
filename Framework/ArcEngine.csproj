@@ -358,6 +358,7 @@
     <Compile Include="Utility\GUI\Container.cs" />
     <Compile Include="Utility\GUI\GuiManager.cs" />
     <Compile Include="Utility\GUI\Label.cs" />
+    <Compile Include="Utility\GUI\Message.cs" />
     <Compile Include="Utility\GUI\ProgressBar.cs" />
     <Compile Include="Utility\GUI\RadioButton.cs" />
     <Compile Include="Utility\GUI\Window.cs" />

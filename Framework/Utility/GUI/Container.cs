@@ -17,11 +17,10 @@ namespace ArcEngine.Utility.GUI
 		/// </summary>
 		public Container()
 		{
-			Controls = new List<Control>();
 		}
 
 
-
+/*
 		/// <summary>
 		/// 
 		/// </summary>
@@ -48,7 +47,7 @@ namespace ArcEngine.Utility.GUI
 			foreach (Control control in Controls)
 				control.Draw(manager, batch);
 		}
-
+*/
 
 		/// <summary>
 		/// Adds a control to the container
@@ -108,11 +107,6 @@ namespace ArcEngine.Utility.GUI
 
 		#region Properties
 
-
-		/// <summary>
-		/// Controls
-		/// </summary>
-		List<Control> Controls;
 
 		#endregion
 	}

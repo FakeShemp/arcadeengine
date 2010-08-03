@@ -69,14 +69,36 @@ namespace ArcEngine.Utility.GUI
 		/// </summary>
 		public void Draw()
 		{
+			Message message = Message.Create(ControlMessage.Paint, null);
+
 			Batch.Begin();
 
 			foreach (Control element in Controls)
-				element.Draw(this, Batch);
+			{
+				DrawChild(element, message);
+			}
 
 			Batch.End();
 		}
 
+
+
+		/// <summary>
+		/// Draw the control and children
+		/// </summary>
+		/// <param name="control"></param>
+		/// <param name="msg"></param>
+		private void DrawChild(Control control, Message msg)
+		{
+			control.ProcessMessage(msg, this, Batch);
+
+			foreach (Control ctrl in control.Controls)
+			{
+				ctrl.ProcessMessage(msg, this, Batch);
+				
+				DrawChild(ctrl, msg);
+			}
+		}
 
 		#endregion
 

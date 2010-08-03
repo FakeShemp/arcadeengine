@@ -41,9 +41,11 @@ namespace ArcEngine.Utility.GUI
 		/// <param name="title">Title of the window</param>
 		public Window(string title)
 		{
+			Title = title;
 		}
 
 
+/*
 		/// <summary>
 		/// Update the window
 		/// </summary>
@@ -57,70 +59,77 @@ namespace ArcEngine.Utility.GUI
 			// Update container
 			base.Update(manager, time);
 		}
-
+*/
 
 
 		/// <summary>
 		/// Draws the window
 		/// </summary>
-		/// <param name="manager">Gui manager handle</param>
-		/// <param name="batch">SpriteBatch to use</param>
-		public override void Draw(GuiManager manager, SpriteBatch batch)
+		/// <param name="e"></param>
+		protected override void OnPaint(PaintEventArgs e)
 		{
+			// Draw all controls in the window
+			base.OnPaint(e);
+
+	
 			if (!Visible)
 				return;
 
 
 			// No skinning
-			if (manager.TileSet == null)
+			if (e.Manager.TileSet == null)
 			{
-				batch.FillRectangle(Rectangle, BgColor);
+				e.Batch.FillRectangle(Rectangle, BgColor);
 			}
 			else
 			{
 				// Corner tiles
-				Tile tiletl = manager.TileSet.GetTile(0);
-				Tile tiletr = manager.TileSet.GetTile(2);
-				Tile tilebl = manager.TileSet.GetTile(6);
-				Tile tilebr = manager.TileSet.GetTile(8);
+				Tile tiletl = e.Manager.TileSet.GetTile(0);
+				Tile tiletr = e.Manager.TileSet.GetTile(2);
+				Tile tilebl = e.Manager.TileSet.GetTile(6);
+				Tile tilebr = e.Manager.TileSet.GetTile(8);
 
 
 				// Draw corners
-				batch.DrawTile(manager.TileSet, 0, new Point(Rectangle.Left - tiletl.Size.Width, Rectangle.Top - tiletl.Size.Height), Color);
-				batch.DrawTile(manager.TileSet, 2, new Point(Rectangle.Right, Rectangle.Top - tiletr.Size.Height), Color);
-				batch.DrawTile(manager.TileSet, 8, new Point(Rectangle.Right, Rectangle.Bottom), Color);
-				batch.DrawTile(manager.TileSet, 6, new Point(Rectangle.Left - tiletl.Size.Width, Rectangle.Bottom), Color);
+				e.Batch.DrawTile(e.Manager.TileSet, 0, new Point(Rectangle.Left - tiletl.Size.Width, Rectangle.Top - tiletl.Size.Height), Color);
+				e.Batch.DrawTile(e.Manager.TileSet, 2, new Point(Rectangle.Right, Rectangle.Top - tiletr.Size.Height), Color);
+				e.Batch.DrawTile(e.Manager.TileSet, 8, new Point(Rectangle.Right, Rectangle.Bottom), Color);
+				e.Batch.DrawTile(e.Manager.TileSet, 6, new Point(Rectangle.Left - tiletl.Size.Width, Rectangle.Bottom), Color);
 
 				// Top bar
-				Tile tile = manager.TileSet.GetTile(1);
+				Tile tile = e.Manager.TileSet.GetTile(1);
 				Rectangle dst = new Rectangle(Rectangle.Left, Rectangle.Top - tile.Size.Height, Rectangle.Width, tile.Size.Height);
-				batch.DrawTile(manager.TileSet, 1, dst.Location, dst, Color);
+				e.Batch.DrawTile(e.Manager.TileSet, 1, dst.Location, dst, Color);
 
 
 				// Bottom bar
-				tile = manager.TileSet.GetTile(7);
+				tile = e.Manager.TileSet.GetTile(7);
 				dst = new Rectangle(Rectangle.Left, Rectangle.Bottom, Rectangle.Width, tile.Size.Height);
-				batch.DrawTile(manager.TileSet, 7, dst.Location, dst, Color);
+				e.Batch.DrawTile(e.Manager.TileSet, 7, dst.Location, dst, Color);
 
 
 				// Right side
-				tile = manager.TileSet.GetTile(5);
+				tile = e.Manager.TileSet.GetTile(5);
 				dst = new Rectangle(Rectangle.Right, Rectangle.Top, tiletr.Size.Width, Rectangle.Height);
-				batch.DrawTile(manager.TileSet, 5, dst.Location, dst, Color);
+				e.Batch.DrawTile(e.Manager.TileSet, 5, dst.Location, dst, Color);
 
 
 				// Left side
-				tile = manager.TileSet.GetTile(3);
+				tile = e.Manager.TileSet.GetTile(3);
 				dst = new Rectangle(Rectangle.Left - tiletl.Size.Height, Rectangle.Top, tiletl.Size.Width, Rectangle.Height);
-				batch.DrawTile(manager.TileSet, 3, dst.Location, dst, Color);
+				e.Batch.DrawTile(e.Manager.TileSet, 3, dst.Location, dst, Color);
 
 				// Background
-				batch.DrawTile(manager.TileSet, 4, Rectangle.Location, Rectangle, Color);
+				e.Batch.DrawTile(e.Manager.TileSet, 4, Rectangle.Location, Rectangle, Color);
 
 
+				// Draw each controls
+				foreach (Control control in Controls)
+				{
+					//control.OnPaint(e);
+				}
 
-				// Draw all controls in the window
-				base.Draw(manager, batch);
+	
 			}
 		}
 

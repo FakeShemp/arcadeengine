@@ -44,6 +44,7 @@ namespace ArcEngine.Utility.GUI
 		/// </summary>
 		public Control()
 		{
+			Controls = new List<Control>();
 			Rectangle = new Rectangle();
 			Color = Color.White;
 			Visible = true;
@@ -68,11 +69,11 @@ namespace ArcEngine.Utility.GUI
 		/// </summary>
 		/// <param name="manager">Gui manager handle</param>
 		/// <param name="time">Elapsed time</param>
-		public virtual void Update(GuiManager manager, GameTime time)
+		public void Update(GuiManager manager, GameTime time)
 		{
 
 			// Mouse inside the control
-			if (ScreenRectangle.Contains(Mouse.Location))
+			if (!ScreenRectangle.Contains(Mouse.Location))
 			{
 
 				// MouseDown event
@@ -81,7 +82,7 @@ namespace ArcEngine.Utility.GUI
 					OnMouseDown(new System.Windows.Forms.MouseEventArgs(Mouse.Buttons, 1, Mouse.Location.X, Mouse.Location.Y, 0));
 
 					// MouseClick event
-					if ((Mouse.Buttons | System.Windows.Forms.MouseButtons.Left) == System.Windows.Forms.MouseButtons.Left)
+					if (Mouse.IsNewButtonDown(System.Windows.Forms.MouseButtons.Left))
 						OnMouseClick(EventArgs.Empty);
 				}
 
@@ -96,20 +97,38 @@ namespace ArcEngine.Utility.GUI
 					if (Mouse.IsNewButtonUp(button))
 						OnMouseUp(new System.Windows.Forms.MouseEventArgs(button, 1, Mouse.Location.X, Mouse.Location.Y, 0));
 				}
-
-
 			}
 		}
 
 
+
 		/// <summary>
-		/// Draws the button
+		/// 
 		/// </summary>
-		/// <param name="manager">Gui manager handle</param>
-		/// <param name="batch">SpriteBatch to use</param>
-		public virtual void Draw(GuiManager manager, SpriteBatch batch)
+		/// <param name="msg"></param>
+		/// <param name="param1"></param>
+		/// <param name="param2"></param>
+		internal void ProcessMessage(Message msg, object param1, object param2)
 		{
-			OnPaint(EventArgs.Empty);
+
+			switch (msg.Msg)
+			{
+				case ControlMessage.PerformLogic:
+				{
+				}
+				break;
+
+
+				case ControlMessage.Paint:
+				{
+					OnPaint(new PaintEventArgs((GuiManager)param1, (SpriteBatch)param2));
+				}
+				break;
+
+
+				default:
+				break;
+			}
 		}
 
 
@@ -119,6 +138,10 @@ namespace ArcEngine.Utility.GUI
 
 
 		#region Methods
+
+		internal void OnMessage(Message msg)
+		{
+		}
 
 
 		/// <summary>
@@ -192,7 +215,7 @@ namespace ArcEngine.Utility.GUI
 		#endregion
 
 
-		#region
+		#region OnEvent
 
 		/// <summary>
 		/// Raises the Click event. 
@@ -209,7 +232,7 @@ namespace ArcEngine.Utility.GUI
 		/// Raises the Paint event. 
 		/// </summary>
 		/// <param name="e">An EventArgs that contains the event data</param>
-		protected virtual void OnPaint(EventArgs e)
+		protected virtual void OnPaint(PaintEventArgs e)
 		{
 			if (Paint != null)
 				Paint(this, e);
@@ -261,6 +284,34 @@ namespace ArcEngine.Utility.GUI
 				MouseMove(this, e);
 		}
 
+
+		/// <summary>
+		/// Raises the KeyUp event. 
+		/// </summary>
+		/// <param name="e">A KeyEventArgs that contains the event data.</param>
+		protected virtual void OnKeyUp(KeyEventArgs e)
+		{
+
+		}
+
+		/// <summary>
+		/// Raises the KeyDown event. 
+		/// </summary>
+		/// <param name="e">A KeyEventArgs that contains the event data.</param>
+		protected virtual void OnKeyDown(KeyEventArgs e)
+		{
+
+		}
+
+
+
+		/// <summary>
+		/// Raises the TextChanged event. 
+		/// </summary>
+		/// <param name="e">An EventArgs that contains the event data</param>
+		protected virtual void OnTextChanged(EventArgs e)
+		{
+		}
 
 
 
@@ -323,7 +374,6 @@ namespace ArcEngine.Utility.GUI
 		public event EventHandler MouseLeave;
 
 		#endregion
-
 
 
 		#region IO routines
@@ -425,9 +475,19 @@ namespace ArcEngine.Utility.GUI
 		#endregion
 
 
-
 		#region Properties
 
+
+		/// <summary>
+		/// Controls
+		/// </summary>
+		public List<Control> Controls
+		{
+			get;
+			private set;
+		}
+
+	
 		/// <summary>
 		/// Gets or sets the parent container of the control. 
 		/// </summary>
@@ -573,8 +633,7 @@ namespace ArcEngine.Utility.GUI
 
 				text = value;
 
-				if (TextChanged != null)
-					TextChanged(this, EventArgs.Empty);
+				OnTextChanged(EventArgs.Empty);
 			}
 		}
 		private string text;
@@ -582,4 +641,88 @@ namespace ArcEngine.Utility.GUI
 		#endregion
 	}
 
+
+	/// <summary>
+	/// 
+	/// </summary>
+	public class PaintEventArgs : EventArgs
+	{
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="manager"></param>
+		/// <param name="batch"></param>
+		public PaintEventArgs(GuiManager manager, SpriteBatch batch)
+		{
+			Batch = batch;
+			Manager = manager;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public SpriteBatch Batch
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public GuiManager Manager
+		{
+			get;
+			private set;
+		}
+
+
+	}
+
+
+	/// <summary>
+	/// Provides data for the KeyDown or KeyUp event. 
+	/// </summary>
+	public class KeyEventArgs : EventArgs
+	{
+
+		/// <summary>
+		/// Gets or sets a value indicating whether the event was handled. 
+		/// </summary>
+		public bool Handled;
+
+
+		/// <summary>
+		/// A Keys representing the key code for the key that was pressed, 
+		/// combined with modifier flags that indicate which combination of 
+		/// CTRL, SHIFT, and ALT keys was pressed at the same time.
+		/// </summary>
+		public System.Windows.Forms.Keys KeyData
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// A Keys value that is the key code for the event. 
+		/// </summary>
+		public System.Windows.Forms.Keys KeyCode
+		{
+			get
+			{
+				System.Windows.Forms.Keys keys = KeyData & System.Windows.Forms.Keys.KeyCode;
+				if (!Enum.IsDefined(typeof(System.Windows.Forms.Keys), (int) keys))
+				{
+					return System.Windows.Forms.Keys.None;
+				}
+				return keys;
+			}
+		}
+ 
+
+	}
 }

@@ -126,6 +126,7 @@ namespace ArcEngine.Utility.GUI
 
 		#region Methods
 
+/*
 
 		/// <summary>
 		/// 
@@ -140,16 +141,15 @@ namespace ArcEngine.Utility.GUI
 		}
 
 
-
 		/// <summary>
 		/// Draws the button
 		/// </summary>
 		/// <param name="manager">Gui manager handle</param>
 		/// <param name="batch">SpriteBatch to use</param>
-		public override void Draw(GuiManager manager, SpriteBatch batch)
+		protected override void OnPaint(PaintEventArgs e)
 		{
 			base.Draw(manager, batch);
-/*
+
 			// Background color
 			if (BgColor.A > 0)
 			{
@@ -168,9 +168,9 @@ namespace ArcEngine.Utility.GUI
 
 
 			device.Color = Color.White;
-*/ 
-		}
 
+		}
+*/ 
 /*
 		/// <summary>
 		/// Resize the button to fit the background texture size
