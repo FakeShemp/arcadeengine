@@ -24,6 +24,8 @@ using System.Text;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
 using System.Drawing;
+using ArcEngine.Input;
+
 
 namespace ArcEngine.Utility.GUI
 {
@@ -50,6 +52,26 @@ namespace ArcEngine.Utility.GUI
 
 
 
+		/// <summary>
+		/// Disposes resources
+		/// </summary>
+		public void Dispose()
+		{
+			if (Font != null)
+				Font.Dispose();
+			Font = null;
+
+			if (Batch != null)
+				Batch.Dispose();
+			Batch = null;
+
+
+			IsDisposed= true;
+		}
+
+
+
+
 		#region Update and Draw
 
 		/// <summary>
@@ -58,8 +80,22 @@ namespace ArcEngine.Utility.GUI
 		/// <param name="time">Elapsed game time</param>
 		public void Update(GameTime time)
 		{
-			foreach (Control control in Controls)
-				control.Update(this, time);
+
+			// Find the control under the mouse
+			Control previouscontrol = ControlUnderMouse;
+			ControlUnderMouse = ControlFromPoint(Mouse.Location);
+
+
+			// MouseLeave/MouseEnter event
+			if (previouscontrol != ControlUnderMouse)
+			{
+				if (previouscontrol != null)
+					previouscontrol.ProcessMessage(Message.Create(ControlMessage.MouseLeave, null, null));
+
+				if (ControlUnderMouse != null)
+					ControlUnderMouse.ProcessMessage(Message.Create(ControlMessage.MouseEnter, null, null));
+
+			}
 		}
 
 
@@ -69,7 +105,7 @@ namespace ArcEngine.Utility.GUI
 		/// </summary>
 		public void Draw()
 		{
-			Message message = Message.Create(ControlMessage.Paint, null);
+			Message message = Message.Create(ControlMessage.Paint, this, null);
 
 			Batch.Begin();
 
@@ -86,15 +122,15 @@ namespace ArcEngine.Utility.GUI
 		/// <summary>
 		/// Draw the control and children
 		/// </summary>
-		/// <param name="control"></param>
-		/// <param name="msg"></param>
+		/// <param name="control">Parent control</param>
+		/// <param name="msg">Message</param>
 		private void DrawChild(Control control, Message msg)
 		{
-			control.ProcessMessage(msg, this, Batch);
+			control.ProcessMessage(msg);
 
 			foreach (Control ctrl in control.Controls)
 			{
-				ctrl.ProcessMessage(msg, this, Batch);
+				ctrl.ProcessMessage(msg);
 				
 				DrawChild(ctrl, msg);
 			}
@@ -102,6 +138,30 @@ namespace ArcEngine.Utility.GUI
 
 		#endregion
 
+
+
+		/// <summary>
+		/// Retrieves a handle to the control that contains the specified point. 
+		/// </summary>
+		/// <param name="loc">The point to be checked</param>
+		/// <returns>The return value is a handle to the window that contains the point.
+		/// If no window exists at the given point, the return value is NULL</returns>
+		public Control ControlFromPoint(Point loc)
+		{
+			foreach (Control control in Controls)
+			{
+				// Point outside the control
+				if (!control.Rectangle.Contains(loc))
+					continue;
+
+
+				Point point = new Point(loc.X - control.Location.X, loc.Y - control.Location.Y);
+				return control.GetChildAtPoint(point);
+			}
+
+
+			return null;
+		}
 
 		
 		#region Element management
@@ -145,25 +205,17 @@ namespace ArcEngine.Utility.GUI
 		#endregion
 
 
-		/// <summary>
-		/// Disposes resources
-		/// </summary>
-		public void Dispose()
-		{
-			if (Font != null)
-				Font.Dispose();
-			Font = null;
-
-			if (Batch != null)
-				Batch.Dispose();
-			Batch = null;
-
-
-			IsDisposed= true;
-		}
-
-
 		#region Properties
+
+
+		/// <summary>
+		/// Control under the mouse
+		/// </summary>
+		public Control ControlUnderMouse
+		{
+			get;
+			private set;
+		}
 
 
 		/// <summary>
@@ -198,7 +250,11 @@ namespace ArcEngine.Utility.GUI
 		/// <summary>
 		/// SpriteBatch
 		/// </summary>
-		SpriteBatch Batch;
+		internal SpriteBatch Batch
+		{
+			get;
+			private set;
+		}
 
 		#endregion
 

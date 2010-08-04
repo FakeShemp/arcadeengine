@@ -103,25 +103,33 @@ namespace ArcEngine.Utility.GUI
 
 
 		/// <summary>
-		/// 
+		/// Process messages
 		/// </summary>
-		/// <param name="msg"></param>
-		/// <param name="param1"></param>
-		/// <param name="param2"></param>
-		internal void ProcessMessage(Message msg, object param1, object param2)
+		/// <param name="msg">Message</param>
+		internal void ProcessMessage(Message msg)
 		{
 
 			switch (msg.Msg)
 			{
-				case ControlMessage.PerformLogic:
+
+				case ControlMessage.Paint:
 				{
+					GuiManager gui = (GuiManager) msg.Param1;
+					OnPaint(new PaintEventArgs(gui , gui.Batch));
 				}
 				break;
 
 
-				case ControlMessage.Paint:
+				case ControlMessage.MouseEnter:
 				{
-					OnPaint(new PaintEventArgs((GuiManager)param1, (SpriteBatch)param2));
+					OnMouseEnter(EventArgs.Empty);
+				}
+				break;
+
+
+				case ControlMessage.MouseLeave:
+				{
+					OnMouseLeave(EventArgs.Empty);
 				}
 				break;
 
@@ -139,8 +147,31 @@ namespace ArcEngine.Utility.GUI
 
 		#region Methods
 
-		internal void OnMessage(Message msg)
+		/// <summary>
+		/// Retrieves the child control that is located at the specified coordinates. 
+		/// </summary>
+		/// <param name="loc">A Point that contains the coordinates where you want to look for a control. 
+		/// Coordinates are expressed relative to the upper-left corner of the control's client area. </param>
+		/// <returns>The child Control at the specified coordinates.</returns>
+		public Control GetChildAtPoint(Point loc)
 		{
+			Rectangle zone = new Rectangle(Point.Empty, Rectangle.Size);
+			if (!zone.Contains(loc))
+				return null;
+
+			foreach (Control control in Controls)
+			{
+				// Point outside the control
+				if (!control.Rectangle.Contains(loc))
+					continue;
+
+
+				Point point = new Point(loc.X - control.Location.X, loc.Y - control.Location.Y);
+				return control.GetChildAtPoint(point);
+			}
+
+
+			return this;
 		}
 
 
@@ -262,6 +293,17 @@ namespace ArcEngine.Utility.GUI
 		}
 
 
+		/// <summary>
+		/// Raises the MouseLeave event. 
+		/// </summary>
+		/// <param name="e">An EventArgs that contains the event data</param>
+		protected virtual void OnMouseLeave(EventArgs e)
+		{
+			if (MouseLeave != null)
+				MouseLeave(this, e);
+		}
+
+
 
 		/// <summary>
 		/// Raises the MouseUp event. 
@@ -321,6 +363,18 @@ namespace ArcEngine.Utility.GUI
 		#region Events
 
 		/// <summary>
+		/// Occurs when the mouse pointer enters the control.
+		/// </summary>
+		public event EventHandler MouseLeave;
+
+
+		/// <summary>
+		/// Occurs when the mouse pointer leaves the control.
+		/// </summary>
+		public event EventHandler MouseEnter;
+
+
+		/// <summary>
 		/// Occurs when the Text property value changes. 
 		/// </summary>
 		public event EventHandler TextChanged;
@@ -360,18 +414,6 @@ namespace ArcEngine.Utility.GUI
 		/// 
 		/// </summary>
 		public event EventHandler MouseMove;
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public event EventHandler MouseEnter;
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public event EventHandler MouseLeave;
 
 		#endregion
 

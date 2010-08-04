@@ -37,19 +37,20 @@ namespace ArcEngine.Utility.GUI
 	/// </summary>
 	public struct Message
 	{
-
 		/// <summary>
 		/// Creates a new Message. 
 		/// </summary>
 		/// <param name="msg">The message ID</param>
-		/// <param name="param"></param>
+		/// <param name="param1"></param>
+		/// <param name="param2"></param>
 		/// <returns></returns>
-		static public Message Create(ControlMessage msg, object param)
+		static public Message Create(ControlMessage msg, object param1, object param2)
 		{
 			Message message = new Message();
 
 			message.Msg = msg;
-			message.Param = param;
+			message.Param1 = param1;
+			message.Param2 = param2;
 
 			return message;
 		}
@@ -70,9 +71,18 @@ namespace ArcEngine.Utility.GUI
 
 
 		/// <summary>
-		/// The message param field
+		/// The message param 1 field
 		/// </summary>
-		public object Param
+		public object Param1
+		{
+			get;
+			private set;
+		}
+
+		/// <summary>
+		/// The message param 2 field
+		/// </summary>
+		public object Param2
 		{
 			get;
 			private set;
@@ -89,15 +99,19 @@ namespace ArcEngine.Utility.GUI
 	public enum ControlMessage
 	{
 		/// <summary>
-		/// Perform update logic
-		/// </summary>
-		PerformLogic,
-
-		/// <summary>
 		/// Paint the control
 		/// </summary>
 		Paint,
 
+		/// <summary>
+		/// Occurs when the mouse pointer leaves the control.
+		/// </summary>
+		MouseLeave,
 
+
+		/// <summary>
+		/// Occurs when the mouse pointer enters the control.
+		/// </summary>
+		MouseEnter,
 	}
 }

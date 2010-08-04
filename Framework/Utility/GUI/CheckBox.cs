@@ -14,7 +14,7 @@ namespace ArcEngine.Utility.GUI
 	public class CheckBox : ButtonBase
 	{
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
 		public CheckBox()
 		{
@@ -23,21 +23,22 @@ namespace ArcEngine.Utility.GUI
 		}
 
 
-/*
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="manager">Gui manager handle</param>
-		/// <param name="time"></param>
-		public override void Update(GuiManager manager, GameTime time)
-		{
-
-			base.Update(manager, time);
-		}
-*/
 
 		#region 
 
+
+		protected override void OnMouseEnter(EventArgs e)
+		{
+			base.OnMouseEnter(e);
+			Text = "Enter";
+		}
+
+
+		protected override void OnMouseLeave(EventArgs e)
+		{
+			base.OnMouseLeave(e);
+			Text = "Leave";
+		}
 
 		/// <summary>
 		/// Raises the Click event.
@@ -114,7 +115,7 @@ namespace ArcEngine.Utility.GUI
 		#endregion
 
 
-		#region
+		#region OnEvent
 
 		/// <summary>
 		/// Raises the Click event. 

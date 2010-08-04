@@ -3,7 +3,7 @@ using System.Drawing;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
 using ArcEngine.Utility.GUI;
-
+using ArcEngine.Input;
 
 
 namespace ArcEngine.Examples.UserInterface
@@ -69,12 +69,25 @@ namespace ArcEngine.Examples.UserInterface
 			Manager.Add(window);
 
 
-			CheckBox checkbox = new CheckBox();
-			checkbox.Location = new Point(50, 50);
-			checkbox.Font = BitmapFont.CreateFromTTF(@"C:\Windows\Fonts\Verdana.ttf", 9, FontStyle.Regular);
-			checkbox.CheckedChanged +=new EventHandler(checkbox_CheckedChanged);
-			window.Add(checkbox);
+			CheckBox checkbox1 = new CheckBox();
+			checkbox1.Location = new Point(50, 50);
+			checkbox1.Text = "checkbox 1";
+			checkbox1.Font = BitmapFont.CreateFromTTF(@"C:\Windows\Fonts\Verdana.ttf", 9, FontStyle.Regular);
+			checkbox1.CheckedChanged +=new EventHandler(checkbox_CheckedChanged);
+			window.Add(checkbox1);
 
+			CheckBox checkbox2 = new CheckBox();
+			checkbox2.Location = new Point(50, 65);
+			checkbox1.Text = "checkbox 2";
+			checkbox2.Font = BitmapFont.CreateFromTTF(@"C:\Windows\Fonts\Verdana.ttf", 10, FontStyle.Regular);
+			checkbox2.CheckedChanged +=new EventHandler(checkbox_CheckedChanged);
+			window.Add(checkbox2);
+
+
+
+
+			Font = BitmapFont.CreateFromTTF(@"C:\Windows\Fonts\Verdana.ttf", 9, FontStyle.Regular);
+			Batch = new SpriteBatch();
 		}
 
 
@@ -91,6 +104,14 @@ namespace ArcEngine.Examples.UserInterface
 		/// </summary>
 		public override void UnloadContent()
 		{
+			if (Batch != null)
+				Batch.Dispose();
+			Batch = null;
+
+			if (Font != null)
+				Font.Dispose();
+			Font = null;
+
 			if (Manager != null)
 				Manager.Dispose();
 			Manager = null;
@@ -103,9 +124,6 @@ namespace ArcEngine.Examples.UserInterface
 		/// <param name="gameTime">Elapsed game time</param>
 		public override void Update(GameTime gameTime)
 		{
-			base.Update(gameTime);
-
-
 			Manager.Update(gameTime);
 		}
 
@@ -116,6 +134,17 @@ namespace ArcEngine.Examples.UserInterface
 		public override void Draw()
 		{
 			Display.ClearBuffers();
+
+			
+			Batch.Begin();
+			Batch.DrawString(Font, new Point(10, 10), Color.White, "Mouse Location : " + Mouse.Location.ToString());
+
+			if (Manager.ControlUnderMouse != null)
+			{
+				Batch.DrawString(Font, new Point(10, 25), Color.White, Manager.ControlUnderMouse.ToString() + " : " + Manager.ControlUnderMouse.Location.ToString());
+			}
+	
+			Batch.End();
 
 
 			Manager.Draw();
@@ -135,6 +164,20 @@ namespace ArcEngine.Examples.UserInterface
 		/// Window
 		/// </summary>
 		Window window;
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		SpriteBatch Batch;
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		BitmapFont Font;
+
+
 
 		#endregion
 	}
