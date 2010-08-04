@@ -41,8 +41,8 @@ namespace ArcEngine.Utility.GUI
 		/// Creates a new Message. 
 		/// </summary>
 		/// <param name="msg">The message ID</param>
-		/// <param name="param1"></param>
-		/// <param name="param2"></param>
+		/// <param name="param1">Param 1</param>
+		/// <param name="param2">Param 2</param>
 		/// <returns></returns>
 		static public Message Create(ControlMessage msg, object param1, object param2)
 		{
@@ -53,6 +53,18 @@ namespace ArcEngine.Utility.GUI
 			message.Param2 = param2;
 
 			return message;
+		}
+
+
+
+		/// <summary>
+		/// Creates a new Message. 
+		/// </summary>
+		/// <param name="msg">The message ID</param>
+		/// <returns></returns>
+		static public Message Create(ControlMessage msg)
+		{
+			return Create(msg, null, null);
 		}
 
 
@@ -113,5 +125,26 @@ namespace ArcEngine.Utility.GUI
 		/// Occurs when the mouse pointer enters the control.
 		/// </summary>
 		MouseEnter,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		MouseDown,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		MouseUp,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		MouseHover,
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		MouseClick,
 	}
 }

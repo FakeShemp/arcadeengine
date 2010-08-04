@@ -63,7 +63,7 @@ namespace ArcEngine.Utility.GUI
 
 
 		#region Update & Draw
-
+/*
 		/// <summary>
 		/// Updates the gadget
 		/// </summary>
@@ -100,7 +100,7 @@ namespace ArcEngine.Utility.GUI
 			}
 		}
 
-
+*/
 
 		/// <summary>
 		/// Process messages
@@ -115,7 +115,7 @@ namespace ArcEngine.Utility.GUI
 				case ControlMessage.Paint:
 				{
 					GuiManager gui = (GuiManager) msg.Param1;
-					OnPaint(new PaintEventArgs(gui , gui.Batch));
+					OnPaint(new PaintEventArgs(gui, gui.Batch));
 				}
 				break;
 
@@ -134,8 +134,34 @@ namespace ArcEngine.Utility.GUI
 				break;
 
 
-				default:
+				case ControlMessage.MouseClick:
+				{
+					OnMouseClick(EventArgs.Empty);
+				}
 				break;
+
+
+				case ControlMessage.MouseDown:
+				{
+					OnMouseDown(EventArgs.Empty);
+				}
+				break;
+
+
+				case ControlMessage.MouseHover:
+				{
+					OnMouseHover(EventArgs.Empty);
+				}
+				break;
+
+
+				case ControlMessage.MouseUp:
+				{
+					OnMouseUp(EventArgs.Empty);
+				}
+				break;
+
+
 			}
 		}
 
@@ -294,6 +320,17 @@ namespace ArcEngine.Utility.GUI
 
 
 		/// <summary>
+		/// Raises the MouseHover event. 
+		/// </summary>
+		/// <param name="e">An EventArgs that contains the event data</param>
+		protected virtual void OnMouseHover(EventArgs e)
+		{
+			if (MouseHover != null)
+				MouseHover(this, e);
+		}
+
+
+		/// <summary>
 		/// Raises the MouseLeave event. 
 		/// </summary>
 		/// <param name="e">An EventArgs that contains the event data</param>
@@ -333,7 +370,8 @@ namespace ArcEngine.Utility.GUI
 		/// <param name="e">A KeyEventArgs that contains the event data.</param>
 		protected virtual void OnKeyUp(KeyEventArgs e)
 		{
-
+			if (KeyUp != null)
+				KeyUp(this, e);
 		}
 
 		/// <summary>
@@ -342,7 +380,8 @@ namespace ArcEngine.Utility.GUI
 		/// <param name="e">A KeyEventArgs that contains the event data.</param>
 		protected virtual void OnKeyDown(KeyEventArgs e)
 		{
-
+			if (KeyDown != null)
+				KeyDown(this, e);
 		}
 
 
@@ -353,6 +392,8 @@ namespace ArcEngine.Utility.GUI
 		/// <param name="e">An EventArgs that contains the event data</param>
 		protected virtual void OnTextChanged(EventArgs e)
 		{
+			if (TextChanged != null)
+				TextChanged(this, e);
 		}
 
 
@@ -372,6 +413,12 @@ namespace ArcEngine.Utility.GUI
 		/// Occurs when the mouse pointer leaves the control.
 		/// </summary>
 		public event EventHandler MouseEnter;
+
+
+		/// <summary>
+		/// Occurs when the mouse pointer hovers over the control.
+		/// </summary>
+		public event EventHandler MouseHover;
 
 
 		/// <summary>
@@ -411,9 +458,24 @@ namespace ArcEngine.Utility.GUI
 
 
 		/// <summary>
-		/// 
+		/// Occurs when the mouse pointer is moved over the control.
 		/// </summary>
 		public event EventHandler MouseMove;
+
+
+		/// <summary>
+		/// Occurs when a key is released while the control has focus.
+		/// </summary>
+		public event EventHandler KeyUp;
+
+
+		/// <summary>
+		/// Occurs when a key is pressed while the control has focus.
+		/// </summary>
+		public event EventHandler KeyDown;
+
+
+
 
 		#endregion
 

@@ -90,12 +90,39 @@ namespace ArcEngine.Utility.GUI
 			if (previouscontrol != ControlUnderMouse)
 			{
 				if (previouscontrol != null)
-					previouscontrol.ProcessMessage(Message.Create(ControlMessage.MouseLeave, null, null));
+					previouscontrol.ProcessMessage(Message.Create(ControlMessage.MouseLeave));
 
 				if (ControlUnderMouse != null)
-					ControlUnderMouse.ProcessMessage(Message.Create(ControlMessage.MouseEnter, null, null));
+					ControlUnderMouse.ProcessMessage(Message.Create(ControlMessage.MouseEnter));
 
 			}
+
+
+			// MouseDown event
+			if ((Mouse.Buttons | System.Windows.Forms.MouseButtons.None) != System.Windows.Forms.MouseButtons.None)
+			{
+				ControlUnderMouse.ProcessMessage(Message.Create(ControlMessage.MouseDown));
+			//	OnMouseDown(new System.Windows.Forms.MouseEventArgs(Mouse.Buttons, 1, Mouse.Location.X, Mouse.Location.Y, 0));
+
+				// MouseClick event
+				if (Mouse.IsNewButtonDown(System.Windows.Forms.MouseButtons.Left))
+					ControlUnderMouse.ProcessMessage(Message.Create(ControlMessage.MouseClick));
+				//	OnMouseClick(EventArgs.Empty);
+			}
+
+
+			// MouseUp event
+			foreach (System.Windows.Forms.MouseButtons button in Enum.GetValues(typeof(System.Windows.Forms.MouseButtons)))
+			{
+				if (button == System.Windows.Forms.MouseButtons.None)
+					continue;
+
+
+				if (Mouse.IsNewButtonUp(button))
+					ControlUnderMouse.ProcessMessage(Message.Create(ControlMessage.MouseUp));
+				//OnMouseUp(new System.Windows.Forms.MouseEventArgs(button, 1, Mouse.Location.X, Mouse.Location.Y, 0));
+			}
+
 		}
 
 
