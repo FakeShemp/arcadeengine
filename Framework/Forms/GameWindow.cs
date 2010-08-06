@@ -242,7 +242,7 @@ namespace ArcEngine.Forms
 		/// <param name="e"></param>
 		void OnMouseUp(object sender, MouseEventArgs e)
 		{
-			Mouse.ButtonUp(e);
+			Mouse.OnButtonUp(e);
 		}
 
 
@@ -253,7 +253,7 @@ namespace ArcEngine.Forms
 		/// <param name="e"></param>
 		void OnMouseDoubleClick(object sender, MouseEventArgs e)
 		{
-			Mouse.DoubleClick(e);
+			Mouse.OnDoubleClick(e);
 		}
 
 
@@ -264,7 +264,7 @@ namespace ArcEngine.Forms
 		/// <param name="e"></param>
 		void OnMouseDown(object sender, MouseEventArgs e)
 		{
-			Mouse.ButtonDown(e);
+			Mouse.OnButtonDown(e);
 		}
 
 
@@ -275,7 +275,7 @@ namespace ArcEngine.Forms
 		/// <param name="e"></param>
 		void OnMouseMove(object sender, MouseEventArgs e)
 		{
-			Mouse.Move(e);
+			Mouse.OnMove(e);
 		}
 
 		/// <summary>

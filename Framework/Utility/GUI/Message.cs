@@ -126,25 +126,46 @@ namespace ArcEngine.Utility.GUI
 		/// </summary>
 		MouseEnter,
 
+
 		/// <summary>
-		/// 
+		/// Occurs when the mouse pointer is over the control and a mouse button is pressed.
 		/// </summary>
 		MouseDown,
 
+
 		/// <summary>
-		/// 
+		/// Occurs when the mouse pointer is over the control and a mouse button is released.
 		/// </summary>
 		MouseUp,
 
+
 		/// <summary>
-		/// 
+		/// Occurs when the mouse pointer hovers over the control.
 		/// </summary>
 		MouseHover,
 
 
 		/// <summary>
-		/// 
+		/// Occurs when the control is clicked.
 		/// </summary>
-		MouseClick,
+		Click,
+
+
+		/// <summary>
+		/// Occurs when the mouse pointer is moved over the control.
+		/// </summary>
+		MouseMove,
+
+
+		/// <summary>
+		/// Occurs when a new control is added.
+		/// </summary>
+		ControlAdded,
+
+
+		/// <summary>
+		/// Occurs when a control is removed.
+		/// </summary>
+		ControlRemoved,
 	}
 }

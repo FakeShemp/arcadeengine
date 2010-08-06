@@ -28,6 +28,7 @@ using ArcEngine.Graphic;
 using ArcEngine.Asset;
 using ArcEngine.Input;
 
+// http://msdn.microsoft.com/en-en/library/ms171541%28v=VS.80%29.aspx
 
 namespace ArcEngine.Utility.GUI
 {
@@ -62,45 +63,10 @@ namespace ArcEngine.Utility.GUI
 		}
 
 
-		#region Update & Draw
-/*
-		/// <summary>
-		/// Updates the gadget
-		/// </summary>
-		/// <param name="manager">Gui manager handle</param>
-		/// <param name="time">Elapsed time</param>
-		public void Update(GuiManager manager, GameTime time)
-		{
-
-			// Mouse inside the control
-			if (!ScreenRectangle.Contains(Mouse.Location))
-			{
-
-				// MouseDown event
-				if ((Mouse.Buttons | System.Windows.Forms.MouseButtons.None) != System.Windows.Forms.MouseButtons.None)
-				{
-					OnMouseDown(new System.Windows.Forms.MouseEventArgs(Mouse.Buttons, 1, Mouse.Location.X, Mouse.Location.Y, 0));
-
-					// MouseClick event
-					if (Mouse.IsNewButtonDown(System.Windows.Forms.MouseButtons.Left))
-						OnMouseClick(EventArgs.Empty);
-				}
 
 
-				// MouseUp event
-				foreach (System.Windows.Forms.MouseButtons button in Enum.GetValues(typeof(System.Windows.Forms.MouseButtons)))
-				{
-					if (button == System.Windows.Forms.MouseButtons.None)
-						continue;
+		#region Methods
 
-
-					if (Mouse.IsNewButtonUp(button))
-						OnMouseUp(new System.Windows.Forms.MouseEventArgs(button, 1, Mouse.Location.X, Mouse.Location.Y, 0));
-				}
-			}
-		}
-
-*/
 
 		/// <summary>
 		/// Process messages
@@ -134,7 +100,7 @@ namespace ArcEngine.Utility.GUI
 				break;
 
 
-				case ControlMessage.MouseClick:
+				case ControlMessage.Click:
 				{
 					OnMouseClick(EventArgs.Empty);
 				}
@@ -161,17 +127,35 @@ namespace ArcEngine.Utility.GUI
 				}
 				break;
 
+				
+				case ControlMessage.MouseMove:
+				{
+					OnMouseMove(EventArgs.Empty);
+				}
+				break;
+
+
+				case ControlMessage.ControlAdded:
+				{
+					OnControlAdded(EventArgs.Empty);
+				}
+				break;
+
+				case ControlMessage.ControlRemoved:
+				{
+					OnControlRemoved(EventArgs.Empty);
+				}
+				break;
+
+
+				default:
+				break;
 
 			}
 		}
 
 
 
-		#endregion
-
-
-
-		#region Methods
 
 		/// <summary>
 		/// Retrieves the child control that is located at the specified coordinates. 
@@ -273,6 +257,28 @@ namespace ArcEngine.Utility.GUI
 
 
 		#region OnEvent
+
+		/// <summary>
+		/// Raises the ControlAdded event. 
+		/// </summary>
+		/// <param name="e">An EventArgs that contains the event data</param>
+		protected virtual void OnControlAdded(EventArgs e)
+		{
+			if (ControlAdded != null)
+				ControlAdded(this, e);
+		}
+
+
+		/// <summary>
+		/// Raises the ControlRemoved event. 
+		/// </summary>
+		/// <param name="e">An EventArgs that contains the event data</param>
+		protected virtual void OnControlRemoved(EventArgs e)
+		{
+			if (ControlRemoved != null)
+				ControlRemoved(this, e);
+		}
+
 
 		/// <summary>
 		/// Raises the Click event. 
@@ -414,9 +420,20 @@ namespace ArcEngine.Utility.GUI
 		/// </summary>
 		public event EventHandler MouseEnter;
 
+		/// <summary>
+		/// Occurs when a control is added.
+		/// </summary>
+		public event EventHandler ControlAdded;
+
 
 		/// <summary>
-		/// Occurs when the mouse pointer hovers over the control.
+		/// Occurs when a control is removed.
+		/// </summary>
+		public event EventHandler ControlRemoved;
+
+
+		/// <summary>
+		/// Occurs when the mouse pointer rests on the control.
 		/// </summary>
 		public event EventHandler MouseHover;
 

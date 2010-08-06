@@ -276,13 +276,6 @@ namespace ArcEngine.Utility.GUI
 
 
 
-		/// <summary>
-		/// Text to print
-		/// </summary>
-		public string Text;
-
-
-
 		#endregion
 
 	}

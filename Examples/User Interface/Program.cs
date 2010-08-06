@@ -124,6 +124,9 @@ namespace ArcEngine.Examples.UserInterface
 		/// <param name="gameTime">Elapsed game time</param>
 		public override void Update(GameTime gameTime)
 		{
+			base.Update(gameTime);
+
+
 			Manager.Update(gameTime);
 		}
 
@@ -143,10 +146,11 @@ namespace ArcEngine.Examples.UserInterface
 			{
 				Batch.DrawString(Font, new Point(10, 25), Color.White, Manager.ControlUnderMouse.ToString() + " : " + Manager.ControlUnderMouse.Location.ToString());
 			}
-	
+
+
 			Batch.End();
 
-
+			// Draw the gui
 			Manager.Draw();
 		}
 

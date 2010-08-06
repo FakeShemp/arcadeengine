@@ -355,7 +355,8 @@
     <Compile Include="Utility\GameState\StateManager.cs" />
     <Compile Include="Utility\GUI\ButtonBase.cs" />
     <Compile Include="Utility\GUI\CheckBox.cs" />
-    <Compile Include="Utility\GUI\Container.cs" />
+    <Compile Include="Utility\GUI\ContainerControl.cs" />
+    <Compile Include="Utility\GUI\ControlPaint.cs" />
     <Compile Include="Utility\GUI\GuiManager.cs" />
     <Compile Include="Utility\GUI\Label.cs" />
     <Compile Include="Utility\GUI\Message.cs" />

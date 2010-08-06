@@ -44,8 +44,11 @@ namespace ArcEngine.Input
 				throw new ArgumentNullException("form");
 			}
 
+			PreviousLocation = Point.Empty;
+
 			Form = form;
-			Form.MouseWheel += new MouseEventHandler(Form_MouseWheel);
+			Form.MouseWheel += new MouseEventHandler(OnMouseWheel);
+
 		}
 
 
@@ -57,9 +60,10 @@ namespace ArcEngine.Input
 			Trace.WriteDebugLine("[Mouse] Dispose");
 
 			if (Form != null)
-				Form.MouseWheel -= new MouseEventHandler(Form_MouseWheel);
+				Form.MouseWheel -= new MouseEventHandler(OnMouseWheel);
 			Form = null;
 		}
+
 
 		/// <summary>
 		/// Updates the mouse state
@@ -68,6 +72,9 @@ namespace ArcEngine.Input
 		{
 			PreviousState = Buttons;
 			Buttons = Form.MouseButtons;
+
+			MoveDelta = new Point(Location.X - PreviousLocation.X, Location.Y - PreviousLocation.Y);
+			PreviousLocation = Location;
 		}
 
 
@@ -162,27 +169,27 @@ namespace ArcEngine.Input
 		#endregion
 
 
-		#region Updaters
+		#region OnEvents
 
 		/// <summary>
 		/// Mouse wheel event
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		internal static void Form_MouseWheel(object sender, MouseEventArgs e)
+		internal static void OnMouseWheel(object sender, MouseEventArgs e)
 		{
-			if (OnMouseWheel != null)
-				OnMouseWheel(null, e);
+			if (MouseWheel != null)
+				MouseWheel(null, e);
 		}
 		
 		/// <summary>
 		/// ButtonDown event
 		/// </summary>
 		/// <param name="e"></param>
-		internal static void ButtonDown(MouseEventArgs e)
+		internal static void OnButtonDown(MouseEventArgs e)
 		{
-			if (OnButtonDown != null)
-				OnButtonDown(null, e);
+			if (ButtonDown != null)
+				ButtonDown(null, e);
 		}
 
 
@@ -190,10 +197,10 @@ namespace ArcEngine.Input
 		/// ButtonUp event
 		/// </summary>
 		/// <param name="e"></param>
-		internal static void ButtonUp(MouseEventArgs e)
+		internal static void OnButtonUp(MouseEventArgs e)
 		{
-			if (OnButtonUp != null)
-				OnButtonUp(null, e);
+			if (ButtonUp != null)
+				ButtonUp(null, e);
 		}
 
 
@@ -201,12 +208,12 @@ namespace ArcEngine.Input
 		/// Move event
 		/// </summary>
 		/// <param name="e"></param>
-		internal static void Move(MouseEventArgs e)
+		internal static void OnMove(MouseEventArgs e)
 		{
-			lastPostion = e.Location;
+			PreviousLocation = e.Location;
 
-			if (OnMove != null)
-				OnMove(null, e);
+			if (Move != null)
+				Move(null, e);
 		}
 
 
@@ -214,10 +221,10 @@ namespace ArcEngine.Input
 		/// DoubleClick event
 		/// </summary>
 		/// <param name="e"></param>
-		internal static void DoubleClick(MouseEventArgs e)
+		internal static void OnDoubleClick(MouseEventArgs e)
 		{
-			if (OnDoubleClick != null)
-				OnDoubleClick(null, e);
+			if (DoubleClick != null)
+				DoubleClick(null, e);
 		}
 
 		#endregion
@@ -251,9 +258,24 @@ namespace ArcEngine.Input
 
 
 		/// <summary>
-		/// Last known location
+		/// Previous location
 		/// </summary>
-		static Point lastPostion = Point.Empty;
+		public static Point PreviousLocation
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// Mouse move delta
+		/// </summary>
+		public static Point MoveDelta
+		{
+			get;
+			private set;
+
+		}
 
 
 		/// <summary>
@@ -308,7 +330,6 @@ namespace ArcEngine.Input
 		}
 
 
-
 		/// <summary>
 		/// Previous mouse buttons state
 		/// </summary>
@@ -319,30 +340,30 @@ namespace ArcEngine.Input
 
 		#region Events
 		/// <summary>
-		///  Event fired when a ButtonDown occur
+		///  Event fired when a ButtonDown occurs
 		/// </summary>
-		public static event EventHandler<MouseEventArgs> OnButtonDown;
+		public static event EventHandler<MouseEventArgs> ButtonDown;
 
 
 		/// <summary>
 		/// Event fired when a ButtonUp occurs
 		/// </summary>
-		public static event EventHandler<MouseEventArgs> OnButtonUp;
+		public static event EventHandler<MouseEventArgs> ButtonUp;
 
 		/// <summary>
 		/// Event fired when a mouse move occurs
 		/// </summary>
-		public static event EventHandler<MouseEventArgs> OnMove;
+		public static event EventHandler<MouseEventArgs> Move;
 
 		/// <summary>
 		/// Event fired when a double click occurs
 		/// </summary>
-		public static event EventHandler<MouseEventArgs> OnDoubleClick;
+		public static event EventHandler<MouseEventArgs> DoubleClick;
 
 		/// <summary>
 		/// Occurs when the mouse wheel moves
 		/// </summary>
-		public static event EventHandler<MouseEventArgs> OnMouseWheel;
+		public static event EventHandler<MouseEventArgs> MouseWheel;
 
 
 		#endregion

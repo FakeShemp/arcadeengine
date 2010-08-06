@@ -47,6 +47,7 @@ namespace ArcEngine.Utility.GUI
 			Controls = new List<Control>();
 
 			Batch = new SpriteBatch();
+			MouseHoverTime = TimeSpan.FromSeconds(0.5f);
 		}
 
 
@@ -93,36 +94,56 @@ namespace ArcEngine.Utility.GUI
 					previouscontrol.ProcessMessage(Message.Create(ControlMessage.MouseLeave));
 
 				if (ControlUnderMouse != null)
+				{
 					ControlUnderMouse.ProcessMessage(Message.Create(ControlMessage.MouseEnter));
+					HoverTime = DateTime.Now;
+				}
+				else
+				{
+					HoverTime = DateTime.MaxValue;
+				}
 
 			}
 
 
-			// MouseDown event
-			if ((Mouse.Buttons | System.Windows.Forms.MouseButtons.None) != System.Windows.Forms.MouseButtons.None)
+			if (ControlUnderMouse != null)
 			{
-				ControlUnderMouse.ProcessMessage(Message.Create(ControlMessage.MouseDown));
-			//	OnMouseDown(new System.Windows.Forms.MouseEventArgs(Mouse.Buttons, 1, Mouse.Location.X, Mouse.Location.Y, 0));
+				// MouseDown event
+				if ((Mouse.Buttons | System.Windows.Forms.MouseButtons.None) != System.Windows.Forms.MouseButtons.None)
+				{
+					ControlUnderMouse.ProcessMessage(Message.Create(ControlMessage.MouseDown));
 
-				// MouseClick event
-				if (Mouse.IsNewButtonDown(System.Windows.Forms.MouseButtons.Left))
-					ControlUnderMouse.ProcessMessage(Message.Create(ControlMessage.MouseClick));
-				//	OnMouseClick(EventArgs.Empty);
+					// MouseClick event
+					if (Mouse.IsNewButtonDown(System.Windows.Forms.MouseButtons.Left))
+						ControlUnderMouse.ProcessMessage(Message.Create(ControlMessage.Click));
+				}
+
+
+				// MouseUp event
+				foreach (System.Windows.Forms.MouseButtons button in Enum.GetValues(typeof(System.Windows.Forms.MouseButtons)))
+				{
+					if (button == System.Windows.Forms.MouseButtons.None)
+						continue;
+
+					if (Mouse.IsNewButtonUp(button))
+						ControlUnderMouse.ProcessMessage(Message.Create(ControlMessage.MouseUp));
+				}
+
+
+				// MouseMove
+				if (Mouse.MoveDelta != Point.Empty)
+				{
+					ControlUnderMouse.ProcessMessage(Message.Create(ControlMessage.MouseMove));
+					HoverTime = DateTime.Now;
+				}
 			}
 
-
-			// MouseUp event
-			foreach (System.Windows.Forms.MouseButtons button in Enum.GetValues(typeof(System.Windows.Forms.MouseButtons)))
+			// OnMouseHover
+			if (ControlUnderMouse != null && HoverTime != DateTime.MaxValue && HoverTime + MouseHoverTime < DateTime.Now)
 			{
-				if (button == System.Windows.Forms.MouseButtons.None)
-					continue;
-
-
-				if (Mouse.IsNewButtonUp(button))
-					ControlUnderMouse.ProcessMessage(Message.Create(ControlMessage.MouseUp));
-				//OnMouseUp(new System.Windows.Forms.MouseEventArgs(button, 1, Mouse.Location.X, Mouse.Location.Y, 0));
+				ControlUnderMouse.ProcessMessage(Message.Create(ControlMessage.MouseHover));
+				HoverTime = DateTime.MaxValue;
 			}
-
 		}
 
 
@@ -244,6 +265,22 @@ namespace ArcEngine.Utility.GUI
 			private set;
 		}
 
+
+		/// <summary>
+		/// Hover time
+		/// </summary>
+		DateTime HoverTime;
+
+
+		/// <summary>
+		/// Gets the time, in milliseconds, that the mouse pointer has to stay 
+		/// in the hover rectangle before a mouse hover message is generated.
+		/// </summary>
+		public TimeSpan MouseHoverTime
+		{
+			get;
+			set;
+		}
 
 		/// <summary>
 		/// List of all gui elements

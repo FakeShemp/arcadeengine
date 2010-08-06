@@ -662,6 +662,10 @@ namespace ArcEngine.Graphic
 		#endregion
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
 		public override string ToString()
 		{
 			return String.Format("Texture {0}", Handle);

@@ -1389,7 +1389,7 @@ namespace ArcEngine.Graphic
 
 
 	/// <summary>
-	/// <see cref="GameWindow"/> creation parameters
+	/// GameWindow creation parameters
 	/// </summary>
 	public class GameWindowParams
 	{
@@ -1726,6 +1726,10 @@ namespace ArcEngine.Graphic
 		/// 
 		/// </summary>
 		Gequal = TK.AlphaFunction.Gequal,
+
+		/// <summary>
+		/// 
+		/// </summary>
 		Always = 519,
 	}
 

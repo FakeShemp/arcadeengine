@@ -25,15 +25,15 @@ using System.Drawing;
 using System.Xml;
 using ArcEngine.Graphic;
 using ArcEngine.Asset;
-
+using ArcEngine;
 
 namespace ArcEngine.Utility.GUI
 {
 	/// <summary>
 	/// Basic Window object. 
-	/// Provides a Client area which new Controls are added to.
+	/// Provides a client area which new controls are added to.
 	/// </summary>
-	public class Window : Container
+	public class Window : ContainerControl
 	{
 		/// <summary>
 		/// Constructor
@@ -45,22 +45,7 @@ namespace ArcEngine.Utility.GUI
 		}
 
 
-/*
-		/// <summary>
-		/// Update the window
-		/// </summary>
-		/// <param name="manager">Gui manager handle</param>
-		/// <param name="time">Elapsed time</param>
-		public override void Update(GuiManager manager, GameTime time)
-		{
-			// Update window
-
-
-			// Update container
-			base.Update(manager, time);
-		}
-*/
-
+		#region OnEvent
 
 		/// <summary>
 		/// Draws the window
@@ -122,17 +107,10 @@ namespace ArcEngine.Utility.GUI
 				// Background
 				e.Batch.DrawTile(e.Manager.TileSet, 4, Rectangle.Location, Rectangle, Color);
 
-
-				// Draw each controls
-				foreach (Control control in Controls)
-				{
-					//control.OnPaint(e);
-				}
-
-	
 			}
 		}
 
+		#endregion
 
 
 		#region IO routines
@@ -238,8 +216,6 @@ namespace ArcEngine.Utility.GUI
 		}
 
 		#endregion
-
-
 
 
 		#region Properties

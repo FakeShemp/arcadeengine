@@ -23,22 +23,9 @@ namespace ArcEngine.Utility.GUI
 		}
 
 
-
-		#region 
-
-
-		protected override void OnMouseEnter(EventArgs e)
-		{
-			base.OnMouseEnter(e);
-			Text = "Enter";
-		}
+		#region OnEvent
 
 
-		protected override void OnMouseLeave(EventArgs e)
-		{
-			base.OnMouseLeave(e);
-			Text = "Leave";
-		}
 
 		/// <summary>
 		/// Raises the Click event.

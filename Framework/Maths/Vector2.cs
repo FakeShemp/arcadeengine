@@ -201,7 +201,6 @@ namespace ArcEngine
         /// for comparisons.
         /// </remarks>
         /// <see cref="Length"/>
-        /// <seealso cref="LengthFast"/>
         public float LengthSquared
         {
             get

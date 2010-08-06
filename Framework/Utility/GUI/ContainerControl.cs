@@ -9,45 +9,16 @@ namespace ArcEngine.Utility.GUI
 	/// <summary>
 	/// Special control that contains other Control types.
 	/// </summary>
-	public abstract class Container : Control
+	public abstract class ContainerControl : Control
 	{
 
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public Container()
+		public ContainerControl()
 		{
 		}
 
-
-/*
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="manager">Gui manager handle</param>
-		/// <param name="time"></param>
-		public override void Update(GuiManager manager, GameTime time)
-		{
-			foreach (Control control in Controls)
-				control.Update(manager, time);
-		}
-
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="manager">Gui manager handle</param>
-		/// <param name="batch"></param>
-		public override void Draw(GuiManager manager, SpriteBatch batch)
-		{
-			if (!Visible)
-				return;
-
-			foreach (Control control in Controls)
-				control.Draw(manager, batch);
-		}
-*/
 
 		/// <summary>
 		/// Adds a control to the container

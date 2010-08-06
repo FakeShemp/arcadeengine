@@ -196,8 +196,6 @@ namespace ArcEngine
         /// <summary>
         /// Gets the length (magnitude) of the vector.
         /// </summary>
-        /// <see cref="LengthFast"/>
-        /// <seealso cref="LengthSquared"/>
         public float Length
         {
             get
