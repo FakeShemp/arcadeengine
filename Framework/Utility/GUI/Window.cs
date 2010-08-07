@@ -45,6 +45,18 @@ namespace ArcEngine.Utility.GUI
 		}
 
 
+		/// <summary>
+		/// Gets the part of the window at a given location
+		/// </summary>
+		/// <param name="location">Location relative to the top left of the window</param>
+		/// <returns>Part of the window</returns>
+		public HitTest GetHitTest(Point location)
+		{
+
+
+			return HitTest.Error;
+		}
+
 		#region OnEvent
 
 		/// <summary>
@@ -227,6 +239,132 @@ namespace ArcEngine.Utility.GUI
 		public string Title;
 
 		#endregion
+
+	}
+
+
+	/// <summary>
+	/// Part of the window corresponds to a particular screen coordinate
+	/// </summary>
+	public enum HitTest
+	{
+		/// <summary>
+		/// In the border of a window that does not have a sizing border.
+		/// </summary>
+		Border,
+
+		/// <summary>
+		/// In the lower-horizontal border of a resizable window
+		/// (the user can click the mouse to resize the window vertically).
+		/// </summary>
+		Bottom,
+
+		/// <summary>
+		/// In the lower-left corner of a border of a resizable window 
+		/// (the user can click the mouse to resize the window diagonally).
+		/// </summary>
+		BottomLeft,
+
+		/// <summary>
+		/// In the lower-right corner of a border of a resizable window 
+		/// (the user can click the mouse to resize the window diagonally).
+		/// </summary>
+		BottomRight,
+
+		/// <summary>
+		/// In a title bar.
+		/// </summary>
+		Caption,
+
+		/// <summary>
+		/// In a client area.
+		/// </summary>
+		ClientArea,
+
+		/// <summary>
+		/// In a Close button.
+		/// </summary>
+		Close,
+
+		/// <summary>
+		/// On the screen background or on a dividing line between windows 
+		/// (same as HTNOWHERE, except that the DefWindowProc function 
+		/// produces a system beep to indicate an error).
+		/// </summary>
+		Error,
+
+		/// <summary>
+		/// In a Help button.
+		/// </summary>
+		Help,
+
+		/// <summary>
+		/// In a horizontal scroll bar.
+		/// </summary>
+		HScroll,
+
+		/// <summary>
+		/// In the left border of a resizable window 
+		/// (the user can click the mouse to resize the window horizontally).
+		/// </summary>
+		Left,
+
+		/// <summary>
+		/// In a menu.
+		/// </summary>
+		Menu,
+
+		/// <summary>
+		/// In a Maximize button.
+		/// </summary>
+		MaxButton,
+
+		/// <summary>
+		/// In a Minimize button.
+		/// </summary>
+		MinButton,
+
+		/// <summary>
+		/// On the screen background or on a dividing line between windows.
+		/// </summary>
+		NoWhere,
+
+		/// <summary>
+		/// In a Minimize button.
+		/// </summary>
+		Reduce,
+
+		/// <summary>
+		/// In the right border of a resizable window 
+		/// (the user can click the mouse to resize the window horizontally).
+		/// </summary>
+		Right,
+
+		/// <summary>
+		/// In a size box
+		/// </summary>
+		Size,
+
+		/// <summary>
+		/// In a window menu or in a Close button in a child window.
+		/// </summary>
+		SystemMenu,
+
+		/// <summary>
+		/// In the upper-horizontal border of a window
+		/// </summary>
+		Top,
+
+		/// <summary>
+		/// In the upper-left corner of a window border.
+		/// </summary>
+		TopLeft,
+
+		/// <summary>
+		/// In the upper-right corner of a windows border
+		/// </summary>
+		TopRight,
+
 
 	}
 }

@@ -60,6 +60,9 @@ namespace ArcEngine.Utility.GUI
 			if (!Visible)
 				return;
 
+	//		ControlPaint.DrawCheckbock(e.Batch, 
+
+
 			Rectangle dst = Rectangle;
 
 			if (Parent != null)
