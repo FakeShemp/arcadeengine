@@ -5,10 +5,12 @@ using System.Windows.Forms;
 using ArcEngine;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
+using ArcEngine.Asset;
+
 
 namespace ArcEngine.Examples.PathFinding
 {
-	class AStar : GameBase
+	class Program : GameBase
 	{
 		/// <summary>
 		/// Main entry point.
@@ -18,7 +20,7 @@ namespace ArcEngine.Examples.PathFinding
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			using (AStar game = new AStar())
+			using (Program game = new Program())
 				game.Run();
 		}
 
@@ -26,7 +28,7 @@ namespace ArcEngine.Examples.PathFinding
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public AStar()
+		public Program()
 		{
 			CreateGameWindow(new Size(1024, 768));
 			Window.Resizable = true;
@@ -42,8 +44,69 @@ namespace ArcEngine.Examples.PathFinding
 		/// </summary>
 		public override void LoadContent()
 		{
-			Display.ClearColor = Color.LightGray;
-			Display.RenderState.Blending = false;
+			// Display settings
+			Display.RenderState.ClearColor = Color.LightGray;
+
+			// Create a font
+			Font = BitmapFont.CreateFromTTF(@"c:\windows\fonts\verdana.ttf", 9, FontStyle.Regular);
+
+			Batch = new SpriteBatch();
+
+			BlockSize = new Size(10, 10);
+			MapSize = new Size(50, 50);
+			Map = new byte[]
+			{
+				1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+				1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+				1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+				1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+				1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+				1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+				1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+				1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+				1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+				1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+				1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+				1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+				1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+				1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+				1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+				1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+				1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+				1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+				1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+				1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+				1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+				1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+				1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+				1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+				1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+				1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+				1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+				1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+				1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+				1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+				1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+				1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+				1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+				1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+				1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+				1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+				1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+				1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+				1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+				1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+				1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+				1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+				1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+				1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+				1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+				1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+				1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+				1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+				1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+				1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+			};
 		}
 
 
@@ -52,6 +115,9 @@ namespace ArcEngine.Examples.PathFinding
 		/// </summary>
 		public override void UnloadContent()
 		{
+			if (Batch != null)
+				Batch.Dispose();
+			Batch = null;
 		}
 
 
@@ -64,40 +130,37 @@ namespace ArcEngine.Examples.PathFinding
 		/// <summary>
 		/// Called when the game determines it is time to draw a frame.
 		/// </summary>
-		/// <param name="device">Rendering device</param>
 		public override void Draw()
 		{
 			Display.ClearBuffers();
 
+			Batch.Begin();
 
-		//	Display.Color = Color.Red;
-			float[] grid2x2 = new float[12]
-			{
-				0.0f, 0.0f, 0.0f, 
-				0.0f, 600.0f, 0.0f,
-				600.0f, 0.0f, 0.0f,
-				600.0f, 600.0f, 0.0f, 
-			};
+			// Draw map
+			for (int y = 0 ; y < MapSize.Height ; y++)
+				for (int x = 0; x < MapSize.Width; x++)
+				{
+					Color color = Map[y * MapSize.Height + x] == 1 ? Color.Black : Color.White;
+					Batch.FillRectangle(new Rectangle(x * BlockSize.Width, y * BlockSize.Height, BlockSize.Width, BlockSize.Height), color);
+				}
 
-			GL.Enable(EnableCap.Map2Vertex3);
-			GL.Map2(MapTarget.Map2Vertex3,
-			  0.0f, 100.0f,  /* U ranges 0..1 */
-			  3,         /* U stride, 3 floats per coord */
-			  2,         /* U is 2nd order, ie. linear */
-			  0.0f, 100.0f,  /* V ranges 0..1 */
-			  2 * 3,     /* V stride, row is 2 coords, 3 floats per coord */
-			  2,         /* V is 2nd order, ie linear */
-			  grid2x2);  /* control points */
+			if (!Start.IsEmpty)
+				Batch.FillRectangle(new Rectangle(Start.X * BlockSize.Width, Start.Y * BlockSize.Height, BlockSize.Width, BlockSize.Height), Color.Red);
+			if (!Destination.IsEmpty)
+				Batch.FillRectangle(new Rectangle(Destination.X * BlockSize.Width, Destination.Y * BlockSize.Height, BlockSize.Width, BlockSize.Height), Color.Green);
+			
+			// Draw mouse
+			int mousex = Mouse.Location.X - (Mouse.Location.X % BlockSize.Width);
+			int mousey = Mouse.Location.Y - (Mouse.Location.Y % BlockSize.Height);
+			Batch.DrawRectangle(new Rectangle(mousex, mousey, BlockSize.Width, BlockSize.Height), Color.FromArgb(128, Color.Red));
 
+			// some debug text
+			Batch.DrawString(Font, new Point(550, 10), Color.White, "Mouse location : " + MouseLocation.ToString());
+			Batch.DrawString(Font, new Point(550, 25), Color.Red, "Start location : " + Start.ToString());
+			Batch.DrawString(Font, new Point(550, 40), Color.Green, "Destination location : " + Destination.ToString());
 
-			GL.MapGrid2(5, 0.0f, 10.0f, 6, 0.0f, 10.0f);
-
-
-			GL.EvalMesh2(MeshMode2.Line,
-  0, 100,   /* Starting at 0 mesh 5 steps (rows). */
-  0, 100);  /* Starting at 0 mesh 6 steps (columns). */
-
-
+			Batch.DrawString(Font, new Point(550, 100), Color.White, "Press spacebar to reset Start and Destination");
+			Batch.End();
 		}
 
 
@@ -111,6 +174,52 @@ namespace ArcEngine.Examples.PathFinding
 			// Byebye
 			if (Keyboard.IsKeyPress(Keys.Escape))
 				Exit();
+
+			// Reset start and destination
+			if (Keyboard.IsKeyPress(Keys.Space))
+			{
+				Start = Point.Empty;
+				Destination = Point.Empty;
+			}
+
+
+
+			// Mouse location in the map
+			MouseLocation = new Point(Mouse.Location.X / BlockSize.Width, Mouse.Location.Y / BlockSize.Height);
+
+			if (MouseLocation.X >= MapSize.Width || MouseLocation.Y >= MapSize.Height ||
+				MouseLocation.X < 0 || MouseLocation.Y < 0)
+				return;
+
+
+			// Change the map
+			if (Mouse.IsButtonDown(MouseButtons.Left))
+			{
+				Map[MouseLocation.Y * MapSize.Height + MouseLocation.X] = 1;
+			}
+
+			if (Mouse.IsButtonDown(MouseButtons.Right))
+			{
+				Map[MouseLocation.Y * MapSize.Height + MouseLocation.X] = 0;
+			}
+
+
+
+			// Start and destination locations
+			if (Mouse.IsNewButtonDown(MouseButtons.Middle))
+			{
+
+				if (Start.IsEmpty)
+				{
+					Start = MouseLocation;
+				}
+				else
+				{
+					Destination = MouseLocation;
+				}
+			}
+
+
 		}
 
 
@@ -120,9 +229,52 @@ namespace ArcEngine.Examples.PathFinding
 
 		#region Properties
 
+		/// <summary>
+		/// Map data
+		/// </summary>
+		byte[] Map;
 
 
+		/// <summary>
+		/// Map size
+		/// </summary>
+		Size MapSize;
 
+		
+		/// <summary>
+		/// Font
+		/// </summary>
+		BitmapFont Font;
+
+
+		/// <summary>
+		/// Spritebatch
+		/// </summary>
+		SpriteBatch Batch;
+
+
+		/// <summary>
+		/// Map location of the mouse
+		/// </summary>
+		Point MouseLocation;
+
+
+		/// <summary>
+		/// Size of each block in the map
+		/// </summary>
+		Size BlockSize;
+
+
+		/// <summary>
+		/// Start point
+		/// </summary>
+		Point Start;
+
+
+		/// <summary>
+		/// Destination point
+		/// </summary>
+		Point Destination;
 		#endregion
 	}
 }
