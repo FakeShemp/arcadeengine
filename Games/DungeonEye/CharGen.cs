@@ -378,7 +378,7 @@ namespace DungeonEye
 						if (new Rectangle(528, 350, 76, 32).Contains(Mouse.Location))
 						{
 							CurrentState = CharGenStates.SelectName;
-							Keyboard.OnKeyDown += new EventHandler<PreviewKeyDownEventArgs>(Keyboard_OnKeyDown);
+							Keyboard.KeyDown += new EventHandler<PreviewKeyDownEventArgs>(Keyboard_OnKeyDown);
 						}
 					}
 				}
@@ -856,7 +856,7 @@ namespace DungeonEye
 
 				case Keys.Return:
 
-				Keyboard.OnKeyDown -= new EventHandler<PreviewKeyDownEventArgs>(Keyboard_OnKeyDown);
+				Keyboard.KeyDown -= new EventHandler<PreviewKeyDownEventArgs>(Keyboard_OnKeyDown);
 				CurrentState = CharGenStates.SelectHero;
 				break;
 

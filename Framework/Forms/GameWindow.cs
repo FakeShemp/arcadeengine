@@ -220,7 +220,7 @@ namespace ArcEngine.Forms
 		/// <param name="e"></param>
 		void OnPreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
 		{
-			Keyboard.KeyDown(e);
+			Keyboard.OnKeyDown(e);
 		}
 
 
@@ -231,7 +231,7 @@ namespace ArcEngine.Forms
 		/// <param name="e"></param>
 		void OnKeyUp(object sender, KeyEventArgs e)
 		{
-			Keyboard.KeyUp(e);
+			Keyboard.OnKeyUp(e);
 		}
 
 

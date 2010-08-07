@@ -50,7 +50,7 @@ namespace ArcEngine.Input
 		/// <summary>
 		/// Update the keyboard status.
 		/// </summary>
-		static public void Update()
+		static internal void Update()
 		{
 
 			// Scan each key
@@ -59,36 +59,13 @@ namespace ArcEngine.Input
 				if (PreviousState[i] != CurrentState[i])
 				{
 					if (CurrentState[i])
-						KeyDown(new PreviewKeyDownEventArgs((Keys)i));
+						OnKeyDown(new PreviewKeyDownEventArgs((Keys)i));
 					else
-						KeyUp(new KeyEventArgs((Keys)i));
+						OnKeyUp(new KeyEventArgs((Keys)i));
 				}					
 				PreviousState[i] = CurrentState[i];
 				CurrentState[i] = (User32.GetKeyState(i) & 0x8000) != 0;
 			}
-		}
-
-
-
-		/// <summary>
-		/// KeyDown event
-		/// </summary>
-		/// <param name="e"></param>
-		static internal void KeyDown(PreviewKeyDownEventArgs e)
-		{
-			if (OnKeyDown != null)
-				OnKeyDown(null, e);
-		}
-
-
-		/// <summary>
-		/// KeyUp event
-		/// </summary>
-		/// <param name="e"></param>
-		static internal void KeyUp(KeyEventArgs e)
-		{
-			if (OnKeyUp != null)
-			    OnKeyUp(null, e);
 		}
 
 
@@ -99,7 +76,12 @@ namespace ArcEngine.Input
 		/// <returns>True if pressed</returns>
 		public static bool IsKeyPress(Keys key)
 		{
-			return CurrentState[(int)key];
+			int value = (int) key;
+			if (value > CurrentState.Length)
+				return false;
+
+
+			return CurrentState[value];
 		}
 
 	
@@ -172,18 +154,45 @@ namespace ArcEngine.Input
 
 
 
+		#region OnEvents
+
+
+		/// <summary>
+		/// KeyDown event
+		/// </summary>
+		/// <param name="e"></param>
+		static internal void OnKeyDown(PreviewKeyDownEventArgs e)
+		{
+			if (KeyDown != null)
+				KeyDown(null, e);
+		}
+
+
+		/// <summary>
+		/// KeyUp event
+		/// </summary>
+		/// <param name="e"></param>
+		static internal void OnKeyUp(KeyEventArgs e)
+		{
+			if (KeyUp != null)
+				KeyUp(null, e);
+		}
+
+		#endregion
+
+
 		#region Events
 
 		/// <summary>
 		///  Event fired when a KeyDown occur
 		/// </summary>
-		public static event EventHandler<PreviewKeyDownEventArgs> OnKeyDown;
+		public static event EventHandler<PreviewKeyDownEventArgs> KeyDown;
 
 
 		/// <summary>
 		/// Event fired when a KeyUp occurs
 		/// </summary>
-		public static event EventHandler<KeyEventArgs> OnKeyUp;
+		public static event EventHandler<KeyEventArgs> KeyUp;
 
 
 		#endregion
