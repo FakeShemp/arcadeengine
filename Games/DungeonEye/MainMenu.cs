@@ -145,10 +145,10 @@ namespace DungeonEye
 		/// <param name="e"></param>
 		void LoadGameEvent(object sender, EventArgs e)
 		{
-			if (!System.IO.File.Exists("savegame.xml"))
+			if (!System.IO.File.Exists("data/savegame.xml"))
 				return;
 			Team team = new Team(null);
-			team.SaveGame = "savegame.xml";
+			team.SaveGame = "data/savegame.xml";
 
 
 			ScreenManager.AddScreen(team);

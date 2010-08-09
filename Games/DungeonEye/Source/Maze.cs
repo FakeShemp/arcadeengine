@@ -118,7 +118,7 @@ namespace DungeonEye
 				Trace.WriteLine("Failed to load wall tileset for the maze \"" + Name + "\".");
 				return false;
 			}
-            WallTileset.Scale = new Vector2(2.0f, 2.0f);
+            WallTileset.Scale = new Vector2(1.0f, 1.0f);
 
 			OverlayTileset = ResourceManager.CreateSharedAsset<TileSet>(OverlayTilesetName, OverlayTilesetName);
 			if (OverlayTileset == null)
@@ -687,13 +687,15 @@ namespace DungeonEye
 			#region Door
 			else if (block.Door != null)
 			{
-				// Under the door
+				// Under the door, draw sides
 				if (field.GetBlock(ViewFieldPosition.N).IsWall && position == ViewFieldPosition.Team)
 				{
 					td = MazeDisplayCoordinates.GetDoor(ViewFieldPosition.Team);
 					if (td != null)
-						batch.DrawTile(ItemsTileset, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);
+						batch.DrawTile(OverlayTileset, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);
 				}
+
+				// Draw the door
 				else if (((field.Maze.IsDoorNorthSouth(block.Location) && (view == CardinalPoint.North || view == CardinalPoint.South)) ||
 					(!field.Maze.IsDoorNorthSouth(block.Location) && (view == CardinalPoint.East || view == CardinalPoint.West))) &&
 					position != ViewFieldPosition.Team)
