@@ -43,10 +43,10 @@ namespace ArcEngine.Examples.PathFinding
 		/// <returns></returns>
 		public int CompareTo(PathNode to)
 		{
-			if (to.H > H)
+			if (to.F > F)
 				return -1;
 
-			if (to.H == H)
+			if (to.F == F)
 				return 0;
 
 			return 1;
@@ -84,7 +84,7 @@ namespace ArcEngine.Examples.PathFinding
 
 
 		/// <summary>
-		/// the estimated(heuristic) cost to reach the destination from here. 
+		/// The estimated(heuristic) cost to reach the destination from here. 
 		/// </summary>
 		public int H;
 

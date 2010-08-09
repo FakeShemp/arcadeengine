@@ -25,7 +25,7 @@ namespace ArcEngine.Examples.PathFinding
 		/// <param name="size">Size of the grid</param>
 		public AStar(Size size)
 		{
-			OpenQueue = new PriorityQueue<PathNode>();
+			NodeQueue = new PriorityQueue<PathNode>();
 
 			GridSize = size;
 
@@ -54,7 +54,7 @@ namespace ArcEngine.Examples.PathFinding
 			PathNode startnode = GetNode(start);
 			startnode.Parent = null;
 			startnode.IsOpen = false;
-			OpenQueue.Push(startnode);
+			NodeQueue.Push(startnode);
 			
 
 			
@@ -66,25 +66,27 @@ namespace ArcEngine.Examples.PathFinding
 
 
 
-			while (OpenQueue.Count > 0)
+			while (NodeQueue.Count > 0)
 			{
 				// No path...
-				if (OpenQueue.Count == 0)
+				if (NodeQueue.Count == 0)
 				{
-					OpenQueue.Clear();
+					NodeQueue.Clear();
 					return null;
 				}
 
 
 				// Get first node
-				PathNode parent = OpenQueue.Pop();
-			
-				// Destination reached ?
-				if (parent == dest)
+				PathNode node = NodeQueue.Pop();
+
+				// if (this node is the goal)
+				if (node == dest)
 				{
-					return GetPath(parent);
+					return GetPath(node);
 				}
 
+				// Move the current node to the closed 
+				node.IsOpen = false;
 
 				// All neighbors
 				Point[] neighbors = new Point[]
@@ -100,49 +102,46 @@ namespace ArcEngine.Examples.PathFinding
 					new Point(-1, 1),	// Bottom left
 				};
 
-				// Foreach neighbor
+				// Consider all of its neighbors
 				for (int i = 0 ; i < neighbors.Length ; i++)
 				{
-					Point neighbor = neighbors[i];
-
-					// Top
-					PathNode node = GetNode(parent.Location.X + neighbor.X, parent.Location.Y + neighbor.Y);
-					if (node == null)
+					// Get next neighbor
+					PathNode neighbor = GetNode(node.Location.X + neighbors[i].X, node.Location.Y + neighbors[i].Y);
+					if (neighbor == null)
 						continue;
 
 					// if (this neighbor is in the closed list and our current g value is lower)
-					if (!node.IsOpen && parent.G < node.G)
+					if (!neighbor.IsOpen && node.G < neighbor.G)
 					{
 						// update the neighbor with the new, lower, g value 
-						node.G = parent.G;
+						neighbor.G = node.G;
 
 						// change the neighbor's parent to our current node
-						node.Parent = parent;
+						neighbor.Parent = node;
 					}
 
 					// else if (this neighbor is in the open list and our current g value is lower)
-					else if (node.IsOpen && parent.G < node.G)
+					else if (neighbor.IsOpen && node.G < neighbor.G)
 					{
-						//update the neighbor with the new, lower, g value 
-						node.G = parent.G;
+						// update the neighbor with the new, lower, g value 
+						neighbor.G = node.G;
 
-						//change the neighbor's parent to our current node
-						node.Parent = parent;
+						// change the neighbor's parent to our current node
+						neighbor.Parent = node;
 					}
 
 					// else this neighbor is not in either the open or closed list 
-					else if (node.IsOpen && node.IsWalkable)
+					else if (neighbor.IsOpen &&  neighbor.IsWalkable)
 					{
 						// add the neighbor to the open list and set its g value
-						node.Parent = parent;
-						node.G = parent.G + MovementCost;
-						node.H = GetHeuristic(node.Location, end);
-						node.IsOpen = false;
-						OpenQueue.Push(node);
+						neighbor.Parent = node;
+						neighbor.G = node.G + MovementCost;
+						neighbor.H = GetHeuristic(neighbor.Location, end);
+						neighbor.IsOpen = false;
+						NodeQueue.Push(neighbor);
 					}
+
 				}
-
-
 
 			}
 
@@ -157,7 +156,7 @@ namespace ArcEngine.Examples.PathFinding
 		{
 
 			// Clear the queue
-			OpenQueue.Clear();
+			NodeQueue.Clear();
 
 
 			// Clear nodes
@@ -235,7 +234,7 @@ namespace ArcEngine.Examples.PathFinding
 		/// <summary>
 		/// 
 		/// </summary>
-		PriorityQueue<PathNode> OpenQueue;
+		PriorityQueue<PathNode> NodeQueue;
 
 
 		/// <summary>
