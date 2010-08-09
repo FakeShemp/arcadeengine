@@ -109,6 +109,18 @@ namespace ArcEngine.Examples.PathFinding
 					Batch.FillRectangle(new Rectangle(x * BlockSize.Width, y * BlockSize.Height, BlockSize.Width, BlockSize.Height), color);
 				}
 
+
+			// Draw path
+			if (Path != null)
+			{
+				foreach (PathNode node in Path)
+				{
+					Batch.FillRectangle(new Rectangle(node.Location.X * BlockSize.Width, node.Location.Y * BlockSize.Height, BlockSize.Width, BlockSize.Height), Color.Red);
+				}
+			}
+
+
+
 			if (!Start.IsEmpty)
 				Batch.FillRectangle(new Rectangle(Start.X * BlockSize.Width, Start.Y * BlockSize.Height, BlockSize.Width, BlockSize.Height), Color.Red);
 			if (!Destination.IsEmpty)
@@ -188,7 +200,7 @@ namespace ArcEngine.Examples.PathFinding
 
 
 			if (!Destination.IsEmpty && !Start.IsEmpty && Keyboard.IsKeyPress(Keys.Enter))
-				PathFinder.FindPath(Start, Destination);
+				Path = PathFinder.FindPath(Start, Destination);
 		}
 
 
@@ -246,6 +258,11 @@ namespace ArcEngine.Examples.PathFinding
 		/// </summary>
 		AStar PathFinder;
 
+
+		/// <summary>
+		/// Path
+		/// </summary>
+		List<PathNode> Path;
 		#endregion
 	}
 }

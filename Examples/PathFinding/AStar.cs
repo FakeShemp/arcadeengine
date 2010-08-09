@@ -51,8 +51,11 @@ namespace ArcEngine.Examples.PathFinding
 			Clear();
 			
 			// Add root node
-			OpenQueue.Push(GetNode(start));
-
+			PathNode startnode = GetNode(start);
+			startnode.Parent = null;
+			startnode.IsOpen = false;
+			OpenQueue.Push(startnode);
+			
 
 			
 
@@ -79,8 +82,7 @@ namespace ArcEngine.Examples.PathFinding
 				// Destination reached ?
 				if (parent == dest)
 				{
-					OpenQueue.Clear();
-					break;
+					return GetPath(parent);
 				}
 
 				PathNode node = null;
@@ -134,7 +136,6 @@ namespace ArcEngine.Examples.PathFinding
 			}
 
 			return null;
-
 		}
 
 
@@ -156,6 +157,26 @@ namespace ArcEngine.Examples.PathFinding
 
 
 
+		}
+
+
+		/// <summary>
+		/// Get the past
+		/// </summary>
+		/// <returns></returns>
+		List<PathNode> GetPath(PathNode node)
+		{
+			List<PathNode> path = new List<PathNode>();
+
+			while (node.Parent != null)
+			{
+				path.Add(node);
+
+				node = node.Parent;
+			}
+
+
+			return path;
 		}
 
 		/// <summary>
