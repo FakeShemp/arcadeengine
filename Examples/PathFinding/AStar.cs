@@ -8,7 +8,7 @@ using System.Drawing;
 // http://www.siteduzero.com/tutoriel-3-34333-le-pathfinding-avec-a.html
 // http://www.3dbuzz.com/vbforum/showthread.php?176912-Wolf-s-A*-pathfinding-tutorial.
 // http://wiki.gamegardens.com/Path_Finding_Tutorial
-//
+// 
 //
 //
 
@@ -85,36 +85,60 @@ namespace ArcEngine.Examples.PathFinding
 					return GetPath(parent);
 				}
 
-				PathNode node = null;
 
+				// All neighbors
 				Point[] neighbors = new Point[]
 				{
 					new Point(0, -1),	// Top
 					new Point(1, 0),	// Right
 					new Point(0, 1),	// Bottom
 					new Point(-1, 0),	// Left
+
+					new Point(1, -1),	// Top right
+					new Point(-1, -1),	// Top left
+					new Point(1, 1),	// Bottom right
+					new Point(-1, 1),	// Bottom left
 				};
 
+				// Foreach neighbor
 				for (int i = 0 ; i < neighbors.Length ; i++)
 				{
 					Point neighbor = neighbors[i];
 
 					// Top
-					node = GetNode(parent.Location.X + neighbor.X, parent.Location.Y + neighbor.Y);
-					if (node != null)
+					PathNode node = GetNode(parent.Location.X + neighbor.X, parent.Location.Y + neighbor.Y);
+					if (node == null)
+						continue;
+
+					// if (this neighbor is in the closed list and our current g value is lower)
+					if (!node.IsOpen && parent.G < node.G)
 					{
-						if (node.IsOpen && node.IsWalkable)
-						{
-							node.Parent = parent;
-							node.G = parent.G + MovementCost;
-							node.H = GetHeuristic(node.Location, end);
-							node.IsOpen = false;
-							OpenQueue.Push(node);
-						}
-						else if (!node.IsOpen && node.G > parent.G)
-						{
-							node.G = parent.G;
-						}
+						// update the neighbor with the new, lower, g value 
+						node.G = parent.G;
+
+						// change the neighbor's parent to our current node
+						node.Parent = parent;
+					}
+
+					// else if (this neighbor is in the open list and our current g value is lower)
+					else if (node.IsOpen && parent.G < node.G)
+					{
+						//update the neighbor with the new, lower, g value 
+						node.G = parent.G;
+
+						//change the neighbor's parent to our current node
+						node.Parent = parent;
+					}
+
+					// else this neighbor is not in either the open or closed list 
+					else if (node.IsOpen && node.IsWalkable)
+					{
+						// add the neighbor to the open list and set its g value
+						node.Parent = parent;
+						node.G = parent.G + MovementCost;
+						node.H = GetHeuristic(node.Location, end);
+						node.IsOpen = false;
+						OpenQueue.Push(node);
 					}
 				}
 
