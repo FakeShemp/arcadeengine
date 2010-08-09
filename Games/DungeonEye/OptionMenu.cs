@@ -53,7 +53,7 @@ namespace DungeonEye
 		public override void LoadContent()
 		{
 			Tileset = ResourceManager.CreateAsset<TileSet>("Main Menu");
-			Tileset.Scale = new Vector2(2.0f, 2.0f);
+		//	Tileset.Scale = new Vector2(2.0f, 2.0f);
 
 			Font = ResourceManager.CreateSharedAsset<BitmapFont>("intro");
 
@@ -86,6 +86,9 @@ namespace DungeonEye
 		/// </summary>
 		public override void UnloadContent()
 		{
+			if (Tileset != null)
+				Tileset.Dispose();
+			Tileset = null;
         }
 
 

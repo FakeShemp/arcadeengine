@@ -66,6 +66,17 @@ namespace ArcEngine.Examples.PathFinding
 				Map[MapSize.Width * y + MapSize.Width - 1] = 1;
 			}
 
+
+			PriorityQueue<int> pq = new PriorityQueue<int>();
+			pq.Push(10);
+			pq.Push(1);
+			pq.Push(3);
+
+			int i = pq.Pop();
+			i = pq.Pop();
+			i = pq.Pop();
+
+
 		}
 
 
@@ -111,7 +122,8 @@ namespace ArcEngine.Examples.PathFinding
 			// Draw mouse
 			int mousex = Mouse.Location.X - (Mouse.Location.X % BlockSize.Width);
 			int mousey = Mouse.Location.Y - (Mouse.Location.Y % BlockSize.Height);
-			Batch.DrawRectangle(new Rectangle(mousex, mousey, BlockSize.Width, BlockSize.Height), Color.FromArgb(128, Color.Red));
+			if (mousex < BlockSize.Width * MapSize.Width && mousey < BlockSize.Height * MapSize.Height)
+				Batch.DrawRectangle(new Rectangle(mousex, mousey, BlockSize.Width, BlockSize.Height), Color.FromArgb(128, Color.Red));
 
 			// some debug text
 			Batch.DrawString(Font, new Point(550, 10), Color.White, "Mouse location : " + MouseLocation.ToString());

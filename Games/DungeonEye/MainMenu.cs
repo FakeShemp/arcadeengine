@@ -57,7 +57,7 @@ namespace DungeonEye
 			Batch = new SpriteBatch();
 	
 			Tileset = ResourceManager.CreateAsset<TileSet>("Main Menu");
-            Tileset.Scale = new Vector2(2.0f, 2.0f);
+         //   Tileset.Scale = new Vector2(2.0f, 2.0f);
 
 			Font = ResourceManager.CreateSharedAsset<BitmapFont>("intro");
             Font.GlyphTileset.Scale = new Vector2(2.0f, 2.0f);
