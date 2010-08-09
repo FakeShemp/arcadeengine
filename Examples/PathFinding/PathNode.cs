@@ -19,10 +19,28 @@ namespace ArcEngine.Examples.PathFinding
 		public PathNode(Point location)
 		{
 			Location = location;
+			IsWalkable = true;
+			IsOpen = true;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public void Clear()
+		{
+			IsOpen = true;
+			G = 0;
+			H = 0;
 		}
 
 		#region Comparer
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="to"></param>
+		/// <returns></returns>
 		public int CompareTo(PathNode to)
 		{
 			if (to.H > H)
@@ -45,6 +63,12 @@ namespace ArcEngine.Examples.PathFinding
 		/// Parent node
 		/// </summary>
 		public PathNode Parent;
+
+
+		/// <summary>
+		/// Is the node walkable
+		/// </summary>
+		public bool IsWalkable;
 
 
 		/// <summary>
@@ -87,10 +111,16 @@ namespace ArcEngine.Examples.PathFinding
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
 		public override string ToString()
 		{
 			return string.Format("{0} F = {1}, G = {2}, H = {3}", Location.ToString(), F ,G ,H);
 		}
+
+
 		#endregion
 	}
 }

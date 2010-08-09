@@ -52,32 +52,20 @@ namespace ArcEngine.Examples.PathFinding
 
 			Batch = new SpriteBatch();
 
-			BlockSize = new Size(20, 20);
 			MapSize = new Size(25, 25);
-			Map = new byte[MapSize.Width * MapSize.Height];
+			PathFinder = new AStar(MapSize);
+
+			BlockSize = new Size(20, 20);
 			for (int x = 0 ; x < MapSize.Width ; x++ )
 			{
-				Map[x] = 1;
-				Map[(MapSize.Height - 1) * MapSize.Width + x] = 1;
+				PathFinder.GetNode(x, 0).IsWalkable = false;
+				PathFinder.GetNode(x, MapSize.Height - 1).IsWalkable = false;
 			}
 			for (int y = 0 ; y < MapSize.Height ; y++)
 			{
-				Map[MapSize.Width * y] = 1;
-				Map[MapSize.Width * y + MapSize.Width - 1] = 1;
+				PathFinder.GetNode(0, y).IsWalkable = false;
+				PathFinder.GetNode(MapSize.Width - 1, y).IsWalkable = false;
 			}
-
-
-			PathFinder = new AStar(MapSize);
-
-			PriorityQueue<int> pq = new PriorityQueue<int>();
-			pq.Push(10);
-			pq.Push(1);
-			pq.Push(3);
-
-			int i = pq.Pop();
-			i = pq.Pop();
-			i = pq.Pop();
-
 
 		}
 
@@ -112,7 +100,12 @@ namespace ArcEngine.Examples.PathFinding
 			for (int y = 0 ; y < MapSize.Height ; y++)
 				for (int x = 0; x < MapSize.Width; x++)
 				{
-					Color color = Map[y * MapSize.Height + x] == 1 ? Color.Black : Color.White;
+					PathNode node = PathFinder.GetNode(x, y);
+					Color color = node.IsWalkable ? Color.White : Color.Black;
+
+					if (!node.IsOpen)
+						color = Color.LightBlue;
+
 					Batch.FillRectangle(new Rectangle(x * BlockSize.Width, y * BlockSize.Height, BlockSize.Width, BlockSize.Height), color);
 				}
 
@@ -169,12 +162,12 @@ namespace ArcEngine.Examples.PathFinding
 			// Change the map
 			if (Mouse.IsButtonDown(MouseButtons.Left))
 			{
-				Map[MouseLocation.Y * MapSize.Height + MouseLocation.X] = 1;
+				PathFinder.GetNode(MouseLocation).IsWalkable = false;
 			}
 
 			if (Mouse.IsButtonDown(MouseButtons.Right))
 			{
-				Map[MouseLocation.Y * MapSize.Height + MouseLocation.X] = 0;
+				PathFinder.GetNode(MouseLocation).IsWalkable = true;
 			}
 
 
@@ -204,11 +197,6 @@ namespace ArcEngine.Examples.PathFinding
 
 
 		#region Properties
-
-		/// <summary>
-		/// Map data
-		/// </summary>
-		byte[] Map;
 
 
 		/// <summary>

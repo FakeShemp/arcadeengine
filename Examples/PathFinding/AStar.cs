@@ -20,7 +20,7 @@ namespace ArcEngine.Examples.PathFinding
 	public class AStar
 	{
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
 		/// <param name="size">Size of the grid</param>
 		public AStar(Size size)
@@ -47,19 +47,15 @@ namespace ArcEngine.Examples.PathFinding
 		/// <returns></returns>
 		public List<PathNode> FindPath(Point start, Point end)
 		{
+
+			Clear();
 			
-			// Clear nodes
-			foreach (PathNode node in Nodes)
-			{
-				node.IsOpen = true;
-			}
-
-
-			// Clear the queue
-			OpenQueue.Clear();
-
 			// Add root node
 			OpenQueue.Push(GetNode(start));
+
+
+			
+
 
 			PathNode dest = GetNode(end);
 
@@ -72,6 +68,7 @@ namespace ArcEngine.Examples.PathFinding
 				// No path...
 				if (OpenQueue.Count == 0)
 				{
+					OpenQueue.Clear();
 					return null;
 				}
 
@@ -81,13 +78,16 @@ namespace ArcEngine.Examples.PathFinding
 			
 				// Destination reached ?
 				if (parent == dest)
+				{
+					OpenQueue.Clear();
 					break;
+				}
 
 				PathNode node = null;
 
 				// Top
 				node = GetNode(parent.Location.X, parent.Location.Y - 1);
-				if (node.IsOpen)
+				if (node != null && node.IsOpen && node.IsWalkable)
 				{
 					node.Parent = parent;
 					node.G = parent.G + MovementCost;
@@ -98,7 +98,7 @@ namespace ArcEngine.Examples.PathFinding
 
 				// Right
 				node = GetNode(parent.Location.X + 1, parent.Location.Y);
-				if (node.IsOpen)
+				if (node != null && node.IsOpen && node.IsWalkable)
 				{
 					node.Parent = parent;
 					node.G = parent.G + MovementCost;
@@ -109,8 +109,8 @@ namespace ArcEngine.Examples.PathFinding
 
 
 				// Bottom
-				node = GetNode(parent.Location.X, parent.Location.Y - 1);
-				if (node.IsOpen)
+				node = GetNode(parent.Location.X, parent.Location.Y + 1);
+				if (node != null && node.IsOpen && node.IsWalkable)
 				{
 					node.Parent = parent;
 					node.G = parent.G + MovementCost;
@@ -121,7 +121,7 @@ namespace ArcEngine.Examples.PathFinding
 
 				// Left
 				node = GetNode(parent.Location.X - 1, parent.Location.Y);
-				if (node.IsOpen)
+				if (node != null && node.IsOpen && node.IsWalkable)
 				{
 					node.Parent = parent;
 					node.G = parent.G + MovementCost;
@@ -131,15 +131,32 @@ namespace ArcEngine.Examples.PathFinding
 				}
 
 
-
-
-
 			}
 
 			return null;
 
 		}
 
+
+		/// <summary>
+		/// Clear
+		/// </summary>
+		public void Clear()
+		{
+
+			// Clear the queue
+			OpenQueue.Clear();
+
+
+			// Clear nodes
+			foreach (PathNode node in Nodes)
+			{
+				node.Clear();
+			}
+
+
+
+		}
 
 		/// <summary>
 		/// Gets heuristic value
@@ -159,7 +176,7 @@ namespace ArcEngine.Examples.PathFinding
 		/// </summary>
 		/// <param name="location">Location</param>
 		/// <returns></returns>
-		PathNode GetNode(Point location)
+		public PathNode GetNode(Point location)
 		{
 			return GetNode(location.X, location.Y);
 		}
@@ -171,7 +188,7 @@ namespace ArcEngine.Examples.PathFinding
 		/// <param name="x">X</param>
 		/// <param name="y">Y</param>
 		/// <returns></returns>
-		PathNode GetNode(int x, int y)
+		public PathNode GetNode(int x, int y)
 		{
 			if (x >= GridSize.Width || y >= GridSize.Height ||
 				x < 0 || y < 0)
