@@ -52,10 +52,10 @@ namespace ArcEngine.Examples.PathFinding
 
 			Batch = new SpriteBatch();
 
-			MapSize = new Size(25, 25);
+			MapSize = new Size(50, 50);
 			PathFinder = new AStar(MapSize);
 
-			BlockSize = new Size(20, 20);
+			BlockSize = new Size(10, 10);
 			for (int x = 0 ; x < MapSize.Width ; x++ )
 			{
 				PathFinder.GetNode(x, 0).IsWalkable = false;
@@ -104,7 +104,7 @@ namespace ArcEngine.Examples.PathFinding
 					Color color = node.IsWalkable ? Color.White : Color.Black;
 
 					if (!node.IsOpen)
-						color = Color.LightBlue;
+						color =  Color.FromArgb(128, Color.LightBlue);
 
 					Batch.FillRectangle(new Rectangle(x * BlockSize.Width, y * BlockSize.Height, BlockSize.Width, BlockSize.Height), color);
 				}
@@ -115,16 +115,16 @@ namespace ArcEngine.Examples.PathFinding
 			{
 				foreach (PathNode node in Path)
 				{
-					Batch.FillRectangle(new Rectangle(node.Location.X * BlockSize.Width, node.Location.Y * BlockSize.Height, BlockSize.Width, BlockSize.Height), Color.Red);
+					Batch.FillRectangle(new Rectangle(node.Location.X * BlockSize.Width, node.Location.Y * BlockSize.Height, BlockSize.Width, BlockSize.Height), Color.FromArgb(128, Color.Red));
 				}
 			}
 
 
 
 			if (!Start.IsEmpty)
-				Batch.FillRectangle(new Rectangle(Start.X * BlockSize.Width, Start.Y * BlockSize.Height, BlockSize.Width, BlockSize.Height), Color.Red);
+				Batch.FillRectangle(new Rectangle(Start.X * BlockSize.Width, Start.Y * BlockSize.Height, BlockSize.Width, BlockSize.Height),  Color.Red);
 			if (!Destination.IsEmpty)
-				Batch.FillRectangle(new Rectangle(Destination.X * BlockSize.Width, Destination.Y * BlockSize.Height, BlockSize.Width, BlockSize.Height), Color.Green);
+				Batch.FillRectangle(new Rectangle(Destination.X * BlockSize.Width, Destination.Y * BlockSize.Height, BlockSize.Width, BlockSize.Height),  Color.Green);
 			
 			// Draw mouse
 			int mousex = Mouse.Location.X - (Mouse.Location.X % BlockSize.Width);
@@ -199,6 +199,7 @@ namespace ArcEngine.Examples.PathFinding
 			}
 
 
+			// Find the path
 			if (!Destination.IsEmpty && !Start.IsEmpty && Keyboard.IsKeyPress(Keys.Enter))
 				Path = PathFinder.FindPath(Start, Destination);
 		}

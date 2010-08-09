@@ -87,50 +87,37 @@ namespace ArcEngine.Examples.PathFinding
 
 				PathNode node = null;
 
-				// Top
-				node = GetNode(parent.Location.X, parent.Location.Y - 1);
-				if (node != null && node.IsOpen && node.IsWalkable)
+				Point[] neighbors = new Point[]
 				{
-					node.Parent = parent;
-					node.G = parent.G + MovementCost;
-					node.H = GetHeuristic(node.Location, end);
-					node.IsOpen = false;
-					OpenQueue.Push(node);
+					new Point(0, -1),	// Top
+					new Point(1, 0),	// Right
+					new Point(0, 1),	// Bottom
+					new Point(-1, 0),	// Left
+				};
+
+				for (int i = 0 ; i < neighbors.Length ; i++)
+				{
+					Point neighbor = neighbors[i];
+
+					// Top
+					node = GetNode(parent.Location.X + neighbor.X, parent.Location.Y + neighbor.Y);
+					if (node != null)
+					{
+						if (node.IsOpen && node.IsWalkable)
+						{
+							node.Parent = parent;
+							node.G = parent.G + MovementCost;
+							node.H = GetHeuristic(node.Location, end);
+							node.IsOpen = false;
+							OpenQueue.Push(node);
+						}
+						else if (!node.IsOpen && node.G > parent.G)
+						{
+							node.G = parent.G;
+						}
+					}
 				}
 
-				// Right
-				node = GetNode(parent.Location.X + 1, parent.Location.Y);
-				if (node != null && node.IsOpen && node.IsWalkable)
-				{
-					node.Parent = parent;
-					node.G = parent.G + MovementCost;
-					node.H = GetHeuristic(node.Location, end);
-					node.IsOpen = false;
-					OpenQueue.Push(node);
-				}
-
-
-				// Bottom
-				node = GetNode(parent.Location.X, parent.Location.Y + 1);
-				if (node != null && node.IsOpen && node.IsWalkable)
-				{
-					node.Parent = parent;
-					node.G = parent.G + MovementCost;
-					node.H = GetHeuristic(node.Location, end);
-					node.IsOpen = false;
-					OpenQueue.Push(node);
-				}
-
-				// Left
-				node = GetNode(parent.Location.X - 1, parent.Location.Y);
-				if (node != null && node.IsOpen && node.IsWalkable)
-				{
-					node.Parent = parent;
-					node.G = parent.G + MovementCost;
-					node.H = GetHeuristic(node.Location, end);
-					node.IsOpen = false;
-					OpenQueue.Push(node);
-				}
 
 
 			}
@@ -178,6 +165,7 @@ namespace ArcEngine.Examples.PathFinding
 
 			return path;
 		}
+
 
 		/// <summary>
 		/// Gets heuristic value
