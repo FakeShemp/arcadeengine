@@ -67,6 +67,8 @@ namespace ArcEngine.Examples.PathFinding
 			}
 
 
+			PathFinder = new AStar(MapSize);
+
 			PriorityQueue<int> pq = new PriorityQueue<int>();
 			pq.Push(10);
 			pq.Push(1);
@@ -126,11 +128,12 @@ namespace ArcEngine.Examples.PathFinding
 				Batch.DrawRectangle(new Rectangle(mousex, mousey, BlockSize.Width, BlockSize.Height), Color.FromArgb(128, Color.Red));
 
 			// some debug text
-			Batch.DrawString(Font, new Point(550, 10), Color.White, "Mouse location : " + MouseLocation.ToString());
+			Batch.DrawString(Font, new Point(550, 10), Color.Black, "Mouse location : " + MouseLocation.ToString());
 			Batch.DrawString(Font, new Point(550, 25), Color.Red, "Start location : " + Start.ToString());
 			Batch.DrawString(Font, new Point(550, 40), Color.Green, "Destination location : " + Destination.ToString());
 
-			Batch.DrawString(Font, new Point(550, 100), Color.White, "Press spacebar to reset Start and Destination");
+			Batch.DrawString(Font, new Point(550, 100), Color.Black, "Press spacebar to reset Start and Destination.");
+			Batch.DrawString(Font, new Point(550, 115), Color.Black, "Press enter to find the path.");
 			Batch.End();
 		}
 
@@ -191,6 +194,8 @@ namespace ArcEngine.Examples.PathFinding
 			}
 
 
+			if (!Destination.IsEmpty && !Start.IsEmpty && Keyboard.IsKeyPress(Keys.Enter))
+				PathFinder.FindPath(Start, Destination);
 		}
 
 
@@ -246,6 +251,13 @@ namespace ArcEngine.Examples.PathFinding
 		/// Destination point
 		/// </summary>
 		Point Destination;
+
+
+		/// <summary>
+		/// Path finder
+		/// </summary>
+		AStar PathFinder;
+
 		#endregion
 	}
 }
