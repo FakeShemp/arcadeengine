@@ -51,21 +51,11 @@ namespace ArcEngine.Examples.PathFinding
 
 			Batch = new SpriteBatch();
 
-			MapSize = new Size(20, 20);
+			MapSize = new Size(100, 100);
+			BlockSize = new Size(5, 5);
 			PathFinder = new AStar(MapSize);
 
-			BlockSize = new Size(50, 50);
-			for (int x = 0 ; x < MapSize.Width ; x++ )
-			{
-				PathFinder.GetNode(x, 0).IsWalkable = false;
-				PathFinder.GetNode(x, MapSize.Height - 1).IsWalkable = false;
-			}
-			for (int y = 0 ; y < MapSize.Height ; y++)
-			{
-				PathFinder.GetNode(0, y).IsWalkable = false;
-				PathFinder.GetNode(MapSize.Width - 1, y).IsWalkable = false;
-			}
-
+			ClearMap();
 		}
 
 
@@ -125,7 +115,7 @@ namespace ArcEngine.Examples.PathFinding
 
 
 
-			DebugPath();
+		//	DebugPath();
 
 
 
@@ -147,10 +137,12 @@ namespace ArcEngine.Examples.PathFinding
 
 			Batch.DrawString(Font, new Point(MapSize.Width * BlockSize.Width + 50, 100), Color.Black, "Press spacebar to reset Start and Destination.");
 			Batch.DrawString(Font, new Point(MapSize.Width * BlockSize.Width + 50, 115), Color.Black, "Press enter to find the path.");
+			Batch.DrawString(Font, new Point(MapSize.Width * BlockSize.Width + 50, 130), Color.Black, "Press R to make some random unwakable block.");
+			Batch.DrawString(Font, new Point(MapSize.Width * BlockSize.Width + 50, 145), Color.Black, "Press C to clear map.");
 
-			Batch.DrawString(Font, new Point(MapSize.Width * BlockSize.Width + 50, 150), Color.Black, "F = G + H.");
-			Batch.DrawString(Font, new Point(MapSize.Width * BlockSize.Width + 50, 165), Color.Black, "G = Movement cost to move from the starting point.");
-			Batch.DrawString(Font, new Point(MapSize.Width * BlockSize.Width + 50, 180), Color.Black, "H = Estimated movement cost to move to the final destination.");
+			Batch.DrawString(Font, new Point(MapSize.Width * BlockSize.Width + 50, 200), Color.Black, "F = G + H.");
+			Batch.DrawString(Font, new Point(MapSize.Width * BlockSize.Width + 50, 215), Color.Black, "G = Movement cost to move from the starting point.");
+			Batch.DrawString(Font, new Point(MapSize.Width * BlockSize.Width + 50, 230), Color.Black, "H = Estimated movement cost to move to the final destination.");
 			
 			Batch.End();
 		}
@@ -174,6 +166,13 @@ namespace ArcEngine.Examples.PathFinding
 				Destination = Point.Empty;
 			}
 
+			// Put some unwakable blocks
+			if (Keyboard.IsNewKeyPress(Keys.R))
+				RandomPlot(200);
+
+			// Put some unwakable blocks
+			if (Keyboard.IsNewKeyPress(Keys.C))
+				ClearMap();
 
 
 			// Mouse location in the map
@@ -242,6 +241,46 @@ namespace ArcEngine.Examples.PathFinding
 
 		}
 
+
+		/// <summary>
+		/// Plot some random unwalkable block
+		/// </summary>
+		/// <param name="count">Number of block to set</param>
+		void RandomPlot(int count)
+		{
+			
+			for (int i = 0 ; i< count ; i++)
+			{
+				PathFinder.GetNode(Random.Next(0, MapSize.Width - 1), Random.Next(0, MapSize.Height - 1)).IsWalkable = false;
+			}
+		}
+
+
+		/// <summary>
+		/// Clear the map
+		/// </summary>
+		void ClearMap()
+		{
+			for (int y = 0 ; y < MapSize.Height ; y++)
+				for (int x = 0 ; x < MapSize.Width ; x++)
+					PathFinder.GetNode(x, y).IsWalkable = true;
+
+
+			for (int x = 0 ; x < MapSize.Width ; x++)
+			{
+				PathFinder.GetNode(x, 0).IsWalkable = false;
+				PathFinder.GetNode(x, MapSize.Height - 1).IsWalkable = false;
+			}
+			for (int y = 0 ; y < MapSize.Height ; y++)
+			{
+				PathFinder.GetNode(0, y).IsWalkable = false;
+				PathFinder.GetNode(MapSize.Width - 1, y).IsWalkable = false;
+			}
+
+		}
+		
+		
+		
 		#endregion
 
 
@@ -300,6 +339,8 @@ namespace ArcEngine.Examples.PathFinding
 		/// Path
 		/// </summary>
 		List<PathNode> Path;
+
+
 		#endregion
 	}
 }

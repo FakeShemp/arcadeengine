@@ -140,9 +140,9 @@ namespace ArcEngine.Examples.PathFinding
 						neighbor.Parent = node;
 						neighbor.G = node.G + MovementCost;
 						
-						// Diagonal movement
+						// Diagonal movement penality
 						if (i > 3)
-							neighbor.G += 2;
+							neighbor.G += 1;
 
 						neighbor.H = GetHeuristic(neighbor.Location, end);
 						neighbor.IsOpen = false;
