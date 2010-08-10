@@ -45,6 +45,7 @@ namespace ArcEngine.Examples.PathFinding
 	/// [Author("Franco, Gustavo")]
 	public class PriorityQueue<T> : IPriorityQueue<T>
 	{
+
 		#region Variables Declaration
 		/// <summary>
 		/// 
@@ -57,6 +58,7 @@ namespace ArcEngine.Examples.PathFinding
 		/// </summary>
 		protected IComparer<T> mComparer;
 		#endregion
+
 
 		#region Contructors
 
@@ -90,6 +92,7 @@ namespace ArcEngine.Examples.PathFinding
 		}
 
 		#endregion
+
 
 		#region Methods
 

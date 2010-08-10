@@ -30,9 +30,8 @@ namespace ArcEngine.Examples.PathFinding
 		/// </summary>
 		public Program()
 		{
-			CreateGameWindow(new Size(1024, 768));
+			CreateGameWindow(new Size(1280, 768));
 			Window.Resizable = true;
-
 		}
 
 
@@ -52,10 +51,10 @@ namespace ArcEngine.Examples.PathFinding
 
 			Batch = new SpriteBatch();
 
-			MapSize = new Size(10, 10);
+			MapSize = new Size(20, 20);
 			PathFinder = new AStar(MapSize);
 
-			BlockSize = new Size(60, 60);
+			BlockSize = new Size(50, 50);
 			for (int x = 0 ; x < MapSize.Width ; x++ )
 			{
 				PathFinder.GetNode(x, 0).IsWalkable = false;
@@ -103,11 +102,26 @@ namespace ArcEngine.Examples.PathFinding
 					PathNode node = PathFinder.GetNode(x, y);
 					Color color = node.IsWalkable ? Color.White : Color.Black;
 
-					if (!node.IsOpen)
-						color =  Color.FromArgb(128, Color.LightBlue);
-
 					Batch.FillRectangle(new Rectangle(x * BlockSize.Width, y * BlockSize.Height, BlockSize.Width, BlockSize.Height), color);
+
+					if (!node.IsOpen)
+						Batch.FillRectangle(new Rectangle(x * BlockSize.Width, y * BlockSize.Height, BlockSize.Width, BlockSize.Height), Color.FromArgb(128, Color.LightBlue));
+					
+
 				}
+
+
+			// Draw path
+			if (Path != null)
+			{
+				foreach (PathNode node in Path)
+				{
+					Point location = new Point(node.Location.X * BlockSize.Width, node.Location.Y * BlockSize.Height);
+
+					// Draw rectangle
+					Batch.FillRectangle(new Rectangle(location.X, location.Y, BlockSize.Width, BlockSize.Height), Color.FromArgb(128, Color.Red));
+				}
+			}
 
 
 
@@ -134,9 +148,9 @@ namespace ArcEngine.Examples.PathFinding
 			Batch.DrawString(Font, new Point(MapSize.Width * BlockSize.Width + 50, 100), Color.Black, "Press spacebar to reset Start and Destination.");
 			Batch.DrawString(Font, new Point(MapSize.Width * BlockSize.Width + 50, 115), Color.Black, "Press enter to find the path.");
 
-			Batch.DrawString(Font, new Point(MapSize.Width * BlockSize.Width + 50, 100), Color.Black, "F = G + H.");
-			Batch.DrawString(Font, new Point(MapSize.Width * BlockSize.Width + 50, 100), Color.Black, "G = Movement cost to move from the starting point.");
-			Batch.DrawString(Font, new Point(MapSize.Width * BlockSize.Width + 50, 100), Color.Black, "H = Estimated movement cost to move to the final destination.");
+			Batch.DrawString(Font, new Point(MapSize.Width * BlockSize.Width + 50, 150), Color.Black, "F = G + H.");
+			Batch.DrawString(Font, new Point(MapSize.Width * BlockSize.Width + 50, 165), Color.Black, "G = Movement cost to move from the starting point.");
+			Batch.DrawString(Font, new Point(MapSize.Width * BlockSize.Width + 50, 180), Color.Black, "H = Estimated movement cost to move to the final destination.");
 			
 			Batch.End();
 		}
@@ -204,27 +218,27 @@ namespace ArcEngine.Examples.PathFinding
 		}
 
 
-
+		/// <summary>
+		/// Debug found path
+		/// </summary>
 		void DebugPath()
 		{
-			// Draw path
-			if (Path == null)
-				return;
+			for (int y = 0 ; y < MapSize.Height ; y++)
+				for (int x = 0 ; x < MapSize.Width ; x++)
+				{
+					PathNode node = PathFinder.GetNode(x, y);
+					if (node.IsOpen)
+						continue;
 
 
-			foreach (PathNode node in Path)
-			{
-				Point location = new Point(node.Location.X * BlockSize.Width, node.Location.Y * BlockSize.Height);
+					Point location = new Point(node.Location.X * BlockSize.Width, node.Location.Y * BlockSize.Height);
+					
 
-				// Draw rectangle
-				Batch.FillRectangle(new Rectangle(location.X, location.Y, BlockSize.Width, BlockSize.Height), Color.FromArgb(128, Color.Red));
-
-
-				// Print some debug
-				Batch.DrawString(Font, new Point(location.X, location.Y), Color.White, "F = " + node.F);
-				Batch.DrawString(Font, new Point(location.X, location.Y + BlockSize.Height / 2), Color.White, "G = " + node.G);
-				Batch.DrawString(Font, new Point(location.X, location.Y + +BlockSize.Height - 15), Color.White, "H = " + node.H);
-			}
+					// Print some debug
+					Batch.DrawString(Font, new Point(location.X, location.Y), Color.Black, "F = " + node.F);
+					Batch.DrawString(Font, new Point(location.X, location.Y + 15), Color.Black, "G = " + node.G);
+					Batch.DrawString(Font, new Point(location.X, location.Y + 30), Color.Black, "H = " + node.H);
+				}
 
 		}
 

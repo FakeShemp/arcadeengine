@@ -62,7 +62,7 @@ namespace ArcEngine.Examples.PathFinding
 
 			PathNode dest = GetNode(end);
 
-			int MovementCost = 10;
+			int MovementCost = 1;
 
 
 
@@ -107,19 +107,21 @@ namespace ArcEngine.Examples.PathFinding
 				{
 					// Get next neighbor
 					PathNode neighbor = GetNode(node.Location.X + neighbors[i].X, node.Location.Y + neighbors[i].Y);
-					if (neighbor == null)
+					if (neighbor == null || !neighbor.IsOpen)
 						continue;
 
 					// if (this neighbor is in the closed list and our current g value is lower)
-					if (!neighbor.IsOpen && node.G < neighbor.G)
+					if (/*!neighbor.IsOpen &&*/ node.G < neighbor.G)
 					{
 						// update the neighbor with the new, lower, g value 
 						neighbor.G = node.G;
 
 						// change the neighbor's parent to our current node
 						neighbor.Parent = node;
+						neighbor.IsOpen = false;
+						NodeQueue.Push(neighbor);
 					}
-
+/*
 					// else if (this neighbor is in the open list and our current g value is lower)
 					else if (neighbor.IsOpen && node.G < neighbor.G)
 					{
@@ -128,21 +130,28 @@ namespace ArcEngine.Examples.PathFinding
 
 						// change the neighbor's parent to our current node
 						neighbor.Parent = node;
+						NodeQueue.Push(neighbor);
 					}
-
+*/
 					// else this neighbor is not in either the open or closed list 
 					else if (neighbor.IsOpen &&  neighbor.IsWalkable)
 					{
 						// add the neighbor to the open list and set its g value
 						neighbor.Parent = node;
 						neighbor.G = node.G + MovementCost;
+						
+						// Diagonal movement
+						if (i > 3)
+							neighbor.G += 2;
+
 						neighbor.H = GetHeuristic(neighbor.Location, end);
 						neighbor.IsOpen = false;
 						NodeQueue.Push(neighbor);
 					}
 
 				}
-
+				
+				
 			}
 
 			return null;
