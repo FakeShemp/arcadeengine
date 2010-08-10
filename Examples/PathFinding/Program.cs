@@ -52,10 +52,10 @@ namespace ArcEngine.Examples.PathFinding
 
 			Batch = new SpriteBatch();
 
-			MapSize = new Size(50, 50);
+			MapSize = new Size(10, 10);
 			PathFinder = new AStar(MapSize);
 
-			BlockSize = new Size(10, 10);
+			BlockSize = new Size(60, 60);
 			for (int x = 0 ; x < MapSize.Width ; x++ )
 			{
 				PathFinder.GetNode(x, 0).IsWalkable = false;
@@ -110,14 +110,8 @@ namespace ArcEngine.Examples.PathFinding
 				}
 
 
-			// Draw path
-			if (Path != null)
-			{
-				foreach (PathNode node in Path)
-				{
-					Batch.FillRectangle(new Rectangle(node.Location.X * BlockSize.Width, node.Location.Y * BlockSize.Height, BlockSize.Width, BlockSize.Height), Color.FromArgb(128, Color.Red));
-				}
-			}
+
+			DebugPath();
 
 
 
@@ -133,12 +127,17 @@ namespace ArcEngine.Examples.PathFinding
 				Batch.DrawRectangle(new Rectangle(mousex, mousey, BlockSize.Width, BlockSize.Height), Color.FromArgb(128, Color.Red));
 
 			// some debug text
-			Batch.DrawString(Font, new Point(550, 10), Color.Black, "Mouse location : " + MouseLocation.ToString());
-			Batch.DrawString(Font, new Point(550, 25), Color.Red, "Start location : " + Start.ToString());
-			Batch.DrawString(Font, new Point(550, 40), Color.Green, "Destination location : " + Destination.ToString());
+			Batch.DrawString(Font, new Point(MapSize.Width * BlockSize.Width + 50, 10), Color.Black, "Mouse location : " + MouseLocation.ToString());
+			Batch.DrawString(Font, new Point(MapSize.Width * BlockSize.Width + 50, 25), Color.Red, "Start location : " + Start.ToString());
+			Batch.DrawString(Font, new Point(MapSize.Width * BlockSize.Width + 50, 40), Color.Green, "Destination location : " + Destination.ToString());
 
-			Batch.DrawString(Font, new Point(550, 100), Color.Black, "Press spacebar to reset Start and Destination.");
-			Batch.DrawString(Font, new Point(550, 115), Color.Black, "Press enter to find the path.");
+			Batch.DrawString(Font, new Point(MapSize.Width * BlockSize.Width + 50, 100), Color.Black, "Press spacebar to reset Start and Destination.");
+			Batch.DrawString(Font, new Point(MapSize.Width * BlockSize.Width + 50, 115), Color.Black, "Press enter to find the path.");
+
+			Batch.DrawString(Font, new Point(MapSize.Width * BlockSize.Width + 50, 100), Color.Black, "F = G + H.");
+			Batch.DrawString(Font, new Point(MapSize.Width * BlockSize.Width + 50, 100), Color.Black, "G = Movement cost to move from the starting point.");
+			Batch.DrawString(Font, new Point(MapSize.Width * BlockSize.Width + 50, 100), Color.Black, "H = Estimated movement cost to move to the final destination.");
+			
 			Batch.End();
 		}
 
@@ -205,6 +204,29 @@ namespace ArcEngine.Examples.PathFinding
 		}
 
 
+
+		void DebugPath()
+		{
+			// Draw path
+			if (Path == null)
+				return;
+
+
+			foreach (PathNode node in Path)
+			{
+				Point location = new Point(node.Location.X * BlockSize.Width, node.Location.Y * BlockSize.Height);
+
+				// Draw rectangle
+				Batch.FillRectangle(new Rectangle(location.X, location.Y, BlockSize.Width, BlockSize.Height), Color.FromArgb(128, Color.Red));
+
+
+				// Print some debug
+				Batch.DrawString(Font, new Point(location.X, location.Y), Color.White, "F = " + node.F);
+				Batch.DrawString(Font, new Point(location.X, location.Y + BlockSize.Height / 2), Color.White, "G = " + node.G);
+				Batch.DrawString(Font, new Point(location.X, location.Y + +BlockSize.Height - 15), Color.White, "H = " + node.H);
+			}
+
+		}
 
 		#endregion
 
