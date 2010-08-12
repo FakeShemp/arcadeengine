@@ -1211,7 +1211,7 @@ namespace DungeonEye
 								loc.GroundPosition = GroundPosition.SouthEast;
 								break;
 							}
-							Location.Maze.FlyingItems.Add(new FlyingItem(SelectedHero, ItemInHand, loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
+							Location.Maze.FlyingItems.Add(new ThrownItem(SelectedHero, ItemInHand, loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
 							SetItemInHand(null);
 						}
 						#endregion
@@ -1238,7 +1238,7 @@ namespace DungeonEye
 								break;
 							}
 
-							Location.Maze.FlyingItems.Add(new FlyingItem(SelectedHero, ItemInHand, loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
+							Location.Maze.FlyingItems.Add(new ThrownItem(SelectedHero, ItemInHand, loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
 							SetItemInHand(null);
 						}
 						#endregion

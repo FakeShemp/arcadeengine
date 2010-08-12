@@ -401,7 +401,7 @@ namespace ArcEngine
 			if (string.IsNullOrEmpty(name))
 				return default(T);
 
-			Trace.WriteDebugLine("[ResourceManager] CreateAsset (name = {0})", name);
+		//	Trace.WriteDebugLine("[ResourceManager] CreateAsset (name = {0})", name);
 
 			lock (BinaryLock)
 			{

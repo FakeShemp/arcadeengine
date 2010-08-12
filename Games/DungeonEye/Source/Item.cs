@@ -183,11 +183,11 @@ namespace DungeonEye
 					}
 					break;
 
-					case "usequiver":
-					{
-						UseQuiver = (bool)Boolean.Parse(node.Attributes["value"].Value);
-					}
-					break;
+					//case "usequiver":
+					//{
+					//    UseQuiver = (bool)Boolean.Parse(node.Attributes["value"].Value);
+					//}
+					//break;
 
 					case "twohanded":
 					{
@@ -248,6 +248,10 @@ namespace DungeonEye
 			writer.WriteAttributeString("value", AllowedClasses.ToString());
 			writer.WriteEndElement();
 
+			writer.WriteStartElement("class");
+			writer.WriteAttributeString("value", Professions.ToString());
+			writer.WriteEndElement();
+
 			writer.WriteStartElement("usequiver");
 			writer.WriteAttributeString("value", UseQuiver.ToString());
 			writer.WriteEndElement();
@@ -256,11 +260,17 @@ namespace DungeonEye
 			writer.WriteAttributeString("value", TwoHanded.ToString());
 			writer.WriteEndElement();
 
+			writer.WriteStartElement("hands");
+			writer.WriteAttributeString("value", Hands.ToString());
+			writer.WriteEndElement();
+
 			writer.WriteStartElement("weight");
 			writer.WriteAttributeString("value", Weight.ToString());
 			writer.WriteEndElement();
 
 			Damage.Save("damage", writer);
+			DamageVsBig.Save("damagevsbig", writer);
+			DamageVsSmall.Save("damagevssmall", writer);
 
 			writer.WriteStartElement("critical");
 			writer.WriteAttributeString("min", Critical.X.ToString());
@@ -321,6 +331,15 @@ namespace DungeonEye
 			set;
 		}
 
+
+		/// <summary>
+		/// Allowed professions
+		/// </summary>
+		public Profession Professions
+		{
+			get;
+			set;
+		}
 
 
 		/// <summary>
@@ -415,6 +434,24 @@ namespace DungeonEye
 		/// Damage
 		/// </summary>
 		public Dice Damage
+		{
+			get;
+			private set;
+		}
+
+		/// <summary>
+		/// Damage versus small entity
+		/// </summary>
+		public Dice DamageVsSmall
+		{
+			get;
+			private set;
+		}
+
+		/// <summary>
+		/// Damage versus big entity
+		/// </summary>
+		public Dice DamageVsBig
 		{
 			get;
 			private set;
@@ -547,14 +584,33 @@ namespace DungeonEye
 		/// </summary>
 		public bool UseQuiver
 		{
-			get;
-			set;
+			get
+			{
+				return (Slot & BodySlot.Quiver) == BodySlot.Quiver;
+			}
 		}
+
 
 		/// <summary>
 		/// Two handed item
 		/// </summary>
 		public bool TwoHanded
+		{
+			get
+			{
+				return ((Hands & HeroHand.Primary) == HeroHand.Primary && (Hands & HeroHand.Secondary) == HeroHand.Secondary);
+			}
+			set
+			{
+				Hands = HeroHand.Primary | HeroHand.Secondary;
+			}
+		}
+
+
+		/// <summary>
+		/// Allowed hands
+		/// </summary>
+		public HeroHand Hands
 		{
 			get;
 			set;
@@ -562,7 +618,7 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Armor Class bonus
+		/// Armor Class bonus/malus
 		/// </summary>
 		public byte ArmorClass
 		{
@@ -585,17 +641,65 @@ namespace DungeonEye
 	/// </summary>
 	public enum ItemType
 	{
+		/// <summary>
+		/// 
+		/// </summary>
 		Adornment,
+
+		/// <summary>
+		/// Ammo
+		/// </summary>
 		Ammo,
+
+		/// <summary>
+		/// 
+		/// </summary>
 		Armor,
+
+		/// <summary>
+		/// 
+		/// </summary>
 		Consumable,
+
+		/// <summary>
+		/// 
+		/// </summary>
 		Miscellaneous,
+
+		/// <summary>
+		/// Potion
+		/// </summary>
 		Potion,
+
+		/// <summary>
+		/// Scroll
+		/// </summary>
 		Scroll,
+
+		/// <summary>
+		/// shield
+		/// </summary>
 		Shield,
+
+		/// <summary>
+		/// Magic wand
+		/// </summary>
 		Wand,
+
+		/// <summary>
+		/// Weapon
+		/// </summary>
 		Weapon,
+
+		/// <summary>
+		/// Key
+		/// </summary>
 		Key,
+
+		/// <summary>
+		/// Book
+		/// </summary>
+		Book,
 	}
 
 
@@ -621,37 +725,37 @@ namespace DungeonEye
 		Quiver = 0x4,
 
 		/// <summary>
-		/// 
+		/// Armour
 		/// </summary>
 		Body = 0x8,
 
 		/// <summary>
-		/// 
+		/// Necklace
 		/// </summary>
 		Neck = 0x10,
 
 		/// <summary>
-		/// 
+		/// Ring
 		/// </summary>
 		Ring = 0x20,
 
 		/// <summary>
-		/// 
+		/// Bracers
 		/// </summary>
 		Wrist = 0x40,
 
 		/// <summary>
-		/// 
+		/// Boots
 		/// </summary>
 		Feet = 0x80,
 
 		/// <summary>
-		/// 
+		/// Helmet
 		/// </summary>
 		Head = 0x100,
 
 		/// <summary>
-		/// 
+		/// Belt
 		/// </summary>
 		Waist = 0x200,
 

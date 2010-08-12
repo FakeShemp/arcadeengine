@@ -227,7 +227,7 @@
     <Compile Include="Source\MazeDisplayCoordinates.cs" />
     <Compile Include="Source\Compass.cs" />
     <Compile Include="IntroScreen.cs" />
-    <Compile Include="Source\FlyingItem.cs" />
+    <Compile Include="Source\ThrownItem.cs" />
     <Compile Include="Source\SpellBook.cs" />
     <Compile Include="Source\Gui\Window.cs" />
     <Compile Include="OptionMenu.cs" />

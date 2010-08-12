@@ -105,21 +105,20 @@ namespace ArcEngine.Graphic
 			Trace.Indent();
 
 
-			try
+			// Dll version
+			string file = @"C:\Windows\System32\nvcpl.dll";
+			if (System.IO.File.Exists(file))
 			{
+				System.Diagnostics.FileVersionInfo dll = System.Diagnostics.FileVersionInfo.GetVersionInfo(file);
+				Trace.WriteLine("Dll infos : {0}", dll.FileName);
+				Trace.WriteLine("Dll infos : {0}", dll.ProductName);
+				Trace.WriteLine("Dll infos : {0}", dll.ProductVersion);
 
-				System.Diagnostics.FileVersionInfo dll = System.Diagnostics.FileVersionInfo.GetVersionInfo(@"C:\Windows\System32\nvcpl.dll");
-				if (dll != null)
-				{
-					Trace.WriteLine("Dll infos : {0}", dll.FileName);
-					Trace.WriteLine("Dll infos : {0}", dll.ProductName);
-					Trace.WriteLine("Dll infos : {0}", dll.ProductVersion);
-				}
+				System.IO.FileInfo info = new System.IO.FileInfo(file);
+				Trace.WriteLine("Creation time : {0}", info.CreationTime.ToString());
 			}
-			catch (Exception e)
-			{
 
-			}
+
 
 			Trace.WriteLine("Graphics card vendor : {0}", Capabilities.VideoVendor);
 			Trace.WriteLine("Renderer : {0}", Capabilities.VideoRenderer);

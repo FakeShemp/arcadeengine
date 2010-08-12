@@ -28,18 +28,18 @@ namespace DungeonEye
 {
 
 	/// <summary>
-	/// All flying objects in the maze (item, fireball, acid cloud....)
+	/// All thrown objects in the maze (item, fireball, acid cloud....)
 	/// 
 	/// http://eob.wikispaces.com/eob.thrownitem
 	/// </summary>
-	public class FlyingItem
+	public class ThrownItem
 	{
 
 		/// <summary>
 		/// Default constructor
 		/// </summary>
 		/// <param name="block">Location</param>
-		public FlyingItem(MazeBlock block)
+		public ThrownItem(MazeBlock block)
 		{
 			if (block != null)
 				Location = new DungeonLocation(block.Location);
@@ -54,9 +54,9 @@ namespace DungeonEye
 		/// <param name="location">Start location</param>
 		/// <param name="speed">Time in ms taken to cross a block</param>
 		/// <param name="distance">How many block the item have to fly before falling on the ground</param>
-		public FlyingItem(Entity owner, Item item, DungeonLocation location, TimeSpan speed, int distance)
+		public ThrownItem(Entity owner, Item item, DungeonLocation location, TimeSpan speed, int distance)
 		{
-			Owner = owner;
+			Caster = owner;
 			Item = item;
 			Location = new DungeonLocation(location);
 			Speed = speed;
@@ -154,7 +154,7 @@ namespace DungeonEye
 						foreach(Monster monster in monsters)
 							if (monster != null)
 							{
-								Attack attack = new Attack(Owner, monster, Item);
+								Attack attack = new Attack(Caster, monster, Item);
 								if (attack.IsAHit)
 									Distance = 0;
 							}
@@ -224,7 +224,7 @@ namespace DungeonEye
 				return false;
 
 
-			writer.WriteStartElement("flyingitem");
+			writer.WriteStartElement("thrownitem");
 
 			Location.Save("location", writer);
 
@@ -302,9 +302,9 @@ namespace DungeonEye
 		#region Properties
 
 		/// <summary>
-		/// Owner of the flying item
+		/// Caster of the flying item
 		/// </summary>
-		public Entity Owner
+		public Entity Caster
 		{
 			get;
 			private set;
@@ -323,7 +323,11 @@ namespace DungeonEye
 		/// <summary>
 		/// How many blocks the item have to fly
 		/// </summary>
-		public int Distance;
+		public int Distance
+		{
+			get;
+			set;
+		}
 
 
 		/// <summary>
@@ -335,6 +339,7 @@ namespace DungeonEye
 			set;
 		}
 
+
 		/// <summary>
 		/// Handle to the item
 		/// </summary>
@@ -343,6 +348,7 @@ namespace DungeonEye
 			get;
 			set;
 		}
+
 
 		/// <summary>
 		/// Last time the update occured

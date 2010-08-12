@@ -91,8 +91,6 @@ namespace DungeonEye.Forms
 			InventoryTileBox.SelectedItem = Item.TileID;
 			ThrownTileBox.SelectedItem = Item.ThrowTileID;
 			IncomingTileBox.SelectedItem = Item.IncomingTileID;
-			UseQuiverBox.Checked = Item.UseQuiver;
-			TwoHandedBox.Checked = Item.TwoHanded;
 
 
 			PrimaryBox.Checked = (Item.Slot & BodySlot.Primary) == BodySlot.Primary;
@@ -660,18 +658,6 @@ namespace DungeonEye.Forms
 
 		#region Hands
 
-		/// <summary>
-		/// Two handed item
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void TwoHandedBox_CheckedChanged(object sender, EventArgs e)
-		{
-			if (Item == null)
-				return;
-			Item.TwoHanded = TwoHandedBox.Checked;
-		}
-
 		#endregion
 
 
@@ -791,19 +777,6 @@ namespace DungeonEye.Forms
 			Item.ArmorClass = (byte)ACBonusBox.Value;
 		}
 
-
-		/// <summary>
-		/// The item use quiver
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void UseQuiverBox_CheckedChanged(object sender, EventArgs e)
-		{
-			if (Item == null)
-				return;
-
-			Item.UseQuiver = UseQuiverBox.Checked;
-		}
 
 
 		/// <summary>

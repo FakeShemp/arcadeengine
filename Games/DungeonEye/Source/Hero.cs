@@ -482,29 +482,32 @@ namespace DungeonEye
 			switch (item.Type)
 			{
 
-				// Throw the ammo
+				#region Ammo
 				case ItemType.Ammo:
 				{
 					// throw ammo
-					Team.Location.Maze.FlyingItems.Add(new FlyingItem(this, item, loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
+					Team.Location.Maze.FlyingItems.Add(new ThrownItem(this, item, loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
 
 					// Empty hand
 					SetInventoryItem(hand == HeroHand.Primary ? InventoryPosition.Primary : InventoryPosition.Secondary, null);
 				}
 				break;
+				#endregion
 
 
-				// Cast the spell
+				#region Scroll
 				case ItemType.Scroll:
 				break;
+				#endregion
 
 
-				// Use the wand
+				#region Wand
 				case ItemType.Wand:
 				break;
+				#endregion
 
 
-				// Use the weapon
+				#region Weapon
 				case ItemType.Weapon:
 				{
 					if (item.Slot == BodySlot.Waist)
@@ -517,7 +520,7 @@ namespace DungeonEye
 						if (Quiver > 0)
 						{
 							Team.Location.Maze.FlyingItems.Add(
-								new FlyingItem(this, ResourceManager.CreateAsset<Item>("Arrow"),
+								new ThrownItem(this, ResourceManager.CreateAsset<Item>("Arrow"),
 								loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
 							Quiver--;
 						}
@@ -541,7 +544,7 @@ namespace DungeonEye
 					}
 				}
 				break;
-
+				#endregion
 			}
 
 		}

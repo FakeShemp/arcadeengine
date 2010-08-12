@@ -51,7 +51,7 @@ namespace DungeonEye
 			Blocks = new List<List<MazeBlock>>();
 			Monsters = new List<Monster>();
 			Doors = new List<Door>();
-			FlyingItems = new List<FlyingItem>();
+			FlyingItems = new List<ThrownItem>();
 			Zones = new List<MazeZone>();
 
 			IsDisposed = false;
@@ -211,12 +211,12 @@ namespace DungeonEye
 			#region Flying items
 
 			// Update flying items
-			foreach (FlyingItem item in FlyingItems)
+			foreach (ThrownItem item in FlyingItems)
 				item.Update(time, this);
 
 			// Remove all blocked flying items
 			FlyingItems.RemoveAll(
-				delegate(FlyingItem fi)
+				delegate(ThrownItem fi)
 				{
 					// Item can fly
 					if (fi.Distance > 0)
@@ -449,23 +449,23 @@ namespace DungeonEye
 		/// Position 1 : North East
 		/// Position 2 : South West
 		/// Position 3 : South East</returns>
-		public List<FlyingItem>[] GetFlyingItems(DungeonLocation location, CardinalPoint direction)
+		public List<ThrownItem>[] GetFlyingItems(DungeonLocation location, CardinalPoint direction)
 		{
-			List<FlyingItem>[] tmp = new List<FlyingItem>[5];
-			tmp[0] = new List<FlyingItem>();
-			tmp[1] = new List<FlyingItem>();
-			tmp[2] = new List<FlyingItem>();
-			tmp[3] = new List<FlyingItem>();
-			tmp[4] = new List<FlyingItem>();
+			List<ThrownItem>[] tmp = new List<ThrownItem>[5];
+			tmp[0] = new List<ThrownItem>();
+			tmp[1] = new List<ThrownItem>();
+			tmp[2] = new List<ThrownItem>();
+			tmp[3] = new List<ThrownItem>();
+			tmp[4] = new List<ThrownItem>();
 
-			foreach (FlyingItem item in FlyingItems)
+			foreach (ThrownItem item in FlyingItems)
 			{
 				if (item.Location.Position == location.Position)
 					tmp[(int)item.Location.GroundPosition].Add(item);
 			}
 
 	
-			List<FlyingItem>[] items = new List<FlyingItem>[5];
+			List<ThrownItem>[] items = new List<ThrownItem>[5];
 			switch (direction)
 			{
 				case CardinalPoint.North:
@@ -785,7 +785,7 @@ namespace DungeonEye
 			#endregion
 
 			#region Flying items
-			List<FlyingItem>[] flyings = GetFlyingItems(block.Location, view);
+			List<ThrownItem>[] flyings = GetFlyingItems(block.Location, view);
 			foreach(GroundPosition pos in Enum.GetValues(typeof(GroundPosition)))
 			{
 				if (MazeDisplayCoordinates.GetFlyingItem(position, pos) == Point.Empty)
@@ -796,7 +796,7 @@ namespace DungeonEye
 				if (pos == GroundPosition.NorthEast || pos == GroundPosition.SouthEast)
 					fx = SpriteEffects.FlipHorizontally;
 
-				foreach (FlyingItem fi in flyings[(int)pos])
+				foreach (ThrownItem fi in flyings[(int)pos])
 					batch.DrawTile(ItemsTileset, fi.Item.ThrowTileID + offset, MazeDisplayCoordinates.GetFlyingItem(position, pos), Color.White, 0.0f, fx, 0.0f);
 
 			}
@@ -941,7 +941,7 @@ namespace DungeonEye
 					{
 						foreach (XmlNode subnode in node)
 						{
-							FlyingItem item = new FlyingItem(null);
+							ThrownItem item = new ThrownItem(null);
 							item.Load(subnode);
 							FlyingItems.Add(item);
 						}
@@ -1075,7 +1075,7 @@ namespace DungeonEye
 			if (FlyingItems.Count > 0)
 			{
 				writer.WriteStartElement("flyingitems");
-				foreach (FlyingItem item in FlyingItems)
+				foreach (ThrownItem item in FlyingItems)
 					item.Save(writer);
 				writer.WriteEndElement();
 			}
@@ -1429,7 +1429,7 @@ namespace DungeonEye
 		/// Flying items in the maze
 		/// </summary>
 		[Browsable(false)]
-		public List<FlyingItem> FlyingItems
+		public List<ThrownItem> FlyingItems
 		{
 			get;
 			private set;
