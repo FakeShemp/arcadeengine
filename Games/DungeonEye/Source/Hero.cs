@@ -545,6 +545,11 @@ namespace DungeonEye
 				}
 				break;
 				#endregion
+
+				case ItemType.Book:
+				{
+				}
+				break;
 			}
 
 		}

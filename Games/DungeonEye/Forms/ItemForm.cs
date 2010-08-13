@@ -74,53 +74,57 @@ namespace DungeonEye.Forms
 			TypeBox.EndUpdate();
 
 
-			Item = new Item();
-			Item.Load(node);
+			Item item = new Item();
+			item.Load(node);
 
 
 			#region UI update
 
-			DescriptionBox.Text = Item.Description;
-			CriticalMinBox.Value = Item.Critical.X;
-			CriticalMaxBox.Value = Item.Critical.Y;
-			MultiplierBox.Value = Item.CriticalMultiplier;
-			SpeedBox.Value = (int)Item.AttackSpeed.TotalMilliseconds;
-			WeightBox.Value = Item.Weight;
-			TypeBox.SelectedItem = Item.Type.ToString();
-			GroundTileBox.SelectedItem = Item.GroundTileID;
-			InventoryTileBox.SelectedItem = Item.TileID;
-			ThrownTileBox.SelectedItem = Item.ThrowTileID;
-			IncomingTileBox.SelectedItem = Item.IncomingTileID;
+			DescriptionBox.Text = item.Description;
+			CriticalMinBox.Value = item.Critical.X;
+			CriticalMaxBox.Value = item.Critical.Y;
+			MultiplierBox.Value = item.CriticalMultiplier;
+			SpeedBox.Value = (int)item.AttackSpeed.TotalMilliseconds;
+			WeightBox.Value = item.Weight;
+			TypeBox.SelectedItem = item.Type.ToString();
+			GroundTileBox.SelectedItem = item.GroundTileID;
+			InventoryTileBox.SelectedItem = item.TileID;
+			ThrownTileBox.SelectedItem = item.ThrowTileID;
+			IncomingTileBox.SelectedItem = item.IncomingTileID;
 
 
-			PrimaryBox.Checked = (Item.Slot & BodySlot.Primary) == BodySlot.Primary;
-			SecondaryBox.Checked = (Item.Slot & BodySlot.Secondary) == BodySlot.Secondary;
-			QuiverBox.Checked = (Item.Slot & BodySlot.Quiver) == BodySlot.Quiver;
-			BodyBox.Checked = (Item.Slot & BodySlot.Body) == BodySlot.Body;
-			RingBox.Checked = (Item.Slot & BodySlot.Ring) == BodySlot.Ring;
-			WristBox.Checked = (Item.Slot & BodySlot.Wrist) == BodySlot.Wrist;
-			FeetBox.Checked = (Item.Slot & BodySlot.Feet) == BodySlot.Feet;
-			HeadBox.Checked = (Item.Slot & BodySlot.Head) == BodySlot.Head;
-			WaistBox.Checked = (Item.Slot & BodySlot.Waist) == BodySlot.Waist;
-			NeckBox.Checked = (Item.Slot & BodySlot.Neck) == BodySlot.Neck;
+			PrimaryBox.Checked = (item.Slot & BodySlot.Primary) == BodySlot.Primary;
+			SecondaryBox.Checked = (item.Slot & BodySlot.Secondary) == BodySlot.Secondary;
+			QuiverBox.Checked = (item.Slot & BodySlot.Quiver) == BodySlot.Quiver;
+			BodyBox.Checked = (item.Slot & BodySlot.Body) == BodySlot.Body;
+			RingBox.Checked = (item.Slot & BodySlot.Ring) == BodySlot.Ring;
+			WristBox.Checked = (item.Slot & BodySlot.Wrist) == BodySlot.Wrist;
+			FeetBox.Checked = (item.Slot & BodySlot.Feet) == BodySlot.Feet;
+			HeadBox.Checked = (item.Slot & BodySlot.Head) == BodySlot.Head;
+			WaistBox.Checked = (item.Slot & BodySlot.Waist) == BodySlot.Waist;
+			NeckBox.Checked = (item.Slot & BodySlot.Neck) == BodySlot.Neck;
 
-			FighterBox.Checked = (Item.AllowedClasses & HeroClass.Fighter) == HeroClass.Fighter;
-			PaladinBox.Checked = (Item.AllowedClasses & HeroClass.Paladin) == HeroClass.Paladin;
-			ClericBox.Checked = (Item.AllowedClasses & HeroClass.Cleric) == HeroClass.Cleric;
-			MageBox.Checked = (Item.AllowedClasses & HeroClass.Mage) == HeroClass.Mage;
-			ThiefBox.Checked = (Item.AllowedClasses & HeroClass.Thief) == HeroClass.Thief;
-			RangerBox.Checked = (Item.AllowedClasses & HeroClass.Ranger) == HeroClass.Ranger;
+			FighterBox.Checked = (item.AllowedClasses & HeroClass.Fighter) == HeroClass.Fighter;
+			PaladinBox.Checked = (item.AllowedClasses & HeroClass.Paladin) == HeroClass.Paladin;
+			ClericBox.Checked = (item.AllowedClasses & HeroClass.Cleric) == HeroClass.Cleric;
+			MageBox.Checked = (item.AllowedClasses & HeroClass.Mage) == HeroClass.Mage;
+			ThiefBox.Checked = (item.AllowedClasses & HeroClass.Thief) == HeroClass.Thief;
+			RangerBox.Checked = (item.AllowedClasses & HeroClass.Ranger) == HeroClass.Ranger;
 
-			ScriptNameBox.SelectedItem = Item.ScriptName;
-			InterfaceNameBox.SelectedItem = Item.InterfaceName;
+			ScriptNameBox.SelectedItem = item.ScriptName;
+			InterfaceNameBox.SelectedItem = item.InterfaceName;
 
-			ACBonusBox.Value = Item.ArmorClass;
-			DamageBox.Dice = Item.Damage;
+			ACBonusBox.Value = item.ArmorClass;
+			DamageBox.Dice = item.Damage;
+			DamageVsSmallBox.Dice = item.DamageVsSmall;
+			DamageVsBigBox.Dice = item.DamageVsBig;
 
-			PiercingBox.Checked = (Item.DamageType & DamageType.Pierce) == DamageType.Pierce;
-			SlashBox.Checked = (Item.DamageType & DamageType.Slash) == DamageType.Slash;
-			BludgeBox.Checked = (Item.DamageType & DamageType.Bludge) == DamageType.Bludge;
+			PiercingBox.Checked = (item.DamageType & DamageType.Pierce) == DamageType.Pierce;
+			SlashBox.Checked = (item.DamageType & DamageType.Slash) == DamageType.Slash;
+			BludgeBox.Checked = (item.DamageType & DamageType.Bludge) == DamageType.Bludge;
 			#endregion
+
+			Item = item;
 		}
 
 
@@ -761,6 +765,38 @@ namespace DungeonEye.Forms
 			Item.Damage.Modifier = DamageBox.Dice.Modifier;
 			Item.Damage.Faces = DamageBox.Dice.Faces;
 			Item.Damage.Throws = DamageBox.Dice.Throws;
+		}
+
+		/// <summary>
+		/// Change damage
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void DamageVsBigBox_ValueChanged(object sender, EventArgs e)
+		{
+			if (Item == null)
+				return;
+
+
+			Item.DamageVsBig.Modifier = DamageVsBigBox.Dice.Modifier;
+			Item.DamageVsBig.Faces = DamageVsBigBox.Dice.Faces;
+			Item.DamageVsBig.Throws = DamageVsBigBox.Dice.Throws;
+		}
+
+		/// <summary>
+		/// Change damage
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void DamageVsSmallBox_ValueChanged(object sender, EventArgs e)
+		{
+			if (Item == null)
+				return;
+
+
+			Item.DamageVsSmall.Modifier = DamageVsSmallBox.Dice.Modifier;
+			Item.DamageVsSmall.Faces = DamageVsSmallBox.Dice.Faces;
+			Item.DamageVsSmall.Throws = DamageVsSmallBox.Dice.Throws;
 		}
 
 

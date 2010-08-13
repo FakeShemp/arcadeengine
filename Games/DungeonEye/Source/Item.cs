@@ -57,6 +57,8 @@ namespace DungeonEye
 		{
 			AllowedClasses = HeroClass.Cleric | HeroClass.Fighter | HeroClass.Mage | HeroClass.Paladin | HeroClass.Ranger | HeroClass.Thief;
 			Damage = new Dice();
+			DamageVsBig  = new Dice();
+			DamageVsSmall = new Dice();
 			DamageType = 0;
 
 			IsDisposed = false;
@@ -142,6 +144,18 @@ namespace DungeonEye
 					}
 					break;
 
+					case "damagevsbig":
+					{
+						DamageVsBig.Load(node);
+					}
+					break;
+
+					case "damagevssmall":
+					{
+						DamageVsSmall.Load(node);
+					}
+					break;
+
 					case "critical":
 					{
 						Critical = new Point(int.Parse(node.Attributes["min"].Value), int.Parse(node.Attributes["max"].Value));
@@ -180,18 +194,6 @@ namespace DungeonEye
 					case "classes":
 					{
 						AllowedClasses = (HeroClass)Enum.Parse(typeof(HeroClass), node.Attributes["value"].Value);
-					}
-					break;
-
-					//case "usequiver":
-					//{
-					//    UseQuiver = (bool)Boolean.Parse(node.Attributes["value"].Value);
-					//}
-					//break;
-
-					case "twohanded":
-					{
-						TwoHanded = (bool)Boolean.Parse(node.Attributes["value"].Value);
 					}
 					break;
 
@@ -248,21 +250,6 @@ namespace DungeonEye
 			writer.WriteAttributeString("value", AllowedClasses.ToString());
 			writer.WriteEndElement();
 
-			writer.WriteStartElement("class");
-			writer.WriteAttributeString("value", Professions.ToString());
-			writer.WriteEndElement();
-
-			writer.WriteStartElement("usequiver");
-			writer.WriteAttributeString("value", UseQuiver.ToString());
-			writer.WriteEndElement();
-
-			writer.WriteStartElement("twohanded");
-			writer.WriteAttributeString("value", TwoHanded.ToString());
-			writer.WriteEndElement();
-
-			writer.WriteStartElement("hands");
-			writer.WriteAttributeString("value", Hands.ToString());
-			writer.WriteEndElement();
 
 			writer.WriteStartElement("weight");
 			writer.WriteAttributeString("value", Weight.ToString());
@@ -299,6 +286,31 @@ namespace DungeonEye
 		#endregion
 
 
+		#region Methods
+
+		/// <summary>
+		/// Gets if an item can be used with a specific hand
+		/// </summary>
+		/// <param name="hand">Hand to check</param>
+		/// <returns>True if can be used with the specified hand</returns>
+		public bool CanUseWithHand(HeroHand hand)
+		{
+			switch (hand)
+			{
+				case HeroHand.Primary:
+				return (Slot & BodySlot.Primary) == BodySlot.Primary;
+				
+				case HeroHand.Secondary:
+				return (Slot & BodySlot.Secondary) == BodySlot.Secondary;
+			}
+
+
+			// Slot == BodySlot.Primary | BodySlot.Secondary
+			return true;
+		}
+
+		#endregion
+
 
 		#region Properties
 
@@ -326,16 +338,6 @@ namespace DungeonEye
 		/// A projectile weapon can shoot out to ten range increments. 
 		/// </summary>
 		public int Range
-		{
-			get;
-			set;
-		}
-
-
-		/// <summary>
-		/// Allowed professions
-		/// </summary>
-		public Profession Professions
 		{
 			get;
 			set;
@@ -598,22 +600,8 @@ namespace DungeonEye
 		{
 			get
 			{
-				return ((Hands & HeroHand.Primary) == HeroHand.Primary && (Hands & HeroHand.Secondary) == HeroHand.Secondary);
+				return ((Slot & BodySlot.Primary) == BodySlot.Primary && (Slot & BodySlot.Secondary) == BodySlot.Secondary);
 			}
-			set
-			{
-				Hands = HeroHand.Primary | HeroHand.Secondary;
-			}
-		}
-
-
-		/// <summary>
-		/// Allowed hands
-		/// </summary>
-		public HeroHand Hands
-		{
-			get;
-			set;
 		}
 
 
