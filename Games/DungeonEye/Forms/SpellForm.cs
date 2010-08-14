@@ -37,13 +37,115 @@ namespace DungeonEye.Forms
 		{
 			InitializeComponent();
 
-			Spell = new Spell();
-			Spell.Load(node);
+
+
+			#region 
+
+			RangeBox.BeginUpdate();
+			RangeBox.Items.Clear();
+			foreach (string name in Enum.GetNames(typeof(SpellRange)))
+				RangeBox.Items.Add(name);
+			RangeBox.EndUpdate();
+			#endregion
+
+
+
+
+			Spell spell = new Spell();
+			spell.Load(node);
+
+			RangeBox.SelectedItem = spell.Range.ToString();
+			DescriptionBox.Text = spell.Description;
+			DurationBox.Value = (int) spell.Duration.TotalSeconds;
+			CastingTimeBox.Value = (int) spell.CastingTime.TotalSeconds;
+			LevelBox.Value = (int) spell.Level;
+
+			Spell = spell;
 		}
 
 
 
 
+		/// <summary>
+		/// Saves the asset to the manager
+		/// </summary>
+		public override void Save()
+		{
+			ResourceManager.AddAsset<Spell>(Spell.Name, ResourceManager.ConvertAsset(Spell));
+		}
+
+
+
+
+		/// <summary>
+		/// Form closing
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void Form_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			DialogResult result = MessageBox.Show("Save modifications ?", "Spell Editor", MessageBoxButtons.YesNoCancel);
+
+			if (result == DialogResult.Yes)
+			{
+				Save();
+				Spell = null;
+
+			}
+			else if (result == DialogResult.Cancel)
+			{
+				e.Cancel = true;
+			}
+
+		}
+
+
+
+
+
+		#region Events
+
+		private void DescriptionBox_TextChanged(object sender, EventArgs e)
+		{
+			if (Spell == null)
+				return;
+
+			Spell.Description = DescriptionBox.Text;
+		}
+
+		private void LevelBox_ValueChanged(object sender, EventArgs e)
+		{
+			if (Spell == null)
+				return;
+
+			Spell.Level = (int)LevelBox.Value;
+		}
+
+		private void CastingTimeBox_ValueChanged(object sender, EventArgs e)
+		{
+			if (Spell == null)
+				return;
+
+			Spell.CastingTime = TimeSpan.FromSeconds((int)CastingTimeBox.Value);
+		}
+
+		private void DurationBox_ValueChanged(object sender, EventArgs e)
+		{
+			if (Spell == null)
+				return;
+
+			Spell.Duration = TimeSpan.FromSeconds((int) DurationBox.Value);
+		}
+
+		private void RangeBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (Spell == null)
+				return;
+
+			Spell.Range = (SpellRange) Enum.Parse(typeof(SpellRange), RangeBox.SelectedItem.ToString());
+		}
+
+		#endregion
 
 
 		#region Properties
@@ -69,5 +171,8 @@ namespace DungeonEye.Forms
 		Spell Spell;
 
 		#endregion
+
+
+
 	}
 }

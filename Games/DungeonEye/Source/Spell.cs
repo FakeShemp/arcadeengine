@@ -24,7 +24,7 @@ using ArcEngine.Asset;
 using System.Xml;
 
 // http://dmreference.com/SRD/Magic.htm
-//
+// http://www.d20srd.org/srd/magicOverview/spellDescriptions.htm
 //
 //
 namespace DungeonEye
@@ -59,9 +59,9 @@ namespace DungeonEye
 		#region Load & Save
 
 		/// <summary>
-		/// 
+		/// Loads a spell definition
 		/// </summary>
-		/// <param name="filename"></param>
+		/// <param name="xml">XmlNode</param>
 		/// <returns></returns>
 		public bool Load(XmlNode xml)
 		{
@@ -78,9 +78,33 @@ namespace DungeonEye
 
 				switch (node.Name.ToLower())
 				{
-					case "type":
+					case "range":
 					{
-						//Type = (ItemType)Enum.Parse(typeof(ItemType), node.Attributes["value"].Value, true);
+						Range =(SpellRange) Enum.Parse(typeof(SpellRange), node.Attributes["value"].Value, true);
+					}
+					break;
+
+					case "level":
+					{
+						Level = int.Parse(node.Attributes["value"].Value);
+					}
+					break;
+
+					case "duration":
+					{
+						Duration = TimeSpan.Parse(node.Attributes["value"].Value);
+					}
+					break;
+
+					case "castingtime":
+					{
+						CastingTime = TimeSpan.Parse(node.Attributes["value"].Value);
+					}
+					break;
+
+					case "description":
+					{
+						Description = node.InnerText;
 					}
 					break;
 
@@ -96,9 +120,9 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Saves a spell definition
 		/// </summary>
-		/// <param name="writer"></param>
+		/// <param name="writer">XmlWriter</param>
 		/// <returns></returns>
 		public bool Save(XmlWriter writer)
 		{
@@ -108,13 +132,31 @@ namespace DungeonEye
 			writer.WriteStartElement("spell");
 			writer.WriteAttributeString("name", Name);
 
+			writer.WriteElementString("description", Description);
 
 
 
+			writer.WriteStartElement("duration");
+			writer.WriteAttributeString("value", Duration.ToString());
+			writer.WriteEndElement();
 
-			//writer.WriteStartElement("speed");
-			//writer.WriteAttributeString("value", Speed.ToString());
-			//writer.WriteEndElement();
+
+
+			writer.WriteStartElement("castingtime");
+			writer.WriteAttributeString("value", CastingTime.ToString());
+			writer.WriteEndElement();
+
+
+			writer.WriteStartElement("range");
+			writer.WriteAttributeString("value", Range.ToString());
+			writer.WriteEndElement();
+
+
+
+			writer.WriteStartElement("level");
+			writer.WriteAttributeString("value", Level.ToString());
+			writer.WriteEndElement();
+
 
 
 
@@ -157,14 +199,14 @@ namespace DungeonEye
 		}
 
 
-		///// <summary>
-		///// Description of the spell
-		///// </summary>
-		//public string Description
-		//{
-		//   get;
-		//   set;
-		//}
+		/// <summary>
+		/// Description of the spell
+		/// </summary>
+		public string Description
+		{
+			get;
+			set;
+		}
 
 
 
