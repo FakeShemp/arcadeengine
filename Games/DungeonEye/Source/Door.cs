@@ -213,14 +213,13 @@ namespace DungeonEye
 
             batch.End();
 
-            Display.RenderState.Scissor = true;
-            Display.ScissorZone = scissor;
+			Display.PushScissor(scissor);
 
             batch.Begin();
             batch.DrawTile(TileSet, id, location);
             batch.End();
 
-            Display.RenderState.Scissor = false;
+			Display.PopScissor();
 
             batch.Begin();
         }
@@ -631,15 +630,14 @@ namespace DungeonEye
 
 					location.Offset(32, 16);
 
-                    Display.RenderState.Scissor = true;
-                    Display.ScissorZone = new Rectangle(location.X + 26, location.Y, 140, 142);
+                    Display.PushScissor(new Rectangle(location.X + 26, location.Y, 140, 142));
 
                     batch.Begin();
                     batch.DrawTile(TileSet, 6, new Point(location.X + VPosition * 3, location.Y));
                     batch.DrawTile(TileSet, 6, new Point(location.X - VPosition * 3 + 96, location.Y), Color.White, 0.0f, SpriteEffects.FlipHorizontally, 0.0f);
                     batch.End();
 
-                    Display.RenderState.Scissor = false;
+					Display.PopScissor();
 
                     batch.Begin();
 
@@ -660,14 +658,14 @@ namespace DungeonEye
 					location.Offset(16, 8);
 
 					Display.RenderState.Scissor = true;
-					Display.ScissorZone = new Rectangle(location.X + 14, location.Y, 100, 94);
+					Display.PushScissor(new Rectangle(location.X + 14, location.Y, 100, 94));
 
                     batch.Begin();
 					batch.DrawTile(TileSet, 7, new Point(location.X + VPosition * 2, location.Y));
 					batch.DrawTile(TileSet, 7, new Point(location.X - VPosition * 2 + 64, location.Y), Color.White, 0.0f, SpriteEffects.FlipHorizontally, 0.0f);
                     batch.End();
 
-					Display.RenderState.Scissor = false;
+					Display.PopScissor();
 
                     batch.Begin();
 					if (HasButton)
@@ -687,15 +685,14 @@ namespace DungeonEye
 
 					location.Offset(8, 4);
 
-					Display.RenderState.Scissor = true;
-					Display.ScissorZone = new Rectangle(location.X + 10, location.Y, 60, 58);
+					Display.PushScissor(new Rectangle(location.X + 10, location.Y, 60, 58));
 
                     batch.Begin();
 					batch.DrawTile(TileSet, 8, new Point(location.X + VPosition, location.Y));
 					batch.DrawTile(TileSet, 8, new Point(location.X - VPosition + 40, location.Y), Color.White, 0.0f, SpriteEffects.FlipHorizontally, 0.0f);
                     batch.End();
 
-					Display.RenderState.Scissor = false;
+					Display.PopScissor();
 
                     batch.Begin();
 				}

@@ -548,7 +548,7 @@ namespace DungeonEye
 
 				case ItemType.Book:
 				{
-
+					Team.SpellBook.Open(this);
 				}
 				break;
 			}

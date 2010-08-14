@@ -524,6 +524,12 @@ namespace DungeonEye
 			if (WallTileset == null)
 				return;
 
+			// Clear the spritebatch
+			batch.End();
+			Display.PushScissor(new Rectangle(0, 0, 352, 240));
+			batch.Begin();
+
+
 			//
 			// 
 			//
@@ -534,7 +540,7 @@ namespace DungeonEye
 			// The background is assumed to be x-flipped when party.x & party.y & party.direction = 1.
 			// I.e. all kind of moves and rotations from the current position will result in the background being x-flipped.
 			//bool flipbackdrop = ((location.Position.X + location.Position.Y + (int)location.Direction) & 1) == 0;
-			SpriteEffects effect = ((location.Position.X + location.Position.Y + (int)location.Direction) & 1) == 0 ? SpriteEffects.FlipHorizontally: SpriteEffects.None;
+			SpriteEffects effect = ((location.Position.X + location.Position.Y + (int) location.Direction) & 1) == 0 ? SpriteEffects.FlipHorizontally: SpriteEffects.None;
 
 			batch.DrawTile(WallTileset, 0, Point.Empty, Color.White, 0.0f, effect, 0.0f);
 
@@ -580,6 +586,11 @@ namespace DungeonEye
 			DrawBlock(batch, pov, ViewFieldPosition.Q, location.Direction);
 			#endregion
 
+
+			// Clear the spritebatch
+			batch.End();
+			Display.PopScissor();
+			batch.Begin();
 
 		}
 

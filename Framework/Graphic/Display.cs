@@ -47,6 +47,7 @@ namespace ArcEngine.Graphic
 			TextureParameters = new DefaultTextureParameters();
 
 			RenderState = new RenderState();
+			Scissors = new Stack<Rectangle>();
 		}
 
 
@@ -151,6 +152,47 @@ namespace ArcEngine.Graphic
 			Trace.Unindent();
 		}
 
+		#region Scissor
+
+
+		/// <summary>
+		/// Pushes a new scissor zone and activate scissor if required
+		/// </summary>
+		/// <param name="rectangle">Clipped rectangle</param>
+		public static void PushScissor(Rectangle rectangle)
+		{
+			Scissors.Push(rectangle);
+
+			ScissorZone = rectangle;
+			RenderState.Scissor = true;
+		}
+
+
+		/// <summary>
+		/// Pops a scissor rectangle and deactivate scissor if stack is empty
+		/// </summary>
+		public static void PopScissor()
+		{
+			if (Scissors.Count == 0)
+				return;
+
+			ScissorZone = Scissors.Pop();
+
+			if (Scissors.Count == 0)
+				RenderState.Scissor = false;
+		}
+
+
+		/// <summary>
+		/// Clears and deactivates the scissor zone
+		/// </summary>
+		public static void ClearScissor()
+		{
+			Scissors.Clear();
+			RenderState.Scissor = false;
+		}
+
+		#endregion
 
 
 		#region OpenGL
@@ -832,6 +874,7 @@ namespace ArcEngine.Graphic
 		}
 		static Shader shader;
 
+
 		/// <summary>
 		/// Shared textures
 		/// </summary>
@@ -975,12 +1018,18 @@ namespace ArcEngine.Graphic
 
 				return new Rectangle(rect[0], rect[1], rect[2], rect[3]);
 			}
-			set
+			private set
 			{
 				//GL.Scissor(scissorZone.X,scissorZone.Bottom, scissorZone.Width,  scissorZone.Top - scissorZone.Bottom);
 				TK.GL.Scissor(value.X, ViewPort.Height - value.Top - value.Height, value.Width, value.Height);
 			}
 		}
+
+
+		/// <summary>
+		/// Scissors stack
+		/// </summary>
+		static Stack<Rectangle> Scissors;
 
 
 		/// <summary>

@@ -74,7 +74,7 @@ namespace ArcEngine.Asset
 		/// </summary>
 		public void Draw()
 		{
-			Display.ScissorZone = Layer.Viewport;
+			Display.PushScissor(Layer.Viewport);
 
 			// Display tile
 	//		if(Layer.Animation.TileSet != null && TileID != -1)
@@ -85,6 +85,8 @@ namespace ArcEngine.Asset
 			{
 				//Layer.Animation.Font.DrawText(TextRectangle, TextJustification.Left, Color.White, Layer.Animation.StringTable.GetString(TextID));
 			}
+
+			Display.PopScissor();
 		}
 
 

@@ -63,6 +63,7 @@ namespace DungeonEye
 		public void LoadContent()
 		{
 			Font = ResourceManager.CreateAsset<BitmapFont>("inventory");
+			Font.GlyphTileset.Scale = new Vector2(2.0f, 2.0f);
 		}
 
 
@@ -120,29 +121,17 @@ namespace DungeonEye
 		void DrawWindow(SpriteBatch batch, Rectangle rectangle, string text, bool active)
 		{
 
-			//if (active)
-			//   Display.Color = Color.FromArgb(101, 105, 182);
-			//else
-			//   Display.Color = Color.FromArgb(166, 166, 186);
 			batch.FillRectangle(rectangle, active ? Color.FromArgb(101, 105, 182) : Color.FromArgb(166, 166, 186));
-
-			//if (active)
-			//   Display.Color = Color.FromArgb(44, 48, 138);
-			//else
-			//   Display.Color = Color.FromArgb(89, 89, 117);
 
 			batch.FillRectangle(new Rectangle(rectangle.X, rectangle.Y, 2, rectangle.Height), active ? Color.FromArgb(44, 48, 138) : Color.FromArgb(89, 89, 117));
 			batch.FillRectangle(new Rectangle(rectangle.Left, rectangle.Bottom - 2, rectangle.Width, 2), active ? Color.FromArgb(44, 48, 138) : Color.FromArgb(89, 89, 117));
 
-			//if (active)
-			//   Display.Color = Color.FromArgb(138, 146, 207);
-			//else
-			//   Display.Color = Color.FromArgb(221, 211, 219);
 			batch.DrawRectangle(new Rectangle(rectangle.X + 2, rectangle.Y, rectangle.Width - 2, 2), active ? Color.FromArgb(138, 146, 207) : Color.FromArgb(221, 211, 219));
 			batch.DrawRectangle(new Rectangle(rectangle.Right - 2, rectangle.Y, 2, rectangle.Height - 2), active ? Color.FromArgb(138, 146, 207) : Color.FromArgb(221, 211, 219));
 
 			batch.DrawString(Font, new Point(rectangle.X + 4, rectangle.Y + 4), Color.Black, text);
 
+			
 			batch.DrawString(Font, new Point(146, 336), Color.White, "abort spell");
 		}
 

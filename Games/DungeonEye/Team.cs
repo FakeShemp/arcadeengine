@@ -358,13 +358,10 @@ namespace DungeonEye
 
             Batch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Deferred, false);
 
-			// Draw the current maze
-            if (Location.Maze != null)
-                Location.Maze.Draw(Batch, Location);
-
-
 			// The backdrop
 			Batch.DrawTile(TileSet, 0, Point.Empty);
+
+
 
 
 			// Display the compass
@@ -418,6 +415,14 @@ namespace DungeonEye
 
 			// Draw the spell window
 			SpellBook.Draw(Batch);
+
+
+
+
+			// Draw the current maze
+			if (Location.Maze != null)
+				Location.Maze.Draw(Batch, Location);
+
 
 
 			// Draw the cursor or the item in the hand
@@ -2033,7 +2038,7 @@ namespace DungeonEye
 		}
 
 		#endregion
-
+		
 
 		#region Messages
 
