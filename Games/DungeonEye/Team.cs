@@ -90,8 +90,7 @@ namespace DungeonEye
 				Heads.Dispose();
 			Heads = null;
 
-			if (TileSet != null)
-				TileSet.Dispose();
+			ResourceManager.RemoveSharedAsset<TileSet>("interface");
 			TileSet = null;
 
 			if (SpellBook != null)
@@ -162,6 +161,7 @@ namespace DungeonEye
 
 
 			TileSet = ResourceManager.CreateAsset<TileSet>("Interface");
+			ResourceManager.AddSharedAsset<TileSet>("Interface", TileSet);
             TileSet.Scale = new Vector2(2.0f, 2.0f);
 			Trace.WriteLine("Tileset ({0} ms)", watch.ElapsedMilliseconds);
 

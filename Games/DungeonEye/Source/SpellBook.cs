@@ -54,6 +54,9 @@ namespace DungeonEye
 			if (Font != null)
 				Font.Dispose();
 			Font = null;
+
+			ResourceManager.RemoveSharedAsset<TileSet>("interface");
+			Tileset = null;
 		}
 
 
@@ -64,7 +67,10 @@ namespace DungeonEye
 		{
 			Font = ResourceManager.CreateAsset<BitmapFont>("inventory");
 			Font.GlyphTileset.Scale = new Vector2(2.0f, 2.0f);
+
+			Tileset = ResourceManager.CreateSharedAsset<TileSet>("Interface");
 		}
+
 
 
 		/// <summary>
@@ -93,47 +99,30 @@ namespace DungeonEye
 		/// <summary>
 		/// Display the window
 		/// </summary>
-		/// <param name="batch"></param>
+		/// <param name="batch">Spritebatch to use</param>
 		public void Draw(SpriteBatch batch)
 		{
 			if (!IsVisible)
 			return;
 
 			// Main window
-			DrawWindow(batch, MainRectangle, string.Empty, true);
+			batch.DrawTile(Tileset, 23, MainRectangle.Location);
 
 			// Levels
 			string[] title = new string[]{"1ST", "2ND", "3RD", "4TH", "5TH"};
 			for (int level = 0; level < 5; level++)
 			{
-				DrawWindow(batch, new Rectangle(MainRectangle.X + level * 42, MainRectangle.Top - 18, 42, 18), title[level], SpellLevel - 1 == level);
+				int id = SpellLevel - 1 == level ? 24 : 25;
+				batch.DrawTile(Tileset, id, new Point(MainRectangle.X + level * 42, MainRectangle.Top - 18));
+				batch.DrawString(Font, new Point(MainRectangle.X + level * 42 + 4, MainRectangle.Top - 18 + 4), Color.White, title[level]);
 			}
-		}
 
 
-		/// <summary>
-		/// Draw a window
-		/// </summary>
-		/// <param name="batch"></param>
-		/// <param name="rectangle">Rectangle of the window</param>
-		/// <param name="text">Test to display</param>
-		/// <param name="active">True if the window is active, or false</param>
-		void DrawWindow(SpriteBatch batch, Rectangle rectangle, string text, bool active)
-		{
-
-			batch.FillRectangle(rectangle, active ? Color.FromArgb(101, 105, 182) : Color.FromArgb(166, 166, 186));
-
-			batch.FillRectangle(new Rectangle(rectangle.X, rectangle.Y, 2, rectangle.Height), active ? Color.FromArgb(44, 48, 138) : Color.FromArgb(89, 89, 117));
-			batch.FillRectangle(new Rectangle(rectangle.Left, rectangle.Bottom - 2, rectangle.Width, 2), active ? Color.FromArgb(44, 48, 138) : Color.FromArgb(89, 89, 117));
-
-			batch.DrawRectangle(new Rectangle(rectangle.X + 2, rectangle.Y, rectangle.Width - 2, 2), active ? Color.FromArgb(138, 146, 207) : Color.FromArgb(221, 211, 219));
-			batch.DrawRectangle(new Rectangle(rectangle.Right - 2, rectangle.Y, 2, rectangle.Height - 2), active ? Color.FromArgb(138, 146, 207) : Color.FromArgb(221, 211, 219));
-
-			batch.DrawString(Font, new Point(rectangle.X + 4, rectangle.Y + 4), Color.Black, text);
-
-			
+			// Abort spell
 			batch.DrawString(Font, new Point(146, 336), Color.White, "abort spell");
 		}
+
+
 
 
 		#endregion
@@ -214,6 +203,12 @@ namespace DungeonEye
 			get;
 			private set;
 		}
+
+
+		/// <summary>
+		/// Tileset
+		/// </summary>
+		TileSet Tileset;
 
 		#endregion
 	}
