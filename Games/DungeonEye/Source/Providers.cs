@@ -45,12 +45,13 @@ namespace DungeonEye
 			WallDecorations = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
 			Items = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
 			SharedItems = new Dictionary<string, Item>(StringComparer.OrdinalIgnoreCase);
+			Spells = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
 
 
 
 			Name = "Dungeon Eye";
-			Tags = new string[] { "dungeon", "item", "monster", "walldecoration" };
-			Assets = new Type[] { typeof(Dungeon), typeof(Item), typeof(Monster), typeof(WallDecoration) };
+			Tags = new string[] { "dungeon", "item", "monster", "walldecoration", "spell" };
+			Assets = new Type[] { typeof(Dungeon), typeof(Item), typeof(Monster), typeof(WallDecoration), typeof(Spell) };
 			Version = new Version(0, 1);
 		}
 
@@ -64,13 +65,13 @@ namespace DungeonEye
 		/// <returns></returns>
 		public override bool Init()
 		{
-			return false;
+			return true;
 		}
 
 
 
 		/// <summary>
-		/// Close all opened resources
+		/// Dispose all opened resources
 		/// </summary>
 		public override void Dispose()
 		{
@@ -106,6 +107,11 @@ namespace DungeonEye
 			else if (typeof(T) == typeof(Monster))
 			{
 				foreach (XmlNode node in Monsters.Values)
+					node.WriteTo(writer);
+			}
+			else if (typeof(T) == typeof(Spell))
+			{
+				foreach (XmlNode node in Spells.Values)
 					node.WriteTo(writer);
 			}
 
@@ -149,6 +155,12 @@ namespace DungeonEye
 				case "walldecoration":
 				{
 					WallDecorations[xml.Attributes["name"].Value] = xml;
+				}
+				break;
+
+				case "spell":
+				{
+					Spells[xml.Attributes["name"].Value] = xml;
 				}
 				break;
 			}
@@ -196,6 +208,14 @@ namespace DungeonEye
 
 				form = new Forms.ItemForm(node);
 			}
+			else if (typeof(T) == typeof(Spell))
+			{
+				if (Spells.ContainsKey(name))
+					node = Spells[name];
+
+				form = new Forms.SpellForm(node);
+			}
+
 
 			form.TabText = name;
 			return form;
@@ -223,6 +243,8 @@ namespace DungeonEye
 				Monsters[name] = node;
 			else if (typeof(Item) == typeof(T))
 				Items[name] = node;
+			else if (typeof(Spell) == typeof(T))
+				Spells[name] = node;
 
 		}
 
@@ -246,6 +268,10 @@ namespace DungeonEye
 
 			else if (typeof(T) == typeof(Item))
 				foreach (string key in Items.Keys)
+					list.Add(key);
+
+			else if (typeof(T) == typeof(Spell))
+				foreach (string key in Spells.Keys)
 					list.Add(key);
 
 			list.Sort();
@@ -284,7 +310,14 @@ namespace DungeonEye
 			{
 				Item item = new Item();
 				item.Load(Items[name]);
-				return (T)(object)item;
+				return (T) (object) item;
+			}
+
+			if (typeof(T) == typeof(Spell) && Spells.ContainsKey(name))
+			{
+				Spell spell = new Spell();
+				spell.Load(Items[name]);
+				return (T) (object) spell;
 			}
 				
 			
@@ -313,6 +346,9 @@ namespace DungeonEye
 			else if (typeof(Item) == typeof(T) && Items.ContainsKey(name))
 				return Items[name];
 
+			else if (typeof(Spell) == typeof(T) && Spells.ContainsKey(name))
+				return Items[name];
+
 			return null;
 		}
 
@@ -332,6 +368,9 @@ namespace DungeonEye
 
 			else if (typeof(Item) == typeof(T))
 				Items.Clear();
+
+			else if (typeof(Spell) == typeof(T))
+				Spells.Clear();
 		}
 
 
@@ -350,6 +389,9 @@ namespace DungeonEye
 
 			else if (typeof(Item) == typeof(T) && Items.ContainsKey(name))
 				Items.Remove(name);
+
+			else if (typeof(Spell) == typeof(T) && Spells.ContainsKey(name))
+				Spells.Remove(name);
 		}
 
 
@@ -362,6 +404,7 @@ namespace DungeonEye
 			Dungeons.Clear();
 			Monsters.Clear();
 			Items.Clear();
+			Spells.Clear();
 		}
 
 
@@ -380,6 +423,9 @@ namespace DungeonEye
 
 			if (typeof(T) == typeof(Item))
 				return Items.Count;
+
+			if (typeof(T) == typeof(Spell))
+				return Spells.Count;
 
 			return 0;
 		}
@@ -404,6 +450,8 @@ namespace DungeonEye
 			if (typeof(T) == typeof(Dungeon))
 				SharedDungeons[name] = asset as Dungeon;
 
+			if (typeof(T) == typeof(Item))
+				SharedItems[name] = asset as Item;
 		}
 
 		/// <summary>
@@ -460,7 +508,7 @@ namespace DungeonEye
 				SharedDungeons.Remove(name);
 
 			if (typeof(T) == typeof(Item))
-				Items.Remove(name); ;
+				SharedItems.Remove(name); ;
 		}
 
 
@@ -487,7 +535,7 @@ namespace DungeonEye
 		public override void ClearShared()
 		{
 			SharedDungeons.Clear();
-			Items.Clear();
+			SharedItems.Clear();
 		}
 
 
@@ -527,6 +575,12 @@ namespace DungeonEye
 		/// Monsters definition
 		/// </summary>
 		Dictionary<string, XmlNode> Monsters;
+
+
+		/// <summary>
+		/// Spells
+		/// </summary>
+		Dictionary<string, XmlNode> Spells;
 
 
 		/// <summary>

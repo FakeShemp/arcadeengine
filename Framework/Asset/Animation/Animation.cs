@@ -137,6 +137,7 @@ namespace ArcEngine.Asset
 		/// <summary>
 		/// Draws the animation
 		/// </summary>
+		/// <param name="batch">Spritebatch to use</param>
 		/// <param name="location">Location on the screen</param>
 		public void Draw(SpriteBatch batch, Point location)
 		{

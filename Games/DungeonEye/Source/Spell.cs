@@ -27,7 +27,7 @@ using System.Xml;
 //
 //
 //
-namespace DungeonEye.Source
+namespace DungeonEye
 {
 	/// <summary>
 	/// Spell class
@@ -36,7 +36,7 @@ namespace DungeonEye.Source
 	{
 
 		/// <summary>
-		/// 
+		/// Default constructor
 		/// </summary>
 		public Spell()
 		{
@@ -65,7 +65,7 @@ namespace DungeonEye.Source
 		/// <returns></returns>
 		public bool Load(XmlNode xml)
 		{
-			if (xml.Name != "spell")
+			if (xml == null || xml.Name != "spell")
 				return false;
 
 			Name = xml.Attributes["name"].Value;
@@ -155,6 +155,7 @@ namespace DungeonEye.Source
 				return "spell";
 			}
 		}
+
 
 		///// <summary>
 		///// Description of the spell

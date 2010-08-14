@@ -18,16 +18,12 @@
 //
 #endregion
 using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
-using ArcEngine.Utility.ScreenManager;
-using DungeonEye.Gui;
 
 namespace DungeonEye
 {
@@ -79,6 +75,9 @@ namespace DungeonEye
 		/// <param name="hero"></param>
 		public void Open(Hero hero)
 		{
+			if (hero == null)
+				return;
+
 			Hero = hero;
 			IsVisible = true;
 		}
@@ -121,9 +120,6 @@ namespace DungeonEye
 			// Abort spell
 			batch.DrawString(Font, new Point(146, 336), Color.White, "abort spell");
 		}
-
-
-
 
 		#endregion
 
@@ -175,6 +171,7 @@ namespace DungeonEye
 			private set;
 		}
 
+
 		/// <summary>
 		/// Display font
 		/// </summary>
@@ -191,7 +188,11 @@ namespace DungeonEye
 		/// <summary>
 		/// Spell level selected
 		/// </summary>
-		public int SpellLevel;
+		public int SpellLevel
+		{
+			get;
+			set;
+		}
 
 
 
