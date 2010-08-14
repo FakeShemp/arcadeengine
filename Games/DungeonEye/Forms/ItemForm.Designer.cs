@@ -28,9 +28,9 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			DungeonEye.Dice dice3 = new DungeonEye.Dice();
-			DungeonEye.Dice dice2 = new DungeonEye.Dice();
 			DungeonEye.Dice dice1 = new DungeonEye.Dice();
+			DungeonEye.Dice dice2 = new DungeonEye.Dice();
+			DungeonEye.Dice dice3 = new DungeonEye.Dice();
 			this.GLGroundTile = new OpenTK.GLControl();
 			this.GLInventoryTile = new OpenTK.GLControl();
 			this.label2 = new System.Windows.Forms.Label();
@@ -40,6 +40,7 @@
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
 			this.DescriptionBox = new System.Windows.Forms.TextBox();
 			this.groupBox5 = new System.Windows.Forms.GroupBox();
+			this.CursedBox = new System.Windows.Forms.CheckBox();
 			this.ACBonusBox = new System.Windows.Forms.NumericUpDown();
 			this.label14 = new System.Windows.Forms.Label();
 			this.RangeBox = new System.Windows.Forms.NumericUpDown();
@@ -90,6 +91,11 @@
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.VisualTab = new System.Windows.Forms.TabPage();
 			this.PropertiesTab = new System.Windows.Forms.TabPage();
+			this.groupBox7 = new System.Windows.Forms.GroupBox();
+			this.AllowedHandPrimaryBox = new System.Windows.Forms.CheckBox();
+			this.AllowedHandSecondaryBox = new System.Windows.Forms.CheckBox();
+			this.DamageVsSmallBox = new DungeonEye.Forms.DiceForm();
+			this.DamageVsBigBox = new DungeonEye.Forms.DiceForm();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.SlashBox = new System.Windows.Forms.CheckBox();
 			this.BludgeBox = new System.Windows.Forms.CheckBox();
@@ -98,8 +104,6 @@
 			this.ScriptTab = new System.Windows.Forms.TabPage();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.groupBox11 = new System.Windows.Forms.GroupBox();
-			this.DamageVsBigBox = new DungeonEye.Forms.DiceForm();
-			this.DamageVsSmallBox = new DungeonEye.Forms.DiceForm();
 			this.groupBox4.SuspendLayout();
 			this.groupBox5.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize) (this.ACBonusBox)).BeginInit();
@@ -115,6 +119,7 @@
 			this.tabControl1.SuspendLayout();
 			this.VisualTab.SuspendLayout();
 			this.PropertiesTab.SuspendLayout();
+			this.groupBox7.SuspendLayout();
 			this.groupBox1.SuspendLayout();
 			this.ScriptTab.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -205,6 +210,7 @@
 			// 
 			// groupBox5
 			// 
+			this.groupBox5.Controls.Add(this.CursedBox);
 			this.groupBox5.Controls.Add(this.ACBonusBox);
 			this.groupBox5.Controls.Add(this.label14);
 			this.groupBox5.Controls.Add(this.RangeBox);
@@ -217,10 +223,21 @@
 			this.groupBox5.Controls.Add(this.label5);
 			this.groupBox5.Location = new System.Drawing.Point(3, 117);
 			this.groupBox5.Name = "groupBox5";
-			this.groupBox5.Size = new System.Drawing.Size(157, 158);
+			this.groupBox5.Size = new System.Drawing.Size(219, 158);
 			this.groupBox5.TabIndex = 6;
 			this.groupBox5.TabStop = false;
 			this.groupBox5.Text = "Misc :";
+			// 
+			// CursedBox
+			// 
+			this.CursedBox.AutoSize = true;
+			this.CursedBox.Location = new System.Drawing.Point(145, 44);
+			this.CursedBox.Name = "CursedBox";
+			this.CursedBox.Size = new System.Drawing.Size(59, 17);
+			this.CursedBox.TabIndex = 5;
+			this.CursedBox.Text = "Cursed";
+			this.CursedBox.UseVisualStyleBackColor = true;
+			this.CursedBox.CheckedChanged += new System.EventHandler(this.CursedBox_CheckedChanged);
 			// 
 			// ACBonusBox
 			// 
@@ -236,7 +253,7 @@
             0,
             -2147483648});
 			this.ACBonusBox.Name = "ACBonusBox";
-			this.ACBonusBox.Size = new System.Drawing.Size(77, 20);
+			this.ACBonusBox.Size = new System.Drawing.Size(57, 20);
 			this.ACBonusBox.TabIndex = 2;
 			this.ACBonusBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.ACBonusBox.ValueChanged += new System.EventHandler(this.ACBonusBox_ValueChanged);
@@ -255,7 +272,7 @@
 			// 
 			this.RangeBox.Location = new System.Drawing.Point(70, 96);
 			this.RangeBox.Name = "RangeBox";
-			this.RangeBox.Size = new System.Drawing.Size(77, 20);
+			this.RangeBox.Size = new System.Drawing.Size(57, 20);
 			this.RangeBox.TabIndex = 4;
 			this.RangeBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.RangeBox.ThousandsSeparator = true;
@@ -270,7 +287,7 @@
             0,
             0});
 			this.WeightBox.Name = "WeightBox";
-			this.WeightBox.Size = new System.Drawing.Size(77, 20);
+			this.WeightBox.Size = new System.Drawing.Size(57, 20);
 			this.WeightBox.TabIndex = 2;
 			this.WeightBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.WeightBox.ThousandsSeparator = true;
@@ -285,7 +302,7 @@
             0,
             0});
 			this.SpeedBox.Name = "SpeedBox";
-			this.SpeedBox.Size = new System.Drawing.Size(77, 20);
+			this.SpeedBox.Size = new System.Drawing.Size(57, 20);
 			this.SpeedBox.TabIndex = 2;
 			this.SpeedBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.SpeedBox.ThousandsSeparator = true;
@@ -350,9 +367,9 @@
 			this.groupBox6.Controls.Add(this.SecondaryBox);
 			this.groupBox6.Controls.Add(this.QuiverBox);
 			this.groupBox6.Controls.Add(this.PrimaryBox);
-			this.groupBox6.Location = new System.Drawing.Point(166, 117);
+			this.groupBox6.Location = new System.Drawing.Point(228, 117);
 			this.groupBox6.Name = "groupBox6";
-			this.groupBox6.Size = new System.Drawing.Size(171, 158);
+			this.groupBox6.Size = new System.Drawing.Size(146, 158);
 			this.groupBox6.TabIndex = 7;
 			this.groupBox6.TabStop = false;
 			this.groupBox6.Text = "Allowed slots :";
@@ -360,7 +377,7 @@
 			// WaistBox
 			// 
 			this.WaistBox.AutoSize = true;
-			this.WaistBox.Location = new System.Drawing.Point(92, 111);
+			this.WaistBox.Location = new System.Drawing.Point(71, 111);
 			this.WaistBox.Name = "WaistBox";
 			this.WaistBox.Size = new System.Drawing.Size(53, 17);
 			this.WaistBox.TabIndex = 0;
@@ -382,7 +399,7 @@
 			// FeetBox
 			// 
 			this.FeetBox.AutoSize = true;
-			this.FeetBox.Location = new System.Drawing.Point(92, 88);
+			this.FeetBox.Location = new System.Drawing.Point(71, 88);
 			this.FeetBox.Name = "FeetBox";
 			this.FeetBox.Size = new System.Drawing.Size(47, 17);
 			this.FeetBox.TabIndex = 0;
@@ -404,7 +421,7 @@
 			// RingBox
 			// 
 			this.RingBox.AutoSize = true;
-			this.RingBox.Location = new System.Drawing.Point(92, 65);
+			this.RingBox.Location = new System.Drawing.Point(71, 65);
 			this.RingBox.Name = "RingBox";
 			this.RingBox.Size = new System.Drawing.Size(48, 17);
 			this.RingBox.TabIndex = 0;
@@ -415,7 +432,7 @@
 			// BodyBox
 			// 
 			this.BodyBox.AutoSize = true;
-			this.BodyBox.Location = new System.Drawing.Point(92, 42);
+			this.BodyBox.Location = new System.Drawing.Point(71, 42);
 			this.BodyBox.Name = "BodyBox";
 			this.BodyBox.Size = new System.Drawing.Size(50, 17);
 			this.BodyBox.TabIndex = 0;
@@ -437,7 +454,7 @@
 			// SecondaryBox
 			// 
 			this.SecondaryBox.AutoSize = true;
-			this.SecondaryBox.Location = new System.Drawing.Point(92, 19);
+			this.SecondaryBox.Location = new System.Drawing.Point(71, 19);
 			this.SecondaryBox.Name = "SecondaryBox";
 			this.SecondaryBox.Size = new System.Drawing.Size(77, 17);
 			this.SecondaryBox.TabIndex = 0;
@@ -641,9 +658,9 @@
 			this.groupBox3.Controls.Add(this.RangerBox);
 			this.groupBox3.Controls.Add(this.PaladinBox);
 			this.groupBox3.Controls.Add(this.FighterBox);
-			this.groupBox3.Location = new System.Drawing.Point(341, 117);
+			this.groupBox3.Location = new System.Drawing.Point(380, 117);
 			this.groupBox3.Name = "groupBox3";
-			this.groupBox3.Size = new System.Drawing.Size(153, 158);
+			this.groupBox3.Size = new System.Drawing.Size(114, 158);
 			this.groupBox3.TabIndex = 7;
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Allowed classes :";
@@ -763,7 +780,7 @@
 			this.tabControl1.Location = new System.Drawing.Point(3, 16);
 			this.tabControl1.Name = "tabControl1";
 			this.tabControl1.SelectedIndex = 0;
-			this.tabControl1.Size = new System.Drawing.Size(815, 626);
+			this.tabControl1.Size = new System.Drawing.Size(890, 587);
 			this.tabControl1.TabIndex = 10;
 			// 
 			// VisualTab
@@ -785,13 +802,15 @@
 			this.VisualTab.Location = new System.Drawing.Point(4, 22);
 			this.VisualTab.Name = "VisualTab";
 			this.VisualTab.Padding = new System.Windows.Forms.Padding(3);
-			this.VisualTab.Size = new System.Drawing.Size(807, 600);
+			this.VisualTab.Size = new System.Drawing.Size(882, 561);
 			this.VisualTab.TabIndex = 0;
 			this.VisualTab.Text = "Visuals";
 			this.VisualTab.UseVisualStyleBackColor = true;
 			// 
 			// PropertiesTab
 			// 
+			this.PropertiesTab.AutoScroll = true;
+			this.PropertiesTab.Controls.Add(this.groupBox7);
 			this.PropertiesTab.Controls.Add(this.DamageVsSmallBox);
 			this.PropertiesTab.Controls.Add(this.DamageVsBigBox);
 			this.PropertiesTab.Controls.Add(this.groupBox1);
@@ -804,10 +823,71 @@
 			this.PropertiesTab.Location = new System.Drawing.Point(4, 22);
 			this.PropertiesTab.Name = "PropertiesTab";
 			this.PropertiesTab.Padding = new System.Windows.Forms.Padding(3);
-			this.PropertiesTab.Size = new System.Drawing.Size(807, 600);
+			this.PropertiesTab.Size = new System.Drawing.Size(882, 561);
 			this.PropertiesTab.TabIndex = 1;
 			this.PropertiesTab.Text = "Properties";
 			this.PropertiesTab.UseVisualStyleBackColor = true;
+			// 
+			// groupBox7
+			// 
+			this.groupBox7.Controls.Add(this.AllowedHandPrimaryBox);
+			this.groupBox7.Controls.Add(this.AllowedHandSecondaryBox);
+			this.groupBox7.Location = new System.Drawing.Point(500, 117);
+			this.groupBox7.Name = "groupBox7";
+			this.groupBox7.Size = new System.Drawing.Size(118, 64);
+			this.groupBox7.TabIndex = 13;
+			this.groupBox7.TabStop = false;
+			this.groupBox7.Text = "Allowed hands :";
+			// 
+			// AllowedHandPrimaryBox
+			// 
+			this.AllowedHandPrimaryBox.AutoSize = true;
+			this.AllowedHandPrimaryBox.Location = new System.Drawing.Point(6, 18);
+			this.AllowedHandPrimaryBox.Name = "AllowedHandPrimaryBox";
+			this.AllowedHandPrimaryBox.Size = new System.Drawing.Size(60, 17);
+			this.AllowedHandPrimaryBox.TabIndex = 1;
+			this.AllowedHandPrimaryBox.Text = "Primary";
+			this.AllowedHandPrimaryBox.UseVisualStyleBackColor = true;
+			this.AllowedHandPrimaryBox.CheckedChanged += new System.EventHandler(this.AllowedHands_CheckedChanged);
+			// 
+			// AllowedHandSecondaryBox
+			// 
+			this.AllowedHandSecondaryBox.AutoSize = true;
+			this.AllowedHandSecondaryBox.Location = new System.Drawing.Point(6, 41);
+			this.AllowedHandSecondaryBox.Name = "AllowedHandSecondaryBox";
+			this.AllowedHandSecondaryBox.Size = new System.Drawing.Size(77, 17);
+			this.AllowedHandSecondaryBox.TabIndex = 0;
+			this.AllowedHandSecondaryBox.Text = "Secondary";
+			this.AllowedHandSecondaryBox.UseVisualStyleBackColor = true;
+			this.AllowedHandSecondaryBox.CheckedChanged += new System.EventHandler(this.AllowedHands_CheckedChanged);
+			// 
+			// DamageVsSmallBox
+			// 
+			this.DamageVsSmallBox.ControlText = "Damage vs Small :";
+			dice1.Faces = 1;
+			dice1.Modifier = 0;
+			dice1.Throws = 1;
+			this.DamageVsSmallBox.Dice = dice1;
+			this.DamageVsSmallBox.Location = new System.Drawing.Point(243, 391);
+			this.DamageVsSmallBox.MinimumSize = new System.Drawing.Size(230, 100);
+			this.DamageVsSmallBox.Name = "DamageVsSmallBox";
+			this.DamageVsSmallBox.Size = new System.Drawing.Size(251, 100);
+			this.DamageVsSmallBox.TabIndex = 12;
+			this.DamageVsSmallBox.ValueChanged += new System.EventHandler(this.DamageVsSmallBox_ValueChanged);
+			// 
+			// DamageVsBigBox
+			// 
+			this.DamageVsBigBox.ControlText = "Damage vs Big :";
+			dice2.Faces = 1;
+			dice2.Modifier = 0;
+			dice2.Throws = 1;
+			this.DamageVsBigBox.Dice = dice2;
+			this.DamageVsBigBox.Location = new System.Drawing.Point(5, 391);
+			this.DamageVsBigBox.MinimumSize = new System.Drawing.Size(230, 100);
+			this.DamageVsBigBox.Name = "DamageVsBigBox";
+			this.DamageVsBigBox.Size = new System.Drawing.Size(230, 100);
+			this.DamageVsBigBox.TabIndex = 11;
+			this.DamageVsBigBox.ValueChanged += new System.EventHandler(this.DamageVsBigBox_ValueChanged);
 			// 
 			// groupBox1
 			// 
@@ -873,7 +953,7 @@
 			this.ScriptTab.Controls.Add(this.groupBox2);
 			this.ScriptTab.Location = new System.Drawing.Point(4, 22);
 			this.ScriptTab.Name = "ScriptTab";
-			this.ScriptTab.Size = new System.Drawing.Size(807, 600);
+			this.ScriptTab.Size = new System.Drawing.Size(882, 561);
 			this.ScriptTab.TabIndex = 2;
 			this.ScriptTab.Text = "Scripting";
 			this.ScriptTab.UseVisualStyleBackColor = true;
@@ -897,44 +977,16 @@
 			this.groupBox11.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupBox11.Location = new System.Drawing.Point(0, 0);
 			this.groupBox11.Name = "groupBox11";
-			this.groupBox11.Size = new System.Drawing.Size(821, 645);
+			this.groupBox11.Size = new System.Drawing.Size(896, 606);
 			this.groupBox11.TabIndex = 13;
 			this.groupBox11.TabStop = false;
 			this.groupBox11.Text = "Properties :";
-			// 
-			// DamageVsBigBox
-			// 
-			this.DamageVsBigBox.ControlText = "Damage vs Big :";
-			dice2.Faces = 1;
-			dice2.Modifier = 0;
-			dice2.Throws = 1;
-			this.DamageVsBigBox.Dice = dice2;
-			this.DamageVsBigBox.Location = new System.Drawing.Point(5, 391);
-			this.DamageVsBigBox.MinimumSize = new System.Drawing.Size(230, 100);
-			this.DamageVsBigBox.Name = "DamageVsBigBox";
-			this.DamageVsBigBox.Size = new System.Drawing.Size(230, 100);
-			this.DamageVsBigBox.TabIndex = 11;
-			this.DamageVsBigBox.ValueChanged += new System.EventHandler(this.DamageVsBigBox_ValueChanged);
-			// 
-			// DamageVsSmallBox
-			// 
-			this.DamageVsSmallBox.ControlText = "Damage vs Small :";
-			dice1.Faces = 1;
-			dice1.Modifier = 0;
-			dice1.Throws = 1;
-			this.DamageVsSmallBox.Dice = dice1;
-			this.DamageVsSmallBox.Location = new System.Drawing.Point(243, 391);
-			this.DamageVsSmallBox.MinimumSize = new System.Drawing.Size(230, 100);
-			this.DamageVsSmallBox.Name = "DamageVsSmallBox";
-			this.DamageVsSmallBox.Size = new System.Drawing.Size(251, 100);
-			this.DamageVsSmallBox.TabIndex = 12;
-			this.DamageVsSmallBox.ValueChanged += new System.EventHandler(this.DamageVsSmallBox_ValueChanged);
 			// 
 			// ItemForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(821, 645);
+			this.ClientSize = new System.Drawing.Size(896, 606);
 			this.Controls.Add(this.groupBox11);
 			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 			this.Name = "ItemForm";
@@ -963,6 +1015,8 @@
 			this.VisualTab.ResumeLayout(false);
 			this.VisualTab.PerformLayout();
 			this.PropertiesTab.ResumeLayout(false);
+			this.groupBox7.ResumeLayout(false);
+			this.groupBox7.PerformLayout();
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			this.ScriptTab.ResumeLayout(false);
@@ -1044,5 +1098,9 @@
 		private System.Windows.Forms.CheckBox PiercingBox;
 		private DiceForm DamageVsSmallBox;
 		private DiceForm DamageVsBigBox;
+		private System.Windows.Forms.CheckBox CursedBox;
+		private System.Windows.Forms.GroupBox groupBox7;
+		private System.Windows.Forms.CheckBox AllowedHandPrimaryBox;
+		private System.Windows.Forms.CheckBox AllowedHandSecondaryBox;
 	}
 }

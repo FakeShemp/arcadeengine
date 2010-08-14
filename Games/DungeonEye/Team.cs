@@ -384,6 +384,24 @@ namespace DungeonEye
 			{
 				DrawMain(Batch);
 
+/*
+				// Action zones
+				for (int id = 0 ; id < 6 ; id++)
+				{
+					Batch.FillRectangle(InterfaceCoord.PrimaryHand[id], Color.FromArgb(128, Color.Red));
+					Batch.FillRectangle(InterfaceCoord.SecondaryHand[id], Color.FromArgb(128, Color.Red));
+					Batch.FillRectangle(InterfaceCoord.SelectHero[id], Color.FromArgb(128, Color.Red));
+					Batch.FillRectangle(InterfaceCoord.HeroFace[id], Color.FromArgb(128, Color.Red));
+				}
+				Batch.FillRectangle(InterfaceCoord.TurnLeft, Color.FromArgb(128, Color.Red));
+				Batch.FillRectangle(InterfaceCoord.TurnRight, Color.FromArgb(128, Color.Red));
+				Batch.FillRectangle(InterfaceCoord.MoveForward, Color.FromArgb(128, Color.Red));
+				Batch.FillRectangle(InterfaceCoord.MoveBackward, Color.FromArgb(128, Color.Red));
+				Batch.FillRectangle(InterfaceCoord.MoveLeft, Color.FromArgb(128, Color.Red));
+				Batch.FillRectangle(InterfaceCoord.MoveRight, Color.FromArgb(128, Color.Red));
+*/
+
+
 				CampWindow.Draw(Batch);
 			}
 
@@ -401,16 +419,6 @@ namespace DungeonEye
 			// Draw the spell window
 			SpellBook.Draw(Batch);
 
-
-			
-			// Action zones
-			//Display.DrawRectangle(new Rectangle(0, 202, 176, 38), Color.Green);
-			//Display.DrawRectangle(new Rectangle(0, 144, 176, 58), Color.Red);
-			//Display.DrawRectangle(new Rectangle(176, 202, 176, 38), Color.LightGreen);
-			//Display.DrawRectangle(new Rectangle(176, 144, 176, 58), Color.LightBlue);
-			//Display.DrawRectangle(new Rectangle(0, 0, 176, 144), Color.Blue);
-			//Display.DrawRectangle(new Rectangle(176, 0, 176, 144), Color.Yellow);
-			//Display.DrawRectangle(new Rectangle(48, 14, 256, 192), Color.Yellow);
 
 			// Draw the cursor or the item in the hand
 			if (ItemInHand != null)
@@ -728,15 +736,29 @@ namespace DungeonEye
 			if (SelectedHero.GetInventoryItem(InventoryPosition.Helmet) != null)
 				batch.DrawTile(Items, SelectedHero.GetInventoryItem(InventoryPosition.Helmet).TileID, new Point(606, 116));
 
+/*
+			// Debug draw
+			Batch.FillRectangle(InterfaceCoord.PreviousHero, Color.FromArgb(128, Color.Red));
+			Batch.FillRectangle(InterfaceCoord.CloseInventory, Color.FromArgb(128, Color.Red));
+			Batch.FillRectangle(InterfaceCoord.NextHero, Color.FromArgb(128, Color.Red));
+			Batch.FillRectangle(InterfaceCoord.ShowStatistics, Color.FromArgb(128, Color.Red));
+			foreach (Rectangle rectangle in InterfaceCoord.BackPack)
+				Batch.FillRectangle(rectangle, Color.FromArgb(128, Color.Red));
+			foreach (Rectangle rectangle in InterfaceCoord.Rings)
+				Batch.FillRectangle(rectangle, Color.FromArgb(128, Color.Red));
+			foreach (Rectangle rectangle in InterfaceCoord.Waist)
+				Batch.FillRectangle(rectangle, Color.FromArgb(128, Color.Red));
 
-			// Ring 1 454,268,20,20
-			// Ring 2 478,268,20,20
-
-			//Display.Color = Color.FromArgb(127, Color.Red);
-			//batch.DrawRectangle(new Rectangle(600, 184, 36, 36), Color.Red);
-			//Display.Rectangle(new Rectangle(478, 268, 20, 20), true);
-
-
+			Batch.FillRectangle(InterfaceCoord.Head, Color.FromArgb(128, Color.Red));
+			Batch.FillRectangle(InterfaceCoord.Neck, Color.FromArgb(128, Color.Red));
+			Batch.FillRectangle(InterfaceCoord.SecondaryHandInventory, Color.FromArgb(128, Color.Red));
+			Batch.FillRectangle(InterfaceCoord.PrimaryHandInventory, Color.FromArgb(128, Color.Red));
+			Batch.FillRectangle(InterfaceCoord.Feet, Color.FromArgb(128, Color.Red));
+			Batch.FillRectangle(InterfaceCoord.Wrist, Color.FromArgb(128, Color.Red));
+			Batch.FillRectangle(InterfaceCoord.Food, Color.FromArgb(128, Color.Red));
+			Batch.FillRectangle(InterfaceCoord.Armor, Color.FromArgb(128, Color.Red));
+			Batch.FillRectangle(InterfaceCoord.Quiver, Color.FromArgb(128, Color.Red));
+*/
 		}
 
 
@@ -1008,31 +1030,31 @@ namespace DungeonEye
 			if (Mouse.IsNewButtonDown(MouseButtons.Left))
 			{
 
-				#region Compass
+				#region TurnLeft
 				// Turn left
-				if (new Rectangle(10, 256, 38, 34).Contains(mousePos))
+				if (InterfaceCoord.TurnLeft.Contains(mousePos))
 					Location.Compass.Rotate(CompassRotation.Rotate270);
 
-				// Forward
-				else if (new Rectangle(48, 256, 40, 34).Contains(mousePos))
+				// MoveForward
+				else if (InterfaceCoord.MoveForward.Contains(mousePos))
 					Walk(0, -1);
 
 				// Turn right
-				else if (new Rectangle(88, 256, 40, 34).Contains(mousePos))
+				else if (InterfaceCoord.TurnRight.Contains(mousePos))
 					Location.Compass.Rotate(CompassRotation.Rotate90);
 
 				// Move left
-				else if (new Rectangle(10, 290, 38, 34).Contains(mousePos))
+				else if (InterfaceCoord.MoveLeft.Contains(mousePos))
 					Walk(-1, 0);
 
 				// Backward
-				else if (new Rectangle(48, 290, 40, 34).Contains(mousePos))
+				else if (InterfaceCoord.MoveBackward.Contains(mousePos))
 				{
 					if (!Walk(0, 1))
 						AddMessage("You can't go that way.");
 				}
 				// Move right
-				else if (new Rectangle(88, 290, 40, 34).Contains(mousePos))
+				else if (InterfaceCoord.MoveRight.Contains(mousePos))
 				{
 					if (!Walk(1, 0))
 						AddMessage("You can't go that way.");
@@ -1211,7 +1233,7 @@ namespace DungeonEye
 								loc.GroundPosition = GroundPosition.SouthEast;
 								break;
 							}
-							Location.Maze.FlyingItems.Add(new ThrownItem(SelectedHero, ItemInHand, loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
+							Location.Maze.ThrownItems.Add(new ThrownItem(SelectedHero, ItemInHand, loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
 							SetItemInHand(null);
 						}
 						#endregion
@@ -1238,7 +1260,7 @@ namespace DungeonEye
 								break;
 							}
 
-							Location.Maze.FlyingItems.Add(new ThrownItem(SelectedHero, ItemInHand, loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
+							Location.Maze.ThrownItems.Add(new ThrownItem(SelectedHero, ItemInHand, loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
 							SetItemInHand(null);
 						}
 						#endregion
@@ -1429,64 +1451,61 @@ namespace DungeonEye
 					Item item = null;
 
 					// Update each hero interface
-					for (int y = 0; y < 3; y++)
+					for (int id = 0; id < 6; id++)
 					{
-						for (int x = 0; x < 2; x++)
+						// Get the hero
+						Hero hero = Heroes[id]; //[y * 2 + x];
+						if (hero == null)
+							continue;
+
+						// Select hero
+						if (InterfaceCoord.SelectHero[id].Contains(mousePos))
+							SelectedHero = hero;
+
+
+						// Swap hero
+						if (InterfaceCoord.HeroFace[id].Contains(mousePos))
 						{
-							// Get the hero
-							Hero hero = Heroes[y * 2 + x];
-							if (hero == null)
-								continue;
-
-							// Select hero
-							if (new Rectangle(368 + 144 * x, y * 104 + 2, 126, 18).Contains(mousePos))
-								SelectedHero = hero;
+							SelectedHero = hero;
+							HeroToSwap = null;
+							Interface = TeamInterface.Inventory;
+						}
 
 
-							// Swap hero
-							if (new Rectangle(370 + 144 * x, y * 104 + 22, 62, 64).Contains(mousePos))
+						// Take object in primary hand
+						if (InterfaceCoord.PrimaryHand[id].Contains(mousePos) && hero.CanUseHand(HeroHand.Primary))
+						{
+							item = hero.GetInventoryItem(InventoryPosition.Primary);
+
+							if (ItemInHand != null && ((ItemInHand.Slot & BodySlot.Primary) == BodySlot.Primary))
 							{
-								SelectedHero = hero;
-								HeroToSwap = null;
-								Interface = TeamInterface.Inventory;
+								Item swap = ItemInHand;
+								SetItemInHand(hero.GetInventoryItem(InventoryPosition.Primary));
+								hero.SetInventoryItem(InventoryPosition.Primary, swap);
 							}
-
-
-							// Take object in primary hand
-							if (new Rectangle(434 + 144 * x, y * 104 + 22, 60, 32).Contains(mousePos) && hero.CanUseHand(HeroHand.Primary))
+							else if (ItemInHand == null && item != null)
 							{
-								item = hero.GetInventoryItem(InventoryPosition.Primary);
-
-								if (ItemInHand != null && ((ItemInHand.Slot & BodySlot.Primary) == BodySlot.Primary))
-								{
-									Item swap = ItemInHand;
-									SetItemInHand(hero.GetInventoryItem(InventoryPosition.Primary));
-									hero.SetInventoryItem(InventoryPosition.Primary, swap);
-								}
-								else if (ItemInHand == null && item != null)
-								{
-									SetItemInHand(item);
-									hero.SetInventoryItem(InventoryPosition.Primary, null); 
-								}
+								SetItemInHand(item);
+								hero.SetInventoryItem(InventoryPosition.Primary, null); 
 							}
+						}
 
-							// Take object in secondary hand
-							if (new Rectangle(434 + 144 * x, y * 104 + 54, 60, 32).Contains(mousePos) && hero.CanUseHand(HeroHand.Secondary))
+						// Take object in secondary hand
+						if (InterfaceCoord.SecondaryHand[id].Contains(mousePos) && hero.CanUseHand(HeroHand.Secondary))
+						{
+							item = hero.GetInventoryItem(InventoryPosition.Secondary);
+
+							if (ItemInHand != null && ((ItemInHand.Slot & BodySlot.Secondary) == BodySlot.Secondary))
 							{
-								item = hero.GetInventoryItem(InventoryPosition.Secondary);
+								Item swap = ItemInHand;
+								SetItemInHand(hero.GetInventoryItem(InventoryPosition.Secondary));
+								hero.SetInventoryItem(InventoryPosition.Secondary, swap);
 
-								if (ItemInHand != null && ((ItemInHand.Slot & BodySlot.Secondary) == BodySlot.Secondary))
-								{
-									Item swap = ItemInHand;
-									SetItemInHand(hero.GetInventoryItem(InventoryPosition.Secondary));
-									hero.SetInventoryItem(InventoryPosition.Secondary, swap);
-
-								}
-								else if (ItemInHand == null && item != null)
-								{
-									SetItemInHand(item);
-									hero.SetInventoryItem(InventoryPosition.Secondary, null); 
-								}
+							}
+							else if (ItemInHand == null && item != null)
+							{
+								SetItemInHand(item);
+								hero.SetInventoryItem(InventoryPosition.Secondary, null); 
 							}
 						}
 					}
@@ -1503,54 +1522,50 @@ namespace DungeonEye
 				{
 
 					// Update each hero interface
-					for (int y = 0; y < 3; y++)
+					for (int id = 0 ; id < 6 ; id++)
 					{
-						for (int x = 0; x < 2; x++)
+						// Get the hero
+						Hero hero = Heroes[id];
+						if (hero == null)
+							continue;
+
+
+						#region Swap hero
+						if (InterfaceCoord.SelectHero[id].Contains(mousePos))
 						{
-
-							// Get the hero
-							Hero hero = Heroes[y * 2 + x];
-							if (hero == null)
-								continue;
-
-
-							#region Swap hero
-							if (new Rectangle(368 + 144 * x, y * 104 + 2, 126, 18).Contains(mousePos))
+							if (HeroToSwap == null)
 							{
-								if (HeroToSwap == null)
-								{
-									HeroToSwap = hero;
-								}
-								else
-								{
-									Heroes[(int)GetHeroPosition(HeroToSwap)] = hero;
-									Heroes[y * 2 + x] = HeroToSwap;
-
-
-									HeroToSwap = null;
-								}
+								HeroToSwap = hero;
 							}
-							#endregion
-
-							#region Show Hero inventory
-							if (new Rectangle(370 + 144 * x, y * 104 + 22, 62, 64).Contains(mousePos))
+							else
 							{
-								SelectedHero = hero;
-								Interface = TeamInterface.Inventory;
+								Heroes[(int) GetHeroPosition(HeroToSwap)] = hero;
+								Heroes[id] = HeroToSwap;
+
+
+								HeroToSwap = null;
 							}
-							#endregion
-
-							#region Use object in primary hand
-							if (new Rectangle(434 + 144 * x, y * 104 + 22, 60, 32).Contains(mousePos) && hero.CanUseHand(HeroHand.Primary))
-								hero.UseHand(HeroHand.Primary);
-
-							#endregion
-
-							#region Use object in secondary hand
-							if (new Rectangle(434 + 144 * x, y * 104 + 54, 60, 32).Contains(mousePos) && hero.CanUseHand(HeroHand.Secondary))
-								hero.UseHand(HeroHand.Secondary);
-							#endregion
 						}
+						#endregion
+
+						#region Show Hero inventory
+						if (InterfaceCoord.HeroFace[id].Contains(mousePos))
+						{
+							SelectedHero = hero;
+							Interface = TeamInterface.Inventory;
+						}
+						#endregion
+
+						#region Use object in primary hand
+						if (InterfaceCoord.PrimaryHand[id].Contains(mousePos) && hero.CanUseHand(HeroHand.Primary))
+							hero.UseHand(HeroHand.Primary);
+
+						#endregion
+
+						#region Use object in secondary hand
+						if (InterfaceCoord.SecondaryHand[id].Contains(mousePos) && hero.CanUseHand(HeroHand.Secondary))
+							hero.UseHand(HeroHand.Secondary);
+						#endregion
 					}
 				}
 				#endregion
@@ -1619,44 +1634,39 @@ namespace DungeonEye
 			if (Mouse.IsNewButtonDown(MouseButtons.Left))
 			{
 				// Close inventory
-				if (new Rectangle(362, 4, 64, 64).Contains(mousePos))
+				if (InterfaceCoord.CloseInventory.Contains(mousePos))
 					Interface = TeamInterface.Main;
 
 
 				// Show statistics
-				if (new Rectangle(606, 296, 36, 36).Contains(mousePos))
+				if (InterfaceCoord.ShowStatistics.Contains(mousePos))
 					Interface = TeamInterface.Statistic;
 
 
 				// Previous Hero
-				if (new Rectangle(548, 68, 40, 30).Contains(mousePos))
+				if (InterfaceCoord.PreviousHero.Contains(mousePos))
 					SelectedHero = GetPreviousHero();
 
 				// Next Hero
-				if (new Rectangle(594, 68, 40, 30).Contains(mousePos))
+				if (InterfaceCoord.NextHero.Contains(mousePos))
 					SelectedHero = GetNextHero();
 
 
 
 				#region Manage bag pack items
-				int pos = 0;
-				for (int y = 76; y < 328; y += 36)
-					for (int x = 364; x < 426; x += 36)
+				for (int id = 0 ; id < 14 ; id++)
+				{
+					if (InterfaceCoord.BackPack[id].Contains(mousePos))
 					{
-						if (new Rectangle(x, y, 36, 36).Contains(mousePos))
-						{
-							Item swap = ItemInHand;
-							SetItemInHand(SelectedHero.GetBackPackItem(pos));
-							SelectedHero.SetBackPackItem(pos, swap);
-						}
-
-						// Next position
-						pos++;
+						Item swap = ItemInHand;
+						SetItemInHand(SelectedHero.GetBackPackItem(id));
+						SelectedHero.SetBackPackItem(id, swap);
 					}
+				}
 				#endregion
 
 				#region Quiver
-				if (new Rectangle(450, 108, 36, 36).Contains(mousePos))
+				if (InterfaceCoord.Quiver.Contains(mousePos))
 				{
 					if (ItemInHand == null && SelectedHero.Quiver > 0)
 					{
@@ -1672,7 +1682,7 @@ namespace DungeonEye
 				#endregion
 
 				#region Armor
-				else if (new Rectangle(448, 148, 36, 36).Contains(mousePos))
+				else if (InterfaceCoord.Armor.Contains(mousePos))
 				{
 					item = SelectedHero.GetInventoryItem(InventoryPosition.Armor);
 
@@ -1686,8 +1696,8 @@ namespace DungeonEye
 				}
 				#endregion
 
-				#region Food 472,72,62,32
-				else if (new Rectangle(474, 72, 62, 30).Contains(mousePos))
+				#region Food
+				else if (InterfaceCoord.Food.Contains(mousePos))
 				{
 					if (ItemInHand != null && ItemInHand.Type == ItemType.Consumable)
 					{
@@ -1697,8 +1707,8 @@ namespace DungeonEye
 				}
 				#endregion
 
-				#region Wrist 448,188,36,36
-				else if (new Rectangle(450, 188, 36, 36).Contains(mousePos))
+				#region Wrist
+				else if (InterfaceCoord.Wrist.Contains(mousePos))
 				{
 					item = SelectedHero.GetInventoryItem(InventoryPosition.Wrist);
 
@@ -1712,8 +1722,8 @@ namespace DungeonEye
 				}
 				#endregion
 
-				#region Primary 458,228,36,36
-				else if (new Rectangle(460, 228, 36, 36).Contains(mousePos))
+				#region Primary
+				else if (InterfaceCoord.PrimaryHandInventory.Contains(mousePos))
 				{
 					item = SelectedHero.GetInventoryItem(InventoryPosition.Primary);
 
@@ -1727,8 +1737,8 @@ namespace DungeonEye
 				}
 				#endregion
 
-				#region Feet 552,270,36,36
-				else if (new Rectangle(554, 270, 36, 36).Contains(mousePos))
+				#region Feet
+				else if (InterfaceCoord.Feet.Contains(mousePos))
 				{
 					item = SelectedHero.GetInventoryItem(InventoryPosition.Feet);
 
@@ -1742,8 +1752,8 @@ namespace DungeonEye
 				}
 				#endregion
 
-				#region Secondary 554,228,36,36
-				else if (new Rectangle(556, 228, 36, 36).Contains(mousePos))
+				#region Secondary
+				else if (InterfaceCoord.SecondaryHandInventory.Contains(mousePos))
 				{
 					item = SelectedHero.GetInventoryItem(InventoryPosition.Secondary);
 
@@ -1757,8 +1767,8 @@ namespace DungeonEye
 				}
 				#endregion
 
-				#region Neck 572,146,36,36
-				else if (new Rectangle(574, 146, 36, 36).Contains(mousePos))
+				#region Neck
+				else if (InterfaceCoord.Neck.Contains(mousePos))
 				{
 					item = SelectedHero.GetInventoryItem(InventoryPosition.Neck);
 
@@ -1772,8 +1782,8 @@ namespace DungeonEye
 				}
 				#endregion
 
-				#region Head 594,106,36,36
-				else if (new Rectangle(596, 106, 36, 36).Contains(mousePos))
+				#region Head
+				else if (InterfaceCoord.Head.Contains(mousePos))
 				{
 					item = SelectedHero.GetInventoryItem(InventoryPosition.Helmet);
 
@@ -1790,41 +1800,36 @@ namespace DungeonEye
 				else
 				{
 					#region Waist
-					// Back 1 598,184,36,36
-					// Back 2 598,220,36,36
-					// Back 3 598,256,36,36
-					for (int i = 0; i < 3; i++)
+					for (int id = 0; id < 3; id++)
 					{
-						if (new Rectangle(600, 184 + i * 36, 36, 36).Contains(mousePos))
+						if (InterfaceCoord.Waist[id].Contains(mousePos))
 						{
-							item = SelectedHero.GetWaistPackItem(i);
+							item = SelectedHero.GetWaistPackItem(id);
 
-							if (ItemInHand != null && SelectedHero.SetWaistPackItem(i, ItemInHand))
+							if (ItemInHand != null && SelectedHero.SetWaistPackItem(id, ItemInHand))
 								SetItemInHand(item);
 							else if (ItemInHand == null && item != null)
 							{
 								SetItemInHand(item);
-								SelectedHero.SetWaistPackItem(i, null);
+								SelectedHero.SetWaistPackItem(id, null);
 							}
 						}
 					}
 					#endregion
 
 					#region Rings
-					// Ring 1 454,268,20,20
-					// Ring 2 478,268,20,20
-					for (int i = 0; i < 2; i++)
+					for (int id = 0; id < 2; id++)
 					{
-						item = SelectedHero.GetInventoryItem(InventoryPosition.Ring_Left + i);
+						item = SelectedHero.GetInventoryItem(InventoryPosition.Ring_Left + id);
 
-						if (new Rectangle(456 + i * 24, 268, 20, 20).Contains(mousePos))
+						if (InterfaceCoord.Rings[id].Contains(mousePos))
 						{
-							if (ItemInHand != null && SelectedHero.SetInventoryItem(InventoryPosition.Ring_Left + i, ItemInHand))
+							if (ItemInHand != null && SelectedHero.SetInventoryItem(InventoryPosition.Ring_Left + id, ItemInHand))
 								SetItemInHand(item);
 							else if (ItemInHand == null && item != null)
 							{
 								SetItemInHand(item);
-								SelectedHero.SetInventoryItem(InventoryPosition.Ring_Left + i, null);
+								SelectedHero.SetInventoryItem(InventoryPosition.Ring_Left + id, null);
 							}
 						}
 					}
@@ -1849,22 +1854,22 @@ namespace DungeonEye
 			{
 
 				// Close inventory
-				if (new Rectangle(362, 4, 64, 64).Contains(mousePos))
+				if (InterfaceCoord.CloseInventory.Contains(mousePos))
 					Interface = TeamInterface.Main;
 
 
 				// Show statistics
-				if (new Rectangle(606, 296, 36, 36).Contains(mousePos))
+				if (InterfaceCoord.ShowStatistics.Contains(mousePos))
 					Interface = TeamInterface.Inventory;
 
 
 
 				// Previous Hero
-				if (new Rectangle(548, 68, 40, 30).Contains(mousePos))
+				if (InterfaceCoord.PreviousHero.Contains(mousePos))
 					SelectedHero = GetPreviousHero();
 
 				// Next Hero
-				if (new Rectangle(594, 68, 40, 30).Contains(mousePos))
+				if (InterfaceCoord.NextHero.Contains(mousePos))
 					SelectedHero = GetNextHero();
 
 			}
@@ -2316,7 +2321,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Move the team according its facing direction
 		/// </summary>
-		/// <param name="front">Forward / backward offset</param>
+		/// <param name="front">MoveForward / backward offset</param>
 		/// <param name="strafe">Left / right offset</param>
 		/// <returns>True if move allowed, otherwise false</rereturns>
 		public bool Walk(int front, int strafe)
@@ -2851,4 +2856,245 @@ namespace DungeonEye
 
 	#endregion
 
+	struct InterfaceCoord
+	{
+
+		#region Main window
+
+		/// <summary>
+		/// TurnLeft button
+		/// </summary>
+		static public Rectangle TurnLeft = new Rectangle(10, 256, 38, 34);
+
+		/// <summary>
+		/// Move Forward button
+		/// </summary>
+		static public Rectangle MoveForward = new Rectangle(48, 256, 40, 34);
+
+
+		/// <summary>
+		/// Turn right button
+		/// </summary>
+		static public Rectangle TurnRight = new Rectangle(88, 256, 40, 34);
+
+
+		/// <summary>
+		/// Move left button
+		/// </summary>
+		static public Rectangle MoveLeft = new Rectangle(10, 290, 38, 34);
+
+
+		/// <summary>
+		/// Move backward button
+		/// </summary>
+		static public Rectangle MoveBackward = new Rectangle(48, 290, 40, 34);
+
+
+		/// <summary>
+		/// Move right button
+		/// </summary>
+		static public Rectangle MoveRight = new Rectangle(88, 290, 40, 34);
+
+
+		/// <summary>
+		/// Select hero's rectangle
+		/// </summary>
+		static public Rectangle[] SelectHero = new Rectangle[]
+		{
+			new Rectangle(368      ,       2, 126, 20),		// Hero 1
+			new Rectangle(368 + 144,       2, 126, 20),		// Hero 2
+
+			new Rectangle(368      , 104 + 2, 126, 20),		// Hero 3
+			new Rectangle(368 + 144, 104 + 2, 126, 20),		// Hero 4
+
+			new Rectangle(368      , 208 + 2, 126, 20),		// Hero 5
+			new Rectangle(368 + 144, 208 + 2, 126, 20),		// Hero 6
+		};
+
+
+		/// <summary>
+		/// Hero's Face rectangle
+		/// </summary>
+		static public Rectangle[] HeroFace = new Rectangle[]
+		{
+			new Rectangle(368      ,       22, 64, 64),		// Hero 1
+			new Rectangle(368 + 144,       22, 64, 64),		// Hero 2
+
+			new Rectangle(368      , 104 + 22, 64, 64),		// Hero 3
+			new Rectangle(368 + 144, 104 + 22, 64, 64),		// Hero 4
+			
+			new Rectangle(368      , 208 + 22, 64, 64),		// Hero 5
+			new Rectangle(368 + 144, 208 + 22, 64, 64),		// Hero 6
+		};
+
+
+		/// <summary>
+		/// Hero's primary hand rectangle
+		/// </summary>
+		static public Rectangle[] PrimaryHand = new Rectangle[]
+		{
+			new Rectangle(432      ,       22, 62, 32),		// Hero 1
+			new Rectangle(432 + 144,       22, 62, 32),		// Hero 2
+
+			new Rectangle(432      , 104 + 22, 62, 32),		// Hero 3
+			new Rectangle(432 + 144, 104 + 22, 62, 32),		// Hero 4
+
+			new Rectangle(432      , 208 + 22, 62, 32),		// Hero 5
+			new Rectangle(432 + 144, 208 + 22, 60, 32),		// Hero 6
+		};
+
+
+		/// <summary>
+		/// Hero's primary hand rectangle
+		/// </summary>
+		static public Rectangle[] SecondaryHand = new Rectangle[]
+		{
+			new Rectangle(432      ,       54, 62, 32),		// Hero 1
+			new Rectangle(432 + 144,       54, 62, 32),		// Hero 2
+
+			new Rectangle(432      , 104 + 54, 62, 32),		// Hero 3
+			new Rectangle(432 + 144, 104 + 54, 62, 32),		// Hero 4
+
+			new Rectangle(432      , 208 + 54, 62, 32),		// Hero 5
+			new Rectangle(432 + 144, 208 + 54, 62, 32),		// Hero 6
+		};
+
+
+		#endregion
+
+
+
+		#region Inventory screen
+
+		/// <summary>
+		/// Close inventory button
+		/// </summary>
+		static public Rectangle CloseInventory = new Rectangle(362, 4, 64, 64);
+
+
+		/// <summary>
+		/// Show statistics button
+		/// </summary>
+		static public Rectangle ShowStatistics = new Rectangle(606, 296, 36, 36);
+
+
+		/// <summary>
+		/// Close inventory button
+		/// </summary>
+		static public Rectangle PreviousHero = new Rectangle(550, 68, 40, 30);
+
+		
+		/// <summary>
+		/// Close inventory button
+		/// </summary>
+		static public Rectangle NextHero = new Rectangle(596, 68, 40, 30);
+
+
+		/// <summary>
+		/// Backpack buttons
+		/// </summary>
+		static public Rectangle[] BackPack = new Rectangle[]
+		{
+			new Rectangle(362     , 76     ,  36, 36),
+			new Rectangle(362 + 36, 76     ,  36, 36),
+			new Rectangle(362     , 76 + 36,  36, 36),
+			new Rectangle(362 + 36, 76 + 36,  36, 36),
+			new Rectangle(362     , 76 + 72,  36, 36),
+			new Rectangle(362 + 36, 76 + 72,  36, 36),
+			new Rectangle(362     , 76 + 108, 36, 36),
+			new Rectangle(362 + 36, 76 + 108, 36, 36),
+			new Rectangle(362     , 76 + 144, 36, 36),
+			new Rectangle(362 + 36, 76 + 144, 36, 36),
+			new Rectangle(362     , 76 + 180, 36, 36),
+			new Rectangle(362 + 36, 76 + 180, 36, 36),
+			new Rectangle(362     , 76 + 216, 36, 36),
+			new Rectangle(362 + 36, 76 + 216, 36, 36),
+		};
+
+		/// <summary>
+		/// Rings buttons
+		/// </summary>
+		static public Rectangle[] Rings = new Rectangle[]
+		{
+			new Rectangle(456     , 268, 20, 20),
+			new Rectangle(456 + 24, 268, 20, 20),
+		};
+
+
+		/// <summary>
+		/// Waist buttons
+		/// </summary>
+		static public Rectangle[] Waist = new Rectangle[]
+		{
+			new Rectangle(600, 184     , 36, 36),
+			new Rectangle(600, 184 + 36, 36, 36),
+			new Rectangle(600, 184 + 72, 36, 36),
+		};
+
+
+		/// <summary>
+		/// Quiver button
+		/// </summary>
+		static public Rectangle Quiver = new Rectangle(450, 108, 36, 36);
+
+
+		/// <summary>
+		/// Quiver button
+		/// </summary>
+		static public Rectangle Armor = new Rectangle(448, 148, 36, 36);
+
+
+		/// <summary>
+		/// Food button
+		/// </summary>
+		static public Rectangle Food = new Rectangle(474, 72, 62, 30);
+
+
+		/// <summary>
+		/// Wrist button
+		/// </summary>
+		static public Rectangle Wrist = new Rectangle(450, 188, 36, 36);
+
+
+		/// <summary>
+		/// Primary Hand inventory button
+		/// </summary>
+		static public Rectangle PrimaryHandInventory = new Rectangle(460, 228, 36, 36);
+
+
+		/// <summary>
+		/// Feet button
+		/// </summary>
+		static public Rectangle Feet = new Rectangle(554, 270, 36, 36);
+
+
+		/// <summary>
+		/// Food button
+		/// </summary>
+		static public Rectangle SecondaryHandInventory = new Rectangle(556, 228, 36, 36);
+
+
+		/// <summary>
+		/// Neck button
+		/// </summary>
+		static public Rectangle Neck = new Rectangle(574, 146, 36, 36);
+
+
+		/// <summary>
+		/// Head button
+		/// </summary>
+		static public Rectangle Head = new Rectangle(596, 106, 36, 36);
+
+
+
+
+
+
+
+
+
+
+
+		#endregion
+	}
 }

@@ -223,6 +223,7 @@
     <Compile Include="Source\MonsterStates\Idle.cs" />
     <Compile Include="Source\Profession.cs" />
     <Compile Include="Source\HitPoint.cs" />
+    <Compile Include="Source\SavingThrow.cs" />
     <Compile Include="Source\WallButton.cs" />
     <Compile Include="Source\MazeDisplayCoordinates.cs" />
     <Compile Include="Source\Compass.cs" />

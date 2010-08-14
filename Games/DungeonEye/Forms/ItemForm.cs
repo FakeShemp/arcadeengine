@@ -122,6 +122,10 @@ namespace DungeonEye.Forms
 			PiercingBox.Checked = (item.DamageType & DamageType.Pierce) == DamageType.Pierce;
 			SlashBox.Checked = (item.DamageType & DamageType.Slash) == DamageType.Slash;
 			BludgeBox.Checked = (item.DamageType & DamageType.Bludge) == DamageType.Bludge;
+			CursedBox.Checked = item.IsCursed;
+			AllowedHandPrimaryBox.Checked = (item.AllowedHands & HeroHand.Primary) == HeroHand.Primary;
+			AllowedHandSecondaryBox.Checked = (item.AllowedHands & HeroHand.Secondary) == HeroHand.Secondary;
+
 			#endregion
 
 			Item = item;
@@ -939,6 +943,37 @@ namespace DungeonEye.Forms
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void CursedBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Item != null)
+				Item.IsCursed = CursedBox.Checked;
+
+		}
+
+
+		/// <summary>
+		/// Allowed hand
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void AllowedHands_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Item == null)
+				return;
+
+			if (AllowedHandPrimaryBox.Checked && AllowedHandSecondaryBox.Checked)
+				Item.AllowedHands = HeroHand.Primary | HeroHand.Secondary;
+			else if (AllowedHandPrimaryBox.Checked)
+				Item.AllowedHands = HeroHand.Primary;
+			else if (AllowedHandSecondaryBox.Checked)
+				Item.AllowedHands = HeroHand.Secondary;
+		}
+
 
 		#region Properties
 
@@ -978,7 +1013,6 @@ namespace DungeonEye.Forms
 		Texture2D CheckerBoard;
 
 		#endregion
-
 
 
 	}

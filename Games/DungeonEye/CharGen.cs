@@ -450,10 +450,10 @@ namespace DungeonEye
 					continue;
 
 				Batch.DrawTile(Heads, hero.Head, HeroeBoxes[i].Location);
-				//Heads.Draw(hero.Head, HeroeBoxes[i].Location);
+				//Heads.Draw(hero.Head, HeroeBoxes[id].Location);
 
 				Batch.DrawString(NameFont, NameLocations[i], Color.Blue, hero.Name);
-				//NameFont.DrawText(NameLocations[i], Color.Blue, hero.Name);
+				//NameFont.DrawText(NameLocations[id], Color.Blue, hero.Name);
 			}
 
 			switch (CurrentState)

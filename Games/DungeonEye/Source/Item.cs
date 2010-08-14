@@ -193,7 +193,19 @@ namespace DungeonEye
 
 					case "classes":
 					{
-						AllowedClasses = (HeroClass)Enum.Parse(typeof(HeroClass), node.Attributes["value"].Value);
+						AllowedClasses = (HeroClass) Enum.Parse(typeof(HeroClass), node.Attributes["value"].Value);
+					}
+					break;
+
+					case "allowedhands":
+					{
+						AllowedHands = (HeroHand) Enum.Parse(typeof(HeroHand), node.Attributes["value"].Value);
+					}
+					break;
+
+					case "cursed":
+					{
+						IsCursed = bool.Parse(node.Attributes["value"].Value);
 					}
 					break;
 
@@ -270,6 +282,14 @@ namespace DungeonEye
 			writer.WriteAttributeString("interface", InterfaceName);
 			writer.WriteEndElement();
 
+			writer.WriteStartElement("cursed");
+			writer.WriteAttributeString("value", IsCursed.ToString());
+			writer.WriteEndElement();
+
+
+			writer.WriteStartElement("allowedhands");
+			writer.WriteAttributeString("value", AllowedHands.ToString());
+			writer.WriteEndElement();
 
 			writer.WriteElementString("description", Description);
 
@@ -594,13 +614,22 @@ namespace DungeonEye
 
 
 		/// <summary>
+		/// Allowed hands
+		/// </summary>
+		public HeroHand AllowedHands
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
 		/// Two handed item
 		/// </summary>
 		public bool TwoHanded
 		{
 			get
 			{
-				return ((Slot & BodySlot.Primary) == BodySlot.Primary && (Slot & BodySlot.Secondary) == BodySlot.Secondary);
+				return ((AllowedHands | HeroHand.Primary) == HeroHand.Primary && (AllowedHands | HeroHand.Secondary) == HeroHand.Secondary);
 			}
 		}
 
@@ -617,6 +646,11 @@ namespace DungeonEye
 		#endregion
 
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
 		public override string ToString()
 		{
 			return Name;

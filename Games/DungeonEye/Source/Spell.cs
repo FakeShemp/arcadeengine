@@ -23,7 +23,10 @@ using System.Text;
 using ArcEngine.Asset;
 using System.Xml;
 
-
+// http://dmreference.com/SRD/Magic.htm
+//
+//
+//
 namespace DungeonEye.Source
 {
 	/// <summary>
@@ -165,7 +168,7 @@ namespace DungeonEye.Source
 
 
 		/// <summary>
-		/// Spell's duration
+		/// How long the magical energy of the spell lasts
 		/// </summary>
 		public TimeSpan Duration
 		{
@@ -173,11 +176,21 @@ namespace DungeonEye.Source
 			set;
 		}
 
+
+		/// <summary>
+		/// Time to cast the spell
+		/// </summary>
+		public TimeSpan CastingTime
+		{
+			get;
+			set;
+		}
+
+
 		/// <summary>
 		/// Action range
 		/// </summary>
-		/// <remarks>0 means the team only</remarks>
-		public int Range
+		public SpellRange Range
 		{
 			get;
 			set;
@@ -196,5 +209,48 @@ namespace DungeonEye.Source
 
 		
 		#endregion
+	}
+
+
+	/// <summary>
+	/// Indicates how far from the entity a spell can reach
+	/// </summary>
+	public enum SpellRange
+	{
+		/// <summary>
+		/// The spell affects only you.
+		/// </summary>
+		Personal,
+
+
+		/// <summary>
+		/// You must touch a creature or object to affect it. 
+		/// </summary>
+		Touch,
+
+
+		/// <summary>
+		/// The spell reaches as far as 3 blocks away from you. The maximum range increases by 1 block for every two full caster levels.
+		/// </summary>
+		Close,
+
+
+		/// <summary>
+		/// The spell reaches as far as 5 blocks + 1 block per caster level.
+		/// </summary>
+		Medium,
+
+
+		/// <summary>
+		/// The spell reaches as far as 10 blocks + 2 blocks per caster level.
+		/// </summary>
+		Long,
+
+
+		/// <summary>
+		/// The spell reaches anywhere on the same plane of existence.
+		/// </summary>
+		Unlimited,
+
 	}
 }

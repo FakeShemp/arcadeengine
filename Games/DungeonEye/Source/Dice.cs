@@ -209,7 +209,10 @@ namespace DungeonEye
 		#endregion
 
 
-
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
 		public override string ToString()
 		{
 			return string.Format("{0}d{1} + {2} ({3}~{4})", Throws, Faces, Modifier, Minimum, Maximum);
@@ -289,7 +292,7 @@ namespace DungeonEye
 	/// <remarks>Some checks are made against a Difficulty Class (DC). 
 	/// The DC is a number (set using the skill rules as a guideline)
 	/// that you must score as a result on your skill check in order to succeed. </remarks>
-	public enum DC
+	public enum DCType
 	{
 		/// <summary>
 		/// Notice something large in plain sight 
@@ -332,35 +335,4 @@ namespace DungeonEye
 		NearlyImpossible = 40,
 	}
 
-
-
-	/// <summary>
-	/// The different kinds of saving throws.
-	/// </summary>
-	/// <remarks>
-	/// http://www.12tomidnight.com/d20modernsrd/SavingThrows.php
-	/// </remarks>
-	public enum SavingThrowType
-	{
-
-		/// <summary>
-		/// These saves measure the character's ability to stand up to massive physical punishment
-		/// or attacks against his or her vitality and health such as poison and paralysis. 
-		/// Apply the character's Constitution modifier to his or her Fortitude saving throws.
-		/// </summary>
-		Fortitude,
-
-		/// <summary>
-		/// These saves test the character's ability to dodge massive attacks such as explosions or car wrecks.
-		/// (Often, when damage is inevitable, the character gets to make a Reflex save to take only half damage.)
-		/// Apply the character's Dexterity modifier to his or her Reflex saving throws.
-		/// </summary>
-		Reflex,
-
-		/// <summary>
-		/// These saves reflect the character's resistance to mental influence and domination as well as to many 
-		/// magical effects. Apply the character's Wisdom modifier to his or her Will saving throws.
-		/// </summary>
-		Will,
-	}
 }

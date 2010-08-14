@@ -296,7 +296,7 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Compass
+		/// TurnLeft
 		/// </summary>
 		[Browsable(false)]
 		public Compass Compass;

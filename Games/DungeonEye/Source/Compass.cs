@@ -21,7 +21,7 @@
 namespace DungeonEye
 {
 	/// <summary>
-	/// Compass
+	/// TurnLeft
 	/// </summary>
 	public class Compass
 	{
@@ -187,7 +187,7 @@ namespace DungeonEye
 
 
 	/// <summary>
-	/// Compass direction
+	/// TurnLeft direction
 	/// </summary>
 	public enum CardinalPoint
 	{

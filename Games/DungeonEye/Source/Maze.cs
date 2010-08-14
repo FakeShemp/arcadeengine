@@ -51,7 +51,7 @@ namespace DungeonEye
 			Blocks = new List<List<MazeBlock>>();
 			Monsters = new List<Monster>();
 			Doors = new List<Door>();
-			FlyingItems = new List<ThrownItem>();
+			ThrownItems = new List<ThrownItem>();
 			Zones = new List<MazeZone>();
 
 			IsDisposed = false;
@@ -90,7 +90,7 @@ namespace DungeonEye
 			Blocks = null;
 			Description = null;
 			Dungeon = null;
-			FlyingItems = null;
+			ThrownItems = null;
 			ItemsTilesetName = null;
 			OverlayTilesetName = null;
 			WallTilesetName = null;
@@ -211,11 +211,11 @@ namespace DungeonEye
 			#region Flying items
 
 			// Update flying items
-			foreach (ThrownItem item in FlyingItems)
+			foreach (ThrownItem item in ThrownItems)
 				item.Update(time, this);
 
 			// Remove all blocked flying items
-			FlyingItems.RemoveAll(
+			ThrownItems.RemoveAll(
 				delegate(ThrownItem fi)
 				{
 					// Item can fly
@@ -458,7 +458,7 @@ namespace DungeonEye
 			tmp[3] = new List<ThrownItem>();
 			tmp[4] = new List<ThrownItem>();
 
-			foreach (ThrownItem item in FlyingItems)
+			foreach (ThrownItem item in ThrownItems)
 			{
 				if (item.Location.Position == location.Position)
 					tmp[(int)item.Location.GroundPosition].Add(item);
@@ -943,7 +943,7 @@ namespace DungeonEye
 						{
 							ThrownItem item = new ThrownItem(null);
 							item.Load(subnode);
-							FlyingItems.Add(item);
+							ThrownItems.Add(item);
 						}
 					}
 					break;
@@ -1072,10 +1072,10 @@ namespace DungeonEye
 			}
 
 			// flying items
-			if (FlyingItems.Count > 0)
+			if (ThrownItems.Count > 0)
 			{
 				writer.WriteStartElement("flyingitems");
-				foreach (ThrownItem item in FlyingItems)
+				foreach (ThrownItem item in ThrownItems)
 					item.Save(writer);
 				writer.WriteEndElement();
 			}
@@ -1429,7 +1429,7 @@ namespace DungeonEye
 		/// Flying items in the maze
 		/// </summary>
 		[Browsable(false)]
-		public List<ThrownItem> FlyingItems
+		public List<ThrownItem> ThrownItems
 		{
 			get;
 			private set;
@@ -1884,7 +1884,7 @@ namespace DungeonEye
 			list.Add("rt");
 			list.Add("y");
 			list.Add("u");
-			list.Add("i");
+			list.Add("id");
 			list.Insert(0, "");
 
 

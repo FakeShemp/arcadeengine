@@ -37,7 +37,7 @@ using ArcEngine.Graphic;
 //		creatures
 //		items
 //		stack of items
-//		FlyingItems
+//		ThrownItems
 //		Doors
 //		Floor decorations (foot steps)
 //		Wall decorations

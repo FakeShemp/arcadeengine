@@ -486,7 +486,7 @@ namespace DungeonEye
 				case ItemType.Ammo:
 				{
 					// throw ammo
-					Team.Location.Maze.FlyingItems.Add(new ThrownItem(this, item, loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
+					Team.Location.Maze.ThrownItems.Add(new ThrownItem(this, item, loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
 
 					// Empty hand
 					SetInventoryItem(hand == HeroHand.Primary ? InventoryPosition.Primary : InventoryPosition.Secondary, null);
@@ -519,7 +519,7 @@ namespace DungeonEye
 					{
 						if (Quiver > 0)
 						{
-							Team.Location.Maze.FlyingItems.Add(
+							Team.Location.Maze.ThrownItems.Add(
 								new ThrownItem(this, ResourceManager.CreateAsset<Item>("Arrow"),
 								loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
 							Quiver--;
@@ -548,6 +548,7 @@ namespace DungeonEye
 
 				case ItemType.Book:
 				{
+
 				}
 				break;
 			}
