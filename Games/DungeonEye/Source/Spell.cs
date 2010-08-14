@@ -22,6 +22,9 @@ using System.Collections.Generic;
 using System.Text;
 using ArcEngine.Asset;
 using System.Xml;
+using DungeonEye.Interfaces;
+using ArcEngine;
+
 
 // http://dmreference.com/SRD/Magic.htm
 // http://www.d20srd.org/srd/magicOverview/spellDescriptions.htm
@@ -46,11 +49,13 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Initializes the asset
+		/// Initializes the item
 		/// </summary>
-		/// <returns>True on success</returns>
+		/// <returns></returns>
 		public bool Init()
 		{
+			Interface = Script.CreateInstance<ISpell>();
+
 			return true;
 		}
 
@@ -201,6 +206,12 @@ namespace DungeonEye
 			get;
 			private set;
 		}
+
+
+		/// <summary>
+		/// Script interface
+		/// </summary>
+		ISpell Interface;
 
 
 		/// <summary>

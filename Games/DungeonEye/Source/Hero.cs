@@ -549,6 +549,9 @@ namespace DungeonEye
 				case ItemType.Book:
 				{
 					Team.SpellBook.Open(this);
+
+					Spell spell = ResourceManager.CreateAsset<Spell>("CreateFood");
+					spell.Init();
 				}
 				break;
 			}

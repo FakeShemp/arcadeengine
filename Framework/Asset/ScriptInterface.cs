@@ -25,6 +25,7 @@ using System.ComponentModel;
 using System.Text;
 using System.Web;
 using System.Xml;
+using System.Reflection;
 
 
 namespace ArcEngine.Asset
@@ -35,6 +36,33 @@ namespace ArcEngine.Asset
 	/// </summary>
 	public class ScriptInterface
 	{
+
+
+		/// <summary>
+		/// Creates an instance 
+		/// </summary>
+		/// <typeparam name="T">Type of instance</typeparam>
+		/// <returns>Instance handle</returns>
+		public T CreateInstance<T>()
+		{
+			if (string.IsNullOrEmpty(ScriptName) && string.IsNullOrEmpty(InterfaceName))
+				return default(T);
+
+			// Create the script
+			Script script = ResourceManager.CreateAsset<Script>(ScriptName);
+			script.Compile();
+
+			
+			// Get the generic method
+			MethodInfo mi = script.GetType().GetMethod("CreateInstance").MakeGenericMethod(typeof(T));
+
+
+			// Invoke the generic method to create the instance
+			object obj = mi.Invoke(script, new object[]{InterfaceName});
+
+			// return the interface
+			return (T) obj;
+		}
 
 
 		#region Load & Save

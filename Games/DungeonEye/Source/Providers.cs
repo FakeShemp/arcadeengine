@@ -316,7 +316,7 @@ namespace DungeonEye
 			if (typeof(T) == typeof(Spell) && Spells.ContainsKey(name))
 			{
 				Spell spell = new Spell();
-				spell.Load(Items[name]);
+				spell.Load(Spells[name]);
 				return (T) (object) spell;
 			}
 				
