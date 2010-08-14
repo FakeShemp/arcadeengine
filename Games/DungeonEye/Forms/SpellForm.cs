@@ -59,6 +59,7 @@ namespace DungeonEye.Forms
 			DurationBox.Value = (int) spell.Duration.TotalSeconds;
 			CastingTimeBox.Value = (int) spell.CastingTime.TotalSeconds;
 			LevelBox.Value = (int) spell.Level;
+			ScriptBox.SetValues(spell.Script);
 
 			Spell = spell;
 		}
@@ -145,6 +146,23 @@ namespace DungeonEye.Forms
 			Spell.Range = (SpellRange) Enum.Parse(typeof(SpellRange), RangeBox.SelectedItem.ToString());
 		}
 
+
+		private void scriptControl1_ScriptChanged(object sender, EventArgs e)
+		{
+			if (Spell == null)
+				return;
+
+			Spell.Script.ScriptName = ScriptBox.ScriptName;
+
+		}
+
+		private void scriptControl1_InterfaceChanged(object sender, EventArgs e)
+		{
+			if (Spell == null)
+				return;
+
+			Spell.Script.InterfaceName = ScriptBox.InterfaceName;
+		}
 		#endregion
 
 

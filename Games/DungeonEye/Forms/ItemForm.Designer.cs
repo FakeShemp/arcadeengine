@@ -102,6 +102,7 @@
 			this.PiercingBox = new System.Windows.Forms.CheckBox();
 			this.DamageBox = new DungeonEye.Forms.DiceForm();
 			this.ScriptTab = new System.Windows.Forms.TabPage();
+			this.scriptControl1 = new ArcEngine.Editor.ScriptControl();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.groupBox11 = new System.Windows.Forms.GroupBox();
 			this.groupBox4.SuspendLayout();
@@ -950,6 +951,7 @@
 			// 
 			// ScriptTab
 			// 
+			this.ScriptTab.Controls.Add(this.scriptControl1);
 			this.ScriptTab.Controls.Add(this.groupBox2);
 			this.ScriptTab.Location = new System.Drawing.Point(4, 22);
 			this.ScriptTab.Name = "ScriptTab";
@@ -957,6 +959,13 @@
 			this.ScriptTab.TabIndex = 2;
 			this.ScriptTab.Text = "Scripting";
 			this.ScriptTab.UseVisualStyleBackColor = true;
+			// 
+			// scriptControl1
+			// 
+			this.scriptControl1.Location = new System.Drawing.Point(289, 40);
+			this.scriptControl1.Name = "scriptControl1";
+			this.scriptControl1.Size = new System.Drawing.Size(267, 80);
+			this.scriptControl1.TabIndex = 7;
 			// 
 			// groupBox2
 			// 
@@ -1102,5 +1111,6 @@
 		private System.Windows.Forms.GroupBox groupBox7;
 		private System.Windows.Forms.CheckBox AllowedHandPrimaryBox;
 		private System.Windows.Forms.CheckBox AllowedHandSecondaryBox;
+		private ArcEngine.Editor.ScriptControl scriptControl1;
 	}
 }

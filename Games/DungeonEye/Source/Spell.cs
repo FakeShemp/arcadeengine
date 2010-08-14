@@ -32,7 +32,7 @@ namespace DungeonEye
 	/// <summary>
 	/// Spell class
 	/// </summary>
-	class Spell : IAsset
+	public class Spell : IAsset
 	{
 
 		/// <summary>
@@ -41,6 +41,7 @@ namespace DungeonEye
 		public Spell()
 		{
 			IsDisposed = false;
+			Script = new ScriptInterface();
 		}
 
 
@@ -108,6 +109,11 @@ namespace DungeonEye
 					}
 					break;
 
+					case "script":
+					{
+						Script.Load(node);
+					}
+					break;
 
 				}
 			}
@@ -158,6 +164,7 @@ namespace DungeonEye
 			writer.WriteEndElement();
 
 
+			Script.Save("script", writer);
 
 
 			writer.WriteEndElement();
@@ -185,6 +192,15 @@ namespace DungeonEye
 		/// </summary>
 		public bool IsDisposed { get; private set; }
 
+
+		/// <summary>
+		/// Script
+		/// </summary>
+		public ScriptInterface Script
+		{
+			get;
+			private set;
+		}
 
 
 		/// <summary>

@@ -38,6 +38,7 @@
 			this.label3 = new System.Windows.Forms.Label();
 			this.RangeBox = new System.Windows.Forms.ComboBox();
 			this.label4 = new System.Windows.Forms.Label();
+			this.ScriptBox = new ArcEngine.Editor.ScriptControl();
 			this.groupBox1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize) (this.LevelBox)).BeginInit();
 			((System.ComponentModel.ISupportInitialize) (this.CastingTimeBox)).BeginInit();
@@ -155,11 +156,22 @@
 			this.label4.TabIndex = 4;
 			this.label4.Text = "Range :";
 			// 
+			// ScriptBox
+			// 
+			this.ScriptBox.ControlText = "Interface :";
+			this.ScriptBox.Location = new System.Drawing.Point(12, 224);
+			this.ScriptBox.Name = "ScriptBox";
+			this.ScriptBox.Size = new System.Drawing.Size(274, 87);
+			this.ScriptBox.TabIndex = 5;
+			this.ScriptBox.InterfaceChanged += new System.EventHandler(this.scriptControl1_InterfaceChanged);
+			this.ScriptBox.ScriptChanged += new System.EventHandler(this.scriptControl1_ScriptChanged);
+			// 
 			// SpellForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(877, 554);
+			this.Controls.Add(this.ScriptBox);
 			this.Controls.Add(this.label4);
 			this.Controls.Add(this.RangeBox);
 			this.Controls.Add(this.label3);
@@ -195,5 +207,6 @@
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.ComboBox RangeBox;
 		private System.Windows.Forms.Label label4;
+		private ArcEngine.Editor.ScriptControl ScriptBox;
 	}
 }

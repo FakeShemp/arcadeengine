@@ -209,6 +209,7 @@
     <Compile Include="Interfaces\IMonster.cs" />
     <Compile Include="Interfaces\IPit.cs" />
     <Compile Include="Interfaces\IMazeZone.cs" />
+    <Compile Include="Interfaces\ISpell.cs" />
     <Compile Include="Source\Ability.cs" />
     <Compile Include="Source\Attack.cs" />
     <Compile Include="Source\AutoMap.cs" />

@@ -262,7 +262,7 @@ namespace ArcEngine.Asset
 		/// <summary>
 		/// Gets all class implementing an interface
 		/// </summary>
-		/// <param name="type">Type of the interface</param>
+		/// <param name="type">Type of the interface or null for evey interfaces</param>
 		/// <returns>List of classes</returns>
 		public List<string> GetImplementedInterfaces(Type type)
 		{
@@ -279,7 +279,7 @@ namespace ArcEngine.Asset
 			foreach (Type t in CompiledAssembly.GetTypes())
 			{
 				foreach(Type ty in t.GetInterfaces())
-					if (ty == type)
+					if (ty == type || type == null)
 						list.Add(t.Name);
 			}
 

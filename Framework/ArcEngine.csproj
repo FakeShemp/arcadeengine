@@ -158,9 +158,16 @@
     <Compile Include="Asset\IAsset.cs" />
     <Compile Include="Asset\Scenes\Scene.cs" />
     <Compile Include="Asset\Language.cs" />
+    <Compile Include="Asset\ScriptInterface.cs" />
     <Compile Include="Asset\ScriptModel.cs" />
     <Compile Include="Asset\Scenes\Storyboard.cs" />
     <Compile Include="Asset\BitmapFont.cs" />
+    <Compile Include="Editor\ScriptControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editor\ScriptControl.Designer.cs">
+      <DependentUpon>ScriptControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Graphic\IndexBuffer.cs" />
     <Compile Include="Graphic\Mesh.cs" />
     <Compile Include="Graphic\RenderState.cs" />
@@ -412,6 +419,9 @@
     <Compile Include="GameTime.cs" />
     <Compile Include="Trace.cs" />
     <Compile Include="Utility\Webcam.cs" />
+    <EmbeddedResource Include="Editor\ScriptControl.resx">
+      <DependentUpon>ScriptControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Graphic\Shaders\bezier.vert" />
     <EmbeddedResource Include="Graphic\Shaders\V1_30\SpriteBatch.frag" />
     <EmbeddedResource Include="Graphic\Shaders\V1_30\SpriteBatch.vert" />
