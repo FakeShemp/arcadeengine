@@ -57,13 +57,14 @@ namespace DungeonEye
 			Batch = new SpriteBatch();
 	
 			Tileset = ResourceManager.CreateAsset<TileSet>("Main Menu");
-         //   Tileset.Scale = new Vector2(2.0f, 2.0f);
 
 			Font = ResourceManager.CreateSharedAsset<BitmapFont>("intro");
             Font.GlyphTileset.Scale = new Vector2(2.0f, 2.0f);
 
 			StringTable = ResourceManager.CreateAsset<StringTable>("main");
 
+			Theme = new Audio();
+			Theme.LoadSound("main theme.wav");
 			
 			Buttons.Add(new ScreenButton("", new Rectangle(156, 324, 340, 14)));
 			Buttons[0].Selected += new EventHandler(LoadGameEvent);
@@ -95,6 +96,10 @@ namespace DungeonEye
 				Font.Dispose();
 			Font = null;
 
+			if (Theme != null)
+				Theme.Dispose();
+			Theme = null;
+
 			if (Batch != null)
 				Batch.Dispose();
 			Batch = null;
@@ -122,6 +127,7 @@ namespace DungeonEye
 		/// <param name="e"></param>
 		void QuitEvent(object sender, EventArgs e)
 		{
+			Theme.Stop();
 			ScreenManager.Game.Exit();
 		}
 
@@ -133,6 +139,7 @@ namespace DungeonEye
 		/// <param name="e"></param>
 		void StartGameEvent(object sender, EventArgs e)
 		{
+			Theme.Stop();
 			ScreenManager.AddScreen(new CharGen(Batch));
 		}
 
@@ -150,6 +157,7 @@ namespace DungeonEye
 			Team team = new Team(null);
 			team.SaveGame = "data/savegame.xml";
 
+			Theme.Stop();
 
 			ScreenManager.AddScreen(team);
 		}
@@ -171,6 +179,10 @@ namespace DungeonEye
 			// No focus byebye
 			if (!hasFocus)
 				return;
+
+			// Play sound
+			if (Theme.IsLoaded && !Theme.IsPlaying)
+				Theme.Play();
 
 
 			// Does the default language changed ?
@@ -268,6 +280,13 @@ namespace DungeonEye
 
 
 		#region Properties
+
+
+		/// <summary>
+		/// Main theme
+		/// </summary>
+		Audio Theme;
+
 
 		/// <summary>
 		/// Tileset

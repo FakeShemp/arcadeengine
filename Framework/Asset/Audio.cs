@@ -23,6 +23,8 @@ using System;
 using System.ComponentModel;
 using System.Media;
 using System.Xml;
+using OpenTK.Audio.OpenAL;
+
 
 namespace ArcEngine.Asset
 {
@@ -195,6 +197,8 @@ namespace ArcEngine.Asset
 				Player.PlayLooping();
 			else
 				Player.Play();
+
+			IsPlaying = true;
 			//AL.SourcePlay(Source);
 		}
 
@@ -214,6 +218,8 @@ namespace ArcEngine.Asset
 		public void Stop()
 		{
 			Player.Stop();
+
+			IsPlaying = false;
 			//AL.SourceStop(Source);
 			//AL.SourceRewind(Source);
 		}
@@ -565,6 +571,16 @@ namespace ArcEngine.Asset
 		/// Is sound loaded
 		/// </summary>
 		public bool IsLoaded
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// Is sound is playing
+		/// </summary>
+		public bool IsPlaying
 		{
 			get;
 			private set;
