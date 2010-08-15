@@ -29,12 +29,12 @@ namespace DungeonEye.Forms
 	/// <summary>
 	/// Dice control form
 	/// </summary>
-	public partial class DiceForm : UserControl
+	public partial class DiceControl : UserControl
 	{
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public DiceForm()
+		public DiceControl()
 		{
 			InitializeComponent();
 

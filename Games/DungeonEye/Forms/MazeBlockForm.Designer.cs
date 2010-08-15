@@ -123,7 +123,7 @@
 			this.DoorTypeBox = new System.Windows.Forms.ComboBox();
 			this.CloseBox = new System.Windows.Forms.Button();
 			this.MonsterBox = new DungeonEye.Forms.MonsterControl();
-			this.PitDamageBox = new DungeonEye.Forms.DiceForm();
+			this.PitDamageBox = new DungeonEye.Forms.DiceControl();
 			this.TabControlBox.SuspendLayout();
 			this.ItemsTab.SuspendLayout();
 			this.groupBox7.SuspendLayout();
@@ -1372,7 +1372,7 @@
 		private System.Windows.Forms.CheckBox HiddenPitBox;
 		private System.Windows.Forms.Label label15;
 		private System.Windows.Forms.NumericUpDown PitDiffcultyBox;
-		private DiceForm PitDamageBox;
+		private DiceControl PitDamageBox;
 		private System.Windows.Forms.Button CloseBox;
 	}
 }

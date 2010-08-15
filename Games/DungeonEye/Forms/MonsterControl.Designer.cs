@@ -57,7 +57,7 @@
 			this.CowardBox = new System.Windows.Forms.CheckBox();
 			this.label4 = new System.Windows.Forms.Label();
 			this.ArmorClassBox = new System.Windows.Forms.NumericUpDown();
-			this.DamageBox = new DungeonEye.Forms.DiceForm();
+			this.DamageBox = new DungeonEye.Forms.DiceControl();
 			this.VisualGroupBox.SuspendLayout();
 			this.PocketGroupBox.SuspendLayout();
 			this.groupBox1.SuspendLayout();
@@ -447,7 +447,7 @@
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.ComboBox InterfaceNameBox;
 		private System.Windows.Forms.ComboBox ScriptNameBox;
-		private DiceForm DamageBox;
+		private DiceControl DamageBox;
 		private System.Windows.Forms.NumericUpDown XPRewardBox;
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.TabControl tabControl1;

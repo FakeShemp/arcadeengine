@@ -1,6 +1,6 @@
 ﻿namespace DungeonEye.Forms
 {
-	partial class DiceForm
+	partial class DiceControl
 	{
 		/// <summary> 
 		/// Variable nécessaire au concepteur.
