@@ -42,27 +42,27 @@ namespace ArcEngine.Editor
 
 
 		/// <summary>
-		/// Sets values
+		/// Set values
 		/// </summary>
-		/// <param name="script"></param>
-		public bool SetValues(ScriptInterface script)
+		/// <typeparam name="T"></typeparam>
+		/// <param name="s"></param>
+		/// <returns></returns>
+		public bool SetValues<T>(ScriptInterface<T> s)
 		{
-			if (script == null)
-				return false;
 
 			RebuildFoundScripts();
-			
 
-			if (string.IsNullOrEmpty(script.ScriptName) || !ScriptNameBox.Items.Contains(script.ScriptName))
+
+			if (string.IsNullOrEmpty(s.ScriptName) || !ScriptNameBox.Items.Contains(s.ScriptName))
 				return false;
 
-			ScriptNameBox.SelectedItem = script.ScriptName;
+			ScriptNameBox.SelectedItem = s.ScriptName;
 
 
-			if (string.IsNullOrEmpty(script.InterfaceName) || !InterfaceNameBox.Items.Contains(script.InterfaceName))
+			if (string.IsNullOrEmpty(s.InterfaceName) || !InterfaceNameBox.Items.Contains(s.InterfaceName))
 				return false;
 
-			InterfaceNameBox.SelectedItem = script.InterfaceName;
+			InterfaceNameBox.SelectedItem = s.InterfaceName;
 
 			return true;
 		}
@@ -238,8 +238,6 @@ namespace ArcEngine.Editor
 
 
 		#endregion
-
-
 	}
 
 }

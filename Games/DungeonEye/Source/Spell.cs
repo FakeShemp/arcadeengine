@@ -44,7 +44,7 @@ namespace DungeonEye
 		public Spell()
 		{
 			IsDisposed = false;
-			Script = new ScriptInterface();
+			Script = new ScriptInterface<ISpell>();
 		}
 
 
@@ -54,8 +54,6 @@ namespace DungeonEye
 		/// <returns></returns>
 		public bool Init()
 		{
-			Interface = Script.CreateInstance<ISpell>();
-
 			return true;
 		}
 
@@ -201,17 +199,11 @@ namespace DungeonEye
 		/// <summary>
 		/// Script
 		/// </summary>
-		public ScriptInterface Script
+		public ScriptInterface<ISpell> Script
 		{
 			get;
 			private set;
 		}
-
-
-		/// <summary>
-		/// Script interface
-		/// </summary>
-		ISpell Interface;
 
 
 		/// <summary>

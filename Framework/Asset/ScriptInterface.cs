@@ -34,19 +34,18 @@ namespace ArcEngine.Asset
 	/// <summary>
 	/// Class holding the name of the script and the interface to use
 	/// </summary>
-	public class ScriptInterface
+	public class ScriptInterface<T>
 	{
 
 
 		/// <summary>
 		/// Creates an instance 
 		/// </summary>
-		/// <typeparam name="T">Type of instance</typeparam>
-		/// <returns>Instance handle</returns>
-		public T CreateInstance<T>()
+		/// <returns>True if the instance is created</returns>
+		bool CreateInstance()
 		{
 			if (string.IsNullOrEmpty(ScriptName) && string.IsNullOrEmpty(InterfaceName))
-				return default(T);
+				return false;
 
 			// Create the script
 			Script script = ResourceManager.CreateAsset<Script>(ScriptName);
@@ -58,11 +57,12 @@ namespace ArcEngine.Asset
 
 
 			// Invoke the generic method to create the instance
-			object obj = mi.Invoke(script, new object[]{InterfaceName});
+			instance = (T) mi.Invoke(script, new object[]{InterfaceName});
 
 			// return the interface
-			return (T) obj;
+			return true;
 		}
+
 
 
 		#region Load & Save
@@ -113,6 +113,28 @@ namespace ArcEngine.Asset
 
 
 		#region Properties
+
+
+		/// <summary>
+		/// Instance
+		/// </summary>
+		public T Instance
+		{
+			get
+			{
+				if (instance == null)
+					CreateInstance();
+
+				return instance;
+			}
+		}
+
+
+		/// <summary>
+		/// Instance
+		/// </summary>
+		T instance;
+
 
 		/// <summary>
 		/// Script to use

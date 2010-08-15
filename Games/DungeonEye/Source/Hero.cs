@@ -552,6 +552,7 @@ namespace DungeonEye
 
 					Spell spell = ResourceManager.CreateAsset<Spell>("CreateFood");
 					spell.Init();
+					spell.Script.Instance.OnCast(spell, this);
 				}
 				break;
 			}

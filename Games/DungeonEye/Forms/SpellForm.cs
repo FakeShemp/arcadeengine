@@ -59,7 +59,7 @@ namespace DungeonEye.Forms
 			DurationBox.Value = (int) spell.Duration.TotalSeconds;
 			CastingTimeBox.Value = (int) spell.CastingTime.TotalSeconds;
 			LevelBox.Value = (int) spell.Level;
-			ScriptBox.SetValues(spell.Script);
+			ScriptBox.SetValues<ISpell>(spell.Script);
 
 			Spell = spell;
 		}
