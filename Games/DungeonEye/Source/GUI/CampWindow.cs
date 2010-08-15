@@ -56,7 +56,7 @@ namespace DungeonEye.Gui
 			Font = ResourceManager.CreateSharedAsset<BitmapFont>("intro");
 
 
-			BgColor = Color.FromArgb(101, 105, 182);
+			//BgColor = Color.FromArgb(101, 105, 182);
 			Rectangle = new Rectangle(0, 0, 352, 288);
 
 
@@ -217,7 +217,7 @@ namespace DungeonEye.Gui
 				return;
 
 
-			DrawBevel(batch, Rectangle, BgColor, Color.FromArgb(138, 146, 207), Color.FromArgb(44, 48, 134));
+			DrawBevel(batch, Rectangle, Colors.Main, Colors.Light, Colors.Dark);
 			batch.DrawString(Font, new Point(8, 10), Color.FromArgb(85, 255, 255), "Camp :");
 
 
@@ -225,7 +225,7 @@ namespace DungeonEye.Gui
 			// Draw buttons
 			foreach (ScreenButton button in Buttons)
 			{
-				DrawBevel(batch, button.Rectangle, BgColor, Color.FromArgb(138, 146, 207), Color.FromArgb(44, 48, 134));
+				DrawBevel(batch, button.Rectangle, Colors.Main, Colors.Light, Colors.Dark);
 
 				// Text
 				Point point = button.Rectangle.Location;
@@ -316,9 +316,31 @@ namespace DungeonEye.Gui
 		/// <summary>
 		/// Background color
 		/// </summary>
-		public Color BgColor;
+	//	public Color BgColor;
 
 
 		#endregion
+	}
+
+
+	struct Colors
+	{
+		/// <summary>
+		/// 
+		/// </summary>
+		static public Color Dark = Color.FromArgb(52, 52, 81);
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		static public Color Light = Color.FromArgb(150, 150, 174);
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		static public Color Main = Color.FromArgb(109, 109, 138);
+
 	}
 }
