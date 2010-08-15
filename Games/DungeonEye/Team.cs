@@ -358,6 +358,12 @@ namespace DungeonEye
 
             Batch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Deferred, false);
 
+
+			// Draw the current maze
+			if (Location.Maze != null)
+				Location.Maze.Draw(Batch, Location);
+
+
 			// The backdrop
 			Batch.DrawTile(TileSet, 0, Point.Empty);
 
@@ -399,6 +405,7 @@ namespace DungeonEye
 */
 
 
+
 				CampWindow.Draw(Batch);
 			}
 
@@ -417,11 +424,6 @@ namespace DungeonEye
 			SpellBook.Draw(Batch);
 
 
-
-
-			// Draw the current maze
-			if (Location.Maze != null)
-				Location.Maze.Draw(Batch, Location);
 
 
 

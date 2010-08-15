@@ -176,7 +176,10 @@ namespace ArcEngine.Graphic
 			if (Scissors.Count == 0)
 				return;
 
-			ScissorZone = Scissors.Pop();
+			Scissors.Pop();
+
+			if (Scissors.Count > 0)
+				ScissorZone = Scissors.Peek();
 
 			if (Scissors.Count == 0)
 				RenderState.Scissor = false;

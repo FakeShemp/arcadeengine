@@ -56,14 +56,14 @@ namespace DungeonEye.Forms
 
 
 			// Scripts
-			ScriptNameBox.BeginUpdate();
-			ScriptNameBox.Items.Clear();
-			foreach (string name in ResourceManager.GetAssets<Script>())
-			{
-				ScriptNameBox.Items.Add(name);
-			}
-			ScriptNameBox.Items.Insert(0, "");
-			ScriptNameBox.EndUpdate();
+			//ScriptNameBox.BeginUpdate();
+			//ScriptNameBox.Items.Clear();
+			//foreach (string name in ResourceManager.GetAssets<Script>())
+			//{
+			//    ScriptNameBox.Items.Add(name);
+			//}
+			//ScriptNameBox.Items.Insert(0, "");
+			//ScriptNameBox.EndUpdate();
 
 			
 
@@ -111,8 +111,9 @@ namespace DungeonEye.Forms
 			ThiefBox.Checked = (item.AllowedClasses & HeroClass.Thief) == HeroClass.Thief;
 			RangerBox.Checked = (item.AllowedClasses & HeroClass.Ranger) == HeroClass.Ranger;
 
-			ScriptNameBox.SelectedItem = item.ScriptName;
-			InterfaceNameBox.SelectedItem = item.InterfaceName;
+			//ScriptNameBox.SelectedItem = item.ScriptName;
+			//InterfaceNameBox.SelectedItem = item.InterfaceName;
+			scriptControl1.SetValues<IItem>(item.Script);
 
 			ACBonusBox.Value = item.ArmorClass;
 			DamageBox.Dice = item.Damage;
@@ -244,13 +245,13 @@ namespace DungeonEye.Forms
 			if (Item == null)
 				return;
 
-			// Script name
-			if (!string.IsNullOrEmpty(Item.ScriptName) && ScriptNameBox.Items.Contains(Item.ScriptName))
-				ScriptNameBox.SelectedItem = Item.ScriptName;
+			//// Script name
+			//if (!string.IsNullOrEmpty(Item.ScriptName) && ScriptNameBox.Items.Contains(Item.ScriptName))
+			//    ScriptNameBox.SelectedItem = Item.ScriptName;
 
-			// Tileset name
-			if (!string.IsNullOrEmpty(Item.TileSetName) && TileSetNameBox.Items.Contains(Item.TileSetName))
-				TileSetNameBox.SelectedItem = Item.TileSetName;
+			//// Tileset name
+			//if (!string.IsNullOrEmpty(Item.TileSetName) && TileSetNameBox.Items.Contains(Item.TileSetName))
+			//    TileSetNameBox.SelectedItem = Item.TileSetName;
 
 
 			ThrownTileBox.SelectedItem = Item.ThrowTileID;
@@ -696,46 +697,46 @@ namespace DungeonEye.Forms
 
 		#region scripting events
 
-		private void InterfaceNameBox_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			if (Item == null)
-				return;
+		//private void InterfaceNameBox_SelectedIndexChanged(object sender, EventArgs e)
+		//{
+		//    if (Item == null)
+		//        return;
 
-			Item.InterfaceName = (string)InterfaceNameBox.SelectedItem;
-		}
+		//    Item.InterfaceName = (string)InterfaceNameBox.SelectedItem;
+		//}
 
-		/// <summary>
-		/// Change script name
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void ScriptNameBox_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			if (ScriptNameBox.SelectedIndex == -1 || Item == null)
-				return;
+		///// <summary>
+		///// Change script name
+		///// </summary>
+		///// <param name="sender"></param>
+		///// <param name="e"></param>
+		//private void ScriptNameBox_SelectedIndexChanged(object sender, EventArgs e)
+		//{
+		//    if (ScriptNameBox.SelectedIndex == -1 || Item == null)
+		//        return;
 
-			Item.ScriptName = ScriptNameBox.SelectedItem as string;
-			RebuildFoundInterfaces();
-		}
-
-
-		/// <summary>
-		/// Rebuild found interfaces
-		/// </summary>
-		void RebuildFoundInterfaces()
-		{
-			InterfaceNameBox.Items.Clear();
+		//    Item.ScriptName = ScriptNameBox.SelectedItem as string;
+		//    RebuildFoundInterfaces();
+		//}
 
 
-			Script script = ResourceManager.CreateAsset<Script>(Item.ScriptName);
-			if (script != null)
-			{
-				List<string> list = script.GetImplementedInterfaces(typeof(IItem));
-				InterfaceNameBox.Items.AddRange(list.ToArray());
+		///// <summary>
+		///// Rebuild found interfaces
+		///// </summary>
+		//void RebuildFoundInterfaces()
+		//{
+		//    InterfaceNameBox.Items.Clear();
 
-			}
-			InterfaceNameBox.Items.Insert(0, "");
-		}
+
+		//    Script script = ResourceManager.CreateAsset<Script>(Item.ScriptName);
+		//    if (script != null)
+		//    {
+		//        List<string> list = script.GetImplementedInterfaces(typeof(IItem));
+		//        InterfaceNameBox.Items.AddRange(list.ToArray());
+
+		//    }
+		//    InterfaceNameBox.Items.Insert(0, "");
+		//}
 
 
 		#endregion
@@ -1013,6 +1014,22 @@ namespace DungeonEye.Forms
 		Texture2D CheckerBoard;
 
 		#endregion
+
+		private void scriptControl1_ScriptChanged(object sender, EventArgs e)
+		{
+			if (Item == null)
+				return;
+			Item.Script.ScriptName = scriptControl1.ScriptName;
+
+		}
+
+		private void scriptControl1_InterfaceChanged(object sender, EventArgs e)
+		{
+			if (Item == null)
+				return;
+
+			Item.Script.InterfaceName = scriptControl1.InterfaceName;
+		}
 
 
 	}

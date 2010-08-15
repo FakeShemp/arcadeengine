@@ -28,9 +28,9 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			DungeonEye.Dice dice1 = new DungeonEye.Dice();
-			DungeonEye.Dice dice2 = new DungeonEye.Dice();
-			DungeonEye.Dice dice3 = new DungeonEye.Dice();
+			DungeonEye.Dice dice4 = new DungeonEye.Dice();
+			DungeonEye.Dice dice5 = new DungeonEye.Dice();
+			DungeonEye.Dice dice6 = new DungeonEye.Dice();
 			this.GLGroundTile = new OpenTK.GLControl();
 			this.GLInventoryTile = new OpenTK.GLControl();
 			this.label2 = new System.Windows.Forms.Label();
@@ -84,10 +84,6 @@
 			this.RangerBox = new System.Windows.Forms.CheckBox();
 			this.PaladinBox = new System.Windows.Forms.CheckBox();
 			this.FighterBox = new System.Windows.Forms.CheckBox();
-			this.InterfaceNameBox = new System.Windows.Forms.ComboBox();
-			this.label17 = new System.Windows.Forms.Label();
-			this.ScriptNameBox = new System.Windows.Forms.ComboBox();
-			this.label16 = new System.Windows.Forms.Label();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.VisualTab = new System.Windows.Forms.TabPage();
 			this.PropertiesTab = new System.Windows.Forms.TabPage();
@@ -103,7 +99,6 @@
 			this.DamageBox = new DungeonEye.Forms.DiceControl();
 			this.ScriptTab = new System.Windows.Forms.TabPage();
 			this.scriptControl1 = new ArcEngine.Editor.ScriptControl();
-			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.groupBox11 = new System.Windows.Forms.GroupBox();
 			this.groupBox4.SuspendLayout();
 			this.groupBox5.SuspendLayout();
@@ -123,7 +118,6 @@
 			this.groupBox7.SuspendLayout();
 			this.groupBox1.SuspendLayout();
 			this.ScriptTab.SuspendLayout();
-			this.groupBox2.SuspendLayout();
 			this.groupBox11.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -732,46 +726,6 @@
 			this.FighterBox.UseVisualStyleBackColor = true;
 			this.FighterBox.CheckedChanged += new System.EventHandler(this.FighterBox_CheckedChanged);
 			// 
-			// InterfaceNameBox
-			// 
-			this.InterfaceNameBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.InterfaceNameBox.FormattingEnabled = true;
-			this.InterfaceNameBox.Location = new System.Drawing.Point(81, 40);
-			this.InterfaceNameBox.Name = "InterfaceNameBox";
-			this.InterfaceNameBox.Size = new System.Drawing.Size(148, 21);
-			this.InterfaceNameBox.Sorted = true;
-			this.InterfaceNameBox.TabIndex = 2;
-			this.InterfaceNameBox.SelectedIndexChanged += new System.EventHandler(this.InterfaceNameBox_SelectedIndexChanged);
-			// 
-			// label17
-			// 
-			this.label17.AutoSize = true;
-			this.label17.Location = new System.Drawing.Point(20, 43);
-			this.label17.Name = "label17";
-			this.label17.Size = new System.Drawing.Size(55, 13);
-			this.label17.TabIndex = 0;
-			this.label17.Text = "Interface :";
-			// 
-			// ScriptNameBox
-			// 
-			this.ScriptNameBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.ScriptNameBox.FormattingEnabled = true;
-			this.ScriptNameBox.Location = new System.Drawing.Point(81, 13);
-			this.ScriptNameBox.Name = "ScriptNameBox";
-			this.ScriptNameBox.Size = new System.Drawing.Size(148, 21);
-			this.ScriptNameBox.Sorted = true;
-			this.ScriptNameBox.TabIndex = 1;
-			this.ScriptNameBox.SelectedIndexChanged += new System.EventHandler(this.ScriptNameBox_SelectedIndexChanged);
-			// 
-			// label16
-			// 
-			this.label16.AutoSize = true;
-			this.label16.Location = new System.Drawing.Point(6, 16);
-			this.label16.Name = "label16";
-			this.label16.Size = new System.Drawing.Size(69, 13);
-			this.label16.TabIndex = 0;
-			this.label16.Text = "Script name :";
-			// 
 			// tabControl1
 			// 
 			this.tabControl1.Controls.Add(this.VisualTab);
@@ -865,10 +819,10 @@
 			// DamageVsSmallBox
 			// 
 			this.DamageVsSmallBox.ControlText = "Damage vs Small :";
-			dice1.Faces = 1;
-			dice1.Modifier = 0;
-			dice1.Throws = 1;
-			this.DamageVsSmallBox.Dice = dice1;
+			dice4.Faces = 1;
+			dice4.Modifier = 0;
+			dice4.Throws = 1;
+			this.DamageVsSmallBox.Dice = dice4;
 			this.DamageVsSmallBox.Location = new System.Drawing.Point(243, 391);
 			this.DamageVsSmallBox.MinimumSize = new System.Drawing.Size(230, 100);
 			this.DamageVsSmallBox.Name = "DamageVsSmallBox";
@@ -879,10 +833,10 @@
 			// DamageVsBigBox
 			// 
 			this.DamageVsBigBox.ControlText = "Damage vs Big :";
-			dice2.Faces = 1;
-			dice2.Modifier = 0;
-			dice2.Throws = 1;
-			this.DamageVsBigBox.Dice = dice2;
+			dice5.Faces = 1;
+			dice5.Modifier = 0;
+			dice5.Throws = 1;
+			this.DamageVsBigBox.Dice = dice5;
 			this.DamageVsBigBox.Location = new System.Drawing.Point(5, 391);
 			this.DamageVsBigBox.MinimumSize = new System.Drawing.Size(230, 100);
 			this.DamageVsBigBox.Name = "DamageVsBigBox";
@@ -938,10 +892,10 @@
 			// DamageBox
 			// 
 			this.DamageBox.ControlText = "Damage :";
-			dice3.Faces = 1;
-			dice3.Modifier = 0;
-			dice3.Throws = 1;
-			this.DamageBox.Dice = dice3;
+			dice6.Faces = 1;
+			dice6.Modifier = 0;
+			dice6.Throws = 1;
+			this.DamageBox.Dice = dice6;
 			this.DamageBox.Location = new System.Drawing.Point(3, 281);
 			this.DamageBox.MinimumSize = new System.Drawing.Size(225, 100);
 			this.DamageBox.Name = "DamageBox";
@@ -952,7 +906,6 @@
 			// ScriptTab
 			// 
 			this.ScriptTab.Controls.Add(this.scriptControl1);
-			this.ScriptTab.Controls.Add(this.groupBox2);
 			this.ScriptTab.Location = new System.Drawing.Point(4, 22);
 			this.ScriptTab.Name = "ScriptTab";
 			this.ScriptTab.Size = new System.Drawing.Size(882, 561);
@@ -962,23 +915,13 @@
 			// 
 			// scriptControl1
 			// 
-			this.scriptControl1.Location = new System.Drawing.Point(289, 40);
+			this.scriptControl1.ControlText = "Interface :";
+			this.scriptControl1.Location = new System.Drawing.Point(5, 3);
 			this.scriptControl1.Name = "scriptControl1";
 			this.scriptControl1.Size = new System.Drawing.Size(267, 80);
 			this.scriptControl1.TabIndex = 7;
-			// 
-			// groupBox2
-			// 
-			this.groupBox2.Controls.Add(this.label16);
-			this.groupBox2.Controls.Add(this.InterfaceNameBox);
-			this.groupBox2.Controls.Add(this.label17);
-			this.groupBox2.Controls.Add(this.ScriptNameBox);
-			this.groupBox2.Location = new System.Drawing.Point(3, 12);
-			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(263, 135);
-			this.groupBox2.TabIndex = 6;
-			this.groupBox2.TabStop = false;
-			this.groupBox2.Text = "Interface :";
+			this.scriptControl1.InterfaceChanged += new System.EventHandler(this.scriptControl1_InterfaceChanged);
+			this.scriptControl1.ScriptChanged += new System.EventHandler(this.scriptControl1_ScriptChanged);
 			// 
 			// groupBox11
 			// 
@@ -1029,8 +972,6 @@
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			this.ScriptTab.ResumeLayout(false);
-			this.groupBox2.ResumeLayout(false);
-			this.groupBox2.PerformLayout();
 			this.groupBox11.ResumeLayout(false);
 			this.ResumeLayout(false);
 
@@ -1088,10 +1029,6 @@
 		private System.Windows.Forms.Label label14;
 		private System.Windows.Forms.Label label15;
 		private System.Windows.Forms.ComboBox TileSetNameBox;
-		private System.Windows.Forms.ComboBox ScriptNameBox;
-		private System.Windows.Forms.Label label16;
-		private System.Windows.Forms.ComboBox InterfaceNameBox;
-		private System.Windows.Forms.Label label17;
 		private System.Windows.Forms.TabControl tabControl1;
 		private System.Windows.Forms.TabPage VisualTab;
 		private System.Windows.Forms.TabPage PropertiesTab;
@@ -1100,7 +1037,6 @@
 		private System.Windows.Forms.NumericUpDown RangeBox;
 		private System.Windows.Forms.Label label3;
 		private DiceControl DamageBox;
-		private System.Windows.Forms.GroupBox groupBox2;
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.CheckBox SlashBox;
 		private System.Windows.Forms.CheckBox BludgeBox;

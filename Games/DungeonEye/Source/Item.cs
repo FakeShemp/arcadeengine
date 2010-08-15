@@ -60,6 +60,7 @@ namespace DungeonEye
 			DamageVsBig  = new Dice();
 			DamageVsSmall = new Dice();
 			DamageType = 0;
+			Script = new ScriptInterface<IItem>();
 
 			IsDisposed = false;
 		}
@@ -71,13 +72,13 @@ namespace DungeonEye
 		/// <returns></returns>
 		public bool Init()
 		{
-			if (!string.IsNullOrEmpty(ScriptName) && !string.IsNullOrEmpty(InterfaceName))
-			{
-				Script script = ResourceManager.CreateAsset<Script>(ScriptName);
-				script.Compile();
+			//if (!string.IsNullOrEmpty(ScriptName) && !string.IsNullOrEmpty(InterfaceName))
+			//{
+			//    Script script = ResourceManager.CreateAsset<Script>(ScriptName);
+			//    script.Compile();
 
-				Interface = script.CreateInstance<IItem>(InterfaceName);
-			}
+			//    Interface = script.CreateInstance<IItem>(InterfaceName);
+			//}
 
 
 			return true;
@@ -109,8 +110,9 @@ namespace DungeonEye
 				{
 					case "script":
 					{
-						ScriptName = node.Attributes["name"].Value;
-						InterfaceName = node.Attributes["interface"].Value;
+						Script.Load(node);
+						//ScriptName = node.Attributes["name"].Value;
+						//InterfaceName = node.Attributes["interface"].Value;
 					}
 					break;
 
@@ -277,10 +279,11 @@ namespace DungeonEye
 			writer.WriteAttributeString("multiplier", CriticalMultiplier.ToString());
 			writer.WriteEndElement();
 
-			writer.WriteStartElement("script");
-			writer.WriteAttributeString("name", ScriptName);
-			writer.WriteAttributeString("interface", InterfaceName);
-			writer.WriteEndElement();
+			Script.Save("script", writer);
+			//writer.WriteStartElement("script");
+			//writer.WriteAttributeString("name", ScriptName);
+			//writer.WriteAttributeString("interface", InterfaceName);
+			//writer.WriteEndElement();
 
 			writer.WriteStartElement("cursed");
 			writer.WriteAttributeString("value", IsCursed.ToString());
@@ -373,7 +376,7 @@ namespace DungeonEye
 			set;
 		}
 
-
+/*
 		/// <summary>
 		/// Script name
 		/// </summary>
@@ -402,6 +405,16 @@ namespace DungeonEye
 			get;
 			private set;
 		}
+*/
+		/// <summary>
+		/// 
+		/// </summary>
+		public ScriptInterface<IItem> Script
+		{
+			get;
+			private set;
+		}
+
 
 		/// <summary>
 		/// Name of the item

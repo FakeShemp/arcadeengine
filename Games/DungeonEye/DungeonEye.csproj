@@ -304,7 +304,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Documentation\Overlay tilesets.txt" />
+    <Content Include="credits.txt" />
     <Content Include="data\settings.xml" />
     <Content Include="data\savegame.xml" />
     <EmbeddedResource Include="Forms\data\editor.png" />

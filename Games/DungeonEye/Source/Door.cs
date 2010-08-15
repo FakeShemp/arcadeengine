@@ -95,24 +95,21 @@ namespace DungeonEye
 					DrawGridDoor(batch, location, distance);
 				break;
 				case DoorType.Iron:
-				DrawIronDoor(batch, location, distance);
+					DrawIronDoor(batch, location, distance);
 				break;
 				case DoorType.Monster:
-				DrawMonsterDoor(batch, location, distance);
+					DrawMonsterDoor(batch, location, distance);
 				break;
 				case DoorType.Spider:
-				DrawSpiderDoor(batch, location, distance);
+					DrawSpiderDoor(batch, location, distance);
 				break;
 				case DoorType.Stone:
-				DrawStoneDoor(batch, location, distance);
+					DrawStoneDoor(batch, location, distance);
 				break;
 				case DoorType.Eye:
-				DrawEyeDoor(batch, location, distance);
+					DrawEyeDoor(batch, location, distance);
 				break;
 			}
-
-
-		//	Display.Rectangle(Button, false);
 
 		}
 
@@ -223,6 +220,7 @@ namespace DungeonEye
 
             batch.Begin();
         }
+
 
 		/// <summary>
 		/// 
@@ -657,7 +655,7 @@ namespace DungeonEye
 
 					location.Offset(16, 8);
 
-					Display.RenderState.Scissor = true;
+				//	Display.RenderState.Scissor = true;
 					Display.PushScissor(new Rectangle(location.X + 14, location.Y, 100, 94));
 
                     batch.Begin();
