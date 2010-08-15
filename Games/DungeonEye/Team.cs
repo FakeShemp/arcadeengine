@@ -371,9 +371,9 @@ namespace DungeonEye
 
 
 			// Display the compass
-			Batch.DrawTile(TileSet, 5 + (int)Location.Direction * 3, new Point(224, 254));
-			Batch.DrawTile(TileSet, 6 + (int)Location.Direction * 3, new Point(154, 308));
-			Batch.DrawTile(TileSet, 7 + (int)Location.Direction * 3, new Point(298, 308));
+			Batch.DrawTile(TileSet, 5 + (int)Location.Direction * 3, new Point(228, 262));
+			Batch.DrawTile(TileSet, 6 + (int)Location.Direction * 3, new Point(158, 316));
+			Batch.DrawTile(TileSet, 7 + (int)Location.Direction * 3, new Point(302, 316));
 
 
 			// Interfaces
@@ -639,10 +639,10 @@ namespace DungeonEye
 		void DrawInventory(SpriteBatch batch)
 		{
 			// Background
-			batch.DrawTile(TileSet, 18, new Point(356, 0));
+			batch.DrawTile(TileSet, 18, new Point(352, 0));
 
 			// Head
-			batch.DrawTile(Heads, SelectedHero.Head, new Point(362, 4));
+			batch.DrawTile(Heads, SelectedHero.Head, new Point(360, 4));
 
 
 			// Name
@@ -743,7 +743,7 @@ namespace DungeonEye
 			if (SelectedHero.GetInventoryItem(InventoryPosition.Helmet) != null)
 				batch.DrawTile(Items, SelectedHero.GetInventoryItem(InventoryPosition.Helmet).TileID, new Point(606, 116));
 
-/*
+
 			// Debug draw
 			Batch.FillRectangle(InterfaceCoord.PreviousHero, Color.FromArgb(128, Color.Red));
 			Batch.FillRectangle(InterfaceCoord.CloseInventory, Color.FromArgb(128, Color.Red));
@@ -765,7 +765,7 @@ namespace DungeonEye
 			Batch.FillRectangle(InterfaceCoord.Food, Color.FromArgb(128, Color.Red));
 			Batch.FillRectangle(InterfaceCoord.Armor, Color.FromArgb(128, Color.Red));
 			Batch.FillRectangle(InterfaceCoord.Quiver, Color.FromArgb(128, Color.Red));
-*/
+
 		}
 
 
@@ -777,14 +777,14 @@ namespace DungeonEye
 		void DrawStatistics(SpriteBatch batch)
 		{
 			// Background
-			batch.DrawTile(TileSet, 18, new Point(356, 0));
-			batch.FillRectangle(new Rectangle(360, 70, 186, 30), Color.FromArgb(164, 164, 184));
+			batch.DrawTile(TileSet, 18, new Point(352, 0));
+			batch.FillRectangle(new Rectangle(360, 70, 182, 30), Color.FromArgb(164, 164, 184));
 			batch.FillRectangle(new Rectangle(360, 100, 276, 194), Color.FromArgb(164, 164, 184));
 			batch.FillRectangle(new Rectangle(360, 294, 242, 36), Color.FromArgb(164, 164, 184));
 
 
 			// Hero head
-			batch.DrawTile(Heads, SelectedHero.Head, new Point(362, 4));
+			batch.DrawTile(Heads, SelectedHero.Head, new Point(360, 4));
 
 
 			batch.DrawString(OutlinedFont, new Point(430, 12), Color.White, SelectedHero.Name);
@@ -2976,25 +2976,25 @@ namespace DungeonEye
 		/// <summary>
 		/// Close inventory button
 		/// </summary>
-		static public Rectangle CloseInventory = new Rectangle(362, 4, 64, 64);
+		static public Rectangle CloseInventory = new Rectangle(360, 4, 64, 64);
 
 
 		/// <summary>
 		/// Show statistics button
 		/// </summary>
-		static public Rectangle ShowStatistics = new Rectangle(606, 296, 36, 36);
+		static public Rectangle ShowStatistics = new Rectangle(602, 296, 36, 36);
 
 
 		/// <summary>
 		/// Close inventory button
 		/// </summary>
-		static public Rectangle PreviousHero = new Rectangle(550, 68, 40, 30);
+		static public Rectangle PreviousHero = new Rectangle(546, 68, 40, 30);
 
 		
 		/// <summary>
 		/// Close inventory button
 		/// </summary>
-		static public Rectangle NextHero = new Rectangle(596, 68, 40, 30);
+		static public Rectangle NextHero = new Rectangle(592, 68, 40, 30);
 
 
 		/// <summary>
@@ -3002,20 +3002,20 @@ namespace DungeonEye
 		/// </summary>
 		static public Rectangle[] BackPack = new Rectangle[]
 		{
-			new Rectangle(362     , 76     ,  36, 36),
-			new Rectangle(362 + 36, 76     ,  36, 36),
-			new Rectangle(362     , 76 + 36,  36, 36),
-			new Rectangle(362 + 36, 76 + 36,  36, 36),
-			new Rectangle(362     , 76 + 72,  36, 36),
-			new Rectangle(362 + 36, 76 + 72,  36, 36),
-			new Rectangle(362     , 76 + 108, 36, 36),
-			new Rectangle(362 + 36, 76 + 108, 36, 36),
-			new Rectangle(362     , 76 + 144, 36, 36),
-			new Rectangle(362 + 36, 76 + 144, 36, 36),
-			new Rectangle(362     , 76 + 180, 36, 36),
-			new Rectangle(362 + 36, 76 + 180, 36, 36),
-			new Rectangle(362     , 76 + 216, 36, 36),
-			new Rectangle(362 + 36, 76 + 216, 36, 36),
+			new Rectangle(358     , 76     ,  36, 36),
+			new Rectangle(358 + 36, 76     ,  36, 36),
+			new Rectangle(358     , 76 + 36,  36, 36),
+			new Rectangle(358 + 36, 76 + 36,  36, 36),
+			new Rectangle(358     , 76 + 72,  36, 36),
+			new Rectangle(358 + 36, 76 + 72,  36, 36),
+			new Rectangle(358     , 76 + 108, 36, 36),
+			new Rectangle(358 + 36, 76 + 108, 36, 36),
+			new Rectangle(358     , 76 + 144, 36, 36),
+			new Rectangle(358 + 36, 76 + 144, 36, 36),
+			new Rectangle(358     , 76 + 180, 36, 36),
+			new Rectangle(358 + 36, 76 + 180, 36, 36),
+			new Rectangle(358     , 76 + 216, 36, 36),
+			new Rectangle(358 + 36, 76 + 216, 36, 36),
 		};
 
 		/// <summary>
@@ -3023,8 +3023,8 @@ namespace DungeonEye
 		/// </summary>
 		static public Rectangle[] Rings = new Rectangle[]
 		{
-			new Rectangle(456     , 268, 20, 20),
-			new Rectangle(456 + 24, 268, 20, 20),
+			new Rectangle(452     , 268, 20, 20),
+			new Rectangle(452 + 24, 268, 20, 20),
 		};
 
 
@@ -3033,64 +3033,64 @@ namespace DungeonEye
 		/// </summary>
 		static public Rectangle[] Waist = new Rectangle[]
 		{
-			new Rectangle(600, 184     , 36, 36),
-			new Rectangle(600, 184 + 36, 36, 36),
-			new Rectangle(600, 184 + 72, 36, 36),
+			new Rectangle(596, 184     , 36, 36),
+			new Rectangle(596, 184 + 36, 36, 36),
+			new Rectangle(596, 184 + 72, 36, 36),
 		};
 
 
 		/// <summary>
 		/// Quiver button
 		/// </summary>
-		static public Rectangle Quiver = new Rectangle(450, 108, 36, 36);
+		static public Rectangle Quiver = new Rectangle(446, 108, 36, 36);
 
 
 		/// <summary>
 		/// Quiver button
 		/// </summary>
-		static public Rectangle Armor = new Rectangle(448, 148, 36, 36);
+		static public Rectangle Armor = new Rectangle(444, 148, 36, 36);
 
 
 		/// <summary>
 		/// Food button
 		/// </summary>
-		static public Rectangle Food = new Rectangle(474, 72, 62, 30);
+		static public Rectangle Food = new Rectangle(470, 72, 62, 30);
 
 
 		/// <summary>
 		/// Wrist button
 		/// </summary>
-		static public Rectangle Wrist = new Rectangle(450, 188, 36, 36);
+		static public Rectangle Wrist = new Rectangle(446, 188, 36, 36);
 
 
 		/// <summary>
 		/// Primary Hand inventory button
 		/// </summary>
-		static public Rectangle PrimaryHandInventory = new Rectangle(460, 228, 36, 36);
+		static public Rectangle PrimaryHandInventory = new Rectangle(456, 228, 36, 36);
 
 
 		/// <summary>
 		/// Feet button
 		/// </summary>
-		static public Rectangle Feet = new Rectangle(554, 270, 36, 36);
+		static public Rectangle Feet = new Rectangle(550, 270, 36, 36);
 
 
 		/// <summary>
 		/// Food button
 		/// </summary>
-		static public Rectangle SecondaryHandInventory = new Rectangle(556, 228, 36, 36);
+		static public Rectangle SecondaryHandInventory = new Rectangle(552, 228, 36, 36);
 
 
 		/// <summary>
 		/// Neck button
 		/// </summary>
-		static public Rectangle Neck = new Rectangle(574, 146, 36, 36);
+		static public Rectangle Neck = new Rectangle(570, 146, 36, 36);
 
 
 		/// <summary>
 		/// Head button
 		/// </summary>
-		static public Rectangle Head = new Rectangle(596, 106, 36, 36);
+		static public Rectangle Head = new Rectangle(592, 106, 36, 36);
 
 
 
