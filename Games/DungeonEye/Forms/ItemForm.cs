@@ -55,18 +55,6 @@ namespace DungeonEye.Forms
 			TileSetNameBox.EndUpdate();
 
 
-			// Scripts
-			//ScriptNameBox.BeginUpdate();
-			//ScriptNameBox.Items.Clear();
-			//foreach (string name in ResourceManager.GetAssets<Script>())
-			//{
-			//    ScriptNameBox.Items.Add(name);
-			//}
-			//ScriptNameBox.Items.Insert(0, "");
-			//ScriptNameBox.EndUpdate();
-
-			
-
 			TypeBox.BeginUpdate();
 			TypeBox.Items.Clear();
 			foreach(string name in Enum.GetNames(typeof(ItemType)))
@@ -87,6 +75,7 @@ namespace DungeonEye.Forms
 			SpeedBox.Value = (int)item.AttackSpeed.TotalMilliseconds;
 			WeightBox.Value = item.Weight;
 			TypeBox.SelectedItem = item.Type.ToString();
+			TileSetNameBox.SelectedItem = item.TileSetName;
 			GroundTileBox.SelectedItem = item.GroundTileID;
 			InventoryTileBox.SelectedItem = item.TileID;
 			ThrownTileBox.SelectedItem = item.ThrowTileID;
@@ -133,8 +122,6 @@ namespace DungeonEye.Forms
 		}
 
 
-
-
 		/// <summary>
 		/// Saves the asset to the manager
 		/// </summary>
@@ -161,19 +148,24 @@ namespace DungeonEye.Forms
 			if (result == DialogResult.Yes)
 			{
 				Save();
-				if (TileSet != null) 
-					TileSet.Dispose();
-				TileSet = null;
-
-				if (SpriteBatch != null) 
-					SpriteBatch.Dispose();
-				SpriteBatch = null;
 			}
 			else if (result == DialogResult.Cancel)
 			{
 				e.Cancel = true;
+				return;
 			}
 
+			if (TileSet != null) 
+				TileSet.Dispose();
+			TileSet = null;
+
+			if (SpriteBatch != null) 
+				SpriteBatch.Dispose();
+			SpriteBatch = null;
+
+			if (CheckerBoard != null)
+				CheckerBoard.Dispose();
+			CheckerBoard = null;
 		}
 
 
@@ -385,11 +377,15 @@ namespace DungeonEye.Forms
 
 			if (TileSet != null)
 				TileSet.Dispose();
+			TileSet = ResourceManager.CreateAsset<TileSet>(TileSetNameBox.SelectedItem as string);
+			RebuildTilesList();
+
+
+			if (Item == null)
+				return;
 
 			Item.TileSetName = TileSetNameBox.SelectedItem as string;
-			TileSet = ResourceManager.CreateAsset<TileSet>(Item.TileSetName);
 
-			RebuildTilesList();
 
 			Paint_Tiles(null, null);
 		}
@@ -695,52 +691,7 @@ namespace DungeonEye.Forms
 		#endregion
 
 
-		#region scripting events
-
-		//private void InterfaceNameBox_SelectedIndexChanged(object sender, EventArgs e)
-		//{
-		//    if (Item == null)
-		//        return;
-
-		//    Item.InterfaceName = (string)InterfaceNameBox.SelectedItem;
-		//}
-
-		///// <summary>
-		///// Change script name
-		///// </summary>
-		///// <param name="sender"></param>
-		///// <param name="e"></param>
-		//private void ScriptNameBox_SelectedIndexChanged(object sender, EventArgs e)
-		//{
-		//    if (ScriptNameBox.SelectedIndex == -1 || Item == null)
-		//        return;
-
-		//    Item.ScriptName = ScriptNameBox.SelectedItem as string;
-		//    RebuildFoundInterfaces();
-		//}
-
-
-		///// <summary>
-		///// Rebuild found interfaces
-		///// </summary>
-		//void RebuildFoundInterfaces()
-		//{
-		//    InterfaceNameBox.Items.Clear();
-
-
-		//    Script script = ResourceManager.CreateAsset<Script>(Item.ScriptName);
-		//    if (script != null)
-		//    {
-		//        List<string> list = script.GetImplementedInterfaces(typeof(IItem));
-		//        InterfaceNameBox.Items.AddRange(list.ToArray());
-
-		//    }
-		//    InterfaceNameBox.Items.Insert(0, "");
-		//}
-
-
-		#endregion
-
+		#region Events
 
 		/// <summary>
 		/// Change description
@@ -772,6 +723,7 @@ namespace DungeonEye.Forms
 			Item.Damage.Throws = DamageBox.Dice.Throws;
 		}
 
+
 		/// <summary>
 		/// Change damage
 		/// </summary>
@@ -787,6 +739,7 @@ namespace DungeonEye.Forms
 			Item.DamageVsBig.Faces = DamageVsBigBox.Dice.Faces;
 			Item.DamageVsBig.Throws = DamageVsBigBox.Dice.Throws;
 		}
+
 
 		/// <summary>
 		/// Change damage
@@ -895,8 +848,10 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void InventoryTileID_OnChange(object sender, EventArgs e)
 		{
-			if (Item != null)
-				Item.TileID = InventoryTileBox.SelectedIndex;
+			if (Item == null)
+				return;
+
+			Item.TileID = InventoryTileBox.SelectedIndex;
 
 			Paint_Tiles(null, null);
 		}
@@ -909,8 +864,10 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void GroundTileID_OnChange(object sender, EventArgs e)
 		{
-			if (Item != null)
-				Item.GroundTileID = GroundTileBox.SelectedIndex;
+			if (Item == null)
+				return;
+			
+			Item.GroundTileID = GroundTileBox.SelectedIndex;
 
 			Paint_Tiles(null, null);
 		}
@@ -923,8 +880,10 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void ThrownID_OnChange(object sender, EventArgs e)
 		{
-			if (Item != null)
-				Item.ThrowTileID = ThrownTileBox.SelectedIndex;
+			if (Item == null)
+				return;
+
+			Item.ThrowTileID = ThrownTileBox.SelectedIndex;
 
 			Paint_Tiles(null, null);
 		}
@@ -937,8 +896,10 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void IncomingTile_OnChange(object sender, EventArgs e)
 		{
-			if (Item != null)
-				Item.IncomingTileID = IncomingTileBox.SelectedIndex;
+			if (Item == null)
+				return;
+
+			Item.IncomingTileID = IncomingTileBox.SelectedIndex;
 
 			Paint_Tiles(null, null);
 		}
@@ -974,6 +935,37 @@ namespace DungeonEye.Forms
 			else if (AllowedHandSecondaryBox.Checked)
 				Item.AllowedHands = HeroHand.Secondary;
 		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void scriptControl1_ScriptChanged(object sender, EventArgs e)
+		{
+			if (Item == null)
+				return;
+			Item.Script.ScriptName = scriptControl1.ScriptName;
+
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void scriptControl1_InterfaceChanged(object sender, EventArgs e)
+		{
+			if (Item == null)
+				return;
+
+			Item.Script.InterfaceName = scriptControl1.InterfaceName;
+		}
+
+
+		#endregion
 
 
 		#region Properties
@@ -1014,22 +1006,6 @@ namespace DungeonEye.Forms
 		Texture2D CheckerBoard;
 
 		#endregion
-
-		private void scriptControl1_ScriptChanged(object sender, EventArgs e)
-		{
-			if (Item == null)
-				return;
-			Item.Script.ScriptName = scriptControl1.ScriptName;
-
-		}
-
-		private void scriptControl1_InterfaceChanged(object sender, EventArgs e)
-		{
-			if (Item == null)
-				return;
-
-			Item.Script.InterfaceName = scriptControl1.InterfaceName;
-		}
 
 
 	}

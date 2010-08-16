@@ -633,14 +633,16 @@ namespace DungeonEye
                     batch.Begin();
                     batch.DrawTile(TileSet, 6, new Point(location.X + VPosition * 3, location.Y));
                     batch.DrawTile(TileSet, 6, new Point(location.X - VPosition * 3 + 96, location.Y), Color.White, 0.0f, SpriteEffects.FlipHorizontally, 0.0f);
-                    batch.End();
+					
+					if (HasButton)
+						batch.DrawTile(TileSet, 33, new Point(location.X + 102 - VPosition * 3, 72 + 20));
+                    
+					batch.End();
 
 					Display.PopScissor();
 
                     batch.Begin();
 
-					if (HasButton)
-						batch.DrawTile(TileSet, 33, new Point(254, 72));
 				}
 				break;
 
@@ -661,13 +663,15 @@ namespace DungeonEye
                     batch.Begin();
 					batch.DrawTile(TileSet, 7, new Point(location.X + VPosition * 2, location.Y));
 					batch.DrawTile(TileSet, 7, new Point(location.X - VPosition * 2 + 64, location.Y), Color.White, 0.0f, SpriteEffects.FlipHorizontally, 0.0f);
-                    batch.End();
+
+					if (HasButton)
+						batch.DrawTile(TileSet, 34, new Point(234, 80));
+        
+					batch.End();
 
 					Display.PopScissor();
 
                     batch.Begin();
-					if (HasButton)
-						batch.DrawTile(TileSet, 34, new Point(234, 80));
 				}
 				break;
 

@@ -550,9 +550,9 @@ namespace DungeonEye
 				{
 					Team.SpellBook.Open(this);
 
-					Spell spell = ResourceManager.CreateAsset<Spell>("CreateFood");
-					spell.Init();
-					spell.Script.Instance.OnCast(spell, this);
+					//Spell spell = ResourceManager.CreateAsset<Spell>("CreateFood");
+					//spell.Init();
+					//spell.Script.Instance.OnCast(spell, this);
 				}
 				break;
 			}
