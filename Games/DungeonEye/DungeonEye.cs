@@ -69,7 +69,6 @@ namespace DungeonEye
 		/// </summary>
 		public override void LoadContent()
 		{
-				throw new ArgumentNullException("toto");
 			GameWindowParams param = new GameWindowParams();
 			param.Samples = 0;
 			param.Size = new Size(640,400);
