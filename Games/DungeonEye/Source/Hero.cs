@@ -66,6 +66,33 @@ namespace DungeonEye
 			HandPenality[1] = DateTime.Now;
 
 			Food = (byte)Game.Random.Next(50, 100);
+			Spells = new List<Spell>();
+
+
+			Spell spell = ResourceManager.CreateAsset<Spell>("Create Food");
+			Spells.Add(spell);
+			spell = ResourceManager.CreateAsset<Spell>("Create Food");
+			Spells.Add(spell);
+			spell = ResourceManager.CreateAsset<Spell>("Create Food");
+			Spells.Add(spell);
+			spell = ResourceManager.CreateAsset<Spell>("Cure Minor Wounds");
+			Spells.Add(spell);
+			spell = ResourceManager.CreateAsset<Spell>("Create Food");
+			Spells.Add(spell);
+			spell = ResourceManager.CreateAsset<Spell>("Create Food");
+			Spells.Add(spell);
+			spell = ResourceManager.CreateAsset<Spell>("Create Food");
+			Spells.Add(spell);
+			spell = ResourceManager.CreateAsset<Spell>("Create Food");
+			Spells.Add(spell);
+			spell = ResourceManager.CreateAsset<Spell>("Create Food");
+			Spells.Add(spell);
+			spell = ResourceManager.CreateAsset<Spell>("Create Food");
+			Spells.Add(spell);
+			spell = ResourceManager.CreateAsset<Spell>("Create Food");
+			Spells.Add(spell);
+			spell = ResourceManager.CreateAsset<Spell>("Create Food");
+			Spells.Add(spell);
 		}
 
 
@@ -1069,7 +1096,18 @@ namespace DungeonEye
 		/// Action result for each hands
 		/// </summary>
 		HandAction[] HandActions;
-		
+
+
+		/// <summary>
+		/// Available spells
+		/// </summary>
+		public List<Spell> Spells
+		{
+			get;
+			private set;
+		}
+
+
 		#endregion
 
 	}

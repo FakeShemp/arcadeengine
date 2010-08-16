@@ -37,10 +37,9 @@
 			// 
 			// OkBox
 			// 
-			this.OkBox.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.OkBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.OkBox.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.OkBox.Location = new System.Drawing.Point(592, 351);
+			this.OkBox.Location = new System.Drawing.Point(497, 327);
 			this.OkBox.Name = "OkBox";
 			this.OkBox.Size = new System.Drawing.Size(75, 23);
 			this.OkBox.TabIndex = 0;
@@ -50,7 +49,7 @@
 			// SendReportBox
 			// 
 			this.SendReportBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.SendReportBox.Location = new System.Drawing.Point(466, 351);
+			this.SendReportBox.Location = new System.Drawing.Point(371, 327);
 			this.SendReportBox.Name = "SendReportBox";
 			this.SendReportBox.Size = new System.Drawing.Size(120, 23);
 			this.SendReportBox.TabIndex = 1;
@@ -85,7 +84,7 @@
 			this.TraceBox.Name = "TraceBox";
 			this.TraceBox.ReadOnly = true;
 			this.TraceBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.TraceBox.Size = new System.Drawing.Size(655, 194);
+			this.TraceBox.Size = new System.Drawing.Size(560, 170);
 			this.TraceBox.TabIndex = 5;
 			// 
 			// ExceptionForm
@@ -93,15 +92,15 @@
 			this.AcceptButton = this.OkBox;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(679, 386);
+			this.ClientSize = new System.Drawing.Size(584, 362);
 			this.Controls.Add(this.TraceBox);
 			this.Controls.Add(this.ErrorBox);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.SendReportBox);
 			this.Controls.Add(this.OkBox);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
+			this.MinimumSize = new System.Drawing.Size(600, 400);
 			this.Name = "ExceptionForm";
 			this.Text = "ArcEngine Exception :";
 			this.ResumeLayout(false);

@@ -9,6 +9,9 @@ using System.Windows.Forms;
 
 namespace ArcEngine.Forms
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	public partial class ExceptionForm : Form
 	{
 
@@ -17,6 +20,8 @@ namespace ArcEngine.Forms
 		/// </summary>
 		public ExceptionForm(Exception e)
 		{
+			Cursor.Show();
+
 			InitializeComponent();
 			E = e;
 

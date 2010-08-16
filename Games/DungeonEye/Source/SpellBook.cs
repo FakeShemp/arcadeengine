@@ -24,6 +24,8 @@ using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
+using System.Collections.Generic;
+
 
 namespace DungeonEye
 {
@@ -116,6 +118,18 @@ namespace DungeonEye
 			}
 
 
+			List<Spell> spells = new List<Spell>();
+			for(int id = 0; id < Hero.Spells.Count; id++)
+			{
+				if (Hero.Spells[id].Level == SpellLevel)
+					spells.Add(Hero.Spells[id]);
+			}
+
+			for (int id = 0; id < Math.Min(spells.Count, 6); id++)
+			{
+				batch.DrawString(Font, new Point(148, 264 + id * 12), Color.White, spells[id].Name);
+			}
+
 			// Abort spell
 			batch.DrawTile(Tileset, 30, new Point(142, 336));
 			batch.DrawString(Font, new Point(146, 340), Color.Black, "abort spell");
@@ -123,8 +137,6 @@ namespace DungeonEye
 			// Next & previous buttons
 			batch.DrawTile(Tileset, 28, new Point(298, 336));
 			batch.DrawTile(Tileset, 29, new Point(326, 336));
-
-
 		}
 
 		#endregion
