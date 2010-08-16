@@ -18,6 +18,7 @@
 //
 #endregion
 
+using System.IO;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -36,13 +37,52 @@ namespace ArcEngine
 		/// </summary>
 		static Trace()
 		{
-			FileName = "trace.log";
+			Start("trace.log");
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="filename"></param>
+		/// <returns></returns>
+		static public bool Start(string filename)
+		{
+			FileName = filename;
 
 			if (System.IO.File.Exists(FileName))
 				System.IO.File.Delete(FileName);
+			
+			
+			Stream = new FileStream(FileName, FileMode.CreateNew);
 
-			Diag.Trace.Listeners.Add(new Diag.TextWriterTraceListener(FileName));
+
+			Diag.Trace.Listeners.Add(new Diag.TextWriterTraceListener(Stream));
 			Diag.Trace.AutoFlush = true;
+
+			return true;
+		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		static public bool Close()
+		{
+			Diag.Trace.Flush();
+			Diag.Trace.Close();
+
+			if (Stream != null)
+			{
+				Stream.Close();
+				Stream.Dispose();
+				Stream = null;
+			}
+
+			FileName = "";
+
+			return true;
 		}
 
 
@@ -70,6 +110,17 @@ namespace ArcEngine
 
 			Unindent();
 
+			WriteLine("ArcEngine assembly :");
+			Indent();
+			Assembly asb = Assembly.GetCallingAssembly();
+			WriteLine("{0}", asb.ToString());
+
+			FileInfo info = new FileInfo(asb.Location);
+			WriteLine("Creation time : {0}", info.CreationTime.ToString());
+
+
+			Unindent();
+
 			// Look through each loaded dll
 			List<string> list = new List<string>();
 			foreach (AssemblyName name in Assembly.GetExecutingAssembly().GetReferencedAssemblies())
@@ -79,7 +130,7 @@ namespace ArcEngine
 			WriteLine("Referenced assemblies :");
 			Indent();
 			foreach (string name in list)
-				WriteLine(name);
+				WriteLine(" - {0}", name);
 			Unindent();
 		}
 
@@ -347,7 +398,17 @@ namespace ArcEngine
 		/// <summary>
 		/// Filename of the log
 		/// </summary>
-		static string FileName;
+		public static string FileName
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// Output stream
+		/// </summary>
+		static FileStream Stream;
 
 		#endregion
 	}

@@ -38,22 +38,8 @@ namespace DungeonEye
 		[STAThread]
 		static void Main()
 		{
-			Game game = null;
-			try
-			{
-				using (game = new Game())
-					game.Run();
-			}
-			catch (Exception e)
-			{
-				Trace.WriteLine("");
-				Trace.WriteLine("!!!FATAL ERROR !!!");
-				Trace.WriteLine("Message : " + e.Message);
-				Trace.WriteLine("StackTrace : " + e.StackTrace);
-				Trace.WriteLine("");
-
-				MessageBox.Show(e.StackTrace, e.Message);
-			}
+			using (Game game = new Game())
+				game.Run();
 		}
 
 
@@ -83,6 +69,7 @@ namespace DungeonEye
 		/// </summary>
 		public override void LoadContent()
 		{
+				throw new ArgumentNullException("toto");
 			GameWindowParams param = new GameWindowParams();
 			param.Samples = 0;
 			param.Size = new Size(640,400);

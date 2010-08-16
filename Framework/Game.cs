@@ -453,39 +453,56 @@ namespace ArcEngine
 		/// </summary>
 		public void Run()
 		{
-			Trace.WriteLine("Running the game");
-
-		//	Audio.Init();
-
-
-			LoadContent();
-
-			IsRunning = true;
-			
 			try
 			{
-				GameTime.ElapsedGameTime = TimeSpan.Zero;
-				GameTime.ElapsedRealTime = TimeSpan.Zero;
-				GameTime.TotalGameTime = TotalGameTime;
-				GameTime.TotalRealTime = Clock.CurrentTime;
-				GameTime.IsRunningSlowly = false;
+				Trace.WriteLine("Running the game");
 
-				Update(GameTime);
+				//	Audio.Init();
 
-				Application.Idle += Application_Idle;
-				Application.Run(Window);
+
+				LoadContent();
+
+				IsRunning = true;
+
+				try
+				{
+					GameTime.ElapsedGameTime = TimeSpan.Zero;
+					GameTime.ElapsedRealTime = TimeSpan.Zero;
+					GameTime.TotalGameTime = TotalGameTime;
+					GameTime.TotalRealTime = Clock.CurrentTime;
+					GameTime.IsRunningSlowly = false;
+
+					Update(GameTime);
+
+					Application.Idle += Application_Idle;
+					Application.Run(Window);
+				}
+				finally
+				{
+					Application.Idle -= Application_Idle;
+					IsRunning = false;
+				}
+
+				//Audio.Release();
+				Gamepad.Dispose();
+
+				ResourceManager.Dispose();
+				CloseGameWindow();
 			}
-			finally
+			catch (Exception e)
 			{
-				Application.Idle -= Application_Idle;
-				IsRunning = false;
+				Trace.WriteLine("");
+				Trace.WriteLine("!!!FATAL ERROR !!!");
+				Trace.WriteLine("Message : " + e.Message);
+				Trace.WriteLine("StackTrace : " + e.StackTrace);
+				Trace.WriteLine("");
+
+
+				ExceptionForm form = new ExceptionForm(e);
+				form.ShowDialog();
+				Exit();
+
 			}
-
-			//Audio.Release();
-			Gamepad.Dispose();
-
-			ResourceManager.Dispose();
-			CloseGameWindow();
 		}
 
 		#endregion

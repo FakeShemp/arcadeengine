@@ -168,6 +168,12 @@
     <Compile Include="Editor\ScriptControl.Designer.cs">
       <DependentUpon>ScriptControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\ExceptionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ExceptionForm.Designer.cs">
+      <DependentUpon>ExceptionForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Graphic\IndexBuffer.cs" />
     <Compile Include="Graphic\Mesh.cs" />
     <Compile Include="Graphic\RenderState.cs" />
@@ -421,6 +427,9 @@
     <Compile Include="Utility\Webcam.cs" />
     <EmbeddedResource Include="Editor\ScriptControl.resx">
       <DependentUpon>ScriptControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ExceptionForm.resx">
+      <DependentUpon>ExceptionForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Graphic\Shaders\bezier.vert" />
     <EmbeddedResource Include="Graphic\Shaders\V1_30\SpriteBatch.frag" />

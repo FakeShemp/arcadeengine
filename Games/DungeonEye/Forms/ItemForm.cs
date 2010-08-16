@@ -76,10 +76,10 @@ namespace DungeonEye.Forms
 			WeightBox.Value = item.Weight;
 			TypeBox.SelectedItem = item.Type.ToString();
 			TileSetNameBox.SelectedItem = item.TileSetName;
-			GroundTileBox.SelectedItem = item.GroundTileID;
-			InventoryTileBox.SelectedItem = item.TileID;
-			ThrownTileBox.SelectedItem = item.ThrowTileID;
-			IncomingTileBox.SelectedItem = item.IncomingTileID;
+			GroundTileBox.Value = item.GroundTileID;
+			InventoryTileBox.Value = item.TileID;
+			ThrownTileBox.Value = item.ThrowTileID;
+			IncomingTileBox.Value = item.IncomingTileID;
 
 
 			PrimaryBox.Checked = (item.Slot & BodySlot.Primary) == BodySlot.Primary;
@@ -179,10 +179,10 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void Paint_Tiles(object sender, PaintEventArgs e)
 		{
-			DrawTiles(GLInventoryTile, InventoryTileBox.SelectedItem == null ? -1 : (int) InventoryTileBox.SelectedItem);
-			DrawTiles(GLGroundTile, GroundTileBox.SelectedItem == null ? -1 : (int) GroundTileBox.SelectedItem);
-			DrawTiles(GLThrownTile, ThrownTileBox.SelectedItem == null ? -1 : (int) ThrownTileBox.SelectedItem);
-			DrawTiles(GLIncomingTile, IncomingTileBox.SelectedItem == null ? -1 : (int) IncomingTileBox.SelectedItem);
+			DrawTiles(GLInventoryTile, (int)InventoryTileBox.Value);
+			DrawTiles(GLGroundTile, (int) GroundTileBox.Value);
+			DrawTiles(GLThrownTile, (int) ThrownTileBox.Value);
+			DrawTiles(GLIncomingTile, (int) IncomingTileBox.Value);
 		}
 
 
@@ -204,9 +204,9 @@ namespace DungeonEye.Forms
 
 
 			// Tile to draw
-			if (tileid >= 0)
+			Tile tile = TileSet.GetTile(tileid);
+			if (tile != null)
 			{
-				Tile tile = TileSet.GetTile(tileid);
 				Point location = new Point((control.Width - tile.Size.Width) / 2, (control.Height - tile.Size.Height) / 2);
 				SpriteBatch.DrawTile(TileSet, tileid, location);
 			}
@@ -246,10 +246,10 @@ namespace DungeonEye.Forms
 			//    TileSetNameBox.SelectedItem = Item.TileSetName;
 
 
-			ThrownTileBox.SelectedItem = Item.ThrowTileID;
-			IncomingTileBox.SelectedItem = Item.IncomingTileID;
-			GroundTileBox.SelectedItem = Item.GroundTileID;
-			InventoryTileBox.SelectedItem = Item.TileID;
+			ThrownTileBox.Value = Item.ThrowTileID;
+			IncomingTileBox.Value = Item.IncomingTileID;
+			GroundTileBox.Value = Item.GroundTileID;
+			InventoryTileBox.Value = Item.TileID;
 		}
 
 
@@ -376,9 +376,11 @@ namespace DungeonEye.Forms
 				return;
 
 			if (TileSet != null)
+			{
 				TileSet.Dispose();
+				TileSet = null;
+			}
 			TileSet = ResourceManager.CreateAsset<TileSet>(TileSetNameBox.SelectedItem as string);
-			RebuildTilesList();
 
 
 			if (Item == null)
@@ -390,39 +392,6 @@ namespace DungeonEye.Forms
 			Paint_Tiles(null, null);
 		}
 
-
-		/// <summary>
-		/// When changing TileSet, rebuild tiles list
-		/// </summary>
-		void RebuildTilesList()
-		{
-
-			// Tiles
-			GroundTileBox.BeginUpdate();
-			GroundTileBox.Items.Clear();
-			InventoryTileBox.BeginUpdate();
-			InventoryTileBox.Items.Clear();
-			ThrownTileBox.BeginUpdate();
-			ThrownTileBox.Items.Clear();
-			IncomingTileBox.BeginUpdate();
-			IncomingTileBox.Items.Clear();
-			if (TileSet != null)
-			{
-				List<int> id = TileSet.GetTiles();
-				foreach (int i in id)
-				{
-					InventoryTileBox.Items.Add(i);
-					GroundTileBox.Items.Add(i);
-					ThrownTileBox.Items.Add(i);
-					IncomingTileBox.Items.Add(i);
-				}
-			}
-			GroundTileBox.EndUpdate();
-			InventoryTileBox.EndUpdate();
-			IncomingTileBox.EndUpdate();
-			ThrownTileBox.EndUpdate();
-
-		}
 
 
 		#endregion
@@ -851,7 +820,7 @@ namespace DungeonEye.Forms
 			if (Item == null)
 				return;
 
-			Item.TileID = InventoryTileBox.SelectedIndex;
+			Item.TileID = (int)InventoryTileBox.Value;
 
 			Paint_Tiles(null, null);
 		}
@@ -866,8 +835,8 @@ namespace DungeonEye.Forms
 		{
 			if (Item == null)
 				return;
-			
-			Item.GroundTileID = GroundTileBox.SelectedIndex;
+
+			Item.GroundTileID = (int)GroundTileBox.Value;
 
 			Paint_Tiles(null, null);
 		}
@@ -883,7 +852,7 @@ namespace DungeonEye.Forms
 			if (Item == null)
 				return;
 
-			Item.ThrowTileID = ThrownTileBox.SelectedIndex;
+			Item.ThrowTileID = (int) ThrownTileBox.Value;
 
 			Paint_Tiles(null, null);
 		}
@@ -899,7 +868,7 @@ namespace DungeonEye.Forms
 			if (Item == null)
 				return;
 
-			Item.IncomingTileID = IncomingTileBox.SelectedIndex;
+			Item.IncomingTileID = (int)IncomingTileBox.Value;
 
 			Paint_Tiles(null, null);
 		}

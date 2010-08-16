@@ -266,29 +266,37 @@ namespace ArcEngine.Graphic
 		/// <returns>True if success or false if something went wrong</returns>
 		public bool LoadImage(string filename)
 		{
-			using (Stream stream = ResourceManager.LoadResource(filename))
-				return FromStream(stream);
+			Stream stream = ResourceManager.LoadResource(filename);
+			bool ret = 	FromStream(stream);
+
+			stream.Dispose();
+
+			return ret;
 		}
 
 
 		/// <summary>
 		/// Load a texture from a stream (ie resource files)
 		/// </summary>
-		/// <param name="stream">Stream</param>
+		/// <param name="stream">Stream handle</param>
 		/// <returns></returns>
 		public bool FromStream(Stream stream)
 		{
 			if (stream == null)
 				return false;
 
-			return FromBitmap(new Bitmap(stream));
+			Bitmap bm = new Bitmap(stream);
+			bool ret = FromBitmap(bm);
+			bm.Dispose();
+
+			return ret;
 		}
 
 
 		/// <summary>
 		/// Loads a texture from a Bitmap
 		/// </summary>
-		/// <param name="bitmap"></param>
+		/// <param name="bitmap">Bitmap handle</param>
 		/// <returns></returns>
 		public bool FromBitmap(Bitmap bitmap)
 		{
@@ -302,10 +310,6 @@ namespace ArcEngine.Graphic
             SetData(bitmap, Point.Empty);
 
 			
-			// Update texture matrix
-	//		Display.TextureMatrix = Matrix4.Scale(1.0f / Size.Width, 1.0f / Size.Height, 1.0f);
-
-
 			return true;
 		}
 
@@ -320,7 +324,11 @@ namespace ArcEngine.Graphic
 			if (data == null)
 				return false;
 
-			return FromStream(new MemoryStream(data));
+			MemoryStream stream = new MemoryStream(data);
+			bool ret = FromStream(stream);
+			stream.Dispose();
+
+			return ret;
 		}
 
 
@@ -350,6 +358,7 @@ namespace ArcEngine.Graphic
 			UnlockTextureBits();
 
 			bm.Save(name);
+			bm.Dispose();
 
 			return true;
 		}
@@ -384,7 +393,12 @@ namespace ArcEngine.Graphic
 			bm.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
 			stream.Seek(0, SeekOrigin.Begin);
 
-			return ResourceManager.LoadBinary(name, stream);
+			bool ret = ResourceManager.LoadBinary(name, stream);
+
+			stream.Dispose();
+			bm.Dispose();
+
+			return ret;
 		}
 
 
@@ -668,7 +682,7 @@ namespace ArcEngine.Graphic
 		/// <returns></returns>
 		public override string ToString()
 		{
-			return String.Format("Texture {0}", Handle);
+			return String.Format("Texture {0} ({1}x{2})", Handle, Size.Width, Size.Height);
 		}
 
 	}
