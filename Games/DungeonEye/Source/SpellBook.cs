@@ -105,20 +105,26 @@ namespace DungeonEye
 			return;
 
 			// Main window
-			batch.DrawTile(Tileset, 23, MainRectangle.Location);
+			batch.DrawTile(Tileset, 23, new Point(MainRectangle.Location.X, MainRectangle.Location.Y - 2));
 
 			// Levels
-			string[] title = new string[]{"1ST", "2ND", "3RD", "4TH", "5TH"};
-			for (int level = 0; level < 5; level++)
+			for (int level = 1; level <= 6; level++)
 			{
-				int id = SpellLevel - 1 == level ? 24 : 25;
-				batch.DrawTile(Tileset, id, new Point(MainRectangle.X + level * 42, MainRectangle.Top - 18));
-				batch.DrawString(Font, new Point(MainRectangle.X + level * 42 + 4, MainRectangle.Top - 18 + 4), Color.White, title[level]);
+				int id = SpellLevel == level ? 24 : 25;
+				batch.DrawTile(Tileset, id, new Point(MainRectangle.X + level * 36 - 36, MainRectangle.Top - 20));
+				batch.DrawString(Font, new Point(MainRectangle.X + level * 36 + 12 - 36, MainRectangle.Top - 20 + 4), Color.Black, level.ToString());
 			}
 
 
 			// Abort spell
-			batch.DrawString(Font, new Point(146, 336), Color.White, "abort spell");
+			batch.DrawTile(Tileset, 30, new Point(142, 336));
+			batch.DrawString(Font, new Point(146, 340), Color.Black, "abort spell");
+
+			// Next & previous buttons
+			batch.DrawTile(Tileset, 28, new Point(298, 336));
+			batch.DrawTile(Tileset, 29, new Point(326, 336));
+
+
 		}
 
 		#endregion
@@ -139,9 +145,9 @@ namespace DungeonEye
 			// Left mouse button
 			if (Mouse.IsNewButtonDown(MouseButtons.Left))
 			{
-				for (int level = 0; level < 5; level++)
+				for (int level = 0; level < 6; level++)
 				{
-					if (new Rectangle(MainRectangle.X + level * 42, MainRectangle.Top - 18, 42, 18).Contains(Mouse.Location))
+					if (new Rectangle(MainRectangle.X + level * 36, MainRectangle.Top - 18, 36, 18).Contains(Mouse.Location))
 					{
 						SpellLevel = level + 1;
 					}
@@ -149,8 +155,19 @@ namespace DungeonEye
 
 
 				// Abort spell
-				if (new Rectangle(MainRectangle.X + 2, MainRectangle.Bottom - 16, MainRectangle.Width - 4, 14).Contains(Mouse.Location))
+				if (new Rectangle(MainRectangle.X + 2, MainRectangle.Bottom - 14, MainRectangle.Width - 56, 18).Contains(Mouse.Location))
 					IsVisible = false;
+
+
+				// Previous line
+				if (new Rectangle(298, 336, 30, 18).Contains(Mouse.Location))
+				{
+				}
+
+				// Next line
+				if (new Rectangle(328, 336, 30, 18).Contains(Mouse.Location))
+				{
+				}
 			}
 
 
