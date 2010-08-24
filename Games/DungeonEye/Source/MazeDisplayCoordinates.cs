@@ -112,7 +112,7 @@ namespace DungeonEye
 		/// <returns></returns>
 		static public Point GetGroundItem(ViewFieldPosition view, GroundPosition ground)
 		{
-			if (ground == GroundPosition.Middle)
+			if (ground == GroundPosition.Center)
 				throw new ArgumentOutOfRangeException("ground", "No ground item in the middle of a block !");
 
 			return GroundItems[(int)view, (int)ground];
@@ -270,7 +270,7 @@ namespace DungeonEye
 						{
 							ViewFieldPosition view = (ViewFieldPosition)Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
 							GroundPosition ground = (GroundPosition)Enum.Parse(typeof(GroundPosition), node.Attributes["coordinate"].Value, true);
-							if (ground == GroundPosition.Middle)
+							if (ground == GroundPosition.Center)
 								throw new ArgumentOutOfRangeException("ground", "No ground item in the middle of a block !");
 
 							GroundItems[(int)view, (int)ground] = new Point(int.Parse(node.Attributes["x"].Value), int.Parse(node.Attributes["y"].Value));

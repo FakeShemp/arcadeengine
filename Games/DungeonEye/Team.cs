@@ -2205,7 +2205,7 @@ namespace DungeonEye
 		/// <returns>Ground position of the hero</returns>
 		public GroundPosition GetHeroGroundPosition(Hero Hero)
 		{
-			GroundPosition groundpos = GroundPosition.Middle;
+			GroundPosition groundpos = GroundPosition.Center;
 
 
 			// Get the hero position in the team
@@ -2388,7 +2388,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Move the team
 		/// </summary>
-		/// <param name="offset">Offset</param>
+		/// <param name="offset">Step offset</param>
 		/// <returns>True if the team moved, or false</returns>
 		private bool Move(Point offset)
 		{
@@ -2815,12 +2815,12 @@ namespace DungeonEye
 		FrontRight,
 
 		/// <summary>
-		/// Middle left
+		/// Center left
 		/// </summary>
 		MiddleLeft,
 
 		/// <summary>
-		/// Middle right
+		/// Center right
 		/// </summary>
 		MiddleRight,
 

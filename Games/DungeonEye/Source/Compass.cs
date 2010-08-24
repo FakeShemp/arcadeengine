@@ -18,6 +18,10 @@
 //
 #endregion
 
+
+using System;
+using System.Drawing;
+
 namespace DungeonEye
 {
 	/// <summary>
@@ -170,6 +174,50 @@ namespace DungeonEye
 
 
 
+		/// <summary>
+		/// Returns the direction in which an entity should face to look at.
+		/// </summary>
+		/// <param name="from">From location</param>
+		/// <param name="target">Target direction</param>
+		/// <returns>Direction to face to</returns>
+		public CardinalPoint SeekDirection(DungeonLocation from, DungeonLocation target)
+		{
+			Point delta = new Point(target.Position.X - from.Position.X, target.Position.Y - from.Position.Y);
+			CardinalPoint dir = CardinalPoint.North;
+
+
+			// Move west
+			if (delta.X < 0)
+			{
+				if (delta.Y > 0)
+					return CardinalPoint.South | CardinalPoint.West;
+				else if (delta.Y < 0)
+					return CardinalPoint.North | CardinalPoint.West;
+				else
+					return CardinalPoint.West;
+			}
+
+			// Move east
+			else if (delta.X > 0)
+			{
+				if (delta.Y > 0)
+					return CardinalPoint.South | CardinalPoint.East;
+				else if (delta.Y < 0)
+					return CardinalPoint.North | CardinalPoint.East;
+				else
+					return CardinalPoint.East;
+			}
+
+			if (delta.Y > 0)
+				return CardinalPoint.South;
+			else if (delta.Y < 0)
+				return CardinalPoint.North;
+
+			return CardinalPoint.North;
+		}
+
+
+
 		#region Properties
 
 		/// <summary>
@@ -189,6 +237,7 @@ namespace DungeonEye
 	/// <summary>
 	/// TurnLeft direction
 	/// </summary>
+	[Flags]
 	public enum CardinalPoint
 	{
 		/// <summary>

@@ -666,7 +666,7 @@ namespace DungeonEye
 		public Item CollectItem(GroundPosition position)
 		{
 			// No item in the middle of a block
-			if (position == GroundPosition.Middle)
+			if (position == GroundPosition.Center)
 				throw new ArgumentOutOfRangeException("position", "No items in the middle of a maze block !");
 
 			int count = GroundItems[(int)position].Count;
@@ -692,7 +692,7 @@ namespace DungeonEye
 		public bool DropItem(GroundPosition position, Item item)
 		{
 			// No item in the middle of a block
-			if (position == GroundPosition.Middle)
+			if (position == GroundPosition.Center)
 				throw new ArgumentOutOfRangeException("position", "No items in the middle of a maze block !");
 
 			// Can drop item in wall
@@ -1023,9 +1023,9 @@ namespace DungeonEye
 		SouthEast = 3,
 
 		/// <summary>
-		/// Middle position (not for items !)
+		/// Center position (not for items !)
 		/// </summary>
-		Middle = 4
+		Center = 4
 	}
 
 }
