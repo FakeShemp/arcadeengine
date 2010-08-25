@@ -49,9 +49,6 @@ namespace ArcEngine.Asset
 			Position = Point.Empty;
 			Velocity = Point.Empty;
 
-			//Player = new SoundPlayer();
-			//Player.LoadCompleted += new AsyncCompletedEventHandler(Player_LoadCompleted);
-
 			IsDisposed = false;
 		}
 
@@ -85,11 +82,6 @@ namespace ArcEngine.Asset
 			Source = 0;
 			OpenAL.AL.DeleteBuffer(Buffer);
 			Buffer = 0;
-
-			//if (Player != null)
-			//    Player.Dispose();
-			//Player = null;
-
 		}
 
 
@@ -202,21 +194,8 @@ namespace ArcEngine.Asset
 		#endregion
 
 
-		#region Events
 
-		/// <summary>
-		/// On load completed event handler
-		/// </summary>
-		/// <param name="audio"></param>
-		public delegate void OnLoadCompletedEventHandler(Audio audio);
-
-		/// <summary>
-		/// OnLoadCompleted event
-		/// </summary>
-		public event OnLoadCompletedEventHandler OnLoadCompleted;
-
-		#endregion
-
+		#region Loaders
 
 
 		/// <summary>
@@ -227,10 +206,6 @@ namespace ArcEngine.Asset
 		{
 			if (string.IsNullOrEmpty(filename))
 				return;
-
-			//Player.Stream = ResourceManager.LoadResource(filename);
-			//if (Player.Stream == null)
-			//    return;
 
 
 			int channels, bits_per_sample, sample_rate;
@@ -244,9 +219,6 @@ namespace ArcEngine.Asset
 			IsLoaded = true;
 		}
 
-
-
-		#region Loaders
 
 		/// <summary>
 		/// Loads a wave/riff audio file.
@@ -308,7 +280,7 @@ namespace ArcEngine.Asset
 
 
 		/// <summary>
-		/// 
+		/// Returns sound format
 		/// </summary>
 		/// <param name="channels"></param>
 		/// <param name="bits"></param>
@@ -334,8 +306,8 @@ namespace ArcEngine.Asset
 		/// </summary>
 		public void Play()
 		{
-			//if (!IsLoaded)
-			//    return;
+			if (!IsLoaded)
+				return;
 
 			OpenAL.AL.SourcePlay(Source);
 
@@ -348,6 +320,9 @@ namespace ArcEngine.Asset
 		/// </summary>
 		public void Pause()
 		{
+			if (!IsPlaying)
+				return;
+
 			OpenAL.AL.SourcePause(Source);
 		}
 
@@ -358,6 +333,7 @@ namespace ArcEngine.Asset
 		public void Stop()
 		{
 			IsPlaying = false;
+
 			OpenAL.AL.SourceStop(Source);
 			OpenAL.AL.SourceRewind(Source);
 		}
