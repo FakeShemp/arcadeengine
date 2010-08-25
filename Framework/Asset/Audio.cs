@@ -158,9 +158,25 @@ namespace ArcEngine.Asset
 		internal static bool Create()
 		{
 			if (Context != null)
-				throw new InvalidOperationException("Audio context already created !");
+				return true;
 
-			Context = new OpenTK.Audio.AudioContext();
+			try
+			{
+				Context = new OpenTK.Audio.AudioContext();
+			}
+			catch (Exception e)
+			{
+				Trace.WriteLine("#####################");
+				Trace.WriteLine("OpenAL not found !!!!");
+				Trace.WriteLine("#####################");
+
+				System.Windows.Forms.MessageBox.Show("Please download and install OpenAL at :" + 
+					Environment.NewLine + Environment.NewLine + 
+					"http://connect.creativelabs.com/openal/Downloads/Forms/AllItems.aspx" + 
+					Environment.NewLine + Environment.NewLine + "and install oalinst", "OpenAL DLL not found !!");
+
+				throw new DllNotFoundException("OpenAL dll not found !!!");
+			}
 
 			Diagnostic();
 

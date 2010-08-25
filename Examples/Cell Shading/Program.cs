@@ -186,7 +186,9 @@ namespace ArcEngine.Examples.CellShading
 			#region Mesh
 
 			Trefoil = Mesh.CreateTrefoil(128, 32);
-			Torus = Mesh.CreateTorus(0.25f, 0.5f, 32, 32);
+			//Torus = Mesh.CreateTorus(0.25f, 0.5f, 32, 32);
+			Torus = Mesh.CreateDisk(0.25f, 1.0f, 32, 32);
+
 			#endregion
 
 

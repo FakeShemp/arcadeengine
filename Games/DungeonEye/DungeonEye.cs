@@ -80,7 +80,7 @@ namespace DungeonEye
 			Display.TextureParameters.BorderColor = Color.Black;
 			Display.TextureParameters.MagFilter = TextureMagFilter.Linear;
 			Display.TextureParameters.MinFilter = TextureMinFilter.Linear;
-	
+
 
 			// Display settings
 			Mouse.Visible = false;

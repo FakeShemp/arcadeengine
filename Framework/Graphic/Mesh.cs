@@ -140,7 +140,7 @@ namespace ArcEngine.Graphic
 		/// <param name="slices">Number of slices</param>
 		/// <returns></returns>
 		/// <remarks>From nopper.tv</remarks>
-		public static Mesh CreateSphere(float radius, int slices)
+		public static Mesh ggCreateSphere(float radius, int slices)
 		{
 
 			#region Vertex
@@ -297,6 +297,183 @@ namespace ArcEngine.Graphic
 			
 			return mesh;
 		}
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="innerradius">Inner radius</param>
+        /// <param name="outerradius">Outer radius</param>
+        /// <param name="slices">Number of slice</param>
+        /// <param name="stacks">Number of stack</param>
+        /// <returns></returns>
+        public static Mesh CreateDisk(float innerradius, float outerradius, int slices, int stacks)
+        {
+
+            // How much step for each stack
+            float radial = outerradius - innerradius;
+            if (radial < 0.0f)
+                radial *= -1.0f;
+            radial /= (float)stacks;
+
+            float slicesize = ((float)Math.PI * 2.0f) / (float)slices;
+            float radialscale = 1.0f / outerradius;
+
+
+			#region Vertices
+
+			float[] vertices = new float[slices * stacks * 44];
+
+
+            int offset = 0;
+            for (int i = 0; i < stacks; i++)
+            {
+                float theyta;
+                float theytaNext;
+
+                
+                for (int j = 0; j < slices; j++)
+                {
+			        float inner = innerradius + (float)(i) * radial;
+			        float outer = innerradius + (float)(i + 1.0f) * radial;
+                    float x = 0.0f;
+                    float y = 0.0f;
+
+                    theyta = slicesize * (float)j;
+                    if (j == (slices - 1))
+                        theytaNext = 0.0f;
+                    else
+                        theytaNext = slicesize * (float)(j + 1.0f);
+
+
+                    // Inner First
+                    x = (float)Math.Cos(theyta) * inner;
+                    y = (float)Math.Sin(theyta) * inner;
+
+                    // Vertex
+                    vertices[offset++] = x;
+                    vertices[offset++] = y;
+                    vertices[offset++] = 0.0f;
+
+                    // Normals
+                    vertices[offset++] = 0.0f;
+                    vertices[offset++] = 0.0f;
+                    vertices[offset++] = 1.0f;
+
+                    // Tangent
+                    vertices[offset++] = 0.0f;
+                    vertices[offset++] = 0.0f;
+                    vertices[offset++] = 0.0f;
+
+                    // Texture
+                    vertices[offset++] = ((x * radialscale) + 1.0f) * 0.5f;
+                    vertices[offset++] = ((y * radialscale) + 1.0f) * 0.5f;
+
+
+
+                    // Outer First
+                    x = (float)Math.Cos(theyta) * outer;
+                    y = (float)Math.Sin(theyta) * outer;
+                    
+                    vertices[offset++] = x;
+                    vertices[offset++] = y;
+                    vertices[offset++] = 0.0f;
+
+                    vertices[offset++] = 0.0f;
+                    vertices[offset++] = 0.0f;
+                    vertices[offset++] = 1.0f;
+
+                    vertices[offset++] = 0.0f;
+                    vertices[offset++] = 0.0f;
+                    vertices[offset++] = 0.0f;
+
+                    vertices[offset++] = ((x * radialscale) + 1.0f) * 0.5f;
+                    vertices[offset++] = ((y * radialscale) + 1.0f) * 0.5f;
+
+
+                    // Inner Second
+                    x = (float)Math.Cos(theytaNext) * inner;
+                    y = (float)Math.Sin(theytaNext) * inner;
+
+                    vertices[offset++] = x;
+                    vertices[offset++] = y;
+                    vertices[offset++] = 0.0f;
+
+                    vertices[offset++] = 0.0f;
+                    vertices[offset++] = 0.0f;
+                    vertices[offset++] = 1.0f;
+
+                    vertices[offset++] = 0.0f;
+                    vertices[offset++] = 0.0f;
+                    vertices[offset++] = 0.0f;
+
+                    vertices[offset++] = ((x * radialscale) + 1.0f) * 0.5f;
+                    vertices[offset++] = ((y * radialscale) + 1.0f) * 0.5f;
+
+
+                    // Outer Second
+                    x = (float)Math.Cos(theytaNext) * outer;
+                    y = (float)Math.Sin(theytaNext) * outer; 
+
+
+                    vertices[offset++] = x;
+                    vertices[offset++] = y;
+                    vertices[offset++] = 0.0f;
+
+                    vertices[offset++] = 0.0f;
+                    vertices[offset++] = 0.0f;
+                    vertices[offset++] = 1.0f;
+
+                    vertices[offset++] = 0.0f;
+                    vertices[offset++] = 0.0f;
+                    vertices[offset++] = 0.0f;
+
+                    vertices[offset++] = ((x * radialscale) + 1.0f) * 0.5f;
+                    vertices[offset++] = ((y * radialscale) + 1.0f) * 0.5f;
+
+
+                }
+			}
+
+			#endregion
+
+
+			#region Indices
+
+			int[] indices = new int[stacks * slices * 6];
+			offset = 0;
+			for (int i = 0; i < stacks; i++)
+			{
+				for (int j = 0; j < slices; j++)
+				{
+					indices[offset++] = i * (slices + 1) + j;
+					indices[offset++] = (i + 1) * (slices + 1) + j;
+					indices[offset++] = (i + 1) * (slices + 1) + (j + 1);
+
+					indices[offset++] = i * (slices + 1) + j;
+					indices[offset++] = (i + 1) * (slices + 1) + (j + 1);
+					indices[offset++] = i * (slices + 1) + (j + 1);
+				}
+			}
+
+			#endregion
+
+
+
+			Mesh mesh = new Mesh();
+			mesh.Buffer.AddDeclaration("in_position", 3);
+			mesh.Buffer.AddDeclaration("in_normal", 3);
+			mesh.Buffer.AddDeclaration("in_tangent", 3);
+			mesh.Buffer.AddDeclaration("in_texcoord", 2);
+
+			mesh.SetVertices(vertices);
+			mesh.SetIndices(indices);
+			mesh.PrimitiveType = PrimitiveType.Triangles;
+
+
+            return mesh;
+        }
+
 
 
 		/// <summary>
