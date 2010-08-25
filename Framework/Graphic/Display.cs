@@ -100,7 +100,7 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Display Graphic device informations
 		/// </summary>
-		public static void TraceInfos()
+		public static void Diagnostic()
 		{
 			Trace.WriteLine("Video informations :");
 			Trace.Indent();

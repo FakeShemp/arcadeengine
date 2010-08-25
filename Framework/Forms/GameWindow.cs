@@ -206,7 +206,7 @@ namespace ArcEngine.Forms
 			// Initialization
 			RenderControl.MakeCurrent();
 			Display.Init();
-			Display.TraceInfos();
+			Display.Diagnostic();
 
 			// Force the resize of the GLControl
 			OnResize(null, null);

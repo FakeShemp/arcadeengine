@@ -23,6 +23,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
+using ArcEngine.Asset;
 using ArcEngine.Forms;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
@@ -457,7 +458,7 @@ namespace ArcEngine
 			{
 				Trace.WriteLine("Running the game");
 
-				//	Audio.Init();
+				Audio.Create();
 
 
 				LoadContent();
@@ -483,7 +484,7 @@ namespace ArcEngine
 					IsRunning = false;
 				}
 
-				//Audio.Release();
+				Audio.Release();
 				Gamepad.Dispose();
 
 				ResourceManager.Dispose();

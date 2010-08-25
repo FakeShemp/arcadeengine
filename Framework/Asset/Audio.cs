@@ -20,11 +20,10 @@
 
 
 using System;
-using System.ComponentModel;
-using System.Media;
+using System.Drawing;
+using System.IO;
 using System.Xml;
-using OpenTK.Audio.OpenAL;
-
+using OpenAL = OpenTK.Audio.OpenAL;
 
 namespace ArcEngine.Asset
 {
@@ -42,16 +41,16 @@ namespace ArcEngine.Asset
 		/// </summary>
 		public Audio()
 		{
-			//Buffer = AL.GenBuffer();
-			//Source = AL.GenSource();
+			Buffer = OpenAL.AL.GenBuffer();
+			Source = OpenAL.AL.GenSource();
 
-			//Pitch = 1.0f;
-			//MaxGain = 1.0f;
-			//Position = Point.Empty;
-			//Velocity = Point.Empty;
+			Pitch = 1.0f;
+			MaxGain = 1.0f;
+			Position = Point.Empty;
+			Velocity = Point.Empty;
 
-			Player = new SoundPlayer();
-			Player.LoadCompleted += new AsyncCompletedEventHandler(Player_LoadCompleted);
+			//Player = new SoundPlayer();
+			//Player.LoadCompleted += new AsyncCompletedEventHandler(Player_LoadCompleted);
 
 			IsDisposed = false;
 		}
@@ -66,65 +65,111 @@ namespace ArcEngine.Asset
 			return true;
 		}
 
-	
-		/// <summary>
-		/// Load complete event
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		void Player_LoadCompleted(object sender, AsyncCompletedEventArgs e)
-		{
-			IsLoaded = true;
 
-			if (OnLoadCompleted != null)
-			{
-				OnLoadCompleted(this);
-			}
-		}
 
-/*
 		/// <summary>
 		/// Destructor
 		/// </summary>
 		~Audio()
 		{
-			Dispose();
+			//throw new Exception("Audio : Call Dispose() !!");
 		}
-*/
+
 
 		/// <summary>
 		/// Dispose
 		/// </summary>
 		public void Dispose()
 		{
-			//AL.DeleteSource(Source);
-			//AL.DeleteBuffer(Buffer);
+			OpenAL.AL.DeleteSource(Source);
+			Source = 0;
+			OpenAL.AL.DeleteBuffer(Buffer);
+			Buffer = 0;
 
-			//Source = 0;
-			//Buffer = 0;
-			if (Player != null)
-				Player.Dispose();
-			Player = null;
+			//if (Player != null)
+			//    Player.Dispose();
+			//Player = null;
 
 		}
 
 
-		#region Static
-/*
+		#region Statics
+
 
 		/// <summary>
-		/// 
+		/// Display diagnostic informations
+		/// </summary>
+		internal static void Diagnostic()
+		{
+			Trace.WriteLine("--- Device related analysis ---");
+			Trace.Indent();
+			{
+				Trace.WriteLine("Default playback device: " + OpenTK.Audio.AudioContext.DefaultDevice);
+				Trace.WriteLine("All known playback devices:");
+				Trace.Indent();
+				{
+					foreach (string s in OpenTK.Audio.AudioContext.AvailableDevices)
+						Trace.WriteLine(s);
+				}
+				Trace.Unindent();
+
+				Trace.WriteLine("Default recording device: " + OpenTK.Audio.AudioCapture.DefaultDevice);
+				Trace.WriteLine("All known recording devices:");
+				Trace.Indent();
+				{
+					foreach (string s in OpenTK.Audio.AudioCapture.AvailableDevices)
+						Trace.WriteLine(s);
+				}
+				Trace.Unindent();
+			}
+			Trace.Unindent();
+
+
+			Trace.WriteLine("--- AL related analysis ---");
+			Trace.Indent();
+			{
+				Trace.WriteLine("Used Device: " + Context.CurrentDevice);
+				Trace.WriteLine("AL Renderer: " + OpenAL.AL.Get(OpenAL.ALGetString.Renderer));
+				Trace.WriteLine("AL Vendor: " + OpenAL.AL.Get(OpenAL.ALGetString.Vendor));
+				Trace.WriteLine("AL Version: " + OpenAL.AL.Get(OpenAL.ALGetString.Version));
+
+				Trace.WriteLine("AL Speed of sound: " + OpenAL.AL.Get(OpenAL.ALGetFloat.SpeedOfSound));
+				Trace.WriteLine("AL Distance Model: " + OpenAL.AL.GetDistanceModel().ToString());
+			//	Trace.WriteLine("AL Maximum simultanous Sources: " + MaxSources);
+
+			//	Trace.WriteLine("AL Extension string: " + ExtensionString);
+				Trace.WriteLine("Confirmed AL Extensions:");
+				Trace.Indent();
+				{
+			//		foreach (KeyValuePair<string, bool> pair in Extensions)
+			//			Trace.WriteLine(pair.Key + ": " + pair.Value);
+				}
+				Trace.Unindent();
+			}
+			Trace.Unindent();
+
+		}
+
+
+		/// <summary>
+		/// Creates an audio context
 		/// </summary>
 		/// <returns></returns>
-		internal static bool Init()
+		internal static bool Create()
 		{
-			Context = new AudioContext();
+			if (Context != null)
+				throw new InvalidOperationException("Audio context already created !");
+
+			Context = new OpenTK.Audio.AudioContext();
+
+			Diagnostic();
+
 			return true;
 		}
 
 
 		/// <summary>
-		/// 
+		/// Release audio context
 		/// </summary>
 		internal static void Release()
 		{
@@ -135,9 +180,9 @@ namespace ArcEngine.Asset
 			}
 		}
 
-		static AudioContext Context;
+		static OpenTK.Audio.AudioContext Context;
 
-*/
+
 		#endregion
 
 
@@ -167,61 +212,138 @@ namespace ArcEngine.Asset
 			if (string.IsNullOrEmpty(filename))
 				return;
 
-			Player.Stream = ResourceManager.LoadResource(filename);
-			if (Player.Stream == null)
-				return;
+			//Player.Stream = ResourceManager.LoadResource(filename);
+			//if (Player.Stream == null)
+			//    return;
 
-			//using (AudioReader sound = new AudioReader(stream))
-			//{
-			//   AL.BufferData(Buffer, sound.ReadToEnd());
-			//   AL.Source(Source, ALSourcei.Buffer, Buffer);
-			//}
 
-			//return AL.GetError() == ALError.NoError;
+			int channels, bits_per_sample, sample_rate;
+			Stream stream = ResourceManager.LoadResource(filename);
+			byte[] sound_data = LoadWave(stream, out channels, out bits_per_sample, out sample_rate);
 
-			IsLoaded = false;
-			Player.LoadAsync();
+			OpenAL.AL.BufferData(Buffer, GetSoundFormat(channels, bits_per_sample), sound_data, sound_data.Length, sample_rate);
+
+			OpenAL.AL.Source(Source, OpenAL.ALSourcei.Buffer, Buffer);
+
+			IsLoaded = true;
 		}
 
 
+
+		#region Loaders
+
+		/// <summary>
+		/// Loads a wave/riff audio file.
+		/// </summary>
+		/// <param name="stream">Stream of the file to load</param>
+		/// <param name="channels">Number of channel</param>
+		/// <param name="bits">Bits per samples</param>
+		/// <param name="rate">Sample rate</param>
+		/// <returns></returns>
+		/// <remarks>Thanks to OpenTK example for the code !!!</remarks>
+		private byte[] LoadWave(Stream stream, out int channels, out int bits, out int rate)
+		{
+			channels = 0;
+			bits = 0;
+			rate = 0;
+
+			if (stream == null)
+				return null;
+
+			using (BinaryReader reader = new BinaryReader(stream))
+			{
+				// RIFF header
+				string signature = new string(reader.ReadChars(4));
+				if (signature != "RIFF")
+					throw new NotSupportedException("Specified stream is not a wave file.");
+
+				int riff_chunck_size = reader.ReadInt32();
+
+				string format = new string(reader.ReadChars(4));
+				if (format != "WAVE")
+					throw new NotSupportedException("Specified stream is not a wave file.");
+
+				// WAVE header
+				string format_signature = new string(reader.ReadChars(4));
+				if (format_signature != "fmt ")
+					throw new NotSupportedException("Specified wave file is not supported.");
+
+				int format_chunk_size = reader.ReadInt32();
+				int audio_format = reader.ReadInt16();
+				int num_channels = reader.ReadInt16();
+				int sample_rate = reader.ReadInt32();
+				int byte_rate = reader.ReadInt32();
+				int block_align = reader.ReadInt16();
+				int bits_per_sample = reader.ReadInt16();
+
+				string data_signature = new string(reader.ReadChars(4));
+		//		if (data_signature != "data")
+		//			throw new NotSupportedException("Specified wave file is not supported.");
+
+				int data_chunk_size = reader.ReadInt32();
+
+				channels = num_channels;
+				bits = bits_per_sample;
+				rate = sample_rate;
+
+				return reader.ReadBytes((int) reader.BaseStream.Length);
+			}
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="channels"></param>
+		/// <param name="bits"></param>
+		/// <returns></returns>
+		private OpenAL.ALFormat GetSoundFormat(int channels, int bits)
+		{
+			switch (channels)
+			{
+				case 1:
+				return bits == 8 ? OpenAL.ALFormat.Mono8 : OpenAL.ALFormat.Mono16;
+				case 2:
+				return bits == 8 ? OpenAL.ALFormat.Stereo8 : OpenAL.ALFormat.Stereo16;
+				default:
+				throw new NotSupportedException("The specified sound format is not supported.");
+			}
+		}
+
+
+		#endregion
 
 		/// <summary>
 		/// Plays the sound
 		/// </summary>
 		public void Play()
 		{
-			if (!IsLoaded)
-				return;
+			//if (!IsLoaded)
+			//    return;
 
-			if (Loop)
-				Player.PlayLooping();
-			else
-				Player.Play();
+			OpenAL.AL.SourcePlay(Source);
 
 			IsPlaying = true;
-			//AL.SourcePlay(Source);
 		}
 
-/*
+
 		/// <summary>
 		/// Pauses the sound
 		/// </summary>
 		public void Pause()
 		{
-			//AL.SourcePause(Source);
+			OpenAL.AL.SourcePause(Source);
 		}
-*/
+
 
 		/// <summary>
 		/// Stops the sound
 		/// </summary>
 		public void Stop()
 		{
-			Player.Stop();
-
 			IsPlaying = false;
-			//AL.SourceStop(Source);
-			//AL.SourceRewind(Source);
+			OpenAL.AL.SourceStop(Source);
+			OpenAL.AL.SourceRewind(Source);
 		}
 
 
@@ -433,7 +555,7 @@ namespace ArcEngine.Asset
 			set;
 		}
 
-/*
+
 		/// <summary>
 		/// ID of the sound buffer
 		/// </summary>
@@ -444,7 +566,7 @@ namespace ArcEngine.Asset
 		/// Source ID
 		/// </summary>
 		int Source;
-*/
+
 
 		/// <summary>
 		/// Turns sound looping on or off
@@ -453,23 +575,19 @@ namespace ArcEngine.Asset
 		{
 			get
 			{
-				//int ret = 0;
-				//AL.GetSourcei(SourceID, AL.AL_LOOPING, out ret);
+				bool ret;
+				OpenAL.AL.GetSource(Source, OpenAL.ALSourceb.Looping, out ret);
 
-				return  false;
+				return ret;
 			}
 
 			set
 			{
-				//if (value)
-				//   AL.Sourcei(SourceID, AL.AL_LOOPING, AL.AL_TRUE);
-				//else
-				//   AL.Sourcei(SourceID, AL.AL_LOOPING, AL.AL_FALSE);
-
+				OpenAL.AL.Source(Source, OpenAL.ALSourceb.Looping, value);
 			}
 		}
 
-/*
+
 		/// <summary>
 		/// Pitch of the sound
 		/// </summary>
@@ -507,6 +625,7 @@ namespace ArcEngine.Asset
 				//AL.Sourcef(SourceID, AL.AL_GAIN, value);
 			}
 		}
+
 
 		/// <summary>
 		/// Gain of the sound
@@ -566,7 +685,8 @@ namespace ArcEngine.Asset
 				//AL.Source3i(SourceID, AL.AL_VELOCITY, value.X, value.Y, 0);
 			}
 		}
-*/
+
+
 		/// <summary>
 		/// Is sound loaded
 		/// </summary>
@@ -590,7 +710,7 @@ namespace ArcEngine.Asset
 		/// <summary>
 		/// Sound player
 		/// </summary>
-		SoundPlayer Player;
+	//	SoundPlayer Player;
 
 		#endregion
 	}
