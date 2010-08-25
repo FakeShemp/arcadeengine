@@ -85,12 +85,12 @@ namespace DungeonEye.Forms
 			PrimaryBox.Checked = (item.Slot & BodySlot.Primary) == BodySlot.Primary;
 			SecondaryBox.Checked = (item.Slot & BodySlot.Secondary) == BodySlot.Secondary;
 			QuiverBox.Checked = (item.Slot & BodySlot.Quiver) == BodySlot.Quiver;
-			BodyBox.Checked = (item.Slot & BodySlot.Body) == BodySlot.Body;
-			RingBox.Checked = (item.Slot & BodySlot.Ring) == BodySlot.Ring;
-			WristBox.Checked = (item.Slot & BodySlot.Wrist) == BodySlot.Wrist;
+			BodyBox.Checked = (item.Slot & BodySlot.Torso) == BodySlot.Torso;
+			RingBox.Checked = (item.Slot & BodySlot.Fingers) == BodySlot.Fingers;
+			WristBox.Checked = (item.Slot & BodySlot.Wrists) == BodySlot.Wrists;
 			FeetBox.Checked = (item.Slot & BodySlot.Feet) == BodySlot.Feet;
 			HeadBox.Checked = (item.Slot & BodySlot.Head) == BodySlot.Head;
-			WaistBox.Checked = (item.Slot & BodySlot.Waist) == BodySlot.Waist;
+			WaistBox.Checked = (item.Slot & BodySlot.Belt) == BodySlot.Belt;
 			NeckBox.Checked = (item.Slot & BodySlot.Neck) == BodySlot.Neck;
 
 			FighterBox.Checked = (item.AllowedClasses & HeroClass.Fighter) == HeroClass.Fighter;
@@ -439,9 +439,9 @@ namespace DungeonEye.Forms
 				return;
 
 			if (WristBox.Checked)
-				Item.Slot |= BodySlot.Wrist;
+				Item.Slot |= BodySlot.Wrists;
 			else
-				Item.Slot ^= BodySlot.Wrist;
+				Item.Slot ^= BodySlot.Wrists;
 		}
 
 		private void HeadBox_CheckedChanged(object sender, EventArgs e)
@@ -472,9 +472,9 @@ namespace DungeonEye.Forms
 				return;
 
 			if (BodyBox.Checked)
-				Item.Slot |= BodySlot.Body;
+				Item.Slot |= BodySlot.Torso;
 			else
-				Item.Slot ^= BodySlot.Body;
+				Item.Slot ^= BodySlot.Torso;
 		}
 
 		private void RingBox_CheckedChanged(object sender, EventArgs e)
@@ -483,9 +483,9 @@ namespace DungeonEye.Forms
 				return;
 
 			if (RingBox.Checked)
-				Item.Slot |= BodySlot.Ring;
+				Item.Slot |= BodySlot.Fingers;
 			else
-				Item.Slot ^= BodySlot.Ring;
+				Item.Slot ^= BodySlot.Fingers;
 		}
 
 		private void FeetBox_CheckedChanged(object sender, EventArgs e)
@@ -506,9 +506,9 @@ namespace DungeonEye.Forms
 				return;
 
 			if (WaistBox.Checked)
-				Item.Slot |= BodySlot.Waist;
+				Item.Slot |= BodySlot.Belt;
 			else
-				Item.Slot ^= BodySlot.Waist;
+				Item.Slot ^= BodySlot.Belt;
 		}
 
 		#endregion

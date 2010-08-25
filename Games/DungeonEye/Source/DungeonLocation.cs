@@ -172,8 +172,7 @@ namespace DungeonEye
 				Direction = (CardinalPoint)Enum.Parse(typeof(CardinalPoint), xml.Attributes["direction"].Value, true);
 
 			if (xml.Attributes["position"] != null)
-				GroundPosition = (GroundPosition)Enum.Parse(typeof(GroundPosition), xml.Attributes["position"].Value, true);
-
+				GroundPosition = (GroundPosition) Enum.Parse(typeof(GroundPosition), xml.Attributes["position"].Value, true);
 
 			return true;
 		}

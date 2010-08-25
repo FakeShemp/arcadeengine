@@ -341,16 +341,16 @@ namespace DungeonEye
 			if (node == null)
 				return null;
 
-            // Tile id
+			// Tile id
 			int id = int.Parse(node.Attributes["tile"].Value);
 
-            // Location
+			// Location
 			Point location = new Point(int.Parse(node.Attributes["x"].Value), int.Parse(node.Attributes["y"].Value));
 
 			// effect
 			SpriteEffects effect = SpriteEffects.None;
-            if (node.Attributes["effect"] != null)
-                effect = (SpriteEffects)Enum.Parse(typeof(SpriteEffects), node.Attributes["effect"].Value);
+			if (node.Attributes["effect"] != null)
+				effect = (SpriteEffects)Enum.Parse(typeof(SpriteEffects), node.Attributes["effect"].Value);
 
 			return new TileDrawing(id, location, effect);
 		}

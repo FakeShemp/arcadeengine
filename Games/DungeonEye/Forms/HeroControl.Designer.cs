@@ -161,7 +161,7 @@
 			this.label10.Name = "label10";
 			this.label10.Size = new System.Drawing.Size(37, 13);
 			this.label10.TabIndex = 5;
-			this.label10.Text = "Wrist :";
+			this.label10.Text = "Wrists :";
 			// 
 			// label9
 			// 

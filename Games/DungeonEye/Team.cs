@@ -699,7 +699,7 @@ namespace DungeonEye
 			if (SelectedHero.GetInventoryItem(InventoryPosition.Armor) != null)
 				batch.DrawTile(Items, SelectedHero.GetInventoryItem(InventoryPosition.Armor).TileID, new Point(454, 158));
 
-			// Wrist
+			// Wrists
 			if (SelectedHero.GetInventoryItem(InventoryPosition.Wrist) != null)
 				batch.DrawTile(Items, SelectedHero.GetInventoryItem(InventoryPosition.Wrist).TileID, new Point(456, 198));
 
@@ -707,11 +707,11 @@ namespace DungeonEye
 			if (SelectedHero.GetInventoryItem(InventoryPosition.Primary) != null)
 				batch.DrawTile(Items, SelectedHero.GetInventoryItem(InventoryPosition.Primary).TileID, new Point(466, 236));
 
-			// Ring 1
+			// Fingers 1
 			if (SelectedHero.GetInventoryItem(InventoryPosition.Ring_Left) != null)
 				batch.DrawTile(Items, SelectedHero.GetInventoryItem(InventoryPosition.Ring_Left).TileID, new Point(454, 270));
 
-			// Ring 2
+			// Fingers 2
 			if (SelectedHero.GetInventoryItem(InventoryPosition.Ring_Right) != null)
 				batch.DrawTile(Items, SelectedHero.GetInventoryItem(InventoryPosition.Ring_Right).TileID, new Point(478, 270));
 
@@ -753,7 +753,7 @@ namespace DungeonEye
 				Batch.FillRectangle(rectangle, Color.FromArgb(128, Color.Red));
 			foreach (Rectangle rectangle in InterfaceCoord.Rings)
 				Batch.FillRectangle(rectangle, Color.FromArgb(128, Color.Red));
-			foreach (Rectangle rectangle in InterfaceCoord.Waist)
+			foreach (Rectangle rectangle in InterfaceCoord.Belt)
 				Batch.FillRectangle(rectangle, Color.FromArgb(128, Color.Red));
 
 			Batch.FillRectangle(InterfaceCoord.Head, Color.FromArgb(128, Color.Red));
@@ -761,7 +761,7 @@ namespace DungeonEye
 			Batch.FillRectangle(InterfaceCoord.SecondaryHandInventory, Color.FromArgb(128, Color.Red));
 			Batch.FillRectangle(InterfaceCoord.PrimaryHandInventory, Color.FromArgb(128, Color.Red));
 			Batch.FillRectangle(InterfaceCoord.Feet, Color.FromArgb(128, Color.Red));
-			Batch.FillRectangle(InterfaceCoord.Wrist, Color.FromArgb(128, Color.Red));
+			Batch.FillRectangle(InterfaceCoord.Wrists, Color.FromArgb(128, Color.Red));
 			Batch.FillRectangle(InterfaceCoord.Food, Color.FromArgb(128, Color.Red));
 			Batch.FillRectangle(InterfaceCoord.Armor, Color.FromArgb(128, Color.Red));
 			Batch.FillRectangle(InterfaceCoord.Quiver, Color.FromArgb(128, Color.Red));
@@ -1714,7 +1714,7 @@ namespace DungeonEye
 				}
 				#endregion
 
-				#region Wrist
+				#region Wrists
 				else if (InterfaceCoord.Wrist.Contains(mousePos))
 				{
 					item = SelectedHero.GetInventoryItem(InventoryPosition.Wrist);
@@ -1806,7 +1806,7 @@ namespace DungeonEye
 
 				else
 				{
-					#region Waist
+					#region Belt
 					for (int id = 0; id < 3; id++)
 					{
 						if (InterfaceCoord.Waist[id].Contains(mousePos))
@@ -3029,7 +3029,7 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Waist buttons
+		/// Belt buttons
 		/// </summary>
 		static public Rectangle[] Waist = new Rectangle[]
 		{
@@ -3058,7 +3058,7 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Wrist button
+		/// Wrists button
 		/// </summary>
 		static public Rectangle Wrist = new Rectangle(446, 188, 36, 36);
 

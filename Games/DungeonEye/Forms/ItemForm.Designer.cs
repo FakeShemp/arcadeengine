@@ -375,7 +375,7 @@
 			this.WaistBox.Name = "WaistBox";
 			this.WaistBox.Size = new System.Drawing.Size(53, 17);
 			this.WaistBox.TabIndex = 0;
-			this.WaistBox.Text = "Waist";
+			this.WaistBox.Text = "Belt";
 			this.WaistBox.UseVisualStyleBackColor = true;
 			this.WaistBox.CheckedChanged += new System.EventHandler(this.WaistBox_CheckedChanged);
 			// 
@@ -408,7 +408,7 @@
 			this.WristBox.Name = "WristBox";
 			this.WristBox.Size = new System.Drawing.Size(50, 17);
 			this.WristBox.TabIndex = 0;
-			this.WristBox.Text = "Wrist";
+			this.WristBox.Text = "Wrists";
 			this.WristBox.UseVisualStyleBackColor = true;
 			this.WristBox.CheckedChanged += new System.EventHandler(this.WristBox_CheckedChanged);
 			// 
@@ -419,7 +419,7 @@
 			this.RingBox.Name = "RingBox";
 			this.RingBox.Size = new System.Drawing.Size(48, 17);
 			this.RingBox.TabIndex = 0;
-			this.RingBox.Text = "Ring";
+			this.RingBox.Text = "Fingers";
 			this.RingBox.UseVisualStyleBackColor = true;
 			this.RingBox.CheckedChanged += new System.EventHandler(this.RingBox_CheckedChanged);
 			// 

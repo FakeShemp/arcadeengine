@@ -178,12 +178,12 @@ namespace DungeonEye
 			switch (position)
 			{
 				case InventoryPosition.Armor:
-				if ((item.Slot & BodySlot.Body) == BodySlot.Body)
+				if ((item.Slot & BodySlot.Torso) == BodySlot.Torso)
 					res = true;
 				break;
 
 				case InventoryPosition.Wrist:
-				if ((item.Slot & BodySlot.Wrist) == BodySlot.Wrist)
+				if ((item.Slot & BodySlot.Wrists) == BodySlot.Wrists)
 					res = true;
 				break;
 
@@ -194,7 +194,7 @@ namespace DungeonEye
 
 				case InventoryPosition.Ring_Left:
 				case InventoryPosition.Ring_Right:
-				if ((item.Slot & BodySlot.Ring) == BodySlot.Ring)
+				if ((item.Slot & BodySlot.Fingers) == BodySlot.Fingers)
 					res = true;
 				break;
 
@@ -264,15 +264,15 @@ namespace DungeonEye
 			}
 
 			// Armor
-			if (item.Slot == BodySlot.Body && GetInventoryItem(InventoryPosition.Armor) == null)
+			if (item.Slot == BodySlot.Torso && GetInventoryItem(InventoryPosition.Armor) == null)
 			{
 				SetInventoryItem(InventoryPosition.Armor, item);
 				return true;
 			}
 
 
-			// Wrist
-			if (item.Slot == BodySlot.Wrist && GetInventoryItem(InventoryPosition.Wrist) == null)
+			// Wrists
+			if (item.Slot == BodySlot.Wrists && GetInventoryItem(InventoryPosition.Wrist) == null)
 			{
 				SetInventoryItem(InventoryPosition.Wrist, item);
 				return true;
@@ -312,8 +312,8 @@ namespace DungeonEye
 				return true;
 			}
 
-			// Ring
-			if (item.Slot == BodySlot.Ring)
+			// Fingers
+			if (item.Slot == BodySlot.Fingers)
 			{
 				if (GetInventoryItem(InventoryPosition.Ring_Left) == null)
 				{
@@ -327,8 +327,8 @@ namespace DungeonEye
 				}
 			}
 
-			// Waist
-			if ((item.Slot & BodySlot.Waist) == BodySlot.Waist)
+			// Belt
+			if ((item.Slot & BodySlot.Belt) == BodySlot.Belt)
 			{
 				for (int i = 0; i < 3; i++)
 				{
@@ -400,7 +400,7 @@ namespace DungeonEye
 				return true;
 			}
 
-			if ((item.Slot & BodySlot.Waist) != BodySlot.Waist)
+			if ((item.Slot & BodySlot.Belt) != BodySlot.Belt)
 				return false;
 			
 			WaistPack[position] = item;
@@ -537,7 +537,7 @@ namespace DungeonEye
 				#region Weapon
 				case ItemType.Weapon:
 				{
-					if (item.Slot == BodySlot.Waist)
+					if (item.Slot == BodySlot.Belt)
 					{
 					}
 
@@ -1046,7 +1046,7 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Waist items
+		/// Belt items
 		/// </summary>
 		public Item[] WaistPack
 		{

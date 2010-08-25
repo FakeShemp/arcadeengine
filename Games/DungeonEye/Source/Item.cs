@@ -739,7 +739,7 @@ namespace DungeonEye
 
 
 	/// <summary>
-	/// Body slots
+	/// Torso slots
 	/// </summary>
 	[Flags]
 	public enum BodySlot
@@ -762,7 +762,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Armour
 		/// </summary>
-		Body = 0x8,
+		Torso = 0x8,
 
 		/// <summary>
 		/// Necklace
@@ -770,14 +770,14 @@ namespace DungeonEye
 		Neck = 0x10,
 
 		/// <summary>
-		/// Ring
+		/// Fingers
 		/// </summary>
-		Ring = 0x20,
+		Fingers = 0x20,
 
 		/// <summary>
 		/// Bracers
 		/// </summary>
-		Wrist = 0x40,
+		Wrists = 0x40,
 
 		/// <summary>
 		/// Boots
@@ -792,7 +792,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Belt
 		/// </summary>
-		Waist = 0x200,
+		Belt = 0x200,
 
 		/// <summary>
 		/// Slotless worn items, items which are not worn
