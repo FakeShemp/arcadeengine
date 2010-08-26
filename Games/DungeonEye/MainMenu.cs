@@ -63,7 +63,7 @@ namespace DungeonEye
 
 			StringTable = ResourceManager.CreateAsset<StringTable>("main");
 
-			Theme = new Audio();
+			Theme = new AudioSample();
 			Theme.LoadSound("main theme.wav");
 			
 			Buttons.Add(new ScreenButton("", new Rectangle(156, 324, 340, 14)));
@@ -285,7 +285,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Main theme
 		/// </summary>
-		Audio Theme;
+		AudioSample Theme;
 
 
 		/// <summary>

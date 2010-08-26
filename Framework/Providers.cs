@@ -63,7 +63,7 @@ namespace ArcEngine
 			SharedTileSets = new Dictionary<string, TileSet>(StringComparer.OrdinalIgnoreCase);
 			SharedAnimations = new Dictionary<string, Animation>(StringComparer.OrdinalIgnoreCase);
 			SharedScripts = new Dictionary<string, Script>(StringComparer.OrdinalIgnoreCase);
-			SharedAudios = new Dictionary<string, Audio>(StringComparer.OrdinalIgnoreCase);
+			SharedAudios = new Dictionary<string, AudioSample>(StringComparer.OrdinalIgnoreCase);
 			SharedScenes = new Dictionary<string, Scene>(StringComparer.OrdinalIgnoreCase);
 			SharedLayouts = new Dictionary<string, Layout>(StringComparer.OrdinalIgnoreCase);
 			SharedShaders = new Dictionary<string, Shader>(StringComparer.OrdinalIgnoreCase);
@@ -75,7 +75,7 @@ namespace ArcEngine
 			};
 			Assets = new Type[] {
 				typeof(TileSet), typeof(StringTable), typeof(Animation), typeof(Scene),typeof(Layout),
-				typeof(BitmapFont), typeof(Script), typeof(ScriptModel), typeof(Audio), typeof(InputScheme),
+				typeof(BitmapFont), typeof(Script), typeof(ScriptModel), typeof(AudioSample), typeof(InputScheme),
 				typeof(Shader),
 			};
 
@@ -157,7 +157,7 @@ namespace ArcEngine
 				foreach (XmlNode node in Models.Values)
 					node.WriteTo(xml);
 			}
-			else if (typeof(T) == typeof(Audio))
+			else if (typeof(T) == typeof(AudioSample))
 			{
 				foreach (XmlNode node in Audios.Values)
 					node.WriteTo(xml);
@@ -342,7 +342,7 @@ namespace ArcEngine
 					node = Models[name];
 				form = new ArcEngine.Editor.ScriptModelForm(node);
 			}
-			else if (typeof(T) == typeof(Audio))
+			else if (typeof(T) == typeof(AudioSample))
 			{
 				if (Audios.ContainsKey(name))
 					node = Audios[name];
@@ -402,7 +402,7 @@ namespace ArcEngine
 				Scripts[name] = node;
 			else if (typeof(T) == typeof(ScriptModel))
 				Models[name] = node;
-			else if (typeof(T) == typeof(Audio))
+			else if (typeof(T) == typeof(AudioSample))
 				Audios[name] = node;
 			else if (typeof(T) == typeof(InputScheme))
 				Schemes[name] = node;
@@ -454,7 +454,7 @@ namespace ArcEngine
 				foreach (string key in Models.Keys)
 					list.Add(key);
 
-			else if (typeof(T) == typeof(Audio))
+			else if (typeof(T) == typeof(AudioSample))
 				foreach (string key in Audios.Keys)
 					list.Add(key);
 
@@ -539,9 +539,9 @@ namespace ArcEngine
 				return (T)(object)model;
 			}
 
-			else if (typeof(T) == typeof(Audio) && Audios.ContainsKey(name))
+			else if (typeof(T) == typeof(AudioSample) && Audios.ContainsKey(name))
 			{
-				Audio sound = new Audio();
+				AudioSample sound = new AudioSample();
 				sound.Load(Audios[name]);
 				return (T)(object)sound;
 			}
@@ -598,7 +598,7 @@ namespace ArcEngine
 			else if (typeof(T) == typeof(ScriptModel) && Models.ContainsKey(name))
 				return Models[name];
 
-			else if (typeof(T) == typeof(Audio) && Audios.ContainsKey(name))
+			else if (typeof(T) == typeof(AudioSample) && Audios.ContainsKey(name))
 					return Audios[name];
 
 			else if (typeof(T) == typeof(InputScheme) && Schemes.ContainsKey(name))
@@ -644,7 +644,7 @@ namespace ArcEngine
 			else if (typeof(T) == typeof(ScriptModel) && Models.ContainsKey(name))
 				Models.Remove(name);
 
-			else if (typeof(T) == typeof(Audio) && Audios.ContainsKey(name))
+			else if (typeof(T) == typeof(AudioSample) && Audios.ContainsKey(name))
 				Audios.Remove(name);
 
 			else if (typeof(T) == typeof(InputScheme) && Schemes.ContainsKey(name))
@@ -686,7 +686,7 @@ namespace ArcEngine
 			else if (typeof(T) == typeof(ScriptModel))
 				Models.Clear();
 
-			else if (typeof(T) == typeof(Audio))
+			else if (typeof(T) == typeof(AudioSample))
 				Audios.Clear();
 
 			else if (typeof(T) == typeof(InputScheme))
@@ -748,7 +748,7 @@ namespace ArcEngine
 			else if (typeof(T) == typeof(ScriptModel))
 				return Models.Count;
 
-			else if (typeof(T) == typeof(Audio))
+			else if (typeof(T) == typeof(AudioSample))
 				return Audios.Count;
 
 			else if (typeof(T) == typeof(InputScheme))
@@ -797,8 +797,8 @@ namespace ArcEngine
 			else if (typeof(T) == typeof(Script))
 				SharedScripts[name] = asset as Script;
 
-			else if (typeof(T) == typeof(Audio))
-				SharedAudios[name] = asset as Audio;
+			else if (typeof(T) == typeof(AudioSample))
+				SharedAudios[name] = asset as AudioSample;
 
 			else if (typeof(T) == typeof(InputScheme))
 				SharedSchemes[name] = asset as InputScheme;
@@ -894,12 +894,12 @@ namespace ArcEngine
 				return (T)(object)SharedScripts[name];
 			}
 
-			else if (typeof(T) == typeof(Audio))
+			else if (typeof(T) == typeof(AudioSample))
 			{
 				if (SharedAudios.ContainsKey(name))
 					return (T)(object)SharedAudios[name];
 
-				Audio sound = new Audio();
+				AudioSample sound = new AudioSample();
 				sound.Load(Audios[name]);
 				SharedAudios[name] = sound;
 
@@ -963,7 +963,7 @@ namespace ArcEngine
 			else if (typeof(T) == typeof(Script))
 				SharedScripts.Remove(name);
 
-			else if (typeof(T) == typeof(Audio))
+			else if (typeof(T) == typeof(AudioSample))
 				SharedAudios.Remove(name);
 
 			else if (typeof(T) == typeof(InputScheme))
@@ -1002,7 +1002,7 @@ namespace ArcEngine
 			else if (typeof(T) == typeof(Script))
 				SharedScripts.Clear();
 
-			else if (typeof(T) == typeof(Audio))
+			else if (typeof(T) == typeof(AudioSample))
 				SharedAudios.Clear();
 
 			else if (typeof(T) == typeof(InputScheme))
@@ -1074,7 +1074,7 @@ namespace ArcEngine
 		Dictionary<string, TileSet> SharedTileSets;
 		Dictionary<string, StringTable> SharedStrings;
 		Dictionary<string, Animation> SharedAnimations;
-		Dictionary<string, Audio> SharedAudios;
+		Dictionary<string, AudioSample> SharedAudios;
 		Dictionary<string, Scene> SharedScenes;
 		Dictionary<string, Script> SharedScripts;
 		Dictionary<string, Shader> SharedShaders;

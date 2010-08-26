@@ -1225,10 +1225,10 @@ namespace DungeonEye
 			set;
 		}
 
-		Audio HitSound;
-		Audio HurtSound;
-		Audio DieSound;
-		Audio MoveSound;
+		AudioSample HitSound;
+		AudioSample HurtSound;
+		AudioSample DieSound;
+		AudioSample MoveSound;
 
 		#endregion
 

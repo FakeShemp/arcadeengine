@@ -151,6 +151,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Asset\Animation\AnimationFrame.cs" />
+    <Compile Include="Asset\AudioStream.cs" />
     <Compile Include="Asset\Scenes\SceneFrame.cs" />
     <Compile Include="Asset\Scenes\KeyFrame.cs" />
     <Compile Include="Asset\Scenes\SceneLayer.cs" />
@@ -162,6 +163,7 @@
     <Compile Include="Asset\ScriptModel.cs" />
     <Compile Include="Asset\Scenes\Storyboard.cs" />
     <Compile Include="Asset\BitmapFont.cs" />
+    <Compile Include="Audio.cs" />
     <Compile Include="Editor\ScriptControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -414,7 +416,7 @@
     </Compile>
     <None Include="app.config" />
     <Compile Include="Asset\Animation\Animation.cs" />
-    <Compile Include="Asset\Audio.cs" />
+    <Compile Include="Asset\AudioSample.cs" />
     <Compile Include="Asset\Enumerators.cs" />
     <Compile Include="Asset\StringTable.cs" />
     <Compile Include="Asset\Tile.cs" />

@@ -45,7 +45,7 @@ namespace ArcEngine.Editor
 
 
 
-			Sound = new Audio();
+			Sound = new AudioSample();
 			Sound.Load(node);
 
 
@@ -127,7 +127,7 @@ namespace ArcEngine.Editor
 		/// <summary>
 		/// 
 		/// </summary>
-		Audio Sound;
+		AudioSample Sound;
 
 
 		#endregion
