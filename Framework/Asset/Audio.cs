@@ -24,6 +24,8 @@ using System.Drawing;
 using System.IO;
 using System.Xml;
 using OpenAL = OpenTK.Audio.OpenAL;
+using System.Collections.Generic;
+
 
 namespace ArcEngine.Asset
 {
@@ -78,10 +80,15 @@ namespace ArcEngine.Asset
 		/// </summary>
 		public void Dispose()
 		{
-			OpenAL.AL.DeleteSource(Source);
+			if (Source != 0)
+				OpenAL.AL.DeleteSource(Source);
 			Source = 0;
-			OpenAL.AL.DeleteBuffer(Buffer);
+
+			if (Buffer != 0)
+				OpenAL.AL.DeleteBuffer(Buffer);
 			Buffer = 0;
+
+			IsDisposed = true;
 		}
 
 
@@ -127,15 +134,14 @@ namespace ArcEngine.Asset
 
 				Trace.WriteLine("AL Speed of sound: " + OpenAL.AL.Get(OpenAL.ALGetFloat.SpeedOfSound));
 				Trace.WriteLine("AL Distance Model: " + OpenAL.AL.GetDistanceModel().ToString());
-			//	Trace.WriteLine("AL Maximum simultanous Sources: " + MaxSources);
 
-			//	Trace.WriteLine("AL Extension string: " + ExtensionString);
-				Trace.WriteLine("Confirmed AL Extensions:");
+				Trace.WriteLine("AL Extensions:");
 				Trace.Indent();
 				{
-			//		foreach (KeyValuePair<string, bool> pair in Extensions)
-			//			Trace.WriteLine(pair.Key + ": " + pair.Value);
+					foreach (string ext in Extensions)
+						Trace.Write(ext + ", ");
 				}
+				Trace.WriteLine("");
 				Trace.Unindent();
 			}
 			Trace.Unindent();
@@ -151,6 +157,9 @@ namespace ArcEngine.Asset
 		{
 			if (Context != null)
 				return true;
+
+			Trace.WriteLine("[Audio] : Create()");
+
 
 			try
 			{
@@ -170,10 +179,45 @@ namespace ArcEngine.Asset
 				throw new DllNotFoundException("OpenAL dll not found !!!");
 			}
 
+
+			string[] AL_Extension_Names = new string[]
+				{
+				  "AL_EXT_ALAW",
+				  "AL_EXT_BFORMAT",
+				  "AL_EXT_double",
+				  "AL_EXT_EXPONENT_DISTANCE",
+				  "AL_EXT_float32",
+				  "AL_EXT_FOLDBACK",
+				  "AL_EXT_IMA4",
+				  "AL_EXT_LINEAR_DISTANCE",
+				  "AL_EXT_MCFORMATS",
+				  "AL_EXT_mp3",
+				  "AL_EXT_MULAW",
+				  "AL_EXT_OFFSET",
+				  "AL_EXT_vorbis",
+				  "AL_LOKI_quadriphonic",
+				  "EAX-RAM",
+				  "EAX",
+				  "EAX1.0",
+				  "EAX2.0",
+				  "EAX3.0",
+				  "EAX3.0EMULATED",
+				  "EAX4.0",
+				  "EAX4.0EMULATED",
+				  "EAX5.0"
+				};
+
+
+			Extensions = new List<string>();
+			foreach (string s in AL_Extension_Names)
+				if (OpenAL.AL.IsExtensionPresent(s))
+					Extensions.Add(s);
+
 			Diagnostic();
 
 			return true;
 		}
+
 
 
 		/// <summary>
@@ -181,18 +225,56 @@ namespace ArcEngine.Asset
 		/// </summary>
 		internal static void Release()
 		{
+			Trace.WriteLine("[Audio] : Release()");
+
 			if (Context != null)
 			{
 				Context.Dispose();
 				Context = null;
 			}
+
+			Extensions.Clear();
 		}
 
+
+		/// <summary>
+		/// Audio context
+		/// </summary>
 		static OpenTK.Audio.AudioContext Context;
 
 
-		#endregion
+		/// <summary>
+		/// Available extensions
+		/// </summary>
+		static List<string> Extensions;
 
+
+		/// <summary>
+		/// Available audio device
+		/// </summary>
+		public static List<string> AvailableDevices
+		{
+			get
+			{
+				return new List<string>(OpenTK.Audio.AudioContext.AvailableDevices);
+			}
+		}
+
+
+
+		/// <summary>
+		/// Default device
+		/// </summary>
+		public static string DefaultDevice
+		{
+			get
+			{
+				return OpenTK.Audio.AudioContext.DefaultDevice;
+			}
+		}
+
+
+		#endregion
 
 
 		#region Loaders
@@ -300,6 +382,7 @@ namespace ArcEngine.Asset
 
 
 		#endregion
+
 
 		/// <summary>
 		/// Plays the sound
