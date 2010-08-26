@@ -174,7 +174,7 @@ namespace DungeonEye
 		public void Open()
 		{
 			State = DoorState.Opening;
-			OpenSound.Play();
+			Audio.PlaySample(0, OpenSound);
 		}
 
 
@@ -188,7 +188,7 @@ namespace DungeonEye
 			//	return;
 
 			State = DoorState.Closing;
-			CloseSound.Play();
+			Audio.PlaySample(0, CloseSound);
 		}
 
 

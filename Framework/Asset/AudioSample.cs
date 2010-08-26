@@ -45,12 +45,11 @@ namespace ArcEngine.Asset
 		public AudioSample()
 		{
 			Buffer = OpenAL.AL.GenBuffer();
-			Source = OpenAL.AL.GenSource();
 
 			Pitch = 1.0f;
 			MaxGain = 1.0f;
-			Position = Point.Empty;
-			Velocity = Point.Empty;
+			Position = Vector3.Zero;
+			Velocity = Vector3.Zero;
 
 			IsDisposed = false;
 		}
@@ -81,10 +80,6 @@ namespace ArcEngine.Asset
 		/// </summary>
 		public void Dispose()
 		{
-			if (Source != 0)
-				OpenAL.AL.DeleteSource(Source);
-			Source = 0;
-
 			if (Buffer != 0)
 				OpenAL.AL.DeleteBuffer(Buffer);
 			Buffer = 0;
@@ -99,24 +94,23 @@ namespace ArcEngine.Asset
 
 
 		/// <summary>
-		/// Loads a sound
+		/// Loads a WAV sound
 		/// </summary>
 		/// <param name="filename">File to load</param>
-		public void LoadSound(string filename)
+		public bool LoadSound(string filename)
 		{
 			if (string.IsNullOrEmpty(filename))
-				return;
+				return false;
 
 
 			int channels, bits_per_sample, sample_rate;
 			Stream stream = ResourceManager.LoadResource(filename);
 			byte[] sound_data = LoadWave(stream, out channels, out bits_per_sample, out sample_rate);
 
+			// Transfert data
 			OpenAL.AL.BufferData(Buffer, GetSoundFormat(channels, bits_per_sample), sound_data, sound_data.Length, sample_rate);
 
-			OpenAL.AL.Source(Source, OpenAL.ALSourcei.Buffer, Buffer);
-
-			IsLoaded = true;
+			return true;
 		}
 
 
@@ -201,43 +195,6 @@ namespace ArcEngine.Asset
 
 		#endregion
 
-
-		/// <summary>
-		/// Plays the sound
-		/// </summary>
-		public void Play()
-		{
-			if (!IsLoaded)
-				return;
-
-			OpenAL.AL.SourcePlay(Source);
-
-			IsPlaying = true;
-		}
-
-
-		/// <summary>
-		/// Pauses the sound
-		/// </summary>
-		public void Pause()
-		{
-			if (!IsPlaying)
-				return;
-
-			OpenAL.AL.SourcePause(Source);
-		}
-
-
-		/// <summary>
-		/// Stops the sound
-		/// </summary>
-		public void Stop()
-		{
-			IsPlaying = false;
-
-			OpenAL.AL.SourceStop(Source);
-			OpenAL.AL.SourceRewind(Source);
-		}
 
 
 		#region	IO operations
@@ -452,158 +409,48 @@ namespace ArcEngine.Asset
 		/// <summary>
 		/// ID of the sound buffer
 		/// </summary>
-		int Buffer;
-
-
-		/// <summary>
-		/// Source ID
-		/// </summary>
-		int Source;
+		internal int Buffer
+		{
+			get;
+			private set;
+		}
 
 
 		/// <summary>
 		/// Turns sound looping on or off
 		/// </summary>
-		public bool Loop
-		{
-			get
-			{
-				bool ret;
-				OpenAL.AL.GetSource(Source, OpenAL.ALSourceb.Looping, out ret);
-
-				return ret;
-			}
-
-			set
-			{
-				OpenAL.AL.Source(Source, OpenAL.ALSourceb.Looping, value);
-			}
-		}
+		public bool Loop;
 
 
 		/// <summary>
 		/// Pitch of the sound
 		/// </summary>
-		public float Pitch
-		{
-			get
-			{
-				float val = 0;
-
-				//AL.GetSourcef(SourceID, AL.AL_PITCH, out val);
-
-				return val;
-			}
-			set
-			{
-				//AL.Sourcef(SourceID, AL.AL_PITCH, value);
-			}
-		}
-
-		/// <summary>
-		/// Gain of the sound
-		/// </summary>
-		public float MaxGain
-		{
-			get
-			{
-				float val = 0;
-
-				//AL.GetSourcef(SourceID, AL.AL_GAIN, out val);
-
-				return val;
-			}
-			set
-			{
-				//AL.Sourcef(SourceID, AL.AL_GAIN, value);
-			}
-		}
+		public float Pitch;
 
 
 		/// <summary>
 		/// Gain of the sound
 		/// </summary>
-		public float MinGain
-		{
-			get
-			{
-				float val = 0;
+		public float MaxGain;
 
-				//AL.GetSourcef(SourceID, AL.AL_GAIN, out val);
 
-				return val;
-			}
-			set
-			{
-				//AL.Sourcef(SourceID, AL.AL_GAIN, value);
-			}
-		}
+		/// <summary>
+		/// Gain of the sound
+		/// </summary>
+		public float MinGain;
 
 
 		/// <summary>
 		/// Position of the sound
 		/// </summary>
-		public Point Position
-		{
-			get
-			{
-				int[] pos = new int[3];
-
-				//AL.GetSourceiv(SourceID, AL.AL_POSITION, pos);
-
-				return new Point(pos[0], pos[1]);
-			}
-			set
-			{
-				//AL.Source3i(SourceID, AL.AL_POSITION, value.X, value.Y, 0);
-			}
-		}
+		public Vector3 Position;
 
 
 		/// <summary>
 		/// Velocity of the sound
 		/// </summary>
-		public Point Velocity
-		{
-			get
-			{
-				int[] pos = new int[3];
+		public Vector3 Velocity;
 
-				//AL.GetSourceiv(SourceID, AL.AL_VELOCITY, pos);
-
-				return new Point(pos[0], pos[1]);
-			}
-			set
-			{
-				//AL.Source3i(SourceID, AL.AL_VELOCITY, value.X, value.Y, 0);
-			}
-		}
-
-
-		/// <summary>
-		/// Is sound loaded
-		/// </summary>
-		public bool IsLoaded
-		{
-			get;
-			private set;
-		}
-
-
-		/// <summary>
-		/// Is sound is playing
-		/// </summary>
-		public bool IsPlaying
-		{
-			get;
-			private set;
-		}
-
-
-		/// <summary>
-		/// Sound player
-		/// </summary>
-	//	SoundPlayer Player;
 
 		#endregion
 	}

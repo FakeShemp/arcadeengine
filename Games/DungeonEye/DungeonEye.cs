@@ -55,7 +55,11 @@ namespace DungeonEye
 			// Add the provider
 			ResourceManager.AddProvider(new Providers());
 
+			// Game state manager
 			GSM = new ScreenManager(this);
+
+			// Audio
+			Audio.Create(10);
 
 		}
 

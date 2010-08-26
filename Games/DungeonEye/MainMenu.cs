@@ -127,7 +127,7 @@ namespace DungeonEye
 		/// <param name="e"></param>
 		void QuitEvent(object sender, EventArgs e)
 		{
-			Theme.Stop();
+			Audio.Stop(0);
 			ScreenManager.Game.Exit();
 		}
 
@@ -139,7 +139,7 @@ namespace DungeonEye
 		/// <param name="e"></param>
 		void StartGameEvent(object sender, EventArgs e)
 		{
-			Theme.Stop();
+			Audio.Stop(0);
 			ScreenManager.AddScreen(new CharGen(Batch));
 		}
 
@@ -157,7 +157,7 @@ namespace DungeonEye
 			Team team = new Team(null);
 			team.SaveGame = "data/savegame.xml";
 
-			Theme.Stop();
+			Audio.Stop(0);
 
 			ScreenManager.AddScreen(team);
 		}
@@ -181,8 +181,8 @@ namespace DungeonEye
 				return;
 
 			// Play sound
-			if (Theme.IsLoaded && !Theme.IsPlaying)
-				Theme.Play();
+			if (Audio.GetSourceState(0) != AudioSourceState.Playing)
+				Audio.PlaySample(0, Theme);
 
 
 			// Does the default language changed ?

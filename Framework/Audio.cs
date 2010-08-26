@@ -25,7 +25,7 @@ using System.Drawing;
 using System.IO;
 using System.Xml;
 using OpenAL = OpenTK.Audio.OpenAL;
-
+using ArcEngine.Asset;
 
 namespace ArcEngine
 {
@@ -73,17 +73,10 @@ namespace ArcEngine
 				Trace.WriteLine("AL Renderer: " + OpenAL.AL.Get(OpenAL.ALGetString.Renderer));
 				Trace.WriteLine("AL Vendor: " + OpenAL.AL.Get(OpenAL.ALGetString.Vendor));
 				Trace.WriteLine("AL Version: " + OpenAL.AL.Get(OpenAL.ALGetString.Version));
+				Trace.WriteLine("AL Extensions: " + OpenAL.AL.Get(OpenAL.ALGetString.Extensions));
 
 				Trace.WriteLine("AL Speed of sound: " + OpenAL.AL.Get(OpenAL.ALGetFloat.SpeedOfSound));
 				Trace.WriteLine("AL Distance Model: " + OpenAL.AL.GetDistanceModel().ToString());
-
-				Trace.WriteLine("AL Extensions:");
-				Trace.Indent();
-				{
-					foreach (string ext in Extensions)
-						Trace.Write(ext + ", ");
-				}
-				Trace.WriteLine("");
 				Trace.Unindent();
 			}
 			Trace.Unindent();
@@ -91,23 +84,38 @@ namespace ArcEngine
 		}
 
 
+
+		/// <summary>
+		/// Creates a default context
+		/// </summary>
+		/// <param name="count">Number of listener</param>
+		/// <returns></returns>
+		static public bool Create(int count)
+		{
+			return Create(DefaultDevice, count);
+		}
+
+
+
 		/// <summary>
 		/// Creates an audio context
 		/// </summary>
+		/// <param name="device">Name of the device to use</param>
+		/// <param name="sourcecount">Number of listener</param>
 		/// <returns></returns>
-		static public bool Create()
+		static public bool Create(string device, int sourcecount)
 		{
 			if (Context != null)
-				return true;
+				Release();
 
-			Trace.WriteLine("[Audio] : Create()");
+			Trace.WriteLine("[Audio] : Creating a new context on \"{0}\" with {1} source(s)", device, sourcecount);
 
 
 			try
 			{
-				Context = new OpenTK.Audio.AudioContext();
+				Context = new OpenTK.Audio.AudioContext(device);
 			}
-			catch (Exception e)
+			catch (Exception)
 			{
 				Trace.WriteLine("#####################");
 				Trace.WriteLine("OpenAL not found !!!!");
@@ -122,40 +130,18 @@ namespace ArcEngine
 			}
 
 
-			string[] AL_Extension_Names = new string[]
-				{
-				  "AL_EXT_ALAW",
-				  "AL_EXT_BFORMAT",
-				  "AL_EXT_double",
-				  "AL_EXT_EXPONENT_DISTANCE",
-				  "AL_EXT_float32",
-				  "AL_EXT_FOLDBACK",
-				  "AL_EXT_IMA4",
-				  "AL_EXT_LINEAR_DISTANCE",
-				  "AL_EXT_MCFORMATS",
-				  "AL_EXT_mp3",
-				  "AL_EXT_MULAW",
-				  "AL_EXT_OFFSET",
-				  "AL_EXT_vorbis",
-				  "AL_LOKI_quadriphonic",
-				  "EAX-RAM",
-				  "EAX",
-				  "EAX1.0",
-				  "EAX2.0",
-				  "EAX3.0",
-				  "EAX3.0EMULATED",
-				  "EAX4.0",
-				  "EAX4.0EMULATED",
-				  "EAX5.0"
-				};
+			// Generates sources
+			Sources = OpenAL.AL.GenSources(sourcecount);
 
 
-			Extensions = new List<string>();
-			foreach (string s in AL_Extension_Names)
-				if (OpenAL.AL.IsExtensionPresent(s))
-					Extensions.Add(s);
+
+			Trace.WriteLine("[Audio] : Created on device \"{0}\" with {1} sources.", Context.CurrentDevice, SourceCount);
 
 			Diagnostic();
+
+
+			//Position = Vector3.Zero;
+			//Velocity = Vector3.Zero;
 
 			return true;
 		}
@@ -175,7 +161,78 @@ namespace ArcEngine
 				Context = null;
 			}
 
-			Extensions.Clear();
+			if (Sources != null)
+			{
+				OpenAL.AL.DeleteSources(Sources);
+				Sources = null;
+			}
+
+		}
+
+
+		/// <summary>
+		/// Plays an audio sample
+		/// </summary>
+		/// <param name="id">Channel to ise</param>
+		/// <param name="sample">Sample handle</param>
+		static public void PlaySample(int id, AudioSample sample)
+		{
+			if (id < 0 || id > SourceCount || sample == null)
+				return;
+
+
+
+			OpenAL.AL.Source(Sources[id], OpenAL.ALSourcei.Buffer, sample.Buffer);
+			OpenAL.AL.Source(Sources[id], OpenAL.ALSourceb.Looping, sample.Loop);
+			OpenAL.AL.Source(Sources[id], OpenAL.ALSourcef.Pitch, sample.Pitch);
+			OpenAL.AL.Source(Sources[id], OpenAL.ALSourcef.MaxGain, sample.MaxGain);
+			OpenAL.AL.Source(Sources[id], OpenAL.ALSourcef.MinGain, sample.MinGain);
+			OpenAL.AL.Source(Sources[id], OpenAL.ALSource3f.Position, sample.Position.X, sample.Position.Y, sample.Position.Z);
+
+			OpenAL.AL.SourcePlay(Sources[id]);
+
+		}
+
+
+		/// <summary>
+		/// Pauses a channel
+		/// </summary>
+		/// <param name="id">Channel to pause</param>
+		static public void Pause(int id)
+		{
+			if (id < 0 || id > SourceCount)
+				return;
+
+			OpenAL.AL.SourcePause(Sources[id]);
+		}
+
+
+		/// <summary>
+		/// Stops a channel
+		/// </summary>
+		/// <param name="id">Channel to pause</param>
+		static public void Stop(int id)
+		{
+			if (id < 0 || id > SourceCount)
+				return;
+
+			OpenAL.AL.SourceStop(Sources[id]);
+			OpenAL.AL.SourceRewind(Sources[id]);
+		}
+
+
+
+		/// <summary>
+		/// Returns the state of a source
+		/// </summary>
+		/// <param name="id">Channel id</param>
+		/// <returns>State of the audio source</returns>
+		static public AudioSourceState GetSourceState(int id)
+		{
+			if (id < 0 || id > SourceCount)
+				throw new ArgumentOutOfRangeException("id");
+
+			return (AudioSourceState)OpenAL.AL.GetSourceState(Sources[id]);
 		}
 
 
@@ -187,12 +244,6 @@ namespace ArcEngine
 		/// Audio context
 		/// </summary>
 		static OpenTK.Audio.AudioContext Context;
-
-
-		/// <summary>
-		/// Available extensions
-		/// </summary>
-		static List<string> Extensions;
 
 
 		/// <summary>
@@ -219,7 +270,92 @@ namespace ArcEngine
 		}
 
 
+		/// <summary>
+		/// Source handles
+		/// </summary>
+		static int[] Sources;
+
+
+		/// <summary>
+		/// Number of available sources
+		/// </summary>
+		static int SourceCount
+		{
+			get
+			{
+				if (Sources == null)
+					return 0;
+
+				return Sources.Length;
+			}
+		}
+
+
+		/// <summary>
+		/// Listener position
+		/// </summary>
+		static public Vector3 Position
+		{
+			get
+			{
+				return position;
+			}
+			set
+			{
+				position = value;
+
+				OpenTK.Vector3 vect = new OpenTK.Vector3(value.X, value.Y, value.X);
+				OpenAL.AL.Listener(OpenAL.ALListener3f.Position, ref vect);
+			}
+		}
+		static Vector3 position;
+
+
+		/// <summary>
+		/// Listener velocity
+		/// </summary>
+		static public Vector3 Velocity
+		{
+			get
+			{
+				return velocity;
+			}
+			set
+			{
+				velocity = value;
+
+				OpenTK.Vector3 vect = new OpenTK.Vector3(value.X, value.Y, value.X);
+				OpenAL.AL.Listener(OpenAL.ALListener3f.Velocity, ref vect);
+			}
+		}
+		static Vector3 velocity;
+
+
+
+
 		#endregion
 
+	}
+
+
+	/// <summary>
+	/// State of an audio channel
+	/// </summary>
+	public enum AudioSourceState
+	{
+		/// <summary>
+		/// Channel is playing
+		/// </summary>
+		Playing = OpenAL.ALSourceState.Playing,
+
+		/// <summary>
+		/// Channel is paused
+		/// </summary>
+		Paused = OpenAL.ALSourceState.Paused,
+
+		/// <summary>
+		/// Channel is stopped
+		/// </summary>
+		Stopped = OpenAL.ALSourceState.Stopped,
 	}
 }
