@@ -869,6 +869,12 @@ namespace ArcEngine.Graphic
 				MaxAnisotropicFilter = val;
 			}
 
+			if (Extensions.Contains("GL_ARB_texture_compression"))
+			{
+				HasTextureCompression = true;
+				TK.GL.Hint(TK.HintTarget.TextureCompressionHint, TK.HintMode.Nicest);
+			}
+
 			if (Extensions.Contains("GL_ARB_pixel_buffer_object"))
 				HasPBO = true;
 
@@ -1025,6 +1031,16 @@ namespace ArcEngine.Graphic
 		/// Has Frame Buffer Objects support
 		/// </summary>
 		public bool HasFBO
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// Has texture compression
+		/// </summary>
+		public bool HasTextureCompression
 		{
 			get;
 			private set;
