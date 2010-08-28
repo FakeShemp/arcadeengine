@@ -637,6 +637,36 @@ namespace ArcEngine.Graphic
 			}
 		}
 
+
+		/// <summary>
+		/// Gets / sets the	texture minifying function 
+		/// </summary>
+		public float AnisotropicFilter
+		{
+			get
+			{
+				if (!Display.Capabilities.HasAnisotropicFiltering)
+					return 0.0f;
+
+				Display.Texture = this;
+
+				float value;
+				TK.GL.GetTexParameter(TK.TextureTarget.Texture2D, (TK.GetTextureParameter)TK.ExtTextureFilterAnisotropic.TextureMaxAnisotropyExt, out value);
+
+				return value;
+			}
+			set
+			{
+				if (!Display.Capabilities.HasAnisotropicFiltering)
+					return;
+
+				Display.Texture = this;
+
+				TK.GL.TexParameter(TK.TextureTarget.Texture2D, (TK.TextureParameterName)TK.ExtTextureFilterAnisotropic.TextureMaxAnisotropyExt, value);
+			}
+		}
+
+
 		/// <summary>
 		/// Gets / sets the size of the texture
 		/// </summary>
@@ -773,18 +803,17 @@ namespace ArcEngine.Graphic
 	/// </summary>
 	public enum ImageLockMode
 	{
-
 		/// <summary>
 		/// Specifies that a portion of the image is locked for reading.
 		/// </summary>
 		ReadOnly = 1,
 
-	
 		
 		/// <summary>
 		/// Specifies that a portion of the image is locked for writing.
 		/// </summary>
 		WriteOnly = 2,
+
 
 		/// <summary>
 		/// Specifies that a portion of the image is locked for reading or writing.

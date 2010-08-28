@@ -860,6 +860,15 @@ namespace ArcEngine.Graphic
 			if (Extensions.Contains("GL_ARB_framebuffer_object"))
 				HasFBO = true;
 
+			if (Extensions.Contains("GL_EXT_texture_filter_anisotropic"))
+			{
+				HasAnisotropicFiltering = true;
+
+				float val;
+				TK.GL.GetFloat((TK.GetPName)TK.ExtTextureFilterAnisotropic.MaxTextureMaxAnisotropyExt, out val);
+				MaxAnisotropicFilter = val;
+			}
+
 			if (Extensions.Contains("GL_ARB_pixel_buffer_object"))
 				HasPBO = true;
 
@@ -960,6 +969,7 @@ namespace ArcEngine.Graphic
 
 		}
 
+
 		/// <summary>
 		/// Has multi sample support
 		/// </summary>
@@ -990,7 +1000,6 @@ namespace ArcEngine.Graphic
 		}
 
 
-
 		/// <summary>
 		/// Total number of texture image units from the fragment 
 		/// and vertex processor can access combined.
@@ -1000,8 +1009,6 @@ namespace ArcEngine.Graphic
 			get;
 			private set;
 		}
-
-
 
 
 		/// <summary>
@@ -1032,6 +1039,27 @@ namespace ArcEngine.Graphic
 			get;
 			private set;
 		}
+
+	
+		/// <summary>
+		/// Has Anisotropic filtering support
+		/// </summary>
+		public bool HasAnisotropicFiltering
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// Maximum anisotropic filter value
+		/// </summary>
+		public float MaxAnisotropicFilter
+		{
+			get;
+			private set;
+		}
+
 
 		/// <summary>
 		/// Has Pixel Buffer Objects support
