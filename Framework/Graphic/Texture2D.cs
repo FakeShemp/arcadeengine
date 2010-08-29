@@ -269,7 +269,8 @@ namespace ArcEngine.Graphic
 			Stream stream = ResourceManager.LoadResource(filename);
 			bool ret = 	FromStream(stream);
 
-			stream.Dispose();
+			if (stream != null)
+				stream.Dispose();
 
 			return ret;
 		}
