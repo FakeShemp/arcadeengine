@@ -66,8 +66,8 @@ namespace ArcEngine.Graphic
 			Texturing = true;
 			RenderState.Blending = true;
 			RenderState.ClearColor = Color.Black;
-			RenderState.Culling = false;
-			RenderState.DepthTest = false;
+	//		RenderState.Culling = false;
+	//		RenderState.DepthTest = false;
 
 			TK.GL.Hint(TK.HintTarget.PolygonSmoothHint, TK.HintMode.Nicest);
 			TK.GL.Hint(TK.HintTarget.LineSmoothHint, TK.HintMode.Nicest);

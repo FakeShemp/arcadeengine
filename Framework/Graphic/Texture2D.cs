@@ -58,6 +58,10 @@ namespace ArcEngine.Graphic
 			//if (code != ErrorCode.NoError)
 			//    Trace.WriteLine("Failed to create a new texture ({0})", code.ToString());
 
+
+			// Bind the texture
+			Display.Texture = this;
+
 			MagFilter = Display.TextureParameters.MagFilter;
 			MinFilter = Display.TextureParameters.MinFilter;
 			BorderColor = Display.TextureParameters.BorderColor;
