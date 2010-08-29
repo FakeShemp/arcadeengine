@@ -140,7 +140,7 @@ namespace ArcEngine.Examples.SphereWorld
 			};
 			Floor = new Mesh();
 			Floor.SetVertices(data);
-			Floor.SetIndices(new int[] { 0, 1, 2, 3 });
+			Floor.SetIndices(new int[] { 0, 1, 2, 0, 2, 3});
 			Floor.Buffer.AddDeclaration("in_position", 3);
 			Floor.Buffer.AddDeclaration("in_texture", 2);
 			Floor.PrimitiveType = PrimitiveType.Triangles;
@@ -221,6 +221,7 @@ namespace ArcEngine.Examples.SphereWorld
 			// Center mouse
 	//		Mouse.Location = new Point(Window.Size.Width / 2, Window.Size.Height / 2);
 
+			// http://www.riemers.net/eng/Tutorials/XNA/Csharp/Series4/Mouse_camera.php
 		}
 
 
