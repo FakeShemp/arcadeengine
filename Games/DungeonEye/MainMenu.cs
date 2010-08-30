@@ -59,7 +59,7 @@ namespace DungeonEye
 			Tileset = ResourceManager.CreateAsset<TileSet>("Main Menu");
 
 			Font = ResourceManager.CreateSharedAsset<BitmapFont>("intro");
-            Font.GlyphTileset.Scale = new Vector2(2.0f, 2.0f);
+			Font.GlyphTileset.Scale = new Vector2(2.0f, 2.0f);
 
 			StringTable = ResourceManager.CreateAsset<StringTable>("main");
 
@@ -219,21 +219,21 @@ namespace DungeonEye
 				ScreenManager.AddScreen(new IntroScreen());
 
 	
-            // Key up
+			// Key up
 			if (Keyboard.IsNewKeyPress(System.Windows.Forms.Keys.Up))
 			{
 				MenuID--;
 				if (MenuID < 0)
 					MenuID = Buttons.Count - 1;
 			}
-            // Key down
+			// Key down
 			else if (Keyboard.IsNewKeyPress(System.Windows.Forms.Keys.Down))
 			{
 				MenuID++;
 				if (MenuID >= Buttons.Count)
 					MenuID = 0;
 			}
-            // Enter
+			// Enter
 			else if (Keyboard.IsNewKeyPress(System.Windows.Forms.Keys.Enter))
 			{
 				Buttons[MenuID].OnSelectEntry();

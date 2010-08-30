@@ -28,7 +28,7 @@ using ArcEngine.Graphic;
 namespace ArcEngine.Asset
 {
 	/// <summary>
-	/// 
+	/// Window skin
 	/// </summary>
 	class Skin: IAsset
 	{

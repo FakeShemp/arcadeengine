@@ -71,7 +71,7 @@ namespace ArcEngine
 			Name = "ArcEngine providers";
 			Tags = new string[] { 
 				"tileset", "stringtable", "animation", "scene", "bitmapfont",
-				"script", "scriptmodel", "audio", "inputscheme", "layout", "shader"
+				"script", "scriptmodel", "audio", "inputscheme", "layout", "shader", "audiosample", "audiostream"
 			};
 			Assets = new Type[] {
 				typeof(TileSet), typeof(StringTable), typeof(Animation), typeof(Scene),typeof(Layout),
@@ -1059,6 +1059,7 @@ namespace ArcEngine
 		Dictionary<string, XmlNode> Schemes;
 		Dictionary<string, XmlNode> Layouts;
 		Dictionary<string, XmlNode> Shaders;
+		Dictionary<string, XmlNode> Audios;
 
 
 

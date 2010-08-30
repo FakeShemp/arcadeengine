@@ -397,16 +397,6 @@ namespace ArcEngine.Asset
 
 
 		/// <summary>
-		/// Audio type
-		/// </summary>
-		public AudioType Type
-		{
-			get;
-			set;
-		}
-
-
-		/// <summary>
 		/// ID of the sound buffer
 		/// </summary>
 		internal int Buffer
@@ -455,20 +445,4 @@ namespace ArcEngine.Asset
 		#endregion
 	}
 
-
-	/// <summary>
-	/// Type of Audio sound
-	/// </summary>
-	public enum AudioType
-	{
-		/// <summary>
-		/// Audio data are fully loaded in memory
-		/// </summary>
-		Sound,
-
-		/// <summary>
-		/// Audio data are streamed
-		/// </summary>
-		Music
-	}
 }

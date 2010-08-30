@@ -178,7 +178,7 @@ namespace ArcEngine
 		static public void PlaySample(int id, AudioSample sample)
 		{
 			if (id < 0 || id > SourceCount || sample == null)
-				return;
+				throw new ArgumentOutOfRangeException("id");
 
 
 
@@ -201,7 +201,7 @@ namespace ArcEngine
 		static public void Pause(int id)
 		{
 			if (id < 0 || id > SourceCount)
-				return;
+				throw new ArgumentOutOfRangeException("id");
 
 			OpenAL.AL.SourcePause(Sources[id]);
 		}
@@ -214,7 +214,7 @@ namespace ArcEngine
 		static public void Stop(int id)
 		{
 			if (id < 0 || id > SourceCount)
-				return;
+				throw new ArgumentOutOfRangeException("id");
 
 			OpenAL.AL.SourceStop(Sources[id]);
 			OpenAL.AL.SourceRewind(Sources[id]);
