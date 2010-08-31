@@ -81,9 +81,9 @@ namespace DungeonEye
 			Window.Text = "Dungeon Eye";
 
 			// Default texture parameters
-			Display.TextureParameters.BorderColor = Color.Black;
-			Display.TextureParameters.MagFilter = TextureMagFilter.Linear;
-			Display.TextureParameters.MinFilter = TextureMinFilter.Linear;
+			Texture2D.DefaultBorderColor = Color.Black;
+			Texture2D.DefaultMagFilter = TextureMagFilter.Linear;
+			Texture2D.DefaultMinFilter = TextureMinFilter.Linear;
 
 
 			// Display settings
