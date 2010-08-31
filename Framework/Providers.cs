@@ -1059,7 +1059,6 @@ namespace ArcEngine
 		Dictionary<string, XmlNode> Schemes;
 		Dictionary<string, XmlNode> Layouts;
 		Dictionary<string, XmlNode> Shaders;
-		Dictionary<string, XmlNode> Audios;
 
 
 
