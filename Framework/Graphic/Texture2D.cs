@@ -62,14 +62,15 @@ namespace ArcEngine.Graphic
 			// Bind the texture
 			Display.Texture = this;
 
-			MagFilter = Display.TextureParameters.MagFilter;
-			MinFilter = Display.TextureParameters.MinFilter;
-			BorderColor = Display.TextureParameters.BorderColor;
-			HorizontalWrap = Display.TextureParameters.HorizontalWrapFilter;
-			VerticalWrap = Display.TextureParameters.VerticalWrapFilter;
-
             PixelInternalFormat = TK.PixelInternalFormat.Rgba8;
 			PixelFormat = PixelFormat.Bgra;
+
+			MagFilter = DefaultMagFilter;
+			MinFilter = DefaultMinFilter;
+			BorderColor = DefaultBorderColor;
+			HorizontalWrap = DefaultHorizontalWrapFilter;
+			VerticalWrap = DefaultVerticalWrapFilter;
+
 		}
 
 		/// <summary>
@@ -292,7 +293,9 @@ namespace ArcEngine.Graphic
 
 			Bitmap bm = new Bitmap(stream);
 			bool ret = FromBitmap(bm);
-			bm.Dispose();
+
+			if (bm != null)
+				bm.Dispose();
 
 			return ret;
 		}
@@ -310,7 +313,7 @@ namespace ArcEngine.Graphic
 
 			Display.Texture = this;
 
-			SetSize(new Size(bitmap.Width, bitmap.Height));
+			SetSize(bitmap.Size);
 
             SetData(bitmap, Point.Empty);
 
@@ -711,6 +714,41 @@ namespace ArcEngine.Graphic
 		#endregion
 
 
+		#region Default values
+
+
+		/// <summary>
+		/// Default magnify filter
+		/// </summary>
+		static public TextureMagFilter DefaultMagFilter = TextureMagFilter.Nearest;
+
+
+		/// <summary>
+		/// Default minify filter
+		/// </summary>
+		static public TextureMinFilter DefaultMinFilter = TextureMinFilter.Nearest;
+
+
+		/// <summary>
+		/// Default border color
+		/// </summary>
+		static public Color DefaultBorderColor = Color.Black;
+
+
+		/// <summary>
+		/// Default horizontal wrap filter
+		/// </summary>
+		static public HorizontalWrapFilter DefaultHorizontalWrapFilter = HorizontalWrapFilter.Clamp;
+
+
+		/// <summary>
+		/// Default vertical wrap filter
+		/// </summary>
+		static public VerticalWrapFilter DefaultVerticalWrapFilter = VerticalWrapFilter.Clamp;
+
+		#endregion
+
+		
 		/// <summary>
 		/// 
 		/// </summary>

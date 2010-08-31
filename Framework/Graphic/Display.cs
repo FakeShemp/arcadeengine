@@ -44,7 +44,6 @@ namespace ArcEngine.Graphic
 			Trace.WriteDebugLine("[Display] Constructor()");
 
 			Statistics = new RenderStats();
-			TextureParameters = new DefaultTextureParameters();
 
 			RenderState = new RenderState();
 			Scissors = new Stack<Rectangle>();
@@ -636,16 +635,6 @@ namespace ArcEngine.Graphic
 		/// Shared textures
 		/// </summary>
 		static Dictionary<string, Texture2D> SharedTextures = new Dictionary<string, Texture2D>();
-
-
-		/// <summary>
-		/// Default texture parameters
-		/// </summary>
-		static public DefaultTextureParameters TextureParameters
-		{
-			get;
-			private set;
-		}
 
 
 		/// <summary>
@@ -1283,78 +1272,6 @@ namespace ArcEngine.Graphic
 		/// Full screen mode
 		/// </summary>
 		public bool FullScreen = false;
-	}
-
-
-	/// <summary>
-	/// Default parameters applied to a new texture
-	/// </summary>
-	public class DefaultTextureParameters
-	{
-
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		public DefaultTextureParameters()
-		{
-			MagFilter = TextureMagFilter.Linear;
-			MinFilter = TextureMinFilter.Linear;
-			BorderColor = Color.Black;
-			HorizontalWrapFilter = HorizontalWrapFilter.Clamp;
-			VerticalWrapFilter = VerticalWrapFilter.Clamp;
-		}
-
-
-		/// <summary>
-		/// Magnify filter
-		/// </summary>
-		public TextureMagFilter MagFilter
-		{
-			get;
-			set;
-		}
-
-
-		/// <summary>
-		/// Minify filter
-		/// </summary>
-		public TextureMinFilter MinFilter
-		{
-			get;
-			set;
-		}
-
-
-		/// <summary>
-		/// Border color
-		/// </summary>
-		public Color BorderColor
-		{
-			get;
-			set;
-		}
-
-
-		/// <summary>
-		/// Horizontal wrap filter
-		/// </summary>
-		public HorizontalWrapFilter HorizontalWrapFilter
-		{
-			get;
-			set;
-		}
-
-
-		/// <summary>
-		/// Vertical wrap filter
-		/// </summary>
-		public VerticalWrapFilter VerticalWrapFilter
-		{
-			get;
-			set;
-		}
-
-
 	}
 
 
