@@ -1312,189 +1312,143 @@ namespace ArcEngine.Graphic
 		LineStrip = TK.BeginMode.LineLoop,
 	}
 
-	/// <summary>
-	/// GLSL Shader language version
-	/// </summary>
-	public enum ShaderVersion
-	{
-		/// <summary>
-		/// Unsuported
-		/// </summary>
-		Unsuported = 0,
-
-		/// <summary>
-		/// Version 1.20, OpenGL 2.1
-		/// </summary>
-		GLSL_1_20,
-
-		/// <summary>
-		/// Version 1.30, OpenGL 3.0
-		/// </summary>
-		GLSL_1_30,
-
-		/// <summary>
-		/// Version 1.40, OpenGL 3.1
-		/// </summary>
-		GLSL_1_40,
-
-		/// <summary>
-		/// Version 1.50, OpenGL 3.2
-		/// </summary>
-		GLSL_1_50,
-
-		/// <summary>
-		/// Version 3.30, OpenGL 3.3
-		/// </summary>
-		GLSL_3_30,
-
-		/// <summary>
-		/// Version 4.00, OpenGL 4.0
-		/// </summary>
-		GLSL_4_00,
-
-		/// <summary>
-		/// Version 4.10, OpenGL 4.1
-		/// </summary>
-		GLSL_4_10,
-	}
-
 
 	/// <summary>
-	/// 
+	/// Stencil operation
 	/// </summary>
 	public enum StencilOp
 	{
 		/// <summary>
-		/// 
+		/// Set Stencil Buffer to 0.
 		/// </summary>
 		Zero = TK.StencilOp.Zero,
 
 		/// <summary>
-		/// 
+		/// Bitwise invert
 		/// </summary>
 		Invert = TK.StencilOp.Invert,
 
 		/// <summary>
-		/// 
+		/// Do not modify the Stencil Buffer
 		/// </summary>
 		Keep = TK.StencilOp.Keep,
 
 		/// <summary>
-		/// 
+		/// set Stencil Buffer to ref value as specified by last GL.StencilFunc() call
 		/// </summary>
 		Replace = TK.StencilOp.Replace,
 
 		/// <summary>
-		/// 
+		/// increment Stencil Buffer by 1. It is clamped at 255
 		/// </summary>
 		Incr = TK.StencilOp.Incr,
 
 		/// <summary>
-		/// 
+		/// decrement Stencil Buffer by 1. It is clamped at 0.
 		/// </summary>
 		Decr = TK.StencilOp.Decr,
 
 		/// <summary>
-		/// 
+		/// increment Stencil Buffer by 1. If the result is greater than 255, it becomes 0.
 		/// </summary>
 		IncrWrap = TK.StencilOp.IncrWrap,
 
 		/// <summary>
-		/// 
+		/// decrement Stencil Buffer by 1. If the result is less than 0, it becomes 255.
 		/// </summary>
 		DecrWrap = TK.StencilOp.DecrWrap,
 	}
 
 
 	/// <summary>
-	/// 
+	/// Stencil function
 	/// </summary>
 	public enum StencilFunction
 	{
 		/// <summary>
-		/// 
+		/// Test will never succeed
 		/// </summary>
 		Never = TK.StencilFunction.Never,
 
 		/// <summary>
-		/// 
+		/// Test will succeed if ( ref & mask ) < ( pixel & mask )
 		/// </summary>
 		Less = TK.StencilFunction.Less,
 
 		/// <summary>
-		/// 
+		/// Test will succeed if ( ref & mask ) == ( pixel & mask )
 		/// </summary>
 		Equal = TK.StencilFunction.Equal,
 
 		/// <summary>
-		/// 
+		/// Test will succeed if ( ref & mask ) <= ( pixel & mask )
 		/// </summary>
 		Lequal = TK.StencilFunction.Lequal,
 
 		/// <summary>
-		/// 
+		/// Test will succeed if ( ref & mask ) > ( pixel & mask )
 		/// </summary>
 		Greater = TK.StencilFunction.Greater,
 
 		/// <summary>
-		/// 
+		/// Test will succeed if ( ref & mask ) != ( pixel & mask )
 		/// </summary>
 		Notequal = TK.StencilFunction.Notequal,
 
 		/// <summary>
-		/// 
+		/// Test will succeed if ( ref & mask ) >= ( pixel & mask )
 		/// </summary>
 		Gequal = TK.StencilFunction.Gequal,
 
 		/// <summary>
-		/// 
+		/// Test will always succeed
 		/// </summary>
 		Always = TK.StencilFunction.Always,
 	}
 
 
 	/// <summary>
-	/// 
+	/// Alpha test function
 	/// </summary>
 	public enum AlphaFunction
 	{
 		/// <summary>
-		/// 
+		/// Never passes
 		/// </summary>
 		Never = TK.AlphaFunction.Never,
 
 		/// <summary>
-		/// 
+		/// Passes if the incoming alpha value is less than the reference value.
 		/// </summary>
 		Less = TK.AlphaFunction.Less,
 
 		/// <summary>
-		/// 
+		/// Passes if the incoming alpha value is equal to the reference value.
 		/// </summary>
 		Equal = TK.AlphaFunction.Equal,
 
 		/// <summary>
-		/// 
+		/// Passes if the incoming alpha value is less than or equal to the reference value.
 		/// </summary>
 		Lequal = TK.AlphaFunction.Lequal,
 
 		/// <summary>
-		/// 
+		/// Passes if the incoming alpha value is greater than the reference value.
 		/// </summary>
 		Greater = TK.AlphaFunction.Greater,
 
 		/// <summary>
-		/// 
+		/// Passes if the incoming alpha value is not equal to the reference value
 		/// </summary>
 		Notequal = TK.AlphaFunction.Notequal,
 
 		/// <summary>
-		/// 
+		/// Passes if the incoming alpha value is greater than or equal to the reference value.
 		/// </summary>
 		Gequal = TK.AlphaFunction.Gequal,
 
 		/// <summary>
-		/// 
+		/// Always passes.
 		/// </summary>
 		Always = 519,
 	}

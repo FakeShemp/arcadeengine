@@ -979,4 +979,53 @@ namespace ArcEngine.Graphic
 		GeometryShader = TK.ShaderType.GeometryShader,
 	}
 
+
+	/// <summary>
+	/// GLSL Shader language version
+	/// </summary>
+	public enum ShaderVersion
+	{
+		/// <summary>
+		/// Unsuported
+		/// </summary>
+		Unsuported = 0,
+
+		/// <summary>
+		/// Version 1.20, OpenGL 2.1
+		/// </summary>
+		GLSL_1_20,
+
+		/// <summary>
+		/// Version 1.30, OpenGL 3.0
+		/// </summary>
+		GLSL_1_30,
+
+		/// <summary>
+		/// Version 1.40, OpenGL 3.1
+		/// </summary>
+		GLSL_1_40,
+
+		/// <summary>
+		/// Version 1.50, OpenGL 3.2
+		/// </summary>
+		GLSL_1_50,
+
+		/// <summary>
+		/// Version 3.30, OpenGL 3.3
+		/// </summary>
+		GLSL_3_30,
+
+		/// <summary>
+		/// Version 4.00, OpenGL 4.0
+		/// </summary>
+		GLSL_4_00,
+
+		/// <summary>
+		/// Version 4.10, OpenGL 4.1
+		/// </summary>
+		GLSL_4_10,
+	}
+
+
+
 }
