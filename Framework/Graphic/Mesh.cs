@@ -58,6 +58,8 @@ namespace ArcEngine.Graphic
 			Position = new Vector3();
 			Rotation = new Vector3();
 			PrimitiveType = PrimitiveType.Triangles;
+			
+			Scale = new Vector3(1.0f, 1.0f, 1.0f);
 		}
 
 
@@ -130,6 +132,19 @@ namespace ArcEngine.Graphic
 		{
 		}
 
+
+		/// <summary>
+		/// Update matrix
+		/// </summary>
+		void UpdateMatrix()
+		{
+			Matrix = Matrix4.CreateRotationX(rotation.X) *
+				Matrix4.CreateRotationY(rotation.Y) * 
+				Matrix4.CreateRotationZ(rotation.Z) *
+				Matrix4.CreateTranslation(position) *
+				Matrix4.Scale(scale);
+			
+		}
 
 		#region Statics
 
@@ -817,16 +832,72 @@ namespace ArcEngine.Graphic
 		}
 
 
+
 		/// <summary>
-		/// 
+		/// Position
 		/// </summary>
-		public Vector3 Position;
+		public Vector3 Position
+		{
+			get
+			{
+				return position;
+			}
+
+			set
+			{
+				position = value;
+				UpdateMatrix();
+			}
+		}
+		Vector3 position;
 
 
 		/// <summary>
-		/// 
+		/// Scale
 		/// </summary>
-		public Vector3 Rotation;
+		public Vector3 Scale
+		{
+			get
+			{
+				return scale;
+			}
+
+			set
+			{
+				scale = value;
+				UpdateMatrix();
+			}
+		}
+		Vector3 scale;
+
+
+		/// <summary>
+		/// Rotation
+		/// </summary>
+		public Vector3 Rotation
+		{
+			get
+			{
+				return rotation;
+			}
+
+			set
+			{
+				rotation = value;
+				UpdateMatrix();
+			}
+		}
+		Vector3 rotation;
+
+
+		/// <summary>
+		/// Matrix of the mesh
+		/// </summary>
+		public Matrix4 Matrix
+		{
+			get;
+			private set;
+		}
 
 
 		/// <summary>

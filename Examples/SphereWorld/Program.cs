@@ -52,7 +52,6 @@ namespace ArcEngine.Examples.SphereWorld
 		}
 
 
-
 		/// <summary>
 		/// Load contents 
 		/// </summary>
@@ -60,15 +59,23 @@ namespace ArcEngine.Examples.SphereWorld
 		{
 			Display.RenderState.ClearColor = Color.CornflowerBlue;
 			Display.RenderState.DepthTest = true;
+			Display.RenderState.Culling = true;
 
+
+			Texture2D.DefaultMagFilter = TextureMagFilter.Linear;
+			Texture2D.DefaultMinFilter = TextureMinFilter.Linear;
+			Texture2D.DefaultHorizontalWrapFilter = HorizontalWrapFilter.Repeat;
+			Texture2D.DefaultVerticalWrapFilter = VerticalWrapFilter.Repeat;
+		
+	
 
 			Batch = new Graphic.SpriteBatch();
-			Font = BitmapFont.CreateFromTTF(@"c:\windows\fonts\verdana.ttf", 11, FontStyle.Regular);
+			Font = BitmapFont.CreateFromTTF(@"c:\windows\fonts\verdana.ttf", 10, FontStyle.Regular);
 					
 			
 			#region Matrices
 
-			CameraPostion = new Vector3(0.0f, 1.0f, 7.0f);
+			CameraPostion = new Vector3(0.0f, 0.1f, 3.0f);
 
 			float aspectRatio = (float)Display.ViewPort.Width / (float)Display.ViewPort.Height;
 			ProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(45.0f), aspectRatio, 0.1f, 100.0f);
@@ -119,31 +126,32 @@ namespace ArcEngine.Examples.SphereWorld
 			Shader.SetSource(ShaderType.FragmentShader, fshader);
 			Shader.Compile();
 			Display.Shader = Shader;
+
 			#endregion
 
-
 			Marble = new Texture2D("data/Marble.png");
-			Marble.MagFilter = TextureMagFilter.Linear;
-			Marble.MinFilter = TextureMinFilter.Linear;
-
 			Moon = new Texture2D("data/Moon.png");
 			Mars = new Texture2D("data/Mars.png");
 
-			Torus = Mesh.CreateTorus(0.15f, 0.40f, 40, 20);
+			Torus = Mesh.CreateTorus(0.15f, 0.50f, 40, 20);
+
 			Sphere = Mesh.ggCreateSphere(0.1f, 26);
+			Sphere.Position = new Vector3(1.0f, 0.4f, 0.0f);
+
 			float[] data = new float[]
 			{
-				-10.0f, -0.41f,  20.0f,		0.0f,     0.0f,
-				 10.0f, -0.41f,  20.0f,		0.0f,   128.0f,
-				 10.0f, -0.41f, -20.0f,		256.0f, 128.0f,
-				-10.0f, -0.41f, -20.0f,		256.0f,   0.0f,
+				-10.0f, 0.0f,  20.0f,		0.0f,    0.0f,
+				 10.0f, 0.0f,  20.0f,		0.0f,    10.0f,
+				 10.0f, 0.0f, -20.0f,		10.0f,	 10.0f,
+				-10.0f, 0.0f, -20.0f,		10.0f,   0.0f,
 			};
 			Floor = new Mesh();
 			Floor.SetVertices(data);
-			Floor.SetIndices(new int[] { 0, 1, 2, 0, 2, 3});
+			Floor.SetIndices(new int[] { 0, 1, 2, 2, 3, 0});
 			Floor.Buffer.AddDeclaration("in_position", 3);
 			Floor.Buffer.AddDeclaration("in_texture", 2);
 			Floor.PrimitiveType = PrimitiveType.Triangles;
+			Floor.Position = new Vector3(0.0f, -1.0f, 0.0f);
 		}
 
 
@@ -201,29 +209,48 @@ namespace ArcEngine.Examples.SphereWorld
 			if (Keyboard.IsKeyPress(Keys.Escape))
 				Exit();
 
-			if (Keyboard.IsKeyPress(Keys.Down))
+			if (Keyboard.IsKeyPress(Keys.Down) || Keyboard.IsKeyPress(Keys.S))
 				CameraPostion = Vector3.Add(CameraPostion, new Vector3(0.0f, 0.0f, CameraSpeed));
 
-			if (Keyboard.IsKeyPress(Keys.Up))
+			if (Keyboard.IsKeyPress(Keys.Up) || Keyboard.IsKeyPress(Keys.Z))
 				CameraPostion = Vector3.Add(CameraPostion, new Vector3(0.0f, 0.0f, -CameraSpeed));
 
 
-			if (Keyboard.IsKeyPress(Keys.Left))
+			if (Keyboard.IsKeyPress(Keys.Left) || Keyboard.IsKeyPress(Keys.Q))
 				CameraPostion = Vector3.Add(CameraPostion, new Vector3(-CameraSpeed, 0.0f, 0.0f));
 
-			if (Keyboard.IsKeyPress(Keys.Right))
+			if (Keyboard.IsKeyPress(Keys.Right) || Keyboard.IsKeyPress(Keys.D))
 				CameraPostion = Vector3.Add(CameraPostion, new Vector3(CameraSpeed, 0.0f, 0.0f));
 
 			// Update camera view
-			Matrix4 cameraRotation = Matrix4.CreateRotationX(Mouse.MoveDelta.X) * Matrix4.CreateRotationY(Mouse.MoveDelta.Y);
-
-	
-			// Center mouse
-	//		Mouse.Location = new Point(Window.Size.Width / 2, Window.Size.Height / 2);
-
 			// http://www.riemers.net/eng/Tutorials/XNA/Csharp/Series4/Mouse_camera.php
+			//CameraRotation = Vector3.Add(CameraRotation, new Vector3(Mouse.MoveDelta.X, Mouse.MoveDelta.Y, 0.0f));
+
+
+			// Center mouse
+			//Mouse.Location = new Point(Window.Size.Width / 2, Window.Size.Height / 2);
+
+			Torus.Rotation += new Vector3(0.0f, 0.025f, 0.0f);
+			Sphere.Rotation -= new Vector3(0.0f, 0.02f, 0.0f);
+
 		}
 
+
+
+		private Matrix4 UpdateViewMatrix()
+		{
+			float rotspeed = 0.3f;
+			Matrix4 cameraRotation = Matrix4.CreateRotationX(CameraRotation.X * rotspeed) * Matrix4.CreateRotationY(CameraRotation.Y * rotspeed);
+
+			Vector3 cameraOriginalTarget = new Vector3(0, 0, -1);
+			Vector3 cameraRotatedTarget = Vector3.Transform(cameraOriginalTarget, cameraRotation);
+			Vector3 cameraFinalTarget = CameraPostion + cameraRotatedTarget;
+
+			Vector3 cameraOriginalUpVector = new Vector3(0, 1, 0);
+			Vector3 cameraRotatedUpVector = Vector3.Transform(cameraOriginalUpVector, cameraRotation);
+
+			return Matrix4.LookAt(CameraPostion, cameraFinalTarget, cameraRotatedUpVector);
+		}
 
 
 		/// <summary>
@@ -239,17 +266,21 @@ namespace ArcEngine.Examples.SphereWorld
 			ModelViewMatrix = Matrix4.LookAt(CameraPostion, target, Vector3.UnitY);
 			Matrix4 mvp = ModelViewMatrix * ProjectionMatrix;
 
+			// Bind the shader and the texture
 			Display.Shader = Shader;
-			Shader.SetUniform("mvpMatrix", mvp);
 			Shader.SetUniform("textureUnit0", 0);
 
-			Display.Texture = Moon;
-			Torus.Draw();
 
 			Display.Texture = Marble;
+			Shader.SetUniform("mvpMatrix", Torus.Matrix * mvp);
+			Torus.Draw();
+
+			Display.Texture = Moon;
+			Shader.SetUniform("mvpMatrix", Matrix4.CreateTranslation(Sphere.Position) * Matrix4.CreateRotationY(Sphere.Rotation.Y) * mvp);
 			Sphere.Draw();
 
 			Display.Texture = Mars;
+			Shader.SetUniform("mvpMatrix", Floor.Matrix * mvp);
 			Floor.Draw();
 
 
@@ -260,23 +291,6 @@ namespace ArcEngine.Examples.SphereWorld
 			Batch.End();
 		}
 
-
-
-		private void UpdateViewMatrix()
-		{
-			float updownRot = 0.0f;
-			float leftrightRot = 0.0f;
-			Matrix4 cameraRotation = Matrix4.CreateRotationX(updownRot) * Matrix4.CreateRotationY(leftrightRot);
-
-			Vector3 cameraOriginalTarget = new Vector3(0, 0, -1);
-			Vector3 cameraRotatedTarget = Vector3.Transform(cameraOriginalTarget, cameraRotation);
-			Vector3 cameraFinalTarget = CameraPostion + cameraRotatedTarget;
-
-			Vector3 cameraOriginalUpVector = new Vector3(0, 1, 0);
-			Vector3 cameraRotatedUpVector = Vector3.Transform(cameraOriginalUpVector, cameraRotation);
-
-			Matrix4 viewMatrix = Matrix4.LookAt(CameraPostion, cameraFinalTarget, cameraRotatedUpVector);
-		}
 
 
 		#region Properties
@@ -299,32 +313,33 @@ namespace ArcEngine.Examples.SphereWorld
 		/// </summary>
 		Vector3 CameraPostion;
 
+
 		/// <summary>
 		/// 
 		/// </summary>
-		Vector2 CameraRotation;
+		Vector3 CameraRotation;
 
 
 		/// <summary>
-		/// 
+		/// Torus mesh
 		/// </summary>
 		Mesh Torus;
 
 
 		/// <summary>
-		/// 
+		/// Sphere mesh
 		/// </summary>
 		Mesh Sphere;
 
 
 		/// <summary>
-		/// 
+		/// Floor mesh
 		/// </summary>
 		Mesh Floor;
 
 
 		/// <summary>
-		/// 
+		/// Shader
 		/// </summary>
 		Shader Shader;
 
@@ -342,31 +357,31 @@ namespace ArcEngine.Examples.SphereWorld
 
 
 		/// <summary>
-		/// 
+		/// Marble texture
 		/// </summary>
 		Texture2D Marble;
 
 
 		/// <summary>
-		/// 
+		/// Mars texture
 		/// </summary>
 		Texture2D Mars;
 
 
 		/// <summary>
-		/// 
+		/// Moon texture
 		/// </summary>
 		Texture2D Moon;
 
 
 		/// <summary>
-		/// 
+		/// Bitmap font
 		/// </summary>
 		BitmapFont Font;
 		
 
 		/// <summary>
-		/// 
+		/// Spritebatch
 		/// </summary>
 		SpriteBatch Batch;
 
