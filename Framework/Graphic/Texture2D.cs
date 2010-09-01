@@ -53,11 +53,9 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public Texture2D()
 		{
-			Handle = TK.GL.GenTexture();
-			//ErrorCode code = GL.GetError();
-			//if (code != ErrorCode.NoError)
-			//    Trace.WriteLine("Failed to create a new texture ({0})", code.ToString());
+			Target = TextureTarget.Texture2D;
 
+			Handle = TK.GL.GenTexture();
 
 			// Bind the texture
 			Display.Texture = this;
@@ -70,6 +68,7 @@ namespace ArcEngine.Graphic
 			BorderColor = DefaultBorderColor;
 			HorizontalWrap = DefaultHorizontalWrapFilter;
 			VerticalWrap = DefaultVerticalWrapFilter;
+
 
 		}
 
@@ -711,6 +710,15 @@ namespace ArcEngine.Graphic
 		}
 
 
+		/// <summary>
+		/// Texture type
+		/// </summary>
+		public TextureTarget Target
+		{
+			get;
+			private set;
+		}
+
 		#endregion
 
 
@@ -794,7 +802,6 @@ namespace ArcEngine.Graphic
 	}
 
 
-
 	/// <summary>
 	/// Sets the wrap parameter for texture coordinate s
 	/// to either CLAMP or REPEAT
@@ -836,7 +843,6 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		Repeat = 0x2901
 	}
-
 
 
 	/// <summary>
@@ -920,5 +926,143 @@ namespace ArcEngine.Graphic
         /// </summary>
         DepthStencil = TK.PixelFormat.DepthStencil,
     }
+
+
+	/// <summary>
+	/// 
+	/// </summary>
+	public enum TextureEnvMode
+	{
+		/// <summary>
+		/// 
+		/// </summary>
+		Add = TK.TextureEnvMode.Add,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Blend = TK.TextureEnvMode.Blend,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Replace = TK.TextureEnvMode.Replace,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Modulate = TK.TextureEnvMode.Modulate,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Decal = TK.TextureEnvMode.Decal,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Combine = TK.TextureEnvMode.Combine,
+	}
+
+
+	/// <summary>
+	/// The texture magnification function is used when the pixel being textured 
+	/// maps to an area less than or equal to one texture element. 
+	/// </summary>
+	public enum TextureMagFilter
+	{
+		/// <summary>
+		/// Returns the value of the texture element that is nearest 
+		/// (in Manhattan distance) to the center of the pixel being textured.
+		/// </summary>
+		Nearest = TK.TextureMagFilter.Nearest,
+
+		/// <summary>
+		/// Returns the weighted average of the four texture elements that are closest 
+		/// to the center of the pixel being textured. These can include border texture 
+		/// elements, depending on the values of GL_TEXTURE_WRAP_S and GL_TEXTURE_WRAP_T, 
+		/// and on the exact mapping.
+		/// </summary>
+		Linear = TK.TextureMagFilter.Linear,
+	}
+
+
+	/// <summary>
+	/// The texture minifying function is used whenever the pixel being
+	/// textured maps to an area greater than one texture element.
+	/// </summary>
+	public enum TextureMinFilter
+	{
+
+		/// <summary>
+		/// Returns the value of the texture element that is nearest (in Manhattan distance) 
+		/// to the center of the pixel being textured.
+		/// </summary>
+		Nearest = TK.TextureMinFilter.Nearest,
+
+		/// <summary>
+		/// Returns the weighted average of the four texture elements that are closest to the center of the pixel 
+		/// being textured. These can include border texture elements, depending on the values of
+		/// GL_TEXTURE_WRAP_S and GL_TEXTURE_WRAP_T, and on the exact mapping.
+		/// </summary>
+		Linear = TK.TextureMinFilter.Linear,
+
+		/// <summary>
+		/// Chooses the mipmap that most closely matches the size of the pixel being textured and uses the
+		/// GL_NEAREST criterion (the texture element nearest to the center of the pixel) to produce a texture value.
+		/// </summary>
+		NearestMipmapNearest = TK.TextureMinFilter.NearestMipmapNearest,
+
+		/// <summary>
+		/// Chooses the mipmap that most closely matches the size of the pixel being textured and uses the 
+		/// GL_LINEAR criterion (a weighted average of the four texture elements that are closest to the 
+		/// center of the pixel) to produce a texture value.
+		/// </summary>
+		LinearMipmapNearest = TK.TextureMinFilter.LinearMipmapNearest,
+
+		/// <summary>
+		/// Chooses the two mipmaps that most closely match the size of the pixel being textured and uses 
+		/// the GL_NEAREST criterion (the texture element nearest to the center of the pixel) to produce
+		/// a texture value from each mipmap. The final texture value is a weighted average of those two values.
+		/// </summary>
+		NearestMipmapLinear = TK.TextureMinFilter.NearestMipmapLinear,
+
+		/// <summary>
+		/// Chooses the two mipmaps that most closely match the size of the pixel being textured and uses 
+		/// the GL_LINEAR criterion (a weighted average of the four texture elements that are closest to 
+		/// the center of the pixel) to produce a texture value from each mipmap. 
+		/// The final texture value is a weighted average of those two values.
+		/// </summary>
+		LinearMipmapLinear = TK.TextureMinFilter.LinearMipmapLinear,
+	}
+
+
+	/// <summary>
+	/// 
+	/// </summary>
+	public enum TextureTarget
+	{
+		/// <summary>
+		/// One dimensional texture
+		/// </summary>
+		Texture1D = TK.TextureTarget.Texture1D,
+
+		/// <summary>
+		/// Two dimensional texture
+		/// </summary>
+		Texture2D = TK.TextureTarget.Texture2D,
+
+
+		/// <summary>
+		/// Three dimensional texture
+		/// </summary>
+		Texture3D = TK.TextureTarget.Texture3D,
+
+
+		/// <summary>
+		/// Cube map texture
+		/// </summary>
+		CubeMap = TK.TextureTarget.TextureCubeMap,
+	}
 
 }

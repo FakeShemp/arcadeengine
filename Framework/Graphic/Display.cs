@@ -654,7 +654,7 @@ namespace ArcEngine.Graphic
 				{
 
 					texture = value;
-					TK.GL.BindTexture(TK.TextureTarget.Texture2D, value.Handle);
+					TK.GL.BindTexture((TK.TextureTarget)value.Target, value.Handle);
 
 					Statistics.TextureBinding++;
 				}
@@ -1498,97 +1498,4 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		Always = 519,
 	}
-
-
-	/// <summary>
-	/// 
-	/// </summary>
-	public enum TextureEnvMode
-	{
-		/// <summary>
-		/// 
-		/// </summary>
-		Add = TK.TextureEnvMode.Add,
-
-		/// <summary>
-		/// 
-		/// </summary>
-		Blend = TK.TextureEnvMode.Blend,
-
-		/// <summary>
-		/// 
-		/// </summary>
-		Replace = TK.TextureEnvMode.Replace,
-
-		/// <summary>
-		/// 
-		/// </summary>
-		Modulate = TK.TextureEnvMode.Modulate,
-
-		/// <summary>
-		/// 
-		/// </summary>
-		Decal = TK.TextureEnvMode.Decal,
-
-		/// <summary>
-		/// 
-		/// </summary>
-		Combine = TK.TextureEnvMode.Combine,
-	}
-
-
-	/// <summary>
-	/// 
-	/// </summary>
-	public enum TextureMagFilter
-	{
-		/// <summary>
-		/// 
-		/// </summary>
-		Nearest = TK.TextureMagFilter.Nearest,
-
-		/// <summary>
-		/// 
-		/// </summary>
-		Linear = TK.TextureMagFilter.Linear,
-	}
-
-
-	/// <summary>
-	/// 
-	/// </summary>
-	public enum TextureMinFilter
-	{
-
-		/// <summary>
-		/// 
-		/// </summary>
-		Nearest = TK.TextureMinFilter.Nearest,
-
-		/// <summary>
-		/// 
-		/// </summary>
-		Linear = TK.TextureMinFilter.Linear,
-
-		/// <summary>
-		/// 
-		/// </summary>
-		NearestMipmapNearest = TK.TextureMinFilter.NearestMipmapNearest,
-
-		/// <summary>
-		/// 
-		/// </summary>
-		LinearMipmapNearest = TK.TextureMinFilter.LinearMipmapNearest,
-
-		/// <summary>
-		/// 
-		/// </summary>
-		NearestMipmapLinear = TK.TextureMinFilter.NearestMipmapLinear,
-
-		/// <summary>
-		/// 
-		/// </summary>
-		LinearMipmapLinear = TK.TextureMinFilter.LinearMipmapLinear,
-	}
-
 }
