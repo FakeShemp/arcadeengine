@@ -62,16 +62,8 @@ namespace ArcEngine.Examples.SphereWorld
 			Display.RenderState.Culling = true;
 
 
-			Texture2D.DefaultMagFilter = TextureMagFilter.Linear;
-			Texture2D.DefaultMinFilter = TextureMinFilter.Linear;
-			Texture2D.DefaultHorizontalWrapFilter = HorizontalWrapFilter.Repeat;
-			Texture2D.DefaultVerticalWrapFilter = VerticalWrapFilter.Repeat;
 		
 	
-
-			Batch = new Graphic.SpriteBatch();
-			Font = BitmapFont.CreateFromTTF(@"c:\windows\fonts\verdana.ttf", 10, FontStyle.Regular);
-					
 			
 			#region Matrices
 
@@ -129,10 +121,30 @@ namespace ArcEngine.Examples.SphereWorld
 
 			#endregion
 
-			Marble = new Texture2D("data/Marble.png");
-			Moon = new Texture2D("data/Moon.png");
-			Mars = new Texture2D("data/Mars.png");
 
+			#region Textures
+
+			Texture2D.DefaultMagFilter = TextureMagFilter.Linear;
+			Texture2D.DefaultMinFilter = TextureMinFilter.Linear;
+			Texture2D.DefaultHorizontalWrapFilter = HorizontalWrapFilter.Repeat;
+			Texture2D.DefaultVerticalWrapFilter = VerticalWrapFilter.Repeat;
+
+			Marble = new Texture2D("data/Marble.png");
+			Marble.MinFilter = TextureMinFilter.Linear;
+			Marble.MagFilter = TextureMagFilter.Linear;
+
+			Moon = new Texture2D("data/Moon.png");
+			Moon.MinFilter = TextureMinFilter.Linear;
+			Moon.MagFilter = TextureMagFilter.Linear;
+
+			Mars = new Texture2D("data/Mars.png");
+			Mars.MinFilter = TextureMinFilter.Linear;
+			Mars.MagFilter = TextureMagFilter.Linear;
+
+			#endregion
+
+
+			#region Mesh
 			Torus = Mesh.CreateTorus(0.15f, 0.50f, 40, 20);
 
 			Sphere = Mesh.ggCreateSphere(0.1f, 26);
@@ -140,18 +152,24 @@ namespace ArcEngine.Examples.SphereWorld
 
 			float[] data = new float[]
 			{
-				-10.0f, 0.0f,  20.0f,		0.0f,    0.0f,
-				 10.0f, 0.0f,  20.0f,		0.0f,    10.0f,
-				 10.0f, 0.0f, -20.0f,		10.0f,	 10.0f,
-				-10.0f, 0.0f, -20.0f,		10.0f,   0.0f,
+				// Vertex					Texture
+				-10.0f, 0.0f,  20.0f,		0.0f, 0.0f,
+				 10.0f, 0.0f,  20.0f,		1.0f, 0.0f,
+				 10.0f, 0.0f, -20.0f,		1.0f, 1.0f,
+				-10.0f, 0.0f, -20.0f,		0.0f, 1.0f,
 			};
 			Floor = new Mesh();
 			Floor.SetVertices(data);
-			Floor.SetIndices(new int[] { 0, 1, 2, 2, 3, 0});
+			Floor.SetIndices(new int[] { 0, 1, 2, 3});
 			Floor.Buffer.AddDeclaration("in_position", 3);
 			Floor.Buffer.AddDeclaration("in_texture", 2);
-			Floor.PrimitiveType = PrimitiveType.Triangles;
+			Floor.PrimitiveType = PrimitiveType.TriangleFan;
 			Floor.Position = new Vector3(0.0f, -1.0f, 0.0f);
+
+			#endregion
+
+			Batch = new Graphic.SpriteBatch();
+			Font = BitmapFont.CreateFromTTF(@"c:\windows\fonts\verdana.ttf", 10, FontStyle.Regular);
 		}
 
 
@@ -271,7 +289,7 @@ namespace ArcEngine.Examples.SphereWorld
 			Shader.SetUniform("textureUnit0", 0);
 
 
-			Display.Texture = Marble;
+			Display.Texture = Mars;
 			Shader.SetUniform("mvpMatrix", Torus.Matrix * mvp);
 			Torus.Draw();
 
@@ -279,15 +297,13 @@ namespace ArcEngine.Examples.SphereWorld
 			Shader.SetUniform("mvpMatrix", Matrix4.CreateTranslation(Sphere.Position) * Matrix4.CreateRotationY(Sphere.Rotation.Y) * mvp);
 			Sphere.Draw();
 
-			Display.Texture = Mars;
+			Display.Texture = Marble;
 			Shader.SetUniform("mvpMatrix", Floor.Matrix * mvp);
 			Floor.Draw();
 
 
 			Batch.Begin();
 			Batch.DrawString(Font, new Vector2(10, 50), Color.White, "Camera position : {0}", CameraPostion.ToString());
-			Batch.DrawString(Font, new Vector2(10, 70), Color.White, "Camera rotation : {0}", CameraRotation.ToString());
-			Batch.DrawString(Font, new Vector2(10, 90), Color.White, "Camera target : {0}", target.ToString());
 			Batch.End();
 		}
 

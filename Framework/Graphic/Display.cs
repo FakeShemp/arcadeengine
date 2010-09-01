@@ -59,8 +59,6 @@ namespace ArcEngine.Graphic
 			if (Capabilities == null)
 				Capabilities = new RenderDeviceCapabilities();
 
-			if (Buffer == null)
-				Buffer = BatchBuffer.CreatePositionColorTextureBuffer();
 
 			Texturing = true;
 			RenderState.Blending = true;
@@ -86,13 +84,8 @@ namespace ArcEngine.Graphic
 		{
 			Trace.WriteDebugLine("[Display] : Dispose()");
 
-			if (Buffer != null)
-				Buffer.Dispose();
-			Buffer = null;
-
 			Shader = null;
 			Texture = null;
-
 		}
 
 
@@ -292,49 +285,6 @@ namespace ArcEngine.Graphic
 		#endregion
 
 
-		#region Shared textures
-
-
-		/// <summary>
-		/// Creates a shared texture
-		/// </summary>
-		/// <param name="name">Name of the texture</param>
-		/// <returns>Texture handle</returns>
-		public static Texture2D CreateSharedTexture(string name)
-		{
-
-			// Texture already exist, so return it
-			if (SharedTextures.ContainsKey(name))
-				return SharedTextures[name];
-
-			// Else create the texture
-			SharedTextures[name] = new Texture2D();
-			return SharedTextures[name];
-		}
-
-
-
-		/// <summary>
-		/// Deletes a shared texture
-		/// </summary>
-		/// <param name="name">Name of the texture</param>
-		public static void DeleteSharedTexture(string name)
-		{
-			SharedTextures[name] = null;
-		}
-
-
-		/// <summary>
-		/// Removes all shared textures
-		/// </summary>
-		public static void DeleteSharedTextures()
-		{
-			SharedTextures.Clear();
-		}
-
-		#endregion
-
-
 		#region Batchs
 
 
@@ -420,18 +370,6 @@ namespace ArcEngine.Graphic
 			return;
 		}
 
-/*
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="shape"></param>
-		/// <param name="shader"></param>
-		public static void DrawShape(Shape shape, Shader shader)
-		{
-
-		}
-*/
 
 		/// <summary>
 		/// Enables a buffer index 
@@ -454,107 +392,6 @@ namespace ArcEngine.Graphic
 		{
 			TK.GL.DisableVertexAttribArray(id);
 		}
-
-		#endregion
-
-
-		#region Texture blits
-
-		/// <summary>
-		/// Draws a texture on the screen
-		/// </summary>
-		/// <param name="texture">Texture to display</param>
-		/// <param name="location">Location on the screen</param>
-		[Obsolete]
-		static public void DrawTexture(Texture2D texture, Point location)
-		{
-			DrawTexture(texture, location, Color.White);
-		}
-
-
-		/// <summary>
-		/// Draws a texture on the screen
-		/// </summary>
-		/// <param name="texture">Texture to display</param>
-		/// <param name="location">Location on the screen</param>
-		/// <param name="color">Color to apply</param>
-		[Obsolete]
-		static public void DrawTexture(Texture2D texture, Point location, Color color)
-		{
-			if (texture == null)
-				return;
-
-			Texture = texture;
-
-			Buffer.AddRectangle(new Rectangle(location, texture.Size), color, texture.Rectangle);
-			int count = Buffer.Update();
-			DrawBatch(Buffer, 0, count);
-		}
-
-
-		/// <summary>
-		/// Draws a texture
-		/// </summary>
-		/// <param name="texture">Texture to display</param>
-		/// <param name="rect"></param>
-		/// <param name="tex">Texture coords</param>
-		[Obsolete]
-		static public void DrawTexture(Texture2D texture, Rectangle rect, Rectangle tex)
-		{
-			DrawTexture(texture, rect, tex, Color.White);
-		}
-
-
-		/// <summary>
-		/// Draws a texture
-		/// </summary>
-		/// <param name="texture">Texture to display</param>
-		/// <param name="rect"></param>
-		/// <param name="tex"></param>
-		/// <param name="color">Color to apply</param>
-		[Obsolete]
-		static public void DrawTexture(Texture2D texture, Rectangle rect, Rectangle tex, Color color)
-		{
-			if (texture == null)
-				return;
-
-			Texture = texture;
-
-			Buffer.AddRectangle(rect, color, tex);
-			int count = Buffer.Update();
-			DrawBatch(Buffer, 0, count);
-		}
-
-
-
-
-		/// <summary>
-		/// Raw draw a textured quad on the screen
-		/// </summary>
-		/// <param name="rect">Rectangle on the screen</param>
-		/// <param name="tex">Rectangle in the texture</param>
-		[Obsolete]
-		static internal void RawBlit(Rectangle rect, Rectangle tex)
-		{
-			TK.GL.Begin(TK.BeginMode.Quads);
-
-			TK.GL.TexCoord2(tex.X, tex.Y);
-			TK.GL.Vertex2(rect.X, rect.Y);
-
-			TK.GL.TexCoord2(tex.X, tex.Y + tex.Height);
-			TK.GL.Vertex2(rect.X, rect.Y + rect.Height);
-
-			TK.GL.TexCoord2(tex.X + tex.Width, tex.Y + tex.Height);
-			TK.GL.Vertex2(rect.X + rect.Width, rect.Y + rect.Height);
-
-			TK.GL.TexCoord2(tex.X + tex.Width, tex.Y);
-			TK.GL.Vertex2(rect.X + rect.Width, rect.Y);
-
-			TK.GL.End();
-
-	//		RenderStats.DirectCall += 4;
-		}
-
 
 		#endregion
 
@@ -602,16 +439,6 @@ namespace ArcEngine.Graphic
 
 
 		/// <summary>
-		/// Batch buffer
-		/// </summary>
-		public static BatchBuffer Buffer
-		{
-			get;
-			private set;
-		}
-
-
-		/// <summary>
 		/// Gets or sets the current Shader
 		/// </summary>
 		public static Shader Shader
@@ -629,12 +456,6 @@ namespace ArcEngine.Graphic
 			}
 		}
 		static Shader shader;
-
-
-		/// <summary>
-		/// Shared textures
-		/// </summary>
-		static Dictionary<string, Texture2D> SharedTextures = new Dictionary<string, Texture2D>();
 
 
 		/// <summary>
@@ -709,6 +530,7 @@ namespace ArcEngine.Graphic
 			}
 		}
 
+
 		/// <summary>
 		/// Gets/sets the viewport
 		/// </summary>
@@ -731,6 +553,7 @@ namespace ArcEngine.Graphic
 				TK.GL.Viewport(0, 0, rect.Width, rect.Height);
 			}
 		}
+
 
 		/// <summary>
 		/// Enables/disables 2d texture

@@ -180,7 +180,6 @@ namespace ArcEngine.Asset
 			
 
 			Vector4 rect = zone;
-			Display.Buffer.Clear();
 
 
 			// Extra offset when displaying tile

@@ -20,7 +20,6 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
@@ -87,7 +86,7 @@ namespace ArcEngine.Examples.ShaderDemo
 			// Setup the geometry shader
 			GeomShader = Shader.CreateColorShader();
 			GeomShader.LoadSource(ShaderType.GeometryShader, "data/geometry.txt");
-			GeomShader.SetGeometryPrimitives(BeginMode.Lines, BeginMode.LineStrip, 50);
+			GeomShader.SetGeometryPrimitives(PrimitiveType.Lines, PrimitiveType.LineStrip, 50);
 			GeomShader.Compile();
 
 

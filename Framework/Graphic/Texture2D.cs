@@ -25,6 +25,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using Imaging = System.Drawing.Imaging;
 using TK = OpenTK.Graphics.OpenGL;
+using System.Collections.Generic;
 
 //
 //
@@ -473,6 +474,60 @@ namespace ArcEngine.Graphic
 			IsLocked = false;
 			Data = null;
 		}
+
+		#endregion
+
+
+		#region Shared textures
+
+
+		/// <summary>
+		/// Creates a shared texture
+		/// </summary>
+		/// <param name="name">Name of the texture</param>
+		/// <returns>Texture handle</returns>
+		public static Texture2D CreateShared(string name)
+		{
+			if (SharedTextures == null)
+				SharedTextures = new Dictionary<string, Texture2D>();
+
+
+			// Texture already exist, so return it
+			if (SharedTextures.ContainsKey(name))
+				return SharedTextures[name];
+
+			// Else create the texture
+			SharedTextures[name] = new Texture2D();
+			return SharedTextures[name];
+		}
+
+
+
+		/// <summary>
+		/// Deletes a shared texture
+		/// </summary>
+		/// <param name="name">Name of the texture</param>
+		public static void DeleteShared(string name)
+		{
+			SharedTextures[name] = null;
+		}
+
+
+		/// <summary>
+		/// Removes all shared textures
+		/// </summary>
+		public static void DeleteShared()
+		{
+			SharedTextures.Clear();
+		}
+
+
+
+		/// <summary>
+		/// Shared textures
+		/// </summary>
+		static Dictionary<string, Texture2D> SharedTextures = new Dictionary<string, Texture2D>();
+
 
 		#endregion
 
