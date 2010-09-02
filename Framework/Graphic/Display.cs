@@ -428,13 +428,26 @@ namespace ArcEngine.Graphic
 
 
 		/// <summary>
-		/// 
+		/// Select a polygon rasterization mode
 		/// </summary>
-		/// <param name="face"></param>
-		/// <param name="mode"></param>
+		/// <param name="face">Specifies the polygons that mode applies to</param>
+		/// <param name="mode">Specifies how polygons will be rasterized</param>
 		public static void PolygonMode(MaterialFace face, PolygonMode mode)
 		{
 			TK.GL.PolygonMode((TK.MaterialFace)face, (TK.PolygonMode)mode);
+		}
+
+
+
+		/// <summary>
+		/// Set the scale and units used to calculate depth values
+		/// </summary>
+		/// <param name="factor">Specifies a scale factor that is used to create a variable
+		/// depth offset for each polygon</param>
+		/// <param name="unit">value tocreate a constant depth offset</param>
+		public static void PolygonOffset(float factor, float unit)
+		{
+			TK.GL.PolygonOffset(factor, unit);
 		}
 
 		#endregion
@@ -641,48 +654,47 @@ namespace ArcEngine.Graphic
 
 
 	/// <summary>
-	/// 
+	/// Interpretation of polygons for rasterization
 	/// </summary>
 	public enum MaterialFace
 	{
 		/// <summary>
-		/// 
+		/// Front-facing polygons 
 		/// </summary>
 		Front = TK.MaterialFace.Front,
 
 		/// <summary>
-		/// 
+		/// Back-facing polygons 
 		/// </summary>
 		Back = TK.MaterialFace.Back,
 
 		/// <summary>
-		/// 
+		/// Both
 		/// </summary>
 		FrontAndBack = TK.MaterialFace.FrontAndBack,
 	}
 
 
 	/// <summary>
-	/// 
+	/// Final rasterization of polygons
 	/// </summary>
 	public enum PolygonMode
 	{
 		/// <summary>
-		/// 
+		/// Polygon vertices that are marked as the start of a boundary edge are drawn as points
 		/// </summary>
 		Point = TK.PolygonMode.Point,
 
 		/// <summary>
-		/// 
+		/// Boundary edges of the polygon are drawn as line segments
 		/// </summary>
 		Line = TK.PolygonMode.Line,
 
 		/// <summary>
-		/// 
+		/// The interior of the polygon is filled
 		/// </summary>
 		Fill = TK.PolygonMode.Fill,
 	}
-
 
 
 	/// <summary>

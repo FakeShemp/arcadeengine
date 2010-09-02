@@ -56,6 +56,9 @@ namespace ArcEngine.Graphic
 			state.StencilWriteMask = StencilWriteMask;
 			state.TwoSidedStencilMode = TwoSidedStencilMode;
 			state.LineWidth = LineWidth;
+			state.PolygonOffsetFill = PolygonOffsetFill;
+			state.PolygonOffsetLine = PolygonOffsetLine;
+			state.PolygonOffsetPoint = PolygonOffsetPoint;
 
 			return state;
 		}
@@ -87,6 +90,9 @@ namespace ArcEngine.Graphic
 			StencilWriteMask = state.StencilWriteMask;
 			TwoSidedStencilMode = state.TwoSidedStencilMode;
 			LineWidth = state.LineWidth;
+			PolygonOffsetFill = state.PolygonOffsetFill;
+			PolygonOffsetLine = state.PolygonOffsetLine;
+			PolygonOffsetPoint = state.PolygonOffsetPoint;
 		}
 
 
@@ -192,7 +198,6 @@ namespace ArcEngine.Graphic
 		}
 
 
-
 		/// <summary>
 		/// FSAA
 		/// </summary>
@@ -229,6 +234,7 @@ namespace ArcEngine.Graphic
 				TK.GL.ClearColor(value.R / 255.0f, value.G / 255.0f, value.B / 255.0f, value.A / 255.0f);
 			}
 		}
+
 
 		/// <summary>
 		/// Enables/disables face culling
@@ -303,6 +309,67 @@ namespace ArcEngine.Graphic
 			set
 			{
 				TK.GL.DepthMask(value);
+			}
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public bool PolygonOffsetFill
+		{
+			get
+			{
+				return TK.GL.IsEnabled(TK.EnableCap.PolygonOffsetFill);
+			}
+
+			set
+			{
+				if (value)
+					TK.GL.Enable(TK.EnableCap.PolygonOffsetFill);
+				else
+					TK.GL.Disable(TK.EnableCap.PolygonOffsetFill);
+			}
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public bool PolygonOffsetLine
+		{
+			get
+			{
+				return TK.GL.IsEnabled(TK.EnableCap.PolygonOffsetLine);
+			}
+
+			set
+			{
+				if (value)
+					TK.GL.Enable(TK.EnableCap.PolygonOffsetLine);
+				else
+					TK.GL.Disable(TK.EnableCap.PolygonOffsetLine);
+			}
+		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public bool PolygonOffsetPoint
+		{
+			get
+			{
+				return TK.GL.IsEnabled(TK.EnableCap.PolygonOffsetPoint);
+			}
+
+			set
+			{
+				if (value)
+					TK.GL.Enable(TK.EnableCap.PolygonOffsetPoint);
+				else
+					TK.GL.Disable(TK.EnableCap.PolygonOffsetPoint);
 			}
 		}
 
@@ -555,6 +622,23 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public int PointSize;
 
+		/// <summary>
+		/// 
+		/// </summary>
+		public bool PolygonOffsetLine;
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public bool PolygonOffsetPoint;
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public bool PolygonOffsetFill;
+
 
 		/// <summary>
 		/// FSAA
@@ -662,9 +746,7 @@ namespace ArcEngine.Graphic
 		#endregion
 	}
 
-
-
-
+	
 	/// <summary>
 	/// Defines stencil buffer operations. 
 	/// </summary>

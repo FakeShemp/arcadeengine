@@ -66,7 +66,7 @@ namespace ArcEngine.Examples.Outlining
 		{
 			Display.RenderState.ClearColor = Color.CornflowerBlue;
 			Display.RenderState.DepthTest = true;
-			Display.RenderState.Culling = true;
+		//	Display.RenderState.Culling = true;
 			Display.RenderState.StencilClearValue = 0;
 
 			#region Matrices
@@ -174,7 +174,7 @@ namespace ArcEngine.Examples.Outlining
 
 			// Bind the shader
 			Display.Shader = Shader;
-			Shader.SetUniform("Color", new Vector4(Color.CornflowerBlue.R / 255.0f, Color.CornflowerBlue.G / 255.0f, Color.CornflowerBlue.B / 255.0f, 1.0f)); 
+			Shader.SetUniform("Color", new Vector4(0.0f, 0.0f, 0.0f, 1.0f)); 
 			Shader.SetUniform("mvpMatrix", Mesh.Matrix * mvp);
 
 			// Ckear the stencil buffer
@@ -186,19 +186,23 @@ namespace ArcEngine.Examples.Outlining
 			Mesh.Draw();
 
 			// Set the stencil buffer to only allow writing when the stencil buffer is not 1
-			Display.StencilFunction(StencilFunction.Notequal, 1, 0xFFFF);
+			Display.StencilFunction(StencilFunction.Notequal, 1, int.MaxValue);
 			Display.StencilOp(StencilOp.Keep, StencilOp.Keep, StencilOp.Replace);
 
 			// Draw the mesh with thick lines
-			Display.RenderState.LineWidth = 10.0f;
+			Display.PolygonOffset(1.0f, -1.0f);
+			Display.RenderState.PolygonOffsetLine = true;
+
+			Display.RenderState.LineWidth = 5.0f;
 			Display.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
-			Shader.SetUniform("Color", new Vector4(1.0f, 0.0f, 0.0f, 1.0f));
+			Shader.SetUniform("Color", new Vector4(1.0f, 1.0f, 0.0f, 1.0f));
 			Mesh.Draw();
 
 			// Removes changes
 			Display.RenderState.LineWidth = 1.0f;
 			Display.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
 			Display.RenderState.StencilTest = false;
+			Display.RenderState.PolygonOffsetLine = false;
 		}
 
 
