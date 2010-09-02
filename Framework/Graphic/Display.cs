@@ -424,6 +424,21 @@ namespace ArcEngine.Graphic
 
 		#endregion
 
+		#region Polygon mode
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="face"></param>
+		/// <param name="mode"></param>
+		public static void PolygonMode(MaterialFace face, PolygonMode mode)
+		{
+			TK.GL.PolygonMode((TK.MaterialFace)face, (TK.PolygonMode)mode);
+		}
+
+		#endregion
+
 
 		#region Properties
 
@@ -623,6 +638,51 @@ namespace ArcEngine.Graphic
 
 		#endregion
 	}
+
+
+	/// <summary>
+	/// 
+	/// </summary>
+	public enum MaterialFace
+	{
+		/// <summary>
+		/// 
+		/// </summary>
+		Front = TK.MaterialFace.Front,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Back = TK.MaterialFace.Back,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		FrontAndBack = TK.MaterialFace.FrontAndBack,
+	}
+
+
+	/// <summary>
+	/// 
+	/// </summary>
+	public enum PolygonMode
+	{
+		/// <summary>
+		/// 
+		/// </summary>
+		Point = TK.PolygonMode.Point,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Line = TK.PolygonMode.Line,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Fill = TK.PolygonMode.Fill,
+	}
+
 
 
 	/// <summary>

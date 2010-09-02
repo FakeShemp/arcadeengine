@@ -36,6 +36,7 @@ namespace ArcEngine.Graphic
 		public StateBlock Capture()
 		{
 			StateBlock state = new StateBlock();
+			state.AlphaTest = AlphaTest;
 			state.Blending = Blending;
 			state.ClearColor = ClearColor;
 			state.Culling = Culling;
@@ -54,6 +55,7 @@ namespace ArcEngine.Graphic
 			state.StencilTest = StencilTest;
 			state.StencilWriteMask = StencilWriteMask;
 			state.TwoSidedStencilMode = TwoSidedStencilMode;
+			state.LineWidth = LineWidth;
 
 			return state;
 		}
@@ -65,6 +67,7 @@ namespace ArcEngine.Graphic
 		/// <param name="state">Stateblock to apply</param>
 		public void Apply(StateBlock state)
 		{
+			AlphaTest = state.AlphaTest;
 			Blending = state.Blending;
 			ClearColor = state.ClearColor;
 			Culling = state.Culling;
@@ -82,7 +85,8 @@ namespace ArcEngine.Graphic
 			StencilReference = state.StencilReference;
 			StencilTest = state.StencilTest;
 			StencilWriteMask = state.StencilWriteMask;
-			TwoSidedStencilMode = state.TwoSidedStencilMode;	
+			TwoSidedStencilMode = state.TwoSidedStencilMode;
+			LineWidth = state.LineWidth;
 		}
 
 
@@ -153,27 +157,6 @@ namespace ArcEngine.Graphic
 
 
 		/// <summary>
-		/// Gets/Sets the stipple pattern
-		/// </summary>
-		[Obsolete("Deprecated")]
-		public bool LineStipple
-		{
-			get
-			{
-                return TK.GL.IsEnabled(TK.EnableCap.LineStipple);
-
-			}
-			set
-			{
-				if (value)
-                    TK.GL.Enable(TK.EnableCap.LineStipple);
-				else
-                    TK.GL.Disable(TK.EnableCap.LineStipple);
-			}
-		}
-
-
-		/// <summary>
 		/// Gets / sets the point size
 		/// </summary>
 		public int PointSize
@@ -194,13 +177,12 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Gets / sets the line size
 		/// </summary>
-		[Obsolete("Deprecated")]
-		public int LineWidth
+		public float LineWidth
 		{
 			get
 			{
-				int value;
-                TK.GL.GetInteger(TK.GetPName.LineWidth, out value);
+				float value;
+                TK.GL.GetFloat(TK.GetPName.LineWidth, out value);
 				return value;
 			}
 			set
@@ -559,7 +541,7 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Gets/sets blending state
 		/// </summary>
-		bool AlphaTest;
+		public bool AlphaTest;
 
 
 		/// <summary>
@@ -614,7 +596,13 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public bool Blending;
 
-	
+
+		/// <summary>
+		/// Line Width
+		/// </summary>
+		public float LineWidth;
+
+
 		#region Stencil
 
 
@@ -769,7 +757,6 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		NotEqual = OpenTK.Graphics.OpenGL.StencilFunction.Notequal,
 	}
-
 
 
 	/// <summary>
