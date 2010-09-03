@@ -61,9 +61,6 @@ namespace ArcEngine.Examples.SphereWorld
 			Display.RenderState.DepthTest = true;
 			Display.RenderState.Culling = true;
 
-
-		
-	
 			
 			#region Matrices
 
@@ -130,8 +127,10 @@ namespace ArcEngine.Examples.SphereWorld
 			Texture2D.DefaultVerticalWrapFilter = VerticalWrapFilter.Repeat;
 
 			Marble = new Texture2D("data/Marble.png");
-			Marble.MinFilter = TextureMinFilter.Linear;
-			Marble.MagFilter = TextureMagFilter.Linear;
+			Marble.MinFilter = TextureMinFilter.Nearest;
+			Marble.MagFilter = TextureMagFilter.Nearest;
+			Marble.HorizontalWrap = HorizontalWrapFilter.Clamp;
+			Marble.VerticalWrap = VerticalWrapFilter.Clamp;
 
 			Moon = new Texture2D("data/Moon.png");
 			Moon.MinFilter = TextureMinFilter.Linear;
@@ -154,9 +153,9 @@ namespace ArcEngine.Examples.SphereWorld
 			{
 				// Vertex					Texture
 				-10.0f, 0.0f,  20.0f,		0.0f, 0.0f,
-				 10.0f, 0.0f,  20.0f,		1.0f, 0.0f,
-				 10.0f, 0.0f, -20.0f,		1.0f, 1.0f,
-				-10.0f, 0.0f, -20.0f,		0.0f, 1.0f,
+				 10.0f, 0.0f,  20.0f,		128.0f, 0.0f,
+				 10.0f, 0.0f, -20.0f,		128.0f, 1.0f,
+				-10.0f, 0.0f, -20.0f,		0.0f, 128.0f,
 			};
 			Floor = new Mesh();
 			Floor.SetVertices(data);
@@ -304,6 +303,7 @@ namespace ArcEngine.Examples.SphereWorld
 
 			Batch.Begin();
 			Batch.DrawString(Font, new Vector2(10, 50), Color.White, "Camera position : {0}", CameraPostion.ToString());
+			Batch.Draw(Marble, new Point(100, 100), Color.White);
 			Batch.End();
 		}
 

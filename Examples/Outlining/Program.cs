@@ -53,7 +53,8 @@ namespace ArcEngine.Examples.Outlining
 			GameWindowParams p = new GameWindowParams();
 			p.Size = new Size(1024, 768);
 			p.Major = 3;
-			p.Minor = 1;
+			p.Minor = 0;
+			p.Compatible = true;
 			CreateGameWindow(p);
 			Window.Text = "Outlining demo";
 		}
@@ -68,6 +69,7 @@ namespace ArcEngine.Examples.Outlining
 			Display.RenderState.DepthTest = true;
 		//	Display.RenderState.Culling = true;
 			Display.RenderState.StencilClearValue = 0;
+			Display.PolygonOffset(1.0f, 1.0f);
 
 			#region Matrices
 
@@ -190,10 +192,9 @@ namespace ArcEngine.Examples.Outlining
 			Display.StencilOp(StencilOp.Keep, StencilOp.Keep, StencilOp.Replace);
 
 			// Draw the mesh with thick lines
-			Display.PolygonOffset(1.0f, -1.0f);
 			Display.RenderState.PolygonOffsetLine = true;
 
-			Display.RenderState.LineWidth = 5.0f;
+			Display.RenderState.LineWidth = 2.0f;
 			Display.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
 			Shader.SetUniform("Color", new Vector4(1.0f, 1.0f, 0.0f, 1.0f));
 			Mesh.Draw();
@@ -201,8 +202,9 @@ namespace ArcEngine.Examples.Outlining
 			// Removes changes
 			Display.RenderState.LineWidth = 1.0f;
 			Display.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
-			Display.RenderState.StencilTest = false;
 			Display.RenderState.PolygonOffsetLine = false;
+
+			Display.RenderState.StencilTest = false;
 		}
 
 
