@@ -1167,6 +1167,12 @@ namespace ArcEngine.Graphic
 		/// Full screen mode
 		/// </summary>
 		public bool FullScreen = false;
+
+
+		/// <summary>
+		/// Compatible with old mode (previous OpenGL 3.0)
+		/// </summary>
+		public bool Compatible = false;
 	}
 
 

@@ -48,11 +48,14 @@ namespace ArcEngine.Forms
 
 			InitializeComponent();
 
+			TK.GraphicsContextFlags compatible = param.Compatible ? TK.GraphicsContextFlags.Default : TK.GraphicsContextFlags.ForwardCompatible;
 
 			// Adds the control to the form
-			Trace.WriteDebugLine("[GameWindow] Requesting a {0}.{1} Opengl context (Color: {2}, Depth: {3}, Stencil:{4}, Sample: {5})", param.Major, param.Minor, param.Color, param.Depth, param.Stencil, param.Samples);
+			Trace.WriteDebugLine("[GameWindow] Requesting a {0}.{1} {2}Opengl context (Color: {3}, Depth: {4}, Stencil:{5}, Sample: {6})",
+				param.Major, param.Minor, param.Compatible ? "compatible " : string.Empty, param.Color, param.Depth, param.Stencil, param.Samples);
+
             RenderControl = new OpenTK.GLControl(new TK.GraphicsMode(param.Color, param.Depth, param.Stencil, param.Samples),
-				param.Major, param.Minor, TK.GraphicsContextFlags.ForwardCompatible);
+				param.Major, param.Minor, compatible);
 			Trace.WriteDebugLine("[GameWindow] Got GraphicsMode {0}", RenderControl.GraphicsMode);
 			RenderControl.Dock = DockStyle.Fill;
 			Controls.Add(RenderControl);
