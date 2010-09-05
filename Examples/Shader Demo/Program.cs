@@ -35,16 +35,8 @@ namespace ArcEngine.Examples.ShaderDemo
 		[STAThread]
 		static void Main()
 		{
-			try
-			{
-				using (Program game = new Program())
-					game.Run();
-			}
-			catch (Exception e)
-			{
-				// Oops, an error happened !
-				MessageBox.Show(e.StackTrace, e.Message);
-			}
+			using (Program game = new Program())
+				game.Run();
 		}
 
 
@@ -55,9 +47,7 @@ namespace ArcEngine.Examples.ShaderDemo
 		{
 			CreateGameWindow(new Size(1024, 768));
 			Window.Text = "Shader demo";
-			Window.Resizable = true;
 		}
-
 
 
 		/// <summary>
@@ -66,28 +56,36 @@ namespace ArcEngine.Examples.ShaderDemo
 		public override void LoadContent()
 		{
 
+			Display.RenderState.DepthTest = true;
+
 			// Something to display text
-			Font = BitmapFont.CreateFromTTF(@"c:\windows\fonts\verdana.ttf", 14, FontStyle.Regular);
+			Font = BitmapFont.CreateFromTTF(@"c:\windows\fonts\verdana.ttf", 11, FontStyle.Regular);
+
+
+			// Sprite batch
+			Batch = new SpriteBatch();
 
 
 			// Load the texture
 			Texture = new Texture2D("data/checkerboard.png");
-			Display.Texture = Texture;
 
 
 			// Setup the simple shader
 			SimpleShader = new Shader();
 			SimpleShader.LoadSource(ShaderType.VertexShader, "data/vertex.txt");
 			SimpleShader.LoadSource(ShaderType.FragmentShader, "data/fragment.txt");
+	//		SimpleShader.LoadSource(ShaderType.GeometryShader, "data/geometry.txt");
 			SimpleShader.Compile();
-			mouseID = SimpleShader.GetUniform("mouse");
-			SimpleShader.SetUniform(SimpleShader.GetUniform("texture"), 0);
 
-			// Setup the geometry shader
-			GeomShader = Shader.CreateColorShader();
-			GeomShader.LoadSource(ShaderType.GeometryShader, "data/geometry.txt");
-			GeomShader.SetGeometryPrimitives(PrimitiveType.Lines, PrimitiveType.LineStrip, 50);
-			GeomShader.Compile();
+
+			// Create a mesh
+			Mesh = Mesh.CreateTorus(0.25f, 0.5f, 32, 32);
+			
+
+			// Matrices
+			ModelViewMatrix = Matrix4.LookAt(new Vector3(0.0f, 0.0f, -2.5f), Vector3.Zero, Vector3.UnitY);
+			float aspectRatio = (float) Display.ViewPort.Width / (float) Display.ViewPort.Height;
+			ProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(45.0f), aspectRatio, 0.1f, 20.0f);
 
 
 		}
@@ -98,17 +96,21 @@ namespace ArcEngine.Examples.ShaderDemo
 		/// </summary>
 		public override void UnloadContent()
 		{
+			if (Mesh != null)
+				Mesh.Dispose();
+			Mesh = null;
+
 			if (SimpleShader != null)
 				SimpleShader.Dispose();
 			SimpleShader = null;
 
-			if (GeomShader != null)
-				GeomShader.Dispose();
-			GeomShader = null;
-
 			if (Font != null)
 				Font.Dispose();
 			Font = null;
+
+			if (Batch != null)
+				Batch.Dispose();
+			Batch = null;
 
 			if (Texture != null)
 				Texture.Dispose();
@@ -125,6 +127,10 @@ namespace ArcEngine.Examples.ShaderDemo
 			// Check if the Escape key is pressed
 			if (Keyboard.IsKeyPress(Keys.Escape))
 				Exit();
+
+
+			// Rotation
+			Yaw += 0.01f;
 		}
 
 
@@ -137,37 +143,45 @@ namespace ArcEngine.Examples.ShaderDemo
 			// Clears the background
 			Display.ClearBuffers();
 
-			// Simple shader
-			if (Mouse.IsButtonDown(MouseButtons.Left))
-			{
-				Display.Shader = SimpleShader;
-				SimpleShader.SetUniform(mouseID, new float[2] { Mouse.Location.X, Display.ViewPort.Bottom - Mouse.Location.Y });
-			}
 
-			// Draw the texture
-			Texture.Blit(Display.ViewPort, TextureLayout.Tile);
+			Display.Shader = SimpleShader;
+			Display.Texture = Texture;
 
-			// No shader
-		//	Display.Shader = null;
+			// Uniforms
+			Matrix4 mvp = Matrix4.CreateRotationY(Yaw) * ModelViewMatrix * ProjectionMatrix;
+			Display.Shader.SetUniform("modelview", mvp);
+			Display.Shader.SetUniform("texture", 0);
 
-			// Geometry shader
-			if (Mouse.IsButtonDown(MouseButtons.Right))
-				Display.Shader = GeomShader;
-			Display.DrawLine(500, 200, 500, 300, Color.White);
-			Display.DrawRectangle(new Rectangle(500, 350, 100, 50), Color.Red);
-			Display.DrawEllipse(new Rectangle(500, 450, 100, 50), Color.Teal);
+			// Draw the mesh
+			Mesh.Draw();
 
-			// No shader
-		//	Display.Shader = null;
-
-
-			Font.DrawText(new Point(25, 50), Color.White, "Press left mouse button to activate the lens shaders");
-			Font.DrawText(new Point(25, 70), Color.White, "Press right mouse button to activate the geometry shaders");
+			// Some text
+			Batch.Begin();
+			Batch.DrawString(Font, new Point(5, 10), Color.White, "Press left mouse button to activate the lens shaders");
+			Batch.DrawString(Font, new Point(5, 30), Color.White, "Press right mouse button to activate the geometry shaders");
+			Batch.End();
 		}
 
 
 
 		#region Properties
+
+		/// <summary>
+		/// 
+		/// </summary>
+		float Yaw;
+
+		/// <summary>
+		/// Model view matrix
+		/// </summary>
+		Matrix4 ModelViewMatrix;
+
+
+		/// <summary>
+		/// Projection matrix
+		/// </summary>
+		Matrix4 ProjectionMatrix;
+
 
 		/// <summary>
 		/// Shader
@@ -176,9 +190,9 @@ namespace ArcEngine.Examples.ShaderDemo
 
 
 		/// <summary>
-		/// Geometry shader
+		/// Mesh
 		/// </summary>
-		Shader GeomShader;
+		Mesh Mesh;
 
 
 		/// <summary>
@@ -192,11 +206,11 @@ namespace ArcEngine.Examples.ShaderDemo
 		/// </summary>
 		BitmapFont Font;
 
-		/// <summary>
-		/// ID of the uniform value
-		/// </summary>
-		int mouseID;
 
+		/// <summary>
+		/// SpriteBatch
+		/// </summary>
+		SpriteBatch Batch;
 
 
 		#endregion
