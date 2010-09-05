@@ -244,12 +244,44 @@ namespace ArcEngine.Examples.SphereWorld
 
 			// ModelViewProjection matrix
 			Vector3 target = Vector3.Add(CameraPostion, new Vector3(0.0f, 0.0f, -1.0f));
-			ModelViewMatrix = Matrix4.LookAt(CameraPostion, target, Vector3.UnitY);
+			ModelViewMatrix = Matrix4.CreateTranslation(0.0f, 1.7f, 0.0f) * Matrix4.Scale(1.0f, -1.0f, 1.0f) * Matrix4.LookAt(CameraPostion, target, Vector3.UnitY);
 			Matrix4 mvp = ModelViewMatrix * ProjectionMatrix;
+
 
 			// Bind the shader and the texture
 			Display.Shader = Shader;
 			Shader.SetUniform("textureUnit0", 0);
+
+
+
+
+			Display.RenderState.FrontFace = FrontFace.ClockWise;
+
+			Display.Texture = Mars;
+			Shader.SetUniform("mvpMatrix", Torus.Matrix * mvp);
+			Shader.SetUniform("in_color", new Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+			Torus.Draw();
+
+			Display.Texture = Moon;
+			Shader.SetUniform("mvpMatrix", Matrix4.CreateTranslation(Sphere.Position) * Matrix4.CreateRotationY(Sphere.Rotation.Y) * mvp);
+			Sphere.Draw();
+
+			Display.RenderState.FrontFace = FrontFace.CounterClockWise;
+
+
+
+
+			ModelViewMatrix = Matrix4.LookAt(CameraPostion, target, Vector3.UnitY);
+			mvp = ModelViewMatrix * ProjectionMatrix;
+
+			Display.RenderState.Blending = true;
+			Display.BlendingFunction(BlendingFactorSource.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+			Display.Texture = Marble;
+			Shader.SetUniform("mvpMatrix", Floor.Matrix * mvp);
+			Shader.SetUniform("in_color", new Vector4(1.0f, 1.0f, 1.0f, 0.75f));
+			Floor.Draw();
+			Display.RenderState.Blending = false;
+			Shader.SetUniform("in_color", new Vector4(1.0f, 1.0f, 1.0f, 1.0f));
 
 
 			Display.Texture = Mars;
@@ -260,9 +292,7 @@ namespace ArcEngine.Examples.SphereWorld
 			Shader.SetUniform("mvpMatrix", Matrix4.CreateTranslation(Sphere.Position) * Matrix4.CreateRotationY(Sphere.Rotation.Y) * mvp);
 			Sphere.Draw();
 
-			Display.Texture = Marble;
-			Shader.SetUniform("mvpMatrix", Floor.Matrix * mvp);
-			Floor.Draw();
+
 
 
 			Batch.Begin();
