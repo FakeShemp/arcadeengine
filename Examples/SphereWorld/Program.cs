@@ -57,7 +57,7 @@ namespace ArcEngine.Examples.SphereWorld
 		/// </summary>
 		public override void LoadContent()
 		{
-			Display.RenderState.ClearColor = Color.CornflowerBlue;
+			Display.RenderState.ClearColor = Color.Black;
 			Display.RenderState.DepthTest = true;
 			Display.RenderState.Culling = true;
 
