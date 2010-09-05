@@ -74,7 +74,7 @@ namespace ArcEngine.Examples.ShaderDemo
 			SimpleShader = new Shader();
 			SimpleShader.LoadSource(ShaderType.VertexShader, "data/vertex.txt");
 			SimpleShader.LoadSource(ShaderType.FragmentShader, "data/fragment.txt");
-	//		SimpleShader.LoadSource(ShaderType.GeometryShader, "data/geometry.txt");
+			SimpleShader.LoadSource(ShaderType.GeometryShader, "data/geometry.txt");
 			SimpleShader.Compile();
 
 
