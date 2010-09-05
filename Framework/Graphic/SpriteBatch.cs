@@ -626,13 +626,29 @@ namespace ArcEngine.Graphic
 		/// Prints some text on the screen
 		/// </summary>
 		/// <param name="font">Font to use</param>
-		/// <param name="pos">Offset of the text</param>
+		/// <param name="position">Offset of the text</param>
 		/// <param name="color">Color</param>
 		/// <param name="text">Text to print</param>
-		public void DrawString(BitmapFont font, Point pos, Color color, string text)
+		public void DrawString(BitmapFont font, Point position, Color color, string text)
 		{
-			DrawString(font, new Vector4(pos.X, pos.Y, 0.0f, 0.0f), color, text);
+			DrawString(font, new Vector4(position.X, position.Y, 0.0f, 0.0f), color, text);
 		}
+
+
+
+		/// <summary>
+		/// Prints some text on the screen
+		/// </summary>
+		/// <param name="font">Font to use</param>
+		/// <param name="position">Offset of the text</param>
+		/// <param name="color">Color</param>
+		/// <param name="format">Text to print</param>
+		/// <param name="args"></param>
+		public void DrawString(BitmapFont font, Point position, Color color, string format, params object[] args)
+		{
+			DrawString(font, position, color, string.Format(format, args));
+		}
+
 
 
 		/// <summary>
