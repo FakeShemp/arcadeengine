@@ -60,6 +60,7 @@ namespace ArcEngine.Graphic
 			state.PolygonOffsetLine = PolygonOffsetLine;
 			state.PolygonOffsetPoint = PolygonOffsetPoint;
 			state.ProgramPointSize = ProgramPointSize;
+			state.FrontFace = FrontFace;
 
 			return state;
 		}
@@ -95,6 +96,7 @@ namespace ArcEngine.Graphic
 			PolygonOffsetLine = state.PolygonOffsetLine;
 			PolygonOffsetPoint = state.PolygonOffsetPoint;
 			ProgramPointSize = state.ProgramPointSize;
+			FrontFace = state.FrontFace;
 		}
 
 
@@ -142,6 +144,26 @@ namespace ArcEngine.Graphic
 
 
 		#endregion
+
+
+
+		/// <summary>
+		/// Gets/sets blending state
+		/// </summary>
+		public FrontFace FrontFace
+		{
+			get
+			{
+				int value;
+				TK.GL.GetInteger(TK.GetPName.FrontFace, out value);
+
+				return (FrontFace) value;
+			}
+			set
+			{
+				TK.GL.FrontFace((TK.FrontFaceDirection) value);
+			}
+		}
 
 
 		/// <summary>
@@ -627,6 +649,10 @@ namespace ArcEngine.Graphic
 	/// </summary>
 	public struct StateBlock
 	{
+		/// <summary>
+		/// 
+		/// </summary>
+		public FrontFace FrontFace;
 
 		/// <summary>
 		/// Gets/sets blending state
@@ -1039,4 +1065,23 @@ namespace ArcEngine.Graphic
         CullCounterClockwiseFace = TK.FrontFaceDirection.Ccw,
 
     }
+
+
+	/// <summary>
+	/// 
+	/// </summary>
+	public enum FrontFace
+	{
+		/// <summary>
+		/// 
+		/// </summary>
+		ClockWise = TK.FrontFaceDirection.Cw,
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		CounterClockWise = TK.FrontFaceDirection.Ccw,
+	}
+
 }
