@@ -1,19 +1,17 @@
+#version 330
 
-#version 130
-
-uniform mat4 modelview;
 
 in vec3 in_position;
 in vec3 in_normal;
 in vec2 in_texcoord;
 
-out vec4 texture;
+out vec2 texture;
 
 void main(void)
 {
-	gl_Position = modelview * vec4(in_position, 1.0);
+	gl_Position = vec4(in_position, 1.0);
 
-	texture = vec4(in_texcoord, 0.0, 0.0);
+	texture = in_texcoord;
 }
 
 

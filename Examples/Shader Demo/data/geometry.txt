@@ -7,78 +7,34 @@ layout (triangle_strip) out;
 layout (max_vertices = 3) out;
 
 
+uniform float push_out;
+uniform mat4 mvp;
 
-in vec4 texture[];
+
+in vec2 texture[];
 
 
-out vec4 out_texture;
+out vec2 out_texture;
 
 
 void main(void)
 {
-	int i;
+	// Face normal
+	vec3 face_normal = normalize(cross(	gl_in[1].gl_Position.xyz - gl_in[0].gl_Position.xyz,
+										gl_in[2].gl_Position.xyz - gl_in[0].gl_Position.xyz));
 
-	for (i = 0; i < 3; i++)
+	for (int i = 0; i < 3; i++)
 	{
 		out_texture = texture[i];
-		gl_Position = gl_in[i].gl_Position;
+
+		// Translate the face by its normal
+        gl_Position = mvp * vec4(gl_in[i].gl_Position.xyz + face_normal * push_out, gl_in[i].gl_Position.w);
+
 		EmitVertex();
 	}
+
+
 	EndPrimitive();
 }
 
 
-
-
-
-
-
-
-
-
-
-
-/*
-#version 120 
-#extension GL_EXT_geometry_shader4 : enable
-
-void main(void)
-{
-	// variable to use in for loops
-	int i;
-
-	// Emit the original vertices without changing, making
-	// this part exactly the same as if no geometry shader
-	// was used.
-	for(i=0; i< gl_VerticesIn; i++)
-	{
-		// copy color 
-		gl_FrontColor = gl_FrontColorIn[i]; 
-	 
-		// copy position 
-		gl_Position = gl_PositionIn[i]; 
-	 
-		// done with the vertex 
-		EmitVertex(); 
-	}
-	// End the one primitive with the original vertices
-	EndPrimitive();
-
-
-
-	// Now we generate some more !
-	for(i=0; i< gl_VerticesIn; i++)
-	{
-		// copy color 
-		gl_FrontColor = gl_FrontColorIn[i]; 
-
-		// copy position 
-		gl_Position = gl_PositionIn[i]; 
-		gl_Position.x += 0.5;
-
-		// done with the vertex 
-		EmitVertex();
- 	}
-	EndPrimitive();
-}
-*/

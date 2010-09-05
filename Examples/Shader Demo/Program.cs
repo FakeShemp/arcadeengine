@@ -88,6 +88,8 @@ namespace ArcEngine.Examples.ShaderDemo
 			ProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(45.0f), aspectRatio, 0.1f, 20.0f);
 
 
+			explode_step = 0.01f;
+			explode_factor = 0.0f;
 		}
 
 
@@ -131,6 +133,26 @@ namespace ArcEngine.Examples.ShaderDemo
 
 			// Rotation
 			Yaw += 0.01f;
+
+
+			// Make the mesh explode
+			if (Mouse.IsNewButtonDown(MouseButtons.Left))
+			{
+				explode_factor = explode_step;
+				explode_step = Math.Abs(explode_step);
+			}
+
+
+			if (explode_factor >= 0.0f)
+			{
+				explode_factor += explode_step;
+
+				if (explode_factor > 1.0f)
+					explode_step = -explode_step;
+
+				else if (explode_factor < 0.0f)
+					explode_factor = 0.0f;
+			}
 		}
 
 
@@ -149,7 +171,9 @@ namespace ArcEngine.Examples.ShaderDemo
 
 			// Uniforms
 			Matrix4 mvp = Matrix4.CreateRotationY(Yaw) * ModelViewMatrix * ProjectionMatrix;
-			Display.Shader.SetUniform("modelview", mvp);
+			Display.Shader.SetUniform("push_out", explode_factor);
+			Display.Shader.SetUniform("modelview", ModelViewMatrix);
+			Display.Shader.SetUniform("mvp", mvp);
 			Display.Shader.SetUniform("texture", 0);
 
 			// Draw the mesh
@@ -157,8 +181,9 @@ namespace ArcEngine.Examples.ShaderDemo
 
 			// Some text
 			Batch.Begin();
-			Batch.DrawString(Font, new Point(5, 10), Color.White, "Press left mouse button to activate the lens shaders");
-			Batch.DrawString(Font, new Point(5, 30), Color.White, "Press right mouse button to activate the geometry shaders");
+			Batch.DrawString(Font, new Point(5, 10), Color.White, "Press left mouse button to make the mesh explode");
+			Batch.DrawString(Font, new Point(5, 30), Color.White, "Explode step = {0}", explode_step);
+			Batch.DrawString(Font, new Point(5, 50), Color.White, "Explode factor = {0}", explode_factor);
 			Batch.End();
 		}
 
@@ -167,9 +192,22 @@ namespace ArcEngine.Examples.ShaderDemo
 		#region Properties
 
 		/// <summary>
-		/// 
+		/// Rotation angle
 		/// </summary>
 		float Yaw;
+
+
+		/// <summary>
+		/// Explode factor
+		/// </summary>
+		float explode_factor;
+
+
+		/// <summary>
+		/// Explosion step
+		/// </summary>
+		float explode_step;
+
 
 		/// <summary>
 		/// Model view matrix
