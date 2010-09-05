@@ -230,14 +230,22 @@ namespace ArcEngine.Graphic
 		/// <param name="filename">Name of the file to load</param>
 		public bool LoadSource(ShaderType type, string filename)
 		{
+
+			// If file not found
+			if (!File.Exists(filename))
+			{
+				Trace.WriteLine("[Shader] Can't load source file \"{0}\" (file not found)", filename);
+				return false;
+			}
+
+
 			try
 			{
 				StreamReader streamReader = new StreamReader(filename);
 				string source = streamReader.ReadToEnd();
-				streamReader.Close();
+				streamReader.Dispose();
 
 				SetSource(type, source);
-
 			}
 			catch (Exception)
 			{

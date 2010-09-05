@@ -74,45 +74,9 @@ namespace ArcEngine.Examples.SphereWorld
 
 			#region Shader
 
-			#region Vertex Shader
-			string vshader = @"
-				#version 130
-
-				uniform mat4 mvpMatrix;
-
-				in vec4 in_position;
-				in vec2 in_texcoord;
-
-				out vec2 vTex;
-
-				void main(void) 
-				{ 
-					vTex = in_texcoord;
-					gl_Position = mvpMatrix * in_position; 
-				}";
-
-			#endregion
-
-			#region Fragment Shader
-			string fshader = @"
-				#version 130
-
-				in vec2 vTex;
-
-				uniform sampler2D textureUnit0;
-
-				out vec4 frag_color;
-
-				void main(void) 
-				{
-					frag_color = texture2D(textureUnit0, vTex); 
-				}";
-
-			#endregion
-
 			Shader = new Shader();
-			Shader.SetSource(ShaderType.VertexShader, vshader);
-			Shader.SetSource(ShaderType.FragmentShader, fshader);
+			Shader.LoadSource(ShaderType.VertexShader, "data/shader.vert");
+			Shader.LoadSource(ShaderType.FragmentShader, "data/shader.frag");
 			Shader.Compile();
 			Display.Shader = Shader;
 
@@ -161,7 +125,7 @@ namespace ArcEngine.Examples.SphereWorld
 			Floor.SetVertices(data);
 			Floor.SetIndices(new int[] { 0, 1, 2, 3});
 			Floor.Buffer.AddDeclaration("in_position", 3);
-			Floor.Buffer.AddDeclaration("in_texture", 2);
+			Floor.Buffer.AddDeclaration("in_texcoord", 2);
 			Floor.PrimitiveType = PrimitiveType.TriangleFan;
 			Floor.Position = new Vector3(0.0f, -1.0f, 0.0f);
 

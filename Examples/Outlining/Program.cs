@@ -53,7 +53,7 @@ namespace ArcEngine.Examples.Outlining
 			GameWindowParams p = new GameWindowParams();
 			p.Size = new Size(1024, 768);
 			p.Major = 3;
-			p.Minor = 0;
+			p.Minor = 3;
 			p.Compatible = true;
 			CreateGameWindow(p);
 			Window.Text = "Outlining demo";
@@ -70,6 +70,8 @@ namespace ArcEngine.Examples.Outlining
 		//	Display.RenderState.Culling = true;
 			Display.RenderState.StencilClearValue = 0;
 			Display.PolygonOffset(1.0f, 1.0f);
+		//	Display.RenderState.ProgramPointSize = true;
+			Display.RenderState.PointSize = 2.0f;
 
 			#region Matrices
 
@@ -92,6 +94,7 @@ namespace ArcEngine.Examples.Outlining
 
 				void main(void) 
 				{ 
+					gl_PointSize = 3.0;
 					gl_Position = mvpMatrix * in_position; 
 				}";
 
