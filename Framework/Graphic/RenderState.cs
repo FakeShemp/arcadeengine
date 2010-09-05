@@ -59,6 +59,7 @@ namespace ArcEngine.Graphic
 			state.PolygonOffsetFill = PolygonOffsetFill;
 			state.PolygonOffsetLine = PolygonOffsetLine;
 			state.PolygonOffsetPoint = PolygonOffsetPoint;
+			state.ProgramPointSize = ProgramPointSize;
 
 			return state;
 		}
@@ -93,6 +94,7 @@ namespace ArcEngine.Graphic
 			PolygonOffsetFill = state.PolygonOffsetFill;
 			PolygonOffsetLine = state.PolygonOffsetLine;
 			PolygonOffsetPoint = state.PolygonOffsetPoint;
+			ProgramPointSize = state.ProgramPointSize;
 		}
 
 
@@ -162,15 +164,36 @@ namespace ArcEngine.Graphic
 		}
 
 
+
 		/// <summary>
-		/// Gets / sets the point size
+		/// Gets / sets vertex program point size
 		/// </summary>
-		public int PointSize
+		public bool ProgramPointSize
 		{
 			get
 			{
-				int value;
-                TK.GL.GetInteger(TK.GetPName.PointSize, out value);
+                return TK.GL.IsEnabled(TK.EnableCap.ProgramPointSize);
+			}
+			set
+			{
+				if (value)
+					TK.GL.Enable(TK.EnableCap.ProgramPointSize);
+				else
+					TK.GL.Disable(TK.EnableCap.ProgramPointSize);
+			}
+		}
+
+
+
+		/// <summary>
+		/// Gets / sets the point size
+		/// </summary>
+		public float PointSize
+		{
+			get
+			{
+				float value;
+                TK.GL.GetFloat(TK.GetPName.PointSize, out value);
 				return value;
 			}
 			set
@@ -612,7 +635,7 @@ namespace ArcEngine.Graphic
 
 
 		/// <summary>
-		/// Gets/Sets the scissor test
+		/// Enable / disable the scissor test
 		/// </summary>
 		public bool Scissor;
 
@@ -620,7 +643,14 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Gets / sets the point size
 		/// </summary>
-		public int PointSize;
+		public float PointSize;
+
+
+		/// <summary>
+		/// Enable / disable the vertex program point size
+		/// </summary>
+		public bool ProgramPointSize;
+
 
 		/// <summary>
 		/// 
@@ -792,6 +822,7 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		Zero = OpenTK.Graphics.OpenGL.StencilOp.Zero,
 	}
+
 
 	/// <summary>
 	/// Defines comparison functions that can be chosen for alpha, stencil, or depth-buffer tests.
