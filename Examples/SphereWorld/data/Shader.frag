@@ -4,6 +4,7 @@ uniform sampler2D textureUnit0;
 uniform vec4 in_color;
 
 in vec2 vTex;
+in vec4 vColor;
 
 out vec4 frag_color;
 

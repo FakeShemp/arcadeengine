@@ -248,10 +248,15 @@ namespace ArcEngine.Examples.SphereWorld
 			Matrix4 mvp = ModelViewMatrix * ProjectionMatrix;
 
 
+			float[] lightPos = new float[]{ -1.0f, 1.0f, 1.0f };
+			float[] diffuseColor = new float[]{ 0.0f, 0.0f, 1.0f, 1.0f };
+
 			// Bind the shader and the texture
 			Display.Shader = Shader;
 			Shader.SetUniform("textureUnit0", 0);
-
+			Shader.SetUniform("lightPosition", lightPos);
+			Shader.SetUniform("mvMatrix", ModelViewMatrix);
+			Shader.SetUniform("diffuseColor", diffuseColor);
 
 
 
