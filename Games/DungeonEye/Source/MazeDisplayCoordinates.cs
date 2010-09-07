@@ -25,6 +25,8 @@ using System.Text;
 using System.Xml;
 using ArcEngine;
 using ArcEngine.Graphic;
+using ArcEngine.Asset;
+
 
 //
 //
@@ -213,14 +215,14 @@ namespace DungeonEye
 		{
 			
 			// Load file definition
-			Stream stream = ResourceManager.LoadResource("MazeElements.xml");
-			if (stream == null)
+			AssetHandle asset = ResourceManager.LoadResource("MazeElements.xml");
+			if (asset == null)
 				throw new FileNotFoundException("Can not find maze element coordinate file !!! Aborting.");
 
 			try
 			{
 				XmlDocument doc = new XmlDocument();
-				doc.Load(stream);
+				doc.Load(asset.Stream);
 				XmlNode xml = doc.DocumentElement;
 				if (xml.Name != "displaycoordinate")
 				{
@@ -323,8 +325,7 @@ namespace DungeonEye
 			}
 			finally
 			{
-				stream.Close();
-				stream.Dispose();
+				asset.Dispose();
 			}
 
 			return true;

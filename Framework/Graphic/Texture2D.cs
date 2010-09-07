@@ -19,13 +19,14 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
+using ArcEngine.Asset;
 using Imaging = System.Drawing.Imaging;
 using TK = OpenTK.Graphics.OpenGL;
-using System.Collections.Generic;
 
 //
 //
@@ -271,11 +272,11 @@ namespace ArcEngine.Graphic
 		/// <returns>True if success or false if something went wrong</returns>
 		public bool LoadImage(string filename)
 		{
-			Stream stream = ResourceManager.LoadResource(filename);
-			bool ret = 	FromStream(stream);
+			AssetHandle asset = ResourceManager.LoadResource(filename);
+			bool ret = 	FromStream(asset.Stream);
 
-			if (stream != null)
-				stream.Dispose();
+			if (asset != null)
+				asset.Dispose();
 
 			return ret;
 		}
@@ -777,7 +778,7 @@ namespace ArcEngine.Graphic
 		#endregion
 
 
-		#region Default values
+		#region Statics
 
 
 		/// <summary>
@@ -808,6 +809,18 @@ namespace ArcEngine.Graphic
 		/// Default vertical wrap filter
 		/// </summary>
 		static public VerticalWrapFilter DefaultVerticalWrapFilter = VerticalWrapFilter.Clamp;
+
+
+		/// <summary>
+		/// GL_ARB_texture_compression extension supported
+		/// </summary>
+		static internal bool HasTextureCompression
+		{
+			get
+			{
+				return Display.Capabilities.Extensions.Contains("GL_ARB_texture_compression");
+			}
+		}
 
 		#endregion
 

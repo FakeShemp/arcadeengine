@@ -86,12 +86,12 @@ namespace ArcEngine
 			
 			BinaryLock = new object();
 
-			UnknownAssets = new List<XmlNode>();
-			Assets = new Dictionary<Type, Provider>();
+			//UnknownAssets = new List<XmlNode>();
+			AssetProviders = new Dictionary<Type, Provider>();
 			Providers = new List<Provider>();
-			Tags = new Dictionary<string, Provider>();
-			Binaries = new Dictionary<string, byte[]>();
-
+			RegistredTags = new Dictionary<string, Provider>();
+			//Binaries = new Dictionary<string, byte[]>();
+			KnownAssets = new Dictionary<string, ResourceReference>();
 
 			AddProvider(new Providers());
 
@@ -167,14 +167,14 @@ namespace ArcEngine
 			// Register asset's tags
 			foreach (string tag in provider.Tags)
 			{
-				Tags[tag] = provider;
+				RegistredTags[tag] = provider;
 			}
 
 
 			// Register assets
 			foreach (Type type in provider.Assets)
 			{
-				Assets[type] = provider;
+				AssetProviders[type] = provider;
 				Trace.Write(type.ToString() + ", ");
 			}
 
@@ -212,10 +212,10 @@ namespace ArcEngine
 			if (string.IsNullOrEmpty(tag))
 				return null;
 
-			if (!Tags.ContainsKey(tag))
+			if (!RegistredTags.ContainsKey(tag))
 				return null;
 
-			return Tags[tag];
+			return RegistredTags[tag];
 		}
 
 
@@ -229,8 +229,8 @@ namespace ArcEngine
 			if (type == null)
 				return null;
 
-			if (Assets.ContainsKey(type))
-				return Assets[type];
+			if (AssetProviders.ContainsKey(type))
+				return AssetProviders[type];
 
 			return null;
 		}
@@ -246,7 +246,7 @@ namespace ArcEngine
 			if (string.IsNullOrEmpty(name))
 				return null;
 
-			foreach (KeyValuePair<Type, Provider> kvp in Assets)
+			foreach (KeyValuePair<Type, Provider> kvp in AssetProviders)
 			{
 				if (kvp.Key.Name == name)
 					return kvp.Value;
@@ -269,7 +269,7 @@ namespace ArcEngine
 
 			// Remove tags
 			foreach (string tag in provider.Tags)
-				Tags.Remove(tag);
+				RegistredTags.Remove(tag);
 
 
 			// Remove provider
@@ -323,10 +323,10 @@ namespace ArcEngine
 
 			lock (BinaryLock)
 			{
-				if (!Assets.ContainsKey(typeof(T)))
+				if (!AssetProviders.ContainsKey(typeof(T)))
 					throw new ArgumentException("Unknown asset type");
 
-				Assets[typeof(T)].Add<T>(name, node);
+				AssetProviders[typeof(T)].Add<T>(name, node);
 			}
 		}
 
@@ -362,10 +362,10 @@ namespace ArcEngine
 
 			lock (BinaryLock)
 			{
-				if (!Assets.ContainsKey(typeof(T)))
+				if (!AssetProviders.ContainsKey(typeof(T)))
 					throw new ArgumentException("Unknown asset type");
 
-				return Assets[typeof(T)].Get<T>(name);
+				return AssetProviders[typeof(T)].Get<T>(name);
 			}
 		}
 
@@ -405,10 +405,10 @@ namespace ArcEngine
 
 			lock (BinaryLock)
 			{
-				if (!Assets.ContainsKey(typeof(T)))
+				if (!AssetProviders.ContainsKey(typeof(T)))
 					throw new ArgumentException("Unknown asset type");
 
-				IAsset asset = Assets[typeof(T)].Create<T>(name);
+				IAsset asset = AssetProviders[typeof(T)].Create<T>(name);
 				//if (asset != null)
 				//    asset.Init();
 
@@ -429,10 +429,10 @@ namespace ArcEngine
 
 			lock (BinaryLock)
 			{
-				if (!Assets.ContainsKey(typeof(T)))
+				if (!AssetProviders.ContainsKey(typeof(T)))
 					throw new ArgumentException("Unknown asset type");
 
-				Assets[typeof(T)].Remove<T>(name);
+				AssetProviders[typeof(T)].Remove<T>(name);
 			}
 		}
 
@@ -469,8 +469,9 @@ namespace ArcEngine
 				foreach (Provider provider in Providers)
 					provider.Clear();
 
-				Binaries.Clear();
-				UnknownAssets.Clear();
+				//Binaries.Clear();
+				//UnknownAssets.Clear();
+				KnownAssets.Clear();
 
 				Trace.WriteLine("Clearing assets !");
 			}
@@ -487,11 +488,11 @@ namespace ArcEngine
 		{
 			lock (BinaryLock)
 			{
-				if (!Assets.ContainsKey(typeof(T)))
+				if (!AssetProviders.ContainsKey(typeof(T)))
 					//throw new ArgumentException("Unknown asset type");
 					return new List<string>();
 
-				return Assets[typeof(T)].GetAssets<T>();
+				return AssetProviders[typeof(T)].GetAssets<T>();
 			}
 		}
 
@@ -513,10 +514,10 @@ namespace ArcEngine
 
 			lock (BinaryLock)
 			{
-				if (!Assets.ContainsKey(typeof(T)))
+				if (!AssetProviders.ContainsKey(typeof(T)))
 					throw new ArgumentException("Unknown asset type");
 
-				T asset = Assets[typeof(T)].CreateShared<T>(name);
+				T asset = AssetProviders[typeof(T)].CreateShared<T>(name);
 				if (asset.IsDisposed)
 				{
 					RemoveSharedAsset<T>(name);
@@ -565,10 +566,10 @@ namespace ArcEngine
 
 			lock (BinaryLock)
 			{
-				if (!Assets.ContainsKey(typeof(T)))
+				if (!AssetProviders.ContainsKey(typeof(T)))
 					throw new ArgumentException("Unknown asset type");
 
-				Assets[typeof(T)].AddShared<T>(name, asset);
+				AssetProviders[typeof(T)].AddShared<T>(name, asset);
 			}
 
 		}
@@ -586,10 +587,10 @@ namespace ArcEngine
 
 			lock (BinaryLock)
 			{
-				if (!Assets.ContainsKey(typeof(T)))
+				if (!AssetProviders.ContainsKey(typeof(T)))
 					throw new ArgumentException("Unknown asset type");
 
-				Assets[typeof(T)].RemoveShared<T>(name);
+				AssetProviders[typeof(T)].RemoveShared<T>(name);
 			}
 		}
 
@@ -696,13 +697,14 @@ namespace ArcEngine
 
 						Trace.Write("+ {0} ({1} octets)", entry.Name, entry.Size);
 
-						// Uncompress data to a buffer
-						byte[] data = new byte[entry.Size];
-						zip.Read(data, 0, (int)entry.Size);
 
 						// If it ends with .xml, then adds it to the asset list to process
 						if (entry.Name.EndsWith(".xml", true, null))
 						{
+
+							// Uncompress data to a buffer
+							byte[] data = new byte[entry.Size];
+							zip.Read(data, 0, (int)entry.Size);
 
 							XmlDocument doc = new XmlDocument();
 							doc.LoadXml(ASCIIEncoding.ASCII.GetString(data));
@@ -713,7 +715,8 @@ namespace ArcEngine
 							// If not a bank, add it as a binary
 							if (xml.Name.ToLower() != "bank")
 							{
-								LoadBinary(entry.Name, data);
+								KnownAssets[entry.Name] = new ResourceReference(entry.Name, filename, password);
+								Trace.WriteLine("");
 								continue;
 							}
 
@@ -730,7 +733,7 @@ namespace ArcEngine
 								if (provider == null)
 								{
 									Trace.WriteLine("? No Provider found for asset \"<" + node.Name + ">\"...");
-									UnknownAssets.Add(node);
+							//		UnknownAssets.Add(node);
 									continue;
 								}
 
@@ -742,11 +745,9 @@ namespace ArcEngine
 
 
 						}
-						else
-						{
-							// Adds data to the list
-							LoadBinary(entry.Name, data);
-						}
+
+						// Adds data to the list
+						KnownAssets[entry.Name] = new ResourceReference(entry.Name, filename, password);
 
 						Trace.WriteLine("");
 					}
@@ -779,44 +780,6 @@ namespace ArcEngine
 
 			return false;
 		}
-
-/*
-		/// <summary>
-		/// Loads a resource from a bank first, and if not found, load it from disk.
-		/// </summary>
-		/// <param name="resourcename">Name of the file to load</param>
-		/// <returns>Binary of the resource</returns>
-		static public byte[] LoadResource(string resourcename)
-		{
-			if (string.IsNullOrEmpty(resourcename))
-				return null;
-
-			byte[] data = null;
-
-			//
-			// 1° Look in binaries
-			//
-			if (Binaries.ContainsKey(resourcename))
-				return Binaries[resourcename];
-			
-
-			//
-			// 2° try to load it from disk
-			//
-			if (!File.Exists(resourcename))
-				return null;
-
-			// Opens the file and copy it to memory
-			FileStream stream = File.Open(resourcename, FileMode.Open, FileAccess.Read);
-			if (stream == null)
-				return null;
-
-			data = new byte[stream.Length];
-			stream.Read(data, 0, (int)stream.Length);
-			stream.Close();
-			return data;
-		}
-*/
 
 
 		/// <summary>
@@ -872,7 +835,7 @@ namespace ArcEngine
 
 			lock (BinaryLock)
 			{
-				Binaries[name] = data;
+			//	Binaries[name] = data;
 			}
 		}
 
@@ -890,7 +853,7 @@ namespace ArcEngine
 
 			lock (BinaryLock)
 			{
-				ret = Binaries.ContainsKey(name);
+				ret = KnownAssets.ContainsKey(name);
 			}
 			return ret;
 		}
@@ -901,7 +864,7 @@ namespace ArcEngine
 		/// </summary>
 		/// <param name="resourcename">Name of the file to load</param>
 		/// <returns>Stream to the resource. Don't forget to close it !</returns>
-		static public Stream LoadResource(string resourcename)
+		static public AssetHandle LoadResource(string resourcename)
 		{
 			if (string.IsNullOrEmpty(resourcename))
 				return null;
@@ -911,7 +874,8 @@ namespace ArcEngine
 			//
 			if (BinaryExist(resourcename))
 			{
-				return new MemoryStream(Binaries[resourcename]);
+				return new AssetHandle(KnownAssets[resourcename]);
+				//return new MemoryStream(Binaries[resourcename]);
 			}
 
 			//
@@ -919,7 +883,8 @@ namespace ArcEngine
 			//
 			if (File.Exists(resourcename))
 			{
-				return File.Open(resourcename, FileMode.Open, FileAccess.Read);
+				return new AssetHandle(resourcename);
+				//File.Open(resourcename, FileMode.Open, FileAccess.Read);
 			}
 
 			return null;
@@ -934,8 +899,8 @@ namespace ArcEngine
 		{
 			lock (BinaryLock)
 			{
-				if (Binaries.ContainsKey(name))
-					Binaries.Remove(name);
+				//if (Binaries.ContainsKey(name))
+				//    Binaries.Remove(name);
 			}
 		}
 
@@ -958,9 +923,6 @@ namespace ArcEngine
 
 			return null;
 		}
-
-
-
 
 
 		/// <summary>
@@ -1020,8 +982,8 @@ namespace ArcEngine
 
 
 				// Save all Binaries
-				foreach (KeyValuePair<string, byte[]> kvp in Binaries)
-					SaveResource(zip, kvp.Key, kvp.Value);
+			//	foreach (KeyValuePair<string, byte[]> kvp in Binaries)
+			//		SaveResource(zip, kvp.Key, kvp.Value);
 
 				// Save all providers
 				XmlWriter doc;
@@ -1095,9 +1057,9 @@ namespace ArcEngine
 
 
 		/// <summary>
-		/// Binary files
+		/// Known assets
 		/// </summary>
-		static Dictionary<string, byte[]> Binaries;
+		static Dictionary<string, ResourceReference> KnownAssets;
 
 
 		/// <summary>
@@ -1111,8 +1073,8 @@ namespace ArcEngine
 
 				lock (BinaryLock)
 				{
-					foreach (string name in Binaries.Keys)
-						list.Add(name);
+					//foreach (string name in Binaries.Keys)
+					//    list.Add(name);
 				}
 				list.Sort();
 
@@ -1142,13 +1104,13 @@ namespace ArcEngine
 		/// <summary>
 		/// List of unknown loaded assets
 		/// </summary>
-		static List<XmlNode> UnknownAssets;
+	//	static List<XmlNode> UnknownAssets;
 
 
 		/// <summary>
 		/// Asset providers
 		/// </summary>
-		static Dictionary<Type, Provider> Assets;
+		static Dictionary<Type, Provider> AssetProviders;
 
 
 
@@ -1165,7 +1127,7 @@ namespace ArcEngine
 		/// <summary>
 		/// Registred tags
 		/// </summary>
-		static Dictionary<string, Provider> Tags;
+		static Dictionary<string, Provider> RegistredTags;
 
 
 		/// <summary>
@@ -1178,4 +1140,42 @@ namespace ArcEngine
 		#endregion
 
 	}
+
+
+	/// <summary>
+	/// Reference to binary files in banks
+	/// </summary>
+	internal class ResourceReference
+	{
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="file"></param>
+		/// <param name="pwd"></param>
+		public ResourceReference(string name, string file, string pwd)
+		{
+			Name = name;
+			FileName = file;
+			Password = pwd;
+		}
+
+
+		/// <summary>
+		/// Asset name
+		/// </summary>
+		public string Name;
+
+
+		/// <summary>
+		/// File name
+		/// </summary>
+		public string FileName;
+
+
+		/// <summary>
+		/// Password to read the file
+		/// </summary>
+		public string Password;
+	}
+
 }

@@ -425,19 +425,19 @@ namespace ArcEngine.Asset
 			GlyphTileset.Clear();
 
 			// Open the font
-			Stream data = ResourceManager.LoadResource(filename);
-			if (data == null)
+			AssetHandle asset = ResourceManager.LoadResource(filename);
+			if (asset == null)
 			{
 				Trace.WriteLine("Can't open TTF Font \"{0}\"", filename);
 				return false;
 			}
 
 			// GdiFont
-			Font font = new Font(LoadFontFamily(data), size, style);
+			Font font = new Font(LoadFontFamily(asset.Stream), size, style);
 			bool ret = Generate(font);
 			font.Dispose();
 
-			data.Dispose();
+			asset.Dispose();
 
 			return ret;
 		}

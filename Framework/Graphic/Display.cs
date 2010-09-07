@@ -63,13 +63,14 @@ namespace ArcEngine.Graphic
 			Texturing = true;
 			RenderState.Blending = true;
 			RenderState.ClearColor = Color.Black;
-	//		RenderState.Culling = false;
-	//		RenderState.DepthTest = false;
 
 			TK.GL.Hint(TK.HintTarget.PolygonSmoothHint, TK.HintMode.Nicest);
 			TK.GL.Hint(TK.HintTarget.LineSmoothHint, TK.HintMode.Nicest);
 			TK.GL.Hint(TK.HintTarget.PointSmoothHint, TK.HintMode.Nicest);
 			TK.GL.Enable(TK.EnableCap.PolygonSmooth);
+
+			if (Texture2D.HasTextureCompression)
+				TK.GL.Hint(TK.HintTarget.TextureCompressionHint, TK.HintMode.Nicest);
 
 			BlendingFunction(BlendingFactorSource.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 			TK.GL.ClearStencil(0);

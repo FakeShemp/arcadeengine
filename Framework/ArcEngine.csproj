@@ -151,6 +151,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Asset\Animation\AnimationFrame.cs" />
+    <Compile Include="Asset\AssetHandle.cs" />
     <Compile Include="Asset\AudioStream.cs" />
     <Compile Include="Asset\Scenes\SceneFrame.cs" />
     <Compile Include="Asset\Scenes\KeyFrame.cs" />

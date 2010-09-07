@@ -221,7 +221,6 @@ namespace DungeonEye
 
 			watch.Stop();
 			Trace.WriteLine("Team::LoadContent() finished ! ({0} ms)", watch.ElapsedMilliseconds);
-
 		}
 
 

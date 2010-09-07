@@ -104,8 +104,11 @@ namespace ArcEngine.Asset
 
 
 			int channels, bits_per_sample, sample_rate;
-			Stream stream = ResourceManager.LoadResource(filename);
-			byte[] sound_data = LoadWave(stream, out channels, out bits_per_sample, out sample_rate);
+			AssetHandle asset = ResourceManager.LoadResource(filename);
+			if (asset == null)
+				return false;
+
+			byte[] sound_data = LoadWave(asset.Stream, out channels, out bits_per_sample, out sample_rate);
 
 			// Transfert data
 			OpenAL.AL.BufferData(Buffer, GetSoundFormat(channels, bits_per_sample), sound_data, sound_data.Length, sample_rate);
