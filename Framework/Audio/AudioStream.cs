@@ -126,7 +126,7 @@ namespace ArcEngine.Asset
 
 
 		/// <summary>
-		/// 
+		/// Play the sound
 		/// </summary>
 		public void Play()
 		{
@@ -147,20 +147,20 @@ namespace ArcEngine.Asset
 
 
 		/// <summary>
-		/// 
+		/// Stop the sound
 		/// </summary>
 		public void Stop()
 		{
-			Status = AudioSourceState.Stopped;
+			OpenAL.AL.SourceStop(Source);
 		}
 
 
 		/// <summary>
-		/// 
+		/// Pause sound
 		/// </summary>
 		public void Pause()
 		{
-			Status = AudioSourceState.Paused;
+			OpenAL.AL.SourcePause(Source);
 		}
 
 
@@ -171,10 +171,6 @@ namespace ArcEngine.Asset
 		{
 			int processed = 0;
 			bool active = true;
-
-		//	if (Status != AudioSourceState.Playing)
-		//		return true;
-
 
 			OpenAL.AL.GetSource(Source, OpenAL.ALGetSourcei.BuffersProcessed, out processed);
 
