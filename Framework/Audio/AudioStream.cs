@@ -165,7 +165,7 @@ namespace ArcEngine.Asset
 
 
 		/// <summary>
-		/// 
+		/// Update a sound buffer
 		/// </summary>
 		internal bool Process()
 		{
@@ -176,14 +176,14 @@ namespace ArcEngine.Asset
 
 			while (processed-- != 0)
 			{
-				int[] buffer;
+				int buffer;
 
-				buffer = OpenAL.AL.SourceUnqueueBuffers(Source, 1);
+				buffer = OpenAL.AL.SourceUnqueueBuffer(Source);
 				Audio.Audio.Check();
 
-				active = Stream(Buffers[0]);
+				active = Stream(buffer);
 
-				OpenAL.AL.SourceQueueBuffers(Source, buffer.Length, buffer);
+				OpenAL.AL.SourceQueueBuffer(Source, buffer);
 				Audio.Audio.Check();
 			}
 
