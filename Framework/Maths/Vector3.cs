@@ -39,7 +39,23 @@ namespace ArcEngine
     [StructLayout(LayoutKind.Sequential)]
     public struct Vector3 : IEquatable<Vector3>
     {
-        #region Fields
+
+
+
+		/// <summary>
+		/// Converting to OpenTK.Matrix4
+		/// </summary>
+		/// <param name="v"></param>
+		/// <returns></returns>
+		internal static OpenTK.Vector3 ToOpenTK(Vector3 v)
+		{
+			return new OpenTK.Vector3(v.X, v.Y, v.Z);
+		}
+
+
+		
+		
+		#region Fields
 
         /// <summary>
         /// The X component of the Vector3.
@@ -197,111 +213,6 @@ namespace ArcEngine
         /// Defines the size of the Vector3 struct in bytes.
         /// </summary>
         public static readonly int SizeInBytes = Marshal.SizeOf(new Vector3());
-
-        #endregion
-
-        #region Obsolete
-
-        #region Sub
-
-        /// <summary>
-        /// Subtract one Vector from another
-        /// </summary>
-        /// <param name="a">First operand</param>
-        /// <param name="b">Second operand</param>
-        /// <returns>Result of subtraction</returns>
-        [Obsolete("Use static Subtract() method instead.")]
-        public static Vector3 Sub(Vector3 a, Vector3 b)
-        {
-            a.X -= b.X;
-            a.Y -= b.Y;
-            a.Z -= b.Z;
-            return a;
-        }
-
-        /// <summary>
-        /// Subtract one Vector from another
-        /// </summary>
-        /// <param name="a">First operand</param>
-        /// <param name="b">Second operand</param>
-        /// <param name="result">Result of subtraction</param>
-        [Obsolete("Use static Subtract() method instead.")]
-        public static void Sub(ref Vector3 a, ref Vector3 b, out Vector3 result)
-        {
-            result.X = a.X - b.X;
-            result.Y = a.Y - b.Y;
-            result.Z = a.Z - b.Z;
-        }
-
-        #endregion
-
-        #region Mult
-
-        /// <summary>
-        /// Multiply a vector and a scalar
-        /// </summary>
-        /// <param name="a">Vector operand</param>
-        /// <param name="f">Scalar operand</param>
-        /// <returns>Result of the multiplication</returns>
-        [Obsolete("Use static Multiply() method instead.")]
-        public static Vector3 Mult(Vector3 a, float f)
-        {
-            a.X *= f;
-            a.Y *= f;
-            a.Z *= f;
-            return a;
-        }
-
-        /// <summary>
-        /// Multiply a vector and a scalar
-        /// </summary>
-        /// <param name="a">Vector operand</param>
-        /// <param name="f">Scalar operand</param>
-        /// <param name="result">Result of the multiplication</param>
-        [Obsolete("Use static Multiply() method instead.")]
-        public static void Mult(ref Vector3 a, float f, out Vector3 result)
-        {
-            result.X = a.X * f;
-            result.Y = a.Y * f;
-            result.Z = a.Z * f;
-        }
-
-        #endregion
-
-        #region Div
-
-        /// <summary>
-        /// Divide a vector by a scalar
-        /// </summary>
-        /// <param name="a">Vector operand</param>
-        /// <param name="f">Scalar operand</param>
-        /// <returns>Result of the division</returns>
-        [Obsolete("Use static Divide() method instead.")]
-        public static Vector3 Div(Vector3 a, float f)
-        {
-            float mult = 1.0f / f;
-            a.X *= mult;
-            a.Y *= mult;
-            a.Z *= mult;
-            return a;
-        }
-
-        /// <summary>
-        /// Divide a vector by a scalar
-        /// </summary>
-        /// <param name="a">Vector operand</param>
-        /// <param name="f">Scalar operand</param>
-        /// <param name="result">Result of the division</param>
-        [Obsolete("Use static Divide() method instead.")]
-        public static void Div(ref Vector3 a, float f, out Vector3 result)
-        {
-            float mult = 1.0f / f;
-            result.X = a.X * mult;
-            result.Y = a.Y * mult;
-            result.Z = a.Z * mult;
-        }
-
-        #endregion
 
         #endregion
 

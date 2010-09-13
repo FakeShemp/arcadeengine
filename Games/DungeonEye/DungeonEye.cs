@@ -24,6 +24,7 @@ using ArcEngine;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
 using ArcEngine.Utility.ScreenManager;
+using ArcEngine.Audio;
 
 namespace DungeonEye
 {
@@ -59,7 +60,7 @@ namespace DungeonEye
 			GSM = new ScreenManager(this);
 
 			// Audio
-			Audio.Create(10);
+			Audio.Create();
 
 		}
 

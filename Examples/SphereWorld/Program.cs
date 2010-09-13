@@ -61,6 +61,11 @@ namespace ArcEngine.Examples.SphereWorld
 			Display.RenderState.DepthTest = true;
 			Display.RenderState.Culling = true;
 
+			Audio.Audio.Create();
+
+			Stream = new AudioStream();
+			Stream.LoadOgg("data/lumme-Badloop.ogg");
+			Stream.Play();
 			
 			#region Matrices
 
@@ -133,6 +138,7 @@ namespace ArcEngine.Examples.SphereWorld
 
 			Batch = new Graphic.SpriteBatch();
 			Font = BitmapFont.CreateFromTTF(@"c:\windows\fonts\verdana.ttf", 10, FontStyle.Regular);
+
 		}
 
 
@@ -177,6 +183,9 @@ namespace ArcEngine.Examples.SphereWorld
 				Font.Dispose();
 			Font = null;
 
+			if (Stream != null)
+				Stream.Dispose();
+			Stream = null;
 		}
 
 
@@ -398,6 +407,12 @@ namespace ArcEngine.Examples.SphereWorld
 		/// Spritebatch
 		/// </summary>
 		SpriteBatch Batch;
+
+
+		/// <summary>
+		/// Audio stream from http://www.vorbis.com/music/
+		/// </summary>
+		AudioStream Stream;
 
 		#endregion
 

@@ -25,7 +25,7 @@ using ArcEngine.Asset;
 using ArcEngine.Editor;
 using ArcEngine.Forms;
 using ArcEngine.Graphic;
-
+using ArcEngine.Audio;
 
 namespace ArcEngine
 {

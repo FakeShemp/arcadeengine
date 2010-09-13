@@ -24,6 +24,7 @@ using ArcEngine.Graphic;
 using System.ComponentModel;
 using System;
 using ArcEngine.Asset;
+using ArcEngine.Audio;
 
 namespace DungeonEye
 {
@@ -174,7 +175,7 @@ namespace DungeonEye
 		public void Open()
 		{
 			State = DoorState.Opening;
-			Audio.PlaySample(0, OpenSound);
+		//	Audio.PlaySample(0, OpenSound);
 		}
 
 
@@ -188,7 +189,7 @@ namespace DungeonEye
 			//	return;
 
 			State = DoorState.Closing;
-			Audio.PlaySample(0, CloseSound);
+		//	Audio.PlaySample(0, CloseSound);
 		}
 
 

@@ -26,7 +26,7 @@ using ArcEngine.Graphic;
 using ArcEngine.Input;
 using ArcEngine.Utility.ScreenManager;
 using DungeonEye.Gui;
-
+using ArcEngine.Audio;
 
 
 namespace DungeonEye
@@ -127,7 +127,7 @@ namespace DungeonEye
 		/// <param name="e"></param>
 		void QuitEvent(object sender, EventArgs e)
 		{
-			Audio.Stop(0);
+		//	Audio.Stop(0);
 			ScreenManager.Game.Exit();
 		}
 
@@ -139,7 +139,7 @@ namespace DungeonEye
 		/// <param name="e"></param>
 		void StartGameEvent(object sender, EventArgs e)
 		{
-			Audio.Stop(0);
+		//	Audio.Stop(0);
 			ScreenManager.AddScreen(new CharGen(Batch));
 		}
 
@@ -157,7 +157,7 @@ namespace DungeonEye
 			Team team = new Team(null);
 			team.SaveGame = "data/savegame.xml";
 
-			Audio.Stop(0);
+		//	Audio.Stop(0);
 
 			ScreenManager.AddScreen(team);
 		}
@@ -181,8 +181,8 @@ namespace DungeonEye
 				return;
 
 			// Play sound
-			if (Audio.GetSourceState(0) != AudioSourceState.Playing)
-				Audio.PlaySample(0, Theme);
+		//	if (Audio.GetSourceState(0) != AudioSourceState.Playing)
+		//		Audio.PlaySample(0, Theme);
 
 
 			// Does the default language changed ?

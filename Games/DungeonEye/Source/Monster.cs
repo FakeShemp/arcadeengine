@@ -24,6 +24,7 @@ using System.Drawing;
 using System.Xml;
 using ArcEngine;
 using ArcEngine.Asset;
+using ArcEngine.Audio;
 using ArcEngine.Graphic;
 using ArcEngine.Utility.GameState;
 using DungeonEye.Interfaces;

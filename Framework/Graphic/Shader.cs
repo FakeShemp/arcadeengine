@@ -613,7 +613,7 @@ namespace ArcEngine.Graphic
 			if (id < 0)
 				return;
 
-            OpenTK.Matrix4 m = Matrix4.Matrix4ToTKMatrix4(matrix); 
+            OpenTK.Matrix4 m = Matrix4.ToOpenTK(matrix); 
 			TK.GL.UniformMatrix4(id, false, ref m);
 		}
 

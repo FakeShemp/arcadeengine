@@ -69,7 +69,7 @@ namespace ArcEngine
 		/// </summary>
 		/// <param name="v"></param>
 		/// <returns></returns>
-		internal static OpenTK.Matrix4 Matrix4ToTKMatrix4(Matrix4 v)
+		internal static OpenTK.Matrix4 ToOpenTK(Matrix4 v)
 		{
 			return new OpenTK.Matrix4(
                 v.M11, v.M12, v.M13, v.M14,

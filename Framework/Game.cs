@@ -28,6 +28,7 @@ using ArcEngine.Forms;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
 using ArcEngine.PInvoke;
+using ArcEngine.Audio;
 
 
 [assembly: CLSCompliant(true)]
@@ -310,6 +311,7 @@ namespace ArcEngine
 						Keyboard.Update();
 						Mouse.Update();
 						Gamepad.Update();
+						AudioStream.Update();
 					}
 
 					// Perform an update
@@ -353,6 +355,7 @@ namespace ArcEngine
 							Keyboard.Update();
 							Mouse.Update();
 							Gamepad.Update();
+							AudioStream.Update();
 						}
 
 						// Perform an update
@@ -430,8 +433,6 @@ namespace ArcEngine
 		}
 
 
-
-
 		/// <summary>
 		/// Called when graphics resources need to be loaded.
 		/// </summary>
@@ -482,7 +483,8 @@ namespace ArcEngine
 					IsRunning = false;
 				}
 
-				Audio.Release();
+				
+				Audio.Audio.Release();
 				Gamepad.Dispose();
 
 				ResourceManager.Dispose();

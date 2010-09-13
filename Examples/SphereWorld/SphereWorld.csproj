@@ -54,6 +54,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
+    <None Include="data\Lumme-Badloop.ogg" />
     <None Include="data\Shader.frag" />
     <None Include="data\Shader.vert" />
     <None Include="Properties\Settings.settings">
