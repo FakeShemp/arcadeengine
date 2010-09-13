@@ -58,8 +58,6 @@ namespace ArcEngine
 
 			Random = new Random((int)DateTime.Now.Ticks);
 			Components = new GameComponentCollection();
-			DrawableComponents = new List<IDrawable>();
-			UpdateableComponents = new List<IUpdateable>();
 		}
 
 
@@ -683,25 +681,6 @@ namespace ArcEngine
 			private set;
 		}
 
-
-		/// <summary>
-		/// List of updateable components
-		/// </summary>
-		public List<IUpdateable> UpdateableComponents
-		{
-			get;
-			private set;
-		}
-
-
-		/// <summary>
-		/// List of drawableable components
-		/// </summary>
-		public List<IDrawable> DrawableComponents
-		{
-			get;
-			private set;
-		}
 
 		/// <summary>
 		/// Gets the game window.

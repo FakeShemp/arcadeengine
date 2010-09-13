@@ -342,9 +342,7 @@
     <Compile Include="Graphic\VertexPositionNormalTangentTexture.cs" />
     <Compile Include="Graphic\VertexPositionNormalTexture.cs" />
     <Compile Include="Graphic\VertexPositionTexture.cs" />
-    <Compile Include="IDrawable.cs" />
     <Compile Include="Input\GamePadState.cs" />
-    <Compile Include="IUpdateable.cs" />
     <Compile Include="Maths\MathHelper.cs">
       <SubType>Code</SubType>
     </Compile>
