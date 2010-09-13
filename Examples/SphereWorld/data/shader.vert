@@ -1,40 +1,45 @@
 ﻿#version 130
 
-uniform mat4	mvpMatrix;
-uniform mat4	mvMatrix;
-uniform mat3	normalMatrix;
+uniform mat4	mvpMatrix;		// ModelViewProjection matrix
+uniform mat4	mvMatrix;		// ModelView matrix
+uniform mat3	normalMatrix;	// transpose of the inverse of the upper
+								// leftmost 3x3 of gl_ModelViewMatrix
+
 uniform vec4	diffuseColor;	
-uniform vec3	lightPosition;
+uniform vec4	lightPosition;
+uniform vec4	color;
 
 
 in vec3 in_position;
 in vec3 in_Normal;
 in vec2 in_texcoord;
 
-out vec2 vTex;
-smooth out vec4 vColor;		// Color to fragment program
+out vec2 vTex;					// Texture coordinate
+smooth out vec4 vColor;			// Color to fragment program
 
 
 void main(void) 
 { 
 
-    // Get surface normal in eye coordinates
-    vec3 vEyeNormal = normalMatrix * in_Normal;
+	// Get surface normal in eye coordinates
+	vec3 vEyeNormal = (mvMatrix * vec4(in_Normal, 0.0)).xyz;
 
-    // Get vertex position in eye coordinates
-    vec4 vPosition4 = mvMatrix * vec4(in_position, 1.0);
-    vec3 vPosition3 = vPosition4.xyz / vPosition4.w;
+	mat3 mNormalMatrix;
+	mNormalMatrix[0] = normalize(mvMatrix[0].xyz);
+	mNormalMatrix[1] = normalize(mvMatrix[1].xyz);
+	mNormalMatrix[2] = normalize(mvMatrix[2].xyz);
+	vec3 vNorm = normalize(mNormalMatrix * in_Normal);
 
-    // Get vector to light source
-    vec3 vLightDir = normalize(lightPosition - vPosition3);
+	vec4 ecPosition;
+	vec3 ecPosition3;
+	ecPosition = mvMatrix * vec4(in_position, 1.0);
+	ecPosition3 = ecPosition.xyz /ecPosition.w;
+	vec3 vLightDir = normalize(lightPosition.xyz - ecPosition3);
 
-    // Dot product gives us diffuse intensity
-    float diff = max(0.0, dot(vEyeNormal, vLightDir));
+	float fDot = max(0.0, dot(vNorm, vLightDir)); 
 
-    // Multiply intensity by diffuse color
-    vColor.rgb = diff * diffuseColor.rgb;
-    vColor.a = diffuseColor.a;
-
+	vColor.rgb = color.rgb * fDot;
+	vColor.a = color.a;
 
 	vTex = in_texcoord;
 	gl_Position = mvpMatrix * vec4(in_position, 1.0); 

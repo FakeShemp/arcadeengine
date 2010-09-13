@@ -62,9 +62,8 @@ namespace ArcEngine.Examples.SphereWorld
 			Display.RenderState.Culling = true;
 
 			Audio.Audio.Create();
-
 			Stream = new AudioStream();
-			Stream.LoadOgg("data/lumme-Badloop.ogg");
+			Stream.LoadOgg("data/Hydrate-Kenny_Beltrey.ogg");
 			Stream.Play();
 			
 			#region Matrices
@@ -135,6 +134,7 @@ namespace ArcEngine.Examples.SphereWorld
 			Floor.Position = new Vector3(0.0f, -1.0f, 0.0f);
 
 			#endregion
+
 
 			Batch = new Graphic.SpriteBatch();
 			Font = BitmapFont.CreateFromTTF(@"c:\windows\fonts\verdana.ttf", 10, FontStyle.Regular);
@@ -226,23 +226,6 @@ namespace ArcEngine.Examples.SphereWorld
 		}
 
 
-
-		private Matrix4 UpdateViewMatrix()
-		{
-			float rotspeed = 0.3f;
-			Matrix4 cameraRotation = Matrix4.CreateRotationX(CameraRotation.X * rotspeed) * Matrix4.CreateRotationY(CameraRotation.Y * rotspeed);
-
-			Vector3 cameraOriginalTarget = new Vector3(0, 0, -1);
-			Vector3 cameraRotatedTarget = Vector3.Transform(cameraOriginalTarget, cameraRotation);
-			Vector3 cameraFinalTarget = CameraPostion + cameraRotatedTarget;
-
-			Vector3 cameraOriginalUpVector = new Vector3(0, 1, 0);
-			Vector3 cameraRotatedUpVector = Vector3.Transform(cameraOriginalUpVector, cameraRotation);
-
-			return Matrix4.LookAt(CameraPostion, cameraFinalTarget, cameraRotatedUpVector);
-		}
-
-
 		/// <summary>
 		/// Called when it is time to draw a frame.
 		/// </summary>
@@ -251,29 +234,31 @@ namespace ArcEngine.Examples.SphereWorld
 			// Clears the background
 			Display.ClearBuffers();
 
-			// ModelViewProjection matrix
 			Vector3 target = Vector3.Add(CameraPostion, new Vector3(0.0f, 0.0f, -1.0f));
-			ModelViewMatrix = Matrix4.CreateTranslation(0.0f, 1.7f, 0.0f) * Matrix4.Scale(1.0f, -1.0f, 1.0f) * Matrix4.LookAt(CameraPostion, target, Vector3.UnitY);
-			Matrix4 mvp = ModelViewMatrix * ProjectionMatrix;
-
-
-			float[] lightPos = new float[]{ -1.0f, 1.0f, 1.0f };
-			float[] diffuseColor = new float[]{ 0.0f, 0.0f, 1.0f, 1.0f };
+			Vector4 lightPos = new Vector4(0.0f, 1.0f, 0.0f, 0.0f);
+			Vector4 diffuseColor = new Vector4(0.0f, 0.0f, 1.0f, 1.0f);
 
 			// Bind the shader and the texture
 			Display.Shader = Shader;
 			Shader.SetUniform("textureUnit0", 0);
-			Shader.SetUniform("lightPosition", lightPos);
-			Shader.SetUniform("mvMatrix", ModelViewMatrix);
 			Shader.SetUniform("diffuseColor", diffuseColor);
 
+	
+			#region Mirror
 
+			// ModelViewProjection matrix
+			ModelViewMatrix = Matrix4.CreateTranslation(0.0f, 1.7f, 0.0f) * Matrix4.Scale(1.0f, -1.0f, 1.0f) * Matrix4.LookAt(CameraPostion, target, Vector3.UnitY);
+			Matrix4 mvp = ModelViewMatrix * ProjectionMatrix;
+			Shader.SetUniform("mvMatrix", ModelViewMatrix);
+
+			// Tranform light position
+			Shader.SetUniform("lightPosition", Vector4.Transform(lightPos, ModelViewMatrix));
 
 			Display.RenderState.FrontFace = FrontFace.ClockWise;
 
 			Display.Texture = Mars;
 			Shader.SetUniform("mvpMatrix", Torus.Matrix * mvp);
-			Shader.SetUniform("in_color", new Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+			Shader.SetUniform("color", new Vector4(1.0f, 1.0f, 1.0f, 1.0f));
 			Torus.Draw();
 
 			Display.Texture = Moon;
@@ -282,20 +267,25 @@ namespace ArcEngine.Examples.SphereWorld
 
 			Display.RenderState.FrontFace = FrontFace.CounterClockWise;
 
+			#endregion
 
 
 
 			ModelViewMatrix = Matrix4.LookAt(CameraPostion, target, Vector3.UnitY);
 			mvp = ModelViewMatrix * ProjectionMatrix;
 
+
+			// Tranform light position
+			Shader.SetUniform("lightPosition", Vector4.Transform(lightPos, ModelViewMatrix));
+			
 			Display.RenderState.Blending = true;
 			Display.BlendingFunction(BlendingFactorSource.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 			Display.Texture = Marble;
 			Shader.SetUniform("mvpMatrix", Floor.Matrix * mvp);
-			Shader.SetUniform("in_color", new Vector4(1.0f, 1.0f, 1.0f, 0.75f));
+			Shader.SetUniform("color", new Vector4(1.0f, 1.0f, 1.0f, 0.75f));
 			Floor.Draw();
 			Display.RenderState.Blending = false;
-			Shader.SetUniform("in_color", new Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+			Shader.SetUniform("color", new Vector4(1.0f, 1.0f, 1.0f, 1.0f));
 
 
 			Display.Texture = Mars;

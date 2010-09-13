@@ -142,6 +142,28 @@ namespace ArcEngine
 		#region Properties
 
 		/// <summary>
+		/// 
+		/// </summary>
+		public float[] NormalMatrix
+		{
+			get
+			{
+
+				Matrix4 normal = this;
+				normal.Invert();
+				normal.Transpose();
+
+				return new float[9]
+				{
+					normal.M11, normal.M12, normal.M13,
+					normal.M21, normal.M22, normal.M23,
+					normal.M31, normal.M32, normal.M33
+				};
+			}
+		}
+
+
+		/// <summary>
 		/// The determinant of this matrix
 		/// </summary>
 		public float Determinant

@@ -176,9 +176,7 @@ namespace ArcEngine.Asset
 
 			while (processed-- != 0)
 			{
-				int buffer;
-
-				buffer = OpenAL.AL.SourceUnqueueBuffer(Source);
+				int buffer = OpenAL.AL.SourceUnqueueBuffer(Source);
 				Audio.Audio.Check();
 
 				active = Stream(buffer);
