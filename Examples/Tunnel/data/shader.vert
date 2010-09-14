@@ -32,7 +32,7 @@ void main(void)
 
     // -- displace the texture's y (v) coordinate. This gives the illusion of movement.
 	vec2 texcoord = aTextureCoord;
-    //texcoord.y = texcoord.y + (fTime);
+    texcoord.y = texcoord.y + (fTime);
 
     // -- copy the texture coordinate 
 	vTextureCoord = texcoord;
