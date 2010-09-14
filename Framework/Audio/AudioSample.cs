@@ -18,12 +18,10 @@
 //
 #endregion
 
-using ArcEngine.Asset;
 using System;
-using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Xml;
+using ArcEngine.Asset;
 using OpenAL = OpenTK.Audio.OpenAL;
 
 /// http://www.games-creators.org/wiki/Utiliser_FMOD_en_C_sharp

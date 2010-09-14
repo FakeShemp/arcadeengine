@@ -22,7 +22,7 @@ using csvorbis;
 namespace ArcEngine.Audio
 {
 	/// <summary>
-	/// 
+	/// Ogg Vorbis streamer
 	/// </summary>
 	internal class OggInputStream
 	{
@@ -61,8 +61,8 @@ namespace ArcEngine.Audio
 		/// <returns>@return the next byte of data, or -1 if the end of the stream is reached</returns>
 		public int Read()
 		{
-			int retVal = Read(readDummy, 0, 1);
-			return (retVal == -1 ? -1 : readDummy[0]);
+			int retVal = Read(ReadDummy, 0, 1);
+			return (retVal == -1 ? -1 : ReadDummy[0]);
 		}
 
 
@@ -646,7 +646,7 @@ namespace ArcEngine.Audio
 		/// <summary>
 		/// A dummy used by read() to read 1 byte.
 		/// </summary>
-		private byte[] readDummy = new byte[1];
+		private byte[] ReadDummy = new byte[1];
 
 		/// <summary>
 		/// 

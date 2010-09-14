@@ -60,7 +60,7 @@ namespace DungeonEye
 			GSM = new ScreenManager(this);
 
 			// Audio
-			Audio.Create();
+			AudioManager.Create();
 
 		}
 

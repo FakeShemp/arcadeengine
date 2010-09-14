@@ -481,7 +481,7 @@ namespace ArcEngine
 				}
 
 				
-				Audio.Audio.Release();
+				Audio.AudioManager.Release();
 				Gamepad.Dispose();
 
 				ResourceManager.Dispose();

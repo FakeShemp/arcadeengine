@@ -20,9 +20,10 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using ArcEngine.Asset;
+using ArcEngine.Audio;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
-using ArcEngine.Asset;
 
 namespace ArcEngine.Examples.SphereWorld
 {
@@ -61,11 +62,17 @@ namespace ArcEngine.Examples.SphereWorld
 			Display.RenderState.DepthTest = true;
 			Display.RenderState.Culling = true;
 
-			Audio.Audio.Create();
+
+			#region Audio
+
+			AudioManager.Create();
 			Stream = new AudioStream();
 			Stream.LoadOgg("data/Hydrate-Kenny_Beltrey.ogg");
 			Stream.Play();
-			
+
+			#endregion
+
+
 			#region Matrices
 
 			CameraPostion = new Vector3(0.0f, 0.1f, 3.0f);
@@ -138,7 +145,6 @@ namespace ArcEngine.Examples.SphereWorld
 
 			Batch = new Graphic.SpriteBatch();
 			Font = BitmapFont.CreateFromTTF(@"c:\windows\fonts\verdana.ttf", 10, FontStyle.Regular);
-
 		}
 
 
@@ -212,17 +218,8 @@ namespace ArcEngine.Examples.SphereWorld
 			if (Keyboard.IsKeyPress(Keys.Right) || Keyboard.IsKeyPress(Keys.D))
 				CameraPostion = Vector3.Add(CameraPostion, new Vector3(CameraSpeed, 0.0f, 0.0f));
 
-			// Update camera view
-			// http://www.riemers.net/eng/Tutorials/XNA/Csharp/Series4/Mouse_camera.php
-			//CameraRotation = Vector3.Add(CameraRotation, new Vector3(Mouse.MoveDelta.X, Mouse.MoveDelta.Y, 0.0f));
-
-
-			// Center mouse
-			//Mouse.Location = new Point(Window.Size.Width / 2, Window.Size.Height / 2);
-
 			Torus.Rotation += new Vector3(0.0f, 0.025f, 0.0f);
 			Sphere.Rotation -= new Vector3(0.0f, 0.02f, 0.0f);
-
 		}
 
 
@@ -270,6 +267,7 @@ namespace ArcEngine.Examples.SphereWorld
 			#endregion
 
 
+			#region Normal view
 
 			ModelViewMatrix = Matrix4.LookAt(CameraPostion, target, Vector3.UnitY);
 			mvp = ModelViewMatrix * ProjectionMatrix;
@@ -296,7 +294,7 @@ namespace ArcEngine.Examples.SphereWorld
 			Shader.SetUniform("mvpMatrix", Matrix4.CreateTranslation(Sphere.Position) * Matrix4.CreateRotationY(Sphere.Rotation.Y) * mvp);
 			Sphere.Draw();
 
-
+			#endregion
 
 
 			Batch.Begin();

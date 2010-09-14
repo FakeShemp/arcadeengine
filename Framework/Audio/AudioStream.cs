@@ -22,7 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Xml;
-using ArcEngine.Audio;
+using ArcEngine.Asset;
 using OpenAL = OpenTK.Audio.OpenAL;
 
 
@@ -32,7 +32,7 @@ using OpenAL = OpenTK.Audio.OpenAL;
 	
 
 
-namespace ArcEngine.Asset
+namespace ArcEngine.Audio
 {
 	/// <summary>
 	///Audio streaming class
@@ -45,20 +45,23 @@ namespace ArcEngine.Asset
 		/// </summary>
 		public AudioStream()
 		{
-			if (Audio.Audio.Context == null)
+			if (AudioManager.Context == null)
 				throw new InvalidOperationException("Initialize Audio context first");
 
-			// Add to the know list of audio streams
+			// Add to the known list of audio streams
 			if (Streams == null)
 				Streams = new List<AudioStream>();
 			Streams.Add(this);
 
 			Buffers = OpenAL.AL.GenBuffers(2);
-			Audio.Audio.Check();
+			AudioManager.Check();
 
 			Source = OpenAL.AL.GenSource();
-			Audio.Audio.Check();
+			AudioManager.Check();
 
+			BufferData = new Dictionary<int, byte[]>();
+			BufferData[Buffers[0]] = new byte[44100];
+			BufferData[Buffers[1]] = new byte[44100];
 		}
 
 
@@ -84,6 +87,7 @@ namespace ArcEngine.Asset
 			Source = -1;
 
 			FileName = string.Empty;
+			BufferData = null;
 
 			IsDisposed = true;
 		}
@@ -95,7 +99,7 @@ namespace ArcEngine.Asset
 		/// <returns></returns>
 		public bool Init()
 		{
-			return false;
+			return true;
 		}
 
 
@@ -113,36 +117,37 @@ namespace ArcEngine.Asset
 			oggStream = new OggInputStream(handle.Stream);
 			FileName = filename;
 
-
-			Vector3 vec = Vector3.Zero;
-			OpenAL.AL.Source(Source, OpenAL.ALSource3f.Position, vec.X, vec.Y, vec.Z);
-			OpenAL.AL.Source(Source, OpenAL.ALSource3f.Velocity, vec.X, vec.Y, vec.Z);
-			OpenAL.AL.Source(Source, OpenAL.ALSource3f.Direction, vec.X, vec.Y, vec.Z);
-			OpenAL.AL.Source(Source, OpenAL.ALSourcef.RolloffFactor, 0.0f);
-			OpenAL.AL.Source(Source, OpenAL.ALSourceb.SourceRelative, true);
+			Position = Vector3.Zero;
+			Direction = Vector3.Zero;
+			Velocity = Vector3.Zero;
+			RolloffFactor = 0.0f;
+			SourceRelative = true;
 
 			return true;
 		}
 
-
+	
 		/// <summary>
 		/// Play the sound
 		/// </summary>
 		public void Play()
 		{
-			if (IsPlaying)
+			if (State == AudioSourceState.Playing)
 				return;
 
-			if (!Stream(Buffers[0]))
+			// Fill first buffer
+			if (!Stream(Buffers[0], BufferData[Buffers[0]]))
 				return;
 
-			if (!Stream(Buffers[1]))
+			// Fill second buffer
+			if (!Stream(Buffers[1], BufferData[Buffers[1]]))
 				return;
 
+			// Add buffers to the queue
 			OpenAL.AL.SourceQueueBuffers(Source, Buffers.Length, Buffers);
-			OpenAL.AL.SourcePlay(Source);
 
-			Status = AudioSourceState.Playing;
+			// Play source
+			OpenAL.AL.SourcePlay(Source);
 		}
 
 
@@ -172,30 +177,34 @@ namespace ArcEngine.Asset
 			int processed = 0;
 			bool active = true;
 
+			// Get free buffers
 			OpenAL.AL.GetSource(Source, OpenAL.ALGetSourcei.BuffersProcessed, out processed);
-
 			while (processed-- != 0)
 			{
+				// Remove buffer from the queue
 				int buffer = OpenAL.AL.SourceUnqueueBuffer(Source);
-				Audio.Audio.Check();
+				AudioManager.Check();
 
-				active = Stream(buffer);
+				// Fill buffer
+				active = Stream(buffer, BufferData[buffer]);
 
+				// Enqueue buffer
 				OpenAL.AL.SourceQueueBuffer(Source, buffer);
-				Audio.Audio.Check();
+				AudioManager.Check();
 			}
 
-			if (!IsPlaying)
+			// If not playing, play
+			if (State != AudioSourceState.Playing)
 			{
 				OpenAL.AL.SourcePlay(Source);
 			}
 
+			// Loop mode ?
 			if (!active && Loop)
 			{
-				if (!IsPlaying)
-				{
+				if (State != AudioSourceState.Playing)
 					Rewind();
-				}
+
 				return true;
 			}
 
@@ -204,19 +213,20 @@ namespace ArcEngine.Asset
 
 
 		/// <summary>
-		/// 
+		/// Fill a buffer with audio data
 		/// </summary>
-		/// <param name="buffer"></param>
-		/// <returns></returns>
-		bool Stream(int buffer)
+		/// <param name="bufferid">Buffer id</param>
+		/// <param name="data">Buffer to fill</param>
+		/// <returns>True if no errors</returns>
+		bool Stream(int bufferid, byte[] data)
 		{
-			byte[] data = new byte[BUFFER_SIZE];
-			int size = 0;
-			int result;
+			if (data == null | data.Length == 0)
+				return false;
 
-			while (size < BUFFER_SIZE)
+			int size = 0;
+			while (size < data.Length)
 			{
-				result = oggStream.Read(data, size, BUFFER_SIZE - size);
+				int result = oggStream.Read(data, size, data.Length - size);
 				if (result > 0)
 				{
 					size += result;
@@ -240,15 +250,16 @@ namespace ArcEngine.Asset
 				return false;
 			}
 
-			OpenAL.AL.BufferData(buffer, (OpenAL.ALFormat)oggStream.Format, data, data.Length, oggStream.Rate);
-			Audio.Audio.Check();
+			// Fill OpenAL buffer
+			OpenAL.AL.BufferData(bufferid, (OpenAL.ALFormat)oggStream.Format, data, data.Length, oggStream.Rate);
+			AudioManager.Check();
 
 			return true;
 		}
 
 
 		/// <summary>
-		/// 
+		/// Rewind the stream
 		/// </summary>
 		public void Rewind()
 		{
@@ -391,13 +402,103 @@ namespace ArcEngine.Asset
 
 
 		/// <summary>
-		/// 
+		/// Sound position
+		/// </summary>
+		public Vector3 Position
+		{
+			get
+			{
+				Vector3 v = Vector3.Zero;
+				OpenAL.AL.GetSource(Source, OpenAL.ALSource3f.Position, out v.X, out v.Y, out v.Z);
+				return v;
+			}
+			set
+			{
+				OpenAL.AL.Source(Source, OpenAL.ALSource3f.Position, value.X, value.Y, value.Z);
+			}
+		}
+
+
+		/// <summary>
+		/// Sound direction
+		/// </summary>
+		public Vector3 Direction
+		{
+			get
+			{
+				Vector3 v = Vector3.Zero;
+				OpenAL.AL.GetSource(Source, OpenAL.ALSource3f.Direction, out v.X, out v.Y, out v.Z);
+				return v;
+			}
+			set
+			{
+				OpenAL.AL.Source(Source, OpenAL.ALSource3f.Direction, value.X, value.Y, value.Z);
+			}
+		}
+
+
+		/// <summary>
+		/// Sound velocity
+		/// </summary>
+		public Vector3 Velocity
+		{
+			get
+			{
+				Vector3 v = Vector3.Zero;
+				OpenAL.AL.GetSource(Source, OpenAL.ALSource3f.Velocity, out v.X, out v.Y, out v.Z);
+				return v;
+			}
+			set
+			{
+				OpenAL.AL.Source(Source, OpenAL.ALSource3f.Velocity, value.X, value.Y, value.Z);
+			}
+		}
+
+
+		/// <summary>
+		/// Rolloff factor
+		/// </summary>
+		public float RolloffFactor
+		{
+			get
+			{
+				float f;
+				OpenAL.AL.GetSource(Source, OpenAL.ALSourcef.RolloffFactor, out f);
+				return f;
+			}
+			set
+			{
+				OpenAL.AL.Source(Source, OpenAL.ALSourcef.RolloffFactor, value);
+			}
+		}
+
+
+		/// <summary>
+		/// Rolloff factor
+		/// </summary>
+		public bool SourceRelative
+		{
+			get
+			{
+				bool b;
+				OpenAL.AL.GetSource(Source, OpenAL.ALSourceb.SourceRelative, out b);
+				return b;
+			}
+			set
+			{
+				OpenAL.AL.Source(Source, OpenAL.ALSourceb.SourceRelative, value);
+			}
+		}
+
+
+		/// <summary>
+		/// Ogg stream
 		/// </summary>
 		OggInputStream oggStream;
 
 
 		/// <summary>
-		/// 
+		/// File name of the audio stream
 		/// </summary>
 		string FileName;
 
@@ -406,22 +507,6 @@ namespace ArcEngine.Asset
 		/// Loop playing
 		/// </summary>
 		public bool Loop;
-
-
-		/// <summary>
-		/// Does the source playing 
-		/// </summary>
-		public bool IsPlaying
-		{
-			get
-			{
-				OpenAL.ALSourceState state;
-
-				state = OpenAL.AL.GetSourceState(Source);
-
-				return (state == OpenAL.ALSourceState.Playing);
-			}
-		}
 
 
 		/// <summary>
@@ -463,24 +548,26 @@ namespace ArcEngine.Asset
 
 
 		/// <summary>
+		/// Buffer data
+		/// </summary>
+		Dictionary<int, byte[]> BufferData;
+		
+
+		/// <summary>
 		/// Audio source
 		/// </summary>
 		int Source;
 
 
 		/// <summary>
-		/// Buffer size
+		/// State of the stream
 		/// </summary>
-		const int BUFFER_SIZE = 4096 * 64;
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public AudioSourceState Status
+		public AudioSourceState State
 		{
-
-			get;
-			private set;
+			get
+			{
+				return (AudioSourceState) OpenAL.AL.GetSourceState(Source);
+			}
 		}
 
 		#endregion

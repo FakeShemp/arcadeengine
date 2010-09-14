@@ -21,11 +21,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Xml;
 using OpenAL = OpenTK.Audio.OpenAL;
-using ArcEngine.Asset;
 
 namespace ArcEngine.Audio
 {
@@ -33,7 +29,7 @@ namespace ArcEngine.Audio
 	/// <summary>
 	/// Audio manager
 	/// </summary>
-	static public class Audio
+	static public class AudioManager
 	{
 
 
@@ -259,6 +255,11 @@ namespace ArcEngine.Audio
 	/// </summary>
 	public enum AudioSourceState
 	{
+		/// <summary>
+		/// Initial mode
+		/// </summary>
+		Initial = OpenAL.ALSourceState.Initial,
+
 		/// <summary>
 		/// Channel is playing
 		/// </summary>

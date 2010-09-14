@@ -170,7 +170,7 @@
     <Compile Include="Asset\ScriptModel.cs" />
     <Compile Include="Asset\Scenes\Storyboard.cs" />
     <Compile Include="Asset\BitmapFont.cs" />
-    <Compile Include="Audio\Audio.cs" />
+    <Compile Include="Audio\AudioManager.cs" />
     <Compile Include="Audio\OggInputStream.cs" />
     <Compile Include="Editor\ScriptControl.cs">
       <SubType>UserControl</SubType>
