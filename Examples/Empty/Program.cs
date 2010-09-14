@@ -28,93 +28,82 @@ using ArcEngine.Input;
 
 namespace ArcEngine.Examples.Empty
 {
-    /// <summary>
-    /// Main game class
-    /// </summary>
-    public class Program : GameBase
-    {
+	/// <summary>
+	/// Main game class
+	/// </summary>
+	public class Program : GameBase
+	{
 
-        /// <summary>
-        /// Main entry point.
-        /// </summary>
-        [STAThread]
-        static void Main()
-        {
-            try
-            {
-                using (Program game = new Program())
-                    game.Run();
-            }
-            catch (Exception e)
-            {
-                // Oops, an error happened !
-                MessageBox.Show(e.StackTrace, e.Message);
-            }
-        }
+		/// <summary>
+		/// Main entry point.
+		/// </summary>
+		[STAThread]
+		static void Main()
+		{
+			using (Program game = new Program())
+				game.Run();
+		}
 
 
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public Program()
-        {
-            CreateGameWindow(new Size(1024, 768));
-        }
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		public Program()
+		{
+			CreateGameWindow(new Size(1024, 768));
+		}
 
 
 
-        /// <summary>
-        /// Load contents 
-        /// </summary>
-        public override void LoadContent()
-        {
-			  Display.RenderState.ClearColor = Color.CornflowerBlue;
+		/// <summary>
+		/// Load contents 
+		/// </summary>
+		public override void LoadContent()
+		{
+			Display.RenderState.ClearColor = Color.CornflowerBlue;
 
-        }
-
-
-        /// <summary>
-        /// Unload contents
-        /// </summary>
-        public override void UnloadContent()
-        {
-        }
+		}
 
 
-        /// <summary>
-        /// Update the game logic
-        /// </summary>
-        /// <param name="gameTime"></param>
-        public override void Update(GameTime gameTime)
-        {
-            // Check if the Escape key is pressed
-            if (Keyboard.IsKeyPress(Keys.Escape))
-                Exit();
+		/// <summary>
+		/// Unload contents
+		/// </summary>
+		public override void UnloadContent()
+		{
+		}
 
 
-        }
+		/// <summary>
+		/// Update the game logic
+		/// </summary>
+		/// <param name="gameTime"></param>
+		public override void Update(GameTime gameTime)
+		{
+			// Check if the Escape key is pressed
+			if (Keyboard.IsKeyPress(Keys.Escape))
+				Exit();
 
 
-
-        /// <summary>
-        /// Called when it is time to draw a frame.
-        /// </summary>
-        public override void Draw()
-        {
-            // Clears the background
-            Display.ClearBuffers();
+		}
 
 
-
-        }
+		/// <summary>
+		/// Called when it is time to draw a frame.
+		/// </summary>
+		public override void Draw()
+		{
+			// Clears the background
+			Display.ClearBuffers();
 
 
 
+		}
 
-        #region Properties
 
-        #endregion
+		#region Properties
 
-    }
+		#endregion
+
+	}
 
 }
