@@ -40,16 +40,8 @@ namespace ArcEngine.Examples.StarterKit
 		[STAThread]
 		static void Main()
 		{
-			try
-			{
-				using (StarterKit game = new StarterKit())
-					game.Run();
-			}
-			catch (Exception e)
-			{
-				// Oops, an error happened !
-				MessageBox.Show(e.StackTrace, e.Message);
-			}
+			StarterKit game = new StarterKit();
+				game.Run();
 		}
 
 
@@ -79,6 +71,8 @@ namespace ArcEngine.Examples.StarterKit
 			// Clear color of the screen
 			Display.RenderState.ClearColor = Color.CornflowerBlue;
 
+			Batch = new SpriteBatch();
+
 			// Load Verdana font
 			Font = BitmapFont.CreateFromTTF(@"c:\windows\fonts\verdana.ttf", 12, FontStyle.Regular);
 
@@ -104,6 +98,10 @@ namespace ArcEngine.Examples.StarterKit
 			if (Font != null)
 				Font.Dispose();
 			Font = null;
+
+			if (Batch != null)
+				Batch.Dispose();
+			Batch = null;
 		}
 
 
@@ -139,6 +137,7 @@ namespace ArcEngine.Examples.StarterKit
 			// Clears the background
 			Display.ClearBuffers();
 
+			Batch.Begin();
 
 			// Display the desired effect
 			switch (Effect)
@@ -146,36 +145,34 @@ namespace ArcEngine.Examples.StarterKit
 				// Shear the smiley
 				case EffectMode.Shear:
 				{
-					Display.Transform(1.0f, 0.0f, SineWave - 0.5f, 1.0f, 0.0f, 0.0f);
-					Smiley.Blit(Location);
+					//Display.Transform(1.0f, 0.0f, SineWave - 0.5f, 1.0f, 0.0f, 0.0f);
+					//Smiley.Blit(Location);
 				}
 				break;
 
 				// Scale the smiley a little bit
 				case EffectMode.Scale:
 				{
-					Display.Scale(SineWave, SineWave);
-					Display.Translate((Display.ViewPort.Width / 2.0f) * (1 - SineWave), (Display.ViewPort.Height / 2.0f) * (1 - SineWave));
-					Smiley.Blit(Location);
+					//Display.Scale(SineWave, SineWave);
+					//Display.Translate((Display.ViewPort.Width / 2.0f) * (1 - SineWave), (Display.ViewPort.Height / 2.0f) * (1 - SineWave));
+					//Smiley.Blit(Location);
 				}
 				break;
 
 				// Rotate the smiely
 				case EffectMode.Rotate:
 				{
-					Smiley.Blit(Location, (float)(SineWave * Math.PI * 120.0f), new Point(Smiley.Size.Width / 2, Smiley.Size.Height / 2));
+					//Smiley.Blit(Location, (float)(SineWave * Math.PI * 120.0f), new Point(Smiley.Size.Width / 2, Smiley.Size.Height / 2));
 				}
 				break;
 			}
 
-			// Restore default matrix
-			Display.DefaultMatrix();
-
-
 			// Print some text
-			Font.DrawText(new Point(10, 450), Color.White, "Press S to Shear");
-			Font.DrawText(new Point(10, 470), Color.White, "Press R to Rotate");
-			Font.DrawText(new Point(10, 490), Color.White, "Press D to Scale");
+			Batch.DrawString(Font, new Point(10, 450), Color.White, "Press S to Shear");
+			Batch.DrawString(Font, new Point(10, 470), Color.White, "Press R to Rotate");
+			Batch.DrawString(Font, new Point(10, 490), Color.White, "Press D to Scale");
+
+			Batch.End();
 		}
 
 
@@ -216,6 +213,11 @@ namespace ArcEngine.Examples.StarterKit
 		/// Drawing font
 		/// </summary>
 		BitmapFont Font;
+
+		/// <summary>
+		/// Spritebatch
+		/// </summary>
+		SpriteBatch Batch;
 
 		#endregion
 
