@@ -227,7 +227,6 @@ namespace ArcEngine
 				Thread.Sleep(20);
 
 
-		//	GameTime.Update();
 			bool flag = true;
 
 			// Update the clock
@@ -309,8 +308,8 @@ namespace ArcEngine
 						Keyboard.Update();
 						Mouse.Update();
 						Gamepad.Update();
-						AudioStream.Update();
 					}
+					AudioStream.Update();
 
 					// Perform an update
 					Update(GameTime);
@@ -353,8 +352,8 @@ namespace ArcEngine
 							Keyboard.Update();
 							Mouse.Update();
 							Gamepad.Update();
-							AudioStream.Update();
 						}
+						AudioStream.Update();
 
 						// Perform an update
 						Update(GameTime);
