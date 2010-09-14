@@ -368,6 +368,7 @@
     <Compile Include="Network\NetworkBase.cs" />
     <Compile Include="Network\NetworkEnums.cs" />
     <Compile Include="Network\ServerConfig.cs" />
+    <Compile Include="PInvoke\Gdi32.cs" />
     <Compile Include="PInvoke\User32.cs" />
     <Compile Include="PInvoke\Winmm.cs" />
     <Compile Include="Providers.cs" />

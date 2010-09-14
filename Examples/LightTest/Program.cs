@@ -42,16 +42,8 @@ namespace ArcEngine.Examples.LightTest
 		[STAThread]
 		static void Main()
 		{
-			try
-			{
-				using (Program game = new Program())
-					game.Run();
-			}
-			catch (Exception e)
-			{
-				// Oops, an error happened !
-				MessageBox.Show(e.StackTrace, e.Message);
-			}
+			using (Program game = new Program())
+				game.Run();
 		}
 
 
@@ -66,7 +58,6 @@ namespace ArcEngine.Examples.LightTest
 			// Change the window title
 			Window.Text = "2D light test";
 			Mouse.Visible = false;
-
 		}
 
 
@@ -77,8 +68,7 @@ namespace ArcEngine.Examples.LightTest
 		public override void LoadContent()
 		{
 			// Clear color of the screen
-			Display.ClearColor = Color.Black;
-			Display.Shader.Dispose();
+			Display.RenderState.ClearColor = Color.Black;
 			Display.Shader = Shader.CreateColorShader();
 
 

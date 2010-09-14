@@ -25,6 +25,9 @@ using System.Drawing;
 
 namespace ArcEngine.PInvoke
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	internal class User32
 	{
 		/// <summary>
@@ -50,6 +53,7 @@ namespace ArcEngine.PInvoke
 			public Point p;
 		}
 
+
 		/// <summary>
 		/// 
 		/// </summary>
@@ -64,6 +68,55 @@ namespace ArcEngine.PInvoke
 		[return: MarshalAs(UnmanagedType.Bool)]
 		internal static extern bool PeekMessage(out NativeMessage message, IntPtr hwnd, uint messageFilterMin, uint messageFilterMax, uint flags);
 
-	
+
+		/// <summary>
+		/// 
+		/// </summary>
+		[StructLayout(LayoutKind.Sequential)]
+		internal struct IconInfo
+		{
+			/// <summary>
+			/// Specifies whether this structure defines an icon or a cursor.
+			/// A value of TRUE specifies an icon; FALSE specifies a cursor
+			/// </summary>
+			bool fIcon;
+			/// <summary>
+			/// The x-coordinate of a cursor's hot spot
+			/// </summary>
+			Int32 xHotspot;
+			/// <summary>
+			/// The y-coordinate of a cursor's hot spot
+			/// </summary>
+			Int32 yHotspot;
+			/// <summary>
+			/// The icon bitmask bitmap
+			/// </summary>
+			IntPtr hbmMask;
+			/// <summary>
+			/// A handle to the icon color bitmap.
+			/// </summary>
+			IntPtr hbmColor;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="icon"></param>
+		/// <returns></returns>
+		[DllImport("user32.dll")]
+		public static extern IntPtr CreateIconIndirect(ref IconInfo icon);
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="hIcon"></param>
+		/// <param name="pIconInfo"></param>
+		/// <returns></returns>
+		[DllImport("user32.dll")]
+		[return: MarshalAs(UnmanagedType.Bool)]
+		public static extern bool GetIconInfo(IntPtr hIcon, ref IconInfo pIconInfo);
+
 	}
 }

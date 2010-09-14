@@ -202,12 +202,12 @@ namespace ArcEngine.Examples.Tunnel
 			if (Keyboard.IsKeyPress(Keys.Escape))
 				Exit();
 
+
+			// Wireframe mode
 			if (Keyboard.IsKeyPress(Keys.Space))
 				Mesh.PrimitiveType = PrimitiveType.LineStrip;
 			else
 				Mesh.PrimitiveType = PrimitiveType.Triangles;
-
-
 		}
 
 

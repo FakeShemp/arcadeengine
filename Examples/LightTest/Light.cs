@@ -43,7 +43,7 @@ namespace ArcEngine.Examples.LightTest
 				buffer.AddPoint(point, Color.FromArgb(0, Color));
 			}
 			int count = buffer.Update();
-			Display.DrawBatch(buffer, OpenTK.Graphics.OpenGL.BeginMode.TriangleFan, 0, count);
+			Display.DrawBatch(buffer, PrimitiveType.TriangleFan, 0, count);
 
 		}
 

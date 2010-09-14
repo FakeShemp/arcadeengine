@@ -46,7 +46,7 @@ namespace ArcEngine.Examples.LightTest
 				Buffer.AddLine(wall.From, wall.To, Color.Red);
 
 			int count = Buffer.Update();
-			Display.DrawBatch(Buffer, OpenTK.Graphics.OpenGL.BeginMode.Lines, 0, count);
+			Display.DrawBatch(Buffer, 0, count);
 
 			// Draw lights
 			foreach (Light light in Lights)
