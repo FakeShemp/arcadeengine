@@ -313,8 +313,6 @@ namespace ArcEngine.Graphic
 		/// <param name="buffer">Buffer handle</param>
 		/// <param name="mode">Drawing mode</param>
 		/// <param name="index">Index buffer</param>
-		/// 
-		/// <returns></returns>
 		public static void DrawIndexBuffer(BatchBuffer buffer, PrimitiveType mode, IndexBuffer index)
 		{
 			if (buffer == null || index == null)
@@ -340,7 +338,6 @@ namespace ArcEngine.Graphic
 		/// <param name="batch">Batch to draw</param>
 		/// <param name="first">Specifies the starting index in the enabled arrays.</param>
 		/// <param name="count">Specifies the number of indices to be rendered.</param>
-		/// <returns></returns>
 		public static void DrawBatch(BatchBuffer batch, int first, int count)
 		{
 			DrawBatch(batch, PrimitiveType.Triangles, first, count);
@@ -375,7 +372,7 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Enables a buffer index 
 		/// </summary>
-		/// <param name="id"></param>
+		/// <param name="id">ID of the buffer</param>
 		public static void EnableBufferIndex(int id)
 		{
 			if (id < 0)
@@ -388,7 +385,7 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Disables a buffer index
 		/// </summary>
-		/// <param name="id"></param>
+		/// <param name="id">ID of the buffer</param>
 		public static void DisableBufferIndex(int id)
 		{
 			TK.GL.DisableVertexAttribArray(id);

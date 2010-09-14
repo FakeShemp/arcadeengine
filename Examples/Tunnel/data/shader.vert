@@ -19,10 +19,10 @@ void main(void)
 {
     vec3 pos = aVertexPosition;
     // -- displace the x coordinate based on the time and the z position 
-	pos.x += cos(fTime + (aVertexPosition.z/4.0));
+	pos.x += cos(fTime + (aVertexPosition.z / 4.0));
 
     // -- displace the y coordinate based on the time and the z position 
-	pos.y += sin(fTime + (aVertexPosition.z/4.0));
+	pos.y += sin(fTime + (aVertexPosition.z / 4.0));
 
     // -- transform the vertex 
 	gl_Position = uPMatrix * uMVMatrix * vec4(pos, 1.0);
@@ -31,8 +31,8 @@ void main(void)
 	vColor = aVertexColor;
 
     // -- displace the texture's y (v) coordinate. This gives the illusion of movement.
-	vec2 texcoord=aTextureCoord;
-    texcoord.y = texcoord.y + (fTime);
+	vec2 texcoord = aTextureCoord;
+    //texcoord.y = texcoord.y + (fTime);
 
     // -- copy the texture coordinate 
 	vTextureCoord = texcoord;

@@ -70,7 +70,7 @@ namespace ArcEngine.Examples.Tunnel
 			Display.RenderState.DepthTest = true;
 			
 
-			// Setup the simple shader
+			// Setup the shader
 			Shader = new Shader();
 			Shader.LoadSource(ShaderType.VertexShader, "data/shader.vert");
 			Shader.LoadSource(ShaderType.FragmentShader, "data/shader.frag");
@@ -80,6 +80,9 @@ namespace ArcEngine.Examples.Tunnel
 			// Load the texture
 			Texture = new Texture2D("data/texture.jpg");
 			Texture.VerticalWrap = VerticalWrapFilter.Repeat;
+			Texture.HorizontalWrap = HorizontalWrapFilter.Repeat;
+			Texture.MagFilter = TextureMagFilter.Linear;
+			Texture.MinFilter = TextureMinFilter.Linear;
 
 
 			// Build the mesh
@@ -199,6 +202,11 @@ namespace ArcEngine.Examples.Tunnel
 			if (Keyboard.IsKeyPress(Keys.Escape))
 				Exit();
 
+			if (Keyboard.IsKeyPress(Keys.Space))
+				Mesh.PrimitiveType = PrimitiveType.LineStrip;
+			else
+				Mesh.PrimitiveType = PrimitiveType.Triangles;
+
 
 		}
 
@@ -230,6 +238,7 @@ namespace ArcEngine.Examples.Tunnel
 
 			// Draw the mesh
 			Mesh.Draw();
+
 		}
 
 

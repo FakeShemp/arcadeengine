@@ -143,7 +143,6 @@ namespace ArcEngine.Graphic
 				Matrix4.CreateRotationZ(rotation.Z) *
 				Matrix4.CreateTranslation(position) *
 				Matrix4.Scale(scale);
-			
 		}
 
 		#region Statics
@@ -901,7 +900,7 @@ namespace ArcEngine.Graphic
 
 
 		/// <summary>
-		/// 
+		/// Drawing primitive mode
 		/// </summary>
 		public PrimitiveType PrimitiveType;
 

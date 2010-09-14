@@ -12,7 +12,7 @@ out vec4 FragColor;
 void main(void)
 {
 	// -- get the pixel from the texture
-	vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+	vec4 textureColor = texture2D(uSampler, vTextureCoord);
 	
 	// -- multiply the texture pixel with the vertex color
 	FragColor = vColor * textureColor;
