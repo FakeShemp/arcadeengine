@@ -100,20 +100,14 @@ namespace ArcEngine.Graphic
 
 
 			// Dll version
-			string file = @"C:\Windows\System32\nvcpl.dll";
-			if (System.IO.File.Exists(file))
+			Microsoft.Win32.RegistryKey hklm;
+			hklm = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(@"SYSTEM\ControlSet001\Control\Class\{4D36E968-E325-11CE-BFC1-08002BE10318}\0000");
+			if (hklm != null)
 			{
-				System.Diagnostics.FileVersionInfo dll = System.Diagnostics.FileVersionInfo.GetVersionInfo(file);
-				Trace.WriteLine("Dll infos : {0}", dll.FileName);
-				Trace.WriteLine("Dll infos : {0}", dll.ProductName);
-				Trace.WriteLine("Dll infos : {0}", dll.ProductVersion);
-
-				System.IO.FileInfo info = new System.IO.FileInfo(file);
-				Trace.WriteLine("Creation time : {0}", info.CreationTime.ToString());
+				Trace.WriteLine("Driver name : {0}", ((string[])hklm.GetValue("OpenGLDriverName"))[0]);
+				Trace.WriteLine("Driver version : {0}", (string)hklm.GetValue("DriverVersion"));
+				Trace.WriteLine("Driver date : {0}", (string)hklm.GetValue("DriverDate"));
 			}
-
-
-
 			Trace.WriteLine("Graphics card vendor : {0}", Capabilities.VideoVendor);
 			Trace.WriteLine("Renderer : {0}", Capabilities.VideoRenderer);
 			Trace.WriteLine("Version : {0}", Capabilities.VideoVersion);
