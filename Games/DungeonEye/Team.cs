@@ -428,10 +428,11 @@ namespace DungeonEye
 
 			// Draw the cursor or the item in the hand
 			if (ItemInHand != null)
+			{
 				Batch.DrawTile(Items, ItemInHand.TileID, Mouse.Location);
-			else
-				Batch.DrawTile(Items, 0, Mouse.Location);
-
+			}
+			//else
+			//    Batch.DrawTile(Items, 0, Mouse.Location);
             Batch.End();
 		}
 

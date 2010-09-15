@@ -22,11 +22,11 @@ using System.Collections.Generic;
 using System.Drawing;
 using ArcEngine;
 using ArcEngine.Asset;
+using ArcEngine.Audio;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
 using ArcEngine.Utility.ScreenManager;
 using DungeonEye.Gui;
-using ArcEngine.Audio;
 
 
 namespace DungeonEye
@@ -54,6 +54,20 @@ namespace DungeonEye
 		{
 			ResourceManager.LoadBank("data/MainMenu.bnk");
 
+			// Change the cursor
+			AssetHandle asset = ResourceManager.LoadResource("cursor.png");
+			if (asset != null)
+			{
+				Bitmap bmp = new Bitmap(asset.Stream);
+				HardwareCursor cursor = new HardwareCursor(bmp, Point.Empty);
+				Mouse.HardwareCursor = cursor;
+
+				bmp.Dispose();
+				asset.Dispose();
+				asset = null;
+			}
+
+			
 			Batch = new SpriteBatch();
 	
 			Tileset = ResourceManager.CreateAsset<TileSet>("Main Menu");
@@ -270,7 +284,7 @@ namespace DungeonEye
 
 
 			// Draw the cursor or the item in the hand
-			Batch.DrawTile(Tileset, 0, Mouse.Location, Color.White);
+		//	Batch.DrawTile(Tileset, 0, Mouse.Location, Color.White);
 
 			Batch.End();
 		}

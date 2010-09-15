@@ -68,7 +68,7 @@ namespace ArcEngine.Examples.Tunnel
 			// Render states
 			Display.RenderState.ClearColor = Color.Black;
 			Display.RenderState.DepthTest = true;
-			
+
 
 			// Setup the shader
 			Shader = new Shader();

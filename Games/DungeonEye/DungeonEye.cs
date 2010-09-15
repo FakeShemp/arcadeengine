@@ -21,10 +21,10 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using ArcEngine;
+using ArcEngine.Audio;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
 using ArcEngine.Utility.ScreenManager;
-using ArcEngine.Audio;
 
 namespace DungeonEye
 {
@@ -86,9 +86,6 @@ namespace DungeonEye
 			Texture2D.DefaultMagFilter = TextureMagFilter.Linear;
 			Texture2D.DefaultMinFilter = TextureMinFilter.Linear;
 
-
-			// Display settings
-			Mouse.Visible = false;
 
 			GSM.AddScreen(new MainMenu());
 			GSM.AddScreen(new Team(null));
