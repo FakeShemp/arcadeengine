@@ -100,11 +100,13 @@ namespace ArcEngine.Graphic
 
 
 			// Dll version
-			Microsoft.Win32.RegistryKey hklm;
-			hklm = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(@"SYSTEM\ControlSet001\Control\Class\{4D36E968-E325-11CE-BFC1-08002BE10318}\0000");
+			Microsoft.Win32.RegistryKey hklm = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(@"SYSTEM\ControlSet001\Control\Class\{4D36E968-E325-11CE-BFC1-08002BE10318}\0000");
 			if (hklm != null)
 			{
-				Trace.WriteLine("Driver name : {0}", ((string[])hklm.GetValue("OpenGLDriverName"))[0]);
+				object obj = null;
+				obj = hklm.GetValue("OpenGLDriverName");
+				if (obj != null)
+					Trace.WriteLine("Driver name : {0}", ((string[])obj)[0]);
 				Trace.WriteLine("Driver version : {0}", (string)hklm.GetValue("DriverVersion"));
 				Trace.WriteLine("Driver date : {0}", (string)hklm.GetValue("DriverDate"));
 			}
