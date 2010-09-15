@@ -79,23 +79,27 @@ namespace ArcEngine.PInvoke
 			/// Specifies whether this structure defines an icon or a cursor.
 			/// A value of TRUE specifies an icon; FALSE specifies a cursor
 			/// </summary>
-			bool fIcon;
+			public bool fIcon;
+		
 			/// <summary>
 			/// The x-coordinate of a cursor's hot spot
 			/// </summary>
-			Int32 xHotspot;
+			public Int32 xHotspot;
+		
 			/// <summary>
 			/// The y-coordinate of a cursor's hot spot
 			/// </summary>
-			Int32 yHotspot;
+			public Int32 yHotspot;
+			
 			/// <summary>
 			/// The icon bitmask bitmap
 			/// </summary>
-			IntPtr hbmMask;
+			public IntPtr hbmMask;
+		
 			/// <summary>
 			/// A handle to the icon color bitmap.
 			/// </summary>
-			IntPtr hbmColor;
+			public IntPtr hbmColor;
 		}
 
 

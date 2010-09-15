@@ -79,33 +79,6 @@ namespace ArcEngine.Input
 		}
 
 
-		/// <summary>
-		/// http://www.switchonthecode.com/tutorials/csharp-tutorial-how-to-use-custom-cursors
-		/// </summary>
-		static public void ChangeCursor()
-		{
-			string Text = "Cursor Test";
-
-			Bitmap bitmap = new Bitmap(140, 25);
-			Graphics g = Graphics.FromImage(bitmap);
-			using (Font f = new Font(FontFamily.GenericSansSerif, 10))
-				g.DrawString("{ } Switch On The Code", f, Brushes.Green, 0, 0);
-
-			Cursor = CreateCursor(bitmap, 3, 3);
-
-			bitmap.Dispose();
-		}
-
-		static Cursor CreateCursor(Bitmap bmp, int xHotSpot, int yHotSpot)
-		{
-			User32.IconInfo tmp = new User32.IconInfo();
-			User32.GetIconInfo(bmp.GetHicon(), ref tmp);
-			tmp.xHotspot = xHotSpot;
-			tmp.yHotspot = yHotSpot;
-			tmp.fIcon = false;
-			return new Cursor(CreateIconIndirect(ref tmp));
-		}
-
 		#region Buttons
 
 		/// <summary>
@@ -266,6 +239,27 @@ namespace ArcEngine.Input
 		/// </summary>
 		static Form Form;
 
+
+		/// <summary>
+		/// Get/set the hardware cursor
+		/// </summary>
+		static public HardwareCursor HardwareCursor
+		{
+			get
+			{
+				return hardwareCursor;
+			}
+			set
+			{
+				hardwareCursor = value;
+
+				if (value != null)
+					Form.Cursor = hardwareCursor.Cursor;
+			}
+		}
+		static HardwareCursor hardwareCursor;
+		
+	
 
 		/// <summary>
 		/// Gets/sets the mouse Offset
