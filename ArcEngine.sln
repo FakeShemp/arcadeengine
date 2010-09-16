@@ -45,7 +45,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Network", "Examples\Network
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "User Interface", "Examples\User Interface\User Interface.csproj", "{E9F7FFF2-F2AC-46A3-8DD3-BB2228FFD78F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Collada", "Examples\Collada\Collada.csproj", "{D33157EA-8505-4083-9EB2-1E412CC386F5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mesh Loader", "Examples\MeshLoader\Mesh Loader.csproj", "{D33157EA-8505-4083-9EB2-1E412CC386F5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrawBuffers", "Examples\DrawBuffers\DrawBuffers.csproj", "{130B9D68-5D3D-478B-82E4-F0431B956525}"
 EndProject
@@ -205,6 +205,7 @@ Global
 		{D33157EA-8505-4083-9EB2-1E412CC386F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D33157EA-8505-4083-9EB2-1E412CC386F5}.Debug|x64.ActiveCfg = Debug|x64
 		{D33157EA-8505-4083-9EB2-1E412CC386F5}.Debug|x86.ActiveCfg = Debug|x86
+		{D33157EA-8505-4083-9EB2-1E412CC386F5}.Debug|x86.Build.0 = Debug|x86
 		{D33157EA-8505-4083-9EB2-1E412CC386F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D33157EA-8505-4083-9EB2-1E412CC386F5}.Release|x64.ActiveCfg = Release|x64
 		{D33157EA-8505-4083-9EB2-1E412CC386F5}.Release|x86.ActiveCfg = Release|x86
@@ -263,7 +264,6 @@ Global
 		{B46574B8-BAC0-4A39-970A-8EF6CAAC4ABD}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{B46574B8-BAC0-4A39-970A-8EF6CAAC4ABD}.Debug|x64.ActiveCfg = Debug|x86
 		{B46574B8-BAC0-4A39-970A-8EF6CAAC4ABD}.Debug|x86.ActiveCfg = Debug|x86
-		{B46574B8-BAC0-4A39-970A-8EF6CAAC4ABD}.Debug|x86.Build.0 = Debug|x86
 		{B46574B8-BAC0-4A39-970A-8EF6CAAC4ABD}.Release|Any CPU.ActiveCfg = Release|x86
 		{B46574B8-BAC0-4A39-970A-8EF6CAAC4ABD}.Release|x64.ActiveCfg = Release|x86
 		{B46574B8-BAC0-4A39-970A-8EF6CAAC4ABD}.Release|x86.ActiveCfg = Release|x86

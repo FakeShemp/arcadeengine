@@ -84,6 +84,10 @@ namespace ArcEngine.Examples.Tunnel
 			Texture.MagFilter = TextureMagFilter.Linear;
 			Texture.MinFilter = TextureMinFilter.Linear;
 
+			Matrix4 e = new Matrix4();
+			e.Transpose();
+			e.Invert();
+
 
 			// Build the mesh
 			#region Mesh
