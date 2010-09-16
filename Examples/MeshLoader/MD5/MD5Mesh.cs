@@ -115,6 +115,29 @@ namespace ArcEngine.Examples.MeshLoader.MD5
 			if (stream == null)
 				return;
 
+
+			// Allow to read float with '.' instead od ','
+			System.Globalization.CultureInfo ci = new System.Globalization.CultureInfo("en-US");
+
+			string line = null;
+			while ((line = stream.ReadLine()) != null)
+			{
+				line = line.Trim();
+				string[] lines = line.Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+
+				// End of joints list
+				if (lines.Length == 1)
+					break;
+
+				string name = lines[0];
+				int parentid = int.Parse(lines[1]);
+				Vector3 position = new Vector3(float.Parse(lines[3], ci), float.Parse(lines[4], ci), float.Parse(lines[5], ci));
+				Vector3 quaternion = new Vector3(float.Parse(lines[8], ci), float.Parse(lines[9], ci), float.Parse(lines[10], ci));
+
+				// Add the joint to the list
+				Joints.Add(new Joint(name, parentid, position, quaternion));
+			}
+
 		}
 
 		#region Properties

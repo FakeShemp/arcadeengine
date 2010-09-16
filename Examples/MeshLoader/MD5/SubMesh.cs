@@ -8,12 +8,21 @@ namespace ArcEngine.Examples.MeshLoader.MD5
 	/// <summary>
 	/// MD5 mesh
 	/// </summary>
-	public class Mesh
+	public class SubMesh
 	{
 
 
 		#region Properties
 
+		/// <summary>
+		/// 
+		/// </summary>
+		public string Shader;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		List<Vector3> Vertices;
 
 		#endregion
 	}
