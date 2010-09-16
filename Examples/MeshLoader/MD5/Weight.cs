@@ -26,37 +26,37 @@ using System.Text;
 namespace ArcEngine.Examples.MeshLoader.MD5
 {
 	/// <summary>
-	/// MD5 mesh
+	/// 
 	/// </summary>
-	public class SubMesh
+	public class Weight
 	{
-
-
-		#region Properties
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="joint"></param>
+		/// <param name="bias"></param>
+		/// <param name="position"></param>
+		public Weight(int joint, float bias, Vector3 position)
+		{
+			Joint = joint;
+			Bias = bias;
+			Position = position;
+		}
 
 		/// <summary>
-		/// Shader
+		/// 
 		/// </summary>
-		public string Shader;
-
-
-		/// <summary>
-		/// Vertices
-		/// </summary>
-		public Vertex[] Vertices;
-
-
-		/// <summary>
-		/// Triangles
-		/// </summary>
-		public Triangle[] Triangles;
+		public int Joint;
 
 
 		/// <summary>
-		/// Weights
+		/// 
 		/// </summary>
-		public Weight[] Weights;
+		public float Bias;
 
-		#endregion
+		/// <summary>
+		/// 
+		/// </summary>
+		public Vector3 Position;
 	}
 }

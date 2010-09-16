@@ -26,37 +26,38 @@ using System.Text;
 namespace ArcEngine.Examples.MeshLoader.MD5
 {
 	/// <summary>
-	/// MD5 mesh
+	/// 
 	/// </summary>
-	public class SubMesh
+	public class Triangle
 	{
 
-
-		#region Properties
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="a"></param>
+		/// <param name="b"></param>
+		/// <param name="c"></param>
+		public Triangle(int a, int b, int c)
+		{
+			A = a;
+			B = b;
+			C = c;
+		}
 
 		/// <summary>
-		/// Shader
+		/// 
 		/// </summary>
-		public string Shader;
-
+		public int A;
 
 		/// <summary>
-		/// Vertices
+		/// 
 		/// </summary>
-		public Vertex[] Vertices;
-
+		public int B;
 
 		/// <summary>
-		/// Triangles
+		/// 
 		/// </summary>
-		public Triangle[] Triangles;
+		public int C;
 
-
-		/// <summary>
-		/// Weights
-		/// </summary>
-		public Weight[] Weights;
-
-		#endregion
 	}
 }

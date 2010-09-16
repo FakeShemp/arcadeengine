@@ -103,7 +103,9 @@
     <Compile Include="MD5\Joint.cs" />
     <Compile Include="MD5\MD5Mesh.cs" />
     <Compile Include="MD5\SubMesh.cs" />
+    <Compile Include="MD5\Triangle.cs" />
     <Compile Include="MD5\Vertex.cs" />
+    <Compile Include="MD5\Weight.cs" />
     <Compile Include="Mesh.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
