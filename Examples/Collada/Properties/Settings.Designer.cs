@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ArcEngine.Examples.Collada.Properties {
+namespace ArcEngine.Examples.MeshLoader.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

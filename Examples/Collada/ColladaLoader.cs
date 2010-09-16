@@ -33,7 +33,7 @@ using ArcEngine.Graphic;
 // http://www.opengl.org/discussion_boards/ubbthreads.php?ubb=showflat&Number=265744
 
 
-namespace ArcEngine.Examples.Collada
+namespace ArcEngine.Examples.MeshLoader
 {
 	/// <summary>
 	/// Collada file loader

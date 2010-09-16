@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ArcEngine.Examples.Collada.Properties {
+namespace ArcEngine.Examples.MeshLoader.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace ArcEngine.Examples.Collada.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ArcEngine.Examples.Collada.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ArcEngine.Examples.MeshLoader.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

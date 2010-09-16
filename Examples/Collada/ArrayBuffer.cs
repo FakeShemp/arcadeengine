@@ -22,9 +22,10 @@ using System.Collections.Generic;
 using System.Text;
 using ArcEngine.Graphic;
 using System.Runtime.InteropServices;
+using OpenTK.Graphics.OpenGL;
 
 
-namespace ArcEngine.Examples.Collada
+namespace ArcEngine.Examples.MeshLoader
 {
 	/// <summary>
 	/// These buffers contain vertex attributes, such as vertex coordinates, texture coordinate data, per vertex-color data, and normals.

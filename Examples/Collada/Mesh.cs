@@ -20,7 +20,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using OpenTK.Graphics.OpenGL;
 using ArcEngine.Graphic;
 using ArcEngine.Asset;
 
@@ -41,7 +40,7 @@ using ArcEngine.Asset;
  * 
  * meshes are subdivided in  subsets , each corresponding to a portion of the mesh characterized by the same material. 
 */
-namespace ArcEngine.Examples.Collada
+namespace ArcEngine.Examples.MeshLoader
 {
 	/// <summary>
 	/// Class which holds the geometry of a 3d object.  

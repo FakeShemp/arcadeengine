@@ -19,19 +19,18 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using ArcEngine.Asset;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
+using ArcEngine.Examples.MeshLoader.MD5;
 
-namespace ArcEngine.Examples.Collada
+namespace ArcEngine.Examples.MeshLoader
 {
 	/// <summary>
 	/// Main game class
 	/// </summary>
-	public class Collada : GameBase
+	public class Program : GameBase
 	{
 
 		/// <summary>
@@ -40,26 +39,18 @@ namespace ArcEngine.Examples.Collada
 		[STAThread]
 		static void Main()
 		{
-			try
-			{
-				using (Collada game = new Collada())
-					game.Run();
-			}
-			catch (Exception e)
-			{
-				// Oops, an error happened !
-				MessageBox.Show(e.StackTrace, e.Message);
-			}
-		}
+			using (Program game = new Program())
+				game.Run();
+	}
 
 
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public Collada()
+		public Program()
 		{
 			CreateGameWindow(new Size(1024, 768));
-			Window.Text = "Collada loader";
+			Window.Text = "Mesh loader";
 		}
 
 
@@ -69,13 +60,16 @@ namespace ArcEngine.Examples.Collada
 		/// </summary>
 		public override void LoadContent()
 		{
-			Display.ClearColor = Color.CornflowerBlue;
+			Display.RenderState.ClearColor = Color.CornflowerBlue;
 
 
-			ColladaLoader loader = new ColladaLoader();
-			loader.Load("data/seymourplane_triangulate.dae");
-			Shape = loader.GenerateShape("propShape");
+		//	ColladaLoader loader = new ColladaLoader();
+		//	loader.Load("data/seymourplane_triangulate.dae");
+		//	Shape = loader.GenerateShape("propShape");
 
+
+			MD5Mesh md5 = new MD5Mesh();
+			md5.Load(@"data/md5/zfat.md5mesh");
 
 			#region Shader
 			Shader = new Shader();
