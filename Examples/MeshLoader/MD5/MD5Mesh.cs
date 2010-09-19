@@ -103,7 +103,7 @@ namespace ArcEngine.Examples.MeshLoader.MD5
 					}
 					else if (line.StartsWith("mesh"))
 					{
-						ReadSubMesh(stream);
+						ReadMesh(stream);
 					}
 				}
 			}
@@ -183,7 +183,7 @@ namespace ArcEngine.Examples.MeshLoader.MD5
 		/// Reads a mesh definition
 		/// </summary>
 		/// <param name="stream">Stream to the file</param>
-		void ReadSubMesh(StreamReader stream)
+		void ReadMesh(StreamReader stream)
 		{
 			if (stream == null)
 				return;
@@ -290,9 +290,9 @@ namespace ArcEngine.Examples.MeshLoader.MD5
 
 
 		/// <summary>
-		/// 
+		/// Get a joint
 		/// </summary>
-		/// <param name="id"></param>
+		/// <param name="id">Id of the joint in the list</param>
 		/// <returns></returns>
 		public Joint GetJoint(int id)
 		{

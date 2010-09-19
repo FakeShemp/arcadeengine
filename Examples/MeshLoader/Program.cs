@@ -70,7 +70,6 @@ namespace ArcEngine.Examples.MeshLoader
 
 			MD5 = new MD5Mesh();
 			MD5.Load(@"data/md5/zfat.md5mesh");
-
 		}
 
 
@@ -87,7 +86,6 @@ namespace ArcEngine.Examples.MeshLoader
 			if (MD5 != null)
 				MD5.Dispose();
 			MD5 = null;
-
 		}
 
 
@@ -118,11 +116,11 @@ namespace ArcEngine.Examples.MeshLoader
 
 
 			#region Matrices
-			Vector3 CameraPostion = new Vector3(0.0f, 0.1f, 3.0f);
+			Vector3 CameraPostion = new Vector3(0.0f, 0.0f, 0.0f);
 			Vector3 target = Vector3.Add(CameraPostion, new Vector3(0.0f, 0.0f, -1.0f));
 
 			float aspectRatio = (float)Display.ViewPort.Width / (float)Display.ViewPort.Height;
-			Matrix4 ProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(45.0f), aspectRatio, 0.1f, 100.0f);
+			Matrix4 ProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(45.0f), aspectRatio, 0.1f, 1000.0f);
 			Matrix4 ModelViewMatrix = Matrix4.LookAt(CameraPostion, target, Vector3.UnitY);
 			Matrix4 mvp = ModelViewMatrix * ProjectionMatrix;
 			#endregion
@@ -137,14 +135,13 @@ namespace ArcEngine.Examples.MeshLoader
 			if (MD5 != null)
 			{
 				Display.Shader = MD5.Shader;
-				Display.Shader.SetUniform("mvpMatrix", Matrix4.CreateTranslation(new Vector3(0.0f, 0.0f, -5.0f)) * mvp);
+				Display.Shader.SetUniform("mvpMatrix", Matrix4.CreateRotationX(-90.0f) * Matrix4.CreateTranslation(new Vector3(0.0f, 0.0f, -150.0f)) * mvp);
 				Display.Shader.SetUniform("mvMatrix", ModelViewMatrix);
 				MD5.Draw();
 			}
+
+
 		}
-
-
-
 
 		#region Properties
 

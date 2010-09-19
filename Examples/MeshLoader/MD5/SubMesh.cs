@@ -32,7 +32,7 @@ namespace ArcEngine.Examples.MeshLoader.MD5
 	{
 
 		/// <summary>
-		/// 
+		/// Dispose resources
 		/// </summary>
 		public void Dispose()
 		{
@@ -43,7 +43,7 @@ namespace ArcEngine.Examples.MeshLoader.MD5
 
 
 		/// <summary>
-		/// 
+		/// Draws the mesh
 		/// </summary>
 		public void Draw()
 		{

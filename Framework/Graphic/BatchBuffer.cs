@@ -119,7 +119,7 @@ namespace ArcEngine.Graphic
 			if (Handle == -1)
 				return;
 
-         TK.GL.BindBuffer(TK.BufferTarget.ArrayBuffer, Handle);
+			TK.GL.BindBuffer(TK.BufferTarget.ArrayBuffer, Handle);
 
 			if (Display.Shader == null)
 				return;
