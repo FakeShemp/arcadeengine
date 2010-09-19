@@ -22,6 +22,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
+using ArcEngine.Graphic;
+
 
 //
 // http://tfc.duke.free.fr/coding/md5-specs-fr.html
@@ -31,13 +33,28 @@ namespace ArcEngine.Examples.MeshLoader.MD5
 	/// <summary>
 	/// 
 	/// </summary>
-	public class MD5Mesh
+	public class MD5Mesh : IDisposable
 	{
 		/// <summary>
 		/// Constructor
 		/// </summary>
 		public MD5Mesh()
 		{
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public void Dispose()
+		{
+			if (Shader != null)
+				Shader.Dispose();
+			Shader = null;
+
+			foreach (SubMesh mesh in Meshes)
+				mesh.Dispose();
+			Meshes = null;
 		}
 
 
@@ -98,12 +115,35 @@ namespace ArcEngine.Examples.MeshLoader.MD5
 
 
 		/// <summary>
+		/// 
+		/// </summary>
+		public void Draw()
+		{
+			Display.Shader = Shader;
+			foreach (SubMesh sub in Meshes)
+				sub.Draw();
+		}
+
+
+		/// <summary>
 		/// Prepare the MD5Mesh for rendering
 		/// </summary>
 		void Prepare()
 		{
+			// Prepare each mesh
 			foreach (SubMesh mesh in Meshes)
 				mesh.Prepare(this);
+
+
+			#region Shader
+
+			Shader = new Shader();
+			Shader.LoadSource(ShaderType.VertexShader, "data/md5/shader.vert");
+			Shader.LoadSource(ShaderType.FragmentShader, "data/md5/shader.frag");
+			Shader.Compile();
+			Display.Shader = Shader;
+
+			#endregion
 		}
 
 
@@ -317,6 +357,14 @@ namespace ArcEngine.Examples.MeshLoader.MD5
 		}
 
 
+		/// <summary>
+		/// Shader
+		/// </summary>
+		public Shader Shader
+		{
+			get;
+			private set;
+		}
 
 		#endregion
 	}

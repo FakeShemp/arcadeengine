@@ -28,8 +28,28 @@ namespace ArcEngine.Examples.MeshLoader.MD5
 	/// <summary>
 	/// MD5 mesh
 	/// </summary>
-	public class SubMesh
+	public class SubMesh : IDisposable
 	{
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public void Dispose()
+		{
+			if (Mesh != null)
+				Mesh.Dispose();
+			Mesh = null;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public void Draw()
+		{
+			Mesh.Draw();
+		}
+
 
 		/// <summary>
 		/// Prepare the mesh for drawing
@@ -89,6 +109,23 @@ namespace ArcEngine.Examples.MeshLoader.MD5
 				buffer[i * 11 +  9] = Vertices[i].Texture.X;
 				buffer[i * 11 + 10] = Vertices[i].Texture.Y;
 			}
+
+
+			int[] indices = new int[Triangles.Length * 3];
+			for (int i = 0 ; i < Triangles.Length ; i++)
+			{
+				indices[i * 3 + 0] = Triangles[i].A;
+				indices[i * 3 + 1] = Triangles[i].B;
+				indices[i * 3 + 2] = Triangles[i].C;
+			}
+
+			Mesh = new Graphic.Mesh();
+			Mesh.Buffer.AddDeclaration("in_position", 3);
+			Mesh.Buffer.AddDeclaration("in_normal", 3);
+			Mesh.Buffer.AddDeclaration("in_tangent", 3);
+			Mesh.Buffer.AddDeclaration("in_texcoord", 2);
+			Mesh.SetVertices(buffer);
+			Mesh.SetIndices(indices);
 		}
 
 
@@ -314,6 +351,11 @@ namespace ArcEngine.Examples.MeshLoader.MD5
 		/// </summary>
 		public Weight[] Weights;
 
+
+		/// <summary>
+		/// Mesh
+		/// </summary>
+		ArcEngine.Graphic.Mesh Mesh;
 
 		#endregion
 	}

@@ -41,7 +41,7 @@ namespace ArcEngine.Examples.MeshLoader
 		{
 			using (Program game = new Program())
 				game.Run();
-	}
+		}
 
 
 		/// <summary>
@@ -68,8 +68,8 @@ namespace ArcEngine.Examples.MeshLoader
 		//	Shape = loader.GenerateShape("propShape");
 
 
-			MD5Mesh md5 = new MD5Mesh();
-			md5.Load(@"data/md5/zfat.md5mesh");
+			MD5 = new MD5Mesh();
+			MD5.Load(@"data/md5/zfat.md5mesh");
 
 			#region Shader
 			Shader = new Shader();
@@ -120,11 +120,7 @@ namespace ArcEngine.Examples.MeshLoader
 
 			#endregion
 
-
-
 		}
-
-
 
 
 
@@ -140,6 +136,10 @@ namespace ArcEngine.Examples.MeshLoader
 			if (Shader != null)
 				Shader.Dispose();
 			Shader = null;
+
+			if (MD5 != null)
+				MD5.Dispose();
+			MD5 = null;
 
 		}
 
@@ -171,12 +171,21 @@ namespace ArcEngine.Examples.MeshLoader
 
 			if (Shape != null)
 				Shape.Draw(Shader);
+
+			if (MD5 != null)
+				MD5.Draw();
 		}
 
 
 
 
 		#region Properties
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		MD5Mesh MD5;
 
 
 		/// <summary>

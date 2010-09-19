@@ -123,6 +123,8 @@
     <None Include="data\cube.DAE">
       <SubType>Designer</SubType>
     </None>
+    <None Include="data\md5\shader.frag" />
+    <None Include="data\md5\shader.vert" />
     <None Include="data\md5\zfat.md5mesh" />
     <None Include="data\plane.dae">
       <SubType>Designer</SubType>
