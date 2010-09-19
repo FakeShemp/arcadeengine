@@ -508,11 +508,81 @@ namespace ArcEngine
 
         #endregion
 
-        #endregion
 
-        #region Operators
+		#region Collected from http://code.google.com/p/csat/source/browse/trunk/csat_src/MathExt.cs
 
-        /// <summary>
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="q"></param>
+		/// <param name="v"></param>
+		/// <returns></returns>
+		public static Vector3 RotatePoint(ref Quaternion q, ref Vector3 v)
+		{
+			Vector3 outv;
+			Quaternion inv = new Quaternion();
+
+			inv.X = -q.X;
+			inv.Y = -q.Y;
+			inv.Z = -q.Z;
+			inv.W = q.W;
+
+			Quaternion norminv = Quaternion.Normalize(inv);
+			Quaternion m = MultVec(ref q, ref v);
+			Quaternion qm = Mult(ref m, ref norminv);
+
+			outv.X = qm.Xyz.X;
+			outv.Y = qm.Xyz.Y;
+			outv.Z = qm.Xyz.Z;
+
+			return outv;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="q"></param>
+		/// <param name="v"></param>
+		/// <returns></returns>
+		public static Quaternion MultVec(ref Quaternion q, ref Vector3 v)
+		{
+			Quaternion outq = new Quaternion();
+
+			outq.W = -(q.Xyz.X * v.X) - (q.Xyz.Y * v.Y) - (q.Xyz.Z * v.Z);
+			outq.X = ((q.W * v.X) + (q.Xyz.Y * v.Z)) - (q.Xyz.Z * v.Y);
+			outq.Y = ((q.W * v.Y) + (q.Xyz.Z * v.X)) - (q.Xyz.X * v.Z);
+			outq.Z = ((q.W * v.Z) + (q.Xyz.X * v.Y)) - (q.Xyz.Y * v.X);
+
+			return outq;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="qb"></param>
+		/// <param name="qa"></param>
+		/// <returns></returns>
+		public static Quaternion Mult(ref Quaternion qb, ref Quaternion qa)
+		{
+			Quaternion outq = new Quaternion();
+
+			outq.W = (qb.W * qa.W) - (qb.Xyz.X * qa.Xyz.X) - (qb.Xyz.Y * qa.Xyz.Y) - (qb.Xyz.Z * qa.Xyz.Z);
+			outq.X = ((qb.W * qa.Xyz.X) + (qb.Xyz.X * qa.W) + (qb.Xyz.Y * qa.Xyz.Z)) - (qb.Xyz.Z * qa.Xyz.Y);
+			outq.Y = ((qb.W * qa.Xyz.Y) + (qb.Xyz.Y * qa.W) + (qb.Xyz.Z * qa.Xyz.X)) - (qb.Xyz.X * qa.Xyz.Z);
+			outq.Z = ((qb.W * qa.Xyz.Z) + (qb.Xyz.Z * qa.W) + (qb.Xyz.X * qa.Xyz.Y)) - (qb.Xyz.Y * qa.Xyz.X);
+
+			return outq;
+		}
+
+		#endregion
+
+		#endregion
+
+		#region Operators
+
+		/// <summary>
         /// Adds two instances.
         /// </summary>
         /// <param name="left">The first instance.</param>

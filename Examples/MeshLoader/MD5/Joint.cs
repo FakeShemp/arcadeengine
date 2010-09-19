@@ -62,25 +62,25 @@ namespace ArcEngine.Examples.MeshLoader.MD5
 		#region Properties
 
 		/// <summary>
-		/// 
+		/// Name of the joint
 		/// </summary>
 		public string Name;
 
 
 		/// <summary>
-		/// 
+		/// Parent joint
 		/// </summary>
 		public int ParentID;
 
 
 		/// <summary>
-		/// 
+		/// Vertex position
 		/// </summary>
 		public Vector3 Position;
 
 
 		/// <summary>
-		/// 
+		/// Orientation
 		/// </summary>
 		public Quaternion Orientation;
 

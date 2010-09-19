@@ -58,5 +58,15 @@ namespace ArcEngine.Examples.MeshLoader.MD5
 		/// 
 		/// </summary>
 		public Vector3 Position;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Vector3 Normal;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Vector3 Tangent;
 	}
 }

@@ -47,16 +47,16 @@ namespace ArcEngine.Examples.MeshLoader.MD5
 		/// <summary>
 		/// Texture coordinates
 		/// </summary>
-		Vector2 Texture;
+		public Vector2 Texture;
 
 		/// <summary>
 		/// 
 		/// </summary>
-		int StartWeight;
+		public int StartWeight;
 
 		/// <summary>
 		/// 
 		/// </summary>
-		int WeightCount;
+		public int WeightCount;
 	}
 }

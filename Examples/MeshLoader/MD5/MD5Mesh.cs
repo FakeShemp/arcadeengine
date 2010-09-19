@@ -23,6 +23,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 
+//
+// http://tfc.duke.free.fr/coding/md5-specs-fr.html
+//
 namespace ArcEngine.Examples.MeshLoader.MD5
 {
 	/// <summary>
@@ -88,8 +91,19 @@ namespace ArcEngine.Examples.MeshLoader.MD5
 				}
 			}
 
+			Prepare();
 
 			return true;
+		}
+
+
+		/// <summary>
+		/// Prepare the MD5Mesh for rendering
+		/// </summary>
+		void Prepare()
+		{
+			foreach (SubMesh mesh in Meshes)
+				mesh.Prepare(this);
 		}
 
 
@@ -229,10 +243,22 @@ namespace ArcEngine.Examples.MeshLoader.MD5
 				#endregion
 			}
 
-
 			Meshes.Add(mesh);
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
+		public Joint GetJoint(int id)
+		{
+			if (id > JointCount)
+				throw new ArgumentOutOfRangeException("id");
+
+			return Joints[id];
+		}
 
 
 		#region Properties
@@ -252,7 +278,7 @@ namespace ArcEngine.Examples.MeshLoader.MD5
 		/// <summary>
 		/// MD5 mesh version
 		/// </summary>
-		public int Version
+		static public int Version
 		{
 			get
 			{
