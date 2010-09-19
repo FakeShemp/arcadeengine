@@ -44,7 +44,7 @@ namespace ArcEngine.Examples.MeshLoader.MD5
 
 
 		/// <summary>
-		/// 
+		/// Dispose
 		/// </summary>
 		public void Dispose()
 		{
@@ -115,11 +115,10 @@ namespace ArcEngine.Examples.MeshLoader.MD5
 
 
 		/// <summary>
-		/// 
+		/// Draw the mesh
 		/// </summary>
 		public void Draw()
 		{
-			Display.Shader = Shader;
 			foreach (SubMesh sub in Meshes)
 				sub.Draw();
 		}
@@ -141,7 +140,6 @@ namespace ArcEngine.Examples.MeshLoader.MD5
 			Shader.LoadSource(ShaderType.VertexShader, "data/md5/shader.vert");
 			Shader.LoadSource(ShaderType.FragmentShader, "data/md5/shader.frag");
 			Shader.Compile();
-			Display.Shader = Shader;
 
 			#endregion
 		}
@@ -207,6 +205,10 @@ namespace ArcEngine.Examples.MeshLoader.MD5
 					lines = line.Split('"');
 					mesh.Shader = lines[1];
 
+				}
+				else if (line == "}")
+				{
+					break;
 				}
 
 				#region Vertices

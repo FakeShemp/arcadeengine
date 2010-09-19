@@ -71,55 +71,6 @@ namespace ArcEngine.Examples.MeshLoader
 			MD5 = new MD5Mesh();
 			MD5.Load(@"data/md5/zfat.md5mesh");
 
-			#region Shader
-			Shader = new Shader();
-			Shader.SetSource(ShaderType.VertexShader,
-			@"
-			#version 130
-
-			precision highp float;
-
-			uniform mat4 mvp_matrix;
-
-			in vec2 in_position;
-			in vec4 in_color;
-
-			out vec4 out_color;
-
-			void main(void)
-			{
-				gl_Position = mvp_matrix * vec4(in_position, 0.0, 1.0);
-				
-				out_color = in_color;
-			}");
-
-
-			Shader.SetSource(ShaderType.FragmentShader,
-			@"
-			#version 130
-
-			precision highp float;
-
-			in vec4 out_color;
-
-			out vec4 out_frag_color;
-		
-			void main(void)
-			{
-				out_frag_color = out_color;
-			}
-			");
-			Shader.Compile();
-			Display.Shader = Shader;
-
-			// Matrix
-			Matrix4 projectionMatrix = Matrix4.CreateOrthographicOffCenter(0, Display.ViewPort.Width, Display.ViewPort.Height, 0, 0, 5);
-			Matrix4 modelviewMatrix = Matrix4.LookAt(new Vector3(0, 0, 1), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
-			Matrix4 mvpMatrix = modelviewMatrix * projectionMatrix;
-			Shader.SetUniform("mvp_matrix", mvpMatrix);
-
-			#endregion
-
 		}
 
 
@@ -129,13 +80,9 @@ namespace ArcEngine.Examples.MeshLoader
 		/// </summary>
 		public override void UnloadContent()
 		{
-			if (Shape != null)
-				Shape.Dispose();
-			Shape = null;
-
-			if (Shader != null)
-				Shader.Dispose();
-			Shader = null;
+			if (Collada != null)
+				Collada.Dispose();
+			Collada = null;
 
 			if (MD5 != null)
 				MD5.Dispose();
@@ -169,11 +116,31 @@ namespace ArcEngine.Examples.MeshLoader
 			// Clears the background
 			Display.ClearBuffers();
 
-			if (Shape != null)
-				Shape.Draw(Shader);
+
+			#region Matrices
+			Vector3 CameraPostion = new Vector3(0.0f, 0.1f, 3.0f);
+			Vector3 target = Vector3.Add(CameraPostion, new Vector3(0.0f, 0.0f, -1.0f));
+
+			float aspectRatio = (float)Display.ViewPort.Width / (float)Display.ViewPort.Height;
+			Matrix4 ProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(45.0f), aspectRatio, 0.1f, 100.0f);
+			Matrix4 ModelViewMatrix = Matrix4.LookAt(CameraPostion, target, Vector3.UnitY);
+			Matrix4 mvp = ModelViewMatrix * ProjectionMatrix;
+			#endregion
+
+
+			if (Collada != null)
+			{
+				//Collada.Draw(Shader);
+			}
+
 
 			if (MD5 != null)
+			{
+				Display.Shader = MD5.Shader;
+				Display.Shader.SetUniform("mvpMatrix", Matrix4.CreateTranslation(new Vector3(0.0f, 0.0f, -5.0f)) * mvp);
+				Display.Shader.SetUniform("mvMatrix", ModelViewMatrix);
 				MD5.Draw();
+			}
 		}
 
 
@@ -191,13 +158,7 @@ namespace ArcEngine.Examples.MeshLoader
 		/// <summary>
 		/// 
 		/// </summary>
-		Mesh Shape;
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		Shader Shader;
+		Mesh Collada;
 
 
 		#endregion
