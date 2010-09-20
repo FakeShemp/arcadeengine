@@ -164,7 +164,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Collada\" />
-    <Folder Include="data\md5\fatty\" />
+    <Folder Include="data\md5\zfat\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="data\md5\fatty_d.tga" />
