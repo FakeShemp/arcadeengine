@@ -426,8 +426,7 @@ namespace ArcEngine.Graphic
 
 
 			Display.Texture = this;
-			//GL.GetTexImage(TextureTarget.Texture2D, 0, PixelFormat.Bgra, PixelType.UnsignedByte, Data);
-            TK.GL.GetTexImage<byte>(TK.TextureTarget.Texture2D, 0, TK.PixelFormat.Bgra, TK.PixelType.UnsignedByte, Data);
+            TK.GL.GetTexImage<byte>((TK.TextureTarget)Target, 0, (TK.PixelFormat)PixelFormat, TK.PixelType.UnsignedByte, Data);
 			return true;
 		}
 
@@ -447,7 +446,7 @@ namespace ArcEngine.Graphic
 
 			// The below is almost OK. The problem is the GL_RGBA. On certain platforms, the GPU prefers that red and blue be swapped (GL_BGRA).
 			// If you supply GL_RGBA, then the driver will do the swapping for you which is slow.
-            TK.GL.TexImage2D(TK.TextureTarget.Texture2D, 0, TK.PixelInternalFormat.Rgba8,
+			TK.GL.TexImage2D((TK.TextureTarget)Target, 0, TK.PixelInternalFormat.Rgba8,
 				Size.Width, Size.Height,
 				0,
 				(TK.PixelFormat)PixelFormat,
@@ -456,10 +455,6 @@ namespace ArcEngine.Graphic
 
 			MinFilter = TextureMinFilter.Nearest;
 			MagFilter = TextureMagFilter.Nearest;
-
-			//GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Nearest);
-			//GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMinFilter.Nearest);
-
 
 			IsLocked = false;
 			Data = null;
