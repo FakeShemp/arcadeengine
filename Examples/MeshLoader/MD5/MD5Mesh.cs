@@ -102,7 +102,9 @@ namespace ArcEngine.Examples.MeshLoader.MD5
 					}
 					else if (line.StartsWith("mesh"))
 					{
-						ReadMesh(stream);
+						SubMesh mesh = new SubMesh();
+						mesh.ReadMesh(stream);
+						Meshes.Add(mesh);
 					}
 				}
 			}
@@ -177,115 +179,6 @@ namespace ArcEngine.Examples.MeshLoader.MD5
 			}
 		}
 
-
-		/// <summary>
-		/// Reads a mesh definition
-		/// </summary>
-		/// <param name="stream">Stream to the file</param>
-		void ReadMesh(StreamReader stream)
-		{
-			if (stream == null)
-				return;
-
-			// Allow to read float with '.' instead od ','
-			System.Globalization.CultureInfo ci = new System.Globalization.CultureInfo("en-US");
-
-			SubMesh mesh = new SubMesh();
-
-
-			string line = null;
-			string[] lines = null;
-			while ((line = stream.ReadLine()) != null)
-			{
-				line = line.Trim();
-
-				if (line.StartsWith("shader"))
-				{
-					lines = line.Split('"');
-					mesh.Shader = lines[1];
-
-				}
-				else if (line == "}")
-				{
-					break;
-				}
-
-				#region Vertices
-				else if (line.StartsWith("numverts"))
-				{
-					int numverts = int.Parse(line.Substring("numverts".Length));
-					mesh.Vertices = new Vertex[numverts];
-
-					for (int i = 0 ; i < numverts ; i++)
-					{
-						line = stream.ReadLine();
-						lines = line.Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
-
-						if (lines[0] != "vert")
-							continue;
-
-						int id = int.Parse(lines[1]);
-						Vector2 texture = new Vector2(float.Parse(lines[3], ci), float.Parse(lines[4], ci));
-						int start = int.Parse(lines[6]);
-						int count = int.Parse(lines[7]);
-
-						Vertex vertex = new Vertex(texture, start, count);
-						mesh.Vertices[id] = vertex;
-					}
-				}
-				#endregion
-
-				#region Triangles
-				else if (line.StartsWith("numtris"))
-				{
-					int numtris = int.Parse(line.Substring("numtris".Length));
-					mesh.Triangles = new Triangle[numtris];
-
-					for (int i = 0 ; i < numtris ; i++)
-					{
-						line = stream.ReadLine();
-						lines = line.Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
-
-						if (lines[0] != "tri")
-							continue;
-
-						int id = int.Parse(lines[1]);
-						int a = int.Parse(lines[2]);
-						int b = int.Parse(lines[3]);
-						int c = int.Parse(lines[4]);
-
-						mesh.Triangles[id] = new Triangle(a, b, c);
-					}
-				}
-				#endregion
-
-				#region Weight
-				else if (line.StartsWith("numweights"))
-				{
-					int numweight = int.Parse(line.Substring("numweights".Length));
-					mesh.Weights = new Weight[numweight];
-
-					for (int i = 0 ; i < numweight ; i++)
-					{
-						line = stream.ReadLine();
-						lines = line.Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
-
-						if (lines[0] != "weight")
-							continue;
-
-						int id = int.Parse(lines[1]);
-						int joint = int.Parse(lines[2]);
-						float bias = float.Parse(lines[3], ci);
-						Vector3 position= new Vector3(float.Parse(lines[5], ci), float.Parse(lines[6], ci), float.Parse(lines[7], ci));
-
-						mesh.Weights[id] = new Weight(joint, bias, position);
-					}
-				}
-				#endregion
-			}
-
-			Meshes.Add(mesh);
-		}
 
 
 		/// <summary>
