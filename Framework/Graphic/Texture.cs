@@ -19,13 +19,8 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.IO;
-using System.Runtime.InteropServices;
-using ArcEngine.Asset;
-using Imaging = System.Drawing.Imaging;
 using TK = OpenTK.Graphics.OpenGL;
 
 //
@@ -385,8 +380,13 @@ namespace ArcEngine.Graphic
 		/// Cube map texture
 		/// </summary>
 		CubeMap = TK.TextureTarget.TextureCubeMap,
-	}
 
+
+		/// <summary>
+		/// Rectangle texture
+		/// </summary>
+		TextureRectangle = TK.TextureTarget.TextureRectangle,
+	}
 
 
 	/// <summary>

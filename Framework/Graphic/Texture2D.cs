@@ -20,7 +20,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -28,22 +27,10 @@ using ArcEngine.Asset;
 using Imaging = System.Drawing.Imaging;
 using TK = OpenTK.Graphics.OpenGL;
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
 namespace ArcEngine.Graphic
 {
-
-
 	/// <summary>
-	/// Texture definition
+	/// 2D Texture
 	/// </summary>
 	public class Texture2D : Texture
 	{
