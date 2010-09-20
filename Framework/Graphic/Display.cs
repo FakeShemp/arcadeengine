@@ -483,13 +483,13 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Current texture
 		/// </summary>
-		static public Texture2D Texture
+		static public Texture Texture
 		{
 			set
 			{
 				if (value == null)
 				{
-					TK.GL.BindTexture(TK.TextureTarget.Texture2D, 0);
+					//TK.GL.BindTexture((TK.TextureTarget)value.Target, 0);
 					texture = null;
 					return;
 				}
@@ -507,7 +507,7 @@ namespace ArcEngine.Graphic
 				return texture;
 			}
 		}
-		static Texture2D texture;
+		static Texture texture;
 
 
 		/// <summary>

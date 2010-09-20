@@ -137,8 +137,8 @@ namespace ArcEngine.Examples.MeshLoader.MD5
 			#region Shader
 
 			Shader = new Shader();
-			Shader.LoadSource(ShaderType.VertexShader, "data/md5/shader.vert");
-			Shader.LoadSource(ShaderType.FragmentShader, "data/md5/shader.frag");
+			Shader.LoadSource(ShaderType.VertexShader, "data/md5/shaders/shader.vert");
+			Shader.LoadSource(ShaderType.FragmentShader, "data/md5/shaders/shader.frag");
 			Shader.Compile();
 
 			#endregion
