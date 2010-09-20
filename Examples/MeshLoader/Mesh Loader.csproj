@@ -125,7 +125,7 @@
     </None>
     <None Include="data\md5\shader.frag" />
     <None Include="data\md5\shader.vert" />
-    <None Include="data\md5\zfat.md5mesh" />
+    <None Include="data\md5\zfat\zfat.md5mesh" />
     <None Include="data\plane.dae">
       <SubType>Designer</SubType>
     </None>
@@ -164,13 +164,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Collada\" />
-    <Folder Include="data\md5\zfat\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="data\md5\fatty_d.tga" />
-    <Content Include="data\md5\fatty_h.tga" />
-    <Content Include="data\md5\fatty_local.tga" />
-    <Content Include="data\md5\fatty_s.tga" />
+    <Content Include="data\md5\zfat\fatty_d.tga" />
+    <Content Include="data\md5\zfat\fatty_h.tga" />
+    <Content Include="data\md5\zfat\fatty_local.tga" />
+    <Content Include="data\md5\zfat\fatty_s.tga" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
