@@ -101,6 +101,7 @@
     <Compile Include="ArrayBuffer.cs" />
     <Compile Include="ColladaLoader.cs" />
     <Compile Include="MD5\Joint.cs" />
+    <Compile Include="MD5\Material.cs" />
     <Compile Include="MD5\MD5Mesh.cs" />
     <Compile Include="MD5\SubMesh.cs" />
     <Compile Include="MD5\Triangle.cs" />

@@ -20,7 +20,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.IO;
 using ArcEngine.Graphic;
 
@@ -31,7 +30,7 @@ using ArcEngine.Graphic;
 namespace ArcEngine.Examples.MeshLoader.MD5
 {
 	/// <summary>
-	/// 
+	/// MD5 mesh
 	/// </summary>
 	public class MD5Mesh : IDisposable
 	{

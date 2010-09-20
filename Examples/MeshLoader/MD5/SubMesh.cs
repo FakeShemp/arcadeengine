@@ -19,11 +19,8 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ArcEngine.Graphic;
 using System.IO;
+using ArcEngine.Graphic;
 
 
 namespace ArcEngine.Examples.MeshLoader.MD5
@@ -43,13 +40,21 @@ namespace ArcEngine.Examples.MeshLoader.MD5
 				Mesh.Dispose();
 			Mesh = null;
 
-			if (Textures != null)
-				for (int i = 0 ; i < 3 ; i++)
-				{
-					if (Textures[i] != null)
-						Textures[i].Dispose();
-					Textures[i] = null;
-				}
+			if (SpecularMap != null)
+				SpecularMap.Dispose();
+			SpecularMap = null;
+
+			if (HeightMap != null)
+				HeightMap.Dispose();
+			HeightMap = null;
+
+			if (BumpMap != null)
+				BumpMap.Dispose();
+			BumpMap = null;
+
+			if (DiffuseMap != null)
+				DiffuseMap.Dispose();
+			DiffuseMap = null;
 		}
 
 
@@ -151,19 +156,19 @@ namespace ArcEngine.Examples.MeshLoader.MD5
 			{
 				// Diffuse map (color)
 				if (File.Exists(Shader + "_d.tga"))
-					Textures[0] = new Texture2D(Shader + "_d.tga");
+					DiffuseMap = new Texture2D(Shader + "_d.tga");
 
-				// Bump map (normal map)
+				// Normal map
 				if (File.Exists(Shader + "_bmp.tga"))
-					Textures[1] = new Texture2D(Shader + "_bmp.tga");
+					BumpMap = new Texture2D(Shader + "_bmp.tga");
 
 				// Height map
-				//if (File.Exists(Shader + "_h.tga"))
-				//	Textures[2] = new Texture2D(Shader + "_d.tga");
+				if (File.Exists(Shader + "_h.tga"))
+					HeightMap = new Texture2D(Shader + "_d.tga");
 	
 				// Specular map (gloss)
 				if (File.Exists(Shader + "_s.tga"))
-					Textures[2] = new Texture2D(Shader + "_s.tga");
+					SpecularMap = new Texture2D(Shader + "_s.tga");
 			}
 			#endregion
 		}
@@ -401,7 +406,41 @@ namespace ArcEngine.Examples.MeshLoader.MD5
 		/// <summary>
 		/// 
 		/// </summary>
-		Texture2D[] Textures;
+		public Texture2D DiffuseMap
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Texture2D SpecularMap
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Texture2D BumpMap
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Texture2D HeightMap
+		{
+			get;
+			private set;
+		}
 
 		#endregion
 	}
