@@ -22,6 +22,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ArcEngine.Graphic;
+using System.IO;
+
 
 namespace ArcEngine.Examples.MeshLoader.MD5
 {
@@ -39,6 +42,14 @@ namespace ArcEngine.Examples.MeshLoader.MD5
 			if (Mesh != null)
 				Mesh.Dispose();
 			Mesh = null;
+
+			if (Textures != null)
+				for (int i = 0 ; i < 3 ; i++)
+				{
+					if (Textures[i] != null)
+						Textures[i].Dispose();
+					Textures[i] = null;
+				}
 		}
 
 
@@ -56,6 +67,8 @@ namespace ArcEngine.Examples.MeshLoader.MD5
 		/// </summary>
 		internal void Prepare(MD5Mesh mesh)
 		{
+
+			#region Vertices
 
 			ComputeWeightNormals(mesh);
 			ComputeWeightTangents(mesh);
@@ -107,7 +120,7 @@ namespace ArcEngine.Examples.MeshLoader.MD5
 				buffer[i * 11 +  8] = tangent.Z;
 
 				buffer[i * 11 +  9] = Vertices[i].Texture.X;
-				buffer[i * 11 + 10] = Vertices[i].Texture.Y;
+				buffer[i * 11 + 10] = Vertices[i].Texture.Y; // v=1.0-v
 			}
 
 
@@ -126,6 +139,33 @@ namespace ArcEngine.Examples.MeshLoader.MD5
 			Mesh.Buffer.AddDeclaration("in_texcoord", 2);
 			Mesh.SetVertices(buffer);
 			Mesh.SetIndices(indices);
+
+			#endregion
+
+
+			return;
+
+			#region Textures
+
+			if (!string.IsNullOrEmpty(Shader))
+			{
+				// Diffuse map (color)
+				if (File.Exists(Shader + "_d.tga"))
+					Textures[0] = new Texture2D(Shader + "_d.tga");
+
+				// Bump map (normal map)
+				if (File.Exists(Shader + "_bmp.tga"))
+					Textures[1] = new Texture2D(Shader + "_bmp.tga");
+
+				// Height map
+				//if (File.Exists(Shader + "_h.tga"))
+				//	Textures[2] = new Texture2D(Shader + "_d.tga");
+	
+				// Specular map (gloss)
+				if (File.Exists(Shader + "_s.tga"))
+					Textures[2] = new Texture2D(Shader + "_s.tga");
+			}
+			#endregion
 		}
 
 
@@ -311,10 +351,10 @@ namespace ArcEngine.Examples.MeshLoader.MD5
 		/// <summary>
 		/// Gets the normal of a triangle
 		/// </summary>
-		/// <param name="p1"></param>
-		/// <param name="p2"></param>
-		/// <param name="p3"></param>
-		/// <returns></returns>
+		/// <param name="p1">Vertex 1</param>
+		/// <param name="p2">Vertex 2</param>
+		/// <param name="p3">Vertex 3</param>
+		/// <returns>Normal of the plane</returns>
 		Vector3 ComputeNormal(Vector3 p1, Vector3 p2, Vector3 p3)
 		{
 			Vector3 vec1 = new Vector3(p1 - p2);
@@ -356,6 +396,12 @@ namespace ArcEngine.Examples.MeshLoader.MD5
 		/// Mesh
 		/// </summary>
 		ArcEngine.Graphic.Mesh Mesh;
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Texture2D[] Textures;
 
 		#endregion
 	}

@@ -61,7 +61,7 @@ namespace ArcEngine.Examples.MeshLoader
 		public override void LoadContent()
 		{
 			Display.RenderState.ClearColor = Color.CornflowerBlue;
-
+			Display.RenderState.DepthTest = true;
 
 		//	ColladaLoader loader = new ColladaLoader();
 		//	loader.Load("data/seymourplane_triangulate.dae");
@@ -135,13 +135,15 @@ namespace ArcEngine.Examples.MeshLoader
 			if (MD5 != null)
 			{
 				Display.Shader = MD5.Shader;
-				Display.Shader.SetUniform("mvpMatrix", Matrix4.CreateRotationX(-90.0f) * Matrix4.CreateTranslation(new Vector3(0.0f, 0.0f, -150.0f)) * mvp);
+				Display.Shader.SetUniform("mvpMatrix", Matrix4.CreateRotationX(MathHelper.DegreesToRadians(-90.0f)) * Matrix4.CreateTranslation(new Vector3(0.0f, -50.0f, -150.0f)) * mvp);
 				Display.Shader.SetUniform("mvMatrix", ModelViewMatrix);
 				MD5.Draw();
 			}
 
 
 		}
+
+
 
 		#region Properties
 
@@ -159,7 +161,6 @@ namespace ArcEngine.Examples.MeshLoader
 
 
 		#endregion
-
 	}
 
 }

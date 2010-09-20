@@ -165,6 +165,12 @@
   <ItemGroup>
     <Folder Include="Collada\" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="data\md5\fatty_d.tga" />
+    <Content Include="data\md5\fatty_h.tga" />
+    <Content Include="data\md5\fatty_local.tga" />
+    <Content Include="data\md5\fatty_s.tga" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
