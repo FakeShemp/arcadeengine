@@ -248,7 +248,7 @@ namespace ArcEngine.Graphic
 			Display.RenderState.Culling = true;
 			Display.RenderState.DepthTest = false;
 			Display.RenderState.Blending = true;
-			Display.Texturing = true;
+			//Display.Texturing = true;
 
 		}
 

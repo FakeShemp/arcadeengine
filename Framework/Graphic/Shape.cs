@@ -23,7 +23,7 @@ namespace ArcEngine.Graphic
 				throw new InvalidOperationException("Shape opened. Close the Shape first !!!");
 			}
 
-			Display.Texturing = false;
+			//Display.Texturing = false;
 			if (mode == ShapeMode.Fill)
                 TK.GL.Begin(TK.BeginMode.Polygon);
 			else
@@ -43,7 +43,7 @@ namespace ArcEngine.Graphic
 				return;
 
             TK.GL.End();
-			Display.Texturing = true;
+			//Display.Texturing = true;
 
 			IsOpen = false;
 			StartPoint = Point.Empty;

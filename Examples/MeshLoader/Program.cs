@@ -70,6 +70,7 @@ namespace ArcEngine.Examples.MeshLoader
 
 			MD5 = new MD5Mesh();
 			MD5.Load(@"data/md5/zfat/zfat.md5mesh");
+
 		}
 
 

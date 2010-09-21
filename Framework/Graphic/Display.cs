@@ -60,7 +60,7 @@ namespace ArcEngine.Graphic
 				Capabilities = new RenderDeviceCapabilities();
 
 
-			Texturing = true;
+			//Texturing = true;
 			RenderState.Blending = true;
 			RenderState.ClearColor = Color.Black;
 
@@ -73,8 +73,7 @@ namespace ArcEngine.Graphic
 				TK.GL.Hint(TK.HintTarget.TextureCompressionHint, TK.HintMode.Nicest);
 
 			BlendingFunction(BlendingFactorSource.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
-			TK.GL.ClearStencil(0);
-
+			RenderState.StencilClearValue = 0;
 		}
 
 
@@ -140,6 +139,19 @@ namespace ArcEngine.Graphic
 
 			Trace.Unindent();
 		}
+
+
+		/// <summary>
+		/// Binds a texture to a texture image unit
+		/// </summary>
+		/// <param name="unit">Texture image unit id</param>
+		/// <param name="texture">Texture handle</param>
+		public static void SetTexture(int unit, Texture texture)
+		{
+			TextureUnit = unit;
+			Texture = texture;
+		}
+
 
 		#region Scissor
 
@@ -418,6 +430,7 @@ namespace ArcEngine.Graphic
 
 		#endregion
 
+
 		#region Polygon mode
 
 
@@ -576,7 +589,7 @@ namespace ArcEngine.Graphic
 			}
 		}
 
-
+/*
 		/// <summary>
 		/// Enables/disables 2d texture
 		/// </summary>
@@ -595,7 +608,7 @@ namespace ArcEngine.Graphic
 
 			}
 		}
-
+*/
 
 		/// <summary>
 		/// Gets/sets the scissor zone
