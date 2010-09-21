@@ -89,7 +89,7 @@ joints {
 
 mesh {
 	// meshes: fatmesh
-	shader "data/md5/fatty"
+	shader "models/monsters/zombie/fatty/fatty"
 
 	numverts 874
 	vert 0 ( 0.6363959908 0.3456969857 ) 0 2

@@ -124,6 +124,7 @@
     <None Include="data\collada\cube.DAE">
       <SubType>Designer</SubType>
     </None>
+    <None Include="data\md5\monsters.mtr" />
     <None Include="data\md5\shaders\shader.frag" />
     <None Include="data\md5\shaders\shader.vert" />
     <None Include="data\md5\zfat\zfat.md5mesh" />

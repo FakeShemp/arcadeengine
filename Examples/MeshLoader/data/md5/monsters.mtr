@@ -1,0 +1,89 @@
+﻿
+
+
+
+
+models/monsters/zombie/fatty/fatty
+{
+	noSelfShadow
+	unsmoothedTangents
+	flesh
+	clamp
+
+	{	// burning corpse effect
+		if	parm7			// only when dead
+		// make a burned away alpha test for the normal skin
+		blend	gl_zero, gl_one			// don't draw anything
+		
+		map models/monsters/spectre/global_dis.tga	// replace this with a monster-specific texture
+		alphaTest 0.05 + 1.5 * (time - parm7)
+	}
+
+	renderbump  -size 1024 1024 -trace 0.02 -aa 2  models/monsters/zombie/fatty/fatty_local.tga models/monsters/zombie/fatty/fatty_hi.lwo
+	forceoverlays
+	diffusemap	  models/monsters/zombie/fatty/fatty_d.tga
+	bumpmap		addnormals( models/monsters/zombie/fatty/fatty_local.tga, heightmap( models/monsters/zombie/fatty/fatty_h.tga, 7 ) )
+	specularmap	models/monsters/zombie/fatty/fatty_s.tga
+}
+
+
+models/monsters/zombie/fatty/fattydamage
+{
+	noSelfShadow
+	unsmoothedTangents
+	flesh
+	clamp
+
+	{	// burning corpse effect
+		if	parm7			// only when dead
+		// make a burned away alpha test for the normal skin
+		blend	gl_zero, gl_one			// don't draw anything
+		
+		map models/monsters/spectre/global_dis.tga	// replace this with a monster-specific texture
+		alphaTest 0.05 + 1.5 * (time - parm7)
+	}
+
+	renderbump  -size 1024 1024 -trace 0.02 -aa 2  models/monsters/zombie/fatty/fatty_local.tga models/monsters/zombie/fatty/fatty_hi.lwo
+	forceoverlays
+	diffusemap	  models/monsters/zombie/fatty/fatty_d.tga
+	bumpmap		addnormals( models/monsters/zombie/fatty/fatty_local.tga, heightmap( models/monsters/zombie/fatty/fatty_h.tga, 7 ) )
+	specularmap	models/monsters/zombie/fatty/fatty_s.tga
+}
+
+
+
+models/monsters/skeleton/skeleton01
+{
+	renderbump  -size 1024 1024 -trace 0.02 -colorMap -aa 2  models/monsters/skeleton/skeleton01_local.tga models/monsters/skeleton/skeleton_hi.lwo
+
+	noselfShadow
+	unsmoothedTangents
+	noshadows
+	nonsolid
+	//noimpact removed by tim
+	flesh
+	clamp
+
+	{	// burning corpse effect
+		if	parm7			// only when dead
+		
+		// make a burned away alpha test for the normal skin
+		blend	gl_zero, gl_one			// don't draw anything
+		
+		map models/monsters/skeleton/skeleton01_d.tga	// replace this with a monster-specific texture
+		alphaTest 0.05 + 0.3 * (time - parm7)
+	}
+
+	{
+		blend diffusemap	
+		map models/monsters/skeleton/skeleton01_d.tga
+		//alphaTest parm7 // .5 + 0.5 * sintable [ time * .2  ]
+	}
+	specularmap 	models/monsters/skeleton/skeleton01_s.tga	
+	bumpmap		addnormals(models/monsters/skeleton/skeleton01_local.tga, heightmap(models/monsters/skeleton/skeleton01_h.tga, 6 ) )
+       
+
+}
+
+
+

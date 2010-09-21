@@ -769,9 +769,17 @@ namespace ArcEngine.Graphic
 			TK.GL.GetInteger(TK.GetPName.MaxTextureUnits, out integer);
 			MaxTextureUnits = integer;
 
+			TK.GL.GetInteger(TK.GetPName.MaxTextureImageUnits, out integer);
+			MaxTextureImageUnits = integer;
+
+			TK.GL.GetInteger(TK.GetPName.MaxVertexTextureImageUnits, out integer);
+			MaxVertexTextureImageUnits = integer;
+
 			TK.GL.GetInteger(TK.GetPName.MaxDrawBuffers, out integer);
 			MaxDrawBuffers = integer;
 
+
+			#region GL_NVX_gpu_memory_info
 			if (Extensions.Contains("GL_NVX_gpu_memory_info"))
 			{
 				Trace.Indent();
@@ -795,8 +803,10 @@ namespace ArcEngine.Graphic
 				Trace.WriteLine("Total video memory evicted : {0} Kb", val);
 				Trace.Unindent();
 			}
+			#endregion
 
 
+			#region GL_ATI_meminfo
 			if (Extensions.Contains("GL_ATI_meminfo"))
 			{
 				Trace.Indent();
@@ -832,6 +842,8 @@ namespace ArcEngine.Graphic
 				Trace.Unindent();
 
 			}
+			#endregion
+
 
 			string[] tmp = ShadingLanguageVersion.Split(new char[] { ' ' });
 			if (tmp[0].StartsWith("1.20"))
@@ -889,6 +901,26 @@ namespace ArcEngine.Graphic
 		/// and vertex processor can access combined.
 		/// </summary>
 		public int MaxTextureUnits
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// Maximum number of available texture image units 
+		/// </summary>
+		public int MaxVertexTextureImageUnits
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public int MaxTextureImageUnits
 		{
 			get;
 			private set;

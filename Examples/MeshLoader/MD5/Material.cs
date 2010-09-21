@@ -31,6 +31,5 @@ namespace ArcEngine.Examples.MeshLoader.MD5
 	public class Material
 	{
 
-
 	}
 }
