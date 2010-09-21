@@ -522,8 +522,8 @@ namespace ArcEngine.Graphic
 
 			set
 			{
-				if (value > Capabilities.MaxTextureUnits || value < 0)
-					return;
+				//if (value > Capabilities.MaxTextureUnits || value < 0)
+				//	return;
 
 				TK.GL.ActiveTexture(TK.TextureUnit.Texture0 + value);
 				textureUnit = value;
@@ -766,14 +766,20 @@ namespace ArcEngine.Graphic
 				MaxMultiSample = integer;
 			}
 
-			TK.GL.GetInteger(TK.GetPName.MaxTextureUnits, out integer);
-			MaxTextureUnits = integer;
+			TK.GL.GetInteger(TK.GetPName.MaxVertexTextureImageUnits, out integer);
+			MaxVertexTextureImageUnits = integer;
 
 			TK.GL.GetInteger(TK.GetPName.MaxTextureImageUnits, out integer);
 			MaxTextureImageUnits = integer;
 
-			TK.GL.GetInteger(TK.GetPName.MaxVertexTextureImageUnits, out integer);
-			MaxVertexTextureImageUnits = integer;
+			TK.GL.GetInteger(TK.GetPName.MaxCombinedTextureImageUnits, out integer);
+			MaxCombinedTextureImageUnits = integer;
+
+			TK.GL.GetInteger(TK.GetPName.MaxColorAttachments, out integer);
+			MaxColorAttachments = integer;
+
+			TK.GL.GetInteger(TK.GetPName.MaxTextureCoords, out integer);
+			MaxTextureCoords = integer;
 
 			TK.GL.GetInteger(TK.GetPName.MaxDrawBuffers, out integer);
 			MaxDrawBuffers = integer;
@@ -845,6 +851,7 @@ namespace ArcEngine.Graphic
 			#endregion
 
 
+			#region Shader version
 			string[] tmp = ShadingLanguageVersion.Split(new char[] { ' ' });
 			if (tmp[0].StartsWith("1.20"))
 				ShaderVersion = ShaderVersion.GLSL_1_20;
@@ -862,7 +869,7 @@ namespace ArcEngine.Graphic
 				ShaderVersion = ShaderVersion.GLSL_4_10;
 			else
 				ShaderVersion = ShaderVersion.Unsuported;
-
+			#endregion
 		}
 
 
@@ -895,7 +902,16 @@ namespace ArcEngine.Graphic
 			private set;
 		}
 
+		/// <summary>
+		/// The maximum number of color atachments.
+		/// </summary>
+		public int MaxColorAttachments
+		{
+			get;
+			private set;
+		}
 
+/*
 		/// <summary>
 		/// Total number of texture image units from the fragment 
 		/// and vertex processor can access combined.
@@ -905,7 +921,7 @@ namespace ArcEngine.Graphic
 			get;
 			private set;
 		}
-
+*/
 
 		/// <summary>
 		/// Maximum number of available texture image units 
@@ -918,9 +934,29 @@ namespace ArcEngine.Graphic
 
 
 		/// <summary>
-		/// 
+		/// Maximum number of supported texture image units 
 		/// </summary>
 		public int MaxTextureImageUnits
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public int MaxCombinedTextureImageUnits
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// Maximum number of supported texture coordinate sets 
+		/// </summary>
+		public int MaxTextureCoords
 		{
 			get;
 			private set;
