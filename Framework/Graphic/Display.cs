@@ -44,9 +44,10 @@ namespace ArcEngine.Graphic
 			Trace.WriteDebugLine("[Display] Constructor()");
 
 			Statistics = new RenderStats();
-
 			RenderState = new RenderState();
 			Scissors = new Stack<Rectangle>();
+
+			textures = new Texture[32];
 		}
 
 
@@ -240,12 +241,13 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Gets Opengl errors
 		/// </summary>
-		/// <param name="message"></param>
-		public static void GetLastError(string message)
+		/// <param name="message">Message to display with the error</param>
+		/// <returns>True on error</returns>
+		public static bool GetLastError(string message)
 		{
 			TK.ErrorCode error = TK.GL.GetError();
 			if (error == TK.ErrorCode.NoError)
-				return;
+				return false;
 
 
 			System.Diagnostics.StackFrame stack = new System.Diagnostics.StackFrame(1, true);
@@ -254,6 +256,8 @@ namespace ArcEngine.Graphic
 
 
 			Trace.WriteLine("\"" + stack.GetFileName() + ":" + stack.GetFileLineNumber() + "\" => GL error : " + msg + " (" + error + ")");
+
+			return true;
 		}
 
 
@@ -503,13 +507,13 @@ namespace ArcEngine.Graphic
 				if (value == null)
 				{
 					//TK.GL.BindTexture((TK.TextureTarget)value.Target, 0);
-					texture = null;
+					textures[TextureUnit] = null;
 					return;
 				}
-				if (texture != value)
+				if (textures[TextureUnit] != value)
 				{
 
-					texture = value;
+					textures[TextureUnit] = value;
 					TK.GL.BindTexture((TK.TextureTarget)value.Target, value.Handle);
 
 					Statistics.TextureBinding++;
@@ -517,10 +521,10 @@ namespace ArcEngine.Graphic
 			}
 			get
 			{
-				return texture;
+				return textures[TextureUnit];
 			}
 		}
-		static Texture texture;
+		static Texture[] textures;
 
 
 		/// <summary>

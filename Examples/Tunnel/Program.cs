@@ -79,8 +79,8 @@ namespace ArcEngine.Examples.Tunnel
 
 			// Load the texture
 			Texture = new Texture2D("data/texture.jpg");
-			Texture.VerticalWrap = VerticalWrapFilter.Repeat;
-			Texture.HorizontalWrap = HorizontalWrapFilter.Repeat;
+			Texture.VerticalWrap = TextureWrapFilter.Repeat;
+			Texture.HorizontalWrap = TextureWrapFilter.Repeat;
 			Texture.MagFilter = TextureMagFilter.Linear;
 			Texture.MinFilter = TextureMinFilter.Linear;
 

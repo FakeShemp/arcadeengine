@@ -887,7 +887,7 @@ namespace ArcEngine
 				//File.Open(resourcename, FileMode.Open, FileAccess.Read);
 			}
 
-			return null;
+			return new AssetHandle();
 		}
 
 

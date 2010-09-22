@@ -184,8 +184,8 @@ namespace DungeonEye.Forms
 
 			// Preload background texture resource
 			CheckerBoard = new Texture2D(ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png"));
-			CheckerBoard.HorizontalWrap = HorizontalWrapFilter.Repeat;
-			CheckerBoard.VerticalWrap = VerticalWrapFilter.Repeat;
+			CheckerBoard.HorizontalWrap = TextureWrapFilter.Repeat;
+			CheckerBoard.VerticalWrap = TextureWrapFilter.Repeat;
 
 			Batch = new SpriteBatch();
 

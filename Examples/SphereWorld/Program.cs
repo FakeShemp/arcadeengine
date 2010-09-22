@@ -98,14 +98,14 @@ namespace ArcEngine.Examples.SphereWorld
 
 			Texture2D.DefaultMagFilter = TextureMagFilter.Linear;
 			Texture2D.DefaultMinFilter = TextureMinFilter.Linear;
-			Texture2D.DefaultHorizontalWrapFilter = HorizontalWrapFilter.Repeat;
-			Texture2D.DefaultVerticalWrapFilter = VerticalWrapFilter.Repeat;
+			Texture2D.DefaultHorizontalWrapFilter = TextureWrapFilter.Repeat;
+			Texture2D.DefaultVerticalWrapFilter = TextureWrapFilter.Repeat;
 
 			Marble = new Texture2D("data/Marble.png");
 			Marble.MinFilter = TextureMinFilter.Linear;
 			Marble.MagFilter = TextureMagFilter.Linear;
-			Marble.HorizontalWrap = HorizontalWrapFilter.Repeat;
-			Marble.VerticalWrap = VerticalWrapFilter.Repeat;
+			Marble.HorizontalWrap = TextureWrapFilter.Repeat;
+			Marble.VerticalWrap = TextureWrapFilter.Repeat;
 
 			Moon = new Texture2D("data/Moon.png");
 			Moon.MinFilter = TextureMinFilter.Linear;
@@ -121,7 +121,7 @@ namespace ArcEngine.Examples.SphereWorld
 			#region Mesh
 			Torus = Mesh.CreateTorus(0.15f, 0.50f, 40, 20);
 
-			Sphere = Mesh.ggCreateSphere(0.1f, 26);
+			Sphere = Mesh.CreateSphere(0.1f, 26);
 			Sphere.Position = new Vector3(1.0f, 0.4f, 0.0f);
 
 			float[] data = new float[]

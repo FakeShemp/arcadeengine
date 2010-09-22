@@ -32,6 +32,14 @@ namespace ArcEngine.Asset
 	/// </summary>
 	public class AssetHandle : IDisposable
 	{
+		/// <summary>
+		/// Default constructor
+		/// </summary>
+		internal AssetHandle()
+		{
+			Stream = null;
+		}
+
 
 		/// <summary>
 		/// Opens a binary from a bank
@@ -98,10 +106,8 @@ namespace ArcEngine.Asset
 		}
 
 
-
-
 		/// <summary>
-		/// 
+		/// Dispose resources
 		/// </summary>
 		public void Dispose()
 		{
@@ -119,7 +125,7 @@ namespace ArcEngine.Asset
 		#region Properties
 
 		/// <summary>
-		/// 
+		/// Handle to the stream
 		/// </summary>
 		public Stream Stream
 		{
@@ -128,9 +134,15 @@ namespace ArcEngine.Asset
 		}
 
 
+		/// <summary>
+		/// Zip handle
+		/// </summary>
 		ZipInputStream Zip;
 
 
+		/// <summary>
+		/// FileStream handle
+		/// </summary>
 		FileStream FS;
 
 		#endregion

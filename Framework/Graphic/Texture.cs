@@ -21,17 +21,11 @@
 using System;
 using System.ComponentModel;
 using System.Drawing;
+using System.IO;
+using System.Runtime.InteropServices;
+using ArcEngine.Asset;
+using Imaging = System.Drawing.Imaging;
 using TK = OpenTK.Graphics.OpenGL;
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 namespace ArcEngine.Graphic
 {
@@ -41,11 +35,307 @@ namespace ArcEngine.Graphic
 	/// </summary>
 	public abstract class Texture : IDisposable
 	{
+		/// <summary>
+		/// 
+		/// </summary>
+		public Texture()
+		{
+			Handle = -1;
+		}
+
+
+		/// <summary>
+		/// Destructor
+		/// </summary>
+		~Texture()
+		{
+			throw new Exception(this + " not disposed, Call Dispose() !!");
+		}
+
 
 		/// <summary>
 		/// 
 		/// </summary>
 		public abstract void Dispose();
+
+
+		/// <summary>
+		/// Generate mipmap
+		/// </summary>
+		public void GenerateMipmap()
+		{
+			TK.GL.GenerateMipmap((TK.GenerateMipmapTarget)Target);
+		}
+
+
+
+		#region Image IO
+
+		/// <summary>
+		/// Load an image from bank and convert it to a texture
+		/// </summary>
+		/// <param name="target">Reference face</param>
+		/// <param name="filename">File name to load</param>
+		/// <returns>True if success or false if something went wrong</returns>
+		protected bool LoadImage(TextureTarget target, string filename)
+		{
+			AssetHandle asset = ResourceManager.LoadResource(filename);
+			bool ret = 	FromStream(target, asset.Stream);
+
+			if (asset != null)
+				asset.Dispose();
+
+			return ret;
+		}
+
+
+		/// <summary>
+		/// Load a texture from a stream (ie resource files)
+		/// </summary>
+		/// <param name="target">Reference face</param>
+		/// <param name="stream">Stream handle</param>
+		/// <returns></returns>
+		protected bool FromStream(TextureTarget target, Stream stream)
+		{
+			if (stream == null)
+				return false;
+
+			Bitmap bm = new Bitmap(stream);
+			bool ret = FromBitmap(target, bm);
+
+			if (bm != null)
+				bm.Dispose();
+
+			return ret;
+		}
+
+
+		/// <summary>
+		/// Loads a texture from a Bitmap
+		/// </summary>
+		/// <param name="target">Reference face</param>
+		/// <param name="bitmap">Bitmap handle</param>
+		/// <returns></returns>
+		protected bool FromBitmap(TextureTarget target, Bitmap bitmap)
+		{
+			if (bitmap == null)
+				return false;
+
+			Display.Texture = this;
+
+			SetSize(target, bitmap.Size);
+
+			SetData(target, bitmap, Point.Empty);
+
+			return true;
+		}
+
+
+		/// <summary>
+		/// Loads a Png picture from a byte[]
+		/// </summary>
+		/// <param name="target">Reference face</param>
+		/// <param name="data">Binary of a png file</param>
+		/// <returns>True if successful, or false</returns>
+		protected bool LoadImage(TextureTarget target, byte[] data)
+		{
+			if (data == null)
+				return false;
+
+			MemoryStream stream = new MemoryStream(data);
+			bool ret = FromStream(target, stream);
+			stream.Dispose();
+
+			return ret;
+		}
+
+
+		/// <summary>
+		/// Save the texture to the disk as a PNG file
+		/// </summary>
+		/// <param name="target">Reference face</param>
+		/// <param name="name">Name of the texture on the disk</param>
+		/// <returns>True if successful or false if an error occured</returns>
+		protected bool SaveToDisk(TextureTarget target, string name)
+		{
+			if (string.IsNullOrEmpty(name))
+				return false;
+
+
+			Bitmap bm = new Bitmap(Size.Width, Size.Height);
+
+			if (!Lock(target, ImageLockMode.ReadOnly))
+				return false;
+
+			System.Drawing.Imaging.BitmapData bmd = bm.LockBits(new Rectangle(Point.Empty, Size),
+				System.Drawing.Imaging.ImageLockMode.WriteOnly,
+				System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+			System.Runtime.InteropServices.Marshal.Copy(Data, 0, bmd.Scan0, Data.Length);
+			bm.UnlockBits(bmd);
+
+			Unlock(target);
+
+			bm.Save(name);
+			bm.Dispose();
+
+			return true;
+		}
+
+
+		/// <summary>
+		/// Save the texture as a PNG image in the bank
+		/// </summary>
+		/// <param name="target">Reference face</param>
+		/// <param name="name">Name</param>
+		/// <returns></returns>
+		protected bool SaveToBank(TextureTarget target, string name)
+		{
+			if (string.IsNullOrEmpty(name))
+				return false;
+
+
+			Bitmap bm = new Bitmap(Size.Width, Size.Height);
+
+			if (!Lock(target, ImageLockMode.ReadOnly))
+				return false;
+
+			System.Drawing.Imaging.BitmapData bmd = bm.LockBits(new Rectangle(Point.Empty, Size),
+				System.Drawing.Imaging.ImageLockMode.WriteOnly,
+				System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+			System.Runtime.InteropServices.Marshal.Copy(Data, 0, bmd.Scan0, Data.Length);
+			bm.UnlockBits(bmd);
+
+			Unlock(target);
+
+			Stream stream = new MemoryStream();
+			bm.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+			stream.Seek(0, SeekOrigin.Begin);
+
+			bool ret = ResourceManager.LoadBinary(name, stream);
+
+			stream.Dispose();
+			bm.Dispose();
+
+			return ret;
+		}
+
+
+		#endregion
+
+
+		/// <summary>
+		/// Sets the size of the texture
+		/// </summary>
+		/// <param name="target">Reference face</param>
+		/// <param name="size">Desired size</param>
+		protected void SetSize(TextureTarget target, Size size)
+		{
+			Size = size;
+
+			Lock(target, ImageLockMode.WriteOnly);
+			Data = null;
+			Unlock(target);
+		}
+
+
+		#region Blitting
+
+		/// <summary>
+		/// Blits a Bitmap on the texture
+		/// </summary>
+		/// <param name="target">Reference face</param>
+		/// <param name="bitmap">Bitmap handle</param>
+		/// <param name="location">Location on the texture</param>
+		protected void SetData(TextureTarget target, Bitmap bitmap, Point location)
+		{
+			if (bitmap == null)
+				return;
+
+
+			Imaging.BitmapData bmdata = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height),
+				 Imaging.ImageLockMode.ReadOnly, Imaging.PixelFormat.Format32bppArgb);
+
+
+			byte[] data = new byte[bitmap.Size.Width * bitmap.Size.Height * 4];
+			Marshal.Copy(bmdata.Scan0, data, 0, bitmap.Size.Width * bitmap.Size.Height * 4);
+			bitmap.UnlockBits(bmdata);
+
+			Display.Texture = this;
+
+			Display.GetLastError("avant");
+			TK.GL.TexSubImage2D<byte>((TK.TextureTarget) target, 0,
+				location.X, location.Y,
+				bitmap.Width, bitmap.Height,
+				(TK.PixelFormat) PixelFormat, TK.PixelType.UnsignedByte,
+				data);
+			Display.GetLastError("apres");
+		}
+
+
+		#endregion
+
+
+
+		#region Locking / unlocking
+
+		/// <summary>
+		/// Locks the bitmap texture to system memory
+		/// </summary>
+		/// <param name="target">Reference face</param>
+		/// <param name="mode">Access mode</param>
+		/// <returns>True if locked, or false if an error occured</returns>
+		protected bool Lock(TextureTarget target, ImageLockMode mode)
+		{
+			// No texture bounds
+			if (Handle == -1  || IsLocked)
+				return false;
+
+			Data = new byte[Size.Width * Size.Height * 4];
+
+			LockMode = mode;
+			IsLocked = true;
+
+			if (mode == ImageLockMode.WriteOnly)
+				return true;
+
+
+			Display.Texture = this;
+			TK.GL.GetTexImage<byte>((TK.TextureTarget) target, 0, (TK.PixelFormat) PixelFormat, TK.PixelType.UnsignedByte, Data);
+			return true;
+		}
+
+
+		/// <summary>
+		/// Unlocks the texture's bitmap from system memory.
+		/// </summary>
+		/// <param name="target">Reference face</param>
+		protected void Unlock(TextureTarget target)
+		{
+			if (!IsLocked || LockMode == ImageLockMode.ReadOnly)
+			{
+				IsLocked = false;
+				return;
+			}
+
+			Display.Texture = this;
+
+			// The below is almost OK. The problem is the GL_RGBA. On certain platforms, the GPU prefers that red and blue be swapped (GL_BGRA).
+			// If you supply GL_RGBA, then the driver will do the swapping for you which is slow.
+			TK.GL.TexImage2D((TK.TextureTarget) target, 0, PixelInternalFormat,
+				Size.Width, Size.Height,
+				0,
+				(TK.PixelFormat) PixelFormat,
+				TK.PixelType.UnsignedByte,
+				Data);
+
+			IsLocked = false;
+			Data = null;
+		}
+
+		#endregion
+
 
 
 		#region Statics
@@ -72,13 +362,13 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Default horizontal wrap filter
 		/// </summary>
-		static public HorizontalWrapFilter DefaultHorizontalWrapFilter = HorizontalWrapFilter.Clamp;
+		static public TextureWrapFilter DefaultHorizontalWrapFilter = TextureWrapFilter.Clamp;
 
 
 		/// <summary>
 		/// Default vertical wrap filter
 		/// </summary>
-		static public VerticalWrapFilter DefaultVerticalWrapFilter = VerticalWrapFilter.Clamp;
+		static public TextureWrapFilter DefaultVerticalWrapFilter = TextureWrapFilter.Clamp;
 
 
 		/// <summary>
@@ -143,52 +433,6 @@ namespace ArcEngine.Graphic
 			protected set;
 		}
 
-
-		/// <summary>
-		/// Horizontal wrapping method
-		/// </summary>
-		public HorizontalWrapFilter HorizontalWrap
-		{
-			get
-			{
-				Display.Texture = this;
-
-				int value;
-				TK.GL.GetTexParameter(TK.TextureTarget.Texture2D, TK.GetTextureParameter.TextureWrapS, out value);
-
-				return (HorizontalWrapFilter) value;
-			}
-			set
-			{
-				Display.Texture = this;
-				TK.GL.TexParameter(TK.TextureTarget.Texture2D, TK.TextureParameterName.TextureWrapS, (int) value);
-			}
-		}
-
-
-		/// <summary>
-		/// Vertical wrapping method
-		/// </summary>
-		public VerticalWrapFilter VerticalWrap
-		{
-			get
-			{
-				Display.Texture = this;
-
-				int value;
-				TK.GL.GetTexParameter(TK.TextureTarget.Texture2D, TK.GetTextureParameter.TextureWrapT, out value);
-
-				return (VerticalWrapFilter) value;
-			}
-			set
-			{
-				Display.Texture = this;
-				TK.GL.TexParameter(TK.TextureTarget.Texture2D, TK.TextureParameterName.TextureWrapT, (int) value);
-			}
-		}
-
-
-
 		/// <summary>
 		/// Gets / sets a border color.
 		/// </summary>
@@ -199,7 +443,7 @@ namespace ArcEngine.Graphic
 				Display.Texture = this;
 
 				int[] color = new int[4];
-				TK.GL.GetTexParameter(TK.TextureTarget.Texture2D, TK.GetTextureParameter.TextureBorderColor, color);
+				TK.GL.GetTexParameter((TK.TextureTarget) Target, TK.GetTextureParameter.TextureBorderColor, color);
 
 				return Color.FromArgb(color[0], color[1], color[2], color[3]);
 
@@ -214,7 +458,7 @@ namespace ArcEngine.Graphic
 				color[2] = value.G;
 				color[3] = value.B;
 
-				TK.GL.TexParameter(TK.TextureTarget.Texture2D, TK.TextureParameterName.TextureBorderColor, color);
+				TK.GL.TexParameter((TK.TextureTarget) Target, TK.TextureParameterName.TextureBorderColor, color);
 			}
 		}
 
@@ -229,7 +473,7 @@ namespace ArcEngine.Graphic
 				Display.Texture = this;
 
 				int value;
-				TK.GL.GetTexParameter(TK.TextureTarget.Texture2D, TK.GetTextureParameter.TextureMinFilter, out value);
+				TK.GL.GetTexParameter((TK.TextureTarget) Target, TK.GetTextureParameter.TextureMinFilter, out value);
 
 				return (TextureMinFilter) value;
 			}
@@ -237,7 +481,7 @@ namespace ArcEngine.Graphic
 			{
 				Display.Texture = this;
 
-				TK.GL.TexParameter(TK.TextureTarget.Texture2D, TK.TextureParameterName.TextureMinFilter, (int) value);
+				TK.GL.TexParameter((TK.TextureTarget) Target, TK.TextureParameterName.TextureMinFilter, (int) value);
 			}
 		}
 
@@ -252,14 +496,14 @@ namespace ArcEngine.Graphic
 				Display.Texture = this;
 
 				int value;
-				TK.GL.GetTexParameter(TK.TextureTarget.Texture2D, TK.GetTextureParameter.TextureMagFilter, out value);
+				TK.GL.GetTexParameter((TK.TextureTarget) Target, TK.GetTextureParameter.TextureMagFilter, out value);
 
 				return (TextureMagFilter) value;
 			}
 			set
 			{
 				Display.Texture = this;
-				TK.GL.TexParameter(TK.TextureTarget.Texture2D, TK.TextureParameterName.TextureMagFilter, (int) value);
+				TK.GL.TexParameter((TK.TextureTarget) Target, TK.TextureParameterName.TextureMagFilter, (int) value);
 			}
 		}
 
@@ -277,7 +521,7 @@ namespace ArcEngine.Graphic
 				Display.Texture = this;
 
 				float value;
-				TK.GL.GetTexParameter(TK.TextureTarget.Texture2D, (TK.GetTextureParameter) TK.ExtTextureFilterAnisotropic.TextureMaxAnisotropyExt, out value);
+				TK.GL.GetTexParameter((TK.TextureTarget) Target, (TK.GetTextureParameter) TK.ExtTextureFilterAnisotropic.TextureMaxAnisotropyExt, out value);
 
 				return value;
 			}
@@ -288,7 +532,7 @@ namespace ArcEngine.Graphic
 
 				Display.Texture = this;
 
-				TK.GL.TexParameter(TK.TextureTarget.Texture2D, (TK.TextureParameterName) TK.ExtTextureFilterAnisotropic.TextureMaxAnisotropyExt, value);
+				TK.GL.TexParameter((TK.TextureTarget) Target, (TK.TextureParameterName) TK.ExtTextureFilterAnisotropic.TextureMaxAnisotropyExt, value);
 			}
 		}
 
@@ -364,6 +608,7 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		Texture1D = TK.TextureTarget.Texture1D,
 
+	
 		/// <summary>
 		/// Two dimensional texture
 		/// </summary>
@@ -386,6 +631,38 @@ namespace ArcEngine.Graphic
 		/// Rectangle texture
 		/// </summary>
 		TextureRectangle = TK.TextureTarget.TextureRectangle,
+
+/*
+		/// <summary>
+		/// 
+		/// </summary>
+		NegativeX = TK.TextureTarget.TextureCubeMapNegativeX,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		NegativeY = TK.TextureTarget.TextureCubeMapNegativeY,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		NegativeZ = TK.TextureTarget.TextureCubeMapNegativeZ,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		PositiveX = TK.TextureTarget.TextureCubeMapPositiveX,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		PositiveY = TK.TextureTarget.TextureCubeMapPositiveY,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		PositiveZ = TK.TextureTarget.TextureCubeMapPositiveZ,
+*/	
 	}
 
 
@@ -422,45 +699,41 @@ namespace ArcEngine.Graphic
 
 
 	/// <summary>
-	/// Sets the wrap parameter for texture coordinate s
+	/// Sets the wrap parameter for texture coordinate
 	/// to either CLAMP or REPEAT
 	/// </summary>
-	public enum HorizontalWrapFilter
+	public enum TextureWrapFilter
 	{
 		/// <summary>
-		/// Causes s coordinates to be clamped	to the range [0,1] and is useful
-		/// for preventing wrapping artifacts	when mapping a single image onto	an object.
+		/// Causes coordinates to be clamped to the range [0,1] and is useful
+		/// for preventing wrapping artifacts when mapping a single image onto an object.
 		/// </summary>
-		Clamp = 0x812F,
+		Clamp = TK.TextureWrapMode.Clamp,
 
 		/// <summary>
-		/// Causes the integer part of the s coordinate	to be ignored; the GL uses only 
+		/// Causes the integer part of the coordinate to be ignored; the GL uses only 
 		/// the fractional part, thereby creating a repeating pattern. Border texture elements are 
 		/// accessed only if wrapping is set to GL_CLAMP.
 		/// </summary>
-		Repeat = 0x2901
-	}
-
-
-	/// <summary>
-	/// Sets the wrap parameter for texture coordinate t
-	/// to either CLAMP or REPEAT
-	/// </summary>
-	public enum VerticalWrapFilter
-	{
-		/// <summary>
-		/// Causes s coordinates to be clamped	to the range [0,1] and is useful
-		/// for preventing wrapping artifacts	when mapping a single image onto	an object.
-		/// </summary>
-		Clamp = 0x812F,
+		Repeat = TK.TextureWrapMode.Repeat,
 
 
 		/// <summary>
-		/// Causes the integer part of the s coordinate	to be ignored; the GL uses only 
-		/// the fractional part, thereby creating a repeating pattern. Border texture elements are 
-		/// accessed only if wrapping is set to GL_CLAMP.
+		/// 
 		/// </summary>
-		Repeat = 0x2901
+		ClampToEdge = TK.TextureWrapMode.ClampToEdge,
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		ClampToBorder = TK.TextureWrapMode.ClampToBorder,
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		MirrorRepeat = TK.TextureWrapMode.MirroredRepeat,
 	}
 
 

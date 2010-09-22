@@ -154,7 +154,7 @@ namespace ArcEngine.Graphic
 		/// <param name="slices">Number of slices</param>
 		/// <returns></returns>
 		/// <remarks>From nopper.tv</remarks>
-		public static Mesh ggCreateSphere(float radius, int slices)
+		public static Mesh CreateSphere(float radius, int slices)
 		{
 
 			#region Vertex
@@ -245,7 +245,7 @@ namespace ArcEngine.Graphic
 		/// <returns></returns>
 		public static Mesh CreateCube(float size)
 		{
-			// Indices
+			#region Indices
 			int[] indices = new int[]
 			{
 				 0, 2, 1,
@@ -261,8 +261,9 @@ namespace ArcEngine.Graphic
 				 20, 23, 22,
 				 20, 22, 21,
 			};
+			#endregion
 
-
+			#region Vertices
 			float[] vertices = new float[]
 			{
 				//Vertex							Normal							Tangent							Texture
@@ -296,7 +297,7 @@ namespace ArcEngine.Graphic
 				+size, +size, +size,			+1.0f,  0.0f,  0.0f,			0.0f,  0.0f, -1.0f,			1.0f, 1.0f,
 				+size, +size, -size,			+1.0f,  0.0f,  0.0f, 		0.0f,  0.0f, -1.0f,			1.0f, 0.0f,
 			};
-
+			#endregion
 
 			Mesh mesh = new Mesh();
 			mesh.Buffer.AddDeclaration("in_position", 3);

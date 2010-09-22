@@ -1068,18 +1068,18 @@ namespace ArcEngine.Graphic
 
 
 	/// <summary>
-	/// 
+	/// Defines front- and back-facing polygons
 	/// </summary>
 	public enum FrontFace
 	{
 		/// <summary>
-		/// 
+		/// Clockwise polygons as front-facing
 		/// </summary>
 		ClockWise = TK.FrontFaceDirection.Cw,
 
 
 		/// <summary>
-		/// 
+		/// Counterclockwise polygons as front-facing
 		/// </summary>
 		CounterClockWise = TK.FrontFaceDirection.Ccw,
 	}
