@@ -31,7 +31,7 @@ namespace ArcEngine.PInvoke
 	internal class User32
 	{
 		/// <summary>
-		/// 
+		/// GetKeyState
 		/// </summary>
 		/// <param name="keyCode"></param>
 		/// <returns></returns>
@@ -40,7 +40,7 @@ namespace ArcEngine.PInvoke
 
 
 		/// <summary>
-		/// 
+		/// NativeMessage
 		/// </summary>
 		[StructLayout(LayoutKind.Sequential)]
 		internal struct NativeMessage
@@ -55,7 +55,7 @@ namespace ArcEngine.PInvoke
 
 
 		/// <summary>
-		/// 
+		/// PeekMessage
 		/// </summary>
 		/// <param name="message"></param>
 		/// <param name="hwnd"></param>
@@ -70,7 +70,7 @@ namespace ArcEngine.PInvoke
 
 
 		/// <summary>
-		/// 
+		/// IconInfo
 		/// </summary>
 		[StructLayout(LayoutKind.Sequential)]
 		internal struct IconInfo
@@ -104,7 +104,7 @@ namespace ArcEngine.PInvoke
 
 
 		/// <summary>
-		/// 
+		/// CreateIconIndirect
 		/// </summary>
 		/// <param name="icon"></param>
 		/// <returns></returns>
