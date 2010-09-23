@@ -58,7 +58,7 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		~BatchBuffer()
 		{
-		//	throw new Exception("BatchBuffer : Call Dispose() !!");
+			throw new Exception("BatchBuffer : Call Dispose() !!");
 		}
 
 
@@ -114,15 +114,16 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Binds the buffer
 		/// </summary>
-		public void Bind()
+		/// <returns>True if successful</returns>
+		public bool Bind()
 		{
 			if (Handle == -1)
-				return;
+				return false;
 
 			TK.GL.BindBuffer(TK.BufferTarget.ArrayBuffer, Handle);
 
 			if (Display.Shader == null)
-				return;
+				return false;
 
 			int offset = 0;
 			foreach (VertexDeclaration dec in Declarations)
@@ -135,6 +136,7 @@ namespace ArcEngine.Graphic
 				offset += dec.Size * sizeof(float);
 			}
 
+			return true;
 		}
 
 
@@ -164,11 +166,11 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Creates a defaut buffer containing position, color and texture data
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>Batch buffer</returns>
 		public static BatchBuffer CreatePositionColorTextureBuffer()
 		{
 			BatchBuffer buffer = new BatchBuffer();
-			buffer.AddDeclaration("in_position", 2);
+			buffer.AddDeclaration("in_position", 3);
 			buffer.AddDeclaration("in_color", 4);
 			buffer.AddDeclaration("in_texture", 2);
 
@@ -179,11 +181,11 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Creates a defaut buffer containing position, color and texture data
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>Batch buffer</returns>
 		public static BatchBuffer CreatePositionColorBuffer()
 		{
 			BatchBuffer buffer = new BatchBuffer();
-			buffer.AddDeclaration("in_position", 2);
+			buffer.AddDeclaration("in_position", 3);
 			buffer.AddDeclaration("in_color", 4);
 
 			return buffer;
@@ -211,11 +213,11 @@ namespace ArcEngine.Graphic
 		/// <param name="color">Drawing color</param>
 		public void AddRectangle(Rectangle rect, Color color)
 		{
-			AddPoint(rect.Location, color);										// A
+			AddPoint(rect.Location, color);									// A
 			AddPoint(new Point(rect.X, rect.Bottom), color);				// D
 			AddPoint(new Point(rect.Right, rect.Bottom), color);			// C
 
-			AddPoint(rect.Location, color);										// A
+			AddPoint(rect.Location, color);									// A
 			AddPoint(new Point(rect.Right, rect.Bottom), color);			// C
 			AddPoint(new Point(rect.Right, rect.Top), color);				// B
 		}
@@ -229,13 +231,13 @@ namespace ArcEngine.Graphic
 		/// <param name="tex">Texture coordinate</param>
 		public void AddRectangle(Rectangle rect, Color color, Rectangle tex)
 		{
-			AddPoint(rect.Location, color, tex.Location);															// A
+			AddPoint(rect.Location, color, tex.Location);												// A
 			AddPoint(new Point(rect.X, rect.Bottom), color, new Point(tex.X, tex.Bottom));				// D
 			AddPoint(new Point(rect.Right, rect.Bottom), color, new Point(tex.Right, tex.Bottom));		// C
 
-			AddPoint(rect.Location, color, tex.Location);															// A
+			AddPoint(rect.Location, color, tex.Location);												// A
 			AddPoint(new Point(rect.Right, rect.Bottom), color, new Point(tex.Right, tex.Bottom));		// C
-			AddPoint(new Point(rect.Right, rect.Top), color, new Point(tex.Right, tex.Top));				// B
+			AddPoint(new Point(rect.Right, rect.Top), color, new Point(tex.Right, tex.Top));			// B
 		}
 
 
@@ -324,8 +326,9 @@ namespace ArcEngine.Graphic
 			CheckForOverflow();
 
 			// Vertex
-			Buffer[Offset++] = (point.X);
-			Buffer[Offset++] = (point.Y);
+			Buffer[Offset++] = point.X;
+			Buffer[Offset++] = point.Y;
+			Buffer[Offset++] = 0.5f;
 
 			// Color
 			Buffer[Offset++] = (color.R / 255.0f);
@@ -349,8 +352,9 @@ namespace ArcEngine.Graphic
 			CheckForOverflow();
 
 			// Vertex
-			Buffer[Offset++] = (point.X);
-			Buffer[Offset++] = (point.Y);
+			Buffer[Offset++] = point.X;
+			Buffer[Offset++] = point.Y;
+			Buffer[Offset++] = 0.5f;
 
 			// Color
 			Buffer[Offset++] = (color.R / 255.0f);
@@ -375,8 +379,9 @@ namespace ArcEngine.Graphic
 			CheckForOverflow();
 
 			// Vertex
-			Buffer[Offset++] = (point.X);
-			Buffer[Offset++] = (point.Y);
+			Buffer[Offset++] = point.X;
+			Buffer[Offset++] = point.Y;
+			Buffer[Offset++] = 0.5f;
 
 			// Color
 			Buffer[Offset++] = (color.R / 255.0f);

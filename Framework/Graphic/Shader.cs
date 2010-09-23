@@ -350,19 +350,19 @@ namespace ArcEngine.Graphic
 
 				in vec2 in_position;
 				in vec4 in_color;
-				in vec4 in_texture;
+				in vec2 in_texture;
 
 				invariant gl_Position;
 
 				smooth out vec4 out_color;
-				smooth out vec4 out_texture;
+				smooth out vec2 out_texture;
 
 				void main(void)
 				{
 					gl_Position = mvp_matrix * vec4(in_position, 0.0, 1.0);
 
 					out_color = in_color;
-					out_texture = tex_matrix * in_texture;
+					out_texture = texture_matrix * vec4(in_texture, 0.0, 0.0);
 				}");
 			#endregion
 
@@ -375,13 +375,13 @@ namespace ArcEngine.Graphic
 				uniform sampler2D texture;
 
 				smooth in vec4 out_color;
-				smooth in vec4 out_texture;
+				smooth in vec2 out_texture;
 
 				out vec4 frag_color;
 
 				void main(void)
 				{
-					frag_color = texture2D(texture, out_texture.st) * out_color;
+					frag_color = texture2D(texture, out_texture) * out_color;
 				}");
 			#endregion
 
@@ -513,6 +513,7 @@ namespace ArcEngine.Graphic
 			TK.GL.Uniform1(id, value);
 		}
 
+
 		/// <summary>
 		/// Sets an uniform value
 		/// </summary>
@@ -521,6 +522,20 @@ namespace ArcEngine.Graphic
 		public void SetUniform(string name, float value)
 		{
 			SetUniform(GetUniform(name), value);
+		}
+
+
+		/// <summary>
+		/// Sets an uniform value
+		/// </summary>
+		/// <param name="name">Name of the uniform</param>
+		/// <param name="value">New value</param>
+		public void SetUniform(string name, bool value)
+		{
+			if (value)
+				SetUniform(GetUniform(name), 1);
+			else
+				SetUniform(GetUniform(name), 0);
 		}
 
 

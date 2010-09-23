@@ -283,9 +283,6 @@ namespace DungeonEye
 			}
 
 
-			// Draw the cursor or the item in the hand
-		//	Batch.DrawTile(Tileset, 0, Mouse.Location, Color.White);
-
 			Batch.End();
 		}
 

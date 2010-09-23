@@ -105,7 +105,14 @@ namespace ArcEngine.Asset
 				Texture = new Texture2D();
 
 			TextureName = filename;
-			return Texture.LoadImage(filename);
+			if (!Texture.LoadImage(filename))
+				return false;
+
+			// Change texture filtering mode
+			Texture.MagFilter = TextureMagFilter.Nearest;
+			Texture.MinFilter = TextureMinFilter.Nearest;
+
+			return true;
 		}
 
 

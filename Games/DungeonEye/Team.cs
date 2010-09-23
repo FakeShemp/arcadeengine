@@ -90,7 +90,11 @@ namespace DungeonEye
 				Heads.Dispose();
 			Heads = null;
 
-			ResourceManager.RemoveSharedAsset<TileSet>("interface");
+			if (TileSet != null)
+			{
+				ResourceManager.RemoveSharedAsset<TileSet>("interface");
+				TileSet.Dispose();
+			}
 			TileSet = null;
 
 			if (SpellBook != null)

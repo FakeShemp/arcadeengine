@@ -45,7 +45,9 @@ namespace ArcEngine.Asset
 		{
 			GlyphTileset = new TileSet();
 			GlyphTileset.Texture = new Texture2D();
-
+			GlyphTileset.Texture.MinFilter = TextureMinFilter.Nearest;
+			GlyphTileset.Texture.MagFilter = TextureMagFilter.Nearest;
+			
 			IsDisposed = false;
 		}
 
@@ -96,59 +98,6 @@ namespace ArcEngine.Asset
 
 		#region Text drawing
 
-/*
-		/// <summary>
-		/// Prints some text on the screen
-		/// </summary>
-		/// <param name="pos">Offset of the text</param>
-		/// <param name="color">Color</param>
-		/// <param name="text">Text to print</param>
-		public void DrawText(Point pos, Color color, string text)
-		{
-			DrawText(new Rectangle(pos, Size.Empty), color, text);
-		}
-
-
-		/// <summary>
-		/// Prints some text on the screen
-		/// </summary>
-		/// <param name="pos">Offset of the text</param>
-		/// <param name="color">Color</param>
-		/// <param name="format">Text to print</param>
-		/// <param name="args"></param>
-		public void DrawText(Point pos, Color color, string format, params object[] args)
-		{
-			DrawText(pos, color, string.Format(format, args));
-		}
-
-
-		/// <summary>
-		/// Prints some text on the screen within a rectangle with left justification
-		/// </summary>
-		/// <param name="rectangle">Rectangle of the text</param>
-		/// <param name="color">Color</param>
-		/// <param name="text">Text to print</param>
-		public void DrawText(Rectangle rectangle, Color color, string text)
-		{
-			DrawText(rectangle, TextJustification.Left, color, text);
-		}
-
-
-		/// <summary>
-		/// Prints some text on the screen
-		/// </summary>
-		/// <param name="rectangle">Rectangle of the text</param>
-		/// <param name="color">Color</param>
-		/// <param name="format">Text to print</param>
-		/// <param name="args"></param>
-		public void DrawText(Rectangle rectangle, Color color, string format, params object[] args)
-		{
-			DrawText(rectangle, color, string.Format(format, args));
-		}
-
-*/
-
-	
 		/// <summary>
 		/// Prints some text on the screen within a rectangle with justification
 		/// </summary>
@@ -328,22 +277,6 @@ namespace ArcEngine.Asset
 
 		}
 
-
-/*
-
-		/// <summary>
-		/// Prints some text on the screen within a rectangle with justification
-		/// </summary>
-		/// <param name="rectangle">Rectangle of the text</param>
-		/// <param name="justification">Needed justifcation</param>
-		/// <param name="color">Color</param>
-		/// <param name="format">Text to print</param>
-		/// <param name="args"></param>
-		public void DrawText(Rectangle rectangle, TextJustification justification, Color color, string format, params object[] args)
-		{
-			DrawText(rectangle, justification, color, string.Format(format, args));
-		}
-*/
 		#endregion
 
 
@@ -624,8 +557,9 @@ namespace ArcEngine.Asset
 				{
 					case "rectangle":
 					{
-						rectangle = new Rectangle(Int32.Parse(node.Attributes["x"].Value), Int32.Parse(node.Attributes["y"].Value),
-															Int32.Parse(node.Attributes["width"].Value), Int32.Parse(node.Attributes["height"].Value));
+						rectangle = new Rectangle(
+							Int32.Parse(node.Attributes["x"].Value), Int32.Parse(node.Attributes["y"].Value),
+							Int32.Parse(node.Attributes["width"].Value), Int32.Parse(node.Attributes["height"].Value));
 					}
 					break;
 					case "size":

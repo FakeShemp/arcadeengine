@@ -248,8 +248,6 @@ namespace ArcEngine.Graphic
 			Display.RenderState.Culling = true;
 			Display.RenderState.DepthTest = false;
 			Display.RenderState.Blending = true;
-			//Display.Texturing = true;
-
 		}
 
 
@@ -265,16 +263,19 @@ namespace ArcEngine.Graphic
 			if (count == 0 || texture == null)
 				return;
 
-			Display.TextureUnit = 0;
-			Display.Texture = texture;
 			Display.Shader = Shader;
 
 			Matrix4 modelViewMatrix = Matrix4.Identity;
 			Matrix4 projectionMatrix = Matrix4.CreateOrthographicOffCenter(0, Display.ViewPort.Width, Display.ViewPort.Height, 0.0f, -1.0f, 1.0f); ;
 			Shader.SetUniform("modelview_matrix", modelViewMatrix * projectionMatrix);
+			Shader.SetUniform("projection_matrix", projectionMatrix);
 
 			Matrix4 textureMatrix = Matrix4.Scale(1.0f / texture.Size.Width, 1.0f / texture.Size.Height, 1.0f);
 			Shader.SetUniform("texture_matrix", textureMatrix);
+
+			Display.TextureUnit = 0;
+			Display.Texture = texture;
+			Shader.SetUniform("texture", 0);
 
 			for (int i = offset; i < offset + count; i++)
 			{
@@ -351,7 +352,7 @@ namespace ArcEngine.Graphic
 		/// <param name="origin">The origin of the sprite. Specify (0,0) for the upper-left corner.</param>
 		/// <param name="effect">Rotations to apply prior to rendering.</param>
 		/// <param name="depth">The sorting depth of the sprite</param>
-		/// <param name="type"></param>
+		/// <param name="type">Type of rendering</param>
 		void InternalDraw(Texture2D texture, ref Rectangle destination, ref Rectangle source, Color color, float rotation, Point origin, SpriteEffects effect, float depth, PrimitiveType type)
 		{
 			Vector4 src = new Vector4(source.X, source.Y, source.Width, source.Height);
