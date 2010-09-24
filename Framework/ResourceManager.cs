@@ -489,7 +489,6 @@ namespace ArcEngine
 			lock (BinaryLock)
 			{
 				if (!AssetProviders.ContainsKey(typeof(T)))
-					//throw new ArgumentException("Unknown asset type");
 					return new List<string>();
 
 				return AssetProviders[typeof(T)].GetAssets<T>();

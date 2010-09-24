@@ -39,18 +39,21 @@
 			this.RangeBox = new System.Windows.Forms.ComboBox();
 			this.label4 = new System.Windows.Forms.Label();
 			this.ScriptBox = new ArcEngine.Editor.ScriptControl();
+			this.label5 = new System.Windows.Forms.Label();
+			this.ClassBox = new System.Windows.Forms.ComboBox();
+			this.stringTableControl1 = new DungeonEye.Forms.StringTableControl();
 			this.groupBox1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize) (this.LevelBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize) (this.CastingTimeBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize) (this.DurationBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.LevelBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.CastingTimeBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.DurationBox)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// groupBox1
 			// 
 			this.groupBox1.Controls.Add(this.DescriptionBox);
-			this.groupBox1.Location = new System.Drawing.Point(13, 13);
+			this.groupBox1.Location = new System.Drawing.Point(12, 12);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(477, 115);
+			this.groupBox1.Size = new System.Drawing.Size(477, 74);
 			this.groupBox1.TabIndex = 0;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Description :";
@@ -62,13 +65,13 @@
 			this.DescriptionBox.Location = new System.Drawing.Point(3, 16);
 			this.DescriptionBox.Multiline = true;
 			this.DescriptionBox.Name = "DescriptionBox";
-			this.DescriptionBox.Size = new System.Drawing.Size(471, 96);
+			this.DescriptionBox.Size = new System.Drawing.Size(471, 55);
 			this.DescriptionBox.TabIndex = 0;
 			this.DescriptionBox.TextChanged += new System.EventHandler(this.DescriptionBox_TextChanged);
 			// 
 			// LevelBox
 			// 
-			this.LevelBox.Location = new System.Drawing.Point(89, 146);
+			this.LevelBox.Location = new System.Drawing.Point(88, 205);
 			this.LevelBox.Maximum = new decimal(new int[] {
             9,
             0,
@@ -83,7 +86,7 @@
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(13, 148);
+			this.label1.Location = new System.Drawing.Point(12, 207);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(42, 13);
 			this.label1.TabIndex = 2;
@@ -91,7 +94,7 @@
 			// 
 			// CastingTimeBox
 			// 
-			this.CastingTimeBox.Location = new System.Drawing.Point(89, 172);
+			this.CastingTimeBox.Location = new System.Drawing.Point(88, 231);
 			this.CastingTimeBox.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -107,7 +110,7 @@
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(13, 174);
+			this.label2.Location = new System.Drawing.Point(12, 233);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(70, 13);
 			this.label2.TabIndex = 2;
@@ -115,7 +118,7 @@
 			// 
 			// DurationBox
 			// 
-			this.DurationBox.Location = new System.Drawing.Point(89, 198);
+			this.DurationBox.Location = new System.Drawing.Point(88, 257);
 			this.DurationBox.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -131,7 +134,7 @@
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(11, 200);
+			this.label3.Location = new System.Drawing.Point(10, 259);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(53, 13);
 			this.label3.TabIndex = 2;
@@ -141,7 +144,7 @@
 			// 
 			this.RangeBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.RangeBox.FormattingEnabled = true;
-			this.RangeBox.Location = new System.Drawing.Point(224, 145);
+			this.RangeBox.Location = new System.Drawing.Point(223, 204);
 			this.RangeBox.Name = "RangeBox";
 			this.RangeBox.Size = new System.Drawing.Size(121, 21);
 			this.RangeBox.TabIndex = 3;
@@ -150,7 +153,7 @@
 			// label4
 			// 
 			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(173, 148);
+			this.label4.Location = new System.Drawing.Point(172, 207);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(45, 13);
 			this.label4.TabIndex = 4;
@@ -159,18 +162,49 @@
 			// ScriptBox
 			// 
 			this.ScriptBox.ControlText = "Interface :";
-			this.ScriptBox.Location = new System.Drawing.Point(12, 224);
+			this.ScriptBox.Location = new System.Drawing.Point(11, 283);
 			this.ScriptBox.Name = "ScriptBox";
 			this.ScriptBox.Size = new System.Drawing.Size(274, 87);
 			this.ScriptBox.TabIndex = 5;
 			this.ScriptBox.InterfaceChanged += new System.EventHandler(this.scriptControl1_InterfaceChanged);
 			this.ScriptBox.ScriptChanged += new System.EventHandler(this.scriptControl1_ScriptChanged);
 			// 
+			// label5
+			// 
+			this.label5.AutoSize = true;
+			this.label5.Location = new System.Drawing.Point(172, 236);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(38, 13);
+			this.label5.TabIndex = 7;
+			this.label5.Text = "Class :";
+			// 
+			// ClassBox
+			// 
+			this.ClassBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.ClassBox.FormattingEnabled = true;
+			this.ClassBox.Location = new System.Drawing.Point(223, 233);
+			this.ClassBox.Name = "ClassBox";
+			this.ClassBox.Size = new System.Drawing.Size(121, 21);
+			this.ClassBox.TabIndex = 6;
+			// 
+			// stringTableControl1
+			// 
+			this.stringTableControl1.Location = new System.Drawing.Point(12, 92);
+			this.stringTableControl1.Name = "stringTableControl1";
+			this.stringTableControl1.ShowPreview = true;
+			this.stringTableControl1.Size = new System.Drawing.Size(477, 100);
+			this.stringTableControl1.StringID = 0;
+			this.stringTableControl1.TabIndex = 8;
+			this.stringTableControl1.Title = "Ingame name :";
+			// 
 			// SpellForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(877, 554);
+			this.Controls.Add(this.stringTableControl1);
+			this.Controls.Add(this.label5);
+			this.Controls.Add(this.ClassBox);
 			this.Controls.Add(this.ScriptBox);
 			this.Controls.Add(this.label4);
 			this.Controls.Add(this.RangeBox);
@@ -181,15 +215,15 @@
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.LevelBox);
 			this.Controls.Add(this.groupBox1);
-			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Name = "SpellForm";
 			this.Text = "SpellForm";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form_FormClosing);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
-			((System.ComponentModel.ISupportInitialize) (this.LevelBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize) (this.CastingTimeBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize) (this.DurationBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.LevelBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.CastingTimeBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.DurationBox)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -208,5 +242,8 @@
 		private System.Windows.Forms.ComboBox RangeBox;
 		private System.Windows.Forms.Label label4;
 		private ArcEngine.Editor.ScriptControl ScriptBox;
+		private System.Windows.Forms.Label label5;
+		private System.Windows.Forms.ComboBox ClassBox;
+		private StringTableControl stringTableControl1;
 	}
 }

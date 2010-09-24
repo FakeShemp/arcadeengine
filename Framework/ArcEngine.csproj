@@ -178,6 +178,12 @@
     <Compile Include="Editor\ScriptControl.Designer.cs">
       <DependentUpon>ScriptControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Editor\StringTableControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editor\StringTableControl.Designer.cs">
+      <DependentUpon>StringTableControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ExceptionForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -441,6 +447,9 @@
     <Compile Include="Utility\Webcam.cs" />
     <EmbeddedResource Include="Editor\ScriptControl.resx">
       <DependentUpon>ScriptControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editor\StringTableControl.resx">
+      <DependentUpon>StringTableControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ExceptionForm.resx">
       <DependentUpon>ExceptionForm.cs</DependentUpon>

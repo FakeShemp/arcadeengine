@@ -18,15 +18,11 @@
 //
 #endregion
 using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Forms;
-using ArcEngine.Graphic;
 using DungeonEye.Interfaces;
 
 namespace DungeonEye.Forms

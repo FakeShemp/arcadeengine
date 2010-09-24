@@ -280,10 +280,14 @@ namespace DungeonEye
 	public enum SpellRange
 	{
 		/// <summary>
-		/// The spell affects only you.
+		/// The spell affects only the caster.
 		/// </summary>
 		Personal,
 
+		/// <summary>
+		/// Affect the whole team
+		/// </summary>
+		Team,
 
 		/// <summary>
 		/// You must touch a creature or object to affect it. 
@@ -292,19 +296,19 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// The spell reaches as far as 3 blocks away from you. The maximum range increases by 1 block for every two full caster levels.
+		/// The spell reaches as far as 2 blocks + 1 block per caster level.
 		/// </summary>
 		Close,
 
 
 		/// <summary>
-		/// The spell reaches as far as 5 blocks + 1 block per caster level.
+		/// The spell reaches as far as 3 blocks + 1 block per caster level.
 		/// </summary>
 		Medium,
 
 
 		/// <summary>
-		/// The spell reaches as far as 10 blocks + 2 blocks per caster level.
+		/// The spell reaches as far as 4 blocks + 2 blocks per caster level.
 		/// </summary>
 		Long,
 
