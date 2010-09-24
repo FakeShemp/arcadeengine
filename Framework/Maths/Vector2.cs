@@ -67,7 +67,6 @@ namespace ArcEngine
         /// Constructs a new Vector2 from the given Vector2.
         /// </summary>
         /// <param name="v">The Vector2 to copy components from.</param>
-        [Obsolete]
         public Vector2(Vector2 v)
         {
             X = v.X;
@@ -78,7 +77,6 @@ namespace ArcEngine
         /// Constructs a new Vector2 from the given Vector3.
         /// </summary>
         /// <param name="v">The Vector3 to copy components from. Z is discarded.</param>
-        [Obsolete]
         public Vector2(Vector3 v)
         {
             X = v.X;
@@ -89,7 +87,6 @@ namespace ArcEngine
         /// Constructs a new Vector2 from the given Vector4.
         /// </summary>
         /// <param name="v">The Vector4 to copy components from. Z and W are discarded.</param>
-        [Obsolete]
         public Vector2(Vector4 v)
         {
             X = v.X;

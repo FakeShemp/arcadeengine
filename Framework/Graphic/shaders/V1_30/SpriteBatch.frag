@@ -1,14 +1,14 @@
 ﻿#version 130
 
-uniform sampler2D texture;
+uniform sampler2D texture;		// Texture sampler
 
+in vec2 out_texture;			// Texture coordinate
+in vec4 out_color;				// Fragment color
 
-in vec4 out_texture;
-in vec4 out_color;
-
-out vec4 frag_color;
+out vec4 frag_color;			// Final fragment
 
 void main()
 {
-	frag_color = texture2D(texture, out_texture.st) * out_color;
+	// Fragment color
+	frag_color = texture2D(texture, out_texture) * out_color;
 }

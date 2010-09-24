@@ -65,6 +65,8 @@ namespace ArcEngine.Graphic
 			bm.SetPixel(0, 0, Color.White);
 			WhiteTexture.SetData(bm, Point.Empty);
 			bm.Dispose();
+			WhiteTexture.MinFilter = TextureMinFilter.Nearest;
+			WhiteTexture.MagFilter = TextureMagFilter.Nearest;
 
 		}
 
@@ -265,10 +267,9 @@ namespace ArcEngine.Graphic
 
 			Display.Shader = Shader;
 
-			Matrix4 modelViewMatrix = Matrix4.Identity;
-			Matrix4 projectionMatrix = Matrix4.CreateOrthographicOffCenter(0, Display.ViewPort.Width, Display.ViewPort.Height, 0.0f, -1.0f, 1.0f); ;
-			Shader.SetUniform("modelview_matrix", modelViewMatrix * projectionMatrix);
-			Shader.SetUniform("projection_matrix", projectionMatrix);
+			// Build matrix
+			Matrix4 ProjectionMatrix = Matrix4.CreateOrthographicOffCenter(0, Display.ViewPort.Width, Display.ViewPort.Height, 0.0f, -1.0f, 1.0f);
+			Shader.SetUniform("projection_matrix", ProjectionMatrix);
 
 			Matrix4 textureMatrix = Matrix4.Scale(1.0f / texture.Size.Width, 1.0f / texture.Size.Height, 1.0f);
 			Shader.SetUniform("texture_matrix", textureMatrix);
@@ -307,24 +308,24 @@ namespace ArcEngine.Graphic
 					// Lines
 					case PrimitiveType.Lines:
 					{
-						Buffer.AddPoint(dst.Xy, src.Xy, Sprites[i].Color);																// A
-						Buffer.AddPoint(new Vector2(dst.Right, dst.Bottom), new Vector2(src.Right, src.Bottom), Sprites[i].Color);		// C
+						Buffer.AddPoint(dst.Xy, Sprites[i].Color, src.Xy);																// A
+						Buffer.AddPoint(new Vector2(dst.Right, dst.Bottom), Sprites[i].Color, new Vector2(src.Right, src.Bottom));		// C
 					}
 					break;
 
 					// Rectangles
 					case PrimitiveType.LineStrip:
 					{
-						Buffer.AddPoint(dst.Xy, src.Xy, Sprites[i].Color);																// A
-						Buffer.AddPoint(new Vector2(dst.X, dst.Bottom), new Vector2(src.X, src.Bottom), Sprites[i].Color);				// D
-						Buffer.AddPoint(new Vector2(dst.Right, dst.Bottom), new Vector2(src.Right, src.Bottom), Sprites[i].Color);		// C
-						Buffer.AddPoint(new Vector2(dst.Right, dst.Top), new Vector2(src.Right, src.Top), Sprites[i].Color);			// B
+						Buffer.AddPoint(dst.Xy, Sprites[i].Color, src.Xy);																// A
+						Buffer.AddPoint(new Vector2(dst.X, dst.Bottom), Sprites[i].Color, new Vector2(src.X, src.Bottom));				// D
+						Buffer.AddPoint(new Vector2(dst.Right, dst.Bottom), Sprites[i].Color, new Vector2(src.Right, src.Bottom));		// C
+						Buffer.AddPoint(new Vector2(dst.Right, dst.Top), Sprites[i].Color, new Vector2(src.Right, src.Top));			// B
 					}
 					break;
 
 					case PrimitiveType.Points:
 					{
-						Buffer.AddPoint(dst.Xy, src.Xy, Sprites[i].Color);																// A
+						Buffer.AddPoint(dst.Xy, Sprites[i].Color, src.Xy);																// A
 					}
 					break;
 
@@ -773,6 +774,18 @@ namespace ArcEngine.Graphic
 			DrawTile(tileset, id, position, Color.White);
 		}
 
+		/// <summary>
+		/// Draws a tile from a TileSet
+		/// </summary>
+		/// <param name="tileset">TileSet to use</param>
+		/// <param name="id">Tile id</param>
+		/// <param name="position">Location on the screen</param>
+		/// <param name="depth">Depth offset</param>
+		public void DrawTile(TileSet tileset, int id, Point position, float depth)
+		{
+			DrawTile(tileset, id, position, Color.White, 0.0f, SpriteEffects.None, depth);
+		}
+
 
 		/// <summary>
 		/// Draws a tile from a TileSet
@@ -817,10 +830,11 @@ namespace ArcEngine.Graphic
 
 			Vector4 src = new Vector4(tile.Rectangle.X, tile.Rectangle.Y, tile.Rectangle.Width, tile.Rectangle.Height);
 
-            Vector2 origin = new Vector2(tile.Origin.X, tile.Origin.Y);
+			Vector2 origin = new Vector2(tile.Origin.X, tile.Origin.Y);
 
 			InternalDraw(tileset.Texture, ref dst, ref src, color, rotation, origin, effect, depth, PrimitiveType.Triangles);
 		}
+
 
 
 		/// <summary>
@@ -833,6 +847,20 @@ namespace ArcEngine.Graphic
 		public void DrawTile(TileSet tileset, int id, Vector2 position, Color color)
 		{
 			DrawTile(tileset, id, position, color, 0.0f, SpriteEffects.None, 0.0f);
+		}
+
+
+
+		/// <summary>
+		/// Draws a tile from a TileSet
+		/// </summary>
+		/// <param name="tileset">TileSet to use</param>
+		/// <param name="id">Tile id</param>
+		/// <param name="position">Location on the screen</param>
+		/// <param name="color">The color channel modulation to use. Use Color.White for full color with no tinting.</param>
+		public void DrawTile(TileSet tileset, int id, Vector3 position, Color color)
+		{
+			DrawTile(tileset, id, new Vector2(position), color, 0.0f, SpriteEffects.None, position.Z);
 		}
 
 
@@ -1435,10 +1463,5 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		Additive
 	}
-
-
-
-
- 
 
 }

@@ -83,8 +83,8 @@ namespace DungeonEye
 
 			// Default texture parameters
 			Texture2D.DefaultBorderColor = Color.Black;
-			Texture2D.DefaultMagFilter = TextureMagFilter.Linear;
-			Texture2D.DefaultMinFilter = TextureMinFilter.Linear;
+			Texture2D.DefaultMagFilter = TextureMagFilter.Nearest;
+			Texture2D.DefaultMinFilter = TextureMinFilter.Nearest;
 
 
 			GSM.AddScreen(new MainMenu());

@@ -123,10 +123,13 @@ namespace DungeonEye
 		/// </summary>
 		public override void LoadContent()
 		{
+			Batch = new SpriteBatch();
+
+	//		Display.RenderState.DepthTest = true;
+	//		Display.RenderState.DepthClearValue = 0;
+
 			System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
 			watch.Start();
-
-			Batch = new SpriteBatch();
 
 			ResourceManager.ClearAssets();
 			ResourceManager.LoadBank("data/game.bnk");
@@ -164,33 +167,31 @@ namespace DungeonEye
 			Trace.WriteLine("InputScheme ({0} ms)", watch.ElapsedMilliseconds);
 
 
+			// Interface tileset
 			TileSet = ResourceManager.CreateAsset<TileSet>("Interface");
 			ResourceManager.AddSharedAsset<TileSet>("Interface", TileSet);
             TileSet.Scale = new Vector2(2.0f, 2.0f);
 			Trace.WriteLine("Tileset ({0} ms)", watch.ElapsedMilliseconds);
 
-
+			// Heroe's heads
 			Heads = ResourceManager.CreateAsset<TileSet>("Heroes");
             Heads.Scale = new Vector2(2.0f, 2.0f);
 			Trace.WriteLine("Head ({0} ms)", watch.ElapsedMilliseconds);
 
+			// Items tileset
 			Items = ResourceManager.CreateAsset<TileSet>("Items");
             Items.Scale = new Vector2(2.0f, 2.0f);
 			Trace.WriteLine("Items ({0} ms)", watch.ElapsedMilliseconds);
 
-
-
-
+			// Fonts
 			Font = ResourceManager.CreateSharedAsset<BitmapFont>("inventory");
             Font.GlyphTileset.Scale = new Vector2(2.0f, 2.0f);
 			OutlinedFont = ResourceManager.CreateSharedAsset<BitmapFont>("outline");
             OutlinedFont.GlyphTileset.Scale = new Vector2(2.0f, 2.0f);
 
+			// Misc init
 			CampWindow.Init();
 			SpellBook.LoadContent();
-
-	
-			
 
 			// Loads a saved game
 			if (!string.IsNullOrEmpty(SaveGame) && File.Exists(SaveGame))
@@ -215,12 +216,12 @@ namespace DungeonEye
 			if (Dungeon == null)
 			{
 				Trace.WriteLine("Failed to load the dungeon !!");
-				throw new NullReferenceException();
+				throw new NullReferenceException("Dungeon");
 			}
 			Dungeon.Init();
 
+			// Select the first hero
 			SelectedHero = Heroes[0];
-
 
 
 			watch.Stop();
@@ -433,10 +434,12 @@ namespace DungeonEye
 			// Draw the cursor or the item in the hand
 			if (ItemInHand != null)
 			{
-				Batch.DrawTile(Items, ItemInHand.TileID, Mouse.Location);
+				Batch.DrawTile(Items, ItemInHand.TileID, Mouse.Location, 0.5f);
 			}
 			//else
 			//    Batch.DrawTile(Items, 0, Mouse.Location);
+
+
             Batch.End();
 		}
 

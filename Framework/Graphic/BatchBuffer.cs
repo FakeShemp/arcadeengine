@@ -270,13 +270,13 @@ namespace ArcEngine.Graphic
 		/// <param name="texture">Texture coordinate</param>
 		public void AddRectangle(Vector4 destination, Color color, Vector4 texture)
 		{
-			AddPoint(destination.Xy, texture.Xy, color);																			// A
-			AddPoint(new Vector2(destination.X, destination.Bottom), new Vector2(texture.X, texture.Bottom), color);				// D
-			AddPoint(new Vector2(destination.Right, destination.Bottom), new Vector2(texture.Right, texture.Bottom), color);		// C
+			AddPoint(destination.Xy, color, texture.Xy);																			// A
+			AddPoint(new Vector2(destination.X, destination.Bottom), color, new Vector2(texture.X, texture.Bottom));				// D
+			AddPoint(new Vector2(destination.Right, destination.Bottom), color, new Vector2(texture.Right, texture.Bottom));		// C
 
-			AddPoint(destination.Xy, texture.Xy, color);																			// A
-			AddPoint(new Vector2(destination.Right, destination.Bottom), new Vector2(texture.Right, texture.Bottom), color);		// C
-			AddPoint(new Vector2(destination.Right, destination.Top), new Vector2(texture.Right, texture.Top), color);				// B
+			AddPoint(destination.Xy, color, texture.Xy);																			// A
+			AddPoint(new Vector2(destination.Right, destination.Bottom), color, new Vector2(texture.Right, texture.Bottom));		// C
+			AddPoint(new Vector2(destination.Right, destination.Top), color, new Vector2(texture.Right, texture.Top));				// B
 		}
 
 
@@ -291,13 +291,13 @@ namespace ArcEngine.Graphic
 			if (color.Length != 4)
 				return;
 
-			AddPoint(new Vector2(destination.X, destination.Bottom), new Vector2(texture.X, texture.Bottom), color[3]);				// D
-			AddPoint(destination.Xy, texture.Xy, color[0]);																			// A
-			AddPoint(new Vector2(destination.Right, destination.Bottom), new Vector2(texture.Right, texture.Bottom), color[2]);		// C
+			AddPoint(new Vector2(destination.X, destination.Bottom), color[3], new Vector2(texture.X, texture.Bottom));				// D
+			AddPoint(destination.Xy, color[0], texture.Xy);																			// A
+			AddPoint(new Vector2(destination.Right, destination.Bottom), color[2], new Vector2(texture.Right, texture.Bottom));		// C
 
-			AddPoint(destination.Xy, texture.Xy, color[0]);																			// A
-			AddPoint(new Vector2(destination.Right, destination.Bottom), new Vector2(texture.Right, texture.Bottom), color[2]);		// C
-			AddPoint(new Vector2(destination.Right, destination.Top), new Vector2(texture.Right, texture.Top), color[1]);			// B
+			AddPoint(destination.Xy, color[0], texture.Xy);																			// A
+			AddPoint(new Vector2(destination.Right, destination.Bottom), color[2], new Vector2(texture.Right, texture.Bottom));		// C
+			AddPoint(new Vector2(destination.Right, destination.Top), color[1], new Vector2(texture.Right, texture.Top));			// B
 		}
 
 		#endregion
@@ -328,7 +328,7 @@ namespace ArcEngine.Graphic
 			// Vertex
 			Buffer[Offset++] = point.X;
 			Buffer[Offset++] = point.Y;
-			Buffer[Offset++] = 0.5f;
+			Buffer[Offset++] = 0.0f;
 
 			// Color
 			Buffer[Offset++] = (color.R / 255.0f);
@@ -341,32 +341,44 @@ namespace ArcEngine.Graphic
 			Buffer[Offset++] = (texture.Y);
 		}
 
+
 		/// <summary>
 		/// Adds a textured point
 		/// </summary>
 		/// <param name="point">Location on the screen</param>
-		/// <param name="texture">Texture coordinate</param>
 		/// <param name="color">Color of the point</param>
-		public void AddPoint(Vector2 point, Vector2 texture, Color color)
+		/// <param name="texture">Texture coordinate</param>
+		public void AddPoint(Vector2 point, Color color, Vector2 texture)
+		{
+			AddPoint(new Vector3(point), color, texture);
+		}
+
+
+		/// <summary>
+		/// Adds a textured point
+		/// </summary>
+		/// <param name="point">Location on the screen</param>
+		/// <param name="color">Color of the point</param>
+		/// <param name="texture">Texture coordinate</param>
+		public void AddPoint(Vector3 point, Color color, Vector2 texture)
 		{
 			CheckForOverflow();
 
 			// Vertex
 			Buffer[Offset++] = point.X;
 			Buffer[Offset++] = point.Y;
-			Buffer[Offset++] = 0.5f;
+			Buffer[Offset++] = point.Z;
 
 			// Color
-			Buffer[Offset++] = (color.R / 255.0f);
-			Buffer[Offset++] = (color.G / 255.0f);
-			Buffer[Offset++] = (color.B / 255.0f);
-			Buffer[Offset++] = (color.A / 255.0f);
-
-			// Texture
-			Buffer[Offset++] = (texture.X);
-			Buffer[Offset++] = (texture.Y);
+			Buffer[Offset++] = color.R / 255.0f;
+			Buffer[Offset++] = color.G / 255.0f;
+			Buffer[Offset++] = color.B / 255.0f;
+			Buffer[Offset++] = color.A / 255.0f;
+							   
+			// Texture		   
+			Buffer[Offset++] = texture.X;
+			Buffer[Offset++] = texture.Y;
 		}
-
 
 
 		/// <summary>
@@ -381,13 +393,17 @@ namespace ArcEngine.Graphic
 			// Vertex
 			Buffer[Offset++] = point.X;
 			Buffer[Offset++] = point.Y;
-			Buffer[Offset++] = 0.5f;
+			Buffer[Offset++] = 0.0f;
 
 			// Color
 			Buffer[Offset++] = (color.R / 255.0f);
 			Buffer[Offset++] = (color.G / 255.0f);
 			Buffer[Offset++] = (color.B / 255.0f);
 			Buffer[Offset++] = (color.A / 255.0f);
+
+			Buffer[Offset++] = 0.0f;
+			Buffer[Offset++] = 0.0f;
+
 		}
 
 		#endregion
