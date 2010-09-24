@@ -43,7 +43,7 @@ namespace DungeonEye
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="heroes">Heroes</param>
+        /// <param name="heroes">Heroes team</param>
         public Team(Hero[] heroes)
 		{
 			Messages = new List<ScreenMessage>();
@@ -2867,6 +2867,10 @@ namespace DungeonEye
 
 	#endregion
 
+
+	/// <summary>
+	/// Interface coordinates
+	/// </summary>
 	struct InterfaceCoord
 	{
 

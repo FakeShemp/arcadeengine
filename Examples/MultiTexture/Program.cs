@@ -193,7 +193,8 @@ namespace ArcEngine.Examples.MultiTexture
 			Matrix4 ModelViewMatrix = Matrix4.LookAt(CameraPostion, target, Vector3.UnitY);
 			Matrix4 mvp = ModelViewMatrix * ProjectionMatrix;
 
-			Matrix4 NormalMatrix = Matrix4.Transpose(Matrix4.Invert(ModelViewMatrix));		
+			Matrix4 NormalMatrix = Matrix4.Transpose(Matrix4.Invert(ModelViewMatrix));
+			Matrix4 m = Matrix4.CreateRotationX(0.0f);
 
 			#endregion
 
@@ -205,7 +206,7 @@ namespace ArcEngine.Examples.MultiTexture
 			Display.Shader.SetUniform("mvpMatrix", Matrix4.CreateRotationY(rot) * Matrix4.CreateRotationX(-rot) * Matrix4.CreateTranslation(new Vector3(0.0f, 0.0f, -4.0f)) * mvp);
 			Display.Shader.SetUniform("mvMatrix", ModelViewMatrix);
 			Display.Shader.SetUniform("NormalMatrix", NormalMatrix);
-			Display.Shader.SetUniform("mInverseCamera", Matrix4.Invert(ProjectionMatrix));
+			Display.Shader.SetUniform("mInverseCamera", Matrix4.Invert(m));//ProjectionMatrix));
 			Display.Shader.SetUniform("tarnishMap", 1);
 			Display.Shader.SetUniform("cubeMap", 0);
 			Display.RenderState.Culling = true;

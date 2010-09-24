@@ -100,16 +100,28 @@ namespace ArcEngine.Graphic
 
 
 			// Dll version
-			Microsoft.Win32.RegistryKey hklm = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(@"SYSTEM\ControlSet001\Control\Class\{4D36E968-E325-11CE-BFC1-08002BE10318}\0000");
-			if (hklm != null)
+			Trace.WriteLine("System informations :");
+			string keybase = @"SYSTEM\ControlSet001\Control\Class\{4D36E968-E325-11CE-BFC1-08002BE10318}\";
+			for (int i = 0; i < 32; i++)
 			{
-				object obj = null;
-				obj = hklm.GetValue("OpenGLDriverName");
+				string key = String.Format("{0:0000}", i);
+				Microsoft.Win32.RegistryKey hklm = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(keybase + key);
+				
+				if (hklm == null)
+					break;
+
+				Trace.WriteLine("Video card {0} - {1} :", i, (string)hklm.GetValue("DriverDesc"));
+				Trace.Indent();
+				object obj = hklm.GetValue("OpenGLDriverName");
 				if (obj != null)
 					Trace.WriteLine("Driver name : {0}", ((string[])obj)[0]);
 				Trace.WriteLine("Driver version : {0}", (string)hklm.GetValue("DriverVersion"));
 				Trace.WriteLine("Driver date : {0}", (string)hklm.GetValue("DriverDate"));
+				Trace.Unindent();
 			}
+
+			Trace.WriteLine("");
+			Trace.WriteLine("OpenGL informations :");
 			Trace.WriteLine("Graphics card vendor : {0}", Capabilities.VideoVendor);
 			Trace.WriteLine("Renderer : {0}", Capabilities.VideoRenderer);
 			Trace.WriteLine("Version : {0}", Capabilities.VideoVersion);
