@@ -426,10 +426,13 @@ namespace ArcEngine.Input
 		static internal void Update()
 		{
 			if (AvailableDevices == null)
+			{
 				Trace.WriteDebugLine("[GamePad] Update() : AvailableDevices == null!");
+				return;
+			}
 
 			foreach (GamePadState pad in AvailableDevices)
-			pad.Update();
+				pad.Update();
 		}
 
 
