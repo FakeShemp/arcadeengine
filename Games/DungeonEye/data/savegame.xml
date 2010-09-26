@@ -101,7 +101,7 @@
 			<race value="HalflingFemale" />
 			<profession>
 				<class name="Cleric" />
-				<xp points="0" />
+				<xp points="450010" />
 			</profession>
 			<inventory position="Secondary" name="Spell book" />
 			<inventory position="Primary" name="Cleric Holy Symbol" />

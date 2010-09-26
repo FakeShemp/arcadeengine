@@ -844,8 +844,8 @@ namespace DungeonEye
 			foreach(Profession prof in SelectedHero.Professions)
 			{
 				batch.DrawString(Font, new Point(366, 290 + y), Color.Black, prof.Class.ToString());
-				batch.DrawString(Font, new Point(460, 290 + y), Color.White, prof.Experience.Points.ToString());
-				batch.DrawString(Font, new Point(560, 290 + y), Color.White, prof.Experience.Level.ToString());
+				batch.DrawString(Font, new Point(460, 290 + y), Color.White, prof.Experience.ToString());
+				batch.DrawString(Font, new Point(560, 290 + y), Color.White, prof.Level.ToString());
 
 				y += 12;
 			}

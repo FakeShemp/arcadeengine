@@ -118,6 +118,7 @@ namespace DungeonEye
 			}
 
 
+			// Get a list of available spells for this level
 			List<Spell> spells = new List<Spell>();
 			for(int id = 0; id < Hero.Spells.Count; id++)
 			{
@@ -125,14 +126,19 @@ namespace DungeonEye
 					spells.Add(Hero.Spells[id]);
 			}
 
+
+			// Display at max 6 spells
+			Point pos = new Point(146, 264);
 			for (int id = 0; id < Math.Min(spells.Count, 6); id++)
 			{
-				batch.DrawString(Font, new Point(148, 264 + id * 12), Color.White, spells[id].Name);
+				batch.DrawString(Font, pos, Color.White, spells[id].Name);
+				pos.Offset(0, 12);
 			}
+
 
 			// Abort spell
 			batch.DrawTile(Tileset, 30, new Point(142, 336));
-			batch.DrawString(Font, new Point(146, 340), Color.Black, "abort spell");
+			batch.DrawString(Font, new Point(146, 340), Color.Black, "Abort spell");
 
 			// Next & previous buttons
 			batch.DrawTile(Tileset, 28, new Point(298, 336));
@@ -154,9 +160,12 @@ namespace DungeonEye
 			if (!IsVisible)
 				return;
 
+			Hero.GetMaxSpellCount(HeroClass.Cleric, 3);
+
 			// Left mouse button
 			if (Mouse.IsNewButtonDown(MouseButtons.Left))
 			{
+				// Change spell level
 				for (int level = 0; level < 6; level++)
 				{
 					if (new Rectangle(MainRectangle.X + level * 36, MainRectangle.Top - 18, 36, 18).Contains(Mouse.Location))
@@ -165,6 +174,19 @@ namespace DungeonEye
 					}
 				}
 
+				// Cast a spell
+				Rectangle line = new Rectangle(144, 262, 212, 12);
+				for (int i = 0; i < 6; i++)
+				{
+					// Cast a spell
+					if (line.Contains(Mouse.Location))
+					{
+						
+					}
+
+					// Offset line
+					line.Offset(0, 12);
+				}
 
 				// Abort spell
 				if (new Rectangle(MainRectangle.X + 2, MainRectangle.Bottom - 14, MainRectangle.Width - 56, 18).Contains(Mouse.Location))
@@ -210,7 +232,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Rectangle of the window
 		/// </summary>
-		Rectangle MainRectangle = new Rectangle(142, 262, 210, 88);
+		Rectangle MainRectangle = new Rectangle(142, 262, 212, 90);
 
 
 

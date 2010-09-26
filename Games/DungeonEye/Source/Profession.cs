@@ -47,7 +47,7 @@ namespace DungeonEye
 		/// <param name="classe">Class</param>
 		public Profession(int xp, HeroClass classe)
 		{
-			Experience = new Experience(xp);
+			Experience = xp;
 			Class = classe;
 		}
 
@@ -58,7 +58,7 @@ namespace DungeonEye
 		/// <returns></returns>
 		public override string ToString()
 		{
-			return string.Format("{0}, level {1}", Class.ToString(), Experience.Level.ToString());
+			return string.Format("{0}, level {1} (XP={3})", Class, Level, Experience);
 		}
 
 
@@ -69,11 +69,11 @@ namespace DungeonEye
 		/// <returns>True if level up</returns>
 		public bool AddXP(int amount)
 		{
-			int level = Experience.Level;
+			int level = Level;
 
-			Experience.Points += amount;
+			Experience += amount;
 
-			return level != Experience.Level;
+			return level != Level;
 		}
 
 
@@ -105,7 +105,8 @@ namespace DungeonEye
 
 					case "xp":
 					{
-						Experience.Load(node);
+						if (node.Attributes["points"] != null)
+							Experience = int.Parse(node.Attributes["points"].Value);
 					}
 					break;
 				}
@@ -133,7 +134,9 @@ namespace DungeonEye
 			writer.WriteAttributeString("name", Class.ToString());
 			writer.WriteEndElement();
 
-			Experience.Save(writer);
+			writer.WriteStartElement("xp");
+			writer.WriteAttributeString("points", Experience.ToString());
+			writer.WriteEndElement();
 	
 			writer.WriteEndElement();
 
@@ -156,14 +159,63 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Experience
+		/// Experience points
 		/// </summary>
-		public Experience Experience
+		public int Experience
 		{
 			get;
 			private set;
 		}
 
+
+		/// <summary>
+		/// Level
+		/// </summary>
+		public byte Level
+		{
+			get
+			{
+				#region Warrior
+				int[] Warrior = new int[]
+				{
+					0,
+					2000,
+					4000,
+					8000,
+					16000,
+					32000,
+					64000,
+					125000,
+					250000,
+					500000,
+					750000,
+					1000000,
+					1250000
+				};
+				#endregion
+
+				#region Clerc
+				int[] Clerc = new int[]
+				{
+					0,
+					1500,
+					3000,
+					6000,
+					13000,
+					27500,
+					55000,
+					110000,
+					225000,
+					450000,
+					675000,
+					900000,
+					1125000
+				};
+				#endregion
+
+				return 1;
+			}
+		}
 
 		#endregion
 	}

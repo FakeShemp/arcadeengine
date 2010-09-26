@@ -96,8 +96,6 @@ namespace DungeonEye
 		}
 
 
-
-
 		/// <summary>
 		/// Updates hero
 		/// </summary>
@@ -141,6 +139,135 @@ namespace DungeonEye
 
 
 		}
+
+
+		#region Spells
+
+		/// <summary>
+		/// Returns the maximum number of spell for a certain class
+		/// </summary>
+		/// <param name="classe"></param>
+		/// <param name="level"></param>
+		/// <returns></returns>
+		public int GetMaxSpellCount(HeroClass classe, int level)
+		{
+			#region Clerc
+			List<int>[] ClercLevels = new List<int>[]
+			{
+				new List<int> {1, 0, 0, 0, 0, 0},	// 1
+				new List<int> {2, 0, 0, 0, 0, 0},	// 2
+				new List<int> {2, 1, 0, 0, 0, 0},	// 3 
+				new List<int> {3, 2, 0, 0, 0, 0},	// 4
+				new List<int> {3, 3, 1, 0, 0, 0},	// 5
+				new List<int> {3, 3, 2, 0, 0, 0},	// 6
+				new List<int> {3, 3, 2, 1, 0, 0},	// 7
+				new List<int> {3, 3, 3, 2, 0, 0},	// 8
+				new List<int> {4, 4, 3, 2, 1, 0},	// 9
+				new List<int> {4, 4, 3, 3, 2, 0},	// 10
+				new List<int> {5, 4, 4, 3, 2, 1},	// 11
+				new List<int> {6, 5, 5, 3, 2, 2},	// 12
+				new List<int> {6, 6, 6, 4, 2, 2},	// 13
+			};
+
+			List<int>[] ClercBonus = new List<int>[] 
+			{
+				new List<int> {0, 0, 0, 0, 0, 0},
+				new List<int> {0, 0, 0, 0, 0, 0},
+				new List<int> {0, 0, 0, 0, 0, 0},
+				new List<int> {0, 0, 0, 0, 0, 0},
+				new List<int> {0, 0, 0, 0, 0, 0},
+				new List<int> {0, 0, 0, 0, 0, 0},
+				new List<int> {0, 0, 0, 0, 0, 0},
+				new List<int> {0, 0, 0, 0, 0, 0},
+				new List<int> {0, 0, 0, 0, 0, 0},
+				new List<int> {0, 0, 0, 0, 0, 0},
+				new List<int> {0, 0, 0, 0, 0, 0},
+				new List<int> {0, 0, 0, 0, 0, 0},
+				new List<int> {1, 0, 0, 0, 0, 0},
+				new List<int> {2, 0, 0, 0, 0, 0},
+				new List<int> {2, 1, 0, 0, 0, 0},
+				new List<int> {2, 2, 0, 0, 0, 0},
+				new List<int> {2, 2, 1, 0, 0, 0},
+				new List<int> {2, 2, 1, 1, 0, 0},
+				new List<int> {3, 2, 1, 2, 0, 0},
+			};
+			#endregion
+
+			#region Mage
+			int[,] MageLevels = new int[,]
+			{
+				{1, 0, 0, 0, 0, 0},
+				{2, 0, 0, 0, 0, 0},
+				{2, 1, 0, 0, 0, 0},
+				{3, 2, 0, 0, 0, 0},
+				{4, 2, 1, 0, 0, 0},
+				{4, 2, 2, 0, 0, 0},
+				{4, 3, 2, 1, 0, 0},
+				{4, 3, 3, 2, 0, 0},
+				{4, 3, 3, 2, 1, 0},
+				{4, 4, 3, 2, 2, 0},
+				{4, 4, 4, 3, 3, 0},
+				{4, 4, 4, 4, 4, 1},
+				{5, 5, 5, 4, 4, 2},
+			};
+			#endregion
+
+			#region Paladin
+			int[,] PaladinLevels = new int[,]
+			{
+				{0, 0, 0},
+				{0, 0, 0},
+				{0, 0, 0},
+				{0, 0, 0},
+				{0, 0, 0},
+				{0, 0, 0},
+				{0, 0, 0},
+				{0, 0, 0},
+				{1, 0, 0},
+				{2, 0, 0},
+				{2, 1, 0},
+				{2, 2, 0},
+				{2, 2, 1},
+			};
+			#endregion
+
+
+			Profession prof = GetProfession(classe);
+			if (prof == null)
+				return 0;
+
+			int count = 0;
+			switch (classe)
+			{
+				case HeroClass.Paladin:
+				{
+				}
+				break;
+	
+				case HeroClass.Mage:
+				{
+				}
+				break;
+
+				case HeroClass.Cleric:
+				{
+					// Base
+			//		count = ClercLevels[ Wisdom.Value - 1), level];
+					count = ClercLevels[Math.Min(13,prof.Level - 1)][level - 1];
+
+					// Bonus
+					if (prof.Level >= 13)
+					{
+						count += ClercBonus[prof.Level - 1][level - 1];
+					}
+				}
+				break;
+			}
+
+			return count;
+		}
+
+		#endregion
 
 
 		#region Inventory
@@ -611,6 +738,20 @@ namespace DungeonEye
 
 
 		/// <summary>
+		/// Get the profession handle
+		/// </summary>
+		/// <param name="classe">Hero class</param>
+		/// <returns>Handle to the profession or null</returns>
+		public Profession GetProfession(HeroClass classe)
+		{
+			foreach (Profession prof in Professions)
+				if (prof.Class == classe)
+					return prof;
+
+			return null;
+		}
+
+		/// <summary>
 		/// Can use the hand
 		/// </summary>
 		/// <param name="hand">Hand to attack</param>
@@ -842,7 +983,7 @@ namespace DungeonEye
 				{
 					if (prof == null)
 						continue;
-					value += prof.Experience.Level / 2;
+					value += prof.Level / 2;
 				}
 				return value;
 			}
@@ -864,10 +1005,10 @@ namespace DungeonEye
 						continue;
 
 					if (prof.Class == HeroClass.Fighter || prof.Class == HeroClass.Ranger || prof.Class == HeroClass.Paladin)
-						value += prof.Experience.Level;
+						value += prof.Level;
 
 					if (prof.Class == HeroClass.Cleric || prof.Class == HeroClass.Mage || prof.Class == HeroClass.Thief)
-						value += (prof.Experience.Level * 4) / 3;
+						value += (prof.Level * 4) / 3;
 				}
 
 				return value;

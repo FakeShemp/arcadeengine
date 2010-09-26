@@ -29,13 +29,13 @@ namespace DungeonEye
 	/// <summary>
 	/// Experience points
 	/// </summary>
-	public class Experience
+	public class Experience999
 	{
 
 		/// <summary>
 		/// Default constructor
 		/// </summary>
-		public Experience() : this (0)
+		public Experience999() : this (0)
 		{
 
 		}
@@ -45,7 +45,7 @@ namespace DungeonEye
 		/// Constructor
 		/// </summary>
 		/// <param name="value">Initial value</param>
-		public Experience(int value)
+		public Experience999(int value)
 		{
 			Points = value;
 		}
@@ -141,6 +141,25 @@ namespace DungeonEye
 				return GetLevelFromXP(Points);
 			}
 		}
+
+
+
+		#region Experience levels
+
+		static List<int>[] Warrior;
+
+		static List<int>[] Clerc;
+
+		static List<int>[] Mage;
+
+		static List<int>[] Paladin;
+	
+		static List<int>[] Ranger;
+		
+		static List<int>[] Thief;
+	
+		#endregion
+
 
 		#endregion
 	}

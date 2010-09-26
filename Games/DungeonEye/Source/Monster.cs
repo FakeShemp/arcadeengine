@@ -744,7 +744,8 @@ namespace DungeonEye
 		{
 			get
 			{
-				return 2 + Experience.GetLevelFromXP(Reward) / 2;
+				// HACK
+				return 2; // +Experience.GetLevelFromXP(Reward) / 2;
 			}
 		}
 

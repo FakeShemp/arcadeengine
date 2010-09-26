@@ -264,13 +264,13 @@ namespace ArcEngine.Graphic
 
 			Display.Texture = this;
 
-			Display.GetLastError("avant");
+			Display.GetLastError("before");
 			TK.GL.TexSubImage2D<byte>((TK.TextureTarget) target, 0,
 				location.X, location.Y,
 				bitmap.Width, bitmap.Height,
 				(TK.PixelFormat) PixelFormat, TK.PixelType.UnsignedByte,
 				data);
-			Display.GetLastError("apres");
+			Display.GetLastError("after");
 		}
 
 

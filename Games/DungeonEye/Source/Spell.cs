@@ -57,7 +57,11 @@ namespace DungeonEye
 			return true;
 		}
 
-	
+
+		public override string ToString()
+		{
+			return string.Format("{0}, {1} level {2}", Name, Class, Level);
+		}
 
 
 		#region Load & Save
@@ -269,6 +273,14 @@ namespace DungeonEye
 		}
 
 
+		/// <summary>
+		/// Class
+		/// </summary>
+		public HeroClass Class
+		{
+			get;
+			set;
+		}
 		
 		#endregion
 	}
@@ -296,25 +308,25 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// The spell reaches as far as 2 blocks + 1 block per caster level.
+		/// The spell reaches as far as 1 block
 		/// </summary>
 		Close,
 
 
 		/// <summary>
-		/// The spell reaches as far as 3 blocks + 1 block per caster level.
+		/// The spell reaches as far as 2 blocks
 		/// </summary>
 		Medium,
 
 
 		/// <summary>
-		/// The spell reaches as far as 4 blocks + 2 blocks per caster level.
+		/// The spell reaches as far as 3 blocks
 		/// </summary>
 		Long,
 
 
 		/// <summary>
-		/// The spell reaches anywhere on the same plane of existence.
+		/// The spell reaches far as possible
 		/// </summary>
 		Unlimited,
 
