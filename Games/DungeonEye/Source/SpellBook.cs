@@ -74,13 +74,22 @@ namespace DungeonEye
 		/// <summary>
 		/// Open the Spell Window
 		/// </summary>
-		/// <param name="hero"></param>
-		public void Open(Hero hero)
+		/// <param name="hero">Hero handle</param>
+		/// <param name="item">Item used to open the spell book</param>
+		public void Open(Hero hero, Item item)
 		{
 			if (hero == null)
 				return;
 
 			Hero = hero;
+
+			if (item.Type == ItemType.Book)
+				Class = HeroClass.Mage;
+			else if (item.Type == ItemType.HolySymbol)
+				Class = HeroClass.Cleric;
+			else
+				return;
+
 			IsVisible = true;
 		}
 
@@ -122,6 +131,9 @@ namespace DungeonEye
 			List<Spell> spells = new List<Spell>();
 			for(int id = 0; id < Hero.Spells.Count; id++)
 			{
+				if (Hero.Spells[id] == null)
+					continue;
+
 				if (Hero.Spells[id].Level == SpellLevel)
 					spells.Add(Hero.Spells[id]);
 			}
@@ -181,12 +193,15 @@ namespace DungeonEye
 					// Cast a spell
 					if (line.Contains(Mouse.Location))
 					{
-						int l = Hero.Professions[0].Level;
+						
+
+
 					}
 
-					// Offset line
+					// Next spell line
 					line.Offset(0, 12);
 				}
+
 
 				// Abort spell
 				if (new Rectangle(MainRectangle.X + 2, MainRectangle.Bottom - 14, MainRectangle.Width - 56, 18).Contains(Mouse.Location))
@@ -197,6 +212,7 @@ namespace DungeonEye
 				if (new Rectangle(298, 336, 30, 18).Contains(Mouse.Location))
 				{
 				}
+
 
 				// Next line
 				if (new Rectangle(328, 336, 30, 18).Contains(Mouse.Location))
@@ -221,6 +237,17 @@ namespace DungeonEye
 			get;
 			private set;
 		}
+
+
+		/// <summary>
+		/// Current class
+		/// </summary>
+		public HeroClass Class
+		{
+			get;
+			private set;
+		}
+
 
 
 		/// <summary>

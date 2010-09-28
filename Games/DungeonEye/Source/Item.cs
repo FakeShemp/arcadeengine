@@ -732,9 +732,14 @@ namespace DungeonEye
 		Key,
 
 		/// <summary>
-		/// Book
+		/// Spell Book
 		/// </summary>
 		Book,
+
+		/// <summary>
+		/// Cleric holy symbol
+		/// </summary>
+		HolySymbol,
 	}
 
 

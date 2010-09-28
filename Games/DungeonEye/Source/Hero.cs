@@ -72,7 +72,7 @@ namespace DungeonEye
 			Spells.Add(spell);
 			spell = ResourceManager.CreateAsset<Spell>("Create Food");
 			Spells.Add(spell);
-			spell = ResourceManager.CreateAsset<Spell>("Cure Minor Wounds");
+			spell = ResourceManager.CreateAsset<Spell>("Cure Light Wounds");
 			Spells.Add(spell);
 			spell = ResourceManager.CreateAsset<Spell>("Create Food");
 			Spells.Add(spell);
@@ -871,9 +871,10 @@ namespace DungeonEye
 				break;
 				#endregion
 
+				case ItemType.HolySymbol:
 				case ItemType.Book:
 				{
-					Team.SpellBook.Open(this);
+					Team.SpellBook.Open(this, item);
 
 					//Spell spell = ResourceManager.CreateAsset<Spell>("CreateFood");
 					//spell.Init();
