@@ -217,7 +217,6 @@
     <Compile Include="Source\CriticalHit.cs" />
     <Compile Include="Source\Defense.cs" />
     <Compile Include="Source\Entity.cs" />
-    <Compile Include="Source\Experience.cs" />
     <Compile Include="Source\Gui\MessageBox.cs" />
     <Compile Include="Source\HandAction.cs" />
     <Compile Include="Source\MazeZone.cs" />

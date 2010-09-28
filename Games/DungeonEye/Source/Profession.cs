@@ -58,7 +58,7 @@ namespace DungeonEye
 		/// <returns></returns>
 		public override string ToString()
 		{
-			return string.Format("{0}, level {1} (XP={3})", Class, Level, Experience);
+			return string.Format("{0}, level {1} (XP={2})", Class, Level, Experience);
 		}
 
 
@@ -171,12 +171,12 @@ namespace DungeonEye
 		/// <summary>
 		/// Level
 		/// </summary>
-		public byte Level
+		public int Level
 		{
 			get
 			{
-				#region Warrior
-				int[] Warrior = new int[]
+				#region Fighter
+				int[] Fighter = new int[]
 				{
 					0,
 					2000,
@@ -195,7 +195,7 @@ namespace DungeonEye
 				#endregion
 
 				#region Clerc
-				int[] Clerc = new int[]
+				int[] Cleric = new int[]
 				{
 					0,
 					1500,
@@ -213,7 +213,116 @@ namespace DungeonEye
 				};
 				#endregion
 
-				return 1;
+				#region Paladin
+				int[] Paladin = new int[]
+				{
+					0,
+					2250,
+					4500,
+					9000,
+					18000,
+					36000,
+					75000,
+					150000,
+					300000,
+					600000,
+					900000,
+					1200000,
+					1500000,
+				};
+				#endregion
+
+				#region Mage
+				int[] Mage = new int[]
+				{
+					0,
+					2500,
+					5000,
+					10000,
+					20000,
+					40000,
+					60000,
+					90000,
+					135000,
+					250000,
+					375000,
+					750000,
+					1125000
+				};
+				#endregion
+
+				#region Ranger
+				int[] Ranger = new int[]
+				{
+					0,
+					2250,
+					4500,
+					9000,
+					18000,
+					36000,
+					75000,
+					150000,
+					300000,
+					600000,
+					900000,
+					1200000,
+					1500000
+				};
+				#endregion
+
+				#region Thief
+				int[] Thief = new int[]
+				{
+					0,
+					1250,
+					2500,
+					5000,
+					10000,
+					20000,
+					40000,
+					70000,
+					110000,
+					160000,
+					220000,
+					440000,
+					660000
+				};
+				#endregion
+
+
+				int[] data = null;
+
+				switch (Class)
+				{
+					case HeroClass.Fighter:
+					data = Fighter;
+					break;
+					case HeroClass.Ranger:
+					data = Ranger;
+					break;
+					case HeroClass.Paladin:
+					data = Paladin;
+					break;
+					case HeroClass.Mage:
+					data = Mage;
+					break;
+					case HeroClass.Cleric:
+					data = Cleric;
+					break;
+					case HeroClass.Thief:
+					data = Thief;
+					break;
+					default:
+						return 0;
+				}
+
+				for (int i = data.Length; i > 0; i--)
+				{
+					if (Experience >= data[i - 1])
+						return i;
+				}
+
+				return 0;
 			}
 		}
 

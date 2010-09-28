@@ -181,7 +181,7 @@ namespace DungeonEye
 					// Cast a spell
 					if (line.Contains(Mouse.Location))
 					{
-						
+						int l = Hero.Professions[0].Level;
 					}
 
 					// Offset line
