@@ -183,6 +183,142 @@ namespace DungeonEye
 		#endregion
 
 
+		#region Statics
+
+		/// <summary>
+		/// Gets spell bonus
+		/// </summary>
+		/// <param name="wisdow">Wisdom level</param>
+		/// <param name="level">Spell level</param>
+		static public int GetClericSpellBonus(int wisdom, int level)
+		{
+			int[] bonus = new int[]
+			{
+				1, 0, 0, 0, 0, 0,
+				2, 0, 0, 0, 0, 0,
+				2, 1, 0, 0, 0, 0,
+				2, 2, 0, 0, 0, 0,
+				2, 2, 1, 0, 0, 0,
+				2, 2, 1, 1, 0, 0,
+				3, 2, 1, 2, 0, 0,
+			};
+
+
+			// Not more than level 6
+			if (level <= 0 || level > 6)
+				return 0;
+
+			// No bonus under wisdom level 13
+			if (wisdom < 13)
+				return 0;
+					
+			// Max wisdom 19
+			wisdom = Math.Min(19, wisdom);
+
+
+			return bonus[(wisdom - 13) * 6 + (level - 1)];
+		}
+
+
+
+		/// <summary>
+		/// Gets the 
+		/// </summary>
+		/// <param name="type">Hero's class</param>
+		/// <param name="wisdom">Wisdom's level</param>
+		/// <param name="level">Spell level</param>
+		static public int GetSpellProgression(HeroClass type, int wisdom, int level)
+		{
+			// Not more than level 6
+			if (level <= 0 || level > 6)
+				return 0;
+
+			switch (type)
+			{
+				#region Paladin
+				case HeroClass.Paladin:
+				{
+					int[] bonus = new int[]
+					{
+						1,0,0,
+						2,0,0,
+						2,1,0,
+						2,2,0,
+						2,2,1,
+					};
+
+					// Level 3 maximum
+					if (level > 3 || wisdom < 9)
+						return 0;
+
+					// Max level 13
+					wisdom = Math.Min(wisdom, 13);
+
+					return bonus[(wisdom - 10) * 3 + (level - 1)];
+				}
+				#endregion
+
+				#region Mage
+				case HeroClass.Mage:
+				{
+					int[] bonus = new int[]
+					{
+						1,0,0,0,0,0,
+						2,0,0,0,0,0,
+						2,1,0,0,0,0,
+						3,2,0,0,0,0,
+						4,2,1,0,0,0,
+						4,2,2,0,0,0,
+						4,3,2,1,0,0,
+						4,3,3,2,0,0,
+						4,3,3,2,1,0,
+						4,4,3,2,2,0,
+						4,4,4,3,3,0,
+						4,4,4,4,4,1,
+						5,5,5,4,4,2,
+					};
+
+					// Max level 13
+					wisdom = Math.Min(wisdom, 13);
+
+					return bonus[(wisdom - 1) * 6 + (level - 1)];
+				}
+				#endregion
+
+				#region Cleric
+				case HeroClass.Cleric:
+				{
+					int[] bonus = new int[]
+					{
+						1,0,0,0,0,0,
+						2,0,0,0,0,0,
+						2,1,0,0,0,0,
+						3,2,0,0,0,0,
+						3,3,1,0,0,0,
+						3,3,2,0,0,0,
+						3,3,2,1,0,0,
+						3,3,3,2,0,0,
+						4,4,3,2,1,0,
+						4,4,3,3,2,0,
+						5,4,3,3,2,0,
+						6,5,5,3,2,2,
+						6,6,6,4,2,2,
+					};
+
+					// Max level 13
+					wisdom = Math.Min(wisdom, 13);
+
+					return bonus[(wisdom - 1) * 6 + (level - 1)];
+				}
+				#endregion
+			}
+			return 0;
+		}
+
+
+
+		#endregion
+
 
 		#region Properties
 

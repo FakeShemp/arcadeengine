@@ -1633,6 +1633,9 @@ namespace DungeonEye
 
 			if (CanMove)
 				MazeBlock.OnTeamStand(this);
+
+
+			Spell.GetSpellProgression(HeroClass.Mage, 11, 3);
 		}
 
 
