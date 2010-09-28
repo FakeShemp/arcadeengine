@@ -1594,9 +1594,10 @@ namespace DungeonEye
 
 			// Update all heroes
 			foreach (Hero hero in Heroes)
+			{
 				if (hero != null)
-				hero.Update(time);
-
+					hero.Update(time);
+			}
 			#endregion 
 
 			

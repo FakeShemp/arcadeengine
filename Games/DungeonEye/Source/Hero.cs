@@ -19,13 +19,10 @@
 #endregion
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Drawing;
+using System.Xml;
 using ArcEngine;
 using ArcEngine.Input;
-using System.Drawing;
-using ArcEngine.Graphic;
-using ArcEngine.Asset;
-using System.Xml;
 
 // Generate a new hero with random values
 // <see cref="http://www.aidedd.org/regles-f97/creation-de-perso-t1456.html"/>
@@ -133,11 +130,185 @@ namespace DungeonEye
 				{
 
 					// New level gained
-					Team.AddMessage(Name + " gained a level in " + prof.Class.ToString() + " !");
+					Team.AddMessage(Name + " gained a level in " + prof.Class + " !");
 				}
 			}
 
 
+		}
+
+
+		/// <summary>
+		/// Gets a new HP bonus according to professions
+		/// </summary>
+		public int GetNewHPBonus()
+		{
+
+			#region Fighter
+			int[] Fighter = new int[]
+			{
+				1,10,
+				1,10,
+				1,10,
+				1,10,
+				1,10,
+				1,10,
+				1,10,
+				1,10,
+				1,10,
+				3,3,
+				3,3,
+				3,3,
+				3,3
+			};
+			#endregion
+
+			#region Clerc
+			int[] Cleric = new int[]
+			{
+				1,8,
+				1,8,
+				1,8,
+				1,8,
+				1,8,
+				1,8,
+				1,8,
+				1,8,
+				1,8,
+				2,2,
+				2,2,
+				2,2,
+				2,2,
+			};
+			#endregion
+
+			#region Paladin
+			int[] Paladin = new int[]
+			{
+				1,10,
+				1,10,
+				1,10,
+				1,10,
+				1,10,
+				1,10,
+				1,10,
+				1,10,
+				1,10,
+				3,3,
+				3,3,
+				3,3,
+				3,3,
+			};
+			#endregion
+
+			#region Mage
+			int[] Mage = new int[]
+			{
+				1,4,
+				1,4,
+				1,4,
+				1,4,
+				1,4,
+				1,4,
+				1,4,
+				1,4,
+				1,4,
+				1,4,
+				1,1,
+				1,1,
+				1,1,
+			};
+			#endregion
+
+			#region Ranger
+			int[] Ranger = new int[]
+			{
+				1,10,
+				1,10,
+				1,10,
+				1,10,
+				1,10,
+				1,10,
+				1,10,
+				1,10,
+				1,10,
+				3,3,
+				3,3,
+				3,3,
+				3,3,
+			};
+			#endregion
+
+			#region Thief
+			int[] Thief = new int[]
+			{
+				1,6,
+				1,6,
+				1,6,
+				1,6,
+				1,6,
+				1,6,
+				1,6,
+				1,6,
+				1,6,
+				1,6,
+				2,2,
+				2,2,
+				2,2,
+			};
+			#endregion
+
+			
+			int bonus = 0;
+			int[] data = null;
+
+			foreach (Profession prof in Professions)
+			{
+				switch (prof.Class)
+				{
+					case HeroClass.Fighter:
+					data = Fighter;
+					break;
+					case HeroClass.Ranger:
+					data = Ranger;
+					break;
+					case HeroClass.Paladin:
+					data = Paladin;
+					break;
+					case HeroClass.Mage:
+					data = Mage;
+					break;
+					case HeroClass.Cleric:
+					data = Cleric;
+					break;
+					case HeroClass.Thief:
+					data = Thief;
+					break;
+					default:
+					return 0;
+				}
+
+				bonus = Math.Max(bonus, Game.Random.Next(data[prof.Level * 2], data[prof.Level * 2 + 1]));
+			}
+
+			return bonus;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString()
+		{
+
+			string txt = string.Empty;
+			foreach (Profession prof in Professions)
+			{
+				txt = string.Format("{0} {1} ", txt, prof);
+			}
+
+			return string.Format("{0} ({1}), {2}", Name, HitPoint, txt);
 		}
 
 
@@ -969,6 +1140,7 @@ namespace DungeonEye
 
 		#region Hero properties
 
+		#region Bonus
 
 		/// <summary>
 		/// Base save bonus
@@ -1015,27 +1187,6 @@ namespace DungeonEye
 			}
 		}
 	
-		
-		/// <summary>
-		/// Number of arrow in the quiver
-		/// </summary>
-		public int Quiver;
-
-
-		/// <summary>
-		/// Armor class
-		/// </summary>
-		public override int ArmorClass
-		{
-			get
-			{
-				return 10 + ArmorBonus + ShieldBonus + DodgeBonus + NaturalArmorBonus;
-			}
-			set
-			{
-			}
-		}
-
 		
 		/// <summary>
 		/// Armor bonus
@@ -1115,6 +1266,28 @@ namespace DungeonEye
 		}
 
 
+		#endregion
+
+		/// <summary>
+		/// Number of arrow in the quiver
+		/// </summary>
+		public int Quiver;
+
+
+		/// <summary>
+		/// Armor class
+		/// </summary>
+		public override int ArmorClass
+		{
+			get
+			{
+				return 10 + ArmorBonus + ShieldBonus + DodgeBonus + NaturalArmorBonus;
+			}
+			set
+			{
+			}
+		}
+
 		/// <summary>
 		///  Name of the hero
 		/// </summary>
@@ -1146,6 +1319,7 @@ namespace DungeonEye
 			}
 		}
 
+	
 		/// <summary>
 		/// Items in the bag
 		/// </summary>
@@ -1224,6 +1398,7 @@ namespace DungeonEye
 		/// </summary>
 		Attack[] Attacks;
 
+
 		/// <summary>
 		/// Time penality on hands
 		/// </summary>
@@ -1262,17 +1437,51 @@ namespace DungeonEye
 	/// </summary>
 	public enum InventoryPosition
 	{
+		/// <summary>
+		/// 
+		/// </summary>
 		Armor,
+
+		/// <summary>
+		/// 
+		/// </summary>
 		Wrist,
+
+		/// <summary>
+		/// 
+		/// </summary>
 		Secondary,
+
+		/// <summary>
+		/// 
+		/// </summary>
 		Ring_Left,
+
+		/// <summary>
+		/// 
+		/// </summary>
 		Ring_Right,
+
+		/// <summary>
+		/// 
+		/// </summary>
 		Feet,
+
+		/// <summary>
+		/// 
+		/// </summary>
 		Primary,
+
+		/// <summary>
+		/// 
+		/// </summary>
 		Neck,
+
+		/// <summary>
+		/// 
+		/// </summary>
 		Helmet,
 	}
-
 
 
 	/// <summary>
@@ -1282,37 +1491,37 @@ namespace DungeonEye
 	public enum HeroClass
 	{
 		/// <summary>
-		/// 
+		/// Undefined
 		/// </summary>
 		Undefined = 0x0,
 	
 		/// <summary>
-		/// 
+		/// Fighter
 		/// </summary>
 		Fighter = 0x1,
 
 		/// <summary>
-		/// 
+		/// Ranger
 		/// </summary>
 		Ranger = 0x2,
 
 		/// <summary>
-		/// 
+		/// Paladin
 		/// </summary>
 		Paladin = 0x4,
 
 		/// <summary>
-		/// 
+		/// Mage
 		/// </summary>
 		Mage = 0x8,
 
 		/// <summary>
-		/// 
+		/// Cleric
 		/// </summary>
 		Cleric = 0x10,
 
 		/// <summary>
-		/// 
+		/// Thief
 		/// </summary>
 		Thief = 0x20,
 
@@ -1324,20 +1533,67 @@ namespace DungeonEye
 	/// </summary>
 	public enum HeroRace
 	{
+
+		/// <summary>
+		/// 
+		/// </summary>
 		HumanMale = 0,
+
+		/// <summary>
+		/// 
+		/// </summary>
 		HumanFemale = 1,
+
+		/// <summary>
+		/// 
+		/// </summary>
 		ElfMale = 2,
+
+		/// <summary>
+		/// 
+		/// </summary>
 		ElfFemale = 3,
+
+		/// <summary>
+		/// 
+		/// </summary>
 		HalfElfMale = 4,
+
+		/// <summary>
+		/// 
+		/// </summary>
 		HalfElfFemale = 5,
+
+		/// <summary>
+		/// 
+		/// </summary>
 		DwarfMale = 6,
+
+		/// <summary>
+		/// 
+		/// </summary>
 		DwarfFemale = 7,
+
+		/// <summary>
+		/// 
+		/// </summary>
 		GnomeMale = 8,
+
+		/// <summary>
+		/// 
+		/// </summary>
 		GnomeFemale = 9,
+
+		/// <summary>
+		/// 
+		/// </summary>
 		HalflingMale = 10,
+
+		/// <summary>
+		/// 
+		/// </summary>
 		HalflingFemale = 11,
 	}
-
 
 
 	/// <summary>
@@ -1354,7 +1610,6 @@ namespace DungeonEye
 		/// Left hand
 		/// </summary>
 		Secondary = 1
-
 	}
 
 
@@ -1363,7 +1618,14 @@ namespace DungeonEye
 	/// </summary>
 	public enum HeroGender
 	{
+		/// <summary>
+		/// Male
+		/// </summary>
 		Male,
+
+		/// <summary>
+		/// Female
+		/// </summary>
 		Female,
 	}
 

@@ -18,13 +18,13 @@
 //
 #endregion
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
-using System.Collections.Generic;
 
 
 namespace DungeonEye

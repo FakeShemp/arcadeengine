@@ -25,10 +25,11 @@ using System.Xml;
 
 namespace DungeonEye
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	public class Defense
 	{
-
-
 
 
 		#region Properties

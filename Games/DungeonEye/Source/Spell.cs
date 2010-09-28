@@ -18,12 +18,9 @@
 //
 #endregion
 using System;
-using System.Collections.Generic;
-using System.Text;
-using ArcEngine.Asset;
 using System.Xml;
+using ArcEngine.Asset;
 using DungeonEye.Interfaces;
-using ArcEngine;
 
 
 // http://dmreference.com/SRD/Magic.htm
@@ -58,6 +55,10 @@ namespace DungeonEye
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
 		public override string ToString()
 		{
 			return string.Format("{0}, {1} level {2}", Name, Class, Level);
