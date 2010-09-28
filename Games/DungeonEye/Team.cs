@@ -1044,7 +1044,7 @@ namespace DungeonEye
 			if (Mouse.IsNewButtonDown(MouseButtons.Left))
 			{
 
-				#region TurnLeft
+				#region Direction buttons
 				// Turn left
 				if (InterfaceCoord.TurnLeft.Contains(mousePos))
 					Location.Compass.Rotate(CompassRotation.Rotate270);
@@ -1468,7 +1468,7 @@ namespace DungeonEye
 					for (int id = 0; id < 6; id++)
 					{
 						// Get the hero
-						Hero hero = Heroes[id]; //[y * 2 + x];
+						Hero hero = Heroes[id]; 
 						if (hero == null)
 							continue;
 
@@ -1487,7 +1487,7 @@ namespace DungeonEye
 
 
 						// Take object in primary hand
-						if (InterfaceCoord.PrimaryHand[id].Contains(mousePos) && hero.CanUseHand(HeroHand.Primary))
+						if (InterfaceCoord.PrimaryHand[id].Contains(mousePos)) // && hero.CanUseHand(HeroHand.Primary))
 						{
 							item = hero.GetInventoryItem(InventoryPosition.Primary);
 
@@ -1505,7 +1505,7 @@ namespace DungeonEye
 						}
 
 						// Take object in secondary hand
-						if (InterfaceCoord.SecondaryHand[id].Contains(mousePos) && hero.CanUseHand(HeroHand.Secondary))
+						if (InterfaceCoord.SecondaryHand[id].Contains(mousePos)) // && hero.CanUseHand(HeroHand.Secondary))
 						{
 							item = hero.GetInventoryItem(InventoryPosition.Secondary);
 
