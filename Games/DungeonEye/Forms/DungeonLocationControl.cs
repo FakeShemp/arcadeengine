@@ -99,17 +99,17 @@ namespace DungeonEye.Forms
 				return;
 
 			// Preload background texture resource
-			CheckerBoard = new Texture2D(ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png"));
+			CheckerBoard = new Texture2D(ResourceManager.GetInternalResource("ArcEngine.Resources.checkerboard.png"));
 
             Batch = new SpriteBatch();
 			Buffer = new BatchBuffer();
 
 			// Preload texture resources
 			Icons = new TileSet();
-			Icons.Texture = new Texture2D(ResourceManager.GetResource("DungeonEye.Forms.data.editor.png"));
+			Icons.Texture = new Texture2D(ResourceManager.GetInternalResource("DungeonEye.Forms.data.editor.png"));
 
 			// Preload background texture resource
-			CheckerBoard = new Texture2D(ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png"));
+			CheckerBoard = new Texture2D(ResourceManager.GetInternalResource("ArcEngine.Resources.checkerboard.png"));
 
 
 			int id = 0;

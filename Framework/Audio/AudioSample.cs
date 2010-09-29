@@ -107,8 +107,6 @@ namespace ArcEngine.Audio
 
 				return true;
 			}
-
-			return false;
 		}
 
 

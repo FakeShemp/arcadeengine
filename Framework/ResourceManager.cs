@@ -726,64 +726,6 @@ namespace ArcEngine
 
 
 		/// <summary>
-		/// Load a file and add it to the manager
-		/// </summary>
-		/// <param name="filename">File name</param>
-		/// <returns></returns>
-		static public bool LoadBinary(string filename)
-		{
-			if (string.IsNullOrEmpty(filename))
-				return false;
-
-			if (!File.Exists(filename))
-				return false;
-	
-			FileStream stream = File.Open(filename, FileMode.Open, FileAccess.Read);
-			return LoadBinary(Path.GetFileName(filename), stream);
-		}
-
-
-		/// <summary>
-		/// Load a binary from a stream
-		/// </summary>
-		/// <param name="name">Name of the binary</param>
-		/// <param name="stream"></param>
-		/// <returns></returns>
-		static public bool LoadBinary(string name, Stream stream)
-		{
-			if (stream == null)
-				return false;
-
-
-			byte[] data = new byte[stream.Length];
-			int i = stream.Read(data, 0, (int)stream.Length);
-			stream.Close();
-
-
-			LoadBinary(name, data);
-			return true;
-		}
-
-
-
-		/// <summary>
-		/// Loads a binary from a byte[]
-		/// </summary>
-		/// <param name="name">Name of the binary</param>
-		/// <param name="data">Data</param>
-		static public void LoadBinary(string name, byte[] data)
-		{
-			if (string.IsNullOrEmpty(name))
-				return;
-
-			lock (BinaryLock)
-			{
-			//	Binaries[name] = data;
-			}
-		}
-
-
-		/// <summary>
 		/// Checks if a Binary is already present
 		/// </summary>
 		/// <param name="name">Name of the binary</param>
@@ -864,26 +806,12 @@ namespace ArcEngine
 
 
 		/// <summary>
-		/// Unloads a binary resource
-		/// </summary>
-		/// <param name="name">Name of the binary to remove</param>
-		static public void UnloadResource(string name)
-		{
-			lock (BinaryLock)
-			{
-				//if (Binaries.ContainsKey(name))
-				//    Binaries.Remove(name);
-			}
-		}
-
-
-		/// <summary>
 		/// Gets an internal resource
 		/// </summary>
 		/// <param name="name">Name of the resource</param>
 		/// <returns>Resource stream or null if not found</returns>
 		/// <remarks>Don't forget to Dispose the stream !!</remarks>
-		static public Stream GetResource(string name)
+		static public Stream GetInternalResource(string name)
 		{
 			List<string> list = new List<string>(Assembly.GetExecutingAssembly().GetManifestResourceNames());
 			if (list.Contains(name))
@@ -896,38 +824,6 @@ namespace ArcEngine
 			return null;
 		}
 
-/*
-		/// <summary>
-		/// Saves a single resource in a bank file
-		/// </summary>
-		/// <param name="zip">Bank stream</param>
-		/// <param name="resourcename">full path name of the resource in the bank</param>
-		/// <param name="data">Data to save</param>
-		/// <returns>True if everything went ok</returns>
-		static bool SaveResource(ZipStorer zip, string resourcename, byte[] data)
-		{
-			// Bad args
-			if (zip == null || string.IsNullOrEmpty(resourcename) || data == null)
-				return false;
-
-			string clean = ZipEntry.CleanName(resourcename);
-			ZipEntry entry = new ZipEntry(clean);
-			entry.DateTime = DateTime.Now;
-			entry.Size = data.Length;
-
-
-
-
-			//zip.BeginUpdate();
-			//zip.Add(entry);
-			//zip.CommitUpdate();
-
-			//stream.PutNextEntry(entry);
-			//stream.Write(data, 0, data.Length);
-			//stream.CloseEntry();
-			return true;
-		}
-*/
 
 		/// <summary>
 		/// Saves all resources to a bank file
@@ -1029,27 +925,6 @@ namespace ArcEngine
 
 
 		/// <summary>
-		/// Returns a list of loaded binaries
-		/// </summary>
-		static public List<string> LoadedBinaries
-		{
-			get
-			{
-				List<string> list = new List<string>();
-
-				lock (BinaryLock)
-				{
-					//foreach (string name in Binaries.Keys)
-					//    list.Add(name);
-				}
-				list.Sort();
-
-				return list;
-			}
-		}
-
-
-		/// <summary>
 		/// Returns a list of all internal resources
 		/// </summary>
 		/// <returns></returns>
@@ -1116,6 +991,7 @@ namespace ArcEngine
 		/// <summary>
 		/// 
 		/// </summary>
+		/// <param name="name"></param>
 		/// <param name="file"></param>
 		/// <param name="pwd"></param>
 		public ResourceReference(string name, string file, string pwd)

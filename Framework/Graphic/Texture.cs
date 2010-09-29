@@ -177,7 +177,7 @@ namespace ArcEngine.Graphic
 			return true;
 		}
 
-
+/*
 		/// <summary>
 		/// Save the texture as a PNG image in the bank
 		/// </summary>
@@ -208,14 +208,17 @@ namespace ArcEngine.Graphic
 			bm.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
 			stream.Seek(0, SeekOrigin.Begin);
 
-			bool ret = ResourceManager.LoadBinary(name, stream);
+
+			throw new NotImplementedException();
+			//bool ret = ResourceManager.LoadBinary(name, stream);
 
 			stream.Dispose();
 			bm.Dispose();
 
-			return ret;
+			//return ret;
+			return false;
 		}
-
+*/
 
 		#endregion
 

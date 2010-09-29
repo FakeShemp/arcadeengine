@@ -94,7 +94,8 @@ namespace ArcEngine.Editor
 					if (MessageBox.Show("Binary \"" + Path.GetFileName(file) + "\" already exists. Replace it ?", "File conflict", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
 						continue;
 
-				ResourceManager.LoadBinary(file);
+				throw new NotImplementedException();
+				//ResourceManager.LoadBinary(file);
 			}
 
 

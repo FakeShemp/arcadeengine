@@ -507,7 +507,7 @@ namespace RuffnTumble.Editor
 
 
 			// Preload texture resources
-			CheckerBoard = new Texture2D(ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png"));
+			CheckerBoard = new Texture2D(ResourceManager.GetInternalResource("ArcEngine.Resources.checkerboard.png"));
 
 		}
 

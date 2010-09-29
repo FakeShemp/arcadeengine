@@ -399,7 +399,7 @@ namespace ArcEngine.Graphic
 		/// <returns>Shader source code or empty</returns>
 		static public string GetShaderSource(string name)
 		{
-			Stream stream = ResourceManager.GetResource("ArcEngine.Graphic.shaders." + name);
+			Stream stream = ResourceManager.GetInternalResource("ArcEngine.Graphic.shaders." + name);
 			if (stream == null)
 				return string.Empty;
 

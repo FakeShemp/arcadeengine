@@ -301,7 +301,7 @@ namespace ArcEngine.Graphic
 			return base.SaveToDisk(Target, name);
 		}
 
-
+/*
 		/// <summary>
 		/// Save the texture as a PNG image in the bank
 		/// </summary>
@@ -311,7 +311,7 @@ namespace ArcEngine.Graphic
 		{
 			return base.SaveToBank(Target, name);
 		}
-
+*/
 
 		/// <summary>
 		/// Blits a Bitmap on the texture

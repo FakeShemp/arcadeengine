@@ -43,14 +43,14 @@ namespace ArcEngine.Graphic
 			TextureComp = new TextureComparer();
 
 			Shader = new Shader();
-			using (Stream stream = ResourceManager.GetResource("ArcEngine.Graphic.Shaders.V1_30.SpriteBatch.vert"))
+			using (Stream stream = ResourceManager.GetInternalResource("ArcEngine.Graphic.Shaders.V1_30.SpriteBatch.vert"))
 			{
 				StreamReader reader = new StreamReader(stream);
 				string src = reader.ReadToEnd();
 				Shader.SetSource(ShaderType.VertexShader, src);
 			}
 
-			using (Stream stream = ResourceManager.GetResource("ArcEngine.Graphic.Shaders.V1_30.SpriteBatch.frag"))
+			using (Stream stream = ResourceManager.GetInternalResource("ArcEngine.Graphic.Shaders.V1_30.SpriteBatch.frag"))
 			{
 				StreamReader reader = new StreamReader(stream);
 				string src = reader.ReadToEnd();

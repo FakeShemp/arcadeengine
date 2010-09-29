@@ -213,7 +213,7 @@ namespace ArcEngine.Editor
 
             Batch = new SpriteBatch();
 
-			CheckerBoard = new Texture2D(ResourceManager.GetResource("ArcEngine.Resources.checkerboard.png"));
+			CheckerBoard = new Texture2D(ResourceManager.GetInternalResource("ArcEngine.Resources.checkerboard.png"));
 			CheckerBoard.VerticalWrap = TextureWrapFilter.Repeat;
 			CheckerBoard.HorizontalWrap = TextureWrapFilter.Repeat;
 		}

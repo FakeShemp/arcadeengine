@@ -377,9 +377,11 @@ namespace ArcEngine.Editor
 			if (res != DialogResult.OK)
 				return;
 
+			throw new NotImplementedException();
+
 			// for each selected file, add it to the bank file
-			for (int i = 0; i < dlg.FileNames.Length; i++)
-				ResourceManager.LoadBinary(dlg.FileNames[i]);
+//			for (int i = 0; i < dlg.FileNames.Length; i++)
+//				ResourceManager.LoadBinary(dlg.FileNames[i]);
 
 			ResourcePanel.RebuildResourceTree();
 
