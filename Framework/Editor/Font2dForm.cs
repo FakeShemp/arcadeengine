@@ -71,7 +71,7 @@ namespace ArcEngine.Editor
 			//SizeBox.Value = CurrentFont.Size;
 
 			FontNameBox.Items.Clear();
-			foreach (string name in ResourceManager.LoadedBinaries)
+			foreach (string name in ResourceManager.Binaries)
 			{
 				if (name.EndsWith(".ttf", true, CultureInfo.CurrentCulture))
 					FontNameBox.Items.Add(name);

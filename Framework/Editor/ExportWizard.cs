@@ -78,7 +78,7 @@ namespace ArcEngine.Editor
 
 			TreeNode bins = TreeviewBox.Nodes.Insert(0, "Binaries");
 			bins.Tag = null;
-			foreach (string name in ResourceManager.LoadedBinaries)
+			foreach (string name in ResourceManager.Binaries)
 				bins.Nodes.Add(name);
 			bins.Checked = true;
 

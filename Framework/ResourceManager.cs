@@ -55,12 +55,10 @@ namespace ArcEngine
 			
 			BinaryLock = new object();
 
-			//UnknownAssets = new List<XmlNode>();
+			Binaries = new List<string>();
 			AssetProviders = new Dictionary<Type, Provider>();
 			Providers = new List<Provider>();
 			RegistredTags = new Dictionary<string, Provider>();
-			//Binaries = new Dictionary<string, byte[]>();
-			KnownAssets = new Dictionary<string, ResourceReference>();
 
 			AddProvider(new Providers());
 
@@ -91,12 +89,10 @@ namespace ArcEngine
 		/// <returns>A list of binaries found</returns>
 		static public List<string> GetBinaries(string pattern)
 		{
-			Trace.WriteDebugLine("[ResourceManager] GetBinaries (pattern = {0}", pattern);
-			
 			List<string> list = new List<string>();
 
 			// No need to lock() because LoadedBinaries do the work for us
-			foreach (string name in LoadedBinaries)
+			foreach (string name in Binaries)
 			{
 				if (Regex.IsMatch(name, pattern))
 					list.Add(name);
@@ -106,6 +102,8 @@ namespace ArcEngine
 
 			return list;
 		}
+
+
 
 		
 		#region Providers
@@ -438,9 +436,8 @@ namespace ArcEngine
 				foreach (Provider provider in Providers)
 					provider.Clear();
 
-				//Binaries.Clear();
-				//UnknownAssets.Clear();
-				KnownAssets.Clear();
+				BankName = null;
+				BankPassword = null;
 
 				Trace.WriteLine("Clearing assets !");
 			}
@@ -620,6 +617,9 @@ namespace ArcEngine
 		/// <returns>True if loaded, otherwise false</returns>
 		static public bool LoadBank(string filename, string password)
 		{
+			BankName = filename;
+			BankPassword = password;
+			Binaries.Clear();
 
 			Trace.WriteLine("Loading resources from file \"" + filename + "\"...");
 
@@ -634,7 +634,7 @@ namespace ArcEngine
 			Trace.Indent();
 
 			// Open an existing zip file for reading
-			ZipStorer zip = ZipStorer.Open(filename, FileAccess.Read);
+			ZipStorer zip = ZipStorer.Open(BankName, FileAccess.Read);
 			if (zip == null)
 			{
 				Trace.WriteLine("Unable to open bank file !");
@@ -649,9 +649,7 @@ namespace ArcEngine
 			// Look for the desired file
 			foreach (ZipStorer.ZipFileEntry entry in dir)
 			{
-
-				// Adds entry to the list
-				KnownAssets[entry.FilenameInZip] = new ResourceReference(entry.FilenameInZip, filename, password);
+				Binaries.Add(entry.FilenameInZip);
 
 				Trace.Write("+ {0} ({1} octets)", entry.FilenameInZip, entry.FileSize);
 
@@ -725,24 +723,6 @@ namespace ArcEngine
 		}
 
 
-		/// <summary>
-		/// Checks if a Binary is already present
-		/// </summary>
-		/// <param name="name">Name of the binary</param>
-		/// <returns>True if present, or false</returns>
-		static public bool BinaryExist(string name)
-		{
-			if (string.IsNullOrEmpty(name))
-				return false;
-			bool ret;
-
-			lock (BinaryLock)
-			{
-				ret = KnownAssets.ContainsKey(name);
-			}
-			return ret;
-		}
-
 
 		/// <summary>
 		/// Loads a resource from a bank first, and if not found, load it from disk.
@@ -754,54 +734,42 @@ namespace ArcEngine
 			if (string.IsNullOrEmpty(resourcename))
 				return null;
 
-
-			Stream stream = null;
-
 			//
-			// 1° Look in binaries
+			// 1° Look in bank
 			//
-			if (BinaryExist(resourcename))
+			ZipStorer zip = ZipStorer.Open(BankName, FileAccess.Read);
+			if (zip == null)
+				return null;
+
+
+			// Read the central directory collection
+			List<ZipStorer.ZipFileEntry> dir = zip.ReadCentralDir();
+
+			// Look for the desired file
+			foreach (ZipStorer.ZipFileEntry entry in dir)
 			{
-				ResourceReference resref = KnownAssets[resourcename];
+				if (entry.FilenameInZip != resourcename)
+					continue;
 
-				// Open an existing zip file for reading
-				ZipStorer zip = ZipStorer.Open(resref.FileName, FileAccess.Read);
-				if (zip == null)
-					return null;
-
-
-				// Read the central directory collection
-				List<ZipStorer.ZipFileEntry> dir = zip.ReadCentralDir();
-
-				// Look for the desired file
-				foreach (ZipStorer.ZipFileEntry entry in dir)
-				{
-					if (entry.FilenameInZip != resref.Name)
-						continue;
-
-					stream = new MemoryStream();
-					zip.ExtractFile(entry, stream);
-
-					break;
-				}
-
+				Stream stream = new MemoryStream();
+				zip.ExtractFile(entry, stream);
 				zip.Close();
 
-				// Rewind...
+				// Rewind
 				stream.Seek(0, SeekOrigin.Begin);
 
 				return stream;
 			}
 
+			zip.Close();
+
 			//
 			// 2° try to load it from disk
 			//
 			if (File.Exists(resourcename))
-			{
-				stream = File.Open(resourcename, FileMode.Open, FileAccess.Read);
-			}
+				return File.Open(resourcename, FileMode.Open, FileAccess.Read);
 
-			return stream;
+			return null;
 		}
 
 
@@ -917,11 +885,31 @@ namespace ArcEngine
 
 		#region Properties
 
+		/// <summary>
+		/// Returns a list of binaries present in the bank
+		/// </summary>
+		/// <returns>A list of binaries found</returns>
+		static public List<string> Binaries
+		{
+			get;
+			private set;
+		}
+
 
 		/// <summary>
-		/// Known assets
+		///  Current bank name
 		/// </summary>
-		static Dictionary<string, ResourceReference> KnownAssets;
+		public static string BankName
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// Bank password
+		/// </summary>
+		public static string BankPassword;
 
 
 		/// <summary>

@@ -140,7 +140,7 @@ namespace ArcEngine.Asset
 		/// <returns></returns>
 		public override StandardValuesCollection GetStandardValues(ITypeDescriptorContext context)
 		{
-			List<string> list = ResourceManager.LoadedBinaries;
+			List<string> list = ResourceManager.Binaries;
 			list.Insert(0, "");
 			return new StandardValuesCollection(list);
 		}
@@ -184,7 +184,7 @@ namespace ArcEngine.Asset
 		{
 			List<string> bin = new List<string>();;
 
-			foreach (string  name in ResourceManager.LoadedBinaries)
+			foreach (string name in ResourceManager.Binaries)
 			{
 				if (name.EndsWith(".ttf", true, CultureInfo.CurrentCulture))
 					bin.Add(name);

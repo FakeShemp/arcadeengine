@@ -87,7 +87,7 @@ namespace ArcEngine.Editor
 
 
 			// Binaries
-			TreeNode sub = ResourceTree.Nodes.Insert(0, "Binaries (" + ResourceManager.LoadedBinaries.Count + ")");
+			TreeNode sub = ResourceTree.Nodes.Insert(0, "Binaries (" + ResourceManager.Binaries.Count + ")");
 
 			ResourceTree.EndUpdate();
 

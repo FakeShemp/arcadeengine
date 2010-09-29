@@ -58,7 +58,7 @@ namespace ArcEngine.Editor
 			ListViewBox.BeginUpdate();
 			ListViewBox.Items.Clear();
 
-			foreach (string name in ResourceManager.LoadedBinaries)
+			foreach (string name in ResourceManager.Binaries)
 			{
 				BinaryInformation info = new BinaryInformation(name);
 
@@ -90,7 +90,7 @@ namespace ArcEngine.Editor
 			// loop through the string array, adding each filename to the ListBox
 			foreach (string file in files)
 			{
-				if (ResourceManager.BinaryExist(Path.GetFileName(file)))
+				if (ResourceManager.Binaries.Contains(Path.GetFileName(file)))
 					if (MessageBox.Show("Binary \"" + Path.GetFileName(file) + "\" already exists. Replace it ?", "File conflict", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
 						continue;
 
