@@ -860,7 +860,13 @@ namespace ArcEngine
 						doc.WriteEndDocument();
 						doc.Flush();
 
-						zip.AddStream(ZipStorer.Compression.Deflate, filename, ms, DateTime.Now, string.Empty);
+						// Rewind
+						ms.Seek(0, SeekOrigin.Begin);
+
+						string zipfilename = type.Name + ".xml";
+
+						
+						zip.AddStream(ZipStorer.Compression.Deflate, zipfilename, ms, DateTime.Now, string.Empty);
 							
 						ms.Dispose();
 					}
