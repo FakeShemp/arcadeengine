@@ -40,11 +40,12 @@ namespace ArcEngine.Asset
 			if (string.IsNullOrEmpty(name))
 				throw new ArgumentNullException("name");
 
-			AssetHandle asset = ResourceManager.LoadResource(name);
-			if (asset== null)
+			Stream stream = ResourceManager.LoadResource(name);
+			if (stream == null)
 				return;
 
-			Size = asset.Stream.Length;
+			Size = stream.Length;
+			stream.Dispose();
 		}
 
 

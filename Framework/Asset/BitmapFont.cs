@@ -357,20 +357,23 @@ namespace ArcEngine.Asset
 			// Clear TileSet
 			GlyphTileset.Clear();
 
+			bool ret = false;
+
 			// Open the font
-			AssetHandle asset = ResourceManager.LoadResource(filename);
-			if (asset == null)
+			using (Stream stream = ResourceManager.LoadResource(filename))
 			{
-				Trace.WriteLine("Can't open TTF Font \"{0}\"", filename);
-				return false;
+				if (stream == null)
+				{
+					Trace.WriteLine("Can't open TTF Font \"{0}\"", filename);
+					return false;
+				}
+
+				// GdiFont
+				Font font = new Font(LoadFontFamily(stream), size, style);
+				ret = Generate(font);
+
+				font.Dispose();
 			}
-
-			// GdiFont
-			Font font = new Font(LoadFontFamily(asset.Stream), size, style);
-			bool ret = Generate(font);
-			font.Dispose();
-
-			asset.Dispose();
 
 			return ret;
 		}

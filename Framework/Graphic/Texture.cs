@@ -79,13 +79,8 @@ namespace ArcEngine.Graphic
 		/// <returns>True if success or false if something went wrong</returns>
 		protected bool LoadImage(TextureTarget target, string filename)
 		{
-			AssetHandle asset = ResourceManager.LoadResource(filename);
-			bool ret = 	FromStream(target, asset.Stream);
-
-			if (asset != null)
-				asset.Dispose();
-
-			return ret;
+			using (Stream stream = ResourceManager.LoadResource(filename))
+				return FromStream(target, stream);
 		}
 
 

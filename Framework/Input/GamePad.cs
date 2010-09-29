@@ -26,6 +26,7 @@ using SlimDX.DirectInput;
 
 // http://msdn.microsoft.com/en-us/library/dd757116%28VS.85%29.aspx
 // http://msdn.microsoft.com/en-us/library/bb153253%28VS.85%29.aspx
+// Gamepad : http://sourceforge.net/projects/xnadirectinput/
 
 namespace ArcEngine.Input
 {

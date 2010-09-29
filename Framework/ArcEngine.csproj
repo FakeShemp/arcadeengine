@@ -118,10 +118,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libraries\DigitalRune\DigitalRune.Windows.TextEditor.dll</HintPath>
     </Reference>
-    <Reference Include="ICSharpCode.SharpZipLib, Version=0.85.5.452, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Libraries\ICSharpLib\ICSharpCode.SharpZipLib.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.VisualBasic">
       <Private>False</Private>
     </Reference>
@@ -157,7 +153,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Asset\Animation\AnimationFrame.cs" />
-    <Compile Include="Asset\AssetHandle.cs" />
     <Compile Include="Audio\AudioStream.cs" />
     <Compile Include="Asset\Scenes\SceneFrame.cs" />
     <Compile Include="Asset\Scenes\KeyFrame.cs" />
@@ -432,6 +427,7 @@
     <Compile Include="Input\Mouse.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ZipStorer.cs" />
     <None Include="app.config" />
     <Compile Include="Asset\Animation\Animation.cs" />
     <Compile Include="Audio\AudioSample.cs" />

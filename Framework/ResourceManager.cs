@@ -22,49 +22,18 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Compression;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
 using ArcEngine.Asset;
-using ICSharpCode.SharpZipLib.Zip;
 
-// Gamepad : http://sourceforge.net/projects/xnadirectinput/
 //
 //
 //
 //
 //
-//
-//
-//
-//
-/*
-public static void compressTo(Stream s,byte[] b)
-{
-	ZipOutputStream zip=new ZipOutputStream(s);
-	zip.SetLevel(9);
-	ZipEntry zipentry=new ZipEntry("image.jpg");
-	zip.PutNextEntry(zipentry);
-	zip.Write(b,0,b.Length);
-	zip.Flush();
-	zip.Close();
-}
-public static byte[] decompressTo(Stream s,int unpaksize)
-{
-	ZipInputStream zipin=new ZipInputStream(s);
-	ZipEntry zipentry=zipin.GetNextEntry();
-	byte[] b=new byte[unpaksize];
-	int readindex=0;
-
-	while ( readindex < unpaksize )
-	readindex+=zipin.Read(b,readindex,unpaksize-readindex);
-
-	return b;
-}
-
-*/
-
 
 namespace ArcEngine
 {
@@ -651,7 +620,7 @@ namespace ArcEngine
 		/// <returns>True if loaded, otherwise false</returns>
 		static public bool LoadBank(string filename, string password)
 		{
-			
+
 			Trace.WriteLine("Loading resources from file \"" + filename + "\"...");
 
 			// File exists ??
@@ -663,106 +632,81 @@ namespace ArcEngine
 
 			Stopwatch swatch = new Stopwatch();
 			Trace.Indent();
-			try
+
+			// Open an existing zip file for reading
+			ZipStorer zip = ZipStorer.Open(filename, FileAccess.Read);
+			if (zip == null)
 			{
-				using (FileStream fs = File.OpenRead(filename))
-				{
-					ZipInputStream zip = new ZipInputStream(fs);
-					zip.Password = password;
-					
-					swatch.Start();
-
-					// Foreach file in the bank
-					ZipEntry entry;
-					while (true)
-					{
-						try
-						{
-							entry = zip.GetNextEntry();
-						}
-						catch (ZipException e)
-						{
-							Trace.WriteLine("ZipException thrown \"{0}\" !", e.Message);
-							break;
-						}
-
-						// EOF
-						if (entry == null)
-							break;
-
-						// If it isn't a file, skip it
-						if (!entry.IsFile)
-							continue;
-
-						Trace.Write("+ {0} ({1} octets)", entry.Name, entry.Size);
-
-
-						// If it ends with .xml, then adds it to the asset list to process
-						if (entry.Name.EndsWith(".xml", true, null))
-						{
-
-							// Uncompress data to a buffer
-							byte[] data = new byte[entry.Size];
-							zip.Read(data, 0, (int)entry.Size);
-
-							XmlDocument doc = new XmlDocument();
-							doc.LoadXml(ASCIIEncoding.ASCII.GetString(data));
-
-							// Check the root node
-							XmlElement xml = doc.DocumentElement;
-
-							// If not a bank, add it as a binary
-							if (xml.Name.ToLower() != "bank")
-							{
-								KnownAssets[entry.Name] = new ResourceReference(entry.Name, filename, password);
-								Trace.WriteLine("");
-								continue;
-							}
-
-
-							// For each nodes, process it
-							XmlNodeList nodes = xml.ChildNodes;
-							foreach (XmlNode node in nodes)
-							{
-								if (node.NodeType == XmlNodeType.Comment)
-									continue;
-
-
-								Provider provider = GetTagProvider(node.Name);
-								if (provider == null)
-								{
-									Trace.WriteLine("? No Provider found for asset \"<" + node.Name + ">\"...");
-							//		UnknownAssets.Add(node);
-									continue;
-								}
-
-								lock (BinaryLock)
-								{
-									provider.Load(node);
-								}
-							}
-
-
-						}
-
-						// Adds data to the list
-						KnownAssets[entry.Name] = new ResourceReference(entry.Name, filename, password);
-
-						Trace.WriteLine("");
-					}
-				}
-			}
-			catch (ZipException e)
-			{
-				Trace.WriteLine(" {0}", e.Message);
+				Trace.WriteLine("Unable to open bank file !");
 				return false;
 			}
-			finally
+
+			swatch.Start();
+
+			// Read the central directory collection
+			List<ZipStorer.ZipFileEntry> dir = zip.ReadCentralDir();
+
+			// Look for the desired file
+			foreach (ZipStorer.ZipFileEntry entry in dir)
 			{
-				swatch.Stop();
-				Trace.Unindent();
-				Trace.WriteLine("Loading finished ! ({0} ms)", swatch.ElapsedMilliseconds);
+
+				// Adds entry to the list
+				KnownAssets[entry.FilenameInZip] = new ResourceReference(entry.FilenameInZip, filename, password);
+
+				Trace.Write("+ {0} ({1} octets)", entry.FilenameInZip, entry.FileSize);
+
+				// Loop back if it's not an xml file
+				if (!entry.FilenameInZip.EndsWith(".xml", true, null))
+				{
+					Trace.WriteLine("");
+					continue;
+				}
+
+				// Uncompress data to a buffer
+				MemoryStream ms = new MemoryStream();
+				zip.ExtractFile(entry, ms);
+
+				// Convert to xml
+				XmlDocument doc = new XmlDocument();
+				doc.LoadXml(ASCIIEncoding.ASCII.GetString(ms.ToArray()));
+
+
+				// Check the root node
+				XmlElement xml = doc.DocumentElement;
+				if (xml.Name.ToLower() != "bank")
+				{
+					Trace.WriteLine("");
+					continue;
+				}
+
+
+				// For each nodes, process it
+				XmlNodeList nodes = xml.ChildNodes;
+				foreach (XmlNode node in nodes)
+				{
+					if (node.NodeType == XmlNodeType.Comment)
+						continue;
+
+
+					Provider provider = GetTagProvider(node.Name);
+					if (provider == null)
+					{
+						Trace.WriteLine("? No Provider found for asset \"<" + node.Name + ">\"...");
+						continue;
+					}
+
+					lock (BinaryLock)
+					{
+						provider.Load(node);
+					}
+				}
+
+				Trace.WriteLine("");
 			}
+
+			swatch.Stop();
+			Trace.Unindent();
+			Trace.WriteLine("Loading finished ! ({0} ms)", swatch.ElapsedMilliseconds);
 			return true;
 		}
 
@@ -863,18 +807,48 @@ namespace ArcEngine
 		/// </summary>
 		/// <param name="resourcename">Name of the file to load</param>
 		/// <returns>Stream to the resource. Don't forget to close it !</returns>
-		static public AssetHandle LoadResource(string resourcename)
+		static public Stream LoadResource(string resourcename)
 		{
 			if (string.IsNullOrEmpty(resourcename))
 				return null;
+
+
+			Stream stream = null;
 
 			//
 			// 1° Look in binaries
 			//
 			if (BinaryExist(resourcename))
 			{
-				return new AssetHandle(KnownAssets[resourcename]);
-				//return new MemoryStream(Binaries[resourcename]);
+				ResourceReference resref = KnownAssets[resourcename];
+
+				// Open an existing zip file for reading
+				ZipStorer zip = ZipStorer.Open(resref.FileName, FileAccess.Read);
+				if (zip == null)
+					return null;
+
+
+				// Read the central directory collection
+				List<ZipStorer.ZipFileEntry> dir = zip.ReadCentralDir();
+
+				// Look for the desired file
+				foreach (ZipStorer.ZipFileEntry entry in dir)
+				{
+					if (entry.FilenameInZip != resref.Name)
+						continue;
+
+					stream = new MemoryStream();
+					zip.ExtractFile(entry, stream);
+
+					break;
+				}
+
+				zip.Close();
+
+				// Rewind...
+				stream.Seek(0, SeekOrigin.Begin);
+
+				return stream;
 			}
 
 			//
@@ -882,11 +856,10 @@ namespace ArcEngine
 			//
 			if (File.Exists(resourcename))
 			{
-				return new AssetHandle(resourcename);
-				//File.Open(resourcename, FileMode.Open, FileAccess.Read);
+				stream = File.Open(resourcename, FileMode.Open, FileAccess.Read);
 			}
 
-			return new AssetHandle();
+			return stream;
 		}
 
 
@@ -923,26 +896,38 @@ namespace ArcEngine
 			return null;
 		}
 
-
+/*
 		/// <summary>
 		/// Saves a single resource in a bank file
 		/// </summary>
-		/// <param name="stream">Bank stream</param>
+		/// <param name="zip">Bank stream</param>
 		/// <param name="resourcename">full path name of the resource in the bank</param>
 		/// <param name="data">Data to save</param>
 		/// <returns>True if everything went ok</returns>
-		static bool SaveResource(ZipOutputStream stream, string resourcename, byte[] data)
+		static bool SaveResource(ZipStorer zip, string resourcename, byte[] data)
 		{
 			// Bad args
-			if (stream == null || string.IsNullOrEmpty(resourcename) || data == null)
+			if (zip == null || string.IsNullOrEmpty(resourcename) || data == null)
 				return false;
 
-			ZipEntry entry = new ZipEntry(resourcename);
-			stream.PutNextEntry(entry);
-			stream.Write(data, 0, data.Length);
+			string clean = ZipEntry.CleanName(resourcename);
+			ZipEntry entry = new ZipEntry(clean);
+			entry.DateTime = DateTime.Now;
+			entry.Size = data.Length;
+
+
+
+
+			//zip.BeginUpdate();
+			//zip.Add(entry);
+			//zip.CommitUpdate();
+
+			//stream.PutNextEntry(entry);
+			//stream.Write(data, 0, data.Length);
+			//stream.CloseEntry();
 			return true;
 		}
-
+*/
 
 		/// <summary>
 		/// Saves all resources to a bank file
@@ -968,21 +953,10 @@ namespace ArcEngine
 
 			Trace.WriteLine("Saving all resources to bank \"" + filename + "\"...");
 
-			FileStream stream = null;
-			ZipOutputStream zip = null;
+
 			try
 			{
-
-				stream = File.Create(filename);
-				zip = new ZipOutputStream(stream);
-				zip.Password = password;
-				zip.SetLevel(5);
-
-
-
-				// Save all Binaries
-			//	foreach (KeyValuePair<string, byte[]> kvp in Binaries)
-			//		SaveResource(zip, kvp.Key, kvp.Value);
+				ZipStorer zip = ZipStorer.Open(filename, FileAccess.Write);
 
 				// Save all providers
 				XmlWriter doc;
@@ -993,7 +967,7 @@ namespace ArcEngine
 				settings.OmitXmlDeclaration = false;
 				settings.IndentChars = "\t";
 				settings.Encoding = ASCIIEncoding.ASCII;
-		
+
 				// For each Provider
 				foreach (Provider provider in Providers)
 				{
@@ -1002,7 +976,7 @@ namespace ArcEngine
 					{
 						// Get the number of asset
 						MethodInfo mi = provider.GetType().GetMethod("Count").MakeGenericMethod(type);
-						int count = (int)mi.Invoke(provider, null);
+						int count = (int) mi.Invoke(provider, null);
 						if (count == 0)
 							continue;
 
@@ -1018,34 +992,27 @@ namespace ArcEngine
 						mi = provider.GetType().GetMethod("Save", types).MakeGenericMethod(type);
 						mi.Invoke(provider, args);
 
-		
 						doc.WriteEndElement();
 						doc.WriteEndDocument();
 						doc.Flush();
-						SaveResource(zip, type.Name + ".xml", ms.ToArray());
+
+						zip.AddStream(ZipStorer.Compression.Deflate, filename, ms, DateTime.Now, string.Empty);
+							
+						ms.Dispose();
 					}
 				}
 
-				retval = true;
-				Trace.WriteLine("Done !");
+				zip.Close();
 
+				retval = true;
 			}
 			catch (Exception e)
 			{
 				Trace.WriteLine(e.Message);
 				Trace.WriteLine(e.StackTrace);
 			}
-			finally
-			{
-				if (zip != null)
-				{
-					zip.Finish();
-					zip.Close();
-				}
-				if (stream != null)
-					stream.Close();
-			}
 
+			Trace.WriteLine("Done !");
 			return retval;
 		}
 

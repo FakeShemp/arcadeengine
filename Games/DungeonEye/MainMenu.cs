@@ -18,6 +18,7 @@
 //
 #endregion
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Drawing;
 using ArcEngine;
@@ -55,16 +56,12 @@ namespace DungeonEye
 			ResourceManager.LoadBank("data/MainMenu.bnk");
 
 			// Change the cursor
-			AssetHandle asset = ResourceManager.LoadResource("cursor.png");
-			if (asset != null)
+			using (Stream stream = ResourceManager.LoadResource("cursor.png"))
 			{
-				Bitmap bmp = new Bitmap(asset.Stream);
+				Bitmap bmp = new Bitmap(stream);
 				HardwareCursor cursor = new HardwareCursor(bmp, Point.Empty);
 				Mouse.HardwareCursor = cursor;
-
 				bmp.Dispose();
-				asset.Dispose();
-				asset = null;
 			}
 
 			

@@ -21,6 +21,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Xml;
 using ArcEngine.Asset;
 using OpenAL = OpenTK.Audio.OpenAL;
@@ -110,20 +111,20 @@ namespace ArcEngine.Audio
 		/// <returns></returns>
 		public bool LoadOgg(string filename)
 		{
-			AssetHandle handle = ResourceManager.LoadResource(filename);
-			if (handle == null)
-				return false;
+			using (Stream stream = ResourceManager.LoadResource(filename))
+			{
+				oggStream = new OggInputStream(stream);
+				FileName = filename;
 
-			oggStream = new OggInputStream(handle.Stream);
-			FileName = filename;
+				Position = Vector3.Zero;
+				Direction = Vector3.Zero;
+				Velocity = Vector3.Zero;
+				RolloffFactor = 0.0f;
+				SourceRelative = true;
 
-			Position = Vector3.Zero;
-			Direction = Vector3.Zero;
-			Velocity = Vector3.Zero;
-			RolloffFactor = 0.0f;
-			SourceRelative = true;
-
-			return true;
+				return true;
+			}
+			return false;
 		}
 
 	

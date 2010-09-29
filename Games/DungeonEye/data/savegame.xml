@@ -22,8 +22,8 @@
 				<class name="Fighter" />
 				<xp points="0" />
 			</profession>
-			<inventory position="Primary" name="Short Sword" />
 			<inventory position="Secondary" name="Light Steel Shield" />
+			<inventory position="Primary" name="Short Sword" />
 		</hero>
 	</position>
 	<position slot="FrontRight">
@@ -113,4 +113,5 @@
 			<spell name="Cure Light Wounds" />
 		</hero>
 	</position>
+	<message text="Team Loaded..." R="154" G="205" B="50" A="255" />
 </team>

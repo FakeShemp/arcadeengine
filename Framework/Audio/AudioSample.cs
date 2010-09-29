@@ -97,21 +97,18 @@ namespace ArcEngine.Audio
 		/// <param name="filename">File to load</param>
 		public bool LoadSound(string filename)
 		{
-			if (string.IsNullOrEmpty(filename))
-				return false;
+			using (Stream stream = ResourceManager.LoadResource(filename))
+			{
+				int channels, bits_per_sample, sample_rate;
+				byte[] sound_data = LoadWave(stream, out channels, out bits_per_sample, out sample_rate);
 
+				// Transfert data
+				OpenAL.AL.BufferData(Buffer, GetSoundFormat(channels, bits_per_sample), sound_data, sound_data.Length, sample_rate);
 
-			int channels, bits_per_sample, sample_rate;
-			AssetHandle asset = ResourceManager.LoadResource(filename);
-			if (asset == null)
-				return false;
+				return true;
+			}
 
-			byte[] sound_data = LoadWave(asset.Stream, out channels, out bits_per_sample, out sample_rate);
-
-			// Transfert data
-			OpenAL.AL.BufferData(Buffer, GetSoundFormat(channels, bits_per_sample), sound_data, sound_data.Length, sample_rate);
-
-			return true;
+			return false;
 		}
 
 

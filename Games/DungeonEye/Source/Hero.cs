@@ -1114,6 +1114,14 @@ namespace DungeonEye
 				}
 
 
+			foreach (Spell spell in Spells)
+			{
+				writer.WriteStartElement("spell");
+				writer.WriteAttributeString("name", spell.Name);
+				writer.WriteEndElement();
+			}
+
+
 			writer.WriteEndElement();
 			return true;
 		}

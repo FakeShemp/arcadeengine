@@ -215,14 +215,14 @@ namespace DungeonEye
 		{
 			
 			// Load file definition
-			AssetHandle asset = ResourceManager.LoadResource("MazeElements.xml");
-			if (asset == null)
+			Stream stream = ResourceManager.LoadResource("MazeElements.xml");
+			if (stream == null)
 				throw new FileNotFoundException("Can not find maze element coordinate file !!! Aborting.");
 
 			try
 			{
 				XmlDocument doc = new XmlDocument();
-				doc.Load(asset.Stream);
+				doc.Load(stream);
 				XmlNode xml = doc.DocumentElement;
 				if (xml.Name != "displaycoordinate")
 				{
@@ -325,7 +325,7 @@ namespace DungeonEye
 			}
 			finally
 			{
-				asset.Dispose();
+				stream.Dispose();
 			}
 
 			return true;
