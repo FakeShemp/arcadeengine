@@ -2802,6 +2802,43 @@ namespace DungeonEye
 			get;
 			set;
 		}
+
+
+		/// <summary>
+		/// Gets if the whole team is dead
+		/// </summary>
+		public bool IsDead
+		{
+			get
+			{
+				foreach (Hero hero in Heroes)
+				{
+					if (hero != null && !hero.IsDead)
+						return false;
+				}
+
+				return true;
+			}
+		}
+
+
+		/// <summary>
+		/// Gets if the whole team is uncounscious
+		/// </summary>
+		public bool IsUncounscious
+		{
+			get
+			{
+				foreach (Hero hero in Heroes)
+				{
+					if (hero != null && !hero.IsUnconscious)
+						return false;
+				}
+
+				return true;
+			}
+		}
+
 		#endregion
 	}
 

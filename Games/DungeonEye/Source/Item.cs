@@ -211,6 +211,13 @@ namespace DungeonEye
 					}
 					break;
 
+
+					case "twohanded":
+					{
+						TwoHanded = bool.Parse(node.Attributes["value"].Value);
+					}
+					break;
+
 				}
 			}
 
@@ -376,36 +383,7 @@ namespace DungeonEye
 			set;
 		}
 
-/*
-		/// <summary>
-		/// Script name
-		/// </summary>
-		public string ScriptName
-		{
-			get;
-			set;
-		}
 
-		
-		/// <summary>
-		/// Interface name for the script
-		/// </summary>
-		public string InterfaceName
-		{
-			get;
-			set;
-		}
-
-	
-		/// <summary>
-		/// Interface handle
-		/// </summary>
-		public IItem Interface
-		{
-			get;
-			private set;
-		}
-*/
 		/// <summary>
 		/// 
 		/// </summary>
@@ -640,10 +618,8 @@ namespace DungeonEye
 		/// </summary>
 		public bool TwoHanded
 		{
-			get
-			{
-				return ((AllowedHands | HeroHand.Primary) == HeroHand.Primary && (AllowedHands | HeroHand.Secondary) == HeroHand.Secondary);
-			}
+			get;
+			set;
 		}
 
 

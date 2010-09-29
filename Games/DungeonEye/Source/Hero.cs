@@ -64,32 +64,6 @@ namespace DungeonEye
 
 			Food = (byte)Game.Random.Next(50, 100);
 			Spells = new List<Spell>();
-
-
-			Spell spell = ResourceManager.CreateAsset<Spell>("Create Food");
-			Spells.Add(spell);
-			spell = ResourceManager.CreateAsset<Spell>("Create Food");
-			Spells.Add(spell);
-			spell = ResourceManager.CreateAsset<Spell>("Create Food");
-			Spells.Add(spell);
-			spell = ResourceManager.CreateAsset<Spell>("Cure Light Wounds");
-			Spells.Add(spell);
-			spell = ResourceManager.CreateAsset<Spell>("Create Food");
-			Spells.Add(spell);
-			spell = ResourceManager.CreateAsset<Spell>("Create Food");
-			Spells.Add(spell);
-			spell = ResourceManager.CreateAsset<Spell>("Create Food");
-			Spells.Add(spell);
-			spell = ResourceManager.CreateAsset<Spell>("Create Food");
-			Spells.Add(spell);
-			spell = ResourceManager.CreateAsset<Spell>("Create Food");
-			Spells.Add(spell);
-			spell = ResourceManager.CreateAsset<Spell>("Create Food");
-			Spells.Add(spell);
-			spell = ResourceManager.CreateAsset<Spell>("Create Food");
-			Spells.Add(spell);
-			spell = ResourceManager.CreateAsset<Spell>("Create Food");
-			Spells.Add(spell);
 		}
 
 
@@ -1046,6 +1020,14 @@ namespace DungeonEye
 						Profession prof = new Profession();
 						prof.Load(node);
 						Professions.Add(prof);
+					}
+					break;
+
+					case "spell":
+					{
+						Spell spell = ResourceManager.CreateAsset<Spell>(node.Attributes["name"].Value);
+						if (spell != null)
+							Spells.Add(spell);
 					}
 					break;
 
