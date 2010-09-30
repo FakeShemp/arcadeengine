@@ -701,6 +701,7 @@ namespace ArcEngine
 
 				Trace.WriteLine("");
 			}
+			zip.Close();
 
 			swatch.Stop();
 			Trace.Unindent();
@@ -821,6 +822,7 @@ namespace ArcEngine
 			try
 			{
 				ZipStorer zip = ZipStorer.Open(filename, FileAccess.Write);
+				List<ZipStorer.ZipFileEntry> dir = zip.ReadCentralDir();
 
 				// Save all providers
 				XmlWriter doc;
@@ -831,6 +833,9 @@ namespace ArcEngine
 				settings.OmitXmlDeclaration = false;
 				settings.IndentChars = "\t";
 				settings.Encoding = ASCIIEncoding.ASCII;
+
+				Dictionary<string, Stream> streams = new Dictionary<string, Stream>();
+				List<ZipStorer.ZipFileEntry> remove = new List<ZipStorer.ZipFileEntry>();
 
 				// For each Provider
 				foreach (Provider provider in Providers)
@@ -863,15 +868,36 @@ namespace ArcEngine
 						// Rewind
 						ms.Seek(0, SeekOrigin.Begin);
 
-						string zipfilename = type.Name + ".xml";
+						string zipfilename = string.Format("{0}.xml", type.Name);
 
-						
-						zip.AddStream(ZipStorer.Compression.Deflate, zipfilename, ms, DateTime.Now, string.Empty);
-							
-						ms.Dispose();
+						// Remove before insert
+						foreach (ZipStorer.ZipFileEntry ent in dir)
+						{
+							if (ent.FilenameInZip == zipfilename)
+							{
+								remove.Add(ent);
+
+								break;
+							}
+						}
+
+						// store the stream
+						streams[zipfilename] = ms;
 					}
 				}
 
+
+				// remove duplicate entries
+				ZipStorer.RemoveEntries(ref zip, remove);
+
+				// Add streams
+				foreach (KeyValuePair<string, Stream> kvp in streams)
+				{
+					zip.AddStream(ZipStorer.Compression.Deflate, kvp.Key, kvp.Value, DateTime.Now, string.Empty);
+					kvp.Value.Dispose();
+				}
+
+				// Close the file
 				zip.Close();
 
 				retval = true;
@@ -974,44 +1000,6 @@ namespace ArcEngine
 
 		#endregion
 
-	}
-
-
-	/// <summary>
-	/// Reference to binary files in banks
-	/// </summary>
-	internal class ResourceReference
-	{
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="name"></param>
-		/// <param name="file"></param>
-		/// <param name="pwd"></param>
-		public ResourceReference(string name, string file, string pwd)
-		{
-			Name = name;
-			FileName = file;
-			Password = pwd;
-		}
-
-
-		/// <summary>
-		/// Asset name
-		/// </summary>
-		public string Name;
-
-
-		/// <summary>
-		/// File name
-		/// </summary>
-		public string FileName;
-
-
-		/// <summary>
-		/// Password to read the file
-		/// </summary>
-		public string Password;
 	}
 
 }
