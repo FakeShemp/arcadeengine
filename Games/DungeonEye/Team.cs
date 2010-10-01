@@ -47,7 +47,7 @@ namespace DungeonEye
         public Team(Hero[] heroes)
 		{
 			Messages = new List<ScreenMessage>();
-			CampWindow = new Camp();
+			CampWindow = new Camp(this);
 			TeamSpeed = TimeSpan.FromSeconds(0.15f);
 			SpellBook = new SpellBook();
 
@@ -193,40 +193,84 @@ namespace DungeonEye
 			CampWindow.Init();
 			SpellBook.LoadContent();
 
+
+
 			// Loads a saved game
-			if (!string.IsNullOrEmpty(SaveGame) && File.Exists(SaveGame))
-			{
-				XmlDocument xml = new XmlDocument();
-				xml.Load(SaveGame);
-				Load(xml.ChildNodes[1]);
-				Teleport(Location);
-			}
-			else
+			if (!LoadParty(SaveGame))
 			{
 				Dungeon = ResourceManager.CreateAsset<Dungeon>("Eye");
+				if (Dungeon == null)
+				{
+					Trace.WriteLine("[Team]Team(): Failed to create default dungeon !");
+					throw new NullReferenceException("Dungeon");
+				}
+
 				Dungeon.Team = this;
+				Dungeon.Init();
 
 				// Set initial location
 				Location = new DungeonLocation(Dungeon);
 				Teleport(Dungeon.StartLocation);
 				Location.Direction = Dungeon.StartLocation.Direction;
-			}
 
-			// The dungeon
-			if (Dungeon == null)
-			{
-				Trace.WriteLine("Failed to load the dungeon !!");
-				throw new NullReferenceException("Dungeon");
+				// Select the first hero
+				SelectedHero = Heroes[0];
 			}
-			Dungeon.Init();
-
-			// Select the first hero
-			SelectedHero = Heroes[0];
 
 
 			watch.Stop();
 			Trace.WriteLine("Team::LoadContent() finished ! ({0} ms)", watch.ElapsedMilliseconds);
 		}
+
+
+		/// <summary>
+		/// Loads a team party
+		/// </summary>
+		/// <param name="filename">File name to load</param>
+		/// <returns>True if loaded</returns>
+		public bool LoadParty(string filename)
+		{
+			if (!System.IO.File.Exists(filename))
+				return false;
+
+			XmlDocument xml = new XmlDocument();
+			xml.Load(filename);
+
+
+			Location = null;
+
+			foreach (XmlNode node in xml)
+			{
+				if (node.Name.ToLower() == "team")
+					Load(node);
+			}
+
+			if (Dungeon == null)
+			{
+				Trace.WriteLine("[Team]LoadParty() : Dungeon == NULL !!");
+				throw new NullReferenceException("Dungeon");
+			}
+
+			Dungeon.Init();
+			Teleport(Location);
+
+			SaveGame = filename;
+
+			AddMessage("Party Loaded...", Color.YellowGreen);
+			return true;
+		}
+
+
+		/// <summary>
+		/// Saves a party progress
+		/// </summary>
+		/// <param name="filename">File name</param>
+		/// <returns></returns>
+		public bool SaveParty(string filename)
+		{
+			return false;
+		}
+
 
 
 		#region IO
@@ -247,6 +291,9 @@ namespace DungeonEye
 			for (int i = 0; i < Heroes.Length; i++)
 				Heroes[i] = null;
 
+			// Dispose dungeon
+			if (Dungeon != null)
+				Dungeon.Dispose();
 			Dungeon = null;
 
 			foreach (XmlNode node in xml)
@@ -909,21 +956,9 @@ namespace DungeonEye
 			// Load team
 			if (Keyboard.IsNewKeyPress(Keys.L))
 			{
-				if (System.IO.File.Exists("data/savegame.xml"))
-				{
-					XmlDocument xml = new XmlDocument();
-					xml.Load("data/savegame.xml");
-
-					foreach (XmlNode node in xml)
-					{
-						if (node.Name.ToLower() == "team")
-							Load(node);
-
-					}
-
-					AddMessage("Team Loaded...", Color.YellowGreen);
-				}
+				LoadParty("data/savegame.xml");
 			}
+
 
 			#region Change maze
 			// Change maze
@@ -1622,7 +1657,7 @@ namespace DungeonEye
 			Dungeon.Update(time);
 
 
-			if (CanMove)
+			if (CanMove && MazeBlock != null)
 				MazeBlock.OnTeamStand(this);
 		}
 

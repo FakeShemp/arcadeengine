@@ -95,7 +95,10 @@ namespace DungeonEye.Gui.CampWindows
 		/// <param name="e"></param>
 		void LoadAnswer(object sender, EventArgs e)
 		{
-			
+			if (((MessageBox) sender).DialogResult == DialogResult.Yes)
+				Camp.Team.LoadParty("data/savegame.xml");
+
+			Camp.Close();
 		}
 
 

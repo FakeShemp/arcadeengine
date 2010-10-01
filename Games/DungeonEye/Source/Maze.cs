@@ -55,7 +55,6 @@ namespace DungeonEye
 			Zones = new List<MazeZone>();
 
 			IsDisposed = false;
-
 		}
 
 
@@ -65,15 +64,13 @@ namespace DungeonEye
 		/// </summary>
 		public void Dispose()
 		{
-			if (Doors != null)
-				foreach (Door door in Doors)
-					door.Dispose();
-			Doors = null;
+			foreach (Door door in Doors)
+				door.Dispose();
+			Doors.Clear();
 
-			if (Monsters != null)
-				foreach (Monster monster in Monsters)
-					monster.Dispose();
-			Monsters = null;
+			foreach (Monster monster in Monsters)
+				monster.Dispose();
+			Monsters.Clear();
 
 			if (ItemsTileset != null)
 				ItemsTileset.Dispose();
@@ -87,15 +84,15 @@ namespace DungeonEye
 				WallTileset.Dispose();
 			WallTileset = null;
 
-			Blocks = null;
+			Blocks.Clear();
 			Description = null;
 			Dungeon = null;
-			ThrownItems = null;
+			ThrownItems.Clear();
 			ItemsTilesetName = null;
 			OverlayTilesetName = null;
 			WallTilesetName = null;
 			size = Size.Empty;
-			Zones = null;
+			Zones.Clear();
 			Name = "";
 
 			IsDisposed = true;

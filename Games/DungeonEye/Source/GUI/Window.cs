@@ -142,7 +142,7 @@ namespace DungeonEye.Gui
 			{
 				if (button.Rectangle.Contains(mousePos))
 				{
-					button.TextColor = Color.FromArgb(255, 85, 85);
+					button.TextColor = Colors.Red;
 					if (Mouse.IsNewButtonDown(System.Windows.Forms.MouseButtons.Left))
 						button.OnSelectEntry();
 				}

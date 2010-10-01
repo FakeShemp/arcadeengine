@@ -36,8 +36,9 @@ namespace DungeonEye.Gui
 		/// <summary>
 		/// Default constructor
 		/// </summary>
-		public Camp()
+		public Camp(Team team)
 		{
+			Team = team;
 			Windows = new Stack<Window>();
 
 			Buttons = new List<ScreenButton>();
@@ -72,6 +73,29 @@ namespace DungeonEye.Gui
 			AddWindow(new MainWindow(this));
 		}
 
+
+		/// <summary>
+		/// Close the camp window
+		/// </summary>
+		public void Close()
+		{
+			if (!IsVisible)
+				return;
+
+			Windows.Clear();
+		}
+
+		/// <summary>
+		/// Adds a window to the stack
+		/// </summary>
+		/// <param name="window">Window handle</param>
+		public void AddWindow(Window window)
+		{
+			if (window == null)
+				return;
+
+			Windows.Push(window);
+		}
 
 		#region Update & Draw
 
@@ -142,23 +166,18 @@ namespace DungeonEye.Gui
 
 
 		#endregion
-
-
-		/// <summary>
-		/// Adds a window to the stack
-		/// </summary>
-		/// <param name="window">Window handle</param>
-		public void AddWindow(Window window)
-		{
-			if (window == null)
-				return;
-
-			Windows.Push(window);
-		}
-
 		
+
 		#region Properties
 
+		/// <summary>
+		/// Team handle
+		/// </summary>
+		public Team Team
+		{
+			get;
+			private set;
+		}
 
 		/// <summary>
 		/// List of buttons
@@ -204,7 +223,7 @@ namespace DungeonEye.Gui
 
 
 	/// <summary>
-	/// 
+	/// GUI colors
 	/// </summary>
 	struct Colors
 	{
@@ -224,6 +243,11 @@ namespace DungeonEye.Gui
 		/// 
 		/// </summary>
 		static public Color Main = Color.FromArgb(109, 109, 138);
+
+		/// <summary>
+		/// 
+		/// </summary>
+		static public Color Red = Color.FromArgb(255, 85, 85);
 
 	}
 }
