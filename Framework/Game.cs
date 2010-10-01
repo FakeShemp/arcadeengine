@@ -577,7 +577,7 @@ namespace ArcEngine
 		/// <summary>
 		/// Exits the game.
 		/// </summary>
-		public void Exit()
+		static public void Exit()
 		{
 			IsExiting = true;
 
@@ -697,7 +697,7 @@ namespace ArcEngine
 		/// Gets whether this Game is exiting.
 		/// </summary>
 		/// <value>true if exiting; otherwise, false.</value>
-		public bool IsExiting
+		static public bool IsExiting
 		{
 			get;
 			private set;
