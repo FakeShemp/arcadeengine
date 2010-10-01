@@ -47,7 +47,7 @@ namespace DungeonEye
         public Team(Hero[] heroes)
 		{
 			Messages = new List<ScreenMessage>();
-			CampWindow = new CampWindow();
+			CampWindow = new Camp();
 			TeamSpeed = TimeSpan.FromSeconds(0.15f);
 			SpellBook = new SpellBook();
 
@@ -372,8 +372,6 @@ namespace DungeonEye
 			Batch.DrawTile(TileSet, 0, Point.Empty);
 
 
-
-
 			// Display the compass
 			Batch.DrawTile(TileSet, 5 + (int)Location.Direction * 3, new Point(228, 262));
 			Batch.DrawTile(TileSet, 6 + (int)Location.Direction * 3, new Point(158, 316));
@@ -428,16 +426,9 @@ namespace DungeonEye
 			SpellBook.Draw(Batch);
 
 
-
-
-
 			// Draw the cursor or the item in the hand
 			if (ItemInHand != null)
-			{
 				Batch.DrawTile(Items, ItemInHand.TileID, Mouse.Location, 0.5f);
-			}
-			//else
-			//    Batch.DrawTile(Items, 0, Mouse.Location);
 
 
             Batch.End();
@@ -1079,7 +1070,7 @@ namespace DungeonEye
 				else if (MazeDisplayCoordinates.CampButton.Contains(mousePos))
 				{
 					SpellBook.Close();
-					CampWindow.IsVisible = true;
+					CampWindow.Show();
 					Interface = TeamInterface.Main;
 				}
 				#endregion
@@ -1633,9 +1624,6 @@ namespace DungeonEye
 
 			if (CanMove)
 				MazeBlock.OnTeamStand(this);
-
-
-			Spell.GetSpellProgression(HeroClass.Mage, 11, 3);
 		}
 
 
@@ -2711,7 +2699,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Window GUI
 		/// </summary>
-		CampWindow CampWindow;
+		Camp CampWindow;
 
 
 		/// <summary>

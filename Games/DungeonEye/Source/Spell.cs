@@ -93,6 +93,12 @@ namespace DungeonEye
 					}
 					break;
 
+					case "class":
+					{
+						Class =(HeroClass) Enum.Parse(typeof(HeroClass), node.Attributes["value"].Value, true);
+					}
+					break;
+
 					case "level":
 					{
 						Level = int.Parse(node.Attributes["value"].Value);
@@ -158,6 +164,11 @@ namespace DungeonEye
 
 			writer.WriteStartElement("castingtime");
 			writer.WriteAttributeString("value", CastingTime.ToString());
+			writer.WriteEndElement();
+
+
+			writer.WriteStartElement("class");
+			writer.WriteAttributeString("value", Class.ToString());
 			writer.WriteEndElement();
 
 

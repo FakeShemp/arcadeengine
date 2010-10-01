@@ -56,6 +56,7 @@ namespace DungeonEye.Forms
 			CastingTimeBox.Value = (int) spell.CastingTime.TotalSeconds;
 			LevelBox.Value = (int) spell.Level;
 			ScriptBox.SetValues<ISpell>(spell.Script);
+			ClassBox.SelectedItem = spell.Class.ToString();
 
 			Spell = spell;
 		}
@@ -102,6 +103,26 @@ namespace DungeonEye.Forms
 
 		#region Events
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ClassBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (Spell == null)
+				return;
+
+			Spell.Class = (HeroClass)Enum.Parse(typeof(HeroClass), (string)ClassBox.SelectedItem);
+
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void DescriptionBox_TextChanged(object sender, EventArgs e)
 		{
 			if (Spell == null)
@@ -110,6 +131,12 @@ namespace DungeonEye.Forms
 			Spell.Description = DescriptionBox.Text;
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void LevelBox_ValueChanged(object sender, EventArgs e)
 		{
 			if (Spell == null)
@@ -118,6 +145,12 @@ namespace DungeonEye.Forms
 			Spell.Level = (int)LevelBox.Value;
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void CastingTimeBox_ValueChanged(object sender, EventArgs e)
 		{
 			if (Spell == null)
@@ -126,6 +159,11 @@ namespace DungeonEye.Forms
 			Spell.CastingTime = TimeSpan.FromSeconds((int)CastingTimeBox.Value);
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void DurationBox_ValueChanged(object sender, EventArgs e)
 		{
 			if (Spell == null)
@@ -134,6 +172,11 @@ namespace DungeonEye.Forms
 			Spell.Duration = TimeSpan.FromSeconds((int) DurationBox.Value);
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void RangeBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (Spell == null)
@@ -142,7 +185,11 @@ namespace DungeonEye.Forms
 			Spell.Range = (SpellRange) Enum.Parse(typeof(SpellRange), RangeBox.SelectedItem.ToString());
 		}
 
-
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void scriptControl1_ScriptChanged(object sender, EventArgs e)
 		{
 			if (Spell == null)
@@ -152,6 +199,11 @@ namespace DungeonEye.Forms
 
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void scriptControl1_InterfaceChanged(object sender, EventArgs e)
 		{
 			if (Spell == null)
@@ -185,8 +237,6 @@ namespace DungeonEye.Forms
 		Spell Spell;
 
 		#endregion
-
-
 
 	}
 }

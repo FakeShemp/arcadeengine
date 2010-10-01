@@ -139,7 +139,7 @@ namespace DungeonEye
 		void QuitEvent(object sender, EventArgs e)
 		{
 		//	Audio.Stop(0);
-			ScreenManager.Game.Exit();
+			Game.Exit();
 		}
 
 
@@ -223,7 +223,7 @@ namespace DungeonEye
 
 			// Bye bye
 			if (Keyboard.IsNewKeyPress(System.Windows.Forms.Keys.Escape))
-				ScreenManager.Game.Exit();
+				Game.Exit();
 
 			// Run intro
 			if (Keyboard.IsNewKeyPress(System.Windows.Forms.Keys.I))

@@ -1,0 +1,83 @@
+﻿#region Licence
+//
+//This file is part of ArcEngine.
+//Copyright (C)2008-2010 Adrien Hémery ( iliak@mimicprod.net )
+//
+//ArcEngine is free software: you can redistribute it and/or modify
+//it under the terms of the GNU General Public License as published by
+//the Free Software Foundation, either version 3 of the License, or
+//any later version.
+//
+//ArcEngine is distributed in the hope that it will be useful,
+//but WITHOUT ANY WARRANTY; without even the implied warranty of
+//MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//GNU General Public License for more details.
+//
+//You should have received a copy of the GNU General Public License
+//along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+//
+#endregion
+using System;
+using System.Drawing;
+using ArcEngine;
+using ArcEngine.Graphic;
+using ArcEngine.Input;
+
+namespace DungeonEye.Gui.CampWindows
+{
+	/// <summary>
+	/// 
+	/// </summary>
+	public class PrayForSpellsWindow : Window
+	{
+		/// <summary>
+		/// 
+		/// </summary>
+		public PrayForSpellsWindow(Camp camp)
+			: base(camp, "Pray For Spells :")
+		{
+			Exit = new ScreenButton("Exit", new Rectangle(256, 244, 80, 28));
+			Exit.Selected += new EventHandler(Exit_Selected);
+			Buttons.Add(Exit);
+
+		}
+
+
+
+		#region Events
+
+
+		/// <summary>
+		/// Exit button
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void Exit_Selected(object sender, EventArgs e)
+		{
+			Closing = true;
+		}
+
+
+		#endregion
+
+
+		#region Buttons
+
+		/// <summary>
+		/// 
+		/// </summary>
+		ScreenButton Exit;
+
+
+		#endregion
+
+
+		#region Properties
+
+
+
+
+		#endregion
+
+	}
+}

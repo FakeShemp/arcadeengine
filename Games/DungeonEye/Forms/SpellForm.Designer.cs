@@ -43,9 +43,9 @@
 			this.ClassBox = new System.Windows.Forms.ComboBox();
 			this.stringTableControl1 = new DungeonEye.Forms.StringTableControl();
 			this.groupBox1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.LevelBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.CastingTimeBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.DurationBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize) (this.LevelBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize) (this.CastingTimeBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize) (this.DurationBox)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// groupBox1
@@ -182,10 +182,15 @@
 			// 
 			this.ClassBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.ClassBox.FormattingEnabled = true;
+			this.ClassBox.Items.AddRange(new object[] {
+            "Cleric",
+            "Mage"});
 			this.ClassBox.Location = new System.Drawing.Point(223, 233);
 			this.ClassBox.Name = "ClassBox";
 			this.ClassBox.Size = new System.Drawing.Size(121, 21);
+			this.ClassBox.Sorted = true;
 			this.ClassBox.TabIndex = 6;
+			this.ClassBox.SelectedIndexChanged += new System.EventHandler(this.ClassBox_SelectedIndexChanged);
 			// 
 			// stringTableControl1
 			// 
@@ -215,15 +220,15 @@
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.LevelBox);
 			this.Controls.Add(this.groupBox1);
-			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 			this.Name = "SpellForm";
 			this.Text = "SpellForm";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form_FormClosing);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.LevelBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.CastingTimeBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.DurationBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize) (this.LevelBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize) (this.CastingTimeBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize) (this.DurationBox)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
