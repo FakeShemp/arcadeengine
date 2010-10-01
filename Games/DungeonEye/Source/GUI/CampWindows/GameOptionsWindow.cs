@@ -76,7 +76,6 @@ namespace DungeonEye.Gui.CampWindows
 		}
 
 
-
 		/// <summary>
 		/// Exit button
 		/// </summary>
@@ -84,9 +83,10 @@ namespace DungeonEye.Gui.CampWindows
 		/// <param name="e"></param>
 		void Load_Selected(object sender, EventArgs e)
 		{
-			MessageBox = new MessageBox("Are you sure you<br>wish to LOAD a<br>saved game ?", MessageBoxButtons.YesNo);
+			MessageBox = new MessageBox("Are you sure you<br />wish to LOAD a<br />saved game ?", MessageBoxButtons.YesNo);
 			MessageBox.Selected +=new EventHandler(LoadAnswer);
 		}
+
 
 		/// <summary>
 		/// 
@@ -109,9 +109,10 @@ namespace DungeonEye.Gui.CampWindows
 		/// <param name="e"></param>
 		void Save_Selected(object sender, EventArgs e)
 		{
-			MessageBox = new MessageBox("Are you sure you<br>wish to SAVE<br>the game ?", MessageBoxButtons.YesNo);
+			MessageBox = new MessageBox("Are you sure you<br />wish to SAVE<br />the game ?", MessageBoxButtons.YesNo);
 			MessageBox.Selected +=new EventHandler(SaveAnswer);
 		}
+
 
 		/// <summary>
 		/// 
@@ -120,9 +121,11 @@ namespace DungeonEye.Gui.CampWindows
 		/// <param name="e"></param>
 		void SaveAnswer(object sender, EventArgs e)
 		{
-			
-		}
+			if (((MessageBox) sender).DialogResult == DialogResult.Yes)
+				Camp.Team.SaveParty(Camp.Team.SaveGame);
 
+			Camp.Close();
+		}
 
 
 		/// <summary>
@@ -135,7 +138,6 @@ namespace DungeonEye.Gui.CampWindows
 		}
 
 
-
 		/// <summary>
 		/// Exit button
 		/// </summary>
@@ -143,7 +145,20 @@ namespace DungeonEye.Gui.CampWindows
 		/// <param name="e"></param>
 		void Quit_Selected(object sender, EventArgs e)
 		{
-			Game.Exit();
+			MessageBox = new MessageBox("Are you sure you<br />wish to EXIT the<br />game ?", MessageBoxButtons.YesNo);
+			MessageBox.Selected +=new EventHandler(QuitAnswer);
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void QuitAnswer(object sender, EventArgs e)
+		{
+			if (((MessageBox) sender).DialogResult == DialogResult.Yes)
+				Game.Exit();
 		}
 
 

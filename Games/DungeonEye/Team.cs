@@ -125,9 +125,6 @@ namespace DungeonEye
 		{
 			Batch = new SpriteBatch();
 
-	//		Display.RenderState.DepthTest = true;
-	//		Display.RenderState.DepthClearValue = 0;
-
 			System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
 			watch.Start();
 
