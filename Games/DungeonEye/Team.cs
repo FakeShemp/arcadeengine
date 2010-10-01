@@ -268,7 +268,27 @@ namespace DungeonEye
 		/// <returns></returns>
 		public bool SaveParty(string filename)
 		{
-			return false;
+			try
+			{
+				XmlWriterSettings settings = new XmlWriterSettings();
+				settings.Indent = true;
+				settings.OmitXmlDeclaration = false;
+				settings.IndentChars = "\t";
+				settings.Encoding = System.Text.ASCIIEncoding.ASCII;
+				XmlWriter xml = XmlWriter.Create(filename, settings);
+				Save(xml);
+				xml.Close();
+
+				SaveGame = filename;
+				AddMessage("Party saved...", Color.YellowGreen);
+			}
+			catch (Exception e)
+			{
+				Trace.WriteLine("[Team] SaveParty() : Failed to save the party (filename = '{0}') => {1} !", filename, e.Message);
+				AddMessage("Party NOT saved...", Color.Red);
+				return false;
+			}
+			return true;
 		}
 
 
@@ -941,16 +961,7 @@ namespace DungeonEye
 			// Save team
 			if (Keyboard.IsNewKeyPress(Keys.J))
 			{
-				XmlWriterSettings settings = new XmlWriterSettings();
-				settings.Indent = true;
-				settings.OmitXmlDeclaration = false;
-				settings.IndentChars = "\t";
-				settings.Encoding = System.Text.ASCIIEncoding.ASCII;
-				XmlWriter xml = XmlWriter.Create(@"data/savegame.xml", settings);
-				Save(xml);
-				xml.Close();
-
-				AddMessage("Team saved...", Color.YellowGreen);
+				SaveParty(@"z:\data\savegame.xml");
 			}
 
 			// Load team
