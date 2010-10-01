@@ -26,12 +26,12 @@ using ArcEngine.Input;
 namespace DungeonEye.Gui.CampWindows
 {
 	/// <summary>
-	/// 
+	/// Scribe for scroll window
 	/// </summary>
 	public class ScribeScrollsWindow : Window
 	{
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
 		public ScribeScrollsWindow(Camp camp)
 			: base(camp, "Scribe Scrolls :")

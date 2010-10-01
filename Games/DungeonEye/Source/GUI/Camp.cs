@@ -97,6 +97,7 @@ namespace DungeonEye.Gui
 			Windows.Push(window);
 		}
 
+
 		#region Update & Draw
 
 

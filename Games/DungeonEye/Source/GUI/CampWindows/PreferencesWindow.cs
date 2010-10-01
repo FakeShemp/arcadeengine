@@ -26,12 +26,12 @@ using ArcEngine.Input;
 namespace DungeonEye.Gui.CampWindows
 {
 	/// <summary>
-	/// 
+	/// Preference window
 	/// </summary>
 	public class PreferencesWindow : Window
 	{
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
 		public PreferencesWindow(Camp camp)
 			: base(camp, "Preferences :")

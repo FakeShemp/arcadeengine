@@ -26,12 +26,12 @@ using ArcEngine.Input;
 namespace DungeonEye.Gui.CampWindows
 {
 	/// <summary>
-	/// 
+	/// Pray for spell window
 	/// </summary>
 	public class PrayForSpellsWindow : Window
 	{
 		/// <summary>
-		/// 
+		/// constructor
 		/// </summary>
 		public PrayForSpellsWindow(Camp camp)
 			: base(camp, "Pray For Spells :")

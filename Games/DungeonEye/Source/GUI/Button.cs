@@ -93,6 +93,15 @@ namespace DungeonEye.Gui
 		public Color TextColor;
 
 
+		/// <summary>
+		/// Shows or hides the button
+		/// </summary>
+		public bool IsVisible
+		{
+			get;
+			set;
+		}
+
 		#endregion
 	}
 }

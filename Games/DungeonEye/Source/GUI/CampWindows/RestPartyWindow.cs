@@ -26,12 +26,12 @@ using ArcEngine.Input;
 namespace DungeonEye.Gui.CampWindows
 {
 	/// <summary>
-	/// 
+	/// Rest party window
 	/// </summary>
 	public class RestPartyWindow : Window
 	{
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
 		public RestPartyWindow(Camp camp) 
 			: base(camp, "Rest Party :")

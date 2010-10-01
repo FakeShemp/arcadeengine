@@ -33,7 +33,7 @@ namespace DungeonEye.Gui
 	{
 
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
 		/// <param name="text">Text to display</param>
 		public MessageBox(string text) : this(text, MessageBoxButtons.OK)

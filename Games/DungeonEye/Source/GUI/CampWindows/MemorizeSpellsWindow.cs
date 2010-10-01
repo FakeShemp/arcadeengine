@@ -31,7 +31,7 @@ namespace DungeonEye.Gui.CampWindows
 	public class MemorizeSpellsWindow : Window
 	{
 		/// <summary>
-		/// 
+		/// Memorize spell window
 		/// </summary>
 		public MemorizeSpellsWindow(Camp camp)
 			: base(camp, "Memorize Spells :")
@@ -42,8 +42,40 @@ namespace DungeonEye.Gui.CampWindows
 			button.Selected += new EventHandler(Exit_Selected);
 			Buttons.Add(button);
 
+			button = new ScreenButton("Clear", new Rectangle(16, 244, 96, 28));
+			button.Selected += new EventHandler(Clear_Selected);
+			Buttons.Add(button);
+
+			for (int i = 0 ; i < 6 ; i++)
+			{
+				button = new ScreenButton((i + 1).ToString(), new Rectangle(22 + i * 54, 32, 40, 46));
+				button.Selected += new EventHandler(Level_Selected);
+				Buttons.Add(button);
+			}
+
+
+
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="batch"></param>
+		public override void Draw(SpriteBatch batch)
+		{
+			base.Draw(batch);
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="time"></param>
+		public override void Update(GameTime time)
+		{
+			base.Update(time);
+		}
 
 
 		#region Events
@@ -57,6 +89,27 @@ namespace DungeonEye.Gui.CampWindows
 		void Exit_Selected(object sender, EventArgs e)
 		{
 			Closing = true;
+		}
+
+
+		/// <summary>
+		/// Exit button
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void Level_Selected(object sender, EventArgs e)
+		{
+		}
+
+
+
+		/// <summary>
+		/// Clear button
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void Clear_Selected(object sender, EventArgs e)
+		{
 		}
 
 

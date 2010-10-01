@@ -92,6 +92,9 @@ namespace DungeonEye.Gui
 			// Draw buttons
 			foreach (ScreenButton button in buttons)
 			{
+				if (!button.IsVisible)
+					continue;
+
 				Camp.DrawBevel(batch, button.Rectangle, Colors.Main, Colors.Light, Colors.Dark);
 
 				// Text
@@ -140,6 +143,9 @@ namespace DungeonEye.Gui
 			Point mousePos = Mouse.Location;
 			foreach (ScreenButton button in buttons)
 			{
+				if (!button.IsVisible)
+					continue;
+
 				if (button.Rectangle.Contains(mousePos))
 				{
 					button.TextColor = Colors.Red;

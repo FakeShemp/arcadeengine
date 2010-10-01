@@ -30,12 +30,12 @@ using DungeonEye.Gui;
 namespace DungeonEye.Gui.CampWindows
 {
 	/// <summary>
-	/// 
+	/// Main camp window
 	/// </summary>
 	public class MainWindow : Window
 	{
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
 		public MainWindow(Camp camp)
 			: base(camp, "Camp :")

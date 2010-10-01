@@ -26,7 +26,7 @@ using ArcEngine.Input;
 namespace DungeonEye.Gui.CampWindows
 {
 	/// <summary>
-	/// 
+	/// Game option window
 	/// </summary>
 	public class GameOptionsWindow : Window
 	{
@@ -60,8 +60,6 @@ namespace DungeonEye.Gui.CampWindows
 		}
 
 
-
-
 		#region Events
 
 
@@ -89,16 +87,17 @@ namespace DungeonEye.Gui.CampWindows
 
 
 		/// <summary>
-		/// 
+		/// Load game answer
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		void LoadAnswer(object sender, EventArgs e)
 		{
 			if (((MessageBox) sender).DialogResult == DialogResult.Yes)
+			{
 				Camp.Team.LoadParty("data/savegame.xml");
-
-			Camp.Close();
+				Camp.Close();
+			}
 		}
 
 
@@ -115,16 +114,17 @@ namespace DungeonEye.Gui.CampWindows
 
 
 		/// <summary>
-		/// 
+		/// Save game answer
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		void SaveAnswer(object sender, EventArgs e)
 		{
 			if (((MessageBox) sender).DialogResult == DialogResult.Yes)
+			{
 				Camp.Team.SaveParty(Camp.Team.SaveGame);
-
-			Camp.Close();
+				Camp.Close();
+			}
 		}
 
 
