@@ -41,9 +41,6 @@ namespace DungeonEye.Gui
 			Windows = new Stack<Window>();
 
 			Buttons = new List<ScreenButton>();
-			Message = new MessageBox();
-			Message.Yes = "Yes";
-			Message.No = "No";
 		}
 
 
@@ -161,11 +158,6 @@ namespace DungeonEye.Gui
 
 		
 		#region Properties
-
-		/// <summary>
-		/// Message box
-		/// </summary>
-		MessageBox Message;
 
 
 		/// <summary>

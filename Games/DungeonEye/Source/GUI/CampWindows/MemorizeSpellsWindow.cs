@@ -36,9 +36,11 @@ namespace DungeonEye.Gui.CampWindows
 		public MemorizeSpellsWindow(Camp camp)
 			: base(camp, "Memorize Spells :")
 		{
-			Exit = new ScreenButton("Exit", new Rectangle(256, 244, 80, 28));
-			Exit.Selected += new EventHandler(Exit_Selected);
-			Buttons.Add(Exit);
+			ScreenButton button;
+
+			button = new ScreenButton("Exit", new Rectangle(256, 244, 80, 28));
+			button.Selected += new EventHandler(Exit_Selected);
+			Buttons.Add(button);
 
 		}
 
@@ -56,17 +58,6 @@ namespace DungeonEye.Gui.CampWindows
 		{
 			Closing = true;
 		}
-
-
-		#endregion
-
-
-		#region Buttons
-
-		/// <summary>
-		/// 
-		/// </summary>
-		ScreenButton Exit;
 
 
 		#endregion

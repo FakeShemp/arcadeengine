@@ -54,7 +54,15 @@ namespace DungeonEye.Gui
 		/// <param name="time"></param>
 		public virtual void Update(GameTime time)
 		{
-			UpdateButtons(Buttons);
+			if (MessageBox != null && MessageBox.Closing)
+				MessageBox = null;
+
+
+			// Update
+			if (MessageBox != null)
+				MessageBox.Update(time);
+			else
+				UpdateButtons(time, Buttons);
 		}
 
 
@@ -74,10 +82,10 @@ namespace DungeonEye.Gui
 
 
 		/// <summary>
-		/// 
+		/// Draws a list of buttons
 		/// </summary>
-		/// <param name="batch"></param>
-		/// <param name="buttons"></param>
+		/// <param name="batch">Spritebatch to use</param>
+		/// <param name="buttons">Button list</param>
 		protected void DrawButtons(SpriteBatch batch, List<ScreenButton> buttons)
 		{
 
@@ -91,6 +99,10 @@ namespace DungeonEye.Gui
 				point.Offset(6, 6);
 				batch.DrawString(Camp.Font, point, button.TextColor, button.Text);
 			}
+
+			// Message box
+			if (MessageBox != null)
+				MessageBox.Draw(Camp, batch);
 
 		}
 
@@ -111,9 +123,20 @@ namespace DungeonEye.Gui
 		/// <summary>
 		/// Update butons int he window
 		/// </summary>
+		/// <param name="time"></param>
 		/// <param name="buttons">List of buttons</param>
-		protected void UpdateButtons(List<ScreenButton> buttons)
+		protected void UpdateButtons(GameTime time, List<ScreenButton> buttons)
 		{
+
+			// update message box
+			if (MessageBox != null)
+			{
+				MessageBox.Update(time);
+
+				return;
+			}
+
+			// Update buttons
 			Point mousePos = Mouse.Location;
 			foreach (ScreenButton button in buttons)
 			{
@@ -173,6 +196,12 @@ namespace DungeonEye.Gui
 			get;
 			private set;
 		}
+
+
+		/// <summary>
+		/// Message box
+		/// </summary>
+		protected MessageBox MessageBox;
 
 		#endregion
 

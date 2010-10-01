@@ -34,6 +34,7 @@ namespace DungeonEye.Forms
 		public RenameForm()
 		{
 			InitializeComponent();
+
 		}
 
 

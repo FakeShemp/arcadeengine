@@ -36,21 +36,22 @@ namespace DungeonEye.Gui.CampWindows
 		public PreferencesWindow(Camp camp)
 			: base(camp, "Preferences :")
 		{
-			Tunes = new ScreenButton("Tunes ar ON", new Rectangle(16, 40, 320, 28));
-			Tunes.Selected += new EventHandler(Tunes_Selected);
-			Buttons.Add(Tunes);
+			ScreenButton button;
+			button = new ScreenButton("Tunes ar ON", new Rectangle(16, 40, 320, 28));
+			button.Selected += new EventHandler(Tunes_Selected);
+			Buttons.Add(button);
 
-			Sounds = new ScreenButton("Sounds are ON", new Rectangle(16, 74, 320, 28));
-			Sounds.Selected += new EventHandler(Sounds_Selected);
-			Buttons.Add(Sounds);
+			button = new ScreenButton("Sounds are ON", new Rectangle(16, 74, 320, 28));
+			button.Selected += new EventHandler(Sounds_Selected);
+			Buttons.Add(button);
 
-			Bar = new ScreenButton("Bar Graphs are ON", new Rectangle(16, 108, 320, 28));
-			Bar.Selected += new EventHandler(Bar_Selected);
-			Buttons.Add(Bar);
-			
-			Exit = new ScreenButton("Exit", new Rectangle(256, 244, 80, 28));
-			Exit.Selected += new EventHandler(Exit_Selected);
-			Buttons.Add(Exit);
+			button = new ScreenButton("Bar Graphs are ON", new Rectangle(16, 108, 320, 28));
+			button.Selected += new EventHandler(Bar_Selected);
+			Buttons.Add(button);
+
+			button = new ScreenButton("Exit", new Rectangle(256, 244, 80, 28));
+			button.Selected += new EventHandler(Exit_Selected);
+			Buttons.Add(button);
 
 		}
 
@@ -101,17 +102,6 @@ namespace DungeonEye.Gui.CampWindows
 		void Bar_Selected(object sender, EventArgs e)
 		{
 		}
-
-
-		#endregion
-
-
-		#region Buttons
-
-		ScreenButton Exit;
-		ScreenButton Tunes;
-		ScreenButton Sounds;
-		ScreenButton Bar;
 
 
 		#endregion

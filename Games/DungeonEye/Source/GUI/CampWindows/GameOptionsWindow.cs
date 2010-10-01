@@ -31,30 +31,31 @@ namespace DungeonEye.Gui.CampWindows
 	public class GameOptionsWindow : Window
 	{
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
 		public GameOptionsWindow(Camp camp)
 			: base(camp, "Game Options:")
 		{
-			Load = new ScreenButton("Load Game", new Rectangle(16, 40, 320, 28));
-			Load.Selected += new EventHandler(Load_Selected);
-			Buttons.Add(Load);
+			ScreenButton button;
+			button = new ScreenButton("Load Game", new Rectangle(16, 40, 320, 28));
+			button.Selected += new EventHandler(Load_Selected);
+			Buttons.Add(button);
 
-			Save = new ScreenButton("Save Game", new Rectangle(16, 74, 320, 28));
-			Save.Selected += new EventHandler(Save_Selected);
-			Buttons.Add(Save);
+			button = new ScreenButton("Save Game", new Rectangle(16, 74, 320, 28));
+			button.Selected += new EventHandler(Save_Selected);
+			Buttons.Add(button);
 
-			Drop = new ScreenButton("Drop Character", new Rectangle(16, 108, 320, 28));
-			Drop.Selected += new EventHandler(Bar_Selected);
-			Buttons.Add(Drop);
+			button = new ScreenButton("Drop Character", new Rectangle(16, 108, 320, 28));
+			button.Selected += new EventHandler(Bar_Selected);
+			Buttons.Add(button);
 
-			Quit = new ScreenButton("Quit Game", new Rectangle(16, 142, 320, 28));
-			Quit.Selected += new EventHandler(Quit_Selected);
-			Buttons.Add(Quit);
+			button = new ScreenButton("Quit Game", new Rectangle(16, 142, 320, 28));
+			button.Selected += new EventHandler(Quit_Selected);
+			Buttons.Add(button);
 
-			Exit = new ScreenButton("Exit", new Rectangle(256, 244, 80, 28));
-			Exit.Selected += new EventHandler(Exit_Selected);
-			Buttons.Add(Exit);
+			button = new ScreenButton("Exit", new Rectangle(256, 244, 80, 28));
+			button.Selected += new EventHandler(Exit_Selected);
+			Buttons.Add(button);
 
 		}
 
@@ -83,8 +84,19 @@ namespace DungeonEye.Gui.CampWindows
 		/// <param name="e"></param>
 		void Load_Selected(object sender, EventArgs e)
 		{
+			MessageBox = new MessageBox("Are you sure you<br>wish to LOAD a<br>saved game ?", MessageBoxButtons.YesNo);
+			MessageBox.Selected +=new EventHandler(LoadAnswer);
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void LoadAnswer(object sender, EventArgs e)
+		{
+			
+		}
 
 
 		/// <summary>
@@ -94,6 +106,18 @@ namespace DungeonEye.Gui.CampWindows
 		/// <param name="e"></param>
 		void Save_Selected(object sender, EventArgs e)
 		{
+			MessageBox = new MessageBox("Are you sure you<br>wish to SAVE<br>the game ?", MessageBoxButtons.YesNo);
+			MessageBox.Selected +=new EventHandler(SaveAnswer);
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void SaveAnswer(object sender, EventArgs e)
+		{
+			
 		}
 
 
@@ -118,18 +142,6 @@ namespace DungeonEye.Gui.CampWindows
 		{
 			Game.Exit();
 		}
-
-
-		#endregion
-
-
-		#region Buttons
-
-		ScreenButton Quit;
-		ScreenButton Load;
-		ScreenButton Save;
-		ScreenButton Drop;
-		ScreenButton Exit;
 
 
 		#endregion

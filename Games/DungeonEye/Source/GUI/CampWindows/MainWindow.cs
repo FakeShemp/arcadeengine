@@ -40,34 +40,36 @@ namespace DungeonEye.Gui.CampWindows
 		public MainWindow(Camp camp)
 			: base(camp, "Camp :")
 		{
+			ScreenButton button;
+
 			// Adds buttons
-			RestParty = new ScreenButton("Rest Party", new Rectangle(16, 40, 320, 28));
-			RestParty.Selected += new EventHandler(RestParty_Selected);
-			Buttons.Add(RestParty);
+			button = new ScreenButton("Rest Party", new Rectangle(16, 40, 320, 28));
+			button.Selected += new EventHandler(RestParty_Selected);
+			Buttons.Add(button);
 
-			MemorizeSpells = new ScreenButton("Memorize Spells", new Rectangle(16, 74, 320, 28));
-			MemorizeSpells.Selected += new EventHandler(MemorizeSpells_Selected);
-			Buttons.Add(MemorizeSpells);
+			button = new ScreenButton("Memorize Spells", new Rectangle(16, 74, 320, 28));
+			button.Selected += new EventHandler(MemorizeSpells_Selected);
+			Buttons.Add(button);
 
-			PrayForSpells = new ScreenButton("Pray for Spells", new Rectangle(16, 108, 320, 28));
-			PrayForSpells.Selected += new EventHandler(PrayForSpells_Selected);
-			Buttons.Add(PrayForSpells);
+			button = new ScreenButton("Pray for Spells", new Rectangle(16, 108, 320, 28));
+			button.Selected += new EventHandler(PrayForSpells_Selected);
+			Buttons.Add(button);
 
-			ScribeScrolls = new ScreenButton("Scribe Scrolls", new Rectangle(16, 142, 320, 28));
-			ScribeScrolls.Selected += new EventHandler(ScribeScrolls_Selected);
-			Buttons.Add(ScribeScrolls);
+			button = new ScreenButton("Scribe Scrolls", new Rectangle(16, 142, 320, 28));
+			button.Selected += new EventHandler(ScribeScrolls_Selected);
+			Buttons.Add(button);
 
-			Preferences = new ScreenButton("Preferences", new Rectangle(16, 176, 320, 28));
-			Preferences.Selected += new EventHandler(Preferences_Selected);
-			Buttons.Add(Preferences);
+			button = new ScreenButton("Preferences", new Rectangle(16, 176, 320, 28));
+			button.Selected += new EventHandler(Preferences_Selected);
+			Buttons.Add(button);
 
-			GameOptions = new ScreenButton("Game Options", new Rectangle(16, 210, 320, 28));
-			GameOptions.Selected += new EventHandler(GameOptions_Selected);
-			Buttons.Add(GameOptions);
+			button = new ScreenButton("Game Options", new Rectangle(16, 210, 320, 28));
+			button.Selected += new EventHandler(GameOptions_Selected);
+			Buttons.Add(button);
 
-			Exit = new ScreenButton("Exit", new Rectangle(256, 244, 80, 28));
-			Exit.Selected += new EventHandler(Exit_Selected);
-			Buttons.Add(Exit);
+			button = new ScreenButton("Exit", new Rectangle(256, 244, 80, 28));
+			button.Selected += new EventHandler(Exit_Selected);
+			Buttons.Add(button);
 
 		}
 
@@ -154,21 +156,6 @@ namespace DungeonEye.Gui.CampWindows
 		{
 			Camp.AddWindow(new RestPartyWindow(Camp));
 		}
-
-		#endregion
-
-
-		#region Buttons
-
-
-		ScreenButton RestParty;
-		ScreenButton MemorizeSpells;
-		ScreenButton PrayForSpells;
-		ScreenButton ScribeScrolls;
-		ScreenButton Preferences;
-		ScreenButton GameOptions;
-		ScreenButton Exit;
-
 
 		#endregion
 

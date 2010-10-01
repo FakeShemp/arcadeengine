@@ -36,9 +36,10 @@ namespace DungeonEye.Gui.CampWindows
 		public RestPartyWindow(Camp camp) 
 			: base(camp, "Rest Party :")
 		{
-			Exit = new ScreenButton("Exit", new Rectangle(256, 244, 80, 28));
-			Exit.Selected += new EventHandler(Exit_Selected);
-			Buttons.Add(Exit);
+			ScreenButton button;
+			button = new ScreenButton("Exit", new Rectangle(256, 244, 80, 28));
+			button.Selected += new EventHandler(Exit_Selected);
+			Buttons.Add(button);
 
 		}
 
@@ -59,18 +60,6 @@ namespace DungeonEye.Gui.CampWindows
 
 
 		#endregion
-
-
-		#region Buttons
-
-		/// <summary>
-		/// 
-		/// </summary>
-		ScreenButton Exit;
-
-
-		#endregion
-
 
 		#region Properties
 
