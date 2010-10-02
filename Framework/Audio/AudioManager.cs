@@ -243,6 +243,24 @@ namespace ArcEngine.Audio
 		static Vector3 velocity;
 
 
+		/// <summary>
+		/// Play tunes
+		/// </summary>
+		static public bool PlayTunes
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// Play sounds
+		/// </summary>
+		static public bool PlaySounds
+		{
+			get;
+			set;
+		}
 
 
 		#endregion

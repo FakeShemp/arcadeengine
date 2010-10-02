@@ -44,6 +44,7 @@ namespace DungeonEye.Gui
 		{
 			Text = text;
 			Rectangle = rectangle;
+			IsVisible = true;
 		}
 
 

@@ -22,6 +22,8 @@ using System.Drawing;
 using ArcEngine;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
+using ArcEngine.Audio;
+
 
 namespace DungeonEye.Gui.CampWindows
 {
@@ -37,12 +39,20 @@ namespace DungeonEye.Gui.CampWindows
 			: base(camp, "Preferences :")
 		{
 			ScreenButton button;
-			button = new ScreenButton("Tunes ar ON", new Rectangle(16, 40, 320, 28));
+			button = new ScreenButton("", new Rectangle(16, 40, 320, 28));
 			button.Selected += new EventHandler(Tunes_Selected);
+			if (AudioManager.PlayTunes)
+				button.Text = "Tunes are ON";
+			else
+				button.Text = "Tunes are OFF";
 			Buttons.Add(button);
 
-			button = new ScreenButton("Sounds are ON", new Rectangle(16, 74, 320, 28));
+			button = new ScreenButton("", new Rectangle(16, 74, 320, 28));
 			button.Selected += new EventHandler(Sounds_Selected);
+			if (AudioManager.PlayTunes)
+				button.Text = "Sounds are ON";
+			else
+				button.Text = "Sounds are OFF";
 			Buttons.Add(button);
 
 			button = new ScreenButton("Bar Graphs are ON", new Rectangle(16, 108, 320, 28));
@@ -73,34 +83,70 @@ namespace DungeonEye.Gui.CampWindows
 
 
 		/// <summary>
-		/// Exit button
+		/// Tunes button
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		void Tunes_Selected(object sender, EventArgs e)
 		{
+			ScreenButton button = sender as ScreenButton;
+
+			if (AudioManager.PlayTunes)
+			{
+				button.Text = "Tunes are OFF";
+				AudioManager.PlayTunes = false;
+			}
+			else
+			{
+				button.Text = "Tunes are ON";
+				AudioManager.PlayTunes = true;
+			}
 		}
 
 
 
 		/// <summary>
-		/// Exit button
+		/// Sounds button
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		void Sounds_Selected(object sender, EventArgs e)
 		{
+			ScreenButton button = sender as ScreenButton;
+
+			if (AudioManager.PlaySounds)
+			{
+				button.Text = "Sounds are OFF";
+				AudioManager.PlaySounds = false;
+			}
+			else
+			{
+				button.Text = "Sounds are ON";
+				AudioManager.PlaySounds = true;
+			}
 		}
 
 
 
 		/// <summary>
-		/// Exit button
+		/// Bar button
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		void Bar_Selected(object sender, EventArgs e)
 		{
+			ScreenButton button = sender as ScreenButton;
+
+			if (Camp.Team.DrawHPAsBar)
+			{
+				button.Text = "Bar Graphs are OFF";
+				Camp.Team.DrawHPAsBar = false;
+			}
+			else
+			{
+				button.Text = "Bar Graphs are ON";
+				Camp.Team.DrawHPAsBar = true;
+			}
 		}
 
 

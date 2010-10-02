@@ -560,7 +560,7 @@ namespace DungeonEye
 						DrawProgressBar(batch, hero.HitPoint.Current, hero.HitPoint.Max, new Rectangle(pos.X + 30, pos.Y + 88, 92, 10), color);
 					}
 					else
-						batch.DrawString(Font, new Point(pos.X + 6, pos.Y + 88), Color.Black, hero.HitPoint + " of " + hero.HitPoint.Max);
+						batch.DrawString(Font, new Point(pos.X + 6, pos.Y + 88), Color.Black, hero.HitPoint.Current + " of " + hero.HitPoint.Max);
 
 
 					// Hands
@@ -1075,7 +1075,7 @@ namespace DungeonEye
 			#region Mouse
 
 			#region Left mouse button
-			if (Mouse.IsNewButtonDown(MouseButtons.Left))
+			if (Mouse.IsNewButtonDown(MouseButtons.Left) && !CampWindow.IsVisible)
 			{
 
 				#region Direction buttons
