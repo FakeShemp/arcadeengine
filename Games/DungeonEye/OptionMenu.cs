@@ -101,7 +101,7 @@ namespace DungeonEye
 		/// <param name="e"></param>
 		void BackEvent(object sender, EventArgs e)
 		{
-			Settings.Save("settings.xml");
+			Settings.Save();
 
 			ScreenManager.RemoveScreen(this);
 		}

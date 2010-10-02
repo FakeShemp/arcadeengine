@@ -123,6 +123,8 @@ namespace DungeonEye
 		/// </summary>
 		public override void LoadContent()
 		{
+			DrawHPAsBar = Settings.GetBool("HPAsBar");
+
 			Batch = new SpriteBatch();
 
 			System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();

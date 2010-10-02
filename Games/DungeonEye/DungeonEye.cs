@@ -52,6 +52,9 @@ namespace DungeonEye
 			Settings.Load("data/settings.xml");
 			InputSchemeName = Settings.GetString("inputscheme");
 			LanguageName = Settings.GetString("language");
+			AudioManager.PlayTunes = Settings.GetBool("Tunes");
+			AudioManager.PlaySounds = Settings.GetBool("Sounds");
+
 
 			// Add the provider
 			ResourceManager.AddProvider(new Providers());

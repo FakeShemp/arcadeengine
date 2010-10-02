@@ -41,6 +41,7 @@ namespace ArcEngine
 		static Settings()
 		{
 			Tokens = new Dictionary<string, string>();
+			FileName = "settings.xml";
 		}
 
 
@@ -60,11 +61,12 @@ namespace ArcEngine
 		/// <summary>
 		/// Sets a string token
 		/// </summary>
+		/// <typeparam name="T"></typeparam>
 		/// <param name="name">Token</param>
 		/// <param name="value">Value</param>
-		static public void SetToken(string name, string value)
+		static public void SetToken(string name, object value)
 		{
-			Tokens[name] = value;
+			Tokens[name] = value.ToString();
 		}
 
 
@@ -81,6 +83,7 @@ namespace ArcEngine
 
 			return defaultvalue;
 		}
+
 
 		/// <summary>
 		/// Gets a string token
@@ -103,8 +106,8 @@ namespace ArcEngine
 		{
 			if (Tokens.ContainsKey(name))
 				return int.Parse(Tokens[name]);
-			else 
-				return defaultvalue;
+
+			return defaultvalue;
 		}
 
 
@@ -124,10 +127,11 @@ namespace ArcEngine
 		/// </summary>
 		/// <param name="name">Token's name</param>
 		/// <returns>Float value, or 0.0f if not found</returns>
-		static float GetFloat(string name)
+		static public float GetFloat(string name)
 		{
 			return GetFloat(name, 0.0f);
 		}
+
 
 		/// <summary>
 		/// Gets a float token
@@ -135,10 +139,36 @@ namespace ArcEngine
 		/// <param name="name">Token's name</param>
 		/// <param name="defaultvalue">Default value if not found</param>
 		/// <returns>Float value, or 0.0f if not found</returns>
-		static float GetFloat(string name, float defaultvalue)
+		static public float GetFloat(string name, float defaultvalue)
 		{
 			if (Tokens.ContainsKey(name))
 				return float.Parse(Tokens[name]);
+
+			return defaultvalue;
+		}
+
+
+		/// <summary>
+		/// Gets a boolean token
+		/// </summary>
+		/// <param name="name">Token's name</param>
+		/// <returns>Boolean value, or false if not found</returns>
+		static public bool GetBool(string name)
+		{
+			return GetBool(name, false);
+		}
+
+
+		/// <summary>
+		/// Gets a boolean token
+		/// </summary>
+		/// <param name="name">Token's name</param>
+		/// <param name="defaultvalue">Default value if not found</param>
+		/// <returns>Boolean value, or defaultvalue if not found</returns>
+		static public bool GetBool(string name, bool defaultvalue)
+		{
+			if (Tokens.ContainsKey(name))
+				return bool.Parse(Tokens[name]);
 
 			return defaultvalue;
 		}
@@ -150,6 +180,17 @@ namespace ArcEngine
 
 		#region IO
 
+
+		/// <summary>
+		/// Saves settings
+		/// </summary>
+		/// <returns>True if successful</returns>
+		static public bool Save()
+		{
+			return Save(FileName);
+		}
+
+
 		/// <summary>
 		/// Saves settings
 		/// </summary>
@@ -160,6 +201,7 @@ namespace ArcEngine
 			if (string.IsNullOrEmpty(filename))
 				return false;
 
+			FileName = filename;
 
 			XmlWriterSettings settings = new XmlWriterSettings();
 			settings.Indent = true;
@@ -184,6 +226,15 @@ namespace ArcEngine
 		}
 
 
+		/// <summary>
+		/// Loads settings from a file
+		/// </summary>
+		/// <returns>True on success</returns>
+		static public bool Load()
+		{
+			return Load(FileName);
+		}
+
 
 		/// <summary>
 		/// Loads settings from a file
@@ -195,6 +246,7 @@ namespace ArcEngine
 			if (string.IsNullOrEmpty(filename))
 				return false;
 
+			FileName = filename;
 
 			Trace.Write("Loading settings from file \"" + filename + "\"...");
 
@@ -246,6 +298,14 @@ namespace ArcEngine
 		static Dictionary<string, string> Tokens;
 
 
+		/// <summary>
+		/// Filename
+		/// </summary>
+		static public string FileName
+		{
+			get;
+			set;
+		}
 
 		#endregion
 

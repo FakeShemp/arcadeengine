@@ -55,8 +55,12 @@ namespace DungeonEye.Gui.CampWindows
 				button.Text = "Sounds are OFF";
 			Buttons.Add(button);
 
-			button = new ScreenButton("Bar Graphs are ON", new Rectangle(16, 108, 320, 28));
+			button = new ScreenButton("", new Rectangle(16, 108, 320, 28));
 			button.Selected += new EventHandler(Bar_Selected);
+			if (Camp.Team.DrawHPAsBar)
+				button.Text = "Bar Graphs are ON";
+			else
+				button.Text = "Bar Graphs are OFF";
 			Buttons.Add(button);
 
 			button = new ScreenButton("Exit", new Rectangle(256, 244, 80, 28));
@@ -77,6 +81,7 @@ namespace DungeonEye.Gui.CampWindows
 		/// <param name="e"></param>
 		void Exit_Selected(object sender, EventArgs e)
 		{
+			Settings.Save();
 			Closing = true;
 		}
 
@@ -101,6 +106,8 @@ namespace DungeonEye.Gui.CampWindows
 				button.Text = "Tunes are ON";
 				AudioManager.PlayTunes = true;
 			}
+
+			Settings.SetToken("Tunes", AudioManager.PlayTunes);
 		}
 
 
@@ -124,6 +131,8 @@ namespace DungeonEye.Gui.CampWindows
 				button.Text = "Sounds are ON";
 				AudioManager.PlaySounds = true;
 			}
+
+			Settings.SetToken("Sounds", AudioManager.PlaySounds);
 		}
 
 
@@ -147,6 +156,8 @@ namespace DungeonEye.Gui.CampWindows
 				button.Text = "Bar Graphs are ON";
 				Camp.Team.DrawHPAsBar = true;
 			}
+
+			Settings.SetToken("HPAsBar", Camp.Team.DrawHPAsBar);
 		}
 
 
