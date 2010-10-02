@@ -33,9 +33,11 @@ namespace DungeonEye.Gui.CampWindows
 		/// <summary>
 		/// Memorize spell window
 		/// </summary>
-		public MemorizeSpellsWindow(Camp camp)
+		public MemorizeSpellsWindow(Camp camp, Hero hero)
 			: base(camp, "Memorize Spells :")
 		{
+			Hero = hero;
+
 			ScreenButton button;
 
 			button = new ScreenButton("Exit", new Rectangle(256, 244, 80, 28));
@@ -119,6 +121,14 @@ namespace DungeonEye.Gui.CampWindows
 		#region Properties
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		public Hero Hero
+		{
+			get;
+			private set;
+		}
 
 
 		#endregion

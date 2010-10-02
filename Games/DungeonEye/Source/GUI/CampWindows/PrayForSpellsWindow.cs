@@ -33,9 +33,12 @@ namespace DungeonEye.Gui.CampWindows
 		/// <summary>
 		/// constructor
 		/// </summary>
-		public PrayForSpellsWindow(Camp camp)
+		public PrayForSpellsWindow(Camp camp, Hero hero)
 			: base(camp, "Pray For Spells :")
 		{
+
+			Hero = hero;
+
 			ScreenButton button;
 
 			button = new ScreenButton("Exit", new Rectangle(256, 244, 80, 28));
@@ -44,6 +47,30 @@ namespace DungeonEye.Gui.CampWindows
 
 		}
 
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="batch"></param>
+		public override void Draw(SpriteBatch batch)
+		{
+			base.Draw(batch);
+
+
+			string text = "Select a character<br />from your party<br />who would like to<br /> pray for spells.";
+		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="time"></param>
+		public override void Update(GameTime time)
+		{
+			base.Update(time);
+		}
 
 
 		#region Events
@@ -66,6 +93,14 @@ namespace DungeonEye.Gui.CampWindows
 		#region Properties
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		public Hero Hero
+		{
+			get;
+			private set;
+		}
 
 
 		#endregion

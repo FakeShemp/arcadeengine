@@ -869,13 +869,13 @@ namespace DungeonEye
 		/// Checks if the hero belgons to a class
 		/// </summary>
 		/// <param name="classe">Class</param>
-		/// <returns>True if the Hero belgons to this class</returns>
+		/// <returns>True if the Hero belongs to this class</returns>
 		public bool CheckClass(HeroClass classe)
 		{
 			foreach(Profession prof in Professions)
 				if (prof != null)
 				{
-					if (prof.Class == classe)
+					if ((prof.Class | classe) == classe)
 						return true;
 				}
 
@@ -891,11 +891,12 @@ namespace DungeonEye
 		public Profession GetProfession(HeroClass classe)
 		{
 			foreach (Profession prof in Professions)
-				if (prof.Class == classe)
+				if ((prof.Class | classe) == classe)
 					return prof;
 
 			return null;
 		}
+
 
 		/// <summary>
 		/// Can use the hand

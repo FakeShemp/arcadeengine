@@ -113,7 +113,9 @@ namespace DungeonEye
 		public void Draw(SpriteBatch batch)
 		{
 			if (!IsVisible)
-			return;
+				return;
+
+			Color color;
 
 			// Main window
 			batch.DrawTile(Tileset, 23, new Point(MainRectangle.Location.X, MainRectangle.Location.Y - 2));
@@ -141,16 +143,27 @@ namespace DungeonEye
 
 			// Display at max 6 spells
 			Point pos = new Point(146, 264);
-			for (int id = 0; id < Math.Min(spells.Count, 6); id++)
+			for (int id = 0 ; id < Math.Min(spells.Count, 6) ; id++)
 			{
-				batch.DrawString(Font, pos, Color.White, spells[id].Name);
+				color = Color.White;
+
+				if (new Rectangle(pos.X, pos.Y, 212, 12).Contains(Mouse.Location))
+					color = Color.Black;
+
+				batch.DrawString(Font, pos, color, spells[id].Name);
 				pos.Offset(0, 12);
 			}
 
 
 			// Abort spell
 			batch.DrawTile(Tileset, 30, new Point(142, 336));
-			batch.DrawString(Font, new Point(146, 340), Color.Black, "Abort spell");
+
+			// Abort spell
+			if (new Rectangle(MainRectangle.X + 2, MainRectangle.Bottom - 14, MainRectangle.Width - 56, 18).Contains(Mouse.Location))
+				color = Color.Red;
+			else
+				color = Color.White;
+			batch.DrawString(Font, new Point(146, 340), color, "Abort spell");
 
 			// Next & previous buttons
 			batch.DrawTile(Tileset, 28, new Point(298, 336));

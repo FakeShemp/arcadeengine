@@ -217,6 +217,7 @@
     <Compile Include="Source\CriticalHit.cs" />
     <Compile Include="Source\Defense.cs" />
     <Compile Include="Source\Entity.cs" />
+    <Compile Include="Source\Gui\CampWindows\SelectHeroByClassWindow.cs" />
     <Compile Include="Source\Gui\CampWindows\GameOptionsWindow.cs" />
     <Compile Include="Source\Gui\CampWindows\PreferencesWindow.cs" />
     <Compile Include="Source\Gui\CampWindows\ScribeScrollsWindow.cs" />
