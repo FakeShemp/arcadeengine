@@ -73,7 +73,12 @@
 			// 
 			this.LevelBox.Location = new System.Drawing.Point(88, 205);
 			this.LevelBox.Maximum = new decimal(new int[] {
-            9,
+            6,
+            0,
+            0,
+            0});
+			this.LevelBox.Minimum = new decimal(new int[] {
+            1,
             0,
             0,
             0});
@@ -81,6 +86,11 @@
 			this.LevelBox.Size = new System.Drawing.Size(77, 20);
 			this.LevelBox.TabIndex = 1;
 			this.LevelBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.LevelBox.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
 			this.LevelBox.ValueChanged += new System.EventHandler(this.LevelBox_ValueChanged);
 			// 
 			// label1

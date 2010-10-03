@@ -20,7 +20,11 @@
 			<race value="HumanMale" />
 			<profession>
 				<class name="Fighter" />
-				<xp points="0" />
+				<xp points="8324" />
+			</profession>
+			<profession>
+				<class name="Paladin" />
+				<xp points="32484" />
 			</profession>
 			<inventory position="Secondary" name="Light Steel Shield" />
 			<inventory position="Primary" name="Short Sword" />
