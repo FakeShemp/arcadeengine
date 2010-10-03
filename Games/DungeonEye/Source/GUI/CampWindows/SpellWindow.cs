@@ -32,14 +32,16 @@ namespace DungeonEye.Gui.CampWindows
 	/// <summary>
 	/// Select a hero by its class
 	/// </summary>
-	public class SelectHeroByClassWindow : Window
+	public class SpellWindow : Window
 	{
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public SelectHeroByClassWindow(Camp camp)
+		public SpellWindow(Camp camp)
 			: base(camp, "")
 		{
+			Interface = ResourceManager.CreateSharedAsset<TileSet>("Interface");
+	
 			// Adds buttons
 			ScreenButton button;
 
@@ -47,7 +49,16 @@ namespace DungeonEye.Gui.CampWindows
 			button.Selected += new EventHandler(Exit_Selected);
 			Buttons.Add(button);
 
-			Interface = ResourceManager.CreateSharedAsset<TileSet>("Interface");
+
+			Levels = new ScreenButton[6];
+			for (int i = 0 ; i < 6 ; i++)
+			{
+				Levels[i] = new ScreenButton((i + 1).ToString(), new Rectangle(22 + i * 54, 32, 40, 46));
+				Levels[i].Selected += new EventHandler(Level_Selected);
+				Levels[i].ReactOnMouseOver = false;
+				Levels[i].IsVisible = false;
+				Buttons.Add(Levels[i]);
+			}
 
 		}
 
@@ -60,12 +71,14 @@ namespace DungeonEye.Gui.CampWindows
 		{
 			base.Draw(batch);
 
+
 			// Display message
-			batch.DrawString(Camp.Font, new Point(26, 58), Color.White, Message);
+			if (Hero == null)
+			{
+				batch.DrawString(Camp.Font, new Point(26, 58), Color.White, Message);
+			}
 
-
-			// Draw heroes
-			Point pos;
+			#region Draw heroes
 			for (int y = 0 ; y < 3 ; y++)
 			{
 				for (int x = 0 ; x < 2 ; x++)
@@ -74,30 +87,32 @@ namespace DungeonEye.Gui.CampWindows
 					if (hero == null)
 						continue;
 
-					// Hero apply
-					if (hero.CheckClass(Filter))
-						continue;
-
-					pos = new Point(366 + 144 * x, y * 104 + 2);
-
-					// Ghost name
-					batch.DrawTile(Interface, 31, new Point(368 + 144 * x, y * 104 + 4));
-
 					// Draw rectangle around the hero
-					// 366, 2 x 130, 104
+					if (hero == Hero)
+					{
+						batch.DrawRectangle(new Rectangle(366 + x * 144, 2 + y * 104, 130, 104), Color.White);
+					}
+					else if (!hero.CheckClass(Filter))
+					{
+						// Ghost name
+						batch.DrawTile(Interface, 31, new Point(368 + 144 * x, y * 104 + 4));
+					}
 				}
 			}
+			#endregion
 		}
 
 
 		/// <summary>
-		/// 
+		/// Update
 		/// </summary>
-		/// <param name="time"></param>
+		/// <param name="time">Elapsed game time</param>
 		public override void Update(GameTime time)
 		{
 			base.Update(time);
 
+
+			#region Select a new hero
 			if (Mouse.IsNewButtonDown(System.Windows.Forms.MouseButtons.Left))
 			{
 				for (int y = 0 ; y < 3 ; y++)
@@ -114,38 +129,41 @@ namespace DungeonEye.Gui.CampWindows
 
 						if (new Rectangle(368 + x * 144, 4 + y * 104, 126, 100).Contains(Mouse.Location))
 						{
-							Target = hero;
-							Closing = true;
-							OnHeroSelected();
+							HeroSelected();
+							Hero = hero;
 							break;
 						}
 					}
 				}
 			}
+			#endregion
 		}
 
 
 
-		#region Events
-
-
 		/// <summary>
-		/// Event raised when the menu is selected.
+		/// Change GUI elements when a new hero is selected
 		/// </summary>
-		public event EventHandler HeroSelected;
-
-
-		/// <summary>
-		/// Method for raising the Selected event.
-		/// </summary>
-		public virtual void OnHeroSelected()
+		void HeroSelected()
 		{
-			if (HeroSelected != null)
-				HeroSelected(this, null);
+			// Buttons already present
+			if (Hero != null)
+				return;
+
+
+			Title = "Spells Available :";
+
+			ScreenButton button;
+			button = new ScreenButton("Clear", new Rectangle(16, 244, 96, 28));
+			button.Selected += new EventHandler(Clear_Selected);
+			Buttons.Add(button);
+
+			for (int i = 0 ; i < 6 ; i++)
+				Levels[i].IsVisible = true;
+
+			Levels[0].TextColor = Colors.Red;
+			SpellLevel = 1;
 		}
-
-
-		#endregion
 
 
 		#region Events
@@ -161,6 +179,30 @@ namespace DungeonEye.Gui.CampWindows
 			Closing = true;
 		}
 
+		/// <summary>
+		/// Exit button
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void Level_Selected(object sender, EventArgs e)
+		{
+			for (int i = 0 ; i < 6 ; i++)
+				Levels[i].TextColor = Color.White;
+
+			ScreenButton button = sender as ScreenButton;
+			button.TextColor = Colors.Red;
+		}
+
+
+
+		/// <summary>
+		/// Clear button
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void Clear_Selected(object sender, EventArgs e)
+		{
+		}
 
 		#endregion
 
@@ -200,7 +242,7 @@ namespace DungeonEye.Gui.CampWindows
 		/// <summary>
 		/// Selected hero
 		/// </summary>
-		public Hero Target
+		public Hero Hero
 		{
 			get;
 			private set;
@@ -222,6 +264,17 @@ namespace DungeonEye.Gui.CampWindows
 		/// </summary>
 		TileSet Interface;
 
+
+		/// <summary>
+		/// Levels buttons
+		/// </summary>
+		ScreenButton[] Levels;
+
+
+		/// <summary>
+		/// Current spell level
+		/// </summary>
+		int SpellLevel;
 
 		#endregion
 

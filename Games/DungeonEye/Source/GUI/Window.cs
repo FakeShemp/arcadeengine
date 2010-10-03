@@ -148,11 +148,14 @@ namespace DungeonEye.Gui
 
 				if (button.Rectangle.Contains(mousePos))
 				{
-					button.TextColor = Colors.Red;
+					if (button.ReactOnMouseOver)
+						button.TextColor = Colors.Red;
+
+					// Click on button
 					if (Mouse.IsNewButtonDown(System.Windows.Forms.MouseButtons.Left))
 						button.OnSelectEntry();
 				}
-				else
+				else if (button.ReactOnMouseOver)
 				{
 					button.TextColor = Color.White;
 				}
@@ -170,7 +173,7 @@ namespace DungeonEye.Gui
 		public string Title
 		{
 			get;
-			private set;
+			protected set;
 		}
 
 

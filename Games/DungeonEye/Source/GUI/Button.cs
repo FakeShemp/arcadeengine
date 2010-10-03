@@ -45,6 +45,8 @@ namespace DungeonEye.Gui
 			Text = text;
 			Rectangle = rectangle;
 			IsVisible = true;
+			TextColor = Color.White;
+			ReactOnMouseOver = true;
 		}
 
 
@@ -98,6 +100,16 @@ namespace DungeonEye.Gui
 		/// Shows or hides the button
 		/// </summary>
 		public bool IsVisible
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// Change text color on mouse over
+		/// </summary>
+		public bool ReactOnMouseOver
 		{
 			get;
 			set;

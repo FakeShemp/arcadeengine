@@ -131,23 +131,10 @@ namespace DungeonEye.Gui.CampWindows
 		/// <param name="e"></param>
 		void PrayForSpells_Selected(object sender, EventArgs e)
 		{
-			SelectHeroByClassWindow window = new SelectHeroByClassWindow(Camp);
+			SpellWindow window = new SpellWindow(Camp);
 			window.Message = "Select a character<br />from your party<br />who would like to<br />pray for spells.";
-			window.HeroSelected += new EventHandler(PrayForSpell_HeroSelected);
 			window.Filter = HeroClass.Cleric | HeroClass.Paladin;
 			Camp.AddWindow(window);
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		void PrayForSpell_HeroSelected(object sender, EventArgs e)
-		{
-			SelectHeroByClassWindow window = sender as SelectHeroByClassWindow;
-			Camp.AddWindow(new PrayForSpellsWindow(Camp, window.Target));
 		}
 
 
@@ -158,23 +145,10 @@ namespace DungeonEye.Gui.CampWindows
 		/// <param name="e"></param>
 		void MemorizeSpells_Selected(object sender, EventArgs e)
 		{
-			SelectHeroByClassWindow window = new SelectHeroByClassWindow(Camp);
+			SpellWindow window = new SpellWindow(Camp);
 			window.Message = "Select a character<br />from your party<br />who would like to<br />memorize spells.";
-			window.HeroSelected += new EventHandler(MemorizeSpell_HeroSelected);
 			window.Filter = HeroClass.Mage;
 			Camp.AddWindow(window);
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		void MemorizeSpell_HeroSelected(object sender, EventArgs e)
-		{
-			SelectHeroByClassWindow window = sender as SelectHeroByClassWindow;
-			Camp.AddWindow(new MemorizeSpellsWindow(Camp, window.Target));
 		}
 
 
