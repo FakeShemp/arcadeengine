@@ -19,26 +19,141 @@
 #endregion
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
+using System.Xml;
 using ArcEngine;
+using ArcEngine.Asset;
+using ArcEngine.Forms;
 
 namespace DungeonEye.Forms
 {
 	/// <summary>
 	/// Control to edit Hero's parameters
 	/// </summary>
-	public partial class HeroControl : UserControl
+	public partial class HeroForm : AssetEditor
 	{
 
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public HeroControl()
+		public HeroForm(XmlNode node)
 		{
 			InitializeComponent();
+
+			Hero hero = new Hero(null);
+			hero.Load(node);
+
+			Hero = hero;
+		}
+
+
+		/// <summary>
+		/// Saves the asset to the manager
+		/// </summary>
+		public override void Save()
+		{
+			ResourceManager.AddAsset<Hero>(Hero.Name, ResourceManager.ConvertAsset(Hero));
+		}
+
+
+
+
+		/// <summary>
+		/// Form closing
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void Form_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			DialogResult result = MessageBox.Show("Save modifications ?", "Hero Editor", MessageBoxButtons.YesNoCancel);
+
+			if (result == DialogResult.Yes)
+			{
+				Save();
+				Hero = null;
+
+			}
+			else if (result == DialogResult.Cancel)
+			{
+				e.Cancel = true;
+			}
+
+		}
+
+
+
+
+
+		/// <summary>
+		/// Rebuild data
+		/// </summary>
+		void Rebuild()
+		{
+			if (Hero == null)
+			{
+				QuiverBox.Value = 0;
+				HelmetBox.SelectedItem = string.Empty;
+				PrimaryBox.SelectedItem = string.Empty;
+				SecondaryBox.SelectedItem = string.Empty;
+				ArmorBox.SelectedItem = string.Empty;
+				WristBox.SelectedItem = string.Empty;
+				LeftRingBox.SelectedItem = string.Empty;
+				RightRingBox.SelectedItem = string.Empty;
+				FeetBox.SelectedItem = string.Empty;
+				NeckBox.SelectedItem = string.Empty;
+			}
+			else
+			{
+				QuiverBox.Value = Hero.Quiver;
+
+				Item item = Hero.GetInventoryItem(InventoryPosition.Helmet);
+				HelmetBox.SelectedItem = item != null ? item.Name : string.Empty;
+				item = Hero.GetInventoryItem(InventoryPosition.Primary);
+				PrimaryBox.SelectedItem = item != null ? item.Name : string.Empty;
+				item = Hero.GetInventoryItem(InventoryPosition.Secondary);
+				SecondaryBox.SelectedItem = item != null ? item.Name : string.Empty;
+				item = Hero.GetInventoryItem(InventoryPosition.Armor);
+				ArmorBox.SelectedItem = item != null ? item.Name : string.Empty;
+				item = Hero.GetInventoryItem(InventoryPosition.Wrist);
+				WristBox.SelectedItem = item != null ? item.Name : string.Empty;
+				item = Hero.GetInventoryItem(InventoryPosition.Ring_Left);
+				LeftRingBox.SelectedItem = item != null ? item.Name : string.Empty;
+				item = Hero.GetInventoryItem(InventoryPosition.Ring_Right);
+				RightRingBox.SelectedItem = item != null ? item.Name : string.Empty;
+				item = Hero.GetInventoryItem(InventoryPosition.Feet);
+				FeetBox.SelectedItem = item != null ? item.Name : string.Empty;
+				item = Hero.GetInventoryItem(InventoryPosition.Neck);
+				NeckBox.SelectedItem = item != null ? item.Name : string.Empty;
+			}
+		}
+
+
+		#region Main control events
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void HeroControl_Load(object sender, EventArgs e)
+		{
+			RebuildProperties();
+			RebuildLearnedSpells();
+		}
+
+		#endregion
+
+
+
+		#region Spells events
+
+		/// <summary>
+		/// 
+		/// </summary>
+		void RebuildProperties()
+		{
+			if (this.DesignMode)
+				return;
 
 			List<string> list = ResourceManager.GetAssets<Item>();
 			list.Insert(0, "");
@@ -54,53 +169,24 @@ namespace DungeonEye.Forms
 		}
 
 
-
 		/// <summary>
-		/// Rebuild data
+		/// 
 		/// </summary>
-		void Rebuild()
+		void RebuildLearnedSpells()
 		{
-			if (hero == null)
-			{
-				QuiverBox.Value = 0;
-				HelmetBox.SelectedItem = string.Empty;
-				PrimaryBox.SelectedItem = string.Empty;
-				SecondaryBox.SelectedItem = string.Empty;
-				ArmorBox.SelectedItem = string.Empty;
-				WristBox.SelectedItem = string.Empty;
-				LeftRingBox.SelectedItem = string.Empty;
-				RightRingBox.SelectedItem = string.Empty;
-				FeetBox.SelectedItem = string.Empty;
-				NeckBox.SelectedItem = string.Empty;
-			}
-			else
-			{
-				QuiverBox.Value = hero.Quiver;
-
-				Item item = hero.GetInventoryItem(InventoryPosition.Helmet);
-				HelmetBox.SelectedItem = item != null ? item.Name : string.Empty;
-				item = hero.GetInventoryItem(InventoryPosition.Primary);
-				PrimaryBox.SelectedItem = item != null ? item.Name : string.Empty;
-				item = hero.GetInventoryItem(InventoryPosition.Secondary);
-				SecondaryBox.SelectedItem = item != null ? item.Name : string.Empty;
-				item = hero.GetInventoryItem(InventoryPosition.Armor);
-				ArmorBox.SelectedItem = item != null ? item.Name : string.Empty;
-				item = hero.GetInventoryItem(InventoryPosition.Wrist);
-				WristBox.SelectedItem = item != null ? item.Name : string.Empty;
-				item = hero.GetInventoryItem(InventoryPosition.Ring_Left);
-				LeftRingBox.SelectedItem = item != null ? item.Name : string.Empty;
-				item = hero.GetInventoryItem(InventoryPosition.Ring_Right);
-				RightRingBox.SelectedItem = item != null ? item.Name : string.Empty;
-				item = hero.GetInventoryItem(InventoryPosition.Feet);
-				FeetBox.SelectedItem = item != null ? item.Name : string.Empty;
-				item = hero.GetInventoryItem(InventoryPosition.Neck);
-				NeckBox.SelectedItem = item != null ? item.Name : string.Empty;
-			}
+			if (this.DesignMode)
+				return;
+			LearnedSpellBox.BeginUpdate();
+			LearnedSpellBox.Items.Clear();
+			LearnedSpellBox.Items.AddRange(ResourceManager.GetAssets<Spell>().ToArray());
+			LearnedSpellBox.EndUpdate();
 		}
 
+		#endregion
 
-		#region Events
 
+
+		#region Properties events
 
 		/// <summary>
 		/// 
@@ -109,10 +195,10 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void numericUpDown1_ValueChanged(object sender, EventArgs e)
 		{
-			if (hero == null)
+			if (Hero == null)
 				return;
 
-			hero.Quiver = (int)QuiverBox.Value;
+			Hero.Quiver = (int) QuiverBox.Value;
 		}
 
 
@@ -123,10 +209,10 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void ArmorBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if (hero == null)
+			if (Hero == null)
 				return;
 
-			hero.SetInventoryItem(InventoryPosition.Armor, ResourceManager.CreateAsset<Item>((string)ArmorBox.SelectedItem));
+			Hero.SetInventoryItem(InventoryPosition.Armor, ResourceManager.CreateAsset<Item>((string)ArmorBox.SelectedItem));
 		}
 
 		
@@ -137,10 +223,10 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void WristBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if (hero == null)
+			if (Hero == null)
 				return;
 
-			hero.SetInventoryItem(InventoryPosition.Wrist, ResourceManager.CreateAsset<Item>((string)WristBox.SelectedItem));
+			Hero.SetInventoryItem(InventoryPosition.Wrist, ResourceManager.CreateAsset<Item>((string)WristBox.SelectedItem));
 
 		}
 
@@ -152,10 +238,10 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void LeftRingBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if (hero == null)
+			if (Hero == null)
 				return;
 
-			hero.SetInventoryItem(InventoryPosition.Ring_Left, ResourceManager.CreateAsset<Item>((string)LeftRingBox.SelectedItem));
+			Hero.SetInventoryItem(InventoryPosition.Ring_Left, ResourceManager.CreateAsset<Item>((string)LeftRingBox.SelectedItem));
 
 		}
 
@@ -167,10 +253,10 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void RightRingBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if (hero == null)
+			if (Hero == null)
 				return;
 
-			hero.SetInventoryItem(InventoryPosition.Ring_Right, ResourceManager.CreateAsset<Item>((string)RightRingBox.SelectedItem));
+			Hero.SetInventoryItem(InventoryPosition.Ring_Right, ResourceManager.CreateAsset<Item>((string)RightRingBox.SelectedItem));
 
 		}
 
@@ -182,10 +268,10 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void PrimaryBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if (hero == null)
+			if (Hero == null)
 				return;
 
-			hero.SetInventoryItem(InventoryPosition.Primary, ResourceManager.CreateAsset<Item>((string)PrimaryBox.SelectedItem));
+			Hero.SetInventoryItem(InventoryPosition.Primary, ResourceManager.CreateAsset<Item>((string)PrimaryBox.SelectedItem));
 		}
 
 
@@ -196,10 +282,10 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void SecondaryBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if (hero == null)
+			if (Hero == null)
 				return;
 
-			hero.SetInventoryItem(InventoryPosition.Secondary, ResourceManager.CreateAsset<Item>((string)SecondaryBox.SelectedItem));
+			Hero.SetInventoryItem(InventoryPosition.Secondary, ResourceManager.CreateAsset<Item>((string)SecondaryBox.SelectedItem));
 		}
 
 
@@ -210,10 +296,10 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void FeetBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if (hero == null)
+			if (Hero == null)
 				return;
 
-			hero.SetInventoryItem(InventoryPosition.Feet, ResourceManager.CreateAsset<Item>((string)FeetBox.SelectedItem));
+			Hero.SetInventoryItem(InventoryPosition.Feet, ResourceManager.CreateAsset<Item>((string)FeetBox.SelectedItem));
 		}
 
 
@@ -224,10 +310,10 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void NeckBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if (hero == null)
+			if (Hero == null)
 				return;
 
-			hero.SetInventoryItem(InventoryPosition.Neck, ResourceManager.CreateAsset<Item>((string)NeckBox.SelectedItem));
+			Hero.SetInventoryItem(InventoryPosition.Neck, ResourceManager.CreateAsset<Item>((string)NeckBox.SelectedItem));
 
 		}
 
@@ -239,10 +325,10 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void HelmetBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if (hero == null)
+			if (Hero == null)
 				return;
 
-			hero.SetInventoryItem(InventoryPosition.Helmet, ResourceManager.CreateAsset<Item>((string)HelmetBox.SelectedItem));
+			Hero.SetInventoryItem(InventoryPosition.Helmet, ResourceManager.CreateAsset<Item>((string)HelmetBox.SelectedItem));
 
 		}
 
@@ -253,28 +339,23 @@ namespace DungeonEye.Forms
 		#region Properties
 
 		/// <summary>
-		/// Hero to edit
+		/// Asset handle
 		/// </summary>
-		public Hero Hero
+		public override IAsset Asset
 		{
 			get
 			{
-				return hero;
-			}
-
-			set
-			{
-				hero = value;
-				Rebuild();
+				return Hero;
 			}
 		}
 
-
 		/// <summary>
-		/// 
+		/// Hero to edit
 		/// </summary>
-		Hero hero;
+		Hero Hero;
+
 
 		#endregion
+
 	}
 }

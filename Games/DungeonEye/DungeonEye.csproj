@@ -93,6 +93,9 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DungeonEye, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <ExecutableExtension>.exe</ExecutableExtension>
+    </Reference>
     <Reference Include="OpenTK.GLControl">
       <HintPath>..\..\Framework\Libraries\OpenTK\Release\OpenTK.GLControl.dll</HintPath>
     </Reference>
@@ -125,11 +128,11 @@
     <Compile Include="Forms\EntityControl.Designer.cs">
       <DependentUpon>EntityControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\HeroControl.cs">
-      <SubType>UserControl</SubType>
+    <Compile Include="Forms\HeroForm.cs">
+      <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\HeroControl.Designer.cs">
-      <DependentUpon>HeroControl.cs</DependentUpon>
+    <Compile Include="Forms\HeroForm.Designer.cs">
+      <DependentUpon>HeroForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\HitPointControl.cs">
       <SubType>UserControl</SubType>
@@ -321,8 +324,8 @@
       <DependentUpon>EntityControl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\HeroControl.resx">
-      <DependentUpon>HeroControl.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\HeroForm.resx">
+      <DependentUpon>HeroForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\HitPointControl.resx">

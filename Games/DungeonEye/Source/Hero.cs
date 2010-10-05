@@ -23,6 +23,7 @@ using System.Drawing;
 using System.Xml;
 using ArcEngine;
 using ArcEngine.Input;
+using ArcEngine.Asset;
 
 // Generate a new hero with random values
 // <see cref="http://www.aidedd.org/regles-f97/creation-de-perso-t1456.html"/>
@@ -39,7 +40,7 @@ namespace DungeonEye
 	/// 
 	/// http://uaf.wiki.sourceforge.net/Player%27s+Guide
 	/// </summary>
-	public class Hero : Entity
+	public class Hero : Entity, IAsset
 	{
 		/// <summary>
 		/// Default constructor
@@ -49,6 +50,7 @@ namespace DungeonEye
 		{
 			Team = team;
 			Professions = new List<Profession>();
+			LearnedSpells = new List<string>();
 
 			Head = -1;
 			Inventory = new Item[26];
@@ -66,6 +68,15 @@ namespace DungeonEye
 			Spells = new List<Spell>();
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		public bool Init()
+		{
+			return true;
+		}
 
 		/// <summary>
 		/// Updates hero
@@ -954,7 +965,9 @@ namespace DungeonEye
 		{
 			if (xml == null)
 				return false;
-		
+
+			Name = xml.Attributes["name"].Value;
+
 			foreach (XmlNode node in xml)
 			{
 				if (node.NodeType == XmlNodeType.Comment)
@@ -989,12 +1002,6 @@ namespace DungeonEye
 					case "quiver":
 					{
 						Quiver = int.Parse(node.Attributes["count"].Value);
-					}
-					break;
-					
-					case "name":
-					{
-						Name = node.Attributes["value"].Value;
 					}
 					break;
 
@@ -1056,12 +1063,9 @@ namespace DungeonEye
 				return false;
 
 			writer.WriteStartElement("hero");
+			writer.WriteAttributeString("name", Name);
 			base.Save(writer);
 
-			// Name
-			writer.WriteStartElement("name");
-			writer.WriteAttributeString("value", Name);
-			writer.WriteEndElement();
 
 			writer.WriteStartElement("quiver");
 			writer.WriteAttributeString("count", Quiver.ToString());
@@ -1131,6 +1135,29 @@ namespace DungeonEye
 
 
 		#region Hero properties
+
+		/// <summary>
+		/// Is asset disposed
+		/// </summary>
+		public bool IsDisposed
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// Xml tag of the asset in bank
+		/// </summary>
+		public string XmlTag
+		{
+			get
+			{
+				return "hero";
+			}
+		}
+
+
 
 		#region Bonus
 
@@ -1260,6 +1287,17 @@ namespace DungeonEye
 
 		#endregion
 
+
+		/// <summary>
+		/// Known scrolls
+		/// </summary>
+		public List<string> LearnedSpells
+		{
+			get;
+			private set;
+		}
+
+
 		/// <summary>
 		/// Number of arrow in the quiver
 		/// </summary>
@@ -1279,6 +1317,7 @@ namespace DungeonEye
 			{
 			}
 		}
+
 
 		/// <summary>
 		///  Name of the hero

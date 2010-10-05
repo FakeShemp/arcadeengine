@@ -46,12 +46,12 @@ namespace DungeonEye
 			Items = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
 			SharedItems = new Dictionary<string, Item>(StringComparer.OrdinalIgnoreCase);
 			Spells = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
-
+			Heroes = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
 
 
 			Name = "Dungeon Eye";
-			Tags = new string[] { "dungeon", "item", "monster", "walldecoration", "spell" };
-			Assets = new Type[] { typeof(Dungeon), typeof(Item), typeof(Monster), typeof(WallDecoration), typeof(Spell) };
+			Tags = new string[] { "dungeon", "item", "monster", "walldecoration", "spell", "hero" };
+			Assets = new Type[] { typeof(Dungeon), typeof(Item), typeof(Monster), typeof(WallDecoration), typeof(Spell), typeof(Hero) };
 			Version = new Version(0, 1);
 		}
 
@@ -114,6 +114,11 @@ namespace DungeonEye
 				foreach (XmlNode node in Spells.Values)
 					node.WriteTo(writer);
 			}
+			else if (typeof(T) == typeof(Hero))
+			{
+				foreach (XmlNode node in Heroes.Values)
+					node.WriteTo(writer);
+			}
 
 
 			return true;
@@ -149,6 +154,12 @@ namespace DungeonEye
 				case "item":
 				{
 					Items[xml.Attributes["name"].Value] = xml;
+				}
+				break;
+
+				case "hero":
+				{
+					Heroes[xml.Attributes["name"].Value] = xml;
 				}
 				break;
 
@@ -216,6 +227,14 @@ namespace DungeonEye
 				form = new Forms.SpellForm(node);
 			}
 
+			else if (typeof(T) == typeof(Hero))
+			{
+				if (Heroes.ContainsKey(name))
+					node = Heroes[name];
+
+				form = new Forms.HeroForm(node);
+			}
+
 
 			form.TabText = name;
 			return form;
@@ -245,6 +264,8 @@ namespace DungeonEye
 				Items[name] = node;
 			else if (typeof(Spell) == typeof(T))
 				Spells[name] = node;
+			else if (typeof(Hero) == typeof(T))
+				Heroes[name] = node;
 
 		}
 
@@ -272,6 +293,10 @@ namespace DungeonEye
 
 			else if (typeof(T) == typeof(Spell))
 				foreach (string key in Spells.Keys)
+					list.Add(key);
+
+			else if (typeof(T) == typeof(Hero))
+				foreach (string key in Heroes.Keys)
 					list.Add(key);
 
 			list.Sort();
@@ -319,8 +344,14 @@ namespace DungeonEye
 				spell.Load(Spells[name]);
 				return (T) (object) spell;
 			}
-				
-			
+
+			if (typeof(T) == typeof(Hero) && Heroes.ContainsKey(name))
+			{
+				Hero hero = new Hero(null);
+				hero.Load(Heroes[name]);
+				return (T) (object) hero;
+			}
+
 			return default(T);
 
 		}
@@ -349,6 +380,9 @@ namespace DungeonEye
 			else if (typeof(Spell) == typeof(T) && Spells.ContainsKey(name))
 				return Items[name];
 
+			else if (typeof(Hero) == typeof(T) && Heroes.ContainsKey(name))
+				return Heroes[name];
+
 			return null;
 		}
 
@@ -371,6 +405,9 @@ namespace DungeonEye
 
 			else if (typeof(Spell) == typeof(T))
 				Spells.Clear();
+
+			else if (typeof(Hero) == typeof(T))
+				Heroes.Clear();
 		}
 
 
@@ -392,6 +429,9 @@ namespace DungeonEye
 
 			else if (typeof(Spell) == typeof(T) && Spells.ContainsKey(name))
 				Spells.Remove(name);
+
+			else if (typeof(Hero) == typeof(T) && Heroes.ContainsKey(name))
+				Heroes.Remove(name);
 		}
 
 
@@ -405,6 +445,7 @@ namespace DungeonEye
 			Monsters.Clear();
 			Items.Clear();
 			Spells.Clear();
+			Heroes.Clear();
 		}
 
 
@@ -426,6 +467,9 @@ namespace DungeonEye
 
 			if (typeof(T) == typeof(Spell))
 				return Spells.Count;
+
+			if (typeof(T) == typeof(Hero))
+				return Heroes.Count;
 
 			return 0;
 		}
@@ -581,6 +625,13 @@ namespace DungeonEye
 		/// Spells
 		/// </summary>
 		Dictionary<string, XmlNode> Spells;
+
+
+
+		/// <summary>
+		/// Heroes
+		/// </summary>
+		Dictionary<string, XmlNode> Heroes;
 
 
 		/// <summary>

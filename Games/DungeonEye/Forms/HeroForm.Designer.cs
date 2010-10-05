@@ -1,6 +1,6 @@
 ﻿namespace DungeonEye.Forms
 {
-	partial class HeroControl
+	partial class HeroForm
 	{
 		/// <summary> 
 		/// Variable nécessaire au concepteur.
@@ -49,8 +49,27 @@
 			this.ArmorBox = new System.Windows.Forms.ComboBox();
 			this.label8 = new System.Windows.Forms.Label();
 			this.QuiverBox = new System.Windows.Forms.NumericUpDown();
+			this.tabControl1 = new System.Windows.Forms.TabControl();
+			this.PropertiesTab = new System.Windows.Forms.TabPage();
+			this.SpellTab = new System.Windows.Forms.TabPage();
+			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.LearnedSpellBox = new System.Windows.Forms.CheckedListBox();
+			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.label1 = new System.Windows.Forms.Label();
+			this.groupBox4 = new System.Windows.Forms.GroupBox();
+			this.XPPointBox = new System.Windows.Forms.NumericUpDown();
+			this.XPLevelBox = new System.Windows.Forms.NumericUpDown();
+			this.label2 = new System.Windows.Forms.Label();
+			this.hitPointControl1 = new DungeonEye.Forms.HitPointControl();
 			this.groupBox3.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.QuiverBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize) (this.QuiverBox)).BeginInit();
+			this.tabControl1.SuspendLayout();
+			this.PropertiesTab.SuspendLayout();
+			this.SpellTab.SuspendLayout();
+			this.groupBox2.SuspendLayout();
+			this.groupBox4.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize) (this.XPPointBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize) (this.XPLevelBox)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// groupBox3
@@ -73,7 +92,7 @@
 			this.groupBox3.Controls.Add(this.LeftRingBox);
 			this.groupBox3.Controls.Add(this.WristBox);
 			this.groupBox3.Controls.Add(this.ArmorBox);
-			this.groupBox3.Location = new System.Drawing.Point(7, 53);
+			this.groupBox3.Location = new System.Drawing.Point(22, 89);
 			this.groupBox3.Name = "groupBox3";
 			this.groupBox3.Size = new System.Drawing.Size(212, 271);
 			this.groupBox3.TabIndex = 9;
@@ -159,7 +178,7 @@
 			this.label10.AutoSize = true;
 			this.label10.Location = new System.Drawing.Point(6, 49);
 			this.label10.Name = "label10";
-			this.label10.Size = new System.Drawing.Size(37, 13);
+			this.label10.Size = new System.Drawing.Size(42, 13);
 			this.label10.TabIndex = 5;
 			this.label10.Text = "Wrists :";
 			// 
@@ -263,7 +282,7 @@
 			// label8
 			// 
 			this.label8.AutoSize = true;
-			this.label8.Location = new System.Drawing.Point(19, 21);
+			this.label8.Location = new System.Drawing.Point(34, 57);
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size(44, 13);
 			this.label8.TabIndex = 8;
@@ -271,7 +290,7 @@
 			// 
 			// QuiverBox
 			// 
-			this.QuiverBox.Location = new System.Drawing.Point(69, 19);
+			this.QuiverBox.Location = new System.Drawing.Point(84, 55);
 			this.QuiverBox.Name = "QuiverBox";
 			this.QuiverBox.Size = new System.Drawing.Size(53, 20);
 			this.QuiverBox.TabIndex = 7;
@@ -279,20 +298,161 @@
 			this.QuiverBox.ThousandsSeparator = true;
 			this.QuiverBox.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
 			// 
-			// HeroControl
+			// tabControl1
+			// 
+			this.tabControl1.Controls.Add(this.PropertiesTab);
+			this.tabControl1.Controls.Add(this.SpellTab);
+			this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tabControl1.Location = new System.Drawing.Point(0, 0);
+			this.tabControl1.Name = "tabControl1";
+			this.tabControl1.SelectedIndex = 0;
+			this.tabControl1.Size = new System.Drawing.Size(589, 545);
+			this.tabControl1.TabIndex = 10;
+			// 
+			// PropertiesTab
+			// 
+			this.PropertiesTab.Controls.Add(this.hitPointControl1);
+			this.PropertiesTab.Controls.Add(this.groupBox4);
+			this.PropertiesTab.Controls.Add(this.label8);
+			this.PropertiesTab.Controls.Add(this.groupBox3);
+			this.PropertiesTab.Controls.Add(this.QuiverBox);
+			this.PropertiesTab.Location = new System.Drawing.Point(4, 22);
+			this.PropertiesTab.Name = "PropertiesTab";
+			this.PropertiesTab.Padding = new System.Windows.Forms.Padding(3);
+			this.PropertiesTab.Size = new System.Drawing.Size(581, 519);
+			this.PropertiesTab.TabIndex = 0;
+			this.PropertiesTab.Text = "Properties :";
+			this.PropertiesTab.UseVisualStyleBackColor = true;
+			// 
+			// SpellTab
+			// 
+			this.SpellTab.Controls.Add(this.groupBox2);
+			this.SpellTab.Controls.Add(this.groupBox1);
+			this.SpellTab.Location = new System.Drawing.Point(4, 22);
+			this.SpellTab.Name = "SpellTab";
+			this.SpellTab.Padding = new System.Windows.Forms.Padding(3);
+			this.SpellTab.Size = new System.Drawing.Size(597, 557);
+			this.SpellTab.TabIndex = 1;
+			this.SpellTab.Text = "Spells :";
+			this.SpellTab.UseVisualStyleBackColor = true;
+			// 
+			// groupBox2
+			// 
+			this.groupBox2.Controls.Add(this.LearnedSpellBox);
+			this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.groupBox2.Location = new System.Drawing.Point(3, 234);
+			this.groupBox2.Name = "groupBox2";
+			this.groupBox2.Size = new System.Drawing.Size(591, 320);
+			this.groupBox2.TabIndex = 1;
+			this.groupBox2.TabStop = false;
+			this.groupBox2.Text = "Spells learned (for mages) : ";
+			// 
+			// LearnedSpellBox
+			// 
+			this.LearnedSpellBox.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.LearnedSpellBox.FormattingEnabled = true;
+			this.LearnedSpellBox.Location = new System.Drawing.Point(3, 16);
+			this.LearnedSpellBox.Name = "LearnedSpellBox";
+			this.LearnedSpellBox.Size = new System.Drawing.Size(585, 301);
+			this.LearnedSpellBox.Sorted = true;
+			this.LearnedSpellBox.TabIndex = 0;
+			// 
+			// groupBox1
+			// 
+			this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
+			this.groupBox1.Location = new System.Drawing.Point(3, 3);
+			this.groupBox1.Name = "groupBox1";
+			this.groupBox1.Size = new System.Drawing.Size(591, 231);
+			this.groupBox1.TabIndex = 0;
+			this.groupBox1.TabStop = false;
+			this.groupBox1.Text = "Spells ready to cast :";
+			// 
+			// label1
+			// 
+			this.label1.AutoSize = true;
+			this.label1.Location = new System.Drawing.Point(6, 21);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(27, 13);
+			this.label1.TabIndex = 10;
+			this.label1.Text = "XP :";
+			// 
+			// groupBox4
+			// 
+			this.groupBox4.Controls.Add(this.label2);
+			this.groupBox4.Controls.Add(this.XPLevelBox);
+			this.groupBox4.Controls.Add(this.XPPointBox);
+			this.groupBox4.Controls.Add(this.label1);
+			this.groupBox4.Location = new System.Drawing.Point(240, 96);
+			this.groupBox4.Name = "groupBox4";
+			this.groupBox4.Size = new System.Drawing.Size(156, 82);
+			this.groupBox4.TabIndex = 11;
+			this.groupBox4.TabStop = false;
+			this.groupBox4.Text = "Experience :";
+			// 
+			// XPPointBox
+			// 
+			this.XPPointBox.Location = new System.Drawing.Point(51, 19);
+			this.XPPointBox.Maximum = new decimal(new int[] {
+            99999999,
+            0,
+            0,
+            0});
+			this.XPPointBox.Name = "XPPointBox";
+			this.XPPointBox.Size = new System.Drawing.Size(99, 20);
+			this.XPPointBox.TabIndex = 11;
+			this.XPPointBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.XPPointBox.ThousandsSeparator = true;
+			// 
+			// XPLevelBox
+			// 
+			this.XPLevelBox.Location = new System.Drawing.Point(51, 52);
+			this.XPLevelBox.Name = "XPLevelBox";
+			this.XPLevelBox.ReadOnly = true;
+			this.XPLevelBox.Size = new System.Drawing.Size(99, 20);
+			this.XPLevelBox.TabIndex = 12;
+			this.XPLevelBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.XPLevelBox.ThousandsSeparator = true;
+			// 
+			// label2
+			// 
+			this.label2.AutoSize = true;
+			this.label2.Location = new System.Drawing.Point(6, 54);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(39, 13);
+			this.label2.TabIndex = 13;
+			this.label2.Text = "Level :";
+			// 
+			// hitPointControl1
+			// 
+			this.hitPointControl1.HitPoint = null;
+			this.hitPointControl1.Location = new System.Drawing.Point(240, 182);
+			this.hitPointControl1.Name = "hitPointControl1";
+			this.hitPointControl1.Size = new System.Drawing.Size(156, 77);
+			this.hitPointControl1.TabIndex = 12;
+			// 
+			// HeroForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.Controls.Add(this.groupBox3);
-			this.Controls.Add(this.label8);
-			this.Controls.Add(this.QuiverBox);
-			this.Name = "HeroControl";
-			this.Size = new System.Drawing.Size(605, 583);
+			this.ClientSize = new System.Drawing.Size(589, 545);
+			this.Controls.Add(this.tabControl1);
+			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+			this.Name = "HeroForm";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form_FormClosing);
+			this.Load += new System.EventHandler(this.HeroControl_Load);
 			this.groupBox3.ResumeLayout(false);
 			this.groupBox3.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.QuiverBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize) (this.QuiverBox)).EndInit();
+			this.tabControl1.ResumeLayout(false);
+			this.PropertiesTab.ResumeLayout(false);
+			this.PropertiesTab.PerformLayout();
+			this.SpellTab.ResumeLayout(false);
+			this.groupBox2.ResumeLayout(false);
+			this.groupBox4.ResumeLayout(false);
+			this.groupBox4.PerformLayout();
+			((System.ComponentModel.ISupportInitialize) (this.XPPointBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize) (this.XPLevelBox)).EndInit();
 			this.ResumeLayout(false);
-			this.PerformLayout();
 
 		}
 
@@ -319,5 +479,17 @@
 		private System.Windows.Forms.ComboBox ArmorBox;
 		private System.Windows.Forms.Label label8;
 		private System.Windows.Forms.NumericUpDown QuiverBox;
+		private System.Windows.Forms.TabControl tabControl1;
+		private System.Windows.Forms.TabPage PropertiesTab;
+		private System.Windows.Forms.TabPage SpellTab;
+		private System.Windows.Forms.GroupBox groupBox2;
+		private System.Windows.Forms.GroupBox groupBox1;
+		private System.Windows.Forms.CheckedListBox LearnedSpellBox;
+		private System.Windows.Forms.GroupBox groupBox4;
+		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.NumericUpDown XPLevelBox;
+		private System.Windows.Forms.NumericUpDown XPPointBox;
+		private System.Windows.Forms.Label label1;
+		private HitPointControl hitPointControl1;
 	}
 }

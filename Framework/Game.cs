@@ -620,7 +620,7 @@ namespace ArcEngine
 
 
 		/// <summary>
-		/// 
+		/// Game time
 		/// </summary>
 		public GameTime GameTime
 		{

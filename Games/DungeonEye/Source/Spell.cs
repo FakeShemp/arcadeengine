@@ -42,6 +42,7 @@ namespace DungeonEye
 		{
 			IsDisposed = false;
 			Script = new ScriptInterface<ISpell>();
+			Level = 1;
 		}
 
 

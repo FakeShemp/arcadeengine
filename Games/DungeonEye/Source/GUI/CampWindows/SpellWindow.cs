@@ -53,13 +53,14 @@ namespace DungeonEye.Gui.CampWindows
 			Levels = new ScreenButton[6];
 			for (int i = 0 ; i < 6 ; i++)
 			{
-				Levels[i] = new ScreenButton((i + 1).ToString(), new Rectangle(22 + i * 54, 32, 40, 46));
+				Levels[i] = new ScreenButton((i + 1).ToString(), new Rectangle(22 + i * 54, 32, 40, 36));
 				Levels[i].Selected += new EventHandler(Level_Selected);
 				Levels[i].ReactOnMouseOver = false;
 				Levels[i].IsVisible = false;
 				Buttons.Add(Levels[i]);
 			}
 
+			RectangleColor = Color.White;
 		}
 
 
@@ -75,7 +76,11 @@ namespace DungeonEye.Gui.CampWindows
 			// Display message
 			if (Hero == null)
 			{
-				batch.DrawString(Camp.Font, new Point(26, 58), Color.White, Message);
+				batch.DrawString(Camp.Font, new Point(26, 58), RectangleColor, Message);
+			}
+			else
+			{
+				batch.DrawString(Camp.Font, new Point(16, 76), Color.White, "0 of 0 remaining.");
 			}
 
 			#region Draw heroes
@@ -90,7 +95,9 @@ namespace DungeonEye.Gui.CampWindows
 					// Draw rectangle around the hero
 					if (hero == Hero)
 					{
+						float col = (float)Math.Sin(1.0f);
 						batch.DrawRectangle(new Rectangle(366 + x * 144, 2 + y * 104, 130, 104), Color.White);
+						batch.DrawRectangle(new Rectangle(367 + x * 144, 4 + y * 104, 128, 101), Color.White);
 					}
 					else if (!hero.CheckClass(Filter))
 					{
@@ -111,6 +118,8 @@ namespace DungeonEye.Gui.CampWindows
 		{
 			base.Update(time);
 
+		//	int col = (int) (Math.Sin(time.ElapsedGameTime.Milliseconds) * 255.0f);
+		//	RectangleColor = Color.FromArgb(255, col, col, col);
 
 			#region Select a new hero
 			if (Mouse.IsNewButtonDown(System.Windows.Forms.MouseButtons.Left))
@@ -208,6 +217,13 @@ namespace DungeonEye.Gui.CampWindows
 
 
 		#region Properties
+
+
+		/// <summary>
+		/// Rectangle color around selected hero
+		/// </summary>
+		Color RectangleColor;
+
 
 		/// <summary>
 		/// Number of hero who apply to the filter
