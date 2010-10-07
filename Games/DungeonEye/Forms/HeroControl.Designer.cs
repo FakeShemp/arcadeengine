@@ -353,9 +353,9 @@
 			// 
 			this.ProfessionsBox.Hero = null;
 			this.ProfessionsBox.Location = new System.Drawing.Point(3, 3);
-			this.ProfessionsBox.MinimumSize = new System.Drawing.Size(350, 280);
+			this.ProfessionsBox.MinimumSize = new System.Drawing.Size(300, 175);
 			this.ProfessionsBox.Name = "ProfessionsBox";
-			this.ProfessionsBox.Size = new System.Drawing.Size(350, 280);
+			this.ProfessionsBox.Size = new System.Drawing.Size(300, 175);
 			this.ProfessionsBox.TabIndex = 0;
 			this.ProfessionsBox.Title = "Professions :";
 			// 

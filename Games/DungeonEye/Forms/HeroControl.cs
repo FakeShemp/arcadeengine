@@ -40,16 +40,8 @@ namespace DungeonEye.Forms
 		{
 			InitializeComponent();
 
-			Rebuild();
-
-
-			// Spells
 			Spells = new List<Spell>();
-			List<string> spells = ResourceManager.GetAssets<Spell>();
-			foreach (string name in spells)
-				Spells.Add(ResourceManager.CreateAsset<Spell>(name));
 
-			SpellLevel = 1;
 		}
 
 
@@ -58,7 +50,7 @@ namespace DungeonEye.Forms
 		/// </summary>
 		void Rebuild()
 		{
-			if (hero == null)
+			if (Hero == null)
 			{
 				QuiverBox.Value = 0;
 				HelmetBox.SelectedItem = string.Empty;
@@ -96,6 +88,15 @@ namespace DungeonEye.Forms
 			}
 
 			ProfessionsBox.Hero = Hero;
+
+
+			// Spells
+			Spells.Clear();
+			List<string> spells = ResourceManager.GetAssets<Spell>();
+			foreach (string name in spells)
+				Spells.Add(ResourceManager.CreateAsset<Spell>(name));
+
+			SpellLevel = 1;
 		}
 
 
@@ -108,6 +109,10 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void HeroControl_Load(object sender, EventArgs e)
 		{
+			if (DesignMode)
+				return;
+
+			Rebuild();
 			RebuildProperties();
 			RebuildSpells();
 			//RebuildProfessions();
