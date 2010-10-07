@@ -1013,7 +1013,7 @@ namespace DungeonEye
 
 					case "food":
 					{
-						Food = byte.Parse(node.Attributes["value"].Value);
+						Food = int.Parse(node.Attributes["value"].Value);
 					}
 					break;
 
@@ -1418,7 +1418,7 @@ namespace DungeonEye
 		/// When these value reach zero, the hero is starving: his Stamina and health decrease until he eats, drinks or dies.
 		/// </summary>
 		/// <remarks>Max food Level is 100</remarks>
-		public byte Food
+		public int Food
 		{
 			get;
 			set;

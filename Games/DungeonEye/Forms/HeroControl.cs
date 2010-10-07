@@ -248,7 +248,7 @@ namespace DungeonEye.Forms
 		/// </summary>
 		void RebuildProperties()
 		{
-			if (this.DesignMode)
+			if (this.DesignMode || Hero == null)
 				return;
 
 			List<string> list = ResourceManager.GetAssets<Item>();
@@ -262,10 +262,26 @@ namespace DungeonEye.Forms
 			RightRingBox.DataSource = new List<string>(list);
 			FeetBox.DataSource = new List<string>(list);
 			NeckBox.DataSource = new List<string>(list);
+
+			FoodBox.Value = Hero.Food;
+			HPBox.HitPoint = Hero.HitPoint;
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void FoodBox_ValueChanged(object sender, EventArgs e)
+		{
+			if (Hero == null)
+				return;
 
+			Hero.Food = (int) FoodBox.Value;
+		}
+		
+		
 		/// <summary>
 		/// 
 		/// </summary>
@@ -459,6 +475,7 @@ namespace DungeonEye.Forms
 	
 		
 		#endregion
+
 
 	}
 }

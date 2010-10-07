@@ -47,13 +47,10 @@
 			this.LeftRingBox = new System.Windows.Forms.ComboBox();
 			this.WristBox = new System.Windows.Forms.ComboBox();
 			this.ArmorBox = new System.Windows.Forms.ComboBox();
-			this.label8 = new System.Windows.Forms.Label();
 			this.QuiverBox = new System.Windows.Forms.NumericUpDown();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.PropertiesTab = new System.Windows.Forms.TabPage();
-			this.hitPointControl1 = new DungeonEye.Forms.HitPointControl();
 			this.ProfessionTab = new System.Windows.Forms.TabPage();
-			this.ProfessionsBox = new DungeonEye.Forms.ProfessionsControl();
 			this.SpellTab = new System.Windows.Forms.TabPage();
 			this.label1 = new System.Windows.Forms.Label();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
@@ -68,6 +65,12 @@
 			this.SpellReportLabel = new System.Windows.Forms.Label();
 			this.SpellReadyBox = new System.Windows.Forms.ListBox();
 			this.button2 = new System.Windows.Forms.Button();
+			this.groupBox5 = new System.Windows.Forms.GroupBox();
+			this.FoodBox = new System.Windows.Forms.TrackBar();
+			this.groupBox6 = new System.Windows.Forms.GroupBox();
+			this.label2 = new System.Windows.Forms.Label();
+			this.HPBox = new DungeonEye.Forms.HitPointControl();
+			this.ProfessionsBox = new DungeonEye.Forms.ProfessionsControl();
 			this.groupBox3.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize) (this.QuiverBox)).BeginInit();
 			this.tabControl1.SuspendLayout();
@@ -77,6 +80,9 @@
 			this.groupBox4.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.groupBox1.SuspendLayout();
+			this.groupBox5.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize) (this.FoodBox)).BeginInit();
+			this.groupBox6.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// groupBox3
@@ -99,7 +105,7 @@
 			this.groupBox3.Controls.Add(this.LeftRingBox);
 			this.groupBox3.Controls.Add(this.WristBox);
 			this.groupBox3.Controls.Add(this.ArmorBox);
-			this.groupBox3.Location = new System.Drawing.Point(22, 89);
+			this.groupBox3.Location = new System.Drawing.Point(6, 6);
 			this.groupBox3.Name = "groupBox3";
 			this.groupBox3.Size = new System.Drawing.Size(212, 271);
 			this.groupBox3.TabIndex = 9;
@@ -286,20 +292,11 @@
 			this.ArmorBox.TabIndex = 2;
 			this.ArmorBox.SelectedIndexChanged += new System.EventHandler(this.ArmorBox_SelectedIndexChanged);
 			// 
-			// label8
-			// 
-			this.label8.AutoSize = true;
-			this.label8.Location = new System.Drawing.Point(34, 57);
-			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(44, 13);
-			this.label8.TabIndex = 8;
-			this.label8.Text = "Quiver :";
-			// 
 			// QuiverBox
 			// 
-			this.QuiverBox.Location = new System.Drawing.Point(84, 55);
+			this.QuiverBox.Location = new System.Drawing.Point(82, 20);
 			this.QuiverBox.Name = "QuiverBox";
-			this.QuiverBox.Size = new System.Drawing.Size(53, 20);
+			this.QuiverBox.Size = new System.Drawing.Size(68, 20);
 			this.QuiverBox.TabIndex = 7;
 			this.QuiverBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.QuiverBox.ThousandsSeparator = true;
@@ -319,10 +316,10 @@
 			// 
 			// PropertiesTab
 			// 
-			this.PropertiesTab.Controls.Add(this.hitPointControl1);
-			this.PropertiesTab.Controls.Add(this.label8);
+			this.PropertiesTab.Controls.Add(this.groupBox6);
+			this.PropertiesTab.Controls.Add(this.groupBox5);
+			this.PropertiesTab.Controls.Add(this.HPBox);
 			this.PropertiesTab.Controls.Add(this.groupBox3);
-			this.PropertiesTab.Controls.Add(this.QuiverBox);
 			this.PropertiesTab.Location = new System.Drawing.Point(4, 22);
 			this.PropertiesTab.Name = "PropertiesTab";
 			this.PropertiesTab.Padding = new System.Windows.Forms.Padding(3);
@@ -330,14 +327,6 @@
 			this.PropertiesTab.TabIndex = 0;
 			this.PropertiesTab.Text = "Properties";
 			this.PropertiesTab.UseVisualStyleBackColor = true;
-			// 
-			// hitPointControl1
-			// 
-			this.hitPointControl1.HitPoint = null;
-			this.hitPointControl1.Location = new System.Drawing.Point(284, 74);
-			this.hitPointControl1.Name = "hitPointControl1";
-			this.hitPointControl1.Size = new System.Drawing.Size(156, 77);
-			this.hitPointControl1.TabIndex = 12;
 			// 
 			// ProfessionTab
 			// 
@@ -348,16 +337,6 @@
 			this.ProfessionTab.TabIndex = 2;
 			this.ProfessionTab.Text = "Professions";
 			this.ProfessionTab.UseVisualStyleBackColor = true;
-			// 
-			// ProfessionsBox
-			// 
-			this.ProfessionsBox.Hero = null;
-			this.ProfessionsBox.Location = new System.Drawing.Point(3, 3);
-			this.ProfessionsBox.MinimumSize = new System.Drawing.Size(300, 175);
-			this.ProfessionsBox.Name = "ProfessionsBox";
-			this.ProfessionsBox.Size = new System.Drawing.Size(300, 175);
-			this.ProfessionsBox.TabIndex = 0;
-			this.ProfessionsBox.Title = "Professions :";
 			// 
 			// SpellTab
 			// 
@@ -525,6 +504,65 @@
 			this.button2.Text = "Remove";
 			this.button2.UseVisualStyleBackColor = true;
 			// 
+			// groupBox5
+			// 
+			this.groupBox5.Controls.Add(this.FoodBox);
+			this.groupBox5.Location = new System.Drawing.Point(224, 143);
+			this.groupBox5.Name = "groupBox5";
+			this.groupBox5.Size = new System.Drawing.Size(156, 51);
+			this.groupBox5.TabIndex = 13;
+			this.groupBox5.TabStop = false;
+			this.groupBox5.Text = "Food : ";
+			// 
+			// FoodBox
+			// 
+			this.FoodBox.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.FoodBox.Location = new System.Drawing.Point(3, 16);
+			this.FoodBox.Maximum = 100;
+			this.FoodBox.Name = "FoodBox";
+			this.FoodBox.Size = new System.Drawing.Size(150, 45);
+			this.FoodBox.TabIndex = 0;
+			this.FoodBox.TickFrequency = 10;
+			this.FoodBox.ValueChanged += new System.EventHandler(this.FoodBox_ValueChanged);
+			// 
+			// groupBox6
+			// 
+			this.groupBox6.Controls.Add(this.label2);
+			this.groupBox6.Controls.Add(this.QuiverBox);
+			this.groupBox6.Location = new System.Drawing.Point(224, 89);
+			this.groupBox6.Name = "groupBox6";
+			this.groupBox6.Size = new System.Drawing.Size(156, 48);
+			this.groupBox6.TabIndex = 14;
+			this.groupBox6.TabStop = false;
+			this.groupBox6.Text = "Quiver :";
+			// 
+			// label2
+			// 
+			this.label2.AutoSize = true;
+			this.label2.Location = new System.Drawing.Point(6, 22);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(70, 13);
+			this.label2.TabIndex = 8;
+			this.label2.Text = "Arrow count :";
+			// 
+			// HPBox
+			// 
+			this.HPBox.HitPoint = null;
+			this.HPBox.Location = new System.Drawing.Point(224, 6);
+			this.HPBox.Name = "HPBox";
+			this.HPBox.Size = new System.Drawing.Size(156, 77);
+			this.HPBox.TabIndex = 12;
+			// 
+			// ProfessionsBox
+			// 
+			this.ProfessionsBox.Hero = null;
+			this.ProfessionsBox.Location = new System.Drawing.Point(3, 3);
+			this.ProfessionsBox.MinimumSize = new System.Drawing.Size(300, 175);
+			this.ProfessionsBox.Name = "ProfessionsBox";
+			this.ProfessionsBox.Size = new System.Drawing.Size(300, 175);
+			this.ProfessionsBox.TabIndex = 0;
+			this.ProfessionsBox.Title = "Professions :";
+			// 
 			// HeroControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -539,13 +577,17 @@
 			((System.ComponentModel.ISupportInitialize) (this.QuiverBox)).EndInit();
 			this.tabControl1.ResumeLayout(false);
 			this.PropertiesTab.ResumeLayout(false);
-			this.PropertiesTab.PerformLayout();
 			this.ProfessionTab.ResumeLayout(false);
 			this.SpellTab.ResumeLayout(false);
 			this.SpellTab.PerformLayout();
 			this.groupBox4.ResumeLayout(false);
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox1.ResumeLayout(false);
+			this.groupBox5.ResumeLayout(false);
+			this.groupBox5.PerformLayout();
+			((System.ComponentModel.ISupportInitialize) (this.FoodBox)).EndInit();
+			this.groupBox6.ResumeLayout(false);
+			this.groupBox6.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -571,14 +613,13 @@
 		private System.Windows.Forms.ComboBox LeftRingBox;
 		private System.Windows.Forms.ComboBox WristBox;
 		private System.Windows.Forms.ComboBox ArmorBox;
-		private System.Windows.Forms.Label label8;
 		private System.Windows.Forms.NumericUpDown QuiverBox;
 		private System.Windows.Forms.TabControl tabControl1;
 		private System.Windows.Forms.TabPage PropertiesTab;
 		private System.Windows.Forms.TabPage SpellTab;
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.CheckedListBox LearnedSpellBox;
-		private HitPointControl hitPointControl1;
+		private HitPointControl HPBox;
 		private System.Windows.Forms.TabPage ProfessionTab;
 		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.Button button2;
@@ -592,5 +633,9 @@
 		private System.Windows.Forms.Button button3;
 		private System.Windows.Forms.Label SpellReportLabel;
 		private ProfessionsControl ProfessionsBox;
+		private System.Windows.Forms.GroupBox groupBox6;
+		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.GroupBox groupBox5;
+		private System.Windows.Forms.TrackBar FoodBox;
 	}
 }
