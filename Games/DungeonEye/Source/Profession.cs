@@ -45,7 +45,7 @@ namespace DungeonEye
 		/// <param name="classe">Class</param>
 		public Profession(int xp, HeroClass classe)
 		{
-			Experience = xp;
+			Experience = Math.Max(1, xp);
 			Class = classe;
 		}
 

@@ -30,7 +30,7 @@
 		{
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProfessionsControl));
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
-			this.label9 = new System.Windows.Forms.Label();
+			this.MultiClassErrorBox = new System.Windows.Forms.Label();
 			this.ThiefLevelBox = new System.Windows.Forms.TextBox();
 			this.label6 = new System.Windows.Forms.Label();
 			this.ThiefXPBox = new System.Windows.Forms.NumericUpDown();
@@ -66,7 +66,7 @@
 			// 
 			// groupBox2
 			// 
-			this.groupBox2.Controls.Add(this.label9);
+			this.groupBox2.Controls.Add(this.MultiClassErrorBox);
 			this.groupBox2.Controls.Add(this.ThiefLevelBox);
 			this.groupBox2.Controls.Add(this.label6);
 			this.groupBox2.Controls.Add(this.ThiefXPBox);
@@ -99,18 +99,18 @@
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Professions :";
 			// 
-			// label9
+			// MultiClassErrorBox
 			// 
-			this.label9.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.label9.Image = ((System.Drawing.Image) (resources.GetObject("label9.Image")));
-			this.label9.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.label9.Location = new System.Drawing.Point(3, 159);
-			this.label9.Name = "label9";
-			this.label9.Size = new System.Drawing.Size(294, 13);
-			this.label9.TabIndex = 1;
-			this.label9.Text = "Illegal multi class Hero !!";
-			this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.label9.Visible = false;
+			this.MultiClassErrorBox.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.MultiClassErrorBox.Image = ((System.Drawing.Image) (resources.GetObject("MultiClassErrorBox.Image")));
+			this.MultiClassErrorBox.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.MultiClassErrorBox.Location = new System.Drawing.Point(3, 159);
+			this.MultiClassErrorBox.Name = "MultiClassErrorBox";
+			this.MultiClassErrorBox.Size = new System.Drawing.Size(294, 13);
+			this.MultiClassErrorBox.TabIndex = 1;
+			this.MultiClassErrorBox.Text = "Illegal multi class Hero !!";
+			this.MultiClassErrorBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.MultiClassErrorBox.Visible = false;
 			// 
 			// ThiefLevelBox
 			// 
@@ -399,7 +399,7 @@
 		#endregion
 
 		private System.Windows.Forms.GroupBox groupBox2;
-		private System.Windows.Forms.Label label9;
+		private System.Windows.Forms.Label MultiClassErrorBox;
 		private System.Windows.Forms.TextBox ClericLevelBox;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.NumericUpDown ClericXPBox;

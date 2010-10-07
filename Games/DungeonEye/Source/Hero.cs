@@ -1533,11 +1533,6 @@ namespace DungeonEye
 	public enum HeroClass
 	{
 		/// <summary>
-		/// Undefined
-		/// </summary>
-		Undefined = 0x0,
-	
-		/// <summary>
 		/// Fighter
 		/// </summary>
 		Fighter = 0x1,

@@ -147,6 +147,20 @@ namespace DungeonEye.Forms
 		}
 
 
+		/// <summary>
+		/// Check for multi class validity
+		/// </summary>
+		void CheckValidity()
+		{
+			if (Hero.ProfessionCount == 0 || hero.ProfessionCount > 3)
+			{
+				MultiClassErrorBox.Visible = true;
+			}
+			else
+			{
+				MultiClassErrorBox.Visible = false;
+			}
+		}
 
 
 		#region Form events
@@ -180,6 +194,8 @@ namespace DungeonEye.Forms
 				ClericXPBox.Value = 0;
 				ClericXPBox.Enabled = false;
 			}
+			
+			CheckValidity();
 		}
 
 
@@ -212,6 +228,8 @@ namespace DungeonEye.Forms
 				FighterXPBox.Value = 0;
 				FighterXPBox.Enabled = false;
 			}
+
+			CheckValidity();
 		}
 
 
@@ -244,6 +262,8 @@ namespace DungeonEye.Forms
 				MageXPBox.Value = 0;
 				MageXPBox.Enabled = false;
 			}
+
+			CheckValidity();
 		}
 
 
@@ -276,6 +296,8 @@ namespace DungeonEye.Forms
 				PaladinXPBox.Value = 0;
 				PaladinXPBox.Enabled = false;
 			}
+
+			CheckValidity();
 		}
 
 
@@ -308,6 +330,8 @@ namespace DungeonEye.Forms
 				RangerXPBox.Value = 0;
 				RangerXPBox.Enabled = false;
 			}
+
+			CheckValidity();
 		}
 
 
@@ -340,6 +364,8 @@ namespace DungeonEye.Forms
 				ThiefXPBox.Value = 0;
 				ThiefXPBox.Enabled = false;
 			}
+
+			CheckValidity();
 		}
 
 
