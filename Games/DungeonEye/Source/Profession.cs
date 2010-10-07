@@ -30,11 +30,11 @@ namespace DungeonEye
 	{
 		
 		/// <summary>
-		/// Default constructor
+		/// XmlNode constructor
 		/// </summary>
-		public Profession() : this(0, HeroClass.Undefined)
+		public Profession(XmlNode node)
 		{
-
+			Load(node);
 		}
 
 
@@ -162,7 +162,7 @@ namespace DungeonEye
 		public int Experience
 		{
 			get;
-			private set;
+			set;
 		}
 
 

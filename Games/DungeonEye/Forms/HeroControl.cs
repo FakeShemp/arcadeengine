@@ -41,9 +41,16 @@ namespace DungeonEye.Forms
 			InitializeComponent();
 
 			Rebuild();
+
+
+			// Spells
+			Spells = new List<Spell>();
+			List<string> spells = ResourceManager.GetAssets<Spell>();
+			foreach (string name in spells)
+				Spells.Add(ResourceManager.CreateAsset<Spell>(name));
+
+			SpellLevel = 1;
 		}
-
-
 
 
 		/// <summary>
@@ -87,6 +94,8 @@ namespace DungeonEye.Forms
 				item = Hero.GetInventoryItem(InventoryPosition.Neck);
 				NeckBox.SelectedItem = item != null ? item.Name : string.Empty;
 			}
+
+			ProfessionsBox.Hero = Hero;
 		}
 
 
@@ -100,10 +109,12 @@ namespace DungeonEye.Forms
 		private void HeroControl_Load(object sender, EventArgs e)
 		{
 			RebuildProperties();
-			RebuildLearnedSpells();
+			RebuildSpells();
+			//RebuildProfessions();
 		}
 
 		#endregion
+
 
 
 		#region Spells events
@@ -117,7 +128,10 @@ namespace DungeonEye.Forms
 		private void CheckAllLearnedBox_Click(object sender, EventArgs e)
 		{
 			for (int i = 0 ; i < LearnedSpellBox.Items.Count ; i++)
-				LearnedSpellBox.SetItemChecked(i, true);
+			{
+				if (!LearnedSpellBox.GetItemChecked(i))
+					LearnedSpellBox.SetItemChecked(i, true);
+			}
 		}
 
 
@@ -129,13 +143,103 @@ namespace DungeonEye.Forms
 		private void UncheckAllLearnedBox_Click(object sender, EventArgs e)
 		{
 			for (int i = 0 ; i < LearnedSpellBox.Items.Count ; i++)
-				LearnedSpellBox.SetItemChecked(i, false);
+			{
+				if (LearnedSpellBox.GetItemChecked(i))
+					LearnedSpellBox.SetItemChecked(i, false);
+			}
 		}
 
-	
-		
+
+
+		/// <summary>
+		/// Change spell's level
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void SpellLevelBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			RebuildSpells();
+		}
+
+
+		/// <summary>
+		/// Rebuild spell list
+		/// </summary>
+		void RebuildSpells()
+		{
+			if (Hero == null)
+				return;
+
+			// Spells ready
+			SpellReadyBox.BeginUpdate();
+			SpellReadyBox.Items.Clear();
+			foreach (Spell spell in Hero.Spells)
+			{
+				if (spell.Level == SpellLevel)
+					SpellReadyBox.Items.Add(spell.Name);
+			}
+			SpellReadyBox.EndUpdate();
+
+			AvailableSpellBox.BeginUpdate();
+			AvailableSpellBox.Items.Clear();
+			LearnedSpellBox.BeginUpdate();
+			LearnedSpellBox.Items.Clear();
+			foreach (Spell spell in Spells)
+			{
+				// Learned spells
+				if (spell.Class == HeroClass.Mage && spell.Level == SpellLevel)
+				{
+					bool check = false;
+
+					if (Hero.LearnedSpells.Contains(spell.Name))
+						check = true;
+
+					LearnedSpellBox.Items.Add(spell.Name, check);
+				}
+
+				// Available spells
+				if (spell.Level == SpellLevel)
+					AvailableSpellBox.Items.Add(spell.Class + " - " + spell.Name);
+
+			}
+			LearnedSpellBox.EndUpdate();
+			AvailableSpellBox.EndUpdate();
+		}
+
+
 		/// <summary>
 		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void LearnedSpellBox_ItemCheck(object sender, ItemCheckEventArgs e)
+		{
+			if (Hero == null)
+				return;
+
+			CheckedListBox clb = sender as CheckedListBox;
+
+			if (e.NewValue == CheckState.Checked)
+			{
+				if (!Hero.LearnedSpells.Contains((string) clb.Items[e.Index]))
+					hero.LearnedSpells.Add((string) clb.Items[e.Index]);
+			}
+			else if (e.NewValue == CheckState.Unchecked)
+			{
+				if (Hero.LearnedSpells.Contains((string) clb.Items[e.Index]))
+					hero.LearnedSpells.Remove((string) clb.Items[e.Index]);
+			}
+
+		}
+
+
+		#endregion
+
+
+		#region Properties events
+
+		/// <summary>
+		/// Rebuild properties
 		/// </summary>
 		void RebuildProperties()
 		{
@@ -156,33 +260,6 @@ namespace DungeonEye.Forms
 		}
 
 
-		/// <summary>
-		/// 
-		/// </summary>
-		void RebuildLearnedSpells()
-		{
-			if (this.DesignMode)
-				return;
-			
-			List<string> spells = ResourceManager.GetAssets<Spell>();
-			
-			LearnedSpellBox.BeginUpdate();
-			LearnedSpellBox.Items.Clear();
-			foreach (string name in spells)
-			{
-				Spell spell = ResourceManager.CreateAsset<Spell>(name);
-				if (spell.Class != HeroClass.Mage)
-					continue;
-
-				LearnedSpellBox.Items.Add("Level " + spell.Level + " - " + name);
-			}
-			LearnedSpellBox.EndUpdate();
-		}
-
-		#endregion
-
-
-		#region Properties events
 
 		/// <summary>
 		/// 
@@ -351,8 +428,32 @@ namespace DungeonEye.Forms
 		}
 		Hero hero;
 
-		#endregion
 
+		/// <summary>
+		/// Spells list
+		/// </summary>
+		List<Spell> Spells;
+
+
+		/// <summary>
+		/// Current spell level
+		/// </summary>
+		int SpellLevel
+		{
+			get
+			{
+				return SpellLevelBox.SelectedIndex + 1;
+			}
+			set
+			{
+				if (value < 1 | value > 6)
+					return;
+				SpellLevelBox.SelectedIndex = value - 1;
+			}
+		}
+	
+		
+		#endregion
 
 	}
 }

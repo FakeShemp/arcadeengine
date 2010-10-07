@@ -53,35 +53,30 @@
 			this.PropertiesTab = new System.Windows.Forms.TabPage();
 			this.hitPointControl1 = new DungeonEye.Forms.HitPointControl();
 			this.ProfessionTab = new System.Windows.Forms.TabPage();
-			this.ProfessionBox3 = new DungeonEye.Forms.ProfessionControl();
-			this.ProfessionBox2 = new DungeonEye.Forms.ProfessionControl();
-			this.ProfessionBox1 = new DungeonEye.Forms.ProfessionControl();
+			this.ProfessionsBox = new DungeonEye.Forms.ProfessionsControl();
 			this.SpellTab = new System.Windows.Forms.TabPage();
-			this.groupBox2 = new System.Windows.Forms.GroupBox();
-			this.UncheckAllLearnedBox = new System.Windows.Forms.Button();
-			this.CheckAllLearnedBox = new System.Windows.Forms.Button();
-			this.LearnedSpellBox = new System.Windows.Forms.CheckedListBox();
-			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.SpellsReadyTab = new System.Windows.Forms.TabControl();
-			this.Lvl1Tab = new System.Windows.Forms.TabPage();
-			this.Lvl2Tab = new System.Windows.Forms.TabPage();
-			this.Lvl3Tab = new System.Windows.Forms.TabPage();
-			this.Lvl4Tab = new System.Windows.Forms.TabPage();
-			this.Lvl5Tab = new System.Windows.Forms.TabPage();
-			this.Lvl6Tab = new System.Windows.Forms.TabPage();
-			this.button2 = new System.Windows.Forms.Button();
+			this.label1 = new System.Windows.Forms.Label();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
+			this.AvailableSpellBox = new System.Windows.Forms.ListBox();
 			this.button1 = new System.Windows.Forms.Button();
+			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.button4 = new System.Windows.Forms.Button();
+			this.button3 = new System.Windows.Forms.Button();
+			this.LearnedSpellBox = new System.Windows.Forms.CheckedListBox();
+			this.SpellLevelBox = new System.Windows.Forms.ComboBox();
+			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.SpellReportLabel = new System.Windows.Forms.Label();
+			this.SpellReadyBox = new System.Windows.Forms.ListBox();
+			this.button2 = new System.Windows.Forms.Button();
 			this.groupBox3.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize) (this.QuiverBox)).BeginInit();
 			this.tabControl1.SuspendLayout();
 			this.PropertiesTab.SuspendLayout();
 			this.ProfessionTab.SuspendLayout();
 			this.SpellTab.SuspendLayout();
+			this.groupBox4.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.groupBox1.SuspendLayout();
-			this.SpellsReadyTab.SuspendLayout();
-			this.groupBox4.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// groupBox3
@@ -319,7 +314,7 @@
 			this.tabControl1.Location = new System.Drawing.Point(0, 0);
 			this.tabControl1.Name = "tabControl1";
 			this.tabControl1.SelectedIndex = 0;
-			this.tabControl1.Size = new System.Drawing.Size(690, 545);
+			this.tabControl1.Size = new System.Drawing.Size(630, 545);
 			this.tabControl1.TabIndex = 10;
 			// 
 			// PropertiesTab
@@ -331,7 +326,7 @@
 			this.PropertiesTab.Location = new System.Drawing.Point(4, 22);
 			this.PropertiesTab.Name = "PropertiesTab";
 			this.PropertiesTab.Padding = new System.Windows.Forms.Padding(3);
-			this.PropertiesTab.Size = new System.Drawing.Size(682, 519);
+			this.PropertiesTab.Size = new System.Drawing.Size(622, 519);
 			this.PropertiesTab.TabIndex = 0;
 			this.PropertiesTab.Text = "Properties";
 			this.PropertiesTab.UseVisualStyleBackColor = true;
@@ -346,86 +341,114 @@
 			// 
 			// ProfessionTab
 			// 
-			this.ProfessionTab.Controls.Add(this.ProfessionBox3);
-			this.ProfessionTab.Controls.Add(this.ProfessionBox2);
-			this.ProfessionTab.Controls.Add(this.ProfessionBox1);
+			this.ProfessionTab.Controls.Add(this.ProfessionsBox);
 			this.ProfessionTab.Location = new System.Drawing.Point(4, 22);
 			this.ProfessionTab.Name = "ProfessionTab";
-			this.ProfessionTab.Size = new System.Drawing.Size(682, 519);
+			this.ProfessionTab.Size = new System.Drawing.Size(622, 519);
 			this.ProfessionTab.TabIndex = 2;
 			this.ProfessionTab.Text = "Professions";
 			this.ProfessionTab.UseVisualStyleBackColor = true;
 			// 
-			// ProfessionBox3
+			// ProfessionsBox
 			// 
-			this.ProfessionBox3.Class = DungeonEye.HeroClass.Undefined;
-			this.ProfessionBox3.Location = new System.Drawing.Point(3, 177);
-			this.ProfessionBox3.Name = "ProfessionBox3";
-			this.ProfessionBox3.Size = new System.Drawing.Size(407, 81);
-			this.ProfessionBox3.TabIndex = 14;
-			// 
-			// ProfessionBox2
-			// 
-			this.ProfessionBox2.Class = DungeonEye.HeroClass.Undefined;
-			this.ProfessionBox2.Location = new System.Drawing.Point(3, 90);
-			this.ProfessionBox2.Name = "ProfessionBox2";
-			this.ProfessionBox2.Size = new System.Drawing.Size(407, 81);
-			this.ProfessionBox2.TabIndex = 14;
-			// 
-			// ProfessionBox1
-			// 
-			this.ProfessionBox1.Class = DungeonEye.HeroClass.Undefined;
-			this.ProfessionBox1.Location = new System.Drawing.Point(3, 3);
-			this.ProfessionBox1.Name = "ProfessionBox1";
-			this.ProfessionBox1.Size = new System.Drawing.Size(407, 81);
-			this.ProfessionBox1.TabIndex = 14;
+			this.ProfessionsBox.Hero = null;
+			this.ProfessionsBox.Location = new System.Drawing.Point(3, 3);
+			this.ProfessionsBox.MinimumSize = new System.Drawing.Size(350, 280);
+			this.ProfessionsBox.Name = "ProfessionsBox";
+			this.ProfessionsBox.Size = new System.Drawing.Size(350, 280);
+			this.ProfessionsBox.TabIndex = 0;
+			this.ProfessionsBox.Title = "Professions :";
 			// 
 			// SpellTab
 			// 
+			this.SpellTab.Controls.Add(this.label1);
+			this.SpellTab.Controls.Add(this.groupBox4);
 			this.SpellTab.Controls.Add(this.groupBox2);
+			this.SpellTab.Controls.Add(this.SpellLevelBox);
 			this.SpellTab.Controls.Add(this.groupBox1);
 			this.SpellTab.Location = new System.Drawing.Point(4, 22);
 			this.SpellTab.Name = "SpellTab";
 			this.SpellTab.Padding = new System.Windows.Forms.Padding(3);
-			this.SpellTab.Size = new System.Drawing.Size(682, 519);
+			this.SpellTab.Size = new System.Drawing.Size(622, 519);
 			this.SpellTab.TabIndex = 1;
 			this.SpellTab.Text = "Spells";
 			this.SpellTab.UseVisualStyleBackColor = true;
 			// 
+			// label1
+			// 
+			this.label1.AutoSize = true;
+			this.label1.Location = new System.Drawing.Point(222, 20);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(39, 13);
+			this.label1.TabIndex = 4;
+			this.label1.Text = "Level :";
+			// 
+			// groupBox4
+			// 
+			this.groupBox4.Controls.Add(this.AvailableSpellBox);
+			this.groupBox4.Controls.Add(this.button1);
+			this.groupBox4.Location = new System.Drawing.Point(209, 48);
+			this.groupBox4.Name = "groupBox4";
+			this.groupBox4.Size = new System.Drawing.Size(200, 214);
+			this.groupBox4.TabIndex = 2;
+			this.groupBox4.TabStop = false;
+			this.groupBox4.Text = "Available spells :";
+			// 
+			// AvailableSpellBox
+			// 
+			this.AvailableSpellBox.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+			this.AvailableSpellBox.FormattingEnabled = true;
+			this.AvailableSpellBox.Location = new System.Drawing.Point(6, 19);
+			this.AvailableSpellBox.Name = "AvailableSpellBox";
+			this.AvailableSpellBox.Size = new System.Drawing.Size(188, 147);
+			this.AvailableSpellBox.Sorted = true;
+			this.AvailableSpellBox.TabIndex = 2;
+			// 
+			// button1
+			// 
+			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.button1.Location = new System.Drawing.Point(6, 182);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(188, 23);
+			this.button1.TabIndex = 1;
+			this.button1.Text = "Add";
+			this.button1.UseVisualStyleBackColor = true;
+			// 
 			// groupBox2
 			// 
-			this.groupBox2.Controls.Add(this.UncheckAllLearnedBox);
-			this.groupBox2.Controls.Add(this.CheckAllLearnedBox);
+			this.groupBox2.Controls.Add(this.button4);
+			this.groupBox2.Controls.Add(this.button3);
 			this.groupBox2.Controls.Add(this.LearnedSpellBox);
-			this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.groupBox2.Location = new System.Drawing.Point(3, 234);
+			this.groupBox2.Location = new System.Drawing.Point(415, 48);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(676, 282);
+			this.groupBox2.Size = new System.Drawing.Size(200, 214);
 			this.groupBox2.TabIndex = 1;
 			this.groupBox2.TabStop = false;
-			this.groupBox2.Text = "Spells learned (for mages) : ";
+			this.groupBox2.Text = "Learned spells :";
 			// 
-			// UncheckAllLearnedBox
+			// button4
 			// 
-			this.UncheckAllLearnedBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.UncheckAllLearnedBox.Location = new System.Drawing.Point(81, 256);
-			this.UncheckAllLearnedBox.Name = "UncheckAllLearnedBox";
-			this.UncheckAllLearnedBox.Size = new System.Drawing.Size(75, 23);
-			this.UncheckAllLearnedBox.TabIndex = 2;
-			this.UncheckAllLearnedBox.Text = "Uncheck All";
-			this.UncheckAllLearnedBox.UseVisualStyleBackColor = true;
-			this.UncheckAllLearnedBox.Click += new System.EventHandler(this.UncheckAllLearnedBox_Click);
+			this.button4.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.button4.Location = new System.Drawing.Point(104, 185);
+			this.button4.Name = "button4";
+			this.button4.Size = new System.Drawing.Size(90, 23);
+			this.button4.TabIndex = 2;
+			this.button4.Text = "Uncheck All";
+			this.button4.UseVisualStyleBackColor = true;
+			this.button4.Click += new System.EventHandler(this.UncheckAllLearnedBox_Click);
 			// 
-			// CheckAllLearnedBox
+			// button3
 			// 
-			this.CheckAllLearnedBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.CheckAllLearnedBox.Location = new System.Drawing.Point(0, 256);
-			this.CheckAllLearnedBox.Name = "CheckAllLearnedBox";
-			this.CheckAllLearnedBox.Size = new System.Drawing.Size(75, 23);
-			this.CheckAllLearnedBox.TabIndex = 1;
-			this.CheckAllLearnedBox.Text = "Check All";
-			this.CheckAllLearnedBox.UseVisualStyleBackColor = true;
-			this.CheckAllLearnedBox.Click += new System.EventHandler(this.CheckAllLearnedBox_Click);
+			this.button3.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.button3.Location = new System.Drawing.Point(6, 185);
+			this.button3.Name = "button3";
+			this.button3.Size = new System.Drawing.Size(90, 23);
+			this.button3.TabIndex = 1;
+			this.button3.Text = "Check All";
+			this.button3.UseVisualStyleBackColor = true;
+			this.button3.Click += new System.EventHandler(this.CheckAllLearnedBox_Click);
 			// 
 			// LearnedSpellBox
 			// 
@@ -434,130 +457,73 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.LearnedSpellBox.CheckOnClick = true;
 			this.LearnedSpellBox.FormattingEnabled = true;
-			this.LearnedSpellBox.Location = new System.Drawing.Point(3, 16);
+			this.LearnedSpellBox.Location = new System.Drawing.Point(6, 19);
 			this.LearnedSpellBox.Name = "LearnedSpellBox";
-			this.LearnedSpellBox.Size = new System.Drawing.Size(670, 229);
+			this.LearnedSpellBox.Size = new System.Drawing.Size(188, 154);
 			this.LearnedSpellBox.Sorted = true;
 			this.LearnedSpellBox.TabIndex = 0;
+			this.LearnedSpellBox.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.LearnedSpellBox_ItemCheck);
+			// 
+			// SpellLevelBox
+			// 
+			this.SpellLevelBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.SpellLevelBox.FormattingEnabled = true;
+			this.SpellLevelBox.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"});
+			this.SpellLevelBox.Location = new System.Drawing.Point(267, 17);
+			this.SpellLevelBox.Name = "SpellLevelBox";
+			this.SpellLevelBox.Size = new System.Drawing.Size(142, 21);
+			this.SpellLevelBox.Sorted = true;
+			this.SpellLevelBox.TabIndex = 3;
+			this.SpellLevelBox.SelectedIndexChanged += new System.EventHandler(this.SpellLevelBox_SelectedIndexChanged);
 			// 
 			// groupBox1
 			// 
-			this.groupBox1.Controls.Add(this.SpellsReadyTab);
+			this.groupBox1.Controls.Add(this.SpellReportLabel);
+			this.groupBox1.Controls.Add(this.SpellReadyBox);
 			this.groupBox1.Controls.Add(this.button2);
-			this.groupBox1.Controls.Add(this.groupBox4);
-			this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox1.Location = new System.Drawing.Point(3, 3);
+			this.groupBox1.Location = new System.Drawing.Point(3, 48);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(676, 231);
+			this.groupBox1.Size = new System.Drawing.Size(200, 214);
 			this.groupBox1.TabIndex = 0;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Spells ready to cast :";
 			// 
-			// SpellsReadyTab
+			// SpellReportLabel
 			// 
-			this.SpellsReadyTab.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.SpellsReadyTab.Controls.Add(this.Lvl1Tab);
-			this.SpellsReadyTab.Controls.Add(this.Lvl2Tab);
-			this.SpellsReadyTab.Controls.Add(this.Lvl3Tab);
-			this.SpellsReadyTab.Controls.Add(this.Lvl4Tab);
-			this.SpellsReadyTab.Controls.Add(this.Lvl5Tab);
-			this.SpellsReadyTab.Controls.Add(this.Lvl6Tab);
-			this.SpellsReadyTab.Location = new System.Drawing.Point(6, 19);
-			this.SpellsReadyTab.Name = "SpellsReadyTab";
-			this.SpellsReadyTab.SelectedIndex = 0;
-			this.SpellsReadyTab.Size = new System.Drawing.Size(413, 177);
-			this.SpellsReadyTab.TabIndex = 0;
+			this.SpellReportLabel.Location = new System.Drawing.Point(6, 156);
+			this.SpellReportLabel.Name = "SpellReportLabel";
+			this.SpellReportLabel.Size = new System.Drawing.Size(188, 23);
+			this.SpellReportLabel.TabIndex = 5;
+			this.SpellReportLabel.Text = "X of X spells remaining.";
+			this.SpellReportLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
-			// Lvl1Tab
+			// SpellReadyBox
 			// 
-			this.Lvl1Tab.Location = new System.Drawing.Point(4, 22);
-			this.Lvl1Tab.Name = "Lvl1Tab";
-			this.Lvl1Tab.Padding = new System.Windows.Forms.Padding(3);
-			this.Lvl1Tab.Size = new System.Drawing.Size(405, 151);
-			this.Lvl1Tab.TabIndex = 0;
-			this.Lvl1Tab.Text = "Level 1";
-			this.Lvl1Tab.UseVisualStyleBackColor = true;
-			// 
-			// Lvl2Tab
-			// 
-			this.Lvl2Tab.Location = new System.Drawing.Point(4, 22);
-			this.Lvl2Tab.Name = "Lvl2Tab";
-			this.Lvl2Tab.Padding = new System.Windows.Forms.Padding(3);
-			this.Lvl2Tab.Size = new System.Drawing.Size(414, 163);
-			this.Lvl2Tab.TabIndex = 1;
-			this.Lvl2Tab.Text = "Level 2";
-			this.Lvl2Tab.UseVisualStyleBackColor = true;
-			// 
-			// Lvl3Tab
-			// 
-			this.Lvl3Tab.Location = new System.Drawing.Point(4, 22);
-			this.Lvl3Tab.Name = "Lvl3Tab";
-			this.Lvl3Tab.Size = new System.Drawing.Size(414, 163);
-			this.Lvl3Tab.TabIndex = 2;
-			this.Lvl3Tab.Text = "Level 3";
-			this.Lvl3Tab.UseVisualStyleBackColor = true;
-			// 
-			// Lvl4Tab
-			// 
-			this.Lvl4Tab.Location = new System.Drawing.Point(4, 22);
-			this.Lvl4Tab.Name = "Lvl4Tab";
-			this.Lvl4Tab.Size = new System.Drawing.Size(414, 163);
-			this.Lvl4Tab.TabIndex = 3;
-			this.Lvl4Tab.Text = "Level 4";
-			this.Lvl4Tab.UseVisualStyleBackColor = true;
-			// 
-			// Lvl5Tab
-			// 
-			this.Lvl5Tab.Location = new System.Drawing.Point(4, 22);
-			this.Lvl5Tab.Name = "Lvl5Tab";
-			this.Lvl5Tab.Size = new System.Drawing.Size(414, 163);
-			this.Lvl5Tab.TabIndex = 4;
-			this.Lvl5Tab.Text = "Level 5";
-			this.Lvl5Tab.UseVisualStyleBackColor = true;
-			// 
-			// Lvl6Tab
-			// 
-			this.Lvl6Tab.Location = new System.Drawing.Point(4, 22);
-			this.Lvl6Tab.Name = "Lvl6Tab";
-			this.Lvl6Tab.Size = new System.Drawing.Size(414, 163);
-			this.Lvl6Tab.TabIndex = 5;
-			this.Lvl6Tab.Text = "Level 6";
-			this.Lvl6Tab.UseVisualStyleBackColor = true;
+			this.SpellReadyBox.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+			this.SpellReadyBox.FormattingEnabled = true;
+			this.SpellReadyBox.Location = new System.Drawing.Point(6, 19);
+			this.SpellReadyBox.Name = "SpellReadyBox";
+			this.SpellReadyBox.Size = new System.Drawing.Size(188, 134);
+			this.SpellReadyBox.Sorted = true;
+			this.SpellReadyBox.TabIndex = 2;
 			// 
 			// button2
 			// 
 			this.button2.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.button2.Location = new System.Drawing.Point(6, 202);
+			this.button2.Location = new System.Drawing.Point(6, 182);
 			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(413, 23);
+			this.button2.Size = new System.Drawing.Size(188, 23);
 			this.button2.TabIndex = 0;
 			this.button2.Text = "Remove";
 			this.button2.UseVisualStyleBackColor = true;
-			// 
-			// groupBox4
-			// 
-			this.groupBox4.Controls.Add(this.button1);
-			this.groupBox4.Dock = System.Windows.Forms.DockStyle.Right;
-			this.groupBox4.Location = new System.Drawing.Point(425, 16);
-			this.groupBox4.Name = "groupBox4";
-			this.groupBox4.Size = new System.Drawing.Size(248, 212);
-			this.groupBox4.TabIndex = 1;
-			this.groupBox4.TabStop = false;
-			this.groupBox4.Text = "Add spells :";
-			// 
-			// button1
-			// 
-			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.button1.Location = new System.Drawing.Point(6, 183);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(236, 23);
-			this.button1.TabIndex = 1;
-			this.button1.Text = "Add";
-			this.button1.UseVisualStyleBackColor = true;
 			// 
 			// HeroControl
 			// 
@@ -566,7 +532,7 @@
 			this.Controls.Add(this.tabControl1);
 			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 			this.Name = "HeroControl";
-			this.Size = new System.Drawing.Size(690, 545);
+			this.Size = new System.Drawing.Size(630, 545);
 			this.Load += new System.EventHandler(this.HeroControl_Load);
 			this.groupBox3.ResumeLayout(false);
 			this.groupBox3.PerformLayout();
@@ -576,10 +542,10 @@
 			this.PropertiesTab.PerformLayout();
 			this.ProfessionTab.ResumeLayout(false);
 			this.SpellTab.ResumeLayout(false);
+			this.SpellTab.PerformLayout();
+			this.groupBox4.ResumeLayout(false);
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox1.ResumeLayout(false);
-			this.SpellsReadyTab.ResumeLayout(false);
-			this.groupBox4.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -610,25 +576,21 @@
 		private System.Windows.Forms.TabControl tabControl1;
 		private System.Windows.Forms.TabPage PropertiesTab;
 		private System.Windows.Forms.TabPage SpellTab;
-		private System.Windows.Forms.GroupBox groupBox2;
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.CheckedListBox LearnedSpellBox;
 		private HitPointControl hitPointControl1;
 		private System.Windows.Forms.TabPage ProfessionTab;
-		private ProfessionControl ProfessionBox3;
-		private ProfessionControl ProfessionBox2;
-		private ProfessionControl ProfessionBox1;
-		private System.Windows.Forms.Button UncheckAllLearnedBox;
-		private System.Windows.Forms.Button CheckAllLearnedBox;
-		private System.Windows.Forms.TabControl SpellsReadyTab;
-		private System.Windows.Forms.TabPage Lvl1Tab;
-		private System.Windows.Forms.TabPage Lvl2Tab;
-		private System.Windows.Forms.TabPage Lvl3Tab;
-		private System.Windows.Forms.TabPage Lvl4Tab;
-		private System.Windows.Forms.TabPage Lvl5Tab;
-		private System.Windows.Forms.TabPage Lvl6Tab;
-		private System.Windows.Forms.GroupBox groupBox4;
 		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.Button button2;
+		private System.Windows.Forms.ListBox AvailableSpellBox;
+		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.ComboBox SpellLevelBox;
+		private System.Windows.Forms.ListBox SpellReadyBox;
+		private System.Windows.Forms.GroupBox groupBox4;
+		private System.Windows.Forms.GroupBox groupBox2;
+		private System.Windows.Forms.Button button4;
+		private System.Windows.Forms.Button button3;
+		private System.Windows.Forms.Label SpellReportLabel;
+		private ProfessionsControl ProfessionsBox;
 	}
 }

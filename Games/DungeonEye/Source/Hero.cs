@@ -1025,8 +1025,7 @@ namespace DungeonEye
 
 					case "profession":
 					{
-						Profession prof = new Profession();
-						prof.Load(node);
+						Profession prof = new Profession(node);
 						Professions.Add(prof);
 					}
 					break;
@@ -1036,6 +1035,12 @@ namespace DungeonEye
 						Spell spell = ResourceManager.CreateAsset<Spell>(node.Attributes["name"].Value);
 						if (spell != null)
 							Spells.Add(spell);
+					}
+					break;
+
+					case "learnedspell":
+					{
+						LearnedSpells.Add(node.Attributes["name"].Value);
 					}
 					break;
 
@@ -1126,6 +1131,12 @@ namespace DungeonEye
 				writer.WriteEndElement();
 			}
 
+			foreach (string name in LearnedSpells)
+			{
+				writer.WriteStartElement("learnedspell");
+				writer.WriteAttributeString("name", name);
+				writer.WriteEndElement();
+			}
 
 			writer.WriteEndElement();
 			return true;
