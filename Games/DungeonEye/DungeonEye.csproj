@@ -93,6 +93,9 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DungeonEye, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <ExecutableExtension>.exe</ExecutableExtension>
+    </Reference>
     <Reference Include="OpenTK.GLControl">
       <HintPath>..\..\Framework\Libraries\OpenTK\Release\OpenTK.GLControl.dll</HintPath>
     </Reference>
@@ -107,6 +110,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\AbilityControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\AbilityControl.Designer.cs">
+      <DependentUpon>AbilityControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\HeroControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -276,6 +285,9 @@
     <Compile Include="Source\Pit.cs" />
     <Compile Include="Source\ScreenMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forms\AbilityControl.resx">
+      <DependentUpon>AbilityControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\HeroControl.resx">
       <DependentUpon>HeroControl.cs</DependentUpon>
       <SubType>Designer</SubType>

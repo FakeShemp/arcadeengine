@@ -28,6 +28,15 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.QuiverBox = new System.Windows.Forms.NumericUpDown();
+			this.tabControl1 = new System.Windows.Forms.TabControl();
+			this.PropertiesTab = new System.Windows.Forms.TabPage();
+			this.groupBox6 = new System.Windows.Forms.GroupBox();
+			this.label2 = new System.Windows.Forms.Label();
+			this.groupBox5 = new System.Windows.Forms.GroupBox();
+			this.FoodBox = new System.Windows.Forms.TrackBar();
+			this.ProfessionTab = new System.Windows.Forms.TabPage();
+			this.EquipementTab = new System.Windows.Forms.TabPage();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
 			this.HelmetBox = new System.Windows.Forms.ComboBox();
 			this.label17 = new System.Windows.Forms.Label();
@@ -47,10 +56,6 @@
 			this.LeftRingBox = new System.Windows.Forms.ComboBox();
 			this.WristBox = new System.Windows.Forms.ComboBox();
 			this.ArmorBox = new System.Windows.Forms.ComboBox();
-			this.QuiverBox = new System.Windows.Forms.NumericUpDown();
-			this.tabControl1 = new System.Windows.Forms.TabControl();
-			this.PropertiesTab = new System.Windows.Forms.TabPage();
-			this.ProfessionTab = new System.Windows.Forms.TabPage();
 			this.SpellTab = new System.Windows.Forms.TabPage();
 			this.label1 = new System.Windows.Forms.Label();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
@@ -65,25 +70,126 @@
 			this.SpellReportLabel = new System.Windows.Forms.Label();
 			this.SpellReadyBox = new System.Windows.Forms.ListBox();
 			this.button2 = new System.Windows.Forms.Button();
-			this.groupBox5 = new System.Windows.Forms.GroupBox();
-			this.FoodBox = new System.Windows.Forms.TrackBar();
-			this.groupBox6 = new System.Windows.Forms.GroupBox();
-			this.label2 = new System.Windows.Forms.Label();
+			this.groupBox7 = new System.Windows.Forms.GroupBox();
 			this.HPBox = new DungeonEye.Forms.HitPointControl();
 			this.ProfessionsBox = new DungeonEye.Forms.ProfessionsControl();
-			this.groupBox3.SuspendLayout();
+			this.abilityControl1 = new DungeonEye.Forms.AbilityControl();
+			this.abilityControl2 = new DungeonEye.Forms.AbilityControl();
+			this.abilityControl3 = new DungeonEye.Forms.AbilityControl();
+			this.abilityControl4 = new DungeonEye.Forms.AbilityControl();
 			((System.ComponentModel.ISupportInitialize) (this.QuiverBox)).BeginInit();
 			this.tabControl1.SuspendLayout();
 			this.PropertiesTab.SuspendLayout();
+			this.groupBox6.SuspendLayout();
+			this.groupBox5.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize) (this.FoodBox)).BeginInit();
 			this.ProfessionTab.SuspendLayout();
+			this.EquipementTab.SuspendLayout();
+			this.groupBox3.SuspendLayout();
 			this.SpellTab.SuspendLayout();
 			this.groupBox4.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.groupBox1.SuspendLayout();
-			this.groupBox5.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize) (this.FoodBox)).BeginInit();
-			this.groupBox6.SuspendLayout();
+			this.groupBox7.SuspendLayout();
 			this.SuspendLayout();
+			// 
+			// QuiverBox
+			// 
+			this.QuiverBox.Location = new System.Drawing.Point(82, 20);
+			this.QuiverBox.Name = "QuiverBox";
+			this.QuiverBox.Size = new System.Drawing.Size(68, 20);
+			this.QuiverBox.TabIndex = 7;
+			this.QuiverBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.QuiverBox.ThousandsSeparator = true;
+			this.QuiverBox.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
+			// 
+			// tabControl1
+			// 
+			this.tabControl1.Controls.Add(this.PropertiesTab);
+			this.tabControl1.Controls.Add(this.ProfessionTab);
+			this.tabControl1.Controls.Add(this.EquipementTab);
+			this.tabControl1.Controls.Add(this.SpellTab);
+			this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tabControl1.Location = new System.Drawing.Point(0, 0);
+			this.tabControl1.Name = "tabControl1";
+			this.tabControl1.SelectedIndex = 0;
+			this.tabControl1.Size = new System.Drawing.Size(630, 545);
+			this.tabControl1.TabIndex = 10;
+			// 
+			// PropertiesTab
+			// 
+			this.PropertiesTab.Controls.Add(this.groupBox7);
+			this.PropertiesTab.Controls.Add(this.groupBox6);
+			this.PropertiesTab.Controls.Add(this.groupBox5);
+			this.PropertiesTab.Controls.Add(this.HPBox);
+			this.PropertiesTab.Location = new System.Drawing.Point(4, 22);
+			this.PropertiesTab.Name = "PropertiesTab";
+			this.PropertiesTab.Padding = new System.Windows.Forms.Padding(3);
+			this.PropertiesTab.Size = new System.Drawing.Size(622, 519);
+			this.PropertiesTab.TabIndex = 0;
+			this.PropertiesTab.Text = "Properties";
+			this.PropertiesTab.UseVisualStyleBackColor = true;
+			// 
+			// groupBox6
+			// 
+			this.groupBox6.Controls.Add(this.label2);
+			this.groupBox6.Controls.Add(this.QuiverBox);
+			this.groupBox6.Location = new System.Drawing.Point(6, 89);
+			this.groupBox6.Name = "groupBox6";
+			this.groupBox6.Size = new System.Drawing.Size(156, 48);
+			this.groupBox6.TabIndex = 14;
+			this.groupBox6.TabStop = false;
+			this.groupBox6.Text = "Quiver :";
+			// 
+			// label2
+			// 
+			this.label2.AutoSize = true;
+			this.label2.Location = new System.Drawing.Point(6, 22);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(70, 13);
+			this.label2.TabIndex = 8;
+			this.label2.Text = "Arrow count :";
+			// 
+			// groupBox5
+			// 
+			this.groupBox5.Controls.Add(this.FoodBox);
+			this.groupBox5.Location = new System.Drawing.Point(6, 143);
+			this.groupBox5.Name = "groupBox5";
+			this.groupBox5.Size = new System.Drawing.Size(156, 51);
+			this.groupBox5.TabIndex = 13;
+			this.groupBox5.TabStop = false;
+			this.groupBox5.Text = "Food : ";
+			// 
+			// FoodBox
+			// 
+			this.FoodBox.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.FoodBox.Location = new System.Drawing.Point(3, 16);
+			this.FoodBox.Maximum = 100;
+			this.FoodBox.Name = "FoodBox";
+			this.FoodBox.Size = new System.Drawing.Size(150, 45);
+			this.FoodBox.TabIndex = 0;
+			this.FoodBox.TickFrequency = 10;
+			this.FoodBox.ValueChanged += new System.EventHandler(this.FoodBox_ValueChanged);
+			// 
+			// ProfessionTab
+			// 
+			this.ProfessionTab.Controls.Add(this.ProfessionsBox);
+			this.ProfessionTab.Location = new System.Drawing.Point(4, 22);
+			this.ProfessionTab.Name = "ProfessionTab";
+			this.ProfessionTab.Size = new System.Drawing.Size(622, 519);
+			this.ProfessionTab.TabIndex = 2;
+			this.ProfessionTab.Text = "Professions";
+			this.ProfessionTab.UseVisualStyleBackColor = true;
+			// 
+			// EquipementTab
+			// 
+			this.EquipementTab.Controls.Add(this.groupBox3);
+			this.EquipementTab.Location = new System.Drawing.Point(4, 22);
+			this.EquipementTab.Name = "EquipementTab";
+			this.EquipementTab.Size = new System.Drawing.Size(622, 519);
+			this.EquipementTab.TabIndex = 3;
+			this.EquipementTab.Text = "Equipement";
+			this.EquipementTab.UseVisualStyleBackColor = true;
 			// 
 			// groupBox3
 			// 
@@ -105,10 +211,10 @@
 			this.groupBox3.Controls.Add(this.LeftRingBox);
 			this.groupBox3.Controls.Add(this.WristBox);
 			this.groupBox3.Controls.Add(this.ArmorBox);
-			this.groupBox3.Location = new System.Drawing.Point(6, 6);
+			this.groupBox3.Location = new System.Drawing.Point(3, 3);
 			this.groupBox3.Name = "groupBox3";
 			this.groupBox3.Size = new System.Drawing.Size(212, 271);
-			this.groupBox3.TabIndex = 9;
+			this.groupBox3.TabIndex = 10;
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Equipment :";
 			// 
@@ -121,7 +227,6 @@
 			this.HelmetBox.Size = new System.Drawing.Size(121, 21);
 			this.HelmetBox.Sorted = true;
 			this.HelmetBox.TabIndex = 2;
-			this.HelmetBox.SelectedIndexChanged += new System.EventHandler(this.HelmetBox_SelectedIndexChanged);
 			// 
 			// label17
 			// 
@@ -213,7 +318,6 @@
 			this.NeckBox.Size = new System.Drawing.Size(121, 21);
 			this.NeckBox.Sorted = true;
 			this.NeckBox.TabIndex = 2;
-			this.NeckBox.SelectedIndexChanged += new System.EventHandler(this.NeckBox_SelectedIndexChanged);
 			// 
 			// FeetBox
 			// 
@@ -224,7 +328,6 @@
 			this.FeetBox.Size = new System.Drawing.Size(121, 21);
 			this.FeetBox.Sorted = true;
 			this.FeetBox.TabIndex = 2;
-			this.FeetBox.SelectedIndexChanged += new System.EventHandler(this.FeetBox_SelectedIndexChanged);
 			// 
 			// SecondaryBox
 			// 
@@ -235,7 +338,6 @@
 			this.SecondaryBox.Size = new System.Drawing.Size(121, 21);
 			this.SecondaryBox.Sorted = true;
 			this.SecondaryBox.TabIndex = 2;
-			this.SecondaryBox.SelectedIndexChanged += new System.EventHandler(this.SecondaryBox_SelectedIndexChanged);
 			// 
 			// PrimaryBox
 			// 
@@ -246,7 +348,6 @@
 			this.PrimaryBox.Size = new System.Drawing.Size(121, 21);
 			this.PrimaryBox.Sorted = true;
 			this.PrimaryBox.TabIndex = 2;
-			this.PrimaryBox.SelectedIndexChanged += new System.EventHandler(this.PrimaryBox_SelectedIndexChanged);
 			// 
 			// RightRingBox
 			// 
@@ -257,7 +358,6 @@
 			this.RightRingBox.Size = new System.Drawing.Size(121, 21);
 			this.RightRingBox.Sorted = true;
 			this.RightRingBox.TabIndex = 2;
-			this.RightRingBox.SelectedIndexChanged += new System.EventHandler(this.RightRingBox_SelectedIndexChanged);
 			// 
 			// LeftRingBox
 			// 
@@ -268,7 +368,6 @@
 			this.LeftRingBox.Size = new System.Drawing.Size(121, 21);
 			this.LeftRingBox.Sorted = true;
 			this.LeftRingBox.TabIndex = 2;
-			this.LeftRingBox.SelectedIndexChanged += new System.EventHandler(this.LeftRingBox_SelectedIndexChanged);
 			// 
 			// WristBox
 			// 
@@ -279,7 +378,6 @@
 			this.WristBox.Size = new System.Drawing.Size(121, 21);
 			this.WristBox.Sorted = true;
 			this.WristBox.TabIndex = 2;
-			this.WristBox.SelectedIndexChanged += new System.EventHandler(this.WristBox_SelectedIndexChanged);
 			// 
 			// ArmorBox
 			// 
@@ -290,53 +388,6 @@
 			this.ArmorBox.Size = new System.Drawing.Size(121, 21);
 			this.ArmorBox.Sorted = true;
 			this.ArmorBox.TabIndex = 2;
-			this.ArmorBox.SelectedIndexChanged += new System.EventHandler(this.ArmorBox_SelectedIndexChanged);
-			// 
-			// QuiverBox
-			// 
-			this.QuiverBox.Location = new System.Drawing.Point(82, 20);
-			this.QuiverBox.Name = "QuiverBox";
-			this.QuiverBox.Size = new System.Drawing.Size(68, 20);
-			this.QuiverBox.TabIndex = 7;
-			this.QuiverBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.QuiverBox.ThousandsSeparator = true;
-			this.QuiverBox.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
-			// 
-			// tabControl1
-			// 
-			this.tabControl1.Controls.Add(this.PropertiesTab);
-			this.tabControl1.Controls.Add(this.ProfessionTab);
-			this.tabControl1.Controls.Add(this.SpellTab);
-			this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tabControl1.Location = new System.Drawing.Point(0, 0);
-			this.tabControl1.Name = "tabControl1";
-			this.tabControl1.SelectedIndex = 0;
-			this.tabControl1.Size = new System.Drawing.Size(630, 545);
-			this.tabControl1.TabIndex = 10;
-			// 
-			// PropertiesTab
-			// 
-			this.PropertiesTab.Controls.Add(this.groupBox6);
-			this.PropertiesTab.Controls.Add(this.groupBox5);
-			this.PropertiesTab.Controls.Add(this.HPBox);
-			this.PropertiesTab.Controls.Add(this.groupBox3);
-			this.PropertiesTab.Location = new System.Drawing.Point(4, 22);
-			this.PropertiesTab.Name = "PropertiesTab";
-			this.PropertiesTab.Padding = new System.Windows.Forms.Padding(3);
-			this.PropertiesTab.Size = new System.Drawing.Size(622, 519);
-			this.PropertiesTab.TabIndex = 0;
-			this.PropertiesTab.Text = "Properties";
-			this.PropertiesTab.UseVisualStyleBackColor = true;
-			// 
-			// ProfessionTab
-			// 
-			this.ProfessionTab.Controls.Add(this.ProfessionsBox);
-			this.ProfessionTab.Location = new System.Drawing.Point(4, 22);
-			this.ProfessionTab.Name = "ProfessionTab";
-			this.ProfessionTab.Size = new System.Drawing.Size(622, 519);
-			this.ProfessionTab.TabIndex = 2;
-			this.ProfessionTab.Text = "Professions";
-			this.ProfessionTab.UseVisualStyleBackColor = true;
 			// 
 			// SpellTab
 			// 
@@ -504,51 +555,23 @@
 			this.button2.Text = "Remove";
 			this.button2.UseVisualStyleBackColor = true;
 			// 
-			// groupBox5
+			// groupBox7
 			// 
-			this.groupBox5.Controls.Add(this.FoodBox);
-			this.groupBox5.Location = new System.Drawing.Point(224, 143);
-			this.groupBox5.Name = "groupBox5";
-			this.groupBox5.Size = new System.Drawing.Size(156, 51);
-			this.groupBox5.TabIndex = 13;
-			this.groupBox5.TabStop = false;
-			this.groupBox5.Text = "Food : ";
-			// 
-			// FoodBox
-			// 
-			this.FoodBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.FoodBox.Location = new System.Drawing.Point(3, 16);
-			this.FoodBox.Maximum = 100;
-			this.FoodBox.Name = "FoodBox";
-			this.FoodBox.Size = new System.Drawing.Size(150, 45);
-			this.FoodBox.TabIndex = 0;
-			this.FoodBox.TickFrequency = 10;
-			this.FoodBox.ValueChanged += new System.EventHandler(this.FoodBox_ValueChanged);
-			// 
-			// groupBox6
-			// 
-			this.groupBox6.Controls.Add(this.label2);
-			this.groupBox6.Controls.Add(this.QuiverBox);
-			this.groupBox6.Location = new System.Drawing.Point(224, 89);
-			this.groupBox6.Name = "groupBox6";
-			this.groupBox6.Size = new System.Drawing.Size(156, 48);
-			this.groupBox6.TabIndex = 14;
-			this.groupBox6.TabStop = false;
-			this.groupBox6.Text = "Quiver :";
-			// 
-			// label2
-			// 
-			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(6, 22);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(70, 13);
-			this.label2.TabIndex = 8;
-			this.label2.Text = "Arrow count :";
+			this.groupBox7.Controls.Add(this.abilityControl4);
+			this.groupBox7.Controls.Add(this.abilityControl3);
+			this.groupBox7.Controls.Add(this.abilityControl2);
+			this.groupBox7.Controls.Add(this.abilityControl1);
+			this.groupBox7.Location = new System.Drawing.Point(168, 6);
+			this.groupBox7.Name = "groupBox7";
+			this.groupBox7.Size = new System.Drawing.Size(294, 188);
+			this.groupBox7.TabIndex = 15;
+			this.groupBox7.TabStop = false;
+			this.groupBox7.Text = "Abilities :";
 			// 
 			// HPBox
 			// 
 			this.HPBox.HitPoint = null;
-			this.HPBox.Location = new System.Drawing.Point(224, 6);
+			this.HPBox.Location = new System.Drawing.Point(6, 6);
 			this.HPBox.Name = "HPBox";
 			this.HPBox.Size = new System.Drawing.Size(156, 77);
 			this.HPBox.TabIndex = 12;
@@ -563,6 +586,38 @@
 			this.ProfessionsBox.TabIndex = 0;
 			this.ProfessionsBox.Title = "Professions :";
 			// 
+			// abilityControl1
+			// 
+			this.abilityControl1.Location = new System.Drawing.Point(6, 19);
+			this.abilityControl1.Name = "abilityControl1";
+			this.abilityControl1.Size = new System.Drawing.Size(259, 27);
+			this.abilityControl1.TabIndex = 0;
+			this.abilityControl1.Title = "label1";
+			// 
+			// abilityControl2
+			// 
+			this.abilityControl2.Location = new System.Drawing.Point(6, 50);
+			this.abilityControl2.Name = "abilityControl2";
+			this.abilityControl2.Size = new System.Drawing.Size(259, 27);
+			this.abilityControl2.TabIndex = 0;
+			this.abilityControl2.Title = "label1";
+			// 
+			// abilityControl3
+			// 
+			this.abilityControl3.Location = new System.Drawing.Point(6, 83);
+			this.abilityControl3.Name = "abilityControl3";
+			this.abilityControl3.Size = new System.Drawing.Size(259, 27);
+			this.abilityControl3.TabIndex = 0;
+			this.abilityControl3.Title = "label1";
+			// 
+			// abilityControl4
+			// 
+			this.abilityControl4.Location = new System.Drawing.Point(6, 116);
+			this.abilityControl4.Name = "abilityControl4";
+			this.abilityControl4.Size = new System.Drawing.Size(259, 27);
+			this.abilityControl4.TabIndex = 0;
+			this.abilityControl4.Title = "label1";
+			// 
 			// HeroControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -572,47 +627,30 @@
 			this.Name = "HeroControl";
 			this.Size = new System.Drawing.Size(630, 545);
 			this.Load += new System.EventHandler(this.HeroControl_Load);
-			this.groupBox3.ResumeLayout(false);
-			this.groupBox3.PerformLayout();
 			((System.ComponentModel.ISupportInitialize) (this.QuiverBox)).EndInit();
 			this.tabControl1.ResumeLayout(false);
 			this.PropertiesTab.ResumeLayout(false);
+			this.groupBox6.ResumeLayout(false);
+			this.groupBox6.PerformLayout();
+			this.groupBox5.ResumeLayout(false);
+			this.groupBox5.PerformLayout();
+			((System.ComponentModel.ISupportInitialize) (this.FoodBox)).EndInit();
 			this.ProfessionTab.ResumeLayout(false);
+			this.EquipementTab.ResumeLayout(false);
+			this.groupBox3.ResumeLayout(false);
+			this.groupBox3.PerformLayout();
 			this.SpellTab.ResumeLayout(false);
 			this.SpellTab.PerformLayout();
 			this.groupBox4.ResumeLayout(false);
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox1.ResumeLayout(false);
-			this.groupBox5.ResumeLayout(false);
-			this.groupBox5.PerformLayout();
-			((System.ComponentModel.ISupportInitialize) (this.FoodBox)).EndInit();
-			this.groupBox6.ResumeLayout(false);
-			this.groupBox6.PerformLayout();
+			this.groupBox7.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
 
 		#endregion
 
-		private System.Windows.Forms.GroupBox groupBox3;
-		private System.Windows.Forms.ComboBox HelmetBox;
-		private System.Windows.Forms.Label label17;
-		private System.Windows.Forms.Label label16;
-		private System.Windows.Forms.Label label15;
-		private System.Windows.Forms.Label label14;
-		private System.Windows.Forms.Label label13;
-		private System.Windows.Forms.Label label12;
-		private System.Windows.Forms.Label label11;
-		private System.Windows.Forms.Label label10;
-		private System.Windows.Forms.Label label9;
-		private System.Windows.Forms.ComboBox NeckBox;
-		private System.Windows.Forms.ComboBox FeetBox;
-		private System.Windows.Forms.ComboBox SecondaryBox;
-		private System.Windows.Forms.ComboBox PrimaryBox;
-		private System.Windows.Forms.ComboBox RightRingBox;
-		private System.Windows.Forms.ComboBox LeftRingBox;
-		private System.Windows.Forms.ComboBox WristBox;
-		private System.Windows.Forms.ComboBox ArmorBox;
 		private System.Windows.Forms.NumericUpDown QuiverBox;
 		private System.Windows.Forms.TabControl tabControl1;
 		private System.Windows.Forms.TabPage PropertiesTab;
@@ -637,5 +675,30 @@
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.GroupBox groupBox5;
 		private System.Windows.Forms.TrackBar FoodBox;
+		private System.Windows.Forms.TabPage EquipementTab;
+		private System.Windows.Forms.GroupBox groupBox3;
+		private System.Windows.Forms.ComboBox HelmetBox;
+		private System.Windows.Forms.Label label17;
+		private System.Windows.Forms.Label label16;
+		private System.Windows.Forms.Label label15;
+		private System.Windows.Forms.Label label14;
+		private System.Windows.Forms.Label label13;
+		private System.Windows.Forms.Label label12;
+		private System.Windows.Forms.Label label11;
+		private System.Windows.Forms.Label label10;
+		private System.Windows.Forms.Label label9;
+		private System.Windows.Forms.ComboBox NeckBox;
+		private System.Windows.Forms.ComboBox FeetBox;
+		private System.Windows.Forms.ComboBox SecondaryBox;
+		private System.Windows.Forms.ComboBox PrimaryBox;
+		private System.Windows.Forms.ComboBox RightRingBox;
+		private System.Windows.Forms.ComboBox LeftRingBox;
+		private System.Windows.Forms.ComboBox WristBox;
+		private System.Windows.Forms.ComboBox ArmorBox;
+		private System.Windows.Forms.GroupBox groupBox7;
+		private AbilityControl abilityControl4;
+		private AbilityControl abilityControl3;
+		private AbilityControl abilityControl2;
+		private AbilityControl abilityControl1;
 	}
 }
