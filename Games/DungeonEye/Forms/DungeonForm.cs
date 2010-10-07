@@ -764,6 +764,14 @@ namespace DungeonEye.Forms
 				if (SpriteBatch != null)
 					SpriteBatch.Dispose();
 				SpriteBatch = null;
+
+				if (Buffer != null)
+					Buffer.Dispose();
+				Buffer = null;
+
+				if (Icon != null)
+					Icon.Dispose();
+				Icon = null;
 			}
 			else if (result == DialogResult.Cancel)
 			{

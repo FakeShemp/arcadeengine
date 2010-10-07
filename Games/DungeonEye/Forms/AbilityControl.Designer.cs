@@ -29,10 +29,10 @@
 		private void InitializeComponent()
 		{
 			this.TitleBox = new System.Windows.Forms.Label();
-			this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+			this.AbilityBox = new System.Windows.Forms.NumericUpDown();
 			this.label2 = new System.Windows.Forms.Label();
-			this.textBox1 = new System.Windows.Forms.TextBox();
-			((System.ComponentModel.ISupportInitialize) (this.numericUpDown1)).BeginInit();
+			this.ModifierBox = new System.Windows.Forms.TextBox();
+			((System.ComponentModel.ISupportInitialize)(this.AbilityBox)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// TitleBox
@@ -44,14 +44,15 @@
 			this.TitleBox.TabIndex = 0;
 			this.TitleBox.Text = "label1";
 			// 
-			// numericUpDown1
+			// AbilityBox
 			// 
-			this.numericUpDown1.Location = new System.Drawing.Point(80, 3);
-			this.numericUpDown1.Name = "numericUpDown1";
-			this.numericUpDown1.Size = new System.Drawing.Size(64, 20);
-			this.numericUpDown1.TabIndex = 1;
-			this.numericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.numericUpDown1.ThousandsSeparator = true;
+			this.AbilityBox.Location = new System.Drawing.Point(80, 3);
+			this.AbilityBox.Name = "AbilityBox";
+			this.AbilityBox.Size = new System.Drawing.Size(64, 20);
+			this.AbilityBox.TabIndex = 1;
+			this.AbilityBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.AbilityBox.ThousandsSeparator = true;
+			this.AbilityBox.ValueChanged += new System.EventHandler(this.AbilityBox_ValueChanged);
 			// 
 			// label2
 			// 
@@ -62,25 +63,25 @@
 			this.label2.TabIndex = 2;
 			this.label2.Text = "Modifier :";
 			// 
-			// textBox1
+			// ModifierBox
 			// 
-			this.textBox1.Location = new System.Drawing.Point(207, 3);
-			this.textBox1.Name = "textBox1";
-			this.textBox1.ReadOnly = true;
-			this.textBox1.Size = new System.Drawing.Size(46, 20);
-			this.textBox1.TabIndex = 3;
+			this.ModifierBox.Location = new System.Drawing.Point(207, 3);
+			this.ModifierBox.Name = "ModifierBox";
+			this.ModifierBox.ReadOnly = true;
+			this.ModifierBox.Size = new System.Drawing.Size(46, 20);
+			this.ModifierBox.TabIndex = 3;
 			// 
 			// AbilityControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.Controls.Add(this.textBox1);
+			this.Controls.Add(this.ModifierBox);
 			this.Controls.Add(this.label2);
-			this.Controls.Add(this.numericUpDown1);
+			this.Controls.Add(this.AbilityBox);
 			this.Controls.Add(this.TitleBox);
 			this.Name = "AbilityControl";
-			this.Size = new System.Drawing.Size(259, 27);
-			((System.ComponentModel.ISupportInitialize) (this.numericUpDown1)).EndInit();
+			this.Size = new System.Drawing.Size(260, 25);
+			((System.ComponentModel.ISupportInitialize)(this.AbilityBox)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -89,8 +90,8 @@
 		#endregion
 
 		private System.Windows.Forms.Label TitleBox;
-		private System.Windows.Forms.NumericUpDown numericUpDown1;
+		private System.Windows.Forms.NumericUpDown AbilityBox;
 		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.TextBox textBox1;
+		private System.Windows.Forms.TextBox ModifierBox;
 	}
 }

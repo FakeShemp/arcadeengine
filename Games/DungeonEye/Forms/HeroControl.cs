@@ -42,6 +42,13 @@ namespace DungeonEye.Forms
 
 			Spells = new List<Spell>();
 
+			AlignmentBox.BeginUpdate();
+			AlignmentBox.DataSource = Enum.GetValues(typeof(EntityAlignment));
+			AlignmentBox.EndUpdate();
+
+			RaceBox.BeginUpdate();
+			RaceBox.DataSource = Enum.GetValues(typeof(HeroRace));
+			RaceBox.EndUpdate();
 		}
 
 
@@ -97,6 +104,22 @@ namespace DungeonEye.Forms
 				Spells.Add(ResourceManager.CreateAsset<Spell>(name));
 
 			SpellLevel = 1;
+
+			// Properties
+			if (Hero != null)
+			{
+				StrengthBox.Ability = Hero.Strength;
+				IntelligenceBox.Ability = Hero.Intelligence;
+				WisdomBox.Ability = Hero.Wisdom;
+				DexterityBox.Ability = Hero.Dexterity;
+				ConstitutionBox.Ability = Hero.Constitution;
+				CharismaBox.Ability = Hero.Charisma;
+
+				RaceBox.SelectedItem = Hero.Race;
+				AlignmentBox.SelectedItem = Hero.Alignment;
+			}
+
+			
 		}
 
 
@@ -119,7 +142,6 @@ namespace DungeonEye.Forms
 		}
 
 		#endregion
-
 
 
 		#region Spells events
@@ -427,6 +449,33 @@ namespace DungeonEye.Forms
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void AlignmentBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (Hero == null)
+				return;
+
+			Hero.Alignment = (EntityAlignment)AlignmentBox.SelectedItem;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void RaceBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (Hero == null)
+				return;
+
+			Hero.Race = (HeroRace) RaceBox.SelectedItem;
+		}
+
 		#endregion
 
 
@@ -475,6 +524,7 @@ namespace DungeonEye.Forms
 	
 		
 		#endregion
+
 
 
 	}

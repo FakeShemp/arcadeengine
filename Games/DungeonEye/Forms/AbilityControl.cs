@@ -10,7 +10,7 @@ using System.Windows.Forms;
 namespace DungeonEye.Forms
 {
 	/// <summary>
-	/// 
+	/// Ability control
 	/// </summary>
 	public partial class AbilityControl : UserControl
 	{
@@ -24,11 +24,43 @@ namespace DungeonEye.Forms
 
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		void Rebuild()
+		{
+			if (Ability == null)
+				return;
+			AbilityBox.Value = Ability.Value;
+
+		}
+
+
+
+		#region Events
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void AbilityBox_ValueChanged(object sender, EventArgs e)
+		{
+			if (Ability == null)
+				return;
+
+			Ability.Value = (int)AbilityBox.Value;
+			ModifierBox.Text = Ability.Modifier.ToString();
+		}
+
+		#endregion
+
+
 		#region Properties
 
 
 		/// <summary>
-		/// 
+		/// Ability title
 		/// </summary>
 		public string Title
 		{
@@ -42,7 +74,26 @@ namespace DungeonEye.Forms
 			}
 		}
 
+
+		/// <summary>
+		/// Ability
+		/// </summary>
+		public Ability Ability
+		{
+			get
+			{
+				return ability;
+			}
+			set
+			{
+				ability = value;
+				Rebuild();
+			}
+		}
+		Ability ability;
+
 		#endregion
+
 
 	}
 
