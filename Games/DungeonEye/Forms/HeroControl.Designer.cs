@@ -7,19 +7,6 @@
 		/// </summary>
 		private System.ComponentModel.IContainer components = null;
 
-		/// <summary> 
-		/// Nettoyage des ressources utilisées.
-		/// </summary>
-		/// <param name="disposing">true si les ressources managées doivent être supprimées ; sinon, false.</param>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && (components != null))
-			{
-				components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
-
 		#region Code généré par le Concepteur de composants
 
 		/// <summary> 
@@ -28,9 +15,19 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HeroControl));
 			this.QuiverBox = new System.Windows.Forms.NumericUpDown();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.PropertiesTab = new System.Windows.Forms.TabPage();
+			this.groupBox9 = new System.Windows.Forms.GroupBox();
+			this.label5 = new System.Windows.Forms.Label();
+			this.label4 = new System.Windows.Forms.Label();
+			this.RaceBox = new System.Windows.Forms.ComboBox();
+			this.AlignmentBox = new System.Windows.Forms.ComboBox();
+			this.groupBox8 = new System.Windows.Forms.GroupBox();
+			this.PreviousFaceBox = new System.Windows.Forms.Button();
+			this.NextFaceBox = new System.Windows.Forms.Button();
+			this.OpenGLBox = new OpenTK.GLControl();
 			this.groupBox7 = new System.Windows.Forms.GroupBox();
 			this.ArmorClassBox = new System.Windows.Forms.TextBox();
 			this.label3 = new System.Windows.Forms.Label();
@@ -73,12 +70,6 @@
 			this.SpellReportLabel = new System.Windows.Forms.Label();
 			this.SpellReadyBox = new System.Windows.Forms.ListBox();
 			this.button2 = new System.Windows.Forms.Button();
-			this.groupBox8 = new System.Windows.Forms.GroupBox();
-			this.groupBox9 = new System.Windows.Forms.GroupBox();
-			this.AlignmentBox = new System.Windows.Forms.ComboBox();
-			this.RaceBox = new System.Windows.Forms.ComboBox();
-			this.label4 = new System.Windows.Forms.Label();
-			this.label5 = new System.Windows.Forms.Label();
 			this.CharismaBox = new DungeonEye.Forms.AbilityControl();
 			this.ConstitutionBox = new DungeonEye.Forms.AbilityControl();
 			this.DexterityBox = new DungeonEye.Forms.AbilityControl();
@@ -87,13 +78,15 @@
 			this.StrengthBox = new DungeonEye.Forms.AbilityControl();
 			this.HPBox = new DungeonEye.Forms.HitPointControl();
 			this.ProfessionsBox = new DungeonEye.Forms.ProfessionsControl();
-			((System.ComponentModel.ISupportInitialize)(this.QuiverBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize) (this.QuiverBox)).BeginInit();
 			this.tabControl1.SuspendLayout();
 			this.PropertiesTab.SuspendLayout();
+			this.groupBox9.SuspendLayout();
+			this.groupBox8.SuspendLayout();
 			this.groupBox7.SuspendLayout();
 			this.groupBox6.SuspendLayout();
 			this.groupBox5.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.FoodBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize) (this.FoodBox)).BeginInit();
 			this.ProfessionTab.SuspendLayout();
 			this.EquipementTab.SuspendLayout();
 			this.groupBox3.SuspendLayout();
@@ -101,7 +94,6 @@
 			this.groupBox4.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.groupBox1.SuspendLayout();
-			this.groupBox9.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// QuiverBox
@@ -124,7 +116,7 @@
 			this.tabControl1.Location = new System.Drawing.Point(0, 0);
 			this.tabControl1.Name = "tabControl1";
 			this.tabControl1.SelectedIndex = 0;
-			this.tabControl1.Size = new System.Drawing.Size(630, 545);
+			this.tabControl1.Size = new System.Drawing.Size(635, 400);
 			this.tabControl1.TabIndex = 10;
 			// 
 			// PropertiesTab
@@ -138,10 +130,107 @@
 			this.PropertiesTab.Location = new System.Drawing.Point(4, 22);
 			this.PropertiesTab.Name = "PropertiesTab";
 			this.PropertiesTab.Padding = new System.Windows.Forms.Padding(3);
-			this.PropertiesTab.Size = new System.Drawing.Size(622, 519);
+			this.PropertiesTab.Size = new System.Drawing.Size(627, 374);
 			this.PropertiesTab.TabIndex = 0;
 			this.PropertiesTab.Text = "Properties";
 			this.PropertiesTab.UseVisualStyleBackColor = true;
+			// 
+			// groupBox9
+			// 
+			this.groupBox9.Controls.Add(this.label5);
+			this.groupBox9.Controls.Add(this.label4);
+			this.groupBox9.Controls.Add(this.RaceBox);
+			this.groupBox9.Controls.Add(this.AlignmentBox);
+			this.groupBox9.Location = new System.Drawing.Point(168, 6);
+			this.groupBox9.Name = "groupBox9";
+			this.groupBox9.Size = new System.Drawing.Size(271, 80);
+			this.groupBox9.TabIndex = 17;
+			this.groupBox9.TabStop = false;
+			this.groupBox9.Text = "Alignment && Race :";
+			// 
+			// label5
+			// 
+			this.label5.AutoSize = true;
+			this.label5.Location = new System.Drawing.Point(6, 49);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(39, 13);
+			this.label5.TabIndex = 3;
+			this.label5.Text = "Race :";
+			// 
+			// label4
+			// 
+			this.label4.AutoSize = true;
+			this.label4.Location = new System.Drawing.Point(6, 22);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(59, 13);
+			this.label4.TabIndex = 2;
+			this.label4.Text = "Alignment :";
+			// 
+			// RaceBox
+			// 
+			this.RaceBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.RaceBox.FormattingEnabled = true;
+			this.RaceBox.Location = new System.Drawing.Point(71, 46);
+			this.RaceBox.Name = "RaceBox";
+			this.RaceBox.Size = new System.Drawing.Size(194, 21);
+			this.RaceBox.Sorted = true;
+			this.RaceBox.TabIndex = 1;
+			this.RaceBox.SelectedIndexChanged += new System.EventHandler(this.RaceBox_SelectedIndexChanged);
+			// 
+			// AlignmentBox
+			// 
+			this.AlignmentBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.AlignmentBox.FormattingEnabled = true;
+			this.AlignmentBox.Location = new System.Drawing.Point(71, 19);
+			this.AlignmentBox.Name = "AlignmentBox";
+			this.AlignmentBox.Size = new System.Drawing.Size(194, 21);
+			this.AlignmentBox.Sorted = true;
+			this.AlignmentBox.TabIndex = 0;
+			this.AlignmentBox.SelectedIndexChanged += new System.EventHandler(this.AlignmentBox_SelectedIndexChanged);
+			// 
+			// groupBox8
+			// 
+			this.groupBox8.Controls.Add(this.PreviousFaceBox);
+			this.groupBox8.Controls.Add(this.NextFaceBox);
+			this.groupBox8.Controls.Add(this.OpenGLBox);
+			this.groupBox8.Location = new System.Drawing.Point(6, 6);
+			this.groupBox8.Name = "groupBox8";
+			this.groupBox8.Size = new System.Drawing.Size(156, 130);
+			this.groupBox8.TabIndex = 16;
+			this.groupBox8.TabStop = false;
+			this.groupBox8.Text = "Face :";
+			// 
+			// PreviousFaceBox
+			// 
+			this.PreviousFaceBox.Image = ((System.Drawing.Image) (resources.GetObject("PreviousFaceBox.Image")));
+			this.PreviousFaceBox.Location = new System.Drawing.Point(3, 101);
+			this.PreviousFaceBox.Name = "PreviousFaceBox";
+			this.PreviousFaceBox.Size = new System.Drawing.Size(65, 23);
+			this.PreviousFaceBox.TabIndex = 2;
+			this.PreviousFaceBox.UseVisualStyleBackColor = true;
+			this.PreviousFaceBox.Click += new System.EventHandler(this.PreviousFaceBox_Click);
+			// 
+			// NextFaceBox
+			// 
+			this.NextFaceBox.Image = ((System.Drawing.Image) (resources.GetObject("NextFaceBox.Image")));
+			this.NextFaceBox.Location = new System.Drawing.Point(85, 101);
+			this.NextFaceBox.Name = "NextFaceBox";
+			this.NextFaceBox.Size = new System.Drawing.Size(65, 23);
+			this.NextFaceBox.TabIndex = 1;
+			this.NextFaceBox.UseVisualStyleBackColor = true;
+			this.NextFaceBox.Click += new System.EventHandler(this.NextFaceBox_Click);
+			// 
+			// OpenGLBox
+			// 
+			this.OpenGLBox.BackColor = System.Drawing.Color.Black;
+			this.OpenGLBox.Location = new System.Drawing.Point(44, 19);
+			this.OpenGLBox.Name = "OpenGLBox";
+			this.OpenGLBox.Size = new System.Drawing.Size(64, 64);
+			this.OpenGLBox.TabIndex = 0;
+			this.OpenGLBox.VSync = false;
+			this.OpenGLBox.Load += new System.EventHandler(this.OpenGLBox_Load);
+			this.OpenGLBox.Paint += new System.Windows.Forms.PaintEventHandler(this.OpenGLBox_Paint);
+			this.OpenGLBox.Resize += new System.EventHandler(this.OpenGLBox_Resize);
 			// 
 			// groupBox7
 			// 
@@ -224,7 +313,7 @@
 			this.ProfessionTab.Controls.Add(this.ProfessionsBox);
 			this.ProfessionTab.Location = new System.Drawing.Point(4, 22);
 			this.ProfessionTab.Name = "ProfessionTab";
-			this.ProfessionTab.Size = new System.Drawing.Size(622, 519);
+			this.ProfessionTab.Size = new System.Drawing.Size(627, 374);
 			this.ProfessionTab.TabIndex = 2;
 			this.ProfessionTab.Text = "Professions";
 			this.ProfessionTab.UseVisualStyleBackColor = true;
@@ -234,7 +323,7 @@
 			this.EquipementTab.Controls.Add(this.groupBox3);
 			this.EquipementTab.Location = new System.Drawing.Point(4, 22);
 			this.EquipementTab.Name = "EquipementTab";
-			this.EquipementTab.Size = new System.Drawing.Size(622, 519);
+			this.EquipementTab.Size = new System.Drawing.Size(627, 374);
 			this.EquipementTab.TabIndex = 3;
 			this.EquipementTab.Text = "Equipement";
 			this.EquipementTab.UseVisualStyleBackColor = true;
@@ -447,7 +536,7 @@
 			this.SpellTab.Location = new System.Drawing.Point(4, 22);
 			this.SpellTab.Name = "SpellTab";
 			this.SpellTab.Padding = new System.Windows.Forms.Padding(3);
-			this.SpellTab.Size = new System.Drawing.Size(622, 519);
+			this.SpellTab.Size = new System.Drawing.Size(627, 374);
 			this.SpellTab.TabIndex = 1;
 			this.SpellTab.Text = "Spells";
 			this.SpellTab.UseVisualStyleBackColor = true;
@@ -474,8 +563,8 @@
 			// 
 			// AvailableSpellBox
 			// 
-			this.AvailableSpellBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)));
+			this.AvailableSpellBox.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
 			this.AvailableSpellBox.FormattingEnabled = true;
 			this.AvailableSpellBox.Location = new System.Drawing.Point(6, 19);
 			this.AvailableSpellBox.Name = "AvailableSpellBox";
@@ -485,8 +574,8 @@
 			// 
 			// button1
 			// 
-			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.button1.Location = new System.Drawing.Point(6, 182);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(188, 23);
@@ -508,7 +597,7 @@
 			// 
 			// button4
 			// 
-			this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.button4.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.button4.Location = new System.Drawing.Point(104, 185);
 			this.button4.Name = "button4";
 			this.button4.Size = new System.Drawing.Size(90, 23);
@@ -519,7 +608,7 @@
 			// 
 			// button3
 			// 
-			this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.button3.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.button3.Location = new System.Drawing.Point(6, 185);
 			this.button3.Name = "button3";
 			this.button3.Size = new System.Drawing.Size(90, 23);
@@ -530,9 +619,9 @@
 			// 
 			// LearnedSpellBox
 			// 
-			this.LearnedSpellBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.LearnedSpellBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.LearnedSpellBox.CheckOnClick = true;
 			this.LearnedSpellBox.FormattingEnabled = true;
 			this.LearnedSpellBox.Location = new System.Drawing.Point(6, 19);
@@ -583,8 +672,8 @@
 			// 
 			// SpellReadyBox
 			// 
-			this.SpellReadyBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)));
+			this.SpellReadyBox.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
 			this.SpellReadyBox.FormattingEnabled = true;
 			this.SpellReadyBox.Location = new System.Drawing.Point(6, 19);
 			this.SpellReadyBox.Name = "SpellReadyBox";
@@ -594,76 +683,14 @@
 			// 
 			// button2
 			// 
-			this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.button2.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.button2.Location = new System.Drawing.Point(6, 182);
 			this.button2.Name = "button2";
 			this.button2.Size = new System.Drawing.Size(188, 23);
 			this.button2.TabIndex = 0;
 			this.button2.Text = "Remove";
 			this.button2.UseVisualStyleBackColor = true;
-			// 
-			// groupBox8
-			// 
-			this.groupBox8.Location = new System.Drawing.Point(6, 6);
-			this.groupBox8.Name = "groupBox8";
-			this.groupBox8.Size = new System.Drawing.Size(156, 130);
-			this.groupBox8.TabIndex = 16;
-			this.groupBox8.TabStop = false;
-			this.groupBox8.Text = "Face :";
-			// 
-			// groupBox9
-			// 
-			this.groupBox9.Controls.Add(this.label5);
-			this.groupBox9.Controls.Add(this.label4);
-			this.groupBox9.Controls.Add(this.RaceBox);
-			this.groupBox9.Controls.Add(this.AlignmentBox);
-			this.groupBox9.Location = new System.Drawing.Point(168, 6);
-			this.groupBox9.Name = "groupBox9";
-			this.groupBox9.Size = new System.Drawing.Size(271, 80);
-			this.groupBox9.TabIndex = 17;
-			this.groupBox9.TabStop = false;
-			this.groupBox9.Text = "Alignment && Race :";
-			// 
-			// AlignmentBox
-			// 
-			this.AlignmentBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.AlignmentBox.FormattingEnabled = true;
-			this.AlignmentBox.Location = new System.Drawing.Point(71, 19);
-			this.AlignmentBox.Name = "AlignmentBox";
-			this.AlignmentBox.Size = new System.Drawing.Size(194, 21);
-			this.AlignmentBox.Sorted = true;
-			this.AlignmentBox.TabIndex = 0;
-			this.AlignmentBox.SelectedIndexChanged += new System.EventHandler(this.AlignmentBox_SelectedIndexChanged);
-			// 
-			// RaceBox
-			// 
-			this.RaceBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.RaceBox.FormattingEnabled = true;
-			this.RaceBox.Location = new System.Drawing.Point(71, 46);
-			this.RaceBox.Name = "RaceBox";
-			this.RaceBox.Size = new System.Drawing.Size(194, 21);
-			this.RaceBox.Sorted = true;
-			this.RaceBox.TabIndex = 1;
-			this.RaceBox.SelectedIndexChanged += new System.EventHandler(this.RaceBox_SelectedIndexChanged);
-			// 
-			// label4
-			// 
-			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(6, 22);
-			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(59, 13);
-			this.label4.TabIndex = 2;
-			this.label4.Text = "Alignment :";
-			// 
-			// label5
-			// 
-			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(6, 49);
-			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(39, 13);
-			this.label5.TabIndex = 3;
-			this.label5.Text = "Race :";
 			// 
 			// CharismaBox
 			// 
@@ -742,20 +769,24 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.tabControl1);
-			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+			this.MinimumSize = new System.Drawing.Size(635, 400);
 			this.Name = "HeroControl";
-			this.Size = new System.Drawing.Size(630, 545);
+			this.Size = new System.Drawing.Size(635, 400);
 			this.Load += new System.EventHandler(this.HeroControl_Load);
-			((System.ComponentModel.ISupportInitialize)(this.QuiverBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize) (this.QuiverBox)).EndInit();
 			this.tabControl1.ResumeLayout(false);
 			this.PropertiesTab.ResumeLayout(false);
+			this.groupBox9.ResumeLayout(false);
+			this.groupBox9.PerformLayout();
+			this.groupBox8.ResumeLayout(false);
 			this.groupBox7.ResumeLayout(false);
 			this.groupBox7.PerformLayout();
 			this.groupBox6.ResumeLayout(false);
 			this.groupBox6.PerformLayout();
 			this.groupBox5.ResumeLayout(false);
 			this.groupBox5.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.FoodBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize) (this.FoodBox)).EndInit();
 			this.ProfessionTab.ResumeLayout(false);
 			this.EquipementTab.ResumeLayout(false);
 			this.groupBox3.ResumeLayout(false);
@@ -765,8 +796,6 @@
 			this.groupBox4.ResumeLayout(false);
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox1.ResumeLayout(false);
-			this.groupBox9.ResumeLayout(false);
-			this.groupBox9.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -832,5 +861,8 @@
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.ComboBox RaceBox;
 		private System.Windows.Forms.ComboBox AlignmentBox;
+		private OpenTK.GLControl OpenGLBox;
+		private System.Windows.Forms.Button PreviousFaceBox;
+		private System.Windows.Forms.Button NextFaceBox;
 	}
 }

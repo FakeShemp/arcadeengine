@@ -75,7 +75,7 @@ namespace DungeonEye.Forms
 			if (result == DialogResult.Yes)
 			{
 				Save();
-
+				HeroBox.Dispose();
 			}
 			else if (result == DialogResult.Cancel)
 			{

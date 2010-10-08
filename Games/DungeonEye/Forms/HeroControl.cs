@@ -19,18 +19,19 @@
 #endregion
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
-using System.Xml;
 using ArcEngine;
 using ArcEngine.Asset;
-using ArcEngine.Forms;
+using ArcEngine.Graphic;
+
 
 namespace DungeonEye.Forms
 {
 	/// <summary>
 	/// Control to edit Hero's parameters
 	/// </summary>
-	public partial class HeroControl : UserControl
+	public partial class HeroControl : UserControl, IDisposable
 	{
 
 		/// <summary>
@@ -49,6 +50,30 @@ namespace DungeonEye.Forms
 			RaceBox.BeginUpdate();
 			RaceBox.DataSource = Enum.GetValues(typeof(HeroRace));
 			RaceBox.EndUpdate();
+
+			
+		}
+
+
+		/// <summary>
+		/// Dispose
+		/// </summary>
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing && (components != null))
+			{
+				components.Dispose();
+			}
+			base.Dispose(disposing);
+
+
+			if (Batch != null)
+				Batch.Dispose();
+			Batch = null;
+
+			if (Heads != null)
+				Heads.Dispose();
+			Heads = null;
 		}
 
 
@@ -117,6 +142,8 @@ namespace DungeonEye.Forms
 
 				RaceBox.SelectedItem = Hero.Race;
 				AlignmentBox.SelectedItem = Hero.Alignment;
+
+				ArmorClassBox.Text = Hero.ArmorClass.ToString();
 			}
 
 			
@@ -265,6 +292,106 @@ namespace DungeonEye.Forms
 
 		#region Properties events
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OpenGLBox_Load(object sender, EventArgs e)
+		{
+			OpenGLBox.MakeCurrent();
+			Display.Init();
+			Display.RenderState.ClearColor = Color.Black;
+
+
+			Heads = ResourceManager.CreateAsset<TileSet>("Heroes");
+			if (Heads != null)
+			{
+				Heads.Scale = new Vector2(2.0f, 2.0f);
+			}
+
+			Batch = new SpriteBatch();
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OpenGLBox_Resize(object sender, EventArgs e)
+		{
+			OpenGLBox.MakeCurrent();
+			Display.ViewPort = new Rectangle(Point.Empty, OpenGLBox.Size);
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OpenGLBox_Paint(object sender, PaintEventArgs e)
+		{
+			//if (CheckerBoard == null)
+			//    return;
+
+			OpenGLBox.MakeCurrent();
+			Display.ClearBuffers();
+
+			if (Heads != null && Batch != null && Hero != null)
+			{
+
+				Batch.Begin();
+				Batch.DrawTile(Heads, Hero.Head, Point.Empty);
+				Batch.End();
+			}
+
+
+			OpenGLBox.SwapBuffers();
+		}
+
+
+
+		/// <summary>
+		/// Next hero face
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void NextFaceBox_Click(object sender, EventArgs e)
+		{
+			if (Hero == null || Heads == null)
+				return;
+
+			int id = Hero.Head + 1;
+			if (id >= Heads.Count)
+				id = 0;
+
+			Hero.Head = id;
+			OpenGLBox.Invalidate();
+		}
+
+
+		/// <summary>
+		/// Previous Hero face
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void PreviousFaceBox_Click(object sender, EventArgs e)
+		{
+			if (Hero == null || Heads == null)
+				return;
+
+			int id = Hero.Head - 1;
+			if (id <= 0)
+				id = Heads.Count - 1;
+
+			Hero.Head = id;
+			OpenGLBox.Invalidate();
+		}
+
+
+	
 		/// <summary>
 		/// Rebuild properties
 		/// </summary>
@@ -521,11 +648,20 @@ namespace DungeonEye.Forms
 				SpellLevelBox.SelectedIndex = value - 1;
 			}
 		}
-	
-		
+
+
+		/// <summary>
+		/// Heroe's heads
+		/// </summary>
+		TileSet Heads;
+
+
+		/// <summary>
+		/// SpriteBatch
+		/// </summary>
+		SpriteBatch Batch;
+
 		#endregion
-
-
 
 	}
 }
