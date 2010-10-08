@@ -29,8 +29,6 @@
 		private void InitializeComponent()
 		{
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PartyForm));
-			this.tabControl1 = new System.Windows.Forms.TabControl();
-			this.HeroesTab = new System.Windows.Forms.TabPage();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.RemoveHeroBox = new System.Windows.Forms.Button();
 			this.CreateHeroBox = new System.Windows.Forms.Button();
@@ -40,8 +38,6 @@
 			this.FrontRightBox = new System.Windows.Forms.RadioButton();
 			this.MiddleLeftBox = new System.Windows.Forms.RadioButton();
 			this.FrontLeftBox = new System.Windows.Forms.RadioButton();
-			this.LocationTab = new System.Windows.Forms.TabPage();
-			this.PropertiesTab = new System.Windows.Forms.TabPage();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.MessageColorBox = new System.Windows.Forms.Button();
 			this.AddMessageBox = new System.Windows.Forms.Button();
@@ -53,38 +49,14 @@
 			this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
 			this.colorDialog1 = new System.Windows.Forms.ColorDialog();
 			this.HeroBox = new DungeonEye.Forms.HeroControl();
-			this.tabControl1.SuspendLayout();
-			this.HeroesTab.SuspendLayout();
+			this.groupBox3 = new System.Windows.Forms.GroupBox();
+			this.ChangeLocationBox = new System.Windows.Forms.Button();
+			this.label1 = new System.Windows.Forms.Label();
+			this.LocationLabel = new System.Windows.Forms.Label();
 			this.groupBox2.SuspendLayout();
-			this.PropertiesTab.SuspendLayout();
 			this.groupBox1.SuspendLayout();
+			this.groupBox3.SuspendLayout();
 			this.SuspendLayout();
-			// 
-			// tabControl1
-			// 
-			this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.tabControl1.Controls.Add(this.HeroesTab);
-			this.tabControl1.Controls.Add(this.LocationTab);
-			this.tabControl1.Controls.Add(this.PropertiesTab);
-			this.tabControl1.Location = new System.Drawing.Point(12, 12);
-			this.tabControl1.Name = "tabControl1";
-			this.tabControl1.SelectedIndex = 0;
-			this.tabControl1.Size = new System.Drawing.Size(814, 503);
-			this.tabControl1.TabIndex = 0;
-			// 
-			// HeroesTab
-			// 
-			this.HeroesTab.Controls.Add(this.groupBox2);
-			this.HeroesTab.Controls.Add(this.HeroBox);
-			this.HeroesTab.Location = new System.Drawing.Point(4, 22);
-			this.HeroesTab.Name = "HeroesTab";
-			this.HeroesTab.Padding = new System.Windows.Forms.Padding(3);
-			this.HeroesTab.Size = new System.Drawing.Size(806, 477);
-			this.HeroesTab.TabIndex = 1;
-			this.HeroesTab.Text = "Heroes";
-			this.HeroesTab.UseVisualStyleBackColor = true;
 			// 
 			// groupBox2
 			// 
@@ -96,16 +68,16 @@
 			this.groupBox2.Controls.Add(this.FrontRightBox);
 			this.groupBox2.Controls.Add(this.MiddleLeftBox);
 			this.groupBox2.Controls.Add(this.FrontLeftBox);
-			this.groupBox2.Location = new System.Drawing.Point(8, 6);
+			this.groupBox2.Location = new System.Drawing.Point(12, 12);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(177, 128);
+			this.groupBox2.Size = new System.Drawing.Size(304, 106);
 			this.groupBox2.TabIndex = 1;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Heroes :";
 			// 
 			// RemoveHeroBox
 			// 
-			this.RemoveHeroBox.Location = new System.Drawing.Point(96, 99);
+			this.RemoveHeroBox.Location = new System.Drawing.Point(220, 56);
 			this.RemoveHeroBox.Name = "RemoveHeroBox";
 			this.RemoveHeroBox.Size = new System.Drawing.Size(75, 23);
 			this.RemoveHeroBox.TabIndex = 2;
@@ -115,7 +87,7 @@
 			// 
 			// CreateHeroBox
 			// 
-			this.CreateHeroBox.Location = new System.Drawing.Point(6, 99);
+			this.CreateHeroBox.Location = new System.Drawing.Point(220, 27);
 			this.CreateHeroBox.Name = "CreateHeroBox";
 			this.CreateHeroBox.Size = new System.Drawing.Size(75, 23);
 			this.CreateHeroBox.TabIndex = 1;
@@ -126,7 +98,7 @@
 			// RearRightBox
 			// 
 			this.RearRightBox.AutoSize = true;
-			this.RearRightBox.Location = new System.Drawing.Point(86, 76);
+			this.RearRightBox.Location = new System.Drawing.Point(109, 76);
 			this.RearRightBox.Name = "RearRightBox";
 			this.RearRightBox.Size = new System.Drawing.Size(76, 17);
 			this.RearRightBox.TabIndex = 0;
@@ -137,7 +109,7 @@
 			// MiddleRightBox
 			// 
 			this.MiddleRightBox.AutoSize = true;
-			this.MiddleRightBox.Location = new System.Drawing.Point(86, 53);
+			this.MiddleRightBox.Location = new System.Drawing.Point(109, 53);
 			this.MiddleRightBox.Name = "MiddleRightBox";
 			this.MiddleRightBox.Size = new System.Drawing.Size(84, 17);
 			this.MiddleRightBox.TabIndex = 0;
@@ -159,7 +131,7 @@
 			// FrontRightBox
 			// 
 			this.FrontRightBox.AutoSize = true;
-			this.FrontRightBox.Location = new System.Drawing.Point(86, 30);
+			this.FrontRightBox.Location = new System.Drawing.Point(109, 30);
 			this.FrontRightBox.Name = "FrontRightBox";
 			this.FrontRightBox.Size = new System.Drawing.Size(77, 17);
 			this.FrontRightBox.TabIndex = 0;
@@ -191,26 +163,6 @@
 			this.FrontLeftBox.UseVisualStyleBackColor = true;
 			this.FrontLeftBox.CheckedChanged += new System.EventHandler(this.FrontLeftBox_CheckedChanged);
 			// 
-			// LocationTab
-			// 
-			this.LocationTab.Location = new System.Drawing.Point(4, 22);
-			this.LocationTab.Name = "LocationTab";
-			this.LocationTab.Padding = new System.Windows.Forms.Padding(3);
-			this.LocationTab.Size = new System.Drawing.Size(806, 453);
-			this.LocationTab.TabIndex = 0;
-			this.LocationTab.Text = "Location";
-			this.LocationTab.UseVisualStyleBackColor = true;
-			// 
-			// PropertiesTab
-			// 
-			this.PropertiesTab.Controls.Add(this.groupBox1);
-			this.PropertiesTab.Location = new System.Drawing.Point(4, 22);
-			this.PropertiesTab.Name = "PropertiesTab";
-			this.PropertiesTab.Size = new System.Drawing.Size(806, 453);
-			this.PropertiesTab.TabIndex = 2;
-			this.PropertiesTab.Text = "Properties";
-			this.PropertiesTab.UseVisualStyleBackColor = true;
-			// 
 			// groupBox1
 			// 
 			this.groupBox1.Controls.Add(this.MessageColorBox);
@@ -219,7 +171,7 @@
 			this.groupBox1.Controls.Add(this.ClearMessageBox);
 			this.groupBox1.Controls.Add(this.MessageTxtBox);
 			this.groupBox1.Controls.Add(this.MessageListBox);
-			this.groupBox1.Location = new System.Drawing.Point(8, 3);
+			this.groupBox1.Location = new System.Drawing.Point(12, 124);
 			this.groupBox1.Name = "groupBox1";
 			this.groupBox1.Size = new System.Drawing.Size(304, 110);
 			this.groupBox1.TabIndex = 0;
@@ -230,7 +182,7 @@
 			// 
 			this.MessageColorBox.AutoSize = true;
 			this.MessageColorBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.MessageColorBox.Image = ((System.Drawing.Image) (resources.GetObject("MessageColorBox.Image")));
+			this.MessageColorBox.Image = ((System.Drawing.Image)(resources.GetObject("MessageColorBox.Image")));
 			this.MessageColorBox.Location = new System.Drawing.Point(192, 80);
 			this.MessageColorBox.Name = "MessageColorBox";
 			this.MessageColorBox.Size = new System.Drawing.Size(22, 22);
@@ -300,45 +252,82 @@
 			// 
 			// HeroBox
 			// 
-			this.HeroBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.HeroBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+			this.HeroBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.HeroBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.HeroBox.Hero = null;
-			this.HeroBox.Location = new System.Drawing.Point(191, 6);
+			this.HeroBox.Location = new System.Drawing.Point(322, 12);
 			this.HeroBox.MinimumSize = new System.Drawing.Size(635, 400);
 			this.HeroBox.Name = "HeroBox";
-			this.HeroBox.Size = new System.Drawing.Size(635, 424);
+			this.HeroBox.Size = new System.Drawing.Size(635, 400);
 			this.HeroBox.TabIndex = 0;
+			// 
+			// groupBox3
+			// 
+			this.groupBox3.Controls.Add(this.LocationLabel);
+			this.groupBox3.Controls.Add(this.label1);
+			this.groupBox3.Controls.Add(this.ChangeLocationBox);
+			this.groupBox3.Location = new System.Drawing.Point(12, 240);
+			this.groupBox3.Name = "groupBox3";
+			this.groupBox3.Size = new System.Drawing.Size(304, 70);
+			this.groupBox3.TabIndex = 2;
+			this.groupBox3.TabStop = false;
+			this.groupBox3.Text = "Location :";
+			// 
+			// ChangeLocationBox
+			// 
+			this.ChangeLocationBox.Location = new System.Drawing.Point(6, 35);
+			this.ChangeLocationBox.Name = "ChangeLocationBox";
+			this.ChangeLocationBox.Size = new System.Drawing.Size(129, 23);
+			this.ChangeLocationBox.TabIndex = 0;
+			this.ChangeLocationBox.Text = "Change location...";
+			this.ChangeLocationBox.UseVisualStyleBackColor = true;
+			this.ChangeLocationBox.Click += new System.EventHandler(this.ChangeLocationBox_Click);
+			// 
+			// label1
+			// 
+			this.label1.AutoSize = true;
+			this.label1.Location = new System.Drawing.Point(7, 19);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(87, 13);
+			this.label1.TabIndex = 1;
+			this.label1.Text = "Current location :";
+			// 
+			// LocationLabel
+			// 
+			this.LocationLabel.AutoSize = true;
+			this.LocationLabel.Location = new System.Drawing.Point(100, 19);
+			this.LocationLabel.Name = "LocationLabel";
+			this.LocationLabel.Size = new System.Drawing.Size(28, 13);
+			this.LocationLabel.TabIndex = 2;
+			this.LocationLabel.Text = ".......";
 			// 
 			// PartyForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(838, 527);
-			this.Controls.Add(this.tabControl1);
-			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+			this.ClientSize = new System.Drawing.Size(968, 442);
+			this.Controls.Add(this.groupBox3);
+			this.Controls.Add(this.HeroBox);
+			this.Controls.Add(this.groupBox2);
+			this.Controls.Add(this.groupBox1);
+			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Name = "PartyForm";
 			this.Text = "PartyForm";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form_FormClosing);
 			this.Load += new System.EventHandler(this.PartyForm_Load);
-			this.tabControl1.ResumeLayout(false);
-			this.HeroesTab.ResumeLayout(false);
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
-			this.PropertiesTab.ResumeLayout(false);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
+			this.groupBox3.ResumeLayout(false);
+			this.groupBox3.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
 
 		#endregion
 
-		private System.Windows.Forms.TabControl tabControl1;
-		private System.Windows.Forms.TabPage HeroesTab;
-		private System.Windows.Forms.TabPage LocationTab;
-		private System.Windows.Forms.TabPage PropertiesTab;
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.Button AddMessageBox;
 		private System.Windows.Forms.Button DeleteMessageBox;
@@ -359,5 +348,9 @@
 		private System.Windows.Forms.SaveFileDialog saveFileDialog1;
 		private System.Windows.Forms.Button MessageColorBox;
 		private System.Windows.Forms.ColorDialog colorDialog1;
+		private System.Windows.Forms.GroupBox groupBox3;
+		private System.Windows.Forms.Label LocationLabel;
+		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.Button ChangeLocationBox;
 	}
 }

@@ -30,11 +30,14 @@ using OpenTK;
 
 namespace DungeonEye.Forms
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	public partial class DungeonLocationControl : UserControl
 	{
 
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
 		public DungeonLocationControl()
 		{
@@ -78,9 +81,14 @@ namespace DungeonEye.Forms
                 Batch.Dispose();
             Batch = null;
 
-            if (Buffer != null)
-                Buffer.Dispose();
-            Buffer = null;
+			if (Icons != null)
+				Icons.Dispose();
+			Icons = null;
+
+			if (CheckerBoard != null)
+				CheckerBoard.Dispose();
+			CheckerBoard = null;
+
 		}
 
 
@@ -92,25 +100,24 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void GlControlBox_Load(object sender, EventArgs e)
 		{
-			GlControlBox.MakeCurrent();
-			Display.Init();
-
 			if (DesignMode)
 				return;
 
+			GlControlBox.MakeCurrent();
+			Display.Init();
+
+			// Spritebatch
+            Batch = new SpriteBatch();
+
 			// Preload background texture resource
 			CheckerBoard = new Texture2D(ResourceManager.GetInternalResource("ArcEngine.Resources.checkerboard.png"));
+			CheckerBoard.HorizontalWrap = TextureWrapFilter.Repeat;
+			CheckerBoard.VerticalWrap = TextureWrapFilter.Repeat;
 
-            Batch = new SpriteBatch();
-			Buffer = new BatchBuffer();
 
 			// Preload texture resources
 			Icons = new TileSet();
 			Icons.Texture = new Texture2D(ResourceManager.GetInternalResource("DungeonEye.Forms.data.editor.png"));
-
-			// Preload background texture resource
-			CheckerBoard = new Texture2D(ResourceManager.GetInternalResource("ArcEngine.Resources.checkerboard.png"));
-
 
 			int id = 0;
 			for (int y = 0; y < Icons.Texture.Size.Height - 50; y += 25)
@@ -138,6 +145,9 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void GlControl_Resize(object sender, EventArgs e)
 		{
+			if (DesignMode)
+				return;
+
 			GlControlBox.MakeCurrent();
 			Display.ViewPort = new Rectangle(new Point(), GlControlBox.Size);
 		}
@@ -151,173 +161,178 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void GlControl_Paint(object sender, PaintEventArgs e)
 		{
-		//	if (GlControlBox.Context == null)
+			if (DesignMode)
+				return;
+
+			//	if (GlControlBox.Context == null)
 		//		return;
 
 			GlControlBox.MakeCurrent();
+			Display.ClearBuffers();
 
-			try
+            Batch.Begin();
+
+			// Background texture
+            Rectangle dst = new Rectangle(Point.Empty, GlControlBox.Size);
+            Batch.Draw(CheckerBoard, dst, dst, Color.White);
+
+
+			if (Maze == null)
+				return;
+
+
+			// Draw maze background
+		//	Display.Texture = Icons.Texture;
+		//	Buffer.Clear();
+
+			Tile tile = null;
+
+			// Blocks
+			for (int y = 0; y < Maze.Size.Height; y++)
 			{
-				Display.ClearBuffers();
-
-				if (DesignMode)
-					return;
-
-                Batch.Begin();
-
-				// Background texture
-                // Background texture
-                Rectangle dst = new Rectangle(Point.Empty, GlControlBox.Size);
-                Batch.Draw(CheckerBoard, dst, dst, Color.White);
-
-
-				if (Maze == null)
-					return;
-
-
-				// Draw maze background
-				Display.Texture = Icons.Texture;
-				Buffer.Clear();
-
-				Tile tile = null;
-
-				// Blocks
-				for (int y = 0; y < Maze.Size.Height; y++)
+				for (int x = 0; x < Maze.Size.Width; x++)
 				{
-					for (int x = 0; x < Maze.Size.Width; x++)
+					MazeBlock block = Maze.GetBlock(new Point(x, y));
+					tile = Icons.GetTile(block.Type == BlockType.Ground ? 1 : 0);
+
+
+					Color color = Color.White;
+					if (block.Type == BlockType.Illusion)
+						color = Color.LightGreen;
+
+					Batch.DrawTile(Icons, block.Type == BlockType.Ground ? 1 : 0, new Point(Offset.X + x * 25, Offset.Y + y * 25));
+					//Buffer.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), color, tile.Rectangle);
+
+					if (block.GroundItemCount > 0)
 					{
-						MazeBlock block = Maze.GetBlock(new Point(x, y));
-						tile = Icons.GetTile(block.Type == BlockType.Ground ? 1 : 0);
+						//tile = Icons.GetTile(19);
+						//Buffer.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), color, tile.Rectangle);
+						Batch.DrawTile(Icons, 19, new Point(Offset.X + x * 25, Offset.Y + y * 25));
+					}
 
 
-						Color color = Color.White;
-						if (block.Type == BlockType.Illusion)
-							color = Color.LightGreen; //Color.FromArgb(200, Color.Green);
 
-						Buffer.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), color, tile.Rectangle);
+					// Doors
+					if (block.Door != null)
+					{
+						int tileid = 0;
 
-						if (block.GroundItemCount > 0)
+						if (Maze.IsDoorNorthSouth(block.Location))
+							tileid = 3;
+						else
+							tileid = 2;
+
+
+						// Door opened or closed
+						if (block.Door.State == DoorState.Broken || block.Door.State == DoorState.Opened || block.Door.State == DoorState.Opening)
+							tileid += 2;
+
+						//tile = Icons.GetTile(tileid);
+						//Buffer.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), Color.White, tile.Rectangle);
+						Batch.DrawTile(Icons, tileid, new Point(Offset.X + x * 25, Offset.Y + y * 25));
+					}
+
+
+					if (block.FloorPlate != null)
+					{
+						//tile = Icons.GetTile(18);
+						//Buffer.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), Color.White, tile.Rectangle);
+						Batch.DrawTile(Icons, 18, new Point(Offset.X + x * 25, Offset.Y + y * 25));
+					}
+
+					if (block.Pit != null)
+					{
+						//tile = Icons.GetTile(9);
+						//Buffer.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), Color.White, tile.Rectangle);
+						Batch.DrawTile(Icons, 19, new Point(Offset.X + x * 25, Offset.Y + y * 25));
+					}
+
+					if (block.Teleporter != null)
+					{
+						//tile = Icons.GetTile(11);
+						//Buffer.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), Color.White, tile.Rectangle);
+						Batch.DrawTile(Icons, 11, new Point(Offset.X + x * 25, Offset.Y + y * 25));
+					}
+
+					if (block.ForceField != null)
+					{
+						int id;
+						if (block.ForceField.Type == ForceFieldType.Turning)
+							id = 12;
+						else if (block.ForceField.Type == ForceFieldType.Moving)
 						{
-							tile = Icons.GetTile(19);
-							Buffer.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), color, tile.Rectangle);
+							id = 13 + (int)block.ForceField.Move;
 						}
+						else
+							id = 17;
 
-
-
-						// Doors
-						if (block.Door != null)
-						{
-							int tileid = 0;
-
-							if (Maze.IsDoorNorthSouth(block.Location))
-								tileid = 3;
-							else
-								tileid = 2;
-
-
-							// Door opened or closed
-							if (block.Door.State == DoorState.Broken || block.Door.State == DoorState.Opened || block.Door.State == DoorState.Opening)
-								tileid += 2;
-
-							tile = Icons.GetTile(tileid);
-
-							Buffer.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), Color.White, tile.Rectangle);
-						}
-
-
-						if (block.FloorPlate != null)
-						{
-							tile = Icons.GetTile(18);
-							Buffer.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), Color.White, tile.Rectangle);
-						}
-
-						if (block.Pit != null)
-						{
-							tile = Icons.GetTile(9);
-							Buffer.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), Color.White, tile.Rectangle);
-						}
-
-						if (block.Teleporter != null)
-						{
-							tile = Icons.GetTile(11);
-							Buffer.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), Color.White, tile.Rectangle);
-						}
-
-						if (block.ForceField != null)
-						{
-							int id;
-							if (block.ForceField.Type == ForceFieldType.Turning)
-								id = 12;
-							else if (block.ForceField.Type == ForceFieldType.Moving)
-							{
-								id = 13 + (int)block.ForceField.Move;
-							}
-							else
-								id = 17;
-
-							tile = Icons.GetTile(id);
-
-							Buffer.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), Color.White, tile.Rectangle);
-
-						}
-
-						if (block.Stair != null)
-						{
-							tile = Icons.GetTile(block.Stair.Type == StairType.Up ? 6 : 7);
-							Buffer.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), Color.White, tile.Rectangle);
-						}
-
-						// Alcoves
-						if (block.HasAlcoves)
-						{
-							// Alcoves coords
-							Point[] alcoves = new Point[]
-							{
-								new Point(7, 0),
-								new Point(7, 19),
-								new Point(0, 7),
-								new Point(19, 7),
-							};
-
-
-							foreach (CardinalPoint side in Enum.GetValues(typeof(CardinalPoint)))
-							{
-								if (block.HasAlcove(side))
-								{
-									tile = Icons.GetTile(100 + ((int)side > 1 ? 0 : 1));
-									Buffer.AddRectangle(new Rectangle(
-										Offset.X + x * 25 + alcoves[(int)side].X,
-										Offset.Y + y * 25 + alcoves[(int)side].Y,
-										tile.Size.Width, tile.Size.Height), Color.White, tile.Rectangle);
-								}
-							}
-						}
+						//tile = Icons.GetTile(id);
+						//Buffer.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), Color.White, tile.Rectangle);
+						Batch.DrawTile(Icons, id, new Point(Offset.X + x * 25, Offset.Y + y * 25));
 
 					}
+
+					if (block.Stair != null)
+					{
+						//tile = Icons.GetTile(block.Stair.Type == StairType.Up ? 6 : 7);
+						//Buffer.AddRectangle(new Rectangle(Offset.X + x * 25, Offset.Y + y * 25, 25, 25), Color.White, tile.Rectangle);
+						Batch.DrawTile(Icons, block.Stair.Type == StairType.Up ? 6 : 7, new Point(Offset.X + x * 25, Offset.Y + y * 25));
+					}
+
+					// Alcoves
+					if (block.HasAlcoves)
+					{
+						// Alcoves coords
+						Point[] alcoves = new Point[]
+						{
+							new Point(7, 0),
+							new Point(7, 19),
+							new Point(0, 7),
+							new Point(19, 7),
+						};
+
+
+						foreach (CardinalPoint side in Enum.GetValues(typeof(CardinalPoint)))
+						{
+							if (block.HasAlcove(side))
+							{
+								//tile = Icons.GetTile();
+								//Buffer.AddRectangle(new Rectangle(
+								//    Offset.X + x * 25 + alcoves[(int)side].X,
+								//    Offset.Y + y * 25 + alcoves[(int)side].Y,
+								//    tile.Size.Width, tile.Size.Height), Color.White, tile.Rectangle);
+
+								Batch.DrawTile(Icons, 100 + ((int)side > 1 ? 0 : 1),
+									new Point(Offset.X + x * 25 + alcoves[(int)side].X, Offset.Y + y * 25 + alcoves[(int)side].Y));
+
+							}
+						}
+					}
+
 				}
+			}
 
 
-				// Draw monsters
-				tile = Icons.GetTile(8);
-				foreach (Monster monster in Maze.Monsters)
-					Buffer.AddRectangle(new Rectangle(Offset.X + monster.Location.Position.X * 25, Offset.Y + monster.Location.Position.Y * 25, 25, 25), Color.White, tile.Rectangle);
+			// Draw monsters
+			//tile = Icons.GetTile(8);
+			foreach (Monster monster in Maze.Monsters)
+			{
+				//Buffer.AddRectangle(new Rectangle(Offset.X + monster.Location.Position.X * 25, Offset.Y + monster.Location.Position.Y * 25, 25, 25), Color.White, tile.Rectangle);
+				Batch.DrawTile(Icons, 8, new Point(Offset.X + monster.Location.Position.X * 25, Offset.Y + monster.Location.Position.Y * 25));
+			}
 
-				int count = Buffer.Update();
-				Display.DrawBatch(Buffer, 0, count);
+			//int count = Buffer.Update();
+			//Display.DrawBatch(Buffer, 0, count);
 
 
 
-				// Target
-				if (Target.MazeName == Maze.Name)
-					Batch.DrawRectangle(new Rectangle(Offset.X + Target.Position.X * 25, Offset.Y + Target.Position.Y * 25, 25, 25), Color.White);
+			// Target
+			if (Target.MazeName == Maze.Name)
+				Batch.DrawRectangle(new Rectangle(Offset.X + Target.Position.X * 25, Offset.Y + Target.Position.Y * 25, 25, 25), Color.White);
 
 			
-			}
-			finally
-			{
-                Batch.End();
-				GlControlBox.SwapBuffers();
-			}
+            Batch.End();
+			GlControlBox.SwapBuffers();
 		}
 
 
@@ -423,17 +438,9 @@ namespace DungeonEye.Forms
 
 
 		/// <summary>
-		/// Rendering batch
-		/// </summary>
-		BatchBuffer Buffer;
-
-
-
-		/// <summary>
 		/// Draw offset of the map
 		/// </summary>
 		Point Offset;
-
 
 
 		/// <summary>
@@ -443,7 +450,7 @@ namespace DungeonEye.Forms
 
 
         /// <summary>
-        /// 
+        /// SpriteBatch
         /// </summary>
         SpriteBatch Batch;
 

@@ -55,9 +55,7 @@ namespace DungeonEye.Forms
 		void SelectHero(HeroPosition position)
 		{
 			if (Team == null)
-			{
 				return;
-			}
 
 			Hero hero = Team.GetHeroFromPosition(position);
 			if (hero == null)
@@ -158,7 +156,7 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void PartyForm_Load(object sender, EventArgs e)
 		{
-			FrontLeftBox.Checked = true;
+			SelectHero(HeroPosition.FrontLeft);
 		}
 
 
@@ -169,7 +167,7 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void Form_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			DialogResult result = MessageBox.Show("Save modifications ?", "Hero Editor", MessageBoxButtons.YesNoCancel);
+			DialogResult result = MessageBox.Show("Save modifications ?", "Team Editor", MessageBoxButtons.YesNoCancel);
 			
 			if (result == DialogResult.Yes)
 			{
@@ -181,6 +179,22 @@ namespace DungeonEye.Forms
 			}
 
 		}
+
+
+		/// <summary>
+		/// Change team location
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ChangeLocationBox_Click(object sender, EventArgs e)
+		{
+			if (Team == null)
+				return;
+
+			DungeonLocationForm form = new DungeonLocationForm(Team.Dungeon, Team.Location);
+			form.ShowDialog();
+		}
+
 
 		#endregion
 
