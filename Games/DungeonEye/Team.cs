@@ -2344,6 +2344,29 @@ namespace DungeonEye
 			return null;
 		}
 
+
+
+		/// <summary>
+		/// Removes a hero from the team
+		/// </summary>
+		/// <param name="position">Hero's position</param>
+		public void RemoveHero(HeroPosition position)
+		{
+			Heroes[(int) position] = null;
+		}
+
+
+
+		/// <summary>
+		/// Adds a hero to the team
+		/// </summary>
+		/// <param name="hero"></param>
+		/// <param name="position"></param>
+		public void AddHero(Hero hero, HeroPosition position)
+		{
+			Heroes[(int) position] = hero;
+		}
+
 		#endregion
 
 

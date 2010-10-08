@@ -40,21 +40,19 @@
 			this.FrontRightBox = new System.Windows.Forms.RadioButton();
 			this.MiddleLeftBox = new System.Windows.Forms.RadioButton();
 			this.FrontLeftBox = new System.Windows.Forms.RadioButton();
-			this.HeroBox = new DungeonEye.Forms.HeroControl();
 			this.LocationTab = new System.Windows.Forms.TabPage();
 			this.PropertiesTab = new System.Windows.Forms.TabPage();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.MessageColorBox = new System.Windows.Forms.Button();
 			this.AddMessageBox = new System.Windows.Forms.Button();
 			this.DeleteMessageBox = new System.Windows.Forms.Button();
 			this.ClearMessageBox = new System.Windows.Forms.Button();
 			this.MessageTxtBox = new System.Windows.Forms.TextBox();
 			this.MessageListBox = new System.Windows.Forms.ListBox();
-			this.LoadPartyBox = new System.Windows.Forms.Button();
-			this.SavePartyBox = new System.Windows.Forms.Button();
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
 			this.colorDialog1 = new System.Windows.Forms.ColorDialog();
-			this.MessageColorBox = new System.Windows.Forms.Button();
+			this.HeroBox = new DungeonEye.Forms.HeroControl();
 			this.tabControl1.SuspendLayout();
 			this.HeroesTab.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -73,7 +71,7 @@
 			this.tabControl1.Location = new System.Drawing.Point(12, 12);
 			this.tabControl1.Name = "tabControl1";
 			this.tabControl1.SelectedIndex = 0;
-			this.tabControl1.Size = new System.Drawing.Size(814, 479);
+			this.tabControl1.Size = new System.Drawing.Size(814, 503);
 			this.tabControl1.TabIndex = 0;
 			// 
 			// HeroesTab
@@ -83,7 +81,7 @@
 			this.HeroesTab.Location = new System.Drawing.Point(4, 22);
 			this.HeroesTab.Name = "HeroesTab";
 			this.HeroesTab.Padding = new System.Windows.Forms.Padding(3);
-			this.HeroesTab.Size = new System.Drawing.Size(806, 453);
+			this.HeroesTab.Size = new System.Drawing.Size(806, 477);
 			this.HeroesTab.TabIndex = 1;
 			this.HeroesTab.Text = "Heroes";
 			this.HeroesTab.UseVisualStyleBackColor = true;
@@ -113,6 +111,7 @@
 			this.RemoveHeroBox.TabIndex = 2;
 			this.RemoveHeroBox.Text = "Remove";
 			this.RemoveHeroBox.UseVisualStyleBackColor = true;
+			this.RemoveHeroBox.Click += new System.EventHandler(this.RemoveHeroBox_Click);
 			// 
 			// CreateHeroBox
 			// 
@@ -122,6 +121,7 @@
 			this.CreateHeroBox.TabIndex = 1;
 			this.CreateHeroBox.Text = "Create";
 			this.CreateHeroBox.UseVisualStyleBackColor = true;
+			this.CreateHeroBox.Click += new System.EventHandler(this.CreateHeroBox_Click);
 			// 
 			// RearRightBox
 			// 
@@ -191,19 +191,6 @@
 			this.FrontLeftBox.UseVisualStyleBackColor = true;
 			this.FrontLeftBox.CheckedChanged += new System.EventHandler(this.FrontLeftBox_CheckedChanged);
 			// 
-			// HeroBox
-			// 
-			this.HeroBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.HeroBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
-			this.HeroBox.Hero = null;
-			this.HeroBox.Location = new System.Drawing.Point(191, 6);
-			this.HeroBox.MinimumSize = new System.Drawing.Size(635, 400);
-			this.HeroBox.Name = "HeroBox";
-			this.HeroBox.Size = new System.Drawing.Size(635, 400);
-			this.HeroBox.TabIndex = 0;
-			// 
 			// LocationTab
 			// 
 			this.LocationTab.Location = new System.Drawing.Point(4, 22);
@@ -238,6 +225,18 @@
 			this.groupBox1.TabIndex = 0;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Messages :";
+			// 
+			// MessageColorBox
+			// 
+			this.MessageColorBox.AutoSize = true;
+			this.MessageColorBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.MessageColorBox.Image = ((System.Drawing.Image) (resources.GetObject("MessageColorBox.Image")));
+			this.MessageColorBox.Location = new System.Drawing.Point(192, 80);
+			this.MessageColorBox.Name = "MessageColorBox";
+			this.MessageColorBox.Size = new System.Drawing.Size(22, 22);
+			this.MessageColorBox.TabIndex = 4;
+			this.MessageColorBox.UseVisualStyleBackColor = true;
+			this.MessageColorBox.Click += new System.EventHandler(this.MessageColorBox_Click);
 			// 
 			// AddMessageBox
 			// 
@@ -284,28 +283,6 @@
 			this.MessageListBox.Size = new System.Drawing.Size(208, 56);
 			this.MessageListBox.TabIndex = 0;
 			// 
-			// LoadPartyBox
-			// 
-			this.LoadPartyBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.LoadPartyBox.Location = new System.Drawing.Point(12, 497);
-			this.LoadPartyBox.Name = "LoadPartyBox";
-			this.LoadPartyBox.Size = new System.Drawing.Size(75, 23);
-			this.LoadPartyBox.TabIndex = 1;
-			this.LoadPartyBox.Text = "Load";
-			this.LoadPartyBox.UseVisualStyleBackColor = true;
-			this.LoadPartyBox.Click += new System.EventHandler(this.LoadPartyBox_Click);
-			// 
-			// SavePartyBox
-			// 
-			this.SavePartyBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.SavePartyBox.Location = new System.Drawing.Point(93, 497);
-			this.SavePartyBox.Name = "SavePartyBox";
-			this.SavePartyBox.Size = new System.Drawing.Size(75, 23);
-			this.SavePartyBox.TabIndex = 2;
-			this.SavePartyBox.Text = "Save";
-			this.SavePartyBox.UseVisualStyleBackColor = true;
-			this.SavePartyBox.Click += new System.EventHandler(this.SavePartyBox_Click);
-			// 
 			// openFileDialog1
 			// 
 			this.openFileDialog1.DefaultExt = "*.xml";
@@ -321,25 +298,24 @@
 			this.saveFileDialog1.RestoreDirectory = true;
 			this.saveFileDialog1.Title = "Save party...";
 			// 
-			// MessageColorBox
+			// HeroBox
 			// 
-			this.MessageColorBox.AutoSize = true;
-			this.MessageColorBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.MessageColorBox.Image = ((System.Drawing.Image) (resources.GetObject("MessageColorBox.Image")));
-			this.MessageColorBox.Location = new System.Drawing.Point(192, 80);
-			this.MessageColorBox.Name = "MessageColorBox";
-			this.MessageColorBox.Size = new System.Drawing.Size(22, 22);
-			this.MessageColorBox.TabIndex = 4;
-			this.MessageColorBox.UseVisualStyleBackColor = true;
-			this.MessageColorBox.Click += new System.EventHandler(this.MessageColorBox_Click);
+			this.HeroBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.HeroBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+			this.HeroBox.Hero = null;
+			this.HeroBox.Location = new System.Drawing.Point(191, 6);
+			this.HeroBox.MinimumSize = new System.Drawing.Size(635, 400);
+			this.HeroBox.Name = "HeroBox";
+			this.HeroBox.Size = new System.Drawing.Size(635, 424);
+			this.HeroBox.TabIndex = 0;
 			// 
 			// PartyForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(838, 527);
-			this.Controls.Add(this.SavePartyBox);
-			this.Controls.Add(this.LoadPartyBox);
 			this.Controls.Add(this.tabControl1);
 			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 			this.Name = "PartyForm";
@@ -379,8 +355,6 @@
 		private System.Windows.Forms.RadioButton MiddleLeftBox;
 		private System.Windows.Forms.Button RemoveHeroBox;
 		private System.Windows.Forms.Button CreateHeroBox;
-		private System.Windows.Forms.Button LoadPartyBox;
-		private System.Windows.Forms.Button SavePartyBox;
 		private System.Windows.Forms.OpenFileDialog openFileDialog1;
 		private System.Windows.Forms.SaveFileDialog saveFileDialog1;
 		private System.Windows.Forms.Button MessageColorBox;

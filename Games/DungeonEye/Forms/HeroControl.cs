@@ -152,6 +152,7 @@ namespace DungeonEye.Forms
 				ArmorClassBox.Text = Hero.ArmorClass.ToString();
 
 				HPBox.HitPoint = Hero.HitPoint;
+				FoodBox.Value = Hero.Food;
 
 				#endregion
 			}
@@ -170,11 +171,7 @@ namespace DungeonEye.Forms
 				SpellLevel = 1;
 			}
 
-			// Properties
-			if (Hero != null)
-			{
-			}
-
+			// Repaint
 			OpenGLBox.Invalidate();
 			
 		}

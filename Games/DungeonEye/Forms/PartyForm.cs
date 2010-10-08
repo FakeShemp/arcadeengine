@@ -130,6 +130,24 @@ namespace DungeonEye.Forms
 		}
 
 
+		/// <summary>
+		/// Save the party
+		/// </summary>
+		void SaveParty()
+		{
+			if (Team == null)
+				return;
+
+			if (saveFileDialog1.ShowDialog() != System.Windows.Forms.DialogResult.OK)
+				return;
+
+			if (string.IsNullOrEmpty(saveFileDialog1.FileName))
+				return;
+
+			Team.SaveParty(saveFileDialog1.FileName);
+		}
+
+
 
 		#region Main form events
 
@@ -155,7 +173,7 @@ namespace DungeonEye.Forms
 			
 			if (result == DialogResult.Yes)
 			{
-				//Save();
+				SaveParty();
 			}
 			else if (result == DialogResult.Cancel)
 			{
@@ -164,33 +182,49 @@ namespace DungeonEye.Forms
 
 		}
 
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void SavePartyBox_Click(object sender, EventArgs e)
-		{
-
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void LoadPartyBox_Click(object sender, EventArgs e)
-		{
-			LoadParty();
-		}
-
 		#endregion
 
 
-
 		#region Heroe's events
+
+		/// <summary>
+		/// Adds a Hero
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void CreateHeroBox_Click(object sender, EventArgs e)
+		{
+
+		}
+
+
+		/// <summary>
+		/// Removes a Hero
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void RemoveHeroBox_Click(object sender, EventArgs e)
+		{
+			if (Team == null)
+				return;
+
+			HeroPosition pos = HeroPosition.FrontLeft;
+			if (FrontLeftBox.Checked)
+				pos = HeroPosition.FrontLeft;
+			if (FrontRightBox.Checked)
+				pos = HeroPosition.FrontRight;
+			if (MiddleLeftBox.Checked)
+				pos = HeroPosition.MiddleLeft;
+			if (MiddleRightBox.Checked)
+				pos = HeroPosition.MiddleRight;
+			if (RearLeftBox.Checked)
+				pos = HeroPosition.RearLeft;
+			if (RearRightBox.Checked)
+				pos = HeroPosition.RearRight;
+
+			Team.RemoveHero(pos);
+			SelectHero(pos);
+		}
 
 
 		/// <summary>
@@ -316,7 +350,6 @@ namespace DungeonEye.Forms
 		Team Team;
 
 		#endregion
-
 
 	}
 }
