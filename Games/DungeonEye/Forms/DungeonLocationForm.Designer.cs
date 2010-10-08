@@ -44,6 +44,7 @@
 			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
 			this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
 			this.DungeonControl = new DungeonEye.Forms.DungeonLocationControl();
+			this.MouseLocationBox = new System.Windows.Forms.ToolStripStatusLabel();
 			this.toolStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.SuspendLayout();
@@ -135,7 +136,8 @@
 			// 
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
-            this.toolStripStatusLabel2});
+            this.toolStripStatusLabel2,
+            this.MouseLocationBox});
 			this.statusStrip1.Location = new System.Drawing.Point(0, 529);
 			this.statusStrip1.Name = "statusStrip1";
 			this.statusStrip1.Size = new System.Drawing.Size(773, 22);
@@ -163,6 +165,13 @@
 			this.DungeonControl.Size = new System.Drawing.Size(773, 504);
 			this.DungeonControl.TabIndex = 0;
 			this.DungeonControl.Target = null;
+			this.DungeonControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.DungeonControl_MouseMove);
+			// 
+			// MouseLocationBox
+			// 
+			this.MouseLocationBox.Name = "MouseLocationBox";
+			this.MouseLocationBox.Size = new System.Drawing.Size(37, 17);
+			this.MouseLocationBox.Text = "..........";
 			// 
 			// DungeonLocationForm
 			// 
@@ -203,5 +212,6 @@
 		private System.Windows.Forms.ToolStripLabel toolStripLabel3;
 		private System.Windows.Forms.ToolStripComboBox GroundPositionBox;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+		private System.Windows.Forms.ToolStripStatusLabel MouseLocationBox;
 	}
 }

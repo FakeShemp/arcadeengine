@@ -92,13 +92,25 @@ namespace DungeonEye.Forms
 
 			#region Messages
 
+			RebuildMessages();
+
+			#endregion
+
+
+			LocationLabel.Text = Team.Location.ToString();
+		}
+
+
+		/// <summary>
+		/// Rebuild messages
+		/// </summary>
+		void RebuildMessages()
+		{
 			MessageListBox.BeginUpdate();
 			MessageListBox.Items.Clear();
 			foreach (ScreenMessage msg in Team.Messages)
 				MessageListBox.Items.Add(msg.Message);
 			MessageListBox.EndUpdate();
-
-			#endregion
 		}
 
 
@@ -193,6 +205,9 @@ namespace DungeonEye.Forms
 
 			DungeonLocationForm form = new DungeonLocationForm(Team.Dungeon, Team.Location);
 			form.ShowDialog();
+
+			Team.Teleport(form.Target);
+			LocationLabel.Text = Team.Location.ToString();
 		}
 
 
@@ -328,7 +343,11 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void ClearMessageBox_Click(object sender, EventArgs e)
 		{
+			if (Team == null)
+				return;
 
+			Team.Messages.Clear();
+			RebuildMessages();
 		}
 
 
@@ -339,7 +358,11 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void DeleteMessageBox_Click(object sender, EventArgs e)
 		{
+			if (Team == null ||MessageListBox.SelectedIndex == -1)
+				return;
 
+			Team.Messages.Remove(Team.Messages[MessageListBox.SelectedIndex]);
+			RebuildMessages();
 		}
 
 
@@ -350,8 +373,16 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void AddMessageBox_Click(object sender, EventArgs e)
 		{
+			if (Team == null || string.IsNullOrEmpty(MessageTxtBox.Text))
+				return;
 
+			Team.AddMessage(MessageTxtBox.Text);
+			MessageTxtBox.Text = "";
+
+			RebuildMessages();
 		}
+
+
 
 		#endregion
 
@@ -364,6 +395,7 @@ namespace DungeonEye.Forms
 		Team Team;
 
 		#endregion
+
 
 	}
 }

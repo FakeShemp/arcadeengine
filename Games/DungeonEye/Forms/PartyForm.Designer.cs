@@ -48,11 +48,11 @@
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
 			this.colorDialog1 = new System.Windows.Forms.ColorDialog();
-			this.HeroBox = new DungeonEye.Forms.HeroControl();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
-			this.ChangeLocationBox = new System.Windows.Forms.Button();
-			this.label1 = new System.Windows.Forms.Label();
 			this.LocationLabel = new System.Windows.Forms.Label();
+			this.label1 = new System.Windows.Forms.Label();
+			this.ChangeLocationBox = new System.Windows.Forms.Button();
+			this.HeroBox = new DungeonEye.Forms.HeroControl();
 			this.groupBox2.SuspendLayout();
 			this.groupBox1.SuspendLayout();
 			this.groupBox3.SuspendLayout();
@@ -250,18 +250,6 @@
 			this.saveFileDialog1.RestoreDirectory = true;
 			this.saveFileDialog1.Title = "Save party...";
 			// 
-			// HeroBox
-			// 
-			this.HeroBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
-			this.HeroBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.HeroBox.Hero = null;
-			this.HeroBox.Location = new System.Drawing.Point(322, 12);
-			this.HeroBox.MinimumSize = new System.Drawing.Size(635, 400);
-			this.HeroBox.Name = "HeroBox";
-			this.HeroBox.Size = new System.Drawing.Size(635, 400);
-			this.HeroBox.TabIndex = 0;
-			// 
 			// groupBox3
 			// 
 			this.groupBox3.Controls.Add(this.LocationLabel);
@@ -274,9 +262,26 @@
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Location :";
 			// 
+			// LocationLabel
+			// 
+			this.LocationLabel.Location = new System.Drawing.Point(99, 19);
+			this.LocationLabel.Name = "LocationLabel";
+			this.LocationLabel.Size = new System.Drawing.Size(196, 13);
+			this.LocationLabel.TabIndex = 2;
+			this.LocationLabel.Text = ".......";
+			// 
+			// label1
+			// 
+			this.label1.AutoSize = true;
+			this.label1.Location = new System.Drawing.Point(6, 19);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(87, 13);
+			this.label1.TabIndex = 1;
+			this.label1.Text = "Current location :";
+			// 
 			// ChangeLocationBox
 			// 
-			this.ChangeLocationBox.Location = new System.Drawing.Point(6, 35);
+			this.ChangeLocationBox.Location = new System.Drawing.Point(6, 41);
 			this.ChangeLocationBox.Name = "ChangeLocationBox";
 			this.ChangeLocationBox.Size = new System.Drawing.Size(129, 23);
 			this.ChangeLocationBox.TabIndex = 0;
@@ -284,23 +289,17 @@
 			this.ChangeLocationBox.UseVisualStyleBackColor = true;
 			this.ChangeLocationBox.Click += new System.EventHandler(this.ChangeLocationBox_Click);
 			// 
-			// label1
+			// HeroBox
 			// 
-			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(7, 19);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(87, 13);
-			this.label1.TabIndex = 1;
-			this.label1.Text = "Current location :";
-			// 
-			// LocationLabel
-			// 
-			this.LocationLabel.AutoSize = true;
-			this.LocationLabel.Location = new System.Drawing.Point(100, 19);
-			this.LocationLabel.Name = "LocationLabel";
-			this.LocationLabel.Size = new System.Drawing.Size(28, 13);
-			this.LocationLabel.TabIndex = 2;
-			this.LocationLabel.Text = ".......";
+			this.HeroBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.HeroBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.HeroBox.Hero = null;
+			this.HeroBox.Location = new System.Drawing.Point(322, 12);
+			this.HeroBox.MinimumSize = new System.Drawing.Size(635, 400);
+			this.HeroBox.Name = "HeroBox";
+			this.HeroBox.Size = new System.Drawing.Size(635, 400);
+			this.HeroBox.TabIndex = 0;
 			// 
 			// PartyForm
 			// 

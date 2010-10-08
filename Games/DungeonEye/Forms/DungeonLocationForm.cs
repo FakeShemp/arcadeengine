@@ -17,15 +17,22 @@
 //along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 //
 #endregion
+using System.Collections.Generic;
 using System;
+using System.Drawing;
 using System.Windows.Forms;
+using ArcEngine;
+using ArcEngine.Forms;
+using ArcEngine.Graphic;
+using ArcEngine.Asset;
+using DungeonEye;
 
 
 
 namespace DungeonEye.Forms
 {
 	/// <summary>
-	/// Dungeon location control
+	/// Dungeon location form
 	/// </summary>
 	public partial class DungeonLocationForm : Form
 	{
@@ -42,7 +49,6 @@ namespace DungeonEye.Forms
 			DungeonControl.Target = new DungeonLocation(location);
 			DungeonControl.GlControlBox.Click += new EventHandler(DungeonControl_Click);
 			DungeonControl.GlControlBox.DoubleClick += new EventHandler(GlControlBox_DoubleClick);
-
 
 			DirectionBox.BeginUpdate();
 			foreach(string name in Enum.GetNames(typeof(CardinalPoint)))
@@ -110,6 +116,8 @@ namespace DungeonEye.Forms
 		{
 			DungeonControl.Target.Position = DungeonControl.BlockUnderMouse;
 			DungeonControl.Target.SetMaze((string)MazeBox.SelectedItem);
+
+			MouseLocationBox.Text = DungeonControl.BlockUnderMouse.ToString();
 		}
 
 	
@@ -166,15 +174,22 @@ namespace DungeonEye.Forms
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void DungeonControl_MouseMove(object sender, MouseEventArgs e)
+		{
+			MouseLocationBox.Text = DungeonControl.BlockUnderMouse.ToString();
+		}
+
 		#endregion
 
 
 
 		#region Properties
 
-		/// <summary>
-		/// Destination
-		/// </summary>
 		public DungeonLocation Target
 		{
 			get
@@ -183,6 +198,7 @@ namespace DungeonEye.Forms
 			}
 		}
 		#endregion
+
 
 	}
 }
