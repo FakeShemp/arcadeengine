@@ -288,9 +288,9 @@ namespace ArcEngine
 		/// </summary>
 		/// <typeparam name="T">Type of asset</typeparam>
 		/// <param name="name">Name of the asset</param>
-		public override AssetEditor EditAsset<T>(string name)
+		public override AssetEditorBase EditAsset<T>(string name)
 		{
-			AssetEditor form = null;
+			AssetEditorBase form = null;
 			XmlNode node = null;
 
 			if (typeof(T) == typeof(TileSet))

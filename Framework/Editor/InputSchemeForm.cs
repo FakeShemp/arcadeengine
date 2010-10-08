@@ -43,7 +43,7 @@ namespace ArcEngine.Editor
 	/// <summary>
 	/// Edit script
 	/// </summary>
-	internal partial class InputSchemeForm : AssetEditor
+	internal partial class InputSchemeForm : AssetEditorBase
 	{
 		/// <summary>
 		/// Constructor

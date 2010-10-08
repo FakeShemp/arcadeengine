@@ -36,7 +36,7 @@ namespace ArcEngine.Editor
 	/// <summary>
 	/// Edit script model
 	/// </summary>
-	internal partial class ScriptModelForm : AssetEditor
+	internal partial class ScriptModelForm : AssetEditorBase
 	{
 		/// <summary>
 		/// Constructor

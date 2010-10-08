@@ -34,7 +34,7 @@ using WeifenLuo.WinFormsUI.Docking;
 
 namespace RuffnTumble.Editor
 {
-	public partial class WorldForm : AssetEditor
+	public partial class WorldForm : AssetEditorBase
 	{
 
 		#region Misc

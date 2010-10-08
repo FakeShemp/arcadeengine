@@ -36,7 +36,7 @@ namespace ArcEngine.Editor
 	/// <summary>
 	/// 
 	/// </summary>
-	internal partial class Font2dForm : AssetEditor
+	internal partial class Font2dForm : AssetEditorBase
 	{
 		/// <summary>
 		/// 

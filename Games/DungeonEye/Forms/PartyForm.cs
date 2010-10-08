@@ -1,7 +1,7 @@
 ﻿#region Licence
 //
 //This file is part of ArcEngine.
-//Copyright (C)2008-2009 Adrien Hémery ( iliak@mimicprod.net )
+//Copyright (C)2008-2010 Adrien Hémery ( iliak@mimicprod.net )
 //
 //ArcEngine is free software: you can redistribute it and/or modify
 //it under the terms of the GNU General Public License as published by
@@ -19,50 +19,63 @@
 #endregion
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.IO;
-using System.Text;
 using System.Windows.Forms;
 using System.Xml;
+using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Forms;
-using ArcEngine.Graphic;
-using OpenTK.Graphics;
-using OpenTK.Graphics.OpenGL;
-using WeifenLuo.WinFormsUI.Docking;
+using ArcEngine.Editor;
 
-namespace ArcEngine.Editor
+
+namespace DungeonEye.Forms
 {
-	public partial class SceneForm : AssetEditorBase
+	/// <summary>
+	/// Party form editor
+	/// </summary>
+	public partial class PartyForm : EditorFormBase
 	{
+
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
-		public SceneForm(XmlNode node)
+		public PartyForm()
 		{
 			InitializeComponent();
 		}
 
 
 
-		#region Properties
+
+
+
+
 
 		/// <summary>
-		/// 
+		/// Form closing
 		/// </summary>
-		public override IAsset Asset
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void Form_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			get
+			DialogResult result = MessageBox.Show("Save modifications ?", "Hero Editor", MessageBoxButtons.YesNoCancel);
+
+			if (result == DialogResult.Yes)
 			{
-				return Scene;
+				//Save();
 			}
+			else if (result == DialogResult.Cancel)
+			{
+				e.Cancel = true;
+			}
+
 		}
 
-		/// <summary>
-		/// 
-		/// </summary>
-		Scene Scene;
+
+
+
+		#region Properties
+
+
 
 		#endregion
 	}

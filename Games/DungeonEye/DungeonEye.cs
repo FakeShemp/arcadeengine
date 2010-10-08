@@ -22,9 +22,11 @@ using System.Drawing;
 using System.Windows.Forms;
 using ArcEngine;
 using ArcEngine.Audio;
+using ArcEngine.Editor;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
 using ArcEngine.Utility.ScreenManager;
+using DungeonEye.Forms;
 
 namespace DungeonEye
 {
@@ -65,9 +67,10 @@ namespace DungeonEye
 			// Audio
 			AudioManager.Create();
 
+
+			// Editor events
+			EditorEnter += new EditorEventHandler(Game_EditorEnter);
 		}
-
-
 
 
 		/// <summary>
@@ -98,7 +101,6 @@ namespace DungeonEye
 
 
 
-
 		/// <summary>
 		/// Called when graphics resources need to be unloaded.
 		/// </summary>
@@ -111,7 +113,6 @@ namespace DungeonEye
 
 
 
-
 		/// <summary>
 		/// Allows the game to run logic such as updating the world,
 		/// checking for collisions, gathering input, and playing audio.
@@ -121,9 +122,8 @@ namespace DungeonEye
 			if (Keyboard.IsKeyPress(Keys.Insert))
 				RunEditor();
 
-
-			GSM.Update(gameTime);
-			
+			// Update game screens
+			GSM.Update(gameTime);			
 		}
 
 
@@ -133,9 +133,47 @@ namespace DungeonEye
 		/// </summary>
 		public override void Draw()
 		{
+			// Render game screens
 			GSM.Draw();
 		}
 
+
+
+		#region Editor
+
+
+		/// <summary>
+		/// Editor is opening
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void Game_EditorEnter(object sender, EditorEventArgs e)
+		{
+			// Add a new button
+			ToolStripButton button = new ToolStripButton();
+			button.Text = "Load Party";
+			button.Click += new EventHandler(LoadParty_Click);
+
+			// Add button to the editor toolbar
+			e.Form.ToolBarHandle.Items.Add(button);
+		}
+
+
+		/// <summary>
+		/// Party editor
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void LoadParty_Click(object sender, EventArgs e)
+		{
+			if (Editor == null)
+				return;
+
+			Editor.OpenClientForm(new PartyForm());
+		}
+
+
+		#endregion
 
 
 

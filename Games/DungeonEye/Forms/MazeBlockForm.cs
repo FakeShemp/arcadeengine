@@ -32,7 +32,7 @@ namespace DungeonEye.Forms
 	/// <summary>
 	/// 
 	/// </summary>
-	public partial class MazeBlockForm : AssetEditor
+	public partial class MazeBlockForm : AssetEditorBase
 	{
 
 		/// <summary>

@@ -34,7 +34,7 @@ namespace ArcEngine.Editor
 	/// <summary>
 	/// TileSet form editor
 	/// </summary>
-	internal partial class TileSetForm : AssetEditor
+	internal partial class TileSetForm : AssetEditorBase
 	{
 
 		/// <summary>

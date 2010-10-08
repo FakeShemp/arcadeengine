@@ -1,7 +1,7 @@
 ﻿#region Licence
 //
 //This file is part of ArcEngine.
-//Copyright (C)2008-2009 Adrien Hémery ( iliak@mimicprod.net )
+//Copyright (C)2008-2010 Adrien Hémery ( iliak@mimicprod.net )
 //
 //ArcEngine is free software: you can redistribute it and/or modify
 //it under the terms of the GNU General Public License as published by
@@ -20,49 +20,34 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Drawing;
-using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using System.Xml;
-using ArcEngine.Asset;
-using ArcEngine.Forms;
-using ArcEngine.Graphic;
-using OpenTK.Graphics;
-using OpenTK.Graphics.OpenGL;
+using ArcEngine.Editor;
 using WeifenLuo.WinFormsUI.Docking;
 
-namespace ArcEngine.Editor
+namespace ArcEngine.Forms
 {
-	public partial class SceneForm : AssetEditorBase
+
+	/// <summary>
+	/// Client form for the Editor
+	/// </summary>
+	public partial class EditorFormBase : DockContent
 	{
 		/// <summary>
-		/// 
+		/// Construstor
 		/// </summary>
-		public SceneForm(XmlNode node)
+		public EditorFormBase()
 		{
 			InitializeComponent();
+
 		}
 
 
 
 		#region Properties
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public override IAsset Asset
-		{
-			get
-			{
-				return Scene;
-			}
-		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		Scene Scene;
 
 		#endregion
 	}

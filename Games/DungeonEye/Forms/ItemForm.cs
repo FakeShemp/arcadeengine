@@ -34,7 +34,7 @@ namespace DungeonEye.Forms
 	/// <summary>
 	/// Itemset form editor class
 	/// </summary>
-	public partial class ItemForm : AssetEditor
+	public partial class ItemForm : AssetEditorBase
 	{
 
 		/// <summary>

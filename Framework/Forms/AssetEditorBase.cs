@@ -27,7 +27,7 @@ namespace ArcEngine.Forms
 	/// <summary>
 	/// Base classe for asset editor
 	/// </summary>
-	public class AssetEditor : DockContent
+	public class AssetEditorBase : DockContent
 	{
 
 		/// <summary>

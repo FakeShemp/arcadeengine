@@ -19,17 +19,15 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
-using ArcEngine.Asset;
+using ArcEngine.Audio;
 using ArcEngine.Forms;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
 using ArcEngine.PInvoke;
-using ArcEngine.Audio;
-
+using ArcEngine.Editor;
 
 [assembly: CLSCompliant(true)]
 namespace ArcEngine
@@ -548,6 +546,54 @@ namespace ArcEngine
 		public event OnResizeEventHandler OnResize;
 
 
+
+		#region Editor 
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public delegate void EditorEventHandler(object sender, EditorEventArgs e);
+
+
+		/// <summary>
+		/// Event raised when the enter the editor.
+		/// </summary>
+		public event EditorEventHandler EditorEnter;
+
+
+		/// <summary>
+		/// Method for raising the EditorEnter event.
+		/// </summary>
+		public virtual void OnEditorEnter(EditorMainForm form)
+		{
+			if (EditorEnter != null)
+			{
+				EditorEventArgs evt = new EditorEventArgs(form);
+				EditorEnter(this, evt);
+			}
+		}
+
+		/// <summary>
+		/// Event raised when leaving the editor.
+		/// </summary>
+		public event EventHandler EditorLeave;
+
+
+		/// <summary>
+		/// Method for raising the EditorLeave event.
+		/// </summary>
+		public virtual void OnEditorLeave()
+		{
+			if (EditorLeave != null)
+				EditorLeave(this, null);
+		}
+
+
+		#endregion
+
+
+
 		#endregion
 
 
@@ -647,23 +693,23 @@ namespace ArcEngine
 		/// </summary>
 		public void RunEditor()
 		{
-			Trace.WriteDebugLine("[GameBase] RunEditor()");
-			
-			
+	
 			bool mousestate = Mouse.Visible;
-			EditorMode = true;
 			Mouse.Visible = true;
 
 			Window.Hide();
 	
-			new Editor.EditorForm().ShowDialog();
-			EditorMode = false;
-
+			Editor = new EditorMainForm();
+			OnEditorEnter(Editor);
+			Editor.ShowDialog();
+			Editor = null;
+			OnEditorLeave();
 
 			Window.MakeCurrent();
 			Mouse.Visible = mousestate;
 			Window.Show();
 			Window.BringToFront();
+			
 		}
 
 		#endregion
@@ -731,10 +777,21 @@ namespace ArcEngine
 		/// </summary>
 		public bool EditorMode
 		{
+			get
+			{
+				return Editor != null;
+			}
+		}
+
+
+		/// <summary>
+		/// Editor form handle
+		/// </summary>
+		public EditorMainForm Editor
+		{
 			get;
 			private set;
 		}
-
 
 		/// <summary>
 		/// Random number generator

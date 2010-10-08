@@ -97,7 +97,7 @@ namespace ArcEngine.Editor
 						// Open the editor windows
 						args = new object[] { NameBox.Text };
 						mi = provider.GetType().GetMethod("EditAsset").MakeGenericMethod(type);
-						AssetEditor form = mi.Invoke(provider, args) as AssetEditor;
+						AssetEditorBase form = mi.Invoke(provider, args) as AssetEditorBase;
 						if (form == null)
 							return;
 

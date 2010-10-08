@@ -301,7 +301,7 @@ namespace ArcEngine.Editor
 			// Edit the asset
 			object[] args = { node.Text };
 			MethodInfo mi = provider.GetType().GetMethod("EditAsset").MakeGenericMethod(node.Tag as Type);
-			AssetEditor form = mi.Invoke(provider, args) as AssetEditor;
+			AssetEditorBase form = mi.Invoke(provider, args) as AssetEditorBase;
 			if (form == null)
 				return false;
 
@@ -325,7 +325,8 @@ namespace ArcEngine.Editor
 				e.CancelEdit = true;
 				return;
 			}
-			
+
+			MessageBox.Show("Not yet implemented !");
 			
 			e.CancelEdit = true;
 		}

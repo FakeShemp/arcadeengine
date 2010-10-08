@@ -38,7 +38,7 @@ namespace ArcEngine.Editor
 	/// <summary>
 	/// Animation editor
 	/// </summary>
-	internal partial class AnimationForm : AssetEditor
+	internal partial class AnimationForm : AssetEditorBase
 	{
 		/// <summary>
 		/// Constructor

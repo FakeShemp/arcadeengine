@@ -146,9 +146,9 @@ namespace RuffnTumble
 		/// <typeparam name="T"></typeparam>
 		/// <param name="name"></param>
 		/// <returns></returns>
-		public override AssetEditor EditAsset<T>(string name)
+		public override AssetEditorBase EditAsset<T>(string name)
 		{
-			AssetEditor form = null;
+			AssetEditorBase form = null;
 			XmlNode node = null;
 
 			if (typeof(T) == typeof(World))

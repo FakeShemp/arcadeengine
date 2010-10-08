@@ -193,9 +193,9 @@ namespace DungeonEye
 		/// <param name="type">Asset's type</param>
 		/// <param name="name">Name of the asset</param>
 		/// <returns>Handle to the edit form</returns>
-		public override AssetEditor EditAsset<T>(string name)
+		public override AssetEditorBase EditAsset<T>(string name)
 		{
-			AssetEditor form = null;
+			AssetEditorBase form = null;
 			XmlNode node = null;
 
 			if (typeof(T) == typeof(Dungeon))

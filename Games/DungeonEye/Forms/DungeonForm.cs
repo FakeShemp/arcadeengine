@@ -32,7 +32,7 @@ namespace DungeonEye.Forms
 	/// <summary>
 	/// Dungeon form editor
 	/// </summary>
-	public partial class DungeonForm : AssetEditor
+	public partial class DungeonForm : AssetEditorBase
 	{
 		/// <summary>
 		/// Default constructor

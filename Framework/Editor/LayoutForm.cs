@@ -41,7 +41,7 @@ namespace ArcEngine.Editor
 	/// <summary>
 	/// 
 	/// </summary>
-	internal partial class LayoutForm : AssetEditor
+	internal partial class LayoutForm : AssetEditorBase
 	{
 
 		/// <summary>

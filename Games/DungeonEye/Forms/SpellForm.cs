@@ -27,7 +27,7 @@ using DungeonEye.Interfaces;
 
 namespace DungeonEye.Forms
 {
-	public partial class SpellForm : AssetEditor
+	public partial class SpellForm : AssetEditorBase
 	{
 		public SpellForm(XmlNode node)
 		{

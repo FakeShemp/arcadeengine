@@ -30,7 +30,7 @@ namespace DungeonEye.Forms
 	/// <summary>
 	/// Control to edit Hero's parameters
 	/// </summary>
-	public partial class HeroForm : AssetEditor
+	public partial class HeroForm : AssetEditorBase
 	{
 
 		/// <summary>

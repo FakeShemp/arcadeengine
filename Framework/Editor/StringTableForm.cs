@@ -34,7 +34,7 @@ namespace ArcEngine.Editor
 	/// <summary>
 	/// 
 	/// </summary>
-	internal partial class StringTableForm : AssetEditor 
+	internal partial class StringTableForm : AssetEditorBase 
 	{
 		/// <summary>
 		/// Constructor

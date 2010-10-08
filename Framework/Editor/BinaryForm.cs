@@ -37,7 +37,7 @@ namespace ArcEngine.Editor
 	/// <summary>
 	/// 
 	/// </summary>
-	public partial class BinaryForm : AssetEditor
+	public partial class BinaryForm : AssetEditorBase
 	{
 		/// <summary>
 		/// constructor

@@ -28,17 +28,18 @@ using WeifenLuo.WinFormsUI.Docking;
 namespace ArcEngine.Editor
 {
 	/// <summary>
-	/// 
+	/// Main Editor form
 	/// </summary>
-	internal partial class EditorForm : Form
+	public partial class EditorMainForm : Form
 	{
 
 
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public EditorForm()
+		public EditorMainForm()
 		{
+			Trace.WriteDebugLine("[Editor] Creating");
 
 			// Form initialize
 			InitializeComponent();
@@ -48,8 +49,8 @@ namespace ArcEngine.Editor
 
 
 			// Log panel
-			logPanel = new LogForm(this);
-			logPanel.Show(dockPanel, DockState.DockBottomAutoHide);
+			LogPanel = new LogForm(this);
+			LogPanel.Show(dockPanel, DockState.DockBottomAutoHide);
 
 			// Resource panel
 			ResourcePanel = new ResourceForm();
@@ -57,6 +58,19 @@ namespace ArcEngine.Editor
 			ResourcePanel.RebuildResourceTree();
 
 
+		}
+
+
+		/// <summary>
+		/// Opens a client form
+		/// </summary>
+		/// <param name="form">Form handle</param>
+		public void OpenClientForm(EditorFormBase form)
+		{
+			if (form == null)
+				return;
+
+			form.Show(dockPanel, DockState.Document);
 		}
 
 
@@ -161,7 +175,7 @@ namespace ArcEngine.Editor
 
 			foreach (DockContent window in windows)
 			{
-				if (window is AssetEditor)
+				if (window is AssetEditorBase)
 					window.Close();
 			}
 		}
@@ -284,9 +298,9 @@ namespace ArcEngine.Editor
 			// Save all opened asset
 			foreach (DockContent window in dockPanel.Contents)
 			{
-				if (window is AssetEditor)
+				if (window is AssetEditorBase)
 				{
-					AssetEditor asseteditor = window as AssetEditor;
+					AssetEditorBase asseteditor = window as AssetEditorBase;
 					asseteditor.Save();
 				}
 			}
@@ -396,7 +410,6 @@ namespace ArcEngine.Editor
 		private void EditorForm_FormClosed(object sender, FormClosedEventArgs e)
 		{
 
-
 			CloseAllTabs_OnClick(null, null);
 
 			//foreach (DockContent window in list)
@@ -404,6 +417,7 @@ namespace ArcEngine.Editor
 			//   if (window is AssetEditor)
 			//      window.Close();
 			//}
+			Trace.WriteDebugLine("[Editor] Closed");
 		}
 
 
@@ -522,7 +536,7 @@ namespace ArcEngine.Editor
 		/// <summary>
 		/// Log panel
 		/// </summary>
-		LogForm logPanel;
+		LogForm LogPanel;
 
 
 		/// <summary>
@@ -555,9 +569,63 @@ namespace ArcEngine.Editor
 			}
 		}
 
-	
+
+		/// <summary>
+		/// MenuStrip handle
+		/// </summary>
+		public MenuStrip MenuHandle
+		{
+			get
+			{
+				return MainMenu;
+			}
+		}
+
+
+		/// <summary>
+		/// Tool bar handle
+		/// </summary>
+		public ToolStrip ToolBarHandle
+		{
+			get
+			{
+				return MainToolStrip;
+			}
+		}
+
+
+
 		#endregion
+	}
 
 
+	/// <summary>
+	/// Editor event arguments
+	/// </summary>
+	public class EditorEventArgs : EventArgs
+	{
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="form">Editor's form handle</param>
+		public EditorEventArgs(EditorMainForm form)
+		{
+			Form = form;
+		}
+
+
+		#region Properties
+
+
+		/// <summary>
+		/// Editor's form handle
+		/// </summary>
+		public EditorMainForm Form
+		{
+			get;
+			private set;
+		}
+
+		#endregion
 	}
 }

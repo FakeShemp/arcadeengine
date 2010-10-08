@@ -34,7 +34,7 @@ namespace ArcEngine.Editor
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public LogForm(EditorForm editor)
+		public LogForm(EditorMainForm editor)
 		{
 			Editor = editor;
 
@@ -94,7 +94,7 @@ namespace ArcEngine.Editor
 		/// <summary>
 		/// Editor form handle
 		/// </summary>
-		EditorForm Editor;
+		EditorMainForm Editor;
 
 		#endregion
 	}

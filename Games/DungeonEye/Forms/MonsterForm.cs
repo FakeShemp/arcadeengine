@@ -26,7 +26,7 @@ using ArcEngine.Forms;
 
 namespace DungeonEye.Forms
 {
-	public partial class MonsterForm : AssetEditor
+	public partial class MonsterForm : AssetEditorBase
 	{
 
 		/// <summary>

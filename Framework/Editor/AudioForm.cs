@@ -35,7 +35,7 @@ namespace ArcEngine.Editor
 	/// <summary>
 	/// 
 	/// </summary>
-	internal partial class AudioForm : AssetEditor 
+	internal partial class AudioForm : AssetEditorBase 
 	{
 		/// <summary>
 		/// Constructor

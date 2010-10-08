@@ -89,7 +89,7 @@ namespace ArcEngine
 		/// </summary>
 		///<typeparam name="T"></typeparam>
 		/// <param name="name"></param>
-		public virtual AssetEditor EditAsset<T>(string name) where T : IAsset
+		public virtual AssetEditorBase EditAsset<T>(string name) where T : IAsset
 		{
 			return null;
 		}
