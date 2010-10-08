@@ -15,7 +15,7 @@ namespace DungeonEye.Forms
 	public partial class AbilityControl : UserControl
 	{
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
 		public AbilityControl()
 		{
@@ -25,14 +25,19 @@ namespace DungeonEye.Forms
 
 
 		/// <summary>
-		/// 
+		/// Rebuild interface
 		/// </summary>
 		void Rebuild()
 		{
 			if (Ability == null)
-				return;
-			AbilityBox.Value = Ability.Value;
-
+			{
+				AbilityBox.Value = 0;
+				ModifierBox.Text = "0";
+			}
+			else
+			{
+				AbilityBox.Value = Ability.Value;
+			}
 		}
 
 

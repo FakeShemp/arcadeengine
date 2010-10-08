@@ -117,4 +117,32 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="MessageColorBox.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAArBJREFUOE+t019I
+        U1EcB/BTL0Ev0T/wD6ZMQkISfJJ6sCjIiAo1Aw3JXJJ/UtIUCUmGjMjYSsuZls6kxH/LJppWvlia1SSm
+        zos6t+bcmtvd7ja3e3f3r91f22BDUZCgA7+HA+f3Od/DOQeh/zloa28lKb9PmRaqPabpIp9p4baXmrlu
+        o9aeNO24j9Pc14BPXXPbDa1ql20UQkXrn/02YqUeSsbG8Xlu1bYQbem/Z8TyvbRBaCFtA9RGgMDb3bS+
+        02qWlWuJb1kuWt+UvQUhpDUuWtexFmgEcRlA41WAwbJgCrOmjTFrhIxD22pb6r7kUI7lisgV7ulNiAMr
+        B6fprSkINGaBnIXAvw241oegZfQ9FDweBr5oFIj5KsPEyyRCMZLesAWgzV3BBGTOMajxNytiEdB4ExTw
+        BwGd9BfKB1JZTGkns1U9dQlW+xw7NYzgXy64Hav8mdDZCbWACTTTBgHE5wwD2uevRBEYVcVew2K+pZ9z
+        0CVtTxCEAbuyulgmTnbaV3kjTm2zgVDyGELF85+bD5T2AVCqcqCURUApSsCKZVJiXpxT8pwlCgPOlYdx
+        pJp7ZvxFjE/SlQKmiXOwhuV58dlbDF+RCuljCApFCEj5TTBNZVCf6g65fjTH9AQBAM5uZrlsT0gjsZLS
+        obr9PtXnTIZcZkOFPB4SnyJANwIAG3STadZuzgFG2hZVGU4QQEKTX30s5mtLlB6fzgD7Yh4UDu8FdAfB
+        0XoEurmLnmlhkuV1bQTD4aBwjz8F2hUC8JE4ULxLlq7LcmAdy/UjuWD4me7TzGR4FwdSqL6KCJ9EELX5
+        GjfeqebDibTx+mibceIs6CfPAyG5DEvjpxzfXyV5RXcPu2fbIrnbPueNKbA3x7NENSzdx0exvo7a2D9i
+        TqRHJjzSqe6NvrLjp/rXBX8BDdHHL7ayyo4AAAAASUVORK5CYII=
+</value>
+  </data>
+  <metadata name="openFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="saveFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>157, 17</value>
+  </metadata>
+  <metadata name="colorDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>293, 17</value>
+  </metadata>
 </root>

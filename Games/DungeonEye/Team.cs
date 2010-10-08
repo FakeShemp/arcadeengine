@@ -2728,7 +2728,11 @@ namespace DungeonEye
 		/// <summary>
 		/// Messages to display
 		/// </summary>
-		List<ScreenMessage> Messages;
+		public List<ScreenMessage> Messages
+		{
+			get;
+			private set;
+		}
 
 
 		/// <summary>
@@ -2888,32 +2892,32 @@ namespace DungeonEye
 		/// <summary>
 		/// Front left
 		/// </summary>
-		FrontLeft,
+		FrontLeft = 0,
 
 		/// <summary>
 		/// Front right
 		/// </summary>
-		FrontRight,
+		FrontRight = 1,
 
 		/// <summary>
 		/// Center left
 		/// </summary>
-		MiddleLeft,
+		MiddleLeft = 2,
 
 		/// <summary>
 		/// Center right
 		/// </summary>
-		MiddleRight,
+		MiddleRight = 3,
 
 		/// <summary>
 		/// Rear left
 		/// </summary>
-		RearLeft,
+		RearLeft = 4,
 
 		/// <summary>
 		/// Rear right
 		/// </summary>
-		RearRight
+		RearRight = 5
 	}
 
 

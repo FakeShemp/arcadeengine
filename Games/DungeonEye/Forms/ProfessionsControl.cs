@@ -31,119 +31,135 @@ namespace DungeonEye.Forms
 		void Rebuild()
 		{
 			if (Hero == null)
-				return;
-
-			Profession prof = null;
-
-			#region Cleric
-			prof = Hero.GetProfession(HeroClass.Cleric);
-			if (prof != null)
 			{
-				ClericBox.Checked = true;
-				ClericXPBox.Enabled = true;
-				ClericLevelBox.Enabled = true;
-				ClericXPBox.Value = prof.Experience;
-			}
-			else
-			{
-				ClericBox.Checked = false;
-				ClericXPBox.Enabled = false;
-				ClericLevelBox.Enabled = false;
 				ClericXPBox.Value = 0;
-			}
-			#endregion
-
-			#region Fighter
-			prof = Hero.GetProfession(HeroClass.Fighter);
-			if (prof != null)
-			{
-				FighterBox.Checked = true;
-				FighterXPBox.Enabled = true;
-				FighterLevelBox.Enabled = true;
-				FighterXPBox.Value = prof.Experience;
-			}
-			else
-			{
-				FighterBox.Checked = false;
-				FighterXPBox.Enabled = false;
-				FighterLevelBox.Enabled = false;
 				FighterXPBox.Value = 0;
-			}
-			#endregion
-
-			#region Mage
-			prof = Hero.GetProfession(HeroClass.Mage);
-			if (prof != null)
-			{
-				MageBox.Checked = true;
-				MageXPBox.Enabled = true;
-				MageLevelBox.Enabled = true;
-				MageXPBox.Value = prof.Experience;
-			}
-			else
-			{
-				MageBox.Checked = false;
-				MageXPBox.Enabled = false;
-				MageLevelBox.Enabled = false;
 				MageXPBox.Value = 0;
-			}
-			#endregion
-
-			#region Paladin
-			prof = Hero.GetProfession(HeroClass.Paladin);
-			if (prof != null)
-			{
-				PaladinBox.Checked = true;
-				PaladinXPBox.Enabled = true;
-				PaladinLevelBox.Enabled = true;
-				PaladinXPBox.Value = prof.Experience;
-			}
-			else
-			{
-				PaladinBox.Checked = false;
-				PaladinXPBox.Enabled = false;
-				PaladinLevelBox.Enabled = false;
 				PaladinXPBox.Value = 0;
-			}
-			#endregion
-
-			#region Ranger
-			prof = Hero.GetProfession(HeroClass.Ranger);
-			if (prof != null)
-			{
-				RangerBox.Checked = true;
-				RangerXPBox.Enabled = true;
-				RangerLevelBox.Enabled = true;
-				RangerXPBox.Value = prof.Experience;
-			}
-			else
-			{
-				RangerBox.Checked = false;
-				RangerXPBox.Enabled = false;
-				RangerLevelBox.Enabled = false;
 				RangerXPBox.Value = 0;
-			}
-			#endregion
+				ThiefXPBox.Value = 0;
 
-			#region Thief
-			prof = Hero.GetProfession(HeroClass.Thief);
-			if (prof != null)
-			{
-				ThiefBox.Checked = true;
-				ThiefXPBox.Enabled = true;
-				ThiefLevelBox.Enabled = true;
-				ThiefXPBox.Value = prof.Experience;
+				ClericLevelBox.Text = "0";
+				FighterLevelBox.Text = "0";
+				MageLevelBox.Text = "0";
+				PaladinLevelBox.Text = "0";
+				RangerLevelBox.Text = "0";
+				ThiefLevelBox.Text = "0";
 			}
 			else
 			{
-				ThiefBox.Checked = false;
-				ThiefXPBox.Enabled = false;
-				ThiefLevelBox.Enabled = false;
-				ThiefXPBox.Value = 0;
+
+				Profession prof = null;
+
+				#region Cleric
+				prof = Hero.GetProfession(HeroClass.Cleric);
+				if (prof != null)
+				{
+					ClericBox.Checked = true;
+					ClericXPBox.Enabled = true;
+					ClericLevelBox.Enabled = true;
+					ClericXPBox.Value = prof.Experience;
+				}
+				else
+				{
+					ClericBox.Checked = false;
+					ClericXPBox.Enabled = false;
+					ClericLevelBox.Enabled = false;
+					ClericXPBox.Value = 0;
+				}
+				#endregion
+
+				#region Fighter
+				prof = Hero.GetProfession(HeroClass.Fighter);
+				if (prof != null)
+				{
+					FighterBox.Checked = true;
+					FighterXPBox.Enabled = true;
+					FighterLevelBox.Enabled = true;
+					FighterXPBox.Value = prof.Experience;
+				}
+				else
+				{
+					FighterBox.Checked = false;
+					FighterXPBox.Enabled = false;
+					FighterLevelBox.Enabled = false;
+					FighterXPBox.Value = 0;
+				}
+				#endregion
+
+				#region Mage
+				prof = Hero.GetProfession(HeroClass.Mage);
+				if (prof != null)
+				{
+					MageBox.Checked = true;
+					MageXPBox.Enabled = true;
+					MageLevelBox.Enabled = true;
+					MageXPBox.Value = prof.Experience;
+				}
+				else
+				{
+					MageBox.Checked = false;
+					MageXPBox.Enabled = false;
+					MageLevelBox.Enabled = false;
+					MageXPBox.Value = 0;
+				}
+				#endregion
+
+				#region Paladin
+				prof = Hero.GetProfession(HeroClass.Paladin);
+				if (prof != null)
+				{
+					PaladinBox.Checked = true;
+					PaladinXPBox.Enabled = true;
+					PaladinLevelBox.Enabled = true;
+					PaladinXPBox.Value = prof.Experience;
+				}
+				else
+				{
+					PaladinBox.Checked = false;
+					PaladinXPBox.Enabled = false;
+					PaladinLevelBox.Enabled = false;
+					PaladinXPBox.Value = 0;
+				}
+				#endregion
+
+				#region Ranger
+				prof = Hero.GetProfession(HeroClass.Ranger);
+				if (prof != null)
+				{
+					RangerBox.Checked = true;
+					RangerXPBox.Enabled = true;
+					RangerLevelBox.Enabled = true;
+					RangerXPBox.Value = prof.Experience;
+				}
+				else
+				{
+					RangerBox.Checked = false;
+					RangerXPBox.Enabled = false;
+					RangerLevelBox.Enabled = false;
+					RangerXPBox.Value = 0;
+				}
+				#endregion
+
+				#region Thief
+				prof = Hero.GetProfession(HeroClass.Thief);
+				if (prof != null)
+				{
+					ThiefBox.Checked = true;
+					ThiefXPBox.Enabled = true;
+					ThiefLevelBox.Enabled = true;
+					ThiefXPBox.Value = prof.Experience;
+				}
+				else
+				{
+					ThiefBox.Checked = false;
+					ThiefXPBox.Enabled = false;
+					ThiefLevelBox.Enabled = false;
+					ThiefXPBox.Value = 0;
+				}
+				#endregion
+
 			}
-			#endregion
-
-
 		}
 
 

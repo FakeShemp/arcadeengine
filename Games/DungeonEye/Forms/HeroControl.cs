@@ -84,6 +84,7 @@ namespace DungeonEye.Forms
 		{
 			if (Hero == null)
 			{
+				#region Inventory
 				QuiverBox.Value = 0;
 				HelmetBox.SelectedItem = string.Empty;
 				PrimaryBox.SelectedItem = string.Empty;
@@ -94,11 +95,29 @@ namespace DungeonEye.Forms
 				RightRingBox.SelectedItem = string.Empty;
 				FeetBox.SelectedItem = string.Empty;
 				NeckBox.SelectedItem = string.Empty;
+				#endregion
+
+				#region Properties
+				StrengthBox.Ability = null;
+				IntelligenceBox.Ability = null;
+				WisdomBox.Ability = null;
+				DexterityBox.Ability = null;
+				ConstitutionBox.Ability = null;
+				CharismaBox.Ability = null;
+
+				ArmorClassBox.Text = "0";
+
+				HPBox.HitPoint = null;
+
+				#endregion
+
+
 			}
 			else
 			{
 				QuiverBox.Value = Hero.Quiver;
 
+				#region Inventory
 				Item item = Hero.GetInventoryItem(InventoryPosition.Helmet);
 				HelmetBox.SelectedItem = item != null ? item.Name : string.Empty;
 				item = Hero.GetInventoryItem(InventoryPosition.Primary);
@@ -117,22 +136,9 @@ namespace DungeonEye.Forms
 				FeetBox.SelectedItem = item != null ? item.Name : string.Empty;
 				item = Hero.GetInventoryItem(InventoryPosition.Neck);
 				NeckBox.SelectedItem = item != null ? item.Name : string.Empty;
-			}
+				#endregion
 
-			ProfessionsBox.Hero = Hero;
-
-
-			// Spells
-			Spells.Clear();
-			List<string> spells = ResourceManager.GetAssets<Spell>();
-			foreach (string name in spells)
-				Spells.Add(ResourceManager.CreateAsset<Spell>(name));
-
-			SpellLevel = 1;
-
-			// Properties
-			if (Hero != null)
-			{
+				#region Properties
 				StrengthBox.Ability = Hero.Strength;
 				IntelligenceBox.Ability = Hero.Intelligence;
 				WisdomBox.Ability = Hero.Wisdom;
@@ -144,8 +150,32 @@ namespace DungeonEye.Forms
 				AlignmentBox.SelectedItem = Hero.Alignment;
 
 				ArmorClassBox.Text = Hero.ArmorClass.ToString();
+
+				HPBox.HitPoint = Hero.HitPoint;
+
+				#endregion
 			}
 
+			ProfessionsBox.Hero = Hero;
+
+
+			// Spells
+			if (!DesignMode)
+			{
+				Spells.Clear();
+				List<string> spells = ResourceManager.GetAssets<Spell>();
+				foreach (string name in spells)
+					Spells.Add(ResourceManager.CreateAsset<Spell>(name));
+
+				SpellLevel = 1;
+			}
+
+			// Properties
+			if (Hero != null)
+			{
+			}
+
+			OpenGLBox.Invalidate();
 			
 		}
 
@@ -165,7 +195,6 @@ namespace DungeonEye.Forms
 			Rebuild();
 			RebuildProperties();
 			RebuildSpells();
-			//RebuildProfessions();
 		}
 
 		#endregion
@@ -299,18 +328,29 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void OpenGLBox_Load(object sender, EventArgs e)
 		{
-			OpenGLBox.MakeCurrent();
-			Display.Init();
-			Display.RenderState.ClearColor = Color.Black;
+			if (DesignMode)
+				return;
 
-
-			Heads = ResourceManager.CreateAsset<TileSet>("Heroes");
-			if (Heads != null)
+			try
 			{
-				Heads.Scale = new Vector2(2.0f, 2.0f);
-			}
+				OpenGLBox.MakeCurrent();
+				Display.Init();
+				Display.RenderState.ClearColor = Color.Black;
 
-			Batch = new SpriteBatch();
+
+
+				Heads = ResourceManager.CreateAsset<TileSet>("Heroes");
+				if (Heads != null)
+				{
+					Heads.Scale = new Vector2(2.0f, 2.0f);
+				}
+
+				Batch = new SpriteBatch();
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
 		}
 
 
@@ -321,6 +361,9 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void OpenGLBox_Resize(object sender, EventArgs e)
 		{
+			if (Batch == null || Heads == null)
+				return;
+
 			OpenGLBox.MakeCurrent();
 			Display.ViewPort = new Rectangle(Point.Empty, OpenGLBox.Size);
 		}
@@ -333,8 +376,8 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void OpenGLBox_Paint(object sender, PaintEventArgs e)
 		{
-			//if (CheckerBoard == null)
-			//    return;
+			if (Batch == null || Heads == null)
+				return;
 
 			OpenGLBox.MakeCurrent();
 			Display.ClearBuffers();

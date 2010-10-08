@@ -9,6 +9,9 @@ using DungeonEye;
 
 namespace DungeonEye.Forms
 {
+	/// <summary>
+	/// HitPoint control
+	/// </summary>
 	public partial class HitPointControl : UserControl
 	{
 		/// <summary>
@@ -59,7 +62,7 @@ namespace DungeonEye.Forms
 		#region Properties
 
 		/// <summary>
-		/// 
+		/// HitPoint
 		/// </summary>
 		public HitPoint HitPoint
 		{
@@ -83,7 +86,6 @@ namespace DungeonEye.Forms
 				}
 			}
 		}
-
 		HitPoint HP;
 
 		#endregion
