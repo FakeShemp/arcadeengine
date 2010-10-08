@@ -111,7 +111,7 @@ namespace DungeonEye.Forms
 
 				#endregion
 
-
+				NameBox.Text = "";
 			}
 			else
 			{
@@ -155,6 +155,8 @@ namespace DungeonEye.Forms
 				FoodBox.Value = Hero.Food;
 
 				#endregion
+
+				NameBox.Text = Hero.Name;
 			}
 
 			ProfessionsBox.Hero = Hero;
@@ -318,6 +320,21 @@ namespace DungeonEye.Forms
 
 		#region Properties events
 
+
+		/// <summary>
+		/// Change Hero's name
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void NameBox_TextChanged(object sender, EventArgs e)
+		{
+			if (Hero == null)
+				return;
+
+			Hero.Name = NameBox.Text;
+		}
+
+
 		/// <summary>
 		/// 
 		/// </summary>
@@ -328,26 +345,15 @@ namespace DungeonEye.Forms
 			if (DesignMode)
 				return;
 
-			try
-			{
-				OpenGLBox.MakeCurrent();
-				Display.Init();
-				Display.RenderState.ClearColor = Color.Black;
+			OpenGLBox.MakeCurrent();
+			Display.Init();
+			Display.RenderState.ClearColor = Color.Black;
 
+			Heads = ResourceManager.CreateAsset<TileSet>("Heroes");
+			if (Heads != null)
+				Heads.Scale = new Vector2(2.0f, 2.0f);
 
-
-				Heads = ResourceManager.CreateAsset<TileSet>("Heroes");
-				if (Heads != null)
-				{
-					Heads.Scale = new Vector2(2.0f, 2.0f);
-				}
-
-				Batch = new SpriteBatch();
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show(ex.Message);
-			}
+			Batch = new SpriteBatch();
 		}
 
 
@@ -702,6 +708,7 @@ namespace DungeonEye.Forms
 		SpriteBatch Batch;
 
 		#endregion
+
 
 	}
 }

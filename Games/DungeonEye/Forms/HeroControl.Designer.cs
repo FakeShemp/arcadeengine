@@ -70,6 +70,8 @@
 			this.SpellReportLabel = new System.Windows.Forms.Label();
 			this.SpellReadyBox = new System.Windows.Forms.ListBox();
 			this.button2 = new System.Windows.Forms.Button();
+			this.groupBox10 = new System.Windows.Forms.GroupBox();
+			this.NameBox = new System.Windows.Forms.TextBox();
 			this.CharismaBox = new DungeonEye.Forms.AbilityControl();
 			this.ConstitutionBox = new DungeonEye.Forms.AbilityControl();
 			this.DexterityBox = new DungeonEye.Forms.AbilityControl();
@@ -78,7 +80,7 @@
 			this.StrengthBox = new DungeonEye.Forms.AbilityControl();
 			this.HPBox = new DungeonEye.Forms.HitPointControl();
 			this.ProfessionsBox = new DungeonEye.Forms.ProfessionsControl();
-			((System.ComponentModel.ISupportInitialize) (this.QuiverBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.QuiverBox)).BeginInit();
 			this.tabControl1.SuspendLayout();
 			this.PropertiesTab.SuspendLayout();
 			this.groupBox9.SuspendLayout();
@@ -86,7 +88,7 @@
 			this.groupBox7.SuspendLayout();
 			this.groupBox6.SuspendLayout();
 			this.groupBox5.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize) (this.FoodBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.FoodBox)).BeginInit();
 			this.ProfessionTab.SuspendLayout();
 			this.EquipementTab.SuspendLayout();
 			this.groupBox3.SuspendLayout();
@@ -94,6 +96,7 @@
 			this.groupBox4.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.groupBox1.SuspendLayout();
+			this.groupBox10.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// QuiverBox
@@ -121,6 +124,7 @@
 			// 
 			// PropertiesTab
 			// 
+			this.PropertiesTab.Controls.Add(this.groupBox10);
 			this.PropertiesTab.Controls.Add(this.groupBox9);
 			this.PropertiesTab.Controls.Add(this.groupBox8);
 			this.PropertiesTab.Controls.Add(this.groupBox7);
@@ -193,29 +197,29 @@
 			this.groupBox8.Controls.Add(this.PreviousFaceBox);
 			this.groupBox8.Controls.Add(this.NextFaceBox);
 			this.groupBox8.Controls.Add(this.OpenGLBox);
-			this.groupBox8.Location = new System.Drawing.Point(6, 6);
+			this.groupBox8.Location = new System.Drawing.Point(6, 60);
 			this.groupBox8.Name = "groupBox8";
-			this.groupBox8.Size = new System.Drawing.Size(156, 130);
+			this.groupBox8.Size = new System.Drawing.Size(156, 93);
 			this.groupBox8.TabIndex = 16;
 			this.groupBox8.TabStop = false;
 			this.groupBox8.Text = "Face :";
 			// 
 			// PreviousFaceBox
 			// 
-			this.PreviousFaceBox.Image = ((System.Drawing.Image) (resources.GetObject("PreviousFaceBox.Image")));
-			this.PreviousFaceBox.Location = new System.Drawing.Point(3, 101);
+			this.PreviousFaceBox.Image = ((System.Drawing.Image)(resources.GetObject("PreviousFaceBox.Image")));
+			this.PreviousFaceBox.Location = new System.Drawing.Point(6, 19);
 			this.PreviousFaceBox.Name = "PreviousFaceBox";
-			this.PreviousFaceBox.Size = new System.Drawing.Size(65, 23);
+			this.PreviousFaceBox.Size = new System.Drawing.Size(30, 64);
 			this.PreviousFaceBox.TabIndex = 2;
 			this.PreviousFaceBox.UseVisualStyleBackColor = true;
 			this.PreviousFaceBox.Click += new System.EventHandler(this.PreviousFaceBox_Click);
 			// 
 			// NextFaceBox
 			// 
-			this.NextFaceBox.Image = ((System.Drawing.Image) (resources.GetObject("NextFaceBox.Image")));
-			this.NextFaceBox.Location = new System.Drawing.Point(85, 101);
+			this.NextFaceBox.Image = ((System.Drawing.Image)(resources.GetObject("NextFaceBox.Image")));
+			this.NextFaceBox.Location = new System.Drawing.Point(120, 19);
 			this.NextFaceBox.Name = "NextFaceBox";
-			this.NextFaceBox.Size = new System.Drawing.Size(65, 23);
+			this.NextFaceBox.Size = new System.Drawing.Size(30, 64);
 			this.NextFaceBox.TabIndex = 1;
 			this.NextFaceBox.UseVisualStyleBackColor = true;
 			this.NextFaceBox.Click += new System.EventHandler(this.NextFaceBox_Click);
@@ -223,7 +227,7 @@
 			// OpenGLBox
 			// 
 			this.OpenGLBox.BackColor = System.Drawing.Color.Black;
-			this.OpenGLBox.Location = new System.Drawing.Point(44, 19);
+			this.OpenGLBox.Location = new System.Drawing.Point(45, 19);
 			this.OpenGLBox.Name = "OpenGLBox";
 			this.OpenGLBox.Size = new System.Drawing.Size(64, 64);
 			this.OpenGLBox.TabIndex = 0;
@@ -244,14 +248,14 @@
 			this.groupBox7.Controls.Add(this.StrengthBox);
 			this.groupBox7.Location = new System.Drawing.Point(168, 92);
 			this.groupBox7.Name = "groupBox7";
-			this.groupBox7.Size = new System.Drawing.Size(271, 238);
+			this.groupBox7.Size = new System.Drawing.Size(271, 255);
 			this.groupBox7.TabIndex = 15;
 			this.groupBox7.TabStop = false;
 			this.groupBox7.Text = "Abilities :";
 			// 
 			// ArmorClassBox
 			// 
-			this.ArmorClassBox.Location = new System.Drawing.Point(85, 206);
+			this.ArmorClassBox.Location = new System.Drawing.Point(86, 210);
 			this.ArmorClassBox.Name = "ArmorClassBox";
 			this.ArmorClassBox.ReadOnly = true;
 			this.ArmorClassBox.Size = new System.Drawing.Size(38, 20);
@@ -261,7 +265,7 @@
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(11, 209);
+			this.label3.Location = new System.Drawing.Point(9, 213);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(68, 13);
 			this.label3.TabIndex = 1;
@@ -271,7 +275,7 @@
 			// 
 			this.groupBox6.Controls.Add(this.label2);
 			this.groupBox6.Controls.Add(this.QuiverBox);
-			this.groupBox6.Location = new System.Drawing.Point(6, 225);
+			this.groupBox6.Location = new System.Drawing.Point(6, 242);
 			this.groupBox6.Name = "groupBox6";
 			this.groupBox6.Size = new System.Drawing.Size(156, 48);
 			this.groupBox6.TabIndex = 14;
@@ -290,7 +294,7 @@
 			// groupBox5
 			// 
 			this.groupBox5.Controls.Add(this.FoodBox);
-			this.groupBox5.Location = new System.Drawing.Point(6, 279);
+			this.groupBox5.Location = new System.Drawing.Point(6, 296);
 			this.groupBox5.Name = "groupBox5";
 			this.groupBox5.Size = new System.Drawing.Size(156, 51);
 			this.groupBox5.TabIndex = 13;
@@ -563,8 +567,8 @@
 			// 
 			// AvailableSpellBox
 			// 
-			this.AvailableSpellBox.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+			this.AvailableSpellBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)));
 			this.AvailableSpellBox.FormattingEnabled = true;
 			this.AvailableSpellBox.Location = new System.Drawing.Point(6, 19);
 			this.AvailableSpellBox.Name = "AvailableSpellBox";
@@ -574,8 +578,8 @@
 			// 
 			// button1
 			// 
-			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.button1.Location = new System.Drawing.Point(6, 182);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(188, 23);
@@ -597,7 +601,7 @@
 			// 
 			// button4
 			// 
-			this.button4.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.button4.Location = new System.Drawing.Point(104, 185);
 			this.button4.Name = "button4";
 			this.button4.Size = new System.Drawing.Size(90, 23);
@@ -608,7 +612,7 @@
 			// 
 			// button3
 			// 
-			this.button3.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.button3.Location = new System.Drawing.Point(6, 185);
 			this.button3.Name = "button3";
 			this.button3.Size = new System.Drawing.Size(90, 23);
@@ -619,9 +623,9 @@
 			// 
 			// LearnedSpellBox
 			// 
-			this.LearnedSpellBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.LearnedSpellBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.LearnedSpellBox.CheckOnClick = true;
 			this.LearnedSpellBox.FormattingEnabled = true;
 			this.LearnedSpellBox.Location = new System.Drawing.Point(6, 19);
@@ -672,8 +676,8 @@
 			// 
 			// SpellReadyBox
 			// 
-			this.SpellReadyBox.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+			this.SpellReadyBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)));
 			this.SpellReadyBox.FormattingEnabled = true;
 			this.SpellReadyBox.Location = new System.Drawing.Point(6, 19);
 			this.SpellReadyBox.Name = "SpellReadyBox";
@@ -683,14 +687,32 @@
 			// 
 			// button2
 			// 
-			this.button2.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.button2.Location = new System.Drawing.Point(6, 182);
 			this.button2.Name = "button2";
 			this.button2.Size = new System.Drawing.Size(188, 23);
 			this.button2.TabIndex = 0;
 			this.button2.Text = "Remove";
 			this.button2.UseVisualStyleBackColor = true;
+			// 
+			// groupBox10
+			// 
+			this.groupBox10.Controls.Add(this.NameBox);
+			this.groupBox10.Location = new System.Drawing.Point(6, 6);
+			this.groupBox10.Name = "groupBox10";
+			this.groupBox10.Size = new System.Drawing.Size(154, 48);
+			this.groupBox10.TabIndex = 18;
+			this.groupBox10.TabStop = false;
+			this.groupBox10.Text = "Name :";
+			// 
+			// NameBox
+			// 
+			this.NameBox.Location = new System.Drawing.Point(6, 19);
+			this.NameBox.Name = "NameBox";
+			this.NameBox.Size = new System.Drawing.Size(142, 20);
+			this.NameBox.TabIndex = 0;
+			this.NameBox.TextChanged += new System.EventHandler(this.NameBox_TextChanged);
 			// 
 			// CharismaBox
 			// 
@@ -749,7 +771,7 @@
 			// HPBox
 			// 
 			this.HPBox.HitPoint = null;
-			this.HPBox.Location = new System.Drawing.Point(6, 142);
+			this.HPBox.Location = new System.Drawing.Point(6, 159);
 			this.HPBox.Name = "HPBox";
 			this.HPBox.Size = new System.Drawing.Size(156, 77);
 			this.HPBox.TabIndex = 12;
@@ -769,12 +791,12 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.tabControl1);
-			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.MinimumSize = new System.Drawing.Size(635, 400);
 			this.Name = "HeroControl";
 			this.Size = new System.Drawing.Size(635, 400);
 			this.Load += new System.EventHandler(this.HeroControl_Load);
-			((System.ComponentModel.ISupportInitialize) (this.QuiverBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.QuiverBox)).EndInit();
 			this.tabControl1.ResumeLayout(false);
 			this.PropertiesTab.ResumeLayout(false);
 			this.groupBox9.ResumeLayout(false);
@@ -786,7 +808,7 @@
 			this.groupBox6.PerformLayout();
 			this.groupBox5.ResumeLayout(false);
 			this.groupBox5.PerformLayout();
-			((System.ComponentModel.ISupportInitialize) (this.FoodBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.FoodBox)).EndInit();
 			this.ProfessionTab.ResumeLayout(false);
 			this.EquipementTab.ResumeLayout(false);
 			this.groupBox3.ResumeLayout(false);
@@ -796,6 +818,8 @@
 			this.groupBox4.ResumeLayout(false);
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox1.ResumeLayout(false);
+			this.groupBox10.ResumeLayout(false);
+			this.groupBox10.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -864,5 +888,7 @@
 		private OpenTK.GLControl OpenGLBox;
 		private System.Windows.Forms.Button PreviousFaceBox;
 		private System.Windows.Forms.Button NextFaceBox;
+		private System.Windows.Forms.GroupBox groupBox10;
+		private System.Windows.Forms.TextBox NameBox;
 	}
 }
