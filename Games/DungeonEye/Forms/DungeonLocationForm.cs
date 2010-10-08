@@ -17,24 +17,20 @@
 //along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 //
 #endregion
-using System.Collections.Generic;
 using System;
-using System.Drawing;
 using System.Windows.Forms;
-using ArcEngine;
-using ArcEngine.Forms;
-using ArcEngine.Graphic;
-using ArcEngine.Asset;
-using DungeonEye;
 
 
 
 namespace DungeonEye.Forms
 {
+	/// <summary>
+	/// Dungeon location control
+	/// </summary>
 	public partial class DungeonLocationForm : Form
 	{
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
 		/// <param name="dungeon">Dungeon handle</param>
 		/// <param name="location">Default location</param>
@@ -46,6 +42,7 @@ namespace DungeonEye.Forms
 			DungeonControl.Target = new DungeonLocation(location);
 			DungeonControl.GlControlBox.Click += new EventHandler(DungeonControl_Click);
 			DungeonControl.GlControlBox.DoubleClick += new EventHandler(GlControlBox_DoubleClick);
+
 
 			DirectionBox.BeginUpdate();
 			foreach(string name in Enum.GetNames(typeof(CardinalPoint)))
@@ -175,6 +172,9 @@ namespace DungeonEye.Forms
 
 		#region Properties
 
+		/// <summary>
+		/// Destination
+		/// </summary>
 		public DungeonLocation Target
 		{
 			get

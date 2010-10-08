@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <team>
 	<dungeon name="Eye" />
-	<location maze="test" x="14" y="8" direction="North" position="NorthEast" />
+	<location maze="test" x="12" y="3" direction="South" position="NorthEast" />
 	<position slot="FrontLeft">
 		<hero name="Allabar">
 			<hitpoint current="23" max="23" />
@@ -13,9 +13,9 @@
 			<charisma value="13" />
 			<alignment value="NeutralGood" />
 			<speed value="0" />
-			<quiver count="1" />
+			<quiver count="67" />
 			<head id="13" />
-			<food value="68" />
+			<food value="100" />
 			<race value="HumanMale" />
 			<profession>
 				<class name="Fighter" />
@@ -25,39 +25,42 @@
 				<class name="Paladin" />
 				<xp points="32484" />
 			</profession>
+			<inventory position="Armor" name="Leather Armor" />
 			<inventory position="Secondary" name="Light Steel Shield" />
 			<inventory position="Primary" name="Short Sword" />
+			<inventory position="Helmet" name="Helmet" />
 		</hero>
 	</position>
 	<position slot="FrontRight">
 		<hero name="Ariel">
-			<hitpoint current="31" max="31" />
-			<strength value="13" />
+			<hitpoint current="85" max="85" />
+			<strength value="19" />
 			<intelligence value="12" />
 			<wisdom value="14" />
 			<dexterity value="15" />
 			<constitution value="10" />
-			<charisma value="6" />
+			<charisma value="3" />
 			<alignment value="ChaoticGood" />
 			<speed value="0" />
-			<quiver count="0" />
+			<quiver count="21" />
 			<head id="20" />
-			<food value="86" />
+			<food value="0" />
 			<race value="DwarfMale" />
 			<profession>
 				<class name="Fighter" />
-				<xp points="0" />
+				<xp points="321412" />
 			</profession>
 			<profession>
 				<class name="Thief" />
-				<xp points="0" />
+				<xp points="432151" />
 			</profession>
+			<inventory position="Secondary" name="Light Steel Shield" />
 			<inventory position="Primary" name="Short Sword" />
 		</hero>
 	</position>
 	<position slot="MiddleLeft">
 		<hero name="Valanau">
-			<hitpoint current="34" max="34" />
+			<hitpoint current="172" max="172" />
 			<strength value="6" />
 			<intelligence value="12" />
 			<wisdom value="12" />
@@ -66,17 +69,17 @@
 			<charisma value="9" />
 			<alignment value="LawfulNeutral" />
 			<speed value="0" />
-			<quiver count="0" />
+			<quiver count="51" />
 			<head id="35" />
 			<food value="99" />
 			<race value="ElfFemale" />
 			<profession>
 				<class name="Mage" />
-				<xp points="0" />
+				<xp points="213421" />
 			</profession>
 			<profession>
 				<class name="Thief" />
-				<xp points="0" />
+				<xp points="653653" />
 			</profession>
 			<inventory position="Primary" name="Spell book" />
 			<spell name="Armor" />
@@ -110,7 +113,7 @@
 	</position>
 	<position slot="RearLeft">
 		<hero name="Weann">
-			<hitpoint current="30" max="30" />
+			<hitpoint current="105" max="105" />
 			<strength value="10" />
 			<intelligence value="13" />
 			<wisdom value="10" />
@@ -119,7 +122,7 @@
 			<charisma value="11" />
 			<alignment value="LawfulEvil" />
 			<speed value="0" />
-			<quiver count="0" />
+			<quiver count="60" />
 			<head id="37" />
 			<food value="88" />
 			<race value="HalflingFemale" />
@@ -131,8 +134,8 @@
 				<class name="Mage" />
 				<xp points="129553" />
 			</profession>
+			<inventory position="Secondary" name="Spell book" />
 			<inventory position="Primary" name="Cleric Holy Symbol" />
-			<inventory position="Secondary" name="Spell Book" />
 			<spell name="Create Food" />
 		</hero>
 	</position>

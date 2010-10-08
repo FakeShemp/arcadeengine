@@ -69,7 +69,7 @@ namespace DungeonEye.Forms
 
 
 		/// <summary>
-		/// 
+		/// Form closing
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -94,7 +94,7 @@ namespace DungeonEye.Forms
 
 
 		/// <summary>
-		/// 
+		/// Form loading
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
