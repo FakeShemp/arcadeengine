@@ -41,6 +41,7 @@
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.EditWallButton = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+			this.CreateNewZoneBox = new System.Windows.Forms.ToolStripButton();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.LabelBox = new System.Windows.Forms.ToolStripStatusLabel();
 			this.PreviewBox = new System.Windows.Forms.ToolStripStatusLabel();
@@ -65,13 +66,12 @@
 			this.DungeonNoteBox = new System.Windows.Forms.TextBox();
 			this.PreviewTab = new System.Windows.Forms.TabPage();
 			this.ZonesTab = new System.Windows.Forms.TabPage();
-			this.MazeZonesBox = new System.Windows.Forms.ListBox();
-			this.button2 = new System.Windows.Forms.Button();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
-			this.DisplayZonesBox = new System.Windows.Forms.CheckBox();
-			this.CreateNewZoneBox = new System.Windows.Forms.ToolStripButton();
-			this.ZoneNameBox = new System.Windows.Forms.TextBox();
 			this.label1 = new System.Windows.Forms.Label();
+			this.ZoneNameBox = new System.Windows.Forms.TextBox();
+			this.button2 = new System.Windows.Forms.Button();
+			this.DisplayZonesBox = new System.Windows.Forms.CheckBox();
+			this.MazeZonesBox = new System.Windows.Forms.ListBox();
 			this.toolStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.panel1.SuspendLayout();
@@ -184,6 +184,17 @@
 			this.toolStripSeparator5.Name = "toolStripSeparator5";
 			this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
 			// 
+			// CreateNewZoneBox
+			// 
+			this.CreateNewZoneBox.CheckOnClick = true;
+			this.CreateNewZoneBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.CreateNewZoneBox.Image = ((System.Drawing.Image)(resources.GetObject("CreateNewZoneBox.Image")));
+			this.CreateNewZoneBox.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.CreateNewZoneBox.Name = "CreateNewZoneBox";
+			this.CreateNewZoneBox.Size = new System.Drawing.Size(23, 22);
+			this.CreateNewZoneBox.Text = "Create a new zone";
+			this.CreateNewZoneBox.Click += new System.EventHandler(this.CreateNewZoneBox_Click);
+			// 
 			// statusStrip1
 			// 
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -242,13 +253,13 @@
 			this.glControl.Size = new System.Drawing.Size(505, 581);
 			this.glControl.TabIndex = 7;
 			this.glControl.VSync = false;
-			this.glControl.DoubleClick += new System.EventHandler(this.glControl_DoubleClick);
 			this.glControl.Paint += new System.Windows.Forms.PaintEventHandler(this.GlControl_Paint);
-			this.glControl.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.GlControl_PreviewKeyDown);
-			this.glControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GlControl_MouseMove);
+			this.glControl.DoubleClick += new System.EventHandler(this.glControl_DoubleClick);
 			this.glControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.GlControl_MouseDown);
-			this.glControl.Resize += new System.EventHandler(this.GlControl_Resize);
+			this.glControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GlControl_MouseMove);
 			this.glControl.MouseUp += new System.Windows.Forms.MouseEventHandler(this.GlControl_MouseUp);
+			this.glControl.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.GlControl_PreviewKeyDown);
+			this.glControl.Resize += new System.EventHandler(this.GlControl_Resize);
 			// 
 			// StrafeRightBox
 			// 
@@ -449,24 +460,6 @@
 			this.ZonesTab.Text = "Zones";
 			this.ZonesTab.UseVisualStyleBackColor = true;
 			// 
-			// MazeZonesBox
-			// 
-			this.MazeZonesBox.FormattingEnabled = true;
-			this.MazeZonesBox.Location = new System.Drawing.Point(8, 3);
-			this.MazeZonesBox.Name = "MazeZonesBox";
-			this.MazeZonesBox.Size = new System.Drawing.Size(120, 173);
-			this.MazeZonesBox.Sorted = true;
-			this.MazeZonesBox.TabIndex = 0;
-			// 
-			// button2
-			// 
-			this.button2.Location = new System.Drawing.Point(8, 179);
-			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(120, 23);
-			this.button2.TabIndex = 1;
-			this.button2.Text = "Remove";
-			this.button2.UseVisualStyleBackColor = true;
-			// 
 			// groupBox2
 			// 
 			this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
@@ -480,6 +473,31 @@
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Properties :";
 			// 
+			// label1
+			// 
+			this.label1.AutoSize = true;
+			this.label1.Location = new System.Drawing.Point(6, 22);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(41, 13);
+			this.label1.TabIndex = 5;
+			this.label1.Text = "Name :";
+			// 
+			// ZoneNameBox
+			// 
+			this.ZoneNameBox.Location = new System.Drawing.Point(56, 19);
+			this.ZoneNameBox.Name = "ZoneNameBox";
+			this.ZoneNameBox.Size = new System.Drawing.Size(201, 20);
+			this.ZoneNameBox.TabIndex = 4;
+			// 
+			// button2
+			// 
+			this.button2.Location = new System.Drawing.Point(8, 179);
+			this.button2.Name = "button2";
+			this.button2.Size = new System.Drawing.Size(120, 23);
+			this.button2.TabIndex = 1;
+			this.button2.Text = "Remove";
+			this.button2.UseVisualStyleBackColor = true;
+			// 
 			// DisplayZonesBox
 			// 
 			this.DisplayZonesBox.AutoSize = true;
@@ -490,32 +508,14 @@
 			this.DisplayZonesBox.Text = "Hide";
 			this.DisplayZonesBox.UseVisualStyleBackColor = true;
 			// 
-			// CreateNewZoneBox
+			// MazeZonesBox
 			// 
-			this.CreateNewZoneBox.CheckOnClick = true;
-			this.CreateNewZoneBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.CreateNewZoneBox.Image = ((System.Drawing.Image)(resources.GetObject("CreateNewZoneBox.Image")));
-			this.CreateNewZoneBox.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.CreateNewZoneBox.Name = "CreateNewZoneBox";
-			this.CreateNewZoneBox.Size = new System.Drawing.Size(23, 22);
-			this.CreateNewZoneBox.Text = "Create a new zone";
-			this.CreateNewZoneBox.Click += new System.EventHandler(this.CreateNewZoneBox_Click);
-			// 
-			// ZoneNameBox
-			// 
-			this.ZoneNameBox.Location = new System.Drawing.Point(56, 19);
-			this.ZoneNameBox.Name = "ZoneNameBox";
-			this.ZoneNameBox.Size = new System.Drawing.Size(201, 20);
-			this.ZoneNameBox.TabIndex = 4;
-			// 
-			// label1
-			// 
-			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(6, 22);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(41, 13);
-			this.label1.TabIndex = 5;
-			this.label1.Text = "Name :";
+			this.MazeZonesBox.FormattingEnabled = true;
+			this.MazeZonesBox.Location = new System.Drawing.Point(8, 3);
+			this.MazeZonesBox.Name = "MazeZonesBox";
+			this.MazeZonesBox.Size = new System.Drawing.Size(120, 173);
+			this.MazeZonesBox.Sorted = true;
+			this.MazeZonesBox.TabIndex = 0;
 			// 
 			// DungeonForm
 			// 
@@ -535,8 +535,8 @@
 			this.ShowInTaskbar = false;
 			this.TabText = "Dungeon Form";
 			this.Text = "Dungeon Form";
-			this.Load += new System.EventHandler(this.DungeonForm_Load);
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DungeonForm_FormClosing);
+			this.Load += new System.EventHandler(this.DungeonForm_Load);
 			this.toolStrip1.ResumeLayout(false);
 			this.toolStrip1.PerformLayout();
 			this.statusStrip1.ResumeLayout(false);
