@@ -2350,9 +2350,29 @@ namespace DungeonEye
 		/// Removes a hero from the team
 		/// </summary>
 		/// <param name="position">Hero's position</param>
-		public void RemoveHero(HeroPosition position)
+		public void DropHero(HeroPosition position)
 		{
-			Heroes[(int) position] = null;
+			Heroes[(int)position] = null;
+		}
+
+
+		/// <summary>
+		/// Removes a hero from the team
+		/// </summary>
+		/// <param name="position">Hero's position</param>
+		public void DropHero(Hero hero)
+		{
+			if (hero == null)
+				return;
+			
+			for(int i = 0; i < Heroes.Length; i++)
+			{
+				if (Heroes[i] == hero)
+				{
+					Heroes[i] = null;
+					return;
+				}
+			}
 		}
 
 

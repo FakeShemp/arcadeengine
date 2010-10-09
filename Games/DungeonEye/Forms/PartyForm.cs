@@ -265,7 +265,7 @@ namespace DungeonEye.Forms
 			if (RearRightBox.Checked)
 				pos = HeroPosition.RearRight;
 
-			Team.RemoveHero(pos);
+			Team.DropHero(pos);
 			SelectHero(pos);
 		}
 

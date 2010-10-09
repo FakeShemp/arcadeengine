@@ -241,6 +241,7 @@
     <Compile Include="Source\CriticalHit.cs" />
     <Compile Include="Source\Defense.cs" />
     <Compile Include="Source\Entity.cs" />
+    <Compile Include="Source\Gui\CampWindows\DropNPCWindow.cs" />
     <Compile Include="Source\Gui\CampWindows\SpellWindow.cs" />
     <Compile Include="Source\Gui\CampWindows\GameOptionsWindow.cs" />
     <Compile Include="Source\Gui\CampWindows\PreferencesWindow.cs" />

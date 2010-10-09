@@ -135,6 +135,7 @@ namespace DungeonEye.Gui.CampWindows
 		/// <param name="e"></param>
 		void DropHero_Selected(object sender, EventArgs e)
 		{
+			Camp.AddWindow(new DropNPCWindow(Camp));
 		}
 
 
