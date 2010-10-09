@@ -43,15 +43,43 @@ namespace DungeonEye.Forms
 
 			Spells = new List<Spell>();
 
+			// Alignments
 			AlignmentBox.BeginUpdate();
 			AlignmentBox.DataSource = Enum.GetValues(typeof(EntityAlignment));
 			AlignmentBox.EndUpdate();
 
+			// Races
 			RaceBox.BeginUpdate();
 			RaceBox.DataSource = Enum.GetValues(typeof(HeroRace));
 			RaceBox.EndUpdate();
 
-			
+			// Back pack
+			// Put slot id in the Tag element of the Button
+			BackPack1Box.Tag = 0;
+			BackPack2Box.Tag = 1;
+			BackPack3Box.Tag = 2;
+			BackPack4Box.Tag = 3;
+			BackPack5Box.Tag = 4;
+			BackPack6Box.Tag = 5;
+			BackPack7Box.Tag = 6;
+			BackPack8Box.Tag = 7;
+			BackPack9Box.Tag = 8;
+			BackPack10Box.Tag = 9;
+			BackPack11Box.Tag = 10;
+			BackPack12Box.Tag = 11;
+			BackPack13Box.Tag = 12;
+			BackPack14Box.Tag = 13;
+
+			HelmetBox.Tag = InventoryPosition.Helmet;
+			PrimaryBox.Tag = InventoryPosition.Primary;
+			SecondaryBox.Tag =InventoryPosition.Secondary;
+			ArmorBox.Tag =InventoryPosition.Armor;
+			WristBox.Tag = InventoryPosition.Wrist;
+			LeftRingBox.Tag = InventoryPosition.Ring_Left;
+			RightRingBox.Tag = InventoryPosition.Ring_Right;
+			FeetBox.Tag = InventoryPosition.Feet;
+			NeckBox.Tag = InventoryPosition.Neck;
+
 		}
 
 
@@ -80,24 +108,26 @@ namespace DungeonEye.Forms
 		/// <summary>
 		/// Rebuild data
 		/// </summary>
-		void Rebuild()
+		void RebuildPanels()
 		{
+			RebuildProperties();
+			RebuildEquipment();
+			RebuildSpellPanel();
+		}
+
+
+		/// <summary>
+		/// Rebuild properties panel
+		/// </summary>
+		void RebuildProperties()
+		{
+			if (this.DesignMode)
+				return;
+
+			ProfessionsBox.Hero = Hero;
+
 			if (Hero == null)
 			{
-				#region Inventory
-				QuiverBox.Value = 0;
-				HelmetBox.SelectedItem = string.Empty;
-				PrimaryBox.SelectedItem = string.Empty;
-				SecondaryBox.SelectedItem = string.Empty;
-				ArmorBox.SelectedItem = string.Empty;
-				WristBox.SelectedItem = string.Empty;
-				LeftRingBox.SelectedItem = string.Empty;
-				RightRingBox.SelectedItem = string.Empty;
-				FeetBox.SelectedItem = string.Empty;
-				NeckBox.SelectedItem = string.Empty;
-				#endregion
-
-				#region Properties
 				StrengthBox.Ability = null;
 				IntelligenceBox.Ability = null;
 				WisdomBox.Ability = null;
@@ -109,36 +139,13 @@ namespace DungeonEye.Forms
 
 				HPBox.HitPoint = null;
 
-				#endregion
-
 				NameBox.Text = "";
+				FoodBox.Value = 0;
+
 			}
 			else
 			{
 				QuiverBox.Value = Hero.Quiver;
-
-				#region Inventory
-				Item item = Hero.GetInventoryItem(InventoryPosition.Helmet);
-				HelmetBox.SelectedItem = item != null ? item.Name : string.Empty;
-				item = Hero.GetInventoryItem(InventoryPosition.Primary);
-				PrimaryBox.SelectedItem = item != null ? item.Name : string.Empty;
-				item = Hero.GetInventoryItem(InventoryPosition.Secondary);
-				SecondaryBox.SelectedItem = item != null ? item.Name : string.Empty;
-				item = Hero.GetInventoryItem(InventoryPosition.Armor);
-				ArmorBox.SelectedItem = item != null ? item.Name : string.Empty;
-				item = Hero.GetInventoryItem(InventoryPosition.Wrist);
-				WristBox.SelectedItem = item != null ? item.Name : string.Empty;
-				item = Hero.GetInventoryItem(InventoryPosition.Ring_Left);
-				LeftRingBox.SelectedItem = item != null ? item.Name : string.Empty;
-				item = Hero.GetInventoryItem(InventoryPosition.Ring_Right);
-				RightRingBox.SelectedItem = item != null ? item.Name : string.Empty;
-				item = Hero.GetInventoryItem(InventoryPosition.Feet);
-				FeetBox.SelectedItem = item != null ? item.Name : string.Empty;
-				item = Hero.GetInventoryItem(InventoryPosition.Neck);
-				NeckBox.SelectedItem = item != null ? item.Name : string.Empty;
-				#endregion
-
-				#region Properties
 				StrengthBox.Ability = Hero.Strength;
 				IntelligenceBox.Ability = Hero.Intelligence;
 				WisdomBox.Ability = Hero.Wisdom;
@@ -153,29 +160,165 @@ namespace DungeonEye.Forms
 
 				HPBox.HitPoint = Hero.HitPoint;
 				FoodBox.Value = Hero.Food;
-
-				#endregion
-
 				NameBox.Text = Hero.Name;
-			}
-
-			ProfessionsBox.Hero = Hero;
-
-
-			// Spells
-			if (!DesignMode)
-			{
-				Spells.Clear();
-				List<string> spells = ResourceManager.GetAssets<Spell>();
-				foreach (string name in spells)
-					Spells.Add(ResourceManager.CreateAsset<Spell>(name));
-
-				SpellLevel = 1;
 			}
 
 			// Repaint
 			OpenGLBox.Invalidate();
-			
+		}
+
+
+		/// <summary>
+		/// Rebuild equipment panel
+		/// </summary>
+		void RebuildEquipment()
+		{
+			if (!DesignMode)
+			{
+				List<string> list = ResourceManager.GetAssets<Item>();
+				list.Insert(0, "");
+				ItemsBox.DataSource = list;
+			}
+
+			if (Hero == null)
+			{
+				QuiverBox.Value = 0;
+				HelmetBox.Text = string.Empty;
+				PrimaryBox.Text = string.Empty;
+				SecondaryBox.Text = string.Empty;
+				ArmorBox.Text = string.Empty;
+				WristBox.Text = string.Empty;
+				LeftRingBox.Text = string.Empty;
+				RightRingBox.Text = string.Empty;
+				FeetBox.Text = string.Empty;
+				NeckBox.Text = string.Empty;
+				
+				BackPack1Box.Text = string.Empty;
+				BackPack2Box.Text = string.Empty;
+				BackPack3Box.Text = string.Empty;
+				BackPack4Box.Text = string.Empty;
+				BackPack5Box.Text = string.Empty;
+				BackPack6Box.Text = string.Empty;
+				BackPack7Box.Text = string.Empty;
+				BackPack8Box.Text = string.Empty;
+				BackPack9Box.Text = string.Empty;
+				BackPack10Box.Text = string.Empty;
+				BackPack11Box.Text = string.Empty;
+				BackPack12Box.Text = string.Empty;
+				BackPack13Box.Text = string.Empty;
+				BackPack14Box.Text = string.Empty;
+			}
+			else
+			{
+				Item item = Hero.GetInventoryItem(InventoryPosition.Helmet);
+				HelmetBox.Text = item != null ? item.Name : string.Empty;
+				item = Hero.GetInventoryItem(InventoryPosition.Primary);
+				PrimaryBox.Text = item != null ? item.Name : string.Empty;
+				item = Hero.GetInventoryItem(InventoryPosition.Secondary);
+				SecondaryBox.Text = item != null ? item.Name : string.Empty;
+				item = Hero.GetInventoryItem(InventoryPosition.Armor);
+				ArmorBox.Text = item != null ? item.Name : string.Empty;
+				item = Hero.GetInventoryItem(InventoryPosition.Wrist);
+				WristBox.Text = item != null ? item.Name : string.Empty;
+				item = Hero.GetInventoryItem(InventoryPosition.Ring_Left);
+				LeftRingBox.Text = item != null ? item.Name : string.Empty;
+				item = Hero.GetInventoryItem(InventoryPosition.Ring_Right);
+				RightRingBox.Text = item != null ? item.Name : string.Empty;
+				item = Hero.GetInventoryItem(InventoryPosition.Feet);
+				FeetBox.Text = item != null ? item.Name : string.Empty;
+				item = Hero.GetInventoryItem(InventoryPosition.Neck);
+				NeckBox.Text = item != null ? item.Name : string.Empty;
+
+				item = Hero.GetBackPackItem(0);
+				BackPack1Box.Text = item != null ? item.Name : string.Empty;
+				item = Hero.GetBackPackItem(1);
+				BackPack2Box.Text = item != null ? item.Name : string.Empty;
+				item = Hero.GetBackPackItem(2);
+				BackPack3Box.Text = item != null ? item.Name : string.Empty;
+				item = Hero.GetBackPackItem(3);
+				BackPack4Box.Text = item != null ? item.Name : string.Empty;
+				item = Hero.GetBackPackItem(4);
+				BackPack5Box.Text = item != null ? item.Name : string.Empty;
+				item = Hero.GetBackPackItem(5);
+				BackPack6Box.Text = item != null ? item.Name : string.Empty;
+				item = Hero.GetBackPackItem(6);
+				BackPack7Box.Text = item != null ? item.Name : string.Empty;
+				item = Hero.GetBackPackItem(7);
+				BackPack8Box.Text = item != null ? item.Name : string.Empty;
+				item = Hero.GetBackPackItem(8);
+				BackPack9Box.Text = item != null ? item.Name : string.Empty;
+				item = Hero.GetBackPackItem(9);
+				BackPack10Box.Text = item != null ? item.Name : string.Empty;
+				item = Hero.GetBackPackItem(10);
+				BackPack11Box.Text = item != null ? item.Name : string.Empty;
+				item = Hero.GetBackPackItem(11);
+				BackPack12Box.Text = item != null ? item.Name : string.Empty;
+				item = Hero.GetBackPackItem(12);
+				BackPack13Box.Text = item != null ? item.Name : string.Empty;
+				item = Hero.GetBackPackItem(13);
+				BackPack14Box.Text = item != null ? item.Name : string.Empty;
+			}
+		}
+
+
+		/// <summary>
+		/// Rebuild spell list
+		/// </summary>
+		void RebuildSpellPanel()
+		{
+			if (DesignMode)
+				return;
+
+			Spells.Clear();
+			List<string> spells = ResourceManager.GetAssets<Spell>();
+			foreach (string name in spells)
+				Spells.Add(ResourceManager.CreateAsset<Spell>(name));
+
+			SpellLevel = 1;
+
+
+			if (Hero != null)
+			{
+				// Spells ready
+				SpellReadyBox.BeginUpdate();
+				SpellReadyBox.Items.Clear();
+				foreach (Spell spell in Hero.Spells)
+				{
+					if (spell.Level == SpellLevel)
+						SpellReadyBox.Items.Add(spell.Name);
+				}
+				SpellReadyBox.EndUpdate();
+
+				// Available & learned spells
+				AvailableSpellBox.BeginUpdate();
+				AvailableSpellBox.Items.Clear();
+				LearnedSpellBox.BeginUpdate();
+				LearnedSpellBox.Items.Clear();
+				foreach (Spell spell in Spells)
+				{
+					// Learned spells
+					if (spell.Class == HeroClass.Mage && spell.Level == SpellLevel)
+					{
+						bool check = false;
+
+						if (Hero.LearnedSpells.Contains(spell.Name))
+							check = true;
+
+						LearnedSpellBox.Items.Add(spell.Name, check);
+					}
+
+					// Available spells
+					if (spell.Level == SpellLevel)
+						AvailableSpellBox.Items.Add(spell.Class + " - " + spell.Name);
+
+				}
+				LearnedSpellBox.EndUpdate();
+				AvailableSpellBox.EndUpdate();
+			}
+			else
+			{
+			}
+
 		}
 
 
@@ -191,9 +334,9 @@ namespace DungeonEye.Forms
 			if (DesignMode)
 				return;
 
-			Rebuild();
+			RebuildPanels();
 			RebuildProperties();
-			RebuildSpells();
+			RebuildSpellPanel();
 		}
 
 		#endregion
@@ -240,53 +383,9 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void SpellLevelBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			RebuildSpells();
+			RebuildSpellPanel();
 		}
 
-
-		/// <summary>
-		/// Rebuild spell list
-		/// </summary>
-		void RebuildSpells()
-		{
-			if (Hero == null)
-				return;
-
-			// Spells ready
-			SpellReadyBox.BeginUpdate();
-			SpellReadyBox.Items.Clear();
-			foreach (Spell spell in Hero.Spells)
-			{
-				if (spell.Level == SpellLevel)
-					SpellReadyBox.Items.Add(spell.Name);
-			}
-			SpellReadyBox.EndUpdate();
-
-			AvailableSpellBox.BeginUpdate();
-			AvailableSpellBox.Items.Clear();
-			LearnedSpellBox.BeginUpdate();
-			LearnedSpellBox.Items.Clear();
-			foreach (Spell spell in Spells)
-			{
-				// Learned spells
-				if (spell.Class == HeroClass.Mage && spell.Level == SpellLevel)
-				{
-					bool check = false;
-
-					if (Hero.LearnedSpells.Contains(spell.Name))
-						check = true;
-
-					LearnedSpellBox.Items.Add(spell.Name, check);
-				}
-
-				// Available spells
-				if (spell.Level == SpellLevel)
-					AvailableSpellBox.Items.Add(spell.Class + " - " + spell.Name);
-
-			}
-			LearnedSpellBox.EndUpdate();
-			AvailableSpellBox.EndUpdate();
-		}
 
 
 		/// <summary>
@@ -437,32 +536,6 @@ namespace DungeonEye.Forms
 		}
 
 
-	
-		/// <summary>
-		/// Rebuild properties
-		/// </summary>
-		void RebuildProperties()
-		{
-			if (this.DesignMode || Hero == null)
-				return;
-
-			List<string> list = ResourceManager.GetAssets<Item>();
-			list.Insert(0, "");
-			HelmetBox.DataSource = new List<string>(list);
-			PrimaryBox.DataSource = new List<string>(list);
-			SecondaryBox.DataSource = new List<string>(list);
-			ArmorBox.DataSource = new List<string>(list);
-			WristBox.DataSource = new List<string>(list);
-			LeftRingBox.DataSource = new List<string>(list);
-			RightRingBox.DataSource = new List<string>(list);
-			FeetBox.DataSource = new List<string>(list);
-			NeckBox.DataSource = new List<string>(list);
-
-			FoodBox.Value = Hero.Food;
-			HPBox.HitPoint = Hero.HitPoint;
-		}
-
-
 		/// <summary>
 		/// 
 		/// </summary>
@@ -501,7 +574,7 @@ namespace DungeonEye.Forms
 			if (Hero == null)
 				return;
 
-			Hero.SetInventoryItem(InventoryPosition.Armor, ResourceManager.CreateAsset<Item>((string)ArmorBox.SelectedItem));
+			Hero.SetInventoryItem(InventoryPosition.Armor, ResourceManager.CreateAsset<Item>((string)ArmorBox.Text));
 		}
 
 		
@@ -515,7 +588,7 @@ namespace DungeonEye.Forms
 			if (Hero == null)
 				return;
 
-			Hero.SetInventoryItem(InventoryPosition.Wrist, ResourceManager.CreateAsset<Item>((string)WristBox.SelectedItem));
+			Hero.SetInventoryItem(InventoryPosition.Wrist, ResourceManager.CreateAsset<Item>((string)WristBox.Text));
 
 		}
 
@@ -530,7 +603,7 @@ namespace DungeonEye.Forms
 			if (Hero == null)
 				return;
 
-			Hero.SetInventoryItem(InventoryPosition.Ring_Left, ResourceManager.CreateAsset<Item>((string)LeftRingBox.SelectedItem));
+			Hero.SetInventoryItem(InventoryPosition.Ring_Left, ResourceManager.CreateAsset<Item>((string)LeftRingBox.Text));
 
 		}
 
@@ -545,7 +618,7 @@ namespace DungeonEye.Forms
 			if (Hero == null)
 				return;
 
-			Hero.SetInventoryItem(InventoryPosition.Ring_Right, ResourceManager.CreateAsset<Item>((string)RightRingBox.SelectedItem));
+			Hero.SetInventoryItem(InventoryPosition.Ring_Right, ResourceManager.CreateAsset<Item>((string)RightRingBox.Text));
 
 		}
 
@@ -560,7 +633,7 @@ namespace DungeonEye.Forms
 			if (Hero == null)
 				return;
 
-			Hero.SetInventoryItem(InventoryPosition.Primary, ResourceManager.CreateAsset<Item>((string)PrimaryBox.SelectedItem));
+			Hero.SetInventoryItem(InventoryPosition.Primary, ResourceManager.CreateAsset<Item>((string)PrimaryBox.Text));
 		}
 
 
@@ -574,7 +647,7 @@ namespace DungeonEye.Forms
 			if (Hero == null)
 				return;
 
-			Hero.SetInventoryItem(InventoryPosition.Secondary, ResourceManager.CreateAsset<Item>((string)SecondaryBox.SelectedItem));
+			Hero.SetInventoryItem(InventoryPosition.Secondary, ResourceManager.CreateAsset<Item>((string)SecondaryBox.Text));
 		}
 
 
@@ -588,7 +661,7 @@ namespace DungeonEye.Forms
 			if (Hero == null)
 				return;
 
-			Hero.SetInventoryItem(InventoryPosition.Feet, ResourceManager.CreateAsset<Item>((string)FeetBox.SelectedItem));
+			Hero.SetInventoryItem(InventoryPosition.Feet, ResourceManager.CreateAsset<Item>((string)FeetBox.Text));
 		}
 
 
@@ -602,7 +675,7 @@ namespace DungeonEye.Forms
 			if (Hero == null)
 				return;
 
-			Hero.SetInventoryItem(InventoryPosition.Neck, ResourceManager.CreateAsset<Item>((string)NeckBox.SelectedItem));
+			Hero.SetInventoryItem(InventoryPosition.Neck, ResourceManager.CreateAsset<Item>((string)NeckBox.Text));
 
 		}
 
@@ -617,13 +690,13 @@ namespace DungeonEye.Forms
 			if (Hero == null)
 				return;
 
-			Hero.SetInventoryItem(InventoryPosition.Helmet, ResourceManager.CreateAsset<Item>((string)HelmetBox.SelectedItem));
+			Hero.SetInventoryItem(InventoryPosition.Helmet, ResourceManager.CreateAsset<Item>((string)HelmetBox.Text));
 
 		}
 
 
 		/// <summary>
-		/// 
+		/// Change alignment
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -637,7 +710,7 @@ namespace DungeonEye.Forms
 
 
 		/// <summary>
-		/// 
+		/// Change race
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -647,6 +720,60 @@ namespace DungeonEye.Forms
 				return;
 
 			Hero.Race = (HeroRace) RaceBox.SelectedItem;
+		}
+
+		#endregion
+
+		#region Equipments
+
+
+		/// <summary>
+		/// Affect an item in the backpack
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void BackPack_Click(object sender, EventArgs e)
+		{
+			if (Hero == null)
+				return;
+
+			// Target
+			Button button = sender as Button;
+
+			// Item
+			string name = ItemsBox.SelectedItem as string;
+			Item item = ResourceManager.CreateAsset<Item>(name);
+
+			// Backpack
+			if (button.Tag is int)
+			{
+				Hero.SetBackPackItem((int)button.Tag, item);
+				button.Text = ItemsBox.SelectedItem as string;
+			}
+
+			// Inventory
+			else if (button.Tag is InventoryPosition)
+			{
+				if (Hero.SetInventoryItem((InventoryPosition)button.Tag, item) || !CheckValidityBox.Checked)
+					button.Text = ItemsBox.SelectedItem as string;
+			}
+			
+		}
+
+
+		/// <summary>
+		/// Clear back pack
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ClearBackPackBox_Click(object sender, EventArgs e)
+		{
+			if (Hero == null)
+				return;
+			for (int i = 0; i < 14; i++)
+				Hero.SetBackPackItem(i, null);
+
+			RebuildEquipment();
 		}
 
 		#endregion
@@ -666,7 +793,7 @@ namespace DungeonEye.Forms
 			set
 			{
 				hero = value;
-				Rebuild();
+				RebuildPanels();
 			}
 		}
 		Hero hero;
@@ -708,6 +835,7 @@ namespace DungeonEye.Forms
 		SpriteBatch Batch;
 
 		#endregion
+
 
 
 	}

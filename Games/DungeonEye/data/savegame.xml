@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <team>
 	<dungeon name="Eye" />
-	<location maze="test" x="2" y="17" direction="North" position="NorthEast" />
+	<location maze="test" x="15" y="2" direction="East" position="NorthEast" />
 	<position slot="FrontLeft">
 		<hero name="Allabar">
 			<hitpoint current="23" max="23" />
@@ -13,7 +13,7 @@
 			<charisma value="13" />
 			<alignment value="NeutralGood" />
 			<speed value="0" />
-			<quiver count="1" />
+			<quiver count="6" />
 			<head id="13" />
 			<food value="68" />
 			<race value="HumanMale" />
@@ -27,6 +27,22 @@
 			</profession>
 			<inventory position="Secondary" name="Light Steel Shield" />
 			<inventory position="Primary" name="Short Sword" />
+			<waist position="0" name="Dart" />
+			<waist position="1" name="Dart" />
+			<backpack position="0" name="Iron Ration" />
+			<backpack position="1" name="Iron Ration" />
+			<backpack position="2" name="Iron Ration" />
+			<backpack position="3" name="Iron Ration" />
+			<backpack position="4" name="Iron Ration" />
+			<backpack position="5" name="Iron Ration" />
+			<backpack position="6" name="Iron Ration" />
+			<backpack position="7" name="Iron Ration" />
+			<backpack position="8" name="Iron Ration" />
+			<backpack position="9" name="Iron Ration" />
+			<backpack position="10" name="Iron Ration" />
+			<backpack position="11" name="Iron Ration" />
+			<backpack position="12" name="Iron Ration" />
+			<backpack position="13" name="Iron Ration" />
 		</hero>
 	</position>
 	<position slot="FrontRight">
@@ -53,6 +69,8 @@
 				<xp points="0" />
 			</profession>
 			<inventory position="Primary" name="Short Sword" />
+			<backpack position="0" name="Spell book" />
+			<backpack position="9" name="Boots" />
 		</hero>
 	</position>
 	<position slot="MiddleLeft">
@@ -79,6 +97,8 @@
 				<xp points="0" />
 			</profession>
 			<inventory position="Primary" name="Spell book" />
+			<backpack position="5" name="Dart" />
+			<backpack position="6" name="Rock" />
 			<spell name="Armor" />
 			<spell name="Detect Magic" />
 			<spell name="Dispell Magic" />
@@ -104,7 +124,10 @@
 				<class name="Cleric" />
 				<xp points="450010" />
 			</profession>
+			<inventory position="Armor" name="Leather Armor" />
 			<inventory position="Primary" name="Cleric Holy Symbol" />
+			<inventory position="Helmet" name="Helmet" />
+			<backpack position="6" name="Light Steel Shield" />
 			<spell name="Create Food" />
 		</hero>
 	</position>
@@ -119,7 +142,7 @@
 			<charisma value="11" />
 			<alignment value="LawfulEvil" />
 			<speed value="0" />
-			<quiver count="0" />
+			<quiver count="78" />
 			<head id="37" />
 			<food value="88" />
 			<race value="HalflingFemale" />
@@ -131,12 +154,11 @@
 				<class name="Mage" />
 				<xp points="129553" />
 			</profession>
+			<inventory position="Wrist" name="Bracers" />
 			<inventory position="Secondary" name="Spell book" />
 			<inventory position="Primary" name="Cleric Holy Symbol" />
+			<backpack position="7" name="Ring" />
 			<spell name="Create Food" />
 		</hero>
 	</position>
-	<message text="Test 1" R="255" G="255" B="255" A="255" />
-	<message text="132" R="255" G="255" B="255" A="255" />
-	<message text="46579865aze azer aze r" R="255" G="255" B="255" A="255" />
 </team>

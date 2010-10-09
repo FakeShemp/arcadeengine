@@ -52,6 +52,7 @@
 			this.LocationLabel = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
 			this.ChangeLocationBox = new System.Windows.Forms.Button();
+			this.SaveBox = new System.Windows.Forms.Button();
 			this.HeroBox = new DungeonEye.Forms.HeroControl();
 			this.groupBox2.SuspendLayout();
 			this.groupBox1.SuspendLayout();
@@ -289,10 +290,26 @@
 			this.ChangeLocationBox.UseVisualStyleBackColor = true;
 			this.ChangeLocationBox.Click += new System.EventHandler(this.ChangeLocationBox_Click);
 			// 
+			// SaveBox
+			// 
+			this.SaveBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.SaveBox.Image = ((System.Drawing.Image)(resources.GetObject("SaveBox.Image")));
+			this.SaveBox.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.SaveBox.Location = new System.Drawing.Point(12, 389);
+			this.SaveBox.Name = "SaveBox";
+			this.SaveBox.Size = new System.Drawing.Size(75, 23);
+			this.SaveBox.TabIndex = 3;
+			this.SaveBox.Text = "Save...";
+			this.SaveBox.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.SaveBox.UseVisualStyleBackColor = true;
+			this.SaveBox.Click += new System.EventHandler(this.SaveBox_Click);
+			// 
 			// HeroBox
 			// 
-			this.HeroBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+			this.HeroBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
+			this.HeroBox.AutoScroll = true;
 			this.HeroBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.HeroBox.Hero = null;
 			this.HeroBox.Location = new System.Drawing.Point(322, 12);
@@ -305,7 +322,8 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(968, 442);
+			this.ClientSize = new System.Drawing.Size(968, 424);
+			this.Controls.Add(this.SaveBox);
 			this.Controls.Add(this.groupBox3);
 			this.Controls.Add(this.HeroBox);
 			this.Controls.Add(this.groupBox2);
@@ -351,5 +369,6 @@
 		private System.Windows.Forms.Label LocationLabel;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Button ChangeLocationBox;
+		private System.Windows.Forms.Button SaveBox;
 	}
 }

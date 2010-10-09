@@ -162,7 +162,18 @@ namespace DungeonEye.Forms
 		#region Main form events
 
 		/// <summary>
-		/// 
+		/// Save party
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void SaveBox_Click(object sender, EventArgs e)
+		{
+			SaveParty();
+		}
+
+	
+		/// <summary>
+		/// Form load
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -395,6 +406,7 @@ namespace DungeonEye.Forms
 		Team Team;
 
 		#endregion
+
 
 
 	}
