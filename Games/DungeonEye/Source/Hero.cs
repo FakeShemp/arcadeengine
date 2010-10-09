@@ -1010,6 +1010,12 @@ namespace DungeonEye
 					}
 					break;
 
+					case "npc":
+					{
+						IsNPC = bool.Parse(node.Attributes["value"].Value);
+					}
+					break;
+
 					case "race":
 					{
 						Race = (HeroRace)Enum.Parse(typeof(HeroRace), node.Attributes["value"].Value, true);
@@ -1075,6 +1081,10 @@ namespace DungeonEye
 
 			writer.WriteStartElement("food");
 			writer.WriteAttributeString("value", Food.ToString());
+			writer.WriteEndElement();
+
+			writer.WriteStartElement("npc");
+			writer.WriteAttributeString("value", IsNPC.ToString());
 			writer.WriteEndElement();
 
 			writer.WriteStartElement("race");
@@ -1161,7 +1171,14 @@ namespace DungeonEye
 			}
 		}
 
-
+		/// <summary>
+		/// Is a Non Player Character
+		/// </summary>
+		public bool IsNPC
+		{
+			get;
+			set;
+		}
 
 		#region Bonus
 

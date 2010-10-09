@@ -46,7 +46,7 @@ namespace DungeonEye.Gui.CampWindows
 			Buttons.Add(button);
 
 			button = new ScreenButton("Drop Character", new Rectangle(16, 108, 320, 28));
-			button.Selected += new EventHandler(Bar_Selected);
+			button.Selected += new EventHandler(DropHero_Selected);
 			Buttons.Add(button);
 
 			button = new ScreenButton("Quit Game", new Rectangle(16, 142, 320, 28));
@@ -133,7 +133,7 @@ namespace DungeonEye.Gui.CampWindows
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		void Bar_Selected(object sender, EventArgs e)
+		void DropHero_Selected(object sender, EventArgs e)
 		{
 		}
 

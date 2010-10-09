@@ -33,24 +33,28 @@
 			// 
 			// HeroBox
 			// 
+			this.HeroBox.AutoScroll = true;
+			this.HeroBox.AutoSize = true;
+			this.HeroBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.HeroBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.HeroBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+			this.HeroBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.HeroBox.Hero = null;
 			this.HeroBox.Location = new System.Drawing.Point(0, 0);
 			this.HeroBox.Name = "HeroBox";
-			this.HeroBox.Size = new System.Drawing.Size(589, 545);
+			this.HeroBox.Size = new System.Drawing.Size(551, 545);
 			this.HeroBox.TabIndex = 0;
 			// 
 			// HeroForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(589, 545);
+			this.ClientSize = new System.Drawing.Size(551, 545);
 			this.Controls.Add(this.HeroBox);
-			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Name = "HeroForm";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form_FormClosing);
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 

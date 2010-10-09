@@ -199,8 +199,11 @@ namespace DungeonEye.Forms
 			else if (result == DialogResult.Cancel)
 			{
 				e.Cancel = true;
+				return;
 			}
 
+			HeroBox.Dispose();
+			HeroBox = null;
 		}
 
 
@@ -274,7 +277,8 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void FrontLeftBox_CheckedChanged(object sender, EventArgs e)
 		{
-			SelectHero(HeroPosition.FrontLeft);
+			if (FrontLeftBox.Checked)
+				SelectHero(HeroPosition.FrontLeft);
 		}
 
 
@@ -285,7 +289,8 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void FrontRightBox_CheckedChanged(object sender, EventArgs e)
 		{
-			SelectHero(HeroPosition.FrontRight);
+			if (FrontRightBox.Checked)
+				SelectHero(HeroPosition.FrontRight);
 		}
 
 
@@ -296,7 +301,8 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void MiddleRightBox_CheckedChanged(object sender, EventArgs e)
 		{
-			SelectHero(HeroPosition.MiddleRight);
+			if (MiddleRightBox.Checked)
+				SelectHero(HeroPosition.MiddleRight);
 		}
 
 
@@ -307,7 +313,8 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void MiddleLeftBox_CheckedChanged(object sender, EventArgs e)
 		{
-			SelectHero(HeroPosition.MiddleLeft);
+			if (MiddleLeftBox.Checked)
+				SelectHero(HeroPosition.MiddleLeft);
 		}
 
 
@@ -318,7 +325,8 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void RearLeftBox_CheckedChanged(object sender, EventArgs e)
 		{
-			SelectHero(HeroPosition.RearLeft);
+			if (RearLeftBox.Checked)
+				SelectHero(HeroPosition.RearLeft);
 		}
 
 
@@ -329,7 +337,8 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void RearRightBox_CheckedChanged(object sender, EventArgs e)
 		{
-			SelectHero(HeroPosition.RearRight);
+			if (RearRightBox.Checked)
+				SelectHero(HeroPosition.RearRight);
 		}
 
 		#endregion

@@ -13,37 +13,27 @@
 			<charisma value="13" />
 			<alignment value="NeutralGood" />
 			<speed value="0" />
-			<quiver count="6" />
-			<head id="13" />
-			<food value="68" />
+			<quiver count="24" />
+			<head id="27" />
+			<food value="100" />
+			<npc value="False" />
 			<race value="HumanMale" />
 			<profession>
 				<class name="Fighter" />
-				<xp points="8324" />
+				<xp points="98324" />
 			</profession>
 			<profession>
 				<class name="Paladin" />
-				<xp points="32484" />
+				<xp points="32505" />
 			</profession>
 			<inventory position="Secondary" name="Light Steel Shield" />
 			<inventory position="Primary" name="Short Sword" />
 			<waist position="0" name="Rock" />
 			<waist position="1" name="Rock" />
 			<waist position="2" name="Rock" />
-			<backpack position="0" name="Iron Ration" />
-			<backpack position="1" name="Iron Ration" />
-			<backpack position="2" name="Iron Ration" />
-			<backpack position="3" name="Iron Ration" />
 			<backpack position="4" name="Iron Ration" />
-			<backpack position="5" name="Iron Ration" />
-			<backpack position="6" name="Iron Ration" />
 			<backpack position="7" name="Iron Ration" />
 			<backpack position="8" name="Iron Ration" />
-			<backpack position="9" name="Iron Ration" />
-			<backpack position="10" name="Iron Ration" />
-			<backpack position="11" name="Iron Ration" />
-			<backpack position="12" name="Iron Ration" />
-			<backpack position="13" name="Iron Ration" />
 		</hero>
 	</position>
 	<position slot="FrontRight">
@@ -58,8 +48,9 @@
 			<alignment value="ChaoticGood" />
 			<speed value="0" />
 			<quiver count="0" />
-			<head id="20" />
+			<head id="21" />
 			<food value="86" />
+			<npc value="False" />
 			<race value="DwarfMale" />
 			<profession>
 				<class name="Fighter" />
@@ -86,8 +77,9 @@
 			<alignment value="LawfulNeutral" />
 			<speed value="0" />
 			<quiver count="0" />
-			<head id="35" />
+			<head id="39" />
 			<food value="99" />
+			<npc value="False" />
 			<race value="ElfFemale" />
 			<profession>
 				<class name="Mage" />
@@ -118,8 +110,9 @@
 			<alignment value="LawfulEvil" />
 			<speed value="0" />
 			<quiver count="0" />
-			<head id="40" />
+			<head id="43" />
 			<food value="88" />
+			<npc value="False" />
 			<race value="HalflingFemale" />
 			<profession>
 				<class name="Cleric" />
@@ -144,8 +137,9 @@
 			<alignment value="LawfulEvil" />
 			<speed value="0" />
 			<quiver count="78" />
-			<head id="37" />
+			<head id="34" />
 			<food value="88" />
+			<npc value="True" />
 			<race value="HalflingFemale" />
 			<profession>
 				<class name="Cleric" />

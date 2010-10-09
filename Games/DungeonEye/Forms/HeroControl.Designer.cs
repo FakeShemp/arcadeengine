@@ -19,6 +19,8 @@
 			this.QuiverBox = new System.Windows.Forms.NumericUpDown();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.PropertiesTab = new System.Windows.Forms.TabPage();
+			this.groupBox13 = new System.Windows.Forms.GroupBox();
+			this.IsNPCBox = new System.Windows.Forms.CheckBox();
 			this.groupBox10 = new System.Windows.Forms.GroupBox();
 			this.NameBox = new System.Windows.Forms.TextBox();
 			this.groupBox9 = new System.Windows.Forms.GroupBox();
@@ -106,6 +108,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.QuiverBox)).BeginInit();
 			this.tabControl1.SuspendLayout();
 			this.PropertiesTab.SuspendLayout();
+			this.groupBox13.SuspendLayout();
 			this.groupBox10.SuspendLayout();
 			this.groupBox9.SuspendLayout();
 			this.groupBox8.SuspendLayout();
@@ -149,6 +152,7 @@
 			// 
 			// PropertiesTab
 			// 
+			this.PropertiesTab.Controls.Add(this.groupBox13);
 			this.PropertiesTab.Controls.Add(this.groupBox10);
 			this.PropertiesTab.Controls.Add(this.groupBox9);
 			this.PropertiesTab.Controls.Add(this.groupBox8);
@@ -163,6 +167,29 @@
 			this.PropertiesTab.TabIndex = 0;
 			this.PropertiesTab.Text = "Properties";
 			this.PropertiesTab.UseVisualStyleBackColor = true;
+			// 
+			// groupBox13
+			// 
+			this.groupBox13.Controls.Add(this.IsNPCBox);
+			this.groupBox13.Location = new System.Drawing.Point(359, 7);
+			this.groupBox13.Name = "groupBox13";
+			this.groupBox13.Size = new System.Drawing.Size(80, 79);
+			this.groupBox13.TabIndex = 19;
+			this.groupBox13.TabStop = false;
+			this.groupBox13.Text = "Misc :";
+			// 
+			// IsNPCBox
+			// 
+			this.IsNPCBox.AutoSize = true;
+			this.IsNPCBox.Checked = true;
+			this.IsNPCBox.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.IsNPCBox.Location = new System.Drawing.Point(7, 21);
+			this.IsNPCBox.Name = "IsNPCBox";
+			this.IsNPCBox.Size = new System.Drawing.Size(48, 17);
+			this.IsNPCBox.TabIndex = 0;
+			this.IsNPCBox.Text = "NPC";
+			this.IsNPCBox.UseVisualStyleBackColor = true;
+			this.IsNPCBox.CheckedChanged += new System.EventHandler(this.IsNPCBox_CheckedChanged);
 			// 
 			// groupBox10
 			// 
@@ -190,7 +217,7 @@
 			this.groupBox9.Controls.Add(this.AlignmentBox);
 			this.groupBox9.Location = new System.Drawing.Point(168, 6);
 			this.groupBox9.Name = "groupBox9";
-			this.groupBox9.Size = new System.Drawing.Size(271, 80);
+			this.groupBox9.Size = new System.Drawing.Size(185, 80);
 			this.groupBox9.TabIndex = 17;
 			this.groupBox9.TabStop = false;
 			this.groupBox9.Text = "Alignment && Race :";
@@ -215,22 +242,26 @@
 			// 
 			// RaceBox
 			// 
+			this.RaceBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.RaceBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.RaceBox.FormattingEnabled = true;
 			this.RaceBox.Location = new System.Drawing.Point(71, 46);
 			this.RaceBox.Name = "RaceBox";
-			this.RaceBox.Size = new System.Drawing.Size(194, 21);
+			this.RaceBox.Size = new System.Drawing.Size(108, 21);
 			this.RaceBox.Sorted = true;
 			this.RaceBox.TabIndex = 1;
 			this.RaceBox.SelectedIndexChanged += new System.EventHandler(this.RaceBox_SelectedIndexChanged);
 			// 
 			// AlignmentBox
 			// 
+			this.AlignmentBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.AlignmentBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.AlignmentBox.FormattingEnabled = true;
 			this.AlignmentBox.Location = new System.Drawing.Point(71, 19);
 			this.AlignmentBox.Name = "AlignmentBox";
-			this.AlignmentBox.Size = new System.Drawing.Size(194, 21);
+			this.AlignmentBox.Size = new System.Drawing.Size(108, 21);
 			this.AlignmentBox.Sorted = true;
 			this.AlignmentBox.TabIndex = 0;
 			this.AlignmentBox.SelectedIndexChanged += new System.EventHandler(this.AlignmentBox_SelectedIndexChanged);
@@ -1075,13 +1106,14 @@
 			this.AutoScroll = true;
 			this.Controls.Add(this.tabControl1);
 			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.MinimumSize = new System.Drawing.Size(640, 400);
 			this.Name = "HeroControl";
 			this.Size = new System.Drawing.Size(640, 400);
 			this.Load += new System.EventHandler(this.HeroControl_Load);
 			((System.ComponentModel.ISupportInitialize)(this.QuiverBox)).EndInit();
 			this.tabControl1.ResumeLayout(false);
 			this.PropertiesTab.ResumeLayout(false);
+			this.groupBox13.ResumeLayout(false);
+			this.groupBox13.PerformLayout();
 			this.groupBox10.ResumeLayout(false);
 			this.groupBox10.PerformLayout();
 			this.groupBox9.ResumeLayout(false);
@@ -1199,5 +1231,7 @@
 		private System.Windows.Forms.Button Waist3Box;
 		private System.Windows.Forms.Button Waist2Box;
 		private System.Windows.Forms.Button Waist1Box;
+		private System.Windows.Forms.GroupBox groupBox13;
+		private System.Windows.Forms.CheckBox IsNPCBox;
 	}
 }

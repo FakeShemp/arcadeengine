@@ -144,6 +144,7 @@ namespace DungeonEye.Forms
 
 				NameBox.Text = "";
 				FoodBox.Value = 0;
+				IsNPCBox.Checked = false;
 
 			}
 			else
@@ -164,6 +165,7 @@ namespace DungeonEye.Forms
 				HPBox.HitPoint = Hero.HitPoint;
 				FoodBox.Value = Hero.Food;
 				NameBox.Text = Hero.Name;
+				IsNPCBox.Checked = Hero.IsNPC;
 			}
 
 			// Repaint
@@ -285,14 +287,6 @@ namespace DungeonEye.Forms
 			if (DesignMode)
 				return;
 
-			Spells.Clear();
-			List<string> spells = ResourceManager.GetAssets<Spell>();
-			foreach (string name in spells)
-				Spells.Add(ResourceManager.CreateAsset<Spell>(name));
-
-			SpellLevel = 1;
-
-
 			if (Hero != null)
 			{
 				// Spells ready
@@ -349,6 +343,14 @@ namespace DungeonEye.Forms
 		{
 			if (DesignMode)
 				return;
+
+
+			Spells.Clear();
+			List<string> spells = ResourceManager.GetAssets<Spell>();
+			foreach (string name in spells)
+				Spells.Add(ResourceManager.CreateAsset<Spell>(name));
+
+			SpellLevel = 1;
 
 			RebuildPanels();
 			RebuildProperties();
@@ -434,6 +436,19 @@ namespace DungeonEye.Forms
 
 
 		#region Properties events
+
+		/// <summary>
+		/// NPC Hero
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void IsNPCBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Hero == null)
+				return;
+
+			Hero.IsNPC = IsNPCBox.Checked;
+		}
 
 
 		/// <summary>
@@ -861,8 +876,6 @@ namespace DungeonEye.Forms
 		SpriteBatch Batch;
 
 		#endregion
-
-
 
 	}
 }
