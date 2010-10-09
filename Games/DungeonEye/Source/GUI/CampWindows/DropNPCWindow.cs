@@ -39,6 +39,12 @@ namespace DungeonEye.Gui.CampWindows
 		/// </summary>
 		public DropNPCWindow(Camp camp) : base(camp, "Drop Character")
 		{
+			if (Camp.Team.HeroCount <= 4)
+			{
+				Closing = true;
+				return;
+			}
+
 			Interface = ResourceManager.CreateSharedAsset<TileSet>("Interface");
 
 			// Adds buttons
@@ -80,18 +86,9 @@ namespace DungeonEye.Gui.CampWindows
 					if (hero == null)
 						continue;
 
-					// Draw rectangle around the hero
-					if (hero == Hero)
-					{
-						float col = (float)Math.Sin(1.0f);
-						batch.DrawRectangle(new Rectangle(366 + x * 144, 2 + y * 104, 130, 104), Color.White);
-						batch.DrawRectangle(new Rectangle(367 + x * 144, 4 + y * 104, 128, 101), Color.White);
-					}
-					else if (!hero.IsNPC)
-					{
-						// Ghost name
-						batch.DrawTile(Interface, 31, new Point(368 + 144 * x, y * 104 + 4));
-					}
+					float col = (float)Math.Sin(1.0f);
+					batch.DrawRectangle(new Rectangle(366 + x * 144, 2 + y * 104, 130, 104), Color.White);
+					batch.DrawRectangle(new Rectangle(367 + x * 144, 4 + y * 104, 128, 101), Color.White);
 				}
 			}
 			#endregion
@@ -110,7 +107,7 @@ namespace DungeonEye.Gui.CampWindows
 			//	RectangleColor = Color.FromArgb(255, col, col, col);
 
 			#region Select a new hero
-			if (Mouse.IsNewButtonDown(System.Windows.Forms.MouseButtons.Left))
+			if (Mouse.IsNewButtonDown(System.Windows.Forms.MouseButtons.Left) && Hero == null)
 			{
 				for (int y = 0; y < 3; y++)
 				{
@@ -118,10 +115,6 @@ namespace DungeonEye.Gui.CampWindows
 					{
 						Hero hero = Camp.Team.Heroes[y * 2 + x];
 						if (hero == null)
-							continue;
-
-						// Hero don't apply
-						if (!hero.IsNPC)
 							continue;
 
 						if (new Rectangle(368 + x * 144, 4 + y * 104, 126, 100).Contains(Mouse.Location))
@@ -166,6 +159,8 @@ namespace DungeonEye.Gui.CampWindows
 				Camp.Team.DropHero(Hero);
 				Camp.Close();
 			}
+
+			Hero = null;
 		}
 
 

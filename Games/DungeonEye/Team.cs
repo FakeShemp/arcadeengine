@@ -53,12 +53,16 @@ namespace DungeonEye
 
 			DrawHPAsBar = true;
 
-			Heroes = new Hero[6];
-			if (heroes != null)
-				for (int i = 0; i < heroes.Length; i++ )
-					Heroes[i] = heroes[i];
+			Heroes = new List<Hero>();
+			for (int i = 0; i < 6; i++)
+				Heroes.Add(null);
 
-			if (heroes == null)
+			if (heroes != null)
+			{
+				for (int i = 0; i < heroes.Length; i++)
+					Heroes[i] = heroes[i];
+			}
+			else
 				SaveGame = "data/savegame.xml";
 		}
 
@@ -291,7 +295,6 @@ namespace DungeonEye
 		}
 
 
-
 		#region IO
 
 
@@ -307,7 +310,7 @@ namespace DungeonEye
 
 
 			// Clear the team
-			for (int i = 0; i < Heroes.Length; i++)
+			for (int i = 0; i < Heroes.Count; i++)
 				Heroes[i] = null;
 
 			// Dispose dungeon
@@ -343,8 +346,9 @@ namespace DungeonEye
 					case "position":
 					{
 						HeroPosition position = (HeroPosition)Enum.Parse(typeof(HeroPosition), node.Attributes["slot"].Value, true);
-						Heroes[(int)position] = new Hero(this);
-						Heroes[(int)position].Load(node.FirstChild);
+						Hero hero = new Hero(this);
+						hero.Load(node.FirstChild);
+						AddHero(hero, position);
 					}
 					break;
 
@@ -933,6 +937,12 @@ namespace DungeonEye
 			{
 				ExitScreen();
 				return;
+			}
+
+			
+			if (Keyboard.IsNewKeyPress(Keys.V))
+			{
+				ReorderHeroes();
 			}
 
 
@@ -2215,7 +2225,7 @@ namespace DungeonEye
 		{
 			int pos = -1;
 
-			for (int id = 0; id < Heroes.Length; id++)
+			for (int id = 0; id < Heroes.Count; id++)
 			{
 				if (Heroes[id] == hero)
 				{
@@ -2353,6 +2363,7 @@ namespace DungeonEye
 		public void DropHero(HeroPosition position)
 		{
 			Heroes[(int)position] = null;
+			ReorderHeroes();
 		}
 
 
@@ -2365,11 +2376,12 @@ namespace DungeonEye
 			if (hero == null)
 				return;
 			
-			for(int i = 0; i < Heroes.Length; i++)
+			for(int i = 0; i < Heroes.Count; i++)
 			{
 				if (Heroes[i] == hero)
 				{
 					Heroes[i] = null;
+					ReorderHeroes();
 					return;
 				}
 			}
@@ -2387,6 +2399,20 @@ namespace DungeonEye
 			Heroes[(int) position] = hero;
 		}
 
+
+		/// <summary>
+		/// Reorder heroes
+		/// </summary>
+		public void ReorderHeroes()
+		{
+			Heroes.RemoveAll(item => item == null);
+
+			while (Heroes.Count < 6)
+				Heroes.Add(null);
+
+		}
+
+		
 		#endregion
 
 
@@ -2651,7 +2677,7 @@ namespace DungeonEye
 		/// <summary>
 		/// All heros in the team
 		/// </summary>
-		public Hero[] Heroes;
+		public List<Hero> Heroes;
 
 
 		/// <summary>

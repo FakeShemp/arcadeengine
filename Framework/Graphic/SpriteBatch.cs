@@ -925,7 +925,15 @@ namespace ArcEngine.Graphic
 		/// <param name="color">Color</param>
 		public void DrawRectangle(Rectangle rect, Color color)
 		{
-			InternalDraw(WhiteTexture, ref rect, ref rect, color, 0.0f, Point.Empty, SpriteEffects.None, 0.0f, PrimitiveType.LineStrip);
+			Point[] points = new Point[4];
+			points[0] = rect.Location;
+			points[1] = new Point(rect.X, rect.Bottom);
+			points[2] = new Point(rect.Right, rect.Bottom);
+			points[3] = new Point(rect.Right, rect.Top);
+
+			DrawLines(points, color);
+
+			//InternalDraw(WhiteTexture, ref rect, ref rect, color, 0.0f, Point.Empty, SpriteEffects.None, 0.0f, PrimitiveType.Lines);
 		}
 
 
