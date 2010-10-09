@@ -67,6 +67,7 @@
 			this.label12 = new System.Windows.Forms.Label();
 			this.label11 = new System.Windows.Forms.Label();
 			this.label10 = new System.Windows.Forms.Label();
+			this.Label23 = new System.Windows.Forms.Label();
 			this.label9 = new System.Windows.Forms.Label();
 			this.HelmetBox = new System.Windows.Forms.Button();
 			this.NeckBox = new System.Windows.Forms.Button();
@@ -74,7 +75,10 @@
 			this.SecondaryBox = new System.Windows.Forms.Button();
 			this.PrimaryBox = new System.Windows.Forms.Button();
 			this.RightRingBox = new System.Windows.Forms.Button();
+			this.Waist3Box = new System.Windows.Forms.Button();
+			this.Waist2Box = new System.Windows.Forms.Button();
 			this.LeftRingBox = new System.Windows.Forms.Button();
+			this.Waist1Box = new System.Windows.Forms.Button();
 			this.WristBox = new System.Windows.Forms.Button();
 			this.ArmorBox = new System.Windows.Forms.Button();
 			this.SpellTab = new System.Windows.Forms.TabPage();
@@ -140,7 +144,7 @@
 			this.tabControl1.Location = new System.Drawing.Point(0, 0);
 			this.tabControl1.Name = "tabControl1";
 			this.tabControl1.SelectedIndex = 0;
-			this.tabControl1.Size = new System.Drawing.Size(635, 400);
+			this.tabControl1.Size = new System.Drawing.Size(640, 400);
 			this.tabControl1.TabIndex = 10;
 			// 
 			// PropertiesTab
@@ -155,7 +159,7 @@
 			this.PropertiesTab.Location = new System.Drawing.Point(4, 22);
 			this.PropertiesTab.Name = "PropertiesTab";
 			this.PropertiesTab.Padding = new System.Windows.Forms.Padding(3);
-			this.PropertiesTab.Size = new System.Drawing.Size(627, 374);
+			this.PropertiesTab.Size = new System.Drawing.Size(632, 374);
 			this.PropertiesTab.TabIndex = 0;
 			this.PropertiesTab.Text = "Properties";
 			this.PropertiesTab.UseVisualStyleBackColor = true;
@@ -356,7 +360,7 @@
 			this.ProfessionTab.Controls.Add(this.ProfessionsBox);
 			this.ProfessionTab.Location = new System.Drawing.Point(4, 22);
 			this.ProfessionTab.Name = "ProfessionTab";
-			this.ProfessionTab.Size = new System.Drawing.Size(627, 374);
+			this.ProfessionTab.Size = new System.Drawing.Size(632, 374);
 			this.ProfessionTab.TabIndex = 2;
 			this.ProfessionTab.Text = "Professions";
 			this.ProfessionTab.UseVisualStyleBackColor = true;
@@ -368,7 +372,7 @@
 			this.EquipementTab.Controls.Add(this.groupBox3);
 			this.EquipementTab.Location = new System.Drawing.Point(4, 22);
 			this.EquipementTab.Name = "EquipementTab";
-			this.EquipementTab.Size = new System.Drawing.Size(627, 374);
+			this.EquipementTab.Size = new System.Drawing.Size(632, 374);
 			this.EquipementTab.TabIndex = 3;
 			this.EquipementTab.Text = "Equipement";
 			this.EquipementTab.UseVisualStyleBackColor = true;
@@ -415,7 +419,7 @@
 			this.BackPack14Box.Size = new System.Drawing.Size(75, 23);
 			this.BackPack14Box.TabIndex = 0;
 			this.BackPack14Box.UseVisualStyleBackColor = true;
-			this.BackPack14Box.Click += new System.EventHandler(this.BackPack_Click);
+			this.BackPack14Box.Click += new System.EventHandler(this.Equipment_Click);
 			// 
 			// BackPack13Box
 			// 
@@ -425,7 +429,7 @@
 			this.BackPack13Box.Size = new System.Drawing.Size(75, 23);
 			this.BackPack13Box.TabIndex = 0;
 			this.BackPack13Box.UseVisualStyleBackColor = true;
-			this.BackPack13Box.Click += new System.EventHandler(this.BackPack_Click);
+			this.BackPack13Box.Click += new System.EventHandler(this.Equipment_Click);
 			// 
 			// BackPack12Box
 			// 
@@ -435,7 +439,7 @@
 			this.BackPack12Box.Size = new System.Drawing.Size(75, 23);
 			this.BackPack12Box.TabIndex = 0;
 			this.BackPack12Box.UseVisualStyleBackColor = true;
-			this.BackPack12Box.Click += new System.EventHandler(this.BackPack_Click);
+			this.BackPack12Box.Click += new System.EventHandler(this.Equipment_Click);
 			// 
 			// BackPack11Box
 			// 
@@ -445,7 +449,7 @@
 			this.BackPack11Box.Size = new System.Drawing.Size(75, 23);
 			this.BackPack11Box.TabIndex = 0;
 			this.BackPack11Box.UseVisualStyleBackColor = true;
-			this.BackPack11Box.Click += new System.EventHandler(this.BackPack_Click);
+			this.BackPack11Box.Click += new System.EventHandler(this.Equipment_Click);
 			// 
 			// BackPack10Box
 			// 
@@ -455,7 +459,7 @@
 			this.BackPack10Box.Size = new System.Drawing.Size(75, 23);
 			this.BackPack10Box.TabIndex = 0;
 			this.BackPack10Box.UseVisualStyleBackColor = true;
-			this.BackPack10Box.Click += new System.EventHandler(this.BackPack_Click);
+			this.BackPack10Box.Click += new System.EventHandler(this.Equipment_Click);
 			// 
 			// BackPack9Box
 			// 
@@ -465,7 +469,7 @@
 			this.BackPack9Box.Size = new System.Drawing.Size(75, 23);
 			this.BackPack9Box.TabIndex = 0;
 			this.BackPack9Box.UseVisualStyleBackColor = true;
-			this.BackPack9Box.Click += new System.EventHandler(this.BackPack_Click);
+			this.BackPack9Box.Click += new System.EventHandler(this.Equipment_Click);
 			// 
 			// BackPack8Box
 			// 
@@ -475,7 +479,7 @@
 			this.BackPack8Box.Size = new System.Drawing.Size(75, 23);
 			this.BackPack8Box.TabIndex = 0;
 			this.BackPack8Box.UseVisualStyleBackColor = true;
-			this.BackPack8Box.Click += new System.EventHandler(this.BackPack_Click);
+			this.BackPack8Box.Click += new System.EventHandler(this.Equipment_Click);
 			// 
 			// BackPack7Box
 			// 
@@ -485,7 +489,7 @@
 			this.BackPack7Box.Size = new System.Drawing.Size(75, 23);
 			this.BackPack7Box.TabIndex = 0;
 			this.BackPack7Box.UseVisualStyleBackColor = true;
-			this.BackPack7Box.Click += new System.EventHandler(this.BackPack_Click);
+			this.BackPack7Box.Click += new System.EventHandler(this.Equipment_Click);
 			// 
 			// BackPack6Box
 			// 
@@ -495,7 +499,7 @@
 			this.BackPack6Box.Size = new System.Drawing.Size(75, 23);
 			this.BackPack6Box.TabIndex = 0;
 			this.BackPack6Box.UseVisualStyleBackColor = true;
-			this.BackPack6Box.Click += new System.EventHandler(this.BackPack_Click);
+			this.BackPack6Box.Click += new System.EventHandler(this.Equipment_Click);
 			// 
 			// BackPack5Box
 			// 
@@ -505,7 +509,7 @@
 			this.BackPack5Box.Size = new System.Drawing.Size(75, 23);
 			this.BackPack5Box.TabIndex = 0;
 			this.BackPack5Box.UseVisualStyleBackColor = true;
-			this.BackPack5Box.Click += new System.EventHandler(this.BackPack_Click);
+			this.BackPack5Box.Click += new System.EventHandler(this.Equipment_Click);
 			// 
 			// BackPack4Box
 			// 
@@ -515,7 +519,7 @@
 			this.BackPack4Box.Size = new System.Drawing.Size(75, 23);
 			this.BackPack4Box.TabIndex = 0;
 			this.BackPack4Box.UseVisualStyleBackColor = true;
-			this.BackPack4Box.Click += new System.EventHandler(this.BackPack_Click);
+			this.BackPack4Box.Click += new System.EventHandler(this.Equipment_Click);
 			// 
 			// BackPack3Box
 			// 
@@ -525,7 +529,7 @@
 			this.BackPack3Box.Size = new System.Drawing.Size(75, 23);
 			this.BackPack3Box.TabIndex = 0;
 			this.BackPack3Box.UseVisualStyleBackColor = true;
-			this.BackPack3Box.Click += new System.EventHandler(this.BackPack_Click);
+			this.BackPack3Box.Click += new System.EventHandler(this.Equipment_Click);
 			// 
 			// BackPack2Box
 			// 
@@ -535,7 +539,7 @@
 			this.BackPack2Box.Size = new System.Drawing.Size(75, 23);
 			this.BackPack2Box.TabIndex = 0;
 			this.BackPack2Box.UseVisualStyleBackColor = true;
-			this.BackPack2Box.Click += new System.EventHandler(this.BackPack_Click);
+			this.BackPack2Box.Click += new System.EventHandler(this.Equipment_Click);
 			// 
 			// BackPack1Box
 			// 
@@ -545,7 +549,7 @@
 			this.BackPack1Box.Size = new System.Drawing.Size(75, 23);
 			this.BackPack1Box.TabIndex = 0;
 			this.BackPack1Box.UseVisualStyleBackColor = true;
-			this.BackPack1Box.Click += new System.EventHandler(this.BackPack_Click);
+			this.BackPack1Box.Click += new System.EventHandler(this.Equipment_Click);
 			// 
 			// groupBox11
 			// 
@@ -593,6 +597,7 @@
 			this.groupBox3.Controls.Add(this.label12);
 			this.groupBox3.Controls.Add(this.label11);
 			this.groupBox3.Controls.Add(this.label10);
+			this.groupBox3.Controls.Add(this.Label23);
 			this.groupBox3.Controls.Add(this.label9);
 			this.groupBox3.Controls.Add(this.HelmetBox);
 			this.groupBox3.Controls.Add(this.NeckBox);
@@ -600,12 +605,15 @@
 			this.groupBox3.Controls.Add(this.SecondaryBox);
 			this.groupBox3.Controls.Add(this.PrimaryBox);
 			this.groupBox3.Controls.Add(this.RightRingBox);
+			this.groupBox3.Controls.Add(this.Waist3Box);
+			this.groupBox3.Controls.Add(this.Waist2Box);
 			this.groupBox3.Controls.Add(this.LeftRingBox);
+			this.groupBox3.Controls.Add(this.Waist1Box);
 			this.groupBox3.Controls.Add(this.WristBox);
 			this.groupBox3.Controls.Add(this.ArmorBox);
 			this.groupBox3.Location = new System.Drawing.Point(327, 3);
 			this.groupBox3.Name = "groupBox3";
-			this.groupBox3.Size = new System.Drawing.Size(169, 278);
+			this.groupBox3.Size = new System.Drawing.Size(241, 278);
 			this.groupBox3.TabIndex = 10;
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Equipment :";
@@ -682,6 +690,15 @@
 			this.label10.TabIndex = 5;
 			this.label10.Text = "Wrist :";
 			// 
+			// Label23
+			// 
+			this.Label23.AutoSize = true;
+			this.Label23.Location = new System.Drawing.Point(177, 167);
+			this.Label23.Name = "Label23";
+			this.Label23.Size = new System.Drawing.Size(40, 13);
+			this.Label23.TabIndex = 5;
+			this.Label23.Text = "Waist :";
+			// 
 			// label9
 			// 
 			this.label9.AutoSize = true;
@@ -699,7 +716,7 @@
 			this.HelmetBox.Size = new System.Drawing.Size(75, 23);
 			this.HelmetBox.TabIndex = 0;
 			this.HelmetBox.UseVisualStyleBackColor = true;
-			this.HelmetBox.Click += new System.EventHandler(this.BackPack_Click);
+			this.HelmetBox.Click += new System.EventHandler(this.Equipment_Click);
 			// 
 			// NeckBox
 			// 
@@ -709,7 +726,7 @@
 			this.NeckBox.Size = new System.Drawing.Size(75, 23);
 			this.NeckBox.TabIndex = 0;
 			this.NeckBox.UseVisualStyleBackColor = true;
-			this.NeckBox.Click += new System.EventHandler(this.BackPack_Click);
+			this.NeckBox.Click += new System.EventHandler(this.Equipment_Click);
 			// 
 			// FeetBox
 			// 
@@ -719,7 +736,7 @@
 			this.FeetBox.Size = new System.Drawing.Size(75, 23);
 			this.FeetBox.TabIndex = 0;
 			this.FeetBox.UseVisualStyleBackColor = true;
-			this.FeetBox.Click += new System.EventHandler(this.BackPack_Click);
+			this.FeetBox.Click += new System.EventHandler(this.Equipment_Click);
 			// 
 			// SecondaryBox
 			// 
@@ -729,7 +746,7 @@
 			this.SecondaryBox.Size = new System.Drawing.Size(75, 23);
 			this.SecondaryBox.TabIndex = 0;
 			this.SecondaryBox.UseVisualStyleBackColor = true;
-			this.SecondaryBox.Click += new System.EventHandler(this.BackPack_Click);
+			this.SecondaryBox.Click += new System.EventHandler(this.Equipment_Click);
 			// 
 			// PrimaryBox
 			// 
@@ -739,7 +756,7 @@
 			this.PrimaryBox.Size = new System.Drawing.Size(75, 23);
 			this.PrimaryBox.TabIndex = 0;
 			this.PrimaryBox.UseVisualStyleBackColor = true;
-			this.PrimaryBox.Click += new System.EventHandler(this.BackPack_Click);
+			this.PrimaryBox.Click += new System.EventHandler(this.Equipment_Click);
 			// 
 			// RightRingBox
 			// 
@@ -749,7 +766,27 @@
 			this.RightRingBox.Size = new System.Drawing.Size(75, 23);
 			this.RightRingBox.TabIndex = 0;
 			this.RightRingBox.UseVisualStyleBackColor = true;
-			this.RightRingBox.Click += new System.EventHandler(this.BackPack_Click);
+			this.RightRingBox.Click += new System.EventHandler(this.Equipment_Click);
+			// 
+			// Waist3Box
+			// 
+			this.Waist3Box.AllowDrop = true;
+			this.Waist3Box.Location = new System.Drawing.Point(158, 247);
+			this.Waist3Box.Name = "Waist3Box";
+			this.Waist3Box.Size = new System.Drawing.Size(75, 23);
+			this.Waist3Box.TabIndex = 0;
+			this.Waist3Box.UseVisualStyleBackColor = true;
+			this.Waist3Box.Click += new System.EventHandler(this.Equipment_Click);
+			// 
+			// Waist2Box
+			// 
+			this.Waist2Box.AllowDrop = true;
+			this.Waist2Box.Location = new System.Drawing.Point(158, 219);
+			this.Waist2Box.Name = "Waist2Box";
+			this.Waist2Box.Size = new System.Drawing.Size(75, 23);
+			this.Waist2Box.TabIndex = 0;
+			this.Waist2Box.UseVisualStyleBackColor = true;
+			this.Waist2Box.Click += new System.EventHandler(this.Equipment_Click);
 			// 
 			// LeftRingBox
 			// 
@@ -759,7 +796,17 @@
 			this.LeftRingBox.Size = new System.Drawing.Size(75, 23);
 			this.LeftRingBox.TabIndex = 0;
 			this.LeftRingBox.UseVisualStyleBackColor = true;
-			this.LeftRingBox.Click += new System.EventHandler(this.BackPack_Click);
+			this.LeftRingBox.Click += new System.EventHandler(this.Equipment_Click);
+			// 
+			// Waist1Box
+			// 
+			this.Waist1Box.AllowDrop = true;
+			this.Waist1Box.Location = new System.Drawing.Point(158, 190);
+			this.Waist1Box.Name = "Waist1Box";
+			this.Waist1Box.Size = new System.Drawing.Size(75, 23);
+			this.Waist1Box.TabIndex = 0;
+			this.Waist1Box.UseVisualStyleBackColor = true;
+			this.Waist1Box.Click += new System.EventHandler(this.Equipment_Click);
 			// 
 			// WristBox
 			// 
@@ -769,7 +816,7 @@
 			this.WristBox.Size = new System.Drawing.Size(75, 23);
 			this.WristBox.TabIndex = 0;
 			this.WristBox.UseVisualStyleBackColor = true;
-			this.WristBox.Click += new System.EventHandler(this.BackPack_Click);
+			this.WristBox.Click += new System.EventHandler(this.Equipment_Click);
 			// 
 			// ArmorBox
 			// 
@@ -779,7 +826,7 @@
 			this.ArmorBox.Size = new System.Drawing.Size(75, 23);
 			this.ArmorBox.TabIndex = 0;
 			this.ArmorBox.UseVisualStyleBackColor = true;
-			this.ArmorBox.Click += new System.EventHandler(this.BackPack_Click);
+			this.ArmorBox.Click += new System.EventHandler(this.Equipment_Click);
 			// 
 			// SpellTab
 			// 
@@ -791,7 +838,7 @@
 			this.SpellTab.Location = new System.Drawing.Point(4, 22);
 			this.SpellTab.Name = "SpellTab";
 			this.SpellTab.Padding = new System.Windows.Forms.Padding(3);
-			this.SpellTab.Size = new System.Drawing.Size(627, 374);
+			this.SpellTab.Size = new System.Drawing.Size(632, 374);
 			this.SpellTab.TabIndex = 1;
 			this.SpellTab.Text = "Spells";
 			this.SpellTab.UseVisualStyleBackColor = true;
@@ -1028,9 +1075,9 @@
 			this.AutoScroll = true;
 			this.Controls.Add(this.tabControl1);
 			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.MinimumSize = new System.Drawing.Size(635, 400);
+			this.MinimumSize = new System.Drawing.Size(640, 400);
 			this.Name = "HeroControl";
-			this.Size = new System.Drawing.Size(635, 400);
+			this.Size = new System.Drawing.Size(640, 400);
 			this.Load += new System.EventHandler(this.HeroControl_Load);
 			((System.ComponentModel.ISupportInitialize)(this.QuiverBox)).EndInit();
 			this.tabControl1.ResumeLayout(false);
@@ -1148,5 +1195,9 @@
 		private System.Windows.Forms.Button WristBox;
 		private System.Windows.Forms.Button ArmorBox;
 		private System.Windows.Forms.Button ClearBackPackBox;
+		private System.Windows.Forms.Label Label23;
+		private System.Windows.Forms.Button Waist3Box;
+		private System.Windows.Forms.Button Waist2Box;
+		private System.Windows.Forms.Button Waist1Box;
 	}
 }

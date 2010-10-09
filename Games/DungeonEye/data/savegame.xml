@@ -27,8 +27,9 @@
 			</profession>
 			<inventory position="Secondary" name="Light Steel Shield" />
 			<inventory position="Primary" name="Short Sword" />
-			<waist position="0" name="Dart" />
-			<waist position="1" name="Dart" />
+			<waist position="0" name="Rock" />
+			<waist position="1" name="Rock" />
+			<waist position="2" name="Rock" />
 			<backpack position="0" name="Iron Ration" />
 			<backpack position="1" name="Iron Ration" />
 			<backpack position="2" name="Iron Ration" />

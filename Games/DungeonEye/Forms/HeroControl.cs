@@ -80,6 +80,9 @@ namespace DungeonEye.Forms
 			FeetBox.Tag = InventoryPosition.Feet;
 			NeckBox.Tag = InventoryPosition.Neck;
 
+			Waist1Box.Tag = -1;
+			Waist2Box.Tag = -2;
+			Waist3Box.Tag = -3;
 		}
 
 
@@ -207,6 +210,10 @@ namespace DungeonEye.Forms
 				BackPack12Box.Text = string.Empty;
 				BackPack13Box.Text = string.Empty;
 				BackPack14Box.Text = string.Empty;
+
+				Waist1Box.Text = string.Empty;
+				Waist2Box.Text = string.Empty;
+				Waist3Box.Text = string.Empty;
 			}
 			else
 			{
@@ -257,6 +264,15 @@ namespace DungeonEye.Forms
 				BackPack13Box.Text = item != null ? item.Name : string.Empty;
 				item = Hero.GetBackPackItem(13);
 				BackPack14Box.Text = item != null ? item.Name : string.Empty;
+
+
+				item = Hero.GetWaistPackItem(0);
+				Waist1Box.Text = item != null ? item.Name : string.Empty;
+				item = Hero.GetWaistPackItem(1);
+				Waist2Box.Text = item != null ? item.Name : string.Empty;
+				item = Hero.GetWaistPackItem(2);
+				Waist3Box.Text = item != null ? item.Name : string.Empty;
+
 			}
 		}
 
@@ -724,6 +740,7 @@ namespace DungeonEye.Forms
 
 		#endregion
 
+
 		#region Equipments
 
 
@@ -732,7 +749,7 @@ namespace DungeonEye.Forms
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void BackPack_Click(object sender, EventArgs e)
+		private void Equipment_Click(object sender, EventArgs e)
 		{
 			if (Hero == null)
 				return;
@@ -747,8 +764,17 @@ namespace DungeonEye.Forms
 			// Backpack
 			if (button.Tag is int)
 			{
-				Hero.SetBackPackItem((int)button.Tag, item);
-				button.Text = ItemsBox.SelectedItem as string;
+				int id = (int)button.Tag;
+				if (id >= 0)
+				{
+					Hero.SetBackPackItem((int)button.Tag, item);
+					button.Text = ItemsBox.SelectedItem as string;
+				}
+				else
+				{
+					if (Hero.SetWaistPackItem(Math.Abs(id) - 1, item) || !CheckValidityBox.Checked)
+						button.Text = ItemsBox.SelectedItem as string;
+				}
 			}
 
 			// Inventory

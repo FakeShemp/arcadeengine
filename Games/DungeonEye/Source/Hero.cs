@@ -491,13 +491,6 @@ namespace DungeonEye
 					res = true;
 				break;
 
-				//case InventoryPosition.Belt_1:
-				//case InventoryPosition.Belt_2:
-				//case InventoryPosition.Belt_3:
-				//if ((item.Slot & BodySlot.Belt) == BodySlot.Belt)
-				//   res = true;
-				//break;
-
 				case InventoryPosition.Neck:
 				if ((item.Slot & BodySlot.Neck) == BodySlot.Neck)
 					res = true;
