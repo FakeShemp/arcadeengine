@@ -62,63 +62,9 @@ namespace DungeonEye.Forms
 			TypeBox.EndUpdate();
 
 
-			Item item = new Item();
-			item.Load(node);
+			Item = new Item();
+			Item.Load(node);
 
-
-			#region UI update
-
-			DescriptionBox.Text = item.Description;
-			CriticalMinBox.Value = item.Critical.X;
-			CriticalMaxBox.Value = item.Critical.Y;
-			MultiplierBox.Value = item.CriticalMultiplier;
-			SpeedBox.Value = (int)item.AttackSpeed.TotalMilliseconds;
-			WeightBox.Value = item.Weight;
-			TypeBox.SelectedItem = item.Type.ToString();
-			TileSetNameBox.SelectedItem = item.TileSetName;
-			GroundTileBox.Value = item.GroundTileID;
-			InventoryTileBox.Value = item.TileID;
-			ThrownTileBox.Value = item.ThrowTileID;
-			IncomingTileBox.Value = item.IncomingTileID;
-
-
-			PrimaryBox.Checked = (item.Slot & BodySlot.Primary) == BodySlot.Primary;
-			SecondaryBox.Checked = (item.Slot & BodySlot.Secondary) == BodySlot.Secondary;
-			QuiverBox.Checked = (item.Slot & BodySlot.Quiver) == BodySlot.Quiver;
-			BodyBox.Checked = (item.Slot & BodySlot.Torso) == BodySlot.Torso;
-			RingBox.Checked = (item.Slot & BodySlot.Fingers) == BodySlot.Fingers;
-			WristBox.Checked = (item.Slot & BodySlot.Wrists) == BodySlot.Wrists;
-			FeetBox.Checked = (item.Slot & BodySlot.Feet) == BodySlot.Feet;
-			HeadBox.Checked = (item.Slot & BodySlot.Head) == BodySlot.Head;
-			WaistBox.Checked = (item.Slot & BodySlot.Belt) == BodySlot.Belt;
-			NeckBox.Checked = (item.Slot & BodySlot.Neck) == BodySlot.Neck;
-
-			FighterBox.Checked = (item.AllowedClasses & HeroClass.Fighter) == HeroClass.Fighter;
-			PaladinBox.Checked = (item.AllowedClasses & HeroClass.Paladin) == HeroClass.Paladin;
-			ClericBox.Checked = (item.AllowedClasses & HeroClass.Cleric) == HeroClass.Cleric;
-			MageBox.Checked = (item.AllowedClasses & HeroClass.Mage) == HeroClass.Mage;
-			ThiefBox.Checked = (item.AllowedClasses & HeroClass.Thief) == HeroClass.Thief;
-			RangerBox.Checked = (item.AllowedClasses & HeroClass.Ranger) == HeroClass.Ranger;
-
-			//ScriptNameBox.SelectedItem = item.ScriptName;
-			//InterfaceNameBox.SelectedItem = item.InterfaceName;
-			scriptControl1.SetValues<IItem>(item.Script);
-
-			ACBonusBox.Value = item.ArmorClass;
-			DamageBox.Dice = item.Damage;
-			DamageVsSmallBox.Dice = item.DamageVsSmall;
-			DamageVsBigBox.Dice = item.DamageVsBig;
-
-			PiercingBox.Checked = (item.DamageType & DamageType.Pierce) == DamageType.Pierce;
-			SlashBox.Checked = (item.DamageType & DamageType.Slash) == DamageType.Slash;
-			BludgeBox.Checked = (item.DamageType & DamageType.Bludge) == DamageType.Bludge;
-			CursedBox.Checked = item.IsCursed;
-			AllowedHandPrimaryBox.Checked = (item.AllowedHands & HeroHand.Primary) == HeroHand.Primary;
-			AllowedHandSecondaryBox.Checked = (item.AllowedHands & HeroHand.Secondary) == HeroHand.Secondary;
-
-			#endregion
-
-			Item = item;
 		}
 
 
@@ -130,6 +76,76 @@ namespace DungeonEye.Forms
 			ResourceManager.AddAsset<Item>(Item.Name, ResourceManager.ConvertAsset(Item));
 		}
 
+
+		/// <summary>
+		/// Update controls
+		/// </summary>
+		void UpdateControls()
+		{
+			if (Item == null)
+			{
+			}
+			else
+			{
+				DescriptionBox.Text = Item.Description;
+				CriticalMinBox.Value = Item.Critical.X;
+				CriticalMaxBox.Value = Item.Critical.Y;
+				MultiplierBox.Value = Item.CriticalMultiplier;
+				SpeedBox.Value = (int)Item.AttackSpeed.TotalMilliseconds;
+				WeightBox.Value = Item.Weight;
+				TypeBox.SelectedItem = Item.Type.ToString();
+				TileSetNameBox.SelectedItem = Item.TileSetName;
+				GroundTileBox.Value = Item.GroundTileID;
+				InventoryTileBox.Value = Item.TileID;
+				ThrownTileBox.Value = Item.ThrowTileID;
+				IncomingTileBox.Value = Item.IncomingTileID;
+
+
+				PrimaryBox.Checked = (Item.Slot & BodySlot.Primary) == BodySlot.Primary;
+				SecondaryBox.Checked = (Item.Slot & BodySlot.Secondary) == BodySlot.Secondary;
+				QuiverBox.Checked = (Item.Slot & BodySlot.Quiver) == BodySlot.Quiver;
+				BodyBox.Checked = (Item.Slot & BodySlot.Torso) == BodySlot.Torso;
+				RingBox.Checked = (Item.Slot & BodySlot.Fingers) == BodySlot.Fingers;
+				WristBox.Checked = (Item.Slot & BodySlot.Wrists) == BodySlot.Wrists;
+				FeetBox.Checked = (Item.Slot & BodySlot.Feet) == BodySlot.Feet;
+				HeadBox.Checked = (Item.Slot & BodySlot.Head) == BodySlot.Head;
+				WaistBox.Checked = (Item.Slot & BodySlot.Belt) == BodySlot.Belt;
+				NeckBox.Checked = (Item.Slot & BodySlot.Neck) == BodySlot.Neck;
+
+				FighterBox.Checked = (Item.AllowedClasses & HeroClass.Fighter) == HeroClass.Fighter;
+				PaladinBox.Checked = (Item.AllowedClasses & HeroClass.Paladin) == HeroClass.Paladin;
+				ClericBox.Checked = (Item.AllowedClasses & HeroClass.Cleric) == HeroClass.Cleric;
+				MageBox.Checked = (Item.AllowedClasses & HeroClass.Mage) == HeroClass.Mage;
+				ThiefBox.Checked = (Item.AllowedClasses & HeroClass.Thief) == HeroClass.Thief;
+				RangerBox.Checked = (Item.AllowedClasses & HeroClass.Ranger) == HeroClass.Ranger;
+
+				scriptControl1.SetValues<IItem>(Item.Script);
+
+				ACBonusBox.Value = Item.ArmorClass;
+				DamageBox.Dice = Item.Damage;
+				DamageVsSmallBox.Dice = Item.DamageVsSmall;
+				DamageVsBigBox.Dice = Item.DamageVsBig;
+
+				PiercingBox.Checked = (Item.DamageType & DamageType.Pierce) == DamageType.Pierce;
+				SlashBox.Checked = (Item.DamageType & DamageType.Slash) == DamageType.Slash;
+				BludgeBox.Checked = (Item.DamageType & DamageType.Bludge) == DamageType.Bludge;
+				CursedBox.Checked = Item.IsCursed;
+				AllowedHandPrimaryBox.Checked = (Item.AllowedHands & HeroHand.Primary) == HeroHand.Primary;
+				AllowedHandSecondaryBox.Checked = (Item.AllowedHands & HeroHand.Secondary) == HeroHand.Secondary;
+			}
+		}
+
+
+		/// <summary>
+		/// Rebuild all visual controls
+		/// </summary>
+		void RebuildDisplay()
+		{
+			DrawTiles(GLInventoryTile, (int)InventoryTileBox.Value);
+			DrawTiles(GLGroundTile, (int) GroundTileBox.Value);
+			DrawTiles(GLThrownTile, (int) ThrownTileBox.Value);
+			DrawTiles(GLIncomingTile, (int) IncomingTileBox.Value);
+		}
 
 		#region Events
 
@@ -170,8 +186,6 @@ namespace DungeonEye.Forms
 
 
 
-
-
 		/// <summary>
 		/// Draws all visual
 		/// </summary>
@@ -179,10 +193,7 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void Paint_Tiles(object sender, PaintEventArgs e)
 		{
-			DrawTiles(GLInventoryTile, (int)InventoryTileBox.Value);
-			DrawTiles(GLGroundTile, (int) GroundTileBox.Value);
-			DrawTiles(GLThrownTile, (int) ThrownTileBox.Value);
-			DrawTiles(GLIncomingTile, (int) IncomingTileBox.Value);
+			RebuildDisplay();
 		}
 
 
@@ -204,17 +215,18 @@ namespace DungeonEye.Forms
 
 
 			// Tile to draw
-			Tile tile = TileSet.GetTile(tileid);
-			if (tile != null)
+			if (TileSet != null)
 			{
-				Point location = new Point((control.Width - tile.Size.Width) / 2, (control.Height - tile.Size.Height) / 2);
-				SpriteBatch.DrawTile(TileSet, tileid, location);
+				Tile tile = TileSet.GetTile(tileid);
+				if (tile != null)
+				{
+					Point location = new Point((control.Width - tile.Size.Width) / 2, (control.Height - tile.Size.Height) / 2);
+					SpriteBatch.DrawTile(TileSet, tileid, location);
+				}
 			}
 
 			SpriteBatch.End();
-
 			control.SwapBuffers();
-
 		}
 
 
@@ -225,7 +237,6 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void Form_Load(object sender, EventArgs e)
 		{
-
 			SpriteBatch = new SpriteBatch();
 
 			// Preload background texture resource
@@ -233,23 +244,7 @@ namespace DungeonEye.Forms
 			CheckerBoard.HorizontalWrap = TextureWrapFilter.Repeat;
 			CheckerBoard.VerticalWrap = TextureWrapFilter.Repeat;
 
-
-			if (Item == null)
-				return;
-
-			//// Script name
-			//if (!string.IsNullOrEmpty(Item.ScriptName) && ScriptNameBox.Items.Contains(Item.ScriptName))
-			//    ScriptNameBox.SelectedItem = Item.ScriptName;
-
-			//// Tileset name
-			//if (!string.IsNullOrEmpty(Item.TileSetName) && TileSetNameBox.Items.Contains(Item.TileSetName))
-			//    TileSetNameBox.SelectedItem = Item.TileSetName;
-
-
-			ThrownTileBox.Value = Item.ThrowTileID;
-			IncomingTileBox.Value = Item.IncomingTileID;
-			GroundTileBox.Value = Item.GroundTileID;
-			InventoryTileBox.Value = Item.TileID;
+			UpdateControls();
 		}
 
 
@@ -304,7 +299,6 @@ namespace DungeonEye.Forms
 		{
 			GLIncomingTile.MakeCurrent();
 			Display.Init();
-
 		}
 
 
@@ -316,8 +310,6 @@ namespace DungeonEye.Forms
 		private void GLInventoryTile_Resize(object sender, EventArgs e)
 		{
 			GLInventoryTile.MakeCurrent();
-			Display.Init();
-			
 			Display.ViewPort = new Rectangle(new Point(), GLInventoryTile.Size);
 		}
 
@@ -330,8 +322,6 @@ namespace DungeonEye.Forms
 		private void GLGroundTile_Resize(object sender, EventArgs e)
 		{
 			GLGroundTile.MakeCurrent();
-			Display.Init();
-
 			Display.ViewPort = new Rectangle(new Point(), GLGroundTile.Size);
 		}
 
@@ -343,8 +333,6 @@ namespace DungeonEye.Forms
 		private void GLIncomingTile_Resize(object sender, EventArgs e)
 		{
 			GLIncomingTile.MakeCurrent();
-			Display.Init();
-
 			Display.ViewPort = new Rectangle(new Point(), GLIncomingTile.Size);
 		}
 
@@ -356,8 +344,6 @@ namespace DungeonEye.Forms
 		private void GLThrownTile_Resize(object sender, EventArgs e)
 		{
 			GLThrownTile.MakeCurrent();
-			Display.Init();
-
 			Display.ViewPort = new Rectangle(new Point(), GLThrownTile.Size);
 		}
 
@@ -375,21 +361,17 @@ namespace DungeonEye.Forms
 			if (TileSetNameBox.SelectedIndex == -1)
 				return;
 
+			// Dispose od tileset
 			if (TileSet != null)
-			{
 				TileSet.Dispose();
-				TileSet = null;
-			}
+
+			// Create new tileset
 			TileSet = ResourceManager.CreateAsset<TileSet>(TileSetNameBox.SelectedItem as string);
+			if (Item != null)
+				Item.TileSetName = TileSetNameBox.SelectedItem as string;
 
-
-			if (Item == null)
-				return;
-
-			Item.TileSetName = TileSetNameBox.SelectedItem as string;
-
-
-			Paint_Tiles(null, null);
+			// Display change
+			RebuildDisplay();
 		}
 
 
@@ -821,8 +803,7 @@ namespace DungeonEye.Forms
 				return;
 
 			Item.TileID = (int)InventoryTileBox.Value;
-
-			Paint_Tiles(null, null);
+			DrawTiles(GLInventoryTile, (int)InventoryTileBox.Value);
 		}
 
 
@@ -837,8 +818,7 @@ namespace DungeonEye.Forms
 				return;
 
 			Item.GroundTileID = (int)GroundTileBox.Value;
-
-			Paint_Tiles(null, null);
+			DrawTiles(GLGroundTile, (int)GroundTileBox.Value);
 		}
 
 
@@ -853,8 +833,7 @@ namespace DungeonEye.Forms
 				return;
 
 			Item.ThrowTileID = (int) ThrownTileBox.Value;
-
-			Paint_Tiles(null, null);
+			DrawTiles(GLThrownTile, (int)ThrownTileBox.Value);
 		}
 
 
@@ -869,8 +848,7 @@ namespace DungeonEye.Forms
 				return;
 
 			Item.IncomingTileID = (int)IncomingTileBox.Value;
-
-			Paint_Tiles(null, null);
+			DrawTiles(GLIncomingTile, (int)IncomingTileBox.Value);
 		}
 
 

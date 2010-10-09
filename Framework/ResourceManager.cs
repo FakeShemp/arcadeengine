@@ -738,31 +738,33 @@ namespace ArcEngine
 			//
 			// 1° Look in bank
 			//
-			ZipStorer zip = ZipStorer.Open(BankName, FileAccess.Read);
-			if (zip == null)
-				return null;
-
-
-			// Read the central directory collection
-			List<ZipStorer.ZipFileEntry> dir = zip.ReadCentralDir();
-
-			// Look for the desired file
-			foreach (ZipStorer.ZipFileEntry entry in dir)
+			if (!string.IsNullOrEmpty(BankName))
 			{
-				if (entry.FilenameInZip != resourcename)
-					continue;
+				ZipStorer zip = ZipStorer.Open(BankName, FileAccess.Read);
+				if (zip != null)
+				{
+					// Read the central directory collection
+					List<ZipStorer.ZipFileEntry> dir = zip.ReadCentralDir();
 
-				Stream stream = new MemoryStream();
-				zip.ExtractFile(entry, stream);
-				zip.Close();
+					// Look for the desired file
+					foreach (ZipStorer.ZipFileEntry entry in dir)
+					{
+						if (entry.FilenameInZip != resourcename)
+							continue;
 
-				// Rewind
-				stream.Seek(0, SeekOrigin.Begin);
+						Stream stream = new MemoryStream();
+						zip.ExtractFile(entry, stream);
+						zip.Close();
 
-				return stream;
+						// Rewind
+						stream.Seek(0, SeekOrigin.Begin);
+
+						return stream;
+					}
+
+					zip.Close();
+				}
 			}
-
-			zip.Close();
 
 			//
 			// 2° try to load it from disk

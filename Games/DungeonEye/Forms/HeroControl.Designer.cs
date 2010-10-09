@@ -33,13 +33,21 @@
 			this.NextFaceBox = new System.Windows.Forms.Button();
 			this.OpenGLBox = new OpenTK.GLControl();
 			this.groupBox7 = new System.Windows.Forms.GroupBox();
+			this.CharismaBox = new DungeonEye.Forms.AbilityControl();
 			this.ArmorClassBox = new System.Windows.Forms.TextBox();
 			this.label3 = new System.Windows.Forms.Label();
+			this.ConstitutionBox = new DungeonEye.Forms.AbilityControl();
+			this.DexterityBox = new DungeonEye.Forms.AbilityControl();
+			this.WisdomBox = new DungeonEye.Forms.AbilityControl();
+			this.IntelligenceBox = new DungeonEye.Forms.AbilityControl();
+			this.StrengthBox = new DungeonEye.Forms.AbilityControl();
 			this.groupBox6 = new System.Windows.Forms.GroupBox();
 			this.label2 = new System.Windows.Forms.Label();
 			this.groupBox5 = new System.Windows.Forms.GroupBox();
 			this.FoodBox = new System.Windows.Forms.TrackBar();
+			this.HPBox = new DungeonEye.Forms.HitPointControl();
 			this.ProfessionTab = new System.Windows.Forms.TabPage();
+			this.ProfessionsBox = new DungeonEye.Forms.ProfessionsControl();
 			this.EquipementTab = new System.Windows.Forms.TabPage();
 			this.groupBox12 = new System.Windows.Forms.GroupBox();
 			this.ClearBackPackBox = new System.Windows.Forms.Button();
@@ -97,14 +105,7 @@
 			this.SpellReportLabel = new System.Windows.Forms.Label();
 			this.SpellReadyBox = new System.Windows.Forms.ListBox();
 			this.button2 = new System.Windows.Forms.Button();
-			this.CharismaBox = new DungeonEye.Forms.AbilityControl();
-			this.ConstitutionBox = new DungeonEye.Forms.AbilityControl();
-			this.DexterityBox = new DungeonEye.Forms.AbilityControl();
-			this.WisdomBox = new DungeonEye.Forms.AbilityControl();
-			this.IntelligenceBox = new DungeonEye.Forms.AbilityControl();
-			this.StrengthBox = new DungeonEye.Forms.AbilityControl();
-			this.HPBox = new DungeonEye.Forms.HitPointControl();
-			this.ProfessionsBox = new DungeonEye.Forms.ProfessionsControl();
+			this.PoisonedBox = new System.Windows.Forms.CheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.QuiverBox)).BeginInit();
 			this.tabControl1.SuspendLayout();
 			this.PropertiesTab.SuspendLayout();
@@ -147,7 +148,7 @@
 			this.tabControl1.Location = new System.Drawing.Point(0, 0);
 			this.tabControl1.Name = "tabControl1";
 			this.tabControl1.SelectedIndex = 0;
-			this.tabControl1.Size = new System.Drawing.Size(640, 400);
+			this.tabControl1.Size = new System.Drawing.Size(640, 453);
 			this.tabControl1.TabIndex = 10;
 			// 
 			// PropertiesTab
@@ -163,17 +164,18 @@
 			this.PropertiesTab.Location = new System.Drawing.Point(4, 22);
 			this.PropertiesTab.Name = "PropertiesTab";
 			this.PropertiesTab.Padding = new System.Windows.Forms.Padding(3);
-			this.PropertiesTab.Size = new System.Drawing.Size(632, 374);
+			this.PropertiesTab.Size = new System.Drawing.Size(632, 427);
 			this.PropertiesTab.TabIndex = 0;
 			this.PropertiesTab.Text = "Properties";
 			this.PropertiesTab.UseVisualStyleBackColor = true;
 			// 
 			// groupBox13
 			// 
+			this.groupBox13.Controls.Add(this.PoisonedBox);
 			this.groupBox13.Controls.Add(this.IsNPCBox);
-			this.groupBox13.Location = new System.Drawing.Point(359, 7);
+			this.groupBox13.Location = new System.Drawing.Point(6, 353);
 			this.groupBox13.Name = "groupBox13";
-			this.groupBox13.Size = new System.Drawing.Size(80, 79);
+			this.groupBox13.Size = new System.Drawing.Size(433, 68);
 			this.groupBox13.TabIndex = 19;
 			this.groupBox13.TabStop = false;
 			this.groupBox13.Text = "Misc :";
@@ -181,8 +183,6 @@
 			// IsNPCBox
 			// 
 			this.IsNPCBox.AutoSize = true;
-			this.IsNPCBox.Checked = true;
-			this.IsNPCBox.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.IsNPCBox.Location = new System.Drawing.Point(7, 21);
 			this.IsNPCBox.Name = "IsNPCBox";
 			this.IsNPCBox.Size = new System.Drawing.Size(48, 17);
@@ -217,7 +217,7 @@
 			this.groupBox9.Controls.Add(this.AlignmentBox);
 			this.groupBox9.Location = new System.Drawing.Point(168, 6);
 			this.groupBox9.Name = "groupBox9";
-			this.groupBox9.Size = new System.Drawing.Size(185, 80);
+			this.groupBox9.Size = new System.Drawing.Size(271, 80);
 			this.groupBox9.TabIndex = 17;
 			this.groupBox9.TabStop = false;
 			this.groupBox9.Text = "Alignment && Race :";
@@ -248,7 +248,7 @@
 			this.RaceBox.FormattingEnabled = true;
 			this.RaceBox.Location = new System.Drawing.Point(71, 46);
 			this.RaceBox.Name = "RaceBox";
-			this.RaceBox.Size = new System.Drawing.Size(108, 21);
+			this.RaceBox.Size = new System.Drawing.Size(194, 21);
 			this.RaceBox.Sorted = true;
 			this.RaceBox.TabIndex = 1;
 			this.RaceBox.SelectedIndexChanged += new System.EventHandler(this.RaceBox_SelectedIndexChanged);
@@ -261,7 +261,7 @@
 			this.AlignmentBox.FormattingEnabled = true;
 			this.AlignmentBox.Location = new System.Drawing.Point(71, 19);
 			this.AlignmentBox.Name = "AlignmentBox";
-			this.AlignmentBox.Size = new System.Drawing.Size(108, 21);
+			this.AlignmentBox.Size = new System.Drawing.Size(194, 21);
 			this.AlignmentBox.Sorted = true;
 			this.AlignmentBox.TabIndex = 0;
 			this.AlignmentBox.SelectedIndexChanged += new System.EventHandler(this.AlignmentBox_SelectedIndexChanged);
@@ -327,6 +327,15 @@
 			this.groupBox7.TabStop = false;
 			this.groupBox7.Text = "Abilities :";
 			// 
+			// CharismaBox
+			// 
+			this.CharismaBox.Ability = null;
+			this.CharismaBox.Location = new System.Drawing.Point(6, 175);
+			this.CharismaBox.Name = "CharismaBox";
+			this.CharismaBox.Size = new System.Drawing.Size(260, 25);
+			this.CharismaBox.TabIndex = 0;
+			this.CharismaBox.Title = "Charisma :";
+			// 
 			// ArmorClassBox
 			// 
 			this.ArmorClassBox.Location = new System.Drawing.Point(86, 210);
@@ -344,6 +353,51 @@
 			this.label3.Size = new System.Drawing.Size(68, 13);
 			this.label3.TabIndex = 1;
 			this.label3.Text = "Armor Class :";
+			// 
+			// ConstitutionBox
+			// 
+			this.ConstitutionBox.Ability = null;
+			this.ConstitutionBox.Location = new System.Drawing.Point(6, 143);
+			this.ConstitutionBox.Name = "ConstitutionBox";
+			this.ConstitutionBox.Size = new System.Drawing.Size(260, 25);
+			this.ConstitutionBox.TabIndex = 0;
+			this.ConstitutionBox.Title = "Constitution :";
+			// 
+			// DexterityBox
+			// 
+			this.DexterityBox.Ability = null;
+			this.DexterityBox.Location = new System.Drawing.Point(6, 112);
+			this.DexterityBox.Name = "DexterityBox";
+			this.DexterityBox.Size = new System.Drawing.Size(260, 25);
+			this.DexterityBox.TabIndex = 0;
+			this.DexterityBox.Title = "Dexterity :";
+			// 
+			// WisdomBox
+			// 
+			this.WisdomBox.Ability = null;
+			this.WisdomBox.Location = new System.Drawing.Point(6, 81);
+			this.WisdomBox.Name = "WisdomBox";
+			this.WisdomBox.Size = new System.Drawing.Size(260, 25);
+			this.WisdomBox.TabIndex = 0;
+			this.WisdomBox.Title = "Wisdom :";
+			// 
+			// IntelligenceBox
+			// 
+			this.IntelligenceBox.Ability = null;
+			this.IntelligenceBox.Location = new System.Drawing.Point(6, 50);
+			this.IntelligenceBox.Name = "IntelligenceBox";
+			this.IntelligenceBox.Size = new System.Drawing.Size(260, 25);
+			this.IntelligenceBox.TabIndex = 0;
+			this.IntelligenceBox.Title = "Intelligence :";
+			// 
+			// StrengthBox
+			// 
+			this.StrengthBox.Ability = null;
+			this.StrengthBox.Location = new System.Drawing.Point(6, 19);
+			this.StrengthBox.Name = "StrengthBox";
+			this.StrengthBox.Size = new System.Drawing.Size(260, 25);
+			this.StrengthBox.TabIndex = 0;
+			this.StrengthBox.Title = "Strength :";
 			// 
 			// groupBox6
 			// 
@@ -386,6 +440,14 @@
 			this.FoodBox.TickFrequency = 10;
 			this.FoodBox.ValueChanged += new System.EventHandler(this.FoodBox_ValueChanged);
 			// 
+			// HPBox
+			// 
+			this.HPBox.HitPoint = null;
+			this.HPBox.Location = new System.Drawing.Point(6, 159);
+			this.HPBox.Name = "HPBox";
+			this.HPBox.Size = new System.Drawing.Size(156, 77);
+			this.HPBox.TabIndex = 12;
+			// 
 			// ProfessionTab
 			// 
 			this.ProfessionTab.Controls.Add(this.ProfessionsBox);
@@ -395,6 +457,16 @@
 			this.ProfessionTab.TabIndex = 2;
 			this.ProfessionTab.Text = "Professions";
 			this.ProfessionTab.UseVisualStyleBackColor = true;
+			// 
+			// ProfessionsBox
+			// 
+			this.ProfessionsBox.Hero = null;
+			this.ProfessionsBox.Location = new System.Drawing.Point(3, 3);
+			this.ProfessionsBox.MinimumSize = new System.Drawing.Size(300, 175);
+			this.ProfessionsBox.Name = "ProfessionsBox";
+			this.ProfessionsBox.Size = new System.Drawing.Size(300, 175);
+			this.ProfessionsBox.TabIndex = 0;
+			this.ProfessionsBox.Title = "Professions :";
 			// 
 			// EquipementTab
 			// 
@@ -1027,77 +1099,15 @@
 			this.button2.Text = "Remove";
 			this.button2.UseVisualStyleBackColor = true;
 			// 
-			// CharismaBox
+			// PoisonedBox
 			// 
-			this.CharismaBox.Ability = null;
-			this.CharismaBox.Location = new System.Drawing.Point(6, 175);
-			this.CharismaBox.Name = "CharismaBox";
-			this.CharismaBox.Size = new System.Drawing.Size(260, 25);
-			this.CharismaBox.TabIndex = 0;
-			this.CharismaBox.Title = "Charisma :";
-			// 
-			// ConstitutionBox
-			// 
-			this.ConstitutionBox.Ability = null;
-			this.ConstitutionBox.Location = new System.Drawing.Point(6, 143);
-			this.ConstitutionBox.Name = "ConstitutionBox";
-			this.ConstitutionBox.Size = new System.Drawing.Size(260, 25);
-			this.ConstitutionBox.TabIndex = 0;
-			this.ConstitutionBox.Title = "Constitution :";
-			// 
-			// DexterityBox
-			// 
-			this.DexterityBox.Ability = null;
-			this.DexterityBox.Location = new System.Drawing.Point(6, 112);
-			this.DexterityBox.Name = "DexterityBox";
-			this.DexterityBox.Size = new System.Drawing.Size(260, 25);
-			this.DexterityBox.TabIndex = 0;
-			this.DexterityBox.Title = "Dexterity :";
-			// 
-			// WisdomBox
-			// 
-			this.WisdomBox.Ability = null;
-			this.WisdomBox.Location = new System.Drawing.Point(6, 81);
-			this.WisdomBox.Name = "WisdomBox";
-			this.WisdomBox.Size = new System.Drawing.Size(260, 25);
-			this.WisdomBox.TabIndex = 0;
-			this.WisdomBox.Title = "Wisdom :";
-			// 
-			// IntelligenceBox
-			// 
-			this.IntelligenceBox.Ability = null;
-			this.IntelligenceBox.Location = new System.Drawing.Point(6, 50);
-			this.IntelligenceBox.Name = "IntelligenceBox";
-			this.IntelligenceBox.Size = new System.Drawing.Size(260, 25);
-			this.IntelligenceBox.TabIndex = 0;
-			this.IntelligenceBox.Title = "Intelligence :";
-			// 
-			// StrengthBox
-			// 
-			this.StrengthBox.Ability = null;
-			this.StrengthBox.Location = new System.Drawing.Point(6, 19);
-			this.StrengthBox.Name = "StrengthBox";
-			this.StrengthBox.Size = new System.Drawing.Size(260, 25);
-			this.StrengthBox.TabIndex = 0;
-			this.StrengthBox.Title = "Strength :";
-			// 
-			// HPBox
-			// 
-			this.HPBox.HitPoint = null;
-			this.HPBox.Location = new System.Drawing.Point(6, 159);
-			this.HPBox.Name = "HPBox";
-			this.HPBox.Size = new System.Drawing.Size(156, 77);
-			this.HPBox.TabIndex = 12;
-			// 
-			// ProfessionsBox
-			// 
-			this.ProfessionsBox.Hero = null;
-			this.ProfessionsBox.Location = new System.Drawing.Point(3, 3);
-			this.ProfessionsBox.MinimumSize = new System.Drawing.Size(300, 175);
-			this.ProfessionsBox.Name = "ProfessionsBox";
-			this.ProfessionsBox.Size = new System.Drawing.Size(300, 175);
-			this.ProfessionsBox.TabIndex = 0;
-			this.ProfessionsBox.Title = "Professions :";
+			this.PoisonedBox.AutoSize = true;
+			this.PoisonedBox.Location = new System.Drawing.Point(6, 45);
+			this.PoisonedBox.Name = "PoisonedBox";
+			this.PoisonedBox.Size = new System.Drawing.Size(70, 17);
+			this.PoisonedBox.TabIndex = 1;
+			this.PoisonedBox.Text = "Poisoned";
+			this.PoisonedBox.UseVisualStyleBackColor = true;
 			// 
 			// HeroControl
 			// 
@@ -1107,7 +1117,7 @@
 			this.Controls.Add(this.tabControl1);
 			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Name = "HeroControl";
-			this.Size = new System.Drawing.Size(640, 400);
+			this.Size = new System.Drawing.Size(640, 453);
 			this.Load += new System.EventHandler(this.HeroControl_Load);
 			((System.ComponentModel.ISupportInitialize)(this.QuiverBox)).EndInit();
 			this.tabControl1.ResumeLayout(false);
@@ -1233,5 +1243,6 @@
 		private System.Windows.Forms.Button Waist1Box;
 		private System.Windows.Forms.GroupBox groupBox13;
 		private System.Windows.Forms.CheckBox IsNPCBox;
+		private System.Windows.Forms.CheckBox PoisonedBox;
 	}
 }

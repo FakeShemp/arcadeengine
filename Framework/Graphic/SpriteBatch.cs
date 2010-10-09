@@ -295,6 +295,8 @@ namespace ArcEngine.Graphic
                     src.Z = -src.Z;
                 }
 
+
+				// Texture flip
                 if ((Sprites[i].Effects & SpriteEffects.FlipVertically) == SpriteEffects.FlipVertically)
                 {
                     src.Y += src.W;
@@ -933,7 +935,7 @@ namespace ArcEngine.Graphic
 
 			DrawLines(points, color);
 
-			//InternalDraw(WhiteTexture, ref rect, ref rect, color, 0.0f, Point.Empty, SpriteEffects.None, 0.0f, PrimitiveType.Lines);
+			//InternalDraw(WhiteTexture, ref rect, ref rect, color, 0.0f, Point.Empty, SpriteEffects.None, 0.0f, PrimitiveType.LineStrip);
 		}
 
 

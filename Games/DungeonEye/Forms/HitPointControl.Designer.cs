@@ -93,6 +93,11 @@
             0,
             0,
             0});
+			this.CurrentBox.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            -2147483648});
 			this.CurrentBox.Name = "CurrentBox";
 			this.CurrentBox.Size = new System.Drawing.Size(80, 20);
 			this.CurrentBox.TabIndex = 0;

@@ -870,6 +870,33 @@ namespace DungeonEye
 
 
 		/// <summary>
+		/// Check for multi class validity
+		/// </summary>
+		/// <returns></returns>
+		public bool CheckMultiClassValidity()
+		{
+			//Fighter             
+			//Ranger              
+			//Paladin             
+			//Mage                
+			//Cleric              
+			//Thief               
+			//Fighter/Cleric      
+			//Fighter/Thief       
+			//Fighter/Mage        
+			//Fighter/Mage/Thief  
+			//Thief/Mage          
+			//Cleric/Thief        
+			//Fighter/Cleric/Mage 
+			//Ranger/Cleric       
+			//Cleric/Mage         
+
+
+			return true;
+		}
+
+
+		/// <summary>
 		/// Checks if the hero belgons to a class
 		/// </summary>
 		/// <param name="classe">Class</param>

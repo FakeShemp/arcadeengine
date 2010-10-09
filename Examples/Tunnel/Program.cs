@@ -55,7 +55,11 @@ namespace ArcEngine.Examples.Tunnel
 		/// </summary>
 		public Program()
 		{
-			CreateGameWindow(new Size(1024, 768));
+			GameWindowParams p = new GameWindowParams();
+			p.Size = new Size(1024, 768);
+			p.Major = 4;
+			p.Minor = 1;
+			CreateGameWindow(p);
 			Window.Text = "Tunnel effect - Thanks to http://www.rozengain.com/blog/";
 		}
 
