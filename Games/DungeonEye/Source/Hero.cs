@@ -65,7 +65,15 @@ namespace DungeonEye
 			HandPenality[1] = DateTime.Now;
 
 			Food = (byte)Game.Random.Next(50, 100);
-			Spells = new List<Spell>();
+			Spells = new List<Spell>[6]
+			{
+				new List<Spell>(),
+				new List<Spell>(),
+				new List<Spell>(),
+				new List<Spell>(),
+				new List<Spell>(),
+				new List<Spell>(),
+			};
 		}
 
 
@@ -302,9 +310,9 @@ namespace DungeonEye
 		/// <summary>
 		/// Returns the maximum number of spell for a certain class
 		/// </summary>
-		/// <param name="classe"></param>
-		/// <param name="level"></param>
-		/// <returns></returns>
+		/// <param name="classe">Cleric, Mage or Paladin</param>
+		/// <param name="level">Spell level</param>
+		/// <returns>Maximum spell count</returns>
 		public int GetMaxSpellCount(HeroClass classe, int level)
 		{
 			#region Clerc
@@ -350,40 +358,40 @@ namespace DungeonEye
 			#endregion
 
 			#region Mage
-			int[,] MageLevels = new int[,]
+			List<int>[] MageLevels = new List<int>[]
 			{
-				{1, 0, 0, 0, 0, 0},
-				{2, 0, 0, 0, 0, 0},
-				{2, 1, 0, 0, 0, 0},
-				{3, 2, 0, 0, 0, 0},
-				{4, 2, 1, 0, 0, 0},
-				{4, 2, 2, 0, 0, 0},
-				{4, 3, 2, 1, 0, 0},
-				{4, 3, 3, 2, 0, 0},
-				{4, 3, 3, 2, 1, 0},
-				{4, 4, 3, 2, 2, 0},
-				{4, 4, 4, 3, 3, 0},
-				{4, 4, 4, 4, 4, 1},
-				{5, 5, 5, 4, 4, 2},
+				new List<int> {1, 0, 0, 0, 0, 0},		// 1
+				new List<int> {2, 0, 0, 0, 0, 0},		// 2
+				new List<int> {2, 1, 0, 0, 0, 0},		// 3 
+				new List<int> {3, 2, 0, 0, 0, 0},		// 4
+				new List<int> {4, 2, 1, 0, 0, 0},		// 5
+				new List<int> {4, 2, 2, 0, 0, 0},		// 6
+				new List<int> {4, 3, 2, 1, 0, 0},		// 7
+				new List<int> {4, 3, 3, 2, 0, 0},		// 8
+				new List<int> {4, 3, 3, 2, 1, 0},		// 9
+				new List<int> {4, 4, 3, 2, 2, 0},		// 10
+				new List<int> {4, 4, 4, 3, 3, 0},		// 11
+				new List<int> {4, 4, 4, 4, 4, 1},		// 12
+				new List<int> {5, 5, 5, 4, 4, 2},		// 13
 			};
 			#endregion
 
 			#region Paladin
-			int[,] PaladinLevels = new int[,]
+			List<int>[] PaladinLevels = new List<int>[]
 			{
-				{0, 0, 0},
-				{0, 0, 0},
-				{0, 0, 0},
-				{0, 0, 0},
-				{0, 0, 0},
-				{0, 0, 0},
-				{0, 0, 0},
-				{0, 0, 0},
-				{1, 0, 0},
-				{2, 0, 0},
-				{2, 1, 0},
-				{2, 2, 0},
-				{2, 2, 1},
+				new List<int> {0, 0, 0},
+				new List<int> {0, 0, 0},
+				new List<int> {0, 0, 0},
+				new List<int> {0, 0, 0},
+				new List<int> {0, 0, 0},
+				new List<int> {0, 0, 0},
+				new List<int> {0, 0, 0},
+				new List<int> {0, 0, 0},
+				new List<int> {1, 0, 0},
+				new List<int> {2, 0, 0},
+				new List<int> {2, 1, 0},
+				new List<int> {2, 2, 0},
+				new List<int> {2, 2, 1},
 			};
 			#endregion
 
@@ -397,30 +405,98 @@ namespace DungeonEye
 			{
 				case HeroClass.Paladin:
 				{
+					count =PaladinLevels[Math.Min(13, prof.Level - 1)][level - 1];
 				}
 				break;
 	
 				case HeroClass.Mage:
 				{
+					count = MageLevels[Math.Min(13, prof.Level - 1)][level - 1];
 				}
 				break;
 
 				case HeroClass.Cleric:
 				{
 					// Base
-			//		count = ClercLevels[ Wisdom.Value - 1), level];
 					count = ClercLevels[Math.Min(13,prof.Level - 1)][level - 1];
 
 					// Bonus
 					if (prof.Level >= 13)
-					{
-						count += ClercBonus[prof.Level - 1][level - 1];
-					}
+						count += ClercBonus[Math.Min(13, Wisdom.Value - 1)][level - 1];
 				}
 				break;
 			}
 
 			return count;
+		}
+
+
+		/// <summary>
+		/// Gets and removes a spell from the spell list
+		/// </summary>
+		/// <param name="classe">Cleric, Mage or Paladin</param>
+		/// <param name="level">Spell level</param>
+		/// <param name="number">Spell number</param>
+		/// <returns>Spell handle or null</returns>
+		public Spell PopSpell(HeroClass classe, int level, int number)
+		{
+			if (level > 6 || number < 0)
+				return null;
+
+			Profession prof = GetProfession(classe);
+			if (prof == null)
+				return null;
+
+
+			Spells[level - 1].RemoveAt(number - 1);
+
+			return null;
+		}
+
+
+		/// <summary>
+		/// Push a spell in the spellbook
+		/// </summary>
+		/// <param name="spell">Handle to the spell</param>
+		/// <returns>True on success</returns>
+		public bool PushSpell(Spell spell)
+		{
+			if (spell == null)
+				return false;
+
+			Spells[spell.Level - 1].Add(spell);
+
+			return true;
+		}
+
+		/// <summary>
+		/// Get avaiable spell for a level
+		/// </summary>
+		/// <param name="classe">Cleric, Mage or Paladin</param>
+		/// <param name="level">Spell level</param>
+		/// <returns>Available spells</returns>
+		public List<Spell> GetSpells(HeroClass classe, int level)
+		{
+			List<Spell> spells = new List<Spell>();
+
+
+			if (level < 0 || level > 6)
+				return spells;
+
+			// Wrong profession
+			if (GetProfession(classe) == null)
+				return spells;
+
+
+			// Get a list of available spells for this level
+			foreach(Spell spell in Spells[level - 1])
+			{
+				if (spell.Class == classe)
+					spells.Add(spell);
+			}
+
+
+			return spells;
 		}
 
 		#endregion
@@ -1060,7 +1136,7 @@ namespace DungeonEye
 					{
 						Spell spell = ResourceManager.CreateAsset<Spell>(node.Attributes["name"].Value);
 						if (spell != null)
-							Spells.Add(spell);
+							Spells[spell.Level - 1].Add(spell);
 					}
 					break;
 
@@ -1154,11 +1230,14 @@ namespace DungeonEye
 				}
 
 
-			foreach (Spell spell in Spells)
+			for (int i = 0; i < 6; i++)
 			{
-				writer.WriteStartElement("spell");
-				writer.WriteAttributeString("name", spell.Name);
-				writer.WriteEndElement();
+				foreach (Spell spell in Spells[i])
+				{
+					writer.WriteStartElement("spell");
+					writer.WriteAttributeString("name", spell.Name);
+					writer.WriteEndElement();
+				}
 			}
 
 			foreach (string name in LearnedSpells)
@@ -1496,11 +1575,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Available spells
 		/// </summary>
-		public List<Spell> Spells
-		{
-			get;
-			private set;
-		}
+		List<Spell>[] Spells;
 
 
 		#endregion

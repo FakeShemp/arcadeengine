@@ -42,6 +42,7 @@ namespace DungeonEye.Forms
 			InitializeComponent();
 
 			Spells = new List<Spell>();
+			SpellLevel = 1;
 
 			// Alignments
 			AlignmentBox.BeginUpdate();
@@ -289,15 +290,11 @@ namespace DungeonEye.Forms
 
 			if (Hero != null)
 			{
-				// Spells ready
-				SpellReadyBox.BeginUpdate();
-				SpellReadyBox.Items.Clear();
-				foreach (Spell spell in Hero.Spells)
-				{
-					if (spell.Level == SpellLevel)
-						SpellReadyBox.Items.Add(spell.Name);
-				}
-				SpellReadyBox.EndUpdate();
+
+
+
+				RebuildAvailableSpellsPanel();
+
 
 				// Available & learned spells
 				AvailableSpellBox.BeginUpdate();
@@ -318,8 +315,8 @@ namespace DungeonEye.Forms
 					}
 
 					// Available spells
-					if (spell.Level == SpellLevel)
-						AvailableSpellBox.Items.Add(spell.Class + " - " + spell.Name);
+					if (spell.Level == SpellLevel && spell.Class == CurrentClass)
+						AvailableSpellBox.Items.Add(spell.Name);
 
 				}
 				LearnedSpellBox.EndUpdate();
@@ -330,6 +327,36 @@ namespace DungeonEye.Forms
 			}
 
 		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		void RebuildAvailableSpellsPanel()
+		{
+			if (DesignMode)
+				return;
+
+			if (Hero != null)
+			{
+				// All spell in the desired level
+				List<Spell> spells = Hero.GetSpells(CurrentClass, SpellLevel);
+
+				// Spells ready
+				SpellReadyBox.BeginUpdate();
+				SpellReadyBox.Items.Clear();
+				foreach (Spell spell in spells)
+				{
+					SpellReadyBox.Items.Add(spell.Name);
+				}
+				SpellReadyBox.EndUpdate();
+			}
+			else
+			{
+			}
+		}
+
+
 
 
 		#region Main control events
@@ -351,6 +378,7 @@ namespace DungeonEye.Forms
 				Spells.Add(ResourceManager.CreateAsset<Spell>(name));
 
 			SpellLevel = 1;
+			SpellClassBox.SelectedIndex = 0;
 
 			RebuildPanels();
 			RebuildProperties();
@@ -431,6 +459,73 @@ namespace DungeonEye.Forms
 
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void AvailableSpellBox_DoubleClick(object sender, EventArgs e)
+		{
+			if (Hero == null)
+				return;
+
+			string name = AvailableSpellBox.SelectedItem as string;
+
+			Spell spell = ResourceManager.CreateAsset<Spell>(name);
+			Hero.PushSpell(spell);
+
+			RebuildAvailableSpellsPanel();
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void button1_Click(object sender, EventArgs e)
+		{
+
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void button2_Click(object sender, EventArgs e)
+		{
+
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void SpellReadyBox_DoubleClick(object sender, EventArgs e)
+		{
+			if (SpellReadyBox.SelectedIndex == -1 || Hero == null)
+				return;
+
+			Hero.PopSpell(CurrentClass, SpellLevel, SpellReadyBox.SelectedIndex + 1);
+
+			RebuildAvailableSpellsPanel();
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+		{
+
+		}
 
 		#endregion
 
@@ -841,7 +936,7 @@ namespace DungeonEye.Forms
 
 
 		/// <summary>
-		/// Spells list
+		/// All available spells
 		/// </summary>
 		List<Spell> Spells;
 
@@ -865,6 +960,25 @@ namespace DungeonEye.Forms
 
 
 		/// <summary>
+		/// Current selected class
+		/// </summary>
+		HeroClass CurrentClass
+		{
+			get
+			{
+				HeroClass hclass = HeroClass.Cleric;
+				if ((string)SpellClassBox.SelectedItem == "Mage")
+					hclass = HeroClass.Mage;
+
+				return hclass;
+			}
+			set
+			{
+			}
+		}
+
+
+		/// <summary>
 		/// Heroe's heads
 		/// </summary>
 		TileSet Heads;
@@ -876,6 +990,7 @@ namespace DungeonEye.Forms
 		SpriteBatch Batch;
 
 		#endregion
+
 
 	}
 }

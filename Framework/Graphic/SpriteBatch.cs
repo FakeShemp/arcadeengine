@@ -67,7 +67,10 @@ namespace ArcEngine.Graphic
 			bm.Dispose();
 			WhiteTexture.MinFilter = TextureMinFilter.Nearest;
 			WhiteTexture.MagFilter = TextureMagFilter.Nearest;
-
+			//WhiteTexture.VerticalWrap = TextureWrapFilter.Clamp;
+			//WhiteTexture.HorizontalWrap = TextureWrapFilter.Clamp;
+			//WhiteTexture.BorderColor = Color.Red;
+			//WhiteTexture.GenerateMipmap();
 		}
 
 
@@ -134,7 +137,6 @@ namespace ArcEngine.Graphic
 
 		}
 
-		#endregion
 
 
 		/// <summary>
@@ -161,6 +163,8 @@ namespace ArcEngine.Graphic
 
 			InUse = false;
 		}
+
+		#endregion
 
 
 		#region Internal
@@ -288,7 +292,7 @@ namespace ArcEngine.Graphic
                     Sprites[i].Destination.Height);
 
                 // Texture coordinate
-                Vector4 src = new Vector4(Sprites[i].Source);
+                Vector4 src = new Vector4(Sprites[i].UV);
                 if ((Sprites[i].Effects & SpriteEffects.FlipHorizontally) == SpriteEffects.FlipHorizontally)
                 {
                     src.X += src.Z;
@@ -406,17 +410,17 @@ namespace ArcEngine.Graphic
 			// Texture rectangle
 			if (source == Vector4.Zero)
 			{
-				Sprites[spriteQueueCount].Source.X = 0.0f;
-				Sprites[spriteQueueCount].Source.Y = 0.0f;
-				Sprites[spriteQueueCount].Source.Z = texture.Size.Width;
-				Sprites[spriteQueueCount].Source.W = texture.Size.Height;
+				Sprites[spriteQueueCount].UV.X = 0.0f;
+				Sprites[spriteQueueCount].UV.Y = 0.0f;
+				Sprites[spriteQueueCount].UV.Z = texture.Size.Width;
+				Sprites[spriteQueueCount].UV.W = texture.Size.Height;
 			}
 			else
 			{
-				Sprites[spriteQueueCount].Source.X = source.X;
-				Sprites[spriteQueueCount].Source.Y = source.Y;
-				Sprites[spriteQueueCount].Source.Z = source.Width;
-				Sprites[spriteQueueCount].Source.W = source.Height;
+				Sprites[spriteQueueCount].UV.X = source.X;
+				Sprites[spriteQueueCount].UV.Y = source.Y;
+				Sprites[spriteQueueCount].UV.Z = source.Width;
+				Sprites[spriteQueueCount].UV.W = source.Height;
             }
 
 
@@ -905,7 +909,8 @@ namespace ArcEngine.Graphic
 		/// <param name="color">Color</param>
 		public void FillRectangle(Rectangle rect, Color color)
 		{
-			Draw(WhiteTexture, rect, rect, color);
+			Draw(WhiteTexture, rect, new Rectangle(0, 0, 1, 1), color);
+			//InternalDraw(WhiteTexture, 
 		}
 
 
@@ -1351,7 +1356,7 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Texture uv
 		/// </summary>
-		public Vector4 Source;
+		public Vector4 UV;
 
 		/// <summary>
 		/// The destination, in screen coordinates, where the sprite will be drawn.

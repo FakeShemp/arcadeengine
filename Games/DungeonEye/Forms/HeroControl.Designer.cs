@@ -20,6 +20,7 @@
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.PropertiesTab = new System.Windows.Forms.TabPage();
 			this.groupBox13 = new System.Windows.Forms.GroupBox();
+			this.PoisonedBox = new System.Windows.Forms.CheckBox();
 			this.IsNPCBox = new System.Windows.Forms.CheckBox();
 			this.groupBox10 = new System.Windows.Forms.GroupBox();
 			this.NameBox = new System.Windows.Forms.TextBox();
@@ -105,7 +106,8 @@
 			this.SpellReportLabel = new System.Windows.Forms.Label();
 			this.SpellReadyBox = new System.Windows.Forms.ListBox();
 			this.button2 = new System.Windows.Forms.Button();
-			this.PoisonedBox = new System.Windows.Forms.CheckBox();
+			this.SpellClassBox = new System.Windows.Forms.ComboBox();
+			this.label6 = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.QuiverBox)).BeginInit();
 			this.tabControl1.SuspendLayout();
 			this.PropertiesTab.SuspendLayout();
@@ -179,6 +181,16 @@
 			this.groupBox13.TabIndex = 19;
 			this.groupBox13.TabStop = false;
 			this.groupBox13.Text = "Misc :";
+			// 
+			// PoisonedBox
+			// 
+			this.PoisonedBox.AutoSize = true;
+			this.PoisonedBox.Location = new System.Drawing.Point(6, 45);
+			this.PoisonedBox.Name = "PoisonedBox";
+			this.PoisonedBox.Size = new System.Drawing.Size(70, 17);
+			this.PoisonedBox.TabIndex = 1;
+			this.PoisonedBox.Text = "Poisoned";
+			this.PoisonedBox.UseVisualStyleBackColor = true;
 			// 
 			// IsNPCBox
 			// 
@@ -453,7 +465,7 @@
 			this.ProfessionTab.Controls.Add(this.ProfessionsBox);
 			this.ProfessionTab.Location = new System.Drawing.Point(4, 22);
 			this.ProfessionTab.Name = "ProfessionTab";
-			this.ProfessionTab.Size = new System.Drawing.Size(632, 374);
+			this.ProfessionTab.Size = new System.Drawing.Size(632, 427);
 			this.ProfessionTab.TabIndex = 2;
 			this.ProfessionTab.Text = "Professions";
 			this.ProfessionTab.UseVisualStyleBackColor = true;
@@ -475,7 +487,7 @@
 			this.EquipementTab.Controls.Add(this.groupBox3);
 			this.EquipementTab.Location = new System.Drawing.Point(4, 22);
 			this.EquipementTab.Name = "EquipementTab";
-			this.EquipementTab.Size = new System.Drawing.Size(632, 374);
+			this.EquipementTab.Size = new System.Drawing.Size(632, 427);
 			this.EquipementTab.TabIndex = 3;
 			this.EquipementTab.Text = "Equipement";
 			this.EquipementTab.UseVisualStyleBackColor = true;
@@ -933,6 +945,8 @@
 			// 
 			// SpellTab
 			// 
+			this.SpellTab.Controls.Add(this.label6);
+			this.SpellTab.Controls.Add(this.SpellClassBox);
 			this.SpellTab.Controls.Add(this.label1);
 			this.SpellTab.Controls.Add(this.groupBox4);
 			this.SpellTab.Controls.Add(this.groupBox2);
@@ -941,7 +955,7 @@
 			this.SpellTab.Location = new System.Drawing.Point(4, 22);
 			this.SpellTab.Name = "SpellTab";
 			this.SpellTab.Padding = new System.Windows.Forms.Padding(3);
-			this.SpellTab.Size = new System.Drawing.Size(632, 374);
+			this.SpellTab.Size = new System.Drawing.Size(632, 427);
 			this.SpellTab.TabIndex = 1;
 			this.SpellTab.Text = "Spells";
 			this.SpellTab.UseVisualStyleBackColor = true;
@@ -976,6 +990,7 @@
 			this.AvailableSpellBox.Size = new System.Drawing.Size(188, 173);
 			this.AvailableSpellBox.Sorted = true;
 			this.AvailableSpellBox.TabIndex = 2;
+			this.AvailableSpellBox.DoubleClick += new System.EventHandler(this.AvailableSpellBox_DoubleClick);
 			// 
 			// button1
 			// 
@@ -987,6 +1002,7 @@
 			this.button1.TabIndex = 1;
 			this.button1.Text = "Add";
 			this.button1.UseVisualStyleBackColor = true;
+			this.button1.Click += new System.EventHandler(this.button1_Click);
 			// 
 			// groupBox2
 			// 
@@ -1087,6 +1103,7 @@
 			this.SpellReadyBox.Size = new System.Drawing.Size(188, 147);
 			this.SpellReadyBox.Sorted = true;
 			this.SpellReadyBox.TabIndex = 2;
+			this.SpellReadyBox.DoubleClick += new System.EventHandler(this.SpellReadyBox_DoubleClick);
 			// 
 			// button2
 			// 
@@ -1098,16 +1115,29 @@
 			this.button2.TabIndex = 0;
 			this.button2.Text = "Remove";
 			this.button2.UseVisualStyleBackColor = true;
+			this.button2.Click += new System.EventHandler(this.button2_Click);
 			// 
-			// PoisonedBox
+			// comboBox1
 			// 
-			this.PoisonedBox.AutoSize = true;
-			this.PoisonedBox.Location = new System.Drawing.Point(6, 45);
-			this.PoisonedBox.Name = "PoisonedBox";
-			this.PoisonedBox.Size = new System.Drawing.Size(70, 17);
-			this.PoisonedBox.TabIndex = 1;
-			this.PoisonedBox.Text = "Poisoned";
-			this.PoisonedBox.UseVisualStyleBackColor = true;
+			this.SpellClassBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.SpellClassBox.FormattingEnabled = true;
+			this.SpellClassBox.Items.AddRange(new object[] {
+            "Cleric",
+            "Mage"});
+			this.SpellClassBox.Location = new System.Drawing.Point(76, 17);
+			this.SpellClassBox.Name = "comboBox1";
+			this.SpellClassBox.Size = new System.Drawing.Size(121, 21);
+			this.SpellClassBox.TabIndex = 5;
+			this.SpellClassBox.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+			// 
+			// label6
+			// 
+			this.label6.AutoSize = true;
+			this.label6.Location = new System.Drawing.Point(29, 20);
+			this.label6.Name = "label6";
+			this.label6.Size = new System.Drawing.Size(41, 13);
+			this.label6.TabIndex = 6;
+			this.label6.Text = "Class : ";
 			// 
 			// HeroControl
 			// 
@@ -1244,5 +1274,7 @@
 		private System.Windows.Forms.GroupBox groupBox13;
 		private System.Windows.Forms.CheckBox IsNPCBox;
 		private System.Windows.Forms.CheckBox PoisonedBox;
+		private System.Windows.Forms.Label label6;
+		private System.Windows.Forms.ComboBox SpellClassBox;
 	}
 }

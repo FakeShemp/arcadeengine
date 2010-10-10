@@ -130,15 +130,7 @@ namespace DungeonEye
 
 
 			// Get a list of available spells for this level
-			List<Spell> spells = new List<Spell>();
-			for(int id = 0; id < Hero.Spells.Count; id++)
-			{
-				if (Hero.Spells[id] == null)
-					continue;
-
-				if (Hero.Spells[id].Level == SpellLevel)
-					spells.Add(Hero.Spells[id]);
-			}
+			List<Spell> spells = Hero.GetSpells(Class, SpellLevel);
 
 
 			// Display at max 6 spells
@@ -206,9 +198,10 @@ namespace DungeonEye
 					// Cast a spell
 					if (line.Contains(Mouse.Location))
 					{
-						
 
-
+						Spell spell = Hero.PopSpell(Class, SpellLevel, i);
+						if (spell != null && spell.Script.Instance != null)
+							spell.Script.Instance.OnCast(spell, Hero);
 					}
 
 					// Next spell line

@@ -734,16 +734,18 @@ namespace DungeonEye
 
 
 			// Food
-			Color color;
-			if (SelectedHero.Food > 50)
-				color = Color.Green;
-			else if (SelectedHero.Food > 25)
-				color = Color.Yellow;
-			else
-				color = Color.Red;
+			if (SelectedHero.Food > 0)
+			{
+				Color color;
+				if (SelectedHero.Food > 50)
+					color = Color.Green;
+				else if (SelectedHero.Food > 25)
+					color = Color.Yellow;
+				else
+					color = Color.Red;
 
-			batch.FillRectangle(new Rectangle(500, 48, SelectedHero.Food, 10), color);
-
+				batch.FillRectangle(new Rectangle(500, 48, SelectedHero.Food, 10), color);
+			}
 
 			// Draw inventory
 			int pos = 0;
@@ -1762,7 +1764,8 @@ namespace DungeonEye
 				{
 					if (ItemInHand != null && ItemInHand.Type == ItemType.Consumable)
 					{
-						SelectedHero.Food += 25;
+						if (ItemInHand.Script.Instance != null)
+							ItemInHand.Script.Instance.OnUse(ItemInHand, SelectedHero);
 						SetItemInHand(null);
 					}
 				}

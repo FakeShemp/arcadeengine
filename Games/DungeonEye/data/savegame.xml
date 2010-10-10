@@ -31,9 +31,20 @@
 			<waist position="0" name="Rock" />
 			<waist position="1" name="Rock" />
 			<waist position="2" name="Rock" />
+			<backpack position="0" name="Rotten Food" />
+			<backpack position="1" name="Rotten Food" />
+			<backpack position="2" name="Rotten Food" />
+			<backpack position="3" name="Rotten Food" />
 			<backpack position="4" name="Iron Ration" />
+			<backpack position="5" name="Rotten Food" />
+			<backpack position="6" name="Rotten Food" />
 			<backpack position="7" name="Iron Ration" />
 			<backpack position="8" name="Iron Ration" />
+			<backpack position="9" name="Rotten Food" />
+			<backpack position="10" name="Rotten Food" />
+			<backpack position="11" name="Rotten Food" />
+			<backpack position="12" name="Rotten Food" />
+			<backpack position="13" name="Rotten Food" />
 		</hero>
 	</position>
 	<position slot="FrontRight">
@@ -94,8 +105,26 @@
 			<backpack position="6" name="Rock" />
 			<spell name="Armor" />
 			<spell name="Detect Magic" />
-			<spell name="Dispell Magic" />
 			<spell name="Protect From Evil" />
+			<spell name="Flame Blade" />
+			<spell name="Slow Poison" />
+			<spell name="Slow Poison" />
+			<spell name="Flame Blade" />
+			<spell name="Detect Invisibility" />
+			<spell name="Improved Identify" />
+			<spell name="Invisibility" />
+			<spell name="Melf's Acid Arrow" />
+			<spell name="Dispell Magic" />
+			<spell name="Cure Critical Wounds" />
+			<spell name="Flame Strike" />
+			<spell name="Hold Monster" />
+			<spell name="Cone of Cold" />
+			<spell name="Wall of Force" />
+			<spell name="Wall of Force" />
+			<spell name="Heal" />
+			<spell name="Harm" />
+			<spell name="Heal" />
+			<spell name="Harm" />
 		</hero>
 	</position>
 	<position slot="MiddleRight">
