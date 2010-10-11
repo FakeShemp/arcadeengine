@@ -192,9 +192,52 @@ namespace ArcEngine
 		#endregion
 
 
+		#region Virtuals methods
+
+		/// <summary>
+		/// Called when the game has determined that game logic needs to be processed.
+		/// </summary>
+		/// <param name="gameTime">The time passed since the last update.</param>
+		public virtual void Update(GameTime gameTime)
+		{
+			// Check if the Escape key is pressed
+			if (Keyboard.IsKeyPress(Keys.Escape))
+				Exit();
+
+			if (Keyboard.IsKeyPress(Keys.Insert))
+				RunEditor();
+		}
+
+
+		/// <summary>
+		/// Called when the game determines it is time to draw a frame.
+		/// </summary>
+		public virtual void Draw()
+		{
+			Display.RenderState.ClearColor = Color.CornflowerBlue;
+			Display.ClearBuffers();
+		}
+
+
+		/// <summary>
+		/// Called when graphics resources need to be loaded.
+		/// </summary>
+		public virtual void LoadContent()
+		{
+		}
+
+
+		/// <summary>
+		/// Called when graphics resources need to be unloaded.
+		/// </summary>
+		public virtual void UnloadContent()
+		{
+		}
+
+		#endregion
+
+
 		#region Game logic
-
-
 		private bool ForceElapsedTimeToZero;
 		private TimeSpan LastFrameElapsedGameTime;
 		private TimeSpan LastFrameElapsedRealTime;
@@ -401,48 +444,6 @@ namespace ArcEngine
 
 
 		}
-
-
-		/// <summary>
-		/// Called when the game has determined that game logic needs to be processed.
-		/// </summary>
-		/// <param name="gameTime">The time passed since the last update.</param>
-		public virtual void Update(GameTime gameTime)
-		{
-			// Check if the Escape key is pressed
-			if (Keyboard.IsKeyPress(Keys.Escape))
-				Exit();
-
-			if (Keyboard.IsKeyPress(Keys.Insert))
-				RunEditor();
-		}
-
-
-		/// <summary>
-		/// Called when the game determines it is time to draw a frame.
-		/// </summary>
-		public virtual void Draw()
-		{
-			Display.RenderState.ClearColor = Color.CornflowerBlue;
-			Display.ClearBuffers();
-		}
-
-
-		/// <summary>
-		/// Called when graphics resources need to be loaded.
-		/// </summary>
-		public virtual void LoadContent()
-		{
-		}
-
-
-		/// <summary>
-		/// Called when graphics resources need to be unloaded.
-		/// </summary>
-		public virtual void UnloadContent()
-		{
-		}
-
 
 
 		/// <summary>

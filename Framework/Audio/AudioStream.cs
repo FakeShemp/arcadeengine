@@ -60,9 +60,11 @@ namespace ArcEngine.Audio
 			Source = OpenAL.AL.GenSource();
 			AudioManager.Check();
 
+			// Stream buffers
 			BufferData = new Dictionary<int, byte[]>();
 			BufferData[Buffers[0]] = new byte[44100];
 			BufferData[Buffers[1]] = new byte[44100];
+
 		}
 
 
@@ -71,18 +73,18 @@ namespace ArcEngine.Audio
 		/// </summary>
 		public void Dispose()
 		{
+			// Remove from known streams
 			Streams.Remove(this);
 
 			if (oggStream != null)
 				oggStream.Dispose();
 			oggStream = null;
+			Stream = null;
 
-			// Generates buffers
 			if (Buffers != null)
 				OpenAL.AL.DeleteBuffers(Buffers);
 			Buffers = null;
 
-			// Generate source
 			if (Source != -1)
 				OpenAL.AL.DeleteSource(Source);
 			Source = -1;
@@ -111,20 +113,31 @@ namespace ArcEngine.Audio
 		/// <returns></returns>
 		public bool LoadOgg(string filename)
 		{
-			using (Stream stream = ResourceManager.LoadResource(filename))
-			{
-				oggStream = new OggInputStream(stream);
-				FileName = filename;
+			FileName = filename;
+			return LoadOgg(ResourceManager.LoadResource(filename));
+		}
 
-				Position = Vector3.Zero;
-				Direction = Vector3.Zero;
-				Velocity = Vector3.Zero;
-				RolloffFactor = 0.0f;
-				SourceRelative = true;
 
-				return true;
-			}
-			return false;
+		/// <summary>
+		/// Loads an Ogg Vorbis from a stream
+		/// </summary>
+		/// <param name="stream">Stream handle</param>
+		/// <returns>True on success</returns>
+		public bool LoadOgg(Stream stream)
+		{
+			if (stream == null)
+				return false;
+
+			Stream = stream;
+			oggStream = new OggInputStream(Stream);
+
+			Position = Vector3.Zero;
+			Direction = Vector3.Zero;
+			Velocity = Vector3.Zero;
+			RolloffFactor = 0.0f;
+			SourceRelative = true;
+
+			return true;
 		}
 
 	
@@ -136,16 +149,18 @@ namespace ArcEngine.Audio
 			if (State == AudioSourceState.Playing)
 				return;
 
+
 			// Fill first buffer
-			if (!Stream(Buffers[0], BufferData[Buffers[0]]))
+			if (!StreamBuffer(Buffers[0], BufferData[Buffers[0]]))
 				return;
 
 			// Fill second buffer
-			if (!Stream(Buffers[1], BufferData[Buffers[1]]))
+			if (!StreamBuffer(Buffers[1], BufferData[Buffers[1]]))
 				return;
 
 			// Add buffers to the queue
 			OpenAL.AL.SourceQueueBuffers(Source, Buffers.Length, Buffers);
+			AudioManager.Check();
 
 			// Play source
 			OpenAL.AL.SourcePlay(Source);
@@ -157,7 +172,10 @@ namespace ArcEngine.Audio
 		/// </summary>
 		public void Stop()
 		{
+			// Stop source
 			OpenAL.AL.SourceStop(Source);
+
+			Rewind();
 		}
 
 
@@ -175,31 +193,31 @@ namespace ArcEngine.Audio
 		/// </summary>
 		internal bool Process()
 		{
-			int processed = 0;
-			bool active = true;
+			if (State != AudioSourceState.Playing)
+				return false;
 
-			// Get free buffers
+			//bool active = true;
+
+			// Get empty buffers
+			int processed = 0;
 			OpenAL.AL.GetSource(Source, OpenAL.ALGetSourcei.BuffersProcessed, out processed);
+
+			// Update each empty buffer
 			while (processed-- != 0)
 			{
-				// Remove buffer from the queue
+				// Enqueue buffer
 				int buffer = OpenAL.AL.SourceUnqueueBuffer(Source);
 				AudioManager.Check();
 
-				// Fill buffer
-				active = Stream(buffer, BufferData[buffer]);
+				// Update buffer
+				StreamBuffer(buffer, BufferData[buffer]);
 
-				// Enqueue buffer
+				// Queue buffer
 				OpenAL.AL.SourceQueueBuffer(Source, buffer);
 				AudioManager.Check();
 			}
 
-			// If not playing, play
-			if (State != AudioSourceState.Playing)
-			{
-				OpenAL.AL.SourcePlay(Source);
-			}
-
+/*
 			// Loop mode ?
 			if (!active && Loop)
 			{
@@ -208,8 +226,8 @@ namespace ArcEngine.Audio
 
 				return true;
 			}
-
-			return active;
+*/
+			return true;
 		}
 
 
@@ -219,7 +237,7 @@ namespace ArcEngine.Audio
 		/// <param name="bufferid">Buffer id</param>
 		/// <param name="data">Buffer to fill</param>
 		/// <returns>True if no errors</returns>
-		bool Stream(int bufferid, byte[] data)
+		bool StreamBuffer(int bufferid, byte[] data)
 		{
 			if (data == null | data.Length == 0)
 				return false;
@@ -234,15 +252,18 @@ namespace ArcEngine.Audio
 				}
 				else
 				{
-					if (result < 0)
+					Trace.WriteLine("[AudioStream] : End of stream");
+					// End of stream
+					//if (Stream.Position == Stream.Length)
+					if (oggStream.Available == 0)
 					{
-						Trace.WriteLine("[AudioStream] : Stream Error : {0}", result);
-						throw new Exception("Stream Error: " + result);
+						if (Loop)
+							Rewind();
+						else
+							Stop();
 					}
-					else
-					{
-						break;
-					}
+
+					return false;
 				}
 			}
 
@@ -264,9 +285,24 @@ namespace ArcEngine.Audio
 		/// </summary>
 		public void Rewind()
 		{
-			string filename = FileName;
-			Dispose();
-			LoadOgg(filename);
+			int buff;
+
+/*	
+			// Remove all queued buffers
+			if (OpenAL.AL.IsBuffer(Buffers[0]))
+				OpenAL.AL.SourceUnqueueBuffer(Buffers[0]);
+			if (OpenAL.AL.IsBuffer(Buffers[1]))
+				OpenAL.AL.SourceUnqueueBuffer(Buffers[1]);
+			AudioManager.Check();
+*/
+		//	oggStream.Reset();
+
+			
+
+			// Begin of the stream
+			Stream.Seek(0, SeekOrigin.Begin);
+			
+			LoadOgg(Stream);
 		}
 
 
@@ -496,6 +532,12 @@ namespace ArcEngine.Audio
 		/// Ogg stream
 		/// </summary>
 		OggInputStream oggStream;
+
+
+		/// <summary>
+		/// File stream
+		/// </summary>
+		Stream Stream;
 
 
 		/// <summary>

@@ -95,10 +95,14 @@ namespace ArcEngine.Audio
 		/// Loads a WAV sound
 		/// </summary>
 		/// <param name="filename">File to load</param>
+		/// <returns>True if successful</returns>
 		public bool LoadSound(string filename)
 		{
 			using (Stream stream = ResourceManager.LoadResource(filename))
 			{
+				if (stream == null)
+					return false;
+
 				int channels, bits_per_sample, sample_rate;
 				byte[] sound_data = LoadWave(stream, out channels, out bits_per_sample, out sample_rate);
 

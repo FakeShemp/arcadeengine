@@ -94,7 +94,7 @@ namespace DungeonEye
 
 
 			GSM.AddScreen(new MainMenu());
-			GSM.AddScreen(new Team(null));
+			//GSM.AddScreen(new Team(null));
 			//GSM.AddScreen(new IntroScreen());
 			//GSM.AddScreen(new CharGen());
 		}

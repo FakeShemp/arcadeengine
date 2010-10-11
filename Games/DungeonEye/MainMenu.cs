@@ -53,7 +53,7 @@ namespace DungeonEye
 		/// </summary>
 		public override void LoadContent()
 		{
-			ResourceManager.LoadBank("data/MainMenu.bnk");
+			ResourceManager.LoadBank("data/Main.bnk");
 
 			// Change the cursor
 			using (Stream stream = ResourceManager.LoadResource("cursor.png"))
@@ -74,9 +74,9 @@ namespace DungeonEye
 
 			StringTable = ResourceManager.CreateAsset<StringTable>("main");
 
-			Theme = new AudioSample();
-			Theme.LoadSound("main theme.wav");
+
 			
+
 			Buttons.Add(new ScreenButton("", new Rectangle(156, 324, 340, 14)));
 			Buttons[0].Selected += new EventHandler(LoadGameEvent);
 
@@ -88,6 +88,11 @@ namespace DungeonEye
 
 			Buttons.Add(new ScreenButton("", new Rectangle(156, 378, 340, 14)));
 			Buttons[3].Selected += new EventHandler(QuitEvent);
+
+			Theme = new AudioStream();
+			Theme.LoadOgg("test.ogg");
+			Theme.Loop = true;
+			Theme.Play();
 		}
 
 
@@ -192,8 +197,14 @@ namespace DungeonEye
 				return;
 
 			// Play sound
-		//	if (Audio.GetSourceState(0) != AudioSourceState.Playing)
-		//		Audio.PlaySample(0, Theme);
+		//	if (Theme.State != AudioSourceState.Playing)
+		//		Theme.Play();
+
+			if (Keyboard.IsNewKeyPress(System.Windows.Forms.Keys.S))
+				Theme.Stop();
+
+			if (Keyboard.IsNewKeyPress(System.Windows.Forms.Keys.P))
+				Theme.Play();
 
 
 			// Does the default language changed ?
@@ -293,7 +304,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Main theme
 		/// </summary>
-		AudioSample Theme;
+		AudioStream Theme;
 
 
 		/// <summary>
