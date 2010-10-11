@@ -191,12 +191,10 @@ namespace ArcEngine.Audio
 		/// <summary>
 		/// Update a sound buffer
 		/// </summary>
-		internal bool Process()
+		internal void Process()
 		{
 			if (State != AudioSourceState.Playing)
-				return false;
-
-			//bool active = true;
+				return;
 
 			// Get empty buffers
 			int processed = 0;
@@ -217,17 +215,6 @@ namespace ArcEngine.Audio
 				AudioManager.Check();
 			}
 
-/*
-			// Loop mode ?
-			if (!active && Loop)
-			{
-				if (State != AudioSourceState.Playing)
-					Rewind();
-
-				return true;
-			}
-*/
-			return true;
 		}
 
 
@@ -253,12 +240,15 @@ namespace ArcEngine.Audio
 				else
 				{
 					Trace.WriteLine("[AudioStream] : End of stream");
+	
 					// End of stream
 					//if (Stream.Position == Stream.Length)
 					if (oggStream.Available == 0)
 					{
 						if (Loop)
+						{
 							Rewind();
+						}
 						else
 							Stop();
 					}
@@ -285,23 +275,10 @@ namespace ArcEngine.Audio
 		/// </summary>
 		public void Rewind()
 		{
-			int buff;
-
-/*	
-			// Remove all queued buffers
-			if (OpenAL.AL.IsBuffer(Buffers[0]))
-				OpenAL.AL.SourceUnqueueBuffer(Buffers[0]);
-			if (OpenAL.AL.IsBuffer(Buffers[1]))
-				OpenAL.AL.SourceUnqueueBuffer(Buffers[1]);
-			AudioManager.Check();
-*/
-		//	oggStream.Reset();
-
-			
-
 			// Begin of the stream
 			Stream.Seek(0, SeekOrigin.Begin);
 			
+			// Reload stream
 			LoadOgg(Stream);
 		}
 

@@ -90,7 +90,7 @@ namespace DungeonEye
 			Buttons[3].Selected += new EventHandler(QuitEvent);
 
 			Theme = new AudioStream();
-			Theme.LoadOgg("test.ogg");
+			Theme.LoadOgg("main.ogg");
 			Theme.Loop = true;
 			Theme.Play();
 		}
