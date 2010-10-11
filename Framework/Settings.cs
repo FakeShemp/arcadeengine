@@ -61,7 +61,6 @@ namespace ArcEngine
 		/// <summary>
 		/// Sets a string token
 		/// </summary>
-		/// <typeparam name="T"></typeparam>
 		/// <param name="name">Token</param>
 		/// <param name="value">Value</param>
 		static public void SetToken(string name, object value)

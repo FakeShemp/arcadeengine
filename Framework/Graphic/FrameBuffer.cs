@@ -26,25 +26,25 @@ namespace ArcEngine.Graphic
 	/// <summary>
 	/// Redirect the rendering output to a frame buffer
 	/// </summary>
-	/// http://www.gamedev.net/reference/articles/article2331.asp
-	/// http://troylawlor.com/tutorial-fbo.html
-	/// http://www.gamedev.net/community/forums/topic.asp?topic_id=364174
-	/// 
-	/// http://www.seas.upenn.edu/~cis665/fbo.htm#error2
-	/// 
-	/// 
-	/// http://www.opengl.org/registry/specs/ARB/wgl_render_texture.txt
-	/// http://oss.sgi.com/projects/ogl-sample/registry/EXT/framebuffer_object.txt
-	/// 
-	/// 
-	/// http://www.coder-studio.com/index.php?page=tutoriaux_aff&code=c_13
-	/// 
-	/// 
-	/// http://ogltotd.blogspot.com/2006/12/render-to-texture.html
-	/// http://www.opentk.com/doc/graphics/frame-buffer-objects
-	/// 
-	/// http://www.songho.ca/opengl/gl_fbo.html
-	/// http://www.songho.ca/opengl/gl_pbo.html
+	// http://www.gamedev.net/reference/articles/article2331.asp
+	// http://troylawlor.com/tutorial-fbo.html
+	// http://www.gamedev.net/community/forums/topic.asp?topic_id=364174
+	// 
+	// http://www.seas.upenn.edu/~cis665/fbo.htm#error2
+	// 
+	// 
+	// http://www.opengl.org/registry/specs/ARB/wgl_render_texture.txt
+	// http://oss.sgi.com/projects/ogl-sample/registry/EXT/framebuffer_object.txt
+	// 
+	// 
+	// http://www.coder-studio.com/index.php?page=tutoriaux_aff&code=c_13
+	// 
+	// 
+	// http://ogltotd.blogspot.com/2006/12/render-to-texture.html
+	// http://www.opentk.com/doc/graphics/frame-buffer-objects
+	// 
+	// http://www.songho.ca/opengl/gl_fbo.html
+	// http://www.songho.ca/opengl/gl_pbo.html
 	public class FrameBuffer : IDisposable
 	{
 
