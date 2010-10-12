@@ -2,24 +2,33 @@
 // Website: zipstorer.codeplex.com
 // Version: 2.35 (March 14, 2010)
 
+using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
+using System.IO.Compression;
 
-namespace System.IO.Compression
+namespace ArcEngine.Asset
 {
     /// <summary>
     /// Unique class for compression/decompression file. Represents a Zip file.
     /// </summary>
-    public class ZipStorer : IDisposable
+    class ZipStorer : IDisposable
     {
         /// <summary>
         /// Compression method enumeration
         /// </summary>
-        public enum Compression : ushort { 
-            /// <summary>Uncompressed storage</summary> 
+        public enum Compression : ushort 
+		{ 
+            /// <summary>
+			/// Uncompressed storage
+            /// </summary>
             Store = 0, 
-            /// <summary>Deflate compression method</summary>
-            Deflate = 8 }
+            /// <summary>
+			/// Deflate compression method
+			/// </summary>
+            Deflate = 8 
+		}
 
         /// <summary>
         /// Represents an entry in Zip file directory

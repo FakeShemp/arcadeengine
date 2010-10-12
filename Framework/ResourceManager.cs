@@ -22,7 +22,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.IO.Compression;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -718,6 +717,18 @@ namespace ArcEngine
 		/// <param name="filename">Name of the file to load</param>
 		/// <returns>True on success</returns>
 		static public bool LoadBankAsync(string filename)
+		{
+			return LoadBankAsync(filename, string.Empty);
+		}
+
+
+		/// <summary>
+		/// Loads a bank asynchronously
+		/// </summary>
+		/// <param name="filename">Name of the file to load</param>
+		/// <param name="password">Password</param>
+		/// <returns>True if loaded, otherwise false</returns>
+		static public bool LoadBankAsync(string filename, string password)
 		{
 
 

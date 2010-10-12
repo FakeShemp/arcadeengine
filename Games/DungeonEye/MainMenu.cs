@@ -54,14 +54,17 @@ namespace DungeonEye
 		public override void LoadContent()
 		{
 			ResourceManager.LoadBank("data/Main.bnk");
+			//AssetBank bank = new AssetBank("data/main.bnk");
+			//ResourceManager.AddBank(bank);
 
 			// Change the cursor
 			using (Stream stream = ResourceManager.LoadAsset("cursor.png"))
 			{
-				Bitmap bmp = new Bitmap(stream);
-				HardwareCursor cursor = new HardwareCursor(bmp, Point.Empty);
-				Mouse.HardwareCursor = cursor;
-				bmp.Dispose();
+				using (Bitmap bmp = new Bitmap(stream))
+				{
+					HardwareCursor cursor = new HardwareCursor(bmp, Point.Empty);
+					Mouse.HardwareCursor = cursor;
+				}
 			}
 
 			
@@ -74,8 +77,6 @@ namespace DungeonEye
 
 			StringTable = ResourceManager.CreateAsset<StringTable>("main");
 
-
-			
 
 			Buttons.Add(new ScreenButton("", new Rectangle(156, 324, 340, 14)));
 			Buttons[0].Selected += new EventHandler(LoadGameEvent);
@@ -93,6 +94,8 @@ namespace DungeonEye
 			Theme.LoadOgg("main.ogg");
 			Theme.Loop = true;
 			Theme.Play();
+
+
 		}
 
 
