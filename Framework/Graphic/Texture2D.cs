@@ -301,17 +301,19 @@ namespace ArcEngine.Graphic
 			return base.SaveToDisk(Target, name);
 		}
 
-/*
+
+
 		/// <summary>
 		/// Save the texture as a PNG image in the bank
 		/// </summary>
-		/// <param name="name">Name</param>
-		/// <returns></returns>
-		public bool SaveToBank(string name)
+		/// <param name="bankname">Bank's name</param>
+		/// <param name="assetname">Asset name in the bank</param>
+		/// <returns>True on success</returns>
+		public bool SaveToBank(string bankname, string assetname)
 		{
-			return base.SaveToBank(Target, name);
+			return base.SaveToBank(TextureTarget.Texture2D, bankname, assetname);
 		}
-*/
+
 
 		/// <summary>
 		/// Blits a Bitmap on the texture

@@ -13,14 +13,15 @@ using ArcEngine.Graphic;
 namespace ArcEngine.Editor
 {
 	/// <summary>
-	/// 
+	/// Import animation from GIF form
 	/// </summary>
 	public partial class ImportGIFForm : Form
 	{
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
-		public ImportGIFForm()
+		/// <param name="bankname">Name of the bank</param>
+		public ImportGIFForm(string bankname)
 		{
 			InitializeComponent();
 		}
@@ -124,7 +125,6 @@ namespace ArcEngine.Editor
 
 			ImportBox.Enabled = false;
 		}
-
 
 
 		/// <summary>
@@ -237,9 +237,11 @@ namespace ArcEngine.Editor
 
 			//
 			// Save assets to the manager
-			//texture.SaveToBank(TextureNameBox.Text + ".png");
+			texture.SaveToBank("", TextureNameBox.Text + ".png");
 			ResourceManager.AddAsset<TileSet>(TileSetNameBox.Text, tileset);
 			ResourceManager.AddAsset<Animation>(AnimationNameBox.Text, animation);
+
+			texture.Dispose();
 
 			Close();
 		}
@@ -289,6 +291,8 @@ namespace ArcEngine.Editor
 		}
 
 
+		#region Form events
+
 		/// <summary>
 		/// Process
 		/// </summary>
@@ -315,6 +319,17 @@ namespace ArcEngine.Editor
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ImportGIFForm_FormClosing(object sender, FormClosingEventArgs e)
+		{
+		}
+
+		#endregion
+
 
 		#region Properties
 
@@ -328,7 +343,6 @@ namespace ArcEngine.Editor
 		}
 
 
-
 		/// <summary>
 		/// Number of fram in the animation
 		/// </summary>
@@ -338,21 +352,19 @@ namespace ArcEngine.Editor
 			private set;
 		}
 	
+
 		/// <summary>
 		/// Currrent animation
 		/// </summary>
 		Image Image;
 
+
 		/// <summary>
-		/// 
+		/// Frame dimensions
 		/// </summary>
 		FrameDimension FrameDim;
 
 
 		#endregion
-
-
-
-
 	}
 }

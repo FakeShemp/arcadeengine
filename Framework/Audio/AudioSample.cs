@@ -98,7 +98,7 @@ namespace ArcEngine.Audio
 		/// <returns>True if successful</returns>
 		public bool LoadSound(string filename)
 		{
-			using (Stream stream = ResourceManager.LoadResource(filename))
+			using (Stream stream = ResourceManager.LoadAsset(filename))
 			{
 				if (stream == null)
 					return false;

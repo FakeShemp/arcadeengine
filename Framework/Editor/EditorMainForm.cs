@@ -188,7 +188,7 @@ namespace ArcEngine.Editor
 		/// <param name="e"></param>
 		private void ImportAnimationFromGIF(object sender, EventArgs e)
 		{
-			new ImportGIFForm().ShowDialog();
+			new ImportGIFForm(BankName).ShowDialog();
 			ResourcePanel.RebuildResourceTree();
 
 		}
@@ -216,7 +216,7 @@ namespace ArcEngine.Editor
 				return;
 
 			BankName = dlg.FileName;
-			ResourceManager.SaveResources(BankName);
+			ResourceManager.SaveAssetsToBank(BankName);
 
 			ResourcePanel.RebuildResourceTree();
 
@@ -329,7 +329,7 @@ namespace ArcEngine.Editor
 
 
 			Text = "ArcEngine Editor " + BankName;
-			ResourceManager.SaveResources(BankName);
+			ResourceManager.SaveAssetsToBank(BankName);
 		}
 
 
@@ -469,7 +469,7 @@ namespace ArcEngine.Editor
 
 			// for each selected file, add it to the bank file
 			for (int i = 0; i < dlg.FileNames.Length; i++)
-				ResourceManager.LoadResource(dlg.SafeFileNames[i]);
+				ResourceManager.LoadAsset(dlg.SafeFileNames[i]);
 
 			ResourcePanel.RebuildResourceTree();
 		}

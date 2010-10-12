@@ -54,7 +54,7 @@ namespace ArcEngine.Graphic
 
 
 		/// <summary>
-		/// 
+		/// Dispose resources
 		/// </summary>
 		public abstract void Dispose();
 
@@ -79,7 +79,7 @@ namespace ArcEngine.Graphic
 		/// <returns>True if success or false if something went wrong</returns>
 		protected bool LoadImage(TextureTarget target, string filename)
 		{
-			using (Stream stream = ResourceManager.LoadResource(filename))
+			using (Stream stream = ResourceManager.LoadAsset(filename))
 				return FromStream(target, stream);
 		}
 
@@ -89,7 +89,7 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		/// <param name="target">Reference face</param>
 		/// <param name="stream">Stream handle</param>
-		/// <returns></returns>
+		/// <returns>True on success</returns>
 		protected bool FromStream(TextureTarget target, Stream stream)
 		{
 			if (stream == null)
@@ -110,7 +110,7 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		/// <param name="target">Reference face</param>
 		/// <param name="bitmap">Bitmap handle</param>
-		/// <returns></returns>
+		/// <returns>True on success</returns>
 		protected bool FromBitmap(TextureTarget target, Bitmap bitmap)
 		{
 			if (bitmap == null)
@@ -171,54 +171,63 @@ namespace ArcEngine.Graphic
 
 			Unlock(target);
 
-			bm.Save(name);
+			bm.Save(name, Imaging.ImageFormat.Png);
 			bm.Dispose();
 
 			return true;
 		}
 
-/*
+
+
 		/// <summary>
 		/// Save the texture as a PNG image in the bank
 		/// </summary>
 		/// <param name="target">Reference face</param>
-		/// <param name="name">Name</param>
-		/// <returns></returns>
-		protected bool SaveToBank(TextureTarget target, string name)
+		/// <param name="bankname">Bank's name</param>
+		/// <param name="assetname">Asset name in the bank</param>
+		/// <returns>True on success</returns>
+		protected bool SaveToBank(TextureTarget target, string bankname, string assetname)
 		{
-			if (string.IsNullOrEmpty(name))
+			if (string.IsNullOrEmpty(bankname) || string.IsNullOrEmpty(assetname))
 				return false;
 
 
-			Bitmap bm = new Bitmap(Size.Width, Size.Height);
+			// Create tmp bitmap
+			using (Bitmap bm = new Bitmap(Size.Width, Size.Height))
+			{
 
-			if (!Lock(target, ImageLockMode.ReadOnly))
-				return false;
+				// Lock texture
+				if (!Lock(target, ImageLockMode.ReadOnly))
+					return false;
 
-			System.Drawing.Imaging.BitmapData bmd = bm.LockBits(new Rectangle(Point.Empty, Size),
-				System.Drawing.Imaging.ImageLockMode.WriteOnly,
-				System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+				// Copy texture to the bitmap
+				System.Drawing.Imaging.BitmapData bmd = bm.LockBits(new Rectangle(Point.Empty, Size),
+					System.Drawing.Imaging.ImageLockMode.WriteOnly,
+					System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
-			System.Runtime.InteropServices.Marshal.Copy(Data, 0, bmd.Scan0, Data.Length);
-			bm.UnlockBits(bmd);
+				System.Runtime.InteropServices.Marshal.Copy(Data, 0, bmd.Scan0, Data.Length);
+				bm.UnlockBits(bmd);
 
-			Unlock(target);
+				// Unlock texture
+				Unlock(target);
 
-			Stream stream = new MemoryStream();
-			bm.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
-			stream.Seek(0, SeekOrigin.Begin);
+				// Save bitmap to a stream
+				using (Stream stream = new MemoryStream())
+				{
+					// Save bitmap to the stream
+					bm.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
 
+					// Rewind stream
+					stream.Seek(0, SeekOrigin.Begin);
 
-			throw new NotImplementedException();
-			//bool ret = ResourceManager.LoadBinary(name, stream);
+					// Save to bank
+					ResourceManager.SaveAsset(bankname, assetname, stream);
+				}
+			}
 
-			stream.Dispose();
-			bm.Dispose();
-
-			//return ret;
-			return false;
+			return true;
 		}
-*/
+
 
 		#endregion
 

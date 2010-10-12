@@ -42,6 +42,7 @@
 			this.FirstFrameBox = new System.Windows.Forms.NumericUpDown();
 			this.label6 = new System.Windows.Forms.Label();
 			this.label5 = new System.Windows.Forms.Label();
+			this.AnimSizeLabel = new System.Windows.Forms.Label();
 			this.FrameCountLabel = new System.Windows.Forms.Label();
 			this.NamesGroup = new System.Windows.Forms.GroupBox();
 			this.AnimationNameBox = new System.Windows.Forms.TextBox();
@@ -50,19 +51,18 @@
 			this.label3 = new System.Windows.Forms.Label();
 			this.TextureNameBox = new System.Windows.Forms.TextBox();
 			this.label2 = new System.Windows.Forms.Label();
-			this.AnimSizeLabel = new System.Windows.Forms.Label();
-			((System.ComponentModel.ISupportInitialize)(this.PreviewBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize) (this.PreviewBox)).BeginInit();
 			this.TextureGroup.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.FramesGroup.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.LastFrameBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.FirstFrameBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize) (this.LastFrameBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize) (this.FirstFrameBox)).BeginInit();
 			this.NamesGroup.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// CancelBox
 			// 
-			this.CancelBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.CancelBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.CancelBox.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.CancelBox.Location = new System.Drawing.Point(643, 387);
 			this.CancelBox.Name = "CancelBox";
@@ -73,7 +73,7 @@
 			// 
 			// ImportBox
 			// 
-			this.ImportBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.ImportBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.ImportBox.Location = new System.Drawing.Point(562, 387);
 			this.ImportBox.Name = "ImportBox";
 			this.ImportBox.Size = new System.Drawing.Size(75, 23);
@@ -144,9 +144,9 @@
 			// 
 			// groupBox2
 			// 
-			this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.groupBox2.Controls.Add(this.PreviewBox);
 			this.groupBox2.Location = new System.Drawing.Point(274, 12);
 			this.groupBox2.Name = "groupBox2";
@@ -216,6 +216,15 @@
 			this.label5.Size = new System.Drawing.Size(61, 13);
 			this.label5.TabIndex = 1;
 			this.label5.Text = "First frame :";
+			// 
+			// AnimSizeLabel
+			// 
+			this.AnimSizeLabel.AutoSize = true;
+			this.AnimSizeLabel.Location = new System.Drawing.Point(7, 16);
+			this.AnimSizeLabel.Name = "AnimSizeLabel";
+			this.AnimSizeLabel.Size = new System.Drawing.Size(83, 13);
+			this.AnimSizeLabel.TabIndex = 0;
+			this.AnimSizeLabel.Text = "Animation size : ";
 			// 
 			// FrameCountLabel
 			// 
@@ -290,15 +299,6 @@
 			this.label2.TabIndex = 0;
 			this.label2.Text = "Texture\'s name :";
 			// 
-			// AnimSizeLabel
-			// 
-			this.AnimSizeLabel.AutoSize = true;
-			this.AnimSizeLabel.Location = new System.Drawing.Point(7, 16);
-			this.AnimSizeLabel.Name = "AnimSizeLabel";
-			this.AnimSizeLabel.Size = new System.Drawing.Size(83, 13);
-			this.AnimSizeLabel.TabIndex = 0;
-			this.AnimSizeLabel.Text = "Animation size : ";
-			// 
 			// ImportGIFForm
 			// 
 			this.AcceptButton = this.ImportBox;
@@ -321,14 +321,15 @@
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Import GIF";
-			((System.ComponentModel.ISupportInitialize)(this.PreviewBox)).EndInit();
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ImportGIFForm_FormClosing);
+			((System.ComponentModel.ISupportInitialize) (this.PreviewBox)).EndInit();
 			this.TextureGroup.ResumeLayout(false);
 			this.TextureGroup.PerformLayout();
 			this.groupBox2.ResumeLayout(false);
 			this.FramesGroup.ResumeLayout(false);
 			this.FramesGroup.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.LastFrameBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.FirstFrameBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize) (this.LastFrameBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize) (this.FirstFrameBox)).EndInit();
 			this.NamesGroup.ResumeLayout(false);
 			this.NamesGroup.PerformLayout();
 			this.ResumeLayout(false);

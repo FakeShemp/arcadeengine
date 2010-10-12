@@ -314,7 +314,7 @@ namespace RuffnTumble.Editor.Wizards
 				bin.Data = ms.ToArray();
 			}
 */
-			ResourceManager.LoadResource(binname);
+			ResourceManager.LoadAsset(binname);
 
 			e.Result = true;
 		}

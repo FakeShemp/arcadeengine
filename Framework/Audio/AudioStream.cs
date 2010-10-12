@@ -114,7 +114,7 @@ namespace ArcEngine.Audio
 		public bool LoadOgg(string filename)
 		{
 			FileName = filename;
-			return LoadOgg(ResourceManager.LoadResource(filename));
+			return LoadOgg(ResourceManager.LoadAsset(filename));
 		}
 
 

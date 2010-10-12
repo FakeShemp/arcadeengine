@@ -41,7 +41,7 @@ namespace ArcEngine
 		/// Returns a random enum
 		/// </summary>
 		/// <typeparam name="T">Type of the enum</typeparam>
-		/// <returns></returns>
+		/// <returns>Random enum</returns>
 		public static T Get<T>()
 		{
 			T[] values = (T[])Enum.GetValues(typeof(T));
@@ -53,7 +53,7 @@ namespace ArcEngine
 		#region Properties
 
 		/// <summary>
-		/// 
+		/// Random generator
 		/// </summary>
 		static Random Random;
 

@@ -56,7 +56,7 @@ namespace DungeonEye
 			ResourceManager.LoadBank("data/Main.bnk");
 
 			// Change the cursor
-			using (Stream stream = ResourceManager.LoadResource("cursor.png"))
+			using (Stream stream = ResourceManager.LoadAsset("cursor.png"))
 			{
 				Bitmap bmp = new Bitmap(stream);
 				HardwareCursor cursor = new HardwareCursor(bmp, Point.Empty);

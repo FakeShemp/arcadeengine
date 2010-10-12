@@ -59,14 +59,16 @@ namespace ArcEngine
 			AssetProviders = new Dictionary<Type, Provider>();
 			Providers = new List<Provider>();
 			RegistredTags = new Dictionary<string, Provider>();
+			Paths = new List<string>();
+
 
 			AddProvider(new Providers());
-
 		}
 
 
 
 		#endregion
+
 
 		/// <summary>
 		/// Initialize each providers
@@ -83,11 +85,33 @@ namespace ArcEngine
 
 
 		/// <summary>
+		/// Gets an internal resource
+		/// </summary>
+		/// <param name="name">Name of the resource</param>
+		/// <returns>Resource stream or null if not found</returns>
+		/// <remarks>Don't forget to Dispose the stream !!</remarks>
+		static public Stream GetInternalResource(string name)
+		{
+			List<string> list = new List<string>(Assembly.GetExecutingAssembly().GetManifestResourceNames());
+			if (list.Contains(name))
+				return Assembly.GetExecutingAssembly().GetManifestResourceStream(name);
+
+			list = new List<string>(Assembly.GetEntryAssembly().GetManifestResourceNames());
+			if (list.Contains(name))
+				return Assembly.GetEntryAssembly().GetManifestResourceStream(name);
+
+			return null;
+		}
+
+
+		#region Binary operations
+
+		/// <summary>
 		/// Returns a list of binary matching a pattern using regular expression
 		/// </summary>
 		/// <param name="pattern">Pattern to apply (ie *.png, *.txt)</param>
 		/// <returns>A list of binaries found</returns>
-		static public List<string> GetBinaries(string pattern)
+		static public List<string> GetBinaryList(string pattern)
 		{
 			List<string> list = new List<string>();
 
@@ -103,7 +127,7 @@ namespace ArcEngine
 			return list;
 		}
 
-
+		#endregion
 
 		
 		#region Providers
@@ -299,11 +323,11 @@ namespace ArcEngine
 
 
 		/// <summary>
-		/// 
+		/// Adds an asset definition
 		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <param name="name"></param>
-		/// <param name="asset"></param>
+		/// <typeparam name="T">Type of the asset</typeparam>
+		/// <param name="name">Name of the asset</param>
+		/// <param name="asset">Asset handle</param>
 		static public void AddAsset<T>(string name, IAsset asset) where T : IAsset
 		{
 			StringBuilder sb = new StringBuilder();
@@ -316,6 +340,7 @@ namespace ArcEngine
 
 			AddAsset<T>(name, doc.DocumentElement);
 		}
+
 
 		/// <summary>
 		/// Returns all assets of a type
@@ -335,26 +360,6 @@ namespace ArcEngine
 				return AssetProviders[typeof(T)].Get<T>(name);
 			}
 		}
-
-
-
-/*
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="name">Name of the asset</param>
-		/// <returns></returns>
-		static public Stream GetAsset(string name)
-		{
-			if (string.IsNullOrEmpty(name))
-				return Stream.Null;
-
-			lock (BinaryLock)
-			{
-				return null;
-			}
-		}
-*/
 
 
 		/// <summary>
@@ -404,7 +409,6 @@ namespace ArcEngine
 		}
 
 
-
 		/// <summary>
 		/// Removes a specific asset
 		/// </summary>
@@ -420,7 +424,6 @@ namespace ArcEngine
 				provider.Remove<T>();
 			}
 		}
-
 
 
 		/// <summary>
@@ -442,7 +445,6 @@ namespace ArcEngine
 				Trace.WriteLine("Clearing assets !");
 			}
 		}
-
 
 
 		/// <summary>
@@ -596,7 +598,7 @@ namespace ArcEngine
 		#endregion
 
 
-		#region I/O operations
+		#region Bank operations
 
 		/// <summary>
 		/// Loads ressource from file
@@ -710,12 +712,11 @@ namespace ArcEngine
 		}
 
 
-
 		/// <summary>
 		/// Loads a bank asynchronously
 		/// </summary>
 		/// <param name="filename">Name of the file to load</param>
-		/// <returns></returns>
+		/// <returns>True on success</returns>
 		static public bool LoadBankAsync(string filename)
 		{
 
@@ -723,16 +724,90 @@ namespace ArcEngine
 			return false;
 		}
 
+		#endregion
+
+
+		#region Asset operations
+
+		/// <summary>
+		/// Adds an asset from a file in a bank
+		/// </summary>
+		/// <param name="bankname">Bank's name</param>
+		/// <param name="assetname">Asset name in the bank</param>
+		/// <param name="filename">File to add in the bank</param>
+		/// <returns>True on success</returns>
+		static public bool SaveAsset(string bankname, string assetname, string filename)
+		{
+			if (string.IsNullOrEmpty(bankname) || string.IsNullOrEmpty(assetname) || string.IsNullOrEmpty(filename))
+				return false;
+
+			using (Stream stream = new FileStream(filename, FileMode.Open))
+				return SaveAsset(bankname, assetname, stream);
+		}
+
+
+		/// <summary>
+		/// Adds an asset from a stream in a bank
+		/// </summary>
+		/// <param name="bankname">Bank's name</param>
+		/// <param name="assetname">Asset name in the bank</param>
+		/// <param name="stream">Stream to add in the bank</param>
+		/// <returns>True on success</returns>
+		static public bool SaveAsset(string bankname, string assetname, Stream stream)
+		{
+			if (string.IsNullOrEmpty(bankname) || string.IsNullOrEmpty(assetname) || stream == null)
+				return false;
+
+			Trace.Write("Saving asset \"{0}\" to bank \"{1}\"... ", assetname, bankname);
+
+			try
+			{
+				// Open bank
+				ZipStorer zip = ZipStorer.Open(bankname, FileAccess.Write);
+
+				// Get a listing of all present files
+				List<ZipStorer.ZipFileEntry> dir = zip.ReadCentralDir();
+
+				// Remove duplicate name before insert
+				List<ZipStorer.ZipFileEntry> remove = new List<ZipStorer.ZipFileEntry>();
+				foreach (ZipStorer.ZipFileEntry ent in dir)
+				{
+					if (ent.FilenameInZip == assetname)
+						remove.Add(ent);
+				}
+				ZipStorer.RemoveEntries(ref zip, remove);
+
+
+				// Add stream
+				zip.AddStream(ZipStorer.Compression.Deflate, assetname, stream, DateTime.Now, string.Empty);
+
+
+				// Close the file
+				zip.Close();
+
+				Trace.WriteLine("Done !");
+			}
+			catch (Exception e)
+			{
+				Trace.WriteLine("Failed !");
+				Trace.WriteLine(e.Message);
+				Trace.WriteLine(e.StackTrace);
+			}
+
+
+			return true;
+		}
 
 
 		/// <summary>
 		/// Loads a resource from a bank first, and if not found, load it from disk.
 		/// </summary>
-		/// <param name="resourcename">Name of the file to load</param>
-		/// <returns>Stream to the resource. Don't forget to close it !</returns>
-		static public Stream LoadResource(string resourcename)
+		/// <param name="assetname">Name of the file to load</param>
+		/// <returns>Resource stream or null if not found</returns>
+		/// <remarks>Don't forget to Dispose the stream !!</remarks>
+		static public Stream LoadAsset(string assetname)
 		{
-			if (string.IsNullOrEmpty(resourcename))
+			if (string.IsNullOrEmpty(assetname))
 				return null;
 
 			//
@@ -749,7 +824,7 @@ namespace ArcEngine
 					// Look for the desired file
 					foreach (ZipStorer.ZipFileEntry entry in dir)
 					{
-						if (entry.FilenameInZip != resourcename)
+						if (entry.FilenameInZip != assetname)
 							continue;
 
 						Stream stream = new MemoryStream();
@@ -769,67 +844,49 @@ namespace ArcEngine
 			//
 			// 2° try to load it from disk
 			//
-			if (File.Exists(resourcename))
-				return File.Open(resourcename, FileMode.Open, FileAccess.Read);
+			if (File.Exists(assetname))
+				return File.Open(assetname, FileMode.Open, FileAccess.Read);
 
 			return null;
 		}
 
 
 		/// <summary>
-		/// Gets an internal resource
+		/// Saves all assets to a bank file
 		/// </summary>
-		/// <param name="name">Name of the resource</param>
-		/// <returns>Resource stream or null if not found</returns>
-		/// <remarks>Don't forget to Dispose the stream !!</remarks>
-		static public Stream GetInternalResource(string name)
+		/// <param name="bankname">The file name of the bank on disk</param>
+		/// <returns>True on success</returns>
+		static public bool SaveAssetsToBank(string bankname)
 		{
-			List<string> list = new List<string>(Assembly.GetExecutingAssembly().GetManifestResourceNames());
-			if (list.Contains(name))
-				return Assembly.GetExecutingAssembly().GetManifestResourceStream(name);
-
-			list = new List<string>(Assembly.GetEntryAssembly().GetManifestResourceNames());
-			if (list.Contains(name))
-				return Assembly.GetEntryAssembly().GetManifestResourceStream(name);
-
-			return null;
+			return SaveAssetsToBank(bankname, string.Empty);
 		}
 
 
 		/// <summary>
-		/// Saves all resources to a bank file
+		/// Saves all assets to a bank file
 		/// </summary>
-		/// <param name="filename">The file name of the bank on disk</param>
-		/// <returns>True if everything went ok</returns>
-		static public bool SaveResources(string filename)
-		{
-			return SaveResources(filename, string.Empty);
-		}
-
-
-		/// <summary>
-		/// Saves all resources to a bank file
-		/// </summary>
-		/// <param name="filename">The file name of the bank on disk</param>
+		/// <param name="bankname">The file name of the bank on disk</param>
 		/// <param name="password">Password</param>
-		/// <returns>True if everything went ok</returns>
-		static public bool SaveResources(string filename, string password)
+		/// <returns>True on success</returns>
+		static public bool SaveAssetsToBank(string bankname, string password)
 		{
 			// Return value
 			bool retval = false;
 
-			Trace.WriteLine("Saving all resources to bank \"" + filename + "\"...");
+			Trace.WriteLine("Saving all resources to bank \"" + bankname + "\"...");
 
 
 			try
 			{
-				ZipStorer zip = ZipStorer.Open(filename, FileAccess.Write);
+				ZipStorer zip = ZipStorer.Open(bankname, FileAccess.Write);
 				List<ZipStorer.ZipFileEntry> dir = zip.ReadCentralDir();
 
 				// Save all providers
 				XmlWriter doc;
 				MemoryStream ms;
 
+
+				// Xml settings
 				XmlWriterSettings settings = new XmlWriterSettings();
 				settings.Indent = true;
 				settings.OmitXmlDeclaration = false;
@@ -851,11 +908,11 @@ namespace ArcEngine
 						if (count == 0)
 							continue;
 
+						// Create Xml document from a memory stream
 						ms = new MemoryStream();
 						doc = XmlWriter.Create(ms, settings);
 						doc.WriteStartDocument(true);
 						doc.WriteStartElement("bank");
-
 
 						// Invoke the generic method like this : provider.Save<[Asset Type]>(XmlNode node);
 						object[] args = { doc };
@@ -863,6 +920,7 @@ namespace ArcEngine
 						mi = provider.GetType().GetMethod("Save", types).MakeGenericMethod(type);
 						mi.Invoke(provider, args);
 
+						// Close xml 
 						doc.WriteEndElement();
 						doc.WriteEndDocument();
 						doc.Flush();
@@ -872,13 +930,12 @@ namespace ArcEngine
 
 						string zipfilename = string.Format("{0}.xml", type.Name);
 
-						// Remove before insert
+						// Remove duplicate name before insert
 						foreach (ZipStorer.ZipFileEntry ent in dir)
 						{
 							if (ent.FilenameInZip == zipfilename)
 							{
 								remove.Add(ent);
-
 								break;
 							}
 						}
@@ -965,16 +1022,9 @@ namespace ArcEngine
 
 
 		/// <summary>
-		/// List of unknown loaded assets
-		/// </summary>
-	//	static List<XmlNode> UnknownAssets;
-
-
-		/// <summary>
 		/// Asset providers
 		/// </summary>
 		static Dictionary<Type, Provider> AssetProviders;
-
 
 
 		/// <summary>
@@ -999,6 +1049,14 @@ namespace ArcEngine
 		static object BinaryLock;
 
 
+		/// <summary>
+		/// Known paths for asset loading
+		/// </summary>
+		static public List<string> Paths
+		{
+			get;
+			private set;
+		}
 
 		#endregion
 
