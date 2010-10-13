@@ -518,13 +518,16 @@ namespace ArcEngine.Graphic
 			{
 				if (value == null)
 				{
-					//TK.GL.BindTexture((TK.TextureTarget)value.Target, 0);
+					Trace.WriteDebugLine("[Display] : Bind null texture on TU {0}", TextureUnit);
+
+				//	TK.GL.BindTexture((TK.TextureTarget)value.Target, 0);
 					textures[TextureUnit] = null;
 					return;
 				}
-				if (textures[TextureUnit] != value)
-				{
 
+
+				if (textures[TextureUnit] != value)
+				{					
 					textures[TextureUnit] = value;
 					TK.GL.BindTexture((TK.TextureTarget)value.Target, value.Handle);
 

@@ -241,6 +241,8 @@ namespace ArcEngine.Graphic
 		{
 			Size = size;
 
+			Trace.WriteDebugLine("[Texture2D] : Resize() {0}", this);
+
 			Lock(target, ImageLockMode.WriteOnly);
 			Data = null;
 			Unlock(target);
@@ -258,8 +260,11 @@ namespace ArcEngine.Graphic
 		protected void SetData(TextureTarget target, Bitmap bitmap, Point location)
 		{
 			if (bitmap == null)
-				return;
+			{
+				Trace.WriteDebugLine("[Texture2D] : SetData() failed. bitmap == null - {0}", this);
 
+				return;
+			}
 
 			Imaging.BitmapData bmdata = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height),
 				 Imaging.ImageLockMode.ReadOnly, Imaging.PixelFormat.Format32bppArgb);
@@ -269,15 +274,17 @@ namespace ArcEngine.Graphic
 			Marshal.Copy(bmdata.Scan0, data, 0, bitmap.Size.Width * bitmap.Size.Height * 4);
 			bitmap.UnlockBits(bmdata);
 
+			Display.GetLastError("before bind texture");
 			Display.Texture = this;
+			Display.GetLastError("after bind texture");
 
-			Display.GetLastError("before");
+			Display.GetLastError("before TexSubImage2D");
 			TK.GL.TexSubImage2D<byte>((TK.TextureTarget) target, 0,
 				location.X, location.Y,
 				bitmap.Width, bitmap.Height,
 				(TK.PixelFormat) PixelFormat, TK.PixelType.UnsignedByte,
 				data);
-			Display.GetLastError("after");
+			Display.GetLastError("after TexSubImage2D");
 		}
 
 
@@ -297,8 +304,14 @@ namespace ArcEngine.Graphic
 		{
 			// No texture bounds
 			if (Handle == -1  || IsLocked)
+			{
+				Trace.WriteDebugLine("[Texture2D] : Lock() failed. Lockmode = {0} - {1}", mode.ToString(), this);
 				return false;
+			}
 
+			Trace.WriteDebugLine("[Texture2D] : Lock() Lockmode = {0} - {1}", mode.ToString(), this);
+
+	
 			Data = new byte[Size.Width * Size.Height * 4];
 
 			LockMode = mode;
@@ -323,6 +336,8 @@ namespace ArcEngine.Graphic
 			if (!IsLocked || LockMode == ImageLockMode.ReadOnly)
 			{
 				IsLocked = false;
+				Trace.WriteDebugLine("[Texture2D] : Lock() failed. Already locked - {0}", this);
+				
 				return;
 			}
 
@@ -339,6 +354,9 @@ namespace ArcEngine.Graphic
 
 			IsLocked = false;
 			Data = null;
+
+			Trace.WriteDebugLine("[Texture2D] : Unlock() {0}", this);
+
 		}
 
 		#endregion

@@ -45,6 +45,7 @@ namespace ArcEngine.Graphic
 			// Target type
 			Target = TextureTarget.Texture2D;
 
+			Trace.WriteDebugLine("[Texture2D] : New texture {0}", this);
 
 			// Bind the texture
 			Display.Texture = this;
