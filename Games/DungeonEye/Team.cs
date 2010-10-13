@@ -709,28 +709,25 @@ namespace DungeonEye
 			// Background
 			batch.DrawTile(TileSet, 18, new Point(352, 0));
 
-			// Head
-			batch.DrawTile(Heads, SelectedHero.Head, new Point(360, 4));
-
-
 			// Name
 			batch.DrawString(OutlinedFont, new Point(430, 12), Color.White, SelectedHero.Name);
 
 			// HP and Food
 			batch.DrawString(Font, new Point(500, 30), Color.Black, SelectedHero.HitPoint.Current + " of " + SelectedHero.HitPoint.Max);
 
-
-			// HP and Food
+			// Dead or uncounscious
 			if (SelectedHero.IsUnconscious)
 			{
 				batch.DrawString(OutlinedFont, new Point(450, 316), Color.FromArgb(255, 85, 85), "UNCONSCIOUS");
-				batch.DrawTile(TileSet, 2, new Point(364, 4));
+				batch.DrawTile(TileSet, 2, new Point(360, 4));
 			}
 			else if (SelectedHero.IsDead)
 			{
 				batch.DrawString(OutlinedFont, new Point(500, 316), Color.FromArgb(255, 85, 85), "DEAD");
-				batch.DrawTile(TileSet, 4, new Point(364, 4));
+				batch.DrawTile(TileSet, 4, new Point(360, 4));
 			}
+			else			
+				batch.DrawTile(Heads, SelectedHero.Head, new Point(360, 4));
 
 
 			// Food
