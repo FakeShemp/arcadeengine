@@ -58,6 +58,7 @@ namespace ArcEngine.Graphic
 			BorderColor = DefaultBorderColor;
 			HorizontalWrap = DefaultHorizontalWrapFilter;
 			VerticalWrap = DefaultVerticalWrapFilter;
+			
 		}
 
 

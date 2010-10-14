@@ -64,6 +64,7 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public void GenerateMipmap()
 		{
+			Display.Texture = this;
 			TK.GL.GenerateMipmap((TK.GenerateMipmapTarget)Target);
 		}
 
