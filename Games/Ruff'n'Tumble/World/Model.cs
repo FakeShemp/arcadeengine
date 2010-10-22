@@ -209,6 +209,12 @@ namespace RuffnTumble
 
 		#region Properties
 
+		public bool IsDisposed
+		{
+			get;
+			set;
+		}
+
 
 		/// <summary>
 		/// Name of the dungeon

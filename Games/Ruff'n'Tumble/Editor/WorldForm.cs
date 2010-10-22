@@ -98,7 +98,7 @@ namespace RuffnTumble.Editor
 			if (LevelHScroller != null)
 			{
 				LevelHScroller.LargeChange = GlControl.Width / (Level.BlockSize.Width);
-				LevelHScroller.Maximum = (Level.SizeInPixel.Width - GlControl.Width) / (Level.BlockSize.Width * (int)Level.Camera.Scale.Width) + LevelHScroller.LargeChange;
+				LevelHScroller.Maximum = (Level.SizeInPixel.Width - GlControl.Width) / (Level.BlockSize.Width * (int)Level.Camera.Scale.X) + LevelHScroller.LargeChange;
 				LevelHScroller.Maximum = 1000;
 			}
 
@@ -106,7 +106,7 @@ namespace RuffnTumble.Editor
 			if (LevelVScroller != null)
 			{
 				LevelVScroller.LargeChange = GlControl.Height / Level.BlockSize.Height; //GlControl.Height;
-				LevelVScroller.Maximum = (Level.SizeInPixel.Height - GlControl.Height) / (Level.BlockSize.Height * (int)Level.Camera.Scale.Height) + LevelVScroller.LargeChange;
+				LevelVScroller.Maximum = (Level.SizeInPixel.Height - GlControl.Height) / (Level.BlockSize.Height * (int)Level.Camera.Scale.Y) + LevelVScroller.LargeChange;
 				LevelVScroller.Maximum = 1000;
 			}
 		}
@@ -159,6 +159,8 @@ namespace RuffnTumble.Editor
 			Display.Init();
 			GlControl_Resize(null, null);
 
+			Batch = new SpriteBatch();
+
 			// Preload texture resources
 			CheckerBoard = new Texture2D(ResourceManager.GetInternalResource("ArcEngine.Resources.checkerboard.png"));
 
@@ -194,13 +196,13 @@ namespace RuffnTumble.Editor
 		private void ClearColor_OnClick(object sender, EventArgs e)
 		{
 			ColorDialog dlg = new ColorDialog();
-			dlg.Color = Display.ClearColor;
+			dlg.Color = Display.RenderState.ClearColor;
 			dlg.AllowFullOpen = true;
 			dlg.AnyColor = true;
 			dlg.FullOpen = true;
 			dlg.ShowDialog();
 
-			Display.ClearColor = Color.FromArgb(dlg.Color.R, dlg.Color.G, dlg.Color.B);
+			Display.RenderState.ClearColor = Color.FromArgb(dlg.Color.R, dlg.Color.G, dlg.Color.B);
 			GlControl.Invalidate();
 		}
 
@@ -436,12 +438,12 @@ namespace RuffnTumble.Editor
 
 			// Background texture
 			Rectangle rect = new Rectangle(Point.Empty, GlControl.Size);
-			CheckerBoard.Blit(rect, rect);
+			Batch.Draw(CheckerBoard, rect.Location, Color.White);
 
 
 			// Draw the level
 			if (Level!= null)
-				Level.Draw();
+				Level.Draw(Batch);
 
 /*
 			// No layer selected
@@ -491,7 +493,7 @@ namespace RuffnTumble.Editor
 					BrushRectangle.Width * Level.BlockDimension.Width,
 					BrushRectangle.Height * Level.BlockDimension.Height);
 				rec.Location = Level.LevelToScreen(rec.Location);
-				Display.DrawRectangle(rec, Color.Green);
+				Batch.DrawRectangle(rec, Color.Green);
 				//Display.Color = Color.White;
 
 			}
@@ -1057,7 +1059,16 @@ namespace RuffnTumble.Editor
 			{
 				e.Cancel = true;
 				DrawTimer.Start();
+				return;
 			}
+
+			if (CheckerBoard != null)
+				CheckerBoard.Dispose();
+
+			if (Batch != null)
+				Batch.Dispose();
+			Batch = null;
+
 		}
 
 		#endregion
@@ -1065,6 +1076,13 @@ namespace RuffnTumble.Editor
 
 
 		#region Properties
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		SpriteBatch Batch;
+
 
 		/// <summary>
 		/// Auto refresh the level

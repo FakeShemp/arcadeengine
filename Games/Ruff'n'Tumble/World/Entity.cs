@@ -191,8 +191,10 @@ namespace RuffnTumble
 		/// Renders the entity
 		/// </summary>
 		///<param name="loc">Location of the entity relative to the layer coordinate</param>
-		public void Draw(Point loc)
+		public void Draw(SpriteBatch batch, Point loc)
 		{
+			if (batch == null)
+				return;
 /*
 			if (TileSet != null)
 			{
@@ -389,7 +391,7 @@ namespace RuffnTumble
 		/// </summary>
 		[Category("Display")]
 		[Description("Zoom factor of the entity")]
-		public SizeF Zoom
+		public Vector2 Zoom
 		{
 			get;
 			set;

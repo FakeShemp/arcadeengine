@@ -69,24 +69,7 @@ namespace RuffnTumble
 		static void Main(string[] args)
 		{
 			Ruff game = new Ruff();
-
-			try
-			{
-				game.Run();
-			}
-			catch (Exception e)
-			{
-				Trace.WriteLine("");
-				Trace.WriteLine("!!!FATAL ERROR !!!");
-				Trace.WriteLine("Message : " + e.Message);
-				Trace.WriteLine("StackTrace : " + e.StackTrace);
-				Trace.WriteLine("");
-
-
-				MessageBox.Show(e.StackTrace, e.Message);
-			}
-
-			game.Exit();
+			game.Run();
 		}
 
 
@@ -96,7 +79,6 @@ namespace RuffnTumble
 		/// </summary>
 		public override void LoadContent()
 		{
-
 			CreateGameWindow(new Size(800, 600));
 			Window.Text = "Ruff'n'Tumble";
 
@@ -106,6 +88,8 @@ namespace RuffnTumble
 			ResourceManager.AddProvider(new WorldProvider());
 			ResourceManager.LoadBank("data/world1.bnk");
 
+
+			Batch = new SpriteBatch();
 
 
 			// Sets the level
@@ -133,7 +117,21 @@ namespace RuffnTumble
 		/// </summary>
 		public override void UnloadContent()
 		{
-			ResourceManager.ClearAssets();
+			if (Font != null)
+				Font.Dispose();
+			Font = null;
+
+			if (Icons != null)
+				Icons.Dispose();
+			Icons = null;
+
+			if (Batch != null)
+				Batch.Dispose();
+			Batch = null;
+
+			if (World != null)
+				World.Dispose();
+			World = null;
 		}
 
 
@@ -229,16 +227,19 @@ namespace RuffnTumble
 			// Clears the background
 			Display.ClearBuffers();
 
+			Batch.Begin();
+
 			// Draw the level
 			if (World != null)
-				World.Draw();
+				World.Draw(Batch);
 
 
 			// Draw the status bar
-			Icons.Draw(0, Point.Empty);
+			Batch.DrawTile(Icons, 0, Point.Empty);
 
 
-			Font.DrawText(new Point(100, 100), Color.White, "Camera location : " + World.CurrentLevel.Camera.Location.ToString());
+			Batch.DrawString(Font, new Point(100, 100), Color.White, "Camera location : " + World.CurrentLevel.Camera.Location.ToString());
+
 
 			#region Stats
 			//Point pos = Point.Empty;
@@ -315,6 +316,8 @@ namespace RuffnTumble
 						Display.Color = Color.White;
 			*/
 			#endregion
+
+			Batch.End();
 
 		}
 
@@ -435,10 +438,15 @@ namespace RuffnTumble
 
 
 		/// <summary>
+		/// Spritebatch
+		/// </summary>
+		SpriteBatch Batch;
+
+
+		/// <summary>
 		/// Shows/Hides debug stats
 		/// </summary>
 		bool DebugStat;
-
 
 
 		/// <summary>

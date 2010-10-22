@@ -4,14 +4,14 @@ using System.Text;
 using System.Xml;
 using ArcEngine;
 using ArcEngine.Asset;
-
+using ArcEngine.Graphic;
 
 namespace RuffnTumble
 {
 	/// <summary>
 	/// 
 	/// </summary>
-	public class World : IAsset
+	public class World : IAsset, IDisposable
 	{
 		/// <summary>
 		/// Constructor
@@ -35,6 +35,15 @@ namespace RuffnTumble
 
 
 		/// <summary>
+		/// 
+		/// </summary>
+		public void Dispose()
+		{
+			foreach (Level level in Levels.Values)
+				level.Dispose();
+		}
+
+		/// <summary>
 		/// Update the world
 		/// </summary>
 		/// <param name="time"></param>
@@ -48,10 +57,10 @@ namespace RuffnTumble
 		/// <summary>
 		/// Draw the world
 		/// </summary>
-		public void Draw()
+		public void Draw(SpriteBatch batch)
 		{
 			if (CurrentLevel != null)
-				CurrentLevel.Draw();
+				CurrentLevel.Draw(batch);
 		}
 
 
@@ -205,6 +214,12 @@ namespace RuffnTumble
 
 
 		#region Properties
+
+		public bool IsDisposed
+		{
+			get;
+			set;
+		}
 
 		/// <summary>
 		/// Name of the world

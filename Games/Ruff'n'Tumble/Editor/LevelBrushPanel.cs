@@ -101,7 +101,7 @@ namespace RuffnTumble.Editor
 
 			// Background texture
 			Rectangle rect = new Rectangle(Point.Empty, GlControl.Size);
-			CheckerBoard.Blit(rect, rect);
+			Batch.Draw(CheckerBoard, rect, Color.White);
 
 			if (Form.World.CurrentLevel != null)
 			{
@@ -120,7 +120,7 @@ namespace RuffnTumble.Editor
 					if (brush == SelectedBrush)
 					{
 						//Display.Color = Color.Red;
-						Display.DrawRectangle(rect, Color.Red);
+						Batch.DrawRectangle(rect, Color.Red);
 						//Display.Color = Color.White;
 					}
 
@@ -128,7 +128,7 @@ namespace RuffnTumble.Editor
 					// Somme blah blah
 					if (rect.Contains(mouse))
 					{
-						Display.DrawRectangle(rect, Color.White);
+						Batch.DrawRectangle(rect, Color.White);
 					}
 
 					// Move to the next location
@@ -185,6 +185,25 @@ namespace RuffnTumble.Editor
 
 		#region Events
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void LevelBrushPanel_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			if (Batch != null)
+				Batch.Dispose();
+			Batch = null;
+
+			if (CheckerBoard != null)
+				CheckerBoard.Dispose();
+			CheckerBoard = null;
+		}
+
+
+
 		/// <summary>
 		/// 
 		/// </summary>
@@ -196,6 +215,7 @@ namespace RuffnTumble.Editor
 			Display.Init();
 			GlControl_Resize(null, null);
 
+			Batch = new SpriteBatch();
 
 			// Preload texture resources
 			CheckerBoard = new Texture2D(ResourceManager.GetInternalResource("ArcEngine.Resources.checkerboard.png"));
@@ -258,7 +278,10 @@ namespace RuffnTumble.Editor
 		/// </summary>
 		WorldForm Form;
 
-
+		/// <summary>
+		/// 
+		/// </summary>
+		SpriteBatch Batch;
 
 		/// <summary>
 		/// Background texture
@@ -278,8 +301,6 @@ namespace RuffnTumble.Editor
 		LayerBrush SelectedBrush;
 
 		#endregion
-
-
 
 
 	}

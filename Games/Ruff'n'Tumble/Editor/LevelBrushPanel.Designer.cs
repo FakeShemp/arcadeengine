@@ -111,6 +111,7 @@
 			this.Name = "LevelBrushPanel";
 			this.TabText = "Brushes";
 			this.Text = "Brushes";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LevelBrushPanel_FormClosing);
 			this.Load += new System.EventHandler(this.LevelBrushPanel_Load);
 			this.MainToolStrip.ResumeLayout(false);
 			this.MainToolStrip.PerformLayout();

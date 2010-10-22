@@ -89,7 +89,7 @@ namespace RuffnTumble.Editor
 			Display.ClearBuffers();
 
 			// Background texture
-			CheckerBoard.Blit(new Rectangle(Point.Empty, GlControl.Size), CheckerBoard.Rectangle, TextureLayout.Tile);
+			Batch.Draw(CheckerBoard, new Rectangle(Point.Empty, GlControl.Size), CheckerBoard.Rectangle, Color.White);
 
 			// No texture, byebye !
 			//if (Form.LayerPanel.CurrentLayer == null || Form.LayerPanel.CurrentLayer.Texture == null)
@@ -103,11 +103,11 @@ namespace RuffnTumble.Editor
 			if (Form.TileMode == TileMode.Pen)
 			{
 				//Display.Color = Color.Red;
-				Display.DrawRectangle(
+				Batch.DrawRectangle(new Rectangle(
 					SelectedTiles.Left * Form.World.CurrentLevel.BlockSize.Width,
 					SelectedTiles.Top * Form.World.CurrentLevel.BlockSize.Height,
 					SelectedTiles.Width * Form.World.CurrentLevel.BlockSize.Width,
-					SelectedTiles.Height * Form.World.CurrentLevel.BlockSize.Height,
+					SelectedTiles.Height * Form.World.CurrentLevel.BlockSize.Height),
 					Color.Red);
 				//Display.Color = Color.White;
 			}
@@ -277,6 +277,18 @@ namespace RuffnTumble.Editor
 
 		#region Events
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void LevelTilePanel_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			if (Batch != null)
+				Batch.Dispose();
+			Batch = null;
+		}
 
 
 		/// <summary>
@@ -506,6 +518,9 @@ namespace RuffnTumble.Editor
 			GlControl_Resize(null, null);
 
 
+			Batch = new SpriteBatch();
+
+
 			// Preload texture resources
 			CheckerBoard = new Texture2D(ResourceManager.GetInternalResource("ArcEngine.Resources.checkerboard.png"));
 
@@ -523,6 +538,11 @@ namespace RuffnTumble.Editor
 		/// </summary>
 		WorldForm Form;
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		SpriteBatch Batch;
 
 
 		/// <summary>
@@ -582,7 +602,6 @@ namespace RuffnTumble.Editor
 		TileMode tileMode;
 
 		#endregion
-
 
 
 	}

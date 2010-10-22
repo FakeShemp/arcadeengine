@@ -48,7 +48,7 @@ namespace RuffnTumble
 	/// <summary>
 	/// Layer for levels
 	/// </summary>
-	public class Layer
+	public class Layer : IDisposable
 	{
 		/// <summary>
 		/// Constructor
@@ -60,6 +60,17 @@ namespace RuffnTumble
 			Visible = true;
 			TileSet = new TileSet();
 			Alpha = 255;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public void Dispose()
+		{
+			if (TileSet != null)
+				TileSet.Dispose();
+			TileSet = null;
 		}
 
 
@@ -145,10 +156,10 @@ namespace RuffnTumble
 		/// Draws the layer
 		/// </summary>
 		// http://www.gamedev.net/reference/articles/article743.asp
-		public void Draw(Camera camera)
+		public void Draw(SpriteBatch batch, Camera camera)
 		{
 			// No tileset or layer not visible
-			if (TileSet == null || !Visible || camera == null)
+			if (TileSet == null || !Visible || camera == null || batch == null)
 				return;
 
 
@@ -183,7 +194,7 @@ namespace RuffnTumble
 						new Size(32, 32)
 						);
 
-					TileSet.Draw(id, rect, TextureLayout.Stretch);
+					batch.DrawTile(TileSet, id, rect.Location, rect, Color.White);
 				}
 			}
 

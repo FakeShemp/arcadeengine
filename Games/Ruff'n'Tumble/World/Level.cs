@@ -24,6 +24,8 @@ using System.Xml;
 using ArcEngine.Graphic;
 using ArcEngine.Asset;
 using ArcEngine;
+using System;
+
 //
 // - Ajouter un tag <gravity x="0.0" y="0.0" /> dans le tag <layer> pour definir la gravite du layer
 //
@@ -32,26 +34,12 @@ using ArcEngine;
 // http://citrusengine.com/manual/manual/levels
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 namespace RuffnTumble
 {
 	/// <summary>
 	/// A level
 	/// </summary>
-	public class Level
+	public class Level : IDisposable
 	{
 
 		/// <summary>
@@ -70,6 +58,26 @@ namespace RuffnTumble
 			BlockSize = new Size(16, 16);
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public void Dispose()
+		{
+			if (TileLayer != null)
+				TileLayer.Dispose();
+			TileLayer = null;
+
+			if (spTexture != null)
+				spTexture.Dispose();
+			spTexture = null;
+
+			if (CollisionLayer != null)
+				CollisionLayer.Dispose();
+			CollisionLayer = null;
+
+
+		}
 
 		#region IO routines
 
@@ -458,8 +466,12 @@ namespace RuffnTumble
 		/// <summary>
 		/// Draws the level
 		/// </summary>
-		public void Draw()
+		/// <param name="batch"></param>
+		public void Draw(SpriteBatch batch)
 		{
+			if (batch == null)
+				return;
+
 			// Begin the draw
 			//Video.ScissorZone = displayZone;
 			//Video.Scissor = true;
@@ -467,9 +479,9 @@ namespace RuffnTumble
 
 
 
-			TileLayer.Draw(Camera);
+			TileLayer.Draw(batch, Camera);
 
-			CollisionLayer.Draw(Camera);
+			CollisionLayer.Draw(batch, Camera);
 
 			//
 			// Draw Spawnpoints
@@ -488,7 +500,7 @@ namespace RuffnTumble
 					Point pos = LevelToScreen(spawn.Location);
 					pos.X = pos.X - 8;
 					pos.Y = pos.Y - 8;
-					spTexture.Blit(pos);
+					batch.Draw(spTexture, pos, Color.White);
 				}
 				//spawn = layerPanel.PropertyGridBox.SelectedObject as SpawnPoint;
 				//if (spawn != null)
@@ -509,7 +521,7 @@ namespace RuffnTumble
 			{
 				foreach (Entity entity in Entities.Values)
 				{
-					entity.Draw(LevelToScreen(entity.Location));
+					entity.Draw(batch, LevelToScreen(entity.Location));
 				}
 			}
 
@@ -521,7 +533,7 @@ namespace RuffnTumble
 			{
 				foreach (Path path in Paths.Values)
 				{
-					path.Draw(Camera);
+					path.Draw(batch, Camera);
 				}
 			}
 
@@ -977,7 +989,7 @@ namespace RuffnTumble
 		{
 			get
 			{
-				return new Size((int)(BlockSize.Width * Camera.Scale.Width), (int)(BlockSize.Height * Camera.Scale.Height));
+				return new Size((int)(BlockSize.Width * Camera.Scale.X), (int)(BlockSize.Height * Camera.Scale.Y));
 			}
 		}
 

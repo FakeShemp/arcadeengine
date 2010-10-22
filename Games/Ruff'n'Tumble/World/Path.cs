@@ -53,13 +53,15 @@ namespace RuffnTumble
 		/// Draws the path on the screen
 		/// </summary>
 		/// <param name="location">Location of the level</param>
-		public void Draw(Camera camera)
+		public void Draw(SpriteBatch batch, Camera camera)
 		{
+			if (batch == null)
+				return;
 
 			for (int i = 0; i < points.Count - 1; i++)
-				Display.DrawLine(points[i], points[i + 1], Color.Red);
+				batch.DrawLine(points[i], points[i + 1], Color.Red);
 
-			Display.DrawRectangle(Zone, Color.Green);
+			batch.DrawRectangle(Zone, Color.Green);
 		}
 
 

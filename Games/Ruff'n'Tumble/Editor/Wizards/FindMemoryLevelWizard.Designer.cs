@@ -43,6 +43,9 @@
 			this.label3 = new System.Windows.Forms.Label();
 			this.MapWidthBox = new System.Windows.Forms.NumericUpDown();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
+			this.comboBox1 = new System.Windows.Forms.ComboBox();
+			this.label7 = new System.Windows.Forms.Label();
+			this.TrackPosition = new System.Windows.Forms.TrackBar();
 			this.MemoryLocationBox = new System.Windows.Forms.TextBox();
 			this.label5 = new System.Windows.Forms.Label();
 			this.label6 = new System.Windows.Forms.Label();
@@ -50,9 +53,6 @@
 			this.LevelGlControl = new OpenTK.GLControl();
 			this.OpenTileDlg = new System.Windows.Forms.OpenFileDialog();
 			this.OpenDatatDlg = new System.Windows.Forms.OpenFileDialog();
-			this.TrackPosition = new System.Windows.Forms.TrackBar();
-			this.label7 = new System.Windows.Forms.Label();
-			this.comboBox1 = new System.Windows.Forms.ComboBox();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.BlockHeightBox)).BeginInit();
@@ -61,8 +61,8 @@
 			((System.ComponentModel.ISupportInitialize)(this.MapHeightBox)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.MapWidthBox)).BeginInit();
 			this.groupBox4.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.TrackPosition)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// groupBox1
@@ -280,6 +280,39 @@
 			this.groupBox4.TabStop = false;
 			this.groupBox4.Text = "Advanced :";
 			// 
+			// comboBox1
+			// 
+			this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboBox1.FormattingEnabled = true;
+			this.comboBox1.Items.AddRange(new object[] {
+            "Byte",
+            "Word",
+            "Long"});
+			this.comboBox1.Location = new System.Drawing.Point(379, 25);
+			this.comboBox1.Name = "comboBox1";
+			this.comboBox1.Size = new System.Drawing.Size(84, 21);
+			this.comboBox1.TabIndex = 5;
+			// 
+			// label7
+			// 
+			this.label7.AutoSize = true;
+			this.label7.Location = new System.Drawing.Point(338, 28);
+			this.label7.Name = "label7";
+			this.label7.Size = new System.Drawing.Size(27, 13);
+			this.label7.TabIndex = 4;
+			this.label7.Text = "Size";
+			// 
+			// TrackPosition
+			// 
+			this.TrackPosition.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.TrackPosition.Location = new System.Drawing.Point(10, 47);
+			this.TrackPosition.Maximum = 0;
+			this.TrackPosition.Name = "TrackPosition";
+			this.TrackPosition.Size = new System.Drawing.Size(598, 45);
+			this.TrackPosition.TabIndex = 3;
+			this.TrackPosition.ValueChanged += new System.EventHandler(this.TrackPosition_Scroll);
+			// 
 			// MemoryLocationBox
 			// 
 			this.MemoryLocationBox.Location = new System.Drawing.Point(103, 25);
@@ -330,6 +363,7 @@
 			this.LevelGlControl.Name = "LevelGlControl";
 			this.LevelGlControl.Size = new System.Drawing.Size(991, 418);
 			this.LevelGlControl.TabIndex = 0;
+			this.LevelGlControl.VSync = false;
 			this.LevelGlControl.Paint += new System.Windows.Forms.PaintEventHandler(this.LevelGlControl_Paint);
 			this.LevelGlControl.Resize += new System.EventHandler(this.LevelGlControl_Resize);
 			// 
@@ -342,39 +376,6 @@
 			// OpenDatatDlg
 			// 
 			this.OpenDatatDlg.Filter = "All file (*.*)|*.*";
-			// 
-			// TrackPosition
-			// 
-			this.TrackPosition.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
-			this.TrackPosition.Location = new System.Drawing.Point(10, 47);
-			this.TrackPosition.Maximum = 0;
-			this.TrackPosition.Name = "TrackPosition";
-			this.TrackPosition.Size = new System.Drawing.Size(598, 45);
-			this.TrackPosition.TabIndex = 3;
-			this.TrackPosition.ValueChanged += new System.EventHandler(this.TrackPosition_Scroll);
-			// 
-			// label7
-			// 
-			this.label7.AutoSize = true;
-			this.label7.Location = new System.Drawing.Point(338, 28);
-			this.label7.Name = "label7";
-			this.label7.Size = new System.Drawing.Size(27, 13);
-			this.label7.TabIndex = 4;
-			this.label7.Text = "Size";
-			// 
-			// comboBox1
-			// 
-			this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.comboBox1.FormattingEnabled = true;
-			this.comboBox1.Items.AddRange(new object[] {
-            "Byte",
-            "Word",
-            "Long"});
-			this.comboBox1.Location = new System.Drawing.Point(379, 25);
-			this.comboBox1.Name = "comboBox1";
-			this.comboBox1.Size = new System.Drawing.Size(84, 21);
-			this.comboBox1.TabIndex = 5;
 			// 
 			// FindMemoryLevelWizard
 			// 
@@ -391,6 +392,8 @@
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Find level wizard - UNDER HEAVY CONSTRUCTION !!!!";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FindMemoryLevelWizard_FormClosing);
+			this.Load += new System.EventHandler(this.FindMemoryLevelWizard_Load);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
@@ -402,8 +405,8 @@
 			((System.ComponentModel.ISupportInitialize)(this.MapWidthBox)).EndInit();
 			this.groupBox4.ResumeLayout(false);
 			this.groupBox4.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.TrackPosition)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
 			this.ResumeLayout(false);
 
 		}

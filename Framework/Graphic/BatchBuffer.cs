@@ -424,9 +424,6 @@ namespace ArcEngine.Graphic
 		#endregion
 
 
-
-
-
 		#region Properties
 
 		/// <summary>
@@ -479,7 +476,6 @@ namespace ArcEngine.Graphic
 		}
 
 		#endregion
-
 
 	}
 

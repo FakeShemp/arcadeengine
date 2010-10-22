@@ -53,17 +53,17 @@ namespace RuffnTumble
 		/// <param name="location">Location in pixel on the screen</param>
 		/// <param name="tileset">Tileset to use</param>
 		/// <param name="blocksize">Size in pixel of each block</param>
-		public void Draw(Point location, TileSet tileset, Size blocksize)
+		public void Draw(SpriteBatch batch, Point location, TileSet tileset, Size blocksize)
 		{
 			// Oops !
-			if (tileset == null)
+			if (tileset == null || batch == null)
 			    return;
 
 			// Draw each tiles 
 			for(int y = 0; y < Size.Height; y++)
 				for (int x = 0; x < Size.Width; x++)
 				{
-					tileset.Draw(Tiles[y][x], new Point(location.X + x * blocksize.Width, location.Y + y * blocksize.Height));
+					batch.DrawTile(tileset, Tiles[y][x], new Point(location.X + x * blocksize.Width, location.Y + y * blocksize.Height));
 				}
 
 		}

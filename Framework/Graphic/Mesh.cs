@@ -78,7 +78,7 @@ namespace ArcEngine.Graphic
 		/// Update indices
 		/// </summary>
 		/// <param name="data"></param>
-		public void SetIndices(int[] data)
+		public void SetIndices(uint[] data)
 		{
 			Index.Update(data);
 		}
@@ -205,20 +205,20 @@ namespace ArcEngine.Graphic
 			#endregion
 
 
-			#region Index
-			int[] indices = new int[numberParallels * slices * 6];
+			#region Indices
+			uint[] indices = new uint[numberParallels * slices * 6];
 			offset = 0;
 			for (int i = 0; i < numberParallels; i++)
 			{
 				for (int j = 0; j < slices; j++)
 				{
-					indices[offset++] = i * (slices + 1) + j;
-					indices[offset++] = (i + 1) * (slices + 1) + j;
-					indices[offset++] = (i + 1) * (slices + 1) + (j + 1);
+					indices[offset++] = (uint)(i * (slices + 1) + j);
+					indices[offset++] = (uint)((i + 1) * (slices + 1) + j);
+					indices[offset++] = (uint)((i + 1) * (slices + 1) + (j + 1));
 
-					indices[offset++] = i * (slices + 1) + j;
-					indices[offset++] = (i + 1) * (slices + 1) + (j + 1);
-					indices[offset++] = i * (slices + 1) + (j + 1);
+					indices[offset++] = (uint)(i * (slices + 1) + j);
+					indices[offset++] = (uint)((i + 1) * (slices + 1) + (j + 1));
+					indices[offset++] = (uint)(i * (slices + 1) + (j + 1));
 				}
 			}
 
@@ -246,7 +246,7 @@ namespace ArcEngine.Graphic
 		public static Mesh CreateCube(float size)
 		{
 			#region Indices
-			int[] indices = new int[]
+			uint[] indices = new uint[]
 			{
 				 0, 2, 1,
 				 0, 3, 2, 
@@ -455,19 +455,19 @@ namespace ArcEngine.Graphic
 
 			#region Indices
 
-			int[] indices = new int[stacks * slices * 6];
+			uint[] indices = new uint[stacks * slices * 6];
 			offset = 0;
 			for (int i = 0; i < stacks; i++)
 			{
 				for (int j = 0; j < slices; j++)
 				{
-					indices[offset++] = i * (slices + 1) + j;
-					indices[offset++] = (i + 1) * (slices + 1) + j;
-					indices[offset++] = (i + 1) * (slices + 1) + (j + 1);
+					indices[offset++] = (uint)(i * (slices + 1) + j);
+					indices[offset++] = (uint)((i + 1) * (slices + 1) + j);
+					indices[offset++] = (uint)((i + 1) * (slices + 1) + (j + 1));
 
-					indices[offset++] = i * (slices + 1) + j;
-					indices[offset++] = (i + 1) * (slices + 1) + (j + 1);
-					indices[offset++] = i * (slices + 1) + (j + 1);
+					indices[offset++] = (uint)(i * (slices + 1) + j);
+					indices[offset++] = (uint)((i + 1) * (slices + 1) + (j + 1));
+					indices[offset++] = (uint)(i * (slices + 1) + (j + 1));
 				}
 			}
 
@@ -591,17 +591,17 @@ namespace ArcEngine.Graphic
 
 
 			#region Indices
-			int[] indices = new int[numberIndices];
+			uint[] indices = new uint[numberIndices];
 			int indexIndices = 0;
 			for (int sideCount = 0; sideCount < sides; sideCount++)
 			{
 				for (int faceCount = 0; faceCount < faces; faceCount++)
 				{
 					// get the number of the vertices for a face of the torus. They must be < numVertices
-					int v0 = ((sideCount * (faces + 1)) + faceCount);
-					int v1 = (((sideCount + 1) * (faces + 1)) + faceCount);
-					int v2 = (((sideCount + 1) * (faces + 1)) + (faceCount + 1));
-					int v3 = ((sideCount * (faces + 1)) + (faceCount + 1));
+					uint v0 = (uint)((sideCount * (faces + 1)) + faceCount);
+					uint v1 = (uint)(((sideCount + 1) * (faces + 1)) + faceCount);
+					uint v2 = (uint)(((sideCount + 1) * (faces + 1)) + (faceCount + 1));
+					uint v3 = (uint)((sideCount * (faces + 1)) + (faceCount + 1));
 				
 					// first triangle of the face, counter clock wise winding		
 					indices[indexIndices++] = v0;
@@ -648,7 +648,7 @@ namespace ArcEngine.Graphic
 			};
 
 			// Indices
-			int[] indices = new int[]
+			uint[] indices = new uint[]
 			{
 				0, 1, 2,
 				1, 3, 2,
@@ -733,20 +733,20 @@ namespace ArcEngine.Graphic
 
 			#region Indices
 
-			int[] indices = new int[slices * stacks * 6];
+			uint[] indices = new uint[slices * stacks * 6];
 			pos = 0;
 			int m = 0;
 			for (int i = 0; i < slices; i++)
 			{
 				for (int j = 0; j < stacks; j++)
 				{
-					indices[pos++] = m + j;
-					indices[pos++] = m + (j + 1) % stacks;
-					indices[pos++] = (m + j + stacks) % VertexCount;
+					indices[pos++] = (uint)(m + j);
+					indices[pos++] = (uint)(m + (j + 1) % stacks);
+					indices[pos++] = (uint)((m + j + stacks) % VertexCount);
 
-					indices[pos++] = (m + j + stacks) % VertexCount;
-					indices[pos++] = (m + (j + 1) % stacks) % VertexCount;
-					indices[pos++] = (m + (j + 1) % stacks + stacks) % VertexCount;
+					indices[pos++] = (uint)((m + j + stacks) % VertexCount);
+					indices[pos++] = (uint)((m + (j + 1) % stacks) % VertexCount);
+					indices[pos++] = (uint)((m + (j + 1) % stacks + stacks) % VertexCount);
 				}
 				m += stacks;
 			}

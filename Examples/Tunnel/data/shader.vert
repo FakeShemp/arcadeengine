@@ -6,18 +6,19 @@ in vec3 aVertexPosition;		// -- the vertex position (x, y, z)
 in vec4 aVertexColor;			// -- the vertex color (r, g, b, a)
 in vec2 aTextureCoord;			// -- the texture coordinate for this vertex (u, v)
 
-uniform mat4 uMVMatrix;				// -- model-view matrix
-uniform mat4 uPMatrix;				// -- projection matrix
-uniform float fTime;				// -- the time value (changes every frame)
+uniform mat4 uMVMatrix;			// -- model-view matrix
+uniform mat4 uPMatrix;			// -- projection matrix
+uniform float fTime;			// -- the time value (changes every frame)
 
 
-out vec4 vColor;			// -- the color
-out vec2 vTextureCoord;		// -- the texture coordinates
+out vec4 vColor;				// -- the color
+out vec2 vTextureCoord;			// -- the texture coordinates
 
 
 void main(void) 
 {
     vec3 pos = aVertexPosition;
+
     // -- displace the x coordinate based on the time and the z position 
 	pos.x += cos(fTime + (aVertexPosition.z / 4.0));
 

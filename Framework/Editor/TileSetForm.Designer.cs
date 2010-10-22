@@ -32,6 +32,7 @@
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TileSetForm));
 			this.TileGroupBox = new System.Windows.Forms.GroupBox();
 			this.CollisionButton2 = new System.Windows.Forms.Button();
+			this.SelectionControlBox = new System.Windows.Forms.Button();
 			this.button2 = new System.Windows.Forms.Button();
 			this.button1 = new System.Windows.Forms.Button();
 			this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
@@ -73,6 +74,7 @@
 			// 
 			this.TileGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.TileGroupBox.Controls.Add(this.CollisionButton2);
+			this.TileGroupBox.Controls.Add(this.SelectionControlBox);
 			this.TileGroupBox.Controls.Add(this.button2);
 			this.TileGroupBox.Controls.Add(this.button1);
 			this.TileGroupBox.Controls.Add(this.numericUpDown1);
@@ -88,16 +90,25 @@
 			// CollisionButton2
 			// 
 			this.CollisionButton2.Image = ((System.Drawing.Image)(resources.GetObject("CollisionButton2.Image")));
-			this.CollisionButton2.Location = new System.Drawing.Point(129, 44);
+			this.CollisionButton2.Location = new System.Drawing.Point(169, 45);
 			this.CollisionButton2.Name = "CollisionButton2";
 			this.CollisionButton2.Size = new System.Drawing.Size(23, 22);
 			this.CollisionButton2.TabIndex = 4;
 			this.CollisionButton2.UseVisualStyleBackColor = true;
 			// 
+			// SelectionControlBox
+			// 
+			this.SelectionControlBox.Image = ((System.Drawing.Image)(resources.GetObject("SelectionControlBox.Image")));
+			this.SelectionControlBox.Location = new System.Drawing.Point(111, 45);
+			this.SelectionControlBox.Name = "SelectionControlBox";
+			this.SelectionControlBox.Size = new System.Drawing.Size(23, 22);
+			this.SelectionControlBox.TabIndex = 4;
+			this.SelectionControlBox.UseVisualStyleBackColor = true;
+			// 
 			// button2
 			// 
 			this.button2.Image = ((System.Drawing.Image)(resources.GetObject("button2.Image")));
-			this.button2.Location = new System.Drawing.Point(100, 44);
+			this.button2.Location = new System.Drawing.Point(140, 45);
 			this.button2.Name = "button2";
 			this.button2.Size = new System.Drawing.Size(23, 22);
 			this.button2.TabIndex = 4;
@@ -106,7 +117,7 @@
 			// button1
 			// 
 			this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
-			this.button1.Location = new System.Drawing.Point(71, 44);
+			this.button1.Location = new System.Drawing.Point(71, 45);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(23, 22);
 			this.button1.TabIndex = 4;
@@ -114,16 +125,26 @@
 			// 
 			// numericUpDown1
 			// 
-			this.numericUpDown1.Location = new System.Drawing.Point(6, 44);
+			this.numericUpDown1.Location = new System.Drawing.Point(6, 46);
+			this.numericUpDown1.Maximum = new decimal(new int[] {
+            999999,
+            0,
+            0,
+            0});
 			this.numericUpDown1.Name = "numericUpDown1";
 			this.numericUpDown1.Size = new System.Drawing.Size(59, 20);
 			this.numericUpDown1.TabIndex = 3;
+			this.numericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.numericUpDown1.ThousandsSeparator = true;
 			// 
 			// TilePropertyGrid
 			// 
+			this.TilePropertyGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.TilePropertyGrid.Location = new System.Drawing.Point(3, 83);
 			this.TilePropertyGrid.Name = "TilePropertyGrid";
-			this.TilePropertyGrid.Size = new System.Drawing.Size(191, 131);
+			this.TilePropertyGrid.Size = new System.Drawing.Size(191, 256);
 			this.TilePropertyGrid.TabIndex = 2;
 			this.TilePropertyGrid.ToolbarVisible = false;
 			// 
@@ -468,5 +489,6 @@
 		private System.Windows.Forms.StatusStrip statusStrip1;
 		private OpenTK.GLControl GLTileControl;
 		private OpenTK.GLControl GLTextureControl;
+		private System.Windows.Forms.Button SelectionControlBox;
 	}
 }

@@ -49,8 +49,7 @@ namespace RuffnTumble.Editor.Wizards
 			
 			
 			LevelGlControl.MakeCurrent();
-			Display.ClearColor = Color.Black;
-			Display.Texturing = true;
+			Display.RenderState.ClearColor = Color.Black;
 			Display.RenderState.Blending = true;
 
 		}
@@ -87,7 +86,7 @@ namespace RuffnTumble.Editor.Wizards
 					if (pos < Data.Length)
 					{
 						int id = Data[pos];
-						Tiles.Draw(id, new Point(x * BlockSize.Width, y * BlockSize.Height));
+						Batch.DrawTile(Tiles, id, new Point(x * BlockSize.Width, y * BlockSize.Height));
 					}
 
 				}
@@ -114,6 +113,31 @@ namespace RuffnTumble.Editor.Wizards
 
 
 		#region Events
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void FindMemoryLevelWizard_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			if (Batch != null)
+				Batch.Dispose();
+			Batch = null;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void FindMemoryLevelWizard_Load(object sender, EventArgs e)
+		{
+			Batch = new SpriteBatch();
+
+		}
+
 
 
 		/// <summary>
@@ -197,6 +221,11 @@ namespace RuffnTumble.Editor.Wizards
 
 
 		#region Properties
+
+		/// <summary>
+		/// 
+		/// </summary>
+		SpriteBatch Batch;
 
 		/// <summary>
 		/// Level size

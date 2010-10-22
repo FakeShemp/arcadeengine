@@ -19,7 +19,7 @@ namespace RuffnTumble
 		{
 			// Hardcoded !!!
 			ViewPort = new Rectangle(0, 56, 800, 544);
-			Scale = new SizeF(2.0f, 2.0f);
+			Scale = new Vector2(2.0f, 2.0f);
 		}
 
 
@@ -86,7 +86,7 @@ namespace RuffnTumble
 		/// <summary>
 		/// Scale factor
 		/// </summary>
-		public SizeF Scale
+		public Vector2 Scale
 		{
 			get;
 			set;

@@ -40,10 +40,10 @@ namespace ArcEngine.Graphic
 
 
 		/// <summary>
-		/// 
+		/// Update buffer
 		/// </summary>
-		/// <param name="buffer"></param>
-		public void Update(int[] buffer)
+		/// <param name="buffer">Array of indices</param>
+		public void Update(uint[] buffer)
 		{
 			if (Handle == -1 || buffer == null)
 				return;
@@ -52,7 +52,7 @@ namespace ArcEngine.Graphic
 			Bind();
 
 			// Update data
-            TK.GL.BufferData<int>(TK.BufferTarget.ElementArrayBuffer, (IntPtr)(buffer.Length * sizeof(int)), buffer, (TK.BufferUsageHint) Usage);
+            TK.GL.BufferData<uint>(TK.BufferTarget.ElementArrayBuffer, (IntPtr)(buffer.Length * sizeof(int)), buffer, (TK.BufferUsageHint) Usage);
 
 			Count = buffer.Length;
 		}

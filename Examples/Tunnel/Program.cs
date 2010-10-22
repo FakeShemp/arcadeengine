@@ -74,32 +74,31 @@ namespace ArcEngine.Examples.Tunnel
 			Display.RenderState.DepthTest = true;
 
 
-			// Setup the shader
+			#region Setup the shader
 			Shader = new Shader();
 			Shader.LoadSource(ShaderType.VertexShader, "data/shader.vert");
 			Shader.LoadSource(ShaderType.FragmentShader, "data/shader.frag");
 			Shader.Compile();
+			#endregion
 
-
-			// Load the texture
+			#region Load the texture
 			Texture = new Texture2D("data/texture.jpg");
 			Texture.VerticalWrap = TextureWrapFilter.Repeat;
 			Texture.HorizontalWrap = TextureWrapFilter.Repeat;
 			Texture.MagFilter = TextureMagFilter.Linear;
 			Texture.MinFilter = TextureMinFilter.Linear;
+			#endregion
 
-			// Build the mesh
-			#region Mesh
-
+			#region Build the mesh
 			float radius = 7.0f;
 			float currentRadius = radius;
-			int segments = 24;
+			uint segments = 24;
 			int spacing = 2;
 			int numRings = 18;
-			int index = 0;
+			uint index = 0;
 
 			List<float> data = new List<float>();
-			List<int> indices = new List<int>();
+			List<uint> indices = new List<uint>();
 			for (int ring = 0 ; ring < numRings ; ring++)
 			{
 				for (int segment = 0; segment < segments; segment++)

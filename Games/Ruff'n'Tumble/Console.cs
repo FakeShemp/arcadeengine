@@ -98,15 +98,15 @@ namespace RuffnTumble
 		/// 
 		/// </summary>
 		/// <param name="gameTime"></param>
-		public void Draw()
+		public void Draw(SpriteBatch batch)
 		{
-			if (!IsActive)
+			if (!IsActive || batch == null)
 				return;
 
 			//Display.Texturing = false;
 			//Display.Color = BackgroundColor;
 
-			Display.DrawRectangle(Rectangle, BackgroundColor);
+			batch.DrawRectangle(Rectangle, BackgroundColor);
 			//Display.Color = Color.White;
 			//Display.Texturing = true;
 

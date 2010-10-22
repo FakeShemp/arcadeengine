@@ -52,11 +52,11 @@
 			this.GlControl.TabIndex = 1;
 			this.GlControl.VSync = false;
 			this.GlControl.Paint += new System.Windows.Forms.PaintEventHandler(this.GlControl_Paint);
-			this.GlControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GlControl_MouseMove);
-			this.GlControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.GlControl_MouseDown);
-			this.GlControl.Resize += new System.EventHandler(this.GlControl_Resize);
-			this.GlControl.MouseUp += new System.Windows.Forms.MouseEventHandler(this.GlControl_MouseUp);
 			this.GlControl.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);
+			this.GlControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.GlControl_MouseDown);
+			this.GlControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GlControl_MouseMove);
+			this.GlControl.MouseUp += new System.Windows.Forms.MouseEventHandler(this.GlControl_MouseUp);
+			this.GlControl.Resize += new System.EventHandler(this.GlControl_Resize);
 			// 
 			// toolStrip1
 			// 
@@ -163,6 +163,7 @@
 			this.Name = "LevelTilePanel";
 			this.TabText = "Tiles";
 			this.Text = "Tiles Panel";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LevelTilePanel_FormClosing);
 			this.Load += new System.EventHandler(this.LevelTilePanel_Load);
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);
 			this.toolStrip1.ResumeLayout(false);
