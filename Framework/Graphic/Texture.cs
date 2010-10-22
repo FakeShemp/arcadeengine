@@ -242,7 +242,7 @@ namespace ArcEngine.Graphic
 		{
 			Size = size;
 
-			Trace.WriteDebugLine("[Texture2D] : Resize() {0}", this);
+		//	Trace.WriteDebugLine("[Texture2D] : Resize() {0}", this);
 
 			Lock(target, ImageLockMode.WriteOnly);
 			Data = null;
@@ -310,7 +310,7 @@ namespace ArcEngine.Graphic
 				return false;
 			}
 
-			Trace.WriteDebugLine("[Texture2D] : Lock() Lockmode = {0} - {1}", mode.ToString(), this);
+		//	Trace.WriteDebugLine("[Texture2D] : Lock() Lockmode = {0} - {1}", mode.ToString(), this);
 
 	
 			Data = new byte[Size.Width * Size.Height * 4];
@@ -356,7 +356,7 @@ namespace ArcEngine.Graphic
 			IsLocked = false;
 			Data = null;
 
-			Trace.WriteDebugLine("[Texture2D] : Unlock() {0}", this);
+		//	Trace.WriteDebugLine("[Texture2D] : Unlock() {0}", this);
 
 		}
 

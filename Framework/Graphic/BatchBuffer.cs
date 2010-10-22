@@ -370,10 +370,10 @@ namespace ArcEngine.Graphic
 			Buffer[Offset++] = point.Z;
 
 			// Color
-			Buffer[Offset++] = color.R / 255.0f;
-			Buffer[Offset++] = color.G / 255.0f;
-			Buffer[Offset++] = color.B / 255.0f;
-			Buffer[Offset++] = color.A / 255.0f;
+			Buffer[Offset++] = (float)(color.R) / 255.0f;
+			Buffer[Offset++] = (float)(color.G) / 255.0f;
+			Buffer[Offset++] = (float)(color.B) / 255.0f;
+			Buffer[Offset++] = (float)(color.A) / 255.0f;
 							   
 			// Texture		   
 			Buffer[Offset++] = texture.X;

@@ -436,9 +436,11 @@ namespace RuffnTumble.Editor
 			GlControl.MakeCurrent();
 			Display.ClearBuffers();
 
+			Batch.Begin();
+
 			// Background texture
 			Rectangle rect = new Rectangle(Point.Empty, GlControl.Size);
-			Batch.Draw(CheckerBoard, rect.Location, Color.White);
+			Batch.Draw(CheckerBoard, rect, Color.White);
 
 
 			// Draw the level
@@ -517,6 +519,7 @@ namespace RuffnTumble.Editor
 */
 			}
 
+			Batch.End();
 			GlControl.SwapBuffers();
 		}
 

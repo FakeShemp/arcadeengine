@@ -197,22 +197,23 @@ namespace RuffnTumble
 				World.SetLevel("Level_5");
 			}
 
+			int speed = 4;
 
 			if (Keyboard.IsKeyPress(Keys.Right))
 			{
-				World.CurrentLevel.Camera.Location.Offset(1, 0);
+				World.CurrentLevel.Camera.Location.Offset(speed, 0);
 			}
 			if (Keyboard.IsKeyPress(Keys.Left))
 			{
-				World.CurrentLevel.Camera.Location.Offset(-1, 0);
+				World.CurrentLevel.Camera.Location.Offset(-speed, 0);
 			}
 			if (Keyboard.IsKeyPress(Keys.Up))
 			{
-				World.CurrentLevel.Camera.Location.Offset(0, -1);
+				World.CurrentLevel.Camera.Location.Offset(0, -speed);
 			}
 			if (Keyboard.IsKeyPress(Keys.Down))
 			{
-				World.CurrentLevel.Camera.Location.Offset(0, 1);
+				World.CurrentLevel.Camera.Location.Offset(0, speed);
 			}
 
 		}
