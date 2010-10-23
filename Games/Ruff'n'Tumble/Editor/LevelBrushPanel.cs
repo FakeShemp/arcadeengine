@@ -200,6 +200,9 @@ namespace RuffnTumble.Editor
 			if (CheckerBoard != null)
 				CheckerBoard.Dispose();
 			CheckerBoard = null;
+
+			
+
 		}
 
 

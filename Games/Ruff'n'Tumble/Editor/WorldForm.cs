@@ -34,6 +34,9 @@ using WeifenLuo.WinFormsUI.Docking;
 
 namespace RuffnTumble.Editor
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	public partial class WorldForm : AssetEditorBase
 	{
 
@@ -163,6 +166,8 @@ namespace RuffnTumble.Editor
 
 			// Preload texture resources
 			CheckerBoard = new Texture2D(ResourceManager.GetInternalResource("ArcEngine.Resources.checkerboard.png"));
+			CheckerBoard.HorizontalWrap = TextureWrapFilter.Repeat;
+			CheckerBoard.VerticalWrap = TextureWrapFilter.Repeat;
 
 
 			//stream = a.GetManifestResourceStream("ArcEngine.Editor.Resources.SpawnPoint.png");
@@ -243,7 +248,6 @@ namespace RuffnTumble.Editor
 			Display.ViewPort = new Rectangle(new Point(), GlControl.Size);
 			if (Level != null)
 				Level.Camera.ViewPort = new Rectangle(new Point(), GlControl.Size);
-			//	ResourceManager.DisplayZone = new Rectangle(new Point(), GlControl.Size);
 		}
 
 
@@ -440,7 +444,8 @@ namespace RuffnTumble.Editor
 
 			// Background texture
 			Rectangle rect = new Rectangle(Point.Empty, GlControl.Size);
-			Batch.Draw(CheckerBoard, rect, Color.White);
+			Batch.Draw(CheckerBoard, rect, rect,  Color.White);
+			//Batch.Draw(CheckerBoard, rect,  Color.White);
 
 
 			// Draw the level
@@ -1065,6 +1070,22 @@ namespace RuffnTumble.Editor
 				return;
 			}
 
+			if (BrushPanel != null)
+				BrushPanel.Close();
+			BrushPanel = null;
+
+			if (TilePanel != null)
+				TilePanel.Close();
+			TilePanel = null;
+
+			if (CheckerBoard != null)
+				CheckerBoard.Dispose();
+			CheckerBoard = null;
+
+			if (World != null)
+				World.Dispose();
+			World = null;
+
 			if (CheckerBoard != null)
 				CheckerBoard.Dispose();
 
@@ -1072,6 +1093,7 @@ namespace RuffnTumble.Editor
 				Batch.Dispose();
 			Batch = null;
 
+			
 		}
 
 		#endregion
@@ -1082,7 +1104,7 @@ namespace RuffnTumble.Editor
 
 
 		/// <summary>
-		/// 
+		/// SpriteBatch
 		/// </summary>
 		SpriteBatch Batch;
 
