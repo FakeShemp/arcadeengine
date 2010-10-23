@@ -62,7 +62,6 @@ namespace RuffnTumble.Editor
 
 			World = new World();
 			World.Load(node);
-			World.Init();
 
 			//Brush = new BrushTool(level);
 
@@ -71,7 +70,6 @@ namespace RuffnTumble.Editor
 			WorldPanel.Init(this);
 
 
-			DrawTimer.Start();
 		}
 
 
@@ -133,13 +131,8 @@ namespace RuffnTumble.Editor
 		/// <param name="name"></param>
 		public void ChangeLevel(string name)
 		{
-			if (string.IsNullOrEmpty(name))
-				return;
-
-			if (World == null)
-				return;
-
-			World.SetLevel(name);
+			if (World != null)
+				World.SetLevel(name);
 
 		}
 
@@ -148,7 +141,7 @@ namespace RuffnTumble.Editor
 
 
 
-		#region Events
+		#region Main form events
 
 
 		/// <summary>
@@ -175,6 +168,7 @@ namespace RuffnTumble.Editor
 			//SpawnPointTexture.LoadImage(stream);
 			//stream.Dispose();
 
+			DrawTimer.Start();
 
 		}
 
@@ -191,6 +185,52 @@ namespace RuffnTumble.Editor
 			WorldPanel.Show(dockPanel);
 		}
 
+
+		/// <summary>
+		/// Form closing
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void WorldForm_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			DrawTimer.Stop();
+			DialogResult result = MessageBox.Show("Save modifications ?", "Tile Map Editor", MessageBoxButtons.YesNoCancel);
+
+
+			if (result == DialogResult.Yes)
+			{
+				Save();
+			}
+			else if (result == DialogResult.Cancel)
+			{
+				e.Cancel = true;
+				DrawTimer.Start();
+				return;
+			}
+
+			if (BrushPanel != null)
+				BrushPanel.Close();
+			BrushPanel = null;
+
+			if (TilePanel != null)
+				TilePanel.Close();
+			TilePanel = null;
+
+			if (CheckerBoard != null)
+				CheckerBoard.Dispose();
+			CheckerBoard = null;
+
+			if (World != null)
+				World.Dispose();
+			World = null;
+
+			if (CheckerBoard != null)
+				CheckerBoard.Dispose();
+
+			if (Batch != null)
+				Batch.Dispose();
+			Batch = null;
+		}
 
 
 		/// <summary>
@@ -233,8 +273,6 @@ namespace RuffnTumble.Editor
 		{
 			ScrollLayer(new Point(LevelHScroller.Value, LevelVScroller.Value));
 		}
-
-
 
 
 		/// <summary>
@@ -445,7 +483,6 @@ namespace RuffnTumble.Editor
 			// Background texture
 			Rectangle rect = new Rectangle(Point.Empty, GlControl.Size);
 			Batch.Draw(CheckerBoard, rect, rect,  Color.White);
-			//Batch.Draw(CheckerBoard, rect,  Color.White);
 
 
 			// Draw the level
@@ -492,8 +529,6 @@ namespace RuffnTumble.Editor
 			// Draw a rectangle showing the brush selection in the layer
 			if (sizingBrush)
 			{
-
-				//Display.Color = Color.Green;
 				Rectangle rec = new Rectangle(
 					BrushRectangle.Left * Level.BlockDimension.Width,
 					BrushRectangle.Top * Level.BlockDimension.Height,
@@ -501,8 +536,6 @@ namespace RuffnTumble.Editor
 					BrushRectangle.Height * Level.BlockDimension.Height);
 				rec.Location = Level.LevelToScreen(rec.Location);
 				Batch.DrawRectangle(rec, Color.Green);
-				//Display.Color = Color.White;
-
 			}
 
 
@@ -1045,55 +1078,6 @@ namespace RuffnTumble.Editor
 
 			Level.RemoveColumn(Level.PositionToBlock(pos).X);
 
-		}
-
-
-		/// <summary>
-		/// Form closing
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void WorldForm_FormClosing(object sender, FormClosingEventArgs e)
-		{
-			DrawTimer.Stop();
-			DialogResult result = MessageBox.Show("Save modifications ?", "Tile Map Editor", MessageBoxButtons.YesNoCancel);
-
-
-			if (result == DialogResult.Yes)
-			{
-				Save();
-			}
-			else if (result == DialogResult.Cancel)
-			{
-				e.Cancel = true;
-				DrawTimer.Start();
-				return;
-			}
-
-			if (BrushPanel != null)
-				BrushPanel.Close();
-			BrushPanel = null;
-
-			if (TilePanel != null)
-				TilePanel.Close();
-			TilePanel = null;
-
-			if (CheckerBoard != null)
-				CheckerBoard.Dispose();
-			CheckerBoard = null;
-
-			if (World != null)
-				World.Dispose();
-			World = null;
-
-			if (CheckerBoard != null)
-				CheckerBoard.Dispose();
-
-			if (Batch != null)
-				Batch.Dispose();
-			Batch = null;
-
-			
 		}
 
 		#endregion

@@ -91,7 +91,8 @@ namespace RuffnTumble.Editor
 			Batch.Begin();
 
 			// Background texture
-			Batch.Draw(CheckerBoard, new Rectangle(Point.Empty, GlControl.Size), CheckerBoard.Rectangle, Color.White);
+			Rectangle rect = new Rectangle(Point.Empty, GlControl.Size);
+			Batch.Draw(CheckerBoard, rect, rect, Color.White);
 
 			// No texture, byebye !
 			//if (Form.LayerPanel.CurrentLayer == null || Form.LayerPanel.CurrentLayer.Texture == null)

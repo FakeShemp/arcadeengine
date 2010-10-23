@@ -18,6 +18,8 @@
 //
 #endregion
 
+using ArcEngine.Graphic;
+using ArcEngine;
 using RuffnTumble;
 
 
@@ -25,23 +27,23 @@ using RuffnTumble;
 namespace RuffnTumble.Interface
 {
 	/// <summary>
-	/// Interface pour la gestion des layers
+	/// Layer interface
 	/// </summary>
 	public interface ILayer
 	{
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="layer"></param>
-		/// <returns></returns>
-		bool Init(Layer layer);
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="layer"></param>
-		void Update(Layer layer);
+		void Update(GameTime time);
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="batch"></param>
+		void Draw(SpriteBatch batch);
 
 	}
 

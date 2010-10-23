@@ -38,7 +38,7 @@ namespace ArcEngine.Asset
 		/// Initializes the asset
 		/// </summary>
 		/// <returns></returns>
-		bool Init();
+	//	bool Init();
 
 
 

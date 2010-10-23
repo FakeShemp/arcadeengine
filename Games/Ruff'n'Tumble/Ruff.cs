@@ -24,7 +24,6 @@ using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
-using RuffnTumble;
 
 
 //
@@ -95,10 +94,7 @@ namespace RuffnTumble
 			// Sets the level
 			World = ResourceManager.CreateAsset<World>("test");
 			if (World != null)
-			{
-				World.Init();
 				World.SetLevel("Level_1");
-			}
 
 
 

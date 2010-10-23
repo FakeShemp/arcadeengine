@@ -99,9 +99,11 @@ namespace RuffnTumble.Editor
 			// Clear the rectangle brush buffer
 			Brushes.Clear();
 
+			Batch.Begin();
+
 			// Background texture
 			Rectangle rect = new Rectangle(Point.Empty, GlControl.Size);
-			Batch.Draw(CheckerBoard, rect, Color.White);
+			Batch.Draw(CheckerBoard, rect, rect, Color.White);
 
 			if (Form.World.CurrentLevel != null)
 			{
@@ -136,7 +138,7 @@ namespace RuffnTumble.Editor
 				}
 			}
 
-
+			Batch.End();
 			GlControl.SwapBuffers();
 		}
 
@@ -222,6 +224,8 @@ namespace RuffnTumble.Editor
 
 			// Preload texture resources
 			CheckerBoard = new Texture2D(ResourceManager.GetInternalResource("ArcEngine.Resources.checkerboard.png"));
+			CheckerBoard.HorizontalWrap = TextureWrapFilter.Repeat;
+			CheckerBoard.VerticalWrap = TextureWrapFilter.Repeat;
 
 		}
 

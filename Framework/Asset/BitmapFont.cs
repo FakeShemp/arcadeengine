@@ -30,6 +30,14 @@ using System.Windows.Forms;
 using System.Xml;
 using ArcEngine.Graphic;
 
+//
+// http://www.xnaresources.com/pages.asp?pageid=51
+//
+//
+//
+//
+//
+
 
 namespace ArcEngine.Asset
 {
@@ -83,17 +91,6 @@ namespace ArcEngine.Asset
 
 			GC.SuppressFinalize(this);
 		}
-
-
-		/// <summary>
-		/// Initializes the asset
-		/// </summary>
-		/// <returns>True on success</returns>
-		public bool Init()
-		{
-			return true;
-		}
-
 	
 
 		#region Text drawing

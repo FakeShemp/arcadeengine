@@ -24,18 +24,7 @@ namespace RuffnTumble
 
 
 		/// <summary>
-		/// Init the world
-		/// </summary>
-		/// <returns></returns>
-		public bool Init()
-		{
-			return true;
-
-		}
-
-
-		/// <summary>
-		/// 
+		/// Dispose
 		/// </summary>
 		public void Dispose()
 		{
@@ -46,7 +35,7 @@ namespace RuffnTumble
 		/// <summary>
 		/// Update the world
 		/// </summary>
-		/// <param name="time"></param>
+		/// <param name="time">Elapsed game time</param>
 		public void Update(GameTime time)
 		{
 			if (CurrentLevel != null)
@@ -120,6 +109,12 @@ namespace RuffnTumble
 					}
 					break;
 
+					default:
+					{
+						Trace.WriteLine("World '{0}' : Unknown node element found (\"{1}\")", Name, node.Name);
+					}
+					break;
+
 				}
 			}
 
@@ -138,15 +133,12 @@ namespace RuffnTumble
 		/// <returns>true if level found</returns>
 		public bool SetLevel(string name)
 		{
-			CurrentLevel = null;
-
-			if (Levels.ContainsKey(name))
-				CurrentLevel = Levels[name];
-
-			if (CurrentLevel == null)
+			if (!Levels.ContainsKey(name))
 				return false;
 
+			CurrentLevel = Levels[name];
 			CurrentLevel.Init();
+
 			return true;
 		}
 
@@ -215,11 +207,15 @@ namespace RuffnTumble
 
 		#region Properties
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public bool IsDisposed
 		{
 			get;
-			set;
+			private set;
 		}
+
 
 		/// <summary>
 		/// Name of the world
@@ -252,6 +248,17 @@ namespace RuffnTumble
 			private set;
 		}
 
+
+		/// <summary>
+		/// Number of level in this world
+		/// </summary>
+		public int LevelCount
+		{
+			get
+			{
+				return Levels.Count;
+			}
+		}
 
 		/// <summary>
 		/// All levels in the world

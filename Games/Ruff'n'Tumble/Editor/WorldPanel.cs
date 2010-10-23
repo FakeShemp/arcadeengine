@@ -32,6 +32,9 @@ using RuffnTumble;
 
 namespace RuffnTumble.Editor
 {
+	/// <summary>
+	/// 
+	/// </summary>
     public partial class WorldPanel : DockContent
 	{
 		public WorldPanel()
@@ -53,8 +56,7 @@ namespace RuffnTumble.Editor
 			Form = form;
 
 			UpdateLists();
-/*
-*/
+
 			return true;
 		}
 

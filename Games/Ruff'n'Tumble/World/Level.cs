@@ -472,15 +472,10 @@ namespace RuffnTumble
 			if (batch == null)
 				return;
 
-			// Begin the draw
-			//Video.ScissorZone = displayZone;
-			//Video.Scissor = true;
-			//Video.Translate = new Point(displayZone.X, displayZone.Y);
-
-
-
+			// Draw the layer
 			TileLayer.Draw(batch, Camera);
 
+			// Draw collision layer
 			CollisionLayer.Draw(batch, Camera);
 
 			//
@@ -538,8 +533,6 @@ namespace RuffnTumble
 			}
 
 
-			//Video.Offset = new Point();
-			//Video.Scissor = false;
 		}
 
 

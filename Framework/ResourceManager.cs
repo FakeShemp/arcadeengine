@@ -376,14 +376,12 @@ namespace ArcEngine
 
 			lock (BinaryLock)
 			{
+				// Unknown asset type
 				if (!AssetProviders.ContainsKey(typeof(T)))
 					throw new ArgumentException("Unknown asset type");
 
-				IAsset asset = AssetProviders[typeof(T)].Create<T>(name);
-				//if (asset != null)
-				//    asset.Init();
-
-				return (T)(object)asset;
+				// Create the asset
+				return (T)AssetProviders[typeof(T)].Create<T>(name);
 			}
 		}
 
