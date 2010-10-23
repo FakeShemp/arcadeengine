@@ -61,14 +61,15 @@ namespace ArcEngine.Graphic
 				Capabilities = new RenderDeviceCapabilities();
 
 
-			//Texturing = true;
 			RenderState.Blending = true;
 			RenderState.ClearColor = Color.Black;
 
 			TK.GL.Hint(TK.HintTarget.PolygonSmoothHint, TK.HintMode.Nicest);
 			TK.GL.Hint(TK.HintTarget.LineSmoothHint, TK.HintMode.Nicest);
 			TK.GL.Hint(TK.HintTarget.PointSmoothHint, TK.HintMode.Nicest);
-			TK.GL.Enable(TK.EnableCap.PolygonSmooth);
+
+			// Cause visual glitches with SpriteBatch !!!!
+		//	TK.GL.Enable(TK.EnableCap.PolygonSmooth);
 
 			if (Texture2D.HasTextureCompression)
 				TK.GL.Hint(TK.HintTarget.TextureCompressionHint, TK.HintMode.Nicest);
