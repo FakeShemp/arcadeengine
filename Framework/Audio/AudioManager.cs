@@ -109,15 +109,18 @@ namespace ArcEngine.Audio
 			{
 				Context = new OpenTK.Audio.AudioContext(device);
 			}
+			catch (DllNotFoundException e)
+			{
+			}
 			catch (Exception)
 			{
 				Trace.WriteLine("#####################");
 				Trace.WriteLine("OpenAL not found !!!!");
 				Trace.WriteLine("#####################");
 
-				System.Windows.Forms.MessageBox.Show("Please download and install OpenAL at :" + 
-					Environment.NewLine + Environment.NewLine + 
-					"http://connect.creativelabs.com/openal/Downloads/Forms/AllItems.aspx" + 
+				System.Windows.Forms.MessageBox.Show("Please download and install OpenAL at :" +
+					Environment.NewLine + Environment.NewLine +
+					"http://connect.creativelabs.com/openal/Downloads/Forms/AllItems.aspx" +
 					Environment.NewLine + Environment.NewLine + "and install oalinst", "OpenAL DLL not found !!");
 
 				throw new DllNotFoundException("OpenAL dll not found !!!");

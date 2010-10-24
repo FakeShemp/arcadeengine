@@ -33,16 +33,16 @@ namespace RuffnTumble.Interface
 	{
 
 		/// <summary>
-		/// 
+		/// Updates layer
 		/// </summary>
-		/// <param name="layer"></param>
+		/// <param name="layer">Game time</param>
 		void Update(GameTime time);
 
 
 		/// <summary>
-		/// 
+		/// Draws the layer
 		/// </summary>
-		/// <param name="batch"></param>
+		/// <param name="batch">Spritebatch</param>
 		void Draw(SpriteBatch batch);
 
 	}
