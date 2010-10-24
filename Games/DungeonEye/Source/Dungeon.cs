@@ -23,6 +23,7 @@ using System.ComponentModel;
 using System.Xml;
 using ArcEngine;
 using ArcEngine.Asset;
+using ArcEngine.Interface;
 
 namespace DungeonEye
 {

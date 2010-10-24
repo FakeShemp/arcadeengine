@@ -19,17 +19,13 @@
 #endregion
 
 using System;
-using System.CodeDom.Compiler;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 using ArcEngine.Asset;
 using ArcEngine.Forms;
-using WeifenLuo.WinFormsUI.Docking;
-using ArcEngine;
-
-using System.Collections.Generic;
+using ArcEngine.Interface;
 
 namespace ArcEngine.Editor
 {

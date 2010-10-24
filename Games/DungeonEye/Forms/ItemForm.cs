@@ -28,6 +28,7 @@ using ArcEngine.Asset;
 using ArcEngine.Forms;
 using ArcEngine.Graphic;
 using DungeonEye.Interfaces;
+using ArcEngine.Interface;
 
 namespace DungeonEye.Forms
 {

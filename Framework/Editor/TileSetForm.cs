@@ -27,6 +27,7 @@ using System.Xml;
 using ArcEngine.Asset;
 using ArcEngine.Forms;
 using ArcEngine.Graphic;
+using ArcEngine.Interface;
 
 
 namespace ArcEngine.Editor

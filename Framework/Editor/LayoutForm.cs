@@ -19,21 +19,14 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.IO;
-using System.Reflection;
 using System.Text;
-//using System.Windows.Forms;
 using System.Xml;
 using ArcEngine.Asset;
 using ArcEngine.Forms;
 using ArcEngine.Graphic;
+using ArcEngine.Interface;
 using ArcEngine.Utility.GUI;
-using OpenTK.Graphics;
-using OpenTK.Graphics.OpenGL;
-using WeifenLuo.WinFormsUI.Docking;
 
 
 namespace ArcEngine.Editor

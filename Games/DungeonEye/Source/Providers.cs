@@ -19,12 +19,10 @@
 #endregion
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Xml;
-using ArcEngine.Asset;
-using ArcEngine.Forms;
-using ArcEngine.Graphic;
 using ArcEngine;
+using ArcEngine.Forms;
+using ArcEngine.Interface;
 
 namespace DungeonEye
 {

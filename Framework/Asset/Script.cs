@@ -27,6 +27,7 @@ using System.Text;
 using System.Web;
 using System.Xml;
 using Microsoft.VisualBasic;
+using ArcEngine.Interface;
 
 
 // TODO Pouvoir ajouter des references a des dll soit depuis le ResourceManager

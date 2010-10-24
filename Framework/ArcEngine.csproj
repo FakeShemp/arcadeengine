@@ -159,7 +159,7 @@
     <Compile Include="Asset\Scenes\KeyFrame.cs" />
     <Compile Include="Asset\Scenes\SceneLayer.cs" />
     <Compile Include="Asset\BinaryInformation.cs" />
-    <Compile Include="Asset\IAsset.cs" />
+    <Compile Include="Interface\IAsset.cs" />
     <Compile Include="Asset\Scenes\Scene.cs" />
     <Compile Include="Asset\Language.cs" />
     <Compile Include="Asset\ScriptInterface.cs" />

@@ -37,6 +37,7 @@ using TK = OpenTK.Graphics.OpenGL;
 //
 //
 
+using ArcEngine.Interface;
 
 namespace ArcEngine.Graphic
 {

@@ -23,6 +23,7 @@ using System.Xml;
 using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Forms;
+using ArcEngine.Interface;
 
 namespace DungeonEye.Forms
 {

@@ -19,23 +19,12 @@
 #endregion
 
 using System;
-using System.CodeDom.Compiler;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
-using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Forms;
-using ArcEngine.Properties;
-using DigitalRune.Windows.TextEditor;
-using DigitalRune.Windows.TextEditor.Completion;
-using DigitalRune.Windows.TextEditor.Document;
-using DigitalRune.Windows.TextEditor.Folding;
-using DigitalRune.Windows.TextEditor.Highlighting;
+using ArcEngine.Interface;
 
 
 namespace ArcEngine.Editor

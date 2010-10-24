@@ -32,6 +32,8 @@ using ArcEngine.Graphic;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using WeifenLuo.WinFormsUI.Docking;
+using ArcEngine.Interface;
+using ArcEngine.Interface;
 
 namespace ArcEngine.Editor
 {

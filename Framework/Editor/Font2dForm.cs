@@ -21,15 +21,13 @@
 using System;
 using System.Drawing;
 using System.Globalization;
-using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 using ArcEngine.Asset;
 using ArcEngine.Forms;
 using ArcEngine.Graphic;
-using OpenTK.Graphics;
-using OpenTK.Graphics.OpenGL;
+using ArcEngine.Interface;
 
 namespace ArcEngine.Editor
 {

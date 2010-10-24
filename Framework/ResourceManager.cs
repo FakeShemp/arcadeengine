@@ -27,6 +27,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
 using ArcEngine.Asset;
+using ArcEngine.Interface;
 
 //
 //

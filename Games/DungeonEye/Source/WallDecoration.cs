@@ -26,6 +26,7 @@ using System.Xml;
 using ArcEngine;
 using ArcEngine.Graphic;
 using ArcEngine.Asset;
+using ArcEngine.Interface;
 
 
 namespace DungeonEye

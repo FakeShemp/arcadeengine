@@ -25,20 +25,13 @@ using System.Xml;
 
 
 
-namespace ArcEngine.Asset
+namespace ArcEngine.Interface
 {
 	/// <summary>
 	/// Asset base interface
 	/// </summary>
 	public interface IAsset
 	{
-
-
-		/// <summary>
-		/// Initializes the asset
-		/// </summary>
-		/// <returns></returns>
-	//	bool Init();
 
 
 

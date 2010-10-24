@@ -24,6 +24,7 @@ using System.Drawing;
 using System.Xml;
 using ArcEngine.Asset;
 using ArcEngine.Forms;
+using ArcEngine.Interface;
 
 namespace ArcEngine
 {

@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
+using ArcEngine.Interface;
 
 
 namespace ArcEngine.Asset

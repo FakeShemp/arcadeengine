@@ -21,6 +21,7 @@ using System;
 using System.Xml;
 using ArcEngine.Asset;
 using DungeonEye.Interfaces;
+using ArcEngine.Interface;
 
 
 // http://dmreference.com/SRD/Magic.htm

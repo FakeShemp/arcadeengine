@@ -24,6 +24,8 @@ using System.Xml;
 using ArcEngine;
 using ArcEngine.Input;
 using ArcEngine.Asset;
+using ArcEngine.Interface;
+using ArcEngine.Interface;
 
 // Generate a new hero with random values
 // <see cref="http://www.aidedd.org/regles-f97/creation-de-perso-t1456.html"/>

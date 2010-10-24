@@ -23,6 +23,7 @@ using System.Xml;
 using ArcEngine.Asset;
 using ArcEngine;
 using DungeonEye.Interfaces;
+using ArcEngine.Interface;
 
 
 //

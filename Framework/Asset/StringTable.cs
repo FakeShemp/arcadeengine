@@ -22,6 +22,7 @@ using System;
 using System.Text;
 using System.Collections.Generic;
 using System.Xml;
+using ArcEngine.Interface;
 
 //
 // http://wiki.openttd.org/Format_of_langfiles

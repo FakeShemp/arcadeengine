@@ -29,6 +29,7 @@ using ArcEngine.Asset;
 using ArcEngine.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 using ArcEngine.Audio;
+using ArcEngine.Interface;
 
 namespace ArcEngine.Editor
 {

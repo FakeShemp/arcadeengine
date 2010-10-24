@@ -29,6 +29,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 using ArcEngine.Graphic;
+using ArcEngine.Interface;
 
 //
 // http://www.xnaresources.com/pages.asp?pageid=51

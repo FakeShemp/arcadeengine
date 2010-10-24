@@ -29,6 +29,7 @@ using ArcEngine.Graphic;
 using ArcEngine.Utility.GameState;
 using DungeonEye.Interfaces;
 using DungeonEye.MonsterStates;
+using ArcEngine.Interface;
 
 
 //

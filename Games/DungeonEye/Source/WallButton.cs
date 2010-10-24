@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Text;
 using ArcEngine.Asset;
 using System.Xml;
+using ArcEngine.Interface;
 
 namespace DungeonEye
 {

@@ -94,6 +94,16 @@ namespace ArcEngine.Graphic
 			WhiteTexture.MagFilter = TextureMagFilter.Nearest;
 		}
 
+		
+		/// <summary>
+		/// Destructor
+		/// </summary>
+		~SpriteBatch()
+		{
+			if (!IsDisposed)
+				throw new Exception(this + " not disposed, Call Dispose() !!");
+		}
+
 
 		/// <summary>
 		/// Immediately releases the unmanaged resources used by this object.
@@ -111,6 +121,8 @@ namespace ArcEngine.Graphic
 			if (Shader != null)
 				Shader.Dispose();
 			Shader = null;
+
+			IsDisposed = true;
 		}
 
 
@@ -1197,6 +1209,15 @@ namespace ArcEngine.Graphic
 
 
 		#region Properties
+
+		/// <summary>
+		/// Resource disposed
+		/// </summary>
+		public bool IsDisposed
+		{
+			get;
+			private set;
+		}
 
 
 		/// <summary>

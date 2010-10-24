@@ -20,6 +20,7 @@
 
 using ArcEngine.Asset;
 using WeifenLuo.WinFormsUI.Docking;
+using ArcEngine.Interface;
 
 namespace ArcEngine.Forms
 {

@@ -23,6 +23,7 @@ using System.IO;
 using System.Xml;
 using ArcEngine.Asset;
 using OpenAL = OpenTK.Audio.OpenAL;
+using ArcEngine.Interface;
 
 /// http://www.games-creators.org/wiki/Utiliser_FMOD_en_C_sharp
 /// http://www.devmaster.net/articles.php?catID=6

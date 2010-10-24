@@ -25,6 +25,7 @@ using System.IO;
 using System.Xml;
 using ArcEngine.Asset;
 using OpenAL = OpenTK.Audio.OpenAL;
+using ArcEngine.Interface;
 
 
 // http://www.marek-knows.com/
