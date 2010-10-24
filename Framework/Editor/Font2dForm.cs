@@ -68,13 +68,17 @@ namespace ArcEngine.Editor
 
 			//SizeBox.Value = CurrentFont.Size;
 
+			FontNameBox.BeginUpdate();
 			FontNameBox.Items.Clear();
+/*
 			foreach (string name in ResourceManager.Binaries)
 			{
 				if (name.EndsWith(".ttf", true, CultureInfo.CurrentCulture))
 					FontNameBox.Items.Add(name);
 			}
 		//	FontNameBox.SelectedText = CurrentFont.FileName;
+*/
+			FontNameBox.EndUpdate();
 
 			StyleBox.Items.Clear();
 			StyleBox.DataSource = Enum.GetNames(typeof(FontStyle));

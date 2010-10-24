@@ -356,6 +356,9 @@
     <Compile Include="Graphic\VertexPositionNormalTexture.cs" />
     <Compile Include="Graphic\VertexPositionTexture.cs" />
     <Compile Include="Input\GamePadState.cs" />
+    <Compile Include="Storage\BankStorage.cs" />
+    <Compile Include="Storage\FileSystemStorage.cs" />
+    <Compile Include="Interface\IStorage.cs" />
     <Compile Include="Maths\MathHelper.cs">
       <SubType>Code</SubType>
     </Compile>

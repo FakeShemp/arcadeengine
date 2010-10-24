@@ -358,7 +358,7 @@ namespace ArcEngine.Asset
 			bool ret = false;
 
 			// Open the font
-			using (Stream stream = ResourceManager.LoadAsset(filename))
+			using (Stream stream = ResourceManager.Load(filename))
 			{
 				if (stream == null)
 				{

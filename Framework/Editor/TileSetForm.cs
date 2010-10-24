@@ -61,10 +61,10 @@ namespace ArcEngine.Editor
 			// Available textures
 			TexturesBox.BeginUpdate();
 			TexturesBox.Items.Clear();
-			foreach (string name in ResourceManager.GetBinaryList(".png$"))
-			{
-				TexturesBox.Items.Add(name);
-			}
+			//foreach (string name in ResourceManager.GetBinaryList(".png$"))
+			//{
+			//    TexturesBox.Items.Add(name);
+			//}
 			TexturesBox.EndUpdate();
 
 			// Set zoom value

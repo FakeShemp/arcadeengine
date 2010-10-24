@@ -28,7 +28,7 @@ using ArcEngine.Graphic;
 using ArcEngine.Input;
 using ArcEngine.Utility.ScreenManager;
 using DungeonEye.Gui;
-
+using ArcEngine.Storage;
 
 namespace DungeonEye
 {
@@ -52,7 +52,7 @@ namespace DungeonEye
 		/// </summary>
 		public override void LoadContent()
 		{
-			ResourceManager.LoadBank("data/intro.bnk");
+			ResourceManager.Storages.Add(new BankStorage("data/intro.bnk"));
 
 			Scene = ResourceManager.CreateAsset<Scene>("intro");
             Scene.Font.GlyphTileset.Scale = new Vector2(2, 2);

@@ -215,7 +215,7 @@ namespace DungeonEye
 		{
 			
 			// Load file definition
-			Stream stream = ResourceManager.LoadAsset("MazeElements.xml");
+			Stream stream = ResourceManager.Load("MazeElements.xml");
 			if (stream == null)
 				throw new FileNotFoundException("Can not find maze element coordinate file !!! Aborting.");
 

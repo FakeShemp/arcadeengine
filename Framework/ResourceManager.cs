@@ -28,7 +28,7 @@ using System.Text.RegularExpressions;
 using System.Xml;
 using ArcEngine.Asset;
 using ArcEngine.Interface;
-
+using ArcEngine.Storage;
 //
 //
 //
@@ -55,12 +55,10 @@ namespace ArcEngine
 			
 			BinaryLock = new object();
 
-			Binaries = new List<string>();
 			AssetProviders = new Dictionary<Type, Provider>();
 			Providers = new List<Provider>();
 			RegistredTags = new Dictionary<string, Provider>();
-			Paths = new List<string>();
-
+			Storages = new List<IStorage>();
 
 			AddProvider(new Providers());
 		}
@@ -78,9 +76,13 @@ namespace ArcEngine
 			Trace.WriteDebugLine("[ResourceManager] Dispose()");
 			
 			foreach (Provider provider in Providers)
-			{
 				provider.Dispose();
-			}
+			Providers.Clear();
+
+			foreach (IStorage storage in Storages)
+				storage.Dispose();
+			Storages.Clear();
+
 		}
 
 
@@ -102,32 +104,6 @@ namespace ArcEngine
 
 			return null;
 		}
-
-
-		#region Binary operations
-
-		/// <summary>
-		/// Returns a list of binary matching a pattern using regular expression
-		/// </summary>
-		/// <param name="pattern">Pattern to apply (ie *.png, *.txt)</param>
-		/// <returns>A list of binaries found</returns>
-		static public List<string> GetBinaryList(string pattern)
-		{
-			List<string> list = new List<string>();
-
-			// No need to lock() because LoadedBinaries do the work for us
-			foreach (string name in Binaries)
-			{
-				if (Regex.IsMatch(name, pattern))
-					list.Add(name);
-			}
-
-			list.Sort();
-
-			return list;
-		}
-
-		#endregion
 
 		
 		#region Providers
@@ -284,8 +260,6 @@ namespace ArcEngine
 			if (asset == null)
 				return null;
 
-			Trace.WriteDebugLine("[ResourceManager] ConvertAsset");
-
 			StringBuilder sb = new StringBuilder();
 			using (XmlWriter writer = XmlWriter.Create(sb))
 				asset.Save(writer);
@@ -437,8 +411,8 @@ namespace ArcEngine
 				foreach (Provider provider in Providers)
 					provider.Clear();
 
-				BankName = null;
-				BankPassword = null;
+				//BankName = null;
+				//BankPassword = null;
 
 				Trace.WriteLine("Clearing assets !");
 			}
@@ -597,7 +571,7 @@ namespace ArcEngine
 
 
 		#region Bank operations
-
+/*
 		/// <summary>
 		/// Loads ressource from file
 		/// </summary>
@@ -617,12 +591,11 @@ namespace ArcEngine
 		/// <returns>True if loaded, otherwise false</returns>
 		static public bool LoadBank(string filename, string password)
 		{
-			BankName = filename;
-			BankPassword = password;
-			Binaries.Clear();
+			//BankName = filename;
+			//BankPassword = password;
+			//Binaries.Clear();
 
 			Trace.WriteLine("Loading resources from file \"" + filename + "\"...");
-
 			// File exists ??
 			if (File.Exists(filename) == false)
 			{
@@ -632,6 +605,7 @@ namespace ArcEngine
 
 			Stopwatch swatch = new Stopwatch();
 			Trace.Indent();
+
 
 			// Open an existing zip file for reading
 			ZipStorer zip = ZipStorer.Open(BankName, FileAccess.Read);
@@ -733,12 +707,37 @@ namespace ArcEngine
 
 			return false;
 		}
-
+*/
 		#endregion
 
 
 		#region Asset operations
 
+
+		/// <summary>
+		/// Loads a resource from a bank first, and if not found, load it from disk.
+		/// </summary>
+		/// <param name="assetname">Name of the file to load</param>
+		/// <returns>Resource stream or null if not found</returns>
+		/// <remarks>Don't forget to Dispose the stream !!</remarks>
+		static public Stream Load(string assetname)
+		{
+			if (string.IsNullOrEmpty(assetname))
+				return null;
+
+			foreach (IStorage storage in Storages)
+			{
+				Stream stream = storage.Read(assetname);
+				if (stream != null)
+					return stream;
+			}
+
+
+			return null;
+		}
+
+
+		
 		/// <summary>
 		/// Adds an asset from a file in a bank
 		/// </summary>
@@ -806,58 +805,6 @@ namespace ArcEngine
 
 
 			return true;
-		}
-
-
-		/// <summary>
-		/// Loads a resource from a bank first, and if not found, load it from disk.
-		/// </summary>
-		/// <param name="assetname">Name of the file to load</param>
-		/// <returns>Resource stream or null if not found</returns>
-		/// <remarks>Don't forget to Dispose the stream !!</remarks>
-		static public Stream LoadAsset(string assetname)
-		{
-			if (string.IsNullOrEmpty(assetname))
-				return null;
-
-			//
-			// 1° Look in bank
-			//
-			if (!string.IsNullOrEmpty(BankName))
-			{
-				ZipStorer zip = ZipStorer.Open(BankName, FileAccess.Read);
-				if (zip != null)
-				{
-					// Read the central directory collection
-					List<ZipStorer.ZipFileEntry> dir = zip.ReadCentralDir();
-
-					// Look for the desired file
-					foreach (ZipStorer.ZipFileEntry entry in dir)
-					{
-						if (entry.FilenameInZip != assetname)
-							continue;
-
-						Stream stream = new MemoryStream();
-						zip.ExtractFile(entry, stream);
-						zip.Close();
-
-						// Rewind
-						stream.Seek(0, SeekOrigin.Begin);
-
-						return stream;
-					}
-
-					zip.Close();
-				}
-			}
-
-			//
-			// 2° try to load it from disk
-			//
-			if (File.Exists(assetname))
-				return File.Open(assetname, FileMode.Open, FileAccess.Read);
-
-			return null;
 		}
 
 
@@ -987,33 +934,6 @@ namespace ArcEngine
 		#region Properties
 
 		/// <summary>
-		/// Returns a list of binaries present in the bank
-		/// </summary>
-		/// <returns>A list of binaries found</returns>
-		static public List<string> Binaries
-		{
-			get;
-			private set;
-		}
-
-
-		/// <summary>
-		///  Current bank name
-		/// </summary>
-		public static string BankName
-		{
-			get;
-			private set;
-		}
-
-
-		/// <summary>
-		/// Bank password
-		/// </summary>
-		public static string BankPassword;
-
-
-		/// <summary>
 		/// Returns a list of all internal resources
 		/// </summary>
 		/// <returns></returns>
@@ -1060,9 +980,9 @@ namespace ArcEngine
 
 
 		/// <summary>
-		/// Known paths for asset loading
+		/// Storages
 		/// </summary>
-		static public List<string> Paths
+		static public List<IStorage> Storages
 		{
 			get;
 			private set;

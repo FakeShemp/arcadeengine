@@ -18,17 +18,17 @@
 //
 #endregion
 using System;
-using System.IO;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Audio;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
+using ArcEngine.Storage;
 using ArcEngine.Utility.ScreenManager;
 using DungeonEye.Gui;
-
 
 namespace DungeonEye
 {
@@ -53,12 +53,11 @@ namespace DungeonEye
 		/// </summary>
 		public override void LoadContent()
 		{
-			ResourceManager.LoadBank("data/Main.bnk");
-			//AssetBank bank = new AssetBank("data/main.bnk");
-			//ResourceManager.AddBank(bank);
+			//ResourceManager.LoadBank("data/Main.bnk");
+			ResourceManager.Storages.Add(new BankStorage("data/main.bnk"));
 
 			// Change the cursor
-			using (Stream stream = ResourceManager.LoadAsset("cursor.png"))
+			using (Stream stream = ResourceManager.Load("cursor.png"))
 			{
 				using (Bitmap bmp = new Bitmap(stream))
 				{

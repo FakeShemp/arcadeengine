@@ -23,7 +23,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using ArcEngine.Forms;
 using WeifenLuo.WinFormsUI.Docking;
-
+using ArcEngine.Storage;
 
 namespace ArcEngine.Editor
 {
@@ -143,7 +143,7 @@ namespace ArcEngine.Editor
 			Environment.CurrentDirectory = Application.StartupPath;
 
 
-			ResourceManager.LoadBank(dlg.FileName);
+			ResourceManager.Storages.Add(new BankStorage(dlg.FileName));
 
 			ResourcePanel.RebuildResourceTree();
 
@@ -270,7 +270,7 @@ namespace ArcEngine.Editor
 
 			// Load bank
 			BankName = dlg.FileName;
-			ResourceManager.LoadBank(BankName);
+			ResourceManager.Storages.Add(new BankStorage(BankName));
 
 			dlg.Dispose();
 			dlg = null;
@@ -469,7 +469,7 @@ namespace ArcEngine.Editor
 
 			// for each selected file, add it to the bank file
 			for (int i = 0; i < dlg.FileNames.Length; i++)
-				ResourceManager.LoadAsset(dlg.SafeFileNames[i]);
+				ResourceManager.Load(dlg.SafeFileNames[i]);
 
 			ResourcePanel.RebuildResourceTree();
 		}
@@ -490,7 +490,7 @@ namespace ArcEngine.Editor
 			if (dlg.ShowDialog() != DialogResult.OK)
 				return;
 
-			ResourceManager.LoadBank(dlg.FileName);
+			ResourceManager.Storages.Add(new BankStorage(dlg.FileName));
 
 			ResourcePanel.RebuildResourceTree();
 		}

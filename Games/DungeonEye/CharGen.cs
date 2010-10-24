@@ -17,15 +17,14 @@
 //along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 //
 #endregion
-using System.Windows.Forms;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Text;
+using System.Windows.Forms;
 using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
+using ArcEngine.Storage;
 using ArcEngine.Utility.ScreenManager;
 using DungeonEye.Gui;
 
@@ -72,7 +71,7 @@ namespace DungeonEye
 		/// </summary>
 		public override void LoadContent()
 		{
-			ResourceManager.LoadBank("data/chargen.bnk");
+			ResourceManager.Storages.Add(new BankStorage("data/chargen.bnk"));
 
 			Tileset = ResourceManager.CreateAsset<TileSet>("CharGen");
             Tileset.Scale = new Vector2(2.0f, 2.0f);

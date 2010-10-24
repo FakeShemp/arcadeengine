@@ -20,13 +20,13 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Windows.Forms;
 using System.Xml;
 using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
+using ArcEngine.Storage;
 using ArcEngine.Utility.ScreenManager;
 using DungeonEye.Gui;
 
@@ -137,7 +137,7 @@ namespace DungeonEye
 			watch.Start();
 
 			ResourceManager.ClearAssets();
-			ResourceManager.LoadBank("data/game.bnk");
+			ResourceManager.Storages.Add(new BankStorage("data/game.bnk"));
 			Trace.WriteLine("Content loaded ({0} ms)", watch.ElapsedMilliseconds);
 
 			// Language
