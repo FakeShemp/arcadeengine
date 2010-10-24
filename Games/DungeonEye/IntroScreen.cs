@@ -52,7 +52,7 @@ namespace DungeonEye
 		/// </summary>
 		public override void LoadContent()
 		{
-			ResourceManager.Storages.Add(new BankStorage("data/intro.bnk"));
+			ResourceManager.Storages.Add(new BankStorage("data/intro.bnk", System.IO.FileAccess.Read));
 
 			Scene = ResourceManager.CreateAsset<Scene>("intro");
             Scene.Font.GlyphTileset.Scale = new Vector2(2, 2);

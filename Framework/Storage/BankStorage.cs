@@ -41,23 +41,13 @@ namespace ArcEngine.Storage
 		/// Constructor
 		/// </summary>
 		/// <param name="bankname">Bank name</param>
-		public BankStorage(string bankname)
-			: this(bankname, string.Empty)
-		{
-		}
-
-
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		/// <param name="bankname">Bank name</param>
-		/// <param name="password">Password</param>
-		public BankStorage(string bankname, string password)
+		/// <param name="access">Acces mode</param>
+		public BankStorage(string bankname, FileAccess access)
 		{
 			Entries = new List<ZipStorer.ZipFileEntry>();
 
 			BankName = bankname;
-			Password = password;
+			Mode = access;
 
 			Process();
 
@@ -139,7 +129,7 @@ namespace ArcEngine.Storage
 			Trace.Indent();
 
 			// Open an existing zip file for reading
-			ZipHandle = ZipStorer.Open(BankName, FileAccess.ReadWrite);
+			ZipHandle = ZipStorer.Open(BankName, Mode);
 			if (ZipHandle == null)
 			{
 				Trace.WriteLine("Failed to open bank file !");
@@ -255,9 +245,13 @@ namespace ArcEngine.Storage
 
 
 		/// <summary>
-		/// Password
+		/// Access mode
 		/// </summary>
-		string Password;
+		public FileAccess Mode
+		{
+			get;
+			private set;
+		}
 
 
 		/// <summary>

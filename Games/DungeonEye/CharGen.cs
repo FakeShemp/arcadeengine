@@ -71,7 +71,7 @@ namespace DungeonEye
 		/// </summary>
 		public override void LoadContent()
 		{
-			ResourceManager.Storages.Add(new BankStorage("data/chargen.bnk"));
+			ResourceManager.Storages.Add(new BankStorage("data/chargen.bnk", System.IO.FileAccess.Read));
 
 			Tileset = ResourceManager.CreateAsset<TileSet>("CharGen");
             Tileset.Scale = new Vector2(2.0f, 2.0f);

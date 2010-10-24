@@ -137,7 +137,7 @@ namespace DungeonEye
 			watch.Start();
 
 			ResourceManager.ClearAssets();
-			ResourceManager.Storages.Add(new BankStorage("data/game.bnk"));
+			ResourceManager.Storages.Add(new BankStorage("data/game.bnk", System.IO.FileAccess.Read));
 			Trace.WriteLine("Content loaded ({0} ms)", watch.ElapsedMilliseconds);
 
 			// Language

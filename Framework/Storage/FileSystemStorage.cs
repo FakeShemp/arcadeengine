@@ -31,53 +31,110 @@ namespace ArcEngine.Storage
 	public class FileSystemStorage : IStorage
 	{
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
-		/// <param name="path"></param>
+		/// <param name="path">Directory path</param>
 		public FileSystemStorage(string path)
 		{
+			StoragePath = path;
+			Files = new List<string>();
 
+			Process();
 		}
 
 
 		/// <summary>
-		/// 
+		/// Dispose resource
 		/// </summary>
 		public void Dispose()
 		{
 		}
 
 
-
+		/// <summary>
+		/// Opens a file for reading
+		/// </summary>
+		/// <param name="name">File name</param>
+		/// <returns>Stream handle or null</returns>
 		public Stream Read(string name)
 		{
-			throw new NotImplementedException();
+			string filename = Path.Combine(StoragePath, name);
+
+			if (!File.Exists(filename))
+				return null;
+
+			return new FileStream(filename, FileMode.Open);
 		}
 
 
 
-
+		/// <summary>
+		/// Returns a file list from the current bank matching the given search pattern.
+		/// </summary>
+		/// <returns>File list</returns>
 		public List<string> GetFiles()
 		{
-			throw new NotImplementedException();
+			return GetFiles("*");
 		}
 
 
 
+		/// <summary>
+		/// Returns a file list from the current bank matching the given search pattern.
+		/// </summary>
+		/// <param name="pattern">Search pattern</param>
+		/// <returns>File list</returns>
 		public List<string> GetFiles(string pattern)
 		{
-			throw new NotImplementedException();
+			List<string> files = new List<string>();
+
+
+			return files;
 		}
 
+
+		/// <summary>
+		/// Process all file in the storage
+		/// </summary>
+		/// <returns>True on succes</returns>
 		public bool Process()
 		{
-			throw new NotImplementedException();
+			Files.Clear();
+
+			DirectoryInfo di = new DirectoryInfo(StoragePath);
+			foreach (FileInfo fi in di.GetFiles("*", SearchOption.AllDirectories))
+			{
+				Files.Add(fi.FullName);
+			}
+
+			return true;
 		}
 
 
+		/// <summary>
+		/// Opens a file for writing
+		/// </summary>
+		/// <param name="name">File name</param>
+		/// <returns>Stream handle or null</returns>
 		public Stream Write(string name)
 		{
-			throw new NotImplementedException();
+			return null;
 		}
+
+
+		#region Properties
+
+		/// <summary>
+		/// Storage path
+		/// </summary>
+		string StoragePath;
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		List<string> Files;
+
+		#endregion
 	}
 }

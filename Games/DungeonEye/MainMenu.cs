@@ -54,7 +54,7 @@ namespace DungeonEye
 		public override void LoadContent()
 		{
 			//ResourceManager.LoadBank("data/Main.bnk");
-			ResourceManager.Storages.Add(new BankStorage("data/main.bnk"));
+			ResourceManager.Storages.Add(new BankStorage("data/main.bnk", FileAccess.Read));
 
 			// Change the cursor
 			using (Stream stream = ResourceManager.Load("cursor.png"))

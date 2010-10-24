@@ -19,12 +19,14 @@
 #endregion
 using System;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 using ArcEngine;
 using ArcEngine.Audio;
 using ArcEngine.Editor;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
+using ArcEngine.Storage;
 using ArcEngine.Utility.ScreenManager;
 using DungeonEye.Forms;
 
@@ -57,6 +59,9 @@ namespace DungeonEye
 			AudioManager.PlayTunes = Settings.GetBool("Tunes");
 			AudioManager.PlaySounds = Settings.GetBool("Sounds");
 
+#if DEBUG
+			ResourceManager.Storages.Add(new FileSystemStorage(Path.Combine(Directory.GetCurrentDirectory(), "data")));
+#endif
 
 			// Add the provider
 			ResourceManager.AddProvider(new Providers());

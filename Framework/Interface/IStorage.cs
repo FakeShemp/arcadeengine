@@ -44,12 +44,14 @@ namespace ArcEngine.Interface
 		/// <returns>Stream handle or null</returns>
 		Stream Read(string name);
 
+
 		/// <summary>
 		/// Opens a file for writing
 		/// </summary>
 		/// <param name="name">File name</param>
 		/// <returns>Stream handle or null</returns>
 		Stream Write(string name);
+
 
 		/// <summary>
 		/// Returns a file list from the current bank
