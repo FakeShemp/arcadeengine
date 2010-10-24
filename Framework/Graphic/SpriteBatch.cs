@@ -67,10 +67,6 @@ namespace ArcEngine.Graphic
 			bm.Dispose();
 			WhiteTexture.MinFilter = TextureMinFilter.Nearest;
 			WhiteTexture.MagFilter = TextureMagFilter.Nearest;
-			//WhiteTexture.VerticalWrap = TextureWrapFilter.Clamp;
-			//WhiteTexture.HorizontalWrap = TextureWrapFilter.Clamp;
-			//WhiteTexture.BorderColor = Color.Red;
-			//WhiteTexture.GenerateMipmap();
 		}
 
 

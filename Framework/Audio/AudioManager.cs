@@ -34,7 +34,7 @@ namespace ArcEngine.Audio
 	{
 
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
 		static AudioManager()
 		{
@@ -123,6 +123,13 @@ namespace ArcEngine.Audio
 		{
 			if (Context != null)
 				Release();
+
+			// No context
+			if (string.IsNullOrEmpty(device))
+			{
+				Trace.WriteLine("[AudioManager] Create() : Empty device name.");
+				return false;
+			}
 
 			Trace.WriteLine("[AudioManager] : Creating a new context on \"{0}\"", device);
 

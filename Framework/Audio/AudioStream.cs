@@ -71,6 +71,16 @@ namespace ArcEngine.Audio
 		}
 
 
+			/// <summary>
+		/// Destructor
+		/// </summary>
+		~AudioStream()
+		{
+			if (!IsDisposed)
+				throw new Exception ("[AudioStream] : Call Dispose() !!");
+		}
+
+	
 		/// <summary>
 		/// Dispose resources
 		/// </summary>

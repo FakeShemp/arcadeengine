@@ -65,7 +65,7 @@ namespace DungeonEye
 			GSM = new ScreenManager(this);
 
 			// Audio
-//			AudioManager.Create();
+			AudioManager.Create();
 
 
 			// Editor events
