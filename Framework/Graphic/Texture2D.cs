@@ -128,7 +128,7 @@ namespace ArcEngine.Graphic
             TK.GL.DeleteTexture(Handle);
 			Handle = -1;
 
-			GC.SuppressFinalize(this);
+			IsDisposed = true;
 		}
 
 		#endregion

@@ -42,6 +42,12 @@ namespace ArcEngine.Audio
 		/// </summary>
 		public AudioSample()
 		{
+			if (!AudioManager.IsInit)
+			{
+				Trace.WriteLine("[AudioSample] AudioSample() : No audio context available.");
+				return;
+			}
+
 			Buffer = OpenAL.AL.GenBuffer();
 
 			Pitch = 1.0f;
@@ -54,22 +60,12 @@ namespace ArcEngine.Audio
 
 
 		/// <summary>
-		/// Initializes the asset
-		/// </summary>
-		/// <returns>True on success</returns>
-		public bool Init()
-		{
-			return true;
-		}
-
-
-
-		/// <summary>
 		/// Destructor
 		/// </summary>
 		~AudioSample()
 		{
-			//throw new Exception("Audio : Call Dispose() !!");
+			if (!IsDisposed)
+				throw new Exception("[AudioSample] : Call Dispose() !!");
 		}
 
 
@@ -98,6 +94,12 @@ namespace ArcEngine.Audio
 		/// <returns>True if successful</returns>
 		public bool LoadSound(string filename)
 		{
+			if (!AudioManager.IsInit)
+			{
+				Trace.WriteLine("[AudioSample] LoadSound() : Failed to load sample, audio system not initialized.");
+				return false;
+			}
+
 			using (Stream stream = ResourceManager.LoadAsset(filename))
 			{
 				if (stream == null)
@@ -107,7 +109,7 @@ namespace ArcEngine.Audio
 				byte[] sound_data = LoadWave(stream, out channels, out bits_per_sample, out sample_rate);
 
 				// Transfert data
-				OpenAL.AL.BufferData(Buffer, GetSoundFormat(channels, bits_per_sample), sound_data, sound_data.Length, sample_rate);
+				OpenAL.AL.BufferData(Buffer, (OpenAL.ALFormat)GetSoundFormat(channels, bits_per_sample), sound_data, sound_data.Length, sample_rate);
 
 				return true;
 			}
@@ -179,14 +181,14 @@ namespace ArcEngine.Audio
 		/// <param name="channels"></param>
 		/// <param name="bits"></param>
 		/// <returns></returns>
-		private OpenAL.ALFormat GetSoundFormat(int channels, int bits)
+		private AudioFormat GetSoundFormat(int channels, int bits)
 		{
 			switch (channels)
 			{
 				case 1:
-				return bits == 8 ? OpenAL.ALFormat.Mono8 : OpenAL.ALFormat.Mono16;
+				return bits == 8 ? AudioFormat.Mono8 : AudioFormat.Mono16;
 				case 2:
-				return bits == 8 ? OpenAL.ALFormat.Stereo8 : OpenAL.ALFormat.Stereo16;
+				return bits == 8 ? AudioFormat.Stereo8 : AudioFormat.Stereo16;
 				default:
 				throw new NotSupportedException("The specified sound format is not supported.");
 			}
@@ -298,73 +300,6 @@ namespace ArcEngine.Audio
 
 		#endregion
 	
-
-		#region Listener Properties
-
-/*
-		/// <summary>
-		/// Listener position
-		/// </summary>
-		static public Point ListenerPosition
-		{
-			get
-			{
-				Vector3 pos;
-
-				AL.GetListener(ALListener3f.Position, out pos);
-
-				return new Point((int)pos.X, (int)pos.Y); ;
-			}
-
-			set
-			{
-				AL.Listener(ALListener3f.Position, value.X, value.Y, 0);
-			}
-		}
-
-		/// <summary>
-		/// Listener velocity
-		/// </summary>
-		static public Point ListenerVelocity
-		{
-			get
-			{
-				int[] pos = new int[3];
-
-				//AL.GetListeneriv(AL.AL_VELOCITY, pos);
-
-				return new Point(pos[0], pos[1]); ;
-			}
-
-			set
-			{
-				//AL.Listener3i(AL.AL_VELOCITY, value.X, value.Y, 0);
-			}
-		}
-
-		/// <summary>
-		/// Listener gain
-		/// </summary>
-		static public float ListenerGain
-		{
-			get
-			{
-				float val = 0;
-				//AL.GetListenerf(AL.AL_GAIN, out val);
-
-				return val;
-			}
-			set
-			{
-				//AL.Listenerf(AL.AL_GAIN, value);
-			}
-		}
-
-*/
-
-
-		#endregion
-
 
 		#region Properties
 

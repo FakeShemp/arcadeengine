@@ -109,6 +109,8 @@ namespace DungeonEye
 				Batch.Dispose();
 			Batch = null;
 
+			
+
 			SaveGame = "";
 			Heroes = null;
 			SelectedHero = null;

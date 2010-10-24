@@ -46,8 +46,11 @@ namespace ArcEngine.Audio
 		/// </summary>
 		public AudioStream()
 		{
-			if (AudioManager.Context == null)
-				throw new InvalidOperationException("Initialize Audio context first");
+			if (!AudioManager.IsInit)
+			{
+				Trace.WriteLine("[AudioStream] AudioStream() : No audio context available.");
+				return;
+			}
 
 			// Add to the known list of audio streams
 			if (Streams == null)
@@ -74,7 +77,8 @@ namespace ArcEngine.Audio
 		public void Dispose()
 		{
 			// Remove from known streams
-			Streams.Remove(this);
+			if (Streams != null)
+				Streams.Remove(this);
 
 			if (oggStream != null)
 				oggStream.Dispose();
@@ -85,9 +89,9 @@ namespace ArcEngine.Audio
 				OpenAL.AL.DeleteBuffers(Buffers);
 			Buffers = null;
 
-			if (Source != -1)
+			if (Source != 0)
 				OpenAL.AL.DeleteSource(Source);
-			Source = -1;
+			Source = 0;
 
 			FileName = string.Empty;
 			BufferData = null;
@@ -95,15 +99,6 @@ namespace ArcEngine.Audio
 			IsDisposed = true;
 		}
 
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <returns></returns>
-		public bool Init()
-		{
-			return true;
-		}
 
 
 		/// <summary>
@@ -125,7 +120,7 @@ namespace ArcEngine.Audio
 		/// <returns>True on success</returns>
 		public bool LoadOgg(Stream stream)
 		{
-			if (stream == null)
+			if (stream == null || !AudioManager.IsInit)
 				return false;
 
 			Stream = stream;
@@ -146,7 +141,7 @@ namespace ArcEngine.Audio
 		/// </summary>
 		public void Play()
 		{
-			if (State == AudioSourceState.Playing)
+			if (!AudioManager.IsInit || State == AudioSourceState.Playing)
 				return;
 
 
@@ -172,6 +167,9 @@ namespace ArcEngine.Audio
 		/// </summary>
 		public void Stop()
 		{
+			if (!AudioManager.IsInit)
+				return;
+
 			// Stop source
 			OpenAL.AL.SourceStop(Source);
 
@@ -184,6 +182,9 @@ namespace ArcEngine.Audio
 		/// </summary>
 		public void Pause()
 		{
+			if (!AudioManager.IsInit)
+				return;
+			
 			OpenAL.AL.SourcePause(Source);
 		}
 
@@ -193,7 +194,7 @@ namespace ArcEngine.Audio
 		/// </summary>
 		internal void Process()
 		{
-			if (State != AudioSourceState.Playing)
+			if (State != AudioSourceState.Playing || !AudioManager.IsInit)
 				return;
 
 			// Get empty buffers
@@ -275,6 +276,9 @@ namespace ArcEngine.Audio
 		/// </summary>
 		public void Rewind()
 		{
+			if (Stream == null)
+				return;
+			
 			// Begin of the stream
 			Stream.Seek(0, SeekOrigin.Begin);
 			
@@ -290,7 +294,7 @@ namespace ArcEngine.Audio
 		/// </summary>
 		static internal void Update()
 		{
-			if (Streams == null)
+			if (!AudioManager.IsInit)
 				return;
 
 			foreach (AudioStream audio in Streams)
@@ -422,12 +426,18 @@ namespace ArcEngine.Audio
 		{
 			get
 			{
+				if (Source == 0)
+					return Vector3.Zero;
+
 				Vector3 v = Vector3.Zero;
 				OpenAL.AL.GetSource(Source, OpenAL.ALSource3f.Position, out v.X, out v.Y, out v.Z);
 				return v;
 			}
 			set
 			{
+				if (Source == 0)
+					return;
+
 				OpenAL.AL.Source(Source, OpenAL.ALSource3f.Position, value.X, value.Y, value.Z);
 			}
 		}
@@ -440,12 +450,18 @@ namespace ArcEngine.Audio
 		{
 			get
 			{
+				if (Source == 0)
+					return Vector3.Zero;
+
 				Vector3 v = Vector3.Zero;
 				OpenAL.AL.GetSource(Source, OpenAL.ALSource3f.Direction, out v.X, out v.Y, out v.Z);
 				return v;
 			}
 			set
 			{
+				if (Source == 0)
+					return;
+
 				OpenAL.AL.Source(Source, OpenAL.ALSource3f.Direction, value.X, value.Y, value.Z);
 			}
 		}
@@ -458,12 +474,18 @@ namespace ArcEngine.Audio
 		{
 			get
 			{
+				if (Source == 0)
+					return Vector3.Zero;
+
 				Vector3 v = Vector3.Zero;
 				OpenAL.AL.GetSource(Source, OpenAL.ALSource3f.Velocity, out v.X, out v.Y, out v.Z);
 				return v;
 			}
 			set
 			{
+				if (Source == 0)
+					return;
+
 				OpenAL.AL.Source(Source, OpenAL.ALSource3f.Velocity, value.X, value.Y, value.Z);
 			}
 		}
@@ -476,12 +498,18 @@ namespace ArcEngine.Audio
 		{
 			get
 			{
+				if (Source == 0)
+					return 0.0f;
+
 				float f;
 				OpenAL.AL.GetSource(Source, OpenAL.ALSourcef.RolloffFactor, out f);
 				return f;
 			}
 			set
 			{
+				if (Source == 0)
+					return;
+
 				OpenAL.AL.Source(Source, OpenAL.ALSourcef.RolloffFactor, value);
 			}
 		}
@@ -494,12 +522,18 @@ namespace ArcEngine.Audio
 		{
 			get
 			{
+				if (Source == 0)
+					return false;
+
 				bool b;
 				OpenAL.AL.GetSource(Source, OpenAL.ALSourceb.SourceRelative, out b);
 				return b;
 			}
 			set
 			{
+				if (Source == 0)
+					return;
+
 				OpenAL.AL.Source(Source, OpenAL.ALSourceb.SourceRelative, value);
 			}
 		}
@@ -586,6 +620,9 @@ namespace ArcEngine.Audio
 		{
 			get
 			{
+				if (Source == 0)
+					return AudioSourceState.Initial;
+
 				return (AudioSourceState) OpenAL.AL.GetSourceState(Source);
 			}
 		}

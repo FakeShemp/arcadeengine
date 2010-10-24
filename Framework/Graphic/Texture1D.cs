@@ -49,6 +49,7 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		public override void Dispose()
 		{
+			IsDisposed = true;
 		}
 	}
 }

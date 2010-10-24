@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using OpenAL = OpenTK.Audio.OpenAL;
+using System.Windows.Forms;
 
 namespace ArcEngine.Audio
 {
@@ -32,16 +33,37 @@ namespace ArcEngine.Audio
 	static public class AudioManager
 	{
 
+		/// <summary>
+		/// 
+		/// </summary>
+		static AudioManager()
+		{
+			if (!string.IsNullOrEmpty(DefaultDevice))
+				return;
+
+
+			Trace.WriteLine("[AudioManager] AudioManager() : OpenAL not found !!!");
+
+			DialogResult result = MessageBox.Show("OpenAL is missing. Would you like to download it now ?", 
+				"OpenAL DLL not found !!", 
+				MessageBoxButtons.YesNo);
+
+			// Open browser with OpenAL download page
+			if (result == DialogResult.Yes)
+					System.Diagnostics.Process.Start("http://connect.creativelabs.com/openal/Downloads/Forms/AllItems.aspx");
+		}
+
 
 		/// <summary>
 		/// Display diagnostic informations
 		/// </summary>
 		static void Diagnostic()
 		{
+
 			Trace.WriteLine("--- Device related analysis ---");
 			Trace.Indent();
 			{
-				Trace.WriteLine("Default playback device: " + OpenTK.Audio.AudioContext.DefaultDevice);
+				Trace.WriteLine("Default playback device: " + DefaultDevice);
 				Trace.WriteLine("All known playback devices:");
 				Trace.Indent();
 				{
@@ -50,7 +72,7 @@ namespace ArcEngine.Audio
 				}
 				Trace.Unindent();
 
-				Trace.WriteLine("Default recording device: " + OpenTK.Audio.AudioCapture.DefaultDevice);
+				Trace.WriteLine("Default recording device: " + DefaultDevice);
 				Trace.WriteLine("All known recording devices:");
 				Trace.Indent();
 				{
@@ -102,33 +124,22 @@ namespace ArcEngine.Audio
 			if (Context != null)
 				Release();
 
-			Trace.WriteLine("[Audio] : Creating a new context on \"{0}\"", device);
+			Trace.WriteLine("[AudioManager] : Creating a new context on \"{0}\"", device);
 
 
 			try
 			{
 				Context = new OpenTK.Audio.AudioContext(device);
 			}
-			catch (DllNotFoundException e)
+			catch (Exception e)
 			{
-			}
-			catch (Exception)
-			{
-				Trace.WriteLine("#####################");
-				Trace.WriteLine("OpenAL not found !!!!");
-				Trace.WriteLine("#####################");
-
-				System.Windows.Forms.MessageBox.Show("Please download and install OpenAL at :" +
-					Environment.NewLine + Environment.NewLine +
-					"http://connect.creativelabs.com/openal/Downloads/Forms/AllItems.aspx" +
-					Environment.NewLine + Environment.NewLine + "and install oalinst", "OpenAL DLL not found !!");
-
-				throw new DllNotFoundException("OpenAL dll not found !!!");
+				Trace.WriteLine("[AudioManager] Create() : " + e.Message);
+				return false;				
 			}
 
 
-
-			Trace.WriteLine("[Audio] : Created on device \"{0}\"", Context.CurrentDevice);
+			IsInit = true;
+			Trace.WriteLine("[AudioManager] : Created on device \"{0}\"", Context.CurrentDevice);
 
 			Diagnostic();
 
@@ -142,13 +153,15 @@ namespace ArcEngine.Audio
 		/// </summary>
 		static public void Release()
 		{
-			Trace.WriteLine("[Audio] : Release()");
+			Trace.WriteLine("[AudioManager] : Release()");
 
 			if (Context != null)
 			{
 				Context.Dispose();
 				Context = null;
 			}
+
+			IsInit = false;
 		}
 
 
@@ -188,6 +201,11 @@ namespace ArcEngine.Audio
 		{
 			get
 			{
+				Trace.WriteLine("[AudioManager] AvailableDevices");
+
+				if (string.IsNullOrEmpty(DefaultDevice))
+					return new List<string>();
+
 				return new List<string>(OpenTK.Audio.AudioContext.AvailableDevices);
 			}
 		}
@@ -200,7 +218,15 @@ namespace ArcEngine.Audio
 		{
 			get
 			{
-				return OpenTK.Audio.AudioContext.DefaultDevice;
+				Trace.WriteLine("[AudioManager] DefaultDevice");
+				try
+				{
+					return OpenTK.Audio.AudioContext.DefaultDevice;
+				}
+				catch
+				{
+					return string.Empty;
+				}
 			}
 		}
 
@@ -266,6 +292,15 @@ namespace ArcEngine.Audio
 		}
 
 
+		/// <summary>
+		/// Is audio system initialized
+		/// </summary>
+		static public bool IsInit
+		{
+			get;
+			private set;
+		}
+
 		#endregion
 
 	}
@@ -304,14 +339,26 @@ namespace ArcEngine.Audio
 	public enum AudioFormat
 	{
 		/// <summary>
-		/// The stereo 16 bit format
+		/// The stereo 16 bits format
 		/// </summary>
-		Streo16 = OpenAL.ALFormat.Stereo16,
+		Stereo16 = OpenAL.ALFormat.Stereo16,
 
 		/// <summary>
-		/// The mono 16 bit format
+		/// The mono 16 bits format
 		/// </summary>
 		Mono16 = OpenAL.ALFormat.Mono16,
+
+
+		/// <summary>
+		/// The mono 8 bits format
+		/// </summary>
+		Mono8 = OpenAL.ALFormat.Mono8,
+
+
+		/// <summary>
+		/// The stereo 8 bits format
+		/// </summary>
+		Stereo8 = OpenAL.ALFormat.Stereo8,
 	}
 
 }

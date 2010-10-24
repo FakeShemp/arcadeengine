@@ -49,7 +49,8 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		~Texture()
 		{
-			throw new Exception(this + " not disposed, Call Dispose() !!");
+			if (!IsDisposed)
+				throw new Exception(this + " not disposed, Call Dispose() !!");
 		}
 
 
@@ -413,6 +414,16 @@ namespace ArcEngine.Graphic
 
 
 		#region Properties
+
+
+		/// <summary>
+		/// Does resource is disposed
+		/// </summary>
+		public bool IsDisposed
+		{
+			get;
+			protected set;
+		}
 
 
 		/// <summary>

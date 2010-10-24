@@ -512,7 +512,7 @@ namespace ArcEngine.Audio
 
 
 		/// <summary>
-		/// Gets the format of the ogg file. Is either FORMAT_MONO16 or FORMAT_STEREO16
+		/// Gets the format of the ogg file. Is either AudioFormat.Mono16 or AudioFormat.Stereo16
 		/// </summary>
 		public AudioFormat Format
 		{
@@ -521,7 +521,7 @@ namespace ArcEngine.Audio
 				if (Info.channels == 1)
 					return AudioFormat.Mono16;
 				else
-					return AudioFormat.Streo16;
+					return AudioFormat.Stereo16;
 			}
 		}
 
