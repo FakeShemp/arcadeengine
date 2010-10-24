@@ -460,6 +460,8 @@
     <EmbeddedResource Include="Graphic\Shaders\bezier.vert" />
     <EmbeddedResource Include="Graphic\Shaders\V1_30\SpriteBatch.frag" />
     <EmbeddedResource Include="Graphic\Shaders\V1_30\SpriteBatch.vert" />
+    <EmbeddedResource Include="Graphic\Shaders\V1_20\SpriteBatch.frag" />
+    <EmbeddedResource Include="Graphic\Shaders\V1_20\SpriteBatch.vert" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Forms\TerminalForm.resx">
@@ -597,7 +599,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Graphic\Shaders\V1_20\" />
     <Folder Include="Libraries\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

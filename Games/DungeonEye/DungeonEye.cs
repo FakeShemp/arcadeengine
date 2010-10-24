@@ -81,7 +81,9 @@ namespace DungeonEye
 		public override void LoadContent()
 		{
 			GameWindowParams param = new GameWindowParams();
-			//param.Samples = 0;
+			param.Major = 2;
+			param.Minor = 1;
+			param.Compatible = true;
 			param.Size = new Size(640,400);
 			CreateGameWindow(param);
 

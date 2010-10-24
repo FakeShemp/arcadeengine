@@ -42,15 +42,40 @@ namespace ArcEngine.Graphic
 			FrontToBackComp = new FrontToBackComparer();
 			TextureComp = new TextureComparer();
 
+
+			// Detect the good shader
+			ShaderVersion version = Shader.CurrentVersion;
+			string vertname = "";
+			string fragname = "";
+
+			switch (version)
+			{
+				case ShaderVersion.GLSL_1_20:
+					vertname = "ArcEngine.Graphic.Shaders.V1_20.SpriteBatch.vert";
+					fragname = "ArcEngine.Graphic.Shaders.V1_20.SpriteBatch.frag";
+				break;
+				case ShaderVersion.GLSL_1_30:
+				case ShaderVersion.GLSL_1_40:
+				case ShaderVersion.GLSL_1_50:
+				case ShaderVersion.GLSL_3_30:
+				case ShaderVersion.GLSL_4_00:
+				case ShaderVersion.GLSL_4_10:
+				{
+					vertname = "ArcEngine.Graphic.Shaders.V1_30.SpriteBatch.vert";
+					fragname = "ArcEngine.Graphic.Shaders.V1_30.SpriteBatch.frag";
+				}
+				break;
+			}
+
 			Shader = new Shader();
-			using (Stream stream = ResourceManager.GetInternalResource("ArcEngine.Graphic.Shaders.V1_30.SpriteBatch.vert"))
+			using (Stream stream = ResourceManager.GetInternalResource(vertname))
 			{
 				StreamReader reader = new StreamReader(stream);
 				string src = reader.ReadToEnd();
 				Shader.SetSource(ShaderType.VertexShader, src);
 			}
 
-			using (Stream stream = ResourceManager.GetInternalResource("ArcEngine.Graphic.Shaders.V1_30.SpriteBatch.frag"))
+			using (Stream stream = ResourceManager.GetInternalResource(fragname))
 			{
 				StreamReader reader = new StreamReader(stream);
 				string src = reader.ReadToEnd();

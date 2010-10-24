@@ -391,7 +391,6 @@ namespace ArcEngine.Graphic
 		}
 
 
-
 		/// <summary>
 		/// Gets the source code of predefined shader
 		/// </summary>
@@ -411,6 +410,51 @@ namespace ArcEngine.Graphic
 			return text;
 		}
 
+
+		/// <summary>
+		/// Current Shader version
+		/// </summary>
+		static public ShaderVersion CurrentVersion
+		{
+			get
+			{
+				try
+				{
+
+					string[] str = TK.GL.GetString(TK.StringName.ShadingLanguageVersion).Split(' ');
+					string[] version = str[0].Split('.');
+					int major = int.Parse(version[0]);
+					int minor = int.Parse(version[1]);
+
+					if (major == 1 && minor == 20)
+						return ShaderVersion.GLSL_1_20;
+
+					if (major == 1 && minor == 30)
+						return ShaderVersion.GLSL_1_30;
+
+					if (major == 1 && minor == 40)
+						return ShaderVersion.GLSL_1_40;
+
+					if (major == 1 && minor == 50)
+						return ShaderVersion.GLSL_1_50;
+
+					if (major == 3 && minor == 30)
+						return ShaderVersion.GLSL_3_30;
+
+					if (major == 4 && minor == 0)
+						return ShaderVersion.GLSL_4_00;
+
+					if (major == 4 && minor == 10)
+						return ShaderVersion.GLSL_4_10;
+				}
+				catch
+				{
+					throw new InvalidOperationException("Invalide display context");
+				}
+
+				return ShaderVersion.Unsuported;
+			}
+		}
 		#endregion
 
 
@@ -740,7 +784,58 @@ namespace ArcEngine.Graphic
 
 		#endregion
 
-		
+
+		#region Dispose
+
+		/// <summary>
+		/// Implement IDisposable.
+		/// </summary>
+		public void Dispose()
+		{
+			TK.GL.DeleteShader(FragmentID);
+			TK.GL.DeleteShader(VertexID);
+			TK.GL.DeleteShader(GeometryID);
+			TK.GL.DeleteProgram(ProgramID);
+
+			FragmentID = -1;
+			VertexID = -1;
+			GeometryID = -1;
+			ProgramID = -1;
+
+			FragmentLog = "";
+			FragmentSource = "";
+			VertexLog = "";
+			VertexSource = "";
+			ProgramLog = "";
+			GeometryLog = "";
+			GeometrySource = "";
+
+			IsDisposed = true;
+
+			GC.SuppressFinalize(this);
+		}
+
+
+
+		#endregion
+
+
+		/// <summary>
+		/// Creates a new shader from file
+		/// </summary>
+		/// <param name="vertex"></param>
+		/// <param name="fragment"></param>
+		/// <returns></returns>
+		public static Shader CreateFromFile(string vertex, string fragment)
+		{
+			Shader shader = new Shader();
+			shader.LoadSource(ShaderType.VertexShader, vertex);
+			shader.LoadSource(ShaderType.FragmentShader, fragment);
+
+			return shader;
+		}
+
+
 		#region Properties
 
 		/// <summary>
@@ -756,7 +851,11 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Is asset disposed
 		/// </summary>
-		public bool IsDisposed { get; private set; }
+		public bool IsDisposed
+		{
+			get;
+			private set;
+		}
 
 
 		/// <summary>
@@ -839,7 +938,7 @@ namespace ArcEngine.Graphic
 					return 0;
 
 				int count = 0;
-                TK.GL.GetProgram(ProgramID, TK.ProgramParameter.GeometryVerticesOut, out count);
+				TK.GL.GetProgram(ProgramID, TK.ProgramParameter.GeometryVerticesOut, out count);
 
 				return count;
 			}
@@ -927,57 +1026,6 @@ namespace ArcEngine.Graphic
 
 		#endregion
 
-
-		#region Dispose
-
-		/// <summary>
-		/// Implement IDisposable.
-		/// </summary>
-		public void Dispose()
-		{
-			TK.GL.DeleteShader(FragmentID);
-			TK.GL.DeleteShader(VertexID);
-			TK.GL.DeleteShader(GeometryID);
-			TK.GL.DeleteProgram(ProgramID);
-
-			FragmentID = -1;
-			VertexID = -1;
-			GeometryID = -1;
-			ProgramID = -1;
-
-			FragmentLog = "";
-			FragmentSource = "";
-			VertexLog = "";
-			VertexSource = "";
-			ProgramLog = "";
-			GeometryLog = "";
-			GeometrySource = "";
-
-			IsDisposed = true;
-
-			GC.SuppressFinalize(this);
-		}
-
-
-
-		#endregion
-
-
-
-		/// <summary>
-		/// Creates a new shader from file
-		/// </summary>
-		/// <param name="vertex"></param>
-		/// <param name="fragment"></param>
-		/// <returns></returns>
-		public static Shader CreateFromFile(string vertex, string fragment)
-		{
-			Shader shader = new Shader();
-			shader.LoadSource(ShaderType.VertexShader, vertex);
-			shader.LoadSource(ShaderType.FragmentShader, fragment);
-
-			return shader;
-		}
 	}
 
 
