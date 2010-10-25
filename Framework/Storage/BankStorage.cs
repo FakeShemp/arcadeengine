@@ -66,11 +66,12 @@ namespace ArcEngine.Storage
 
 
 		/// <summary>
-		/// Opens a file for reading
+		/// Opens a file at a specified path 
 		/// </summary>
-		/// <param name="name">File name</param>
+		/// <param name="name">Relative path of the file </param>
+		/// <param name="access">Specifies whether the file is opened with read, write, or read/write access</param>
 		/// <returns>Stream handle or null</returns>
-		public override Stream Read(string name)
+		public override Stream OpenFile(string name, FileAccess access)
 		{
 			foreach (ZipStorer.ZipFileEntry entry in Entries)
 			{
@@ -86,22 +87,6 @@ namespace ArcEngine.Storage
 				}
 			}
 
-			return null;
-		}
-
-
-		/// <summary>
-		/// Opens a file for writing
-		/// </summary>
-		/// <param name="name">File name</param>
-		/// <returns>Stream handle or null</returns>
-		public override Stream Write(string name)
-		{
-			if (ZipHandle == null)
-				return null;
-
-	//		ZipHandle.AddStream(ZipStorer.Compression.Deflate, name, stream, DateTime.Now, string.Empty);
-			
 			return null;
 		}
 

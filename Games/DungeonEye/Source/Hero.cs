@@ -23,8 +23,6 @@ using System.Drawing;
 using System.Xml;
 using ArcEngine;
 using ArcEngine.Input;
-using ArcEngine.Asset;
-using ArcEngine.Interface;
 using ArcEngine.Interface;
 
 // Generate a new hero with random values

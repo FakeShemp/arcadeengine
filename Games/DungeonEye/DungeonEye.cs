@@ -99,9 +99,10 @@ namespace DungeonEye
 			Texture2D.DefaultMagFilter = TextureMagFilter.Nearest;
 			Texture2D.DefaultMinFilter = TextureMinFilter.Nearest;
 
+			ResourceManager.Storages.Add(new BankStorage("data/game.bnk", FileAccess.Read));
 
 			GSM.AddScreen(new MainMenu());
-			//GSM.AddScreen(new Team(null));
+			GSM.AddScreen(new Team(null));
 			//GSM.AddScreen(new IntroScreen());
 			//GSM.AddScreen(new CharGen());
 		}

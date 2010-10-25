@@ -71,7 +71,7 @@ namespace DungeonEye
 		/// </summary>
 		public override void LoadContent()
 		{
-			ResourceManager.Storages.Add(new BankStorage("data/chargen.bnk", System.IO.FileAccess.Read));
+			//ResourceManager.Storages.Add(new BankStorage("data/chargen.bnk", System.IO.FileAccess.Read));
 
 			Tileset = ResourceManager.CreateAsset<TileSet>("CharGen");
             Tileset.Scale = new Vector2(2.0f, 2.0f);
@@ -681,13 +681,6 @@ namespace DungeonEye
 				break;
 				#endregion
 			}
-
-
-
-
-
-			// Draw the cursor or the item in the hand
-			Batch.DrawTile(Tileset, 999, Mouse.Location);
 
 			Batch.End();
 		}

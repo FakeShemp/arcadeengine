@@ -52,8 +52,6 @@ namespace DungeonEye
 		/// </summary>
 		public override void LoadContent()
 		{
-			ResourceManager.Storages.Add(new BankStorage("data/intro.bnk", System.IO.FileAccess.Read));
-
 			Scene = ResourceManager.CreateAsset<Scene>("intro");
             Scene.Font.GlyphTileset.Scale = new Vector2(2, 2);
 			Scene.StringTable.LanguageName = Game.LanguageName;
@@ -78,6 +76,10 @@ namespace DungeonEye
 			if (Font != null)
 				Font.Dispose();
 			Font = null;
+
+			if (Scene != null)
+				Scene.Dispose();
+			Scene = null;
 		}
 
 
@@ -128,7 +130,7 @@ namespace DungeonEye
 			SpriteBatch.Begin();
 
 			if (Scene != null)
-			Scene.Draw(SpriteBatch);
+				Scene.Draw(SpriteBatch);
 
 
 			// Debug info

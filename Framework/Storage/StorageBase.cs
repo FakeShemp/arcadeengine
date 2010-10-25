@@ -37,6 +37,7 @@ namespace ArcEngine.Storage
 		public StorageBase()
 		{
 			Files = new List<string>();
+			Directories = new List<string>();
 		}
 
 
@@ -59,35 +60,61 @@ namespace ArcEngine.Storage
 		}
 
 
+
+		#region Files
+
 		/// <summary>
-		/// Opens a file for reading
+		/// Opens a file at a specified path 
 		/// </summary>
-		/// <param name="name">File name</param>
+		/// <param name="name">Relative path of the file </param>
+		/// <param name="access">Specifies whether the file is opened with read, write, or read/write access</param>
 		/// <returns>Stream handle or null</returns>
-		public virtual Stream Read(string name)
+		public virtual Stream OpenFile(string name, FileAccess access)
 		{
 			return null;
 		}
 
+		/// <summary>
+		/// Creates a new file 
+		/// </summary>
+		/// <param name="file">The relative path of the file to create</param>
+		/// <returns>True on success</returns>
+		public bool CreateFile(string file)
+		{
+			return false;
+		}
+
 
 		/// <summary>
-		/// Opens a file for writing
+		/// Deletes a file 
 		/// </summary>
-		/// <param name="name">File name</param>
-		/// <returns>Stream handle or null</returns>
-		public virtual Stream Write(string name)
+		/// <param name="file">The relative path of the file to delete</param>
+		/// <returns>True on success</returns>
+		public virtual bool DeleteFile(string file)
 		{
-			return null;
+			return false;
 		}
+
+
+		/// <summary>
+		/// Determines whether the specified path refers to an existing file  
+		/// </summary>
+		/// <param name="file">The file to test</param>
+		/// <returns>True on success</returns>
+		public virtual bool FileExists(string file)
+		{
+			return false;
+		}
+
 
 
 		/// <summary>
 		/// Returns a file list from the current bank
 		/// </summary>
 		/// <returns>File list</returns>
-		public List<string> GetFiles()
+		public List<string> GetFileNames()
 		{
-			return GetFiles("*");
+			return GetFileNames("*");
 		}
 
 
@@ -96,7 +123,7 @@ namespace ArcEngine.Storage
 		/// </summary>
 		/// <param name="pattern">Search pattern</param>
 		/// <returns>File list</returns>
-		public List<string> GetFiles(string pattern)
+		public List<string> GetFileNames(string pattern)
 		{
 			List<string> list = new List<string>();
 
@@ -111,6 +138,73 @@ namespace ArcEngine.Storage
 			return list;
 		}
 
+		#endregion
+
+
+		#region Directories
+
+		/// <summary>
+		/// Creates a new directory 
+		/// </summary>
+		/// <param name="directory">The relative path of the directory to create</param>
+		/// <returns>True on success</returns>
+		public bool CreateDirectory(string directory)
+		{
+			return false;
+		}
+
+
+		/// <summary>
+		/// Deletes a directory 
+		/// </summary>
+		/// <param name="directory">The relative path of the directory to delete</param>
+		/// <returns>True on success</returns>
+		public virtual bool DeleteDirectory(string directory)
+		{
+			return false;
+		}
+
+
+		/// <summary>
+		/// Determines whether the specified path refers to an existing directory  
+		/// </summary>
+		/// <param name="directory">The path to test</param>
+		/// <returns>True on success</returns>
+		public virtual bool DirectoryExists(string directory)
+		{
+			return false;
+		}
+
+
+
+		/// <summary>
+		/// Enumerates the directories. 
+		/// </summary>
+		/// <returns>An array of relative paths of directories</returns>
+		public virtual List<string> GetDirectoryNames()
+		{
+			return GetDirectoryNames("*");
+		}
+
+
+
+		/// <summary>
+		/// Enumerates the directories that conform to a search pattern. 
+		/// </summary>
+		/// <param name="searchPattern">A search pattern.</param>
+		/// <returns>An array of relative paths of directories</returns>
+		public virtual List<string> GetDirectoryNames(string searchPattern)
+		{
+			List<string> directories = new List<string>();
+
+
+			return directories;
+		}
+
+
+
+		#endregion
+
 
 		#region Properties
 
@@ -118,6 +212,11 @@ namespace ArcEngine.Storage
 		/// Files list
 		/// </summary>
 		protected List<string> Files;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		protected List<string> Directories;
 
 		#endregion
 	}

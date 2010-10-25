@@ -575,16 +575,17 @@ namespace ArcEngine
 		/// Loads a resource from a bank first, and if not found, load it from disk.
 		/// </summary>
 		/// <param name="assetname">Name of the file to load</param>
+		/// <param name="access">Acces mode</param>
 		/// <returns>Resource stream or null if not found</returns>
 		/// <remarks>Don't forget to Dispose the stream !!</remarks>
-		static public Stream Load(string assetname)
+		static public Stream Load(string assetname, FileAccess access)
 		{
 			if (string.IsNullOrEmpty(assetname))
 				return null;
 
 			foreach (StorageBase storage in Storages)
 			{
-				Stream stream = storage.Read(assetname);
+				Stream stream = storage.OpenFile(assetname, access);
 				if (stream != null)
 					return stream;
 			}

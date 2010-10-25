@@ -136,8 +136,6 @@ namespace DungeonEye
 			System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
 			watch.Start();
 
-			ResourceManager.ClearAssets();
-			ResourceManager.Storages.Add(new BankStorage("data/game.bnk", System.IO.FileAccess.Read));
 			Trace.WriteLine("Content loaded ({0} ms)", watch.ElapsedMilliseconds);
 
 			// Language
@@ -179,7 +177,7 @@ namespace DungeonEye
 			Trace.WriteLine("Tileset ({0} ms)", watch.ElapsedMilliseconds);
 
 			// Heroe's heads
-			Heads = ResourceManager.CreateAsset<TileSet>("Heroes");
+			Heads = ResourceManager.CreateAsset<TileSet>("Heads");
             Heads.Scale = new Vector2(2.0f, 2.0f);
 			Trace.WriteLine("Head ({0} ms)", watch.ElapsedMilliseconds);
 

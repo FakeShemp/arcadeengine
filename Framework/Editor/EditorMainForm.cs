@@ -470,7 +470,7 @@ namespace ArcEngine.Editor
 
 			// for each selected file, add it to the bank file
 			for (int i = 0; i < dlg.FileNames.Length; i++)
-				ResourceManager.Load(dlg.SafeFileNames[i]);
+				ResourceManager.Load(dlg.SafeFileNames[i], FileAccess.Read);
 
 			ResourcePanel.RebuildResourceTree();
 		}

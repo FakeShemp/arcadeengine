@@ -215,12 +215,11 @@ namespace DungeonEye
 		{
 			
 			// Load file definition
-			Stream stream = ResourceManager.Load("MazeElements.xml");
-			if (stream == null)
-				throw new FileNotFoundException("Can not find maze element coordinate file !!! Aborting.");
-
-			try
+			using (Stream stream = ResourceManager.Load("MazeElements.xml", FileAccess.Read))
 			{
+				if (stream == null)
+					throw new FileNotFoundException("Can not find maze element coordinate file !!! Aborting.");
+
 				XmlDocument doc = new XmlDocument();
 				doc.Load(stream);
 				XmlNode xml = doc.DocumentElement;
@@ -241,91 +240,88 @@ namespace DungeonEye
 					{
 						case "decoration":
 						{
-							ViewFieldPosition view = (ViewFieldPosition)Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
-							CardinalPoint side = (CardinalPoint)Enum.Parse(typeof(CardinalPoint), node.Attributes["side"].Value, true);
+							ViewFieldPosition view = (ViewFieldPosition) Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
+							CardinalPoint side = (CardinalPoint) Enum.Parse(typeof(CardinalPoint), node.Attributes["side"].Value, true);
 							if (side == CardinalPoint.North)
 								throw new ArgumentOutOfRangeException("side", "No north wall side decoration !");
 
-							Decorations[(int)view, (int)side - 1] = GetTileDrawing(node);
-								//new Point(int.Parse(node.Attributes["x"].Value), int.Parse(node.Attributes["y"].Value));
+							Decorations[(int) view, (int) side - 1] = GetTileDrawing(node);
+							//new Point(int.Parse(node.Attributes["x"].Value), int.Parse(node.Attributes["y"].Value));
 						}
 						break;
 
 
 						case "wall":
 						{
-							ViewFieldPosition view = (ViewFieldPosition)Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
-							Walls[(int)view].Add(GetTileDrawing(node));
+							ViewFieldPosition view = (ViewFieldPosition) Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
+							Walls[(int) view].Add(GetTileDrawing(node));
 						}
 						break;
 
 
 						case "stair":
 						{
-							ViewFieldPosition view = (ViewFieldPosition)Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
-							Stairs[(int)view].Add(GetTileDrawing(node));
+							ViewFieldPosition view = (ViewFieldPosition) Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
+							Stairs[(int) view].Add(GetTileDrawing(node));
 						}
 						break;
 
 
 						case "grounditem":
 						{
-							ViewFieldPosition view = (ViewFieldPosition)Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
-							GroundPosition ground = (GroundPosition)Enum.Parse(typeof(GroundPosition), node.Attributes["coordinate"].Value, true);
+							ViewFieldPosition view = (ViewFieldPosition) Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
+							GroundPosition ground = (GroundPosition) Enum.Parse(typeof(GroundPosition), node.Attributes["coordinate"].Value, true);
 							if (ground == GroundPosition.Center)
 								throw new ArgumentOutOfRangeException("ground", "No ground item in the middle of a block !");
 
-							GroundItems[(int)view, (int)ground] = new Point(int.Parse(node.Attributes["x"].Value), int.Parse(node.Attributes["y"].Value));
+							GroundItems[(int) view, (int) ground] = new Point(int.Parse(node.Attributes["x"].Value), int.Parse(node.Attributes["y"].Value));
 						}
 						break;
 
 
 						case "flyingitem":
 						{
-							ViewFieldPosition view = (ViewFieldPosition)Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
-							GroundPosition ground = (GroundPosition)Enum.Parse(typeof(GroundPosition), node.Attributes["coordinate"].Value, true);
+							ViewFieldPosition view = (ViewFieldPosition) Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
+							GroundPosition ground = (GroundPosition) Enum.Parse(typeof(GroundPosition), node.Attributes["coordinate"].Value, true);
 
-							FlyingItems[(int)view, (int)ground] = new Point(int.Parse(node.Attributes["x"].Value), int.Parse(node.Attributes["y"].Value));
+							FlyingItems[(int) view, (int) ground] = new Point(int.Parse(node.Attributes["x"].Value), int.Parse(node.Attributes["y"].Value));
 						}
 						break;
 
 
 						case "pit":
 						{
-							ViewFieldPosition view = (ViewFieldPosition)Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
-							Pits[(int)view] = GetTileDrawing(node);
+							ViewFieldPosition view = (ViewFieldPosition) Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
+							Pits[(int) view] = GetTileDrawing(node);
 						}
 						break;
 
 
 						case "ceilingpit":
 						{
-							ViewFieldPosition view = (ViewFieldPosition)Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
-							CeilingPits[(int)view] = GetTileDrawing(node);
+							ViewFieldPosition view = (ViewFieldPosition) Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
+							CeilingPits[(int) view] = GetTileDrawing(node);
 						}
 						break;
 
 
 						case "floorplate":
 						{
-							ViewFieldPosition view = (ViewFieldPosition)Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
-							FloorPlates[(int)view] = GetTileDrawing(node);
+							ViewFieldPosition view = (ViewFieldPosition) Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
+							FloorPlates[(int) view] = GetTileDrawing(node);
 						}
 						break;
 
 						case "door":
 						{
-							ViewFieldPosition view = (ViewFieldPosition)Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
-							Doors[(int)view] = GetTileDrawing(node);
+							ViewFieldPosition view = (ViewFieldPosition) Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
+							Doors[(int) view] = GetTileDrawing(node);
 						}
 						break;
 
 					}
 				}
-			}
-			finally
-			{
-				stream.Dispose();
+
 			}
 
 			return true;

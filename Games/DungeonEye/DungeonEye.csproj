@@ -320,10 +320,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
-    <None Include="data\chargen.bnk" />
     <None Include="data\Game.bnk" />
-    <None Include="data\intro.bnk" />
-    <None Include="data\Main.bnk" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
