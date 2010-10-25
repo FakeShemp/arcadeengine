@@ -55,7 +55,7 @@ namespace DungeonEye
 		{
 
 			// Change the cursor
-			using (Stream stream = ResourceManager.Load("cursor.png", FileAccess.Read))
+			using (Stream stream = ResourceManager.Load("cursor.png"))
 			{
 				using (Bitmap bmp = new Bitmap(stream))
 				{

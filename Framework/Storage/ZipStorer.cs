@@ -2,69 +2,22 @@
 // Website: zipstorer.codeplex.com
 // Version: 2.35 (March 14, 2010)
 
+
+// See http://dotnetzip.codeplex.com/
+
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.IO.Compression;
 
-namespace ArcEngine.Asset
+namespace ArcEngine.Storage
 {
     /// <summary>
     /// Unique class for compression/decompression file. Represents a Zip file.
     /// </summary>
     class ZipStorer : IDisposable
     {
-        /// <summary>
-        /// Compression method enumeration
-        /// </summary>
-        public enum Compression : ushort 
-		{ 
-            /// <summary>
-			/// Uncompressed storage
-            /// </summary>
-            Store = 0, 
-            /// <summary>
-			/// Deflate compression method
-			/// </summary>
-            Deflate = 8 
-		}
-
-        /// <summary>
-        /// Represents an entry in Zip file directory
-        /// </summary>
-        public struct ZipFileEntry
-        {
-            /// <summary>Compression method</summary>
-            public Compression Method; 
-            /// <summary>Full path and filename as stored in Zip</summary>
-            public string FilenameInZip;
-            /// <summary>Original file size</summary>
-            public uint FileSize;
-            /// <summary>Compressed file size</summary>
-            public uint CompressedSize;
-            /// <summary>Offset of header information inside Zip storage</summary>
-            public uint HeaderOffset;
-            /// <summary>Offset of file inside Zip storage</summary>
-            public uint FileOffset;
-            /// <summary>Size of header information</summary>
-            public uint HeaderSize;
-            /// <summary>32-bit checksum of entire file</summary>
-            public uint Crc32;
-            /// <summary>Last modification time of file</summary>
-            public DateTime ModifyTime;
-            /// <summary>User comment for file</summary>
-            public string Comment;
-            /// <summary>True if UTF8 encoding for filename and comments, false if default (CP 437)</summary>
-            public bool EncodeUTF8;
-
-            /// <summary>Overriden method</summary>
-            /// <returns>Filename in Zip</returns>
-            public override string ToString()
-            {
-                return this.FilenameInZip;
-            }
-        }
 
         #region Public fields
         /// <summary>True if UTF8 encoding for filename and comments, false if default (CP 437)</summary>
@@ -95,7 +48,10 @@ namespace ArcEngine.Asset
         #endregion
 
         #region Public methods
-        // Static constructor. Just invoked once in order to create the CRC32 lookup table.
+     
+		/// <summary>
+		/// Static constructor. Just invoked once in order to create the CRC32 lookup table.
+		/// </summary>
         static ZipStorer()
         {
             // Generate CRC32 table
@@ -113,7 +69,9 @@ namespace ArcEngine.Asset
                 CrcTable[i] = c;
             }
         }
-        /// <summary>
+       
+		
+		/// <summary>
         /// Method to create a new storage file
         /// </summary>
         /// <param name="_filename">Full path of Zip file to create</param>
@@ -129,7 +87,9 @@ namespace ArcEngine.Asset
 
             return zip;
         }
-        /// <summary>
+      
+		
+		/// <summary>
         /// Method to create a new zip storage in a stream
         /// </summary>
         /// <param name="_stream"></param>
@@ -144,7 +104,9 @@ namespace ArcEngine.Asset
 
             return zip;
         }
-        /// <summary>
+     
+		
+		/// <summary>
         /// Method to open an existing storage file
         /// </summary>
         /// <param name="_filename">Full path of Zip file to open</param>
@@ -159,7 +121,9 @@ namespace ArcEngine.Asset
 
             return zip;
         }
-        /// <summary>
+     
+		
+		/// <summary>
         /// Method to open an existing storage from stream
         /// </summary>
         /// <param name="_stream">Already opened stream with zip contents</param>
@@ -180,7 +144,9 @@ namespace ArcEngine.Asset
 
             throw new System.IO.InvalidDataException();
         }
-        /// <summary>
+ 
+		
+		/// <summary>
         /// Add full contents of a file into the Zip storage
         /// </summary>
         /// <param name="_method">Compression method</param>
@@ -196,7 +162,9 @@ namespace ArcEngine.Asset
             AddStream(_method, _filenameInZip, stream, File.GetLastWriteTime(_pathname), _comment);
             stream.Close();
         }
-        /// <summary>
+  
+		
+		/// <summary>
         /// Add full contents of a stream into the Zip storage
         /// </summary>
         /// <param name="_method">Compression method</param>
@@ -242,7 +210,9 @@ namespace ArcEngine.Asset
 
             Files.Add(zfe);
         }
-        /// <summary>
+      
+		
+		/// <summary>
         /// Updates central directory (if pertinent) and close the Zip storage
         /// </summary>
         /// <remarks>This is a required step, unless automatic dispose is used</remarks>
@@ -276,7 +246,9 @@ namespace ArcEngine.Asset
                 this.ZipFileStream = null;
             }
         }
-        /// <summary>
+     
+		
+		/// <summary>
         /// Read all the file records in the central directory 
         /// </summary>
         /// <returns>List of all entries in directory</returns>
@@ -326,7 +298,9 @@ namespace ArcEngine.Asset
 
             return result;
         }
-        /// <summary>
+      
+		
+		/// <summary>
         /// Copy the contents of a stored file into a physical file
         /// </summary>
         /// <param name="_zfe">Entry information of file to extract</param>
@@ -354,7 +328,9 @@ namespace ArcEngine.Asset
             
             return result;
         }
-        /// <summary>
+   
+		
+		/// <summary>
         /// Copy the contents of a stored file into an opened stream
         /// </summary>
         /// <param name="_zfe">Entry information of file to extract</param>
@@ -398,7 +374,9 @@ namespace ArcEngine.Asset
                 inStream.Dispose();
             return true;
         }
-        /// <summary>
+    
+		
+		/// <summary>
         /// Removes one of many files in storage. It creates a new Zip file.
         /// </summary>
         /// <param name="_zip">Reference to the current Zip object</param>
@@ -453,7 +431,8 @@ namespace ArcEngine.Asset
             }
             return true;
         }
-        #endregion
+   
+		#endregion
 
         #region Private methods
         // Calculate the file offset by reading the corresponding local header
@@ -750,5 +729,104 @@ namespace ArcEngine.Asset
             this.Close();
         }
         #endregion
+    }
+
+
+	/// <summary>
+	/// 
+	/// </summary>
+	class ZipStream : MemoryStream
+	{
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="zip"></param>
+		/// <param name="filename"></param>
+		public ZipStream(ZipStorer zip, string filename)
+		{
+			Zip = zip;
+			FileName = filename;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public new void Dispose()
+		{
+			Seek(0, SeekOrigin.Begin);
+
+			Zip.AddStream(Compression.Deflate, FileName, this, DateTime.Now, string.Empty);
+
+			base.Dispose();
+		}
+
+
+		#region Properties
+
+
+		/// <summary>
+		/// Zip handle
+		/// </summary>
+		ZipStorer Zip;
+
+
+		/// <summary>
+		/// File name in the zip
+		/// </summary>
+		string FileName;
+
+		#endregion
+	}
+
+    /// <summary>
+    /// Compression method enumeration
+    /// </summary>
+    enum Compression : ushort 
+	{ 
+        /// <summary>
+		/// Uncompressed storage
+        /// </summary>
+        Store = 0, 
+        /// <summary>
+		/// Deflate compression method
+		/// </summary>
+        Deflate = 8 
+	}
+
+    /// <summary>
+    /// Represents an entry in Zip file directory
+    /// </summary>
+    struct ZipFileEntry
+    {
+        /// <summary>Compression method</summary>
+        public Compression Method; 
+        /// <summary>Full path and filename as stored in Zip</summary>
+        public string FilenameInZip;
+        /// <summary>Original file size</summary>
+        public uint FileSize;
+        /// <summary>Compressed file size</summary>
+        public uint CompressedSize;
+        /// <summary>Offset of header information inside Zip storage</summary>
+        public uint HeaderOffset;
+        /// <summary>Offset of file inside Zip storage</summary>
+        public uint FileOffset;
+        /// <summary>Size of header information</summary>
+        public uint HeaderSize;
+        /// <summary>32-bit checksum of entire file</summary>
+        public uint Crc32;
+        /// <summary>Last modification time of file</summary>
+        public DateTime ModifyTime;
+        /// <summary>User comment for file</summary>
+        public string Comment;
+        /// <summary>True if UTF8 encoding for filename and comments, false if default (CP 437)</summary>
+        public bool EncodeUTF8;
+
+        /// <summary>Overriden method</summary>
+        /// <returns>Filename in Zip</returns>
+        public override string ToString()
+        {
+            return this.FilenameInZip;
+        }
     }
 }

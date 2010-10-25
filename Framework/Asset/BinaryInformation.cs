@@ -40,7 +40,7 @@ namespace ArcEngine.Asset
 			if (string.IsNullOrEmpty(name))
 				throw new ArgumentNullException("name");
 
-			Stream stream = ResourceManager.Load(name, FileAccess.Read);
+			Stream stream = ResourceManager.Load(name);
 			if (stream == null)
 				return;
 

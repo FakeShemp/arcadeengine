@@ -153,7 +153,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Asset\Animation\AnimationFrame.cs" />
-    <Compile Include="Asset\AssetBank.cs" />
     <Compile Include="Audio\AudioStream.cs" />
     <Compile Include="Asset\Scenes\SceneFrame.cs" />
     <Compile Include="Asset\Scenes\KeyFrame.cs" />
@@ -437,7 +436,7 @@
     <Compile Include="Input\Mouse.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Asset\ZipStorer.cs" />
+    <Compile Include="Storage\ZipStorer.cs" />
     <None Include="app.config" />
     <Compile Include="Asset\Animation\Animation.cs" />
     <Compile Include="Audio\AudioSample.cs" />

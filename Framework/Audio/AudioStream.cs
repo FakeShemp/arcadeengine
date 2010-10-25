@@ -120,7 +120,7 @@ namespace ArcEngine.Audio
 		public bool LoadOgg(string filename)
 		{
 			FileName = filename;
-			return LoadOgg(ResourceManager.Load(filename, FileAccess.Read));
+			return LoadOgg(ResourceManager.Load(filename));
 		}
 
 

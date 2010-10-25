@@ -67,21 +67,22 @@ namespace ArcEngine.Storage
 		/// Opens a file at a specified path 
 		/// </summary>
 		/// <param name="name">Relative path of the file </param>
-		/// <param name="access">Specifies whether the file is opened with read, write, or read/write access</param>
+		// <param name="access">Specifies whether the file is opened with read, write, or read/write access</param>
 		/// <returns>Stream handle or null</returns>
-		public virtual Stream OpenFile(string name, FileAccess access)
+		public virtual Stream OpenFile(string name)
 		{
 			return null;
 		}
+
 
 		/// <summary>
 		/// Creates a new file 
 		/// </summary>
 		/// <param name="file">The relative path of the file to create</param>
 		/// <returns>True on success</returns>
-		public bool CreateFile(string file)
+		public virtual Stream CreateFile(string file)
 		{
-			return false;
+			return null;
 		}
 
 
@@ -105,7 +106,6 @@ namespace ArcEngine.Storage
 		{
 			return false;
 		}
-
 
 
 		/// <summary>

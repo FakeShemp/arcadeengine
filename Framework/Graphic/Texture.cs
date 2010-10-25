@@ -23,9 +23,9 @@ using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
-using ArcEngine.Asset;
 using Imaging = System.Drawing.Imaging;
 using TK = OpenTK.Graphics.OpenGL;
+using ArcEngine.Storage;
 
 namespace ArcEngine.Graphic
 {
@@ -81,7 +81,7 @@ namespace ArcEngine.Graphic
 		/// <returns>True if success or false if something went wrong</returns>
 		protected bool LoadImage(TextureTarget target, string filename)
 		{
-			using (Stream stream = ResourceManager.Load(filename, FileAccess.Read))
+			using (Stream stream = ResourceManager.Load(filename))
 				return FromStream(target, stream);
 		}
 
@@ -185,12 +185,12 @@ namespace ArcEngine.Graphic
 		/// Save the texture as a PNG image in the bank
 		/// </summary>
 		/// <param name="target">Reference face</param>
-		/// <param name="bankname">Bank's name</param>
+		/// <param name="storage">Storage handle</param>
 		/// <param name="assetname">Asset name in the bank</param>
 		/// <returns>True on success</returns>
-		protected bool SaveToBank(TextureTarget target, string bankname, string assetname)
+		protected bool SaveToStorage(TextureTarget target, StorageBase storage, string assetname)
 		{
-			if (string.IsNullOrEmpty(bankname) || string.IsNullOrEmpty(assetname))
+			if (storage == null || string.IsNullOrEmpty(assetname))
 				return false;
 
 
@@ -213,17 +213,19 @@ namespace ArcEngine.Graphic
 				// Unlock texture
 				Unlock(target);
 
+
 				// Save bitmap to a stream
-				using (Stream stream = new MemoryStream())
+				//using (Stream stream = new MemoryStream())
+				using (Stream stream = storage.OpenFile(assetname))
 				{
 					// Save bitmap to the stream
 					bm.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
 
 					// Rewind stream
-					stream.Seek(0, SeekOrigin.Begin);
+					//stream.Seek(0, SeekOrigin.Begin);
 
 					// Save to bank
-					ResourceManager.SaveAsset(bankname, assetname, stream);
+					//ResourceManager.SaveAsset(bankname, assetname, stream);
 				}
 			}
 

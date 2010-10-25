@@ -59,10 +59,6 @@ namespace DungeonEye
 			AudioManager.PlayTunes = Settings.GetBool("Tunes");
 			AudioManager.PlaySounds = Settings.GetBool("Sounds");
 
-#if DEBUG
-			ResourceManager.Storages.Add(new FileSystemStorage(Path.Combine(Directory.GetCurrentDirectory(), "data")));
-#endif
-
 			// Add the provider
 			ResourceManager.AddProvider(new Providers());
 
@@ -99,6 +95,10 @@ namespace DungeonEye
 			Texture2D.DefaultMagFilter = TextureMagFilter.Nearest;
 			Texture2D.DefaultMinFilter = TextureMinFilter.Nearest;
 
+#if DEBUG
+			ResourceManager.Storages.Add(new FileSystemStorage(Path.Combine(Directory.GetCurrentDirectory(), "data")));
+#endif
+			// Main storage bank
 			ResourceManager.Storages.Add(new BankStorage("data/game.bnk", FileAccess.Read));
 
 			GSM.AddScreen(new MainMenu());

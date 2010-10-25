@@ -18,10 +18,10 @@
 //
 #endregion
 
-using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using ArcEngine.Storage;
 using TK = OpenTK.Graphics.OpenGL;
 
 namespace ArcEngine.Graphic
@@ -308,12 +308,12 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Save the texture as a PNG image in the bank
 		/// </summary>
-		/// <param name="bankname">Bank's name</param>
+		/// <param name="storage">Bank's name</param>
 		/// <param name="assetname">Asset name in the bank</param>
 		/// <returns>True on success</returns>
-		public bool SaveToBank(string bankname, string assetname)
+		public bool SaveToBank(StorageBase storage, string assetname)
 		{
-			return base.SaveToBank(TextureTarget.Texture2D, bankname, assetname);
+			return base.SaveToStorage(TextureTarget.Texture2D, storage, assetname);
 		}
 
 

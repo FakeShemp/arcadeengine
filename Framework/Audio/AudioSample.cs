@@ -101,7 +101,7 @@ namespace ArcEngine.Audio
 				return false;
 			}
 
-			using (Stream stream = ResourceManager.Load(filename, FileAccess.Read))
+			using (Stream stream = ResourceManager.Load(filename))
 			{
 				if (stream == null)
 					return false;

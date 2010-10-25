@@ -41,7 +41,7 @@ namespace ArcEngine.Storage
 		/// <param name="access">Acces mode</param>
 		public BankStorage(string bankname, FileAccess access)
 		{
-			Entries = new List<ZipStorer.ZipFileEntry>();
+			Entries = new List<ZipFileEntry>();
 
 			BankName = bankname;
 			Mode = access;
@@ -69,11 +69,11 @@ namespace ArcEngine.Storage
 		/// Opens a file at a specified path 
 		/// </summary>
 		/// <param name="name">Relative path of the file </param>
-		/// <param name="access">Specifies whether the file is opened with read, write, or read/write access</param>
 		/// <returns>Stream handle or null</returns>
-		public override Stream OpenFile(string name, FileAccess access)
+		public override Stream OpenFile(string name)
 		{
-			foreach (ZipStorer.ZipFileEntry entry in Entries)
+
+			foreach (ZipFileEntry entry in Entries)
 			{
 				if (entry.FilenameInZip.Equals(name))
 				{
@@ -88,6 +88,17 @@ namespace ArcEngine.Storage
 			}
 
 			return null;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="file"></param>
+		/// <returns></returns>
+		public override Stream CreateFile(string file)
+		{
+			return new ZipStream(ZipHandle, file);
 		}
 
 
@@ -125,7 +136,7 @@ namespace ArcEngine.Storage
 			Entries = ZipHandle.ReadCentralDir();
 
 			// Look for the desired file
-			foreach (ZipStorer.ZipFileEntry entry in Entries)
+			foreach (ZipFileEntry entry in Entries)
 			{
 				//Trace.Write("+ {0} ({1} octets)", entry.FilenameInZip, entry.FileSize);
 				Files.Add(entry.FilenameInZip);
@@ -176,7 +187,7 @@ namespace ArcEngine.Storage
 					}
 				}
 
-				Trace.WriteLine("");
+				//Trace.WriteLine("");
 			}
 
 			swatch.Stop();
@@ -210,7 +221,7 @@ namespace ArcEngine.Storage
 		/// <summary>
 		/// Archive entries
 		/// </summary>
-		List<ZipStorer.ZipFileEntry> Entries;
+		List<ZipFileEntry> Entries;
 
 
 		/// <summary>

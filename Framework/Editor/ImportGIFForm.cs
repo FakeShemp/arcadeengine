@@ -237,7 +237,7 @@ namespace ArcEngine.Editor
 
 			//
 			// Save assets to the manager
-			texture.SaveToBank("", TextureNameBox.Text + ".png");
+			//texture.SaveToBank("", TextureNameBox.Text + ".png");
 			ResourceManager.AddAsset<TileSet>(TileSetNameBox.Text, tileset);
 			ResourceManager.AddAsset<Animation>(AnimationNameBox.Text, animation);
 

@@ -103,7 +103,30 @@ namespace ArcEngine
 			return null;
 		}
 
-		
+
+		/// <summary>
+		/// Loads a resource from storages
+		/// </summary>
+		/// <param name="assetname">Name of the file to load</param>
+		/// <returns>Resource stream or null if not found</returns>
+		/// <remarks>Don't forget to Dispose the stream !!</remarks>
+		static public Stream Load(string assetname)
+		{
+			if (string.IsNullOrEmpty(assetname))
+				return null;
+
+			foreach (StorageBase storage in Storages)
+			{
+				Stream stream = storage.OpenFile(assetname);
+				if (stream != null)
+					return stream;
+			}
+
+
+			return null;
+		}
+
+	
 		#region Providers
 
 
@@ -270,7 +293,6 @@ namespace ArcEngine
 		}
 
 
-
 		/// <summary>
 		/// Adds an asset definition
 		/// </summary>
@@ -306,9 +328,8 @@ namespace ArcEngine
 			using (XmlWriter writer = XmlWriter.Create(sb))
 				asset.Save(writer);
 
-			string xml = sb.ToString();
 			XmlDocument doc = new XmlDocument();
-			doc.LoadXml(xml);
+			doc.LoadXml(sb.ToString());
 
 			AddAsset<T>(name, doc.DocumentElement);
 		}
@@ -344,8 +365,6 @@ namespace ArcEngine
 		{
 			if (string.IsNullOrEmpty(name))
 				return default(T);
-
-		//	Trace.WriteDebugLine("[ResourceManager] CreateAsset (name = {0})", name);
 
 			lock (BinaryLock)
 			{
@@ -570,32 +589,7 @@ namespace ArcEngine
 
 		#region Asset operations
 
-
-		/// <summary>
-		/// Loads a resource from a bank first, and if not found, load it from disk.
-		/// </summary>
-		/// <param name="assetname">Name of the file to load</param>
-		/// <param name="access">Acces mode</param>
-		/// <returns>Resource stream or null if not found</returns>
-		/// <remarks>Don't forget to Dispose the stream !!</remarks>
-		static public Stream Load(string assetname, FileAccess access)
-		{
-			if (string.IsNullOrEmpty(assetname))
-				return null;
-
-			foreach (StorageBase storage in Storages)
-			{
-				Stream stream = storage.OpenFile(assetname, access);
-				if (stream != null)
-					return stream;
-			}
-
-
-			return null;
-		}
-
-
-		
+/*		
 		/// <summary>
 		/// Adds an asset from a file in a bank
 		/// </summary>
@@ -665,18 +659,9 @@ namespace ArcEngine
 			return true;
 		}
 
+*/
 
-		/// <summary>
-		/// Saves all assets to a bank file
-		/// </summary>
-		/// <param name="bankname">The file name of the bank on disk</param>
-		/// <returns>True on success</returns>
-		static public bool SaveAssetsToBank(string bankname)
-		{
-			return SaveAssetsToBank(bankname, string.Empty);
-		}
-
-
+	
 		/// <summary>
 		/// Saves all assets to a bank file
 		/// </summary>
@@ -694,7 +679,7 @@ namespace ArcEngine
 			try
 			{
 				ZipStorer zip = ZipStorer.Open(bankname, FileAccess.Write);
-				List<ZipStorer.ZipFileEntry> dir = zip.ReadCentralDir();
+				List<ZipFileEntry> dir = zip.ReadCentralDir();
 
 				// Save all providers
 				XmlWriter doc;
@@ -709,7 +694,7 @@ namespace ArcEngine
 				settings.Encoding = ASCIIEncoding.ASCII;
 
 				Dictionary<string, Stream> streams = new Dictionary<string, Stream>();
-				List<ZipStorer.ZipFileEntry> remove = new List<ZipStorer.ZipFileEntry>();
+				List<ZipFileEntry> remove = new List<ZipFileEntry>();
 
 				// For each Provider
 				foreach (Provider provider in Providers)
@@ -746,7 +731,7 @@ namespace ArcEngine
 						string zipfilename = string.Format("{0}.xml", type.Name);
 
 						// Remove duplicate name before insert
-						foreach (ZipStorer.ZipFileEntry ent in dir)
+						foreach (ZipFileEntry ent in dir)
 						{
 							if (ent.FilenameInZip == zipfilename)
 							{
@@ -767,7 +752,7 @@ namespace ArcEngine
 				// Add streams
 				foreach (KeyValuePair<string, Stream> kvp in streams)
 				{
-					zip.AddStream(ZipStorer.Compression.Deflate, kvp.Key, kvp.Value, DateTime.Now, string.Empty);
+					zip.AddStream(Compression.Deflate, kvp.Key, kvp.Value, DateTime.Now, string.Empty);
 					kvp.Value.Dispose();
 				}
 
