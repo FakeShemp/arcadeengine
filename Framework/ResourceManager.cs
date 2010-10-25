@@ -20,11 +20,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Xml;
 using ArcEngine.Asset;
 using ArcEngine.Interface;
@@ -58,7 +56,7 @@ namespace ArcEngine
 			AssetProviders = new Dictionary<Type, Provider>();
 			Providers = new List<Provider>();
 			RegistredTags = new Dictionary<string, Provider>();
-			Storages = new List<IStorage>();
+			Storages = new List<StorageBase>();
 
 			AddProvider(new Providers());
 		}
@@ -79,7 +77,7 @@ namespace ArcEngine
 				provider.Dispose();
 			Providers.Clear();
 
-			foreach (IStorage storage in Storages)
+			foreach (StorageBase storage in Storages)
 				storage.Dispose();
 			Storages.Clear();
 
@@ -584,7 +582,7 @@ namespace ArcEngine
 			if (string.IsNullOrEmpty(assetname))
 				return null;
 
-			foreach (IStorage storage in Storages)
+			foreach (StorageBase storage in Storages)
 			{
 				Stream stream = storage.Read(assetname);
 				if (stream != null)
@@ -841,7 +839,7 @@ namespace ArcEngine
 		/// <summary>
 		/// Storages
 		/// </summary>
-		static public List<IStorage> Storages
+		static public List<StorageBase> Storages
 		{
 			get;
 			private set;

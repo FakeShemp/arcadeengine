@@ -21,18 +21,15 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Xml;
 using ArcEngine.Asset;
-using ArcEngine.Interface;
-using System;
 
 namespace ArcEngine.Storage
 {
 	/// <summary>
 	/// Zip bank storage
 	/// </summary>
-	public class BankStorage : IStorage
+	public class BankStorage : StorageBase
 	{
 
 		#region Constructors
@@ -59,7 +56,7 @@ namespace ArcEngine.Storage
 		/// <summary>
 		/// Dispose
 		/// </summary>
-		public void Dispose()
+		public override void Dispose()
 		{
 			if (ZipHandle != null)
 				ZipHandle.Close();
@@ -73,7 +70,7 @@ namespace ArcEngine.Storage
 		/// </summary>
 		/// <param name="name">File name</param>
 		/// <returns>Stream handle or null</returns>
-		public Stream Read(string name)
+		public override Stream Read(string name)
 		{
 			foreach (ZipStorer.ZipFileEntry entry in Entries)
 			{
@@ -98,7 +95,7 @@ namespace ArcEngine.Storage
 		/// </summary>
 		/// <param name="name">File name</param>
 		/// <returns>Stream handle or null</returns>
-		public Stream Write(string name)
+		public override Stream Write(string name)
 		{
 			if (ZipHandle == null)
 				return null;
@@ -113,10 +110,11 @@ namespace ArcEngine.Storage
 		/// 
 		/// </summary>
 		/// <returns></returns>
-		public bool Process()
+		public override bool Process()
 		{
-
 			Trace.WriteLine("Loading resources from file \"" + BankName + "\"...");
+
+			Files.Clear();
 
 			// File exists ??
 			if (File.Exists(BankName) == false)
@@ -144,7 +142,8 @@ namespace ArcEngine.Storage
 			// Look for the desired file
 			foreach (ZipStorer.ZipFileEntry entry in Entries)
 			{
-				Trace.Write("+ {0} ({1} octets)", entry.FilenameInZip, entry.FileSize);
+				//Trace.Write("+ {0} ({1} octets)", entry.FilenameInZip, entry.FileSize);
+				Files.Add(entry.FilenameInZip);
 
 				// Loop back if it's not an xml file
 				if (!entry.FilenameInZip.EndsWith(".xml", true, null))
@@ -201,37 +200,6 @@ namespace ArcEngine.Storage
 			return true;
 		}
 
-
-
-		/// <summary>
-		/// Returns a file list from the current bank matching the given search pattern.
-		/// </summary>
-		/// <returns>File list</returns>
-		public List<string> GetFiles()
-		{
-			return GetFiles("*");
-		}
-
-
-		/// <summary>
-		/// Returns a file list from the current bank matching the given search pattern.
-		/// </summary>
-		/// <param name="pattern">Search pattern</param>
-		/// <returns>File list</returns>
-		public List<string> GetFiles(string pattern)
-		{
-			List<string> list = new List<string>();
-
-			foreach (ZipStorer.ZipFileEntry entry in Entries)
-			{
-				if (Regex.IsMatch(entry.FilenameInZip, pattern))
-					list.Add(entry.FilenameInZip);
-			}
-
-			list.Sort();
-
-			return list;
-		}
 
 
 

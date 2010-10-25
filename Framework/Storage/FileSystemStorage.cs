@@ -17,18 +17,17 @@
 //along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 //
 #endregion
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
-using ArcEngine.Interface;
+using System.Xml;
+
 
 namespace ArcEngine.Storage
 {
 	/// <summary>
 	/// Filesystem storage
 	/// </summary>
-	public class FileSystemStorage : IStorage
+	public class FileSystemStorage : StorageBase
 	{
 		/// <summary>
 		/// Constructor
@@ -37,7 +36,6 @@ namespace ArcEngine.Storage
 		public FileSystemStorage(string path)
 		{
 			StoragePath = path;
-			Files = new List<string>();
 
 			Process();
 		}
@@ -46,7 +44,7 @@ namespace ArcEngine.Storage
 		/// <summary>
 		/// Dispose resource
 		/// </summary>
-		public void Dispose()
+		public override void Dispose()
 		{
 		}
 
@@ -56,7 +54,7 @@ namespace ArcEngine.Storage
 		/// </summary>
 		/// <param name="name">File name</param>
 		/// <returns>Stream handle or null</returns>
-		public Stream Read(string name)
+		public override Stream Read(string name)
 		{
 			string filename = Path.Combine(StoragePath, name);
 
@@ -69,43 +67,64 @@ namespace ArcEngine.Storage
 
 
 		/// <summary>
-		/// Returns a file list from the current bank matching the given search pattern.
-		/// </summary>
-		/// <returns>File list</returns>
-		public List<string> GetFiles()
-		{
-			return GetFiles("*");
-		}
-
-
-
-		/// <summary>
-		/// Returns a file list from the current bank matching the given search pattern.
-		/// </summary>
-		/// <param name="pattern">Search pattern</param>
-		/// <returns>File list</returns>
-		public List<string> GetFiles(string pattern)
-		{
-			List<string> files = new List<string>();
-
-
-			return files;
-		}
-
-
-		/// <summary>
 		/// Process all file in the storage
 		/// </summary>
 		/// <returns>True on succes</returns>
-		public bool Process()
+		public override bool Process()
 		{
 			Files.Clear();
 
+			// Add files to the list
 			DirectoryInfo di = new DirectoryInfo(StoragePath);
 			foreach (FileInfo fi in di.GetFiles("*", SearchOption.AllDirectories))
 			{
-				Files.Add(fi.FullName);
+				// Adds file to the list
+				Files.Add(fi.FullName.Replace(StoragePath, string.Empty));
+
+
+				if (!fi.FullName.EndsWith(".xml", true, null))
+					continue;
+
+				// Convert to xml
+				XmlDocument doc = new XmlDocument();
+				doc.Load(fi.FullName);
+
+
+				// Check the root node
+				XmlElement xml = doc.DocumentElement;
+				if (xml.Name.ToLower() != "bank")
+				{
+					Trace.WriteLine("");
+					continue;
+				}
+
+
+				// For each nodes, process it
+				foreach (XmlNode node in xml.ChildNodes)
+				{
+					if (node.NodeType == XmlNodeType.Comment)
+						continue;
+
+
+					Provider provider = ResourceManager.GetTagProvider(node.Name);
+					if (provider == null)
+					{
+						Trace.WriteLine("? No Provider found for asset \"<" + node.Name + ">\"...");
+						continue;
+					}
+
+					//lock (BinaryLock)
+					{
+						provider.Load(node);
+					}
+				}
+
+				Trace.WriteLine("");
+
+
 			}
+
+
 
 			return true;
 		}
@@ -116,7 +135,7 @@ namespace ArcEngine.Storage
 		/// </summary>
 		/// <param name="name">File name</param>
 		/// <returns>Stream handle or null</returns>
-		public Stream Write(string name)
+		public override Stream Write(string name)
 		{
 			return null;
 		}
@@ -128,12 +147,6 @@ namespace ArcEngine.Storage
 		/// Storage path
 		/// </summary>
 		string StoragePath;
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		List<string> Files;
 
 		#endregion
 	}

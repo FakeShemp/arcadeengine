@@ -20,21 +20,43 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Text;
 
-namespace ArcEngine.Interface
+namespace ArcEngine.Storage
 {
 	/// <summary>
 	/// Storage interface
 	/// </summary>
-	public interface IStorage : IDisposable
+	public abstract class StorageBase : IDisposable
 	{
+
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		public StorageBase()
+		{
+			Files = new List<string>();
+		}
+
+
 
 		/// <summary>
 		/// Process all file in the storage
 		/// </summary>
 		/// <returns>True on succes</returns>
-		bool Process();
+		public virtual bool Process()
+		{
+			return false;
+		}
+
+
+		/// <summary>
+		/// Dispose resource
+		/// </summary>
+		public virtual void Dispose()
+		{
+		}
 
 
 		/// <summary>
@@ -42,7 +64,10 @@ namespace ArcEngine.Interface
 		/// </summary>
 		/// <param name="name">File name</param>
 		/// <returns>Stream handle or null</returns>
-		Stream Read(string name);
+		public virtual Stream Read(string name)
+		{
+			return null;
+		}
 
 
 		/// <summary>
@@ -50,14 +75,20 @@ namespace ArcEngine.Interface
 		/// </summary>
 		/// <param name="name">File name</param>
 		/// <returns>Stream handle or null</returns>
-		Stream Write(string name);
+		public virtual Stream Write(string name)
+		{
+			return null;
+		}
 
 
 		/// <summary>
 		/// Returns a file list from the current bank
 		/// </summary>
 		/// <returns>File list</returns>
-		List<string> GetFiles();
+		public List<string> GetFiles()
+		{
+			return GetFiles("*");
+		}
 
 
 		/// <summary>
@@ -65,6 +96,29 @@ namespace ArcEngine.Interface
 		/// </summary>
 		/// <param name="pattern">Search pattern</param>
 		/// <returns>File list</returns>
-		List<string> GetFiles(string pattern);
+		public List<string> GetFiles(string pattern)
+		{
+			List<string> list = new List<string>();
+
+			foreach (string file in Files)
+			{
+				if (Regex.IsMatch(file, pattern))
+					list.Add(file);
+			}
+
+			list.Sort();
+
+			return list;
+		}
+
+
+		#region Properties
+
+		/// <summary>
+		/// Files list
+		/// </summary>
+		protected List<string> Files;
+
+		#endregion
 	}
 }
