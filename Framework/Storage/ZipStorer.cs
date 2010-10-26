@@ -748,17 +748,20 @@ namespace ArcEngine.Storage
 			FileName = filename;
 		}
 
-
 		/// <summary>
-		/// 
+		/// Dispose
 		/// </summary>
-		public void Dispose()
+		protected override void Dispose(bool disposing)
 		{
+
+			if (IsDisposing)
+				return;
+			IsDisposing = true;
+
 			Seek(0, SeekOrigin.Begin);
-
 			Zip.AddStream(Compression.Deflate, FileName, this, DateTime.Now, string.Empty);
-
-			base.Dispose();
+			
+			base.Close();
 		}
 
 
@@ -775,6 +778,11 @@ namespace ArcEngine.Storage
 		/// File name in the zip
 		/// </summary>
 		string FileName;
+
+		/// <summary>
+		/// Stream is closing
+		/// </summary>
+		bool IsDisposing;
 
 		#endregion
 	}

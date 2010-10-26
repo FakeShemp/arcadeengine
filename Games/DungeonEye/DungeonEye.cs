@@ -95,15 +95,12 @@ namespace DungeonEye
 			Texture2D.DefaultMagFilter = TextureMagFilter.Nearest;
 			Texture2D.DefaultMinFilter = TextureMinFilter.Nearest;
 
-
 			using (BankStorage bs = BankStorage.Create("test.bnk", FileAccess.ReadWrite))
 			{
 				using (Stream stream = bs.CreateFile("toto.bin"))
 				{
 					byte[] buffer= System.Text.Encoding.ASCII.GetBytes("Toto fait du vélo sur le dos.");
 					stream.Write(buffer, 0, buffer.Length);
-
-					stream.Dispose();
 				}
 			}
 
