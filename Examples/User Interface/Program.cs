@@ -4,7 +4,7 @@ using ArcEngine.Asset;
 using ArcEngine.Graphic;
 using ArcEngine.Utility.GUI;
 using ArcEngine.Input;
-
+using ArcEngine.Storage;
 
 namespace ArcEngine.Examples.UserInterface
 {
@@ -54,7 +54,7 @@ namespace ArcEngine.Examples.UserInterface
 			Display.RenderState.ClearColor = Color.CornflowerBlue;
             
 
-			ResourceManager.LoadBank("data/data.bnk");
+			ResourceManager.Storages.Add(new BankStorage("data/data.bnk"));
 
 
 			Manager = new GuiManager();

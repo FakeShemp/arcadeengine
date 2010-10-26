@@ -95,12 +95,23 @@ namespace DungeonEye
 			Texture2D.DefaultMagFilter = TextureMagFilter.Nearest;
 			Texture2D.DefaultMinFilter = TextureMinFilter.Nearest;
 
-#if DEBUG
-			ResourceManager.Storages.Add(new FileSystemStorage(Path.Combine(Directory.GetCurrentDirectory(), "data")));
-#endif
+
+			using (BankStorage bs = BankStorage.Create("test.bnk", FileAccess.ReadWrite))
+			{
+				using (Stream stream = bs.CreateFile("toto.bin"))
+				{
+					byte[] buffer= System.Text.Encoding.ASCII.GetBytes("Toto fait du vélo sur le dos.");
+					stream.Write(buffer, 0, buffer.Length);
+
+					stream.Dispose();
+				}
+			}
+
+
 			// Main storage bank
 			ResourceManager.Storages.Add(new BankStorage("data/game.bnk", FileAccess.Read));
 
+	
 			GSM.AddScreen(new MainMenu());
 			GSM.AddScreen(new Team(null));
 			//GSM.AddScreen(new IntroScreen());

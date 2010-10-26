@@ -24,6 +24,9 @@ using System.Windows.Forms;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
+using ArcEngine.Storage;
+using System.IO;
+
 
 namespace ArcEngine.Examples.Particles
 {
@@ -94,6 +97,7 @@ namespace ArcEngine.Examples.Particles
 			// Display settings
 			Display.BlendingFunction(BlendingFactorSource.SrcAlpha, BlendingFactorDest.One);
 
+			ResourceManager.Storages.Add(new FileSystemStorage(Directory.GetCurrentDirectory()));
 
 
 			// Load the texture

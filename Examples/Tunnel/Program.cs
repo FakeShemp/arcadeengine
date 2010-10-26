@@ -25,8 +25,8 @@ using ArcEngine.Asset;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
 using System.Collections.Generic;
-
-
+using ArcEngine.Storage;
+using System.IO;
 
 //
 // Tunnel effect taken from http://www.rozengain.com/files/webgl/tunnel/
@@ -72,7 +72,6 @@ namespace ArcEngine.Examples.Tunnel
 			// Render states
 			Display.RenderState.ClearColor = Color.Black;
 			Display.RenderState.DepthTest = true;
-
 
 			#region Setup the shader
 			Shader = new Shader();

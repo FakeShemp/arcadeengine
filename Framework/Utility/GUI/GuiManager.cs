@@ -66,6 +66,15 @@ namespace ArcEngine.Utility.GUI
 				Batch.Dispose();
 			Batch = null;
 
+			if (TileSet != null)
+				TileSet.Dispose();
+			TileSet = null;
+
+			foreach (Control control in Controls)
+			{
+				control.Dispose();
+			}
+			Controls.Clear();
 
 			IsDisposed= true;
 		}

@@ -38,16 +38,42 @@ namespace ArcEngine.Storage
 		/// Constructor
 		/// </summary>
 		/// <param name="bankname">Bank name</param>
+		public BankStorage(string bankname) : this(bankname, FileAccess.Read)
+		{
+		}
+
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="bankname">Bank name</param>
 		/// <param name="access">Acces mode</param>
 		public BankStorage(string bankname, FileAccess access)
 		{
 			Entries = new List<ZipFileEntry>();
 
 			BankName = bankname;
-			Mode = access;
+			Access = access;
 
 			Process();
 
+		}
+
+		#endregion
+
+
+		#region Statics
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="name"></param>
+		/// <returns></returns>
+		public static BankStorage Create(string name, FileAccess access)
+		{
+			ZipStorer zip = ZipStorer.Create(name, string.Empty);
+			zip.Close();
+
+			return new BankStorage(name, access);
 		}
 
 		#endregion
@@ -123,7 +149,7 @@ namespace ArcEngine.Storage
 			Trace.Indent();
 
 			// Open an existing zip file for reading
-			ZipHandle = ZipStorer.Open(BankName, Mode);
+			ZipHandle = ZipStorer.Open(BankName, Access);
 			if (ZipHandle == null)
 			{
 				Trace.WriteLine("Failed to open bank file !");
@@ -144,7 +170,7 @@ namespace ArcEngine.Storage
 				// Loop back if it's not an xml file
 				if (!entry.FilenameInZip.EndsWith(".xml", true, null))
 				{
-					Trace.WriteLine("");
+					//Trace.WriteLine("");
 					continue;
 				}
 
@@ -161,7 +187,7 @@ namespace ArcEngine.Storage
 				XmlElement xml = doc.DocumentElement;
 				if (xml.Name.ToLower() != "bank")
 				{
-					Trace.WriteLine("");
+					//Trace.WriteLine("");
 					continue;
 				}
 
@@ -211,7 +237,7 @@ namespace ArcEngine.Storage
 		/// <summary>
 		/// Access mode
 		/// </summary>
-		public FileAccess Mode
+		public FileAccess Access
 		{
 			get;
 			private set;

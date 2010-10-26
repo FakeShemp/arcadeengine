@@ -53,11 +53,11 @@ namespace DungeonEye
 		public override void LoadContent()
 		{
 			Scene = ResourceManager.CreateAsset<Scene>("intro");
-            Scene.Font.GlyphTileset.Scale = new Vector2(2, 2);
+			// Scene.Font.GlyphTileset.Scale = new Vector2(2, 2);
 			Scene.StringTable.LanguageName = Game.LanguageName;
 
 			Font = ResourceManager.CreateAsset<BitmapFont>("intro");
-            Font.GlyphTileset.Scale = new Vector2(2, 2);
+			// Font.GlyphTileset.Scale = new Vector2(2, 2);
 
 			SpriteBatch = new SpriteBatch();
 		}
@@ -100,8 +100,8 @@ namespace DungeonEye
 
 			// Bye bye
 			if (Keyboard.IsNewKeyPress(Keys.Escape))
-				ScreenManager.RemoveScreen(this); 
-				//ScreenManager.Game.Exit();
+				ScreenManager.RemoveScreen(this);
+			//ScreenManager.Game.Exit();
 
 			// Pause animation
 			if (Keyboard.IsNewKeyPress(Keys.Space))

@@ -57,6 +57,14 @@ namespace ArcEngine.Utility.GUI
 		/// </summary>
 		public virtual void Dispose()
 		{
+
+			foreach (Control control in Controls)
+			{
+				control.Dispose();
+			}
+			Controls.Clear();
+
+			
 			if (Font != null)
 				Font.Dispose();
 			Font = null;

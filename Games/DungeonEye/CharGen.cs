@@ -41,7 +41,7 @@ namespace DungeonEye
 		/// </summary>
 		public CharGen(SpriteBatch batch)
 		{
-            Batch = batch;
+			Batch = batch;
 			Heroes = new Hero[4];
 
 			HeroeBoxes = new Rectangle[] 
@@ -74,16 +74,16 @@ namespace DungeonEye
 			//ResourceManager.Storages.Add(new BankStorage("data/chargen.bnk", System.IO.FileAccess.Read));
 
 			Tileset = ResourceManager.CreateAsset<TileSet>("CharGen");
-            Tileset.Scale = new Vector2(2.0f, 2.0f);
+			//Tileset.Scale = new Vector2(2.0f, 2.0f);
 
 			Heads = ResourceManager.CreateAsset<TileSet>("Heads");
-            Heads.Scale = new Vector2(2.0f, 2.0f);
+			//Heads.Scale = new Vector2(2.0f, 2.0f);
 
 			Font = ResourceManager.CreateAsset<BitmapFont>("intro");
-            Font.GlyphTileset.Scale = new Vector2(2.0f, 2.0f);
+			//Font.GlyphTileset.Scale = new Vector2(2.0f, 2.0f);
 
 			NameFont = ResourceManager.CreateAsset<BitmapFont>("name");
-            NameFont.GlyphTileset.Scale = new Vector2(2.0f, 2.0f);
+			//NameFont.GlyphTileset.Scale = new Vector2(2.0f, 2.0f);
 
 			PlayButton = new ScreenButton(string.Empty, new Rectangle(48, 362, 166, 32));
 			PlayButton.Selected += new EventHandler(PlayButton_Selected);
@@ -92,7 +92,7 @@ namespace DungeonEye
 			StringTable.LanguageName = Game.LanguageName;
 
 			Anims = ResourceManager.CreateAsset<Animation>("Animations");
-            Anims.TileSet.Scale = new Vector2(2.0f, 2.0f);
+			//Anims.TileSet.Scale = new Vector2(2.0f, 2.0f);
 			Anims.Play();
 
 			CurrentState = CharGenStates.SelectHero;
@@ -108,17 +108,17 @@ namespace DungeonEye
 				Tileset.Dispose();
 			Tileset = null;
 
-            if (Heads != null)
-                Heads.Dispose();
-            Heads = null;
+			if (Heads != null)
+				Heads.Dispose();
+			Heads = null;
 
 			if (Font != null)
 				Font.Dispose();
 			Font = null;
 
-            if (NameFont != null)
-                NameFont.Dispose();
-            NameFont = null;
+			if (NameFont != null)
+				NameFont.Dispose();
+			NameFont = null;
 
 			if (Anims != null)
 				Anims.Dispose();
@@ -168,7 +168,7 @@ namespace DungeonEye
 				case CharGenStates.SelectHero:
 				if (Mouse.IsButtonDown(MouseButtons.Left))
 				{
-					for (int id = 0; id < 4; id++)
+					for (int id = 0 ; id < 4 ; id++)
 					{
 						if (HeroeBoxes[id].Contains(Mouse.Location))
 						{
@@ -192,12 +192,12 @@ namespace DungeonEye
 				case CharGenStates.SelectRace:
 				{
 					Point point = new Point(300, 140);
-					for (int i = 0; i < 12; i++)
+					for (int i = 0 ; i < 12 ; i++)
 					{
 						point.Y += 18;
 						if (new Rectangle(point.X, point.Y, 324, 16).Contains(Mouse.Location) && Mouse.IsNewButtonDown(MouseButtons.Left))
 						{
-							CurrentHero.Race = (HeroRace)i;
+							CurrentHero.Race = (HeroRace) i;
 							CurrentState = CharGenStates.SelectClass;
 						}
 					}
@@ -209,7 +209,7 @@ namespace DungeonEye
 				case CharGenStates.SelectClass:
 				{
 					Point point = new Point(304, 0);
-					for (int i = 0; i < 9; i++)
+					for (int i = 0 ; i < 9 ; i++)
 					{
 						point.Y = 176 + i *18;
 						if (new Rectangle(286, 176 + i * 18, 324, 16).Contains(Mouse.Location) && Mouse.IsNewButtonDown(MouseButtons.Left))
@@ -260,8 +260,8 @@ namespace DungeonEye
 						if (BackButton.Contains(Mouse.Location) && Mouse.IsNewButtonDown(MouseButtons.Left))
 							CurrentState = CharGenStates.SelectRace;
 					}
-				
-					
+
+
 				}
 				break;
 				#endregion
@@ -270,7 +270,7 @@ namespace DungeonEye
 				case CharGenStates.SelectAlignment:
 				{
 					Point point = new Point(304, 0);
-					for (int i = 0; i < 9; i++)
+					for (int i = 0 ; i < 9 ; i++)
 					{
 						point.Y = 176 + i * 18;
 						if (new Rectangle(286, 176 + i * 18, 324, 16).Contains(Mouse.Location) && Mouse.IsNewButtonDown(MouseButtons.Left))
@@ -313,7 +313,7 @@ namespace DungeonEye
 							FaceOffset++;
 
 						// Select a face
-						for (int x = 0; x < 4; x++)
+						for (int x = 0 ; x < 4 ; x++)
 						{
 							if (new Rectangle(352 + x * 64, 132, 64, 64).Contains(Mouse.Location))
 							{
@@ -434,7 +434,7 @@ namespace DungeonEye
 			// Clears the background
 			Display.ClearBuffers();
 
-            Batch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Immediate, false);
+			Batch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Immediate, false);
 
 
 			// Background
@@ -442,7 +442,7 @@ namespace DungeonEye
 			Batch.DrawTile(Tileset, 0, Point.Empty, Color.White);
 
 			// Heroes faces and names
-			for (int i = 0; i < 4; i++)
+			for (int i = 0 ; i < 4 ; i++)
 			{
 				Hero hero = Heroes[i];
 				if (hero == null)
@@ -477,7 +477,7 @@ namespace DungeonEye
 
 					Point point = new Point(300, 140);
 					Color color;
-					for (int i = 0; i < 12; i++)
+					for (int i = 0 ; i < 12 ; i++)
 					{
 						point.Y += 18;
 						if (new Rectangle(point.X, point.Y, 324, 16).Contains(Mouse.Location))
@@ -500,7 +500,7 @@ namespace DungeonEye
 
 					Point point = new Point(304, 0);
 					Color color;
-					for (int i = 0; i < 9; i++)
+					for (int i = 0 ; i < 9 ; i++)
 					{
 						point.Y = 176 + i *18;
 						if (new Rectangle(286, 176 + i * 18, 324, 16).Contains(Mouse.Location))
@@ -521,12 +521,12 @@ namespace DungeonEye
 				#region Select alignment
 				case CharGenStates.SelectAlignment:
 				{
-                    Anims.Draw(Batch, HeroeBoxes[HeroID].Location);
+					Anims.Draw(Batch, HeroeBoxes[HeroID].Location);
 					Batch.DrawString(Font, new Rectangle(304, 140, 300, 64), Color.FromArgb(85, 255, 255), StringTable.GetString(12));
 
 					Point point = new Point(304, 0);
 					Color color;
-					for (int i = 0; i < 9; i++)
+					for (int i = 0 ; i < 9 ; i++)
 					{
 						point.Y = 176 + i * 18;
 						if (new Rectangle(286, 176 + i * 18, 324, 16).Contains(Mouse.Location))
@@ -547,7 +547,7 @@ namespace DungeonEye
 				#region Select face
 				case CharGenStates.SelectFace:
 				{
-                    Anims.Draw(Batch, HeroeBoxes[HeroID].Location);
+					Anims.Draw(Batch, HeroeBoxes[HeroID].Location);
 
 					// Class and professions
 					Batch.DrawString(Font, new Rectangle(300, 210, 300, 64), Color.White, CurrentHero.Race.ToString());
@@ -575,7 +575,7 @@ namespace DungeonEye
 					Batch.DrawTile(Tileset, 19, new Point(300, 172));
 
 					// Faces
-					for (int i = 0; i < 4; i++)
+					for (int i = 0 ; i < 4 ; i++)
 						Batch.DrawTile(Heads, i + FaceOffset, new Point(354 + i * 64, 132));
 
 				}
@@ -857,8 +857,8 @@ namespace DungeonEye
 					if (CurrentHero.Name != null && CurrentHero.Name.Length > 10)
 						break;
 
-					if ((int)e.KeyCode > (int)'Z')
-						CurrentHero.Name += (char)(e.KeyCode + 32);
+					if ((int) e.KeyCode > (int) 'Z')
+						CurrentHero.Name += (char) (e.KeyCode + 32);
 					else
 						CurrentHero.Name += e.KeyCode;
 				}
@@ -885,7 +885,7 @@ namespace DungeonEye
 		{
 			get
 			{
-				for (int id = 0; id < 4; id++)
+				for (int id = 0 ; id < 4 ; id++)
 				{
 					if (Heroes[id] == null)
 						return false;

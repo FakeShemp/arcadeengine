@@ -40,11 +40,11 @@ namespace DungeonEye
 	public class Team : GameScreen
 	{
 
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="heroes">Heroes team</param>
-        public Team(Hero[] heroes)
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="heroes">Heroes team</param>
+		public Team(Hero[] heroes)
 		{
 			Messages = new List<ScreenMessage>();
 			CampWindow = new Camp(this);
@@ -54,12 +54,12 @@ namespace DungeonEye
 			DrawHPAsBar = true;
 
 			Heroes = new List<Hero>();
-			for (int i = 0; i < 6; i++)
+			for (int i = 0 ; i < 6 ; i++)
 				Heroes.Add(null);
 
 			if (heroes != null)
 			{
-				for (int i = 0; i < heroes.Length; i++)
+				for (int i = 0 ; i < heroes.Length ; i++)
 					Heroes[i] = heroes[i];
 			}
 			else
@@ -73,7 +73,7 @@ namespace DungeonEye
 		public override void UnloadContent()
 		{
 			Trace.WriteDebugLine("[Team] : UnloadContent");
-			
+
 			if (Dungeon != null)
 				Dungeon.Dispose();
 			Dungeon = null;
@@ -109,7 +109,7 @@ namespace DungeonEye
 				Batch.Dispose();
 			Batch = null;
 
-			
+
 
 			SaveGame = "";
 			Heroes = null;
@@ -173,24 +173,24 @@ namespace DungeonEye
 			// Interface tileset
 			TileSet = ResourceManager.CreateAsset<TileSet>("Interface");
 			ResourceManager.AddSharedAsset<TileSet>("Interface", TileSet);
-            TileSet.Scale = new Vector2(2.0f, 2.0f);
-			Trace.WriteLine("Tileset ({0} ms)", watch.ElapsedMilliseconds);
+			//TileSet.Scale = new Vector2(2.0f, 2.0f);
+			//Trace.WriteLine("Tileset ({0} ms)", watch.ElapsedMilliseconds);
 
 			// Heroe's heads
 			Heads = ResourceManager.CreateAsset<TileSet>("Heads");
-            Heads.Scale = new Vector2(2.0f, 2.0f);
-			Trace.WriteLine("Head ({0} ms)", watch.ElapsedMilliseconds);
+			//Heads.Scale = new Vector2(2.0f, 2.0f);
+			//Trace.WriteLine("Head ({0} ms)", watch.ElapsedMilliseconds);
 
 			// Items tileset
 			Items = ResourceManager.CreateAsset<TileSet>("Items");
-            Items.Scale = new Vector2(2.0f, 2.0f);
-			Trace.WriteLine("Items ({0} ms)", watch.ElapsedMilliseconds);
+			//Items.Scale = new Vector2(2.0f, 2.0f);
+			//Trace.WriteLine("Items ({0} ms)", watch.ElapsedMilliseconds);
 
 			// Fonts
 			Font = ResourceManager.CreateSharedAsset<BitmapFont>("inventory");
-            Font.GlyphTileset.Scale = new Vector2(2.0f, 2.0f);
+			//Font.GlyphTileset.Scale = new Vector2(2.0f, 2.0f);
 			OutlinedFont = ResourceManager.CreateSharedAsset<BitmapFont>("outline");
-            OutlinedFont.GlyphTileset.Scale = new Vector2(2.0f, 2.0f);
+			//OutlinedFont.GlyphTileset.Scale = new Vector2(2.0f, 2.0f);
 
 			// Misc init
 			CampWindow.Init();
@@ -310,7 +310,7 @@ namespace DungeonEye
 
 
 			// Clear the team
-			for (int i = 0; i < Heroes.Count; i++)
+			for (int i = 0 ; i < Heroes.Count ; i++)
 				Heroes[i] = null;
 
 			// Dispose dungeon
@@ -345,7 +345,7 @@ namespace DungeonEye
 
 					case "position":
 					{
-						HeroPosition position = (HeroPosition)Enum.Parse(typeof(HeroPosition), node.Attributes["slot"].Value, true);
+						HeroPosition position = (HeroPosition) Enum.Parse(typeof(HeroPosition), node.Attributes["slot"].Value, true);
 						Hero hero = new Hero(this);
 						hero.Load(node.FirstChild);
 						AddHero(hero, position);
@@ -410,9 +410,9 @@ namespace DungeonEye
 			}
 
 
-			
+
 			writer.WriteEndElement();
-	
+
 			return false;
 		}
 
@@ -430,7 +430,7 @@ namespace DungeonEye
 		public override void Draw()
 		{
 
-            Batch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Deferred, false);
+			Batch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Deferred, false);
 
 
 			// Draw the current maze
@@ -443,9 +443,9 @@ namespace DungeonEye
 
 
 			// Display the compass
-			Batch.DrawTile(TileSet, 5 + (int)Location.Direction * 3, new Point(228, 262));
-			Batch.DrawTile(TileSet, 6 + (int)Location.Direction * 3, new Point(158, 316));
-			Batch.DrawTile(TileSet, 7 + (int)Location.Direction * 3, new Point(302, 316));
+			Batch.DrawTile(TileSet, 5 + (int) Location.Direction * 3, new Point(228, 262));
+			Batch.DrawTile(TileSet, 6 + (int) Location.Direction * 3, new Point(158, 316));
+			Batch.DrawTile(TileSet, 7 + (int) Location.Direction * 3, new Point(302, 316));
 
 
 			// Interfaces
@@ -459,22 +459,22 @@ namespace DungeonEye
 			{
 				DrawMain(Batch);
 
-/*
-				// Action zones
-				for (int id = 0 ; id < 6 ; id++)
-				{
-					Batch.FillRectangle(InterfaceCoord.PrimaryHand[id], Color.FromArgb(128, Color.Red));
-					Batch.FillRectangle(InterfaceCoord.SecondaryHand[id], Color.FromArgb(128, Color.Red));
-					Batch.FillRectangle(InterfaceCoord.SelectHero[id], Color.FromArgb(128, Color.Red));
-					Batch.FillRectangle(InterfaceCoord.HeroFace[id], Color.FromArgb(128, Color.Red));
-				}
-				Batch.FillRectangle(InterfaceCoord.TurnLeft, Color.FromArgb(128, Color.Red));
-				Batch.FillRectangle(InterfaceCoord.TurnRight, Color.FromArgb(128, Color.Red));
-				Batch.FillRectangle(InterfaceCoord.MoveForward, Color.FromArgb(128, Color.Red));
-				Batch.FillRectangle(InterfaceCoord.MoveBackward, Color.FromArgb(128, Color.Red));
-				Batch.FillRectangle(InterfaceCoord.MoveLeft, Color.FromArgb(128, Color.Red));
-				Batch.FillRectangle(InterfaceCoord.MoveRight, Color.FromArgb(128, Color.Red));
-*/
+				/*
+								// Action zones
+								for (int id = 0 ; id < 6 ; id++)
+								{
+									Batch.FillRectangle(InterfaceCoord.PrimaryHand[id], Color.FromArgb(128, Color.Red));
+									Batch.FillRectangle(InterfaceCoord.SecondaryHand[id], Color.FromArgb(128, Color.Red));
+									Batch.FillRectangle(InterfaceCoord.SelectHero[id], Color.FromArgb(128, Color.Red));
+									Batch.FillRectangle(InterfaceCoord.HeroFace[id], Color.FromArgb(128, Color.Red));
+								}
+								Batch.FillRectangle(InterfaceCoord.TurnLeft, Color.FromArgb(128, Color.Red));
+								Batch.FillRectangle(InterfaceCoord.TurnRight, Color.FromArgb(128, Color.Red));
+								Batch.FillRectangle(InterfaceCoord.MoveForward, Color.FromArgb(128, Color.Red));
+								Batch.FillRectangle(InterfaceCoord.MoveBackward, Color.FromArgb(128, Color.Red));
+								Batch.FillRectangle(InterfaceCoord.MoveLeft, Color.FromArgb(128, Color.Red));
+								Batch.FillRectangle(InterfaceCoord.MoveRight, Color.FromArgb(128, Color.Red));
+				*/
 
 
 
@@ -501,7 +501,7 @@ namespace DungeonEye
 				Batch.DrawTile(Items, ItemInHand.TileID, Mouse.Location, 0.5f);
 
 
-            Batch.End();
+			Batch.End();
 		}
 
 
@@ -515,9 +515,9 @@ namespace DungeonEye
 		{
 			// Draw heroes
 			Point pos;
-			for (int y = 0; y < 3; y++)
+			for (int y = 0 ; y < 3 ; y++)
 			{
-				for (int x = 0; x < 2; x++)
+				for (int x = 0 ; x < 2 ; x++)
 				{
 					Hero hero = Heroes[y * 2 + x];
 					if (hero == null)
@@ -555,7 +555,7 @@ namespace DungeonEye
 					// HP
 					if (DrawHPAsBar)
 					{
-						float percent = (float)hero.HitPoint.Current / (float)hero.HitPoint.Max;
+						float percent = (float) hero.HitPoint.Current / (float) hero.HitPoint.Max;
 						Color color = Color.Green;
 						if (percent < 0.15)
 							color = Color.Red;
@@ -570,9 +570,9 @@ namespace DungeonEye
 
 
 					// Hands
-					for (int i = 0; i < 2; i++)
+					for (int i = 0 ; i < 2 ; i++)
 					{
-						HeroHand hand = (HeroHand)i;
+						HeroHand hand = (HeroHand) i;
 						int yoffset = i * 32;
 
 						// Primary
@@ -651,7 +651,7 @@ namespace DungeonEye
 						batch.DrawTile(TileSet, 20, new Point(pos.X + 24, pos.Y + 66));
 						batch.DrawString(Font, new Point(pos.X + 52, pos.Y + 86), Color.White, hero.LastAttack.Hit.ToString());
 					}
-	
+
 				}
 			}
 
@@ -682,9 +682,9 @@ namespace DungeonEye
 			if (value > 0)
 			{
 				Vector4 zone = new Vector4(
-					rectangle.Left + 1, 
+					rectangle.Left + 1,
 					rectangle.Top + 1,
-					((float)value / (float)max * (rectangle.Width - 1)),
+					((float) value / (float) max * (rectangle.Width - 1)),
 					rectangle.Height - 2
 					);
 				batch.FillRectangle(zone, color);
@@ -698,7 +698,7 @@ namespace DungeonEye
 			batch.DrawLine(rectangle.Right + 1, rectangle.Top, rectangle.Right + 1, rectangle.Bottom, Color.FromArgb(44, 48, 138));
 		}
 
-		
+
 
 		/// <summary>
 		/// Draws the inventory
@@ -726,7 +726,7 @@ namespace DungeonEye
 				batch.DrawString(OutlinedFont, new Point(500, 316), Color.FromArgb(255, 85, 85), "DEAD");
 				batch.DrawTile(TileSet, 4, new Point(360, 4));
 			}
-			else			
+			else
 				batch.DrawTile(Heads, SelectedHero.Head, new Point(360, 4));
 
 
@@ -746,8 +746,8 @@ namespace DungeonEye
 
 			// Draw inventory
 			int pos = 0;
-			for (int y = 86; y < 338; y += 36)
-				for (int x = 368; x < 440; x += 36)
+			for (int y = 86 ; y < 338 ; y += 36)
+				for (int x = 368 ; x < 440 ; x += 36)
 				{
 					if (SelectedHero.GetBackPackItem(pos) != null)
 						batch.DrawTile(Items, SelectedHero.GetBackPackItem(pos).TileID, new Point(x, y));
@@ -810,29 +810,29 @@ namespace DungeonEye
 			if (SelectedHero.GetInventoryItem(InventoryPosition.Helmet) != null)
 				batch.DrawTile(Items, SelectedHero.GetInventoryItem(InventoryPosition.Helmet).TileID, new Point(602, 116));
 
-/* 
-			// Debug draw
-			Batch.FillRectangle(InterfaceCoord.PreviousHero, Color.FromArgb(128, Color.Red));
-			Batch.FillRectangle(InterfaceCoord.CloseInventory, Color.FromArgb(128, Color.Red));
-			Batch.FillRectangle(InterfaceCoord.NextHero, Color.FromArgb(128, Color.Red));
-			Batch.FillRectangle(InterfaceCoord.ShowStatistics, Color.FromArgb(128, Color.Red));
-			foreach (Rectangle rectangle in InterfaceCoord.BackPack)
-				Batch.FillRectangle(rectangle, Color.FromArgb(128, Color.Red));
-			foreach (Rectangle rectangle in InterfaceCoord.Rings)
-				Batch.FillRectangle(rectangle, Color.FromArgb(128, Color.Red));
-			foreach (Rectangle rectangle in InterfaceCoord.Belt)
-				Batch.FillRectangle(rectangle, Color.FromArgb(128, Color.Red));
+			/* 
+						// Debug draw
+						Batch.FillRectangle(InterfaceCoord.PreviousHero, Color.FromArgb(128, Color.Red));
+						Batch.FillRectangle(InterfaceCoord.CloseInventory, Color.FromArgb(128, Color.Red));
+						Batch.FillRectangle(InterfaceCoord.NextHero, Color.FromArgb(128, Color.Red));
+						Batch.FillRectangle(InterfaceCoord.ShowStatistics, Color.FromArgb(128, Color.Red));
+						foreach (Rectangle rectangle in InterfaceCoord.BackPack)
+							Batch.FillRectangle(rectangle, Color.FromArgb(128, Color.Red));
+						foreach (Rectangle rectangle in InterfaceCoord.Rings)
+							Batch.FillRectangle(rectangle, Color.FromArgb(128, Color.Red));
+						foreach (Rectangle rectangle in InterfaceCoord.Belt)
+							Batch.FillRectangle(rectangle, Color.FromArgb(128, Color.Red));
 
-			Batch.FillRectangle(InterfaceCoord.Head, Color.FromArgb(128, Color.Red));
-			Batch.FillRectangle(InterfaceCoord.Neck, Color.FromArgb(128, Color.Red));
-			Batch.FillRectangle(InterfaceCoord.SecondaryHandInventory, Color.FromArgb(128, Color.Red));
-			Batch.FillRectangle(InterfaceCoord.PrimaryHandInventory, Color.FromArgb(128, Color.Red));
-			Batch.FillRectangle(InterfaceCoord.Feet, Color.FromArgb(128, Color.Red));
-			Batch.FillRectangle(InterfaceCoord.Wrists, Color.FromArgb(128, Color.Red));
-			Batch.FillRectangle(InterfaceCoord.Food, Color.FromArgb(128, Color.Red));
-			Batch.FillRectangle(InterfaceCoord.Armor, Color.FromArgb(128, Color.Red));
-			Batch.FillRectangle(InterfaceCoord.Quiver, Color.FromArgb(128, Color.Red));
-*/
+						Batch.FillRectangle(InterfaceCoord.Head, Color.FromArgb(128, Color.Red));
+						Batch.FillRectangle(InterfaceCoord.Neck, Color.FromArgb(128, Color.Red));
+						Batch.FillRectangle(InterfaceCoord.SecondaryHandInventory, Color.FromArgb(128, Color.Red));
+						Batch.FillRectangle(InterfaceCoord.PrimaryHandInventory, Color.FromArgb(128, Color.Red));
+						Batch.FillRectangle(InterfaceCoord.Feet, Color.FromArgb(128, Color.Red));
+						Batch.FillRectangle(InterfaceCoord.Wrists, Color.FromArgb(128, Color.Red));
+						Batch.FillRectangle(InterfaceCoord.Food, Color.FromArgb(128, Color.Red));
+						Batch.FillRectangle(InterfaceCoord.Armor, Color.FromArgb(128, Color.Red));
+						Batch.FillRectangle(InterfaceCoord.Quiver, Color.FromArgb(128, Color.Red));
+			*/
 		}
 
 
@@ -901,7 +901,7 @@ namespace DungeonEye
 			batch.DrawString(Font, new Point(470, 270), Color.Black, "EXP");
 			batch.DrawString(Font, new Point(550, 270), Color.Black, "LVL");
 			int y = 0;
-			foreach(Profession prof in SelectedHero.Professions)
+			foreach (Profession prof in SelectedHero.Professions)
 			{
 				batch.DrawString(Font, new Point(366, 290 + y), Color.Black, prof.Class.ToString());
 				batch.DrawString(Font, new Point(460, 290 + y), Color.White, prof.Experience.ToString());
@@ -938,7 +938,7 @@ namespace DungeonEye
 				return;
 			}
 
-			
+
 			if (Keyboard.IsNewKeyPress(Keys.V))
 			{
 				ReorderHeroes();
@@ -981,7 +981,7 @@ namespace DungeonEye
 
 			#region Change maze
 			// Change maze
-			for (int i = 0; i < 12; i++)
+			for (int i = 0 ; i < 12 ; i++)
 			{
 				if (Keyboard.IsNewKeyPress(Keys.F1 + i))
 				{
@@ -1181,7 +1181,7 @@ namespace DungeonEye
 						break;
 					}
 
-		
+
 					if (ItemInHand != null)
 					{
 						if (FrontBlock.DropItem(groundpos, ItemInHand))
@@ -1212,7 +1212,7 @@ namespace DungeonEye
 						groundpos = GroundPosition.NorthWest;
 						break;
 					}
-					
+
 					if (ItemInHand != null)
 					{
 						if (CurrentBlock.DropItem(groundpos, ItemInHand))
@@ -1252,7 +1252,7 @@ namespace DungeonEye
 					if (ItemInHand != null)
 					{
 						if (FrontBlock.DropItem(groundpos, ItemInHand))
-							SetItemInHand ( null);
+							SetItemInHand(null);
 					}
 					else
 					{
@@ -1269,7 +1269,7 @@ namespace DungeonEye
 				#region Action to process on the front block
 
 				// Click on the block in front of the team
-				else if(MazeDisplayCoordinates.FrontBlock.Contains(mousePos))// && FrontBlock.IsWall)
+				else if (MazeDisplayCoordinates.FrontBlock.Contains(mousePos))// && FrontBlock.IsWall)
 				{
 					if (!FrontBlock.OnClick(this, mousePos, FrontWallSide))
 					{
@@ -1510,10 +1510,10 @@ namespace DungeonEye
 					Item item = null;
 
 					// Update each hero interface
-					for (int id = 0; id < 6; id++)
+					for (int id = 0 ; id < 6 ; id++)
 					{
 						// Get the hero
-						Hero hero = Heroes[id]; 
+						Hero hero = Heroes[id];
 						if (hero == null)
 							continue;
 
@@ -1545,7 +1545,7 @@ namespace DungeonEye
 							else if (ItemInHand == null && item != null)
 							{
 								SetItemInHand(item);
-								hero.SetInventoryItem(InventoryPosition.Primary, null); 
+								hero.SetInventoryItem(InventoryPosition.Primary, null);
 							}
 						}
 
@@ -1564,7 +1564,7 @@ namespace DungeonEye
 							else if (ItemInHand == null && item != null)
 							{
 								SetItemInHand(item);
-								hero.SetInventoryItem(InventoryPosition.Secondary, null); 
+								hero.SetInventoryItem(InventoryPosition.Secondary, null);
 							}
 						}
 					}
@@ -1643,9 +1643,9 @@ namespace DungeonEye
 				if (hero != null)
 					hero.Update(time);
 			}
-			#endregion 
+			#endregion
 
-			
+
 			#region Spell window
 
 			SpellBook.Update(time);
@@ -1689,8 +1689,8 @@ namespace DungeonEye
 		{
 			Point mousePos = Mouse.Location;
 			Item item = null;
-	
-			
+
+
 			if (Mouse.IsNewButtonDown(MouseButtons.Left))
 			{
 				// Close inventory
@@ -1774,10 +1774,10 @@ namespace DungeonEye
 					item = SelectedHero.GetInventoryItem(InventoryPosition.Wrist);
 
 					if (ItemInHand != null && SelectedHero.SetInventoryItem(InventoryPosition.Wrist, ItemInHand))
-						SetItemInHand(item); 
+						SetItemInHand(item);
 					else if (ItemInHand == null && item != null)
 					{
-						SetItemInHand(item); 
+						SetItemInHand(item);
 						SelectedHero.SetInventoryItem(InventoryPosition.Wrist, null);
 					}
 				}
@@ -1804,7 +1804,7 @@ namespace DungeonEye
 					item = SelectedHero.GetInventoryItem(InventoryPosition.Feet);
 
 					if (ItemInHand != null && SelectedHero.SetInventoryItem(InventoryPosition.Feet, ItemInHand))
-					    SetItemInHand(item);
+						SetItemInHand(item);
 					else if (ItemInHand == null && item != null)
 					{
 						SetItemInHand(item);
@@ -1861,7 +1861,7 @@ namespace DungeonEye
 				else
 				{
 					#region Belt
-					for (int id = 0; id < 3; id++)
+					for (int id = 0 ; id < 3 ; id++)
 					{
 						if (InterfaceCoord.Waist[id].Contains(mousePos))
 						{
@@ -1879,7 +1879,7 @@ namespace DungeonEye
 					#endregion
 
 					#region Rings
-					for (int id = 0; id < 2; id++)
+					for (int id = 0 ; id < 2 ; id++)
 					{
 						item = SelectedHero.GetInventoryItem(InventoryPosition.Ring_Left + id);
 
@@ -1979,11 +1979,11 @@ namespace DungeonEye
 					// Is there a wall between the Team and the location
 					int dx = location.X - Location.Position.X;
 					int dy = location.Y - Location.Position.Y;
-					float delta = (float)dy / (float)dx;
+					float delta = (float) dy / (float) dx;
 					float y = 0;
-					for (int pos = Location.Position.Y; pos >= location.Y; pos--)
+					for (int pos = Location.Position.Y ; pos >= location.Y ; pos--)
 					{
-						if (Location.Maze.GetBlock(new Point(pos, Location.Position.Y + (int)y)).Type == BlockType.Wall)
+						if (Location.Maze.GetBlock(new Point(pos, Location.Position.Y + (int) y)).Type == BlockType.Wall)
 							return false;
 
 						y += delta;
@@ -2007,11 +2007,11 @@ namespace DungeonEye
 					// Is there a wall between the Team and the location
 					int dx = location.X - Location.Position.X;
 					int dy = location.Y - Location.Position.Y;
-					float delta = (float)dy / (float)dx;
+					float delta = (float) dy / (float) dx;
 					float y = 0;
-					for (int pos = Location.Position.Y; pos <= location.Y; pos++)
+					for (int pos = Location.Position.Y ; pos <= location.Y ; pos++)
 					{
-						if (Location.Maze.GetBlock(new Point(pos, Location.Position.Y + (int)y)).Type == BlockType.Wall)
+						if (Location.Maze.GetBlock(new Point(pos, Location.Position.Y + (int) y)).Type == BlockType.Wall)
 							return false;
 
 						y += delta;
@@ -2036,11 +2036,11 @@ namespace DungeonEye
 					// Is there a wall between the Team and the location
 					int dx = location.X - Location.Position.X;
 					int dy = location.Y - Location.Position.Y;
-					float delta = (float)dy / (float)dx;
+					float delta = (float) dy / (float) dx;
 					float y = 0;
-					for (int pos = Location.Position.X; pos >= location.X; pos--)
+					for (int pos = Location.Position.X ; pos >= location.X ; pos--)
 					{
-						if (Location.Maze.GetBlock(new Point(pos, Location.Position.Y + (int)y)).Type == BlockType.Wall)
+						if (Location.Maze.GetBlock(new Point(pos, Location.Position.Y + (int) y)).Type == BlockType.Wall)
 							return false;
 
 						y += delta;
@@ -2063,11 +2063,11 @@ namespace DungeonEye
 					// Is there a wall between the Team and the location
 					int dx = location.X - Location.Position.X;
 					int dy = location.Y - Location.Position.Y;
-					float delta = (float)dy / (float)dx;
+					float delta = (float) dy / (float) dx;
 					float y = 0;
-					for (int pos = Location.Position.X; pos <= location.X; pos++)
+					for (int pos = Location.Position.X ; pos <= location.X ; pos++)
 					{
-						if (Location.Maze.GetBlock(new Point(pos, Location.Position.Y + (int)y)).Type == BlockType.Wall)
+						if (Location.Maze.GetBlock(new Point(pos, Location.Position.Y + (int) y)).Type == BlockType.Wall)
 							return false;
 
 						y += delta;
@@ -2094,7 +2094,7 @@ namespace DungeonEye
 		}
 
 		#endregion
-		
+
 
 		#region Messages
 
@@ -2177,7 +2177,7 @@ namespace DungeonEye
 		Hero GetNextHero()
 		{
 			int i = 0;
-			for (i = 0; i < HeroCount; i++)
+			for (i = 0 ; i < HeroCount ; i++)
 			{
 				if (Heroes[i] == SelectedHero)
 				{
@@ -2200,7 +2200,7 @@ namespace DungeonEye
 		Hero GetPreviousHero()
 		{
 			int i = 0;
-			for (i = 0; i < HeroCount; i++)
+			for (i = 0 ; i < HeroCount ; i++)
 			{
 				if (Heroes[i] == SelectedHero)
 				{
@@ -2225,7 +2225,7 @@ namespace DungeonEye
 		{
 			int pos = -1;
 
-			for (int id = 0; id < Heroes.Count; id++)
+			for (int id = 0 ; id < Heroes.Count ; id++)
 			{
 				if (Heroes[id] == hero)
 				{
@@ -2237,7 +2237,7 @@ namespace DungeonEye
 			if (pos == -1)
 				throw new ArgumentOutOfRangeException("hero");
 
-			return (HeroPosition)pos;
+			return (HeroPosition) pos;
 		}
 
 
@@ -2331,7 +2331,7 @@ namespace DungeonEye
 		/// <returns>Hero handle or null</returns>
 		public Hero GetHeroFromPosition(HeroPosition pos)
 		{
-			return Heroes[(int)pos];
+			return Heroes[(int) pos];
 		}
 
 
@@ -2343,8 +2343,8 @@ namespace DungeonEye
 		public Hero GetHeroFromLocation(Point location)
 		{
 
-			for (int y = 0; y < 3; y++)
-				for (int x = 0; x < 2; x++)
+			for (int y = 0 ; y < 3 ; y++)
+				for (int x = 0 ; x < 2 ; x++)
 				{
 					// find the hero under the location 
 					if (new Rectangle(366 + x * 144, 2 + y * 104, 130, 104).Contains(location))
@@ -2362,7 +2362,7 @@ namespace DungeonEye
 		/// <param name="position">Hero's position</param>
 		public void DropHero(HeroPosition position)
 		{
-			Heroes[(int)position] = null;
+			Heroes[(int) position] = null;
 			ReorderHeroes();
 		}
 
@@ -2375,8 +2375,8 @@ namespace DungeonEye
 		{
 			if (hero == null)
 				return;
-			
-			for(int i = 0; i < Heroes.Count; i++)
+
+			for (int i = 0 ; i < Heroes.Count ; i++)
 			{
 				if (Heroes[i] == hero)
 				{
@@ -2412,7 +2412,7 @@ namespace DungeonEye
 
 		}
 
-		
+
 		#endregion
 
 
@@ -2446,7 +2446,7 @@ namespace DungeonEye
 		/// <returns>True if move allowed, otherwise false</rereturns>
 		public bool Walk(int front, int strafe)
 		{
-		
+
 			switch (Location.Direction)
 			{
 				case CardinalPoint.North:
@@ -2575,7 +2575,7 @@ namespace DungeonEye
 			if (maze == null)
 				return false;
 
-			if(MazeBlock != null)
+			if (MazeBlock != null)
 				MazeBlock.OnTeamLeave(this);
 			Location.Position = location.Position;
 			Location.SetMaze(maze.Name);
@@ -2729,7 +2729,7 @@ namespace DungeonEye
 						CardinalPoint.West,
 					};
 
-				return points[(int)Direction];
+				return points[(int) Direction];
 			}
 		}
 
@@ -3148,7 +3148,7 @@ namespace DungeonEye
 		/// </summary>
 		static public Rectangle PreviousHero = new Rectangle(546, 68, 40, 30);
 
-		
+
 		/// <summary>
 		/// Close inventory button
 		/// </summary>

@@ -752,7 +752,7 @@ namespace ArcEngine.Storage
 		/// <summary>
 		/// 
 		/// </summary>
-		public new void Dispose()
+		public void Dispose()
 		{
 			Seek(0, SeekOrigin.Begin);
 

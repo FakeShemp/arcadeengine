@@ -53,7 +53,6 @@ namespace ArcEngine.Storage
 		/// Opens a file at a specified path 
 		/// </summary>
 		/// <param name="name">Relative path of the file </param>
-		/// <param name="access">Specifies whether the file is opened with read, write, or read/write access</param>
 		/// <returns>Stream handle or null</returns>
 		public override Stream OpenFile(string name)
 		{
@@ -62,7 +61,7 @@ namespace ArcEngine.Storage
 			if (!File.Exists(filename))
 				return null;
 
-			return new FileStream(filename, FileMode.Open);
+			return new FileStream(filename, FileMode.Open, FileAccess.Read);
 		}
 
 

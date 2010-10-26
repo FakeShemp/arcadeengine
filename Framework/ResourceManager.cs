@@ -57,6 +57,7 @@ namespace ArcEngine
 			Providers = new List<Provider>();
 			RegistredTags = new Dictionary<string, Provider>();
 			Storages = new List<StorageBase>();
+			FailbackStorage = new FileSystemStorage(Directory.GetCurrentDirectory());
 
 			AddProvider(new Providers());
 		}
@@ -107,23 +108,23 @@ namespace ArcEngine
 		/// <summary>
 		/// Loads a resource from storages
 		/// </summary>
-		/// <param name="assetname">Name of the file to load</param>
+		/// <param name="filename">Name of the file to load</param>
 		/// <returns>Resource stream or null if not found</returns>
 		/// <remarks>Don't forget to Dispose the stream !!</remarks>
-		static public Stream Load(string assetname)
+		static public Stream Load(string filename)
 		{
-			if (string.IsNullOrEmpty(assetname))
+			if (string.IsNullOrEmpty(filename))
 				return null;
 
 			foreach (StorageBase storage in Storages)
 			{
-				Stream stream = storage.OpenFile(assetname);
+				Stream stream = storage.OpenFile(filename);
 				if (stream != null)
 					return stream;
 			}
 
-
-			return null;
+			// Last chance...
+			return FailbackStorage.OpenFile(filename);
 		}
 
 	
@@ -830,6 +831,13 @@ namespace ArcEngine
 			get;
 			private set;
 		}
+
+
+		/// <summary>
+		/// Failback storage
+		/// </summary>
+		static FileSystemStorage FailbackStorage;
+
 
 		#endregion
 
