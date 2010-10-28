@@ -174,19 +174,21 @@ namespace ArcEngine.Editor
 		{
 			DialogResult result = MessageBox.Show("Animation Editor", "Save modifications ?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
 
-			if (result == DialogResult.Yes)
-			{
-				Save();
-                if (SpriteBatch != null)
-                    SpriteBatch.Dispose();
-                SpriteBatch = null;
-
-			}
-			else if (result == DialogResult.Cancel)
+			if (result == DialogResult.Cancel)
 			{
 				e.Cancel = true;
+				return;
 			}
 
+				Save();
+
+			if (SpriteBatch != null)
+				SpriteBatch.Dispose();
+			SpriteBatch = null;
+
+			if (Animation != null)
+				Animation.Dispose();
+			Animation = null;
 		}
 
 

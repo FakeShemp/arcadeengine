@@ -307,11 +307,11 @@
     <Compile Include="Editor\TileSetForm.Designer.cs">
       <DependentUpon>TileSetForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Editor\Font2dForm.cs">
+    <Compile Include="Editor\BitmapFontForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Editor\Font2dForm.Designer.cs">
-      <DependentUpon>Font2dForm.cs</DependentUpon>
+    <Compile Include="Editor\BitmapFontForm.Designer.cs">
+      <DependentUpon>BitmapFontForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\AboutForm.cs">
       <SubType>Form</SubType>
@@ -556,8 +556,8 @@
       <DependentUpon>TileSetForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Editor\Font2dForm.resx">
-      <DependentUpon>Font2dForm.cs</DependentUpon>
+    <EmbeddedResource Include="Editor\BitmapFontForm.resx">
+      <DependentUpon>BitmapFontForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AboutForm.resx">

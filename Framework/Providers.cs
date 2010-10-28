@@ -329,7 +329,7 @@ namespace ArcEngine
 			{
 				if (Fonts.ContainsKey(name))
 					node = Fonts[name];
-				form = new ArcEngine.Editor.Font2dForm(node);
+				form = new ArcEngine.Editor.BitmapFontForm(node);
 			}
 			else if (typeof(T) == typeof(Script))
 			{

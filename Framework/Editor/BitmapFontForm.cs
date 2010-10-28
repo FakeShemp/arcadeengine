@@ -34,12 +34,12 @@ namespace ArcEngine.Editor
 	/// <summary>
 	/// 
 	/// </summary>
-	internal partial class Font2dForm : AssetEditorBase
+	internal partial class BitmapFontForm : AssetEditorBase
 	{
 		/// <summary>
 		/// 
 		/// </summary>
-		public Font2dForm(XmlNode node)
+		public BitmapFontForm(XmlNode node)
 		{
 			InitializeComponent();
 
@@ -183,7 +183,7 @@ namespace ArcEngine.Editor
 		/// <param name="e"></param>
 		private void OnFormClosing(object sender, FormClosingEventArgs e)
 		{
-			DialogResult result = MessageBox.Show("Texture Font Editor", "Save modifciations ?", MessageBoxButtons.YesNoCancel);
+			DialogResult result = MessageBox.Show("Texture Font Editor", "Save modifications ?", MessageBoxButtons.YesNoCancel);
 
 			if (result == DialogResult.Yes)
 			{
@@ -192,15 +192,21 @@ namespace ArcEngine.Editor
 			else if (result == DialogResult.Cancel)
 			{
 				e.Cancel = true;
+				return;
 			}
 
 			if (Batch != null)
 				Batch.Dispose();
 			Batch = null;
 
-			if (Font != null)
-				Font.Dispose();
-			Font = null;
+			if (CurrentFont != null)
+				CurrentFont.Dispose();
+			CurrentFont = null;
+
+			if (CheckerBoard != null)
+				CheckerBoard.Dispose();
+			CheckerBoard = null;
+
 		}
 
 		/// <summary>

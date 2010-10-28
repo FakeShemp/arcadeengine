@@ -4,6 +4,8 @@ using System.Drawing.Imaging;
 using System.Windows.Forms;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
+using ArcEngine.Storage;
+
 
 //
 //
@@ -21,7 +23,7 @@ namespace ArcEngine.Editor
 		/// Constructor
 		/// </summary>
 		/// <param name="bankname">Name of the bank</param>
-		public ImportGIFForm(string bankname)
+		public ImportGIFForm(StorageBase storage)
 		{
 			InitializeComponent();
 		}

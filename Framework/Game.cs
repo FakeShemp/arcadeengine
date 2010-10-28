@@ -28,6 +28,7 @@ using ArcEngine.Graphic;
 using ArcEngine.Input;
 using ArcEngine.PInvoke;
 using ArcEngine.Editor;
+using ArcEngine.Storage;
 
 [assembly: CLSCompliant(true)]
 namespace ArcEngine
@@ -133,7 +134,7 @@ namespace ArcEngine
 		#endregion
 
 
-		#region Event	handlers
+		#region Event handlers
 
 		/// <summary>
 		/// GameWindow resize event
@@ -205,7 +206,7 @@ namespace ArcEngine
 				Exit();
 
 			if (Keyboard.IsKeyPress(Keys.Insert))
-				RunEditor();
+				RunEditor(null);
 		}
 
 
@@ -692,7 +693,8 @@ namespace ArcEngine
 		/// <summary>
 		/// Launch the editor
 		/// </summary>
-		public void RunEditor()
+		/// <param name="storage">Storage to use</param>
+		public void RunEditor(StorageBase storage)
 		{
 	
 			bool mousestate = Mouse.Visible;
@@ -701,7 +703,7 @@ namespace ArcEngine
 			if (Window != null)
 				Window.Hide();
 	
-			Editor = new EditorMainForm();
+			Editor = new EditorMainForm(storage);
 			OnEditorEnter(Editor);
 			Editor.ShowDialog();
 			Editor = null;

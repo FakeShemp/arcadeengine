@@ -153,7 +153,7 @@ namespace ArcEngine.Editor
 			this.ToolSave.Size = new System.Drawing.Size(23, 22);
 			this.ToolSave.Text = "Save bank...";
 			this.ToolSave.ToolTipText = "Save the ressource";
-			this.ToolSave.Click += new System.EventHandler(this.SaveResourcesToFile);
+			this.ToolSave.Click += new System.EventHandler(this.SaveResourcesToStorage);
 			// 
 			// toolStripSeparator1
 			// 
@@ -240,7 +240,7 @@ namespace ArcEngine.Editor
 			this.MenuFileSave.ShortcutKeys = ((System.Windows.Forms.Keys) ((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
 			this.MenuFileSave.Size = new System.Drawing.Size(191, 22);
 			this.MenuFileSave.Text = "&Save";
-			this.MenuFileSave.Click += new System.EventHandler(this.SaveResourcesToFile);
+			this.MenuFileSave.Click += new System.EventHandler(this.SaveResourcesToStorage);
 			// 
 			// MenuFileSaveAs
 			// 

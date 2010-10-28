@@ -753,11 +753,25 @@ namespace ArcEngine.Storage
 		/// </summary>
 		protected override void Dispose(bool disposing)
 		{
-
+			// Disposing
 			if (IsDisposing)
 				return;
 			IsDisposing = true;
 
+			// Does file exists 
+			foreach(ZipFileEntry entry in Zip.ReadCentralDir())
+			{
+				if (entry.FilenameInZip == FileName)
+				{
+					List<ZipFileEntry> rem = new List<ZipFileEntry>();
+					rem.Add(entry);
+
+					ZipStorer.RemoveEntries(ref Zip, rem);
+					break;
+				}
+			}
+
+			// Rewind stream and write it
 			Seek(0, SeekOrigin.Begin);
 			Zip.AddStream(Compression.Deflate, FileName, this, DateTime.Now, string.Empty);
 			

@@ -38,7 +38,7 @@ namespace ArcEngine.Storage
 		/// Constructor
 		/// </summary>
 		/// <param name="bankname">Bank name</param>
-		public BankStorage(string bankname) : this(bankname, FileAccess.Read)
+		public BankStorage(string bankname) : this(bankname, FileAccess.ReadWrite)
 		{
 		}
 
@@ -85,7 +85,7 @@ namespace ArcEngine.Storage
 		public override void Dispose()
 		{
 			if (ZipHandle != null)
-				ZipHandle.Close();
+				ZipHandle.Dispose();
 			ZipHandle = null;
 		}
 
@@ -223,6 +223,14 @@ namespace ArcEngine.Storage
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString()
+		{
+			return BankName;
+		}
 
 
 		#region Properties

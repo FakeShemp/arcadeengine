@@ -95,18 +95,10 @@ namespace DungeonEye
 			Texture2D.DefaultMagFilter = TextureMagFilter.Nearest;
 			Texture2D.DefaultMinFilter = TextureMinFilter.Nearest;
 
-			using (BankStorage bs = BankStorage.Create("test.bnk", FileAccess.ReadWrite))
-			{
-				using (Stream stream = bs.CreateFile("toto.bin"))
-				{
-					byte[] buffer= System.Text.Encoding.ASCII.GetBytes("Toto fait du vélo sur le dos.");
-					stream.Write(buffer, 0, buffer.Length);
-				}
-			}
-
 
 			// Main storage bank
-			ResourceManager.Storages.Add(new BankStorage("data/game.bnk", FileAccess.Read));
+			Storage = new BankStorage("data/game.bnk");
+			ResourceManager.Storages.Add(Storage);
 
 	
 			GSM.AddScreen(new MainMenu());
@@ -136,7 +128,7 @@ namespace DungeonEye
 		public override void Update(GameTime gameTime)
 		{
 			if (Keyboard.IsKeyPress(Keys.Insert))
-				RunEditor();
+				RunEditor(Storage);
 
 			// Update game screens
 			GSM.Update(gameTime);			
@@ -211,6 +203,12 @@ namespace DungeonEye
 		/// Current language
 		/// </summary>
 		static public string LanguageName = "English";
+
+
+		/// <summary>
+		/// Storage
+		/// </summary>
+		StorageBase Storage;
 
 		#endregion
 	}

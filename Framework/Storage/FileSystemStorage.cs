@@ -130,6 +130,15 @@ namespace ArcEngine.Storage
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString()
+		{
+			return StoragePath;
+		}
+
 
 		#region Properties
 

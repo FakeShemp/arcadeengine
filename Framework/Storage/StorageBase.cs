@@ -213,8 +213,9 @@ namespace ArcEngine.Storage
 		/// </summary>
 		protected List<string> Files;
 
+
 		/// <summary>
-		/// 
+		/// Directories list
 		/// </summary>
 		protected List<string> Directories;
 

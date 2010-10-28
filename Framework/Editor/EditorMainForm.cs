@@ -38,13 +38,16 @@ namespace ArcEngine.Editor
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public EditorMainForm()
+		public EditorMainForm(StorageBase storage)
 		{
 			Trace.WriteDebugLine("[Editor] Creating");
 
 			// Form initialize
 			InitializeComponent();
 
+			Storage = storage;
+			if (Storage != null)
+				Text = "ArcEngine Editor : " + Storage;
 
 			//Config.Load();
 
@@ -189,7 +192,7 @@ namespace ArcEngine.Editor
 		/// <param name="e"></param>
 		private void ImportAnimationFromGIF(object sender, EventArgs e)
 		{
-			new ImportGIFForm(BankName).ShowDialog();
+			new ImportGIFForm(Storage).ShowDialog();
 			ResourcePanel.RebuildResourceTree();
 
 		}
@@ -202,22 +205,28 @@ namespace ArcEngine.Editor
 		/// <param name="e"></param>
 		private void FileSaveAs_OnClick(object sender, EventArgs e)
 		{
-			SaveFileDialog dlg = new SaveFileDialog();
-			dlg.Filter = "Resource bank (*.bnk)|*.bnk|All Files (*.*)|*.*";
-			dlg.Title = "Save resource as...";
-			dlg.DefaultExt = ".bnk";
-			dlg.RestoreDirectory = true;
-			dlg.AddExtension = true;
-			dlg.CheckPathExists = true;
-			dlg.OverwritePrompt = true;
-			dlg.ValidateNames = true;
+			using (SaveFileDialog dlg = new SaveFileDialog())
+			{
+				dlg.Filter = "Resource bank (*.bnk)|*.bnk|All Files (*.*)|*.*";
+				dlg.Title = "Save resource as...";
+				dlg.DefaultExt = ".bnk";
+				dlg.RestoreDirectory = true;
+				dlg.AddExtension = true;
+				dlg.CheckPathExists = true;
+				dlg.OverwritePrompt = true;
+				dlg.ValidateNames = true;
 
-			DialogResult res = dlg.ShowDialog();
-			if (res != DialogResult.OK)
-				return;
+				DialogResult res = dlg.ShowDialog();
+				if (res != DialogResult.OK)
+					return;
 
-			BankName = dlg.FileName;
-			ResourceManager.SaveAssetsToBank(BankName, string.Empty);
+				if (Storage != null)
+					Storage.Dispose();
+
+				Storage = new BankStorage(dlg.FileName, FileAccess.ReadWrite);
+			}
+
+			ResourceManager.SaveAssetsToStorage(Storage);
 
 			ResourcePanel.RebuildResourceTree();
 
@@ -251,50 +260,43 @@ namespace ArcEngine.Editor
 		/// <param name="e"></param>
 		private void OpenBank(object sender, EventArgs e)
 		{
-			OpenFileDialog dlg = new OpenFileDialog();
-			dlg.Filter = "Resource bank (*.bnk)|*.bnk|All Files (*.*)|*.*";
-			dlg.Title = "Select resource to open...";
-			dlg.DefaultExt = ".bnk";
-			dlg.RestoreDirectory = true;
-			dlg.CheckFileExists = true;
-			dlg.CheckPathExists = true;
-			dlg.Multiselect = false;
+			using (OpenFileDialog dlg = new OpenFileDialog())
+			{
+				dlg.Filter = "Resource bank (*.bnk)|*.bnk|All Files (*.*)|*.*";
+				dlg.Title = "Select resource to open...";
+				dlg.DefaultExt = ".bnk";
+				dlg.RestoreDirectory = true;
+				dlg.CheckFileExists = true;
+				dlg.CheckPathExists = true;
+				dlg.Multiselect = false;
 
 
-			DialogResult res = dlg.ShowDialog();
-			if (res != DialogResult.OK)
-				return;
+				DialogResult res = dlg.ShowDialog();
+				if (res != DialogResult.OK)
+					return;
 
-			// Erases all resources
-			ResourceManager.ClearAssets();
-			CloseAllTabs_OnClick(null, null);
+				// Erases all resources
+				CloseAllTabs_OnClick(null, null);
+				ResourceManager.ClearAssets();
 
-			// Load bank
-			BankName = dlg.FileName;
-			ResourceManager.Storages.Add(new BankStorage(BankName, FileAccess.Read));
-
-			dlg.Dispose();
-			dlg = null;
+				// Load bank
+				Storage = new BankStorage(dlg.FileName, FileAccess.ReadWrite);
+				ResourceManager.Storages.Add(Storage);
+			}
 
 			ResourcePanel.RebuildResourceTree();
 
-			Text = "ArcEngine Editor " + BankName;
+			Text = "ArcEngine Editor : " + Storage;
 
-			//if (Log.ErrorCount > 0)
-			//{
-			//    ReportLabel.Text = Log.ErrorCount + " Error(s) occured !";
-			//}
-			//else
-			//    ReportLabel.Text = "";
 		}
 
 
 		/// <summary>
-		/// Save all resources to a bank
+		/// Save all resources to a storage
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void SaveResourcesToFile(object sender, EventArgs e)
+		private void SaveResourcesToStorage(object sender, EventArgs e)
 		{
 			// Save all opened asset
 			foreach (DockContent window in dockPanel.Contents)
@@ -309,7 +311,7 @@ namespace ArcEngine.Editor
 
 
 
-			if (string.IsNullOrEmpty(BankName))
+			if (Storage == null)
 			{
 				SaveFileDialog dlg = new SaveFileDialog();
 				dlg.Filter = "Resource bank (*.bnk)|*.bnk|All Files (*.*)|*.*";
@@ -325,12 +327,12 @@ namespace ArcEngine.Editor
 				if (res != DialogResult.OK)
 					return;
 
-				BankName = dlg.FileName;
+				Storage = new BankStorage(dlg.FileName);
 			}
 
 
-			Text = "ArcEngine Editor " + BankName;
-			ResourceManager.SaveAssetsToBank(BankName, string.Empty);
+			Text = "ArcEngine Editor " + Storage;
+			ResourceManager.SaveAssetsToStorage(Storage);
 		}
 
 
@@ -352,7 +354,9 @@ namespace ArcEngine.Editor
 			ResourceManager.ClearAssets();
 
 			// New bank name
-			BankName = "";
+			if (Storage != null)
+				Storage.Dispose();
+			Storage = null;
 
 			//
 			ResourcePanel.RebuildResourceTree();
@@ -541,25 +545,6 @@ namespace ArcEngine.Editor
 
 
 		/// <summary>
-		/// Name of the opened bank
-		/// </summary>
-		public string BankName
-		{
-
-			get
-			{
-				return bankName;
-			}
-			set
-			{
-				Text = "ArcEngine Editor " + bankName;
-				bankName = value;
-			}
-		}
-		string bankName;
-
-
-		/// <summary>
 		/// DockPanel for asset forms
 		/// </summary>
 		public DockPanel AssetPanel
@@ -595,6 +580,10 @@ namespace ArcEngine.Editor
 		}
 
 
+		/// <summary>
+		/// Storage 
+		/// </summary>
+		StorageBase Storage;
 
 		#endregion
 	}

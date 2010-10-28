@@ -141,18 +141,25 @@ namespace ArcEngine.Editor
 		{
 			System.Windows.Forms.DialogResult result = System.Windows.Forms.MessageBox.Show("Layout Editor", "Save modifications ?", System.Windows.Forms.MessageBoxButtons.YesNoCancel, System.Windows.Forms.MessageBoxIcon.Question);
 
-			if (result == System.Windows.Forms.DialogResult.Yes)
-			{
-				Save();
-
-                if (Batch != null)
-                    Batch.Dispose();
-                Batch = null;
-			}
-			else if (result == System.Windows.Forms.DialogResult.Cancel)
+			if (result == System.Windows.Forms.DialogResult.Cancel)
 			{
 				e.Cancel = true;
+				return;
 			}
+
+			Save();
+
+            if (Batch != null)
+                Batch.Dispose();
+            Batch = null;
+
+			if (CheckerBoard != null)
+				CheckerBoard.Dispose();
+			CheckerBoard = null;
+
+			if (CurrentLayout != null)
+				CurrentLayout.Dispose();
+			CurrentLayout = null;
 
 		}
 

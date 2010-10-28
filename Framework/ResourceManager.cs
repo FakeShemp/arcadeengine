@@ -421,19 +421,20 @@ namespace ArcEngine
 		/// </summary>
 		static public void ClearAssets()
 		{
-			Trace.WriteDebugLine("[ResourceManager] ClearAssets");
+			Trace.WriteDebugLine("[ResourceManager] ClearAssets()");
 
 
 			lock (BinaryLock)
 			{
 				foreach (Provider provider in Providers)
 					provider.Clear();
-
-				//BankName = null;
-				//BankPassword = null;
-
-				Trace.WriteLine("Clearing assets !");
 			}
+
+
+			// Remove all storages
+			foreach (StorageBase storage in Storages)
+				storage.Dispose();
+			Storages.Clear();
 		}
 
 
@@ -664,23 +665,25 @@ namespace ArcEngine
 
 	
 		/// <summary>
-		/// Saves all assets to a bank file
+		/// Saves all assets to a storage
 		/// </summary>
-		/// <param name="bankname">The file name of the bank on disk</param>
-		/// <param name="password">Password</param>
+		/// <param name="storage">Storage bank</param>
 		/// <returns>True on success</returns>
-		static public bool SaveAssetsToBank(string bankname, string password)
+		static public bool SaveAssetsToStorage(StorageBase storage)
 		{
+			if (storage == null)
+				return false;
+
 			// Return value
 			bool retval = false;
 
-			Trace.WriteLine("Saving all resources to bank \"" + bankname + "\"...");
+			Trace.WriteLine("[ResourceManager] : Saving all resources to storage \"" + storage.ToString() + "\"...");
 
 
 			try
 			{
-				ZipStorer zip = ZipStorer.Open(bankname, FileAccess.Write);
-				List<ZipFileEntry> dir = zip.ReadCentralDir();
+				//ZipStorer zip = ZipStorer.Open(bankname, FileAccess.Write);
+				//List<ZipFileEntry> dir = zip.ReadCentralDir();
 
 				// Save all providers
 				XmlWriter doc;
@@ -709,27 +712,30 @@ namespace ArcEngine
 						if (count == 0)
 							continue;
 
-						// Create Xml document from a memory stream
-						ms = new MemoryStream();
-						doc = XmlWriter.Create(ms, settings);
-						doc.WriteStartDocument(true);
-						doc.WriteStartElement("bank");
+						using (Stream stream = storage.CreateFile(string.Format("{0}.xml", type.Name)))
+						{
 
-						// Invoke the generic method like this : provider.Save<[Asset Type]>(XmlNode node);
-						object[] args = { doc };
-						Type[] types = new Type[] { typeof(XmlWriter) };
-						mi = provider.GetType().GetMethod("Save", types).MakeGenericMethod(type);
-						mi.Invoke(provider, args);
+							// Create Xml document from a memory stream
+							ms = new MemoryStream();
+							doc = XmlWriter.Create(stream, settings);
+							doc.WriteStartDocument(true);
+							doc.WriteStartElement("bank");
 
-						// Close xml 
-						doc.WriteEndElement();
-						doc.WriteEndDocument();
-						doc.Flush();
+							// Invoke the generic method like this : provider.Save<[Asset Type]>(XmlNode node);
+							object[] args = { doc };
+							Type[] types = new Type[] { typeof(XmlWriter) };
+							mi = provider.GetType().GetMethod("Save", types).MakeGenericMethod(type);
+							mi.Invoke(provider, args);
 
+							// Close xml 
+							doc.WriteEndElement();
+							doc.WriteEndDocument();
+							doc.Flush();
+						}
+/*
 						// Rewind
 						ms.Seek(0, SeekOrigin.Begin);
 
-						string zipfilename = string.Format("{0}.xml", type.Name);
 
 						// Remove duplicate name before insert
 						foreach (ZipFileEntry ent in dir)
@@ -743,10 +749,11 @@ namespace ArcEngine
 
 						// store the stream
 						streams[zipfilename] = ms;
+*/
 					}
 				}
 
-
+/*
 				// remove duplicate entries
 				ZipStorer.RemoveEntries(ref zip, remove);
 
@@ -759,7 +766,7 @@ namespace ArcEngine
 
 				// Close the file
 				zip.Close();
-
+*/
 				retval = true;
 			}
 			catch (Exception e)
