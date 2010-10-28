@@ -65,7 +65,6 @@ namespace DungeonEye
 				Trace.WriteLine("Unable to load TileSet for door");
 				return false;
 			}
-            TileSet.Scale = new Vector2(2.0f, 2.0f);
 
 
 			// Zone of the button to open/close the door

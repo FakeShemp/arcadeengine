@@ -698,7 +698,8 @@ namespace ArcEngine
 			bool mousestate = Mouse.Visible;
 			Mouse.Visible = true;
 
-			Window.Hide();
+			if (Window != null)
+				Window.Hide();
 	
 			Editor = new EditorMainForm();
 			OnEditorEnter(Editor);
@@ -706,10 +707,13 @@ namespace ArcEngine
 			Editor = null;
 			OnEditorLeave();
 
-			Window.MakeCurrent();
+			if (Window != null)
+			{
+				Window.MakeCurrent();
+				Window.Show();
+				Window.BringToFront();
+			}
 			Mouse.Visible = mousestate;
-			Window.Show();
-			Window.BringToFront();
 			
 		}
 

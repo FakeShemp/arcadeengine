@@ -623,6 +623,16 @@ namespace ArcEngine.Editor
 
 			tileSet.Load(Node);
 
+/*
+			foreach (int id in tileSet.Tiles)
+			{
+				Tile tile = tileSet.GetTile(id);
+				Rectangle rect = tile.Rectangle;
+				rect = new Rectangle(rect.X * 2, rect.Y * 2, rect.Width *2, rect.Height * 2);
+				tile.Rectangle = rect;
+			}
+*/
+
 			// Build Cell list
 			RebuildCellList();
 		}
@@ -838,6 +848,13 @@ namespace ArcEngine.Editor
 				Batch.Dispose();
 			Batch = null;
 
+			if (tileSet != null)
+				tileSet.Dispose();
+			tileSet = null;
+
+			if (CheckerBoard != null)
+				CheckerBoard.Dispose();
+			CheckerBoard = null;
 		}
 
 
