@@ -147,7 +147,7 @@ namespace ArcEngine.Editor
 			Environment.CurrentDirectory = Application.StartupPath;
 
 
-			ResourceManager.Storages.Add(new BankStorage(dlg.FileName, FileAccess.Read));
+			ResourceManager.Storages.Add(new IonicStorage(dlg.FileName));
 
 			ResourcePanel.RebuildResourceTree();
 
@@ -223,7 +223,7 @@ namespace ArcEngine.Editor
 				if (Storage != null)
 					Storage.Dispose();
 
-				Storage = new BankStorage(dlg.FileName, FileAccess.ReadWrite);
+				Storage = new IonicStorage(dlg.FileName);
 			}
 
 			ResourceManager.SaveAssetsToStorage(Storage);
@@ -280,7 +280,8 @@ namespace ArcEngine.Editor
 				ResourceManager.ClearAssets();
 
 				// Load bank
-				Storage = new BankStorage(dlg.FileName, FileAccess.ReadWrite);
+				Directory.SetCurrentDirectory(@"D:\Dev\ArcEngine\Games\DungeonEye");
+				Storage = new IonicStorage(dlg.FileName);
 				ResourceManager.Storages.Add(Storage);
 			}
 
@@ -309,8 +310,7 @@ namespace ArcEngine.Editor
 			}
 
 
-
-
+			// Select a storage
 			if (Storage == null)
 			{
 				SaveFileDialog dlg = new SaveFileDialog();
@@ -327,7 +327,7 @@ namespace ArcEngine.Editor
 				if (res != DialogResult.OK)
 					return;
 
-				Storage = new BankStorage(dlg.FileName);
+				Storage = new IonicStorage(dlg.FileName);
 			}
 
 
@@ -495,7 +495,7 @@ namespace ArcEngine.Editor
 			if (dlg.ShowDialog() != DialogResult.OK)
 				return;
 
-			ResourceManager.Storages.Add(new BankStorage(dlg.FileName, FileAccess.Read));
+			ResourceManager.Storages.Add(new IonicStorage(dlg.FileName));
 
 			ResourcePanel.RebuildResourceTree();
 		}

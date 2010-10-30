@@ -293,10 +293,8 @@ namespace ArcEngine.Forms
 			Display.Dispose();
 
 			if (RenderControl != null)
-			{
 				RenderControl.Dispose();
-				RenderControl = null;
-			}
+			RenderControl = null;
 		}
 
 

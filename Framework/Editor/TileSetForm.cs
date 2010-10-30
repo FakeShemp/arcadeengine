@@ -632,7 +632,6 @@ namespace ArcEngine.Editor
 				tile.Rectangle = rect;
 			}
 */
-
 			// Build Cell list
 			RebuildCellList();
 		}

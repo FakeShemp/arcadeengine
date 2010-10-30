@@ -52,9 +52,9 @@ namespace ArcEngine.Examples.UserInterface
 		public override void LoadContent()
 		{
 			Display.RenderState.ClearColor = Color.CornflowerBlue;
-            
 
-			ResourceManager.Storages.Add(new BankStorage("data/data.bnk"));
+
+			ResourceManager.Storages.Add(new IonicStorage("data/data.bnk"));
 
 
 			Manager = new GuiManager();

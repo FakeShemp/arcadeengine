@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Text;
+using System.Xml;
 
 namespace ArcEngine.Storage
 {
@@ -52,6 +53,44 @@ namespace ArcEngine.Storage
 		}
 
 
+		public virtual void Flush()
+		{
+		}
+
+		/// <summary>
+		/// Process an asset definition
+		/// </summary>
+		/// <param name="xml"></param>
+		protected bool ProcessAsset(XmlElement xml)
+		{
+			if (xml == null || xml.Name.ToLower() != "bank")
+				return false;
+
+			// For each nodes, process it
+			XmlNodeList nodes = xml.ChildNodes;
+			foreach (XmlNode node in nodes)
+			{
+				if (node.NodeType == XmlNodeType.Comment)
+				{
+					continue;
+				}
+
+				Provider provider = ResourceManager.GetTagProvider(node.Name);
+				if (provider == null)
+				{
+					Trace.WriteLine("? No Provider found for asset \"<" + node.Name + ">\"...");
+					continue;
+				}
+
+				//lock (BinaryLock)
+				{
+					provider.Load(node);
+				}
+			}
+
+			return true;
+		}
+
 		/// <summary>
 		/// Dispose resource
 		/// </summary>
@@ -60,6 +99,14 @@ namespace ArcEngine.Storage
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString()
+		{
+			return base.ToString();
+		}
 
 		#region Files
 
@@ -79,7 +126,7 @@ namespace ArcEngine.Storage
 		/// Creates a new file 
 		/// </summary>
 		/// <param name="file">The relative path of the file to create</param>
-		/// <returns>True on success</returns>
+		/// <returns>Stream handle or null</returns>
 		public virtual Stream CreateFile(string file)
 		{
 			return null;

@@ -29,6 +29,8 @@ using ArcEngine.Input;
 using ArcEngine.Storage;
 using ArcEngine.Utility.ScreenManager;
 using DungeonEye.Forms;
+using System.Collections.Generic;
+
 
 namespace DungeonEye
 {
@@ -69,7 +71,11 @@ namespace DungeonEye
 			AudioManager.Create();
 
 
-			// Editor events
+			using (IonicStorage s = new IonicStorage(@"data\Game.bnk"))
+			    ResourceManager.SaveAssetsToStorage(s);
+
+
+			// HACK : Editor events
 			EditorEnter += new EditorEventHandler(Game_EditorEnter);
 		}
 
@@ -97,7 +103,7 @@ namespace DungeonEye
 
 
 			// Main storage bank
-			Storage = new BankStorage("data/game.bnk");
+			Storage = new IonicStorage("data/Game.bnk");
 			ResourceManager.Storages.Add(Storage);
 
 	

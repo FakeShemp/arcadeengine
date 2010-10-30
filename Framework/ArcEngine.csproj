@@ -118,8 +118,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libraries\DigitalRune\DigitalRune.Windows.TextEditor.dll</HintPath>
     </Reference>
-    <Reference Include="ICSharpCode.SharpZipLib">
-      <HintPath>Libraries\ICSharpCode\ICSharpCode.SharpZipLib.dll</HintPath>
+    <Reference Include="Ionic.Zip.Reduced, Version=1.9.1.5, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libraries\Ionic\Release\Ionic.Zip.Reduced.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic">
       <Private>False</Private>
@@ -358,7 +359,7 @@
     <Compile Include="Graphic\VertexPositionNormalTexture.cs" />
     <Compile Include="Graphic\VertexPositionTexture.cs" />
     <Compile Include="Input\GamePadState.cs" />
-    <Compile Include="Storage\BankStorage.cs" />
+    <Compile Include="Storage\IonicStorage.cs" />
     <Compile Include="Storage\FileSystemStorage.cs" />
     <Compile Include="Storage\StorageBase.cs" />
     <Compile Include="Maths\MathHelper.cs">
@@ -439,7 +440,6 @@
     <Compile Include="Input\Mouse.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Storage\ZipStorer.cs" />
     <None Include="app.config" />
     <Compile Include="Asset\Animation\Animation.cs" />
     <Compile Include="Audio\AudioSample.cs" />
@@ -603,9 +603,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Libraries\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

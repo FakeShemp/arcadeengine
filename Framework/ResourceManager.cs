@@ -674,31 +674,16 @@ namespace ArcEngine
 			if (storage == null)
 				return false;
 
-			// Return value
-			bool retval = false;
-
 			Trace.WriteLine("[ResourceManager] : Saving all resources to storage \"" + storage.ToString() + "\"...");
-
 
 			try
 			{
-				//ZipStorer zip = ZipStorer.Open(bankname, FileAccess.Write);
-				//List<ZipFileEntry> dir = zip.ReadCentralDir();
-
-				// Save all providers
-				XmlWriter doc;
-				MemoryStream ms;
-
-
 				// Xml settings
 				XmlWriterSettings settings = new XmlWriterSettings();
 				settings.Indent = true;
 				settings.OmitXmlDeclaration = false;
 				settings.IndentChars = "\t";
 				settings.Encoding = ASCIIEncoding.ASCII;
-
-				Dictionary<string, Stream> streams = new Dictionary<string, Stream>();
-				List<ZipFileEntry> remove = new List<ZipFileEntry>();
 
 				// For each Provider
 				foreach (Provider provider in Providers)
@@ -708,66 +693,31 @@ namespace ArcEngine
 					{
 						// Get the number of asset
 						MethodInfo mi = provider.GetType().GetMethod("Count").MakeGenericMethod(type);
-						int count = (int) mi.Invoke(provider, null);
-						if (count == 0)
+						if ((int) mi.Invoke(provider, null) == 0)
 							continue;
 
+						// Save to storage
 						using (Stream stream = storage.CreateFile(string.Format("{0}.xml", type.Name)))
 						{
-
-							// Create Xml document from a memory stream
-							ms = new MemoryStream();
-							doc = XmlWriter.Create(stream, settings);
+							// Create Xml document from storage stream
+							XmlWriter doc = XmlWriter.Create(stream, settings);
 							doc.WriteStartDocument(true);
 							doc.WriteStartElement("bank");
 
 							// Invoke the generic method like this : provider.Save<[Asset Type]>(XmlNode node);
-							object[] args = { doc };
-							Type[] types = new Type[] { typeof(XmlWriter) };
-							mi = provider.GetType().GetMethod("Save", types).MakeGenericMethod(type);
-							mi.Invoke(provider, args);
+							mi = provider.GetType().GetMethod("Save", new Type[] { typeof(XmlWriter) }).MakeGenericMethod(type);
+							mi.Invoke(provider, new object[] { doc });
 
 							// Close xml 
 							doc.WriteEndElement();
 							doc.WriteEndDocument();
 							doc.Flush();
 						}
-/*
-						// Rewind
-						ms.Seek(0, SeekOrigin.Begin);
-
-
-						// Remove duplicate name before insert
-						foreach (ZipFileEntry ent in dir)
-						{
-							if (ent.FilenameInZip == zipfilename)
-							{
-								remove.Add(ent);
-								break;
-							}
-						}
-
-						// store the stream
-						streams[zipfilename] = ms;
-*/
 					}
 				}
 
-/*
-				// remove duplicate entries
-				ZipStorer.RemoveEntries(ref zip, remove);
-
-				// Add streams
-				foreach (KeyValuePair<string, Stream> kvp in streams)
-				{
-					zip.AddStream(Compression.Deflate, kvp.Key, kvp.Value, DateTime.Now, string.Empty);
-					kvp.Value.Dispose();
-				}
-
-				// Close the file
-				zip.Close();
-*/
-				retval = true;
+				storage.Flush();
+				return true;
 			}
 			catch (Exception e)
 			{
@@ -775,8 +725,7 @@ namespace ArcEngine
 				Trace.WriteLine(e.StackTrace);
 			}
 
-			Trace.WriteLine("Done !");
-			return retval;
+			return false;
 		}
 
 		#endregion

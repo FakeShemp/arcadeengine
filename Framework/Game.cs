@@ -23,11 +23,11 @@ using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
 using ArcEngine.Audio;
+using ArcEngine.Editor;
 using ArcEngine.Forms;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
 using ArcEngine.PInvoke;
-using ArcEngine.Editor;
 using ArcEngine.Storage;
 
 [assembly: CLSCompliant(true)]
@@ -452,6 +452,7 @@ namespace ArcEngine
 		/// </summary>
 		public void Run()
 		{
+
 			try
 			{
 				Trace.WriteLine("Running the game");
