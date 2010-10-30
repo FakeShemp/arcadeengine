@@ -10,14 +10,14 @@ namespace ArcEngine.Storage
 	/// <summary>
 	/// 
 	/// </summary>
-	public class IonicStorage : StorageBase
+	public class BankStorage : StorageBase
 	{
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="bankname"></param>
-		public IonicStorage(string bankname)
+		public BankStorage(string bankname)
 			: this(bankname, "")
 		{
 		}
@@ -28,7 +28,7 @@ namespace ArcEngine.Storage
 		/// </summary>
 		/// <param name="bankname"></param>
 		/// <param name="password">Password</param>
-		public IonicStorage(string bankname, string password)
+		public BankStorage(string bankname, string password)
 		{
 			BankName = bankname;
 			Password = password;

@@ -71,7 +71,7 @@ namespace DungeonEye
 			AudioManager.Create();
 
 
-			using (IonicStorage s = new IonicStorage(@"data\Game.bnk"))
+			using (BankStorage s = new BankStorage(@"data\Game.bnk"))
 			    ResourceManager.SaveAssetsToStorage(s);
 
 
@@ -103,7 +103,7 @@ namespace DungeonEye
 
 
 			// Main storage bank
-			Storage = new IonicStorage("data/Game.bnk");
+			Storage = new BankStorage("data/Game.bnk");
 			ResourceManager.Storages.Add(Storage);
 
 	

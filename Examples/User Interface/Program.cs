@@ -54,7 +54,7 @@ namespace ArcEngine.Examples.UserInterface
 			Display.RenderState.ClearColor = Color.CornflowerBlue;
 
 
-			ResourceManager.Storages.Add(new IonicStorage("data/data.bnk"));
+			ResourceManager.Storages.Add(new BankStorage("data/data.bnk"));
 
 
 			Manager = new GuiManager();
