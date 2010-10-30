@@ -115,7 +115,7 @@ namespace DungeonEye
 				Trace.WriteLine("Failed to load wall tileset for the maze \"" + Name + "\".");
 				return false;
 			}
-            WallTileset.Scale = new Vector2(1.0f, 1.0f);
+			//   WallTileset.Scale = new Vector2(1.0f, 1.0f);
 
 			OverlayTileset = ResourceManager.CreateSharedAsset<TileSet>(OverlayTilesetName, OverlayTilesetName);
 			if (OverlayTileset == null)
@@ -123,7 +123,7 @@ namespace DungeonEye
 				Trace.WriteLine("Failed to load overlay tileset for the maze \"" + Name + "\".");
 				return false;
 			}
-            OverlayTileset.Scale = new Vector2(2.0f, 2.0f);
+			//  OverlayTileset.Scale = new Vector2(2.0f, 2.0f);
 
 			ItemsTileset = ResourceManager.CreateSharedAsset<TileSet>(ItemsTilesetName, ItemsTilesetName);
 			if (ItemsTileset == null)
@@ -131,7 +131,7 @@ namespace DungeonEye
 				Trace.WriteLine("Failed to load items tileset for the maze \"" + Name + "\".");
 				return false;
 			}
-            ItemsTileset.Scale = new Vector2(2.0f, 2.0f);
+			// ItemsTileset.Scale = new Vector2(2.0f, 2.0f);
 
 			foreach (Monster monster in Monsters)
 				monster.Init();
@@ -222,35 +222,35 @@ namespace DungeonEye
 
 					// Make the item falling on the ground
 					GroundPosition pos = fi.Location.GroundPosition;
-/*
-					switch (fi.Location.Direction)
-					{
-						case CardinalPoint.North:
-						if (fi.Location.GroundPosition == GroundPosition.SouthWest)
-							pos = GroundPosition.NorthWest;
-						if (fi.Location.GroundPosition == GroundPosition.SouthEast)
-							pos = GroundPosition.NorthEast;
-						break;
-						case CardinalPoint.East:
-						if (fi.Location.GroundPosition == GroundPosition.NorthWest)
-							pos = GroundPosition.NorthEast;
-						if (fi.Location.GroundPosition == GroundPosition.SouthWest)
-							pos = GroundPosition.SouthEast;
-						break;
-						case CardinalPoint.South:
-						if (fi.Location.GroundPosition == GroundPosition.NorthEast)
-							pos = GroundPosition.SouthEast;
-						if (fi.Location.GroundPosition == GroundPosition.NorthWest)
-							pos = GroundPosition.SouthWest;
-						break;
-						case CardinalPoint.West:
-						if (fi.Location.GroundPosition == GroundPosition.SouthEast)
-							pos = GroundPosition.SouthWest;
-						if (fi.Location.GroundPosition == GroundPosition.NorthEast)
-							pos = GroundPosition.NorthWest;
-						break;
-					}
-*/
+					/*
+										switch (fi.Location.Direction)
+										{
+											case CardinalPoint.North:
+											if (fi.Location.GroundPosition == GroundPosition.SouthWest)
+												pos = GroundPosition.NorthWest;
+											if (fi.Location.GroundPosition == GroundPosition.SouthEast)
+												pos = GroundPosition.NorthEast;
+											break;
+											case CardinalPoint.East:
+											if (fi.Location.GroundPosition == GroundPosition.NorthWest)
+												pos = GroundPosition.NorthEast;
+											if (fi.Location.GroundPosition == GroundPosition.SouthWest)
+												pos = GroundPosition.SouthEast;
+											break;
+											case CardinalPoint.South:
+											if (fi.Location.GroundPosition == GroundPosition.NorthEast)
+												pos = GroundPosition.SouthEast;
+											if (fi.Location.GroundPosition == GroundPosition.NorthWest)
+												pos = GroundPosition.SouthWest;
+											break;
+											case CardinalPoint.West:
+											if (fi.Location.GroundPosition == GroundPosition.SouthEast)
+												pos = GroundPosition.SouthWest;
+											if (fi.Location.GroundPosition == GroundPosition.NorthEast)
+												pos = GroundPosition.NorthWest;
+											break;
+										}
+					*/
 
 					GetBlock(fi.Location.Position).DropItem(pos, fi.Item);
 
@@ -281,7 +281,7 @@ namespace DungeonEye
 
 			Monsters.Add(monster);
 
-			
+
 			return true;
 		}
 
@@ -381,7 +381,7 @@ namespace DungeonEye
 		}
 
 
-		
+
 
 
 		/// <summary>
@@ -394,7 +394,7 @@ namespace DungeonEye
 			if (location == null)
 				throw new ArgumentNullException("location");
 
-			Point left = new Point(location.Position.X - 1, location.Position.Y);	
+			Point left = new Point(location.Position.X - 1, location.Position.Y);
 			if (!Contains(left))
 				return false;
 
@@ -461,7 +461,7 @@ namespace DungeonEye
 					tmp[(int)item.Location.GroundPosition].Add(item);
 			}
 
-	
+
 			List<ThrownItem>[] items = new List<ThrownItem>[5];
 			switch (direction)
 			{
@@ -537,7 +537,7 @@ namespace DungeonEye
 			// The background is assumed to be x-flipped when party.x & party.y & party.direction = 1.
 			// I.e. all kind of moves and rotations from the current position will result in the background being x-flipped.
 			//bool flipbackdrop = ((location.Position.X + location.Position.Y + (int)location.Direction) & 1) == 0;
-			SpriteEffects effect = ((location.Position.X + location.Position.Y + (int) location.Direction) & 1) == 0 ? SpriteEffects.FlipHorizontally: SpriteEffects.None;
+			SpriteEffects effect = ((location.Position.X + location.Position.Y + (int)location.Direction) & 1) == 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
 
 			batch.DrawTile(WallTileset, 0, Point.Empty, Color.White, 0.0f, effect, 0.0f);
 
@@ -620,24 +620,24 @@ namespace DungeonEye
 				case ViewFieldPosition.E:
 				case ViewFieldPosition.F:
 				case ViewFieldPosition.G:
-					offset = 3;
+				offset = 3;
 				break;
 				case ViewFieldPosition.H:
 				case ViewFieldPosition.I:
 				case ViewFieldPosition.J:
 				case ViewFieldPosition.K:
 				case ViewFieldPosition.L:
-					offset = 2;
+				offset = 2;
 				break;
 				case ViewFieldPosition.M:
 				case ViewFieldPosition.N:
 				case ViewFieldPosition.O:
-					offset = 1;
+				offset = 1;
 				break;
 				case ViewFieldPosition.P:
 				case ViewFieldPosition.Team:
 				case ViewFieldPosition.Q:
-					offset = 0;
+				offset = 0;
 				break;
 			}
 			#endregion
@@ -648,8 +648,8 @@ namespace DungeonEye
 			{
 				td = MazeDisplayCoordinates.GetCeilingPit(position);
 				if (td != null)
-                    batch.DrawTile(OverlayTileset, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);
-			//	batch.DrawTile(ItemsTileset, td.ID, td.Location, td.SwapX, td.SwapY);
+					batch.DrawTile(OverlayTileset, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);
+				//	batch.DrawTile(ItemsTileset, td.ID, td.Location, td.SwapX, td.SwapY);
 			}
 
 			#endregion
@@ -678,7 +678,7 @@ namespace DungeonEye
 			{
 				td = MazeDisplayCoordinates.GetPit(position);
 				if (td != null && !block.Pit.IsHidden)
-                    batch.DrawTile(OverlayTileset, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);
+					batch.DrawTile(OverlayTileset, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);
 			}
 			#endregion
 
@@ -718,12 +718,12 @@ namespace DungeonEye
 			}
 			#endregion
 
-			#region Floor plate 
+			#region Floor plate
 			else if (block.FloorPlate != null && !block.FloorPlate.Invisible)
 			{
 				td = MazeDisplayCoordinates.GetFloorPlate(position);
 				if (td != null)
-                    batch.DrawTile(OverlayTileset, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);
+					batch.DrawTile(OverlayTileset, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);
 			}
 			#endregion
 
@@ -742,20 +742,20 @@ namespace DungeonEye
 					foreach (CardinalPoint side in Enum.GetValues(typeof(CardinalPoint)))
 					{
 						td = MazeDisplayCoordinates.GetDecoration(position, side);
-                        if (td != null && block.HasAlcove(view, side))
-                            batch.DrawTile(OverlayTileset, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);
+						if (td != null && block.HasAlcove(view, side))
+							batch.DrawTile(OverlayTileset, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);
 					}
 
 					// Draw items in the alcove in front of the team
 					td = MazeDisplayCoordinates.GetDecoration(position, CardinalPoint.South);
 					if (td != null)
 					{
-                        foreach (Item item in block.GetAlcoveItems(view, CardinalPoint.South))
-                        {
-                            Point loc = td.Location;
-                            loc.Offset(new Point(30, 20));
-                            batch.DrawTile(ItemsTileset, item.GroundTileID + offset, loc);
-                        }
+						foreach (Item item in block.GetAlcoveItems(view, CardinalPoint.South))
+						{
+							Point loc = td.Location;
+							loc.Offset(new Point(30, 20));
+							batch.DrawTile(ItemsTileset, item.GroundTileID + offset, loc);
+						}
 					}
 				}
 
@@ -794,7 +794,7 @@ namespace DungeonEye
 
 			#region Flying items
 			List<ThrownItem>[] flyings = GetFlyingItems(block.Location, view);
-			foreach(GroundPosition pos in Enum.GetValues(typeof(GroundPosition)))
+			foreach (GroundPosition pos in Enum.GetValues(typeof(GroundPosition)))
 			{
 				if (MazeDisplayCoordinates.GetFlyingItem(position, pos) == Point.Empty)
 					continue;
@@ -821,8 +821,8 @@ namespace DungeonEye
 		/// <param name="location">Location on the screen</param>
 		public void DrawMiniMap(SpriteBatch batch, Team team, Point location)
 		{
-            if (batch == null)
-                return;
+			if (batch == null)
+				return;
 
 			Color color;
 
@@ -845,7 +845,7 @@ namespace DungeonEye
 					}
 
 
-					
+
 					if (GetMonsterCount(block.Location.Position) > 0)
 						color = Color.Red;
 					if (block.Door != null)
@@ -871,19 +871,19 @@ namespace DungeonEye
 
 				// Sight zone
 				Rectangle zone = new Rectangle(
-					monster.SightZone.X * 4 + location.X, 
+					monster.SightZone.X * 4 + location.X,
 					monster.SightZone.Y * 4 + location.Y,
-					monster.SightZone.Width * 4, 
+					monster.SightZone.Width * 4,
 					monster.SightZone.Height * 4);
-                batch.FillRectangle(zone, Color.FromArgb(128, Color.Red));
-	
+				batch.FillRectangle(zone, Color.FromArgb(128, Color.Red));
+
 				// Detect zone
 				zone = new Rectangle(
 					monster.DetectionZone.X * 4 + location.X,
 					monster.DetectionZone.Y * 4 + location.Y,
 					monster.DetectionZone.Width * 4,
 					monster.DetectionZone.Height * 4);
-                batch.FillRectangle(zone, Color.FromArgb(128, Color.Green));
+				batch.FillRectangle(zone, Color.FromArgb(128, Color.Green));
 
 
 				//TODO a deplacer en tant que propriete de Monster
@@ -1059,7 +1059,7 @@ namespace DungeonEye
 
 
 			foreach (List<MazeBlock> list in Blocks)
-				foreach(MazeBlock block in list)
+				foreach (MazeBlock block in list)
 					block.Save(writer);
 
 			writer.WriteEndElement();
@@ -1163,8 +1163,8 @@ namespace DungeonEye
 				Blocks.Insert(rowid, row);
 
 				// Offset objects
-			//	Rectangle zone = new Rectangle(0, rowid * level.BlockDimension.Height, level.Dimension.Width, level.Dimension.Height);
-			//	OffsetObjects(zone, new Point(0, level.BlockDimension.Height));
+				//	Rectangle zone = new Rectangle(0, rowid * level.BlockDimension.Height, level.Dimension.Width, level.Dimension.Height);
+				//	OffsetObjects(zone, new Point(0, level.BlockDimension.Height));
 			}
 		}
 
@@ -1182,8 +1182,8 @@ namespace DungeonEye
 			Blocks.RemoveAt(rowid);
 
 			// Offset objects
-		//	Rectangle zone = new Rectangle(0, rowid * level.BlockDimension.Height, level.Dimension.Width, level.Dimension.Height);
-		//	OffsetObjects(zone, new Point(0, -level.BlockDimension.Height));
+			//	Rectangle zone = new Rectangle(0, rowid * level.BlockDimension.Height, level.Dimension.Width, level.Dimension.Height);
+			//	OffsetObjects(zone, new Point(0, -level.BlockDimension.Height));
 		}
 
 
@@ -1205,8 +1205,8 @@ namespace DungeonEye
 					row.Insert(columnid, new MazeBlock(this));
 
 					// Offset objects
-				//	Rectangle zone = new Rectangle(columnid * level.BlockDimension.Width, 0, level.Dimension.Width, level.Dimension.Height);
-				//	OffsetObjects(zone, new Point(level.BlockDimension.Width, 0));
+					//	Rectangle zone = new Rectangle(columnid * level.BlockDimension.Width, 0, level.Dimension.Width, level.Dimension.Height);
+					//	OffsetObjects(zone, new Point(level.BlockDimension.Width, 0));
 				}
 			}
 		}
@@ -1225,8 +1225,8 @@ namespace DungeonEye
 			}
 
 			// Offset objects
-		//	Rectangle zone = new Rectangle(columnid * level.BlockDimension.Width, 0, level.Dimension.Width, level.Dimension.Height);
-		//	OffsetObjects(zone, new Point(-level.BlockDimension.Width, 0));
+			//	Rectangle zone = new Rectangle(columnid * level.BlockDimension.Width, 0, level.Dimension.Width, level.Dimension.Height);
+			//	OffsetObjects(zone, new Point(-level.BlockDimension.Width, 0));
 		}
 
 
@@ -1237,30 +1237,30 @@ namespace DungeonEye
 		/// <param name="offset">Offset to move</param>
 		void OffsetObjects(Rectangle zone, Point offset)
 		{
-/*	
-			// Move entities
-			foreach (Entity entity in Entities.Values)
-			{
-				if (zone.Contains(entity.Location))
-				{
-					entity.Location = new Point(
-						entity.Location.X + offset.X,
-						entity.Location.Y + offset.Y);
-				}
-			}
+			/*	
+						// Move entities
+						foreach (Entity entity in Entities.Values)
+						{
+							if (zone.Contains(entity.Location))
+							{
+								entity.Location = new Point(
+									entity.Location.X + offset.X,
+									entity.Location.Y + offset.Y);
+							}
+						}
 
 
-			// Mode SpawnPoints
-			foreach (SpawnPoint spawn in SpawnPoints.Values)
-			{
-				if (zone.Contains(spawn.Location))
-				{
-					spawn.Location = new Point(
-						spawn.Location.X + offset.X,
-						spawn.Location.Y + offset.Y);
-				}
-			}
-*/
+						// Mode SpawnPoints
+						foreach (SpawnPoint spawn in SpawnPoints.Values)
+						{
+							if (zone.Contains(spawn.Location))
+							{
+								spawn.Location = new Point(
+									spawn.Location.X + offset.X,
+									spawn.Location.Y + offset.Y);
+							}
+						}
+			*/
 		}
 
 		#endregion
@@ -1522,8 +1522,8 @@ namespace DungeonEye
 					Blocks[17] = maze.GetBlock(new Point(location.Position.X + 1, location.Position.Y));
 
 
-					
-					
+
+
 					Monsters[0] = maze.GetMonsters(new Point(location.Position.X - 3, location.Position.Y - 3));
 					Monsters[1] = maze.GetMonsters(new Point(location.Position.X - 2, location.Position.Y - 3));
 					Monsters[2] = maze.GetMonsters(new Point(location.Position.X - 1, location.Position.Y - 3));
@@ -1646,7 +1646,7 @@ namespace DungeonEye
 					Monsters[15] = maze.GetMonsters(new Point(location.Position.X, location.Position.Y - 1));
 					Monsters[17] = maze.GetMonsters(new Point(location.Position.X, location.Position.Y + 1));
 
-				
+
 				}
 				break;
 				#endregion
@@ -1838,7 +1838,7 @@ namespace DungeonEye
 		J = 9,
 		K = 10,
 		L = 11,
-	
+
 		M = 12,
 		N = 13,
 		O = 14,

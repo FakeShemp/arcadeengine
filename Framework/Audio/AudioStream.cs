@@ -152,7 +152,7 @@ namespace ArcEngine.Audio
 		/// </summary>
 		public void Play()
 		{
-			if (!AudioManager.IsInit || State == AudioSourceState.Playing)
+			if (!AudioManager.IsInit || State == AudioSourceState.Playing || Stream == null)
 				return;
 
 
