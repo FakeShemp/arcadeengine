@@ -575,8 +575,8 @@ namespace DungeonEye.Forms
 			Display.RenderState.ClearColor = Color.Black;
 
 			Heads = ResourceManager.CreateAsset<TileSet>("Heroes");
-			if (Heads != null)
-				Heads.Scale = new Vector2(2.0f, 2.0f);
+			//if (Heads != null)
+			//	Heads.Scale = new Vector2(2.0f, 2.0f);
 
 			Batch = new SpriteBatch();
 		}

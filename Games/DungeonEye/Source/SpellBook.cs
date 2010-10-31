@@ -64,7 +64,6 @@ namespace DungeonEye
 		public void LoadContent()
 		{
 			Font = ResourceManager.CreateAsset<BitmapFont>("inventory");
-			Font.GlyphTileset.Scale = new Vector2(2.0f, 2.0f);
 
 			Tileset = ResourceManager.CreateSharedAsset<TileSet>("Interface");
 		}
@@ -199,7 +198,7 @@ namespace DungeonEye
 					if (line.Contains(Mouse.Location))
 					{
 
-						Spell spell = Hero.PopSpell(Class, SpellLevel, i);
+						Spell spell = Hero.PopSpell(Class, SpellLevel, i + 1);
 						if (spell != null && spell.Script.Instance != null)
 							spell.Script.Instance.OnCast(spell, Hero);
 					}

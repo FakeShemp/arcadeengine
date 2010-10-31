@@ -47,7 +47,7 @@ namespace DungeonEye
 			Trace.WriteDebugLine("[AutoMap] : LoadContent()");
 			
 			Tileset = ResourceManager.CreateAsset<TileSet>("AutoMap");
-			Tileset.Scale = new Vector2(2.0f, 2.0f);
+		//	Tileset.Scale = new Vector2(2.0f, 2.0f);
 
 			Font = ResourceManager.CreateSharedAsset<BitmapFont>("intro");
 

@@ -447,10 +447,11 @@ namespace DungeonEye
 			if (prof == null)
 				return null;
 
+			Spell spell = Spells[level - 1][number - 1];
 
 			Spells[level - 1].RemoveAt(number - 1);
 
-			return null;
+			return spell;
 		}
 
 

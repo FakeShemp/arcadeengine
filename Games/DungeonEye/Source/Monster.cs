@@ -57,10 +57,10 @@ namespace DungeonEye
 		/// <param name="maze">Maze handle where the monster is</param>
 		public Monster(Maze maze)
 		{
-            if (maze != null)
-            {
-                Location = new DungeonLocation(maze.Dungeon);
-            }	
+			if (maze != null)
+			{
+				Location = new DungeonLocation(maze.Dungeon);
+			}
 
 			ItemsInPocket = new List<string>();
 			Damage = new Dice();
@@ -110,7 +110,7 @@ namespace DungeonEye
 		public bool Init()
 		{
 			Tileset = ResourceManager.CreateSharedAsset<TileSet>(TileSetName, TileSetName);
-            Tileset.Scale = new Vector2(2.0f, 2.0f);
+		//	Tileset.Scale = new Vector2(2.0f, 2.0f);
 
 			if (!string.IsNullOrEmpty(ScriptName) && !string.IsNullOrEmpty(InterfaceName))
 			{
@@ -173,8 +173,8 @@ namespace DungeonEye
 			if (canmove)
 			{
 				// Leave the current block
-			    Location.Block.OnMonsterLeave(this);
-				
+				Location.Block.OnMonsterLeave(this);
+
 
 				Location.Position.Offset(offset);
 				LastAction = DateTime.Now;
@@ -229,7 +229,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Update the monster logic
 		/// </summary>
-        /// <param name="time">Elapsed game time</param>
+		/// <param name="time">Elapsed game time</param>
 		public virtual void Update(GameTime time)
 		{
 			if (Interface != null)
@@ -262,12 +262,12 @@ namespace DungeonEye
 
 			TextureEnvMode mode = Display.TexEnv;
 
-			
+
 
 			// Monster was hit, redraw it
 			if (LastAttack != null && LastAttack.Time + TimeSpan.FromSeconds(0.25) > DateTime.Now)
 			{
-				Display.BlendingFunction(BlendingFactorSource.SrcAlpha , BlendingFactorDest.OneMinusSrcAlpha);
+				Display.BlendingFunction(BlendingFactorSource.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 				Display.TexEnv = TextureEnvMode.Add;
 			}
 
@@ -275,47 +275,47 @@ namespace DungeonEye
 			switch (pos)
 			{
 				case ViewFieldPosition.B:
-                Tileset.Scale = new Vector2(0.75f, 0.75f);
+				Tileset.Scale = new Vector2(0.5f, 0.5f);
 				batch.DrawTile(Tileset, GetTileID(direction), new Point(0 + DrawOffset.X / 4, 110 + DrawOffset.Y / 4), Color.Gray);
-                Tileset.Scale = new Vector2(2.0f, 2.0f);
+				Tileset.Scale = new Vector2(1.0f, 1.0f);
 				break;
 				case ViewFieldPosition.C:
-                Tileset.Scale = new Vector2(0.75f, 0.75f);
+				Tileset.Scale = new Vector2(0.5f, 0.5f);
 				batch.DrawTile(Tileset, GetTileID(direction), new Point(80 + DrawOffset.X / 4, 110 + DrawOffset.Y / 4), Color.Gray);
-                Tileset.Scale = new Vector2(2.0f, 2.0f);
+				Tileset.Scale = new Vector2(1.0f, 1.0f);
 				break;
 				case ViewFieldPosition.D:
-                Tileset.Scale = new Vector2(0.75f, 0.75f);
+				Tileset.Scale = new Vector2(0.5f, 0.5f);
 				batch.DrawTile(Tileset, GetTileID(direction), new Point(180 + DrawOffset.X / 4, 110 + DrawOffset.Y / 4), Color.Gray);
-                Tileset.Scale = new Vector2(2.0f, 2.0f);
+				Tileset.Scale = new Vector2(1.0f, 1.0f);
 				break;
 				case ViewFieldPosition.E:
-                Tileset.Scale = new Vector2(0.75f, 0.75f);
+				Tileset.Scale = new Vector2(0.5f, 0.5f);
 				batch.DrawTile(Tileset, GetTileID(direction), new Point(270 + DrawOffset.X / 4, 110 + DrawOffset.Y / 4), Color.Gray);
-                Tileset.Scale = new Vector2(2.0f, 2.0f);
+				Tileset.Scale = new Vector2(1.0f, 1.0f);
 				break;
 				case ViewFieldPosition.F:
-                Tileset.Scale = new Vector2(0.75f, 0.75f);
+				Tileset.Scale = new Vector2(0.5f, 0.5f);
 				batch.DrawTile(Tileset, GetTileID(direction), new Point(342 + DrawOffset.X / 4, 110 + DrawOffset.Y / 4), Color.Gray);
-                Tileset.Scale = new Vector2(2.0f, 2.0f);
+				Tileset.Scale = new Vector2(1.0f, 1.0f);
 				break;
 
 
 
 				case ViewFieldPosition.I:
-                Tileset.Scale = new Vector2(1.25f, 1.25f);
+				Tileset.Scale = new Vector2(0.75f, 0.75f);
 				batch.DrawTile(Tileset, GetTileID(direction), new Point(50 + DrawOffset.X / 2, 136 + DrawOffset.Y / 2));
-                Tileset.Scale = new Vector2(2.0f, 2.0f);
+				Tileset.Scale = new Vector2(1.0f, 1.0f);
 				break;
 				case ViewFieldPosition.J:
-                Tileset.Scale = new Vector2(1.25f, 1.25f);
+				Tileset.Scale = new Vector2(0.75f, 0.75f);
 				batch.DrawTile(Tileset, GetTileID(direction), new Point(180 + DrawOffset.X / 2, 136 + DrawOffset.Y / 2));
-                Tileset.Scale = new Vector2(2.0f, 2.0f);
+				Tileset.Scale = new Vector2(1.0f, 1.0f);
 				break;
 				case ViewFieldPosition.K:
-                Tileset.Scale = new Vector2(1.25f, 1.25f);
+				Tileset.Scale = new Vector2(0.75f, 0.75f);
 				batch.DrawTile(Tileset, GetTileID(direction), new Point(300 + DrawOffset.X / 2, 136 + DrawOffset.Y / 2));
-                Tileset.Scale = new Vector2(2.0f, 2.0f);
+				Tileset.Scale = new Vector2(1.0f, 1.0f);
 				break;
 
 
@@ -353,8 +353,8 @@ namespace DungeonEye
 		/// <param name="from">View direction of the viewer</param>
 		/// <returns>ID of the tile to display the monster</returns>
 		public int GetTileID(CardinalPoint point)
-		{			
-			int[,] id = new int[4,4];
+		{
+			int[,] id = new int[4, 4];
 
 			// g	f						LOOKING	  FROM	        VIEW	
 			id[0, 0] = 5;			//		N			N			N
@@ -382,25 +382,25 @@ namespace DungeonEye
 
 
 
-        /// <summary>
-        /// Gets if the monster can see the given location
-        /// </summary>
-        /// <returns>True if the point is in range of sight</returns>
-        public bool CanSee(DungeonLocation location)
-        {
-            if (location == null)
-                return false;
+		/// <summary>
+		/// Gets if the monster can see the given location
+		/// </summary>
+		/// <returns>True if the point is in range of sight</returns>
+		public bool CanSee(DungeonLocation location)
+		{
+			if (location == null)
+				return false;
 
-            // Not in the same maze
-            if (Location.MazeName != location.MazeName)
-                return false;
+			// Not in the same maze
+			if (Location.MazeName != location.MazeName)
+				return false;
 
 			// Not in sight zone
 			if (!SightZone.Contains(location.Position))
 				return false;
 
 			// Check in straight line
-			Point vector = new Point(Location.Position.X- location.Position.X, Location.Position.Y - location.Position.Y);
+			Point vector = new Point(Location.Position.X - location.Position.X, Location.Position.Y - location.Position.Y);
 			while (!vector.IsEmpty)
 			{
 				if (vector.X > 0)
@@ -421,7 +421,7 @@ namespace DungeonEye
 
 			// Location is visible
 			return true;
-        }
+		}
 
 
 		/// <summary>
@@ -564,11 +564,11 @@ namespace DungeonEye
 					}
 					break;
 
-                    case "baseattack":
-                    {
-                        BaseAttack = int.Parse(node.Attributes["value"].Value);
-                    }
-                    break;
+					case "baseattack":
+					{
+						BaseAttack = int.Parse(node.Attributes["value"].Value);
+					}
+					break;
 
 					case "sightrange":
 					{
@@ -593,7 +593,7 @@ namespace DungeonEye
 						Reward = int.Parse(node.Attributes["value"].Value);
 					}
 					break;
-					
+
 					default:
 					{
 						base.Load(node);
@@ -617,7 +617,7 @@ namespace DungeonEye
 			if (writer == null)
 				return false;
 
-	
+
 			writer.WriteStartElement("monster");
 			writer.WriteAttributeString("name", Name);
 
@@ -650,9 +650,9 @@ namespace DungeonEye
 			writer.WriteAttributeString("value", ArmorClass.ToString());
 			writer.WriteEndElement();
 
-            writer.WriteStartElement("baseattack");
-            writer.WriteAttributeString("value", BaseAttack.ToString());
-            writer.WriteEndElement();
+			writer.WriteStartElement("baseattack");
+			writer.WriteAttributeString("value", BaseAttack.ToString());
+			writer.WriteEndElement();
 
 			writer.WriteStartElement("sightrange");
 			writer.WriteAttributeString("value", SightRange.ToString());
@@ -689,7 +689,7 @@ namespace DungeonEye
 			writer.WriteAttributeString("event", "die");
 			writer.WriteAttributeString("name", DieSoundName);
 			writer.WriteEndElement();
-			
+
 			writer.WriteEndElement();
 
 			return true;
@@ -699,7 +699,7 @@ namespace DungeonEye
 
 		#endregion
 
-		
+
 		/// <summary>
 		/// 
 		/// </summary>
@@ -783,46 +783,46 @@ namespace DungeonEye
 		}
 
 
-        /// <summary>
-        /// Location of the monster
-        /// </summary>
-        public DungeonLocation Location
-        {
-            get;
-            set;
-        }
+		/// <summary>
+		/// Location of the monster
+		/// </summary>
+		public DungeonLocation Location
+		{
+			get;
+			set;
+		}
 
 
-/*
-        /// <summary>
-        /// Target location of the monster
-        /// </summary>
-        public DungeonLocation TargetLocation
-        {
-			get
-			{
-				DungeonLocation loc = new DungeonLocation(Location);
+		/*
+				/// <summary>
+				/// Target location of the monster
+				/// </summary>
+				public DungeonLocation TargetLocation
+				{
+					get
+					{
+						DungeonLocation loc = new DungeonLocation(Location);
 
-				//switch (TargetDirection)
-				//{
-				//    case CardinalPoint.North:
-				//    loc.Position.Y -= TargetRange;
-				//    break;
-				//    case CardinalPoint.South:
-				//    loc.Position.Y += TargetRange;
-				//    break;
-				//    case CardinalPoint.West:
-				//    loc.Position.X -= TargetRange;
-				//    break;
-				//    case CardinalPoint.East:
-				//    loc.Position.X += TargetRange;
-				//    break;
-				//}
+						//switch (TargetDirection)
+						//{
+						//    case CardinalPoint.North:
+						//    loc.Position.Y -= TargetRange;
+						//    break;
+						//    case CardinalPoint.South:
+						//    loc.Position.Y += TargetRange;
+						//    break;
+						//    case CardinalPoint.West:
+						//    loc.Position.X -= TargetRange;
+						//    break;
+						//    case CardinalPoint.East:
+						//    loc.Position.X += TargetRange;
+						//    break;
+						//}
 
-				return loc;
-			}
-        }
-*/
+						return loc;
+					}
+				}
+		*/
 
 
 		/// <summary>
@@ -1040,25 +1040,25 @@ namespace DungeonEye
 				switch (Location.Direction)
 				{
 					case CardinalPoint.North:
-						zone = new Rectangle(
-							Location.Position.X - 1, Location.Position.Y - SightRange,
-							3, SightRange);
-						break;
+					zone = new Rectangle(
+						Location.Position.X - 1, Location.Position.Y - SightRange,
+						3, SightRange);
+					break;
 					case CardinalPoint.South:
-						zone = new Rectangle(
-							Location.Position.X - 1, Location.Position.Y + 1,
-							3, SightRange);
-						break;
+					zone = new Rectangle(
+						Location.Position.X - 1, Location.Position.Y + 1,
+						3, SightRange);
+					break;
 					case CardinalPoint.West:
-						zone = new Rectangle(
-							Location.Position.X - SightRange, Location.Position.Y - 1,
-							SightRange, 3);
-						break;
+					zone = new Rectangle(
+						Location.Position.X - SightRange, Location.Position.Y - 1,
+						SightRange, 3);
+					break;
 					case CardinalPoint.East:
-						zone = new Rectangle(
-							Location.Position.X + 1, Location.Position.Y - 1,
-							SightRange, 3);
-						break;
+					zone = new Rectangle(
+						Location.Position.X + 1, Location.Position.Y - 1,
+						SightRange, 3);
+					break;
 				}
 
 				return zone;
@@ -1076,7 +1076,7 @@ namespace DungeonEye
 			get
 			{
 				return new Rectangle(
-				Location.Position.X - DetectionRange / 2, 
+				Location.Position.X - DetectionRange / 2,
 				Location.Position.Y - DetectionRange / 2,
 				DetectionRange, DetectionRange);
 			}
@@ -1328,7 +1328,7 @@ namespace DungeonEye
 		/// <summary>
 		/// The creature does not attack champions.
 		/// </summary>
-		None, 
+		None,
 
 
 		/// <summary>
@@ -1340,18 +1340,18 @@ namespace DungeonEye
 		/// <summary>
 		/// The 'Armor Strength' value of the attacked champion's armor is used to compute damage.
 		/// </summary>
-		Critical, 
+		Critical,
 
 
 		/// <summary>
 		/// The 'Armor Strength' value of the attacked champion's armor is used to compute damage. 
 		/// </summary>
-		Normal, 
+		Normal,
 
 		/// <summary>
 		/// The 'Sharp resistance' value of the attacked champion's armor is used to compute damage. 
 		/// </summary>
-		Sharp, 
+		Sharp,
 
 
 		/// <summary>
