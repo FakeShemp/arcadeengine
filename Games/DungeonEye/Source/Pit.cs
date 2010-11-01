@@ -34,7 +34,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Default constructor
 		/// </summary>
-		public Pit(MazeBlock block)
+		public Pit(Square block)
 		{
 			if (block == null)
 				throw new ArgumentNullException("block");
@@ -143,7 +143,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Location of the pit
 		/// </summary>
-		MazeBlock Block;
+		Square Block;
 
 
 		/// <summary>

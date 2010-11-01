@@ -48,7 +48,7 @@ namespace DungeonEye
 			Name = "No name";
 			Dungeon = dungeon;
 
-			Blocks = new List<List<MazeBlock>>();
+			Blocks = new List<List<Square>>();
 			Monsters = new List<Monster>();
 			Doors = new List<Door>();
 			ThrownItems = new List<ThrownItem>();
@@ -142,7 +142,7 @@ namespace DungeonEye
 			for (int y = 0; y < Size.Height; y++)
 				for (int x = 0; x < Size.Width; x++)
 				{
-					MazeBlock block = GetBlock(new Point(x, y));
+					Square block = GetBlock(new Point(x, y));
 
 					#region Pits
 					if (block.Pit != null && block.Pit.Target != null)
@@ -151,7 +151,7 @@ namespace DungeonEye
 						if (maze == null)
 							continue;
 
-						MazeBlock blk = maze.GetBlock(block.Pit.Target.Position);
+						Square blk = maze.GetBlock(block.Pit.Target.Position);
 						if (blk == null)
 							continue;
 
@@ -187,7 +187,7 @@ namespace DungeonEye
 					// Drop the content of his pocket
 					if (monster.ItemsInPocket.Count > 0)
 					{
-						MazeBlock block = GetBlock(monster.Location.Position);
+						Square block = GetBlock(monster.Location.Position);
 
 						//ItemSet itemset = ResourceManager.CreateSharedAsset<ItemSet>("Main");
 						foreach (string name in monster.ItemsInPocket)
@@ -398,7 +398,7 @@ namespace DungeonEye
 			if (!Contains(left))
 				return false;
 
-			MazeBlock block = GetBlock(left);
+			Square block = GetBlock(left);
 			return (block.IsWall);
 		}
 
@@ -407,10 +407,10 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="location">Location of the block</param>
 		/// <returns>Block handle</returns>
-		public MazeBlock GetBlock(Point location)
+		public Square GetBlock(Point location)
 		{
 			if (!Rectangle.Contains(location))
-				return new MazeBlock(this);
+				return new Square(this);
 
 			return Blocks[location.Y][location.X];
 
@@ -605,7 +605,7 @@ namespace DungeonEye
 			if (field == null)
 				return;
 
-			MazeBlock block = field.Blocks[(int)position];
+			Square block = field.Blocks[(int)position];
 			Point point;
 			TileDrawing td = null;
 
@@ -829,7 +829,7 @@ namespace DungeonEye
 			for (int y = 0; y < Size.Height; y++)
 				for (int x = 0; x < Size.Width; x++)
 				{
-					MazeBlock block = GetBlock(new Point(x, y));
+					Square block = GetBlock(new Point(x, y));
 
 					switch (block.Type)
 					{
@@ -920,7 +920,7 @@ namespace DungeonEye
 
 			Name = xml.Attributes["name"].Value;
 
-			MazeBlock block = null;
+			Square block = null;
 
 			foreach (XmlNode node in xml)
 			{
@@ -978,7 +978,7 @@ namespace DungeonEye
 								// Add a row
 								case "block":
 								{
-									block = new MazeBlock(this);
+									block = new Square(this);
 									block.Load(subnode);
 
 									Blocks[block.Location.Position.Y][block.Location.Position.X] = block;
@@ -1058,8 +1058,8 @@ namespace DungeonEye
 			writer.WriteAttributeString("height", Size.Height.ToString());
 
 
-			foreach (List<MazeBlock> list in Blocks)
-				foreach (MazeBlock block in list)
+			foreach (List<Square> list in Blocks)
+				foreach (Square block in list)
 					block.Save(writer);
 
 			writer.WriteEndElement();
@@ -1147,9 +1147,9 @@ namespace DungeonEye
 		public void InsertRow(int rowid)
 		{
 			// Build the row
-			List<MazeBlock> row = new List<MazeBlock>(Size.Width);
+			List<Square> row = new List<Square>(Size.Width);
 			for (int x = 0; x < Size.Width; x++)
-				row.Add(new MazeBlock(this));
+				row.Add(new Square(this));
 
 			// Adds the row at the end
 			if (rowid >= Blocks.Count)
@@ -1194,15 +1194,15 @@ namespace DungeonEye
 		public void InsertColumn(int columnid)
 		{
 			// Insert the column
-			foreach (List<MazeBlock> row in Blocks)
+			foreach (List<Square> row in Blocks)
 			{
 				if (columnid >= row.Count)
 				{
-					row.Add(new MazeBlock(this));
+					row.Add(new Square(this));
 				}
 				else
 				{
-					row.Insert(columnid, new MazeBlock(this));
+					row.Insert(columnid, new Square(this));
 
 					// Offset objects
 					//	Rectangle zone = new Rectangle(columnid * level.BlockDimension.Width, 0, level.Dimension.Width, level.Dimension.Height);
@@ -1219,7 +1219,7 @@ namespace DungeonEye
 		public void RemoveColumn(int columnid)
 		{
 			// Remove the column
-			foreach (List<MazeBlock> row in Blocks)
+			foreach (List<Square> row in Blocks)
 			{
 				row.RemoveAt(columnid);
 			}
@@ -1347,7 +1347,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Blocks in the maze
 		/// </summary>
-		List<List<MazeBlock>> Blocks;
+		List<List<Square>> Blocks;
 
 		/// <summary>
 		/// Gets the size of the maze
@@ -1479,7 +1479,7 @@ namespace DungeonEye
 		public ViewField(Maze maze, DungeonLocation location)
 		{
 			Maze = maze;
-			Blocks = new MazeBlock[19];
+			Blocks = new Square[19];
 			Monsters = new Monster[19][];
 			for (int i = 0; i < Monsters.Length; i++)
 				Monsters[i] = new Monster[4];
@@ -1761,7 +1761,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="position">Block position</param>
 		/// <returns>Block handle</returns>
-		public MazeBlock GetBlock(ViewFieldPosition position)
+		public Square GetBlock(ViewFieldPosition position)
 		{
 			return Blocks[(int)position];
 		}
@@ -1773,7 +1773,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Blocks in the maze
 		/// </summary>
-		public MazeBlock[] Blocks
+		public Square[] Blocks
 		{
 			get;
 			private set;

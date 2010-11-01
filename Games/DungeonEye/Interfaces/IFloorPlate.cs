@@ -43,7 +43,7 @@ namespace DungeonEye.Interfaces
 		/// <param name="item">Item handle</param>
 		/// <param name="hero">Hero dropping the item</param>
 		/// <param name="block">Block</param>
-		void OnItemDrop(Item item, Hero hero, MazeBlock block);
+		void OnItemDrop(Item item, Hero hero, Square block);
 
 
 		/// <summary>
@@ -52,7 +52,7 @@ namespace DungeonEye.Interfaces
 		/// <param name="item">Item handle</param>
 		/// <param name="hero">Hero dropping the item</param>
 		/// <param name="block">Block</param>
-		void OnItemCollect(Item item, Hero hero, MazeBlock block);
+		void OnItemCollect(Item item, Hero hero, Square block);
 
 	}
 }

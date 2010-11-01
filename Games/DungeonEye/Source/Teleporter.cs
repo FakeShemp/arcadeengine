@@ -35,7 +35,7 @@ namespace DungeonEye
 		/// <summary>
 		/// 
 		/// </summary>
-		public Teleporter(MazeBlock block)
+		public Teleporter(Square block)
 		{
 			if (block == null)
 				throw new ArgumentNullException("block");
@@ -107,7 +107,7 @@ namespace DungeonEye
 		/// <summary>
 		/// 
 		/// </summary>
-		MazeBlock Block;
+		Square Block;
 
 	
 		/// <summary>

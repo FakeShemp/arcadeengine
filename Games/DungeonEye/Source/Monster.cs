@@ -151,7 +151,7 @@ namespace DungeonEye
 				canmove = false;
 
 			// A wall
-			MazeBlock dstblock = Location.Maze.GetBlock(dst);
+			Square dstblock = Location.Maze.GetBlock(dst);
 			if (dstblock.IsBlocking)
 				canmove = false;
 
@@ -413,7 +413,7 @@ namespace DungeonEye
 				else if (vector.Y < 0)
 					vector.Y++;
 
-				MazeBlock block = Location.Maze.GetBlock(new Point(location.Position.X + vector.X, Location.Position.Y + vector.Y));
+				Square block = Location.Maze.GetBlock(new Point(location.Position.X + vector.X, Location.Position.Y + vector.Y));
 				if (block.IsWall)
 					return false;
 			}

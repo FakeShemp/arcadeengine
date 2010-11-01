@@ -44,7 +44,7 @@ namespace DungeonEye.Interfaces
 		/// <param name="item">Item</param>
 		/// <param name="hero">Hero dropping the item</param>
 		/// <param name="block">Block where the item is</param>
-		void OnDrop(Item item, Hero hero, MazeBlock block);
+		void OnDrop(Item item, Hero hero, Square block);
 
 
 		/// <summary>

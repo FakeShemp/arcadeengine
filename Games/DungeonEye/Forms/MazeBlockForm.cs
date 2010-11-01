@@ -40,7 +40,7 @@ namespace DungeonEye.Forms
 		/// </summary>
 		/// <param name="maze">Maze</param>
 		/// <param name="position">Location of the block</param>
-		public MazeBlockForm(Maze maze, MazeBlock block)
+		public MazeBlockForm(Maze maze, Square block)
 		{
 			InitializeComponent();
 
@@ -463,7 +463,7 @@ namespace DungeonEye.Forms
 
 			Monster monster = ResourceManager.CreateAsset<Monster>(MonsterTemplateBox.SelectedItem as string);
 			monster.Location = new DungeonLocation(MazeBlock.Location);
-			//monster.Location.Position = MazeBlock.Location;
+			//monster.Location.Position = Square.Location;
 			monster.Location.GroundPosition = (GroundPosition)Enum.ToObject(typeof(GroundPosition), GroundLocationBox.SelectedIndex);
 			monster.Location.SetMaze(Maze.Name);
 			monster.Init();
@@ -1082,7 +1082,7 @@ namespace DungeonEye.Forms
 		/// <summary>
 		/// 
 		/// </summary>
-		MazeBlock MazeBlock;
+		Square MazeBlock;
 
 
 		#endregion

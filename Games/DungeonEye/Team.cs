@@ -1080,7 +1080,7 @@ namespace DungeonEye
 			Point pos = Point.Empty;
 
 			// Get the block at team position
-			MazeBlock CurrentBlock = Location.Maze.GetBlock(Location.Position);
+			Square CurrentBlock = Location.Maze.GetBlock(Location.Position);
 
 
 			#region Mouse
@@ -2518,7 +2518,7 @@ namespace DungeonEye
 			bool state = true;
 
 			// A wall
-			MazeBlock dstblock = Location.Maze.GetBlock(dst);
+			Square dstblock = Location.Maze.GetBlock(dst);
 			if (dstblock.IsBlocking)
 				state = false;
 
@@ -2621,9 +2621,9 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// MazeBlock where the team is
+		/// Square where the team is
 		/// </summary>
-		public MazeBlock MazeBlock
+		public Square MazeBlock
 		{
 			get;
 			private set;
@@ -2703,9 +2703,9 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Returns the MazeBlock in front of the team
+		/// Returns the Square in front of the team
 		/// </summary>
-		public MazeBlock FrontBlock
+		public Square FrontBlock
 		{
 			get
 			{

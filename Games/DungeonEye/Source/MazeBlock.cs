@@ -42,7 +42,7 @@ namespace DungeonEye
 	/// 
 	/// 
 	/// </summary>
-	public class MazeBlock
+	public class Square
 	{
 
 
@@ -50,7 +50,7 @@ namespace DungeonEye
 		/// Constructor
 		/// </summary>
 		/// <param name="maze">Maze</param>
-		public MazeBlock(Maze maze)
+		public Square(Maze maze)
 		{
 			if (maze == null)
 				throw new ArgumentNullException("maze");

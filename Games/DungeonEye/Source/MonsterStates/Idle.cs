@@ -155,7 +155,7 @@ namespace DungeonEye.MonsterStates
 
 
 				// Check the block
-				MazeBlock block = Monster.Location.Maze.GetBlock(vector);
+				Square block = Monster.Location.Maze.GetBlock(vector);
 				if (block != null)
 				{
 					// Automatic direction changing

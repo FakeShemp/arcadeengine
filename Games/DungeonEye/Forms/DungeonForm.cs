@@ -220,7 +220,7 @@ namespace DungeonEye.Forms
 			if (!Maze.Contains(coord))
 				return;
 
-			MazeBlock block = Maze.GetBlock(coord);
+			Square block = Maze.GetBlock(coord);
 
 			if (e.Button == MouseButtons.Middle)
 			{
@@ -335,7 +335,7 @@ namespace DungeonEye.Forms
 			else if (e.Button == MouseButtons.Left)
 			{
 				BlockCoord = new Point((e.Location.X - Offset.X) / 25, (e.Location.Y - Offset.Y) / 25);
-				MazeBlock block = Maze.GetBlock(BlockCoord);
+				Square block = Maze.GetBlock(BlockCoord);
 
 				if (EditWallButton.Checked)
 				{
@@ -358,7 +358,7 @@ namespace DungeonEye.Forms
 			else if (e.Button == MouseButtons.Right)
 			{
 				BlockCoord = new Point((e.Location.X - Offset.X) / 25, (e.Location.Y - Offset.Y) / 25);
-				MazeBlock block = Maze.GetBlock(BlockCoord);
+				Square block = Maze.GetBlock(BlockCoord);
 
 				if (EditWallButton.Checked)
 				{
@@ -447,7 +447,7 @@ namespace DungeonEye.Forms
 			{
 				for (int x = 0; x < Maze.Size.Width; x++)
 				{
-					MazeBlock block = Maze.GetBlock(new Point(x, y));
+					Square block = Maze.GetBlock(new Point(x, y));
 					int tileid = block.Type == BlockType.Ground ? 1 : 0;
 
 					// Location of the block on the screen

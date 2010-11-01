@@ -39,7 +39,7 @@ namespace DungeonEye
 		/// Default constructor
 		/// </summary>
 		/// <param name="block">Location</param>
-		public ThrownItem(MazeBlock block)
+		public ThrownItem(Square block)
 		{
 			if (block != null)
 				Location = new DungeonLocation(block.Location);
@@ -103,7 +103,7 @@ namespace DungeonEye
 
 
 				// Blocked by a wall, fall before the block
-				MazeBlock blockinfo =  maze.GetBlock(dst);
+				Square blockinfo =  maze.GetBlock(dst);
 				if (blockinfo.IsBlocking)
 				{
 					Distance = 0;

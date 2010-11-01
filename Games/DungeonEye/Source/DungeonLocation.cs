@@ -314,7 +314,7 @@ namespace DungeonEye
 		/// <summary>
 		/// 
 		/// </summary>
-		public MazeBlock Block
+		public Square Block
 		{
 			get
 			{

@@ -45,7 +45,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="team">Handle to the team</param>
 		/// <param name="block">Mazeblock of the fllor plate</param>
-		public void OnTeamTouch(Team team, MazeBlock block)
+		public void OnTeamTouch(Team team, Square block)
 		{
 			// No script defined
 			if (string.IsNullOrEmpty(OnEnterScript) || Script == null)
@@ -74,7 +74,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="team"></param>
 		/// <param name="item"></param>
-		public void OnTeamLeave(Team team, MazeBlock block)
+		public void OnTeamLeave(Team team, Square block)
 		{
 			// No script defined
 			if (string.IsNullOrEmpty(OnEnterScript) || Script == null)

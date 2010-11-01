@@ -35,7 +35,7 @@ namespace DungeonEye
 		/// <summary>
 		/// 
 		/// </summary>
-		public Stair(MazeBlock block)
+		public Stair(Square block)
 		{
 			if (block == null)
 				throw new ArgumentNullException("block");
@@ -119,7 +119,7 @@ namespace DungeonEye
 		/// <summary>
 		/// 
 		/// </summary>
-		MazeBlock Block;
+		Square Block;
 
 	
 		/// <summary>
