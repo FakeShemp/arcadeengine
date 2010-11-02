@@ -588,18 +588,6 @@ namespace ArcEngine.Graphic
 		}
 
 
-		/// <summary>
-		/// Gets a rectangle that covers the texture
-		/// </summary>
-		[Browsable(false)]
-		public Rectangle Rectangle
-		{
-			get
-			{
-				return new Rectangle(Point.Empty, Size);
-			}
-		}
-
 
 		/// <summary>
 		/// Bitmap of the texture

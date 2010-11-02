@@ -35,7 +35,7 @@ namespace ArcEngine.Storage
 		/// <param name="path">Directory path</param>
 		public FileSystemStorage(string path)
 		{
-			StoragePath = path;
+			RootDirectory = path;
 
 			Process();
 		}
@@ -56,7 +56,7 @@ namespace ArcEngine.Storage
 		/// <returns>Stream handle or null</returns>
 		public override Stream OpenFile(string name)
 		{
-			string filename = Path.Combine(StoragePath, name);
+			string filename = Path.Combine(RootDirectory, name);
 
 			if (!File.Exists(filename))
 				return null;
@@ -75,11 +75,11 @@ namespace ArcEngine.Storage
 			Files.Clear();
 
 			// Add files to the list
-			DirectoryInfo di = new DirectoryInfo(StoragePath);
+			DirectoryInfo di = new DirectoryInfo(RootDirectory);
 			foreach (FileInfo fi in di.GetFiles("*", SearchOption.AllDirectories))
 			{
 				// Adds file to the list
-				Files.Add(fi.FullName.Replace(StoragePath, string.Empty));
+				Files.Add(fi.FullName.Replace(RootDirectory, string.Empty));
 
 
 				if (!fi.FullName.EndsWith(".xml", true, null))
@@ -124,8 +124,6 @@ namespace ArcEngine.Storage
 
 			}
 
-
-
 			return true;
 		}
 
@@ -136,7 +134,7 @@ namespace ArcEngine.Storage
 		/// <returns></returns>
 		public override string ToString()
 		{
-			return StoragePath;
+			return RootDirectory;
 		}
 
 
@@ -145,7 +143,7 @@ namespace ArcEngine.Storage
 		/// <summary>
 		/// Storage path
 		/// </summary>
-		string StoragePath;
+		public string RootDirectory;
 
 		#endregion
 	}

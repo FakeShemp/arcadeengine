@@ -330,13 +330,13 @@ namespace ArcEngine.Examples.PathFinding
 
 
 		/// <summary>
-		/// Path finder
+		/// RootDirectory finder
 		/// </summary>
 		AStar PathFinder;
 
 
 		/// <summary>
-		/// Path
+		/// RootDirectory
 		/// </summary>
 		List<PathNode> Path;
 

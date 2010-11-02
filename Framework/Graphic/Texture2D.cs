@@ -345,6 +345,18 @@ namespace ArcEngine.Graphic
 		#region Properties
 
 		/// <summary>
+		/// Gets a rectangle that covers the texture
+		/// </summary>
+		public Rectangle Bounds
+		{
+			get
+			{
+				return new Rectangle(Point.Empty, Size);
+			}
+		}
+
+
+		/// <summary>
 		/// Horizontal wrapping method
 		/// </summary>
 		public TextureWrapFilter HorizontalWrap
@@ -391,8 +403,5 @@ namespace ArcEngine.Graphic
 
 		#endregion
 	}
-
-
-
 
 }

@@ -73,7 +73,7 @@ namespace ArcEngine.Examples.GameState
 		/// <param name="device"></param>
 		public override void Draw()
 		{
-			BackgroundTexture.Blit(GameBase.Window.Rectangle, BackgroundTexture.Rectangle);
+			BackgroundTexture.Blit(GameBase.Window.Rectangle, BackgroundTexture.Bounds);
 		}
 
 

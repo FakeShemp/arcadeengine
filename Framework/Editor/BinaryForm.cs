@@ -91,8 +91,8 @@ namespace ArcEngine.Editor
 			// loop through the string array, adding each filename to the ListBox
 			foreach (string file in files)
 			{
-			//	if (ResourceManager.Binaries.Contains(Path.GetFileName(file)))
-			//		if (MessageBox.Show("Binary \"" + Path.GetFileName(file) + "\" already exists. Replace it ?", "File conflict", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+			//	if (ResourceManager.Binaries.Contains(RootDirectory.GetFileName(file)))
+			//		if (MessageBox.Show("Binary \"" + RootDirectory.GetFileName(file) + "\" already exists. Replace it ?", "File conflict", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
 			//			continue;
 
 			//	throw new NotImplementedException();

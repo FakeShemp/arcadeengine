@@ -699,6 +699,9 @@ namespace ArcEngine
 						// Save to storage
 						using (Stream stream = storage.CreateFile(string.Format("{0}.xml", type.Name)))
 						{
+							if (stream == null)
+								continue;
+
 							// Create Xml document from storage stream
 							XmlWriter doc = XmlWriter.Create(stream, settings);
 							doc.WriteStartDocument(true);
@@ -794,6 +797,21 @@ namespace ArcEngine
 		/// </summary>
 		static FileSystemStorage FailbackStorage;
 
+
+		/// <summary>
+		/// Gets or sets the root directory
+		/// </summary>
+		static public string RootDirectory
+		{
+			get
+			{
+				return FailbackStorage.RootDirectory;
+			}
+			set
+			{
+				FailbackStorage.RootDirectory = value;
+			}
+		}
 
 		#endregion
 

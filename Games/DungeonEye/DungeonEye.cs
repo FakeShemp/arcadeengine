@@ -71,8 +71,8 @@ namespace DungeonEye
 			AudioManager.Create();
 
 
-			using (BankStorage s = new BankStorage(@"data\Game.bnk"))
-			    ResourceManager.SaveAssetsToStorage(s);
+			//using (BankStorage s = new BankStorage(@"data\Game.bnk"))
+			//    ResourceManager.SaveAssetsToStorage(s);
 
 
 			// HACK : Editor events
@@ -105,6 +105,7 @@ namespace DungeonEye
 			// Main storage bank
 			Storage = new BankStorage("data/Game.bnk");
 			ResourceManager.Storages.Add(Storage);
+			ResourceManager.RootDirectory = "data";
 
 	
 			GSM.AddScreen(new MainMenu());

@@ -119,7 +119,7 @@ namespace ArcEngine.Graphic
 				return false;
 
 			Texture = texture;
-			Rectangle = texture.Rectangle;
+			Rectangle = texture.Bounds;
 			IsLocked = true;
 
 			// Bind PBO

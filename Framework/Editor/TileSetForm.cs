@@ -181,8 +181,8 @@ namespace ArcEngine.Editor
 			Vector4 zoom = new Vector4(
 			TextureOffset.X,
 			TextureOffset.Y,
-			tileSet.Texture.Rectangle.Width * zoomvalue,
-			tileSet.Texture.Rectangle.Height * zoomvalue);
+			tileSet.Texture.Bounds.Width * zoomvalue,
+			tileSet.Texture.Bounds.Height * zoomvalue);
 
 			Vector4 src = new Vector4(0.0f, 0.0f, tileSet.Texture.Size.Width, tileSet.Texture.Size.Height);
 

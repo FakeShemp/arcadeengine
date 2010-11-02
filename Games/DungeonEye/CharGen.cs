@@ -74,16 +74,12 @@ namespace DungeonEye
 			//ResourceManager.Storages.Add(new BankStorage("data/chargen.bnk", System.IO.FileAccess.Read));
 
 			Tileset = ResourceManager.CreateAsset<TileSet>("CharGen");
-			//Tileset.Scale = new Vector2(2.0f, 2.0f);
 
 			Heads = ResourceManager.CreateAsset<TileSet>("Heads");
-			//Heads.Scale = new Vector2(2.0f, 2.0f);
 
 			Font = ResourceManager.CreateAsset<BitmapFont>("intro");
-			//Font.GlyphTileset.Scale = new Vector2(2.0f, 2.0f);
 
 			NameFont = ResourceManager.CreateAsset<BitmapFont>("name");
-			//NameFont.GlyphTileset.Scale = new Vector2(2.0f, 2.0f);
 
 			PlayButton = new ScreenButton(string.Empty, new Rectangle(48, 362, 166, 32));
 			PlayButton.Selected += new EventHandler(PlayButton_Selected);
@@ -92,7 +88,6 @@ namespace DungeonEye
 			StringTable.LanguageName = Game.LanguageName;
 
 			Anims = ResourceManager.CreateAsset<Animation>("Animations");
-			//Anims.TileSet.Scale = new Vector2(2.0f, 2.0f);
 			Anims.Play();
 
 			CurrentState = CharGenStates.SelectHero;

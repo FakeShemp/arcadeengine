@@ -823,8 +823,9 @@ namespace ArcEngine
 				if (SharedTileSets.ContainsKey(name))
 					return (T)(object)SharedTileSets[name];
 
-				SharedTileSets[name] = new TileSet();
-				return (T)(object)SharedTileSets[name];
+				TileSet ts = new TileSet();
+				SharedTileSets[name] = ts;
+				return(T) (object) ts;
 			}
 
 			else if (typeof(T) == typeof(StringTable))
@@ -835,7 +836,7 @@ namespace ArcEngine
 				StringTable st = new StringTable();
 				SharedStrings[name] = st;
 
-				st.Load(Strings[name]);
+				//st.Load(Strings[name]);
 
 				return (T)(object)st;
 			}
@@ -879,7 +880,7 @@ namespace ArcEngine
 					return (T)(object)SharedFonts[name];
 
 				BitmapFont font = new BitmapFont();
-				font.Load(Fonts[name]);
+				//font.Load(Fonts[name]);
 				SharedFonts[name] = font;
 
 				return (T)(object)font;
@@ -890,9 +891,10 @@ namespace ArcEngine
 				if (SharedScripts.ContainsKey(name))
 					return (T)(object)SharedScripts[name];
 
-				SharedScripts[name] = new Script();
+				Script s = new Script();
+				SharedScripts[name] = s;
 
-				return (T)(object)SharedScripts[name];
+				return (T)(object)s;
 			}
 
 			else if (typeof(T) == typeof(AudioSample))
@@ -901,7 +903,7 @@ namespace ArcEngine
 					return (T)(object)SharedAudios[name];
 
 				AudioSample sound = new AudioSample();
-				sound.Load(Audios[name]);
+				//sound.Load(Audios[name]);
 				SharedAudios[name] = sound;
 
 				return (T)(object)sound;

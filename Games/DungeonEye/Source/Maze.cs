@@ -115,7 +115,6 @@ namespace DungeonEye
 				Trace.WriteLine("Failed to load wall tileset for the maze \"" + Name + "\".");
 				return false;
 			}
-			//   WallTileset.Scale = new Vector2(1.0f, 1.0f);
 
 			OverlayTileset = ResourceManager.CreateSharedAsset<TileSet>(OverlayTilesetName, OverlayTilesetName);
 			if (OverlayTileset == null)
@@ -123,7 +122,6 @@ namespace DungeonEye
 				Trace.WriteLine("Failed to load overlay tileset for the maze \"" + Name + "\".");
 				return false;
 			}
-			//  OverlayTileset.Scale = new Vector2(2.0f, 2.0f);
 
 			ItemsTileset = ResourceManager.CreateSharedAsset<TileSet>(ItemsTilesetName, ItemsTilesetName);
 			if (ItemsTileset == null)
@@ -131,7 +129,6 @@ namespace DungeonEye
 				Trace.WriteLine("Failed to load items tileset for the maze \"" + Name + "\".");
 				return false;
 			}
-			// ItemsTileset.Scale = new Vector2(2.0f, 2.0f);
 
 			foreach (Monster monster in Monsters)
 				monster.Init();

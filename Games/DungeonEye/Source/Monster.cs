@@ -110,7 +110,6 @@ namespace DungeonEye
 		public bool Init()
 		{
 			Tileset = ResourceManager.CreateSharedAsset<TileSet>(TileSetName, TileSetName);
-		//	Tileset.Scale = new Vector2(2.0f, 2.0f);
 
 			if (!string.IsNullOrEmpty(ScriptName) && !string.IsNullOrEmpty(InterfaceName))
 			{

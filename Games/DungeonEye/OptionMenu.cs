@@ -53,7 +53,6 @@ namespace DungeonEye
 		public override void LoadContent()
 		{
 			Tileset = ResourceManager.CreateAsset<TileSet>("Main Menu");
-		//	Tileset.Scale = new Vector2(2.0f, 2.0f);
 
 			Font = ResourceManager.CreateSharedAsset<BitmapFont>("intro");
 

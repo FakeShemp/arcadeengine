@@ -284,7 +284,7 @@
     </Compile>
     <Compile Include="Source\Hero.cs" />
     <Compile Include="Source\Providers.cs" />
-    <Compile Include="Source\MazeBlock.cs" />
+    <Compile Include="Source\Square.cs" />
     <Compile Include="Source\Monster.cs" />
     <Compile Include="Source\Pit.cs" />
     <Compile Include="Source\ScreenMessage.cs" />

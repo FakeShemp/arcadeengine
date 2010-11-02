@@ -144,6 +144,7 @@ namespace DungeonEye
 			{
 				Trace.WriteLine("ERROR !!! No StringTable defined for the game !!!");
 				ExitScreen();
+				return;
 			}
 			Language.LanguageName = Game.LanguageName;
 
@@ -173,24 +174,16 @@ namespace DungeonEye
 			// Interface tileset
 			TileSet = ResourceManager.CreateAsset<TileSet>("Interface");
 			ResourceManager.AddSharedAsset<TileSet>("Interface", TileSet);
-			//TileSet.Scale = new Vector2(2.0f, 2.0f);
-			//Trace.WriteLine("Tileset ({0} ms)", watch.ElapsedMilliseconds);
 
 			// Heroe's heads
 			Heads = ResourceManager.CreateAsset<TileSet>("Heads");
-			//Heads.Scale = new Vector2(2.0f, 2.0f);
-			//Trace.WriteLine("Head ({0} ms)", watch.ElapsedMilliseconds);
 
 			// Items tileset
 			Items = ResourceManager.CreateAsset<TileSet>("Items");
-			//Items.Scale = new Vector2(2.0f, 2.0f);
-			//Trace.WriteLine("Items ({0} ms)", watch.ElapsedMilliseconds);
 
 			// Fonts
 			Font = ResourceManager.CreateSharedAsset<BitmapFont>("inventory");
-			//Font.GlyphTileset.Scale = new Vector2(2.0f, 2.0f);
 			OutlinedFont = ResourceManager.CreateSharedAsset<BitmapFont>("outline");
-			//OutlinedFont.GlyphTileset.Scale = new Vector2(2.0f, 2.0f);
 
 			// Misc init
 			CampWindow.Init();

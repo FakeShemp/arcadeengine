@@ -851,7 +851,7 @@ namespace RuffnTumble
 		#endregion
 
 
-		#region Path
+		#region RootDirectory
 
 
 		/// <summary>
