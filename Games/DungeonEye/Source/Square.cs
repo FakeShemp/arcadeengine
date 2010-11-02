@@ -584,6 +584,17 @@ namespace DungeonEye
 					}
 					break;
 
+					case "noghost":
+					{
+						NoGhost = true;
+					}
+					break;
+
+					case "nomonster":
+					{
+						NoMonster = true;
+					}
+					break;
 
 					case "location":
 					{

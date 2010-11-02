@@ -70,11 +70,6 @@ namespace DungeonEye
 			// Audio
 			AudioManager.Create();
 
-
-			//using (BankStorage s = new BankStorage(@"data\Game.bnk"))
-			//    ResourceManager.SaveAssetsToStorage(s);
-
-
 			// HACK : Editor events
 			EditorEnter += new EditorEventHandler(Game_EditorEnter);
 		}
