@@ -129,6 +129,8 @@ namespace DungeonEye.Forms
 				SightRangeBox.Value = Monster.SightRange;
 				PickupBox.Value = (decimal)Monster.PickupRate * 100;
 				StealBox.Value = (decimal)Monster.StealRate * 100;
+				CanSeeInvisibleBox.Checked = Monster.CanSeeInvisible;
+				TeleportsBox.Checked = Monster.Teleports;
 			}
 		}
 
@@ -520,7 +522,7 @@ namespace DungeonEye.Forms
 			if (Monster == null)
 				return;
 
-			Monster.FleesAfterAttack = FleesBox.Checked;
+			Monster.FillSquare = FillSquareBox.Checked;
 
 		}
 
@@ -574,7 +576,7 @@ namespace DungeonEye.Forms
 			if (Monster == null)
 				return;
 
-			Monster.FleesAfterAttack = FleesBox.Checked;
+			Monster.UseStairs = UseStairsBox.Checked;
 
 		}
 
@@ -605,6 +607,32 @@ namespace DungeonEye.Forms
 
 		}
 
+		private void BackRowAttackBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Monster == null)
+				return;
+
+			Monster.BackRowAttack = BackRowAttackBox.Checked;
+		}
+
+		private void CanSeeInvisibleBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Monster == null)
+				return;
+
+			Monster.CanSeeInvisible = CanSeeInvisibleBox.Checked;
+		}
+
+		private void SightRangeBox_ValueChanged(object sender, EventArgs e)
+		{
+			if (Monster == null)
+				return;
+
+			Monster.SightRange= (int)SightRangeBox.Value;
+
+		}
+
 		#endregion
+
 	}
 }

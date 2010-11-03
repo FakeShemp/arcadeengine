@@ -28,7 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			DungeonEye.Dice dice2 = new DungeonEye.Dice();
+			DungeonEye.Dice dice1 = new DungeonEye.Dice();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MonsterControl));
 			this.VisualGroupBox = new System.Windows.Forms.GroupBox();
 			this.label11 = new System.Windows.Forms.Label();
@@ -309,7 +309,7 @@
 			this.EntityBox.Entity = null;
 			this.EntityBox.Location = new System.Drawing.Point(3, 3);
 			this.EntityBox.Name = "EntityBox";
-			this.EntityBox.Size = new System.Drawing.Size(580, 423);
+			this.EntityBox.Size = new System.Drawing.Size(186, 68);
 			this.EntityBox.TabIndex = 0;
 			// 
 			// PropertiesTab
@@ -379,6 +379,7 @@
 			this.SightRangeBox.Size = new System.Drawing.Size(73, 20);
 			this.SightRangeBox.TabIndex = 15;
 			this.SightRangeBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.SightRangeBox.ValueChanged += new System.EventHandler(this.SightRangeBox_ValueChanged);
 			// 
 			// CanSeeInvisibleBox
 			// 
@@ -389,7 +390,7 @@
 			this.CanSeeInvisibleBox.TabIndex = 14;
 			this.CanSeeInvisibleBox.Text = "Can see invisible";
 			this.CanSeeInvisibleBox.UseVisualStyleBackColor = true;
-			this.CanSeeInvisibleBox.CheckedChanged += new System.EventHandler(this.SmartAIBox_CheckedChanged);
+			this.CanSeeInvisibleBox.CheckedChanged += new System.EventHandler(this.CanSeeInvisibleBox_CheckedChanged);
 			// 
 			// SmartAIBox
 			// 
@@ -422,7 +423,7 @@
 			this.BackRowAttackBox.TabIndex = 13;
 			this.BackRowAttackBox.Text = "Back row attack";
 			this.BackRowAttackBox.UseVisualStyleBackColor = true;
-			this.BackRowAttackBox.CheckedChanged += new System.EventHandler(this.UseStairsBox_CheckedChanged);
+			this.BackRowAttackBox.CheckedChanged += new System.EventHandler(this.BackRowAttackBox_CheckedChanged);
 			// 
 			// label5
 			// 
@@ -564,10 +565,10 @@
 			// DamageBox
 			// 
 			this.DamageBox.ControlText = "Damage :";
-			dice2.Faces = 1;
-			dice2.Modifier = 0;
-			dice2.Throws = 1;
-			this.DamageBox.Dice = dice2;
+			dice1.Faces = 1;
+			dice1.Modifier = 0;
+			dice1.Throws = 1;
+			this.DamageBox.Dice = dice1;
 			this.DamageBox.Location = new System.Drawing.Point(257, 273);
 			this.DamageBox.MinimumSize = new System.Drawing.Size(225, 100);
 			this.DamageBox.Name = "DamageBox";

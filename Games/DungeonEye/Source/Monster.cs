@@ -517,6 +517,10 @@ namespace DungeonEye
 
 			foreach (XmlNode node in xml)
 			{
+				string value = "";
+				if (node.Attributes["value"] != null)
+					value = node.Attributes["value"].Value;
+
 				switch (node.Name.ToLower())
 				{
 					case "location":
@@ -560,37 +564,127 @@ namespace DungeonEye
 
 					case "armorclass":
 					{
-						ArmorClass = int.Parse(node.Attributes["value"].Value);
+						ArmorClass = int.Parse(value);
+					}
+					break;
+
+					case "castingpower":
+					{
+						MagicCastingPower = int.Parse(value);
+					}
+					break;
+
+					case "stealrate":
+					{
+						StealRate = float.Parse(value);
+					}
+					break;
+
+					case "pickuprate":
+					{
+						PickupRate = float.Parse(value);
 					}
 					break;
 
 					case "baseattack":
 					{
-						BaseAttack = int.Parse(node.Attributes["value"].Value);
+						BaseAttack = int.Parse(value);
 					}
 					break;
 
 					case "sightrange":
 					{
-						SightRange = byte.Parse(node.Attributes["value"].Value);
+						SightRange = byte.Parse(value);
 					}
 					break;
 
-					//case "iscoward":
-					//{
-					//    IsCoward = bool.Parse(node.Attributes["value"].Value);
-					//}
-					//break;
+					case "behaviour":
+					{
+						Behaviour = (MonsterBehaviour) Enum.Parse(typeof(MonsterBehaviour), value);
+					}
+					break;
 
-					//case "isaggressive":
-					//{
-					//    IsAggressive = bool.Parse(node.Attributes["value"].Value);
-					//}
-					//break;
+					case "nonmaterial":
+					{
+						NonMaterial = bool.Parse(value);
+					}
+					break;
+
+					case "poisonimmunity":
+					{
+						PoisonImmunity = bool.Parse(value);
+					}
+					break;
+
+					case "cansseinvisible":
+					{
+						CanSeeInvisible = bool.Parse(value);
+					}
+					break;
+
+					case "backrowattack":
+					{
+						BackRowAttack = bool.Parse(value);
+					}
+					break;
+
+					case "teleports":
+					{
+						Teleports = bool.Parse(value);
+					}
+					break;
+
+					case "usestairs":
+					{
+						UseStairs = bool.Parse(value);
+					}
+					break;
+
+					case "fillsquare":
+					{
+						FillSquare = bool.Parse(value);
+					}
+					break;
+
+					case "flees":
+					{
+						FleesAfterAttack = bool.Parse(value);
+					}
+					break;
+
+					case "drains":
+					{
+						HasDrainMagic = bool.Parse(value);
+					}
+					break;
+
+					case "heals":
+					{
+						HasHealMagic = bool.Parse(value);
+					}
+					break;
+
+					case "throwweapons":
+					{
+						ThrowWeapons = bool.Parse(value);
+					}
+					break;
+
+					case "flying":
+					{
+						Flying = bool.Parse(value);
+					}
+					break;
+
+					case "smartai":
+					{
+						SmartAI = bool.Parse(value);
+					}
+					break;
 
 					case "reward":
 					{
-						Reward = int.Parse(node.Attributes["value"].Value);
+						Reward = int.Parse(value);
 					}
 					break;
 
@@ -1173,7 +1267,7 @@ namespace DungeonEye
 		/// Maximum number of tiles between creature and party needed to see the party. 
 		/// This applies only if the creature is facing the party.
 		/// </summary>
-		public byte SightRange
+		public int SightRange
 		{
 			get;
 			set;
