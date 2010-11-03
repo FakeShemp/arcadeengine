@@ -57,7 +57,7 @@ namespace DungeonEye.Forms
 
 			GroundPositionBox.BeginUpdate();
 			GroundPositionBox.Items.Clear();
-			foreach (string name in Enum.GetNames(typeof(GroundPosition)))
+			foreach (string name in Enum.GetNames(typeof(SquarePosition)))
 				GroundPositionBox.Items.Add(name);
 			GroundPositionBox.EndUpdate();
 
@@ -170,7 +170,7 @@ namespace DungeonEye.Forms
 			if (GroundPositionBox.SelectedIndex == -1)
 				return;
 
-			DungeonControl.Target.GroundPosition = (GroundPosition)Enum.Parse(typeof(GroundPosition), (string)GroundPositionBox.SelectedItem);
+			DungeonControl.Target.GroundPosition = (SquarePosition)Enum.Parse(typeof(SquarePosition), (string)GroundPositionBox.SelectedItem);
 		}
 
 

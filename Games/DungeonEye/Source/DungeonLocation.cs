@@ -44,7 +44,7 @@ namespace DungeonEye
 			Dungeon = dungeon;
 			Compass = new Compass();
 			Position = Point.Empty;
-			GroundPosition = GroundPosition.NorthEast;
+			GroundPosition = SquarePosition.NorthEast;
 		}
 
 
@@ -172,7 +172,7 @@ namespace DungeonEye
 				Direction = (CardinalPoint)Enum.Parse(typeof(CardinalPoint), xml.Attributes["direction"].Value, true);
 
 			if (xml.Attributes["position"] != null)
-				GroundPosition = (GroundPosition) Enum.Parse(typeof(GroundPosition), xml.Attributes["position"].Value, true);
+				GroundPosition = (SquarePosition) Enum.Parse(typeof(SquarePosition), xml.Attributes["position"].Value, true);
 
 			return true;
 		}
@@ -304,7 +304,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Position on the ground
 		/// </summary>
-		public GroundPosition GroundPosition
+		public SquarePosition GroundPosition
 		{
 			get;
 			set;

@@ -45,6 +45,19 @@ namespace DungeonEye
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString()
+		{
+			StringBuilder sb = new StringBuilder();
+
+			sb.Append("Teleporter (target " + Target + ")");
+
+			return sb.ToString();
+		}
+
 		#region I/O
 
 

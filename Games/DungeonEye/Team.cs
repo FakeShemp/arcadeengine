@@ -1068,7 +1068,7 @@ namespace DungeonEye
 			#endregion
 
 
-			GroundPosition groundpos = GroundPosition.NorthEast;
+			SquarePosition groundpos = SquarePosition.NorthEast;
 			Point mousePos = Mouse.Location;
 			Point pos = Point.Empty;
 
@@ -1131,16 +1131,16 @@ namespace DungeonEye
 					switch (Direction)
 					{
 						case CardinalPoint.North:
-						groundpos = GroundPosition.NorthWest;
+						groundpos = SquarePosition.NorthWest;
 						break;
 						case CardinalPoint.East:
-						groundpos = GroundPosition.NorthEast;
+						groundpos = SquarePosition.NorthEast;
 						break;
 						case CardinalPoint.South:
-						groundpos = GroundPosition.SouthEast;
+						groundpos = SquarePosition.SouthEast;
 						break;
 						case CardinalPoint.West:
-						groundpos = GroundPosition.SouthWest;
+						groundpos = SquarePosition.SouthWest;
 						break;
 					}
 					if (ItemInHand != null)
@@ -1161,16 +1161,16 @@ namespace DungeonEye
 					switch (Location.Direction)
 					{
 						case CardinalPoint.North:
-						groundpos = GroundPosition.SouthWest;
+						groundpos = SquarePosition.SouthWest;
 						break;
 						case CardinalPoint.East:
-						groundpos = GroundPosition.NorthWest;
+						groundpos = SquarePosition.NorthWest;
 						break;
 						case CardinalPoint.South:
-						groundpos = GroundPosition.NorthEast;
+						groundpos = SquarePosition.NorthEast;
 						break;
 						case CardinalPoint.West:
-						groundpos = GroundPosition.SouthEast;
+						groundpos = SquarePosition.SouthEast;
 						break;
 					}
 
@@ -1193,16 +1193,16 @@ namespace DungeonEye
 					switch (Location.Direction)
 					{
 						case CardinalPoint.North:
-						groundpos = GroundPosition.NorthEast;
+						groundpos = SquarePosition.NorthEast;
 						break;
 						case CardinalPoint.East:
-						groundpos = GroundPosition.SouthEast;
+						groundpos = SquarePosition.SouthEast;
 						break;
 						case CardinalPoint.South:
-						groundpos = GroundPosition.SouthWest;
+						groundpos = SquarePosition.SouthWest;
 						break;
 						case CardinalPoint.West:
-						groundpos = GroundPosition.NorthWest;
+						groundpos = SquarePosition.NorthWest;
 						break;
 					}
 
@@ -1228,16 +1228,16 @@ namespace DungeonEye
 					switch (Location.Direction)
 					{
 						case CardinalPoint.North:
-						groundpos = GroundPosition.SouthEast;
+						groundpos = SquarePosition.SouthEast;
 						break;
 						case CardinalPoint.East:
-						groundpos = GroundPosition.SouthWest;
+						groundpos = SquarePosition.SouthWest;
 						break;
 						case CardinalPoint.South:
-						groundpos = GroundPosition.NorthWest;
+						groundpos = SquarePosition.NorthWest;
 						break;
 						case CardinalPoint.West:
-						groundpos = GroundPosition.NorthEast;
+						groundpos = SquarePosition.NorthEast;
 						break;
 					}
 
@@ -1273,16 +1273,16 @@ namespace DungeonEye
 							switch (Location.Direction)
 							{
 								case CardinalPoint.North:
-								loc.GroundPosition = GroundPosition.SouthWest;
+								loc.GroundPosition = SquarePosition.SouthWest;
 								break;
 								case CardinalPoint.East:
-								loc.GroundPosition = GroundPosition.NorthWest;
+								loc.GroundPosition = SquarePosition.NorthWest;
 								break;
 								case CardinalPoint.South:
-								loc.GroundPosition = GroundPosition.NorthEast;
+								loc.GroundPosition = SquarePosition.NorthEast;
 								break;
 								case CardinalPoint.West:
-								loc.GroundPosition = GroundPosition.SouthEast;
+								loc.GroundPosition = SquarePosition.SouthEast;
 								break;
 							}
 							Location.Maze.ThrownItems.Add(new ThrownItem(SelectedHero, ItemInHand, loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
@@ -1299,16 +1299,16 @@ namespace DungeonEye
 							switch (Location.Direction)
 							{
 								case CardinalPoint.North:
-								loc.GroundPosition = GroundPosition.SouthEast;
+								loc.GroundPosition = SquarePosition.SouthEast;
 								break;
 								case CardinalPoint.East:
-								loc.GroundPosition = GroundPosition.SouthWest;
+								loc.GroundPosition = SquarePosition.SouthWest;
 								break;
 								case CardinalPoint.South:
-								loc.GroundPosition = GroundPosition.NorthWest;
+								loc.GroundPosition = SquarePosition.NorthWest;
 								break;
 								case CardinalPoint.West:
-								loc.GroundPosition = GroundPosition.NorthEast;
+								loc.GroundPosition = SquarePosition.NorthEast;
 								break;
 							}
 
@@ -1345,16 +1345,16 @@ namespace DungeonEye
 					switch (Direction)
 					{
 						case CardinalPoint.North:
-						groundpos = GroundPosition.NorthWest;
+						groundpos = SquarePosition.NorthWest;
 						break;
 						case CardinalPoint.East:
-						groundpos = GroundPosition.NorthEast;
+						groundpos = SquarePosition.NorthEast;
 						break;
 						case CardinalPoint.South:
-						groundpos = GroundPosition.SouthEast;
+						groundpos = SquarePosition.SouthEast;
 						break;
 						case CardinalPoint.West:
-						groundpos = GroundPosition.SouthWest;
+						groundpos = SquarePosition.SouthWest;
 						break;
 					}
 					if (ItemInHand == null)
@@ -1377,16 +1377,16 @@ namespace DungeonEye
 					switch (Location.Direction)
 					{
 						case CardinalPoint.North:
-						groundpos = GroundPosition.SouthWest;
+						groundpos = SquarePosition.SouthWest;
 						break;
 						case CardinalPoint.East:
-						groundpos = GroundPosition.NorthWest;
+						groundpos = SquarePosition.NorthWest;
 						break;
 						case CardinalPoint.South:
-						groundpos = GroundPosition.NorthEast;
+						groundpos = SquarePosition.NorthEast;
 						break;
 						case CardinalPoint.West:
-						groundpos = GroundPosition.SouthEast;
+						groundpos = SquarePosition.SouthEast;
 						break;
 					}
 
@@ -1413,16 +1413,16 @@ namespace DungeonEye
 					switch (Location.Direction)
 					{
 						case CardinalPoint.North:
-						groundpos = GroundPosition.NorthEast;
+						groundpos = SquarePosition.NorthEast;
 						break;
 						case CardinalPoint.East:
-						groundpos = GroundPosition.SouthEast;
+						groundpos = SquarePosition.SouthEast;
 						break;
 						case CardinalPoint.South:
-						groundpos = GroundPosition.SouthWest;
+						groundpos = SquarePosition.SouthWest;
 						break;
 						case CardinalPoint.West:
-						groundpos = GroundPosition.NorthWest;
+						groundpos = SquarePosition.NorthWest;
 						break;
 					}
 
@@ -1447,16 +1447,16 @@ namespace DungeonEye
 					switch (Location.Direction)
 					{
 						case CardinalPoint.North:
-						groundpos = GroundPosition.SouthEast;
+						groundpos = SquarePosition.SouthEast;
 						break;
 						case CardinalPoint.East:
-						groundpos = GroundPosition.SouthWest;
+						groundpos = SquarePosition.SouthWest;
 						break;
 						case CardinalPoint.South:
-						groundpos = GroundPosition.NorthWest;
+						groundpos = SquarePosition.NorthWest;
 						break;
 						case CardinalPoint.West:
-						groundpos = GroundPosition.NorthEast;
+						groundpos = SquarePosition.NorthEast;
 						break;
 					}
 
@@ -1976,7 +1976,7 @@ namespace DungeonEye
 					float y = 0;
 					for (int pos = Location.Position.Y ; pos >= location.Y ; pos--)
 					{
-						if (Location.Maze.GetBlock(new Point(pos, Location.Position.Y + (int) y)).Type == BlockType.Wall)
+						if (Location.Maze.GetBlock(new Point(pos, Location.Position.Y + (int) y)).Type == SquareType.Wall)
 							return false;
 
 						y += delta;
@@ -2004,7 +2004,7 @@ namespace DungeonEye
 					float y = 0;
 					for (int pos = Location.Position.Y ; pos <= location.Y ; pos++)
 					{
-						if (Location.Maze.GetBlock(new Point(pos, Location.Position.Y + (int) y)).Type == BlockType.Wall)
+						if (Location.Maze.GetBlock(new Point(pos, Location.Position.Y + (int) y)).Type == SquareType.Wall)
 							return false;
 
 						y += delta;
@@ -2033,7 +2033,7 @@ namespace DungeonEye
 					float y = 0;
 					for (int pos = Location.Position.X ; pos >= location.X ; pos--)
 					{
-						if (Location.Maze.GetBlock(new Point(pos, Location.Position.Y + (int) y)).Type == BlockType.Wall)
+						if (Location.Maze.GetBlock(new Point(pos, Location.Position.Y + (int) y)).Type == SquareType.Wall)
 							return false;
 
 						y += delta;
@@ -2060,7 +2060,7 @@ namespace DungeonEye
 					float y = 0;
 					for (int pos = Location.Position.X ; pos <= location.X ; pos++)
 					{
-						if (Location.Maze.GetBlock(new Point(pos, Location.Position.Y + (int) y)).Type == BlockType.Wall)
+						if (Location.Maze.GetBlock(new Point(pos, Location.Position.Y + (int) y)).Type == SquareType.Wall)
 							return false;
 
 						y += delta;
@@ -2250,9 +2250,9 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="Hero">Hero handle</param>
 		/// <returns>Ground position of the hero</returns>
-		public GroundPosition GetHeroGroundPosition(Hero Hero)
+		public SquarePosition GetHeroGroundPosition(Hero Hero)
 		{
-			GroundPosition groundpos = GroundPosition.Center;
+			SquarePosition groundpos = SquarePosition.Center;
 
 
 			// Get the hero position in the team
@@ -2264,49 +2264,49 @@ namespace DungeonEye
 				case CardinalPoint.North:
 				{
 					if (pos == HeroPosition.FrontLeft)
-						groundpos = GroundPosition.NorthWest;
+						groundpos = SquarePosition.NorthWest;
 					else if (pos == HeroPosition.FrontRight)
-						groundpos = GroundPosition.NorthEast;
+						groundpos = SquarePosition.NorthEast;
 					else if (pos == HeroPosition.MiddleLeft || pos == HeroPosition.RearLeft)
-						groundpos = GroundPosition.SouthWest;
+						groundpos = SquarePosition.SouthWest;
 					else
-						groundpos = GroundPosition.SouthEast;
+						groundpos = SquarePosition.SouthEast;
 				}
 				break;
 				case CardinalPoint.East:
 				{
 					if (pos == HeroPosition.FrontLeft)
-						groundpos = GroundPosition.NorthEast;
+						groundpos = SquarePosition.NorthEast;
 					else if (pos == HeroPosition.FrontRight)
-						groundpos = GroundPosition.SouthEast;
+						groundpos = SquarePosition.SouthEast;
 					else if (pos == HeroPosition.MiddleLeft || pos == HeroPosition.RearLeft)
-						groundpos = GroundPosition.NorthWest;
+						groundpos = SquarePosition.NorthWest;
 					else
-						groundpos = GroundPosition.SouthWest;
+						groundpos = SquarePosition.SouthWest;
 				}
 				break;
 				case CardinalPoint.South:
 				{
 					if (pos == HeroPosition.FrontLeft)
-						groundpos = GroundPosition.SouthEast;
+						groundpos = SquarePosition.SouthEast;
 					else if (pos == HeroPosition.FrontRight)
-						groundpos = GroundPosition.SouthWest;
+						groundpos = SquarePosition.SouthWest;
 					else if (pos == HeroPosition.MiddleLeft || pos == HeroPosition.RearLeft)
-						groundpos = GroundPosition.NorthEast;
+						groundpos = SquarePosition.NorthEast;
 					else
-						groundpos = GroundPosition.NorthWest;
+						groundpos = SquarePosition.NorthWest;
 				}
 				break;
 				case CardinalPoint.West:
 				{
 					if (pos == HeroPosition.FrontLeft)
-						groundpos = GroundPosition.SouthWest;
+						groundpos = SquarePosition.SouthWest;
 					else if (pos == HeroPosition.FrontRight)
-						groundpos = GroundPosition.NorthWest;
+						groundpos = SquarePosition.NorthWest;
 					else if (pos == HeroPosition.MiddleLeft || pos == HeroPosition.RearLeft)
-						groundpos = GroundPosition.SouthEast;
+						groundpos = SquarePosition.SouthEast;
 					else
-						groundpos = GroundPosition.NorthEast;
+						groundpos = SquarePosition.NorthEast;
 				}
 				break;
 			}

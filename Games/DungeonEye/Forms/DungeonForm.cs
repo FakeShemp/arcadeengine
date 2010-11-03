@@ -132,7 +132,7 @@ namespace DungeonEye.Forms
 			PreviewLoc.Position.X += offset.X;
 			PreviewLoc.Position.Y += offset.Y;
 
-			PreviewBox.Text = "Preview pos : " + PreviewLoc.Position.ToString();
+			SquareDescriptionBox.Text = "Preview pos : " + PreviewLoc.Position.ToString();
 
 		}
 
@@ -239,12 +239,12 @@ namespace DungeonEye.Forms
 				// Add wall
 				if (EditWallButton.Checked)
 				{
-					if (block.Type == BlockType.Ground)
-						block.Type = BlockType.Wall;
-					else if (block.Type == BlockType.Wall)
-						block.Type = BlockType.Illusion;
-					else if (block.Type == BlockType.Illusion)
-						block.Type = BlockType.Wall;
+					if (block.Type == SquareType.Ground)
+						block.Type = SquareType.Wall;
+					else if (block.Type == SquareType.Wall)
+						block.Type = SquareType.Illusion;
+					else if (block.Type == SquareType.Illusion)
+						block.Type = SquareType.Wall;
 				}
 				else if (NoGhostsBox.Checked)
 				{
@@ -282,7 +282,7 @@ namespace DungeonEye.Forms
 
 				if (EditWallButton.Checked)
 				{
-					block.Type = BlockType.Ground;
+					block.Type = SquareType.Ground;
 				}
 				else if (NoGhostsBox.Checked)
 				{
@@ -319,7 +319,7 @@ namespace DungeonEye.Forms
 				return;
 			
 
-			new MazeBlockForm(Maze, Maze.GetBlock(pos)).ShowDialog();
+			new SquareForm(Maze, Maze.GetBlock(pos)).ShowDialog();
 		}
 
 
@@ -334,6 +334,10 @@ namespace DungeonEye.Forms
 
 			if (Maze == null)
 				return;
+
+			BlockCoord = new Point((e.Location.X - Offset.X) / 25, (e.Location.Y - Offset.Y) / 25);
+			Square block = Maze.GetBlock(BlockCoord);
+
 
 
 			// If scrolling with the middle mouse button
@@ -352,12 +356,9 @@ namespace DungeonEye.Forms
 
 			else if (e.Button == MouseButtons.Left)
 			{
-				BlockCoord = new Point((e.Location.X - Offset.X) / 25, (e.Location.Y - Offset.Y) / 25);
-				Square block = Maze.GetBlock(BlockCoord);
-
 				if (EditWallButton.Checked)
 				{
-					block.Type = BlockType.Wall;
+					block.Type = SquareType.Wall;
 					return;
 				}
 				else if (NoGhostsBox.Checked)
@@ -383,12 +384,9 @@ namespace DungeonEye.Forms
 
 			else if (e.Button == MouseButtons.Right)
 			{
-				BlockCoord = new Point((e.Location.X - Offset.X) / 25, (e.Location.Y - Offset.Y) / 25);
-				Square block = Maze.GetBlock(BlockCoord);
-
 				if (EditWallButton.Checked)
 				{
-					block.Type = BlockType.Ground;
+					block.Type = SquareType.Ground;
 				}
 				else if (NoGhostsBox.Checked)
 				{
@@ -402,7 +400,8 @@ namespace DungeonEye.Forms
 
 
 			// Debug
-			LabelBox.Text = new Point((e.Location.X - Offset.X) / 25, (e.Location.Y - Offset.Y) / 25).ToString();
+			SquareCoordBox.Text = new Point((e.Location.X - Offset.X) / 25, (e.Location.Y - Offset.Y) / 25).ToString();
+			SquareDescriptionBox.Text = block.ToString();
 
 		}
 
@@ -482,14 +481,14 @@ namespace DungeonEye.Forms
 				for (int x = 0; x < Maze.Size.Width; x++)
 				{
 					Square block = Maze.GetBlock(new Point(x, y));
-					int tileid = block.Type == BlockType.Ground ? 1 : 0;
+					int tileid = block.Type == SquareType.Ground ? 1 : 0;
 
 					// Location of the block on the screen
 					Point location = new Point(Offset.X + x * 25, Offset.Y + y * 25);
 
 
 					Color color = Color.White;
-					if (block.Type == BlockType.Illusion)
+					if (block.Type == SquareType.Illusion)
 						color = Color.LightGreen; 
 
 					SpriteBatch.DrawTile(Icons, tileid, location, color);

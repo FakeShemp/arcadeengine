@@ -46,6 +46,20 @@ namespace DungeonEye
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString()
+		{
+			StringBuilder sb = new StringBuilder();
+
+			sb.Append("Stairs going " + Type + " (target " + Target + ")");
+
+			return sb.ToString();
+		}
+
+
 		#region I/O
 
 
@@ -152,8 +166,15 @@ namespace DungeonEye
 	/// </summary>
 	public enum StairType
 	{
+		/// <summary>
+		/// Going up
+		/// </summary>
 		Up,
 
+
+		/// <summary>
+		/// Going down
+		/// </summary>
 		Down
 	}
 }

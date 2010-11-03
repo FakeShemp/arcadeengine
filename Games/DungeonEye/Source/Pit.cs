@@ -46,6 +46,19 @@ namespace DungeonEye
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString()
+		{
+			StringBuilder sb = new StringBuilder();
+
+			sb.Append("Pit (target " + Target + ")");
+
+			return sb.ToString();
+		}
+
 
 		#region I/O
 

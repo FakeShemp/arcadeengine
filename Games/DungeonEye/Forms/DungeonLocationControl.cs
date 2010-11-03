@@ -185,10 +185,10 @@ namespace DungeonEye.Forms
 						Square block = Maze.GetBlock(new Point(x, y));
 
 						Color color = Color.White;
-						if (block.Type == BlockType.Illusion)
+						if (block.Type == SquareType.Illusion)
 							color = Color.LightGreen;
 
-						Batch.DrawTile(Icons, block.Type == BlockType.Ground ? 1 : 0, new Point(Offset.X + x * 25, Offset.Y + y * 25));
+						Batch.DrawTile(Icons, block.Type == SquareType.Ground ? 1 : 0, new Point(Offset.X + x * 25, Offset.Y + y * 25));
 
 						if (block.GroundItemCount > 0)
 						{

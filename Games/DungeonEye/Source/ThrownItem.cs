@@ -117,32 +117,32 @@ namespace DungeonEye
 					//Distance = 0;
 					Location.Position = dst;
 
-					GroundPosition gp = Location.GroundPosition;
+					SquarePosition gp = Location.GroundPosition;
 					switch (Location.Direction)
 					{
 						case CardinalPoint.North:
-						if (gp == GroundPosition.NorthEast || gp == GroundPosition.SouthEast)
-							Location.GroundPosition = GroundPosition.SouthEast;
+						if (gp == SquarePosition.NorthEast || gp == SquarePosition.SouthEast)
+							Location.GroundPosition = SquarePosition.SouthEast;
 						else
-							Location.GroundPosition = GroundPosition.SouthWest;
+							Location.GroundPosition = SquarePosition.SouthWest;
 						break;
 						case CardinalPoint.South:
-						if (gp == GroundPosition.NorthEast || gp == GroundPosition.SouthEast)
-							Location.GroundPosition = GroundPosition.NorthEast;
+						if (gp == SquarePosition.NorthEast || gp == SquarePosition.SouthEast)
+							Location.GroundPosition = SquarePosition.NorthEast;
 						else
-							Location.GroundPosition = GroundPosition.NorthWest;
+							Location.GroundPosition = SquarePosition.NorthWest;
 						break;
 						case CardinalPoint.West:
-						if (gp == GroundPosition.NorthEast || gp == GroundPosition.NorthWest)
-							Location.GroundPosition = GroundPosition.NorthEast;
+						if (gp == SquarePosition.NorthEast || gp == SquarePosition.NorthWest)
+							Location.GroundPosition = SquarePosition.NorthEast;
 						else
-							Location.GroundPosition = GroundPosition.SouthEast;
+							Location.GroundPosition = SquarePosition.SouthEast;
 						break;
 						case CardinalPoint.East:
-						if (gp == GroundPosition.NorthEast || gp == GroundPosition.NorthWest)
-							Location.GroundPosition = GroundPosition.NorthWest;
+						if (gp == SquarePosition.NorthEast || gp == SquarePosition.NorthWest)
+							Location.GroundPosition = SquarePosition.NorthWest;
 						else
-							Location.GroundPosition = GroundPosition.SouthWest;
+							Location.GroundPosition = SquarePosition.SouthWest;
 						break;
 					}
 
@@ -168,32 +168,32 @@ namespace DungeonEye
 				// Drop the item at good ground position
 				if (Distance == 0)
 				{
-					GroundPosition gp = Location.GroundPosition;
+					SquarePosition gp = Location.GroundPosition;
 					switch (Location.Direction)
 					{
 						case CardinalPoint.North:
-						if (gp == GroundPosition.NorthEast || gp == GroundPosition.SouthEast)
-							Location.GroundPosition = GroundPosition.NorthEast;
+						if (gp == SquarePosition.NorthEast || gp == SquarePosition.SouthEast)
+							Location.GroundPosition = SquarePosition.NorthEast;
 						else
-							Location.GroundPosition = GroundPosition.NorthWest;
+							Location.GroundPosition = SquarePosition.NorthWest;
 						break;
 						case CardinalPoint.South:
-						if (gp == GroundPosition.NorthEast || gp == GroundPosition.SouthEast)
-							Location.GroundPosition = GroundPosition.SouthEast;
+						if (gp == SquarePosition.NorthEast || gp == SquarePosition.SouthEast)
+							Location.GroundPosition = SquarePosition.SouthEast;
 						else
-							Location.GroundPosition = GroundPosition.SouthWest;
+							Location.GroundPosition = SquarePosition.SouthWest;
 						break;
 						case CardinalPoint.West:
-						if (gp == GroundPosition.NorthEast || gp == GroundPosition.NorthWest)
-							Location.GroundPosition = GroundPosition.NorthWest;
+						if (gp == SquarePosition.NorthEast || gp == SquarePosition.NorthWest)
+							Location.GroundPosition = SquarePosition.NorthWest;
 						else
-							Location.GroundPosition = GroundPosition.SouthWest;
+							Location.GroundPosition = SquarePosition.SouthWest;
 						break;
 						case CardinalPoint.East:
-						if (gp == GroundPosition.NorthEast || gp == GroundPosition.NorthWest)
-							Location.GroundPosition = GroundPosition.NorthEast;
+						if (gp == SquarePosition.NorthEast || gp == SquarePosition.NorthWest)
+							Location.GroundPosition = SquarePosition.NorthEast;
 						else
-							Location.GroundPosition = GroundPosition.SouthEast;
+							Location.GroundPosition = SquarePosition.SouthEast;
 						break;
 					}
 

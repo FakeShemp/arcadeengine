@@ -47,8 +47,8 @@
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-			this.LabelBox = new System.Windows.Forms.ToolStripStatusLabel();
-			this.PreviewBox = new System.Windows.Forms.ToolStripStatusLabel();
+			this.SquareCoordBox = new System.Windows.Forms.ToolStripStatusLabel();
+			this.SquareDescriptionBox = new System.Windows.Forms.ToolStripStatusLabel();
 			this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
 			this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
 			this.DrawTimer = new System.Windows.Forms.Timer(this.components);
@@ -238,26 +238,29 @@
 			// statusStrip1
 			// 
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.LabelBox,
-            this.PreviewBox});
-			this.statusStrip1.Location = new System.Drawing.Point(0, 639);
+            this.SquareCoordBox,
+            this.SquareDescriptionBox});
+			this.statusStrip1.Location = new System.Drawing.Point(0, 637);
 			this.statusStrip1.Name = "statusStrip1";
-			this.statusStrip1.Size = new System.Drawing.Size(1160, 22);
+			this.statusStrip1.Size = new System.Drawing.Size(1160, 24);
 			this.statusStrip1.SizingGrip = false;
 			this.statusStrip1.TabIndex = 3;
 			this.statusStrip1.Text = "statusStrip1";
 			// 
-			// LabelBox
+			// SquareCoordBox
 			// 
-			this.LabelBox.Name = "LabelBox";
-			this.LabelBox.Size = new System.Drawing.Size(118, 17);
-			this.LabelBox.Text = "toolStripStatusLabel1";
+			this.SquareCoordBox.AutoSize = false;
+			this.SquareCoordBox.Name = "SquareCoordBox";
+			this.SquareCoordBox.Size = new System.Drawing.Size(250, 19);
+			this.SquareCoordBox.Text = "...Location...";
 			// 
-			// PreviewBox
+			// SquareDescriptionBox
 			// 
-			this.PreviewBox.Name = "PreviewBox";
-			this.PreviewBox.Size = new System.Drawing.Size(86, 17);
-			this.PreviewBox.Text = "PreviewPosBox";
+			this.SquareDescriptionBox.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides) ((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right)));
+			this.SquareDescriptionBox.Name = "SquareDescriptionBox";
+			this.SquareDescriptionBox.Size = new System.Drawing.Size(864, 19);
+			this.SquareDescriptionBox.Spring = true;
+			this.SquareDescriptionBox.Text = "...Description...";
 			// 
 			// hScrollBar1
 			// 
@@ -610,7 +613,7 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
 		private System.Windows.Forms.ToolStripButton EditWallButton;
 		private System.Windows.Forms.StatusStrip statusStrip1;
-		private System.Windows.Forms.ToolStripStatusLabel LabelBox;
+		private System.Windows.Forms.ToolStripStatusLabel SquareCoordBox;
 		private System.Windows.Forms.HScrollBar hScrollBar1;
 		private System.Windows.Forms.VScrollBar vScrollBar1;
 		private System.Windows.Forms.PropertyGrid MazePropertyBox;
@@ -626,7 +629,7 @@
 		private System.Windows.Forms.Button ForwardBox;
 		private System.Windows.Forms.Button StrafeLeftBox;
 		private System.Windows.Forms.Button TurnLeftBox;
-		private System.Windows.Forms.ToolStripStatusLabel PreviewBox;
+		private System.Windows.Forms.ToolStripStatusLabel SquareDescriptionBox;
 		private System.Windows.Forms.Panel panel1;
 		private System.Windows.Forms.MenuStrip DungeonMenu;
 		private System.Windows.Forms.ToolStripMenuItem dungeonToolStripMenuItem;

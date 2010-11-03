@@ -155,12 +155,6 @@
     <Compile Include="Forms\ItemForm.Designer.cs">
       <DependentUpon>ItemForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\MazeBlockForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\MazeBlockForm.Designer.cs">
-      <DependentUpon>MazeBlockForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\DungeonLocationControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -208,6 +202,12 @@
     </Compile>
     <Compile Include="Forms\SpellForm.Designer.cs">
       <DependentUpon>SpellForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SquareForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SquareForm.Designer.cs">
+      <DependentUpon>SquareForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Wizards\NewItemWizard.cs">
       <SubType>Form</SubType>
@@ -309,6 +309,9 @@
     <EmbeddedResource Include="Forms\SpellForm.resx">
       <DependentUpon>SpellForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SquareForm.resx">
+      <DependentUpon>SquareForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -366,10 +369,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ItemForm.resx">
       <DependentUpon>ItemForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\MazeBlockForm.resx">
-      <DependentUpon>MazeBlockForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\DungeonLocationControl.resx">

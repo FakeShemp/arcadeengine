@@ -218,7 +218,7 @@ namespace DungeonEye
 
 
 					// Make the item falling on the ground
-					GroundPosition pos = fi.Location.GroundPosition;
+					SquarePosition pos = fi.Location.GroundPosition;
 					/*
 										switch (fi.Location.Direction)
 										{
@@ -333,7 +333,7 @@ namespace DungeonEye
 		/// <param name="location">Location in the maze</param>
 		/// <param name="position">Ground location</param>
 		/// <returns>Monster handle or null</returns>
-		public Monster GetMonster(DungeonLocation location, GroundPosition position)
+		public Monster GetMonster(DungeonLocation location, SquarePosition position)
 		{
 			// Out of the maze
 			if (!Rectangle.Contains(location.Position))
@@ -662,7 +662,7 @@ namespace DungeonEye
 
 					foreach (Item item in list[i])
 					{
-						point = MazeDisplayCoordinates.GetGroundItem(position, (GroundPosition)i);
+						point = MazeDisplayCoordinates.GetGroundItem(position, (SquarePosition)i);
 						if (!point.IsEmpty)
 							batch.DrawTile(ItemsTileset, item.GroundTileID + offset, point);
 					}
@@ -781,7 +781,7 @@ namespace DungeonEye
 
 					foreach (Item item in list[i])
 					{
-						point = MazeDisplayCoordinates.GetGroundItem(position, (GroundPosition)i);
+						point = MazeDisplayCoordinates.GetGroundItem(position, (SquarePosition)i);
 						if (!point.IsEmpty)
 							batch.DrawTile(ItemsTileset, item.GroundTileID + offset, point);
 					}
@@ -791,14 +791,14 @@ namespace DungeonEye
 
 			#region Flying items
 			List<ThrownItem>[] flyings = GetFlyingItems(block.Location, view);
-			foreach (GroundPosition pos in Enum.GetValues(typeof(GroundPosition)))
+			foreach (SquarePosition pos in Enum.GetValues(typeof(SquarePosition)))
 			{
 				if (MazeDisplayCoordinates.GetFlyingItem(position, pos) == Point.Empty)
 					continue;
 
 				// Swap the tile if throwing on the right side
 				SpriteEffects fx = SpriteEffects.None;
-				if (pos == GroundPosition.NorthEast || pos == GroundPosition.SouthEast)
+				if (pos == SquarePosition.NorthEast || pos == SquarePosition.SouthEast)
 					fx = SpriteEffects.FlipHorizontally;
 
 				foreach (ThrownItem fi in flyings[(int)pos])
@@ -830,10 +830,10 @@ namespace DungeonEye
 
 					switch (block.Type)
 					{
-						case BlockType.Wall:
+						case SquareType.Wall:
 						color = Color.Black;
 						break;
-						case BlockType.Illusion:
+						case SquareType.Illusion:
 						color = Color.Gray;
 						break;
 						default:

@@ -58,7 +58,7 @@ namespace DungeonEye
 			//Maze = maze;
 			Location = new DungeonLocation(maze.Dungeon);
 			Location.SetMaze(maze.Name);
-			Type = BlockType.Wall;
+			Type = SquareType.Wall;
 
 			WallDecoration = new int[4];
 			Alcoves = new bool[4];
@@ -70,7 +70,63 @@ namespace DungeonEye
 		}
 
 
+		public override string ToString()
+		{
+			StringBuilder sb = new StringBuilder();
 
+			if (Door != null)
+				sb.Append(Door);
+
+			else if (Teleporter != null)
+				sb.Append(" " + Teleporter);
+
+			else if (Stair != null)
+				sb.Append(" " + Stair);
+
+			else if (Pit != null)
+				sb.Append(" " + Pit);
+
+			else if (FloorPlate != null)
+				sb.Append(" " + FloorPlate);
+
+			else if (ForceField!= null)
+				sb.Append(" " + ForceField);
+
+			else if (NoMonster)
+				sb.Append(" (no monster)");
+
+			else if (NoGhost)
+				sb.Append(" (no ghost)");
+
+			else if (IsWall)
+			{
+				if (IsIllusion)
+				{
+					sb.Append(" Illusion");
+				}
+				else 
+					sb.Append(" Wall");
+				
+				if (HasAlcoves)
+				{
+					sb.Append(" Alcove facing ");
+					foreach (CardinalPoint point in Enum.GetValues(typeof(CardinalPoint)))
+					{
+						if (HasAlcove(point))
+							sb.Append(point + " ");
+					}
+				}
+			}
+			else
+			{
+				sb.Append("Floor");
+			}
+
+			if (GroundItemCount > 0)
+				sb.Append(" " + GroundItemCount + " item(s)");
+
+			return sb.ToString();
+		}
 
 
 		#region Events
@@ -334,7 +390,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="position">Ground position</param>
 		/// <returns>List of items</returns>
-		public List<Item> GetItemsOnGround(GroundPosition position)
+		public List<Item> GetItemsOnGround(SquarePosition position)
 		{
 			return GroundItems[(int)position];
 		}
@@ -346,7 +402,7 @@ namespace DungeonEye
 		/// <param name="from">Facing position</param>
 		/// <param name="position">Ground position</param>
 		/// <returns>List of items</returns>
-		public List<Item> GetItemsOnGround(CardinalPoint from, GroundPosition position)
+		public List<Item> GetItemsOnGround(CardinalPoint from, SquarePosition position)
 		{
 			CardinalPoint[,] tab = new CardinalPoint[,]
 			{
@@ -356,7 +412,7 @@ namespace DungeonEye
 				{CardinalPoint.East, CardinalPoint.West, CardinalPoint.North, CardinalPoint.South},
 			};
 
-			return GetItemsOnGround((GroundPosition)tab[(int)from, (int)position]);
+			return GetItemsOnGround((SquarePosition)tab[(int)from, (int)position]);
 		}
 
 
@@ -442,7 +498,7 @@ namespace DungeonEye
 		/// <returns>Item handle or null</returns>
 		public Item CollectAlcoveItem(CardinalPoint side)
 		{
-			return CollectItem((GroundPosition)side);
+			return CollectItem((SquarePosition)side);
 		}
 
 
@@ -538,7 +594,7 @@ namespace DungeonEye
 					foreach (Item item in GroundItems[i])
 					{
 						writer.WriteStartElement("item");
-						writer.WriteAttributeString("location", ((GroundPosition)i).ToString());
+						writer.WriteAttributeString("location", ((SquarePosition)i).ToString());
 						writer.WriteAttributeString("name", item.Name);
 						writer.WriteEndElement();
 					}
@@ -576,7 +632,7 @@ namespace DungeonEye
 					// Items on ground
 					case "item":
 					{
-						GroundPosition loc = (GroundPosition)Enum.Parse(typeof(GroundPosition), node.Attributes["location"].Value);
+						SquarePosition loc = (SquarePosition)Enum.Parse(typeof(SquarePosition), node.Attributes["location"].Value);
 						Item item = ResourceManager.CreateAsset<Item>(node.Attributes["name"].Value);
 						if (item != null)
 							GroundItems[(int)loc].Add(item);
@@ -605,7 +661,7 @@ namespace DungeonEye
 
 					case "type":
 					{
-						Type = (BlockType)Enum.Parse(typeof(BlockType), node.Attributes["value"].Value, true);
+						Type = (SquareType)Enum.Parse(typeof(SquareType), node.Attributes["value"].Value, true);
 					}
 					break;
 
@@ -676,10 +732,10 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="position">Position in the block</param>
 		/// <returns>Item</returns>
-		public Item CollectItem(GroundPosition position)
+		public Item CollectItem(SquarePosition position)
 		{
 			// No item in the middle of a block
-			if (position == GroundPosition.Center)
+			if (position == SquarePosition.Center)
 				throw new ArgumentOutOfRangeException("position", "No items in the middle of a maze block !");
 
 			int count = GroundItems[(int)position].Count;
@@ -702,10 +758,10 @@ namespace DungeonEye
 		/// <param name="position">Position in the block</param>
 		/// <param name="item">Item to drop</param>
 		/// <returns>True if the item can be dropped</returns>
-		public bool DropItem(GroundPosition position, Item item)
+		public bool DropItem(SquarePosition position, Item item)
 		{
 			// No item in the middle of a block
-			if (position == GroundPosition.Center)
+			if (position == SquarePosition.Center)
 				throw new ArgumentOutOfRangeException("position", "No items in the middle of a maze block !");
 
 			// Can drop item in wall
@@ -804,7 +860,7 @@ namespace DungeonEye
 		{
 			get
 			{
-				return Type != BlockType.Ground;
+				return Type != SquareType.Ground;
 			}
 		}
 
@@ -827,7 +883,7 @@ namespace DungeonEye
 		{
 			get
 			{
-				if (Type == BlockType.Wall)
+				if (Type == SquareType.Wall)
 					return true;
 
 				if (Door != null && (Door.State != DoorState.Opened))
@@ -848,7 +904,7 @@ namespace DungeonEye
 		{
 			get
 			{
-				return Type == BlockType.Illusion;
+				return Type == SquareType.Illusion;
 			}
 
 		}
@@ -891,7 +947,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Type of the block
 		/// </summary>
-		public BlockType Type
+		public SquareType Type
 		{
 			get;
 			set;
@@ -1001,9 +1057,9 @@ namespace DungeonEye
 
 
 	/// <summary>
-	/// Type of block in the maze
+	/// Type of square in the maze
 	/// </summary>
-	public enum BlockType
+	public enum SquareType
 	{
 		/// <summary>
 		/// Ground block
@@ -1024,7 +1080,7 @@ namespace DungeonEye
 
 
 	/// <summary>
-	/// Sub position in a block in the maze
+	/// Sub position in a square in the maze
 	/// 
 	/// .-------.
 	/// | A | B |
@@ -1034,7 +1090,7 @@ namespace DungeonEye
 	/// | C | D |
 	/// '-------'
 	/// </summary>
-	public enum GroundPosition
+	public enum SquarePosition
 	{
 		/// <summary>
 		/// North west

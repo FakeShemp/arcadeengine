@@ -25,6 +25,7 @@ using System.ComponentModel;
 using System;
 using ArcEngine.Asset;
 using ArcEngine.Audio;
+using System.Text;
 
 namespace DungeonEye
 {
@@ -77,6 +78,24 @@ namespace DungeonEye
 			return true;
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString()
+		{
+			StringBuilder sb = new StringBuilder();
+
+			sb.Append(State + " " + Type + " door ");
+			if (IsBashable)
+				sb.Append("(breakable) ");
+			sb.Append("(key ....) ");
+			
+
+
+			return sb.ToString();
+		}
 
 
 		/// <summary>

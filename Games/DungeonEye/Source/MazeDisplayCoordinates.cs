@@ -112,9 +112,9 @@ namespace DungeonEye
 		/// <param name="view">Block position in the view field</param>
 		/// <param name="ground">ground position</param>
 		/// <returns></returns>
-		static public Point GetGroundItem(ViewFieldPosition view, GroundPosition ground)
+		static public Point GetGroundItem(ViewFieldPosition view, SquarePosition ground)
 		{
-			if (ground == GroundPosition.Center)
+			if (ground == SquarePosition.Center)
 				throw new ArgumentOutOfRangeException("ground", "No ground item in the middle of a block !");
 
 			return GroundItems[(int)view, (int)ground];
@@ -127,7 +127,7 @@ namespace DungeonEye
 		/// <param name="view">Block position in the view field</param>
 		/// <param name="ground">ground position</param>
 		/// <returns></returns>
-		static public Point GetFlyingItem(ViewFieldPosition view, GroundPosition ground)
+		static public Point GetFlyingItem(ViewFieldPosition view, SquarePosition ground)
 		{
 			return FlyingItems[(int)view, (int)ground];
 		}
@@ -270,8 +270,8 @@ namespace DungeonEye
 						case "grounditem":
 						{
 							ViewFieldPosition view = (ViewFieldPosition) Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
-							GroundPosition ground = (GroundPosition) Enum.Parse(typeof(GroundPosition), node.Attributes["coordinate"].Value, true);
-							if (ground == GroundPosition.Center)
+							SquarePosition ground = (SquarePosition) Enum.Parse(typeof(SquarePosition), node.Attributes["coordinate"].Value, true);
+							if (ground == SquarePosition.Center)
 								throw new ArgumentOutOfRangeException("ground", "No ground item in the middle of a block !");
 
 							GroundItems[(int) view, (int) ground] = new Point(int.Parse(node.Attributes["x"].Value), int.Parse(node.Attributes["y"].Value));
@@ -282,7 +282,7 @@ namespace DungeonEye
 						case "flyingitem":
 						{
 							ViewFieldPosition view = (ViewFieldPosition) Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
-							GroundPosition ground = (GroundPosition) Enum.Parse(typeof(GroundPosition), node.Attributes["coordinate"].Value, true);
+							SquarePosition ground = (SquarePosition) Enum.Parse(typeof(SquarePosition), node.Attributes["coordinate"].Value, true);
 
 							FlyingItems[(int) view, (int) ground] = new Point(int.Parse(node.Attributes["x"].Value), int.Parse(node.Attributes["y"].Value));
 						}
