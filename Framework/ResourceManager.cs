@@ -472,7 +472,7 @@ namespace ArcEngine
 		/// <typeparam name="T">Type of the asset</typeparam>
 		/// <param name="name">Asset name</param>
 		/// <returns>Handle to the asset</returns>
-		static public T CreateSharedAsset<T>(string name) where T : IAsset
+		static public T GetSharedAsset<T>(string name) where T : IAsset
 		{
 			if (string.IsNullOrEmpty(name))
 				return default(T);
@@ -486,7 +486,7 @@ namespace ArcEngine
 				if (asset.IsDisposed)
 				{
 					RemoveSharedAsset<T>(name);
-					return CreateSharedAsset<T>(name);
+					return GetSharedAsset<T>(name);
 				}
 
 				return asset;

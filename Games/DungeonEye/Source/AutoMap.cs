@@ -48,7 +48,7 @@ namespace DungeonEye
 			
 			Tileset = ResourceManager.CreateAsset<TileSet>("AutoMap");
 
-			Font = ResourceManager.CreateSharedAsset<BitmapFont>("intro");
+			Font = ResourceManager.GetSharedAsset<BitmapFont>("intro");
 
 		}
 

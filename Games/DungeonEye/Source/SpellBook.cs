@@ -65,7 +65,7 @@ namespace DungeonEye
 		{
 			Font = ResourceManager.CreateAsset<BitmapFont>("inventory");
 
-			Tileset = ResourceManager.CreateSharedAsset<TileSet>("Interface");
+			Tileset = ResourceManager.GetSharedAsset<TileSet>("Interface");
 		}
 
 

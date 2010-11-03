@@ -72,8 +72,8 @@ namespace DungeonEye
 			Button = new Rectangle(254, 70, 20, 28);
 
 			// Sounds
-			OpenSound = ResourceManager.CreateSharedAsset<AudioSample>("door open");
-			CloseSound = ResourceManager.CreateSharedAsset<AudioSample>("door close");
+			OpenSound = ResourceManager.GetSharedAsset<AudioSample>("door open");
+			CloseSound = ResourceManager.GetSharedAsset<AudioSample>("door close");
 
 			return true;
 		}

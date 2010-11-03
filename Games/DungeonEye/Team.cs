@@ -172,8 +172,7 @@ namespace DungeonEye
 
 
 			// Interface tileset
-			TileSet = ResourceManager.CreateAsset<TileSet>("Interface");
-			ResourceManager.AddSharedAsset<TileSet>("Interface", TileSet);
+			TileSet = ResourceManager.CreateSharedAsset<TileSet>("Interface", "Interface");
 
 			// Heroe's heads
 			Heads = ResourceManager.CreateAsset<TileSet>("Heads");
@@ -182,8 +181,8 @@ namespace DungeonEye
 			Items = ResourceManager.CreateAsset<TileSet>("Items");
 
 			// Fonts
-			Font = ResourceManager.CreateSharedAsset<BitmapFont>("inventory");
-			OutlinedFont = ResourceManager.CreateSharedAsset<BitmapFont>("outline");
+			Font = ResourceManager.CreateSharedAsset<BitmapFont>("inventory", "inventory");
+			OutlinedFont = ResourceManager.CreateSharedAsset<BitmapFont>("outline", "outline");
 
 			// Misc init
 			CampWindow.Init();

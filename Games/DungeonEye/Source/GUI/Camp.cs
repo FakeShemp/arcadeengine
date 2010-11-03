@@ -52,7 +52,7 @@ namespace DungeonEye.Gui
 		public bool Init()
 		{
 
-			Font = ResourceManager.CreateSharedAsset<BitmapFont>("intro");
+			Font = ResourceManager.GetSharedAsset<BitmapFont>("intro");
 
 
 			//BgColor = Color.FromArgb(101, 105, 182);

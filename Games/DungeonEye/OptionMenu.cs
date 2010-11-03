@@ -54,7 +54,7 @@ namespace DungeonEye
 		{
 			Tileset = ResourceManager.CreateAsset<TileSet>("Main Menu");
 
-			Font = ResourceManager.CreateSharedAsset<BitmapFont>("intro");
+			Font = ResourceManager.GetSharedAsset<BitmapFont>("intro");
 
 			StringTable = ResourceManager.CreateAsset<StringTable>("option");
 
