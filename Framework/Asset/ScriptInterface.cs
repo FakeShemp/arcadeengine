@@ -44,7 +44,7 @@ namespace ArcEngine.Asset
 		/// <returns>True if the instance is created</returns>
 		bool CreateInstance()
 		{
-			if (string.IsNullOrEmpty(ScriptName) && string.IsNullOrEmpty(InterfaceName))
+			if (string.IsNullOrEmpty(ScriptName) || string.IsNullOrEmpty(InterfaceName))
 				return false;
 
 			// Create the script

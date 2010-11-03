@@ -26,10 +26,10 @@ using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Audio;
 using ArcEngine.Graphic;
+using ArcEngine.Interface;
 using ArcEngine.Utility.GameState;
 using DungeonEye.Interfaces;
 using DungeonEye.MonsterStates;
-using ArcEngine.Interface;
 
 
 //
@@ -112,13 +112,13 @@ namespace DungeonEye
 		{
 			Tileset = ResourceManager.CreateSharedAsset<TileSet>(TileSetName, TileSetName);
 
-			if (!string.IsNullOrEmpty(ScriptName) && !string.IsNullOrEmpty(InterfaceName))
-			{
-				Script script = ResourceManager.CreateAsset<Script>(ScriptName);
-				script.Compile();
+			//if (!string.IsNullOrEmpty(ScriptName) && !string.IsNullOrEmpty(InterfaceName))
+			//{
+			//    Script script = ResourceManager.CreateAsset<Script>(ScriptName);
+			//    script.Compile();
 
-				Interface = script.CreateInstance<IMonster>(InterfaceName);
-			}
+			//    Interface = script.CreateInstance<IMonster>(InterfaceName);
+			//}
 
 
 			StateManager.SetState(new IdleState(this));
@@ -232,8 +232,8 @@ namespace DungeonEye
 		/// <param name="time">Elapsed game time</param>
 		public virtual void Update(GameTime time)
 		{
-			if (Interface != null)
-				Interface.OnUpdate(this);
+			if (Script.Instance != null)
+				Script.Instance.OnUpdate(this);
 
 
 			// Draw offset
@@ -541,8 +541,8 @@ namespace DungeonEye
 
 					case "script":
 					{
-						ScriptName = node.Attributes["name"].Value;
-						InterfaceName = node.Attributes["interface"].Value;
+						Script = new ScriptInterface<IMonster>();
+						Script.Load(node);
 					}
 					break;
 
@@ -623,10 +623,8 @@ namespace DungeonEye
 
 			base.Save(writer);
 
-			writer.WriteStartElement("script");
-			writer.WriteAttributeString("name", ScriptName);
-			writer.WriteAttributeString("interface", InterfaceName);
-			writer.WriteEndElement();
+			if (Script != null)
+				Script.Save("script", writer);
 
 			if (Location != null)
 				Location.Save("location", writer);
@@ -658,14 +656,6 @@ namespace DungeonEye
 			writer.WriteAttributeString("value", SightRange.ToString());
 			writer.WriteEndElement();
 
-			//writer.WriteStartElement("isaggressive");
-			//writer.WriteAttributeString("value", IsAggressive.ToString());
-			//writer.WriteEndElement();
-
-			//writer.WriteStartElement("iscoward");
-			//writer.WriteAttributeString("value", IsCoward.ToString());
-			//writer.WriteEndElement();
-
 			writer.WriteStartElement("reward");
 			writer.WriteAttributeString("value", Reward.ToString());
 			writer.WriteEndElement();
@@ -690,6 +680,75 @@ namespace DungeonEye
 			writer.WriteAttributeString("name", DieSoundName);
 			writer.WriteEndElement();
 
+			writer.WriteStartElement("behaviour");
+			writer.WriteAttributeString("value", Behaviour.ToString());
+			writer.WriteEndElement();
+
+			writer.WriteStartElement("fillsquare");
+			writer.WriteAttributeString("value", FillSquare.ToString());
+			writer.WriteEndElement();
+
+			writer.WriteStartElement("flees");
+			writer.WriteAttributeString("value", FleesAfterAttack.ToString());
+			writer.WriteEndElement();
+
+			writer.WriteStartElement("drains");
+			writer.WriteAttributeString("value", HasDrainMagic.ToString());
+			writer.WriteEndElement();
+
+			writer.WriteStartElement("heals");
+			writer.WriteAttributeString("value", HasHealMagic.ToString());
+			writer.WriteEndElement();
+
+			writer.WriteStartElement("castingpower");
+			writer.WriteAttributeString("value", MagicCastingPower.ToString());
+			writer.WriteEndElement();
+
+			writer.WriteStartElement("throwweapons");
+			writer.WriteAttributeString("value", ThrowWeapons.ToString());
+			writer.WriteEndElement();
+
+			writer.WriteStartElement("usestairs");
+			writer.WriteAttributeString("value", UseStairs.ToString());
+			writer.WriteEndElement();
+
+			writer.WriteStartElement("flying");
+			writer.WriteAttributeString("value", Flying.ToString());
+			writer.WriteEndElement();
+
+			writer.WriteStartElement("smartai");
+			writer.WriteAttributeString("value", SmartAI.ToString());
+			writer.WriteEndElement();
+
+			writer.WriteStartElement("teleports");
+			writer.WriteAttributeString("value", Teleports.ToString());
+			writer.WriteEndElement();
+
+			writer.WriteStartElement("pickuprate");
+			writer.WriteAttributeString("value", PickupRate.ToString());
+			writer.WriteEndElement();
+
+			writer.WriteStartElement("stealrate");
+			writer.WriteAttributeString("value", StealRate.ToString());
+			writer.WriteEndElement();
+
+			writer.WriteStartElement("backrowattack");
+			writer.WriteAttributeString("value", BackRowAttack.ToString());
+			writer.WriteEndElement();
+
+			writer.WriteStartElement("cansseinvisible");
+			writer.WriteAttributeString("value", CanSeeInvisible.ToString());
+			writer.WriteEndElement();
+
+			writer.WriteStartElement("poisonimmunity");
+			writer.WriteAttributeString("value", PoisonImmunity.ToString());
+			writer.WriteEndElement();
+
+			writer.WriteStartElement("nonmaterial");
+			writer.WriteAttributeString("value", NonMaterial.ToString());
+			writer.WriteEndElement();
+
+
 			writer.WriteEndElement();
 
 			return true;
@@ -706,7 +765,7 @@ namespace DungeonEye
 		/// <returns></returns>
 		public override string ToString()
 		{
-			return string.Format("{0}", Name);
+			return string.Format(Name);
 		}
 
 
@@ -726,6 +785,16 @@ namespace DungeonEye
 		/// Gets or sets a monster in the middle of a square
 		/// </summary>
 		public bool FillSquare
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// Gets or sets the monster run away after an attack 
+		/// </summary>
+		public bool FleesAfterAttack
 		{
 			get;
 			set;
@@ -758,7 +827,7 @@ namespace DungeonEye
 		}
 
 		/// <summary>
-		/// 
+		/// Gets or sets if the monster uses of the drain spell
 		/// </summary>
 		public bool HasDrainMagic
 		{
@@ -767,7 +836,7 @@ namespace DungeonEye
 		}
 
 		/// <summary>
-		/// 
+		/// Gets or sets if the monster uses of the heal spell
 		/// </summary>
 		public bool HasHealMagic
 		{
@@ -775,18 +844,9 @@ namespace DungeonEye
 			set;
 		}
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public int MagicIntelligence
-		{
-			get;
-			set;
-		}
-
 
 		/// <summary>
-		/// 
+		/// Gets or sets the maximum power level the monster can use. 
 		/// </summary>
 		public int MagicCastingPower
 		{
@@ -943,6 +1003,78 @@ namespace DungeonEye
 
 
 		/// <summary>
+		/// Gets or sets to throw all unequipped weapons 
+		/// </summary>
+		public bool ThrowWeapons
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// Gets or sets if the monster can go up and down stairs.
+		/// </summary>
+		public bool UseStairs
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// Gets or sets if the monster is flying.
+		/// </summary>
+		public bool Flying
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// Gets or sets if the monster receives a variety of AI boosts
+		/// (opening doors, using switch, cast spell...)
+		/// </summary>
+		public bool SmartAI
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// Gets or sets if the monster can teleport at will to a new square 
+		/// on the same dungeon level within a 5 square radius. 
+		/// </summary>
+		public bool Teleports
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// Gets or sets how likely a monster is to pick up an item on the ground
+		/// </summary>
+		public float PickupRate
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// Gets or sets how often a monster steals from the party instead of attacking.
+		/// </summary>
+		public float StealRate
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
 		/// Tile id for this monster
 		/// </summary>
 		[Category("TileSet")]
@@ -1026,7 +1158,6 @@ namespace DungeonEye
 		}
 
 
-
 		/// <summary>
 		/// Defines the attack speed of the creature. 
 		/// This is the minimum amount of time required between two attacks. 
@@ -1047,7 +1178,6 @@ namespace DungeonEye
 			get;
 			set;
 		}
-
 
 
 		/// <summary>
@@ -1118,7 +1248,7 @@ namespace DungeonEye
 		}
 
 
-
+/*
 		/// <summary>
 		/// Resistance to magical spells like Fireball.
 		/// Values range from 0 to 15. Value 15 means the creature is immune.
@@ -1128,14 +1258,13 @@ namespace DungeonEye
 			get;
 			set;
 		}
-
+*/
 
 
 		/// <summary>
 		/// Resistance to magical spells involving poison.
-		///  Values range from 0 to 15. Value 15 means the creature is immune.
 		/// </summary>
-		public byte PoisonResistance
+		public bool PoisonImmunity
 		{
 			get;
 			set;
@@ -1160,31 +1289,10 @@ namespace DungeonEye
 		public TimeSpan AttackDisplayDuration;
 
 
-		ScriptInterface<IMonster> Script;
-
 		/// <summary>
-		/// Script name
+		/// Script
 		/// </summary>
-		public string ScriptName
-		{
-			get;
-			set;
-		}
-
-		/// <summary>
-		/// Interface name for the script
-		/// </summary>
-		public string InterfaceName
-		{
-			get;
-			set;
-		}
-
-
-		/// <summary>
-		/// Script interface
-		/// </summary>
-		public IMonster Interface
+		public ScriptInterface<IMonster> Script
 		{
 			get;
 			private set;

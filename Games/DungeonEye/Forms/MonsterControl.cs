@@ -75,20 +75,13 @@ namespace DungeonEye.Forms
 
 
 			// Scripts
-			ScriptNameBox.BeginUpdate();
-			foreach (string name in ResourceManager.GetAssets<Script>())
-				ScriptNameBox.Items.Add(name);
-			ScriptNameBox.Items.Insert(0, "");
-			ScriptNameBox.EndUpdate();
-
 
 			if (Monster == null)
 			{
 				ArmorClassBox.Value = 0;
 				XPRewardBox.Value = 0;
 				PocketItemsBox.Items.Clear();
-				ScriptNameBox.Items.Clear();
-				InterfaceNameBox.Items.Clear();
+				ScriptBox.SetValues<IMonster>(null);
 				TileSetBox.Items.Clear();
 				TileIDBox.Items.Clear();
 				DamageBox.Dice.Reset();
@@ -120,10 +113,22 @@ namespace DungeonEye.Forms
 				XPRewardBox.Value = Monster.Reward;
 				ArmorClassBox.Value = Monster.ArmorClass;
 
-				ScriptNameBox.SelectedItem = Monster.ScriptName;
-				InterfaceNameBox.SelectedItem = Monster.InterfaceName;
+				ScriptBox.SetValues<IMonster>(Monster.Script);
 
 				DamageBox.Dice = Monster.DamageDice;
+				FleesBox.Checked = Monster.FleesAfterAttack;
+				FlyingBox.Checked = Monster.Flying;
+				FillSquareBox.Checked = Monster.FillSquare;
+				NonMaterialBox.Checked = Monster.NonMaterial;
+				UseStairsBox.Checked = Monster.UseStairs;
+				BackRowAttackBox.Checked = Monster.BackRowAttack;
+				PoisonImmunityBox.Checked = Monster.PoisonImmunity;
+				ThrowWeaponsBox.Checked = Monster.ThrowWeapons;
+				SmartAIBox.Checked = Monster.SmartAI;
+				CanSeeInvisibleBox.Checked = Monster.CanSeeInvisible;
+				SightRangeBox.Value = Monster.SightRange;
+				PickupBox.Value = (decimal)Monster.PickupRate * 100;
+				StealBox.Value = (decimal)Monster.StealRate * 100;
 			}
 		}
 
@@ -358,56 +363,6 @@ namespace DungeonEye.Forms
 		}
 
 
-
-		/// <summary>
-		/// Change script
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void ScriptNameBox_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			if (ScriptNameBox.SelectedIndex == -1 || Monster == null)
-				return;
-
-			Monster.ScriptName = ScriptNameBox.SelectedItem as string;
-			RebuildFoundInterfaces();
-		}
-
-
-
-		/// <summary>
-		/// Rebuild found interfaces
-		/// </summary>
-		void RebuildFoundInterfaces()
-		{
-			InterfaceNameBox.Items.Clear();
-
-
-			Script script = ResourceManager.CreateAsset<Script>(Monster.ScriptName);
-			if (script != null)
-			{
-				List<string> list = script.GetImplementedInterfaces(typeof(IMonster));
-				InterfaceNameBox.Items.AddRange(list.ToArray());
-
-			}
-			InterfaceNameBox.Items.Insert(0, "");
-		}
-
-
-		/// <summary>
-		/// Change script interface
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void InterfaceNameBox_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			if (InterfaceNameBox.SelectedIndex == -1 || Monster == null)
-				return;
-
-			Monster.InterfaceName = (string)InterfaceNameBox.SelectedItem;
-		}
-
-
 		/// <summary>
 		/// Damage value changed
 		/// </summary>
@@ -527,7 +482,6 @@ namespace DungeonEye.Forms
 			{
 				HealMagicBox.Checked = false;
 				HasDrainMagicBox.Checked = false;
-				MagicIntelligenceBox.Value = 0;
 				CastingPowerBox.Value = 0;
 				KnownSpellsBox.Items.Clear();
 			}
@@ -535,7 +489,6 @@ namespace DungeonEye.Forms
 			{
 				HealMagicBox.Checked = Monster.HasHealMagic;
 				HasDrainMagicBox.Checked = Monster.HasDrainMagic;
-				MagicIntelligenceBox.Value = Monster.MagicIntelligence;
 				CastingPowerBox.Value = Monster.MagicCastingPower;
 				KnownSpellsBox.Items.Clear();
 			}
@@ -545,6 +498,113 @@ namespace DungeonEye.Forms
 		#endregion
 
 
+		#region Properties Tab
 
+		/// <summary>
+		/// Flees after attack
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void FleesBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Monster == null)
+				return;
+
+			Monster.FleesAfterAttack = FleesBox.Checked;
+		}
+
+
+
+		private void FillSquareBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Monster == null)
+				return;
+
+			Monster.FleesAfterAttack = FleesBox.Checked;
+
+		}
+
+		private void NonMaterialBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Monster == null)
+				return;
+
+			Monster.NonMaterial = NonMaterialBox.Checked;
+
+		}
+
+		private void PoisonImmunityBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Monster == null)
+				return;
+
+			Monster.PoisonImmunity = PoisonImmunityBox.Checked;
+
+		}
+
+		private void ThrowWeaponsBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Monster == null)
+				return;
+
+			Monster.ThrowWeapons = ThrowWeaponsBox.Checked;
+
+		}
+
+		private void PickupBox_ValueChanged(object sender, EventArgs e)
+		{
+			if (Monster == null)
+				return;
+
+			Monster.PickupRate = (float) PickupBox.Value / 100.0f;
+
+		}
+
+		private void StealBox_ValueChanged(object sender, EventArgs e)
+		{
+			if (Monster == null)
+				return;
+
+			Monster.StealRate = (float) StealBox.Value / 100.0f;
+
+		}
+
+		private void UseStairsBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Monster == null)
+				return;
+
+			Monster.FleesAfterAttack = FleesBox.Checked;
+
+		}
+
+		private void FlyingBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Monster == null)
+				return;
+
+			Monster.Flying = FlyingBox.Checked;
+
+		}
+
+		private void SmartAIBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Monster == null)
+				return;
+
+			Monster.SmartAI = SmartAIBox.Checked;
+
+		}
+
+		private void TeleportsBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Monster == null)
+				return;
+
+			Monster.Teleports = TeleportsBox.Checked;
+
+		}
+
+		#endregion
 	}
 }

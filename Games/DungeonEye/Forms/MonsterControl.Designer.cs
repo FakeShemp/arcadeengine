@@ -28,8 +28,8 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			DungeonEye.Dice dice2 = new DungeonEye.Dice();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MonsterControl));
-			DungeonEye.Dice dice1 = new DungeonEye.Dice();
 			this.VisualGroupBox = new System.Windows.Forms.GroupBox();
 			this.label11 = new System.Windows.Forms.Label();
 			this.label12 = new System.Windows.Forms.Label();
@@ -41,34 +41,37 @@
 			this.AddPocketItemBox = new System.Windows.Forms.Button();
 			this.ItemsBox = new System.Windows.Forms.ComboBox();
 			this.RemovePocketItemBox = new System.Windows.Forms.Button();
-			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.label2 = new System.Windows.Forms.Label();
-			this.label1 = new System.Windows.Forms.Label();
-			this.InterfaceNameBox = new System.Windows.Forms.ComboBox();
-			this.ScriptNameBox = new System.Windows.Forms.ComboBox();
 			this.XPRewardBox = new System.Windows.Forms.NumericUpDown();
 			this.label3 = new System.Windows.Forms.Label();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.VisualTab = new System.Windows.Forms.TabPage();
 			this.AttributesTab = new System.Windows.Forms.TabPage();
+			this.EntityBox = new DungeonEye.Forms.EntityControl();
 			this.PropertiesTab = new System.Windows.Forms.TabPage();
+			this.ScriptBox = new ArcEngine.Editor.ScriptControl();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.label16 = new System.Windows.Forms.Label();
+			this.SightRangeBox = new System.Windows.Forms.NumericUpDown();
+			this.CanSeeInvisibleBox = new System.Windows.Forms.CheckBox();
 			this.SmartAIBox = new System.Windows.Forms.CheckBox();
-			this.CanTeleportBox = new System.Windows.Forms.CheckBox();
+			this.TeleportsBox = new System.Windows.Forms.CheckBox();
+			this.BackRowAttackBox = new System.Windows.Forms.CheckBox();
+			this.label5 = new System.Windows.Forms.Label();
 			this.FlyingBox = new System.Windows.Forms.CheckBox();
 			this.UseStairsBox = new System.Windows.Forms.CheckBox();
 			this.label6 = new System.Windows.Forms.Label();
-			this.label4 = new System.Windows.Forms.Label();
-			this.label5 = new System.Windows.Forms.Label();
-			this.StealBox = new System.Windows.Forms.NumericUpDown();
-			this.ArmorClassBox = new System.Windows.Forms.NumericUpDown();
 			this.PickupBox = new System.Windows.Forms.NumericUpDown();
 			this.ThrowWeaponsBox = new System.Windows.Forms.CheckBox();
+			this.label4 = new System.Windows.Forms.Label();
 			this.PoisonImmunityBox = new System.Windows.Forms.CheckBox();
+			this.ArmorClassBox = new System.Windows.Forms.NumericUpDown();
 			this.NonMaterialBox = new System.Windows.Forms.CheckBox();
+			this.StealBox = new System.Windows.Forms.NumericUpDown();
 			this.FillSquareBox = new System.Windows.Forms.CheckBox();
 			this.FleesBox = new System.Windows.Forms.CheckBox();
+			this.DamageBox = new DungeonEye.Forms.DiceControl();
 			this.MagicTab = new System.Windows.Forms.TabPage();
+			this.HasMagicBox = new System.Windows.Forms.CheckBox();
 			this.MagicGroupBox = new System.Windows.Forms.GroupBox();
 			this.AvailableSpellsBox = new System.Windows.Forms.ComboBox();
 			this.label9 = new System.Windows.Forms.Label();
@@ -78,11 +81,8 @@
 			this.KnownSpellsBox = new System.Windows.Forms.ListBox();
 			this.label8 = new System.Windows.Forms.Label();
 			this.CastingPowerBox = new System.Windows.Forms.NumericUpDown();
-			this.label7 = new System.Windows.Forms.Label();
-			this.MagicIntelligenceBox = new System.Windows.Forms.NumericUpDown();
 			this.HasDrainMagicBox = new System.Windows.Forms.CheckBox();
 			this.HealMagicBox = new System.Windows.Forms.CheckBox();
-			this.HasMagicBox = new System.Windows.Forms.CheckBox();
 			this.AudioTab = new System.Windows.Forms.TabPage();
 			this.PlayHurtSoundBox = new System.Windows.Forms.Button();
 			this.PlayDeathSoundBox = new System.Windows.Forms.Button();
@@ -100,24 +100,21 @@
 			this.label14 = new System.Windows.Forms.Label();
 			this.label13 = new System.Windows.Forms.Label();
 			this.label10 = new System.Windows.Forms.Label();
-			this.EntityBox = new DungeonEye.Forms.EntityControl();
-			this.DamageBox = new DungeonEye.Forms.DiceControl();
 			this.VisualGroupBox.SuspendLayout();
 			this.PocketGroupBox.SuspendLayout();
-			this.groupBox1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize) (this.XPRewardBox)).BeginInit();
 			this.tabControl1.SuspendLayout();
 			this.VisualTab.SuspendLayout();
 			this.AttributesTab.SuspendLayout();
 			this.PropertiesTab.SuspendLayout();
 			this.groupBox2.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize) (this.StealBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize) (this.ArmorClassBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize) (this.SightRangeBox)).BeginInit();
 			((System.ComponentModel.ISupportInitialize) (this.PickupBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize) (this.ArmorClassBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize) (this.StealBox)).BeginInit();
 			this.MagicTab.SuspendLayout();
 			this.MagicGroupBox.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize) (this.CastingPowerBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize) (this.MagicIntelligenceBox)).BeginInit();
 			this.AudioTab.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -194,7 +191,7 @@
 			this.PocketGroupBox.Controls.Add(this.RemovePocketItemBox);
 			this.PocketGroupBox.Location = new System.Drawing.Point(257, 2);
 			this.PocketGroupBox.Name = "PocketGroupBox";
-			this.PocketGroupBox.Size = new System.Drawing.Size(189, 172);
+			this.PocketGroupBox.Size = new System.Drawing.Size(275, 172);
 			this.PocketGroupBox.TabIndex = 7;
 			this.PocketGroupBox.TabStop = false;
 			this.PocketGroupBox.Text = "Items in pocket :";
@@ -207,7 +204,7 @@
 			this.PocketItemsBox.FormattingEnabled = true;
 			this.PocketItemsBox.Location = new System.Drawing.Point(6, 44);
 			this.PocketItemsBox.Name = "PocketItemsBox";
-			this.PocketItemsBox.Size = new System.Drawing.Size(177, 95);
+			this.PocketItemsBox.Size = new System.Drawing.Size(263, 95);
 			this.PocketItemsBox.Sorted = true;
 			this.PocketItemsBox.TabIndex = 5;
 			this.PocketItemsBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.PocketItemsBox_MouseDoubleClick);
@@ -240,66 +237,15 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.RemovePocketItemBox.Location = new System.Drawing.Point(6, 143);
 			this.RemovePocketItemBox.Name = "RemovePocketItemBox";
-			this.RemovePocketItemBox.Size = new System.Drawing.Size(177, 23);
+			this.RemovePocketItemBox.Size = new System.Drawing.Size(263, 23);
 			this.RemovePocketItemBox.TabIndex = 2;
 			this.RemovePocketItemBox.Text = "Remove";
 			this.RemovePocketItemBox.UseVisualStyleBackColor = true;
 			this.RemovePocketItemBox.Click += new System.EventHandler(this.RemovePocketItemBox_Click);
 			// 
-			// groupBox1
-			// 
-			this.groupBox1.Controls.Add(this.label2);
-			this.groupBox1.Controls.Add(this.label1);
-			this.groupBox1.Controls.Add(this.InterfaceNameBox);
-			this.groupBox1.Controls.Add(this.ScriptNameBox);
-			this.groupBox1.Location = new System.Drawing.Point(257, 180);
-			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(189, 80);
-			this.groupBox1.TabIndex = 9;
-			this.groupBox1.TabStop = false;
-			this.groupBox1.Text = "Script :";
-			// 
-			// label2
-			// 
-			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(6, 50);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(55, 13);
-			this.label2.TabIndex = 1;
-			this.label2.Text = "Interface :";
-			// 
-			// label1
-			// 
-			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(6, 23);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(40, 13);
-			this.label1.TabIndex = 1;
-			this.label1.Text = "Script :";
-			// 
-			// InterfaceNameBox
-			// 
-			this.InterfaceNameBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.InterfaceNameBox.FormattingEnabled = true;
-			this.InterfaceNameBox.Location = new System.Drawing.Point(67, 47);
-			this.InterfaceNameBox.Name = "InterfaceNameBox";
-			this.InterfaceNameBox.Size = new System.Drawing.Size(116, 21);
-			this.InterfaceNameBox.TabIndex = 0;
-			this.InterfaceNameBox.SelectedIndexChanged += new System.EventHandler(this.InterfaceNameBox_SelectedIndexChanged);
-			// 
-			// ScriptNameBox
-			// 
-			this.ScriptNameBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.ScriptNameBox.FormattingEnabled = true;
-			this.ScriptNameBox.Location = new System.Drawing.Point(67, 20);
-			this.ScriptNameBox.Name = "ScriptNameBox";
-			this.ScriptNameBox.Size = new System.Drawing.Size(116, 21);
-			this.ScriptNameBox.TabIndex = 0;
-			this.ScriptNameBox.SelectedIndexChanged += new System.EventHandler(this.ScriptNameBox_SelectedIndexChanged);
-			// 
 			// XPRewardBox
 			// 
-			this.XPRewardBox.Location = new System.Drawing.Point(105, 135);
+			this.XPRewardBox.Location = new System.Drawing.Point(113, 318);
 			this.XPRewardBox.Maximum = new decimal(new int[] {
             1410065408,
             2,
@@ -315,7 +261,7 @@
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(6, 137);
+			this.label3.Location = new System.Drawing.Point(6, 320);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(62, 13);
 			this.label3.TabIndex = 12;
@@ -332,7 +278,7 @@
 			this.tabControl1.Location = new System.Drawing.Point(0, 0);
 			this.tabControl1.Name = "tabControl1";
 			this.tabControl1.SelectedIndex = 0;
-			this.tabControl1.Size = new System.Drawing.Size(539, 455);
+			this.tabControl1.Size = new System.Drawing.Size(594, 455);
 			this.tabControl1.TabIndex = 13;
 			// 
 			// VisualTab
@@ -341,7 +287,7 @@
 			this.VisualTab.Location = new System.Drawing.Point(4, 22);
 			this.VisualTab.Name = "VisualTab";
 			this.VisualTab.Padding = new System.Windows.Forms.Padding(3);
-			this.VisualTab.Size = new System.Drawing.Size(531, 429);
+			this.VisualTab.Size = new System.Drawing.Size(586, 429);
 			this.VisualTab.TabIndex = 0;
 			this.VisualTab.Text = "Visual";
 			this.VisualTab.UseVisualStyleBackColor = true;
@@ -352,128 +298,215 @@
 			this.AttributesTab.Location = new System.Drawing.Point(4, 22);
 			this.AttributesTab.Name = "AttributesTab";
 			this.AttributesTab.Padding = new System.Windows.Forms.Padding(3);
-			this.AttributesTab.Size = new System.Drawing.Size(531, 429);
+			this.AttributesTab.Size = new System.Drawing.Size(586, 429);
 			this.AttributesTab.TabIndex = 1;
 			this.AttributesTab.Text = "Attributes";
 			this.AttributesTab.UseVisualStyleBackColor = true;
 			// 
+			// EntityBox
+			// 
+			this.EntityBox.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.EntityBox.Entity = null;
+			this.EntityBox.Location = new System.Drawing.Point(3, 3);
+			this.EntityBox.Name = "EntityBox";
+			this.EntityBox.Size = new System.Drawing.Size(580, 423);
+			this.EntityBox.TabIndex = 0;
+			// 
 			// PropertiesTab
 			// 
+			this.PropertiesTab.Controls.Add(this.ScriptBox);
 			this.PropertiesTab.Controls.Add(this.groupBox2);
 			this.PropertiesTab.Controls.Add(this.PocketGroupBox);
-			this.PropertiesTab.Controls.Add(this.groupBox1);
 			this.PropertiesTab.Controls.Add(this.DamageBox);
 			this.PropertiesTab.Location = new System.Drawing.Point(4, 22);
 			this.PropertiesTab.Name = "PropertiesTab";
-			this.PropertiesTab.Size = new System.Drawing.Size(531, 429);
+			this.PropertiesTab.Size = new System.Drawing.Size(586, 429);
 			this.PropertiesTab.TabIndex = 2;
 			this.PropertiesTab.Text = "Properties";
 			this.PropertiesTab.UseVisualStyleBackColor = true;
 			// 
+			// ScriptBox
+			// 
+			this.ScriptBox.ControlText = "Script :";
+			this.ScriptBox.Location = new System.Drawing.Point(257, 180);
+			this.ScriptBox.Name = "ScriptBox";
+			this.ScriptBox.Size = new System.Drawing.Size(274, 87);
+			this.ScriptBox.TabIndex = 14;
+			// 
 			// groupBox2
 			// 
+			this.groupBox2.Controls.Add(this.label16);
+			this.groupBox2.Controls.Add(this.SightRangeBox);
+			this.groupBox2.Controls.Add(this.CanSeeInvisibleBox);
 			this.groupBox2.Controls.Add(this.SmartAIBox);
-			this.groupBox2.Controls.Add(this.CanTeleportBox);
+			this.groupBox2.Controls.Add(this.TeleportsBox);
+			this.groupBox2.Controls.Add(this.BackRowAttackBox);
+			this.groupBox2.Controls.Add(this.label5);
 			this.groupBox2.Controls.Add(this.FlyingBox);
+			this.groupBox2.Controls.Add(this.XPRewardBox);
 			this.groupBox2.Controls.Add(this.UseStairsBox);
 			this.groupBox2.Controls.Add(this.label6);
-			this.groupBox2.Controls.Add(this.label4);
-			this.groupBox2.Controls.Add(this.label5);
-			this.groupBox2.Controls.Add(this.label3);
-			this.groupBox2.Controls.Add(this.StealBox);
-			this.groupBox2.Controls.Add(this.ArmorClassBox);
 			this.groupBox2.Controls.Add(this.PickupBox);
-			this.groupBox2.Controls.Add(this.XPRewardBox);
 			this.groupBox2.Controls.Add(this.ThrowWeaponsBox);
+			this.groupBox2.Controls.Add(this.label4);
 			this.groupBox2.Controls.Add(this.PoisonImmunityBox);
+			this.groupBox2.Controls.Add(this.ArmorClassBox);
 			this.groupBox2.Controls.Add(this.NonMaterialBox);
+			this.groupBox2.Controls.Add(this.StealBox);
 			this.groupBox2.Controls.Add(this.FillSquareBox);
+			this.groupBox2.Controls.Add(this.label3);
 			this.groupBox2.Controls.Add(this.FleesBox);
-			this.groupBox2.Location = new System.Drawing.Point(4, 109);
+			this.groupBox2.Location = new System.Drawing.Point(3, 3);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(248, 249);
+			this.groupBox2.Size = new System.Drawing.Size(248, 370);
 			this.groupBox2.TabIndex = 13;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Misc :";
 			// 
+			// label16
+			// 
+			this.label16.AutoSize = true;
+			this.label16.Location = new System.Drawing.Point(6, 244);
+			this.label16.Name = "label16";
+			this.label16.Size = new System.Drawing.Size(67, 13);
+			this.label16.TabIndex = 16;
+			this.label16.Text = "Sight range :";
+			// 
+			// SightRangeBox
+			// 
+			this.SightRangeBox.Location = new System.Drawing.Point(113, 242);
+			this.SightRangeBox.Name = "SightRangeBox";
+			this.SightRangeBox.Size = new System.Drawing.Size(73, 20);
+			this.SightRangeBox.TabIndex = 15;
+			this.SightRangeBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			// 
+			// CanSeeInvisibleBox
+			// 
+			this.CanSeeInvisibleBox.AutoSize = true;
+			this.CanSeeInvisibleBox.Location = new System.Drawing.Point(135, 111);
+			this.CanSeeInvisibleBox.Name = "CanSeeInvisibleBox";
+			this.CanSeeInvisibleBox.Size = new System.Drawing.Size(105, 17);
+			this.CanSeeInvisibleBox.TabIndex = 14;
+			this.CanSeeInvisibleBox.Text = "Can see invisible";
+			this.CanSeeInvisibleBox.UseVisualStyleBackColor = true;
+			this.CanSeeInvisibleBox.CheckedChanged += new System.EventHandler(this.SmartAIBox_CheckedChanged);
+			// 
 			// SmartAIBox
 			// 
 			this.SmartAIBox.AutoSize = true;
-			this.SmartAIBox.Location = new System.Drawing.Point(135, 200);
+			this.SmartAIBox.Location = new System.Drawing.Point(135, 65);
 			this.SmartAIBox.Name = "SmartAIBox";
 			this.SmartAIBox.Size = new System.Drawing.Size(66, 17);
 			this.SmartAIBox.TabIndex = 14;
 			this.SmartAIBox.Text = "Smart AI";
 			this.SmartAIBox.UseVisualStyleBackColor = true;
+			this.SmartAIBox.CheckedChanged += new System.EventHandler(this.SmartAIBox_CheckedChanged);
 			// 
-			// CanTeleportBox
+			// TeleportsBox
 			// 
-			this.CanTeleportBox.AutoSize = true;
-			this.CanTeleportBox.Location = new System.Drawing.Point(135, 223);
-			this.CanTeleportBox.Name = "CanTeleportBox";
-			this.CanTeleportBox.Size = new System.Drawing.Size(83, 17);
-			this.CanTeleportBox.TabIndex = 13;
-			this.CanTeleportBox.Text = "Can teleport";
-			this.CanTeleportBox.UseVisualStyleBackColor = true;
+			this.TeleportsBox.AutoSize = true;
+			this.TeleportsBox.Location = new System.Drawing.Point(135, 88);
+			this.TeleportsBox.Name = "TeleportsBox";
+			this.TeleportsBox.Size = new System.Drawing.Size(83, 17);
+			this.TeleportsBox.TabIndex = 13;
+			this.TeleportsBox.Text = "Can teleport";
+			this.TeleportsBox.UseVisualStyleBackColor = true;
+			this.TeleportsBox.CheckedChanged += new System.EventHandler(this.TeleportsBox_CheckedChanged);
+			// 
+			// BackRowAttackBox
+			// 
+			this.BackRowAttackBox.AutoSize = true;
+			this.BackRowAttackBox.Location = new System.Drawing.Point(6, 129);
+			this.BackRowAttackBox.Name = "BackRowAttackBox";
+			this.BackRowAttackBox.Size = new System.Drawing.Size(104, 17);
+			this.BackRowAttackBox.TabIndex = 13;
+			this.BackRowAttackBox.Text = "Back row attack";
+			this.BackRowAttackBox.UseVisualStyleBackColor = true;
+			this.BackRowAttackBox.CheckedChanged += new System.EventHandler(this.UseStairsBox_CheckedChanged);
+			// 
+			// label5
+			// 
+			this.label5.AutoSize = true;
+			this.label5.Location = new System.Drawing.Point(6, 270);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(101, 13);
+			this.label5.TabIndex = 5;
+			this.label5.Text = "Pickups floor items :";
 			// 
 			// FlyingBox
 			// 
 			this.FlyingBox.AutoSize = true;
-			this.FlyingBox.Location = new System.Drawing.Point(9, 223);
+			this.FlyingBox.Location = new System.Drawing.Point(6, 107);
 			this.FlyingBox.Name = "FlyingBox";
 			this.FlyingBox.Size = new System.Drawing.Size(53, 17);
 			this.FlyingBox.TabIndex = 13;
 			this.FlyingBox.Text = "Flying";
 			this.FlyingBox.UseVisualStyleBackColor = true;
+			this.FlyingBox.CheckedChanged += new System.EventHandler(this.FlyingBox_CheckedChanged);
 			// 
 			// UseStairsBox
 			// 
 			this.UseStairsBox.AutoSize = true;
-			this.UseStairsBox.Location = new System.Drawing.Point(9, 200);
+			this.UseStairsBox.Location = new System.Drawing.Point(6, 85);
 			this.UseStairsBox.Name = "UseStairsBox";
 			this.UseStairsBox.Size = new System.Drawing.Size(72, 17);
 			this.UseStairsBox.TabIndex = 13;
 			this.UseStairsBox.Text = "Use stairs";
 			this.UseStairsBox.UseVisualStyleBackColor = true;
+			this.UseStairsBox.CheckedChanged += new System.EventHandler(this.UseStairsBox_CheckedChanged);
 			// 
 			// label6
 			// 
 			this.label6.AutoSize = true;
-			this.label6.Location = new System.Drawing.Point(6, 111);
+			this.label6.Location = new System.Drawing.Point(6, 294);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(69, 13);
 			this.label6.TabIndex = 5;
 			this.label6.Text = "Steals items :";
 			// 
+			// PickupBox
+			// 
+			this.PickupBox.Location = new System.Drawing.Point(113, 268);
+			this.PickupBox.Name = "PickupBox";
+			this.PickupBox.Size = new System.Drawing.Size(73, 20);
+			this.PickupBox.TabIndex = 4;
+			this.PickupBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.PickupBox.ValueChanged += new System.EventHandler(this.PickupBox_ValueChanged);
+			// 
+			// ThrowWeaponsBox
+			// 
+			this.ThrowWeaponsBox.AutoSize = true;
+			this.ThrowWeaponsBox.Location = new System.Drawing.Point(135, 42);
+			this.ThrowWeaponsBox.Name = "ThrowWeaponsBox";
+			this.ThrowWeaponsBox.Size = new System.Drawing.Size(102, 17);
+			this.ThrowWeaponsBox.TabIndex = 3;
+			this.ThrowWeaponsBox.Text = "Throw weapons";
+			this.ThrowWeaponsBox.UseVisualStyleBackColor = true;
+			this.ThrowWeaponsBox.CheckedChanged += new System.EventHandler(this.ThrowWeaponsBox_CheckedChanged);
+			// 
 			// label4
 			// 
 			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(6, 163);
+			this.label4.Location = new System.Drawing.Point(6, 346);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(68, 13);
 			this.label4.TabIndex = 12;
 			this.label4.Text = "Armor Class :";
 			// 
-			// label5
+			// PoisonImmunityBox
 			// 
-			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(6, 87);
-			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(96, 13);
-			this.label5.TabIndex = 5;
-			this.label5.Text = "Pickup floor items :";
-			// 
-			// StealBox
-			// 
-			this.StealBox.Location = new System.Drawing.Point(105, 109);
-			this.StealBox.Name = "StealBox";
-			this.StealBox.Size = new System.Drawing.Size(73, 20);
-			this.StealBox.TabIndex = 4;
-			this.StealBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.PoisonImmunityBox.AutoSize = true;
+			this.PoisonImmunityBox.Location = new System.Drawing.Point(135, 19);
+			this.PoisonImmunityBox.Name = "PoisonImmunityBox";
+			this.PoisonImmunityBox.Size = new System.Drawing.Size(101, 17);
+			this.PoisonImmunityBox.TabIndex = 3;
+			this.PoisonImmunityBox.Text = "Poison immunity";
+			this.PoisonImmunityBox.UseVisualStyleBackColor = true;
+			this.PoisonImmunityBox.CheckedChanged += new System.EventHandler(this.PoisonImmunityBox_CheckedChanged);
 			// 
 			// ArmorClassBox
 			// 
-			this.ArmorClassBox.Location = new System.Drawing.Point(105, 161);
+			this.ArmorClassBox.Location = new System.Drawing.Point(113, 344);
 			this.ArmorClassBox.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -486,53 +519,36 @@
 			this.ArmorClassBox.ThousandsSeparator = true;
 			this.ArmorClassBox.ValueChanged += new System.EventHandler(this.ArmorClassBox_ValueChanged);
 			// 
-			// PickupBox
-			// 
-			this.PickupBox.Location = new System.Drawing.Point(105, 85);
-			this.PickupBox.Name = "PickupBox";
-			this.PickupBox.Size = new System.Drawing.Size(73, 20);
-			this.PickupBox.TabIndex = 4;
-			this.PickupBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			// 
-			// ThrowWeaponsBox
-			// 
-			this.ThrowWeaponsBox.AutoSize = true;
-			this.ThrowWeaponsBox.Location = new System.Drawing.Point(135, 62);
-			this.ThrowWeaponsBox.Name = "ThrowWeaponsBox";
-			this.ThrowWeaponsBox.Size = new System.Drawing.Size(102, 17);
-			this.ThrowWeaponsBox.TabIndex = 3;
-			this.ThrowWeaponsBox.Text = "Throw weapons";
-			this.ThrowWeaponsBox.UseVisualStyleBackColor = true;
-			// 
-			// PoisonImmunityBox
-			// 
-			this.PoisonImmunityBox.AutoSize = true;
-			this.PoisonImmunityBox.Location = new System.Drawing.Point(135, 39);
-			this.PoisonImmunityBox.Name = "PoisonImmunityBox";
-			this.PoisonImmunityBox.Size = new System.Drawing.Size(101, 17);
-			this.PoisonImmunityBox.TabIndex = 3;
-			this.PoisonImmunityBox.Text = "Poison immunity";
-			this.PoisonImmunityBox.UseVisualStyleBackColor = true;
-			// 
 			// NonMaterialBox
 			// 
 			this.NonMaterialBox.AutoSize = true;
-			this.NonMaterialBox.Location = new System.Drawing.Point(6, 62);
+			this.NonMaterialBox.Location = new System.Drawing.Point(6, 63);
 			this.NonMaterialBox.Name = "NonMaterialBox";
 			this.NonMaterialBox.Size = new System.Drawing.Size(85, 17);
 			this.NonMaterialBox.TabIndex = 2;
 			this.NonMaterialBox.Text = "Non-material";
 			this.NonMaterialBox.UseVisualStyleBackColor = true;
+			this.NonMaterialBox.CheckedChanged += new System.EventHandler(this.NonMaterialBox_CheckedChanged);
+			// 
+			// StealBox
+			// 
+			this.StealBox.Location = new System.Drawing.Point(113, 292);
+			this.StealBox.Name = "StealBox";
+			this.StealBox.Size = new System.Drawing.Size(73, 20);
+			this.StealBox.TabIndex = 4;
+			this.StealBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.StealBox.ValueChanged += new System.EventHandler(this.StealBox_ValueChanged);
 			// 
 			// FillSquareBox
 			// 
 			this.FillSquareBox.AutoSize = true;
-			this.FillSquareBox.Location = new System.Drawing.Point(6, 39);
+			this.FillSquareBox.Location = new System.Drawing.Point(6, 41);
 			this.FillSquareBox.Name = "FillSquareBox";
 			this.FillSquareBox.Size = new System.Drawing.Size(73, 17);
 			this.FillSquareBox.TabIndex = 1;
 			this.FillSquareBox.Text = "Fill square";
 			this.FillSquareBox.UseVisualStyleBackColor = true;
+			this.FillSquareBox.CheckedChanged += new System.EventHandler(this.FillSquareBox_CheckedChanged);
 			// 
 			// FleesBox
 			// 
@@ -543,6 +559,21 @@
 			this.FleesBox.TabIndex = 0;
 			this.FleesBox.Text = "Flees after an attack";
 			this.FleesBox.UseVisualStyleBackColor = true;
+			this.FleesBox.CheckedChanged += new System.EventHandler(this.FleesBox_CheckedChanged);
+			// 
+			// DamageBox
+			// 
+			this.DamageBox.ControlText = "Damage :";
+			dice2.Faces = 1;
+			dice2.Modifier = 0;
+			dice2.Throws = 1;
+			this.DamageBox.Dice = dice2;
+			this.DamageBox.Location = new System.Drawing.Point(257, 273);
+			this.DamageBox.MinimumSize = new System.Drawing.Size(225, 100);
+			this.DamageBox.Name = "DamageBox";
+			this.DamageBox.Size = new System.Drawing.Size(275, 100);
+			this.DamageBox.TabIndex = 10;
+			this.DamageBox.ValueChanged += new System.EventHandler(this.DamageBox_ValueChanged);
 			// 
 			// MagicTab
 			// 
@@ -550,10 +581,21 @@
 			this.MagicTab.Controls.Add(this.MagicGroupBox);
 			this.MagicTab.Location = new System.Drawing.Point(4, 22);
 			this.MagicTab.Name = "MagicTab";
-			this.MagicTab.Size = new System.Drawing.Size(531, 429);
+			this.MagicTab.Size = new System.Drawing.Size(586, 429);
 			this.MagicTab.TabIndex = 4;
 			this.MagicTab.Text = "Magic";
 			this.MagicTab.UseVisualStyleBackColor = true;
+			// 
+			// HasMagicBox
+			// 
+			this.HasMagicBox.AutoSize = true;
+			this.HasMagicBox.Location = new System.Drawing.Point(9, 3);
+			this.HasMagicBox.Name = "HasMagicBox";
+			this.HasMagicBox.Size = new System.Drawing.Size(77, 17);
+			this.HasMagicBox.TabIndex = 4;
+			this.HasMagicBox.Text = "Has Magic";
+			this.HasMagicBox.UseVisualStyleBackColor = true;
+			this.HasMagicBox.CheckedChanged += new System.EventHandler(this.HasMagicBox_CheckedChanged);
 			// 
 			// MagicGroupBox
 			// 
@@ -565,8 +607,6 @@
 			this.MagicGroupBox.Controls.Add(this.KnownSpellsBox);
 			this.MagicGroupBox.Controls.Add(this.label8);
 			this.MagicGroupBox.Controls.Add(this.CastingPowerBox);
-			this.MagicGroupBox.Controls.Add(this.label7);
-			this.MagicGroupBox.Controls.Add(this.MagicIntelligenceBox);
 			this.MagicGroupBox.Controls.Add(this.HasDrainMagicBox);
 			this.MagicGroupBox.Controls.Add(this.HealMagicBox);
 			this.MagicGroupBox.Location = new System.Drawing.Point(3, 23);
@@ -633,7 +673,7 @@
 			// label8
 			// 
 			this.label8.AutoSize = true;
-			this.label8.Location = new System.Drawing.Point(148, 51);
+			this.label8.Location = new System.Drawing.Point(162, 12);
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size(80, 13);
 			this.label8.TabIndex = 9;
@@ -641,28 +681,11 @@
 			// 
 			// CastingPowerBox
 			// 
-			this.CastingPowerBox.Location = new System.Drawing.Point(234, 49);
+			this.CastingPowerBox.Location = new System.Drawing.Point(248, 10);
 			this.CastingPowerBox.Name = "CastingPowerBox";
 			this.CastingPowerBox.Size = new System.Drawing.Size(61, 20);
 			this.CastingPowerBox.TabIndex = 8;
 			this.CastingPowerBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			// 
-			// label7
-			// 
-			this.label7.AutoSize = true;
-			this.label7.Location = new System.Drawing.Point(161, 25);
-			this.label7.Name = "label7";
-			this.label7.Size = new System.Drawing.Size(67, 13);
-			this.label7.TabIndex = 9;
-			this.label7.Text = "Intelligence :";
-			// 
-			// MagicIntelligenceBox
-			// 
-			this.MagicIntelligenceBox.Location = new System.Drawing.Point(234, 23);
-			this.MagicIntelligenceBox.Name = "MagicIntelligenceBox";
-			this.MagicIntelligenceBox.Size = new System.Drawing.Size(61, 20);
-			this.MagicIntelligenceBox.TabIndex = 8;
-			this.MagicIntelligenceBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// HasDrainMagicBox
 			// 
@@ -684,17 +707,6 @@
 			this.HealMagicBox.Text = "Has heal magic";
 			this.HealMagicBox.UseVisualStyleBackColor = true;
 			// 
-			// HasMagicBox
-			// 
-			this.HasMagicBox.AutoSize = true;
-			this.HasMagicBox.Location = new System.Drawing.Point(9, 3);
-			this.HasMagicBox.Name = "HasMagicBox";
-			this.HasMagicBox.Size = new System.Drawing.Size(77, 17);
-			this.HasMagicBox.TabIndex = 4;
-			this.HasMagicBox.Text = "Has Magic";
-			this.HasMagicBox.UseVisualStyleBackColor = true;
-			this.HasMagicBox.CheckedChanged += new System.EventHandler(this.HasMagicBox_CheckedChanged);
-			// 
 			// AudioTab
 			// 
 			this.AudioTab.Controls.Add(this.PlayHurtSoundBox);
@@ -715,7 +727,7 @@
 			this.AudioTab.Controls.Add(this.label10);
 			this.AudioTab.Location = new System.Drawing.Point(4, 22);
 			this.AudioTab.Name = "AudioTab";
-			this.AudioTab.Size = new System.Drawing.Size(531, 429);
+			this.AudioTab.Size = new System.Drawing.Size(586, 429);
 			this.AudioTab.TabIndex = 3;
 			this.AudioTab.Text = "Audio";
 			this.AudioTab.UseVisualStyleBackColor = true;
@@ -856,29 +868,6 @@
 			this.label10.TabIndex = 0;
 			this.label10.Text = "Move :";
 			// 
-			// EntityBox
-			// 
-			this.EntityBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.EntityBox.Entity = null;
-			this.EntityBox.Location = new System.Drawing.Point(3, 3);
-			this.EntityBox.Name = "EntityBox";
-			this.EntityBox.Size = new System.Drawing.Size(525, 423);
-			this.EntityBox.TabIndex = 0;
-			// 
-			// DamageBox
-			// 
-			this.DamageBox.ControlText = "Damage :";
-			dice1.Faces = 1;
-			dice1.Modifier = 0;
-			dice1.Throws = 1;
-			this.DamageBox.Dice = dice1;
-			this.DamageBox.Location = new System.Drawing.Point(4, 3);
-			this.DamageBox.MinimumSize = new System.Drawing.Size(225, 100);
-			this.DamageBox.Name = "DamageBox";
-			this.DamageBox.Size = new System.Drawing.Size(247, 100);
-			this.DamageBox.TabIndex = 10;
-			this.DamageBox.ValueChanged += new System.EventHandler(this.DamageBox_ValueChanged);
-			// 
 			// MonsterControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -886,14 +875,12 @@
 			this.Controls.Add(this.tabControl1);
 			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 			this.Name = "MonsterControl";
-			this.Size = new System.Drawing.Size(539, 455);
+			this.Size = new System.Drawing.Size(594, 455);
 			this.Load += new System.EventHandler(this.MonsterControl_Load);
 			this.VisualGroupBox.ResumeLayout(false);
 			this.VisualGroupBox.PerformLayout();
 			this.PocketGroupBox.ResumeLayout(false);
 			this.PocketGroupBox.PerformLayout();
-			this.groupBox1.ResumeLayout(false);
-			this.groupBox1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize) (this.XPRewardBox)).EndInit();
 			this.tabControl1.ResumeLayout(false);
 			this.VisualTab.ResumeLayout(false);
@@ -901,15 +888,15 @@
 			this.PropertiesTab.ResumeLayout(false);
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
-			((System.ComponentModel.ISupportInitialize) (this.StealBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize) (this.ArmorClassBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize) (this.SightRangeBox)).EndInit();
 			((System.ComponentModel.ISupportInitialize) (this.PickupBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize) (this.ArmorClassBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize) (this.StealBox)).EndInit();
 			this.MagicTab.ResumeLayout(false);
 			this.MagicTab.PerformLayout();
 			this.MagicGroupBox.ResumeLayout(false);
 			this.MagicGroupBox.PerformLayout();
 			((System.ComponentModel.ISupportInitialize) (this.CastingPowerBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize) (this.MagicIntelligenceBox)).EndInit();
 			this.AudioTab.ResumeLayout(false);
 			this.AudioTab.PerformLayout();
 			this.ResumeLayout(false);
@@ -929,11 +916,6 @@
 		private System.Windows.Forms.Button AddPocketItemBox;
 		private System.Windows.Forms.ComboBox ItemsBox;
 		private System.Windows.Forms.Button RemovePocketItemBox;
-		private System.Windows.Forms.GroupBox groupBox1;
-		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.ComboBox InterfaceNameBox;
-		private System.Windows.Forms.ComboBox ScriptNameBox;
 		private DiceControl DamageBox;
 		private System.Windows.Forms.NumericUpDown XPRewardBox;
 		private System.Windows.Forms.Label label3;
@@ -956,15 +938,13 @@
 		private System.Windows.Forms.CheckBox FleesBox;
 		private System.Windows.Forms.TabPage AudioTab;
 		private System.Windows.Forms.CheckBox SmartAIBox;
-		private System.Windows.Forms.CheckBox CanTeleportBox;
+		private System.Windows.Forms.CheckBox TeleportsBox;
 		private System.Windows.Forms.CheckBox FlyingBox;
 		private System.Windows.Forms.CheckBox UseStairsBox;
 		private System.Windows.Forms.TabPage MagicTab;
 		private System.Windows.Forms.GroupBox MagicGroupBox;
 		private System.Windows.Forms.Label label8;
 		private System.Windows.Forms.NumericUpDown CastingPowerBox;
-		private System.Windows.Forms.Label label7;
-		private System.Windows.Forms.NumericUpDown MagicIntelligenceBox;
 		private System.Windows.Forms.CheckBox HasDrainMagicBox;
 		private System.Windows.Forms.CheckBox HealMagicBox;
 		private System.Windows.Forms.CheckBox HasMagicBox;
@@ -990,5 +970,10 @@
 		private System.Windows.Forms.Button LoadDeathSoundBox;
 		private System.Windows.Forms.Button LoadMoveSoundBox;
 		private System.Windows.Forms.Button LoadAttackSoundBox;
+		private System.Windows.Forms.CheckBox CanSeeInvisibleBox;
+		private System.Windows.Forms.CheckBox BackRowAttackBox;
+		private System.Windows.Forms.Label label16;
+		private System.Windows.Forms.NumericUpDown SightRangeBox;
+		private ArcEngine.Editor.ScriptControl ScriptBox;
 	}
 }

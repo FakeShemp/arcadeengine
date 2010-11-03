@@ -53,7 +53,7 @@ namespace ArcEngine.Editor
 			RebuildFoundScripts();
 
 
-			if (string.IsNullOrEmpty(s.ScriptName) || !ScriptNameBox.Items.Contains(s.ScriptName))
+			if (s == null || string.IsNullOrEmpty(s.ScriptName) || !ScriptNameBox.Items.Contains(s.ScriptName))
 				return false;
 
 			ScriptNameBox.SelectedItem = s.ScriptName;

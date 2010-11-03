@@ -194,70 +194,76 @@ namespace DungeonEye
 		/// <summary>
 		/// Loads
 		/// </summary>
-		/// <param name="xml">XmlNode handle</param>
-		public virtual bool Load(XmlNode xml)
+		/// <param name="node">XmlNode handle</param>
+		public virtual bool Load(XmlNode node)
 		{
-			if (xml == null)
+			if (node == null)
 				return false;
 
 
-			if (xml.NodeType == XmlNodeType.Comment)
+			if (node.NodeType == XmlNodeType.Comment)
 				return false;
 
-			switch (xml.Name.ToLower())
+			switch (node.Name.ToLower())
 			{
 
 				case "strength":
 				{
-					Strength.Load(xml);
+					Strength.Load(node);
 				}
 				break;
 
 				case "intelligence":
 				{
-					Intelligence.Load(xml);
+					Intelligence.Load(node);
 				}
 				break;
 
 				case "wisdom":
 				{
-					Wisdom.Load(xml);
+					Wisdom.Load(node);
 				}
 				break;
 
 				case "dexterity":
 				{
-					Dexterity.Load(xml);
+					Dexterity.Load(node);
 				}
 				break;
 
 				case "constitution":
 				{
-					Constitution.Load(xml);
+					Constitution.Load(node);
 				}
 				break;
 
 				case "charisma":
 				{
-					Charisma.Load(xml);
+					Charisma.Load(node);
 				}
 				break;
 
 				case "alignment":
 				{
-					Alignment = (EntityAlignment)Enum.Parse(typeof(EntityAlignment), xml.Attributes["value"].Value, true);
+					Alignment = (EntityAlignment)Enum.Parse(typeof(EntityAlignment), node.Attributes["value"].Value, true);
 				}
 				break;
 
 				case "hitpoint":
 				{
-					HitPoint.Load(xml);
+					HitPoint.Load(node);
 				}
 				break;
 
 				case "speed":
 				{
-					Speed = TimeSpan.FromMilliseconds(int.Parse(xml.Attributes["value"].Value));
+					Speed = TimeSpan.FromMilliseconds(int.Parse(node.Attributes["value"].Value));
+				}
+				break;
+
+				default:
+				{
+					Trace.WriteLine("Unknown node : \"{0}\"", node.Name);
 				}
 				break;
 			}
