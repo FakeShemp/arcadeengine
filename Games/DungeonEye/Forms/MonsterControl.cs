@@ -119,8 +119,8 @@ namespace DungeonEye.Forms
 				InterfaceNameBox.SelectedItem = Monster.InterfaceName;
 
 				DamageBox.Dice = Monster.Damage;
-				CowardBox.Checked = Monster.IsCoward;
-				AggressiveBox.Checked = Monster.IsAggressive;
+				//CowardBox.Checked = Monster.IsCoward;
+				//AggressiveBox.Checked = Monster.IsAggressive;
 			}
 		}
 
@@ -488,7 +488,7 @@ namespace DungeonEye.Forms
 			if (Monster == null)
 				return;
 
-			Monster.IsCoward = CowardBox.Checked;
+			//Monster.IsCoward = CowardBox.Checked;
 		}
 
 
@@ -502,7 +502,7 @@ namespace DungeonEye.Forms
 			if (Monster == null)
 				return;
 
-			Monster.IsAggressive = AggressiveBox.Checked;
+			//Monster.IsAggressive = AggressiveBox.Checked;
 		}
 
 		#endregion

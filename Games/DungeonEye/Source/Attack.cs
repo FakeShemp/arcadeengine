@@ -97,7 +97,7 @@ namespace DungeonEye
 			else if (striker is Monster)
 			{
 				Monster monster = striker as Monster;
-				sizemodifier = (int)monster.Size;
+				//sizemodifier = (int)monster.Size;
 			}
 
 

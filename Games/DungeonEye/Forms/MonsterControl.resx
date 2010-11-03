@@ -117,4 +117,45 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="PlayHurtSoundBox.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGOfPtRkwAAACBjSFJNAAB6
+        JQAAgIMAAPn/AACA6QAAdTAAAOpgAAA6mAAAF2+SX8VGAAAACXBIWXMAAAsPAAALDwGS+QOlAAAAsElE
+        QVQ4T2P4//8/AyUYq+ay/dluxBqK1YCEGRH/iTUEpwGWZfpEGYLVgKgpQf833Fr8nxhDsBoQPMEbZDtR
+        hmA1wKfLGWwACEctCsDrEqwGODZb/M/YEAvWbNus/1+nWOG/RBo3iFZDjx2sBpjX6KFo5k9gwaoZZBhW
+        A/RKleE249OM0wCVfCmwswlpxmmAdIYgUZpxGiCSzInTz0QFIrbQxpU3KMqJOL1AbE4EqQMAJP3E6eLV
+        FswAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="PlayDeathSoundBox.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGOfPtRkwAAACBjSFJNAAB6
+        JQAAgIMAAPn/AACA6QAAdTAAAOpgAAA6mAAAF2+SX8VGAAAACXBIWXMAAAsQAAALEAGtI711AAAAsElE
+        QVQ4T2P4//8/AyUYq+ay/dluxBqK1YCEGRH/iTUEpwGWZfpEGYLVgKgpQf833Fr8nxhDsBoQPMEbZDtR
+        hmA1wKfLGWwACEctCsDrEqwGODZb/M/YEAvWbNus/1+nWOG/RBo3iFZDjx2sBpjX6KFo5k9gwaoZZBhW
+        A/RKleE249OM0wCVfCmwswlpxmmAdIYgUZpxGiCSzInTz0QFIrbQxpU3KMqJOL1AbE4EqQMAJP3E6eLV
+        FswAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="PlayMoveSoundBox.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGOfPtRkwAAACBjSFJNAAB6
+        JQAAgIMAAPn/AACA6QAAdTAAAOpgAAA6mAAAF2+SX8VGAAAACXBIWXMAAAsRAAALEQF/ZF+RAAAAsElE
+        QVQ4T2P4//8/AyUYq+ay/dluxBqK1YCEGRH/iTUEpwGWZfpEGYLVgKgpQf833Fr8nxhDsBoQPMEbZDtR
+        hmA1wKfLGWwACEctCsDrEqwGODZb/M/YEAvWbNus/1+nWOG/RBo3iFZDjx2sBpjX6KFo5k9gwaoZZBhW
+        A/RKleE249OM0wCVfCmwswlpxmmAdIYgUZpxGiCSzInTz0QFIrbQxpU3KMqJOL1AbE4EqQMAJP3E6eLV
+        FswAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="PlayAttackSoundBox.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGOfPtRkwAAACBjSFJNAAB6
+        JQAAgIMAAPn/AACA6QAAdTAAAOpgAAA6mAAAF2+SX8VGAAAACXBIWXMAAAsSAAALEgHS3X78AAAAsElE
+        QVQ4T2P4//8/AyUYq+ay/dluxBqK1YCEGRH/iTUEpwGWZfpEGYLVgKgpQf833Fr8nxhDsBoQPMEbZDtR
+        hmA1wKfLGWwACEctCsDrEqwGODZb/M/YEAvWbNus/1+nWOG/RBo3iFZDjx2sBpjX6KFo5k9gwaoZZBhW
+        A/RKleE249OM0wCVfCmwswlpxmmAdIYgUZpxGiCSzInTz0QFIrbQxpU3KMqJOL1AbE4EqQMAJP3E6eLV
+        FswAAAAASUVORK5CYII=
+</value>
+  </data>
 </root>

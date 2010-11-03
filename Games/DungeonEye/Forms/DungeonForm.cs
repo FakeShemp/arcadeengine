@@ -162,6 +162,7 @@ namespace DungeonEye.Forms
 			MazeZonesBox.EndUpdate();
 		}
 
+
 		#region Events
 
 
@@ -245,7 +246,17 @@ namespace DungeonEye.Forms
 					else if (block.Type == BlockType.Illusion)
 						block.Type = BlockType.Wall;
 				}
+				else if (NoGhostsBox.Checked)
+				{
+					block.NoGhost = !block.NoGhost;
+				}
+				else if (NoMonstersBox.Checked)
+				{
+					block.NoMonster = !block.NoMonster;
+				}
+
 				#endregion
+
 
 				#region Zone
 
@@ -342,6 +353,14 @@ namespace DungeonEye.Forms
 					block.Type = BlockType.Wall;
 					return;
 				}
+				else if (NoGhostsBox.Checked)
+				{
+					block.NoGhost = true;
+				}
+				else if (NoMonstersBox.Checked)
+				{
+					block.NoMonster = true;
+				}
 				else if (CreateNewZoneBox.Checked)
 				{
 					CurrentZone.Rectangle = new Rectangle(CurrentZone.Rectangle.Location,
@@ -363,6 +382,14 @@ namespace DungeonEye.Forms
 				if (EditWallButton.Checked)
 				{
 					block.Type = BlockType.Ground;
+				}
+				else if (NoGhostsBox.Checked)
+				{
+					block.NoGhost = false;
+				}
+				else if (NoMonstersBox.Checked)
+				{
+					block.NoMonster = false;
 				}
 			}
 
@@ -545,6 +572,17 @@ namespace DungeonEye.Forms
 						}
 					}
 
+					if (block.NoMonster)
+					{
+						SpriteBatch.FillRectangle(new Rectangle(location.X, location.Y, 25, 25), Color.FromArgb(128, Color.Blue));
+					}
+
+
+					if (block.NoGhost)
+					{
+						SpriteBatch.FillRectangle(new Rectangle(location.X, location.Y, 25, 25), Color.FromArgb(128, Color.Green));
+					}
+
 				}
 			}
 
@@ -552,10 +590,10 @@ namespace DungeonEye.Forms
 			foreach (Monster monster in Maze.Monsters)
 				SpriteBatch.DrawTile(Icons, 8, new Point(Offset.X + monster.Location.Position.X * 25, Offset.Y + monster.Location.Position.Y * 25));
 
-	
 
 			// Preview pos
 			SpriteBatch.DrawTile(Icons, 22 + (int)PreviewLoc.Direction, new Point(Offset.X + PreviewLoc.Position.X * 25, Offset.Y + PreviewLoc.Position.Y * 25));
+
 
 			// Starting point
 			if (Dungeon.StartLocation.MazeName == Maze.Name)
@@ -1077,6 +1115,8 @@ namespace DungeonEye.Forms
 			}
 
 			CreateNewZoneBox.Checked = false;
+			NoMonstersBox.Checked = false;
+			NoGhostsBox.Checked = false;
 		}
 
 
@@ -1094,7 +1134,39 @@ namespace DungeonEye.Forms
 			}
 
 			EditWallButton.Checked = false;
+			NoMonstersBox.Checked = false;
+			NoGhostsBox.Checked = false;
 		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void NoMonstersBox_Click(object sender, EventArgs e)
+		{
+
+			EditWallButton.Checked = false;
+			CreateNewZoneBox.Checked = false;
+			NoGhostsBox.Checked = false;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void NoGhostsBox_Click(object sender, EventArgs e)
+		{
+
+			EditWallButton.Checked = false;
+			NoMonstersBox.Checked = false;
+			CreateNewZoneBox.Checked = false;
+		}
+
+
 	}
 
 

@@ -65,6 +65,7 @@ namespace DungeonEye
 			ItemsInPocket = new List<string>();
 			Damage = new Dice();
 			HitDice = new Dice();
+			Behaviour = MonsterBehaviour.Aggressive;
 
 			DrawOffsetDuration = TimeSpan.FromSeconds(1.0f + GameBase.Random.NextDouble());
 
@@ -83,9 +84,9 @@ namespace DungeonEye
 				Tileset.Dispose();
 			Tileset = null;
 
-			if (HitSound != null)
-				HitSound.Dispose();
-			HitSound = null;
+			if (AttackSound != null)
+				AttackSound.Dispose();
+			AttackSound = null;
 
 			if (HurtSound != null)
 				HurtSound.Dispose();
@@ -575,17 +576,17 @@ namespace DungeonEye
 					}
 					break;
 
-					case "iscoward":
-					{
-						IsCoward = bool.Parse(node.Attributes["value"].Value);
-					}
-					break;
+					//case "iscoward":
+					//{
+					//    IsCoward = bool.Parse(node.Attributes["value"].Value);
+					//}
+					//break;
 
-					case "isaggressive":
-					{
-						IsAggressive = bool.Parse(node.Attributes["value"].Value);
-					}
-					break;
+					//case "isaggressive":
+					//{
+					//    IsAggressive = bool.Parse(node.Attributes["value"].Value);
+					//}
+					//break;
 
 					case "reward":
 					{
@@ -657,13 +658,13 @@ namespace DungeonEye
 			writer.WriteAttributeString("value", SightRange.ToString());
 			writer.WriteEndElement();
 
-			writer.WriteStartElement("isaggressive");
-			writer.WriteAttributeString("value", IsAggressive.ToString());
-			writer.WriteEndElement();
+			//writer.WriteStartElement("isaggressive");
+			//writer.WriteAttributeString("value", IsAggressive.ToString());
+			//writer.WriteEndElement();
 
-			writer.WriteStartElement("iscoward");
-			writer.WriteAttributeString("value", IsCoward.ToString());
-			writer.WriteEndElement();
+			//writer.WriteStartElement("iscoward");
+			//writer.WriteAttributeString("value", IsCoward.ToString());
+			//writer.WriteEndElement();
 
 			writer.WriteStartElement("reward");
 			writer.WriteAttributeString("value", Reward.ToString());
@@ -671,7 +672,7 @@ namespace DungeonEye
 
 			writer.WriteStartElement("sound");
 			writer.WriteAttributeString("event", "hit");
-			writer.WriteAttributeString("name", HitSoundName);
+			writer.WriteAttributeString("name", AttackSoundName);
 			writer.WriteEndElement();
 
 			writer.WriteStartElement("sound");
@@ -681,7 +682,7 @@ namespace DungeonEye
 
 			writer.WriteStartElement("sound");
 			writer.WriteAttributeString("event", "walk");
-			writer.WriteAttributeString("name", WalkSoundName);
+			writer.WriteAttributeString("name", MoveSoundName);
 			writer.WriteEndElement();
 
 			writer.WriteStartElement("sound");
@@ -710,6 +711,26 @@ namespace DungeonEye
 
 
 		#region Properties
+
+		/// <summary>
+		/// Monster behaviour
+		/// </summary>
+		public MonsterBehaviour Behaviour
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// Gets or sets a monster in the middle of a square
+		/// </summary>
+		public bool FillSquare
+		{
+			get;
+			set;
+		}
+
 
 		/// <summary>
 		/// State manager
@@ -864,17 +885,12 @@ namespace DungeonEye
 			set;
 		}
 
-
+/*
 		/// <summary>
 		/// The monster can absorb some items when they are thrown at him
 		/// </summary>
 		public float AbsorbItemRate;
-
-
-		/// <summary>
-		/// Use to alternate frames when the monster walk
-		/// </summary>
-		//public bool SwapFrame;
+*/
 
 
 		/// <summary>
@@ -918,7 +934,7 @@ namespace DungeonEye
 			set;
 		}
 
-
+/*
 		/// <summary>
 		/// Defines the size of the creature on the floor. 
 		/// </summary>
@@ -929,7 +945,7 @@ namespace DungeonEye
 			get;
 			set;
 		}
-
+*/
 
 
 		/// <summary>
@@ -941,19 +957,6 @@ namespace DungeonEye
 			get;
 			set;
 		}
-
-
-
-
-		/// <summary>
-		/// If this bit is set to '1', the creature can pass over pits without falling. 
-		/// </summary>
-		public bool Levitation
-		{
-			get;
-			set;
-		}
-
 
 
 
@@ -976,6 +979,7 @@ namespace DungeonEye
 			set;
 		}
 
+
 		/// <summary>
 		/// Does the monster can move
 		/// </summary>
@@ -983,6 +987,9 @@ namespace DungeonEye
 		{
 			get
 			{
+				if (Behaviour == MonsterBehaviour.FriendlyUnmoving || Behaviour == MonsterBehaviour.Unmoving)
+					return false;
+
 				if (LastAction + Speed > DateTime.Now)
 					return false;
 
@@ -1121,8 +1128,7 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// The monster is non material. These creatures ignore normal attacks but take damage from 'Disrupt' spell.
-		/// Fire damage is also reduced by a half. All missiles except 'Dispell' pass through these creatures.
+		/// The monster is non material. These creatures ignore normal attacks but take damage from some spells.
 		/// These creatures can pass through all doors of any type. 
 		/// </summary>
 		public bool NonMaterial
@@ -1131,14 +1137,16 @@ namespace DungeonEye
 			set;
 		}
 
-
+/*
 		/// <summary>
 		/// Does the monster attack without being provoked ?
 		/// </summary>
 		public bool IsAggressive
 		{
-			get;
-			set;
+			get
+			{
+				return Behaviour == MonsterBehaviour.Aggressive;
+			}
 		}
 
 
@@ -1152,13 +1160,15 @@ namespace DungeonEye
 			get;
 			set;
 		}
-
+*/
 
 		/// <summary>
 		/// The amount of time while the attack graphic is displayed. 
 		/// </summary>
 		public TimeSpan AttackDisplayDuration;
 
+
+		ScriptInterface<IMonster> Script;
 
 		/// <summary>
 		/// Script name
@@ -1194,7 +1204,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Name of the sound when the monster attacks
 		/// </summary>
-		public string HitSoundName
+		public string AttackSoundName
 		{
 			get;
 			set;
@@ -1221,13 +1231,13 @@ namespace DungeonEye
 		/// <summary>
 		/// Name of the sound when the monster move
 		/// </summary>
-		public string WalkSoundName
+		public string MoveSoundName
 		{
 			get;
 			set;
 		}
 
-		AudioSample HitSound;
+		AudioSample AttackSound;
 		AudioSample HurtSound;
 		AudioSample DieSound;
 		AudioSample MoveSound;
@@ -1237,7 +1247,7 @@ namespace DungeonEye
 		#endregion
 	}
 
-
+/*
 	/// <summary>
 	/// A size modifier applies to the creature’s Armor Class (AC) and attack bonus,
 	/// as well as to certain skills. A creature’s size also determines how far 
@@ -1366,5 +1376,41 @@ namespace DungeonEye
 
 	}
 
+*/
+	/// <summary>
+	/// Monster artificial intelligence
+	/// </summary>
+	public enum MonsterBehaviour
+	{
+		/// <summary>
+		/// Go right up to the party and attack
+		/// </summary>
+		Aggressive,
+
+		/// <summary>
+		/// Try to keep distance from party and use ranged attacks (spells and thrown items)
+		/// </summary>
+		RangeAttack,
+
+		/// <summary>
+		/// Avoid the party, only attacking when cornered
+		/// </summary>
+		RunAway,
+
+		/// <summary>
+		/// Stay in one square, unmoving 
+		/// </summary>
+		Unmoving,
+
+		/// <summary>
+		/// Invincible, never attacks, wanders around randomly
+		/// </summary>
+		Friendly,
+
+		/// <summary>
+		/// Invincible, never attacks or moves
+		/// </summary>
+		FriendlyUnmoving,
+	}
 }
 
