@@ -50,6 +50,7 @@ namespace ArcEngine.Graphic
 
 			switch (version)
 			{
+				default:
 				case ShaderVersion.GLSL_1_20:
 					vertname = "ArcEngine.Graphic.Shaders.V1_20.SpriteBatch.vert";
 					fragname = "ArcEngine.Graphic.Shaders.V1_20.SpriteBatch.frag";
@@ -70,16 +71,22 @@ namespace ArcEngine.Graphic
 			Shader = new Shader();
 			using (Stream stream = ResourceManager.GetInternalResource(vertname))
 			{
-				StreamReader reader = new StreamReader(stream);
-				string src = reader.ReadToEnd();
-				Shader.SetSource(ShaderType.VertexShader, src);
+				if (stream != null)
+				{
+					StreamReader reader = new StreamReader(stream);
+					string src = reader.ReadToEnd();
+					Shader.SetSource(ShaderType.VertexShader, src);
+				}
 			}
 
 			using (Stream stream = ResourceManager.GetInternalResource(fragname))
 			{
-				StreamReader reader = new StreamReader(stream);
-				string src = reader.ReadToEnd();
-				Shader.SetSource(ShaderType.FragmentShader, src);
+				if (stream != null)
+				{
+					StreamReader reader = new StreamReader(stream);
+					string src = reader.ReadToEnd();
+					Shader.SetSource(ShaderType.FragmentShader, src);
+				}
 			}
 			Shader.Compile();
 

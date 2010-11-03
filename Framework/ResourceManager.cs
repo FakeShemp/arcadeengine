@@ -93,13 +93,20 @@ namespace ArcEngine
 		/// <remarks>Don't forget to Dispose the stream !!</remarks>
 		static public Stream GetInternalResource(string name)
 		{
-			List<string> list = new List<string>(Assembly.GetExecutingAssembly().GetManifestResourceNames());
-			if (list.Contains(name))
-				return Assembly.GetExecutingAssembly().GetManifestResourceStream(name);
+			Assembly assembly = Assembly.GetExecutingAssembly();
+			if (assembly == null)
+				return null;
 
-			list = new List<string>(Assembly.GetEntryAssembly().GetManifestResourceNames());
+			List<string> list = new List<string>(assembly.GetManifestResourceNames());
 			if (list.Contains(name))
-				return Assembly.GetEntryAssembly().GetManifestResourceStream(name);
+				return assembly.GetManifestResourceStream(name);
+
+			assembly = Assembly.GetEntryAssembly();
+			if (assembly == null)
+				return null;
+			list = new List<string>(assembly.GetManifestResourceNames());
+			if (list.Contains(name))
+				return assembly.GetManifestResourceStream(name);
 
 			return null;
 		}

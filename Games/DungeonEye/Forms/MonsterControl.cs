@@ -177,11 +177,11 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void MonsterControl_Load(object sender, EventArgs e)
 		{
-			// Parent closing form
-			if (!DesignMode)
-			{
+			if (DesignMode)
+				return;
+	
+			if (ParentForm != null)
 				ParentForm.FormClosing += new FormClosingEventHandler(ParentForm_FormClosing);
-			}
 
 			SpriteBatch = new SpriteBatch();
 		}
@@ -220,8 +220,14 @@ namespace DungeonEye.Forms
 		private void GlControl_Load(object sender, EventArgs e)
 		{
 			GlControl.MakeCurrent();
+			if (DesignMode)
+				return;
+
 			Display.Init();
 			Display.ClearBuffers();
+
+			if (DesignMode)
+				return;
 
 			CheckerBoard = new Texture2D(ResourceManager.GetInternalResource("ArcEngine.Resources.checkerboard.png"));
 			CheckerBoard.HorizontalWrap = TextureWrapFilter.Repeat;
@@ -257,6 +263,9 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void GlControl_Resize(object sender, EventArgs e)
 		{
+			if (DesignMode)
+				return;
+
 			GlControl.MakeCurrent();
 			Display.ViewPort = new Rectangle(new Point(), GlControl.Size);
 		}
@@ -270,12 +279,15 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void GlControl_Paint(object sender, PaintEventArgs e)
 		{
-			if (CheckerBoard == null)
+			if (DesignMode)
 				return;
-
+			
 			GlControl.MakeCurrent();
 
+			Display.ClearBuffers();
+
 			SpriteBatch.Begin();
+
 
 			// Background texture
 			SpriteBatch.Draw(CheckerBoard, new Rectangle(Point.Empty, GlControl.Size), Color.White);
