@@ -63,7 +63,7 @@ namespace DungeonEye
 			}
 
 			ItemsInPocket = new List<string>();
-			Damage = new Dice();
+			DamageDice = new Dice();
 			HitDice = new Dice();
 			Behaviour = MonsterBehaviour.Aggressive;
 
@@ -548,7 +548,7 @@ namespace DungeonEye
 
 					case "damage":
 					{
-						Damage.Load(node);
+						DamageDice.Load(node);
 					}
 					break;
 
@@ -631,7 +631,7 @@ namespace DungeonEye
 			if (Location != null)
 				Location.Save("location", writer);
 
-			Damage.Save("damage", writer);
+			DamageDice.Save("damage", writer);
 			HitDice.Save("hitdice", writer);
 
 			writer.WriteStartElement("tiles");
@@ -757,6 +757,43 @@ namespace DungeonEye
 			set;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		public bool HasDrainMagic
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public bool HasHealMagic
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public int MagicIntelligence
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public int MagicCastingPower
+		{
+			get;
+			set;
+		}
+
 
 		/// <summary>
 		/// Base save bonus
@@ -869,7 +906,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Damage dice
 		/// </summary>
-		public Dice Damage
+		public Dice DamageDice
 		{
 			get;
 			private set;
@@ -884,13 +921,6 @@ namespace DungeonEye
 			get;
 			set;
 		}
-
-/*
-		/// <summary>
-		/// The monster can absorb some items when they are thrown at him
-		/// </summary>
-		public float AbsorbItemRate;
-*/
 
 
 		/// <summary>
@@ -933,19 +963,6 @@ namespace DungeonEye
 			get;
 			set;
 		}
-
-/*
-		/// <summary>
-		/// Defines the size of the creature on the floor. 
-		/// </summary>
-		/// <remarks>This value is ignored for non material creatures and 
-		/// the door always closes normally without causing any damage to such creatures</remarks>
-		public MonsterSize Size
-		{
-			get;
-			set;
-		}
-*/
 
 
 		/// <summary>
@@ -1102,7 +1119,6 @@ namespace DungeonEye
 
 
 
-
 		/// <summary>
 		/// Resistance to magical spells like Fireball.
 		/// Values range from 0 to 15. Value 15 means the creature is immune.
@@ -1137,30 +1153,6 @@ namespace DungeonEye
 			set;
 		}
 
-/*
-		/// <summary>
-		/// Does the monster attack without being provoked ?
-		/// </summary>
-		public bool IsAggressive
-		{
-			get
-			{
-				return Behaviour == MonsterBehaviour.Aggressive;
-			}
-		}
-
-
-		/// <summary>
-		/// Does the monster flee when attacked? Values are "true" or "false". 
-		/// Combining aggressive="true" with cowardly="true" results in a monster 
-		/// that uses hit&run tactics (attacks unprovoked and flees when the target fights back).
-		/// </summary>
-		public bool IsCoward
-		{
-			get;
-			set;
-		}
-*/
 
 		/// <summary>
 		/// The amount of time while the attack graphic is displayed. 
@@ -1377,6 +1369,8 @@ namespace DungeonEye
 	}
 
 */
+
+
 	/// <summary>
 	/// Monster artificial intelligence
 	/// </summary>

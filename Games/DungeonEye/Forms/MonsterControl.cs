@@ -52,8 +52,11 @@ namespace DungeonEye.Forms
 		/// <param name="monster"></param>
 		public void SetMonster(Monster monster)
 		{
+			if (Monster != null)
+				Monster.Dispose();
+
 			Monster = monster;
-			EntityBox.Entity = monster;
+			EntityBox.Entity = Monster;
 			UpdateControls();
 		}
 
@@ -94,6 +97,8 @@ namespace DungeonEye.Forms
 					TileSet.Dispose();
 					TileSet = null;
 				}
+
+				HasMagicBox.Checked = false;
 			}
 			else
 			{
@@ -118,9 +123,7 @@ namespace DungeonEye.Forms
 				ScriptNameBox.SelectedItem = Monster.ScriptName;
 				InterfaceNameBox.SelectedItem = Monster.InterfaceName;
 
-				DamageBox.Dice = Monster.Damage;
-				//CowardBox.Checked = Monster.IsCoward;
-				//AggressiveBox.Checked = Monster.IsAggressive;
+				DamageBox.Dice = Monster.DamageDice;
 			}
 		}
 
@@ -198,6 +201,14 @@ namespace DungeonEye.Forms
 			if (SpriteBatch != null)
 				SpriteBatch.Dispose();
 			SpriteBatch = null;
+
+			if (CheckerBoard != null)
+				CheckerBoard.Dispose();
+			CheckerBoard = null;
+
+			if (Monster != null)
+				Monster.Dispose();
+			Monster = null;
 		}
 
 
@@ -230,6 +241,8 @@ namespace DungeonEye.Forms
 
 			Monster.TileSetName = TileSetBox.SelectedItem as string;
 
+			if (TileSet != null)
+				TileSet.Dispose();
 
 			TileSet = ResourceManager.CreateAsset<TileSet>(Monster.TileSetName);
 			UpdateTileControl();
@@ -271,6 +284,7 @@ namespace DungeonEye.Forms
 			{
 				Tile tile = TileSet.GetTile(Monster.Tile);
 				Point pos = new Point((GlControl.Width - tile.Size.Width) / 2, (GlControl.Height - tile.Size.Height) / 2);
+				pos.Offset(tile.Origin);
 				SpriteBatch.DrawTile(TileSet, Monster.Tile, pos);
 			}
 
@@ -392,7 +406,7 @@ namespace DungeonEye.Forms
 			if (Monster == null)
 				return;
 
-			Monster.Damage.Clone(DamageBox.Dice);
+			Monster.DamageDice.Clone(DamageBox.Dice);
 		}
 
 
@@ -462,7 +476,7 @@ namespace DungeonEye.Forms
 
 
 		/// <summary>
-		/// 
+		/// Spritebatch
 		/// </summary>
 		SpriteBatch SpriteBatch;
 
@@ -476,19 +490,17 @@ namespace DungeonEye.Forms
 		#endregion
 
 
-		#region Behavior events
+
+		#region Magic Tab
 
 		/// <summary>
-		/// 
+		/// Has Magic
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void CowardBox_Click(object sender, EventArgs e)
+		private void HasMagicBox_CheckedChanged(object sender, EventArgs e)
 		{
-			if (Monster == null)
-				return;
-
-			//Monster.IsCoward = CowardBox.Checked;
+			MagicGroupBox.Enabled = HasMagicBox.Checked;
 		}
 
 
@@ -497,14 +509,30 @@ namespace DungeonEye.Forms
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void AggressiveBox_Click(object sender, EventArgs e)
+		private void MagicGroupBox_EnabledChanged(object sender, EventArgs e)
 		{
 			if (Monster == null)
-				return;
-
-			//Monster.IsAggressive = AggressiveBox.Checked;
+			{
+				HealMagicBox.Checked = false;
+				HasDrainMagicBox.Checked = false;
+				MagicIntelligenceBox.Value = 0;
+				CastingPowerBox.Value = 0;
+				KnownSpellsBox.Items.Clear();
+			}
+			else
+			{
+				HealMagicBox.Checked = Monster.HasHealMagic;
+				HasDrainMagicBox.Checked = Monster.HasDrainMagic;
+				MagicIntelligenceBox.Value = Monster.MagicIntelligence;
+				CastingPowerBox.Value = Monster.MagicCastingPower;
+				KnownSpellsBox.Items.Clear();
+			}
 		}
+
 
 		#endregion
+
+
+
 	}
 }

@@ -248,11 +248,11 @@ namespace DungeonEye.Forms
 				}
 				else if (NoGhostsBox.Checked)
 				{
-					block.NoGhost = !block.NoGhost;
+					block.NoGhost = true;
 				}
 				else if (NoMonstersBox.Checked)
 				{
-					block.NoMonster = !block.NoMonster;
+					block.NoMonster = true;
 				}
 
 				#endregion
@@ -282,8 +282,15 @@ namespace DungeonEye.Forms
 
 				if (EditWallButton.Checked)
 				{
-					//block.IsWall = false;
 					block.Type = BlockType.Ground;
+				}
+				else if (NoGhostsBox.Checked)
+				{
+					block.NoGhost = false;
+				}
+				else if (NoMonstersBox.Checked)
+				{
+					block.NoMonster = false;
 				}
 			}
 
@@ -651,7 +658,10 @@ namespace DungeonEye.Forms
 			if (e.KeyCode == Keys.Escape)
 			{
 				EditWallButton.Checked = false;
-				//ObjectPropertyBox.SelectedObject = null;
+				NoMonstersBox.Checked = false;
+				NoGhostsBox.Checked = false;
+				CreateNewZoneBox.Checked = false;
+
 			}
 
 
