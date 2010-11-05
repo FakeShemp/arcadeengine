@@ -121,8 +121,6 @@ namespace ArcEngine
 		public abstract void Remove<T>(string name) where T : IAsset;
 
 
-
-
 		/// <summary>
 		/// Returns an asset definition
 		/// </summary>
@@ -130,7 +128,6 @@ namespace ArcEngine
 		/// <param name="name">Name of the asset</param>
 		/// <returns>Definition of an asset</returns>
 		public abstract XmlNode Get<T>(string name) where T : IAsset;
-
 
 
 		/// <summary>
@@ -149,7 +146,7 @@ namespace ArcEngine
 		/// <returns>List of available assets</returns>
 		public abstract List<string> GetAssets<T>() where T : IAsset;
 
-
+		
 		/// <summary>
 		/// Removes a specific type of assets
 		/// </summary>
@@ -192,7 +189,7 @@ namespace ArcEngine
 		/// <typeparam name="T">Asset type</typeparam>
 		/// <param name="name">Name of the shared asset</param>
 		/// <returns>The resource</returns>
-		public abstract T CreateShared<T>(string name) where T : IAsset;
+		public abstract T GetShared<T>(string name) where T : IAsset;
 
 
 

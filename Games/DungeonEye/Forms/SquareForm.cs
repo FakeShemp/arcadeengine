@@ -485,7 +485,6 @@ namespace DungeonEye.Forms
 			if (GroundLocationBox.SelectedIndex == -1)
 				return;
 
-			//Monster[] monsters = Maze.GetMonsters(MazeBlock.Location.Position);
 			Monster monster = MazeBlock.GetMonster((SquarePosition) GroundLocationBox.SelectedIndex);
 			if (monster == null)
 				MonsterBox.Visible = false;

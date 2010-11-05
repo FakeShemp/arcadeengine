@@ -497,41 +497,23 @@ namespace DungeonEye
 		}
 
 		/// <summary>
-		/// Creates a shared resource
+		/// Gets a shared resource
 		/// </summary>
 		/// <typeparam name="T">Asset type</typeparam>
 		/// <param name="name">Name of the shared asset</param>
-		/// <returns>The resource</returns>
-		public override T CreateShared<T>(string name)
+		/// <returns>Asset handle or null</returns>
+		public override T GetShared<T>(string name)
 		{
 			if (typeof(T) == typeof(Dungeon))
 			{
 				if (SharedDungeons.ContainsKey(name))
 					return (T)(object)SharedDungeons[name];
-
-
-				if (!Dungeons.ContainsKey(name))
-					return default(T);
-							
-				Dungeon dungeon = new Dungeon();
-				dungeon.Load(Dungeons[name]);
-				SharedDungeons[name] = dungeon;
-				return (T)(object)dungeon;
 			}
 
 			if (typeof(T) == typeof(Item))
 			{
 				if (SharedItems.ContainsKey(name))
 					return (T)(object)SharedItems[name];
-
-
-				if (!Items.ContainsKey(name))
-					return default(T);
-
-				Item ItemSet = new Item();
-				ItemSet.Load(Items[name]);
-				SharedItems[name] = ItemSet;
-				return (T)(object)ItemSet;
 			}
 
 			return default(T);

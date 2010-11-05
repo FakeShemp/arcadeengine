@@ -468,6 +468,7 @@ namespace ArcEngine
 
 		#region Shared assets
 
+
 		/// <summary>
 		/// Creates and retruns a shared asset
 		/// </summary>
@@ -476,22 +477,17 @@ namespace ArcEngine
 		/// <returns>Handle to the asset</returns>
 		static public T GetSharedAsset<T>(string name) where T : IAsset
 		{
+			// Bad name
 			if (string.IsNullOrEmpty(name))
 				return default(T);
 
 			lock (BinaryLock)
 			{
+				// Unknow asset
 				if (!AssetProviders.ContainsKey(typeof(T)))
 					throw new ArgumentException("Unknown asset type");
 
-				T asset = AssetProviders[typeof(T)].CreateShared<T>(name);
-				if (asset.IsDisposed)
-				{
-					RemoveSharedAsset<T>(name);
-					return GetSharedAsset<T>(name);
-				}
-
-				return asset;
+				return AssetProviders[typeof(T)].GetShared<T>(name);
 			}
 		}
 
@@ -508,8 +504,13 @@ namespace ArcEngine
 			if (string.IsNullOrEmpty(name))
 				return default(T);
 
-			// Create the asset
-			T tmp = CreateAsset<T>(asset);
+			// Asset already exist
+			T tmp = GetSharedAsset<T>(name);
+			if (tmp != null)
+				return tmp;
+
+			// Create a new asset
+			tmp = CreateAsset<T>(asset);
 			if (tmp == null)
 				return default(T);
 

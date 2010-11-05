@@ -811,124 +811,72 @@ namespace ArcEngine
 
 
 		/// <summary>
-		/// Creates a shared asset
+		/// Gets a shared asset
 		/// </summary>
 		/// <typeparam name="T">Asset type</typeparam>
-		/// <param name="name">Name of the shared asset</param>
-		/// <returns>The resource</returns>
-		public override T CreateShared<T>(string name)
+		/// <param name="name">Shared name</param>
+		/// <returns>Asset handle or null</returns>
+		public override T GetShared<T>(string name)
 		{
+			
 			if (typeof(T) == typeof(TileSet))
 			{
 				if (SharedTileSets.ContainsKey(name))
 					return (T)(object)SharedTileSets[name];
-
-				TileSet ts = new TileSet();
-				SharedTileSets[name] = ts;
-				return(T) (object) ts;
 			}
 
 			else if (typeof(T) == typeof(StringTable))
 			{
 				if (SharedStrings.ContainsKey(name))
 					return (T)(object)SharedStrings[name];
-
-				StringTable st = new StringTable();
-				SharedStrings[name] = st;
-
-				//st.Load(Strings[name]);
-
-				return (T)(object)st;
 			}
 
 			else if (typeof(T) == typeof(Animation))
 			{
 				if (SharedAnimations.ContainsKey(name))
 					return (T)(object)SharedAnimations[name];
-
-				Animation anim = new Animation();
-				SharedAnimations[name] = anim;
-
-				return (T)(object)anim;
 			}
 
 			else if (typeof(T) == typeof(Shader))
 			{
 				if (SharedShaders.ContainsKey(name))
 					return (T)(object)SharedShaders[name];
-
-				Shader shader = new Shader();
-				SharedShaders[name] = shader;
-
-				return (T)(object)shader;
 			}
 
 			else if (typeof(T) == typeof(Scene))
 			{
 				if (SharedScenes.ContainsKey(name))
 					return (T)(object)SharedScenes[name];
-
-				Scene scene = new Scene();
-				SharedScenes[name] = scene;
-
-				return (T)(object)scene;
 			}
 
 			else if (typeof(T) == typeof(BitmapFont))
 			{
 				if (SharedFonts.ContainsKey(name))
 					return (T)(object)SharedFonts[name];
-
-				BitmapFont font = new BitmapFont();
-				//font.Load(Fonts[name]);
-				SharedFonts[name] = font;
-
-				return (T)(object)font;
 			}
 
 			else if (typeof(T) == typeof(Script))
 			{
 				if (SharedScripts.ContainsKey(name))
 					return (T)(object)SharedScripts[name];
-
-				Script s = new Script();
-				SharedScripts[name] = s;
-
-				return (T)(object)s;
 			}
 
 			else if (typeof(T) == typeof(AudioSample))
 			{
 				if (SharedAudios.ContainsKey(name))
 					return (T)(object)SharedAudios[name];
-
-				AudioSample sound = new AudioSample();
-				//sound.Load(Audios[name]);
-				SharedAudios[name] = sound;
-
-				return (T)(object)sound;
 			}
 
 			else if (typeof(T) == typeof(InputScheme))
 			{
 				if (SharedSchemes.ContainsKey(name))
 					return (T)(object)SharedSchemes[name];
-
-				InputScheme scheme = new InputScheme();
-				SharedSchemes[name] = scheme;
-
-				return (T)(object)scheme;
 			}
 
 			else if (typeof(T) == typeof(Layout))
 			{
 				if (SharedLayouts.ContainsKey(name))
 					return (T)(object)SharedLayouts[name];
-
-				Layout layout = new Layout();
-				SharedLayouts[name] = layout;
-
-				return (T)(object)layout;
 			}
 
 			return default(T);
