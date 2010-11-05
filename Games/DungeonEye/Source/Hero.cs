@@ -833,7 +833,8 @@ namespace DungeonEye
 				return;
 
 			// Attacked entity
-			Entity target = Team.Location.Maze.GetMonster(Team.FrontLocation, Team.GetHeroGroundPosition(this));
+			Entity target = Team.FrontBlock.GetMonster(Team.GetHeroGroundPosition(this));
+			//Team.Location.Maze.GetMonster(Team.FrontLocation, Team.GetHeroGroundPosition(this));
 
 
 			// Which item is used for the attack
@@ -858,7 +859,7 @@ namespace DungeonEye
 
 			// 
 			DungeonLocation loc = new DungeonLocation(Team.Location);
-			loc.GroundPosition = Team.GetHeroGroundPosition(this);
+			loc.SquarePosition = Team.GetHeroGroundPosition(this);
 			switch (item.Type)
 			{
 

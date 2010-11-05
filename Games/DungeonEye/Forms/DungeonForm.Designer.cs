@@ -258,7 +258,7 @@
 			// 
 			this.SquareDescriptionBox.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides) ((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right)));
 			this.SquareDescriptionBox.Name = "SquareDescriptionBox";
-			this.SquareDescriptionBox.Size = new System.Drawing.Size(864, 19);
+			this.SquareDescriptionBox.Size = new System.Drawing.Size(895, 19);
 			this.SquareDescriptionBox.Spring = true;
 			this.SquareDescriptionBox.Text = "...Description...";
 			// 

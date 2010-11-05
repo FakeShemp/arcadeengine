@@ -56,8 +56,8 @@ namespace DungeonEye.Forms
 		/// <param name="monster"></param>
 		public void SetMonster(Monster monster)
 		{
-			if (Monster != null)
-				Monster.Dispose();
+			//if (Monster != null)
+			//    Monster.Dispose();
 
 			Monster = monster;
 			EntityBox.Entity = Monster;
@@ -218,8 +218,6 @@ namespace DungeonEye.Forms
 				CheckerBoard.Dispose();
 			CheckerBoard = null;
 
-			if (Monster != null)
-				Monster.Dispose();
 			Monster = null;
 		}
 
@@ -489,14 +487,14 @@ namespace DungeonEye.Forms
 			{
 				HealMagicBox.Checked = false;
 				HasDrainMagicBox.Checked = false;
-				CastingPowerBox.Value = 0;
+				CastingLevelBox.Value = 0;
 				KnownSpellsBox.Items.Clear();
 			}
 			else
 			{
 				HealMagicBox.Checked = Monster.HasHealMagic;
 				HasDrainMagicBox.Checked = Monster.HasDrainMagic;
-				CastingPowerBox.Value = Monster.MagicCastingPower;
+				CastingLevelBox.Value = Monster.MagicCastingLevel;
 				KnownSpellsBox.Items.Clear();
 			}
 		}
@@ -648,6 +646,14 @@ namespace DungeonEye.Forms
 		}
 
 		#endregion
+
+		private void CastingLevelBox_ValueChanged(object sender, EventArgs e)
+		{
+			if (Monster == null)
+				return;
+
+			Monster.MagicCastingLevel = (int) CastingLevelBox.Value;
+		}
 
 
 	}

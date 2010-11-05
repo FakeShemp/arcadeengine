@@ -49,7 +49,6 @@ namespace DungeonEye
 			Dungeon = dungeon;
 
 			Blocks = new List<List<Square>>();
-			Monsters = new List<Monster>();
 			Doors = new List<Door>();
 			ThrownItems = new List<ThrownItem>();
 			Zones = new List<MazeZone>();
@@ -67,10 +66,6 @@ namespace DungeonEye
 			foreach (Door door in Doors)
 				door.Dispose();
 			Doors.Clear();
-
-			foreach (Monster monster in Monsters)
-				monster.Dispose();
-			Monsters.Clear();
 
 			if (ItemsTileset != null)
 				ItemsTileset.Dispose();
@@ -130,25 +125,23 @@ namespace DungeonEye
 				return false;
 			}
 
-			foreach (Monster monster in Monsters)
-				monster.Init();
 
 			foreach (Door door in Doors)
 				door.Init();
 
-			for (int y = 0; y < Size.Height; y++)
-				for (int x = 0; x < Size.Width; x++)
+			foreach (List<Square> list in Blocks)
+				foreach (Square square in list)
 				{
-					Square block = GetBlock(new Point(x, y));
+					square.Init();
 
 					#region Pits
-					if (block.Pit != null && block.Pit.Target != null)
+					if (square.Pit != null && square.Pit.Target != null)
 					{
-						Maze maze = Dungeon.GetMaze(block.Pit.Target.MazeName);
+						Maze maze = Dungeon.GetMaze(square.Pit.Target.MazeName);
 						if (maze == null)
 							continue;
 
-						Square blk = maze.GetBlock(block.Pit.Target.Position);
+						Square blk = maze.GetBlock(square.Pit.Target.Position);
 						if (blk == null)
 							continue;
 
@@ -167,12 +160,11 @@ namespace DungeonEye
 		public void Update(GameTime time)
 		{
 			// Update monsters
-			foreach (Monster monster in Monsters)
-			{
-				monster.Update(time);
-			}
+		//	foreach (List<Square> list in Blocks)
+		//		foreach (Square square in list)
+		//			square.Update(time);
 
-
+/*
 			// Remove dead monsters
 			Monsters.RemoveAll(
 				delegate(Monster monster)
@@ -188,13 +180,13 @@ namespace DungeonEye
 
 						//ItemSet itemset = ResourceManager.CreateSharedAsset<ItemSet>("Main");
 						foreach (string name in monster.ItemsInPocket)
-							block.DropItem(monster.Location.GroundPosition, ResourceManager.CreateAsset<Item>(name));
+							block.DropItem(monster.Location.SquarePosition, ResourceManager.CreateAsset<Item>(name));
 					}
 
 					return true;
 				});
 
-
+*/
 
 			#region Doors
 			foreach (Door door in Doors)
@@ -218,7 +210,7 @@ namespace DungeonEye
 
 
 					// Make the item falling on the ground
-					SquarePosition pos = fi.Location.GroundPosition;
+					SquarePosition pos = fi.Location.SquarePosition;
 					/*
 										switch (fi.Location.Direction)
 										{
@@ -260,26 +252,19 @@ namespace DungeonEye
 
 		#region Monsters
 
+/*
 
 		/// <summary>
 		/// Adds a monster in the maze
 		/// </summary>
 		/// <param name="monster">Monster handle</param>
 		/// <param name="location">Location in the maze</param>
-		/// <returns>True if the monster can spawn, else false if monster is still there</returns>
-		public bool SetMonster(Monster monster, DungeonLocation location)
+		/// <param name="position"></param>
+		public void SetMonster(Monster monster, Point location, SquarePosition position)
 		{
-			if (location == null)
-				return false;
-
-			// Check if a monster is present
-			if (GetMonsters(location.Position)[(int)location.GroundPosition] != null)
-				return false;
-
-			Monsters.Add(monster);
-
-
-			return true;
+			Square square = GetBlock(location);
+			if (square != null)
+				square.SetMonster(monster, position);
 		}
 
 
@@ -302,7 +287,6 @@ namespace DungeonEye
 		}
 
 
-
 		/// <summary>
 		/// Returns monster at a given location
 		/// </summary>
@@ -320,11 +304,10 @@ namespace DungeonEye
 
 			foreach (Monster monster in Monsters)
 				if (monster.Location.Position == location)
-					list[(int)monster.Location.GroundPosition] = monster;
+					list[(int)monster.Location.SquarePosition] = monster;
 
 			return list;
 		}
-
 
 
 		/// <summary>
@@ -361,11 +344,14 @@ namespace DungeonEye
 			return monsters[(int)position];
 		}
 
+*/
 
 		#endregion
 
 
 		#region  Helper
+
+
 
 		/// <summary>
 		/// Checks if a maze location is valid
@@ -378,8 +364,26 @@ namespace DungeonEye
 		}
 
 
+/*
+		/// <summary>
+		/// Gets if a given location is free for a monster
+		/// </summary>
+		/// <param name="Location"></param>
+		/// <param name="position"></param>
+		/// <returns></returns>
+		public bool IsLocationFree(DungeonLocation location, SquarePosition position)
+		{
+			if (location == null)
+				return false;
 
+			Square square = GetBlock(location.Position);
+			if (square.IsBlocking)
+				return true;
+			
 
+			return false;
+		}
+*/
 
 		/// <summary>
 		/// Gets if a door is North-South aligned
@@ -455,7 +459,7 @@ namespace DungeonEye
 			foreach (ThrownItem item in ThrownItems)
 			{
 				if (item.Location.Position == location.Position)
-					tmp[(int)item.Location.GroundPosition].Add(item);
+					tmp[(int)item.Location.SquarePosition].Add(item);
 			}
 
 
@@ -843,60 +847,70 @@ namespace DungeonEye
 
 
 
-					if (GetMonsterCount(block.Location.Position) > 0)
+					if (block.MonsterCount > 0)
 						color = Color.Red;
 					if (block.Door != null)
 						color = Color.Yellow;
 					if (block.Stair != null)
 						color = Color.LightGreen;
+					if (block.MonsterCount > 0)
+						color = Color.Red;
 
 					if (team.Location.Position.X == x && team.Location.Position.Y == y && team.Location.Maze == this)
 						color = Color.Blue;
 
 					batch.FillRectangle(new Rectangle(location.X + x * 4, location.Y + y * 4, 4, 4), color);
+
+
+/*
+					// Draw monster target
+					foreach (Monster monster in block.Monsters)
+					{
+						if (monster == null)
+							continue;
+
+						Point start = monster.Location.Position;
+						start.X *= 4;
+						start.Y *= 4;
+						start.Offset(location);
+						start.Offset(2, 2);
+
+						// Sight zone
+						Rectangle zone = new Rectangle(
+							monster.SightZone.X * 4 + location.X,
+							monster.SightZone.Y * 4 + location.Y,
+							monster.SightZone.Width * 4,
+							monster.SightZone.Height * 4);
+						batch.FillRectangle(zone, Color.FromArgb(128, Color.Red));
+
+						// Detect zone
+						zone = new Rectangle(
+							monster.DetectionZone.X * 4 + location.X,
+							monster.DetectionZone.Y * 4 + location.Y,
+							monster.DetectionZone.Width * 4,
+							monster.DetectionZone.Height * 4);
+						batch.FillRectangle(zone, Color.FromArgb(128, Color.Green));
+
+
+						//TODO a deplacer en tant que propriete de Monster
+						if (monster.StateManager.CurrentState is MoveState)
+						{
+							// Direction
+							MoveState state = monster.StateManager.CurrentState as MoveState;
+							Point end = state.TargetLocation.Position;
+							end.X *= 4;
+							end.Y *= 4;
+							end.Offset(location);
+							end.Offset(2, 2);
+
+							batch.DrawLine(start, end, Color.Blue);
+						}
+					}
+*/
 				}
 
 
-			// Draw monster target
-			foreach (Monster monster in Monsters)
-			{
-				Point start = monster.Location.Position;
-				start.X *= 4;
-				start.Y *= 4;
-				start.Offset(location);
-				start.Offset(2, 2);
 
-				// Sight zone
-				Rectangle zone = new Rectangle(
-					monster.SightZone.X * 4 + location.X,
-					monster.SightZone.Y * 4 + location.Y,
-					monster.SightZone.Width * 4,
-					monster.SightZone.Height * 4);
-				batch.FillRectangle(zone, Color.FromArgb(128, Color.Red));
-
-				// Detect zone
-				zone = new Rectangle(
-					monster.DetectionZone.X * 4 + location.X,
-					monster.DetectionZone.Y * 4 + location.Y,
-					monster.DetectionZone.Width * 4,
-					monster.DetectionZone.Height * 4);
-				batch.FillRectangle(zone, Color.FromArgb(128, Color.Green));
-
-
-				//TODO a deplacer en tant que propriete de Monster
-				if (monster.StateManager.CurrentState is MoveState)
-				{
-					// Direction
-					MoveState state = monster.StateManager.CurrentState as MoveState;
-					Point end = state.TargetLocation.Position;
-					end.X *= 4;
-					end.Y *= 4;
-					end.Offset(location);
-					end.Offset(2, 2);
-
-					batch.DrawLine(start, end, Color.Blue);
-				}
-			}
 		}
 
 
@@ -997,7 +1011,7 @@ namespace DungeonEye
 
 					#endregion
 
-
+/*
 					#region Monsters
 
 					case "monsters":
@@ -1013,7 +1027,7 @@ namespace DungeonEye
 					}
 					break;
 					#endregion
-
+*/
 				}
 			}
 
@@ -1065,7 +1079,7 @@ namespace DungeonEye
 			foreach (MazeZone zone in Zones)
 				zone.Save(writer);
 
-
+/*
 
 			// Monsters
 			if (Monsters.Count > 0)
@@ -1075,6 +1089,7 @@ namespace DungeonEye
 					monster.Save(writer);
 				writer.WriteEndElement();
 			}
+*/
 
 			// flying items
 			if (ThrownItems.Count > 0)
@@ -1377,23 +1392,10 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Monsters in the maze
-		/// </summary>
-		[Browsable(false)]
-		public List<Monster> Monsters
-		{
-			get;
-			private set;
-		}
-
-
-
-		/// <summary>
 		/// Private list of doors in the maze
 		/// </summary>
 		[Category("Blocks")]
 		List<Door> Doors;
-
 
 
 		/// <summary>
@@ -1460,6 +1462,7 @@ namespace DungeonEye
 
 		#endregion
 
+
 	}
 
 
@@ -1518,31 +1521,6 @@ namespace DungeonEye
 					Blocks[15] = maze.GetBlock(new Point(location.Position.X - 1, location.Position.Y));
 					Blocks[17] = maze.GetBlock(new Point(location.Position.X + 1, location.Position.Y));
 
-
-
-
-					Monsters[0] = maze.GetMonsters(new Point(location.Position.X - 3, location.Position.Y - 3));
-					Monsters[1] = maze.GetMonsters(new Point(location.Position.X - 2, location.Position.Y - 3));
-					Monsters[2] = maze.GetMonsters(new Point(location.Position.X - 1, location.Position.Y - 3));
-					Monsters[3] = maze.GetMonsters(new Point(location.Position.X, location.Position.Y - 3));
-					Monsters[4] = maze.GetMonsters(new Point(location.Position.X + 1, location.Position.Y - 3));
-					Monsters[5] = maze.GetMonsters(new Point(location.Position.X + 2, location.Position.Y - 3));
-					Monsters[6] = maze.GetMonsters(new Point(location.Position.X + 3, location.Position.Y - 3));
-
-					Monsters[7] = maze.GetMonsters(new Point(location.Position.X - 2, location.Position.Y - 2));
-					Monsters[8] = maze.GetMonsters(new Point(location.Position.X - 1, location.Position.Y - 2));
-					Monsters[9] = maze.GetMonsters(new Point(location.Position.X, location.Position.Y - 2));
-					Monsters[10] = maze.GetMonsters(new Point(location.Position.X + 1, location.Position.Y - 2));
-					Monsters[11] = maze.GetMonsters(new Point(location.Position.X + 2, location.Position.Y - 2));
-
-					Monsters[12] = maze.GetMonsters(new Point(location.Position.X - 1, location.Position.Y - 1));
-					Monsters[13] = maze.GetMonsters(new Point(location.Position.X, location.Position.Y - 1));
-					Monsters[14] = maze.GetMonsters(new Point(location.Position.X + 1, location.Position.Y - 1));
-
-					Monsters[15] = maze.GetMonsters(new Point(location.Position.X - 1, location.Position.Y));
-					Monsters[17] = maze.GetMonsters(new Point(location.Position.X + 1, location.Position.Y));
-
-
 				}
 				break;
 				#endregion
@@ -1570,29 +1548,6 @@ namespace DungeonEye
 
 					Blocks[15] = maze.GetBlock(new Point(location.Position.X + 1, location.Position.Y));
 					Blocks[17] = maze.GetBlock(new Point(location.Position.X - 1, location.Position.Y));
-
-
-					Monsters[0] = maze.GetMonsters(new Point(location.Position.X + 3, location.Position.Y + 3));
-					Monsters[1] = maze.GetMonsters(new Point(location.Position.X + 2, location.Position.Y + 3));
-					Monsters[2] = maze.GetMonsters(new Point(location.Position.X + 1, location.Position.Y + 3));
-					Monsters[3] = maze.GetMonsters(new Point(location.Position.X, location.Position.Y + 3));
-					Monsters[4] = maze.GetMonsters(new Point(location.Position.X - 1, location.Position.Y + 3));
-					Monsters[5] = maze.GetMonsters(new Point(location.Position.X - 2, location.Position.Y + 3));
-					Monsters[6] = maze.GetMonsters(new Point(location.Position.X - 3, location.Position.Y + 3));
-
-					Monsters[7] = maze.GetMonsters(new Point(location.Position.X + 2, location.Position.Y + 2));
-					Monsters[8] = maze.GetMonsters(new Point(location.Position.X + 1, location.Position.Y + 2));
-					Monsters[9] = maze.GetMonsters(new Point(location.Position.X, location.Position.Y + 2));
-					Monsters[10] = maze.GetMonsters(new Point(location.Position.X - 1, location.Position.Y + 2));
-					Monsters[11] = maze.GetMonsters(new Point(location.Position.X - 2, location.Position.Y + 2));
-
-					Monsters[12] = maze.GetMonsters(new Point(location.Position.X + 1, location.Position.Y + 1));
-					Monsters[13] = maze.GetMonsters(new Point(location.Position.X, location.Position.Y + 1));
-					Monsters[14] = maze.GetMonsters(new Point(location.Position.X - 1, location.Position.Y + 1));
-
-					Monsters[15] = maze.GetMonsters(new Point(location.Position.X + 1, location.Position.Y));
-					Monsters[17] = maze.GetMonsters(new Point(location.Position.X - 1, location.Position.Y));
-
 				}
 				break;
 				#endregion
@@ -1620,30 +1575,6 @@ namespace DungeonEye
 
 					Blocks[15] = maze.GetBlock(new Point(location.Position.X, location.Position.Y - 1));
 					Blocks[17] = maze.GetBlock(new Point(location.Position.X, location.Position.Y + 1));
-
-
-					Monsters[0] = maze.GetMonsters(new Point(location.Position.X + 3, location.Position.Y - 3));
-					Monsters[1] = maze.GetMonsters(new Point(location.Position.X + 3, location.Position.Y - 2));
-					Monsters[2] = maze.GetMonsters(new Point(location.Position.X + 3, location.Position.Y - 1));
-					Monsters[3] = maze.GetMonsters(new Point(location.Position.X + 3, location.Position.Y));
-					Monsters[4] = maze.GetMonsters(new Point(location.Position.X + 3, location.Position.Y + 1));
-					Monsters[5] = maze.GetMonsters(new Point(location.Position.X + 3, location.Position.Y + 2));
-					Monsters[6] = maze.GetMonsters(new Point(location.Position.X + 3, location.Position.Y + 3));
-
-					Monsters[7] = maze.GetMonsters(new Point(location.Position.X + 2, location.Position.Y - 2));
-					Monsters[8] = maze.GetMonsters(new Point(location.Position.X + 2, location.Position.Y - 1));
-					Monsters[9] = maze.GetMonsters(new Point(location.Position.X + 2, location.Position.Y));
-					Monsters[10] = maze.GetMonsters(new Point(location.Position.X + 2, location.Position.Y + 1));
-					Monsters[11] = maze.GetMonsters(new Point(location.Position.X + 2, location.Position.Y + 2));
-
-					Monsters[12] = maze.GetMonsters(new Point(location.Position.X + 1, location.Position.Y - 1));
-					Monsters[13] = maze.GetMonsters(new Point(location.Position.X + 1, location.Position.Y));
-					Monsters[14] = maze.GetMonsters(new Point(location.Position.X + 1, location.Position.Y + 1));
-
-					Monsters[15] = maze.GetMonsters(new Point(location.Position.X, location.Position.Y - 1));
-					Monsters[17] = maze.GetMonsters(new Point(location.Position.X, location.Position.Y + 1));
-
-
 				}
 				break;
 				#endregion
@@ -1671,37 +1602,19 @@ namespace DungeonEye
 
 					Blocks[15] = maze.GetBlock(new Point(location.Position.X, location.Position.Y + 1));
 					Blocks[17] = maze.GetBlock(new Point(location.Position.X, location.Position.Y - 1));
-
-
-					Monsters[0] = maze.GetMonsters(new Point(location.Position.X - 3, location.Position.Y + 3));
-					Monsters[1] = maze.GetMonsters(new Point(location.Position.X - 3, location.Position.Y + 2));
-					Monsters[2] = maze.GetMonsters(new Point(location.Position.X - 3, location.Position.Y + 1));
-					Monsters[3] = maze.GetMonsters(new Point(location.Position.X - 3, location.Position.Y));
-					Monsters[4] = maze.GetMonsters(new Point(location.Position.X - 3, location.Position.Y - 1));
-					Monsters[5] = maze.GetMonsters(new Point(location.Position.X - 3, location.Position.Y - 2));
-					Monsters[6] = maze.GetMonsters(new Point(location.Position.X - 3, location.Position.Y - 3));
-
-					Monsters[7] = maze.GetMonsters(new Point(location.Position.X - 2, location.Position.Y + 2));
-					Monsters[8] = maze.GetMonsters(new Point(location.Position.X - 2, location.Position.Y + 1));
-					Monsters[9] = maze.GetMonsters(new Point(location.Position.X - 2, location.Position.Y));
-					Monsters[10] = maze.GetMonsters(new Point(location.Position.X - 2, location.Position.Y - 1));
-					Monsters[11] = maze.GetMonsters(new Point(location.Position.X - 2, location.Position.Y - 2));
-
-					Monsters[12] = maze.GetMonsters(new Point(location.Position.X - 1, location.Position.Y + 1));
-					Monsters[13] = maze.GetMonsters(new Point(location.Position.X - 1, location.Position.Y));
-					Monsters[14] = maze.GetMonsters(new Point(location.Position.X - 1, location.Position.Y - 1));
-
-					Monsters[15] = maze.GetMonsters(new Point(location.Position.X, location.Position.Y + 1));
-					Monsters[17] = maze.GetMonsters(new Point(location.Position.X, location.Position.Y - 1));
 				}
 				break;
 				#endregion
 
+
 			}
 
 			// Team's position
-			Blocks[16] = maze.GetBlock(new Point(location.Position.X, location.Position.Y));
+			Blocks[16] = maze.GetBlock(location.Position);
 
+			// Monsters
+			for (int i = 0 ; i < 17 ; i++)
+				Monsters[i] = Blocks[i].Monsters;
 
 		}
 

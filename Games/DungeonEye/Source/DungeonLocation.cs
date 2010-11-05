@@ -44,7 +44,7 @@ namespace DungeonEye
 			Dungeon = dungeon;
 			Compass = new Compass();
 			Position = Point.Empty;
-			GroundPosition = SquarePosition.NorthEast;
+			SquarePosition = SquarePosition.NorthEast;
 		}
 
 
@@ -58,7 +58,7 @@ namespace DungeonEye
 			Dungeon = loc.Dungeon;
 			Compass = new Compass(loc.Compass);
 			Position = loc.Position;
-			GroundPosition = loc.GroundPosition;
+			SquarePosition = loc.SquarePosition;
 			SetMaze(loc.MazeName);
 		}
 
@@ -151,6 +151,17 @@ namespace DungeonEye
 		}
 
 
+		/// <summary>
+		/// FAce to a given location
+		/// </summary>
+		/// <param name="target"></param>
+		public void FaceTo(DungeonLocation target)
+		{
+			if (target == null)
+				throw new ArgumentNullException("target");
+
+		}
+
 		#region I/O
 
 
@@ -172,7 +183,7 @@ namespace DungeonEye
 				Direction = (CardinalPoint)Enum.Parse(typeof(CardinalPoint), xml.Attributes["direction"].Value, true);
 
 			if (xml.Attributes["position"] != null)
-				GroundPosition = (SquarePosition) Enum.Parse(typeof(SquarePosition), xml.Attributes["position"].Value, true);
+				SquarePosition = (SquarePosition) Enum.Parse(typeof(SquarePosition), xml.Attributes["position"].Value, true);
 
 			return true;
 		}
@@ -196,7 +207,7 @@ namespace DungeonEye
 			writer.WriteAttributeString("x", Position.X.ToString());
 			writer.WriteAttributeString("y", Position.Y.ToString());
 			writer.WriteAttributeString("direction", Direction.ToString());
-			writer.WriteAttributeString("position", GroundPosition.ToString());
+			writer.WriteAttributeString("position", SquarePosition.ToString());
 			writer.WriteEndElement();
 
 			return true;
@@ -304,7 +315,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Position on the ground
 		/// </summary>
-		public SquarePosition GroundPosition
+		public SquarePosition SquarePosition
 		{
 			get;
 			set;

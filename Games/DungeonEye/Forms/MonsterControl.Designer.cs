@@ -50,6 +50,8 @@
 			this.PropertiesTab = new System.Windows.Forms.TabPage();
 			this.ScriptBox = new ArcEngine.Editor.ScriptControl();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.label1 = new System.Windows.Forms.Label();
+			this.DefaultBehaviourBox = new System.Windows.Forms.ComboBox();
 			this.label16 = new System.Windows.Forms.Label();
 			this.SightRangeBox = new System.Windows.Forms.NumericUpDown();
 			this.CanSeeInvisibleBox = new System.Windows.Forms.CheckBox();
@@ -80,7 +82,7 @@
 			this.AddMagicSpellBox = new System.Windows.Forms.Button();
 			this.KnownSpellsBox = new System.Windows.Forms.ListBox();
 			this.label8 = new System.Windows.Forms.Label();
-			this.CastingPowerBox = new System.Windows.Forms.NumericUpDown();
+			this.CastingLevelBox = new System.Windows.Forms.NumericUpDown();
 			this.HasDrainMagicBox = new System.Windows.Forms.CheckBox();
 			this.HealMagicBox = new System.Windows.Forms.CheckBox();
 			this.AudioTab = new System.Windows.Forms.TabPage();
@@ -100,8 +102,6 @@
 			this.label14 = new System.Windows.Forms.Label();
 			this.label13 = new System.Windows.Forms.Label();
 			this.label10 = new System.Windows.Forms.Label();
-			this.DefaultBehaviourBox = new System.Windows.Forms.ComboBox();
-			this.label1 = new System.Windows.Forms.Label();
 			this.VisualGroupBox.SuspendLayout();
 			this.PocketGroupBox.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize) (this.XPRewardBox)).BeginInit();
@@ -116,7 +116,7 @@
 			((System.ComponentModel.ISupportInitialize) (this.StealBox)).BeginInit();
 			this.MagicTab.SuspendLayout();
 			this.MagicGroupBox.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize) (this.CastingPowerBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize) (this.CastingLevelBox)).BeginInit();
 			this.AudioTab.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -311,7 +311,7 @@
 			this.EntityBox.Entity = null;
 			this.EntityBox.Location = new System.Drawing.Point(3, 3);
 			this.EntityBox.Name = "EntityBox";
-			this.EntityBox.Size = new System.Drawing.Size(580, 423);
+			this.EntityBox.Size = new System.Drawing.Size(186, 68);
 			this.EntityBox.TabIndex = 0;
 			// 
 			// PropertiesTab
@@ -366,6 +366,26 @@
 			this.groupBox2.TabIndex = 13;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Misc :";
+			// 
+			// label1
+			// 
+			this.label1.AutoSize = true;
+			this.label1.Location = new System.Drawing.Point(6, 158);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(97, 13);
+			this.label1.TabIndex = 18;
+			this.label1.Text = "Default behaviour :";
+			// 
+			// DefaultBehaviourBox
+			// 
+			this.DefaultBehaviourBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.DefaultBehaviourBox.FormattingEnabled = true;
+			this.DefaultBehaviourBox.Location = new System.Drawing.Point(113, 155);
+			this.DefaultBehaviourBox.Name = "DefaultBehaviourBox";
+			this.DefaultBehaviourBox.Size = new System.Drawing.Size(129, 21);
+			this.DefaultBehaviourBox.Sorted = true;
+			this.DefaultBehaviourBox.TabIndex = 17;
+			this.DefaultBehaviourBox.SelectedIndexChanged += new System.EventHandler(this.DefaultBehaviourBox_SelectedIndexChanged);
 			// 
 			// label16
 			// 
@@ -611,7 +631,7 @@
 			this.MagicGroupBox.Controls.Add(this.AddMagicSpellBox);
 			this.MagicGroupBox.Controls.Add(this.KnownSpellsBox);
 			this.MagicGroupBox.Controls.Add(this.label8);
-			this.MagicGroupBox.Controls.Add(this.CastingPowerBox);
+			this.MagicGroupBox.Controls.Add(this.CastingLevelBox);
 			this.MagicGroupBox.Controls.Add(this.HasDrainMagicBox);
 			this.MagicGroupBox.Controls.Add(this.HealMagicBox);
 			this.MagicGroupBox.Location = new System.Drawing.Point(3, 23);
@@ -678,19 +698,20 @@
 			// label8
 			// 
 			this.label8.AutoSize = true;
-			this.label8.Location = new System.Drawing.Point(162, 12);
+			this.label8.Location = new System.Drawing.Point(163, 25);
 			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(80, 13);
+			this.label8.Size = new System.Drawing.Size(73, 13);
 			this.label8.TabIndex = 9;
-			this.label8.Text = "Casting power :";
+			this.label8.Text = "Casting level :";
 			// 
-			// CastingPowerBox
+			// CastingLevelBox
 			// 
-			this.CastingPowerBox.Location = new System.Drawing.Point(248, 10);
-			this.CastingPowerBox.Name = "CastingPowerBox";
-			this.CastingPowerBox.Size = new System.Drawing.Size(61, 20);
-			this.CastingPowerBox.TabIndex = 8;
-			this.CastingPowerBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.CastingLevelBox.Location = new System.Drawing.Point(249, 23);
+			this.CastingLevelBox.Name = "CastingLevelBox";
+			this.CastingLevelBox.Size = new System.Drawing.Size(61, 20);
+			this.CastingLevelBox.TabIndex = 8;
+			this.CastingLevelBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.CastingLevelBox.ValueChanged += new System.EventHandler(this.CastingLevelBox_ValueChanged);
 			// 
 			// HasDrainMagicBox
 			// 
@@ -873,26 +894,6 @@
 			this.label10.TabIndex = 0;
 			this.label10.Text = "Move :";
 			// 
-			// DefaultBehaviourBox
-			// 
-			this.DefaultBehaviourBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.DefaultBehaviourBox.FormattingEnabled = true;
-			this.DefaultBehaviourBox.Location = new System.Drawing.Point(113, 155);
-			this.DefaultBehaviourBox.Name = "DefaultBehaviourBox";
-			this.DefaultBehaviourBox.Size = new System.Drawing.Size(129, 21);
-			this.DefaultBehaviourBox.Sorted = true;
-			this.DefaultBehaviourBox.TabIndex = 17;
-			this.DefaultBehaviourBox.SelectedIndexChanged += new System.EventHandler(this.DefaultBehaviourBox_SelectedIndexChanged);
-			// 
-			// label1
-			// 
-			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(6, 158);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(97, 13);
-			this.label1.TabIndex = 18;
-			this.label1.Text = "Default behaviour :";
-			// 
 			// MonsterControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -921,7 +922,7 @@
 			this.MagicTab.PerformLayout();
 			this.MagicGroupBox.ResumeLayout(false);
 			this.MagicGroupBox.PerformLayout();
-			((System.ComponentModel.ISupportInitialize) (this.CastingPowerBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize) (this.CastingLevelBox)).EndInit();
 			this.AudioTab.ResumeLayout(false);
 			this.AudioTab.PerformLayout();
 			this.ResumeLayout(false);
@@ -969,7 +970,7 @@
 		private System.Windows.Forms.TabPage MagicTab;
 		private System.Windows.Forms.GroupBox MagicGroupBox;
 		private System.Windows.Forms.Label label8;
-		private System.Windows.Forms.NumericUpDown CastingPowerBox;
+		private System.Windows.Forms.NumericUpDown CastingLevelBox;
 		private System.Windows.Forms.CheckBox HasDrainMagicBox;
 		private System.Windows.Forms.CheckBox HealMagicBox;
 		private System.Windows.Forms.CheckBox HasMagicBox;

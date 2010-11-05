@@ -48,7 +48,7 @@ namespace DungeonEye
 	/// <summary>
 	/// Base class of all monster in the game
 	/// </summary>
-	public class Monster : Entity, IAsset, IDisposable
+	public class Monster : Entity, IAsset
 	{
 
 		/// <summary>
@@ -75,6 +75,7 @@ namespace DungeonEye
 		}
 
 
+/*
 		/// <summary>
 		/// Dispose
 		/// </summary>
@@ -102,7 +103,7 @@ namespace DungeonEye
 
 			IsDisposed = true;
 		}
-
+*/
 
 		/// <summary>
 		/// Initializes the monster
@@ -121,7 +122,7 @@ namespace DungeonEye
 			//}
 
 
-			StateManager.SetState(new IdleState(this));
+			//StateManager.SetState(new IdleState(this));
 			return true;
 		}
 
@@ -160,7 +161,7 @@ namespace DungeonEye
 				canmove = false;
 
 			// Monsters
-			if (Location.Maze.GetMonsterCount(dst) > 0)
+			if (dstblock.MonsterCount > 0)
 				canmove = false;
 
 			// blocking door
@@ -249,6 +250,8 @@ namespace DungeonEye
 			//StateManager.Update(time);
 
 
+			Team team = Location.Dungeon.Team;
+			Maze maze = Location.Maze;
 
 			switch (CurrentBehaviour)
 			{
@@ -269,6 +272,31 @@ namespace DungeonEye
 
 				#region Guard
 				case MonsterBehaviour.Guard:
+				{
+					// Heal
+					if (CanHeal && HitPoint.Ratio < 0.5f)
+						Heal();
+
+					// Not in the same maze
+					else if (team.Location.Maze != maze)
+						break;
+
+					else if (CanGetCloserTo(team.Location))
+					{
+						GetCloserTo(team.Location);
+					}
+					else if (CanDoCloseAttack(team.Location))
+					{
+					}
+					else if (IsNear(team.Location))
+					{
+						if (Location.IsFacing(team.Location))
+							Location.FaceTo(team.Location);
+
+						if (!CanUseAmmo)
+							CurrentBehaviour = MonsterBehaviour.Aggressive;
+					}
+				}
 				break;
 				#endregion
 
@@ -286,6 +314,82 @@ namespace DungeonEye
 
 
 
+		/// <summary>
+		/// Try to move closer to the target while remaining in the square
+		/// </summary>
+		/// <param name="target">Target point</param>
+		/// <returns>True if can get closer</returns>
+		public bool CanGetCloserTo(DungeonLocation target)
+		{
+			if (target == null)
+				throw new ArgumentNullException("target");
+
+			// Monster is alone in the square
+			if (Location.SquarePosition == SquarePosition.Center)
+				return false;
+
+			// Find the distance
+			Point dist = new Point(Location.Position.X - target.Position.X, Location.Position.Y - target.Position.Y);
+
+			// Current maze
+			Maze maze = Location.Maze;
+			Square square = maze.GetBlock(Location.Position);
+			Monster[] monsters = maze.GetBlock(Location.Position).Monsters;
+
+			// Target on the right
+			if (dist.X > 0)
+			{
+			}
+			else
+			{
+			}
+
+			// Target above
+			if (dist.Y > 0)
+			{
+				//if (Location.SquarePosition == SquarePosition.SouthWest && maze.IsLocationFree(Location, SquarePosition.NorthWest))
+
+			}
+			else
+			{
+			}
+
+			return false;
+		}
+
+
+		/// <summary>
+		/// Moves closer to the target while remaining in the square
+		/// </summary>
+		/// <param name="target">Target point</param>
+		public void GetCloserTo(DungeonLocation target)
+		{
+			if (target == null)
+				throw new ArgumentNullException("target");
+
+		}
+
+
+		/// <summary>
+		/// Try to move closer to the target while remaining in the square
+		/// </summary>
+		/// <param name="target">Target point</param>
+		/// <returns>True if can get closer</returns>
+		public bool IsNear(DungeonLocation target)
+		{
+			if (target == null)
+				throw new ArgumentNullException("target");
+
+			if (Location.Maze != target.Maze)
+				return false;
+
+			Point dist = new Point(Location.Position.X - target.Position.X, Location.Position.Y - target.Position.Y);
+
+			return Math.Abs(dist.X) < 5 || Math.Abs(dist.Y) < 5;
+		}
+
+
+
 
 		/// <summary>
 		/// Draw the monster
@@ -295,6 +399,8 @@ namespace DungeonEye
 		/// <param name="pos">Position of the monster in the field of view</param>
 		public virtual void Draw(SpriteBatch batch, CardinalPoint direction, ViewFieldPosition pos)
 		{
+			if (Tileset == null)
+				return;
 
 			TextureEnvMode mode = Display.TexEnv;
 
@@ -379,6 +485,64 @@ namespace DungeonEye
 
 		#endregion
 
+
+		/// <summary>
+		/// Heal 
+		/// </summary>
+		public void Heal()
+		{
+			if (!CanHeal)
+				return;
+
+			HitPoint.Current += 2;
+
+		}
+
+
+		/// <summary>
+		/// Checks map between monster and teh team to see if can throw projectiles
+		/// </summary>
+		/// <param name="target">Target location</param>
+		/// <returns>True if possible</returns>
+		public bool CanDoRangeAttack(DungeonLocation target)
+		{
+			// Not in the same maze
+			if (target.Maze != Location.Maze)
+				return false;
+
+			// x or y lined
+			if (target.Position.X == Location.Position.X)
+			{
+				return true;
+			}
+			else if (target.Position.Y == Location.Position.Y)
+			{
+				return true;
+			}
+			else
+				return false;
+
+		}
+
+
+
+		/// <summary>
+		/// Checks if the monster can do close combat with the target
+		/// </summary>
+		/// <param name="target">Target location</param>
+		/// <returns>True if possible</returns>
+		public bool CanDoCloseAttack(DungeonLocation target)
+		{
+			if (target.Maze != Location.Maze)
+				return false;
+
+			if (CanGetCloserTo(target))
+				return false;
+
+			Point dist = new Point(target.Position.X - Location.Position.X, target.Position.Y - Location.Position.Y);
+
+			return Math.Abs(dist.X) <= 1 || Math.Abs(dist.Y) <= 1;
+		}
 
 
 		#region Helpers
@@ -604,9 +768,9 @@ namespace DungeonEye
 					}
 					break;
 
-					case "castingpower":
+					case "castinglevel":
 					{
-						MagicCastingPower = int.Parse(value);
+						MagicCastingLevel = int.Parse(value);
 					}
 					break;
 
@@ -751,6 +915,7 @@ namespace DungeonEye
 
 			writer.WriteStartElement("monster");
 			writer.WriteAttributeString("name", Name);
+			writer.WriteAttributeString("position", Location.SquarePosition.ToString());
 
 			base.Save(writer);
 
@@ -832,8 +997,8 @@ namespace DungeonEye
 			writer.WriteAttributeString("value", HasHealMagic.ToString());
 			writer.WriteEndElement();
 
-			writer.WriteStartElement("castingpower");
-			writer.WriteAttributeString("value", MagicCastingPower.ToString());
+			writer.WriteStartElement("castinglevel");
+			writer.WriteAttributeString("value", MagicCastingLevel.ToString());
 			writer.WriteEndElement();
 
 			writer.WriteStartElement("throwweapons");
@@ -902,6 +1067,35 @@ namespace DungeonEye
 
 
 		#region Properties
+
+
+		/// <summary>
+		/// Can use ammo
+		/// </summary>
+		public bool CanUseAmmo
+		{
+			get
+			{
+				return false;
+			}
+		}
+
+
+		/// <summary>
+		/// Does the monster can cast Heal magic
+		/// </summary>
+		public bool CanHeal
+		{
+			get
+			{
+				if (!HasHealMagic)
+					return false;
+
+				return true;
+			}
+		}
+
+
 
 		/// <summary>
 		/// Monster default behaviour
@@ -992,7 +1186,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Gets or sets the maximum power level the monster can use. 
 		/// </summary>
-		public int MagicCastingPower
+		public int MagicCastingLevel
 		{
 			get;
 			set;

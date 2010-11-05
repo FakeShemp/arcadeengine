@@ -59,6 +59,7 @@ namespace DungeonEye
 			Location = new DungeonLocation(maze.Dungeon);
 			Location.SetMaze(maze.Name);
 			Type = SquareType.Wall;
+			Monsters = new Monster[4];
 
 			WallDecoration = new int[4];
 			Alcoves = new bool[4];
@@ -67,6 +68,22 @@ namespace DungeonEye
 			for (int i = 0; i < 4; i++)
 				GroundItems[i] = new List<Item>();
 
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public void Init()
+		{
+			for (int i = 0 ; i < 4 ; i++)
+			{
+				// Monsters
+				if (Monsters[i] != null)
+					Monsters[i].Init();
+
+
+			}
 		}
 
 
@@ -385,35 +402,41 @@ namespace DungeonEye
 		}
 
 
-		/// <summary>
-		/// Returns items on the ground at a specific corner
-		/// </summary>
-		/// <param name="position">Ground position</param>
-		/// <returns>List of items</returns>
-		public List<Item> GetItemsOnGround(SquarePosition position)
-		{
-			return GroundItems[(int)position];
-		}
+		#region Monsters
 
 
 		/// <summary>
-		/// Returns items on the ground at a specific corner
+		/// Get the monster at a given location
 		/// </summary>
-		/// <param name="from">Facing position</param>
-		/// <param name="position">Ground position</param>
-		/// <returns>List of items</returns>
-		public List<Item> GetItemsOnGround(CardinalPoint from, SquarePosition position)
+		/// <param name="position">Location</param>
+		/// <returns>Monster handle or null</returns>
+		public Monster GetMonster(SquarePosition position)
 		{
-			CardinalPoint[,] tab = new CardinalPoint[,]
+			if (position == SquarePosition.Center)
 			{
-				{CardinalPoint.North, CardinalPoint.South, CardinalPoint.West, CardinalPoint.East},
-				{CardinalPoint.South, CardinalPoint.North, CardinalPoint.East, CardinalPoint.West},
-				{CardinalPoint.West, CardinalPoint.East, CardinalPoint.South, CardinalPoint.North},
-				{CardinalPoint.East, CardinalPoint.West, CardinalPoint.North, CardinalPoint.South},
-			};
-
-			return GetItemsOnGround((SquarePosition)tab[(int)from, (int)position]);
+				return null;
+			}
+			else
+			{
+				return Monsters[(int)position];
+			}
 		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="monster"></param>
+		/// <param name="position"></param>
+		public void SetMonster(Monster monster, SquarePosition position)
+		{
+			if (position == SquarePosition.Center)
+				return;
+
+			Monsters[(int) position] = monster;
+		}
+
+		#endregion
 
 
 		#region Alcoves
@@ -602,6 +625,14 @@ namespace DungeonEye
 				}
 			}
 
+			foreach (Monster monster in Monsters)
+			{
+				if (monster == null)
+					continue;
+
+				monster.Save(writer);
+			}
+
 			writer.WriteStartElement("nomonster");
 			writer.WriteAttributeString("value", NoMonster.ToString());
 			writer.WriteEndElement();
@@ -712,11 +743,24 @@ namespace DungeonEye
 					}
 					break;
 
-
 					case "alcove":
 					{
 						CardinalPoint side = (CardinalPoint)Enum.Parse(typeof(CardinalPoint), node.Attributes["side"].Value);
 						SetAlcove(side, true);
+					}
+					break;
+
+					case "monster":
+					{
+						Monster monster = new Monster(Location.Maze);
+						monster.Load(node);
+						SetMonster(monster, (SquarePosition)Enum.Parse(typeof(SquarePosition), node.Attributes["position"].Value));
+					}
+					break;
+
+					default:
+					{
+						Trace.WriteLine("[Square] Load() : Unknown node \"{0}\"", node.Name);
 					}
 					break;
 				}
@@ -731,6 +775,37 @@ namespace DungeonEye
 
 
 		#region Ground items
+
+
+		/// <summary>
+		/// Returns items on the ground at a specific corner
+		/// </summary>
+		/// <param name="position">Ground position</param>
+		/// <returns>List of items</returns>
+		public List<Item> GetItemsOnGround(SquarePosition position)
+		{
+			return GroundItems[(int) position];
+		}
+
+
+		/// <summary>
+		/// Returns items on the ground at a specific corner
+		/// </summary>
+		/// <param name="from">Facing position</param>
+		/// <param name="position">Ground position</param>
+		/// <returns>List of items</returns>
+		public List<Item> GetItemsOnGround(CardinalPoint from, SquarePosition position)
+		{
+			CardinalPoint[,] tab = new CardinalPoint[,]
+			{
+				{CardinalPoint.North, CardinalPoint.South, CardinalPoint.West, CardinalPoint.East},
+				{CardinalPoint.South, CardinalPoint.North, CardinalPoint.East, CardinalPoint.West},
+				{CardinalPoint.West, CardinalPoint.East, CardinalPoint.South, CardinalPoint.North},
+				{CardinalPoint.East, CardinalPoint.West, CardinalPoint.North, CardinalPoint.South},
+			};
+
+			return GetItemsOnGround((SquarePosition) tab[(int) from, (int) position]);
+		}
 
 		/// <summary>
 		/// Collects an item on the ground
@@ -843,6 +918,52 @@ namespace DungeonEye
 
 
 		#region Properties
+
+		#region Monsters
+
+		/// <summary>
+		/// Number of monster in the square
+		/// </summary>
+		public int MonsterCount
+		{
+			get
+			{
+				int count = 0;
+
+				if (Monsters[0] != null) count++;
+				if (Monsters[1] != null) count++;
+				if (Monsters[2] != null) count++;
+				if (Monsters[3] != null) count++;
+
+				return count;
+			}
+		}
+
+
+		/// <summary>
+		/// Does the square has monster
+		/// </summary>
+		public bool HasMonster
+		{
+			get
+			{
+				return Monsters[0] == null &&
+					Monsters[1] == null &&
+					Monsters[2] == null &&
+					Monsters[3] == null;
+			}
+		}
+
+		/// <summary>
+		/// Monster list
+		/// </summary>
+		public Monster[] Monsters
+		{
+			get;
+			private set;
+		}
+
+		#endregion
 
 
 
@@ -969,7 +1090,6 @@ namespace DungeonEye
 		}
 
 
-
 		/// <summary>
 		/// Door
 		/// </summary>
@@ -1055,7 +1175,6 @@ namespace DungeonEye
 			get;
 			set;
 		}
-
 
 		#endregion
 	}

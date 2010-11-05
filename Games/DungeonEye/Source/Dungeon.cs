@@ -72,6 +72,7 @@ namespace DungeonEye
 
 			StartLocation.SetMaze(StartLocation.MazeName);
 
+
 			foreach (Maze maze in Mazes.Values)
 				maze.Init();
 
@@ -85,7 +86,10 @@ namespace DungeonEye
 		/// </summary>
 		public void Clear()
 		{
+			foreach (Maze maze in Mazes.Values)
+				maze.Dispose();
 			Mazes.Clear();
+
 			StartLocation = new DungeonLocation(StartLocation);
 		}
 

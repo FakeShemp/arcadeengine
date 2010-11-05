@@ -1023,15 +1023,36 @@ namespace ArcEngine
 		/// </summary>
 		public override void ClearShared()
 		{
+			foreach (TileSet ts in SharedTileSets.Values)
+				ts.Dispose();
 			SharedTileSets.Clear();
+
 			SharedStrings.Clear();
-			SharedAnimations.Clear();
-			SharedScenes.Clear();
-			SharedFonts.Clear();
-			SharedScripts.Clear();
-			SharedAudios.Clear();
 			SharedSchemes.Clear();
+			SharedScripts.Clear();
+
+			foreach (Animation anim in SharedAnimations.Values)
+				anim.Dispose();
+			SharedAnimations.Clear();
+
+			foreach (Scene scene in SharedScenes.Values)
+				scene.Dispose();
+			SharedScenes.Clear();
+
+			foreach (BitmapFont font in SharedFonts.Values)
+				font.Dispose();
+			SharedFonts.Clear();
+
+			foreach (AudioSample audio in SharedAudios.Values)
+				audio.Dispose();
+			SharedAudios.Clear();
+
+			foreach (Layout layout in SharedLayouts.Values)
+				layout.Dispose();
 			SharedLayouts.Clear();
+
+			foreach (Shader shader in SharedShaders.Values)
+				shader.Dispose();
 			SharedShaders.Clear();
 		}
 
@@ -1040,7 +1061,7 @@ namespace ArcEngine
 		#endregion
 
 
-		#region Progerties
+		#region Properties
 
 
 		/// <summary>

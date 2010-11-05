@@ -85,7 +85,7 @@ namespace DungeonEye.Forms
 			if (!string.IsNullOrEmpty(DungeonControl.Target.MazeName))
 				MazeBox.SelectedItem = DungeonControl.Target.MazeName;
 			DirectionBox.SelectedItem = DungeonControl.Target.Direction.ToString();
-			GroundPositionBox.SelectedItem = DungeonControl.Target.GroundPosition.ToString();
+			GroundPositionBox.SelectedItem = DungeonControl.Target.SquarePosition.ToString();
 
 
 		}
@@ -170,7 +170,7 @@ namespace DungeonEye.Forms
 			if (GroundPositionBox.SelectedIndex == -1)
 				return;
 
-			DungeonControl.Target.GroundPosition = (SquarePosition)Enum.Parse(typeof(SquarePosition), (string)GroundPositionBox.SelectedItem);
+			DungeonControl.Target.SquarePosition = (SquarePosition)Enum.Parse(typeof(SquarePosition), (string)GroundPositionBox.SelectedItem);
 		}
 
 

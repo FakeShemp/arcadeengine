@@ -123,10 +123,17 @@ namespace DungeonEye
 		/// </summary>
 		public int Current
 		{
-			get;
-			set;
+			get
+			{
+				return current;
+			}
+			set
+			{
+				current += value;
+				current = Math.Max(current, Max);
+			}
 		}
-
+		int current;
 
 		/// <summary>
 		/// Maximum HP
@@ -149,7 +156,16 @@ namespace DungeonEye
 		}
 
 
-
+		/// <summary>
+		/// Health ratio
+		/// </summary>
+		public float Ratio
+		{
+			get
+			{
+				return ((float) Current / (float) Max);
+			}
+		}
 
 
 		#endregion

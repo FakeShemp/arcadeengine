@@ -277,15 +277,16 @@ namespace DungeonEye.Forms
 							}
 						}
 
+						// Draw monsters
+						if (block.HasMonster)
+						{
+							Batch.DrawTile(Icons, 8, new Point(Offset.X + block.Location.Position.X * 25, Offset.Y + block.Location.Position.Y * 25));
+						}
+
+
 					}
 				}
 
-
-				// Draw monsters
-				foreach (Monster monster in Maze.Monsters)
-				{
-					Batch.DrawTile(Icons, 8, new Point(Offset.X + monster.Location.Position.X * 25, Offset.Y + monster.Location.Position.Y * 25));
-				}
 
 				// Target
 				if (Target.MazeName == Maze.Name)

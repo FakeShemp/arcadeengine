@@ -1272,16 +1272,16 @@ namespace DungeonEye
 							switch (Location.Direction)
 							{
 								case CardinalPoint.North:
-								loc.GroundPosition = SquarePosition.SouthWest;
+								loc.SquarePosition = SquarePosition.SouthWest;
 								break;
 								case CardinalPoint.East:
-								loc.GroundPosition = SquarePosition.NorthWest;
+								loc.SquarePosition = SquarePosition.NorthWest;
 								break;
 								case CardinalPoint.South:
-								loc.GroundPosition = SquarePosition.NorthEast;
+								loc.SquarePosition = SquarePosition.NorthEast;
 								break;
 								case CardinalPoint.West:
-								loc.GroundPosition = SquarePosition.SouthEast;
+								loc.SquarePosition = SquarePosition.SouthEast;
 								break;
 							}
 							Location.Maze.ThrownItems.Add(new ThrownItem(SelectedHero, ItemInHand, loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
@@ -1298,16 +1298,16 @@ namespace DungeonEye
 							switch (Location.Direction)
 							{
 								case CardinalPoint.North:
-								loc.GroundPosition = SquarePosition.SouthEast;
+								loc.SquarePosition = SquarePosition.SouthEast;
 								break;
 								case CardinalPoint.East:
-								loc.GroundPosition = SquarePosition.SouthWest;
+								loc.SquarePosition = SquarePosition.SouthWest;
 								break;
 								case CardinalPoint.South:
-								loc.GroundPosition = SquarePosition.NorthWest;
+								loc.SquarePosition = SquarePosition.NorthWest;
 								break;
 								case CardinalPoint.West:
-								loc.GroundPosition = SquarePosition.NorthEast;
+								loc.SquarePosition = SquarePosition.NorthEast;
 								break;
 							}
 
@@ -2519,7 +2519,7 @@ namespace DungeonEye
 				state = true;
 
 			// Monsters
-			if (Location.Maze.GetMonsterCount(dstblock.Location.Position) > 0)
+			if (dstblock.MonsterCount > 0)
 				state = false;
 
 			// blocking door

@@ -464,12 +464,13 @@ namespace DungeonEye.Forms
 			Monster monster = ResourceManager.CreateAsset<Monster>(MonsterTemplateBox.SelectedItem as string);
 			monster.Location = new DungeonLocation(MazeBlock.Location);
 			//monster.Location.Position = Square.Location;
-			monster.Location.GroundPosition = (SquarePosition)Enum.ToObject(typeof(SquarePosition), GroundLocationBox.SelectedIndex);
+			monster.Location.SquarePosition = (SquarePosition)Enum.ToObject(typeof(SquarePosition), GroundLocationBox.SelectedIndex);
 			monster.Location.SetMaze(Maze.Name);
 			monster.Init();
 
+			MazeBlock.SetMonster(monster, (SquarePosition) Enum.ToObject(typeof(SquarePosition), GroundLocationBox.SelectedIndex));
 
-			Maze.Monsters.Add(monster);
+			//Maze.Monsters.Add(monster);
 		//	MonsterBox.Monster = monster;
 		}
 
@@ -484,8 +485,8 @@ namespace DungeonEye.Forms
 			if (GroundLocationBox.SelectedIndex == -1)
 				return;
 
-			Monster[] monsters = Maze.GetMonsters(MazeBlock.Location.Position);
-			Monster monster = monsters[GroundLocationBox.SelectedIndex];
+			//Monster[] monsters = Maze.GetMonsters(MazeBlock.Location.Position);
+			Monster monster = MazeBlock.GetMonster((SquarePosition) GroundLocationBox.SelectedIndex);
 			if (monster == null)
 				MonsterBox.Visible = false;
 			else

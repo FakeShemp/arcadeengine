@@ -547,7 +547,12 @@ namespace DungeonEye
 		public override void RemoveShared<T>(string name)
 		{
 			if (typeof(T) == typeof(Dungeon))
+			{
+				foreach (Dungeon dungeon in SharedDungeons.Values)
+					dungeon.Dispose();
+
 				SharedDungeons.Remove(name);
+			}
 
 			if (typeof(T) == typeof(Item))
 				SharedItems.Remove(name); ;

@@ -111,46 +111,45 @@ namespace DungeonEye
 
 
 				// Block by an obstacle, but fall on the block
-				int monstercount = maze.GetMonsterCount(dst);
-				if ((blockinfo.Door != null && blockinfo.Door.State != DoorState.Opened) || monstercount > 0)
+				if ((blockinfo.Door != null && blockinfo.Door.State != DoorState.Opened) || blockinfo.MonsterCount > 0)
 				{
 					//Distance = 0;
 					Location.Position = dst;
 
-					SquarePosition gp = Location.GroundPosition;
+					SquarePosition gp = Location.SquarePosition;
 					switch (Location.Direction)
 					{
 						case CardinalPoint.North:
 						if (gp == SquarePosition.NorthEast || gp == SquarePosition.SouthEast)
-							Location.GroundPosition = SquarePosition.SouthEast;
+							Location.SquarePosition = SquarePosition.SouthEast;
 						else
-							Location.GroundPosition = SquarePosition.SouthWest;
+							Location.SquarePosition = SquarePosition.SouthWest;
 						break;
 						case CardinalPoint.South:
 						if (gp == SquarePosition.NorthEast || gp == SquarePosition.SouthEast)
-							Location.GroundPosition = SquarePosition.NorthEast;
+							Location.SquarePosition = SquarePosition.NorthEast;
 						else
-							Location.GroundPosition = SquarePosition.NorthWest;
+							Location.SquarePosition = SquarePosition.NorthWest;
 						break;
 						case CardinalPoint.West:
 						if (gp == SquarePosition.NorthEast || gp == SquarePosition.NorthWest)
-							Location.GroundPosition = SquarePosition.NorthEast;
+							Location.SquarePosition = SquarePosition.NorthEast;
 						else
-							Location.GroundPosition = SquarePosition.SouthEast;
+							Location.SquarePosition = SquarePosition.SouthEast;
 						break;
 						case CardinalPoint.East:
 						if (gp == SquarePosition.NorthEast || gp == SquarePosition.NorthWest)
-							Location.GroundPosition = SquarePosition.NorthWest;
+							Location.SquarePosition = SquarePosition.NorthWest;
 						else
-							Location.GroundPosition = SquarePosition.SouthWest;
+							Location.SquarePosition = SquarePosition.SouthWest;
 						break;
 					}
 
 
 					// Get monster and hit it
-					if (monstercount > 0)
+					if (blockinfo.MonsterCount > 0)
 					{
-						Monster[] monsters = maze.GetMonsters(Location.Position);
+						Monster[] monsters = maze.GetBlock(Location.Position).Monsters;
 						foreach(Monster monster in monsters)
 							if (monster != null)
 							{
@@ -168,32 +167,32 @@ namespace DungeonEye
 				// Drop the item at good ground position
 				if (Distance == 0)
 				{
-					SquarePosition gp = Location.GroundPosition;
+					SquarePosition gp = Location.SquarePosition;
 					switch (Location.Direction)
 					{
 						case CardinalPoint.North:
 						if (gp == SquarePosition.NorthEast || gp == SquarePosition.SouthEast)
-							Location.GroundPosition = SquarePosition.NorthEast;
+							Location.SquarePosition = SquarePosition.NorthEast;
 						else
-							Location.GroundPosition = SquarePosition.NorthWest;
+							Location.SquarePosition = SquarePosition.NorthWest;
 						break;
 						case CardinalPoint.South:
 						if (gp == SquarePosition.NorthEast || gp == SquarePosition.SouthEast)
-							Location.GroundPosition = SquarePosition.SouthEast;
+							Location.SquarePosition = SquarePosition.SouthEast;
 						else
-							Location.GroundPosition = SquarePosition.SouthWest;
+							Location.SquarePosition = SquarePosition.SouthWest;
 						break;
 						case CardinalPoint.West:
 						if (gp == SquarePosition.NorthEast || gp == SquarePosition.NorthWest)
-							Location.GroundPosition = SquarePosition.NorthWest;
+							Location.SquarePosition = SquarePosition.NorthWest;
 						else
-							Location.GroundPosition = SquarePosition.SouthWest;
+							Location.SquarePosition = SquarePosition.SouthWest;
 						break;
 						case CardinalPoint.East:
 						if (gp == SquarePosition.NorthEast || gp == SquarePosition.NorthWest)
-							Location.GroundPosition = SquarePosition.NorthEast;
+							Location.SquarePosition = SquarePosition.NorthEast;
 						else
-							Location.GroundPosition = SquarePosition.SouthEast;
+							Location.SquarePosition = SquarePosition.SouthEast;
 						break;
 					}
 

@@ -589,12 +589,24 @@ namespace DungeonEye.Forms
 						SpriteBatch.FillRectangle(new Rectangle(location.X, location.Y, 25, 25), Color.FromArgb(128, Color.Green));
 					}
 
+
+					// Monsters
+					if (block.Monsters[0] != null)
+						SpriteBatch.FillRectangle(new Rectangle(location.X + 4, location.Y + 4, 4, 4), Color.Red);
+					if (block.Monsters[1] != null)
+						SpriteBatch.FillRectangle(new Rectangle(location.X + 16, location.Y + 4, 4, 4), Color.Red);
+					if (block.Monsters[2] != null)
+						SpriteBatch.FillRectangle(new Rectangle(location.X + 4, location.Y + 16, 4, 4), Color.Red);
+					if (block.Monsters[3] != null)
+						SpriteBatch.FillRectangle(new Rectangle(location.X + 16, location.Y + 16, 4, 4), Color.Red);
+
+					
 				}
 			}
 
 			// Draw monsters
-			foreach (Monster monster in Maze.Monsters)
-				SpriteBatch.DrawTile(Icons, 8, new Point(Offset.X + monster.Location.Position.X * 25, Offset.Y + monster.Location.Position.Y * 25));
+			//foreach (Monster monster in Maze.Monsters)
+			//    SpriteBatch.DrawTile(Icons, 8, new Point(Offset.X + monster.Location.Position.X * 25, Offset.Y + monster.Location.Position.Y * 25));
 
 
 			// Preview pos

@@ -73,7 +73,9 @@ namespace ArcEngine
 		static public void Dispose()
 		{
 			Trace.WriteDebugLine("[ResourceManager] Dispose()");
-			
+
+			ClearSharedAssets();
+
 			foreach (Provider provider in Providers)
 				provider.Dispose();
 			Providers.Clear();
