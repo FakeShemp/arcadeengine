@@ -23,7 +23,7 @@ using System.Text;
 using ArcEngine;
 using ArcEngine.Utility.GameState;
 
-namespace DungeonEye
+namespace DungeonEye.MonsterStates
 {
 
 	/// <summary>
@@ -46,7 +46,7 @@ namespace DungeonEye
 
 
 
-		#region
+		#region Properties
 
 
 

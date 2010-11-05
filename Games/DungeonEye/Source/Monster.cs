@@ -65,7 +65,7 @@ namespace DungeonEye
 			ItemsInPocket = new List<string>();
 			DamageDice = new Dice();
 			HitDice = new Dice();
-			Behaviour = MonsterBehaviour.Aggressive;
+			DefaultBehaviour = MonsterBehaviour.Aggressive;
 
 			DrawOffsetDuration = TimeSpan.FromSeconds(1.0f + GameBase.Random.NextDouble());
 
@@ -232,8 +232,8 @@ namespace DungeonEye
 		/// <param name="time">Elapsed game time</param>
 		public virtual void Update(GameTime time)
 		{
-			if (Script.Instance != null)
-				Script.Instance.OnUpdate(this);
+			//if (Script.Instance != null)
+			//	Script.Instance.OnUpdate(this);
 
 
 			// Draw offset
@@ -243,9 +243,45 @@ namespace DungeonEye
 				LastDrawOffset = DateTime.Now;
 			}
 
-			// Update current state
-			StateManager.Update(time);
 
+
+			// Update current state
+			//StateManager.Update(time);
+
+
+
+			switch (CurrentBehaviour)
+			{
+				#region Aggressive
+				case MonsterBehaviour.Aggressive:
+				break;
+				#endregion
+
+				#region RangeAttack
+				case MonsterBehaviour.RangeAttack:
+				break;
+				#endregion
+
+				#region Run away
+				case MonsterBehaviour.RunAway:
+				break;
+				#endregion
+
+				#region Guard
+				case MonsterBehaviour.Guard:
+				break;
+				#endregion
+
+				#region Friendly
+				case MonsterBehaviour.Friendly:
+				break;
+				#endregion
+
+				#region Friendly unmoving
+				case MonsterBehaviour.FriendlyUnmoving:
+				break;
+				#endregion
+			}
 		}
 
 
@@ -600,7 +636,8 @@ namespace DungeonEye
 
 					case "behaviour":
 					{
-						Behaviour = (MonsterBehaviour) Enum.Parse(typeof(MonsterBehaviour), value);
+						//DefaultBehaviour = (MonsterBehaviour) Enum.Parse(typeof(MonsterBehaviour), node.Attributes["default"].Value);
+						//CurrentBehaviour = (MonsterBehaviour) Enum.Parse(typeof(MonsterBehaviour), node.Attributes["current"].Value);
 					}
 					break;
 
@@ -775,7 +812,8 @@ namespace DungeonEye
 			writer.WriteEndElement();
 
 			writer.WriteStartElement("behaviour");
-			writer.WriteAttributeString("value", Behaviour.ToString());
+			writer.WriteAttributeString("default", DefaultBehaviour.ToString());
+			writer.WriteAttributeString("current", CurrentBehaviour.ToString());
 			writer.WriteEndElement();
 
 			writer.WriteStartElement("fillsquare");
@@ -866,13 +904,25 @@ namespace DungeonEye
 		#region Properties
 
 		/// <summary>
-		/// Monster behaviour
+		/// Monster default behaviour
 		/// </summary>
-		public MonsterBehaviour Behaviour
+		public MonsterBehaviour DefaultBehaviour
 		{
 			get;
 			set;
 		}
+
+
+		/// <summary>
+		/// Monster behaviour
+		/// </summary>
+		public MonsterBehaviour CurrentBehaviour
+		{
+			get;
+			private set;
+		}
+
+
 
 
 		/// <summary>
@@ -1230,7 +1280,7 @@ namespace DungeonEye
 		{
 			get
 			{
-				if (Behaviour == MonsterBehaviour.FriendlyUnmoving || Behaviour == MonsterBehaviour.Unmoving)
+				if (DefaultBehaviour == MonsterBehaviour.FriendlyUnmoving || DefaultBehaviour == MonsterBehaviour.Guard)
 					return false;
 
 				if (LastAction + Speed > DateTime.Now)
@@ -1596,7 +1646,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Stay in one square, unmoving 
 		/// </summary>
-		Unmoving,
+		Guard,
 
 		/// <summary>
 		/// Invincible, never attacks, wanders around randomly

@@ -28,7 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			DungeonEye.Dice dice1 = new DungeonEye.Dice();
+			DungeonEye.Dice dice2 = new DungeonEye.Dice();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MonsterControl));
 			this.VisualGroupBox = new System.Windows.Forms.GroupBox();
 			this.label11 = new System.Windows.Forms.Label();
@@ -100,6 +100,8 @@
 			this.label14 = new System.Windows.Forms.Label();
 			this.label13 = new System.Windows.Forms.Label();
 			this.label10 = new System.Windows.Forms.Label();
+			this.DefaultBehaviourBox = new System.Windows.Forms.ComboBox();
+			this.label1 = new System.Windows.Forms.Label();
 			this.VisualGroupBox.SuspendLayout();
 			this.PocketGroupBox.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize) (this.XPRewardBox)).BeginInit();
@@ -213,7 +215,7 @@
 			// 
 			this.AddPocketItemBox.AutoSize = true;
 			this.AddPocketItemBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.AddPocketItemBox.Location = new System.Drawing.Point(146, 19);
+			this.AddPocketItemBox.Location = new System.Drawing.Point(233, 16);
 			this.AddPocketItemBox.Name = "AddPocketItemBox";
 			this.AddPocketItemBox.Size = new System.Drawing.Size(36, 23);
 			this.AddPocketItemBox.TabIndex = 4;
@@ -225,9 +227,9 @@
 			// 
 			this.ItemsBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.ItemsBox.FormattingEnabled = true;
-			this.ItemsBox.Location = new System.Drawing.Point(6, 19);
+			this.ItemsBox.Location = new System.Drawing.Point(6, 16);
 			this.ItemsBox.Name = "ItemsBox";
-			this.ItemsBox.Size = new System.Drawing.Size(134, 21);
+			this.ItemsBox.Size = new System.Drawing.Size(221, 21);
 			this.ItemsBox.Sorted = true;
 			this.ItemsBox.TabIndex = 3;
 			// 
@@ -309,7 +311,7 @@
 			this.EntityBox.Entity = null;
 			this.EntityBox.Location = new System.Drawing.Point(3, 3);
 			this.EntityBox.Name = "EntityBox";
-			this.EntityBox.Size = new System.Drawing.Size(186, 68);
+			this.EntityBox.Size = new System.Drawing.Size(580, 423);
 			this.EntityBox.TabIndex = 0;
 			// 
 			// PropertiesTab
@@ -335,6 +337,8 @@
 			// 
 			// groupBox2
 			// 
+			this.groupBox2.Controls.Add(this.label1);
+			this.groupBox2.Controls.Add(this.DefaultBehaviourBox);
 			this.groupBox2.Controls.Add(this.label16);
 			this.groupBox2.Controls.Add(this.SightRangeBox);
 			this.groupBox2.Controls.Add(this.CanSeeInvisibleBox);
@@ -565,10 +569,10 @@
 			// DamageBox
 			// 
 			this.DamageBox.ControlText = "Damage :";
-			dice1.Faces = 1;
-			dice1.Modifier = 0;
-			dice1.Throws = 1;
-			this.DamageBox.Dice = dice1;
+			dice2.Faces = 1;
+			dice2.Modifier = 0;
+			dice2.Throws = 1;
+			this.DamageBox.Dice = dice2;
 			this.DamageBox.Location = new System.Drawing.Point(257, 273);
 			this.DamageBox.MinimumSize = new System.Drawing.Size(225, 100);
 			this.DamageBox.Name = "DamageBox";
@@ -869,6 +873,26 @@
 			this.label10.TabIndex = 0;
 			this.label10.Text = "Move :";
 			// 
+			// DefaultBehaviourBox
+			// 
+			this.DefaultBehaviourBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.DefaultBehaviourBox.FormattingEnabled = true;
+			this.DefaultBehaviourBox.Location = new System.Drawing.Point(113, 155);
+			this.DefaultBehaviourBox.Name = "DefaultBehaviourBox";
+			this.DefaultBehaviourBox.Size = new System.Drawing.Size(129, 21);
+			this.DefaultBehaviourBox.Sorted = true;
+			this.DefaultBehaviourBox.TabIndex = 17;
+			this.DefaultBehaviourBox.SelectedIndexChanged += new System.EventHandler(this.DefaultBehaviourBox_SelectedIndexChanged);
+			// 
+			// label1
+			// 
+			this.label1.AutoSize = true;
+			this.label1.Location = new System.Drawing.Point(6, 158);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(97, 13);
+			this.label1.TabIndex = 18;
+			this.label1.Text = "Default behaviour :";
+			// 
 			// MonsterControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -976,5 +1000,7 @@
 		private System.Windows.Forms.Label label16;
 		private System.Windows.Forms.NumericUpDown SightRangeBox;
 		private ArcEngine.Editor.ScriptControl ScriptBox;
+		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.ComboBox DefaultBehaviourBox;
 	}
 }

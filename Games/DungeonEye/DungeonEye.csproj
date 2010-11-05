@@ -251,7 +251,7 @@
     <Compile Include="Source\Gui\MessageBox.cs" />
     <Compile Include="Source\HandAction.cs" />
     <Compile Include="Source\MazeZone.cs" />
-    <Compile Include="Source\MonsterState.cs">
+    <Compile Include="Source\MonsterStates\MonsterState.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Source\MonsterStates\Attack.cs" />

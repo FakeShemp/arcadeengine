@@ -602,8 +602,13 @@ namespace DungeonEye
 				}
 			}
 
-			writer.WriteElementString("nomonster", NoMonster.ToString());
-			writer.WriteElementString("noghost", NoGhost.ToString());
+			writer.WriteStartElement("nomonster");
+			writer.WriteAttributeString("value", NoMonster.ToString());
+			writer.WriteEndElement();
+
+			writer.WriteStartElement("noghost");
+			writer.WriteAttributeString("value", NoGhost.ToString());
+			writer.WriteEndElement();
 
 			writer.WriteEndElement();
 		}
@@ -642,13 +647,13 @@ namespace DungeonEye
 
 					case "noghost":
 					{
-						NoGhost = true;
+						NoGhost = bool.Parse(node.Attributes["value"].Value);
 					}
 					break;
 
 					case "nomonster":
 					{
-						NoMonster = true;
+						NoMonster = bool.Parse(node.Attributes["value"].Value);
 					}
 					break;
 

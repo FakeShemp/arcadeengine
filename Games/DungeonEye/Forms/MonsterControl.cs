@@ -43,6 +43,10 @@ namespace DungeonEye.Forms
 		public MonsterControl()
 		{
 			InitializeComponent();
+
+			DefaultBehaviourBox.BeginUpdate();
+			DefaultBehaviourBox.DataSource = Enum.GetNames(typeof(MonsterBehaviour));
+			DefaultBehaviourBox.EndUpdate();
 		}
 
 
@@ -131,6 +135,7 @@ namespace DungeonEye.Forms
 				StealBox.Value = (decimal)Monster.StealRate * 100;
 				CanSeeInvisibleBox.Checked = Monster.CanSeeInvisible;
 				TeleportsBox.Checked = Monster.Teleports;
+				DefaultBehaviourBox.SelectedItem = Monster.DefaultBehaviour;
 			}
 		}
 
@@ -632,7 +637,18 @@ namespace DungeonEye.Forms
 
 		}
 
+
+		private void DefaultBehaviourBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (Monster == null)
+				return;
+
+			Monster.DefaultBehaviour = (MonsterBehaviour) Enum.Parse(typeof(MonsterBehaviour), (string)DefaultBehaviourBox.SelectedItem);
+
+		}
+
 		#endregion
+
 
 	}
 }
