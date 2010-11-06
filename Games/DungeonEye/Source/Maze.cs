@@ -160,9 +160,11 @@ namespace DungeonEye
 		public void Update(GameTime time)
 		{
 			// Update monsters
-		//	foreach (List<Square> list in Blocks)
-		//		foreach (Square square in list)
-		//			square.Update(time);
+			foreach (List<Square> list in Blocks)
+				foreach (Square square in list)
+				{
+					square.Update(time);
+				}
 
 /*
 			// Remove dead monsters
@@ -186,8 +188,8 @@ namespace DungeonEye
 					return true;
 				});
 
-*/
 
+*/
 			#region Doors
 			foreach (Door door in Doors)
 				door.Update(time);
@@ -539,9 +541,7 @@ namespace DungeonEye
 			// I.e. all kind of moves and rotations from the current position will result in the background being x-flipped.
 			//bool flipbackdrop = ((location.Position.X + location.Position.Y + (int)location.Direction) & 1) == 0;
 			SpriteEffects effect = ((location.Position.X + location.Position.Y + (int)location.Direction) & 1) == 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-
 			batch.DrawTile(WallTileset, 0, Point.Empty, Color.White, 0.0f, effect, 0.0f);
-
 
 
 			// alternate the wall

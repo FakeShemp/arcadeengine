@@ -72,7 +72,7 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Initialization
 		/// </summary>
 		public void Init()
 		{
@@ -87,12 +87,19 @@ namespace DungeonEye
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
 		public override string ToString()
 		{
 			StringBuilder sb = new StringBuilder();
 
 			if (Door != null)
 				sb.Append(Door);
+
+			else if (MonsterCount > 0)
+				sb.Append(" " + MonsterCount + " monster(s)");
 
 			else if (Teleporter != null)
 				sb.Append(" " + Teleporter);
@@ -121,9 +128,9 @@ namespace DungeonEye
 				{
 					sb.Append(" Illusion");
 				}
-				else 
+				else
 					sb.Append(" Wall");
-				
+
 				if (HasAlcoves)
 				{
 					sb.Append(" Alcove facing ");
@@ -143,6 +150,24 @@ namespace DungeonEye
 				sb.Append(" " + GroundItemCount + " item(s)");
 
 			return sb.ToString();
+		}
+
+
+		/// <summary>
+		/// Update
+		/// </summary>
+		/// <param name="time"></param>
+		public void Update(GameTime time)
+		{
+			// Update monsters
+			if (MonsterCount > 0)
+				for (int i = 0; i < 4; i++)
+					if (Monsters[i] != null)
+						Monsters[i].Update(time);
+
+			// Door
+			if (Door != null)
+				Door.Update(time);
 		}
 
 
@@ -374,7 +399,6 @@ namespace DungeonEye
 		}
 
 		#endregion
-
 
 
 		/// <summary>

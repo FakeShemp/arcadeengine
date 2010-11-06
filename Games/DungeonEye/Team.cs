@@ -452,20 +452,20 @@ namespace DungeonEye
 				DrawMain(Batch);
 
 				/*
-								// Action zones
-								for (int id = 0 ; id < 6 ; id++)
-								{
-									Batch.FillRectangle(InterfaceCoord.PrimaryHand[id], Color.FromArgb(128, Color.Red));
-									Batch.FillRectangle(InterfaceCoord.SecondaryHand[id], Color.FromArgb(128, Color.Red));
-									Batch.FillRectangle(InterfaceCoord.SelectHero[id], Color.FromArgb(128, Color.Red));
-									Batch.FillRectangle(InterfaceCoord.HeroFace[id], Color.FromArgb(128, Color.Red));
-								}
-								Batch.FillRectangle(InterfaceCoord.TurnLeft, Color.FromArgb(128, Color.Red));
-								Batch.FillRectangle(InterfaceCoord.TurnRight, Color.FromArgb(128, Color.Red));
-								Batch.FillRectangle(InterfaceCoord.MoveForward, Color.FromArgb(128, Color.Red));
-								Batch.FillRectangle(InterfaceCoord.MoveBackward, Color.FromArgb(128, Color.Red));
-								Batch.FillRectangle(InterfaceCoord.MoveLeft, Color.FromArgb(128, Color.Red));
-								Batch.FillRectangle(InterfaceCoord.MoveRight, Color.FromArgb(128, Color.Red));
+				// Action zones
+				for (int id = 0 ; id < 6 ; id++)
+				{
+					Batch.FillRectangle(InterfaceCoord.PrimaryHand[id], Color.FromArgb(128, Color.Red));
+					Batch.FillRectangle(InterfaceCoord.SecondaryHand[id], Color.FromArgb(128, Color.Red));
+					Batch.FillRectangle(InterfaceCoord.SelectHero[id], Color.FromArgb(128, Color.Red));
+					Batch.FillRectangle(InterfaceCoord.HeroFace[id], Color.FromArgb(128, Color.Red));
+				}
+				Batch.FillRectangle(InterfaceCoord.TurnLeft, Color.FromArgb(128, Color.Red));
+				Batch.FillRectangle(InterfaceCoord.TurnRight, Color.FromArgb(128, Color.Red));
+				Batch.FillRectangle(InterfaceCoord.MoveForward, Color.FromArgb(128, Color.Red));
+				Batch.FillRectangle(InterfaceCoord.MoveBackward, Color.FromArgb(128, Color.Red));
+				Batch.FillRectangle(InterfaceCoord.MoveLeft, Color.FromArgb(128, Color.Red));
+				Batch.FillRectangle(InterfaceCoord.MoveRight, Color.FromArgb(128, Color.Red));
 				*/
 
 

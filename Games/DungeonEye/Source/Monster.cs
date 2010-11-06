@@ -75,36 +75,6 @@ namespace DungeonEye
 		}
 
 
-/*
-		/// <summary>
-		/// Dispose
-		/// </summary>
-		public void Dispose()
-		{
-			if (Tileset != null)
-				Tileset.Dispose();
-			Tileset = null;
-
-			if (AttackSound != null)
-				AttackSound.Dispose();
-			AttackSound = null;
-
-			if (HurtSound != null)
-				HurtSound.Dispose();
-			HurtSound = null;
-
-			if (DieSound != null)
-				DieSound.Dispose();
-			DieSound = null;
-
-			if (MoveSound != null)
-				MoveSound.Dispose();
-			MoveSound = null;
-
-			IsDisposed = true;
-		}
-*/
-
 		/// <summary>
 		/// Initializes the monster
 		/// </summary>
@@ -236,6 +206,7 @@ namespace DungeonEye
 			//if (Script.Instance != null)
 			//	Script.Instance.OnUpdate(this);
 
+//			return;
 
 			// Draw offset
 			if (LastDrawOffset + DrawOffsetDuration < DateTime.Now)
@@ -800,8 +771,8 @@ namespace DungeonEye
 
 					case "behaviour":
 					{
-						//DefaultBehaviour = (MonsterBehaviour) Enum.Parse(typeof(MonsterBehaviour), node.Attributes["default"].Value);
-						//CurrentBehaviour = (MonsterBehaviour) Enum.Parse(typeof(MonsterBehaviour), node.Attributes["current"].Value);
+						DefaultBehaviour = (MonsterBehaviour) Enum.Parse(typeof(MonsterBehaviour), node.Attributes["default"].Value);
+						CurrentBehaviour = (MonsterBehaviour) Enum.Parse(typeof(MonsterBehaviour), node.Attributes["current"].Value);
 					}
 					break;
 
