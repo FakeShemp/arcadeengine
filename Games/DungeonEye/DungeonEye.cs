@@ -99,7 +99,7 @@ namespace DungeonEye
 
 			// Main storage bank
 			Storage = new BankStorage("data/Game.bnk");
-			ResourceManager.Storages.Add(Storage);
+			ResourceManager.AddStorage(Storage);
 			ResourceManager.RootDirectory = "data";
 
 	

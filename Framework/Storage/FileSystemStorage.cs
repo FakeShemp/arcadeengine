@@ -37,7 +37,7 @@ namespace ArcEngine.Storage
 		{
 			RootDirectory = path;
 
-			Process();
+		//	Process();
 		}
 
 

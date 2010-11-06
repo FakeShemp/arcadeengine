@@ -33,7 +33,7 @@ namespace ArcEngine.Storage
 			BankName = bankname;
 			Password = password;
 
-			Process();
+		//	Process();
 		}
 
 

@@ -764,16 +764,15 @@ namespace DungeonEye
 			#endregion
 
 			#region Monsters
-			//if (GetMonsterCount(block.Location.Position) != 0)
+			if (block.MonsterCount > 0)
 			{
-				foreach (Monster monster in field.GetMonsters(position))
+				foreach (Monster monster in block.Monsters)
 				{
 					if (monster != null)
 						monster.Draw(batch, view, position);
 				}
 			}
 			#endregion
-
 
 			#region Items on ground
 			if (!block.IsWall)
@@ -1467,7 +1466,7 @@ namespace DungeonEye
 
 
 	/// <summary>
-	/// Get the walls and the monsters viewed from a point of view
+	/// Get all the blocks viewed from a given point of view
 	/// </summary>
 	public class ViewField
 	{
@@ -1480,9 +1479,6 @@ namespace DungeonEye
 		{
 			Maze = maze;
 			Blocks = new Square[19];
-			Monsters = new Monster[19][];
-			for (int i = 0; i < Monsters.Length; i++)
-				Monsters[i] = new Monster[4];
 
 
 
@@ -1605,67 +1601,13 @@ namespace DungeonEye
 				}
 				break;
 				#endregion
-
-
 			}
 
 			// Team's position
 			Blocks[16] = maze.GetBlock(location.Position);
-
-			// Monsters
-			for (int i = 0 ; i < 17 ; i++)
-				Monsters[i] = Blocks[i].Monsters;
-
 		}
 
-		/// <summary>
-		/// Returns a list of all monster
-		/// </summary>
-		/// <param name="pos">Position in the view field</param>
-		/// <returns></returns>
-		public Monster[] GetMonsters(ViewFieldPosition pos)
-		{
-			switch (pos)
-			{
-				case ViewFieldPosition.B:
-				return Monsters[1];
-
-				case ViewFieldPosition.C:
-				return Monsters[2];
-
-				case ViewFieldPosition.D:
-				return Monsters[3];
-
-				case ViewFieldPosition.E:
-				return Monsters[4];
-
-				case ViewFieldPosition.F:
-				return Monsters[5];
-
-				case ViewFieldPosition.I:
-				return Monsters[8];
-
-				case ViewFieldPosition.J:
-				return Monsters[9];
-
-				case ViewFieldPosition.K:
-				return Monsters[10];
-
-				case ViewFieldPosition.M:
-				return Monsters[12];
-
-				case ViewFieldPosition.N:
-				return Monsters[13];
-
-				case ViewFieldPosition.O:
-				return Monsters[14];
-
-			}
-
-			return new Monster[4];
-		}
-
-
+	
 		/// <summary>
 		/// Gets a block in the view field
 		/// </summary>
@@ -1688,13 +1630,6 @@ namespace DungeonEye
 			get;
 			private set;
 		}
-
-
-
-		/// <summary>
-		/// Monster list
-		/// </summary>
-		Monster[][] Monsters;
 
 
 		/// <summary>

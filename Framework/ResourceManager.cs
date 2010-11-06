@@ -88,6 +88,20 @@ namespace ArcEngine
 
 
 		/// <summary>
+		/// Adds a storage to the manager
+		/// </summary>
+		/// <param name="storage"></param>
+		static public void AddStorage(StorageBase storage)
+		{
+			if (storage == null)
+				return;
+
+			storage.Process();
+			Storages.Add(storage);
+		}
+
+
+		/// <summary>
 		/// Gets an internal resource
 		/// </summary>
 		/// <param name="name">Name of the resource</param>
@@ -795,12 +809,7 @@ namespace ArcEngine
 		/// <summary>
 		/// Storages
 		/// </summary>
-		static public List<StorageBase> Storages
-		{
-			get;
-			private set;
-		}
-
+		static List<StorageBase> Storages;
 
 		/// <summary>
 		/// Failback storage

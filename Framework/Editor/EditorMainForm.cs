@@ -147,7 +147,7 @@ namespace ArcEngine.Editor
 			Environment.CurrentDirectory = Application.StartupPath;
 
 
-			ResourceManager.Storages.Add(new BankStorage(dlg.FileName));
+			ResourceManager.AddStorage(new BankStorage(dlg.FileName));
 
 			ResourcePanel.RebuildResourceTree();
 
@@ -282,7 +282,7 @@ namespace ArcEngine.Editor
 				// Load bank
 				Directory.SetCurrentDirectory(@"D:\Dev\ArcEngine\Games\DungeonEye");
 				Storage = new BankStorage(dlg.FileName);
-				ResourceManager.Storages.Add(Storage);
+				ResourceManager.AddStorage(Storage);
 			}
 
 			ResourcePanel.RebuildResourceTree();
@@ -495,7 +495,7 @@ namespace ArcEngine.Editor
 			if (dlg.ShowDialog() != DialogResult.OK)
 				return;
 
-			ResourceManager.Storages.Add(new BankStorage(dlg.FileName));
+			ResourceManager.AddStorage(new BankStorage(dlg.FileName));
 
 			ResourcePanel.RebuildResourceTree();
 		}

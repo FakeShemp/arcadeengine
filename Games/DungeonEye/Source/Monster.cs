@@ -206,7 +206,6 @@ namespace DungeonEye
 			//if (Script.Instance != null)
 			//	Script.Instance.OnUpdate(this);
 
-//			return;
 
 			// Draw offset
 			if (LastDrawOffset + DrawOffsetDuration < DateTime.Now)
@@ -244,7 +243,7 @@ namespace DungeonEye
 				#region Guard
 				case MonsterBehaviour.Guard:
 				{
-					// Heal
+					// Heal if needed
 					if (CanHeal && HitPoint.Ratio < 0.5f)
 						Heal();
 
@@ -252,20 +251,28 @@ namespace DungeonEye
 					else if (team.Location.Maze != maze)
 						break;
 
+					// Can get closer while staying in the same square ?
 					else if (CanGetCloserTo(team.Location))
 					{
 						GetCloserTo(team.Location);
 					}
+
+					// Can do close attack ?
 					else if (CanDoCloseAttack(team.Location))
 					{
+						Attack(team.Location);
 					}
+
+					// If neat the target
 					else if (IsNear(team.Location))
 					{
+						// Face the target
 						if (Location.IsFacing(team.Location))
 							Location.FaceTo(team.Location);
 
-						if (!CanUseAmmo)
-							CurrentBehaviour = MonsterBehaviour.Aggressive;
+						// No choice, attack !
+						//if (!CanUseAmmo)
+						//	CurrentBehaviour = MonsterBehaviour.Aggressive;
 					}
 				}
 				break;
@@ -360,8 +367,6 @@ namespace DungeonEye
 		}
 
 
-
-
 		/// <summary>
 		/// Draw the monster
 		/// </summary>
@@ -436,7 +441,7 @@ namespace DungeonEye
 				batch.DrawTile(Tileset, GetTileID(direction), new Point(-20 + DrawOffset.X, 190));
 				break;
 				case ViewFieldPosition.N:
-				batch.DrawTile(Tileset, GetTileID(direction), new Point(180 + DrawOffset.X, 190));
+				batch.DrawTile(Tileset, GetTileID(direction), new Point(180 + DrawOffset.X, 150));
 				break;
 				case ViewFieldPosition.O:
 				batch.DrawTile(Tileset, GetTileID(direction), new Point(370 + DrawOffset.X, 190));
@@ -504,15 +509,20 @@ namespace DungeonEye
 		/// <returns>True if possible</returns>
 		public bool CanDoCloseAttack(DungeonLocation target)
 		{
+			// Not in the same maze
 			if (target.Maze != Location.Maze)
 				return false;
 
+			// If can get closer to the target
 			if (CanGetCloserTo(target))
 				return false;
 
+			// Find the distance
 			Point dist = new Point(target.Position.X - Location.Position.X, target.Position.Y - Location.Position.Y);
 
-			return Math.Abs(dist.X) <= 1 || Math.Abs(dist.Y) <= 1;
+			// Close to the target (up, down or left, right)
+			return	(dist.X == 0 && Math.Abs(dist.Y) == 1) ||
+					(Math.Abs(dist.X) == 1 && dist.Y == 0);
 		}
 
 

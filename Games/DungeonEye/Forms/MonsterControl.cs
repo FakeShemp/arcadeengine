@@ -58,6 +58,9 @@ namespace DungeonEye.Forms
 		{
 			//if (Monster != null)
 			//    Monster.Dispose();
+			if (TileSet != null)
+				TileSet.Dispose();
+			TileSet = null;
 
 			Monster = monster;
 			EntityBox.Entity = Monster;
@@ -77,8 +80,6 @@ namespace DungeonEye.Forms
 				ItemsBox.Items.Add(item);
 			ItemsBox.EndUpdate();
 
-
-			// Scripts
 
 			if (Monster == null)
 			{
@@ -100,7 +101,7 @@ namespace DungeonEye.Forms
 			else
 			{
 
-				if (!string.IsNullOrEmpty(Monster.TileSetName))
+				if (!string.IsNullOrEmpty(Monster.TileSetName) && TileSet == null)
 					TileSet = ResourceManager.CreateAsset<TileSet>(Monster.TileSetName);
 
 
@@ -135,7 +136,7 @@ namespace DungeonEye.Forms
 				StealBox.Value = (decimal)Monster.StealRate * 100;
 				CanSeeInvisibleBox.Checked = Monster.CanSeeInvisible;
 				TeleportsBox.Checked = Monster.Teleports;
-				DefaultBehaviourBox.SelectedItem = Monster.DefaultBehaviour;
+				DefaultBehaviourBox.SelectedItem = Monster.DefaultBehaviour.ToString();
 			}
 		}
 
