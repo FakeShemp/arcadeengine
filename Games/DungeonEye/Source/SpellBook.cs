@@ -43,7 +43,7 @@ namespace DungeonEye
 			SpellLevel = 1;
 		}
 
-
+		
 		/// <summary>
 		/// Dispose
 		/// </summary>
@@ -52,7 +52,7 @@ namespace DungeonEye
 			if (Font != null)
 				Font.Dispose();
 			Font = null;
-
+			
 			ResourceManager.RemoveSharedAsset<TileSet>("interface");
 			Tileset = null;
 		}
@@ -134,7 +134,7 @@ namespace DungeonEye
 
 			// Display at max 6 spells
 			Point pos = new Point(146, 264);
-			for (int id = 0 ; id < Math.Min(spells.Count, 6) ; id++)
+			for (int id = 0; id < Math.Min(spells.Count, 6); id++)
 			{
 				color = Color.White;
 
@@ -230,8 +230,8 @@ namespace DungeonEye
 
 		#endregion
 
-		
-		
+
+
 		#region Properties
 
 		/// <summary>
