@@ -30,6 +30,9 @@ using ArcEngine.Graphic;
 
 namespace ArcEngine.Editor
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	public partial class ScriptControl : UserControl
 	{
 		/// <summary>

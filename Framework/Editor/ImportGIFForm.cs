@@ -22,7 +22,7 @@ namespace ArcEngine.Editor
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="bankname">Name of the bank</param>
+		/// <param name="storage">Name of the bank</param>
 		public ImportGIFForm(StorageBase storage)
 		{
 			InitializeComponent();

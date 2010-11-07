@@ -120,7 +120,7 @@ namespace DungeonEye
 		public CardinalPoint SeekDirection(DungeonLocation from, DungeonLocation target)
 		{
 			Point delta = new Point(target.Coordinate.X - from.Coordinate.X, target.Coordinate.Y - from.Coordinate.Y);
-			CardinalPoint dir = CardinalPoint.North;
+			//CardinalPoint dir = CardinalPoint.North;
 
 
 			// Move west

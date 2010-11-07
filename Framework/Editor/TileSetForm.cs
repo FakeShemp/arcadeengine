@@ -39,9 +39,9 @@ namespace ArcEngine.Editor
 	{
 
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
-		/// <param name="node"></param>
+		/// <param name="node">Xml node</param>
 		public TileSetForm(XmlNode node)
 		{
 			InitializeComponent();
@@ -624,6 +624,7 @@ namespace ArcEngine.Editor
 			tileSet.Load(Node);
 
 /*
+			// Rectangle * 2
 			foreach (int id in tileSet.Tiles)
 			{
 				Tile tile = tileSet.GetTile(id);
@@ -632,6 +633,15 @@ namespace ArcEngine.Editor
 				tile.Rectangle = rect;
 			}
 */
+/*
+			// Origin x 2
+			foreach (int id in tileSet.Tiles)
+			{
+				Tile tile = tileSet.GetTile(id);
+				tile.Origin = new Point(tile.Origin.X * 2, tile.Origin.Y * 2);
+			}
+*/	
+			
 			// Build Cell list
 			RebuildCellList();
 		}

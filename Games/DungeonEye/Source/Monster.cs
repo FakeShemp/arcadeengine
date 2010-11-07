@@ -604,11 +604,11 @@ namespace DungeonEye
 				},
 				// N
 				new Point[]{
-					new Point(116, 120),	// North West
-					new Point(214, 120),	// North East
-					new Point(106, 140),	// South West
-					new Point(234, 140),	// South East
-					new Point(180, 150),	// Middle
+					new Point(116, 168),	// North West
+					new Point(214, 168),	// North East
+					new Point(106, 196),	// South West
+					new Point(234, 196),	// South East
+					new Point(160, 140),	// Middle
 				},
 				// O
 				new Point[]{
@@ -623,7 +623,6 @@ namespace DungeonEye
 			};
 			#endregion
 
-			int i = 0;
 			#region Subsquare
 
 			// Translate subsquare position according looking point
@@ -694,7 +693,9 @@ namespace DungeonEye
 					Point position = new Point(
 						positions[offset][suboffset].X + DrawOffset.X / offsetscale[offset].X,
 						positions[offset][suboffset].Y + DrawOffset.Y / offsetscale[offset].Y);
-					
+
+					position = MazeDisplayCoordinates.GetGroundItem(pos, Position);
+
 					batch.DrawTile(Tileset, GetTileID(direction), position);
 					Tileset.Scale = new Vector2(1.0f, 1.0f);
 
@@ -1148,7 +1149,7 @@ namespace DungeonEye
 
 			writer.WriteStartElement("monster");
 			writer.WriteAttributeString("name", Name);
-			writer.WriteAttributeString("position", Location.Coordinate.ToString());
+			writer.WriteAttributeString("position", Position.ToString());
 
 			base.Save(writer);
 

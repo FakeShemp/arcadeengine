@@ -569,10 +569,7 @@ namespace DungeonEye
 
 						// Primary
 						Item item = hero.GetInventoryItem(hand == HeroHand.Primary ? InventoryPosition.Primary : InventoryPosition.Secondary);
-						if (item != null)
-							batch.DrawTile(Items, item.TileID, new Point(pos.X + 88, pos.Y + 28 + yoffset));
-						else
-							batch.DrawTile(Items, 86, new Point(pos.X + 80, pos.Y + 28 + yoffset));
+						batch.DrawTile(Items, item != null ? item.TileID : 86, new Point(pos.X + 96, pos.Y + 36 + yoffset));
 
 						if (!hero.CanUseHand(hand))
 							batch.DrawTile(TileSet, 3, new Point(pos.X + 66, pos.Y + 20 + yoffset));
@@ -738,8 +735,8 @@ namespace DungeonEye
 
 			// Draw inventory
 			int pos = 0;
-			for (int y = 86 ; y < 338 ; y += 36)
-				for (int x = 368 ; x < 440 ; x += 36)
+			for (int y = 94 ; y < 346 ; y += 36)
+				for (int x = 376 ; x < 448 ; x += 36)
 				{
 					if (SelectedHero.GetBackPackItem(pos) != null)
 						batch.DrawTile(Items, SelectedHero.GetBackPackItem(pos).TileID, new Point(x, y));
@@ -756,51 +753,51 @@ namespace DungeonEye
 
 			// Armor
 			if (SelectedHero.GetInventoryItem(InventoryPosition.Armor) != null)
-				batch.DrawTile(Items, SelectedHero.GetInventoryItem(InventoryPosition.Armor).TileID, new Point(454, 158));
+				batch.DrawTile(Items, SelectedHero.GetInventoryItem(InventoryPosition.Armor).TileID, new Point(462, 166));
 
 			// Wrists
 			if (SelectedHero.GetInventoryItem(InventoryPosition.Wrist) != null)
-				batch.DrawTile(Items, SelectedHero.GetInventoryItem(InventoryPosition.Wrist).TileID, new Point(456, 198));
+				batch.DrawTile(Items, SelectedHero.GetInventoryItem(InventoryPosition.Wrist).TileID, new Point(464, 206));
 
 			// Primary
 			if (SelectedHero.GetInventoryItem(InventoryPosition.Primary) != null)
-				batch.DrawTile(Items, SelectedHero.GetInventoryItem(InventoryPosition.Primary).TileID, new Point(466, 236));
+				batch.DrawTile(Items, SelectedHero.GetInventoryItem(InventoryPosition.Primary).TileID, new Point(474, 244));
 
 			// Fingers 1
 			if (SelectedHero.GetInventoryItem(InventoryPosition.Ring_Left) != null)
-				batch.DrawTile(Items, SelectedHero.GetInventoryItem(InventoryPosition.Ring_Left).TileID, new Point(454, 270));
+				batch.DrawTile(Items, SelectedHero.GetInventoryItem(InventoryPosition.Ring_Left).TileID, new Point(462, 278));
 
 			// Fingers 2
 			if (SelectedHero.GetInventoryItem(InventoryPosition.Ring_Right) != null)
-				batch.DrawTile(Items, SelectedHero.GetInventoryItem(InventoryPosition.Ring_Right).TileID, new Point(478, 270));
+				batch.DrawTile(Items, SelectedHero.GetInventoryItem(InventoryPosition.Ring_Right).TileID, new Point(486, 278));
 
 			// Feet
 			if (SelectedHero.GetInventoryItem(InventoryPosition.Feet) != null)
-				batch.DrawTile(Items, SelectedHero.GetInventoryItem(InventoryPosition.Feet).TileID, new Point(560, 280));
+				batch.DrawTile(Items, SelectedHero.GetInventoryItem(InventoryPosition.Feet).TileID, new Point(568, 288));
 
 			// Secondary
 			if (SelectedHero.GetInventoryItem(InventoryPosition.Secondary) != null)
-				batch.DrawTile(Items, SelectedHero.GetInventoryItem(InventoryPosition.Secondary).TileID, new Point(560, 238));
+				batch.DrawTile(Items, SelectedHero.GetInventoryItem(InventoryPosition.Secondary).TileID, new Point(568, 246));
 
 			// Back 1 598,184,36,36
 			if (SelectedHero.GetWaistPackItem(0) != null)
-				batch.DrawTile(Items, SelectedHero.GetWaistPackItem(0).TileID, new Point(606, 194));
+				batch.DrawTile(Items, SelectedHero.GetWaistPackItem(0).TileID, new Point(614, 202));
 
 			// Back 2 598,220,36,36
 			if (SelectedHero.GetWaistPackItem(1) != null)
-				batch.DrawTile(Items, SelectedHero.GetWaistPackItem(1).TileID, new Point(606, 230));
+				batch.DrawTile(Items, SelectedHero.GetWaistPackItem(1).TileID, new Point(614, 238));
 
 			// Back 3 598,256,36,36
 			if (SelectedHero.GetWaistPackItem(2) != null)
-				batch.DrawTile(Items, SelectedHero.GetWaistPackItem(2).TileID, new Point(606, 264));
+				batch.DrawTile(Items, SelectedHero.GetWaistPackItem(2).TileID, new Point(614, 272));
 
 			// Neck 572,146,36,36
 			if (SelectedHero.GetInventoryItem(InventoryPosition.Neck) != null)
-				batch.DrawTile(Items, SelectedHero.GetInventoryItem(InventoryPosition.Neck).TileID, new Point(586, 164));
+				batch.DrawTile(Items, SelectedHero.GetInventoryItem(InventoryPosition.Neck).TileID, new Point(588, 164));
 
 			// Head 594,106,36,36
 			if (SelectedHero.GetInventoryItem(InventoryPosition.Helmet) != null)
-				batch.DrawTile(Items, SelectedHero.GetInventoryItem(InventoryPosition.Helmet).TileID, new Point(602, 116));
+				batch.DrawTile(Items, SelectedHero.GetInventoryItem(InventoryPosition.Helmet).TileID, new Point(610, 124));
 
 			/* 
 						// Debug draw
@@ -2563,18 +2560,23 @@ namespace DungeonEye
 			if (Dungeon == null || location == null)
 				return false;
 
+			// Destination maze
 			Maze maze = Dungeon.GetMaze(location.MazeName);
 			if (maze == null)
 				return false;
 
+			// Leave current block
 			if (MazeBlock != null)
 				MazeBlock.OnTeamLeave(this);
-			Location.Position = location.Position;
+
+			// Change location
+			Location.Coordinate = location.Coordinate;
 			Location.SetMaze(maze.Name);
 
+			// New block
+			MazeBlock = Location.Maze.GetBlock(location.Coordinate);
 
-			MazeBlock = Location.Maze.GetBlock(Location.Coordinate);
-
+			// Enter new block
 			MazeBlock.OnTeamEnter(this);
 
 			return true;

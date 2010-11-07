@@ -5,7 +5,7 @@ using csvorbis;
 
 //taken from http://home.halden.net/tombr/ogg/ogg.html
 
-/**
+/*
 * Decompresses an Ogg file.
 * <p>
 * How to use:<br>

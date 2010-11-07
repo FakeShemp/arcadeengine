@@ -53,6 +53,9 @@ namespace ArcEngine.Storage
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public virtual void Flush()
 		{
 		}

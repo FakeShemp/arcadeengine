@@ -31,20 +31,6 @@
 			<waist position="0" name="Rock" />
 			<waist position="1" name="Rock" />
 			<waist position="2" name="Rock" />
-			<backpack position="0" name="Rotten Food" />
-			<backpack position="1" name="Rotten Food" />
-			<backpack position="2" name="Rotten Food" />
-			<backpack position="3" name="Rotten Food" />
-			<backpack position="4" name="Iron Ration" />
-			<backpack position="5" name="Rotten Food" />
-			<backpack position="6" name="Rotten Food" />
-			<backpack position="7" name="Iron Ration" />
-			<backpack position="8" name="Iron Ration" />
-			<backpack position="9" name="Rotten Food" />
-			<backpack position="10" name="Rotten Food" />
-			<backpack position="11" name="Rotten Food" />
-			<backpack position="12" name="Rotten Food" />
-			<backpack position="13" name="Rotten Food" />
 		</hero>
 	</position>
 	<position slot="FrontRight">
