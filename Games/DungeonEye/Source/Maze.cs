@@ -766,10 +766,14 @@ namespace DungeonEye
 			#region Monsters
 			if (block.MonsterCount > 0)
 			{
-				foreach (Monster monster in block.Monsters)
+				for (int i = 0; i < 4; i++)
 				{
-					if (monster != null)
-						monster.Draw(batch, view, position);
+					Monster monster = block.Monsters[i];
+					if (monster == null)
+						continue;
+
+
+					monster.Draw(batch, view, position);
 				}
 			}
 			#endregion

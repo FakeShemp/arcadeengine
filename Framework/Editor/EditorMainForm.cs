@@ -59,6 +59,7 @@ namespace ArcEngine.Editor
 			// Resource panel
 			ResourcePanel = new ResourceForm();
 			ResourcePanel.Show(dockPanel, DockState.DockLeft);
+			ResourcePanel.Width = 200;
 			ResourcePanel.RebuildResourceTree();
 
 

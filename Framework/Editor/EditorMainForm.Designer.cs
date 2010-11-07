@@ -29,21 +29,21 @@ namespace ArcEngine.Editor
         private void InitializeComponent()
         {
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditorMainForm));
-			WeifenLuo.WinFormsUI.Docking.DockPanelSkin dockPanelSkin2 = new WeifenLuo.WinFormsUI.Docking.DockPanelSkin();
-			WeifenLuo.WinFormsUI.Docking.AutoHideStripSkin autoHideStripSkin2 = new WeifenLuo.WinFormsUI.Docking.AutoHideStripSkin();
-			WeifenLuo.WinFormsUI.Docking.DockPanelGradient dockPanelGradient4 = new WeifenLuo.WinFormsUI.Docking.DockPanelGradient();
-			WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient8 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
-			WeifenLuo.WinFormsUI.Docking.DockPaneStripSkin dockPaneStripSkin2 = new WeifenLuo.WinFormsUI.Docking.DockPaneStripSkin();
-			WeifenLuo.WinFormsUI.Docking.DockPaneStripGradient dockPaneStripGradient2 = new WeifenLuo.WinFormsUI.Docking.DockPaneStripGradient();
-			WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient9 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
-			WeifenLuo.WinFormsUI.Docking.DockPanelGradient dockPanelGradient5 = new WeifenLuo.WinFormsUI.Docking.DockPanelGradient();
-			WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient10 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
-			WeifenLuo.WinFormsUI.Docking.DockPaneStripToolWindowGradient dockPaneStripToolWindowGradient2 = new WeifenLuo.WinFormsUI.Docking.DockPaneStripToolWindowGradient();
-			WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient11 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
-			WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient12 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
-			WeifenLuo.WinFormsUI.Docking.DockPanelGradient dockPanelGradient6 = new WeifenLuo.WinFormsUI.Docking.DockPanelGradient();
-			WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient13 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
-			WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient14 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
+			WeifenLuo.WinFormsUI.Docking.DockPanelSkin dockPanelSkin1 = new WeifenLuo.WinFormsUI.Docking.DockPanelSkin();
+			WeifenLuo.WinFormsUI.Docking.AutoHideStripSkin autoHideStripSkin1 = new WeifenLuo.WinFormsUI.Docking.AutoHideStripSkin();
+			WeifenLuo.WinFormsUI.Docking.DockPanelGradient dockPanelGradient1 = new WeifenLuo.WinFormsUI.Docking.DockPanelGradient();
+			WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient1 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
+			WeifenLuo.WinFormsUI.Docking.DockPaneStripSkin dockPaneStripSkin1 = new WeifenLuo.WinFormsUI.Docking.DockPaneStripSkin();
+			WeifenLuo.WinFormsUI.Docking.DockPaneStripGradient dockPaneStripGradient1 = new WeifenLuo.WinFormsUI.Docking.DockPaneStripGradient();
+			WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient2 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
+			WeifenLuo.WinFormsUI.Docking.DockPanelGradient dockPanelGradient2 = new WeifenLuo.WinFormsUI.Docking.DockPanelGradient();
+			WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient3 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
+			WeifenLuo.WinFormsUI.Docking.DockPaneStripToolWindowGradient dockPaneStripToolWindowGradient1 = new WeifenLuo.WinFormsUI.Docking.DockPaneStripToolWindowGradient();
+			WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient4 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
+			WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient5 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
+			WeifenLuo.WinFormsUI.Docking.DockPanelGradient dockPanelGradient3 = new WeifenLuo.WinFormsUI.Docking.DockPanelGradient();
+			WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient6 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
+			WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient7 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
 			this.MainToolStrip = new System.Windows.Forms.ToolStrip();
 			this.ToolCreate = new System.Windows.Forms.ToolStripButton();
 			this.ToolOpen = new System.Windows.Forms.ToolStripButton();
@@ -54,6 +54,7 @@ namespace ArcEngine.Editor
 			this.RemoveAssetBox = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.HelpButtonBox = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
 			this.MenuFileNewBank = new System.Windows.Forms.ToolStripMenuItem();
 			this.MenuFileOpen = new System.Windows.Forms.ToolStripMenuItem();
 			this.MenuFileClose = new System.Windows.Forms.ToolStripMenuItem();
@@ -96,7 +97,6 @@ namespace ArcEngine.Editor
 			this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
 			this.MenuAboutAbout = new System.Windows.Forms.ToolStripMenuItem();
 			this.dockPanel = new WeifenLuo.WinFormsUI.Docking.DockPanel();
-			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
 			this.MainToolStrip.SuspendLayout();
 			this.MainStatusStrip.SuspendLayout();
 			this.MainMenu.SuspendLayout();
@@ -125,7 +125,7 @@ namespace ArcEngine.Editor
 			// ToolCreate
 			// 
 			this.ToolCreate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.ToolCreate.Image = ((System.Drawing.Image) (resources.GetObject("ToolCreate.Image")));
+			this.ToolCreate.Image = ((System.Drawing.Image)(resources.GetObject("ToolCreate.Image")));
 			this.ToolCreate.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.ToolCreate.Name = "ToolCreate";
 			this.ToolCreate.Size = new System.Drawing.Size(23, 22);
@@ -136,7 +136,7 @@ namespace ArcEngine.Editor
 			// ToolOpen
 			// 
 			this.ToolOpen.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.ToolOpen.Image = ((System.Drawing.Image) (resources.GetObject("ToolOpen.Image")));
+			this.ToolOpen.Image = ((System.Drawing.Image)(resources.GetObject("ToolOpen.Image")));
 			this.ToolOpen.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.ToolOpen.Name = "ToolOpen";
 			this.ToolOpen.Size = new System.Drawing.Size(23, 22);
@@ -147,7 +147,7 @@ namespace ArcEngine.Editor
 			// ToolSave
 			// 
 			this.ToolSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.ToolSave.Image = ((System.Drawing.Image) (resources.GetObject("ToolSave.Image")));
+			this.ToolSave.Image = ((System.Drawing.Image)(resources.GetObject("ToolSave.Image")));
 			this.ToolSave.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.ToolSave.Name = "ToolSave";
 			this.ToolSave.Size = new System.Drawing.Size(23, 22);
@@ -163,7 +163,7 @@ namespace ArcEngine.Editor
 			// AddbinaryBox
 			// 
 			this.AddbinaryBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.AddbinaryBox.Image = ((System.Drawing.Image) (resources.GetObject("AddbinaryBox.Image")));
+			this.AddbinaryBox.Image = ((System.Drawing.Image)(resources.GetObject("AddbinaryBox.Image")));
 			this.AddbinaryBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.AddbinaryBox.Name = "AddbinaryBox";
 			this.AddbinaryBox.Size = new System.Drawing.Size(23, 22);
@@ -173,7 +173,7 @@ namespace ArcEngine.Editor
 			// NewAssetBox
 			// 
 			this.NewAssetBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.NewAssetBox.Image = ((System.Drawing.Image) (resources.GetObject("NewAssetBox.Image")));
+			this.NewAssetBox.Image = ((System.Drawing.Image)(resources.GetObject("NewAssetBox.Image")));
 			this.NewAssetBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.NewAssetBox.Name = "NewAssetBox";
 			this.NewAssetBox.Size = new System.Drawing.Size(23, 22);
@@ -183,7 +183,7 @@ namespace ArcEngine.Editor
 			// RemoveAssetBox
 			// 
 			this.RemoveAssetBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.RemoveAssetBox.Image = ((System.Drawing.Image) (resources.GetObject("RemoveAssetBox.Image")));
+			this.RemoveAssetBox.Image = ((System.Drawing.Image)(resources.GetObject("RemoveAssetBox.Image")));
 			this.RemoveAssetBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.RemoveAssetBox.Name = "RemoveAssetBox";
 			this.RemoveAssetBox.Size = new System.Drawing.Size(23, 22);
@@ -197,26 +197,31 @@ namespace ArcEngine.Editor
 			// HelpButtonBox
 			// 
 			this.HelpButtonBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.HelpButtonBox.Image = ((System.Drawing.Image) (resources.GetObject("HelpButtonBox.Image")));
+			this.HelpButtonBox.Image = ((System.Drawing.Image)(resources.GetObject("HelpButtonBox.Image")));
 			this.HelpButtonBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.HelpButtonBox.Name = "HelpButtonBox";
 			this.HelpButtonBox.Size = new System.Drawing.Size(23, 22);
 			this.HelpButtonBox.Text = "&?";
 			// 
+			// toolStripSeparator5
+			// 
+			this.toolStripSeparator5.Name = "toolStripSeparator5";
+			this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
+			// 
 			// MenuFileNewBank
 			// 
-			this.MenuFileNewBank.Image = ((System.Drawing.Image) (resources.GetObject("MenuFileNewBank.Image")));
+			this.MenuFileNewBank.Image = ((System.Drawing.Image)(resources.GetObject("MenuFileNewBank.Image")));
 			this.MenuFileNewBank.Name = "MenuFileNewBank";
-			this.MenuFileNewBank.ShortcutKeys = ((System.Windows.Forms.Keys) ((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+			this.MenuFileNewBank.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
 			this.MenuFileNewBank.Size = new System.Drawing.Size(191, 22);
 			this.MenuFileNewBank.Text = "&New bank";
 			this.MenuFileNewBank.Click += new System.EventHandler(this.CreateNewBank);
 			// 
 			// MenuFileOpen
 			// 
-			this.MenuFileOpen.Image = ((System.Drawing.Image) (resources.GetObject("MenuFileOpen.Image")));
+			this.MenuFileOpen.Image = ((System.Drawing.Image)(resources.GetObject("MenuFileOpen.Image")));
 			this.MenuFileOpen.Name = "MenuFileOpen";
-			this.MenuFileOpen.ShortcutKeys = ((System.Windows.Forms.Keys) ((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+			this.MenuFileOpen.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
 			this.MenuFileOpen.Size = new System.Drawing.Size(191, 22);
 			this.MenuFileOpen.Text = "&Open...";
 			this.MenuFileOpen.Click += new System.EventHandler(this.OpenBank);
@@ -235,9 +240,9 @@ namespace ArcEngine.Editor
 			// 
 			// MenuFileSave
 			// 
-			this.MenuFileSave.Image = ((System.Drawing.Image) (resources.GetObject("MenuFileSave.Image")));
+			this.MenuFileSave.Image = ((System.Drawing.Image)(resources.GetObject("MenuFileSave.Image")));
 			this.MenuFileSave.Name = "MenuFileSave";
-			this.MenuFileSave.ShortcutKeys = ((System.Windows.Forms.Keys) ((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+			this.MenuFileSave.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
 			this.MenuFileSave.Size = new System.Drawing.Size(191, 22);
 			this.MenuFileSave.Text = "&Save";
 			this.MenuFileSave.Click += new System.EventHandler(this.SaveResourcesToStorage);
@@ -245,8 +250,8 @@ namespace ArcEngine.Editor
 			// MenuFileSaveAs
 			// 
 			this.MenuFileSaveAs.Name = "MenuFileSaveAs";
-			this.MenuFileSaveAs.ShortcutKeys = ((System.Windows.Forms.Keys) (((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.S)));
+			this.MenuFileSaveAs.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+						| System.Windows.Forms.Keys.S)));
 			this.MenuFileSaveAs.Size = new System.Drawing.Size(191, 22);
 			this.MenuFileSaveAs.Text = "Save &As...";
 			this.MenuFileSaveAs.Click += new System.EventHandler(this.FileSaveAs_OnClick);
@@ -277,7 +282,7 @@ namespace ArcEngine.Editor
 			// ExportMenuItem
 			// 
 			this.ExportMenuItem.Name = "ExportMenuItem";
-			this.ExportMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys) ((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
+			this.ExportMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
 			this.ExportMenuItem.Size = new System.Drawing.Size(191, 22);
 			this.ExportMenuItem.Text = "Export...";
 			this.ExportMenuItem.Click += new System.EventHandler(this.OnExport);
@@ -285,7 +290,7 @@ namespace ArcEngine.Editor
 			// ImportMenuItem
 			// 
 			this.ImportMenuItem.Name = "ImportMenuItem";
-			this.ImportMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys) ((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
+			this.ImportMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
 			this.ImportMenuItem.Size = new System.Drawing.Size(191, 22);
 			this.ImportMenuItem.Text = "Import...";
 			this.ImportMenuItem.Click += new System.EventHandler(this.OnImport);
@@ -323,7 +328,7 @@ namespace ArcEngine.Editor
 			// 
 			// ErrorLabel
 			// 
-			this.ErrorLabel.Image = ((System.Drawing.Image) (resources.GetObject("ErrorLabel.Image")));
+			this.ErrorLabel.Image = ((System.Drawing.Image)(resources.GetObject("ErrorLabel.Image")));
 			this.ErrorLabel.Name = "ErrorLabel";
 			this.ErrorLabel.Size = new System.Drawing.Size(57, 17);
 			this.ErrorLabel.Text = "0 Error";
@@ -332,7 +337,7 @@ namespace ArcEngine.Editor
 			// 
 			// WarningLabel
 			// 
-			this.WarningLabel.Image = ((System.Drawing.Image) (resources.GetObject("WarningLabel.Image")));
+			this.WarningLabel.Image = ((System.Drawing.Image)(resources.GetObject("WarningLabel.Image")));
 			this.WarningLabel.Name = "WarningLabel";
 			this.WarningLabel.Size = new System.Drawing.Size(77, 17);
 			this.WarningLabel.Text = "0 Warning";
@@ -371,7 +376,7 @@ namespace ArcEngine.Editor
 			// 
 			// toolStripMenuItem5
 			// 
-			this.toolStripMenuItem5.Image = ((System.Drawing.Image) (resources.GetObject("toolStripMenuItem5.Image")));
+			this.toolStripMenuItem5.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItem5.Image")));
 			this.toolStripMenuItem5.Name = "toolStripMenuItem5";
 			this.toolStripMenuItem5.ShortcutKeys = System.Windows.Forms.Keys.Delete;
 			this.toolStripMenuItem5.Size = new System.Drawing.Size(197, 22);
@@ -384,9 +389,9 @@ namespace ArcEngine.Editor
 			// 
 			// toolStripMenuItem4
 			// 
-			this.toolStripMenuItem4.Image = ((System.Drawing.Image) (resources.GetObject("toolStripMenuItem4.Image")));
+			this.toolStripMenuItem4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItem4.Image")));
 			this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-			this.toolStripMenuItem4.ShortcutKeys = ((System.Windows.Forms.Keys) ((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
+			this.toolStripMenuItem4.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
 			this.toolStripMenuItem4.Size = new System.Drawing.Size(197, 22);
 			this.toolStripMenuItem4.Text = "Find Resource...";
 			// 
@@ -411,9 +416,9 @@ namespace ArcEngine.Editor
 			// 
 			// PreferenceMenu
 			// 
-			this.PreferenceMenu.Image = ((System.Drawing.Image) (resources.GetObject("PreferenceMenu.Image")));
+			this.PreferenceMenu.Image = ((System.Drawing.Image)(resources.GetObject("PreferenceMenu.Image")));
 			this.PreferenceMenu.Name = "PreferenceMenu";
-			this.PreferenceMenu.ShortcutKeys = ((System.Windows.Forms.Keys) ((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
+			this.PreferenceMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
 			this.PreferenceMenu.Size = new System.Drawing.Size(197, 22);
 			this.PreferenceMenu.Text = "Preferences...";
 			this.PreferenceMenu.Click += new System.EventHandler(this.PreferenceMenu_Click);
@@ -466,7 +471,7 @@ namespace ArcEngine.Editor
 			// MenuWindow_Log
 			// 
 			this.MenuWindow_Log.CheckOnClick = true;
-			this.MenuWindow_Log.Image = ((System.Drawing.Image) (resources.GetObject("MenuWindow_Log.Image")));
+			this.MenuWindow_Log.Image = ((System.Drawing.Image)(resources.GetObject("MenuWindow_Log.Image")));
 			this.MenuWindow_Log.Name = "MenuWindow_Log";
 			this.MenuWindow_Log.Size = new System.Drawing.Size(148, 22);
 			this.MenuWindow_Log.Text = "&Log";
@@ -505,7 +510,7 @@ namespace ArcEngine.Editor
 			// 
 			// toolStripMenuItem7
 			// 
-			this.toolStripMenuItem7.Image = ((System.Drawing.Image) (resources.GetObject("toolStripMenuItem7.Image")));
+			this.toolStripMenuItem7.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItem7.Image")));
 			this.toolStripMenuItem7.Name = "toolStripMenuItem7";
 			this.toolStripMenuItem7.Size = new System.Drawing.Size(179, 22);
 			this.toolStripMenuItem7.Text = "Contents";
@@ -523,7 +528,7 @@ namespace ArcEngine.Editor
 			// 
 			// WebSiteMenu
 			// 
-			this.WebSiteMenu.Image = ((System.Drawing.Image) (resources.GetObject("WebSiteMenu.Image")));
+			this.WebSiteMenu.Image = ((System.Drawing.Image)(resources.GetObject("WebSiteMenu.Image")));
 			this.WebSiteMenu.Name = "WebSiteMenu";
 			this.WebSiteMenu.Size = new System.Drawing.Size(179, 22);
 			this.WebSiteMenu.Text = "Website...";
@@ -547,63 +552,60 @@ namespace ArcEngine.Editor
 			this.dockPanel.ActiveAutoHideContent = null;
 			this.dockPanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.dockPanel.DockBackColor = System.Drawing.SystemColors.Control;
+			this.dockPanel.DockBottomPortion = 100D;
+			this.dockPanel.DockLeftPortion = 200D;
 			this.dockPanel.DocumentStyle = WeifenLuo.WinFormsUI.Docking.DocumentStyle.DockingWindow;
 			this.dockPanel.Location = new System.Drawing.Point(0, 49);
 			this.dockPanel.Name = "dockPanel";
 			this.dockPanel.ShowDocumentIcon = true;
 			this.dockPanel.Size = new System.Drawing.Size(916, 428);
-			dockPanelGradient4.EndColor = System.Drawing.SystemColors.ControlLight;
-			dockPanelGradient4.StartColor = System.Drawing.SystemColors.ControlLight;
-			autoHideStripSkin2.DockStripGradient = dockPanelGradient4;
-			tabGradient8.EndColor = System.Drawing.SystemColors.Control;
-			tabGradient8.StartColor = System.Drawing.SystemColors.Control;
-			tabGradient8.TextColor = System.Drawing.SystemColors.ControlDarkDark;
-			autoHideStripSkin2.TabGradient = tabGradient8;
-			dockPanelSkin2.AutoHideStripSkin = autoHideStripSkin2;
-			tabGradient9.EndColor = System.Drawing.SystemColors.ControlLightLight;
-			tabGradient9.StartColor = System.Drawing.SystemColors.ControlLightLight;
-			tabGradient9.TextColor = System.Drawing.SystemColors.ControlText;
-			dockPaneStripGradient2.ActiveTabGradient = tabGradient9;
-			dockPanelGradient5.EndColor = System.Drawing.SystemColors.Control;
-			dockPanelGradient5.StartColor = System.Drawing.SystemColors.Control;
-			dockPaneStripGradient2.DockStripGradient = dockPanelGradient5;
-			tabGradient10.EndColor = System.Drawing.SystemColors.ControlLight;
-			tabGradient10.StartColor = System.Drawing.SystemColors.ControlLight;
-			tabGradient10.TextColor = System.Drawing.SystemColors.ControlText;
-			dockPaneStripGradient2.InactiveTabGradient = tabGradient10;
-			dockPaneStripSkin2.DocumentGradient = dockPaneStripGradient2;
-			tabGradient11.EndColor = System.Drawing.SystemColors.ActiveCaption;
-			tabGradient11.LinearGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Vertical;
-			tabGradient11.StartColor = System.Drawing.SystemColors.GradientActiveCaption;
-			tabGradient11.TextColor = System.Drawing.SystemColors.ActiveCaptionText;
-			dockPaneStripToolWindowGradient2.ActiveCaptionGradient = tabGradient11;
-			tabGradient12.EndColor = System.Drawing.SystemColors.Control;
-			tabGradient12.StartColor = System.Drawing.SystemColors.Control;
-			tabGradient12.TextColor = System.Drawing.SystemColors.ControlText;
-			dockPaneStripToolWindowGradient2.ActiveTabGradient = tabGradient12;
-			dockPanelGradient6.EndColor = System.Drawing.SystemColors.ControlLight;
-			dockPanelGradient6.StartColor = System.Drawing.SystemColors.ControlLight;
-			dockPaneStripToolWindowGradient2.DockStripGradient = dockPanelGradient6;
-			tabGradient13.EndColor = System.Drawing.SystemColors.GradientInactiveCaption;
-			tabGradient13.LinearGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Vertical;
-			tabGradient13.StartColor = System.Drawing.SystemColors.GradientInactiveCaption;
-			tabGradient13.TextColor = System.Drawing.SystemColors.ControlText;
-			dockPaneStripToolWindowGradient2.InactiveCaptionGradient = tabGradient13;
-			tabGradient14.EndColor = System.Drawing.Color.Transparent;
-			tabGradient14.StartColor = System.Drawing.Color.Transparent;
-			tabGradient14.TextColor = System.Drawing.SystemColors.ControlDarkDark;
-			dockPaneStripToolWindowGradient2.InactiveTabGradient = tabGradient14;
-			dockPaneStripSkin2.ToolWindowGradient = dockPaneStripToolWindowGradient2;
-			dockPanelSkin2.DockPaneStripSkin = dockPaneStripSkin2;
-			this.dockPanel.Skin = dockPanelSkin2;
+			dockPanelGradient1.EndColor = System.Drawing.SystemColors.ControlLight;
+			dockPanelGradient1.StartColor = System.Drawing.SystemColors.ControlLight;
+			autoHideStripSkin1.DockStripGradient = dockPanelGradient1;
+			tabGradient1.EndColor = System.Drawing.SystemColors.Control;
+			tabGradient1.StartColor = System.Drawing.SystemColors.Control;
+			tabGradient1.TextColor = System.Drawing.SystemColors.ControlDarkDark;
+			autoHideStripSkin1.TabGradient = tabGradient1;
+			dockPanelSkin1.AutoHideStripSkin = autoHideStripSkin1;
+			tabGradient2.EndColor = System.Drawing.SystemColors.ControlLightLight;
+			tabGradient2.StartColor = System.Drawing.SystemColors.ControlLightLight;
+			tabGradient2.TextColor = System.Drawing.SystemColors.ControlText;
+			dockPaneStripGradient1.ActiveTabGradient = tabGradient2;
+			dockPanelGradient2.EndColor = System.Drawing.SystemColors.Control;
+			dockPanelGradient2.StartColor = System.Drawing.SystemColors.Control;
+			dockPaneStripGradient1.DockStripGradient = dockPanelGradient2;
+			tabGradient3.EndColor = System.Drawing.SystemColors.ControlLight;
+			tabGradient3.StartColor = System.Drawing.SystemColors.ControlLight;
+			tabGradient3.TextColor = System.Drawing.SystemColors.ControlText;
+			dockPaneStripGradient1.InactiveTabGradient = tabGradient3;
+			dockPaneStripSkin1.DocumentGradient = dockPaneStripGradient1;
+			tabGradient4.EndColor = System.Drawing.SystemColors.ActiveCaption;
+			tabGradient4.LinearGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Vertical;
+			tabGradient4.StartColor = System.Drawing.SystemColors.GradientActiveCaption;
+			tabGradient4.TextColor = System.Drawing.SystemColors.ActiveCaptionText;
+			dockPaneStripToolWindowGradient1.ActiveCaptionGradient = tabGradient4;
+			tabGradient5.EndColor = System.Drawing.SystemColors.Control;
+			tabGradient5.StartColor = System.Drawing.SystemColors.Control;
+			tabGradient5.TextColor = System.Drawing.SystemColors.ControlText;
+			dockPaneStripToolWindowGradient1.ActiveTabGradient = tabGradient5;
+			dockPanelGradient3.EndColor = System.Drawing.SystemColors.ControlLight;
+			dockPanelGradient3.StartColor = System.Drawing.SystemColors.ControlLight;
+			dockPaneStripToolWindowGradient1.DockStripGradient = dockPanelGradient3;
+			tabGradient6.EndColor = System.Drawing.SystemColors.GradientInactiveCaption;
+			tabGradient6.LinearGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Vertical;
+			tabGradient6.StartColor = System.Drawing.SystemColors.GradientInactiveCaption;
+			tabGradient6.TextColor = System.Drawing.SystemColors.ControlText;
+			dockPaneStripToolWindowGradient1.InactiveCaptionGradient = tabGradient6;
+			tabGradient7.EndColor = System.Drawing.Color.Transparent;
+			tabGradient7.StartColor = System.Drawing.Color.Transparent;
+			tabGradient7.TextColor = System.Drawing.SystemColors.ControlDarkDark;
+			dockPaneStripToolWindowGradient1.InactiveTabGradient = tabGradient7;
+			dockPaneStripSkin1.ToolWindowGradient = dockPaneStripToolWindowGradient1;
+			dockPanelSkin1.DockPaneStripSkin = dockPaneStripSkin1;
+			this.dockPanel.Skin = dockPanelSkin1;
 			this.dockPanel.TabIndex = 8;
 			// 
-			// toolStripSeparator5
-			// 
-			this.toolStripSeparator5.Name = "toolStripSeparator5";
-			this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
-			// 
-			// EditorForm
+			// EditorMainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -614,7 +616,7 @@ namespace ArcEngine.Editor
 			this.Controls.Add(this.MainMenu);
 			this.IsMdiContainer = true;
 			this.MainMenuStrip = this.MainMenu;
-			this.Name = "EditorForm";
+			this.Name = "EditorMainForm";
 			this.Text = "ArcEngine Editor";
 			this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.EditorForm_FormClosed);

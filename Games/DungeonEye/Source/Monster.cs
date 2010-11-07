@@ -378,85 +378,191 @@ namespace DungeonEye
 			if (Tileset == null)
 				return;
 
-			TextureEnvMode mode = Display.TexEnv;
-
-
-
-			// Monster was hit, redraw it
-			if (LastAttack != null && LastAttack.Time + TimeSpan.FromSeconds(0.25) > DateTime.Now)
+			// Tileset scale
+			Vector2[] tilescale = new Vector2[]
 			{
-				Display.BlendingFunction(BlendingFactorSource.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
-				Display.TexEnv = TextureEnvMode.Add;
-			}
+				new Vector2(1.0f, 1.0f),		// A
+				new Vector2(0.5f, 0.5f),		// B
+				new Vector2(0.5f, 0.5f),		// C
+				new Vector2(0.5f, 0.5f),		// D
+				new Vector2(0.5f, 0.5f),		// E
+				new Vector2(0.5f, 0.5f),		// F
+				new Vector2(1.0f, 1.0f),		// G
+
+				new Vector2(1.0f, 1.0f),		// H
+				new Vector2(0.75f, 0.75f),		// I
+				new Vector2(0.75f, 0.75f),		// J
+				new Vector2(0.75f, 0.75f),		// K
+				new Vector2(1.0f, 1.0f),		// L
+
+				new Vector2(1.0f, 1.0f),		// M
+				new Vector2(1.0f, 1.0f),		// N
+				new Vector2(1.0f, 1.0f),		// O
+
+				new Vector2(1.0f, 1.0f),		// P
+				new Vector2(1.0f, 1.0f),		// Team
+				new Vector2(1.0f, 1.0f),		// Q
+			};
+
+			// draw offset scale
+			Point[] offsetscale = new Point[]
+			{
+				new Point(1, 1),		// A
+				new Point(4, 4),		// B
+				new Point(4, 4),		// C
+				new Point(4, 4),		// D
+				new Point(4, 4),		// E
+				new Point(4, 4),		// F
+				new Point(1, 1),		// G
+
+				new Point(1, 1),		// H
+				new Point(2, 2),		// I
+				new Point(2, 2),		// J
+				new Point(2, 2),		// K
+				new Point(1, 1),		// L
+
+				new Point(1, 1),		// M
+				new Point(1, 1),		// N
+				new Point(1, 1),		// O
+
+				new Point(1, 1),		// P
+				new Point(1, 1),		// Team
+				new Point(1, 1),		// Q
+			};
+
+
+			// draw offset scale
+			Point[] positions = new Point[]
+			{
+				Point.Empty,				// A
+				new Point(0, 140),			// B
+				new Point(80, 140),			// C
+				new Point(180, 140),		// D
+				new Point(270, 140),		// E
+				new Point(342, 140),		// F
+				Point.Empty,				// G
+
+				Point.Empty,				// H
+				new Point(50, 146),			// I
+				new Point(180, 146),		// J
+				new Point(300, 146),		// K
+				Point.Empty,				// L
+
+				new Point(-20, 150),		// M
+				new Point(180, 150),		// N
+				new Point(370, 150),		// O
+
+				Point.Empty,				// P
+				Point.Empty,				// Team
+				Point.Empty,				// Q
+			};
+
+
+
+			TextureEnvMode mode = Display.TexEnv;
 
 
 			switch (pos)
 			{
 				case ViewFieldPosition.B:
+				case ViewFieldPosition.C:
+				case ViewFieldPosition.D:
+				case ViewFieldPosition.E:
+				case ViewFieldPosition.F:
+
+				case ViewFieldPosition.I:
+				case ViewFieldPosition.J:
+				case ViewFieldPosition.K:
+
+				case ViewFieldPosition.M:
+				case ViewFieldPosition.N:
+				case ViewFieldPosition.O:
+				{
+					// Monster was hit, redraw it
+					if (LastAttack != null && LastAttack.Time + TimeSpan.FromSeconds(0.25) > DateTime.Now)
+					{
+						Display.BlendingFunction(BlendingFactorSource.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+						Display.TexEnv = TextureEnvMode.Add;
+					}
+
+					// Draw the monster
+					int offset = (int)pos;
+					Tileset.Scale = tilescale[offset];
+					batch.DrawTile(Tileset, GetTileID(direction), new Point(positions[offset].X + DrawOffset.X / offsetscale[offset].X, positions[offset].Y + DrawOffset.Y / offsetscale[offset].Y));
+					Tileset.Scale = new Vector2(1.0f, 1.0f);
+
+
+					// finish special mode
+					if (LastAttack != null && LastAttack.Time + TimeSpan.FromSeconds(0.25) > DateTime.Now)
+					{
+						Display.TexEnv = mode;
+						Display.BlendingFunction(BlendingFactorSource.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+					}
+				}
+				break;
+			}
+
+/*
+			switch (pos)
+			{
+				case ViewFieldPosition.B:
 				Tileset.Scale = new Vector2(0.5f, 0.5f);
-				batch.DrawTile(Tileset, GetTileID(direction), new Point(0 + DrawOffset.X / 4, 110 + DrawOffset.Y / 4), Color.Gray);
+				batch.DrawTile(Tileset, GetTileID(direction), new Point(0 + DrawOffset.X / 4, 140 + DrawOffset.Y / 4), Color.Gray);
 				Tileset.Scale = new Vector2(1.0f, 1.0f);
 				break;
 				case ViewFieldPosition.C:
 				Tileset.Scale = new Vector2(0.5f, 0.5f);
-				batch.DrawTile(Tileset, GetTileID(direction), new Point(80 + DrawOffset.X / 4, 110 + DrawOffset.Y / 4), Color.Gray);
+				batch.DrawTile(Tileset, GetTileID(direction), new Point(80 + DrawOffset.X / 4, 140 + DrawOffset.Y / 4), Color.Gray);
 				Tileset.Scale = new Vector2(1.0f, 1.0f);
 				break;
 				case ViewFieldPosition.D:
 				Tileset.Scale = new Vector2(0.5f, 0.5f);
-				batch.DrawTile(Tileset, GetTileID(direction), new Point(180 + DrawOffset.X / 4, 110 + DrawOffset.Y / 4), Color.Gray);
+				batch.DrawTile(Tileset, GetTileID(direction), new Point(180 + DrawOffset.X / 4, 140 + DrawOffset.Y / 4), Color.Gray);
 				Tileset.Scale = new Vector2(1.0f, 1.0f);
 				break;
 				case ViewFieldPosition.E:
 				Tileset.Scale = new Vector2(0.5f, 0.5f);
-				batch.DrawTile(Tileset, GetTileID(direction), new Point(270 + DrawOffset.X / 4, 110 + DrawOffset.Y / 4), Color.Gray);
+				batch.DrawTile(Tileset, GetTileID(direction), new Point(270 + DrawOffset.X / 4, 140 + DrawOffset.Y / 4), Color.Gray);
 				Tileset.Scale = new Vector2(1.0f, 1.0f);
 				break;
 				case ViewFieldPosition.F:
 				Tileset.Scale = new Vector2(0.5f, 0.5f);
-				batch.DrawTile(Tileset, GetTileID(direction), new Point(342 + DrawOffset.X / 4, 110 + DrawOffset.Y / 4), Color.Gray);
+				batch.DrawTile(Tileset, GetTileID(direction), new Point(342 + DrawOffset.X / 4, 140 + DrawOffset.Y / 4), Color.Gray);
 				Tileset.Scale = new Vector2(1.0f, 1.0f);
 				break;
-
 
 
 				case ViewFieldPosition.I:
 				Tileset.Scale = new Vector2(0.75f, 0.75f);
-				batch.DrawTile(Tileset, GetTileID(direction), new Point(50 + DrawOffset.X / 2, 136 + DrawOffset.Y / 2));
+				batch.DrawTile(Tileset, GetTileID(direction), new Point(50 + DrawOffset.X / 2, 146 + DrawOffset.Y / 2));
 				Tileset.Scale = new Vector2(1.0f, 1.0f);
 				break;
 				case ViewFieldPosition.J:
 				Tileset.Scale = new Vector2(0.75f, 0.75f);
-				batch.DrawTile(Tileset, GetTileID(direction), new Point(180 + DrawOffset.X / 2, 136 + DrawOffset.Y / 2));
+				batch.DrawTile(Tileset, GetTileID(direction), new Point(180 + DrawOffset.X / 2, 146 + DrawOffset.Y / 2));
 				Tileset.Scale = new Vector2(1.0f, 1.0f);
 				break;
 				case ViewFieldPosition.K:
 				Tileset.Scale = new Vector2(0.75f, 0.75f);
-				batch.DrawTile(Tileset, GetTileID(direction), new Point(300 + DrawOffset.X / 2, 136 + DrawOffset.Y / 2));
+				batch.DrawTile(Tileset, GetTileID(direction), new Point(300 + DrawOffset.X / 2, 146 + DrawOffset.Y / 2));
 				Tileset.Scale = new Vector2(1.0f, 1.0f);
 				break;
 
 
 				case ViewFieldPosition.M:
-				batch.DrawTile(Tileset, GetTileID(direction), new Point(-20 + DrawOffset.X, 190));
+				batch.DrawTile(Tileset, GetTileID(direction), new Point(-20 + DrawOffset.X, 150 + DrawOffset.Y));
 				break;
 				case ViewFieldPosition.N:
-				batch.DrawTile(Tileset, GetTileID(direction), new Point(180 + DrawOffset.X, 150));
+				batch.DrawTile(Tileset, GetTileID(direction), new Point(180 + DrawOffset.X, 150 + DrawOffset.Y));
 				break;
 				case ViewFieldPosition.O:
-				batch.DrawTile(Tileset, GetTileID(direction), new Point(370 + DrawOffset.X, 190));
+				batch.DrawTile(Tileset, GetTileID(direction), new Point(370 + DrawOffset.X, 150 + DrawOffset.Y));
 				break;
 			}
+*/
 
 
 
-
-			// finish special mode
-			if (LastAttack != null && LastAttack.Time + TimeSpan.FromSeconds(0.25) > DateTime.Now)
-			{
-				Display.TexEnv = mode;
-				Display.BlendingFunction(BlendingFactorSource.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
-			}
 		}
 
 		#endregion
@@ -1303,7 +1409,7 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Offset when drawing the monster
+		/// Offset when drawing the monster to simulate an animation
 		/// </summary>
 		Point DrawOffset;
 
