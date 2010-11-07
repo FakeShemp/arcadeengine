@@ -331,23 +331,23 @@ namespace ArcEngine.Graphic
 					Sprites[i].Destination.Width, 
                     Sprites[i].Destination.Height);
 
+
                 // Texture coordinate
-                Vector4 src = new Vector4(Sprites[i].UV);
-                if ((Sprites[i].Effects & SpriteEffects.FlipHorizontally) == SpriteEffects.FlipHorizontally)
+                Vector4 src = Sprites[i].UV;
+
+				// Texture flip
+				if ((Sprites[i].Effects & SpriteEffects.FlipHorizontally) == SpriteEffects.FlipHorizontally)
                 {
                     src.X += src.Z;
                     src.Z = -src.Z;
                 }
-
-
-				// Texture flip
                 if ((Sprites[i].Effects & SpriteEffects.FlipVertically) == SpriteEffects.FlipVertically)
                 {
                     src.Y += src.W;
                     src.W = -src.W;
                 }
 
-
+				// Rendering type
 				switch (Sprites[i].Type)
 				{
 
@@ -817,7 +817,7 @@ namespace ArcEngine.Graphic
 		/// <param name="position">Location on the screen</param>
 		public void DrawTile(TileSet tileset, int id, Point position)
 		{
-			DrawTile(tileset, id, position, Color.White);
+			DrawTile(tileset, id, new Vector2(position.X, position.Y), Color.White, 0.0f, SpriteEffects.None, 0.0f);
 		}
 
 		/// <summary>
@@ -876,7 +876,7 @@ namespace ArcEngine.Graphic
 
 			Vector4 src = new Vector4(tile.Rectangle.X, tile.Rectangle.Y, tile.Rectangle.Width, tile.Rectangle.Height);
 
-			Vector2 origin = new Vector2(tile.Origin.X, tile.Origin.Y);
+			Vector2 origin = new Vector2(tile.Origin.X * tileset.Scale.X, tile.Origin.Y * tileset.Scale.Y);
 
 			InternalDraw(tileset.Texture, ref dst, ref src, color, rotation, origin, effect, depth, PrimitiveType.Triangles);
 		}

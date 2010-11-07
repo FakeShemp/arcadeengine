@@ -624,7 +624,6 @@ namespace DungeonEye
 			#endregion
 
 			#region Subsquare
-
 			// Translate subsquare position according looking point
 			int[][] sub = new int[][]
 			{
@@ -633,7 +632,7 @@ namespace DungeonEye
 				{
 					0,1,2,3,4
 				},
-
+				
 				// Looking from south
 				new int[]
 				{
@@ -645,14 +644,14 @@ namespace DungeonEye
 				{
 					1,3,0,2,4
 				},
-				
+
 				// Looking from east
 				new int[]
 				{
 					2,0,3,1,4
 				},
-			};
 
+			};
 			#endregion
 
 			switch (pos)
@@ -684,23 +683,21 @@ namespace DungeonEye
 					int offset = (int)pos;
 					Tileset.Scale = tilescale[offset];
 
-					int suboffset = 0;
+					// Find the good square location
+					SquarePosition squarepos;
 					if (Location.Square.MonsterCount == 1)
-						suboffset = sub[(int)direction][4];
+						squarepos = SquarePosition.Center;
 					else
-						suboffset = sub[(int)direction][(int)Position];
-					
-					Point position = new Point(
-						positions[offset][suboffset].X + DrawOffset.X / offsetscale[offset].X,
-						positions[offset][suboffset].Y + DrawOffset.Y / offsetscale[offset].Y);
+						squarepos = (SquarePosition) sub[(int)direction][(int)Position];
 
-					position = MazeDisplayCoordinates.GetGroundItem(pos, Position);
+					// Screen coordinate
+					Point position = MazeDisplayCoordinates.GetGroundPosition(pos, squarepos);
 
 					batch.DrawTile(Tileset, GetTileID(direction), position);
 					Tileset.Scale = new Vector2(1.0f, 1.0f);
 
 
-					// finish special mode
+					// Finish special mode
 					if (LastAttack != null && LastAttack.Time + TimeSpan.FromSeconds(0.25) > DateTime.Now)
 					{
 						Display.TexEnv = mode;

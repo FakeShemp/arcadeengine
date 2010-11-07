@@ -666,7 +666,7 @@ namespace DungeonEye
 
 					foreach (Item item in list[i])
 					{
-						point = MazeDisplayCoordinates.GetGroundItem(position, (SquarePosition)i);
+						point = MazeDisplayCoordinates.GetGroundPosition(position, (SquarePosition)i);
 						if (!point.IsEmpty)
 							batch.DrawTile(ItemsTileset, item.GroundTileID + offset, point);
 					}
@@ -773,7 +773,7 @@ namespace DungeonEye
 
 					foreach (Item item in list[i])
 					{
-						point = MazeDisplayCoordinates.GetGroundItem(position, (SquarePosition)i);
+						point = MazeDisplayCoordinates.GetGroundPosition(position, (SquarePosition)i);
 						if (!point.IsEmpty)
 							batch.DrawTile(ItemsTileset, item.GroundTileID + offset, point);
 					}

@@ -174,7 +174,7 @@ namespace DungeonEye
 	/// <summary>
 	/// TurnLeft direction
 	/// </summary>
-	[Flags]
+	//[Flags]
 	public enum CardinalPoint
 	{
 		/// <summary>

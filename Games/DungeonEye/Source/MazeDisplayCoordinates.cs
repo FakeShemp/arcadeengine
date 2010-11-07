@@ -67,7 +67,7 @@ namespace DungeonEye
 
 			Doors = new TileDrawing[viewcount];
 			FloorPlates = new TileDrawing[viewcount];
-			GroundItems = new Point[viewcount, 4];
+			Ground = new Point[viewcount, 5];
 			Decorations = new TileDrawing[viewcount, 3];
 			FlyingItems = new Point[viewcount, 5];
 			Walls = new List<TileDrawing>[viewcount];
@@ -110,14 +110,14 @@ namespace DungeonEye
 		/// Gets a ground item coordinate
 		/// </summary>
 		/// <param name="view">Block position in the view field</param>
-		/// <param name="ground">ground position</param>
+		/// <param name="position">ground position</param>
 		/// <returns></returns>
-		static public Point GetGroundItem(ViewFieldPosition view, SquarePosition ground)
+		static public Point GetGroundPosition(ViewFieldPosition view, SquarePosition position)
 		{
-			if (ground == SquarePosition.Center)
-				throw new ArgumentOutOfRangeException("ground", "No ground item in the middle of a block !");
+		//	if (position == SquarePosition.Center)
+		//		throw new ArgumentOutOfRangeException("position", "No ground item in the middle of a block !");
 
-			return GroundItems[(int)view, (int)ground];
+			return Ground[(int)view, (int)position];
 		}
 
 
@@ -271,10 +271,8 @@ namespace DungeonEye
 						{
 							ViewFieldPosition view = (ViewFieldPosition) Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
 							SquarePosition ground = (SquarePosition) Enum.Parse(typeof(SquarePosition), node.Attributes["coordinate"].Value, true);
-							if (ground == SquarePosition.Center)
-								throw new ArgumentOutOfRangeException("ground", "No ground item in the middle of a block !");
 
-							GroundItems[(int) view, (int) ground] = new Point(int.Parse(node.Attributes["x"].Value), int.Parse(node.Attributes["y"].Value));
+							Ground[(int) view, (int) ground] = new Point(int.Parse(node.Attributes["x"].Value), int.Parse(node.Attributes["y"].Value));
 						}
 						break;
 
@@ -395,7 +393,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Ground items
 		/// </summary>
-		static Point[,] GroundItems;
+		static Point[,] Ground;
 
 
 		/// <summary>
