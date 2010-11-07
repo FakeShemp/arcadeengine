@@ -462,10 +462,10 @@ namespace DungeonEye.Forms
 			
 
 			Monster monster = ResourceManager.CreateAsset<Monster>((string)MonsterTemplateBox.SelectedItem);
-			monster.Location = new DungeonLocation(MazeBlock.Location);
-			monster.Location.SquarePosition = (SquarePosition)Enum.ToObject(typeof(SquarePosition), GroundLocationBox.SelectedIndex);
-			monster.Location.SetMaze(Maze.Name);
-			monster.Init();
+			//monster.Location = new DungeonLocation(MazeBlock.Location);
+			//monster.Location.Position = (SquarePosition)Enum.ToObject(typeof(SquarePosition), GroundLocationBox.SelectedIndex);
+			//monster.Location.SetMaze(Maze.Name);
+			//monster.Init();
 
 			MazeBlock.SetMonster(monster, (SquarePosition) Enum.ToObject(typeof(SquarePosition), GroundLocationBox.SelectedIndex));
 

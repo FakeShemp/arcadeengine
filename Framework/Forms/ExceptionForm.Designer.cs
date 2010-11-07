@@ -37,9 +37,9 @@
 			// 
 			// OkBox
 			// 
-			this.OkBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.OkBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.OkBox.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.OkBox.Location = new System.Drawing.Point(497, 327);
+			this.OkBox.Location = new System.Drawing.Point(868, 425);
 			this.OkBox.Name = "OkBox";
 			this.OkBox.Size = new System.Drawing.Size(75, 23);
 			this.OkBox.TabIndex = 0;
@@ -48,8 +48,8 @@
 			// 
 			// SendReportBox
 			// 
-			this.SendReportBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.SendReportBox.Location = new System.Drawing.Point(371, 327);
+			this.SendReportBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.SendReportBox.Location = new System.Drawing.Point(742, 425);
 			this.SendReportBox.Name = "SendReportBox";
 			this.SendReportBox.Size = new System.Drawing.Size(120, 23);
 			this.SendReportBox.TabIndex = 1;
@@ -76,23 +76,24 @@
 			// 
 			// TraceBox
 			// 
-			this.TraceBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.TraceBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.TraceBox.Location = new System.Drawing.Point(12, 151);
 			this.TraceBox.Multiline = true;
 			this.TraceBox.Name = "TraceBox";
 			this.TraceBox.ReadOnly = true;
 			this.TraceBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.TraceBox.Size = new System.Drawing.Size(560, 170);
+			this.TraceBox.Size = new System.Drawing.Size(931, 268);
 			this.TraceBox.TabIndex = 5;
+			this.TraceBox.WordWrap = false;
 			// 
 			// ExceptionForm
 			// 
 			this.AcceptButton = this.OkBox;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(584, 362);
+			this.ClientSize = new System.Drawing.Size(955, 460);
 			this.Controls.Add(this.TraceBox);
 			this.Controls.Add(this.ErrorBox);
 			this.Controls.Add(this.label1);

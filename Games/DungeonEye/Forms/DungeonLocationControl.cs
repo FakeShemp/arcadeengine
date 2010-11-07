@@ -57,7 +57,7 @@ namespace DungeonEye.Forms
 			DungeonLocation loc = new DungeonLocation(Dungeon);
 			loc.SetMaze(Maze.Name);
 
-			loc.Position = point;
+			loc.Coordinate = point;
 
 
 			return loc;
@@ -280,7 +280,7 @@ namespace DungeonEye.Forms
 						// Draw monsters
 						if (block.HasMonster)
 						{
-							Batch.DrawTile(Icons, 8, new Point(Offset.X + block.Location.Position.X * 25, Offset.Y + block.Location.Position.Y * 25));
+							Batch.DrawTile(Icons, 8, new Point(Offset.X + block.Location.Coordinate.X * 25, Offset.Y + block.Location.Coordinate.Y * 25));
 						}
 
 
@@ -290,7 +290,7 @@ namespace DungeonEye.Forms
 
 				// Target
 				if (Target.MazeName == Maze.Name)
-					Batch.DrawRectangle(new Rectangle(Offset.X + Target.Position.X * 25, Offset.Y + Target.Position.Y * 25, 25, 25), Color.White);
+					Batch.DrawRectangle(new Rectangle(Offset.X + Target.Coordinate.X * 25, Offset.Y + Target.Coordinate.Y * 25, 25, 25), Color.White);
 
 			}
 

@@ -42,9 +42,8 @@ namespace DungeonEye
 		public DungeonLocation(Dungeon dungeon)
 		{
 			Dungeon = dungeon;
-			Compass = new Compass();
-			Position = Point.Empty;
-			SquarePosition = SquarePosition.NorthEast;
+			Coordinate = Point.Empty;
+			Position = SquarePosition.NorthEast;
 		}
 
 
@@ -56,9 +55,8 @@ namespace DungeonEye
 		public DungeonLocation(DungeonLocation loc)
 		{
 			Dungeon = loc.Dungeon;
-			Compass = new Compass(loc.Compass);
+			Coordinate = loc.Coordinate;
 			Position = loc.Position;
-			SquarePosition = loc.SquarePosition;
 			SetMaze(loc.MazeName);
 		}
 
@@ -70,11 +68,12 @@ namespace DungeonEye
 		/// <param name="name">Name of the maze</param>
 		/// <param name="location">Location</param>
 		/// <param name="direction">Direction</param>
-		public DungeonLocation(string name, Point location, CardinalPoint direction)
+		/// <param name="position">Square position</param>
+		public DungeonLocation(string name, Point location, CardinalPoint direction, SquarePosition position)
 		{
-			Position = location;
-			Compass = new Compass();
+			Position = position;
 			Direction = direction;
+			Coordinate = location; 
 			SetMaze(name);
 		}
 
@@ -93,16 +92,16 @@ namespace DungeonEye
 			switch (direction)
 			{
 				case CardinalPoint.North:
-				Position.Y -= range;
+				Coordinate.Y -= range;
 				break;
 				case CardinalPoint.South:
-				Position.Y += range;
+				Coordinate.Y += range;
 				break;
 				case CardinalPoint.West:
-				Position.X -= range;
+				Coordinate.X -= range;
 				break;
 				case CardinalPoint.East:
-				Position.X += range;
+				Coordinate.X += range;
 				break;
 			}
 
@@ -117,7 +116,7 @@ namespace DungeonEye
 		/// <returns>True if facing, or false</returns>
 		public bool IsFacing(DungeonLocation location)
 		{
-			Point offset = new Point(location.Position.X - Position.X, location.Position.Y - Position.Y);
+			Point offset = new Point(location.Coordinate.X - Coordinate.X, location.Coordinate.Y - Coordinate.Y);
 
 			switch (Direction)
 			{
@@ -177,13 +176,13 @@ namespace DungeonEye
 
 			if (xml.Attributes["maze"] != null)
 				SetMaze(xml.Attributes["maze"].Value);
-			Position = new Point(int.Parse(xml.Attributes["x"].Value), int.Parse(xml.Attributes["y"].Value));
+			Coordinate = new Point(int.Parse(xml.Attributes["x"].Value), int.Parse(xml.Attributes["y"].Value));
 
 			if (xml.Attributes["direction"] != null)
 				Direction = (CardinalPoint)Enum.Parse(typeof(CardinalPoint), xml.Attributes["direction"].Value, true);
 
 			if (xml.Attributes["position"] != null)
-				SquarePosition = (SquarePosition) Enum.Parse(typeof(SquarePosition), xml.Attributes["position"].Value, true);
+				Position = (SquarePosition) Enum.Parse(typeof(SquarePosition), xml.Attributes["position"].Value, true);
 
 			return true;
 		}
@@ -204,10 +203,10 @@ namespace DungeonEye
 
 			writer.WriteStartElement(name);
 			writer.WriteAttributeString("maze", MazeName);
-			writer.WriteAttributeString("x", Position.X.ToString());
-			writer.WriteAttributeString("y", Position.Y.ToString());
+			writer.WriteAttributeString("x", Coordinate.X.ToString());
+			writer.WriteAttributeString("y", Coordinate.Y.ToString());
 			writer.WriteAttributeString("direction", Direction.ToString());
-			writer.WriteAttributeString("position", SquarePosition.ToString());
+			writer.WriteAttributeString("position", Position.ToString());
 			writer.WriteEndElement();
 
 			return true;
@@ -245,7 +244,7 @@ namespace DungeonEye
 		/// <returns></returns>
 		public override string ToString()
 		{
-			return string.Format("{0}x{1} {2} {3}", Position.X, Position.Y, MazeName, Direction.ToString());
+			return string.Format("{0}x{1} in {2}, looking {3}, sub {4}", Coordinate.X, Coordinate.Y, MazeName, Direction, Position);
 		}
 
 
@@ -286,7 +285,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Location in the maze
 		/// </summary>
-		public Point Position;
+		public Point Coordinate;
 
 
 		/// <summary>
@@ -294,28 +293,15 @@ namespace DungeonEye
 		/// </summary>
 		public CardinalPoint Direction
 		{
-			get
-			{
-				return Compass.Direction;
-			}
-			set
-			{
-				Compass.Direction = value;
-			}
+			get;
+			set;
 		}
-
-
-		/// <summary>
-		/// TurnLeft
-		/// </summary>
-		[Browsable(false)]
-		public Compass Compass;
 
 
 		/// <summary>
 		/// Position on the ground
 		/// </summary>
-		public SquarePosition SquarePosition
+		public SquarePosition Position
 		{
 			get;
 			set;
@@ -323,16 +309,16 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Corresponding block
 		/// </summary>
-		public Square Block
+		public Square Square
 		{
 			get
 			{
 				if (Maze == null)
 					return null;
 
-				return Maze.GetBlock(Position);
+				return Maze.GetBlock(Coordinate);
 			}
 		}
 

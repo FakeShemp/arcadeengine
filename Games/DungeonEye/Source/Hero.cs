@@ -859,7 +859,7 @@ namespace DungeonEye
 
 			// 
 			DungeonLocation loc = new DungeonLocation(Team.Location);
-			loc.SquarePosition = Team.GetHeroGroundPosition(this);
+			loc.Position = Team.GetHeroGroundPosition(this);
 			switch (item.Type)
 			{
 

@@ -88,16 +88,16 @@ namespace DungeonEye
 				switch (Location.Direction)
 				{
 					case CardinalPoint.North:
-					dst = new Point(Location.Position.X, Location.Position.Y - 1);
+					dst = new Point(Location.Coordinate.X, Location.Coordinate.Y - 1);
 					break;
 					case CardinalPoint.East:
-					dst = new Point(Location.Position.X + 1, Location.Position.Y);
+					dst = new Point(Location.Coordinate.X + 1, Location.Coordinate.Y);
 					break;
 					case CardinalPoint.South:
-					dst = new Point(Location.Position.X, Location.Position.Y + 1);
+					dst = new Point(Location.Coordinate.X, Location.Coordinate.Y + 1);
 					break;
 					case CardinalPoint.West:
-					dst = new Point(Location.Position.X - 1, Location.Position.Y);
+					dst = new Point(Location.Coordinate.X - 1, Location.Coordinate.Y);
 					break;
 				}
 
@@ -114,34 +114,34 @@ namespace DungeonEye
 				if ((blockinfo.Door != null && blockinfo.Door.State != DoorState.Opened) || blockinfo.MonsterCount > 0)
 				{
 					//Distance = 0;
-					Location.Position = dst;
+					Location.Coordinate = dst;
 
-					SquarePosition gp = Location.SquarePosition;
+					SquarePosition gp = Location.Position;
 					switch (Location.Direction)
 					{
 						case CardinalPoint.North:
 						if (gp == SquarePosition.NorthEast || gp == SquarePosition.SouthEast)
-							Location.SquarePosition = SquarePosition.SouthEast;
+							Location.Position = SquarePosition.SouthEast;
 						else
-							Location.SquarePosition = SquarePosition.SouthWest;
+							Location.Position = SquarePosition.SouthWest;
 						break;
 						case CardinalPoint.South:
 						if (gp == SquarePosition.NorthEast || gp == SquarePosition.SouthEast)
-							Location.SquarePosition = SquarePosition.NorthEast;
+							Location.Position = SquarePosition.NorthEast;
 						else
-							Location.SquarePosition = SquarePosition.NorthWest;
+							Location.Position = SquarePosition.NorthWest;
 						break;
 						case CardinalPoint.West:
 						if (gp == SquarePosition.NorthEast || gp == SquarePosition.NorthWest)
-							Location.SquarePosition = SquarePosition.NorthEast;
+							Location.Position = SquarePosition.NorthEast;
 						else
-							Location.SquarePosition = SquarePosition.SouthEast;
+							Location.Position = SquarePosition.SouthEast;
 						break;
 						case CardinalPoint.East:
 						if (gp == SquarePosition.NorthEast || gp == SquarePosition.NorthWest)
-							Location.SquarePosition = SquarePosition.NorthWest;
+							Location.Position = SquarePosition.NorthWest;
 						else
-							Location.SquarePosition = SquarePosition.SouthWest;
+							Location.Position = SquarePosition.SouthWest;
 						break;
 					}
 
@@ -149,7 +149,7 @@ namespace DungeonEye
 					// Get monster and hit it
 					if (blockinfo.MonsterCount > 0)
 					{
-						Monster[] monsters = maze.GetBlock(Location.Position).Monsters;
+						Monster[] monsters = maze.GetBlock(Location.Coordinate).Monsters;
 						foreach(Monster monster in monsters)
 							if (monster != null)
 							{
@@ -167,32 +167,32 @@ namespace DungeonEye
 				// Drop the item at good ground position
 				if (Distance == 0)
 				{
-					SquarePosition gp = Location.SquarePosition;
+					SquarePosition gp = Location.Position;
 					switch (Location.Direction)
 					{
 						case CardinalPoint.North:
 						if (gp == SquarePosition.NorthEast || gp == SquarePosition.SouthEast)
-							Location.SquarePosition = SquarePosition.NorthEast;
+							Location.Position = SquarePosition.NorthEast;
 						else
-							Location.SquarePosition = SquarePosition.NorthWest;
+							Location.Position = SquarePosition.NorthWest;
 						break;
 						case CardinalPoint.South:
 						if (gp == SquarePosition.NorthEast || gp == SquarePosition.SouthEast)
-							Location.SquarePosition = SquarePosition.SouthEast;
+							Location.Position = SquarePosition.SouthEast;
 						else
-							Location.SquarePosition = SquarePosition.SouthWest;
+							Location.Position = SquarePosition.SouthWest;
 						break;
 						case CardinalPoint.West:
 						if (gp == SquarePosition.NorthEast || gp == SquarePosition.NorthWest)
-							Location.SquarePosition = SquarePosition.NorthWest;
+							Location.Position = SquarePosition.NorthWest;
 						else
-							Location.SquarePosition = SquarePosition.SouthWest;
+							Location.Position = SquarePosition.SouthWest;
 						break;
 						case CardinalPoint.East:
 						if (gp == SquarePosition.NorthEast || gp == SquarePosition.NorthWest)
-							Location.SquarePosition = SquarePosition.NorthEast;
+							Location.Position = SquarePosition.NorthEast;
 						else
-							Location.SquarePosition = SquarePosition.SouthEast;
+							Location.Position = SquarePosition.SouthEast;
 						break;
 					}
 
@@ -201,7 +201,7 @@ namespace DungeonEye
 				else
 				{
 					Distance--;
-					Location.Position = dst;
+					Location.Coordinate = dst;
 				}
 			}
 

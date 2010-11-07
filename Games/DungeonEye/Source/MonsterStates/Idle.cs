@@ -61,7 +61,7 @@ namespace DungeonEye.MonsterStates
 					continue;
 
 				//int dir = Dice.GetD20(1);
-				Point vector = Monster.Location.Position;
+				Point vector = Monster.Location.Coordinate;
 
 /*
 				// Depending the current direction

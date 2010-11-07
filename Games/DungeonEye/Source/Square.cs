@@ -33,7 +33,7 @@ namespace DungeonEye
 	/// 
 	/// 
 	/// Events
-	///  OnTeamEnter		Team enter in the block
+	///  OnTeamEnter     Team enter in the block
 	///  OnTeamStand     Team stand in the block
 	///  OnTeamLeave     Team leave the block
 	///  OnDropItem      An item is dropped on the ground
@@ -88,7 +88,7 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// To string
 		/// </summary>
 		/// <returns></returns>
 		public override string ToString()
@@ -251,7 +251,7 @@ namespace DungeonEye
 				{
 					case ForceFieldType.Turning:
 					{
-						team.Location.Compass.Rotate(ForceField.Rotation);
+						team.Location.Direction = Compass.Rotate(team.Location.Direction, ForceField.Rotation);
 					}
 					break;
 
@@ -302,7 +302,7 @@ namespace DungeonEye
 				{
 					case ForceFieldType.Turning:
 					{
-						monster.Location.Compass.Rotate(ForceField.Rotation);
+						monster.Location.Direction = Compass.Rotate(monster.Location.Direction, ForceField.Rotation);
 					}
 					break;
 
@@ -312,16 +312,16 @@ namespace DungeonEye
 						switch (ForceField.Move)
 						{
 							case CardinalPoint.North:
-							monster.Location.Position.Offset(0, -1);
+							monster.Location.Coordinate.Offset(0, -1);
 							break;
 							case CardinalPoint.South:
-							monster.Location.Position.Offset(0, 1);
+							monster.Location.Coordinate.Offset(0, 1);
 							break;
 							case CardinalPoint.West:
-							monster.Location.Position.Offset(-1, 0);
+							monster.Location.Coordinate.Offset(-1, 0);
 							break;
 							case CardinalPoint.East:
-							monster.Location.Position.Offset(1, 0);
+							monster.Location.Coordinate.Offset(1, 0);
 							break;
 						}
 					}
@@ -330,18 +330,18 @@ namespace DungeonEye
 			}
 			else if (Pit != null)
 			{
-				monster.Location = new DungeonLocation(Pit.Target);
+				monster.Teleport(Pit.Target);
 				monster.Damage(Pit.Damage, SavingThrowType.Reflex, Pit.Difficulty);
 
 			}
 			else if (Teleporter != null)
 			{
-				monster.Location = new DungeonLocation(Teleporter.Target);
+				monster.Teleport(Teleporter.Target);
 
 			}
 			else if (Stair != null)
 			{
-				monster.Location = new DungeonLocation(Stair.Target);
+				monster.Teleport(Stair.Target);
 				monster.Location.Direction = Stair.Target.Direction;
 
 			}
@@ -437,21 +437,17 @@ namespace DungeonEye
 		public Monster GetMonster(SquarePosition position)
 		{
 			if (position == SquarePosition.Center)
-			{
 				return null;
-			}
-			else
-			{
-				return Monsters[(int)position];
-			}
+
+			return Monsters[(int)position];
 		}
 
 
 		/// <summary>
-		/// 
+		/// Set a monster in the square
 		/// </summary>
-		/// <param name="monster"></param>
-		/// <param name="position"></param>
+		/// <param name="monster">Monster handle or null</param>
+		/// <param name="position">Square position</param>
 		public void SetMonster(Monster monster, SquarePosition position)
 		{
 			if (position == SquarePosition.Center)
@@ -689,6 +685,14 @@ namespace DungeonEye
 
 				switch (node.Name.ToLower())
 				{
+					case "monster":
+					{
+						Monster monster = new Monster(Location.Maze);
+						monster.Load(node);
+						monster.Teleport(this, (SquarePosition)Enum.Parse(typeof(SquarePosition), node.Attributes["position"].Value));
+					}
+					break;
+
 					// Items on ground
 					case "item":
 					{
@@ -696,7 +700,6 @@ namespace DungeonEye
 						Item item = ResourceManager.CreateAsset<Item>(node.Attributes["name"].Value);
 						if (item != null)
 							GroundItems[(int)loc].Add(item);
-
 					}
 					break;
 
@@ -717,7 +720,6 @@ namespace DungeonEye
 						Location.Load(node);
 					}
 					break;
-
 
 					case "type":
 					{
@@ -773,15 +775,6 @@ namespace DungeonEye
 						SetAlcove(side, true);
 					}
 					break;
-
-					case "monster":
-					{
-						Monster monster = new Monster(Location.Maze);
-						monster.Load(node);
-						SetMonster(monster, (SquarePosition)Enum.Parse(typeof(SquarePosition), node.Attributes["position"].Value));
-					}
-					break;
-
 					default:
 					{
 						Trace.WriteLine("[Square] Load() : Unknown node \"{0}\"", node.Name);
@@ -830,6 +823,7 @@ namespace DungeonEye
 
 			return GetItemsOnGround((SquarePosition) tab[(int) from, (int) position]);
 		}
+
 
 		/// <summary>
 		/// Collects an item on the ground
@@ -1074,6 +1068,18 @@ namespace DungeonEye
 		{
 			get;
 			set;
+		}
+
+
+		/// <summary>
+		/// Does the block have items
+		/// </summary>
+		public bool HasItems
+		{
+			get
+			{
+				return GroundItemCount > 0;
+			}
 		}
 
 

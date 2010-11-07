@@ -129,8 +129,8 @@ namespace DungeonEye.Forms
 
 
 
-			PreviewLoc.Position.X += offset.X;
-			PreviewLoc.Position.Y += offset.Y;
+			PreviewLoc.Coordinate.X += offset.X;
+			PreviewLoc.Coordinate.Y += offset.Y;
 
 			SquareDescriptionBox.Text = "Preview pos : " + PreviewLoc.Position.ToString();
 
@@ -272,7 +272,7 @@ namespace DungeonEye.Forms
 				// Select object
 				else
 				{
-					if (PreviewLoc.Position == BlockCoord)
+					if (PreviewLoc.Coordinate == BlockCoord)
 						DragPreview = true;
 				}
 			}
@@ -378,7 +378,7 @@ namespace DungeonEye.Forms
 
 				if (DragPreview)
 				{
-					PreviewLoc.Position = BlockCoord;
+					PreviewLoc.Coordinate = BlockCoord;
 				}
 			}
 
@@ -606,18 +606,18 @@ namespace DungeonEye.Forms
 
 			// Draw monsters
 			//foreach (Monster monster in Maze.Monsters)
-			//    SpriteBatch.DrawTile(Icons, 8, new Point(Offset.X + monster.Location.Position.X * 25, Offset.Y + monster.Location.Position.Y * 25));
+			//    SpriteBatch.DrawTile(Icons, 8, new Point(Offset.X + monster.Location.Location.X * 25, Offset.Y + monster.Location.Location.Y * 25));
 
 
 			// Preview pos
-			SpriteBatch.DrawTile(Icons, 22 + (int)PreviewLoc.Direction, new Point(Offset.X + PreviewLoc.Position.X * 25, Offset.Y + PreviewLoc.Position.Y * 25));
+			SpriteBatch.DrawTile(Icons, 22 + (int)PreviewLoc.Direction, new Point(Offset.X + PreviewLoc.Coordinate.X * 25, Offset.Y + PreviewLoc.Coordinate.Y * 25));
 
 
 			// Starting point
 			if (Dungeon.StartLocation.MazeName == Maze.Name)
 			{
 				SpriteBatch.DrawTile(Icons, 20,
-					new Point(Offset.X + Dungeon.StartLocation.Position.X * 25, Offset.Y + Dungeon.StartLocation.Position.Y * 25));
+					new Point(Offset.X + Dungeon.StartLocation.Coordinate.X * 25, Offset.Y + Dungeon.StartLocation.Coordinate.Y * 25));
 			}
 
 
@@ -691,12 +691,12 @@ namespace DungeonEye.Forms
 			//}
 			else if (e.KeyCode == KeyboardScheme["TurnLeft"])
 			{
-				PreviewLoc.Compass.Rotate(CompassRotation.Rotate270);
+				PreviewLoc.Direction = Compass.Rotate(PreviewLoc.Direction, CompassRotation.Rotate270);
 			}
 
 			// Turn right
 			else if (e.KeyCode == KeyboardScheme["TurnRight"])
-				PreviewLoc.Compass.Rotate(CompassRotation.Rotate90);
+				PreviewLoc.Direction = Compass.Rotate(PreviewLoc.Direction, CompassRotation.Rotate90);
 
 
 			// Move forward
@@ -950,7 +950,7 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void TurnLeftBox_Click(object sender, EventArgs e)
 		{
-			PreviewLoc.Compass.Rotate(CompassRotation.Rotate270);
+			PreviewLoc.Direction = Compass.Rotate(PreviewLoc.Direction, CompassRotation.Rotate270);
 		}
 
 
@@ -984,7 +984,7 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void TurnRightBox_Click(object sender, EventArgs e)
 		{
-			PreviewLoc.Compass.Rotate(CompassRotation.Rotate90);
+			PreviewLoc.Direction = Compass.Rotate(PreviewLoc.Direction, CompassRotation.Rotate90);
 		}
 
 

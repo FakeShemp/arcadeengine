@@ -59,7 +59,7 @@ namespace DungeonEye
 		{
 			if (maze != null)
 			{
-				Location = new DungeonLocation(maze.Dungeon);
+				//Location = new DungeonLocation(maze.Dungeon);
 			}
 
 			ItemsInPocket = new List<string>();
@@ -109,7 +109,7 @@ namespace DungeonEye
 				return false;
 
 			// Get informations about the destination block
-			Point dst = Location.Position;
+			Point dst = Location.Coordinate;
 			dst.Offset(offset);
 
 
@@ -118,7 +118,7 @@ namespace DungeonEye
 
 			// The team
 			if (Location.Dungeon.Team.Location.Maze == Location.Maze &&
-				Location.Dungeon.Team.Location.Position == dst)
+				Location.Dungeon.Team.Location.Coordinate == dst)
 				canmove = false;
 
 			// A wall
@@ -144,17 +144,72 @@ namespace DungeonEye
 			if (canmove)
 			{
 				// Leave the current block
-				Location.Block.OnMonsterLeave(this);
+				Location.Square.OnMonsterLeave(this);
 
 
-				Location.Position.Offset(offset);
+				Location.Coordinate.Offset(offset);
 				LastAction = DateTime.Now;
 
 				// Enter the new block
-				Location.Block.OnMonsterEnter(this);
+				Location.Square.OnMonsterEnter(this);
 			}
 
 			return canmove;
+		}
+
+
+		/// <summary>
+		/// Teleport the monster to a given location
+		/// </summary>
+		/// <param name="target">Destination square</param>
+		/// <param name="position">Square position</param>
+		public void Teleport(Square square, SquarePosition position)
+		{
+			// Move to another square
+			if (Square != square)
+			{
+				// Remove from previous location
+				if (Square != null)
+				{
+					Square.Monsters[(int)Position] = null;
+				}
+
+				Square = square;
+
+				// Add the monster to the new square
+				Position = position;
+				Square.Monsters[(int)Position] = this;
+			}
+
+			// Move to a subsquare
+			else
+			{
+				Square.Monsters[(int)Position] = null;
+				Square.Monsters[(int)position] = this;
+
+				Position = position;
+			}
+		}
+
+
+		/// <summary>
+		/// Teleport the monster to a given location
+		/// but keep the same square position
+		/// </summary>
+		/// <param name="square">Destination square</param>
+		public void Teleport(Square square)
+		{
+			Teleport(square, Position);
+		}
+
+
+		/// <summary>
+		/// Teleport the monster to a given location
+		/// </summary>
+		/// <param name="target">Destination</param>
+		public void Teleport(DungeonLocation target)
+		{
+			Teleport(target.Square, target.Position);
 		}
 
 
@@ -210,7 +265,7 @@ namespace DungeonEye
 			// Draw offset
 			if (LastDrawOffset + DrawOffsetDuration < DateTime.Now)
 			{
-				DrawOffset = new Point(GameBase.Random.Next(-10, 10), GameBase.Random.Next(-10, 10));
+				//DrawOffset = new Point(GameBase.Random.Next(-10, 10), GameBase.Random.Next(-10, 10));
 				LastDrawOffset = DateTime.Now;
 			}
 
@@ -303,16 +358,15 @@ namespace DungeonEye
 				throw new ArgumentNullException("target");
 
 			// Monster is alone in the square
-			if (Location.SquarePosition == SquarePosition.Center)
+			if (Location.Position == SquarePosition.Center)
 				return false;
 
 			// Find the distance
-			Point dist = new Point(Location.Position.X - target.Position.X, Location.Position.Y - target.Position.Y);
+			Point dist = new Point(Location.Coordinate.X - target.Coordinate.X, Location.Coordinate.Y - target.Coordinate.Y);
 
 			// Current maze
 			Maze maze = Location.Maze;
-			Square square = maze.GetBlock(Location.Position);
-			Monster[] monsters = maze.GetBlock(Location.Position).Monsters;
+			Square square = maze.GetBlock(Location.Coordinate);
 
 			// Target on the right
 			if (dist.X > 0)
@@ -325,7 +379,7 @@ namespace DungeonEye
 			// Target above
 			if (dist.Y > 0)
 			{
-				//if (Location.SquarePosition == SquarePosition.SouthWest && maze.IsLocationFree(Location, SquarePosition.NorthWest))
+				//if (Location.Position == SquarePosition.SouthWest && maze.IsLocationFree(Location, SquarePosition.NorthWest))
 
 			}
 			else
@@ -361,7 +415,7 @@ namespace DungeonEye
 			if (Location.Maze != target.Maze)
 				return false;
 
-			Point dist = new Point(Location.Position.X - target.Position.X, Location.Position.Y - target.Position.Y);
+			Point dist = new Point(Location.Coordinate.X - target.Coordinate.X, Location.Coordinate.Y - target.Coordinate.Y);
 
 			return Math.Abs(dist.X) < 5 || Math.Abs(dist.Y) < 5;
 		}
@@ -378,7 +432,7 @@ namespace DungeonEye
 			if (Tileset == null)
 				return;
 
-			// Tileset scale
+			#region Tileset scale
 			Vector2[] tilescale = new Vector2[]
 			{
 				new Vector2(1.0f, 1.0f),		// A
@@ -403,8 +457,9 @@ namespace DungeonEye
 				new Vector2(1.0f, 1.0f),		// Team
 				new Vector2(1.0f, 1.0f),		// Q
 			};
+			#endregion
 
-			// draw offset scale
+			#region Draw offset scale
 			Point[] offsetscale = new Point[]
 			{
 				new Point(1, 1),		// A
@@ -429,38 +484,177 @@ namespace DungeonEye
 				new Point(1, 1),		// Team
 				new Point(1, 1),		// Q
 			};
+			#endregion
 
-
-			// draw offset scale
-			Point[] positions = new Point[]
+			#region Draw positions
+			Point[][] positions = new Point[][]
 			{
-				Point.Empty,				// A
-				new Point(0, 140),			// B
-				new Point(80, 140),			// C
-				new Point(180, 140),		// D
-				new Point(270, 140),		// E
-				new Point(342, 140),		// F
-				Point.Empty,				// G
+				#region row 3
+				// A
+				new Point[]
+				{
+					Point.Empty,
+					Point.Empty,
+					Point.Empty,
+					Point.Empty,
+					Point.Empty,
+				},
+				// B
+				new Point[]
+				{
+					new Point(0, 140),	
+					new Point(0, 140),	
+					new Point(0, 140),	
+					new Point(0, 140),	
+					new Point(0, 140),	
+				},
+				// C
+				new Point[]{
+					new Point(80, 140),	
+					new Point(80, 140),	
+					new Point(80, 140),	
+					new Point(80, 140),	
+					new Point(80, 140),	
+				},
+				// D
+				new Point[]{
+					new Point(180, 140),
+					new Point(180, 140),
+					new Point(180, 140),
+					new Point(180, 140),
+					new Point(180, 140),
+				},
+				// E
+				new Point[]{
+					new Point(270, 140),
+					new Point(270, 140),
+					new Point(270, 140),
+					new Point(270, 140),
+					new Point(270, 140),
+				},
+				// F
+				new Point[]{
+					new Point(342, 140),
+					new Point(342, 140),
+					new Point(342, 140),
+					new Point(342, 140),
+					new Point(342, 140),
+				},
+				// G
+				new Point[]{
+					Point.Empty,
+					Point.Empty,
+					Point.Empty,
+					Point.Empty,
+					Point.Empty,
+				},
+				#endregion
 
-				Point.Empty,				// H
-				new Point(50, 146),			// I
-				new Point(180, 146),		// J
-				new Point(300, 146),		// K
-				Point.Empty,				// L
+				#region row 2
+				// H
+				new Point[]{
+					Point.Empty,
+					Point.Empty,
+					Point.Empty,
+					Point.Empty,
+					Point.Empty,
+				},
+				// I
+				new Point[]{
+					new Point(50, 146),	
+					new Point(50, 146),	
+					new Point(50, 146),	
+					new Point(50, 146),	
+					new Point(50, 146),	
+				},
+				// J
+				new Point[]{
+					new Point(180, 146),
+					new Point(180, 146),
+					new Point(180, 146),
+					new Point(180, 146),
+					new Point(180, 146),
+				},
+				// K
+				new Point[]{
+					new Point(300, 146),
+					new Point(300, 146),
+					new Point(300, 146),
+					new Point(300, 146),
+					new Point(300, 146),
+				},
+				// L
+				new Point[]{
+					Point.Empty,
+					Point.Empty,
+					Point.Empty,
+					Point.Empty,
+					Point.Empty,
+				},
+				#endregion
 
-				new Point(-20, 150),		// M
-				new Point(180, 150),		// N
-				new Point(370, 150),		// O
+				#region row 1
+				// M
+				new Point[]{
+					new Point(-20, 150),
+					new Point(-20, 150),
+					new Point(-20, 150),
+					new Point(-20, 150),
+					new Point(-20, 150),
+				},
+				// N
+				new Point[]{
+					new Point(116, 120),	// North West
+					new Point(214, 120),	// North East
+					new Point(106, 140),	// South West
+					new Point(234, 140),	// South East
+					new Point(180, 150),	// Middle
+				},
+				// O
+				new Point[]{
+					new Point(370, 150),
+					new Point(370, 150),
+					new Point(370, 150),
+					new Point(370, 150),
+					new Point(370, 150),
+				},
+				#endregion
 
-				Point.Empty,				// P
-				Point.Empty,				// Team
-				Point.Empty,				// Q
+			};
+			#endregion
+
+			int i = 0;
+			#region Subsquare
+
+			// Translate subsquare position according looking point
+			int[][] sub = new int[][]
+			{
+				// Looking from north
+				new int[]
+				{
+					0,1,2,3,4
+				},
+
+				// Looking from south
+				new int[]
+				{
+					3,2,1,0,4
+				},
+
+				// Looking from west
+				new int[]
+				{
+					1,3,0,2,4
+				},
+				
+				// Looking from east
+				new int[]
+				{
+					2,0,3,1,4
+				},
 			};
 
-
-
-			TextureEnvMode mode = Display.TexEnv;
-
+			#endregion
 
 			switch (pos)
 			{
@@ -478,6 +672,8 @@ namespace DungeonEye
 				case ViewFieldPosition.N:
 				case ViewFieldPosition.O:
 				{
+					TextureEnvMode mode = Display.TexEnv;
+
 					// Monster was hit, redraw it
 					if (LastAttack != null && LastAttack.Time + TimeSpan.FromSeconds(0.25) > DateTime.Now)
 					{
@@ -488,7 +684,18 @@ namespace DungeonEye
 					// Draw the monster
 					int offset = (int)pos;
 					Tileset.Scale = tilescale[offset];
-					batch.DrawTile(Tileset, GetTileID(direction), new Point(positions[offset].X + DrawOffset.X / offsetscale[offset].X, positions[offset].Y + DrawOffset.Y / offsetscale[offset].Y));
+
+					int suboffset = 0;
+					if (Location.Square.MonsterCount == 1)
+						suboffset = sub[(int)direction][4];
+					else
+						suboffset = sub[(int)direction][(int)Position];
+					
+					Point position = new Point(
+						positions[offset][suboffset].X + DrawOffset.X / offsetscale[offset].X,
+						positions[offset][suboffset].Y + DrawOffset.Y / offsetscale[offset].Y);
+					
+					batch.DrawTile(Tileset, GetTileID(direction), position);
 					Tileset.Scale = new Vector2(1.0f, 1.0f);
 
 
@@ -501,67 +708,6 @@ namespace DungeonEye
 				}
 				break;
 			}
-
-/*
-			switch (pos)
-			{
-				case ViewFieldPosition.B:
-				Tileset.Scale = new Vector2(0.5f, 0.5f);
-				batch.DrawTile(Tileset, GetTileID(direction), new Point(0 + DrawOffset.X / 4, 140 + DrawOffset.Y / 4), Color.Gray);
-				Tileset.Scale = new Vector2(1.0f, 1.0f);
-				break;
-				case ViewFieldPosition.C:
-				Tileset.Scale = new Vector2(0.5f, 0.5f);
-				batch.DrawTile(Tileset, GetTileID(direction), new Point(80 + DrawOffset.X / 4, 140 + DrawOffset.Y / 4), Color.Gray);
-				Tileset.Scale = new Vector2(1.0f, 1.0f);
-				break;
-				case ViewFieldPosition.D:
-				Tileset.Scale = new Vector2(0.5f, 0.5f);
-				batch.DrawTile(Tileset, GetTileID(direction), new Point(180 + DrawOffset.X / 4, 140 + DrawOffset.Y / 4), Color.Gray);
-				Tileset.Scale = new Vector2(1.0f, 1.0f);
-				break;
-				case ViewFieldPosition.E:
-				Tileset.Scale = new Vector2(0.5f, 0.5f);
-				batch.DrawTile(Tileset, GetTileID(direction), new Point(270 + DrawOffset.X / 4, 140 + DrawOffset.Y / 4), Color.Gray);
-				Tileset.Scale = new Vector2(1.0f, 1.0f);
-				break;
-				case ViewFieldPosition.F:
-				Tileset.Scale = new Vector2(0.5f, 0.5f);
-				batch.DrawTile(Tileset, GetTileID(direction), new Point(342 + DrawOffset.X / 4, 140 + DrawOffset.Y / 4), Color.Gray);
-				Tileset.Scale = new Vector2(1.0f, 1.0f);
-				break;
-
-
-				case ViewFieldPosition.I:
-				Tileset.Scale = new Vector2(0.75f, 0.75f);
-				batch.DrawTile(Tileset, GetTileID(direction), new Point(50 + DrawOffset.X / 2, 146 + DrawOffset.Y / 2));
-				Tileset.Scale = new Vector2(1.0f, 1.0f);
-				break;
-				case ViewFieldPosition.J:
-				Tileset.Scale = new Vector2(0.75f, 0.75f);
-				batch.DrawTile(Tileset, GetTileID(direction), new Point(180 + DrawOffset.X / 2, 146 + DrawOffset.Y / 2));
-				Tileset.Scale = new Vector2(1.0f, 1.0f);
-				break;
-				case ViewFieldPosition.K:
-				Tileset.Scale = new Vector2(0.75f, 0.75f);
-				batch.DrawTile(Tileset, GetTileID(direction), new Point(300 + DrawOffset.X / 2, 146 + DrawOffset.Y / 2));
-				Tileset.Scale = new Vector2(1.0f, 1.0f);
-				break;
-
-
-				case ViewFieldPosition.M:
-				batch.DrawTile(Tileset, GetTileID(direction), new Point(-20 + DrawOffset.X, 150 + DrawOffset.Y));
-				break;
-				case ViewFieldPosition.N:
-				batch.DrawTile(Tileset, GetTileID(direction), new Point(180 + DrawOffset.X, 150 + DrawOffset.Y));
-				break;
-				case ViewFieldPosition.O:
-				batch.DrawTile(Tileset, GetTileID(direction), new Point(370 + DrawOffset.X, 150 + DrawOffset.Y));
-				break;
-			}
-*/
-
-
 
 		}
 
@@ -593,11 +739,11 @@ namespace DungeonEye
 				return false;
 
 			// x or y lined
-			if (target.Position.X == Location.Position.X)
+			if (target.Coordinate.X == Location.Coordinate.X)
 			{
 				return true;
 			}
-			else if (target.Position.Y == Location.Position.Y)
+			else if (target.Coordinate.Y == Location.Coordinate.Y)
 			{
 				return true;
 			}
@@ -624,7 +770,7 @@ namespace DungeonEye
 				return false;
 
 			// Find the distance
-			Point dist = new Point(target.Position.X - Location.Position.X, target.Position.Y - Location.Position.Y);
+			Point dist = new Point(target.Coordinate.X - Location.Coordinate.X, target.Coordinate.Y - Location.Coordinate.Y);
 
 			// Close to the target (up, down or left, right)
 			return	(dist.X == 0 && Math.Abs(dist.Y) == 1) ||
@@ -643,26 +789,26 @@ namespace DungeonEye
 		{
 			int[,] id = new int[4, 4];
 
-			// g	f						LOOKING	  FROM	        VIEW	
-			id[0, 0] = 5;			//		N			N			N
-			id[0, 1] = 0;			//		N			S			S
-			id[0, 2] = 3;			//		N			W			W
-			id[0, 3] = 1;			//		N			E			E
+			// g	f						LOOKING   FROM         VIEW	
+			id[0, 0] = 5;			//			N		N			N
+			id[0, 1] = 0;			//			N		S			S
+			id[0, 2] = 3;			//			N		W			W
+			id[0, 3] = 1;			//			N		E			E
 
-			id[1, 0] = 0;			//		S			N			S
-			id[1, 1] = 5;			//		S			S			N
-			id[1, 2] = 1;			//		S			W			E
-			id[1, 3] = 3;			//		S			E			W
+			id[1, 0] = 0;			//			S		N			S
+			id[1, 1] = 5;			//			S		S			N
+			id[1, 2] = 1;			//			S		W			E
+			id[1, 3] = 3;			//			S		E			W
 
-			id[2, 0] = 1;			//		W			N			E
-			id[2, 1] = 3;			//		W			S			W
-			id[2, 2] = 5;			//		W			W			N
-			id[2, 3] = 0;			//		W			E			S
+			id[2, 0] = 1;			//			W		N			E
+			id[2, 1] = 3;			//			W		S			W
+			id[2, 2] = 5;			//			W		W			N
+			id[2, 3] = 0;			//			W		E			S
 
-			id[3, 0] = 3;			//		E			N			W
-			id[3, 1] = 1;			//		E			S			E
-			id[3, 2] = 0;			//		E			W			S
-			id[3, 3] = 5;			//		E			E			N
+			id[3, 0] = 3;			//			E		N			W
+			id[3, 1] = 1;			//			E		S			E
+			id[3, 2] = 0;			//			E		W			S
+			id[3, 3] = 5;			//			E		E			N
 
 			return id[(int)Location.Direction, (int)point] + Tile;
 		}
@@ -683,11 +829,11 @@ namespace DungeonEye
 				return false;
 
 			// Not in sight zone
-			if (!SightZone.Contains(location.Position))
+			if (!SightZone.Contains(location.Coordinate))
 				return false;
 
 			// Check in straight line
-			Point vector = new Point(Location.Position.X - location.Position.X, Location.Position.Y - location.Position.Y);
+			Point vector = new Point(Location.Coordinate.X - location.Coordinate.X, Location.Coordinate.Y - location.Coordinate.Y);
 			while (!vector.IsEmpty)
 			{
 				if (vector.X > 0)
@@ -700,7 +846,7 @@ namespace DungeonEye
 				else if (vector.Y < 0)
 					vector.Y++;
 
-				Square block = Location.Maze.GetBlock(new Point(location.Position.X + vector.X, Location.Position.Y + vector.Y));
+				Square block = Location.Maze.GetBlock(new Point(location.Coordinate.X + vector.X, Location.Coordinate.Y + vector.Y));
 				if (block.IsWall)
 					return false;
 			}
@@ -726,7 +872,7 @@ namespace DungeonEye
 				return false;
 
 			// Not in sight zone
-			if (!DetectionZone.Contains(location.Position))
+			if (!DetectionZone.Contains(location.Coordinate))
 				return false;
 
 
@@ -741,7 +887,8 @@ namespace DungeonEye
 		/// <returns>True if facing, or false</returns>
 		public bool IsFacing(CardinalPoint direction)
 		{
-			return Location.Compass.IsFacing(direction);
+			
+			return Location.Direction == direction;
 		}
 
 
@@ -775,7 +922,7 @@ namespace DungeonEye
 				return true;
 
 			// Face to the location
-			Location.Compass.Rotate(CompassRotation.Rotate90);
+			Location.Direction = Compass.Rotate(Location.Direction, CompassRotation.Rotate90);
 
 
 			// Does the monster face the direction
@@ -784,7 +931,6 @@ namespace DungeonEye
 
 
 		#endregion
-
 
 
 		#region I/O
@@ -1002,7 +1148,7 @@ namespace DungeonEye
 
 			writer.WriteStartElement("monster");
 			writer.WriteAttributeString("name", Name);
-			writer.WriteAttributeString("position", Location.SquarePosition.ToString());
+			writer.WriteAttributeString("position", Location.Coordinate.ToString());
 
 			base.Save(writer);
 
@@ -1144,7 +1290,7 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// To string
 		/// </summary>
 		/// <returns></returns>
 		public override string ToString()
@@ -1154,6 +1300,40 @@ namespace DungeonEye
 
 
 		#region Properties
+
+		/// <summary>
+		/// Location of the monster
+		/// </summary>
+		public DungeonLocation Location
+		{
+			get
+			{
+				if (Square != null)
+					return Square.Location;
+
+				return null;
+			}
+		}
+
+
+		/// <summary>
+		/// Square where the monster is
+		/// </summary>
+		public Square Square
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// Square position
+		/// </summary>
+		public SquarePosition Position
+		{
+			get;
+			private set;
+		}
 
 
 		/// <summary>
@@ -1183,7 +1363,6 @@ namespace DungeonEye
 		}
 
 
-
 		/// <summary>
 		/// Monster default behaviour
 		/// </summary>
@@ -1202,8 +1381,6 @@ namespace DungeonEye
 			get;
 			private set;
 		}
-
-
 
 
 		/// <summary>
@@ -1260,6 +1437,7 @@ namespace DungeonEye
 			set;
 		}
 
+	
 		/// <summary>
 		/// Gets or sets if the monster uses of the heal spell
 		/// </summary>
@@ -1319,16 +1497,6 @@ namespace DungeonEye
 		/// Dice rolled to generate hit points
 		/// </summary>
 		public Dice HitDice
-		{
-			get;
-			set;
-		}
-
-
-		/// <summary>
-		/// Location of the monster
-		/// </summary>
-		public DungeonLocation Location
 		{
 			get;
 			set;
@@ -1619,22 +1787,22 @@ namespace DungeonEye
 				{
 					case CardinalPoint.North:
 					zone = new Rectangle(
-						Location.Position.X - 1, Location.Position.Y - SightRange,
+						Location.Coordinate.X - 1, Location.Coordinate.Y - SightRange,
 						3, SightRange);
 					break;
 					case CardinalPoint.South:
 					zone = new Rectangle(
-						Location.Position.X - 1, Location.Position.Y + 1,
+						Location.Coordinate.X - 1, Location.Coordinate.Y + 1,
 						3, SightRange);
 					break;
 					case CardinalPoint.West:
 					zone = new Rectangle(
-						Location.Position.X - SightRange, Location.Position.Y - 1,
+						Location.Coordinate.X - SightRange, Location.Coordinate.Y - 1,
 						SightRange, 3);
 					break;
 					case CardinalPoint.East:
 					zone = new Rectangle(
-						Location.Position.X + 1, Location.Position.Y - 1,
+						Location.Coordinate.X + 1, Location.Coordinate.Y - 1,
 						SightRange, 3);
 					break;
 				}
@@ -1654,8 +1822,8 @@ namespace DungeonEye
 			get
 			{
 				return new Rectangle(
-				Location.Position.X - DetectionRange / 2,
-				Location.Position.Y - DetectionRange / 2,
+				Location.Coordinate.X - DetectionRange / 2,
+				Location.Coordinate.Y - DetectionRange / 2,
 				DetectionRange, DetectionRange);
 			}
 		}

@@ -1012,12 +1012,12 @@ namespace DungeonEye
 
 			// Turn left
 			if (Keyboard.IsNewKeyPress(InputScheme["TurnLeft"]))
-				Location.Compass.Rotate(CompassRotation.Rotate270);
+				Location.Direction = Compass.Rotate(Location.Direction, CompassRotation.Rotate270);
 
 
 			// Turn right
 			if (Keyboard.IsNewKeyPress(InputScheme["TurnRight"]))
-				Location.Compass.Rotate(CompassRotation.Rotate90);
+				Location.Direction = Compass.Rotate(Location.Direction, CompassRotation.Rotate90);
 
 
 			// Move forward
@@ -1072,7 +1072,7 @@ namespace DungeonEye
 			Point pos = Point.Empty;
 
 			// Get the block at team position
-			Square CurrentBlock = Location.Maze.GetBlock(Location.Position);
+			Square CurrentBlock = Location.Maze.GetBlock(Location.Coordinate);
 
 
 			#region Mouse
@@ -1084,7 +1084,7 @@ namespace DungeonEye
 				#region Direction buttons
 				// Turn left
 				if (InterfaceCoord.TurnLeft.Contains(mousePos))
-					Location.Compass.Rotate(CompassRotation.Rotate270);
+					Location.Direction = Compass.Rotate(Location.Direction, CompassRotation.Rotate270);
 
 				// MoveForward
 				else if (InterfaceCoord.MoveForward.Contains(mousePos))
@@ -1092,7 +1092,7 @@ namespace DungeonEye
 
 				// Turn right
 				else if (InterfaceCoord.TurnRight.Contains(mousePos))
-					Location.Compass.Rotate(CompassRotation.Rotate90);
+					Location.Direction = Compass.Rotate(Location.Direction, CompassRotation.Rotate90);
 
 				// Move left
 				else if (InterfaceCoord.MoveLeft.Contains(mousePos))
@@ -1272,16 +1272,16 @@ namespace DungeonEye
 							switch (Location.Direction)
 							{
 								case CardinalPoint.North:
-								loc.SquarePosition = SquarePosition.SouthWest;
+								loc.Position = SquarePosition.SouthWest;
 								break;
 								case CardinalPoint.East:
-								loc.SquarePosition = SquarePosition.NorthWest;
+								loc.Position = SquarePosition.NorthWest;
 								break;
 								case CardinalPoint.South:
-								loc.SquarePosition = SquarePosition.NorthEast;
+								loc.Position = SquarePosition.NorthEast;
 								break;
 								case CardinalPoint.West:
-								loc.SquarePosition = SquarePosition.SouthEast;
+								loc.Position = SquarePosition.SouthEast;
 								break;
 							}
 							Location.Maze.ThrownItems.Add(new ThrownItem(SelectedHero, ItemInHand, loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
@@ -1298,16 +1298,16 @@ namespace DungeonEye
 							switch (Location.Direction)
 							{
 								case CardinalPoint.North:
-								loc.SquarePosition = SquarePosition.SouthEast;
+								loc.Position = SquarePosition.SouthEast;
 								break;
 								case CardinalPoint.East:
-								loc.SquarePosition = SquarePosition.SouthWest;
+								loc.Position = SquarePosition.SouthWest;
 								break;
 								case CardinalPoint.South:
-								loc.SquarePosition = SquarePosition.NorthWest;
+								loc.Position = SquarePosition.NorthWest;
 								break;
 								case CardinalPoint.West:
-								loc.SquarePosition = SquarePosition.NorthEast;
+								loc.Position = SquarePosition.NorthEast;
 								break;
 							}
 
@@ -1959,23 +1959,23 @@ namespace DungeonEye
 			{
 				case CardinalPoint.North:
 				{
-					if (!new Rectangle(Location.Position.X - 1, Location.Position.Y - 3, 3, 4).Contains(location) &&
-						location != new Point(Location.Position.X - 3, Location.Position.Y - 3) &&
-						location != new Point(Location.Position.X - 2, Location.Position.Y - 3) &&
-						location != new Point(Location.Position.X - 2, Location.Position.Y - 2) &&
-						location != new Point(Location.Position.X + 3, Location.Position.Y - 3) &&
-						location != new Point(Location.Position.X + 2, Location.Position.Y - 3) &&
-						location != new Point(Location.Position.X + 2, Location.Position.Y - 2))
+					if (!new Rectangle(Location.Coordinate.X - 1, Location.Coordinate.Y - 3, 3, 4).Contains(location) &&
+						location != new Point(Location.Coordinate.X - 3, Location.Coordinate.Y - 3) &&
+						location != new Point(Location.Coordinate.X - 2, Location.Coordinate.Y - 3) &&
+						location != new Point(Location.Coordinate.X - 2, Location.Coordinate.Y - 2) &&
+						location != new Point(Location.Coordinate.X + 3, Location.Coordinate.Y - 3) &&
+						location != new Point(Location.Coordinate.X + 2, Location.Coordinate.Y - 3) &&
+						location != new Point(Location.Coordinate.X + 2, Location.Coordinate.Y - 2))
 						return false;
 
 					// Is there a wall between the Team and the location
-					int dx = location.X - Location.Position.X;
-					int dy = location.Y - Location.Position.Y;
+					int dx = location.X - Location.Coordinate.X;
+					int dy = location.Y - Location.Coordinate.Y;
 					float delta = (float) dy / (float) dx;
 					float y = 0;
-					for (int pos = Location.Position.Y ; pos >= location.Y ; pos--)
+					for (int pos = Location.Coordinate.Y ; pos >= location.Y ; pos--)
 					{
-						if (Location.Maze.GetBlock(new Point(pos, Location.Position.Y + (int) y)).Type == SquareType.Wall)
+						if (Location.Maze.GetBlock(new Point(pos, Location.Coordinate.Y + (int) y)).Type == SquareType.Wall)
 							return false;
 
 						y += delta;
@@ -1986,24 +1986,24 @@ namespace DungeonEye
 
 				case CardinalPoint.South:
 				{
-					if (!new Rectangle(Location.Position.X - 1, Location.Position.Y, 3, 4).Contains(location) &&
-						location != new Point(Location.Position.X - 3, Location.Position.Y + 3) &&
-						location != new Point(Location.Position.X - 2, Location.Position.Y + 3) &&
-						location != new Point(Location.Position.X - 2, Location.Position.Y + 2) &&
-						location != new Point(Location.Position.X + 3, Location.Position.Y + 3) &&
-						location != new Point(Location.Position.X + 2, Location.Position.Y + 3) &&
-						location != new Point(Location.Position.X + 2, Location.Position.Y + 2))
+					if (!new Rectangle(Location.Coordinate.X - 1, Location.Coordinate.Y, 3, 4).Contains(location) &&
+						location != new Point(Location.Coordinate.X - 3, Location.Coordinate.Y + 3) &&
+						location != new Point(Location.Coordinate.X - 2, Location.Coordinate.Y + 3) &&
+						location != new Point(Location.Coordinate.X - 2, Location.Coordinate.Y + 2) &&
+						location != new Point(Location.Coordinate.X + 3, Location.Coordinate.Y + 3) &&
+						location != new Point(Location.Coordinate.X + 2, Location.Coordinate.Y + 3) &&
+						location != new Point(Location.Coordinate.X + 2, Location.Coordinate.Y + 2))
 						return false;
 
 
 					// Is there a wall between the Team and the location
-					int dx = location.X - Location.Position.X;
-					int dy = location.Y - Location.Position.Y;
+					int dx = location.X - Location.Coordinate.X;
+					int dy = location.Y - Location.Coordinate.Y;
 					float delta = (float) dy / (float) dx;
 					float y = 0;
-					for (int pos = Location.Position.Y ; pos <= location.Y ; pos++)
+					for (int pos = Location.Coordinate.Y ; pos <= location.Y ; pos++)
 					{
-						if (Location.Maze.GetBlock(new Point(pos, Location.Position.Y + (int) y)).Type == SquareType.Wall)
+						if (Location.Maze.GetBlock(new Point(pos, Location.Coordinate.Y + (int) y)).Type == SquareType.Wall)
 							return false;
 
 						y += delta;
@@ -2014,25 +2014,25 @@ namespace DungeonEye
 
 				case CardinalPoint.West:
 				{
-					if (!new Rectangle(Location.Position.X - 3, Location.Position.Y - 1, 4, 3).Contains(location) &&
-						location != new Point(Location.Position.X - 3, Location.Position.Y - 3) &&
-						location != new Point(Location.Position.X - 3, Location.Position.Y - 2) &&
-						location != new Point(Location.Position.X - 2, Location.Position.Y - 2) &&
-						location != new Point(Location.Position.X - 3, Location.Position.Y + 3) &&
-						location != new Point(Location.Position.X - 3, Location.Position.Y + 2) &&
-						location != new Point(Location.Position.X - 2, Location.Position.Y + 2))
+					if (!new Rectangle(Location.Coordinate.X - 3, Location.Coordinate.Y - 1, 4, 3).Contains(location) &&
+						location != new Point(Location.Coordinate.X - 3, Location.Coordinate.Y - 3) &&
+						location != new Point(Location.Coordinate.X - 3, Location.Coordinate.Y - 2) &&
+						location != new Point(Location.Coordinate.X - 2, Location.Coordinate.Y - 2) &&
+						location != new Point(Location.Coordinate.X - 3, Location.Coordinate.Y + 3) &&
+						location != new Point(Location.Coordinate.X - 3, Location.Coordinate.Y + 2) &&
+						location != new Point(Location.Coordinate.X - 2, Location.Coordinate.Y + 2))
 						return false;
 
 
 
 					// Is there a wall between the Team and the location
-					int dx = location.X - Location.Position.X;
-					int dy = location.Y - Location.Position.Y;
+					int dx = location.X - Location.Coordinate.X;
+					int dy = location.Y - Location.Coordinate.Y;
 					float delta = (float) dy / (float) dx;
 					float y = 0;
-					for (int pos = Location.Position.X ; pos >= location.X ; pos--)
+					for (int pos = Location.Coordinate.X ; pos >= location.X ; pos--)
 					{
-						if (Location.Maze.GetBlock(new Point(pos, Location.Position.Y + (int) y)).Type == SquareType.Wall)
+						if (Location.Maze.GetBlock(new Point(pos, Location.Coordinate.Y + (int) y)).Type == SquareType.Wall)
 							return false;
 
 						y += delta;
@@ -2043,23 +2043,23 @@ namespace DungeonEye
 
 				case CardinalPoint.East:
 				{
-					if (!new Rectangle(Location.Position.X, Location.Position.Y - 1, 4, 3).Contains(location) &&
-						location != new Point(Location.Position.X + 3, Location.Position.Y - 3) &&
-						location != new Point(Location.Position.X + 3, Location.Position.Y - 2) &&
-						location != new Point(Location.Position.X + 2, Location.Position.Y - 2) &&
-						location != new Point(Location.Position.X + 3, Location.Position.Y + 3) &&
-						location != new Point(Location.Position.X + 3, Location.Position.Y + 2) &&
-						location != new Point(Location.Position.X + 2, Location.Position.Y + 2))
+					if (!new Rectangle(Location.Coordinate.X, Location.Coordinate.Y - 1, 4, 3).Contains(location) &&
+						location != new Point(Location.Coordinate.X + 3, Location.Coordinate.Y - 3) &&
+						location != new Point(Location.Coordinate.X + 3, Location.Coordinate.Y - 2) &&
+						location != new Point(Location.Coordinate.X + 2, Location.Coordinate.Y - 2) &&
+						location != new Point(Location.Coordinate.X + 3, Location.Coordinate.Y + 3) &&
+						location != new Point(Location.Coordinate.X + 3, Location.Coordinate.Y + 2) &&
+						location != new Point(Location.Coordinate.X + 2, Location.Coordinate.Y + 2))
 						return false;
 
 					// Is there a wall between the Team and the location
-					int dx = location.X - Location.Position.X;
-					int dy = location.Y - Location.Position.Y;
+					int dx = location.X - Location.Coordinate.X;
+					int dy = location.Y - Location.Coordinate.Y;
 					float delta = (float) dy / (float) dx;
 					float y = 0;
-					for (int pos = Location.Position.X ; pos <= location.X ; pos++)
+					for (int pos = Location.Coordinate.X ; pos <= location.X ; pos++)
 					{
-						if (Location.Maze.GetBlock(new Point(pos, Location.Position.Y + (int) y)).Type == SquareType.Wall)
+						if (Location.Maze.GetBlock(new Point(pos, Location.Coordinate.Y + (int) y)).Type == SquareType.Wall)
 							return false;
 
 						y += delta;
@@ -2082,7 +2082,7 @@ namespace DungeonEye
 		/// <returns>Distance with the Team</returns>
 		public Point Distance(Point location)
 		{
-			return new Point(location.X - Location.Position.X, location.Y - Location.Position.Y);
+			return new Point(location.X - Location.Coordinate.X, location.Y - Location.Coordinate.Y);
 		}
 
 		#endregion
@@ -2502,7 +2502,7 @@ namespace DungeonEye
 				return false;
 
 			// Get informations about the destination block
-			Point dst = Location.Position;
+			Point dst = Location.Coordinate;
 			dst.Offset(offset);
 
 
@@ -2539,12 +2539,12 @@ namespace DungeonEye
 				MazeBlock.OnTeamLeave(this);
 
 
-			Location.Position.Offset(offset);
+			Location.Coordinate.Offset(offset);
 			LastMove = DateTime.Now;
 			HasMoved = true;
 
 			// Enter the new block
-			MazeBlock = Location.Maze.GetBlock(Location.Position);
+			MazeBlock = Location.Maze.GetBlock(Location.Coordinate);
 			if (MazeBlock != null)
 				MazeBlock.OnTeamEnter(this);
 
@@ -2573,7 +2573,7 @@ namespace DungeonEye
 			Location.SetMaze(maze.Name);
 
 
-			MazeBlock = Location.Maze.GetBlock(Location.Position);
+			MazeBlock = Location.Maze.GetBlock(Location.Coordinate);
 
 			MazeBlock.OnTeamEnter(this);
 
@@ -2701,7 +2701,7 @@ namespace DungeonEye
 		{
 			get
 			{
-				return Location.Maze.GetBlock(FrontLocation.Position);
+				return Location.Maze.GetBlock(FrontLocation.Coordinate);
 			}
 		}
 
@@ -2738,16 +2738,16 @@ namespace DungeonEye
 				switch (Location.Direction)
 				{
 					case CardinalPoint.North:
-					location.Position = new Point(Location.Position.X, Location.Position.Y - 1);
+					location.Coordinate = new Point(Location.Coordinate.X, Location.Coordinate.Y - 1);
 					break;
 					case CardinalPoint.South:
-					location.Position = new Point(Location.Position.X, Location.Position.Y + 1);
+					location.Coordinate = new Point(Location.Coordinate.X, Location.Coordinate.Y + 1);
 					break;
 					case CardinalPoint.West:
-					location.Position = new Point(Location.Position.X - 1, Location.Position.Y);
+					location.Coordinate = new Point(Location.Coordinate.X - 1, Location.Coordinate.Y);
 					break;
 					case CardinalPoint.East:
-					location.Position = new Point(Location.Position.X + 1, Location.Position.Y);
+					location.Coordinate = new Point(Location.Coordinate.X + 1, Location.Coordinate.Y);
 					break;
 				}
 

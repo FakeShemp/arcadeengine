@@ -52,118 +52,56 @@ namespace DungeonEye
 		/// <summary>
 		/// Rotate the team
 		/// </summary>
-		/// <param name="rot"></param>
-		public void Rotate(CompassRotation rot)
+		/// <param name="direction">Initial direction</param>
+		/// <param name="rot">Rotation needed</param>
+		/// <returns>Final direction</returns>
+		static public CardinalPoint Rotate(CardinalPoint direction, CompassRotation rot)
 		{
-
-
-			switch (Direction)
+			CardinalPoint[][] points = new CardinalPoint[][]
 			{
-				case CardinalPoint.North:
+				// North
+				new CardinalPoint[] 
 				{
-					switch (rot)
-					{
-						case CompassRotation.Rotate90:
-						{
-							Direction = CardinalPoint.East;
-						}
-						break;
+					CardinalPoint.East,
+					CardinalPoint.South,
+					CardinalPoint.West,
+					CardinalPoint.North,
+				},
 
-						case CompassRotation.Rotate270:
-						{
-							Direction = CardinalPoint.West;
-						}
-						break;
-
-						case CompassRotation.Rotate180:
-						{
-							Direction = CardinalPoint.South;
-						}
-						break;
-					}
-				}
-				break;
-
-				case CardinalPoint.South:
+				// South
+				new CardinalPoint[] 
 				{
-					switch (rot)
-					{
-						case CompassRotation.Rotate90:
-						{
-							Direction = CardinalPoint.West;
-						}
-						break;
+					CardinalPoint.West,
+					CardinalPoint.North,
+					CardinalPoint.East,
+					CardinalPoint.South,
+				},
 
-						case CompassRotation.Rotate270:
-						{
-							Direction = CardinalPoint.East;
-						}
-						break;
-
-						case CompassRotation.Rotate180:
-						{
-							Direction = CardinalPoint.North;
-						}
-						break;
-					}
-				}
-				break;
-
-				case CardinalPoint.East:
+				// West
+				new CardinalPoint[] 
 				{
-					switch (rot)
-					{
-						case CompassRotation.Rotate90:
-						{
-							Direction = CardinalPoint.South;
-						}
-						break;
+					CardinalPoint.North,
+					CardinalPoint.East,
+					CardinalPoint.South,
+					CardinalPoint.West,
+				},
 
-						case CompassRotation.Rotate270:
-						{
-							Direction = CardinalPoint.North;
-						}
-						break;
-
-						case CompassRotation.Rotate180:
-						{
-							Direction = CardinalPoint.West;
-						}
-						break;
-					}
-				}
-				break;
-
-				case CardinalPoint.West:
+				// East
+				new CardinalPoint[] 
 				{
-					switch (rot)
-					{
-						case CompassRotation.Rotate90:
-						{
-							Direction = CardinalPoint.North;
-						}
-						break;
+					CardinalPoint.South,
+					CardinalPoint.West,
+					CardinalPoint.North,
+					CardinalPoint.East,
+				},
+			};
 
-						case CompassRotation.Rotate270:
-						{
-							Direction = CardinalPoint.South;
-						}
-						break;
-
-						case CompassRotation.Rotate180:
-						{
-							Direction = CardinalPoint.East;
-						}
-						break;
-					}
-				}
-				break;
-			}
+			return points[(int)direction][(int)rot];
 		}
 
 
 		/// <summary>
-		/// Is facing a specific directioen
+		/// Is facing a specific direction
 		/// </summary>
 		/// <param name="dir">Direction</param>
 		/// <returns>True if facing the same direction</returns>
@@ -171,7 +109,6 @@ namespace DungeonEye
 		{
 			return Direction == dir;
 		}
-
 
 
 		/// <summary>
@@ -182,7 +119,7 @@ namespace DungeonEye
 		/// <returns>Direction to face to</returns>
 		public CardinalPoint SeekDirection(DungeonLocation from, DungeonLocation target)
 		{
-			Point delta = new Point(target.Position.X - from.Position.X, target.Position.Y - from.Position.Y);
+			Point delta = new Point(target.Coordinate.X - from.Coordinate.X, target.Coordinate.Y - from.Coordinate.Y);
 			CardinalPoint dir = CardinalPoint.North;
 
 

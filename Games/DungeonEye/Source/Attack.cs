@@ -68,8 +68,8 @@ namespace DungeonEye
 			else
 				to = ((Monster)target).Location;
 
-			Range = (int)Math.Sqrt((from.Position.Y - to.Position.Y) * (from.Position.Y - to.Position.Y) +
-						(from.Position.X - to.Position.X) * (from.Position.X - to.Position.X));
+			Range = (int)Math.Sqrt((from.Coordinate.Y - to.Coordinate.Y) * (from.Coordinate.Y - to.Coordinate.Y) +
+						(from.Coordinate.X - to.Coordinate.X) * (from.Coordinate.X - to.Coordinate.X));
 
 			// Attack roll
 			int attackdie = Dice.GetD20(1);
