@@ -443,6 +443,18 @@ namespace DungeonEye
 		}
 
 
+		/// <summary>
+		/// Removes a monster
+		/// </summary>
+		/// <param name="position">Square position</param>
+		public void RemoveMonster(SquarePosition position)
+		{
+			if (position == SquarePosition.Center)
+				return;
+
+			Monsters[(int) position] = null;
+		}
+
 		#endregion
 
 

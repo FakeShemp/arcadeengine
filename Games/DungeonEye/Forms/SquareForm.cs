@@ -500,13 +500,18 @@ namespace DungeonEye.Forms
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void button2_Click(object sender, EventArgs e)
+		private void RemoveMonsterBox_Click(object sender, EventArgs e)
 		{
 			if (GroundLocationBox.SelectedIndex == -1)
 				return;
 
-		//	Maze.Monsters.Remove(MonsterBox.Monster);
-		//	MonsterBox.Monster = null;
+			if (MazeBlock == null)
+				return;
+
+			MazeBlock.RemoveMonster((SquarePosition)GroundLocationBox.SelectedIndex);
+			MonsterBox.Visible = false;
+			MonsterBox.SetMonster(null);
+
 
 		}
 

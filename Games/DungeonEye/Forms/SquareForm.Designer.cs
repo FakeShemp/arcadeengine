@@ -58,7 +58,8 @@
 			this.NWItemsBox = new System.Windows.Forms.ComboBox();
 			this.NWRemoveItem = new System.Windows.Forms.Button();
 			this.MonstersTab = new System.Windows.Forms.TabPage();
-			this.button2 = new System.Windows.Forms.Button();
+			this.MonsterBox = new DungeonEye.Forms.MonsterControl();
+			this.RemoveMonsterBox = new System.Windows.Forms.Button();
 			this.ApplyMonsterTemplateBox = new System.Windows.Forms.Button();
 			this.MonsterTemplateBox = new System.Windows.Forms.ComboBox();
 			this.label10 = new System.Windows.Forms.Label();
@@ -95,6 +96,7 @@
 			this.label3 = new System.Windows.Forms.Label();
 			this.HiddenPlateBox = new System.Windows.Forms.CheckBox();
 			this.PitGroupBox = new System.Windows.Forms.GroupBox();
+			this.PitDamageBox = new DungeonEye.Forms.DiceControl();
 			this.label15 = new System.Windows.Forms.Label();
 			this.PitDiffcultyBox = new System.Windows.Forms.NumericUpDown();
 			this.HiddenPitBox = new System.Windows.Forms.CheckBox();
@@ -122,8 +124,6 @@
 			this.DoorStateBox = new System.Windows.Forms.ComboBox();
 			this.DoorTypeBox = new System.Windows.Forms.ComboBox();
 			this.CloseBox = new System.Windows.Forms.Button();
-			this.MonsterBox = new DungeonEye.Forms.MonsterControl();
-			this.PitDamageBox = new DungeonEye.Forms.DiceControl();
 			this.TabControlBox.SuspendLayout();
 			this.ItemsTab.SuspendLayout();
 			this.groupBox7.SuspendLayout();
@@ -141,7 +141,7 @@
 			this.tabPage1.SuspendLayout();
 			this.PlateGroupBox.SuspendLayout();
 			this.PitGroupBox.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.PitDiffcultyBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize) (this.PitDiffcultyBox)).BeginInit();
 			this.StairGroupBox.SuspendLayout();
 			this.ForceFieldGroupBox.SuspendLayout();
 			this.TeleporterGroupBox.SuspendLayout();
@@ -150,9 +150,9 @@
 			// 
 			// TabControlBox
 			// 
-			this.TabControlBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.TabControlBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.TabControlBox.Controls.Add(this.ItemsTab);
 			this.TabControlBox.Controls.Add(this.MonstersTab);
 			this.TabControlBox.Controls.Add(this.WallsTab);
@@ -250,9 +250,9 @@
 			// 
 			// SEBox
 			// 
-			this.SEBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.SEBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.SEBox.FormattingEnabled = true;
 			this.SEBox.Location = new System.Drawing.Point(6, 47);
 			this.SEBox.Name = "SEBox";
@@ -284,8 +284,8 @@
 			// 
 			// SERemoveItem
 			// 
-			this.SERemoveItem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.SERemoveItem.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.SERemoveItem.Location = new System.Drawing.Point(6, 146);
 			this.SERemoveItem.Name = "SERemoveItem";
 			this.SERemoveItem.Size = new System.Drawing.Size(177, 23);
@@ -309,9 +309,9 @@
 			// 
 			// SWBox
 			// 
-			this.SWBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.SWBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.SWBox.FormattingEnabled = true;
 			this.SWBox.Location = new System.Drawing.Point(6, 47);
 			this.SWBox.Name = "SWBox";
@@ -343,8 +343,8 @@
 			// 
 			// SWRemoveItem
 			// 
-			this.SWRemoveItem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.SWRemoveItem.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.SWRemoveItem.Location = new System.Drawing.Point(6, 146);
 			this.SWRemoveItem.Name = "SWRemoveItem";
 			this.SWRemoveItem.Size = new System.Drawing.Size(177, 23);
@@ -368,9 +368,9 @@
 			// 
 			// NEBox
 			// 
-			this.NEBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.NEBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.NEBox.FormattingEnabled = true;
 			this.NEBox.Location = new System.Drawing.Point(6, 47);
 			this.NEBox.Name = "NEBox";
@@ -402,8 +402,8 @@
 			// 
 			// NERemoveItem
 			// 
-			this.NERemoveItem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.NERemoveItem.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.NERemoveItem.Location = new System.Drawing.Point(6, 146);
 			this.NERemoveItem.Name = "NERemoveItem";
 			this.NERemoveItem.Size = new System.Drawing.Size(177, 23);
@@ -427,9 +427,9 @@
 			// 
 			// NWBox
 			// 
-			this.NWBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.NWBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.NWBox.FormattingEnabled = true;
 			this.NWBox.Location = new System.Drawing.Point(6, 47);
 			this.NWBox.Name = "NWBox";
@@ -461,8 +461,8 @@
 			// 
 			// NWRemoveItem
 			// 
-			this.NWRemoveItem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.NWRemoveItem.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.NWRemoveItem.Location = new System.Drawing.Point(6, 146);
 			this.NWRemoveItem.Name = "NWRemoveItem";
 			this.NWRemoveItem.Size = new System.Drawing.Size(177, 23);
@@ -474,7 +474,7 @@
 			// MonstersTab
 			// 
 			this.MonstersTab.Controls.Add(this.MonsterBox);
-			this.MonstersTab.Controls.Add(this.button2);
+			this.MonstersTab.Controls.Add(this.RemoveMonsterBox);
 			this.MonstersTab.Controls.Add(this.ApplyMonsterTemplateBox);
 			this.MonstersTab.Controls.Add(this.MonsterTemplateBox);
 			this.MonstersTab.Controls.Add(this.label10);
@@ -488,17 +488,29 @@
 			this.MonstersTab.Text = "Monsters";
 			this.MonstersTab.UseVisualStyleBackColor = true;
 			// 
-			// button2
+			// MonsterBox
 			// 
-			this.button2.Image = ((System.Drawing.Image)(resources.GetObject("button2.Image")));
-			this.button2.Location = new System.Drawing.Point(528, 6);
-			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(75, 23);
-			this.button2.TabIndex = 13;
-			this.button2.Text = "Remove";
-			this.button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.button2.UseVisualStyleBackColor = true;
-			this.button2.Click += new System.EventHandler(this.button2_Click);
+			this.MonsterBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.MonsterBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+			this.MonsterBox.Location = new System.Drawing.Point(8, 35);
+			this.MonsterBox.Name = "MonsterBox";
+			this.MonsterBox.Size = new System.Drawing.Size(1176, 657);
+			this.MonsterBox.TabIndex = 14;
+			this.MonsterBox.Visible = false;
+			// 
+			// RemoveMonsterBox
+			// 
+			this.RemoveMonsterBox.Image = ((System.Drawing.Image) (resources.GetObject("RemoveMonsterBox.Image")));
+			this.RemoveMonsterBox.Location = new System.Drawing.Point(528, 6);
+			this.RemoveMonsterBox.Name = "RemoveMonsterBox";
+			this.RemoveMonsterBox.Size = new System.Drawing.Size(75, 23);
+			this.RemoveMonsterBox.TabIndex = 13;
+			this.RemoveMonsterBox.Text = "Remove";
+			this.RemoveMonsterBox.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.RemoveMonsterBox.UseVisualStyleBackColor = true;
+			this.RemoveMonsterBox.Click += new System.EventHandler(this.RemoveMonsterBox_Click);
 			// 
 			// ApplyMonsterTemplateBox
 			// 
@@ -645,9 +657,9 @@
 			// 
 			// DecorationGroupBox
 			// 
-			this.DecorationGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.DecorationGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.DecorationGroupBox.Controls.Add(this.groupBox6);
 			this.DecorationGroupBox.Controls.Add(this.AddWallTemplateBox);
 			this.DecorationGroupBox.Controls.Add(this.groupBox5);
@@ -910,6 +922,20 @@
 			this.PitGroupBox.TabIndex = 0;
 			this.PitGroupBox.TabStop = false;
 			this.PitGroupBox.Text = "Pit :";
+			// 
+			// PitDamageBox
+			// 
+			this.PitDamageBox.ControlText = "Damage :";
+			dice1.Faces = 1;
+			dice1.Modifier = 0;
+			dice1.Throws = 1;
+			this.PitDamageBox.Dice = dice1;
+			this.PitDamageBox.Location = new System.Drawing.Point(5, 129);
+			this.PitDamageBox.MinimumSize = new System.Drawing.Size(230, 100);
+			this.PitDamageBox.Name = "PitDamageBox";
+			this.PitDamageBox.Size = new System.Drawing.Size(230, 100);
+			this.PitDamageBox.TabIndex = 3;
+			this.PitDamageBox.ValueChanged += new System.EventHandler(this.diceForm1_ValueChanged);
 			// 
 			// label15
 			// 
@@ -1182,7 +1208,7 @@
 			// 
 			// CloseBox
 			// 
-			this.CloseBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.CloseBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.CloseBox.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.CloseBox.Location = new System.Drawing.Point(1113, 730);
 			this.CloseBox.Name = "CloseBox";
@@ -1191,33 +1217,7 @@
 			this.CloseBox.Text = "Close";
 			this.CloseBox.UseVisualStyleBackColor = true;
 			// 
-			// MonsterBox
-			// 
-			this.MonsterBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
-			this.MonsterBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.MonsterBox.Location = new System.Drawing.Point(8, 35);
-			this.MonsterBox.Name = "MonsterBox";
-			this.MonsterBox.Size = new System.Drawing.Size(1176, 657);
-			this.MonsterBox.TabIndex = 14;
-			this.MonsterBox.Visible = false;
-			// 
-			// PitDamageBox
-			// 
-			this.PitDamageBox.ControlText = "Damage :";
-			dice1.Faces = 1;
-			dice1.Modifier = 0;
-			dice1.Throws = 1;
-			this.PitDamageBox.Dice = dice1;
-			this.PitDamageBox.Location = new System.Drawing.Point(5, 129);
-			this.PitDamageBox.MinimumSize = new System.Drawing.Size(230, 100);
-			this.PitDamageBox.Name = "PitDamageBox";
-			this.PitDamageBox.Size = new System.Drawing.Size(230, 100);
-			this.PitDamageBox.TabIndex = 3;
-			this.PitDamageBox.ValueChanged += new System.EventHandler(this.diceForm1_ValueChanged);
-			// 
-			// MazeBlockForm
+			// SquareForm
 			// 
 			this.AcceptButton = this.CloseBox;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1225,12 +1225,12 @@
 			this.ClientSize = new System.Drawing.Size(1200, 765);
 			this.Controls.Add(this.CloseBox);
 			this.Controls.Add(this.TabControlBox);
-			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
 			this.KeyPreview = true;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
-			this.Name = "MazeBlockForm";
+			this.Name = "SquareForm";
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
@@ -1265,7 +1265,7 @@
 			this.PlateGroupBox.PerformLayout();
 			this.PitGroupBox.ResumeLayout(false);
 			this.PitGroupBox.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.PitDiffcultyBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize) (this.PitDiffcultyBox)).EndInit();
 			this.StairGroupBox.ResumeLayout(false);
 			this.StairGroupBox.PerformLayout();
 			this.ForceFieldGroupBox.ResumeLayout(false);
@@ -1337,7 +1337,7 @@
 		private System.Windows.Forms.Label label10;
 		private System.Windows.Forms.ComboBox GroundLocationBox;
 		private System.Windows.Forms.Label label9;
-		private System.Windows.Forms.Button button2;
+		private System.Windows.Forms.Button RemoveMonsterBox;
 		private System.Windows.Forms.Button ApplyMonsterTemplateBox;
 		private System.Windows.Forms.Button AddWallTemplateBox;
 		private System.Windows.Forms.ComboBox WallTemplateBox;

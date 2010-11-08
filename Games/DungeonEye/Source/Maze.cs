@@ -751,10 +751,29 @@ namespace DungeonEye
 					td = MazeDisplayCoordinates.GetDecoration(position, CardinalPoint.South);
 					if (td != null)
 					{
+						Point[] offsets = new Point[]
+						{
+							new Point(10, 10),		// A
+							new Point(10, 10),		// B
+							new Point(10, 10),		// C
+							new Point(10, 10),		// D
+							new Point(10, 10),		// E
+							new Point(10, 10),		// F
+							new Point(10, 10),		// G
+							new Point(20, 20),		// H
+							new Point(20, 20),		// I
+							new Point(20, 20),		// J
+							new Point(20, 20),		// K
+							new Point(16, 16),		// L
+							new Point(32, 32),		// M
+							new Point(32, 32),		// N
+							new Point(32, 32),		// O
+						};
+
 						foreach (Item item in block.GetAlcoveItems(view, CardinalPoint.South))
 						{
 							Point loc = td.Location;
-							loc.Offset(new Point(30, 20));
+							loc.Offset(offsets[(int)position]);
 							batch.DrawTile(ItemsTileset, item.GroundTileID + offset, loc);
 						}
 					}
@@ -805,7 +824,8 @@ namespace DungeonEye
 			List<ThrownItem>[] flyings = GetFlyingItems(block.Location, view);
 			foreach (SquarePosition pos in Enum.GetValues(typeof(SquarePosition)))
 			{
-				if (MazeDisplayCoordinates.GetFlyingItem(position, pos) == Point.Empty)
+				point = MazeDisplayCoordinates.GetFlyingItem(position, pos);
+				if (point == Point.Empty)
 					continue;
 
 				// Swap the tile if throwing on the right side
@@ -814,7 +834,7 @@ namespace DungeonEye
 					fx = SpriteEffects.FlipHorizontally;
 
 				foreach (ThrownItem fi in flyings[(int)pos])
-					batch.DrawTile(ItemsTileset, fi.Item.ThrowTileID + offset, MazeDisplayCoordinates.GetFlyingItem(position, pos), Color.White, 0.0f, fx, 0.0f);
+					batch.DrawTile(ItemsTileset, fi.Item.ThrowTileID + offset, point, Color.White, 0.0f, fx, 0.0f);
 
 			}
 			#endregion
