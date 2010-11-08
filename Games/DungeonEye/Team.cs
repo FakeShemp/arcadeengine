@@ -1262,7 +1262,6 @@ namespace DungeonEye
 				#endregion
 
 
-
 				#region Action to process on the front block
 
 				// Click on the block in front of the team
@@ -1277,17 +1276,17 @@ namespace DungeonEye
 							switch (Location.Direction)
 							{
 								case CardinalPoint.North:
-								loc.Position = SquarePosition.SouthWest;
-								break;
+									loc.Position = SquarePosition.SouthWest;
+									break;
 								case CardinalPoint.East:
-								loc.Position = SquarePosition.NorthWest;
-								break;
+									loc.Position = SquarePosition.NorthWest;
+									break;
 								case CardinalPoint.South:
-								loc.Position = SquarePosition.NorthEast;
-								break;
+									loc.Position = SquarePosition.NorthEast;
+									break;
 								case CardinalPoint.West:
-								loc.Position = SquarePosition.SouthEast;
-								break;
+									loc.Position = SquarePosition.SouthEast;
+									break;
 							}
 							Location.Maze.ThrownItems.Add(new ThrownItem(SelectedHero, ItemInHand, loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
 							SetItemInHand(null);

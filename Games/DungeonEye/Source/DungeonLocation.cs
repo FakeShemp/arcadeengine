@@ -58,6 +58,7 @@ namespace DungeonEye
 			Coordinate = loc.Coordinate;
 			Position = loc.Position;
 			SetMaze(loc.MazeName);
+			Direction = loc.Direction;
 		}
 
 

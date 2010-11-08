@@ -460,11 +460,17 @@ namespace DungeonEye
 
 			foreach (ThrownItem item in ThrownItems)
 			{
-				if (item.Location.Position == location.Position)
+				// Not in the same maze
+				if (item.Location.Maze != location.Maze)
+					continue;
+
+				// Same coordinate
+				if (item.Location.Coordinate == location.Coordinate)
 					tmp[(int)item.Location.Position].Add(item);
 			}
 
 
+			// Swap according to view point direction
 			List<ThrownItem>[] items = new List<ThrownItem>[5];
 			switch (direction)
 			{
@@ -825,8 +831,8 @@ namespace DungeonEye
 			foreach (SquarePosition pos in Enum.GetValues(typeof(SquarePosition)))
 			{
 				point = MazeDisplayCoordinates.GetFlyingItem(position, pos);
-				if (point == Point.Empty)
-					continue;
+			//	if (point == Point.Empty)
+			//		continue;
 
 				// Swap the tile if throwing on the right side
 				SpriteEffects fx = SpriteEffects.None;

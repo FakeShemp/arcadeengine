@@ -110,7 +110,7 @@ namespace DungeonEye
 				}
 
 
-				// Block by an obstacle, but fall on the block
+				// Blocked by an obstacle, but fall on the block
 				if ((blockinfo.Door != null && blockinfo.Door.State != DoorState.Opened) || blockinfo.MonsterCount > 0)
 				{
 					//Distance = 0;
