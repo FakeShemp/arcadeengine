@@ -5,4 +5,5 @@
 	<HPAsBar>False</HPAsBar>
 	<Tunes>True</Tunes>
 	<Sounds>True</Sounds>
+	<FullScreen>False</FullScreen>
 </settings>

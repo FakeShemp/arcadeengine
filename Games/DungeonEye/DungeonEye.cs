@@ -87,6 +87,7 @@ namespace DungeonEye
 			param.Minor = 1;
 			param.Compatible = true;
 			param.Size = new Size(640,400);
+			param.FullScreen = Settings.GetBool("FullScreen");
 			CreateGameWindow(param);
 
 			Window.Text = "Dungeon Eye";
