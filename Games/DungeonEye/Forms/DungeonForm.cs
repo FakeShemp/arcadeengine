@@ -553,7 +553,7 @@ namespace DungeonEye.Forms
 					}
 
 					// Alcoves
-					if (block.HasAlcoves)
+					if (block.IsWall && block.HasAlcoves)
 					{
 						// Alcoves coords
 						Point[] alcoves = new Point[]

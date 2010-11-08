@@ -467,7 +467,8 @@ namespace DungeonEye.Forms
 			//monster.Location.SetMaze(Maze.Name);
 			//monster.Init();
 
-			MazeBlock.SetMonster(monster, (SquarePosition) Enum.ToObject(typeof(SquarePosition), GroundLocationBox.SelectedIndex));
+			monster.Teleport(MazeBlock, (SquarePosition) Enum.ToObject(typeof(SquarePosition), GroundLocationBox.SelectedIndex));
+			//MazeBlock.SetMonster(monster, (SquarePosition) Enum.ToObject(typeof(SquarePosition), GroundLocationBox.SelectedIndex));
 
 			//MonsterBox.Monster = monster;
 		}

@@ -784,9 +784,17 @@ namespace DungeonEye
 			#region Monsters
 			if (block.MonsterCount > 0)
 			{
+				int[][] order = new int[][]
+				{
+					new int[] {0, 1, 2, 3},	// North
+					new int[] {3, 2, 1, 0},	// South
+					new int[] {2, 0, 3, 1},	// West
+					new int[] {1, 3, 0, 2},	// East
+				};
+
 				for (int i = 0; i < 4; i++)
 				{
-					Monster monster = block.Monsters[i];
+					Monster monster = block.Monsters[order[(int)view][i]];
 					if (monster != null)
 						monster.Draw(batch, view, position);
 				}

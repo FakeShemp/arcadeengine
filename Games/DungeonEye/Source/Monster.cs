@@ -184,7 +184,10 @@ namespace DungeonEye
 			// Move to a subsquare
 			else
 			{
+				// Remove from previous position
 				Square.Monsters[(int)Position] = null;
+
+				// Move to the new position
 				Square.Monsters[(int)position] = this;
 
 				Position = position;
@@ -265,7 +268,7 @@ namespace DungeonEye
 			// Draw offset
 			if (LastDrawOffset + DrawOffsetDuration < DateTime.Now)
 			{
-				//DrawOffset = new Point(GameBase.Random.Next(-10, 10), GameBase.Random.Next(-10, 10));
+				DrawOffset = new Point(GameBase.Random.Next(-10, 10), GameBase.Random.Next(-10, 10));
 				LastDrawOffset = DateTime.Now;
 			}
 
@@ -444,9 +447,9 @@ namespace DungeonEye
 				new Vector2(1.0f, 1.0f),		// G
 
 				new Vector2(1.0f, 1.0f),		// H
-				new Vector2(0.75f, 0.75f),		// I
-				new Vector2(0.75f, 0.75f),		// J
-				new Vector2(0.75f, 0.75f),		// K
+				new Vector2(0.66f, 0.66f),		// I
+				new Vector2(0.66f, 0.66f),		// J
+				new Vector2(0.66f, 0.66f),		// K
 				new Vector2(1.0f, 1.0f),		// L
 
 				new Vector2(1.0f, 1.0f),		// M
@@ -485,144 +488,7 @@ namespace DungeonEye
 				new Point(1, 1),		// Q
 			};
 			#endregion
-
-			#region Draw positions
-			Point[][] positions = new Point[][]
-			{
-				#region row 3
-				// A
-				new Point[]
-				{
-					Point.Empty,
-					Point.Empty,
-					Point.Empty,
-					Point.Empty,
-					Point.Empty,
-				},
-				// B
-				new Point[]
-				{
-					new Point(0, 140),	
-					new Point(0, 140),	
-					new Point(0, 140),	
-					new Point(0, 140),	
-					new Point(0, 140),	
-				},
-				// C
-				new Point[]{
-					new Point(80, 140),	
-					new Point(80, 140),	
-					new Point(80, 140),	
-					new Point(80, 140),	
-					new Point(80, 140),	
-				},
-				// D
-				new Point[]{
-					new Point(180, 140),
-					new Point(180, 140),
-					new Point(180, 140),
-					new Point(180, 140),
-					new Point(180, 140),
-				},
-				// E
-				new Point[]{
-					new Point(270, 140),
-					new Point(270, 140),
-					new Point(270, 140),
-					new Point(270, 140),
-					new Point(270, 140),
-				},
-				// F
-				new Point[]{
-					new Point(342, 140),
-					new Point(342, 140),
-					new Point(342, 140),
-					new Point(342, 140),
-					new Point(342, 140),
-				},
-				// G
-				new Point[]{
-					Point.Empty,
-					Point.Empty,
-					Point.Empty,
-					Point.Empty,
-					Point.Empty,
-				},
-				#endregion
-
-				#region row 2
-				// H
-				new Point[]{
-					Point.Empty,
-					Point.Empty,
-					Point.Empty,
-					Point.Empty,
-					Point.Empty,
-				},
-				// I
-				new Point[]{
-					new Point(50, 146),	
-					new Point(50, 146),	
-					new Point(50, 146),	
-					new Point(50, 146),	
-					new Point(50, 146),	
-				},
-				// J
-				new Point[]{
-					new Point(180, 146),
-					new Point(180, 146),
-					new Point(180, 146),
-					new Point(180, 146),
-					new Point(180, 146),
-				},
-				// K
-				new Point[]{
-					new Point(300, 146),
-					new Point(300, 146),
-					new Point(300, 146),
-					new Point(300, 146),
-					new Point(300, 146),
-				},
-				// L
-				new Point[]{
-					Point.Empty,
-					Point.Empty,
-					Point.Empty,
-					Point.Empty,
-					Point.Empty,
-				},
-				#endregion
-
-				#region row 1
-				// M
-				new Point[]{
-					new Point(-20, 150),
-					new Point(-20, 150),
-					new Point(-20, 150),
-					new Point(-20, 150),
-					new Point(-20, 150),
-				},
-				// N
-				new Point[]{
-					new Point(116, 168),	// North West
-					new Point(214, 168),	// North East
-					new Point(106, 196),	// South West
-					new Point(234, 196),	// South East
-					new Point(160, 140),	// Middle
-				},
-				// O
-				new Point[]{
-					new Point(370, 150),
-					new Point(370, 150),
-					new Point(370, 150),
-					new Point(370, 150),
-					new Point(370, 150),
-				},
-				#endregion
-
-			};
-			#endregion
-
+			
 			#region Subsquare
 			// Translate subsquare position according looking point
 			int[][] sub = new int[][]
@@ -651,6 +517,33 @@ namespace DungeonEye
 					2,0,3,1,4
 				},
 
+			};
+			#endregion
+
+			#region Color offset
+			// Color offset
+			Color[] colors = new Color[]
+			{
+				Color.Gray,			// A
+				Color.Gray,			// B
+				Color.Gray,			// C
+				Color.Gray,			// D
+				Color.Gray,			// E
+				Color.Gray,			// F
+				Color.Gray,			// G
+
+				Color.LightGray,	// H
+				Color.LightGray,	// I
+				Color.LightGray,	// J
+				Color.LightGray,	// K
+				Color.LightGray,	// L
+
+				Color.White,		// M
+				Color.White,		// N
+				Color.White,		// O
+
+				Color.White,		// P
+				Color.White,		// Q
 			};
 			#endregion
 
@@ -692,8 +585,9 @@ namespace DungeonEye
 
 					// Screen coordinate
 					Point position = MazeDisplayCoordinates.GetGroundPosition(pos, squarepos);
+					//position.Offset(DrawOffset.X / offsetscale[offset].X, DrawOffset.Y / offsetscale[offset].Y);
 
-					batch.DrawTile(Tileset, GetTileID(direction), position);
+					batch.DrawTile(Tileset, GetTileID(direction), position, colors[(int)pos]);
 					Tileset.Scale = new Vector2(1.0f, 1.0f);
 
 
@@ -785,30 +679,16 @@ namespace DungeonEye
 		/// <returns>ID of the tile to display the monster</returns>
 		public int GetTileID(CardinalPoint point)
 		{
-			int[,] id = new int[4, 4];
+			int[][] id = new int[][]
+			{
+				//    From	 N  S  W  E       Looking
+				new int[]	{5, 0, 3, 1},	// North
+				new int[]	{0, 5, 1, 3},	// South
+				new int[]	{1, 3, 5, 0},	// West
+				new int[]	{3, 1, 0, 5},	// East
+			};
 
-			// g	f						LOOKING   FROM         VIEW	
-			id[0, 0] = 5;			//			N		N			N
-			id[0, 1] = 0;			//			N		S			S
-			id[0, 2] = 3;			//			N		W			W
-			id[0, 3] = 1;			//			N		E			E
-
-			id[1, 0] = 0;			//			S		N			S
-			id[1, 1] = 5;			//			S		S			N
-			id[1, 2] = 1;			//			S		W			E
-			id[1, 3] = 3;			//			S		E			W
-
-			id[2, 0] = 1;			//			W		N			E
-			id[2, 1] = 3;			//			W		S			W
-			id[2, 2] = 5;			//			W		W			N
-			id[2, 3] = 0;			//			W		E			S
-
-			id[3, 0] = 3;			//			E		N			W
-			id[3, 1] = 1;			//			E		S			E
-			id[3, 2] = 0;			//			E		W			S
-			id[3, 3] = 5;			//			E		E			N
-
-			return id[(int)Location.Direction, (int)point] + Tile;
+			return id[(int) Location.Direction][(int) point] + Tile;
 		}
 
 
@@ -888,7 +768,6 @@ namespace DungeonEye
 			
 			return Location.Direction == direction;
 		}
-
 
 
 		/// <summary>
@@ -1153,8 +1032,8 @@ namespace DungeonEye
 			if (Script != null)
 				Script.Save("script", writer);
 
-			if (Location != null)
-				Location.Save("location", writer);
+	//		if (Location != null)
+	//			Location.Save("location", writer);
 
 			DamageDice.Save("damage", writer);
 			HitDice.Save("hitdice", writer);

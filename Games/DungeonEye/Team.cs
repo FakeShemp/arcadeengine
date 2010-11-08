@@ -927,6 +927,14 @@ namespace DungeonEye
 				return;
 			}
 
+			// Reload data banks
+			if (Keyboard.IsNewKeyPress(Keys.W))
+			{
+				MazeDisplayCoordinates.Load();
+				AddMessage("MazeDisplayCoordinates reloaded...");
+			}
+
+
 
 			if (Keyboard.IsNewKeyPress(Keys.V))
 			{

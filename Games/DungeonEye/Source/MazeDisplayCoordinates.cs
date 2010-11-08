@@ -67,7 +67,12 @@ namespace DungeonEye
 
 			Doors = new TileDrawing[viewcount];
 			FloorPlates = new TileDrawing[viewcount];
+			
 			Ground = new Point[viewcount, 5];
+			for (int i = 0 ; i < viewcount ; i++)
+				for (int j = 0 ; j < 5 ; j++)
+					Ground[i,j] = new Point(-999, -999);
+
 			Decorations = new TileDrawing[viewcount, 3];
 			FlyingItems = new Point[viewcount, 5];
 			Walls = new List<TileDrawing>[viewcount];
@@ -114,9 +119,6 @@ namespace DungeonEye
 		/// <returns></returns>
 		static public Point GetGroundPosition(ViewFieldPosition view, SquarePosition position)
 		{
-		//	if (position == SquarePosition.Center)
-		//		throw new ArgumentOutOfRangeException("position", "No ground item in the middle of a block !");
-
 			return Ground[(int)view, (int)position];
 		}
 
@@ -267,7 +269,7 @@ namespace DungeonEye
 						break;
 
 
-						case "grounditem":
+						case "ground":
 						{
 							ViewFieldPosition view = (ViewFieldPosition) Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
 							SquarePosition ground = (SquarePosition) Enum.Parse(typeof(SquarePosition), node.Attributes["coordinate"].Value, true);

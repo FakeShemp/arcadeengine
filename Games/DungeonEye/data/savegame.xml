@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <team>
 	<dungeon name="Eye" />
-	<location maze="test" x="6" y="13" direction="South" position="NorthEast" />
+	<location maze="test" x="10" y="17" direction="South" position="NorthEast" />
 	<position slot="FrontLeft">
 		<hero name="Allabar">
 			<hitpoint current="23" max="23" />

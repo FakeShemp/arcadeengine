@@ -443,19 +443,6 @@ namespace DungeonEye
 		}
 
 
-		/// <summary>
-		/// Set a monster in the square
-		/// </summary>
-		/// <param name="monster">Monster handle or null</param>
-		/// <param name="position">Square position</param>
-		public void SetMonster(Monster monster, SquarePosition position)
-		{
-			if (position == SquarePosition.Center)
-				return;
-
-			Monsters[(int) position] = monster;
-		}
-
 		#endregion
 
 
