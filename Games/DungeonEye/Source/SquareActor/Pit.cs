@@ -43,6 +43,7 @@ namespace DungeonEye
 				throw new ArgumentNullException("block");
 
 			Damage = new Dice();
+			AcceptItems = true;
 		}
 
 
@@ -242,16 +243,6 @@ namespace DungeonEye
 
 
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public override bool AcceptItems
-		{
-			get
-			{
-				return true;
-			}
-		}
 
 		/// <summary>
 		/// 

@@ -40,8 +40,7 @@ namespace DungeonEye
 			if (block == null)
 				throw new ArgumentNullException("block");
 
-			//Block = block;
-			//Target = new DungeonLocation(Block.Location);
+			AcceptItems = true;
 		}
 
 
@@ -169,17 +168,6 @@ namespace DungeonEye
 			get
 			{
 				return false;
-			}
-		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public override bool AcceptItems
-		{
-			get
-			{
-				return true;
 			}
 		}
 

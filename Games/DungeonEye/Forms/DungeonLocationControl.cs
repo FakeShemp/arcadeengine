@@ -190,7 +190,7 @@ namespace DungeonEye.Forms
 
 						Batch.DrawTile(Icons, block.Type == SquareType.Ground ? 1 : 0, new Point(Offset.X + x * 25, Offset.Y + y * 25));
 
-						if (block.GroundItemCount > 0)
+						if (block.ItemCount > 0)
 						{
 							Batch.DrawTile(Icons, 19, new Point(Offset.X + x * 25, Offset.Y + y * 25));
 						}

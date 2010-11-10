@@ -47,6 +47,9 @@ namespace DungeonEye
 			// Sounds
 			OpenSound = ResourceManager.GetSharedAsset<AudioSample>("door open");
 			CloseSound = ResourceManager.GetSharedAsset<AudioSample>("door close");
+
+
+			AcceptItems = false;
 		}
 
 
@@ -59,7 +62,7 @@ namespace DungeonEye
 			StringBuilder sb = new StringBuilder();
 
 			sb.Append(State + " " + Type + " door ");
-			if (IsBashable)
+			if (IsBreakable)
 				sb.Append("(breakable) ");
 			sb.Append("(key ....) ");
 			
@@ -772,9 +775,9 @@ namespace DungeonEye
 					}
 					break;
 
-					case "toforce":
+					default:
 					{
-						ToForce = true;
+						Trace.WriteLine("[Door] Load() : Unknown node \"" + node.Name + "\" found.");
 					}
 					break;
 				}
@@ -784,7 +787,6 @@ namespace DungeonEye
 
 			return true;
 		}
-
 
 
 		/// <summary>
@@ -811,12 +813,16 @@ namespace DungeonEye
 			writer.WriteAttributeString("value", State.ToString());
 			writer.WriteEndElement();
 
-			// Has to be forced
-			if (ToForce)
-			{
-				writer.WriteStartElement("toforce");
-				writer.WriteEndElement();
-			}
+			// 
+			writer.WriteStartElement("isbroken");
+			writer.WriteAttributeString("value", IsBroken.ToString());
+			writer.WriteEndElement();
+
+			// 
+			writer.WriteStartElement("isbreakable");
+			writer.WriteAttributeString("value", IsBreakable.ToString());
+			writer.WriteEndElement();
+
 
 			if (HasButton)
 			{
@@ -880,19 +886,7 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
-		/// </summary>
-		public override bool AcceptItems
-		{
-			get
-			{
-				return false;
-			}
-		}
-
-
-		/// <summary>
-		/// Is the door opened
+		/// Door state
 		/// </summary>
 		public DoorState State
 		{
@@ -925,6 +919,16 @@ namespace DungeonEye
 
 
 		/// <summary>
+		/// Picklock value
+		/// </summary>
+		public int PickLock
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
 		/// Does items can pass though
 		/// </summary>
 		public override bool CanPassThrough
@@ -947,6 +951,7 @@ namespace DungeonEye
 			}
 		}
 
+
 		/// <summary>
 		/// Has the door a button to open it
 		/// </summary>
@@ -956,33 +961,26 @@ namespace DungeonEye
 			set;
 		}
 
-		/// <summary>
-		/// Bashable by chopping
-		/// </summary>
-		public bool IsBashable
-		{
-			get;
-			set;
-		}
-
 
 		/// <summary>
 		/// Bashable by chopping
 		/// </summary>
-		public bool DestroyableByFireball
+		public bool IsBreakable
 		{
 			get;
 			set;
 		}
 
+
 		/// <summary>
-		/// Does the door has to be forced to be opened
+		/// Door is broken
 		/// </summary>
-		public bool ToForce
+		public bool IsBroken
 		{
 			get;
 			set;
 		}
+
 
 		/// <summary>
 		/// Vertical position of the door in the animation
@@ -1041,6 +1039,27 @@ namespace DungeonEye
 		/// </summary>
 		AudioSample CloseSound;
 
+
+		/// <summary>
+		/// Door strength. 
+		/// This damage must be done in a single blow.
+		/// Multiple weaker blows will have no effect.
+		/// </summary>
+		public int Strength
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// Item disappears upon use
+		/// </summary>
+		public bool ItemDisappear
+		{
+			get;
+			set;
+		}
 		#endregion
 	}
 

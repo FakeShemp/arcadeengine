@@ -43,6 +43,7 @@ namespace DungeonEye
 				throw new ArgumentNullException("block");
 
 			block.Type = SquareType.Ground;
+			AcceptItems = false;
 		}
 
 
@@ -251,16 +252,6 @@ namespace DungeonEye
 		}
 
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public override bool AcceptItems
-		{
-			get
-			{
-				return false;
-			}
-		}
 
 
 

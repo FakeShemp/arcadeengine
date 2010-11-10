@@ -81,7 +81,6 @@ namespace DungeonEye.Forms
 		}
 
 
-
 		/// <summary>
 		/// Move the team
 		/// </summary>
@@ -135,7 +134,6 @@ namespace DungeonEye.Forms
 			SquareDescriptionBox.Text = "Preview pos : " + PreviewLoc.Position.ToString();
 
 		}
-
 
 
 		/// <summary>
@@ -207,8 +205,39 @@ namespace DungeonEye.Forms
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="square"></param>
+		void EditActor(Square square)
+		{
+			if (square == null || square.Actor == null)
+				return;
+
+			if (square.Actor is Door)
+				new DoorForm(square.Actor as Door).ShowDialog();
+
+
+
+
+		}
+
 
 		#region Events
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ToggleStripButtons(object sender, EventArgs e)
+		{
+			//if (Maze == null)
+			//	return;
+
+			UncheckButtons(sender as ToolStripButton);
+		}
 
 
 		/// <summary>
@@ -259,13 +288,16 @@ namespace DungeonEye.Forms
 		{
 			LastMousePos = e.Location;
 
+			// No maze
 			if (Maze == null)
 				return;
 
+			// Get maze coord
 			Point coord = new Point((e.Location.X - Offset.X) / 25, (e.Location.Y - Offset.Y) / 25);
 			if (!Maze.Contains(coord))
 				return;
 
+			// Get the corresponding square
 			Square block = Maze.GetBlock(coord);
 
 			if (e.Button == MouseButtons.Middle)
@@ -280,7 +312,6 @@ namespace DungeonEye.Forms
 				BlockCoord = coord;
 
 
-				#region Mazeblock changing
 				// Add wall
 				if (WallBox.Checked)
 				{
@@ -300,7 +331,6 @@ namespace DungeonEye.Forms
 					block.NoMonster = true;
 				}
 
-				#endregion
 
 
 				#region Zone
@@ -343,6 +373,8 @@ namespace DungeonEye.Forms
 		}
 
 
+
+
 		/// <summary>
 		/// On double click edit block informations
 		/// </summary>
@@ -355,16 +387,21 @@ namespace DungeonEye.Forms
 				return;
 
 			// Not while editing walls
-			if (WallBox.Checked)
-				return;
+		//	if (WallBox.Checked)
+		//		return;
 
+			// Get mouse coordinate
 			Point pos = glControl.PointToClient(MousePosition);
 			pos = new Point((pos.X - Offset.X) / 25, (pos.Y - Offset.Y) / 25);
 			if (!Maze.Contains(pos))
 				return;
-			
 
-			new SquareForm(Maze, Maze.GetBlock(pos)).ShowDialog();
+			Square square = Maze.GetBlock(pos);
+
+			if (square.Actor != null)
+				EditActor(square);
+			else
+				new SquareForm(Maze, Maze.GetBlock(pos)).ShowDialog();
 		}
 
 
@@ -538,7 +575,7 @@ namespace DungeonEye.Forms
 
 					SpriteBatch.DrawTile(Icons, tileid, location, color);
 
-					if (block.GroundItemCount > 0)
+					if (block.ItemCount > 0)
 					{
 						SpriteBatch.DrawTile(Icons, 19, location);
 					}
@@ -602,30 +639,30 @@ namespace DungeonEye.Forms
 							tileid = stair.Type == StairType.Up ? 6 : 7;
 							SpriteBatch.DrawTile(Icons, tileid, location);
 						}
+					}
 
-						// Alcoves
-						if (block.IsWall && block.HasAlcoves)
+					// Alcoves
+					if (block.IsWall && block.HasAlcoves)
+					{
+						// Alcoves coords
+						Point[] alcoves = new Point[]
+					{
+						new Point(7, 0),
+						new Point(7, 19),
+						new Point(0, 7),
+						new Point(19, 7),
+					};
+
+
+						foreach (CardinalPoint side in Enum.GetValues(typeof(CardinalPoint)))
 						{
-							// Alcoves coords
-							Point[] alcoves = new Point[]
-						{
-							new Point(7, 0),
-							new Point(7, 19),
-							new Point(0, 7),
-							new Point(19, 7),
-						};
-
-
-							foreach (CardinalPoint side in Enum.GetValues(typeof(CardinalPoint)))
+							if (block.HasAlcove(side))
 							{
-								if (block.HasAlcove(side))
-								{
-									tileid = (int) side > 1 ? 100: 101;
-									SpriteBatch.DrawTile(Icons, tileid, new Point(
-										Offset.X + x * 25 + alcoves[(int) side].X,
-										Offset.Y + y * 25 + alcoves[(int) side].Y));
+								tileid = (int) side > 1 ? 100: 101;
+								SpriteBatch.DrawTile(Icons, tileid, new Point(
+									Offset.X + x * 25 + alcoves[(int) side].X,
+									Offset.Y + y * 25 + alcoves[(int) side].Y));
 
-								}
 							}
 						}
 					}
@@ -652,7 +689,6 @@ namespace DungeonEye.Forms
 					if (block.Monsters[3] != null)
 						SpriteBatch.FillRectangle(new Rectangle(location.X + 16, location.Y + 16, 4, 4), Color.Red);
 
-					
 				}
 			}
 
@@ -677,6 +713,15 @@ namespace DungeonEye.Forms
 			// Surround the selected object
 			if (MazePropertyBox.SelectedObject != null)
 				SpriteBatch.DrawRectangle(new Rectangle(BlockCoord.X * 25 + Offset.X, BlockCoord.Y * 25 + Offset.Y, 25, 25), Color.White);
+
+			// Surround the selected object
+			if (MazePropertyBox.SelectedObject != null)
+				SpriteBatch.DrawRectangle(new Rectangle(BlockCoord.X * 25 + Offset.X, BlockCoord.Y * 25 + Offset.Y, 25, 25), Color.White);
+
+
+			// Surround the selected object
+			if (CurrentSquare != null)
+				SpriteBatch.DrawRectangle(new Rectangle(CurrentSquare.Location.Coordinate.X * 25 + Offset.X, CurrentSquare.Location.Coordinate.Y * 25 + Offset.Y, 25, 25), Color.White);
 
 
 			if (DisplayZonesBox.Checked)
@@ -721,8 +766,10 @@ namespace DungeonEye.Forms
 
 			// Escape unchecks all buttons
 			if (e.KeyCode == Keys.Escape)
+			{
 				UncheckButtons(null);
-
+				CurrentSquare = null;
+			}
 
 			//else if (e.KeyCode == Keys.Delete)
 			//{
@@ -892,8 +939,6 @@ namespace DungeonEye.Forms
 		{
 			Offset = Point.Empty;
 		}
-
-
 
 
 		/// <summary>
@@ -1099,6 +1144,7 @@ namespace DungeonEye.Forms
 			}
 		}
 
+
 		/// <summary>
 		/// Dungeon to edit
 		/// </summary>
@@ -1133,7 +1179,6 @@ namespace DungeonEye.Forms
 		/// Draw offset of the map
 		/// </summary>
 		Point Offset;
-
 
 
 		/// <summary>
@@ -1171,189 +1216,33 @@ namespace DungeonEye.Forms
 		/// </summary>
 		MazeZone CurrentZone;
 
+
+		/// <summary>
+		/// Square currently selected
+		/// </summary>
+		Square CurrentSquare;
+
 		#endregion
 
-	
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void EditWallButton_Click(object sender, EventArgs e)
+		private void glControl_MouseClick(object sender, MouseEventArgs e)
 		{
 			if (Maze == null)
 				return;
 
-			UncheckButtons(WallBox);
+			// Left mouse button
+			if (e.Button == MouseButtons.Left)
+			{
+
+				// Change selected square
+				Point coord = new Point((e.Location.X - Offset.X) / 25, (e.Location.Y - Offset.Y) / 25);
+				if (Maze.Contains(coord))
+					CurrentSquare = Maze.GetBlock(coord);
+			}
+
 		}
 
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void CreateNewZoneBox_Click(object sender, EventArgs e)
-		{
-			if (Maze == null)
-				return;
-
-			UncheckButtons(ZoneBox);
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void NoMonstersBox_Click(object sender, EventArgs e)
-		{
-			if (Maze == null)
-				return;
-
-			UncheckButtons(NoMonstersBox);
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void NoGhostsBox_Click(object sender, EventArgs e)
-		{
-			if (Maze == null)
-				return;
-
-			UncheckButtons(NoGhostsBox);
-		}
-
-		private void AddMonsterBox_Click(object sender, EventArgs e)
-		{
-			if (Maze == null)
-				return;
-
-			UncheckButtons(AddMonsterBox);
-		}
-
-		private void AddItemBox_Click(object sender, EventArgs e)
-		{
-			if (Maze == null)
-				return;
-
-			UncheckButtons(AddItemBox);
-		}
-
-		private void StairBox_Click(object sender, EventArgs e)
-		{
-			if (Maze == null)
-				return;
-
-			UncheckButtons(StairBox);
-		}
-
-		private void TeleporterBox_Click(object sender, EventArgs e)
-		{
-			if (Maze == null)
-				return;
-
-			UncheckButtons(TeleporterBox);
-		}
-
-		private void AlcoveBox_Click(object sender, EventArgs e)
-		{
-			if (Maze == null)
-				return;
-
-			UncheckButtons(AlcoveBox);
-		}
-
-		private void DoorBox_Click(object sender, EventArgs e)
-		{
-			if (Maze == null)
-				return;
-
-			UncheckButtons(DoorBox);
-		}
-
-		private void PitBox_Click(object sender, EventArgs e)
-		{
-			if (Maze == null)
-				return;
-
-			UncheckButtons(PitBox);
-		}
-
-		private void WrittingBox_Click(object sender, EventArgs e)
-		{
-			if (Maze == null)
-				return;
-
-			UncheckButtons(WrittingBox);
-		}
-
-		private void LauncherBox_Click(object sender, EventArgs e)
-		{
-			if (Maze == null)
-				return;
-
-			UncheckButtons(LauncherBox);
-		}
-
-		private void GeneratorBox_Click(object sender, EventArgs e)
-		{
-			if (Maze == null)
-				return;
-
-			UncheckButtons(GeneratorBox);
-		}
-
-		private void SwitchBox_Click(object sender, EventArgs e)
-		{
-			if (Maze == null)
-				return;
-
-			UncheckButtons(SwitchBox);
-		}
-
-		private void FloorSwitchBox_Click(object sender, EventArgs e)
-		{
-			if (Maze == null)
-				return;
-
-			UncheckButtons(FloorSwitchBox);
-		}
-
-		private void EventBox_Click(object sender, EventArgs e)
-		{
-			if (Maze == null)
-				return;
-
-			UncheckButtons(EventBox);
-		}
-
-		private void DecorationBox_Click(object sender, EventArgs e)
-		{
-			if (Maze == null)
-				return;
-
-			UncheckButtons(DecorationBox);
-		}
-
-		private void FloorDecorationBox_Click(object sender, EventArgs e)
-		{
-			if (Maze == null)
-				return;
-
-			UncheckButtons(FloorDecorationBox);
-		}
 
 
 	}
-
-
-
-
-
 }

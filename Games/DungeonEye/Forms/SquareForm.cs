@@ -66,13 +66,13 @@ namespace DungeonEye.Forms
 			SEBox.BeginUpdate();
 			SEBox.Items.Clear();
 
-			foreach (Item item in MazeBlock.GroundItems[0])
+			foreach (Item item in MazeBlock.Items[0])
 				NWBox.Items.Add(item.Name);
-			foreach (Item item in MazeBlock.GroundItems[1])
+			foreach (Item item in MazeBlock.Items[1])
 				NEBox.Items.Add(item.Name);
-			foreach (Item item in MazeBlock.GroundItems[2])
+			foreach (Item item in MazeBlock.Items[2])
 				SWBox.Items.Add(item.Name);
-			foreach (Item item in MazeBlock.GroundItems[3])
+			foreach (Item item in MazeBlock.Items[3])
 				SEBox.Items.Add(item.Name);
 
 			NWBox.EndUpdate();
@@ -226,7 +226,7 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void NWAddItem_Click(object sender, EventArgs e)
 		{
-			MazeBlock.GroundItems[0].Add(ResourceManager.CreateAsset<Item>(NWItemsBox.SelectedItem as string));
+			MazeBlock.Items[0].Add(ResourceManager.CreateAsset<Item>(NWItemsBox.SelectedItem as string));
 			NWBox.Items.Add(NWItemsBox.SelectedItem as string);
 		}
 
@@ -237,7 +237,7 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void NEAddItem_Click(object sender, EventArgs e)
 		{
-			MazeBlock.GroundItems[1].Add(ResourceManager.CreateAsset<Item>(NEItemsBox.SelectedItem as string));
+			MazeBlock.Items[1].Add(ResourceManager.CreateAsset<Item>(NEItemsBox.SelectedItem as string));
 			NEBox.Items.Add(NEItemsBox.SelectedItem as string);
 		}
 
@@ -251,10 +251,10 @@ namespace DungeonEye.Forms
 			if (NEBox.SelectedIndex == -1)
 				return;
 
-			MazeBlock.GroundItems[1].RemoveAt(NEBox.SelectedIndex);
+			MazeBlock.Items[1].RemoveAt(NEBox.SelectedIndex);
 
 			NEBox.Items.Clear();
-			foreach (Item item in MazeBlock.GroundItems[1])
+			foreach (Item item in MazeBlock.Items[1])
 				NEBox.Items.Add(item.Name);
 
 		}
@@ -269,10 +269,10 @@ namespace DungeonEye.Forms
 			if (NWBox.SelectedIndex == -1)
 				return;
 
-			MazeBlock.GroundItems[0].RemoveAt(NWBox.SelectedIndex);
+			MazeBlock.Items[0].RemoveAt(NWBox.SelectedIndex);
 
 			NWBox.Items.Clear();
-			foreach (Item item in MazeBlock.GroundItems[0])
+			foreach (Item item in MazeBlock.Items[0])
 				NWBox.Items.Add(item.Name);
 		}
 
@@ -283,7 +283,7 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void SWAddItem_Click(object sender, EventArgs e)
 		{
-			MazeBlock.GroundItems[2].Add(ResourceManager.CreateAsset<Item>(SWItemsBox.SelectedItem as string));
+			MazeBlock.Items[2].Add(ResourceManager.CreateAsset<Item>(SWItemsBox.SelectedItem as string));
 			SWBox.Items.Add(SWItemsBox.SelectedItem as string);
 		}
 
@@ -294,7 +294,7 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void SEAddItem_Click(object sender, EventArgs e)
 		{
-			MazeBlock.GroundItems[3].Add(ResourceManager.CreateAsset<Item>(SEItemsBox.SelectedItem as string));
+			MazeBlock.Items[3].Add(ResourceManager.CreateAsset<Item>(SEItemsBox.SelectedItem as string));
 			SEBox.Items.Add(SEItemsBox.SelectedItem as string);
 
 		}
@@ -309,10 +309,10 @@ namespace DungeonEye.Forms
 			if (SEBox.SelectedIndex == -1)
 				return;
 
-			MazeBlock.GroundItems[3].RemoveAt(SEBox.SelectedIndex);
+			MazeBlock.Items[3].RemoveAt(SEBox.SelectedIndex);
 
 			SEBox.Items.Clear();
-			foreach (Item item in MazeBlock.GroundItems[3])
+			foreach (Item item in MazeBlock.Items[3])
 				SEBox.Items.Add(item.Name);
 		}
 
@@ -326,10 +326,10 @@ namespace DungeonEye.Forms
 			if (SWBox.SelectedIndex == -1)
 				return;
 
-			MazeBlock.GroundItems[2].RemoveAt(SWBox.SelectedIndex);
+			MazeBlock.Items[2].RemoveAt(SWBox.SelectedIndex);
 
 			SWBox.Items.Clear();
-			foreach (Item item in MazeBlock.GroundItems[2])
+			foreach (Item item in MazeBlock.Items[2])
 				SWBox.Items.Add(item.Name);
 		}
 
@@ -344,7 +344,7 @@ namespace DungeonEye.Forms
 			if (NWBox.SelectedIndex == -1)
 				return;
 
-			MazeBlock.GroundItems[0].RemoveAt(NWBox.SelectedIndex);
+			MazeBlock.Items[0].RemoveAt(NWBox.SelectedIndex);
 			NWBox.Items.RemoveAt(NWBox.SelectedIndex);
 		}
 
@@ -359,7 +359,7 @@ namespace DungeonEye.Forms
 			if (NEBox.SelectedIndex == -1)
 				return;
 
-			MazeBlock.GroundItems[1].RemoveAt(NEBox.SelectedIndex);
+			MazeBlock.Items[1].RemoveAt(NEBox.SelectedIndex);
 			NEBox.Items.RemoveAt(NEBox.SelectedIndex);
 		}
 
@@ -374,7 +374,7 @@ namespace DungeonEye.Forms
 			if (SEBox.SelectedIndex == -1)
 				return;
 
-			MazeBlock.GroundItems[3].RemoveAt(SEBox.SelectedIndex);
+			MazeBlock.Items[3].RemoveAt(SEBox.SelectedIndex);
 			SEBox.Items.RemoveAt(SEBox.SelectedIndex);
 		}
 
@@ -389,7 +389,7 @@ namespace DungeonEye.Forms
 			if (SWBox.SelectedIndex == -1)
 				return;
 
-			MazeBlock.GroundItems[2].RemoveAt(SWBox.SelectedIndex);
+			MazeBlock.Items[2].RemoveAt(SWBox.SelectedIndex);
 			SWBox.Items.RemoveAt(SWBox.SelectedIndex);
 		}
 
@@ -616,123 +616,8 @@ namespace DungeonEye.Forms
 					TeleporterGroupBox.Enabled = false;
 					PlateGroupBox.Enabled = false;
 
-					MazeBlock.RemoveSpecials();
 				}
 				break;
-
-				// Door
-				//case 1:
-				//{
-				//    StairGroupBox.Enabled = false;
-				//    PitGroupBox.Enabled = false;
-				//    DoorGroupBox.Enabled = true;
-				//    ForceFieldGroupBox.Enabled = false;
-				//    TeleporterGroupBox.Enabled = false;
-				//    PlateGroupBox.Enabled = false;
-
-
-				//    // If no door present, then add one
-				//    //if (MazeBlock.Door == null)
-				//    //{
-				//    //    MazeBlock.RemoveSpecials();
-				//    //    MazeBlock.Door = new Door();
-				//    //    //MazeBlock.Door.Init();
-				//    //}
-				//}
-				//break;
-
-				// Floor Plate
-				//case 2:
-				//{
-				//    StairGroupBox.Enabled = false;
-				//    PitGroupBox.Enabled = false;
-				//    DoorGroupBox.Enabled = false;
-				//    ForceFieldGroupBox.Enabled = false;
-				//    TeleporterGroupBox.Enabled = false;
-				//    PlateGroupBox.Enabled = true;
-
-
-				//    //if (MazeBlock.FloorPlate == null)
-				//    //{
-				//    //    MazeBlock.RemoveSpecials();
-				//    //    MazeBlock.FloorPlate = new FloorPlate(MazeBlock);
-				//    //}
-
-				//}
-				//break;
-
-				// Force field
-				//case 3:
-				//{
-				//    StairGroupBox.Enabled = false;
-				//    PitGroupBox.Enabled = false;
-				//    DoorGroupBox.Enabled = false;
-				//    ForceFieldGroupBox.Enabled = true;
-				//    TeleporterGroupBox.Enabled = false;
-				//    PlateGroupBox.Enabled = false;
-
-				//    if (MazeBlock.ForceField == null)
-				//    {
-				//        MazeBlock.RemoveSpecials();
-				//        MazeBlock.ForceField = new ForceField();
-				//    }
-				//}
-				//break;
-
-
-				// Pit
-				//case 4:
-				//{
-				//    StairGroupBox.Enabled = false;
-				//    PitGroupBox.Enabled = true;
-				//    DoorGroupBox.Enabled = false;
-				//    ForceFieldGroupBox.Enabled = false;
-				//    TeleporterGroupBox.Enabled = false;
-				//    PlateGroupBox.Enabled = false;
-
-				//    //if (MazeBlock.Pit == null)
-				//    //{
-				//    //    MazeBlock.RemoveSpecials();
-				//    //    MazeBlock.Pit = new Pit(MazeBlock);
-				//    //}
-				//}
-				//break;
-
-				// Stair
-				//case 5:
-				//{
-				//    StairGroupBox.Enabled = true;
-				//    PitGroupBox.Enabled = false;
-				//    DoorGroupBox.Enabled = false;
-				//    ForceFieldGroupBox.Enabled = false;
-				//    TeleporterGroupBox.Enabled = false;
-				//    PlateGroupBox.Enabled = false;
-
-				//    //if (MazeBlock.Stair == null)
-				//    //{
-				//    //    MazeBlock.RemoveSpecials();
-				//    //    MazeBlock.Stair = new Stair(MazeBlock);
-				//    //}
-				//}
-				//break;
-
-				// Teleporter
-				//case 6:
-				//{
-				//    StairGroupBox.Enabled = false;
-				//    PitGroupBox.Enabled = false;
-				//    DoorGroupBox.Enabled = false;
-				//    ForceFieldGroupBox.Enabled = false;
-				//    TeleporterGroupBox.Enabled = true;
-				//    PlateGroupBox.Enabled = false;
-
-				//    if (MazeBlock.Teleporter == null)
-				//    {
-				//        MazeBlock.RemoveSpecials();
-				//        MazeBlock.Teleporter = new Teleporter(MazeBlock);
-				//    }
-				//}
-				//break;
 
 			}
 		}
@@ -744,52 +629,6 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void SpecialTab_Enter(object sender, EventArgs e)
 		{
-			//if (MazeBlock.Door != null)
-			//{
-			//    SpecialTypeBox.SelectedItem = "Door";
-			//    HasButtonBox.Checked = MazeBlock.Door.HasButton;
-			//    DoorStateBox.SelectedItem = MazeBlock.Door.State.ToString();
-			//    DoorTypeBox.SelectedItem = MazeBlock.Door.Type.ToString();
-
-			//}
-			//if (MazeBlock.FloorPlate != null)
-			//{
-			//    SpecialTypeBox.SelectedItem = "Floor Plate";
-			//    HiddenPlateBox.Checked = MazeBlock.FloorPlate.Invisible;
-			//}
-			//if (MazeBlock.ForceField != null)
-			//{
-			//    SpecialTypeBox.SelectedItem = "Force Field";
-
-			//    ForceFieldTypeBox.SelectedItem = MazeBlock.ForceField.Type.ToString();
-			//    ForceFieldRotationBox.SelectedItem = MazeBlock.ForceField.Rotation.ToString();
-			//    ForceFieldMoveBox.SelectedItem = MazeBlock.ForceField.Move.ToString();
-			//}
-			//else if (MazeBlock.Pit != null)
-			//{
-			//    Pit pit = MazeBlock.Pit;
-			//    SpecialTypeBox.SelectedItem = "Pit";
-			//    PitTargetLabel.Text = "Target : " + pit.Target.ToString();
-			//    HiddenPitBox.Checked = pit.IsHidden;
-			//    PitDamageBox.Dice.Clone(pit.Damage);
-			//    PitDiffcultyBox.Value = pit.Difficulty;
-			//}
-			//else if (MazeBlock.Stair != null)
-			//{
-			//    SpecialTypeBox.SelectedItem = "Stair";
-			//    StairTargetLabel.Text = "Target : " + MazeBlock.Stair.Target.ToString();
-
-			//}
-			//else if (MazeBlock.Teleporter != null)
-			//{
-			//    SpecialTypeBox.SelectedItem = "Teleporter";
-
-
-			//}
-			//else
-			//{
-			//    SpecialTypeBox.SelectedItem = "None";
-			//}
 			
 		}
 

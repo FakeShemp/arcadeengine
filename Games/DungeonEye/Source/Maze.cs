@@ -662,7 +662,7 @@ namespace DungeonEye
 			#endregion
 
 			#region Items on ground
-			List<Item>[] list = block.GetGroundItems(view);
+			List<Item>[] list = block.GetItems(view);
 			if (!block.IsWall)
 			{
 				for (int i = 0; i < 2; i++)

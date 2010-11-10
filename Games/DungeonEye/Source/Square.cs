@@ -64,9 +64,9 @@ namespace DungeonEye
 			WallDecoration = new int[4];
 			Alcoves = new bool[4];
 
-			GroundItems = new List<Item>[4];
+			Items = new List<Item>[4];
 			for (int i = 0; i < 4; i++)
-				GroundItems[i] = new List<Item>();
+				Items[i] = new List<Item>();
 
 		}
 
@@ -81,8 +81,6 @@ namespace DungeonEye
 				// Monsters
 				if (Monsters[i] != null)
 					Monsters[i].Init();
-
-
 			}
 		}
 
@@ -100,21 +98,6 @@ namespace DungeonEye
 
 			else if (MonsterCount > 0)
 				sb.Append(" " + MonsterCount + " monster(s)");
-
-			//else if (Teleporter != null)
-			//    sb.Append(" " + Teleporter);
-
-			//else if (Stair != null)
-			//	sb.Append(" " + Stair);
-
-			//else if (Pit != null)
-			//    sb.Append(" " + Pit);
-
-			//else if (FloorPlate != null)
-			//    sb.Append(" " + FloorPlate);
-
-			//else if (ForceField!= null)
-			//    sb.Append(" " + ForceField);
 
 			else if (NoMonster)
 				sb.Append(" (no monster)");
@@ -146,8 +129,8 @@ namespace DungeonEye
 				sb.Append(" Floor");
 			}
 
-			if (GroundItemCount > 0)
-				sb.Append(" " + GroundItemCount + " item(s)");
+			if (ItemCount > 0)
+				sb.Append(" " + ItemCount + " item(s)");
 
 			return sb.ToString();
 		}
@@ -420,20 +403,6 @@ namespace DungeonEye
 		}
 
 
-		/// <summary>
-		/// Remove all specials (Stair, Teleporter, Pit...) on this block
-		/// </summary>
-		public void RemoveSpecials()
-		{
-			//Door = null;
-			//FloorPlate = null;
-			//ForceField = null;
-			//Pit = null;
-			//Stair = null;
-			//Teleporter = null;
-		}
-
-
 		#region Monsters
 
 
@@ -517,7 +486,7 @@ namespace DungeonEye
 		/// <returns>List of items</returns>
 		public List<Item> GetAlcoveItems(CardinalPoint side)
 		{
-			return GroundItems[(int)side];
+			return Items[(int)side];
 		}
 
 
@@ -562,7 +531,7 @@ namespace DungeonEye
 			if (item == null || !HasAlcove(side))
 				return false;
 
-			GroundItems[(int)side].Add(item);
+			Items[(int)side].Add(item);
 
 			return true;
 		}
@@ -642,10 +611,10 @@ namespace DungeonEye
 			// Items
 			for (int i = 0; i < 4; i++)
 			{
-				if (GroundItems[i].Count > 0)
+				if (Items[i].Count > 0)
 				{
 
-					foreach (Item item in GroundItems[i])
+					foreach (Item item in Items[i])
 					{
 						writer.WriteStartElement("item");
 						writer.WriteAttributeString("location", ((SquarePosition)i).ToString());
@@ -710,7 +679,7 @@ namespace DungeonEye
 						SquarePosition loc = (SquarePosition)Enum.Parse(typeof(SquarePosition), node.Attributes["location"].Value);
 						Item item = ResourceManager.CreateAsset<Item>(node.Attributes["name"].Value);
 						if (item != null)
-							GroundItems[(int)loc].Add(item);
+							Items[(int)loc].Add(item);
 					}
 					break;
 
@@ -802,7 +771,7 @@ namespace DungeonEye
 		#endregion
 
 
-		#region Ground items
+		#region Items
 
 
 		/// <summary>
@@ -810,9 +779,9 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="position">Ground position</param>
 		/// <returns>List of items</returns>
-		public List<Item> GetItemsOnGround(SquarePosition position)
+		public List<Item> GetItems(SquarePosition position)
 		{
-			return GroundItems[(int) position];
+			return Items[(int) position];
 		}
 
 
@@ -822,7 +791,7 @@ namespace DungeonEye
 		/// <param name="from">Facing position</param>
 		/// <param name="position">Ground position</param>
 		/// <returns>List of items</returns>
-		public List<Item> GetItemsOnGround(CardinalPoint from, SquarePosition position)
+		public List<Item> GetItems(CardinalPoint from, SquarePosition position)
 		{
 			CardinalPoint[,] tab = new CardinalPoint[,]
 			{
@@ -832,7 +801,7 @@ namespace DungeonEye
 				{CardinalPoint.East, CardinalPoint.West, CardinalPoint.North, CardinalPoint.South},
 			};
 
-			return GetItemsOnGround((SquarePosition) tab[(int) from, (int) position]);
+			return GetItems((SquarePosition) tab[(int) from, (int) position]);
 		}
 
 
@@ -847,12 +816,12 @@ namespace DungeonEye
 			if (position == SquarePosition.Center)
 				throw new ArgumentOutOfRangeException("position", "No items in the middle of a maze block !");
 
-			int count = GroundItems[(int)position].Count;
+			int count = Items[(int)position].Count;
 			if (count == 0)
 				return null;
 
-			Item item = GroundItems[(int)position][count - 1];
-			GroundItems[(int)position].RemoveAt(count - 1);
+			Item item = Items[(int)position][count - 1];
+			Items[(int)position].RemoveAt(count - 1);
 
 			// Call the script
 			OnCollectedItem(item);
@@ -882,7 +851,7 @@ namespace DungeonEye
 				return false;
 
 			// Add the item to the ground
-			GroundItems[(int)position].Add(item);
+			Items[(int)position].Add(item);
 
 			// Call the script
 			OnCollectedItem(item);
@@ -892,15 +861,15 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Returns all objects on the ground depending the view point
+		/// Returns all items depending the view point
 		/// </summary>
 		/// <param name="location">Facing direction</param>
-		/// <returns>Returns an array of items on the ground
+		/// <returns>Returns an array of items
 		/// Position 0 : Up left
 		/// Position 1 : Up Right
 		/// Position 2 : Bottom left
 		/// Position 3 : Bottom right</returns>
-		public List<Item>[] GetGroundItems(CardinalPoint location)
+		public List<Item>[] GetItems(CardinalPoint location)
 		{
 			// List of items
 			List<Item>[] items = new List<Item>[4];
@@ -910,34 +879,34 @@ namespace DungeonEye
 			{
 				case CardinalPoint.North:
 				{
-					items[0] = GroundItems[0];
-					items[1] = GroundItems[1];
-					items[2] = GroundItems[2];
-					items[3] = GroundItems[3];
+					items[0] = Items[0];
+					items[1] = Items[1];
+					items[2] = Items[2];
+					items[3] = Items[3];
 				}
 				break;
 				case CardinalPoint.East:
 				{
-					items[0] = GroundItems[1];
-					items[1] = GroundItems[3];
-					items[2] = GroundItems[0];
-					items[3] = GroundItems[2];
+					items[0] = Items[1];
+					items[1] = Items[3];
+					items[2] = Items[0];
+					items[3] = Items[2];
 				}
 				break;
 				case CardinalPoint.South:
 				{
-					items[0] = GroundItems[3];
-					items[1] = GroundItems[2];
-					items[2] = GroundItems[1];
-					items[3] = GroundItems[0];
+					items[0] = Items[3];
+					items[1] = Items[2];
+					items[2] = Items[1];
+					items[3] = Items[0];
 				}
 				break;
 				case CardinalPoint.West:
 				{
-					items[0] = GroundItems[2];
-					items[1] = GroundItems[0];
-					items[2] = GroundItems[3];
-					items[3] = GroundItems[1];
+					items[0] = Items[2];
+					items[1] = Items[0];
+					items[2] = Items[3];
+					items[3] = Items[1];
 				}
 				break;
 			}
@@ -1091,7 +1060,7 @@ namespace DungeonEye
 		/// Items on the ground
 		/// </summary>
 		[Browsable(false)]
-		public List<Item>[] GroundItems
+		public List<Item>[] Items
 		{
 			get;
 			set;
@@ -1099,26 +1068,14 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Does the block have items
-		/// </summary>
-		public bool HasItems
-		{
-			get
-			{
-				return GroundItemCount > 0;
-			}
-		}
-
-
-		/// <summary>
 		/// Number of item on ground
 		/// </summary>
-		public int GroundItemCount
+		public int ItemCount
 		{
 			get
 			{
 				int count = 0;
-				foreach (List<Item> list in GroundItems)
+				foreach (List<Item> list in Items)
 					count += list.Count;
 
 				return count;
@@ -1145,29 +1102,6 @@ namespace DungeonEye
 			get;
 			private set;
 		}
-
-
-
-
-		/// <summary>
-		/// Force field
-		/// </summary>
-		//public ForceField ForceField
-		//{
-		//    get;
-		//    set;
-		//}
-
-
-
-		/// <summary>
-		/// Teleporter
-		/// </summary>
-		//public Teleporter Teleporter
-		//{
-		//    get;
-		//    set;
-		//}
 
 
 		/// <summary>

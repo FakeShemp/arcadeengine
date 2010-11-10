@@ -40,6 +40,7 @@ namespace DungeonEye
 		public FloorPlate(Square square) : base(square)
 		{
 			//Script = new Script();			
+			AcceptItems = true;
 		}
 
 
@@ -255,17 +256,6 @@ namespace DungeonEye
 		/// 
 		/// </summary>
 		public override bool CanPassThrough
-		{
-			get
-			{
-				return true;
-			}
-		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public override bool AcceptItems
 		{
 			get
 			{

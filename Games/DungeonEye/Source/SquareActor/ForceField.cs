@@ -40,6 +40,8 @@ namespace DungeonEye
 			Type = ForceFieldType.Turning;
 			Rotation = CompassRotation.Rotate180;
 			Move = CardinalPoint.North;
+
+			AcceptItems = true;
 		}
 
 
@@ -204,17 +206,6 @@ namespace DungeonEye
 
 
 		#region Properties
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public override bool AcceptItems
-		{
-			get
-			{
-				return true;
-			}
-		}
 
 
 		/// <summary>

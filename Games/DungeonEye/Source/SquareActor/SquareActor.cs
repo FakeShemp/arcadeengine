@@ -217,9 +217,10 @@ namespace DungeonEye
 		/// <summary>
 		/// Does the square accept items
 		/// </summary>
-		public abstract bool AcceptItems
+		public bool AcceptItems
 		{
 			get;
+			protected set;
 		}
 
 		#endregion
