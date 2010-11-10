@@ -234,14 +234,16 @@ namespace DungeonEye.Forms
 								Batch.DrawTile(Icons, 11, new Point(Offset.X + x * 25, Offset.Y + y * 25));
 							}
 
-							if (block.ForceField != null)
+							if (block.Actor is ForceField)
 							{
+								ForceField field = block.Actor as ForceField;
+
 								int id;
-								if (block.ForceField.Type == ForceFieldType.Turning)
+								if (field.Type == ForceFieldType.Turning)
 									id = 12;
-								else if (block.ForceField.Type == ForceFieldType.Moving)
+								else if (field.Type == ForceFieldType.Moving)
 								{
-									id = 13 + (int) block.ForceField.Move;
+									id = 13 + (int) field.Move;
 								}
 								else
 									id = 17;

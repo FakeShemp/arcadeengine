@@ -22,20 +22,20 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
-
+using ArcEngine.Graphic;
 
 namespace DungeonEye
 {
 	/// <summary>
 	/// Invisible force moving the team
 	/// </summary>
-	public class ForceField
+	public class ForceField : SquareActor
 	{
 
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public ForceField()
+		public ForceField(Square square) : base(square)
 		{
 			Type = ForceFieldType.Turning;
 			Rotation = CompassRotation.Rotate180;
@@ -51,7 +51,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="node"></param>
 		/// <returns></returns>
-		public bool Load(XmlNode xml)
+		public override bool Load(XmlNode xml)
 		{
 			if (xml == null)
 				return false;
@@ -93,7 +93,7 @@ namespace DungeonEye
 		/// 
 		/// </summary>
 		/// <returns></returns>
-		public bool Save(XmlWriter writer)
+		public override bool Save(XmlWriter writer)
 		{
 			if (writer == null)
 				return false;
@@ -126,9 +126,119 @@ namespace DungeonEye
 
 
 
+		#region Script
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="team"></param>
+		/// <returns></returns>
+		public override bool OnTeamEnter(Team team)
+		{
+			if (team == null)
+				return false;
+
+			switch (Type)
+			{
+				case ForceFieldType.Turning:
+				{
+					team.Location.Direction = Compass.Rotate(team.Location.Direction, Rotation);
+				}
+				break;
+
+				case ForceFieldType.Moving:
+				{
+					team.Offset(Move, 1);
+				}
+				break;
+			}
+
+
+			return true;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="monster"></param>
+		/// <returns></returns>
+		public override bool OnMonsterEnter(Monster monster)
+		{
+			if (monster == null)
+				return false;
+
+			switch (Type)
+			{
+				case ForceFieldType.Turning:
+				{
+					monster.Location.Direction = Compass.Rotate(monster.Location.Direction, Rotation);
+				}
+				break;
+
+				case ForceFieldType.Moving:
+				{
+
+					switch (Move)
+					{
+						case CardinalPoint.North:
+						monster.Location.Coordinate.Offset(0, -1);
+						break;
+						case CardinalPoint.South:
+						monster.Location.Coordinate.Offset(0, 1);
+						break;
+						case CardinalPoint.West:
+						monster.Location.Coordinate.Offset(-1, 0);
+						break;
+						case CardinalPoint.East:
+						monster.Location.Coordinate.Offset(1, 0);
+						break;
+					}
+				}
+				break;
+			}
+
+			return true;
+		}
+		#endregion
+
+
 		#region Properties
 
+		/// <summary>
+		/// 
+		/// </summary>
+		public override bool AcceptItems
+		{
+			get
+			{
+				return true;
+			}
+		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public override bool CanPassThrough
+		{
+			get
+			{
+				return true;
+			}
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public override bool IsBlocking
+		{
+			get
+			{
+				return false;
+			}
+		}
 
 		/// <summary>
 		/// Type of force field

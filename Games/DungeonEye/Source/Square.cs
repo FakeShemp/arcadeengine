@@ -113,8 +113,8 @@ namespace DungeonEye
 			//else if (FloorPlate != null)
 			//    sb.Append(" " + FloorPlate);
 
-			else if (ForceField!= null)
-				sb.Append(" " + ForceField);
+			//else if (ForceField!= null)
+			//    sb.Append(" " + ForceField);
 
 			else if (NoMonster)
 				sb.Append(" (no monster)");
@@ -250,23 +250,23 @@ namespace DungeonEye
 				Actor.OnTeamEnter(team);
 
 	
-			if (ForceField != null)
-			{
-				switch (ForceField.Type)
-				{
-					case ForceFieldType.Turning:
-					{
-						team.Location.Direction = Compass.Rotate(team.Location.Direction, ForceField.Rotation);
-					}
-					break;
+			//if (ForceField != null)
+			//{
+			//    switch (ForceField.Type)
+			//    {
+			//        case ForceFieldType.Turning:
+			//        {
+			//            team.Location.Direction = Compass.Rotate(team.Location.Direction, ForceField.Rotation);
+			//        }
+			//        break;
 
-					case ForceFieldType.Moving:
-					{
-						team.Offset(ForceField.Move, 1);
-					}
-					break;
-				}
-			}
+			//        case ForceFieldType.Moving:
+			//        {
+			//            team.Offset(ForceField.Move, 1);
+			//        }
+			//        break;
+			//    }
+			//}
 			//else if (Pit != null)
 			//{
 			//    if (team.Teleport(Pit.Target))
@@ -304,38 +304,38 @@ namespace DungeonEye
 				Actor.OnMonsterEnter(monster);
 
 
-			if (ForceField != null)
-			{
-				switch (ForceField.Type)
-				{
-					case ForceFieldType.Turning:
-					{
-						monster.Location.Direction = Compass.Rotate(monster.Location.Direction, ForceField.Rotation);
-					}
-					break;
+			//if (ForceField != null)
+			//{
+			//    switch (ForceField.Type)
+			//    {
+			//        case ForceFieldType.Turning:
+			//        {
+			//            monster.Location.Direction = Compass.Rotate(monster.Location.Direction, ForceField.Rotation);
+			//        }
+			//        break;
 
-					case ForceFieldType.Moving:
-					{
+			//        case ForceFieldType.Moving:
+			//        {
 
-						switch (ForceField.Move)
-						{
-							case CardinalPoint.North:
-							monster.Location.Coordinate.Offset(0, -1);
-							break;
-							case CardinalPoint.South:
-							monster.Location.Coordinate.Offset(0, 1);
-							break;
-							case CardinalPoint.West:
-							monster.Location.Coordinate.Offset(-1, 0);
-							break;
-							case CardinalPoint.East:
-							monster.Location.Coordinate.Offset(1, 0);
-							break;
-						}
-					}
-					break;
-				}
-			}
+			//            switch (ForceField.Move)
+			//            {
+			//                case CardinalPoint.North:
+			//                monster.Location.Coordinate.Offset(0, -1);
+			//                break;
+			//                case CardinalPoint.South:
+			//                monster.Location.Coordinate.Offset(0, 1);
+			//                break;
+			//                case CardinalPoint.West:
+			//                monster.Location.Coordinate.Offset(-1, 0);
+			//                break;
+			//                case CardinalPoint.East:
+			//                monster.Location.Coordinate.Offset(1, 0);
+			//                break;
+			//            }
+			//        }
+			//        break;
+			//    }
+			//}
 			//else if (Pit != null)
 			//{
 			//    monster.Teleport(Pit.Target);
@@ -427,7 +427,7 @@ namespace DungeonEye
 		{
 			//Door = null;
 			//FloorPlate = null;
-			ForceField = null;
+			//ForceField = null;
 			//Pit = null;
 			//Stair = null;
 			//Teleporter = null;
@@ -608,8 +608,8 @@ namespace DungeonEye
 			//if (Teleporter != null)
 			//    Teleporter.Save(writer);
 
-			if (ForceField != null)
-				ForceField.Save(writer);
+			//if (ForceField != null)
+			//    ForceField.Save(writer);
 
 			//if (Stair != null)
 			//	Stair.Save(writer);
@@ -768,8 +768,8 @@ namespace DungeonEye
 
 					case "forcefield":
 					{
-						ForceField = new ForceField();
-						ForceField.Load(node);
+						Actor = new ForceField(this);
+						Actor.Load(node);
 					}
 					break;
 
@@ -1152,11 +1152,11 @@ namespace DungeonEye
 		/// <summary>
 		/// Force field
 		/// </summary>
-		public ForceField ForceField
-		{
-			get;
-			set;
-		}
+		//public ForceField ForceField
+		//{
+		//    get;
+		//    set;
+		//}
 
 
 

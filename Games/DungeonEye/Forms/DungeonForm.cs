@@ -580,13 +580,15 @@ namespace DungeonEye.Forms
 							SpriteBatch.DrawTile(Icons, 11, location);
 						}
 
-						if (block.ForceField != null)
+						if (block.Actor is ForceField)
 						{
-							if (block.ForceField.Type == ForceFieldType.Turning)
+							ForceField field = block.Actor as ForceField;
+
+							if (field.Type == ForceFieldType.Turning)
 								tileid = 12;
-							else if (block.ForceField.Type == ForceFieldType.Moving)
+							else if (field.Type == ForceFieldType.Moving)
 							{
-								tileid = 13 + (int) block.ForceField.Move;
+								tileid = 13 + (int) field.Move;
 							}
 							else
 								tileid = 17;

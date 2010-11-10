@@ -278,7 +278,7 @@
     <Compile Include="Source\SquareActor\FloorPlate.cs" />
     <Compile Include="Source\Gui\Button.cs" />
     <Compile Include="Source\Gui\Camp.cs" />
-    <Compile Include="Source\ForceField.cs" />
+    <Compile Include="Source\SquareActor\ForceField.cs" />
     <Compile Include="Source\Item.cs" />
     <Compile Include="MainMenu.cs" />
     <Compile Include="Source\Maze.cs">

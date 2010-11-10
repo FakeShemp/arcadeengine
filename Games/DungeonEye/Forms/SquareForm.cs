@@ -662,22 +662,22 @@ namespace DungeonEye.Forms
 				//break;
 
 				// Force field
-				case 3:
-				{
-					StairGroupBox.Enabled = false;
-					PitGroupBox.Enabled = false;
-					DoorGroupBox.Enabled = false;
-					ForceFieldGroupBox.Enabled = true;
-					TeleporterGroupBox.Enabled = false;
-					PlateGroupBox.Enabled = false;
+				//case 3:
+				//{
+				//    StairGroupBox.Enabled = false;
+				//    PitGroupBox.Enabled = false;
+				//    DoorGroupBox.Enabled = false;
+				//    ForceFieldGroupBox.Enabled = true;
+				//    TeleporterGroupBox.Enabled = false;
+				//    PlateGroupBox.Enabled = false;
 
-					if (MazeBlock.ForceField == null)
-					{
-						MazeBlock.RemoveSpecials();
-						MazeBlock.ForceField = new ForceField();
-					}
-				}
-				break;
+				//    if (MazeBlock.ForceField == null)
+				//    {
+				//        MazeBlock.RemoveSpecials();
+				//        MazeBlock.ForceField = new ForceField();
+				//    }
+				//}
+				//break;
 
 
 				// Pit
@@ -757,14 +757,14 @@ namespace DungeonEye.Forms
 			//    SpecialTypeBox.SelectedItem = "Floor Plate";
 			//    HiddenPlateBox.Checked = MazeBlock.FloorPlate.Invisible;
 			//}
-			if (MazeBlock.ForceField != null)
-			{
-				SpecialTypeBox.SelectedItem = "Force Field";
+			//if (MazeBlock.ForceField != null)
+			//{
+			//    SpecialTypeBox.SelectedItem = "Force Field";
 
-				ForceFieldTypeBox.SelectedItem = MazeBlock.ForceField.Type.ToString();
-				ForceFieldRotationBox.SelectedItem = MazeBlock.ForceField.Rotation.ToString();
-				ForceFieldMoveBox.SelectedItem = MazeBlock.ForceField.Move.ToString();
-			}
+			//    ForceFieldTypeBox.SelectedItem = MazeBlock.ForceField.Type.ToString();
+			//    ForceFieldRotationBox.SelectedItem = MazeBlock.ForceField.Rotation.ToString();
+			//    ForceFieldMoveBox.SelectedItem = MazeBlock.ForceField.Move.ToString();
+			//}
 			//else if (MazeBlock.Pit != null)
 			//{
 			//    Pit pit = MazeBlock.Pit;
@@ -786,10 +786,10 @@ namespace DungeonEye.Forms
 
 
 			//}
-			else
-			{
-				SpecialTypeBox.SelectedItem = "None";
-			}
+			//else
+			//{
+			//    SpecialTypeBox.SelectedItem = "None";
+			//}
 			
 		}
 
@@ -1018,9 +1018,9 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void ForceFieldTypeBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if (MazeBlock.ForceField == null)
-				return;
-			MazeBlock.ForceField.Type = (ForceFieldType)Enum.Parse(typeof(ForceFieldType), ForceFieldTypeBox.SelectedItem as string);
+			//if (MazeBlock.ForceField == null)
+			//    return;
+			//MazeBlock.ForceField.Type = (ForceFieldType)Enum.Parse(typeof(ForceFieldType), ForceFieldTypeBox.SelectedItem as string);
 
 		}
 
@@ -1031,10 +1031,10 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void ForceFieldRotationBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if (MazeBlock.ForceField == null)
-				return;
+			//if (MazeBlock.ForceField == null)
+			//    return;
 
-			MazeBlock.ForceField.Rotation = (CompassRotation)Enum.Parse(typeof(CompassRotation), ForceFieldRotationBox.SelectedItem as string);
+			//MazeBlock.ForceField.Rotation = (CompassRotation)Enum.Parse(typeof(CompassRotation), ForceFieldRotationBox.SelectedItem as string);
 		}
 
 
@@ -1045,10 +1045,10 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void ForceFieldMoveBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if (MazeBlock.ForceField == null)
-				return;
+			//if (MazeBlock.ForceField == null)
+			//    return;
 
-			MazeBlock.ForceField.Move = (CardinalPoint)Enum.Parse(typeof(CardinalPoint), ForceFieldMoveBox.SelectedItem as string);
+			//MazeBlock.ForceField.Move = (CardinalPoint)Enum.Parse(typeof(CardinalPoint), ForceFieldMoveBox.SelectedItem as string);
 		}
 
 
