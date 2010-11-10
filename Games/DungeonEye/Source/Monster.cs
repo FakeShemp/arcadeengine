@@ -127,16 +127,16 @@ namespace DungeonEye
 				canmove = false;
 
 			// Stairs
-			if (dstblock.Stair != null)
-				canmove = false;
+			//if (dstblock.Stair != null)
+			//    canmove = false;
 
 			// Monsters
 			if (dstblock.MonsterCount > 0)
 				canmove = false;
 
 			// blocking door
-			if (dstblock.Door != null && dstblock.Door.IsBlocking)
-				canmove = false;
+			//if (dstblock.Door != null && dstblock.Door.IsBlocking)
+			//    canmove = false;
 
 
 

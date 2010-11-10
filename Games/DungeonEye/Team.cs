@@ -1288,7 +1288,7 @@ namespace DungeonEye
 									loc.Position = SquarePosition.SouthEast;
 									break;
 							}
-							Location.Maze.ThrownItems.Add(new ThrownItem(SelectedHero, ItemInHand, loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
+							Location.Maze.ThrownItems.Add(new ThrownItem(SelectedHero, ItemInHand, loc, TimeSpan.FromSeconds(0.25), 4));
 							SetItemInHand(null);
 						}
 						#endregion
@@ -1315,7 +1315,7 @@ namespace DungeonEye
 								break;
 							}
 
-							Location.Maze.ThrownItems.Add(new ThrownItem(SelectedHero, ItemInHand, loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
+							Location.Maze.ThrownItems.Add(new ThrownItem(SelectedHero, ItemInHand, loc, TimeSpan.FromSeconds(0.25), 4));
 							SetItemInHand(null);
 						}
 						#endregion
@@ -2513,22 +2513,22 @@ namespace DungeonEye
 			// Check all blocking states
 			bool state = true;
 
-			// A wall
+			// Is blocking
 			Square dstblock = Location.Maze.GetBlock(dst);
 			if (dstblock.IsBlocking)
 				state = false;
 
 			// Stairs
-			if (dstblock.Stair != null)
-				state = true;
+			//if (dstblock.Stair != null)
+			//    state = true;
 
 			// Monsters
 			if (dstblock.MonsterCount > 0)
 				state = false;
 
 			// blocking door
-			if (dstblock.Door != null && dstblock.Door.IsBlocking)
-				state = false;
+			//if (dstblock.Door != null && dstblock.Door.IsBlocking)
+			//	state = false;
 
 			// If can't pass through
 			if (!state)

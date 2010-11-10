@@ -202,8 +202,8 @@ namespace DungeonEye.Forms
 			WallTypeBox.SelectedItem = MazeBlock.Type.ToString();
 			#endregion
 
-
-			#region Stais
+/*
+			#region Stairs
 			StairTypeBox.BeginUpdate();
 			StairTypeBox.Items.Clear();
 			foreach (string name in Enum.GetNames(typeof(StairType)))
@@ -212,6 +212,7 @@ namespace DungeonEye.Forms
 				StairTypeBox.SelectedItem = MazeBlock.Stair.Type.ToString();
 			StairTypeBox.EndUpdate();
 			#endregion
+*/
 		}
 
 
@@ -631,12 +632,12 @@ namespace DungeonEye.Forms
 
 
 					// If no door present, then add one
-					if (MazeBlock.Door == null)
-					{
-						MazeBlock.RemoveSpecials();
-						MazeBlock.Door = new Door();
-						MazeBlock.Door.Init();
-					}
+					//if (MazeBlock.Door == null)
+					//{
+					//    MazeBlock.RemoveSpecials();
+					//    MazeBlock.Door = new Door();
+					//    //MazeBlock.Door.Init();
+					//}
 				}
 				break;
 
@@ -707,11 +708,11 @@ namespace DungeonEye.Forms
 					TeleporterGroupBox.Enabled = false;
 					PlateGroupBox.Enabled = false;
 
-					if (MazeBlock.Stair == null)
-					{
-						MazeBlock.RemoveSpecials();
-						MazeBlock.Stair = new Stair(MazeBlock);
-					}
+					//if (MazeBlock.Stair == null)
+					//{
+					//    MazeBlock.RemoveSpecials();
+					//    MazeBlock.Stair = new Stair(MazeBlock);
+					//}
 				}
 				break;
 
@@ -743,15 +744,15 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void SpecialTab_Enter(object sender, EventArgs e)
 		{
-			if (MazeBlock.Door != null)
-			{
-				SpecialTypeBox.SelectedItem = "Door";
-				HasButtonBox.Checked = MazeBlock.Door.HasButton;
-				DoorStateBox.SelectedItem = MazeBlock.Door.State.ToString();
-				DoorTypeBox.SelectedItem = MazeBlock.Door.Type.ToString();
+			//if (MazeBlock.Door != null)
+			//{
+			//    SpecialTypeBox.SelectedItem = "Door";
+			//    HasButtonBox.Checked = MazeBlock.Door.HasButton;
+			//    DoorStateBox.SelectedItem = MazeBlock.Door.State.ToString();
+			//    DoorTypeBox.SelectedItem = MazeBlock.Door.Type.ToString();
 
-			}
-			else if (MazeBlock.FloorPlate != null)
+			//}
+			if (MazeBlock.FloorPlate != null)
 			{
 				SpecialTypeBox.SelectedItem = "Floor Plate";
 				HiddenPlateBox.Checked = MazeBlock.FloorPlate.Invisible;
@@ -773,17 +774,17 @@ namespace DungeonEye.Forms
 				PitDamageBox.Dice.Clone(pit.Damage);
 				PitDiffcultyBox.Value = pit.Difficulty;
 			}
-			else if (MazeBlock.Stair != null)
-			{
-				SpecialTypeBox.SelectedItem = "Stair";
-				StairTargetLabel.Text = "Target : " + MazeBlock.Stair.Target.ToString();
+			//else if (MazeBlock.Stair != null)
+			//{
+			//    SpecialTypeBox.SelectedItem = "Stair";
+			//    StairTargetLabel.Text = "Target : " + MazeBlock.Stair.Target.ToString();
 
-			}
+			//}
 			else if (MazeBlock.Teleporter != null)
 			{
 				SpecialTypeBox.SelectedItem = "Teleporter";
 
-				
+
 			}
 			else
 			{
@@ -804,10 +805,10 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void HasButtonBox_CheckedChanged(object sender, EventArgs e)
 		{
-			if (MazeBlock.Door == null)
-				return;
+			//if (MazeBlock.Door == null)
+			//	return;
 
-			MazeBlock.Door.HasButton = HasButtonBox.Checked;
+			//MazeBlock.Door.HasButton = HasButtonBox.Checked;
 		}
 
 
@@ -818,10 +819,10 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void DoorStateBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if (MazeBlock.Door == null)
-				return;
+			//if (MazeBlock.Door == null)
+			//	return;
 
-			MazeBlock.Door.State = (DoorState)Enum.Parse(typeof(DoorState), DoorStateBox.SelectedItem.ToString());
+			//MazeBlock.Door.State = (DoorState)Enum.Parse(typeof(DoorState), DoorStateBox.SelectedItem.ToString());
 		}
 
 
@@ -832,10 +833,10 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void DoorTypeBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if (MazeBlock.Door == null)
-				return;
+			//if (MazeBlock.Door == null)
+			//	return;
 
-			MazeBlock.Door.Type = (DoorType)Enum.Parse(typeof(DoorType), DoorTypeBox.SelectedItem.ToString());
+			//MazeBlock.Door.Type = (DoorType)Enum.Parse(typeof(DoorType), DoorTypeBox.SelectedItem.ToString());
 		}
 
 
@@ -1046,15 +1047,15 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void StairTargetBox_Click(object sender, EventArgs e)
 		{
-			if (MazeBlock.Stair == null)
-				return;
+			//if (MazeBlock.Stair == null)
+			//    return;
 
-			DungeonLocationForm form = new DungeonLocationForm(Maze.Dungeon, MazeBlock.Stair.Target);
-			if (form.ShowDialog() != DialogResult.OK)
-				return;
+			//DungeonLocationForm form = new DungeonLocationForm(Maze.Dungeon, MazeBlock.Stair.Target);
+			//if (form.ShowDialog() != DialogResult.OK)
+			//    return;
 
-			MazeBlock.Stair.Target = form.Target;
-			StairTargetLabel.Text = "Target : " + MazeBlock.Stair.Target.ToString();
+			//MazeBlock.Stair.Target = form.Target;
+			//StairTargetLabel.Text = "Target : " + MazeBlock.Stair.Target.ToString();
 		}
 
 
@@ -1065,10 +1066,10 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void StairTypeBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if (MazeBlock.Stair == null)
-				return;
+			//if (MazeBlock.Stair == null)
+			//    return;
 
-			MazeBlock.Stair.Type = (StairType)Enum.Parse(typeof(StairType), (string)StairTypeBox.SelectedItem);
+			//MazeBlock.Stair.Type = (StairType)Enum.Parse(typeof(StairType), (string)StairTypeBox.SelectedItem);
 		}
 
 

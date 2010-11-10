@@ -196,86 +196,92 @@ namespace DungeonEye.Forms
 						}
 
 
-
-						// Doors
-						if (block.Door != null)
+						if (block.Actor != null)
 						{
-							int tileid = 0;
-
-							if (Maze.IsDoorNorthSouth(block.Location))
-								tileid = 3;
-							else
-								tileid = 2;
-
-
-							// Door opened or closed
-							if (block.Door.State == DoorState.Broken || block.Door.State == DoorState.Opened || block.Door.State == DoorState.Opening)
-								tileid += 2;
-
-							Batch.DrawTile(Icons, tileid, new Point(Offset.X + x * 25, Offset.Y + y * 25));
-						}
-
-
-						if (block.FloorPlate != null)
-						{
-							Batch.DrawTile(Icons, 18, new Point(Offset.X + x * 25, Offset.Y + y * 25));
-						}
-
-						if (block.Pit != null)
-						{
-							Batch.DrawTile(Icons, 19, new Point(Offset.X + x * 25, Offset.Y + y * 25));
-						}
-
-						if (block.Teleporter != null)
-						{
-							Batch.DrawTile(Icons, 11, new Point(Offset.X + x * 25, Offset.Y + y * 25));
-						}
-
-						if (block.ForceField != null)
-						{
-							int id;
-							if (block.ForceField.Type == ForceFieldType.Turning)
-								id = 12;
-							else if (block.ForceField.Type == ForceFieldType.Moving)
+							// Doors
+							if (block.Actor is Door)
 							{
-								id = 13 + (int)block.ForceField.Move;
+								Door door = block.Actor as Door;
+
+								int tileid = 0;
+
+								if (Maze.IsDoorNorthSouth(block.Location))
+									tileid = 3;
+								else
+									tileid = 2;
+
+
+								// Door opened or closed
+								if (door.State == DoorState.Broken || door.State == DoorState.Opened || door.State == DoorState.Opening)
+									tileid += 2;
+
+								Batch.DrawTile(Icons, tileid, new Point(Offset.X + x * 25, Offset.Y + y * 25));
 							}
-							else
-								id = 17;
-
-							Batch.DrawTile(Icons, id, new Point(Offset.X + x * 25, Offset.Y + y * 25));
-						}
 
 
-						if (block.Stair != null)
-						{
-							Batch.DrawTile(Icons, block.Stair.Type == StairType.Up ? 6 : 7, new Point(Offset.X + x * 25, Offset.Y + y * 25));
-						}
-
-						// Alcoves
-						if (block.HasAlcoves)
-						{
-							// Alcoves coords
-							Point[] alcoves = new Point[]
-						{
-							new Point(7, 0),
-							new Point(7, 19),
-							new Point(0, 7),
-							new Point(19, 7),
-						};
-
-
-							foreach (CardinalPoint side in Enum.GetValues(typeof(CardinalPoint)))
+							if (block.FloorPlate != null)
 							{
-								if (block.HasAlcove(side))
-								{
-									Batch.DrawTile(Icons, 100 + ((int)side > 1 ? 0 : 1),
-										new Point(Offset.X + x * 25 + alcoves[(int)side].X, 
-											Offset.Y + y * 25 + alcoves[(int)side].Y));
+								Batch.DrawTile(Icons, 18, new Point(Offset.X + x * 25, Offset.Y + y * 25));
+							}
 
+							if (block.Pit != null)
+							{
+								Batch.DrawTile(Icons, 19, new Point(Offset.X + x * 25, Offset.Y + y * 25));
+							}
+
+							if (block.Teleporter != null)
+							{
+								Batch.DrawTile(Icons, 11, new Point(Offset.X + x * 25, Offset.Y + y * 25));
+							}
+
+							if (block.ForceField != null)
+							{
+								int id;
+								if (block.ForceField.Type == ForceFieldType.Turning)
+									id = 12;
+								else if (block.ForceField.Type == ForceFieldType.Moving)
+								{
+									id = 13 + (int) block.ForceField.Move;
+								}
+								else
+									id = 17;
+
+								Batch.DrawTile(Icons, id, new Point(Offset.X + x * 25, Offset.Y + y * 25));
+							}
+
+
+							if (block.Actor is Stair)
+							{
+								Stair stair = block.Actor as Stair;
+								Batch.DrawTile(Icons, stair.Type == StairType.Up ? 6 : 7, new Point(Offset.X + x * 25, Offset.Y + y * 25));
+							}
+
+							// Alcoves
+							if (block.HasAlcoves)
+							{
+								// Alcoves coords
+								Point[] alcoves = new Point[]
+								{
+									new Point(7, 0),
+									new Point(7, 19),
+									new Point(0, 7),
+									new Point(19, 7),
+								};
+
+
+								foreach (CardinalPoint side in Enum.GetValues(typeof(CardinalPoint)))
+								{
+									if (block.HasAlcove(side))
+									{
+										Batch.DrawTile(Icons, 100 + ((int) side > 1 ? 0 : 1),
+											new Point(Offset.X + x * 25 + alcoves[(int) side].X,
+												Offset.Y + y * 25 + alcoves[(int) side].Y));
+
+									}
 								}
 							}
 						}
+
 
 						// Draw monsters
 						if (block.HasMonster)

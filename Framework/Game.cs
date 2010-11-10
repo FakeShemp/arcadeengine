@@ -497,8 +497,7 @@ namespace ArcEngine
 				Trace.WriteLine("");
 
 
-				ExceptionForm form = new ExceptionForm(e);
-				form.ShowDialog();
+				new ExceptionForm(e).ShowDialog();
 				Exit();
 
 			}

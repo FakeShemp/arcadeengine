@@ -74,6 +74,10 @@ namespace ArcEngine
 		{
 			Trace.WriteDebugLine("[ResourceManager] Dispose()");
 
+
+			if (TileSet.InUse > 0)
+				Trace.WriteLine("[ResourceManager] Dispose() : {0} TileSet remaining...", TileSet.InUse);
+
 			ClearSharedAssets();
 
 			foreach (Provider provider in Providers)

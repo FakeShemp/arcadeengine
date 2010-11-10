@@ -49,7 +49,6 @@ namespace DungeonEye
 			Dungeon = dungeon;
 
 			Blocks = new List<List<Square>>();
-			Doors = new List<Door>();
 			ThrownItems = new List<ThrownItem>();
 			Zones = new List<MazeZone>();
 
@@ -63,9 +62,8 @@ namespace DungeonEye
 		/// </summary>
 		public void Dispose()
 		{
-			foreach (Door door in Doors)
-				door.Dispose();
-			Doors.Clear();
+			if (DoorTileset != null)
+				DoorTileset.Dispose();
 
 			if (ItemsTileset != null)
 				ItemsTileset.Dispose();
@@ -125,9 +123,10 @@ namespace DungeonEye
 				return false;
 			}
 
+			DoorTileset = ResourceManager.CreateSharedAsset<TileSet>("Doors", "Doors");
+			if (DoorTileset == null)
+				Trace.WriteLine("[Maze] Init() : Failed to load items tileset for doors.");
 
-			foreach (Door door in Doors)
-				door.Init();
 
 			foreach (List<Square> list in Blocks)
 				foreach (Square square in list)
@@ -190,11 +189,6 @@ namespace DungeonEye
 
 
 */
-			#region Doors
-			foreach (Door door in Doors)
-				door.Update(time);
-			#endregion
-
 
 			#region Flying items
 
@@ -605,7 +599,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="batch"></param>
 		/// <param name="field">View field</param>
-		/// <param name="position">Position in the view filed</param>
+		/// <param name="position">Position in the view field</param>
 		/// <param name="view">Looking direction of the team</param>
 		void DrawBlock(SpriteBatch batch, ViewField field, ViewFieldPosition position, CardinalPoint view)
 		{
@@ -650,6 +644,7 @@ namespace DungeonEye
 			#endregion
 
 
+
 			#region ceiling pit
 			if (block.IsPitTarget)
 			{
@@ -690,38 +685,19 @@ namespace DungeonEye
 			#endregion
 
 			#region Stair
-			else if (block.Stair != null)
-			{
-				// Upstair or downstair ?
-				int delta = block.Stair.Type == StairType.Up ? 0 : 13;
-				foreach (TileDrawing tmp in MazeDisplayCoordinates.GetStairs(position))
-					batch.DrawTile(WallTileset, tmp.ID + delta, tmp.Location, Color.White, 0.0f, tmp.Effect, 0.0f);
-			}
+			//else if (block.Stair != null)
+			//{
+			//    // Upstair or downstair ?
+			//    int delta = block.Stair.Type == StairType.Up ? 0 : 13;
+			//    foreach (TileDrawing tmp in MazeDisplayCoordinates.GetStairs(position))
+			//        batch.DrawTile(WallTileset, tmp.ID + delta, tmp.Location, Color.White, 0.0f, tmp.Effect, 0.0f);
+			//}
 			#endregion
 
-			#region Door
-			else if (block.Door != null)
+			#region Actor
+			if (block.Actor != null)
 			{
-				// Under the door, draw sides
-				if (field.GetBlock(ViewFieldPosition.N).IsWall && position == ViewFieldPosition.Team)
-				{
-					td = MazeDisplayCoordinates.GetDoor(ViewFieldPosition.Team);
-					if (td != null)
-						batch.DrawTile(OverlayTileset, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);
-				}
-
-				// Draw the door
-				else if (((field.Maze.IsDoorNorthSouth(block.Location) && (view == CardinalPoint.North || view == CardinalPoint.South)) ||
-					(!field.Maze.IsDoorNorthSouth(block.Location) && (view == CardinalPoint.East || view == CardinalPoint.West))) &&
-					position != ViewFieldPosition.Team)
-				{
-					td = MazeDisplayCoordinates.GetDoor(position);
-					if (td != null)
-					{
-						batch.DrawTile(WallTileset, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);
-						block.Door.Draw(batch, td.Location, position, view);
-					}
-				}
+				block.Actor.Draw(batch, field, position, view);
 			}
 			#endregion
 
@@ -883,9 +859,9 @@ namespace DungeonEye
 
 					if (block.MonsterCount > 0)
 						color = Color.Red;
-					if (block.Door != null)
+					if (block.Actor is Door)
 						color = Color.Yellow;
-					if (block.Stair != null)
+					if (block.Actor is Stair)
 						color = Color.LightGreen;
 					if (block.MonsterCount > 0)
 						color = Color.Red;
@@ -1033,8 +1009,8 @@ namespace DungeonEye
 									//
 
 									// Add door to the list
-									if (block.Door != null)
-										Doors.Add(block.Door);
+									//if (block.Door != null)
+									//	Doors.Add(block.Door);
 								}
 								break;
 							}
@@ -1044,24 +1020,6 @@ namespace DungeonEye
 					break;
 
 					#endregion
-
-/*
-					#region Monsters
-
-					case "monsters":
-					{
-						foreach (XmlNode subnode in node)
-						{
-							Monster monster = new Monster(this);
-							Monsters.Add(monster);
-							monster.Load(subnode);
-							monster.Location.SetMaze(Name);
-						}
-
-					}
-					break;
-					#endregion
-*/
 				}
 			}
 
@@ -1320,6 +1278,8 @@ namespace DungeonEye
 		public bool IsDisposed { get; private set; }
 
 
+		#region Tilesets
+
 		/// <summary>
 		/// Wall TileSet to use
 		/// </summary>
@@ -1388,7 +1348,16 @@ namespace DungeonEye
 		}
 
 
+		/// <summary>
+		/// Doors tileset
+		/// </summary>
+		public TileSet DoorTileset
+		{
+			get;
+			private set;
+		}
 
+		#endregion
 
 		/// <summary>
 		/// Blocks in the maze
@@ -1423,13 +1392,6 @@ namespace DungeonEye
 				return new Rectangle(Point.Empty, Size);
 			}
 		}
-
-
-		/// <summary>
-		/// Private list of doors in the maze
-		/// </summary>
-		[Category("Blocks")]
-		List<Door> Doors;
 
 
 		/// <summary>

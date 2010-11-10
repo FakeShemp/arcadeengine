@@ -49,6 +49,7 @@ namespace ArcEngine.Asset
 			tiles = new Dictionary<int, Tile>();
 
 			IsDisposed = false;
+			InUse++;
 		}
 
 
@@ -67,6 +68,7 @@ namespace ArcEngine.Asset
 			Name = "";
 
 			IsDisposed = true;
+			InUse--;
 
 			GC.SuppressFinalize(this);
 		}
@@ -576,6 +578,18 @@ namespace ArcEngine.Asset
 */
 		#endregion
 
+		#region Statics
+
+		/// <summary>
+		/// Number of TileSet currently used
+		/// </summary>
+		public static int InUse
+		{
+			get;
+			private set;
+		}
+
+		#endregion
 
 		#region Properties
 

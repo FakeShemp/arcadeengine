@@ -95,8 +95,8 @@ namespace DungeonEye
 		{
 			StringBuilder sb = new StringBuilder();
 
-			if (Door != null)
-				sb.Append(Door);
+			if (Actor != null)
+				sb.Append(Actor);
 
 			else if (MonsterCount > 0)
 				sb.Append(" " + MonsterCount + " monster(s)");
@@ -104,8 +104,8 @@ namespace DungeonEye
 			else if (Teleporter != null)
 				sb.Append(" " + Teleporter);
 
-			else if (Stair != null)
-				sb.Append(" " + Stair);
+			//else if (Stair != null)
+			//	sb.Append(" " + Stair);
 
 			else if (Pit != null)
 				sb.Append(" " + Pit);
@@ -143,7 +143,7 @@ namespace DungeonEye
 			}
 			else
 			{
-				sb.Append("Floor");
+				sb.Append(" Floor");
 			}
 
 			if (GroundItemCount > 0)
@@ -165,9 +165,9 @@ namespace DungeonEye
 					if (Monsters[i] != null)
 						Monsters[i].Update(time);
 
-			// Door
-			if (Door != null)
-				Door.Update(time);
+			// Actor
+			if (Actor != null)
+				Actor.Update(time);
 		}
 
 
@@ -182,13 +182,15 @@ namespace DungeonEye
 		/// <returns>True if the event is processed</returns>
 		public bool OnClick(Team team, Point location, CardinalPoint side)
 		{
-			if (team == null)
+			if (team == null ||Actor == null)
 				return false;
 
+
+
 			// A door
-			if (Door != null && team.ItemInHand == null)
+			if (team.ItemInHand == null)
 			{
-				Door.OnClick(team, location);
+				Actor.OnClick(team, location, side);
 				return true;
 			}
 
@@ -244,6 +246,9 @@ namespace DungeonEye
 			if (team == null)
 				return;
 
+			if (Actor != null)
+				Actor.OnTeamEnter(team);
+
 	
 			if (ForceField != null)
 			{
@@ -273,12 +278,12 @@ namespace DungeonEye
 				team.Teleport(Teleporter.Target);
 
 			}
-			else if (Stair != null)
-			{
-				if (team.Teleport(Stair.Target))
-					team.Direction = Stair.Target.Direction;
+			//else if (Stair != null)
+			//{
+			//    if (team.Teleport(Stair.Target))
+			//        team.Direction = Stair.Target.Direction;
 
-			}
+			//}
 			else if (FloorPlate != null)
 			{
 				FloorPlate.OnTeamTouch(team, this);
@@ -294,6 +299,9 @@ namespace DungeonEye
 		{
 			if (monster == null)
 				return;
+
+			if (Actor != null)
+				Actor.OnMonsterEnter(monster);
 
 
 			if (ForceField != null)
@@ -339,12 +347,12 @@ namespace DungeonEye
 				monster.Teleport(Teleporter.Target);
 
 			}
-			else if (Stair != null)
-			{
-				monster.Teleport(Stair.Target);
-				monster.Location.Direction = Stair.Target.Direction;
+			//else if (Stair != null)
+			//{
+			//    monster.Teleport(Stair.Target);
+			//    monster.Location.Direction = Stair.Target.Direction;
 
-			}
+			//}
 			else if (FloorPlate != null)
 			{
 				FloorPlate.OnMonsterTouch(monster);
@@ -417,11 +425,11 @@ namespace DungeonEye
 		/// </summary>
 		public void RemoveSpecials()
 		{
-			Door = null;
+			//Door = null;
 			FloorPlate = null;
 			ForceField = null;
 			Pit = null;
-			Stair = null;
+			//Stair = null;
 			Teleporter = null;
 		}
 
@@ -585,8 +593,11 @@ namespace DungeonEye
 			writer.WriteAttributeString("value", Type.ToString());
 			writer.WriteEndElement();
 
-			if (Door != null)
-				Door.Save(writer);
+			if (Actor != null)
+				Actor.Save(writer);
+
+			//if (Door != null)
+			//	Door.Save(writer);
 
 			if (FloorPlate != null)
 				FloorPlate.Save(writer);
@@ -600,8 +611,9 @@ namespace DungeonEye
 			if (ForceField != null)
 				ForceField.Save(writer);
 
-			if (Stair != null)
-				Stair.Save(writer);
+			//if (Stair != null)
+			//	Stair.Save(writer);
+
 
 			// Wall decoration
 			for (int i = 0; i < 4; i++)
@@ -728,8 +740,8 @@ namespace DungeonEye
 
 					case "door":
 					{
-						Door = new Door();
-						Door.Load(node);
+						Actor = new Door(this);
+						Actor.Load(node);
 					}
 					break;
 
@@ -763,8 +775,8 @@ namespace DungeonEye
 
 					case "stair":
 					{
-						Stair = new Stair(this);
-						Stair.Load(node);
+						Actor = new Stair(this);
+						Actor.Load(node);
 					}
 					break;
 
@@ -861,8 +873,12 @@ namespace DungeonEye
 			if (position == SquarePosition.Center)
 				throw new ArgumentOutOfRangeException("position", "No items in the middle of a maze block !");
 
-			// Can drop item in wall
-			if (IsWall || Stair != null)
+			// Can't drop item in wall
+			if (IsWall)
+				return false;
+
+			// Actor refuses items
+			if (Actor != null && !Actor.AcceptItems)
 				return false;
 
 			// Add the item to the ground
@@ -983,6 +999,15 @@ namespace DungeonEye
 		#endregion
 
 
+		/// <summary>
+		/// Square actor
+		/// </summary>
+		public SquareActor Actor
+		{
+			get;
+			private set;
+		}
+
 
 		/// <summary>
 		/// Gets if the wall have alcoves
@@ -1026,13 +1051,16 @@ namespace DungeonEye
 		{
 			get
 			{
-				if (Type == SquareType.Wall)
+
+				if (Actor != null && Actor.IsBlocking)
 					return true;
 
-				if (Door != null && (Door.State != DoorState.Opened))
-					return true;
+		//		if (Type == SquareType.Wall)
+				//			return true;
+				else if (IsIllusion)
+					return false;
 
-				if (Stair != null)
+				else if (IsWall)
 					return true;
 
 				return false;
@@ -1119,14 +1147,14 @@ namespace DungeonEye
 		}
 
 
-		/// <summary>
-		/// Door
-		/// </summary>
-		public Door Door
-		{
-			get;
-			set;
-		}
+		///// <summary>
+		///// Door
+		///// </summary>
+		//public Door Door
+		//{
+		//    get;
+		//    set;
+		//}
 
 
 		/// <summary>
@@ -1164,16 +1192,6 @@ namespace DungeonEye
 		/// Floor Plate
 		/// </summary>
 		public FloorPlate FloorPlate
-		{
-			get;
-			set;
-		}
-
-
-		/// <summary>
-		/// Stair
-		/// </summary>
-		public Stair Stair
 		{
 			get;
 			set;

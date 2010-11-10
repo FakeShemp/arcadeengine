@@ -54,6 +54,10 @@ namespace DungeonEye
 				maze.Dispose();
 			Mazes.Clear();
 
+			// Remove shared asset
+			ResourceManager.RemoveSharedAsset<TileSet>("Doors");
+
+
 			StartLocation = null;
 			Note = "";
 			Team = null;
@@ -71,6 +75,10 @@ namespace DungeonEye
 			Trace.WriteLine("[Dungeon] : Init()");
 
 			StartLocation.SetMaze(StartLocation.MazeName);
+
+
+			// Generate shared asset
+			ResourceManager.CreateSharedAsset<TileSet>("Doors", "Doors");
 
 
 			foreach (Maze maze in Mazes.Values)

@@ -86,6 +86,10 @@ namespace ArcEngine.Graphic
 		{
 			Trace.WriteDebugLine("[Display] : Dispose()");
 
+			if (Texture.InUse > 0)
+				Trace.WriteLine("[Display] Dispose() : {0} texture(s) remaining !", Texture.InUse);
+
+
 			Shader = null;
 			Texture = null;
 		}

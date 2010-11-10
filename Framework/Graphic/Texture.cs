@@ -41,6 +41,7 @@ namespace ArcEngine.Graphic
 		public Texture()
 		{
 			Handle = -1;
+			InUse++;
 		}
 
 
@@ -409,6 +410,16 @@ namespace ArcEngine.Graphic
 			{
 				return Display.Capabilities.Extensions.Contains("GL_ARB_texture_compression");
 			}
+		}
+
+
+		/// <summary>
+		/// Number of textre in use
+		/// </summary>
+		public static int InUse
+		{
+			get;
+			protected set;
 		}
 
 		#endregion

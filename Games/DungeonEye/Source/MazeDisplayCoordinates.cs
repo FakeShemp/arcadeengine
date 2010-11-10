@@ -319,6 +319,12 @@ namespace DungeonEye
 						}
 						break;
 
+						default:
+						{
+							Trace.WriteLine("[MazeDisplayCoordinates] Load() : Unknown element \"" + node.Name + "\".");
+						}
+						break;
+
 					}
 				}
 

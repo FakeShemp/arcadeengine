@@ -894,35 +894,78 @@ namespace ArcEngine
 				return;
 
 			if (typeof(T) == typeof(TileSet))
+			{
+				TileSet ts = GetShared<TileSet>(name);
+				if (ts != null)
+					ts.Dispose();
+
 				SharedTileSets.Remove(name);
+			}
 
 			else if (typeof(T) == typeof(StringTable))
 				SharedStrings.Remove(name);
 
 			else if (typeof(T) == typeof(Shader))
+			{
+				Shader shader = GetShared<Shader>(name);
+				if (shader != null)
+					shader.Dispose();
+
 				SharedShaders.Remove(name);
+			}
 
 			else if (typeof(T) == typeof(Scene))
+			{
+				Scene scene = GetShared<Scene>(name);
+				if (scene != null)
+					scene.Dispose();
+
 				SharedScenes.Remove(name);
+			}
 
 			else if (typeof(T) == typeof(Animation))
+			{
+				Animation anim = GetShared<Animation>(name);
+				if (anim != null)
+					anim.Dispose();
+
 				SharedAnimations.Remove(name);
+			}
 
 			else if (typeof(T) == typeof(BitmapFont))
+			{
+				BitmapFont font = GetShared<BitmapFont>(name);
+				if (font != null)
+					font.Dispose();
+
 				SharedFonts.Remove(name);
+			}
 
 			else if (typeof(T) == typeof(Script))
+			{
 				SharedScripts.Remove(name);
+			}
 
 			else if (typeof(T) == typeof(AudioSample))
+			{
+				AudioSample audio = GetShared<AudioSample>(name);
+				if (audio != null)
+					audio.Dispose();
+
 				SharedAudios.Remove(name);
+			}
 
 			else if (typeof(T) == typeof(InputScheme))
 				SharedSchemes.Remove(name);
 
 			else if (typeof(T) == typeof(Layout))
-				SharedLayouts.Remove(name);
+			{
+				Layout layout = GetShared<Layout>(name);
+				if (layout != null)
+					layout.Dispose();
 
+				SharedLayouts.Remove(name);
+			}
 		}
 
 

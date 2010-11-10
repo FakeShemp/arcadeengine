@@ -261,6 +261,7 @@
     <Compile Include="Source\Profession.cs" />
     <Compile Include="Source\HitPoint.cs" />
     <Compile Include="Source\SavingThrow.cs" />
+    <Compile Include="Source\SquareActor\SquareActor.cs" />
     <Compile Include="Source\WallButton.cs" />
     <Compile Include="Source\MazeDisplayCoordinates.cs" />
     <Compile Include="Source\Compass.cs" />
@@ -270,7 +271,7 @@
     <Compile Include="Source\Gui\Window.cs" />
     <Compile Include="OptionMenu.cs" />
     <Compile Include="Source\Dice.cs" />
-    <Compile Include="Source\Door.cs" />
+    <Compile Include="Source\SquareActor\Door.cs" />
     <Compile Include="Source\Dungeon.cs" />
     <Compile Include="DungeonEye.cs" />
     <Compile Include="Source\DungeonLocation.cs" />
@@ -334,7 +335,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Source\Spell.cs" />
-    <Compile Include="Source\Stair.cs" />
+    <Compile Include="Source\SquareActor\Stair.cs" />
     <Compile Include="Team.cs">
     </Compile>
     <Compile Include="Source\Teleporter.cs" />
@@ -431,6 +432,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

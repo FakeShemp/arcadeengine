@@ -530,13 +530,14 @@ namespace DungeonEye
 		{
 			if (typeof(T) == typeof(Dungeon))
 			{
-				foreach (Dungeon dungeon in SharedDungeons.Values)
+				Dungeon dungeon = GetShared<Dungeon>(name);
+				if (dungeon != null)
 					dungeon.Dispose();
 
-				SharedDungeons.Remove(name);
+				SharedDungeons.Remove(Name);
 			}
 
-			if (typeof(T) == typeof(Item))
+			else if (typeof(T) == typeof(Item))
 				SharedItems.Remove(name); ;
 		}
 
@@ -550,10 +551,18 @@ namespace DungeonEye
 		public override void RemoveShared<T>()
 		{
 			if (typeof(T) == typeof(Dungeon))
-				SharedDungeons.Clear();
+			{
+				foreach (Dungeon dungeon in SharedDungeons.Values)
+					dungeon.Dispose();
 
-			if (typeof(T) == typeof(Item))
+
+				SharedDungeons.Clear();
+			}
+
+			else if (typeof(T) == typeof(Item))
+			{
 				SharedItems.Clear();
+			}
 		}
 
 
