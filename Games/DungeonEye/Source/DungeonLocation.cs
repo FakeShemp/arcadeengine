@@ -79,6 +79,16 @@ namespace DungeonEye
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="node"></param>
+		public DungeonLocation(XmlNode node)
+		{
+			Load(node);
+		}
+
+
 		#endregion
 
 

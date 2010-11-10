@@ -219,17 +219,17 @@ namespace DungeonEye.Forms
 							}
 
 
-							if (block.FloorPlate != null)
+							if (block.Actor is FloorPlate)
 							{
 								Batch.DrawTile(Icons, 18, new Point(Offset.X + x * 25, Offset.Y + y * 25));
 							}
 
-							if (block.Pit != null)
+							if (block.Actor is Pit)
 							{
 								Batch.DrawTile(Icons, 19, new Point(Offset.X + x * 25, Offset.Y + y * 25));
 							}
 
-							if (block.Teleporter != null)
+							if (block.Actor is Teleporter)
 							{
 								Batch.DrawTile(Icons, 11, new Point(Offset.X + x * 25, Offset.Y + y * 25));
 							}

@@ -101,17 +101,17 @@ namespace DungeonEye
 			else if (MonsterCount > 0)
 				sb.Append(" " + MonsterCount + " monster(s)");
 
-			else if (Teleporter != null)
-				sb.Append(" " + Teleporter);
+			//else if (Teleporter != null)
+			//    sb.Append(" " + Teleporter);
 
 			//else if (Stair != null)
 			//	sb.Append(" " + Stair);
 
-			else if (Pit != null)
-				sb.Append(" " + Pit);
+			//else if (Pit != null)
+			//    sb.Append(" " + Pit);
 
-			else if (FloorPlate != null)
-				sb.Append(" " + FloorPlate);
+			//else if (FloorPlate != null)
+			//    sb.Append(" " + FloorPlate);
 
 			else if (ForceField!= null)
 				sb.Append(" " + ForceField);
@@ -267,27 +267,27 @@ namespace DungeonEye
 					break;
 				}
 			}
-			else if (Pit != null)
-			{
-				if (team.Teleport(Pit.Target))
-					team.Damage(Pit.Damage, SavingThrowType.Reflex, Pit.Difficulty);
+			//else if (Pit != null)
+			//{
+			//    if (team.Teleport(Pit.Target))
+			//        team.Damage(Pit.Damage, SavingThrowType.Reflex, Pit.Difficulty);
 
-			}
-			else if (Teleporter != null)
-			{
-				team.Teleport(Teleporter.Target);
+			//}
+			//else if (Teleporter != null)
+			//{
+			//    team.Teleport(Teleporter.Target);
 
-			}
+			//}
 			//else if (Stair != null)
 			//{
 			//    if (team.Teleport(Stair.Target))
 			//        team.Direction = Stair.Target.Direction;
 
 			//}
-			else if (FloorPlate != null)
-			{
-				FloorPlate.OnTeamTouch(team, this);
-			}
+			//else if (FloorPlate != null)
+			//{
+			//    FloorPlate.OnTeamTouch(team, this);
+			//}
 		}
 
 
@@ -336,27 +336,27 @@ namespace DungeonEye
 					break;
 				}
 			}
-			else if (Pit != null)
-			{
-				monster.Teleport(Pit.Target);
-				monster.Damage(Pit.Damage, SavingThrowType.Reflex, Pit.Difficulty);
+			//else if (Pit != null)
+			//{
+			//    monster.Teleport(Pit.Target);
+			//    monster.Damage(Pit.Damage, SavingThrowType.Reflex, Pit.Difficulty);
 
-			}
-			else if (Teleporter != null)
-			{
-				monster.Teleport(Teleporter.Target);
+			//}
+			//else if (Teleporter != null)
+			//{
+			//    monster.Teleport(Teleporter.Target);
 
-			}
+			//}
 			//else if (Stair != null)
 			//{
 			//    monster.Teleport(Stair.Target);
 			//    monster.Location.Direction = Stair.Target.Direction;
 
 			//}
-			else if (FloorPlate != null)
-			{
-				FloorPlate.OnMonsterTouch(monster);
-			}
+			//else if (FloorPlate != null)
+			//{
+			//    FloorPlate.OnMonsterTouch(monster);
+			//}
 		}
 
 
@@ -369,8 +369,8 @@ namespace DungeonEye
 			if (team == null)
 				return;
 
-			if (FloorPlate != null)
-				FloorPlate.OnTeamLeave(team, this);
+			if (Actor != null)
+				Actor.OnTeamLeave(team);
 		}
 
 
@@ -426,11 +426,11 @@ namespace DungeonEye
 		public void RemoveSpecials()
 		{
 			//Door = null;
-			FloorPlate = null;
+			//FloorPlate = null;
 			ForceField = null;
-			Pit = null;
+			//Pit = null;
 			//Stair = null;
-			Teleporter = null;
+			//Teleporter = null;
 		}
 
 
@@ -599,14 +599,14 @@ namespace DungeonEye
 			//if (Door != null)
 			//	Door.Save(writer);
 
-			if (FloorPlate != null)
-				FloorPlate.Save(writer);
+			//if (FloorPlate != null)
+			//    FloorPlate.Save(writer);
 
-			if (Pit != null)
-				Pit.Save(writer);
+			//if (Pit != null)
+			//    Pit.Save(writer);
 
-			if (Teleporter != null)
-				Teleporter.Save(writer);
+			//if (Teleporter != null)
+			//    Teleporter.Save(writer);
 
 			if (ForceField != null)
 				ForceField.Save(writer);
@@ -747,22 +747,22 @@ namespace DungeonEye
 
 					case "teleporter":
 					{
-						Teleporter = new Teleporter(this);
-						Teleporter.Load(node);
+						Actor = new Teleporter(this);
+						Actor.Load(node);
 					}
 					break;
 
 					case "floorplate":
 					{
-						FloorPlate = new FloorPlate();
-						FloorPlate.Load(node);
+						Actor = new FloorPlate(this);
+						Actor.Load(node);
 					}
 					break;
 
 					case "pit":
 					{
-						Pit = new Pit(this);
-						Pit.Load(node);
+						Actor = new Pit(this);
+						Actor.Load(node);
 					}
 					break;
 
@@ -1147,14 +1147,6 @@ namespace DungeonEye
 		}
 
 
-		///// <summary>
-		///// Door
-		///// </summary>
-		//public Door Door
-		//{
-		//    get;
-		//    set;
-		//}
 
 
 		/// <summary>
@@ -1167,35 +1159,15 @@ namespace DungeonEye
 		}
 
 
-		/// <summary>
-		/// Pit
-		/// </summary>
-		public Pit Pit
-		{
-			get;
-			set;
-		}
-
 
 		/// <summary>
 		/// Teleporter
 		/// </summary>
-		public Teleporter Teleporter
-		{
-			get;
-			set;
-		}
-
-
-
-		/// <summary>
-		/// Floor Plate
-		/// </summary>
-		public FloorPlate FloorPlate
-		{
-			get;
-			set;
-		}
+		//public Teleporter Teleporter
+		//{
+		//    get;
+		//    set;
+		//}
 
 
 		/// <summary>

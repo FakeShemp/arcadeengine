@@ -23,27 +23,47 @@ using System.Text;
 using System.Drawing;
 using System.Xml;
 using System.ComponentModel;
+using ArcEngine.Asset;
+using ArcEngine.Graphic;
+
 
 namespace DungeonEye
 {
 	/// <summary>
 	/// Pit class
 	/// </summary>
-	public class Pit
+	public class Pit : SquareActor
 	{
 		/// <summary>
 		/// Default constructor
 		/// </summary>
-		public Pit(Square block)
+		public Pit(Square block) : base(block)
 		{
 			if (block == null)
 				throw new ArgumentNullException("block");
 
-			Block = block;
-			Target = new DungeonLocation(Block.Location);
 			Damage = new Dice();
-
 		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="batch"></param>
+		/// <param name="field"></param>
+		/// <param name="position"></param>
+		/// <param name="direction"></param>
+		public override void Draw(SpriteBatch batch, ViewField field, ViewFieldPosition position, CardinalPoint direction)
+		{
+			if (TileSet == null)
+				return;
+
+			TileDrawing td = MazeDisplayCoordinates.GetPit(position);
+			if (td != null && !IsHidden)
+				batch.DrawTile(TileSet, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);
+		}
+
 
 
 		/// <summary>
@@ -54,7 +74,14 @@ namespace DungeonEye
 		{
 			StringBuilder sb = new StringBuilder();
 
-			sb.Append("Pit (target " + Target + ")");
+			sb.Append("Pit (");
+			if (Target != null)
+				sb.Append(Target);
+
+			if (Damage != null)
+				sb.Append(" " + Damage);
+			
+			sb.Append(")");
 
 			return sb.ToString();
 		}
@@ -68,7 +95,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="node"></param>
 		/// <returns></returns>
-		public bool Load(XmlNode xml)
+		public override bool Load(XmlNode xml)
 		{
 			if (xml == null)
 				return false;
@@ -82,6 +109,9 @@ namespace DungeonEye
 				{
 					case "target":
 					{
+						if (Target == null)
+							Target = new DungeonLocation(Square.Location);
+
 						Target.Load(node);
 					}
 					break;
@@ -118,7 +148,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="writer"></param>
 		/// <returns></returns>
-		public bool Save(XmlWriter writer)
+		public override bool Save(XmlWriter writer)
 		{
 			if (writer == null)
 				return false;
@@ -150,14 +180,89 @@ namespace DungeonEye
 		#endregion
 
 
+		#region Script
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="team"></param>
+		/// <returns></returns>
+		public override bool OnTeamEnter(Team team)
+		{
+			if (team == null)
+				return false;
+
+			if (Target == null)
+				return false;
+
+			if (team.Teleport(Target))
+				team.Damage(Damage, SavingThrowType.Reflex, Difficulty);
+
+			return true;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="monster"></param>
+		/// <returns></returns>
+		public override bool OnMonsterEnter(Monster monster)
+		{
+			if (monster == null)
+				return false;
+
+			if (Target == null)
+				return false;
+
+			monster.Teleport(Target);
+			monster.Damage(Damage, SavingThrowType.Reflex, Difficulty);
+
+			return true;
+		}
+		#endregion
+
 
 		#region Properties
 
-		/// <summary>
-		/// Location of the pit
-		/// </summary>
-		Square Block;
 
+		/// <summary>
+		/// Tileset for the drawing
+		/// </summary>
+		TileSet TileSet
+		{
+			get
+			{
+				if (Square == null)
+					return null;
+
+				return Square.Location.Maze.OverlayTileset;
+			}
+		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public override bool AcceptItems
+		{
+			get
+			{
+				return true;
+			}
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public override bool IsBlocking
+		{
+			get
+			{
+				return false;
+			}
+		}
 
 		/// <summary>
 		/// Target of the pit
@@ -168,6 +273,17 @@ namespace DungeonEye
 			set;
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public override bool CanPassThrough
+		{
+			get
+			{
+				return true;
+			}
+		}
 
 		/// <summary>
 		/// An illusion pit

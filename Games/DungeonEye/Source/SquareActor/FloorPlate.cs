@@ -24,78 +24,43 @@ using System.Text;
 using System.Xml;
 using ArcEngine;
 using ArcEngine.Asset;
-
+using ArcEngine.Graphic;
 
 namespace DungeonEye
 {
-	public class FloorPlate
+	/// <summary>
+	/// Floor plate
+	/// </summary>
+	public class FloorPlate : SquareActor
 	{
 
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public FloorPlate()
+		public FloorPlate(Square square) : base(square)
 		{
-			Script = new Script();			
+			//Script = new Script();			
 		}
 
-
-		/// <summary>
-		/// The team or an item is walking / falling on the plate
-		/// </summary>
-		/// <param name="team">Handle to the team</param>
-		/// <param name="block">Mazeblock of the fllor plate</param>
-		public void OnTeamTouch(Team team, Square block)
-		{
-			// No script defined
-			if (string.IsNullOrEmpty(OnEnterScript) || Script == null)
-				return;
-
-			Script.Compile();
-
-			Script.Invoke(OnEnterScript, team, block);
-
-
-		}
 
 
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="monster"></param>
-		public void OnMonsterTouch(Monster monster)
+		/// <param name="batch"></param>
+		/// <param name="field"></param>
+		/// <param name="position"></param>
+		/// <param name="direction"></param>
+		public override void Draw(SpriteBatch batch, ViewField field, ViewFieldPosition position, CardinalPoint direction)
 		{
-			if (monster == null)
-				return;
-		}
-
-		/// <summary>
-		/// Team /item is leaving the Floor Plate
-		/// </summary>
-		/// <param name="team"></param>
-		/// <param name="item"></param>
-		public void OnTeamLeave(Team team, Square block)
-		{
-			// No script defined
-			if (string.IsNullOrEmpty(OnEnterScript) || Script == null)
+			if (TileSet == null)
 				return;
 
-			Script.Compile();
-
-			Script.Invoke(OnLeaveScript, team, block);
-
+			TileDrawing td = MazeDisplayCoordinates.GetFloorPlate(position);
+			if (td != null)
+				batch.DrawTile(TileSet, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);
 		}
 
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="monster"></param>
-		public void OnMonsterLeave(Monster monster)
-		{
-			if (monster == null)
-				return;
-		}
 
 
 		#region I/O
@@ -106,7 +71,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="node"></param>
 		/// <returns></returns>
-		public bool Load(XmlNode xml)
+		public override bool Load(XmlNode xml)
 		{
 			if (xml == null)
 				return false;
@@ -128,7 +93,7 @@ namespace DungeonEye
 					case "script":
 					{
 						ScriptName = node.Attributes["name"].Value;
-						Script = Script.LoadFromBank(ScriptName);
+						//Script = Script.LoadFromBank(ScriptName);
 					}
 					break;
 
@@ -156,7 +121,7 @@ namespace DungeonEye
 		/// 
 		/// </summary>
 		/// <returns></returns>
-		public bool Save(XmlWriter writer)
+		public override bool Save(XmlWriter writer)
 		{
 			if (writer == null)
 				return false;
@@ -193,8 +158,120 @@ namespace DungeonEye
 		#endregion
 
 
+
+		#region Script
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="team"></param>
+		/// <returns></returns>
+		public override bool OnTeamEnter(Team team)
+		{
+			if (team == null)
+				return false;
+
+			return true;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="monster"></param>
+		/// <returns></returns>
+		public override bool OnMonsterEnter(Monster monster)
+		{
+			if (monster == null)
+				return false;
+
+
+			return true;
+		}
+
+
+		/// <summary>
+		/// Team /item is leaving the Floor Plate
+		/// </summary>
+		/// <param name="team"></param>
+		/// <param name="item"></param>
+		public override bool OnTeamLeave(Team team)
+		{
+			// No script defined
+			if (string.IsNullOrEmpty(OnEnterScript) || Script == null)
+				return false;
+
+			return false;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="monster"></param>
+		public override bool OnMonsterLeave(Monster monster)
+		{
+			if (monster == null)
+				return false;
+
+
+			return false;
+		}
+
+
+		#endregion
+
+
 		#region Properties
 
+		/// <summary>
+		/// Tileset for the drawing
+		/// </summary>
+		TileSet TileSet
+		{
+			get
+			{
+				if (Square == null)
+					return null;
+
+				return Square.Location.Maze.OverlayTileset;
+			}
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public override bool IsBlocking
+		{
+			get
+			{
+				return false;
+			}
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public override bool CanPassThrough
+		{
+			get
+			{
+				return true;
+			}
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public override bool AcceptItems
+		{
+			get
+			{
+				return true;
+			}
+		}
 
 		/// <summary>
 		/// Is the floor plate visible

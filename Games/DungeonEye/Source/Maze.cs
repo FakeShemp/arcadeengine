@@ -134,13 +134,18 @@ namespace DungeonEye
 					square.Init();
 
 					#region Pits
-					if (square.Pit != null && square.Pit.Target != null)
+					// Find pit destination squares
+					Pit pit = square.Actor as Pit;
+
+					if (pit != null && pit.Target != null)
 					{
-						Maze maze = Dungeon.GetMaze(square.Pit.Target.MazeName);
+						// Maze exists
+						Maze maze = Dungeon.GetMaze(pit.Target.MazeName);
 						if (maze == null)
 							continue;
 
-						Square blk = maze.GetBlock(square.Pit.Target.Coordinate);
+						// Destination exists
+						Square blk = maze.GetBlock(pit.Target.Coordinate);
 						if (blk == null)
 							continue;
 
@@ -676,12 +681,12 @@ namespace DungeonEye
 			#endregion
 
 			#region Pit
-			if (block.Pit != null)
-			{
-				td = MazeDisplayCoordinates.GetPit(position);
-				if (td != null && !block.Pit.IsHidden)
-					batch.DrawTile(OverlayTileset, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);
-			}
+			//if (block.Pit != null)
+			//{
+			//    td = MazeDisplayCoordinates.GetPit(position);
+			//    if (td != null && !block.Pit.IsHidden)
+			//        batch.DrawTile(OverlayTileset, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);
+			//}
 			#endregion
 
 			#region Stair
@@ -694,20 +699,20 @@ namespace DungeonEye
 			//}
 			#endregion
 
-			#region Actor
+
 			if (block.Actor != null)
 			{
 				block.Actor.Draw(batch, field, position, view);
 			}
-			#endregion
+
 
 			#region Floor plate
-			else if (block.FloorPlate != null && !block.FloorPlate.Invisible)
-			{
-				td = MazeDisplayCoordinates.GetFloorPlate(position);
-				if (td != null)
-					batch.DrawTile(OverlayTileset, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);
-			}
+			//else if (block.FloorPlate != null && !block.FloorPlate.Invisible)
+			//{
+			//    td = MazeDisplayCoordinates.GetFloorPlate(position);
+			//    if (td != null)
+			//        batch.DrawTile(OverlayTileset, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);
+			//}
 			#endregion
 
 			#region Walls
@@ -861,6 +866,8 @@ namespace DungeonEye
 						color = Color.Red;
 					if (block.Actor is Door)
 						color = Color.Yellow;
+					if (block.Actor is Pit)
+						color = Color.DarkBlue;
 					if (block.Actor is Stair)
 						color = Color.LightGreen;
 					if (block.MonsterCount > 0)

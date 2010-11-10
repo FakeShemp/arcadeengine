@@ -101,6 +101,30 @@ namespace DungeonEye
 			return false;
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="team"></param>
+		/// <returns></returns>
+		public virtual bool OnTeamLeave(Team team)
+		{
+			return false;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="monster"></param>
+		/// <returns></returns>
+		public virtual bool OnMonsterLeave(Monster monster)
+		{
+			return false;
+		}
+
+
+
 		#endregion
 
 

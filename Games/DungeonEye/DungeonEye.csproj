@@ -275,7 +275,7 @@
     <Compile Include="Source\Dungeon.cs" />
     <Compile Include="DungeonEye.cs" />
     <Compile Include="Source\DungeonLocation.cs" />
-    <Compile Include="Source\FloorPlate.cs" />
+    <Compile Include="Source\SquareActor\FloorPlate.cs" />
     <Compile Include="Source\Gui\Button.cs" />
     <Compile Include="Source\Gui\Camp.cs" />
     <Compile Include="Source\ForceField.cs" />
@@ -287,7 +287,7 @@
     <Compile Include="Source\Providers.cs" />
     <Compile Include="Source\Square.cs" />
     <Compile Include="Source\Monster.cs" />
-    <Compile Include="Source\Pit.cs" />
+    <Compile Include="Source\SquareActor\Pit.cs" />
     <Compile Include="Source\ScreenMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\AbilityControl.resx">
@@ -338,7 +338,7 @@
     <Compile Include="Source\SquareActor\Stair.cs" />
     <Compile Include="Team.cs">
     </Compile>
-    <Compile Include="Source\Teleporter.cs" />
+    <Compile Include="Source\SquareActor\Teleporter.cs" />
     <Compile Include="Source\WallDecoration.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -565,17 +565,17 @@ namespace DungeonEye.Forms
 						}
 
 
-						if (block.FloorPlate != null)
+						if (block.Actor is FloorPlate)
 						{
 							SpriteBatch.DrawTile(Icons, 18, location);
 						}
 
-						if (block.Pit != null)
+						if (block.Actor is Pit)
 						{
 							SpriteBatch.DrawTile(Icons, 9, location);
 						}
 
-						if (block.Teleporter != null)
+						if (block.Actor is Teleporter)
 						{
 							SpriteBatch.DrawTile(Icons, 11, location);
 						}

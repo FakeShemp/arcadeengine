@@ -22,26 +22,26 @@ using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
 using System.Xml;
-
+using ArcEngine.Graphic;
 
 namespace DungeonEye
 {
 	/// <summary>
 	/// Teleporter object
 	/// </summary>
-	public class Teleporter
+	public class Teleporter : SquareActor
 	{
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public Teleporter(Square block)
+		public Teleporter(Square block) : base(block)
 		{
 			if (block == null)
 				throw new ArgumentNullException("block");
 
-			Block = block;
-			Target = new DungeonLocation(Block.Location);
+			//Block = block;
+			//Target = new DungeonLocation(Block.Location);
 		}
 
 
@@ -66,7 +66,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="xml"></param>
 		/// <returns></returns>
-		public bool Load(XmlNode xml)
+		public override bool Load(XmlNode xml)
 		{
 			if (xml == null)
 				return false;
@@ -80,6 +80,7 @@ namespace DungeonEye
 				{
 					case "target":
 					{
+						Target = new DungeonLocation(Square.Location);
 						Target.Load(node);
 					}
 					break;
@@ -96,7 +97,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="writer"></param>
 		/// <returns></returns>
-		public bool Save(XmlWriter writer)
+		public override bool Save(XmlWriter writer)
 		{
 			if (writer == null)
 				return false;
@@ -114,14 +115,85 @@ namespace DungeonEye
 		#endregion
 
 
-
-		#region Properties
+		#region Script
 
 		/// <summary>
 		/// 
 		/// </summary>
-		Square Block;
+		/// <param name="team"></param>
+		/// <returns></returns>
+		public override bool OnTeamEnter(Team team)
+		{
+			if (team == null)
+				return false;
 
+			if (Target == null)
+				return false;
+
+			team.Teleport(Target);
+
+			return true;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="monster"></param>
+		/// <returns></returns>
+		public override bool OnMonsterEnter(Monster monster)
+		{
+			if (monster == null)
+				return false;
+
+			if (Target == null)
+				return false;
+
+			monster.Teleport(Target);
+
+			return true;
+		}
+
+
+		#endregion
+
+
+		#region Properties
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public override bool IsBlocking
+		{
+			get
+			{
+				return false;
+			}
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public override bool AcceptItems
+		{
+			get
+			{
+				return true;
+			}
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public override bool CanPassThrough
+		{
+			get
+			{
+				return true;
+			}
+		}
 	
 		/// <summary>
 		/// Target of the stair
