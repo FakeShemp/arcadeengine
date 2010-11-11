@@ -814,7 +814,7 @@ namespace DungeonEye
 		{
 			// No item in the middle of a block
 			if (position == SquarePosition.Center)
-				throw new ArgumentOutOfRangeException("position", "No items in the middle of a maze block !");
+				return null;
 
 			int count = Items[(int)position].Count;
 			if (count == 0)

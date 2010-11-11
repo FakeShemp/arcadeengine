@@ -54,6 +54,9 @@ namespace DungeonEye
 		/// <param name="loc">Location</param>
 		public DungeonLocation(DungeonLocation loc)
 		{
+			if (loc == null)
+				return;
+
 			Dungeon = loc.Dungeon;
 			Coordinate = loc.Coordinate;
 			Position = loc.Position;

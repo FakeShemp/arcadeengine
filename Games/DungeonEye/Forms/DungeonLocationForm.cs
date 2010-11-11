@@ -37,34 +37,28 @@ namespace DungeonEye.Forms
 	public partial class DungeonLocationForm : Form
 	{
 		/// <summary>
-		/// Constructor
+		/// 
 		/// </summary>
-		/// <param name="dungeon">Dungeon handle</param>
-		/// <param name="location">Default location</param>
-		public DungeonLocationForm(Dungeon dungeon, DungeonLocation location)
+		/// <param name="dungeon"></param>
+		/// <param name="maze"></param>
+		/// <param name="coordinate"></param>
+		public DungeonLocationForm(Dungeon dungeon, string maze, Point coordinate)
 		{
-			InitializeComponent();
+				InitializeComponent();
 
 			DungeonControl.Dungeon = dungeon;
-			DungeonControl.Target = new DungeonLocation(location);
+			DungeonControl.Target = new DungeonLocation(maze, coordinate, CardinalPoint.North, SquarePosition.NorthWest);
 			DungeonControl.GlControlBox.Click += new EventHandler(DungeonControl_Click);
 			DungeonControl.GlControlBox.DoubleClick += new EventHandler(GlControlBox_DoubleClick);
 
-			DirectionBox.BeginUpdate();
-			foreach(string name in Enum.GetNames(typeof(CardinalPoint)))
-				DirectionBox.Items.Add(name);
-			DirectionBox.EndUpdate();
+			DirectionBox.Items.AddRange(Enum.GetNames(typeof(CardinalPoint)));
+			GroundPositionBox.Items.AddRange(Enum.GetNames(typeof(SquarePosition)));
 
-			GroundPositionBox.BeginUpdate();
-			GroundPositionBox.Items.Clear();
-			foreach (string name in Enum.GetNames(typeof(SquarePosition)))
-				GroundPositionBox.Items.Add(name);
-			GroundPositionBox.EndUpdate();
+			Coordinate = coordinate;
+			MazeName = maze;
 
 			Init();
-		}
-
-
+	}
 
 
 		/// <summary>
@@ -116,6 +110,9 @@ namespace DungeonEye.Forms
 		{
 			DungeonControl.Target.Coordinate = DungeonControl.BlockUnderMouse;
 			DungeonControl.Target.SetMaze((string)MazeBox.SelectedItem);
+
+			Coordinate = DungeonControl.BlockUnderMouse;
+			MazeName = DungeonControl.Maze.Name;
 
 			MouseLocationBox.Text = DungeonControl.BlockUnderMouse.ToString();
 		}
@@ -190,6 +187,31 @@ namespace DungeonEye.Forms
 
 		#region Properties
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Point Coordinate
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public string MazeName
+		{
+			get;
+			private set;
+		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
 		public DungeonLocation Target
 		{
 			get

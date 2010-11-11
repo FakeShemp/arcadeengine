@@ -180,6 +180,22 @@ namespace ArcEngine.Utility.ScreenManager
 		}
 
 
+
+		/// <summary>
+		/// Screen become inactive
+		/// </summary>
+		public virtual void OnLeave()
+		{
+		}
+
+
+		/// <summary>
+		/// Screen become active
+		/// </summary>
+		public virtual void OnEnter()
+		{
+		}
+
 		#endregion
 
 

@@ -785,7 +785,7 @@ namespace DungeonEye.Forms
 			if (pit == null)
 				return;
 
-			DungeonLocationForm form = new DungeonLocationForm(Maze.Dungeon, pit.Target);
+			DungeonLocationForm form = new DungeonLocationForm(Maze.Dungeon, pit.Target.MazeName, pit.Target.Coordinate);
 			if (form.ShowDialog() != DialogResult.OK)
 				return;
 

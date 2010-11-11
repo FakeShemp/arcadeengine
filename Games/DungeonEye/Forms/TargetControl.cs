@@ -50,7 +50,13 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void FromMapBox_Click(object sender, EventArgs e)
 		{
+			if (Dungeon == null)
+				return;
 
+			DungeonLocationForm form = new DungeonLocationForm(Dungeon, MazeName, Coordinate);
+			form.ShowDialog();
+
+			SetTarget(form.MazeName, form.Coordinate);
 		}
 
 		#endregion

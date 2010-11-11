@@ -217,7 +217,7 @@ namespace DungeonEye.Forms
 			if (Team == null)
 				return;
 
-			DungeonLocationForm form = new DungeonLocationForm(Team.Dungeon, Team.Location);
+			DungeonLocationForm form = new DungeonLocationForm(Team.Dungeon, Team.Location.MazeName, Team.Location.Coordinate);
 			form.ShowDialog();
 
 			Team.Teleport(form.Target);

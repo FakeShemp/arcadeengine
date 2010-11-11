@@ -108,7 +108,12 @@ namespace ArcEngine.Utility.ScreenManager
 		public void ClearScreens()
 		{
 			foreach (GameScreen screen in GetScreens())
+			{
+				screen.OnLeave();
 				screen.ExitScreen();
+			}
+
+			Screens.Clear();
 		}
 
 
@@ -118,22 +123,41 @@ namespace ArcEngine.Utility.ScreenManager
 		/// <param name="screen"></param>
 		public void AddScreen(GameScreen screen)
 		{
+			if (screen == null)
+				return;
+
+			if (Screens.Count > 0)
+			{
+				GameScreen current = Screens[Screens.Count - 1];
+				current.OnLeave();
+
+			}
+
 			Screens.Add(screen);
 			screen.ScreenManager = this;
 			screen.IsExiting = false;
 
 			screen.LoadContent();
+			screen.OnEnter();
 		}
 
 
 		/// <summary>
 		/// Removes the a screen
 		/// </summary>
+		/// <param name="screen">Screen to remove</param>
 		public void RemoveScreen(GameScreen screen)
 		{
+			if (screen == null)
+				return;
+
+			screen.OnLeave();
 			screen.UnloadContent();
 
 			Screens.Remove(screen);
+
+			if (Screens.Count > 0)
+				Screens[Screens.Count - 1].OnEnter();
 		}
 
 

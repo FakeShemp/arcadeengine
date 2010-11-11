@@ -1261,6 +1261,21 @@ namespace DungeonEye
 
 				#endregion
 
+				#region Alcove
+				else if (MazeDisplayCoordinates.Alcove.Contains(mousePos) && FrontBlock.IsWall)
+				{
+
+					if (ItemInHand != null)
+					{
+						if (FrontBlock.DropAlcoveItem(FrontWallSide, ItemInHand))
+							SetItemInHand(null);
+					}
+					else
+					{
+						SetItemInHand(FrontBlock.CollectAlcoveItem(FrontWallSide));
+					}
+				}
+				#endregion
 
 				#region Action to process on the front block
 
@@ -1330,14 +1345,15 @@ namespace DungeonEye
 
 			else if (Mouse.IsNewButtonDown(MouseButtons.Right))
 			{
-				#region Action to process on the front block
-
-				// Click on the block in front of the team
+				#region Alcove
 				if (MazeDisplayCoordinates.Alcove.Contains(mousePos) && FrontBlock.IsWall)
 				{
-					//FrontBlock.OnClick(this, mousePos, FrontWallSide); 
 					SelectedHero.AddToInventory(FrontBlock.CollectAlcoveItem(FrontWallSide));
 				}
+				#endregion
+
+				#region Action to process on the front block
+
 				#endregion
 
 				#region Gather item on the ground Left

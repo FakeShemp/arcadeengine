@@ -89,7 +89,7 @@ namespace DungeonEye
 			Theme = new AudioStream();
 			Theme.LoadOgg("main.ogg");
 			Theme.Loop = true;
-			Theme.Play();
+			//Theme.Play();
 
 
 		}
@@ -142,7 +142,7 @@ namespace DungeonEye
 		/// <param name="e"></param>
 		void QuitEvent(object sender, EventArgs e)
 		{
-		//	Audio.Stop(0);
+			//Theme.Stop();
 			Game.Exit();
 		}
 
@@ -154,7 +154,7 @@ namespace DungeonEye
 		/// <param name="e"></param>
 		void StartGameEvent(object sender, EventArgs e)
 		{
-		//	Audio.Stop(0);
+			//Theme.Stop();
 			ScreenManager.AddScreen(new CharGen(Batch));
 		}
 
@@ -172,13 +172,31 @@ namespace DungeonEye
 			Team team = new Team(null);
 			team.SaveGame = "data/savegame.xml";
 
-		//	Audio.Stop(0);
+			//Theme.Stop();
 
 			ScreenManager.AddScreen(team);
 		}
 
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		public override void OnLeave()
+		{
+			if (Theme != null)
+				Theme.Stop();
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public override void OnEnter()
+		{
+			if (Theme != null)
+				Theme.Play();
+		}
 
 		#region Update & draw
 
