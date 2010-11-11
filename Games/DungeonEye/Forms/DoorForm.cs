@@ -48,13 +48,41 @@ namespace DungeonEye.Forms
 
 			DoorStateBox.SelectedItem = door.State;
 			DoorTypeBox.SelectedItem = door.Type;
+			ItemConsumBox.Checked = door.ConsumeItem;
+			DoorTypeBox.SelectedItem = door.Type;
+			PicklockBox.Value = door.PickLock;
+
 			IsBreakableBox.Checked = door.IsBreakable;
 			BreakValueBox.Value = door.Strength;
-			IsBrokenBox.Checked = door.IsBroken;
-			ItemDisappearBox.Checked = door.ItemDisappear;
-			DoorTypeBox.SelectedItem = door.Type;
-			BreakValueBox.Value = door.Strength;
-			PicklockBox.Value = door.PickLock;
+			BreakValueBox.Visible = door.IsBreakable;
+
+			switch (door.OpenType)
+			{
+				case DoorOpenType.Button:
+				ButtonRadioBox.Checked = true;
+				break;
+				case DoorOpenType.Item:
+				ItemRadioBox.Checked = true;
+				break;
+				case DoorOpenType.Event:
+				EventRadioBox.Checked = true;
+				break;
+			}
+
+
+			if (door.OpenType == DoorOpenType.Item)
+			{
+				ItemPanel.Visible = true;
+
+				// Populate item list
+				if (ItemNameBox.Items.Count == 0 && !DesignMode)
+					ItemNameBox.DataSource = ResourceManager.GetAssets<Item>();
+
+				ItemNameBox.SelectedItem = door.OpenItemName;
+			}
+			else
+				ItemPanel.Visible = false;
+			
 
 			Door = door;
 		}
@@ -74,31 +102,39 @@ namespace DungeonEye.Forms
 
 		#endregion
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void IsBreakableBox_CheckedChanged(object sender, EventArgs e)
 		{
-
 			if (Door == null)
 				return;
 
 			Door.IsBreakable = IsBreakableBox.Checked;
+			BreakValueBox.Visible = Door.IsBreakable;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void BreakValueBox_ValueChanged(object sender, EventArgs e)
 		{
 			if (Door == null)
 				return;
 
-			Door.Strength = (int)PicklockBox.Value;
+			Door.Strength = (int)BreakValueBox.Value;
 		}
 
-		private void IsBrokenBox_CheckedChanged(object sender, EventArgs e)
-		{
-			if (Door == null)
-				return;
 
-			Door.IsBroken = IsBrokenBox.Checked;
-		}
-
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void PicklockBox_ValueChanged(object sender, EventArgs e)
 		{
 			if (Door == null)
@@ -107,12 +143,17 @@ namespace DungeonEye.Forms
 			Door.PickLock = (int)PicklockBox.Value;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void ItemDisappearBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (Door == null)
 				return;
 
-			Door.ItemDisappear = ItemDisappearBox.Checked;
+			Door.ConsumeItem = ItemConsumBox.Checked;
 
 		}
 
@@ -121,16 +162,60 @@ namespace DungeonEye.Forms
 
 		}
 
-		private void ItemRadioBox_CheckedChanged(object sender, EventArgs e)
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OpensBy_CheckedChanged(object sender, EventArgs e)
 		{
+			if (Door == null)
+				return;
+
+			RadioButton button = sender as RadioButton;
+
+			if (button.Checked)
+			{
+
+				if (button == ButtonRadioBox)
+				{
+					Door.OpenType = DoorOpenType.Button;
+					Door.OpenItemName = string.Empty;
+					Door.ConsumeItem = false;
+					Door.PickLock = 0;
+				}
+				else if (button == ItemRadioBox)
+				{
+					Door.OpenType = DoorOpenType.Item;
+					Door.OpenItemName = (string)ItemNameBox.SelectedItem;
+					Door.ConsumeItem = ItemConsumBox.Checked;
+					Door.PickLock = (int)PicklockBox.Value;
+
+					// Populate item list
+					if (ItemNameBox.Items.Count == 0 && !DesignMode)
+						ItemNameBox.DataSource = ResourceManager.GetAssets<Item>();
+
+					ItemNameBox.SelectedItem = Door.OpenItemName;
+				}
+				else if (button == EventRadioBox)
+				{
+					Door.OpenType = DoorOpenType.Event;
+					Door.OpenItemName = string.Empty;
+					Door.ConsumeItem = false;
+					Door.PickLock = 0;
+				}
+			}
+
+			ItemPanel.Visible = Door.OpenType == DoorOpenType.Item;
 
 		}
 
-		private void ButtonRadioBox_CheckedChanged(object sender, EventArgs e)
-		{
 
-		}
-
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void DoorTypeBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (Door == null)
@@ -138,6 +223,7 @@ namespace DungeonEye.Forms
 
 			Door.Type = (DoorType)DoorTypeBox.SelectedItem;
 		}
+
 
 		/// <summary>
 		/// 
@@ -164,5 +250,7 @@ namespace DungeonEye.Forms
 				Close();
 
 		}
+
+
 	}
 }

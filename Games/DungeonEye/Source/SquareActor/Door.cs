@@ -814,11 +814,6 @@ namespace DungeonEye
 			writer.WriteEndElement();
 
 			// 
-			writer.WriteStartElement("isbroken");
-			writer.WriteAttributeString("value", IsBroken.ToString());
-			writer.WriteEndElement();
-
-			// 
 			writer.WriteStartElement("isbreakable");
 			writer.WriteAttributeString("value", IsBreakable.ToString());
 			writer.WriteEndElement();
@@ -882,6 +877,26 @@ namespace DungeonEye
 
 				return Square.Location.Maze.DoorTileset;
 			}
+		}
+
+
+		/// <summary>
+		/// The way the door opens
+		/// </summary>
+		public DoorOpenType OpenType
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// Item needed to opens the door
+		/// </summary>
+		public string OpenItemName
+		{
+			get;
+			set;
 		}
 
 
@@ -973,16 +988,6 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Door is broken
-		/// </summary>
-		public bool IsBroken
-		{
-			get;
-			set;
-		}
-
-
-		/// <summary>
 		/// Vertical position of the door in the animation
 		/// </summary>
 		int VPosition;
@@ -1055,7 +1060,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Item disappears upon use
 		/// </summary>
-		public bool ItemDisappear
+		public bool ConsumeItem
 		{
 			get;
 			set;
@@ -1137,4 +1142,26 @@ namespace DungeonEye
 		Eye
 	}
 
+
+	/// <summary>
+	/// The way a door can be opened
+	/// </summary>
+	public enum DoorOpenType
+	{
+		/// <summary>
+		/// The door has a button
+		/// </summary>
+		Button,
+
+		/// <summary>
+		/// The door opens using an item
+		/// </summary>
+		Item,
+
+
+		/// <summary>
+		/// The door opens by an event
+		/// </summary>
+		Event,
+	}
 }
