@@ -31,13 +31,13 @@
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TeleporterForm));
 			this.DoneBox = new System.Windows.Forms.Button();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.TeamBox = new System.Windows.Forms.CheckBox();
-			this.MonsterBox = new System.Windows.Forms.CheckBox();
 			this.ItemsBox = new System.Windows.Forms.CheckBox();
+			this.MonsterBox = new System.Windows.Forms.CheckBox();
+			this.TeamBox = new System.Windows.Forms.CheckBox();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
-			this.VisibleBox = new System.Windows.Forms.CheckBox();
-			this.ReusableBox = new System.Windows.Forms.CheckBox();
 			this.ActiveBox = new System.Windows.Forms.CheckBox();
+			this.ReusableBox = new System.Windows.Forms.CheckBox();
+			this.VisibleBox = new System.Windows.Forms.CheckBox();
 			this.SoundNameBox = new System.Windows.Forms.TextBox();
 			this.LoadSoundBox = new System.Windows.Forms.Button();
 			this.PlaySoundBox = new System.Windows.Forms.Button();
@@ -72,16 +72,16 @@
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Usable by :";
 			// 
-			// TeamBox
+			// ItemsBox
 			// 
-			this.TeamBox.AutoSize = true;
-			this.TeamBox.Location = new System.Drawing.Point(6, 19);
-			this.TeamBox.Name = "TeamBox";
-			this.TeamBox.Size = new System.Drawing.Size(53, 17);
-			this.TeamBox.TabIndex = 0;
-			this.TeamBox.Text = "Team";
-			this.TeamBox.UseVisualStyleBackColor = true;
-			this.TeamBox.CheckedChanged += new System.EventHandler(this.TeamBox_CheckedChanged);
+			this.ItemsBox.AutoSize = true;
+			this.ItemsBox.Location = new System.Drawing.Point(6, 65);
+			this.ItemsBox.Name = "ItemsBox";
+			this.ItemsBox.Size = new System.Drawing.Size(51, 17);
+			this.ItemsBox.TabIndex = 0;
+			this.ItemsBox.Text = "Items";
+			this.ItemsBox.UseVisualStyleBackColor = true;
+			this.ItemsBox.CheckedChanged += new System.EventHandler(this.ItemsBox_CheckedChanged);
 			// 
 			// MonsterBox
 			// 
@@ -94,16 +94,16 @@
 			this.MonsterBox.UseVisualStyleBackColor = true;
 			this.MonsterBox.CheckedChanged += new System.EventHandler(this.MonsterBox_CheckedChanged);
 			// 
-			// ItemsBox
+			// TeamBox
 			// 
-			this.ItemsBox.AutoSize = true;
-			this.ItemsBox.Location = new System.Drawing.Point(6, 65);
-			this.ItemsBox.Name = "ItemsBox";
-			this.ItemsBox.Size = new System.Drawing.Size(51, 17);
-			this.ItemsBox.TabIndex = 0;
-			this.ItemsBox.Text = "Items";
-			this.ItemsBox.UseVisualStyleBackColor = true;
-			this.ItemsBox.CheckedChanged += new System.EventHandler(this.ItemsBox_CheckedChanged);
+			this.TeamBox.AutoSize = true;
+			this.TeamBox.Location = new System.Drawing.Point(6, 19);
+			this.TeamBox.Name = "TeamBox";
+			this.TeamBox.Size = new System.Drawing.Size(53, 17);
+			this.TeamBox.TabIndex = 0;
+			this.TeamBox.Text = "Team";
+			this.TeamBox.UseVisualStyleBackColor = true;
+			this.TeamBox.CheckedChanged += new System.EventHandler(this.TeamBox_CheckedChanged);
 			// 
 			// groupBox2
 			// 
@@ -117,16 +117,16 @@
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Properties :";
 			// 
-			// VisibleBox
+			// ActiveBox
 			// 
-			this.VisibleBox.AutoSize = true;
-			this.VisibleBox.Location = new System.Drawing.Point(7, 20);
-			this.VisibleBox.Name = "VisibleBox";
-			this.VisibleBox.Size = new System.Drawing.Size(56, 17);
-			this.VisibleBox.TabIndex = 0;
-			this.VisibleBox.Text = "Visible";
-			this.VisibleBox.UseVisualStyleBackColor = true;
-			this.VisibleBox.CheckedChanged += new System.EventHandler(this.VisibleBox_CheckedChanged);
+			this.ActiveBox.AutoSize = true;
+			this.ActiveBox.Location = new System.Drawing.Point(7, 65);
+			this.ActiveBox.Name = "ActiveBox";
+			this.ActiveBox.Size = new System.Drawing.Size(56, 17);
+			this.ActiveBox.TabIndex = 0;
+			this.ActiveBox.Text = "Active";
+			this.ActiveBox.UseVisualStyleBackColor = true;
+			this.ActiveBox.CheckedChanged += new System.EventHandler(this.ActiveBox_CheckedChanged);
 			// 
 			// ReusableBox
 			// 
@@ -139,16 +139,16 @@
 			this.ReusableBox.UseVisualStyleBackColor = true;
 			this.ReusableBox.CheckedChanged += new System.EventHandler(this.ReusableBox_CheckedChanged);
 			// 
-			// ActiveBox
+			// VisibleBox
 			// 
-			this.ActiveBox.AutoSize = true;
-			this.ActiveBox.Location = new System.Drawing.Point(7, 65);
-			this.ActiveBox.Name = "ActiveBox";
-			this.ActiveBox.Size = new System.Drawing.Size(56, 17);
-			this.ActiveBox.TabIndex = 0;
-			this.ActiveBox.Text = "Active";
-			this.ActiveBox.UseVisualStyleBackColor = true;
-			this.ActiveBox.CheckedChanged += new System.EventHandler(this.ActiveBox_CheckedChanged);
+			this.VisibleBox.AutoSize = true;
+			this.VisibleBox.Location = new System.Drawing.Point(7, 20);
+			this.VisibleBox.Name = "VisibleBox";
+			this.VisibleBox.Size = new System.Drawing.Size(56, 17);
+			this.VisibleBox.TabIndex = 0;
+			this.VisibleBox.Text = "Visible";
+			this.VisibleBox.UseVisualStyleBackColor = true;
+			this.VisibleBox.CheckedChanged += new System.EventHandler(this.VisibleBox_CheckedChanged);
 			// 
 			// SoundNameBox
 			// 
@@ -211,9 +211,11 @@
 			// 
 			this.targetControl1.Dungeon = null;
 			this.targetControl1.Location = new System.Drawing.Point(200, 12);
+			this.targetControl1.MinimumSize = new System.Drawing.Size(175, 100);
 			this.targetControl1.Name = "targetControl1";
 			this.targetControl1.Size = new System.Drawing.Size(182, 105);
 			this.targetControl1.TabIndex = 3;
+			this.targetControl1.CoordinateChanged += new DungeonEye.Forms.TargetControl.ChangedEventHandler(this.targetControl1_CoordinateChanged);
 			// 
 			// TeleporterForm
 			// 
@@ -227,6 +229,7 @@
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.DoneBox);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+			this.KeyPreview = true;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "TeleporterForm";
@@ -234,6 +237,7 @@
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Teleporter wizard";
+			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TeleporterForm_KeyDown);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			this.groupBox2.ResumeLayout(false);

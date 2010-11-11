@@ -39,7 +39,34 @@ namespace DungeonEye.Forms
 
 			MazeNameBox.Text = MazeName;
 			CoordinateBox.Text = Coordinate.X + " x " + Coordinate.Y;
+
+			OnCoordinateChanged(EventArgs.Empty);
 		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		public delegate void ChangedEventHandler(string name, Point coordinate);
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public event ChangedEventHandler CoordinateChanged;
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="e"></param>
+		protected virtual void OnCoordinateChanged(EventArgs e)
+		{
+			if (CoordinateChanged != null)
+				CoordinateChanged(MazeName, Coordinate);
+		}
+
 
 		#region Events
 

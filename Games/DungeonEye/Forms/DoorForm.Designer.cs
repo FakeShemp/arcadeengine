@@ -41,18 +41,18 @@
 			this.DoorTypeBox = new System.Windows.Forms.ComboBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.SpeedBox = new System.Windows.Forms.NumericUpDown();
+			this.label4 = new System.Windows.Forms.Label();
 			this.BreakValueBox = new System.Windows.Forms.NumericUpDown();
 			this.IsBreakableBox = new System.Windows.Forms.CheckBox();
 			this.DoorStateBox = new System.Windows.Forms.ComboBox();
 			this.label3 = new System.Windows.Forms.Label();
-			this.SpeedBox = new System.Windows.Forms.NumericUpDown();
-			this.label4 = new System.Windows.Forms.Label();
 			this.groupBox1.SuspendLayout();
 			this.ItemPanel.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.PicklockBox)).BeginInit();
 			this.groupBox2.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.BreakValueBox)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.SpeedBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.BreakValueBox)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// DoneBox
@@ -204,6 +204,30 @@
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Properties :";
 			// 
+			// SpeedBox
+			// 
+			this.SpeedBox.Location = new System.Drawing.Point(101, 46);
+			this.SpeedBox.Maximum = new decimal(new int[] {
+            999999999,
+            0,
+            0,
+            0});
+			this.SpeedBox.Name = "SpeedBox";
+			this.SpeedBox.Size = new System.Drawing.Size(54, 20);
+			this.SpeedBox.TabIndex = 4;
+			this.SpeedBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.SpeedBox.ThousandsSeparator = true;
+			this.SpeedBox.ValueChanged += new System.EventHandler(this.SpeedBox_ValueChanged);
+			// 
+			// label4
+			// 
+			this.label4.AutoSize = true;
+			this.label4.Location = new System.Drawing.Point(3, 48);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(92, 13);
+			this.label4.TabIndex = 3;
+			this.label4.Text = "Speed in seconds";
+			// 
 			// BreakValueBox
 			// 
 			this.BreakValueBox.Location = new System.Drawing.Point(101, 20);
@@ -249,30 +273,6 @@
 			this.label3.TabIndex = 3;
 			this.label3.Text = "State :";
 			// 
-			// SpeedBox
-			// 
-			this.SpeedBox.Location = new System.Drawing.Point(101, 46);
-			this.SpeedBox.Maximum = new decimal(new int[] {
-            999999999,
-            0,
-            0,
-            0});
-			this.SpeedBox.Name = "SpeedBox";
-			this.SpeedBox.Size = new System.Drawing.Size(54, 20);
-			this.SpeedBox.TabIndex = 4;
-			this.SpeedBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.SpeedBox.ThousandsSeparator = true;
-			this.SpeedBox.ValueChanged += new System.EventHandler(this.SpeedBox_ValueChanged);
-			// 
-			// label4
-			// 
-			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(3, 48);
-			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(92, 13);
-			this.label4.TabIndex = 3;
-			this.label4.Text = "Speed in seconds";
-			// 
 			// DoorForm
 			// 
 			this.AcceptButton = this.DoneBox;
@@ -287,6 +287,7 @@
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.DoneBox);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+			this.KeyPreview = true;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "DoorForm";
@@ -302,8 +303,8 @@
 			((System.ComponentModel.ISupportInitialize)(this.PicklockBox)).EndInit();
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.BreakValueBox)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.SpeedBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.BreakValueBox)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

@@ -34,7 +34,7 @@ namespace DungeonEye.Forms
 			if (teleporter != null)
 			{
 				targetControl1.Dungeon = teleporter.Square.Location.Dungeon;
-				targetControl1.SetTarget(teleporter.Square.Location.MazeName, teleporter.Square.Location.Coordinate);
+				targetControl1.SetTarget(teleporter.Target.MazeName, teleporter.Target.Coordinate);
 				
 			}
 
@@ -43,6 +43,13 @@ namespace DungeonEye.Forms
 
 
 		#region Events
+
+		private void TeleporterForm_KeyDown(object sender, KeyEventArgs e)
+		{
+
+			if (e.KeyCode == Keys.Escape)
+				Close();
+		}
 
 		private void TeamBox_CheckedChanged(object sender, EventArgs e)
 		{
@@ -120,6 +127,15 @@ namespace DungeonEye.Forms
 				return;
 
 			Teleporter.UseSound = UseSoundBox.Checked;
+		}
+
+
+		private void targetControl1_CoordinateChanged(string name, Point coordinate)
+		{
+			if (Teleporter == null)
+				return;
+
+			Teleporter.Target = new DungeonLocation(name, coordinate, CardinalPoint.North, SquarePosition.Center);
 		}
 
 		#endregion
