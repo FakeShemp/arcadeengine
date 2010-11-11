@@ -974,7 +974,7 @@ namespace DungeonEye
 		public SquareActor Actor
 		{
 			get;
-			private set;
+			set;
 		}
 
 

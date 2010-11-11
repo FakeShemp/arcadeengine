@@ -199,18 +199,20 @@ namespace DungeonEye
 		/// <summary>
 		/// Does the items can pass through
 		/// </summary>
-		public abstract bool CanPassThrough
+		public virtual bool CanPassThrough
 		{
 			get;
+			protected set;
 		}
 
 
 		/// <summary>
 		/// Does the square is blocking for monster or the team
 		/// </summary>
-		public abstract bool IsBlocking
+		public virtual bool IsBlocking
 		{
 			get;
+			protected set;
 		}
 
 

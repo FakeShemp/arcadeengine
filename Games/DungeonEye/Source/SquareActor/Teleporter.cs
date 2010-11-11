@@ -23,6 +23,7 @@ using System.Text;
 using System.Drawing;
 using System.Xml;
 using ArcEngine.Graphic;
+using ArcEngine;
 
 namespace DungeonEye
 {
@@ -41,6 +42,8 @@ namespace DungeonEye
 				throw new ArgumentNullException("block");
 
 			AcceptItems = true;
+			CanPassThrough = true;
+			IsBlocking = false;
 		}
 
 
@@ -57,6 +60,7 @@ namespace DungeonEye
 			return sb.ToString();
 		}
 
+		
 		#region I/O
 
 
@@ -81,6 +85,12 @@ namespace DungeonEye
 					{
 						Target = new DungeonLocation(Square.Location);
 						Target.Load(node);
+					}
+					break;
+
+					default:
+					{
+						Trace.WriteLine("[Teleporter] Load() : Unknown node \"" + node.Name + "\" found.");
 					}
 					break;
 				}
@@ -160,29 +170,7 @@ namespace DungeonEye
 		#region Properties
 
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public override bool IsBlocking
-		{
-			get
-			{
-				return false;
-			}
-		}
 
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public override bool CanPassThrough
-		{
-			get
-			{
-				return true;
-			}
-		}
-	
 		/// <summary>
 		/// Target of the stair
 		/// </summary>
@@ -214,45 +202,70 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Scope
+		/// Does the teleport can be used more than once
 		/// </summary>
-		public TeleporterScope Scope
+		public bool Reusable
 		{
 			get;
 			set;
 		}
+
+
+		/// <summary>
+		/// Does the teleporter visible
+		/// </summary>
+		public bool IsVisible
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// Can teleport monsters
+		/// </summary>
+		public bool CanTeleportMonsters
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// Can teleport the team
+		/// </summary>
+		public bool CanTeleportTeam
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// Can teleport items
+		/// </summary>
+		public bool CanTeleportItems
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// Does teleporter is active
+		/// </summary>
+		public bool IsActive
+		{
+			get;
+			set;
+		}
+
+
+
 
 		#endregion
 
 
 	}
 
-
-	/// <summary>
-	/// Affected object by a teleporter
-	/// </summary>
-	[Flags]
-	public enum TeleporterScope
-	{
-		/// <summary>
-		/// Everything
-		/// </summary>
-		Everything,
-
-		/// <summary>
-		/// Only items
-		/// </summary>
-		Items,
-
-		/// <summary>
-		/// Only monsters
-		/// </summary>
-		Monsters,
-
-		/// <summary>
-		/// Only the team
-		/// </summary>
-		Team,
-
-	}
 }

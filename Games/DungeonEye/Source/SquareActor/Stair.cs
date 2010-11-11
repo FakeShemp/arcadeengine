@@ -44,6 +44,8 @@ namespace DungeonEye
 
 			block.Type = SquareType.Ground;
 			AcceptItems = false;
+			CanPassThrough = false;
+			IsBlocking = false;
 		}
 
 
@@ -227,29 +229,6 @@ namespace DungeonEye
 			}
 		}
 
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public override bool CanPassThrough
-		{
-			get
-			{
-				return false;
-			}
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public override bool IsBlocking
-		{
-			get
-			{
-				return false;
-			}
-		}
 
 
 

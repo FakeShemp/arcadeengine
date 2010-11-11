@@ -44,6 +44,8 @@ namespace DungeonEye
 
 			Damage = new Dice();
 			AcceptItems = true;
+			CanPassThrough = true;
+			IsBlocking = false;
 		}
 
 

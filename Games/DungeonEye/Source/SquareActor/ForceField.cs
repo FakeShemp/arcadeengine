@@ -42,6 +42,8 @@ namespace DungeonEye
 			Move = CardinalPoint.North;
 
 			AcceptItems = true;
+			CanPassThrough = true;
+			IsBlocking = false;
 		}
 
 
@@ -262,11 +264,11 @@ namespace DungeonEye
 		/// <summary>
 		/// Scope
 		/// </summary>
-		public TeleporterScope Scope
-		{
-			get;
-			set;
-		}
+		//public TeleporterScope Scope
+		//{
+		//    get;
+		//    set;
+		//}
 
 		#endregion
 	}

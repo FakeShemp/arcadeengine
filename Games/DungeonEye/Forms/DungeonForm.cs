@@ -217,7 +217,8 @@ namespace DungeonEye.Forms
 			if (square.Actor is Door)
 				new DoorForm(square.Actor as Door).ShowDialog();
 
-
+			else if (square.Actor is Teleporter)
+				new TeleporterForm(square.Actor as Teleporter).ShowDialog();
 
 
 		}
@@ -315,12 +316,12 @@ namespace DungeonEye.Forms
 				// Add wall
 				if (WallBox.Checked)
 				{
-					if (block.Type == SquareType.Ground)
-						block.Type = SquareType.Wall;
-					else if (block.Type == SquareType.Wall)
-						block.Type = SquareType.Illusion;
-					else if (block.Type == SquareType.Illusion)
-						block.Type = SquareType.Wall;
+					if (block.Type == SquareType.Wall)
+						EditWallType = SquareType.Illusion;
+					else
+						EditWallType = SquareType.Wall;
+
+					block.Type = EditWallType;
 				}
 				else if (NoGhostsBox.Checked)
 				{
@@ -440,7 +441,7 @@ namespace DungeonEye.Forms
 			{
 				if (WallBox.Checked)
 				{
-					block.Type = SquareType.Wall;
+					block.Type = EditWallType;
 					return;
 				}
 				else if (NoGhostsBox.Checked)
@@ -495,14 +496,16 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void GlControl_MouseUp(object sender, MouseEventArgs e)
 		{
+
+			// Middle button
 			if (e.Button == MouseButtons.Middle)
 			{
 				Cursor = Cursors.Default;
 				return;
 			}
 
-			// Entity no more selected
-			if (e.Button == MouseButtons.Left)
+			// Left mouse button
+			else if (e.Button == MouseButtons.Left)
 			{
 				if (ZoneBox.Checked)
 				{
@@ -771,8 +774,14 @@ namespace DungeonEye.Forms
 				CurrentSquare = null;
 			}
 
-			//else if (e.KeyCode == Keys.Delete)
-			//{
+			else if (e.KeyCode == Keys.Delete)
+			{
+				if (CurrentSquare != null)
+				{
+					// Remove actor
+					if (CurrentSquare.Actor != null)
+						CurrentSquare.Actor = null;
+				}
 			//   if (ObjectPropertyBox.SelectedObject == null)
 			//      return;
 
@@ -783,7 +792,7 @@ namespace DungeonEye.Forms
 			//   //}
 
 			//   ObjectPropertyBox.SelectedObject = null;
-			//}
+			}
 			else if (e.KeyCode == KeyboardScheme["TurnLeft"])
 			{
 				PreviewLoc.Direction = Compass.Rotate(PreviewLoc.Direction, CompassRotation.Rotate270);
@@ -811,6 +820,59 @@ namespace DungeonEye.Forms
 			// Strafe right
 			else if (e.KeyCode == KeyboardScheme["StrafeRight"])
 				PreviewMove(1, 0);
+		}
+
+
+
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void glControl_MouseClick(object sender, MouseEventArgs e)
+		{
+			if (Maze == null)
+				return;
+
+			// Change selected square
+			Point coord = new Point((e.Location.X - Offset.X) / 25, (e.Location.Y - Offset.Y) / 25);
+
+			Square square = null;
+			if (Maze.Contains(coord))
+				square = Maze.GetBlock(coord);
+
+			if (square == null)
+				return;
+
+			// Left mouse button
+			if (e.Button == MouseButtons.Left)
+			{
+				if (TeleporterBox.Checked)
+				{
+					square.Actor = new Teleporter(square);
+					new TeleporterForm(square.Actor as Teleporter).ShowDialog();
+					UncheckButtons(null);
+				}
+				else if (DoorBox.Checked)
+				{
+					square.Actor = new Door(square);
+					new DoorForm(square.Actor as Door).ShowDialog();
+					UncheckButtons(null);
+				}
+				//else if (WallBox.Checked)
+				//{
+				//    if (square.Type == SquareType.Wall)
+				//        square.Type = SquareType.Illusion;
+				//    else
+				//        square.Type = SquareType.Wall;
+				//}
+				else
+				{
+					CurrentSquare = square;
+				}
+			}
+
 		}
 
 
@@ -1222,27 +1284,14 @@ namespace DungeonEye.Forms
 		/// </summary>
 		Square CurrentSquare;
 
+
+		/// <summary>
+		/// Type of wall to paste in edit mode
+		/// </summary>
+		SquareType EditWallType;
+
+
 		#endregion
-
-		private void glControl_MouseClick(object sender, MouseEventArgs e)
-		{
-			if (Maze == null)
-				return;
-
-			// Left mouse button
-			if (e.Button == MouseButtons.Left)
-			{
-
-				// Change selected square
-				Point coord = new Point((e.Location.X - Offset.X) / 25, (e.Location.Y - Offset.Y) / 25);
-				if (Maze.Contains(coord))
-					CurrentSquare = Maze.GetBlock(coord);
-			}
-
-		}
-
-
-
-
+	
 	}
 }

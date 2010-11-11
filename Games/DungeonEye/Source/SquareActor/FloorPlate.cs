@@ -41,6 +41,8 @@ namespace DungeonEye
 		{
 			//Script = new Script();			
 			AcceptItems = true;
+			CanPassThrough = true;
+			IsBlocking = false;
 		}
 
 

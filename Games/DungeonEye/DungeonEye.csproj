@@ -215,6 +215,18 @@
     <Compile Include="Forms\SquareForm.Designer.cs">
       <DependentUpon>SquareForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\TargetControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\TargetControl.Designer.cs">
+      <DependentUpon>TargetControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\TeleporterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\TeleporterForm.Designer.cs">
+      <DependentUpon>TeleporterForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Wizards\NewItemWizard.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -321,6 +333,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SquareForm.resx">
       <DependentUpon>SquareForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\TargetControl.resx">
+      <DependentUpon>TargetControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\TeleporterForm.resx">
+      <DependentUpon>TeleporterForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
