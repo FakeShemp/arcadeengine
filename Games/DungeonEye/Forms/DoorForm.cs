@@ -51,6 +51,8 @@ namespace DungeonEye.Forms
 			ItemConsumBox.Checked = door.ConsumeItem;
 			DoorTypeBox.SelectedItem = door.Type;
 			PicklockBox.Value = door.PickLock;
+			SpeedBox.Value = (int)door.Speed.TotalSeconds;
+
 
 			IsBreakableBox.Checked = door.IsBreakable;
 			BreakValueBox.Value = door.Strength;
@@ -72,13 +74,14 @@ namespace DungeonEye.Forms
 
 			if (door.OpenType == DoorOpenType.Item)
 			{
-				ItemPanel.Visible = true;
 
 				// Populate item list
 				if (ItemNameBox.Items.Count == 0 && !DesignMode)
 					ItemNameBox.DataSource = ResourceManager.GetAssets<Item>();
 
 				ItemNameBox.SelectedItem = door.OpenItemName;
+
+				ItemPanel.Visible = true;
 			}
 			else
 				ItemPanel.Visible = false;
@@ -159,6 +162,10 @@ namespace DungeonEye.Forms
 
 		private void ItemNameBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
+			if (Door == null)
+				return;
+
+			Door.OpenItemName = (string)ItemNameBox.SelectedItem;
 
 		}
 
@@ -249,6 +256,19 @@ namespace DungeonEye.Forms
 			if (e.KeyCode == Keys.Escape)
 				Close();
 
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void SpeedBox_ValueChanged(object sender, EventArgs e)
+		{
+			if (Door == null)
+				return;
+
+			Door.Speed = TimeSpan.FromSeconds((int)SpeedBox.Value);
 		}
 
 

@@ -50,6 +50,7 @@ namespace DungeonEye
 
 
 			AcceptItems = false;
+			Speed = TimeSpan.FromSeconds(1);
 		}
 
 
@@ -769,11 +770,49 @@ namespace DungeonEye
 					}
 					break;
 
-					case "button":
+					case "isbreakable":
 					{
-						HasButton = true;
+						IsBreakable = Boolean.Parse(node.Attributes["value"].Value);
 					}
 					break;
+
+					case "consumeitem":
+					{
+						ConsumeItem = Boolean.Parse(node.Attributes["value"].Value);
+					}
+					break;
+
+					case "openitem":
+					{
+						OpenItemName = node.Attributes["value"].Value;
+					}
+					break;
+
+					case "opentype":
+					{
+						OpenType = (DoorOpenType)Enum.Parse(typeof(DoorOpenType), node.Attributes["value"].Value, true);
+					}
+					break;
+
+					case "picklock":
+					{
+						PickLock = int.Parse(node.Attributes["value"].Value);
+					}
+					break;
+
+					case "speed":
+					{
+						Speed = TimeSpan.FromSeconds(int.Parse(node.Attributes["value"].Value));
+					}
+					break;
+
+					case "strength":
+					{
+						Strength = int.Parse(node.Attributes["value"].Value);
+					}
+					break;
+
+
 
 					default:
 					{
@@ -807,7 +846,6 @@ namespace DungeonEye
 			writer.WriteAttributeString("value", Type.ToString());
 			writer.WriteEndElement();
 
-
 			// State
 			writer.WriteStartElement("state");
 			writer.WriteAttributeString("value", State.ToString());
@@ -818,12 +856,37 @@ namespace DungeonEye
 			writer.WriteAttributeString("value", IsBreakable.ToString());
 			writer.WriteEndElement();
 
+			// 
+			writer.WriteStartElement("consumeitem");
+			writer.WriteAttributeString("value", ConsumeItem.ToString());
+			writer.WriteEndElement();
 
-			if (HasButton)
-			{
-				writer.WriteStartElement("button");
-				writer.WriteEndElement();
-			}
+			// 
+			writer.WriteStartElement("openitem");
+			writer.WriteAttributeString("value", OpenItemName);
+			writer.WriteEndElement();
+
+			// 
+			writer.WriteStartElement("opentype");
+			writer.WriteAttributeString("value", OpenType.ToString());
+			writer.WriteEndElement();
+
+			// 
+			writer.WriteStartElement("picklock");
+			writer.WriteAttributeString("value", PickLock.ToString());
+			writer.WriteEndElement();
+
+			// 
+			writer.WriteStartElement("speed");
+			writer.WriteAttributeString("value", Speed.TotalSeconds.ToString());
+			writer.WriteEndElement();
+
+
+			// 
+			writer.WriteStartElement("strength");
+			writer.WriteAttributeString("value", Strength.ToString());
+			writer.WriteEndElement();
+
 
 			writer.WriteEndElement();
 
@@ -972,8 +1035,10 @@ namespace DungeonEye
 		/// </summary>
 		public bool HasButton
 		{
-			get;
-			set;
+			get
+			{
+				return OpenType == DoorOpenType.Button;
+			}
 		}
 
 
@@ -992,11 +1057,6 @@ namespace DungeonEye
 		/// </summary>
 		int VPosition;
 
-		/// <summary>
-		/// Location of the button on the door
-		/// </summary>
-	//	Point ButtonPoint;
-
 
 		/// <summary>
 		/// Opening / closing speed
@@ -1010,21 +1070,31 @@ namespace DungeonEye
 		/// <summary>
 		/// Thrown items can pass through
 		/// </summary>
-		public bool ThrownItemsPassThrough 
+		public bool CanItemsPassThrough 
 		{
-			get;
-			set;
+			get
+			{
+				return State == DoorState.Broken || State == DoorState.Opened || Type == DoorType.Grid;
+			}
 		}
 
 
 
 		/// <summary>
-		/// Creatures can see the party through the door
+		/// Can see through the door
 		/// </summary>
-		public bool CreaturesCanSeeThrough
+		public bool CanSeeThrough
 		{
-			get;
-			set;
+			get
+			{
+				if (CanItemsPassThrough)
+					return true;
+
+				if (Type == DoorType.Grid || Type == DoorType.Iron)
+					return true;
+
+				return false;
+			}
 		}
 
 
