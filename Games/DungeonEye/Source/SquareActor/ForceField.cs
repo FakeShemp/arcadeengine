@@ -37,8 +37,8 @@ namespace DungeonEye
 		/// </summary>
 		public ForceField(Square square) : base(square)
 		{
-			Type = ForceFieldType.Turning;
-			Rotation = CompassRotation.Rotate180;
+			Type = ForceFieldType.Spin;
+			Spin = CompassRotation.Rotate180;
 			Move = CardinalPoint.North;
 
 			AcceptItems = true;
@@ -73,9 +73,9 @@ namespace DungeonEye
 					}
 					break;
 
-					case "rotation":
+					case "spin":
 					{
-						Rotation = (CompassRotation)Enum.Parse(typeof(CompassRotation), node.Attributes["value"].Value);
+						Spin = (CompassRotation)Enum.Parse(typeof(CompassRotation), node.Attributes["value"].Value);
 					}
 					break;
 
@@ -110,8 +110,8 @@ namespace DungeonEye
 			writer.WriteAttributeString("value", Type.ToString());
 			writer.WriteEndElement();
 
-			writer.WriteStartElement("rotation");
-			writer.WriteAttributeString("value", Rotation.ToString());
+			writer.WriteStartElement("spin");
+			writer.WriteAttributeString("value", Spin.ToString());
 			writer.WriteEndElement();
 
 			writer.WriteStartElement("move");
@@ -144,13 +144,13 @@ namespace DungeonEye
 
 			switch (Type)
 			{
-				case ForceFieldType.Turning:
+				case ForceFieldType.Spin:
 				{
-					Team.Location.Direction = Compass.Rotate(Team.Location.Direction, Rotation);
+					Team.Location.Direction = Compass.Rotate(Team.Location.Direction, Spin);
 				}
 				break;
 
-				case ForceFieldType.Moving:
+				case ForceFieldType.Move:
 				{
 					team.Offset(Move, 1);
 				}
@@ -174,13 +174,13 @@ namespace DungeonEye
 
 			switch (Type)
 			{
-				case ForceFieldType.Turning:
+				case ForceFieldType.Spin:
 				{
-					monster.Location.Direction = Compass.Rotate(monster.Location.Direction, Rotation);
+					monster.Location.Direction = Compass.Rotate(monster.Location.Direction, Spin);
 				}
 				break;
 
-				case ForceFieldType.Moving:
+				case ForceFieldType.Move:
 				{
 
 					switch (Move)
@@ -210,28 +210,6 @@ namespace DungeonEye
 		#region Properties
 
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public override bool CanPassThrough
-		{
-			get
-			{
-				return true;
-			}
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public override bool IsBlocking
-		{
-			get
-			{
-				return false;
-			}
-		}
 
 		/// <summary>
 		/// Type of force field
@@ -245,7 +223,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Type of turn
 		/// </summary>
-		public CompassRotation Rotation
+		public CompassRotation Spin
 		{
 			get;
 			set;
@@ -261,14 +239,35 @@ namespace DungeonEye
 			set;
 		}
 
+
 		/// <summary>
-		/// Scope
+		/// Does affect monsters
 		/// </summary>
-		//public TeleporterScope Scope
-		//{
-		//    get;
-		//    set;
-		//}
+		public bool AffectMonsters
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// Does affect team
+		/// </summary>
+		public bool AffectTeam
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// Does affect items
+		/// </summary>
+		public bool AffectItems
+		{
+			get;
+			set;
+		}
 
 		#endregion
 	}
@@ -282,16 +281,16 @@ namespace DungeonEye
 		/// <summary>
 		/// Team is turning
 		/// </summary>
-		Turning,
+		Spin,
 
 		/// <summary>
 		/// Team is moved to a direction
 		/// </summary>
-		Moving,
+		Move,
 
 		/// <summary>
-		/// Team can go through
+		/// Team can't go through
 		/// </summary>
-		Blocking,
+		Block,
 	}
 }

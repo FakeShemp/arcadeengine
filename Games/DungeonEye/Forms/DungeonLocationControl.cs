@@ -236,9 +236,9 @@ namespace DungeonEye.Forms
 								ForceField field = block.Actor as ForceField;
 
 								int id;
-								if (field.Type == ForceFieldType.Turning)
+								if (field.Type == ForceFieldType.Spin)
 									id = 12;
-								else if (field.Type == ForceFieldType.Moving)
+								else if (field.Type == ForceFieldType.Move)
 								{
 									id = 13 + (int) field.Move;
 								}

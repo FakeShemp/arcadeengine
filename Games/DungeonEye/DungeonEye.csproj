@@ -119,6 +119,12 @@
     <Compile Include="Forms\DoorForm.Designer.cs">
       <DependentUpon>DoorForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\ForceFieldForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ForceFieldForm.Designer.cs">
+      <DependentUpon>ForceFieldForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\HeroControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -325,6 +331,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\DoorForm.resx">
       <DependentUpon>DoorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ForceFieldForm.resx">
+      <DependentUpon>ForceFieldForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\HeroControl.resx">
       <DependentUpon>HeroControl.cs</DependentUpon>

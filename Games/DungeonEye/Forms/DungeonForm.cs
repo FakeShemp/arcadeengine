@@ -225,6 +225,9 @@ namespace DungeonEye.Forms
 			else if (square.Actor is Stair)
 				new StairForm(square.Actor as Stair, Dungeon).ShowDialog();
 
+			else if (square.Actor is ForceField)
+				new ForceFieldForm(square.Actor as ForceField, Dungeon).ShowDialog();
+
 		}
 
 
@@ -628,9 +631,9 @@ namespace DungeonEye.Forms
 						{
 							ForceField field = block.Actor as ForceField;
 
-							if (field.Type == ForceFieldType.Turning)
+							if (field.Type == ForceFieldType.Spin)
 								tileid = 12;
-							else if (field.Type == ForceFieldType.Moving)
+							else if (field.Type == ForceFieldType.Move)
 							{
 								tileid = 13 + (int) field.Move;
 							}
