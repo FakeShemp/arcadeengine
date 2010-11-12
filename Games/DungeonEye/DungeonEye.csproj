@@ -119,6 +119,12 @@
     <Compile Include="Forms\DoorForm.Designer.cs">
       <DependentUpon>DoorForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\FloorSwitchForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FloorSwitchForm.Designer.cs">
+      <DependentUpon>FloorSwitchForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ForceFieldForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -311,7 +317,7 @@
     <Compile Include="Source\Dungeon.cs" />
     <Compile Include="DungeonEye.cs" />
     <Compile Include="Source\DungeonLocation.cs" />
-    <Compile Include="Source\SquareActor\FloorPlate.cs" />
+    <Compile Include="Source\SquareActor\FloorSwitch.cs" />
     <Compile Include="Source\Gui\Button.cs" />
     <Compile Include="Source\Gui\Camp.cs" />
     <Compile Include="Source\SquareActor\ForceField.cs" />
@@ -331,6 +337,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\DoorForm.resx">
       <DependentUpon>DoorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FloorSwitchForm.resx">
+      <DependentUpon>FloorSwitchForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ForceFieldForm.resx">
       <DependentUpon>ForceFieldForm.cs</DependentUpon>

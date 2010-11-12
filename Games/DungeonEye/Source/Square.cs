@@ -722,7 +722,7 @@ namespace DungeonEye
 
 					case "floorplate":
 					{
-						Actor = new FloorPlate(this);
+						Actor = new FloorSwitch(this);
 						Actor.Load(node);
 					}
 					break;

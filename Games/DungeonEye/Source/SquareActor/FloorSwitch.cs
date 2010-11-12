@@ -29,15 +29,15 @@ using ArcEngine.Graphic;
 namespace DungeonEye
 {
 	/// <summary>
-	/// Floor plate
+	/// Floor switch
 	/// </summary>
-	public class FloorPlate : SquareActor
+	public class FloorSwitch : SquareActor
 	{
 
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public FloorPlate(Square square) : base(square)
+		public FloorSwitch(Square square) : base(square)
 		{
 			//Script = new Script();			
 			AcceptItems = true;
@@ -57,6 +57,9 @@ namespace DungeonEye
 		public override void Draw(SpriteBatch batch, ViewField field, ViewFieldPosition position, CardinalPoint direction)
 		{
 			if (TileSet == null)
+				return;
+
+			if (IsHidden)
 				return;
 
 			TileDrawing td = MazeDisplayCoordinates.GetFloorPlate(position);
@@ -79,7 +82,7 @@ namespace DungeonEye
 			if (xml == null)
 				return false;
 
-			if (xml.Name.ToLower() != "floorplate")
+			if (xml.Name.ToLower() != "floorswitch")
 				return false;
 
 			foreach (XmlNode node in xml)
@@ -89,7 +92,7 @@ namespace DungeonEye
 
 					case "invisible":
 					{
-						Invisible = true;
+						IsHidden = true;
 					}
 					break;
 
@@ -130,9 +133,9 @@ namespace DungeonEye
 				return false;
 
 
-			writer.WriteStartElement("floorplate");
+			writer.WriteStartElement("floorswitch");
 
-			if (Invisible)
+			if (IsHidden)
 			{
 				writer.WriteStartElement("invisible");
 				writer.WriteEndElement();
@@ -243,32 +246,9 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
-		/// </summary>
-		public override bool IsBlocking
-		{
-			get
-			{
-				return false;
-			}
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public override bool CanPassThrough
-		{
-			get
-			{
-				return true;
-			}
-		}
-
-		/// <summary>
 		/// Is the floor plate visible
 		/// </summary>
-		public bool Invisible
+		public bool IsHidden
 		{
 			get;
 			set;

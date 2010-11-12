@@ -228,6 +228,9 @@ namespace DungeonEye.Forms
 			else if (square.Actor is ForceField)
 				new ForceFieldForm(square.Actor as ForceField, Dungeon).ShowDialog();
 
+			else if (square.Actor is FloorSwitch)
+				new FloorSwitchForm(square.Actor as FloorSwitch, Dungeon).ShowDialog();
+
 		}
 
 
@@ -338,7 +341,6 @@ namespace DungeonEye.Forms
 				{
 					block.NoMonster = true;
 				}
-
 
 
 				#region Zone
@@ -612,7 +614,7 @@ namespace DungeonEye.Forms
 						}
 
 
-						if (block.Actor is FloorPlate)
+						if (block.Actor is FloorSwitch)
 						{
 							SpriteBatch.DrawTile(Icons, 18, location);
 						}
@@ -867,13 +869,12 @@ namespace DungeonEye.Forms
 					new DoorForm(square.Actor as Door).ShowDialog();
 					UncheckButtons(null);
 				}
-				//else if (WallBox.Checked)
-				//{
-				//    if (square.Type == SquareType.Wall)
-				//        square.Type = SquareType.Illusion;
-				//    else
-				//        square.Type = SquareType.Wall;
-				//}
+				else if (FloorSwitchBox.Checked)
+				{
+					square.Actor = new FloorSwitch(square);
+					new FloorSwitchForm(square.Actor as FloorSwitch, Dungeon).ShowDialog();
+					UncheckButtons(null);
+				}
 				else
 				{
 					CurrentSquare = square;
