@@ -104,6 +104,7 @@
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Stair wizard";
+			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.StairForm_KeyDown);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			this.ResumeLayout(false);

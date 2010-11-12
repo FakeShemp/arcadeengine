@@ -65,6 +65,16 @@ namespace DungeonEye.Forms
 			Stair.Type = (StairType)DirectionBox.SelectedItem;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void StairForm_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Escape)
+				Close();
+		}
 		#endregion
 
 
@@ -77,5 +87,6 @@ namespace DungeonEye.Forms
 		Stair Stair;
 
 		#endregion
+
 	}
 }
