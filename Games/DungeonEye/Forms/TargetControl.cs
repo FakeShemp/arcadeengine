@@ -28,12 +28,21 @@ namespace DungeonEye.Forms
 		/// <summary>
 		/// Changes target
 		/// </summary>
+		/// <param name="dungeon">Dungeon handle</param>
 		/// <param name="target">Target handle</param>
+		public void SetTarget(Dungeon dungeon, DungeonLocation target)
+		{
+			Dungeon = dungeon;
+			SetTarget(target);
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="target"></param>
 		public void SetTarget(DungeonLocation target)
 		{
-			if (Dungeon == null)
-				return;
-
 			Target = target;
 
 			MazeNameBox.Text = Target.Maze;
@@ -50,7 +59,7 @@ namespace DungeonEye.Forms
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		public delegate void ChangedEventHandler(object sender, DungeonLocation location);
+		public delegate void ChangedEventHandler(object sender, DungeonLocation target);
 
 		/// <summary>
 		/// 

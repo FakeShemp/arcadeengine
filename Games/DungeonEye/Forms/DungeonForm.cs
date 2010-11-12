@@ -222,6 +222,9 @@ namespace DungeonEye.Forms
 			else if (square.Actor is Pit)
 				new PitForm(square.Actor as Pit, Dungeon).ShowDialog();
 
+			else if (square.Actor is Stair)
+				new StairForm(square.Actor as Stair, Dungeon).ShowDialog();
+
 		}
 
 

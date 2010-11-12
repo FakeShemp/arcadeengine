@@ -35,7 +35,7 @@ namespace DungeonEye
 	{
 
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
 		public Stair(Square block) : base(block)
 		{
@@ -228,11 +228,6 @@ namespace DungeonEye
 				return Square.Maze.WallTileset;
 			}
 		}
-
-
-
-
-
 
 		#endregion
 	}
