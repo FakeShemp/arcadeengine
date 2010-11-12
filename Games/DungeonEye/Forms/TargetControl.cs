@@ -16,59 +16,62 @@ namespace DungeonEye.Forms
 	public partial class TargetControl : UserControl
 	{
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
 		public TargetControl()
 		{
 			InitializeComponent();
+			Target = new DungeonLocation();
 		}
 
 
 		/// <summary>
-		/// 
+		/// Changes target
 		/// </summary>
-		/// <param name="maze"></param>
-		/// <param name="coordinate"></param>
-		public void SetTarget(string maze, Point coordinate)
+		/// <param name="target">Target handle</param>
+		public void SetTarget(DungeonLocation target)
 		{
 			if (Dungeon == null)
 				return;
 
-			MazeName = maze;
-			Coordinate = coordinate;
+			Target = target;
 
-			MazeNameBox.Text = MazeName;
-			CoordinateBox.Text = Coordinate.X + " x " + Coordinate.Y;
+			MazeNameBox.Text = Target.Maze;
+			CoordinateBox.Text = Target.Coordinate.X + " x " + Target.Coordinate.Y;
 
-			OnCoordinateChanged(EventArgs.Empty);
+			OnTargetChanged(EventArgs.Empty);
 		}
 
+
+		#region Events
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		public delegate void ChangedEventHandler(string name, Point coordinate);
+		public delegate void ChangedEventHandler(object sender, DungeonLocation location);
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public event ChangedEventHandler CoordinateChanged;
+		public event ChangedEventHandler TargetChanged;
 
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="e"></param>
-		protected virtual void OnCoordinateChanged(EventArgs e)
+		protected virtual void OnTargetChanged(EventArgs e)
 		{
-			if (CoordinateChanged != null)
-				CoordinateChanged(MazeName, Coordinate);
+			if (TargetChanged != null)
+				TargetChanged(this, Target);
 		}
 
+		#endregion
 
-		#region Events
+
+		#region Form events
 
 		/// <summary>
 		/// 
@@ -80,7 +83,10 @@ namespace DungeonEye.Forms
 			if (Dungeon == null)
 				return;
 
-			new DungeonLocationForm(Dungeon, MazeName, Coordinate).ShowDialog();
+			DungeonLocationForm form = new DungeonLocationForm(Dungeon, MazeName, Coordinate);
+			form.ShowDialog();
+
+			SetTarget(form.Target);
 		}
 
 		#endregion
@@ -99,21 +105,35 @@ namespace DungeonEye.Forms
 
 
 		/// <summary>
-		/// Maze name
+		/// Target
 		/// </summary>
-		public string MazeName
+		public DungeonLocation Target
 		{
 			get;
 			private set;
 		}
 
+
 		/// <summary>
-		/// Location
+		/// Maze name
+		/// </summary>
+		public string MazeName
+		{
+			get
+			{
+				return Target.Maze;
+			}			
+		}
+
+		/// <summary>
+		/// Coordinate
 		/// </summary>
 		public Point Coordinate
 		{
-			get;
-			private set;
+			get
+			{
+				return Target.Coordinate;
+			}
 		}
 
 		#endregion

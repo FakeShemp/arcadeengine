@@ -62,7 +62,7 @@ namespace DungeonEye.Forms
 
 
 
-		#region Events
+		#region Form events
 
 
 		/// <summary>
@@ -433,8 +433,6 @@ namespace DungeonEye.Forms
 		}
 
 		#endregion
-
-
 
 	}
 }

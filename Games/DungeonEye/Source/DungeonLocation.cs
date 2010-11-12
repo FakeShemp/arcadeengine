@@ -35,7 +35,6 @@ namespace DungeonEye
 	{
 		#region constructors
 
-/*
 		/// <summary>
 		/// Empty constructor
 		/// </summary>
@@ -43,7 +42,6 @@ namespace DungeonEye
 		{
 
 		}
-*/
 
 		/// <summary>
 		/// Copy constructor
@@ -59,7 +57,6 @@ namespace DungeonEye
 			Position = loc.Position;
 			Direction = loc.Direction;
 		}
-
 
 
 		/// <summary>

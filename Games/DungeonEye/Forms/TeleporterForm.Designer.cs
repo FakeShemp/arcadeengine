@@ -215,7 +215,7 @@
 			this.targetControl1.Name = "targetControl1";
 			this.targetControl1.Size = new System.Drawing.Size(182, 105);
 			this.targetControl1.TabIndex = 3;
-			this.targetControl1.CoordinateChanged += new DungeonEye.Forms.TargetControl.ChangedEventHandler(this.targetControl1_CoordinateChanged);
+			this.targetControl1.TargetChanged += new DungeonEye.Forms.TargetControl.ChangedEventHandler(this.targetControl1_TargetChanged);
 			// 
 			// TeleporterForm
 			// 

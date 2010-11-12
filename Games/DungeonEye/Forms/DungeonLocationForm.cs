@@ -93,7 +93,7 @@ namespace DungeonEye.Forms
 		}
 
 
-		#region Events
+		#region Form events
 
 
 

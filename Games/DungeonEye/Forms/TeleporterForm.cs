@@ -10,13 +10,15 @@ using System.Windows.Forms;
 namespace DungeonEye.Forms
 {
 	/// <summary>
-	/// 
+	/// Teleporter form editor
 	/// </summary>
 	public partial class TeleporterForm : Form
 	{
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
+		/// <param name="teleporter">Teleporter handle</param>
+		/// <param name="dungeon">Dungeon handle</param>
 		public TeleporterForm(Teleporter teleporter, Dungeon dungeon)
 		{
 			InitializeComponent();
@@ -34,7 +36,7 @@ namespace DungeonEye.Forms
 
 			if (teleporter != null)
 			{
-				targetControl1.SetTarget(teleporter.Target.Maze, teleporter.Target.Coordinate);
+				targetControl1.SetTarget(teleporter.Target);
 				
 			}
 
@@ -130,12 +132,12 @@ namespace DungeonEye.Forms
 		}
 
 
-		private void targetControl1_CoordinateChanged(string name, Point coordinate)
+		private void targetControl1_TargetChanged(object sender, DungeonLocation location)
 		{
 			if (Teleporter == null)
 				return;
 
-			Teleporter.Target = new DungeonLocation(name, coordinate, CardinalPoint.North, SquarePosition.Center);
+			Teleporter.Target = location;
 		}
 
 		#endregion
@@ -150,6 +152,7 @@ namespace DungeonEye.Forms
 
 
 		#endregion
+
 
 
 	}
