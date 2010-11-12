@@ -785,12 +785,12 @@ namespace DungeonEye.Forms
 			if (pit == null)
 				return;
 
-			DungeonLocationForm form = new DungeonLocationForm(Maze.Dungeon, pit.Target.MazeName, pit.Target.Coordinate);
-			if (form.ShowDialog() != DialogResult.OK)
-				return;
+			//DungeonLocationForm form = new DungeonLocationForm(Maze.Dungeon, pit.Target.Maze, pit.Target.Coordinate);
+			//if (form.ShowDialog() != DialogResult.OK)
+			//	return;
 
-			pit.Target = form.Target;
-			PitTargetLabel.Text = "Target : " + pit.Target.ToString();
+			//pit.Target = form.Target;
+			//PitTargetLabel.Text = "Target : " + pit.Target.ToString();
 		}
 
 

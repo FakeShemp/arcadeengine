@@ -239,7 +239,7 @@ namespace DungeonEye
 				if (Square == null)
 					return null;
 
-				return Square.Location.Maze.OverlayTileset;
+				return Square.Maze.OverlayTileset;
 			}
 		}
 

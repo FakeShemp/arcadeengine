@@ -146,7 +146,7 @@ namespace DungeonEye
 			{
 				case ForceFieldType.Turning:
 				{
-					team.Location.Direction = Compass.Rotate(team.Location.Direction, Rotation);
+					Team.Location.Direction = Compass.Rotate(Team.Location.Direction, Rotation);
 				}
 				break;
 

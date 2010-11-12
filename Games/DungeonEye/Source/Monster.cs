@@ -117,12 +117,12 @@ namespace DungeonEye
 			bool canmove = true;
 
 			// The team
-			if (Location.Dungeon.Team.Location.Maze == Location.Maze &&
-				Location.Dungeon.Team.Location.Coordinate == dst)
+			if (Team.Location.Maze == Location.Maze &&
+				Team.Location.Coordinate == dst)
 				canmove = false;
 
 			// A wall
-			Square dstblock = Location.Maze.GetBlock(dst);
+			Square dstblock = Maze.GetBlock(dst);
 			if (dstblock.IsBlocking)
 				canmove = false;
 
@@ -144,14 +144,14 @@ namespace DungeonEye
 			if (canmove)
 			{
 				// Leave the current block
-				Location.Square.OnMonsterLeave(this);
+				Square.OnMonsterLeave(this);
 
 
 				Location.Coordinate.Offset(offset);
 				LastAction = DateTime.Now;
 
 				// Enter the new block
-				Location.Square.OnMonsterEnter(this);
+				Square.OnMonsterEnter(this);
 			}
 
 			return canmove;
@@ -212,7 +212,7 @@ namespace DungeonEye
 		/// <param name="target">Destination</param>
 		public void Teleport(DungeonLocation target)
 		{
-			Teleport(target.Square, target.Position);
+			//Teleport(target.Square, target.Position);
 		}
 
 
@@ -278,8 +278,8 @@ namespace DungeonEye
 			//StateManager.Update(time);
 
 
-			Team team = Location.Dungeon.Team;
-			Maze maze = Location.Maze;
+			//Team team = Location.Dungeon.Team;
+			//Maze maze = Location.Maze;
 
 			switch (CurrentBehaviour)
 			{
@@ -306,27 +306,27 @@ namespace DungeonEye
 						Heal();
 
 					// Not in the same maze
-					else if (team.Location.Maze != maze)
+					else if (Team.Maze != Maze)
 						break;
 
 					// Can get closer while staying in the same square ?
-					else if (CanGetCloserTo(team.Location))
+					else if (CanGetCloserTo(Team.Location))
 					{
-						GetCloserTo(team.Location);
+						GetCloserTo(Team.Location);
 					}
 
 					// Can do close attack ?
-					else if (CanDoCloseAttack(team.Location))
+					else if (CanDoCloseAttack(Team.Location))
 					{
-						Attack(team.Location);
+						Attack(Team.Location);
 					}
 
 					// If neat the target
-					else if (IsNear(team.Location))
+					else if (IsNear(Team.Location))
 					{
 						// Face the target
-						if (Location.IsFacing(team.Location))
-							Location.FaceTo(team.Location);
+						if (Location.IsFacing(Team.Location))
+							Location.FaceTo(Team.Location);
 
 						// No choice, attack !
 						//if (!CanUseAmmo)
@@ -368,8 +368,8 @@ namespace DungeonEye
 			Point dist = new Point(Location.Coordinate.X - target.Coordinate.X, Location.Coordinate.Y - target.Coordinate.Y);
 
 			// Current maze
-			Maze maze = Location.Maze;
-			Square square = maze.GetBlock(Location.Coordinate);
+		//	Maze maze = Location.Maze;
+			Square square = Maze.GetBlock(Location.Coordinate);
 
 			// Target on the right
 			if (dist.X > 0)
@@ -578,7 +578,7 @@ namespace DungeonEye
 
 					// Find the good square location
 					SquarePosition squarepos;
-					if (Location.Square.MonsterCount == 1)
+					if (Square.MonsterCount == 1)
 						squarepos = SquarePosition.Center;
 					else
 						squarepos = (SquarePosition) sub[(int)direction][(int)Position];
@@ -703,7 +703,7 @@ namespace DungeonEye
 				return false;
 
 			// Not in the same maze
-			if (Location.MazeName != location.MazeName)
+			if (Location.Maze != location.Maze)
 				return false;
 
 			// Not in sight zone
@@ -724,7 +724,7 @@ namespace DungeonEye
 				else if (vector.Y < 0)
 					vector.Y++;
 
-				Square block = Location.Maze.GetBlock(new Point(location.Coordinate.X + vector.X, Location.Coordinate.Y + vector.Y));
+				Square block = Maze.GetBlock(new Point(location.Coordinate.X + vector.X, Location.Coordinate.Y + vector.Y));
 				if (block.IsWall)
 					return false;
 			}
@@ -746,7 +746,7 @@ namespace DungeonEye
 				return false;
 
 			// Not in the same maze
-			if (Location.MazeName != location.MazeName)
+			if (Location.Maze != location.Maze)
 				return false;
 
 			// Not in sight zone
@@ -1202,6 +1202,17 @@ namespace DungeonEye
 			private set;
 		}
 
+
+		/// <summary>
+		/// Maze
+		/// </summary>
+		public Maze Maze
+		{
+			get
+			{
+				return Square.Maze;
+			}
+		}
 
 		/// <summary>
 		/// Square position

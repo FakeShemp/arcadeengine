@@ -42,23 +42,31 @@ namespace DungeonEye.Forms
 		/// <param name="dungeon"></param>
 		/// <param name="maze"></param>
 		/// <param name="coordinate"></param>
-		public DungeonLocationForm(Dungeon dungeon, string maze, Point coordinate)
+		public DungeonLocationForm(Dungeon dungeon, string maze, Point coordinate) : this (dungeon, new DungeonLocation(maze, coordinate))
 		{
-				InitializeComponent();
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="dungeon"></param>
+		/// <param name="maze"></param>
+		/// <param name="coordinate"></param>
+		public DungeonLocationForm(Dungeon dungeon, DungeonLocation location)
+		{
+			InitializeComponent();
 
 			DungeonControl.Dungeon = dungeon;
-			DungeonControl.Target = new DungeonLocation(maze, coordinate, CardinalPoint.North, SquarePosition.NorthWest);
+			DungeonControl.Target = location;
 			DungeonControl.GlControlBox.Click += new EventHandler(DungeonControl_Click);
 			DungeonControl.GlControlBox.DoubleClick += new EventHandler(GlControlBox_DoubleClick);
 
 			DirectionBox.Items.AddRange(Enum.GetNames(typeof(CardinalPoint)));
 			GroundPositionBox.Items.AddRange(Enum.GetNames(typeof(SquarePosition)));
 
-			Coordinate = coordinate;
-			MazeName = maze;
-
 			Init();
-	}
+		}
 
 
 		/// <summary>
@@ -76,8 +84,8 @@ namespace DungeonEye.Forms
 			MazeBox.EndUpdate();
 
 
-			if (!string.IsNullOrEmpty(DungeonControl.Target.MazeName))
-				MazeBox.SelectedItem = DungeonControl.Target.MazeName;
+			if (!string.IsNullOrEmpty(DungeonControl.Target.Maze))
+				MazeBox.SelectedItem = DungeonControl.Target.Maze;
 			DirectionBox.SelectedItem = DungeonControl.Target.Direction.ToString();
 			GroundPositionBox.SelectedItem = DungeonControl.Target.Position.ToString();
 
@@ -109,10 +117,7 @@ namespace DungeonEye.Forms
 		void DungeonControl_Click(object sender, EventArgs e)
 		{
 			DungeonControl.Target.Coordinate = DungeonControl.BlockUnderMouse;
-			DungeonControl.Target.SetMaze((string)MazeBox.SelectedItem);
-
-			Coordinate = DungeonControl.BlockUnderMouse;
-			MazeName = DungeonControl.Maze.Name;
+			DungeonControl.Target.Maze = (string)MazeBox.SelectedItem;
 
 			MouseLocationBox.Text = DungeonControl.BlockUnderMouse.ToString();
 		}
@@ -186,27 +191,6 @@ namespace DungeonEye.Forms
 
 
 		#region Properties
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public Point Coordinate
-		{
-			get;
-			private set;
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public string MazeName
-		{
-			get;
-			private set;
-		}
-
 
 
 		/// <summary>

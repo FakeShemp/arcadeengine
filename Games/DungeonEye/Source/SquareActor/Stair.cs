@@ -225,7 +225,7 @@ namespace DungeonEye
 				if (Square == null)
 					return null;
 
-				return Square.Location.Maze.WallTileset;
+				return Square.Maze.WallTileset;
 			}
 		}
 

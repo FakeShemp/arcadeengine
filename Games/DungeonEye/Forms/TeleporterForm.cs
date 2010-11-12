@@ -17,10 +17,11 @@ namespace DungeonEye.Forms
 		/// <summary>
 		/// 
 		/// </summary>
-		public TeleporterForm(Teleporter teleporter)
+		public TeleporterForm(Teleporter teleporter, Dungeon dungeon)
 		{
 			InitializeComponent();
 
+			targetControl1.Dungeon = dungeon;
 
 			TeamBox.Checked = teleporter.CanTeleportTeam;
 			ItemsBox.Checked = teleporter.CanTeleportItems;
@@ -33,8 +34,7 @@ namespace DungeonEye.Forms
 
 			if (teleporter != null)
 			{
-				targetControl1.Dungeon = teleporter.Square.Location.Dungeon;
-				targetControl1.SetTarget(teleporter.Target.MazeName, teleporter.Target.Coordinate);
+				targetControl1.SetTarget(teleporter.Target.Maze, teleporter.Target.Coordinate);
 				
 			}
 
@@ -147,6 +147,7 @@ namespace DungeonEye.Forms
 		/// Teleporter
 		/// </summary>
 		Teleporter Teleporter;
+
 
 		#endregion
 

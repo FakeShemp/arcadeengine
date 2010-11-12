@@ -140,7 +140,7 @@ namespace DungeonEye
 					if (pit != null && pit.Target != null)
 					{
 						// Maze exists
-						Maze maze = Dungeon.GetMaze(pit.Target.MazeName);
+						Maze maze = Dungeon.GetMaze(pit.Target.Maze);
 						if (maze == null)
 							continue;
 
@@ -873,7 +873,8 @@ namespace DungeonEye
 					if (block.MonsterCount > 0)
 						color = Color.Red;
 
-					if (team.Location.Coordinate.X == x && team.Location.Coordinate.Y == y && team.Location.Maze == this)
+					
+					if (Team.Location.Coordinate.X == x && Team.Location.Coordinate.Y == y && Team.Maze == this)
 						color = Color.Blue;
 
 					batch.FillRectangle(new Rectangle(location.X + x * 4, location.Y + y * 4, 4, 4), color);

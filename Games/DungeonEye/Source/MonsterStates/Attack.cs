@@ -48,25 +48,23 @@ namespace DungeonEye.MonsterStates
 		/// <param name="time">Elapsed game time</param>
 		public override void Update(GameTime time)
 		{
-			Team team = Monster.Location.Dungeon.Team;
-
 			// Can see the team anymore
-			if (!Monster.CanSee(team.Location) || !Monster.CanDetect(team.Location))
+			if (!Monster.CanSee(Team.Location) || !Monster.CanDetect(Team.Location))
 			{
 				Exit = true;
 				return;
 			}
 
 			// Facing the team ?
-			if (!Monster.Location.IsFacing(team.Location))
+			if (!Monster.Location.IsFacing(Team.Location))
 			{
-				Monster.TurnTo(team.Location);
+				Monster.TurnTo(Team.Location);
 				return;
 			}
 
 	
 			// Can attack ?
-			if (Monster.Attack(Monster.Location.Dungeon.Team.Location))
+			if (Monster.Attack(Team.Location))
 				return;
 
 			// Move to the team

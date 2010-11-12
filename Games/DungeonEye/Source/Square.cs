@@ -55,9 +55,8 @@ namespace DungeonEye
 			if (maze == null)
 				throw new ArgumentNullException("maze");
 
-			//Maze = maze;
-			Location = new DungeonLocation(maze.Dungeon);
-			Location.SetMaze(maze.Name);
+			Location = new DungeonLocation(maze.Name, Point.Empty);
+			Maze = maze;
 			Type = SquareType.Wall;
 			Monsters = new Monster[4];
 
@@ -667,7 +666,7 @@ namespace DungeonEye
 				{
 					case "monster":
 					{
-						Monster monster = new Monster(Location.Maze);
+						Monster monster = new Monster(Maze);
 						monster.Load(node);
 						monster.Teleport(this, (SquarePosition)Enum.Parse(typeof(SquarePosition), node.Attributes["position"].Value));
 					}
@@ -1098,6 +1097,16 @@ namespace DungeonEye
 		/// Location of the block in the maze
 		/// </summary>
 		public DungeonLocation Location
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// Maze
+		/// </summary>
+		public Maze Maze
 		{
 			get;
 			private set;

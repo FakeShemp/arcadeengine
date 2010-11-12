@@ -86,8 +86,8 @@ namespace DungeonEye
 				return;
 
 			TileDrawing td = null;
-			TileSet overlay = Square.Location.Maze.OverlayTileset;
-			TileSet wall = Square.Location.Maze.WallTileset;
+			TileSet overlay = Square.Maze.OverlayTileset;
+			TileSet wall = Square.Maze.WallTileset;
 
 
 			// Under the door, draw sides
@@ -938,7 +938,7 @@ namespace DungeonEye
 				if (Square == null)
 					return null;
 
-				return Square.Location.Maze.DoorTileset;
+				return Square.Maze.DoorTileset;
 			}
 		}
 

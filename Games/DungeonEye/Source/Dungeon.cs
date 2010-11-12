@@ -39,9 +39,6 @@ namespace DungeonEye
 		public Dungeon()
 		{
 			Mazes = new Dictionary<string, Maze>();
-			StartLocation = new DungeonLocation(this);
-
-			IsDisposed = false;
 		}
 
 
@@ -74,7 +71,7 @@ namespace DungeonEye
 		{
 			Trace.WriteLine("[Dungeon] : Init()");
 
-			StartLocation.SetMaze(StartLocation.MazeName);
+			StartLocation.Maze = StartLocation.Maze;
 
 
 			// Generate shared asset
@@ -157,7 +154,7 @@ namespace DungeonEye
 
 					case "start":
 					{
-						StartLocation.Load(node);
+						StartLocation = new DungeonLocation(node);
 					}
 					break;
 

@@ -54,10 +54,7 @@ namespace DungeonEye.Forms
 		/// <returns></returns>
 		public DungeonLocation GetLocation(Point point)
 		{
-			DungeonLocation loc = new DungeonLocation(Dungeon);
-			loc.SetMaze(Maze.Name);
-
-			loc.Coordinate = point;
+			DungeonLocation loc = new DungeonLocation(Maze.Name, point);
 
 
 			return loc;
@@ -297,7 +294,7 @@ namespace DungeonEye.Forms
 
 
 				// Target
-				if (Target.MazeName == Maze.Name)
+				if (Target.Maze == Maze.Name)
 					Batch.DrawRectangle(new Rectangle(Offset.X + Target.Coordinate.X * 25, Offset.Y + Target.Coordinate.Y * 25, 25, 25), Color.White);
 
 			}

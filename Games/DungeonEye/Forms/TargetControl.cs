@@ -80,10 +80,7 @@ namespace DungeonEye.Forms
 			if (Dungeon == null)
 				return;
 
-			DungeonLocationForm form = new DungeonLocationForm(Dungeon, MazeName, Coordinate);
-			form.ShowDialog();
-
-			SetTarget(form.MazeName, form.Coordinate);
+			new DungeonLocationForm(Dungeon, MazeName, Coordinate).ShowDialog();
 		}
 
 		#endregion

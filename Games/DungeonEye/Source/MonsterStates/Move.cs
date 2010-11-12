@@ -73,18 +73,18 @@ namespace DungeonEye.MonsterStates
 				Monster.Location.Direction = TargetDirection;
 
 
-			Team team = Monster.Location.Dungeon.Team;
+			//Team team = Monster.Location.Dungeon.Team;
 
 
 			// Can see the team ?
-			if (Monster.CanSee(team.Location))
+			if (Monster.CanSee(Team.Location))
 				Monster.StateManager.PushState(new AttackState(Monster));
 
 
 			// Can detect the team
-			if (Monster.CanDetect(team.Location))
+			if (Monster.CanDetect(Team.Location))
 			{
-				Monster.TurnTo(team.Location);
+				Monster.TurnTo(Team.Location);
 				return;
 			}
 

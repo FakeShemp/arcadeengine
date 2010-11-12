@@ -128,8 +128,7 @@ namespace DungeonEye.Forms
 
 
 
-			PreviewLoc.Coordinate.X += offset.X;
-			PreviewLoc.Coordinate.Y += offset.Y;
+			PreviewLoc.Coordinate.Offset(offset);
 
 			SquareDescriptionBox.Text = "Preview pos : " + PreviewLoc.Position.ToString();
 
@@ -218,7 +217,7 @@ namespace DungeonEye.Forms
 				new DoorForm(square.Actor as Door).ShowDialog();
 
 			else if (square.Actor is Teleporter)
-				new TeleporterForm(square.Actor as Teleporter).ShowDialog();
+				new TeleporterForm(square.Actor as Teleporter, Dungeon).ShowDialog();
 
 
 		}
@@ -705,7 +704,7 @@ namespace DungeonEye.Forms
 
 
 			// Starting point
-			if (Dungeon.StartLocation.MazeName == Maze.Name)
+			if (Dungeon.StartLocation.Maze == Maze.Name)
 			{
 				SpriteBatch.DrawTile(Icons, 20,
 					new Point(Offset.X + Dungeon.StartLocation.Coordinate.X * 25, Offset.Y + Dungeon.StartLocation.Coordinate.Y * 25));
@@ -851,7 +850,7 @@ namespace DungeonEye.Forms
 				if (TeleporterBox.Checked)
 				{
 					square.Actor = new Teleporter(square);
-					new TeleporterForm(square.Actor as Teleporter).ShowDialog();
+					new TeleporterForm(square.Actor as Teleporter, Dungeon).ShowDialog();
 					UncheckButtons(null);
 				}
 				else if (DoorBox.Checked)
@@ -915,7 +914,7 @@ namespace DungeonEye.Forms
 		{
 			Maze = Dungeon.GetMaze(MazeListBox.SelectedItem.ToString());
 			MazePropertyBox.SelectedObject = Maze;
-			PreviewLoc.SetMaze(Maze.Name);
+			PreviewLoc.Maze = Maze.Name;
 		}
 
 

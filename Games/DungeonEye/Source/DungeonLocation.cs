@@ -35,18 +35,15 @@ namespace DungeonEye
 	{
 		#region constructors
 
+/*
 		/// <summary>
-		/// Default constructor
+		/// Empty constructor
 		/// </summary>
-		/// <param name="dungeon">Initial dungeon</param>
-		public DungeonLocation(Dungeon dungeon)
+		public DungeonLocation()
 		{
-			Dungeon = dungeon;
-			Coordinate = Point.Empty;
-			Position = SquarePosition.NorthEast;
+
 		}
-
-
+*/
 
 		/// <summary>
 		/// Copy constructor
@@ -57,10 +54,9 @@ namespace DungeonEye
 			if (loc == null)
 				return;
 
-			Dungeon = loc.Dungeon;
+			Maze = loc.Maze;
 			Coordinate = loc.Coordinate;
 			Position = loc.Position;
-			SetMaze(loc.MazeName);
 			Direction = loc.Direction;
 		}
 
@@ -69,28 +65,71 @@ namespace DungeonEye
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="name">Name of the maze</param>
-		/// <param name="location">Location</param>
-		/// <param name="direction">Direction</param>
-		/// <param name="position">Square position</param>
-		public DungeonLocation(string name, Point location, CardinalPoint direction, SquarePosition position)
+		/// <param name="maze">Name of the maze</param>
+		/// <param name="coordinate">Location</param>
+		public DungeonLocation(string maze, Point coordinate) : this(maze, coordinate, CardinalPoint.North, SquarePosition.NorthWest)
 		{
-			Position = position;
-			Direction = direction;
-			Coordinate = location; 
-			SetMaze(name);
 		}
 
 
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
-		/// <param name="node"></param>
+		/// <param name="maze">Name of the maze</param>
+		/// <param name="coordinate">Location</param>
+		/// <param name="direction">Direction</param>
+		/// <param name="position">Square position</param>
+		public DungeonLocation(string maze, Point coordinate, CardinalPoint direction, SquarePosition position)
+		{
+			Maze = maze;
+			Coordinate = coordinate;
+			Direction = direction;
+			Position = position;
+		}
+
+
+		/// <summary>
+		/// XML constructor
+		/// </summary>
+		/// <param name="node">Xml node</param>
 		public DungeonLocation(XmlNode node)
 		{
 			Load(node);
 		}
 
+
+
+		/// <summary>
+		/// Gets the maze of the location
+		/// </summary>
+		/// <param name="dungeon">Dungeon handle</param>
+		/// <returns>Maze handle or null</returns>
+		public Maze GetMaze(Dungeon dungeon)
+		{
+			if (dungeon == null)
+				return null;
+
+			return dungeon.GetMaze(Maze);
+		}
+
+
+
+		/// <summary>
+		/// Gets the square
+		/// </summary>
+		/// <param name="dungeon">Dungeon handle</param>
+		/// <returns>Square handle or null</returns>
+		public Square GetSquare(Dungeon dungeon)
+		{
+			if (dungeon == null)
+				return null;
+
+			Maze maze = dungeon.GetMaze(Maze);
+			if (maze == null)
+				return null;
+
+			return maze.GetBlock(Coordinate);
+		}
 
 		#endregion
 
@@ -100,22 +139,22 @@ namespace DungeonEye
 		/// Offset the location
 		/// </summary>
 		/// <param name="direction">Direction of the move</param>
-		/// <param name="range">Number of block to move</param>
-		public void Offset(CardinalPoint direction, int range)
+		/// <param name="count">Number of block to move</param>
+		public void Offset(CardinalPoint direction, int count)
 		{
 			switch (direction)
 			{
 				case CardinalPoint.North:
-				Coordinate.Y -= range;
+				Coordinate.Offset(0, -count);
 				break;
 				case CardinalPoint.South:
-				Coordinate.Y += range;
+				Coordinate.Offset(0, count);
 				break;
 				case CardinalPoint.West:
-				Coordinate.X -= range;
+				Coordinate.Offset(-count, 0);
 				break;
 				case CardinalPoint.East:
-				Coordinate.X += range;
+				Coordinate.Offset(count, 0);
 				break;
 			}
 
@@ -175,6 +214,7 @@ namespace DungeonEye
 
 		}
 
+
 		#region I/O
 
 
@@ -189,8 +229,10 @@ namespace DungeonEye
 				return false;
 
 			if (xml.Attributes["maze"] != null)
-				SetMaze(xml.Attributes["maze"].Value);
-			Coordinate = new Point(int.Parse(xml.Attributes["x"].Value), int.Parse(xml.Attributes["y"].Value));
+				Maze = xml.Attributes["maze"].Value;
+
+			if (xml.Attributes["x"] != null && xml.Attributes["y"] != null)
+				Coordinate = new Point(int.Parse(xml.Attributes["x"].Value), int.Parse(xml.Attributes["y"].Value));
 
 			if (xml.Attributes["direction"] != null)
 				Direction = (CardinalPoint)Enum.Parse(typeof(CardinalPoint), xml.Attributes["direction"].Value, true);
@@ -216,7 +258,7 @@ namespace DungeonEye
 
 
 			writer.WriteStartElement(name);
-			writer.WriteAttributeString("maze", MazeName);
+			writer.WriteAttributeString("maze", Maze);
 			writer.WriteAttributeString("x", Coordinate.X.ToString());
 			writer.WriteAttributeString("y", Coordinate.Y.ToString());
 			writer.WriteAttributeString("direction", Direction.ToString());
@@ -232,72 +274,30 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Changes the current maze
-		/// </summary>
-		/// <param name="name">Desired maze name</param>
-		/// <returns>True if maze found</returns>
-		public bool SetMaze(string name)
-		{
-			if (string.IsNullOrEmpty(name))
-				return false;
-
-			if (Dungeon == null || Dungeon.GetMaze(name) == null)
-				return false;
-
-			MazeName = name;
-			Maze = Dungeon.GetMaze(name);
-
-			return true;
-		}
-
-
-
-		/// <summary>
 		/// Returns a String that represents the current location
 		/// </summary>
 		/// <returns></returns>
 		public override string ToString()
 		{
-			return string.Format("{0}x{1} in {2}, looking {3}, sub {4}", Coordinate.X, Coordinate.Y, MazeName, Direction, Position);
+			return string.Format("{0}x{1} in {2}, looking {3}, sub {4}", Coordinate.X, Coordinate.Y, Maze, Direction, Position);
 		}
 
 
 
 		#region Properties
 
-
-		/// <summary>
-		/// Dungeon handle
-		/// </summary>
-		public Dungeon Dungeon
-		{
-			get;
-			private set;
-		}
-
-	
-		/// <summary>
-		/// Handle of the maze
-		/// </summary>
-		public Maze Maze
-		{
-			get;
-			private set;
-		}
-
-
 		/// <summary>
 		/// Gets current maze name
 		/// </summary>
-		public string MazeName
+		public string Maze
 		{
 			get;
-			private set;
+			set;
 		}
 
 
 		/// <summary>
-		/// Location in the maze
+		/// Coordinate in the maze
 		/// </summary>
 		public Point Coordinate;
 
@@ -321,21 +321,6 @@ namespace DungeonEye
 			set;
 		}
 
-
-		/// <summary>
-		/// Corresponding block
-		/// </summary>
-		public Square Square
-		{
-			get
-			{
-				if (Maze == null)
-					return null;
-
-				return Maze.GetBlock(Coordinate);
-			}
-		}
-
 		#endregion
 
 	}
@@ -355,10 +340,10 @@ namespace DungeonEye
 			{
 				DungeonLocation loc = value as DungeonLocation;
 
-				if (string.IsNullOrEmpty(loc.MazeName))
+				if (string.IsNullOrEmpty(loc.Maze))
 					return string.Empty;
 
-				return loc.MazeName + " " + loc.Position.ToString() + "-" + loc.Direction.ToString();
+				return loc.Maze + " " + loc.Position.ToString() + "-" + loc.Direction.ToString();
 			}
 
 			return base.ConvertTo(context, culture, value, destType);
