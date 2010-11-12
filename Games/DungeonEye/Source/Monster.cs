@@ -83,6 +83,8 @@ namespace DungeonEye
 		{
 			Tileset = ResourceManager.CreateSharedAsset<TileSet>(TileSetName, TileSetName);
 
+			LastUpdate = DateTime.Now;
+
 			//if (!string.IsNullOrEmpty(ScriptName) && !string.IsNullOrEmpty(InterfaceName))
 			//{
 			//    Script script = ResourceManager.CreateAsset<Script>(ScriptName);
@@ -264,7 +266,6 @@ namespace DungeonEye
 			//if (Script.Instance != null)
 			//	Script.Instance.OnUpdate(this);
 
-
 			// Draw offset
 			if (LastDrawOffset + DrawOffsetDuration < DateTime.Now)
 			{
@@ -273,13 +274,10 @@ namespace DungeonEye
 			}
 
 
+			// Not entity time to update
+			if (LastUpdate + Speed > DateTime.Now)
+				return;
 
-			// Update current state
-			//StateManager.Update(time);
-
-
-			//Team team = Location.Dungeon.Team;
-			//Maze maze = Location.Maze;
 
 			switch (CurrentBehaviour)
 			{
@@ -346,6 +344,8 @@ namespace DungeonEye
 				break;
 				#endregion
 			}
+
+			LastUpdate = DateTime.Now;
 		}
 
 
@@ -1285,7 +1285,7 @@ namespace DungeonEye
 		public MonsterBehaviour CurrentBehaviour
 		{
 			get;
-			private set;
+			set;
 		}
 
 

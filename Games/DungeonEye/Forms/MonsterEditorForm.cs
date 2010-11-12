@@ -38,7 +38,15 @@ namespace DungeonEye.Forms
 
 
 
-		#region Properties
+		#region Form events
+
+
+
+		private void MonsterEditorForm_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Escape)
+				Close();
+		}
 
 
 		private void ApplyModelBox_Click(object sender, EventArgs e)

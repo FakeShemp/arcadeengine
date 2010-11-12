@@ -328,6 +328,12 @@ namespace DungeonEye
 			set;
 		}
 
+		
+		/// <summary>
+		/// Last time the entity was updated
+		/// </summary>
+		protected DateTime LastUpdate;
+
 
 		/// <summary>
 		/// Hit Point

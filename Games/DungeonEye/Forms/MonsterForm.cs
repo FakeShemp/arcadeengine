@@ -58,6 +58,18 @@ namespace DungeonEye.Forms
 
 
 		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void MonsterForm_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Escape)
+				Close();
+		}
+
+
+		/// <summary>
 		/// Form closing
 		/// </summary>
 		/// <param name="sender"></param>
@@ -96,7 +108,6 @@ namespace DungeonEye.Forms
 		Monster Monster;
 
 		#endregion
-
 
 	}
 }

@@ -50,6 +50,7 @@
 			this.Controls.Add(this.monsterControl1);
 			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+			this.KeyPreview = true;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.MinimumSize = new System.Drawing.Size(500, 400);
@@ -60,6 +61,7 @@
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Monster wizard";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnFormClosing);
+			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MonsterForm_KeyDown);
 			this.ResumeLayout(false);
 
 		}

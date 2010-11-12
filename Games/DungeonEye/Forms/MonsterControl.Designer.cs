@@ -49,6 +49,8 @@
 			this.PropertiesTab = new System.Windows.Forms.TabPage();
 			this.ScriptBox = new ArcEngine.Editor.ScriptControl();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.NameBox = new System.Windows.Forms.TextBox();
+			this.label7 = new System.Windows.Forms.Label();
 			this.DirectionBox = new System.Windows.Forms.ComboBox();
 			this.label2 = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
@@ -103,6 +105,8 @@
 			this.label14 = new System.Windows.Forms.Label();
 			this.label13 = new System.Windows.Forms.Label();
 			this.label10 = new System.Windows.Forms.Label();
+			this.label17 = new System.Windows.Forms.Label();
+			this.CurrentBehaviourBox = new System.Windows.Forms.ComboBox();
 			this.PocketGroupBox.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.XPRewardBox)).BeginInit();
 			this.tabControl1.SuspendLayout();
@@ -233,7 +237,7 @@
 			// 
 			// XPRewardBox
 			// 
-			this.XPRewardBox.Location = new System.Drawing.Point(113, 318);
+			this.XPRewardBox.Location = new System.Drawing.Point(113, 355);
 			this.XPRewardBox.Maximum = new decimal(new int[] {
             1410065408,
             2,
@@ -249,7 +253,7 @@
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(6, 320);
+			this.label3.Location = new System.Drawing.Point(6, 357);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(62, 13);
 			this.label3.TabIndex = 12;
@@ -327,9 +331,13 @@
 			// 
 			// groupBox2
 			// 
+			this.groupBox2.Controls.Add(this.NameBox);
+			this.groupBox2.Controls.Add(this.label7);
 			this.groupBox2.Controls.Add(this.DirectionBox);
 			this.groupBox2.Controls.Add(this.label2);
+			this.groupBox2.Controls.Add(this.label17);
 			this.groupBox2.Controls.Add(this.label1);
+			this.groupBox2.Controls.Add(this.CurrentBehaviourBox);
 			this.groupBox2.Controls.Add(this.DefaultBehaviourBox);
 			this.groupBox2.Controls.Add(this.label16);
 			this.groupBox2.Controls.Add(this.SightRangeBox);
@@ -354,16 +362,33 @@
 			this.groupBox2.Controls.Add(this.FleesBox);
 			this.groupBox2.Location = new System.Drawing.Point(3, 3);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(248, 370);
+			this.groupBox2.Size = new System.Drawing.Size(248, 409);
 			this.groupBox2.TabIndex = 13;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Misc :";
+			// 
+			// NameBox
+			// 
+			this.NameBox.Location = new System.Drawing.Point(113, 248);
+			this.NameBox.Name = "NameBox";
+			this.NameBox.Size = new System.Drawing.Size(129, 20);
+			this.NameBox.TabIndex = 22;
+			this.NameBox.TextChanged += new System.EventHandler(this.NameBox_TextChanged);
+			// 
+			// label7
+			// 
+			this.label7.AutoSize = true;
+			this.label7.Location = new System.Drawing.Point(62, 251);
+			this.label7.Name = "label7";
+			this.label7.Size = new System.Drawing.Size(41, 13);
+			this.label7.TabIndex = 21;
+			this.label7.Text = "Name :";
 			// 
 			// DirectionBox
 			// 
 			this.DirectionBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.DirectionBox.FormattingEnabled = true;
-			this.DirectionBox.Location = new System.Drawing.Point(113, 184);
+			this.DirectionBox.Location = new System.Drawing.Point(113, 221);
 			this.DirectionBox.Name = "DirectionBox";
 			this.DirectionBox.Size = new System.Drawing.Size(129, 21);
 			this.DirectionBox.TabIndex = 20;
@@ -372,7 +397,7 @@
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(48, 187);
+			this.label2.Location = new System.Drawing.Point(48, 224);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(55, 13);
 			this.label2.TabIndex = 19;
@@ -401,7 +426,7 @@
 			// label16
 			// 
 			this.label16.AutoSize = true;
-			this.label16.Location = new System.Drawing.Point(6, 244);
+			this.label16.Location = new System.Drawing.Point(6, 281);
 			this.label16.Name = "label16";
 			this.label16.Size = new System.Drawing.Size(67, 13);
 			this.label16.TabIndex = 16;
@@ -409,7 +434,7 @@
 			// 
 			// SightRangeBox
 			// 
-			this.SightRangeBox.Location = new System.Drawing.Point(113, 242);
+			this.SightRangeBox.Location = new System.Drawing.Point(113, 279);
 			this.SightRangeBox.Name = "SightRangeBox";
 			this.SightRangeBox.Size = new System.Drawing.Size(73, 20);
 			this.SightRangeBox.TabIndex = 15;
@@ -463,7 +488,7 @@
 			// label5
 			// 
 			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(6, 270);
+			this.label5.Location = new System.Drawing.Point(6, 307);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(101, 13);
 			this.label5.TabIndex = 5;
@@ -494,7 +519,7 @@
 			// label6
 			// 
 			this.label6.AutoSize = true;
-			this.label6.Location = new System.Drawing.Point(6, 294);
+			this.label6.Location = new System.Drawing.Point(6, 331);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(69, 13);
 			this.label6.TabIndex = 5;
@@ -502,7 +527,7 @@
 			// 
 			// PickupBox
 			// 
-			this.PickupBox.Location = new System.Drawing.Point(113, 268);
+			this.PickupBox.Location = new System.Drawing.Point(113, 305);
 			this.PickupBox.Name = "PickupBox";
 			this.PickupBox.Size = new System.Drawing.Size(73, 20);
 			this.PickupBox.TabIndex = 4;
@@ -523,7 +548,7 @@
 			// label4
 			// 
 			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(6, 346);
+			this.label4.Location = new System.Drawing.Point(6, 383);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(68, 13);
 			this.label4.TabIndex = 12;
@@ -542,7 +567,7 @@
 			// 
 			// ArmorClassBox
 			// 
-			this.ArmorClassBox.Location = new System.Drawing.Point(113, 344);
+			this.ArmorClassBox.Location = new System.Drawing.Point(113, 381);
 			this.ArmorClassBox.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -568,7 +593,7 @@
 			// 
 			// StealBox
 			// 
-			this.StealBox.Location = new System.Drawing.Point(113, 292);
+			this.StealBox.Location = new System.Drawing.Point(113, 329);
 			this.StealBox.Name = "StealBox";
 			this.StealBox.Size = new System.Drawing.Size(73, 20);
 			this.StealBox.TabIndex = 4;
@@ -905,6 +930,26 @@
 			this.label10.TabIndex = 0;
 			this.label10.Text = "Move :";
 			// 
+			// label17
+			// 
+			this.label17.AutoSize = true;
+			this.label17.Location = new System.Drawing.Point(6, 185);
+			this.label17.Name = "label17";
+			this.label17.Size = new System.Drawing.Size(97, 13);
+			this.label17.TabIndex = 18;
+			this.label17.Text = "Current behaviour :";
+			// 
+			// CurrentBehaviourBox
+			// 
+			this.CurrentBehaviourBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.CurrentBehaviourBox.FormattingEnabled = true;
+			this.CurrentBehaviourBox.Location = new System.Drawing.Point(113, 182);
+			this.CurrentBehaviourBox.Name = "CurrentBehaviourBox";
+			this.CurrentBehaviourBox.Size = new System.Drawing.Size(129, 21);
+			this.CurrentBehaviourBox.Sorted = true;
+			this.CurrentBehaviourBox.TabIndex = 17;
+			this.CurrentBehaviourBox.SelectedIndexChanged += new System.EventHandler(this.CurrentBehaviourBox_SelectedIndexChanged);
+			// 
 			// MonsterControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1014,5 +1059,9 @@
 		private System.Windows.Forms.ComboBox DefaultBehaviourBox;
 		private System.Windows.Forms.ComboBox DirectionBox;
 		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.TextBox NameBox;
+		private System.Windows.Forms.Label label7;
+		private System.Windows.Forms.Label label17;
+		private System.Windows.Forms.ComboBox CurrentBehaviourBox;
 	}
 }

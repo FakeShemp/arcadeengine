@@ -116,6 +116,7 @@
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Monster editor wizard";
 			this.Load += new System.EventHandler(this.MonsterEditorForm_Load);
+			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MonsterEditorForm_KeyDown);
 			this.groupBox1.ResumeLayout(false);
 			this.ResumeLayout(false);
 

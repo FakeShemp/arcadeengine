@@ -59,6 +59,8 @@ namespace DungeonEye.Forms
 				TileSetBox.DataSource = ResourceManager.GetAssets<TileSet>();
 			if (DefaultBehaviourBox.Items.Count == 0)
 				DefaultBehaviourBox.DataSource = Enum.GetValues(typeof(MonsterBehaviour));
+			if (CurrentBehaviourBox.Items.Count == 0)
+				CurrentBehaviourBox.DataSource = Enum.GetValues(typeof(MonsterBehaviour));
 			if (DirectionBox.Items.Count == 0)
 				DirectionBox.DataSource = Enum.GetValues(typeof(CardinalPoint));
 
@@ -137,7 +139,9 @@ namespace DungeonEye.Forms
 				CanSeeInvisibleBox.Checked = Monster.CanSeeInvisible;
 				TeleportsBox.Checked = Monster.Teleports;
 				DefaultBehaviourBox.SelectedItem = Monster.DefaultBehaviour;
+				CurrentBehaviourBox.SelectedItem = Monster.CurrentBehaviour;
 				DirectionBox.SelectedItem = Monster.Direction;
+				NameBox.Text = Monster.Name;
 			}
 		}
 
@@ -436,6 +440,14 @@ namespace DungeonEye.Forms
 
 		#region Properties Tab
 
+		private void NameBox_TextChanged(object sender, EventArgs e)
+		{
+			if (Monster == null)
+				return;
+
+			Monster.Name = NameBox.Text;
+		}
+
 
 		/// <summary>
 		/// Damage value changed
@@ -641,8 +653,14 @@ namespace DungeonEye.Forms
 
 		}
 
-		#endregion
+		private void CurrentBehaviourBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (Monster == null)
+				return;
 
+			Monster.CurrentBehaviour = (MonsterBehaviour)CurrentBehaviourBox.SelectedItem;
+		}
+		#endregion
 
 
 		#region Properties
@@ -676,6 +694,7 @@ namespace DungeonEye.Forms
 
 
 		#endregion
+
 
 
 	}
