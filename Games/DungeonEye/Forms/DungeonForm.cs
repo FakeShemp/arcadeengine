@@ -396,9 +396,6 @@ namespace DungeonEye.Forms
 			if (Maze == null || ((MouseEventArgs)e).Button != MouseButtons.Left)
 				return;
 
-			// Not while editing walls
-		//	if (WallBox.Checked)
-		//		return;
 
 			// Get mouse coordinate
 			Point pos = glControl.PointToClient(MousePosition);
@@ -408,8 +405,11 @@ namespace DungeonEye.Forms
 
 			Square square = Maze.GetBlock(pos);
 
+			// Edit actor
 			if (square.Actor != null)
 				EditActor(square);
+
+			// Edit square
 			else
 				new SquareForm(Maze, Maze.GetBlock(pos)).ShowDialog();
 		}

@@ -428,9 +428,9 @@ namespace DungeonEye
 		/// Draw the monster
 		/// </summary>
 		/// <param name="batch">SpriteBatch to use</param>
-		/// <param name="direction">Team's facing direction</param>
+		/// <param name="teamdir">Team's facing direction</param>
 		/// <param name="pos">Position of the monster in the field of view</param>
-		public virtual void Draw(SpriteBatch batch, CardinalPoint direction, ViewFieldPosition pos)
+		public void Draw(SpriteBatch batch, CardinalPoint teamdir, ViewFieldPosition pos)
 		{
 			if (Tileset == null)
 				return;
@@ -581,13 +581,13 @@ namespace DungeonEye
 					if (Square.MonsterCount == 1)
 						squarepos = SquarePosition.Center;
 					else
-						squarepos = (SquarePosition) sub[(int)direction][(int)Position];
+						squarepos = (SquarePosition) sub[(int)teamdir][(int)Position];
 
 					// Screen coordinate
 					Point position = MazeDisplayCoordinates.GetGroundPosition(pos, squarepos);
-					//position.Offset(DrawOffset.X / offsetscale[offset].X, DrawOffset.Y / offsetscale[offset].Y);
+					position.Offset(DrawOffset.X / offsetscale[offset].X, DrawOffset.Y / offsetscale[offset].Y);
 
-					batch.DrawTile(Tileset, GetTileID(direction), position, colors[(int)pos]);
+					batch.DrawTile(Tileset, GetTileID(teamdir), position, colors[(int)pos]);
 					Tileset.Scale = new Vector2(1.0f, 1.0f);
 
 
@@ -688,7 +688,7 @@ namespace DungeonEye
 				new int[]	{3, 1, 0, 5},	// East
 			};
 
-			return id[(int) Location.Direction][(int) point] + Tile;
+			return id[(int)Direction][(int) point] + Tile;
 		}
 
 
@@ -837,6 +837,12 @@ namespace DungeonEye
 					{
 						if (Location != null)
 							Location.Load(node);
+					}
+					break;
+
+					case "direction":
+					{
+						Direction = (CardinalPoint) Enum.Parse(typeof(CardinalPoint), node.Attributes["value"].Value);
 					}
 					break;
 
@@ -1032,8 +1038,6 @@ namespace DungeonEye
 			if (Script != null)
 				Script.Save("script", writer);
 
-	//		if (Location != null)
-	//			Location.Save("location", writer);
 
 			DamageDice.Save("damage", writer);
 			HitDice.Save("hitdice", writer);
@@ -1041,6 +1045,10 @@ namespace DungeonEye
 			writer.WriteStartElement("tiles");
 			writer.WriteAttributeString("name", TileSetName);
 			writer.WriteAttributeString("id", Tile.ToString());
+			writer.WriteEndElement();
+
+			writer.WriteStartElement("direction");
+			writer.WriteAttributeString("value", Direction.ToString());
 			writer.WriteEndElement();
 
 			foreach (string name in ItemsInPocket)
@@ -1224,6 +1232,15 @@ namespace DungeonEye
 			private set;
 		}
 
+
+		/// <summary>
+		/// Looking direction
+		/// </summary>
+		public CardinalPoint Direction
+		{
+			get;
+			set;
+		}
 
 		/// <summary>
 		/// Can use ammo

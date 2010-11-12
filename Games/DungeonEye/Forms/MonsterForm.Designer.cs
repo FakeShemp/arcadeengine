@@ -28,27 +28,37 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.MonsterBox = new DungeonEye.Forms.MonsterControl();
+			this.monsterControl1 = new DungeonEye.Forms.MonsterControl();
 			this.SuspendLayout();
 			// 
-			// MonsterBox
+			// monsterControl1
 			// 
-			this.MonsterBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.MonsterBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.MonsterBox.Location = new System.Drawing.Point(0, 0);
-			this.MonsterBox.Name = "MonsterBox";
-			this.MonsterBox.Size = new System.Drawing.Size(637, 501);
-			this.MonsterBox.TabIndex = 0;
+			this.monsterControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.monsterControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.monsterControl1.Location = new System.Drawing.Point(12, 12);
+			this.monsterControl1.Name = "monsterControl1";
+			this.monsterControl1.Size = new System.Drawing.Size(664, 504);
+			this.monsterControl1.TabIndex = 0;
 			// 
 			// MonsterForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(637, 501);
-			this.Controls.Add(this.MonsterBox);
+			this.ClientSize = new System.Drawing.Size(688, 528);
+			this.Controls.Add(this.monsterControl1);
 			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+			this.MaximizeBox = false;
+			this.MinimizeBox = false;
+			this.MinimumSize = new System.Drawing.Size(500, 400);
 			this.Name = "MonsterForm";
-			this.Text = "Monster";
+			this.ShowIcon = false;
+			this.ShowInTaskbar = false;
+			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+			this.Text = "Monster wizard";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnFormClosing);
 			this.ResumeLayout(false);
 
@@ -56,6 +66,7 @@
 
 		#endregion
 
-		private MonsterControl MonsterBox;
+		private MonsterControl monsterControl1;
+
 	}
 }

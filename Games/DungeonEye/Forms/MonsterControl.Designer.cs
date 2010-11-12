@@ -28,9 +28,8 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			DungeonEye.Dice dice2 = new DungeonEye.Dice();
+			DungeonEye.Dice dice1 = new DungeonEye.Dice();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MonsterControl));
-			this.VisualGroupBox = new System.Windows.Forms.GroupBox();
 			this.label11 = new System.Windows.Forms.Label();
 			this.label12 = new System.Windows.Forms.Label();
 			this.GlControl = new OpenTK.GLControl();
@@ -50,6 +49,8 @@
 			this.PropertiesTab = new System.Windows.Forms.TabPage();
 			this.ScriptBox = new ArcEngine.Editor.ScriptControl();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.DirectionBox = new System.Windows.Forms.ComboBox();
+			this.label2 = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
 			this.DefaultBehaviourBox = new System.Windows.Forms.ComboBox();
 			this.label16 = new System.Windows.Forms.Label();
@@ -102,42 +103,27 @@
 			this.label14 = new System.Windows.Forms.Label();
 			this.label13 = new System.Windows.Forms.Label();
 			this.label10 = new System.Windows.Forms.Label();
-			this.VisualGroupBox.SuspendLayout();
 			this.PocketGroupBox.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize) (this.XPRewardBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.XPRewardBox)).BeginInit();
 			this.tabControl1.SuspendLayout();
 			this.VisualTab.SuspendLayout();
 			this.AttributesTab.SuspendLayout();
 			this.PropertiesTab.SuspendLayout();
 			this.groupBox2.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize) (this.SightRangeBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize) (this.PickupBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize) (this.ArmorClassBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize) (this.StealBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.SightRangeBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.PickupBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.ArmorClassBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.StealBox)).BeginInit();
 			this.MagicTab.SuspendLayout();
 			this.MagicGroupBox.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize) (this.CastingLevelBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.CastingLevelBox)).BeginInit();
 			this.AudioTab.SuspendLayout();
 			this.SuspendLayout();
-			// 
-			// VisualGroupBox
-			// 
-			this.VisualGroupBox.Controls.Add(this.label11);
-			this.VisualGroupBox.Controls.Add(this.label12);
-			this.VisualGroupBox.Controls.Add(this.GlControl);
-			this.VisualGroupBox.Controls.Add(this.TileIDBox);
-			this.VisualGroupBox.Controls.Add(this.TileSetBox);
-			this.VisualGroupBox.Location = new System.Drawing.Point(6, 6);
-			this.VisualGroupBox.Name = "VisualGroupBox";
-			this.VisualGroupBox.Size = new System.Drawing.Size(309, 343);
-			this.VisualGroupBox.TabIndex = 6;
-			this.VisualGroupBox.TabStop = false;
-			this.VisualGroupBox.Text = "Visual :";
 			// 
 			// label11
 			// 
 			this.label11.AutoSize = true;
-			this.label11.Location = new System.Drawing.Point(12, 53);
+			this.label11.Location = new System.Drawing.Point(13, 37);
 			this.label11.Name = "label11";
 			this.label11.Size = new System.Drawing.Size(30, 13);
 			this.label11.TabIndex = 3;
@@ -146,7 +132,7 @@
 			// label12
 			// 
 			this.label12.AutoSize = true;
-			this.label12.Location = new System.Drawing.Point(12, 25);
+			this.label12.Location = new System.Drawing.Point(13, 9);
 			this.label12.Name = "label12";
 			this.label12.Size = new System.Drawing.Size(46, 13);
 			this.label12.TabIndex = 3;
@@ -155,7 +141,7 @@
 			// GlControl
 			// 
 			this.GlControl.BackColor = System.Drawing.Color.Black;
-			this.GlControl.Location = new System.Drawing.Point(6, 78);
+			this.GlControl.Location = new System.Drawing.Point(7, 62);
 			this.GlControl.Name = "GlControl";
 			this.GlControl.Size = new System.Drawing.Size(297, 259);
 			this.GlControl.TabIndex = 1;
@@ -168,9 +154,9 @@
 			// 
 			this.TileIDBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.TileIDBox.FormattingEnabled = true;
-			this.TileIDBox.Location = new System.Drawing.Point(64, 50);
+			this.TileIDBox.Location = new System.Drawing.Point(65, 34);
 			this.TileIDBox.Name = "TileIDBox";
-			this.TileIDBox.Size = new System.Drawing.Size(239, 21);
+			this.TileIDBox.Size = new System.Drawing.Size(143, 21);
 			this.TileIDBox.TabIndex = 2;
 			this.TileIDBox.SelectedIndexChanged += new System.EventHandler(this.TileIDBox_SelectedIndexChanged);
 			// 
@@ -178,9 +164,9 @@
 			// 
 			this.TileSetBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.TileSetBox.FormattingEnabled = true;
-			this.TileSetBox.Location = new System.Drawing.Point(64, 22);
+			this.TileSetBox.Location = new System.Drawing.Point(65, 6);
 			this.TileSetBox.Name = "TileSetBox";
-			this.TileSetBox.Size = new System.Drawing.Size(239, 21);
+			this.TileSetBox.Size = new System.Drawing.Size(143, 21);
 			this.TileSetBox.Sorted = true;
 			this.TileSetBox.TabIndex = 2;
 			this.TileSetBox.SelectedIndexChanged += new System.EventHandler(this.TileSetBox_SelectedIndexChanged);
@@ -200,9 +186,9 @@
 			// 
 			// PocketItemsBox
 			// 
-			this.PocketItemsBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.PocketItemsBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.PocketItemsBox.FormattingEnabled = true;
 			this.PocketItemsBox.Location = new System.Drawing.Point(6, 44);
 			this.PocketItemsBox.Name = "PocketItemsBox";
@@ -235,8 +221,8 @@
 			// 
 			// RemovePocketItemBox
 			// 
-			this.RemovePocketItemBox.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.RemovePocketItemBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.RemovePocketItemBox.Location = new System.Drawing.Point(6, 143);
 			this.RemovePocketItemBox.Name = "RemovePocketItemBox";
 			this.RemovePocketItemBox.Size = new System.Drawing.Size(263, 23);
@@ -285,7 +271,11 @@
 			// 
 			// VisualTab
 			// 
-			this.VisualTab.Controls.Add(this.VisualGroupBox);
+			this.VisualTab.Controls.Add(this.label11);
+			this.VisualTab.Controls.Add(this.label12);
+			this.VisualTab.Controls.Add(this.GlControl);
+			this.VisualTab.Controls.Add(this.TileSetBox);
+			this.VisualTab.Controls.Add(this.TileIDBox);
 			this.VisualTab.Location = new System.Drawing.Point(4, 22);
 			this.VisualTab.Name = "VisualTab";
 			this.VisualTab.Padding = new System.Windows.Forms.Padding(3);
@@ -337,6 +327,8 @@
 			// 
 			// groupBox2
 			// 
+			this.groupBox2.Controls.Add(this.DirectionBox);
+			this.groupBox2.Controls.Add(this.label2);
 			this.groupBox2.Controls.Add(this.label1);
 			this.groupBox2.Controls.Add(this.DefaultBehaviourBox);
 			this.groupBox2.Controls.Add(this.label16);
@@ -366,6 +358,25 @@
 			this.groupBox2.TabIndex = 13;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Misc :";
+			// 
+			// DirectionBox
+			// 
+			this.DirectionBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.DirectionBox.FormattingEnabled = true;
+			this.DirectionBox.Location = new System.Drawing.Point(113, 184);
+			this.DirectionBox.Name = "DirectionBox";
+			this.DirectionBox.Size = new System.Drawing.Size(129, 21);
+			this.DirectionBox.TabIndex = 20;
+			this.DirectionBox.SelectedIndexChanged += new System.EventHandler(this.DirectionBox_SelectedIndexChanged);
+			// 
+			// label2
+			// 
+			this.label2.AutoSize = true;
+			this.label2.Location = new System.Drawing.Point(48, 187);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(55, 13);
+			this.label2.TabIndex = 19;
+			this.label2.Text = "Direction :";
 			// 
 			// label1
 			// 
@@ -589,10 +600,10 @@
 			// DamageBox
 			// 
 			this.DamageBox.ControlText = "Damage :";
-			dice2.Faces = 1;
-			dice2.Modifier = 0;
-			dice2.Throws = 1;
-			this.DamageBox.Dice = dice2;
+			dice1.Faces = 1;
+			dice1.Modifier = 0;
+			dice1.Throws = 1;
+			this.DamageBox.Dice = dice1;
 			this.DamageBox.Location = new System.Drawing.Point(257, 273);
 			this.DamageBox.MinimumSize = new System.Drawing.Size(225, 100);
 			this.DamageBox.Name = "DamageBox";
@@ -760,37 +771,37 @@
 			// 
 			// PlayHurtSoundBox
 			// 
-			this.PlayHurtSoundBox.Image = ((System.Drawing.Image) (resources.GetObject("PlayHurtSoundBox.Image")));
+			this.PlayHurtSoundBox.Image = ((System.Drawing.Image)(resources.GetObject("PlayHurtSoundBox.Image")));
 			this.PlayHurtSoundBox.Location = new System.Drawing.Point(301, 102);
 			this.PlayHurtSoundBox.Name = "PlayHurtSoundBox";
-			this.PlayHurtSoundBox.Size = new System.Drawing.Size(75, 23);
+			this.PlayHurtSoundBox.Size = new System.Drawing.Size(23, 23);
 			this.PlayHurtSoundBox.TabIndex = 3;
 			this.PlayHurtSoundBox.UseVisualStyleBackColor = true;
 			// 
 			// PlayDeathSoundBox
 			// 
-			this.PlayDeathSoundBox.Image = ((System.Drawing.Image) (resources.GetObject("PlayDeathSoundBox.Image")));
+			this.PlayDeathSoundBox.Image = ((System.Drawing.Image)(resources.GetObject("PlayDeathSoundBox.Image")));
 			this.PlayDeathSoundBox.Location = new System.Drawing.Point(301, 76);
 			this.PlayDeathSoundBox.Name = "PlayDeathSoundBox";
-			this.PlayDeathSoundBox.Size = new System.Drawing.Size(75, 23);
+			this.PlayDeathSoundBox.Size = new System.Drawing.Size(23, 23);
 			this.PlayDeathSoundBox.TabIndex = 3;
 			this.PlayDeathSoundBox.UseVisualStyleBackColor = true;
 			// 
 			// PlayMoveSoundBox
 			// 
-			this.PlayMoveSoundBox.Image = ((System.Drawing.Image) (resources.GetObject("PlayMoveSoundBox.Image")));
+			this.PlayMoveSoundBox.Image = ((System.Drawing.Image)(resources.GetObject("PlayMoveSoundBox.Image")));
 			this.PlayMoveSoundBox.Location = new System.Drawing.Point(301, 50);
 			this.PlayMoveSoundBox.Name = "PlayMoveSoundBox";
-			this.PlayMoveSoundBox.Size = new System.Drawing.Size(75, 23);
+			this.PlayMoveSoundBox.Size = new System.Drawing.Size(23, 23);
 			this.PlayMoveSoundBox.TabIndex = 3;
 			this.PlayMoveSoundBox.UseVisualStyleBackColor = true;
 			// 
 			// PlayAttackSoundBox
 			// 
-			this.PlayAttackSoundBox.Image = ((System.Drawing.Image) (resources.GetObject("PlayAttackSoundBox.Image")));
+			this.PlayAttackSoundBox.Image = ((System.Drawing.Image)(resources.GetObject("PlayAttackSoundBox.Image")));
 			this.PlayAttackSoundBox.Location = new System.Drawing.Point(301, 24);
 			this.PlayAttackSoundBox.Name = "PlayAttackSoundBox";
-			this.PlayAttackSoundBox.Size = new System.Drawing.Size(75, 23);
+			this.PlayAttackSoundBox.Size = new System.Drawing.Size(23, 23);
 			this.PlayAttackSoundBox.TabIndex = 3;
 			this.PlayAttackSoundBox.UseVisualStyleBackColor = true;
 			// 
@@ -899,30 +910,29 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.tabControl1);
-			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Name = "MonsterControl";
 			this.Size = new System.Drawing.Size(594, 455);
 			this.Load += new System.EventHandler(this.MonsterControl_Load);
-			this.VisualGroupBox.ResumeLayout(false);
-			this.VisualGroupBox.PerformLayout();
 			this.PocketGroupBox.ResumeLayout(false);
 			this.PocketGroupBox.PerformLayout();
-			((System.ComponentModel.ISupportInitialize) (this.XPRewardBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.XPRewardBox)).EndInit();
 			this.tabControl1.ResumeLayout(false);
 			this.VisualTab.ResumeLayout(false);
+			this.VisualTab.PerformLayout();
 			this.AttributesTab.ResumeLayout(false);
 			this.PropertiesTab.ResumeLayout(false);
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
-			((System.ComponentModel.ISupportInitialize) (this.SightRangeBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize) (this.PickupBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize) (this.ArmorClassBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize) (this.StealBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.SightRangeBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.PickupBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.ArmorClassBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.StealBox)).EndInit();
 			this.MagicTab.ResumeLayout(false);
 			this.MagicTab.PerformLayout();
 			this.MagicGroupBox.ResumeLayout(false);
 			this.MagicGroupBox.PerformLayout();
-			((System.ComponentModel.ISupportInitialize) (this.CastingLevelBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.CastingLevelBox)).EndInit();
 			this.AudioTab.ResumeLayout(false);
 			this.AudioTab.PerformLayout();
 			this.ResumeLayout(false);
@@ -931,7 +941,6 @@
 
 		#endregion
 
-		private System.Windows.Forms.GroupBox VisualGroupBox;
 		private System.Windows.Forms.Label label11;
 		private System.Windows.Forms.Label label12;
 		private OpenTK.GLControl GlControl;
@@ -1003,5 +1012,7 @@
 		private ArcEngine.Editor.ScriptControl ScriptBox;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.ComboBox DefaultBehaviourBox;
+		private System.Windows.Forms.ComboBox DirectionBox;
+		private System.Windows.Forms.Label label2;
 	}
 }

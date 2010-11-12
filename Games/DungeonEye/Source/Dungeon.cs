@@ -295,6 +295,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Is asset disposed
 		/// </summary>
+		[Browsable(false)]
 		public bool IsDisposed { get; private set; }
 
 

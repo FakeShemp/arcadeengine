@@ -699,12 +699,12 @@ namespace DungeonEye
 			//}
 			#endregion
 
-
+			#region Actor
 			if (block.Actor != null)
 			{
 				block.Actor.Draw(batch, field, position, view);
 			}
-
+			#endregion
 
 			#region Floor plate
 			//else if (block.FloorPlate != null && !block.FloorPlate.Invisible)
@@ -1283,6 +1283,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Is asset disposed
 		/// </summary>
+		[Browsable(false)]
 		public bool IsDisposed { get; private set; }
 
 
@@ -1359,6 +1360,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Doors tileset
 		/// </summary>
+		[Browsable(false)]
 		public TileSet DoorTileset
 		{
 			get;

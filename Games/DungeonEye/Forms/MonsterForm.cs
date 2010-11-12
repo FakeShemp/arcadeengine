@@ -27,20 +27,22 @@ using ArcEngine.Interface;
 
 namespace DungeonEye.Forms
 {
+	/// <summary>
+	/// Monster form editor
+	/// </summary>
 	public partial class MonsterForm : AssetEditorBase
 	{
 
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
-		/// <param name="node"></param>
+		/// <param name="node">Xml node</param>
 		public MonsterForm(XmlNode node)
 		{
 			InitializeComponent();
 
 			Monster = new Monster(null);
 			Monster.Load(node);
-			MonsterBox.SetMonster(Monster);
 		}
 
 
@@ -91,11 +93,7 @@ namespace DungeonEye.Forms
 		}
 
 
-		public Monster Monster
-		{
-			get;
-			set;
-		}
+		Monster Monster;
 
 		#endregion
 

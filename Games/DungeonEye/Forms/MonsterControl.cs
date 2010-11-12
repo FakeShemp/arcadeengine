@@ -44,20 +44,24 @@ namespace DungeonEye.Forms
 		{
 			InitializeComponent();
 
-			DefaultBehaviourBox.BeginUpdate();
-			DefaultBehaviourBox.DataSource = Enum.GetNames(typeof(MonsterBehaviour));
-			DefaultBehaviourBox.EndUpdate();
+
+		
 		}
 
 
 		/// <summary>
 		/// Sets the monster to edit
 		/// </summary>
-		/// <param name="monster"></param>
+		/// <param name="monster">Monster handle</param>
 		public void SetMonster(Monster monster)
 		{
-			//if (Monster != null)
-			//    Monster.Dispose();
+			if(TileSetBox.Items.Count == 0)
+				TileSetBox.DataSource = ResourceManager.GetAssets<TileSet>();
+			if (DefaultBehaviourBox.Items.Count == 0)
+				DefaultBehaviourBox.DataSource = Enum.GetValues(typeof(MonsterBehaviour));
+			if (DirectionBox.Items.Count == 0)
+				DirectionBox.DataSource = Enum.GetValues(typeof(CardinalPoint));
+
 			if (TileSet != null)
 				TileSet.Dispose();
 			TileSet = null;
@@ -74,11 +78,7 @@ namespace DungeonEye.Forms
 		void UpdateControls()
 		{
 			// Items
-			ItemsBox.BeginUpdate();
-			ItemsBox.Items.Clear();
-			foreach (string item in ResourceManager.GetAssets<Item>())
-				ItemsBox.Items.Add(item);
-			ItemsBox.EndUpdate();
+			ItemsBox.DataSource = ResourceManager.GetAssets<Item>();
 
 
 			if (Monster == null)
@@ -136,7 +136,8 @@ namespace DungeonEye.Forms
 				StealBox.Value = (decimal)Monster.StealRate * 100;
 				CanSeeInvisibleBox.Checked = Monster.CanSeeInvisible;
 				TeleportsBox.Checked = Monster.Teleports;
-				DefaultBehaviourBox.SelectedItem = Monster.DefaultBehaviour.ToString();
+				DefaultBehaviourBox.SelectedItem = Monster.DefaultBehaviour;
+				DirectionBox.SelectedItem = Monster.Direction;
 			}
 		}
 
@@ -145,15 +146,10 @@ namespace DungeonEye.Forms
 		/// </summary>
 		void UpdateTilesControl()
 		{
-			TileSetBox.BeginUpdate();
-			TileSetBox.Items.Clear();
-			foreach (string name in ResourceManager.GetAssets<TileSet>())
-			{
-				TileSetBox.Items.Add(name);
-			}
-			if (Monster != null)
-				TileSetBox.Text = Monster.TileSetName;
-			TileSetBox.EndUpdate();
+			if (Monster == null)
+				return;
+
+			TileSetBox.Text = Monster.TileSetName;
 		}
 
 
@@ -170,6 +166,7 @@ namespace DungeonEye.Forms
 				{
 					TileIDBox.Items.Add(id);
 				}
+
 				if (Monster != null)
 					TileIDBox.SelectedItem = Monster.Tile;
 			}
@@ -178,6 +175,39 @@ namespace DungeonEye.Forms
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		void Draw()
+		{
+			if (DesignMode || SpriteBatch == null)
+				return;
+
+			GlControl.MakeCurrent();
+
+			Display.ClearBuffers();
+
+			SpriteBatch.Begin();
+
+
+			// Background texture
+			SpriteBatch.Draw(CheckerBoard, new Rectangle(Point.Empty, GlControl.Size), Color.White);
+
+			if (Monster != null && TileSet != null)
+			{
+				Tile tile = TileSet.GetTile(Monster.Tile);
+				if (tile != null)
+				{
+					Point pos = new Point((GlControl.Width - tile.Size.Width) / 2, (GlControl.Height - tile.Size.Height) / 2);
+					pos.Offset(tile.Origin);
+					SpriteBatch.DrawTile(TileSet, Monster.Tile, pos);
+				}
+			}
+
+			SpriteBatch.End();
+
+			GlControl.SwapBuffers();
+		}
 
 		#region Events
 
@@ -192,11 +222,9 @@ namespace DungeonEye.Forms
 		{
 			if (DesignMode)
 				return;
-	
+
 			if (ParentForm != null)
 				ParentForm.FormClosing += new FormClosingEventHandler(ParentForm_FormClosing);
-
-			SpriteBatch = new SpriteBatch();
 		}
 
 
@@ -230,15 +258,15 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void GlControl_Load(object sender, EventArgs e)
 		{
-			GlControl.MakeCurrent();
 			if (DesignMode)
 				return;
+
+			GlControl.MakeCurrent();
 
 			Display.Init();
 			Display.ClearBuffers();
 
-			if (DesignMode)
-				return;
+			SpriteBatch = new SpriteBatch();
 
 			CheckerBoard = new Texture2D(ResourceManager.GetInternalResource("ArcEngine.Resources.checkerboard.png"));
 			CheckerBoard.HorizontalWrap = TextureWrapFilter.Repeat;
@@ -256,7 +284,7 @@ namespace DungeonEye.Forms
 			if (Monster == null)
 				return;
 
-			Monster.TileSetName = TileSetBox.SelectedItem as string;
+			Monster.TileSetName = (string)TileSetBox.SelectedItem;
 
 			if (TileSet != null)
 				TileSet.Dispose();
@@ -290,31 +318,9 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void GlControl_Paint(object sender, PaintEventArgs e)
 		{
-			if (DesignMode)
-				return;
-			
-			GlControl.MakeCurrent();
-
-			Display.ClearBuffers();
-
-			SpriteBatch.Begin();
-
-
-			// Background texture
-			SpriteBatch.Draw(CheckerBoard, new Rectangle(Point.Empty, GlControl.Size), Color.White);
-
-			if (Monster != null && TileSet != null)
-			{
-				Tile tile = TileSet.GetTile(Monster.Tile);
-				Point pos = new Point((GlControl.Width - tile.Size.Width) / 2, (GlControl.Height - tile.Size.Height) / 2);
-				pos.Offset(tile.Origin);
-				SpriteBatch.DrawTile(TileSet, Monster.Tile, pos);
-			}
-
-			SpriteBatch.End();
-
-			GlControl.SwapBuffers();
+			Draw();
 		}
+
 
 
 		/// <summary>
@@ -329,7 +335,8 @@ namespace DungeonEye.Forms
 
 
 			Monster.Tile = (int)TileIDBox.SelectedItem;
-			GlControl.Invalidate();
+			//GlControl.Invalidate();
+			Draw();
 		}
 
 
@@ -367,6 +374,67 @@ namespace DungeonEye.Forms
 
 
 		}
+
+
+		#endregion
+
+
+		#region Visual Tab
+
+
+
+		#endregion
+
+
+		#region Magic Tab
+
+		private void CastingLevelBox_ValueChanged(object sender, EventArgs e)
+		{
+			if (Monster == null)
+				return;
+
+			Monster.MagicCastingLevel = (int)CastingLevelBox.Value;
+		}
+
+		/// <summary>
+		/// Has Magic
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void HasMagicBox_CheckedChanged(object sender, EventArgs e)
+		{
+			MagicGroupBox.Enabled = HasMagicBox.Checked;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void MagicGroupBox_EnabledChanged(object sender, EventArgs e)
+		{
+			if (Monster == null)
+			{
+				HealMagicBox.Checked = false;
+				HasDrainMagicBox.Checked = false;
+				CastingLevelBox.Value = 0;
+				KnownSpellsBox.Items.Clear();
+			}
+			else
+			{
+				HealMagicBox.Checked = Monster.HasHealMagic;
+				HasDrainMagicBox.Checked = Monster.HasDrainMagic;
+				CastingLevelBox.Value = Monster.MagicCastingLevel;
+				KnownSpellsBox.Items.Clear();
+			}
+		}
+
+
+		#endregion
+
+
+		#region Properties Tab
 
 
 		/// <summary>
@@ -413,6 +481,14 @@ namespace DungeonEye.Forms
 			Monster.Reward = (int)XPRewardBox.Value;
 		}
 
+		private void DirectionBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (Monster == null)
+				return;
+
+			Monster.Direction = (CardinalPoint)DirectionBox.SelectedItem;
+		}
+
 
 		/// <summary>
 		/// 
@@ -427,85 +503,6 @@ namespace DungeonEye.Forms
 			Monster.ArmorClass = (int)ArmorClassBox.Value;
 		}
 
-		#endregion
-
-
-		#region Properties
-
-		/// <summary>
-		/// Current monster
-		/// </summary>
-		public Monster Monster
-		{
-			get;
-			private set;
-		}
-
-
-		/// <summary>
-		/// Tileset
-		/// </summary>
-		TileSet TileSet;
-
-
-		/// <summary>
-		/// Spritebatch
-		/// </summary>
-		SpriteBatch SpriteBatch;
-
-
-		/// <summary>
-		/// Background texture
-		/// </summary>
-		Texture2D CheckerBoard;
-
-
-		#endregion
-
-
-
-		#region Magic Tab
-
-		/// <summary>
-		/// Has Magic
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void HasMagicBox_CheckedChanged(object sender, EventArgs e)
-		{
-			MagicGroupBox.Enabled = HasMagicBox.Checked;
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void MagicGroupBox_EnabledChanged(object sender, EventArgs e)
-		{
-			if (Monster == null)
-			{
-				HealMagicBox.Checked = false;
-				HasDrainMagicBox.Checked = false;
-				CastingLevelBox.Value = 0;
-				KnownSpellsBox.Items.Clear();
-			}
-			else
-			{
-				HealMagicBox.Checked = Monster.HasHealMagic;
-				HasDrainMagicBox.Checked = Monster.HasDrainMagic;
-				CastingLevelBox.Value = Monster.MagicCastingLevel;
-				KnownSpellsBox.Items.Clear();
-			}
-		}
-
-
-		#endregion
-
-
-		#region Properties Tab
-
 		/// <summary>
 		/// Flees after attack
 		/// </summary>
@@ -518,8 +515,6 @@ namespace DungeonEye.Forms
 
 			Monster.FleesAfterAttack = FleesBox.Checked;
 		}
-
-
 
 		private void FillSquareBox_CheckedChanged(object sender, EventArgs e)
 		{
@@ -642,19 +637,45 @@ namespace DungeonEye.Forms
 			if (Monster == null)
 				return;
 
-			Monster.DefaultBehaviour = (MonsterBehaviour) Enum.Parse(typeof(MonsterBehaviour), (string)DefaultBehaviourBox.SelectedItem);
+			Monster.DefaultBehaviour = (MonsterBehaviour) DefaultBehaviourBox.SelectedItem;
 
 		}
 
 		#endregion
 
-		private void CastingLevelBox_ValueChanged(object sender, EventArgs e)
-		{
-			if (Monster == null)
-				return;
 
-			Monster.MagicCastingLevel = (int) CastingLevelBox.Value;
+
+		#region Properties
+
+		/// <summary>
+		/// Current monster
+		/// </summary>
+		public Monster Monster
+		{
+			get;
+			private set;
 		}
+
+
+		/// <summary>
+		/// Tileset
+		/// </summary>
+		TileSet TileSet;
+
+
+		/// <summary>
+		/// Spritebatch
+		/// </summary>
+		SpriteBatch SpriteBatch;
+
+
+		/// <summary>
+		/// Background texture
+		/// </summary>
+		Texture2D CheckerBoard;
+
+
+		#endregion
 
 
 	}
