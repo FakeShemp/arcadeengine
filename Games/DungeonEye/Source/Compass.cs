@@ -48,6 +48,7 @@ namespace DungeonEye
 			Direction = compass.Direction;
 		}
 
+		#region Statics
 
 		/// <summary>
 		/// Rotate the team
@@ -101,26 +102,14 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Is facing a specific direction
-		/// </summary>
-		/// <param name="dir">Direction</param>
-		/// <returns>True if facing the same direction</returns>
-		public bool IsFacing(CardinalPoint dir)
-		{
-			return Direction == dir;
-		}
-
-
-		/// <summary>
 		/// Returns the direction in which an entity should face to look at.
 		/// </summary>
 		/// <param name="from">From location</param>
 		/// <param name="target">Target direction</param>
 		/// <returns>Direction to face to</returns>
-		public CardinalPoint SeekDirection(DungeonLocation from, DungeonLocation target)
+		static public CardinalPoint SeekDirection(DungeonLocation from, DungeonLocation target)
 		{
 			Point delta = new Point(target.Coordinate.X - from.Coordinate.X, target.Coordinate.Y - from.Coordinate.Y);
-			//CardinalPoint dir = CardinalPoint.North;
 
 
 			// Move west
@@ -153,6 +142,48 @@ namespace DungeonEye
 			return CardinalPoint.North;
 		}
 
+
+		/// <summary>
+		/// Returns if two locations are facing each others
+		/// </summary>
+		/// <param name="from">From location</param>
+		/// <param name="target">Target direction</param>
+		/// <returns>True if locations face each others</returns>
+		static public bool IsFacing(DungeonLocation from, DungeonLocation target)
+		{
+			Point delta = new Point(target.Coordinate.X - from.Coordinate.X, target.Coordinate.Y - from.Coordinate.Y);
+			
+			switch (from.Direction)
+			{
+				case CardinalPoint.North:
+					return target.Direction == CardinalPoint.South;
+
+				case CardinalPoint.South:
+					return target.Direction == CardinalPoint.North;
+	
+				case CardinalPoint.West:
+					return target.Direction == CardinalPoint.East;
+				
+				case CardinalPoint.East:
+					return target.Direction == CardinalPoint.West;
+			}
+
+			return false;
+		}
+
+
+		#endregion
+
+
+		/// <summary>
+		/// Is facing a specific direction
+		/// </summary>
+		/// <param name="dir">Direction</param>
+		/// <returns>True if facing the same direction</returns>
+		public bool IsFacing(CardinalPoint dir)
+		{
+			return Direction == dir;
+		}
 
 
 		#region Properties

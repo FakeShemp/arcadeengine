@@ -307,6 +307,12 @@ namespace DungeonEye
 					else if (Team.Maze != Maze)
 						break;
 
+					// Facing the team
+					else if (Compass.SeekDirection(Location, Team.Location) != Direction)
+					{
+						Direction = Compass.SeekDirection(Location, Team.Location);
+					}
+
 					// Can get closer while staying in the same square ?
 					else if (CanGetCloserTo(Team.Location))
 					{
