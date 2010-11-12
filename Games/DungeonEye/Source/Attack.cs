@@ -74,7 +74,7 @@ namespace DungeonEye
 			// Attack roll
 			int attackdie = Dice.GetD20(1);
 
-			// Fail ?
+			// Critical fail ?
 			if (attackdie == 1)
 				attackdie = -100000;
 

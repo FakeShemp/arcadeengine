@@ -1214,6 +1214,7 @@ namespace DungeonEye
 			}
 		}
 
+
 		/// <summary>
 		/// Square position
 		/// </summary>

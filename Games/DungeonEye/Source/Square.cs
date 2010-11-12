@@ -145,7 +145,14 @@ namespace DungeonEye
 			if (MonsterCount > 0)
 				for (int i = 0; i < 4; i++)
 					if (Monsters[i] != null)
-						Monsters[i].Update(time);
+					{
+						// Monster is dead
+						if (Monsters[i].IsDead)
+							Monsters[i] = null;
+						else
+							Monsters[i].Update(time);
+					}
+
 
 			// Actor
 			if (Actor != null)
@@ -412,6 +419,18 @@ namespace DungeonEye
 		/// <returns>Monster handle or null</returns>
 		public Monster GetMonster(SquarePosition position)
 		{
+			// No monster here
+			if (MonsterCount == 0)
+				return null;
+
+			// Only one monster, so returns this one
+			else if (MonsterCount == 1)
+			{
+				for (int i = 0; i < 4; i++)
+					if (Monsters[i] != null)
+						return Monsters[i];
+			}
+
 			if (position == SquarePosition.Center)
 				return null;
 
@@ -948,10 +967,7 @@ namespace DungeonEye
 		{
 			get
 			{
-				return Monsters[0] == null &&
-					Monsters[1] == null &&
-					Monsters[2] == null &&
-					Monsters[3] == null;
+				return MonsterCount > 0;
 			}
 		}
 
@@ -1023,12 +1039,13 @@ namespace DungeonEye
 				if (Actor != null && Actor.IsBlocking)
 					return true;
 
-		//		if (Type == SquareType.Wall)
-				//			return true;
 				else if (IsIllusion)
 					return false;
 
 				else if (IsWall)
+					return true;
+				
+				else if (HasMonster)
 					return true;
 
 				return false;

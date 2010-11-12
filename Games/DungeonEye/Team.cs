@@ -2266,11 +2266,36 @@ namespace DungeonEye
 		/// <summary>
 		/// Gets if the hero is in front row
 		/// </summary>
-		/// <param name="hero"></param>
-		/// <returns></returns>
+		/// <param name="hero">Hero handle</param>
+		/// <returns>True if in front line</returns>
 		public bool IsHeroInFront(Hero hero)
 		{
 			return GetHeroFromPosition(HeroPosition.FrontLeft) == hero || GetHeroFromPosition(HeroPosition.FrontRight) == hero;
+		}
+
+
+		/// <summary>
+		/// Gets the entity in front the team at a given sqaure position
+		/// </summary>
+		/// <param name="position">Square position</param>
+		/// <returns>Entity handle or null</returns>
+		public Entity GetFrontEntity(SquarePosition position)
+		{
+			// Center position
+			if (position == SquarePosition.Center)
+				throw new ArgumentOutOfRangeException("position");
+
+			int[][] id = new int[][]
+			{
+				new int[]{2, 2, 1, 1},		// From NW
+				new int[]{3, 3, 0, 0},		// From NE
+				new int[]{0, 0, 3, 3},		// From SW
+				new int[]{1, 1, 2, 2},		// From SE
+			};
+			
+			SquarePosition pos = (SquarePosition) id[(int)position][(int)Direction];
+
+			return FrontBlock.GetMonster(pos);
 		}
 
 

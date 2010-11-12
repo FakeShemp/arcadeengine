@@ -129,8 +129,8 @@ namespace DungeonEye
 			}
 			set
 			{
-				current += value;
-				current = Math.Max(current, Max);
+				current = value;
+				current = Math.Min(current, Max);
 			}
 		}
 		int current;

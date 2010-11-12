@@ -92,7 +92,7 @@ namespace DungeonEye
 		/// <param name="time">Elapsed gametime</param>
 		public void Update(GameTime time)
 		{
-			Point mousePos = Mouse.Location;
+		//	Point mousePos = Mouse.Location;
 
 
 			if (Food > 100)
@@ -822,6 +822,8 @@ namespace DungeonEye
 		}
 
 
+
+
 		/// <summary>
 		/// Hero attack with his hands
 		/// </summary>
@@ -832,10 +834,8 @@ namespace DungeonEye
 			if (!CanUseHand(hand))
 				return;
 
-			// Attacked entity
-			Entity target = Team.FrontBlock.GetMonster(Team.GetHeroGroundPosition(this));
-			//Team.Location.Maze.GetMonster(Team.FrontLocation, Team.GetHeroGroundPosition(this));
-
+			// Find the entity in front of the hero
+			Entity target = Team.GetFrontEntity(Team.GetHeroGroundPosition(this));
 
 			// Which item is used for the attack
 			Item item = GetInventoryItem(hand == HeroHand.Primary ? InventoryPosition.Primary : InventoryPosition.Secondary);
@@ -891,6 +891,7 @@ namespace DungeonEye
 				#region Weapon
 				case ItemType.Weapon:
 				{
+					// Belt weapon
 					if (item.Slot == BodySlot.Belt)
 					{
 					}
@@ -1287,6 +1288,30 @@ namespace DungeonEye
 			get;
 			set;
 		}
+
+		/// <summary>
+		/// Returns true if dead
+		/// </summary>
+		public override bool IsDead
+		{
+			get
+			{
+				return HitPoint.Current <= -10;
+			}
+		}
+
+		/// <summary>
+		/// Returns if is unconscious
+		/// </summary>
+		public bool IsUnconscious
+		{
+			get
+			{
+				return HitPoint.Current > -10 && HitPoint.Current <= 0;
+			}
+		}
+
+
 
 		#region Bonus
 

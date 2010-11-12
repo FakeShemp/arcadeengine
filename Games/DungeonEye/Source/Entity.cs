@@ -349,26 +349,15 @@ namespace DungeonEye
 		}
 
 
+
 		/// <summary>
-		/// Returns if is unconscious
+		/// Returns true if dead
 		/// </summary>
-		public bool IsUnconscious
+		public virtual bool IsDead
 		{
 			get
 			{
-				return HitPoint.Current > -10 && HitPoint.Current <= 0;
-			}
-		}
-
-
-		/// <summary>
-		/// Returns true is dead
-		/// </summary>
-		public bool IsDead
-		{
-			get
-			{
-				return HitPoint.Current <= -10;
+				return HitPoint.Current <= 0;
 			}
 		}
 
