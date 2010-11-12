@@ -247,17 +247,6 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
-		/// </summary>
-		public override bool IsBlocking
-		{
-			get
-			{
-				return false;
-			}
-		}
-
-		/// <summary>
 		/// Target of the pit
 		/// </summary>
 		public DungeonLocation Target
@@ -268,25 +257,12 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
-		/// </summary>
-		public override bool CanPassThrough
-		{
-			get
-			{
-				return true;
-			}
-		}
-
-		/// <summary>
 		/// An illusion pit
 		/// </summary>
 		public bool IsIllusion
 		{
-			get
-			{
-				return Target == null;
-			}
+			get;
+			set;
 		}
 
 

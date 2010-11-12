@@ -219,6 +219,8 @@ namespace DungeonEye.Forms
 			else if (square.Actor is Teleporter)
 				new TeleporterForm(square.Actor as Teleporter, Dungeon).ShowDialog();
 
+			else if (square.Actor is Pit)
+				new PitForm(square.Actor as Pit, Dungeon).ShowDialog();
 
 		}
 

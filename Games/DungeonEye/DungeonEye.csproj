@@ -191,6 +191,12 @@
     <Compile Include="Forms\PartyForm.Designer.cs">
       <DependentUpon>PartyForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\PitForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PitForm.Designer.cs">
+      <DependentUpon>PitForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ProfessionsControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -324,6 +330,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\PartyForm.resx">
       <DependentUpon>PartyForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PitForm.resx">
+      <DependentUpon>PitForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ProfessionsControl.resx">
       <DependentUpon>ProfessionsControl.cs</DependentUpon>
