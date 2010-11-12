@@ -267,6 +267,16 @@ namespace DungeonEye
 
 
 		/// <summary>
+		/// Monster also trigger
+		/// </summary>
+		public bool MonsterTrigger
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
 		/// A hidden pit
 		/// </summary>
 		public bool IsHidden

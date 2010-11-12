@@ -25,8 +25,7 @@ namespace DungeonEye.Forms
 
 			IsHiddenBox.Checked = pit.IsHidden;
 			IsIllusionBox.Checked = pit.IsIllusion;
-			TargetBox.Dungeon = dungeon;
-			TargetBox.SetTarget(pit.Target);
+			TargetBox.SetTarget(dungeon, pit.Target);
 			DamageBox.Dice = pit.Damage;
 			DifficultyBox.Value = pit.Difficulty;
 
@@ -103,6 +102,14 @@ namespace DungeonEye.Forms
 				return;
 
 			Pit.Damage = DamageBox.Dice;
+		}
+
+		private void MonsterTriggerBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Pit == null)
+				return;
+
+			Pit.MonsterTrigger = MonsterTriggerBox.Checked;
 		}
 
 	}
