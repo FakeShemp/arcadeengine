@@ -321,6 +321,7 @@ namespace DungeonEye
 
 		/// <summary>
 		/// Gives the entity’s tactical speed.
+		/// Lower is faster
 		/// </summary>
 		public TimeSpan Speed
 		{

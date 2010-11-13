@@ -165,7 +165,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="target">Destination square</param>
 		/// <param name="pos">Square position</param>
-		public void Teleport(Square square, SquarePosition pos)
+		public bool Teleport(Square square, SquarePosition pos)
 		{
 			// Move to another square
 			if (Square != square)
@@ -173,29 +173,33 @@ namespace DungeonEye
 				// Remove from previous location
 				if (Square != null)
 				{
-					Square.Monsters[(int)Position] = null;
+					Square.Monsters[(int)position] = null;
 				}
 
 				Square = square;
 
 				// Add the monster to the new square
 				position = pos;
-				Square.Monsters[(int)Position] = this;
+				Square.Monsters[(int)pos] = this;
 			}
 
 			// Move to a subsquare
 			else
 			{
 				// Remove from previous position
-				if (Square != null)
-					Square.Monsters[(int)Position] = null;
+				if (Square == null || Square.GetMonster(pos) != null)
+					return false;
+
+				Square.Monsters[(int)position] = null;
 
 					// Move to the new position
 				if (square != null)
 					square.Monsters[(int)pos] = this;
 
-				Position = pos;
+				position = pos;
 			}
+
+			return true;
 		}
 
 
@@ -271,7 +275,7 @@ namespace DungeonEye
 			// Draw offset
 			if (LastDrawOffset + DrawOffsetDuration < DateTime.Now)
 			{
-				DrawOffset = new Point(GameBase.Random.Next(-10, 10), GameBase.Random.Next(-10, 10));
+			//	DrawOffset = new Point(GameBase.Random.Next(-10, 10), GameBase.Random.Next(-10, 10));
 				LastDrawOffset = DateTime.Now;
 			}
 
@@ -331,12 +335,14 @@ namespace DungeonEye
 					else if (IsNear(Team.Location))
 					{
 						// Face the target
-						if (Location.IsFacing(Team.Location))
-							Location.FaceTo(Team.Location);
+						//if (Location.IsFacing(Team.Location))
+						//	Location.FaceTo(Team.Location);
 
 						// No choice, attack !
-						//if (!CanUseAmmo)
-						//	CurrentBehaviour = MonsterBehaviour.Aggressive;
+						if (!CanUseAmmo)
+						{
+							//CurrentBehaviour = MonsterBehaviour.Aggressive;
+						}
 					}
 				}
 				break;
@@ -366,36 +372,139 @@ namespace DungeonEye
 		public bool CanGetCloserTo(DungeonLocation target)
 		{
 			if (target == null)
-				throw new ArgumentNullException("target");
-
-			// Monster is alone in the square
-			if (Location.Position == SquarePosition.Center)
 				return false;
 
-			// Find the distance
+			// Monster is alone in the square
+			if (Position == SquarePosition.Center)
+				return false;
+
 			Point dist = new Point(Location.Coordinate.X - target.Coordinate.X, Location.Coordinate.Y - target.Coordinate.Y);
 
-			// Current maze
-		//	Maze maze = Location.Maze;
-			Square square = Maze.GetBlock(Location.Coordinate);
+			switch (Position)
+			{
+				#region North west
+				case SquarePosition.NorthWest:
+				{
+				
+					// 
+					if (dist.X < 0)
+					{
+						if (Square.Monsters[(int)SquarePosition.SouthEast] == null || Square.Monsters[(int)SquarePosition.SouthWest] == null)
+							return true;
+					}
+					//
+					else if (dist.X > 0)
+					{
+					}
 
-			// Target on the right
-			if (dist.X > 0)
-			{
-			}
-			else
-			{
+					// Above
+					if (dist.Y > 0)
+					{
+					}
+
+					// Below
+					else if (dist.Y < 0)
+					{
+						if (Square.GetMonster(SquarePosition.SouthWest) == null || Square.GetMonster(SquarePosition.SouthEast) == null)
+							return true;
+					}
+				}
+				break;
+				#endregion
+
+				#region North east
+				case SquarePosition.NorthEast:
+				{
+
+					// Right
+					if (dist.X < 0)
+					{
+					}
+
+					// Left
+					else if (dist.X > 0)
+					{
+						if (Square.GetMonster(SquarePosition.NorthWest) == null || Square.GetMonster(SquarePosition.SouthWest) == null)
+							return true;
+					}
+
+					// Below
+					if (dist.Y < 0)
+					{
+						if (Square.Monsters[(int)SquarePosition.SouthEast] == null || Square.Monsters[(int)SquarePosition.SouthWest] == null)
+							return true;
+					}
+					else if (dist.Y > 0)
+					{
+					}
+				}
+				break;
+				#endregion
+
+				#region South west
+				case SquarePosition.SouthWest:
+				{
+					// Right
+					if (dist.X < 0)
+					{
+						if (Square.GetMonster(SquarePosition.SouthEast) == null || Square.GetMonster(SquarePosition.NorthEast) == null)
+							return true;
+					}
+
+					// Left
+					else if (dist.X > 0)
+					{
+					}
+
+					// Above
+					if (dist.Y > 0)
+					{
+						if (Square.GetMonster(SquarePosition.NorthWest) == null || Square.GetMonster(SquarePosition.NorthEast) == null)
+							return true;						
+					}
+
+					// Below
+					else if (dist.Y < 0)
+					{
+					}
+				}
+				break;
+				#endregion
+
+				#region South east
+				case SquarePosition.SouthEast:
+				{
+
+					// Left
+					if (dist.X > 0)
+					{
+						// No monster in SW
+						if (Square.GetMonster(SquarePosition.SouthWest) == null || Square.GetMonster(SquarePosition.NorthWest) == null)
+							return true;
+					}
+
+					// Right
+					else if (dist.X < 0)
+					{
+					}
+
+
+					// Below
+					if (dist.Y < 0)
+					{
+					}
+
+					// Above
+					else if (dist.Y > 0)
+					{
+						if (Square.GetMonster(SquarePosition.NorthEast) == null || Square.GetMonster(SquarePosition.NorthWest) == null)
+							return true;
+					}
+				}
+				break;
+				#endregion
 			}
 
-			// Target above
-			if (dist.Y > 0)
-			{
-				//if (Location.Position == SquarePosition.SouthWest && maze.IsLocationFree(Location, SquarePosition.NorthWest))
-
-			}
-			else
-			{
-			}
 
 			return false;
 		}
@@ -407,11 +516,160 @@ namespace DungeonEye
 		/// <param name="target">Target point</param>
 		public void GetCloserTo(DungeonLocation target)
 		{
-			if (target == null)
+			// Can we get closer ?
+			if (!CanGetCloserTo(target))
 				return;
 
-			// Find the bearing with the target
-			CardinalPoint bearing = Compass.SeekDirection(Location, target);
+
+					Point dist = new Point(Location.Coordinate.X - target.Coordinate.X, Location.Coordinate.Y - target.Coordinate.Y);
+
+			switch (Position)
+			{
+				#region North west
+				case SquarePosition.NorthWest:
+				{
+					// 
+					if (dist.X < 0)
+					{
+						if (Square.Monsters[(int)SquarePosition.SouthEast] == null)
+							Teleport(Square, SquarePosition.SouthEast);
+					
+						else if (Square.Monsters[(int)SquarePosition.SouthWest] == null)
+							Teleport(Square, SquarePosition.SouthWest);
+					}
+					//
+					else if (dist.X > 0)
+					{
+					}
+
+					// Above
+					if (dist.Y > 0)
+					{
+					}
+
+					// Below
+					else if (dist.Y < 0)
+					{
+						if (Square.GetMonster(SquarePosition.SouthWest) == null)
+							Teleport(Square, SquarePosition.SouthWest);
+
+						else if (Square.GetMonster(SquarePosition.SouthEast) == null)
+							Teleport(Square, SquarePosition.SouthEast);
+					}
+				}
+				break;
+				#endregion
+
+				#region North east
+				case SquarePosition.NorthEast:
+				{
+					// Right
+					if (dist.X < 0)
+					{
+					}
+
+					// Left
+					else if (dist.X > 0)
+					{
+						if (Square.GetMonster(SquarePosition.NorthWest) == null)
+							Teleport(Square, SquarePosition.NorthWest);
+						else if(Square.GetMonster(SquarePosition.SouthWest) == null)
+							Teleport(Square, SquarePosition.SouthWest);							
+					}
+
+
+					// Below
+					if (dist.Y < 0)
+					{
+						if (Square.Monsters[(int)SquarePosition.SouthEast] == null)
+							Teleport(Square, SquarePosition.SouthEast);
+
+						else if (Square.Monsters[(int)SquarePosition.SouthWest] == null)
+							Teleport(Square, SquarePosition.SouthWest);
+					}
+					else if (dist.Y > 0)
+					{
+					}
+				}
+				break;
+				#endregion
+
+				#region South west
+				case SquarePosition.SouthWest:
+				{
+
+					// Right
+					if (dist.X < 0)
+					{
+						if (Square.GetMonster(SquarePosition.SouthEast) == null)
+							Teleport(Square, SquarePosition.SouthEast);
+						else if (Square.GetMonster(SquarePosition.NorthEast) == null)
+							Teleport(Square, SquarePosition.NorthEast);
+					}
+
+					// Left
+					else if (dist.X > 0)
+					{
+					}
+
+					// Above
+					if (dist.Y > 0)
+					{
+						if (Square.GetMonster(SquarePosition.NorthWest) == null)
+							Teleport(Square, SquarePosition.NorthWest);
+						else if (Square.GetMonster(SquarePosition.NorthEast) == null)
+							Teleport(Square, SquarePosition.NorthEast);
+					}
+
+					// Below
+					else if (dist.Y < 0)
+					{
+					}
+				}
+				break;
+				#endregion
+
+				#region South east
+				case SquarePosition.SouthEast:
+				{
+
+					// Left
+					if (dist.X > 0)
+					{
+						// No monster in SW
+						if (Square.GetMonster(SquarePosition.SouthWest) == null)
+							Teleport(Square, SquarePosition.SouthWest);
+
+						// No monster in NW
+						if (Square.GetMonster(SquarePosition.NorthWest) == null)
+							Teleport(Square, SquarePosition.NorthWest);
+					}
+
+					// Right
+					else if (dist.X < 0)
+					{
+					}
+
+
+					// Below
+					if (dist.Y < 0)
+					{
+					}
+
+					// Above
+					else if (dist.Y > 0)
+					{
+						if (Square.GetMonster(SquarePosition.NorthEast) == null)
+							Teleport(Square, SquarePosition.NorthEast);
+
+						else if (Square.GetMonster(SquarePosition.NorthWest) == null)
+							Teleport(Square, SquarePosition.NorthWest);
+					}
+				}
+				break;
+				#endregion
+			}
+
 
 		}
 
@@ -1042,7 +1300,7 @@ namespace DungeonEye
 
 			writer.WriteStartElement("monster");
 			writer.WriteAttributeString("name", Name);
-			writer.WriteAttributeString("position", Position.ToString());
+			writer.WriteAttributeString("position", position.ToString());
 
 			base.Save(writer);
 
@@ -1241,6 +1499,11 @@ namespace DungeonEye
 		{
 			get
 			{
+				// The only monster in the square, then we are in the middle
+				//if (Square != null && Square.MonsterCount == 1)
+				//    return SquarePosition.Center;
+
+
 				return position;
 			}
 			set

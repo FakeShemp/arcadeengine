@@ -77,7 +77,7 @@
 			// 
 			// SpeedBox
 			// 
-			this.SpeedBox.Location = new System.Drawing.Point(246, 64);
+			this.SpeedBox.Location = new System.Drawing.Point(291, 64);
 			this.SpeedBox.Maximum = new decimal(new int[] {
             100000000,
             0,
@@ -92,11 +92,12 @@
 			// label8
 			// 
 			this.label8.AutoSize = true;
-			this.label8.Location = new System.Drawing.Point(181, 66);
+			this.label8.Location = new System.Drawing.Point(180, 66);
 			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(44, 13);
+			this.label8.Size = new System.Drawing.Size(71, 13);
 			this.label8.TabIndex = 3;
-			this.label8.Text = "Speed :";
+			this.label8.Text = "Speed in ms :";
+			this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// label7
 			// 
