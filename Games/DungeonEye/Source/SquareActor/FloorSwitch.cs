@@ -69,6 +69,33 @@ namespace DungeonEye
 
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString()
+		{
+			StringBuilder sb = new StringBuilder();
+
+			sb.Append("Floor switch (");
+
+
+			if (IsHidden)
+				sb.Append("Hidden. ");
+
+			sb.Append("Affect ");
+			if (AffectTeam)
+				sb.Append("Team ");
+			if (AffectMonsters)
+				sb.Append("monsters ");
+			if (AffectItems)
+				sb.Append("items ");
+
+			sb.Append(")");
+			return sb.ToString();
+		}
+
+
 		#region I/O
 
 
@@ -255,6 +282,36 @@ namespace DungeonEye
 		}
 
 
+		/// <summary>
+		/// Does affect monsters
+		/// </summary>
+		public bool AffectMonsters
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// Does affect team
+		/// </summary>
+		public bool AffectTeam
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// Does affect items
+		/// </summary>
+		public bool AffectItems
+		{
+			get;
+			set;
+		}
+
+	
 		/// <summary>
 		///  Action to execute
 		/// </summary>

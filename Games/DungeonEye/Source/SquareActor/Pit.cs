@@ -82,7 +82,7 @@ namespace DungeonEye
 				sb.Append(Target);
 
 			if (Damage != null)
-				sb.Append(" " + Damage);
+				sb.Append(". Difficulty : " + Damage);
 			
 			sb.Append(")");
 

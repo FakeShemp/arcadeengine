@@ -408,7 +408,10 @@ namespace DungeonEye
 		public void GetCloserTo(DungeonLocation target)
 		{
 			if (target == null)
-				throw new ArgumentNullException("target");
+				return;
+
+			// Find the bearing with the target
+			CardinalPoint bearing = Compass.SeekDirection(Location, target);
 
 		}
 

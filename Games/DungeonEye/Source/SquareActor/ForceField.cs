@@ -41,9 +41,49 @@ namespace DungeonEye
 			Spin = CompassRotation.Rotate180;
 			Move = CardinalPoint.North;
 
+			AffectTeam = true;
+			AffectMonsters = true;
+			AffectItems = true;
+
 			AcceptItems = true;
 			CanPassThrough = true;
 			IsBlocking = false;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString()
+		{
+			StringBuilder sb = new StringBuilder();
+
+			sb.Append("ForceField (");
+
+			switch (Type)
+			{
+				case ForceFieldType.Spin:
+					sb.Append("Spin " + Spin);
+				break;
+				case ForceFieldType.Move:
+					sb.Append("Move " + Move);
+				break;
+				case ForceFieldType.Block:
+					sb.Append("Block");
+			break;
+			}
+
+			sb.Append(". Affect :");
+			if (AffectTeam)
+				sb.Append("Team ");
+			if (AffectMonsters)
+				sb.Append("monsters ");
+			if (AffectItems)
+				sb.Append("items ");
+
+			sb.Append(")");
+			return sb.ToString();
 		}
 
 
@@ -127,7 +167,6 @@ namespace DungeonEye
 
 
 		#endregion
-
 
 
 		#region Script
