@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <team>
 	<dungeon name="Eye" />
-	<location maze="test" x="10" y="17" direction="South" position="NorthEast" />
+	<location maze="test" x="6" y="15" direction="North" position="NorthEast" />
 	<position slot="FrontLeft">
 		<hero name="Allabar">
 			<hitpoint current="23" max="23" />
@@ -64,7 +64,7 @@
 	</position>
 	<position slot="MiddleLeft">
 		<hero name="Valanau">
-			<hitpoint current="34" max="34" />
+			<hitpoint current="30" max="34" />
 			<strength value="6" />
 			<intelligence value="12" />
 			<wisdom value="12" />
@@ -115,7 +115,7 @@
 	</position>
 	<position slot="MiddleRight">
 		<hero name="TenMiyana">
-			<hitpoint current="30" max="30" />
+			<hitpoint current="15" max="30" />
 			<strength value="10" />
 			<intelligence value="13" />
 			<wisdom value="10" />
@@ -142,7 +142,7 @@
 	</position>
 	<position slot="RearLeft">
 		<hero name="Weann">
-			<hitpoint current="30" max="30" />
+			<hitpoint current="26" max="30" />
 			<strength value="10" />
 			<intelligence value="13" />
 			<wisdom value="10" />

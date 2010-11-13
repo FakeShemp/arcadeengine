@@ -28,26 +28,26 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.monsterControl1 = new DungeonEye.Forms.MonsterControl();
+			this.MonsterBox = new DungeonEye.Forms.MonsterControl();
 			this.SuspendLayout();
 			// 
-			// monsterControl1
+			// MonsterBox
 			// 
-			this.monsterControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			this.MonsterBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
 						| System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
-			this.monsterControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.monsterControl1.Location = new System.Drawing.Point(12, 12);
-			this.monsterControl1.Name = "monsterControl1";
-			this.monsterControl1.Size = new System.Drawing.Size(664, 504);
-			this.monsterControl1.TabIndex = 0;
+			this.MonsterBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.MonsterBox.Location = new System.Drawing.Point(12, 12);
+			this.MonsterBox.Name = "MonsterBox";
+			this.MonsterBox.Size = new System.Drawing.Size(664, 504);
+			this.MonsterBox.TabIndex = 0;
 			// 
 			// MonsterForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(688, 528);
-			this.Controls.Add(this.monsterControl1);
+			this.Controls.Add(this.MonsterBox);
 			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
 			this.KeyPreview = true;
@@ -68,7 +68,7 @@
 
 		#endregion
 
-		private MonsterControl monsterControl1;
+		private MonsterControl MonsterBox;
 
 	}
 }

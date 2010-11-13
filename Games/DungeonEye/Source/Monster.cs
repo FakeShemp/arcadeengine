@@ -164,8 +164,8 @@ namespace DungeonEye
 		/// Teleport the monster to a given location
 		/// </summary>
 		/// <param name="target">Destination square</param>
-		/// <param name="position">Square position</param>
-		public void Teleport(Square square, SquarePosition position)
+		/// <param name="pos">Square position</param>
+		public void Teleport(Square square, SquarePosition pos)
 		{
 			// Move to another square
 			if (Square != square)
@@ -179,7 +179,7 @@ namespace DungeonEye
 				Square = square;
 
 				// Add the monster to the new square
-				Position = position;
+				position = pos;
 				Square.Monsters[(int)Position] = this;
 			}
 
@@ -187,12 +187,14 @@ namespace DungeonEye
 			else
 			{
 				// Remove from previous position
-				Square.Monsters[(int)Position] = null;
+				if (Square != null)
+					Square.Monsters[(int)Position] = null;
 
-				// Move to the new position
-				Square.Monsters[(int)position] = this;
+					// Move to the new position
+				if (square != null)
+					square.Monsters[(int)pos] = this;
 
-				Position = position;
+				Position = pos;
 			}
 		}
 
@@ -1230,13 +1232,27 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Square position
+		/// Gets or sets the square position
 		/// </summary>
 		public SquarePosition Position
 		{
-			get;
-			private set;
+			get
+			{
+				return position;
+			}
+			set
+			{
+				// Remove from previous position
+				if (Square != null)
+				{
+					Square.Monsters[(int)position] = null;
+					Square.Monsters[(int)value] = this;
+				}
+
+				position = value;
+			}
 		}
+		SquarePosition position;
 
 
 		/// <summary>

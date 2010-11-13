@@ -43,6 +43,9 @@ namespace DungeonEye.Forms
 
 			Monster = new Monster(null);
 			Monster.Load(node);
+
+			MonsterBox.SetMonster(Monster);
+
 		}
 
 

@@ -116,9 +116,15 @@ namespace DungeonEye
 			if (delta.X < 0)
 			{
 				if (delta.Y > 0)
-					return CardinalPoint.South | CardinalPoint.West;
+					if (target.Direction == CardinalPoint.North)
+						return CardinalPoint.South;
+					else
+						return CardinalPoint.West;
 				else if (delta.Y < 0)
-					return CardinalPoint.North | CardinalPoint.West;
+					if (target.Direction == CardinalPoint.South)
+						return CardinalPoint.North;
+					else
+						return CardinalPoint.West;
 				else
 					return CardinalPoint.West;
 			}
@@ -127,9 +133,15 @@ namespace DungeonEye
 			else if (delta.X > 0)
 			{
 				if (delta.Y > 0)
-					return CardinalPoint.South | CardinalPoint.East;
+					if (target.Direction == CardinalPoint.North)
+						return CardinalPoint.South;
+					else
+						return CardinalPoint.East;
 				else if (delta.Y < 0)
-					return CardinalPoint.North | CardinalPoint.East;
+					if (target.Direction == CardinalPoint.South)
+						return CardinalPoint.North;
+					else
+						return CardinalPoint.East;
 				else
 					return CardinalPoint.East;
 			}

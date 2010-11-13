@@ -393,25 +393,34 @@ namespace DungeonEye.Forms
 		private void glControl_DoubleClick(object sender, EventArgs e)
 		{
 			// No maze or not a double left mouse click
-			if (Maze == null || ((MouseEventArgs)e).Button != MouseButtons.Left)
+			if (Maze == null)
 				return;
 
 
-			// Get mouse coordinate
-			Point pos = glControl.PointToClient(MousePosition);
-			pos = new Point((pos.X - Offset.X) / 25, (pos.Y - Offset.Y) / 25);
-			if (!Maze.Contains(pos))
-				return;
+			MouseEventArgs arg = e as MouseEventArgs;
 
-			Square square = Maze.GetBlock(pos);
 
-			// Edit actor
-			if (square.Actor != null)
-				EditActor(square);
+			if (arg.Button == MouseButtons.Left)
+			{
 
-			// Edit square
-			else
-				new SquareForm(Maze, Maze.GetBlock(pos)).ShowDialog();
+				// Get mouse coordinate
+				Point pos = glControl.PointToClient(MousePosition);
+				pos = new Point((pos.X - Offset.X) / 25, (pos.Y - Offset.Y) / 25);
+				if (!Maze.Contains(pos))
+					return;
+
+				Square square = Maze.GetBlock(pos);
+				if (square == null)
+					return;
+
+				// Edit actor
+				if (square.Actor != null)
+					EditActor(square);
+
+				// Edit square
+				else
+					new SquareForm(Maze, Maze.GetBlock(pos)).ShowDialog();
+			}
 		}
 
 

@@ -583,24 +583,6 @@ namespace DungeonEye
 			if (Actor != null)
 				Actor.Save(writer);
 
-			//if (Door != null)
-			//	Door.Save(writer);
-
-			//if (FloorPlate != null)
-			//    FloorPlate.Save(writer);
-
-			//if (Pit != null)
-			//    Pit.Save(writer);
-
-			//if (Teleporter != null)
-			//    Teleporter.Save(writer);
-
-			//if (ForceField != null)
-			//    ForceField.Save(writer);
-
-			//if (Stair != null)
-			//	Stair.Save(writer);
-
 
 			// Wall decoration
 			for (int i = 0; i < 4; i++)
@@ -691,7 +673,6 @@ namespace DungeonEye
 					}
 					break;
 
-					// Items on ground
 					case "item":
 					{
 						SquarePosition loc = (SquarePosition)Enum.Parse(typeof(SquarePosition), node.Attributes["location"].Value);
