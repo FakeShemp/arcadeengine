@@ -138,6 +138,8 @@
 			<inventory position="Helmet" name="Helmet" />
 			<backpack position="6" name="Light Steel Shield" />
 			<spell name="Create Food" />
+			<spell name="Cure Light Wounds" />
+			<spell name="Slow Poison" />
 		</hero>
 	</position>
 	<position slot="RearLeft">

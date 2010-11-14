@@ -41,8 +41,95 @@ namespace DungeonEye.Gui.CampWindows
 			button.Selected += new EventHandler(Exit_Selected);
 			Buttons.Add(button);
 
+
+			MessageBox = new MessageBox("Will your healers<br />heals the party ?", MessageBoxButtons.YesNo);
+			MessageBox.Selected += new EventHandler(HealAnswer);
+
+
+
+
 		}
 
+
+		#region Events
+
+		/// <summary>
+		/// Heals the party answer
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void HealAnswer(object sender, EventArgs e)
+		{
+			if (((MessageBox)sender).DialogResult == DialogResult.Yes)
+				HealParty = true;
+
+			Start = DateTime.Now;
+		}
+
+		#endregion
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="time"></param>
+		public override void Update(GameTime time)
+		{
+			base.Update(time);
+
+			// No answer, waiting
+			if (Start == DateTime.MinValue)
+				return;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="batch"></param>
+		public override void Draw(SpriteBatch batch)
+		{
+			base.Draw(batch);
+
+			// No answer, waiting
+			if (Start == DateTime.MinValue)
+				return;
+
+			// Number of hour sleeping
+			int hours = (int)(DateTime.Now - Start).TotalSeconds;
+
+			// Display
+			batch.DrawString(Camp.Font, new Point(26, 58), Color.White, "Hours rested : " + hours);
+
+			foreach (Hero hero in Camp.Team.Heroes)
+			{
+				if (hero == null)
+					continue;
+
+				// Hero can heal some one ?
+				if (hero.CanHeal())
+				{
+
+					// Find the weakest hero and heal him
+					Hero weakest = Camp.Team.Heroes[0];
+					foreach (Hero h in Camp.Team.Heroes)
+					{
+						if (h == null)
+							continue;
+
+						if (h.HitPoint.Ratio < weakest.HitPoint.Ratio)
+							weakest = h;
+					}
+
+					if (weakest.HitPoint.Ratio < 1.0f)
+					{
+						Camp.Team.AddMessage(hero.Name + " casts healing on " + weakest.Name);
+						hero.Heal(weakest);
+					}
+				}
+			}
+		}
 
 
 		#region Events
@@ -64,7 +151,16 @@ namespace DungeonEye.Gui.CampWindows
 		#region Properties
 
 
+		/// <summary>
+		/// Start of the rest
+		/// </summary>
+		DateTime Start;
 
+
+		/// <summary>
+		/// Does healers heals the party
+		/// </summary>
+		bool HealParty;
 
 		#endregion
 

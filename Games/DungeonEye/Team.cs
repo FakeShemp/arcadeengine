@@ -195,16 +195,13 @@ namespace DungeonEye
 			}
 			TileSet = null;
 
-			if (SpellBook != null)
-				SpellBook.Dispose();
-			SpellBook = null;
-
 			if (Batch != null)
 				Batch.Dispose();
 			Batch = null;
 
 
 
+			SpellBook = null;
 			SaveGame = "";
 			Heroes = null;
 			SelectedHero = null;
@@ -2730,9 +2727,13 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// All heros in the team
+		/// All heroes in the team
 		/// </summary>
-		public List<Hero> Heroes;
+		public List<Hero> Heroes
+		{
+			get;
+			private set;
+		}
 
 
 		/// <summary>

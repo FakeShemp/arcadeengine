@@ -63,6 +63,15 @@ namespace DungeonEye
 
 
 		/// <summary>
+		/// Adds a value to the curent HP
+		/// </summary>
+		/// <param name="amount"></param>
+		public void Add(int amount)
+		{
+			Current += amount;
+		}
+
+		/// <summary>
 		/// 
 		/// </summary>
 		/// <returns></returns>

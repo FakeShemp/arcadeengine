@@ -166,7 +166,7 @@ namespace DungeonEye.Forms
 				HPBox.HitPoint = Hero.HitPoint;
 				FoodBox.Value = Hero.Food;
 				NameBox.Text = Hero.Name;
-				IsNPCBox.Checked = Hero.IsNPC;
+				//IsNPCBox.Checked = Hero.IsNPC;
 			}
 
 			// Repaint
@@ -542,7 +542,7 @@ namespace DungeonEye.Forms
 			if (Hero == null)
 				return;
 
-			Hero.IsNPC = IsNPCBox.Checked;
+			//Hero.IsNPC = IsNPCBox.Checked;
 		}
 
 

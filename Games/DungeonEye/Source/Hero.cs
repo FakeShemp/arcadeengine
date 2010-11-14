@@ -78,15 +78,6 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
-		/// </summary>
-		/// <returns></returns>
-		public bool Init()
-		{
-			return true;
-		}
-
-		/// <summary>
 		/// Updates hero
 		/// </summary>
 		/// <param name="time">Elapsed gametime</param>
@@ -480,7 +471,7 @@ namespace DungeonEye
 		{
 			List<Spell> spells = new List<Spell>();
 
-
+			// Bad level
 			if (level < 0 || level > 6)
 				return spells;
 
@@ -1116,11 +1107,11 @@ namespace DungeonEye
 					}
 					break;
 
-					case "npc":
-					{
-						IsNPC = bool.Parse(node.Attributes["value"].Value);
-					}
-					break;
+					//case "npc":
+					//{
+					//    IsNPC = bool.Parse(node.Attributes["value"].Value);
+					//}
+					//break;
 
 					case "race":
 					{
@@ -1189,9 +1180,9 @@ namespace DungeonEye
 			writer.WriteAttributeString("value", Food.ToString());
 			writer.WriteEndElement();
 
-			writer.WriteStartElement("npc");
-			writer.WriteAttributeString("value", IsNPC.ToString());
-			writer.WriteEndElement();
+			//writer.WriteStartElement("npc");
+			//writer.WriteAttributeString("value", IsNPC.ToString());
+			//writer.WriteEndElement();
 
 			writer.WriteStartElement("race");
 			writer.WriteAttributeString("value", Race.ToString());
@@ -1256,6 +1247,115 @@ namespace DungeonEye
 
 		#endregion
 
+		#region Magic
+
+		/// <summary>
+		/// Does the hero can heal another hero
+		/// </summary>
+		public bool CanHeal()
+		{
+			// Check for hero class
+			if (!CheckClass(HeroClass.Cleric))
+				return false;
+
+			List<Spell> spells = null;
+
+			#region Level 1 - Cure Light Wounds
+			spells = GetSpells(HeroClass.Cleric, 1);
+
+			foreach (Spell spell in spells)
+				if (spell.Name == "Cure Light Wounds")
+					return true;
+			#endregion
+
+			#region Level 4 - Cure Serious Wounds
+			spells = GetSpells(HeroClass.Cleric, 4);
+
+			foreach (Spell spell in spells)
+				if (spell.Name == "Cure Serious Wounds")
+					return true;
+			#endregion
+
+			#region Level 5 - Cure Critical Wounds
+			spells = GetSpells(HeroClass.Cleric, 5);
+
+			foreach (Spell spell in spells)
+				if (spell.Name == "Cure Critical Wounds")
+					return true;
+			#endregion
+
+			#region Level 6 - Heal
+			spells = GetSpells(HeroClass.Cleric, 6);
+
+			foreach (Spell spell in spells)
+				if (spell.Name == "Heal")
+					return true;
+			#endregion
+
+			return false;
+		}
+
+	
+		/// <summary>
+		/// Heal a hero
+		/// </summary>
+		/// <param name="hero">Hero to heal</param>
+		public void Heal(Hero hero)
+		{
+			if (!CanHeal() || hero == null)
+				return;
+
+			//Spell spell = Hero.PopSpell(Class, SpellLevel, i + 1);
+			//if (spell != null && spell.Script.Instance != null)
+			//    spell.Script.Instance.OnCast(spell, Hero);
+
+			List<Spell> spells = null;
+
+			#region Level 1 - Cure Light Wounds
+			spells = GetSpells(HeroClass.Cleric, 1);
+
+			foreach (Spell spell in spells)
+			{
+				if (spell.Name == "Cure Light Wounds")
+				{
+					spell.Script.Instance.OnCast(spell, hero);
+					return;
+				}
+
+			}
+
+			#endregion
+
+			#region Level 4 - Cure Serious Wounds
+			spells = GetSpells(HeroClass.Cleric, 4);
+
+			foreach (Spell spell in spells)
+				if (spell.Name == "Cure Serious Wounds")
+				{
+				}
+			#endregion
+
+			#region Level 5 - Cure Critical Wounds
+			spells = GetSpells(HeroClass.Cleric, 5);
+
+			foreach (Spell spell in spells)
+				if (spell.Name == "Cure Critical Wounds")
+				{
+				}
+			#endregion
+
+			#region Level 6 - Heal
+			spells = GetSpells(HeroClass.Cleric, 6);
+
+			foreach (Spell spell in spells)
+				if (spell.Name == "Heal")
+				{
+				}
+			#endregion
+
+		}
+
+		#endregion
 
 		#region Hero properties
 
@@ -1280,6 +1380,7 @@ namespace DungeonEye
 			}
 		}
 
+/*
 		/// <summary>
 		/// Is a Non Player Character
 		/// </summary>
@@ -1288,7 +1389,7 @@ namespace DungeonEye
 			get;
 			set;
 		}
-
+*/
 		/// <summary>
 		/// Returns true if dead
 		/// </summary>
@@ -1443,16 +1544,6 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Known scrolls
-		/// </summary>
-		public List<string> LearnedSpells
-		{
-			get;
-			private set;
-		}
-
-
-		/// <summary>
 		/// Number of arrow in the quiver
 		/// </summary>
 		public int Quiver;
@@ -1599,11 +1690,26 @@ namespace DungeonEye
 		HandAction[] HandActions;
 
 
+		#region Magic
+
 		/// <summary>
 		/// Available spells
 		/// </summary>
 		List<Spell>[] Spells;
 
+
+		/// <summary>
+		/// Known scrolls
+		/// </summary>
+		public List<string> LearnedSpells
+		{
+			get;
+			private set;
+		}
+
+
+
+		#endregion
 
 		#endregion
 

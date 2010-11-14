@@ -32,7 +32,7 @@ namespace DungeonEye
 	/// <summary>
 	/// Speel window
 	/// </summary>
-	public class SpellBook : IDisposable
+	public class SpellBook// : IDisposable
 	{
 
 		/// <summary>
@@ -43,27 +43,13 @@ namespace DungeonEye
 			SpellLevel = 1;
 		}
 
-		
-		/// <summary>
-		/// Dispose
-		/// </summary>
-		public void Dispose()
-		{
-			if (Font != null)
-				Font.Dispose();
-			Font = null;
-			
-			ResourceManager.RemoveSharedAsset<TileSet>("interface");
-			Tileset = null;
-		}
-
 
 		/// <summary>
 		/// Loads content
 		/// </summary>
 		public void LoadContent()
 		{
-			Font = ResourceManager.CreateAsset<BitmapFont>("inventory");
+			Font = ResourceManager.GetSharedAsset<BitmapFont>("inventory");
 
 			Tileset = ResourceManager.GetSharedAsset<TileSet>("Interface");
 		}
