@@ -161,7 +161,7 @@ namespace DungeonEye.MonsterStates
 					// Automatic direction changing
 					//Monster.Location.Direction = direction;
 
-					Monster.StateManager.PushState(new MoveState(Monster, range, direction));
+					//Monster.StateManager.PushState(new MoveState(Monster, range, direction));
 					return;
 				}
 			}

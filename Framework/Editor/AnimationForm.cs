@@ -119,7 +119,10 @@ namespace ArcEngine.Editor
 
             SpriteBatch = new SpriteBatch();
 
-	//		Animation.Init();
+			// Preload background texture resource
+			CheckerBoard = new Texture2D(ResourceManager.GetInternalResource("ArcEngine.Resources.checkerboard.png"));
+			CheckerBoard.HorizontalWrap = TextureWrapFilter.Repeat;
+			CheckerBoard.VerticalWrap = TextureWrapFilter.Repeat;
 
 			// Draw timer
 			DrawTimer.Start();
@@ -183,6 +186,10 @@ namespace ArcEngine.Editor
 			if (Animation != null)
 				Animation.Dispose();
 			Animation = null;
+
+			if (CheckerBoard != null)
+				CheckerBoard.Dispose();
+			CheckerBoard = null;
 		}
 
 
@@ -294,12 +301,15 @@ namespace ArcEngine.Editor
 			Display.ClearBuffers();
 
 
-			try
-			{
-				//if (Animation.TileSet == null)
-				//    return;
+			SpriteBatch.Begin();
 
-				Animation.Draw(SpriteBatch, AnimOffset);
+			// Background texture
+			Rectangle dst = new Rectangle(Point.Empty, GlPreviewControl.Size);
+			SpriteBatch.Draw(CheckerBoard, dst, dst, Color.White);
+
+
+
+			Animation.Draw(SpriteBatch, AnimOffset);
 
 /*
 				Tile tile = Animation.CurrentTile;
@@ -312,12 +322,9 @@ namespace ArcEngine.Editor
 
 				Animation.TileSet.Draw(Animation.CurrentFrame, AnimOffset);
 */
-			}
-			finally
-			{
-				GlPreviewControl.SwapBuffers();
-			}
 
+			SpriteBatch.End();
+			GlPreviewControl.SwapBuffers();
 		}
 
 
@@ -529,44 +536,49 @@ namespace ArcEngine.Editor
 			GlFramesControl.MakeCurrent();
 			Display.ClearBuffers();
 
+
+			SpriteBatch.Begin();
+
+			// Background texture
+			Rectangle dst = new Rectangle(Point.Empty, GlFramesControl.Size);
+			SpriteBatch.Draw(CheckerBoard, dst, dst, Color.White);
+
 			// Oops !
-			if (Animation.TileSet == null)
+			if (Animation.TileSet != null)
 			{
-				GlFramesControl.SwapBuffers();
-				return;
-			}
 
-			// Mouse location
-			Point mouse = GlFramesControl.PointToClient(Control.MousePosition);
+				// Mouse location
+				Point mouse = GlFramesControl.PointToClient(Control.MousePosition);
 
-			// Bind the TileSet
-		//	Animation.TileSet.Bind();
 
-	
-			// Display each frames
-			Rectangle rect = Rectangle.Empty;
-			for (int id = 0; id < Animation.Frames.Count; id++)
+				// Display each frames
+				Rectangle rect = Rectangle.Empty;
+				for (int id = 0; id < Animation.Frames.Count; id++)
 				{
-				Tile tile = Animation.TileSet.GetTile(Animation.Frames[id]);
-				if (tile == null)
-					continue;
+					Tile tile = Animation.TileSet.GetTile(Animation.Frames[id]);
+					if (tile == null)
+						continue;
 
-				rect.Size = tile.Size;
+					rect.Size = tile.Size;
 
-				//Animation.TileSet.Texture.Blit(rect, tile.Rectangle);
-				//Display.BlitTexture(Animation.TileSet.Texture, rect, tile.Rectangle);
-                SpriteBatch.Draw(Animation.TileSet.Texture, rect, tile.Rectangle, Color.White);
+					//Animation.TileSet.Texture.Blit(rect, tile.Rectangle);
+					//Display.BlitTexture(Animation.TileSet.Texture, rect, tile.Rectangle);
+					SpriteBatch.Draw(Animation.TileSet.Texture, rect, tile.Rectangle, Color.White);
 
-				if (rect.Contains(mouse) || id == FrameID)
-				{
-					SpriteBatch.DrawRectangle(rect, Color.White);
+					if (rect.Contains(mouse) || id == FrameID)
+					{
+						SpriteBatch.DrawRectangle(rect, Color.White);
+					}
+
+					rect.X += tile.Size.Width;
+
+					if (rect.X > Display.ViewPort.Width)
+						break;
 				}
-
-				rect.X += tile.Size.Width;
-
-				if (rect.X > Display.ViewPort.Width)
-					break;
 			}
+
+			SpriteBatch.End();
+
 
 			GlFramesControl.SwapBuffers();
 		}
@@ -673,52 +685,57 @@ namespace ArcEngine.Editor
 			GlTilesControl.MakeCurrent();
 			Display.ClearBuffers();
 
-			if (Animation.TileSet == null)
+
+			SpriteBatch.Begin();
+
+			// Background texture
+			Rectangle dst = new Rectangle(Point.Empty, GlTilesControl.Size);
+			SpriteBatch.Draw(CheckerBoard, dst, dst, Color.White);
+
+
+			if (Animation.TileSet != null)
 			{
-				GlTilesControl.SwapBuffers();
-				return;
+
+				// Find the cursor location
+				Point mouse = GlTilesControl.PointToClient(Control.MousePosition);
+
+
+				int maxheight = 0;
+				Rectangle rect = Rectangle.Empty;
+				foreach (int id in Animation.TileSet.Tiles)
+				{
+					// Get the display rectangle
+					Tile tile = Animation.TileSet.GetTile(id);
+					rect.Size = tile.Size;
+
+					// Blit the tile
+					//	Animation.TileSet.Draw(id, new Point(rect.X + tile.HotSpot.X, rect.Y + tile.HotSpot.Y));
+
+					// Is mouse over or selected tile
+					if (rect.Contains(mouse) || TileID == id)
+					{
+						SpriteBatch.DrawRectangle(rect, Color.White);
+					}
+
+					// Move right
+					rect.X += tile.Size.Width;
+
+
+					// End of line ?
+					if (rect.X + rect.Width > GlTilesControl.Width)
+					{
+						rect.X = 0;
+						rect.Y += maxheight + 10;
+						maxheight = 0;
+					}
+
+
+					// Get the maximum height
+					maxheight = Math.Max(maxheight, rect.Height);
+				}
 			}
 
-
-			// Find the cursor location
-			Point mouse = GlTilesControl.PointToClient(Control.MousePosition);
-
-
-			int maxheight = 0;
-			Rectangle rect = Rectangle.Empty;
-			foreach (int id in Animation.TileSet.Tiles)
-			{
-				// Get the display rectangle
-				Tile tile = Animation.TileSet.GetTile(id);
-				rect.Size = tile.Size;
-
-				// Blit the tile
-			//	Animation.TileSet.Draw(id, new Point(rect.X + tile.HotSpot.X, rect.Y + tile.HotSpot.Y));
-
-				// Is mouse over or selected tile
-				if (rect.Contains(mouse) || TileID == id)
-				{
-					SpriteBatch.DrawRectangle(rect, Color.White);
-				}
-
-				// Move right
-				rect.X += tile.Size.Width;
-
-
-				// End of line ?
-				if (rect.X + rect.Width > GlTilesControl.Width)
-				{
-					rect.X = 0;
-					rect.Y += maxheight + 10;
-					maxheight = 0;
-				}
-
-
-				// Get the maximum height
-				maxheight = Math.Max(maxheight, rect.Height);
-			}
-
-
+			SpriteBatch.End();
 			GlTilesControl.SwapBuffers();
 		}
 

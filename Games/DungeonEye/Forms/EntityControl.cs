@@ -54,7 +54,7 @@ namespace DungeonEye.Forms
 				IntelligenceBox.Value = 0;
 				WisdomBox.Value = 0;
 				CharismaBox.Value = 0;
-				SpeedBox.Value = 0;
+				MoveSpeedBox.Value = 0;
 			}
 			else
 			{
@@ -66,32 +66,10 @@ namespace DungeonEye.Forms
 				WisdomBox.Value = entity.Wisdom.Value;
 				CharismaBox.Value = entity.Charisma.Value;
 				AlignmentBox.SelectedItem = entity.Alignment;
-				SpeedBox.Value = (int)entity.Speed.TotalMilliseconds;
+				MoveSpeedBox.Value = (int)entity.MoveSpeed.TotalMilliseconds;
 			}
 		}
 
-
-		#region Properties
-
-		/// <summary>
-		/// Entity to edit
-		/// </summary>
-		public Entity Entity
-		{
-			get
-			{
-				return entity;
-			}
-
-			set
-			{
-				entity = value;
-				Rebuild();
-			}
-		}
-		Entity entity;
-
-		#endregion
 
 
 		#region Events
@@ -161,13 +139,38 @@ namespace DungeonEye.Forms
 			Rebuild();
 		}
 
-		private void SpeedBox_ValueChanged(object sender, EventArgs e)
+		private void MoveSpeedBox_ValueChanged(object sender, EventArgs e)
 		{
 			if (entity == null)
 				return;
 
-			entity.Speed = TimeSpan.FromMilliseconds((int)SpeedBox.Value);
+			entity.MoveSpeed = TimeSpan.FromMilliseconds((int)MoveSpeedBox.Value);
 		}
+
+
+
+		#endregion
+
+
+		#region Properties
+
+		/// <summary>
+		/// Entity to edit
+		/// </summary>
+		public Entity Entity
+		{
+			get
+			{
+				return entity;
+			}
+
+			set
+			{
+				entity = value;
+				Rebuild();
+			}
+		}
+		Entity entity;
 
 		#endregion
 

@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.SpeedBox = new System.Windows.Forms.NumericUpDown();
+			this.MoveSpeedBox = new System.Windows.Forms.NumericUpDown();
 			this.label8 = new System.Windows.Forms.Label();
 			this.label7 = new System.Windows.Forms.Label();
 			this.AlignmentBox = new System.Windows.Forms.ComboBox();
@@ -49,7 +49,7 @@
 			this.StrengthBox = new System.Windows.Forms.NumericUpDown();
 			this.hitPointControl1 = new DungeonEye.Forms.HitPointControl();
 			this.groupBox1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.SpeedBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.MoveSpeedBox)).BeginInit();
 			this.groupBox2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.CharismaBox)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.WisdomBox)).BeginInit();
@@ -61,7 +61,7 @@
 			// 
 			// groupBox1
 			// 
-			this.groupBox1.Controls.Add(this.SpeedBox);
+			this.groupBox1.Controls.Add(this.MoveSpeedBox);
 			this.groupBox1.Controls.Add(this.label8);
 			this.groupBox1.Controls.Add(this.label7);
 			this.groupBox1.Controls.Add(this.AlignmentBox);
@@ -70,33 +70,34 @@
 			this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupBox1.Location = new System.Drawing.Point(0, 0);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(621, 430);
+			this.groupBox1.Size = new System.Drawing.Size(385, 322);
 			this.groupBox1.TabIndex = 0;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Entity :";
 			// 
-			// SpeedBox
+			// MoveSpeedBox
 			// 
-			this.SpeedBox.Location = new System.Drawing.Point(291, 64);
-			this.SpeedBox.Maximum = new decimal(new int[] {
+			this.MoveSpeedBox.Location = new System.Drawing.Point(291, 64);
+			this.MoveSpeedBox.Maximum = new decimal(new int[] {
             100000000,
             0,
             0,
             0});
-			this.SpeedBox.Name = "SpeedBox";
-			this.SpeedBox.Size = new System.Drawing.Size(75, 20);
-			this.SpeedBox.TabIndex = 4;
-			this.SpeedBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.SpeedBox.ValueChanged += new System.EventHandler(this.SpeedBox_ValueChanged);
+			this.MoveSpeedBox.Name = "MoveSpeedBox";
+			this.MoveSpeedBox.Size = new System.Drawing.Size(75, 20);
+			this.MoveSpeedBox.TabIndex = 4;
+			this.MoveSpeedBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.MoveSpeedBox.ThousandsSeparator = true;
+			this.MoveSpeedBox.ValueChanged += new System.EventHandler(this.MoveSpeedBox_ValueChanged);
 			// 
 			// label8
 			// 
 			this.label8.AutoSize = true;
 			this.label8.Location = new System.Drawing.Point(180, 66);
 			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(71, 13);
+			this.label8.Size = new System.Drawing.Size(99, 13);
 			this.label8.TabIndex = 3;
-			this.label8.Text = "Speed in ms :";
+			this.label8.Text = "Move speed in ms :";
 			this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// label7
@@ -302,10 +303,10 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.groupBox1);
 			this.Name = "EntityControl";
-			this.Size = new System.Drawing.Size(621, 430);
+			this.Size = new System.Drawing.Size(385, 322);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.SpeedBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.MoveSpeedBox)).EndInit();
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.CharismaBox)).EndInit();
@@ -338,7 +339,7 @@
 		private System.Windows.Forms.Label label7;
 		private System.Windows.Forms.ComboBox AlignmentBox;
 		private System.Windows.Forms.Button RollAbilitiesBox;
-		private System.Windows.Forms.NumericUpDown SpeedBox;
+		private System.Windows.Forms.NumericUpDown MoveSpeedBox;
 		private System.Windows.Forms.Label label8;
 	}
 }

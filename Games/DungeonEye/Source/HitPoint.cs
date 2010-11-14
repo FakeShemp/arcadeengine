@@ -105,8 +105,8 @@ namespace DungeonEye
 			if (xml.Name != "hitpoint")
 				return false;
 
-			Current = int.Parse(xml.Attributes["current"].Value);
 			Max = int.Parse(xml.Attributes["max"].Value);
+			Current = int.Parse(xml.Attributes["current"].Value);
 
 
 

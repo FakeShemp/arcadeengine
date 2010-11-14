@@ -44,7 +44,7 @@ namespace DungeonEye
 			Intelligence = new Ability();
 			Wisdom = new Ability();
 
-			RollAbilities();
+			//RollAbilities();
 		}
 
 
@@ -183,9 +183,10 @@ namespace DungeonEye
 			writer.WriteAttributeString("value", Alignment.ToString());
 			writer.WriteEndElement();
 
-			writer.WriteStartElement("speed");
-			writer.WriteAttributeString("value", Speed.TotalMilliseconds.ToString());
+			writer.WriteStartElement("movespeed");
+			writer.WriteAttributeString("value", MoveSpeed.TotalMilliseconds.ToString());
 			writer.WriteEndElement();
+
 
 			return true;
 		}
@@ -255,9 +256,9 @@ namespace DungeonEye
 				}
 				break;
 
-				case "speed":
+				case "movespeed":
 				{
-					Speed = TimeSpan.FromMilliseconds(int.Parse(node.Attributes["value"].Value));
+					MoveSpeed = TimeSpan.FromMilliseconds(int.Parse(node.Attributes["value"].Value));
 				}
 				break;
 
@@ -319,17 +320,18 @@ namespace DungeonEye
 			get;
 		}
 
+
 		/// <summary>
 		/// Gives the entity’s tactical speed.
 		/// Lower is faster
 		/// </summary>
-		public TimeSpan Speed
+		public TimeSpan MoveSpeed
 		{
 			get;
 			set;
 		}
 
-		
+
 		/// <summary>
 		/// Last time the entity was updated
 		/// </summary>
@@ -470,7 +472,7 @@ namespace DungeonEye
 	}
 
 
-
+/*
 	/// <summary>
 	/// define the height of the creature. It is used to check if missiles can fly over the creatures (for example Fireballs can fly over small creatures).
 	/// This value is also used to define how to animate a door that is closed upon the creature: 
@@ -499,6 +501,6 @@ namespace DungeonEye
 		/// </summary>
 		Giant
 	}
-
+*/
 
 }

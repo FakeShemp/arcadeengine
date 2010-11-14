@@ -98,9 +98,6 @@ namespace DungeonEye
 		/// <returns></returns>
 		public bool Init()
 		{
-			// Loads maze display coordinates
-			MazeDisplayCoordinates.Load();
-
 
 			WallTileset = ResourceManager.CreateSharedAsset<TileSet>(WallTilesetName, WallTilesetName);
 			if (WallTileset == null)

@@ -175,6 +175,9 @@ namespace ArcEngine.Asset
 		{
 			TileSetName = name;
 
+			if (TileSet != null)
+				TileSet.Dispose();
+
 			TileSet = ResourceManager.CreateAsset<TileSet>(name);
 
 			return TileSet != null;

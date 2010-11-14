@@ -1579,7 +1579,7 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Summary of last attacks
+		/// Summary of last attacks for each hands
 		/// </summary>
 		Attack[] Attacks;
 

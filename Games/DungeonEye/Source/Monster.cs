@@ -69,12 +69,13 @@ namespace DungeonEye
 
 			DrawOffsetDuration = TimeSpan.FromSeconds(1.0f + GameBase.Random.NextDouble());
 
-			StateManager = new StateManager();
+			//StateManager = new StateManager();
 
 			IsDisposed = false;
 		}
 
 
+/*
 		/// <summary>
 		/// Initializes the monster
 		/// </summary>
@@ -97,7 +98,7 @@ namespace DungeonEye
 			//StateManager.SetState(new IdleState(this));
 			return true;
 		}
-
+*/
 
 		/// <summary>
 		/// Move the monster
@@ -261,6 +262,78 @@ namespace DungeonEye
 
 
 
+		#region Events
+
+		/// <summary>
+		/// Fired when the monster dies
+		/// </summary>
+		public void OnDeath()
+		{
+			Trace.WriteDebugLine("[Monster] {0} die.", Name);
+
+			// Drop items on the ground
+			foreach (string item in ItemsInPocket)
+				Square.DropItem(Position, ResourceManager.CreateAsset<Item>(item));
+
+			// Reward the team
+			Team team = Team.Dungeon.Team;
+			foreach (Hero hero in team.Heroes)
+				if (hero != null)
+					hero.AddExperience(Reward / team.HeroCount);
+		}
+
+
+		/// <summary>
+		/// Fired when the creature is first spawned 
+		/// </summary>
+		public void OnSpawn()
+		{
+			Trace.WriteDebugLine("[Monster] {0} spawn.", Name);
+
+			// Tileset
+			Tileset = ResourceManager.CreateSharedAsset<TileSet>(TileSetName, TileSetName);
+
+			// Give a weapon  to the monster
+			if (!string.IsNullOrEmpty(WeaponName))
+				Weapon = ResourceManager.CreateAsset<Item>(WeaponName);
+			
+			// Last time updated
+			LastUpdate = DateTime.Now;
+
+
+			//if (!string.IsNullOrEmpty(ScriptName) && !string.IsNullOrEmpty(InterfaceName))
+			//{
+			//    Script script = ResourceManager.CreateAsset<Script>(ScriptName);
+			//    script.Compile();
+
+			//    Interface = script.CreateInstance<IMonster>(InterfaceName);
+			//}
+
+
+			//StateManager.SetState(new IdleState(this));
+		}
+
+
+		/// <summary>
+		/// Fired when the monster is hit
+		/// </summary>
+		public void OnHit()
+		{
+			Trace.WriteDebugLine("[Monster] {0} hit.", Name);
+		}
+
+
+		/// <summary>
+		/// Fired when the monster attack
+		/// </summary>
+		public void OnAttack()
+		{
+		}
+
+
+		#endregion
+
+
 		#region Update & Draw
 
 		/// <summary>
@@ -275,13 +348,13 @@ namespace DungeonEye
 			// Draw offset
 			if (LastDrawOffset + DrawOffsetDuration < DateTime.Now)
 			{
-			//	DrawOffset = new Point(GameBase.Random.Next(-10, 10), GameBase.Random.Next(-10, 10));
+				DrawOffset = new Point(GameBase.Random.Next(-10, 10), GameBase.Random.Next(-10, 10));
 				LastDrawOffset = DateTime.Now;
 			}
 
 
 			// Not entity time to update
-			if (LastUpdate + Speed > DateTime.Now)
+			if (LastUpdate + MoveSpeed > DateTime.Now)
 				return;
 
 
@@ -884,7 +957,6 @@ namespace DungeonEye
 				return;
 
 			HitPoint.Current += 2;
-
 		}
 
 
@@ -946,7 +1018,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="from">View direction of the viewer</param>
 		/// <returns>ID of the tile to display the monster</returns>
-		public int GetTileID(CardinalPoint point)
+		int GetTileID(CardinalPoint point)
 		{
 			int[][] id = new int[][]
 			{
@@ -1102,6 +1174,12 @@ namespace DungeonEye
 
 				switch (node.Name.ToLower())
 				{
+					case "attackspeed":
+					{
+						AttackSpeed = TimeSpan.FromMilliseconds(int.Parse(node.Attributes["value"].Value));
+					}
+					break;
+
 					case "location":
 					{
 						if (Location != null)
@@ -1432,6 +1510,9 @@ namespace DungeonEye
 			writer.WriteAttributeString("value", NonMaterial.ToString());
 			writer.WriteEndElement();
 
+			writer.WriteStartElement("attackspeed");
+			writer.WriteAttributeString("value", AttackSpeed.TotalMilliseconds.ToString());
+			writer.WriteEndElement();
 
 			writer.WriteEndElement();
 
@@ -1596,7 +1677,7 @@ namespace DungeonEye
 			set;
 		}
 
-
+/*
 		/// <summary>
 		/// State manager
 		/// </summary>
@@ -1605,7 +1686,7 @@ namespace DungeonEye
 			get;
 			private set;
 		}
-
+*/
 
 		/// <summary>
 		/// Is asset disposed
@@ -1790,6 +1871,25 @@ namespace DungeonEye
 
 
 		/// <summary>
+		/// Weapon name
+		/// </summary>
+		public string WeaponName
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// Weapon currently in use
+		/// </summary>
+		public Item Weapon
+		{
+			get;
+			private set;
+		}
+
+		/// <summary>
 		/// Gets or sets to throw all unequipped weapons 
 		/// </summary>
 		public bool ThrowWeapons
@@ -1923,10 +2023,10 @@ namespace DungeonEye
 		{
 			get
 			{
-				if (DefaultBehaviour == MonsterBehaviour.FriendlyUnmoving || DefaultBehaviour == MonsterBehaviour.Guard)
+				if (CurrentBehaviour == MonsterBehaviour.FriendlyUnmoving || CurrentBehaviour == MonsterBehaviour.Guard)
 					return false;
 
-				if (LastAction + Speed > DateTime.Now)
+				if (LastAction + MoveSpeed > DateTime.Now)
 					return false;
 
 				return true;

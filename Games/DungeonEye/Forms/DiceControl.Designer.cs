@@ -94,6 +94,8 @@
 			// 
 			// MaximumBox
 			// 
+			this.MaximumBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.MaximumBox.Location = new System.Drawing.Point(177, 44);
 			this.MaximumBox.Name = "MaximumBox";
 			this.MaximumBox.ReadOnly = true;
@@ -104,6 +106,8 @@
 			// 
 			// MinimumBox
 			// 
+			this.MinimumBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.MinimumBox.Location = new System.Drawing.Point(177, 18);
 			this.MinimumBox.Name = "MinimumBox";
 			this.MinimumBox.ReadOnly = true;
@@ -190,13 +194,13 @@
             0});
 			this.FacesBox.ValueChanged += new System.EventHandler(this.OnValueChanged);
 			// 
-			// DiceForm
+			// DiceControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.groupBox1);
 			this.MinimumSize = new System.Drawing.Size(230, 100);
-			this.Name = "DiceForm";
+			this.Name = "DiceControl";
 			this.Size = new System.Drawing.Size(230, 100);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();

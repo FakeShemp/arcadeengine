@@ -79,7 +79,7 @@ namespace DungeonEye
 			{
 				// Monsters
 				if (Monsters[i] != null)
-					Monsters[i].Init();
+					Monsters[i].OnSpawn();
 			}
 		}
 
@@ -144,15 +144,22 @@ namespace DungeonEye
 			// Update monsters
 			if (MonsterCount > 0)
 				for (int i = 0; i < 4; i++)
-					if (Monsters[i] != null)
-					{
-						// Monster is dead
-						if (Monsters[i].IsDead)
-							Monsters[i] = null;
-						else
-							Monsters[i].Update(time);
-					}
+				{
+					Monster monster = Monsters[i];
+					if (monster == null)
+						continue;
 
+
+					// Monster is dead
+					if (monster.IsDead)
+					{
+						monster.OnDeath();
+						Monsters[i] = null;
+					}
+					else
+						monster.Update(time);
+
+				}
 
 			// Actor
 			if (Actor != null)

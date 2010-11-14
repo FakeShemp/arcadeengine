@@ -71,6 +71,9 @@ namespace DungeonEye
 		{
 			Trace.WriteLine("[Dungeon] : Init()");
 
+			// Loads maze display coordinates
+			MazeDisplayCoordinates.Load();
+
 			StartLocation.Maze = StartLocation.Maze;
 
 

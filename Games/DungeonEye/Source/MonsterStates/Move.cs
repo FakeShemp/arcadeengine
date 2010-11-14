@@ -77,8 +77,8 @@ namespace DungeonEye.MonsterStates
 
 
 			// Can see the team ?
-			if (Monster.CanSee(Team.Location))
-				Monster.StateManager.PushState(new AttackState(Monster));
+			//if (Monster.CanSee(Team.Location))
+			//	Monster.StateManager.PushState(new AttackState(Monster));
 
 
 			// Can detect the team

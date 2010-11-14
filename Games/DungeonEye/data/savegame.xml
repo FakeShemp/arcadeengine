@@ -12,7 +12,7 @@
 			<constitution value="10" />
 			<charisma value="13" />
 			<alignment value="NeutralGood" />
-			<speed value="0" />
+			<movespeed value="0" />
 			<quiver count="24" />
 			<head id="27" />
 			<food value="100" />
@@ -43,7 +43,7 @@
 			<constitution value="10" />
 			<charisma value="6" />
 			<alignment value="ChaoticGood" />
-			<speed value="0" />
+			<movespeed value="0" />
 			<quiver count="0" />
 			<head id="21" />
 			<food value="86" />
@@ -72,7 +72,7 @@
 			<constitution value="13" />
 			<charisma value="9" />
 			<alignment value="LawfulNeutral" />
-			<speed value="0" />
+			<movespeed value="0" />
 			<quiver count="0" />
 			<head id="39" />
 			<food value="99" />
@@ -123,7 +123,7 @@
 			<constitution value="13" />
 			<charisma value="11" />
 			<alignment value="LawfulEvil" />
-			<speed value="0" />
+			<movespeed value="0" />
 			<quiver count="0" />
 			<head id="43" />
 			<food value="88" />
@@ -150,7 +150,7 @@
 			<constitution value="13" />
 			<charisma value="11" />
 			<alignment value="LawfulEvil" />
-			<speed value="0" />
+			<movespeed value="0" />
 			<quiver count="78" />
 			<head id="34" />
 			<food value="88" />

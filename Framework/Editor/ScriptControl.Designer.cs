@@ -48,17 +48,18 @@
 			this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupBox2.Location = new System.Drawing.Point(0, 0);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(274, 87);
+			this.groupBox2.Size = new System.Drawing.Size(200, 70);
 			this.groupBox2.TabIndex = 7;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Interface :";
 			// 
 			// RefreshBox
 			// 
+			this.RefreshBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.RefreshBox.AutoSize = true;
 			this.RefreshBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.RefreshBox.Image = ((System.Drawing.Image) (resources.GetObject("RefreshBox.Image")));
-			this.RefreshBox.Location = new System.Drawing.Point(235, 13);
+			this.RefreshBox.Image = ((System.Drawing.Image)(resources.GetObject("RefreshBox.Image")));
+			this.RefreshBox.Location = new System.Drawing.Point(172, 13);
 			this.RefreshBox.Name = "RefreshBox";
 			this.RefreshBox.Size = new System.Drawing.Size(22, 22);
 			this.RefreshBox.TabIndex = 3;
@@ -76,11 +77,13 @@
 			// 
 			// InterfaceNameBox
 			// 
+			this.InterfaceNameBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.InterfaceNameBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.InterfaceNameBox.FormattingEnabled = true;
 			this.InterfaceNameBox.Location = new System.Drawing.Point(81, 40);
 			this.InterfaceNameBox.Name = "InterfaceNameBox";
-			this.InterfaceNameBox.Size = new System.Drawing.Size(148, 21);
+			this.InterfaceNameBox.Size = new System.Drawing.Size(85, 21);
 			this.InterfaceNameBox.Sorted = true;
 			this.InterfaceNameBox.TabIndex = 2;
 			this.InterfaceNameBox.SelectedIndexChanged += new System.EventHandler(this.InterfaceNameBox_SelectedIndexChanged);
@@ -96,11 +99,13 @@
 			// 
 			// ScriptNameBox
 			// 
+			this.ScriptNameBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.ScriptNameBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.ScriptNameBox.FormattingEnabled = true;
 			this.ScriptNameBox.Location = new System.Drawing.Point(81, 13);
 			this.ScriptNameBox.Name = "ScriptNameBox";
-			this.ScriptNameBox.Size = new System.Drawing.Size(148, 21);
+			this.ScriptNameBox.Size = new System.Drawing.Size(85, 21);
 			this.ScriptNameBox.Sorted = true;
 			this.ScriptNameBox.TabIndex = 1;
 			this.ScriptNameBox.SelectedIndexChanged += new System.EventHandler(this.ScriptNameBox_SelectedIndexChanged);
@@ -110,8 +115,9 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.groupBox2);
+			this.MinimumSize = new System.Drawing.Size(200, 70);
 			this.Name = "ScriptControl";
-			this.Size = new System.Drawing.Size(274, 87);
+			this.Size = new System.Drawing.Size(200, 70);
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
 			this.ResumeLayout(false);
