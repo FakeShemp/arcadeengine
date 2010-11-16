@@ -58,9 +58,9 @@ namespace ArcEngine.Editor
 			GLTextureControl.MouseWheel += new MouseEventHandler(GLTextureControl_MouseWheel);
 
 
+
 			// Set zoom value
 			ZoomBox.SelectedIndex = 0;
-
 		}
 
 
@@ -69,15 +69,7 @@ namespace ArcEngine.Editor
 		/// </summary>
 		public override void Save()
 		{
-			StringBuilder sb = new StringBuilder();
-			using (XmlWriter writer = XmlWriter.Create(sb))
-				TileSet.Save(writer);
-
-			string xml = sb.ToString();
-			XmlDocument doc = new XmlDocument();
-			doc.LoadXml(xml);
-
-			ResourceManager.AddAsset<TileSet>(TileSet.Name, doc.DocumentElement);
+			ResourceManager.AddAsset<TileSet>(TileSet.Name, ResourceManager.ConvertAsset(TileSet));
 		}
 
 
@@ -603,6 +595,17 @@ namespace ArcEngine.Editor
 		#region Events
 
 		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ChangeTextureBox_Click(object sender, EventArgs e)
+		{
+
+		}
+
+
+		/// <summary>
 		/// Loads the form
 		/// </summary>
 		/// <param name="sender"></param>
@@ -626,35 +629,7 @@ namespace ArcEngine.Editor
 
 			TileSet.Load(Node);
 
-
-			// Available textures
-			//TexturesBox.BeginUpdate();
-			//TexturesBox.Items.Clear();
-			//foreach (string name in ResourceManager.GetBinaryList(".png$"))
-			//    TexturesBox.Items.Add(name);
-			//TexturesBox.EndUpdate();
-
-/*
-			// Rectangle * 2
-			foreach (int id in tileSet.Tiles)
-			{
-				Tile tile = tileSet.GetTile(id);
-				Rectangle rect = tile.Rectangle;
-				rect = new Rectangle(rect.X * 2, rect.Y * 2, rect.Width *2, rect.Height * 2);
-				tile.Rectangle = rect;
-			}
-*/
-/*
-			// Origin x 2
-			foreach (int id in tileSet.Tiles)
-			{
-				Tile tile = tileSet.GetTile(id);
-				tile.Origin = new Point(tile.Origin.X * 2, tile.Origin.Y * 2);
-			}
-*/	
-			
-			// Build Cell list
-			//RebuildCellList();
+			TextureNameBox.Text = TileSet.TextureName;
 		}
 
 
@@ -769,29 +744,6 @@ namespace ArcEngine.Editor
 
 
 
-
-		/// <summary>
-		/// HotSpot mode
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void HotSpotButton_Click(object sender, EventArgs e)
-		{
-			ColisionBox.Checked = false;
-		}
-
-
-		/// <summary>
-		/// Collision box mode
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void CollisionButton_Click(object sender, EventArgs e)
-		{
-			HotSpotBox.Checked = false;
-		}
-
-
 		/// <summary>
 		/// Form closing
 		/// </summary>
@@ -819,20 +771,6 @@ namespace ArcEngine.Editor
 			if (CheckerBoard != null)
 				CheckerBoard.Dispose();
 			CheckerBoard = null;
-		}
-
-
-		/// <summary>
-		/// Change the texture
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void TexturesBox_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			if (TexturesBox.SelectedItem == null)
-				return;
-
-			TileSet.LoadTexture(TexturesBox.SelectedItem as string);
 		}
 
 
