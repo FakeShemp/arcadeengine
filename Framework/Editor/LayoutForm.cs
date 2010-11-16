@@ -210,7 +210,7 @@ namespace ArcEngine.Editor
 			SelectionBox.Draw(Batch);
 
 			// If no action and mouse over an element, draw its bounding box
-			if (SelectionBox.MouseTool == SelectionTool.MouseTools.NoTool)
+			if (SelectionBox.MouseTool == MouseTools.NoTool)
 			{
 				Control elem = FindElementAt(RenderControl.PointToClient(System.Windows.Forms.Control.MousePosition));
 				if (elem != null)

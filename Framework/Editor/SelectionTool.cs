@@ -465,23 +465,24 @@ namespace ArcEngine.Editor
 	
 		#endregion
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public enum MouseTools
-		{
-			NoTool,
-			MoveObject,
-			SizeUp,
-			SizeUpLeft,
-			SizeUpRight,
-			SizeDown,
-			SizeDownLeft,
-			SizeDownRight,
-			SizeLeft,
-			SizeRight
-		};
-
-
 	}
+	
+	/// <summary>
+	/// 
+	/// </summary>
+	public enum MouseTools
+	{
+		NoTool,
+		MoveObject,
+		SizeUp,
+		SizeUpLeft,
+		SizeUpRight,
+		SizeDown,
+		SizeDownLeft,
+		SizeDownRight,
+		SizeLeft,
+		SizeRight
+	};
+
+
 }

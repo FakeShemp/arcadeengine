@@ -50,7 +50,7 @@ namespace ArcEngine.Editor
 			Node = node;
 			TileSet = new TileSet();
 
-			TileSelection = new SelectionTool();
+			SelectionTool = new SelectionTool();
 			CollisionSelection = new SelectionTool();
 
 
@@ -171,15 +171,15 @@ namespace ArcEngine.Editor
 
 
 			// If we have some tiles to draw
-			if (TileSet.Count != 0)
+		//	if (TileSet.Count != 0)
 			{
 				// Draw the selection box with sizing handles
 				if (CurrentTile != null)
 				{
-					TileSelection.Zoom = zoomvalue;
-					TileSelection.Offset = TextureOffset;
-					CurrentTile.Rectangle = TileSelection.Rectangle;
-					TileSelection.Draw(Batch);
+					SelectionTool.Zoom = zoomvalue;
+					SelectionTool.Offset = TextureOffset;
+					CurrentTile.Rectangle = SelectionTool.Rectangle;
+					SelectionTool.Draw(Batch);
 				}
 
 			}
@@ -200,6 +200,7 @@ namespace ArcEngine.Editor
 			Display.ViewPort = new Rectangle(Point.Empty, GLTextureControl.Size);
 		}
 
+
 		/// <summary>
 		/// OnMouseMove
 		/// </summary>
@@ -217,21 +218,21 @@ namespace ArcEngine.Editor
 
 				// Store last mouse location
 				LastMousePos = e.Location;
-
-				return;
 			}
+
+			else if (e.Button == MouseButtons.Left)
+			{
+			}
+
+			// Update selection
+			if (SelectionTool != null && (SelectionBox.Checked || HotSpotBox.Checked || ColisionBox.Checked))
+				SelectionTool.OnMouseMove(e);
 
 			// Prints the location of the mouse
 			int zoomvalue = int.Parse((string)ZoomBox.SelectedItem);
 			PositionLabel.Text = (int)((e.Location.X - TextureOffset.X) / zoomvalue) + "," + (int)((e.Location.Y - TextureOffset.Y) / zoomvalue);
+			SizeLabel.Text = SelectionTool.Rectangle.Width + "," + SelectionTool.Rectangle.Height;
 
-			// Prints the size of the current tile
-			SizeLabel.Text = TileSelection.Rectangle.Width + "," + TileSelection.Rectangle.Height;
-
-
-			// Resize the tile
-			//if (TilesBox.Items.Count > 0)
-			//	TileBox.OnMouseMove(e);
 
 		}
 
@@ -243,9 +244,13 @@ namespace ArcEngine.Editor
 		/// <param name="e"></param>
 		private void GLTextureControl_MouseUp(object sender, MouseEventArgs e)
 		{
+			if (e.Button == MouseButtons.Left)
+			{
+			}
+
 			// Transmit event to the selection box
-			if (TileSelection != null)
-				TileSelection.OnMouseUp(e);
+			if (SelectionTool != null && (SelectionBox.Checked || HotSpotBox.Checked || ColisionBox.Checked))
+				SelectionTool.OnMouseUp(e);
 		}
 
 
@@ -256,28 +261,47 @@ namespace ArcEngine.Editor
 		/// <param name="e"></param>
 		private void GLTextureControl_MouseDown(object sender, MouseEventArgs e)
 		{
-			// Size the selection box
-			if (TileSelection.MouseTool == SelectionTool.MouseTools.NoTool && e.Button == MouseButtons.Left)
+			if (e.Button == MouseButtons.Left)
 			{
-				int zoomvalue = int.Parse((string)ZoomBox.SelectedItem);
 
-				TileSelection.Rectangle.X = (e.Location.X - TextureOffset.X) / zoomvalue;
-				TileSelection.Rectangle.Y = (e.Location.Y - TextureOffset.Y) / zoomvalue;
-				TileSelection.Rectangle.Width = 0;
-				TileSelection.Rectangle.Height = 0;
+				// Cheange tile selection
+				if (SelectionBox.Checked)
+				{
 
-				TileSelection.MouseTool = SelectionTool.MouseTools.SizeDownRight;
+					// Size the selection box
+					if (SelectionTool.MouseTool == MouseTools.NoTool)
+					{
+						int zoomvalue = int.Parse((string)ZoomBox.SelectedItem);
 
+						SelectionTool.Rectangle.X = (e.Location.X - TextureOffset.X) / zoomvalue;
+						SelectionTool.Rectangle.Y = (e.Location.Y - TextureOffset.Y) / zoomvalue;
+						SelectionTool.Rectangle.Width = 0;
+						SelectionTool.Rectangle.Height = 0;
+
+						SelectionTool.MouseTool = MouseTools.SizeDownRight;
+					}
+
+				}
+				else if (HotSpotBox.Checked)
+				{
+				}
+				else if (ColisionBox.Checked)
+				{
+				}
+	
+			}
+
+
+			// Pan the texture
+			else if (e.Button == MouseButtons.Middle)
+			{
+				LastMousePos = e.Location;
 			}
 
 
 			// Transmit event to the selection box
-			if (TileSelection != null)
-				TileSelection.OnMouseDown(e);
-
-			// Pan the texture
-			if (e.Button == MouseButtons.Middle)
-				LastMousePos = e.Location;
+			if (SelectionTool != null && (SelectionBox.Checked || HotSpotBox.Checked || ColisionBox.Checked))
+				SelectionTool.OnMouseDown(e);
 		}
 
 
@@ -294,33 +318,33 @@ namespace ArcEngine.Editor
 				case Keys.Up:
 					{
 						if (e.Shift)
-							TileSelection.Rectangle.Height--;
+							SelectionTool.Rectangle.Height--;
 						else
-							TileSelection.Rectangle.Y--;
+							SelectionTool.Rectangle.Y--;
 					}
 					break;
 				case Keys.Down:
 					{
 						if (e.Shift)
-							TileSelection.Rectangle.Height++;
+							SelectionTool.Rectangle.Height++;
 						else
-							TileSelection.Rectangle.Y++;
+							SelectionTool.Rectangle.Y++;
 					}
 					break;
 				case Keys.Left:
 					{
 						if (e.Shift)
-							TileSelection.Rectangle.Width--;
+							SelectionTool.Rectangle.Width--;
 						else
-							TileSelection.Rectangle.X--;
+							SelectionTool.Rectangle.X--;
 					}
 					break;
 				case Keys.Right:
 					{
 						if (e.Shift)
-							TileSelection.Rectangle.Width++;
+							SelectionTool.Rectangle.Width++;
 						else
-							TileSelection.Rectangle.X++;
+							SelectionTool.Rectangle.X++;
 					}
 					break;
 
@@ -517,7 +541,7 @@ namespace ArcEngine.Editor
 		private void GLTileControl_MouseDown(object sender, MouseEventArgs e)
 		{
 			// Size the selection box
-			if (CollisionSelection.MouseTool == SelectionTool.MouseTools.NoTool &&
+			if (CollisionSelection.MouseTool == MouseTools.NoTool &&
 				e.Button == MouseButtons.Left &&
 				ColisionBox.Checked)
 			{
@@ -528,7 +552,7 @@ namespace ArcEngine.Editor
 				CollisionSelection.Rectangle.Width = 0;
 				CollisionSelection.Rectangle.Height = 0;
 
-				CollisionSelection.MouseTool = SelectionTool.MouseTools.SizeDownRight;
+				CollisionSelection.MouseTool = MouseTools.SizeDownRight;
 			}
 
 
@@ -664,12 +688,12 @@ namespace ArcEngine.Editor
 			if (CurrentTile == null)
 				return;
 
-			TileSelection.Rectangle = CurrentTile.Rectangle;
+			SelectionTool.Rectangle = CurrentTile.Rectangle;
 			CollisionSelection.Rectangle = CurrentTile.CollisionBox;
 
 
 			// Prints the size of the current tile
-			SizeLabel.Text = TileSelection.Rectangle.Width + "," + TileSelection.Rectangle.Height;
+			SizeLabel.Text = SelectionTool.Rectangle.Width + "," + SelectionTool.Rectangle.Height;
 
 
 
@@ -867,7 +891,7 @@ namespace ArcEngine.Editor
 		/// <summary>
 		/// Tile selection box
 		/// </summary>
-		SelectionTool TileSelection;
+		SelectionTool SelectionTool;
 
 		/// <summary>
 		/// Collision box
