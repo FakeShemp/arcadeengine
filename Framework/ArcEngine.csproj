@@ -162,6 +162,9 @@
     <Compile Include="Asset\Scenes\KeyFrame.cs" />
     <Compile Include="Asset\Scenes\SceneLayer.cs" />
     <Compile Include="Asset\BinaryInformation.cs" />
+    <Compile Include="Editor\ToolStripNumberControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Interface\IAsset.cs" />
     <Compile Include="Asset\Scenes\Scene.cs" />
     <Compile Include="Asset\Language.cs" />
@@ -292,7 +295,7 @@
     <Compile Include="Editor\ScriptModelForm.Designer.cs">
       <DependentUpon>ScriptModelForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Editor\SelectionBox.cs" />
+    <Compile Include="Editor\SelectionTool.cs" />
     <Compile Include="Editor\StringTableForm.cs">
       <SubType>Form</SubType>
     </Compile>

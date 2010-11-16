@@ -48,10 +48,10 @@ namespace ArcEngine.Editor
 
 			//
 			Node = node;
-			tileSet = new TileSet();
+			TileSet = new TileSet();
 
-			TileSelection = new SelectionBox();
-			CollisionSelection = new SelectionBox();
+			TileSelection = new SelectionTool();
+			CollisionSelection = new SelectionTool();
 
 
 			GLTileControl.MouseWheel += new MouseEventHandler(GLTileControl_MouseWheel);
@@ -71,16 +71,35 @@ namespace ArcEngine.Editor
 		{
 			StringBuilder sb = new StringBuilder();
 			using (XmlWriter writer = XmlWriter.Create(sb))
-				tileSet.Save(writer);
+				TileSet.Save(writer);
 
 			string xml = sb.ToString();
 			XmlDocument doc = new XmlDocument();
 			doc.LoadXml(xml);
 
-			ResourceManager.AddAsset<TileSet>(tileSet.Name, doc.DocumentElement);
+			ResourceManager.AddAsset<TileSet>(TileSet.Name, doc.DocumentElement);
 		}
 
 
+		/// <summary>
+		/// Uncheck all checkboxes
+		/// </summary>
+		/// <param name="exclude"></param>
+		void UncheckButtons(ToolStripButton exclude)
+		{
+			ToolStripButton[] boxes = new ToolStripButton[]
+			{
+				SelectionBox,
+				HotSpotBox,
+				ColisionBox,
+			};
+
+			foreach (ToolStripButton box in boxes)
+			{
+				if (box != exclude)
+					box.Checked = false;
+			}
+		}
 
 
 		#region GlTextureControl
@@ -120,7 +139,7 @@ namespace ArcEngine.Editor
 
 
 			// No texture 
-			if (tileSet.Texture == null)
+			if (TileSet.Texture == null)
 			{
 				GLTextureControl.SwapBuffers();
 				return;
@@ -142,17 +161,17 @@ namespace ArcEngine.Editor
 			Vector4 zoom = new Vector4(
 			TextureOffset.X,
 			TextureOffset.Y,
-			tileSet.Texture.Bounds.Width * zoomvalue,
-			tileSet.Texture.Bounds.Height * zoomvalue);
+			TileSet.Texture.Bounds.Width * zoomvalue,
+			TileSet.Texture.Bounds.Height * zoomvalue);
 
-			Vector4 src = new Vector4(0.0f, 0.0f, tileSet.Texture.Size.Width, tileSet.Texture.Size.Height);
+			Vector4 src = new Vector4(0.0f, 0.0f, TileSet.Texture.Size.Width, TileSet.Texture.Size.Height);
 
-			Batch.Draw(tileSet.Texture, zoom, src, Color.White);
+			Batch.Draw(TileSet.Texture, zoom, src, Color.White);
 
 
 
 			// If we have some tiles to draw
-			if (tileSet.Count != 0)
+			if (TileSet.Count != 0)
 			{
 				// Draw the selection box with sizing handles
 				if (CurrentTile != null)
@@ -238,7 +257,7 @@ namespace ArcEngine.Editor
 		private void GLTextureControl_MouseDown(object sender, MouseEventArgs e)
 		{
 			// Size the selection box
-			if (TileSelection.MouseTool == SelectionBox.MouseTools.NoTool && e.Button == MouseButtons.Left)
+			if (TileSelection.MouseTool == SelectionTool.MouseTools.NoTool && e.Button == MouseButtons.Left)
 			{
 				int zoomvalue = int.Parse((string)ZoomBox.SelectedItem);
 
@@ -247,7 +266,7 @@ namespace ArcEngine.Editor
 				TileSelection.Rectangle.Width = 0;
 				TileSelection.Rectangle.Height = 0;
 
-				TileSelection.MouseTool = SelectionBox.MouseTools.SizeDownRight;
+				TileSelection.MouseTool = SelectionTool.MouseTools.SizeDownRight;
 
 			}
 
@@ -404,7 +423,7 @@ namespace ArcEngine.Editor
 					CurrentTile.Rectangle.X, CurrentTile.Rectangle.Y,
 					CurrentTile.Size.Width, CurrentTile.Size.Height);
 
-				Batch.Draw(tileSet.Texture, zoom, src, Color.White);
+				Batch.Draw(TileSet.Texture, zoom, src, Color.White);
 
 
 				// Draw Collision box
@@ -498,7 +517,7 @@ namespace ArcEngine.Editor
 		private void GLTileControl_MouseDown(object sender, MouseEventArgs e)
 		{
 			// Size the selection box
-			if (CollisionSelection.MouseTool == SelectionBox.MouseTools.NoTool &&
+			if (CollisionSelection.MouseTool == SelectionTool.MouseTools.NoTool &&
 				e.Button == MouseButtons.Left &&
 				ColisionBox.Checked)
 			{
@@ -509,7 +528,7 @@ namespace ArcEngine.Editor
 				CollisionSelection.Rectangle.Width = 0;
 				CollisionSelection.Rectangle.Height = 0;
 
-				CollisionSelection.MouseTool = SelectionBox.MouseTools.SizeDownRight;
+				CollisionSelection.MouseTool = SelectionTool.MouseTools.SizeDownRight;
 			}
 
 
@@ -581,7 +600,7 @@ namespace ArcEngine.Editor
 			CheckerBoard.HorizontalWrap = TextureWrapFilter.Repeat;
 			CheckerBoard.VerticalWrap = TextureWrapFilter.Repeat;
 
-			tileSet.Load(Node);
+			TileSet.Load(Node);
 
 
 			// Available textures
@@ -635,7 +654,11 @@ namespace ArcEngine.Editor
 		/// <param name="e"></param>
 		private void TilesBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			CurrentTile = tileSet.GetTile((int)TileIDBox.Value);
+			if (TileSet == null)
+				return;
+
+
+			CurrentTile = TileSet.GetTile((int)TileIDBox.Value);
 			TilePropertyGrid.SelectedObject = CurrentTile;
 
 			if (CurrentTile == null)
@@ -695,7 +718,7 @@ namespace ArcEngine.Editor
 			if (MessageBox.Show("Remove this tile ?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
 				return;
 
-			tileSet.Remove((int)TileIDBox.Value);
+			TileSet.Remove((int)TileIDBox.Value);
 
 
 			//int index = TilesBox.SelectedIndex;
@@ -706,33 +729,6 @@ namespace ArcEngine.Editor
 
 		}
 
-/*
-		/// <summary>
-		/// Adds a tile
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void AddTileButton_Click(object sender, EventArgs e)
-		{
-			int id = 0;
-
-			// If there's tile, then get the last one and add 1
-			if (TilesBox.Items.Count > 0)
-				id = (int)TilesBox.Items[TilesBox.Items.Count - 1] + 1;
-
-
-			// Create the tile
-			Tile tile = tileSet.AddTile(id);
-
-
-			// Rebuil the list
-			RebuildCellList();
-
-			TilesBox.SelectedIndex = TilesBox.Items.Count - 1;
-			TilePropertyGrid.SelectedObject = tile;
-
-		}
-*/
 
 		/// <summary>
 		/// Recenter the view
@@ -792,9 +788,9 @@ namespace ArcEngine.Editor
 				Batch.Dispose();
 			Batch = null;
 
-			if (tileSet != null)
-				tileSet.Dispose();
-			tileSet = null;
+			if (TileSet != null)
+				TileSet.Dispose();
+			TileSet = null;
 
 			if (CheckerBoard != null)
 				CheckerBoard.Dispose();
@@ -812,7 +808,22 @@ namespace ArcEngine.Editor
 			if (TexturesBox.SelectedItem == null)
 				return;
 
-			tileSet.LoadTexture(TexturesBox.SelectedItem as string);
+			TileSet.LoadTexture(TexturesBox.SelectedItem as string);
+		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ToggleStripButtons(object sender, EventArgs e)
+		{
+			ToolStripButton button = sender as ToolStripButton;
+
+			if (button.Checked)
+				UncheckButtons(button);
 		}
 
 
@@ -830,7 +841,7 @@ namespace ArcEngine.Editor
 		{
 			get
 			{
-				return tileSet;
+				return TileSet;
 			}
 		}
 
@@ -850,18 +861,18 @@ namespace ArcEngine.Editor
 		/// <summary>
 		/// Current TileSet
 		/// </summary>
-		TileSet tileSet;
+		TileSet TileSet;
 
 
 		/// <summary>
 		/// Tile selection box
 		/// </summary>
-		SelectionBox TileSelection;
+		SelectionTool TileSelection;
 
 		/// <summary>
 		/// Collision box
 		/// </summary>
-		SelectionBox CollisionSelection;
+		SelectionTool CollisionSelection;
 
 
 		/// <summary>

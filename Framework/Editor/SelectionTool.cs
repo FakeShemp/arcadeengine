@@ -31,15 +31,15 @@ namespace ArcEngine.Editor
 
 	
 	/// <summary>
-	/// Selection box with sizing handles
+	/// Selection tool with sizing handles
 	/// </summary>
-	internal class SelectionBox
+	internal class SelectionTool
 	{
 
 		/// <summary>
 		/// Default constructor
 		/// </summary>
-		public SelectionBox()
+		public SelectionTool()
 		{
 			Color = Color.FromArgb(128, Color.White);
 		}

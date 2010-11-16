@@ -247,7 +247,10 @@ namespace DungeonEye.Forms
 			//if (Maze == null)
 			//	return;
 
-			UncheckButtons(sender as ToolStripButton);
+			ToolStripButton button = sender as ToolStripButton;
+
+			if (button.Checked)
+				UncheckButtons(button);
 		}
 
 

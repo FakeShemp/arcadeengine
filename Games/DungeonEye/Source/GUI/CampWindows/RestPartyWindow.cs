@@ -60,8 +60,10 @@ namespace DungeonEye.Gui.CampWindows
 		/// <param name="e"></param>
 		void HealAnswer(object sender, EventArgs e)
 		{
-			if (((MessageBox)sender).DialogResult == DialogResult.Yes)
+			if (((MessageBox) sender).DialogResult == DialogResult.Yes)
 				HealParty = true;
+			else
+				HealParty = false;
 
 			Start = DateTime.Now;
 		}

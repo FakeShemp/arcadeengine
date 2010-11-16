@@ -44,7 +44,7 @@ namespace ArcEngine.Editor
 		{
 			InitializeComponent();
 
-			SelectionBox = new SelectionBox();
+			SelectionBox = new SelectionTool();
 
 
 
@@ -210,7 +210,7 @@ namespace ArcEngine.Editor
 			SelectionBox.Draw(Batch);
 
 			// If no action and mouse over an element, draw its bounding box
-			if (SelectionBox.MouseTool == SelectionBox.MouseTools.NoTool)
+			if (SelectionBox.MouseTool == SelectionTool.MouseTools.NoTool)
 			{
 				Control elem = FindElementAt(RenderControl.PointToClient(System.Windows.Forms.Control.MousePosition));
 				if (elem != null)
@@ -437,7 +437,7 @@ namespace ArcEngine.Editor
 		/// <summary>
 		/// SelectionBox to resize gui elements
 		/// </summary>
-		SelectionBox SelectionBox;
+		SelectionTool SelectionBox;
 
 		/// <summary>
 		/// Background texture
