@@ -225,7 +225,7 @@ namespace ArcEngine.Audio
 		{
 			get
 			{
-				Trace.WriteLine("[AudioManager] DefaultDevice");
+				//Trace.WriteLine("[AudioManager] DefaultDevice");
 				try
 				{
 					return OpenTK.Audio.AudioContext.DefaultDevice;

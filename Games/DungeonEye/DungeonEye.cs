@@ -45,6 +45,9 @@ namespace DungeonEye
 		[STAThread]
 		static void Main()
 		{
+			// Start tracing
+			Trace.Start("log.html", "Dungeon Eye");
+
 			using (Game game = new Game())
 				game.Run();
 		}
@@ -77,8 +80,6 @@ namespace DungeonEye
 
 		/// <summary>
 		/// Allows the game to perform any initialization it needs to before starting to run.
-		/// This is where it can query for any required services and load any non-graphic
-		/// related content.
 		/// </summary>
 		public override void LoadContent()
 		{

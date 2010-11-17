@@ -46,6 +46,10 @@ namespace DungeonEye.Gui.CampWindows
 			MessageBox.Selected += new EventHandler(HealAnswer);
 
 
+			// TODO:
+			// Someone is still
+			// injured. Rest
+			// until healed ?
 
 
 		}

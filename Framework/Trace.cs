@@ -32,20 +32,22 @@ namespace ArcEngine
 	/// </summary>
 	public static class Trace
 	{
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		static Trace()
-		{
-			Start("trace.log");
-		}
+		///// <summary>
+		///// Constructor
+		///// </summary>
+		//static Trace()
+		//{
+		//    //Start("log.html");
+		//}
+
 
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="filename"></param>
+		/// <param name="filename">Output filename</param>
+		/// <param name="title">Title of the log</param>
 		/// <returns></returns>
-		static public bool Start(string filename)
+		static public bool Start(string filename, string title)
 		{
 			FileName = filename;
 
@@ -59,6 +61,66 @@ namespace ArcEngine
 			Diag.Trace.Listeners.Add(new Diag.TextWriterTraceListener(Stream));
 			Diag.Trace.AutoFlush = true;
 
+
+			string header = @"<html>
+				<head>
+				<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+				<title>ArcEngine Log</title>
+				<style type='text/css'>
+				body, html {
+				background: #000000;
+				width: 95%;
+				font-family: Verdana;
+				font-size: 12px;
+				color: #C0C0C0;
+				}
+				table {
+				background: #292929;
+				font-family: Verdana;
+				font-size: 12px;
+				width = 100%
+				color: #C0C0C0;
+				}
+				h1 {
+				color : #FFFFFF;
+				border-bottom : 1px dotted #888888;
+				}
+				pre {
+				font-family : Verdana;
+				margin : 0;
+				}
+				.box {
+				border : 1px dotted #818286;
+				padding : 5px;
+				margin: 5px;
+				width: 100%;
+				background-color : #292929;
+				}
+				.err {
+				color: #EE1100;
+				font-weight: bold
+				}
+				.warn {
+				color: #FFCC00;
+				font-weight: bold
+				}
+				.info {
+				color: #C0C0C0;
+				}
+				.debug {
+				color: #CCA0A0;
+				}
+				</style>
+				</head>
+
+				<body>
+				<h1>ArcEngine : <a href='http://www.mimicprod.net'>www.mimicprod.net</a></h1>
+				<h3>" + title + @"</h3>
+				<div class='box'>
+				<table>";
+
+			WriteDebugLine(header);
+
 			return true;
 		}
 
@@ -70,6 +132,14 @@ namespace ArcEngine
 		/// <returns></returns>
 		static public bool Close()
 		{
+			string footer = @"</tr>
+				</table>
+				</div>
+				</body>
+				</html>";
+
+			WriteLine(footer);
+
 			Diag.Trace.Flush();
 			Diag.Trace.Close();
 
@@ -176,6 +246,13 @@ namespace ArcEngine
 		/// <param name="message">Message to write</param>
 		public static void Write(string message)
 		{
+			// Need to start a new line
+			if (!NewLineStarted)
+			{
+				Diag.Trace.Write("<tr><td>");
+				NewLineStarted = true;
+			}
+
 			Diag.Trace.Write(message);
 
 			if (OnTrace != null)
@@ -203,6 +280,13 @@ namespace ArcEngine
 		/// <param name="message">Message</param>
 		public static void WriteIf(bool condition, string message)
 		{
+			// Need to start a new line
+			if (!NewLineStarted)
+			{
+				Diag.Trace.Write("<tr><td>");
+				NewLineStarted = true;
+			}
+
 			Diag.Trace.WriteIf(condition, message);
 
 			if (OnTrace != null)
@@ -232,11 +316,18 @@ namespace ArcEngine
 		/// <param name="message">Message</param>
 		public static void WriteLine(string message)
 		{
-			Diag.Trace.WriteLine(message);
+			// Need to start a new line
+			if (!NewLineStarted)
+				Diag.Trace.Write("<tr><td>");
+
+
+			Diag.Trace.Write(message + "</td></tr>\n");
+			NewLineStarted = false;
 
 			if (OnTrace != null)
 				OnTrace(message + Environment.NewLine);
 		}
+
 
 		/// <summary>
 		/// Writes a line to the log
@@ -256,11 +347,17 @@ namespace ArcEngine
 		/// <param name="message">Message</param>
 		public static void WriteLineIf(bool condition, string message)
 		{
-			Diag.Trace.WriteLineIf(condition, message);
+			// Need to start a new line
+			if (!NewLineStarted)
+				Diag.Trace.Write("<tr><td>");
+
+			Diag.Trace.WriteLineIf(condition, "<tr><td>" + message + "</td></tr>\n");
+			NewLineStarted = false;
 
 			if (OnTrace != null)
 				OnTrace(message + Environment.NewLine);
 		}
+
 
 		/// <summary>
 		/// Writes a conditional line to the log
@@ -343,7 +440,14 @@ namespace ArcEngine
 		[Conditional("DEBUG")]
 		public static void WriteDebugLine(string message)
 		{
-			Diag.Trace.WriteLine(message);
+			// Need to close the line
+			if (NewLineStarted)
+			{
+				Diag.Trace.Write("</td></tr>");
+				NewLineStarted = false;
+			}
+
+			Diag.Trace.WriteLine("<tr><td>" + message + "</td></tr>\n");
 
 			if (OnTrace != null)
 				OnTrace(message + Environment.NewLine);
@@ -369,7 +473,14 @@ namespace ArcEngine
 		[Conditional("DEBUG")]
 		public static void WriteDebugLineIf(bool condition, string message)
 		{
-			Diag.Trace.WriteLineIf(condition, message);
+			// Need to close the line
+			if (NewLineStarted)
+			{
+				Diag.Trace.Write("</td></tr>");
+				NewLineStarted = false;
+			}
+
+			Diag.Trace.WriteLine("<tr><td>" + message + "</td></tr>\n");
 
 			if (OnTrace != null)
 				OnTrace(message + Environment.NewLine);
@@ -409,6 +520,13 @@ namespace ArcEngine
 		/// Output stream
 		/// </summary>
 		static FileStream Stream;
+
+
+		/// <summary>
+		/// True if a new line is started
+		/// </summary>
+		static bool NewLineStarted;
+
 
 		#endregion
 	}
