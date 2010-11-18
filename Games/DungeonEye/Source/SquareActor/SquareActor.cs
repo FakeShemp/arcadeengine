@@ -34,9 +34,9 @@ namespace DungeonEye
 	{
 
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
-		/// <param name="square"></param>
+		/// <param name="square">Square handle</param>
 		public SquareActor(Square square)
 		{
 			Square = square;
@@ -57,9 +57,9 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Update the actor
 		/// </summary>
-		/// <param name="time"></param>
+		/// <param name="time">Elpased time</param>
 		public virtual void Update(GameTime time)
 		{
 		}
@@ -68,7 +68,7 @@ namespace DungeonEye
 		#region Script
 
 		/// <summary>
-		/// A hero interacted with a side of the block
+		/// A hero interacted with a side of the square
 		/// </summary>
 		/// <param name="team">Team</param>
 		/// <param name="location">Location of the mouse</param>
@@ -81,10 +81,10 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Fired when the team enters the square
 		/// </summary>
-		/// <param name="team"></param>
-		/// <returns></returns>
+		/// <param name="team">Team handle</param>
+		/// <returns>True if event handled</returns>
 		public virtual bool OnTeamEnter(Team team)
 		{
 			return false;
@@ -92,21 +92,10 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Fired when the team leaves the square
 		/// </summary>
-		/// <param name="monster"></param>
-		/// <returns></returns>
-		public virtual bool OnMonsterEnter(Monster monster)
-		{
-			return false;
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="team"></param>
-		/// <returns></returns>
+		/// <param name="team">Team handle</param>
+		/// <returns>True if event handled</returns>
 		public virtual bool OnTeamLeave(Team team)
 		{
 			return false;
@@ -114,15 +103,68 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Fired when the team stands on a square
 		/// </summary>
-		/// <param name="monster"></param>
-		/// <returns></returns>
+		/// <param name="team">Team handle</param>
+		/// <returns>True if event handled</returns>
+		public virtual bool OnTeamStand(Team team)
+		{
+			return false;
+		}
+
+
+		/// <summary>
+		/// Fired when a monster enters the square
+		/// </summary>
+		/// <param name="monster">Monster handle</param>
+		/// <returns>True if event handled</returns>
+		public virtual bool OnMonsterEnter(Monster monster)
+		{
+			return false;
+		}
+
+
+		/// <summary>
+		/// Fired when a monster leaves the square
+		/// </summary>
+		/// <param name="monster">Monster handle</param>
+		/// <returns>True if event handled</returns>
 		public virtual bool OnMonsterLeave(Monster monster)
 		{
 			return false;
 		}
 
+		/// <summary>
+		/// Fired when a monster stands on a square
+		/// </summary>
+		/// <param name="monster">Monster handle</param>
+		/// <returns>True if event handled</returns>
+		public virtual bool OnMonsterStand(Monster monster)
+		{
+			return false;
+		}
+
+
+		/// <summary>
+		/// Fired when an item is added to the square
+		/// </summary>
+		/// <param name="monster">Item handle</param>
+		/// <returns>True if event handled</returns>
+		public virtual bool OnItemDropped(Item item)
+		{
+			return false;
+		}
+
+
+		/// <summary>
+		/// Fired when an item is removed from the square
+		/// </summary>
+		/// <param name="monster">Item handle</param>
+		/// <returns>True if event handled</returns>
+		public virtual bool OnItemCollected(Item item)
+		{
+			return false;
+		}
 
 
 		#endregion
@@ -131,7 +173,7 @@ namespace DungeonEye
 		#region Events
 
 		/// <summary>
-		/// 
+		/// ACtivates the actor
 		/// </summary>
 		public virtual void Activate()
 		{
@@ -139,7 +181,7 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Deactivates the actor
 		/// </summary>
 		public virtual void Deactivate()
 		{
@@ -147,11 +189,45 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Toggles the actor
 		/// </summary>
 		public virtual void Toggle()
 		{
 		}
+
+
+		/// <summary>
+		/// Exchanges the actor state
+		/// </summary>
+		public virtual void Exchange()
+		{
+		}
+
+
+
+		/// <summary>
+		/// Sets to as state
+		/// </summary>
+		public virtual void SetTo()
+		{
+		}
+
+
+		/// <summary>
+		/// Plays a sound
+		/// </summary>
+		public virtual void PlaySound()
+		{
+		}
+
+
+		/// <summary>
+		/// Stops a sound
+		/// </summary>
+		public virtual void StopSound()
+		{
+		}
+
 
 		#endregion
 

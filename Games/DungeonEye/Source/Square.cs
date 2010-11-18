@@ -219,6 +219,9 @@ namespace DungeonEye
 		{
 			if (team == null)
 				return;
+
+			if (Actor != null)
+				Actor.OnTeamStand(team);
 		}
 
 
@@ -230,6 +233,9 @@ namespace DungeonEye
 		{
 			if (monster == null)
 				return;
+
+			if (Actor != null)
+				Actor.OnMonsterStand(monster);
 		}
 
 
@@ -244,116 +250,9 @@ namespace DungeonEye
 
 			if (Actor != null)
 				Actor.OnTeamEnter(team);
-
-	
-			//if (ForceField != null)
-			//{
-			//    switch (ForceField.Type)
-			//    {
-			//        case ForceFieldType.Turning:
-			//        {
-			//            team.Location.Direction = Compass.Rotate(team.Location.Direction, ForceField.Rotation);
-			//        }
-			//        break;
-
-			//        case ForceFieldType.Moving:
-			//        {
-			//            team.Offset(ForceField.Move, 1);
-			//        }
-			//        break;
-			//    }
-			//}
-			//else if (Pit != null)
-			//{
-			//    if (team.Teleport(Pit.Target))
-			//        team.Damage(Pit.Damage, SavingThrowType.Reflex, Pit.Difficulty);
-
-			//}
-			//else if (Teleporter != null)
-			//{
-			//    team.Teleport(Teleporter.Target);
-
-			//}
-			//else if (Stair != null)
-			//{
-			//    if (team.Teleport(Stair.Target))
-			//        team.Direction = Stair.Target.Direction;
-
-			//}
-			//else if (FloorPlate != null)
-			//{
-			//    FloorPlate.OnTeamTouch(team, this);
-			//}
 		}
 
 
-		/// <summary>
-		/// A monster enters on the block
-		/// </summary>
-		/// <param name="monster"></param>
-		public void OnMonsterEnter(Monster monster)
-		{
-			if (monster == null)
-				return;
-
-			if (Actor != null)
-				Actor.OnMonsterEnter(monster);
-
-
-			//if (ForceField != null)
-			//{
-			//    switch (ForceField.Type)
-			//    {
-			//        case ForceFieldType.Turning:
-			//        {
-			//            monster.Location.Direction = Compass.Rotate(monster.Location.Direction, ForceField.Rotation);
-			//        }
-			//        break;
-
-			//        case ForceFieldType.Moving:
-			//        {
-
-			//            switch (ForceField.Move)
-			//            {
-			//                case CardinalPoint.North:
-			//                monster.Location.Coordinate.Offset(0, -1);
-			//                break;
-			//                case CardinalPoint.South:
-			//                monster.Location.Coordinate.Offset(0, 1);
-			//                break;
-			//                case CardinalPoint.West:
-			//                monster.Location.Coordinate.Offset(-1, 0);
-			//                break;
-			//                case CardinalPoint.East:
-			//                monster.Location.Coordinate.Offset(1, 0);
-			//                break;
-			//            }
-			//        }
-			//        break;
-			//    }
-			//}
-			//else if (Pit != null)
-			//{
-			//    monster.Teleport(Pit.Target);
-			//    monster.Damage(Pit.Damage, SavingThrowType.Reflex, Pit.Difficulty);
-
-			//}
-			//else if (Teleporter != null)
-			//{
-			//    monster.Teleport(Teleporter.Target);
-
-			//}
-			//else if (Stair != null)
-			//{
-			//    monster.Teleport(Stair.Target);
-			//    monster.Location.Direction = Stair.Target.Direction;
-
-			//}
-			//else if (FloorPlate != null)
-			//{
-			//    FloorPlate.OnMonsterTouch(monster);
-			//}
-		}
 
 
 		/// <summary>
@@ -371,35 +270,58 @@ namespace DungeonEye
 
 
 		/// <summary>
+		/// A monster enters on the block
+		/// </summary>
+		/// <param name="monster">Monster handle</param>
+		public void OnMonsterEnter(Monster monster)
+		{
+			if (monster == null)
+				return;
+
+			if (Actor != null)
+				Actor.OnMonsterEnter(monster);
+		}
+
+	
+		/// <summary>
 		/// Monster leaves the block
 		/// </summary>
-		/// <param name="monster"></param>
+		/// <param name="monster">Monster handle</param>
 		public void OnMonsterLeave(Monster monster)
 		{
 			if (monster == null)
 				return;
+
+			if (Actor != null)
+				Actor.OnMonsterLeave(monster);
 		}
 
 
 		/// <summary>
 		/// Item is dropped on the block
 		/// </summary>
-		/// <param name="item">Handle to the item</param>
+		/// <param name="item">Item handle</param>
 		public void OnDroppedItem(Item item)
 		{
 			if (item == null)
 				return;
+		
+			if (Actor != null)
+				Actor.OnItemDropped(item);
 		}
 
 
 		/// <summary>
 		/// Item is collected from the block
 		/// </summary>
-		/// <param name="item">Handle to the item</param>
+		/// <param name="item">Item handle</param>
 		public void OnCollectedItem(Item item)
 		{
 			if (item == null)
 				return;
+
+			if (Actor != null)
+				Actor.OnItemCollected(item);
 		}
 
 		#endregion
