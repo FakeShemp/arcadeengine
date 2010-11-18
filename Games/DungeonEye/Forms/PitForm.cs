@@ -17,11 +17,13 @@ namespace DungeonEye.Forms
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="pit"></param>
-		/// <param name="dungeon"></param>
+		/// <param name="pit">Pit handle</param>
+		/// <param name="dungeon">Dungeon handle</param>
 		public PitForm(Pit pit, Dungeon dungeon)
 		{
 			InitializeComponent();
+
+			Dungeon = dungeon;
 
 			IsHiddenBox.Checked = pit.IsHidden;
 			IsIllusionBox.Checked = pit.IsIllusion;
@@ -34,6 +36,53 @@ namespace DungeonEye.Forms
 
 
 		#region Form events
+
+		private void TargetBox_TargetChanged(object sender, DungeonLocation location)
+		{
+			if (Pit == null)
+				return;
+
+			Pit.Target = location;
+		}
+
+		private void IsIllusionBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Pit == null)
+				return;
+
+			Pit.IsIllusion = IsIllusionBox.Checked;
+		}
+
+		private void IsHiddenBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Pit == null)
+				return;
+
+			Pit.IsHidden = IsHiddenBox.Checked;
+		}
+
+		private void DifficultyBox_ValueChanged(object sender, EventArgs e)
+		{
+			if (Pit == null)
+				return;
+			Pit.Difficulty = (int) DifficultyBox.Value;
+		}
+
+		private void DamageBox_ValueChanged(object sender, EventArgs e)
+		{
+			if (Pit == null)
+				return;
+
+			Pit.Damage = DamageBox.Dice;
+		}
+
+		private void MonsterTriggerBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Pit == null)
+				return;
+
+			Pit.MonsterTrigger = MonsterTriggerBox.Checked;
+		}
 
 
 		/// <summary>
@@ -64,53 +113,6 @@ namespace DungeonEye.Forms
 		Dungeon Dungeon;
 
 		#endregion
-
-		private void TargetBox_TargetChanged(object sender, DungeonLocation location)
-		{
-			if (Pit == null)
-				return;
-
-			Pit.Target = location;
-		}
-
-		private void IsIllusionBox_CheckedChanged(object sender, EventArgs e)
-		{
-			if (Pit == null)
-				return;
-
-			Pit.IsIllusion = IsIllusionBox.Checked;
-		}
-
-		private void IsHiddenBox_CheckedChanged(object sender, EventArgs e)
-		{
-			if (Pit == null)
-				return;
-
-			Pit.IsHidden = IsHiddenBox.Checked;
-		}
-
-		private void DifficultyBox_ValueChanged(object sender, EventArgs e)
-		{
-			if (Pit == null)
-				return;
-			Pit.Difficulty = (int)DifficultyBox.Value;
-		}
-
-		private void DamageBox_ValueChanged(object sender, EventArgs e)
-		{
-			if (Pit == null)
-				return;
-
-			Pit.Damage = DamageBox.Dice;
-		}
-
-		private void MonsterTriggerBox_CheckedChanged(object sender, EventArgs e)
-		{
-			if (Pit == null)
-				return;
-
-			Pit.MonsterTrigger = MonsterTriggerBox.Checked;
-		}
 
 	}
 }

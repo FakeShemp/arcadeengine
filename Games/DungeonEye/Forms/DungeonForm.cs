@@ -171,7 +171,6 @@ namespace DungeonEye.Forms
 				WallBox,
 				StairBox,
 				TeleporterBox,
-				AlcoveBox,
 				DoorBox,
 				PitBox,
 				WrittingBox,
@@ -885,6 +884,18 @@ namespace DungeonEye.Forms
 				{
 					square.Actor = new FloorSwitch(square);
 					new FloorSwitchForm(square.Actor as FloorSwitch, Dungeon).ShowDialog();
+					UncheckButtons(null);
+				}
+				else if (StairBox.Checked)
+				{
+					square.Actor = new Stair(square);
+					new StairForm(square.Actor as Stair, Dungeon).ShowDialog();
+					UncheckButtons(null);
+				}
+				else if (PitBox.Checked)
+				{
+					square.Actor = new Pit(square);
+					new PitForm(square.Actor as Pit, Dungeon).ShowDialog();
 					UncheckButtons(null);
 				}
 				else

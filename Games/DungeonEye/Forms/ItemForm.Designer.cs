@@ -29,8 +29,6 @@
 		private void InitializeComponent()
 		{
 			DungeonEye.Dice dice1 = new DungeonEye.Dice();
-			DungeonEye.Dice dice2 = new DungeonEye.Dice();
-			DungeonEye.Dice dice3 = new DungeonEye.Dice();
 			this.GLGroundTile = new OpenTK.GLControl();
 			this.GLInventoryTile = new OpenTK.GLControl();
 			this.label2 = new System.Windows.Forms.Label();
@@ -94,12 +92,10 @@
 			this.SlashBox = new System.Windows.Forms.CheckBox();
 			this.BludgeBox = new System.Windows.Forms.CheckBox();
 			this.PiercingBox = new System.Windows.Forms.CheckBox();
+			this.DamageBox = new DungeonEye.Forms.DiceControl();
 			this.ScriptTab = new System.Windows.Forms.TabPage();
 			this.scriptControl1 = new ArcEngine.Editor.ScriptControl();
 			this.groupBox11 = new System.Windows.Forms.GroupBox();
-			this.DamageVsSmallBox = new DungeonEye.Forms.DiceControl();
-			this.DamageVsBigBox = new DungeonEye.Forms.DiceControl();
-			this.DamageBox = new DungeonEye.Forms.DiceControl();
 			((System.ComponentModel.ISupportInitialize) (this.GroundTileBox)).BeginInit();
 			this.groupBox4.SuspendLayout();
 			this.groupBox5.SuspendLayout();
@@ -198,6 +194,7 @@
 			this.DescriptionBox.Location = new System.Drawing.Point(3, 16);
 			this.DescriptionBox.Multiline = true;
 			this.DescriptionBox.Name = "DescriptionBox";
+			this.DescriptionBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
 			this.DescriptionBox.Size = new System.Drawing.Size(485, 86);
 			this.DescriptionBox.TabIndex = 4;
 			this.DescriptionBox.TextChanged += new System.EventHandler(this.DescriptionBox_TextChanged);
@@ -373,7 +370,7 @@
 			this.WaistBox.AutoSize = true;
 			this.WaistBox.Location = new System.Drawing.Point(71, 111);
 			this.WaistBox.Name = "WaistBox";
-			this.WaistBox.Size = new System.Drawing.Size(53, 17);
+			this.WaistBox.Size = new System.Drawing.Size(44, 17);
 			this.WaistBox.TabIndex = 0;
 			this.WaistBox.Text = "Belt";
 			this.WaistBox.UseVisualStyleBackColor = true;
@@ -406,7 +403,7 @@
 			this.WristBox.AutoSize = true;
 			this.WristBox.Location = new System.Drawing.Point(6, 88);
 			this.WristBox.Name = "WristBox";
-			this.WristBox.Size = new System.Drawing.Size(50, 17);
+			this.WristBox.Size = new System.Drawing.Size(55, 17);
 			this.WristBox.TabIndex = 0;
 			this.WristBox.Text = "Wrists";
 			this.WristBox.UseVisualStyleBackColor = true;
@@ -417,7 +414,7 @@
 			this.RingBox.AutoSize = true;
 			this.RingBox.Location = new System.Drawing.Point(71, 65);
 			this.RingBox.Name = "RingBox";
-			this.RingBox.Size = new System.Drawing.Size(48, 17);
+			this.RingBox.Size = new System.Drawing.Size(60, 17);
 			this.RingBox.TabIndex = 0;
 			this.RingBox.Text = "Fingers";
 			this.RingBox.UseVisualStyleBackColor = true;
@@ -796,8 +793,6 @@
 			this.PropertiesTab.Controls.Add(this.groupBox5);
 			this.PropertiesTab.Controls.Add(this.groupBox6);
 			this.PropertiesTab.Controls.Add(this.groupBox3);
-			this.PropertiesTab.Controls.Add(this.DamageVsSmallBox);
-			this.PropertiesTab.Controls.Add(this.DamageVsBigBox);
 			this.PropertiesTab.Controls.Add(this.DamageBox);
 			this.PropertiesTab.Location = new System.Drawing.Point(4, 22);
 			this.PropertiesTab.Name = "PropertiesTab";
@@ -885,6 +880,20 @@
 			this.PiercingBox.UseVisualStyleBackColor = true;
 			this.PiercingBox.CheckedChanged += new System.EventHandler(this.PiercingBox_CheckedChanged);
 			// 
+			// DamageBox
+			// 
+			this.DamageBox.ControlText = "Damage :";
+			dice1.Faces = 1;
+			dice1.Modifier = 0;
+			dice1.Throws = 1;
+			this.DamageBox.Dice = dice1;
+			this.DamageBox.Location = new System.Drawing.Point(3, 281);
+			this.DamageBox.MinimumSize = new System.Drawing.Size(225, 100);
+			this.DamageBox.Name = "DamageBox";
+			this.DamageBox.Size = new System.Drawing.Size(232, 104);
+			this.DamageBox.TabIndex = 9;
+			this.DamageBox.ValueChanged += new System.EventHandler(this.DamageBox_ValueChanged);
+			// 
 			// ScriptTab
 			// 
 			this.ScriptTab.Controls.Add(this.scriptControl1);
@@ -899,6 +908,7 @@
 			// 
 			this.scriptControl1.ControlText = "Interface :";
 			this.scriptControl1.Location = new System.Drawing.Point(5, 3);
+			this.scriptControl1.MinimumSize = new System.Drawing.Size(200, 70);
 			this.scriptControl1.Name = "scriptControl1";
 			this.scriptControl1.Size = new System.Drawing.Size(267, 80);
 			this.scriptControl1.TabIndex = 7;
@@ -915,48 +925,6 @@
 			this.groupBox11.TabIndex = 13;
 			this.groupBox11.TabStop = false;
 			this.groupBox11.Text = "Properties :";
-			// 
-			// DamageVsSmallBox
-			// 
-			this.DamageVsSmallBox.ControlText = "Damage vs Small :";
-			dice1.Faces = 1;
-			dice1.Modifier = 0;
-			dice1.Throws = 1;
-			this.DamageVsSmallBox.Dice = dice1;
-			this.DamageVsSmallBox.Location = new System.Drawing.Point(243, 391);
-			this.DamageVsSmallBox.MinimumSize = new System.Drawing.Size(230, 100);
-			this.DamageVsSmallBox.Name = "DamageVsSmallBox";
-			this.DamageVsSmallBox.Size = new System.Drawing.Size(251, 100);
-			this.DamageVsSmallBox.TabIndex = 12;
-			this.DamageVsSmallBox.ValueChanged += new System.EventHandler(this.DamageVsSmallBox_ValueChanged);
-			// 
-			// DamageVsBigBox
-			// 
-			this.DamageVsBigBox.ControlText = "Damage vs Big :";
-			dice2.Faces = 1;
-			dice2.Modifier = 0;
-			dice2.Throws = 1;
-			this.DamageVsBigBox.Dice = dice2;
-			this.DamageVsBigBox.Location = new System.Drawing.Point(5, 391);
-			this.DamageVsBigBox.MinimumSize = new System.Drawing.Size(230, 100);
-			this.DamageVsBigBox.Name = "DamageVsBigBox";
-			this.DamageVsBigBox.Size = new System.Drawing.Size(230, 100);
-			this.DamageVsBigBox.TabIndex = 11;
-			this.DamageVsBigBox.ValueChanged += new System.EventHandler(this.DamageVsBigBox_ValueChanged);
-			// 
-			// DamageBox
-			// 
-			this.DamageBox.ControlText = "Damage :";
-			dice3.Faces = 1;
-			dice3.Modifier = 0;
-			dice3.Throws = 1;
-			this.DamageBox.Dice = dice3;
-			this.DamageBox.Location = new System.Drawing.Point(3, 281);
-			this.DamageBox.MinimumSize = new System.Drawing.Size(225, 100);
-			this.DamageBox.Name = "DamageBox";
-			this.DamageBox.Size = new System.Drawing.Size(232, 104);
-			this.DamageBox.TabIndex = 9;
-			this.DamageBox.ValueChanged += new System.EventHandler(this.DamageBox_ValueChanged);
 			// 
 			// ItemForm
 			// 
@@ -1068,8 +1036,6 @@
 		private System.Windows.Forms.CheckBox SlashBox;
 		private System.Windows.Forms.CheckBox BludgeBox;
 		private System.Windows.Forms.CheckBox PiercingBox;
-		private DiceControl DamageVsSmallBox;
-		private DiceControl DamageVsBigBox;
 		private System.Windows.Forms.CheckBox CursedBox;
 		private System.Windows.Forms.GroupBox groupBox7;
 		private System.Windows.Forms.CheckBox AllowedHandPrimaryBox;

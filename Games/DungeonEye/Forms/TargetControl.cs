@@ -45,6 +45,14 @@ namespace DungeonEye.Forms
 		{
 			Target = target;
 
+			if (Target == null)
+			{
+				MazeNameBox.Text = "";
+				CoordinateBox.Text = "";
+
+				return;
+			}
+
 			MazeNameBox.Text = Target.Maze;
 			CoordinateBox.Text = Target.Coordinate.X + " x " + Target.Coordinate.Y;
 
@@ -130,6 +138,9 @@ namespace DungeonEye.Forms
 		{
 			get
 			{
+				if (Target == null)
+					return string.Empty;
+
 				return Target.Maze;
 			}			
 		}
@@ -141,6 +152,9 @@ namespace DungeonEye.Forms
 		{
 			get
 			{
+				if (Target == null)
+					return Point.Empty;
+
 				return Target.Coordinate;
 			}
 		}

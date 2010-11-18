@@ -92,6 +92,8 @@
 			this.NWItemsBox = new System.Windows.Forms.ComboBox();
 			this.NWRemoveItem = new System.Windows.Forms.Button();
 			this.TabControlBox = new System.Windows.Forms.TabControl();
+			this.ClearAllItemsBox = new System.Windows.Forms.Button();
+			this.RemoveAllMonstersBox = new System.Windows.Forms.Button();
 			this.WallsTab.SuspendLayout();
 			this.DecorationGroupBox.SuspendLayout();
 			this.groupBox9.SuspendLayout();
@@ -114,7 +116,7 @@
 			// 
 			// CloseBox
 			// 
-			this.CloseBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.CloseBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.CloseBox.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.CloseBox.Location = new System.Drawing.Point(422, 447);
 			this.CloseBox.Name = "CloseBox";
@@ -332,6 +334,7 @@
 			// 
 			// MonstersTab
 			// 
+			this.MonstersTab.Controls.Add(this.RemoveAllMonstersBox);
 			this.MonstersTab.Controls.Add(this.groupBox13);
 			this.MonstersTab.Controls.Add(this.groupBox12);
 			this.MonstersTab.Controls.Add(this.groupBox11);
@@ -371,7 +374,7 @@
 			this.DeleteSWBox.Name = "DeleteSWBox";
 			this.DeleteSWBox.Size = new System.Drawing.Size(75, 23);
 			this.DeleteSWBox.TabIndex = 0;
-			this.DeleteSWBox.Text = "Delete";
+			this.DeleteSWBox.Text = "Remove";
 			this.DeleteSWBox.UseVisualStyleBackColor = true;
 			this.DeleteSWBox.Click += new System.EventHandler(this.DeleteSWBox_Click);
 			// 
@@ -412,7 +415,7 @@
 			this.DeleteSEBox.Name = "DeleteSEBox";
 			this.DeleteSEBox.Size = new System.Drawing.Size(75, 23);
 			this.DeleteSEBox.TabIndex = 0;
-			this.DeleteSEBox.Text = "Delete";
+			this.DeleteSEBox.Text = "Remove";
 			this.DeleteSEBox.UseVisualStyleBackColor = true;
 			this.DeleteSEBox.Click += new System.EventHandler(this.DeleteSEBox_Click);
 			// 
@@ -453,7 +456,7 @@
 			this.DeleteNEBox.Name = "DeleteNEBox";
 			this.DeleteNEBox.Size = new System.Drawing.Size(75, 23);
 			this.DeleteNEBox.TabIndex = 0;
-			this.DeleteNEBox.Text = "Delete";
+			this.DeleteNEBox.Text = "Remove";
 			this.DeleteNEBox.UseVisualStyleBackColor = true;
 			this.DeleteNEBox.Click += new System.EventHandler(this.DeleteNEBox_Click);
 			// 
@@ -494,7 +497,7 @@
 			this.DeleteNWBox.Name = "DeleteNWBox";
 			this.DeleteNWBox.Size = new System.Drawing.Size(75, 23);
 			this.DeleteNWBox.TabIndex = 0;
-			this.DeleteNWBox.Text = "Delete";
+			this.DeleteNWBox.Text = "Remove";
 			this.DeleteNWBox.UseVisualStyleBackColor = true;
 			this.DeleteNWBox.Click += new System.EventHandler(this.DeleteNWBox_Click);
 			// 
@@ -510,6 +513,7 @@
 			// 
 			// ItemsTab
 			// 
+			this.ItemsTab.Controls.Add(this.ClearAllItemsBox);
 			this.ItemsTab.Controls.Add(this.AlcoveGroupBox);
 			this.ItemsTab.Controls.Add(this.groupBox4);
 			this.ItemsTab.Controls.Add(this.groupBox3);
@@ -595,9 +599,9 @@
 			// 
 			// SEBox
 			// 
-			this.SEBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.SEBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.SEBox.FormattingEnabled = true;
 			this.SEBox.Location = new System.Drawing.Point(6, 47);
 			this.SEBox.Name = "SEBox";
@@ -629,8 +633,8 @@
 			// 
 			// SERemoveItem
 			// 
-			this.SERemoveItem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.SERemoveItem.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.SERemoveItem.Location = new System.Drawing.Point(6, 146);
 			this.SERemoveItem.Name = "SERemoveItem";
 			this.SERemoveItem.Size = new System.Drawing.Size(177, 23);
@@ -654,9 +658,9 @@
 			// 
 			// SWBox
 			// 
-			this.SWBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.SWBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.SWBox.FormattingEnabled = true;
 			this.SWBox.Location = new System.Drawing.Point(6, 47);
 			this.SWBox.Name = "SWBox";
@@ -688,8 +692,8 @@
 			// 
 			// SWRemoveItem
 			// 
-			this.SWRemoveItem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.SWRemoveItem.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.SWRemoveItem.Location = new System.Drawing.Point(6, 146);
 			this.SWRemoveItem.Name = "SWRemoveItem";
 			this.SWRemoveItem.Size = new System.Drawing.Size(177, 23);
@@ -713,9 +717,9 @@
 			// 
 			// NEBox
 			// 
-			this.NEBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.NEBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.NEBox.FormattingEnabled = true;
 			this.NEBox.Location = new System.Drawing.Point(6, 47);
 			this.NEBox.Name = "NEBox";
@@ -747,8 +751,8 @@
 			// 
 			// NERemoveItem
 			// 
-			this.NERemoveItem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.NERemoveItem.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.NERemoveItem.Location = new System.Drawing.Point(6, 146);
 			this.NERemoveItem.Name = "NERemoveItem";
 			this.NERemoveItem.Size = new System.Drawing.Size(177, 23);
@@ -772,9 +776,9 @@
 			// 
 			// NWBox
 			// 
-			this.NWBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.NWBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.NWBox.FormattingEnabled = true;
 			this.NWBox.Location = new System.Drawing.Point(6, 47);
 			this.NWBox.Name = "NWBox";
@@ -806,8 +810,8 @@
 			// 
 			// NWRemoveItem
 			// 
-			this.NWRemoveItem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.NWRemoveItem.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.NWRemoveItem.Location = new System.Drawing.Point(6, 146);
 			this.NWRemoveItem.Name = "NWRemoveItem";
 			this.NWRemoveItem.Size = new System.Drawing.Size(177, 23);
@@ -818,9 +822,9 @@
 			// 
 			// TabControlBox
 			// 
-			this.TabControlBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.TabControlBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.TabControlBox.Controls.Add(this.ItemsTab);
 			this.TabControlBox.Controls.Add(this.MonstersTab);
 			this.TabControlBox.Controls.Add(this.WallsTab);
@@ -830,6 +834,26 @@
 			this.TabControlBox.Size = new System.Drawing.Size(509, 441);
 			this.TabControlBox.TabIndex = 0;
 			// 
+			// ClearAllItemsBox
+			// 
+			this.ClearAllItemsBox.Location = new System.Drawing.Point(6, 372);
+			this.ClearAllItemsBox.Name = "ClearAllItemsBox";
+			this.ClearAllItemsBox.Size = new System.Drawing.Size(384, 23);
+			this.ClearAllItemsBox.TabIndex = 23;
+			this.ClearAllItemsBox.Text = "Remove all items";
+			this.ClearAllItemsBox.UseVisualStyleBackColor = true;
+			this.ClearAllItemsBox.Click += new System.EventHandler(this.ClearAllItemsBox_Click);
+			// 
+			// RemoveAllMonstersBox
+			// 
+			this.RemoveAllMonstersBox.Location = new System.Drawing.Point(8, 176);
+			this.RemoveAllMonstersBox.Name = "RemoveAllMonstersBox";
+			this.RemoveAllMonstersBox.Size = new System.Drawing.Size(348, 23);
+			this.RemoveAllMonstersBox.TabIndex = 16;
+			this.RemoveAllMonstersBox.Text = "Remove all monsters";
+			this.RemoveAllMonstersBox.UseVisualStyleBackColor = true;
+			this.RemoveAllMonstersBox.Click += new System.EventHandler(this.RemoveAllMonstersBox_Click);
+			// 
 			// SquareForm
 			// 
 			this.AcceptButton = this.CloseBox;
@@ -838,7 +862,7 @@
 			this.ClientSize = new System.Drawing.Size(509, 482);
 			this.Controls.Add(this.CloseBox);
 			this.Controls.Add(this.TabControlBox);
-			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
 			this.KeyPreview = true;
 			this.MaximizeBox = false;
@@ -949,5 +973,7 @@
 		private System.Windows.Forms.ComboBox NWItemsBox;
 		private System.Windows.Forms.Button NWRemoveItem;
 		private System.Windows.Forms.TabControl TabControlBox;
+		private System.Windows.Forms.Button ClearAllItemsBox;
+		private System.Windows.Forms.Button RemoveAllMonstersBox;
 	}
 }

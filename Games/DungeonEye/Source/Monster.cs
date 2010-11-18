@@ -75,31 +75,6 @@ namespace DungeonEye
 		}
 
 
-/*
-		/// <summary>
-		/// Initializes the monster
-		/// </summary>
-		/// <returns></returns>
-		public bool Init()
-		{
-			Tileset = ResourceManager.CreateSharedAsset<TileSet>(TileSetName, TileSetName);
-
-			LastUpdate = DateTime.Now;
-
-			//if (!string.IsNullOrEmpty(ScriptName) && !string.IsNullOrEmpty(InterfaceName))
-			//{
-			//    Script script = ResourceManager.CreateAsset<Script>(ScriptName);
-			//    script.Compile();
-
-			//    Interface = script.CreateInstance<IMonster>(InterfaceName);
-			//}
-
-
-			//StateManager.SetState(new IdleState(this));
-			return true;
-		}
-*/
-
 		/// <summary>
 		/// Move the monster
 		/// </summary>
@@ -168,6 +143,9 @@ namespace DungeonEye
 		/// <param name="pos">Square position</param>
 		public bool Teleport(Square square, SquarePosition pos)
 		{
+			if (square == null)
+				return false;
+
 			// Move to another square
 			if (Square != square)
 			{
@@ -774,7 +752,7 @@ namespace DungeonEye
 		/// <param name="pos">Position of the monster in the field of view</param>
 		public void Draw(SpriteBatch batch, CardinalPoint teamdir, ViewFieldPosition pos)
 		{
-			if (Tileset == null)
+			if (Tileset == null || Square == null)
 				return;
 
 			#region Tileset scale
@@ -1352,6 +1330,12 @@ namespace DungeonEye
 					}
 					break;
 
+					case "weaponname":
+					{
+						WeaponName = node.Attributes["name"].Value;
+					}
+					break;
+
 					default:
 					{
 						base.Load(node);
@@ -1470,6 +1454,10 @@ namespace DungeonEye
 			writer.WriteAttributeString("value", ThrowWeapons.ToString());
 			writer.WriteEndElement();
 
+			writer.WriteStartElement("weaponname");
+			writer.WriteAttributeString("name", WeaponName);
+			writer.WriteEndElement();
+
 			writer.WriteStartElement("usestairs");
 			writer.WriteAttributeString("value", UseStairs.ToString());
 			writer.WriteEndElement();
@@ -1543,10 +1531,10 @@ namespace DungeonEye
 		{
 			get
 			{
-				if (Square != null)
-					return Square.Location;
+				if (Square == null)
+					return null;
 
-				return null;
+				return Square.Location;
 			}
 		}
 
@@ -1568,6 +1556,9 @@ namespace DungeonEye
 		{
 			get
 			{
+				if (Square == null)
+					return null;
+
 				return Square.Maze;
 			}
 		}
@@ -2074,6 +2065,9 @@ namespace DungeonEye
 		{
 			get
 			{
+				if (Location == null)
+					return Rectangle.Empty;
+
 				Rectangle zone = Rectangle.Empty;
 
 				// Calculates the area view
@@ -2115,6 +2109,9 @@ namespace DungeonEye
 		{
 			get
 			{
+				if (Location == null)
+					return Rectangle.Empty;
+
 				return new Rectangle(
 				Location.Coordinate.X - DetectionRange / 2,
 				Location.Coordinate.Y - DetectionRange / 2,
@@ -2234,7 +2231,7 @@ namespace DungeonEye
 		#endregion
 	}
 
-/*
+
 	/// <summary>
 	/// A size modifier applies to the creature’s Armor Class (AC) and attack bonus,
 	/// as well as to certain skills. A creature’s size also determines how far 
@@ -2259,7 +2256,7 @@ namespace DungeonEye
 		Big
 	}
 
-
+/*
 	/// <summary>
 	/// The bigger an opponent is, the easier it is to hit in combat. 
 	/// The smaller it is, the harder it is to hit.

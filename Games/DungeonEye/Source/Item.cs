@@ -58,8 +58,8 @@ namespace DungeonEye
 		{
 			AllowedClasses = HeroClass.Cleric | HeroClass.Fighter | HeroClass.Mage | HeroClass.Paladin | HeroClass.Ranger | HeroClass.Thief;
 			Damage = new Dice();
-			DamageVsBig  = new Dice();
-			DamageVsSmall = new Dice();
+			//DamageVsBig  = new Dice();
+			//DamageVsSmall = new Dice();
 			DamageType = 0;
 			Script = new ScriptInterface<IItem>();
 
@@ -147,17 +147,17 @@ namespace DungeonEye
 					}
 					break;
 
-					case "damagevsbig":
-					{
-						DamageVsBig.Load(node);
-					}
-					break;
+					//case "damagevsbig":
+					//{
+					//    DamageVsBig.Load(node);
+					//}
+					//break;
 
-					case "damagevssmall":
-					{
-						DamageVsSmall.Load(node);
-					}
-					break;
+					//case "damagevssmall":
+					//{
+					//    DamageVsSmall.Load(node);
+					//}
+					//break;
 
 					case "critical":
 					{
@@ -278,8 +278,8 @@ namespace DungeonEye
 			writer.WriteEndElement();
 
 			Damage.Save("damage", writer);
-			DamageVsBig.Save("damagevsbig", writer);
-			DamageVsSmall.Save("damagevssmall", writer);
+			//DamageVsBig.Save("damagevsbig", writer);
+			//DamageVsSmall.Save("damagevssmall", writer);
 
 			writer.WriteStartElement("critical");
 			writer.WriteAttributeString("min", Critical.X.ToString());
@@ -453,6 +453,7 @@ namespace DungeonEye
 			private set;
 		}
 
+/*
 		/// <summary>
 		/// Damage versus small entity
 		/// </summary>
@@ -470,7 +471,7 @@ namespace DungeonEye
 			get;
 			private set;
 		}
-
+*/
 
 		/// <summary>
 		/// Critical Hit

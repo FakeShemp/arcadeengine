@@ -124,8 +124,8 @@ namespace DungeonEye.Forms
 
 				ACBonusBox.Value = Item.ArmorClass;
 				DamageBox.Dice = Item.Damage;
-				DamageVsSmallBox.Dice = Item.DamageVsSmall;
-				DamageVsBigBox.Dice = Item.DamageVsBig;
+				//DamageVsSmallBox.Dice = Item.DamageVsSmall;
+				//DamageVsBigBox.Dice = Item.DamageVsBig;
 
 				PiercingBox.Checked = (Item.DamageType & DamageType.Pierce) == DamageType.Pierce;
 				SlashBox.Checked = (Item.DamageType & DamageType.Slash) == DamageType.Slash;
@@ -673,40 +673,6 @@ namespace DungeonEye.Forms
 			Item.Damage.Modifier = DamageBox.Dice.Modifier;
 			Item.Damage.Faces = DamageBox.Dice.Faces;
 			Item.Damage.Throws = DamageBox.Dice.Throws;
-		}
-
-
-		/// <summary>
-		/// Change damage
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void DamageVsBigBox_ValueChanged(object sender, EventArgs e)
-		{
-			if (Item == null)
-				return;
-
-
-			Item.DamageVsBig.Modifier = DamageVsBigBox.Dice.Modifier;
-			Item.DamageVsBig.Faces = DamageVsBigBox.Dice.Faces;
-			Item.DamageVsBig.Throws = DamageVsBigBox.Dice.Throws;
-		}
-
-
-		/// <summary>
-		/// Change damage
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void DamageVsSmallBox_ValueChanged(object sender, EventArgs e)
-		{
-			if (Item == null)
-				return;
-
-
-			Item.DamageVsSmall.Modifier = DamageVsSmallBox.Dice.Modifier;
-			Item.DamageVsSmall.Faces = DamageVsSmallBox.Dice.Faces;
-			Item.DamageVsSmall.Throws = DamageVsSmallBox.Dice.Throws;
 		}
 
 

@@ -112,6 +112,32 @@ namespace DungeonEye.Forms
 
 
 		/// <summary>
+		/// Removes all items
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ClearAllItemsBox_Click(object sender, EventArgs e)
+		{
+			if (Square == null)
+				return;
+
+			if (MessageBox.Show("Are you sure ?", "Remove all items", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+				return;
+
+			Square.Items[0].Clear();
+			Square.Items[1].Clear();
+			Square.Items[2].Clear();
+			Square.Items[3].Clear();
+
+			NWBox.Items.Clear();
+			NEBox.Items.Clear();
+			SWBox.Items.Clear();
+			SEBox.Items.Clear();
+
+		}
+
+
+		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="sender"></param>
@@ -366,10 +392,30 @@ namespace DungeonEye.Forms
 		#region Monsters
 
 		/// <summary>
+		/// Removes all monsters
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void RemoveAllMonstersBox_Click(object sender, EventArgs e)
+		{
+			if (Square == null)
+				return;
+
+			if (MessageBox.Show("Are you sure ?", "Remove all monsters", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+				return;
+
+			SetMonster(SquarePosition.NorthWest, null);
+			SetMonster(SquarePosition.NorthEast, null);
+			SetMonster(SquarePosition.SouthWest, null);
+			SetMonster(SquarePosition.SouthEast, null);
+		}
+
+
+		/// <summary>
 		/// Definies a monster
 		/// </summary>
-		/// <param name="position"></param>
-		/// <param name="monster"></param>
+		/// <param name="position">Square position</param>
+		/// <param name="monster">Monster handle or null</param>
 		void SetMonster(SquarePosition position, Monster monster)
 		{
 			TextBox[] boxes = new TextBox[]
@@ -396,11 +442,14 @@ namespace DungeonEye.Forms
 			{
 				boxes[(int)position].Text = string.Empty;
 				buttons[(int)position].Enabled = false;
+				if (Square != null)
+					Square.Monsters[(int) position] = null;
 			}
 			else
 			{
 				boxes[(int)position].Text = monster.Name;
 				buttons[(int)position].Enabled = true;
+				monster.Teleport(Square);
 				monster.Position = position;
 			}
 		}
@@ -415,8 +464,10 @@ namespace DungeonEye.Forms
 				Square.Monsters[0] = new Monster(Square.Maze);
 
 			new MonsterEditorForm(Square.Monsters[0]).ShowDialog();
-
+			
 			SetMonster(SquarePosition.NorthWest, Square.Monsters[0]);
+			Square.Monsters[0].OnSpawn();
+
 		}
 
 		private void EditNEBox_Click(object sender, EventArgs e)
@@ -429,6 +480,7 @@ namespace DungeonEye.Forms
 				Square.Monsters[1] = new Monster(Square.Maze);
 
 			new MonsterEditorForm(Square.Monsters[1]).ShowDialog();
+			Square.Monsters[1].OnSpawn();
 
 			SetMonster(SquarePosition.NorthEast, Square.Monsters[1]);
 		}
@@ -443,6 +495,7 @@ namespace DungeonEye.Forms
 				Square.Monsters[2] = new Monster(Square.Maze);
 
 			new MonsterEditorForm(Square.Monsters[2]).ShowDialog();
+			Square.Monsters[2].OnSpawn();
 
 			SetMonster(SquarePosition.SouthWest, Square.Monsters[2]);
 		}
@@ -456,6 +509,7 @@ namespace DungeonEye.Forms
 				Square.Monsters[3] = new Monster(Square.Maze);
 
 			new MonsterEditorForm(Square.Monsters[3]).ShowDialog();
+			Square.Monsters[3].OnSpawn();
 
 			SetMonster(SquarePosition.SouthEast, Square.Monsters[3]);
 		}
@@ -468,11 +522,8 @@ namespace DungeonEye.Forms
 			if (Square == null)
 				return;
 
-			if (MessageBox.Show("Are you sure ?", "Delete monster", MessageBoxButtons.YesNo) == DialogResult.Yes)
-			{
-				Square.Monsters[0] = null;
+			if (MessageBox.Show("Are you sure ?", "Remove monster", MessageBoxButtons.YesNo) == DialogResult.Yes)
 				SetMonster(SquarePosition.NorthWest, null);
-			}
 		}
 		
 		private void DeleteNEBox_Click(object sender, EventArgs e)
@@ -480,11 +531,8 @@ namespace DungeonEye.Forms
 			if (Square == null)
 				return;
 
-			if (MessageBox.Show("Are you sure ?", "Delete monster", MessageBoxButtons.YesNo) == DialogResult.Yes)
-			{
-				Square.Monsters[1] = null;
+			if (MessageBox.Show("Are you sure ?", "Remove monster", MessageBoxButtons.YesNo) == DialogResult.Yes)
 				SetMonster(SquarePosition.NorthEast, null);
-			}
 		}
 	
 		private void DeleteSWBox_Click(object sender, EventArgs e)
@@ -492,11 +540,8 @@ namespace DungeonEye.Forms
 			if (Square == null)
 				return;
 
-			if (MessageBox.Show("Are you sure ?", "Delete monster", MessageBoxButtons.YesNo) == DialogResult.Yes)
-			{
-				Square.Monsters[2] = null;
+			if (MessageBox.Show("Are you sure ?", "Remove monster", MessageBoxButtons.YesNo) == DialogResult.Yes)
 				SetMonster(SquarePosition.SouthWest, null);
-			}
 		}
 
 		private void DeleteSEBox_Click(object sender, EventArgs e)
@@ -504,11 +549,8 @@ namespace DungeonEye.Forms
 			if (Square == null)
 				return;
 
-			if (MessageBox.Show("Are you sure ?", "Delete monster", MessageBoxButtons.YesNo) == DialogResult.Yes)
-			{
-				Square.Monsters[3] = null;
+			if (MessageBox.Show("Are you sure ?", "Remove monster", MessageBoxButtons.YesNo) == DialogResult.Yes)
 				SetMonster(SquarePosition.SouthEast, null);
-			}
 		}
 
 		#endregion
@@ -606,7 +648,6 @@ namespace DungeonEye.Forms
 
 
 		#endregion
-
 
 	}
 }
