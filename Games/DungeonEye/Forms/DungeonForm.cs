@@ -204,9 +204,9 @@ namespace DungeonEye.Forms
 
 
 		/// <summary>
-		/// 
+		/// Edits the square's actor
 		/// </summary>
-		/// <param name="square"></param>
+		/// <param name="square">Square handle</param>
 		void EditActor(Square square)
 		{
 			if (square == null || square.Actor == null)
@@ -439,7 +439,7 @@ namespace DungeonEye.Forms
 				return;
 
 			BlockCoord = new Point((e.Location.X - Offset.X) / 25, (e.Location.Y - Offset.Y) / 25);
-			Square block = Maze.GetBlock(BlockCoord);
+			SquareUnderMouse = Maze.GetBlock(BlockCoord);
 
 
 
@@ -461,16 +461,16 @@ namespace DungeonEye.Forms
 			{
 				if (WallBox.Checked)
 				{
-					block.Type = EditWallType;
+					SquareUnderMouse.Type = EditWallType;
 					return;
 				}
 				else if (NoGhostsBox.Checked)
 				{
-					block.NoGhost = true;
+					SquareUnderMouse.NoGhost = true;
 				}
 				else if (NoMonstersBox.Checked)
 				{
-					block.NoMonster = true;
+					SquareUnderMouse.NoMonster = true;
 				}
 				else if (ZoneBox.Checked)
 				{
@@ -489,22 +489,22 @@ namespace DungeonEye.Forms
 			{
 				if (WallBox.Checked)
 				{
-					block.Type = SquareType.Ground;
+					SquareUnderMouse.Type = SquareType.Ground;
 				}
 				else if (NoGhostsBox.Checked)
 				{
-					block.NoGhost = false;
+					SquareUnderMouse.NoGhost = false;
 				}
 				else if (NoMonstersBox.Checked)
 				{
-					block.NoMonster = false;
+					SquareUnderMouse.NoMonster = false;
 				}
 			}
 
 
 			// Debug
 			SquareCoordBox.Text = new Point((e.Location.X - Offset.X) / 25, (e.Location.Y - Offset.Y) / 25).ToString();
-			SquareDescriptionBox.Text = block.ToString();
+			SquareDescriptionBox.Text = SquareUnderMouse.ToString();
 
 		}
 
@@ -567,11 +567,12 @@ namespace DungeonEye.Forms
 
 			SpriteBatch.Begin();
 
-            // Background texture
-            Rectangle dst = new Rectangle(Point.Empty, glControl.Size);
+			// Background texture
+			Rectangle dst = new Rectangle(Point.Empty, glControl.Size);
 			SpriteBatch.Draw(CheckerBoard, dst, dst, Color.White);
 
 
+			// Nom maze, bye bye
 			if (Maze == null)
 			{
 				SpriteBatch.End();
@@ -580,10 +581,10 @@ namespace DungeonEye.Forms
 			}
 
 
-			// Blocks
-			for (int y = 0; y < Maze.Size.Height; y++)
+			#region Squares
+			for (int y = 0 ; y < Maze.Size.Height ; y++)
 			{
-				for (int x = 0; x < Maze.Size.Width; x++)
+				for (int x = 0 ; x < Maze.Size.Width ; x++)
 				{
 					Square block = Maze.GetBlock(new Point(x, y));
 					int tileid = block.Type == SquareType.Ground ? 1 : 0;
@@ -594,7 +595,7 @@ namespace DungeonEye.Forms
 
 					Color color = Color.White;
 					if (block.Type == SquareType.Illusion)
-						color = Color.LightGreen; 
+						color = Color.LightGreen;
 
 					SpriteBatch.DrawTile(Icons, tileid, location, color);
 
@@ -714,14 +715,11 @@ namespace DungeonEye.Forms
 
 				}
 			}
-
-			// Draw monsters
-			//foreach (Monster monster in Maze.Monsters)
-			//    SpriteBatch.DrawTile(Icons, 8, new Point(Offset.X + monster.Location.Location.X * 25, Offset.Y + monster.Location.Location.Y * 25));
+			#endregion
 
 
 			// Preview pos
-			SpriteBatch.DrawTile(Icons, 22 + (int)PreviewLoc.Direction, new Point(Offset.X + PreviewLoc.Coordinate.X * 25, Offset.Y + PreviewLoc.Coordinate.Y * 25));
+			SpriteBatch.DrawTile(Icons, 22 + (int) PreviewLoc.Direction, new Point(Offset.X + PreviewLoc.Coordinate.X * 25, Offset.Y + PreviewLoc.Coordinate.Y * 25));
 
 
 			// Starting point
@@ -732,21 +730,30 @@ namespace DungeonEye.Forms
 			}
 
 
-
-			// Surround the selected object
-			if (MazePropertyBox.SelectedObject != null)
-				SpriteBatch.DrawRectangle(new Rectangle(BlockCoord.X * 25 + Offset.X, BlockCoord.Y * 25 + Offset.Y, 25, 25), Color.White);
-
-			// Surround the selected object
-			if (MazePropertyBox.SelectedObject != null)
-				SpriteBatch.DrawRectangle(new Rectangle(BlockCoord.X * 25 + Offset.X, BlockCoord.Y * 25 + Offset.Y, 25, 25), Color.White);
-
-
 			// Surround the selected object
 			if (CurrentSquare != null)
 				SpriteBatch.DrawRectangle(new Rectangle(CurrentSquare.Location.Coordinate.X * 25 + Offset.X, CurrentSquare.Location.Coordinate.Y * 25 + Offset.Y, 25, 25), Color.White);
 
 
+			// If the current actor has a target
+			if (SquareUnderMouse != null && SquareUnderMouse.Actor != null)
+			{
+				SquareActor actor = SquareUnderMouse.Actor;
+				if (actor.Target != null)
+				{
+
+					if (actor.Target.Maze == Maze.Name)
+					{
+						Point from = new Point(BlockCoord.X * 25 + Offset.X + 12, BlockCoord.Y * 25 + Offset.Y + 12);
+						Point to = new Point(actor.Target.Coordinate.X * 25 + Offset.X + 12, actor.Target.Coordinate.Y * 25 + Offset.Y + 12);
+						SpriteBatch.DrawLine(from, to, Color.Red);
+						SpriteBatch.DrawRectangle(new Rectangle(actor.Target.Coordinate.X * 25 + Offset.X, actor.Target.Coordinate.Y * 25 + Offset.Y, 25, 25), Color.Red);
+					}
+				}
+			}
+
+
+			#region Display zones
 			if (DisplayZonesBox.Checked)
 			{
 
@@ -763,18 +770,19 @@ namespace DungeonEye.Forms
 
 					SpriteBatch.FillRectangle(rect, color);
 				}
-			}
 
-			if (CurrentZone != null)
-			{
-				Rectangle rect = new Rectangle(CurrentZone.Rectangle.X * 25, CurrentZone.Rectangle.Y * 25, CurrentZone.Rectangle.Width * 25, CurrentZone.Rectangle.Height * 25);
-				SpriteBatch.FillRectangle(rect, Color.FromArgb(128, Color.Blue));
+
+				if (CurrentZone != null)
+				{
+					Rectangle rect = new Rectangle(CurrentZone.Rectangle.X * 25, CurrentZone.Rectangle.Y * 25, CurrentZone.Rectangle.Width * 25, CurrentZone.Rectangle.Height * 25);
+					SpriteBatch.FillRectangle(rect, Color.FromArgb(128, Color.Blue));
+				}
 			}
+			#endregion
 
 
 			SpriteBatch.End();
 			glControl.SwapBuffers();
-
 		}
 
 
@@ -1254,6 +1262,12 @@ namespace DungeonEye.Forms
 		/// Preview location
 		/// </summary>
 		DungeonLocation PreviewLoc;
+
+
+		/// <summary>
+		/// Square under the mouse
+		/// </summary>
+		Square SquareUnderMouse;
 
 
 		/// <summary>

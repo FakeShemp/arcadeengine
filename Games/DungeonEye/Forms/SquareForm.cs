@@ -17,14 +17,12 @@
 //along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 //
 #endregion
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using ArcEngine;
-using ArcEngine.Forms;
 using ArcEngine.Graphic;
-using ArcEngine.Asset;
 
 
 namespace DungeonEye.Forms
@@ -32,7 +30,7 @@ namespace DungeonEye.Forms
 	/// <summary>
 	/// Square editor form
 	/// </summary>
-	public partial class SquareForm : AssetEditorBase
+	public partial class SquareForm : Form
 	{
 
 		/// <summary>
@@ -53,17 +51,16 @@ namespace DungeonEye.Forms
 			Maze = maze;
 
 			List<string> list = ResourceManager.GetAssets<Item>();
-			NWItemsBox.DataSource = list;
-			NEItemsBox.DataSource = list;
-			SWItemsBox.DataSource = list;
-			SEItemsBox.DataSource = list;
+			ItemsBox.DataSource = list;
 			WallTypeBox.DataSource = Enum.GetValues(typeof(SquareType));
 
 
 			#region Items
 
 			if (!square.IsWall)
+			{
 				AlcoveGroupBox.Enabled = false;
+			}
 
 			NWBox.BeginUpdate();
 			NEBox.BeginUpdate();
@@ -147,8 +144,8 @@ namespace DungeonEye.Forms
 			if (Square == null)
 				return;
 			
-			Square.Items[0].Add(ResourceManager.CreateAsset<Item>(NWItemsBox.SelectedItem as string));
-			NWBox.Items.Add(NWItemsBox.SelectedItem as string);
+			Square.Items[0].Add(ResourceManager.CreateAsset<Item>(ItemsBox.SelectedItem as string));
+			NWBox.Items.Add(ItemsBox.SelectedItem as string);
 		}
 
 		/// <summary>
@@ -161,8 +158,8 @@ namespace DungeonEye.Forms
 			if (Square == null)
 				return;
 
-			Square.Items[1].Add(ResourceManager.CreateAsset<Item>(NEItemsBox.SelectedItem as string));
-			NEBox.Items.Add(NEItemsBox.SelectedItem as string);
+			Square.Items[1].Add(ResourceManager.CreateAsset<Item>(ItemsBox.SelectedItem as string));
+			NEBox.Items.Add(ItemsBox.SelectedItem as string);
 		}
 
 		/// <summary>
@@ -210,8 +207,8 @@ namespace DungeonEye.Forms
 			if (Square == null)
 				return;
 
-			Square.Items[2].Add(ResourceManager.CreateAsset<Item>(SWItemsBox.SelectedItem as string));
-			SWBox.Items.Add(SWItemsBox.SelectedItem as string);
+			Square.Items[2].Add(ResourceManager.CreateAsset<Item>(ItemsBox.SelectedItem as string));
+			SWBox.Items.Add(ItemsBox.SelectedItem as string);
 		}
 
 		/// <summary>
@@ -224,8 +221,8 @@ namespace DungeonEye.Forms
 			if (Square == null)
 				return;
 
-			Square.Items[3].Add(ResourceManager.CreateAsset<Item>(SEItemsBox.SelectedItem as string));
-			SEBox.Items.Add(SEItemsBox.SelectedItem as string);
+			Square.Items[3].Add(ResourceManager.CreateAsset<Item>(ItemsBox.SelectedItem as string));
+			SEBox.Items.Add(ItemsBox.SelectedItem as string);
 
 		}
 

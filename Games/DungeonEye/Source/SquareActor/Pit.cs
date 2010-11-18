@@ -246,15 +246,6 @@ namespace DungeonEye
 
 
 
-		/// <summary>
-		/// Target of the pit
-		/// </summary>
-		public DungeonLocation Target
-		{
-			get;
-			set;
-		}
-
 
 		/// <summary>
 		/// An illusion pit

@@ -169,18 +169,6 @@ namespace DungeonEye
 
 		#region Properties
 
-
-
-		/// <summary>
-		/// Target of the stair
-		/// </summary>
-		public DungeonLocation Target
-		{
-			get;
-			set;
-		}
-
-
 		/// <summary>
 		/// Name of the sound to play
 		/// </summary>

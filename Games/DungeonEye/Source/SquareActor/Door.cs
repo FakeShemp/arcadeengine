@@ -219,10 +219,34 @@ namespace DungeonEye
 		}
 
 
+		#region Events
+
+
+		/// <summary>
+		/// Opens the door
+		/// </summary>
+		public override void Activate()
+		{
+			Open();
+		}
+
+
+		/// <summary>
+		/// Closes the door
+		/// </summary>
+		public override void Deactivate()
+		{
+			Close();
+		} 
+
+
+		#endregion
+
+
 		#region Door type
 
 
-        /// <summary>
+		/// <summary>
         /// Draw the door with a scissor test
         /// </summary>
         /// <param name="batch">Spritebatch to use</param>

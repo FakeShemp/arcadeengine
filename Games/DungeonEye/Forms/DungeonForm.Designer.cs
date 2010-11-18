@@ -641,9 +641,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.groupBox2.Controls.Add(this.label1);
 			this.groupBox2.Controls.Add(this.ZoneNameBox);
-			this.groupBox2.Location = new System.Drawing.Point(8, 339);
+			this.groupBox2.Location = new System.Drawing.Point(8, 220);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(317, 362);
+			this.groupBox2.Size = new System.Drawing.Size(343, 339);
 			this.groupBox2.TabIndex = 2;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Properties :";
@@ -666,7 +666,7 @@
 			// 
 			// button2
 			// 
-			this.button2.Location = new System.Drawing.Point(8, 179);
+			this.button2.Location = new System.Drawing.Point(8, 191);
 			this.button2.Name = "button2";
 			this.button2.Size = new System.Drawing.Size(120, 23);
 			this.button2.TabIndex = 1;
@@ -678,15 +678,15 @@
 			this.DisplayZonesBox.AutoSize = true;
 			this.DisplayZonesBox.Location = new System.Drawing.Point(134, 15);
 			this.DisplayZonesBox.Name = "DisplayZonesBox";
-			this.DisplayZonesBox.Size = new System.Drawing.Size(48, 17);
+			this.DisplayZonesBox.Size = new System.Drawing.Size(91, 17);
 			this.DisplayZonesBox.TabIndex = 3;
-			this.DisplayZonesBox.Text = "Hide";
+			this.DisplayZonesBox.Text = "Display zones";
 			this.DisplayZonesBox.UseVisualStyleBackColor = true;
 			// 
 			// MazeZonesBox
 			// 
 			this.MazeZonesBox.FormattingEnabled = true;
-			this.MazeZonesBox.Location = new System.Drawing.Point(8, 3);
+			this.MazeZonesBox.Location = new System.Drawing.Point(8, 15);
 			this.MazeZonesBox.Name = "MazeZonesBox";
 			this.MazeZonesBox.Size = new System.Drawing.Size(120, 173);
 			this.MazeZonesBox.Sorted = true;
