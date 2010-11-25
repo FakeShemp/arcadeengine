@@ -176,7 +176,26 @@ namespace ArcEngine.Editor
 
 			}
 
+			// Suround all tiles
+			foreach(int id in TileSet.Tiles)
+			{
+				Tile tile = TileSet.GetTile(id);
+				if (tile == null)
+					continue;
+
+				Rectangle rect = new Rectangle(
+					tile.Rectangle.X * (int)zoomvalue + TextureOffset.X,
+					tile.Rectangle.Y * (int)zoomvalue + TextureOffset.Y,
+					tile.Rectangle.Width * (int)zoomvalue,
+					tile.Rectangle.Height * (int)zoomvalue);
+
+				Batch.DrawRectangle(rect, Color.Red);
+			}
+
+
 			Batch.End();
+
+
 			GLTextureControl.SwapBuffers();
 		}
 
