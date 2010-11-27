@@ -416,6 +416,7 @@ namespace DungeonEye
 		/// </summary>
 		public override void Draw()
 		{
+			Display.ClearBuffers();
 
 			Batch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Deferred, false);
 

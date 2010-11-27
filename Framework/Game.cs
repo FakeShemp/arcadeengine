@@ -501,6 +501,9 @@ namespace ArcEngine
 				Exit();
 
 			}
+
+
+			Trace.Close();
 		}
 
 		#endregion
@@ -629,7 +632,7 @@ namespace ArcEngine
 		{
 			IsExiting = true;
 
-			Trace.WriteDebugLine("Exit requested !");
+			Trace.WriteDebugLine("[Game] Exit requested !");
 		}
 
 

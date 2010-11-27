@@ -56,12 +56,13 @@ namespace ArcEngine
 
 
 			Stream = new StreamWriter(FileName);
-
+			Stream.AutoFlush = true;
 
 			//Diag.Trace.Listeners.Add(new Diag.TextWriterTraceListener(Stream));
 			Diag.Trace.AutoFlush = true;
 
 
+			#region header
 			string header = @"<html>
 				<head>
 				<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
@@ -118,6 +119,7 @@ namespace ArcEngine
 				<h3>" + title + @"</h3>
 				<div class='box'>
 				<table>";
+			#endregion
 
 			Stream.WriteLine(header);
 
@@ -125,12 +127,10 @@ namespace ArcEngine
 		}
 
 
-
 		/// <summary>
-		/// 
+		/// Closes the trace
 		/// </summary>
-		/// <returns></returns>
-		static public bool Close()
+		static public void Close()
 		{
 			string footer = @"</tr>
 				</table>
@@ -144,15 +144,10 @@ namespace ArcEngine
 			Diag.Trace.Close();
 
 			if (Stream != null)
-			{
 				Stream.Close();
-				Stream.Dispose();
-				Stream = null;
-			}
+			Stream = null;
 
 			FileName = "";
-
-			return true;
 		}
 
 
@@ -215,10 +210,11 @@ namespace ArcEngine
 		/// <param name="condition">Condition</param>
 		public static void Assert(bool condition)
 		{
-			Diag.Trace.Assert(condition);
+			Assert(condition, string.Empty);
+			//Diag.Trace.Assert(condition);
 
-			if (OnAssert != null)
-				OnAssert();
+			//if (OnAssert != null)
+			//    OnAssert();
 		}
 
 
@@ -229,6 +225,11 @@ namespace ArcEngine
 		/// <param name="message">Message to trace</param>
 		public static void Assert(bool condition, string message)
 		{
+			if (condition)
+				return;
+
+			WriteLine(message);
+
 			Diag.Trace.Assert(condition, message);
 
 			if (OnAssert != null)
@@ -249,9 +250,13 @@ namespace ArcEngine
 			// Need to start a new line
 			if (!NewLineStarted)
 			{
-				Diag.Trace.Write("<tr><td>");
+				if (Stream != null)
+					Stream.Write("<tr><td>");
 				NewLineStarted = true;
 			}
+
+			if (Stream != null)
+				Stream.WriteLine(message);
 
 			Diag.Trace.Write(message);
 
@@ -306,7 +311,8 @@ namespace ArcEngine
 		/// <param name="args">Arguments</param>
 		public static void WriteIf(bool condition, string format, params object[] args)
 		{
-			WriteIf(condition, string.Format(format, args));
+			if (condition)
+				Write(string.Format(format, args));
 		}
 
 
@@ -323,10 +329,13 @@ namespace ArcEngine
 		{
 			// Need to start a new line
 			if (!NewLineStarted)
-				Stream.Write("<tr><td>");
+			{
+				if (Stream != null)
+					Stream.Write("<tr><td>");
+			}
 
-
-			Stream.WriteLine(message + "</td></tr>");
+			if (Stream != null)
+				Stream.WriteLine(message + "</td></tr>");
 
 			Diag.Trace.WriteLine(message);
 			NewLineStarted = false;
