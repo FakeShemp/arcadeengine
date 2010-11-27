@@ -39,25 +39,32 @@
 			this.BrowseSoundBox = new System.Windows.Forms.Button();
 			this.SoundNameBox = new System.Windows.Forms.TextBox();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
-			this.PictureTab = new System.Windows.Forms.TabPage();
-			this.ChoicesTab = new System.Windows.Forms.TabPage();
-			this.CloseBox = new System.Windows.Forms.Button();
+			this.PropertiesTab = new System.Windows.Forms.TabPage();
+			this.groupBox4 = new System.Windows.Forms.GroupBox();
+			this.label1 = new System.Windows.Forms.Label();
+			this.IntelligenceBox = new System.Windows.Forms.NumericUpDown();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.MessageBox = new System.Windows.Forms.TextBox();
+			this.PictureTab = new System.Windows.Forms.TabPage();
 			this.PictureNameBox = new System.Windows.Forms.TextBox();
+			this.ChoicesTab = new System.Windows.Forms.TabPage();
+			this.CloseBox = new System.Windows.Forms.Button();
 			this.groupBox1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.PreviewBox)).BeginInit();
 			this.groupBox3.SuspendLayout();
 			this.tabControl1.SuspendLayout();
-			this.PictureTab.SuspendLayout();
+			this.PropertiesTab.SuspendLayout();
+			this.groupBox4.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.IntelligenceBox)).BeginInit();
 			this.groupBox2.SuspendLayout();
+			this.PictureTab.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// groupBox1
 			// 
 			this.groupBox1.Controls.Add(this.MustFaceBox);
 			this.groupBox1.Controls.Add(this.DirectionBox);
-			this.groupBox1.Location = new System.Drawing.Point(12, 12);
+			this.groupBox1.Location = new System.Drawing.Point(3, 3);
 			this.groupBox1.Name = "groupBox1";
 			this.groupBox1.Size = new System.Drawing.Size(132, 79);
 			this.groupBox1.TabIndex = 0;
@@ -120,7 +127,7 @@
 			this.groupBox3.Controls.Add(this.LoopSoundBox);
 			this.groupBox3.Controls.Add(this.BrowseSoundBox);
 			this.groupBox3.Controls.Add(this.SoundNameBox);
-			this.groupBox3.Location = new System.Drawing.Point(150, 12);
+			this.groupBox3.Location = new System.Drawing.Point(141, 3);
 			this.groupBox3.Name = "groupBox3";
 			this.groupBox3.Size = new System.Drawing.Size(149, 79);
 			this.groupBox3.TabIndex = 2;
@@ -161,13 +168,84 @@
 			this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
 						| System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
+			this.tabControl1.Controls.Add(this.PropertiesTab);
 			this.tabControl1.Controls.Add(this.PictureTab);
 			this.tabControl1.Controls.Add(this.ChoicesTab);
-			this.tabControl1.Location = new System.Drawing.Point(12, 97);
+			this.tabControl1.Location = new System.Drawing.Point(12, 12);
 			this.tabControl1.Name = "tabControl1";
 			this.tabControl1.SelectedIndex = 0;
-			this.tabControl1.Size = new System.Drawing.Size(570, 284);
+			this.tabControl1.Size = new System.Drawing.Size(570, 369);
 			this.tabControl1.TabIndex = 3;
+			// 
+			// PropertiesTab
+			// 
+			this.PropertiesTab.Controls.Add(this.groupBox4);
+			this.PropertiesTab.Controls.Add(this.groupBox2);
+			this.PropertiesTab.Controls.Add(this.groupBox1);
+			this.PropertiesTab.Controls.Add(this.groupBox3);
+			this.PropertiesTab.Location = new System.Drawing.Point(4, 22);
+			this.PropertiesTab.Name = "PropertiesTab";
+			this.PropertiesTab.Size = new System.Drawing.Size(562, 343);
+			this.PropertiesTab.TabIndex = 2;
+			this.PropertiesTab.Text = "Properties";
+			this.PropertiesTab.UseVisualStyleBackColor = true;
+			// 
+			// groupBox4
+			// 
+			this.groupBox4.Controls.Add(this.label1);
+			this.groupBox4.Controls.Add(this.IntelligenceBox);
+			this.groupBox4.Location = new System.Drawing.Point(3, 173);
+			this.groupBox4.Name = "groupBox4";
+			this.groupBox4.Size = new System.Drawing.Size(132, 52);
+			this.groupBox4.TabIndex = 6;
+			this.groupBox4.TabStop = false;
+			this.groupBox4.Text = "Intelligence :";
+			// 
+			// label1
+			// 
+			this.label1.AutoSize = true;
+			this.label1.Location = new System.Drawing.Point(6, 21);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(54, 13);
+			this.label1.TabIndex = 1;
+			this.label1.Text = "Minimum :";
+			// 
+			// IntelligenceBox
+			// 
+			this.IntelligenceBox.Location = new System.Drawing.Point(66, 19);
+			this.IntelligenceBox.Maximum = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
+			this.IntelligenceBox.Name = "IntelligenceBox";
+			this.IntelligenceBox.Size = new System.Drawing.Size(55, 20);
+			this.IntelligenceBox.TabIndex = 0;
+			this.IntelligenceBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.IntelligenceBox.ThousandsSeparator = true;
+			this.IntelligenceBox.ValueChanged += new System.EventHandler(this.IntelligenceBox_ValueChanged);
+			// 
+			// groupBox2
+			// 
+			this.groupBox2.Controls.Add(this.MessageBox);
+			this.groupBox2.Location = new System.Drawing.Point(3, 88);
+			this.groupBox2.Name = "groupBox2";
+			this.groupBox2.Size = new System.Drawing.Size(287, 79);
+			this.groupBox2.TabIndex = 5;
+			this.groupBox2.TabStop = false;
+			this.groupBox2.Text = "Display message :";
+			// 
+			// MessageBox
+			// 
+			this.MessageBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.MessageBox.Location = new System.Drawing.Point(6, 19);
+			this.MessageBox.Multiline = true;
+			this.MessageBox.Name = "MessageBox";
+			this.MessageBox.Size = new System.Drawing.Size(275, 54);
+			this.MessageBox.TabIndex = 0;
+			this.MessageBox.TextChanged += new System.EventHandler(this.MessageBox_TextChanged);
 			// 
 			// PictureTab
 			// 
@@ -178,17 +256,25 @@
 			this.PictureTab.Location = new System.Drawing.Point(4, 22);
 			this.PictureTab.Name = "PictureTab";
 			this.PictureTab.Padding = new System.Windows.Forms.Padding(3);
-			this.PictureTab.Size = new System.Drawing.Size(562, 258);
+			this.PictureTab.Size = new System.Drawing.Size(562, 343);
 			this.PictureTab.TabIndex = 0;
 			this.PictureTab.Text = "Picture";
 			this.PictureTab.UseVisualStyleBackColor = true;
+			// 
+			// PictureNameBox
+			// 
+			this.PictureNameBox.Location = new System.Drawing.Point(364, 35);
+			this.PictureNameBox.Name = "PictureNameBox";
+			this.PictureNameBox.Size = new System.Drawing.Size(192, 20);
+			this.PictureNameBox.TabIndex = 3;
+			this.PictureNameBox.TextChanged += new System.EventHandler(this.PictureNameBox_TextChanged);
 			// 
 			// ChoicesTab
 			// 
 			this.ChoicesTab.Location = new System.Drawing.Point(4, 22);
 			this.ChoicesTab.Name = "ChoicesTab";
 			this.ChoicesTab.Padding = new System.Windows.Forms.Padding(3);
-			this.ChoicesTab.Size = new System.Drawing.Size(562, 258);
+			this.ChoicesTab.Size = new System.Drawing.Size(562, 343);
 			this.ChoicesTab.TabIndex = 1;
 			this.ChoicesTab.Text = "Choices";
 			this.ChoicesTab.UseVisualStyleBackColor = true;
@@ -204,49 +290,14 @@
 			this.CloseBox.Text = "Close";
 			this.CloseBox.UseVisualStyleBackColor = true;
 			// 
-			// groupBox2
-			// 
-			this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
-			this.groupBox2.Controls.Add(this.MessageBox);
-			this.groupBox2.Location = new System.Drawing.Point(305, 12);
-			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(277, 79);
-			this.groupBox2.TabIndex = 5;
-			this.groupBox2.TabStop = false;
-			this.groupBox2.Text = "Display message :";
-			// 
-			// MessageBox
-			// 
-			this.MessageBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
-			this.MessageBox.Location = new System.Drawing.Point(6, 19);
-			this.MessageBox.Multiline = true;
-			this.MessageBox.Name = "MessageBox";
-			this.MessageBox.Size = new System.Drawing.Size(265, 54);
-			this.MessageBox.TabIndex = 0;
-			this.MessageBox.TextChanged += new System.EventHandler(this.MessageBox_TextChanged);
-			// 
-			// PictureNameBox
-			// 
-			this.PictureNameBox.Location = new System.Drawing.Point(364, 35);
-			this.PictureNameBox.Name = "PictureNameBox";
-			this.PictureNameBox.Size = new System.Drawing.Size(192, 20);
-			this.PictureNameBox.TabIndex = 3;
-			this.PictureNameBox.TextChanged += new System.EventHandler(this.PictureNameBox_TextChanged);
-			// 
 			// EventSquareForm
 			// 
 			this.AcceptButton = this.CloseBox;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(594, 422);
-			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.CloseBox);
 			this.Controls.Add(this.tabControl1);
-			this.Controls.Add(this.groupBox3);
-			this.Controls.Add(this.groupBox1);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
 			this.KeyPreview = true;
 			this.MaximizeBox = false;
@@ -265,10 +316,14 @@
 			this.groupBox3.ResumeLayout(false);
 			this.groupBox3.PerformLayout();
 			this.tabControl1.ResumeLayout(false);
-			this.PictureTab.ResumeLayout(false);
-			this.PictureTab.PerformLayout();
+			this.PropertiesTab.ResumeLayout(false);
+			this.groupBox4.ResumeLayout(false);
+			this.groupBox4.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.IntelligenceBox)).EndInit();
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
+			this.PictureTab.ResumeLayout(false);
+			this.PictureTab.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -292,5 +347,9 @@
 		private System.Windows.Forms.GroupBox groupBox2;
 		private System.Windows.Forms.TextBox MessageBox;
 		private System.Windows.Forms.TextBox PictureNameBox;
+		private System.Windows.Forms.TabPage PropertiesTab;
+		private System.Windows.Forms.GroupBox groupBox4;
+		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.NumericUpDown IntelligenceBox;
 	}
 }

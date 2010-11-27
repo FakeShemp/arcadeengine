@@ -42,6 +42,164 @@ namespace DungeonEye
 
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString()
+		{
+			return "Event";
+		}
+
+
+
+		#region IO
+
+		/// <summary>
+		/// Loads the door's definition from a bank
+		/// </summary>
+		/// <param name="xml">Xml handle</param>
+		/// <returns></returns>
+		public override bool Load(XmlNode xml)
+		{
+			if (xml == null)
+				return false;
+
+
+			foreach (XmlNode node in xml)
+			{
+				if (node.NodeType == XmlNodeType.Comment)
+					continue;
+
+
+				switch (node.Name.ToLower())
+				{
+					case "mustface":
+					{
+						MustFace = Boolean.Parse(node.Attributes["value"].Value);
+					}
+					break;
+
+					case "direction":
+					{
+						Direction = (CardinalPoint)Enum.Parse(typeof(CardinalPoint), node.Attributes["value"].Value);
+					}
+					break;
+
+					case "soundname":
+					{
+						SoundName = node.Attributes["value"].Value;
+					}
+					break;
+
+					case "loopsound":
+					{
+						LoopSound = Boolean.Parse(node.Attributes["value"].Value);
+					}
+					break;
+
+					case "displaybackground":
+					{
+						DisplayBackground = Boolean.Parse(node.Attributes["value"].Value);
+					}
+					break;
+
+					case "message":
+					{
+						Message = node.Attributes["value"].Value;
+					}
+					break;
+
+					case "picturename":
+					{
+						PictureName = node.Attributes["value"].Value;
+					}
+					break;
+
+					case "intelligence":
+					{
+						Intelligence = int.Parse(node.Attributes["value"].Value);
+					}
+					break;
+
+
+					default:
+					{
+						Trace.WriteLine("[EventSquare] Load() : Unknown node \"" + node.Name + "\" found.");
+					}
+					break;
+				}
+			}
+
+
+
+			return true;
+		}
+
+
+		/// <summary>
+		/// Saves the door definition
+		/// </summary>
+		/// <param name="writer">XML writer handle</param>
+		/// <returns></returns>
+		public override bool Save(XmlWriter writer)
+		{
+			if (writer == null)
+				return false;
+
+
+			writer.WriteStartElement("eventsquare");
+
+			writer.WriteStartElement("mustface");
+			writer.WriteAttributeString("value", MustFace.ToString());
+			writer.WriteEndElement();
+
+			writer.WriteStartElement("direction");
+			writer.WriteAttributeString("value", Direction.ToString());
+			writer.WriteEndElement();
+
+			// 
+			writer.WriteStartElement("soundname");
+			writer.WriteAttributeString("value", SoundName);
+			writer.WriteEndElement();
+
+			// 
+			writer.WriteStartElement("loopsound");
+			writer.WriteAttributeString("value", LoopSound.ToString());
+			writer.WriteEndElement();
+
+			// 
+			writer.WriteStartElement("displaybackground");
+			writer.WriteAttributeString("value", DisplayBackground.ToString());
+			writer.WriteEndElement();
+
+			// 
+			writer.WriteStartElement("intelligence");
+			writer.WriteAttributeString("value", Intelligence.ToString());
+			writer.WriteEndElement();
+
+			// 
+			writer.WriteStartElement("message");
+			writer.WriteAttributeString("value", Message);
+			writer.WriteEndElement();
+
+			// 
+			writer.WriteStartElement("picturename");
+			writer.WriteAttributeString("value", PictureName);
+			writer.WriteEndElement();
+
+
+
+
+			writer.WriteEndElement();
+
+			return true;
+		}
+
+		#endregion
+
+
+
 
 		#region Properties
 
@@ -91,6 +249,16 @@ namespace DungeonEye
 		/// Gets or sets the background
 		/// </summary>
 		public bool DisplayBackground
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// Gets or sets the minimum intelligence needed to trigger the event
+		/// </summary>
+		public int Intelligence
 		{
 			get;
 			set;

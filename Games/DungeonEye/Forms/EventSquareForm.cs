@@ -49,7 +49,8 @@ namespace DungeonEye.Forms
 			DirectionBox.DataSource = Enum.GetValues(typeof(CardinalPoint));
 			DirectionBox.SelectedItem = eventsquare.Direction;
 			DisplayBackgroundBox.Checked = eventsquare.DisplayBackground;
-	
+			IntelligenceBox.Value = eventsquare.Intelligence;
+
 			EventSquare = eventsquare;
 		}
 
@@ -227,6 +228,15 @@ namespace DungeonEye.Forms
 				return;
 
 			EventSquare.DisplayBackground = DisplayBackgroundBox.Checked;
+
+		}
+
+		private void IntelligenceBox_ValueChanged(object sender, EventArgs e)
+		{
+			if (EventSquare == null)
+				return;
+
+			EventSquare.Intelligence = (int)IntelligenceBox.Value;
 
 		}
 

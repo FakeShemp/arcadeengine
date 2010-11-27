@@ -683,6 +683,14 @@ namespace DungeonEye
 						SetAlcove(side, true);
 					}
 					break;
+
+					case "eventsquare":
+					{
+						Actor = new EventSquare(this);
+						Actor.Load(node);
+					}
+					break;
+
 					default:
 					{
 						Trace.WriteLine("[Square] Load() : Unknown node \"{0}\"", node.Name);
