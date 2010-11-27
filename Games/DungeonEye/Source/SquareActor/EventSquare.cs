@@ -45,10 +45,11 @@ namespace DungeonEye
 
 		#region Properties
 
+
 		/// <summary>
-		/// Direction Team must face to trigger
+		/// Team must face a direction
 		/// </summary>
-		CardinalPoint Direction
+		public bool MustFace
 		{
 			get;
 			set;
@@ -56,9 +57,40 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Audio name
+		/// Direction Team must face to trigger
 		/// </summary>
-		public string AudioName
+		public CardinalPoint Direction
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// Gets or sets the sound name
+		/// </summary>
+		public string SoundName
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// Loop sound
+		/// </summary>
+		public bool LoopSound
+		{
+			get;
+			set;
+		}
+
+
+
+		/// <summary>
+		/// Gets or sets the background
+		/// </summary>
+		public bool DisplayBackground
 		{
 			get;
 			set;
@@ -69,6 +101,15 @@ namespace DungeonEye
 		/// Message to display
 		/// </summary>
 		public string Message
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Gets or sets the picture name
+		/// </summary>
+		public string PictureName
 		{
 			get;
 			set;

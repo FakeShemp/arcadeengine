@@ -233,11 +233,11 @@
     <Compile Include="Forms\SpellForm.Designer.cs">
       <DependentUpon>SpellForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\SquareEventForm.cs">
+    <Compile Include="Forms\EventSquareForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\SquareEventForm.Designer.cs">
-      <DependentUpon>SquareEventForm.cs</DependentUpon>
+    <Compile Include="Forms\EventSquareForm.Designer.cs">
+      <DependentUpon>EventSquareForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\SquareForm.cs">
       <SubType>Form</SubType>
@@ -380,8 +380,8 @@
     <EmbeddedResource Include="Forms\SpellForm.resx">
       <DependentUpon>SpellForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\SquareEventForm.resx">
-      <DependentUpon>SquareEventForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\EventSquareForm.resx">
+      <DependentUpon>EventSquareForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SquareForm.resx">
       <DependentUpon>SquareForm.cs</DependentUpon>

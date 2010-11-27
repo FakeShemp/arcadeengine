@@ -1,6 +1,6 @@
 ﻿namespace DungeonEye.Forms
 {
-	partial class SquareEventForm
+	partial class EventSquareForm
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -42,11 +42,15 @@
 			this.PictureTab = new System.Windows.Forms.TabPage();
 			this.ChoicesTab = new System.Windows.Forms.TabPage();
 			this.CloseBox = new System.Windows.Forms.Button();
+			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.MessageBox = new System.Windows.Forms.TextBox();
+			this.PictureNameBox = new System.Windows.Forms.TextBox();
 			this.groupBox1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize) (this.PreviewBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.PreviewBox)).BeginInit();
 			this.groupBox3.SuspendLayout();
 			this.tabControl1.SuspendLayout();
 			this.PictureTab.SuspendLayout();
+			this.groupBox2.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// groupBox1
@@ -55,7 +59,7 @@
 			this.groupBox1.Controls.Add(this.DirectionBox);
 			this.groupBox1.Location = new System.Drawing.Point(12, 12);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(127, 79);
+			this.groupBox1.Size = new System.Drawing.Size(132, 79);
 			this.groupBox1.TabIndex = 0;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Direction :";
@@ -69,14 +73,17 @@
 			this.MustFaceBox.TabIndex = 1;
 			this.MustFaceBox.Text = "Team must face to :";
 			this.MustFaceBox.UseVisualStyleBackColor = true;
+			this.MustFaceBox.CheckedChanged += new System.EventHandler(this.MustFaceBox_CheckedChanged);
 			// 
 			// DirectionBox
 			// 
+			this.DirectionBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.DirectionBox.FormattingEnabled = true;
 			this.DirectionBox.Location = new System.Drawing.Point(6, 48);
 			this.DirectionBox.Name = "DirectionBox";
 			this.DirectionBox.Size = new System.Drawing.Size(115, 21);
 			this.DirectionBox.TabIndex = 0;
+			this.DirectionBox.SelectedIndexChanged += new System.EventHandler(this.DirectionBox_SelectedIndexChanged);
 			// 
 			// PreviewBox
 			// 
@@ -100,21 +107,22 @@
 			// DisplayBackgroundBox
 			// 
 			this.DisplayBackgroundBox.AutoSize = true;
-			this.DisplayBackgroundBox.Location = new System.Drawing.Point(364, 35);
+			this.DisplayBackgroundBox.Location = new System.Drawing.Point(364, 61);
 			this.DisplayBackgroundBox.Name = "DisplayBackgroundBox";
 			this.DisplayBackgroundBox.Size = new System.Drawing.Size(120, 17);
 			this.DisplayBackgroundBox.TabIndex = 2;
 			this.DisplayBackgroundBox.Text = "Display background";
 			this.DisplayBackgroundBox.UseVisualStyleBackColor = true;
+			this.DisplayBackgroundBox.CheckedChanged += new System.EventHandler(this.DisplayBackgroundBox_CheckedChanged);
 			// 
 			// groupBox3
 			// 
 			this.groupBox3.Controls.Add(this.LoopSoundBox);
 			this.groupBox3.Controls.Add(this.BrowseSoundBox);
 			this.groupBox3.Controls.Add(this.SoundNameBox);
-			this.groupBox3.Location = new System.Drawing.Point(295, 12);
+			this.groupBox3.Location = new System.Drawing.Point(150, 12);
 			this.groupBox3.Name = "groupBox3";
-			this.groupBox3.Size = new System.Drawing.Size(217, 79);
+			this.groupBox3.Size = new System.Drawing.Size(149, 79);
 			this.groupBox3.TabIndex = 2;
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Sound :";
@@ -122,12 +130,13 @@
 			// LoopSoundBox
 			// 
 			this.LoopSoundBox.AutoSize = true;
-			this.LoopSoundBox.Location = new System.Drawing.Point(110, 23);
+			this.LoopSoundBox.Location = new System.Drawing.Point(87, 23);
 			this.LoopSoundBox.Name = "LoopSoundBox";
 			this.LoopSoundBox.Size = new System.Drawing.Size(50, 17);
 			this.LoopSoundBox.TabIndex = 2;
 			this.LoopSoundBox.Text = "Loop";
 			this.LoopSoundBox.UseVisualStyleBackColor = true;
+			this.LoopSoundBox.CheckedChanged += new System.EventHandler(this.LoopSoundBox_CheckedChanged);
 			// 
 			// BrowseSoundBox
 			// 
@@ -143,31 +152,33 @@
 			// 
 			this.SoundNameBox.Location = new System.Drawing.Point(6, 49);
 			this.SoundNameBox.Name = "SoundNameBox";
-			this.SoundNameBox.Size = new System.Drawing.Size(205, 20);
+			this.SoundNameBox.Size = new System.Drawing.Size(131, 20);
 			this.SoundNameBox.TabIndex = 0;
+			this.SoundNameBox.TextChanged += new System.EventHandler(this.SoundNameBox_TextChanged);
 			// 
 			// tabControl1
 			// 
-			this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.tabControl1.Controls.Add(this.PictureTab);
 			this.tabControl1.Controls.Add(this.ChoicesTab);
 			this.tabControl1.Location = new System.Drawing.Point(12, 97);
 			this.tabControl1.Name = "tabControl1";
 			this.tabControl1.SelectedIndex = 0;
-			this.tabControl1.Size = new System.Drawing.Size(504, 330);
+			this.tabControl1.Size = new System.Drawing.Size(570, 284);
 			this.tabControl1.TabIndex = 3;
 			// 
 			// PictureTab
 			// 
+			this.PictureTab.Controls.Add(this.PictureNameBox);
 			this.PictureTab.Controls.Add(this.DisplayBackgroundBox);
 			this.PictureTab.Controls.Add(this.BrowsePictureBox);
 			this.PictureTab.Controls.Add(this.PreviewBox);
 			this.PictureTab.Location = new System.Drawing.Point(4, 22);
 			this.PictureTab.Name = "PictureTab";
 			this.PictureTab.Padding = new System.Windows.Forms.Padding(3);
-			this.PictureTab.Size = new System.Drawing.Size(496, 304);
+			this.PictureTab.Size = new System.Drawing.Size(562, 258);
 			this.PictureTab.TabIndex = 0;
 			this.PictureTab.Text = "Picture";
 			this.PictureTab.UseVisualStyleBackColor = true;
@@ -177,28 +188,61 @@
 			this.ChoicesTab.Location = new System.Drawing.Point(4, 22);
 			this.ChoicesTab.Name = "ChoicesTab";
 			this.ChoicesTab.Padding = new System.Windows.Forms.Padding(3);
-			this.ChoicesTab.Size = new System.Drawing.Size(496, 304);
+			this.ChoicesTab.Size = new System.Drawing.Size(562, 258);
 			this.ChoicesTab.TabIndex = 1;
 			this.ChoicesTab.Text = "Choices";
 			this.ChoicesTab.UseVisualStyleBackColor = true;
 			// 
 			// CloseBox
 			// 
-			this.CloseBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.CloseBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.CloseBox.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.CloseBox.Location = new System.Drawing.Point(437, 433);
+			this.CloseBox.Location = new System.Drawing.Point(507, 387);
 			this.CloseBox.Name = "CloseBox";
 			this.CloseBox.Size = new System.Drawing.Size(75, 23);
 			this.CloseBox.TabIndex = 4;
 			this.CloseBox.Text = "Close";
 			this.CloseBox.UseVisualStyleBackColor = true;
 			// 
-			// SquareEventForm
+			// groupBox2
+			// 
+			this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.groupBox2.Controls.Add(this.MessageBox);
+			this.groupBox2.Location = new System.Drawing.Point(305, 12);
+			this.groupBox2.Name = "groupBox2";
+			this.groupBox2.Size = new System.Drawing.Size(277, 79);
+			this.groupBox2.TabIndex = 5;
+			this.groupBox2.TabStop = false;
+			this.groupBox2.Text = "Display message :";
+			// 
+			// MessageBox
+			// 
+			this.MessageBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.MessageBox.Location = new System.Drawing.Point(6, 19);
+			this.MessageBox.Multiline = true;
+			this.MessageBox.Name = "MessageBox";
+			this.MessageBox.Size = new System.Drawing.Size(265, 54);
+			this.MessageBox.TabIndex = 0;
+			this.MessageBox.TextChanged += new System.EventHandler(this.MessageBox_TextChanged);
+			// 
+			// PictureNameBox
+			// 
+			this.PictureNameBox.Location = new System.Drawing.Point(364, 35);
+			this.PictureNameBox.Name = "PictureNameBox";
+			this.PictureNameBox.Size = new System.Drawing.Size(192, 20);
+			this.PictureNameBox.TabIndex = 3;
+			this.PictureNameBox.TextChanged += new System.EventHandler(this.PictureNameBox_TextChanged);
+			// 
+			// EventSquareForm
 			// 
 			this.AcceptButton = this.CloseBox;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(528, 468);
+			this.ClientSize = new System.Drawing.Size(594, 422);
+			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.CloseBox);
 			this.Controls.Add(this.tabControl1);
 			this.Controls.Add(this.groupBox3);
@@ -207,19 +251,24 @@
 			this.KeyPreview = true;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
-			this.Name = "SquareEventForm";
+			this.MinimumSize = new System.Drawing.Size(550, 450);
+			this.Name = "EventSquareForm";
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Square event wizard";
+			this.Load += new System.EventHandler(this.EventSquareForm_Load);
+			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.EventSquareForm_KeyDown);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
-			((System.ComponentModel.ISupportInitialize) (this.PreviewBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.PreviewBox)).EndInit();
 			this.groupBox3.ResumeLayout(false);
 			this.groupBox3.PerformLayout();
 			this.tabControl1.ResumeLayout(false);
 			this.PictureTab.ResumeLayout(false);
 			this.PictureTab.PerformLayout();
+			this.groupBox2.ResumeLayout(false);
+			this.groupBox2.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -240,5 +289,8 @@
 		private System.Windows.Forms.TabPage PictureTab;
 		private System.Windows.Forms.TabPage ChoicesTab;
 		private System.Windows.Forms.Button CloseBox;
+		private System.Windows.Forms.GroupBox groupBox2;
+		private System.Windows.Forms.TextBox MessageBox;
+		private System.Windows.Forms.TextBox PictureNameBox;
 	}
 }

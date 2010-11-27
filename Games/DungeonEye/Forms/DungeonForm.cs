@@ -230,6 +230,8 @@ namespace DungeonEye.Forms
 			else if (square.Actor is FloorSwitch)
 				new FloorSwitchForm(square.Actor as FloorSwitch, Dungeon).ShowDialog();
 
+			else if (square.Actor is EventSquare)
+				new EventSquareForm(square.Actor as EventSquare, Dungeon).ShowDialog();
 		}
 
 
@@ -663,6 +665,11 @@ namespace DungeonEye.Forms
 							tileid = stair.Type == StairType.Up ? 6 : 7;
 							SpriteBatch.DrawTile(Icons, tileid, location);
 						}
+
+						if (block.Actor is EventSquare)
+						{
+							SpriteBatch.DrawTile(Icons, 26, location);
+						}
 					}
 
 					// Alcoves
@@ -904,6 +911,12 @@ namespace DungeonEye.Forms
 				{
 					square.Actor = new Pit(square);
 					new PitForm(square.Actor as Pit, Dungeon).ShowDialog();
+					UncheckButtons(null);
+				}
+				else if (EventBox.Checked)
+				{
+					square.Actor = new EventSquare(square);
+					new EventSquareForm(square.Actor as EventSquare, Dungeon).ShowDialog();
 					UncheckButtons(null);
 				}
 				else
