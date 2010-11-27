@@ -41,8 +41,49 @@ namespace ArcEngine.Forms
 		public StorageBrowserForm()
 		{
 			InitializeComponent();
+
+			StorageBox.DataSource = ResourceManager.Storages;
 		}
 
+
+		#region Form events
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void FilesBox_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+		{
+			FileNameBox.Text = e.Item.Text;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void FilesBox_MouseDoubleClick(object sender, MouseEventArgs e)
+		{
+			DialogResult = DialogResult.OK;
+			Close();
+		}
+
+
+		/// <summary>
+		/// Change storage
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void StorageBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			Storage = ResourceManager.Storages[StorageBox.SelectedIndex];
+
+			OnStorageChanged();
+		}
+
+		#endregion
 
 
 		#region Internal events
@@ -100,22 +141,10 @@ namespace ArcEngine.Forms
 		/// </summary>
 		public StorageBase Storage
 		{
-			get
-			{
-				return storage;
-			}
-			set
-			{
-				if (value == null)
-					return;
-
-				storage = value;
-
-				OnStorageChanged();
-			}
+			get;
+			private set;
 		}
 
-		StorageBase storage;
 
 
 		/// <summary>
@@ -133,8 +162,14 @@ namespace ArcEngine.Forms
 		/// </summary>
 		public string FileName
 		{
-			get;
-			set;
+			get
+			{
+				return FileNameBox.Text;
+			}
+			set
+			{
+				FileNameBox.Text = value;
+			}
 		}
 
 
@@ -149,8 +184,22 @@ namespace ArcEngine.Forms
 		}
 
 
+		/// <summary>
+		/// Gets or sets a value indicating whether the dialog box allows multiple files to be selected. 
+		/// </summary>
+		public bool MultiSelect
+		{
+			get
+			{
+				return FilesBox.MultiSelect;
+			}
+			set
+			{
+				FilesBox.MultiSelect = value;
+			}
+		}
 		#endregion
-	
-	
+
+
 	}
 }

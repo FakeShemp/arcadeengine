@@ -97,7 +97,6 @@ namespace ArcEngine.Editor
 			this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
 			this.MenuAboutAbout = new System.Windows.Forms.ToolStripMenuItem();
 			this.dockPanel = new WeifenLuo.WinFormsUI.Docking.DockPanel();
-			this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
 			this.MainToolStrip.SuspendLayout();
 			this.MainStatusStrip.SuspendLayout();
 			this.MainMenu.SuspendLayout();
@@ -116,8 +115,7 @@ namespace ArcEngine.Editor
             this.RemoveAssetBox,
             this.toolStripSeparator2,
             this.HelpButtonBox,
-            this.toolStripSeparator5,
-            this.toolStripButton1});
+            this.toolStripSeparator5});
 			this.MainToolStrip.Location = new System.Drawing.Point(0, 24);
 			this.MainToolStrip.Name = "MainToolStrip";
 			this.MainToolStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -127,7 +125,7 @@ namespace ArcEngine.Editor
 			// ToolCreate
 			// 
 			this.ToolCreate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.ToolCreate.Image = ((System.Drawing.Image) (resources.GetObject("ToolCreate.Image")));
+			this.ToolCreate.Image = ((System.Drawing.Image)(resources.GetObject("ToolCreate.Image")));
 			this.ToolCreate.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.ToolCreate.Name = "ToolCreate";
 			this.ToolCreate.Size = new System.Drawing.Size(23, 22);
@@ -138,7 +136,7 @@ namespace ArcEngine.Editor
 			// ToolOpen
 			// 
 			this.ToolOpen.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.ToolOpen.Image = ((System.Drawing.Image) (resources.GetObject("ToolOpen.Image")));
+			this.ToolOpen.Image = ((System.Drawing.Image)(resources.GetObject("ToolOpen.Image")));
 			this.ToolOpen.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.ToolOpen.Name = "ToolOpen";
 			this.ToolOpen.Size = new System.Drawing.Size(23, 22);
@@ -149,7 +147,7 @@ namespace ArcEngine.Editor
 			// ToolSave
 			// 
 			this.ToolSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.ToolSave.Image = ((System.Drawing.Image) (resources.GetObject("ToolSave.Image")));
+			this.ToolSave.Image = ((System.Drawing.Image)(resources.GetObject("ToolSave.Image")));
 			this.ToolSave.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.ToolSave.Name = "ToolSave";
 			this.ToolSave.Size = new System.Drawing.Size(23, 22);
@@ -165,7 +163,7 @@ namespace ArcEngine.Editor
 			// AddbinaryBox
 			// 
 			this.AddbinaryBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.AddbinaryBox.Image = ((System.Drawing.Image) (resources.GetObject("AddbinaryBox.Image")));
+			this.AddbinaryBox.Image = ((System.Drawing.Image)(resources.GetObject("AddbinaryBox.Image")));
 			this.AddbinaryBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.AddbinaryBox.Name = "AddbinaryBox";
 			this.AddbinaryBox.Size = new System.Drawing.Size(23, 22);
@@ -175,7 +173,7 @@ namespace ArcEngine.Editor
 			// NewAssetBox
 			// 
 			this.NewAssetBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.NewAssetBox.Image = ((System.Drawing.Image) (resources.GetObject("NewAssetBox.Image")));
+			this.NewAssetBox.Image = ((System.Drawing.Image)(resources.GetObject("NewAssetBox.Image")));
 			this.NewAssetBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.NewAssetBox.Name = "NewAssetBox";
 			this.NewAssetBox.Size = new System.Drawing.Size(23, 22);
@@ -185,7 +183,7 @@ namespace ArcEngine.Editor
 			// RemoveAssetBox
 			// 
 			this.RemoveAssetBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.RemoveAssetBox.Image = ((System.Drawing.Image) (resources.GetObject("RemoveAssetBox.Image")));
+			this.RemoveAssetBox.Image = ((System.Drawing.Image)(resources.GetObject("RemoveAssetBox.Image")));
 			this.RemoveAssetBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.RemoveAssetBox.Name = "RemoveAssetBox";
 			this.RemoveAssetBox.Size = new System.Drawing.Size(23, 22);
@@ -199,7 +197,7 @@ namespace ArcEngine.Editor
 			// HelpButtonBox
 			// 
 			this.HelpButtonBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.HelpButtonBox.Image = ((System.Drawing.Image) (resources.GetObject("HelpButtonBox.Image")));
+			this.HelpButtonBox.Image = ((System.Drawing.Image)(resources.GetObject("HelpButtonBox.Image")));
 			this.HelpButtonBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.HelpButtonBox.Name = "HelpButtonBox";
 			this.HelpButtonBox.Size = new System.Drawing.Size(23, 22);
@@ -212,18 +210,18 @@ namespace ArcEngine.Editor
 			// 
 			// MenuFileNewBank
 			// 
-			this.MenuFileNewBank.Image = ((System.Drawing.Image) (resources.GetObject("MenuFileNewBank.Image")));
+			this.MenuFileNewBank.Image = ((System.Drawing.Image)(resources.GetObject("MenuFileNewBank.Image")));
 			this.MenuFileNewBank.Name = "MenuFileNewBank";
-			this.MenuFileNewBank.ShortcutKeys = ((System.Windows.Forms.Keys) ((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+			this.MenuFileNewBank.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
 			this.MenuFileNewBank.Size = new System.Drawing.Size(191, 22);
 			this.MenuFileNewBank.Text = "&New bank";
 			this.MenuFileNewBank.Click += new System.EventHandler(this.CreateNewBank);
 			// 
 			// MenuFileOpen
 			// 
-			this.MenuFileOpen.Image = ((System.Drawing.Image) (resources.GetObject("MenuFileOpen.Image")));
+			this.MenuFileOpen.Image = ((System.Drawing.Image)(resources.GetObject("MenuFileOpen.Image")));
 			this.MenuFileOpen.Name = "MenuFileOpen";
-			this.MenuFileOpen.ShortcutKeys = ((System.Windows.Forms.Keys) ((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+			this.MenuFileOpen.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
 			this.MenuFileOpen.Size = new System.Drawing.Size(191, 22);
 			this.MenuFileOpen.Text = "&Open...";
 			this.MenuFileOpen.Click += new System.EventHandler(this.OpenBank);
@@ -242,9 +240,9 @@ namespace ArcEngine.Editor
 			// 
 			// MenuFileSave
 			// 
-			this.MenuFileSave.Image = ((System.Drawing.Image) (resources.GetObject("MenuFileSave.Image")));
+			this.MenuFileSave.Image = ((System.Drawing.Image)(resources.GetObject("MenuFileSave.Image")));
 			this.MenuFileSave.Name = "MenuFileSave";
-			this.MenuFileSave.ShortcutKeys = ((System.Windows.Forms.Keys) ((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+			this.MenuFileSave.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
 			this.MenuFileSave.Size = new System.Drawing.Size(191, 22);
 			this.MenuFileSave.Text = "&Save";
 			this.MenuFileSave.Click += new System.EventHandler(this.SaveResourcesToStorage);
@@ -252,8 +250,8 @@ namespace ArcEngine.Editor
 			// MenuFileSaveAs
 			// 
 			this.MenuFileSaveAs.Name = "MenuFileSaveAs";
-			this.MenuFileSaveAs.ShortcutKeys = ((System.Windows.Forms.Keys) (((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.S)));
+			this.MenuFileSaveAs.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+						| System.Windows.Forms.Keys.S)));
 			this.MenuFileSaveAs.Size = new System.Drawing.Size(191, 22);
 			this.MenuFileSaveAs.Text = "Save &As...";
 			this.MenuFileSaveAs.Click += new System.EventHandler(this.FileSaveAs_OnClick);
@@ -284,7 +282,7 @@ namespace ArcEngine.Editor
 			// ExportMenuItem
 			// 
 			this.ExportMenuItem.Name = "ExportMenuItem";
-			this.ExportMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys) ((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
+			this.ExportMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
 			this.ExportMenuItem.Size = new System.Drawing.Size(191, 22);
 			this.ExportMenuItem.Text = "Export...";
 			this.ExportMenuItem.Click += new System.EventHandler(this.OnExport);
@@ -292,7 +290,7 @@ namespace ArcEngine.Editor
 			// ImportMenuItem
 			// 
 			this.ImportMenuItem.Name = "ImportMenuItem";
-			this.ImportMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys) ((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
+			this.ImportMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
 			this.ImportMenuItem.Size = new System.Drawing.Size(191, 22);
 			this.ImportMenuItem.Text = "Import...";
 			this.ImportMenuItem.Click += new System.EventHandler(this.OnImport);
@@ -330,7 +328,7 @@ namespace ArcEngine.Editor
 			// 
 			// ErrorLabel
 			// 
-			this.ErrorLabel.Image = ((System.Drawing.Image) (resources.GetObject("ErrorLabel.Image")));
+			this.ErrorLabel.Image = ((System.Drawing.Image)(resources.GetObject("ErrorLabel.Image")));
 			this.ErrorLabel.Name = "ErrorLabel";
 			this.ErrorLabel.Size = new System.Drawing.Size(57, 17);
 			this.ErrorLabel.Text = "0 Error";
@@ -339,7 +337,7 @@ namespace ArcEngine.Editor
 			// 
 			// WarningLabel
 			// 
-			this.WarningLabel.Image = ((System.Drawing.Image) (resources.GetObject("WarningLabel.Image")));
+			this.WarningLabel.Image = ((System.Drawing.Image)(resources.GetObject("WarningLabel.Image")));
 			this.WarningLabel.Name = "WarningLabel";
 			this.WarningLabel.Size = new System.Drawing.Size(77, 17);
 			this.WarningLabel.Text = "0 Warning";
@@ -378,7 +376,7 @@ namespace ArcEngine.Editor
 			// 
 			// toolStripMenuItem5
 			// 
-			this.toolStripMenuItem5.Image = ((System.Drawing.Image) (resources.GetObject("toolStripMenuItem5.Image")));
+			this.toolStripMenuItem5.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItem5.Image")));
 			this.toolStripMenuItem5.Name = "toolStripMenuItem5";
 			this.toolStripMenuItem5.ShortcutKeys = System.Windows.Forms.Keys.Delete;
 			this.toolStripMenuItem5.Size = new System.Drawing.Size(197, 22);
@@ -391,9 +389,9 @@ namespace ArcEngine.Editor
 			// 
 			// toolStripMenuItem4
 			// 
-			this.toolStripMenuItem4.Image = ((System.Drawing.Image) (resources.GetObject("toolStripMenuItem4.Image")));
+			this.toolStripMenuItem4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItem4.Image")));
 			this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-			this.toolStripMenuItem4.ShortcutKeys = ((System.Windows.Forms.Keys) ((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
+			this.toolStripMenuItem4.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
 			this.toolStripMenuItem4.Size = new System.Drawing.Size(197, 22);
 			this.toolStripMenuItem4.Text = "Find Resource...";
 			// 
@@ -418,9 +416,9 @@ namespace ArcEngine.Editor
 			// 
 			// PreferenceMenu
 			// 
-			this.PreferenceMenu.Image = ((System.Drawing.Image) (resources.GetObject("PreferenceMenu.Image")));
+			this.PreferenceMenu.Image = ((System.Drawing.Image)(resources.GetObject("PreferenceMenu.Image")));
 			this.PreferenceMenu.Name = "PreferenceMenu";
-			this.PreferenceMenu.ShortcutKeys = ((System.Windows.Forms.Keys) ((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
+			this.PreferenceMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
 			this.PreferenceMenu.Size = new System.Drawing.Size(197, 22);
 			this.PreferenceMenu.Text = "Preferences...";
 			this.PreferenceMenu.Click += new System.EventHandler(this.PreferenceMenu_Click);
@@ -473,7 +471,7 @@ namespace ArcEngine.Editor
 			// MenuWindow_Log
 			// 
 			this.MenuWindow_Log.CheckOnClick = true;
-			this.MenuWindow_Log.Image = ((System.Drawing.Image) (resources.GetObject("MenuWindow_Log.Image")));
+			this.MenuWindow_Log.Image = ((System.Drawing.Image)(resources.GetObject("MenuWindow_Log.Image")));
 			this.MenuWindow_Log.Name = "MenuWindow_Log";
 			this.MenuWindow_Log.Size = new System.Drawing.Size(148, 22);
 			this.MenuWindow_Log.Text = "&Log";
@@ -512,7 +510,7 @@ namespace ArcEngine.Editor
 			// 
 			// toolStripMenuItem7
 			// 
-			this.toolStripMenuItem7.Image = ((System.Drawing.Image) (resources.GetObject("toolStripMenuItem7.Image")));
+			this.toolStripMenuItem7.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItem7.Image")));
 			this.toolStripMenuItem7.Name = "toolStripMenuItem7";
 			this.toolStripMenuItem7.Size = new System.Drawing.Size(179, 22);
 			this.toolStripMenuItem7.Text = "Contents";
@@ -530,7 +528,7 @@ namespace ArcEngine.Editor
 			// 
 			// WebSiteMenu
 			// 
-			this.WebSiteMenu.Image = ((System.Drawing.Image) (resources.GetObject("WebSiteMenu.Image")));
+			this.WebSiteMenu.Image = ((System.Drawing.Image)(resources.GetObject("WebSiteMenu.Image")));
 			this.WebSiteMenu.Name = "WebSiteMenu";
 			this.WebSiteMenu.Size = new System.Drawing.Size(179, 22);
 			this.WebSiteMenu.Text = "Website...";
@@ -606,16 +604,6 @@ namespace ArcEngine.Editor
 			dockPanelSkin1.DockPaneStripSkin = dockPaneStripSkin1;
 			this.dockPanel.Skin = dockPanelSkin1;
 			this.dockPanel.TabIndex = 8;
-			// 
-			// toolStripButton1
-			// 
-			this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolStripButton1.Image = ((System.Drawing.Image) (resources.GetObject("toolStripButton1.Image")));
-			this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolStripButton1.Name = "toolStripButton1";
-			this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
-			this.toolStripButton1.Text = "toolStripButton1";
-			this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
 			// 
 			// EditorMainForm
 			// 
@@ -698,7 +686,6 @@ namespace ArcEngine.Editor
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
 		private System.Windows.Forms.ToolStripMenuItem CreateNewAssetMenu;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
-		private System.Windows.Forms.ToolStripButton toolStripButton1;
 
     }
 }

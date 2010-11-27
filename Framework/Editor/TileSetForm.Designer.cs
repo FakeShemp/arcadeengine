@@ -65,7 +65,7 @@
 			// 
 			// TileGroupBox
 			// 
-			this.TileGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.TileGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.TileGroupBox.Controls.Add(this.toolStrip1);
 			this.TileGroupBox.Controls.Add(this.TilePropertyGrid);
 			this.TileGroupBox.Location = new System.Drawing.Point(0, 288);
@@ -116,7 +116,7 @@
 			// EraseTileBox
 			// 
 			this.EraseTileBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.EraseTileBox.Image = ((System.Drawing.Image) (resources.GetObject("EraseTileBox.Image")));
+			this.EraseTileBox.Image = ((System.Drawing.Image)(resources.GetObject("EraseTileBox.Image")));
 			this.EraseTileBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.EraseTileBox.Name = "EraseTileBox";
 			this.EraseTileBox.Size = new System.Drawing.Size(23, 22);
@@ -132,7 +132,7 @@
 			// 
 			this.SelectionBox.CheckOnClick = true;
 			this.SelectionBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.SelectionBox.Image = ((System.Drawing.Image) (resources.GetObject("SelectionBox.Image")));
+			this.SelectionBox.Image = ((System.Drawing.Image)(resources.GetObject("SelectionBox.Image")));
 			this.SelectionBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.SelectionBox.Name = "SelectionBox";
 			this.SelectionBox.Size = new System.Drawing.Size(23, 22);
@@ -143,7 +143,7 @@
 			// 
 			this.HotSpotBox.CheckOnClick = true;
 			this.HotSpotBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.HotSpotBox.Image = ((System.Drawing.Image) (resources.GetObject("HotSpotBox.Image")));
+			this.HotSpotBox.Image = ((System.Drawing.Image)(resources.GetObject("HotSpotBox.Image")));
 			this.HotSpotBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.HotSpotBox.Name = "HotSpotBox";
 			this.HotSpotBox.Size = new System.Drawing.Size(23, 22);
@@ -154,7 +154,7 @@
 			// 
 			this.ColisionBox.CheckOnClick = true;
 			this.ColisionBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.ColisionBox.Image = ((System.Drawing.Image) (resources.GetObject("ColisionBox.Image")));
+			this.ColisionBox.Image = ((System.Drawing.Image)(resources.GetObject("ColisionBox.Image")));
 			this.ColisionBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.ColisionBox.Name = "ColisionBox";
 			this.ColisionBox.Size = new System.Drawing.Size(23, 22);
@@ -163,9 +163,9 @@
 			// 
 			// TilePropertyGrid
 			// 
-			this.TilePropertyGrid.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.TilePropertyGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.TilePropertyGrid.Location = new System.Drawing.Point(12, 44);
 			this.TilePropertyGrid.Name = "TilePropertyGrid";
 			this.TilePropertyGrid.Size = new System.Drawing.Size(182, 314);
@@ -174,8 +174,8 @@
 			// 
 			// VertScroller
 			// 
-			this.VertScroller.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.VertScroller.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.VertScroller.Location = new System.Drawing.Point(901, 25);
 			this.VertScroller.Name = "VertScroller";
 			this.VertScroller.Size = new System.Drawing.Size(17, 257);
@@ -183,8 +183,8 @@
 			// 
 			// HScroller
 			// 
-			this.HScroller.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.HScroller.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.HScroller.Location = new System.Drawing.Point(206, 288);
 			this.HScroller.Name = "HScroller";
 			this.HScroller.Size = new System.Drawing.Size(695, 17);
@@ -218,7 +218,7 @@
 			// ZoomOutButton
 			// 
 			this.ZoomOutButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.ZoomOutButton.Image = ((System.Drawing.Image) (resources.GetObject("ZoomOutButton.Image")));
+			this.ZoomOutButton.Image = ((System.Drawing.Image)(resources.GetObject("ZoomOutButton.Image")));
 			this.ZoomOutButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.ZoomOutButton.Name = "ZoomOutButton";
 			this.ZoomOutButton.Size = new System.Drawing.Size(23, 22);
@@ -248,7 +248,7 @@
 			// ZoomInButton
 			// 
 			this.ZoomInButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.ZoomInButton.Image = ((System.Drawing.Image) (resources.GetObject("ZoomInButton.Image")));
+			this.ZoomInButton.Image = ((System.Drawing.Image)(resources.GetObject("ZoomInButton.Image")));
 			this.ZoomInButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.ZoomInButton.Name = "ZoomInButton";
 			this.ZoomInButton.Size = new System.Drawing.Size(23, 22);
@@ -258,7 +258,7 @@
 			// ActualSizeButton
 			// 
 			this.ActualSizeButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.ActualSizeButton.Image = ((System.Drawing.Image) (resources.GetObject("ActualSizeButton.Image")));
+			this.ActualSizeButton.Image = ((System.Drawing.Image)(resources.GetObject("ActualSizeButton.Image")));
 			this.ActualSizeButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.ActualSizeButton.Name = "ActualSizeButton";
 			this.ActualSizeButton.Size = new System.Drawing.Size(23, 22);
@@ -285,7 +285,7 @@
 			// ChangeTextureBox
 			// 
 			this.ChangeTextureBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.ChangeTextureBox.Image = ((System.Drawing.Image) (resources.GetObject("ChangeTextureBox.Image")));
+			this.ChangeTextureBox.Image = ((System.Drawing.Image)(resources.GetObject("ChangeTextureBox.Image")));
 			this.ChangeTextureBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.ChangeTextureBox.Name = "ChangeTextureBox";
 			this.ChangeTextureBox.Size = new System.Drawing.Size(23, 22);
@@ -300,7 +300,7 @@
 			// PositionLabel
 			// 
 			this.PositionLabel.AutoSize = false;
-			this.PositionLabel.Image = ((System.Drawing.Image) (resources.GetObject("PositionLabel.Image")));
+			this.PositionLabel.Image = ((System.Drawing.Image)(resources.GetObject("PositionLabel.Image")));
 			this.PositionLabel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.PositionLabel.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.PositionLabel.Name = "PositionLabel";
@@ -317,7 +317,7 @@
 			// SizeLabel
 			// 
 			this.SizeLabel.AutoSize = false;
-			this.SizeLabel.Image = ((System.Drawing.Image) (resources.GetObject("SizeLabel.Image")));
+			this.SizeLabel.Image = ((System.Drawing.Image)(resources.GetObject("SizeLabel.Image")));
 			this.SizeLabel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.SizeLabel.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.SizeLabel.Name = "SizeLabel";
@@ -338,8 +338,8 @@
 			// 
 			// GLTileControl
 			// 
-			this.GLTileControl.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.GLTileControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.GLTileControl.BackColor = System.Drawing.Color.Black;
 			this.GLTileControl.Location = new System.Drawing.Point(206, 308);
 			this.GLTileControl.Name = "GLTileControl";
@@ -355,9 +355,9 @@
 			// 
 			// GLTextureControl
 			// 
-			this.GLTextureControl.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.GLTextureControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.GLTextureControl.BackColor = System.Drawing.Color.Black;
 			this.GLTextureControl.Location = new System.Drawing.Point(3, 28);
 			this.GLTextureControl.Name = "GLTextureControl";
@@ -382,7 +382,7 @@
 			this.Controls.Add(this.HScroller);
 			this.Controls.Add(this.TextureToolStrip);
 			this.Controls.Add(this.TileGroupBox);
-			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Name = "TileSetForm";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TileSetForm_FormClosing);
 			this.Load += new System.EventHandler(this.TileSetForm_Load);

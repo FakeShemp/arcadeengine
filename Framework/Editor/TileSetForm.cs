@@ -620,7 +620,15 @@ namespace ArcEngine.Editor
 		/// <param name="e"></param>
 		private void ChangeTextureBox_Click(object sender, EventArgs e)
 		{
+			StorageBrowserForm form = new StorageBrowserForm();
+			form.MultiSelect = false;
+			form.FileName = TileSet.TextureName;
+			if (form.ShowDialog() != DialogResult.OK)
+				return;
 
+			TextureNameBox.Text = form.FileName;
+			TileSet.TextureName = form.FileName;
+			TileSet.Texture.LoadImage(TileSet.TextureName);
 		}
 
 
