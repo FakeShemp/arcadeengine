@@ -56,7 +56,7 @@ namespace ArcEngine
 			AssetProviders = new Dictionary<Type, Provider>();
 			Providers = new List<Provider>();
 			RegistredTags = new Dictionary<string, Provider>();
-			Storages = new List<StorageBase>();
+			StorageList = new List<StorageBase>();
 			FailbackStorage = new FileSystemStorage(Directory.GetCurrentDirectory());
 
 			AddProvider(new Providers());
@@ -84,9 +84,9 @@ namespace ArcEngine
 				provider.Dispose();
 			Providers.Clear();
 
-			foreach (StorageBase storage in Storages)
+			foreach (StorageBase storage in StorageList)
 				storage.Dispose();
-			Storages.Clear();
+			StorageList.Clear();
 
 		}
 
@@ -101,7 +101,7 @@ namespace ArcEngine
 				return;
 
 			storage.Process();
-			Storages.Add(storage);
+			StorageList.Add(storage);
 		}
 
 
@@ -143,7 +143,7 @@ namespace ArcEngine
 			if (string.IsNullOrEmpty(filename))
 				return null;
 
-			foreach (StorageBase storage in Storages)
+			foreach (StorageBase storage in StorageList)
 			{
 				Stream stream = storage.OpenFile(filename);
 				if (stream != null)
@@ -459,9 +459,9 @@ namespace ArcEngine
 
 
 			// Remove all storages
-			foreach (StorageBase storage in Storages)
+			foreach (StorageBase storage in StorageList)
 				storage.Dispose();
-			Storages.Clear();
+			StorageList.Clear();
 		}
 
 
@@ -813,7 +813,20 @@ namespace ArcEngine
 		/// <summary>
 		/// Storages
 		/// </summary>
-		static List<StorageBase> Storages;
+		static List<StorageBase> StorageList;
+
+
+		/// <summary>
+		/// Available storage bases
+		/// </summary>
+		public static StorageBase[] Storages
+		{
+			get
+			{
+				return StorageList.ToArray();
+			}
+		}
+
 
 		/// <summary>
 		/// Failback storage

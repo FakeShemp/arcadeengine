@@ -164,7 +164,7 @@ namespace ArcEngine.Storage
 		/// <returns>File list</returns>
 		public List<string> GetFileNames()
 		{
-			return GetFileNames("*");
+			return GetFileNames("");
 		}
 
 
@@ -179,7 +179,7 @@ namespace ArcEngine.Storage
 
 			foreach (string file in Files)
 			{
-				if (Regex.IsMatch(file, pattern))
+				if (Regex.IsMatch(file, Regex.Escape(pattern)))
 					list.Add(file);
 			}
 

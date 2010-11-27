@@ -162,6 +162,12 @@
     <Compile Include="Asset\Scenes\KeyFrame.cs" />
     <Compile Include="Asset\Scenes\SceneLayer.cs" />
     <Compile Include="Asset\BinaryInformation.cs" />
+    <Compile Include="Forms\StorageBrowserForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\StorageBrowserForm.Designer.cs">
+      <DependentUpon>StorageBrowserForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Editor\ToolStripNumberControl.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -458,6 +464,9 @@
     <Compile Include="Utility\Webcam.cs" />
     <EmbeddedResource Include="Editor\ScriptControl.resx">
       <DependentUpon>ScriptControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\StorageBrowserForm.resx">
+      <DependentUpon>StorageBrowserForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Editor\StringTableControl.resx">
       <DependentUpon>StringTableControl.cs</DependentUpon>

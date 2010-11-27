@@ -642,6 +642,33 @@ namespace DungeonEye.Forms
 		#endregion
 
 
+		#region Audio
+
+		private void LoadAttackSoundBox_Click(object sender, EventArgs e)
+		{
+			StorageBrowserForm form = new StorageBrowserForm();
+			form.ShowDialog();
+		}
+
+		private void LoadMoveSoundBox_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void LoadDeathSoundBox_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void LoadHurtSoundBox_Click(object sender, EventArgs e)
+		{
+
+		}
+
+
+		#endregion
+
+
 		#region Properties
 
 		/// <summary>
@@ -673,7 +700,6 @@ namespace DungeonEye.Forms
 
 
 		#endregion
-
 
 
 	}

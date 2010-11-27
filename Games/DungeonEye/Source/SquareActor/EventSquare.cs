@@ -29,14 +29,14 @@ using ArcEngine.Graphic;
 namespace DungeonEye
 {
 	/// <summary>
-	/// 
+	/// Event square
 	/// </summary>
 	public class EventSquare : SquareActor
 	{
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
-		/// <param name="square"></param>
+		/// <param name="square">Square handle</param>
 		public EventSquare(Square square) : base(square)
 		{
 

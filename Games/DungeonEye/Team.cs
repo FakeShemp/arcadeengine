@@ -1007,6 +1007,17 @@ namespace DungeonEye
 				}
 			}
 
+			// Forest maze
+			if (Keyboard.IsNewKeyPress(Keys.F))
+			{
+				Maze maze = Dungeon.GetMaze("Forest");
+				if (maze != null)
+				{
+					Maze = maze;
+					AddMessage("Loading maze forest", Color.Blue);
+				}
+			}
+
 			#endregion
 
 

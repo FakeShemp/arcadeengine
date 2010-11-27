@@ -28,7 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			DungeonEye.Dice dice1 = new DungeonEye.Dice();
+			DungeonEye.Dice dice4 = new DungeonEye.Dice();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MonsterControl));
 			this.label11 = new System.Windows.Forms.Label();
 			this.label12 = new System.Windows.Forms.Label();
@@ -43,6 +43,7 @@
 			this.label3 = new System.Windows.Forms.Label();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.VisualTab = new System.Windows.Forms.TabPage();
+			this.TileIDBox = new System.Windows.Forms.NumericUpDown();
 			this.AttributesTab = new System.Windows.Forms.TabPage();
 			this.EntityBox = new DungeonEye.Forms.EntityControl();
 			this.PropertiesTab = new System.Windows.Forms.TabPage();
@@ -111,25 +112,24 @@
 			this.label14 = new System.Windows.Forms.Label();
 			this.label13 = new System.Windows.Forms.Label();
 			this.label10 = new System.Windows.Forms.Label();
-			this.TileIDBox = new System.Windows.Forms.NumericUpDown();
 			this.PocketGroupBox.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.XPRewardBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize) (this.XPRewardBox)).BeginInit();
 			this.tabControl1.SuspendLayout();
 			this.VisualTab.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize) (this.TileIDBox)).BeginInit();
 			this.AttributesTab.SuspendLayout();
 			this.PropertiesTab.SuspendLayout();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.AttackSpeedBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.SightRangeBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.PickupBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.ArmorClassBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.StealBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize) (this.AttackSpeedBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize) (this.SightRangeBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize) (this.PickupBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize) (this.ArmorClassBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize) (this.StealBox)).BeginInit();
 			this.MagicTab.SuspendLayout();
 			this.MagicGroupBox.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.CastingLevelBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize) (this.CastingLevelBox)).BeginInit();
 			this.AudioTab.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.TileIDBox)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// label11
@@ -220,8 +220,8 @@
 			// 
 			// RemovePocketItemBox
 			// 
-			this.RemovePocketItemBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.RemovePocketItemBox.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.RemovePocketItemBox.Location = new System.Drawing.Point(6, 140);
 			this.RemovePocketItemBox.Name = "RemovePocketItemBox";
 			this.RemovePocketItemBox.Size = new System.Drawing.Size(215, 23);
@@ -282,6 +282,21 @@
 			this.VisualTab.TabIndex = 0;
 			this.VisualTab.Text = "Visual";
 			this.VisualTab.UseVisualStyleBackColor = true;
+			// 
+			// TileIDBox
+			// 
+			this.TileIDBox.Location = new System.Drawing.Point(65, 33);
+			this.TileIDBox.Maximum = new decimal(new int[] {
+            1316134911,
+            2328,
+            0,
+            0});
+			this.TileIDBox.Name = "TileIDBox";
+			this.TileIDBox.Size = new System.Drawing.Size(93, 20);
+			this.TileIDBox.TabIndex = 4;
+			this.TileIDBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.TileIDBox.ThousandsSeparator = true;
+			this.TileIDBox.ValueChanged += new System.EventHandler(this.TileIDBox_ValueChanged);
 			// 
 			// AttributesTab
 			// 
@@ -699,10 +714,10 @@
 			// DamageBox
 			// 
 			this.DamageBox.ControlText = "Damage :";
-			dice1.Faces = 1;
-			dice1.Modifier = 0;
-			dice1.Throws = 1;
-			this.DamageBox.Dice = dice1;
+			dice4.Faces = 1;
+			dice4.Modifier = 0;
+			dice4.Throws = 1;
+			this.DamageBox.Dice = dice4;
 			this.DamageBox.Location = new System.Drawing.Point(257, 257);
 			this.DamageBox.MinimumSize = new System.Drawing.Size(225, 100);
 			this.DamageBox.Name = "DamageBox";
@@ -870,8 +885,8 @@
 			// 
 			// PlayHurtSoundBox
 			// 
-			this.PlayHurtSoundBox.Image = ((System.Drawing.Image)(resources.GetObject("PlayHurtSoundBox.Image")));
-			this.PlayHurtSoundBox.Location = new System.Drawing.Point(301, 102);
+			this.PlayHurtSoundBox.Image = ((System.Drawing.Image) (resources.GetObject("PlayHurtSoundBox.Image")));
+			this.PlayHurtSoundBox.Location = new System.Drawing.Point(343, 101);
 			this.PlayHurtSoundBox.Name = "PlayHurtSoundBox";
 			this.PlayHurtSoundBox.Size = new System.Drawing.Size(23, 23);
 			this.PlayHurtSoundBox.TabIndex = 3;
@@ -879,8 +894,8 @@
 			// 
 			// PlayDeathSoundBox
 			// 
-			this.PlayDeathSoundBox.Image = ((System.Drawing.Image)(resources.GetObject("PlayDeathSoundBox.Image")));
-			this.PlayDeathSoundBox.Location = new System.Drawing.Point(301, 76);
+			this.PlayDeathSoundBox.Image = ((System.Drawing.Image) (resources.GetObject("PlayDeathSoundBox.Image")));
+			this.PlayDeathSoundBox.Location = new System.Drawing.Point(343, 75);
 			this.PlayDeathSoundBox.Name = "PlayDeathSoundBox";
 			this.PlayDeathSoundBox.Size = new System.Drawing.Size(23, 23);
 			this.PlayDeathSoundBox.TabIndex = 3;
@@ -888,8 +903,8 @@
 			// 
 			// PlayMoveSoundBox
 			// 
-			this.PlayMoveSoundBox.Image = ((System.Drawing.Image)(resources.GetObject("PlayMoveSoundBox.Image")));
-			this.PlayMoveSoundBox.Location = new System.Drawing.Point(301, 50);
+			this.PlayMoveSoundBox.Image = ((System.Drawing.Image) (resources.GetObject("PlayMoveSoundBox.Image")));
+			this.PlayMoveSoundBox.Location = new System.Drawing.Point(343, 49);
 			this.PlayMoveSoundBox.Name = "PlayMoveSoundBox";
 			this.PlayMoveSoundBox.Size = new System.Drawing.Size(23, 23);
 			this.PlayMoveSoundBox.TabIndex = 3;
@@ -897,8 +912,8 @@
 			// 
 			// PlayAttackSoundBox
 			// 
-			this.PlayAttackSoundBox.Image = ((System.Drawing.Image)(resources.GetObject("PlayAttackSoundBox.Image")));
-			this.PlayAttackSoundBox.Location = new System.Drawing.Point(301, 24);
+			this.PlayAttackSoundBox.Image = ((System.Drawing.Image) (resources.GetObject("PlayAttackSoundBox.Image")));
+			this.PlayAttackSoundBox.Location = new System.Drawing.Point(343, 23);
 			this.PlayAttackSoundBox.Name = "PlayAttackSoundBox";
 			this.PlayAttackSoundBox.Size = new System.Drawing.Size(23, 23);
 			this.PlayAttackSoundBox.TabIndex = 3;
@@ -908,37 +923,41 @@
 			// 
 			this.LoadHurtSoundBox.Location = new System.Drawing.Point(269, 102);
 			this.LoadHurtSoundBox.Name = "LoadHurtSoundBox";
-			this.LoadHurtSoundBox.Size = new System.Drawing.Size(26, 23);
+			this.LoadHurtSoundBox.Size = new System.Drawing.Size(68, 23);
 			this.LoadHurtSoundBox.TabIndex = 2;
-			this.LoadHurtSoundBox.Text = "...";
+			this.LoadHurtSoundBox.Text = "Browse...";
 			this.LoadHurtSoundBox.UseVisualStyleBackColor = true;
+			this.LoadHurtSoundBox.Click += new System.EventHandler(this.LoadHurtSoundBox_Click);
 			// 
 			// LoadDeathSoundBox
 			// 
 			this.LoadDeathSoundBox.Location = new System.Drawing.Point(269, 76);
 			this.LoadDeathSoundBox.Name = "LoadDeathSoundBox";
-			this.LoadDeathSoundBox.Size = new System.Drawing.Size(26, 23);
+			this.LoadDeathSoundBox.Size = new System.Drawing.Size(68, 23);
 			this.LoadDeathSoundBox.TabIndex = 2;
-			this.LoadDeathSoundBox.Text = "...";
+			this.LoadDeathSoundBox.Text = "Browse...";
 			this.LoadDeathSoundBox.UseVisualStyleBackColor = true;
+			this.LoadDeathSoundBox.Click += new System.EventHandler(this.LoadDeathSoundBox_Click);
 			// 
 			// LoadMoveSoundBox
 			// 
 			this.LoadMoveSoundBox.Location = new System.Drawing.Point(269, 50);
 			this.LoadMoveSoundBox.Name = "LoadMoveSoundBox";
-			this.LoadMoveSoundBox.Size = new System.Drawing.Size(26, 23);
+			this.LoadMoveSoundBox.Size = new System.Drawing.Size(68, 23);
 			this.LoadMoveSoundBox.TabIndex = 2;
-			this.LoadMoveSoundBox.Text = "...";
+			this.LoadMoveSoundBox.Text = "Browse...";
 			this.LoadMoveSoundBox.UseVisualStyleBackColor = true;
+			this.LoadMoveSoundBox.Click += new System.EventHandler(this.LoadMoveSoundBox_Click);
 			// 
 			// LoadAttackSoundBox
 			// 
 			this.LoadAttackSoundBox.Location = new System.Drawing.Point(269, 24);
 			this.LoadAttackSoundBox.Name = "LoadAttackSoundBox";
-			this.LoadAttackSoundBox.Size = new System.Drawing.Size(26, 23);
+			this.LoadAttackSoundBox.Size = new System.Drawing.Size(68, 23);
 			this.LoadAttackSoundBox.TabIndex = 2;
-			this.LoadAttackSoundBox.Text = "...";
+			this.LoadAttackSoundBox.Text = "Browse...";
 			this.LoadAttackSoundBox.UseVisualStyleBackColor = true;
+			this.LoadAttackSoundBox.Click += new System.EventHandler(this.LoadAttackSoundBox_Click);
 			// 
 			// HurtSoundBox
 			// 
@@ -1004,55 +1023,40 @@
 			this.label10.TabIndex = 0;
 			this.label10.Text = "Move :";
 			// 
-			// TileIDBox
-			// 
-			this.TileIDBox.Location = new System.Drawing.Point(65, 33);
-			this.TileIDBox.Maximum = new decimal(new int[] {
-            1316134911,
-            2328,
-            0,
-            0});
-			this.TileIDBox.Name = "TileIDBox";
-			this.TileIDBox.Size = new System.Drawing.Size(93, 20);
-			this.TileIDBox.TabIndex = 4;
-			this.TileIDBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.TileIDBox.ThousandsSeparator = true;
-			this.TileIDBox.ValueChanged += new System.EventHandler(this.TileIDBox_ValueChanged);
-			// 
 			// MonsterControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.tabControl1);
-			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 			this.Name = "MonsterControl";
 			this.Size = new System.Drawing.Size(500, 473);
 			this.Load += new System.EventHandler(this.MonsterControl_Load);
 			this.PocketGroupBox.ResumeLayout(false);
 			this.PocketGroupBox.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.XPRewardBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize) (this.XPRewardBox)).EndInit();
 			this.tabControl1.ResumeLayout(false);
 			this.VisualTab.ResumeLayout(false);
 			this.VisualTab.PerformLayout();
+			((System.ComponentModel.ISupportInitialize) (this.TileIDBox)).EndInit();
 			this.AttributesTab.ResumeLayout(false);
 			this.PropertiesTab.ResumeLayout(false);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.AttackSpeedBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.SightRangeBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.PickupBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.ArmorClassBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.StealBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize) (this.AttackSpeedBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize) (this.SightRangeBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize) (this.PickupBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize) (this.ArmorClassBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize) (this.StealBox)).EndInit();
 			this.MagicTab.ResumeLayout(false);
 			this.MagicTab.PerformLayout();
 			this.MagicGroupBox.ResumeLayout(false);
 			this.MagicGroupBox.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.CastingLevelBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize) (this.CastingLevelBox)).EndInit();
 			this.AudioTab.ResumeLayout(false);
 			this.AudioTab.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.TileIDBox)).EndInit();
 			this.ResumeLayout(false);
 
 		}

@@ -587,6 +587,13 @@ namespace ArcEngine.Editor
 		StorageBase Storage;
 
 		#endregion
+
+		private void toolStripButton1_Click(object sender, EventArgs e)
+		{
+			StorageBrowserForm form = new StorageBrowserForm();
+			form.Storage = ResourceManager.Storages[0];
+			form.ShowDialog();
+		}
 	}
 
 
