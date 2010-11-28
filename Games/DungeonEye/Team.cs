@@ -206,7 +206,7 @@ namespace DungeonEye
 			Heroes = null;
 			SelectedHero = null;
 			Messages = null;
-			MazeBlock = null;
+			Square = null;
 			Location = null;
 			LastMove = DateTime.MinValue;
 			Language = null;
@@ -475,7 +475,7 @@ namespace DungeonEye
 			int i = 0;
 			foreach (ScreenMessage msg in Messages)
 			{
-				Batch.DrawString(Font, new Point(10, 358 + i * 12), msg.Color, msg.Message);
+				Batch.DrawString(Font, new Point(8, 360 + i * 12), msg.Color, msg.Message);
 				i++;
 			}
 
@@ -1095,8 +1095,8 @@ namespace DungeonEye
 			Point mousePos = Mouse.Location;
 			Point pos = Point.Empty;
 
-			// Get the block at team position
-			Square CurrentBlock = Maze.GetBlock(Location.Coordinate);
+			// Get the square at team position
+			Square square = Maze.GetSquare(Location.Coordinate);
 
 
 			#region Mouse
@@ -1168,17 +1168,17 @@ namespace DungeonEye
 					}
 					if (ItemInHand != null)
 					{
-						if (CurrentBlock.DropItem(groundpos, ItemInHand))
+						if (square.DropItem(groundpos, ItemInHand))
 							SetItemInHand(null);
 					}
 					else
 					{
-						SetItemInHand(CurrentBlock.CollectItem(groundpos));
+						SetItemInHand(square.CollectItem(groundpos));
 					}
 				}
 
 				// In front of the team
-				else if (!FrontBlock.IsWall && MazeDisplayCoordinates.LeftFrontTeamGround.Contains(mousePos))
+				else if (!FrontSquare.IsWall && MazeDisplayCoordinates.LeftFrontTeamGround.Contains(mousePos))
 				{
 					// Ground position
 					switch (Location.Direction)
@@ -1200,11 +1200,11 @@ namespace DungeonEye
 
 					if (ItemInHand != null)
 					{
-						if (FrontBlock.DropItem(groundpos, ItemInHand))
+						if (FrontSquare.DropItem(groundpos, ItemInHand))
 							SetItemInHand(null);
 					}
 					else
-						SetItemInHand(FrontBlock.CollectItem(groundpos));
+						SetItemInHand(FrontSquare.CollectItem(groundpos));
 				}
 
 
@@ -1231,12 +1231,12 @@ namespace DungeonEye
 
 					if (ItemInHand != null)
 					{
-						if (CurrentBlock.DropItem(groundpos, ItemInHand))
+						if (square.DropItem(groundpos, ItemInHand))
 							SetItemInHand(null);
 					}
 					else
 					{
-						SetItemInHand(CurrentBlock.CollectItem(groundpos));
+						SetItemInHand(square.CollectItem(groundpos));
 						//if (ItemInHand != null)
 						//    AddMessage(Language.BuildMessage(2, ItemInHand.Name));
 
@@ -1244,7 +1244,7 @@ namespace DungeonEye
 				}
 
 				// In front of the team
-				else if (!FrontBlock.IsWall && MazeDisplayCoordinates.RightFrontTeamGround.Contains(mousePos))
+				else if (!FrontSquare.IsWall && MazeDisplayCoordinates.RightFrontTeamGround.Contains(mousePos))
 				{
 
 					// Ground position
@@ -1267,12 +1267,12 @@ namespace DungeonEye
 
 					if (ItemInHand != null)
 					{
-						if (FrontBlock.DropItem(groundpos, ItemInHand))
+						if (FrontSquare.DropItem(groundpos, ItemInHand))
 							SetItemInHand(null);
 					}
 					else
 					{
-						SetItemInHand(FrontBlock.CollectItem(groundpos));
+						SetItemInHand(FrontSquare.CollectItem(groundpos));
 						//if (ItemInHand != null)
 						//    AddMessage(Language.BuildMessage(2, ItemInHand.Name));
 					}
@@ -1281,27 +1281,27 @@ namespace DungeonEye
 				#endregion
 
 				#region Alcove
-				else if (MazeDisplayCoordinates.Alcove.Contains(mousePos) && FrontBlock.IsWall)
+				else if (MazeDisplayCoordinates.Alcove.Contains(mousePos) && FrontSquare.IsWall)
 				{
 
 					if (ItemInHand != null)
 					{
-						if (FrontBlock.DropAlcoveItem(FrontWallSide, ItemInHand))
+						if (FrontSquare.DropAlcoveItem(FrontWallSide, ItemInHand))
 							SetItemInHand(null);
 					}
 					else
 					{
-						SetItemInHand(FrontBlock.CollectAlcoveItem(FrontWallSide));
+						SetItemInHand(FrontSquare.CollectAlcoveItem(FrontWallSide));
 					}
 				}
 				#endregion
 
-				#region Action to process on the front block
+				#region Action to process on the front square
 
-				// Click on the block in front of the team
-				else if (MazeDisplayCoordinates.FrontBlock.Contains(mousePos))// && FrontBlock.IsWall)
+				// Click on the square in front of the team
+				else if (MazeDisplayCoordinates.FrontSquare.Contains(mousePos))// && FrontBlock.IsWall)
 				{
-					if (!FrontBlock.OnClick(this, mousePos, FrontWallSide))
+					if (!FrontSquare.OnClick(this, mousePos, FrontWallSide))
 					{
 						#region Throw an object left side
 						if (MazeDisplayCoordinates.ThrowLeft.Contains(mousePos) && ItemInHand != null)
@@ -1365,13 +1365,13 @@ namespace DungeonEye
 			else if (Mouse.IsNewButtonDown(MouseButtons.Right))
 			{
 				#region Alcove
-				if (MazeDisplayCoordinates.Alcove.Contains(mousePos) && FrontBlock.IsWall)
+				if (MazeDisplayCoordinates.Alcove.Contains(mousePos) && FrontSquare.IsWall)
 				{
-					SelectedHero.AddToInventory(FrontBlock.CollectAlcoveItem(FrontWallSide));
+					SelectedHero.AddToInventory(FrontSquare.CollectAlcoveItem(FrontWallSide));
 				}
 				#endregion
 
-				#region Action to process on the front block
+				#region Action to process on the front square
 
 				#endregion
 
@@ -1397,19 +1397,19 @@ namespace DungeonEye
 					}
 					if (ItemInHand == null)
 					{
-						Item item = CurrentBlock.CollectItem(groundpos);
+						Item item = square.CollectItem(groundpos);
 						if (item != null)
 						{
 							if (SelectedHero.AddToInventory(item))
 								AddMessage(Language.BuildMessage(2, item.Name));
 							else
-								CurrentBlock.DropItem(groundpos, item);
+								square.DropItem(groundpos, item);
 						}
 					}
 				}
 
 				// In front of the team
-				else if (MazeDisplayCoordinates.LeftFrontTeamGround.Contains(mousePos) && !FrontBlock.IsWall)
+				else if (MazeDisplayCoordinates.LeftFrontTeamGround.Contains(mousePos) && !FrontSquare.IsWall)
 				{
 					// Ground position
 					switch (Location.Direction)
@@ -1430,14 +1430,14 @@ namespace DungeonEye
 
 					if (ItemInHand == null)
 					{
-						Item item = FrontBlock.CollectItem(groundpos);
+						Item item = FrontSquare.CollectItem(groundpos);
 
 						if (item != null)
 						{
 							if (SelectedHero.AddToInventory(item))
 								AddMessage(Language.BuildMessage(2, item.Name));
 							else
-								FrontBlock.DropItem(groundpos, item);
+								FrontSquare.DropItem(groundpos, item);
 						}
 					}
 				}
@@ -1466,19 +1466,19 @@ namespace DungeonEye
 
 					if (ItemInHand == null)
 					{
-						Item item = CurrentBlock.CollectItem(groundpos);
+						Item item = square.CollectItem(groundpos);
 						if (item != null)
 						{
 							if (SelectedHero.AddToInventory(item))
 								AddMessage(Language.BuildMessage(2, item.Name));
 							else
-								CurrentBlock.DropItem(groundpos, item);
+								square.DropItem(groundpos, item);
 						}
 					}
 				}
 
 				// In front of the team
-				else if (MazeDisplayCoordinates.RightFrontTeamGround.Contains(mousePos) && !FrontBlock.IsWall)
+				else if (MazeDisplayCoordinates.RightFrontTeamGround.Contains(mousePos) && !FrontSquare.IsWall)
 				{
 
 					// Ground position
@@ -1500,13 +1500,13 @@ namespace DungeonEye
 
 					if (ItemInHand == null)
 					{
-						Item item = FrontBlock.CollectItem(groundpos);
+						Item item = FrontSquare.CollectItem(groundpos);
 						if (item != null)
 						{
 							if (SelectedHero.AddToInventory(item))
 								AddMessage(Language.BuildMessage(2, item.Name));
 							else
-								FrontBlock.DropItem(groundpos, item);
+								FrontSquare.DropItem(groundpos, item);
 						}
 					}
 				}
@@ -1691,12 +1691,13 @@ namespace DungeonEye
 				Messages.RemoveAt(0);
 
 			foreach (ScreenMessage msg in Messages)
-				msg.Life -= time.ElapsedGameTime.Milliseconds;
+				msg.Life = msg.Life.Add(-time.ElapsedGameTime);
 
+			// Remove old messages
 			Messages.RemoveAll(
 				delegate(ScreenMessage msg)
 				{
-					return msg.Life < 0;
+					return msg.Life.Seconds <= 0;
 				}
 			);
 
@@ -1707,8 +1708,8 @@ namespace DungeonEye
 			Dungeon.Update(time);
 
 
-			if (CanMove && MazeBlock != null)
-				MazeBlock.OnTeamStand(this);
+			if (CanMove && Square != null)
+				Square.OnTeamStand(this);
 		}
 
 
@@ -2014,7 +2015,7 @@ namespace DungeonEye
 					float y = 0;
 					for (int pos = Location.Coordinate.Y ; pos >= location.Y ; pos--)
 					{
-						if (Maze.GetBlock(new Point(pos, Location.Coordinate.Y + (int) y)).Type == SquareType.Wall)
+						if (Maze.GetSquare(new Point(pos, Location.Coordinate.Y + (int) y)).Type == SquareType.Wall)
 							return false;
 
 						y += delta;
@@ -2042,7 +2043,7 @@ namespace DungeonEye
 					float y = 0;
 					for (int pos = Location.Coordinate.Y ; pos <= location.Y ; pos++)
 					{
-						if (Maze.GetBlock(new Point(pos, Location.Coordinate.Y + (int) y)).Type == SquareType.Wall)
+						if (Maze.GetSquare(new Point(pos, Location.Coordinate.Y + (int) y)).Type == SquareType.Wall)
 							return false;
 
 						y += delta;
@@ -2071,7 +2072,7 @@ namespace DungeonEye
 					float y = 0;
 					for (int pos = Location.Coordinate.X ; pos >= location.X ; pos--)
 					{
-						if (Maze.GetBlock(new Point(pos, Location.Coordinate.Y + (int) y)).Type == SquareType.Wall)
+						if (Maze.GetSquare(new Point(pos, Location.Coordinate.Y + (int) y)).Type == SquareType.Wall)
 							return false;
 
 						y += delta;
@@ -2098,7 +2099,7 @@ namespace DungeonEye
 					float y = 0;
 					for (int pos = Location.Coordinate.X ; pos <= location.X ; pos++)
 					{
-						if (Maze.GetBlock(new Point(pos, Location.Coordinate.Y + (int) y)).Type == SquareType.Wall)
+						if (Maze.GetSquare(new Point(pos, Location.Coordinate.Y + (int) y)).Type == SquareType.Wall)
 							return false;
 
 						y += delta;
@@ -2127,15 +2128,15 @@ namespace DungeonEye
 		#endregion
 
 
-		#region Messages
+		#region On screen messages
 
 		/// <summary>
 		/// Adds a message to the interface
 		/// </summary>
 		/// <param name="msg">Message</param>
-		public void AddMessage(string msg)
+		public static void AddMessage(string msg)
 		{
-			Messages.Add(new ScreenMessage(msg, Color.White));
+			AddMessage(msg, Color.White);
 		}
 
 
@@ -2144,9 +2145,19 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="msg">Message</param>
 		/// <param name="color">Color</param>
-		public void AddMessage(string msg, Color color)
+		public static void AddMessage(string msg, Color color)
 		{
-			Messages.Add(new ScreenMessage(msg, color));
+			// Split all new lines
+			string[] lines = msg.Split('\n');
+
+			// Lines too long
+			int maxlen = 47;
+			foreach (string line in lines)
+			{
+				for (int i = 0; i < line.Length; i += maxlen)
+					Messages.Add(new ScreenMessage(line.Substring(i, Math.Min(line.Length - i, maxlen)), color));
+			}
+
 		}
 
 
@@ -2170,7 +2181,21 @@ namespace DungeonEye
 					hero.Damage(damage, type, difficulty);
 		}
 
-
+/*
+		/// <summary>
+		/// Hit all heroes in the team
+		/// </summary>
+		/// <param name="damage">Amount of damage</param>
+		public void Hit(int damage)
+		{
+			foreach (Hero hero in Heroes)
+			{
+				if (hero != null)
+					hero.HitPoint.Current -= damage;
+			}
+		}
+*/
+		
 		/// <summary>
 		/// Add experience to the whole team
 		/// </summary>
@@ -2184,20 +2209,6 @@ namespace DungeonEye
 			foreach (Hero hero in Heroes)
 				if (hero != null)
 					hero.AddExperience(value);
-		}
-
-
-		/// <summary>
-		/// Hit all heroes in the team
-		/// </summary>
-		/// <param name="damage">Amount of damage</param>
-		public void Hit(int damage)
-		{
-			foreach (Hero hero in Heroes)
-			{
-				if (hero != null)
-					hero.HitPoint.Current -= damage;
-			}
 		}
 
 
@@ -2304,7 +2315,7 @@ namespace DungeonEye
 			
 			SquarePosition pos = (SquarePosition) id[(int)position][(int)Direction];
 
-			return FrontBlock.GetMonster(pos);
+			return FrontSquare.GetMonster(pos);
 		}
 
 
@@ -2529,7 +2540,7 @@ namespace DungeonEye
 		/// (useful for forcefield)
 		/// </summary>
 		/// <param name="offset">Direction of the move</param>
-		/// <param name="count">Number of block</param>
+		/// <param name="count">Number of square</param>
 		public void Offset(CardinalPoint direction, int count)
 		{
 			Point offset = Point.Empty;
@@ -2565,7 +2576,7 @@ namespace DungeonEye
 			if (!CanMove)
 				return false;
 
-			// Get informations about the destination block
+			// Get informations about the destination square
 			Point dst = Location.Coordinate;
 			dst.Offset(offset);
 
@@ -2574,13 +2585,13 @@ namespace DungeonEye
 			bool state = true;
 
 			// Is blocking
-			Square dstblock = Maze.GetBlock(dst);
-			if (dstblock.IsBlocking)
+			Square dstsquare = Maze.GetSquare(dst);
+			if (dstsquare.IsBlocking)
 				state = false;
 
 
 			// Monsters
-			if (dstblock.MonsterCount > 0)
+			if (dstsquare.MonsterCount > 0)
 				state = false;
 
 			// If can't pass through
@@ -2591,19 +2602,19 @@ namespace DungeonEye
 			}
 
 
-			// Leave the current block
-			if (MazeBlock != null)
-				MazeBlock.OnTeamLeave(this);
+			// Leave the current square
+			if (Square != null)
+				Square.OnTeamLeave(this);
 
 
 			Location.Coordinate.Offset(offset);
 			LastMove = DateTime.Now;
 			HasMoved = true;
 
-			// Enter the new block
-			MazeBlock = Maze.GetBlock(Location.Coordinate);
-			if (MazeBlock != null)
-				MazeBlock.OnTeamEnter(this);
+			// Enter the new square
+			Square = Maze.GetSquare(Location.Coordinate);
+			if (Square != null)
+				Square.OnTeamEnter(this);
 
 
 			return true;
@@ -2627,18 +2638,18 @@ namespace DungeonEye
 
 			Maze = maze;
 
-			// Leave current block
-			if (MazeBlock != null)
-				MazeBlock.OnTeamLeave(this);
+			// Leave current square
+			if (Square != null)
+				Square.OnTeamLeave(this);
 
 			// Change location
 			Location.Coordinate = location.Coordinate;
 			
 			// New block
-			MazeBlock = Maze.GetBlock(location.Coordinate);
+			Square = Maze.GetSquare(location.Coordinate);
 
 			// Enter new block
-			MazeBlock.OnTeamEnter(this);
+			Square.OnTeamEnter(this);
 
 			return true;
 		}
@@ -2687,7 +2698,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Square where the team is
 		/// </summary>
-		public Square MazeBlock
+		public Square Square
 		{
 			get;
 			private set;
@@ -2773,11 +2784,11 @@ namespace DungeonEye
 		/// <summary>
 		/// Returns the Square in front of the team
 		/// </summary>
-		public Square FrontBlock
+		public Square FrontSquare
 		{
 			get
 			{
-				return Maze.GetBlock(FrontLocation.Coordinate);
+				return Maze.GetSquare(FrontLocation.Coordinate);
 			}
 		}
 
@@ -2865,7 +2876,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Messages to display
 		/// </summary>
-		public List<ScreenMessage> Messages
+		static public List<ScreenMessage> Messages
 		{
 			get;
 			private set;

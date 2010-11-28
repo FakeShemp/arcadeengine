@@ -133,8 +133,8 @@ namespace DungeonEye
 		/// <summary>
 		/// Returns the result of a saving throw
 		/// </summary>
-		/// <param name="type"></param>
-		/// <returns></returns>
+		/// <param name="type">Type of throw</param>
+		/// <returns>Saving throw value</returns>
 		public int SavingThrow(SavingThrowType type)
 		{
 			int ret = BaseSaveBonus;

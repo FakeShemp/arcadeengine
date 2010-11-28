@@ -89,7 +89,7 @@ namespace DungeonEye
 			ThrowRight =  new Rectangle(176, 0, 176, 144);
 			ThrowLeft = new Rectangle(0, 0, 176, 144);
 			CampButton = new Rectangle(578, 354, 62, 42);
-			FrontBlock = new Rectangle(48, 14, 256, 192);
+			FrontSquare = new Rectangle(48, 14, 256, 192);
 			Alcove = new Rectangle(130, 64, 128, 44);
 			LeftFeetTeam = new Rectangle(0, 202, 176, 38);
 			LeftFrontTeamGround = new Rectangle(0, 144, 176, 58);
@@ -429,7 +429,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Front block zone
 		/// </summary>
-		static public Rectangle FrontBlock
+		static public Rectangle FrontSquare
 		{
 			get;
 			private set;

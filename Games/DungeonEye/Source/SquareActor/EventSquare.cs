@@ -42,6 +42,7 @@ namespace DungeonEye
 
 		}
 
+
 		/// <summary>
 		/// 
 		/// </summary>
@@ -51,6 +52,32 @@ namespace DungeonEye
 			return "Event";
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="team">Team handle</param>
+		/// <returns></returns>
+		public override bool OnTeamEnter(Team team)
+		{
+			// Some message to display
+			if (!string.IsNullOrEmpty(Message))
+			{
+				foreach (Hero hero in team.Heroes)
+				{
+					if (hero == null)
+						continue;
+
+					if (hero.SavingThrow(SavingThrowType.Will) > Dice.GetD20(1))
+					{
+						Team.AddMessage(hero.Name + ": " + Message, MessageColor);
+						break;
+					}
+				}
+			}
+
+			return false;
+		}
 
 
 		#region IO
@@ -74,6 +101,12 @@ namespace DungeonEye
 
 				switch (node.Name.ToLower())
 				{
+					case "messagecolor":
+					{
+						MessageColor = Color.FromArgb(int.Parse(node.Attributes["value"].Value));
+					}
+					break;
+
 					case "mustface":
 					{
 						MustFace = Boolean.Parse(node.Attributes["value"].Value);
@@ -150,6 +183,10 @@ namespace DungeonEye
 
 			writer.WriteStartElement("eventsquare");
 
+			writer.WriteStartElement("messagecolor");
+			writer.WriteAttributeString("value", MessageColor.ToArgb().ToString());
+			writer.WriteEndElement();
+
 			writer.WriteStartElement("mustface");
 			writer.WriteAttributeString("value", MustFace.ToString());
 			writer.WriteEndElement();
@@ -199,8 +236,6 @@ namespace DungeonEye
 		#endregion
 
 
-
-
 		#region Properties
 
 
@@ -213,6 +248,15 @@ namespace DungeonEye
 			set;
 		}
 
+
+		/// <summary>
+		/// Message color
+		/// </summary>
+		public Color MessageColor
+		{
+			get;
+			set;
+		}
 
 		/// <summary>
 		/// Direction Team must face to trigger

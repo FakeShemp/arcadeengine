@@ -103,7 +103,7 @@ namespace DungeonEye
 
 
 				// Blocked by a wall, fall before the block
-				Square blockinfo =  maze.GetBlock(dst);
+				Square blockinfo =  maze.GetSquare(dst);
 				if (blockinfo.IsBlocking)
 				{
 					Distance = 0;
@@ -149,7 +149,7 @@ namespace DungeonEye
 					// Get monster and hit it
 					if (blockinfo.MonsterCount > 0)
 					{
-						Monster[] monsters = maze.GetBlock(Location.Coordinate).Monsters;
+						Monster[] monsters = maze.GetSquare(Location.Coordinate).Monsters;
 						foreach(Monster monster in monsters)
 							if (monster != null)
 							{

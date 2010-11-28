@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EventSquareForm));
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.MustFaceBox = new System.Windows.Forms.CheckBox();
 			this.DirectionBox = new System.Windows.Forms.ComboBox();
@@ -49,6 +50,7 @@
 			this.PictureNameBox = new System.Windows.Forms.TextBox();
 			this.ChoicesTab = new System.Windows.Forms.TabPage();
 			this.CloseBox = new System.Windows.Forms.Button();
+			this.MsgColorBox = new System.Windows.Forms.Button();
 			this.groupBox1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.PreviewBox)).BeginInit();
 			this.groupBox3.SuspendLayout();
@@ -227,6 +229,7 @@
 			// 
 			// groupBox2
 			// 
+			this.groupBox2.Controls.Add(this.MsgColorBox);
 			this.groupBox2.Controls.Add(this.MessageBox);
 			this.groupBox2.Location = new System.Drawing.Point(3, 88);
 			this.groupBox2.Name = "groupBox2";
@@ -237,13 +240,15 @@
 			// 
 			// MessageBox
 			// 
+			this.MessageBox.AcceptsReturn = true;
 			this.MessageBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
 						| System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
+			this.MessageBox.ForeColor = System.Drawing.SystemColors.MenuHighlight;
 			this.MessageBox.Location = new System.Drawing.Point(6, 19);
 			this.MessageBox.Multiline = true;
 			this.MessageBox.Name = "MessageBox";
-			this.MessageBox.Size = new System.Drawing.Size(275, 54);
+			this.MessageBox.Size = new System.Drawing.Size(247, 54);
 			this.MessageBox.TabIndex = 0;
 			this.MessageBox.TextChanged += new System.EventHandler(this.MessageBox_TextChanged);
 			// 
@@ -289,6 +294,18 @@
 			this.CloseBox.TabIndex = 4;
 			this.CloseBox.Text = "Close";
 			this.CloseBox.UseVisualStyleBackColor = true;
+			// 
+			// MsgColorBox
+			// 
+			this.MsgColorBox.AutoSize = true;
+			this.MsgColorBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.MsgColorBox.Image = ((System.Drawing.Image)(resources.GetObject("MsgColorBox.Image")));
+			this.MsgColorBox.Location = new System.Drawing.Point(259, 17);
+			this.MsgColorBox.Name = "MsgColorBox";
+			this.MsgColorBox.Size = new System.Drawing.Size(22, 22);
+			this.MsgColorBox.TabIndex = 1;
+			this.MsgColorBox.UseVisualStyleBackColor = true;
+			this.MsgColorBox.Click += new System.EventHandler(this.MsgColorBox_Click);
 			// 
 			// EventSquareForm
 			// 
@@ -351,5 +368,6 @@
 		private System.Windows.Forms.GroupBox groupBox4;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.NumericUpDown IntelligenceBox;
+		private System.Windows.Forms.Button MsgColorBox;
 	}
 }

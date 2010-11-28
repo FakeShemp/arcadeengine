@@ -50,6 +50,7 @@ namespace DungeonEye.Forms
 			DirectionBox.SelectedItem = eventsquare.Direction;
 			DisplayBackgroundBox.Checked = eventsquare.DisplayBackground;
 			IntelligenceBox.Value = eventsquare.Intelligence;
+			MessageBox.ForeColor = eventsquare.MessageColor;
 
 			EventSquare = eventsquare;
 		}
@@ -58,6 +59,27 @@ namespace DungeonEye.Forms
 
 		#region Form events
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void MsgColorBox_Click(object sender, EventArgs e)
+		{
+			if (EventSquare == null)
+				return;
+
+			ColorDialog dlg = new ColorDialog();
+			dlg.Color = EventSquare.MessageColor;
+			dlg.FullOpen = true;
+			if (dlg.ShowDialog() != DialogResult.OK)
+				return;
+
+			EventSquare.MessageColor = dlg.Color;
+			MessageBox.ForeColor = dlg.Color;
+		}
+
+		
 		/// <summary>
 		/// 
 		/// </summary>

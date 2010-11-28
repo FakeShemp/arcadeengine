@@ -142,7 +142,7 @@ namespace DungeonEye
 							continue;
 
 						// Destination exists
-						Square blk = maze.GetBlock(pit.Target.Coordinate);
+						Square blk = maze.GetSquare(pit.Target.Coordinate);
 						if (blk == null)
 							continue;
 
@@ -239,7 +239,7 @@ namespace DungeonEye
 										}
 					*/
 
-					GetBlock(fi.Location.Coordinate).DropItem(pos, fi.Item);
+					GetSquare(fi.Location.Coordinate).DropItem(pos, fi.Item);
 
 
 					return true;
@@ -397,7 +397,7 @@ namespace DungeonEye
 			if (!Contains(left))
 				return false;
 
-			Square block = GetBlock(left);
+			Square block = GetSquare(left);
 			return (block.IsWall);
 		}
 
@@ -406,7 +406,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="location">Location of the block</param>
 		/// <returns>Block handle</returns>
-		public Square GetBlock(Point location)
+		public Square GetSquare(Point location)
 		{
 			if (!Rectangle.Contains(location))
 				return new Square(this);
@@ -842,7 +842,7 @@ namespace DungeonEye
 			for (int y = 0; y < Size.Height; y++)
 				for (int x = 0; x < Size.Width; x++)
 				{
-					Square block = GetBlock(new Point(x, y));
+					Square block = GetSquare(new Point(x, y));
 
 					switch (block.Type)
 					{
@@ -1500,26 +1500,26 @@ namespace DungeonEye
 				#region North
 				case CardinalPoint.North:
 				{
-					Blocks[0] = maze.GetBlock(new Point(location.Coordinate.X - 3, location.Coordinate.Y - 3));
-					Blocks[1] = maze.GetBlock(new Point(location.Coordinate.X - 2, location.Coordinate.Y - 3));
-					Blocks[2] = maze.GetBlock(new Point(location.Coordinate.X - 1, location.Coordinate.Y - 3));
-					Blocks[3] = maze.GetBlock(new Point(location.Coordinate.X, location.Coordinate.Y - 3));
-					Blocks[4] = maze.GetBlock(new Point(location.Coordinate.X + 1, location.Coordinate.Y - 3));
-					Blocks[5] = maze.GetBlock(new Point(location.Coordinate.X + 2, location.Coordinate.Y - 3));
-					Blocks[6] = maze.GetBlock(new Point(location.Coordinate.X + 3, location.Coordinate.Y - 3));
+					Blocks[0] = maze.GetSquare(new Point(location.Coordinate.X - 3, location.Coordinate.Y - 3));
+					Blocks[1] = maze.GetSquare(new Point(location.Coordinate.X - 2, location.Coordinate.Y - 3));
+					Blocks[2] = maze.GetSquare(new Point(location.Coordinate.X - 1, location.Coordinate.Y - 3));
+					Blocks[3] = maze.GetSquare(new Point(location.Coordinate.X, location.Coordinate.Y - 3));
+					Blocks[4] = maze.GetSquare(new Point(location.Coordinate.X + 1, location.Coordinate.Y - 3));
+					Blocks[5] = maze.GetSquare(new Point(location.Coordinate.X + 2, location.Coordinate.Y - 3));
+					Blocks[6] = maze.GetSquare(new Point(location.Coordinate.X + 3, location.Coordinate.Y - 3));
 
-					Blocks[7] = maze.GetBlock(new Point(location.Coordinate.X - 2, location.Coordinate.Y - 2));
-					Blocks[8] = maze.GetBlock(new Point(location.Coordinate.X - 1, location.Coordinate.Y - 2));
-					Blocks[9] = maze.GetBlock(new Point(location.Coordinate.X, location.Coordinate.Y - 2));
-					Blocks[10] = maze.GetBlock(new Point(location.Coordinate.X + 1, location.Coordinate.Y - 2));
-					Blocks[11] = maze.GetBlock(new Point(location.Coordinate.X + 2, location.Coordinate.Y - 2));
+					Blocks[7] = maze.GetSquare(new Point(location.Coordinate.X - 2, location.Coordinate.Y - 2));
+					Blocks[8] = maze.GetSquare(new Point(location.Coordinate.X - 1, location.Coordinate.Y - 2));
+					Blocks[9] = maze.GetSquare(new Point(location.Coordinate.X, location.Coordinate.Y - 2));
+					Blocks[10] = maze.GetSquare(new Point(location.Coordinate.X + 1, location.Coordinate.Y - 2));
+					Blocks[11] = maze.GetSquare(new Point(location.Coordinate.X + 2, location.Coordinate.Y - 2));
 
-					Blocks[12] = maze.GetBlock(new Point(location.Coordinate.X - 1, location.Coordinate.Y - 1));
-					Blocks[13] = maze.GetBlock(new Point(location.Coordinate.X,     location.Coordinate.Y - 1));
-					Blocks[14] = maze.GetBlock(new Point(location.Coordinate.X + 1, location.Coordinate.Y - 1));
+					Blocks[12] = maze.GetSquare(new Point(location.Coordinate.X - 1, location.Coordinate.Y - 1));
+					Blocks[13] = maze.GetSquare(new Point(location.Coordinate.X,     location.Coordinate.Y - 1));
+					Blocks[14] = maze.GetSquare(new Point(location.Coordinate.X + 1, location.Coordinate.Y - 1));
 
-					Blocks[15] = maze.GetBlock(new Point(location.Coordinate.X - 1, location.Coordinate.Y));
-					Blocks[17] = maze.GetBlock(new Point(location.Coordinate.X + 1, location.Coordinate.Y));
+					Blocks[15] = maze.GetSquare(new Point(location.Coordinate.X - 1, location.Coordinate.Y));
+					Blocks[17] = maze.GetSquare(new Point(location.Coordinate.X + 1, location.Coordinate.Y));
 
 				}
 				break;
@@ -1528,26 +1528,26 @@ namespace DungeonEye
 				#region South
 				case CardinalPoint.South:
 				{
-					Blocks[0] = maze.GetBlock(new Point(location.Coordinate.X + 3, location.Coordinate.Y + 3));
-					Blocks[1] = maze.GetBlock(new Point(location.Coordinate.X + 2, location.Coordinate.Y + 3));
-					Blocks[2] = maze.GetBlock(new Point(location.Coordinate.X + 1, location.Coordinate.Y + 3));
-					Blocks[3] = maze.GetBlock(new Point(location.Coordinate.X, location.Coordinate.Y + 3));
-					Blocks[4] = maze.GetBlock(new Point(location.Coordinate.X - 1, location.Coordinate.Y + 3));
-					Blocks[5] = maze.GetBlock(new Point(location.Coordinate.X - 2, location.Coordinate.Y + 3));
-					Blocks[6] = maze.GetBlock(new Point(location.Coordinate.X - 3, location.Coordinate.Y + 3));
+					Blocks[0] = maze.GetSquare(new Point(location.Coordinate.X + 3, location.Coordinate.Y + 3));
+					Blocks[1] = maze.GetSquare(new Point(location.Coordinate.X + 2, location.Coordinate.Y + 3));
+					Blocks[2] = maze.GetSquare(new Point(location.Coordinate.X + 1, location.Coordinate.Y + 3));
+					Blocks[3] = maze.GetSquare(new Point(location.Coordinate.X, location.Coordinate.Y + 3));
+					Blocks[4] = maze.GetSquare(new Point(location.Coordinate.X - 1, location.Coordinate.Y + 3));
+					Blocks[5] = maze.GetSquare(new Point(location.Coordinate.X - 2, location.Coordinate.Y + 3));
+					Blocks[6] = maze.GetSquare(new Point(location.Coordinate.X - 3, location.Coordinate.Y + 3));
 
-					Blocks[7] = maze.GetBlock(new Point(location.Coordinate.X + 2, location.Coordinate.Y + 2));
-					Blocks[8] = maze.GetBlock(new Point(location.Coordinate.X + 1, location.Coordinate.Y + 2));
-					Blocks[9] = maze.GetBlock(new Point(location.Coordinate.X, location.Coordinate.Y + 2));
-					Blocks[10] = maze.GetBlock(new Point(location.Coordinate.X - 1, location.Coordinate.Y + 2));
-					Blocks[11] = maze.GetBlock(new Point(location.Coordinate.X - 2, location.Coordinate.Y + 2));
+					Blocks[7] = maze.GetSquare(new Point(location.Coordinate.X + 2, location.Coordinate.Y + 2));
+					Blocks[8] = maze.GetSquare(new Point(location.Coordinate.X + 1, location.Coordinate.Y + 2));
+					Blocks[9] = maze.GetSquare(new Point(location.Coordinate.X, location.Coordinate.Y + 2));
+					Blocks[10] = maze.GetSquare(new Point(location.Coordinate.X - 1, location.Coordinate.Y + 2));
+					Blocks[11] = maze.GetSquare(new Point(location.Coordinate.X - 2, location.Coordinate.Y + 2));
 
-					Blocks[12] = maze.GetBlock(new Point(location.Coordinate.X + 1, location.Coordinate.Y + 1));
-					Blocks[13] = maze.GetBlock(new Point(location.Coordinate.X, location.Coordinate.Y + 1));
-					Blocks[14] = maze.GetBlock(new Point(location.Coordinate.X - 1, location.Coordinate.Y + 1));
+					Blocks[12] = maze.GetSquare(new Point(location.Coordinate.X + 1, location.Coordinate.Y + 1));
+					Blocks[13] = maze.GetSquare(new Point(location.Coordinate.X, location.Coordinate.Y + 1));
+					Blocks[14] = maze.GetSquare(new Point(location.Coordinate.X - 1, location.Coordinate.Y + 1));
 
-					Blocks[15] = maze.GetBlock(new Point(location.Coordinate.X + 1, location.Coordinate.Y));
-					Blocks[17] = maze.GetBlock(new Point(location.Coordinate.X - 1, location.Coordinate.Y));
+					Blocks[15] = maze.GetSquare(new Point(location.Coordinate.X + 1, location.Coordinate.Y));
+					Blocks[17] = maze.GetSquare(new Point(location.Coordinate.X - 1, location.Coordinate.Y));
 				}
 				break;
 				#endregion
@@ -1555,26 +1555,26 @@ namespace DungeonEye
 				#region East
 				case CardinalPoint.East:
 				{
-					Blocks[0] = maze.GetBlock(new Point(location.Coordinate.X + 3, location.Coordinate.Y - 3));
-					Blocks[1] = maze.GetBlock(new Point(location.Coordinate.X + 3, location.Coordinate.Y - 2));
-					Blocks[2] = maze.GetBlock(new Point(location.Coordinate.X + 3, location.Coordinate.Y - 1));
-					Blocks[3] = maze.GetBlock(new Point(location.Coordinate.X + 3, location.Coordinate.Y));
-					Blocks[4] = maze.GetBlock(new Point(location.Coordinate.X + 3, location.Coordinate.Y + 1));
-					Blocks[5] = maze.GetBlock(new Point(location.Coordinate.X + 3, location.Coordinate.Y + 2));
-					Blocks[6] = maze.GetBlock(new Point(location.Coordinate.X + 3, location.Coordinate.Y + 3));
+					Blocks[0] = maze.GetSquare(new Point(location.Coordinate.X + 3, location.Coordinate.Y - 3));
+					Blocks[1] = maze.GetSquare(new Point(location.Coordinate.X + 3, location.Coordinate.Y - 2));
+					Blocks[2] = maze.GetSquare(new Point(location.Coordinate.X + 3, location.Coordinate.Y - 1));
+					Blocks[3] = maze.GetSquare(new Point(location.Coordinate.X + 3, location.Coordinate.Y));
+					Blocks[4] = maze.GetSquare(new Point(location.Coordinate.X + 3, location.Coordinate.Y + 1));
+					Blocks[5] = maze.GetSquare(new Point(location.Coordinate.X + 3, location.Coordinate.Y + 2));
+					Blocks[6] = maze.GetSquare(new Point(location.Coordinate.X + 3, location.Coordinate.Y + 3));
 
-					Blocks[7] = maze.GetBlock(new Point(location.Coordinate.X + 2, location.Coordinate.Y - 2));
-					Blocks[8] = maze.GetBlock(new Point(location.Coordinate.X + 2, location.Coordinate.Y - 1));
-					Blocks[9] = maze.GetBlock(new Point(location.Coordinate.X + 2, location.Coordinate.Y));
-					Blocks[10] = maze.GetBlock(new Point(location.Coordinate.X + 2, location.Coordinate.Y + 1));
-					Blocks[11] = maze.GetBlock(new Point(location.Coordinate.X + 2, location.Coordinate.Y + 2));
+					Blocks[7] = maze.GetSquare(new Point(location.Coordinate.X + 2, location.Coordinate.Y - 2));
+					Blocks[8] = maze.GetSquare(new Point(location.Coordinate.X + 2, location.Coordinate.Y - 1));
+					Blocks[9] = maze.GetSquare(new Point(location.Coordinate.X + 2, location.Coordinate.Y));
+					Blocks[10] = maze.GetSquare(new Point(location.Coordinate.X + 2, location.Coordinate.Y + 1));
+					Blocks[11] = maze.GetSquare(new Point(location.Coordinate.X + 2, location.Coordinate.Y + 2));
 
-					Blocks[12] = maze.GetBlock(new Point(location.Coordinate.X + 1, location.Coordinate.Y - 1));
-					Blocks[13] = maze.GetBlock(new Point(location.Coordinate.X + 1, location.Coordinate.Y));
-					Blocks[14] = maze.GetBlock(new Point(location.Coordinate.X + 1, location.Coordinate.Y + 1));
+					Blocks[12] = maze.GetSquare(new Point(location.Coordinate.X + 1, location.Coordinate.Y - 1));
+					Blocks[13] = maze.GetSquare(new Point(location.Coordinate.X + 1, location.Coordinate.Y));
+					Blocks[14] = maze.GetSquare(new Point(location.Coordinate.X + 1, location.Coordinate.Y + 1));
 
-					Blocks[15] = maze.GetBlock(new Point(location.Coordinate.X, location.Coordinate.Y - 1));
-					Blocks[17] = maze.GetBlock(new Point(location.Coordinate.X, location.Coordinate.Y + 1));
+					Blocks[15] = maze.GetSquare(new Point(location.Coordinate.X, location.Coordinate.Y - 1));
+					Blocks[17] = maze.GetSquare(new Point(location.Coordinate.X, location.Coordinate.Y + 1));
 				}
 				break;
 				#endregion
@@ -1582,33 +1582,33 @@ namespace DungeonEye
 				#region West
 				case CardinalPoint.West:
 				{
-					Blocks[0] = maze.GetBlock(new Point(location.Coordinate.X - 3, location.Coordinate.Y + 3));
-					Blocks[1] = maze.GetBlock(new Point(location.Coordinate.X - 3, location.Coordinate.Y + 2));
-					Blocks[2] = maze.GetBlock(new Point(location.Coordinate.X - 3, location.Coordinate.Y + 1));
-					Blocks[3] = maze.GetBlock(new Point(location.Coordinate.X - 3, location.Coordinate.Y));
-					Blocks[4] = maze.GetBlock(new Point(location.Coordinate.X - 3, location.Coordinate.Y - 1));
-					Blocks[5] = maze.GetBlock(new Point(location.Coordinate.X - 3, location.Coordinate.Y - 2));
-					Blocks[6] = maze.GetBlock(new Point(location.Coordinate.X - 3, location.Coordinate.Y - 3));
+					Blocks[0] = maze.GetSquare(new Point(location.Coordinate.X - 3, location.Coordinate.Y + 3));
+					Blocks[1] = maze.GetSquare(new Point(location.Coordinate.X - 3, location.Coordinate.Y + 2));
+					Blocks[2] = maze.GetSquare(new Point(location.Coordinate.X - 3, location.Coordinate.Y + 1));
+					Blocks[3] = maze.GetSquare(new Point(location.Coordinate.X - 3, location.Coordinate.Y));
+					Blocks[4] = maze.GetSquare(new Point(location.Coordinate.X - 3, location.Coordinate.Y - 1));
+					Blocks[5] = maze.GetSquare(new Point(location.Coordinate.X - 3, location.Coordinate.Y - 2));
+					Blocks[6] = maze.GetSquare(new Point(location.Coordinate.X - 3, location.Coordinate.Y - 3));
 
-					Blocks[7] = maze.GetBlock(new Point(location.Coordinate.X - 2, location.Coordinate.Y + 2));
-					Blocks[8] = maze.GetBlock(new Point(location.Coordinate.X - 2, location.Coordinate.Y + 1));
-					Blocks[9] = maze.GetBlock(new Point(location.Coordinate.X - 2, location.Coordinate.Y));
-					Blocks[10] = maze.GetBlock(new Point(location.Coordinate.X - 2, location.Coordinate.Y - 1));
-					Blocks[11] = maze.GetBlock(new Point(location.Coordinate.X - 2, location.Coordinate.Y - 2));
+					Blocks[7] = maze.GetSquare(new Point(location.Coordinate.X - 2, location.Coordinate.Y + 2));
+					Blocks[8] = maze.GetSquare(new Point(location.Coordinate.X - 2, location.Coordinate.Y + 1));
+					Blocks[9] = maze.GetSquare(new Point(location.Coordinate.X - 2, location.Coordinate.Y));
+					Blocks[10] = maze.GetSquare(new Point(location.Coordinate.X - 2, location.Coordinate.Y - 1));
+					Blocks[11] = maze.GetSquare(new Point(location.Coordinate.X - 2, location.Coordinate.Y - 2));
 
-					Blocks[12] = maze.GetBlock(new Point(location.Coordinate.X - 1, location.Coordinate.Y + 1));
-					Blocks[13] = maze.GetBlock(new Point(location.Coordinate.X - 1, location.Coordinate.Y));
-					Blocks[14] = maze.GetBlock(new Point(location.Coordinate.X - 1, location.Coordinate.Y - 1));
+					Blocks[12] = maze.GetSquare(new Point(location.Coordinate.X - 1, location.Coordinate.Y + 1));
+					Blocks[13] = maze.GetSquare(new Point(location.Coordinate.X - 1, location.Coordinate.Y));
+					Blocks[14] = maze.GetSquare(new Point(location.Coordinate.X - 1, location.Coordinate.Y - 1));
 
-					Blocks[15] = maze.GetBlock(new Point(location.Coordinate.X, location.Coordinate.Y + 1));
-					Blocks[17] = maze.GetBlock(new Point(location.Coordinate.X, location.Coordinate.Y - 1));
+					Blocks[15] = maze.GetSquare(new Point(location.Coordinate.X, location.Coordinate.Y + 1));
+					Blocks[17] = maze.GetSquare(new Point(location.Coordinate.X, location.Coordinate.Y - 1));
 				}
 				break;
 				#endregion
 			}
 
 			// Team's position
-			Blocks[16] = maze.GetBlock(location.Coordinate);
+			Blocks[16] = maze.GetSquare(location.Coordinate);
 		}
 
 	

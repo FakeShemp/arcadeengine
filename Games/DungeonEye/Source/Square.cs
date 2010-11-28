@@ -242,7 +242,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Action when the team enter the block
 		/// </summary>
-		/// <param name="team">Team</param>
+		/// <param name="team">Team handle</param>
 		public void OnTeamEnter(Team team)
 		{
 			if (team == null)
@@ -258,7 +258,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Action when the team leave the block
 		/// </summary>
-		/// <param name="team">Team</param>
+		/// <param name="team">Team handle</param>
 		public void OnTeamLeave(Team team)
 		{
 			if (team == null)

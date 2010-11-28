@@ -130,7 +130,7 @@ namespace DungeonEye.Gui.CampWindows
 
 					if (weakest.HitPoint.Ratio < 1.0f)
 					{
-						Camp.Team.AddMessage(hero.Name + " casts healing on " + weakest.Name);
+						Team.AddMessage(hero.Name + " casts healing on " + weakest.Name);
 						hero.Heal(weakest);
 					}
 				}

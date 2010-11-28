@@ -179,7 +179,7 @@ namespace DungeonEye.Forms
 				{
 					for (int x = 0; x < Maze.Size.Width; x++)
 					{
-						Square block = Maze.GetBlock(new Point(x, y));
+						Square block = Maze.GetSquare(new Point(x, y));
 
 						Color color = Color.White;
 						if (block.Type == SquareType.Illusion)

@@ -32,17 +32,35 @@ namespace DungeonEye
 	public class ScreenMessage
 	{
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
-		/// <param name="msg"></param>
-		/// <param name="col"></param>
-		public ScreenMessage(string msg, Color col)
+		/// <param name="msg">Message to display</param>
+		/// <param name="color">Color</param>
+		public ScreenMessage(string msg, Color color)
 		{
 			Message = msg;
-			Color = col;
-			Life = 5000;
+			Color = color;
+			Life = TimeSpan.FromSeconds(15);
 		}
 
+
+
+		#region Statics
+
+
+		/// <summary>
+		/// Default message duration
+		/// </summary>
+		static public TimeSpan Duration
+		{
+			get;
+			set;
+		}
+
+		#endregion
+
+
+		#region Properties
 
 		/// <summary>
 		/// Message to display
@@ -67,7 +85,9 @@ namespace DungeonEye
 		/// <summary>
 		/// Life time of the message
 		/// </summary>
-		public int Life;
+		public TimeSpan Life;
+
+		#endregion
 
 	}
 }

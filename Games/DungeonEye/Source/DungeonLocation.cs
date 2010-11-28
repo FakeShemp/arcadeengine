@@ -125,7 +125,7 @@ namespace DungeonEye
 			if (maze == null)
 				return null;
 
-			return maze.GetBlock(Coordinate);
+			return maze.GetSquare(Coordinate);
 		}
 
 		#endregion

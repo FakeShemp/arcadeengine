@@ -313,7 +313,7 @@ namespace DungeonEye.Forms
 				return;
 
 			// Get the corresponding square
-			Square block = Maze.GetBlock(coord);
+			Square block = Maze.GetSquare(coord);
 
 			if (e.Button == MouseButtons.Middle)
 			{
@@ -413,7 +413,7 @@ namespace DungeonEye.Forms
 				if (!Maze.Contains(pos))
 					return;
 
-				Square square = Maze.GetBlock(pos);
+				Square square = Maze.GetSquare(pos);
 				if (square == null)
 					return;
 
@@ -423,7 +423,7 @@ namespace DungeonEye.Forms
 
 				// Edit square
 				else
-					new SquareForm(Maze, Maze.GetBlock(pos)).ShowDialog();
+					new SquareForm(Maze, Maze.GetSquare(pos)).ShowDialog();
 			}
 		}
 
@@ -441,7 +441,7 @@ namespace DungeonEye.Forms
 				return;
 
 			BlockCoord = new Point((e.Location.X - Offset.X) / 25, (e.Location.Y - Offset.Y) / 25);
-			SquareUnderMouse = Maze.GetBlock(BlockCoord);
+			SquareUnderMouse = Maze.GetSquare(BlockCoord);
 
 
 
@@ -588,7 +588,7 @@ namespace DungeonEye.Forms
 			{
 				for (int x = 0 ; x < Maze.Size.Width ; x++)
 				{
-					Square block = Maze.GetBlock(new Point(x, y));
+					Square block = Maze.GetSquare(new Point(x, y));
 					int tileid = block.Type == SquareType.Ground ? 1 : 0;
 
 					// Location of the block on the screen
@@ -875,7 +875,7 @@ namespace DungeonEye.Forms
 
 			Square square = null;
 			if (Maze.Contains(coord))
-				square = Maze.GetBlock(coord);
+				square = Maze.GetSquare(coord);
 
 			if (square == null)
 				return;
