@@ -34,7 +34,7 @@
 			this.DirectionBox = new System.Windows.Forms.ComboBox();
 			this.PreviewBox = new System.Windows.Forms.PictureBox();
 			this.BrowsePictureBox = new System.Windows.Forms.Button();
-			this.DisplayBackgroundBox = new System.Windows.Forms.CheckBox();
+			this.DisplayBorderBox = new System.Windows.Forms.CheckBox();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
 			this.LoopSoundBox = new System.Windows.Forms.CheckBox();
 			this.BrowseSoundBox = new System.Windows.Forms.Button();
@@ -113,16 +113,16 @@
 			this.BrowsePictureBox.UseVisualStyleBackColor = true;
 			this.BrowsePictureBox.Click += new System.EventHandler(this.BrowsePictureBox_Click);
 			// 
-			// DisplayBackgroundBox
+			// DisplayBorderBox
 			// 
-			this.DisplayBackgroundBox.AutoSize = true;
-			this.DisplayBackgroundBox.Location = new System.Drawing.Point(364, 61);
-			this.DisplayBackgroundBox.Name = "DisplayBackgroundBox";
-			this.DisplayBackgroundBox.Size = new System.Drawing.Size(120, 17);
-			this.DisplayBackgroundBox.TabIndex = 2;
-			this.DisplayBackgroundBox.Text = "Display background";
-			this.DisplayBackgroundBox.UseVisualStyleBackColor = true;
-			this.DisplayBackgroundBox.CheckedChanged += new System.EventHandler(this.DisplayBackgroundBox_CheckedChanged);
+			this.DisplayBorderBox.AutoSize = true;
+			this.DisplayBorderBox.Location = new System.Drawing.Point(364, 61);
+			this.DisplayBorderBox.Name = "DisplayBorderBox";
+			this.DisplayBorderBox.Size = new System.Drawing.Size(93, 17);
+			this.DisplayBorderBox.TabIndex = 2;
+			this.DisplayBorderBox.Text = "Display border";
+			this.DisplayBorderBox.UseVisualStyleBackColor = true;
+			this.DisplayBorderBox.CheckedChanged += new System.EventHandler(this.DisplayBackgroundBox_CheckedChanged);
 			// 
 			// groupBox3
 			// 
@@ -255,7 +255,7 @@
 			// PictureTab
 			// 
 			this.PictureTab.Controls.Add(this.PictureNameBox);
-			this.PictureTab.Controls.Add(this.DisplayBackgroundBox);
+			this.PictureTab.Controls.Add(this.DisplayBorderBox);
 			this.PictureTab.Controls.Add(this.BrowsePictureBox);
 			this.PictureTab.Controls.Add(this.PreviewBox);
 			this.PictureTab.Location = new System.Drawing.Point(4, 22);
@@ -350,7 +350,7 @@
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.CheckBox MustFaceBox;
 		private System.Windows.Forms.ComboBox DirectionBox;
-		private System.Windows.Forms.CheckBox DisplayBackgroundBox;
+		private System.Windows.Forms.CheckBox DisplayBorderBox;
 		private System.Windows.Forms.Button BrowsePictureBox;
 		private System.Windows.Forms.PictureBox PreviewBox;
 		private System.Windows.Forms.GroupBox groupBox3;

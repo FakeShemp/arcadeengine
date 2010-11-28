@@ -48,7 +48,7 @@ namespace DungeonEye.Forms
 
 			DirectionBox.DataSource = Enum.GetValues(typeof(CardinalPoint));
 			DirectionBox.SelectedItem = eventsquare.Direction;
-			DisplayBackgroundBox.Checked = eventsquare.DisplayBackground;
+			DisplayBorderBox.Checked = eventsquare.DisplayBorder;
 			IntelligenceBox.Value = eventsquare.Intelligence;
 			MessageBox.ForeColor = eventsquare.MessageColor;
 
@@ -110,6 +110,17 @@ namespace DungeonEye.Forms
 				return;
 
 			EventSquare.PictureName = PictureNameBox.Text;
+
+			Stream stream = ResourceManager.Load(EventSquare.PictureName);
+			if (stream == null)
+			{
+				PreviewBox.Image.Dispose();
+				PreviewBox.Image = null;
+				return;
+			}
+
+			PreviewBox.Image = Image.FromStream(stream);
+			stream.Close();
 		}
 
 	
@@ -130,10 +141,6 @@ namespace DungeonEye.Forms
 
 			PictureNameBox.Text = form.FileName;
 
-			Stream stream = ResourceManager.Load(form.FileName);
-			if (stream != null)
-				PreviewBox.Image = Image.FromStream(stream);
-			stream.Close();
 		}
 
 
@@ -249,7 +256,7 @@ namespace DungeonEye.Forms
 			if (EventSquare == null)
 				return;
 
-			EventSquare.DisplayBackground = DisplayBackgroundBox.Checked;
+			EventSquare.DisplayBorder = DisplayBorderBox.Checked;
 
 		}
 

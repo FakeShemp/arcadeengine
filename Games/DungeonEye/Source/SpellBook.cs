@@ -122,10 +122,10 @@ namespace DungeonEye
 			Point pos = new Point(146, 264);
 			for (int id = 0; id < Math.Min(spells.Count, 6); id++)
 			{
-				color = Color.White;
+				color = GameColors.White;
 
 				if (new Rectangle(pos.X, pos.Y, 212, 12).Contains(Mouse.Location))
-					color = Color.Black;
+					color = GameColors.Black;
 
 				batch.DrawString(Font, pos, color, spells[id].Name);
 				pos.Offset(0, 12);
@@ -137,9 +137,9 @@ namespace DungeonEye
 
 			// Abort spell
 			if (new Rectangle(MainRectangle.X + 2, MainRectangle.Bottom - 14, MainRectangle.Width - 56, 18).Contains(Mouse.Location))
-				color = Color.Red;
+				color = GameColors.Red;
 			else
-				color = Color.White;
+				color = GameColors.White;
 			batch.DrawString(Font, new Point(146, 340), color, "Abort spell");
 
 			// Next & previous buttons

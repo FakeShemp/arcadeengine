@@ -26,7 +26,6 @@ using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
-using ArcEngine.Storage;
 using ArcEngine.Utility.ScreenManager;
 using DungeonEye.Gui;
 
@@ -248,7 +247,7 @@ namespace DungeonEye
 
 			SaveGame = filename;
 
-			AddMessage("Party Loaded...", Color.YellowGreen);
+			AddMessage("Party Loaded...", GameColors.Yellow);
 			return true;
 		}
 
@@ -272,12 +271,12 @@ namespace DungeonEye
 				xml.Close();
 
 				SaveGame = filename;
-				AddMessage("Party saved...", Color.YellowGreen);
+				AddMessage("Party saved...", GameColors.Yellow);
 			}
 			catch (Exception e)
 			{
 				Trace.WriteLine("[Team] SaveParty() : Failed to save the party (filename = '{0}') => {1} !", filename, e.Message);
-				AddMessage("Party NOT saved...", Color.Red);
+				AddMessage("Party NOT saved...", GameColors.Red);
 				return false;
 			}
 			return true;
@@ -529,32 +528,32 @@ namespace DungeonEye
 					// Name
 					if (HeroToSwap == hero)
 					{
-						batch.DrawString(Font, new Point(pos.X + 6, pos.Y + 6), Color.Red, " Swapping");
+						batch.DrawString(Font, new Point(pos.X + 6, pos.Y + 6), GameColors.Red, " Swapping");
 					}
 					else if (SelectedHero == hero)
 					{
-						batch.DrawString(Font, new Point(pos.X + 6, pos.Y + 6), Color.White, hero.Name);
+						batch.DrawString(Font, new Point(pos.X + 6, pos.Y + 6), GameColors.White, hero.Name);
 					}
 					else
 					{
-						batch.DrawString(Font, new Point(pos.X + 6, pos.Y + 6), Color.Black, hero.Name);
+						batch.DrawString(Font, new Point(pos.X + 6, pos.Y + 6), GameColors.Black, hero.Name);
 					}
 
 					// HP
 					if (DrawHPAsBar)
 					{
 						float percent = (float) hero.HitPoint.Current / (float) hero.HitPoint.Max;
-						Color color = Color.Green;
+						Color color = GameColors.Green;
 						if (percent < 0.15)
-							color = Color.Red;
+							color = GameColors.Red;
 						else if (percent < 0.4)
-							color = Color.Yellow;
+							color = GameColors.Yellow;
 
-						batch.DrawString(Font, new Point(pos.X + 6, pos.Y + 88), Color.Black, "HP");
+						batch.DrawString(Font, new Point(pos.X + 6, pos.Y + 88), GameColors.Black, "HP");
 						DrawProgressBar(batch, hero.HitPoint.Current, hero.HitPoint.Max, new Rectangle(pos.X + 30, pos.Y + 88, 92, 10), color);
 					}
 					else
-						batch.DrawString(Font, new Point(pos.X + 6, pos.Y + 88), Color.Black, hero.HitPoint.Current + " of " + hero.HitPoint.Max);
+						batch.DrawString(Font, new Point(pos.X + 6, pos.Y + 88), GameColors.Black, hero.HitPoint.Current + " of " + hero.HitPoint.Max);
 
 
 					// Hands
@@ -587,9 +586,9 @@ namespace DungeonEye
 									batch.DrawTile(TileSet, 21, new Point(pos.X + 64, pos.Y + 20 + yoffset));
 
 									if (attack.IsAHit)
-										batch.DrawString(Font, new Point(pos.X + 90, pos.Y + 32 + yoffset), Color.White, attack.Hit.ToString());
+										batch.DrawString(Font, new Point(pos.X + 90, pos.Y + 32 + yoffset), GameColors.White, attack.Hit.ToString());
 									else if (attack.IsAMiss)
-										batch.DrawString(Font, new Point(pos.X + 76, pos.Y + 32 + yoffset), Color.White, "MISS");
+										batch.DrawString(Font, new Point(pos.X + 76, pos.Y + 32 + yoffset), GameColors.White, "MISS");
 								}
 							}
 
@@ -607,14 +606,14 @@ namespace DungeonEye
 							{
 								case ActionResult.NoAmmo:
 								{
-									batch.DrawString(Font, new Point(pos.X + 86, pos.Y + 24 + yoffset), Color.White, "NO");
-									batch.DrawString(Font, new Point(pos.X + 74, pos.Y + 38 + yoffset), Color.White, "AMMO");
+									batch.DrawString(Font, new Point(pos.X + 86, pos.Y + 24 + yoffset), GameColors.White, "NO");
+									batch.DrawString(Font, new Point(pos.X + 74, pos.Y + 38 + yoffset), GameColors.White, "AMMO");
 								}
 								break;
 								case ActionResult.CantReach:
 								{
-									batch.DrawString(Font, new Point(pos.X + 68, pos.Y + 24 + yoffset), Color.White, "CAN'T");
-									batch.DrawString(Font, new Point(pos.X + 68, pos.Y + 38 + yoffset), Color.White, "REACH");
+									batch.DrawString(Font, new Point(pos.X + 68, pos.Y + 24 + yoffset), GameColors.White, "CAN'T");
+									batch.DrawString(Font, new Point(pos.X + 68, pos.Y + 38 + yoffset), GameColors.White, "REACH");
 								}
 								break;
 							}
@@ -634,7 +633,7 @@ namespace DungeonEye
 					if (hero.LastAttack != null && !hero.LastAttack.IsOutdated(DateTime.Now, 1000))
 					{
 						batch.DrawTile(TileSet, 20, new Point(pos.X + 24, pos.Y + 66));
-						batch.DrawString(Font, new Point(pos.X + 52, pos.Y + 86), Color.White, hero.LastAttack.Hit.ToString());
+						batch.DrawString(Font, new Point(pos.X + 52, pos.Y + 86), GameColors.White, hero.LastAttack.Hit.ToString());
 					}
 
 				}
@@ -647,7 +646,7 @@ namespace DungeonEye
 				Maze.DrawMiniMap(batch, this, new Point(500, 220));
 
 				// Team location
-				batch.DrawString(Font, new Point(10, 340), Color.White, Location.ToString());
+				batch.DrawString(Font, new Point(10, 340), GameColors.White, Location.ToString());
 			}
 		}
 
@@ -675,12 +674,12 @@ namespace DungeonEye
 				batch.FillRectangle(zone, color);
 			}
 
-			batch.DrawLine(rectangle.Left, rectangle.Top, rectangle.Left, rectangle.Bottom, Color.FromArgb(138, 146, 207));
-			batch.DrawLine(rectangle.Left, rectangle.Bottom, rectangle.Right + 2, rectangle.Bottom, Color.FromArgb(138, 146, 207));
+			batch.DrawLine(rectangle.Left, rectangle.Top, rectangle.Left, rectangle.Bottom, GameColors.LightBlue);
+			batch.DrawLine(rectangle.Left, rectangle.Bottom, rectangle.Right + 2, rectangle.Bottom, GameColors.LightBlue);
 
 
-			batch.DrawLine(rectangle.Left + 1, rectangle.Top, rectangle.Right + 1, rectangle.Top, Color.FromArgb(44, 48, 138));
-			batch.DrawLine(rectangle.Right + 1, rectangle.Top, rectangle.Right + 1, rectangle.Bottom, Color.FromArgb(44, 48, 138));
+			batch.DrawLine(rectangle.Left + 1, rectangle.Top, rectangle.Right + 1, rectangle.Top, GameColors.DarkBlue);
+			batch.DrawLine(rectangle.Right + 1, rectangle.Top, rectangle.Right + 1, rectangle.Bottom, GameColors.DarkBlue);
 		}
 
 
@@ -695,20 +694,20 @@ namespace DungeonEye
 			batch.DrawTile(TileSet, 18, new Point(352, 0));
 
 			// Name
-			batch.DrawString(OutlinedFont, new Point(430, 12), Color.White, SelectedHero.Name);
+			batch.DrawString(OutlinedFont, new Point(430, 12), GameColors.White, SelectedHero.Name);
 
 			// HP and Food
-			batch.DrawString(Font, new Point(500, 30), Color.Black, SelectedHero.HitPoint.Current + " of " + SelectedHero.HitPoint.Max);
+			batch.DrawString(Font, new Point(500, 30), GameColors.Black, SelectedHero.HitPoint.Current + " of " + SelectedHero.HitPoint.Max);
 
 			// Dead or uncounscious
 			if (SelectedHero.IsUnconscious)
 			{
-				batch.DrawString(OutlinedFont, new Point(450, 316), Color.FromArgb(255, 85, 85), "UNCONSCIOUS");
+				batch.DrawString(OutlinedFont, new Point(450, 316), GameColors.Yellow, "UNCONSCIOUS");
 				batch.DrawTile(TileSet, 2, new Point(360, 4));
 			}
 			else if (SelectedHero.IsDead)
 			{
-				batch.DrawString(OutlinedFont, new Point(500, 316), Color.FromArgb(255, 85, 85), "DEAD");
+				batch.DrawString(OutlinedFont, new Point(500, 316), GameColors.Red, "DEAD");
 				batch.DrawTile(TileSet, 4, new Point(360, 4));
 			}
 			else
@@ -720,11 +719,11 @@ namespace DungeonEye
 			{
 				Color color;
 				if (SelectedHero.Food > 50)
-					color = Color.Green;
+					color = GameColors.Green;
 				else if (SelectedHero.Food > 25)
-					color = Color.Yellow;
+					color = GameColors.Yellow;
 				else
-					color = Color.Red;
+					color = GameColors.Red;
 
 				batch.FillRectangle(new Rectangle(500, 48, SelectedHero.Food, 10), color);
 			}
@@ -743,9 +742,9 @@ namespace DungeonEye
 
 			// Quiver count
 			if (SelectedHero.Quiver > 99)
-				batch.DrawString(Font, new Point(452, 128), Color.White, "++");
+				batch.DrawString(Font, new Point(452, 128), GameColors.White, "++");
 			else
-				batch.DrawString(Font, new Point(452, 128), Color.White, SelectedHero.Quiver.ToString());
+				batch.DrawString(Font, new Point(452, 128), GameColors.White, SelectedHero.Quiver.ToString());
 
 			// Armor
 			if (SelectedHero.GetInventoryItem(InventoryPosition.Armor) != null)
@@ -830,29 +829,29 @@ namespace DungeonEye
 		{
 			// Background
 			batch.DrawTile(TileSet, 18, new Point(352, 0));
-			batch.FillRectangle(new Rectangle(360, 70, 182, 30), Color.FromArgb(164, 164, 184));
-			batch.FillRectangle(new Rectangle(360, 100, 276, 194), Color.FromArgb(164, 164, 184));
-			batch.FillRectangle(new Rectangle(360, 294, 242, 36), Color.FromArgb(164, 164, 184));
+			batch.FillRectangle(new Rectangle(360, 70, 182, 30), GameColors.LightGrey);
+			batch.FillRectangle(new Rectangle(360, 100, 276, 194), GameColors.LightGrey);
+			batch.FillRectangle(new Rectangle(360, 294, 242, 36), GameColors.LightGrey);
 
 
 			// Hero head
 			batch.DrawTile(Heads, SelectedHero.Head, new Point(360, 4));
 
 
-			batch.DrawString(OutlinedFont, new Point(430, 12), Color.White, SelectedHero.Name);
-			batch.DrawString(OutlinedFont, new Point(370, 80), Color.White, "Character info");
+			batch.DrawString(OutlinedFont, new Point(430, 12), GameColors.White, SelectedHero.Name);
+			batch.DrawString(OutlinedFont, new Point(370, 80), GameColors.White, "Character info");
 
 			// HP and Food
-			batch.DrawString(Font, new Point(500, 30), Color.Black, SelectedHero.HitPoint.Current + " of " + SelectedHero.HitPoint.Max);
+			batch.DrawString(Font, new Point(500, 30), GameColors.Black, SelectedHero.HitPoint.Current + " of " + SelectedHero.HitPoint.Max);
 
 			// Food
 			Color color;
 			if (SelectedHero.Food > 50)
-				color = Color.Green;
+				color = GameColors.Green;
 			else if (SelectedHero.Food > 25)
-				color = Color.Yellow;
+				color = GameColors.Yellow;
 			else
-				color = Color.Red;
+				color = GameColors.Red;
 
 			batch.FillRectangle(new Rectangle(498, 48, SelectedHero.Food, 10), color);
 
@@ -861,36 +860,36 @@ namespace DungeonEye
 				txt += prof.Class.ToString() + "/";
 			txt = txt.Substring(0, txt.Length - 1);
 
-			batch.DrawString(Font, new Point(366, 110), Color.Black, txt);
-			batch.DrawString(Font, new Point(366, 124), Color.Black, SelectedHero.Alignment.ToString());
-			batch.DrawString(Font, new Point(366, 138), Color.Black, SelectedHero.Race.ToString());
+			batch.DrawString(Font, new Point(366, 110), GameColors.Black, txt);
+			batch.DrawString(Font, new Point(366, 124), GameColors.Black, SelectedHero.Alignment.ToString());
+			batch.DrawString(Font, new Point(366, 138), GameColors.Black, SelectedHero.Race.ToString());
 
-			batch.DrawString(Font, new Point(366, 166), Color.Black, "Strength");
-			batch.DrawString(Font, new Point(366, 180), Color.Black, "Intelligence");
-			batch.DrawString(Font, new Point(366, 194), Color.Black, "Wisdom");
-			batch.DrawString(Font, new Point(366, 208), Color.Black, "Dexterity");
-			batch.DrawString(Font, new Point(366, 222), Color.Black, "Constitution");
-			batch.DrawString(Font, new Point(366, 236), Color.Black, "Charisma");
-			batch.DrawString(Font, new Point(366, 250), Color.Black, "Armor class");
-
-
-			batch.DrawString(Font, new Point(552, 166), Color.Black, SelectedHero.Strength.Value.ToString());// + "/" + SelectedHero.MaxStrength.ToString());
-			batch.DrawString(Font, new Point(552, 180), Color.Black, SelectedHero.Intelligence.Value.ToString());
-			batch.DrawString(Font, new Point(552, 194), Color.Black, SelectedHero.Wisdom.Value.ToString());
-			batch.DrawString(Font, new Point(552, 208), Color.Black, SelectedHero.Dexterity.Value.ToString());
-			batch.DrawString(Font, new Point(552, 222), Color.Black, SelectedHero.Constitution.Value.ToString());
-			batch.DrawString(Font, new Point(552, 236), Color.Black, SelectedHero.Charisma.Value.ToString());
-			batch.DrawString(Font, new Point(552, 250), Color.Black, SelectedHero.ArmorClass.ToString());
+			batch.DrawString(Font, new Point(366, 166), GameColors.Black, "Strength");
+			batch.DrawString(Font, new Point(366, 180), GameColors.Black, "Intelligence");
+			batch.DrawString(Font, new Point(366, 194), GameColors.Black, "Wisdom");
+			batch.DrawString(Font, new Point(366, 208), GameColors.Black, "Dexterity");
+			batch.DrawString(Font, new Point(366, 222), GameColors.Black, "Constitution");
+			batch.DrawString(Font, new Point(366, 236), GameColors.Black, "Charisma");
+			batch.DrawString(Font, new Point(366, 250), GameColors.Black, "Armor class");
 
 
-			batch.DrawString(Font, new Point(470, 270), Color.Black, "EXP");
-			batch.DrawString(Font, new Point(550, 270), Color.Black, "LVL");
+			batch.DrawString(Font, new Point(552, 166), GameColors.Black, SelectedHero.Strength.Value.ToString());// + "/" + SelectedHero.MaxStrength.ToString());
+			batch.DrawString(Font, new Point(552, 180), GameColors.Black, SelectedHero.Intelligence.Value.ToString());
+			batch.DrawString(Font, new Point(552, 194), GameColors.Black, SelectedHero.Wisdom.Value.ToString());
+			batch.DrawString(Font, new Point(552, 208), GameColors.Black, SelectedHero.Dexterity.Value.ToString());
+			batch.DrawString(Font, new Point(552, 222), GameColors.Black, SelectedHero.Constitution.Value.ToString());
+			batch.DrawString(Font, new Point(552, 236), GameColors.Black, SelectedHero.Charisma.Value.ToString());
+			batch.DrawString(Font, new Point(552, 250), GameColors.Black, SelectedHero.ArmorClass.ToString());
+
+
+			batch.DrawString(Font, new Point(470, 270), GameColors.Black, "EXP");
+			batch.DrawString(Font, new Point(550, 270), GameColors.Black, "LVL");
 			int y = 0;
 			foreach (Profession prof in SelectedHero.Professions)
 			{
-				batch.DrawString(Font, new Point(366, 290 + y), Color.Black, prof.Class.ToString());
-				batch.DrawString(Font, new Point(460, 290 + y), Color.White, prof.Experience.ToString());
-				batch.DrawString(Font, new Point(560, 290 + y), Color.White, prof.Level.ToString());
+				batch.DrawString(Font, new Point(366, 290 + y), GameColors.Black, prof.Class.ToString());
+				batch.DrawString(Font, new Point(460, 290 + y), GameColors.White, prof.Experience.ToString());
+				batch.DrawString(Font, new Point(560, 290 + y), GameColors.White, prof.Level.ToString());
 
 				y += 12;
 			}
@@ -1004,7 +1003,7 @@ namespace DungeonEye
 				if (maze != null)
 				{
 					Maze = maze;
-					AddMessage("Loading maze test", Color.Blue);
+					AddMessage("Loading maze test", GameColors.Blue);
 				}
 			}
 
@@ -2136,7 +2135,7 @@ namespace DungeonEye
 		/// <param name="msg">Message</param>
 		public static void AddMessage(string msg)
 		{
-			AddMessage(msg, Color.White);
+			AddMessage(msg, GameColors.White);
 		}
 
 

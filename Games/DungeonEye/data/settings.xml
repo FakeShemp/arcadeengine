@@ -2,7 +2,7 @@
 <settings>
 	<inputscheme>azerty</inputscheme>
 	<language>English</language>
-	<HPAsBar>False</HPAsBar>
+	<HPAsBar>True</HPAsBar>
 	<Tunes>True</Tunes>
 	<Sounds>True</Sounds>
 	<FullScreen>False</FullScreen>

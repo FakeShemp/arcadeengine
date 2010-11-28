@@ -131,9 +131,9 @@ namespace DungeonEye
 					}
 					break;
 
-					case "displaybackground":
+					case "displayborder":
 					{
-						DisplayBackground = Boolean.Parse(node.Attributes["value"].Value);
+						DisplayBorder = Boolean.Parse(node.Attributes["value"].Value);
 					}
 					break;
 
@@ -206,8 +206,8 @@ namespace DungeonEye
 			writer.WriteEndElement();
 
 			// 
-			writer.WriteStartElement("displaybackground");
-			writer.WriteAttributeString("value", DisplayBackground.ToString());
+			writer.WriteStartElement("displayborder");
+			writer.WriteAttributeString("value", DisplayBorder.ToString());
 			writer.WriteEndElement();
 
 			// 
@@ -292,7 +292,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Gets or sets the background
 		/// </summary>
-		public bool DisplayBackground
+		public bool DisplayBorder
 		{
 			get;
 			set;
