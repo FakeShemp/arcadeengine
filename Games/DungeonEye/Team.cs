@@ -46,7 +46,7 @@ namespace DungeonEye
 		public Team(Hero[] heroes)
 		{
 			Messages = new List<ScreenMessage>();
-			CampWindow = new Camp(this);
+			//Dialog = new CampDialog(this);
 			TeamSpeed = TimeSpan.FromSeconds(0.15f);
 			SpellBook = new SpellBook();
 
@@ -127,7 +127,7 @@ namespace DungeonEye
 			OutlinedFont = ResourceManager.CreateSharedAsset<BitmapFont>("outline", "outline");
 
 			// Misc init
-			CampWindow.Init();
+			//Dialog.Init();
 			SpellBook.LoadContent();
 
 
@@ -210,7 +210,7 @@ namespace DungeonEye
 			LastMove = DateTime.MinValue;
 			Language = null;
 			InputScheme = null;
-			CampWindow = null;
+			Dialog = null;
 		}
 
 
@@ -446,26 +446,27 @@ namespace DungeonEye
 			{
 				DrawMain(Batch);
 
-				/*
+				
 				// Action zones
-				for (int id = 0 ; id < 6 ; id++)
-				{
-					Batch.FillRectangle(InterfaceCoord.PrimaryHand[id], Color.FromArgb(128, Color.Red));
-					Batch.FillRectangle(InterfaceCoord.SecondaryHand[id], Color.FromArgb(128, Color.Red));
-					Batch.FillRectangle(InterfaceCoord.SelectHero[id], Color.FromArgb(128, Color.Red));
-					Batch.FillRectangle(InterfaceCoord.HeroFace[id], Color.FromArgb(128, Color.Red));
-				}
-				Batch.FillRectangle(InterfaceCoord.TurnLeft, Color.FromArgb(128, Color.Red));
-				Batch.FillRectangle(InterfaceCoord.TurnRight, Color.FromArgb(128, Color.Red));
-				Batch.FillRectangle(InterfaceCoord.MoveForward, Color.FromArgb(128, Color.Red));
-				Batch.FillRectangle(InterfaceCoord.MoveBackward, Color.FromArgb(128, Color.Red));
-				Batch.FillRectangle(InterfaceCoord.MoveLeft, Color.FromArgb(128, Color.Red));
-				Batch.FillRectangle(InterfaceCoord.MoveRight, Color.FromArgb(128, Color.Red));
-				*/
+				//for (int id = 0 ; id < 6 ; id++)
+				//{
+				//    Batch.FillRectangle(InterfaceCoord.PrimaryHand[id], Color.FromArgb(128, Color.Red));
+				//    Batch.FillRectangle(InterfaceCoord.SecondaryHand[id], Color.FromArgb(128, Color.Red));
+				//    Batch.FillRectangle(InterfaceCoord.SelectHero[id], Color.FromArgb(128, Color.Red));
+				//    Batch.FillRectangle(InterfaceCoord.HeroFace[id], Color.FromArgb(128, Color.Red));
+				//}
+				//Batch.FillRectangle(InterfaceCoord.TurnLeft, Color.FromArgb(128, Color.Red));
+				//Batch.FillRectangle(InterfaceCoord.TurnRight, Color.FromArgb(128, Color.Red));
+				//Batch.FillRectangle(InterfaceCoord.MoveForward, Color.FromArgb(128, Color.Red));
+				//Batch.FillRectangle(InterfaceCoord.MoveBackward, Color.FromArgb(128, Color.Red));
+				//Batch.FillRectangle(InterfaceCoord.MoveLeft, Color.FromArgb(128, Color.Red));
+				//Batch.FillRectangle(InterfaceCoord.MoveRight, Color.FromArgb(128, Color.Red));
+				
 
 
 
-				CampWindow.Draw(Batch);
+				if (Dialog != null)
+					Dialog.Draw(Batch);
 			}
 
 
@@ -1101,7 +1102,7 @@ namespace DungeonEye
 			#region Mouse
 
 			#region Left mouse button
-			if (Mouse.IsNewButtonDown(MouseButtons.Left) && !CampWindow.IsVisible)
+			if (Mouse.IsNewButtonDown(MouseButtons.Left) && Dialog == null) //.IsVisible)
 			{
 
 				#region Direction buttons
@@ -1139,7 +1140,8 @@ namespace DungeonEye
 				else if (MazeDisplayCoordinates.CampButton.Contains(mousePos))
 				{
 					SpellBook.Close();
-					CampWindow.Show();
+					Dialog = new CampDialog(this);
+					//CampWindow.Show();
 					Interface = TeamInterface.Main;
 				}
 				#endregion
@@ -1534,7 +1536,7 @@ namespace DungeonEye
 
 
 				// Left mouse button down
-				if (Mouse.IsNewButtonDown(MouseButtons.Left) && !CampWindow.IsVisible)
+				if (Mouse.IsNewButtonDown(MouseButtons.Left) && Dialog == null) //.IsVisible)
 				{
 
 					Item item = null;
@@ -1607,7 +1609,7 @@ namespace DungeonEye
 				#region Right mouse button action
 
 				// Right mouse button down
-				if (Mouse.IsNewButtonDown(MouseButtons.Right) && !CampWindow.IsVisible)
+				if (Mouse.IsNewButtonDown(MouseButtons.Right) && Dialog == null) //.IsVisible)
 				{
 
 					// Update each hero interface
@@ -1660,9 +1662,12 @@ namespace DungeonEye
 				#endregion
 			}
 
-			CampWindow.Update(time);
-
 			#endregion
+
+
+			if (Dialog != null)
+				Dialog.Update(time);
+
 
 
 			#region Heros update
@@ -2893,9 +2898,13 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Window GUI
+		/// Dialog GUI
 		/// </summary>
-		Camp CampWindow;
+		public DialogBase Dialog
+		{
+			get;
+			private set;
+		}
 
 
 		/// <summary>

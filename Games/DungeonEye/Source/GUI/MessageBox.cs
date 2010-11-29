@@ -42,7 +42,7 @@ namespace DungeonEye.Gui
 
 
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
 		/// <param name="text">Text to display</param>
 		/// <param name="buttons">Buttons to display</param>
@@ -113,12 +113,12 @@ namespace DungeonEye.Gui
 		#endregion
 
 		/// <summary>
-		/// 
+		/// Converts the client coordinates of a specified point to screen coordinates. 
 		/// </summary>
-		/// <param name="offset"></param>
-		/// <param name="rectangle"></param>
+		/// <param name="offset">Offset</param>
+		/// <param name="rectangle">Screen rectangle</param>
 		/// <returns></returns>
-		Rectangle Translate(Point offset, Rectangle rectangle)
+		Rectangle ClientToScreen(Point offset, Rectangle rectangle)
 		{
 			return new Rectangle(
 					offset.X + rectangle.X,
@@ -132,7 +132,7 @@ namespace DungeonEye.Gui
 		/// Draws the window
 		/// </summary>
 		/// <param name="batch">SpriteBatch to use</param>
-		public void Draw(Camp camp, SpriteBatch batch)
+		public void Draw(CampDialog camp, SpriteBatch batch)
 		{
 			if (batch == null)
 				return;
@@ -148,7 +148,7 @@ namespace DungeonEye.Gui
 			// Draw buttons
 			foreach (ScreenButton button in Buttons)
 			{
-				Rectangle rect = Translate(Rectangle.Location, button.Rectangle);
+				Rectangle rect = ClientToScreen(Rectangle.Location, button.Rectangle);
 				camp.DrawBevel(batch, rect, Colors.Main, Colors.Light, Colors.Dark);
 
 				// Text
@@ -173,7 +173,7 @@ namespace DungeonEye.Gui
 			Point mousePos = Mouse.Location;
 			foreach (ScreenButton button in Buttons)
 			{
-				Rectangle rect = Translate(Rectangle.Location, button.Rectangle);
+				Rectangle rect = ClientToScreen(Rectangle.Location, button.Rectangle);
 				if (rect.Contains(mousePos))
 				{
 					button.TextColor = Color.FromArgb(255, 85, 85);

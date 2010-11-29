@@ -33,7 +33,7 @@ namespace DungeonEye.Gui.CampWindows
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public RestPartyWindow(Camp camp) 
+		public RestPartyWindow(CampDialog camp) 
 			: base(camp, "Rest Party :")
 		{
 			ScreenButton button;

@@ -37,7 +37,7 @@ namespace DungeonEye.Gui.CampWindows
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public DropNPCWindow(Camp camp) : base(camp, "Drop Character")
+		public DropNPCWindow(CampDialog camp) : base(camp, "Drop Character")
 		{
 			if (Camp.Team.HeroCount <= 4)
 			{
@@ -157,7 +157,7 @@ namespace DungeonEye.Gui.CampWindows
 			if (((MessageBox)sender).DialogResult == DialogResult.Yes)
 			{
 				Camp.Team.DropHero(Hero);
-				Camp.Close();
+				Camp.Exit();
 			}
 
 			Hero = null;

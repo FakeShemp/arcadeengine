@@ -60,6 +60,10 @@ namespace DungeonEye
 		/// <returns></returns>
 		public override bool OnTeamEnter(Team team)
 		{
+			// No more usage possible
+			if (Remaining == 0)
+				return false;
+
 			// Some message to display
 			if (!string.IsNullOrEmpty(Message))
 			{
@@ -76,7 +80,12 @@ namespace DungeonEye
 				}
 			}
 
-			return false;
+
+			// Decrement usage
+			if (Remaining > 0)
+				Remaining--;
+
+			return true;
 		}
 
 
@@ -155,6 +164,12 @@ namespace DungeonEye
 					}
 					break;
 
+					case "remaining":
+					{
+						Remaining = int.Parse(node.Attributes["value"].Value);
+					}
+					break;
+
 
 					default:
 					{
@@ -193,6 +208,10 @@ namespace DungeonEye
 
 			writer.WriteStartElement("direction");
 			writer.WriteAttributeString("value", Direction.ToString());
+			writer.WriteEndElement();
+
+			writer.WriteStartElement("remaining");
+			writer.WriteAttributeString("value", Remaining.ToString());
 			writer.WriteEndElement();
 
 			// 
@@ -247,6 +266,18 @@ namespace DungeonEye
 			get;
 			set;
 		}
+
+
+		/// <summary>
+		/// Number of usage remaining
+		/// </summary>
+		/// <remarks>-1 means infinite usage</remarks>
+		public int Remaining
+		{
+			get;
+			set;
+		}
+
 
 
 		/// <summary>

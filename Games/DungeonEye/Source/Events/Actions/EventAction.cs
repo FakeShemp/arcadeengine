@@ -18,56 +18,20 @@
 //
 #endregion
 using System;
-using System.Drawing;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using ArcEngine;
-using ArcEngine.Graphic;
-using ArcEngine.Input;
 
-namespace DungeonEye.Gui.CampWindows
+
+namespace DungeonEye.Events.Actions
 {
 	/// <summary>
-	/// Scribe for scroll window
+	/// Abstract base class for event actions
 	/// </summary>
-	public class ScribeScrollsWindow : Window
+	public abstract class EventAction
 	{
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		public ScribeScrollsWindow(CampDialog camp)
-			: base(camp, "Scribe Scrolls :")
-		{
-			ScreenButton button;
-			button = new ScreenButton("Exit", new Rectangle(256, 244, 80, 28));
-			button.Selected += new EventHandler(Exit_Selected);
-			Buttons.Add(button);
 
-		}
-
-
-
-		#region Events
-
-
-		/// <summary>
-		/// Exit button
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		void Exit_Selected(object sender, EventArgs e)
-		{
-			Closing = true;
-		}
-
-
-		#endregion
-
-
-		#region Properties
-
-
-
-
-		#endregion
 
 	}
 }

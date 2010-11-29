@@ -39,7 +39,7 @@ namespace DungeonEye.Gui
 		/// </summary>
 		/// <param name="camp">Camp window handle</param>
 		/// <param name="title">Window title</param>
-		public Window(Camp camp, string title)
+		public Window(CampDialog camp, string title)
 		{
 			Camp = camp;
 			Title = title;
@@ -200,7 +200,7 @@ namespace DungeonEye.Gui
 		/// <summary>
 		/// Camp window
 		/// </summary>
-		protected Camp Camp
+		protected CampDialog Camp
 		{
 			get;
 			private set;

@@ -35,7 +35,7 @@ namespace DungeonEye.Gui.CampWindows
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public PreferencesWindow(Camp camp)
+		public PreferencesWindow(CampDialog camp)
 			: base(camp, "Preferences :")
 		{
 			ScreenButton button;

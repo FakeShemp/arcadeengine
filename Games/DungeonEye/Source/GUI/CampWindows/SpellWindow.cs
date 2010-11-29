@@ -37,7 +37,7 @@ namespace DungeonEye.Gui.CampWindows
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public SpellWindow(Camp camp) : base(camp, "")
+		public SpellWindow(CampDialog camp) : base(camp, "")
 		{
 			Interface = ResourceManager.GetSharedAsset<TileSet>("Interface");
 	

@@ -33,7 +33,7 @@ namespace DungeonEye.Gui.CampWindows
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public GameOptionsWindow(Camp camp)
+		public GameOptionsWindow(CampDialog camp)
 			: base(camp, "Game Options:")
 		{
 			ScreenButton button;
@@ -96,7 +96,7 @@ namespace DungeonEye.Gui.CampWindows
 			if (((MessageBox) sender).DialogResult == DialogResult.Yes)
 			{
 				Camp.Team.LoadParty("data/savegame.xml");
-				Camp.Close();
+				Camp.Exit();
 			}
 		}
 
@@ -123,7 +123,7 @@ namespace DungeonEye.Gui.CampWindows
 			if (((MessageBox) sender).DialogResult == DialogResult.Yes)
 			{
 				Camp.Team.SaveParty(Camp.Team.SaveGame);
-				Camp.Close();
+				Camp.Exit();
 			}
 		}
 
