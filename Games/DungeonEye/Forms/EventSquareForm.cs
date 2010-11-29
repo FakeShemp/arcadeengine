@@ -51,6 +51,7 @@ namespace DungeonEye.Forms
 			DisplayBorderBox.Checked = eventsquare.DisplayBorder;
 			IntelligenceBox.Value = eventsquare.Intelligence;
 			MessageBox.ForeColor = eventsquare.MessageColor;
+			RemainingBox.Value = eventsquare.Remaining;
 
 			EventSquare = eventsquare;
 		}
@@ -59,6 +60,21 @@ namespace DungeonEye.Forms
 
 		#region Form events
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void RemainingBox_ValueChanged(object sender, EventArgs e)
+		{
+			if (EventSquare == null)
+				return;
+
+			EventSquare.Remaining = (int)RemainingBox.Value;
+		}
+
+		
 		/// <summary>
 		/// 
 		/// </summary>
@@ -281,7 +297,6 @@ namespace DungeonEye.Forms
 		EventSquare EventSquare;
 
 		#endregion
-
 
 	}
 }
