@@ -59,6 +59,8 @@ namespace DungeonEye
 		public override void Exit()
 		{
 			Windows.Clear();
+
+			base.Exit();
 		}
 
 
@@ -89,9 +91,11 @@ namespace DungeonEye
 				// Remove closing windows
 				while (Windows.Count > 0 && Windows.Peek().Closing)
 					Windows.Pop();
-			
-	
-				if (Windows.Count > 0)
+
+
+				if (Windows.Count == 0)
+					Exit();
+				else
 					Windows.Peek().Update(time);
 			}
 		}
@@ -154,34 +158,5 @@ namespace DungeonEye
 		#endregion
 	}
 
-
-	/// <summary>
-	/// GUI colors
-	/// </summary>
-	struct Colors
-	{
-		/// <summary>
-		/// 
-		/// </summary>
-		static public Color Dark = Color.FromArgb(52, 52, 81);
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		static public Color Light = Color.FromArgb(150, 150, 174);
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		static public Color Main = Color.FromArgb(109, 109, 138);
-
-		/// <summary>
-		/// 
-		/// </summary>
-		static public Color Red = Color.FromArgb(255, 85, 85);
-
-	}
 
 }

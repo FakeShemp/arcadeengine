@@ -46,7 +46,6 @@ namespace DungeonEye
 		public Team(Hero[] heroes)
 		{
 			Messages = new List<ScreenMessage>();
-			//Dialog = new CampDialog(this);
 			TeamSpeed = TimeSpan.FromSeconds(0.15f);
 			SpellBook = new SpellBook();
 
@@ -199,7 +198,7 @@ namespace DungeonEye
 			Batch = null;
 
 
-
+			Dialog = null;
 			SpellBook = null;
 			SaveGame = "";
 			Heroes = null;
@@ -210,7 +209,6 @@ namespace DungeonEye
 			LastMove = DateTime.MinValue;
 			Language = null;
 			InputScheme = null;
-			Dialog = null;
 		}
 
 
@@ -461,12 +459,9 @@ namespace DungeonEye
 				//Batch.FillRectangle(InterfaceCoord.MoveBackward, Color.FromArgb(128, Color.Red));
 				//Batch.FillRectangle(InterfaceCoord.MoveLeft, Color.FromArgb(128, Color.Red));
 				//Batch.FillRectangle(InterfaceCoord.MoveRight, Color.FromArgb(128, Color.Red));
-				
 
 
 
-				if (Dialog != null)
-					Dialog.Draw(Batch);
 			}
 
 
@@ -484,9 +479,16 @@ namespace DungeonEye
 			SpellBook.Draw(Batch);
 
 
+
+			if (Dialog != null)
+			{
+				Dialog.Draw(Batch);
+			}
+
 			// Draw the cursor or the item in the hand
-			if (ItemInHand != null)
+			else if (ItemInHand != null)
 				Batch.DrawTile(Items, ItemInHand.TileID, Mouse.Location, 0.5f);
+
 
 
 			Batch.End();
@@ -911,6 +913,21 @@ namespace DungeonEye
 		/// <param name="time">Time passed since the last call to the last update.</param>
 		public override void Update(GameTime time, bool hasFocus, bool isCovered)
 		{
+
+			if (Dialog != null)
+			{
+				if (Dialog.Quit)
+					Dialog = null;
+				else
+				{
+					Dialog.Update(time);
+					return;
+				}
+			}
+
+
+
+
 			HasMoved = false;
 
 
@@ -926,7 +943,7 @@ namespace DungeonEye
 			// Reload data banks
 			if (Keyboard.IsNewKeyPress(Keys.W))
 			{
-				MazeDisplayCoordinates.Load();
+				DisplayCoordinates.Load();
 				AddMessage("MazeDisplayCoordinates reloaded...");
 			}
 
@@ -1137,7 +1154,7 @@ namespace DungeonEye
 				#endregion
 
 				#region Camp button
-				else if (MazeDisplayCoordinates.CampButton.Contains(mousePos))
+				else if (DisplayCoordinates.CampButton.Contains(mousePos))
 				{
 					SpellBook.Close();
 					Dialog = new CampDialog(this);
@@ -1150,7 +1167,7 @@ namespace DungeonEye
 				#region Gather item on the ground Left
 
 				// Team's feet
-				else if (MazeDisplayCoordinates.LeftFeetTeam.Contains(mousePos))
+				else if (DisplayCoordinates.LeftFeetTeam.Contains(mousePos))
 				{
 					switch (Direction)
 					{
@@ -1179,7 +1196,7 @@ namespace DungeonEye
 				}
 
 				// In front of the team
-				else if (!FrontSquare.IsWall && MazeDisplayCoordinates.LeftFrontTeamGround.Contains(mousePos))
+				else if (!FrontSquare.IsWall && DisplayCoordinates.LeftFrontTeamGround.Contains(mousePos))
 				{
 					// Ground position
 					switch (Location.Direction)
@@ -1212,7 +1229,7 @@ namespace DungeonEye
 				#endregion
 
 				#region Gather item on the ground right
-				else if (MazeDisplayCoordinates.RightFeetTeam.Contains(mousePos))
+				else if (DisplayCoordinates.RightFeetTeam.Contains(mousePos))
 				{
 					switch (Location.Direction)
 					{
@@ -1245,7 +1262,7 @@ namespace DungeonEye
 				}
 
 				// In front of the team
-				else if (!FrontSquare.IsWall && MazeDisplayCoordinates.RightFrontTeamGround.Contains(mousePos))
+				else if (!FrontSquare.IsWall && DisplayCoordinates.RightFrontTeamGround.Contains(mousePos))
 				{
 
 					// Ground position
@@ -1282,7 +1299,7 @@ namespace DungeonEye
 				#endregion
 
 				#region Alcove
-				else if (MazeDisplayCoordinates.Alcove.Contains(mousePos) && FrontSquare.IsWall)
+				else if (DisplayCoordinates.Alcove.Contains(mousePos) && FrontSquare.IsWall)
 				{
 
 					if (ItemInHand != null)
@@ -1300,12 +1317,12 @@ namespace DungeonEye
 				#region Action to process on the front square
 
 				// Click on the square in front of the team
-				else if (MazeDisplayCoordinates.FrontSquare.Contains(mousePos))// && FrontBlock.IsWall)
+				else if (DisplayCoordinates.FrontSquare.Contains(mousePos))// && FrontBlock.IsWall)
 				{
 					if (!FrontSquare.OnClick(this, mousePos, FrontWallSide))
 					{
 						#region Throw an object left side
-						if (MazeDisplayCoordinates.ThrowLeft.Contains(mousePos) && ItemInHand != null)
+						if (DisplayCoordinates.ThrowLeft.Contains(mousePos) && ItemInHand != null)
 						{
 							DungeonLocation loc = new DungeonLocation(Location);
 							switch (Location.Direction)
@@ -1329,7 +1346,7 @@ namespace DungeonEye
 						#endregion
 
 						#region Throw an object in the right side
-						else if (MazeDisplayCoordinates.ThrowRight.Contains(mousePos) && ItemInHand != null)
+						else if (DisplayCoordinates.ThrowRight.Contains(mousePos) && ItemInHand != null)
 						{
 
 							DungeonLocation loc = new DungeonLocation(Location);
@@ -1366,7 +1383,7 @@ namespace DungeonEye
 			else if (Mouse.IsNewButtonDown(MouseButtons.Right))
 			{
 				#region Alcove
-				if (MazeDisplayCoordinates.Alcove.Contains(mousePos) && FrontSquare.IsWall)
+				if (DisplayCoordinates.Alcove.Contains(mousePos) && FrontSquare.IsWall)
 				{
 					SelectedHero.AddToInventory(FrontSquare.CollectAlcoveItem(FrontWallSide));
 				}
@@ -1379,7 +1396,7 @@ namespace DungeonEye
 				#region Gather item on the ground Left
 
 				// Team's feet
-				else if (MazeDisplayCoordinates.LeftFeetTeam.Contains(mousePos))
+				else if (DisplayCoordinates.LeftFeetTeam.Contains(mousePos))
 				{
 					switch (Direction)
 					{
@@ -1410,7 +1427,7 @@ namespace DungeonEye
 				}
 
 				// In front of the team
-				else if (MazeDisplayCoordinates.LeftFrontTeamGround.Contains(mousePos) && !FrontSquare.IsWall)
+				else if (DisplayCoordinates.LeftFrontTeamGround.Contains(mousePos) && !FrontSquare.IsWall)
 				{
 					// Ground position
 					switch (Location.Direction)
@@ -1447,7 +1464,7 @@ namespace DungeonEye
 				#endregion
 
 				#region Gather item on the ground right
-				else if (MazeDisplayCoordinates.RightFeetTeam.Contains(mousePos))
+				else if (DisplayCoordinates.RightFeetTeam.Contains(mousePos))
 				{
 					switch (Location.Direction)
 					{
@@ -1479,7 +1496,7 @@ namespace DungeonEye
 				}
 
 				// In front of the team
-				else if (MazeDisplayCoordinates.RightFrontTeamGround.Contains(mousePos) && !FrontSquare.IsWall)
+				else if (DisplayCoordinates.RightFrontTeamGround.Contains(mousePos) && !FrontSquare.IsWall)
 				{
 
 					// Ground position
@@ -1663,10 +1680,6 @@ namespace DungeonEye
 			}
 
 			#endregion
-
-
-			if (Dialog != null)
-				Dialog.Update(time);
 
 
 
@@ -2902,9 +2915,19 @@ namespace DungeonEye
 		/// </summary>
 		public DialogBase Dialog
 		{
-			get;
-			private set;
+			get
+			{
+				return dialog;
+			}
+			set
+			{
+				if (dialog != null)
+					dialog.Dispose();
+
+				dialog = value;
+			}
 		}
+		DialogBase dialog;
 
 
 		/// <summary>

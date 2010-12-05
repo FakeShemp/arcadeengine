@@ -81,6 +81,12 @@ namespace DungeonEye
 			}
 
 
+			if (!string.IsNullOrEmpty(PictureName))
+			{
+				team.Dialog = new ScriptedDialog(Square);
+			}
+
+
 			// Decrement usage
 			if (Remaining > 0)
 				Remaining--;

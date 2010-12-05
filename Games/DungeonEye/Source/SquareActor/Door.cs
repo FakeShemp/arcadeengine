@@ -93,7 +93,7 @@ namespace DungeonEye
 			// Under the door, draw sides
 			if (field.GetBlock(ViewFieldPosition.N).IsWall && position == ViewFieldPosition.Team)
 			{
-				td = MazeDisplayCoordinates.GetDoor(ViewFieldPosition.Team);
+				td = DisplayCoordinates.GetDoor(ViewFieldPosition.Team);
 				if (td != null)
 					batch.DrawTile(overlay, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);
 			}
@@ -103,7 +103,7 @@ namespace DungeonEye
 					(!field.Maze.IsDoorNorthSouth(Square.Location) && (view == CardinalPoint.East || view == CardinalPoint.West))) &&
 					position != ViewFieldPosition.Team)
 			{
-				td = MazeDisplayCoordinates.GetDoor(position);
+				td = DisplayCoordinates.GetDoor(position);
 				if (td != null)
 				{
 					batch.DrawTile(wall, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);

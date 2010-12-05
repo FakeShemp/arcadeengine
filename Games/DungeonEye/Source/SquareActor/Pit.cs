@@ -62,7 +62,7 @@ namespace DungeonEye
 			if (TileSet == null)
 				return;
 
-			TileDrawing td = MazeDisplayCoordinates.GetPit(position);
+			TileDrawing td = DisplayCoordinates.GetPit(position);
 			if (td != null && !IsHidden)
 				batch.DrawTile(TileSet, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);
 		}

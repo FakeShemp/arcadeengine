@@ -904,7 +904,7 @@ namespace DungeonEye
 						squarepos = (SquarePosition) sub[(int)teamdir][(int)Position];
 
 					// Screen coordinate
-					Point position = MazeDisplayCoordinates.GetGroundPosition(pos, squarepos);
+					Point position = DisplayCoordinates.GetGroundPosition(pos, squarepos);
 					position.Offset(DrawOffset.X / offsetscale[offset].X, DrawOffset.Y / offsetscale[offset].Y);
 
 					batch.DrawTile(Tileset, GetTileID(teamdir), position, colors[(int)pos]);

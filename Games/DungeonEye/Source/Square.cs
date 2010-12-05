@@ -191,7 +191,7 @@ namespace DungeonEye
 			}
 
 			// An Alcove 
-			else if (HasAlcove(side) && MazeDisplayCoordinates.Alcove.Contains(location))
+			else if (HasAlcove(side) && DisplayCoordinates.Alcove.Contains(location))
 			{
 				if (team.ItemInHand != null)
 				{

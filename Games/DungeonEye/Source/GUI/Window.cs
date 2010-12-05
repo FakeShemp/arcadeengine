@@ -95,7 +95,7 @@ namespace DungeonEye.Gui
 				if (!button.IsVisible)
 					continue;
 
-				Camp.DrawBevel(batch, button.Rectangle, Colors.Main, Colors.Light, Colors.Dark);
+				Camp.DrawDoubleBevel(batch, button.Rectangle);//, GameColors.Main, GameColors.Light, GameColors.Dark);
 
 				// Text
 				Point point = button.Rectangle.Location;
@@ -117,9 +117,9 @@ namespace DungeonEye.Gui
 		protected void DrawBackground(SpriteBatch batch)
 		{
 			Rectangle rect = new Rectangle(0, 0, 352, 288);
-			Camp.DrawBevel(batch, rect, Colors.Main, Colors.Light, Colors.Dark);
+			Camp.DrawDoubleBevel(batch, rect, GameColors.Main, GameColors.Light, GameColors.Dark);
 
-			batch.DrawString(Camp.Font, new Point(8, 10), Color.FromArgb(85, 255, 255), Title);
+			batch.DrawString(Camp.Font, new Point(8, 10), GameColors.Cyan, Title);
 		}
 
 
@@ -149,7 +149,7 @@ namespace DungeonEye.Gui
 				if (button.Rectangle.Contains(mousePos))
 				{
 					if (button.ReactOnMouseOver)
-						button.TextColor = Colors.Red;
+						button.TextColor = GameColors.Red;
 
 					// Click on button
 					if (Mouse.IsNewButtonDown(System.Windows.Forms.MouseButtons.Left))

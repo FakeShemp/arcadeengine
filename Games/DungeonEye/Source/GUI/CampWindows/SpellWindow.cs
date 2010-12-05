@@ -169,7 +169,7 @@ namespace DungeonEye.Gui.CampWindows
 			for (int i = 0 ; i < 6 ; i++)
 				Levels[i].IsVisible = true;
 
-			Levels[0].TextColor = Colors.Red;
+			Levels[0].TextColor = GameColors.Red;
 			SpellLevel = 1;
 		}
 
@@ -198,7 +198,7 @@ namespace DungeonEye.Gui.CampWindows
 				Levels[i].TextColor = Color.White;
 
 			ScreenButton button = sender as ScreenButton;
-			button.TextColor = Colors.Red;
+			button.TextColor = GameColors.Red;
 		}
 
 

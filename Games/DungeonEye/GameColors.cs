@@ -56,7 +56,18 @@ namespace DungeonEye
 		{
 			get
 			{
-				return Color.FromArgb(255, 164, 164, 184);
+				return Color.FromArgb(255, 166, 166, 186);
+			}
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		static public Color Dark
+		{
+			get
+			{
+				return Color.FromArgb(52, 52, 81);
 			}
 		}
 
@@ -123,6 +134,28 @@ namespace DungeonEye
 			get
 			{
 				return Color.FromArgb(255, 0, 170, 0);
+			}
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		static public Color Main
+		{
+			get
+			{
+				return Color.FromArgb(109, 109, 138);
+			}
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		static public Color Light
+		{
+			get
+			{
+				return Color.FromArgb(150, 150, 174);
 			}
 		}
 

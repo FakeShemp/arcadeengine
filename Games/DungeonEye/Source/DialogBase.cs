@@ -24,22 +24,25 @@ using ArcEngine.Asset;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
 using DungeonEye.Gui.CampWindows;
+using System;
 
 namespace DungeonEye
 {
 	/// <summary>
 	/// Dialog base class
 	/// </summary>
-	public abstract class DialogBase
+	public abstract class DialogBase : IDisposable
 	{
 
-		
+
+
 
 		/// <summary>
-		/// Close the dialog
+		/// Closes the dialog
 		/// </summary>
 		public virtual void Exit()
 		{
+			Quit = true;
 		}
 
 
@@ -64,6 +67,17 @@ namespace DungeonEye
 
 
 		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="batch"></param>
+		/// <param name="rectangle"></param>
+		public void DrawDoubleBevel(SpriteBatch batch, Rectangle rectangle)
+		{
+			DrawDoubleBevel(batch, rectangle, GameColors.Main, GameColors.Light, GameColors.Dark);
+		}
+
+
+		/// <summary>
 		/// Draws a beveled rectangle
 		/// </summary>
 		/// <param name="batch">SpriteBatch to use</param>
@@ -71,7 +85,7 @@ namespace DungeonEye
 		/// <param name="bg">Background color</param>
 		/// <param name="light">Light color</param>
 		/// <param name="dark">Dark color</param>
-		public void DrawBevel(SpriteBatch batch, Rectangle rect, Color bg, Color light, Color dark)
+		public void DrawDoubleBevel(SpriteBatch batch, Rectangle rect, Color bg, Color light, Color dark)
 		{
 			batch.FillRectangle(rect, bg);
 
@@ -90,5 +104,61 @@ namespace DungeonEye
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="batch"></param>
+		/// <param name="rectangle"></param>
+		public void DrawSimpleBevel(SpriteBatch batch, Rectangle rectangle)
+		{
+			DrawSimpleBevel(batch, rectangle, GameColors.Main, GameColors.Light, GameColors.Dark);
+		}
+
+
+		/// <summary>
+		/// Draws a beveled rectangle
+		/// </summary>
+		/// <param name="batch">SpriteBatch to use</param>
+		/// <param name="rectangle">Rectangle</param>
+		/// <param name="bg">Background color</param>
+		/// <param name="light">Light color</param>
+		/// <param name="dark">Dark color</param>
+		public void DrawSimpleBevel(SpriteBatch batch, Rectangle rectangle, Color bg, Color light, Color dark)
+		{
+			batch.FillRectangle(rectangle, bg);
+
+			Point point = rectangle.Location;
+			Size size = rectangle.Size;
+
+			batch.FillRectangle(new Rectangle(point.X + 2, point.Y, size.Width - 2, 2), light);
+			batch.FillRectangle(new Rectangle(rectangle.Right - 2, point.Y + 2, 2, size.Height - 4), light);
+
+			batch.FillRectangle(new Rectangle(point.X, point.Y + 2, 2, size.Height - 2), dark);
+			batch.FillRectangle(new Rectangle(point.X + 2, point.Y + size.Height - 2, size.Width - 4, 2), dark);
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public virtual void Dispose()
+		{
+		}
+
+
+
+		#region Properties
+
+
+		/// <summary>
+		/// Dialog is over
+		/// </summary>
+		public bool Quit
+		{
+			get;
+			private set;
+		}
+
+		#endregion
 	}
 }

@@ -65,7 +65,7 @@ namespace DungeonEye
 			// Upstair or downstair ?
 			int delta = Type == StairType.Up ? 0 : 13;
 
-			foreach (TileDrawing tmp in MazeDisplayCoordinates.GetStairs(position))
+			foreach (TileDrawing tmp in DisplayCoordinates.GetStairs(position))
 				batch.DrawTile(TileSet, tmp.ID + delta, tmp.Location, Color.White, 0.0f, tmp.Effect, 0.0f);
 		
 		}
