@@ -25,6 +25,7 @@ using System.Text;
 using ArcEngine;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
+using ArcEngine.Asset;
 
 namespace DungeonEye
 {
@@ -48,6 +49,8 @@ namespace DungeonEye
 			if (Event.DisplayBorder)
 				Border = new Texture2D("border.png");
 
+			Font = ResourceManager.GetSharedAsset<BitmapFont>("inventory");
+			//Font.LineHeight += 2;
 		}
 
 
@@ -94,6 +97,7 @@ namespace DungeonEye
 			
 			DrawSimpleBevel(batch, DisplayCoordinates.ScriptedDialog);
 
+			batch.DrawString(Font, new Point(4, 250), GameColors.White, Event.Text);
 		}
 
 
@@ -134,6 +138,11 @@ namespace DungeonEye
 		/// </summary>
 		Texture2D Border;
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		BitmapFont Font;
 
 		#endregion
 	}

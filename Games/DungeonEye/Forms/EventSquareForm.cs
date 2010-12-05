@@ -20,14 +20,16 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
 using System.Data;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using ArcEngine.Forms;
 using ArcEngine;
-using System.IO;
+using ArcEngine.Asset;
+using ArcEngine.Forms;
+
 
 namespace DungeonEye.Forms
 {
@@ -52,7 +54,8 @@ namespace DungeonEye.Forms
 			IntelligenceBox.Value = eventsquare.Intelligence;
 			MessageBox.ForeColor = eventsquare.MessageColor;
 			RemainingBox.Value = eventsquare.Remaining;
-
+			TextBox.Text = eventsquare.Text;
+			TextJustificationBox.DataSource = Enum.GetValues(typeof(TextJustification));
 			EventSquare = eventsquare;
 		}
 
@@ -282,6 +285,15 @@ namespace DungeonEye.Forms
 				return;
 
 			EventSquare.Intelligence = (int)IntelligenceBox.Value;
+
+		}
+
+		private void TextBox_TextChanged(object sender, EventArgs e)
+		{
+			if (EventSquare == null)
+				return;
+
+			EventSquare.Text = TextBox.Text;
 
 		}
 

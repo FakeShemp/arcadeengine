@@ -41,6 +41,9 @@
 			this.SoundNameBox = new System.Windows.Forms.TextBox();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.PropertiesTab = new System.Windows.Forms.TabPage();
+			this.groupBox5 = new System.Windows.Forms.GroupBox();
+			this.label2 = new System.Windows.Forms.Label();
+			this.RemainingBox = new System.Windows.Forms.NumericUpDown();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.IntelligenceBox = new System.Windows.Forms.NumericUpDown();
@@ -50,35 +53,32 @@
 			this.PictureTab = new System.Windows.Forms.TabPage();
 			this.PictureNameBox = new System.Windows.Forms.TextBox();
 			this.ChoicesTab = new System.Windows.Forms.TabPage();
-			this.CloseBox = new System.Windows.Forms.Button();
-			this.groupBox5 = new System.Windows.Forms.GroupBox();
-			this.label2 = new System.Windows.Forms.Label();
-			this.RemainingBox = new System.Windows.Forms.NumericUpDown();
-			this.TextBox = new System.Windows.Forms.TextBox();
-			this.groupBox6 = new System.Windows.Forms.GroupBox();
 			this.groupBox7 = new System.Windows.Forms.GroupBox();
-			this.ChoicesBox = new System.Windows.Forms.ListBox();
-			this.AddEditChoiceBox = new System.Windows.Forms.Button();
-			this.DeleteChoiceBox = new System.Windows.Forms.Button();
-			this.UpChoiceBox = new System.Windows.Forms.Button();
 			this.DownChoiceBox = new System.Windows.Forms.Button();
-			this.TextColorBox = new System.Windows.Forms.Button();
-			this.TextalignBox = new System.Windows.Forms.ComboBox();
+			this.UpChoiceBox = new System.Windows.Forms.Button();
+			this.DeleteChoiceBox = new System.Windows.Forms.Button();
+			this.AddEditChoiceBox = new System.Windows.Forms.Button();
+			this.ChoicesBox = new System.Windows.Forms.ListBox();
+			this.groupBox6 = new System.Windows.Forms.GroupBox();
 			this.label3 = new System.Windows.Forms.Label();
+			this.TextJustificationBox = new System.Windows.Forms.ComboBox();
+			this.TextColorBox = new System.Windows.Forms.Button();
+			this.TextBox = new System.Windows.Forms.TextBox();
+			this.CloseBox = new System.Windows.Forms.Button();
 			this.groupBox1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize) (this.PreviewBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.PreviewBox)).BeginInit();
 			this.groupBox3.SuspendLayout();
 			this.tabControl1.SuspendLayout();
 			this.PropertiesTab.SuspendLayout();
+			this.groupBox5.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.RemainingBox)).BeginInit();
 			this.groupBox4.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize) (this.IntelligenceBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.IntelligenceBox)).BeginInit();
 			this.groupBox2.SuspendLayout();
 			this.PictureTab.SuspendLayout();
 			this.ChoicesTab.SuspendLayout();
-			this.groupBox5.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize) (this.RemainingBox)).BeginInit();
-			this.groupBox6.SuspendLayout();
 			this.groupBox7.SuspendLayout();
+			this.groupBox6.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// groupBox1
@@ -186,9 +186,9 @@
 			// 
 			// tabControl1
 			// 
-			this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.tabControl1.Controls.Add(this.PropertiesTab);
 			this.tabControl1.Controls.Add(this.PictureTab);
 			this.tabControl1.Controls.Add(this.ChoicesTab);
@@ -211,6 +211,46 @@
 			this.PropertiesTab.TabIndex = 2;
 			this.PropertiesTab.Text = "Properties";
 			this.PropertiesTab.UseVisualStyleBackColor = true;
+			// 
+			// groupBox5
+			// 
+			this.groupBox5.Controls.Add(this.label2);
+			this.groupBox5.Controls.Add(this.RemainingBox);
+			this.groupBox5.Location = new System.Drawing.Point(141, 173);
+			this.groupBox5.Name = "groupBox5";
+			this.groupBox5.Size = new System.Drawing.Size(149, 52);
+			this.groupBox5.TabIndex = 7;
+			this.groupBox5.TabStop = false;
+			this.groupBox5.Text = "Usage count :";
+			// 
+			// label2
+			// 
+			this.label2.AutoSize = true;
+			this.label2.Location = new System.Drawing.Point(6, 21);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(63, 13);
+			this.label2.TabIndex = 8;
+			this.label2.Text = "Remaining :";
+			// 
+			// RemainingBox
+			// 
+			this.RemainingBox.Location = new System.Drawing.Point(81, 19);
+			this.RemainingBox.Maximum = new decimal(new int[] {
+            99999999,
+            0,
+            0,
+            0});
+			this.RemainingBox.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+			this.RemainingBox.Name = "RemainingBox";
+			this.RemainingBox.Size = new System.Drawing.Size(56, 20);
+			this.RemainingBox.TabIndex = 0;
+			this.RemainingBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.RemainingBox.ThousandsSeparator = true;
+			this.RemainingBox.ValueChanged += new System.EventHandler(this.RemainingBox_ValueChanged);
 			// 
 			// groupBox4
 			// 
@@ -262,7 +302,7 @@
 			// 
 			this.MsgColorBox.AutoSize = true;
 			this.MsgColorBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.MsgColorBox.Image = ((System.Drawing.Image) (resources.GetObject("MsgColorBox.Image")));
+			this.MsgColorBox.Image = ((System.Drawing.Image)(resources.GetObject("MsgColorBox.Image")));
 			this.MsgColorBox.Location = new System.Drawing.Point(259, 17);
 			this.MsgColorBox.Name = "MsgColorBox";
 			this.MsgColorBox.Size = new System.Drawing.Size(22, 22);
@@ -273,9 +313,9 @@
 			// MessageBox
 			// 
 			this.MessageBox.AcceptsReturn = true;
-			this.MessageBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.MessageBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.MessageBox.ForeColor = System.Drawing.SystemColors.MenuHighlight;
 			this.MessageBox.Location = new System.Drawing.Point(6, 19);
 			this.MessageBox.Multiline = true;
@@ -300,8 +340,8 @@
 			// 
 			// PictureNameBox
 			// 
-			this.PictureNameBox.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.PictureNameBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.PictureNameBox.Location = new System.Drawing.Point(364, 35);
 			this.PictureNameBox.Name = "PictureNameBox";
 			this.PictureNameBox.Size = new System.Drawing.Size(142, 20);
@@ -320,89 +360,11 @@
 			this.ChoicesTab.Text = "Choices";
 			this.ChoicesTab.UseVisualStyleBackColor = true;
 			// 
-			// CloseBox
-			// 
-			this.CloseBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.CloseBox.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.CloseBox.Location = new System.Drawing.Point(457, 387);
-			this.CloseBox.Name = "CloseBox";
-			this.CloseBox.Size = new System.Drawing.Size(75, 23);
-			this.CloseBox.TabIndex = 4;
-			this.CloseBox.Text = "Close";
-			this.CloseBox.UseVisualStyleBackColor = true;
-			// 
-			// groupBox5
-			// 
-			this.groupBox5.Controls.Add(this.label2);
-			this.groupBox5.Controls.Add(this.RemainingBox);
-			this.groupBox5.Location = new System.Drawing.Point(141, 173);
-			this.groupBox5.Name = "groupBox5";
-			this.groupBox5.Size = new System.Drawing.Size(149, 52);
-			this.groupBox5.TabIndex = 7;
-			this.groupBox5.TabStop = false;
-			this.groupBox5.Text = "Usage count :";
-			// 
-			// label2
-			// 
-			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(6, 21);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(63, 13);
-			this.label2.TabIndex = 8;
-			this.label2.Text = "Remaining :";
-			// 
-			// RemainingBox
-			// 
-			this.RemainingBox.Location = new System.Drawing.Point(81, 19);
-			this.RemainingBox.Maximum = new decimal(new int[] {
-            99999999,
-            0,
-            0,
-            0});
-			this.RemainingBox.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            -2147483648});
-			this.RemainingBox.Name = "RemainingBox";
-			this.RemainingBox.Size = new System.Drawing.Size(56, 20);
-			this.RemainingBox.TabIndex = 0;
-			this.RemainingBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.RemainingBox.ThousandsSeparator = true;
-			this.RemainingBox.ValueChanged += new System.EventHandler(this.RemainingBox_ValueChanged);
-			// 
-			// TextBox
-			// 
-			this.TextBox.AcceptsReturn = true;
-			this.TextBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.TextBox.Location = new System.Drawing.Point(6, 19);
-			this.TextBox.Multiline = true;
-			this.TextBox.Name = "TextBox";
-			this.TextBox.Size = new System.Drawing.Size(488, 106);
-			this.TextBox.TabIndex = 0;
-			// 
-			// groupBox6
-			// 
-			this.groupBox6.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.groupBox6.Controls.Add(this.label3);
-			this.groupBox6.Controls.Add(this.TextalignBox);
-			this.groupBox6.Controls.Add(this.TextColorBox);
-			this.groupBox6.Controls.Add(this.TextBox);
-			this.groupBox6.Location = new System.Drawing.Point(6, 6);
-			this.groupBox6.Name = "groupBox6";
-			this.groupBox6.Size = new System.Drawing.Size(500, 160);
-			this.groupBox6.TabIndex = 1;
-			this.groupBox6.TabStop = false;
-			this.groupBox6.Text = "Initial message :";
-			// 
 			// groupBox7
 			// 
-			this.groupBox7.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.groupBox7.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.groupBox7.Controls.Add(this.DownChoiceBox);
 			this.groupBox7.Controls.Add(this.UpChoiceBox);
 			this.groupBox7.Controls.Add(this.DeleteChoiceBox);
@@ -415,50 +377,9 @@
 			this.groupBox7.TabStop = false;
 			this.groupBox7.Text = "Choices :";
 			// 
-			// ChoicesBox
-			// 
-			this.ChoicesBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.ChoicesBox.FormattingEnabled = true;
-			this.ChoicesBox.Location = new System.Drawing.Point(6, 19);
-			this.ChoicesBox.Name = "ChoicesBox";
-			this.ChoicesBox.Size = new System.Drawing.Size(407, 134);
-			this.ChoicesBox.TabIndex = 0;
-			// 
-			// AddEditChoiceBox
-			// 
-			this.AddEditChoiceBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.AddEditChoiceBox.Location = new System.Drawing.Point(419, 19);
-			this.AddEditChoiceBox.Name = "AddEditChoiceBox";
-			this.AddEditChoiceBox.Size = new System.Drawing.Size(75, 23);
-			this.AddEditChoiceBox.TabIndex = 1;
-			this.AddEditChoiceBox.Text = "Add/Edit";
-			this.AddEditChoiceBox.UseVisualStyleBackColor = true;
-			// 
-			// DeleteChoiceBox
-			// 
-			this.DeleteChoiceBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.DeleteChoiceBox.Location = new System.Drawing.Point(419, 48);
-			this.DeleteChoiceBox.Name = "DeleteChoiceBox";
-			this.DeleteChoiceBox.Size = new System.Drawing.Size(75, 23);
-			this.DeleteChoiceBox.TabIndex = 1;
-			this.DeleteChoiceBox.Text = "Delete";
-			this.DeleteChoiceBox.UseVisualStyleBackColor = true;
-			// 
-			// UpChoiceBox
-			// 
-			this.UpChoiceBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.UpChoiceBox.Location = new System.Drawing.Point(419, 101);
-			this.UpChoiceBox.Name = "UpChoiceBox";
-			this.UpChoiceBox.Size = new System.Drawing.Size(75, 23);
-			this.UpChoiceBox.TabIndex = 1;
-			this.UpChoiceBox.Text = "Up";
-			this.UpChoiceBox.UseVisualStyleBackColor = true;
-			// 
 			// DownChoiceBox
 			// 
-			this.DownChoiceBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.DownChoiceBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.DownChoiceBox.Location = new System.Drawing.Point(419, 130);
 			this.DownChoiceBox.Name = "DownChoiceBox";
 			this.DownChoiceBox.Size = new System.Drawing.Size(75, 23);
@@ -466,36 +387,116 @@
 			this.DownChoiceBox.Text = "Down";
 			this.DownChoiceBox.UseVisualStyleBackColor = true;
 			// 
-			// TextColorBox
+			// UpChoiceBox
 			// 
-			this.TextColorBox.AutoSize = true;
-			this.TextColorBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.TextColorBox.Image = ((System.Drawing.Image) (resources.GetObject("TextColorBox.Image")));
-			this.TextColorBox.Location = new System.Drawing.Point(6, 131);
-			this.TextColorBox.Name = "TextColorBox";
-			this.TextColorBox.Size = new System.Drawing.Size(22, 22);
-			this.TextColorBox.TabIndex = 1;
-			this.TextColorBox.UseVisualStyleBackColor = true;
+			this.UpChoiceBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.UpChoiceBox.Location = new System.Drawing.Point(419, 101);
+			this.UpChoiceBox.Name = "UpChoiceBox";
+			this.UpChoiceBox.Size = new System.Drawing.Size(75, 23);
+			this.UpChoiceBox.TabIndex = 1;
+			this.UpChoiceBox.Text = "Up";
+			this.UpChoiceBox.UseVisualStyleBackColor = true;
 			// 
-			// TextalignBox
+			// DeleteChoiceBox
 			// 
-			this.TextalignBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.TextalignBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.TextalignBox.FormattingEnabled = true;
-			this.TextalignBox.Location = new System.Drawing.Point(373, 131);
-			this.TextalignBox.Name = "TextalignBox";
-			this.TextalignBox.Size = new System.Drawing.Size(121, 21);
-			this.TextalignBox.TabIndex = 2;
+			this.DeleteChoiceBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.DeleteChoiceBox.Location = new System.Drawing.Point(419, 48);
+			this.DeleteChoiceBox.Name = "DeleteChoiceBox";
+			this.DeleteChoiceBox.Size = new System.Drawing.Size(75, 23);
+			this.DeleteChoiceBox.TabIndex = 1;
+			this.DeleteChoiceBox.Text = "Delete";
+			this.DeleteChoiceBox.UseVisualStyleBackColor = true;
+			// 
+			// AddEditChoiceBox
+			// 
+			this.AddEditChoiceBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.AddEditChoiceBox.Location = new System.Drawing.Point(419, 19);
+			this.AddEditChoiceBox.Name = "AddEditChoiceBox";
+			this.AddEditChoiceBox.Size = new System.Drawing.Size(75, 23);
+			this.AddEditChoiceBox.TabIndex = 1;
+			this.AddEditChoiceBox.Text = "Add/Edit";
+			this.AddEditChoiceBox.UseVisualStyleBackColor = true;
+			// 
+			// ChoicesBox
+			// 
+			this.ChoicesBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.ChoicesBox.FormattingEnabled = true;
+			this.ChoicesBox.Location = new System.Drawing.Point(6, 19);
+			this.ChoicesBox.Name = "ChoicesBox";
+			this.ChoicesBox.Size = new System.Drawing.Size(407, 134);
+			this.ChoicesBox.TabIndex = 0;
+			// 
+			// groupBox6
+			// 
+			this.groupBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.groupBox6.Controls.Add(this.label3);
+			this.groupBox6.Controls.Add(this.TextJustificationBox);
+			this.groupBox6.Controls.Add(this.TextColorBox);
+			this.groupBox6.Controls.Add(this.TextBox);
+			this.groupBox6.Location = new System.Drawing.Point(6, 6);
+			this.groupBox6.Name = "groupBox6";
+			this.groupBox6.Size = new System.Drawing.Size(500, 160);
+			this.groupBox6.TabIndex = 1;
+			this.groupBox6.TabStop = false;
+			this.groupBox6.Text = "Initial message :";
 			// 
 			// label3
 			// 
-			this.label3.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.label3.AutoSize = true;
 			this.label3.Location = new System.Drawing.Point(308, 134);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(59, 13);
 			this.label3.TabIndex = 3;
 			this.label3.Text = "Text align :";
+			// 
+			// TextJustificationBox
+			// 
+			this.TextJustificationBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.TextJustificationBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.TextJustificationBox.FormattingEnabled = true;
+			this.TextJustificationBox.Location = new System.Drawing.Point(373, 131);
+			this.TextJustificationBox.Name = "TextJustificationBox";
+			this.TextJustificationBox.Size = new System.Drawing.Size(121, 21);
+			this.TextJustificationBox.TabIndex = 2;
+			// 
+			// TextColorBox
+			// 
+			this.TextColorBox.AutoSize = true;
+			this.TextColorBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.TextColorBox.Image = ((System.Drawing.Image)(resources.GetObject("TextColorBox.Image")));
+			this.TextColorBox.Location = new System.Drawing.Point(6, 131);
+			this.TextColorBox.Name = "TextColorBox";
+			this.TextColorBox.Size = new System.Drawing.Size(22, 22);
+			this.TextColorBox.TabIndex = 1;
+			this.TextColorBox.UseVisualStyleBackColor = true;
+			// 
+			// TextBox
+			// 
+			this.TextBox.AcceptsReturn = true;
+			this.TextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.TextBox.Location = new System.Drawing.Point(6, 19);
+			this.TextBox.Multiline = true;
+			this.TextBox.Name = "TextBox";
+			this.TextBox.Size = new System.Drawing.Size(488, 106);
+			this.TextBox.TabIndex = 0;
+			this.TextBox.TextChanged += new System.EventHandler(this.TextBox_TextChanged);
+			// 
+			// CloseBox
+			// 
+			this.CloseBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.CloseBox.DialogResult = System.Windows.Forms.DialogResult.OK;
+			this.CloseBox.Location = new System.Drawing.Point(457, 387);
+			this.CloseBox.Name = "CloseBox";
+			this.CloseBox.Size = new System.Drawing.Size(75, 23);
+			this.CloseBox.TabIndex = 4;
+			this.CloseBox.Text = "Close";
+			this.CloseBox.UseVisualStyleBackColor = true;
 			// 
 			// EventSquareForm
 			// 
@@ -519,25 +520,25 @@
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.EventSquareForm_KeyDown);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
-			((System.ComponentModel.ISupportInitialize) (this.PreviewBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.PreviewBox)).EndInit();
 			this.groupBox3.ResumeLayout(false);
 			this.groupBox3.PerformLayout();
 			this.tabControl1.ResumeLayout(false);
 			this.PropertiesTab.ResumeLayout(false);
+			this.groupBox5.ResumeLayout(false);
+			this.groupBox5.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.RemainingBox)).EndInit();
 			this.groupBox4.ResumeLayout(false);
 			this.groupBox4.PerformLayout();
-			((System.ComponentModel.ISupportInitialize) (this.IntelligenceBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.IntelligenceBox)).EndInit();
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
 			this.PictureTab.ResumeLayout(false);
 			this.PictureTab.PerformLayout();
 			this.ChoicesTab.ResumeLayout(false);
-			this.groupBox5.ResumeLayout(false);
-			this.groupBox5.PerformLayout();
-			((System.ComponentModel.ISupportInitialize) (this.RemainingBox)).EndInit();
+			this.groupBox7.ResumeLayout(false);
 			this.groupBox6.ResumeLayout(false);
 			this.groupBox6.PerformLayout();
-			this.groupBox7.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -577,7 +578,7 @@
 		private System.Windows.Forms.ListBox ChoicesBox;
 		private System.Windows.Forms.GroupBox groupBox6;
 		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.ComboBox TextalignBox;
+		private System.Windows.Forms.ComboBox TextJustificationBox;
 		private System.Windows.Forms.Button TextColorBox;
 		private System.Windows.Forms.TextBox TextBox;
 	}

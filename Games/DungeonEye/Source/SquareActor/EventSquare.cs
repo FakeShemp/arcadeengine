@@ -176,6 +176,11 @@ namespace DungeonEye
 					}
 					break;
 
+					case "text":
+					{
+						Text = node.InnerText;
+					}
+					break;
 
 					default:
 					{
@@ -246,6 +251,11 @@ namespace DungeonEye
 			writer.WriteEndElement();
 
 			// 
+			writer.WriteStartElement("text");
+			writer.WriteString(Text);
+			writer.WriteEndElement();
+
+			// 
 			writer.WriteStartElement("picturename");
 			writer.WriteAttributeString("value", PictureName);
 			writer.WriteEndElement();
@@ -303,6 +313,17 @@ namespace DungeonEye
 			get;
 			set;
 		}
+
+
+		/// <summary>
+		/// Initial text to display
+		/// </summary>
+		public string Text
+		{
+			get;
+			set;
+		}
+
 
 
 		/// <summary>
