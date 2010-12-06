@@ -175,7 +175,7 @@ namespace ArcEngine.Asset
 								case "br":
 								{
 									rect.X = zone.X;
-									rect.Y += (int)(LineHeight * GlyphTileset.Scale.Y) + tileoffset;
+									rect.Y += (int)(LineHeight * GlyphTileset.Scale.Y) + tileoffset + Interline;
 									tileoffset = 0;
 								}
 								break;
@@ -241,7 +241,7 @@ namespace ArcEngine.Asset
 									tmp.Y = tmp.Y + (LineHeight * GlyphTileset.Scale.Y);
 
 									rect.X = zone.X;
-									rect.Y += (LineHeight * GlyphTileset.Scale.Y) + tileoffset;
+									rect.Y += (LineHeight * GlyphTileset.Scale.Y) + tileoffset + Interline;
 									tileoffset = 0;
 
 								}
@@ -391,7 +391,7 @@ namespace ArcEngine.Asset
 		bool Generate(Font font)
 		{
 			LineHeight = font.Height;
-			//	IsGenerated = false;
+			
 
 			// Final Bitmap
 			Bitmap bm = new Bitmap(512, LineHeight, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
@@ -661,6 +661,10 @@ namespace ArcEngine.Asset
 			xml.WriteAttributeString("value", Advance.ToString());
 			xml.WriteEndElement();
 
+			xml.WriteStartElement("interline");
+			xml.WriteAttributeString("value", Interline.ToString());
+			xml.WriteEndElement();
+
 			xml.WriteEndElement();
 			return false;
 		}
@@ -702,6 +706,12 @@ namespace ArcEngine.Asset
 					case "advance":
 					{
 						Advance = int.Parse(node.Attributes["value"].Value);
+					}
+					break;
+
+					case "interline":
+					{
+						Interline = int.Parse(node.Attributes["value"].Value);
 					}
 					break;
 
@@ -803,6 +813,17 @@ namespace ArcEngine.Asset
 			get;
 			protected set;
 		}
+
+
+		/// <summary>
+		/// Vertical extra space between lines
+		/// </summary>
+		public int Interline
+		{
+			get;
+			set;
+		}
+
 
 		/// <summary>
 		/// Size of a glyph

@@ -19,7 +19,7 @@
 #endregion
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Xml;
 using System.Text;
 using ArcEngine;
 using DungeonEye.Events.Actions;
@@ -33,12 +33,96 @@ namespace DungeonEye.Events
 	public class EventChoice
 	{
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
-		public EventChoice()
+		/// <param name="name">Choice's name</param>
+		public EventChoice(string name)
 		{
 			Actions = new List<EventAction>();
+
+			Name = name;
 		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString()
+		{
+			return Name + " - <" + Actions.Count + "> action(s)";
+		}
+
+
+		#region IO
+
+
+		/// <summary>
+		/// Loads a party
+		/// </summary>
+		/// <param name="filename">Xml data</param>
+		/// <returns>True if team successfuly loaded, otherwise false</returns>
+		public bool Load(XmlNode xml)
+		{
+			if (xml == null || xml.Name.ToLower() != "choice")
+				return false;
+
+			Name = xml.Attributes["name"].Value;
+
+			foreach (XmlNode node in xml)
+			{
+				if (node.NodeType == XmlNodeType.Comment)
+					continue;
+
+
+				switch (node.Name.ToLower())
+				{
+					case "action":
+					{
+						//EventAction action = new EventAction();
+						//Actions.Add(action);
+					}
+					break;
+				}
+			}
+
+
+			return true;
+		}
+
+
+
+		/// <summary>
+		/// Saves the party
+		/// </summary>
+		/// <param name="filename">XmlWriter</param>
+		/// <returns></returns>
+		public bool Save(XmlWriter writer)
+		{
+			if (writer == null)
+				return false;
+
+			writer.WriteStartElement("choice");
+			writer.WriteAttributeString("name", Name);
+
+			foreach (EventAction action in Actions)
+			{
+				writer.WriteStartElement("action");
+				writer.WriteAttributeString("name", action.Name);
+				action.Save(writer);
+				writer.WriteEndElement();
+			}
+
+			writer.WriteEndElement();
+
+			return false;
+		}
+
+
+		#endregion
+
+
 
 
 		#region Properties
@@ -49,6 +133,14 @@ namespace DungeonEye.Events
 		List<EventAction> Actions;
 
 
+		/// <summary>
+		/// Name of the choice
+		/// </summary>
+		public string Name
+		{
+			get;
+			set;
+		}
 		#endregion
 	}
 }

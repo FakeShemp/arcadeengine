@@ -29,7 +29,7 @@ using System.Windows.Forms;
 using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Forms;
-
+using DungeonEye.Events;
 
 namespace DungeonEye.Forms
 {
@@ -56,6 +56,14 @@ namespace DungeonEye.Forms
 			RemainingBox.Value = eventsquare.Remaining;
 			TextBox.Text = eventsquare.Text;
 			TextJustificationBox.DataSource = Enum.GetValues(typeof(TextJustification));
+
+
+			#region Choices
+
+			ChoicesBox.DataSource = eventsquare.Choices;
+
+			#endregion
+
 			EventSquare = eventsquare;
 		}
 
@@ -301,6 +309,78 @@ namespace DungeonEye.Forms
 		#endregion
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		void RebuildChoices()
+		{
+			((CurrencyManager) ChoicesBox.BindingContext[ChoicesBox.DataSource]).Refresh();
+		}
+
+
+		#region Choices events
+
+		private void AddEditChoiceBox_Click(object sender, EventArgs e)
+		{
+			if (EventSquare == null)
+				return;
+
+
+			EventChoice choice = new EventChoice("Choice " + (EventSquare.Choices.Count + 1));
+			EventSquare.Choices.Add(choice);
+			new EventChoiceForm(choice).ShowDialog();
+
+			RebuildChoices();
+		}
+
+		private void DeleteChoiceBox_Click(object sender, EventArgs e)
+		{
+			if (EventSquare == null)
+				return;
+
+			EventSquare.Choices.Remove(EventSquare.Choices[ChoicesBox.SelectedIndex]);
+			RebuildChoices();
+		}
+
+		private void UpChoiceBox_Click(object sender, EventArgs e)
+		{
+			if (EventSquare == null)
+				return;
+
+
+		}
+
+		private void DownChoiceBox_Click(object sender, EventArgs e)
+		{
+			if (EventSquare == null)
+				return;
+
+
+		}
+
+		private void TextJustificationBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (EventSquare == null)
+				return;
+
+
+		}
+
+
+		private void ChoicesBox_MouseDoubleClick(object sender, MouseEventArgs e)
+		{
+			if (EventSquare == null)
+				return;
+
+			new EventChoiceForm(EventSquare.Choices[ChoicesBox.SelectedIndex]).ShowDialog();
+
+			RebuildChoices();
+
+		}
+
+		#endregion
+
+
 		#region Properties
 
 		/// <summary>
@@ -309,6 +389,7 @@ namespace DungeonEye.Forms
 		EventSquare EventSquare;
 
 		#endregion
+
 
 	}
 }

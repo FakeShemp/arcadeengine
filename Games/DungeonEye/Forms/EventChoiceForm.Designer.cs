@@ -30,21 +30,21 @@
 		{
 			this.CloseBox = new System.Windows.Forms.Button();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.ActionsBox = new System.Windows.Forms.ListBox();
+			this.MoveDownActionBox = new System.Windows.Forms.Button();
+			this.MoveUpActionBox = new System.Windows.Forms.Button();
+			this.RemoveActionBox = new System.Windows.Forms.Button();
+			this.AddActionBox = new System.Windows.Forms.Button();
 			this.NameBox = new System.Windows.Forms.TextBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.VisibleBox = new System.Windows.Forms.CheckBox();
 			this.AutoTriggerBox = new System.Windows.Forms.CheckBox();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
-			this.ItemsBox = new System.Windows.Forms.ListBox();
-			this.AddItemBox = new System.Windows.Forms.Button();
-			this.RemoveItemBox = new System.Windows.Forms.Button();
 			this.KeepItemBox = new System.Windows.Forms.CheckBox();
-			this.AddActionBox = new System.Windows.Forms.Button();
-			this.RemoveActionBox = new System.Windows.Forms.Button();
-			this.MoveUpActionBox = new System.Windows.Forms.Button();
-			this.MoveDownActionBox = new System.Windows.Forms.Button();
-			this.ActionsBox = new System.Windows.Forms.ListBox();
+			this.RemoveItemBox = new System.Windows.Forms.Button();
+			this.AddItemBox = new System.Windows.Forms.Button();
+			this.ItemsBox = new System.Windows.Forms.ListBox();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.groupBox3.SuspendLayout();
@@ -54,7 +54,7 @@
 			// 
 			this.CloseBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.CloseBox.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.CloseBox.Location = new System.Drawing.Point(421, 431);
+			this.CloseBox.Location = new System.Drawing.Point(421, 363);
 			this.CloseBox.Name = "CloseBox";
 			this.CloseBox.Size = new System.Drawing.Size(75, 23);
 			this.CloseBox.TabIndex = 0;
@@ -70,10 +70,58 @@
 			this.groupBox1.Controls.Add(this.AddActionBox);
 			this.groupBox1.Location = new System.Drawing.Point(12, 201);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(484, 219);
+			this.groupBox1.Size = new System.Drawing.Size(484, 153);
 			this.groupBox1.TabIndex = 1;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Actions :";
+			// 
+			// ActionsBox
+			// 
+			this.ActionsBox.FormattingEnabled = true;
+			this.ActionsBox.Location = new System.Drawing.Point(6, 19);
+			this.ActionsBox.Name = "ActionsBox";
+			this.ActionsBox.Size = new System.Drawing.Size(391, 121);
+			this.ActionsBox.TabIndex = 1;
+			// 
+			// MoveDownActionBox
+			// 
+			this.MoveDownActionBox.Location = new System.Drawing.Point(403, 117);
+			this.MoveDownActionBox.Name = "MoveDownActionBox";
+			this.MoveDownActionBox.Size = new System.Drawing.Size(75, 23);
+			this.MoveDownActionBox.TabIndex = 0;
+			this.MoveDownActionBox.Text = "Down";
+			this.MoveDownActionBox.UseVisualStyleBackColor = true;
+			this.MoveDownActionBox.Click += new System.EventHandler(this.MoveDownActionBox_Click);
+			// 
+			// MoveUpActionBox
+			// 
+			this.MoveUpActionBox.Location = new System.Drawing.Point(403, 88);
+			this.MoveUpActionBox.Name = "MoveUpActionBox";
+			this.MoveUpActionBox.Size = new System.Drawing.Size(75, 23);
+			this.MoveUpActionBox.TabIndex = 0;
+			this.MoveUpActionBox.Text = "Up";
+			this.MoveUpActionBox.UseVisualStyleBackColor = true;
+			this.MoveUpActionBox.Click += new System.EventHandler(this.MoveUpActionBox_Click);
+			// 
+			// RemoveActionBox
+			// 
+			this.RemoveActionBox.Location = new System.Drawing.Point(403, 48);
+			this.RemoveActionBox.Name = "RemoveActionBox";
+			this.RemoveActionBox.Size = new System.Drawing.Size(75, 23);
+			this.RemoveActionBox.TabIndex = 0;
+			this.RemoveActionBox.Text = "Remove";
+			this.RemoveActionBox.UseVisualStyleBackColor = true;
+			this.RemoveActionBox.Click += new System.EventHandler(this.RemoveActionBox_Click);
+			// 
+			// AddActionBox
+			// 
+			this.AddActionBox.Location = new System.Drawing.Point(403, 19);
+			this.AddActionBox.Name = "AddActionBox";
+			this.AddActionBox.Size = new System.Drawing.Size(75, 23);
+			this.AddActionBox.TabIndex = 0;
+			this.AddActionBox.Text = "Add";
+			this.AddActionBox.UseVisualStyleBackColor = true;
+			this.AddActionBox.Click += new System.EventHandler(this.AddActionBox_Click);
 			// 
 			// NameBox
 			// 
@@ -81,6 +129,7 @@
 			this.NameBox.Name = "NameBox";
 			this.NameBox.Size = new System.Drawing.Size(269, 20);
 			this.NameBox.TabIndex = 4;
+			this.NameBox.TextChanged += new System.EventHandler(this.NameBox_TextChanged);
 			// 
 			// label1
 			// 
@@ -100,6 +149,7 @@
 			this.VisibleBox.TabIndex = 6;
 			this.VisibleBox.Text = "Visible";
 			this.VisibleBox.UseVisualStyleBackColor = true;
+			this.VisibleBox.CheckedChanged += new System.EventHandler(this.VisibleBox_CheckedChanged);
 			// 
 			// AutoTriggerBox
 			// 
@@ -110,6 +160,7 @@
 			this.AutoTriggerBox.TabIndex = 6;
 			this.AutoTriggerBox.Text = "Choice is automatically triggered";
 			this.AutoTriggerBox.UseVisualStyleBackColor = true;
+			this.AutoTriggerBox.CheckedChanged += new System.EventHandler(this.AutoTriggerBox_CheckedChanged);
 			// 
 			// groupBox2
 			// 
@@ -135,6 +186,37 @@
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Required items :";
 			// 
+			// KeepItemBox
+			// 
+			this.KeepItemBox.AutoSize = true;
+			this.KeepItemBox.Location = new System.Drawing.Point(132, 78);
+			this.KeepItemBox.Name = "KeepItemBox";
+			this.KeepItemBox.Size = new System.Drawing.Size(99, 17);
+			this.KeepItemBox.TabIndex = 3;
+			this.KeepItemBox.Text = "Remove item(s)";
+			this.KeepItemBox.UseVisualStyleBackColor = true;
+			this.KeepItemBox.CheckedChanged += new System.EventHandler(this.KeepItemBox_CheckedChanged);
+			// 
+			// RemoveItemBox
+			// 
+			this.RemoveItemBox.Location = new System.Drawing.Point(132, 49);
+			this.RemoveItemBox.Name = "RemoveItemBox";
+			this.RemoveItemBox.Size = new System.Drawing.Size(75, 23);
+			this.RemoveItemBox.TabIndex = 2;
+			this.RemoveItemBox.Text = "Remove";
+			this.RemoveItemBox.UseVisualStyleBackColor = true;
+			this.RemoveItemBox.Click += new System.EventHandler(this.RemoveItemBox_Click);
+			// 
+			// AddItemBox
+			// 
+			this.AddItemBox.Location = new System.Drawing.Point(132, 19);
+			this.AddItemBox.Name = "AddItemBox";
+			this.AddItemBox.Size = new System.Drawing.Size(75, 23);
+			this.AddItemBox.TabIndex = 1;
+			this.AddItemBox.Text = "Add";
+			this.AddItemBox.UseVisualStyleBackColor = true;
+			this.AddItemBox.Click += new System.EventHandler(this.AddItemBox_Click);
+			// 
 			// ItemsBox
 			// 
 			this.ItemsBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -147,84 +229,12 @@
 			this.ItemsBox.Sorted = true;
 			this.ItemsBox.TabIndex = 0;
 			// 
-			// AddItemBox
-			// 
-			this.AddItemBox.Location = new System.Drawing.Point(132, 19);
-			this.AddItemBox.Name = "AddItemBox";
-			this.AddItemBox.Size = new System.Drawing.Size(75, 23);
-			this.AddItemBox.TabIndex = 1;
-			this.AddItemBox.Text = "Add";
-			this.AddItemBox.UseVisualStyleBackColor = true;
-			// 
-			// RemoveItemBox
-			// 
-			this.RemoveItemBox.Location = new System.Drawing.Point(132, 49);
-			this.RemoveItemBox.Name = "RemoveItemBox";
-			this.RemoveItemBox.Size = new System.Drawing.Size(75, 23);
-			this.RemoveItemBox.TabIndex = 2;
-			this.RemoveItemBox.Text = "Remove";
-			this.RemoveItemBox.UseVisualStyleBackColor = true;
-			// 
-			// KeepItemBox
-			// 
-			this.KeepItemBox.AutoSize = true;
-			this.KeepItemBox.Location = new System.Drawing.Point(132, 78);
-			this.KeepItemBox.Name = "KeepItemBox";
-			this.KeepItemBox.Size = new System.Drawing.Size(99, 17);
-			this.KeepItemBox.TabIndex = 3;
-			this.KeepItemBox.Text = "Remove item(s)";
-			this.KeepItemBox.UseVisualStyleBackColor = true;
-			// 
-			// AddActionBox
-			// 
-			this.AddActionBox.Location = new System.Drawing.Point(403, 19);
-			this.AddActionBox.Name = "AddActionBox";
-			this.AddActionBox.Size = new System.Drawing.Size(75, 23);
-			this.AddActionBox.TabIndex = 0;
-			this.AddActionBox.Text = "Add";
-			this.AddActionBox.UseVisualStyleBackColor = true;
-			// 
-			// RemoveActionBox
-			// 
-			this.RemoveActionBox.Location = new System.Drawing.Point(403, 48);
-			this.RemoveActionBox.Name = "RemoveActionBox";
-			this.RemoveActionBox.Size = new System.Drawing.Size(75, 23);
-			this.RemoveActionBox.TabIndex = 0;
-			this.RemoveActionBox.Text = "Remove";
-			this.RemoveActionBox.UseVisualStyleBackColor = true;
-			// 
-			// MoveUpActionBox
-			// 
-			this.MoveUpActionBox.Location = new System.Drawing.Point(403, 150);
-			this.MoveUpActionBox.Name = "MoveUpActionBox";
-			this.MoveUpActionBox.Size = new System.Drawing.Size(75, 23);
-			this.MoveUpActionBox.TabIndex = 0;
-			this.MoveUpActionBox.Text = "Up";
-			this.MoveUpActionBox.UseVisualStyleBackColor = true;
-			// 
-			// MoveDownActionBox
-			// 
-			this.MoveDownActionBox.Location = new System.Drawing.Point(403, 179);
-			this.MoveDownActionBox.Name = "MoveDownActionBox";
-			this.MoveDownActionBox.Size = new System.Drawing.Size(75, 23);
-			this.MoveDownActionBox.TabIndex = 0;
-			this.MoveDownActionBox.Text = "Down";
-			this.MoveDownActionBox.UseVisualStyleBackColor = true;
-			// 
-			// ActionsBox
-			// 
-			this.ActionsBox.FormattingEnabled = true;
-			this.ActionsBox.Location = new System.Drawing.Point(6, 19);
-			this.ActionsBox.Name = "ActionsBox";
-			this.ActionsBox.Size = new System.Drawing.Size(391, 186);
-			this.ActionsBox.TabIndex = 1;
-			// 
 			// EventChoiceForm
 			// 
 			this.AcceptButton = this.CloseBox;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(508, 466);
+			this.ClientSize = new System.Drawing.Size(508, 398);
 			this.Controls.Add(this.groupBox3);
 			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.label1);
@@ -240,6 +250,7 @@
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Event choice wizard";
+			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.EventChoiceForm_KeyDown);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();

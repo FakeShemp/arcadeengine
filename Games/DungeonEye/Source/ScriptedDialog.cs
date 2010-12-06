@@ -17,15 +17,15 @@
 //along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 //
 #endregion
-
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
+using System.Windows.Forms;
 using ArcEngine;
+using ArcEngine.Asset;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
-using ArcEngine.Asset;
 
 namespace DungeonEye
 {
@@ -50,7 +50,6 @@ namespace DungeonEye
 				Border = new Texture2D("border.png");
 
 			Font = ResourceManager.GetSharedAsset<BitmapFont>("inventory");
-			//Font.LineHeight += 2;
 		}
 
 
@@ -66,6 +65,8 @@ namespace DungeonEye
 			if (Border != null)
 				Border.Dispose();
 			Border = null;
+
+			Font = null;
 		}
 
 
@@ -75,7 +76,7 @@ namespace DungeonEye
 		/// <param name="time"></param>
 		public override void Update(GameTime time)
 		{
-			if (Mouse.IsNewButtonDown(System.Windows.Forms.MouseButtons.Left))
+			if (Mouse.IsNewButtonDown(MouseButtons.Left))
 				Exit();
 		}
 
@@ -93,11 +94,13 @@ namespace DungeonEye
 			// Picture
 			batch.Draw(Picture, new Point(16, 16), Color.White);
 
-
-			
+			// Text
 			DrawSimpleBevel(batch, DisplayCoordinates.ScriptedDialog);
-
 			batch.DrawString(Font, new Point(4, 250), GameColors.White, Event.Text);
+
+
+			// Choices
+			
 		}
 
 
@@ -106,12 +109,12 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Square
 		/// </summary>
 		Square Square;
 
 		/// <summary>
-		/// 
+		/// Event square
 		/// </summary>
 		EventSquare Event
 		{
@@ -128,19 +131,19 @@ namespace DungeonEye
 		}
 
 		/// <summary>
-		/// 
+		/// Picture to display
 		/// </summary>
 		Texture2D Picture;
 
 
 		/// <summary>
-		/// 
+		/// Border texture
 		/// </summary>
 		Texture2D Border;
 
 
 		/// <summary>
-		/// 
+		/// Font to use
 		/// </summary>
 		BitmapFont Font;
 

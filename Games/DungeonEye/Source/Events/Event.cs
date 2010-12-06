@@ -24,60 +24,27 @@ using System.Text;
 using ArcEngine;
 using System.Xml;
 
-namespace DungeonEye.Events.Actions
+
+namespace DungeonEye.Events
 {
 	/// <summary>
-	/// Abstract base class for event actions
+	/// 
 	/// </summary>
-	public abstract class EventAction
+	public class Event
 	{
 
 
 
-		#region IO
-
-
-		/// <summary>
-		/// Loads a party
-		/// </summary>
-		/// <param name="filename">Xml data</param>
-		/// <returns>True if team successfuly loaded, otherwise false</returns>
-		public virtual bool Load(XmlNode xml)
+		public Event()
 		{
-			return true;
+
 		}
-
-
-
-		/// <summary>
-		/// Saves the party
-		/// </summary>
-		/// <param name="filename">XmlWriter</param>
-		/// <returns></returns>
-		public virtual bool Save(XmlWriter writer)
-		{
-			return true;
-		}
-
-
-		#endregion
 
 
 
 		#region Properties
 
 
-		/// <summary>
-		/// Action's name
-		/// </summary>
-		public string Name
-		{
-			get;
-			protected set;
-		}
-
-
 		#endregion
-
 	}
 }

@@ -25,14 +25,115 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using DungeonEye.Events;
+
 
 namespace DungeonEye.Forms
 {
+	/// <summary>
+	/// Event choice form editor
+	/// </summary>
 	public partial class EventChoiceForm : Form
 	{
-		public EventChoiceForm()
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="choice">choice to edit</param>
+		public EventChoiceForm(EventChoice choice)
 		{
 			InitializeComponent();
+
+			if (choice == null)
+				throw new ArgumentNullException("choice");
+
+			NameBox.Text = choice.Name;
+
+			Choice = choice;
 		}
+
+
+		#region Events
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void EventChoiceForm_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Escape)
+				Close();
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void NameBox_TextChanged(object sender, EventArgs e)
+		{
+			if (Choice == null)
+				return;
+
+			Choice.Name = NameBox.Text;
+		}
+
+
+		private void MoveUpActionBox_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void MoveDownActionBox_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void RemoveActionBox_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void AddActionBox_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void AddItemBox_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void RemoveItemBox_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void KeepItemBox_CheckedChanged(object sender, EventArgs e)
+		{
+
+		}
+
+		private void VisibleBox_CheckedChanged(object sender, EventArgs e)
+		{
+
+		}
+
+		private void AutoTriggerBox_CheckedChanged(object sender, EventArgs e)
+		{
+
+		}
+		#endregion
+
+
+		#region Properties
+
+		EventChoice Choice;
+
+		#endregion
+
+
 	}
 }

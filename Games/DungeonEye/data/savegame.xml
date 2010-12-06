@@ -142,35 +142,4 @@
 			<spell name="Slow Poison" />
 		</hero>
 	</position>
-	<position slot="RearLeft">
-		<hero name="Weann">
-			<hitpoint current="24" max="30" />
-			<strength value="10" />
-			<intelligence value="13" />
-			<wisdom value="10" />
-			<dexterity value="13" />
-			<constitution value="13" />
-			<charisma value="11" />
-			<alignment value="LawfulEvil" />
-			<movespeed value="0" />
-			<quiver count="78" />
-			<head id="34" />
-			<food value="88" />
-			<npc value="True" />
-			<race value="HalflingFemale" />
-			<profession>
-				<class name="Cleric" />
-				<xp points="26458" />
-			</profession>
-			<profession>
-				<class name="Mage" />
-				<xp points="129553" />
-			</profession>
-			<inventory position="Wrist" name="Bracers" />
-			<inventory position="Secondary" name="Spell book" />
-			<inventory position="Primary" name="Cleric Holy Symbol" />
-			<backpack position="7" name="Ring" />
-			<spell name="Create Food" />
-		</hero>
-	</position>
 </team>

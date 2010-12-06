@@ -97,6 +97,8 @@ namespace DungeonEye
 			RightFrontTeamGround = new Rectangle(176, 144, 176, 58);
 
 			ScriptedDialog = new Rectangle(0, 242, 640, 158);
+			Scroll = new Rectangle(0, 0, 352, 350);
+			ScrollOk = new Rectangle(152, 324, 190, 18);
 		}
 
 
@@ -422,6 +424,26 @@ namespace DungeonEye
 		/// Alcoves zone
 		/// </summary>
 		static public Rectangle Alcove
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// Scroll display zone
+		/// </summary>
+		static public Rectangle Scroll
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// Scroll Ok button zone
+		/// </summary>
+		static public Rectangle ScrollOk
 		{
 			get;
 			private set;

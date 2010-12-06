@@ -25,6 +25,7 @@ using System.Xml;
 using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
+using DungeonEye.Events;
 
 namespace DungeonEye
 {
@@ -39,7 +40,8 @@ namespace DungeonEye
 		/// <param name="square">Square handle</param>
 		public EventSquare(Square square) : base(square)
 		{
-
+			Choices = new List<EventChoice>();
+			Events = new List<Event>();
 		}
 
 
@@ -116,6 +118,15 @@ namespace DungeonEye
 
 				switch (node.Name.ToLower())
 				{
+					case "choice":
+					{
+						EventChoice choice = new EventChoice("");
+						choice.Load(node);
+
+						Choices.Add(choice);
+					}
+					break;
+
 					case "messagecolor":
 					{
 						MessageColor = Color.FromArgb(int.Parse(node.Attributes["value"].Value));
@@ -261,6 +272,8 @@ namespace DungeonEye
 			writer.WriteEndElement();
 
 
+			foreach(EventChoice choice in Choices)
+				choice.Save(writer);
 
 
 			writer.WriteEndElement();
@@ -384,6 +397,32 @@ namespace DungeonEye
 			get;
 			set;
 		}
+
+
+		/// <summary>
+		/// Available choices
+		/// </summary>
+		public List<EventChoice> Choices
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// Current event
+		/// </summary>
+		public Event CurrentEvent
+		{
+			get;
+			protected set;
+		}
+
+
+		/// <summary>
+		/// Available events
+		/// </summary>
+		List<Event> Events;
 
 		#endregion
 

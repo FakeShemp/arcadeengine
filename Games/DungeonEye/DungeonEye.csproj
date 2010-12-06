@@ -310,6 +310,7 @@
     <Compile Include="Source\DialogBase.cs" />
     <Compile Include="Source\Entity.cs" />
     <Compile Include="Source\Events\Actions\EventAction.cs" />
+    <Compile Include="Source\Events\Event.cs" />
     <Compile Include="Source\Events\EventChoice.cs" />
     <Compile Include="Source\Gui\CampWindows\DropCharacterWindow.cs" />
     <Compile Include="Source\Gui\CampWindows\SpellWindow.cs" />
