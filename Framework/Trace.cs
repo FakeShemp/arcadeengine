@@ -138,7 +138,7 @@ namespace ArcEngine
 				</body>
 				</html>";
 
-			WriteLine(footer);
+			Stream.WriteLine(footer);
 
 			Diag.Trace.Flush();
 			Diag.Trace.Close();

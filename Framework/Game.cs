@@ -493,7 +493,8 @@ namespace ArcEngine
 				Trace.WriteLine("");
 				Trace.WriteLine("!!!FATAL ERROR !!!");
 				Trace.WriteLine("Message : " + e.Message);
-				Trace.WriteLine("StackTrace : " + e.StackTrace);
+				Trace.WriteLine("Inner exception : " + e.InnerException);
+				Trace.WriteLine("Stack trace : " + e.StackTrace);
 				Trace.WriteLine("");
 
 
