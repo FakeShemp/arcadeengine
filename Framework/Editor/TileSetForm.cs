@@ -130,12 +130,12 @@ namespace ArcEngine.Editor
 			Display.ClearBuffers();
 
 
-			// No texture 
-			if (TileSet.Texture == null)
-			{
-				GLTextureControl.SwapBuffers();
-				return;
-			}
+			//// No texture 
+			//if (TileSet.Texture == null)
+			//{
+			//    GLTextureControl.SwapBuffers();
+			//    return;
+			//}
 
 			Batch.Begin();
 
@@ -149,47 +149,52 @@ namespace ArcEngine.Editor
 			float zoomvalue = float.Parse((string)ZoomBox.SelectedItem);
 
 
-			// Draw the tile texture
-			Vector4 zoom = new Vector4(
-			TextureOffset.X,
-			TextureOffset.Y,
-			TileSet.Texture.Bounds.Width * zoomvalue,
-			TileSet.Texture.Bounds.Height * zoomvalue);
-
-			Vector4 src = new Vector4(0.0f, 0.0f, TileSet.Texture.Size.Width, TileSet.Texture.Size.Height);
-
-			Batch.Draw(TileSet.Texture, zoom, src, Color.White);
-
-
-
-			// If we have some tiles to draw
-		//	if (TileSet.Count != 0)
+			if (TileSet.Texture != null)
 			{
-				// Draw the selection box with sizing handles
-				if (CurrentTile != null)
+
+				// Draw the tile texture
+				Vector4 zoom = new Vector4(
+				TextureOffset.X,
+				TextureOffset.Y,
+				TileSet.Texture.Bounds.Width * zoomvalue,
+				TileSet.Texture.Bounds.Height * zoomvalue);
+
+				Vector4 src = new Vector4(0.0f, 0.0f, TileSet.Texture.Size.Width, TileSet.Texture.Size.Height);
+
+				Batch.Draw(TileSet.Texture, zoom, src, Color.White);
+
+
+
+				// If we have some tiles to draw
+				//	if (TileSet.Count != 0)
 				{
-					SelectionTool.Zoom = zoomvalue;
-					SelectionTool.Offset = TextureOffset;
-					CurrentTile.Rectangle = SelectionTool.Rectangle;
-					SelectionTool.Draw(Batch);
+					// Draw the selection box with sizing handles
+					if (CurrentTile != null)
+					{
+						SelectionTool.Zoom = zoomvalue;
+						SelectionTool.Offset = TextureOffset;
+						CurrentTile.Rectangle = SelectionTool.Rectangle;
+						SelectionTool.Draw(Batch);
+					}
+
 				}
 
-			}
+				// Suround all tiles
+				foreach (int id in TileSet.Tiles)
+				{
+					Tile tile = TileSet.GetTile(id);
+					if (tile == null)
+						continue;
 
-			// Suround all tiles
-			foreach(int id in TileSet.Tiles)
-			{
-				Tile tile = TileSet.GetTile(id);
-				if (tile == null)
-					continue;
+					Rectangle rect = new Rectangle(
+						tile.Rectangle.X * (int)zoomvalue + TextureOffset.X,
+						tile.Rectangle.Y * (int)zoomvalue + TextureOffset.Y,
+						tile.Rectangle.Width * (int)zoomvalue,
+						tile.Rectangle.Height * (int)zoomvalue);
 
-				Rectangle rect = new Rectangle(
-					tile.Rectangle.X * (int)zoomvalue + TextureOffset.X,
-					tile.Rectangle.Y * (int)zoomvalue + TextureOffset.Y,
-					tile.Rectangle.Width * (int)zoomvalue,
-					tile.Rectangle.Height * (int)zoomvalue);
+					Batch.DrawRectangle(rect, Color.Red);
+				}
 
-				Batch.DrawRectangle(rect, Color.Red);
 			}
 
 
@@ -290,6 +295,12 @@ namespace ArcEngine.Editor
 						SelectionTool.Rectangle.Height = 0;
 
 						SelectionTool.MouseTool = MouseTools.SizeDownRight;
+
+						// No tile, so create one
+						if (CurrentTile == null)
+						{
+							SetCurrentTile(TileSet.AddTile((int)TileIDBox.Value));
+						}
 					}
 
 				}
@@ -688,7 +699,17 @@ namespace ArcEngine.Editor
 				return;
 
 
-			CurrentTile = TileSet.GetTile((int)TileIDBox.Value);
+			SetCurrentTile(TileSet.GetTile((int)TileIDBox.Value));
+		}
+
+
+		/// <summary>
+		/// Change the tile to edit
+		/// </summary>
+		/// <param name="tile">Tile handle</param>
+		void SetCurrentTile(Tile tile)
+		{
+			CurrentTile = tile;
 			TilePropertyGrid.SelectedObject = CurrentTile;
 
 			if (CurrentTile == null)
@@ -700,9 +721,6 @@ namespace ArcEngine.Editor
 
 			// Prints the size of the current tile
 			SizeLabel.Text = SelectionTool.Rectangle.Width + "," + SelectionTool.Rectangle.Height;
-
-
-
 		}
 
 

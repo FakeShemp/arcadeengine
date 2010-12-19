@@ -6,6 +6,7 @@ using ArcEngine;
 using ArcEngine.Graphic;
 using System.Drawing;
 using ArcEngine.Input;
+using ArcEngine.Storage;
 
 namespace TowerDefense
 {
@@ -47,6 +48,8 @@ namespace TowerDefense
 		/// </summary>
 		public override void LoadContent()
 		{
+			ResourceManager.AddStorage(new BankStorage("data/data.bnk"));
+
 			GameWindowParams param = new GameWindowParams();
 			param.Major = 2;
 			param.Minor = 1;
@@ -60,7 +63,7 @@ namespace TowerDefense
 
 			Display.RenderState.ClearColor = Color.CornflowerBlue;
 
-			Background = new Texture2D("data/background.png");
+			Background = new Texture2D("background.png");
 		}
 
 
