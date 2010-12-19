@@ -8,39 +8,36 @@ using System.Xml;
 namespace ArcEngine.Storage
 {
 	/// <summary>
-	/// 
+	/// Bank storage (zip) class
 	/// </summary>
 	public class BankStorage : StorageBase
 	{
 
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
-		/// <param name="bankname"></param>
-		public BankStorage(string bankname)
-			: this(bankname, "")
+		/// <param name="bankname">Bank name</param>
+		public BankStorage(string bankname) : this(bankname, "")
 		{
 		}
 
 
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
-		/// <param name="bankname"></param>
+		/// <param name="bankname">Bank name</param>
 		/// <param name="password">Password</param>
 		public BankStorage(string bankname, string password)
 		{
 			BankName = bankname;
 			Password = password;
-
-		//	Process();
 		}
 
 
 		/// <summary>
-		/// 
+		/// Process each entry in the bank
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>True on success</returns>
 		public override bool Process()
 		{
 			if (Zip != null)
@@ -94,21 +91,21 @@ namespace ArcEngine.Storage
 
 
 		/// <summary>
-		/// 
+		/// Flush pending resources
 		/// </summary>
 		public override void Flush()
 		{
 			if (Zip == null)
 				return;
-			
-			Trace.WriteLine("[IonicStorage] Flush()");
+
+			Trace.WriteDebugLine("[BankStorage] Flush()");
 
 			Zip.Save();
 		}
 
 
 		/// <summary>
-		/// 
+		/// Dispose resources
 		/// </summary>
 		public override void Dispose()
 		{
@@ -124,10 +121,11 @@ namespace ArcEngine.Storage
 		/// Opens a file at a specified path 
 		/// </summary>
 		/// <param name="name">Relative path of the file </param>
+		/// <param name="access"></param>
 		/// <returns>Stream handle or null</returns>
-		public override Stream OpenFile(string name)
+		public override Stream OpenFile(string name, FileAccess access)
 		{
-
+			// Foreach each entry
 			foreach (ZipEntry entry in Zip)
 			{
 				if (entry.FileName != name)
@@ -139,19 +137,33 @@ namespace ArcEngine.Storage
 				return ms;
 			}
 
-			
-			return null;
+			// Read only access
+			if (access == FileAccess.Read)
+				return null;
+
+			// Creates the file
+			return new IonicStream(Zip, Path.GetFileName(name));
 		}
 
 
 		/// <summary>
-		/// 
+		/// Creates a new file in the archive
 		/// </summary>
-		/// <param name="file"></param>
-		/// <returns></returns>
+		/// <param name="file">Entry name</param>
+		/// <returns>Stream handle or null</returns>
 		public override Stream CreateFile(string file)
 		{
 			return new IonicStream(Zip, file);
+		}
+
+
+		/// <summary>
+		/// ToString()
+		/// </summary>
+		/// <returns>Name</returns>
+		public override string ToString()
+		{
+			return string.Format("Bank storage ({0})", BankName);
 		}
 
 
@@ -163,7 +175,7 @@ namespace ArcEngine.Storage
 		string BankName;
 
 		/// <summary>
-		/// 
+		/// Password to the zip file
 		/// </summary>
 		string Password;
 
@@ -179,15 +191,15 @@ namespace ArcEngine.Storage
 
 
 	/// <summary>
-	/// 
+	/// BankStorage stream to memory
 	/// </summary>
 	class IonicStream : MemoryStream
 	{
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
-		/// <param name="handle"></param>
-		/// <param name="filename"></param>
+		/// <param name="handle">Zip bank handle</param>
+		/// <param name="filename">Filename in the bank</param>
 		public IonicStream(ZipFile handle, string filename)
 		{
 			Handle = handle;
@@ -200,9 +212,11 @@ namespace ArcEngine.Storage
 		// http://community.sharpdevelop.net/forums/p/6210/17755.aspx#17755
 		protected override void Dispose(bool disposing)
 		{
+			// No handle...
 			if (Handle == null)
 			{
-				Trace.WriteLine("Handle is null !");
+				Trace.WriteLine("[BankStorage] IonicStream.Dispose() : Handle is null !");
+				return;
 			}
 
 
@@ -211,16 +225,16 @@ namespace ArcEngine.Storage
 
 			try
 			{
-
-				Handle.RemoveEntry(FileName);
+				// Remove entry if exist
+				if (Handle.ContainsEntry(FileName))
+					Handle.RemoveEntry(FileName);
 
 				Handle.AddEntry(FileName, this);
-			//	Handle.Save();
 
 			}
 			catch (Exception e)
 			{
-				Trace.WriteLine("[BankStorage] Error : " + e.Message);
+				Trace.WriteLine("[BankStorage] IonicStream.Dispose() Error : " + e.Message);
 			}
 
 		}

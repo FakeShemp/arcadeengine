@@ -217,7 +217,7 @@ namespace ArcEngine.Graphic
 
 				// Save bitmap to a stream
 				//using (Stream stream = new MemoryStream())
-				using (Stream stream = storage.OpenFile(assetname))
+				using (Stream stream = storage.OpenFile(assetname, FileAccess.Write))
 				{
 					// Save bitmap to the stream
 					bm.Save(stream, System.Drawing.Imaging.ImageFormat.Png);

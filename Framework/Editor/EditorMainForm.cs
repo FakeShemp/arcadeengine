@@ -386,6 +386,9 @@ namespace ArcEngine.Editor
 		/// <param name="e"></param>
 		private void AddBinary_OnClick(object sender, EventArgs e)
 		{
+			if (Storage == null)
+				return;
+
 			OpenFileDialog dlg = new OpenFileDialog();
 			dlg.Filter = "All Files (*.*)|*.*";
 			dlg.Title = "Select a binary file...";
@@ -397,14 +400,29 @@ namespace ArcEngine.Editor
 			if (res != DialogResult.OK)
 				return;
 
-			throw new NotImplementedException();
+			for (int i = 0; i < dlg.FileNames.Length; i++)
+			{
+				// Open storage file
+				using (Stream to = Storage.OpenFile(dlg.FileNames[i], FileAccess.Write))
+				{
+					// Temp memory stream
+					MemoryStream mem = new MemoryStream();
 
-			// for each selected file, add it to the bank file
-//			for (int i = 0; i < dlg.FileNames.Length; i++)
-//				ResourceManager.LoadBinary(dlg.FileNames[i]);
+					// Open file to copy
+					using (Stream from = new FileStream(dlg.FileNames[i], FileMode.Open))
+					{
+						mem.SetLength(from.Length);
+						from.Read(mem.GetBuffer(), 0, (int)from.Length);
+						mem.Flush();
+					}
+
+					mem.WriteTo(to);
+
+					mem.Close();
+				}
+			}
 
 			ResourcePanel.RebuildResourceTree();
-
 		}
 
 

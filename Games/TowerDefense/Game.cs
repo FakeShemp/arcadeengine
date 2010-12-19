@@ -119,11 +119,10 @@ namespace TowerDefense
 		/// <param name="gameTime">Elapsed game time</param>
 		public override void Update(GameTime gameTime)
 		{
-			#region Keyboard
 
-			// Bye bye
-			if (Keyboard.IsKeyPress(Keys.Escape))
-				Exit();
+			base.Update(gameTime);
+
+			#region Keyboard
 
 
 			#endregion

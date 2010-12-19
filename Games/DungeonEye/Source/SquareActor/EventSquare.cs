@@ -46,7 +46,7 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// ToString
 		/// </summary>
 		/// <returns></returns>
 		public override string ToString()
@@ -310,7 +310,6 @@ namespace DungeonEye
 		}
 
 
-
 		/// <summary>
 		/// Message color
 		/// </summary>
@@ -320,6 +319,7 @@ namespace DungeonEye
 			set;
 		}
 
+	
 		/// <summary>
 		/// Direction Team must face to trigger
 		/// </summary>
@@ -340,7 +340,6 @@ namespace DungeonEye
 		}
 
 
-
 		/// <summary>
 		/// Gets or sets the sound name
 		/// </summary>
@@ -359,7 +358,6 @@ namespace DungeonEye
 			get;
 			set;
 		}
-
 
 
 		/// <summary>
@@ -391,6 +389,7 @@ namespace DungeonEye
 			set;
 		}
 
+		
 		/// <summary>
 		/// Gets or sets the picture name
 		/// </summary>

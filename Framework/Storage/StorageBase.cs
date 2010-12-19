@@ -111,15 +111,16 @@ namespace ArcEngine.Storage
 			return base.ToString();
 		}
 
+
 		#region Files
 
 		/// <summary>
 		/// Opens a file at a specified path 
 		/// </summary>
 		/// <param name="name">Relative path of the file </param>
-		// <param name="access">Specifies whether the file is opened with read, write, or read/write access</param>
-		/// <returns>Stream handle or null</returns>
-		public virtual Stream OpenFile(string name)
+		/// <param name="access">Specifies whether the file is opened with read, write, or read/write access</param>
+		/// <returns>Stream handle or null if file not found</returns>
+		public virtual Stream OpenFile(string name, FileAccess access)
 		{
 			return null;
 		}

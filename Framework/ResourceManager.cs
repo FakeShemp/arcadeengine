@@ -145,13 +145,13 @@ namespace ArcEngine
 
 			foreach (StorageBase storage in StorageList)
 			{
-				Stream stream = storage.OpenFile(filename);
+				Stream stream = storage.OpenFile(filename, FileAccess.Read);
 				if (stream != null)
 					return stream;
 			}
 
 			// Last chance...
-			return FailbackStorage.OpenFile(filename);
+			return FailbackStorage.OpenFile(filename, FileAccess.Read);
 		}
 
 	

@@ -628,7 +628,11 @@ namespace ArcEngine.Editor
 
 			TextureNameBox.Text = form.FileName;
 			TileSet.TextureName = form.FileName;
-			TileSet.Texture.LoadImage(TileSet.TextureName);
+
+			if (TileSet.Texture != null)
+				TileSet.Texture.Dispose();
+
+			TileSet.Texture = new Texture2D(form.FileName);
 		}
 
 
