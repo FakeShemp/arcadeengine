@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Drawing;
 using System.Windows.Forms;
 using ArcEngine;
+using ArcEngine.Asset;
 using ArcEngine.Graphic;
-using System.Drawing;
 using ArcEngine.Input;
 using ArcEngine.Storage;
 
@@ -37,6 +37,8 @@ namespace TowerDefense
 			Towers = new List<Tower>();
 			Towers.Add(new Tower(new Point(5, 5)));
 			Towers.Add(new Tower(new Point(10, 7)));
+			Towers.Add(new Tower(new Point(10, 6)));
+			Towers.Add(new Tower(new Point(10, 5)));
 
 			SpawnRate = TimeSpan.FromSeconds(1.0f);
 			LastSpawn = DateTime.Now;
@@ -64,6 +66,9 @@ namespace TowerDefense
 			Display.RenderState.ClearColor = Color.CornflowerBlue;
 
 			Background = new Texture2D("background.png");
+
+			TileSet = ResourceManager.CreateAsset<TileSet>("Tiles");
+
 		}
 
 
@@ -79,6 +84,10 @@ namespace TowerDefense
 			if (Background != null)
 				Background.Dispose();
 			Background = null;
+
+			if (TileSet != null)
+				TileSet.Dispose();
+			TileSet = null;
 		}
 
 
@@ -175,7 +184,7 @@ namespace TowerDefense
 
 
 			// Time to add new monsters ?
-			if (LastSpawn + SpawnRate < DateTime.Now)
+			if (LastSpawn + SpawnRate < DateTime.Now && MonsterCount < 10)
 			{
 				Monsters.Add(new Monster());
 				LastSpawn = DateTime.Now;
@@ -277,6 +286,16 @@ namespace TowerDefense
 		/// </summary>
 		object Selected;
 
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		static public TileSet TileSet
+		{
+			get;
+			private set;
+		}
 		#endregion
 	}
 }

@@ -5,6 +5,7 @@ using System.Text;
 using ArcEngine;
 using ArcEngine.Graphic;
 using System.Drawing;
+using ArcEngine.Asset;
 
 namespace TowerDefense
 {
@@ -23,7 +24,6 @@ namespace TowerDefense
 			Location = location;
 			Rate = TimeSpan.FromSeconds(0.5f);
 			Range = 64.0f;
-			Size = new Vector2(24.0f, 24.0f);
 		}
 
 
@@ -36,11 +36,16 @@ namespace TowerDefense
 			if (batch == null)
 				return;
 
-			Vector4 coord = new Vector4(
-				Location.X * Game.Scale.X + Game.Scale.X / 2.0f - Size.X / 2.0f,
-				Location.Y * Game.Scale.Y + Game.Scale.Y / 2.0f - Size.Y / 2.0f,
-				Size.X, Size.Y);
-			batch.FillRectangle(coord, Color.Black);
+
+			Tile tile = Game.TileSet.GetTile(0);
+			if (tile != null)
+			{
+				Vector2 coord = new Vector2(
+				Location.X * Game.Scale.X + Game.Scale.X / 2.0f - tile.Size.Width / 2.0f,
+				Location.Y * Game.Scale.Y + Game.Scale.Y / 2.0f - tile.Size.Height / 2.0f);
+
+				batch.DrawTile(Game.TileSet, 0, coord, Color.White);
+			}			
 		}
 
 
@@ -88,11 +93,6 @@ namespace TowerDefense
 		/// </summary>
 		int Price;
 
-
-		/// <summary>
-		/// Size of the tower
-		/// </summary>
-		Vector2 Size;
 
 		#endregion
 	}
