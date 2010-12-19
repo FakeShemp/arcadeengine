@@ -239,6 +239,12 @@
     <Compile Include="Forms\RenameForm.Designer.cs">
       <DependentUpon>RenameForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\ScriptedDialogForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ScriptedDialogForm.Designer.cs">
+      <DependentUpon>ScriptedDialogForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\SpellForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -400,6 +406,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ProfessionsControl.resx">
       <DependentUpon>ProfessionsControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ScriptedDialogForm.resx">
+      <DependentUpon>ScriptedDialogForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SpellForm.resx">
       <DependentUpon>SpellForm.cs</DependentUpon>

@@ -26,6 +26,8 @@ using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
+using DungeonEye.Events;
+
 
 namespace DungeonEye
 {
@@ -38,23 +40,32 @@ namespace DungeonEye
 		/// Constructor
 		/// </summary>
 		/// <param name="square">Square</param>
-		public ScriptedDialog(Square square)
+		/// <param name="border">Display picture border</param>
+		/// <param name="picture">Picture name</param>
+		/// <param name="text">Text to display</param>
+		public ScriptedDialog(Square square, bool border, string picture, string text)
 		{
 			if (square == null)
 				throw new ArgumentNullException("Square is null");
 
 			Square = square;
-			Picture = new Texture2D(Event.PictureName);
+			Picture = new Texture2D(picture);
+			Text = text;
 
-			if (Event.DisplayBorder)
+			if (border)
+			{
+				DisplayBorder = true;
 				Border = new Texture2D("border.png");
+			}
 
 			Font = ResourceManager.GetSharedAsset<BitmapFont>("inventory");
+
+			Choices = new List<EventChoice>();
 		}
 
 
 		/// <summary>
-		/// 
+		/// Disposes resources
 		/// </summary>
 		public override void Dispose()
 		{
@@ -71,9 +82,9 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Update
 		/// </summary>
-		/// <param name="time"></param>
+		/// <param name="time">Game time</param>
 		public override void Update(GameTime time)
 		{
 			if (Mouse.IsNewButtonDown(MouseButtons.Left))
@@ -82,13 +93,13 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Draws the dialog
 		/// </summary>
-		/// <param name="batch"></param>
+		/// <param name="batch">Spritebatch handle</param>
 		public override void Draw(SpriteBatch batch)
 		{
 			// Border
-			if (Event.DisplayBorder)
+			if (DisplayBorder)
 				batch.Draw(Border, Point.Empty, Color.White);
 
 			// Picture
@@ -96,16 +107,94 @@ namespace DungeonEye
 
 			// Text
 			DrawSimpleBevel(batch, DisplayCoordinates.ScriptedDialog);
-			batch.DrawString(Font, new Point(4, 250), GameColors.White, Event.Text);
+			batch.DrawString(Font, new Point(4, 250), GameColors.White, Text);
 
 
 			// Choices
-			
+			DrawSimpleBevel(batch, DisplayCoordinates.ScriptedDialogChoices[3]);
+			DrawSimpleBevel(batch, DisplayCoordinates.ScriptedDialogChoices[4]);
+			DrawSimpleBevel(batch, DisplayCoordinates.ScriptedDialogChoices[5]);
+		}
+
+
+		#region Choices
+
+		/// <summary>
+		/// Set the choice
+		/// </summary>
+		/// <param name="choice">choice</param>
+		public void SetChoices(EventChoice choice)
+		{
+			Choices.Clear();
+			Choices.Add(choice);
+
+		}
+
+		/// <summary>
+		/// Set the choices
+		/// </summary>
+		/// <param name="choice1">First choice</param>
+		/// <param name="choice2">Second choice</param>
+		public void SetChoices(EventChoice choice1, EventChoice choice2)
+		{
+			Choices.Clear();
+			Choices.Add(choice1);
+			Choices.Add(choice2);
+		}
+
+		/// <summary>
+		/// Set the choices
+		/// </summary>
+		/// <param name="choice1">First choice</param>
+		/// <param name="choice2">Second choice</param>
+		/// <param name="choice2">Third choice</param>
+		public void SetChoice(EventChoice choice1, EventChoice choice2, EventChoice choice3)
+		{
+			Choices.Clear();
+			Choices.Add(choice1);
+			Choices.Add(choice2);
+			Choices.Add(choice3);
+		}
+
+		#endregion
+
+
+		/// <summary>
+		/// Changes the picture
+		/// </summary>
+		/// <param name="name">Name of the picture</param>
+		/// <returns>True on success</returns>
+		public bool SetPicture(string name)
+		{
+			if (Picture != null)
+				Picture.Dispose();
+
+			Picture = new Texture2D(name);
+
+			return Picture != null;
 		}
 
 
 
+		/// <summary>
+		/// Changes the picture
+		/// </summary>
+		/// <param name="name">texture handle</param>
+		public void SetPicture(Texture2D handle)
+		{
+			if (Picture != null)
+				Picture.Dispose();
+
+			Picture = handle;
+		}
+
+
 		#region Properties
+
+		/// <summary>
+		/// Available choices
+		/// </summary>
+		List<EventChoice> Choices;
 
 
 		/// <summary>
@@ -113,28 +202,35 @@ namespace DungeonEye
 		/// </summary>
 		Square Square;
 
+
 		/// <summary>
-		/// Event square
+		/// Text to display
 		/// </summary>
-		EventSquare Event
+		public string Text
 		{
-			get
-			{
-				if (Square == null)
-					return null;
-
-				if (!(Square.Actor is EventSquare))
-					throw new ArgumentException("Bad Actor type");
-
-				return Square.Actor as EventSquare;
-			}
+			get;
+			set;
 		}
+
 
 		/// <summary>
 		/// Picture to display
 		/// </summary>
-		Texture2D Picture;
+		public Texture2D Picture
+		{
+			get;
+			private set;
+		}
 
+
+		/// <summary>
+		/// Display picture border
+		/// </summary>
+		public bool DisplayBorder
+		{
+			get;
+			set;
+		}
 
 		/// <summary>
 		/// Border texture
@@ -146,6 +242,7 @@ namespace DungeonEye
 		/// Font to use
 		/// </summary>
 		BitmapFont Font;
+
 
 		#endregion
 	}

@@ -97,6 +97,18 @@ namespace DungeonEye
 			RightFrontTeamGround = new Rectangle(176, 144, 176, 58);
 
 			ScriptedDialog = new Rectangle(0, 242, 640, 158);
+			ScriptedDialogChoices = new Rectangle[]
+			{
+				new Rectangle(442,	378, 190, 18),
+
+				new Rectangle(118,	378, 190, 18),
+				new Rectangle(332,	378, 190, 18),
+
+				new Rectangle(8,	378, 190, 18),
+				new Rectangle(224,	378, 190, 18),
+				new Rectangle(440,	378, 190, 18),
+			};
+
 			Scroll = new Rectangle(0, 0, 352, 350);
 			ScrollOk = new Rectangle(152, 324, 190, 18);
 		}
@@ -484,6 +496,16 @@ namespace DungeonEye
 		/// Scripted dialog rectangle
 		/// </summary>
 		static public Rectangle ScriptedDialog
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// Scripted dialog choices rectangle
+		/// </summary>
+		static public Rectangle[] ScriptedDialogChoices
 		{
 			get;
 			private set;

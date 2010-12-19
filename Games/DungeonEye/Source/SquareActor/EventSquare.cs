@@ -56,7 +56,7 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Team enters the square
 		/// </summary>
 		/// <param name="team">Team handle</param>
 		/// <returns></returns>
@@ -85,7 +85,9 @@ namespace DungeonEye
 
 			if (!string.IsNullOrEmpty(PictureName))
 			{
-				team.Dialog = new ScriptedDialog(Square);
+				ScriptedDialog dialog = new ScriptedDialog(Square, DisplayBorder, PictureName, Text);
+
+				team.Dialog = dialog;
 			}
 
 

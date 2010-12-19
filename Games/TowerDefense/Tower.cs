@@ -1,0 +1,99 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using ArcEngine;
+using ArcEngine.Graphic;
+using System.Drawing;
+
+namespace TowerDefense
+{
+	/// <summary>
+	/// Tower class
+	/// </summary>
+	public class Tower
+	{
+
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="location">Game corrdinate</param>
+		public Tower(Point location)
+		{
+			Location = location;
+			Rate = TimeSpan.FromSeconds(0.5f);
+			Range = 64.0f;
+			Size = new Vector2(24.0f, 24.0f);
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="batch"></param>
+		public void Draw(SpriteBatch batch)
+		{
+			if (batch == null)
+				return;
+
+			Vector4 coord = new Vector4(
+				Location.X * Game.Scale.X + Game.Scale.X / 2.0f - Size.X / 2.0f,
+				Location.Y * Game.Scale.Y + Game.Scale.Y / 2.0f - Size.Y / 2.0f,
+				Size.X, Size.Y);
+			batch.FillRectangle(coord, Color.Black);
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="time"></param>
+		public void Update(GameTime time)
+		{
+		}
+
+
+		#region Properties
+
+		/// <summary>
+		/// Location in game
+		/// </summary>
+		public Point Location
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// Attack range
+		/// </summary>
+		float Range;
+
+
+		/// <summary>
+		/// Fire rate
+		/// </summary>
+		TimeSpan Rate;
+
+
+		/// <summary>
+		/// Damage
+		/// </summary>
+		float Damage;
+
+
+		/// <summary>
+		/// Buy price
+		/// </summary>
+		int Price;
+
+
+		/// <summary>
+		/// Size of the tower
+		/// </summary>
+		Vector2 Size;
+
+		#endregion
+	}
+}
