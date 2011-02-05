@@ -57,7 +57,7 @@ namespace DungeonEye.Gui
 
 
 		/// <summary>
-		/// Event raised when the menu is selected.
+		/// Event raised when the button is selected.
 		/// </summary>
 		public event EventHandler Selected;
 

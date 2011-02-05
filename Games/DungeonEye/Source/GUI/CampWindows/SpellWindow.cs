@@ -26,6 +26,7 @@ using ArcEngine.Asset;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
 using DungeonEye.Gui;
+using System.Windows.Forms;
 
 namespace DungeonEye.Gui.CampWindows
 {
@@ -75,11 +76,11 @@ namespace DungeonEye.Gui.CampWindows
 			// Display message
 			if (Hero == null)
 			{
-				batch.DrawString(Camp.Font, new Point(26, 58), RectangleColor, Message);
+				batch.DrawString(GUI.MenuFont, new Point(26, 58), RectangleColor, Message);
 			}
 			else
 			{
-				batch.DrawString(Camp.Font, new Point(16, 76), Color.White, "0 of 0 remaining.");
+				batch.DrawString(GUI.MenuFont, new Point(16, 76), Color.White, "0 of 0 remaining.");
 			}
 
 			#region Draw heroes
@@ -121,7 +122,7 @@ namespace DungeonEye.Gui.CampWindows
 		//	RectangleColor = Color.FromArgb(255, col, col, col);
 
 			#region Select a new hero
-			if (Mouse.IsNewButtonDown(System.Windows.Forms.MouseButtons.Left))
+			if (Mouse.IsNewButtonDown(MouseButtons.Left))
 			{
 				for (int y = 0 ; y < 3 ; y++)
 				{

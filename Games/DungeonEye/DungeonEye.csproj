@@ -317,6 +317,7 @@
     <Compile Include="Source\Entity.cs" />
     <Compile Include="Source\Events\Actions\ScriptAction.cs" />
     <Compile Include="Source\Events\Event.cs" />
+    <Compile Include="Source\Events\ScriptButton.cs" />
     <Compile Include="Source\Events\ScriptChoice.cs" />
     <Compile Include="Source\Gui\CampWindows\DropCharacterWindow.cs" />
     <Compile Include="Source\Gui\CampWindows\SpellWindow.cs" />
@@ -325,6 +326,7 @@
     <Compile Include="Source\Gui\CampWindows\ScribeScrollsWindow.cs" />
     <Compile Include="Source\Gui\CampWindows\RestPartyWindow.cs" />
     <Compile Include="Source\Gui\CampWindows\MainWindow.cs" />
+    <Compile Include="Source\Gui\GUI.cs" />
     <Compile Include="Source\Gui\MessageBox.cs" />
     <Compile Include="Source\HandAction.cs" />
     <Compile Include="Source\MazeZone.cs" />

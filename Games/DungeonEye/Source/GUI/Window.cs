@@ -95,12 +95,12 @@ namespace DungeonEye.Gui
 				if (!button.IsVisible)
 					continue;
 
-				Camp.DrawDoubleBevel(batch, button.Rectangle);//, GameColors.Main, GameColors.Light, GameColors.Dark);
+				DialogBase.DrawDoubleBevel(batch, button.Rectangle);//, GameColors.Main, GameColors.Light, GameColors.Dark);
 
 				// Text
 				Point point = button.Rectangle.Location;
 				point.Offset(6, 6);
-				batch.DrawString(Camp.Font, point, button.TextColor, button.Text);
+				batch.DrawString(GUI.MenuFont, point, button.TextColor, button.Text);
 			}
 
 			// Message box
@@ -117,9 +117,9 @@ namespace DungeonEye.Gui
 		protected void DrawBackground(SpriteBatch batch)
 		{
 			Rectangle rect = new Rectangle(0, 0, 352, 288);
-			Camp.DrawDoubleBevel(batch, rect, GameColors.Main, GameColors.Light, GameColors.Dark);
+			DialogBase.DrawDoubleBevel(batch, rect, GameColors.Main, GameColors.Light, GameColors.Dark);
 
-			batch.DrawString(Camp.Font, new Point(8, 10), GameColors.Cyan, Title);
+			batch.DrawString(GUI.MenuFont, new Point(8, 10), GameColors.Cyan, Title);
 		}
 
 

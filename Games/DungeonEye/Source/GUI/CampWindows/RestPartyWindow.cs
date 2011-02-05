@@ -106,7 +106,7 @@ namespace DungeonEye.Gui.CampWindows
 			int hours = (int)(DateTime.Now - Start).TotalSeconds;
 
 			// Display
-			batch.DrawString(Camp.Font, new Point(26, 58), Color.White, "Hours rested : " + hours);
+			batch.DrawString(GUI.MenuFont, new Point(26, 58), Color.White, "Hours rested : " + hours);
 
 			foreach (Hero hero in Camp.Team.Heroes)
 			{

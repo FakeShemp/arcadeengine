@@ -70,7 +70,7 @@ namespace DungeonEye.Gui.CampWindows
 			// Display message
 			if (Hero == null)
 			{
-				batch.DrawString(Camp.Font, new Point(26, 58), RectangleColor, Message);
+				batch.DrawString(GUI.MenuFont, new Point(26, 58), RectangleColor, Message);
 			}
 			else
 			{

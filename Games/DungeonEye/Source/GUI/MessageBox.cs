@@ -138,23 +138,23 @@ namespace DungeonEye.Gui
 				return;
 
 			// Draw bevel background
-			camp.DrawDoubleBevel(batch, Rectangle, GameColors.Main, GameColors.Light, GameColors.Dark);
+			DialogBase.DrawDoubleBevel(batch, Rectangle, GameColors.Main, GameColors.Light, GameColors.Dark);
 
 			// Draw message
 			Point point = Rectangle.Location;
 			point.Offset(6, 6);
-			batch.DrawString(camp.Font, point, Color.White, Text);
+			batch.DrawString(GUI.MenuFont, point, Color.White, Text);
 
 			// Draw buttons
 			foreach (ScreenButton button in Buttons)
 			{
 				Rectangle rect = ClientToScreen(Rectangle.Location, button.Rectangle);
-				camp.DrawDoubleBevel(batch, rect, GameColors.Main, GameColors.Light, GameColors.Dark);
+				DialogBase.DrawDoubleBevel(batch, rect, GameColors.Main, GameColors.Light, GameColors.Dark);
 
 				// Text
 				point = rect.Location;
 				point.Offset(6, 6);
-				batch.DrawString(camp.Font, point, button.TextColor, button.Text);
+				batch.DrawString(GUI.MenuFont, point, button.TextColor, button.Text);
 			}
 			
 		}

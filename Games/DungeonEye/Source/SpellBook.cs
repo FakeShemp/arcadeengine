@@ -25,14 +25,14 @@ using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
-
+using DungeonEye.Gui;
 
 namespace DungeonEye
 {
 	/// <summary>
 	/// Speel window
 	/// </summary>
-	public class SpellBook// : IDisposable
+	public class SpellBook
 	{
 
 		/// <summary>
@@ -49,8 +49,6 @@ namespace DungeonEye
 		/// </summary>
 		public void LoadContent()
 		{
-			Font = ResourceManager.GetSharedAsset<BitmapFont>("inventory");
-
 			Tileset = ResourceManager.GetSharedAsset<TileSet>("Interface");
 		}
 
@@ -110,7 +108,7 @@ namespace DungeonEye
 			{
 				int id = SpellLevel == level ? 24 : 25;
 				batch.DrawTile(Tileset, id, new Point(MainRectangle.X + level * 36 - 36, MainRectangle.Top - 20));
-				batch.DrawString(Font, new Point(MainRectangle.X + level * 36 + 12 - 36, MainRectangle.Top - 20 + 4), Color.Black, level.ToString());
+				batch.DrawString(GUI.DialogFont, new Point(MainRectangle.X + level * 36 + 12 - 36, MainRectangle.Top - 20 + 4), Color.Black, level.ToString());
 			}
 
 
@@ -127,7 +125,7 @@ namespace DungeonEye
 				if (new Rectangle(pos.X, pos.Y, 212, 12).Contains(Mouse.Location))
 					color = GameColors.Black;
 
-				batch.DrawString(Font, pos, color, spells[id].Name);
+				batch.DrawString(GUI.DialogFont, pos, color, spells[id].Name);
 				pos.Offset(0, 12);
 			}
 
@@ -140,7 +138,7 @@ namespace DungeonEye
 				color = GameColors.Red;
 			else
 				color = GameColors.White;
-			batch.DrawString(Font, new Point(146, 340), color, "Abort spell");
+			batch.DrawString(GUI.DialogFont, new Point(146, 340), color, "Abort spell");
 
 			// Next & previous buttons
 			batch.DrawTile(Tileset, 28, new Point(298, 336));
@@ -239,12 +237,6 @@ namespace DungeonEye
 			private set;
 		}
 
-
-
-		/// <summary>
-		/// Display font
-		/// </summary>
-		BitmapFont Font;
 
 
 		/// <summary>

@@ -24,6 +24,7 @@ using ArcEngine.Asset;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
 using ArcEngine.Utility.ScreenManager;
+using DungeonEye.Gui;
 
 namespace DungeonEye
 {
@@ -48,8 +49,6 @@ namespace DungeonEye
 			
 			Tileset = ResourceManager.CreateAsset<TileSet>("AutoMap");
 
-			Font = ResourceManager.GetSharedAsset<BitmapFont>("intro");
-
 		}
 
 
@@ -60,7 +59,7 @@ namespace DungeonEye
 		{
 			Trace.WriteDebugLine("[AutoMap] : UnloadContent()");
 
-			Font = null;
+			//Font = null;
 			Batch = null;
 
 			if (Tileset != null)
@@ -99,7 +98,7 @@ namespace DungeonEye
 			Batch.DrawTile(Tileset, 1, Point.Empty, Color.White);
 
 			// Some WIP
-			Batch.DrawString(Font, new Vector2(100, 100), Color.White, "TODO...");	
+			Batch.DrawString(GUI.MenuFont, new Vector2(100, 100), Color.White, "TODO...");	
 
 			// Draw the cursor or the item in the hand
 			Batch.DrawTile(Tileset, 0, Mouse.Location, Color.White);
@@ -122,7 +121,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Font
 		/// </summary>
-		BitmapFont Font;
+		//BitmapFont Font;
 
 
 		/// <summary>

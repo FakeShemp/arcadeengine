@@ -33,8 +33,7 @@ namespace DungeonEye.Gui.CampWindows
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public GameOptionsWindow(CampDialog camp)
-			: base(camp, "Game Options:")
+		public GameOptionsWindow(CampDialog camp) : base(camp, "Game Options:")
 		{
 			ScreenButton button;
 			button = new ScreenButton("Load Game", new Rectangle(16, 40, 320, 28));

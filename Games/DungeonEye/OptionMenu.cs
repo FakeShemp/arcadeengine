@@ -54,8 +54,6 @@ namespace DungeonEye
 		{
 			Tileset = ResourceManager.CreateAsset<TileSet>("Main Menu");
 
-			Font = ResourceManager.GetSharedAsset<BitmapFont>("intro");
-
 			StringTable = ResourceManager.CreateAsset<StringTable>("option");
 
 
@@ -234,12 +232,12 @@ namespace DungeonEye
 				Point point = button.Rectangle.Location;
 
 				// Text
-                Batch.DrawString(Font, point, id == MenuID ? Color.FromArgb(255, 85, 85) : Color.White, button.Text);
+                Batch.DrawString(GUI.MenuFont, point, id == MenuID ? Color.FromArgb(255, 85, 85) : Color.White, button.Text);
 			}
 
 
 			// Version info
-            Batch.DrawString(Font, new Point(500, 380), Color.White, "V 0.3.3");
+			Batch.DrawString(GUI.MenuFont, new Point(500, 380), Color.White, "V 0.3.3");
 
 			// Draw the cursor or the item in the hand
             Batch.DrawTile(Tileset, 0, Mouse.Location);
@@ -263,7 +261,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Font
 		/// </summary>
-		BitmapFont Font;
+		//BitmapFont Font;
 
 
 		/// <summary>

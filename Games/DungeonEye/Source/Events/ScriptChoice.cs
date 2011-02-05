@@ -23,6 +23,7 @@ using System.Xml;
 using System.Text;
 using ArcEngine;
 using DungeonEye.Events.Actions;
+using System.Drawing;
 
 namespace DungeonEye.Events
 
@@ -41,6 +42,8 @@ namespace DungeonEye.Events
 			Actions = new List<ScriptAction>();
 
 			Name = name;
+
+			Button = new ScriptButton(Name, Rectangle.Empty);
 		}
 
 
@@ -150,6 +153,16 @@ namespace DungeonEye.Events
 		{
 			get;
 			set;
+		}
+
+
+		/// <summary>
+		/// Button
+		/// </summary>
+		public ScriptButton Button
+		{
+			get;
+			private set;
 		}
 		#endregion
 	}

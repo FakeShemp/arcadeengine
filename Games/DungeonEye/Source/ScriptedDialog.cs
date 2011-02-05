@@ -58,22 +58,24 @@ namespace DungeonEye
 				Border = new Texture2D("border.png");
 			}
 
-			Font = ResourceManager.GetSharedAsset<BitmapFont>("inventory");
-
-			Choices = new List<ScriptChoice>();
-
-
 			ScriptChoice choice = new ScriptChoice("Yes");
 			choice.Enabled = true;
+			choice.Button.Rectangle = DisplayCoordinates.ScriptedDialogChoices[6];
 			Choices.Add(choice);
 
 			choice = new ScriptChoice("No");
 			choice.Enabled = true;
+			choice.Button.Rectangle = DisplayCoordinates.ScriptedDialogChoices[7];
 			Choices.Add(choice);
+			
 
 			choice = new ScriptChoice("Dunno");
 			choice.Enabled = true;
+			choice.Button.Rectangle = DisplayCoordinates.ScriptedDialogChoices[8];
 			Choices.Add(choice);
+
+
+
 
 		}
 
@@ -91,7 +93,7 @@ namespace DungeonEye
 				Border.Dispose();
 			Border = null;
 
-			Font = null;
+			//Font = null;
 		}
 
 
@@ -101,8 +103,19 @@ namespace DungeonEye
 		/// <param name="time">Game time</param>
 		public override void Update(GameTime time)
 		{
-			if (Mouse.IsNewButtonDown(MouseButtons.Left))
+			if (Mouse.IsNewButtonDown(MouseButtons.Middle))
 				Exit();
+
+
+			// Update each choice button
+			foreach (ScriptChoice choice in Choices)
+			{
+				if (!choice.Enabled)
+					continue;
+
+				choice.Button.Update(time);
+			}
+
 		}
 
 
@@ -121,7 +134,7 @@ namespace DungeonEye
 
 			// Text
 			DrawSimpleBevel(batch, DisplayCoordinates.ScriptedDialog);
-			batch.DrawString(Font, new Point(4, 250), GameColors.White, Text);
+			batch.DrawString(GUI.DialogFont, new Point(4, 250), GameColors.White, Text);
 
 
 			// Choices
@@ -141,6 +154,17 @@ namespace DungeonEye
 				return;
 
 
+			// Update each choice button
+			foreach (ScriptChoice choice in Choices)
+			{
+				if (!choice.Enabled)
+					continue;
+
+				choice.Button.Draw(batch);
+			}
+
+			return;
+
 			// Count the number of choice
 			int start = 0;
 			foreach (ScriptChoice choice in Choices)
@@ -156,7 +180,7 @@ namespace DungeonEye
 					continue;
 
 				DrawSimpleBevel(batch, DisplayCoordinates.ScriptedDialogChoices[start * 3 + pos]);
-				batch.DrawString(Font, DisplayCoordinates.ScriptedDialogChoices[start * 3 + pos].Location, Color.White, choice.Name);
+				batch.DrawString(GUI.DialogFont, DisplayCoordinates.ScriptedDialogChoices[start * 3 + pos].Location, Color.White, choice.Name);
 
 				pos++;
 			}
@@ -244,7 +268,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Available choices
 		/// </summary>
-		List<ScriptChoice> Choices;
+		List<ScriptChoice> Choices = new List<ScriptChoice>();
 
 
 		/// <summary>
@@ -292,12 +316,11 @@ namespace DungeonEye
 		/// <summary>
 		/// Font to use
 		/// </summary>
-		BitmapFont Font;
+	//	BitmapFont Font;
 
 
 		#endregion
 
-	
 	
 	}
 }

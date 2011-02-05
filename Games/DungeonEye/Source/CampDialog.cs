@@ -44,7 +44,6 @@ namespace DungeonEye
 
 			Buttons = new List<ScreenButton>();
 
-			Font = ResourceManager.GetSharedAsset<BitmapFont>("intro");
 			Rectangle = new Rectangle(0, 0, 352, 288);
 
 			AddWindow(new MainWindow(this));
@@ -132,16 +131,6 @@ namespace DungeonEye
 		/// List of buttons
 		/// </summary>
 		protected List<ScreenButton> Buttons;
-
-
-		/// <summary>
-		/// Font to use
-		/// </summary>
-		public BitmapFont Font
-		{
-			get;
-			private set;
-		}
 
 
 		/// <summary>

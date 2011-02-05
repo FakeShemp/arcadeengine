@@ -34,9 +34,6 @@ namespace DungeonEye
 	public abstract class DialogBase : IDisposable
 	{
 
-
-
-
 		/// <summary>
 		/// Closes the dialog
 		/// </summary>
@@ -44,7 +41,6 @@ namespace DungeonEye
 		{
 			Quit = true;
 		}
-
 
 
 		/// <summary>
@@ -59,7 +55,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Draws the Window
 		/// </summary>
-		/// <param name="batch"></param>
+		/// <param name="batch">SpriteBatch to use</param>
 		public virtual void Draw(SpriteBatch batch)
 		{
 		}
@@ -67,11 +63,11 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Draws a double beveled rectangle
 		/// </summary>
-		/// <param name="batch"></param>
-		/// <param name="rectangle"></param>
-		public void DrawDoubleBevel(SpriteBatch batch, Rectangle rectangle)
+		/// <param name="batch">SpriteBatch to use</param>
+		/// <param name="rect">Rectangle</param>
+		public static void DrawDoubleBevel(SpriteBatch batch, Rectangle rectangle)
 		{
 			DrawDoubleBevel(batch, rectangle, GameColors.Main, GameColors.Light, GameColors.Dark);
 		}
@@ -85,7 +81,7 @@ namespace DungeonEye
 		/// <param name="bg">Background color</param>
 		/// <param name="light">Light color</param>
 		/// <param name="dark">Dark color</param>
-		public void DrawDoubleBevel(SpriteBatch batch, Rectangle rect, Color bg, Color light, Color dark)
+		public static void DrawDoubleBevel(SpriteBatch batch, Rectangle rect, Color bg, Color light, Color dark)
 		{
 			batch.FillRectangle(rect, bg);
 
@@ -105,11 +101,11 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Draws a beveled rectangle
 		/// </summary>
-		/// <param name="batch"></param>
-		/// <param name="rectangle"></param>
-		public void DrawSimpleBevel(SpriteBatch batch, Rectangle rectangle)
+		/// <param name="batch">SpriteBatch to use</param>
+		/// <param name="rect">Rectangle</param>
+		public static void DrawSimpleBevel(SpriteBatch batch, Rectangle rectangle)
 		{
 			DrawSimpleBevel(batch, rectangle, GameColors.Main, GameColors.Light, GameColors.Dark);
 		}
@@ -123,7 +119,7 @@ namespace DungeonEye
 		/// <param name="bg">Background color</param>
 		/// <param name="light">Light color</param>
 		/// <param name="dark">Dark color</param>
-		public void DrawSimpleBevel(SpriteBatch batch, Rectangle rectangle, Color bg, Color light, Color dark)
+		public static void DrawSimpleBevel(SpriteBatch batch, Rectangle rectangle, Color bg, Color light, Color dark)
 		{
 			batch.FillRectangle(rectangle, bg);
 
@@ -157,6 +153,16 @@ namespace DungeonEye
 		{
 			get;
 			private set;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Font ScriptFont
+		{
+			get;
+			set;
 		}
 
 		#endregion
