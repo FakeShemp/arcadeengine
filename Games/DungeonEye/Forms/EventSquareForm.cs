@@ -326,7 +326,7 @@ namespace DungeonEye.Forms
 				return;
 
 
-			EventChoice choice = new EventChoice("Choice " + (EventSquare.Choices.Count + 1));
+			ScriptChoice choice = new ScriptChoice("Choice " + (EventSquare.Choices.Count + 1));
 			EventSquare.Choices.Add(choice);
 			new EventChoiceForm(choice).ShowDialog();
 

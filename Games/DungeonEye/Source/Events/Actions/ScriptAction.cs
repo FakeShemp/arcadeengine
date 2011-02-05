@@ -27,9 +27,9 @@ using System.Xml;
 namespace DungeonEye.Events.Actions
 {
 	/// <summary>
-	/// Abstract base class for event actions
+	/// Abstract base class for event script actions
 	/// </summary>
-	public abstract class EventAction
+	public abstract class ScriptAction
 	{
 
 

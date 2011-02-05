@@ -64,9 +64,9 @@ namespace DungeonEye.Gui.CampWindows
 
 
 		/// <summary>
-		/// 
+		/// Draws the window
 		/// </summary>
-		/// <param name="batch"></param>
+		/// <param name="batch">Spritebatch handle</param>
 		public override void Draw(SpriteBatch batch)
 		{
 			base.Draw(batch);

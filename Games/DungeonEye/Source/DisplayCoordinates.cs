@@ -99,11 +99,17 @@ namespace DungeonEye
 			ScriptedDialog = new Rectangle(0, 242, 640, 158);
 			ScriptedDialogChoices = new Rectangle[]
 			{
+				// 1 choice
 				new Rectangle(442,	378, 190, 18),
+				Rectangle.Empty,
+				Rectangle.Empty,
 
+				// 2 choices
 				new Rectangle(118,	378, 190, 18),
 				new Rectangle(332,	378, 190, 18),
+				Rectangle.Empty,
 
+				// 3 choices
 				new Rectangle(8,	378, 190, 18),
 				new Rectangle(224,	378, 190, 18),
 				new Rectangle(440,	378, 190, 18),

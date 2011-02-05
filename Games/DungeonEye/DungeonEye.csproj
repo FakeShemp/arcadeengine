@@ -315,9 +315,9 @@
     <Compile Include="Source\Defense.cs" />
     <Compile Include="Source\DialogBase.cs" />
     <Compile Include="Source\Entity.cs" />
-    <Compile Include="Source\Events\Actions\EventAction.cs" />
+    <Compile Include="Source\Events\Actions\ScriptAction.cs" />
     <Compile Include="Source\Events\Event.cs" />
-    <Compile Include="Source\Events\EventChoice.cs" />
+    <Compile Include="Source\Events\ScriptChoice.cs" />
     <Compile Include="Source\Gui\CampWindows\DropCharacterWindow.cs" />
     <Compile Include="Source\Gui\CampWindows\SpellWindow.cs" />
     <Compile Include="Source\Gui\CampWindows\GameOptionsWindow.cs" />
@@ -355,7 +355,7 @@
     <Compile Include="DungeonEye.cs" />
     <Compile Include="Source\DungeonLocation.cs" />
     <Compile Include="Source\SquareActor\FloorSwitch.cs" />
-    <Compile Include="Source\Gui\Button.cs" />
+    <Compile Include="Source\Gui\ScreenButton.cs" />
     <Compile Include="Source\CampDialog.cs" />
     <Compile Include="Source\SquareActor\ForceField.cs" />
     <Compile Include="Source\Item.cs" />

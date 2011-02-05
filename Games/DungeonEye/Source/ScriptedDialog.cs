@@ -27,7 +27,7 @@ using ArcEngine.Asset;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
 using DungeonEye.Events;
-
+using DungeonEye.Gui;
 
 namespace DungeonEye
 {
@@ -60,7 +60,21 @@ namespace DungeonEye
 
 			Font = ResourceManager.GetSharedAsset<BitmapFont>("inventory");
 
-			Choices = new List<EventChoice>();
+			Choices = new List<ScriptChoice>();
+
+
+			ScriptChoice choice = new ScriptChoice("Yes");
+			choice.Enabled = true;
+			Choices.Add(choice);
+
+			choice = new ScriptChoice("No");
+			choice.Enabled = true;
+			Choices.Add(choice);
+
+			choice = new ScriptChoice("Dunno");
+			choice.Enabled = true;
+			Choices.Add(choice);
+
 		}
 
 
@@ -111,9 +125,41 @@ namespace DungeonEye
 
 
 			// Choices
-			DrawSimpleBevel(batch, DisplayCoordinates.ScriptedDialogChoices[3]);
-			DrawSimpleBevel(batch, DisplayCoordinates.ScriptedDialogChoices[4]);
-			DrawSimpleBevel(batch, DisplayCoordinates.ScriptedDialogChoices[5]);
+			DrawChoices(batch);			
+			
+		}
+
+
+		/// <summary>
+		/// Display available choices
+		/// </summary>
+		/// <param name="batch">Spritebatch handle</param>
+		void DrawChoices(SpriteBatch batch)
+		{
+			// No batch or choice
+			if (batch == null || Choices.Count == 0)
+				return;
+
+
+			// Count the number of choice
+			int start = 0;
+			foreach (ScriptChoice choice in Choices)
+				if (choice.Enabled)
+					start++;
+			start = Math.Min(start, 3) - 1;
+
+
+			int pos = 0;
+			foreach (ScriptChoice choice in Choices)
+			{
+				if (!choice.Enabled)
+					continue;
+
+				DrawSimpleBevel(batch, DisplayCoordinates.ScriptedDialogChoices[start * 3 + pos]);
+				batch.DrawString(Font, DisplayCoordinates.ScriptedDialogChoices[start * 3 + pos].Location, Color.White, choice.Name);
+
+				pos++;
+			}
 		}
 
 
@@ -123,7 +169,7 @@ namespace DungeonEye
 		/// Set the choice
 		/// </summary>
 		/// <param name="choice">choice</param>
-		public void SetChoices(EventChoice choice)
+		public void SetChoices(ScriptChoice choice)
 		{
 			Choices.Clear();
 			Choices.Add(choice);
@@ -135,7 +181,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="choice1">First choice</param>
 		/// <param name="choice2">Second choice</param>
-		public void SetChoices(EventChoice choice1, EventChoice choice2)
+		public void SetChoices(ScriptChoice choice1, ScriptChoice choice2)
 		{
 			Choices.Clear();
 			Choices.Add(choice1);
@@ -148,7 +194,7 @@ namespace DungeonEye
 		/// <param name="choice1">First choice</param>
 		/// <param name="choice2">Second choice</param>
 		/// <param name="choice2">Third choice</param>
-		public void SetChoice(EventChoice choice1, EventChoice choice2, EventChoice choice3)
+		public void SetChoice(ScriptChoice choice1, ScriptChoice choice2, ScriptChoice choice3)
 		{
 			Choices.Clear();
 			Choices.Add(choice1);
@@ -158,6 +204,8 @@ namespace DungeonEye
 
 		#endregion
 
+
+		#region Picture
 
 		/// <summary>
 		/// Changes the picture
@@ -188,13 +236,15 @@ namespace DungeonEye
 			Picture = handle;
 		}
 
+		#endregion
+
 
 		#region Properties
 
 		/// <summary>
 		/// Available choices
 		/// </summary>
-		List<EventChoice> Choices;
+		List<ScriptChoice> Choices;
 
 
 		/// <summary>
@@ -246,5 +296,8 @@ namespace DungeonEye
 
 
 		#endregion
+
+	
+	
 	}
 }

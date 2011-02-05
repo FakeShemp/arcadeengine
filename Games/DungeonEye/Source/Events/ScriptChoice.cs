@@ -30,15 +30,15 @@ namespace DungeonEye.Events
 	/// <summary>
 	/// Provides interaction in event dialogs
 	/// </summary>
-	public class EventChoice
+	public class ScriptChoice
 	{
 		/// <summary>
 		/// Constructor
 		/// </summary>
 		/// <param name="name">Choice's name</param>
-		public EventChoice(string name)
+		public ScriptChoice(string name)
 		{
-			Actions = new List<EventAction>();
+			Actions = new List<ScriptAction>();
 
 			Name = name;
 		}
@@ -106,7 +106,7 @@ namespace DungeonEye.Events
 			writer.WriteStartElement("choice");
 			writer.WriteAttributeString("name", Name);
 
-			foreach (EventAction action in Actions)
+			foreach (ScriptAction action in Actions)
 			{
 				writer.WriteStartElement("action");
 				writer.WriteAttributeString("name", action.Name);
@@ -130,7 +130,17 @@ namespace DungeonEye.Events
 		/// <summary>
 		/// List of actions
 		/// </summary>
-		List<EventAction> Actions;
+		List<ScriptAction> Actions;
+
+
+		/// <summary>
+		/// Choice enabled
+		/// </summary>
+		public bool Enabled
+		{
+			get;
+			set;
+		}
 
 
 		/// <summary>

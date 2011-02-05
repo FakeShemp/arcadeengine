@@ -39,7 +39,7 @@ namespace DungeonEye.Forms
 		/// Constructor
 		/// </summary>
 		/// <param name="choice">choice to edit</param>
-		public EventChoiceForm(EventChoice choice)
+		public EventChoiceForm(ScriptChoice choice)
 		{
 			InitializeComponent();
 
@@ -130,7 +130,7 @@ namespace DungeonEye.Forms
 
 		#region Properties
 
-		EventChoice Choice;
+		ScriptChoice Choice;
 
 		#endregion
 

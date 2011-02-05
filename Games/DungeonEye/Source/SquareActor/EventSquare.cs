@@ -40,7 +40,7 @@ namespace DungeonEye
 		/// <param name="square">Square handle</param>
 		public EventSquare(Square square) : base(square)
 		{
-			Choices = new List<EventChoice>();
+			Choices = new List<ScriptChoice>();
 			Events = new List<Event>();
 		}
 
@@ -59,7 +59,7 @@ namespace DungeonEye
 		/// Team enters the square
 		/// </summary>
 		/// <param name="team">Team handle</param>
-		/// <returns></returns>
+		/// <returns>True on success</returns>
 		public override bool OnTeamEnter(Team team)
 		{
 			// No more usage possible
@@ -83,11 +83,10 @@ namespace DungeonEye
 			}
 
 
+			// Create the scripted dialog
 			if (!string.IsNullOrEmpty(PictureName))
 			{
-				ScriptedDialog dialog = new ScriptedDialog(Square, DisplayBorder, PictureName, Text);
-
-				team.Dialog = dialog;
+				team.Dialog = new ScriptedDialog(Square, DisplayBorder, PictureName, Text);				
 			}
 
 
@@ -122,7 +121,7 @@ namespace DungeonEye
 				{
 					case "choice":
 					{
-						EventChoice choice = new EventChoice("");
+						ScriptChoice choice = new ScriptChoice("");
 						choice.Load(node);
 
 						Choices.Add(choice);
@@ -274,7 +273,7 @@ namespace DungeonEye
 			writer.WriteEndElement();
 
 
-			foreach(EventChoice choice in Choices)
+			foreach(ScriptChoice choice in Choices)
 				choice.Save(writer);
 
 
@@ -403,7 +402,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Available choices
 		/// </summary>
-		public List<EventChoice> Choices
+		public List<ScriptChoice> Choices
 		{
 			get;
 			private set;
