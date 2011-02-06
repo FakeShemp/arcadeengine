@@ -45,6 +45,11 @@ namespace DungeonEye
 		/// <param name="heroes">Heroes team</param>
 		public Team(Hero[] heroes)
 		{
+			if (Handle != null)
+				throw new ArgumentException("Only one Team instace possible");
+			Handle = this;
+
+
 			Messages = new List<ScreenMessage>();
 			TeamSpeed = TimeSpan.FromSeconds(0.15f);
 			SpellBook = new SpellBook();
@@ -2676,6 +2681,17 @@ namespace DungeonEye
 
 
 		#region Properties
+
+
+		/// <summary>
+		/// Handle to the team
+		/// </summary>
+		public static Team Handle
+		{
+			get;
+			private set;
+		}
+
 
 		/// <summary>
 		/// Current language

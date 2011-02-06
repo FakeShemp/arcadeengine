@@ -95,7 +95,7 @@ namespace DungeonEye.Gui
 				if (!button.IsVisible)
 					continue;
 
-				DialogBase.DrawDoubleBevel(batch, button.Rectangle);//, GameColors.Main, GameColors.Light, GameColors.Dark);
+				GUI.DrawDoubleBevel(batch, button.Rectangle);//, GameColors.Main, GameColors.Light, GameColors.Dark);
 
 				// Text
 				Point point = button.Rectangle.Location;
@@ -117,7 +117,7 @@ namespace DungeonEye.Gui
 		protected void DrawBackground(SpriteBatch batch)
 		{
 			Rectangle rect = new Rectangle(0, 0, 352, 288);
-			DialogBase.DrawDoubleBevel(batch, rect, GameColors.Main, GameColors.Light, GameColors.Dark);
+			GUI.DrawDoubleBevel(batch, rect, GameColors.Main, GameColors.Light, GameColors.Dark, false);
 
 			batch.DrawString(GUI.MenuFont, new Point(8, 10), GameColors.Cyan, Title);
 		}

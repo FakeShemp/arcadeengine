@@ -25,7 +25,7 @@ using System.Xml;
 using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
-using DungeonEye.Events;
+using DungeonEye.EventScript;
 
 namespace DungeonEye
 {
@@ -41,7 +41,7 @@ namespace DungeonEye
 		public EventSquare(Square square) : base(square)
 		{
 			Choices = new List<ScriptChoice>();
-			Events = new List<Event>();
+			//Events = new List<Event>();
 		}
 
 
@@ -86,7 +86,7 @@ namespace DungeonEye
 			// Create the scripted dialog
 			if (!string.IsNullOrEmpty(PictureName))
 			{
-				team.Dialog = new ScriptedDialog(Square, DisplayBorder, PictureName, Text);				
+				team.Dialog = new ScriptedDialog(team, Square, DisplayBorder, PictureName, Text);				
 			}
 
 
@@ -123,7 +123,6 @@ namespace DungeonEye
 					{
 						ScriptChoice choice = new ScriptChoice("");
 						choice.Load(node);
-
 						Choices.Add(choice);
 					}
 					break;
@@ -408,7 +407,7 @@ namespace DungeonEye
 			private set;
 		}
 
-
+/*
 		/// <summary>
 		/// Current event
 		/// </summary>
@@ -423,7 +422,7 @@ namespace DungeonEye
 		/// Available events
 		/// </summary>
 		List<Event> Events;
-
+*/
 		#endregion
 
 	}

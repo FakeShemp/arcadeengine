@@ -138,7 +138,7 @@ namespace DungeonEye.Gui
 				return;
 
 			// Draw bevel background
-			DialogBase.DrawDoubleBevel(batch, Rectangle, GameColors.Main, GameColors.Light, GameColors.Dark);
+			GUI.DrawDoubleBevel(batch, Rectangle, GameColors.Main, GameColors.Light, GameColors.Dark, false);
 
 			// Draw message
 			Point point = Rectangle.Location;
@@ -149,7 +149,7 @@ namespace DungeonEye.Gui
 			foreach (ScreenButton button in Buttons)
 			{
 				Rectangle rect = ClientToScreen(Rectangle.Location, button.Rectangle);
-				DialogBase.DrawDoubleBevel(batch, rect, GameColors.Main, GameColors.Light, GameColors.Dark);
+				GUI.DrawDoubleBevel(batch, rect, GameColors.Main, GameColors.Light, GameColors.Dark, false);
 
 				// Text
 				point = rect.Location;

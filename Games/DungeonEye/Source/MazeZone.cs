@@ -214,7 +214,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Script handle
 		/// </summary>
-		Script Script;
+		//Script Script;
 
 
 		/// <summary>

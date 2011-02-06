@@ -405,7 +405,7 @@ namespace DungeonEye
 		/// Returns informations about a block in the maze
 		/// </summary>
 		/// <param name="location">Location of the block</param>
-		/// <returns>Block handle</returns>
+		/// <returns>Square handle</returns>
 		public Square GetSquare(Point location)
 		{
 			if (!Rectangle.Contains(location))

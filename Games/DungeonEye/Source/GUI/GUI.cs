@@ -43,6 +43,108 @@ namespace DungeonEye.Gui
 		}
 
 
+		#region Bevels
+
+		/// <summary>
+		/// Draws a double beveled rectangle
+		/// </summary>
+		/// <param name="batch">SpriteBatch to use</param>
+		/// <param name="rectangle">Rectangle</param>
+		/// <param name="reverse">Inverse the color, giving a raise effect</param>
+		public static void DrawDoubleBevel(SpriteBatch batch, Rectangle rectangle)
+		{
+			DrawDoubleBevel(batch, rectangle, GameColors.Main, GameColors.Light, GameColors.Dark, false);
+		}
+
+
+		/// <summary>
+		/// Draws a double beveled rectangle
+		/// </summary>
+		/// <param name="batch">SpriteBatch to use</param>
+		/// <param name="rectangle"></param>
+		/// <param name="reverse"></param>
+		public static void DrawDoubleBevel(SpriteBatch batch, Rectangle rectangle, bool reverse)
+		{
+			DrawDoubleBevel(batch, rectangle, GameColors.Main, GameColors.Light, GameColors.Dark, reverse);
+		}
+
+
+		/// <summary>
+		/// Draws a beveled rectangle
+		/// </summary>
+		/// <param name="batch">SpriteBatch to use</param>
+		/// <param name="rect">Rectangle</param>
+		/// <param name="bg">Background color</param>
+		/// <param name="light">Light color</param>
+		/// <param name="dark">Dark color</param>
+		/// <param name="reverse">Inverse the color, giving a raise effect</param>
+		public static void DrawDoubleBevel(SpriteBatch batch, Rectangle rect, Color bg, Color light, Color dark, bool reverse)
+		{
+			batch.FillRectangle(rect, bg);
+
+			Point point = rect.Location;
+			Size size = rect.Size;
+
+				batch.FillRectangle(new Rectangle(point.X + 2, point.Y, size.Width - 2, 2), reverse ? dark : light);
+				batch.FillRectangle(new Rectangle(point.X + 4, point.Y + 2, size.Width - 4, 2), reverse ? dark : light);
+				batch.FillRectangle(new Rectangle(rect.Right - 4, point.Y + 4, 2, size.Height - 8), reverse ? dark : light);
+				batch.FillRectangle(new Rectangle(rect.Right - 2, point.Y + 4, 2, size.Height - 6), reverse ? dark : light);
+
+				batch.FillRectangle(new Rectangle(point.X, point.Y + 2, 2, size.Height - 4), reverse ? light : dark);
+				batch.FillRectangle(new Rectangle(point.X + 2, point.Y + 4, 2, size.Height - 6), reverse ? light : dark);
+				batch.FillRectangle(new Rectangle(point.X, point.Y + size.Height - 2, size.Width - 2, 2), reverse ? light : dark);
+				batch.FillRectangle(new Rectangle(point.X, point.Y + size.Height - 4, size.Width - 4, 2), reverse ? light : dark);
+		}
+
+
+		/// <summary>
+		/// Draws a beveled rectangle
+		/// </summary>
+		/// <param name="batch">SpriteBatch to use</param>
+		/// <param name="rect">Rectangle</param>
+		public static void DrawSimpleBevel(SpriteBatch batch, Rectangle rectangle)
+		{
+			DrawSimpleBevel(batch, rectangle, GameColors.Main, GameColors.Light, GameColors.Dark, false);
+		}
+
+		/// <summary>
+		/// Draws a beveled rectangle
+		/// </summary>
+		/// <param name="batch">SpriteBatch to use</param>
+		/// <param name="rect">Rectangle</param>
+		/// <param name="rectangle">Reverse color to give a raise effect</param>
+		public static void DrawSimpleBevel(SpriteBatch batch, Rectangle rectangle, bool reverse)
+		{
+			DrawSimpleBevel(batch, rectangle, GameColors.Main, GameColors.Light, GameColors.Dark, reverse);
+		}
+
+
+		/// <summary>
+		/// Draws a beveled rectangle
+		/// </summary>
+		/// <param name="batch">SpriteBatch to use</param>
+		/// <param name="rectangle">Rectangle</param>
+		/// <param name="bg">Background color</param>
+		/// <param name="light">Light color</param>
+		/// <param name="dark">Dark color</param>
+		/// <param name="rectangle">Reverse color to give a raise effect</param>
+		public static void DrawSimpleBevel(SpriteBatch batch, Rectangle rectangle, Color bg, Color light, Color dark, bool reverse)
+		{
+			batch.FillRectangle(rectangle, bg);
+
+			Point point = rectangle.Location;
+			Size size = rectangle.Size;
+
+			batch.FillRectangle(new Rectangle(point.X + 2, point.Y, size.Width - 2, 2), reverse ? dark : light);
+			batch.FillRectangle(new Rectangle(rectangle.Right - 2, point.Y + 2, 2, size.Height - 4), reverse ? dark : light);
+
+			batch.FillRectangle(new Rectangle(point.X, point.Y + 2, 2, size.Height - 2), reverse ? light : dark);
+			batch.FillRectangle(new Rectangle(point.X + 2, point.Y + size.Height - 2, size.Width - 4, 2), reverse ? light : dark);
+		}
+
+
+		#endregion
+
 
 		#region Properties
 

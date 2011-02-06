@@ -26,7 +26,7 @@ using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
-using DungeonEye.Events;
+using DungeonEye.EventScript;
 using DungeonEye.Gui;
 
 namespace DungeonEye
@@ -39,15 +39,18 @@ namespace DungeonEye
 		/// <summary>
 		/// Constructor
 		/// </summary>
+		/// <param name="team">Team handle</param>
 		/// <param name="square">Square</param>
 		/// <param name="border">Display picture border</param>
 		/// <param name="picture">Picture name</param>
 		/// <param name="text">Text to display</param>
-		public ScriptedDialog(Square square, bool border, string picture, string text)
+		public ScriptedDialog(Team team, Square square, bool border, string picture, string text)
 		{
 			if (square == null)
 				throw new ArgumentNullException("Square is null");
 
+
+			Team = team;
 			Square = square;
 			Picture = new Texture2D(picture);
 			Text = text;
@@ -57,26 +60,33 @@ namespace DungeonEye
 				DisplayBorder = true;
 				Border = new Texture2D("border.png");
 			}
-
-			ScriptChoice choice = new ScriptChoice("Yes");
-			choice.Enabled = true;
-			choice.Button.Rectangle = DisplayCoordinates.ScriptedDialogChoices[6];
-			Choices.Add(choice);
-
-			choice = new ScriptChoice("No");
-			choice.Enabled = true;
-			choice.Button.Rectangle = DisplayCoordinates.ScriptedDialogChoices[7];
-			Choices.Add(choice);
 			
+			// Buttons
+			Buttons = new ScriptButton[3];
+			for (int i = 0 ; i < 3 ; i++)
+			{
+				Buttons[i] = new ScriptButton();
+				Buttons[i].Click +=new EventHandler(ButtonClick);
+			}
 
-			choice = new ScriptChoice("Dunno");
-			choice.Enabled = true;
-			choice.Button.Rectangle = DisplayCoordinates.ScriptedDialogChoices[8];
-			Choices.Add(choice);
+			Choices = new ScriptChoice[3];
 
 
-
-
+	
+			// Dummy tests
+			ScriptChoice choice1 = new ScriptChoice("Yes");
+			choice1.Actions.Add(new ScriptTeleport
+			{
+				Target = new DungeonLocation("Forest", new Point(9, 15), CardinalPoint.West, SquarePosition.Center),
+				ChangeDirection = true,
+			});
+			ScriptChoice choice2 = new ScriptChoice("No");
+			choice2.Actions.Add(new ScriptTeleport
+			{
+				Target = new DungeonLocation("Forest", new Point(10, 12), CardinalPoint.North, SquarePosition.Center),
+				ChangeDirection = true,
+			});
+			SetChoices(choice1, choice2);
 		}
 
 
@@ -92,8 +102,6 @@ namespace DungeonEye
 			if (Border != null)
 				Border.Dispose();
 			Border = null;
-
-			//Font = null;
 		}
 
 
@@ -108,12 +116,12 @@ namespace DungeonEye
 
 
 			// Update each choice button
-			foreach (ScriptChoice choice in Choices)
+			for (int id = 0; id < Choices.Length; id++)
 			{
-				if (!choice.Enabled)
+				if (Choices[id] == null || !Choices[id].Enabled)
 					continue;
 
-				choice.Button.Update(time);
+				Buttons[id].Update(time);
 			}
 
 		}
@@ -133,58 +141,42 @@ namespace DungeonEye
 			batch.Draw(Picture, new Point(16, 16), Color.White);
 
 			// Text
-			DrawSimpleBevel(batch, DisplayCoordinates.ScriptedDialog);
+			GUI.DrawSimpleBevel(batch, DisplayCoordinates.ScriptedDialog);
 			batch.DrawString(GUI.DialogFont, new Point(4, 250), GameColors.White, Text);
 
 
 			// Choices
-			DrawChoices(batch);			
+			for (int id = 0 ; id < Choices.Length ; id++)
+			{
+				if (Choices[id] == null || !Choices[id].Enabled)
+					continue;
+
+				Buttons[id].Draw(batch);
+			}
 			
 		}
 
 
+		#region Button actions
+
 		/// <summary>
-		/// Display available choices
+		/// 
 		/// </summary>
-		/// <param name="batch">Spritebatch handle</param>
-		void DrawChoices(SpriteBatch batch)
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void ButtonClick(object sender, EventArgs e)
 		{
-			// No batch or choice
-			if (batch == null || Choices.Count == 0)
-				return;
+			ScriptButton button = sender as ScriptButton;
 
-
-			// Update each choice button
-			foreach (ScriptChoice choice in Choices)
+			if (button.Tag != null)
 			{
-				if (!choice.Enabled)
-					continue;
-
-				choice.Button.Draw(batch);
-			}
-
-			return;
-
-			// Count the number of choice
-			int start = 0;
-			foreach (ScriptChoice choice in Choices)
-				if (choice.Enabled)
-					start++;
-			start = Math.Min(start, 3) - 1;
-
-
-			int pos = 0;
-			foreach (ScriptChoice choice in Choices)
-			{
-				if (!choice.Enabled)
-					continue;
-
-				DrawSimpleBevel(batch, DisplayCoordinates.ScriptedDialogChoices[start * 3 + pos]);
-				batch.DrawString(GUI.DialogFont, DisplayCoordinates.ScriptedDialogChoices[start * 3 + pos].Location, Color.White, choice.Name);
-
-				pos++;
+				ScriptChoice choice = button.Tag as ScriptChoice;
+				choice.Run();
 			}
 		}
+
+
+		#endregion
 
 
 		#region Choices
@@ -192,12 +184,33 @@ namespace DungeonEye
 		/// <summary>
 		/// Set the choice
 		/// </summary>
+		/// <param name="id">Choice id (from 1 to 3)</param>
+		/// <param name="choice">choice</param>
+		public void SetChoices(int id, ScriptChoice choice)
+		{
+			if (id < 1 || id > 3)
+				return;
+
+			Choices[id] = choice;
+
+			Buttons[id].Rectangle = DisplayCoordinates.ScriptedDialogChoices[0];
+			Buttons[id].Text = choice.Name;
+			Buttons[id].Tag = choice;
+		}
+
+		/// <summary>
+		/// Set the choice
+		/// </summary>
 		/// <param name="choice">choice</param>
 		public void SetChoices(ScriptChoice choice)
 		{
-			Choices.Clear();
-			Choices.Add(choice);
+			Choices[0] = choice;
+			Choices[1] = null;
+			Choices[2] = null;
 
+			Buttons[0].Rectangle = DisplayCoordinates.ScriptedDialogChoices[0];
+			Buttons[0].Text = choice.Name;
+			Buttons[0].Tag = choice;
 		}
 
 		/// <summary>
@@ -207,9 +220,17 @@ namespace DungeonEye
 		/// <param name="choice2">Second choice</param>
 		public void SetChoices(ScriptChoice choice1, ScriptChoice choice2)
 		{
-			Choices.Clear();
-			Choices.Add(choice1);
-			Choices.Add(choice2);
+			Choices[0] = choice1;
+			Choices[1] = choice2;
+			Choices[2] = null;
+
+			Buttons[0].Rectangle = DisplayCoordinates.ScriptedDialogChoices[3];
+			Buttons[0].Text = choice1.Name;
+			Buttons[0].Tag = choice1;
+
+			Buttons[1].Rectangle = DisplayCoordinates.ScriptedDialogChoices[4];
+			Buttons[1].Text = choice2.Name;
+			Buttons[1].Tag = choice2;
 		}
 
 		/// <summary>
@@ -220,10 +241,22 @@ namespace DungeonEye
 		/// <param name="choice2">Third choice</param>
 		public void SetChoice(ScriptChoice choice1, ScriptChoice choice2, ScriptChoice choice3)
 		{
-			Choices.Clear();
-			Choices.Add(choice1);
-			Choices.Add(choice2);
-			Choices.Add(choice3);
+			Choices[0] = choice1;
+			Choices[1] = choice2;
+			Choices[2] = choice3;
+
+			Buttons[0].Rectangle = DisplayCoordinates.ScriptedDialogChoices[6];
+			Buttons[0].Text = choice1.Name;
+			Buttons[0].Tag = choice1;
+
+			Buttons[1].Rectangle = DisplayCoordinates.ScriptedDialogChoices[7];
+			Buttons[1].Text = choice2.Name;
+			Buttons[1].Tag = choice2;
+
+
+			Buttons[2].Rectangle = DisplayCoordinates.ScriptedDialogChoices[8];
+			Buttons[2].Text = choice3.Name;
+			Buttons[2].Tag = choice3;
 		}
 
 		#endregion
@@ -268,7 +301,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Available choices
 		/// </summary>
-		List<ScriptChoice> Choices = new List<ScriptChoice>();
+		ScriptChoice[] Choices;
 
 
 		/// <summary>
@@ -314,10 +347,15 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Font to use
+		/// Team handle
 		/// </summary>
-	//	BitmapFont Font;
+		Team Team;
 
+
+		/// <summary>
+		/// Buttons
+		/// </summary>
+		ScriptButton[] Buttons;
 
 		#endregion
 
