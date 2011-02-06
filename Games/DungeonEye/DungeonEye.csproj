@@ -316,7 +316,15 @@
     <Compile Include="Source\DialogBase.cs" />
     <Compile Include="Source\Entity.cs" />
     <Compile Include="Source\EventScript\Actions\ScriptAction.cs" />
+    <Compile Include="Source\EventScript\Actions\ScriptActivateTarget.cs" />
+    <Compile Include="Source\EventScript\Actions\ScriptDisableTarget.cs" />
+    <Compile Include="Source\EventScript\Actions\ScriptEndChoice.cs" />
+    <Compile Include="Source\EventScript\Actions\ScriptEndDialog.cs" />
+    <Compile Include="Source\EventScript\Actions\ScriptGiveExperience.cs" />
+    <Compile Include="Source\EventScript\Actions\ScriptGiveItem.cs" />
+    <Compile Include="Source\EventScript\Actions\ScriptHealing.cs" />
     <Compile Include="Source\EventScript\Actions\ScriptTeleport.cs" />
+    <Compile Include="Source\EventScript\Actions\ScriptToggleTarget.cs" />
     <Compile Include="Source\EventScript\Event.cs" />
     <Compile Include="Source\EventScript\ScriptButton.cs" />
     <Compile Include="Source\EventScript\ScriptChoice.cs" />

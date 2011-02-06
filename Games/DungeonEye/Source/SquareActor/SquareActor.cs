@@ -70,11 +70,10 @@ namespace DungeonEye
 		/// <summary>
 		/// A hero interacted with a side of the square
 		/// </summary>
-		/// <param name="team">Team</param>
 		/// <param name="location">Location of the mouse</param>
 		/// <param name="side">Wall side</param>
 		/// <returns>True if the event is processed</returns>
-		public virtual bool OnClick(Team team, Point location, CardinalPoint side)
+		public virtual bool OnClick(Point location, CardinalPoint side)
 		{
 			return false;
 		}
@@ -83,9 +82,8 @@ namespace DungeonEye
 		/// <summary>
 		/// Fired when the team enters the square
 		/// </summary>
-		/// <param name="team">Team handle</param>
 		/// <returns>True if event handled</returns>
-		public virtual bool OnTeamEnter(Team team)
+		public virtual bool OnTeamEnter()
 		{
 			return false;
 		}
@@ -94,9 +92,8 @@ namespace DungeonEye
 		/// <summary>
 		/// Fired when the team leaves the square
 		/// </summary>
-		/// <param name="team">Team handle</param>
 		/// <returns>True if event handled</returns>
-		public virtual bool OnTeamLeave(Team team)
+		public virtual bool OnTeamLeave()
 		{
 			return false;
 		}
@@ -105,9 +102,8 @@ namespace DungeonEye
 		/// <summary>
 		/// Fired when the team stands on a square
 		/// </summary>
-		/// <param name="team">Team handle</param>
 		/// <returns>True if event handled</returns>
-		public virtual bool OnTeamStand(Team team)
+		public virtual bool OnTeamStand()
 		{
 			return false;
 		}

@@ -39,18 +39,16 @@ namespace DungeonEye
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="team">Team handle</param>
 		/// <param name="square">Square</param>
 		/// <param name="border">Display picture border</param>
 		/// <param name="picture">Picture name</param>
 		/// <param name="text">Text to display</param>
-		public ScriptedDialog(Team team, Square square, bool border, string picture, string text)
+		public ScriptedDialog(Square square, bool border, string picture, string text)
 		{
 			if (square == null)
 				throw new ArgumentNullException("Square is null");
 
 
-			Team = team;
 			Square = square;
 			Picture = new Texture2D(picture);
 			Text = text;
@@ -80,6 +78,8 @@ namespace DungeonEye
 				Target = new DungeonLocation("Forest", new Point(9, 15), CardinalPoint.West, SquarePosition.Center),
 				ChangeDirection = true,
 			});
+			choice1.Actions.Add(new ScriptEndDialog());
+
 			ScriptChoice choice2 = new ScriptChoice("No");
 			choice2.Actions.Add(new ScriptTeleport
 			{
@@ -87,6 +87,7 @@ namespace DungeonEye
 				ChangeDirection = true,
 			});
 			SetChoices(choice1, choice2);
+			choice2.Actions.Add(new ScriptEndDialog());
 		}
 
 
@@ -172,6 +173,10 @@ namespace DungeonEye
 			{
 				ScriptChoice choice = button.Tag as ScriptChoice;
 				choice.Run();
+
+				// Time to quit
+				if (Quit)
+					return;
 			}
 		}
 
@@ -344,12 +349,6 @@ namespace DungeonEye
 		/// Border texture
 		/// </summary>
 		Texture2D Border;
-
-
-		/// <summary>
-		/// Team handle
-		/// </summary>
-		Team Team;
 
 
 		/// <summary>

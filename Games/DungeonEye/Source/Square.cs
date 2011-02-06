@@ -186,7 +186,7 @@ namespace DungeonEye
 			// A door
 			if (team.ItemInHand == null)
 			{
-				Actor.OnClick(team, location, side);
+				Actor.OnClick(location, side);
 				return true;
 			}
 
@@ -214,14 +214,10 @@ namespace DungeonEye
 		/// <summary>
 		/// Team stand on the block
 		/// </summary>
-		/// <param name="team">Team</param>
-		public void OnTeamStand(Team team)
+		public void OnTeamStand()
 		{
-			if (team == null)
-				return;
-
 			if (Actor != null)
-				Actor.OnTeamStand(team);
+				Actor.OnTeamStand();
 		}
 
 
@@ -242,14 +238,10 @@ namespace DungeonEye
 		/// <summary>
 		/// Action when the team enter the block
 		/// </summary>
-		/// <param name="team">Team handle</param>
-		public void OnTeamEnter(Team team)
+		public void OnTeamEnter()
 		{
-			if (team == null)
-				return;
-
 			if (Actor != null)
-				Actor.OnTeamEnter(team);
+				Actor.OnTeamEnter();
 		}
 
 
@@ -258,14 +250,10 @@ namespace DungeonEye
 		/// <summary>
 		/// Action when the team leave the block
 		/// </summary>
-		/// <param name="team">Team handle</param>
-		public void OnTeamLeave(Team team)
+		public void OnTeamLeave()
 		{
-			if (team == null)
-				return;
-
 			if (Actor != null)
-				Actor.OnTeamLeave(team);
+				Actor.OnTeamLeave();
 		}
 
 

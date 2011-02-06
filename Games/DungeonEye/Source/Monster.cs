@@ -254,10 +254,10 @@ namespace DungeonEye
 				Square.DropItem(Position, ResourceManager.CreateAsset<Item>(item));
 
 			// Reward the team
-			Team team = Team.Dungeon.Team;
-			foreach (Hero hero in team.Heroes)
+			//Team team = Team.Dungeon.Team;
+			foreach (Hero hero in Team.Handle.Heroes)
 				if (hero != null)
-					hero.AddExperience(Reward / team.HeroCount);
+					hero.AddExperience(Reward / Team.Handle.HeroCount);
 		}
 
 

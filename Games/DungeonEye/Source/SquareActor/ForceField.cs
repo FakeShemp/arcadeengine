@@ -174,13 +174,9 @@ namespace DungeonEye
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="team"></param>
 		/// <returns></returns>
-		public override bool OnTeamEnter(Team team)
+		public override bool OnTeamEnter()
 		{
-			if (team == null)
-				return false;
-
 			switch (Type)
 			{
 				case ForceFieldType.Spin:
@@ -191,7 +187,7 @@ namespace DungeonEye
 
 				case ForceFieldType.Move:
 				{
-					team.Offset(Move, 1);
+					Team.Handle.Offset(Move, 1);
 				}
 				break;
 			}

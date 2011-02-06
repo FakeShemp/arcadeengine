@@ -146,7 +146,7 @@ namespace DungeonEye
 					throw new NullReferenceException("Dungeon");
 				}
 
-				Dungeon.Team = this;
+				//Dungeon.Team = this;
 				Dungeon.Init();
 
 				// Set initial location
@@ -320,7 +320,7 @@ namespace DungeonEye
 					case "dungeon":
 					{
 						Dungeon = ResourceManager.CreateAsset<Dungeon>(node.Attributes["name"].Value);
-						Dungeon.Team = this;
+						//Dungeon.Team = this;
 					}
 					break;
 
@@ -964,7 +964,7 @@ namespace DungeonEye
 			if (Keyboard.IsNewKeyPress(Keys.R))
 			{
 				Dungeon = ResourceManager.CreateAsset<Dungeon>("Eye");
-				Dungeon.Team = this;
+				//Dungeon.Team = this;
 				Dungeon.Init();
 				AddMessage("Dungeon reloaded...");
 			}
@@ -1731,7 +1731,7 @@ namespace DungeonEye
 
 
 			if (CanMove && Square != null)
-				Square.OnTeamStand(this);
+				Square.OnTeamStand();
 		}
 
 
@@ -2626,7 +2626,7 @@ namespace DungeonEye
 
 			// Leave the current square
 			if (Square != null)
-				Square.OnTeamLeave(this);
+				Square.OnTeamLeave();
 
 
 			Location.Coordinate.Offset(offset);
@@ -2636,7 +2636,7 @@ namespace DungeonEye
 			// Enter the new square
 			Square = Maze.GetSquare(Location.Coordinate);
 			if (Square != null)
-				Square.OnTeamEnter(this);
+				Square.OnTeamEnter();
 
 
 			return true;
@@ -2662,7 +2662,7 @@ namespace DungeonEye
 
 			// Leave current square
 			if (Square != null)
-				Square.OnTeamLeave(this);
+				Square.OnTeamLeave();
 
 			// Change location
 			Location.Coordinate = location.Coordinate;
@@ -2671,7 +2671,7 @@ namespace DungeonEye
 			Square = Maze.GetSquare(location.Coordinate);
 
 			// Enter new block
-			Square.OnTeamEnter(this);
+			Square.OnTeamEnter();
 
 			return true;
 		}
@@ -2707,6 +2707,7 @@ namespace DungeonEye
 			get;
 			private set;
 		}
+
 
 		/// <summary>
 		/// Current maze

@@ -57,7 +57,7 @@ namespace DungeonEye
 
 			StartLocation = null;
 			Note = "";
-			Team = null;
+			//Team = null;
 
 			IsDisposed = true;
 		}
@@ -357,14 +357,16 @@ namespace DungeonEye
 		}
 
 
-		/// <summary>
-		/// Handle to the team
-		/// </summary>
-		public Team Team
-		{
-			get;
-			set;
-		}
+		///// <summary>
+		///// Handle to the team
+		///// </summary>
+		//public Team Team
+		//{
+		//    get;
+		//    set;
+		//}
+		
+		
 		#endregion
 
 

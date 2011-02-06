@@ -173,10 +173,9 @@ namespace DungeonEye
 		/// <summary>
 		/// Mouse click on the door
 		/// </summary>
-		/// <param name="team">Team handle</param>
 		/// <param name="location">Location of the click</param>
 		/// <param name="side">Wall side</param>
-		public override bool OnClick(Team team, Point location, CardinalPoint side)
+		public override bool OnClick(Point location, CardinalPoint side)
 		{
 			// Button
 			if (HasButton && Button.Contains(location))

@@ -199,11 +199,8 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="team"></param>
 		/// <returns></returns>
-		public override bool OnTeamEnter(Team team)
+		public override bool OnTeamEnter()
 		{
-			if (team == null)
-				return false;
-
 			return true;
 		}
 
@@ -228,7 +225,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="team"></param>
 		/// <param name="item"></param>
-		public override bool OnTeamLeave(Team team)
+		public override bool OnTeamLeave()
 		{
 			// No script defined
 			if (string.IsNullOrEmpty(OnEnterScript) || Script == null)

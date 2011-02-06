@@ -60,7 +60,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="team">Team handle</param>
 		/// <returns>True on success</returns>
-		public override bool OnTeamEnter(Team team)
+		public override bool OnTeamEnter()
 		{
 			// No more usage possible
 			if (Remaining == 0)
@@ -69,7 +69,7 @@ namespace DungeonEye
 			// Some message to display
 			if (!string.IsNullOrEmpty(Message))
 			{
-				foreach (Hero hero in team.Heroes)
+				foreach (Hero hero in Team.Handle.Heroes)
 				{
 					if (hero == null)
 						continue;
@@ -86,7 +86,7 @@ namespace DungeonEye
 			// Create the scripted dialog
 			if (!string.IsNullOrEmpty(PictureName))
 			{
-				team.Dialog = new ScriptedDialog(team, Square, DisplayBorder, PictureName, Text);				
+				Team.Handle.Dialog = new ScriptedDialog(Square, DisplayBorder, PictureName, Text);				
 			}
 
 

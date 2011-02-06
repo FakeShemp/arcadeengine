@@ -129,17 +129,13 @@ namespace DungeonEye
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="team"></param>
 		/// <returns></returns>
-		public override bool OnTeamEnter(Team team)
+		public override bool OnTeamEnter()
 		{
-			if (team == null)
-				return false;
-
 			if (Target == null)
 				return false;
 
-			team.Teleport(Target);
+			Team.Handle.Teleport(Target);
 
 			return true;
 		}
