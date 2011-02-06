@@ -92,7 +92,37 @@ namespace ArcEngine.Asset
 
 			GC.SuppressFinalize(this);
 		}
-	
+
+
+		/// <summary>
+		/// Returns the size of the text
+		/// </summary>
+		/// <param name="text">Text to measure</param>
+		/// <returns>Text size in pixels</returns>
+		public Size GetTextSize(string text)
+		{
+			Size size = new Size();
+
+			//TODO: Handle <br /> tags and more generaly HTML tags
+			foreach (char c in text)
+			{
+				// Get tile
+				Tile tile = GlyphTileset.GetTile((int) c);
+				if (tile == null)
+					continue;
+
+				// Width
+				size.Width += tile.Size.Width;
+
+				// Height
+				size.Height = Math.Max(size.Height, tile.Size.Height);
+			}
+
+
+			return size;
+		}
+
+
 
 		#region Text drawing
 
