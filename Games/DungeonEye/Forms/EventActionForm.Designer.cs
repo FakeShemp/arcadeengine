@@ -29,60 +29,62 @@
 		private void InitializeComponent()
 		{
 			this.CloseBox = new System.Windows.Forms.Button();
-			this.comboBox1 = new System.Windows.Forms.ComboBox();
+			this.ActionListBox = new System.Windows.Forms.ComboBox();
 			this.label1 = new System.Windows.Forms.Label();
-			this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+			this.RemainingCountBox = new System.Windows.Forms.NumericUpDown();
 			this.label2 = new System.Windows.Forms.Label();
-			((System.ComponentModel.ISupportInitialize) (this.numericUpDown1)).BeginInit();
+			this.panel1 = new System.Windows.Forms.Panel();
+			((System.ComponentModel.ISupportInitialize) (this.RemainingCountBox)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// CloseBox
 			// 
 			this.CloseBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.CloseBox.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.CloseBox.Location = new System.Drawing.Point(670, 476);
+			this.CloseBox.Location = new System.Drawing.Point(745, 429);
 			this.CloseBox.Name = "CloseBox";
 			this.CloseBox.Size = new System.Drawing.Size(75, 23);
 			this.CloseBox.TabIndex = 0;
 			this.CloseBox.Text = "Close";
 			this.CloseBox.UseVisualStyleBackColor = true;
 			// 
-			// comboBox1
+			// ActionListBox
 			// 
-			this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.comboBox1.FormattingEnabled = true;
-			this.comboBox1.Location = new System.Drawing.Point(112, 12);
-			this.comboBox1.Name = "comboBox1";
-			this.comboBox1.Size = new System.Drawing.Size(166, 21);
-			this.comboBox1.TabIndex = 1;
+			this.ActionListBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.ActionListBox.FormattingEnabled = true;
+			this.ActionListBox.Location = new System.Drawing.Point(112, 12);
+			this.ActionListBox.Name = "ActionListBox";
+			this.ActionListBox.Size = new System.Drawing.Size(166, 21);
+			this.ActionListBox.Sorted = true;
+			this.ActionListBox.TabIndex = 1;
 			// 
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(284, 15);
+			this.label1.Location = new System.Drawing.Point(356, 16);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(63, 13);
 			this.label1.TabIndex = 2;
 			this.label1.Text = "Remaining :";
 			// 
-			// numericUpDown1
+			// RemainingCountBox
 			// 
-			this.numericUpDown1.Location = new System.Drawing.Point(353, 12);
-			this.numericUpDown1.Maximum = new decimal(new int[] {
+			this.RemainingCountBox.Location = new System.Drawing.Point(425, 13);
+			this.RemainingCountBox.Maximum = new decimal(new int[] {
             1410065407,
             2,
             0,
             0});
-			this.numericUpDown1.Minimum = new decimal(new int[] {
+			this.RemainingCountBox.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             -2147483648});
-			this.numericUpDown1.Name = "numericUpDown1";
-			this.numericUpDown1.Size = new System.Drawing.Size(57, 20);
-			this.numericUpDown1.TabIndex = 3;
-			this.numericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.numericUpDown1.ThousandsSeparator = true;
+			this.RemainingCountBox.Name = "RemainingCountBox";
+			this.RemainingCountBox.Size = new System.Drawing.Size(57, 20);
+			this.RemainingCountBox.TabIndex = 3;
+			this.RemainingCountBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.RemainingCountBox.ThousandsSeparator = true;
 			// 
 			// label2
 			// 
@@ -93,27 +95,39 @@
 			this.label2.TabIndex = 2;
 			this.label2.Text = "Action :";
 			// 
+			// panel1
+			// 
+			this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.panel1.Location = new System.Drawing.Point(12, 39);
+			this.panel1.Name = "panel1";
+			this.panel1.Size = new System.Drawing.Size(808, 384);
+			this.panel1.TabIndex = 4;
+			// 
 			// EventActionForm
 			// 
 			this.AcceptButton = this.CloseBox;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(757, 511);
-			this.Controls.Add(this.numericUpDown1);
+			this.ClientSize = new System.Drawing.Size(832, 464);
+			this.Controls.Add(this.panel1);
+			this.Controls.Add(this.RemainingCountBox);
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.label1);
-			this.Controls.Add(this.comboBox1);
+			this.Controls.Add(this.ActionListBox);
 			this.Controls.Add(this.CloseBox);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
 			this.KeyPreview = true;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
+			this.MinimumSize = new System.Drawing.Size(500, 300);
 			this.Name = "EventActionForm";
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Event action wizard";
-			((System.ComponentModel.ISupportInitialize) (this.numericUpDown1)).EndInit();
+			((System.ComponentModel.ISupportInitialize) (this.RemainingCountBox)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -122,9 +136,10 @@
 		#endregion
 
 		private System.Windows.Forms.Button CloseBox;
-		private System.Windows.Forms.ComboBox comboBox1;
+		private System.Windows.Forms.ComboBox ActionListBox;
 		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.NumericUpDown numericUpDown1;
+		private System.Windows.Forms.NumericUpDown RemainingCountBox;
 		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.Panel panel1;
 	}
 }

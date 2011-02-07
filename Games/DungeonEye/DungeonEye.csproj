@@ -325,7 +325,6 @@
     <Compile Include="Source\EventScript\Actions\ScriptHealing.cs" />
     <Compile Include="Source\EventScript\Actions\ScriptTeleport.cs" />
     <Compile Include="Source\EventScript\Actions\ScriptToggleTarget.cs" />
-    <Compile Include="Source\EventScript\Event.cs" />
     <Compile Include="Source\EventScript\ScriptButton.cs" />
     <Compile Include="Source\EventScript\ScriptChoice.cs" />
     <Compile Include="Source\Gui\CampWindows\DropCharacterWindow.cs" />

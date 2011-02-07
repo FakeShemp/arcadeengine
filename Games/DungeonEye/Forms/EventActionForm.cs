@@ -33,6 +33,19 @@ namespace DungeonEye.Forms
 		public EventActionForm()
 		{
 			InitializeComponent();
+
+
+			ActionListBox.BeginUpdate();
+			ActionListBox.Items.Add("Activate");
+			ActionListBox.Items.Add("Deactivate");
+			ActionListBox.Items.Add("Give Experience");
+			ActionListBox.Items.Add("Give Item");
+			ActionListBox.Items.Add("Healing");
+			ActionListBox.Items.Add("Teleport");
+			ActionListBox.Items.Add("End Choice");
+			ActionListBox.Items.Add("End Dialog");
+			ActionListBox.EndUpdate();
+
 		}
 	}
 }

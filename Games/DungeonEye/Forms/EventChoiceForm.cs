@@ -98,7 +98,7 @@ namespace DungeonEye.Forms
 
 		private void AddActionBox_Click(object sender, EventArgs e)
 		{
-
+			new EventActionForm().ShowDialog();
 		}
 
 		private void AddItemBox_Click(object sender, EventArgs e)

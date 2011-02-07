@@ -75,7 +75,7 @@ namespace DungeonEye
 			ScriptChoice choice1 = new ScriptChoice("Yes");
 			choice1.Actions.Add(new ScriptTeleport
 			{
-				Target = new DungeonLocation("Forest", new Point(9, 15), CardinalPoint.West, SquarePosition.Center),
+				Target = new DungeonLocation("maze_01", new Point(8, 2), CardinalPoint.West, SquarePosition.Center),
 				ChangeDirection = true,
 			});
 			choice1.Actions.Add(new ScriptEndDialog());
@@ -86,8 +86,9 @@ namespace DungeonEye
 				Target = new DungeonLocation("Forest", new Point(10, 12), CardinalPoint.North, SquarePosition.Center),
 				ChangeDirection = true,
 			});
-			SetChoices(choice1, choice2);
 			choice2.Actions.Add(new ScriptEndDialog());
+
+			SetChoices(choice1, choice2);
 		}
 
 
