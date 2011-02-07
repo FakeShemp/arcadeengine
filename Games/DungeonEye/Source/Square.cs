@@ -60,7 +60,7 @@ namespace DungeonEye
 			Type = SquareType.Wall;
 			Monsters = new Monster[4];
 
-			WallDecoration = new int[4];
+			Decorations = new int[4];
 			Alcoves = new bool[4];
 
 			Items = new List<Item>[4];
@@ -322,7 +322,7 @@ namespace DungeonEye
 		/// <returns></returns>
 		public WallDecoration GetWallDecoration(CardinalPoint direction)
 		{
-			return ResourceManager.CreateAsset<WallDecoration>(WallDecoration[(int)direction].ToString());
+			return ResourceManager.CreateAsset<WallDecoration>(Decorations[(int)direction].ToString());
 		}
 
 
@@ -504,11 +504,11 @@ namespace DungeonEye
 			// Wall decoration
 			for (int i = 0; i < 4; i++)
 			{
-				if (WallDecoration[i] != 0)
+				if (Decorations[i] != 0)
 				{
 					writer.WriteStartElement("decoration");
 					writer.WriteAttributeString("position", i.ToString());
-					writer.WriteAttributeString("id", WallDecoration[i].ToString());
+					writer.WriteAttributeString("id", Decorations[i].ToString());
 					writer.WriteEndElement();
 				}
 			}
@@ -975,7 +975,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Decoration on each wall block
 		/// </summary>
-		public int[] WallDecoration;
+		public int[] Decorations;
 
 
 		/// <summary>

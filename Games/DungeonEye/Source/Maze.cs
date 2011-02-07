@@ -657,7 +657,7 @@ namespace DungeonEye
 
 			#endregion
 
-			#region Items on ground
+			#region Items on ground before a door
 			List<Item>[] list = block.GetItems(view);
 			if (!block.IsWall)
 			{
@@ -670,7 +670,24 @@ namespace DungeonEye
 					{
 						point = DisplayCoordinates.GetGroundPosition(position, (SquarePosition)i);
 						if (!point.IsEmpty)
-							batch.DrawTile(ItemsTileset, item.GroundTileID + offset, point);
+						{
+							Tile tile = ItemsTileset.GetTile(item.GroundTileID);
+							if (tile != null)
+							{
+								// Get the screen location
+								Rectangle rect = new Rectangle(
+									point.X - tile.Origin.X, point.Y - tile.Origin.Y,
+									tile.Rectangle.Width / (offset + 1), tile.Rectangle.Height / (offset + 1));
+
+								// Fade color
+								Color color = offset < 2 ? Color.White : Color.Gray;
+
+
+								batch.DrawTile(ItemsTileset, item.GroundTileID + offset, point);
+								batch.DrawTile(ItemsTileset, item.GroundTileID, point, rect, color);
+								//batch.DrawTile(ItemsTileset, item.GroundTileID + offset, point, Color.Green);
+							}
+						}
 					}
 				}
 			}
@@ -737,7 +754,7 @@ namespace DungeonEye
 			}
 			#endregion
 
-			#region Items on ground
+			#region Items on ground after a door
 			if (!block.IsWall)
 			{
 				for (int i = 2; i < 4; i++)
@@ -747,9 +764,20 @@ namespace DungeonEye
 
 					foreach (Item item in list[i])
 					{
+						// Get screen coordinate
 						point = DisplayCoordinates.GetGroundPosition(position, (SquarePosition)i);
 						if (!point.IsEmpty)
-							batch.DrawTile(ItemsTileset, item.GroundTileID + offset, point);
+						{
+							Tile tile = ItemsTileset.GetTile(item.GroundTileID);
+							if (tile != null)
+							{
+								Rectangle rect = tile.Rectangle;
+								rect.Inflate(offset, offset);
+
+								batch.DrawTile(ItemsTileset, item.GroundTileID, point, rect, Color.Red);
+								batch.DrawTile(ItemsTileset, item.GroundTileID + offset, point);
+							}
+						}
 					}
 				}
 			}

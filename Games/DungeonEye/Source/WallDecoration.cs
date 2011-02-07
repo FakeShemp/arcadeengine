@@ -39,7 +39,7 @@ namespace DungeonEye
 	{
 
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
 		public WallDecoration()
 		{
@@ -64,7 +64,7 @@ namespace DungeonEye
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="filename"></param>
+		/// <param name="xml"></param>
 		/// <returns></returns>
 		public bool Load(XmlNode xml)
 		{
@@ -129,18 +129,7 @@ namespace DungeonEye
 			return true;
 		}
 
-/*
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="filename"></param>
-		/// <returns></returns>
-		public bool Save(string filename)
-		{
-			return false;
 
-		}
-*/
 		#endregion
 
 
