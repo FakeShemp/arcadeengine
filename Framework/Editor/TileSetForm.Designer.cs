@@ -55,6 +55,7 @@
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.SizeLabel = new System.Windows.Forms.ToolStripLabel();
 			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+			this.AutoDetectBox = new System.Windows.Forms.ToolStripButton();
 			this.RenderTimer = new System.Windows.Forms.Timer(this.components);
 			this.GLTileControl = new OpenTK.GLControl();
 			this.GLTextureControl = new OpenTK.GLControl();
@@ -207,7 +208,8 @@
             this.PositionLabel,
             this.toolStripSeparator3,
             this.SizeLabel,
-            this.toolStripSeparator4});
+            this.toolStripSeparator4,
+            this.AutoDetectBox});
 			this.TextureToolStrip.Location = new System.Drawing.Point(0, 0);
 			this.TextureToolStrip.Name = "TextureToolStrip";
 			this.TextureToolStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -330,6 +332,16 @@
 			this.toolStripSeparator4.Name = "toolStripSeparator4";
 			this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
 			// 
+			// AutoDetectBox
+			// 
+			this.AutoDetectBox.CheckOnClick = true;
+			this.AutoDetectBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.AutoDetectBox.Image = ((System.Drawing.Image)(resources.GetObject("AutoDetectBox.Image")));
+			this.AutoDetectBox.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.AutoDetectBox.Name = "AutoDetectBox";
+			this.AutoDetectBox.Size = new System.Drawing.Size(23, 22);
+			this.AutoDetectBox.Text = "Auto detect borders";
+			// 
 			// RenderTimer
 			// 
 			this.RenderTimer.Enabled = true;
@@ -365,6 +377,7 @@
 			this.GLTextureControl.TabIndex = 16;
 			this.GLTextureControl.VSync = false;
 			this.GLTextureControl.Paint += new System.Windows.Forms.PaintEventHandler(this.GLTextureControl_Paint);
+			this.GLTextureControl.MouseClick += new System.Windows.Forms.MouseEventHandler(this.GLTextureControl_MouseClick);
 			this.GLTextureControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.GLTextureControl_MouseDown);
 			this.GLTextureControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GLTextureControl_MouseMove);
 			this.GLTextureControl.MouseUp += new System.Windows.Forms.MouseEventHandler(this.GLTextureControl_MouseUp);
@@ -426,5 +439,6 @@
 		private System.Windows.Forms.ToolStripButton ColisionBox;
 		private System.Windows.Forms.ToolStripTextBox TextureNameBox;
 		private System.Windows.Forms.ToolStripButton ChangeTextureBox;
+		private System.Windows.Forms.ToolStripButton AutoDetectBox;
 	}
 }

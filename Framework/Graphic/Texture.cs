@@ -302,7 +302,7 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Locks the bitmap texture to system memory
 		/// </summary>
-		/// <param name="target">Reference face</param>
+		/// <param name="target">Reference mode</param>
 		/// <param name="mode">Access mode</param>
 		/// <returns>True if locked, or false if an error occured</returns>
 		protected bool Lock(TextureTarget target, ImageLockMode mode)
@@ -310,11 +310,11 @@ namespace ArcEngine.Graphic
 			// No texture bounds
 			if (Handle == -1  || IsLocked)
 			{
-				Trace.WriteDebugLine("[Texture2D] : Lock() failed. Lockmode = {0} - {1}", mode.ToString(), this);
+				Trace.WriteDebugLine("[Texture] : Lock() failed. Lockmode = {0} - {1}", mode.ToString(), this);
 				return false;
 			}
 
-		//	Trace.WriteDebugLine("[Texture2D] : Lock() Lockmode = {0} - {1}", mode.ToString(), this);
+		//	Trace.WriteDebugLine("[Texture] : Lock() Lockmode = {0} - {1}", mode.ToString(), this);
 
 	
 			Data = new byte[Size.Width * Size.Height * 4];
@@ -327,7 +327,7 @@ namespace ArcEngine.Graphic
 
 
 			Display.Texture = this;
-			TK.GL.GetTexImage<byte>((TK.TextureTarget) target, 0, (TK.PixelFormat) PixelFormat, TK.PixelType.UnsignedByte, Data);
+			TK.GL.GetTexImage<byte>((TK.TextureTarget)target, 0, (TK.PixelFormat) PixelFormat, TK.PixelType.UnsignedByte, Data);
 			return true;
 		}
 
@@ -362,6 +362,35 @@ namespace ArcEngine.Graphic
 
 		//	Trace.WriteDebugLine("[Texture2D] : Unlock() {0}", this);
 
+		}
+
+
+		/// <summary>
+		/// Returns a read only array of Color of the texture
+		/// </summary>
+		/// <param name="target">Reference mode</param>
+		/// <returns>A bi dimensional array of colors</returns>
+		protected Color[,] DataToColor(TextureTarget target)
+		{
+			Lock(target, ImageLockMode.ReadOnly);
+
+			Color[,] colors = new Color[Size.Width, Size.Height];
+
+			for (int y = 0; y < Size.Height; y++)
+			{
+				for (int x = 0; x < Size.Width; x++)
+				{
+					int offset = y * Size.Width *4 + x * 4;
+					colors[x, y] = Color.FromArgb(
+						Data[offset + 3],
+						Data[offset + 2],
+						Data[offset + 1],
+						Data[offset + 0]);
+				}
+			}
+			Unlock(target);
+
+			return colors;
 		}
 
 		#endregion

@@ -330,6 +330,35 @@ namespace ArcEngine.Graphic
 
 
 		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="mode"></param>
+		/// <returns></returns>
+		public bool Lock(ImageLockMode mode)
+		{
+			return Lock(TextureTarget.Texture2D, mode);
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public void Unlock()
+		{
+			Unlock(TextureTarget.Texture2D);
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		public Color[,] GetColors()
+		{
+			return DataToColor(TextureTarget.Texture2D);
+		}
+
+		/// <summary>
 		/// Sets the size of the texture
 		/// </summary>
 		/// <param name="size">Desired size</param>
