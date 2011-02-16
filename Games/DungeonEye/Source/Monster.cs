@@ -814,34 +814,21 @@ namespace DungeonEye
 			int[][] sub = new int[][]
 			{
 				// Looking from north
-				new int[]
-				{
-					0,1,2,3,4
-				},
+				new int[] {0,1,2,3,4},
 				
 				// Looking from south
-				new int[]
-				{
-					3,2,1,0,4
-				},
+				new int[] {3,2,1,0,4},
 
 				// Looking from west
-				new int[]
-				{
-					1,3,0,2,4
-				},
+				new int[] {1,3,0,2,4},
 
 				// Looking from east
-				new int[]
-				{
-					2,0,3,1,4
-				},
+				new int[] {2,0,3,1,4},
 
 			};
 			#endregion
 
 			#region Color offset
-			// Color offset
 			Color[] colors = new Color[]
 			{
 				Color.Gray,			// A
@@ -907,7 +894,13 @@ namespace DungeonEye
 					Point position = DisplayCoordinates.GetGroundPosition(pos, squarepos);
 					position.Offset(DrawOffset.X / offsetscale[offset].X, DrawOffset.Y / offsetscale[offset].Y);
 
-					batch.DrawTile(Tileset, GetTileID(teamdir), position, colors[(int)pos]);
+					// Draw
+					batch.DrawTile(Tileset, 
+						GetTileID(teamdir), 
+						position, colors[(int)pos], 
+						0.0f, 
+						NeedSwapSprite(teamdir) ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 
+						0.0f);
 					Tileset.Scale = new Vector2(1.0f, 1.0f);
 
 
@@ -1001,16 +994,34 @@ namespace DungeonEye
 			int[][] id = new int[][]
 			{
 				//    From	 N  S  W  E       Looking
-				new int[]	{5, 0, 3, 1},	// North
-				new int[]	{0, 5, 1, 3},	// South
-				new int[]	{1, 3, 5, 0},	// West
-				new int[]	{3, 1, 0, 5},	// East
+				new int[]	{3, 0, 2, 1},	// North
+				new int[]	{0, 3, 1, 2},	// South
+				new int[]	{1, 2, 3, 0},	// West
+				new int[]	{2, 1, 0, 3},	// East
 			};
 
-			return id[(int)Direction][(int) point] + Tile;
+			return id[(int)Direction][(int)point] + Tile;
 		}
 
 
+		/// <summary>
+		/// Gets if the sprite need to be horizontally flipped
+		/// </summary>
+		/// <param name="point">View direction of the viewer</param>
+		/// <returns>True if the sprite need to be flipped</returns>
+		bool NeedSwapSprite(CardinalPoint point)
+		{
+			bool[][] id = new bool[][]
+			{
+				//    From	    N     S      W      E       Looking
+				new bool[]	{false, false, true,  false},	// North
+				new bool[]	{false, false, false, true},	// South
+				new bool[]	{false, true,  false, false},	// West
+				new bool[]	{true,  false, false, false},	// East
+			};
+
+			return id[(int)Direction][(int)point];
+		}
 
 		/// <summary>
 		/// Gets if the monster can see the given location
@@ -1258,7 +1269,7 @@ namespace DungeonEye
 					}
 					break;
 
-					case "cansseinvisible":
+					case "canseeinvisible":
 					{
 						CanSeeInvisible = bool.Parse(value);
 					}
@@ -1486,7 +1497,7 @@ namespace DungeonEye
 			writer.WriteAttributeString("value", BackRowAttack.ToString());
 			writer.WriteEndElement();
 
-			writer.WriteStartElement("cansseinvisible");
+			writer.WriteStartElement("canseeinvisible");
 			writer.WriteAttributeString("value", CanSeeInvisible.ToString());
 			writer.WriteEndElement();
 

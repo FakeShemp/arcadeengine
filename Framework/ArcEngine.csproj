@@ -171,6 +171,12 @@
     <Compile Include="Editor\ToolStripNumberControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="GameComponent.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GameComponentCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Interface\IAsset.cs" />
     <Compile Include="Asset\Scenes\Scene.cs" />
     <Compile Include="Asset\Language.cs" />
@@ -349,7 +355,6 @@
     </Compile>
     <Compile Include="Game.cs" />
     <Compile Include="GameClock.cs" />
-    <Compile Include="GameComponentCollection.cs" />
     <Compile Include="Graphic\BatchBuffer.cs" />
     <Compile Include="Graphic\PixelBuffer.cs" />
     <Compile Include="Graphic\FrameBuffer.cs" />
@@ -359,7 +364,6 @@
     <Compile Include="Graphic\Texture1D.cs" />
     <Compile Include="Graphic\Texture2D.cs" />
     <Compile Include="Graphic\Display.cs" />
-    <Compile Include="GameComponent.cs" />
     <Compile Include="Graphic\TextureCubeMap.cs" />
     <Compile Include="Graphic\TextureRectangle.cs" />
     <Compile Include="Graphic\VertexPositionColor.cs" />
@@ -428,7 +432,6 @@
     <Compile Include="Utility\GUI\Button.cs" />
     <Compile Include="Utility\GUI\Control.cs" />
     <Compile Include="Asset\Layout.cs" />
-    <Compile Include="ScriptManager.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Utility\Terminal.cs" />
     <Compile Include="Forms\TerminalForm.cs">

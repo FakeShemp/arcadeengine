@@ -557,33 +557,33 @@ namespace DungeonEye
 			// P Team Q
 
 			#region row -3
-			DrawBlock(batch, pov, ViewFieldPosition.A, location.Direction);
-			DrawBlock(batch, pov, ViewFieldPosition.G, location.Direction);
-			DrawBlock(batch, pov, ViewFieldPosition.B, location.Direction);
-			DrawBlock(batch, pov, ViewFieldPosition.F, location.Direction);
-			DrawBlock(batch, pov, ViewFieldPosition.C, location.Direction);
-			DrawBlock(batch, pov, ViewFieldPosition.E, location.Direction);
-			DrawBlock(batch, pov, ViewFieldPosition.D, location.Direction);
+			DrawSquare(batch, pov, ViewFieldPosition.A, location.Direction);
+			DrawSquare(batch, pov, ViewFieldPosition.G, location.Direction);
+			DrawSquare(batch, pov, ViewFieldPosition.B, location.Direction);
+			DrawSquare(batch, pov, ViewFieldPosition.F, location.Direction);
+			DrawSquare(batch, pov, ViewFieldPosition.C, location.Direction);
+			DrawSquare(batch, pov, ViewFieldPosition.E, location.Direction);
+			DrawSquare(batch, pov, ViewFieldPosition.D, location.Direction);
 			#endregion
 
 			#region row -2
-			DrawBlock(batch, pov, ViewFieldPosition.H, location.Direction);
-			DrawBlock(batch, pov, ViewFieldPosition.L, location.Direction);
-			DrawBlock(batch, pov, ViewFieldPosition.I, location.Direction);
-			DrawBlock(batch, pov, ViewFieldPosition.K, location.Direction);
-			DrawBlock(batch, pov, ViewFieldPosition.J, location.Direction);
+			DrawSquare(batch, pov, ViewFieldPosition.H, location.Direction);
+			DrawSquare(batch, pov, ViewFieldPosition.L, location.Direction);
+			DrawSquare(batch, pov, ViewFieldPosition.I, location.Direction);
+			DrawSquare(batch, pov, ViewFieldPosition.K, location.Direction);
+			DrawSquare(batch, pov, ViewFieldPosition.J, location.Direction);
 			#endregion
 
 			#region row -1
-			DrawBlock(batch, pov, ViewFieldPosition.M, location.Direction);
-			DrawBlock(batch, pov, ViewFieldPosition.O, location.Direction);
-			DrawBlock(batch, pov, ViewFieldPosition.N, location.Direction);
+			DrawSquare(batch, pov, ViewFieldPosition.M, location.Direction);
+			DrawSquare(batch, pov, ViewFieldPosition.O, location.Direction);
+			DrawSquare(batch, pov, ViewFieldPosition.N, location.Direction);
 			#endregion
 
 			#region row 0
-			DrawBlock(batch, pov, ViewFieldPosition.P, location.Direction);
-			DrawBlock(batch, pov, ViewFieldPosition.Team, location.Direction);
-			DrawBlock(batch, pov, ViewFieldPosition.Q, location.Direction);
+			DrawSquare(batch, pov, ViewFieldPosition.P, location.Direction);
+			DrawSquare(batch, pov, ViewFieldPosition.Team, location.Direction);
+			DrawSquare(batch, pov, ViewFieldPosition.Q, location.Direction);
 			#endregion
 
 
@@ -597,13 +597,13 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Draws a block
+		/// Draws a square
 		/// </summary>
-		/// <param name="batch"></param>
+		/// <param name="batch">Spritebatch handle</param>
 		/// <param name="field">View field</param>
 		/// <param name="position">Position in the view field</param>
 		/// <param name="view">Looking direction of the team</param>
-		void DrawBlock(SpriteBatch batch, ViewField field, ViewFieldPosition position, CardinalPoint view)
+		void DrawSquare(SpriteBatch batch, ViewField field, ViewFieldPosition position, CardinalPoint view)
 		{
 			if (field == null)
 				return;
@@ -684,7 +684,7 @@ namespace DungeonEye
 
 
 								batch.DrawTile(ItemsTileset, item.GroundTileID + offset, point);
-								batch.DrawTile(ItemsTileset, item.GroundTileID, point, rect, color);
+								//batch.DrawTile(ItemsTileset, item.GroundTileID, point, rect, color);
 								//batch.DrawTile(ItemsTileset, item.GroundTileID + offset, point, Color.Green);
 							}
 						}
@@ -774,7 +774,7 @@ namespace DungeonEye
 								Rectangle rect = tile.Rectangle;
 								rect.Inflate(offset, offset);
 
-								batch.DrawTile(ItemsTileset, item.GroundTileID, point, rect, Color.Red);
+								//batch.DrawTile(ItemsTileset, item.GroundTileID, point, rect, Color.Red);
 								batch.DrawTile(ItemsTileset, item.GroundTileID + offset, point);
 							}
 						}
