@@ -95,8 +95,8 @@ namespace DungeonEye
 			bool canmove = true;
 
 			// The team
-			if (Team.Location.Maze == Location.Maze &&
-				Team.Location.Coordinate == dst)
+			if (Team.Handle.Location.Maze == Location.Maze &&
+				Team.Handle.Location.Coordinate == dst)
 				canmove = false;
 
 			// A wall
@@ -361,29 +361,29 @@ namespace DungeonEye
 						Heal();
 
 					// Not in the same maze
-					else if (Team.Maze != Maze)
+					else if (Team.Handle.Maze != Maze)
 						break;
 
 					// Facing the team
-					else if (Compass.SeekDirection(Location, Team.Location) != Direction)
+					else if (Compass.SeekDirection(Location, Team.Handle.Location) != Direction)
 					{
-						Direction = Compass.SeekDirection(Location, Team.Location);
+						Direction = Compass.SeekDirection(Location, Team.Handle.Location);
 					}
 
 					// Can get closer while staying in the same square ?
-					else if (CanGetCloserTo(Team.Location))
+					else if (CanGetCloserTo(Team.Handle.Location))
 					{
-						GetCloserTo(Team.Location);
+						GetCloserTo(Team.Handle.Location);
 					}
 
 					// Can do close attack ?
-					else if (CanDoCloseAttack(Team.Location))
+					else if (CanDoCloseAttack(Team.Handle.Location))
 					{
-						Attack(Team.Location);
+						Attack(Team.Handle.Location);
 					}
 
 					// If neat the target
-					else if (IsNear(Team.Location))
+					else if (IsNear(Team.Handle.Location))
 					{
 						// Face the target
 						//if (Location.IsFacing(Team.Location))

@@ -42,7 +42,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="heroes">Heroes team</param>
+		/// <param name="heroes">Heroes in the team</param>
 		public Team(Hero[] heroes)
 		{
 			if (Handle != null)
@@ -449,7 +449,7 @@ namespace DungeonEye
 			{
 				DrawMain(Batch);
 
-				
+
 				// Action zones
 				//for (int id = 0 ; id < 6 ; id++)
 				//{
@@ -919,6 +919,8 @@ namespace DungeonEye
 		public override void Update(GameTime time, bool hasFocus, bool isCovered)
 		{
 
+			#region Dialog
+
 			if (Dialog != null)
 			{
 				if (Dialog.Quit)
@@ -930,7 +932,7 @@ namespace DungeonEye
 				}
 			}
 
-
+			#endregion
 
 
 			HasMoved = false;
@@ -1004,16 +1006,19 @@ namespace DungeonEye
 					string lvl = "0" + id.ToString();
 					lvl = "maze_" + lvl.Substring(lvl.Length - 2, 2);
 
-					Maze maze = Dungeon.GetMaze(lvl);
-					if (maze == null)
-						break;
+					//DungeonLocation location = new DungeonLocation(lvl, Location.Coordinate);
+					if (Teleport(lvl))
 
-					Maze = maze;
-					AddMessage("Loading " + lvl + ":" + maze.Description);
+					//Maze maze = Dungeon.GetMaze(lvl);
+					//if (maze == null)
+					//    break;
+
+					//Maze = maze;
+						AddMessage("Loading " + lvl + ":" + Maze.Description);
 
 
 					//Teleport(null);
-					
+
 
 					break;
 				}
@@ -1022,21 +1027,27 @@ namespace DungeonEye
 			// Test maze
 			if (Keyboard.IsNewKeyPress(Keys.T))
 			{
-				Maze maze = Dungeon.GetMaze("test");
-				if (maze != null)
+				if (Teleport("test"))
 				{
-					Maze = maze;
+
+					//Maze maze = Dungeon.GetMaze("test");
+					//if (maze != null)
+					//{
+					//    Maze = maze;
 					AddMessage("Loading maze test", GameColors.Blue);
+					//}
 				}
 			}
 
 			// Forest maze
 			if (Keyboard.IsNewKeyPress(Keys.F))
 			{
-				Maze maze = Dungeon.GetMaze("Forest");
-				if (maze != null)
+				if (Teleport("Forest"))
 				{
-					Maze = maze;
+					//Maze maze = Dungeon.GetMaze("Forest");
+					//if (maze != null)
+					//{
+					//    Maze = maze;
 					AddMessage("Loading maze forest", Color.Blue);
 				}
 			}
@@ -1322,28 +1333,28 @@ namespace DungeonEye
 				#region Action to process on the front square
 
 				// Click on the square in front of the team
-				else if (DisplayCoordinates.FrontSquare.Contains(mousePos))// && FrontBlock.IsWall)
+				else if (DisplayCoordinates.FrontSquare.Contains(mousePos))
 				{
 					if (!FrontSquare.OnClick(this, mousePos, FrontWallSide))
 					{
-						#region Throw an object left side
+						#region Throw an object in the left side
 						if (DisplayCoordinates.ThrowLeft.Contains(mousePos) && ItemInHand != null)
 						{
 							DungeonLocation loc = new DungeonLocation(Location);
 							switch (Location.Direction)
 							{
 								case CardinalPoint.North:
-									loc.Position = SquarePosition.SouthWest;
-									break;
+								loc.Position = SquarePosition.SouthWest;
+								break;
 								case CardinalPoint.East:
-									loc.Position = SquarePosition.NorthWest;
-									break;
+								loc.Position = SquarePosition.NorthWest;
+								break;
 								case CardinalPoint.South:
-									loc.Position = SquarePosition.NorthEast;
-									break;
+								loc.Position = SquarePosition.NorthEast;
+								break;
 								case CardinalPoint.West:
-									loc.Position = SquarePosition.SouthEast;
-									break;
+								loc.Position = SquarePosition.SouthEast;
+								break;
 							}
 							Maze.ThrownItems.Add(new ThrownItem(SelectedHero, ItemInHand, loc, TimeSpan.FromSeconds(0.25), 4));
 							SetItemInHand(null);
@@ -1558,7 +1569,7 @@ namespace DungeonEye
 
 
 				// Left mouse button down
-				if (Mouse.IsNewButtonDown(MouseButtons.Left) && Dialog == null) //.IsVisible)
+				if (Mouse.IsNewButtonDown(MouseButtons.Left) && Dialog == null)
 				{
 
 					Item item = null;
@@ -1571,21 +1582,21 @@ namespace DungeonEye
 						if (hero == null)
 							continue;
 
-						// Select hero
+						#region Select hero
 						if (InterfaceCoord.SelectHero[id].Contains(mousePos))
 							SelectedHero = hero;
+						#endregion
 
-
-						// Swap hero
+						#region Swap hero
 						if (InterfaceCoord.HeroFace[id].Contains(mousePos))
 						{
 							SelectedHero = hero;
 							HeroToSwap = null;
 							Interface = TeamInterface.Inventory;
 						}
+						#endregion
 
-
-						// Take object in primary hand
+						#region Take object in primary hand
 						if (InterfaceCoord.PrimaryHand[id].Contains(mousePos)) // && hero.CanUseHand(HeroHand.Primary))
 						{
 							item = hero.GetInventoryItem(InventoryPosition.Primary);
@@ -1602,8 +1613,9 @@ namespace DungeonEye
 								hero.SetInventoryItem(InventoryPosition.Primary, null);
 							}
 						}
+						#endregion
 
-						// Take object in secondary hand
+						#region Take object in secondary hand
 						if (InterfaceCoord.SecondaryHand[id].Contains(mousePos)) // && hero.CanUseHand(HeroHand.Secondary))
 						{
 							item = hero.GetInventoryItem(InventoryPosition.Secondary);
@@ -1621,6 +1633,7 @@ namespace DungeonEye
 								hero.SetInventoryItem(InventoryPosition.Secondary, null);
 							}
 						}
+						#endregion
 					}
 
 
@@ -1631,7 +1644,7 @@ namespace DungeonEye
 				#region Right mouse button action
 
 				// Right mouse button down
-				if (Mouse.IsNewButtonDown(MouseButtons.Right) && Dialog == null) //.IsVisible)
+				if (Mouse.IsNewButtonDown(MouseButtons.Right) && Dialog == null)
 				{
 
 					// Update each hero interface
@@ -1685,7 +1698,6 @@ namespace DungeonEye
 			}
 
 			#endregion
-
 
 
 			#region Heros update
@@ -2176,7 +2188,7 @@ namespace DungeonEye
 			int maxlen = 47;
 			foreach (string line in lines)
 			{
-				for (int i = 0; i < line.Length; i += maxlen)
+				for (int i = 0 ; i < line.Length ; i += maxlen)
 					Messages.Add(new ScreenMessage(line.Substring(i, Math.Min(line.Length - i, maxlen)), color));
 			}
 
@@ -2203,21 +2215,21 @@ namespace DungeonEye
 					hero.Damage(damage, type, difficulty);
 		}
 
-/*
-		/// <summary>
-		/// Hit all heroes in the team
-		/// </summary>
-		/// <param name="damage">Amount of damage</param>
-		public void Hit(int damage)
-		{
-			foreach (Hero hero in Heroes)
-			{
-				if (hero != null)
-					hero.HitPoint.Current -= damage;
-			}
-		}
-*/
-		
+		/*
+				/// <summary>
+				/// Hit all heroes in the team
+				/// </summary>
+				/// <param name="damage">Amount of damage</param>
+				public void Hit(int damage)
+				{
+					foreach (Hero hero in Heroes)
+					{
+						if (hero != null)
+							hero.HitPoint.Current -= damage;
+					}
+				}
+		*/
+
 		/// <summary>
 		/// Add experience to the whole team
 		/// </summary>
@@ -2334,8 +2346,8 @@ namespace DungeonEye
 				new int[]{0, 0, 3, 3},		// From SW
 				new int[]{1, 1, 2, 2},		// From SE
 			};
-			
-			SquarePosition pos = (SquarePosition) id[(int)position][(int)Direction];
+
+			SquarePosition pos = (SquarePosition) id[(int) position][(int) Direction];
 
 			return FrontSquare.GetMonster(pos);
 		}
@@ -2643,6 +2655,19 @@ namespace DungeonEye
 		}
 
 
+
+		/// <summary>
+		/// Teleport to a new maze
+		/// </summary>
+		/// <param name="name">Name of the maze</param>
+		/// <returns>True on success</returns>
+		public bool Teleport(string name)
+		{
+			DungeonLocation loc = new DungeonLocation(name, Location.Coordinate);
+			return Teleport(loc);
+		}
+
+
 		/// <summary>
 		/// Teleport the team to a new location, but don't change direction
 		/// </summary>
@@ -2666,7 +2691,10 @@ namespace DungeonEye
 
 			// Change location
 			Location.Coordinate = location.Coordinate;
-			
+			Location.Maze = Maze.Name;
+			Location.Direction = location.Direction;
+
+
 			// New block
 			Square = Maze.GetSquare(location.Coordinate);
 
@@ -2702,7 +2730,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Dungeon to use
 		/// </summary>
-		static public Dungeon Dungeon
+		public Dungeon Dungeon
 		{
 			get;
 			private set;
@@ -2712,7 +2740,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Current maze
 		/// </summary>
-		static public Maze Maze
+		public Maze Maze
 		{
 			get;
 			private set;
@@ -2722,7 +2750,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Location of the team
 		/// </summary>
-		static public DungeonLocation Location
+		public DungeonLocation Location
 		{
 			get;
 			private set;

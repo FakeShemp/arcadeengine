@@ -199,8 +199,7 @@ namespace DungeonEye
 				item.Update(time, this);
 
 			// Remove all blocked flying items
-			ThrownItems.RemoveAll(
-				delegate(ThrownItem fi)
+			ThrownItems.RemoveAll(fi =>
 				{
 					// Item can fly
 					if (fi.Distance > 0)
@@ -870,7 +869,7 @@ namespace DungeonEye
 						color = Color.Red;
 
 					
-					if (Team.Location.Coordinate.X == x && Team.Location.Coordinate.Y == y && Team.Maze == this)
+					if (Team.Handle.Location.Coordinate.X == x && Team.Handle.Location.Coordinate.Y == y && Team.Handle.Maze == this)
 						color = Color.Blue;
 
 					batch.FillRectangle(new Rectangle(location.X + x * 4, location.Y + y * 4, 4, 4), color);

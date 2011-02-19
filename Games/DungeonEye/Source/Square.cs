@@ -178,7 +178,7 @@ namespace DungeonEye
 		/// <returns>True if the event is processed</returns>
 		public bool OnClick(Team team, Point location, CardinalPoint side)
 		{
-			if (team == null ||Actor == null)
+			if (team == null || Actor == null)
 				return false;
 
 

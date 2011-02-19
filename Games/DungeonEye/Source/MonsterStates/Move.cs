@@ -82,9 +82,9 @@ namespace DungeonEye.MonsterStates
 
 
 			// Can detect the team
-			if (Monster.CanDetect(Team.Location))
+			if (Monster.CanDetect(Team.Handle.Location))
 			{
-				Monster.TurnTo(Team.Location);
+				Monster.TurnTo(Team.Handle.Location);
 				return;
 			}
 

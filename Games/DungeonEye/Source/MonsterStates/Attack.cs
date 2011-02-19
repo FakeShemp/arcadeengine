@@ -49,22 +49,22 @@ namespace DungeonEye.MonsterStates
 		public override void Update(GameTime time)
 		{
 			// Can see the team anymore
-			if (!Monster.CanSee(Team.Location) || !Monster.CanDetect(Team.Location))
+			if (!Monster.CanSee(Team.Handle.Location) || !Monster.CanDetect(Team.Handle.Location))
 			{
 				Exit = true;
 				return;
 			}
 
 			// Facing the team ?
-			if (!Monster.Location.IsFacing(Team.Location))
+			if (!Monster.Location.IsFacing(Team.Handle.Location))
 			{
-				Monster.TurnTo(Team.Location);
+				Monster.TurnTo(Team.Handle.Location);
 				return;
 			}
 
 	
 			// Can attack ?
-			if (Monster.Attack(Team.Location))
+			if (Monster.Attack(Team.Handle.Location))
 				return;
 
 			// Move to the team
