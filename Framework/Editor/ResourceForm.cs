@@ -26,7 +26,8 @@ using System.Windows.Forms;
 using ArcEngine.Forms;
 using ArcEngine;
 using WeifenLuo.WinFormsUI.Docking;
-
+using ArcEngine.Asset;
+using ArcEngine.Audio;
 
 namespace ArcEngine.Editor
 {
@@ -50,10 +51,20 @@ namespace ArcEngine.Editor
 		/// </summary>
 		public void RebuildResourceTree()
 		{
+			// Asset icon
+			Dictionary<Type, int> tab = new Dictionary<Type, int>();
+			tab.Add(typeof(TileSet), 2);
+			tab.Add(typeof(StringTable), 4);
+			tab.Add(typeof(AudioSample), 32);
+			tab.Add(typeof(Script), 24);
+
+
 			ResourceTree.BeginUpdate();
 
 			ResourceTree.Nodes.Clear();
 			TreeNode bank = ResourceTree.Nodes.Add("Assets");
+			bank.ImageIndex = 31;
+			bank.SelectedImageIndex = 31;
 
 			// For each providers
 			foreach (Provider provider in ResourceManager.Providers)
@@ -78,6 +89,13 @@ namespace ArcEngine.Editor
 					{
 						TreeNode element = node.Nodes.Add(str);
 						element.Tag = type;
+
+						int imgindex = 14;
+						if (tab.ContainsKey(type))
+							imgindex = tab[type];
+
+						element.ImageIndex = imgindex;
+						element.SelectedImageIndex = imgindex;
 					}
 				}
 			}

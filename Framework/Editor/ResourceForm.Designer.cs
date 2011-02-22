@@ -44,21 +44,21 @@
 			this.ResourceTree.FullRowSelect = true;
 			this.ResourceTree.HideSelection = false;
 			this.ResourceTree.HotTracking = true;
-			this.ResourceTree.ImageIndex = 0;
+			this.ResourceTree.ImageIndex = 34;
 			this.ResourceTree.ImageList = this.MainImageList;
 			this.ResourceTree.LabelEdit = true;
 			this.ResourceTree.Location = new System.Drawing.Point(0, 0);
 			this.ResourceTree.Name = "ResourceTree";
-			this.ResourceTree.SelectedImageIndex = 0;
+			this.ResourceTree.SelectedImageIndex = 35;
 			this.ResourceTree.ShowRootLines = false;
 			this.ResourceTree.Size = new System.Drawing.Size(187, 273);
 			this.ResourceTree.TabIndex = 1;
 			this.ResourceTree.TabStop = false;
 			this.ResourceTree.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.ResourceTree_AfterLabelEdit);
+			this.ResourceTree.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.ResourceTree_NodeMouseClick);
 			this.ResourceTree.DoubleClick += new System.EventHandler(this.OnTreeViewDoubleCick);
 			this.ResourceTree.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp);
 			this.ResourceTree.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.ResourceTree_PreviewKeyDown);
-			this.ResourceTree.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.ResourceTree_NodeMouseClick);
 			// 
 			// MouseContextMenu
 			// 
@@ -71,7 +71,7 @@
 			// 
 			// RemoveMenuItem
 			// 
-			this.RemoveMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("RemoveMenuItem.Image")));
+			this.RemoveMenuItem.Image = ((System.Drawing.Image) (resources.GetObject("RemoveMenuItem.Image")));
 			this.RemoveMenuItem.Name = "RemoveMenuItem";
 			this.RemoveMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.RemoveMenuItem.Text = "Remove";
@@ -79,7 +79,7 @@
 			// 
 			// MainImageList
 			// 
-			this.MainImageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("MainImageList.ImageStream")));
+			this.MainImageList.ImageStream = ((System.Windows.Forms.ImageListStreamer) (resources.GetObject("MainImageList.ImageStream")));
 			this.MainImageList.TransparentColor = System.Drawing.Color.Transparent;
 			this.MainImageList.Images.SetKeyName(0, "ZoomOut.png");
 			this.MainImageList.Images.SetKeyName(1, "Add.png");
@@ -124,7 +124,7 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(187, 273);
 			this.Controls.Add(this.ResourceTree);
-			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 			this.HideOnClose = true;
 			this.Name = "ResourceForm";
 			this.ShowInTaskbar = false;
