@@ -8,22 +8,30 @@ using System.Text;
 using System.Windows.Forms;
 using DungeonEye.EventScript;
 
+
 namespace DungeonEye.Forms
 {
-	public partial class ScriptGiveExperienceControl : ScriptActionControlBase
+	/// <summary>
+	/// 
+	/// </summary>
+	public partial class ScriptChangePictureControl : ScriptActionControlBase
 	{
-		public ScriptGiveExperienceControl()
+		/// <summary>
+		/// 
+		/// </summary>
+		public ScriptChangePictureControl()
 		{
 			InitializeComponent();
 
-
-			Action = new ScriptGiveExperience();
+			Action = new ScriptChangePicture();
 		}
+
 
 
 		#region Properties
 
 
 		#endregion
+
 	}
 }

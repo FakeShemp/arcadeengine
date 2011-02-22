@@ -10,20 +10,28 @@ using DungeonEye.EventScript;
 
 namespace DungeonEye.Forms
 {
-	public partial class ScriptGiveExperienceControl : ScriptActionControlBase
+	/// <summary>
+	/// 
+	/// </summary>
+	public partial class ScriptGiveItemControl : ScriptActionControlBase
 	{
-		public ScriptGiveExperienceControl()
+		/// <summary>
+		/// 
+		/// </summary>
+		public ScriptGiveItemControl()
 		{
 			InitializeComponent();
 
 
-			Action = new ScriptGiveExperience();
+			Action = new ScriptGiveItem();
 		}
+
 
 
 		#region Properties
 
 
 		#endregion
+
 	}
 }

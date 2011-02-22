@@ -239,17 +239,89 @@
     <Compile Include="Forms\RenameForm.Designer.cs">
       <DependentUpon>RenameForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Script\ScriptedDialogForm.cs">
+    <Compile Include="Forms\Script\ScriptEnableChoiceControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Script\ScriptEnableChoiceControl.Designer.cs">
+      <DependentUpon>ScriptEnableChoiceControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Script\ScriptDisableChoiceControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Script\ScriptDisableChoiceControl.Designer.cs">
+      <DependentUpon>ScriptDisableChoiceControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Script\ScriptPlaySoundControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Script\ScriptPlaySoundControl.Designer.cs">
+      <DependentUpon>ScriptPlaySoundControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Script\ScriptChangePictureControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Script\ScriptChangePictureControl.Designer.cs">
+      <DependentUpon>ScriptChangePictureControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Script\ScriptToggleTargetControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Script\ScriptToggleTargetControl.Designer.cs">
+      <DependentUpon>ScriptToggleTargetControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Script\ScriptDeactivateTargetControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Script\ScriptDeactivateTargetControl.Designer.cs">
+      <DependentUpon>ScriptDeactivateTargetControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Script\ScriptActionControlBase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Script\ScriptActionControlBase.Designer.cs">
+      <DependentUpon>ScriptActionControlBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ScriptedDialogForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Script\ScriptedDialogForm.Designer.cs">
+    <Compile Include="Forms\ScriptedDialogForm.Designer.cs">
       <DependentUpon>ScriptedDialogForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Script\ScriptActivateTargetControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Script\ScriptActivateTargetControl.Designer.cs">
+      <DependentUpon>ScriptActivateTargetControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Script\ScriptChangeTextControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Script\ScriptChangeTextControl.Designer.cs">
+      <DependentUpon>ScriptChangeTextControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Script\ScriptGiveExperienceControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Forms\Script\ScriptGiveExperienceControl.Designer.cs">
       <DependentUpon>ScriptGiveExperienceControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Script\ScriptGiveItemControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Script\ScriptGiveItemControl.Designer.cs">
+      <DependentUpon>ScriptGiveItemControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Script\ScriptHealingControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Script\ScriptHealingControl.Designer.cs">
+      <DependentUpon>ScriptHealingControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Script\ScriptJoinCharacterControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Script\ScriptJoinCharacterControl.Designer.cs">
+      <DependentUpon>ScriptJoinCharacterControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Script\ScriptTeleportControl.cs">
       <SubType>UserControl</SubType>
@@ -327,14 +399,20 @@
     <Compile Include="Source\Defense.cs" />
     <Compile Include="Source\DialogBase.cs" />
     <Compile Include="Source\Entity.cs" />
-    <Compile Include="Source\EventScript\Actions\ScriptAction.cs" />
+    <Compile Include="Source\EventScript\Actions\ScriptEnableChoice.cs" />
+    <Compile Include="Source\EventScript\Actions\ScriptDisableChoice.cs" />
+    <Compile Include="Source\EventScript\Actions\ScriptPlaySound.cs" />
+    <Compile Include="Source\EventScript\Actions\ScriptChangePicture.cs" />
+    <Compile Include="Source\EventScript\Actions\IScriptAction.cs" />
     <Compile Include="Source\EventScript\Actions\ScriptActivateTarget.cs" />
+    <Compile Include="Source\EventScript\Actions\ScriptChangeText.cs" />
     <Compile Include="Source\EventScript\Actions\ScriptDisableTarget.cs" />
     <Compile Include="Source\EventScript\Actions\ScriptEndChoice.cs" />
     <Compile Include="Source\EventScript\Actions\ScriptEndDialog.cs" />
     <Compile Include="Source\EventScript\Actions\ScriptGiveExperience.cs" />
     <Compile Include="Source\EventScript\Actions\ScriptGiveItem.cs" />
     <Compile Include="Source\EventScript\Actions\ScriptHealing.cs" />
+    <Compile Include="Source\EventScript\Actions\ScriptJoinCharacter.cs" />
     <Compile Include="Source\EventScript\Actions\ScriptTeleport.cs" />
     <Compile Include="Source\EventScript\Actions\ScriptToggleTarget.cs" />
     <Compile Include="Source\EventScript\ScriptButton.cs" />
@@ -429,11 +507,44 @@
     <EmbeddedResource Include="Forms\ProfessionsControl.resx">
       <DependentUpon>ProfessionsControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Script\ScriptedDialogForm.resx">
+    <EmbeddedResource Include="Forms\ScriptedDialogForm.resx">
       <DependentUpon>ScriptedDialogForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Script\ScriptEnableChoiceControl.resx">
+      <DependentUpon>ScriptEnableChoiceControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Script\ScriptDisableChoiceControl.resx">
+      <DependentUpon>ScriptDisableChoiceControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Script\ScriptPlaySoundControl.resx">
+      <DependentUpon>ScriptPlaySoundControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Script\ScriptChangePictureControl.resx">
+      <DependentUpon>ScriptChangePictureControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Script\ScriptToggleTargetControl.resx">
+      <DependentUpon>ScriptToggleTargetControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Script\ScriptDeactivateTargetControl.resx">
+      <DependentUpon>ScriptDeactivateTargetControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Script\ScriptActivateTargetControl.resx">
+      <DependentUpon>ScriptActivateTargetControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Script\ScriptChangeTextControl.resx">
+      <DependentUpon>ScriptChangeTextControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Script\ScriptGiveExperienceControl.resx">
       <DependentUpon>ScriptGiveExperienceControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Script\ScriptGiveItemControl.resx">
+      <DependentUpon>ScriptGiveItemControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Script\ScriptHealingControl.resx">
+      <DependentUpon>ScriptHealingControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Script\ScriptJoinCharacterControl.resx">
+      <DependentUpon>ScriptJoinCharacterControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Script\ScriptTeleportControl.resx">
       <DependentUpon>ScriptTeleportControl.cs</DependentUpon>

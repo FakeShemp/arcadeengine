@@ -8,31 +8,39 @@ using System.Text;
 using System.Windows.Forms;
 using DungeonEye.EventScript;
 
+
 namespace DungeonEye.Forms
 {
 	/// <summary>
-	/// 
+	/// Script action control base
 	/// </summary>
-	public partial class ScriptTeleportControl : ScriptActionControlBase
+	public partial class ScriptActionControlBase : UserControl
 	{
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
-		public ScriptTeleportControl()
+		public ScriptActionControlBase()
 		{
 			InitializeComponent();
-
-
-			Action = new ScriptTeleport();
 		}
+
+
 
 
 		#region Properties
 
 
+		/// <summary>
+		/// Action to execute
+		/// </summary>
+		public IScriptAction Action
+		{
+			get;
+			protected set;
+		}
+
+
+
 		#endregion
-
-
-
 	}
 }

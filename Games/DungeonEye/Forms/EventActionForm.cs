@@ -25,11 +25,19 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using DungeonEye.EventScript;
 
 namespace DungeonEye.Forms
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	public partial class EventActionForm : Form
 	{
+
+		/// <summary>
+		/// 
+		/// </summary>
 		public EventActionForm()
 		{
 			InitializeComponent();
@@ -38,14 +46,21 @@ namespace DungeonEye.Forms
 			ActionListBox.BeginUpdate();
 			ActionListBox.Items.Add("Activate");
 			ActionListBox.Items.Add("Deactivate");
+			ActionListBox.Items.Add("Disable Choice");
+			ActionListBox.Items.Add("Enable Choice");
+			ActionListBox.Items.Add("Toggle");
+			ActionListBox.Items.Add("Change Picture");
 			ActionListBox.Items.Add("Give Experience");
 			ActionListBox.Items.Add("Give Item");
 			ActionListBox.Items.Add("Healing");
 			ActionListBox.Items.Add("Teleport");
+			ActionListBox.Items.Add("Join Character");
 			ActionListBox.Items.Add("End Choice");
 			ActionListBox.Items.Add("End Dialog");
+			ActionListBox.Items.Add("Change Text");
 			ActionListBox.EndUpdate();
 		}
+
 
 		#region Events
 
@@ -62,15 +77,46 @@ namespace DungeonEye.Forms
 			if (ActionListBox.SelectedIndex == -1)
 				return;
 
-			UserControl ctrl = null;
+			ScriptActionControlBase ctrl = null;
 
 			if ((string) ActionListBox.SelectedItem == "Teleport")
 				ctrl = new ScriptTeleportControl();
 
+			else if ((string) ActionListBox.SelectedItem == "Change Picture")
+				ctrl = new ScriptChangePictureControl();
+
+			else if ((string) ActionListBox.SelectedItem == "Play Sound")
+				ctrl = new ScriptPlaySoundControl();
+
+			else if ((string) ActionListBox.SelectedItem == "Activate")
+				ctrl = new ScriptActivateTargetControl();
+
+			else if ((string) ActionListBox.SelectedItem == "Deactivate")
+				ctrl = new ScriptDeactivateTargetControl();
+
+			else if ((string) ActionListBox.SelectedItem == "Enable Choice")
+				ctrl = new ScriptEnableChoiceControl();
+
+			else if ((string) ActionListBox.SelectedItem == "Disable Choice")
+				ctrl = new ScriptDisableChoiceControl();
+
+			else if ((string) ActionListBox.SelectedItem == "Toggle")
+				ctrl = new ScriptToggleTargetControl();
+
+			else if ((string) ActionListBox.SelectedItem == "Healing")
+				ctrl = new ScriptHealingControl();
+
 			else if ((string) ActionListBox.SelectedItem == "Give Experience")
 				ctrl = new ScriptGiveExperienceControl();
 
+			else if ((string) ActionListBox.SelectedItem == "Give Item")
+				ctrl = new ScriptGiveItemControl();
 
+			else if ((string) ActionListBox.SelectedItem == "Change Text")
+				ctrl = new ScriptChangeTextControl();
+
+			else if ((string) ActionListBox.SelectedItem == "Join Character")
+				ctrl = new ScriptJoinCharacterControl();
 
 
 			if (ctrl == null)
@@ -80,6 +126,12 @@ namespace DungeonEye.Forms
 			ActionControlBox.Controls.Add(ctrl);
 
 		}
+
+		#endregion
+
+
+		#region Properties
+
 
 		#endregion
 

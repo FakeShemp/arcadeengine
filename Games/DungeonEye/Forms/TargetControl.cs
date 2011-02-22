@@ -41,6 +41,7 @@ namespace DungeonEye.Forms
 		{
 			InitializeComponent();
 			Target = new DungeonLocation();
+		//	Dungeon = Team.Handle.Dungeon;
 		}
 
 
@@ -117,7 +118,10 @@ namespace DungeonEye.Forms
 		private void FromMapBox_Click(object sender, EventArgs e)
 		{
 			if (Dungeon == null)
+			{
+				MessageBox.Show("Dungeon handle == null\nSet a dungeon first !", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 				return;
+			}
 
 			DungeonLocationForm form = new DungeonLocationForm(Dungeon, MazeName, Coordinate);
 			form.ShowDialog();
