@@ -215,6 +215,12 @@
     <Compile Include="Forms\MonsterForm.Designer.cs">
       <DependentUpon>MonsterForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\MonsterGeneratorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MonsterGeneratorForm.Designer.cs">
+      <DependentUpon>MonsterGeneratorForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\PartyForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -352,6 +358,12 @@
     </Compile>
     <Compile Include="Forms\StairForm.Designer.cs">
       <DependentUpon>StairForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SwitchCountControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\SwitchCountControl.Designer.cs">
+      <DependentUpon>SwitchCountControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\TargetControl.cs">
       <SubType>UserControl</SubType>
@@ -498,6 +510,9 @@
     <EmbeddedResource Include="Forms\MonsterEditorForm.resx">
       <DependentUpon>MonsterEditorForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MonsterGeneratorForm.resx">
+      <DependentUpon>MonsterGeneratorForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\PartyForm.resx">
       <DependentUpon>PartyForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -560,6 +575,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\StairForm.resx">
       <DependentUpon>StairForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SwitchCountControl.resx">
+      <DependentUpon>SwitchCountControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\TargetControl.resx">
       <DependentUpon>TargetControl.cs</DependentUpon>
