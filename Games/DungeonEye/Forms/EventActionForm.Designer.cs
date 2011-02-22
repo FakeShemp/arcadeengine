@@ -33,7 +33,7 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.RemainingCountBox = new System.Windows.Forms.NumericUpDown();
 			this.label2 = new System.Windows.Forms.Label();
-			this.panel1 = new System.Windows.Forms.Panel();
+			this.ActionControlBox = new System.Windows.Forms.Panel();
 			((System.ComponentModel.ISupportInitialize) (this.RemainingCountBox)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -41,7 +41,7 @@
 			// 
 			this.CloseBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.CloseBox.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.CloseBox.Location = new System.Drawing.Point(745, 429);
+			this.CloseBox.Location = new System.Drawing.Point(728, 449);
 			this.CloseBox.Name = "CloseBox";
 			this.CloseBox.Size = new System.Drawing.Size(75, 23);
 			this.CloseBox.TabIndex = 0;
@@ -57,6 +57,7 @@
 			this.ActionListBox.Size = new System.Drawing.Size(166, 21);
 			this.ActionListBox.Sorted = true;
 			this.ActionListBox.TabIndex = 1;
+			this.ActionListBox.SelectedIndexChanged += new System.EventHandler(this.ActionListBox_SelectedIndexChanged);
 			// 
 			// label1
 			// 
@@ -95,23 +96,23 @@
 			this.label2.TabIndex = 2;
 			this.label2.Text = "Action :";
 			// 
-			// panel1
+			// ActionControlBox
 			// 
-			this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.ActionControlBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.panel1.Location = new System.Drawing.Point(12, 39);
-			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(808, 384);
-			this.panel1.TabIndex = 4;
+			this.ActionControlBox.Location = new System.Drawing.Point(12, 39);
+			this.ActionControlBox.Name = "ActionControlBox";
+			this.ActionControlBox.Size = new System.Drawing.Size(791, 404);
+			this.ActionControlBox.TabIndex = 4;
 			// 
 			// EventActionForm
 			// 
 			this.AcceptButton = this.CloseBox;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(832, 464);
-			this.Controls.Add(this.panel1);
+			this.ClientSize = new System.Drawing.Size(815, 484);
+			this.Controls.Add(this.ActionControlBox);
 			this.Controls.Add(this.RemainingCountBox);
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.label1);
@@ -140,6 +141,6 @@
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.NumericUpDown RemainingCountBox;
 		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.Panel panel1;
+		private System.Windows.Forms.Panel ActionControlBox;
 	}
 }

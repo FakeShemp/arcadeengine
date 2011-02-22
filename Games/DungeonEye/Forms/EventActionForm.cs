@@ -45,7 +45,43 @@ namespace DungeonEye.Forms
 			ActionListBox.Items.Add("End Choice");
 			ActionListBox.Items.Add("End Dialog");
 			ActionListBox.EndUpdate();
+		}
+
+		#region Events
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ActionListBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			ActionControlBox.Controls.Clear();
+
+			if (ActionListBox.SelectedIndex == -1)
+				return;
+
+			UserControl ctrl = null;
+
+			if ((string) ActionListBox.SelectedItem == "Teleport")
+				ctrl = new ScriptTeleportControl();
+
+			else if ((string) ActionListBox.SelectedItem == "Give Experience")
+				ctrl = new ScriptGiveExperienceControl();
+
+
+
+
+			if (ctrl == null)
+				return;
+
+			ctrl.Dock = DockStyle.Fill;
+			ActionControlBox.Controls.Add(ctrl);
 
 		}
+
+		#endregion
+
 	}
 }

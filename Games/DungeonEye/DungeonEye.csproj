@@ -239,11 +239,23 @@
     <Compile Include="Forms\RenameForm.Designer.cs">
       <DependentUpon>RenameForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\ScriptedDialogForm.cs">
+    <Compile Include="Forms\Script\ScriptedDialogForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\ScriptedDialogForm.Designer.cs">
+    <Compile Include="Forms\Script\ScriptedDialogForm.Designer.cs">
       <DependentUpon>ScriptedDialogForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Script\ScriptGiveExperienceControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Script\ScriptGiveExperienceControl.Designer.cs">
+      <DependentUpon>ScriptGiveExperienceControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Script\ScriptTeleportControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Script\ScriptTeleportControl.Designer.cs">
+      <DependentUpon>ScriptTeleportControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\SpellForm.cs">
       <SubType>Form</SubType>
@@ -417,8 +429,14 @@
     <EmbeddedResource Include="Forms\ProfessionsControl.resx">
       <DependentUpon>ProfessionsControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ScriptedDialogForm.resx">
+    <EmbeddedResource Include="Forms\Script\ScriptedDialogForm.resx">
       <DependentUpon>ScriptedDialogForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Script\ScriptGiveExperienceControl.resx">
+      <DependentUpon>ScriptGiveExperienceControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Script\ScriptTeleportControl.resx">
+      <DependentUpon>ScriptTeleportControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SpellForm.resx">
       <DependentUpon>SpellForm.cs</DependentUpon>
