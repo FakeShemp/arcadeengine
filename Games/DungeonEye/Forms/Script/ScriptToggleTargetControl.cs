@@ -19,11 +19,15 @@ namespace DungeonEye.Forms
 		/// <summary>
 		/// 
 		/// </summary>
-		public ScriptToggleTargetControl()
+		/// <param name="script"></param>
+		public ScriptToggleTargetControl(ScriptToggleTarget script)
 		{
 			InitializeComponent();
 
-			Action = new ScriptActivateTarget();
+			if (script != null)
+				Action = script;
+			else
+				Action = new ScriptToggleTarget();
 		}
 
 

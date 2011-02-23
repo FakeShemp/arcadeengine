@@ -120,9 +120,10 @@
 			// 
 			// EventActionForm
 			// 
-			this.AcceptButton = this.CloseBox;
+			this.AcceptButton = this.OKBox;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.CancelButton = this.CloseBox;
 			this.ClientSize = new System.Drawing.Size(815, 484);
 			this.Controls.Add(this.ActionControlBox);
 			this.Controls.Add(this.RemainingCountBox);

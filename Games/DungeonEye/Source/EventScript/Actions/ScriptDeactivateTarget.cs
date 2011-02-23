@@ -5,20 +5,17 @@ using System.Text;
 
 namespace DungeonEye.EventScript
 {
-	public class ScriptEndDialog : IScriptAction
+	public class ScriptDeactivateTarget : IScriptAction
 	{
 
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <returns>Treu on succes</returns>
+		/// <returns></returns>
 		public bool Run()
 		{
-			if (Team.Handle.Dialog == null)
-				return false;
 
 
-			Team.Handle.Dialog.Exit();
 			return true;
 		}
 
@@ -27,13 +24,9 @@ namespace DungeonEye.EventScript
 		/// 
 		/// </summary>
 		/// <param name="xml"></param>
-		/// <returns>True on success</returns>
+		/// <returns></returns>
 		public bool Load(XmlNode xml)
 		{
-			if (xml == null || xml.Name != Name)
-				return false;
-
-
 			return true;
 		}
 
@@ -42,15 +35,9 @@ namespace DungeonEye.EventScript
 		/// 
 		/// </summary>
 		/// <param name="writer"></param>
-		/// <returns>True on success</returns>
+		/// <returns></returns>
 		public bool Save(XmlWriter writer)
 		{
-			if (writer == null)
-				return false;
-
-			writer.WriteStartElement(Name);
-			writer.WriteEndElement();
-
 			return true;
 		}
 
@@ -61,13 +48,13 @@ namespace DungeonEye.EventScript
 
 
 		/// <summary>
-		/// Name of the script
+		/// 
 		/// </summary>
 		public string Name
 		{
 			get
 			{
-				return "EndDialog";
+				return "Deactivate Target";
 			}
 		}
 

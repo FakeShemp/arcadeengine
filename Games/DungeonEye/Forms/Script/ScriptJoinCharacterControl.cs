@@ -16,14 +16,19 @@ namespace DungeonEye.Forms
 	/// </summary>
 	public partial class ScriptJoinCharacterControl : ScriptActionControlBase
 	{
+		
 		/// <summary>
 		/// 
 		/// </summary>
-		public ScriptJoinCharacterControl()
+		/// <param name="script"></param>
+		public ScriptJoinCharacterControl(ScriptJoinCharacter script)
 		{
 			InitializeComponent();
 
-			Action = new ScriptJoinCharacter();
+			if (script != null)
+				Action = script;
+			else
+				Action = new ScriptJoinCharacter();
 		}
 
 

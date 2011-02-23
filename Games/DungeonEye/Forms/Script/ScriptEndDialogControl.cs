@@ -19,11 +19,14 @@ namespace DungeonEye.Forms
 		/// <summary>
 		/// 
 		/// </summary>
-		public ScriptEndDialogControl()
+		public ScriptEndDialogControl(ScriptEndDialog script)
 		{
 			InitializeComponent();
 
-			Action = new ScriptEndDialog();
+			if (script != null)
+				Action = script;
+			else
+				Action = new ScriptEndDialog();
 		}
 
 

@@ -32,6 +32,13 @@ namespace DungeonEye.EventScript
 	/// </summary>
 	public class ScriptTeleport : IScriptAction
 	{
+		/// <summary>
+		/// 
+		/// </summary>
+		public ScriptTeleport()
+		{
+			Target = new DungeonLocation();
+		}
 
 
 		/// <summary>
@@ -53,30 +60,69 @@ namespace DungeonEye.EventScript
 			return false;
 		}
 
+	
 		#region IO
 
 
 		/// <summary>
-		/// Loads a party
+		/// 
 		/// </summary>
-		/// <param name="filename">Xml data</param>
-		/// <returns>True if team successfuly loaded, otherwise false</returns>
+		/// <param name="xml"></param>
+		/// <returns>True on success</returns>
 		public bool Load(XmlNode xml)
 		{
+			if (xml == null || xml.Name != Name)
+				return false;
+
+			foreach (XmlNode node in xml)
+			{
+				if (node.NodeType == XmlNodeType.Comment)
+					continue;
+
+				switch (node.Name.ToLower())
+				{
+					case "target":
+					{
+						Target.Load(node);
+					}
+					break;
+
+					case "changedirection":
+					{
+						ChangeDirection = (bool) bool.Parse(node.Value);
+					}
+					break;
+				}
+			}
 			return true;
 		}
-
 
 
 		/// <summary>
-		/// Saves the party
+		/// 
 		/// </summary>
-		/// <param name="filename">XmlWriter</param>
-		/// <returns></returns>
+		/// <param name="writer"></param>
+		/// <returns>True on success</returns>
 		public bool Save(XmlWriter writer)
 		{
+			if (writer == null)
+				return false;
+
+			writer.WriteStartElement(Name);
+			
+			if (Target != null)
+				Target.Save("target", writer);
+
+			writer.WriteStartElement("changedirection");
+			writer.WriteAttributeString("value", ChangeDirection.ToString());
+			writer.WriteEndElement();
+
+
+			writer.WriteEndElement();
+
 			return true;
 		}
+
 
 
 		#endregion

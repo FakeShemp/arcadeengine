@@ -82,6 +82,7 @@
 			this.ActionsBox.Name = "ActionsBox";
 			this.ActionsBox.Size = new System.Drawing.Size(391, 121);
 			this.ActionsBox.TabIndex = 1;
+			this.ActionsBox.DoubleClick += new System.EventHandler(this.ActionsBox_DoubleClick);
 			// 
 			// MoveDownActionBox
 			// 

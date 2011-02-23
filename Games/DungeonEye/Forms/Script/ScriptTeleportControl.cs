@@ -15,15 +15,18 @@ namespace DungeonEye.Forms
 	/// </summary>
 	public partial class ScriptTeleportControl : ScriptActionControlBase
 	{
-		/// <summary>n
+		/// <summary>
 		/// 
 		/// </summary>
-		public ScriptTeleportControl()
+		/// <param name="script"></param>
+		public ScriptTeleportControl(ScriptTeleport script)
 		{
 			InitializeComponent();
 
-
-			Action = new ScriptTeleport();
+			if (script != null)
+				Action = script;
+			else
+				Action = new ScriptTeleport();
 		}
 
 

@@ -35,7 +35,6 @@
 			// 
 			// targetControl1
 			// 
-			this.targetControl1.ChangeDirection = false;
 			this.targetControl1.Dungeon = null;
 			this.targetControl1.Location = new System.Drawing.Point(6, 19);
 			this.targetControl1.MinimumSize = new System.Drawing.Size(175, 100);

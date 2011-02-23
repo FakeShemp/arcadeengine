@@ -200,6 +200,27 @@ namespace DungeonEye.Forms
 		{
 
 		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ActionsBox_DoubleClick(object sender, EventArgs e)
+		{
+			EventActionForm form =  new EventActionForm();
+
+			IScriptAction action = Choice.Actions[ActionsBox.SelectedIndex];
+
+			form.SetAction(action);
+			
+			form.ShowDialog();
+
+			UpdateActionList();
+		}
+
+
 		#endregion
 
 
@@ -208,7 +229,6 @@ namespace DungeonEye.Forms
 		ScriptChoice Choice;
 
 		#endregion
-
 
 	}
 }

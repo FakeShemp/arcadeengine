@@ -18,12 +18,16 @@ namespace DungeonEye.Forms
 		/// <summary>
 		/// 
 		/// </summary>
-		public ScriptHealingControl()
+		/// <param name="script"></param>
+		public ScriptHealingControl(ScriptHealing script)
 		{
 			InitializeComponent();
 
 
-			Action = new ScriptHealing();
+			if (script != null)
+				Action = script;
+			else
+				Action = new ScriptHealing();
 		}
 
 

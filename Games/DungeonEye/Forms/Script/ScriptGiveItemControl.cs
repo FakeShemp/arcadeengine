@@ -15,15 +15,20 @@ namespace DungeonEye.Forms
 	/// </summary>
 	public partial class ScriptGiveItemControl : ScriptActionControlBase
 	{
+		
 		/// <summary>
 		/// 
 		/// </summary>
-		public ScriptGiveItemControl()
+		/// <param name="script"></param>
+		public ScriptGiveItemControl(ScriptGiveItem script)
 		{
 			InitializeComponent();
 
 
-			Action = new ScriptGiveItem();
+			if (script != null)
+				Action = script;
+			else
+				Action = new ScriptGiveItem();
 		}
 
 

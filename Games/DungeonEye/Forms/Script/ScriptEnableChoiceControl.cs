@@ -19,11 +19,15 @@ namespace DungeonEye.Forms
 		/// <summary>
 		/// 
 		/// </summary>
-		public ScriptEnableChoiceControl()
+		/// <param name="script"></param>
+		public ScriptEnableChoiceControl(ScriptEnableChoice script)
 		{
 			InitializeComponent();
 
-			Action = new ScriptEnableChoice();
+			if (script != null)
+				Action = script;
+			else
+				Action = new ScriptEndChoice();
 		}
 
 

@@ -423,6 +423,7 @@
     <Compile Include="Source\Defense.cs" />
     <Compile Include="Source\DialogBase.cs" />
     <Compile Include="Source\Entity.cs" />
+    <Compile Include="Source\EventScript\Actions\ScriptDeactivateTarget.cs" />
     <Compile Include="Source\EventScript\Actions\ScriptEnableChoice.cs" />
     <Compile Include="Source\EventScript\Actions\ScriptDisableChoice.cs" />
     <Compile Include="Source\EventScript\Actions\ScriptPlaySound.cs" />
