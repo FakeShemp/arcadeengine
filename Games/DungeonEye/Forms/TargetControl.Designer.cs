@@ -29,6 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.ChangeDirectionBox = new System.Windows.Forms.CheckBox();
 			this.CoordinateBox = new System.Windows.Forms.TextBox();
 			this.MazeNameBox = new System.Windows.Forms.TextBox();
 			this.FromMapBox = new System.Windows.Forms.Button();
@@ -39,6 +40,7 @@
 			// 
 			// groupBox1
 			// 
+			this.groupBox1.Controls.Add(this.ChangeDirectionBox);
 			this.groupBox1.Controls.Add(this.CoordinateBox);
 			this.groupBox1.Controls.Add(this.MazeNameBox);
 			this.groupBox1.Controls.Add(this.FromMapBox);
@@ -47,10 +49,20 @@
 			this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupBox1.Location = new System.Drawing.Point(0, 0);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(175, 100);
+			this.groupBox1.Size = new System.Drawing.Size(175, 125);
 			this.groupBox1.TabIndex = 0;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Target :";
+			// 
+			// ChangeDirectionBox
+			// 
+			this.ChangeDirectionBox.AutoSize = true;
+			this.ChangeDirectionBox.Location = new System.Drawing.Point(9, 100);
+			this.ChangeDirectionBox.Name = "ChangeDirectionBox";
+			this.ChangeDirectionBox.Size = new System.Drawing.Size(106, 17);
+			this.ChangeDirectionBox.TabIndex = 3;
+			this.ChangeDirectionBox.Text = "Change direction";
+			this.ChangeDirectionBox.UseVisualStyleBackColor = true;
 			// 
 			// CoordinateBox
 			// 
@@ -103,9 +115,9 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.groupBox1);
-			this.MinimumSize = new System.Drawing.Size(175, 100);
+			this.MinimumSize = new System.Drawing.Size(175, 125);
 			this.Name = "TargetControl";
-			this.Size = new System.Drawing.Size(175, 100);
+			this.Size = new System.Drawing.Size(175, 125);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			this.ResumeLayout(false);
@@ -120,5 +132,6 @@
 		private System.Windows.Forms.Button FromMapBox;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.CheckBox ChangeDirectionBox;
 	}
 }

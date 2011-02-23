@@ -168,6 +168,7 @@ namespace DungeonEye.Forms
 			}			
 		}
 
+
 		/// <summary>
 		/// Coordinate
 		/// </summary>
@@ -182,6 +183,21 @@ namespace DungeonEye.Forms
 			}
 		}
 
+
+		/// <summary>
+		/// Force change direction
+		/// </summary>
+		public bool ChangeDirection
+		{
+			get
+			{
+				return ChangeDirectionBox.Checked;
+			}
+			set
+			{
+				ChangeDirectionBox.Checked = false;
+			}
+		}
 		#endregion
 	}
 }

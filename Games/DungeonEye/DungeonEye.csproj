@@ -245,6 +245,18 @@
     <Compile Include="Forms\RenameForm.Designer.cs">
       <DependentUpon>RenameForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Script\ScriptEndDialogControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Script\ScriptEndDialogControl.Designer.cs">
+      <DependentUpon>ScriptEndDialogControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Script\ScriptEndChoiceControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Script\ScriptEndChoiceControl.Designer.cs">
+      <DependentUpon>ScriptEndChoiceControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Script\ScriptEnableChoiceControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -524,6 +536,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ScriptedDialogForm.resx">
       <DependentUpon>ScriptedDialogForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Script\ScriptEndDialogControl.resx">
+      <DependentUpon>ScriptEndDialogControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Script\ScriptEndChoiceControl.resx">
+      <DependentUpon>ScriptEndChoiceControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Script\ScriptEnableChoiceControl.resx">
       <DependentUpon>ScriptEnableChoiceControl.cs</DependentUpon>

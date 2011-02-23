@@ -35,6 +35,7 @@
 			// 
 			// targetControl1
 			// 
+			this.targetControl1.ChangeDirection = false;
 			this.targetControl1.Dungeon = null;
 			this.targetControl1.Location = new System.Drawing.Point(6, 19);
 			this.targetControl1.MinimumSize = new System.Drawing.Size(175, 100);
@@ -53,14 +54,14 @@
 			this.groupBox1.Size = new System.Drawing.Size(768, 519);
 			this.groupBox1.TabIndex = 1;
 			this.groupBox1.TabStop = false;
-			this.groupBox1.Text = "Activate a target";
+			this.groupBox1.Text = "Activate A Target";
 			// 
-			// ScriptActivateControl
+			// ScriptActivateTargetControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.groupBox1);
-			this.Name = "ScriptActivateControl";
+			this.Name = "ScriptActivateTargetControl";
 			this.Size = new System.Drawing.Size(774, 525);
 			this.groupBox1.ResumeLayout(false);
 			this.ResumeLayout(false);

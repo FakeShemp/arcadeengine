@@ -44,7 +44,7 @@
 			this.groupBox1.Size = new System.Drawing.Size(788, 580);
 			this.groupBox1.TabIndex = 0;
 			this.groupBox1.TabStop = false;
-			this.groupBox1.Text = "Give item";
+			this.groupBox1.Text = "Give Item";
 			// 
 			// listBox1
 			// 

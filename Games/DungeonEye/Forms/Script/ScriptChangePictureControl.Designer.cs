@@ -41,7 +41,7 @@
 			this.groupBox1.Size = new System.Drawing.Size(768, 519);
 			this.groupBox1.TabIndex = 1;
 			this.groupBox1.TabStop = false;
-			this.groupBox1.Text = "Change picture";
+			this.groupBox1.Text = "Change Picture";
 			// 
 			// ScriptChangePictureControl
 			// 

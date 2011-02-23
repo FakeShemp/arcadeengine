@@ -34,18 +34,19 @@
 			this.RemainingCountBox = new System.Windows.Forms.NumericUpDown();
 			this.label2 = new System.Windows.Forms.Label();
 			this.ActionControlBox = new System.Windows.Forms.Panel();
+			this.OKBox = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize) (this.RemainingCountBox)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// CloseBox
 			// 
 			this.CloseBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.CloseBox.DialogResult = System.Windows.Forms.DialogResult.OK;
+			this.CloseBox.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.CloseBox.Location = new System.Drawing.Point(728, 449);
 			this.CloseBox.Name = "CloseBox";
 			this.CloseBox.Size = new System.Drawing.Size(75, 23);
 			this.CloseBox.TabIndex = 0;
-			this.CloseBox.Text = "Close";
+			this.CloseBox.Text = "Cancel";
 			this.CloseBox.UseVisualStyleBackColor = true;
 			// 
 			// ActionListBox
@@ -106,6 +107,17 @@
 			this.ActionControlBox.Size = new System.Drawing.Size(791, 404);
 			this.ActionControlBox.TabIndex = 4;
 			// 
+			// OKBox
+			// 
+			this.OKBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.OKBox.DialogResult = System.Windows.Forms.DialogResult.OK;
+			this.OKBox.Location = new System.Drawing.Point(647, 449);
+			this.OKBox.Name = "OKBox";
+			this.OKBox.Size = new System.Drawing.Size(75, 23);
+			this.OKBox.TabIndex = 0;
+			this.OKBox.Text = "Accept";
+			this.OKBox.UseVisualStyleBackColor = true;
+			// 
 			// EventActionForm
 			// 
 			this.AcceptButton = this.CloseBox;
@@ -117,6 +129,7 @@
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.ActionListBox);
+			this.Controls.Add(this.OKBox);
 			this.Controls.Add(this.CloseBox);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
 			this.KeyPreview = true;
@@ -142,5 +155,6 @@
 		private System.Windows.Forms.NumericUpDown RemainingCountBox;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Panel ActionControlBox;
+		private System.Windows.Forms.Button OKBox;
 	}
 }

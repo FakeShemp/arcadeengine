@@ -58,11 +58,14 @@ namespace DungeonEye.Forms
 			ActionListBox.Items.Add("End Choice");
 			ActionListBox.Items.Add("End Dialog");
 			ActionListBox.Items.Add("Change Text");
+			ActionListBox.Items.Add("Play Sound");
 			ActionListBox.EndUpdate();
 		}
 
 
 		#region Events
+
+
 
 
 		/// <summary>
@@ -77,62 +80,87 @@ namespace DungeonEye.Forms
 			if (ActionListBox.SelectedIndex == -1)
 				return;
 
-			ScriptActionControlBase ctrl = null;
 
 			if ((string) ActionListBox.SelectedItem == "Teleport")
-				ctrl = new ScriptTeleportControl();
+				ControlHandle = new ScriptTeleportControl();
 
 			else if ((string) ActionListBox.SelectedItem == "Change Picture")
-				ctrl = new ScriptChangePictureControl();
+				ControlHandle = new ScriptChangePictureControl();
 
 			else if ((string) ActionListBox.SelectedItem == "Play Sound")
-				ctrl = new ScriptPlaySoundControl();
+				ControlHandle = new ScriptPlaySoundControl();
 
 			else if ((string) ActionListBox.SelectedItem == "Activate")
-				ctrl = new ScriptActivateTargetControl();
+				ControlHandle = new ScriptActivateTargetControl();
+
+			else if ((string) ActionListBox.SelectedItem == "End Dialog")
+				ControlHandle = new ScriptEndDialogControl();
+
+			else if ((string) ActionListBox.SelectedItem == "End Choice")
+				ControlHandle = new ScriptEndChoiceControl();
 
 			else if ((string) ActionListBox.SelectedItem == "Deactivate")
-				ctrl = new ScriptDeactivateTargetControl();
+				ControlHandle = new ScriptDeactivateTargetControl();
 
 			else if ((string) ActionListBox.SelectedItem == "Enable Choice")
-				ctrl = new ScriptEnableChoiceControl();
+				ControlHandle = new ScriptEnableChoiceControl();
 
 			else if ((string) ActionListBox.SelectedItem == "Disable Choice")
-				ctrl = new ScriptDisableChoiceControl();
+				ControlHandle = new ScriptDisableChoiceControl();
 
 			else if ((string) ActionListBox.SelectedItem == "Toggle")
-				ctrl = new ScriptToggleTargetControl();
+				ControlHandle = new ScriptToggleTargetControl();
 
 			else if ((string) ActionListBox.SelectedItem == "Healing")
-				ctrl = new ScriptHealingControl();
+				ControlHandle = new ScriptHealingControl();
 
 			else if ((string) ActionListBox.SelectedItem == "Give Experience")
-				ctrl = new ScriptGiveExperienceControl();
+				ControlHandle = new ScriptGiveExperienceControl();
 
 			else if ((string) ActionListBox.SelectedItem == "Give Item")
-				ctrl = new ScriptGiveItemControl();
+				ControlHandle = new ScriptGiveItemControl();
 
 			else if ((string) ActionListBox.SelectedItem == "Change Text")
-				ctrl = new ScriptChangeTextControl();
+				ControlHandle = new ScriptChangeTextControl();
 
 			else if ((string) ActionListBox.SelectedItem == "Join Character")
-				ctrl = new ScriptJoinCharacterControl();
+				ControlHandle = new ScriptJoinCharacterControl();
 
 
-			if (ctrl == null)
+			if (ControlHandle == null)
 				return;
 
-			ctrl.Dock = DockStyle.Fill;
-			ActionControlBox.Controls.Add(ctrl);
+			ControlHandle.Dock = DockStyle.Fill;
+			ActionControlBox.Controls.Add(ControlHandle);
 
 		}
+
+
 
 		#endregion
 
 
 		#region Properties
 
+		/// <summary>
+		/// 
+		/// </summary>
+		ScriptActionControlBase ControlHandle = null;
 
+
+		/// <summary>
+		/// Script action
+		/// </summary>
+		public IScriptAction Script
+		{
+			get
+			{
+				if (ControlHandle == null)
+					return null;
+
+				return ControlHandle.Action;
+			}
+		}
 		#endregion
 
 	}

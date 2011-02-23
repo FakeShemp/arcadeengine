@@ -49,7 +49,27 @@ namespace DungeonEye.Forms
 			NameBox.Text = choice.Name;
 
 			Choice = choice;
+
+			UpdateActionList();
 		}
+
+
+
+		/// <summary>
+		/// Update action list
+		/// </summary>
+		void UpdateActionList()
+		{
+			ActionsBox.BeginUpdate();
+
+			ActionsBox.Items.Clear();
+
+			foreach (IScriptAction action in Choice.Actions)
+				ActionsBox.Items.Add(action.Name);
+
+			ActionsBox.EndUpdate();
+		}
+
 
 
 		#region Events
@@ -81,26 +101,81 @@ namespace DungeonEye.Forms
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void MoveUpActionBox_Click(object sender, EventArgs e)
 		{
+			int id = ActionsBox.SelectedIndex;
+			if (id <= 0)
+				return;
+			IScriptAction action = Choice.Actions[id];
+			Choice.Actions.RemoveAt(id);
+			Choice.Actions.Insert(id -1, action);
+
+			UpdateActionList();
+			ActionsBox.SelectedIndex = id - 1;
 
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void MoveDownActionBox_Click(object sender, EventArgs e)
 		{
+			int id = ActionsBox.SelectedIndex;
+			if (id >= Choice.Actions.Count - 1)
+				return;
+
+			IScriptAction action = Choice.Actions[id];
+			Choice.Actions.RemoveAt(id);
+			Choice.Actions.Insert(id + 1, action);
+
+			UpdateActionList();
+			ActionsBox.SelectedIndex = id + 1;
 
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void RemoveActionBox_Click(object sender, EventArgs e)
 		{
+			if (ActionsBox.SelectedIndex == -1 || ActionsBox.SelectedIndex > Choice.Actions.Count)
+				return;
 
+			Choice.Actions.RemoveAt(ActionsBox.SelectedIndex);
+
+			UpdateActionList();
 		}
 
+
+		/// <summary>
+		/// Adds a new action
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void AddActionBox_Click(object sender, EventArgs e)
 		{
-			new EventActionForm().ShowDialog();
+			EventActionForm form =  new EventActionForm();
+			if (form.ShowDialog() != DialogResult.OK)
+				return;
+
+			if (form.Script != null)
+				Choice.Actions.Add(form.Script);
+	
+			UpdateActionList();
 		}
 
+	
 		private void AddItemBox_Click(object sender, EventArgs e)
 		{
 

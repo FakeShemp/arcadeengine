@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.targetControl1 = new DungeonEye.Forms.TargetControl();
+			this.TargetBox = new DungeonEye.Forms.TargetControl();
 			this.groupBox1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -38,7 +38,7 @@
 			this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.groupBox1.Controls.Add(this.targetControl1);
+			this.groupBox1.Controls.Add(this.TargetBox);
 			this.groupBox1.Location = new System.Drawing.Point(3, 3);
 			this.groupBox1.Name = "groupBox1";
 			this.groupBox1.Size = new System.Drawing.Size(490, 317);
@@ -46,14 +46,15 @@
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Teleport";
 			// 
-			// targetControl1
+			// TargetBox
 			// 
-			this.targetControl1.Dungeon = null;
-			this.targetControl1.Location = new System.Drawing.Point(6, 19);
-			this.targetControl1.MinimumSize = new System.Drawing.Size(175, 100);
-			this.targetControl1.Name = "targetControl1";
-			this.targetControl1.Size = new System.Drawing.Size(175, 100);
-			this.targetControl1.TabIndex = 0;
+			this.TargetBox.ChangeDirection = false;
+			this.TargetBox.Dungeon = null;
+			this.TargetBox.Location = new System.Drawing.Point(6, 19);
+			this.TargetBox.MinimumSize = new System.Drawing.Size(175, 125);
+			this.TargetBox.Name = "TargetBox";
+			this.TargetBox.Size = new System.Drawing.Size(175, 125);
+			this.TargetBox.TabIndex = 0;
 			// 
 			// ScriptTeleportControl
 			// 
@@ -70,6 +71,6 @@
 		#endregion
 
 		private System.Windows.Forms.GroupBox groupBox1;
-		private TargetControl targetControl1;
+		private TargetControl TargetBox;
 	}
 }

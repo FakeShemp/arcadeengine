@@ -93,6 +93,12 @@ namespace DungeonEye.EventScript
 						LoadActions(node);
 					}
 					break;
+				
+					default:
+					{
+						Trace.WriteLine("[ScriptChoice] Load() : Unknown node \"{0}\"", node.Name);
+					}
+					break;
 				}
 			}
 
@@ -123,6 +129,12 @@ namespace DungeonEye.EventScript
 						ScriptTeleport teleport = new ScriptTeleport();
 						teleport.Load(node);
 						Actions.Add(teleport);
+					}
+					break;
+
+					default:
+					{
+						Trace.WriteLine("[ScriptChoice] LoadActions() : Unknown node \"{0}\"", node.Name);
 					}
 					break;
 				}

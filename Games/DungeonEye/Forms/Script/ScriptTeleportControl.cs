@@ -15,7 +15,7 @@ namespace DungeonEye.Forms
 	/// </summary>
 	public partial class ScriptTeleportControl : ScriptActionControlBase
 	{
-		/// <summary>
+		/// <summary>n
 		/// 
 		/// </summary>
 		public ScriptTeleportControl()
@@ -27,12 +27,26 @@ namespace DungeonEye.Forms
 		}
 
 
-		#region Properties
+		#region Events
+
 
 
 		#endregion
 
 
+
+		#region Properties
+
+		/// <summary>
+		/// Target location
+		/// </summary>
+		public DungeonLocation Target
+		{
+			get;
+			private set;
+		}
+
+		#endregion
 
 	}
 }
