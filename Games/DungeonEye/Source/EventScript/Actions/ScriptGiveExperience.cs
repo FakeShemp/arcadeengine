@@ -36,20 +36,23 @@ namespace DungeonEye.EventScript
 			if (xml == null || xml.Name != Name)
 				return false;
 
-			foreach (XmlNode node in xml)
-			{
-				if (node.NodeType == XmlNodeType.Comment)
-					continue;
+			if (xml.Attributes["value"] != null)
+				Amount = int.Parse(xml.Attributes["value"].Value);
 
-				switch (node.Name.ToLower())
-				{
-					case "Amount":
-					{
-						Amount = int.Parse(node.Attributes["value"].Value);
-					}
-					break;
-				}
-			}
+			//foreach (XmlNode node in xml)
+			//{
+			//    if (node.NodeType == XmlNodeType.Comment)
+			//        continue;
+
+			//    switch (node.Name.ToLower())
+			//    {
+			//        case "amount":
+			//        {
+			//            Amount = int.Parse(node.Attributes["value"].Value);
+			//        }
+			//        break;
+			//    }
+			//}
 			return true;
 		}
 

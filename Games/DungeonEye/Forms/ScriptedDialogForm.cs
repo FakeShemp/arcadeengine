@@ -50,6 +50,7 @@ namespace DungeonEye.Forms
 			MessageBox.Text = eventsquare.Text;
 			TextJustificationBox.DataSource = Enum.GetValues(typeof(TextJustification));
 
+			Dungeon = dungeon;
 
 			#region Choices
 
@@ -188,7 +189,7 @@ namespace DungeonEye.Forms
 
 			ScriptChoice choice = new ScriptChoice("Choice " + (EventSquare.Choices.Count + 1));
 			EventSquare.Choices.Add(choice);
-			new EventChoiceForm(choice).ShowDialog();
+			new EventChoiceForm(choice, Dungeon).ShowDialog();
 
 			RebuildChoices();
 		}
@@ -232,7 +233,7 @@ namespace DungeonEye.Forms
 			if (EventSquare == null)
 				return;
 
-			new EventChoiceForm(EventSquare.Choices[ChoicesBox.SelectedIndex]).ShowDialog();
+			new EventChoiceForm(EventSquare.Choices[ChoicesBox.SelectedIndex], Dungeon).ShowDialog();
 
 			RebuildChoices();
 
@@ -244,9 +245,15 @@ namespace DungeonEye.Forms
 		#region Properties
 
 		/// <summary>
-		/// 
+		/// Square handle
 		/// </summary>
 		EventSquare EventSquare;
+
+
+		/// <summary>
+		/// Dungeon handle
+		/// </summary>
+		Dungeon Dungeon;
 
 		#endregion
 

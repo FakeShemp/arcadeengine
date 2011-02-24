@@ -89,7 +89,7 @@ namespace DungeonEye.EventScript
 
 					case "changedirection":
 					{
-						ChangeDirection = (bool) bool.Parse(node.Value);
+						ChangeDirection = (bool) bool.Parse(node.Attributes["value"].Value);
 					}
 					break;
 				}

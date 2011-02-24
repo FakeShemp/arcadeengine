@@ -20,7 +20,7 @@ namespace DungeonEye.Forms
 		/// 
 		/// </summary>
 		/// <param name="script"></param>
-		public ScriptToggleTargetControl(ScriptToggleTarget script)
+		public ScriptToggleTargetControl(ScriptToggleTarget script, Dungeon dungeon)
 		{
 			InitializeComponent();
 
@@ -28,6 +28,8 @@ namespace DungeonEye.Forms
 				Action = script;
 			else
 				Action = new ScriptToggleTarget();
+
+			TargetBox.Dungeon = dungeon;
 		}
 
 

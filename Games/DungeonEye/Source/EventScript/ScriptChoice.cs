@@ -132,6 +132,126 @@ namespace DungeonEye.EventScript
 					}
 					break;
 
+					case "giveexperience":
+					{
+						ScriptGiveExperience script = new ScriptGiveExperience();
+						script.Load(node);
+						Actions.Add(script);
+					}
+					break;
+
+					case "activate":
+					{
+						ScriptActivateTarget script = new ScriptActivateTarget();
+						script.Load(node);
+						Actions.Add(script);
+					}
+					break;
+
+					case "changepicture":
+					{
+						ScriptChangePicture script = new ScriptChangePicture();
+						script.Load(node);
+						Actions.Add(script);
+					}
+					break;
+
+					case "changetext":
+					{
+						ScriptChangeText script = new ScriptChangeText();
+						script.Load(node);
+						Actions.Add(script);
+					}
+					break;
+
+					case "deactivate":
+					{
+						ScriptDeactivateTarget script = new ScriptDeactivateTarget();
+						script.Load(node);
+						Actions.Add(script);
+					}
+					break;
+
+					case "disablechoice":
+					{
+						ScriptDisableChoice script = new ScriptDisableChoice();
+						script.Load(node);
+						Actions.Add(script);
+					}
+					break;
+
+					case "disable":
+					{
+						ScriptDisableTarget script = new ScriptDisableTarget();
+						script.Load(node);
+						Actions.Add(script);
+					}
+					break;
+
+					case "enablechoice":
+					{
+						ScriptEnableChoice script = new ScriptEnableChoice();
+						script.Load(node);
+						Actions.Add(script);
+					}
+					break;
+
+					case "endchoice":
+					{
+						ScriptEndChoice script = new ScriptEndChoice();
+						script.Load(node);
+						Actions.Add(script);
+					}
+					break;
+
+					case "enddialog":
+					{
+						ScriptEndDialog script = new ScriptEndDialog();
+						script.Load(node);
+						Actions.Add(script);
+					}
+					break;
+
+					case "giveitem":
+					{
+						ScriptGiveItem script = new ScriptGiveItem();
+						script.Load(node);
+						Actions.Add(script);
+					}
+					break;
+
+					case "healing":
+					{
+						ScriptHealing script = new ScriptHealing();
+						script.Load(node);
+						Actions.Add(script);
+					}
+					break;
+
+					case "joincharacter":
+					{
+						ScriptJoinCharacter script = new ScriptJoinCharacter();
+						script.Load(node);
+						Actions.Add(script);
+					}
+					break;
+
+					case "playsound":
+					{
+						ScriptPlaySound script = new ScriptPlaySound();
+						script.Load(node);
+						Actions.Add(script);
+					}
+					break;
+
+					case "toggle":
+					{
+						ScriptToggleTarget script = new ScriptToggleTarget();
+						script.Load(node);
+						Actions.Add(script);
+					}
+					break;
+
 					default:
 					{
 						Trace.WriteLine("[ScriptChoice] LoadActions() : Unknown node \"{0}\"", node.Name);
@@ -156,13 +276,12 @@ namespace DungeonEye.EventScript
 			writer.WriteStartElement("choice");
 			writer.WriteAttributeString("name", Name);
 
+			writer.WriteStartElement("actions");
 			foreach (IScriptAction action in Actions)
 			{
-				writer.WriteStartElement("action");
-				writer.WriteAttributeString("name", action.Name);
 				action.Save(writer);
-				writer.WriteEndElement();
 			}
+			writer.WriteEndElement();
 
 			writer.WriteEndElement();
 

@@ -36,41 +36,42 @@ namespace DungeonEye
 	/// </summary>
 	public class ScriptedDialog : DialogBase
 	{
+
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="square">Square</param>
-		/// <param name="border">Display picture border</param>
-		/// <param name="picture">Picture name</param>
-		/// <param name="text">Text to display</param>
-		public ScriptedDialog(Square square, bool border, string picture, string text)
+		/// <param name="square">Square handle</param>
+		/// <param name="evt">Event square handle</param>
+		public ScriptedDialog(Square square, EventSquare evt)
 		{
 			if (square == null)
 				throw new ArgumentNullException("Square is null");
 
+			if (evt == null)
+				throw new ArgumentNullException("EventSquare is null");
 
+			Event = evt;
 			Square = square;
-			Picture = new Texture2D(picture);
-			Text = text;
 
-			if (border)
+			Picture = new Texture2D(Event.PictureName);
+
+			if (Event.DisplayBorder)
 			{
-				DisplayBorder = true;
 				Border = new Texture2D("border.png");
 			}
 			
-			// Buttons
-			Buttons = new ScriptButton[3];
-			for (int i = 0 ; i < 3 ; i++)
+			// HACK: Hard coded maximum button for ScriptDialog
+			Choices = new ScriptChoice[MaxButtonCount];
+			Buttons = new ScriptButton[MaxButtonCount];
+			for (int i = 0 ; i < MaxButtonCount ; i++)
 			{
 				Buttons[i] = new ScriptButton();
 				Buttons[i].Click +=new EventHandler(ButtonClick);
 			}
 
-			Choices = new ScriptChoice[3];
 
 
-	
+/*	
 			// Dummy tests
 			ScriptChoice choice1 = new ScriptChoice("Yes");
 			choice1.Actions.Add(new ScriptTeleport
@@ -89,6 +90,7 @@ namespace DungeonEye
 			choice2.Actions.Add(new ScriptEndDialog());
 
 			SetChoices(choice1, choice2);
+*/
 		}
 
 
@@ -113,20 +115,46 @@ namespace DungeonEye
 		/// <param name="time">Game time</param>
 		public override void Update(GameTime time)
 		{
+			// Debug
 			if (Mouse.IsNewButtonDown(MouseButtons.Middle))
 				Exit();
 
 
-			// Update each choice button
-			for (int id = 0; id < Choices.Length; id++)
+
+			// Rebuild button list
+			int id = 0;
+			Choices[0] = null;
+			Choices[1] = null;
+			Choices[2] = null;
+			foreach (ScriptChoice choice in Event.Choices)
 			{
-				if (Choices[id] == null || !Choices[id].Enabled)
+				// choice disabled
+				if (!choice.Enabled)
 					continue;
+
+				// Add choice
+				Choices[id++] = choice;
+
+				// Maximum reached
+				if (id >= MaxButtonCount)
+					break;
+			}
+
+			// Compute button rectangles
+			SetChoice(Choices[0], Choices[1], Choices[2]);
+
+
+			// Update each choice button
+			for (id = 0 ; id < MaxButtonCount ; id++)
+			{
+				if (Choices[id] == null)
+					break;
 
 				Buttons[id].Update(time);
 			}
 
 		}
+
 
 
 		/// <summary>
@@ -136,7 +164,7 @@ namespace DungeonEye
 		public override void Draw(SpriteBatch batch)
 		{
 			// Border
-			if (DisplayBorder)
+			if (Event.DisplayBorder)
 				batch.Draw(Border, Point.Empty, Color.White);
 
 			// Picture
@@ -144,11 +172,11 @@ namespace DungeonEye
 
 			// Text
 			GUI.DrawSimpleBevel(batch, DisplayCoordinates.ScriptedDialog);
-			batch.DrawString(GUI.DialogFont, new Point(4, 250), GameColors.White, Text);
+			batch.DrawString(GUI.DialogFont, new Point(4, 250), GameColors.White, Event.Text);
 
 
 			// Choices
-			for (int id = 0 ; id < Choices.Length ; id++)
+			for (int id = 0 ; id < MaxButtonCount ; id++)
 			{
 				if (Choices[id] == null || !Choices[id].Enabled)
 					continue;
@@ -251,18 +279,27 @@ namespace DungeonEye
 			Choices[1] = choice2;
 			Choices[2] = choice3;
 
-			Buttons[0].Rectangle = DisplayCoordinates.ScriptedDialogChoices[6];
-			Buttons[0].Text = choice1.Name;
-			Buttons[0].Tag = choice1;
+			if (choice1 != null)
+			{
+				Buttons[0].Rectangle = DisplayCoordinates.ScriptedDialogChoices[6];
+				Buttons[0].Text = choice1.Name;
+				Buttons[0].Tag = choice1;
+			}
 
-			Buttons[1].Rectangle = DisplayCoordinates.ScriptedDialogChoices[7];
-			Buttons[1].Text = choice2.Name;
-			Buttons[1].Tag = choice2;
+			if (choice2 != null)
+			{
+				Buttons[1].Rectangle = DisplayCoordinates.ScriptedDialogChoices[7];
+				Buttons[1].Text = choice2.Name;
+				Buttons[1].Tag = choice2;
+			}
 
 
-			Buttons[2].Rectangle = DisplayCoordinates.ScriptedDialogChoices[8];
-			Buttons[2].Text = choice3.Name;
-			Buttons[2].Tag = choice3;
+			if (choice3 != null)
+			{
+				Buttons[2].Rectangle = DisplayCoordinates.ScriptedDialogChoices[8];
+				Buttons[2].Text = choice3.Name;
+				Buttons[2].Tag = choice3;
+			}
 		}
 
 		#endregion
@@ -305,6 +342,12 @@ namespace DungeonEye
 		#region Properties
 
 		/// <summary>
+		/// Maximum number of button on the screen
+		/// </summary>
+		int MaxButtonCount = 3;
+
+
+		/// <summary>
 		/// Available choices
 		/// </summary>
 		ScriptChoice[] Choices;
@@ -317,14 +360,9 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Text to display
+		/// Eventswqaure handle
 		/// </summary>
-		public string Text
-		{
-			get;
-			set;
-		}
-
+		EventSquare Event;
 
 
 		/// <summary>
@@ -336,15 +374,6 @@ namespace DungeonEye
 			private set;
 		}
 
-
-		/// <summary>
-		/// Display picture border
-		/// </summary>
-		public bool DisplayBorder
-		{
-			get;
-			set;
-		}
 
 		/// <summary>
 		/// Border texture

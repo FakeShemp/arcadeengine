@@ -83,10 +83,10 @@ namespace DungeonEye
 			}
 
 
-			// Create the scripted dialog
+			// Create the scripted dialog if there's a picture to show
 			if (!string.IsNullOrEmpty(PictureName))
 			{
-				Team.Handle.Dialog = new ScriptedDialog(Square, DisplayBorder, PictureName, Text);				
+				Team.Handle.Dialog = new ScriptedDialog(Square, this);				
 			}
 
 

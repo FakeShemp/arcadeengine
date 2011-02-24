@@ -38,10 +38,12 @@ namespace DungeonEye.Forms
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="script"></param>
-		public EventActionForm()
+		/// <param name="dungeon">Dungeon handle</param>
+		public EventActionForm(Dungeon dungeon)
 		{
 			InitializeComponent();
+
+			Dungeon = dungeon;
 
 			ActionListBox.BeginUpdate();
 			ActionListBox.Items.Add("Activate");
@@ -73,17 +75,17 @@ namespace DungeonEye.Forms
 		public bool SetAction(IScriptAction script)
 		{
 			ControlHandle = null;
-
+			
 			if (script is ScriptTeleport)
 			{
 				ActionListBox.SelectedItem = "Teleport";
-				ControlHandle = new ScriptTeleportControl(script as ScriptTeleport);
+				ControlHandle = new ScriptTeleportControl(script as ScriptTeleport, Dungeon);
 			}
 
 			else if (script is ScriptActivateTarget)
 			{
 				ActionListBox.SelectedItem = "Activate";
-				ControlHandle = new ScriptActivateTargetControl(script as ScriptActivateTarget);
+				ControlHandle = new ScriptActivateTargetControl(script as ScriptActivateTarget, Dungeon);
 			}
 
 			else if (script is ScriptChangePicture)
@@ -113,7 +115,7 @@ namespace DungeonEye.Forms
 			else if (script is ScriptDeactivateTarget)
 			{
 				ActionListBox.SelectedItem = "Deactivate";
-				ControlHandle = new ScriptDeactivateTargetControl(script as ScriptDeactivateTarget);
+				ControlHandle = new ScriptDeactivateTargetControl(script as ScriptDeactivateTarget, Dungeon);
 			}
 
 			else if (script is ScriptEnableChoice)
@@ -131,7 +133,7 @@ namespace DungeonEye.Forms
 			else if (script is ScriptToggleTarget)
 			{
 				ActionListBox.SelectedItem = "Toggle";
-				ControlHandle = new ScriptToggleTargetControl(script as ScriptToggleTarget);
+				ControlHandle = new ScriptToggleTargetControl(script as ScriptToggleTarget, Dungeon);
 			}
 
 			else if (script is ScriptHealing)
@@ -197,7 +199,7 @@ namespace DungeonEye.Forms
 
 
 			if ((string) ActionListBox.SelectedItem == "Teleport")
-				ControlHandle = new ScriptTeleportControl(null);
+				ControlHandle = new ScriptTeleportControl(null, Dungeon);
 
 			else if ((string) ActionListBox.SelectedItem == "Change Picture")
 				ControlHandle = new ScriptChangePictureControl(null);
@@ -206,7 +208,7 @@ namespace DungeonEye.Forms
 				ControlHandle = new ScriptPlaySoundControl(null);
 
 			else if ((string) ActionListBox.SelectedItem == "Activate")
-				ControlHandle = new ScriptActivateTargetControl(null);
+				ControlHandle = new ScriptActivateTargetControl(null, Dungeon);
 
 			else if ((string) ActionListBox.SelectedItem == "End Dialog")
 				ControlHandle = new ScriptEndDialogControl(null);
@@ -215,7 +217,7 @@ namespace DungeonEye.Forms
 				ControlHandle = new ScriptEndChoiceControl(null);
 
 			else if ((string) ActionListBox.SelectedItem == "Deactivate")
-				ControlHandle = new ScriptDeactivateTargetControl(null);
+				ControlHandle = new ScriptDeactivateTargetControl(null, Dungeon);
 
 			else if ((string) ActionListBox.SelectedItem == "Enable Choice")
 				ControlHandle = new ScriptEnableChoiceControl(null);
@@ -224,7 +226,7 @@ namespace DungeonEye.Forms
 				ControlHandle = new ScriptDisableChoiceControl(null);
 
 			else if ((string) ActionListBox.SelectedItem == "Toggle")
-				ControlHandle = new ScriptToggleTargetControl(null);
+				ControlHandle = new ScriptToggleTargetControl(null, Dungeon);
 
 			else if ((string) ActionListBox.SelectedItem == "Healing")
 				ControlHandle = new ScriptHealingControl(null);
@@ -255,12 +257,20 @@ namespace DungeonEye.Forms
 		#endregion
 
 
+
+
 		#region Properties
 
 		/// <summary>
 		/// 
 		/// </summary>
 		ScriptActionControlBase ControlHandle = null;
+
+
+		/// <summary>
+		/// Dungeon handle
+		/// </summary>
+		Dungeon Dungeon;
 
 
 		/// <summary>

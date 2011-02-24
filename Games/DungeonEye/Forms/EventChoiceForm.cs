@@ -39,12 +39,14 @@ namespace DungeonEye.Forms
 		/// Constructor
 		/// </summary>
 		/// <param name="choice">choice to edit</param>
-		public EventChoiceForm(ScriptChoice choice)
+		public EventChoiceForm(ScriptChoice choice, Dungeon dungeon)
 		{
 			InitializeComponent();
 
 			if (choice == null)
 				throw new ArgumentNullException("choice");
+
+			Dungeon = dungeon;
 
 			NameBox.Text = choice.Name;
 
@@ -165,7 +167,7 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void AddActionBox_Click(object sender, EventArgs e)
 		{
-			EventActionForm form =  new EventActionForm();
+			EventActionForm form =  new EventActionForm(Dungeon);
 			if (form.ShowDialog() != DialogResult.OK)
 				return;
 
@@ -209,7 +211,7 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void ActionsBox_DoubleClick(object sender, EventArgs e)
 		{
-			EventActionForm form =  new EventActionForm();
+			EventActionForm form =  new EventActionForm(Dungeon);
 
 			IScriptAction action = Choice.Actions[ActionsBox.SelectedIndex];
 
@@ -226,7 +228,16 @@ namespace DungeonEye.Forms
 
 		#region Properties
 
+		/// <summary>
+		/// Choice handle
+		/// </summary>
 		ScriptChoice Choice;
+
+
+		/// <summary>
+		/// Dungeon handle
+		/// </summary>
+		Dungeon Dungeon;
 
 		#endregion
 
