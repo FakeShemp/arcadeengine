@@ -376,7 +376,7 @@ namespace DungeonEye
 				return Items[name];
 
 			else if (typeof(Spell) == typeof(T) && Spells.ContainsKey(name))
-				return Items[name];
+				return Spells[name];
 
 			else if (typeof(Hero) == typeof(T) && Heroes.ContainsKey(name))
 				return Heroes[name];
