@@ -352,14 +352,15 @@ namespace ArcEngine
 		/// <param name="asset">Asset handle</param>
 		static public void AddAsset<T>(string name, IAsset asset) where T : IAsset
 		{
-			StringBuilder sb = new StringBuilder();
-			using (XmlWriter writer = XmlWriter.Create(sb))
-				asset.Save(writer);
+			//StringBuilder sb = new StringBuilder();
+			//using (XmlWriter writer = XmlWriter.Create(sb))
+			//    asset.Save(writer);
 
-			XmlDocument doc = new XmlDocument();
-			doc.LoadXml(sb.ToString());
+			//XmlDocument doc = new XmlDocument();
+			//doc.LoadXml(sb.ToString());
 
-			AddAsset<T>(name, doc.DocumentElement);
+			XmlNode node = ConvertAsset(asset);
+			AddAsset<T>(name, node);
 		}
 
 

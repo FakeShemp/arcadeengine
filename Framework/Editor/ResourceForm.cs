@@ -23,11 +23,13 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
-using ArcEngine.Forms;
-using ArcEngine;
-using WeifenLuo.WinFormsUI.Docking;
+using System.Xml;
 using ArcEngine.Asset;
 using ArcEngine.Audio;
+using ArcEngine.Forms;
+using WeifenLuo.WinFormsUI.Docking;
+using ArcEngine.Interface;
+
 
 namespace ArcEngine.Editor
 {
@@ -42,6 +44,14 @@ namespace ArcEngine.Editor
 		public ResourceForm()
 		{
 			InitializeComponent();
+
+
+			// Node icons
+			NodeIcons = new Dictionary<Type, int>();
+			NodeIcons.Add(typeof(TileSet), 2);
+			NodeIcons.Add(typeof(StringTable), 4);
+			NodeIcons.Add(typeof(AudioSample), 32);
+			NodeIcons.Add(typeof(Script), 24);
 		}
 
 
@@ -51,20 +61,13 @@ namespace ArcEngine.Editor
 		/// </summary>
 		public void RebuildResourceTree()
 		{
-			// Asset icon
-			Dictionary<Type, int> tab = new Dictionary<Type, int>();
-			tab.Add(typeof(TileSet), 2);
-			tab.Add(typeof(StringTable), 4);
-			tab.Add(typeof(AudioSample), 32);
-			tab.Add(typeof(Script), 24);
-
-
 			ResourceTree.BeginUpdate();
 
 			ResourceTree.Nodes.Clear();
 			TreeNode bank = ResourceTree.Nodes.Add("Assets");
 			bank.ImageIndex = 31;
 			bank.SelectedImageIndex = 31;
+			
 
 			// For each providers
 			foreach (Provider provider in ResourceManager.Providers)
@@ -80,22 +83,16 @@ namespace ArcEngine.Editor
 
 					TreeNode node = bank.Nodes.Add(type.Name + " (" + count.ToString() + ")");
 					node.Tag = type;
-
+					node.ImageIndex = 34;
+					node.SelectedImageIndex = 35;
+					
 					// Invoke the generic method like this : provider.GetAssets<[Asset Type]>();
 					mi = provider.GetType().GetMethod("GetAssets").MakeGenericMethod(type);
 					List<string> list = mi.Invoke(provider, null) as List<string>;
 
 					foreach (string str in list)
 					{
-						TreeNode element = node.Nodes.Add(str);
-						element.Tag = type;
-
-						int imgindex = 14;
-						if (tab.ContainsKey(type))
-							imgindex = tab[type];
-
-						element.ImageIndex = imgindex;
-						element.SelectedImageIndex = imgindex;
+						AddNode(node, str, type);
 					}
 				}
 			}
@@ -112,6 +109,27 @@ namespace ArcEngine.Editor
 			bank.Expand();
 
 		}
+
+
+		/// <summary>
+		/// Adds a node
+		/// </summary>
+		/// <param name="parent">Parent node</param>
+		/// <param name="text">Text to display</param>
+		/// <param name="type">Type of the asset</param>
+		private void AddNode(TreeNode parent, string text, Type type)
+		{
+			TreeNode element = parent.Nodes.Add(text);
+			element.Tag = type;
+
+			int imgindex = 14;
+			if (NodeIcons.ContainsKey(type))
+				imgindex = NodeIcons[type];
+
+			element.ImageIndex = imgindex;
+			element.SelectedImageIndex = imgindex;
+		}
+
 
 
 		/// <summary>
@@ -147,14 +165,15 @@ namespace ArcEngine.Editor
 		/// <param name="e"></param>
 		private void ResourceTree_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
 		{
-			if (ResourceTree.SelectedNode == null)
+			TreeNode node = ResourceTree.SelectedNode;
+			if (node == null)
 				return;
 
 			if (e.KeyCode == Keys.Delete)
-				RemoveAsset(ResourceTree.SelectedNode);
+				RemoveAsset(node);
 
-			if (e.KeyCode == Keys.Enter)
-				EditAsset(ResourceTree.SelectedNode);
+			if (e.KeyCode == Keys.Enter && !node.IsEditing)
+				EditAsset(node);
 		}
 
 
@@ -189,6 +208,82 @@ namespace ArcEngine.Editor
 			RemoveAsset(ResourceTree.SelectedNode);
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void CloneMenuItem_Click(object sender, EventArgs e)
+		{
+			// Not an editable node
+			TreeNode node = ResourceTree.SelectedNode;
+			if (node == null || node.Tag == null)
+				return;
+
+
+			// Get the original asset
+			MethodInfo me = typeof(ResourceManager).GetMethod("GetAsset", new Type[] { typeof(string) });
+			MethodInfo mi = me.MakeGenericMethod(node.Tag as Type);
+			XmlNode xml = mi.Invoke(null, new object[] { node.Text }) as XmlNode;
+			if (xml == null)
+				return;
+			xml.Attributes["name"].Value = node.Text + "_1";
+
+			// Adds the new asset
+			me = typeof(ResourceManager).GetMethod("AddAsset", new Type[] { typeof(string), typeof(XmlNode) });
+			mi = me.MakeGenericMethod(node.Tag as Type);
+			mi.Invoke(null, new object[] { xml.Attributes["name"].Value, xml });
+
+			// Adds the node
+			AddNode(node.Parent, xml.Attributes["name"].Value, node.Tag as Type);
+		}
+
+
+
+		/// <summary>
+		/// Changing the name of an asset
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ResourceTree_AfterLabelEdit(object sender, NodeLabelEditEventArgs e)
+		{
+			TreeNode node = e.Node;
+			if (node == null || node.Tag == null)
+			{
+				e.CancelEdit = true;
+				return;
+			}
+
+			if (node.Text.StartsWith("Binaries"))
+			{
+				e.CancelEdit = true;
+				return;
+			}
+
+
+			// Get the original asset
+			MethodInfo me = typeof(ResourceManager).GetMethod("GetAsset", new Type[] { typeof(string) });
+			MethodInfo mi = me.MakeGenericMethod(node.Tag as Type);
+			XmlNode xml = mi.Invoke(null, new object[] { node.Text }) as XmlNode;
+			if (xml == null)
+				return;
+			xml.Attributes["name"].Value = e.Label;
+			
+
+
+			// Adds the new asset
+			me = typeof(ResourceManager).GetMethod("AddAsset", new Type[] { typeof(string), typeof(XmlNode) });
+			mi = me.MakeGenericMethod(node.Tag as Type);
+			mi.Invoke(null, new object[] { e.Label, xml });
+
+
+			// Remove the old asset
+			me = typeof(ResourceManager).GetMethod("RemoveAsset", new Type[] { typeof(string) });
+			mi = me.MakeGenericMethod(node.Tag as Type);
+			mi.Invoke(null, new object[] { node.Text });
+
+		}
 
 
 		/// <summary>
@@ -239,8 +334,6 @@ namespace ArcEngine.Editor
 				mi.Invoke(provider, new object[] { });
 
 			}
-			else
-				return false;
 
 
 			RemoveNode(node);
@@ -252,7 +345,7 @@ namespace ArcEngine.Editor
 		/// <summary>
 		/// Removes a node
 		/// </summary>
-		/// <param name="node"></param>
+		/// <param name="node">Node handle</param>
 		private void RemoveNode(TreeNode node)
 		{
 			if (node == null)
@@ -329,24 +422,19 @@ namespace ArcEngine.Editor
 		}
 
 
+
 		/// <summary>
-		/// Changing the name of an asset
+		/// Renames an asset
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void ResourceTree_AfterLabelEdit(object sender, NodeLabelEditEventArgs e)
+		private void RenameMenuItem_Click(object sender, EventArgs e)
 		{
-			TreeNode node = e.Node;
+			TreeNode node = ResourceTree.SelectedNode;
 
-			if (node.Text.StartsWith("Binaries"))
-			{
-				e.CancelEdit = true;
-				return;
-			}
+			if (node.Nodes.Count == 0)
+				node.BeginEdit();
 
-			MessageBox.Show("Not yet implemented !");
-			
-			e.CancelEdit = true;
 		}
 
 
@@ -363,6 +451,25 @@ namespace ArcEngine.Editor
 		#endregion
 
 
+
+		#region Properties
+
+		/// <summary>
+		/// Node icons
+		/// </summary>
+		Dictionary<Type, int> NodeIcons;
+
+		#endregion
+
+		private void ResourceTree_BeforeLabelEdit(object sender, NodeLabelEditEventArgs e)
+		{
+			if (e.Node.Nodes.Count != 0)
+			{
+				e.CancelEdit = true;
+				return;
+			}
+
+		}
 
 	}
 }
