@@ -131,7 +131,6 @@ namespace ArcEngine.Editor
 		}
 
 
-
 		/// <summary>
 		/// Collapse resource tree
 		/// </summary>
@@ -153,136 +152,42 @@ namespace ArcEngine.Editor
 		}
 
 
-
-
-		#region Events
-
-
 		/// <summary>
-		/// OnKeyPreview
+		/// Edit an asset
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void ResourceTree_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
-		{
-			TreeNode node = ResourceTree.SelectedNode;
-			if (node == null)
-				return;
-
-			if (e.KeyCode == Keys.Delete)
-				RemoveAsset(node);
-
-			if (e.KeyCode == Keys.Enter && !node.IsEditing)
-				EditAsset(node);
-		}
-
-
-
-		/// <summary>
-		/// OnMouseUp ContextMenu
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnMouseUp(object sender, MouseEventArgs e)
-		{
-
-			if (e.Button == MouseButtons.Right)
-			{
-				TreeNode node = ResourceTree.GetNodeAt(e.X, e.Y);
-				MouseContextMenu.Tag = node.Tag;
-
-				MouseContextMenu.Show(ResourceTree, new Point(e.X, e.Y));
-			}
-		}
-
-
-
-
-		/// <summary>
-		/// Removes an asset
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void EraseMenu_Click(object sender, EventArgs e)
-		{
-			RemoveAsset(ResourceTree.SelectedNode);
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void CloneMenuItem_Click(object sender, EventArgs e)
+		/// <param name="node">Tree node</param>
+		/// <returns>True if asset is editable</returns>
+		private bool EditAsset(TreeNode node)
 		{
 			// Not an editable node
-			TreeNode node = ResourceTree.SelectedNode;
-			if (node == null || node.Tag == null)
-				return;
-
-
-			// Get the original asset
-			MethodInfo me = typeof(ResourceManager).GetMethod("GetAsset", new Type[] { typeof(string) });
-			MethodInfo mi = me.MakeGenericMethod(node.Tag as Type);
-			XmlNode xml = mi.Invoke(null, new object[] { node.Text }) as XmlNode;
-			if (xml == null)
-				return;
-			xml.Attributes["name"].Value = node.Text + "_1";
-
-			// Adds the new asset
-			me = typeof(ResourceManager).GetMethod("AddAsset", new Type[] { typeof(string), typeof(XmlNode) });
-			mi = me.MakeGenericMethod(node.Tag as Type);
-			mi.Invoke(null, new object[] { xml.Attributes["name"].Value, xml });
-
-			// Adds the node
-			AddNode(node.Parent, xml.Attributes["name"].Value, node.Tag as Type);
-		}
-
-
-
-		/// <summary>
-		/// Changing the name of an asset
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void ResourceTree_AfterLabelEdit(object sender, NodeLabelEditEventArgs e)
-		{
-			TreeNode node = e.Node;
-			if (node == null || node.Tag == null)
-			{
-				e.CancelEdit = true;
-				return;
-			}
+			if (node == null || node.Nodes.Count > 0)
+				return false;
 
 			if (node.Text.StartsWith("Binaries"))
 			{
-				e.CancelEdit = true;
-				return;
+				new BinaryForm().Show(DockPanel, DockState.Document);
+				return true;
 			}
 
 
-			// Get the original asset
-			MethodInfo me = typeof(ResourceManager).GetMethod("GetAsset", new Type[] { typeof(string) });
-			MethodInfo mi = me.MakeGenericMethod(node.Tag as Type);
-			XmlNode xml = mi.Invoke(null, new object[] { node.Text }) as XmlNode;
-			if (xml == null)
-				return;
-			xml.Attributes["name"].Value = e.Label;
-			
+			if (node.Tag == null)
+				return false;
 
+			// Get the provider
+			Provider provider = ResourceManager.GetAssetProvider(node.Tag as Type);
+			if (provider == null)
+				return false;
 
-			// Adds the new asset
-			me = typeof(ResourceManager).GetMethod("AddAsset", new Type[] { typeof(string), typeof(XmlNode) });
-			mi = me.MakeGenericMethod(node.Tag as Type);
-			mi.Invoke(null, new object[] { e.Label, xml });
+			// Edit the asset
+			object[] args = { node.Text };
+			MethodInfo mi = provider.GetType().GetMethod("EditAsset").MakeGenericMethod(node.Tag as Type);
+			AssetEditorBase form = mi.Invoke(provider, args) as AssetEditorBase;
+			if (form == null)
+				return false;
 
+			form.Show(DockPanel, DockState.Document);
 
-			// Remove the old asset
-			me = typeof(ResourceManager).GetMethod("RemoveAsset", new Type[] { typeof(string) });
-			mi = me.MakeGenericMethod(node.Tag as Type);
-			mi.Invoke(null, new object[] { node.Text });
-
+			return true;
 		}
 
 
@@ -341,7 +246,6 @@ namespace ArcEngine.Editor
 		}
 
 
-
 		/// <summary>
 		/// Removes a node
 		/// </summary>
@@ -356,7 +260,7 @@ namespace ArcEngine.Editor
 			// If children present, the rename the parent
 			if (node.Nodes.Count == 0)
 			{
-				string[] val = node.Parent.Text.Split(new char[]{'(', ')'});
+				string[] val = node.Parent.Text.Split(new char[] { '(', ')' });
 				int count = int.Parse(val[1]) - 1;
 				parent.Text = (node.Tag as Type).Name + " (" + count + ")";
 
@@ -371,6 +275,137 @@ namespace ArcEngine.Editor
 		}
 
 
+
+		#region Events
+
+
+		/// <summary>
+		/// OnKeyPreview
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ResourceTree_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+		{
+			TreeNode node = ResourceTree.SelectedNode;
+			if (node == null)
+				return;
+
+			if (e.KeyCode == Keys.Delete)
+				RemoveAsset(node);
+
+			if (e.KeyCode == Keys.Enter && !node.IsEditing)
+				EditAsset(node);
+		}
+
+
+		/// <summary>
+		/// OnMouseUp ContextMenu
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnMouseUp(object sender, MouseEventArgs e)
+		{
+
+			if (e.Button == MouseButtons.Right)
+			{
+				TreeNode node = ResourceTree.GetNodeAt(e.X, e.Y);
+				MouseContextMenu.Tag = node.Tag;
+
+				MouseContextMenu.Show(ResourceTree, new Point(e.X, e.Y));
+			}
+		}
+
+
+		/// <summary>
+		/// Removes an asset
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void EraseMenu_Click(object sender, EventArgs e)
+		{
+			RemoveAsset(ResourceTree.SelectedNode);
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void CloneMenuItem_Click(object sender, EventArgs e)
+		{
+			// Not an editable node
+			TreeNode node = ResourceTree.SelectedNode;
+			if (node == null || node.Tag == null)
+				return;
+
+
+			// Get the original asset
+			MethodInfo me = typeof(ResourceManager).GetMethod("GetAsset", new Type[] { typeof(string) });
+			MethodInfo mi = me.MakeGenericMethod(node.Tag as Type);
+			XmlNode xml = mi.Invoke(null, new object[] { node.Text }) as XmlNode;
+			if (xml == null)
+				return;
+			xml = xml.Clone();
+			xml.Attributes["name"].Value = node.Text + "_1";
+
+			
+
+			// Adds the new asset
+			me = typeof(ResourceManager).GetMethod("AddAsset", new Type[] { typeof(string), typeof(XmlNode) });
+			mi = me.MakeGenericMethod(node.Tag as Type);
+			mi.Invoke(null, new object[] { xml.Attributes["name"].Value, xml });
+
+			// Adds the node
+			AddNode(node.Parent, xml.Attributes["name"].Value, node.Tag as Type);
+		}
+
+
+		/// <summary>
+		/// Changing the name of an asset
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ResourceTree_AfterLabelEdit(object sender, NodeLabelEditEventArgs e)
+		{
+			TreeNode node = e.Node;
+			if (node == null || node.Tag == null)
+			{
+				e.CancelEdit = true;
+				return;
+			}
+
+			if (node.Text.StartsWith("Binaries"))
+			{
+				e.CancelEdit = true;
+				return;
+			}
+
+
+			// Get the original asset
+			MethodInfo me = typeof(ResourceManager).GetMethod("GetAsset", new Type[] { typeof(string) });
+			MethodInfo mi = me.MakeGenericMethod(node.Tag as Type);
+			XmlNode xml = mi.Invoke(null, new object[] { node.Text }) as XmlNode;
+			if (xml == null)
+				return;
+			xml.Attributes["name"].Value = e.Label;
+			
+
+
+			// Adds the new asset
+			me = typeof(ResourceManager).GetMethod("AddAsset", new Type[] { typeof(string), typeof(XmlNode) });
+			mi = me.MakeGenericMethod(node.Tag as Type);
+			mi.Invoke(null, new object[] { e.Label, xml });
+
+
+			// Remove the old asset
+			me = typeof(ResourceManager).GetMethod("RemoveAsset", new Type[] { typeof(string) });
+			mi = me.MakeGenericMethod(node.Tag as Type);
+			mi.Invoke(null, new object[] { node.Text });
+
+		}
+
+
 		/// <summary>
 		/// When double click on an element in the treeview then opens up a new window
 		/// </summary>
@@ -380,47 +415,6 @@ namespace ArcEngine.Editor
 		{
 			EditAsset(ResourceTree.SelectedNode);
 		}
-
-
-
-		/// <summary>
-		/// Edit an asset
-		/// </summary>
-		/// <param name="node">Tree node</param>
-		/// <returns>True if asset is editable</returns>
-		private bool EditAsset(TreeNode node)
-		{
-			// Not an editable node
-			if (node == null ||node.Nodes.Count > 0)
-				return false;
-
-			if (node.Text.StartsWith("Binaries"))
-			{
-				new BinaryForm().Show(DockPanel, DockState.Document);
-				return true;
-			}
-
-
-			if (node.Tag == null)
-				return false;
-
-			// Get the provider
-			Provider provider = ResourceManager.GetAssetProvider(node.Tag as Type);
-			if (provider == null)
-				return false;
-
-			// Edit the asset
-			object[] args = { node.Text };
-			MethodInfo mi = provider.GetType().GetMethod("EditAsset").MakeGenericMethod(node.Tag as Type);
-			AssetEditorBase form = mi.Invoke(provider, args) as AssetEditorBase;
-			if (form == null)
-				return false;
-
-			form.Show(DockPanel, DockState.Document);
-
-			return true;
-		}
-
 
 
 		/// <summary>
@@ -448,6 +442,22 @@ namespace ArcEngine.Editor
 			ResourceTree.SelectedNode = e.Node;
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ResourceTree_BeforeLabelEdit(object sender, NodeLabelEditEventArgs e)
+		{
+			if (e.Node.Nodes.Count != 0)
+			{
+				e.CancelEdit = true;
+				return;
+			}
+
+		}
+
 		#endregion
 
 
@@ -460,16 +470,6 @@ namespace ArcEngine.Editor
 		Dictionary<Type, int> NodeIcons;
 
 		#endregion
-
-		private void ResourceTree_BeforeLabelEdit(object sender, NodeLabelEditEventArgs e)
-		{
-			if (e.Node.Nodes.Count != 0)
-			{
-				e.CancelEdit = true;
-				return;
-			}
-
-		}
 
 	}
 }
