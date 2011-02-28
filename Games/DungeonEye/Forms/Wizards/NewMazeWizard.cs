@@ -30,18 +30,28 @@ using ArcEngine.Graphic;
 
 namespace DungeonEye.Forms.Wizards
 {
+	/// <summary>
+	/// New maze wizard
+	/// </summary>
 	public partial class NewMazeWizard : Form
 	{
 
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
+		/// <param name="dungeon">Dungeon handle</param>
 		public NewMazeWizard(Dungeon dungeon)
 		{
+			if (dungeon == null)
+				throw new ArgumentNullException("dungeon");
+
 			InitializeComponent();
 
 			Dungeon = dungeon;
-	
+
+
+			WallTilSetBox.DataSource = ResourceManager.GetAssets<TileSet>();
+			OverlayTileSetBox.DataSource = ResourceManager.GetAssets<TileSet>();
 		}
 
 
@@ -69,26 +79,22 @@ namespace DungeonEye.Forms.Wizards
 			Maze maze = new Maze(Dungeon);
 			maze.Name = MazeName.Text;
 			maze.Size = new Size((int)MazeWidthBox.Value, (int)MazeHeightBox.Value);
+			maze.WallTilesetName = (string)WallTilSetBox.SelectedItem;
+			maze.OverlayTilesetName= (string)OverlayTileSetBox.SelectedItem;
 			Dungeon.AddMaze(maze);
 
 		}
 
 
 
-		///// <summary>
-		///// Desired size of the blocks
-		///// </summary>
-		//Size NewBlockSize
-		//{
-		//   get
-		//   {
-		//      return new Size((int)BlockWidthBox.Value, (int)BlockHeightBox.Value);
-		//   }
-		//}
+		#region Properties
 
-
-
+		/// <summary>
+		/// Dungeon handle
+		/// </summary>
 		Dungeon Dungeon;
+
+		#endregion
 
 	}
 }

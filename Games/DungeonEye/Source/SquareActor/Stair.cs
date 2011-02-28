@@ -176,7 +176,8 @@ namespace DungeonEye
 			writer.WriteAttributeString("value", Type.ToString());
 			writer.WriteEndElement();
 
-			Target.Save("target", writer);
+			if (Target != null)
+				Target.Save("target", writer);
 
 			writer.WriteEndElement();
 

@@ -1004,21 +1004,10 @@ namespace DungeonEye
 				{
 					int id = i + 1;
 					string lvl = "0" + id.ToString();
-					lvl = "maze_" + lvl.Substring(lvl.Length - 2, 2);
+					lvl = "Catacomb - " + lvl.Substring(lvl.Length - 2, 2);
 
-					//DungeonLocation location = new DungeonLocation(lvl, Location.Coordinate);
 					if (Teleport(lvl))
-
-					//Maze maze = Dungeon.GetMaze(lvl);
-					//if (maze == null)
-					//    break;
-
-					//Maze = maze;
 						AddMessage("Loading " + lvl + ":" + Maze.Description);
-
-
-					//Teleport(null);
-
 
 					break;
 				}
@@ -1028,28 +1017,14 @@ namespace DungeonEye
 			if (Keyboard.IsNewKeyPress(Keys.T))
 			{
 				if (Teleport("test"))
-				{
-
-					//Maze maze = Dungeon.GetMaze("test");
-					//if (maze != null)
-					//{
-					//    Maze = maze;
 					AddMessage("Loading maze test", GameColors.Blue);
-					//}
-				}
 			}
 
 			// Forest maze
 			if (Keyboard.IsNewKeyPress(Keys.F))
 			{
 				if (Teleport("Forest"))
-				{
-					//Maze maze = Dungeon.GetMaze("Forest");
-					//if (maze != null)
-					//{
-					//    Maze = maze;
 					AddMessage("Loading maze forest", Color.Blue);
-				}
 			}
 
 			#endregion

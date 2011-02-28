@@ -162,6 +162,10 @@
     <Compile Include="Asset\Scenes\KeyFrame.cs" />
     <Compile Include="Asset\Scenes\SceneLayer.cs" />
     <Compile Include="Asset\BinaryInformation.cs" />
+    <Compile Include="Editor\Wizards\RenameWizard.cs" />
+    <Compile Include="Editor\Wizards\RenameWizard.Designer.cs">
+      <DependentUpon>RenameWizard.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\StorageBrowserForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -467,6 +471,9 @@
     <Compile Include="Utility\Webcam.cs" />
     <EmbeddedResource Include="Editor\ScriptControl.resx">
       <DependentUpon>ScriptControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editor\Wizards\RenameWizard.resx">
+      <DependentUpon>RenameWizard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\StorageBrowserForm.resx">
       <DependentUpon>StorageBrowserForm.cs</DependentUpon>
