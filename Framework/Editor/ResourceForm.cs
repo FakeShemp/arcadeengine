@@ -369,12 +369,13 @@ namespace ArcEngine.Editor
 		private void ResourceTree_AfterLabelEdit(object sender, NodeLabelEditEventArgs e)
 		{
 			TreeNode node = e.Node;
-			if (node == null || node.Tag == null)
+			if (node == null || node.Tag == null || e.Label == null)
 			{
 				e.CancelEdit = true;
 				return;
 			}
 
+			// Can't edit binaries
 			if (node.Text.StartsWith("Binaries"))
 			{
 				e.CancelEdit = true;

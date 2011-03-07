@@ -162,7 +162,9 @@
     <Compile Include="Asset\Scenes\KeyFrame.cs" />
     <Compile Include="Asset\Scenes\SceneLayer.cs" />
     <Compile Include="Asset\BinaryInformation.cs" />
-    <Compile Include="Editor\Wizards\RenameWizard.cs" />
+    <Compile Include="Editor\Wizards\RenameWizard.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Editor\Wizards\RenameWizard.Designer.cs">
       <DependentUpon>RenameWizard.cs</DependentUpon>
     </Compile>
