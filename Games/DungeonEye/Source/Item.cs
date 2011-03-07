@@ -147,17 +147,17 @@ namespace DungeonEye
 					}
 					break;
 
-					//case "damagevsbig":
-					//{
-					//    DamageVsBig.Load(node);
-					//}
-					//break;
+					case "damagevsbig":
+					{
+						DamageVsBig.Load(node);
+					}
+					break;
 
-					//case "damagevssmall":
-					//{
-					//    DamageVsSmall.Load(node);
-					//}
-					//break;
+					case "damagevssmall":
+					{
+						DamageVsSmall.Load(node);
+					}
+					break;
 
 					case "critical":
 					{
@@ -166,10 +166,28 @@ namespace DungeonEye
 					}
 					break;
 
-					case "description":
+					case "shortname":
 					{
-						Description = node.InnerText;
-					} 
+						ShortName = node.InnerText;
+					}
+					break;
+
+					case "identifiedname":
+					{
+						IdentifiedName = node.InnerText;
+					}
+					break;
+
+					case "isidentified":
+					{
+						IsIdentified = bool.Parse(node.Attributes["value"].Value);
+					}
+					break;
+
+					case "canidentify":
+					{
+						CanIdentify = bool.Parse(node.Attributes["value"].Value);
+					}
 					break;
 
 					case "speed":
@@ -278,8 +296,8 @@ namespace DungeonEye
 			writer.WriteEndElement();
 
 			Damage.Save("damage", writer);
-			//DamageVsBig.Save("damagevsbig", writer);
-			//DamageVsSmall.Save("damagevssmall", writer);
+			DamageVsBig.Save("damagevsbig", writer);
+			DamageVsSmall.Save("damagevssmall", writer);
 
 			writer.WriteStartElement("critical");
 			writer.WriteAttributeString("min", Critical.X.ToString());
@@ -293,7 +311,15 @@ namespace DungeonEye
 			//writer.WriteAttributeString("interface", InterfaceName);
 			//writer.WriteEndElement();
 
-			writer.WriteStartElement("cursed");
+			writer.WriteStartElement("iscursed");
+			writer.WriteAttributeString("value", IsCursed.ToString());
+			writer.WriteEndElement();
+
+			writer.WriteStartElement("isidentified");
+			writer.WriteAttributeString("value", IsCursed.ToString());
+			writer.WriteEndElement();
+
+			writer.WriteStartElement("canidentify");
 			writer.WriteAttributeString("value", IsCursed.ToString());
 			writer.WriteEndElement();
 
@@ -302,7 +328,8 @@ namespace DungeonEye
 			writer.WriteAttributeString("value", AllowedHands.ToString());
 			writer.WriteEndElement();
 
-			writer.WriteElementString("description", Description);
+			writer.WriteElementString("shortname", ShortName);
+			writer.WriteElementString("identifiedname", IdentifiedName);
 
 
 			writer.WriteStartElement("speed");
@@ -453,7 +480,7 @@ namespace DungeonEye
 			private set;
 		}
 
-/*
+
 		/// <summary>
 		/// Damage versus small entity
 		/// </summary>
@@ -471,7 +498,7 @@ namespace DungeonEye
 			get;
 			private set;
 		}
-*/
+
 
 		/// <summary>
 		/// Critical Hit
@@ -495,9 +522,39 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Description of the item
+		/// Name of the item when not yet identified
 		/// </summary>
-		public string Description
+		public string ShortName
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// Name of the item once identified
+		/// </summary>
+		public string IdentifiedName
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// Does the item is identified
+		/// </summary>
+		public bool IsIdentified
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// Does the item can be identified
+		/// </summary>
+		public bool CanIdentify
 		{
 			get;
 			set;
@@ -512,7 +569,6 @@ namespace DungeonEye
 			get;
 			set;
 		}
-
 
 
 		/// <summary>

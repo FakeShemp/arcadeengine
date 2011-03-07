@@ -130,13 +130,6 @@ namespace ArcEngine.Editor
 			Display.ClearBuffers();
 
 
-			//// No texture 
-			//if (TileSet.Texture == null)
-			//{
-			//    GLTextureControl.SwapBuffers();
-			//    return;
-			//}
-
 			Batch.Begin();
 
 
@@ -516,7 +509,7 @@ namespace ArcEngine.Editor
 			// Background texture
 			Rectangle dst = new Rectangle(Point.Empty, GLTileControl.Size);
 			Batch.Draw(CheckerBoard, dst, dst, Color.White);
-			
+		
 
 		//	CurrentTile = tileSet.GetTile((int)TileIDBox.Value);
 
@@ -742,6 +735,8 @@ namespace ArcEngine.Editor
 			TileSet.Load(Node);
 
 			TextureNameBox.Text = TileSet.TextureName;
+
+			BMFont = BitmapFont.CreateFromTTF(@"c:\windows\fonts\verdana.ttf", 14, FontStyle.Regular);
 		}
 
 
@@ -984,6 +979,12 @@ namespace ArcEngine.Editor
 		/// Spritebatch
 		/// </summary>
 		SpriteBatch Batch;
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		BitmapFont BMFont;
 
 		#endregion
 

@@ -531,7 +531,7 @@ namespace ArcEngine.Graphic
 				}
 
 
-				if (textures[TextureUnit] != value)
+	//			if (textures[TextureUnit] != value)
 				{					
 					textures[TextureUnit] = value;
 					TK.GL.BindTexture((TK.TextureTarget)value.Target, value.Handle);

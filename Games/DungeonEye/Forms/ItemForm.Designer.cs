@@ -35,9 +35,14 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.GroundTileBox = new System.Windows.Forms.NumericUpDown();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
-			this.DescriptionBox = new System.Windows.Forms.TextBox();
+			this.IdentifiedNameBox = new System.Windows.Forms.TextBox();
+			this.label4 = new System.Windows.Forms.Label();
+			this.ShortNameBox = new System.Windows.Forms.TextBox();
+			this.label34 = new System.Windows.Forms.Label();
 			this.groupBox5 = new System.Windows.Forms.GroupBox();
-			this.CursedBox = new System.Windows.Forms.CheckBox();
+			this.CanIdentifyBox = new System.Windows.Forms.CheckBox();
+			this.IdentifiedBox = new System.Windows.Forms.CheckBox();
+			this.IsCursedBox = new System.Windows.Forms.CheckBox();
 			this.ACBonusBox = new System.Windows.Forms.NumericUpDown();
 			this.label14 = new System.Windows.Forms.Label();
 			this.RangeBox = new System.Windows.Forms.NumericUpDown();
@@ -180,28 +185,56 @@
 			// 
 			// groupBox4
 			// 
-			this.groupBox4.Controls.Add(this.DescriptionBox);
-			this.groupBox4.Location = new System.Drawing.Point(3, 6);
+			this.groupBox4.Controls.Add(this.IdentifiedNameBox);
+			this.groupBox4.Controls.Add(this.label4);
+			this.groupBox4.Controls.Add(this.ShortNameBox);
+			this.groupBox4.Controls.Add(this.label34);
+			this.groupBox4.Location = new System.Drawing.Point(6, 6);
 			this.groupBox4.Name = "groupBox4";
-			this.groupBox4.Size = new System.Drawing.Size(491, 105);
+			this.groupBox4.Size = new System.Drawing.Size(373, 79);
 			this.groupBox4.TabIndex = 5;
 			this.groupBox4.TabStop = false;
 			this.groupBox4.Text = "Description :";
 			// 
-			// DescriptionBox
+			// IdentifiedNameBox
 			// 
-			this.DescriptionBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.DescriptionBox.Location = new System.Drawing.Point(3, 16);
-			this.DescriptionBox.Multiline = true;
-			this.DescriptionBox.Name = "DescriptionBox";
-			this.DescriptionBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.DescriptionBox.Size = new System.Drawing.Size(485, 86);
-			this.DescriptionBox.TabIndex = 4;
-			this.DescriptionBox.TextChanged += new System.EventHandler(this.DescriptionBox_TextChanged);
+			this.IdentifiedNameBox.Location = new System.Drawing.Point(97, 45);
+			this.IdentifiedNameBox.Name = "IdentifiedNameBox";
+			this.IdentifiedNameBox.Size = new System.Drawing.Size(267, 20);
+			this.IdentifiedNameBox.TabIndex = 1;
+			this.IdentifiedNameBox.TextChanged += new System.EventHandler(this.IdentifiedNameBox_TextChanged);
+			// 
+			// label4
+			// 
+			this.label4.AutoSize = true;
+			this.label4.Location = new System.Drawing.Point(6, 48);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(85, 13);
+			this.label4.TabIndex = 0;
+			this.label4.Text = "Identified name :";
+			// 
+			// ShortNameBox
+			// 
+			this.ShortNameBox.Location = new System.Drawing.Point(97, 19);
+			this.ShortNameBox.Name = "ShortNameBox";
+			this.ShortNameBox.Size = new System.Drawing.Size(267, 20);
+			this.ShortNameBox.TabIndex = 1;
+			this.ShortNameBox.TextChanged += new System.EventHandler(this.ShortNameBox_TextChanged);
+			// 
+			// label34
+			// 
+			this.label34.AutoSize = true;
+			this.label34.Location = new System.Drawing.Point(24, 19);
+			this.label34.Name = "label34";
+			this.label34.Size = new System.Drawing.Size(67, 13);
+			this.label34.TabIndex = 0;
+			this.label34.Text = "Short name :";
 			// 
 			// groupBox5
 			// 
-			this.groupBox5.Controls.Add(this.CursedBox);
+			this.groupBox5.Controls.Add(this.CanIdentifyBox);
+			this.groupBox5.Controls.Add(this.IdentifiedBox);
+			this.groupBox5.Controls.Add(this.IsCursedBox);
 			this.groupBox5.Controls.Add(this.ACBonusBox);
 			this.groupBox5.Controls.Add(this.label14);
 			this.groupBox5.Controls.Add(this.RangeBox);
@@ -212,23 +245,45 @@
 			this.groupBox5.Controls.Add(this.TypeBox);
 			this.groupBox5.Controls.Add(this.label6);
 			this.groupBox5.Controls.Add(this.label5);
-			this.groupBox5.Location = new System.Drawing.Point(3, 117);
+			this.groupBox5.Location = new System.Drawing.Point(6, 91);
 			this.groupBox5.Name = "groupBox5";
 			this.groupBox5.Size = new System.Drawing.Size(219, 158);
 			this.groupBox5.TabIndex = 6;
 			this.groupBox5.TabStop = false;
 			this.groupBox5.Text = "Misc :";
 			// 
+			// CanIdentifyBox
+			// 
+			this.CanIdentifyBox.AutoSize = true;
+			this.CanIdentifyBox.Location = new System.Drawing.Point(133, 122);
+			this.CanIdentifyBox.Name = "CanIdentifyBox";
+			this.CanIdentifyBox.Size = new System.Drawing.Size(81, 17);
+			this.CanIdentifyBox.TabIndex = 6;
+			this.CanIdentifyBox.Text = "Can identify";
+			this.CanIdentifyBox.UseVisualStyleBackColor = true;
+			this.CanIdentifyBox.CheckedChanged += new System.EventHandler(this.CanIdentifyBox_CheckedChanged);
+			// 
+			// IdentifiedBox
+			// 
+			this.IdentifiedBox.AutoSize = true;
+			this.IdentifiedBox.Location = new System.Drawing.Point(133, 72);
+			this.IdentifiedBox.Name = "IdentifiedBox";
+			this.IdentifiedBox.Size = new System.Drawing.Size(79, 17);
+			this.IdentifiedBox.TabIndex = 6;
+			this.IdentifiedBox.Text = "Is identified";
+			this.IdentifiedBox.UseVisualStyleBackColor = true;
+			this.IdentifiedBox.CheckedChanged += new System.EventHandler(this.IdentifiedBox_CheckedChanged);
+			// 
 			// CursedBox
 			// 
-			this.CursedBox.AutoSize = true;
-			this.CursedBox.Location = new System.Drawing.Point(145, 44);
-			this.CursedBox.Name = "CursedBox";
-			this.CursedBox.Size = new System.Drawing.Size(59, 17);
-			this.CursedBox.TabIndex = 5;
-			this.CursedBox.Text = "Cursed";
-			this.CursedBox.UseVisualStyleBackColor = true;
-			this.CursedBox.CheckedChanged += new System.EventHandler(this.CursedBox_CheckedChanged);
+			this.IsCursedBox.AutoSize = true;
+			this.IsCursedBox.Location = new System.Drawing.Point(133, 44);
+			this.IsCursedBox.Name = "CursedBox";
+			this.IsCursedBox.Size = new System.Drawing.Size(69, 17);
+			this.IsCursedBox.TabIndex = 5;
+			this.IsCursedBox.Text = "Is cursed";
+			this.IsCursedBox.UseVisualStyleBackColor = true;
+			this.IsCursedBox.CheckedChanged += new System.EventHandler(this.CursedBox_CheckedChanged);
 			// 
 			// ACBonusBox
 			// 
@@ -358,7 +413,7 @@
 			this.groupBox6.Controls.Add(this.SecondaryBox);
 			this.groupBox6.Controls.Add(this.QuiverBox);
 			this.groupBox6.Controls.Add(this.PrimaryBox);
-			this.groupBox6.Location = new System.Drawing.Point(228, 117);
+			this.groupBox6.Location = new System.Drawing.Point(231, 91);
 			this.groupBox6.Name = "groupBox6";
 			this.groupBox6.Size = new System.Drawing.Size(146, 158);
 			this.groupBox6.TabIndex = 7;
@@ -483,7 +538,7 @@
 			this.groupBox8.Controls.Add(this.label9);
 			this.groupBox8.Controls.Add(this.CriticalMinBox);
 			this.groupBox8.Controls.Add(this.label10);
-			this.groupBox8.Location = new System.Drawing.Point(243, 281);
+			this.groupBox8.Location = new System.Drawing.Point(244, 255);
 			this.groupBox8.Name = "groupBox8";
 			this.groupBox8.Size = new System.Drawing.Size(148, 104);
 			this.groupBox8.TabIndex = 8;
@@ -659,7 +714,7 @@
 			this.groupBox3.Controls.Add(this.RangerBox);
 			this.groupBox3.Controls.Add(this.PaladinBox);
 			this.groupBox3.Controls.Add(this.FighterBox);
-			this.groupBox3.Location = new System.Drawing.Point(380, 117);
+			this.groupBox3.Location = new System.Drawing.Point(383, 91);
 			this.groupBox3.Name = "groupBox3";
 			this.groupBox3.Size = new System.Drawing.Size(114, 158);
 			this.groupBox3.TabIndex = 7;
@@ -806,9 +861,9 @@
 			// 
 			this.groupBox7.Controls.Add(this.AllowedHandPrimaryBox);
 			this.groupBox7.Controls.Add(this.AllowedHandSecondaryBox);
-			this.groupBox7.Location = new System.Drawing.Point(500, 117);
+			this.groupBox7.Location = new System.Drawing.Point(383, 6);
 			this.groupBox7.Name = "groupBox7";
-			this.groupBox7.Size = new System.Drawing.Size(118, 64);
+			this.groupBox7.Size = new System.Drawing.Size(111, 79);
 			this.groupBox7.TabIndex = 13;
 			this.groupBox7.TabStop = false;
 			this.groupBox7.Text = "Allowed hands :";
@@ -840,9 +895,9 @@
 			this.groupBox1.Controls.Add(this.SlashBox);
 			this.groupBox1.Controls.Add(this.BludgeBox);
 			this.groupBox1.Controls.Add(this.PiercingBox);
-			this.groupBox1.Location = new System.Drawing.Point(397, 281);
+			this.groupBox1.Location = new System.Drawing.Point(398, 255);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(97, 104);
+			this.groupBox1.Size = new System.Drawing.Size(99, 104);
 			this.groupBox1.TabIndex = 10;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Damage type :";
@@ -887,7 +942,7 @@
 			dice1.Modifier = 0;
 			dice1.Throws = 1;
 			this.DamageBox.Dice = dice1;
-			this.DamageBox.Location = new System.Drawing.Point(3, 281);
+			this.DamageBox.Location = new System.Drawing.Point(6, 255);
 			this.DamageBox.MinimumSize = new System.Drawing.Size(225, 100);
 			this.DamageBox.Name = "DamageBox";
 			this.DamageBox.Size = new System.Drawing.Size(232, 104);
@@ -983,7 +1038,6 @@
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.NumericUpDown GroundTileBox;
 		private System.Windows.Forms.GroupBox groupBox4;
-		private System.Windows.Forms.TextBox DescriptionBox;
 		private System.Windows.Forms.GroupBox groupBox5;
 		private System.Windows.Forms.ComboBox TypeBox;
 		private System.Windows.Forms.Label label5;
@@ -1036,11 +1090,17 @@
 		private System.Windows.Forms.CheckBox SlashBox;
 		private System.Windows.Forms.CheckBox BludgeBox;
 		private System.Windows.Forms.CheckBox PiercingBox;
-		private System.Windows.Forms.CheckBox CursedBox;
+		private System.Windows.Forms.CheckBox IsCursedBox;
 		private System.Windows.Forms.GroupBox groupBox7;
 		private System.Windows.Forms.CheckBox AllowedHandPrimaryBox;
 		private System.Windows.Forms.CheckBox AllowedHandSecondaryBox;
 		private ArcEngine.Editor.ScriptControl scriptControl1;
 		private System.Windows.Forms.NumericUpDown InventoryTileBox;
+		private System.Windows.Forms.CheckBox CanIdentifyBox;
+		private System.Windows.Forms.CheckBox IdentifiedBox;
+		private System.Windows.Forms.TextBox IdentifiedNameBox;
+		private System.Windows.Forms.Label label4;
+		private System.Windows.Forms.TextBox ShortNameBox;
+		private System.Windows.Forms.Label label34;
 	}
 }

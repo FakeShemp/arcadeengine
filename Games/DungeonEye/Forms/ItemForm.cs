@@ -88,7 +88,6 @@ namespace DungeonEye.Forms
 			}
 			else
 			{
-				DescriptionBox.Text = Item.Description;
 				CriticalMinBox.Value = Item.Critical.X;
 				CriticalMaxBox.Value = Item.Critical.Y;
 				MultiplierBox.Value = Item.CriticalMultiplier;
@@ -127,10 +126,16 @@ namespace DungeonEye.Forms
 				//DamageVsSmallBox.Dice = Item.DamageVsSmall;
 				//DamageVsBigBox.Dice = Item.DamageVsBig;
 
+				CanIdentifyBox.Checked = Item.CanIdentify;
+				IdentifiedBox.Checked = Item.IsIdentified;
+				ShortNameBox.Text = Item.ShortName;
+				IdentifiedNameBox.Text = Item.IdentifiedName;
+
+
 				PiercingBox.Checked = (Item.DamageType & DamageType.Pierce) == DamageType.Pierce;
 				SlashBox.Checked = (Item.DamageType & DamageType.Slash) == DamageType.Slash;
 				BludgeBox.Checked = (Item.DamageType & DamageType.Bludge) == DamageType.Bludge;
-				CursedBox.Checked = Item.IsCursed;
+				IsCursedBox.Checked = Item.IsCursed;
 				AllowedHandPrimaryBox.Checked = (Item.AllowedHands & HeroHand.Primary) == HeroHand.Primary;
 				AllowedHandSecondaryBox.Checked = (Item.AllowedHands & HeroHand.Secondary) == HeroHand.Secondary;
 			}
@@ -645,17 +650,63 @@ namespace DungeonEye.Forms
 
 		#region Events
 
+
 		/// <summary>
-		/// Change description
+		/// 
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void DescriptionBox_TextChanged(object sender, EventArgs e)
+		private void CanIdentifyBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (Item == null)
 				return;
 
-			Item.Description = DescriptionBox.Text;
+			
+		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void IdentifiedBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Item == null)
+				return;
+
+			Item.IsIdentified = IdentifiedBox.Checked;
+		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ShortNameBox_TextChanged(object sender, EventArgs e)
+		{
+			if (Item == null)
+				return;
+
+			Item.ShortName = ShortNameBox.Text;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void IdentifiedNameBox_TextChanged(object sender, EventArgs e)
+		{
+			if (Item == null)
+				return;
+
+			Item.IdentifiedName = IdentifiedBox.Text;
+
 		}
 
 
@@ -827,7 +878,7 @@ namespace DungeonEye.Forms
 		private void CursedBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (Item != null)
-				Item.IsCursed = CursedBox.Checked;
+				Item.IsCursed = IsCursedBox.Checked;
 
 		}
 
@@ -920,7 +971,6 @@ namespace DungeonEye.Forms
 		Texture2D CheckerBoard;
 
 		#endregion
-
 
 	}
 }
