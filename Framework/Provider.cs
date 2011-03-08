@@ -29,7 +29,7 @@ using ArcEngine.Interface;
 namespace ArcEngine
 {
 	/// <summary>
-	/// Provider interface 
+	/// Provider class 
 	/// </summary>
 	public abstract class Provider
 	{

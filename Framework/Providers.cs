@@ -32,7 +32,7 @@ namespace ArcEngine
 {
 
 	/// <summary>
-	/// Tileset provider
+	/// Basic asset provider
 	/// </summary>
 	public class Providers : Provider
 	{

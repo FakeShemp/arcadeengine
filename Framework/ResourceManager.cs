@@ -783,6 +783,13 @@ namespace ArcEngine
 		}
 
 
+
+		/// <summary>
+		/// Registered assets
+		/// </summary>
+		static List<RegisteredAsset> RegisteredAssets;
+
+
 		/// <summary>
 		/// Asset providers
 		/// </summary>
