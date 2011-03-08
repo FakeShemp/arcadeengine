@@ -188,22 +188,13 @@ namespace DungeonEye.Forms
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void Form_FormClosing(object sender, FormClosingEventArgs e)
+		private void PartyForm_FormClosed(object sender, FormClosedEventArgs e)
 		{
-			DialogResult result = MessageBox.Show("Save modifications ?", "Team Editor", MessageBoxButtons.YesNoCancel);
-			
-			if (result == DialogResult.Yes)
+			if (HeroBox != null)
 			{
-				SaveParty();
+				HeroBox.Dispose();
+				HeroBox = null;
 			}
-			else if (result == DialogResult.Cancel)
-			{
-				e.Cancel = true;
-				return;
-			}
-
-			HeroBox.Dispose();
-			HeroBox = null;
 		}
 
 
@@ -415,6 +406,7 @@ namespace DungeonEye.Forms
 		Team Team;
 
 		#endregion
+
 
 
 

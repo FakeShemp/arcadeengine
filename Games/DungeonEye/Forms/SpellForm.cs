@@ -76,31 +76,6 @@ namespace DungeonEye.Forms
 
 
 
-		/// <summary>
-		/// Form closing
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void Form_FormClosing(object sender, FormClosingEventArgs e)
-		{
-			DialogResult result = MessageBox.Show("Save modifications ?", "Spell Editor", MessageBoxButtons.YesNoCancel);
-
-			if (result == DialogResult.Yes)
-			{
-				Save();
-				Spell = null;
-
-			}
-			else if (result == DialogResult.Cancel)
-			{
-				e.Cancel = true;
-			}
-
-		}
-
-
-
-
 
 		#region Events
 

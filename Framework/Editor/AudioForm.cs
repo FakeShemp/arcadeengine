@@ -83,29 +83,6 @@ namespace ArcEngine.Editor
 
 		#region Events
 
-		/// <summary>
-		/// Closing form
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void SoundForm_FormClosing(object sender, FormClosingEventArgs e)
-		{
-			DialogResult result = MessageBox.Show("Save modifications ?", "ArcEngine Editor", MessageBoxButtons.YesNoCancel);
-
-			
-			
-			if (result == DialogResult.Yes)
-			{
-				Save();
-			}
-			else if (result == DialogResult.Cancel)
-			{
-				e.Cancel = true;
-			}
-
-		}
-
-
 
 
 		#endregion

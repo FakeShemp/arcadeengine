@@ -64,31 +64,6 @@ namespace DungeonEye.Forms
 
 
 
-		/// <summary>
-		/// Form closing
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void Form_FormClosing(object sender, FormClosingEventArgs e)
-		{
-			DialogResult result = MessageBox.Show("Save modifications ?", "Hero Editor", MessageBoxButtons.YesNoCancel);
-
-			if (result == DialogResult.Yes)
-			{
-				Save();
-				HeroBox.Dispose();
-			}
-			else if (result == DialogResult.Cancel)
-			{
-				e.Cancel = true;
-			}
-
-		}
-
-
-
-
-
 
 
 

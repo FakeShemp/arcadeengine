@@ -477,6 +477,9 @@
     <EmbeddedResource Include="Editor\Wizards\RenameWizard.resx">
       <DependentUpon>RenameWizard.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AssetEditorBase.resx">
+      <DependentUpon>AssetEditorBase.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\StorageBrowserForm.resx">
       <DependentUpon>StorageBrowserForm.cs</DependentUpon>
     </EmbeddedResource>

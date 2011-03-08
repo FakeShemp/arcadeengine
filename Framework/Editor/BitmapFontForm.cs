@@ -181,20 +181,8 @@ namespace ArcEngine.Editor
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnFormClosing(object sender, FormClosingEventArgs e)
+		private void BitmapFontForm_FormClosed(object sender, FormClosedEventArgs e)
 		{
-			DialogResult result = MessageBox.Show("Texture Font Editor", "Save modifications ?", MessageBoxButtons.YesNoCancel);
-
-			if (result == DialogResult.Yes)
-			{
-				Save();
-			}
-			else if (result == DialogResult.Cancel)
-			{
-				e.Cancel = true;
-				return;
-			}
-
 			if (Batch != null)
 				Batch.Dispose();
 			Batch = null;
@@ -261,6 +249,7 @@ namespace ArcEngine.Editor
         SpriteBatch Batch;
 
 		#endregion
+
 
 
 

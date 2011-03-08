@@ -863,16 +863,8 @@ namespace ArcEngine.Editor
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void TileSetForm_FormClosing(object sender, FormClosingEventArgs e)
+		private void TileSetForm_FormClosed(object sender, FormClosedEventArgs e)
 		{
-			DialogResult result = MessageBox.Show("TileSet Editor", "Save modifciations ?", MessageBoxButtons.YesNoCancel);
-			if (result == DialogResult.Cancel)
-			{
-				e.Cancel = true;
-				return;
-			}
-			else if (result == DialogResult.Yes)
-				Save();
 
 			if (Batch != null)
 				Batch.Dispose();

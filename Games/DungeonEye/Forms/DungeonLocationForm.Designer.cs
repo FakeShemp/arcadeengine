@@ -43,8 +43,8 @@
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
 			this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
-			this.DungeonControl = new DungeonEye.Forms.DungeonLocationControl();
 			this.MouseLocationBox = new System.Windows.Forms.ToolStripStatusLabel();
+			this.DungeonControl = new DungeonEye.Forms.DungeonLocationControl();
 			this.toolStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.SuspendLayout();
@@ -125,7 +125,7 @@
 			// 
 			// SelectBox
 			// 
-			this.SelectBox.Image = ((System.Drawing.Image)(resources.GetObject("SelectBox.Image")));
+			this.SelectBox.Image = ((System.Drawing.Image) (resources.GetObject("SelectBox.Image")));
 			this.SelectBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.SelectBox.Name = "SelectBox";
 			this.SelectBox.Size = new System.Drawing.Size(58, 22);
@@ -155,6 +155,12 @@
 			this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
 			this.toolStripStatusLabel2.Size = new System.Drawing.Size(0, 17);
 			// 
+			// MouseLocationBox
+			// 
+			this.MouseLocationBox.Name = "MouseLocationBox";
+			this.MouseLocationBox.Size = new System.Drawing.Size(37, 17);
+			this.MouseLocationBox.Text = "..........";
+			// 
 			// DungeonControl
 			// 
 			this.DungeonControl.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -166,12 +172,6 @@
 			this.DungeonControl.TabIndex = 0;
 			this.DungeonControl.Target = null;
 			this.DungeonControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.DungeonControl_MouseMove);
-			// 
-			// MouseLocationBox
-			// 
-			this.MouseLocationBox.Name = "MouseLocationBox";
-			this.MouseLocationBox.Size = new System.Drawing.Size(37, 17);
-			this.MouseLocationBox.Text = "..........";
 			// 
 			// DungeonLocationForm
 			// 

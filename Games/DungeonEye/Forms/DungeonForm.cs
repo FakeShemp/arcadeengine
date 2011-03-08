@@ -976,24 +976,10 @@ namespace DungeonEye.Forms
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void DungeonForm_FormClosing(object sender, FormClosingEventArgs e)
+		private void DungeonForm_FormClosed(object sender, FormClosedEventArgs e)
 		{
 
 			DrawTimer.Stop();
-			DialogResult result = MessageBox.Show("Save modifications ?", "Dungeon Editor", MessageBoxButtons.YesNoCancel);
-
-
-			if (result == DialogResult.Yes)
-			{
-				Save();
-			}
-			else if (result == DialogResult.Cancel)
-			{
-				e.Cancel = true;
-				DrawTimer.Start();
-				return;
-			}
-
 
 			if (Dungeon != null)
 				Dungeon.Dispose();
@@ -1350,6 +1336,7 @@ namespace DungeonEye.Forms
 
 
 		#endregion
+
 	
 	}
 }

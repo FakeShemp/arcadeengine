@@ -58,8 +58,8 @@ namespace DungeonEye
 		{
 			AllowedClasses = HeroClass.Cleric | HeroClass.Fighter | HeroClass.Mage | HeroClass.Paladin | HeroClass.Ranger | HeroClass.Thief;
 			Damage = new Dice();
-			//DamageVsBig  = new Dice();
-			//DamageVsSmall = new Dice();
+			DamageVsBig  = new Dice();
+			DamageVsSmall = new Dice();
 			DamageType = 0;
 			Script = new ScriptInterface<IItem>();
 

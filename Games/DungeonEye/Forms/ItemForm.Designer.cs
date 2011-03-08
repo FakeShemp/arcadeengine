@@ -274,11 +274,11 @@
 			this.IdentifiedBox.UseVisualStyleBackColor = true;
 			this.IdentifiedBox.CheckedChanged += new System.EventHandler(this.IdentifiedBox_CheckedChanged);
 			// 
-			// CursedBox
+			// IsCursedBox
 			// 
 			this.IsCursedBox.AutoSize = true;
 			this.IsCursedBox.Location = new System.Drawing.Point(133, 44);
-			this.IsCursedBox.Name = "CursedBox";
+			this.IsCursedBox.Name = "IsCursedBox";
 			this.IsCursedBox.Size = new System.Drawing.Size(69, 17);
 			this.IsCursedBox.TabIndex = 5;
 			this.IsCursedBox.Text = "Is cursed";
@@ -987,11 +987,10 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(896, 606);
 			this.Controls.Add(this.groupBox11);
-			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 			this.Name = "ItemForm";
 			this.TabText = "ItemForm";
 			this.Text = "ItemForm";
-			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form_FormClosing);
+			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ItemForm_FormClosed);
 			this.Load += new System.EventHandler(this.Form_Load);
 			((System.ComponentModel.ISupportInitialize) (this.GroundTileBox)).EndInit();
 			this.groupBox4.ResumeLayout(false);

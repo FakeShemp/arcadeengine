@@ -96,7 +96,6 @@ namespace DungeonEye.Forms
 		#region Form events
 
 
-
 		/// <summary>
 		/// OnDoubleClick
 		/// </summary>
@@ -204,6 +203,7 @@ namespace DungeonEye.Forms
 			}
 		}
 		#endregion
+
 
 
 	}

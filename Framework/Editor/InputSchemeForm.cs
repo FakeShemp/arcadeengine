@@ -101,27 +101,6 @@ namespace ArcEngine.Editor
 		#region Events
 
 
-
-		/// <summary>
-		/// Form closing
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void KeyboardSchemeForm_FormClosing(object sender, FormClosingEventArgs e)
-		{
-			DialogResult result = MessageBox.Show("Keyboard Scheme Editor", "Save modifications ?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-
-			if (result == DialogResult.Yes)
-			{
-				Save();
-			}
-			else if (result == DialogResult.Cancel)
-			{
-				e.Cancel = true;
-			}
-		}
-
-	
 		#endregion
 
 

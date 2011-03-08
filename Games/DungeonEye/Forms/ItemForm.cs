@@ -163,20 +163,8 @@ namespace DungeonEye.Forms
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void Form_FormClosing(object sender, FormClosingEventArgs e)
+		private void ItemForm_FormClosed(object sender, FormClosedEventArgs e)
 		{
-			DialogResult result = MessageBox.Show("Save modifications ?", "Item Editor", MessageBoxButtons.YesNoCancel);
-
-			if (result == DialogResult.Yes)
-			{
-				Save();
-			}
-			else if (result == DialogResult.Cancel)
-			{
-				e.Cancel = true;
-				return;
-			}
-
 			if (TileSet != null) 
 				TileSet.Dispose();
 			TileSet = null;
@@ -971,6 +959,7 @@ namespace DungeonEye.Forms
 		Texture2D CheckerBoard;
 
 		#endregion
+
 
 	}
 }

@@ -40,7 +40,7 @@ namespace DungeonEye
 			Dungeons = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
 			SharedDungeons = new Dictionary<string, Dungeon>(StringComparer.OrdinalIgnoreCase);
 			Monsters = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
-			WallDecorations = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
+			Decorations = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
 			Items = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
 			SharedItems = new Dictionary<string, Item>(StringComparer.OrdinalIgnoreCase);
 			Spells = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
@@ -48,8 +48,8 @@ namespace DungeonEye
 
 
 			Name = "Dungeon Eye";
-			Tags = new string[] { "dungeon", "item", "monster", "walldecoration", "spell", "hero" };
-			Assets = new Type[] { typeof(Dungeon), typeof(Item), typeof(Monster), typeof(WallDecoration), typeof(Spell), typeof(Hero) };
+			Tags = new string[] { "dungeon", "item", "monster", "decoration", "spell", "hero" };
+			Assets = new Type[] { typeof(Dungeon), typeof(Item), typeof(Monster), typeof(Decoration), typeof(Spell), typeof(Hero) };
 			Version = new Version(0, 1);
 		}
 
@@ -117,6 +117,11 @@ namespace DungeonEye
 				foreach (XmlNode node in Heroes.Values)
 					node.WriteTo(writer);
 			}
+			else if (typeof(T) == typeof(Decoration))
+			{
+				foreach (XmlNode node in Decorations.Values)
+					node.WriteTo(writer);
+			}
 
 
 			return true;
@@ -161,9 +166,9 @@ namespace DungeonEye
 				}
 				break;
 
-				case "walldecoration":
+				case "decoration":
 				{
-					WallDecorations[xml.Attributes["name"].Value] = xml;
+					Decorations[xml.Attributes["name"].Value] = xml;
 				}
 				break;
 
@@ -234,6 +239,15 @@ namespace DungeonEye
 			}
 
 
+			else if (typeof(T) == typeof(Decoration))
+			{
+				if (Decorations.ContainsKey(name))
+					node = Decorations[name];
+
+				form = new Forms.DecorationForm(node);
+			}
+
+
 			form.TabText = name;
 			return form;
 		}
@@ -264,6 +278,8 @@ namespace DungeonEye
 				Spells[name] = node;
 			else if (typeof(Hero) == typeof(T))
 				Heroes[name] = node;
+			else if (typeof(Decoration) == typeof(T))
+				Decorations[name] = node;
 
 		}
 
@@ -295,6 +311,10 @@ namespace DungeonEye
 
 			else if (typeof(T) == typeof(Hero))
 				foreach (string key in Heroes.Keys)
+					list.Add(key);
+
+			else if (typeof(T) == typeof(Decoration))
+				foreach (string key in Decorations.Keys)
 					list.Add(key);
 
 			list.Sort();
@@ -350,6 +370,13 @@ namespace DungeonEye
 				return (T) (object) hero;
 			}
 
+			if (typeof(T) == typeof(Decoration) && Decorations.ContainsKey(name))
+			{
+				Decoration deco = new Decoration();
+				deco.Load(Heroes[name]);
+				return (T) (object) deco;
+			}
+
 			return default(T);
 
 		}
@@ -381,6 +408,9 @@ namespace DungeonEye
 			else if (typeof(Hero) == typeof(T) && Heroes.ContainsKey(name))
 				return Heroes[name];
 
+			else if (typeof(Decoration) == typeof(T) && Decorations.ContainsKey(name))
+				return Decorations[name];
+
 			return null;
 		}
 
@@ -406,6 +436,9 @@ namespace DungeonEye
 
 			else if (typeof(Hero) == typeof(T))
 				Heroes.Clear();
+
+			else if (typeof(Decoration) == typeof(T))
+				Decorations.Clear();
 		}
 
 
@@ -430,6 +463,9 @@ namespace DungeonEye
 
 			else if (typeof(Hero) == typeof(T) && Heroes.ContainsKey(name))
 				Heroes.Remove(name);
+
+			else if (typeof(Decoration) == typeof(T) && Decorations.ContainsKey(name))
+				Decorations.Remove(name);
 		}
 
 
@@ -444,6 +480,7 @@ namespace DungeonEye
 			Items.Clear();
 			Spells.Clear();
 			Heroes.Clear();
+			Decorations.Clear();
 		}
 
 
@@ -468,6 +505,9 @@ namespace DungeonEye
 
 			if (typeof(T) == typeof(Hero))
 				return Heroes.Count;
+
+			if (typeof(T) == typeof(Decoration))
+				return Decorations.Count;
 
 			return 0;
 		}
@@ -631,7 +671,7 @@ namespace DungeonEye
 		/// <summary>
 		/// WallDecoration definition
 		/// </summary>
-		Dictionary<string, XmlNode> WallDecorations;
+		Dictionary<string, XmlNode> Decorations;
 
 
 

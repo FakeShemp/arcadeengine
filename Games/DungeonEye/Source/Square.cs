@@ -320,9 +320,9 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="compass"></param>
 		/// <returns></returns>
-		public WallDecoration GetWallDecoration(CardinalPoint direction)
+		public Decoration GetWallDecoration(CardinalPoint direction)
 		{
-			return ResourceManager.CreateAsset<WallDecoration>(Decorations[(int)direction].ToString());
+			return ResourceManager.CreateAsset<Decoration>(Decorations[(int)direction].ToString());
 		}
 
 

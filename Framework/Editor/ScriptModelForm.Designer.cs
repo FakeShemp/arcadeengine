@@ -244,7 +244,6 @@ namespace ArcEngine.Editor
 			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Name = "ScriptForm";
 			this.ShowInTaskbar = false;
-			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ScriptForm_FormClosing);
 			this.ReportStrip.ResumeLayout(false);
 			this.ReportStrip.PerformLayout();
 			this.splitContainer1.Panel1.ResumeLayout(false);

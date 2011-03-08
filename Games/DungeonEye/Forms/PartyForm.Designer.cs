@@ -183,7 +183,7 @@
 			// 
 			this.MessageColorBox.AutoSize = true;
 			this.MessageColorBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.MessageColorBox.Image = ((System.Drawing.Image)(resources.GetObject("MessageColorBox.Image")));
+			this.MessageColorBox.Image = ((System.Drawing.Image) (resources.GetObject("MessageColorBox.Image")));
 			this.MessageColorBox.Location = new System.Drawing.Point(192, 80);
 			this.MessageColorBox.Name = "MessageColorBox";
 			this.MessageColorBox.Size = new System.Drawing.Size(22, 22);
@@ -292,8 +292,8 @@
 			// 
 			// SaveBox
 			// 
-			this.SaveBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.SaveBox.Image = ((System.Drawing.Image)(resources.GetObject("SaveBox.Image")));
+			this.SaveBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.SaveBox.Image = ((System.Drawing.Image) (resources.GetObject("SaveBox.Image")));
 			this.SaveBox.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.SaveBox.Location = new System.Drawing.Point(12, 389);
 			this.SaveBox.Name = "SaveBox";
@@ -306,11 +306,11 @@
 			// 
 			// HeroBox
 			// 
-			this.HeroBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.HeroBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.HeroBox.AutoScroll = true;
-			this.HeroBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.HeroBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 			this.HeroBox.Hero = null;
 			this.HeroBox.Location = new System.Drawing.Point(322, 12);
 			this.HeroBox.MinimumSize = new System.Drawing.Size(635, 400);
@@ -328,10 +328,10 @@
 			this.Controls.Add(this.HeroBox);
 			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.groupBox1);
-			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 			this.Name = "PartyForm";
 			this.Text = "PartyForm";
-			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form_FormClosing);
+			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.PartyForm_FormClosed);
 			this.Load += new System.EventHandler(this.PartyForm_Load);
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();

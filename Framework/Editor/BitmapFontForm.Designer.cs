@@ -46,7 +46,7 @@
 			this.PreviewBox.SuspendLayout();
 			this.PropertyBox.SuspendLayout();
 			this.groupBox1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.SizeBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize) (this.SizeBox)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// PreviewBox
@@ -104,7 +104,7 @@
 			// 
 			// groupBox1
 			// 
-			this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.groupBox1.Controls.Add(this.StyleBox);
 			this.groupBox1.Controls.Add(this.SizeBox);
 			this.groupBox1.Controls.Add(this.FontNameBox);
@@ -186,23 +186,22 @@
 			this.DrawTimer.Enabled = true;
 			this.DrawTimer.Tick += new System.EventHandler(this.DrawTimer_Tick);
 			// 
-			// Font2dForm
+			// BitmapFontForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(777, 512);
 			this.Controls.Add(this.PreviewBox);
 			this.Controls.Add(this.PropertyBox);
-			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.Name = "Font2dForm";
+			this.Name = "BitmapFontForm";
+			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.BitmapFontForm_FormClosed);
 			this.Load += new System.EventHandler(this.Font2dForm_Load);
-			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnFormClosing);
 			this.PreviewBox.ResumeLayout(false);
 			this.PreviewBox.PerformLayout();
 			this.PropertyBox.ResumeLayout(false);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.SizeBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize) (this.SizeBox)).EndInit();
 			this.ResumeLayout(false);
 
 		}

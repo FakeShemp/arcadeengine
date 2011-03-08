@@ -35,13 +35,13 @@ namespace DungeonEye
 	/// <summary>
 	/// Decoration on wall
 	/// </summary>
-	public class WallDecoration : IAsset
+	public class Decoration : IAsset
 	{
 
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public WallDecoration()
+		public Decoration()
 		{
 			IsDisposed = false;
 		}

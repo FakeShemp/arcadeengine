@@ -113,6 +113,12 @@
     <Compile Include="Forms\AbilityControl.Designer.cs">
       <DependentUpon>AbilityControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\DecorationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DecorationForm.Designer.cs">
+      <DependentUpon>DecorationForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\DoorForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -630,7 +636,7 @@
     <Compile Include="Team.cs">
     </Compile>
     <Compile Include="Source\SquareActor\Teleporter.cs" />
-    <Compile Include="Source\WallDecoration.cs" />
+    <Compile Include="Source\Decoration.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Framework\ArcEngine.csproj">

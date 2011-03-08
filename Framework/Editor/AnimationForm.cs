@@ -167,18 +167,8 @@ namespace ArcEngine.Editor
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void AnimationForm_FormClosing(object sender, FormClosingEventArgs e)
+		private void AnimationForm_FormClosed(object sender, FormClosedEventArgs e)
 		{
-			DialogResult result = MessageBox.Show("Animation Editor", "Save modifications ?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-
-			if (result == DialogResult.Cancel)
-			{
-				e.Cancel = true;
-				return;
-			}
-
-				Save();
-
 			if (SpriteBatch != null)
 				SpriteBatch.Dispose();
 			SpriteBatch = null;
@@ -807,6 +797,7 @@ namespace ArcEngine.Editor
 
 
 		#endregion
+
 
 
 

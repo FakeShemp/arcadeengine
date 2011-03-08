@@ -87,8 +87,8 @@
 			// 
 			// groupBox2
 			// 
-			this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.groupBox2.Controls.Add(this.GlPreviewControl);
 			this.groupBox2.Controls.Add(this.PreviewToolStrip);
 			this.groupBox2.Location = new System.Drawing.Point(206, 0);
@@ -100,9 +100,9 @@
 			// 
 			// GlPreviewControl
 			// 
-			this.GlPreviewControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.GlPreviewControl.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.GlPreviewControl.BackColor = System.Drawing.Color.Black;
 			this.GlPreviewControl.Location = new System.Drawing.Point(3, 41);
 			this.GlPreviewControl.Name = "GlPreviewControl";
@@ -110,10 +110,10 @@
 			this.GlPreviewControl.TabIndex = 2;
 			this.GlPreviewControl.VSync = false;
 			this.GlPreviewControl.Paint += new System.Windows.Forms.PaintEventHandler(this.GlPreviewControl_Paint);
-			this.GlPreviewControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GlPreviewControl_MouseMove);
 			this.GlPreviewControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.GlPreviewControl_MouseDown);
-			this.GlPreviewControl.Resize += new System.EventHandler(this.GlPreviewControl_Resize);
+			this.GlPreviewControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GlPreviewControl_MouseMove);
 			this.GlPreviewControl.MouseUp += new System.Windows.Forms.MouseEventHandler(this.GlPreviewControl_MouseUp);
+			this.GlPreviewControl.Resize += new System.EventHandler(this.GlPreviewControl_Resize);
 			// 
 			// PreviewToolStrip
 			// 
@@ -139,7 +139,7 @@
 			// AnimPreviousFrame
 			// 
 			this.AnimPreviousFrame.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.AnimPreviousFrame.Image = ((System.Drawing.Image)(resources.GetObject("AnimPreviousFrame.Image")));
+			this.AnimPreviousFrame.Image = ((System.Drawing.Image) (resources.GetObject("AnimPreviousFrame.Image")));
 			this.AnimPreviousFrame.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.AnimPreviousFrame.Name = "AnimPreviousFrame";
 			this.AnimPreviousFrame.Size = new System.Drawing.Size(23, 22);
@@ -149,7 +149,7 @@
 			// 
 			this.AnimPlay.CheckOnClick = true;
 			this.AnimPlay.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.AnimPlay.Image = ((System.Drawing.Image)(resources.GetObject("AnimPlay.Image")));
+			this.AnimPlay.Image = ((System.Drawing.Image) (resources.GetObject("AnimPlay.Image")));
 			this.AnimPlay.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.AnimPlay.Name = "AnimPlay";
 			this.AnimPlay.Size = new System.Drawing.Size(23, 22);
@@ -159,7 +159,7 @@
 			// AnimNextFrame
 			// 
 			this.AnimNextFrame.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.AnimNextFrame.Image = ((System.Drawing.Image)(resources.GetObject("AnimNextFrame.Image")));
+			this.AnimNextFrame.Image = ((System.Drawing.Image) (resources.GetObject("AnimNextFrame.Image")));
 			this.AnimNextFrame.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.AnimNextFrame.Name = "AnimNextFrame";
 			this.AnimNextFrame.Size = new System.Drawing.Size(23, 22);
@@ -174,7 +174,7 @@
 			// 
 			this.AnimPause.CheckOnClick = true;
 			this.AnimPause.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.AnimPause.Image = ((System.Drawing.Image)(resources.GetObject("AnimPause.Image")));
+			this.AnimPause.Image = ((System.Drawing.Image) (resources.GetObject("AnimPause.Image")));
 			this.AnimPause.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.AnimPause.Name = "AnimPause";
 			this.AnimPause.Size = new System.Drawing.Size(23, 22);
@@ -184,7 +184,7 @@
 			// AnimStop
 			// 
 			this.AnimStop.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.AnimStop.Image = ((System.Drawing.Image)(resources.GetObject("AnimStop.Image")));
+			this.AnimStop.Image = ((System.Drawing.Image) (resources.GetObject("AnimStop.Image")));
 			this.AnimStop.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.AnimStop.Name = "AnimStop";
 			this.AnimStop.Size = new System.Drawing.Size(23, 22);
@@ -199,7 +199,7 @@
 			// AnimNoZoom
 			// 
 			this.AnimNoZoom.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.AnimNoZoom.Image = ((System.Drawing.Image)(resources.GetObject("AnimNoZoom.Image")));
+			this.AnimNoZoom.Image = ((System.Drawing.Image) (resources.GetObject("AnimNoZoom.Image")));
 			this.AnimNoZoom.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.AnimNoZoom.Name = "AnimNoZoom";
 			this.AnimNoZoom.Size = new System.Drawing.Size(23, 22);
@@ -208,7 +208,7 @@
 			// AnimZoomIn
 			// 
 			this.AnimZoomIn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.AnimZoomIn.Image = ((System.Drawing.Image)(resources.GetObject("AnimZoomIn.Image")));
+			this.AnimZoomIn.Image = ((System.Drawing.Image) (resources.GetObject("AnimZoomIn.Image")));
 			this.AnimZoomIn.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.AnimZoomIn.Name = "AnimZoomIn";
 			this.AnimZoomIn.Size = new System.Drawing.Size(23, 22);
@@ -217,7 +217,7 @@
 			// AnimZoomOut
 			// 
 			this.AnimZoomOut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.AnimZoomOut.Image = ((System.Drawing.Image)(resources.GetObject("AnimZoomOut.Image")));
+			this.AnimZoomOut.Image = ((System.Drawing.Image) (resources.GetObject("AnimZoomOut.Image")));
 			this.AnimZoomOut.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.AnimZoomOut.Name = "AnimZoomOut";
 			this.AnimZoomOut.Size = new System.Drawing.Size(23, 22);
@@ -225,9 +225,9 @@
 			// 
 			// groupBox3
 			// 
-			this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.groupBox3.Controls.Add(this.GlTilesControl);
 			this.groupBox3.Controls.Add(this.toolStrip1);
 			this.groupBox3.Controls.Add(this.TilesHScroller);
@@ -240,9 +240,9 @@
 			// 
 			// GlTilesControl
 			// 
-			this.GlTilesControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.GlTilesControl.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.GlTilesControl.BackColor = System.Drawing.Color.Black;
 			this.GlTilesControl.Location = new System.Drawing.Point(3, 41);
 			this.GlTilesControl.Name = "GlTilesControl";
@@ -274,7 +274,7 @@
 			// TilesNoZoom
 			// 
 			this.TilesNoZoom.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.TilesNoZoom.Image = ((System.Drawing.Image)(resources.GetObject("TilesNoZoom.Image")));
+			this.TilesNoZoom.Image = ((System.Drawing.Image) (resources.GetObject("TilesNoZoom.Image")));
 			this.TilesNoZoom.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.TilesNoZoom.Name = "TilesNoZoom";
 			this.TilesNoZoom.Size = new System.Drawing.Size(23, 22);
@@ -283,7 +283,7 @@
 			// TilesZoomIn
 			// 
 			this.TilesZoomIn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.TilesZoomIn.Image = ((System.Drawing.Image)(resources.GetObject("TilesZoomIn.Image")));
+			this.TilesZoomIn.Image = ((System.Drawing.Image) (resources.GetObject("TilesZoomIn.Image")));
 			this.TilesZoomIn.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.TilesZoomIn.Name = "TilesZoomIn";
 			this.TilesZoomIn.Size = new System.Drawing.Size(23, 22);
@@ -292,7 +292,7 @@
 			// TilesZoomOut
 			// 
 			this.TilesZoomOut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.TilesZoomOut.Image = ((System.Drawing.Image)(resources.GetObject("TilesZoomOut.Image")));
+			this.TilesZoomOut.Image = ((System.Drawing.Image) (resources.GetObject("TilesZoomOut.Image")));
 			this.TilesZoomOut.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.TilesZoomOut.Name = "TilesZoomOut";
 			this.TilesZoomOut.Size = new System.Drawing.Size(23, 22);
@@ -336,8 +336,8 @@
 			// 
 			// groupBox1
 			// 
-			this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.groupBox1.Controls.Add(this.GlFramesControl);
 			this.groupBox1.Controls.Add(this.toolStrip2);
 			this.groupBox1.Location = new System.Drawing.Point(206, 183);
@@ -349,9 +349,9 @@
 			// 
 			// GlFramesControl
 			// 
-			this.GlFramesControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.GlFramesControl.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.GlFramesControl.BackColor = System.Drawing.Color.Black;
 			this.GlFramesControl.Location = new System.Drawing.Point(3, 41);
 			this.GlFramesControl.Name = "GlFramesControl";
@@ -386,7 +386,7 @@
 			// FramesAdd
 			// 
 			this.FramesAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.FramesAdd.Image = ((System.Drawing.Image)(resources.GetObject("FramesAdd.Image")));
+			this.FramesAdd.Image = ((System.Drawing.Image) (resources.GetObject("FramesAdd.Image")));
 			this.FramesAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.FramesAdd.Name = "FramesAdd";
 			this.FramesAdd.Size = new System.Drawing.Size(23, 22);
@@ -396,7 +396,7 @@
 			// FramesDelete
 			// 
 			this.FramesDelete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.FramesDelete.Image = ((System.Drawing.Image)(resources.GetObject("FramesDelete.Image")));
+			this.FramesDelete.Image = ((System.Drawing.Image) (resources.GetObject("FramesDelete.Image")));
 			this.FramesDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.FramesDelete.Name = "FramesDelete";
 			this.FramesDelete.Size = new System.Drawing.Size(23, 22);
@@ -411,7 +411,7 @@
 			// MoveLeft
 			// 
 			this.MoveLeft.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.MoveLeft.Image = ((System.Drawing.Image)(resources.GetObject("MoveLeft.Image")));
+			this.MoveLeft.Image = ((System.Drawing.Image) (resources.GetObject("MoveLeft.Image")));
 			this.MoveLeft.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.MoveLeft.Name = "MoveLeft";
 			this.MoveLeft.Size = new System.Drawing.Size(23, 22);
@@ -421,7 +421,7 @@
 			// MoveRight
 			// 
 			this.MoveRight.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.MoveRight.Image = ((System.Drawing.Image)(resources.GetObject("MoveRight.Image")));
+			this.MoveRight.Image = ((System.Drawing.Image) (resources.GetObject("MoveRight.Image")));
 			this.MoveRight.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.MoveRight.Name = "MoveRight";
 			this.MoveRight.Size = new System.Drawing.Size(23, 22);
@@ -436,7 +436,7 @@
 			// FramesNoZoom
 			// 
 			this.FramesNoZoom.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.FramesNoZoom.Image = ((System.Drawing.Image)(resources.GetObject("FramesNoZoom.Image")));
+			this.FramesNoZoom.Image = ((System.Drawing.Image) (resources.GetObject("FramesNoZoom.Image")));
 			this.FramesNoZoom.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.FramesNoZoom.Name = "FramesNoZoom";
 			this.FramesNoZoom.Size = new System.Drawing.Size(23, 22);
@@ -445,7 +445,7 @@
 			// FramesZoomIn
 			// 
 			this.FramesZoomIn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.FramesZoomIn.Image = ((System.Drawing.Image)(resources.GetObject("FramesZoomIn.Image")));
+			this.FramesZoomIn.Image = ((System.Drawing.Image) (resources.GetObject("FramesZoomIn.Image")));
 			this.FramesZoomIn.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.FramesZoomIn.Name = "FramesZoomIn";
 			this.FramesZoomIn.Size = new System.Drawing.Size(23, 22);
@@ -454,7 +454,7 @@
 			// FramesZoomOut
 			// 
 			this.FramesZoomOut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.FramesZoomOut.Image = ((System.Drawing.Image)(resources.GetObject("FramesZoomOut.Image")));
+			this.FramesZoomOut.Image = ((System.Drawing.Image) (resources.GetObject("FramesZoomOut.Image")));
 			this.FramesZoomOut.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.FramesZoomOut.Name = "FramesZoomOut";
 			this.FramesZoomOut.Size = new System.Drawing.Size(23, 22);
@@ -474,12 +474,11 @@
 			this.Controls.Add(this.groupBox4);
 			this.Controls.Add(this.groupBox3);
 			this.Controls.Add(this.groupBox2);
-			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Name = "AnimationForm";
 			this.TabText = "Animation";
 			this.Text = "Animation";
+			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.AnimationForm_FormClosed);
 			this.Load += new System.EventHandler(this.AnimationForm_Load);
-			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AnimationForm_FormClosing);
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
 			this.PreviewToolStrip.ResumeLayout(false);

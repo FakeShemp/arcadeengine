@@ -62,12 +62,12 @@
 			this.RenderControl.TabIndex = 0;
 			this.RenderControl.VSync = true;
 			this.RenderControl.Paint += new System.Windows.Forms.PaintEventHandler(this.RenderControl_Paint);
-			this.RenderControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.RenderControl_MouseMove);
-			this.RenderControl.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.RenderControl_MouseDoubleClick);
 			this.RenderControl.MouseClick += new System.Windows.Forms.MouseEventHandler(this.RenderControl_MouseClick);
+			this.RenderControl.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.RenderControl_MouseDoubleClick);
 			this.RenderControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.RenderControl_MouseDown);
-			this.RenderControl.Resize += new System.EventHandler(this.RenderControl_Resize);
+			this.RenderControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.RenderControl_MouseMove);
 			this.RenderControl.MouseUp += new System.Windows.Forms.MouseEventHandler(this.RenderControl_MouseUp);
+			this.RenderControl.Resize += new System.EventHandler(this.RenderControl_Resize);
 			// 
 			// panel1
 			// 
@@ -97,7 +97,7 @@
 			this.ElementsBox.FormattingEnabled = true;
 			this.ElementsBox.Location = new System.Drawing.Point(3, 41);
 			this.ElementsBox.Name = "ElementsBox";
-			this.ElementsBox.Size = new System.Drawing.Size(194, 121);
+			this.ElementsBox.Size = new System.Drawing.Size(194, 126);
 			this.ElementsBox.Sorted = true;
 			this.ElementsBox.TabIndex = 0;
 			this.ElementsBox.SelectedIndexChanged += new System.EventHandler(this.ElementsBox_SelectedIndexChanged);
@@ -120,7 +120,7 @@
 			// DeleteButton
 			// 
 			this.DeleteButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.DeleteButton.Image = ((System.Drawing.Image)(resources.GetObject("DeleteButton.Image")));
+			this.DeleteButton.Image = ((System.Drawing.Image) (resources.GetObject("DeleteButton.Image")));
 			this.DeleteButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.DeleteButton.Name = "DeleteButton";
 			this.DeleteButton.Size = new System.Drawing.Size(23, 22);
@@ -132,7 +132,7 @@
 			this.toolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.AddButtonButton});
-			this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
+			this.toolStripDropDownButton1.Image = ((System.Drawing.Image) (resources.GetObject("toolStripDropDownButton1.Image")));
 			this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
 			this.toolStripDropDownButton1.Size = new System.Drawing.Size(29, 22);
@@ -140,7 +140,7 @@
 			// 
 			// AddButtonButton
 			// 
-			this.AddButtonButton.Image = ((System.Drawing.Image)(resources.GetObject("AddButtonButton.Image")));
+			this.AddButtonButton.Image = ((System.Drawing.Image) (resources.GetObject("AddButtonButton.Image")));
 			this.AddButtonButton.Name = "AddButtonButton";
 			this.AddButtonButton.Size = new System.Drawing.Size(144, 22);
 			this.AddButtonButton.Text = "Add a Button";
@@ -153,7 +153,7 @@
 			// ResizeToFitButton
 			// 
 			this.ResizeToFitButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.ResizeToFitButton.Image = ((System.Drawing.Image)(resources.GetObject("ResizeToFitButton.Image")));
+			this.ResizeToFitButton.Image = ((System.Drawing.Image) (resources.GetObject("ResizeToFitButton.Image")));
 			this.ResizeToFitButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.ResizeToFitButton.Name = "ResizeToFitButton";
 			this.ResizeToFitButton.Size = new System.Drawing.Size(23, 22);
@@ -162,8 +162,8 @@
 			// 
 			// groupBox2
 			// 
-			this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)));
+			this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
 			this.groupBox2.Controls.Add(this.ElementPropertyBox);
 			this.groupBox2.Location = new System.Drawing.Point(0, 179);
 			this.groupBox2.Name = "groupBox2";
@@ -182,7 +182,7 @@
 			// 
 			// groupBox1
 			// 
-			this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.groupBox1.Controls.Add(this.GuiPropertyBox);
 			this.groupBox1.Location = new System.Drawing.Point(0, 397);
 			this.groupBox1.Name = "groupBox1";
@@ -211,10 +211,9 @@
 			this.ClientSize = new System.Drawing.Size(834, 692);
 			this.Controls.Add(this.RenderControl);
 			this.Controls.Add(this.panel1);
-			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Name = "LayoutForm";
+			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.LayoutForm_FormClosed);
 			this.Load += new System.EventHandler(this.LayoutForm_Load);
-			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LayoutForm_FormClosing);
 			this.panel1.ResumeLayout(false);
 			this.groupBox3.ResumeLayout(false);
 			this.groupBox3.PerformLayout();

@@ -282,25 +282,6 @@ public class entity : IEntity
 		}
 
 
-		/// <summary>
-		/// Form closing
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void ScriptForm_FormClosing(object sender, FormClosingEventArgs e)
-		{
-			DialogResult result = MessageBox.Show("Script Editor", "Save modifciations ?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-
-			if (result == DialogResult.Yes)
-			{
-				Save();
-			}
-			else if (result == DialogResult.Cancel)
-			{
-				e.Cancel = true;
-			}
-		}
-
 		#endregion
 
 

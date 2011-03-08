@@ -137,18 +137,8 @@ namespace ArcEngine.Editor
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-		private void LayoutForm_FormClosing(object sender, System.Windows.Forms.FormClosingEventArgs e)
+		private void LayoutForm_FormClosed(object sender, System.Windows.Forms.FormClosedEventArgs e)
 		{
-			System.Windows.Forms.DialogResult result = System.Windows.Forms.MessageBox.Show("Layout Editor", "Save modifications ?", System.Windows.Forms.MessageBoxButtons.YesNoCancel, System.Windows.Forms.MessageBoxIcon.Question);
-
-			if (result == System.Windows.Forms.DialogResult.Cancel)
-			{
-				e.Cancel = true;
-				return;
-			}
-
-			Save();
-
             if (Batch != null)
                 Batch.Dispose();
             Batch = null;
@@ -452,6 +442,7 @@ namespace ArcEngine.Editor
 
 
 		#endregion
+
 
 
 	}

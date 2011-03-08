@@ -21,6 +21,7 @@
 using ArcEngine.Asset;
 using WeifenLuo.WinFormsUI.Docking;
 using ArcEngine.Interface;
+using System.Windows.Forms;
 
 namespace ArcEngine.Forms
 {
@@ -32,12 +33,66 @@ namespace ArcEngine.Forms
 	{
 
 		/// <summary>
+		/// 
+		/// </summary>
+		public AssetEditorBase()
+		{
+			InitializeComponent();
+		}
+
+
+		/// <summary>
 		/// Save the asset
 		/// </summary>
 		public virtual void Save()
 		{
-			throw new System.NotImplementedException("Asset");
+			//throw new System.NotImplementedException("Asset");
 		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		private void InitializeComponent()
+		{
+			this.SuspendLayout();
+			// 
+			// AssetEditorBase
+			// 
+			this.ClientSize = new System.Drawing.Size(284, 262);
+			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+			this.Name = "AssetEditorBase";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AssetEditorBase_FormClosing);
+			this.ResumeLayout(false);
+
+		}
+
+
+		#region Events
+
+		/// <summary>
+		/// Form closing
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void AssetEditorBase_FormClosing(object sender, FormClosingEventArgs e)
+		{
+
+			DialogResult result = MessageBox.Show("Save modifications ?", "Editor", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+
+			if (result == DialogResult.Yes)
+			{
+				Save();
+			}
+			else if (result == DialogResult.Cancel)
+			{
+				e.Cancel = true;
+			}
+
+
+		}
+
+		#endregion
 
 
 		#region Properties
@@ -55,5 +110,7 @@ namespace ArcEngine.Forms
 		}
 
 		#endregion
+
+
 	}
 }

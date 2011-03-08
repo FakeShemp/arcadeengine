@@ -1,7 +1,7 @@
 ﻿#region Licence
 //
 //This file is part of ArcEngine.
-//Copyright (C)2008-2010 Adrien Hémery ( iliak@mimicprod.net )
+//Copyright (C)2008-2011 Adrien Hémery ( iliak@mimicprod.net )
 //
 //ArcEngine is free software: you can redistribute it and/or modify
 //it under the terms of the GNU General Public License as published by
@@ -28,47 +28,22 @@ using ArcEngine.Interface;
 namespace DungeonEye.Forms
 {
 	/// <summary>
-	/// Monster form editor
+	/// Decoration form
 	/// </summary>
-	public partial class MonsterForm : AssetEditorBase
+	public partial class DecorationForm : AssetEditorBase
 	{
-
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		/// <param name="node">Xml node</param>
-		public MonsterForm(XmlNode node)
-		{
-			InitializeComponent();
-
-			Monster = new Monster(null);
-			Monster.Load(node);
-
-			MonsterBox.SetMonster(Monster);
-
-		}
-
-
-
-		/// <summary>
-		/// save the asset to the manager
-		/// </summary>
-		public override void Save()
-		{
-			ResourceManager.AddAsset<Monster>(Monster.Name, ResourceManager.ConvertAsset(Monster));
-		}
-
-
 
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void MonsterForm_KeyDown(object sender, KeyEventArgs e)
+		/// <param name="node"></param>
+		public DecorationForm(XmlNode node)
 		{
-			if (e.KeyCode == Keys.Escape)
-				Close();
+			InitializeComponent();
+
+
+			Decoration = new Decoration();
+			Decoration.Load(node);
 		}
 
 
@@ -82,12 +57,16 @@ namespace DungeonEye.Forms
 		{
 			get
 			{
-				return Monster;
+				return Decoration;
 			}
 		}
 
 
-		Monster Monster;
+		/// <summary>
+		/// 
+		/// </summary>
+		Decoration Decoration;
+
 
 		#endregion
 
