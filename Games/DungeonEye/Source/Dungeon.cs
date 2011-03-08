@@ -57,7 +57,6 @@ namespace DungeonEye
 
 			StartLocation = null;
 			Note = "";
-			//Team = null;
 
 			IsDisposed = true;
 		}

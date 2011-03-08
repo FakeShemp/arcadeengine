@@ -359,7 +359,7 @@
     <Compile Include="Forms\GameWindow.Designer.cs">
       <DependentUpon>GameWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="Game.cs" />
+    <Compile Include="GameBase.cs" />
     <Compile Include="GameClock.cs" />
     <Compile Include="Graphic\BatchBuffer.cs" />
     <Compile Include="Graphic\PixelBuffer.cs" />

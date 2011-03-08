@@ -91,7 +91,6 @@ namespace DungeonEye.Forms
 		{
 
 			// Destination point
-		//	Point dst = Point.Empty;
 			Point offset = Point.Empty;
 
 
