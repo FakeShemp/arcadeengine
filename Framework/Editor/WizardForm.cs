@@ -46,11 +46,12 @@ namespace ArcEngine.Editor
 			// Collect all asset type
 			TypesBox.SuspendLayout();
 			TypesBox.Items.Clear();
-			foreach (Provider provider in ResourceManager.Providers)
+			//foreach (Provider provider in ResourceManager.Providers)
 			{
-				foreach (Type type in provider.Assets)
+				//foreach (Type type in provider.Assets)
+				foreach(RegisteredAsset ra in ResourceManager.RegisteredAssets)
 				{
-					TypesBox.Items.Add(type.Name);
+					TypesBox.Items.Add(ra.Tag);
 				}
 			}
 
@@ -81,23 +82,25 @@ namespace ArcEngine.Editor
 
 			
 			// Create the asset
-			foreach (Provider provider in ResourceManager.Providers)
+			//foreach (Provider provider in ResourceManager.Providers)
 			{
-				foreach (Type type in provider.Assets)
+				//foreach (Type type in provider.Assets)
+				foreach (RegisteredAsset ra in ResourceManager.RegisteredAssets)
 				{
-					if (type.Name == TypesBox.Text)
+					if (ra.Tag == TypesBox.Text)
 					{
 
 						// Invoke the generic method like this : provider.Add<[Asset Type]>(NameBox.Text, null);
-						object[] args = { NameBox.Text, null };
-						MethodInfo mi = provider.GetType().GetMethod("Add").MakeGenericMethod(type);
-						mi.Invoke(provider, args);
-
+						//object[] args = { NameBox.Text, null };
+						//MethodInfo mi = provider.GetType().GetMethod("Add").MakeGenericMethod(type);
+						//mi.Invoke(provider, args);
+						ra.Add(NameBox.Text, null);
 
 						// Open the editor windows
-						args = new object[] { NameBox.Text };
-						mi = provider.GetType().GetMethod("EditAsset").MakeGenericMethod(type);
-						AssetEditorBase form = mi.Invoke(provider, args) as AssetEditorBase;
+						//args = new object[] { NameBox.Text };
+						//mi = provider.GetType().GetMethod("EditAsset").MakeGenericMethod(type);
+						//AssetEditorBase form = mi.Invoke(provider, args) as AssetEditorBase;
+						AssetEditorBase form = ra.Edit(NameBox.Text);
 						if (form == null)
 							return;
 

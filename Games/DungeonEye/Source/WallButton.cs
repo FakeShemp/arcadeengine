@@ -33,6 +33,9 @@ namespace DungeonEye
 	public class WallButton : IAsset
 	{
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public WallButton()
 		{
 			AccpetedItems = new List<Item>();
@@ -50,7 +53,15 @@ namespace DungeonEye
 			return true;
 		}
 
-	
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public void Dispose()
+		{
+		}
+
+
 
 		/// <summary>
 		/// Draws the button

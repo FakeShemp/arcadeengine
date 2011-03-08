@@ -50,6 +50,14 @@ namespace ArcEngine.Asset
 			return true;
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public void Dispose()
+		{
+		}
+
 	
 
 		#region	IO operations

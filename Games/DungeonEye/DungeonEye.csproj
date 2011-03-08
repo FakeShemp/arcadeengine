@@ -494,7 +494,6 @@
     <Compile Include="Source\Maze.cs">
     </Compile>
     <Compile Include="Source\Hero.cs" />
-    <Compile Include="Source\Providers.cs" />
     <Compile Include="Source\Square.cs" />
     <Compile Include="Source\Monster.cs" />
     <Compile Include="Source\SquareActor\Pit.cs" />

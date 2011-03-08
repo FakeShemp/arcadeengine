@@ -50,28 +50,30 @@ namespace ArcEngine.Editor
 
 			TreeviewBox.BeginUpdate();
 			// For each providers
-			foreach (Provider provider in ResourceManager.Providers)
+			//foreach (Provider provider in ResourceManager.Providers)
 			{
 				// for each registred asset
-				foreach (Type type in provider.Assets)
+				//foreach (Type type in provider.Assets)
+				foreach(RegisteredAsset ra in ResourceManager.RegisteredAssets)
 				{
 					// Get the number of asset
-					MethodInfo mi = provider.GetType().GetMethod("Count").MakeGenericMethod(type);
-					int count = (int)mi.Invoke(provider, null);
-					if (count == 0)
+					//MethodInfo mi = provider.GetType().GetMethod("Count").MakeGenericMethod(type);
+					//int count = (int)mi.Invoke(provider, null);
+					if (ra.Count == 0)
 						continue;
 
-					TreeNode node = bank.Nodes.Add(type.Name + " (" + count.ToString() + ")");
-					node.Tag = type;
+					TreeNode node = bank.Nodes.Add(ra.Tag + " (" + ra.Count.ToString() + ")");
+					node.Tag = ra.Tag;
 
 					// Invoke the generic method like this : provider.GetAssets<[Asset Type]>();
-					mi = provider.GetType().GetMethod("GetAssets").MakeGenericMethod(type);
-					List<string> list = mi.Invoke(provider, null) as List<string>;
+					//mi = provider.GetType().GetMethod("GetAssets").MakeGenericMethod(type);
+					//List<string> list = mi.Invoke(provider, null) as List<string>;
 
-					foreach (string str in list)
+					List<string> list = new List<string>();
+					foreach (string str in ra.GetList(list))
 					{
 						TreeNode element = node.Nodes.Add(str);
-						element.Tag = type;
+						element.Tag = ra;
 					}
 				}
 			}

@@ -67,7 +67,15 @@ namespace ArcEngine.Asset
 			return true;
 		}
 
-	
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public void Dispose()
+		{
+		}
+
 
 		/// <summary>
 		/// Build a message from a string and arguments

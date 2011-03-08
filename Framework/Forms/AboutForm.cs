@@ -37,9 +37,10 @@ namespace ArcEngine.Editor.Forms
 			InitializeComponent();
 
 			PluginList.SuspendLayout();
-			foreach (Provider provider in ResourceManager.Providers)
+			//foreach (Provider provider in ResourceManager.Providers)
+			foreach(RegisteredAsset ra in ResourceManager.RegisteredAssets)
 			{
-				PluginList.Items.Add(provider.Name + "  (version " + provider.Version.ToString() + ")");
+				PluginList.Items.Add(ra.Type.Name);
 			}
 			PluginList.ResumeLayout();
 

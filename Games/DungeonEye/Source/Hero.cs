@@ -77,6 +77,15 @@ namespace DungeonEye
 		}
 
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public void Dispose()
+		{
+		}
+
+		
 		/// <summary>
 		/// Updates hero
 		/// </summary>

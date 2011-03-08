@@ -25,13 +25,13 @@ using System.Reflection;
 using System.Text;
 using System.Xml;
 using ArcEngine.Asset;
+using ArcEngine.Audio;
+using ArcEngine.Editor;
+using ArcEngine.Forms;
+using ArcEngine.Graphic;
 using ArcEngine.Interface;
 using ArcEngine.Storage;
-//
-//
-//
-//
-//
+
 
 namespace ArcEngine
 {
@@ -50,16 +50,30 @@ namespace ArcEngine
 		static ResourceManager()
 		{
 			Trace.WriteDebugLine("[ResourceManager] Constructor()");
-			
+
 			BinaryLock = new object();
 
-			AssetProviders = new Dictionary<Type, Provider>();
-			Providers = new List<Provider>();
-			RegistredTags = new Dictionary<string, Provider>();
 			StorageList = new List<StorageBase>();
 			FailbackStorage = new FileSystemStorage(Directory.GetCurrentDirectory());
 
-			AddProvider(new Providers());
+
+			RegisteredAssets = new List<RegisteredAsset>();
+			RegisterAsset<TileSet>("tileset", typeof(TileSetForm));
+			RegisterAsset<StringTable>("stringtable", typeof(StringTableForm));
+			RegisterAsset<Animation>("animation", typeof(AnimationForm));
+			RegisterAsset<Scene>("scene", typeof(SceneForm));
+			RegisterAsset<Layout>("layouet", typeof(LayoutForm));
+			RegisterAsset<BitmapFont>("bitmapfont", typeof(BitmapFontForm));
+			RegisterAsset<Script>("script", typeof(ScriptForm));
+			RegisterAsset<ScriptModel>("scriptmodel", null);
+			RegisterAsset<AudioSample>("audiosample", typeof(AudioForm));
+			RegisterAsset<InputScheme>("inputscheme", typeof(InputSchemeForm));
+			RegisterAsset<Shader>("shader", null);
+
+			//AssetProviders = new Dictionary<Type, Provider>();
+			//Providers = new List<Provider>();
+			//RegistredTags = new Dictionary<string, Provider>();
+			//AddProvider(new Providers());
 		}
 
 
@@ -80,9 +94,9 @@ namespace ArcEngine
 
 			ClearSharedAssets();
 
-			foreach (Provider provider in Providers)
-				provider.Dispose();
-			Providers.Clear();
+			//foreach (Provider provider in Providers)
+			//	provider.Dispose();
+			//Providers.Clear();
 
 			foreach (StorageBase storage in StorageList)
 				storage.Dispose();
@@ -154,9 +168,9 @@ namespace ArcEngine
 			return FailbackStorage.OpenFile(filename, FileAccess.Read);
 		}
 
-	
-		#region Providers
 
+		#region Providers
+/*
 
 		/// <summary>
 		/// Adds a provider
@@ -241,7 +255,7 @@ namespace ArcEngine
 		/// <param name="type">asset type</param>
 		/// <returns>Provider of the asset or null</returns>
 		static public Provider GetAssetProvider(Type type)
-		{	
+		{
 			if (type == null)
 				return null;
 
@@ -291,7 +305,7 @@ namespace ArcEngine
 			// Remove provider
 			Providers.Remove(provider);
 		}
-
+*/
 
 		#endregion
 
@@ -322,25 +336,129 @@ namespace ArcEngine
 
 
 		/// <summary>
+		/// Registers an asset definition
+		/// </summary>
+		/// <typeparam name="T">Type of the asset</typeparam>
+		/// <param name="tag">Tag's name</param>
+		/// <param name="editor">Type of the editor form</param>
+		/// <returns>True on success</returns>
+		static public bool RegisterAsset<T>(string tag, Type editor) where T : IAsset
+		{
+			foreach (RegisteredAsset ra in RegisteredAssets)
+			{
+				if (ra.Type == typeof(T))
+				{
+					Trace.WriteDebugLine("[ResourceManager::RegisterAsset()] Type of asset \"" + typeof(T).Name + "\" already registered !");
+					return false;
+				}
+
+				if (ra.Tag == tag)
+				{
+					Trace.WriteDebugLine("[ResourceManager::RegisterAsset()] Asset tag \"" + tag + "\" already registered !");
+					return false;
+				}
+			}
+
+			Trace.WriteDebugLine("[ResourceManager::RegisterAsset()] Registering asset \"" + typeof(T).Name + " as tag \"" + tag);
+			RegisteredAssets.Add(new RegisteredAsset(typeof(T), tag, editor));
+
+			return true;
+		}
+
+
+		/// <summary>
+		/// Unregister an asset definition
+		/// </summary>
+		/// <typeparam name="T">Asset type</typeparam>
+		static public void UnregisterAsset<T>() where T : IAsset
+		{
+			lock (BinaryLock)
+			{
+				foreach (RegisteredAsset ra in RegisteredAssets)
+				{
+					if (ra.Type == typeof(T))
+					{
+						RegisteredAssets.Remove(ra);
+						return;
+					}
+				}
+
+				//Provider provider = GetAssetProvider(typeof(T));
+				//if (provider == null)
+				//    return;
+
+				//provider.Remove<T>();
+			}
+		}
+
+
+		/// <summary>
+		/// Finds the registered asset by its tag
+		/// </summary>
+		/// <param name="tag">Tag's name</param>
+		/// <returns>Registered asset or null</returns>
+		static public RegisteredAsset GetRegisteredByTag(string tag)
+		{
+			if (string.IsNullOrEmpty(tag))
+				return null;
+
+			foreach (RegisteredAsset ra in RegisteredAssets)
+			{
+				if (ra.Tag == tag)
+					return ra;
+			}
+
+			return null;
+		}
+
+
+		/// <summary>
+		/// Finds the registered asset by its type
+		/// </summary>
+		/// <param name="type">Type definition</param>
+		/// <returns>Registered asset or null</returns>
+		static public RegisteredAsset GetRegisteredByType(Type type)
+		{
+			if (type == null)
+				return null;
+
+			foreach (RegisteredAsset ra in RegisteredAssets)
+			{
+				if (ra.Type == type)
+					return ra;
+			}
+
+			return null;
+		}
+
+
+		/// <summary>
 		/// Adds an asset definition
 		/// </summary>
 		/// <typeparam name="T">Type of the asset</typeparam>
 		/// <param name="name">Name of the asset</param>
 		/// <param name="node">Xml description of the asset</param>
-		static public void AddAsset<T>(string name, XmlNode node) where T : IAsset
+		static public bool AddAsset<T>(string name, XmlNode node) where T : IAsset
 		{
 			if (string.IsNullOrEmpty(name))
-				return;
+				return false;
 
 			Trace.WriteDebugLine("[ResourceManager] AddAsset (name = {0})", name);
 
 			lock (BinaryLock)
 			{
-				if (!AssetProviders.ContainsKey(typeof(T)))
-					throw new ArgumentException("Unknown asset type");
+				foreach (RegisteredAsset ra in RegisteredAssets)
+				{
+					if (ra.Type == typeof(T))
+					{
 
-				AssetProviders[typeof(T)].Add<T>(name, node);
+						ra.Add(name, node);
+						return true;
+					}
+				}
 			}
+
+			return false;
 		}
 
 
@@ -352,13 +470,6 @@ namespace ArcEngine
 		/// <param name="asset">Asset handle</param>
 		static public void AddAsset<T>(string name, IAsset asset) where T : IAsset
 		{
-			//StringBuilder sb = new StringBuilder();
-			//using (XmlWriter writer = XmlWriter.Create(sb))
-			//    asset.Save(writer);
-
-			//XmlDocument doc = new XmlDocument();
-			//doc.LoadXml(sb.ToString());
-
 			XmlNode node = ConvertAsset(asset);
 			AddAsset<T>(name, node);
 		}
@@ -376,11 +487,19 @@ namespace ArcEngine
 
 			lock (BinaryLock)
 			{
-				if (!AssetProviders.ContainsKey(typeof(T)))
-					throw new ArgumentException("Unknown asset type");
+				foreach (RegisteredAsset ra in RegisteredAssets)
+				{
+					if (ra.Type == typeof(T))
+						return ra.Get(name);
+				}
 
-				return AssetProviders[typeof(T)].Get<T>(name);
+				//if (!AssetProviders.ContainsKey(typeof(T)))
+				//    throw new ArgumentException("Unknown asset type");
+
+				//return AssetProviders[typeof(T)].Get<T>(name);
 			}
+
+			return null;
 		}
 
 
@@ -388,7 +507,7 @@ namespace ArcEngine
 		/// Creates an asset
 		/// </summary>
 		/// <typeparam name="T">Type of the asset</typeparam>
-		/// <param name="name">ASset name</param>
+		/// <param name="name">Asset name</param>
 		/// <returns>The asset or null</returns>
 		static public T CreateAsset<T>(string name) where T : IAsset
 		{
@@ -397,13 +516,21 @@ namespace ArcEngine
 
 			lock (BinaryLock)
 			{
-				// Unknown asset type
-				if (!AssetProviders.ContainsKey(typeof(T)))
-					throw new ArgumentException("Unknown asset type");
+				foreach (RegisteredAsset ra in RegisteredAssets)
+				{
+					if (ra.Type == typeof(T))
+						return (T)ra.Create(name);
+				}
 
-				// Create the asset
-				return (T)AssetProviders[typeof(T)].Create<T>(name);
+				// Unknown asset type
+				//if (!AssetProviders.ContainsKey(typeof(T)))
+				//    throw new ArgumentException("Unknown asset type");
+
+				//// Create the asset
+				//return (T)AssetProviders[typeof(T)].Create<T>(name);
 			}
+
+			return default(T);
 		}
 
 
@@ -419,27 +546,16 @@ namespace ArcEngine
 
 			lock (BinaryLock)
 			{
-				if (!AssetProviders.ContainsKey(typeof(T)))
-					throw new ArgumentException("Unknown asset type");
+				foreach (RegisteredAsset ra in RegisteredAssets)
+				{
+					if (ra.Type == typeof(T))
+						ra.Remove(name);
+				}
 
-				AssetProviders[typeof(T)].Remove<T>(name);
-			}
-		}
+				//if (!AssetProviders.ContainsKey(typeof(T)))
+				//    throw new ArgumentException("Unknown asset type");
 
-
-		/// <summary>
-		/// Removes a specific asset
-		/// </summary>
-		/// <typeparam name="T">Asset type</typeparam>
-		static public void RemoveAsset<T>() where T : IAsset
-		{
-			lock (BinaryLock)
-			{
-				Provider provider = GetAssetProvider(typeof(T));
-				if (provider == null)
-					return;
-
-				provider.Remove<T>();
+				//AssetProviders[typeof(T)].Remove<T>(name);
 			}
 		}
 
@@ -454,8 +570,8 @@ namespace ArcEngine
 
 			lock (BinaryLock)
 			{
-				foreach (Provider provider in Providers)
-					provider.Clear();
+				foreach (RegisteredAsset ra in RegisteredAssets)
+					ra.Clear();
 			}
 
 
@@ -473,13 +589,24 @@ namespace ArcEngine
 		/// <returns>Sorted list of available asset</returns>
 		static public List<string> GetAssets<T>() where T : IAsset
 		{
+			List<string> list = new List<string>();
+			
 			lock (BinaryLock)
 			{
-				if (!AssetProviders.ContainsKey(typeof(T)))
-					return new List<string>();
+				foreach (RegisteredAsset ra in RegisteredAssets)
+				{
+					if (ra.Type == typeof(T))
+						return ra.GetList(list);
+				}
 
-				return AssetProviders[typeof(T)].GetAssets<T>();
+				//if (!AssetProviders.ContainsKey(typeof(T)))
+				//    return new List<string>();
+
+				//return AssetProviders[typeof(T)].GetAssets<T>();
+
 			}
+
+			return list;
 		}
 
 		#endregion
@@ -502,12 +629,21 @@ namespace ArcEngine
 
 			lock (BinaryLock)
 			{
-				// Unknow asset
-				if (!AssetProviders.ContainsKey(typeof(T)))
-					throw new ArgumentException("Unknown asset type");
+				foreach (RegisteredAsset ra in RegisteredAssets)
+				{
+					if (ra.Type == typeof(T))
+						return (T) ra.GetShared(name);
+				}
 
-				return AssetProviders[typeof(T)].GetShared<T>(name);
+
+				// Unknow asset
+				//if (!AssetProviders.ContainsKey(typeof(T)))
+				//    throw new ArgumentException("Unknown asset type");
+
+				//return AssetProviders[typeof(T)].GetShared<T>(name);
 			}
+
+			return default(T);
 		}
 
 
@@ -523,20 +659,30 @@ namespace ArcEngine
 			if (string.IsNullOrEmpty(name))
 				return default(T);
 
-			// Asset already exist
-			T tmp = GetSharedAsset<T>(name);
-			if (tmp != null)
-				return tmp;
 
-			// Create a new asset
-			tmp = CreateAsset<T>(asset);
-			if (tmp == null)
-				return default(T);
+			foreach (RegisteredAsset ra in RegisteredAssets)
+			{
+				if (ra.Type == typeof(T))
+				{
+					return (T) ra.GetShared(name);
+				}
+			}
 
-			// Add the asset to the shared list
-			AddSharedAsset<T>(name, tmp);
 
-			return tmp;
+			//// Asset already exist
+			//T tmp = GetSharedAsset<T>(name);
+			//if (tmp != null)
+			//    return tmp;
+
+			//// Create a new asset
+			//tmp = CreateAsset<T>(asset);
+			//if (tmp == null)
+			//    return default(T);
+
+			//// Add the asset to the shared list
+			//AddSharedAsset<T>(name, tmp);
+
+			return default(T);
 		}
 
 
@@ -553,10 +699,21 @@ namespace ArcEngine
 
 			lock (BinaryLock)
 			{
-				if (!AssetProviders.ContainsKey(typeof(T)))
-					throw new ArgumentException("Unknown asset type");
 
-				AssetProviders[typeof(T)].AddShared<T>(name, asset);
+				foreach (RegisteredAsset ra in RegisteredAssets)
+				{
+					if (ra.Type == typeof(T))
+					{
+						ra.AddShared(name, asset);
+						return;
+					}
+				}
+
+
+				//if (!AssetProviders.ContainsKey(typeof(T)))
+				//    throw new ArgumentException("Unknown asset type");
+
+				//AssetProviders[typeof(T)].AddShared<T>(name, asset);
 			}
 
 		}
@@ -574,10 +731,19 @@ namespace ArcEngine
 
 			lock (BinaryLock)
 			{
-				if (!AssetProviders.ContainsKey(typeof(T)))
-					throw new ArgumentException("Unknown asset type");
+				foreach (RegisteredAsset ra in RegisteredAssets)
+				{
+					if (ra.Type == typeof(T))
+					{
+						ra.RemoveShared(name);
+						return;
+					}
+				}
 
-				AssetProviders[typeof(T)].RemoveShared<T>(name);
+				//if (!AssetProviders.ContainsKey(typeof(T)))
+				//    throw new ArgumentException("Unknown asset type");
+
+				//AssetProviders[typeof(T)].RemoveShared<T>(name);
 			}
 		}
 
@@ -591,11 +757,17 @@ namespace ArcEngine
 		{
 			lock (BinaryLock)
 			{
-				Provider provider = GetAssetProvider(typeof(T));
-				if (provider == null)
-					return;
+				foreach (RegisteredAsset ra in RegisteredAssets)
+				{
+					if (ra.Type == typeof(T))
+						ra.ClearShared();
+				}
 
-				provider.RemoveShared<T>();
+				//Provider provider = GetAssetProvider(typeof(T));
+				//if (provider == null)
+				//    return;
+
+				//provider.RemoveShared<T>();
 			}
 		}
 
@@ -607,8 +779,11 @@ namespace ArcEngine
 		{
 			lock (BinaryLock)
 			{
-				foreach (Provider provider in Providers)
-					provider.ClearShared();
+				//foreach (Provider provider in Providers)
+				//    provider.ClearShared();
+
+				foreach (RegisteredAsset ra in RegisteredAssets)
+					ra.ClearShared();
 			}
 		}
 
@@ -620,7 +795,7 @@ namespace ArcEngine
 
 		#region Asset operations
 
-/*		
+		/*		
 		/// <summary>
 		/// Adds an asset from a file in a bank
 		/// </summary>
@@ -692,7 +867,7 @@ namespace ArcEngine
 
 */
 
-	
+
 		/// <summary>
 		/// Saves all assets to a storage
 		/// </summary>
@@ -715,18 +890,21 @@ namespace ArcEngine
 				settings.Encoding = ASCIIEncoding.ASCII;
 
 				// For each Provider
-				foreach (Provider provider in Providers)
+				//foreach (Provider provider in Providers)
 				{
 					// for each registred asset
-					foreach (Type type in provider.Assets)
+					//foreach (Type type in provider.Assets)
+					foreach(RegisteredAsset ra in RegisteredAssets)
 					{
 						// Get the number of asset
-						MethodInfo mi = provider.GetType().GetMethod("Count").MakeGenericMethod(type);
-						if ((int) mi.Invoke(provider, null) == 0)
+						//MethodInfo mi = provider.GetType().GetMethod("Count").MakeGenericMethod(type);
+						//if ((int)mi.Invoke(provider, null) == 0)
+						//    continue;
+						if (ra.Count == 0)
 							continue;
 
 						// Save to storage
-						using (Stream stream = storage.CreateFile(string.Format("{0}.xml", type.Name)))
+						using (Stream stream = storage.CreateFile(string.Format("{0}.xml", ra.Type.Name)))
 						{
 							if (stream == null)
 								continue;
@@ -737,8 +915,9 @@ namespace ArcEngine
 							doc.WriteStartElement("bank");
 
 							// Invoke the generic method like this : provider.Save<[Asset Type]>(XmlNode node);
-							mi = provider.GetType().GetMethod("Save", new Type[] { typeof(XmlWriter) }).MakeGenericMethod(type);
-							mi.Invoke(provider, new object[] { doc });
+							//mi = provider.GetType().GetMethod("Save", new Type[] { typeof(XmlWriter) }).MakeGenericMethod(type);
+							//mi.Invoke(provider, new object[] { doc });
+							ra.Save(doc);
 
 							// Close xml 
 							doc.WriteEndElement();
@@ -787,29 +966,48 @@ namespace ArcEngine
 		/// <summary>
 		/// Registered assets
 		/// </summary>
-		static List<RegisteredAsset> RegisteredAssets;
-
-
-		/// <summary>
-		/// Asset providers
-		/// </summary>
-		static Dictionary<Type, Provider> AssetProviders;
-
-
-		/// <summary>
-		/// Registred providers
-		/// </summary>
-		public static List<Provider> Providers
+		public static List<RegisteredAsset> RegisteredAssets
 		{
 			get;
 			private set;
 		}
 
 
+
+
+
+
+
+
+
+
 		/// <summary>
-		/// Registred tags
+		/// Asset providers
 		/// </summary>
-		static Dictionary<string, Provider> RegistredTags;
+	//	static Dictionary<Type, Provider> AssetProviders;
+
+
+		/// <summary>
+		/// Registred providers
+		/// </summary>
+		//public static List<Provider> Providers
+		//{
+		//    get;
+		//    private set;
+		//}
+
+
+		///// <summary>
+		///// Registred tags
+		///// </summary>
+		//static Dictionary<string, Provider> RegistredTags;
+
+
+
+
+
+
+
 
 
 		/// <summary>

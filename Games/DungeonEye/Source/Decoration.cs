@@ -57,7 +57,15 @@ namespace DungeonEye
 			return true;
 		}
 
-	
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public void Dispose()
+		{
+		}
+
 
 		#region IO
 

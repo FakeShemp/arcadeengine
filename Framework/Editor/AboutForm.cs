@@ -39,15 +39,16 @@ namespace ArcEngine.Editor
 			this.labelCompanyName.Text = AssemblyCompany;
 			this.textBoxDescription.Text = AssemblyDescription;
 
-			textBoxDescription.Text += Environment.NewLine + "Registred asset :" + Environment.NewLine;
+			textBoxDescription.Text += Environment.NewLine + "Registred assets :" + Environment.NewLine;
 
-			foreach (Provider provider in ResourceManager.Providers)
+			//foreach (Provider provider in ResourceManager.Providers)
+			//{
+			//foreach (Type type in provider.Assets)
+			foreach (RegisteredAsset ra in ResourceManager.RegisteredAssets)
 			{
-				foreach (Type type in provider.Assets)
-				{
-					textBoxDescription.Text += type.Name + Environment.NewLine;
-				}
+				textBoxDescription.Text += ra.Type.Name + Environment.NewLine;
 			}
+			//}
 		}
 
 		#region Accesseurs d'attribut de l'assembly

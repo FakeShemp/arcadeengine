@@ -75,6 +75,15 @@ namespace DungeonEye
 		}
 
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public void Dispose()
+		{
+		}
+
+
 		/// <summary>
 		/// Move the monster
 		/// </summary>

@@ -86,6 +86,14 @@ namespace DungeonEye
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		public void Dispose()
+		{
+		}
+
+
 		#region Load & Save
 
 		/// <summary>

@@ -30,25 +30,26 @@ namespace ArcEngine.Interface
 	/// <summary>
 	/// Asset base interface
 	/// </summary>
-	public interface IAsset
+	public interface IAsset : IDisposable
 	{
 
 
 
 		#region IO
+
 		/// <summary>
 		/// Loads an asset
 		/// </summary>
-		/// <param name="xml"></param>
-		/// <returns></returns>
+		/// <param name="writer">XmlNode handle</param>
+		/// <returns>True on success</returns>
 		bool Load(XmlNode xml);
 
 
 		/// <summary>
-		/// 
+		/// Saves asset definition
 		/// </summary>
-		/// <param name="writer"></param>
-		/// <returns></returns>
+		/// <param name="writer">XmlWriter handle</param>
+		/// <returns>True on success</returns>
 		bool Save(XmlWriter writer);
 
 		#endregion

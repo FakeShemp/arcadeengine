@@ -70,29 +70,31 @@ namespace ArcEngine.Editor
 			
 
 			// For each providers
-			foreach (Provider provider in ResourceManager.Providers)
+			//foreach (Provider provider in ResourceManager.Providers)
 			{
 				// for each registred asset
-				foreach(Type type in provider.Assets)
+				//foreach(Type type in provider.Assets)
+				foreach(RegisteredAsset ra in ResourceManager.RegisteredAssets)
 				{
 					// Get the number of asset
-					MethodInfo mi = provider.GetType().GetMethod("Count").MakeGenericMethod(type);
-					int count = (int) mi.Invoke(provider, null);
-					if (count == 0)
+					//MethodInfo mi = provider.GetType().GetMethod("Count").MakeGenericMethod(type);
+					//int count = (int) mi.Invoke(provider, null);
+					if (ra.Count == 0)
 						continue;
 
-					TreeNode node = bank.Nodes.Add(type.Name + " (" + count.ToString() + ")");
-					node.Tag = type;
+					TreeNode node = bank.Nodes.Add(ra.Tag + " (" + ra.Count.ToString() + ")");
+					node.Tag = ra;
 					node.ImageIndex = 34;
 					node.SelectedImageIndex = 35;
 					
 					// Invoke the generic method like this : provider.GetAssets<[Asset Type]>();
-					mi = provider.GetType().GetMethod("GetAssets").MakeGenericMethod(type);
-					List<string> list = mi.Invoke(provider, null) as List<string>;
+					//mi = provider.GetType().GetMethod("GetAssets").MakeGenericMethod(type);
+					//List<string> list = mi.Invoke(provider, null) as List<string>;
+					List<string> list = new List<string>();
 
-					foreach (string str in list)
+					foreach (string str in ra.GetList(list))
 					{
-						AddNode(node, str, type);
+						AddNode(node, str, ra.Type);
 					}
 				}
 			}
@@ -174,14 +176,16 @@ namespace ArcEngine.Editor
 				return false;
 
 			// Get the provider
-			Provider provider = ResourceManager.GetAssetProvider(node.Tag as Type);
-			if (provider == null)
+			//Provider provider = ResourceManager.GetAssetProvider(node.Tag as Type);
+			RegisteredAsset ra = ResourceManager.GetRegisteredByType(node.Tag as Type);
+			if (ra == null)
 				return false;
 
 			// Edit the asset
-			object[] args = { node.Text };
-			MethodInfo mi = provider.GetType().GetMethod("EditAsset").MakeGenericMethod(node.Tag as Type);
-			AssetEditorBase form = mi.Invoke(provider, args) as AssetEditorBase;
+			//object[] args = { node.Text };
+			//MethodInfo mi = provider.GetType().GetMethod("EditAsset").MakeGenericMethod(node.Tag as Type);
+			//AssetEditorBase form = mi.Invoke(provider, args) as AssetEditorBase;
+			AssetEditorBase form = ra.Edit(node.Text);
 			if (form == null)
 				return false;
 
@@ -209,16 +213,18 @@ namespace ArcEngine.Editor
 					return false;
 
 				// Get the provider
-				Provider provider = ResourceManager.GetAssetProvider(node.Tag as Type);
-				if (provider == null)
+				//Provider provider = ResourceManager.GetAssetProvider(node.Tag as Type);
+				RegisteredAsset ra = ResourceManager.GetRegisteredByType(node.Tag as Type);
+				if (ra == null)
 					return false;
 
 
-				object[] args = { ResourceTree.SelectedNode.Text };
-				Type[] types = new Type[] { typeof(string) };
-				MethodInfo mi = provider.GetType().GetMethod("Remove", types).MakeGenericMethod(node.Tag as Type);
-				mi.Invoke(provider, args);
+				//object[] args = { ResourceTree.SelectedNode.Text };
+				//Type[] types = new Type[] { typeof(string) };
+				//MethodInfo mi = provider.GetType().GetMethod("Remove", types).MakeGenericMethod(node.Tag as Type);
+				//mi.Invoke(provider, args);
 
+				ra.Remove(ResourceTree.SelectedNode.Text);
 			}
 
 			else if (node.Nodes.Count >= 0)
@@ -228,16 +234,16 @@ namespace ArcEngine.Editor
 				if (MessageBox.Show("Do you really want to erase all \"" + names[names.Length - 1] + "\" ?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
 					return false;
 
-				Provider provider = ResourceManager.GetAssetProvider(node.Tag as Type);
-				if (provider == null)
+				RegisteredAsset ra = ResourceManager.GetRegisteredByType(node.Tag as Type);
+				if (ra == null)
 					return false;
 
-				Type type = provider.GetType();
-				MethodInfo mi = type.GetMethod("Remove", new Type[] { });
+				//Type type = provider.GetType();
+				//MethodInfo mi = type.GetMethod("Remove", new Type[] { });
 
-				mi = mi.MakeGenericMethod(node.Tag as Type);
-				mi.Invoke(provider, new object[] { });
-
+				//mi = mi.MakeGenericMethod(node.Tag as Type);
+				//mi.Invoke(provider, new object[] { });
+				ra.Remove();
 			}
 
 

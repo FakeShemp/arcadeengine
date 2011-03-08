@@ -410,7 +410,6 @@
     <Compile Include="PInvoke\Gdi32.cs" />
     <Compile Include="PInvoke\User32.cs" />
     <Compile Include="PInvoke\Winmm.cs" />
-    <Compile Include="Providers.cs" />
     <Compile Include="RandomEnum.cs" />
     <Compile Include="Utility\GameState\State.cs" />
     <Compile Include="Utility\GameState\StateManager.cs" />
@@ -434,7 +433,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Provider.cs" />
     <Compile Include="Utility\ScreenManager\ScreenManager.cs" />
     <Compile Include="Utility\GUI\Button.cs" />
     <Compile Include="Utility\GUI\Control.cs" />

@@ -126,6 +126,14 @@ namespace ArcEngine.Asset
 
 
 		/// <summary>
+		/// 
+		/// </summary>
+		public void Dispose()
+		{
+		}
+
+
+		/// <summary>
 		/// Invoke a method in the script
 		/// </summary>
 		/// <param name="method">Method's name</param>

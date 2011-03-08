@@ -58,7 +58,15 @@ namespace ArcEngine.Asset
 			return true;
 		}
 
-		
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public void Dispose()
+		{
+		}
+
 		
 		/// <summary>
 		/// Adds a new input

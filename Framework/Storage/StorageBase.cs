@@ -78,16 +78,17 @@ namespace ArcEngine.Storage
 					continue;
 				}
 
-				Provider provider = ResourceManager.GetTagProvider(node.Name);
-				if (provider == null)
+				//Provider provider = ResourceManager.GetTagProvider(node.Name);
+				RegisteredAsset ra = ResourceManager.GetRegisteredByTag(node.Name);
+				if (ra== null)
 				{
-					Trace.WriteLine("? No Provider found for asset \"<" + node.Name + ">\"...");
+					Trace.WriteLine("[StorageBase::Process()] No registered asset found for tag \"<" + node.Name + ">\"...");
 					continue;
 				}
 
 				//lock (BinaryLock)
 				{
-					provider.Load(node);
+					ra.Load(node);
 				}
 			}
 

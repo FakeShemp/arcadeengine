@@ -65,7 +65,17 @@ namespace DungeonEye
 			AudioManager.PlaySounds = Settings.GetBool("Sounds");
 
 			// Add the provider
-			ResourceManager.AddProvider(new Providers());
+			//ResourceManager.AddProvider(new Providers());
+
+
+			// Add the assets
+			ResourceManager.RegisterAsset<Dungeon>("dungeon", typeof(DungeonForm));
+			ResourceManager.RegisterAsset<Item>("item", typeof(ItemForm));
+			ResourceManager.RegisterAsset<Monster>("monster", typeof(MonsterForm));
+			ResourceManager.RegisterAsset<Decoration>("decoration", typeof(DecorationForm));
+			ResourceManager.RegisterAsset<Spell>("spell", typeof(SpellForm));
+			ResourceManager.RegisterAsset<Hero>("hero", typeof(HeroForm));
+
 
 			// Game state manager
 			GSM = new ScreenManager(this);
@@ -75,6 +85,8 @@ namespace DungeonEye
 
 			// HACK : Editor events
 			EditorEnter += new EditorEventHandler(Game_EditorEnter);
+
+
 		}
 
 
