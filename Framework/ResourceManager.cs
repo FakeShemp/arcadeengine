@@ -359,7 +359,7 @@ namespace ArcEngine
 				}
 			}
 
-			Trace.WriteDebugLine("Registering asset \"" + typeof(T).Name + " as tag \"" + tag);
+			Trace.WriteDebugLine("Registering asset \"" + typeof(T).Name + "\" as tag \"" + tag + "\"");
 			RegisteredAssets.Add(new RegisteredAsset(typeof(T), tag, editor));
 
 			return true;

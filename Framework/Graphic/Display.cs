@@ -121,7 +121,10 @@ namespace ArcEngine.Graphic
 				if (obj != null)
 					Trace.WriteLine("Driver name : {0}", ((string[])obj)[0]);
 				Trace.WriteLine("Driver version : {0}", (string)hklm.GetValue("DriverVersion"));
-				Trace.WriteLine("Driver date : {0} (mm-dd-yyyy)", (string)hklm.GetValue("DriverDate"));
+				
+				string[] str = ((string) hklm.GetValue("DriverDate")).Split('-');
+				DateTime date = DateTime.Parse(str[1] + "-" + str[0] + "-" + str[2]);
+				Trace.WriteLine("Driver date : {0}", date.ToLongDateString());
 				Trace.Unindent();
 			}
 

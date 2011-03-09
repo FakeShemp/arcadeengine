@@ -264,7 +264,7 @@ namespace DungeonEye
 
 				default:
 				{
-					Trace.WriteLine("[Entity] Load() : Unknown node : \"{0}\"", node.Name);
+					Trace.WriteLine("[Entity] Load() : Unknown node : <{0}>", node.Name);
 				}
 				break;
 			}
