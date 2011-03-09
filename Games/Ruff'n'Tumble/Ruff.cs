@@ -24,7 +24,7 @@ using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
-
+using ArcEngine.Storage;
 
 //
 //http://gamedevgeek.com/tutorials/managing-game-states-in-c/
@@ -67,8 +67,11 @@ namespace RuffnTumble
 		[STAThread]
 		static void Main(string[] args)
 		{
-			Ruff game = new Ruff();
-			game.Run();
+			// Start tracing
+			Trace.Start("log.html", "Dungeon Eye");
+
+			using (Ruff game = new Ruff())
+				game.Run();
 		}
 
 
@@ -83,9 +86,13 @@ namespace RuffnTumble
 
 			Gamepad.Init(Window);
 
+
+			ResourceManager.RegisterAsset<World>("world", typeof(RuffnTumble.Editor.WorldForm));
+
 			// Loads content
-			ResourceManager.AddProvider(new WorldProvider());
-			ResourceManager.LoadBank("data/world1.bnk");
+			Storage = new BankStorage("data/world1.bnk");
+			ResourceManager.AddStorage(Storage);
+			ResourceManager.RootDirectory = "data";
 
 
 			Batch = new SpriteBatch();
@@ -100,7 +107,7 @@ namespace RuffnTumble
 
 			// Default rendering font
 			Font = new BitmapFont();
-			Font.LoadTTF("verdana.ttf", 12, FontStyle.Regular);
+			Font.LoadTTF(@"C:\Windows\Fonts\verdana.ttf", 12, FontStyle.Regular);
 
 
 			Icons = ResourceManager.CreateAsset<TileSet>("Layout");
@@ -140,7 +147,7 @@ namespace RuffnTumble
 		{
 			// Run the editor
 			if (Keyboard.IsKeyPress(Keys.Insert))
-				RunEditor();
+				RunEditor(Storage);
 
 			// Byebye
 			if (Keyboard.IsNewKeyPress(Keys.Escape))
@@ -235,8 +242,10 @@ namespace RuffnTumble
 			Batch.DrawTile(Icons, 0, Point.Empty);
 
 
-			Batch.DrawString(Font, new Point(100, 100), Color.White, "Camera location : " + World.CurrentLevel.Camera.Location.ToString());
-
+			if (World != null)
+			{
+				Batch.DrawString(Font, new Point(100, 100), Color.White, "Camera location : " + World.CurrentLevel.Camera.Location.ToString());
+			}
 
 			#region Stats
 			//Point pos = Point.Empty;
@@ -427,6 +436,12 @@ namespace RuffnTumble
 
 
 		#region Properties
+
+		/// <summary>
+		/// Storage
+		/// </summary>
+		StorageBase Storage;
+
 
 		/// <summary>
 		/// Drawing font

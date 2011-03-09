@@ -149,9 +149,10 @@ namespace ArcEngine.Examples.GamePad
 			// Clears the background
 			Display.ClearBuffers();
 
-			Display.DrawRectangle(new Rectangle(100, 100, 100, 100), Color.Red);
 
 			SpriteBatch.Begin();
+
+			SpriteBatch.DrawRectangle(new Rectangle(100, 100, 100, 100), Color.Red);
 
 			SpriteBatch.DrawString(Font, new Vector2(100, 50), Color.White, "Press F1 to detect new gamepads...");
 			SpriteBatch.DrawString(Font, new Vector2(100, 90), Color.White, "Available device(s) : {0}", Gamepad.Count);

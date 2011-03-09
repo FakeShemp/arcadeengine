@@ -49,7 +49,7 @@ namespace ArcEngine.Examples.Component
 			Color color = Color.FromArgb(alpha, FadeColor);
 
 			// Fade the full screen
-			Display.FillRectangle(Display.ViewPort, color);
+			//Display.FillRectangle(Display.ViewPort, color);
 		}
 
 

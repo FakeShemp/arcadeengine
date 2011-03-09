@@ -112,13 +112,13 @@ namespace ArcEngine.Examples.ShadowMapping
 			if (mesh == null || reader == null || count <= 0)
 				return;
 
-			int[] faces = new int[count * 3];
+			uint[] faces = new uint[count * 3];
 			for (int i = 0; i < count; i++)
 			{
 				string[] line = reader.ReadLine().Trim().Split(' ');
-				faces[i * 3] = int.Parse(line[1]);
-				faces[i * 3 + 1] = int.Parse(line[2]);
-				faces[i * 3 + 2] = int.Parse(line[3]);
+				faces[i * 3] = uint.Parse(line[1]);
+				faces[i * 3 + 1] = uint.Parse(line[2]);
+				faces[i * 3 + 2] = uint.Parse(line[3]);
 			}
 
 			mesh.SetIndices(faces);

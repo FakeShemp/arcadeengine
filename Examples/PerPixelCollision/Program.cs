@@ -39,16 +39,8 @@ namespace ArcEngine.Examples.PerPixelCollision
 		[STAThread]
 		static void Main()
 		{
-			try
-			{
-				using (Program game = new Program())
-					game.Run();
-			}
-			catch (Exception e)
-			{
-				// Oops, an error happened !
-				MessageBox.Show(e.StackTrace, e.Message);
-			}
+			using (Program game = new Program())
+				game.Run();
 		}
 
 
@@ -77,7 +69,7 @@ namespace ArcEngine.Examples.PerPixelCollision
 		{
 			// Clear color of the screen
 			Display.RenderState.ClearColor = Color.LightGray;
-		//	Mouse.Visible = false;
+			//	Mouse.Visible = false;
 
 			if (!PixelCollision.Init())
 			{
@@ -100,8 +92,8 @@ namespace ArcEngine.Examples.PerPixelCollision
 		/// </summary>
 		public override void UnloadContent()
 		{
-			PixelCollision.Dispose();			
-			
+			PixelCollision.Dispose();
+
 			if (Logo != null)
 				Logo.Dispose();
 
@@ -143,7 +135,7 @@ namespace ArcEngine.Examples.PerPixelCollision
 
 
 			#region First draw
-		//	Sprite.Begin(SpriteBlendMode.Additive, SpriteSortMode.Deferred, false);
+			//	Sprite.Begin(SpriteBlendMode.Additive, SpriteSortMode.Deferred, false);
 			Sprite.Begin();
 
 			// Draw the logo
@@ -154,7 +146,7 @@ namespace ArcEngine.Examples.PerPixelCollision
 				StarColor = Color.Red;
 			else
 				StarColor = Color.White;
-	
+
 
 			// Draws the star
 			Sprite.Draw(Star, new Vector2(Mouse.Location.X, Mouse.Location.Y), StarColor);
@@ -178,7 +170,7 @@ namespace ArcEngine.Examples.PerPixelCollision
 			Sprite.Begin();
 			Sprite.Draw(Star, new Vector2(Mouse.Location.X, Mouse.Location.Y), StarColor);
 			Sprite.End();
-			
+
 			PixelCollision.EndQuery();
 
 
@@ -202,10 +194,10 @@ namespace ArcEngine.Examples.PerPixelCollision
 		private void DrawLogo()
 		{
 			Vector2 dst = new Vector2(Display.ViewPort.Width / 2.0f, Display.ViewPort.Height / 2.0f);
-	//		dst = new Vector2(200, 200);
-	//		dst = new Vector2(Mouse.Location.X, Mouse.Location.Y);
+			//		dst = new Vector2(200, 200);
+			//		dst = new Vector2(Mouse.Location.X, Mouse.Location.Y);
 
-			Sprite.Draw(Logo, dst, null, Color.White, Angle, new Vector2(Logo.Size.Width / 2, Logo.Size.Height / 2), 1.0f, SpriteEffects.None, 0.0f);
+			Sprite.Draw(Logo, dst, Vector4.Zero, Color.White, Angle, new Vector2(Logo.Size.Width / 2, Logo.Size.Height / 2), 1.0f, SpriteEffects.None, 0.0f);
 		}
 
 

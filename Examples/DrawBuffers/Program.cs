@@ -87,8 +87,8 @@ namespace ArcEngine.Examples.DrawBufer
 
 			// Loads a texture and binds it to TUI 2
 			Texture = new Texture2D("data/texture.png");
-			Texture.HorizontalWrap = HorizontalWrapFilter.Repeat;
-			Texture.VerticalWrap = VerticalWrapFilter.Repeat;
+			Texture.HorizontalWrap = TextureWrapFilter.Repeat;
+			Texture.VerticalWrap = TextureWrapFilter.Repeat;
 			Display.TextureUnit = 2;
 			Display.Texture = Texture;
 			
@@ -103,7 +103,7 @@ namespace ArcEngine.Examples.DrawBufer
 
 
 			// Indices
-			int[] indices = new int[]
+			uint[] indices = new uint[]
 			{
 				0, 1, 2, 
 				1, 2, 3

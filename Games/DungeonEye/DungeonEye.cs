@@ -64,9 +64,6 @@ namespace DungeonEye
 			AudioManager.PlayTunes = Settings.GetBool("Tunes");
 			AudioManager.PlaySounds = Settings.GetBool("Sounds");
 
-			// Add the provider
-			//ResourceManager.AddProvider(new Providers());
-
 
 			// Add the assets
 			ResourceManager.RegisterAsset<Dungeon>("dungeon", typeof(DungeonForm));

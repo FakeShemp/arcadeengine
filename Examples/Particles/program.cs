@@ -42,15 +42,11 @@ namespace ArcEngine.Examples.Particles
 		[STAThread]
 		static void Main()
 		{
-			try
-			{
-				using (Program game = new Program())
-					game.Run();
-			}
-			catch (Exception e)
-			{
-				MessageBox.Show(e.StackTrace, e.Message);
-			}
+			// Start tracing
+			Trace.Start("log.html", "Particle");
+
+			using (Program game = new Program())
+				game.Run();
 		}
 
 
@@ -72,7 +68,7 @@ namespace ArcEngine.Examples.Particles
 
 			// Create particles
 			Particles = new Particle[ParticleCount * 2];
-			for (int i = 0; i < Particles.Length; i++)
+			for (int i = 0 ; i < Particles.Length ; i++)
 				Particles[i] = new Particle();
 
 			// Colors for the particles
@@ -97,7 +93,7 @@ namespace ArcEngine.Examples.Particles
 			// Display settings
 			Display.BlendingFunction(BlendingFactorSource.SrcAlpha, BlendingFactorDest.One);
 
-			ResourceManager.Storages.Add(new FileSystemStorage(Directory.GetCurrentDirectory()));
+			ResourceManager.AddStorage(new FileSystemStorage(Directory.GetCurrentDirectory()));
 
 
 			// Load the texture
@@ -106,7 +102,7 @@ namespace ArcEngine.Examples.Particles
 			Textures[1] = new Texture2D("data/particle2.png");
 
 			// Init all particles
-			for (int i = 0; i < Particles.Length; i++)
+			for (int i = 0 ; i < Particles.Length ; i++)
 			{
 				Particles[i] = new Particle();
 				ResetParticle(Particles[i]);
@@ -118,7 +114,7 @@ namespace ArcEngine.Examples.Particles
 
 			// SpriteBatch
 			Sprite = new SpriteBatch();
-	}
+		}
 
 
 		/// <summary>
@@ -134,7 +130,7 @@ namespace ArcEngine.Examples.Particles
 				Font.Dispose();
 			Font = null;
 
-			for (int i = 0; i < Textures.Length; i++)
+			for (int i = 0 ; i < Textures.Length ; i++)
 			{
 				if (Textures[i] != null)
 					Textures[i].Dispose();

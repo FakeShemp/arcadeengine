@@ -392,7 +392,7 @@ namespace ArcEngine.Asset
 			{
 				if (stream == null)
 				{
-					Trace.WriteLine("Can't open TTF Font \"{0}\"", filename);
+					Trace.WriteLine("[BitmapFont] LoadTTF() : Can't open TTF Font \"{0}\"", filename);
 					return false;
 				}
 

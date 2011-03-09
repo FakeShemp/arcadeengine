@@ -83,7 +83,7 @@ namespace ArcEngine.Games.SimplePhysic
 		/// </summary>
 		public override void LoadContent()
 		{
-			Display.ClearColor = Color.CornflowerBlue;
+			Display.RenderState.ClearColor = Color.CornflowerBlue;
 
 			Font = new BitmapFont();
 			Font.LoadTTF(@"data/verdana.ttf", 12, FontStyle.Regular);

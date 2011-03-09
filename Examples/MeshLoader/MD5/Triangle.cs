@@ -37,7 +37,7 @@ namespace ArcEngine.Examples.MeshLoader.MD5
 		/// <param name="a"></param>
 		/// <param name="b"></param>
 		/// <param name="c"></param>
-		public Triangle(int a, int b, int c)
+		public Triangle(uint a, uint b, uint c)
 		{
 			A = a;
 			B = b;
@@ -47,17 +47,17 @@ namespace ArcEngine.Examples.MeshLoader.MD5
 		/// <summary>
 		/// 
 		/// </summary>
-		public int A;
+		public uint A;
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public int B;
+		public uint B;
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public int C;
+		public uint C;
 
 	}
 }

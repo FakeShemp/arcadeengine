@@ -22,7 +22,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
-
+using ArcEngine.Storage;
 
 namespace ArcEngine.Examples.TextDemo
 {
@@ -69,7 +69,7 @@ namespace ArcEngine.Examples.TextDemo
 			Display.RenderState.ClearColor = Color.CornflowerBlue;
 
 			// Load the bank
-			ResourceManager.LoadBank("data/data.bnk");
+			ResourceManager.AddStorage(new BankStorage("data/data.bnk"));
 
 			// Creates the font
 			Font = BitmapFont.CreateFromTTF(@"c:\windows\fonts\verdana.ttf", 14, FontStyle.Regular);

@@ -100,9 +100,9 @@ namespace ArcEngine.Examples.MeshLoader.MD5
 							continue;
 
 						int id = int.Parse(lines[1]);
-						int a = int.Parse(lines[2]);
-						int b = int.Parse(lines[3]);
-						int c = int.Parse(lines[4]);
+						uint a = uint.Parse(lines[2]);
+						uint b = uint.Parse(lines[3]);
+						uint c = uint.Parse(lines[4]);
 
 						Triangles[id] = new Triangle(a, b, c);
 					}
@@ -236,7 +236,7 @@ namespace ArcEngine.Examples.MeshLoader.MD5
 			}
 
 
-			int[] indices = new int[Triangles.Length * 3];
+			uint[] indices = new uint[Triangles.Length * 3];
 			for (int i = 0 ; i < Triangles.Length ; i++)
 			{
 				indices[i * 3 + 0] = Triangles[i].A;

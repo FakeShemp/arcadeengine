@@ -5,13 +5,14 @@ using System.Xml;
 using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
+using ArcEngine.Interface;
 
 namespace RuffnTumble
 {
 	/// <summary>
 	/// 
 	/// </summary>
-	public class World : IAsset, IDisposable
+	public class World : IAsset
 	{
 		/// <summary>
 		/// Constructor

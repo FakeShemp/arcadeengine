@@ -22,6 +22,7 @@ using System.Drawing;
 using System.Xml;
 using ArcEngine.Asset;
 using System.ComponentModel;
+using ArcEngine.Interface;
 
 namespace RuffnTumble
 {
@@ -33,16 +34,28 @@ namespace RuffnTumble
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="name"></param>
-		public Model()//string name) : base(name)
+		public Model()
 		{
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
 		public bool Init()
 		{
 			return true;
 		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public void Dispose()
+		{
+		}
+
 
 		#region IO routines
 

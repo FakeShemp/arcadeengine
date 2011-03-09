@@ -134,7 +134,7 @@ namespace ArcEngine.Examples.SphereWorld
 			};
 			Floor = new Mesh();
 			Floor.SetVertices(data);
-			Floor.SetIndices(new int[] { 0, 1, 2, 3});
+			Floor.SetIndices(new uint[] { 0, 1, 2, 3});
 			Floor.Buffer.AddDeclaration("in_position", 3);
 			Floor.Buffer.AddDeclaration("in_texcoord", 2);
 			Floor.PrimitiveType = PrimitiveType.TriangleFan;
