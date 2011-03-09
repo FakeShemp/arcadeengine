@@ -61,8 +61,8 @@ namespace ArcEngine
 				return false;
 
 			// Convert the tile to a system icon
-			Bitmap bm = Tileset.Texture.ToBitmap(tile.Rectangle);
-			ToCursor(bm, tile.Origin);
+			//Bitmap bm = Tileset.Texture.ToBitmap(tile.Rectangle);
+			//ToCursor(bm, tile.Origin);
 
 			return true;
 		}

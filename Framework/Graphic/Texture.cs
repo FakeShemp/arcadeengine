@@ -178,7 +178,7 @@ namespace ArcEngine.Graphic
 		/// <returns>Bitmap handle or null</returns>
 		protected Bitmap ToBitmap(TextureTarget target, Rectangle rectangle)
 		{
-			if (!Lock(target, ImageLockMode.ReadOnly))
+			if (!Lock(target, ImageLockMode.ReadOnly, rectangle))
 				return null;
 
 			Bitmap bm = new Bitmap(rectangle.Width, rectangle.Height);
@@ -262,7 +262,7 @@ namespace ArcEngine.Graphic
 
 		//	Trace.WriteDebugLine("[Texture2D] : Resize() {0}", this);
 
-			Lock(target, ImageLockMode.WriteOnly);
+			Lock(target, ImageLockMode.WriteOnly, new Rectangle(Point.Empty, size));
 			Data = null;
 			Unlock(target);
 		}
@@ -313,11 +313,24 @@ namespace ArcEngine.Graphic
 
 		#region Locking / unlocking
 
+				/// <summary>
+		/// Locks the bitmap texture to system memory
+		/// </summary>
+		/// <param name="target">Reference mode</param>
+		/// <param name="mode">Access mode</param>
+		/// <returns>True if locked, or false if an error occured</returns>
+		protected bool Lock(TextureTarget target, ImageLockMode mode)
+		{
+			return Lock(target, mode, new Rectangle(Point.Empty, Size));
+		}
+
+
 		/// <summary>
 		/// Locks the bitmap texture to system memory
 		/// </summary>
 		/// <param name="target">Reference mode</param>
 		/// <param name="mode">Access mode</param>
+		/// <param name="rectangle">Zone to lock</param>
 		/// <returns>True if locked, or false if an error occured</returns>
 		protected bool Lock(TextureTarget target, ImageLockMode mode, Rectangle rectangle)
 		{

@@ -66,7 +66,6 @@ namespace ArcEngine.Graphic
 		}
 
 
-
 		/// <summary>
 		/// Maps the current frame buffer
 		/// </summary>
@@ -104,7 +103,6 @@ namespace ArcEngine.Graphic
 			
 
 		}
-
 
 
 		/// <summary>
@@ -159,8 +157,6 @@ namespace ArcEngine.Graphic
 			IsLocked = false;
             TK.GL.BindBuffer(TK.BufferTarget.PixelPackBuffer, 0);
 		}
-
-
 
 
 		#region Properties
@@ -227,22 +223,22 @@ namespace ArcEngine.Graphic
 
 
     /// <summary>
-    /// 
+    /// Type of buffer acces
     /// </summary>
     public enum BufferAccess
     {
         /// <summary>
-        /// 
+        /// Raed only
         /// </summary>
         ReadOnly = TK.BufferAccess.ReadOnly,
 
         /// <summary>
-        /// 
+        /// Write only
         /// </summary>
         WriteOnly = TK.BufferAccess.WriteOnly,
 
         /// <summary>
-        /// 
+        /// Read and write
         /// </summary>
         ReadWrite = TK.BufferAccess.ReadWrite,
     }

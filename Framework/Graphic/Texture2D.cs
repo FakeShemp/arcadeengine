@@ -356,7 +356,7 @@ namespace ArcEngine.Graphic
 		/// <returns></returns>
 		public bool Lock(ImageLockMode mode)
 		{
-			return Lock(TextureTarget.Texture2D, mode);
+			return base.Lock(TextureTarget.Texture2D, mode);
 		}
 
 
