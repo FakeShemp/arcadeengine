@@ -94,6 +94,66 @@ namespace ArcEngine.Editor
 		}
 
 
+		/// <summary>
+		/// Detect edges of a tile
+		/// </summary>
+		/// <param name="start">Location</param>
+		/// <param name="border">Border color</param>
+		/// <returns></returns>
+		private Rectangle DetectTileEdges(Point start, Color border)
+		{
+			Cursor cursor = Cursor;
+			Cursor = Cursors.WaitCursor;
+
+			// Bound
+			Rectangle bound = new Rectangle(start.X, start.Y, 1, 1);
+
+			// Get colors
+			Color[,] colors = TileSet.Texture.GetColors();
+
+			// Find left border
+			while (bound.X > 0)
+			{
+				if (colors[bound.X - 1, bound.Y] == border)
+					break;
+				bound.X--;
+			}
+
+			// Find top
+			while (bound.Y > 0)
+			{
+				if (colors[bound.X, bound.Y - 1] == border)
+					break;
+				bound.Y--;
+			}
+
+			// Find right
+			while (bound.Right < TileSet.Texture.Size.Width - 1)
+			{
+				if (colors[bound.Right + 1, bound.Bottom] == border)
+					break;
+
+				bound.Width++;
+			}
+
+			// Find bottom
+			while (bound.Bottom < TileSet.Texture.Size.Height - 1)
+			{
+				if (colors[bound.Right, bound.Bottom + 1] == border)
+					break;
+
+				bound.Height++;
+			}
+
+			bound.Width++;
+			bound.Height++;
+
+			Cursor = cursor;
+			return bound;
+		}
+
+
+
 		#region GlTextureControl
 
 
@@ -398,60 +458,17 @@ namespace ArcEngine.Editor
 				// No texture
 				if (TileSet.Texture == null)
 					return;
+				
+				
+				int zoomvalue = int.Parse((string) ZoomBox.SelectedItem);
+				Point start = new Point(
+					(int) ((e.Location.X - TextureOffset.X) / zoomvalue),
+					(int) ((e.Location.Y - TextureOffset.Y) / zoomvalue));
 
-				Color border = Color.FromArgb(255, 255, 0, 0);
-
-				// Bound
-				int zoomvalue = int.Parse((string)ZoomBox.SelectedItem);
-				Rectangle bound = new Rectangle(
-					(int)((e.Location.X - TextureOffset.X) / zoomvalue),
-					(int)((e.Location.Y - TextureOffset.Y) / zoomvalue),
-					1, 1
-					);
-
-				// Get colors
-				Color[,] colors = TileSet.Texture.GetColors();
-
-				// Find left border
-				while(bound.X > 0)
-				{
-					if (colors[bound.X - 1, bound.Y] == border)
-						break;
-					bound.X--;
-				}
-
-				// Find top
-				while (bound.Y > 0)
-				{
-					if (colors[bound.X, bound.Y - 1] == border)
-						break;
-					bound.Y--;
-				}
-
-				// Find right
-				while (bound.Right < TileSet.Texture.Size.Width - 1)
-				{
-					if (colors[bound.Right + 1, bound.Bottom] == border)
-						break;
-
-					bound.Width++;
-				}
-
-				// Find bottom
-				while (bound.Bottom < TileSet.Texture.Size.Height - 1)
-				{
-					if (colors[bound.Right, bound.Bottom + 1] == border)
-						break;
-
-					bound.Height++;
-				}
-
-				bound.Width++;
-				bound.Height++;
-
-				SelectionTool.Rectangle = bound;
+				SelectionTool.Rectangle = DetectTileEdges(start, Color.FromArgb(255, 255, 0, 0));
 			}
 		}
+
 
 
 

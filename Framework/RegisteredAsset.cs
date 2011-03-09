@@ -343,8 +343,8 @@ namespace ArcEngine
 		{
 			foreach (IAsset asset in Shared.Values)
 			{
-
-				asset.Dispose();
+				if (asset != null)
+					asset.Dispose();
 			}
 
 			Shared.Clear();

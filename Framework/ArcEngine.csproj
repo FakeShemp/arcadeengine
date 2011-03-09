@@ -183,6 +183,7 @@
     <Compile Include="GameComponentCollection.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="GameCursor.cs" />
     <Compile Include="Interface\IAsset.cs" />
     <Compile Include="Asset\Scenes\Scene.cs" />
     <Compile Include="Asset\Language.cs" />

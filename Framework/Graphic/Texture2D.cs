@@ -303,6 +303,26 @@ namespace ArcEngine.Graphic
 		}
 
 
+		/// <summary>
+		/// Convert the texture to a Bitmap
+		/// </summary>
+		/// <param name="rectangle">Rectangle bounds</param>
+		/// <returns>Bitmap handle or null</returns>
+		public Bitmap ToBitmap(Rectangle rectangle)
+		{
+			return base.ToBitmap(Target, rectangle);
+		}
+
+
+		/// <summary>
+		/// Convert the texture to a Bitmap
+		/// </summary>
+		/// <returns>Bitmap handle or null</returns>
+		public Bitmap ToBitmap()
+		{
+			return base.ToBitmap(Target, Bounds);
+		}
+
 
 		/// <summary>
 		/// Save the texture as a PNG image in the bank
@@ -330,7 +350,7 @@ namespace ArcEngine.Graphic
 
 
 		/// <summary>
-		/// 
+		/// Lock texture data
 		/// </summary>
 		/// <param name="mode"></param>
 		/// <returns></returns>
@@ -355,8 +375,20 @@ namespace ArcEngine.Graphic
 		/// <returns></returns>
 		public Color[,] GetColors()
 		{
-			return DataToColor(TextureTarget.Texture2D);
+			return DataToColor(TextureTarget.Texture2D, Bounds);
 		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="rectangle"></param>
+		/// <returns></returns>
+		public Color[,] GetColors(Rectangle rectangle)
+		{
+			return DataToColor(TextureTarget.Texture2D, rectangle);
+		}
+
 
 		/// <summary>
 		/// Sets the size of the texture

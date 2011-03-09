@@ -159,13 +159,31 @@ namespace ArcEngine.Graphic
 			if (string.IsNullOrEmpty(name))
 				return false;
 
-
-			Bitmap bm = new Bitmap(Size.Width, Size.Height);
-
-			if (!Lock(target, ImageLockMode.ReadOnly))
+			Bitmap bm = ToBitmap(target, new Rectangle(Point.Empty, Size));
+			if (bm == null)
 				return false;
 
-			System.Drawing.Imaging.BitmapData bmd = bm.LockBits(new Rectangle(Point.Empty, Size),
+			bm.Save(name, Imaging.ImageFormat.Png);
+			bm.Dispose();
+
+			return true;
+		}
+
+
+		/// <summary>
+		/// Convert the texture to a Bitmap
+		/// </summary>
+		/// <param name="target">Reference face</param>
+		/// <param name="rectangle">Rectangle bounds</param>
+		/// <returns>Bitmap handle or null</returns>
+		protected Bitmap ToBitmap(TextureTarget target, Rectangle rectangle)
+		{
+			if (!Lock(target, ImageLockMode.ReadOnly))
+				return null;
+
+			Bitmap bm = new Bitmap(rectangle.Width, rectangle.Height);
+
+			System.Drawing.Imaging.BitmapData bmd = bm.LockBits(rectangle,
 				System.Drawing.Imaging.ImageLockMode.WriteOnly,
 				System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
@@ -174,12 +192,8 @@ namespace ArcEngine.Graphic
 
 			Unlock(target);
 
-			bm.Save(name, Imaging.ImageFormat.Png);
-			bm.Dispose();
-
-			return true;
+			return bm;
 		}
-
 
 
 		/// <summary>
@@ -305,7 +319,7 @@ namespace ArcEngine.Graphic
 		/// <param name="target">Reference mode</param>
 		/// <param name="mode">Access mode</param>
 		/// <returns>True if locked, or false if an error occured</returns>
-		protected bool Lock(TextureTarget target, ImageLockMode mode)
+		protected bool Lock(TextureTarget target, ImageLockMode mode, Rectangle rectangle)
 		{
 			// No texture bounds
 			if (Handle == -1  || IsLocked)
@@ -328,6 +342,9 @@ namespace ArcEngine.Graphic
 
 			Display.Texture = this;
 			TK.GL.GetTexImage<byte>((TK.TextureTarget)target, 0, (TK.PixelFormat) PixelFormat, TK.PixelType.UnsignedByte, Data);
+
+			LockBound = rectangle;
+
 			return true;
 		}
 
@@ -357,8 +374,15 @@ namespace ArcEngine.Graphic
 				TK.PixelType.UnsignedByte,
 				Data);
 
+			//TK.GL.TexSubImage2D<byte>((TK.TextureTarget) target, 0,
+			//    LockBound.Left, LockBound.Top,
+			//    LockBound.Width, LockBound.Height,
+			//    (TK.PixelFormat) PixelFormat, TK.PixelType.UnsignedByte, Data); 
+
+
 			IsLocked = false;
 			Data = null;
+			LockBound = Rectangle.Empty;
 
 		//	Trace.WriteDebugLine("[Texture2D] : Unlock() {0}", this);
 
@@ -369,18 +393,19 @@ namespace ArcEngine.Graphic
 		/// Returns a read only array of Color of the texture
 		/// </summary>
 		/// <param name="target">Reference mode</param>
-		/// <returns>A bi dimensional array of colors</returns>
-		protected Color[,] DataToColor(TextureTarget target)
+		/// <param name="rectangle">Zone to collect</param>
+		/// <returns>A bi dimensional array of RGBA colors</returns>
+		protected Color[,] DataToColor(TextureTarget target, Rectangle rectangle)
 		{
-			Lock(target, ImageLockMode.ReadOnly);
+			Lock(target, ImageLockMode.ReadOnly, rectangle);
 
-			Color[,] colors = new Color[Size.Width, Size.Height];
+			Color[,] colors = new Color[rectangle.Width, rectangle.Height];
 
-			for (int y = 0; y < Size.Height; y++)
+			for (int y = rectangle.Top ; y < rectangle.Height ; y++)
 			{
-				for (int x = 0; x < Size.Width; x++)
+				for (int x = rectangle.Left ; x < rectangle.Width ; x++)
 				{
-					int offset = y * Size.Width *4 + x * 4;
+					int offset = y * rectangle.Width *4 + x * 4;
 					colors[x, y] = Color.FromArgb(
 						Data[offset + 3],
 						Data[offset + 2],
@@ -484,6 +509,11 @@ namespace ArcEngine.Graphic
 		protected ImageLockMode LockMode;
 
 
+		/// <summary>
+		/// Lock rectangle
+		/// </summary>
+		Rectangle LockBound;
+
 
 		/// <summary>
 		/// Gets the internal RenderDevice ID of the texture
@@ -493,8 +523,6 @@ namespace ArcEngine.Graphic
 			get;
 			protected set;
 		}
-
-
 
 
 		/// <summary>

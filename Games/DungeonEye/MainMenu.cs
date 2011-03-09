@@ -55,15 +55,16 @@ namespace DungeonEye
 		{
 
 			// Change the cursor
-			using (Stream stream = ResourceManager.Load("cursor.png"))
-			{
-				using (Bitmap bmp = new Bitmap(stream))
-				{
-					HardwareCursor cursor = new HardwareCursor(bmp, Point.Empty);
-					Mouse.HardwareCursor = cursor;
-				}
-			}
-
+			//using (Stream stream = ResourceManager.Load("cursor.png"))
+			//{
+			//    using (Bitmap bmp = new Bitmap(stream))
+			//    {
+			//        HardwareCursor cursor = new HardwareCursor(bmp, Point.Empty);
+			//        Mouse.HardwareCursor = cursor;
+			//    }
+			//}
+			GameCursor.Tileset = ResourceManager.CreateSharedAsset<TileSet>("Items", "Items");
+			GameCursor.SetTile(0);
 			
 			Batch = new SpriteBatch();
 	
