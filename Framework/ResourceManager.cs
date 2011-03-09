@@ -641,13 +641,6 @@ namespace ArcEngine
 					if (ra.Type == typeof(T))
 						return (T) ra.LockShared(name);
 				}
-
-
-				// Unknow asset
-				//if (!AssetProviders.ContainsKey(typeof(T)))
-				//    throw new ArgumentException("Unknown asset type");
-
-				//return AssetProviders[typeof(T)].GetShared<T>(name);
 			}
 
 			return default(T);

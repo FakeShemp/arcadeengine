@@ -248,7 +248,7 @@ namespace ArcEngine
 		/// <param name="asset">Asset's handle</param>
 		public void AddShared(string name, IAsset asset)
 		{
-			if (string.IsNullOrEmpty(name))
+			if (string.IsNullOrEmpty(name) || asset == null)
 				return;
 
 			Shared[name] = asset;
@@ -301,9 +301,12 @@ namespace ArcEngine
 
 			// Create a new asset
 			IAsset asset = Create(name);
-			AddShared(name, asset);
+			if (asset == null)
+				return null;
 
+			AddShared(name, asset);
 			SharedCounter[name]++;
+
 			return asset;
 		}
 
@@ -326,6 +329,7 @@ namespace ArcEngine
 			// No more used, remove it
 			if (SharedCounter[name] == 0)
 			{
+				Trace.WriteDebugLine("[RegisteredAsset] Flushing asset \"" + name + "\" of type \"" + Type.Name + "\"");
 				Shared[name].Dispose();
 				Shared.Remove(name);
 			}
@@ -338,7 +342,10 @@ namespace ArcEngine
 		public void ClearShared()
 		{
 			foreach (IAsset asset in Shared.Values)
+			{
+
 				asset.Dispose();
+			}
 
 			Shared.Clear();
 			SharedCounter.Clear();
