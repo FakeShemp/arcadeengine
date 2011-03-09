@@ -472,15 +472,55 @@ namespace ArcEngine.Editor
 	/// </summary>
 	public enum MouseTools
 	{
+
+		/// <summary>
+		/// 
+		/// </summary>
 		NoTool,
+
+		/// <summary>
+		/// 
+		/// </summary>
 		MoveObject,
+
+		/// <summary>
+		/// 
+		/// </summary>
 		SizeUp,
+
+		/// <summary>
+		/// 
+		/// </summary>
 		SizeUpLeft,
+
+		/// <summary>
+		/// 
+		/// </summary>
 		SizeUpRight,
+
+		/// <summary>
+		/// 
+		/// </summary>
 		SizeDown,
+
+		/// <summary>
+		/// 
+		/// </summary>
 		SizeDownLeft,
+
+		/// <summary>
+		/// 
+		/// </summary>
 		SizeDownRight,
+
+		/// <summary>
+		/// 
+		/// </summary>
 		SizeLeft,
+
+		/// <summary>
+		/// 
+		/// </summary>
 		SizeRight
 	};
 

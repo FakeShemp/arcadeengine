@@ -11,6 +11,9 @@ namespace ArcEngine.Editor.Wizards
 {
 	public partial class RenameWizardForm : Form
 	{
+		/// <summary>
+		/// 
+		/// </summary>
 		public RenameWizardForm()
 		{
 			InitializeComponent();

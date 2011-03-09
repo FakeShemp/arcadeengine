@@ -40,7 +40,7 @@ namespace ArcEngine.Interface
 		/// <summary>
 		/// Loads an asset
 		/// </summary>
-		/// <param name="writer">XmlNode handle</param>
+		/// <param name="xml">XmlNode handle</param>
 		/// <returns>True on success</returns>
 		bool Load(XmlNode xml);
 

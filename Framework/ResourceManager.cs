@@ -348,18 +348,18 @@ namespace ArcEngine
 			{
 				if (ra.Type == typeof(T))
 				{
-					Trace.WriteDebugLine("[ResourceManager::RegisterAsset()] Type of asset \"" + typeof(T).Name + "\" already registered !");
+					Trace.WriteDebugLine("Type of asset \"" + typeof(T).Name + "\" already registered !");
 					return false;
 				}
 
 				if (ra.Tag == tag)
 				{
-					Trace.WriteDebugLine("[ResourceManager::RegisterAsset()] Asset tag \"" + tag + "\" already registered !");
+					Trace.WriteDebugLine("Asset tag \"" + tag + "\" already registered !");
 					return false;
 				}
 			}
 
-			Trace.WriteDebugLine("[ResourceManager::RegisterAsset()] Registering asset \"" + typeof(T).Name + " as tag \"" + tag);
+			Trace.WriteDebugLine("Registering asset \"" + typeof(T).Name + " as tag \"" + tag);
 			RegisteredAssets.Add(new RegisteredAsset(typeof(T), tag, editor));
 
 			return true;
@@ -962,7 +962,6 @@ namespace ArcEngine
 		}
 
 
-
 		/// <summary>
 		/// Registered assets
 		/// </summary>
@@ -971,43 +970,6 @@ namespace ArcEngine
 			get;
 			private set;
 		}
-
-
-
-
-
-
-
-
-
-
-		/// <summary>
-		/// Asset providers
-		/// </summary>
-	//	static Dictionary<Type, Provider> AssetProviders;
-
-
-		/// <summary>
-		/// Registred providers
-		/// </summary>
-		//public static List<Provider> Providers
-		//{
-		//    get;
-		//    private set;
-		//}
-
-
-		///// <summary>
-		///// Registred tags
-		///// </summary>
-		//static Dictionary<string, Provider> RegistredTags;
-
-
-
-
-
-
-
 
 
 		/// <summary>
