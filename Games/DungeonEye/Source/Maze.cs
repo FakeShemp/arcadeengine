@@ -62,19 +62,23 @@ namespace DungeonEye
 		/// </summary>
 		public void Dispose()
 		{
-			if (DoorTileset != null)
-				DoorTileset.Dispose();
+			//if (DoorTileset != null)
+			//    DoorTileset.Dispose();
+			ResourceManager.UnlockSharedAsset<TileSet>("Doors");
 
-			if (ItemsTileset != null)
-				ItemsTileset.Dispose();
+			//if (ItemsTileset != null)
+			//    ItemsTileset.Dispose();
+			ResourceManager.UnlockSharedAsset<TileSet>(ItemsTilesetName);
 			ItemsTileset = null;
 
-			if (OverlayTileset != null)
-				OverlayTileset.Dispose();
+			//if (OverlayTileset != null)
+			//    OverlayTileset.Dispose();
+			ResourceManager.UnlockSharedAsset<TileSet>(OverlayTilesetName);
 			OverlayTileset = null;
 
-			if (WallTileset != null)
-				WallTileset.Dispose();
+			//if (WallTileset != null)
+			//    WallTileset.Dispose();
+			ResourceManager.UnlockSharedAsset<TileSet>(WallTilesetName);
 			WallTileset = null;
 
 			Blocks.Clear();
@@ -98,7 +102,6 @@ namespace DungeonEye
 		/// <returns></returns>
 		public bool Init()
 		{
-
 			WallTileset = ResourceManager.CreateSharedAsset<TileSet>(WallTilesetName, WallTilesetName);
 			if (WallTileset == null)
 				Trace.WriteLine("[Maze] Init() : Failed to load wall tileset for the maze \"" + Name + "\".");

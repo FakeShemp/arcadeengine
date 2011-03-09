@@ -243,7 +243,7 @@ namespace ArcEngine.Editor
 
 				//mi = mi.MakeGenericMethod(node.Tag as Type);
 				//mi.Invoke(provider, new object[] { });
-				ra.Remove();
+				ra.Clear();
 			}
 
 

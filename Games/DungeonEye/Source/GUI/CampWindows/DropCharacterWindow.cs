@@ -45,7 +45,7 @@ namespace DungeonEye.Gui.CampWindows
 				return;
 			}
 
-			Interface = ResourceManager.GetSharedAsset<TileSet>("Interface");
+			Interface = ResourceManager.LockSharedAsset<TileSet>("Interface");
 
 			// Adds buttons
 			ScreenButton button;

@@ -87,7 +87,7 @@ namespace RuffnTumble
 			Gamepad.Init(Window);
 
 
-			ResourceManager.RegisterAsset<World>("world", typeof(RuffnTumble.Editor.WorldForm));
+			ResourceManager.RegisterAsset<World>(typeof(RuffnTumble.Editor.WorldForm), "world");
 
 			// Loads content
 			Storage = new BankStorage("data/world1.bnk");

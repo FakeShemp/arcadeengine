@@ -52,7 +52,7 @@ namespace DungeonEye
 			Mazes.Clear();
 
 			// Remove shared asset
-			ResourceManager.RemoveSharedAsset<TileSet>("Doors");
+			ResourceManager.UnlockSharedAsset<TileSet>("Doors");
 
 
 			StartLocation = null;

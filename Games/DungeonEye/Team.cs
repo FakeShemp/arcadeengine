@@ -193,7 +193,7 @@ namespace DungeonEye
 
 			if (TileSet != null)
 			{
-				ResourceManager.RemoveSharedAsset<TileSet>("interface");
+				ResourceManager.UnlockSharedAsset<TileSet>("interface");
 				TileSet.Dispose();
 			}
 			TileSet = null;

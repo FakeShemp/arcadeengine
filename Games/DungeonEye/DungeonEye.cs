@@ -66,12 +66,12 @@ namespace DungeonEye
 
 
 			// Add the assets
-			ResourceManager.RegisterAsset<Dungeon>("dungeon", typeof(DungeonForm));
-			ResourceManager.RegisterAsset<Item>("item", typeof(ItemForm));
-			ResourceManager.RegisterAsset<Monster>("monster", typeof(MonsterForm));
-			ResourceManager.RegisterAsset<Decoration>("decoration", typeof(DecorationForm));
-			ResourceManager.RegisterAsset<Spell>("spell", typeof(SpellForm));
-			ResourceManager.RegisterAsset<Hero>("hero", typeof(HeroForm));
+			ResourceManager.RegisterAsset<Dungeon>(typeof(DungeonForm));
+			ResourceManager.RegisterAsset<Item>(typeof(ItemForm));
+			ResourceManager.RegisterAsset<Monster>(typeof(MonsterForm));
+			ResourceManager.RegisterAsset<Decoration>(typeof(DecorationForm));
+			ResourceManager.RegisterAsset<Spell>(typeof(SpellForm));
+			ResourceManager.RegisterAsset<Hero>(typeof(HeroForm));
 
 
 			// Game state manager

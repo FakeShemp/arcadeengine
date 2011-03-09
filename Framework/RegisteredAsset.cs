@@ -50,6 +50,7 @@ namespace ArcEngine
 
 			Dictionary = new Dictionary<string, XmlNode>(StringComparer.OrdinalIgnoreCase);
 			Shared = new Dictionary<string, IAsset>(StringComparer.OrdinalIgnoreCase);
+			SharedCounter = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
 
 			Type = type;
 			Editor = editor;
@@ -59,7 +60,7 @@ namespace ArcEngine
 
 
 		/// <summary>
-		/// Edits an asset
+		/// Runs the editor form of an asset
 		/// </summary>
 		/// <param name="name">Name of the asset</param>
 		public AssetEditorBase Edit(string name)
@@ -192,7 +193,7 @@ namespace ArcEngine
 		/// Creates a new asset
 		/// </summary>
 		/// <param name="name">Name of the asset</param>
-		/// <returns>Asset or null</returns>
+		/// <returns>Asset handle or null</returns>
 		public IAsset Create(string name)
 		{
 
@@ -221,25 +222,18 @@ namespace ArcEngine
 
 
 		/// <summary>
-		/// Removes an asset
+		/// Removes an asset by its name
 		/// </summary>
 		/// <param name="name">Name</param>
 		public void Remove(string name)
 		{
+			if (string.IsNullOrEmpty(name))
+				return;
 
 			if (Dictionary.ContainsKey(name))
 				Dictionary.Remove(name);
-
 		}
 
-
-		/// <summary>
-		/// Removes assets of a specific type
-		/// </summary>
-		public void Remove()
-		{
-			Dictionary.Clear();
-		}
 
 
 		#endregion
@@ -258,56 +252,83 @@ namespace ArcEngine
 				return;
 
 			Shared[name] = asset;
-
+			SharedCounter[name] = 0;
 		}
 
 
 		/// <summary>
-		/// Gets a shared asset
+		/// Creates a new shared asset
+		/// </summary>
+		/// <param name="sharename">New shared asset name</param>
+		/// <param name="assetname">Asset name to load</param>
+		/// <returns>Handle to the asset</returns>
+		public IAsset CreateShared(string sharename, string assetname)
+		{
+			if (string.IsNullOrEmpty(sharename) ||string.IsNullOrEmpty(assetname))
+				return null;
+
+
+			// Asset already exist
+			if (Shared.ContainsKey(sharename))
+				return LockShared(sharename);
+
+			// Create a new asset
+			IAsset asset = Create(assetname);
+			if (asset == null)
+				return null;
+
+			AddShared(sharename, asset);
+
+			return LockShared(sharename);
+		}
+
+		/// <summary>
+		/// Locks a shared asset.
 		/// </summary>
 		/// <param name="name">Shared name</param>
 		/// <returns>Asset handle or null</returns>
-		public IAsset GetShared(string name)
+		public IAsset LockShared(string name)
 		{
 			if (string.IsNullOrEmpty(name))
 				return null;
 
 			// If asset exists, returns it
 			if (Shared.ContainsKey(name))
+			{
+				SharedCounter[name]++;
 				return Shared[name];
+			}
 
-			//// Create a new asset
+			// Create a new asset
 			IAsset asset = Create(name);
 			AddShared(name, asset);
+
+			SharedCounter[name]++;
 			return asset;
-
-			//tmp = CreateAsset<T>(asset);
-			//if (tmp == null)
-			//    return default(T);
-
-			//// Add the asset to the shared list
-			//AddSharedAsset<T>(name, tmp);
-
-
-			//return null;
 		}
 
 
 		/// <summary>
-		/// Removes a shared asset
+		/// Releases a shared asset
 		/// </summary>
 		/// <param name="name">Name of the asset</param>
-		public void RemoveShared(string name)
+		public void UnlockShared(string name)
 		{
 			if (string.IsNullOrEmpty(name))
 				return;
 
-			IAsset asset = GetShared(name);
-			if (asset != null)
-				asset.Dispose();
+			// Asset not found
+			if (!Shared.ContainsKey(name))
+				return;
 
-			Shared.Remove(name);
+			SharedCounter[name]--;
 
+			// No more used, remove it
+			if (SharedCounter[name] == 0)
+			{
+				Shared[name].Dispose();
+				Shared.Remove(name);
+			}
 		}
 
 
@@ -320,7 +341,7 @@ namespace ArcEngine
 				asset.Dispose();
 
 			Shared.Clear();
-
+			SharedCounter.Clear();
 		}
 
 
@@ -386,6 +407,12 @@ namespace ArcEngine
 		/// Shared dictionary
 		/// </summary>
 		Dictionary<string, IAsset> Shared;
+
+
+		/// <summary>
+		/// Counter for shared assets
+		/// </summary>
+		Dictionary<string, int> SharedCounter;
 
 
 		/// <summary>

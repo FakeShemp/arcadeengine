@@ -58,22 +58,17 @@ namespace ArcEngine
 
 
 			RegisteredAssets = new List<RegisteredAsset>();
-			RegisterAsset<TileSet>("tileset", typeof(TileSetForm));
-			RegisterAsset<StringTable>("stringtable", typeof(StringTableForm));
-			RegisterAsset<Animation>("animation", typeof(AnimationForm));
-			RegisterAsset<Scene>("scene", typeof(SceneForm));
-			RegisterAsset<Layout>("layouet", typeof(LayoutForm));
-			RegisterAsset<BitmapFont>("bitmapfont", typeof(BitmapFontForm));
-			RegisterAsset<Script>("script", typeof(ScriptForm));
-			RegisterAsset<ScriptModel>("scriptmodel", null);
-			RegisterAsset<AudioSample>("audiosample", typeof(AudioForm));
-			RegisterAsset<InputScheme>("inputscheme", typeof(InputSchemeForm));
-			RegisterAsset<Shader>("shader", null);
-
-			//AssetProviders = new Dictionary<Type, Provider>();
-			//Providers = new List<Provider>();
-			//RegistredTags = new Dictionary<string, Provider>();
-			//AddProvider(new Providers());
+			RegisterAsset<TileSet>(typeof(TileSetForm));
+			RegisterAsset<StringTable>(typeof(StringTableForm));
+			RegisterAsset<Animation>(typeof(AnimationForm));
+			RegisterAsset<Scene>(typeof(SceneForm));
+			RegisterAsset<Layout>(typeof(LayoutForm));
+			RegisterAsset<BitmapFont>(typeof(BitmapFontForm));
+			RegisterAsset<Script>(typeof(ScriptForm));
+			RegisterAsset<ScriptModel>(null);
+			RegisterAsset<AudioSample>(typeof(AudioForm));
+			RegisterAsset<InputScheme>(typeof(InputSchemeForm));
+			RegisterAsset<Shader>(null);
 		}
 
 
@@ -339,10 +334,22 @@ namespace ArcEngine
 		/// Registers an asset definition
 		/// </summary>
 		/// <typeparam name="T">Type of the asset</typeparam>
-		/// <param name="tag">Tag's name</param>
 		/// <param name="editor">Type of the editor form</param>
 		/// <returns>True on success</returns>
-		static public bool RegisterAsset<T>(string tag, Type editor) where T : IAsset
+		static public bool RegisterAsset<T>(Type editor) where T : IAsset
+		{
+			return RegisterAsset<T>(editor, typeof(T).Name.ToLower());
+		}
+
+
+		/// <summary>
+		/// Registers an asset definition
+		/// </summary>
+		/// <typeparam name="T">Type of the asset</typeparam>
+		/// <param name="editor">Type of the editor form</param>
+		/// <param name="tag">Tag's name</param>
+		/// <returns>True on success</returns>
+		static public bool RegisterAsset<T>(Type editor, string tag) where T : IAsset
 		{
 			foreach (RegisteredAsset ra in RegisteredAssets)
 			{
@@ -621,7 +628,7 @@ namespace ArcEngine
 		/// <typeparam name="T">Type of the asset</typeparam>
 		/// <param name="name">Asset name</param>
 		/// <returns>Handle to the asset</returns>
-		static public T GetSharedAsset<T>(string name) where T : IAsset
+		static public T LockSharedAsset<T>(string name) where T : IAsset
 		{
 			// Bad name
 			if (string.IsNullOrEmpty(name))
@@ -632,7 +639,7 @@ namespace ArcEngine
 				foreach (RegisteredAsset ra in RegisteredAssets)
 				{
 					if (ra.Type == typeof(T))
-						return (T) ra.GetShared(name);
+						return (T) ra.LockShared(name);
 				}
 
 
@@ -648,46 +655,53 @@ namespace ArcEngine
 
 
 		/// <summary>
+		/// Removes a shared asset
+		/// </summary>
+		/// <typeparam name="T">Asset type</typeparam>
+		/// <param name="name">Name of the asset</param>
+		static public void UnlockSharedAsset<T>(string name) where T : IAsset
+		{
+			if (string.IsNullOrEmpty(name))
+				return;
+
+			lock (BinaryLock)
+			{
+				foreach (RegisteredAsset ra in RegisteredAssets)
+				{
+					if (ra.Type == typeof(T))
+					{
+						ra.UnlockShared(name);
+						return;
+					}
+				}
+
+			}
+		}
+
+
+		/// <summary>
 		/// Creates and loads a shared asset
 		/// </summary>
 		/// <typeparam name="T">Type of the asset</typeparam>
-		/// <param name="name">New asset name</param>
-		/// <param name="asset">Asset to load</param>
+		/// <param name="name">New shared asset name</param>
+		/// <param name="asset">Asset name to load</param>
 		/// <returns>Handle to the asset</returns>
 		static public T CreateSharedAsset<T>(string name, string asset) where T : IAsset
 		{
-			if (string.IsNullOrEmpty(name))
-				return default(T);
-
-
 			foreach (RegisteredAsset ra in RegisteredAssets)
 			{
 				if (ra.Type == typeof(T))
 				{
-					return (T) ra.GetShared(name);
+					return (T) ra.CreateShared(name, asset);
 				}
 			}
-
-
-			//// Asset already exist
-			//T tmp = GetSharedAsset<T>(name);
-			//if (tmp != null)
-			//    return tmp;
-
-			//// Create a new asset
-			//tmp = CreateAsset<T>(asset);
-			//if (tmp == null)
-			//    return default(T);
-
-			//// Add the asset to the shared list
-			//AddSharedAsset<T>(name, tmp);
 
 			return default(T);
 		}
 
 
 		/// <summary>
-		/// Adds an asset to the Shared List
+		/// Adds an asset to the shared list
 		/// </summary>
 		/// <typeparam name="T">Type of the asset</typeparam>
 		/// <param name="name">Name of the asset</param>
@@ -720,36 +734,6 @@ namespace ArcEngine
 
 
 		/// <summary>
-		/// Removes an asset
-		/// </summary>
-		/// <typeparam name="T">Asset type</typeparam>
-		/// <param name="name">Name of the asset</param>
-		static public void RemoveSharedAsset<T>(string name) where T : IAsset
-		{
-			if (string.IsNullOrEmpty(name))
-				return;
-
-			lock (BinaryLock)
-			{
-				foreach (RegisteredAsset ra in RegisteredAssets)
-				{
-					if (ra.Type == typeof(T))
-					{
-						ra.RemoveShared(name);
-						return;
-					}
-				}
-
-				//if (!AssetProviders.ContainsKey(typeof(T)))
-				//    throw new ArgumentException("Unknown asset type");
-
-				//AssetProviders[typeof(T)].RemoveShared<T>(name);
-			}
-		}
-
-
-
-		/// <summary>
 		/// Removes a specific shared asset type
 		/// </summary>
 		/// <typeparam name="T">Type of the asset</typeparam>
@@ -762,12 +746,6 @@ namespace ArcEngine
 					if (ra.Type == typeof(T))
 						ra.ClearShared();
 				}
-
-				//Provider provider = GetAssetProvider(typeof(T));
-				//if (provider == null)
-				//    return;
-
-				//provider.RemoveShared<T>();
 			}
 		}
 
@@ -779,9 +757,6 @@ namespace ArcEngine
 		{
 			lock (BinaryLock)
 			{
-				//foreach (Provider provider in Providers)
-				//    provider.ClearShared();
-
 				foreach (RegisteredAsset ra in RegisteredAssets)
 					ra.ClearShared();
 			}

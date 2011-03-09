@@ -40,7 +40,7 @@ namespace DungeonEye.Gui.CampWindows
 		/// </summary>
 		public SpellWindow(CampDialog camp) : base(camp, "")
 		{
-			Interface = ResourceManager.GetSharedAsset<TileSet>("Interface");
+			Interface = ResourceManager.LockSharedAsset<TileSet>("Interface");
 	
 			// Adds buttons
 			ScreenButton button;

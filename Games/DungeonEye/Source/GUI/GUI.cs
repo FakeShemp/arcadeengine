@@ -38,8 +38,8 @@ namespace DungeonEye.Gui
 		/// </summary>
 		static GUI()
 		{
-			MenuFont = ResourceManager.GetSharedAsset<BitmapFont>("intro");
-			DialogFont = ResourceManager.GetSharedAsset<BitmapFont>("inventory");
+			MenuFont = ResourceManager.LockSharedAsset<BitmapFont>("intro");
+			DialogFont = ResourceManager.LockSharedAsset<BitmapFont>("inventory");
 		}
 
 

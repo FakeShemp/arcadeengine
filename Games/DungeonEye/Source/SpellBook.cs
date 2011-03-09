@@ -49,7 +49,7 @@ namespace DungeonEye
 		/// </summary>
 		public void LoadContent()
 		{
-			Tileset = ResourceManager.GetSharedAsset<TileSet>("Interface");
+			Tileset = ResourceManager.LockSharedAsset<TileSet>("Interface");
 		}
 
 
