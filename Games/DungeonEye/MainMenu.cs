@@ -29,6 +29,8 @@ using ArcEngine.Input;
 using ArcEngine.Storage;
 using ArcEngine.Utility.ScreenManager;
 using DungeonEye.Gui;
+using ArcEngine.Input;
+
 
 namespace DungeonEye
 {
@@ -54,7 +56,6 @@ namespace DungeonEye
 		public override void LoadContent()
 		{
 
-			// Change the cursor
 			//using (Stream stream = ResourceManager.Load("cursor.png"))
 			//{
 			//    using (Bitmap bmp = new Bitmap(stream))
@@ -63,8 +64,6 @@ namespace DungeonEye
 			//        Mouse.HardwareCursor = cursor;
 			//    }
 			//}
-			GameCursor.Tileset = ResourceManager.CreateSharedAsset<TileSet>("Items", "Items");
-			GameCursor.SetTile(0);
 			
 			Batch = new SpriteBatch();
 	
@@ -73,7 +72,6 @@ namespace DungeonEye
 			Font = ResourceManager.CreateSharedAsset<BitmapFont>("intro", "intro");
 
 			StringTable = ResourceManager.CreateAsset<StringTable>("main");
-
 
 			Buttons.Add(new ScreenButton("", new Rectangle(156, 324, 340, 14)));
 			Buttons[0].Selected += new EventHandler(LoadGameEvent);

@@ -344,7 +344,7 @@ namespace ArcEngine.Graphic
 		//	Trace.WriteDebugLine("[Texture] : Lock() Lockmode = {0} - {1}", mode.ToString(), this);
 
 	
-			Data = new byte[Size.Width * Size.Height * 4];
+			Data = new byte[rectangle.Width * rectangle.Height * 4];
 
 			LockMode = mode;
 			IsLocked = true;
@@ -354,7 +354,18 @@ namespace ArcEngine.Graphic
 
 
 			Display.Texture = this;
-			TK.GL.GetTexImage<byte>((TK.TextureTarget)target, 0, (TK.PixelFormat) PixelFormat, TK.PixelType.UnsignedByte, Data);
+
+			// Get the whole texture
+			if (rectangle == new Rectangle(Point.Empty, Size))
+			{
+
+				TK.GL.GetTexImage<byte>((TK.TextureTarget)target, 0, (TK.PixelFormat)PixelFormat, TK.PixelType.UnsignedByte, Data);
+			}
+			else
+			{
+				//TODO: Use Pixel Buffer Object instead
+				TK.GL.ReadPixels(rectangle.Left, rectangle.Top, rectangle.Width, rectangle.Height, (TK.PixelFormat)PixelFormat, TK.PixelType.UnsignedByte, Data);
+			}
 
 			LockBound = rectangle;
 

@@ -23,6 +23,8 @@ using System.Drawing;
 using System.Windows.Forms;
 using ArcEngine.Graphic;
 using ArcEngine.PInvoke;
+using ArcEngine.Asset;
+
 
 namespace ArcEngine.Input
 {
@@ -60,6 +62,18 @@ namespace ArcEngine.Input
 		{
 			Trace.WriteDebugLine("[Mouse] Dispose");
 
+			if (Texture != null)
+			{
+				Texture.Dispose();
+				Texture = null;
+			}
+
+			if (Tileset != null)
+			{
+				Tileset.Dispose();
+				Tileset = null;
+			}
+
 			if (Form != null)
 				Form.MouseWheel -= new MouseEventHandler(OnMouseWheel);
 			Form = null;
@@ -78,6 +92,91 @@ namespace ArcEngine.Input
 			PreviousLocation = Location;
 		}
 
+
+		#region Cursor shape using TileSet
+
+		/// <summary>
+		/// Defines the tileset to use
+		/// </summary>
+		/// <param name="tileset">TileSet handle</param>
+		/// <returns>True on success</returns>
+		/// <remarks>Dispose the current TileSet if present</remarks>
+		static public bool LoadTileSet(TileSet tileset)
+		{
+			if (tileset == null)
+				return false;
+
+			// Dispose current tileset
+			if (Tileset != null)
+				Tileset.Dispose();
+			Tileset = tileset;
+
+			// Dispose current texture
+			if (Texture != null)
+				Texture.Dispose();
+			Texture = null;
+
+
+			// Convert the Tileset texture to a bitmap
+			if (Tileset.Texture == null)
+			{
+				Trace.WriteLine("[Mouse] LoadTileSet() : No texture bound to the tileset !");
+				return false;
+			}
+			Texture = Tileset.Texture.ToBitmap();
+
+			return true;
+		}
+
+
+
+		/// <summary>
+		/// Change cursor
+		/// </summary>
+		/// <param name="id">Id of the tile</param>
+		/// <returns>True on success</returns>
+		static public bool SetTile(int id)
+		{
+			if (Tileset == null || Texture == null)
+				return false;
+
+			// Get the tile
+			Tile tile = Tileset.GetTile(id);
+			if (tile == null)
+				return false;
+
+			// Convert the tile to a system icon
+			Bitmap bm = new Bitmap(tile.Size.Width, tile.Size.Height);
+			using (Graphics g = Graphics.FromImage(bm))
+			{
+				g.DrawImage(Texture, new Rectangle(Point.Empty, tile.Rectangle.Size), tile.Rectangle, GraphicsUnit.Pixel);
+			}
+
+			SetFormCursor(bm, tile.Origin);
+
+			return true;
+		}
+
+
+		/// <summary>
+		/// Creates a new hardware cursor
+		/// </summary>
+		/// <param name="bmp">Bitmap handle</param>
+		/// <param name="hotspot">Cursor hotspot</param>
+		static public void SetFormCursor(Bitmap bmp, Point hotspot)
+		{
+			User32.IconInfo tmp = new User32.IconInfo();
+			User32.GetIconInfo(bmp.GetHicon(), ref tmp);
+			tmp.xHotspot = hotspot.X;
+			tmp.yHotspot = hotspot.Y;
+			tmp.fIcon = false;
+
+			Cursor = new Cursor(User32.CreateIconIndirect(ref tmp));
+		}
+
+
+		#endregion
+		
 
 		#region Buttons
 
@@ -231,6 +330,37 @@ namespace ArcEngine.Input
 		#endregion
 
 
+		#region Events
+		/// <summary>
+		///  Event fired when a ButtonDown occurs
+		/// </summary>
+		public static event EventHandler<MouseEventArgs> ButtonDown;
+
+
+		/// <summary>
+		/// Event fired when a ButtonUp occurs
+		/// </summary>
+		public static event EventHandler<MouseEventArgs> ButtonUp;
+
+		/// <summary>
+		/// Event fired when a mouse move occurs
+		/// </summary>
+		public static event EventHandler<MouseEventArgs> Move;
+
+		/// <summary>
+		/// Event fired when a double click occurs
+		/// </summary>
+		public static event EventHandler<MouseEventArgs> DoubleClick;
+
+		/// <summary>
+		/// Occurs when the mouse wheel moves
+		/// </summary>
+		public static event EventHandler<MouseEventArgs> MouseWheel;
+
+
+		#endregion
+
+
 		#region Properties
 
 
@@ -241,25 +371,20 @@ namespace ArcEngine.Input
 
 
 		/// <summary>
-		/// Get/set the hardware cursor
+		/// Tileset to use
 		/// </summary>
-		static public HardwareCursor HardwareCursor
+		static public TileSet Tileset
 		{
-			get
-			{
-				return hardwareCursor;
-			}
-			set
-			{
-				hardwareCursor = value;
-
-				if (value != null)
-					Form.Cursor = hardwareCursor.Cursor;
-			}
+			get;
+			private set;
 		}
-		static HardwareCursor hardwareCursor;
-		
-	
+
+
+		/// <summary>
+		/// Bitmap of the TileSet
+		/// </summary>
+		static Bitmap Texture;
+
 
 		/// <summary>
 		/// Gets/sets the mouse Offset
@@ -328,16 +453,15 @@ namespace ArcEngine.Input
 		{
 			get
 			{
-				if (Form == null)
-					throw new ArgumentNullException("Form", "You must initialize the class first !");
-				
-				return Form.Cursor;
+				if (Form != null)
+					return Form.Cursor;
+
+				return null;
 			}
 			set
 			{
-				if (Form == null)
-					throw new ArgumentNullException("Form", "You must initialize the class first !");
-				Form.Cursor = value;
+				if (Form != null)
+					Form.Cursor = value;
 			}
 		}
 
@@ -356,37 +480,6 @@ namespace ArcEngine.Input
 		/// Previous mouse buttons state
 		/// </summary>
 		static MouseButtons PreviousState;
-
-		#endregion
-
-
-		#region Events
-		/// <summary>
-		///  Event fired when a ButtonDown occurs
-		/// </summary>
-		public static event EventHandler<MouseEventArgs> ButtonDown;
-
-
-		/// <summary>
-		/// Event fired when a ButtonUp occurs
-		/// </summary>
-		public static event EventHandler<MouseEventArgs> ButtonUp;
-
-		/// <summary>
-		/// Event fired when a mouse move occurs
-		/// </summary>
-		public static event EventHandler<MouseEventArgs> Move;
-
-		/// <summary>
-		/// Event fired when a double click occurs
-		/// </summary>
-		public static event EventHandler<MouseEventArgs> DoubleClick;
-
-		/// <summary>
-		/// Occurs when the mouse wheel moves
-		/// </summary>
-		public static event EventHandler<MouseEventArgs> MouseWheel;
-
 
 		#endregion
 

@@ -30,7 +30,7 @@ using ArcEngine.Storage;
 using ArcEngine.Utility.ScreenManager;
 using DungeonEye.Forms;
 using System.Collections.Generic;
-
+using ArcEngine.Asset;
 
 namespace DungeonEye
 {
@@ -112,6 +112,11 @@ namespace DungeonEye
 			Storage = new BankStorage("data/Game.bnk");
 			ResourceManager.AddStorage(Storage);
 			ResourceManager.RootDirectory = "data";
+
+
+			// Change the cursor
+			Mouse.LoadTileSet(ResourceManager.CreateAsset<TileSet>("Items"));
+			Mouse.SetTile(0);
 
 	
 			GSM.AddScreen(new MainMenu());

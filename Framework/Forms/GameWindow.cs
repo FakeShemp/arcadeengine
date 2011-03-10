@@ -321,6 +321,7 @@ namespace ArcEngine.Forms
 			}
 		}
 
+
 		/// <summary>
 		/// Gets / sets game window resizable
 		/// </summary>
@@ -376,6 +377,7 @@ namespace ArcEngine.Forms
 			get;
 			private set;
 		}
+
 
 /*
 		/// <summary>

@@ -183,7 +183,6 @@
     <Compile Include="GameComponentCollection.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="GameCursor.cs" />
     <Compile Include="Interface\IAsset.cs" />
     <Compile Include="Asset\Scenes\Scene.cs" />
     <Compile Include="Asset\Language.cs" />
@@ -217,7 +216,6 @@
     <Compile Include="Forms\EditorFormBase.Designer.cs">
       <DependentUpon>EditorFormBase.cs</DependentUpon>
     </Compile>
-    <Compile Include="Graphic\HardwareCursor.cs" />
     <Compile Include="Graphic\IndexBuffer.cs" />
     <Compile Include="Graphic\Mesh.cs" />
     <Compile Include="Graphic\RenderState.cs" />

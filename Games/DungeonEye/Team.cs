@@ -2501,11 +2501,22 @@ namespace DungeonEye
 		/// <param name="item">Item handle</param>
 		public void SetItemInHand(Item item)
 		{
+			// Set the item in the hand
 			ItemInHand = item;
 
+			// Display a message
 			if (ItemInHand != null)
+			{
+				// TODO: If item is identified, display identified message, else display default item's name
 				AddMessage(Language.BuildMessage(2, ItemInHand.Name));
 
+				// Change cursor
+				Mouse.SetTile(item.TileID);
+			}
+			else
+			{
+				Mouse.SetTile(0);
+			}
 		}
 
 		#endregion
