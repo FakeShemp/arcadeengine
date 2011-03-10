@@ -62,8 +62,8 @@ namespace DungeonEye
 			Windows.Clear();
 
 			// Restore item in hand cursor
-			if (Team.Handle.ItemInHand != null)
-				Mouse.SetTile(Team.Handle.ItemInHand.TileID);
+			if (Team.ItemInHand != null)
+				Mouse.SetTile(Team.ItemInHand.TileID);
 
 			base.Exit();
 		}

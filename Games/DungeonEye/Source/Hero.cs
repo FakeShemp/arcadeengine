@@ -45,12 +45,11 @@ namespace DungeonEye
 		/// <summary>
 		/// Default constructor
 		/// </summary>
-		/// <param name="team">Team</param>
-		public Hero(Team team)
+		public Hero()
 		{
-			Team = team;
 			Professions = new List<Profession>();
 			LearnedSpells = new List<string>();
+			IsDisposed = false;
 
 			Head = -1;
 			Inventory = new Item[26];
@@ -83,6 +82,7 @@ namespace DungeonEye
 		/// </summary>
 		public void Dispose()
 		{
+			IsDisposed = true;
 		}
 
 		
@@ -123,7 +123,7 @@ namespace DungeonEye
 				{
 
 					// New level gained
-					Team.AddMessage(Name + " gained a level in " + prof.Class + " !");
+					InGameScreen.AddMessage(Name + " gained a level in " + prof.Class + " !");
 				}
 			}
 
@@ -931,7 +931,7 @@ namespace DungeonEye
 				case ItemType.HolySymbol:
 				case ItemType.Book:
 				{
-					Team.SpellBook.Open(this, item);
+					InGameScreen.SpellBook.Open(this, item);
 
 					//Spell spell = ResourceManager.CreateAsset<Spell>("CreateFood");
 					//spell.Init();
@@ -1256,6 +1256,7 @@ namespace DungeonEye
 
 		#endregion
 
+
 		#region Magic
 
 		/// <summary>
@@ -1366,6 +1367,7 @@ namespace DungeonEye
 
 		#endregion
 
+
 		#region Hero properties
 
 		/// <summary>
@@ -1389,16 +1391,7 @@ namespace DungeonEye
 			}
 		}
 
-/*
-		/// <summary>
-		/// Is a Non Player Character
-		/// </summary>
-		public bool IsNPC
-		{
-			get;
-			set;
-		}
-*/
+
 		/// <summary>
 		/// Returns true if dead
 		/// </summary>
@@ -1665,16 +1658,6 @@ namespace DungeonEye
 		{
 			get;
 			set;
-		}
-
-
-		/// <summary>
-		/// Team of the hero
-		/// </summary>
-		public Team Team
-		{
-			get;
-			private set;
 		}
 
 

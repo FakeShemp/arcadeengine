@@ -32,7 +32,7 @@ using DungeonEye.Gui;
 namespace DungeonEye
 {
 	/// <summary>
-	/// 
+	/// Option menu
 	/// </summary>
 	public class OptionMenu : GameScreen
 	{

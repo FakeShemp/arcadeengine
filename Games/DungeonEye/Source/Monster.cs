@@ -104,8 +104,8 @@ namespace DungeonEye
 			bool canmove = true;
 
 			// The team
-			if (Team.Handle.Location.Maze == Location.Maze &&
-				Team.Handle.Location.Coordinate == dst)
+			if (Team.Location.Maze == Location.Maze &&
+				Team.Location.Coordinate == dst)
 				canmove = false;
 
 			// A wall
@@ -243,7 +243,7 @@ namespace DungeonEye
 			// Reward the team for having killed the entity
 			if (IsDead && attack.Striker is Hero)
 			{
-				(attack.Striker as Hero).Team.AddExperience(Reward);
+				Team.AddExperience(Reward);
 			}
 		}
 
@@ -264,9 +264,9 @@ namespace DungeonEye
 
 			// Reward the team
 			//Team team = Team.Dungeon.Team;
-			foreach (Hero hero in Team.Handle.Heroes)
+			foreach (Hero hero in Team.Heroes)
 				if (hero != null)
-					hero.AddExperience(Reward / Team.Handle.HeroCount);
+					hero.AddExperience(Reward / Team.HeroCount);
 		}
 
 
@@ -370,29 +370,29 @@ namespace DungeonEye
 						Heal();
 
 					// Not in the same maze
-					else if (Team.Handle.Maze != Maze)
+					else if (Team.Maze != Maze)
 						break;
 
 					// Facing the team
-					else if (Compass.SeekDirection(Location, Team.Handle.Location) != Direction)
+					else if (Compass.SeekDirection(Location, Team.Location) != Direction)
 					{
-						Direction = Compass.SeekDirection(Location, Team.Handle.Location);
+						Direction = Compass.SeekDirection(Location, Team.Location);
 					}
 
 					// Can get closer while staying in the same square ?
-					else if (CanGetCloserTo(Team.Handle.Location))
+					else if (CanGetCloserTo(Team.Location))
 					{
-						GetCloserTo(Team.Handle.Location);
+						GetCloserTo(Team.Location);
 					}
 
 					// Can do close attack ?
-					else if (CanDoCloseAttack(Team.Handle.Location))
+					else if (CanDoCloseAttack(Team.Location))
 					{
-						Attack(Team.Handle.Location);
+						Attack(Team.Location);
 					}
 
 					// If neat the target
-					else if (IsNear(Team.Handle.Location))
+					else if (IsNear(Team.Location))
 					{
 						// Face the target
 						//if (Location.IsFacing(Team.Location))

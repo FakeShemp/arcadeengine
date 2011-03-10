@@ -472,6 +472,7 @@
     <Compile Include="Source\ScriptedDialog.cs" />
     <Compile Include="Source\SquareActor\EventSquare.cs" />
     <Compile Include="Source\SquareActor\SquareActor.cs" />
+    <Compile Include="Source\Team.cs" />
     <Compile Include="Source\WallButton.cs" />
     <Compile Include="Source\DisplayCoordinates.cs" />
     <Compile Include="Source\Compass.cs" />
@@ -632,7 +633,7 @@
     </Compile>
     <Compile Include="Source\Spell.cs" />
     <Compile Include="Source\SquareActor\Stair.cs" />
-    <Compile Include="Team.cs">
+    <Compile Include="InGameScreen.cs">
     </Compile>
     <Compile Include="Source\SquareActor\Teleporter.cs" />
     <Compile Include="Source\Decoration.cs" />

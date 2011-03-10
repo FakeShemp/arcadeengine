@@ -50,10 +50,10 @@ namespace DungeonEye.EventScript
 			if (Target == null)
 				return false;
 
-			if (Team.Handle.Teleport(Target))
+			if (Team.Teleport(Target))
 			{
 				if (ChangeDirection)
-					Team.Handle.Direction = Target.Direction;
+					Team.Direction = Target.Direction;
 				return true;
 			}
 

@@ -43,7 +43,7 @@ namespace DungeonEye.Forms
 
 
 			// Load hero
-			Hero hero = new Hero(null);
+			Hero hero = new Hero();
 			hero.Load(node);
 			HeroBox.Hero = hero;
 		}

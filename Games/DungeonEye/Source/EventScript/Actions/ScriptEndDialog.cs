@@ -11,14 +11,14 @@ namespace DungeonEye.EventScript
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <returns>Treu on succes</returns>
+		/// <returns>True on succes</returns>
 		public bool Run()
 		{
-			if (Team.Handle.Dialog == null)
+			if (InGameScreen.Dialog == null)
 				return false;
 
 
-			Team.Handle.Dialog.Exit();
+			InGameScreen.Dialog.Exit();
 			return true;
 		}
 

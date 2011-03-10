@@ -172,19 +172,18 @@ namespace DungeonEye
 		/// <summary>
 		/// A hero interacted with a side of the block
 		/// </summary>
-		/// <param name="team">Team</param>
 		/// <param name="location">Location of the mouse</param>
 		/// <param name="side">Wall side</param>
 		/// <returns>True if the event is processed</returns>
-		public bool OnClick(Team team, Point location, CardinalPoint side)
+		public bool OnClick(Point location, CardinalPoint side)
 		{
-			if (team == null || Actor == null)
+			if (Actor == null)
 				return false;
 
 
 
 			// A door
-			if (team.ItemInHand == null)
+			if (Team.ItemInHand == null)
 			{
 				Actor.OnClick(location, side);
 				return true;
@@ -193,14 +192,14 @@ namespace DungeonEye
 			// An Alcove 
 			else if (HasAlcove(side) && DisplayCoordinates.Alcove.Contains(location))
 			{
-				if (team.ItemInHand != null)
+				if (Team.ItemInHand != null)
 				{
-					DropAlcoveItem(side, team.ItemInHand);
-					team.SetItemInHand(null);
+					DropAlcoveItem(side, Team.ItemInHand);
+					Team.SetItemInHand(null);
 				}
 				else
 				{
-					team.SetItemInHand(CollectAlcoveItem(side));
+					Team.SetItemInHand(CollectAlcoveItem(side));
 				}
 
 				return true;

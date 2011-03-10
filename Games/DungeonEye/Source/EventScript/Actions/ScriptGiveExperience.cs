@@ -14,10 +14,7 @@ namespace DungeonEye.EventScript
 		/// <returns></returns>
 		public bool Run()
 		{
-			if (Team.Handle == null)
-				return false;
-
-			Team.Handle.AddExperience(Amount);
+			Team.AddExperience(Amount);
 
 			return true;
 		}

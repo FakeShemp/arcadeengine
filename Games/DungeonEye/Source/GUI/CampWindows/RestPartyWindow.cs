@@ -108,7 +108,7 @@ namespace DungeonEye.Gui.CampWindows
 			// Display
 			batch.DrawString(GUI.MenuFont, new Point(26, 58), Color.White, "Hours rested : " + hours);
 
-			foreach (Hero hero in Team.Handle.Heroes)
+			foreach (Hero hero in Team.Heroes)
 			{
 				if (hero == null)
 					continue;
@@ -118,8 +118,8 @@ namespace DungeonEye.Gui.CampWindows
 				{
 
 					// Find the weakest hero and heal him
-					Hero weakest = Team.Handle.Heroes[0];
-					foreach (Hero h in Team.Handle.Heroes)
+					Hero weakest = Team.Heroes[0];
+					foreach (Hero h in Team.Heroes)
 					{
 						if (h == null)
 							continue;
@@ -130,7 +130,7 @@ namespace DungeonEye.Gui.CampWindows
 
 					if (weakest.HitPoint.Ratio < 1.0f)
 					{
-						Team.AddMessage(hero.Name + " casts healing on " + weakest.Name);
+						InGameScreen.AddMessage(hero.Name + " casts healing on " + weakest.Name);
 						hero.Heal(weakest);
 					}
 				}

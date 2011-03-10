@@ -59,12 +59,12 @@ namespace DungeonEye
 			DungeonLocation from = null;
 			DungeonLocation to = null;
 			if (striker is Hero)
-				from = Team.Handle.Location;
+				from = Team.Location;
 			else
 				from = ((Monster)striker).Location;
 
 			if (target is Hero)
-				to = Team.Handle.Location;
+				to = Team.Location;
 			else
 				to = ((Monster)target).Location;
 

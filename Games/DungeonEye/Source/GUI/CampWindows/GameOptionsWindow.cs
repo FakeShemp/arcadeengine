@@ -94,7 +94,7 @@ namespace DungeonEye.Gui.CampWindows
 		{
 			if (((MessageBox) sender).DialogResult == DialogResult.Yes)
 			{
-				Team.Handle.LoadParty("data/savegame.xml");
+				Team.LoadParty("data/savegame.xml");
 				Camp.Exit();
 			}
 		}
@@ -121,7 +121,7 @@ namespace DungeonEye.Gui.CampWindows
 		{
 			if (((MessageBox) sender).DialogResult == DialogResult.Yes)
 			{
-				Team.Handle.SaveParty(Team.Handle.SaveGame);
+				InGameScreen.SaveParty(InGameScreen.SaveGame);
 				Camp.Exit();
 			}
 		}

@@ -195,8 +195,8 @@ namespace DungeonEye
 			if (Target == null)
 				return false;
 
-			if (Team.Handle.Teleport(Target))
-				Team.Handle.Damage(Damage, SavingThrowType.Reflex, Difficulty);
+			if (Team.Teleport(Target))
+				Team.Damage(Damage, SavingThrowType.Reflex, Difficulty);
 
 			return true;
 		}

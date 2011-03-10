@@ -31,7 +31,7 @@ namespace DungeonEye.Interfaces
 		/// </summary>
 		/// <param name="pit"></param>
 		/// <param name="team"></param>
-		void OnTeamEnter(Pit pit, Team team);
+		void OnTeamEnter(Pit pit, InGameScreen team);
 
 
 		/// <summary>
@@ -39,6 +39,6 @@ namespace DungeonEye.Interfaces
 		/// </summary>
 		/// <param name="pit"></param>
 		/// <param name="team"></param>
-		void OnTeamLeave(Pit pit, Team team);
+		void OnTeamLeave(Pit pit, InGameScreen team);
 	}
 }

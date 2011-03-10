@@ -119,7 +119,7 @@ namespace DungeonEye
 			Mouse.SetTile(0);
 
 			GSM.AddScreen(new MainMenu());
-			GSM.AddScreen(new Team(null));
+			GSM.AddScreen(new InGameScreen(null));
 			//GSM.AddScreen(new IntroScreen());
 			//GSM.AddScreen(new CharGen());
 		}

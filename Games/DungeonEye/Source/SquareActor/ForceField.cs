@@ -181,13 +181,13 @@ namespace DungeonEye
 			{
 				case ForceFieldType.Spin:
 				{
-					Team.Handle.Location.Direction = Compass.Rotate(Team.Handle.Location.Direction, Spin);
+					Team.Location.Direction = Compass.Rotate(Team.Location.Direction, Spin);
 				}
 				break;
 
 				case ForceFieldType.Move:
 				{
-					Team.Handle.Offset(Move, 1);
+					Team.Offset(Move, 1);
 				}
 				break;
 			}

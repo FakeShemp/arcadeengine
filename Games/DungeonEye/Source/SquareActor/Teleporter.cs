@@ -135,9 +135,7 @@ namespace DungeonEye
 			if (Target == null)
 				return false;
 
-			Team.Handle.Teleport(Target);
-
-			return true;
+			return Team.Teleport(Target);
 		}
 
 

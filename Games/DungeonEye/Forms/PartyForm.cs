@@ -42,7 +42,7 @@ namespace DungeonEye.Forms
 		{
 			InitializeComponent();
 
-			Team = new Team(null);
+			GameScreen = new InGameScreen(null);
 
 			LoadParty();
 		}
@@ -54,7 +54,7 @@ namespace DungeonEye.Forms
 		/// <param name="position"></param>
 		void SelectHero(HeroPosition position)
 		{
-			if (Team == null)
+			if (GameScreen == null)
 				return;
 
 			Hero hero = Team.GetHeroFromPosition(position);
@@ -80,7 +80,7 @@ namespace DungeonEye.Forms
 		/// </summary>
 		void Rebuild()
 		{
-			if (Team == null)
+			if (GameScreen == null)
 				return;
 
 
@@ -108,7 +108,7 @@ namespace DungeonEye.Forms
 		{
 			MessageListBox.BeginUpdate();
 			MessageListBox.Items.Clear();
-			foreach (ScreenMessage msg in Team.Messages)
+			foreach (ScreenMessage msg in InGameScreen.Messages)
 				MessageListBox.Items.Add(msg.Message);
 			MessageListBox.EndUpdate();
 		}
@@ -131,7 +131,7 @@ namespace DungeonEye.Forms
 			foreach (XmlNode node in xml)
 			{
 				if (node.Name.ToLower() == "team")
-					Team.Load(node);
+					GameScreen.Load(node);
 			}
 			xml = null;
 
@@ -145,7 +145,7 @@ namespace DungeonEye.Forms
 		/// </summary>
 		void SaveParty()
 		{
-			if (Team == null)
+			if (GameScreen == null)
 				return;
 
 			if (saveFileDialog1.ShowDialog() != System.Windows.Forms.DialogResult.OK)
@@ -154,7 +154,7 @@ namespace DungeonEye.Forms
 			if (string.IsNullOrEmpty(saveFileDialog1.FileName))
 				return;
 
-			Team.SaveParty(saveFileDialog1.FileName);
+			GameScreen.SaveParty(saveFileDialog1.FileName);
 		}
 
 
@@ -205,7 +205,7 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void ChangeLocationBox_Click(object sender, EventArgs e)
 		{
-			if (Team == null)
+			if (GameScreen == null)
 				return;
 
 			DungeonLocationForm form = new DungeonLocationForm(Team.Dungeon, Team.Location.Maze, Team.Location.Coordinate);
@@ -239,7 +239,7 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void RemoveHeroBox_Click(object sender, EventArgs e)
 		{
-			if (Team == null)
+			if (GameScreen == null)
 				return;
 
 			HeroPosition pos = HeroPosition.FrontLeft;
@@ -354,10 +354,10 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void ClearMessageBox_Click(object sender, EventArgs e)
 		{
-			if (Team == null)
+			if (GameScreen == null)
 				return;
 
-			Team.Messages.Clear();
+			InGameScreen.Messages.Clear();
 			RebuildMessages();
 		}
 
@@ -369,10 +369,10 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void DeleteMessageBox_Click(object sender, EventArgs e)
 		{
-			if (Team == null ||MessageListBox.SelectedIndex == -1)
+			if (GameScreen == null ||MessageListBox.SelectedIndex == -1)
 				return;
 
-			Team.Messages.Remove(Team.Messages[MessageListBox.SelectedIndex]);
+			InGameScreen.Messages.Remove(InGameScreen.Messages[MessageListBox.SelectedIndex]);
 			RebuildMessages();
 		}
 
@@ -384,10 +384,10 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void AddMessageBox_Click(object sender, EventArgs e)
 		{
-			if (Team == null || string.IsNullOrEmpty(MessageTxtBox.Text))
+			if (GameScreen == null || string.IsNullOrEmpty(MessageTxtBox.Text))
 				return;
 
-			Team.AddMessage(MessageTxtBox.Text);
+			InGameScreen.AddMessage(MessageTxtBox.Text);
 			MessageTxtBox.Text = "";
 
 			RebuildMessages();
@@ -403,7 +403,7 @@ namespace DungeonEye.Forms
 		/// <summary>
 		/// Team
 		/// </summary>
-		Team Team;
+		InGameScreen GameScreen;
 
 		#endregion
 

@@ -824,7 +824,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="team">Team handle</param>
 		/// <param name="location">Location on the screen</param>
-		public void DrawMiniMap(SpriteBatch batch, Team team, Point location)
+		public void DrawMiniMap(SpriteBatch batch, InGameScreen team, Point location)
 		{
 			if (batch == null)
 				return;
@@ -863,7 +863,7 @@ namespace DungeonEye
 						color = Color.Red;
 
 					
-					if (Team.Handle.Location.Coordinate.X == x && Team.Handle.Location.Coordinate.Y == y && Team.Handle.Maze == this)
+					if (Team.Location.Coordinate.X == x && Team.Location.Coordinate.Y == y && Team.Maze == this)
 						color = Color.Blue;
 
 					batch.FillRectangle(new Rectangle(location.X + x * 4, location.Y + y * 4, 4, 4), color);

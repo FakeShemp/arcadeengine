@@ -69,14 +69,14 @@ namespace DungeonEye
 			// Some message to display
 			if (!string.IsNullOrEmpty(Message))
 			{
-				foreach (Hero hero in Team.Handle.Heroes)
+				foreach (Hero hero in Team.Heroes)
 				{
 					if (hero == null)
 						continue;
 
 					if (hero.SavingThrow(SavingThrowType.Will) > Dice.GetD20(1))
 					{
-						Team.AddMessage(hero.Name + ": " + Message, MessageColor);
+						InGameScreen.AddMessage(hero.Name + ": " + Message, MessageColor);
 						break;
 					}
 				}
@@ -86,7 +86,7 @@ namespace DungeonEye
 			// Create the scripted dialog if there's a picture to show
 			if (!string.IsNullOrEmpty(PictureName))
 			{
-				Team.Handle.Dialog = new ScriptedDialog(Square, this);				
+				InGameScreen.Dialog = new ScriptedDialog(Square, this);				
 			}
 
 

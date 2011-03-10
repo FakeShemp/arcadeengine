@@ -34,39 +34,23 @@ namespace DungeonEye
 {
 
 	/// <summary>
-	/// Represents the player's heroes in the dungeon
+	/// Dungeon crawler game class
 	/// </summary>
-	public class Team : GameScreen
+	public class InGameScreen : GameScreen
 	{
 
 		/// <summary>
 		/// Constructor
 		/// </summary>
 		/// <param name="heroes">Heroes in the team</param>
-		public Team(Hero[] heroes)
+		public InGameScreen(Hero[] heroes)
 		{
-			if (Handle != null)
-				throw new ArgumentException("Only one Team instace possible");
-			Handle = this;
-
 
 			Messages = new List<ScreenMessage>();
-			TeamSpeed = TimeSpan.FromSeconds(0.15f);
 			SpellBook = new SpellBook();
 
 			DrawHPAsBar = true;
 
-			Heroes = new List<Hero>();
-			for (int i = 0 ; i < 6 ; i++)
-				Heroes.Add(null);
-
-			if (heroes != null)
-			{
-				for (int i = 0 ; i < heroes.Length ; i++)
-					Heroes[i] = heroes[i];
-			}
-			else
-				SaveGame = "data/savegame.xml";
 		}
 
 
@@ -139,23 +123,7 @@ namespace DungeonEye
 			// Loads a saved game
 			if (!LoadParty(SaveGame))
 			{
-				Dungeon = ResourceManager.CreateAsset<Dungeon>("Eye");
-				if (Dungeon == null)
-				{
-					Trace.WriteLine("[Team]Team(): Failed to create default dungeon !");
-					throw new NullReferenceException("Dungeon");
-				}
-
-				//Dungeon.Team = this;
-				Dungeon.Init();
-
-				// Set initial location
-				//Location = new DungeonLocation();
-				Teleport(Dungeon.StartLocation);
-				Location.Direction = Dungeon.StartLocation.Direction;
-
-				// Select the first hero
-				SelectedHero = Heroes[0];
+				Team.Init();
 			}
 
 
@@ -206,15 +174,17 @@ namespace DungeonEye
 			Dialog = null;
 			SpellBook = null;
 			SaveGame = "";
-			Heroes = null;
-			SelectedHero = null;
+			//Heroes = null;
+			//SelectedHero = null;
 			Messages = null;
-			Square = null;
-			Location = null;
-			LastMove = DateTime.MinValue;
+			//Square = null;
+			//LastMove = DateTime.MinValue;
 			Language = null;
 			InputScheme = null;
 		}
+
+
+		#region IO
 
 
 		/// <summary>
@@ -224,29 +194,8 @@ namespace DungeonEye
 		/// <returns>True if loaded</returns>
 		public bool LoadParty(string filename)
 		{
-			if (!System.IO.File.Exists(filename))
-				return false;
 
-			XmlDocument xml = new XmlDocument();
-			xml.Load(filename);
-
-
-			Location = null;
-
-			foreach (XmlNode node in xml)
-			{
-				if (node.Name.ToLower() == "team")
-					Load(node);
-			}
-
-			if (Dungeon == null)
-			{
-				Trace.WriteLine("[Team]LoadParty() : Dungeon == NULL !!");
-				throw new NullReferenceException("Dungeon");
-			}
-
-			Dungeon.Init();
-			Teleport(Location);
+			Team.LoadParty(filename);
 
 			SaveGame = filename;
 
@@ -264,14 +213,7 @@ namespace DungeonEye
 		{
 			try
 			{
-				XmlWriterSettings settings = new XmlWriterSettings();
-				settings.Indent = true;
-				settings.OmitXmlDeclaration = false;
-				settings.IndentChars = "\t";
-				settings.Encoding = System.Text.ASCIIEncoding.ASCII;
-				XmlWriter xml = XmlWriter.Create(filename, settings);
-				Save(xml);
-				xml.Close();
+				Team.SaveParty(filename);
 
 				SaveGame = filename;
 				AddMessage("Party saved...", GameColors.Yellow);
@@ -285,125 +227,6 @@ namespace DungeonEye
 			return true;
 		}
 
-
-		#region IO
-
-
-		/// <summary>
-		/// Loads a party
-		/// </summary>
-		/// <param name="filename">Xml data</param>
-		/// <returns>True if team successfuly loaded, otherwise false</returns>
-		public bool Load(XmlNode xml)
-		{
-			if (xml == null || xml.Name.ToLower() != "team")
-				return false;
-
-
-			// Clear the team
-			for (int i = 0 ; i < Heroes.Count ; i++)
-				Heroes[i] = null;
-
-			// Dispose dungeon
-			if (Dungeon != null)
-				Dungeon.Dispose();
-			Dungeon = null;
-
-			foreach (XmlNode node in xml)
-			{
-				if (node.NodeType == XmlNodeType.Comment)
-					continue;
-
-
-				switch (node.Name.ToLower())
-				{
-					case "dungeon":
-					{
-						Dungeon = ResourceManager.CreateAsset<Dungeon>(node.Attributes["name"].Value);
-						//Dungeon.Team = this;
-					}
-					break;
-
-					case "location":
-					{
-						Location = new DungeonLocation(node);
-					}
-					break;
-
-
-					case "position":
-					{
-						HeroPosition position = (HeroPosition) Enum.Parse(typeof(HeroPosition), node.Attributes["slot"].Value, true);
-						Hero hero = new Hero(this);
-						hero.Load(node.FirstChild);
-						AddHero(hero, position);
-					}
-					break;
-
-					case "message":
-					{
-						AddMessage(node.Attributes["text"].Value, Color.FromArgb(int.Parse(node.Attributes["A"].Value), int.Parse(node.Attributes["R"].Value), int.Parse(node.Attributes["G"].Value), int.Parse(node.Attributes["B"].Value)));
-					}
-					break;
-				}
-			}
-
-
-			SelectedHero = Heroes[0];
-			return true;
-		}
-
-
-
-		/// <summary>
-		/// Saves the party
-		/// </summary>
-		/// <param name="filename">XmlWriter</param>
-		/// <returns></returns>
-		public bool Save(XmlWriter writer)
-		{
-			if (writer == null)
-				return false;
-
-			writer.WriteStartElement("team");
-
-			writer.WriteStartElement("dungeon");
-			writer.WriteAttributeString("name", Dungeon.Name);
-			writer.WriteEndElement();
-			Location.Save("location", writer);
-
-
-			// Save each hero
-			foreach (Hero hero in Heroes)
-			{
-				if (hero != null)
-				{
-					writer.WriteStartElement("position");
-					writer.WriteAttributeString("slot", GetHeroPosition(hero).ToString());
-					hero.Save(writer);
-					writer.WriteEndElement();
-				}
-			}
-
-
-			System.ComponentModel.TypeConverter colorConverter = System.ComponentModel.TypeDescriptor.GetConverter(typeof(Color));
-			foreach (ScreenMessage message in Messages)
-			{
-				writer.WriteStartElement("message");
-				writer.WriteAttributeString("text", message.Message);
-				writer.WriteAttributeString("R", message.Color.R.ToString());
-				writer.WriteAttributeString("G", message.Color.G.ToString());
-				writer.WriteAttributeString("B", message.Color.B.ToString());
-				writer.WriteAttributeString("A", message.Color.A.ToString());
-				writer.WriteEndElement();
-			}
-
-
-
-			writer.WriteEndElement();
-
-			return false;
-		}
 
 
 		#endregion
@@ -424,18 +247,18 @@ namespace DungeonEye
 
 
 			// Draw the current maze
-			if (Maze != null)
-				Maze.Draw(Batch, Location);
+			if (Team.Maze != null)
+				Team.Maze.Draw(Batch, Team.Location);
 
-
+			
 			// The backdrop
 			Batch.DrawTile(TileSet, 0, Point.Empty);
 
 
 			// Display the compass
-			Batch.DrawTile(TileSet, 5 + (int) Location.Direction * 3, new Point(228, 262));
-			Batch.DrawTile(TileSet, 6 + (int) Location.Direction * 3, new Point(158, 316));
-			Batch.DrawTile(TileSet, 7 + (int) Location.Direction * 3, new Point(302, 316));
+			Batch.DrawTile(TileSet, 5 + (int)Team.Location.Direction * 3, new Point(228, 262));
+			Batch.DrawTile(TileSet, 6 + (int)Team.Location.Direction * 3, new Point(158, 316));
+			Batch.DrawTile(TileSet, 7 + (int)Team.Location.Direction * 3, new Point(302, 316));
 
 
 			// Interfaces
@@ -491,8 +314,8 @@ namespace DungeonEye
 			}
 
 			// Draw the cursor or the item in the hand
-			else if (ItemInHand != null)
-				Batch.DrawTile(Items, ItemInHand.TileID, Mouse.Location, 0.5f);
+			else if (Team.ItemInHand != null)
+				Batch.DrawTile(Items, Team.ItemInHand.TileID, Mouse.Location, 0.5f);
 
 
 
@@ -514,7 +337,7 @@ namespace DungeonEye
 			{
 				for (int x = 0 ; x < 2 ; x++)
 				{
-					Hero hero = Heroes[y * 2 + x];
+					Hero hero = Team.Heroes[y * 2 + x];
 					if (hero == null)
 						continue;
 
@@ -538,7 +361,7 @@ namespace DungeonEye
 					{
 						batch.DrawString(Font, new Point(pos.X + 6, pos.Y + 6), GameColors.Red, " Swapping");
 					}
-					else if (SelectedHero == hero)
+					else if (Team.SelectedHero == hero)
 					{
 						batch.DrawString(Font, new Point(pos.X + 6, pos.Y + 6), GameColors.White, hero.Name);
 					}
@@ -651,10 +474,10 @@ namespace DungeonEye
 			// Mini map
 			if (Debug)
 			{
-				Maze.DrawMiniMap(batch, this, new Point(500, 220));
+				Team.Maze.DrawMiniMap(batch, this, new Point(500, 220));
 
 				// Team location
-				batch.DrawString(Font, new Point(10, 340), GameColors.White, Location.ToString());
+				batch.DrawString(Font, new Point(10, 340), GameColors.White, Team.Location.ToString());
 			}
 		}
 
@@ -702,38 +525,38 @@ namespace DungeonEye
 			batch.DrawTile(TileSet, 18, new Point(352, 0));
 
 			// Name
-			batch.DrawString(OutlinedFont, new Point(430, 12), GameColors.White, SelectedHero.Name);
+			batch.DrawString(OutlinedFont, new Point(430, 12), GameColors.White, Team.SelectedHero.Name);
 
 			// HP and Food
-			batch.DrawString(Font, new Point(500, 30), GameColors.Black, SelectedHero.HitPoint.Current + " of " + SelectedHero.HitPoint.Max);
+			batch.DrawString(Font, new Point(500, 30), GameColors.Black, Team.SelectedHero.HitPoint.Current + " of " + Team.SelectedHero.HitPoint.Max);
 
 			// Dead or uncounscious
-			if (SelectedHero.IsUnconscious)
+			if (Team.SelectedHero.IsUnconscious)
 			{
 				batch.DrawString(OutlinedFont, new Point(450, 316), GameColors.Yellow, "UNCONSCIOUS");
 				batch.DrawTile(TileSet, 2, new Point(360, 4));
 			}
-			else if (SelectedHero.IsDead)
+			else if (Team.SelectedHero.IsDead)
 			{
 				batch.DrawString(OutlinedFont, new Point(500, 316), GameColors.Red, "DEAD");
 				batch.DrawTile(TileSet, 4, new Point(360, 4));
 			}
 			else
-				batch.DrawTile(Heads, SelectedHero.Head, new Point(360, 4));
+				batch.DrawTile(Heads, Team.SelectedHero.Head, new Point(360, 4));
 
 
 			// Food
-			if (SelectedHero.Food > 0)
+			if (Team.SelectedHero.Food > 0)
 			{
 				Color color;
-				if (SelectedHero.Food > 50)
+				if (Team.SelectedHero.Food > 50)
 					color = GameColors.Green;
-				else if (SelectedHero.Food > 25)
+				else if (Team.SelectedHero.Food > 25)
 					color = GameColors.Yellow;
 				else
 					color = GameColors.Red;
 
-				batch.FillRectangle(new Rectangle(500, 48, SelectedHero.Food, 10), color);
+				batch.FillRectangle(new Rectangle(500, 48, Team.SelectedHero.Food, 10), color);
 			}
 
 			// Draw inventory
@@ -741,66 +564,66 @@ namespace DungeonEye
 			for (int y = 94 ; y < 346 ; y += 36)
 				for (int x = 376 ; x < 448 ; x += 36)
 				{
-					if (SelectedHero.GetBackPackItem(pos) != null)
-						batch.DrawTile(Items, SelectedHero.GetBackPackItem(pos).TileID, new Point(x, y));
+					if (Team.SelectedHero.GetBackPackItem(pos) != null)
+						batch.DrawTile(Items, Team.SelectedHero.GetBackPackItem(pos).TileID, new Point(x, y));
 
 					pos++;
 				}
 
 
 			// Quiver count
-			if (SelectedHero.Quiver > 99)
+			if (Team.SelectedHero.Quiver > 99)
 				batch.DrawString(Font, new Point(452, 128), GameColors.White, "++");
 			else
-				batch.DrawString(Font, new Point(452, 128), GameColors.White, SelectedHero.Quiver.ToString());
+				batch.DrawString(Font, new Point(452, 128), GameColors.White, Team.SelectedHero.Quiver.ToString());
 
 			// Armor
-			if (SelectedHero.GetInventoryItem(InventoryPosition.Armor) != null)
-				batch.DrawTile(Items, SelectedHero.GetInventoryItem(InventoryPosition.Armor).TileID, new Point(462, 166));
+			if (Team.SelectedHero.GetInventoryItem(InventoryPosition.Armor) != null)
+				batch.DrawTile(Items, Team.SelectedHero.GetInventoryItem(InventoryPosition.Armor).TileID, new Point(462, 166));
 
 			// Wrists
-			if (SelectedHero.GetInventoryItem(InventoryPosition.Wrist) != null)
-				batch.DrawTile(Items, SelectedHero.GetInventoryItem(InventoryPosition.Wrist).TileID, new Point(464, 206));
+			if (Team.SelectedHero.GetInventoryItem(InventoryPosition.Wrist) != null)
+				batch.DrawTile(Items, Team.SelectedHero.GetInventoryItem(InventoryPosition.Wrist).TileID, new Point(464, 206));
 
 			// Primary
-			if (SelectedHero.GetInventoryItem(InventoryPosition.Primary) != null)
-				batch.DrawTile(Items, SelectedHero.GetInventoryItem(InventoryPosition.Primary).TileID, new Point(474, 244));
+			if (Team.SelectedHero.GetInventoryItem(InventoryPosition.Primary) != null)
+				batch.DrawTile(Items, Team.SelectedHero.GetInventoryItem(InventoryPosition.Primary).TileID, new Point(474, 244));
 
 			// Fingers 1
-			if (SelectedHero.GetInventoryItem(InventoryPosition.Ring_Left) != null)
-				batch.DrawTile(Items, SelectedHero.GetInventoryItem(InventoryPosition.Ring_Left).TileID, new Point(462, 278));
+			if (Team.SelectedHero.GetInventoryItem(InventoryPosition.Ring_Left) != null)
+				batch.DrawTile(Items, Team.SelectedHero.GetInventoryItem(InventoryPosition.Ring_Left).TileID, new Point(462, 278));
 
 			// Fingers 2
-			if (SelectedHero.GetInventoryItem(InventoryPosition.Ring_Right) != null)
-				batch.DrawTile(Items, SelectedHero.GetInventoryItem(InventoryPosition.Ring_Right).TileID, new Point(486, 278));
+			if (Team.SelectedHero.GetInventoryItem(InventoryPosition.Ring_Right) != null)
+				batch.DrawTile(Items, Team.SelectedHero.GetInventoryItem(InventoryPosition.Ring_Right).TileID, new Point(486, 278));
 
 			// Feet
-			if (SelectedHero.GetInventoryItem(InventoryPosition.Feet) != null)
-				batch.DrawTile(Items, SelectedHero.GetInventoryItem(InventoryPosition.Feet).TileID, new Point(568, 288));
+			if (Team.SelectedHero.GetInventoryItem(InventoryPosition.Feet) != null)
+				batch.DrawTile(Items, Team.SelectedHero.GetInventoryItem(InventoryPosition.Feet).TileID, new Point(568, 288));
 
 			// Secondary
-			if (SelectedHero.GetInventoryItem(InventoryPosition.Secondary) != null)
-				batch.DrawTile(Items, SelectedHero.GetInventoryItem(InventoryPosition.Secondary).TileID, new Point(568, 246));
+			if (Team.SelectedHero.GetInventoryItem(InventoryPosition.Secondary) != null)
+				batch.DrawTile(Items, Team.SelectedHero.GetInventoryItem(InventoryPosition.Secondary).TileID, new Point(568, 246));
 
 			// Back 1 598,184,36,36
-			if (SelectedHero.GetWaistPackItem(0) != null)
-				batch.DrawTile(Items, SelectedHero.GetWaistPackItem(0).TileID, new Point(614, 202));
+			if (Team.SelectedHero.GetWaistPackItem(0) != null)
+				batch.DrawTile(Items, Team.SelectedHero.GetWaistPackItem(0).TileID, new Point(614, 202));
 
 			// Back 2 598,220,36,36
-			if (SelectedHero.GetWaistPackItem(1) != null)
-				batch.DrawTile(Items, SelectedHero.GetWaistPackItem(1).TileID, new Point(614, 238));
+			if (Team.SelectedHero.GetWaistPackItem(1) != null)
+				batch.DrawTile(Items, Team.SelectedHero.GetWaistPackItem(1).TileID, new Point(614, 238));
 
 			// Back 3 598,256,36,36
-			if (SelectedHero.GetWaistPackItem(2) != null)
-				batch.DrawTile(Items, SelectedHero.GetWaistPackItem(2).TileID, new Point(614, 272));
+			if (Team.SelectedHero.GetWaistPackItem(2) != null)
+				batch.DrawTile(Items, Team.SelectedHero.GetWaistPackItem(2).TileID, new Point(614, 272));
 
 			// Neck 572,146,36,36
-			if (SelectedHero.GetInventoryItem(InventoryPosition.Neck) != null)
-				batch.DrawTile(Items, SelectedHero.GetInventoryItem(InventoryPosition.Neck).TileID, new Point(588, 164));
+			if (Team.SelectedHero.GetInventoryItem(InventoryPosition.Neck) != null)
+				batch.DrawTile(Items, Team.SelectedHero.GetInventoryItem(InventoryPosition.Neck).TileID, new Point(588, 164));
 
 			// Head 594,106,36,36
-			if (SelectedHero.GetInventoryItem(InventoryPosition.Helmet) != null)
-				batch.DrawTile(Items, SelectedHero.GetInventoryItem(InventoryPosition.Helmet).TileID, new Point(610, 124));
+			if (Team.SelectedHero.GetInventoryItem(InventoryPosition.Helmet) != null)
+				batch.DrawTile(Items, Team.SelectedHero.GetInventoryItem(InventoryPosition.Helmet).TileID, new Point(610, 124));
 
 			/* 
 						// Debug draw
@@ -843,34 +666,34 @@ namespace DungeonEye
 
 
 			// Hero head
-			batch.DrawTile(Heads, SelectedHero.Head, new Point(360, 4));
+			batch.DrawTile(Heads, Team.SelectedHero.Head, new Point(360, 4));
 
 
-			batch.DrawString(OutlinedFont, new Point(430, 12), GameColors.White, SelectedHero.Name);
+			batch.DrawString(OutlinedFont, new Point(430, 12), GameColors.White, Team.SelectedHero.Name);
 			batch.DrawString(OutlinedFont, new Point(370, 80), GameColors.White, "Character info");
 
 			// HP and Food
-			batch.DrawString(Font, new Point(500, 30), GameColors.Black, SelectedHero.HitPoint.Current + " of " + SelectedHero.HitPoint.Max);
+			batch.DrawString(Font, new Point(500, 30), GameColors.Black, Team.SelectedHero.HitPoint.Current + " of " + Team.SelectedHero.HitPoint.Max);
 
 			// Food
 			Color color;
-			if (SelectedHero.Food > 50)
+			if (Team.SelectedHero.Food > 50)
 				color = GameColors.Green;
-			else if (SelectedHero.Food > 25)
+			else if (Team.SelectedHero.Food > 25)
 				color = GameColors.Yellow;
 			else
 				color = GameColors.Red;
 
-			batch.FillRectangle(new Rectangle(498, 48, SelectedHero.Food, 10), color);
+			batch.FillRectangle(new Rectangle(498, 48, Team.SelectedHero.Food, 10), color);
 
 			string txt = string.Empty;
-			foreach (Profession prof in SelectedHero.Professions)
+			foreach (Profession prof in Team.SelectedHero.Professions)
 				txt += prof.Class.ToString() + "/";
 			txt = txt.Substring(0, txt.Length - 1);
 
 			batch.DrawString(Font, new Point(366, 110), GameColors.Black, txt);
-			batch.DrawString(Font, new Point(366, 124), GameColors.Black, SelectedHero.Alignment.ToString());
-			batch.DrawString(Font, new Point(366, 138), GameColors.Black, SelectedHero.Race.ToString());
+			batch.DrawString(Font, new Point(366, 124), GameColors.Black, Team.SelectedHero.Alignment.ToString());
+			batch.DrawString(Font, new Point(366, 138), GameColors.Black, Team.SelectedHero.Race.ToString());
 
 			batch.DrawString(Font, new Point(366, 166), GameColors.Black, "Strength");
 			batch.DrawString(Font, new Point(366, 180), GameColors.Black, "Intelligence");
@@ -881,19 +704,19 @@ namespace DungeonEye
 			batch.DrawString(Font, new Point(366, 250), GameColors.Black, "Armor class");
 
 
-			batch.DrawString(Font, new Point(552, 166), GameColors.Black, SelectedHero.Strength.Value.ToString());// + "/" + SelectedHero.MaxStrength.ToString());
-			batch.DrawString(Font, new Point(552, 180), GameColors.Black, SelectedHero.Intelligence.Value.ToString());
-			batch.DrawString(Font, new Point(552, 194), GameColors.Black, SelectedHero.Wisdom.Value.ToString());
-			batch.DrawString(Font, new Point(552, 208), GameColors.Black, SelectedHero.Dexterity.Value.ToString());
-			batch.DrawString(Font, new Point(552, 222), GameColors.Black, SelectedHero.Constitution.Value.ToString());
-			batch.DrawString(Font, new Point(552, 236), GameColors.Black, SelectedHero.Charisma.Value.ToString());
-			batch.DrawString(Font, new Point(552, 250), GameColors.Black, SelectedHero.ArmorClass.ToString());
+			batch.DrawString(Font, new Point(552, 166), GameColors.Black, Team.SelectedHero.Strength.Value.ToString());// + "/" + Team.SelectedHero.MaxStrength.ToString());
+			batch.DrawString(Font, new Point(552, 180), GameColors.Black, Team.SelectedHero.Intelligence.Value.ToString());
+			batch.DrawString(Font, new Point(552, 194), GameColors.Black, Team.SelectedHero.Wisdom.Value.ToString());
+			batch.DrawString(Font, new Point(552, 208), GameColors.Black, Team.SelectedHero.Dexterity.Value.ToString());
+			batch.DrawString(Font, new Point(552, 222), GameColors.Black, Team.SelectedHero.Constitution.Value.ToString());
+			batch.DrawString(Font, new Point(552, 236), GameColors.Black, Team.SelectedHero.Charisma.Value.ToString());
+			batch.DrawString(Font, new Point(552, 250), GameColors.Black, Team.SelectedHero.ArmorClass.ToString());
 
 
 			batch.DrawString(Font, new Point(470, 270), GameColors.Black, "EXP");
 			batch.DrawString(Font, new Point(550, 270), GameColors.Black, "LVL");
 			int y = 0;
-			foreach (Profession prof in SelectedHero.Professions)
+			foreach (Profession prof in Team.SelectedHero.Professions)
 			{
 				batch.DrawString(Font, new Point(366, 290 + y), GameColors.Black, prof.Class.ToString());
 				batch.DrawString(Font, new Point(460, 290 + y), GameColors.White, prof.Experience.ToString());
@@ -935,7 +758,7 @@ namespace DungeonEye
 			#endregion
 
 
-			HasMoved = false;
+			Team.HasMoved = false;
 
 
 			#region Keyboard
@@ -958,16 +781,16 @@ namespace DungeonEye
 
 			if (Keyboard.IsNewKeyPress(Keys.V))
 			{
-				ReorderHeroes();
+				Team.ReorderHeroes();
 			}
 
 
 			// Reload data banks
 			if (Keyboard.IsNewKeyPress(Keys.R))
 			{
-				Dungeon = ResourceManager.CreateAsset<Dungeon>("Eye");
+				Team.Dungeon = ResourceManager.CreateAsset<Dungeon>("Eye");
 				//Dungeon.Team = this;
-				Dungeon.Init();
+				Team.Dungeon.Init();
 				AddMessage("Dungeon reloaded...");
 			}
 
@@ -1006,8 +829,8 @@ namespace DungeonEye
 					string lvl = "0" + id.ToString();
 					lvl = "Catacomb - " + lvl.Substring(lvl.Length - 2, 2);
 
-					if (Teleport(lvl))
-						AddMessage("Loading " + lvl + ":" + Maze.Description);
+					if (Team.Teleport(lvl))
+						AddMessage("Loading " + lvl + ":" + Team.Maze.Description);
 
 					break;
 				}
@@ -1016,14 +839,14 @@ namespace DungeonEye
 			// Test maze
 			if (Keyboard.IsNewKeyPress(Keys.T))
 			{
-				if (Teleport("test"))
+				if (Team.Teleport("test"))
 					AddMessage("Loading maze test", GameColors.Blue);
 			}
 
 			// Forest maze
 			if (Keyboard.IsNewKeyPress(Keys.F))
 			{
-				if (Teleport("Forest"))
+				if (Team.Teleport("Forest"))
 					AddMessage("Loading maze forest", Color.Blue);
 			}
 
@@ -1044,55 +867,55 @@ namespace DungeonEye
 
 			// Turn left
 			if (Keyboard.IsNewKeyPress(InputScheme["TurnLeft"]))
-				Location.Direction = Compass.Rotate(Location.Direction, CompassRotation.Rotate270);
+				Team.Location.Direction = Compass.Rotate(Team.Location.Direction, CompassRotation.Rotate270);
 
 
 			// Turn right
 			if (Keyboard.IsNewKeyPress(InputScheme["TurnRight"]))
-				Location.Direction = Compass.Rotate(Location.Direction, CompassRotation.Rotate90);
+				Team.Location.Direction = Compass.Rotate(Team.Location.Direction, CompassRotation.Rotate90);
 
 
 			// Move forward
 			if (Keyboard.IsNewKeyPress(InputScheme["MoveForward"]))
-				Walk(0, -1);
+				Team.Walk(0, -1);
 
 
 			// Move backward
 			if (Keyboard.IsNewKeyPress(InputScheme["MoveBackward"]))
-				Walk(0, 1);
+				Team.Walk(0, 1);
 
 
 			// Strafe left
 			if (Keyboard.IsNewKeyPress(InputScheme["StrafeLeft"]))
-				Walk(-1, 0);
+				Team.Walk(-1, 0);
 
 			// Strafe right
 			if (Keyboard.IsNewKeyPress(InputScheme["StrafeRight"]))
-				Walk(1, 0);
+				Team.Walk(1, 0);
 
 			// Select Hero 1
 			if (Keyboard.IsNewKeyPress(InputScheme["SelectHero1"]))
-				SelectedHero = Heroes[0];
+				Team.SelectedHero = Team.Heroes[0];
 
 			// Select Hero 2
 			if (Keyboard.IsNewKeyPress(InputScheme["SelectHero2"]))
-				SelectedHero = Heroes[1];
+				Team.SelectedHero = Team.Heroes[1];
 
 			// Select Hero 3
 			if (Keyboard.IsNewKeyPress(InputScheme["SelectHero3"]))
-				SelectedHero = Heroes[2];
+				Team.SelectedHero = Team.Heroes[2];
 
 			// Select Hero 4
 			if (Keyboard.IsNewKeyPress(InputScheme["SelectHero4"]))
-				SelectedHero = Heroes[3];
+				Team.SelectedHero = Team.Heroes[3];
 
 			// Select Hero 5
-			if (Keyboard.IsNewKeyPress(InputScheme["SelectHero5"]) && HeroCount >= 5)
-				SelectedHero = Heroes[4];
+			if (Keyboard.IsNewKeyPress(InputScheme["SelectHero5"]) && Team.HeroCount >= 5)
+				Team.SelectedHero = Team.Heroes[4];
 
 			// Select Hero 6
-			if (Keyboard.IsNewKeyPress(InputScheme["SelectHero6"]) && HeroCount >= 6)
-				SelectedHero = Heroes[5];
+			if (Keyboard.IsNewKeyPress(InputScheme["SelectHero6"]) && Team.HeroCount >= 6)
+				Team.SelectedHero = Team.Heroes[5];
 			#endregion
 
 
@@ -1104,7 +927,7 @@ namespace DungeonEye
 			Point pos = Point.Empty;
 
 			// Get the square at team position
-			Square square = Maze.GetSquare(Location.Coordinate);
+			Square square = Team.Maze.GetSquare(Team.Location.Coordinate);
 
 
 			#region Mouse
@@ -1116,30 +939,30 @@ namespace DungeonEye
 				#region Direction buttons
 				// Turn left
 				if (InterfaceCoord.TurnLeft.Contains(mousePos))
-					Location.Direction = Compass.Rotate(Location.Direction, CompassRotation.Rotate270);
+					Team.Location.Direction = Compass.Rotate(Team.Location.Direction, CompassRotation.Rotate270);
 
 				// MoveForward
 				else if (InterfaceCoord.MoveForward.Contains(mousePos))
-					Walk(0, -1);
+					Team.Walk(0, -1);
 
 				// Turn right
 				else if (InterfaceCoord.TurnRight.Contains(mousePos))
-					Location.Direction = Compass.Rotate(Location.Direction, CompassRotation.Rotate90);
+					Team.Location.Direction = Compass.Rotate(Team.Location.Direction, CompassRotation.Rotate90);
 
 				// Move left
 				else if (InterfaceCoord.MoveLeft.Contains(mousePos))
-					Walk(-1, 0);
+					Team.Walk(-1, 0);
 
 				// Backward
 				else if (InterfaceCoord.MoveBackward.Contains(mousePos))
 				{
-					if (!Walk(0, 1))
+					if (!Team.Walk(0, 1))
 						AddMessage("You can't go that way.");
 				}
 				// Move right
 				else if (InterfaceCoord.MoveRight.Contains(mousePos))
 				{
-					if (!Walk(1, 0))
+					if (!Team.Walk(1, 0))
 						AddMessage("You can't go that way.");
 				}
 				#endregion
@@ -1159,7 +982,7 @@ namespace DungeonEye
 				// Team's feet
 				else if (DisplayCoordinates.LeftFeetTeam.Contains(mousePos))
 				{
-					switch (Direction)
+					switch (Team.Direction)
 					{
 						case CardinalPoint.North:
 						groundpos = SquarePosition.NorthWest;
@@ -1174,22 +997,22 @@ namespace DungeonEye
 						groundpos = SquarePosition.SouthWest;
 						break;
 					}
-					if (ItemInHand != null)
+					if (Team.ItemInHand != null)
 					{
-						if (square.DropItem(groundpos, ItemInHand))
-							SetItemInHand(null);
+						if (square.DropItem(groundpos, Team.ItemInHand))
+							Team.SetItemInHand(null);
 					}
 					else
 					{
-						SetItemInHand(square.CollectItem(groundpos));
+						Team.SetItemInHand(square.CollectItem(groundpos));
 					}
 				}
 
 				// In front of the team
-				else if (!FrontSquare.IsWall && DisplayCoordinates.LeftFrontTeamGround.Contains(mousePos))
+				else if (!Team.FrontSquare.IsWall && DisplayCoordinates.LeftFrontTeamGround.Contains(mousePos))
 				{
 					// Ground position
-					switch (Location.Direction)
+					switch (Team.Location.Direction)
 					{
 						case CardinalPoint.North:
 						groundpos = SquarePosition.SouthWest;
@@ -1206,13 +1029,13 @@ namespace DungeonEye
 					}
 
 
-					if (ItemInHand != null)
+					if (Team.ItemInHand != null)
 					{
-						if (FrontSquare.DropItem(groundpos, ItemInHand))
-							SetItemInHand(null);
+						if (Team.FrontSquare.DropItem(groundpos, Team.ItemInHand))
+							Team.SetItemInHand(null);
 					}
 					else
-						SetItemInHand(FrontSquare.CollectItem(groundpos));
+						Team.SetItemInHand(Team.FrontSquare.CollectItem(groundpos));
 				}
 
 
@@ -1221,7 +1044,7 @@ namespace DungeonEye
 				#region Gather item on the ground right
 				else if (DisplayCoordinates.RightFeetTeam.Contains(mousePos))
 				{
-					switch (Location.Direction)
+					switch (Team.Location.Direction)
 					{
 						case CardinalPoint.North:
 						groundpos = SquarePosition.NorthEast;
@@ -1237,14 +1060,14 @@ namespace DungeonEye
 						break;
 					}
 
-					if (ItemInHand != null)
+					if (Team.ItemInHand != null)
 					{
-						if (square.DropItem(groundpos, ItemInHand))
-							SetItemInHand(null);
+						if (square.DropItem(groundpos, Team.ItemInHand))
+							Team.SetItemInHand(null);
 					}
 					else
 					{
-						SetItemInHand(square.CollectItem(groundpos));
+						Team.SetItemInHand(square.CollectItem(groundpos));
 						//if (ItemInHand != null)
 						//    AddMessage(Language.BuildMessage(2, ItemInHand.Name));
 
@@ -1252,11 +1075,11 @@ namespace DungeonEye
 				}
 
 				// In front of the team
-				else if (!FrontSquare.IsWall && DisplayCoordinates.RightFrontTeamGround.Contains(mousePos))
+				else if (!Team.FrontSquare.IsWall && DisplayCoordinates.RightFrontTeamGround.Contains(mousePos))
 				{
 
 					// Ground position
-					switch (Location.Direction)
+					switch (Team.Location.Direction)
 					{
 						case CardinalPoint.North:
 						groundpos = SquarePosition.SouthEast;
@@ -1273,14 +1096,14 @@ namespace DungeonEye
 					}
 
 
-					if (ItemInHand != null)
+					if (Team.ItemInHand != null)
 					{
-						if (FrontSquare.DropItem(groundpos, ItemInHand))
-							SetItemInHand(null);
+						if (Team.FrontSquare.DropItem(groundpos, Team.ItemInHand))
+							Team.SetItemInHand(null);
 					}
 					else
 					{
-						SetItemInHand(FrontSquare.CollectItem(groundpos));
+						Team.SetItemInHand(Team.FrontSquare.CollectItem(groundpos));
 						//if (ItemInHand != null)
 						//    AddMessage(Language.BuildMessage(2, ItemInHand.Name));
 					}
@@ -1289,17 +1112,17 @@ namespace DungeonEye
 				#endregion
 
 				#region Alcove
-				else if (DisplayCoordinates.Alcove.Contains(mousePos) && FrontSquare.IsWall)
+				else if (DisplayCoordinates.Alcove.Contains(mousePos) && Team.FrontSquare.IsWall)
 				{
 
-					if (ItemInHand != null)
+					if (Team.ItemInHand != null)
 					{
-						if (FrontSquare.DropAlcoveItem(FrontWallSide, ItemInHand))
-							SetItemInHand(null);
+						if (Team.FrontSquare.DropAlcoveItem(Team.FrontWallSide, Team.ItemInHand))
+							Team.SetItemInHand(null);
 					}
 					else
 					{
-						SetItemInHand(FrontSquare.CollectAlcoveItem(FrontWallSide));
+						Team.SetItemInHand(Team.FrontSquare.CollectAlcoveItem(Team.FrontWallSide));
 					}
 				}
 				#endregion
@@ -1309,13 +1132,13 @@ namespace DungeonEye
 				// Click on the square in front of the team
 				else if (DisplayCoordinates.FrontSquare.Contains(mousePos))
 				{
-					if (!FrontSquare.OnClick(this, mousePos, FrontWallSide))
+					if (!Team.FrontSquare.OnClick(mousePos, Team.FrontWallSide))
 					{
 						#region Throw an object in the left side
-						if (DisplayCoordinates.ThrowLeft.Contains(mousePos) && ItemInHand != null)
+						if (DisplayCoordinates.ThrowLeft.Contains(mousePos) && Team.ItemInHand != null)
 						{
-							DungeonLocation loc = new DungeonLocation(Location);
-							switch (Location.Direction)
+							DungeonLocation loc = new DungeonLocation(Team.Location);
+							switch (Team.Location.Direction)
 							{
 								case CardinalPoint.North:
 								loc.Position = SquarePosition.SouthWest;
@@ -1330,18 +1153,18 @@ namespace DungeonEye
 								loc.Position = SquarePosition.SouthEast;
 								break;
 							}
-							Maze.ThrownItems.Add(new ThrownItem(SelectedHero, ItemInHand, loc, TimeSpan.FromSeconds(0.25), 4));
-							SetItemInHand(null);
+							Team.Maze.ThrownItems.Add(new ThrownItem(Team.SelectedHero, Team.ItemInHand, loc, TimeSpan.FromSeconds(0.25), 4));
+							Team.SetItemInHand(null);
 						}
 						#endregion
 
 						#region Throw an object in the right side
-						else if (DisplayCoordinates.ThrowRight.Contains(mousePos) && ItemInHand != null)
+						else if (DisplayCoordinates.ThrowRight.Contains(mousePos) && Team.ItemInHand != null)
 						{
 
-							DungeonLocation loc = new DungeonLocation(Location);
+							DungeonLocation loc = new DungeonLocation(Team.Location);
 
-							switch (Location.Direction)
+							switch (Team.Location.Direction)
 							{
 								case CardinalPoint.North:
 								loc.Position = SquarePosition.SouthEast;
@@ -1357,8 +1180,8 @@ namespace DungeonEye
 								break;
 							}
 
-							Maze.ThrownItems.Add(new ThrownItem(SelectedHero, ItemInHand, loc, TimeSpan.FromSeconds(0.25), 4));
-							SetItemInHand(null);
+							Team.Maze.ThrownItems.Add(new ThrownItem(Team.SelectedHero, Team.ItemInHand, loc, TimeSpan.FromSeconds(0.25), 4));
+							Team.SetItemInHand(null);
 						}
 						#endregion
 					}
@@ -1373,9 +1196,9 @@ namespace DungeonEye
 			else if (Mouse.IsNewButtonDown(MouseButtons.Right))
 			{
 				#region Alcove
-				if (DisplayCoordinates.Alcove.Contains(mousePos) && FrontSquare.IsWall)
+				if (DisplayCoordinates.Alcove.Contains(mousePos) && Team.FrontSquare.IsWall)
 				{
-					SelectedHero.AddToInventory(FrontSquare.CollectAlcoveItem(FrontWallSide));
+					Team.SelectedHero.AddToInventory(Team.FrontSquare.CollectAlcoveItem(Team.FrontWallSide));
 				}
 				#endregion
 
@@ -1388,7 +1211,7 @@ namespace DungeonEye
 				// Team's feet
 				else if (DisplayCoordinates.LeftFeetTeam.Contains(mousePos))
 				{
-					switch (Direction)
+					switch (Team.Direction)
 					{
 						case CardinalPoint.North:
 						groundpos = SquarePosition.NorthWest;
@@ -1403,12 +1226,12 @@ namespace DungeonEye
 						groundpos = SquarePosition.SouthWest;
 						break;
 					}
-					if (ItemInHand == null)
+					if (Team.ItemInHand == null)
 					{
 						Item item = square.CollectItem(groundpos);
 						if (item != null)
 						{
-							if (SelectedHero.AddToInventory(item))
+							if (Team.SelectedHero.AddToInventory(item))
 								AddMessage(Language.BuildMessage(2, item.Name));
 							else
 								square.DropItem(groundpos, item);
@@ -1417,10 +1240,10 @@ namespace DungeonEye
 				}
 
 				// In front of the team
-				else if (DisplayCoordinates.LeftFrontTeamGround.Contains(mousePos) && !FrontSquare.IsWall)
+				else if (DisplayCoordinates.LeftFrontTeamGround.Contains(mousePos) && !Team.FrontSquare.IsWall)
 				{
 					// Ground position
-					switch (Location.Direction)
+					switch (Team.Location.Direction)
 					{
 						case CardinalPoint.North:
 						groundpos = SquarePosition.SouthWest;
@@ -1436,16 +1259,16 @@ namespace DungeonEye
 						break;
 					}
 
-					if (ItemInHand == null)
+					if (Team.ItemInHand == null)
 					{
-						Item item = FrontSquare.CollectItem(groundpos);
+						Item item = Team.FrontSquare.CollectItem(groundpos);
 
 						if (item != null)
 						{
-							if (SelectedHero.AddToInventory(item))
+							if (Team.SelectedHero.AddToInventory(item))
 								AddMessage(Language.BuildMessage(2, item.Name));
 							else
-								FrontSquare.DropItem(groundpos, item);
+								Team.FrontSquare.DropItem(groundpos, item);
 						}
 					}
 				}
@@ -1456,7 +1279,7 @@ namespace DungeonEye
 				#region Gather item on the ground right
 				else if (DisplayCoordinates.RightFeetTeam.Contains(mousePos))
 				{
-					switch (Location.Direction)
+					switch (Team.Location.Direction)
 					{
 						case CardinalPoint.North:
 						groundpos = SquarePosition.NorthEast;
@@ -1472,12 +1295,12 @@ namespace DungeonEye
 						break;
 					}
 
-					if (ItemInHand == null)
+					if (Team.ItemInHand == null)
 					{
 						Item item = square.CollectItem(groundpos);
 						if (item != null)
 						{
-							if (SelectedHero.AddToInventory(item))
+							if (Team.SelectedHero.AddToInventory(item))
 								AddMessage(Language.BuildMessage(2, item.Name));
 							else
 								square.DropItem(groundpos, item);
@@ -1486,11 +1309,11 @@ namespace DungeonEye
 				}
 
 				// In front of the team
-				else if (DisplayCoordinates.RightFrontTeamGround.Contains(mousePos) && !FrontSquare.IsWall)
+				else if (DisplayCoordinates.RightFrontTeamGround.Contains(mousePos) && !Team.FrontSquare.IsWall)
 				{
 
 					// Ground position
-					switch (Location.Direction)
+					switch (Team.Location.Direction)
 					{
 						case CardinalPoint.North:
 						groundpos = SquarePosition.SouthEast;
@@ -1506,15 +1329,15 @@ namespace DungeonEye
 						break;
 					}
 
-					if (ItemInHand == null)
+					if (Team.ItemInHand == null)
 					{
-						Item item = FrontSquare.CollectItem(groundpos);
+						Item item = Team.FrontSquare.CollectItem(groundpos);
 						if (item != null)
 						{
-							if (SelectedHero.AddToInventory(item))
+							if (Team.SelectedHero.AddToInventory(item))
 								AddMessage(Language.BuildMessage(2, item.Name));
 							else
-								FrontSquare.DropItem(groundpos, item);
+								Team.FrontSquare.DropItem(groundpos, item);
 						}
 					}
 				}
@@ -1552,19 +1375,19 @@ namespace DungeonEye
 					for (int id = 0 ; id < 6 ; id++)
 					{
 						// Get the hero
-						Hero hero = Heroes[id];
+						Hero hero = Team.Heroes[id];
 						if (hero == null)
 							continue;
 
 						#region Select hero
 						if (InterfaceCoord.SelectHero[id].Contains(mousePos))
-							SelectedHero = hero;
+							Team.SelectedHero = hero;
 						#endregion
 
 						#region Swap hero
 						if (InterfaceCoord.HeroFace[id].Contains(mousePos))
 						{
-							SelectedHero = hero;
+							Team.SelectedHero = hero;
 							HeroToSwap = null;
 							Interface = TeamInterface.Inventory;
 						}
@@ -1575,15 +1398,15 @@ namespace DungeonEye
 						{
 							item = hero.GetInventoryItem(InventoryPosition.Primary);
 
-							if (ItemInHand != null && ((ItemInHand.Slot & BodySlot.Primary) == BodySlot.Primary))
+							if (Team.ItemInHand != null && ((Team.ItemInHand.Slot & BodySlot.Primary) == BodySlot.Primary))
 							{
-								Item swap = ItemInHand;
-								SetItemInHand(hero.GetInventoryItem(InventoryPosition.Primary));
+								Item swap = Team.ItemInHand;
+								Team.SetItemInHand(hero.GetInventoryItem(InventoryPosition.Primary));
 								hero.SetInventoryItem(InventoryPosition.Primary, swap);
 							}
-							else if (ItemInHand == null && item != null)
+							else if (Team.ItemInHand == null && item != null)
 							{
-								SetItemInHand(item);
+								Team.SetItemInHand(item);
 								hero.SetInventoryItem(InventoryPosition.Primary, null);
 							}
 						}
@@ -1594,16 +1417,16 @@ namespace DungeonEye
 						{
 							item = hero.GetInventoryItem(InventoryPosition.Secondary);
 
-							if (ItemInHand != null && ((ItemInHand.Slot & BodySlot.Secondary) == BodySlot.Secondary))
+							if (Team.ItemInHand != null && ((Team.ItemInHand.Slot & BodySlot.Secondary) == BodySlot.Secondary))
 							{
-								Item swap = ItemInHand;
-								SetItemInHand(hero.GetInventoryItem(InventoryPosition.Secondary));
+								Item swap = Team.ItemInHand;
+								Team.SetItemInHand(hero.GetInventoryItem(InventoryPosition.Secondary));
 								hero.SetInventoryItem(InventoryPosition.Secondary, swap);
 
 							}
-							else if (ItemInHand == null && item != null)
+							else if (Team.ItemInHand == null && item != null)
 							{
-								SetItemInHand(item);
+								Team.SetItemInHand(item);
 								hero.SetInventoryItem(InventoryPosition.Secondary, null);
 							}
 						}
@@ -1625,7 +1448,7 @@ namespace DungeonEye
 					for (int id = 0 ; id < 6 ; id++)
 					{
 						// Get the hero
-						Hero hero = Heroes[id];
+						Hero hero = Team.Heroes[id];
 						if (hero == null)
 							continue;
 
@@ -1639,8 +1462,8 @@ namespace DungeonEye
 							}
 							else
 							{
-								Heroes[(int) GetHeroPosition(HeroToSwap)] = hero;
-								Heroes[id] = HeroToSwap;
+								Team.Heroes[(int)Team.GetHeroPosition(HeroToSwap)] = hero;
+								Team.Heroes[id] = HeroToSwap;
 
 
 								HeroToSwap = null;
@@ -1651,7 +1474,7 @@ namespace DungeonEye
 						#region Show Hero inventory
 						if (InterfaceCoord.HeroFace[id].Contains(mousePos))
 						{
-							SelectedHero = hero;
+							Team.SelectedHero = hero;
 							Interface = TeamInterface.Inventory;
 						}
 						#endregion
@@ -1677,7 +1500,7 @@ namespace DungeonEye
 			#region Heros update
 
 			// Update all heroes
-			foreach (Hero hero in Heroes)
+			foreach (Hero hero in Team.Heroes)
 			{
 				if (hero != null)
 					hero.Update(time);
@@ -1713,11 +1536,11 @@ namespace DungeonEye
 
 
 			// Update the dungeon
-			Dungeon.Update(time);
+			Team.Dungeon.Update(time);
 
 
-			if (CanMove && Square != null)
-				Square.OnTeamStand();
+			if (Team.CanMove && Team.Square != null)
+				Team.Square.OnTeamStand();
 		}
 
 
@@ -1745,11 +1568,11 @@ namespace DungeonEye
 
 				// Previous Hero
 				if (InterfaceCoord.PreviousHero.Contains(mousePos))
-					SelectedHero = GetPreviousHero();
+					Team.SelectedHero = Team.GetPreviousHero();
 
 				// Next Hero
 				if (InterfaceCoord.NextHero.Contains(mousePos))
-					SelectedHero = GetNextHero();
+					Team.SelectedHero = Team.GetNextHero();
 
 
 
@@ -1758,9 +1581,9 @@ namespace DungeonEye
 				{
 					if (InterfaceCoord.BackPack[id].Contains(mousePos))
 					{
-						Item swap = ItemInHand;
-						SetItemInHand(SelectedHero.GetBackPackItem(id));
-						SelectedHero.SetBackPackItem(id, swap);
+						Item swap = Team.ItemInHand;
+						Team.SetItemInHand(Team.SelectedHero.GetBackPackItem(id));
+						Team.SelectedHero.SetBackPackItem(id, swap);
 					}
 				}
 				#endregion
@@ -1768,15 +1591,15 @@ namespace DungeonEye
 				#region Quiver
 				if (InterfaceCoord.Quiver.Contains(mousePos))
 				{
-					if (ItemInHand == null && SelectedHero.Quiver > 0)
+					if (Team.ItemInHand == null && Team.SelectedHero.Quiver > 0)
 					{
-						SelectedHero.Quiver--;
-						SetItemInHand(ResourceManager.CreateAsset<Item>("Arrow"));
+						Team.SelectedHero.Quiver--;
+						Team.SetItemInHand(ResourceManager.CreateAsset<Item>("Arrow"));
 					}
-					else if (ItemInHand != null && (ItemInHand.Slot & BodySlot.Quiver) == BodySlot.Quiver)
+					else if (Team.ItemInHand != null && (Team.ItemInHand.Slot & BodySlot.Quiver) == BodySlot.Quiver)
 					{
-						SelectedHero.Quiver++;
-						SetItemInHand(null);
+						Team.SelectedHero.Quiver++;
+						Team.SetItemInHand(null);
 					}
 				}
 				#endregion
@@ -1784,14 +1607,14 @@ namespace DungeonEye
 				#region Armor
 				else if (InterfaceCoord.Armor.Contains(mousePos))
 				{
-					item = SelectedHero.GetInventoryItem(InventoryPosition.Armor);
+					item = Team.SelectedHero.GetInventoryItem(InventoryPosition.Armor);
 
-					if (ItemInHand != null && SelectedHero.SetInventoryItem(InventoryPosition.Armor, ItemInHand))
-						SetItemInHand(item);
-					else if (ItemInHand == null && item != null)
+					if (Team.ItemInHand != null && Team.SelectedHero.SetInventoryItem(InventoryPosition.Armor, Team.ItemInHand))
+						Team.SetItemInHand(item);
+					else if (Team.ItemInHand == null && item != null)
 					{
-						SetItemInHand(item);
-						SelectedHero.SetInventoryItem(InventoryPosition.Armor, null);
+						Team.SetItemInHand(item);
+						Team.SelectedHero.SetInventoryItem(InventoryPosition.Armor, null);
 					}
 				}
 				#endregion
@@ -1799,11 +1622,11 @@ namespace DungeonEye
 				#region Food
 				else if (InterfaceCoord.Food.Contains(mousePos))
 				{
-					if (ItemInHand != null && ItemInHand.Type == ItemType.Consumable)
+					if (Team.ItemInHand != null && Team.ItemInHand.Type == ItemType.Consumable)
 					{
-						if (ItemInHand.Script.Instance != null)
-							ItemInHand.Script.Instance.OnUse(ItemInHand, SelectedHero);
-						SetItemInHand(null);
+						if (Team.ItemInHand.Script.Instance != null)
+							Team.ItemInHand.Script.Instance.OnUse(Team.ItemInHand, Team.SelectedHero);
+						Team.SetItemInHand(null);
 					}
 				}
 				#endregion
@@ -1811,14 +1634,14 @@ namespace DungeonEye
 				#region Wrists
 				else if (InterfaceCoord.Wrist.Contains(mousePos))
 				{
-					item = SelectedHero.GetInventoryItem(InventoryPosition.Wrist);
+					item = Team.SelectedHero.GetInventoryItem(InventoryPosition.Wrist);
 
-					if (ItemInHand != null && SelectedHero.SetInventoryItem(InventoryPosition.Wrist, ItemInHand))
-						SetItemInHand(item);
-					else if (ItemInHand == null && item != null)
+					if (Team.ItemInHand != null && Team.SelectedHero.SetInventoryItem(InventoryPosition.Wrist, Team.ItemInHand))
+						Team.SetItemInHand(item);
+					else if (Team.ItemInHand == null && item != null)
 					{
-						SetItemInHand(item);
-						SelectedHero.SetInventoryItem(InventoryPosition.Wrist, null);
+						Team.SetItemInHand(item);
+						Team.SelectedHero.SetInventoryItem(InventoryPosition.Wrist, null);
 					}
 				}
 				#endregion
@@ -1826,14 +1649,14 @@ namespace DungeonEye
 				#region Primary
 				else if (InterfaceCoord.PrimaryHandInventory.Contains(mousePos))
 				{
-					item = SelectedHero.GetInventoryItem(InventoryPosition.Primary);
+					item = Team.SelectedHero.GetInventoryItem(InventoryPosition.Primary);
 
-					if (ItemInHand != null && SelectedHero.SetInventoryItem(InventoryPosition.Primary, ItemInHand))
-						SetItemInHand(item);
-					else if (ItemInHand == null &&item != null)
+					if (Team.ItemInHand != null && Team.SelectedHero.SetInventoryItem(InventoryPosition.Primary, Team.ItemInHand))
+						Team.SetItemInHand(item);
+					else if (Team.ItemInHand == null && item != null)
 					{
-						SetItemInHand(item);
-						SelectedHero.SetInventoryItem(InventoryPosition.Primary, null);
+						Team.SetItemInHand(item);
+						Team.SelectedHero.SetInventoryItem(InventoryPosition.Primary, null);
 					}
 				}
 				#endregion
@@ -1841,14 +1664,14 @@ namespace DungeonEye
 				#region Feet
 				else if (InterfaceCoord.Feet.Contains(mousePos))
 				{
-					item = SelectedHero.GetInventoryItem(InventoryPosition.Feet);
+					item = Team.SelectedHero.GetInventoryItem(InventoryPosition.Feet);
 
-					if (ItemInHand != null && SelectedHero.SetInventoryItem(InventoryPosition.Feet, ItemInHand))
-						SetItemInHand(item);
-					else if (ItemInHand == null && item != null)
+					if (Team.ItemInHand != null && Team.SelectedHero.SetInventoryItem(InventoryPosition.Feet, Team.ItemInHand))
+						Team.SetItemInHand(item);
+					else if (Team.ItemInHand == null && item != null)
 					{
-						SetItemInHand(item);
-						SelectedHero.SetInventoryItem(InventoryPosition.Feet, null);
+						Team.SetItemInHand(item);
+						Team.SelectedHero.SetInventoryItem(InventoryPosition.Feet, null);
 					}
 				}
 				#endregion
@@ -1856,14 +1679,14 @@ namespace DungeonEye
 				#region Secondary
 				else if (InterfaceCoord.SecondaryHandInventory.Contains(mousePos))
 				{
-					item = SelectedHero.GetInventoryItem(InventoryPosition.Secondary);
+					item = Team.SelectedHero.GetInventoryItem(InventoryPosition.Secondary);
 
-					if (ItemInHand != null && SelectedHero.SetInventoryItem(InventoryPosition.Secondary, ItemInHand))
-						SetItemInHand(item);
-					else if (ItemInHand == null && item != null)
+					if (Team.ItemInHand != null && Team.SelectedHero.SetInventoryItem(InventoryPosition.Secondary, Team.ItemInHand))
+						Team.SetItemInHand(item);
+					else if (Team.ItemInHand == null && item != null)
 					{
-						SetItemInHand(item);
-						SelectedHero.SetInventoryItem(InventoryPosition.Secondary, null);
+						Team.SetItemInHand(item);
+						Team.SelectedHero.SetInventoryItem(InventoryPosition.Secondary, null);
 					}
 				}
 				#endregion
@@ -1871,14 +1694,14 @@ namespace DungeonEye
 				#region Neck
 				else if (InterfaceCoord.Neck.Contains(mousePos))
 				{
-					item = SelectedHero.GetInventoryItem(InventoryPosition.Neck);
+					item = Team.SelectedHero.GetInventoryItem(InventoryPosition.Neck);
 
-					if (ItemInHand != null && SelectedHero.SetInventoryItem(InventoryPosition.Neck, ItemInHand))
-						SetItemInHand(item);
-					else if (ItemInHand == null && item != null)
+					if (Team.ItemInHand != null && Team.SelectedHero.SetInventoryItem(InventoryPosition.Neck, Team.ItemInHand))
+						Team.SetItemInHand(item);
+					else if (Team.ItemInHand == null && item != null)
 					{
-						SetItemInHand(item);
-						SelectedHero.SetInventoryItem(InventoryPosition.Neck, null);
+						Team.SetItemInHand(item);
+						Team.SelectedHero.SetInventoryItem(InventoryPosition.Neck, null);
 					}
 				}
 				#endregion
@@ -1886,14 +1709,14 @@ namespace DungeonEye
 				#region Head
 				else if (InterfaceCoord.Head.Contains(mousePos))
 				{
-					item = SelectedHero.GetInventoryItem(InventoryPosition.Helmet);
+					item = Team.SelectedHero.GetInventoryItem(InventoryPosition.Helmet);
 
-					if (ItemInHand != null && SelectedHero.SetInventoryItem(InventoryPosition.Helmet, ItemInHand))
-						SetItemInHand(item);
-					else if (ItemInHand == null && item != null)
+					if (Team.ItemInHand != null && Team.SelectedHero.SetInventoryItem(InventoryPosition.Helmet, Team.ItemInHand))
+						Team.SetItemInHand(item);
+					else if (Team.ItemInHand == null && item != null)
 					{
-						SetItemInHand(item);
-						SelectedHero.SetInventoryItem(InventoryPosition.Helmet, null);
+						Team.SetItemInHand(item);
+						Team.SelectedHero.SetInventoryItem(InventoryPosition.Helmet, null);
 					}
 				}
 				#endregion
@@ -1905,14 +1728,14 @@ namespace DungeonEye
 					{
 						if (InterfaceCoord.Waist[id].Contains(mousePos))
 						{
-							item = SelectedHero.GetWaistPackItem(id);
+							item = Team.SelectedHero.GetWaistPackItem(id);
 
-							if (ItemInHand != null && SelectedHero.SetWaistPackItem(id, ItemInHand))
-								SetItemInHand(item);
-							else if (ItemInHand == null && item != null)
+							if (Team.ItemInHand != null && Team.SelectedHero.SetWaistPackItem(id, Team.ItemInHand))
+								Team.SetItemInHand(item);
+							else if (Team.ItemInHand == null && item != null)
 							{
-								SetItemInHand(item);
-								SelectedHero.SetWaistPackItem(id, null);
+								Team.SetItemInHand(item);
+								Team.SelectedHero.SetWaistPackItem(id, null);
 							}
 						}
 					}
@@ -1921,16 +1744,16 @@ namespace DungeonEye
 					#region Rings
 					for (int id = 0 ; id < 2 ; id++)
 					{
-						item = SelectedHero.GetInventoryItem(InventoryPosition.Ring_Left + id);
+						item = Team.SelectedHero.GetInventoryItem(InventoryPosition.Ring_Left + id);
 
 						if (InterfaceCoord.Rings[id].Contains(mousePos))
 						{
-							if (ItemInHand != null && SelectedHero.SetInventoryItem(InventoryPosition.Ring_Left + id, ItemInHand))
-								SetItemInHand(item);
-							else if (ItemInHand == null && item != null)
+							if (Team.ItemInHand != null && Team.SelectedHero.SetInventoryItem(InventoryPosition.Ring_Left + id, Team.ItemInHand))
+								Team.SetItemInHand(item);
+							else if (Team.ItemInHand == null && item != null)
 							{
-								SetItemInHand(item);
-								SelectedHero.SetInventoryItem(InventoryPosition.Ring_Left + id, null);
+								Team.SetItemInHand(item);
+								Team.SelectedHero.SetInventoryItem(InventoryPosition.Ring_Left + id, null);
 							}
 						}
 					}
@@ -1967,171 +1790,15 @@ namespace DungeonEye
 
 				// Previous Hero
 				if (InterfaceCoord.PreviousHero.Contains(mousePos))
-					SelectedHero = GetPreviousHero();
+					Team.SelectedHero = Team.GetPreviousHero();
 
 				// Next Hero
 				if (InterfaceCoord.NextHero.Contains(mousePos))
-					SelectedHero = GetNextHero();
+					Team.SelectedHero = Team.GetNextHero();
 
 			}
 		}
 
-
-		#endregion
-
-
-		#region Misc
-
-
-		/// <summary>
-		/// Does the Team can see this place
-		/// </summary>
-		/// <param name="maze">Maze</param>
-		/// <param name="location">Place to see</param>
-		/// <returns>True if can see the location</returns>
-		/// http://tom.cs.byu.edu/~455/3DDDA.pdf
-		/// http://www.tar.hu/gamealgorithms/ch22lev1sec1.html
-		/// http://www.cse.yorku.ca/~amana/research/grid.pdf
-		/// http://www.siggraph.org/education/materials/HyperGraph/scanline/outprims/drawline.htm#dda
-		public bool CanSee(Maze maze, Point location)
-		{
-			Point dist = Point.Empty;
-
-			// Not the same maze
-			if (Maze != maze)
-				return false;
-
-
-			Rectangle rect = Rectangle.Empty;
-			switch (Location.Direction)
-			{
-				case CardinalPoint.North:
-				{
-					if (!new Rectangle(Location.Coordinate.X - 1, Location.Coordinate.Y - 3, 3, 4).Contains(location) &&
-						location != new Point(Location.Coordinate.X - 3, Location.Coordinate.Y - 3) &&
-						location != new Point(Location.Coordinate.X - 2, Location.Coordinate.Y - 3) &&
-						location != new Point(Location.Coordinate.X - 2, Location.Coordinate.Y - 2) &&
-						location != new Point(Location.Coordinate.X + 3, Location.Coordinate.Y - 3) &&
-						location != new Point(Location.Coordinate.X + 2, Location.Coordinate.Y - 3) &&
-						location != new Point(Location.Coordinate.X + 2, Location.Coordinate.Y - 2))
-						return false;
-
-					// Is there a wall between the Team and the location
-					int dx = location.X - Location.Coordinate.X;
-					int dy = location.Y - Location.Coordinate.Y;
-					float delta = (float) dy / (float) dx;
-					float y = 0;
-					for (int pos = Location.Coordinate.Y ; pos >= location.Y ; pos--)
-					{
-						if (Maze.GetSquare(new Point(pos, Location.Coordinate.Y + (int) y)).Type == SquareType.Wall)
-							return false;
-
-						y += delta;
-					}
-
-					return true;
-				}
-
-				case CardinalPoint.South:
-				{
-					if (!new Rectangle(Location.Coordinate.X - 1, Location.Coordinate.Y, 3, 4).Contains(location) &&
-						location != new Point(Location.Coordinate.X - 3, Location.Coordinate.Y + 3) &&
-						location != new Point(Location.Coordinate.X - 2, Location.Coordinate.Y + 3) &&
-						location != new Point(Location.Coordinate.X - 2, Location.Coordinate.Y + 2) &&
-						location != new Point(Location.Coordinate.X + 3, Location.Coordinate.Y + 3) &&
-						location != new Point(Location.Coordinate.X + 2, Location.Coordinate.Y + 3) &&
-						location != new Point(Location.Coordinate.X + 2, Location.Coordinate.Y + 2))
-						return false;
-
-
-					// Is there a wall between the Team and the location
-					int dx = location.X - Location.Coordinate.X;
-					int dy = location.Y - Location.Coordinate.Y;
-					float delta = (float) dy / (float) dx;
-					float y = 0;
-					for (int pos = Location.Coordinate.Y ; pos <= location.Y ; pos++)
-					{
-						if (Maze.GetSquare(new Point(pos, Location.Coordinate.Y + (int) y)).Type == SquareType.Wall)
-							return false;
-
-						y += delta;
-					}
-
-					return true;
-				}
-
-				case CardinalPoint.West:
-				{
-					if (!new Rectangle(Location.Coordinate.X - 3, Location.Coordinate.Y - 1, 4, 3).Contains(location) &&
-						location != new Point(Location.Coordinate.X - 3, Location.Coordinate.Y - 3) &&
-						location != new Point(Location.Coordinate.X - 3, Location.Coordinate.Y - 2) &&
-						location != new Point(Location.Coordinate.X - 2, Location.Coordinate.Y - 2) &&
-						location != new Point(Location.Coordinate.X - 3, Location.Coordinate.Y + 3) &&
-						location != new Point(Location.Coordinate.X - 3, Location.Coordinate.Y + 2) &&
-						location != new Point(Location.Coordinate.X - 2, Location.Coordinate.Y + 2))
-						return false;
-
-
-
-					// Is there a wall between the Team and the location
-					int dx = location.X - Location.Coordinate.X;
-					int dy = location.Y - Location.Coordinate.Y;
-					float delta = (float) dy / (float) dx;
-					float y = 0;
-					for (int pos = Location.Coordinate.X ; pos >= location.X ; pos--)
-					{
-						if (Maze.GetSquare(new Point(pos, Location.Coordinate.Y + (int) y)).Type == SquareType.Wall)
-							return false;
-
-						y += delta;
-					}
-
-					return true;
-				}
-
-				case CardinalPoint.East:
-				{
-					if (!new Rectangle(Location.Coordinate.X, Location.Coordinate.Y - 1, 4, 3).Contains(location) &&
-						location != new Point(Location.Coordinate.X + 3, Location.Coordinate.Y - 3) &&
-						location != new Point(Location.Coordinate.X + 3, Location.Coordinate.Y - 2) &&
-						location != new Point(Location.Coordinate.X + 2, Location.Coordinate.Y - 2) &&
-						location != new Point(Location.Coordinate.X + 3, Location.Coordinate.Y + 3) &&
-						location != new Point(Location.Coordinate.X + 3, Location.Coordinate.Y + 2) &&
-						location != new Point(Location.Coordinate.X + 2, Location.Coordinate.Y + 2))
-						return false;
-
-					// Is there a wall between the Team and the location
-					int dx = location.X - Location.Coordinate.X;
-					int dy = location.Y - Location.Coordinate.Y;
-					float delta = (float) dy / (float) dx;
-					float y = 0;
-					for (int pos = Location.Coordinate.X ; pos <= location.X ; pos++)
-					{
-						if (Maze.GetSquare(new Point(pos, Location.Coordinate.Y + (int) y)).Type == SquareType.Wall)
-							return false;
-
-						y += delta;
-					}
-
-					return true;
-				}
-
-			}
-
-			return false;
-		}
-
-
-
-		/// <summary>
-		/// Returns the distance between the Team and a location
-		/// </summary>
-		/// <param name="location">Location to check</param>
-		/// <returns>Distance with the Team</returns>
-		public Point Distance(Point location)
-		{
-			return new Point(location.X - Location.Coordinate.X, location.Y - Location.Coordinate.Y);
-		}
 
 		#endregion
 
@@ -2172,600 +1839,19 @@ namespace DungeonEye
 		#endregion
 
 
-		#region Heroes
-
-
-
-		/// <summary>
-		/// Make damage to the whole team
-		/// </summary>
-		/// <param name="damage">Attack roll</param>
-		/// <param name="type">Type of saving throw</param>
-		/// <param name="difficulty">Difficulty</param>
-		public void Damage(Dice damage, SavingThrowType type, int difficulty)
-		{
-			foreach (Hero hero in Heroes)
-				if (hero != null)
-					hero.Damage(damage, type, difficulty);
-		}
-
-		/*
-				/// <summary>
-				/// Hit all heroes in the team
-				/// </summary>
-				/// <param name="damage">Amount of damage</param>
-				public void Hit(int damage)
-				{
-					foreach (Hero hero in Heroes)
-					{
-						if (hero != null)
-							hero.HitPoint.Current -= damage;
-					}
-				}
-		*/
-
-		/// <summary>
-		/// Add experience to the whole team
-		/// </summary>
-		/// <param name="amount">Amount to be distributed among the entire team</param>
-		public void AddExperience(int amount)
-		{
-			if (amount == 0)
-				return;
-
-			int value = amount / HeroCount;
-			foreach (Hero hero in Heroes)
-				if (hero != null)
-					hero.AddExperience(value);
-		}
-
-
-		/// <summary>
-		/// Returns next hero in the team
-		/// </summary>
-		/// <returns></returns>
-		Hero GetNextHero()
-		{
-			int i = 0;
-			for (i = 0 ; i < HeroCount ; i++)
-			{
-				if (Heroes[i] == SelectedHero)
-				{
-					i++;
-					if (i == HeroCount)
-						i = 0;
-
-					break;
-				}
-			}
-
-			return Heroes[i];
-		}
-
-
-		/// <summary>
-		/// Returns previous hero
-		/// </summary>
-		/// <returns></returns>
-		Hero GetPreviousHero()
-		{
-			int i = 0;
-			for (i = 0 ; i < HeroCount ; i++)
-			{
-				if (Heroes[i] == SelectedHero)
-				{
-					i--;
-					if (i < 0)
-						i = HeroCount - 1;
-
-					break;
-				}
-			}
-
-			return Heroes[i];
-		}
-
-
-		/// <summary>
-		/// Returns the position of a hero in the team
-		/// </summary>
-		/// <param name="hero">Hero handle</param>
-		/// <returns>Position of the hero in the team</returns>
-		public HeroPosition GetHeroPosition(Hero hero)
-		{
-			int pos = -1;
-
-			for (int id = 0 ; id < Heroes.Count ; id++)
-			{
-				if (Heroes[id] == hero)
-				{
-					pos = id;
-					break;
-				}
-			}
-
-			if (pos == -1)
-				throw new ArgumentOutOfRangeException("hero");
-
-			return (HeroPosition) pos;
-		}
-
-
-		/// <summary>
-		/// Gets if the hero is in front row
-		/// </summary>
-		/// <param name="hero">Hero handle</param>
-		/// <returns>True if in front line</returns>
-		public bool IsHeroInFront(Hero hero)
-		{
-			return GetHeroFromPosition(HeroPosition.FrontLeft) == hero || GetHeroFromPosition(HeroPosition.FrontRight) == hero;
-		}
-
-
-		/// <summary>
-		/// Gets the entity in front the team at a given sqaure position
-		/// </summary>
-		/// <param name="position">Square position</param>
-		/// <returns>Entity handle or null</returns>
-		public Entity GetFrontEntity(SquarePosition position)
-		{
-			// Center position
-			if (position == SquarePosition.Center)
-				throw new ArgumentOutOfRangeException("position");
-
-			int[][] id = new int[][]
-			{
-				new int[]{2, 2, 1, 1},		// From NW
-				new int[]{3, 3, 0, 0},		// From NE
-				new int[]{0, 0, 3, 3},		// From SW
-				new int[]{1, 1, 2, 2},		// From SE
-			};
-
-			SquarePosition pos = (SquarePosition) id[(int) position][(int) Direction];
-
-			return FrontSquare.GetMonster(pos);
-		}
-
-
-		/// <summary>
-		/// Returns the ground position of a hero
-		/// </summary>
-		/// <param name="Hero">Hero handle</param>
-		/// <returns>Ground position of the hero</returns>
-		public SquarePosition GetHeroGroundPosition(Hero Hero)
-		{
-			SquarePosition groundpos = SquarePosition.Center;
-
-
-			// Get the hero position in the team
-			HeroPosition pos = GetHeroPosition(Hero);
-
-
-			switch (Location.Direction)
-			{
-				case CardinalPoint.North:
-				{
-					if (pos == HeroPosition.FrontLeft)
-						groundpos = SquarePosition.NorthWest;
-					else if (pos == HeroPosition.FrontRight)
-						groundpos = SquarePosition.NorthEast;
-					else if (pos == HeroPosition.MiddleLeft || pos == HeroPosition.RearLeft)
-						groundpos = SquarePosition.SouthWest;
-					else
-						groundpos = SquarePosition.SouthEast;
-				}
-				break;
-				case CardinalPoint.East:
-				{
-					if (pos == HeroPosition.FrontLeft)
-						groundpos = SquarePosition.NorthEast;
-					else if (pos == HeroPosition.FrontRight)
-						groundpos = SquarePosition.SouthEast;
-					else if (pos == HeroPosition.MiddleLeft || pos == HeroPosition.RearLeft)
-						groundpos = SquarePosition.NorthWest;
-					else
-						groundpos = SquarePosition.SouthWest;
-				}
-				break;
-				case CardinalPoint.South:
-				{
-					if (pos == HeroPosition.FrontLeft)
-						groundpos = SquarePosition.SouthEast;
-					else if (pos == HeroPosition.FrontRight)
-						groundpos = SquarePosition.SouthWest;
-					else if (pos == HeroPosition.MiddleLeft || pos == HeroPosition.RearLeft)
-						groundpos = SquarePosition.NorthEast;
-					else
-						groundpos = SquarePosition.NorthWest;
-				}
-				break;
-				case CardinalPoint.West:
-				{
-					if (pos == HeroPosition.FrontLeft)
-						groundpos = SquarePosition.SouthWest;
-					else if (pos == HeroPosition.FrontRight)
-						groundpos = SquarePosition.NorthWest;
-					else if (pos == HeroPosition.MiddleLeft || pos == HeroPosition.RearLeft)
-						groundpos = SquarePosition.SouthEast;
-					else
-						groundpos = SquarePosition.NorthEast;
-				}
-				break;
-			}
-
-
-			return groundpos;
-		}
-
-
-
-		/// <summary>
-		/// Returns the Hero at a given position in the team
-		/// </summary>
-		/// <param name="pos">Position rank</param>
-		/// <returns>Hero handle or null</returns>
-		public Hero GetHeroFromPosition(HeroPosition pos)
-		{
-			return Heroes[(int) pos];
-		}
-
-
-		/// <summary>
-		/// Returns the Hero under the mouse location
-		/// </summary>
-		/// <param name="location">Screen location</param>
-		/// <returns>Hero handle or null</returns>
-		public Hero GetHeroFromLocation(Point location)
-		{
-
-			for (int y = 0 ; y < 3 ; y++)
-				for (int x = 0 ; x < 2 ; x++)
-				{
-					// find the hero under the location 
-					if (new Rectangle(366 + x * 144, 2 + y * 104, 130, 104).Contains(location))
-						return Heroes[y * 2 + x];
-				}
-
-			return null;
-		}
-
-
-
-		/// <summary>
-		/// Removes a hero from the team
-		/// </summary>
-		/// <param name="position">Hero's position</param>
-		public void DropHero(HeroPosition position)
-		{
-			Heroes[(int) position] = null;
-			ReorderHeroes();
-		}
-
-
-		/// <summary>
-		/// Removes a hero from the team
-		/// </summary>
-		/// <param name="position">Hero's position</param>
-		public void DropHero(Hero hero)
-		{
-			if (hero == null)
-				return;
-
-			for (int i = 0 ; i < Heroes.Count ; i++)
-			{
-				if (Heroes[i] == hero)
-				{
-					Heroes[i] = null;
-					ReorderHeroes();
-					return;
-				}
-			}
-		}
-
-
-
-		/// <summary>
-		/// Adds a hero to the team
-		/// </summary>
-		/// <param name="hero"></param>
-		/// <param name="position"></param>
-		public void AddHero(Hero hero, HeroPosition position)
-		{
-			Heroes[(int) position] = hero;
-		}
-
-
-		/// <summary>
-		/// Reorder heroes
-		/// </summary>
-		public void ReorderHeroes()
-		{
-			Heroes.RemoveAll(item => item == null);
-
-			while (Heroes.Count < 6)
-				Heroes.Add(null);
-
-		}
-
-
-		#endregion
-
-
-		#region Hand management
-
-
-		/// <summary>
-		/// Sets the item in the hand
-		/// </summary>
-		/// <param name="item">Item handle</param>
-		public void SetItemInHand(Item item)
-		{
-			// Set the item in the hand
-			ItemInHand = item;
-
-			// Display a message
-			if (ItemInHand != null)
-			{
-				// TODO: If item is identified, display identified message, else display default item's name
-				AddMessage(Language.BuildMessage(2, ItemInHand.Name));
-
-				// Change cursor
-				Mouse.SetTile(item.TileID);
-			}
-			else
-			{
-				Mouse.SetTile(0);
-			}
-		}
-
-		#endregion
-
-
-		#region Movement
-
-
-		/// <summary>
-		/// Move the team according its facing direction
-		/// </summary>
-		/// <param name="front">MoveForward / backward offset</param>
-		/// <param name="strafe">Left / right offset</param>
-		/// <returns>True if move allowed, otherwise false</rereturns>
-		public bool Walk(int front, int strafe)
-		{
-
-			switch (Location.Direction)
-			{
-				case CardinalPoint.North:
-				return Move(new Point(front, strafe));
-
-				case CardinalPoint.South:
-				return Move(new Point(-front, -strafe));
-
-				case CardinalPoint.East:
-				return Move(new Point(-strafe, front));
-
-				case CardinalPoint.West:
-				return Move(new Point(strafe, -front));
-			}
-
-
-			return false;
-		}
-
-
-
-		/// <summary>
-		/// Move team despite the direction the team is facing
-		/// (useful for forcefield)
-		/// </summary>
-		/// <param name="offset">Direction of the move</param>
-		/// <param name="count">Number of square</param>
-		public void Offset(CardinalPoint direction, int count)
-		{
-			Point offset = Point.Empty;
-
-			switch (direction)
-			{
-				case CardinalPoint.North:
-				offset = new Point(0, -1);
-				break;
-				case CardinalPoint.South:
-				offset = new Point(0, 1);
-				break;
-				case CardinalPoint.West:
-				offset = new Point(-1, 0);
-				break;
-				case CardinalPoint.East:
-				offset = new Point(1, 0);
-				break;
-			}
-
-			Move(offset);
-		}
-
-
-		/// <summary>
-		/// Move the team
-		/// </summary>
-		/// <param name="offset">Step offset</param>
-		/// <returns>True if the team moved, or false</returns>
-		private bool Move(Point offset)
-		{
-			// Can't move and force is false
-			if (!CanMove)
-				return false;
-
-			// Get informations about the destination square
-			Point dst = Location.Coordinate;
-			dst.Offset(offset);
-
-
-			// Check all blocking states
-			bool state = true;
-
-			// Is blocking
-			Square dstsquare = Maze.GetSquare(dst);
-			if (dstsquare.IsBlocking)
-				state = false;
-
-
-			// Monsters
-			if (dstsquare.MonsterCount > 0)
-				state = false;
-
-			// If can't pass through
-			if (!state)
-			{
-				AddMessage(Language.GetString(1));
-				return false;
-			}
-
-
-			// Leave the current square
-			if (Square != null)
-				Square.OnTeamLeave();
-
-
-			Location.Coordinate.Offset(offset);
-			LastMove = DateTime.Now;
-			HasMoved = true;
-
-			// Enter the new square
-			Square = Maze.GetSquare(Location.Coordinate);
-			if (Square != null)
-				Square.OnTeamEnter();
-
-
-			return true;
-		}
-
-
-
-		/// <summary>
-		/// Teleport to a new maze
-		/// </summary>
-		/// <param name="name">Name of the maze</param>
-		/// <returns>True on success</returns>
-		public bool Teleport(string name)
-		{
-			DungeonLocation loc = new DungeonLocation(name, Location.Coordinate);
-			return Teleport(loc);
-		}
-
-
-		/// <summary>
-		/// Teleport the team to a new location, but don't change direction
-		/// </summary>
-		/// <param name="location">Location in the dungeon</param>
-		/// <returns>True if teleportion is ok, or false if M. Spoke failed !</returns>
-		public bool Teleport(DungeonLocation location)
-		{
-			if (Dungeon == null || location == null)
-				return false;
-
-			// Destination maze
-			Maze maze = Dungeon.GetMaze(location.Maze);
-			if (maze == null)
-				return false;
-
-			Maze = maze;
-
-			// Leave current square
-			if (Square != null)
-				Square.OnTeamLeave();
-
-			// Change location
-			Location.Coordinate = location.Coordinate;
-			Location.Maze = Maze.Name;
-			Location.Direction = location.Direction;
-
-
-			// New block
-			Square = Maze.GetSquare(location.Coordinate);
-
-			// Enter new block
-			Square.OnTeamEnter();
-
-			return true;
-		}
-
-
-		#endregion
-
-
 		#region Properties
 
 
 		/// <summary>
-		/// Handle to the team
+		/// Heads of the Heroes
 		/// </summary>
-		public static Team Handle
-		{
-			get;
-			private set;
-		}
+		TileSet Heads;
 
 
 		/// <summary>
 		/// Current language
 		/// </summary>
 		StringTable Language;
-
-
-		/// <summary>
-		/// Dungeon to use
-		/// </summary>
-		public Dungeon Dungeon
-		{
-			get;
-			private set;
-		}
-
-
-		/// <summary>
-		/// Current maze
-		/// </summary>
-		public Maze Maze
-		{
-			get;
-			private set;
-		}
-
-
-		/// <summary>
-		/// Location of the team
-		/// </summary>
-		public DungeonLocation Location
-		{
-			get;
-			private set;
-		}
-
-
-		/// <summary>
-		/// Square where the team is
-		/// </summary>
-		public Square Square
-		{
-			get;
-			private set;
-		}
-
-
-		/// <summary>
-		/// Direction the team is facing
-		/// </summary>
-		public CardinalPoint Direction
-		{
-			get
-			{
-				return Location.Direction;
-			}
-			set
-			{
-				Location.Direction = value;
-			}
-		}
 
 
 		/// <summary>
@@ -2785,21 +1871,15 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Heads of the Heroes
-		/// </summary>
-		TileSet Heads;
-
-
-		/// <summary>
 		/// Items tilesets
 		/// </summary>
 		TileSet Items;
 
 
 		/// <summary>
-		/// All heroes in the team
+		/// Interface to display
 		/// </summary>
-		public List<Hero> Heroes
+		static public TeamInterface Interface
 		{
 			get;
 			private set;
@@ -2807,103 +1887,7 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Number of heroes in the team
-		/// </summary>
-		public int HeroCount
-		{
-			get
-			{
-				if (Heroes == null)
-					return 0;
-
-				int count = 0;
-				foreach (Hero hero in Heroes)
-				{
-					if (hero != null)
-						count++;
-				}
-
-				return count;
-			}
-		}
-
-
-		/// <summary>
-		/// Returns the Square in front of the team
-		/// </summary>
-		public Square FrontSquare
-		{
-			get
-			{
-				return Maze.GetSquare(FrontLocation.Coordinate);
-			}
-		}
-
-
-		/// <summary>
-		/// Gets the front wall side
-		/// </summary>
-		public CardinalPoint FrontWallSide
-		{
-			get
-			{
-				CardinalPoint[] points = new CardinalPoint[]
-					{
-						CardinalPoint.South,
-						CardinalPoint.North,
-						CardinalPoint.East,
-						CardinalPoint.West,
-					};
-
-				return points[(int) Direction];
-			}
-		}
-
-
-		/// <summary>
-		/// Returns the location in front of the team
-		/// </summary>
-		public DungeonLocation FrontLocation
-		{
-			get
-			{
-				DungeonLocation location = new DungeonLocation(Location);
-
-				switch (Location.Direction)
-				{
-					case CardinalPoint.North:
-					location.Coordinate = new Point(Location.Coordinate.X, Location.Coordinate.Y - 1);
-					break;
-					case CardinalPoint.South:
-					location.Coordinate = new Point(Location.Coordinate.X, Location.Coordinate.Y + 1);
-					break;
-					case CardinalPoint.West:
-					location.Coordinate = new Point(Location.Coordinate.X - 1, Location.Coordinate.Y);
-					break;
-					case CardinalPoint.East:
-					location.Coordinate = new Point(Location.Coordinate.X + 1, Location.Coordinate.Y);
-					break;
-				}
-
-				return location;
-			}
-		}
-
-
-
-		/// <summary>
-		/// Return the currently selected hero
-		/// </summary>
-		public Hero SelectedHero;
-
-
-		/// <summary>
-		/// Interface to display
-		/// </summary>
-		public TeamInterface Interface;
-
-		/// <summary>
-		/// 
+		/// Spritebatch
 		/// </summary>
 		SpriteBatch Batch;
 
@@ -2931,19 +1915,9 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Item hold in the hand
-		/// </summary>
-		public Item ItemInHand
-		{
-			get;
-			private set;
-		}
-
-
-		/// <summary>
 		/// Dialog GUI
 		/// </summary>
-		public DialogBase Dialog
+		static public DialogBase Dialog
 		{
 			get
 			{
@@ -2957,59 +1931,7 @@ namespace DungeonEye
 				dialog = value;
 			}
 		}
-		DialogBase dialog;
-
-
-		/// <summary>
-		/// If the team moved during the last update
-		/// </summary>
-		public bool HasMoved
-		{
-			get;
-			private set;
-		}
-
-
-		/// <summary>
-		/// Does the team can move
-		/// </summary>
-		public bool CanMove
-		{
-			get
-			{
-				if (LastMove + TeamSpeed > DateTime.Now)
-					return false;
-
-				return true;
-			}
-		}
-
-
-		/// <summary>
-		/// Last time the team moved
-		/// </summary>
-		DateTime LastMove
-		{
-			get;
-			set;
-		}
-
-
-		/// <summary>
-		/// Speed of the team.
-		/// TODO: Check all heroes and return the slowest one
-		/// </summary>
-		TimeSpan TeamSpeed
-		{
-			get;
-			set;
-		}
-
-
-		/// <summary>
-		/// Hero swapping
-		/// </summary>
-		Hero HeroToSwap;
+		static DialogBase dialog;
 
 
 		/// <summary>
@@ -3018,11 +1940,10 @@ namespace DungeonEye
 		InputScheme InputScheme;
 
 
-
 		/// <summary>
 		/// Spell book window
 		/// </summary>
-		public SpellBook SpellBook
+		static public SpellBook SpellBook
 		{
 			get;
 			private set;
@@ -3032,12 +1953,11 @@ namespace DungeonEye
 		/// <summary>
 		/// Draw HP as bar
 		/// </summary>
-		public bool DrawHPAsBar
+		static public bool DrawHPAsBar
 		{
 			get;
 			set;
 		}
-
 
 
 		/// <summary>
@@ -3051,83 +1971,16 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Gets if the whole team is dead
+		/// Hero swapping
 		/// </summary>
-		public bool IsDead
-		{
-			get
-			{
-				foreach (Hero hero in Heroes)
-				{
-					if (hero != null && !hero.IsDead)
-						return false;
-				}
+		Hero HeroToSwap;
 
-				return true;
-			}
-		}
-
-
-		/// <summary>
-		/// Gets if the whole team is uncounscious
-		/// </summary>
-		public bool IsUncounscious
-		{
-			get
-			{
-				foreach (Hero hero in Heroes)
-				{
-					if (hero != null && !hero.IsUnconscious)
-						return false;
-				}
-
-				return true;
-			}
-		}
 
 		#endregion
 	}
 
 
 	#region Enums
-
-
-
-	/// <summary>
-	/// Position of a Hero in the team
-	/// </summary>
-	public enum HeroPosition
-	{
-		/// <summary>
-		/// Front left
-		/// </summary>
-		FrontLeft = 0,
-
-		/// <summary>
-		/// Front right
-		/// </summary>
-		FrontRight = 1,
-
-		/// <summary>
-		/// Center left
-		/// </summary>
-		MiddleLeft = 2,
-
-		/// <summary>
-		/// Center right
-		/// </summary>
-		MiddleRight = 3,
-
-		/// <summary>
-		/// Rear left
-		/// </summary>
-		RearLeft = 4,
-
-		/// <summary>
-		/// Rear right
-		/// </summary>
-		RearRight = 5
-	}
 
 
 

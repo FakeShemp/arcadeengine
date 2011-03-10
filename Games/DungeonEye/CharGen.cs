@@ -132,7 +132,7 @@ namespace DungeonEye
 		void PlayButton_Selected(object sender, EventArgs e)
 		{
 
-			ScreenManager.AddScreen(new Team(Heroes));
+			ScreenManager.AddScreen(new InGameScreen(Heroes));
 			ExitScreen();
 		}
 
@@ -172,7 +172,7 @@ namespace DungeonEye
 							// Create a new hero or remove it
 							if (Heroes[id] == null)
 							{
-								Heroes[id] = new Hero(null);
+								Heroes[id] = new Hero();
 								CurrentState = CharGenStates.SelectRace;
 							}
 							else
