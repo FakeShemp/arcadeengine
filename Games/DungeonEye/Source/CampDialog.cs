@@ -37,9 +37,8 @@ namespace DungeonEye
 		/// <summary>
 		/// Default constructor
 		/// </summary>
-		public CampDialog(Team team)
+		public CampDialog()
 		{
-			Team = team;
 			Windows = new Stack<Window>();
 
 			Buttons = new List<ScreenButton>();
@@ -47,6 +46,9 @@ namespace DungeonEye
 			Rectangle = new Rectangle(0, 0, 352, 288);
 
 			AddWindow(new MainWindow(this));
+
+			// Set default cursor
+			Mouse.SetTile(0);
 		}
 
 
@@ -58,6 +60,10 @@ namespace DungeonEye
 		public override void Exit()
 		{
 			Windows.Clear();
+
+			// Restore item in hand cursor
+			if (Team.Handle.ItemInHand != null)
+				Mouse.SetTile(Team.Handle.ItemInHand.TileID);
 
 			base.Exit();
 		}
@@ -116,15 +122,6 @@ namespace DungeonEye
 		
 
 		#region Properties
-
-		/// <summary>
-		/// Team handle
-		/// </summary>
-		public Team Team
-		{
-			get;
-			private set;
-		}
 
 
 		/// <summary>

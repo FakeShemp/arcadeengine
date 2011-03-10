@@ -108,7 +108,7 @@ namespace DungeonEye.Gui.CampWindows
 			// Display
 			batch.DrawString(GUI.MenuFont, new Point(26, 58), Color.White, "Hours rested : " + hours);
 
-			foreach (Hero hero in Camp.Team.Heroes)
+			foreach (Hero hero in Team.Handle.Heroes)
 			{
 				if (hero == null)
 					continue;
@@ -118,8 +118,8 @@ namespace DungeonEye.Gui.CampWindows
 				{
 
 					// Find the weakest hero and heal him
-					Hero weakest = Camp.Team.Heroes[0];
-					foreach (Hero h in Camp.Team.Heroes)
+					Hero weakest = Team.Handle.Heroes[0];
+					foreach (Hero h in Team.Handle.Heroes)
 					{
 						if (h == null)
 							continue;

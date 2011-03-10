@@ -1110,7 +1110,7 @@ namespace DungeonEye
 			#region Mouse
 
 			#region Left mouse button
-			if (Mouse.IsNewButtonDown(MouseButtons.Left) && Dialog == null) //.IsVisible)
+			if (Mouse.IsNewButtonDown(MouseButtons.Left) && Dialog == null)
 			{
 
 				#region Direction buttons
@@ -1148,8 +1148,7 @@ namespace DungeonEye
 				else if (DisplayCoordinates.CampButton.Contains(mousePos))
 				{
 					SpellBook.Close();
-					Dialog = new CampDialog(this);
-					//CampWindow.Show();
+					Dialog = new CampDialog();
 					Interface = TeamInterface.Main;
 				}
 				#endregion

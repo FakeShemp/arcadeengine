@@ -152,18 +152,18 @@ namespace ArcEngine.Input
 				g.DrawImage(Texture, new Rectangle(Point.Empty, tile.Rectangle.Size), tile.Rectangle, GraphicsUnit.Pixel);
 			}
 
-			SetFormCursor(bm, tile.Origin);
+			SetCursor(bm, tile.Origin);
 
 			return true;
 		}
 
 
 		/// <summary>
-		/// Creates a new hardware cursor
+		/// Defines the mouse cursor
 		/// </summary>
 		/// <param name="bmp">Bitmap handle</param>
 		/// <param name="hotspot">Cursor hotspot</param>
-		static public void SetFormCursor(Bitmap bmp, Point hotspot)
+		static public void SetCursor(Bitmap bmp, Point hotspot)
 		{
 			User32.IconInfo tmp = new User32.IconInfo();
 			User32.GetIconInfo(bmp.GetHicon(), ref tmp);
