@@ -908,13 +908,13 @@ namespace DungeonEye
 				else if (InterfaceCoord.MoveBackward.Contains(mousePos))
 				{
 					if (!Team.Walk(0, 1))
-						GameMessage.AddMessage("You can't go that way.");
+						GameMessage.BuildMessage(1);
 				}
 				// Move right
 				else if (InterfaceCoord.MoveRight.Contains(mousePos))
 				{
 					if (!Team.Walk(1, 0))
-						GameMessage.AddMessage("You can't go that way.");
+						GameMessage.BuildMessage(1);
 				}
 				#endregion
 

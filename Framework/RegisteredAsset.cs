@@ -75,8 +75,9 @@ namespace ArcEngine
 			if (string.IsNullOrEmpty(name))
 				throw new ArgumentNullException("name");
 
-			return Activator.CreateInstance(Editor, new object[]{ Get(name)}) as AssetEditorBase;
-
+			AssetEditorBase form = Activator.CreateInstance(Editor, new object[]{ Get(name)}) as AssetEditorBase;
+			form.Text = name;
+			return form;
 		}
 
 

@@ -67,35 +67,24 @@ namespace ArcEngine.Editor
 			TreeNode bank = ResourceTree.Nodes.Add("Assets");
 			bank.ImageIndex = 31;
 			bank.SelectedImageIndex = 31;
-			
 
-			// For each providers
-			//foreach (Provider provider in ResourceManager.Providers)
+
+			// for each registred asset
+			foreach (RegisteredAsset ra in ResourceManager.RegisteredAssets)
 			{
-				// for each registred asset
-				//foreach(Type type in provider.Assets)
-				foreach(RegisteredAsset ra in ResourceManager.RegisteredAssets)
+				// Get the number of asset
+				if (ra.Count == 0)
+					continue;
+
+				TreeNode node = bank.Nodes.Add(ra.Tag + " (" + ra.Count.ToString() + ")");
+				node.Tag = ra;
+				node.ImageIndex = 34;
+				node.SelectedImageIndex = 35;
+
+				List<string> list = new List<string>();
+				foreach (string str in ra.GetList(list))
 				{
-					// Get the number of asset
-					//MethodInfo mi = provider.GetType().GetMethod("Count").MakeGenericMethod(type);
-					//int count = (int) mi.Invoke(provider, null);
-					if (ra.Count == 0)
-						continue;
-
-					TreeNode node = bank.Nodes.Add(ra.Tag + " (" + ra.Count.ToString() + ")");
-					node.Tag = ra;
-					node.ImageIndex = 34;
-					node.SelectedImageIndex = 35;
-					
-					// Invoke the generic method like this : provider.GetAssets<[Asset Type]>();
-					//mi = provider.GetType().GetMethod("GetAssets").MakeGenericMethod(type);
-					//List<string> list = mi.Invoke(provider, null) as List<string>;
-					List<string> list = new List<string>();
-
-					foreach (string str in ra.GetList(list))
-					{
-						AddNode(node, str, ra.Type);
-					}
+					AddNode(node, str, ra.Type);
 				}
 			}
 
@@ -171,20 +160,15 @@ namespace ArcEngine.Editor
 				return true;
 			}
 
-
 			if (node.Tag == null)
 				return false;
 
-			// Get the provider
-			//Provider provider = ResourceManager.GetAssetProvider(node.Tag as Type);
+			// Get the asset definition
 			RegisteredAsset ra = ResourceManager.GetRegisteredByType(node.Tag as Type);
 			if (ra == null)
 				return false;
 
-			// Edit the asset
-			//object[] args = { node.Text };
-			//MethodInfo mi = provider.GetType().GetMethod("EditAsset").MakeGenericMethod(node.Tag as Type);
-			//AssetEditorBase form = mi.Invoke(provider, args) as AssetEditorBase;
+			// Get the editor
 			AssetEditorBase form = ra.Edit(node.Text);
 			if (form == null)
 				return false;
@@ -198,7 +182,7 @@ namespace ArcEngine.Editor
 		/// <summary>
 		/// Removes an asset
 		/// </summary>
-		/// <param name="node"></param>
+		/// <param name="node">Node handle</param>
 		/// <returns></returns>
 		private bool RemoveAsset(TreeNode node)
 		{
@@ -212,17 +196,10 @@ namespace ArcEngine.Editor
 				if (MessageBox.Show("Do you really want to erase \"" + node.Text + "\" ?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
 					return false;
 
-				// Get the provider
-				//Provider provider = ResourceManager.GetAssetProvider(node.Tag as Type);
+				// Get the asset definition
 				RegisteredAsset ra = ResourceManager.GetRegisteredByType(node.Tag as Type);
 				if (ra == null)
 					return false;
-
-
-				//object[] args = { ResourceTree.SelectedNode.Text };
-				//Type[] types = new Type[] { typeof(string) };
-				//MethodInfo mi = provider.GetType().GetMethod("Remove", types).MakeGenericMethod(node.Tag as Type);
-				//mi.Invoke(provider, args);
 
 				ra.Remove(ResourceTree.SelectedNode.Text);
 			}
@@ -238,11 +215,6 @@ namespace ArcEngine.Editor
 				if (ra == null)
 					return false;
 
-				//Type type = provider.GetType();
-				//MethodInfo mi = type.GetMethod("Remove", new Type[] { });
-
-				//mi = mi.MakeGenericMethod(node.Tag as Type);
-				//mi.Invoke(provider, new object[] { });
 				ra.Clear();
 			}
 
@@ -355,7 +327,7 @@ namespace ArcEngine.Editor
 			xml = xml.Clone();
 			xml.Attributes["name"].Value = node.Text + "_1";
 
-			
+
 
 			// Adds the new asset
 			me = typeof(ResourceManager).GetMethod("AddAsset", new Type[] { typeof(string), typeof(XmlNode) });
@@ -396,7 +368,7 @@ namespace ArcEngine.Editor
 			if (xml == null)
 				return;
 			xml.Attributes["name"].Value = e.Label;
-			
+
 
 
 			// Adds the new asset
