@@ -108,7 +108,7 @@ namespace DungeonEye.Forms
 		{
 			MessageListBox.BeginUpdate();
 			MessageListBox.Items.Clear();
-			foreach (ScreenMessage msg in InGameScreen.Messages)
+			foreach (ScreenMessage msg in GameMessage.Messages)
 				MessageListBox.Items.Add(msg.Message);
 			MessageListBox.EndUpdate();
 		}
@@ -130,8 +130,8 @@ namespace DungeonEye.Forms
 
 			foreach (XmlNode node in xml)
 			{
-				if (node.Name.ToLower() == "team")
-					GameScreen.Load(node);
+				//if (node.Name.ToLower() == "team")
+				//	Team.LoadParty(node);
 			}
 			xml = null;
 
@@ -357,7 +357,7 @@ namespace DungeonEye.Forms
 			if (GameScreen == null)
 				return;
 
-			InGameScreen.Messages.Clear();
+			GameMessage.Clear();
 			RebuildMessages();
 		}
 
@@ -372,7 +372,7 @@ namespace DungeonEye.Forms
 			if (GameScreen == null ||MessageListBox.SelectedIndex == -1)
 				return;
 
-			InGameScreen.Messages.Remove(InGameScreen.Messages[MessageListBox.SelectedIndex]);
+			GameMessage.Messages.Remove(GameMessage.Messages[MessageListBox.SelectedIndex]);
 			RebuildMessages();
 		}
 
@@ -387,7 +387,7 @@ namespace DungeonEye.Forms
 			if (GameScreen == null || string.IsNullOrEmpty(MessageTxtBox.Text))
 				return;
 
-			InGameScreen.AddMessage(MessageTxtBox.Text);
+			GameMessage.AddMessage(MessageTxtBox.Text);
 			MessageTxtBox.Text = "";
 
 			RebuildMessages();

@@ -74,6 +74,7 @@ namespace ArcEngine.Asset
 		/// </summary>
 		public void Dispose()
 		{
+			IsDisposed = true;
 		}
 
 

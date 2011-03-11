@@ -65,7 +65,7 @@ namespace ArcEngine.Graphic
 			Handle = -1;
 
 			IsDisposed = true;
-			InUse--;
+			InUse.Remove(this);
 		}
 
 

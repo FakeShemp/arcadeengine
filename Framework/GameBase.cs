@@ -120,7 +120,6 @@ namespace ArcEngine
 
 			Trace.WriteDebugLine("[GameBase] Closing GameWindow");
 
-			Mouse.Dispose();
 			Window.Activated -= Window_Activated;
 			Window.Deactivate -= Window_Deactivate;
 			Window.Resize -= Window_Resize;
@@ -255,12 +254,23 @@ namespace ArcEngine
 		/// </summary>
 		void Tick()
 		{
+			if (IsExiting)
+			{
+				Audio.AudioManager.Release();
+				Gamepad.Dispose();
+				Mouse.Dispose();
 
+				ResourceManager.Dispose();
+
+				CloseGameWindow();
+
+				Application.Exit();
+			}
 
 			// if we are exiting or in editor mode, do nothing
-			if (IsExiting || EditorMode)
+			if (EditorMode)
 			{
-				Thread.Sleep(10);
+				Thread.Sleep(100);
 				return;
 			}
 
@@ -482,11 +492,11 @@ namespace ArcEngine
 				}
 
 				
-				Audio.AudioManager.Release();
-				Gamepad.Dispose();
+				//Audio.AudioManager.Release();
+				//Gamepad.Dispose();
+				//CloseGameWindow();
 
-				ResourceManager.Dispose();
-				CloseGameWindow();
+				//ResourceManager.Dispose();
 			}
 			catch (Exception e)
 			{
@@ -614,12 +624,7 @@ namespace ArcEngine
 			User32.NativeMessage message;
 			while (!User32.PeekMessage(out message, IntPtr.Zero, 0, 0, 0))
 			{
-				if (IsExiting)
-					//Window.Close();
-					Application.Exit();
-
-				else
-					Tick();
+				Tick();
 			}
 		}
 
@@ -633,7 +638,7 @@ namespace ArcEngine
 		{
 			IsExiting = true;
 
-			Trace.WriteDebugLine("[Game] Exit requested !");
+			Trace.WriteDebugLine("[GameBase] Exit requested !");
 		}
 
 

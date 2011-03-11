@@ -38,12 +38,12 @@ namespace DungeonEye
 	{
 
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
 		static Team()
 		{
 			TeamSpeed = TimeSpan.FromSeconds(0.15f);
-
+			SaveGameName = @"data/savegame.xml";
 
 			Heroes = new List<Hero>();
 			for (int i = 0; i < 6; i++)
@@ -61,9 +61,9 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Initialize the team
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>True on success</returns>
 		static public bool Init()
 		{
 			if (Dungeon != null)
@@ -86,6 +86,19 @@ namespace DungeonEye
 			SelectedHero = Heroes[0];
 
 			return true;
+		}
+
+
+		/// <summary>
+		/// Disposes resources
+		/// </summary>
+		public static void Dispose()
+		{
+			if (Dungeon != null)
+				Dungeon.Dispose();
+			Dungeon = null;
+
+
 		}
 
 
@@ -115,6 +128,7 @@ namespace DungeonEye
 
 
 
+
 		#region IO
 
 		/// <summary>
@@ -122,13 +136,16 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="filename">File name to load</param>
 		/// <returns>True if loaded</returns>
-		static public bool LoadParty(string filename)
+		static public bool LoadParty()
 		{
-			if (!System.IO.File.Exists(filename))
+			if (!System.IO.File.Exists(SaveGameName))
+			{
+				Trace.WriteLine("[Team]LoadParty() : Unable to find file \"" + SaveGameName + "\".");
 				return false;
+			}
 
 			XmlDocument xml = new XmlDocument();
-			xml.Load(filename);
+			xml.Load(SaveGameName);
 
 
 			//Location = null;
@@ -158,14 +175,14 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="filename">File name</param>
 		/// <returns></returns>
-		static public bool SaveParty(string filename)
+		static public bool SaveParty()
 		{
 			XmlWriterSettings settings = new XmlWriterSettings();
 			settings.Indent = true;
 			settings.OmitXmlDeclaration = false;
 			settings.IndentChars = "\t";
 			settings.Encoding = System.Text.ASCIIEncoding.ASCII;
-			XmlWriter xml = XmlWriter.Create(filename, settings);
+			XmlWriter xml = XmlWriter.Create(SaveGameName, settings);
 			Save(xml);
 			xml.Close();
 
@@ -179,7 +196,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="filename">Xml data</param>
 		/// <returns>True if team successfuly loaded, otherwise false</returns>
-		static public bool Load(XmlNode xml)
+		static bool Load(XmlNode xml)
 		{
 			if (xml == null || xml.Name.ToLower() != "team")
 				return false;
@@ -227,7 +244,7 @@ namespace DungeonEye
 
 					case "message":
 					{
-						InGameScreen.AddMessage(node.Attributes["text"].Value, Color.FromArgb(int.Parse(node.Attributes["A"].Value), int.Parse(node.Attributes["R"].Value), int.Parse(node.Attributes["G"].Value), int.Parse(node.Attributes["B"].Value)));
+						GameMessage.AddMessage(node.Attributes["text"].Value, Color.FromArgb(int.Parse(node.Attributes["A"].Value), int.Parse(node.Attributes["R"].Value), int.Parse(node.Attributes["G"].Value), int.Parse(node.Attributes["B"].Value)));
 					}
 					break;
 				}
@@ -245,7 +262,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="filename">XmlWriter</param>
 		/// <returns></returns>
-		static public bool Save(XmlWriter writer)
+		static bool Save(XmlWriter writer)
 		{
 			if (writer == null)
 				return false;
@@ -272,7 +289,7 @@ namespace DungeonEye
 
 
 			System.ComponentModel.TypeConverter colorConverter = System.ComponentModel.TypeDescriptor.GetConverter(typeof(Color));
-			foreach (ScreenMessage message in Messages)
+			foreach (ScreenMessage message in GameMessage.Messages)
 			{
 				writer.WriteStartElement("message");
 				writer.WriteAttributeString("text", message.Message);
@@ -293,6 +310,7 @@ namespace DungeonEye
 
 		#endregion
 
+
 		#region Hand management
 
 
@@ -309,7 +327,7 @@ namespace DungeonEye
 			if (ItemInHand != null)
 			{
 				// TODO: If item is identified, display identified message, else display default item's name
-				InGameScreen.AddMessage(Language.BuildMessage(2, ItemInHand.Name));
+				GameMessage.BuildMessage(2, ItemInHand.Name);
 
 				// Change cursor
 				Mouse.SetTile(item.TileID);
@@ -574,7 +592,7 @@ namespace DungeonEye
 			// If can't pass through
 			if (!state)
 			{
-				InGameScreen.AddMessage(Language.GetString(1));
+				GameMessage.BuildMessage(1);
 				return false;
 			}
 
@@ -943,6 +961,17 @@ namespace DungeonEye
 
 		#region Properties
 
+
+		/// <summary>
+		/// Name of the savegame file
+		/// </summary>
+		static string SaveGameName
+		{
+			get;
+			set;
+		}
+
+
 		/// <summary>
 		/// If the team moved during the last update
 		/// </summary>
@@ -951,6 +980,7 @@ namespace DungeonEye
 			get;
 			private set;
 		}
+
 
 		/// <summary>
 		/// Gets if the whole team is dead
@@ -986,6 +1016,7 @@ namespace DungeonEye
 				return true;
 			}
 		}
+
 
 		/// <summary>
 		/// Does the team can move
@@ -1093,8 +1124,6 @@ namespace DungeonEye
 		}
 
 
-
-
 		/// <summary>
 		/// Square where the team is
 		/// </summary>
@@ -1103,7 +1132,6 @@ namespace DungeonEye
 			get;
 			private set;
 		}
-
 
 
 		/// <summary>

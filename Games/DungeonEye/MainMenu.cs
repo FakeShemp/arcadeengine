@@ -168,12 +168,12 @@ namespace DungeonEye
 		{
 			if (!System.IO.File.Exists("data/savegame.xml"))
 				return;
-			InGameScreen team = new InGameScreen(null);
-			team.SaveGame = "data/savegame.xml";
+			InGameScreen scr = new InGameScreen(null);
+			//team.SaveGame = "data/savegame.xml";
 
 			//Theme.Stop();
 
-			ScreenManager.AddScreen(team);
+			ScreenManager.AddScreen(scr);
 		}
 
 

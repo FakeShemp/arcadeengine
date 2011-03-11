@@ -76,7 +76,7 @@ namespace DungeonEye
 
 					if (hero.SavingThrow(SavingThrowType.Will) > Dice.GetD20(1))
 					{
-						InGameScreen.AddMessage(hero.Name + ": " + Message, MessageColor);
+						GameMessage.AddMessage(hero.Name + ": " + Message, MessageColor);
 						break;
 					}
 				}

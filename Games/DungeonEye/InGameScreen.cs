@@ -46,7 +46,6 @@ namespace DungeonEye
 		public InGameScreen(Hero[] heroes)
 		{
 
-			Messages = new List<ScreenMessage>();
 			SpellBook = new SpellBook();
 
 			DrawHPAsBar = true;
@@ -67,16 +66,6 @@ namespace DungeonEye
 			watch.Start();
 
 			Trace.WriteLine("Content loaded ({0} ms)", watch.ElapsedMilliseconds);
-
-			// Language
-			Language = ResourceManager.CreateAsset<StringTable>("game");
-			if (Language == null)
-			{
-				Trace.WriteLine("ERROR !!! No StringTable defined for the game !!!");
-				ExitScreen();
-				return;
-			}
-			Language.LanguageName = Game.LanguageName;
 
 			// Keyboard input scheme
 			InputScheme = ResourceManager.CreateAsset<InputScheme>(Game.InputSchemeName);
@@ -117,11 +106,11 @@ namespace DungeonEye
 			// Misc init
 			//Dialog.Init();
 			SpellBook.LoadContent();
-
+			GameMessage.Init();
 
 
 			// Loads a saved game
-			if (!LoadParty(SaveGame))
+			if (!LoadParty())
 			{
 				Team.Init();
 			}
@@ -139,9 +128,7 @@ namespace DungeonEye
 		{
 			Trace.WriteDebugLine("[Team] : UnloadContent");
 
-			if (Dungeon != null)
-				Dungeon.Dispose();
-			Dungeon = null;
+			Team.Dispose();
 
 			if (OutlinedFont != null)
 				OutlinedFont.Dispose();
@@ -159,11 +146,7 @@ namespace DungeonEye
 				Heads.Dispose();
 			Heads = null;
 
-			if (TileSet != null)
-			{
-				ResourceManager.UnlockSharedAsset<TileSet>("interface");
-				TileSet.Dispose();
-			}
+			ResourceManager.UnlockSharedAsset<TileSet>("interface");
 			TileSet = null;
 
 			if (Batch != null)
@@ -173,13 +156,6 @@ namespace DungeonEye
 
 			Dialog = null;
 			SpellBook = null;
-			SaveGame = "";
-			//Heroes = null;
-			//SelectedHero = null;
-			Messages = null;
-			//Square = null;
-			//LastMove = DateTime.MinValue;
-			Language = null;
 			InputScheme = null;
 		}
 
@@ -192,14 +168,11 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="filename">File name to load</param>
 		/// <returns>True if loaded</returns>
-		public bool LoadParty(string filename)
+		public bool LoadParty()
 		{
 
-			Team.LoadParty(filename);
-
-			SaveGame = filename;
-
-			AddMessage("Party Loaded...", GameColors.Yellow);
+			Team.LoadParty();
+			GameMessage.AddMessage("Party Loaded...", GameColors.Yellow);
 			return true;
 		}
 
@@ -213,15 +186,13 @@ namespace DungeonEye
 		{
 			try
 			{
-				Team.SaveParty(filename);
-
-				SaveGame = filename;
-				AddMessage("Party saved...", GameColors.Yellow);
+				Team.SaveParty();
+				GameMessage.AddMessage("Party saved...", GameColors.Yellow);
 			}
 			catch (Exception e)
 			{
 				Trace.WriteLine("[Team] SaveParty() : Failed to save the party (filename = '{0}') => {1} !", filename, e.Message);
-				AddMessage("Party NOT saved...", GameColors.Red);
+				GameMessage.AddMessage("Party NOT saved...", GameColors.Red);
 				return false;
 			}
 			return true;
@@ -251,7 +222,7 @@ namespace DungeonEye
 				Team.Maze.Draw(Batch, Team.Location);
 
 			
-			// The backdrop
+			// The interface
 			Batch.DrawTile(TileSet, 0, Point.Empty);
 
 
@@ -261,7 +232,7 @@ namespace DungeonEye
 			Batch.DrawTile(TileSet, 7 + (int)Team.Location.Direction * 3, new Point(302, 316));
 
 
-			// Interfaces
+			// Ingame interfaces
 			if (Interface == TeamInterface.Inventory)
 				DrawInventory(Batch);
 
@@ -287,36 +258,20 @@ namespace DungeonEye
 				//Batch.FillRectangle(InterfaceCoord.MoveBackward, Color.FromArgb(128, Color.Red));
 				//Batch.FillRectangle(InterfaceCoord.MoveLeft, Color.FromArgb(128, Color.Red));
 				//Batch.FillRectangle(InterfaceCoord.MoveRight, Color.FromArgb(128, Color.Red));
-
-
-
 			}
 
 
-
-			// Display the last 3 messages
-			int i = 0;
-			foreach (ScreenMessage msg in Messages)
-			{
-				Batch.DrawString(Font, new Point(8, 360 + i * 12), msg.Color, msg.Message);
-				i++;
-			}
+			// Draw game messages
+			GameMessage.Draw(Batch, Font);
 
 
 			// Draw the spell window
 			SpellBook.Draw(Batch);
 
 
-
+			// Draws the dialog window
 			if (Dialog != null)
-			{
 				Dialog.Draw(Batch);
-			}
-
-			// Draw the cursor or the item in the hand
-			else if (Team.ItemInHand != null)
-				Batch.DrawTile(Items, Team.ItemInHand.TileID, Mouse.Location, 0.5f);
-
 
 
 			Batch.End();
@@ -758,7 +713,7 @@ namespace DungeonEye
 			#endregion
 
 
-			Team.HasMoved = false;
+		//	Team.HasMoved = false;
 
 
 			#region Keyboard
@@ -774,7 +729,7 @@ namespace DungeonEye
 			if (Keyboard.IsNewKeyPress(Keys.W))
 			{
 				DisplayCoordinates.Load();
-				AddMessage("MazeDisplayCoordinates reloaded...");
+				GameMessage.AddMessage("MazeDisplayCoordinates reloaded...");
 			}
 
 
@@ -788,10 +743,10 @@ namespace DungeonEye
 			// Reload data banks
 			if (Keyboard.IsNewKeyPress(Keys.R))
 			{
-				Team.Dungeon = ResourceManager.CreateAsset<Dungeon>("Eye");
+				//Team.Dungeon = ResourceManager.CreateAsset<Dungeon>("Eye");
 				//Dungeon.Team = this;
-				Team.Dungeon.Init();
-				AddMessage("Dungeon reloaded...");
+				//Team.Dungeon.Init();
+				GameMessage.AddMessage("Dungeon reloaded...");
 			}
 
 
@@ -815,7 +770,7 @@ namespace DungeonEye
 			// Load team
 			if (Keyboard.IsNewKeyPress(Keys.L))
 			{
-				LoadParty("data/savegame.xml");
+				LoadParty();
 			}
 
 
@@ -830,7 +785,7 @@ namespace DungeonEye
 					lvl = "Catacomb - " + lvl.Substring(lvl.Length - 2, 2);
 
 					if (Team.Teleport(lvl))
-						AddMessage("Loading " + lvl + ":" + Team.Maze.Description);
+						GameMessage.AddMessage("Loading " + lvl + ":" + Team.Maze.Description);
 
 					break;
 				}
@@ -840,14 +795,14 @@ namespace DungeonEye
 			if (Keyboard.IsNewKeyPress(Keys.T))
 			{
 				if (Team.Teleport("test"))
-					AddMessage("Loading maze test", GameColors.Blue);
+					GameMessage.AddMessage("Loading maze test", GameColors.Blue);
 			}
 
 			// Forest maze
 			if (Keyboard.IsNewKeyPress(Keys.F))
 			{
 				if (Team.Teleport("Forest"))
-					AddMessage("Loading maze forest", Color.Blue);
+					GameMessage.AddMessage("Loading maze forest", Color.Blue);
 			}
 
 			#endregion
@@ -957,13 +912,13 @@ namespace DungeonEye
 				else if (InterfaceCoord.MoveBackward.Contains(mousePos))
 				{
 					if (!Team.Walk(0, 1))
-						AddMessage("You can't go that way.");
+						GameMessage.AddMessage("You can't go that way.");
 				}
 				// Move right
 				else if (InterfaceCoord.MoveRight.Contains(mousePos))
 				{
 					if (!Team.Walk(1, 0))
-						AddMessage("You can't go that way.");
+						GameMessage.AddMessage("You can't go that way.");
 				}
 				#endregion
 
@@ -1232,7 +1187,7 @@ namespace DungeonEye
 						if (item != null)
 						{
 							if (Team.SelectedHero.AddToInventory(item))
-								AddMessage(Language.BuildMessage(2, item.Name));
+								GameMessage.BuildMessage(2, item.Name);
 							else
 								square.DropItem(groundpos, item);
 						}
@@ -1266,7 +1221,7 @@ namespace DungeonEye
 						if (item != null)
 						{
 							if (Team.SelectedHero.AddToInventory(item))
-								AddMessage(Language.BuildMessage(2, item.Name));
+								GameMessage.BuildMessage(2, item.Name);
 							else
 								Team.FrontSquare.DropItem(groundpos, item);
 						}
@@ -1301,7 +1256,7 @@ namespace DungeonEye
 						if (item != null)
 						{
 							if (Team.SelectedHero.AddToInventory(item))
-								AddMessage(Language.BuildMessage(2, item.Name));
+								GameMessage.BuildMessage(2, item.Name);
 							else
 								square.DropItem(groundpos, item);
 						}
@@ -1335,7 +1290,7 @@ namespace DungeonEye
 						if (item != null)
 						{
 							if (Team.SelectedHero.AddToInventory(item))
-								AddMessage(Language.BuildMessage(2, item.Name));
+								GameMessage.BuildMessage(2, item.Name);
 							else
 								Team.FrontSquare.DropItem(groundpos, item);
 						}
@@ -1515,24 +1470,8 @@ namespace DungeonEye
 			#endregion
 
 
-			#region Screen messages update
-
-			// Remove older screen messages and display them
-			while (Messages.Count > 3)
-				Messages.RemoveAt(0);
-
-			foreach (ScreenMessage msg in Messages)
-				msg.Life = msg.Life.Add(-time.ElapsedGameTime);
-
-			// Remove old messages
-			Messages.RemoveAll(
-				delegate(ScreenMessage msg)
-				{
-					return msg.Life.Seconds <= 0;
-				}
-			);
-
-			#endregion
+			// Update messages
+			GameMessage.Update(time);
 
 
 			// Update the dungeon
@@ -1803,42 +1742,6 @@ namespace DungeonEye
 		#endregion
 
 
-		#region On screen messages
-
-		/// <summary>
-		/// Adds a message to the interface
-		/// </summary>
-		/// <param name="msg">Message</param>
-		public static void AddMessage(string msg)
-		{
-			AddMessage(msg, GameColors.White);
-		}
-
-
-		/// <summary>
-		/// Adds a messgae to the interface
-		/// </summary>
-		/// <param name="msg">Message</param>
-		/// <param name="color">Color</param>
-		public static void AddMessage(string msg, Color color)
-		{
-			// Split all new lines
-			string[] lines = msg.Split('\n');
-
-			// Lines too long
-			int maxlen = 47;
-			foreach (string line in lines)
-			{
-				for (int i = 0 ; i < line.Length ; i += maxlen)
-					Messages.Add(new ScreenMessage(line.Substring(i, Math.Min(line.Length - i, maxlen)), color));
-			}
-
-		}
-
-
-		#endregion
-
-
 		#region Properties
 
 
@@ -1846,12 +1749,6 @@ namespace DungeonEye
 		/// Heads of the Heroes
 		/// </summary>
 		TileSet Heads;
-
-
-		/// <summary>
-		/// Current language
-		/// </summary>
-		StringTable Language;
 
 
 		/// <summary>
@@ -1905,16 +1802,6 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Messages to display
-		/// </summary>
-		static public List<ScreenMessage> Messages
-		{
-			get;
-			private set;
-		}
-
-
-		/// <summary>
 		/// Dialog GUI
 		/// </summary>
 		static public DialogBase Dialog
@@ -1961,16 +1848,6 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Name of the savegame file
-		/// </summary>
-		public string SaveGame
-		{
-			get;
-			set;
-		}
-
-
-		/// <summary>
 		/// Hero swapping
 		/// </summary>
 		Hero HeroToSwap;
@@ -1983,9 +1860,8 @@ namespace DungeonEye
 	#region Enums
 
 
-
 	/// <summary>
-	/// Interface to display
+	/// Interface panel to display
 	/// </summary>
 	public enum TeamInterface
 	{
@@ -2011,248 +1887,4 @@ namespace DungeonEye
 	#endregion
 
 
-	/// <summary>
-	/// Interface coordinates
-	/// </summary>
-	struct InterfaceCoord
-	{
-
-		#region Main window
-
-		/// <summary>
-		/// TurnLeft button
-		/// </summary>
-		static public Rectangle TurnLeft = new Rectangle(10, 256, 38, 34);
-
-		/// <summary>
-		/// Move Forward button
-		/// </summary>
-		static public Rectangle MoveForward = new Rectangle(48, 256, 40, 34);
-
-
-		/// <summary>
-		/// Turn right button
-		/// </summary>
-		static public Rectangle TurnRight = new Rectangle(88, 256, 40, 34);
-
-
-		/// <summary>
-		/// Move left button
-		/// </summary>
-		static public Rectangle MoveLeft = new Rectangle(10, 290, 38, 34);
-
-
-		/// <summary>
-		/// Move backward button
-		/// </summary>
-		static public Rectangle MoveBackward = new Rectangle(48, 290, 40, 34);
-
-
-		/// <summary>
-		/// Move right button
-		/// </summary>
-		static public Rectangle MoveRight = new Rectangle(88, 290, 40, 34);
-
-
-		/// <summary>
-		/// Select hero's rectangle
-		/// </summary>
-		static public Rectangle[] SelectHero = new Rectangle[]
-		{
-			new Rectangle(368      ,       2, 126, 20),		// Hero 1
-			new Rectangle(368 + 144,       2, 126, 20),		// Hero 2
-
-			new Rectangle(368      , 104 + 2, 126, 20),		// Hero 3
-			new Rectangle(368 + 144, 104 + 2, 126, 20),		// Hero 4
-
-			new Rectangle(368      , 208 + 2, 126, 20),		// Hero 5
-			new Rectangle(368 + 144, 208 + 2, 126, 20),		// Hero 6
-		};
-
-
-		/// <summary>
-		/// Hero's Face rectangle
-		/// </summary>
-		static public Rectangle[] HeroFace = new Rectangle[]
-		{
-			new Rectangle(368      ,       22, 64, 64),		// Hero 1
-			new Rectangle(368 + 144,       22, 64, 64),		// Hero 2
-
-			new Rectangle(368      , 104 + 22, 64, 64),		// Hero 3
-			new Rectangle(368 + 144, 104 + 22, 64, 64),		// Hero 4
-			
-			new Rectangle(368      , 208 + 22, 64, 64),		// Hero 5
-			new Rectangle(368 + 144, 208 + 22, 64, 64),		// Hero 6
-		};
-
-
-		/// <summary>
-		/// Hero's primary hand rectangle
-		/// </summary>
-		static public Rectangle[] PrimaryHand = new Rectangle[]
-		{
-			new Rectangle(432      ,       22, 62, 32),		// Hero 1
-			new Rectangle(432 + 144,       22, 62, 32),		// Hero 2
-
-			new Rectangle(432      , 104 + 22, 62, 32),		// Hero 3
-			new Rectangle(432 + 144, 104 + 22, 62, 32),		// Hero 4
-
-			new Rectangle(432      , 208 + 22, 62, 32),		// Hero 5
-			new Rectangle(432 + 144, 208 + 22, 60, 32),		// Hero 6
-		};
-
-
-		/// <summary>
-		/// Hero's primary hand rectangle
-		/// </summary>
-		static public Rectangle[] SecondaryHand = new Rectangle[]
-		{
-			new Rectangle(432      ,       54, 62, 32),		// Hero 1
-			new Rectangle(432 + 144,       54, 62, 32),		// Hero 2
-
-			new Rectangle(432      , 104 + 54, 62, 32),		// Hero 3
-			new Rectangle(432 + 144, 104 + 54, 62, 32),		// Hero 4
-
-			new Rectangle(432      , 208 + 54, 62, 32),		// Hero 5
-			new Rectangle(432 + 144, 208 + 54, 62, 32),		// Hero 6
-		};
-
-
-		#endregion
-
-
-
-		#region Inventory screen
-
-		/// <summary>
-		/// Close inventory button
-		/// </summary>
-		static public Rectangle CloseInventory = new Rectangle(360, 4, 64, 64);
-
-
-		/// <summary>
-		/// Show statistics button
-		/// </summary>
-		static public Rectangle ShowStatistics = new Rectangle(602, 296, 36, 36);
-
-
-		/// <summary>
-		/// Close inventory button
-		/// </summary>
-		static public Rectangle PreviousHero = new Rectangle(546, 68, 40, 30);
-
-
-		/// <summary>
-		/// Close inventory button
-		/// </summary>
-		static public Rectangle NextHero = new Rectangle(592, 68, 40, 30);
-
-
-		/// <summary>
-		/// Backpack buttons
-		/// </summary>
-		static public Rectangle[] BackPack = new Rectangle[]
-		{
-			new Rectangle(358     , 76     ,  36, 36),
-			new Rectangle(358 + 36, 76     ,  36, 36),
-			new Rectangle(358     , 76 + 36,  36, 36),
-			new Rectangle(358 + 36, 76 + 36,  36, 36),
-			new Rectangle(358     , 76 + 72,  36, 36),
-			new Rectangle(358 + 36, 76 + 72,  36, 36),
-			new Rectangle(358     , 76 + 108, 36, 36),
-			new Rectangle(358 + 36, 76 + 108, 36, 36),
-			new Rectangle(358     , 76 + 144, 36, 36),
-			new Rectangle(358 + 36, 76 + 144, 36, 36),
-			new Rectangle(358     , 76 + 180, 36, 36),
-			new Rectangle(358 + 36, 76 + 180, 36, 36),
-			new Rectangle(358     , 76 + 216, 36, 36),
-			new Rectangle(358 + 36, 76 + 216, 36, 36),
-		};
-
-		/// <summary>
-		/// Rings buttons
-		/// </summary>
-		static public Rectangle[] Rings = new Rectangle[]
-		{
-			new Rectangle(452     , 268, 20, 20),
-			new Rectangle(452 + 24, 268, 20, 20),
-		};
-
-
-		/// <summary>
-		/// Belt buttons
-		/// </summary>
-		static public Rectangle[] Waist = new Rectangle[]
-		{
-			new Rectangle(596, 184     , 36, 36),
-			new Rectangle(596, 184 + 36, 36, 36),
-			new Rectangle(596, 184 + 72, 36, 36),
-		};
-
-
-		/// <summary>
-		/// Quiver button
-		/// </summary>
-		static public Rectangle Quiver = new Rectangle(446, 108, 36, 36);
-
-
-		/// <summary>
-		/// Quiver button
-		/// </summary>
-		static public Rectangle Armor = new Rectangle(444, 148, 36, 36);
-
-
-		/// <summary>
-		/// Food button
-		/// </summary>
-		static public Rectangle Food = new Rectangle(470, 72, 62, 30);
-
-
-		/// <summary>
-		/// Wrists button
-		/// </summary>
-		static public Rectangle Wrist = new Rectangle(446, 188, 36, 36);
-
-
-		/// <summary>
-		/// Primary Hand inventory button
-		/// </summary>
-		static public Rectangle PrimaryHandInventory = new Rectangle(456, 228, 36, 36);
-
-
-		/// <summary>
-		/// Feet button
-		/// </summary>
-		static public Rectangle Feet = new Rectangle(550, 270, 36, 36);
-
-
-		/// <summary>
-		/// Food button
-		/// </summary>
-		static public Rectangle SecondaryHandInventory = new Rectangle(552, 228, 36, 36);
-
-
-		/// <summary>
-		/// Neck button
-		/// </summary>
-		static public Rectangle Neck = new Rectangle(570, 146, 36, 36);
-
-
-		/// <summary>
-		/// Head button
-		/// </summary>
-		static public Rectangle Head = new Rectangle(592, 106, 36, 36);
-
-
-
-
-
-
-
-
-
-
-
-		#endregion
-	}
 }

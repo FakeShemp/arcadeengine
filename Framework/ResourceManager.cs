@@ -83,20 +83,22 @@ namespace ArcEngine
 		{
 			Trace.WriteDebugLine("[ResourceManager] Dispose()");
 
-
-			if (TileSet.InUse > 0)
-				Trace.WriteLine("[ResourceManager] Dispose() : {0} TileSet remaining...", TileSet.InUse);
+			
+			if (TileSet.InUse.Count > 0)
+			{
+				Trace.WriteLine("{0} TileSet remaining...", TileSet.InUse.Count);
+				foreach (TileSet ts in TileSet.InUse)
+				{
+					Trace.WriteLine("Tileset \"" + ts.Name + "\".");
+				}
+			}
 
 			ClearSharedAssets();
 
-			//foreach (Provider provider in Providers)
-			//	provider.Dispose();
-			//Providers.Clear();
 
 			foreach (StorageBase storage in StorageList)
 				storage.Dispose();
 			StorageList.Clear();
-
 		}
 
 
@@ -529,12 +531,6 @@ namespace ArcEngine
 						return (T)ra.Create(name);
 				}
 
-				// Unknown asset type
-				//if (!AssetProviders.ContainsKey(typeof(T)))
-				//    throw new ArgumentException("Unknown asset type");
-
-				//// Create the asset
-				//return (T)AssetProviders[typeof(T)].Create<T>(name);
 			}
 
 			return default(T);

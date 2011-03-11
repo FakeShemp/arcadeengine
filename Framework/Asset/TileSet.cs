@@ -49,7 +49,10 @@ namespace ArcEngine.Asset
 			tiles = new Dictionary<int, Tile>();
 
 			IsDisposed = false;
-			InUse++;
+
+			if (InUse == null)
+				InUse = new List<TileSet>();
+			InUse.Add(this);
 		}
 
 
@@ -68,19 +71,9 @@ namespace ArcEngine.Asset
 			Name = "";
 
 			IsDisposed = true;
-			InUse--;
+			InUse.Remove(this);
 
 			GC.SuppressFinalize(this);
-		}
-
-
-		/// <summary>
-		/// Destructor
-		/// </summary>
-		~TileSet()
-		{
-		//	if (Texture != null)
-		//		throw new Exception("TileSet : Call Dispose() !!");
 		}
 
 		#endregion
@@ -578,18 +571,20 @@ namespace ArcEngine.Asset
 */
 		#endregion
 
+
 		#region Statics
 
 		/// <summary>
-		/// Number of TileSet currently used
+		/// Tileset currently in use
 		/// </summary>
-		public static int InUse
+		public static List<TileSet> InUse
 		{
 			get;
 			private set;
 		}
 
 		#endregion
+
 
 		#region Properties
 

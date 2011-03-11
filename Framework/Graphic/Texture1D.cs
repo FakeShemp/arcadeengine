@@ -50,7 +50,7 @@ namespace ArcEngine.Graphic
 		public override void Dispose()
 		{
 			IsDisposed = true;
-			InUse--;
+			InUse.Remove(this);
 		}
 	}
 }

@@ -123,7 +123,7 @@ namespace DungeonEye
 				{
 
 					// New level gained
-					InGameScreen.AddMessage(Name + " gained a level in " + prof.Class + " !");
+					GameMessage.AddMessage(Name + " gained a level in " + prof.Class + " !");
 				}
 			}
 

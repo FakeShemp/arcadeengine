@@ -413,7 +413,7 @@
     <Compile Include="Forms\Wizards\NewNameWizard.Designer.cs">
       <DependentUpon>NewNameWizard.cs</DependentUpon>
     </Compile>
-    <Compile Include="GameColors.cs" />
+    <Compile Include="Source\GameColors.cs" />
     <Compile Include="Interfaces\IDoor.cs" />
     <Compile Include="Interfaces\IFloorPlate.cs" />
     <Compile Include="Interfaces\IItem.cs" />
@@ -459,6 +459,7 @@
     <Compile Include="Source\Gui\MessageBox.cs" />
     <Compile Include="Source\HandAction.cs" />
     <Compile Include="Source\MazeZone.cs" />
+    <Compile Include="Source\GameMessage.cs" />
     <Compile Include="Source\MonsterStates\MonsterState.cs">
       <SubType>Code</SubType>
     </Compile>

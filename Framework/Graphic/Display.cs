@@ -86,8 +86,12 @@ namespace ArcEngine.Graphic
 		{
 			Trace.WriteDebugLine("[Display] : Dispose()");
 
-			if (Texture.InUse > 0)
-				Trace.WriteLine("[Display] Dispose() : {0} texture(s) remaining !", Texture.InUse);
+			if (Texture.InUse.Count > 0)
+			{
+				Trace.WriteLine("{0} texture(s) remaining !", Texture.InUse.Count);
+				foreach (Texture tex in Texture.InUse)
+					Trace.WriteLine("Texture handle \"" + tex.Handle + "\"");
+			}
 
 
 			Shader = null;
@@ -526,9 +530,9 @@ namespace ArcEngine.Graphic
 			{
 				if (value == null)
 				{
-					Trace.WriteDebugLine("[Display] : Bind null texture on TU {0}", TextureUnit);
+					//Trace.WriteDebugLine("[Display] : Bind null texture on TU {0}", TextureUnit);
 
-				//	TK.GL.BindTexture((TK.TextureTarget)value.Target, 0);
+					//TK.GL.BindTexture((TK.TextureTarget)value.Target, 0);
 					textures[TextureUnit] = null;
 					return;
 				}

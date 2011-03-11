@@ -26,6 +26,7 @@ using System.Runtime.InteropServices;
 using Imaging = System.Drawing.Imaging;
 using TK = OpenTK.Graphics.OpenGL;
 using ArcEngine.Storage;
+using System.Collections.Generic;
 
 namespace ArcEngine.Graphic
 {
@@ -41,7 +42,9 @@ namespace ArcEngine.Graphic
 		public Texture()
 		{
 			Handle = -1;
-			InUse++;
+			if (InUse == null)
+				InUse = new List<Texture>();
+			InUse.Add(this);
 		}
 
 
@@ -494,7 +497,7 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// Number of textre in use
 		/// </summary>
-		public static int InUse
+		public static List<Texture> InUse
 		{
 			get;
 			protected set;
