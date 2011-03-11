@@ -94,7 +94,7 @@ namespace DungeonEye.Gui.CampWindows
 		{
 			if (((MessageBox) sender).DialogResult == DialogResult.Yes)
 			{
-				Team.LoadParty();
+				GameScreen.Team.LoadParty();
 				Camp.Exit();
 			}
 		}
@@ -121,7 +121,7 @@ namespace DungeonEye.Gui.CampWindows
 		{
 			if (((MessageBox) sender).DialogResult == DialogResult.Yes)
 			{
-				Team.SaveParty();
+				GameScreen.Team.SaveParty();
 				Camp.Exit();
 			}
 		}

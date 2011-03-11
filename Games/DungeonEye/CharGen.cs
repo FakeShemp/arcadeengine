@@ -132,7 +132,7 @@ namespace DungeonEye
 		void PlayButton_Selected(object sender, EventArgs e)
 		{
 
-			ScreenManager.AddScreen(new GameScreen(Heroes));
+			ScreenManager.AddScreen(new GameScreen());
 			ExitScreen();
 		}
 

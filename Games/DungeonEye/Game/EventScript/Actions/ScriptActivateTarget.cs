@@ -11,8 +11,9 @@ namespace DungeonEye.EventScript
 		/// <summary>
 		/// 
 		/// </summary>
+		/// <param name="team"></param>
 		/// <returns></returns>
-		public bool Run()
+		public bool Run(Team team)
 		{
 
 

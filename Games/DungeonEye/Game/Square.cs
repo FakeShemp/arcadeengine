@@ -194,10 +194,10 @@ namespace DungeonEye
 			if (Actor == null)
 				return false;
 
-
+			Team team = GameScreen.Team;
 
 			// A door
-			if (Team.ItemInHand == null)
+			if (team.ItemInHand == null)
 			{
 				Actor.OnClick(location, side);
 				return true;
@@ -206,14 +206,14 @@ namespace DungeonEye
 			// An Alcove 
 			else if (HasAlcove(side) && DisplayCoordinates.Alcove.Contains(location))
 			{
-				if (Team.ItemInHand != null)
+				if (team.ItemInHand != null)
 				{
-					DropAlcoveItem(side, Team.ItemInHand);
-					Team.SetItemInHand(null);
+					DropAlcoveItem(side, team.ItemInHand);
+					team.SetItemInHand(null);
 				}
 				else
 				{
-					Team.SetItemInHand(CollectAlcoveItem(side));
+					team.SetItemInHand(CollectAlcoveItem(side));
 				}
 
 				return true;

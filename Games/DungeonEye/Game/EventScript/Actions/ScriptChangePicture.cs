@@ -38,7 +38,7 @@ namespace DungeonEye.EventScript
 		/// Run actions
 		/// </summary>
 		/// <returns></returns>
-		public bool Run()
+		public bool Run(Team team)
 		{
 
 			return false;

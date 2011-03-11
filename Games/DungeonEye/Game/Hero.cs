@@ -834,8 +834,10 @@ namespace DungeonEye
 			if (!CanUseHand(hand))
 				return;
 
+			Team team = GameScreen.Team;
+
 			// Find the entity in front of the hero
-			Entity target = Team.GetFrontEntity(Team.GetHeroGroundPosition(this));
+			Entity target = team.GetFrontEntity(team.GetHeroGroundPosition(this));
 
 			// Which item is used for the attack
 			Item item = GetInventoryItem(hand == HeroHand.Primary ? InventoryPosition.Primary : InventoryPosition.Secondary);
@@ -844,7 +846,7 @@ namespace DungeonEye
 			// Hand attack
 			if (item == null)
 			{
-				if (Team.IsHeroInFront(this))
+				if (team.IsHeroInFront(this))
 				{
 					Attacks[(int)hand] = new Attack(this, target, null);
 				}
@@ -858,8 +860,8 @@ namespace DungeonEye
 
 
 			// 
-			DungeonLocation loc = new DungeonLocation(Team.Location);
-			loc.Position = Team.GetHeroGroundPosition(this);
+			DungeonLocation loc = new DungeonLocation(team.Location);
+			loc.Position = team.GetHeroGroundPosition(this);
 			switch (item.Type)
 			{
 
@@ -867,7 +869,7 @@ namespace DungeonEye
 				case ItemType.Ammo:
 				{
 					// throw ammo
-					Team.Maze.ThrownItems.Add(new ThrownItem(this, item, loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
+					team.Maze.ThrownItems.Add(new ThrownItem(this, item, loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
 
 					// Empty hand
 					SetInventoryItem(hand == HeroHand.Primary ? InventoryPosition.Primary : InventoryPosition.Secondary, null);
@@ -901,7 +903,7 @@ namespace DungeonEye
 					{
 						if (Quiver > 0)
 						{
-							Team.Maze.ThrownItems.Add(
+							team.Maze.ThrownItems.Add(
 								new ThrownItem(this, ResourceManager.CreateAsset<Item>("Arrow"),
 								loc, TimeSpan.FromSeconds(0.25), int.MaxValue));
 							Quiver--;
@@ -915,7 +917,7 @@ namespace DungeonEye
 					else
 					{
 						// Check is the weapon can reach the target
-						if (!Team.IsHeroInFront(this) && item.Range == 0)
+						if (!team.IsHeroInFront(this) && item.Range == 0)
 						{
 							HandActions[(int)hand] = new HandAction(ActionResult.CantReach);
 						}

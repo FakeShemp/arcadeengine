@@ -59,11 +59,13 @@ namespace DungeonEye
 		/// </summary>
 		public override void Exit()
 		{
+			Team team = GameScreen.Team;
+
 			Windows.Clear();
 
 			// Restore item in hand cursor
-			if (Team.ItemInHand != null)
-				Mouse.SetTile(Team.ItemInHand.TileID);
+			if (team.ItemInHand != null)
+				Mouse.SetTile(team.ItemInHand.TileID);
 
 			base.Exit();
 		}

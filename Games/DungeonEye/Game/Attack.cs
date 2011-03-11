@@ -47,6 +47,7 @@ namespace DungeonEye
 		/// http://nwn2.wikia.com/wiki/Attack_sequence
 		public Attack(Entity striker, Entity target, Item item)
 		{
+			Team team = GameScreen.Team;
 			Time = DateTime.Now;
 			Striker = striker;
 			Target = target;
@@ -59,12 +60,12 @@ namespace DungeonEye
 			DungeonLocation from = null;
 			DungeonLocation to = null;
 			if (striker is Hero)
-				from = Team.Location;
+				from = team.Location;
 			else
 				from = ((Monster)striker).Location;
 
 			if (target is Hero)
-				to = Team.Location;
+				to = team.Location;
 			else
 				to = ((Monster)target).Location;
 

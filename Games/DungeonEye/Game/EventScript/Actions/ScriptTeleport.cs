@@ -45,15 +45,15 @@ namespace DungeonEye.EventScript
 		/// Run actions
 		/// </summary>
 		/// <returns></returns>
-		public bool Run()
+		public bool Run(Team team)
 		{
 			if (Target == null)
 				return false;
 
-			if (Team.Teleport(Target))
+			if (team.Teleport(Target))
 			{
 				if (ChangeDirection)
-					Team.Direction = Target.Direction;
+					team.Direction = Target.Direction;
 				return true;
 			}
 

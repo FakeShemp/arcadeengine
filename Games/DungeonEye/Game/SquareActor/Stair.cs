@@ -94,8 +94,10 @@ namespace DungeonEye
 		/// <returns></returns>
 		public override bool OnTeamEnter()
 		{
-			if (Team.Teleport(Target))
-				Team.Direction = Target.Direction;
+			Team team = GameScreen.Team;
+
+			if (team.Teleport(Target))
+				team.Direction = Target.Direction;
 
 			return true;
 		}

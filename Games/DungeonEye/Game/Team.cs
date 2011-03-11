@@ -34,13 +34,13 @@ namespace DungeonEye
 	/// <summary>
 	/// Represents the player's heroes in the dungeon
 	/// </summary>
-	static public class Team
+	public class Team
 	{
 
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		static Team()
+		public Team()
 		{
 			TeamSpeed = TimeSpan.FromSeconds(0.15f);
 			SaveGameName = @"data/savegame.xml";
@@ -64,7 +64,7 @@ namespace DungeonEye
 		/// Initialize the team
 		/// </summary>
 		/// <returns>True on success</returns>
-		static public bool Init()
+		public bool Init()
 		{
 			if (Dungeon != null)
 				Dungeon.Dispose();
@@ -80,7 +80,7 @@ namespace DungeonEye
 
 			// Set initial location
 			Teleport(Dungeon.StartLocation);
-			Team.Location.Direction = Dungeon.StartLocation.Direction;
+			Location.Direction = Dungeon.StartLocation.Direction;
 
 			// Select the first hero
 			SelectedHero = Heroes[0];
@@ -92,7 +92,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Disposes resources
 		/// </summary>
-		public static void Dispose()
+		public void Dispose()
 		{
 			if (Dungeon != null)
 				Dungeon.Dispose();
@@ -107,7 +107,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="position">Square position</param>
 		/// <returns>Entity handle or null</returns>
-		static public Entity GetFrontEntity(SquarePosition position)
+		public Entity GetFrontEntity(SquarePosition position)
 		{
 			// Center position
 			if (position == SquarePosition.Center)
@@ -136,7 +136,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="filename">File name to load</param>
 		/// <returns>True if loaded</returns>
-		static public bool LoadParty()
+		public bool LoadParty()
 		{
 			if (!System.IO.File.Exists(SaveGameName))
 			{
@@ -175,7 +175,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="filename">File name</param>
 		/// <returns></returns>
-		static public bool SaveParty()
+		public bool SaveParty()
 		{
 			XmlWriterSettings settings = new XmlWriterSettings();
 			settings.Indent = true;
@@ -196,7 +196,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="filename">Xml data</param>
 		/// <returns>True if team successfuly loaded, otherwise false</returns>
-		static bool Load(XmlNode xml)
+		bool Load(XmlNode xml)
 		{
 			if (xml == null || xml.Name.ToLower() != "team")
 				return false;
@@ -262,7 +262,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="filename">XmlWriter</param>
 		/// <returns></returns>
-		static bool Save(XmlWriter writer)
+		bool Save(XmlWriter writer)
 		{
 			if (writer == null)
 				return false;
@@ -318,7 +318,7 @@ namespace DungeonEye
 		/// Sets the item in the hand
 		/// </summary>
 		/// <param name="item">Item handle</param>
-		static public void SetItemInHand(Item item)
+		public void SetItemInHand(Item item)
 		{
 			// Set the item in the hand
 			ItemInHand = item;
@@ -354,7 +354,7 @@ namespace DungeonEye
 		/// http://www.tar.hu/gamealgorithms/ch22lev1sec1.html
 		/// http://www.cse.yorku.ca/~amana/research/grid.pdf
 		/// http://www.siggraph.org/education/materials/HyperGraph/scanline/outprims/drawline.htm#dda
-		static public bool CanSee(Maze maze, Point location)
+		public bool CanSee(Maze maze, Point location)
 		{
 			Point dist = Point.Empty;
 
@@ -364,7 +364,7 @@ namespace DungeonEye
 
 
 			Rectangle rect = Rectangle.Empty;
-			switch (Team.Location.Direction)
+			switch (Location.Direction)
 			{
 				case CardinalPoint.North:
 				{
@@ -489,7 +489,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="location">Location to check</param>
 		/// <returns>Distance with the Team</returns>
-		static public Point Distance(Point location)
+		public Point Distance(Point location)
 		{
 			return new Point(location.X - Location.Coordinate.X, location.Y - Location.Coordinate.Y);
 		}
@@ -506,7 +506,7 @@ namespace DungeonEye
 		/// <param name="front">MoveForward / backward offset</param>
 		/// <param name="strafe">Left / right offset</param>
 		/// <returns>True if move allowed, otherwise false</rereturns>
-		static public bool Walk(int front, int strafe)
+		public bool Walk(int front, int strafe)
 		{
 
 			switch (Location.Direction)
@@ -536,7 +536,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="offset">Direction of the move</param>
 		/// <param name="count">Number of square</param>
-		static public void Offset(CardinalPoint direction, int count)
+		public void Offset(CardinalPoint direction, int count)
 		{
 			Point offset = Point.Empty;
 
@@ -565,7 +565,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="offset">Step offset</param>
 		/// <returns>True if the team moved, or false</returns>
-		static private bool Move(Point offset)
+		private bool Move(Point offset)
 		{
 			// Can't move and force is false
 			if (!CanMove)
@@ -622,7 +622,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="name">Name of the maze</param>
 		/// <returns>True on success</returns>
-		static public bool Teleport(string name)
+		public bool Teleport(string name)
 		{
 			DungeonLocation loc = new DungeonLocation(name, Location.Coordinate);
 			return Teleport(loc);
@@ -634,7 +634,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="location">Location in the dungeon</param>
 		/// <returns>True if teleportion is ok, or false if M. Spoke failed !</returns>
-		static public bool Teleport(DungeonLocation location)
+		public bool Teleport(DungeonLocation location)
 		{
 			if (Dungeon == null || location == null)
 				return false;
@@ -677,7 +677,7 @@ namespace DungeonEye
 		/// <param name="damage">Attack roll</param>
 		/// <param name="type">Type of saving throw</param>
 		/// <param name="difficulty">Difficulty</param>
-		static public void Damage(Dice damage, SavingThrowType type, int difficulty)
+		public void Damage(Dice damage, SavingThrowType type, int difficulty)
 		{
 			foreach (Hero hero in Heroes)
 				if (hero != null)
@@ -703,7 +703,7 @@ namespace DungeonEye
 		/// Add experience to the whole team
 		/// </summary>
 		/// <param name="amount">Amount to be distributed among the entire team</param>
-		static public void AddExperience(int amount)
+		public void AddExperience(int amount)
 		{
 			if (amount == 0)
 				return;
@@ -719,7 +719,7 @@ namespace DungeonEye
 		/// Returns next hero in the team
 		/// </summary>
 		/// <returns></returns>
-		static public Hero GetNextHero()
+		public Hero GetNextHero()
 		{
 			int i = 0;
 			for (i = 0; i < HeroCount; i++)
@@ -742,7 +742,7 @@ namespace DungeonEye
 		/// Returns previous hero
 		/// </summary>
 		/// <returns></returns>
-		static public Hero GetPreviousHero()
+		public Hero GetPreviousHero()
 		{
 			int i = 0;
 			for (i = 0; i < HeroCount; i++)
@@ -766,7 +766,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="hero">Hero handle</param>
 		/// <returns>Position of the hero in the team</returns>
-		static public HeroPosition GetHeroPosition(Hero hero)
+		public HeroPosition GetHeroPosition(Hero hero)
 		{
 			int pos = -1;
 
@@ -791,7 +791,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="hero">Hero handle</param>
 		/// <returns>True if in front line</returns>
-		static public bool IsHeroInFront(Hero hero)
+		public bool IsHeroInFront(Hero hero)
 		{
 			return GetHeroFromPosition(HeroPosition.FrontLeft) == hero || GetHeroFromPosition(HeroPosition.FrontRight) == hero;
 		}
@@ -802,7 +802,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="Hero">Hero handle</param>
 		/// <returns>Ground position of the hero</returns>
-		static public SquarePosition GetHeroGroundPosition(Hero Hero)
+		public SquarePosition GetHeroGroundPosition(Hero Hero)
 		{
 			SquarePosition groundpos = SquarePosition.Center;
 
@@ -873,7 +873,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="pos">Position rank</param>
 		/// <returns>Hero handle or null</returns>
-		static public Hero GetHeroFromPosition(HeroPosition pos)
+		public Hero GetHeroFromPosition(HeroPosition pos)
 		{
 			return Heroes[(int)pos];
 		}
@@ -884,7 +884,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="location">Screen location</param>
 		/// <returns>Hero handle or null</returns>
-		static public Hero GetHeroFromLocation(Point location)
+		public Hero GetHeroFromLocation(Point location)
 		{
 
 			for (int y = 0; y < 3; y++)
@@ -904,7 +904,7 @@ namespace DungeonEye
 		/// Removes a hero from the team
 		/// </summary>
 		/// <param name="position">Hero's position</param>
-		static public void DropHero(HeroPosition position)
+		public void DropHero(HeroPosition position)
 		{
 			Heroes[(int)position] = null;
 			ReorderHeroes();
@@ -915,7 +915,7 @@ namespace DungeonEye
 		/// Removes a hero from the team
 		/// </summary>
 		/// <param name="position">Hero's position</param>
-		static public void DropHero(Hero hero)
+		public void DropHero(Hero hero)
 		{
 			if (hero == null)
 				return;
@@ -937,7 +937,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="hero"></param>
 		/// <param name="position"></param>
-		static public void AddHero(Hero hero, HeroPosition position)
+		public void AddHero(Hero hero, HeroPosition position)
 		{
 			Heroes[(int)position] = hero;
 		}
@@ -946,7 +946,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Reorder heroes
 		/// </summary>
-		static public void ReorderHeroes()
+		public void ReorderHeroes()
 		{
 			Heroes.RemoveAll(item => item == null);
 
@@ -965,7 +965,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Name of the savegame file
 		/// </summary>
-		static string SaveGameName
+		string SaveGameName
 		{
 			get;
 			set;
@@ -975,7 +975,7 @@ namespace DungeonEye
 		/// <summary>
 		/// If the team moved during the last update
 		/// </summary>
-		static public bool HasMoved
+		public bool HasMoved
 		{
 			get;
 			private set;
@@ -985,7 +985,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Gets if the whole team is dead
 		/// </summary>
-		static public bool IsDead
+		public bool IsDead
 		{
 			get
 			{
@@ -1003,7 +1003,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Gets if the whole team is uncounscious
 		/// </summary>
-		static public bool IsUncounscious
+		public bool IsUncounscious
 		{
 			get
 			{
@@ -1021,7 +1021,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Does the team can move
 		/// </summary>
-		static public bool CanMove
+		public bool CanMove
 		{
 			get
 			{
@@ -1036,7 +1036,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Last time the team moved
 		/// </summary>
-		static DateTime LastMove
+		DateTime LastMove
 		{
 			get;
 			set;
@@ -1047,7 +1047,7 @@ namespace DungeonEye
 		/// Speed of the team.
 		/// TODO: Check all heroes and return the slowest one
 		/// </summary>
-		static TimeSpan TeamSpeed
+		TimeSpan TeamSpeed
 		{
 			get;
 			set;
@@ -1057,7 +1057,7 @@ namespace DungeonEye
 		/// <summary>
 		/// All heroes in the team
 		/// </summary>
-		static public List<Hero> Heroes
+		public List<Hero> Heroes
 		{
 			get;
 			private set;
@@ -1068,13 +1068,13 @@ namespace DungeonEye
 		/// <summary>
 		/// Return the currently selected hero
 		/// </summary>
-		static public Hero SelectedHero;
+		public Hero SelectedHero;
 
 
 		/// <summary>
 		/// Item hold in the hand
 		/// </summary>
-		static public Item ItemInHand
+		public Item ItemInHand
 		{
 			get;
 			private set;
@@ -1084,7 +1084,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Number of heroes in the team
 		/// </summary>
-		static public int HeroCount
+		public int HeroCount
 		{
 			get
 			{
@@ -1107,7 +1107,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Dungeon to use
 		/// </summary>
-		static public Dungeon Dungeon
+		public Dungeon Dungeon
 		{
 			get;
 			private set;
@@ -1117,7 +1117,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Current maze
 		/// </summary>
-		static public Maze Maze
+		public Maze Maze
 		{
 			get;
 			private set;
@@ -1127,7 +1127,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Square where the team is
 		/// </summary>
-		static public Square Square
+		public Square Square
 		{
 			get;
 			private set;
@@ -1137,7 +1137,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Gets the front wall side
 		/// </summary>
-		static public CardinalPoint FrontWallSide
+		public CardinalPoint FrontWallSide
 		{
 			get
 			{
@@ -1157,7 +1157,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Returns the location in front of the team
 		/// </summary>
-		static public DungeonLocation FrontLocation
+		public DungeonLocation FrontLocation
 		{
 			get
 			{
@@ -1187,7 +1187,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Returns the Square in front of the team
 		/// </summary>
-		static public Square FrontSquare
+		public Square FrontSquare
 		{
 			get
 			{
@@ -1199,7 +1199,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Direction the team is facing
 		/// </summary>
-		static public CardinalPoint Direction
+		public CardinalPoint Direction
 		{
 			get
 			{
@@ -1214,7 +1214,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Location of the team
 		/// </summary>
-		static public DungeonLocation Location
+		public DungeonLocation Location
 		{
 			get;
 			private set;

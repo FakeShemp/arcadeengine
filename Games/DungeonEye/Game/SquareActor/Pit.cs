@@ -195,8 +195,11 @@ namespace DungeonEye
 			if (Target == null)
 				return false;
 
-			if (Team.Teleport(Target))
-				Team.Damage(Damage, SavingThrowType.Reflex, Difficulty);
+			Team team = GameScreen.Team;
+
+
+			if (team.Teleport(Target))
+				team.Damage(Damage, SavingThrowType.Reflex, Difficulty);
 
 			return true;
 		}

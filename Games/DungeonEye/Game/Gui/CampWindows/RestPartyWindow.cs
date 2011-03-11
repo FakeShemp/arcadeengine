@@ -102,13 +102,15 @@ namespace DungeonEye.Gui.CampWindows
 			if (Start == DateTime.MinValue)
 				return;
 
+			Team team = GameScreen.Team;
+
 			// Number of hour sleeping
 			int hours = (int)(DateTime.Now - Start).TotalSeconds;
 
 			// Display
 			batch.DrawString(GUI.MenuFont, new Point(26, 58), Color.White, "Hours rested : " + hours);
 
-			foreach (Hero hero in Team.Heroes)
+			foreach (Hero hero in team.Heroes)
 			{
 				if (hero == null)
 					continue;
@@ -118,8 +120,8 @@ namespace DungeonEye.Gui.CampWindows
 				{
 
 					// Find the weakest hero and heal him
-					Hero weakest = Team.Heroes[0];
-					foreach (Hero h in Team.Heroes)
+					Hero weakest = team.Heroes[0];
+					foreach (Hero h in team.Heroes)
 					{
 						if (h == null)
 							continue;
@@ -153,6 +155,7 @@ namespace DungeonEye.Gui.CampWindows
 
 
 		#endregion
+
 
 		#region Properties
 

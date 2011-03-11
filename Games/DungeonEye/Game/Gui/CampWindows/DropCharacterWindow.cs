@@ -39,7 +39,7 @@ namespace DungeonEye.Gui.CampWindows
 		/// </summary>
 		public DropNPCWindow(CampDialog camp) : base(camp, "Drop Character")
 		{
-			if (Team.HeroCount <= 4)
+			if (GameScreen.Team.HeroCount <= 4)
 			{
 				Closing = true;
 				return;
@@ -82,7 +82,7 @@ namespace DungeonEye.Gui.CampWindows
 			{
 				for (int x = 0; x < 2; x++)
 				{
-					Hero hero = Team.Heroes[y * 2 + x];
+					Hero hero = GameScreen.Team.Heroes[y * 2 + x];
 					if (hero == null)
 						continue;
 
@@ -113,7 +113,7 @@ namespace DungeonEye.Gui.CampWindows
 				{
 					for (int x = 0; x < 2; x++)
 					{
-						Hero hero = Team.Heroes[y * 2 + x];
+						Hero hero = GameScreen.Team.Heroes[y * 2 + x];
 						if (hero == null)
 							continue;
 
@@ -156,7 +156,7 @@ namespace DungeonEye.Gui.CampWindows
 		{
 			if (((MessageBox)sender).DialogResult == DialogResult.Yes)
 			{
-				Team.DropHero(Hero);
+				GameScreen.Team.DropHero(Hero);
 				Camp.Exit();
 			}
 

@@ -12,7 +12,7 @@ namespace DungeonEye.EventScript
 		/// 
 		/// </summary>
 		/// <returns></returns>
-		public bool Run()
+		public bool Run(Team team)
 		{
 
 

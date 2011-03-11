@@ -29,7 +29,6 @@ using ArcEngine.Input;
 using ArcEngine.Storage;
 using ArcEngine.Utility.ScreenManager;
 using DungeonEye.Gui;
-using ArcEngine.Input;
 
 
 namespace DungeonEye
@@ -168,7 +167,7 @@ namespace DungeonEye
 		{
 			if (!System.IO.File.Exists("data/savegame.xml"))
 				return;
-			GameScreen scr = new GameScreen(null);
+			GameScreen scr = new GameScreen();
 			//team.SaveGame = "data/savegame.xml";
 
 			//Theme.Stop();

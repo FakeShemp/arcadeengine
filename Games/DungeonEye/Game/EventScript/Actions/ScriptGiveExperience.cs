@@ -9,12 +9,12 @@ namespace DungeonEye.EventScript
 	{
 
 		/// <summary>
-		/// 
+		/// Runs the script
 		/// </summary>
-		/// <returns></returns>
-		public bool Run()
+		/// <returns>True on success</returns>
+		public bool Run(Team team)
 		{
-			Team.AddExperience(Amount);
+			team.AddExperience(Amount);
 
 			return true;
 		}

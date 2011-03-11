@@ -35,8 +35,9 @@ namespace DungeonEye.EventScript
 		/// <summary>
 		/// Run the script
 		/// </summary>
+		/// <param name="team">Team handle</param>
 		/// <returns>True on success</returns>
-		bool Run();
+		bool Run(Team team);
 
 
 		#region IO

@@ -69,7 +69,7 @@ namespace DungeonEye
 			// Some message to display
 			if (!string.IsNullOrEmpty(Message))
 			{
-				foreach (Hero hero in Team.Heroes)
+				foreach (Hero hero in GameScreen.Team.Heroes)
 				{
 					if (hero == null)
 						continue;

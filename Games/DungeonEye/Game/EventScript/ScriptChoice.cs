@@ -48,10 +48,10 @@ namespace DungeonEye.EventScript
 		/// Run each action
 		/// </summary>
 		/// <param name="team">Team handle</param>
-		public void Run()
+		public void Run(Team team)
 		{
 			foreach (IScriptAction action in Actions)
-				action.Run();
+				action.Run(team);
 		}
 
 

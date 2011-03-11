@@ -177,17 +177,19 @@ namespace DungeonEye
 		/// <returns></returns>
 		public override bool OnTeamEnter()
 		{
+			Team team = GameScreen.Team;
+
 			switch (Type)
 			{
 				case ForceFieldType.Spin:
 				{
-					Team.Location.Direction = Compass.Rotate(Team.Location.Direction, Spin);
+					team.Location.Direction = Compass.Rotate(team.Location.Direction, Spin);
 				}
 				break;
 
 				case ForceFieldType.Move:
 				{
-					Team.Offset(Move, 1);
+					team.Offset(Move, 1);
 				}
 				break;
 			}

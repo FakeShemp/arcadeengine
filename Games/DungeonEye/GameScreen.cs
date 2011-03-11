@@ -43,13 +43,12 @@ namespace DungeonEye
 		/// Constructor
 		/// </summary>
 		/// <param name="heroes">Heroes in the team</param>
-		public GameScreen(Hero[] heroes)
+		public GameScreen()
 		{
-
 			SpellBook = new SpellBook();
-
 			DrawHPAsBar = true;
 
+			Team = new Team();
 		}
 
 
@@ -429,7 +428,7 @@ namespace DungeonEye
 			// Mini map
 			if (Debug)
 			{
-				Team.Maze.DrawMiniMap(batch, this, new Point(500, 220));
+				Team.Maze.DrawMiniMap(batch, new Point(500, 220));
 
 				// Team location
 				batch.DrawString(Font, new Point(10, 340), GameColors.White, Team.Location.ToString());
@@ -1744,6 +1743,68 @@ namespace DungeonEye
 
 		#region Properties
 
+		#region Statics
+
+		/// <summary>
+		/// Team handle
+		/// </summary>
+		static public Team Team
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// Spell book window
+		/// </summary>
+		static public SpellBook SpellBook
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// Draw HP as bar
+		/// </summary>
+		static public bool DrawHPAsBar
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// Interface to display
+		/// </summary>
+		static public TeamInterface Interface
+		{
+			get;
+			private set;
+		}
+
+		/// <summary>
+		/// Dialog GUI
+		/// </summary>
+		static public DialogBase Dialog
+		{
+			get
+			{
+				return dialog;
+			}
+			set
+			{
+				if (dialog != null)
+					dialog.Dispose();
+
+				dialog = value;
+			}
+		}
+		static DialogBase dialog;
+
+		#endregion
+
 
 		/// <summary>
 		/// Heads of the Heroes
@@ -1774,16 +1835,6 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Interface to display
-		/// </summary>
-		static public TeamInterface Interface
-		{
-			get;
-			private set;
-		}
-
-
-		/// <summary>
 		/// Spritebatch
 		/// </summary>
 		SpriteBatch Batch;
@@ -1802,49 +1853,9 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Dialog GUI
-		/// </summary>
-		static public DialogBase Dialog
-		{
-			get
-			{
-				return dialog;
-			}
-			set
-			{
-				if (dialog != null)
-					dialog.Dispose();
-
-				dialog = value;
-			}
-		}
-		static DialogBase dialog;
-
-
-		/// <summary>
 		/// Allow the player to personalize keyboard input shceme
 		/// </summary>
 		InputScheme InputScheme;
-
-
-		/// <summary>
-		/// Spell book window
-		/// </summary>
-		static public SpellBook SpellBook
-		{
-			get;
-			private set;
-		}
-
-
-		/// <summary>
-		/// Draw HP as bar
-		/// </summary>
-		static public bool DrawHPAsBar
-		{
-			get;
-			set;
-		}
 
 
 		/// <summary>

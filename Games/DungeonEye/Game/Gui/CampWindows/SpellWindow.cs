@@ -72,6 +72,7 @@ namespace DungeonEye.Gui.CampWindows
 		{
 			base.Draw(batch);
 
+			Team team = GameScreen.Team;
 
 			// Display message
 			if (Hero == null)
@@ -88,7 +89,7 @@ namespace DungeonEye.Gui.CampWindows
 			{
 				for (int x = 0 ; x < 2 ; x++)
 				{
-					Hero hero = Team.Heroes[y * 2 + x];
+					Hero hero = team.Heroes[y * 2 + x];
 					if (hero == null)
 						continue;
 
@@ -128,7 +129,7 @@ namespace DungeonEye.Gui.CampWindows
 				{
 					for (int x = 0 ; x < 2 ; x++)
 					{
-						Hero hero = Team.Heroes[y * 2 + x];
+						Hero hero = GameScreen.Team.Heroes[y * 2 + x];
 						if (hero == null)
 							continue;
 
@@ -233,7 +234,7 @@ namespace DungeonEye.Gui.CampWindows
 			get
 			{
 				int count = 0;
-				foreach (Hero hero in Team.Heroes)
+				foreach (Hero hero in GameScreen.Team.Heroes)
 				{
 					// Hero applies
 					if (hero != null && hero.CheckClass(Filter))

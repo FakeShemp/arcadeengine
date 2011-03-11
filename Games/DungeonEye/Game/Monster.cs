@@ -99,6 +99,8 @@ namespace DungeonEye
 			if (!CanMove)
 				return false;
 
+			Team team = GameScreen.Team;
+
 			// Get informations about the destination block
 			Point dst = Location.Coordinate;
 			dst.Offset(offset);
@@ -108,8 +110,8 @@ namespace DungeonEye
 			bool canmove = true;
 
 			// The team
-			if (Team.Location.Maze == Location.Maze &&
-				Team.Location.Coordinate == dst)
+			if (team.Location.Maze == Location.Maze &&
+				team.Location.Coordinate == dst)
 				canmove = false;
 
 			// A wall
@@ -247,7 +249,7 @@ namespace DungeonEye
 			// Reward the team for having killed the entity
 			if (IsDead && attack.Striker is Hero)
 			{
-				Team.AddExperience(Reward);
+				GameScreen.Team.AddExperience(Reward);
 			}
 		}
 
@@ -268,9 +270,9 @@ namespace DungeonEye
 
 			// Reward the team
 			//Team team = Team.Dungeon.Team;
-			foreach (Hero hero in Team.Heroes)
+			foreach (Hero hero in GameScreen.Team.Heroes)
 				if (hero != null)
-					hero.AddExperience(Reward / Team.HeroCount);
+					hero.AddExperience(Reward / GameScreen.Team.HeroCount);
 		}
 
 
@@ -336,6 +338,8 @@ namespace DungeonEye
 			//if (Script.Instance != null)
 			//	Script.Instance.OnUpdate(this);
 
+			Team team = GameScreen.Team;
+
 			// Draw offset
 			if (LastDrawOffset + DrawOffsetDuration < DateTime.Now)
 			{
@@ -374,29 +378,29 @@ namespace DungeonEye
 						Heal();
 
 					// Not in the same maze
-					else if (Team.Maze != Maze)
+					else if (team.Maze != Maze)
 						break;
 
 					// Facing the team
-					else if (Compass.SeekDirection(Location, Team.Location) != Direction)
+					else if (Compass.SeekDirection(Location, team.Location) != Direction)
 					{
-						Direction = Compass.SeekDirection(Location, Team.Location);
+						Direction = Compass.SeekDirection(Location, team.Location);
 					}
 
 					// Can get closer while staying in the same square ?
-					else if (CanGetCloserTo(Team.Location))
+					else if (CanGetCloserTo(team.Location))
 					{
-						GetCloserTo(Team.Location);
+						GetCloserTo(team.Location);
 					}
 
 					// Can do close attack ?
-					else if (CanDoCloseAttack(Team.Location))
+					else if (CanDoCloseAttack(team.Location))
 					{
-						Attack(Team.Location);
+						Attack(team.Location);
 					}
 
 					// If neat the target
-					else if (IsNear(Team.Location))
+					else if (IsNear(team.Location))
 					{
 						// Face the target
 						//if (Location.IsFacing(Team.Location))

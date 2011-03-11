@@ -135,7 +135,7 @@ namespace DungeonEye
 			if (Target == null)
 				return false;
 
-			return Team.Teleport(Target);
+			return GameScreen.Team.Teleport(Target);
 		}
 
 
