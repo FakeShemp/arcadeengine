@@ -34,16 +34,16 @@ namespace DungeonEye
 {
 
 	/// <summary>
-	/// Dungeon crawler game class
+	/// Dungeon crawler game screen class
 	/// </summary>
-	public class InGameScreen : GameScreen
+	public class GameScreen : GameScreenBase
 	{
 
 		/// <summary>
 		/// Constructor
 		/// </summary>
 		/// <param name="heroes">Heroes in the team</param>
-		public InGameScreen(Hero[] heroes)
+		public GameScreen(Hero[] heroes)
 		{
 
 			SpellBook = new SpellBook();

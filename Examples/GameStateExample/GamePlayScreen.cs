@@ -32,7 +32,7 @@ namespace ArcEngine.Examples.GameState
 	/// <summary>
 	/// Main screen of the game
 	/// </summary>
-	class GamePlayScreen : GameScreen
+	class GamePlayScreen : GameScreenBase
 	{
 
 

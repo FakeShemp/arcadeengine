@@ -35,7 +35,7 @@ namespace DungeonEye
 	/// <summary>
 	/// Introduction screen
 	/// </summary>
-	public class IntroScreen : GameScreen
+	public class IntroScreen : GameScreenBase
 	{
 
 		/// <summary>

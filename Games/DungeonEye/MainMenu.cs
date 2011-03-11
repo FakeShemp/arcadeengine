@@ -37,7 +37,7 @@ namespace DungeonEye
 	/// <summary>
 	/// Main menu class
 	/// </summary>
-	public class MainMenu : GameScreen
+	public class MainMenu : GameScreenBase
 	{
 
 		/// <summary>
@@ -168,7 +168,7 @@ namespace DungeonEye
 		{
 			if (!System.IO.File.Exists("data/savegame.xml"))
 				return;
-			InGameScreen scr = new InGameScreen(null);
+			GameScreen scr = new GameScreen(null);
 			//team.SaveGame = "data/savegame.xml";
 
 			//Theme.Stop();

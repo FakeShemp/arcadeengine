@@ -86,7 +86,7 @@ namespace DungeonEye
 			// Create the scripted dialog if there's a picture to show
 			if (!string.IsNullOrEmpty(PictureName))
 			{
-				InGameScreen.Dialog = new ScriptedDialog(Square, this);				
+				GameScreen.Dialog = new ScriptedDialog(Square, this);				
 			}
 
 

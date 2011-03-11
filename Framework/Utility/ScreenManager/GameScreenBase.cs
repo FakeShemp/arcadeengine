@@ -30,14 +30,14 @@ namespace ArcEngine.Utility.ScreenManager
 	/// <summary>
 	/// GameScreen
 	/// </summary>
-	public class GameScreen
+	public class GameScreenBase
 	{
 
 
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public GameScreen()
+		public GameScreenBase()
 		{
 			IsPopupScreen = false;
 		}
@@ -136,8 +136,8 @@ namespace ArcEngine.Utility.ScreenManager
 		/// <summary>
 		/// Helper for updating the screen transition position.
 		/// </summary>
-		/// <param name="gameTime"></param>
-		/// <param name="time"></param>
+		/// <param name="gameTime">Elapsed game time</param>
+		/// <param name="time">Transition time</param>
 		bool UpdateTransition(GameTime gameTime, TimeSpan time)
 		{
 			// How much should we move by?

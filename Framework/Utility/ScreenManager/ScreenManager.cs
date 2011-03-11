@@ -47,37 +47,23 @@ namespace ArcEngine.Utility.ScreenManager
 		#region Initialization
 
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
-		/// <param name="game"></param>
+		/// <param name="game">Gamebase handle</param>
 		public ScreenManager(GameBase game)
 		{
 			Trace.WriteLine("Creating new ScreenManager.");
-			Screens = new List<GameScreen>();
+			Screens = new List<GameScreenBase>();
 			Game = game;
 		}
 
-/*
 
 		/// <summary>
-		/// Initializes the screen manager component.
-		/// </summary>
-		public void Initialize()
-		{
-			foreach (GameScreen screen in Screens)
-			{
-				screen.Initialize();
-			}
-		
-		}
-*/
-
-		/// <summary>
-		/// Load your graphics content.
+		/// Load your resources
 		/// </summary>
 		public void LoadContent()
 		{
-			foreach (GameScreen screen in Screens)
+			foreach (GameScreenBase screen in Screens)
 			{
 				screen.LoadContent();
 			}
@@ -85,11 +71,11 @@ namespace ArcEngine.Utility.ScreenManager
 
 
 		/// <summary>
-		/// 
+		/// Unload resource
 		/// </summary>
 		public void UnloadContent()
 		{
-			foreach (GameScreen screen in Screens)
+			foreach (GameScreenBase screen in Screens)
 			{
 				screen.UnloadContent();
 			}
@@ -107,7 +93,7 @@ namespace ArcEngine.Utility.ScreenManager
 		/// </summary>
 		public void ClearScreens()
 		{
-			foreach (GameScreen screen in GetScreens())
+			foreach (GameScreenBase screen in GetScreens())
 			{
 				screen.OnLeave();
 				screen.ExitScreen();
@@ -120,15 +106,15 @@ namespace ArcEngine.Utility.ScreenManager
 		/// <summary>
 		/// Pushes a GameScreen over the current game state
 		/// </summary>
-		/// <param name="screen"></param>
-		public void AddScreen(GameScreen screen)
+		/// <param name="screen">Screen handle</param>
+		public void AddScreen(GameScreenBase screen)
 		{
 			if (screen == null)
 				return;
 
 			if (Screens.Count > 0)
 			{
-				GameScreen current = Screens[Screens.Count - 1];
+				GameScreenBase current = Screens[Screens.Count - 1];
 				current.OnLeave();
 
 			}
@@ -146,7 +132,7 @@ namespace ArcEngine.Utility.ScreenManager
 		/// Removes the a screen
 		/// </summary>
 		/// <param name="screen">Screen to remove</param>
-		public void RemoveScreen(GameScreen screen)
+		public void RemoveScreen(GameScreenBase screen)
 		{
 			if (screen == null)
 				return;
@@ -165,7 +151,7 @@ namespace ArcEngine.Utility.ScreenManager
 		/// <summary>
 		/// Expose an array holding all the screens.
 		/// </summary>
-		public GameScreen[] GetScreens()
+		public GameScreenBase[] GetScreens()
 		{
 			return Screens.ToArray();
 		}
@@ -182,13 +168,13 @@ namespace ArcEngine.Utility.ScreenManager
 		/// <summary>
 		/// Update game states
 		/// </summary>
-		/// <param name="time"></param>
+		/// <param name="time">Elapsed game time</param>
 		public void Update_OLD(GameTime time)
 		{
 			// Make a copy of the master screen list, to avoid confusion if
 			// the process of updating one screen adds or removes others.
-			List<GameScreen> screensToUpdate = new List<GameScreen>();
-			foreach (GameScreen screen in Screens)
+			List<GameScreenBase> screensToUpdate = new List<GameScreenBase>();
+			foreach (GameScreenBase screen in Screens)
 				screensToUpdate.Add(screen);
 
 			bool hasFocus = true;
@@ -198,7 +184,7 @@ namespace ArcEngine.Utility.ScreenManager
 			while (screensToUpdate.Count > 0)
 			{
 				// Pop the topmost screen off the waiting list.
-				GameScreen screen = screensToUpdate[screensToUpdate.Count - 1];
+				GameScreenBase screen = screensToUpdate[screensToUpdate.Count - 1];
 				screensToUpdate.RemoveAt(screensToUpdate.Count - 1);
 
 		
@@ -229,7 +215,7 @@ namespace ArcEngine.Utility.ScreenManager
 		/// <summary>
 		/// Update game states
 		/// </summary>
-		/// <param name="time"></param>
+		/// <param name="time">Elapsed game time</param>
 		public void Update(GameTime time)
 		{
 			// No screen to update
@@ -238,11 +224,11 @@ namespace ArcEngine.Utility.ScreenManager
 
 			// Make a copy of the master screen list, to avoid confusion if
 			// the process of updating one screen adds or removes others.
-			Stack<GameScreen> screensToUpdate = new Stack<GameScreen>();
-			foreach (GameScreen scr in Screens)
+			Stack<GameScreenBase> screensToUpdate = new Stack<GameScreenBase>();
+			foreach (GameScreenBase scr in Screens)
 				screensToUpdate.Push(scr);
 
-			GameScreen screen = screensToUpdate.Pop();
+			GameScreenBase screen = screensToUpdate.Pop();
 			screen.Update(time, true, false);
 		}
 
@@ -257,11 +243,11 @@ namespace ArcEngine.Utility.ScreenManager
 			if (Screens.Count == 0)
 				return;
 
-			Stack<GameScreen> screensToUpdate = new Stack<GameScreen>();
-			foreach (GameScreen scr in Screens)
+			Stack<GameScreenBase> screensToUpdate = new Stack<GameScreenBase>();
+			foreach (GameScreenBase scr in Screens)
 				screensToUpdate.Push(scr);
 
-			GameScreen screen = screensToUpdate.Pop();
+			GameScreenBase screen = screensToUpdate.Pop();
 			screen.Draw();
 
 			return;
@@ -283,26 +269,14 @@ namespace ArcEngine.Utility.ScreenManager
 
 		#region Properties
 
-/*	
-		/// <summary>
-		/// Font for the Menu items
-		/// </summary>
-		public Font2D Font
-		{
-			get;
-			set;
-		}
-
-*/
-
 		/// <summary>
 		/// GameScreen list
 		/// </summary>
-		List<GameScreen> Screens;
+		List<GameScreenBase> Screens;
 
 
 		/// <summary>
-		/// 
+		/// Gamebase handle
 		/// </summary>
 		public GameBase Game
 		{

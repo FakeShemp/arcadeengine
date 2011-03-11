@@ -28,7 +28,7 @@ using DungeonEye.Gui;
 
 namespace DungeonEye
 {
-	public class AutoMap : GameScreen
+	public class AutoMap : GameScreenBase
 	{
 
         /// <summary>

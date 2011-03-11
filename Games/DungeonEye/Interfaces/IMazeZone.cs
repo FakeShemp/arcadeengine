@@ -30,7 +30,7 @@ namespace DungeonEye.Interfaces
 		/// </summary>
 		/// <param name="zone"></param>
 		/// <param name="team"></param>
-		void OnTeamEnter(MazeZone zone, InGameScreen team);
+		void OnTeamEnter(MazeZone zone, GameScreen team);
 
 
 		/// <summary>
@@ -38,7 +38,7 @@ namespace DungeonEye.Interfaces
 		/// </summary>
 		/// <param name="zone"></param>
 		/// <param name="team"></param>
-		void OnTeamLeave(MazeZone zone, InGameScreen team);
+		void OnTeamLeave(MazeZone zone, GameScreen team);
 
 		/// <summary>
 		/// 

@@ -824,7 +824,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="team">Team handle</param>
 		/// <param name="location">Location on the screen</param>
-		public void DrawMiniMap(SpriteBatch batch, InGameScreen team, Point location)
+		public void DrawMiniMap(SpriteBatch batch, GameScreen team, Point location)
 		{
 			if (batch == null)
 				return;

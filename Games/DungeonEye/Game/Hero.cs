@@ -931,7 +931,7 @@ namespace DungeonEye
 				case ItemType.HolySymbol:
 				case ItemType.Book:
 				{
-					InGameScreen.SpellBook.Open(this, item);
+					GameScreen.SpellBook.Open(this, item);
 
 					//Spell spell = ResourceManager.CreateAsset<Spell>("CreateFood");
 					//spell.Init();

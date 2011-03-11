@@ -36,7 +36,7 @@ namespace ArcEngine.Examples.GameState
 	/// <summary>
 	/// Selection menu screen
 	/// </summary>
-	class MainScreen : GameScreen
+	class MainScreen : GameScreenBase
 	{
 
 		/// <summary>

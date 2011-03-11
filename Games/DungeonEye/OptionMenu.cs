@@ -34,7 +34,7 @@ namespace DungeonEye
 	/// <summary>
 	/// Option menu
 	/// </summary>
-	public class OptionMenu : GameScreen
+	public class OptionMenu : GameScreenBase
 	{
 
 		/// <summary>

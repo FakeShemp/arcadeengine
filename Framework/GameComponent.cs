@@ -28,7 +28,7 @@ namespace ArcEngine
 	public class GameComponent
 	{
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
 		public GameComponent()
 		{
@@ -62,6 +62,8 @@ namespace ArcEngine
 		{
 		}
 
+
+		#region Properties
 
 		/// <summary>
 		/// Indicates the order in which the GameComponent should be updated relative to other GameComponent instances. 
@@ -102,5 +104,7 @@ namespace ArcEngine
 			get;
 			protected set;
 		}
+
+		#endregion
 	}
 }

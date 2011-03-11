@@ -28,7 +28,7 @@ namespace ArcEngine.Examples.GameState
 	/// <summary>
 	/// 
 	/// </summary>
-	class BackgroundScreen : GameScreen
+	class BackgroundScreen : GameScreenBase
 	{
 
 		/// <summary>

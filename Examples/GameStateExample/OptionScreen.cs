@@ -28,7 +28,7 @@ namespace ArcEngine.Examples.GameState
 	/// <summary>
 	/// 
 	/// </summary>
-	class OptionScreen : GameScreen
+	class OptionScreen : GameScreenBase
 	{
 
 		public OptionScreen()

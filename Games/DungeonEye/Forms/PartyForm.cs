@@ -42,7 +42,7 @@ namespace DungeonEye.Forms
 		{
 			InitializeComponent();
 
-			GameScreen = new InGameScreen(null);
+			GameScreen = new GameScreen(null);
 
 			LoadParty();
 		}
@@ -403,7 +403,7 @@ namespace DungeonEye.Forms
 		/// <summary>
 		/// Team
 		/// </summary>
-		InGameScreen GameScreen;
+		GameScreen GameScreen;
 
 		#endregion
 

@@ -26,7 +26,7 @@ using ArcEngine.Utility.ScreenManager;
 
 namespace ArcEngine.Examples.GameState
 {
-	public class QuitScreen : GameScreen
+	public class QuitScreen : GameScreenBase
 	{
 
 		/// <summary>

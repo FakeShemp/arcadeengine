@@ -33,7 +33,7 @@ namespace DungeonEye
 	/// <summary>
 	/// Charactere generation
 	/// </summary>
-	public class CharGen : GameScreen
+	public class CharGen : GameScreenBase
 	{
 
 		/// <summary>
@@ -132,7 +132,7 @@ namespace DungeonEye
 		void PlayButton_Selected(object sender, EventArgs e)
 		{
 
-			ScreenManager.AddScreen(new InGameScreen(Heroes));
+			ScreenManager.AddScreen(new GameScreen(Heroes));
 			ExitScreen();
 		}
 
