@@ -147,7 +147,7 @@ namespace DungeonEye
 				Heads.Dispose();
 			Heads = null;
 
-			ResourceManager.UnlockSharedAsset<TileSet>("interface");
+			ResourceManager.UnlockSharedAsset<TileSet>(TileSet);
 			TileSet = null;
 
 			if (Batch != null)

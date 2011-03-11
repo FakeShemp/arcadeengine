@@ -314,24 +314,24 @@ namespace ArcEngine
 		/// <summary>
 		/// Releases a shared asset
 		/// </summary>
-		/// <param name="name">Name of the asset</param>
-		public void UnlockShared(string name)
+		/// <param name="handle">Asset handle</param>
+		public void UnlockShared(IAsset handle)
 		{
-			if (string.IsNullOrEmpty(name))
+			if (handle == null)
 				return;
 
 			// Asset not found
-			if (!Shared.ContainsKey(name))
+			if (!Shared.ContainsValue(handle))
 				return;
 
-			SharedCounter[name]--;
+			SharedCounter[handle.Name]--;
 
 			// No more used, remove it
-			if (SharedCounter[name] == 0)
+			if (SharedCounter[handle.Name] == 0)
 			{
-				Trace.WriteDebugLine("[RegisteredAsset] Flushing asset \"" + name + "\" of type \"" + Type.Name + "\"");
-				Shared[name].Dispose();
-				Shared.Remove(name);
+				Trace.WriteDebugLine("[RegisteredAsset] Flushing asset \"" + handle.Name + "\" of type \"" + Type.Name + "\"");
+				Shared[handle.Name].Dispose();
+				Shared.Remove(handle.Name);
 			}
 		}
 

@@ -58,52 +58,6 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Dispose
-		/// </summary>
-		public void Dispose()
-		{
-
-			// Dispose each sqaure
-			foreach (List<Square> list in Blocks)
-				foreach (Square square in list)
-					square.Dispose();
-				
-
-			//if (DoorTileset != null)
-			//    DoorTileset.Dispose();
-			ResourceManager.UnlockSharedAsset<TileSet>("Doors");
-
-			//if (ItemsTileset != null)
-			//    ItemsTileset.Dispose();
-			ResourceManager.UnlockSharedAsset<TileSet>(ItemsTilesetName);
-			ItemsTileset = null;
-
-			//if (OverlayTileset != null)
-			//    OverlayTileset.Dispose();
-			ResourceManager.UnlockSharedAsset<TileSet>(OverlayTilesetName);
-			OverlayTileset = null;
-
-			//if (WallTileset != null)
-			//    WallTileset.Dispose();
-			ResourceManager.UnlockSharedAsset<TileSet>(WallTilesetName);
-			WallTileset = null;
-
-			Blocks.Clear();
-			Description = null;
-			Dungeon = null;
-			ThrownItems.Clear();
-			ItemsTilesetName = null;
-			OverlayTilesetName = null;
-			WallTilesetName = null;
-			size = Size.Empty;
-			Zones.Clear();
-			Name = "";
-
-			IsDisposed = true;
-		}
-
-
-		/// <summary>
 		/// Initialize the maze
 		/// </summary>
 		/// <returns></returns>
@@ -153,6 +107,45 @@ namespace DungeonEye
 				}
 
 			return true;
+		}
+
+
+		/// <summary>
+		/// Dispose
+		/// </summary>
+		public void Dispose()
+		{
+
+			// Dispose each sqaure
+			foreach (List<Square> list in Blocks)
+				foreach (Square square in list)
+					square.Dispose();
+				
+
+			ResourceManager.UnlockSharedAsset<TileSet>(DoorTileset);
+			DoorTileset = null;
+
+			ResourceManager.UnlockSharedAsset<TileSet>(ItemsTileset);
+			ItemsTileset = null;
+
+			ResourceManager.UnlockSharedAsset<TileSet>(OverlayTileset);
+			OverlayTileset = null;
+
+			ResourceManager.UnlockSharedAsset<TileSet>(WallTileset);
+			WallTileset = null;
+
+			Blocks.Clear();
+			Description = null;
+			Dungeon = null;
+			ThrownItems.Clear();
+			ItemsTilesetName = null;
+			OverlayTilesetName = null;
+			WallTilesetName = null;
+			size = Size.Empty;
+			Zones.Clear();
+			Name = "";
+
+			IsDisposed = true;
 		}
 
 

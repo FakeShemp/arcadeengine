@@ -43,26 +43,6 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Dispose
-		/// </summary>
-		public void Dispose()
-		{
-			foreach (Maze maze in Mazes.Values)
-				maze.Dispose();
-			Mazes.Clear();
-
-			// Remove shared asset
-			ResourceManager.UnlockSharedAsset<TileSet>("Doors");
-
-
-			StartLocation = null;
-			Note = "";
-
-			IsDisposed = true;
-		}
-
-
-		/// <summary>
 		/// Initialize the dungeon
 		/// </summary>
 		/// <returns>True if all is OK</returns>
@@ -77,7 +57,7 @@ namespace DungeonEye
 
 
 			// Generate shared asset
-			ResourceManager.CreateSharedAsset<TileSet>("Doors", "Doors");
+			//ResourceManager.CreateSharedAsset<TileSet>("Doors", "Doors");
 
 
 			foreach (Maze maze in Mazes.Values)
@@ -86,6 +66,26 @@ namespace DungeonEye
 			return true;
 		}
 
+
+
+		/// <summary>
+		/// Dispose
+		/// </summary>
+		public void Dispose()
+		{
+			foreach (Maze maze in Mazes.Values)
+				maze.Dispose();
+			Mazes.Clear();
+
+			// Remove shared asset
+			//ResourceManager.UnlockSharedAsset<TileSet>();
+
+
+			StartLocation = null;
+			Note = "";
+
+			IsDisposed = true;
+		}
 
 
 		/// <summary>

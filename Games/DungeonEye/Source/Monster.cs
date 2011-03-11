@@ -81,7 +81,7 @@ namespace DungeonEye
 		/// </summary>
 		public void Dispose()
 		{
-			ResourceManager.UnlockSharedAsset<TileSet>("Monsters");
+			ResourceManager.UnlockSharedAsset<TileSet>(Tileset);
 			Tileset = null;
 
 			IsDisposed = true;

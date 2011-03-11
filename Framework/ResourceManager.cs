@@ -647,10 +647,10 @@ namespace ArcEngine
 		/// Removes a shared asset
 		/// </summary>
 		/// <typeparam name="T">Asset type</typeparam>
-		/// <param name="name">Name of the asset</param>
-		static public void UnlockSharedAsset<T>(string name) where T : IAsset
+		/// <param name="handle">Handle of the asset</param>
+		static public void UnlockSharedAsset<T>(IAsset handle) where T : IAsset
 		{
-			if (string.IsNullOrEmpty(name))
+			if (handle == null)
 				return;
 
 			lock (BinaryLock)
@@ -659,7 +659,7 @@ namespace ArcEngine
 				{
 					if (ra.Type == typeof(T))
 					{
-						ra.UnlockShared(name);
+						ra.UnlockShared(handle);
 						return;
 					}
 				}
