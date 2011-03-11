@@ -69,7 +69,7 @@ namespace DungeonEye
 
 			DrawOffsetDuration = TimeSpan.FromSeconds(1.0f + GameBase.Random.NextDouble());
 
-			//StateManager = new StateManager();
+			HitDisplayDuration = TimeSpan.FromSeconds(0.5f);
 
 			IsDisposed = false;
 		}
@@ -222,7 +222,7 @@ namespace DungeonEye
 		/// Try to attack a location
 		/// </summary>
 		/// <param name="location">Location to attack</param>
-		/// <returns></returns>
+		/// <returns>True on success</returns>
 		public bool Attack(DungeonLocation location)
 		{
 
@@ -234,7 +234,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Attack the entity
 		/// </summary>
-		/// <param name="attack">Attack</param>
+		/// <param name="attack">Attack handle</param>
 		public override void Hit(Attack attack)
 		{
 			if (attack == null)
@@ -245,6 +245,10 @@ namespace DungeonEye
 				return;
 
 			HitPoint.Current -= LastAttack.Hit;
+
+			LastHit = DateTime.Now;
+
+			OnHit();
 
 			// Reward the team for having killed the entity
 			if (IsDead && attack.Striker is Hero)
@@ -269,7 +273,6 @@ namespace DungeonEye
 				Square.DropItem(Position, ResourceManager.CreateAsset<Item>(item));
 
 			// Reward the team
-			//Team team = Team.Dungeon.Team;
 			foreach (Hero hero in GameScreen.Team.Heroes)
 				if (hero != null)
 					hero.AddExperience(Reward / GameScreen.Team.HeroCount);
@@ -911,10 +914,17 @@ namespace DungeonEye
 					Point position = DisplayCoordinates.GetGroundPosition(pos, squarepos);
 					position.Offset(DrawOffset.X / offsetscale[offset].X, DrawOffset.Y / offsetscale[offset].Y);
 
+					// Display color
+					Color tint = colors[(int)pos];
+
+					// Display in red if monster is hit
+					if (LastHit + HitDisplayDuration > DateTime.Now)
+						tint = Color.Red;
+
 					// Draw
 					batch.DrawTile(Tileset, 
 						GetTileID(teamdir), 
-						position, colors[(int)pos], 
+						position, tint, 
 						0.0f, 
 						NeedSwapSprite(teamdir) ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 
 						0.0f);
@@ -1760,7 +1770,7 @@ namespace DungeonEye
 			get
 			{
 				// HACK
-				return 2; // +Experience.GetLevelFromXP(Reward) / 2;
+				return 2;// +Experience.GetLevelFromXP(Reward) / 2;
 			}
 		}
 
@@ -1836,17 +1846,6 @@ namespace DungeonEye
 		{
 			get;
 			set;
-		}
-
-
-		/// <summary>
-		/// TileSet of the monster
-		/// </summary>
-		[Browsable(false)]
-		public TileSet Tileset
-		{
-			get;
-			protected set;
 		}
 
 
@@ -2000,6 +1999,17 @@ namespace DungeonEye
 		{
 			get;
 			set;
+		}
+
+
+		/// <summary>
+		/// TileSet of the monster
+		/// </summary>
+		[Browsable(false)]
+		public TileSet Tileset
+		{
+			get;
+			protected set;
 		}
 
 
@@ -2221,6 +2231,19 @@ namespace DungeonEye
 			get;
 			set;
 		}
+
+
+		/// <summary>
+		/// Time when the monster was hit
+		/// </summary>
+		DateTime LastHit;
+
+
+		/// <summary>
+		/// How many time display the monster was hit
+		/// </summary>
+		TimeSpan HitDisplayDuration;
+
 
 		/// <summary>
 		/// Name of the sound when is hit by an attack
