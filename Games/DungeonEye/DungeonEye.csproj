@@ -413,6 +413,7 @@
     <Compile Include="Forms\Wizards\NewNameWizard.Designer.cs">
       <DependentUpon>NewNameWizard.cs</DependentUpon>
     </Compile>
+    <Compile Include="GameSettings.cs" />
     <Compile Include="Game\GameColors.cs" />
     <Compile Include="Interfaces\IDoor.cs" />
     <Compile Include="Interfaces\IFloorPlate.cs" />

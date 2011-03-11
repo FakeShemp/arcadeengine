@@ -43,7 +43,6 @@ namespace DungeonEye
 		public Team()
 		{
 			TeamSpeed = TimeSpan.FromSeconds(0.15f);
-			SaveGameName = @"data/savegame.xml";
 
 			Heroes = new List<Hero>();
 			for (int i = 0; i < 6; i++)
@@ -138,17 +137,15 @@ namespace DungeonEye
 		/// <returns>True if loaded</returns>
 		public bool LoadParty()
 		{
-			if (!System.IO.File.Exists(SaveGameName))
+			if (!System.IO.File.Exists(GameSettings.SaveGameName))
 			{
-				Trace.WriteLine("[Team]LoadParty() : Unable to find file \"" + SaveGameName + "\".");
+				Trace.WriteLine("[Team]LoadParty() : Unable to find file \"" + GameSettings.SaveGameName + "\".");
 				return false;
 			}
 
 			XmlDocument xml = new XmlDocument();
-			xml.Load(SaveGameName);
+			xml.Load(GameSettings.SaveGameName);
 
-
-			//Location = null;
 
 			foreach (XmlNode node in xml)
 			{
@@ -182,7 +179,7 @@ namespace DungeonEye
 			settings.OmitXmlDeclaration = false;
 			settings.IndentChars = "\t";
 			settings.Encoding = System.Text.ASCIIEncoding.ASCII;
-			XmlWriter xml = XmlWriter.Create(SaveGameName, settings);
+			XmlWriter xml = XmlWriter.Create(GameSettings.SaveGameName, settings);
 			Save(xml);
 			xml.Close();
 
@@ -960,16 +957,6 @@ namespace DungeonEye
 
 
 		#region Properties
-
-
-		/// <summary>
-		/// Name of the savegame file
-		/// </summary>
-		string SaveGameName
-		{
-			get;
-			set;
-		}
 
 
 		/// <summary>

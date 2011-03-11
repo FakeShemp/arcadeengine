@@ -870,56 +870,7 @@ namespace DungeonEye
 
 					batch.FillRectangle(new Rectangle(location.X + x * 4, location.Y + y * 4, 4, 4), color);
 
-
-/*
-					// Draw monster target
-					foreach (Monster monster in block.Monsters)
-					{
-						if (monster == null)
-							continue;
-
-						Point start = monster.Location.Position;
-						start.X *= 4;
-						start.Y *= 4;
-						start.Offset(location);
-						start.Offset(2, 2);
-
-						// Sight zone
-						Rectangle zone = new Rectangle(
-							monster.SightZone.X * 4 + location.X,
-							monster.SightZone.Y * 4 + location.Y,
-							monster.SightZone.Width * 4,
-							monster.SightZone.Height * 4);
-						batch.FillRectangle(zone, Color.FromArgb(128, Color.Red));
-
-						// Detect zone
-						zone = new Rectangle(
-							monster.DetectionZone.X * 4 + location.X,
-							monster.DetectionZone.Y * 4 + location.Y,
-							monster.DetectionZone.Width * 4,
-							monster.DetectionZone.Height * 4);
-						batch.FillRectangle(zone, Color.FromArgb(128, Color.Green));
-
-
-						//TODO a deplacer en tant que propriete de Monster
-						if (monster.StateManager.CurrentState is MoveState)
-						{
-							// Direction
-							MoveState state = monster.StateManager.CurrentState as MoveState;
-							Point end = state.TargetLocation.Position;
-							end.X *= 4;
-							end.Y *= 4;
-							end.Offset(location);
-							end.Offset(2, 2);
-
-							batch.DrawLine(start, end, Color.Blue);
-						}
-					}
-*/
 				}
-
-
-
 		}
 
 

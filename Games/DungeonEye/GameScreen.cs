@@ -42,11 +42,9 @@ namespace DungeonEye
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="heroes">Heroes in the team</param>
 		public GameScreen()
 		{
 			SpellBook = new SpellBook();
-			DrawHPAsBar = true;
 
 			Team = new Team();
 		}
@@ -57,7 +55,6 @@ namespace DungeonEye
 		/// </summary>
 		public override void LoadContent()
 		{
-			DrawHPAsBar = Settings.GetBool("HPAsBar");
 
 			Batch = new SpriteBatch();
 
@@ -325,7 +322,7 @@ namespace DungeonEye
 					}
 
 					// HP
-					if (DrawHPAsBar)
+					if (GameSettings.DrawHPAsBar)
 					{
 						float percent = (float) hero.HitPoint.Current / (float) hero.HitPoint.Max;
 						Color color = GameColors.Green;
@@ -1762,16 +1759,6 @@ namespace DungeonEye
 		{
 			get;
 			private set;
-		}
-
-
-		/// <summary>
-		/// Draw HP as bar
-		/// </summary>
-		static public bool DrawHPAsBar
-		{
-			get;
-			set;
 		}
 
 

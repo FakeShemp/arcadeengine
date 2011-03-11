@@ -57,7 +57,7 @@ namespace DungeonEye.Gui.CampWindows
 
 			button = new ScreenButton("", new Rectangle(16, 108, 320, 28));
 			button.Selected += new EventHandler(Bar_Selected);
-			if (GameScreen.DrawHPAsBar)
+			if (GameSettings.DrawHPAsBar)
 				button.Text = "Bar Graphs are ON";
 			else
 				button.Text = "Bar Graphs are OFF";
@@ -146,18 +146,17 @@ namespace DungeonEye.Gui.CampWindows
 		{
 			ScreenButton button = sender as ScreenButton;
 
-			if (GameScreen.DrawHPAsBar)
+			if (GameSettings.DrawHPAsBar)
 			{
 				button.Text = "Bar Graphs are OFF";
-				GameScreen.DrawHPAsBar = false;
+				GameSettings.DrawHPAsBar = false;
 			}
 			else
 			{
 				button.Text = "Bar Graphs are ON";
-				GameScreen.DrawHPAsBar = true;
+				GameSettings.DrawHPAsBar = true;
 			}
 
-			Settings.SetToken("HPAsBar", GameScreen.DrawHPAsBar);
 		}
 
 
