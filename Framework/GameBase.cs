@@ -55,7 +55,7 @@ namespace ArcEngine
 			TargetElapsedTime = TimeSpan.FromTicks(166667L);
 			IsFixedTimeStep = true;
 
-			Random = new Random((int)DateTime.Now.Ticks);
+			Random = new Random((int) DateTime.Now.Ticks);
 			Components = new GameComponentCollection();
 		}
 
@@ -186,7 +186,7 @@ namespace ArcEngine
 		{
 			Trace.WriteDebugLine("[Game] Form_Closing()");
 			UnloadContent();
-		
+
 		}
 
 		#endregion
@@ -260,10 +260,6 @@ namespace ArcEngine
 				Gamepad.Dispose();
 				Mouse.Dispose();
 
-				ResourceManager.Dispose();
-
-				CloseGameWindow();
-
 				Application.Exit();
 			}
 
@@ -304,10 +300,11 @@ namespace ArcEngine
 				elapsedAdjustedTime = MaximumElapsedTime;
 
 
+			#region Fixed time step
 			// check if we are using a fixed or variable time step
 			if (IsFixedTimeStep)
 			{
-				if (Math.Abs((long)(elapsedAdjustedTime.Ticks - TargetElapsedTime.Ticks)) < (TargetElapsedTime.Ticks >> 6))
+				if (Math.Abs((long) (elapsedAdjustedTime.Ticks - TargetElapsedTime.Ticks)) < (TargetElapsedTime.Ticks >> 6))
 					elapsedAdjustedTime = TargetElapsedTime;
 
 				// update the timing state
@@ -365,7 +362,7 @@ namespace ArcEngine
 
 					// Perform an update
 					Update(GameTime);
-					for (int i = 0; i < Components.Count; i++)
+					for (int i = 0 ; i < Components.Count ; i++)
 					{
 						GameComponent component = Components[i];
 						if (component.Enabled)
@@ -380,6 +377,9 @@ namespace ArcEngine
 					TotalGameTime += TargetElapsedTime;
 				}
 			}
+			#endregion
+
+			#region Variable time step
 			else
 			{
 				TimeSpan span3 = elapsedAdjustedTime;
@@ -409,7 +409,7 @@ namespace ArcEngine
 
 						// Perform an update
 						Update(GameTime);
-						for (int i = 0; i < Components.Count; i++)
+						for (int i = 0 ; i < Components.Count ; i++)
 						{
 							GameComponent component = Components[i];
 							if (component.Enabled)
@@ -426,7 +426,7 @@ namespace ArcEngine
 					}
 				}
 			}
-
+			#endregion
 
 
 			if (!flag)
@@ -443,7 +443,7 @@ namespace ArcEngine
 				Display.Statistics.Reset();
 
 				Draw();
-				for (int i = 0; i < Components.Count; i++)
+				for (int i = 0 ; i < Components.Count ; i++)
 				{
 					GameComponent component = Components[i];
 					if (component.IsVisible)
@@ -491,12 +491,11 @@ namespace ArcEngine
 					IsRunning = false;
 				}
 
-				
+
 				//Audio.AudioManager.Release();
 				//Gamepad.Dispose();
 				//CloseGameWindow();
 
-				//ResourceManager.Dispose();
 			}
 			catch (Exception e)
 			{
@@ -514,6 +513,7 @@ namespace ArcEngine
 			}
 
 
+			ResourceManager.Dispose();
 			Trace.Close();
 		}
 
@@ -542,7 +542,7 @@ namespace ArcEngine
 		/// <param name="game">Game</param>
 		public delegate void OnDeactivatedEventHandler(GameBase game);
 
-		
+
 		/// <summary>
 		/// Raised when the game loses focus.
 		/// </summary>
@@ -563,7 +563,7 @@ namespace ArcEngine
 
 
 
-		#region Editor 
+		#region Editor
 
 
 		/// <summary>
@@ -642,7 +642,7 @@ namespace ArcEngine
 		}
 
 
-	
+
 		#region Time management
 
 		/// <summary>
@@ -705,13 +705,13 @@ namespace ArcEngine
 		/// <param name="storage">Storage to use</param>
 		public void RunEditor(StorageBase storage)
 		{
-	
+
 			bool mousestate = Mouse.Visible;
 			Mouse.Visible = true;
 
 			if (Window != null)
 				Window.Hide();
-	
+
 			Editor = new EditorMainForm(storage);
 			OnEditorEnter(Editor);
 			Editor.ShowDialog();
@@ -725,7 +725,7 @@ namespace ArcEngine
 				Window.BringToFront();
 			}
 			Mouse.Visible = mousestate;
-			
+
 		}
 
 		#endregion

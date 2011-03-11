@@ -104,7 +104,6 @@ namespace DungeonEye
 			OutlinedFont = ResourceManager.CreateSharedAsset<BitmapFont>("outline", "outline");
 
 			// Misc init
-			//Dialog.Init();
 			SpellBook.LoadContent();
 			GameMessage.Init();
 
@@ -129,6 +128,8 @@ namespace DungeonEye
 			Trace.WriteDebugLine("[Team] : UnloadContent");
 
 			Team.Dispose();
+			SpellBook.Dispose();
+			SpellBook = null;
 
 			if (OutlinedFont != null)
 				OutlinedFont.Dispose();
@@ -155,7 +156,6 @@ namespace DungeonEye
 
 
 			Dialog = null;
-			SpellBook = null;
 			InputScheme = null;
 		}
 

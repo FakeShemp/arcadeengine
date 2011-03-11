@@ -42,7 +42,7 @@ namespace DungeonEye
 	/// 
 	/// 
 	/// </summary>
-	public class Square
+	public class Square : IDisposable
 	{
 
 
@@ -82,6 +82,20 @@ namespace DungeonEye
 					Monsters[i].OnSpawn();
 			}
 		}
+
+
+		/// <summary>
+		/// Dispose resources
+		/// </summary>
+		public void Dispose()
+		{
+			foreach (Monster monster in Monsters)
+			{
+				if (monster != null)
+					monster.Dispose();
+			}
+		}
+
 
 
 		/// <summary>

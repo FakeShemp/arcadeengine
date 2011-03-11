@@ -32,7 +32,7 @@ namespace DungeonEye
 	/// <summary>
 	/// Speel window
 	/// </summary>
-	public class SpellBook
+	public class SpellBook : IDisposable
 	{
 
 		/// <summary>
@@ -52,6 +52,15 @@ namespace DungeonEye
 			Tileset = ResourceManager.LockSharedAsset<TileSet>("Interface");
 		}
 
+
+		/// <summary>
+		/// Dispose resources
+		/// </summary>
+		public void Dispose()
+		{
+			ResourceManager.UnlockSharedAsset<TileSet>("Interface");
+			Tileset = null;
+		}
 
 
 		/// <summary>

@@ -62,6 +62,13 @@ namespace DungeonEye
 		/// </summary>
 		public void Dispose()
 		{
+
+			// Dispose each sqaure
+			foreach (List<Square> list in Blocks)
+				foreach (Square square in list)
+					square.Dispose();
+				
+
 			//if (DoorTileset != null)
 			//    DoorTileset.Dispose();
 			ResourceManager.UnlockSharedAsset<TileSet>("Doors");
