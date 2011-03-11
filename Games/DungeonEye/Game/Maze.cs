@@ -651,6 +651,10 @@ namespace DungeonEye
 			#endregion
 
 			#region Items on ground before a door
+
+			// Zoom factors for items
+			float[] ItemZoom = new float[] { 1.0f, 0.66f, 0.5f, 0.33f };
+
 			List<Item>[] list = block.GetItems(view);
 			if (!block.IsWall)
 			{
@@ -676,7 +680,8 @@ namespace DungeonEye
 								Color color = offset < 2 ? Color.White : Color.Gray;
 
 
-								batch.DrawTile(ItemsTileset, item.GroundTileID + offset, point);
+								//batch.DrawTile(ItemsTileset, item.GroundTileID + offset, point);
+								batch.DrawTile(ItemsTileset, item.GroundTileID, point, color, 0.0f, SpriteEffects.None, 0.0f);
 								//batch.DrawTile(ItemsTileset, item.GroundTileID, point, rect, color);
 								//batch.DrawTile(ItemsTileset, item.GroundTileID + offset, point, Color.Green);
 							}

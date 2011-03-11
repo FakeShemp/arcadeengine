@@ -92,6 +92,10 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>
+    </ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="OpenTK.GLControl">
       <HintPath>..\..\Framework\Libraries\OpenTK\Release\OpenTK.GLControl.dll</HintPath>
@@ -648,6 +652,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="credits.txt" />
+    <EmbeddedResource Include="data\GameIcon.ico" />
     <Content Include="data\settings.xml" />
     <Content Include="data\savegame.xml" />
     <EmbeddedResource Include="Forms\data\editor.png" />

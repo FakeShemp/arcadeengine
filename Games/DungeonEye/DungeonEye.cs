@@ -100,6 +100,7 @@ namespace DungeonEye
 			param.FullScreen = Settings.GetBool("FullScreen");
 			CreateGameWindow(param);
 
+			Window.Icon = new Icon(@"data/GameIcon.ico");
 			Window.Text = "Dungeon Eye";
 
 			// Default texture parameters
