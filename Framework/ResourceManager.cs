@@ -84,7 +84,7 @@ namespace ArcEngine
 			Trace.WriteDebugLine("[ResourceManager] Dispose()");
 
 			
-			if (TileSet.InUse.Count > 0)
+			if (TileSet.InUse != null && TileSet.InUse.Count > 0)
 			{
 				Trace.WriteLine("{0} TileSet remaining...", TileSet.InUse.Count);
 				foreach (TileSet ts in TileSet.InUse)
