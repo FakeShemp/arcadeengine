@@ -67,7 +67,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiTexture", "Examples\Mu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TowerDefense", "Games\TowerDefense\TowerDefense.csproj", "{D58B4F99-738A-4696-BFF2-46761338948B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Monster Blob", "Monster Blob\Monster Blob.csproj", "{DF5D9606-7433-4709-8984-E30F4E520835}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Monster Blob", "Examples\Monster Blob\Monster Blob.csproj", "{DF5D9606-7433-4709-8984-E30F4E520835}"
 EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
