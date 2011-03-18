@@ -61,6 +61,7 @@ namespace ArcEngine.Examples.MonsterBlob
 			p.Minor = 1;
 			CreateGameWindow(p);
 			Window.Text = "Blob Monster - Thanks to http://www.charliesgames.com/wordpress/?p=441";
+			Cursor.Hide();
 
 			Monsters = new List<Monster>();
 			Monsters.Add(new Monster(new Vector2(200.0f, 100.0f), 1.0f, 7));

@@ -44,13 +44,13 @@ namespace ArcEngine.Examples.MonsterBlob
 		public Monster(Vector2 position, float speed, int segment)
 		{
 			Speed = speed;
-			Tail = new List<Vector2>();
-			Tail.Add(position);
+			Position = position;
+			Elasticity = 0.3f;
 
+			Tail = new List<Vector2>();
 			for (int i = 0; i < segment; i++)
 				Tail.Add(new Vector2(position));
 
-			Elasticity = 0.3f;
 		}
 
 
@@ -69,9 +69,10 @@ namespace ArcEngine.Examples.MonsterBlob
 				);
 
 			Position = new Vector2(Mouse.Location.X, Mouse.Location.Y);
+			Tail[0] = Position;
 
 			// Draw the main body
-			for (int i = 1; i < Tail.Count; i++)
+			for (int i = 1; i < Segments; i++)
 			{
 				// calculate distance between the current point and the previous
 				Vector2 distance = new Vector2(Tail[i - 1].X - Tail[i].X, Tail[i - 1].Y - Tail[i].Y);
@@ -105,8 +106,10 @@ namespace ArcEngine.Examples.MonsterBlob
 			float rotation = 0.0f;
 			Color color = Color.White;
 
+
+
 			// Draw the main body
-			for (int i = 0; i < Segments - 1; i++)
+			for (int i = 1; i < Segments - 1; i++)
 			{
 				color = Color.FromArgb((int)(255 * 0.15f), 0, 200, 150);
 				scale = new Vector2(1 + (0.5f * (float)Math.Sin(i * 35.0f)), 1 + (0.5f * (float)Math.Sin(i * 35.0f)));
@@ -131,8 +134,8 @@ namespace ArcEngine.Examples.MonsterBlob
 			// on the first and last section because we want other things at those coords.
 			for (int i = 1; i < Segments - 2; i++)
 			{
-				color = Color.FromArgb((int)(255 * 1.0f), 255, 255, 255);
 				scale = new Vector2(0.1f + (0.6f * (float)Math.Sin(i * 30.0f)), 0.05f);
+			
 				rotation = 33.0f * (float)Math.Sin(Time * 5.0f + i * 30.0f) + CalculateAngle(Tail[i], Tail[i - 1]);
 				batch.Draw(texture, Tail[i], rect, color, rotation, origin, scale, SpriteEffects.None, 0.0f);
 
@@ -165,13 +168,13 @@ namespace ArcEngine.Examples.MonsterBlob
 			origin = new Vector2(0, texture.Size.Width / 2.0f);
 			color = Color.FromArgb((int)(255 * 0.8f), 0, 200, 155);
 			angle += 95.0f;
-			batch.Draw(texture, Tail[0], rect, color, angle, origin, scale, SpriteEffects.None, 0.0f);
+			batch.Draw(texture, Position, rect, color, angle, origin, scale, SpriteEffects.None, 0.0f);
 
 			// Yellow light
 			scale = new Vector2(4.0f, 4.0f);
 			color = Color.FromArgb((int)(255 * 0.2f), 255, 255, 0);
 			origin = new Vector2(texture.Size.Width / 2.0f, texture.Size.Height / 2.0f);
-			batch.Draw(texture, Tail[0], rect, color, rotation, origin, scale, SpriteEffects.None, 0.0f);
+			batch.Draw(texture, Position, rect, color, rotation, origin, scale, SpriteEffects.None, 0.0f);
 
 		}
 
@@ -194,17 +197,7 @@ namespace ArcEngine.Examples.MonsterBlob
 		/// <summary>
 		/// Location on the screen
 		/// </summary>
-		public Vector2 Position
-		{
-			get
-			{
-				return Tail[0];
-			}
-			set
-			{
-				Tail[0] = value;
-			}
-		}
+		public Vector2 Position;
 
 
 		/// <summary>
