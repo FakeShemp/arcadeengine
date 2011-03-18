@@ -74,19 +74,15 @@ namespace ArcEngine.Examples.MonsterBlob
 		{
 			// Render states
 			Display.RenderState.ClearColor = Color.Black;
-			//Display.RenderState.DepthTest = true;
-			Display.RenderState.AlphaTest = true;
+			Display.BlendingFunction(BlendingFactorSource.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 			Display.RenderState.Blending = true;
 
 			Batch = new SpriteBatch();
 
-			#region Load the texture
+			// Load the texture
 			Texture = new Texture2D("data/blob.png");
-			//Texture.VerticalWrap = TextureWrapFilter.Repeat;
-			//Texture.HorizontalWrap = TextureWrapFilter.Repeat;
 			Texture.MagFilter = TextureMagFilter.Linear;
 			Texture.MinFilter = TextureMinFilter.Linear;
-			#endregion
 
 		}
 
@@ -132,24 +128,32 @@ namespace ArcEngine.Examples.MonsterBlob
 
 			Batch.Begin();
 
-			foreach (Monster monster in Monsters)
-			    monster.Draw(Batch, Texture);
 
-
-			Vector4 rect = new Vector4(400, 400, 200, 200);
+			Vector4 rect = new Vector4(400, 400, 10, 10);
 			Vector2 origin = new Vector2(rect.Width / 2.0f, rect.Height / 2.0f);
 			rotation += 2.0f;
 
-	//		Batch.DrawRectangle(rect, Color.White, 0.0f, origin);
+			Batch.DrawRectangle(rect, Color.FromArgb(128, Color.Red), rotation, origin, new Vector2(4.0f, 2.0f));
 
 
-			Batch.Draw(Texture, rect.Xy, Vector4.Zero, Color.White, -rotation, new Vector2(Texture.Size.Width / 2.0f, Texture.Size.Height / 2.0f), new Vector2(3.0f, 2.0f), SpriteEffects.None, 0.0f);
-	//		Batch.Draw(Texture, rect.Xy, Vector4.Zero, Color.Red, 0.0f, Vector2.Zero, new Vector2(1.0f, 1.0f), SpriteEffects.None, 0.0f);
-	//		Batch.Draw(Texture, rect.Xy, Color.White);
+
+			//Batch.DrawRectangle(rect, Color.White, 0.0f, origin);
+
+
+			//Batch.Draw(Texture, rect.Xy, Vector4.Zero, Color.White, -rotation, new Vector2(Texture.Size.Width / 2.0f, Texture.Size.Height / 2.0f), new Vector2(3.0f, 1.0f), SpriteEffects.None, 0.0f);
+			Batch.DrawPoint(rect.Xy, Color.Red);
+
+
+			//Batch.Draw(Texture, rect.Xy, Vector4.Zero, Color.FromArgb(128, Color.White), -rotation, new Vector2(Texture.Size.Width / 2.0f, Texture.Size.Height / 2.0f), new Vector2(3.0f, 2.0f), SpriteEffects.None, 0.0f);
+
+			foreach (Monster monster in Monsters)
+				monster.Draw(Batch, Texture);
+
+
 			Batch.End();
 		}
 
-			float rotation = 0.0f;
+		float rotation = 0.0f;
 
 		#region Properties
 

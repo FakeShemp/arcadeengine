@@ -326,8 +326,8 @@ namespace ArcEngine.Graphic
 			{
                 // Destination on the screen
 				Vector4 dst = new Vector4(
-					Sprites[i].Destination.X - Sprites[i].Origin.X, 
-                    Sprites[i].Destination.Y - Sprites[i].Origin.Y,
+					Sprites[i].Destination.X - Sprites[i].Origin.X * Sprites[i].Scale.X,
+					Sprites[i].Destination.Y - Sprites[i].Origin.Y * Sprites[i].Scale.Y,
 					Sprites[i].Destination.Width * Sprites[i].Scale.X, 
                     Sprites[i].Destination.Height * Sprites[i].Scale.Y);
 
@@ -1062,6 +1062,19 @@ namespace ArcEngine.Graphic
 		public void DrawRectangle(Vector4 destination, Color color, float rotation, Vector2 origin)
 		{
 			InternalDraw(WhiteTexture, ref destination, ref destination, color, rotation, origin, Vector2.One, SpriteEffects.None, 0.0f, PrimitiveType.LineStrip);
+		}
+
+		/// <summary>
+		/// Draws a rectangle
+		/// </summary>
+		/// <param name="destination">Destination</param>
+		/// <param name="color">Color</param>
+		/// <param name="rotation">Rotation angle in radian</param>
+		/// <param name="origin">Origin of rotation</param>
+		/// <param name="scale">Scaling factor</param>
+		public void DrawRectangle(Vector4 destination, Color color, float rotation, Vector2 origin, Vector2 scale)
+		{
+			InternalDraw(WhiteTexture, ref destination, ref destination, color, rotation, origin, scale, SpriteEffects.None, 0.0f, PrimitiveType.LineStrip);
 		}
 
 
