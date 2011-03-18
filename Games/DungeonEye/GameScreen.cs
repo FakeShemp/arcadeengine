@@ -61,8 +61,6 @@ namespace DungeonEye
 			System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
 			watch.Start();
 
-			Trace.WriteLine("Content loaded ({0} ms)", watch.ElapsedMilliseconds);
-
 			// Keyboard input scheme
 			InputScheme = ResourceManager.CreateAsset<InputScheme>(Game.InputSchemeName);
 			if (InputScheme == null)
@@ -112,7 +110,7 @@ namespace DungeonEye
 
 
 			watch.Stop();
-			Trace.WriteLine("Team::LoadContent() finished ! ({0} ms)", watch.ElapsedMilliseconds);
+			Trace.WriteLine("[GameScreen] LoadContent() - finished ! ({0} ms)", watch.ElapsedMilliseconds);
 		}
 
 

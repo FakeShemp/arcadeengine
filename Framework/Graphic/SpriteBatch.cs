@@ -328,23 +328,58 @@ namespace ArcEngine.Graphic
 				Vector4 dst = new Vector4(
 					Sprites[i].Destination.X - Sprites[i].Origin.X, 
                     Sprites[i].Destination.Y - Sprites[i].Origin.Y,
-					Sprites[i].Destination.Width, 
-                    Sprites[i].Destination.Height);
+					Sprites[i].Destination.Width * Sprites[i].Scale.X, 
+                    Sprites[i].Destination.Height * Sprites[i].Scale.Y);
 
+				// For vertex
+				Vector2 A = dst.Xy;
+				Vector2 B = new Vector2(dst.Right, dst.Top);
+				Vector2 C = new Vector2(dst.Right, dst.Bottom);
+				Vector2 D = new Vector2(dst.X, dst.Bottom);
+
+				// Apply rotation
+				if (Sprites[i].Rotation != 0.0f)
+				{
+					float theta = Sprites[i].Rotation * (float) Math.PI / 180.0f;
+
+
+					Vector2 o = dst.Xy + Sprites[i].Origin;
+
+					Vector2 p = A;
+					A.X = (float) Math.Cos(theta) * (p.X - o.X) - (float) Math.Sin(theta) * (p.Y - o.Y) + o.X;
+					A.Y = (float) Math.Sin(theta) * (p.X - o.X) + (float) Math.Cos(theta) * (p.Y - o.Y) + o.Y;
+
+					p = B;
+					B.X = (float) Math.Cos(theta) * (p.X - o.X) - (float) Math.Sin(theta) * (p.Y - o.Y) + o.X;
+					B.Y = (float) Math.Sin(theta) * (p.X - o.X) + (float) Math.Cos(theta) * (p.Y - o.Y) + o.Y;
+
+					p = C;
+					C.X = (float) Math.Cos(theta) * (p.X - o.X) - (float) Math.Sin(theta) * (p.Y - o.Y) + o.X;
+					C.Y = (float) Math.Sin(theta) * (p.X - o.X) + (float) Math.Cos(theta) * (p.Y - o.Y) + o.Y;
+
+					p = D;
+					D.X = (float) Math.Cos(theta) * (p.X - o.X) - (float) Math.Sin(theta) * (p.Y - o.Y) + o.X;
+					D.Y = (float) Math.Sin(theta) * (p.X - o.X) + (float) Math.Cos(theta) * (p.Y - o.Y) + o.Y;
+
+				}
+
+
+				// Color
+				Color color = Sprites[i].Color;
 
                 // Texture coordinate
-                Vector4 src = Sprites[i].UV;
+                Vector4 uv = Sprites[i].UV;
 
 				// Texture flip
 				if ((Sprites[i].Effects & SpriteEffects.FlipHorizontally) == SpriteEffects.FlipHorizontally)
                 {
-                    src.X += src.Z;
-                    src.Z = -src.Z;
+                    uv.X += uv.Z;
+                    uv.Z = -uv.Z;
                 }
                 if ((Sprites[i].Effects & SpriteEffects.FlipVertically) == SpriteEffects.FlipVertically)
                 {
-                    src.Y += src.W;
-                    src.W = -src.W;
+                    uv.Y += uv.W;
+                    uv.W = -uv.W;
                 }
 
 				// Rendering type
@@ -354,29 +389,32 @@ namespace ArcEngine.Graphic
 					// Lines
 					case PrimitiveType.Lines:
 					{
-						Buffer.AddPoint(dst.Xy, Sprites[i].Color, src.Xy);																// A
-						Buffer.AddPoint(new Vector2(dst.Right, dst.Bottom), Sprites[i].Color, new Vector2(src.Right, src.Bottom));		// C
+						Buffer.AddPoint(A, color, uv.Xy);									// A
+						Buffer.AddPoint(C, color, new Vector2(uv.Right, uv.Bottom));		// C
 					}
 					break;
 
 					// Rectangles
 					case PrimitiveType.LineStrip:
 					{
-						Buffer.AddPoint(dst.Xy, Sprites[i].Color, src.Xy);																// A
-						Buffer.AddPoint(new Vector2(dst.X, dst.Bottom), Sprites[i].Color, new Vector2(src.X, src.Bottom));				// D
-						Buffer.AddPoint(new Vector2(dst.Right, dst.Bottom), Sprites[i].Color, new Vector2(src.Right, src.Bottom));		// C
-						Buffer.AddPoint(new Vector2(dst.Right, dst.Top), Sprites[i].Color, new Vector2(src.Right, src.Top));			// B
+						Buffer.AddPoint(A, color, uv.Xy);									// A
+						Buffer.AddPoint(D, color, new Vector2(uv.X, uv.Bottom));			// D
+						Buffer.AddPoint(C, color, new Vector2(uv.Right, uv.Bottom));		// C
+						Buffer.AddPoint(B, color, new Vector2(uv.Right, uv.Top));			// B
+					
 					}
 					break;
 
 					case PrimitiveType.Points:
 					{
-						Buffer.AddPoint(dst.Xy, Sprites[i].Color, src.Xy);																// A
+						Buffer.AddPoint(A, color, uv.Xy);									// A
 					}
 					break;
 
 					default:
-						Buffer.AddRectangle(dst, Sprites[i].Color, src);
+					{
+						Buffer.AddRectangle(dst, color, uv);
+					}
 					break;
 				}
 				
@@ -468,8 +506,9 @@ namespace ArcEngine.Graphic
             // Add to queue
 			Sprites[spriteQueueCount].Destination.X = destination.X;
 			Sprites[spriteQueueCount].Destination.Y = destination.Y;
-			Sprites[spriteQueueCount].Destination.Z = destination.Width * scale.X;
-			Sprites[spriteQueueCount].Destination.W = destination.Height * scale.Y;
+			Sprites[spriteQueueCount].Destination.Z = destination.Width;
+			Sprites[spriteQueueCount].Destination.W = destination.Height;
+			Sprites[spriteQueueCount].Scale = scale;
 			Sprites[spriteQueueCount].Color = color;
 			Sprites[spriteQueueCount].Depth = depth;
 			Sprites[spriteQueueCount].Effects = effect;
@@ -664,10 +703,9 @@ namespace ArcEngine.Graphic
             src.Z = texture.Size.Width;
             src.W = texture.Size.Height;
 
-			origin = Vector2.Multiply(origin, scale);
-
 			InternalDraw(texture, ref src, ref source, color, rotation, origin, scale, effects, layerDepth, PrimitiveType.Triangles);
-        }
+			//InternalDraw(texture, ref src, ref source, color, rotation, origin, scale, effects, layerDepth, PrimitiveType.LineStrip);
+		}
 
  
 
@@ -1471,6 +1509,11 @@ namespace ArcEngine.Graphic
 		/// Type of rendering
 		/// </summary>
 		public PrimitiveType Type;
+
+		/// <summary>
+		/// Scaling factor
+		/// </summary>
+		public Vector2 Scale;
 	}
 
 

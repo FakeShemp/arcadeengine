@@ -709,9 +709,11 @@ namespace ArcEngine
 			}
 			set
 			{
-				X = value.X; Y = value.Y;
+				X = value.X; 
+				Y = value.Y;
 			}
 		}
+
 
 		/// <summary>
 		/// Gets or sets an OpenTK.Vector3 with the X, Y and Z components of this instance.
@@ -725,7 +727,9 @@ namespace ArcEngine
 			}
 			set
 			{
-				X = value.X; Y = value.Y; Z = value.Z;
+				X = value.X; 
+				Y = value.Y; 
+				Z = value.Z;
 			}
 		}
 
@@ -740,8 +744,11 @@ namespace ArcEngine
 			{
 				return W;
 			}
+			set
+			{
+				W = value;
+			}
 		}
-
 
 
 		/// <summary>
@@ -754,8 +761,11 @@ namespace ArcEngine
 			{
 				return Y + Height;
 			}
+			set
+			{
+				Height = value - Y;
+			}
 		}
-
 
 
 		/// <summary>
@@ -768,8 +778,11 @@ namespace ArcEngine
 			{
 				return X;
 			}
+			set
+			{
+				X = value;
+			}
 		}
-
 
 
 		/// <summary>
@@ -781,6 +794,10 @@ namespace ArcEngine
 			get
 			{
 				return X + Width;
+			}
+			set
+			{
+				Width = value - X;
 			}
 		}
 
@@ -795,6 +812,10 @@ namespace ArcEngine
 			{
 				return Y;
 			}
+			set
+			{
+				Y = value;
+			}
 		}
 
 
@@ -807,6 +828,10 @@ namespace ArcEngine
 			get
 			{
 				return Z;
+			}
+			set
+			{
+				Z = value;
 			}
 		}
 
@@ -821,9 +846,12 @@ namespace ArcEngine
 			{
 				return new Vector2(Width, Height);
 			}
+			set
+			{
+				Width = value.X;
+				Height = value.Y;
+			}
 		}
-
-
 
 
 		#endregion

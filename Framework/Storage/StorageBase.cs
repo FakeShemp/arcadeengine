@@ -60,6 +60,7 @@ namespace ArcEngine.Storage
 		{
 		}
 
+		
 		/// <summary>
 		/// Process an asset definition
 		/// </summary>
@@ -94,6 +95,7 @@ namespace ArcEngine.Storage
 
 			return true;
 		}
+
 
 		/// <summary>
 		/// Dispose resource

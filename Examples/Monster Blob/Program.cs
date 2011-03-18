@@ -131,21 +131,24 @@ namespace ArcEngine.Examples.MonsterBlob
 
 			Batch.Begin();
 
-		//	foreach (Monster monster in Monsters)
-		//		monster.Draw(Batch, Texture);
+			//foreach (Monster monster in Monsters)
+			//    monster.Draw(Batch, Texture);
 
 
 
 
 
-			Vector2 origin = Vector2.Zero;
-			Vector4 rect = new Vector4(10, 0, 200, 100);
-			rotation += 2.1f;
+			Vector4 rect = new Vector4(400, 300, 200, 100);
+			Vector2 origin = new Vector2(rect.Width / 2.0f, rect.Height / 2.0f);
+			
+			rotation += 2.0f;
+
+		//	Batch.DrawRectangle(rect, Color.White, rotation, origin);
 
 
-			Batch.DrawRectangle(rect, Color.White, rotation, origin);
-
-
+			Batch.Draw(Texture, rect.Xy, Vector4.Zero, Color.Green, rotation, origin, new Vector2(2.0f, 1.0f), SpriteEffects.None, 0.0f);
+	//		Batch.Draw(Texture, rect.Xy, Vector4.Zero, Color.Red, 0.0f, Vector2.Zero, new Vector2(1.0f, 1.0f), SpriteEffects.None, 0.0f);
+	//		Batch.Draw(Texture, rect.Xy, Color.White);
 			Batch.End();
 		}
 
