@@ -331,7 +331,7 @@ namespace ArcEngine.Graphic
 					Sprites[i].Destination.Width * Sprites[i].Scale.X, 
                     Sprites[i].Destination.Height * Sprites[i].Scale.Y);
 
-				// For vertex
+				// Four vertex
 				Vector2 A = dst.Xy;
 				Vector2 B = new Vector2(dst.Right, dst.Top);
 				Vector2 C = new Vector2(dst.Right, dst.Bottom);
@@ -343,7 +343,7 @@ namespace ArcEngine.Graphic
 					float theta = Sprites[i].Rotation * (float) Math.PI / 180.0f;
 
 
-					Vector2 o = dst.Xy + Sprites[i].Origin;
+					Vector2 o = dst.Xy + Vector2.Multiply(Sprites[i].Origin, Sprites[i].Scale);
 
 					Vector2 p = A;
 					A.X = (float) Math.Cos(theta) * (p.X - o.X) - (float) Math.Sin(theta) * (p.Y - o.Y) + o.X;
@@ -413,7 +413,13 @@ namespace ArcEngine.Graphic
 
 					default:
 					{
-						Buffer.AddRectangle(dst, color, uv);
+						Buffer.AddPoint(A, color, uv.Xy);									// A
+						Buffer.AddPoint(B, color, new Vector2(uv.Right, uv.Top));			// B
+						Buffer.AddPoint(C, color, new Vector2(uv.Right, uv.Bottom));		// C
+
+						Buffer.AddPoint(A, color, uv.Xy);									// A
+						Buffer.AddPoint(C, color, new Vector2(uv.Right, uv.Bottom));		// C
+						Buffer.AddPoint(D, color, new Vector2(uv.X, uv.Bottom));			// D
 					}
 					break;
 				}
@@ -1034,15 +1040,14 @@ namespace ArcEngine.Graphic
 		/// <param name="color">Color</param>
 		public void DrawRectangle(Rectangle rect, Color color)
 		{
-			Point[] points = new Point[4];
+			Point[] points = new Point[5];
 			points[0] = rect.Location;
 			points[1] = new Point(rect.X, rect.Bottom);
 			points[2] = new Point(rect.Right, rect.Bottom);
 			points[3] = new Point(rect.Right, rect.Top);
+			points[4] = rect.Location;
 
 			DrawLines(points, color);
-
-			//InternalDraw(WhiteTexture, ref rect, ref rect, color, 0.0f, Point.Empty, SpriteEffects.None, 0.0f, PrimitiveType.LineStrip);
 		}
 
 
