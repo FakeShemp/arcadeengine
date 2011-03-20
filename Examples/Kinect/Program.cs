@@ -18,20 +18,18 @@
 //
 #endregion
 using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
-using System.Collections.Generic;
 using ArcEngine.Storage;
-using System.IO;
 
-//
-// http://www.charliesgames.com/wordpress/?p=441
-//
-namespace ArcEngine.Examples.MonsterBlob
+
+namespace ArcEngine.Examples.KinectExample
 {
 	/// <summary>
 	/// Main game class
@@ -59,11 +57,9 @@ namespace ArcEngine.Examples.MonsterBlob
 			p.Size = new Size(1024, 768);
 			p.Major = 4;
 			p.Minor = 1;
+		
 			CreateGameWindow(p);
-			Window.Text = "Blob Monster - Thanks to http://www.charliesgames.com/wordpress/?p=441";
-			Cursor.Hide();
-
-			Monster = new Monster(new Vector2(200.0f, 100.0f), 1.0f, 30);
+			Window.Text = "Kinect";
 		}
 
 
@@ -74,16 +70,12 @@ namespace ArcEngine.Examples.MonsterBlob
 		{
 			// Render states
 			Display.RenderState.ClearColor = Color.Black;
-			//Display.BlendingFunction(BlendingFactorSource.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
-			Display.RenderState.Blending = true;
 
 			Batch = new SpriteBatch();
 
-			// Load the texture
-			Texture = new Texture2D("data/blob.png");
-			Texture.MagFilter = TextureMagFilter.Linear;
-			Texture.MinFilter = TextureMinFilter.Linear;
+			Font = BitmapFont.CreateFromTTF(@"c:\windows\fonts\lucon.ttf", 12, FontStyle.Regular);
 
+			Kinect = new Kinect(0);
 		}
 
 
@@ -96,9 +88,18 @@ namespace ArcEngine.Examples.MonsterBlob
 				Batch.Dispose();
 			Batch = null;
 
+			if (Font != null)
+				Font.Dispose();
+			Font = null;
+
 			if (Texture != null)
 				Texture.Dispose();
 			Texture = null;
+
+			if (Kinect != null)
+				Kinect.Dispose();
+			Kinect = null;
+
 		}
 
 
@@ -112,8 +113,17 @@ namespace ArcEngine.Examples.MonsterBlob
 			if (Keyboard.IsKeyPress(Keys.Escape))
 				Exit();
 
-			// Update monster
-			Monster.Update(gameTime);
+			if (Keyboard.IsNewKeyPress(Keys.Up))
+				Kinect.SetMotorPosition(8000);
+
+			if (Keyboard.IsNewKeyPress(Keys.Down))
+				Kinect.SetMotorPosition(-8000);
+
+			for (byte i = 0; i < 8; i++)
+			{
+				if (Keyboard.IsNewKeyPress(Keys.F1+ i))
+					Kinect.SetLED((KinectLedBlinkMode)i);
+			}
 		}
 
 
@@ -128,30 +138,10 @@ namespace ArcEngine.Examples.MonsterBlob
 			Batch.Begin();
 
 
-			//static float rotation = 0.0f;
-			//Vector4 rect = new Vector4(400, 400, 10, 10);
-			//Vector2 origin = new Vector2(rect.Width / 2.0f, rect.Height / 2.0f);
-			//rotation += 2.0f;
-
-			//Batch.DrawRectangle(rect, Color.FromArgb(128, Color.Red), rotation, origin, new Vector2(4.0f, 2.0f));
-
-
-
-			//Batch.DrawRectangle(rect, Color.White, 0.0f, origin);
-
-
-			//Vector2 scale = new Vector2(
-			//    (float)Math.Cos(GameTime.ElapsedRealTime.Milliseconds / 1500.0f),
-			//    (float)Math.Sin(GameTime.ElapsedRealTime.Milliseconds / 1500.0f));
-
-			//Batch.Draw(Texture, rect.Xy, Vector4.Zero, Color.White, 0.0f, new Vector2(Texture.Size.Width / 2.0f, Texture.Size.Height / 2.0f), scale, SpriteEffects.None, 0.0f);
-			//Batch.DrawPoint(rect.Xy, Color.Red);
-
-
-			//Batch.Draw(Texture, rect.Xy, Vector4.Zero, Color.FromArgb(128, Color.White), -rotation, new Vector2(Texture.Size.Width / 2.0f, Texture.Size.Height / 2.0f), new Vector2(3.0f, 2.0f), SpriteEffects.None, 0.0f);
-
-			Monster.Draw(Batch, Texture);
-
+			Batch.DrawString(Font, new Vector2(10, 100), Color.White, "Accelerometer : {0,8:#.00} x {1,8:0.00} x {2,8:0.00}",
+				Kinect.Accelerometer.X,
+				Kinect.Accelerometer.Y,
+				Kinect.Accelerometer.Z);
 
 			Batch.End();
 		}
@@ -160,10 +150,6 @@ namespace ArcEngine.Examples.MonsterBlob
 
 		#region Properties
 
-		/// <summary>
-		/// Monster list
-		/// </summary>
-		Monster Monster;
 
 		/// Texture
 		/// </summary>
@@ -174,6 +160,19 @@ namespace ArcEngine.Examples.MonsterBlob
 		/// Spritebatch
 		/// </summary>
 		SpriteBatch Batch;
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		BitmapFont Font;
+
+
+		/// <summary>
+		/// Kinect handle
+		/// </summary>
+		Kinect Kinect;
+
 
 		#endregion
 

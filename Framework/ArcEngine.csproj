@@ -118,6 +118,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libraries\DigitalRune\DigitalRune.Windows.TextEditor.dll</HintPath>
     </Reference>
+    <Reference Include="freenectdotnet">
+      <HintPath>Libraries\OpenKinect\freenectdotnet.dll</HintPath>
+    </Reference>
     <Reference Include="Ionic.Zip.Reduced, Version=1.9.1.5, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libraries\Ionic\Release\Ionic.Zip.Reduced.dll</HintPath>
@@ -183,6 +186,8 @@
     <Compile Include="GameComponentCollection.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Input\Kinect\CLNUIDevice.cs" />
+    <Compile Include="Input\Kinect\Kinect.cs" />
     <Compile Include="Interface\IAsset.cs" />
     <Compile Include="Asset\Scenes\Scene.cs" />
     <Compile Include="Asset\Language.cs" />
@@ -606,6 +611,9 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Shaders.xml" />
+    <Content Include="CLNUIDevice.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Maths\OpenTK License.txt" />
     <Content Include="Utility\GUI\gui.txt" />
     <Content Include="Network\Documentation.txt" />

@@ -47,6 +47,9 @@ namespace DungeonEye
 			SpellBook = new SpellBook();
 
 			Team = new Team();
+
+			int c = Kinect.Count;
+
 		}
 
 

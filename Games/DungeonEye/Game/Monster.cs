@@ -851,13 +851,13 @@ namespace DungeonEye
 			#region Color offset
 			Color[] colors = new Color[]
 			{
-				Color.Gray,			// A
-				Color.Gray,			// B
-				Color.Gray,			// C
-				Color.Gray,			// D
-				Color.Gray,			// E
-				Color.Gray,			// F
-				Color.Gray,			// G
+				Color.FromArgb(200, 128, 128, 128),			// A
+				Color.FromArgb(200, 128, 128, 128),			// B
+				Color.FromArgb(200, 128, 128, 128),			// C
+				Color.FromArgb(200, 128, 128, 128),			// D
+				Color.FromArgb(200, 128, 128, 128),			// E
+				Color.FromArgb(200, 128, 128, 128),			// F
+				Color.FromArgb(200, 128, 128, 128),			// G
 
 				Color.LightGray,	// H
 				Color.LightGray,	// I

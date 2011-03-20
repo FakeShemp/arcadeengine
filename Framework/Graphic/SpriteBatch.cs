@@ -332,20 +332,20 @@ namespace ArcEngine.Graphic
                     Sprites[i].Destination.Height * Sprites[i].Scale.Y);
 
 				// Four vertex
-				Vector2 A = dst.Xy;
-				Vector2 B = new Vector2(dst.Right, dst.Top);
-				Vector2 C = new Vector2(dst.Right, dst.Bottom);
-				Vector2 D = new Vector2(dst.X, dst.Bottom);
+				Vector3 A = new Vector3(dst.X, dst.Y, Sprites[i].Depth);
+				Vector3 B = new Vector3(dst.Right, dst.Top, Sprites[i].Depth);
+				Vector3 C = new Vector3(dst.Right, dst.Bottom, Sprites[i].Depth);
+				Vector3 D = new Vector3(dst.X, dst.Bottom, Sprites[i].Depth);
 
 				// Apply rotation
 				if (Sprites[i].Rotation != 0.0f)
 				{
+					// Degree to radian
 					float theta = Sprites[i].Rotation * (float) Math.PI / 180.0f;
-
 
 					Vector2 o = dst.Xy + Vector2.Multiply(Sprites[i].Origin, Sprites[i].Scale);
 
-					Vector2 p = A;
+					Vector3 p = A;
 					A.X = (float) Math.Cos(theta) * (p.X - o.X) - (float) Math.Sin(theta) * (p.Y - o.Y) + o.X;
 					A.Y = (float) Math.Sin(theta) * (p.X - o.X) + (float) Math.Cos(theta) * (p.Y - o.Y) + o.Y;
 
@@ -921,10 +921,44 @@ namespace ArcEngine.Graphic
 		/// <param name="id">Tile id</param>
 		/// <param name="position">Location on the screen</param>
 		/// <param name="color">The color channel modulation to use. Use Color.White for full color with no tinting.</param>
+		/// <param name="rotation"></param>
+		/// <param name="scale">Scaling factor</param>
+		/// <param name="effect"></param>
+		/// <param name="depth"></param>
+		public void DrawTile(TileSet tileset, int id, Point position, Color color, float rotation, Vector2 scale, SpriteEffects effect, float depth)
+		{
+			DrawTile(tileset, id, new Vector2(position.X, position.Y), color, rotation, scale, effect, depth);
+		}
+
+
+		/// <summary>
+		/// Draws a tile from a TileSet
+		/// </summary>
+		/// <param name="tileset">TileSet to use</param>
+		/// <param name="id">Tile id</param>
+		/// <param name="position">Location on the screen</param>
+		/// <param name="color">The color channel modulation to use. Use Color.White for full color with no tinting.</param>
 		/// <param name="rotation">Angle of rotation in radian</param>
 		/// <param name="effect">Visual effect to apply</param>
 		/// <param name="depth">Depth offset</param>
 		public void DrawTile(TileSet tileset, int id, Vector2 position, Color color, float rotation, SpriteEffects effect, float depth)
+		{
+			DrawTile(tileset, id, position, color, rotation, Vector2.One, effect, depth);
+		}
+
+
+		/// <summary>
+		/// Draws a tile from a TileSet
+		/// </summary>
+		/// <param name="tileset">TileSet to use</param>
+		/// <param name="id">Tile id</param>
+		/// <param name="position">Location on the screen</param>
+		/// <param name="color">The color channel modulation to use. Use Color.White for full color with no tinting.</param>
+		/// <param name="rotation">Angle of rotation in radian</param>
+		/// <param name="scale">Scaling factor</param>
+		/// <param name="effect">Visual effect to apply</param>
+		/// <param name="depth">Depth offset</param>
+		public void DrawTile(TileSet tileset, int id, Vector2 position, Color color, float rotation, Vector2 scale, SpriteEffects effect, float depth)
 		{
 			if (tileset == null || id < 0)
 				return;
@@ -943,7 +977,7 @@ namespace ArcEngine.Graphic
 
 			Vector2 origin = new Vector2(tile.Origin.X * tileset.Scale.X, tile.Origin.Y * tileset.Scale.Y);
 
-			InternalDraw(tileset.Texture, ref dst, ref src, color, rotation, origin, Vector2.One, effect, depth, PrimitiveType.Triangles);
+			InternalDraw(tileset.Texture, ref dst, ref src, color, rotation, origin, scale, effect, depth, PrimitiveType.Triangles);
 		}
 
 

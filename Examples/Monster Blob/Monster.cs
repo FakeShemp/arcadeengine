@@ -45,7 +45,7 @@ namespace ArcEngine.Examples.MonsterBlob
 		{
 			Speed = speed;
 			Position = position;
-			Elasticity = 0.3f;
+			Elasticity = 0.5f;
 
 			Tail = new List<Vector2>();
 			for (int i = 0; i < segment; i++)
@@ -64,11 +64,13 @@ namespace ArcEngine.Examples.MonsterBlob
 			Time += Speed / 100.0f;
 
 			Position = new Vector2(
-				(15.0f * (float)Math.Sin(Time * 6.0f)) + (512 + (400.0f * (float)Math.Cos(Time / 1.5f))),
+				(15.0f * (float)Math.Sin(Time * -6.0f)) + (512 + (400.0f * (float)Math.Cos(Time / 1.5f))),
 				(15.0f * (float)Math.Cos(Time * -6.0f)) + (384 + (300.0f * (float)Math.Sin(Time * 1.3f)))
 				);
 
-			Position = new Vector2(Mouse.Location.X, Mouse.Location.Y);
+			//Position = new Vector2(Mouse.Location.X, Mouse.Location.Y);
+			
+			
 			Tail[0] = Position;
 
 			// Draw the main body
@@ -101,7 +103,7 @@ namespace ArcEngine.Examples.MonsterBlob
 				return;
 
 			Vector4 rect = Vector4.Zero;
-			Vector2 origin = new Vector2(texture.Size.Width / 2.0f, texture.Size.Height / 2.0f);
+			Vector2 origin = Vector2.Zero;
 			Vector2 scale = new Vector2(1.0f, 1.0f);
 			float rotation = 0.0f;
 			Color color = Color.White;
@@ -111,14 +113,16 @@ namespace ArcEngine.Examples.MonsterBlob
 			// Draw the main body
 			for (int i = 1; i < Segments - 1; i++)
 			{
+				origin = new Vector2(texture.Size.Width / 2.0f, texture.Size.Height / 2.0f);
 				color = Color.FromArgb((int)(255 * 0.15f), 0, 200, 150);
-				scale = new Vector2(1 + (0.5f * (float)Math.Sin(i * 35.0f)), 1 + (0.5f * (float)Math.Sin(i * 35.0f)));
+				scale = new Vector2(1.0f + (0.5f * (float)Math.Sin(i * 35.0f)), 1.0f + (0.5f * (float)Math.Sin(i * 35.0f)));
 				batch.Draw(texture, Tail[i], rect, color, rotation, origin, scale, SpriteEffects.None, 0.0f);
 
 				color = Color.FromArgb((int)(255 * 0.8f), 0, 200, 150);
 				scale = new Vector2(0.1f, 0.1f);
 				batch.Draw(texture, Tail[i], rect, color, rotation, origin, scale, SpriteEffects.None, 0.0f);
 			}
+
 
 			// Spikes on tail
 			color = Color.FromArgb((int)(255 * 0.8f), 255, 255, 255);
@@ -129,6 +133,7 @@ namespace ArcEngine.Examples.MonsterBlob
 			rotation = 10.0f * (float)Math.Sin(-Time * 10.0f) + CalculateAngle(Tail[Segments - 1], Tail[Segments - 5]) + 90.0f;
 			batch.Draw(texture, Tail[Segments - 1], rect, color, rotation, origin, scale, SpriteEffects.None, 0.0f);
 
+		//	return;
 
 			// begin looping through the body sections again. Note that we don't want fins
 			// on the first and last section because we want other things at those coords.
@@ -188,7 +193,7 @@ namespace ArcEngine.Examples.MonsterBlob
 		/// <returns></returns>
 		float CalculateAngle(Vector2 from, Vector2 to)
 		{
-			return (float)-Math.Atan2(from.X - to.X, from.Y - to.Y);
+			return (float)-Math.Atan2((from.X - to.X), (from.Y - to.Y));
 		}
 
 

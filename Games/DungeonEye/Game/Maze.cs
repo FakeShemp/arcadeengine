@@ -120,7 +120,7 @@ namespace DungeonEye
 			foreach (List<Square> list in Blocks)
 				foreach (Square square in list)
 					square.Dispose();
-				
+
 
 			ResourceManager.UnlockSharedAsset<TileSet>(DoorTileset);
 			DoorTileset = null;
@@ -161,30 +161,30 @@ namespace DungeonEye
 					square.Update(time);
 				}
 
-/*
-			// Remove dead monsters
-			Monsters.RemoveAll(
-				delegate(Monster monster)
-				{
-					// Monster alive
-					if (!monster.IsDead)
-						return false;
+			/*
+						// Remove dead monsters
+						Monsters.RemoveAll(
+							delegate(Monster monster)
+							{
+								// Monster alive
+								if (!monster.IsDead)
+									return false;
 
-					// Drop the content of his pocket
-					if (monster.ItemsInPocket.Count > 0)
-					{
-						Square block = GetBlock(monster.Location.Position);
+								// Drop the content of his pocket
+								if (monster.ItemsInPocket.Count > 0)
+								{
+									Square block = GetBlock(monster.Location.Position);
 
-						//ItemSet itemset = ResourceManager.CreateSharedAsset<ItemSet>("Main");
-						foreach (string name in monster.ItemsInPocket)
-							block.DropItem(monster.Location.Position, ResourceManager.CreateAsset<Item>(name));
-					}
+									//ItemSet itemset = ResourceManager.CreateSharedAsset<ItemSet>("Main");
+									foreach (string name in monster.ItemsInPocket)
+										block.DropItem(monster.Location.Position, ResourceManager.CreateAsset<Item>(name));
+								}
 
-					return true;
-				});
+								return true;
+							});
 
 
-*/
+			*/
 
 			#region Flying items
 
@@ -243,7 +243,7 @@ namespace DungeonEye
 
 		#region Monsters
 
-/*
+		/*
 
 		/// <summary>
 		/// Adds a monster in the maze
@@ -355,26 +355,26 @@ namespace DungeonEye
 		}
 
 
-/*
-		/// <summary>
-		/// Gets if a given location is free for a monster
-		/// </summary>
-		/// <param name="Location"></param>
-		/// <param name="position"></param>
-		/// <returns></returns>
-		public bool IsLocationFree(DungeonLocation location, SquarePosition position)
-		{
-			if (location == null)
-				return false;
+		/*
+				/// <summary>
+				/// Gets if a given location is free for a monster
+				/// </summary>
+				/// <param name="Location"></param>
+				/// <param name="position"></param>
+				/// <returns></returns>
+				public bool IsLocationFree(DungeonLocation location, SquarePosition position)
+				{
+					if (location == null)
+						return false;
 
-			Square square = GetBlock(location.Position);
-			if (square.IsBlocking)
-				return true;
+					Square square = GetBlock(location.Position);
+					if (square.IsBlocking)
+						return true;
 			
 
-			return false;
-		}
-*/
+					return false;
+				}
+		*/
 
 		/// <summary>
 		/// Gets if a door is North-South aligned
@@ -654,6 +654,20 @@ namespace DungeonEye
 
 			// Zoom factors for items
 			float[] ItemZoom = new float[] { 1.0f, 0.66f, 0.5f, 0.33f };
+			Vector2[] scale = new Vector2[]
+			{
+				new Vector2(1.0f, 1.0f),
+				new Vector2(0.66f, 0.66f),
+				new Vector2(0.5f, 0.5f),
+				new Vector2(0.33f, 0.33f)
+			};
+			Color[] colors = new Color[]
+			{
+				Color.White,
+				Color.White,
+				Color.FromArgb(255, 128, 128, 128),
+				Color.FromArgb(128, 128, 128, 128),
+			};
 
 			List<Item>[] list = block.GetItems(view);
 			if (!block.IsWall)
@@ -676,14 +690,7 @@ namespace DungeonEye
 									point.X - tile.Origin.X, point.Y - tile.Origin.Y,
 									tile.Rectangle.Width / (offset + 1), tile.Rectangle.Height / (offset + 1));
 
-								// Fade color
-								Color color = offset < 2 ? Color.White : Color.Gray;
-
-
-								//batch.DrawTile(ItemsTileset, item.GroundTileID + offset, point);
-								batch.DrawTile(ItemsTileset, item.GroundTileID, point, color, 0.0f, SpriteEffects.None, 0.0f);
-								//batch.DrawTile(ItemsTileset, item.GroundTileID, point, rect, color);
-								//batch.DrawTile(ItemsTileset, item.GroundTileID + offset, point, Color.Green);
+								batch.DrawTile(ItemsTileset, item.GroundTileID, point, colors[offset], 0.0f, scale[offset], SpriteEffects.None, 0.0f);
 							}
 						}
 					}
@@ -773,7 +780,8 @@ namespace DungeonEye
 								rect.Inflate(offset, offset);
 
 								//batch.DrawTile(ItemsTileset, item.GroundTileID, point, rect, Color.Red);
-								batch.DrawTile(ItemsTileset, item.GroundTileID + offset, point);
+							//	batch.DrawTile(ItemsTileset, item.GroundTileID + offset, point);
+								batch.DrawTile(ItemsTileset, item.GroundTileID, point, colors[offset], 0.0f, scale[offset], SpriteEffects.None, 0.0f);
 							}
 						}
 					}
@@ -806,8 +814,8 @@ namespace DungeonEye
 			foreach (SquarePosition pos in Enum.GetValues(typeof(SquarePosition)))
 			{
 				point = DisplayCoordinates.GetFlyingItem(position, pos);
-			//	if (point == Point.Empty)
-			//		continue;
+				//	if (point == Point.Empty)
+				//		continue;
 
 				// Swap the tile if throwing on the right side
 				SpriteEffects fx = SpriteEffects.None;
@@ -869,7 +877,7 @@ namespace DungeonEye
 					if (block.MonsterCount > 0)
 						color = Color.Red;
 
-					
+
 					if (team.Location.Coordinate.X == x && team.Location.Coordinate.Y == y && team.Maze == this)
 						color = Color.Blue;
 
@@ -1026,17 +1034,17 @@ namespace DungeonEye
 			foreach (MazeZone zone in Zones)
 				zone.Save(writer);
 
-/*
+			/*
 
-			// Monsters
-			if (Monsters.Count > 0)
-			{
-				writer.WriteStartElement("monsters");
-				foreach (Monster monster in Monsters)
-					monster.Save(writer);
-				writer.WriteEndElement();
-			}
-*/
+						// Monsters
+						if (Monsters.Count > 0)
+						{
+							writer.WriteStartElement("monsters");
+							foreach (Monster monster in Monsters)
+								monster.Save(writer);
+							writer.WriteEndElement();
+						}
+			*/
 
 			// flying items
 			if (ThrownItems.Count > 0)
@@ -1465,7 +1473,7 @@ namespace DungeonEye
 					Blocks[11] = maze.GetSquare(new Point(location.Coordinate.X + 2, location.Coordinate.Y - 2));
 
 					Blocks[12] = maze.GetSquare(new Point(location.Coordinate.X - 1, location.Coordinate.Y - 1));
-					Blocks[13] = maze.GetSquare(new Point(location.Coordinate.X,     location.Coordinate.Y - 1));
+					Blocks[13] = maze.GetSquare(new Point(location.Coordinate.X, location.Coordinate.Y - 1));
 					Blocks[14] = maze.GetSquare(new Point(location.Coordinate.X + 1, location.Coordinate.Y - 1));
 
 					Blocks[15] = maze.GetSquare(new Point(location.Coordinate.X - 1, location.Coordinate.Y));
@@ -1561,7 +1569,7 @@ namespace DungeonEye
 			Blocks[16] = maze.GetSquare(location.Coordinate);
 		}
 
-	
+
 		/// <summary>
 		/// Gets a block in the view field
 		/// </summary>
