@@ -83,7 +83,7 @@ namespace ArcEngine
 		{
 			Trace.WriteDebugLine("[ResourceManager] Dispose()");
 
-			
+
 			if (TileSet.InUse != null && TileSet.InUse.Count > 0)
 			{
 				Trace.WriteLine("{0} TileSet remaining...", TileSet.InUse.Count);
@@ -452,7 +452,7 @@ namespace ArcEngine
 		static public List<string> GetAssets<T>() where T : IAsset
 		{
 			List<string> list = new List<string>();
-			
+
 			lock (BinaryLock)
 			{
 				foreach (RegisteredAsset ra in RegisteredAssets)
@@ -494,7 +494,7 @@ namespace ArcEngine
 				foreach (RegisteredAsset ra in RegisteredAssets)
 				{
 					if (ra.Type == typeof(T))
-						return (T) ra.LockShared(name);
+						return (T)ra.LockShared(name);
 				}
 			}
 
@@ -540,7 +540,7 @@ namespace ArcEngine
 			{
 				if (ra.Type == typeof(T))
 				{
-					return (T) ra.CreateShared(name, asset);
+					return (T)ra.CreateShared(name, asset);
 				}
 			}
 
@@ -712,34 +712,25 @@ namespace ArcEngine
 				settings.IndentChars = "\t";
 				settings.Encoding = ASCIIEncoding.ASCII;
 
-				// For each Provider
-				//foreach (Provider provider in Providers)
+				// for each registred asset
+				foreach (RegisteredAsset ra in RegisteredAssets)
 				{
-					// for each registred asset
-					//foreach (Type type in provider.Assets)
-					foreach(RegisteredAsset ra in RegisteredAssets)
+					// No asset
+					if (ra.Count == 0)
+						continue;
+
+					// Save to storage
+					using (Stream stream = storage.CreateFile(string.Format("{0}.xml", ra.Type.Name)))
 					{
-						// Get the number of asset
-						//MethodInfo mi = provider.GetType().GetMethod("Count").MakeGenericMethod(type);
-						//if ((int)mi.Invoke(provider, null) == 0)
-						//    continue;
-						if (ra.Count == 0)
+						if (stream == null)
 							continue;
 
-						// Save to storage
-						using (Stream stream = storage.CreateFile(string.Format("{0}.xml", ra.Type.Name)))
+						// Create Xml document from storage stream
+						using (XmlWriter doc = XmlWriter.Create(stream, settings))
 						{
-							if (stream == null)
-								continue;
-
-							// Create Xml document from storage stream
-							XmlWriter doc = XmlWriter.Create(stream, settings);
 							doc.WriteStartDocument(true);
 							doc.WriteStartElement("bank");
 
-							// Invoke the generic method like this : provider.Save<[Asset Type]>(XmlNode node);
-							//mi = provider.GetType().GetMethod("Save", new Type[] { typeof(XmlWriter) }).MakeGenericMethod(type);
-							//mi.Invoke(provider, new object[] { doc });
 							ra.Save(doc);
 
 							// Close xml 
@@ -751,6 +742,7 @@ namespace ArcEngine
 				}
 
 				storage.Flush();
+
 				return true;
 			}
 			catch (Exception e)

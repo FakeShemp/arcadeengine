@@ -156,7 +156,7 @@ namespace DungeonEye
 			if (Dungeon == null)
 			{
 				Trace.WriteLine("[Team]LoadParty() : Dungeon == NULL !!");
-				throw new NullReferenceException("Dungeon");
+				throw new NullReferenceException("Dungeon id null");
 			}
 
 			Dungeon.Init();

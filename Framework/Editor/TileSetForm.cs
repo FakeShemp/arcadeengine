@@ -28,7 +28,7 @@ using ArcEngine.Asset;
 using ArcEngine.Forms;
 using ArcEngine.Graphic;
 using ArcEngine.Interface;
-
+using ArcEngine.Input;
 
 namespace ArcEngine.Editor
 {
@@ -152,6 +152,20 @@ namespace ArcEngine.Editor
 			return bound;
 		}
 
+		/// <summary>
+		/// Remove a tile
+		/// </summary>
+		/// <param name="id"></param>
+		void RemoveTile(int id)
+		{
+			if (MessageBox.Show("Remove this tile ?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+				return;
+
+			TileSet.Remove(id);
+
+			SelectionTool.Rectangle = Rectangle.Empty;
+			CurrentTile = null;
+		}
 
 
 		#region GlTextureControl
@@ -330,30 +344,43 @@ namespace ArcEngine.Editor
 		/// <param name="e"></param>
 		private void GLTextureControl_MouseDown(object sender, MouseEventArgs e)
 		{
+			int zoomvalue = int.Parse((string)ZoomBox.SelectedItem);
+			Point position = new Point((e.Location.X - TextureOffset.X) / zoomvalue, (e.Location.Y - TextureOffset.Y) / zoomvalue);
+
+
 			if (e.Button == MouseButtons.Left)
 			{
+				// Select a tile by left click + ctrl
+				if ((Control.ModifierKeys & Keys.Control) == Keys.Control)
+				{
+					// Get the tile under the cursor
+					foreach(int id in TileSet.Tiles)
+					{
+						Tile tile = TileSet.GetTile(id);
+						if (tile != null && tile.Rectangle.Contains(position))
+						{
+							TileIDBox.Value = id;
+							//SetCurrentTile(tile);
+							return;
+						}
+					}
+				}
 
-				// Cheange tile selection
-				if (SelectionBox.Checked)
+				// Change tile selection
+				else if (SelectionBox.Checked)
 				{
 
 					// Size the selection box
 					if (SelectionTool.MouseTool == MouseTools.NoTool)
 					{
-						int zoomvalue = int.Parse((string)ZoomBox.SelectedItem);
-
-						SelectionTool.Rectangle.X = (e.Location.X - TextureOffset.X) / zoomvalue;
-						SelectionTool.Rectangle.Y = (e.Location.Y - TextureOffset.Y) / zoomvalue;
-						SelectionTool.Rectangle.Width = 0;
-						SelectionTool.Rectangle.Height = 0;
-
-						SelectionTool.MouseTool = MouseTools.SizeDownRight;
-
 						// No tile, so create one
 						if (CurrentTile == null)
 						{
 							SetCurrentTile(TileSet.AddTile((int)TileIDBox.Value));
 						}
+
+						SelectionTool.Rectangle = new Rectangle(position, Size.Empty);
+						SelectionTool.MouseTool = MouseTools.SizeDownRight;
 					}
 
 				}
@@ -426,6 +453,7 @@ namespace ArcEngine.Editor
 				// Previous tile
 				case Keys.PageUp:
 					{
+						//SetCurrentTile(Math.Max(TileIDBox.Value - 1, 0));
 						TileIDBox.Value = Math.Max(TileIDBox.Value - 1, 0);
 					}
 					break;
@@ -433,12 +461,17 @@ namespace ArcEngine.Editor
 				// Next tile
 				case Keys.PageDown:
 					{
+						//SetCurrentTile(Math.Min(TileIDBox.Value + 1, TileIDBox.Maximum));
 						TileIDBox.Value = Math.Min(TileIDBox.Value + 1, TileIDBox.Maximum);
 					}
 					break;
 
-				default:
-					return;
+				// Remove current tile
+				case Keys.Delete:
+				{
+					RemoveTile((int)TileIDBox.Value);
+				}
+				break;
 			}
 
 			e.IsInputKey = true;
@@ -794,15 +827,21 @@ namespace ArcEngine.Editor
 			CurrentTile = tile;
 			TilePropertyGrid.SelectedObject = CurrentTile;
 
-			if (CurrentTile == null)
-				return;
-
-			SelectionTool.Rectangle = CurrentTile.Rectangle;
-			CollisionSelection.Rectangle = CurrentTile.CollisionBox;
+			if (CurrentTile != null)
+			{
 
 
-			// Prints the size of the current tile
-			SizeLabel.Text = SelectionTool.Rectangle.Width + "," + SelectionTool.Rectangle.Height;
+				SelectionTool.Rectangle = CurrentTile.Rectangle;
+				CollisionSelection.Rectangle = CurrentTile.CollisionBox;
+
+
+				// Prints the size of the current tile
+				SizeLabel.Text = SelectionTool.Rectangle.Width + "," + SelectionTool.Rectangle.Height;
+			}
+			else
+			{
+				SelectionTool.Rectangle = Rectangle.Empty;
+			}
 		}
 
 
@@ -844,19 +883,7 @@ namespace ArcEngine.Editor
 		/// <param name="e"></param>
 		private void EraseTileButton_Click(object sender, EventArgs e)
 		{
-
-			if (MessageBox.Show("Remove this tile ?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
-				return;
-
-			TileSet.Remove((int)TileIDBox.Value);
-
-
-			//int index = TilesBox.SelectedIndex;
-			//RebuildCellList();
-
-			//if (TilesBox.Items.Count > 0)
-			//    TilesBox.SelectedIndex = Math.Max(0, index - 1);
-
+			RemoveTile((int)TileIDBox.Value);
 		}
 
 
