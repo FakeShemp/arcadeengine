@@ -453,7 +453,6 @@ namespace ArcEngine.Editor
 				// Previous tile
 				case Keys.PageUp:
 					{
-						//SetCurrentTile(Math.Max(TileIDBox.Value - 1, 0));
 						TileIDBox.Value = Math.Max(TileIDBox.Value - 1, 0);
 					}
 					break;
@@ -461,7 +460,6 @@ namespace ArcEngine.Editor
 				// Next tile
 				case Keys.PageDown:
 					{
-						//SetCurrentTile(Math.Min(TileIDBox.Value + 1, TileIDBox.Maximum));
 						TileIDBox.Value = Math.Min(TileIDBox.Value + 1, TileIDBox.Maximum);
 					}
 					break;

@@ -58,6 +58,12 @@ namespace DungeonEye
 		/// </summary>
 		public Game()
 		{
+
+			// Check for new version
+			AutoUpdater.NewVersion += new AutoUpdater.NewVersionHandler(AutoUpdater_NewVersion);
+			AutoUpdater.CheckForNewVersion("http://www.dungeoneye.net/updater.xml");
+
+
 			Settings.Load("data/settings.xml");
 			InputSchemeName = Settings.GetString("inputscheme");
 			LanguageName = Settings.GetString("language");
@@ -84,6 +90,17 @@ namespace DungeonEye
 			EditorEnter += new EditorEventHandler(Game_EditorEnter);
 
 
+		}
+
+
+
+		/// <summary>
+		/// A new version of the game is available
+		/// </summary>
+		/// <param name="product"></param>
+		void AutoUpdater_NewVersion(ProductVersion product)
+		{
+			throw new NotImplementedException();
 		}
 
 

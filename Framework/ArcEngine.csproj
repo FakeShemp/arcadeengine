@@ -153,6 +153,7 @@
     <Reference Include="System.Xml">
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="WeifenLuo.WinFormsUI.Docking, Version=2.3.1.24483, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libraries\DockPanel\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
@@ -165,6 +166,7 @@
     <Compile Include="Asset\Scenes\KeyFrame.cs" />
     <Compile Include="Asset\Scenes\SceneLayer.cs" />
     <Compile Include="Asset\BinaryInformation.cs" />
+    <Compile Include="AutoUpdater.cs" />
     <Compile Include="Editor\Wizards\RenameWizard.cs">
       <SubType>Form</SubType>
     </Compile>
