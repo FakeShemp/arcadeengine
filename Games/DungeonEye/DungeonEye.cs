@@ -60,7 +60,6 @@ namespace DungeonEye
 		{
 
 			// Check for new version
-			AutoUpdater.NewVersion += new AutoUpdater.NewVersionHandler(AutoUpdater_NewVersion);
 			AutoUpdater.CheckForNewVersion("http://www.dungeoneye.net/updater.xml");
 
 
@@ -100,7 +99,7 @@ namespace DungeonEye
 		/// <param name="product"></param>
 		void AutoUpdater_NewVersion(ProductVersion product)
 		{
-			throw new NotImplementedException();
+			MessageBox.Show("New version available !!!");
 		}
 
 

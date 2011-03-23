@@ -118,9 +118,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libraries\DigitalRune\DigitalRune.Windows.TextEditor.dll</HintPath>
     </Reference>
-    <Reference Include="freenectdotnet">
-      <HintPath>Libraries\OpenKinect\freenectdotnet.dll</HintPath>
-    </Reference>
     <Reference Include="Ionic.Zip.Reduced, Version=1.9.1.5, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libraries\Ionic\Release\Ionic.Zip.Reduced.dll</HintPath>
@@ -172,6 +169,12 @@
     </Compile>
     <Compile Include="Editor\Wizards\RenameWizard.Designer.cs">
       <DependentUpon>RenameWizard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AutoUpdateForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AutoUpdateForm.Designer.cs">
+      <DependentUpon>AutoUpdateForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\StorageBrowserForm.cs">
       <SubType>Form</SubType>
@@ -484,6 +487,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AssetEditorBase.resx">
       <DependentUpon>AssetEditorBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AutoUpdateForm.resx">
+      <DependentUpon>AutoUpdateForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\StorageBrowserForm.resx">
       <DependentUpon>StorageBrowserForm.cs</DependentUpon>
