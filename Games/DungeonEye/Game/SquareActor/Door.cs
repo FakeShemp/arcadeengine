@@ -39,10 +39,11 @@ namespace DungeonEye
 		/// Initializes doors
 		/// </summary>
 		/// <param name="square">Parent square handle</param>
-		public Door(Square square) : base(square)
+		public Door(Square square)
+			: base(square)
 		{
 			// Zone of the button to open/close the door
-			Button = new Rectangle(254, 70, 20, 28);
+			Button = new Rectangle(252, 90, 20, 28);
 
 			// Sounds
 			OpenSound = ResourceManager.LockSharedAsset<AudioSample>("door open");
@@ -69,7 +70,7 @@ namespace DungeonEye
 			if (IsBreakable)
 				sb.Append("(breakable) ");
 			sb.Append("(key ....) ");
-			
+
 
 
 			return sb.ToString();
@@ -116,22 +117,31 @@ namespace DungeonEye
 					switch (Type)
 					{
 						case DoorType.Grid:
-							DrawGridDoor(batch, td.Location, position);
+						DrawSimpleDoor(batch, 1, td.Location, position);
+						break;
+						case DoorType.Forest:
+						DrawSimpleDoor(batch, 6, td.Location, position);
 						break;
 						case DoorType.Iron:
-							DrawIronDoor(batch, td.Location, position);
+						DrawSimpleDoor(batch, 0, td.Location, position);
 						break;
 						case DoorType.Monster:
-							DrawMonsterDoor(batch, td.Location, position);
+						DrawUpDownDoor(batch, 2, td.Location, position);
 						break;
-						case DoorType.Spider:
-							DrawSpiderDoor(batch, td.Location, position);
+						case DoorType.Azure:
+						DrawSimpleDoor(batch, 8, td.Location, position);
 						break;
-						case DoorType.Stone:
-							DrawStoneDoor(batch, td.Location, position);
+						case DoorType.Crimson:
+						DrawSimpleDoor(batch, 9, td.Location, position);
 						break;
-						case DoorType.Eye:
-							DrawEyeDoor(batch, td.Location, position);
+						case DoorType.Temple:
+						DrawSimpleDoor(batch, 10, td.Location, position);
+						break;
+						case DoorType.Silver:
+						DrawSimpleDoor(batch, 11, td.Location, position);
+						break;
+						case DoorType.Mantis:
+						DrawSimpleDoor(batch, 12, td.Location, position);
 						break;
 					}
 				}
@@ -203,7 +213,7 @@ namespace DungeonEye
 		public void Open()
 		{
 			State = DoorState.Opening;
-		//	Audio.PlaySample(0, OpenSound);
+			//	Audio.PlaySample(0, OpenSound);
 		}
 
 
@@ -217,7 +227,7 @@ namespace DungeonEye
 			//	return;
 
 			State = DoorState.Closing;
-		//	Audio.PlaySample(0, CloseSound);
+			//	Audio.PlaySample(0, CloseSound);
 		}
 
 
@@ -239,7 +249,7 @@ namespace DungeonEye
 		public override void Deactivate()
 		{
 			Close();
-		} 
+		}
 
 
 		#endregion
@@ -249,40 +259,113 @@ namespace DungeonEye
 
 
 		/// <summary>
-        /// Draw the door with a scissor test
-        /// </summary>
-        /// <param name="batch">Spritebatch to use</param>
-        /// <param name="tileset">Tileset to use</param>
-        /// <param name="id">ID of the tile</param>
-        /// <param name="location">Location of the tile on the screen</param>
-        /// <param name="scissor">Scissor zone</param>
-        void InternalDraw(SpriteBatch batch, TileSet tileset, int id, Point location, Rectangle scissor)
-        {
-            if (batch == null)
-                return;
+		/// Draw the door with a scissor test
+		/// </summary>
+		/// <param name="batch">Spritebatch to use</param>
+		/// <param name="tileset">Tileset to use</param>
+		/// <param name="id">ID of the tile</param>
+		/// <param name="location">Location of the tile on the screen</param>
+		/// <param name="scissor">Scissor zone</param>
+		/// <param name="scale">Scaling factor</param>
+		/// <param name="color">Color</param>
+		void InternalDraw(SpriteBatch batch, TileSet tileset, int id, Point location, Rectangle scissor, Vector2 scale, Color color)
+		{
+			if (batch == null)
+				return;
 
-            batch.End();
+			batch.End();
 
 			Display.PushScissor(scissor);
 
-            batch.Begin();
-            batch.DrawTile(TileSet, id, location);
-            batch.End();
+			batch.Begin();
+			batch.DrawTile(TileSet, id, location, color, 0.0f, scale, SpriteEffects.None, 0.0f);
+			batch.End();
 
 			Display.PopScissor();
 
-            batch.Begin();
-        }
+			batch.Begin();
+		}
+
+
+		/// <summary>
+		/// Draws a simple sliding door
+		/// </summary>
+		/// <param name="batch">Spritebatch handle</param>
+		/// <param name="tileid">Tile id</param>
+		/// <param name="location">Location on the screen</param>
+		/// <param name="distance">Distance between the view point and the door</param>
+		void DrawSimpleDoor(SpriteBatch batch, int tileid, Point location, ViewFieldPosition distance)
+		{
+			Vector2 scale = new Vector2();
+			Color color = Color.White;
+			Point button = new Point();
+
+			switch (distance)
+			{
+				case ViewFieldPosition.M:
+				case ViewFieldPosition.N:
+				case ViewFieldPosition.O:
+				{
+					location.Offset(56, 16);
+					scale = Vector2.One;
+					button = new Point(252, 90);
+				}
+				break;
+
+				case ViewFieldPosition.H:
+				case ViewFieldPosition.I:
+				case ViewFieldPosition.J:
+				case ViewFieldPosition.K:
+				case ViewFieldPosition.L:
+				{
+					location.Offset(32, 10);
+					scale = new Vector2(0.66f, 0.66f);
+					color = Color.FromArgb(130, 130, 130);
+					button = new Point(230, 86);
+				}
+				break;
+
+				case ViewFieldPosition.A:
+				case ViewFieldPosition.B:
+				case ViewFieldPosition.C:
+				case ViewFieldPosition.D:
+				case ViewFieldPosition.E:
+				case ViewFieldPosition.F:
+				case ViewFieldPosition.G:
+				{
+					location.Offset(12, 6);
+					scale = new Vector2(0.50f, 0.50f);
+					color = Color.FromArgb(40, 40, 40);
+					button = new Point(210, 84);
+				}
+				break;
+
+			}
+
+
+			InternalDraw(batch, TileSet, tileid,
+				new Point(location.X, location.Y + VPosition * 5),
+				new Rectangle(location, new Size(144, 150)),
+				scale, color);
+
+			if (HasButton)
+				batch.DrawTile(TileSet, 15, button, color, 0.0f, scale, SpriteEffects.None, 0.0f);
+
+		}
 
 
 		/// <summary>
 		/// 
 		/// </summary>
-        /// <param name="batch"></param>
 		/// <param name="location"></param>
 		/// <param name="distance"></param>
-		void DrawEyeDoor(SpriteBatch batch, Point location, ViewFieldPosition distance)
+		void DrawUpDownDoor(SpriteBatch batch, int tileid, Point location, ViewFieldPosition distance)
 		{
+			Vector2 scale = new Vector2();
+			Color color = Color.White;
+			Rectangle clip = Rectangle.Empty;
+			int[] offset = new int[2];
+			Point button = new Point();
 
 			switch (distance)
 			{
@@ -291,241 +374,11 @@ namespace DungeonEye
 				case ViewFieldPosition.O:
 				{
 					location.Offset(56, 14);
-                    InternalDraw(batch, TileSet, 15, 
-                        new Point(location.X, location.Y + VPosition * 5), 
-                        new Rectangle(location, new Size(144, 150)));
-
-					if (HasButton)
-						batch.DrawTile(TileSet, 41, new Point(260, 72));
-				}
-				break;
-
-				case ViewFieldPosition.H:
-				case ViewFieldPosition.I:
-				case ViewFieldPosition.J:
-				case ViewFieldPosition.K:
-				case ViewFieldPosition.L:
-				{
-					location.Offset(32, 12);
-                    InternalDraw(batch, TileSet, 16, 
-                        new Point(location.X, location.Y + VPosition * 3), 
-                        new Rectangle(location, new Size(102, 96)));
-
-					if (HasButton)
-						batch.DrawTile(TileSet, 42, new Point(234, 80));
-				}
-				break;
-
-				case ViewFieldPosition.A:
-				case ViewFieldPosition.B:
-				case ViewFieldPosition.C:
-				case ViewFieldPosition.D:
-				case ViewFieldPosition.E:
-				case ViewFieldPosition.F:
-				case ViewFieldPosition.G:
-				{
-					location.Offset(14, 4);
-                    InternalDraw(batch, TileSet, 17,
-                         new Point(location.X, location.Y + VPosition * 2),
-                         new Rectangle(location, new Size(64, 58)));
-				}
-				break;
-
-			}
-		}
-
-
-		/// <summary>
-		/// Draws the grid door
-		/// </summary>
-		/// <param name="location"></param>
-		/// <param name="distance"></param>
-		void DrawGridDoor(SpriteBatch batch, Point location, ViewFieldPosition distance)
-		{
-			switch (distance)
-			{
-				case ViewFieldPosition.M:
-				case ViewFieldPosition.N:
-				case ViewFieldPosition.O:
-				{
-                    //Display.RenderState.Scissor = true;
-					location.Offset(54, 16);
-                    //Display.ScissorZone = new Rectangle(location, new Size(148, 142));
-                    //location.Offset(0, VPosition * 5);
-                    //batch.DrawTile(TileSet, 9, location);
-                    //Display.RenderState.Scissor = false;
-
-                    InternalDraw(batch, TileSet, 9,
-                         new Point(location.X, location.Y + VPosition * 5),
-                         new Rectangle(location, new Size(148, 142)));
-
-					if (HasButton)
-						batch.DrawTile(TileSet, 30, new Point(260, 72));
-				}
-				break;
-
-				case ViewFieldPosition.H:
-				case ViewFieldPosition.I:
-				case ViewFieldPosition.J:
-				case ViewFieldPosition.K:
-				case ViewFieldPosition.L:
-				{
-                    //Display.RenderState.Scissor = true;
-                    location.Offset(28, 8);
-                    //Display.ScissorZone = new Rectangle(location, new Size(104, 86));
-                    //location.Offset(0, VPosition * 3);
-                    //batch.DrawTile(TileSet, 10, location);
-                    //Display.RenderState.Scissor = false;
-
-                    InternalDraw(batch, TileSet, 10,
-                         new Point(location.X, location.Y + VPosition * 3),
-                         new Rectangle(location, new Size(104, 86)));
-
-					if (HasButton)
-						batch.DrawTile(TileSet, 31, new Point(234, 80));
-				}
-				break;
-
-				case ViewFieldPosition.A:
-				case ViewFieldPosition.B:
-				case ViewFieldPosition.C:
-				case ViewFieldPosition.D:
-				case ViewFieldPosition.E:
-				case ViewFieldPosition.F:
-				case ViewFieldPosition.G:
-				{
-                    //Display.RenderState.Scissor = true;
-					location.Offset(16, 4);
-                    //Display.ScissorZone = new Rectangle(location, new Size(64, 58));
-                    //location.Offset(0, VPosition * 2);
-                    //batch.DrawTile(TileSet, 11, location);
-                    //Display.RenderState.Scissor = false;
-
-                    InternalDraw(batch, TileSet, 11,
-                         new Point(location.X, location.Y + VPosition * 2),
-                         new Rectangle(location, new Size(64, 58)));
-
-				}
-				break;
-
-			}
-
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="location"></param>
-		/// <param name="distance"></param>
-		void DrawIronDoor(SpriteBatch batch, Point location, ViewFieldPosition distance)
-		{
-
-			switch (distance)
-			{
-				case ViewFieldPosition.M:
-				case ViewFieldPosition.N:
-				case ViewFieldPosition.O:
-				{
-					//Display.RenderState.Scissor = true;
-					location.Offset(54, 16);
-                    //if (State != DoorState.Opened)
-                    //{
-                    //    Display.ScissorZone = new Rectangle(location, new Size(148, 144));
-                    //    Display.RenderState.Scissor = true;
-                    //    batch.DrawTile(TileSet, 18, new Point(location.X, location.Y + VPosition * 5));
-                    //}
-                    //Display.RenderState.Scissor = false;
-
-                    InternalDraw(batch, TileSet, 18,
-                     new Point(location.X, location.Y + VPosition * 5),
-                     new Rectangle(location, new Size(148, 144)));
-
-					if (HasButton)
-						batch.DrawTile(TileSet, 30, new Point(260, 72));
-				}
-				break;
-
-				case ViewFieldPosition.H:
-				case ViewFieldPosition.I:
-				case ViewFieldPosition.J:
-				case ViewFieldPosition.K:
-				case ViewFieldPosition.L:
-				{
-                    //Display.RenderState.Scissor = true;
-					location.Offset(28, 8);
-                    //Display.ScissorZone = new Rectangle(location, new Size(104, 96));
-                    //Display.RenderState.Scissor = true;
-                    //batch.DrawTile(TileSet, 19, new Point(location.X, location.Y + VPosition * 3));
-                    //Display.RenderState.Scissor = false;
-
-                    InternalDraw(batch, TileSet, 19,
-                        new Point(location.X, location.Y + VPosition * 3),
-                        new Rectangle(location, new Size(104, 96)));
-
-					if (HasButton)
-						batch.DrawTile(TileSet, 31, new Point(234, 80));
-				}
-				break;
-
-				case ViewFieldPosition.A:
-				case ViewFieldPosition.B:
-				case ViewFieldPosition.C:
-				case ViewFieldPosition.D:
-				case ViewFieldPosition.E:
-				case ViewFieldPosition.F:
-				case ViewFieldPosition.G:
-				{
-                    //Display.RenderState.Scissor = true;
-					location.Offset(14, 4);
-                    //Display.ScissorZone = new Rectangle(location, new Size(64, 58));
-                    //Display.RenderState.Scissor = true;
-                    //batch.DrawTile(TileSet, 20, new Point(location.X, location.Y + VPosition * 2));
-                    //Display.RenderState.Scissor = false;
-
-                    InternalDraw(batch, TileSet, 20,
-                         new Point(location.X, location.Y + VPosition * 2),
-                         new Rectangle(location, new Size(64, 58)));
-
-				}
-				break;
-
-			}
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="location"></param>
-		/// <param name="distance"></param>
-		void DrawMonsterDoor(SpriteBatch batch, Point location, ViewFieldPosition distance)
-		{
-			switch (distance)
-			{
-				case ViewFieldPosition.M:
-				case ViewFieldPosition.N:
-				case ViewFieldPosition.O:
-				{
-					location.Offset(56, 14);
-                    //Display.RenderState.Scissor = true;
-                    //Display.ScissorZone = new Rectangle(location, new Size(144, 142));
-                    //batch.DrawTile(TileSet, 0, new Point(location.X, location.Y + VPosition * 5));
-                    //batch.DrawTile(TileSet, 1, new Point(location.X, location.Y + 86 + VPosition * -2));
-                    //Display.RenderState.Scissor = false;
-
-                    InternalDraw(batch, TileSet, 0,
-                         new Point(location.X, location.Y + VPosition * 5),
-                         new Rectangle(location, new Size(144, 142)));
-
-                    InternalDraw(batch, TileSet, 1,
-                         new Point(location.X, location.Y + 86 + VPosition * -2),
-                         new Rectangle(location, new Size(144, 142)));
-
-					if (HasButton)
-						batch.DrawTile(TileSet, 36, new Point(260, 72));
-
-
+					scale = Vector2.One;
+					clip = new Rectangle(location, new Size(144, 142));
+					offset[0] = VPosition * 5;
+					offset[1] = 86 + VPosition * -2;
+					button = new Point(252, 90);
 				}
 				break;
 
@@ -536,24 +389,12 @@ namespace DungeonEye
 				case ViewFieldPosition.L:
 				{
 					location.Offset(28, 8);
-                    //Display.RenderState.Scissor = true;
-                    //Display.ScissorZone = new Rectangle(location, new Size(104, 96));
-                    //batch.DrawTile(TileSet, 2, new Point(location.X, location.Y + VPosition * 3));
-                    //batch.DrawTile(TileSet, 3, new Point(location.X, location.Y + 56 + VPosition * -1));
-                    //Display.RenderState.Scissor = false;
-
-                    InternalDraw(batch, TileSet, 2,
-                         new Point(location.X, location.Y + VPosition * 3),
-                         new Rectangle(location, new Size(104, 96)));
-
-                    InternalDraw(batch, TileSet, 3,
-                         new Point(location.X, location.Y + 56 - VPosition),
-                         new Rectangle(location, new Size(104, 96)));
-
-
-					if (HasButton)
-						batch.DrawTile(TileSet, 37, new Point(234, 80));
-
+					scale = new Vector2(0.66f, 0.66f);
+					color = Color.FromArgb(130, 130, 130);
+					clip = new Rectangle(location, new Size(104, 96));
+					offset[0] = VPosition * 3;
+					offset[1] = 56 - VPosition;
+					button = new Point(230, 86);
 				}
 				break;
 
@@ -566,193 +407,33 @@ namespace DungeonEye
 				case ViewFieldPosition.G:
 				{
 					location.Offset(14, 4);
-                    //Display.RenderState.Scissor = true;
-                    //Display.ScissorZone = new Rectangle(location, new Size(68, 60));
-                    //batch.DrawTile(TileSet, 4, new Point(location.X, location.Y + VPosition * 2));
-                    //batch.DrawTile(TileSet, 5, new Point(location.X, location.Y + 36 + VPosition * -1));
-                    //Display.RenderState.Scissor = false;
-
-                    InternalDraw(batch, TileSet, 4,
-                         new Point(location.X, location.Y + VPosition * 2),
-                         new Rectangle(location, new Size(68, 60)));
-
-                    InternalDraw(batch, TileSet, 5,
-                         new Point(location.X, location.Y + 36 - VPosition),
-                         new Rectangle(location, new Size(68, 60)));
-
-
-				}
-				break;
-
-			}
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="location"></param>
-		/// <param name="distance"></param>
-		void DrawSpiderDoor(SpriteBatch batch, Point location, ViewFieldPosition distance)
-		{
-			switch (distance)
-			{
-				case ViewFieldPosition.M:
-				case ViewFieldPosition.N:
-				case ViewFieldPosition.O:
-				{
-					location.Offset(32, 24);
-                    //Display.RenderState.Scissor = true;
-                    //Display.ScissorZone = new Rectangle(location, new Size(192, 142));
-                    //batch.DrawTile(TileSet, 12, new Point(location.X, location.Y + VPosition * 5));
-                    //Display.RenderState.Scissor = false;
-
-                    InternalDraw(batch, TileSet, 12,
-                         new Point(location.X, location.Y + VPosition * 5),
-                         new Rectangle(location, new Size(192, 142)));
-
-					if (HasButton)
-						batch.DrawTile(TileSet, 39, new Point(260, 72));
-				}
-				break;
-
-				case ViewFieldPosition.H:
-				case ViewFieldPosition.I:
-				case ViewFieldPosition.J:
-				case ViewFieldPosition.K:
-				case ViewFieldPosition.L:
-				{
-					location.Offset(32, 18);
-                    //Display.RenderState.Scissor = true;
-                    //Display.ScissorZone = new Rectangle(location, new Size(96, 82));
-                    //batch.DrawTile(TileSet, 13, new Point(location.X, location.Y + VPosition * 3));
-                    //Display.RenderState.Scissor = false;
-
-                    InternalDraw(batch, TileSet, 13,
-                         new Point(location.X, location.Y + VPosition * 3),
-                         new Rectangle(location, new Size(96, 82)));
-
-
-					if (HasButton)
-						batch.DrawTile(TileSet, 40, new Point(234, 80));
-				}
-				break;
-
-				case ViewFieldPosition.A:
-				case ViewFieldPosition.B:
-				case ViewFieldPosition.C:
-				case ViewFieldPosition.D:
-				case ViewFieldPosition.E:
-				case ViewFieldPosition.F:
-				case ViewFieldPosition.G:
-				{
-					location.Offset(16, 10);
-                    //Display.ScissorZone = new Rectangle(location, new Size(64, 54));
-                    //Display.RenderState.Scissor = true;
-                    //batch.DrawTile(TileSet, 14, new Point(location.X, location.Y + VPosition * 2));
-                    //Display.RenderState.Scissor = false;
-
-                    InternalDraw(batch, TileSet, 14,
-                        new Point(location.X, location.Y + VPosition * 2),
-                        new Rectangle(location, new Size(64, 54)));
-
+					scale = new Vector2(0.5f, 0.5f);
+					color = Color.FromArgb(40, 40, 40);
+					clip = new Rectangle(location, new Size(68, 60));
+					offset[0] = VPosition * 2;
+					offset[1] = 36 - VPosition;
+					button = new Point(210, 84);
 				}
 				break;
 
 			}
 
-		}
 
+			// Upper part
+			InternalDraw(batch, TileSet, tileid,
+				new Point(location.X, location.Y + offset[0]),
+				clip,
+				scale, color);
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="location"></param>
-		/// <param name="distance"></param>
-		void DrawStoneDoor(SpriteBatch batch, Point location, ViewFieldPosition distance)
-		{
-			switch (distance)
-			{
-				case ViewFieldPosition.M:
-				case ViewFieldPosition.N:
-				case ViewFieldPosition.O:
-				{
-                    batch.End();
+			// Lower part
+			InternalDraw(batch, TileSet, tileid + 1,
+				new Point(location.X, location.Y + offset[1]),
+				clip,
+				scale, color);
 
-					location.Offset(32, 16);
-
-                    Display.PushScissor(new Rectangle(location.X + 26, location.Y, 140, 142));
-
-                    batch.Begin();
-                    batch.DrawTile(TileSet, 6, new Point(location.X + VPosition * 3, location.Y));
-                    batch.DrawTile(TileSet, 6, new Point(location.X - VPosition * 3 + 96, location.Y), Color.White, 0.0f, SpriteEffects.FlipHorizontally, 0.0f);
-					
-					if (HasButton)
-						batch.DrawTile(TileSet, 33, new Point(location.X + 102 - VPosition * 3, 72 + 20));
-                    
-					batch.End();
-
-					Display.PopScissor();
-
-                    batch.Begin();
-
-				}
-				break;
-
-				case ViewFieldPosition.H:
-				case ViewFieldPosition.I:
-				case ViewFieldPosition.J:
-				case ViewFieldPosition.K:
-				case ViewFieldPosition.L:
-				{
-                    batch.End();
-
-
-					location.Offset(16, 8);
-
-				//	Display.RenderState.Scissor = true;
-					Display.PushScissor(new Rectangle(location.X + 14, location.Y, 100, 94));
-
-                    batch.Begin();
-					batch.DrawTile(TileSet, 7, new Point(location.X + VPosition * 2, location.Y));
-					batch.DrawTile(TileSet, 7, new Point(location.X - VPosition * 2 + 64, location.Y), Color.White, 0.0f, SpriteEffects.FlipHorizontally, 0.0f);
-
-					if (HasButton)
-						batch.DrawTile(TileSet, 34, new Point(234, 80));
-        
-					batch.End();
-
-					Display.PopScissor();
-
-                    batch.Begin();
-				}
-				break;
-
-				case ViewFieldPosition.A:
-				case ViewFieldPosition.B:
-				case ViewFieldPosition.C:
-				case ViewFieldPosition.D:
-				case ViewFieldPosition.E:
-				case ViewFieldPosition.F:
-				case ViewFieldPosition.G:
-				{
-                    batch.End();
-
-					location.Offset(8, 4);
-
-					Display.PushScissor(new Rectangle(location.X + 10, location.Y, 60, 58));
-
-                    batch.Begin();
-					batch.DrawTile(TileSet, 8, new Point(location.X + VPosition, location.Y));
-					batch.DrawTile(TileSet, 8, new Point(location.X - VPosition + 40, location.Y), Color.White, 0.0f, SpriteEffects.FlipHorizontally, 0.0f);
-                    batch.End();
-
-					Display.PopScissor();
-
-                    batch.Begin();
-				}
-				break;
-			}
+			// Button
+			if (HasButton)
+				batch.DrawTile(TileSet, 13, button, color, 0.0f, scale, SpriteEffects.None, 0.0f);
 
 		}
 
@@ -771,7 +452,7 @@ namespace DungeonEye
 		{
 			if (xml == null)
 				return false;
-			
+
 
 			foreach (XmlNode node in xml)
 			{
@@ -1017,7 +698,7 @@ namespace DungeonEye
 		{
 			get
 			{
-				return State != DoorState.Opened;		
+				return State != DoorState.Opened;
 			}
 		}
 
@@ -1051,7 +732,7 @@ namespace DungeonEye
 		{
 			get
 			{
-				return State == DoorState.Opened;	
+				return State == DoorState.Opened;
 			}
 		}
 
@@ -1096,7 +777,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Thrown items can pass through
 		/// </summary>
-		public bool CanItemsPassThrough 
+		public bool CanItemsPassThrough
 		{
 			get
 			{
@@ -1225,17 +906,32 @@ namespace DungeonEye
 		/// <summary>
 		/// 
 		/// </summary>
-		Spider,
+		Azure,
 
 		/// <summary>
 		/// 
 		/// </summary>
-		Stone,
+		Crimson,
 
 		/// <summary>
 		/// 
 		/// </summary>
-		Eye
+		Temple,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Forest,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Silver,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Mantis
 	}
 
 

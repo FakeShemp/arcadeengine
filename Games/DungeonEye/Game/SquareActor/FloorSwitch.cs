@@ -37,6 +37,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Constructor
 		/// </summary>
+		/// <param name="square">Square handle</param>
 		public FloorSwitch(Square square) : base(square)
 		{
 			//Script = new Script();			
@@ -189,7 +190,6 @@ namespace DungeonEye
 
 
 		#endregion
-
 
 
 		#region Script
