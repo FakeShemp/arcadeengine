@@ -43,6 +43,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Constructor
 		/// </summary>
+		/// <param name="dungeon">Dungeon handle</param>
 		public Maze(Dungeon dungeon)
 		{
 			Name = "No name";
@@ -60,7 +61,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Initialize the maze
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>True on success</returns>
 		public bool Init()
 		{
 			WallTileset = ResourceManager.CreateSharedAsset<TileSet>(WallTilesetName, WallTilesetName);
@@ -895,8 +896,8 @@ namespace DungeonEye
 		/// <summary>
 		/// Loads the maze definition
 		/// </summary>
-		/// <param name="xml"></param>
-		/// <returns></returns>
+		/// <param name="xml">XmlNode handle</param>
+		/// <returns>True on success</returns>
 		public bool Load(XmlNode xml)
 		{
 			if (xml == null)
@@ -948,6 +949,13 @@ namespace DungeonEye
 					}
 					break;
 
+					case "doors":
+					{
+						DefaultDoorType = (DoorType)Enum.Parse(typeof(DoorType), node.Attributes["type"].Value);
+					}
+					break;
+
+
 					#region Blocks
 
 					case "blocks":
@@ -966,14 +974,6 @@ namespace DungeonEye
 									block.Load(subnode);
 
 									Blocks[block.Location.Coordinate.Y][block.Location.Coordinate.X] = block;
-
-									//
-									// Collect block informations
-									//
-
-									// Add door to the list
-									//if (block.Door != null)
-									//	Doors.Add(block.Door);
 								}
 								break;
 							}
@@ -996,8 +996,8 @@ namespace DungeonEye
 		/// <summary>
 		/// Saves the maze definition
 		/// </summary>
-		/// <param name="writer"></param>
-		/// <returns></returns>
+		/// <param name="writer">XmlWriter handle</param>
+		/// <returns>True on success</returns>
 		public bool Save(XmlWriter writer)
 		{
 			if (writer == null)
@@ -1015,6 +1015,10 @@ namespace DungeonEye
 
 			writer.WriteStartElement("description");
 			writer.WriteString(Description);
+			writer.WriteEndElement();
+
+			writer.WriteStartElement("doors");
+			writer.WriteAttributeString("type", DefaultDoorType.ToString());
 			writer.WriteEndElement();
 
 
@@ -1324,10 +1328,12 @@ namespace DungeonEye
 
 		#endregion
 
+
 		/// <summary>
 		/// Blocks in the maze
 		/// </summary>
 		List<List<Square>> Blocks;
+
 
 		/// <summary>
 		/// Gets the size of the maze
@@ -1369,7 +1375,6 @@ namespace DungeonEye
 		}
 
 
-
 		/// <summary>
 		/// Description of the maze
 		/// </summary>
@@ -1378,7 +1383,6 @@ namespace DungeonEye
 			get;
 			set;
 		}
-
 
 
 		/// <summary>
@@ -1392,7 +1396,6 @@ namespace DungeonEye
 		}
 
 
-
 		/// <summary>
 		/// Flying items in the maze
 		/// </summary>
@@ -1404,12 +1407,20 @@ namespace DungeonEye
 		}
 
 
+		/// <summary>
+		/// Default type of door in this maze
+		/// </summary>
+		public DoorType DefaultDoorType
+		{
+			get;
+			set;
+		}
+
 
 		/// <summary>
 		/// Level Experience Multiplier when Heroes gain experience
 		/// </summary>
-		public byte ExperienceMultiplier;
-
+		public float ExperienceMultiplier;
 
 
 		/// <summary>
@@ -1422,8 +1433,6 @@ namespace DungeonEye
 		}
 
 		#endregion
-
-
 	}
 
 

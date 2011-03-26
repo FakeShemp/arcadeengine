@@ -82,7 +82,11 @@ namespace ArcEngine.Editor
 		}
 
 
-
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void LogForm_FormClosing(object sender, FormClosingEventArgs e)
 		{
 			Trace.OnTrace -= new Trace.OnTraceEvent(Trace_OnTrace);

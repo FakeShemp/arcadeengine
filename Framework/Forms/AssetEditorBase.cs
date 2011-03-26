@@ -18,6 +18,7 @@
 //
 #endregion
 
+using System;
 using ArcEngine.Asset;
 using WeifenLuo.WinFormsUI.Docking;
 using ArcEngine.Interface;
@@ -87,9 +88,10 @@ namespace ArcEngine.Forms
 			else if (result == DialogResult.Cancel)
 			{
 				e.Cancel = true;
+				return;
 			}
 
-
+			Dispose();
 		}
 
 		#endregion
@@ -110,7 +112,5 @@ namespace ArcEngine.Forms
 		}
 
 		#endregion
-
-
 	}
 }

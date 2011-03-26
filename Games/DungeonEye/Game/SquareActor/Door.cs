@@ -38,7 +38,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Initializes doors
 		/// </summary>
-		/// <returns></returns>
+		/// <param name="square">Parent square handle</param>
 		public Door(Square square) : base(square)
 		{
 			// Zone of the button to open/close the door
@@ -51,6 +51,9 @@ namespace DungeonEye
 
 			AcceptItems = false;
 			Speed = TimeSpan.FromSeconds(1);
+
+			if (Square != null || Square.Maze != null)
+				Type = Square.Maze.DefaultDoorType;
 		}
 
 

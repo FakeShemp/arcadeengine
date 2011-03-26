@@ -167,6 +167,34 @@ namespace ArcEngine.Editor
 			CurrentTile = null;
 		}
 
+		/// <summary>
+		/// Change the tile to edit
+		/// </summary>
+		/// <param name="tile">Tile handle</param>
+		void SetCurrentTile(Tile tile)
+		{
+			CurrentTile = tile;
+			TilePropertyGrid.SelectedObject = CurrentTile;
+
+			if (CurrentTile != null)
+			{
+
+
+				SelectionTool.Rectangle = CurrentTile.Rectangle;
+				CollisionSelection.Rectangle = CurrentTile.CollisionBox;
+
+
+				// Prints the size of the current tile
+				SizeLabel.Text = SelectionTool.Rectangle.Width + "," + SelectionTool.Rectangle.Height;
+			}
+			else
+			{
+				SelectionTool.Rectangle = Rectangle.Empty;
+			}
+		}
+
+
+
 
 		#region GlTextureControl
 
@@ -817,34 +845,6 @@ namespace ArcEngine.Editor
 
 
 		/// <summary>
-		/// Change the tile to edit
-		/// </summary>
-		/// <param name="tile">Tile handle</param>
-		void SetCurrentTile(Tile tile)
-		{
-			CurrentTile = tile;
-			TilePropertyGrid.SelectedObject = CurrentTile;
-
-			if (CurrentTile != null)
-			{
-
-
-				SelectionTool.Rectangle = CurrentTile.Rectangle;
-				CollisionSelection.Rectangle = CurrentTile.CollisionBox;
-
-
-				// Prints the size of the current tile
-				SizeLabel.Text = SelectionTool.Rectangle.Width + "," + SelectionTool.Rectangle.Height;
-			}
-			else
-			{
-				SelectionTool.Rectangle = Rectangle.Empty;
-			}
-		}
-
-
-
-		/// <summary>
 		/// Zoom in the texture preview panel
 		/// </summary>
 		/// <param name="sender"></param>
@@ -919,6 +919,11 @@ namespace ArcEngine.Editor
 			if (CheckerBoard != null)
 				CheckerBoard.Dispose();
 			CheckerBoard = null;
+
+			if (BMFont != null)
+				BMFont.Dispose();
+			BMFont = null;
+
 		}
 
 
@@ -1021,9 +1026,5 @@ namespace ArcEngine.Editor
 		BitmapFont BMFont;
 
 		#endregion
-
-
 	}
-
-
 }

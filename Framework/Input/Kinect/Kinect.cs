@@ -23,7 +23,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using ArcEngine.PInvoke;
-using freenect;
+//using freenect;
 
 
 namespace ArcEngine.Input
@@ -40,7 +40,7 @@ namespace ArcEngine.Input
 		/// <param name="deviceid">Device id</param>
 		public Kinect(int deviceid)
 		{
-			freenect.Kinect k = new freenect.Kinect(0);
+	//		freenect.Kinect k = new freenect.Kinect(0);
 			
 			
 			try
