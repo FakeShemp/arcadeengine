@@ -31,18 +31,20 @@
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ResourceForm));
 			this.ResourceTree = new System.Windows.Forms.TreeView();
-			this.MouseContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.MainImageList = new System.Windows.Forms.ImageList(this.components);
+			this.AssetContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.CloneMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.RenameMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
 			this.RemoveMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.MainImageList = new System.Windows.Forms.ImageList(this.components);
-			this.MouseContextMenu.SuspendLayout();
+			this.TypeContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.AssetContextMenu.SuspendLayout();
+			this.TypeContextMenu.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// ResourceTree
 			// 
-			this.ResourceTree.ContextMenuStrip = this.MouseContextMenu;
 			this.ResourceTree.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.ResourceTree.FullRowSelect = true;
 			this.ResourceTree.HideSelection = false;
@@ -61,47 +63,8 @@
 			this.ResourceTree.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.ResourceTree_AfterLabelEdit);
 			this.ResourceTree.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.ResourceTree_NodeMouseClick);
 			this.ResourceTree.DoubleClick += new System.EventHandler(this.OnTreeViewDoubleCick);
-			this.ResourceTree.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp);
+			this.ResourceTree.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ResourceTree_MouseClick);
 			this.ResourceTree.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.ResourceTree_PreviewKeyDown);
-			// 
-			// MouseContextMenu
-			// 
-			this.MouseContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.CloneMenuItem,
-            this.RenameMenuItem,
-            this.toolStripMenuItem1,
-            this.RemoveMenuItem});
-			this.MouseContextMenu.Name = "BankcontextMenu";
-			this.MouseContextMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-			this.MouseContextMenu.Size = new System.Drawing.Size(153, 98);
-			this.MouseContextMenu.Text = "Resource";
-			// 
-			// CloneMenuItem
-			// 
-			this.CloneMenuItem.Name = "CloneMenuItem";
-			this.CloneMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.CloneMenuItem.Text = "Clone";
-			this.CloneMenuItem.Click += new System.EventHandler(this.CloneMenuItem_Click);
-			// 
-			// RenameMenuItem
-			// 
-			this.RenameMenuItem.Name = "RenameMenuItem";
-			this.RenameMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.RenameMenuItem.Text = "Rename";
-			this.RenameMenuItem.Click += new System.EventHandler(this.RenameMenuItem_Click);
-			// 
-			// toolStripMenuItem1
-			// 
-			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-			this.toolStripMenuItem1.Size = new System.Drawing.Size(149, 6);
-			// 
-			// RemoveMenuItem
-			// 
-			this.RemoveMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("RemoveMenuItem.Image")));
-			this.RemoveMenuItem.Name = "RemoveMenuItem";
-			this.RemoveMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.RemoveMenuItem.Text = "Remove";
-			this.RemoveMenuItem.Click += new System.EventHandler(this.EraseMenu_Click);
 			// 
 			// MainImageList
 			// 
@@ -115,11 +78,11 @@
 			this.MainImageList.Images.SetKeyName(5, "Ruler.png");
 			this.MainImageList.Images.SetKeyName(6, "Script.png");
 			this.MainImageList.Images.SetKeyName(7, "Texture.png");
-			this.MainImageList.Images.SetKeyName(8, "Tiles.png");
-			this.MainImageList.Images.SetKeyName(9, "Library.png");
-			this.MainImageList.Images.SetKeyName(10, "Audio.png");
-			this.MainImageList.Images.SetKeyName(11, "FolderClosed.png");
-			this.MainImageList.Images.SetKeyName(12, "FolderOpen.png");
+			this.MainImageList.Images.SetKeyName(8, "");
+			this.MainImageList.Images.SetKeyName(9, "");
+			this.MainImageList.Images.SetKeyName(10, "");
+			this.MainImageList.Images.SetKeyName(11, "");
+			this.MainImageList.Images.SetKeyName(12, "");
 			this.MainImageList.Images.SetKeyName(13, "");
 			this.MainImageList.Images.SetKeyName(14, "");
 			this.MainImageList.Images.SetKeyName(15, "");
@@ -144,6 +107,58 @@
 			this.MainImageList.Images.SetKeyName(34, "");
 			this.MainImageList.Images.SetKeyName(35, "");
 			// 
+			// AssetContextMenu
+			// 
+			this.AssetContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.CloneMenuItem,
+            this.RenameMenuItem,
+            this.toolStripMenuItem1,
+            this.RemoveMenuItem});
+			this.AssetContextMenu.Name = "BankcontextMenu";
+			this.AssetContextMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+			this.AssetContextMenu.Size = new System.Drawing.Size(153, 98);
+			this.AssetContextMenu.Text = "Resource";
+			// 
+			// CloneMenuItem
+			// 
+			this.CloneMenuItem.Name = "CloneMenuItem";
+			this.CloneMenuItem.Size = new System.Drawing.Size(117, 22);
+			this.CloneMenuItem.Text = "Clone";
+			this.CloneMenuItem.Click += new System.EventHandler(this.CloneMenuItem_Click);
+			// 
+			// RenameMenuItem
+			// 
+			this.RenameMenuItem.Name = "RenameMenuItem";
+			this.RenameMenuItem.Size = new System.Drawing.Size(117, 22);
+			this.RenameMenuItem.Text = "Rename";
+			this.RenameMenuItem.Click += new System.EventHandler(this.RenameMenuItem_Click);
+			// 
+			// toolStripMenuItem1
+			// 
+			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+			this.toolStripMenuItem1.Size = new System.Drawing.Size(114, 6);
+			// 
+			// RemoveMenuItem
+			// 
+			this.RemoveMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("RemoveMenuItem.Image")));
+			this.RemoveMenuItem.Name = "RemoveMenuItem";
+			this.RemoveMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.RemoveMenuItem.Text = "Remove";
+			this.RemoveMenuItem.Click += new System.EventHandler(this.EraseMenu_Click);
+			// 
+			// TypeContextMenu
+			// 
+			this.TypeContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.clearToolStripMenuItem});
+			this.TypeContextMenu.Name = "TypeContextMenu";
+			this.TypeContextMenu.Size = new System.Drawing.Size(153, 48);
+			// 
+			// clearToolStripMenuItem
+			// 
+			this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
+			this.clearToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.clearToolStripMenuItem.Text = "Clear";
+			// 
 			// ResourceForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -156,7 +171,8 @@
 			this.ShowInTaskbar = false;
 			this.TabText = "Assets :";
 			this.Text = "Assets :";
-			this.MouseContextMenu.ResumeLayout(false);
+			this.AssetContextMenu.ResumeLayout(false);
+			this.TypeContextMenu.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -164,11 +180,13 @@
 		#endregion
 
 		public System.Windows.Forms.TreeView ResourceTree;
-		private System.Windows.Forms.ContextMenuStrip MouseContextMenu;
+		private System.Windows.Forms.ContextMenuStrip AssetContextMenu;
 		private System.Windows.Forms.ToolStripMenuItem RemoveMenuItem;
 		private System.Windows.Forms.ImageList MainImageList;
 		private System.Windows.Forms.ToolStripMenuItem CloneMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem RenameMenuItem;
 		private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
+		private System.Windows.Forms.ContextMenuStrip TypeContextMenu;
+		private System.Windows.Forms.ToolStripMenuItem clearToolStripMenuItem;
 	}
 }

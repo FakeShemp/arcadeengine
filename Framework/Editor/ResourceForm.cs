@@ -268,29 +268,17 @@ namespace ArcEngine.Editor
 			if (node == null)
 				return;
 
+			// Delete
 			if (e.KeyCode == Keys.Delete)
 				RemoveAsset(node);
 
+			// Rename
+			if (e.KeyCode == Keys.F2)
+				node.BeginEdit();
+
+			// Edit
 			if (e.KeyCode == Keys.Enter && !node.IsEditing)
 				EditAsset(node);
-		}
-
-
-		/// <summary>
-		/// OnMouseUp ContextMenu
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnMouseUp(object sender, MouseEventArgs e)
-		{
-
-			if (e.Button == MouseButtons.Right)
-			{
-				TreeNode node = ResourceTree.GetNodeAt(e.X, e.Y);
-				MouseContextMenu.Tag = node.Tag;
-
-				MouseContextMenu.Show(ResourceTree, new Point(e.X, e.Y));
-			}
 		}
 
 
@@ -437,6 +425,43 @@ namespace ArcEngine.Editor
 
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ResourceTree_MouseClick(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right)
+			{
+				Point location = PointToScreen(e.Location);
+				TreeNode node = ResourceTree.GetNodeAt(e.Location.X, e.Location.Y);
+				if (node == null)
+					return;
+
+				// Root node
+				if (node.Parent == null)
+				{
+
+				}
+				// Asset type node
+				else if (node.GetNodeCount(true) > 0)
+				{
+					TypeContextMenu.Tag = node.Tag;
+					TypeContextMenu.Show(location);
+				}
+
+				else
+				{
+					AssetContextMenu.Tag = node.Tag;
+					AssetContextMenu.Show(location);
+				}
+
+			}
+		}
+
+
+
 		#endregion
 
 
@@ -449,6 +474,7 @@ namespace ArcEngine.Editor
 		Dictionary<Type, int> NodeIcons;
 
 		#endregion
+
 
 	}
 }
