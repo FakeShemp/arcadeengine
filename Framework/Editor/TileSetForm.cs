@@ -152,6 +152,7 @@ namespace ArcEngine.Editor
 			return bound;
 		}
 
+
 		/// <summary>
 		/// Remove a tile
 		/// </summary>
@@ -166,6 +167,7 @@ namespace ArcEngine.Editor
 			SelectionTool.Rectangle = Rectangle.Empty;
 			CurrentTile = null;
 		}
+
 
 		/// <summary>
 		/// Change the tile to edit
@@ -760,7 +762,7 @@ namespace ArcEngine.Editor
 
 
 
-		#region Events
+		#region Form events
 
 
 		/// <summary>
@@ -813,6 +815,34 @@ namespace ArcEngine.Editor
 			TextureNameBox.Text = TileSet.TextureName;
 
 			BMFont = BitmapFont.CreateFromTTF(@"c:\windows\fonts\verdana.ttf", 14, FontStyle.Regular);
+		}
+
+
+
+		/// <summary>
+		/// Form closing
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void TileSetForm_FormClosed(object sender, FormClosedEventArgs e)
+		{
+
+			if (Batch != null)
+				Batch.Dispose();
+			Batch = null;
+
+			if (TileSet != null)
+				TileSet.Dispose();
+			TileSet = null;
+
+			if (CheckerBoard != null)
+				CheckerBoard.Dispose();
+			CheckerBoard = null;
+
+			if (BMFont != null)
+				BMFont.Dispose();
+			BMFont = null;
+
 		}
 
 
@@ -897,35 +927,6 @@ namespace ArcEngine.Editor
 			TextureOffset = Point.Empty;
 			TileOffset = Point.Empty;
 		}
-
-
-
-		/// <summary>
-		/// Form closing
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void TileSetForm_FormClosed(object sender, FormClosedEventArgs e)
-		{
-
-			if (Batch != null)
-				Batch.Dispose();
-			Batch = null;
-
-			if (TileSet != null)
-				TileSet.Dispose();
-			TileSet = null;
-
-			if (CheckerBoard != null)
-				CheckerBoard.Dispose();
-			CheckerBoard = null;
-
-			if (BMFont != null)
-				BMFont.Dispose();
-			BMFont = null;
-
-		}
-
 
 
 		/// <summary>

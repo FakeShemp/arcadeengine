@@ -117,11 +117,11 @@
     <Compile Include="Forms\AbilityControl.Designer.cs">
       <DependentUpon>AbilityControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\DecorationForm.cs">
+    <Compile Include="Forms\DecorationSetForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\DecorationForm.Designer.cs">
-      <DependentUpon>DecorationForm.cs</DependentUpon>
+    <Compile Include="Forms\DecorationSetForm.Designer.cs">
+      <DependentUpon>DecorationSetForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\DoorForm.cs">
       <SubType>Form</SubType>
@@ -424,7 +424,7 @@
       <DependentUpon>NewNameWizard.cs</DependentUpon>
     </Compile>
     <Compile Include="GameSettings.cs" />
-    <Compile Include="Game\DecorationInfo.cs" />
+    <Compile Include="Game\Decoration.cs" />
     <Compile Include="Game\GameColors.cs" />
     <Compile Include="Interfaces\IDoor.cs" />
     <Compile Include="Interfaces\IFloorPlate.cs" />
@@ -516,8 +516,8 @@
     <EmbeddedResource Include="Forms\AbilityControl.resx">
       <DependentUpon>AbilityControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\DecorationForm.resx">
-      <DependentUpon>DecorationForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\DecorationSetForm.resx">
+      <DependentUpon>DecorationSetForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\DoorForm.resx">
       <DependentUpon>DoorForm.cs</DependentUpon>
@@ -655,7 +655,7 @@
     <Compile Include="GameScreen.cs">
     </Compile>
     <Compile Include="Game\SquareActor\Teleporter.cs" />
-    <Compile Include="Game\Decoration.cs" />
+    <Compile Include="Game\DecorationSet.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Framework\ArcEngine.csproj">

@@ -74,7 +74,7 @@ namespace DungeonEye
 			ResourceManager.RegisterAsset<Dungeon>(typeof(DungeonForm));
 			ResourceManager.RegisterAsset<Item>(typeof(ItemForm));
 			ResourceManager.RegisterAsset<Monster>(typeof(MonsterForm));
-			ResourceManager.RegisterAsset<Decoration>(typeof(DecorationForm));
+			ResourceManager.RegisterAsset<DecorationSet>(typeof(DecorationSetForm));
 			ResourceManager.RegisterAsset<Spell>(typeof(SpellForm));
 			ResourceManager.RegisterAsset<Hero>(typeof(HeroForm));
 
