@@ -426,6 +426,7 @@ namespace ArcEngine.Editor
 		}
 
 
+
 		/// <summary>
 		/// 
 		/// </summary>
@@ -605,6 +606,7 @@ namespace ArcEngine.Editor
 		StorageBase Storage;
 
 		#endregion
+
 
 	}
 

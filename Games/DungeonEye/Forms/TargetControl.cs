@@ -41,7 +41,6 @@ namespace DungeonEye.Forms
 		{
 			InitializeComponent();
 			Target = new DungeonLocation();
-		//	Dungeon = Team.Handle.Dungeon;
 		}
 
 

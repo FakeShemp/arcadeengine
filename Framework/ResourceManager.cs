@@ -482,7 +482,7 @@ namespace ArcEngine
 		/// </summary>
 		/// <typeparam name="T">Type of the asset</typeparam>
 		/// <param name="name">Asset name</param>
-		/// <returns>Handle to the asset</returns>
+		/// <returns>Handle to the asset or null</returns>
 		static public T LockSharedAsset<T>(string name) where T : IAsset
 		{
 			// Bad name
@@ -506,7 +506,7 @@ namespace ArcEngine
 		/// Removes a shared asset
 		/// </summary>
 		/// <typeparam name="T">Asset type</typeparam>
-		/// <param name="handle">Handle of the asset</param>
+		/// <param name="handle">Handle of the asset or null</param>
 		static public void UnlockSharedAsset<T>(IAsset handle) where T : IAsset
 		{
 			if (handle == null)
@@ -533,7 +533,7 @@ namespace ArcEngine
 		/// <typeparam name="T">Type of the asset</typeparam>
 		/// <param name="name">New shared asset name</param>
 		/// <param name="asset">Asset name to load</param>
-		/// <returns>Handle to the asset</returns>
+		/// <returns>Handle to the asset or null</returns>
 		static public T CreateSharedAsset<T>(string name, string asset) where T : IAsset
 		{
 			foreach (RegisteredAsset ra in RegisteredAssets)

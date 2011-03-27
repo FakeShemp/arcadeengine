@@ -1,7 +1,7 @@
 ﻿#region Licence
 //
 //This file is part of ArcEngine.
-//Copyright (C)2008-2010 Adrien Hémery ( iliak@mimicprod.net )
+//Copyright (C)2008-2011 Adrien Hémery ( iliak@mimicprod.net )
 //
 //ArcEngine is free software: you can redistribute it and/or modify
 //it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ namespace DungeonEye
 {
 
 	/// <summary>
-	/// Decoration on wall
+	/// Decoration
 	/// </summary>
 	public class Decoration : IAsset
 	{
@@ -43,6 +43,7 @@ namespace DungeonEye
 		/// </summary>
 		public Decoration()
 		{
+			Decorations = new List<DecorationInfo>();
 			IsDisposed = false;
 		}
 
@@ -54,16 +55,91 @@ namespace DungeonEye
 		/// <returns>True on success</returns>
 		public bool Init()
 		{
+			Tileset = ResourceManager.LockSharedAsset<TileSet>(TileSetName);
+
 			return true;
 		}
 
 
 
 		/// <summary>
-		/// 
+		/// Disposes resources
 		/// </summary>
 		public void Dispose()
 		{
+			if (Tileset != null)
+				ResourceManager.UnlockSharedAsset<TileSet>(Tileset);
+			Tileset = null;
+
+			Decorations = null;
+			IsDisposed = true;
+		}
+
+
+		/// <summary>
+		/// Gets a decoration description
+		/// </summary>
+		/// <param name="id">Decoration number</param>
+		/// <returns>Decoration information or null</returns>
+		public DecorationInfo GetDecoration(int id)
+		{
+			if (id > Decorations.Count - 1)
+				return null;
+
+			DecorationInfo deco = Decorations[id];
+
+			if (Tileset != null)
+				deco.Tile = Tileset.GetTile(deco.TileId);
+
+			return deco;
+		}
+
+
+
+		/// <summary>
+		/// Get screen location of a decoration
+		/// </summary>
+		/// <param name="id">Decoration id</param>
+		/// <returns>On screen location</returns>
+		public Point GetLocation(int id)
+		{
+			Point point = Point.Empty;
+
+			return point;
+		}
+
+
+
+
+		/// <summary>
+		/// Get Tile handle a decoration
+		/// </summary>
+		/// <param name="id">Decoration id</param>
+		/// <returns>Tile handle</returns>
+		public Tile GetTile(int id)
+		{
+			Tile tile = null;
+
+			return tile;
+		}
+
+
+
+		/// <summary>
+		/// Loads a TileSet
+		/// </summary>
+		/// <param name="name">TileSet name</param>
+		/// <returns>True on success</returns>
+		public bool LoadTileSet(string name)
+		{
+			TileSetName = name;
+
+			if (string.IsNullOrEmpty(name))
+				return false;
+
+			Tileset = ResourceManager.CreateAsset<TileSet>(TileSetName);
+
+			return Tileset != null;
 		}
 
 
@@ -80,7 +156,7 @@ namespace DungeonEye
 			if (xml == null)
 				return false;
 
-			if (xml.Name.ToLower() != "walldecoration")
+			if (xml.Name != XmlTag)
 				return false;
 
 			Name = xml.Attributes["name"].Value;
@@ -93,14 +169,25 @@ namespace DungeonEye
 
 				switch (node.Name.ToLower())
 				{
-
-					case "tiles":
+					case "tileset":
 					{
-						TileSetName = node.Attributes["name"].Value;
-						Tile = int.Parse(node.Attributes["id"].Value);
+						LoadTileSet(node.Attributes["name"].Value);
 					}
 					break;
 
+					case "deco":
+					{
+						DecorationInfo deco = new DecorationInfo();
+						deco.TileId = int.Parse(node.Attributes["id"].Value);
+						deco.Location = new Point(int.Parse(node.Attributes["x"].Value), int.Parse(node.Attributes["y"].Value));
+					}
+					break;
+
+					case "editor":
+					{
+						BackgroundTileset = node.Attributes["tileset"].Value;
+					}
+					break;
 
 				}
 			}
@@ -123,14 +210,25 @@ namespace DungeonEye
 				return false;
 
 
-			writer.WriteStartElement("walldecoration");
+			writer.WriteStartElement(XmlTag);
 			writer.WriteAttributeString("name", Name);
 
-			writer.WriteStartElement("tiles");
+			writer.WriteStartElement("tileset");
 			writer.WriteAttributeString("name", TileSetName);
-			writer.WriteAttributeString("id", Tile.ToString());
 			writer.WriteEndElement();
 
+			writer.WriteStartElement("editor");
+			writer.WriteAttributeString("tileset", BackgroundTileset);
+			writer.WriteEndElement();
+
+			foreach (DecorationInfo deco in Decorations)
+			{
+				writer.WriteStartElement("deco");
+				writer.WriteAttributeString("id", deco.TileId.ToString());
+				writer.WriteAttributeString("x", deco.Location.X.ToString());
+				writer.WriteAttributeString("y", deco.Location.Y.ToString());
+				writer.WriteEndElement();
+			}
 
 			writer.WriteEndElement();
 
@@ -167,14 +265,14 @@ namespace DungeonEye
 		{
 			get
 			{
-				return "walldecoration";
+				return "decoration";
 			}
 		}
+
 
 		/// <summary>
 		/// TileSet of the decoration
 		/// </summary>
-		[Browsable(false)]
 		public TileSet Tileset
 		{
 			get;
@@ -183,21 +281,8 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Tile id for this decoration
-		/// </summary>
-		[Category("TileSet")]
-		public int Tile
-		{
-			get;
-			set;
-		}
-
-
-		/// <summary>
 		/// TileSet name to use for this decoration
 		/// </summary>
-		[TypeConverter(typeof(TileSetEnumerator))]
-		[Category("TileSet")]
 		public string TileSetName
 		{
 			get;
@@ -205,6 +290,24 @@ namespace DungeonEye
 		}
 
 
+
+		/// <summary>
+		/// List of decorations
+		/// </summary>
+		List<DecorationInfo> Decorations;
+
+
+		/// <summary>
+		/// Name of the tileset to use for the editor
+		/// </summary>
+		internal string BackgroundTileset
+		{
+			get;
+			set;
+		}
+
 		#endregion
 	}
+
+
 }

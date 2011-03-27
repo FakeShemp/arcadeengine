@@ -105,8 +105,10 @@ namespace ArcEngine
 				return false;
 
 			foreach (XmlNode node in Dictionary.Values)
-				node.WriteTo(xml);
-
+			{
+				if (node != null)
+					node.WriteTo(xml);
+			}
 			return true;
 		}
 
@@ -115,7 +117,7 @@ namespace ArcEngine
 		/// Loads an asset
 		/// </summary>
 		/// <param name="xml">XmlNode handle</param>
-		/// <returns></returns>
+		/// <returns>True on success</returns>
 		public bool Load(XmlNode xml)
 		{
 			if (xml == null)
@@ -180,6 +182,8 @@ namespace ArcEngine
 		{
 			if (list == null)
 				throw new ArgumentNullException("list");
+
+			list.Clear();
 
 			foreach (string key in Dictionary.Keys)
 				list.Add(key);
@@ -282,6 +286,7 @@ namespace ArcEngine
 
 			return LockShared(sharename);
 		}
+
 
 		/// <summary>
 		/// Locks a shared asset.

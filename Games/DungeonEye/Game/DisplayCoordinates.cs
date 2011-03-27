@@ -126,7 +126,7 @@ namespace DungeonEye
 		/// Gets a draw order information
 		/// </summary>
 		/// <param name="position">Block position in the view field</param>
-		/// <returns></returns>
+		/// <returns>List of drawing tiles</returns>
 		static public List<TileDrawing> GetWalls(ViewFieldPosition position)
 		{
 			return Walls[(int)position];

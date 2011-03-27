@@ -76,7 +76,7 @@ namespace ArcEngine.Editor
 		/// <summary>
 		/// Uncheck all checkboxes
 		/// </summary>
-		/// <param name="exclude"></param>
+		/// <param name="exclude">Control to exclude</param>
 		void UncheckButtons(ToolStripButton exclude)
 		{
 			ToolStripButton[] boxes = new ToolStripButton[]
