@@ -59,12 +59,13 @@ namespace DungeonEye
 		/// <param name="direction"></param>
 		public override void Draw(SpriteBatch batch, ViewField field, ViewFieldPosition position, CardinalPoint direction)
 		{
-			if (TileSet == null)
+			if (Decoration == null)
 				return;
 
 			TileDrawing td = DisplayCoordinates.GetPit(position);
-			if (td != null && !IsHidden)
-				batch.DrawTile(TileSet, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);
+			//TODO
+			//if (td != null && !IsHidden)
+			//    batch.DrawTile(TileSet, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);
 		}
 
 
@@ -230,16 +231,16 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Tileset for the drawing
+		/// Decoration handle
 		/// </summary>
-		TileSet TileSet
+		DecorationSet Decoration
 		{
 			get
 			{
 				if (Square == null)
 					return null;
 
-				return Square.Maze.OverlayTileset;
+				return Square.Maze.Decoration;
 			}
 		}
 

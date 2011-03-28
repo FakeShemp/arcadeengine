@@ -68,9 +68,9 @@ namespace DungeonEye
 			if (WallTileset == null)
 				Trace.WriteLine("[Maze] Init() : Failed to load wall tileset for the maze \"" + Name + "\".");
 
-			OverlayTileset = ResourceManager.CreateSharedAsset<TileSet>(OverlayTilesetName, OverlayTilesetName);
-			if (OverlayTileset == null)
-				Trace.WriteLine("[Maze] Init() : Failed to load overlay tileset for the maze \"" + Name + "\".");
+			Decoration = ResourceManager.CreateSharedAsset<DecorationSet>(DecorationName, DecorationName);
+			if (Decoration == null)
+				Trace.WriteLine("[Maze] Init() : Failed to load decoration for the maze \"" + Name + "\".");
 
 			ItemsTileset = ResourceManager.CreateSharedAsset<TileSet>(ItemsTilesetName, ItemsTilesetName);
 			if (ItemsTileset == null)
@@ -129,8 +129,8 @@ namespace DungeonEye
 			ResourceManager.UnlockSharedAsset<TileSet>(ItemsTileset);
 			ItemsTileset = null;
 
-			ResourceManager.UnlockSharedAsset<TileSet>(OverlayTileset);
-			OverlayTileset = null;
+			ResourceManager.UnlockSharedAsset<DecorationSet>(Decoration);
+			Decoration = null;
 
 			ResourceManager.UnlockSharedAsset<TileSet>(WallTileset);
 			WallTileset = null;
@@ -140,7 +140,7 @@ namespace DungeonEye
 			Dungeon = null;
 			ThrownItems.Clear();
 			ItemsTilesetName = null;
-			OverlayTilesetName = null;
+			DecorationName = null;
 			WallTilesetName = null;
 			size = Size.Empty;
 			Zones.Clear();
@@ -643,10 +643,11 @@ namespace DungeonEye
 			#region ceiling pit
 			if (block.IsPitTarget)
 			{
+				//TODO
 				td = DisplayCoordinates.GetCeilingPit(position);
-				if (td != null)
-					batch.DrawTile(OverlayTileset, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);
-				//	batch.DrawTile(ItemsTileset, td.ID, td.Location, td.SwapX, td.SwapY);
+				//if (td != null)
+				//	batch.DrawTile(OverlayTileset, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);
+				//***batch.DrawTile(ItemsTileset, td.ID, td.Location, td.SwapX, td.SwapY);
 			}
 
 			#endregion
@@ -721,8 +722,9 @@ namespace DungeonEye
 					foreach (CardinalPoint side in Enum.GetValues(typeof(CardinalPoint)))
 					{
 						td = DisplayCoordinates.GetDecoration(position, side);
-						if (td != null && block.HasAlcove(view, side))
-							batch.DrawTile(OverlayTileset, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);
+						//TODO
+						//if (td != null && block.HasAlcove(view, side))
+						//    batch.DrawTile(OverlayTileset, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);
 					}
 
 					// Draw items in the alcove in front of the team
@@ -918,7 +920,7 @@ namespace DungeonEye
 					case "tileset":
 					{
 						WallTilesetName = node.Attributes["wall"].Value;
-						OverlayTilesetName = node.Attributes["overlay"].Value;
+						DecorationName = node.Attributes["decoration"].Value;
 						ItemsTilesetName = node.Attributes["items"].Value;
 
 					}
@@ -1009,7 +1011,7 @@ namespace DungeonEye
 			// Tilesets
 			writer.WriteStartElement("tileset");
 			writer.WriteAttributeString("wall", WallTilesetName);
-			writer.WriteAttributeString("overlay", OverlayTilesetName);
+			writer.WriteAttributeString("decoration", DecorationName);
 			writer.WriteAttributeString("items", ItemsTilesetName);
 			writer.WriteEndElement();
 
@@ -1272,21 +1274,21 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Layout TileSet
+		/// Decoration name
 		/// </summary>
 		[TypeConverter(typeof(TileSetEnumerator))]
 		[Category("TileSet")]
-		public string OverlayTilesetName
+		public string DecorationName
 		{
 			get;
 			set;
 		}
 
 		/// <summary>
-		/// Overlay tileset
+		/// Decoration handle
 		/// </summary>
 		[Browsable(false)]
-		public TileSet OverlayTileset
+		public DecorationSet Decoration
 		{
 			get;
 			private set;

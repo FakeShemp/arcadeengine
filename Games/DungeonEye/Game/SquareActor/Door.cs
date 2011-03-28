@@ -90,16 +90,15 @@ namespace DungeonEye
 				return;
 
 			TileDrawing td = null;
-			TileSet overlay = Square.Maze.OverlayTileset;
 			TileSet wall = Square.Maze.WallTileset;
 
 
-			// Under the door, draw sides
+			// TODO: Under the door, draw sides
 			if (field.GetBlock(ViewFieldPosition.N).IsWall && position == ViewFieldPosition.Team)
 			{
-				td = DisplayCoordinates.GetDoor(ViewFieldPosition.Team);
-				if (td != null)
-					batch.DrawTile(overlay, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);
+		//		td = DisplayCoordinates.GetDoor(ViewFieldPosition.Team);
+		//		if (td != null)
+		//			batch.DrawTile(overlay, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);
 			}
 
 			// Draw the door

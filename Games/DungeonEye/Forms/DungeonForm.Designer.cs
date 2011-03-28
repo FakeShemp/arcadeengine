@@ -88,6 +88,13 @@
 			this.dungeonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.StartLocationMenu = new System.Windows.Forms.ToolStripMenuItem();
 			this.LeftPanel = new System.Windows.Forms.Panel();
+			this.SquareMenuBox = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.SquareStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.EventStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.editToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+			this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.DungeonStripBox.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.RightPanel.SuspendLayout();
@@ -99,6 +106,7 @@
 			this.groupBox2.SuspendLayout();
 			this.DungeonMenu.SuspendLayout();
 			this.LeftPanel.SuspendLayout();
+			this.SquareMenuBox.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// MazePropertyBox
@@ -726,6 +734,60 @@
 			this.LeftPanel.Size = new System.Drawing.Size(366, 588);
 			this.LeftPanel.TabIndex = 8;
 			// 
+			// SquareMenuBox
+			// 
+			this.SquareMenuBox.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.SquareStripMenuItem,
+            this.EventStripMenuItem});
+			this.SquareMenuBox.Name = "SquareMenuBox";
+			this.SquareMenuBox.Size = new System.Drawing.Size(153, 70);
+			// 
+			// SquareStripMenuItem
+			// 
+			this.SquareStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.editToolStripMenuItem,
+            this.clearToolStripMenuItem});
+			this.SquareStripMenuItem.Name = "SquareStripMenuItem";
+			this.SquareStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.SquareStripMenuItem.Text = "Square";
+			// 
+			// editToolStripMenuItem
+			// 
+			this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+			this.editToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.editToolStripMenuItem.Text = "Edit";
+			this.editToolStripMenuItem.Click += new System.EventHandler(this.editToolStripMenuItem_Click);
+			// 
+			// clearToolStripMenuItem
+			// 
+			this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
+			this.clearToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.clearToolStripMenuItem.Text = "Clear";
+			this.clearToolStripMenuItem.Click += new System.EventHandler(this.clearToolStripMenuItem_Click);
+			// 
+			// EventStripMenuItem
+			// 
+			this.EventStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.editToolStripMenuItem1,
+            this.removeToolStripMenuItem});
+			this.EventStripMenuItem.Name = "EventStripMenuItem";
+			this.EventStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.EventStripMenuItem.Text = "Event";
+			// 
+			// editToolStripMenuItem1
+			// 
+			this.editToolStripMenuItem1.Name = "editToolStripMenuItem1";
+			this.editToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+			this.editToolStripMenuItem1.Text = "Edit";
+			this.editToolStripMenuItem1.Click += new System.EventHandler(this.editToolStripMenuItem1_Click);
+			// 
+			// removeToolStripMenuItem
+			// 
+			this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
+			this.removeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.removeToolStripMenuItem.Text = "Remove";
+			this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
+			// 
 			// DungeonForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -762,6 +824,7 @@
 			this.DungeonMenu.ResumeLayout(false);
 			this.DungeonMenu.PerformLayout();
 			this.LeftPanel.ResumeLayout(false);
+			this.SquareMenuBox.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -827,5 +890,12 @@
 		private System.Windows.Forms.ToolStripButton DecorationBox;
 		private System.Windows.Forms.ToolStripButton EventBox;
 		private System.Windows.Forms.Panel LeftPanel;
+		private System.Windows.Forms.ContextMenuStrip SquareMenuBox;
+		private System.Windows.Forms.ToolStripMenuItem SquareStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem EventStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem clearToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem1;
+		private System.Windows.Forms.ToolStripMenuItem removeToolStripMenuItem;
 	}
 }

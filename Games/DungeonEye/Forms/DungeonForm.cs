@@ -234,6 +234,16 @@ namespace DungeonEye.Forms
 		}
 
 
+		/// <summary>
+		/// Edits the square
+		/// </summary>
+		/// <param name="square">Square handle</param>
+		void EditSquare(Square square)
+		{
+			new SquareForm(Maze, square).ShowDialog();
+		}
+
+
 		#region Events
 
 
@@ -422,7 +432,7 @@ namespace DungeonEye.Forms
 
 				// Edit square
 				else
-					new SquareForm(Maze, Maze.GetSquare(pos)).ShowDialog();
+					EditSquare(Maze.GetSquare(pos));
 			}
 		}
 
@@ -879,7 +889,7 @@ namespace DungeonEye.Forms
 			if (square == null)
 				return;
 
-			// Left mouse button
+			#region Left mouse button
 			if (e.Button == MouseButtons.Left)
 			{
 				if (TeleporterBox.Checked)
@@ -923,6 +933,18 @@ namespace DungeonEye.Forms
 					CurrentSquare = square;
 				}
 			}
+			#endregion
+
+			#region Right mouse button
+
+			else if (e.Button == MouseButtons.Right)
+			{
+				EventStripMenuItem.Visible = square.Actor != null ? true : false;
+
+				SquareMenuBox.Tag = square;
+				SquareMenuBox.Show(Control.MousePosition);
+			}
+			#endregion
 
 		}
 
@@ -1230,6 +1252,64 @@ namespace DungeonEye.Forms
 		#endregion
 
 
+
+		#region Context menu
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void editToolStripMenuItem1_Click(object sender, EventArgs e)
+		{
+			Square square = SquareMenuBox.Tag as Square;
+
+			EditActor(square);
+		}
+		
+		/// <summary>
+		/// Edits square
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void editToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			Square square = SquareMenuBox.Tag as Square;
+			EditSquare(square);
+		}
+
+
+		/// <summary>
+		/// Clears square
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void clearToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			Square square = SquareMenuBox.Tag as Square;
+
+
+		
+		}
+
+
+		/// <summary>
+		/// Removes the actor
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void removeToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			Square square = SquareMenuBox.Tag as Square;
+
+			square.Actor = null;
+			glControl.Invalidate();
+		}
+
+		#endregion
+
+
 		#region Properties
 
 		/// <summary>
@@ -1336,6 +1416,6 @@ namespace DungeonEye.Forms
 
 		#endregion
 
-	
+
 	}
 }

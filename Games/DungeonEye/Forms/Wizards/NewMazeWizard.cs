@@ -80,7 +80,7 @@ namespace DungeonEye.Forms.Wizards
 			maze.Name = MazeName.Text;
 			maze.Size = new Size((int)MazeWidthBox.Value, (int)MazeHeightBox.Value);
 			maze.WallTilesetName = (string)WallTilSetBox.SelectedItem;
-			maze.OverlayTilesetName= (string)OverlayTileSetBox.SelectedItem;
+			maze.DecorationName = (string)OverlayTileSetBox.SelectedItem;
 			Dungeon.AddMaze(maze);
 
 		}
