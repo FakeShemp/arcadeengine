@@ -197,7 +197,7 @@ namespace ArcEngine.Examples.PerPixelCollision
 			//		dst = new Vector2(200, 200);
 			//		dst = new Vector2(Mouse.Location.X, Mouse.Location.Y);
 
-			Sprite.Draw(Logo, dst, Vector4.Zero, Color.White, Angle, new Vector2(Logo.Size.Width / 2, Logo.Size.Height / 2), 1.0f, SpriteEffects.None, 0.0f);
+			Sprite.Draw(Logo, dst, Vector4.Zero, Color.White, Angle, new Vector2(Logo.Size.Width / 2, Logo.Size.Height / 2), Vector2.One, SpriteEffects.None, 0.0f);
 		}
 
 

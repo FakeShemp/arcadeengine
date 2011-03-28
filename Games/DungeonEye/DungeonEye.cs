@@ -62,7 +62,7 @@ namespace DungeonEye
 			// Check for new version
 			AutoUpdater.CheckForNewVersion("http://www.dungeoneye.net/updater.xml");
 
-
+			// Settings
 			Settings.Load("data/settings.xml");
 			InputSchemeName = Settings.GetString("inputscheme");
 			LanguageName = Settings.GetString("language");

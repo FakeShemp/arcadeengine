@@ -43,18 +43,8 @@ namespace ArcEngine.Examples.CellShading
 		[STAThread]
 		static void Main()
 		{
-			try
-			{
-				using (Program game = new Program())
-					game.Run();
-			}
-			catch (Exception e)
-			{
-				// Oops, an error happened !
-				MessageBox.Show(e.StackTrace, e.Message);
-				Trace.WriteLine(e.Message);
-				Trace.WriteLine(e.StackTrace);
-			}
+			using (Program game = new Program())
+				game.Run();
 		}
 
 
@@ -83,7 +73,7 @@ namespace ArcEngine.Examples.CellShading
 
 			// Matrices
 			ModelViewMatrix = Matrix4.LookAt(new Vector3(0.0f, 0.0f, -2.5f), Vector3.Zero, Vector3.UnitY);
-			float aspectRatio = (float)Display.ViewPort.Width / (float)Display.ViewPort.Height;
+			float aspectRatio = (float) Display.ViewPort.Width / (float) Display.ViewPort.Height;
 			ProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(45.0f), aspectRatio, 0.1f, 20.0f);
 
 
@@ -262,8 +252,8 @@ namespace ArcEngine.Examples.CellShading
 
 			// Uniforms
 			Shader.SetUniform("modelview", mvp);
-			Shader.SetUniform("DiffuseMaterial", new float[] { 0.0f, 0.75f, 0.75f });	
-			Shader.SetUniform("LightPosition", new float[] { 0.25f, 0.25f, -1.0f});
+			Shader.SetUniform("DiffuseMaterial", new float[] { 0.0f, 0.75f, 0.75f });
+			Shader.SetUniform("LightPosition", new float[] { 0.25f, 0.25f, -1.0f });
 			Shader.SetUniform("AmbientMaterial", new float[] { 0.04f, 0.04f, 0.04f });
 			Shader.SetUniform("SpecularMaterial", new float[] { 0.5f, 0.5f, 0.5f });
 			Shader.SetUniform("Shininess", 50.0f);

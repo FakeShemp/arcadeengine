@@ -31,7 +31,7 @@ namespace DungeonEye
 	/// <summary>
 	/// Represent a dungeon which contains severals mazes
 	/// </summary>
-	public class Dungeon : IAsset, IDisposable
+	public class Dungeon : IAsset
 	{
 		/// <summary>
 		/// Default constructor
