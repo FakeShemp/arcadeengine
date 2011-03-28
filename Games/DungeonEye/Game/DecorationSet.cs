@@ -83,7 +83,7 @@ namespace DungeonEye
 		/// <returns>Decoration information or null</returns>
 		public Decoration GetDecoration(int id)
 		{
-			if (id > Decorations.Count - 1)
+			if (!Decorations.ContainsKey(id))
 				return null;
 
 			return Decorations[id];
@@ -124,6 +124,24 @@ namespace DungeonEye
 		}
 
 
+		/// <summary>
+		/// Draws a decoration
+		/// </summary>
+		/// <param name="batch">Spritebatch handle</param>
+		/// <param name="id">Decoration id</param>
+		/// <param name="position">View position</param>
+		/// <returns>True on succes or false if nothing drew</returns>
+		public void Draw(SpriteBatch batch, int id, ViewFieldPosition position)
+		{
+			if (batch == null)
+				return;
+
+			Decoration deco = GetDecoration(id);
+
+			batch.DrawTile(Tileset, deco.GetTileId(position), deco.GetLocation(position));
+		}
+
+
 		#region IO
 
 		/// <summary>
@@ -159,8 +177,9 @@ namespace DungeonEye
 					case "decoration":
 					{
 						Decoration deco = new Decoration();
-						deco.TileId = int.Parse(node.Attributes["id"].Value);
-						deco.Location = new Point(int.Parse(node.Attributes["x"].Value), int.Parse(node.Attributes["y"].Value));
+						deco.Load(node);
+						int id = int.Parse(node.Attributes["id"].Value);
+						Decorations[id] = deco;
 					}
 					break;
 
@@ -203,13 +222,7 @@ namespace DungeonEye
 			writer.WriteEndElement();
 
 			foreach (KeyValuePair<int, Decoration> val in Decorations)
-			{
-				writer.WriteStartElement("decoration");
-				writer.WriteAttributeString("id", val.Key.ToString());
-				writer.WriteAttributeString("x", val.Value.Location.X.ToString());
-				writer.WriteAttributeString("y", val.Value.Location.Y.ToString());
-				writer.WriteEndElement();
-			}
+				val.Value.Save(writer, val.Key);
 
 			writer.WriteEndElement();
 

@@ -27,6 +27,7 @@ using ArcEngine.Forms;
 using ArcEngine.Graphic;
 using ArcEngine.Interface;
 using System.Drawing;
+using System;
 
 
 namespace DungeonEye.Forms
@@ -40,7 +41,7 @@ namespace DungeonEye.Forms
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="node">xmlNode handle</param>
+		/// <param name="node">XmlNode handle</param>
 		public DecorationSetForm(XmlNode node)
 		{
 			InitializeComponent();
@@ -49,6 +50,7 @@ namespace DungeonEye.Forms
 
 			DecorationSet = new DecorationSet();
 			DecorationSet.Load(node);
+			ChangeDecorationId(0);
 		}
 
 
@@ -109,36 +111,74 @@ namespace DungeonEye.Forms
 			// Draw the decoration
 			if (Decoration != null)
 			{
-				Batch.DrawTile(DecorationSet.Tileset, Decoration.TileId, Decoration.Location);
+				DecorationSet.Draw(Batch, (int) DecorationIdBox.Value, ViewPositionBox.Position);
 
-				Tile tile = DecorationSet.Tileset.GetTile(Decoration.TileId);
-				Rectangle rect = new Rectangle(Decoration.Location, tile.Size);
-				if (rect.Contains(OpenGLBox.PointToClient(Control.MousePosition)))
+				Tile tile = DecorationSet.Tileset.GetTile(Decoration.GetTileId(ViewPositionBox.Position));
+				if (tile != null)
 				{
-					Batch.DrawRectangle(rect, Color.Red);
+					Point start = Decoration.GetLocation(ViewPositionBox.Position);
+					Rectangle rect = new Rectangle(start, tile.Size);
+					if (rect.Contains(OpenGLBox.PointToClient(Control.MousePosition)))
+					{
+						Batch.DrawRectangle(rect, Color.Red);
+					}
 				}
-
-			}
 			
+				LocationBox.Text = Decoration.GetLocation(ViewPositionBox.Position).ToString();
+			}
+			else
+			{
+				LocationBox.Text = "";
+			}
+
 			Batch.End();
 
-			LocationBox.Text = OpenGLBox.PointToClient(Control.MousePosition).ToString();
 
 			OpenGLBox.SwapBuffers();
 		}
 
 
 		/// <summary>
-		/// Sets the current decoration
+		/// Update each viewposition status in the View box
 		/// </summary>
-		/// <param name="deco">Decoration handle</param>
-		void SetCurrentDecoration(Decoration deco)
+		void UpdateViewBoxStatus()
 		{
-			Decoration = deco;
 
 			if (Decoration != null)
 			{
+				foreach (ViewFieldPosition pos in Enum.GetValues(typeof(ViewFieldPosition)))
+				{
+					ViewPositionBox.HighlightPosition(pos, Decoration.GetTileId(pos) != -1);
+				}
 			}
+			else
+			{
+				foreach (ViewFieldPosition pos in Enum.GetValues(typeof(ViewFieldPosition)))
+					ViewPositionBox.HighlightPosition(pos, false);
+			}
+
+		}
+
+
+		/// <summary>
+		/// Change the curent decoration
+		/// </summary>
+		/// <param name="id">Id of the decoration</param>
+		void ChangeDecorationId(int id)
+		{
+			Decoration = DecorationSet.GetDecoration(id);
+
+			if (Decoration != null)
+			{
+				TileIdBox.Value = Decoration.GetTileId(ViewPositionBox.Position);
+
+			}
+			else
+			{
+				TileIdBox.Value = -1;				
+			}
+
+			UpdateViewBoxStatus();
 		}
 
 
@@ -180,7 +220,7 @@ namespace DungeonEye.Forms
 
 			else if (BackgroundTileSetBox.Items.Count > 0)
 			{
-				ChangeBackgroundTileSet((string)BackgroundTileSetBox.Items[0]);
+				ChangeBackgroundTileSet((string) BackgroundTileSetBox.Items[0]);
 				BackgroundTileSetBox.SelectedIndex = 0;
 			}
 
@@ -212,7 +252,7 @@ namespace DungeonEye.Forms
 			if (BgTileSet != null)
 				BgTileSet.Dispose();
 			BgTileSet = null;
-			
+
 		}
 
 
@@ -226,7 +266,7 @@ namespace DungeonEye.Forms
 			if (BackgroundTileSetBox.SelectedIndex == -1)
 				return;
 
-			ChangeBackgroundTileSet((string)BackgroundTileSetBox.SelectedItem);
+			ChangeBackgroundTileSet((string) BackgroundTileSetBox.SelectedItem);
 		}
 
 
@@ -240,7 +280,7 @@ namespace DungeonEye.Forms
 			if (TilesetBox.SelectedIndex == -1)
 				return;
 
-			ChangeDecorationTileSet((string)TilesetBox.SelectedItem);
+			ChangeDecorationTileSet((string) TilesetBox.SelectedItem);
 		}
 
 
@@ -252,9 +292,20 @@ namespace DungeonEye.Forms
 		private void TileIdBox_ValueChanged(object sender, System.EventArgs e)
 		{
 			if (Decoration == null)
-				Decoration = DecorationSet.AddDecoration((int)TileIdBox.Value);
+				Decoration = DecorationSet.AddDecoration((int) DecorationIdBox.Value);
 
-			Decoration.TileId = (int)TileIdBox.Value;
+			Decoration.SetTileId(ViewPositionBox.Position, (int) TileIdBox.Value);
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void DecorationIdBox_ValueChanged(object sender, System.EventArgs e)
+		{
+			ChangeDecorationId((int) DecorationIdBox.Value);
 		}
 
 
@@ -278,9 +329,33 @@ namespace DungeonEye.Forms
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OpenGLBox_MouseDown(object sender, MouseEventArgs e)
+		private void OpenGLBox_MouseMove(object sender, MouseEventArgs e)
 		{
+			if (Decoration == null)
+				return;
 
+			int tileid = Decoration.GetTileId(ViewPositionBox.Position);
+			Point location = Decoration.GetLocation(ViewPositionBox.Position);
+			Tile tile = DecorationSet.Tileset.GetTile(tileid);
+			Point offset = new Point(LastMousePosition.X - e.Location.X, LastMousePosition.Y - e.Location.Y);
+
+			// Left mouse button
+			if (e.Button == MouseButtons.Left)
+			{
+				// Mouse over tile, so pan the tile
+				Rectangle rect = new Rectangle(location, tile.Size);
+				Decoration.SetLocation(ViewPositionBox.Position, new Point(location.X - offset.X, location.Y - offset.Y));
+
+				Cursor = Cursors.SizeAll;
+			}
+			else
+			{
+				Cursor = Cursors.Default;
+			}
+
+
+			// Update last mouse position
+			LastMousePosition = e.Location;
 		}
 
 
@@ -289,13 +364,46 @@ namespace DungeonEye.Forms
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OpenGLBox_MouseMove(object sender, MouseEventArgs e)
+		private void OpenGLBox_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
 		{
-			if (e.Button == MouseButtons.Left)
+			if (Decoration == null)
+				return;
+
+			Point location = Decoration.GetLocation(ViewPositionBox.Position);
+
+			switch (e.KeyCode)
 			{
+				case Keys.Up:
+				{
+					location.Y--;
+					e.IsInputKey = true;
+				}
+				break;
 
+				case Keys.Down:
+				{
+					location.Y++;
+					e.IsInputKey = true;
+				}
+				break;
 
+				case Keys.Left:
+				{
+					location.X--;
+					e.IsInputKey = true;
+				}
+				break;
+
+				case Keys.Right:
+				{
+					location.X++;
+					e.IsInputKey = true;
+				}
+				break;
 			}
+
+			Decoration.SetLocation(ViewPositionBox.Position, location);
+
 		}
 
 
@@ -323,7 +431,7 @@ namespace DungeonEye.Forms
 
 
 		/// <summary>
-		/// 
+		/// Current decoration handle
 		/// </summary>
 		Decoration Decoration;
 
@@ -340,9 +448,12 @@ namespace DungeonEye.Forms
 		TileSet BgTileSet;
 
 
+		/// <summary>
+		/// Last mouse position
+		/// </summary>
+		Point LastMousePosition;
+
 		#endregion
-
-
 
 	}
 }

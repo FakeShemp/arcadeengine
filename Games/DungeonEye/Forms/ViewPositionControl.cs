@@ -42,17 +42,7 @@ namespace DungeonEye.Forms
 		{
 			InitializeComponent();
 
-			TeamBox.Checked = true;
-		}
-
-
-		/// <summary>
-		/// Uncheck all checkboxes
-		/// </summary>
-		/// <param name="exclude">Control to exclude</param>
-		void UncheckButtons(CheckBox exclude)
-		{
-			CheckBox[] boxes = new CheckBox[]
+			ControlBoxes = new CheckBox[]
 			{
 				ABox,
 				BBox,
@@ -74,7 +64,18 @@ namespace DungeonEye.Forms
 				QBox,
 			};
 
-			foreach (CheckBox box in boxes)
+
+			TeamBox.Checked = true;
+		}
+
+
+		/// <summary>
+		/// Uncheck all checkboxes
+		/// </summary>
+		/// <param name="exclude">Control to exclude</param>
+		void UncheckButtons(CheckBox exclude)
+		{
+			foreach (CheckBox box in Controls)
 			{
 				if (box != exclude)
 					box.Checked = false;
@@ -87,36 +88,24 @@ namespace DungeonEye.Forms
 		/// </summary>
 		void CheckForValidity()
 		{
-			CheckBox[] boxes = new CheckBox[]
-			{
-				ABox,
-				BBox,
-				CBox,
-				DBox,
-				EBox,
-				FBox,
-				GBox,
-				HBox,
-				IBox,
-				JBox,
-				KBox,
-				LBox,
-				MBox,
-				NBox,
-				OBox,
-				PBox,
-				TeamBox,
-				QBox,
-			};
-
-
-			foreach (CheckBox box in boxes)
+			foreach (CheckBox box in ControlBoxes)
 			{
 				if (box.Checked)
 					return;
 			}
 
 			TeamBox.Checked = true;
+		}
+
+
+		/// <summary>
+		/// Highlight a position
+		/// </summary>
+		/// <param name="position">Position</param>
+		/// <param name="state">Highlight state</param>
+		public void HighlightPosition(ViewFieldPosition position, bool state)
+		{
+			ControlBoxes[(int) position].ForeColor = state ? Color.Red : Color.Black;
 		}
 
 
@@ -180,6 +169,11 @@ namespace DungeonEye.Forms
 
 
 		#region Properties
+
+		/// <summary>
+		/// Available controls
+		/// </summary>
+		CheckBox[] ControlBoxes;
 
 
 		/// <summary>

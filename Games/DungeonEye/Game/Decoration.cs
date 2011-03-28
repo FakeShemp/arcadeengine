@@ -37,23 +37,136 @@ namespace DungeonEye
 	public class Decoration
 	{
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
 		public Decoration()
 		{
-
+			TileId= new int[18];
+			Location = new Point[18];
+			for (int i = 0 ; i < TileId.Length ; i++)
+				TileId[i] = -1;
 		}
+
+
+
 
 		/// <summary>
-		/// Constructor
+		/// Gets the tile id for a given view point
 		/// </summary>
-		/// <param name="tile">Tile id</param>
-		/// <param name="location">Screen location</param>
-		public Decoration(int tileId, Point location)
+		/// <param name="position">View point position</param>
+		/// <returns>Tile id or -1 if no tile</returns>
+		public int GetTileId(ViewFieldPosition position)
 		{
-			TileId = tileId;
-			Location = location;
+			return TileId[(int) position];
 		}
+
+
+
+		/// <summary>
+		/// Sets the tile id for a given view point
+		/// </summary>
+		/// <param name="position">View point position</param>
+		/// <param name="id">Id of the tile</param>
+		public void SetTileId(ViewFieldPosition position, int id)
+		{
+			TileId[(int) position] = id;
+		}
+
+
+		/// <summary>
+		/// Gets the on screen location for a given view point
+		/// </summary>
+		/// <param name="position">View point position</param>
+		/// <returns>Screen location</returns>
+		public Point GetLocation(ViewFieldPosition position)
+		{
+			return Location[(int) position];
+		}
+
+
+		/// <summary>
+		/// Gets the on screen location for a given view point
+		/// </summary>
+		/// <param name="position">View point position</param>
+		/// <param name="location">Screen location</param>
+		public void SetLocation(ViewFieldPosition position, Point location)
+		{
+			Location[(int) position] = location;
+		}
+
+
+
+
+		#region IO
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="xml"></param>
+		/// <returns></returns>
+		public bool Load(XmlNode xml)
+		{
+
+			if (xml == null || xml.Name != "decoration")
+				return false;
+
+			foreach (XmlNode node in xml)
+			{
+				if (node.NodeType == XmlNodeType.Comment)
+					continue;
+
+				try
+				{
+					ViewFieldPosition pos = (ViewFieldPosition) Enum.Parse(typeof(ViewFieldPosition), node.Name);
+					Location[(int) pos].X = int.Parse(node.Attributes["x"].Value);
+					Location[(int) pos].Y = int.Parse(node.Attributes["y"].Value);
+					TileId[(int) pos] = int.Parse(node.Attributes["id"].Value);
+				}
+				catch (Exception e)
+				{
+					Trace.WriteLine("[Decoration]Load : Error while loading : " + e.Message);
+				}
+			}
+
+
+
+			return true;
+		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="writer">XmlWriter handle</param>
+		/// <param name="id">Decoration Id</param>
+		/// <returns></returns>
+		public bool Save(XmlWriter writer, int id)
+		{
+			if (writer == null)
+				return false;
+
+
+			writer.WriteStartElement("decoration");
+			writer.WriteAttributeString("id", id.ToString());
+
+			foreach (ViewFieldPosition vfp in Enum.GetValues(typeof(ViewFieldPosition)))
+			{
+				writer.WriteStartElement(vfp.ToString());
+				writer.WriteAttributeString("id", TileId[(int) vfp].ToString());
+				writer.WriteAttributeString("x", Location[(int) vfp].X.ToString());
+				writer.WriteAttributeString("y", Location[(int) vfp].Y.ToString());
+				writer.WriteEndElement();
+			}
+
+			writer.WriteEndElement();
+
+			return true;
+		}
+
+
+		#endregion
+
 
 
 		#region properties
@@ -62,13 +175,13 @@ namespace DungeonEye
 		/// <summary>
 		/// Tile Id
 		/// </summary>
-		public int TileId;
+		int[] TileId;
 
 
 		/// <summary>
 		/// Display location on the screen
 		/// </summary>
-		public Point Location;
+		Point[] Location;
 
 
 		#endregion

@@ -441,6 +441,7 @@ namespace ArcEngine.Graphic
 		/// <param name="color">The color channel modulation to use. Use Color.White for full color with no tinting.</param>
 		/// <param name="rotation">The angle, in radians, to rotate the sprite around the origin.</param>
 		/// <param name="origin">The origin of the sprite. Specify (0,0) for the upper-left corner.</param>
+		/// <param name="scale">Scaling factor</param>
 		/// <param name="effect">Rotations to apply prior to rendering.</param>
 		/// <param name="depth">The sorting depth of the sprite</param>
 		/// <param name="type">Type of rendering</param>

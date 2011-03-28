@@ -40,16 +40,16 @@
 			this.label5 = new System.Windows.Forms.Label();
 			this.label3 = new System.Windows.Forms.Label();
 			this.TileIdBox = new System.Windows.Forms.NumericUpDown();
-			this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+			this.DecorationIdBox = new System.Windows.Forms.NumericUpDown();
 			this.label2 = new System.Windows.Forms.Label();
 			this.TilesetBox = new System.Windows.Forms.ComboBox();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
-			this.ViewPositionBox = new DungeonEye.Forms.ViewPositionControl();
 			this.DrawTimer = new System.Windows.Forms.Timer(this.components);
+			this.ViewPositionBox = new DungeonEye.Forms.ViewPositionControl();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.TileIdBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize) (this.TileIdBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize) (this.DecorationIdBox)).BeginInit();
 			this.groupBox3.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -61,8 +61,8 @@
 			this.OpenGLBox.Size = new System.Drawing.Size(352, 240);
 			this.OpenGLBox.TabIndex = 0;
 			this.OpenGLBox.VSync = false;
-			this.OpenGLBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OpenGLBox_MouseDown);
 			this.OpenGLBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OpenGLBox_MouseMove);
+			this.OpenGLBox.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.OpenGLBox_PreviewKeyDown);
 			// 
 			// groupBox1
 			// 
@@ -116,7 +116,7 @@
 			this.groupBox2.Controls.Add(this.label5);
 			this.groupBox2.Controls.Add(this.label3);
 			this.groupBox2.Controls.Add(this.TileIdBox);
-			this.groupBox2.Controls.Add(this.numericUpDown1);
+			this.groupBox2.Controls.Add(this.DecorationIdBox);
 			this.groupBox2.Controls.Add(this.label2);
 			this.groupBox2.Controls.Add(this.TilesetBox);
 			this.groupBox2.Location = new System.Drawing.Point(12, 175);
@@ -168,6 +168,11 @@
             0,
             0,
             0});
+			this.TileIdBox.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
 			this.TileIdBox.Name = "TileIdBox";
 			this.TileIdBox.Size = new System.Drawing.Size(148, 20);
 			this.TileIdBox.TabIndex = 2;
@@ -175,19 +180,20 @@
 			this.TileIdBox.ThousandsSeparator = true;
 			this.TileIdBox.ValueChanged += new System.EventHandler(this.TileIdBox_ValueChanged);
 			// 
-			// numericUpDown1
+			// DecorationIdBox
 			// 
-			this.numericUpDown1.Location = new System.Drawing.Point(91, 46);
-			this.numericUpDown1.Maximum = new decimal(new int[] {
+			this.DecorationIdBox.Location = new System.Drawing.Point(91, 46);
+			this.DecorationIdBox.Maximum = new decimal(new int[] {
             9999999,
             0,
             0,
             0});
-			this.numericUpDown1.Name = "numericUpDown1";
-			this.numericUpDown1.Size = new System.Drawing.Size(148, 20);
-			this.numericUpDown1.TabIndex = 2;
-			this.numericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.numericUpDown1.ThousandsSeparator = true;
+			this.DecorationIdBox.Name = "DecorationIdBox";
+			this.DecorationIdBox.Size = new System.Drawing.Size(148, 20);
+			this.DecorationIdBox.TabIndex = 2;
+			this.DecorationIdBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.DecorationIdBox.ThousandsSeparator = true;
+			this.DecorationIdBox.ValueChanged += new System.EventHandler(this.DecorationIdBox_ValueChanged);
 			// 
 			// label2
 			// 
@@ -219,6 +225,11 @@
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "View point :";
 			// 
+			// DrawTimer
+			// 
+			this.DrawTimer.Interval = 66;
+			this.DrawTimer.Tick += new System.EventHandler(this.DrawTimer_Tick);
+			// 
 			// ViewPositionBox
 			// 
 			this.ViewPositionBox.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -227,11 +238,6 @@
 			this.ViewPositionBox.Position = DungeonEye.ViewFieldPosition.Team;
 			this.ViewPositionBox.Size = new System.Drawing.Size(239, 138);
 			this.ViewPositionBox.TabIndex = 0;
-			// 
-			// DrawTimer
-			// 
-			this.DrawTimer.Interval = 66;
-			this.DrawTimer.Tick += new System.EventHandler(this.DrawTimer_Tick);
 			// 
 			// DecorationSetForm
 			// 
@@ -249,8 +255,8 @@
 			this.groupBox1.PerformLayout();
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.TileIdBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+			((System.ComponentModel.ISupportInitialize) (this.TileIdBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize) (this.DecorationIdBox)).EndInit();
 			this.groupBox3.ResumeLayout(false);
 			this.ResumeLayout(false);
 
@@ -268,7 +274,7 @@
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.ComboBox TilesetBox;
 		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.NumericUpDown numericUpDown1;
+		private System.Windows.Forms.NumericUpDown DecorationIdBox;
 		private System.Windows.Forms.Label LocationBox;
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.Label label5;
