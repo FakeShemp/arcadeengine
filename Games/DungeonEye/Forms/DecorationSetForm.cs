@@ -109,9 +109,9 @@ namespace DungeonEye.Forms
 
 
 			// Draw the decoration
-			if (Decoration != null)
+			if (Decoration != null && DecorationSet.Tileset != null)
 			{
-				DecorationSet.Draw(Batch, (int) DecorationIdBox.Value, ViewPositionBox.Position);
+				DecorationSet.Draw(Batch, (int)DecorationIdBox.Value, ViewPositionBox.Position);
 
 				Tile tile = DecorationSet.Tileset.GetTile(Decoration.GetTileId(ViewPositionBox.Position));
 				if (tile != null)
@@ -123,7 +123,7 @@ namespace DungeonEye.Forms
 						Batch.DrawRectangle(rect, Color.Red);
 					}
 				}
-			
+
 				LocationBox.Text = Decoration.GetLocation(ViewPositionBox.Position).ToString();
 			}
 			else
@@ -132,7 +132,6 @@ namespace DungeonEye.Forms
 			}
 
 			Batch.End();
-
 
 			OpenGLBox.SwapBuffers();
 		}
@@ -175,7 +174,7 @@ namespace DungeonEye.Forms
 			}
 			else
 			{
-				TileIdBox.Value = -1;				
+				TileIdBox.Value = -1;
 			}
 
 			UpdateViewBoxStatus();
@@ -187,7 +186,7 @@ namespace DungeonEye.Forms
 		/// </summary>
 		public override void Save()
 		{
-			ResourceManager.AddAsset<DecorationSet>(Name, ResourceManager.ConvertAsset(DecorationSet));
+			ResourceManager.AddAsset<DecorationSet>(DecorationSet.Name, ResourceManager.ConvertAsset(DecorationSet));
 		}
 
 
@@ -220,7 +219,7 @@ namespace DungeonEye.Forms
 
 			else if (BackgroundTileSetBox.Items.Count > 0)
 			{
-				ChangeBackgroundTileSet((string) BackgroundTileSetBox.Items[0]);
+				ChangeBackgroundTileSet((string)BackgroundTileSetBox.Items[0]);
 				BackgroundTileSetBox.SelectedIndex = 0;
 			}
 
@@ -266,7 +265,7 @@ namespace DungeonEye.Forms
 			if (BackgroundTileSetBox.SelectedIndex == -1)
 				return;
 
-			ChangeBackgroundTileSet((string) BackgroundTileSetBox.SelectedItem);
+			ChangeBackgroundTileSet((string)BackgroundTileSetBox.SelectedItem);
 		}
 
 
@@ -280,7 +279,7 @@ namespace DungeonEye.Forms
 			if (TilesetBox.SelectedIndex == -1)
 				return;
 
-			ChangeDecorationTileSet((string) TilesetBox.SelectedItem);
+			ChangeDecorationTileSet((string)TilesetBox.SelectedItem);
 		}
 
 
@@ -292,9 +291,11 @@ namespace DungeonEye.Forms
 		private void TileIdBox_ValueChanged(object sender, System.EventArgs e)
 		{
 			if (Decoration == null)
-				Decoration = DecorationSet.AddDecoration((int) DecorationIdBox.Value);
+				Decoration = DecorationSet.AddDecoration((int)DecorationIdBox.Value);
 
-			Decoration.SetTileId(ViewPositionBox.Position, (int) TileIdBox.Value);
+			Decoration.SetTileId(ViewPositionBox.Position, (int)TileIdBox.Value);
+
+			UpdateViewBoxStatus();
 		}
 
 
@@ -305,7 +306,7 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void DecorationIdBox_ValueChanged(object sender, System.EventArgs e)
 		{
-			ChangeDecorationId((int) DecorationIdBox.Value);
+			ChangeDecorationId((int)DecorationIdBox.Value);
 		}
 
 
@@ -318,6 +319,21 @@ namespace DungeonEye.Forms
 		{
 			RenderScene();
 		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="position"></param>
+		private void ViewPositionBox_PositionChanged(object sender, ViewFieldPosition position)
+		{
+			if (Decoration != null)
+				TileIdBox.Value = Decoration.GetTileId(position);
+			else
+				TileIdBox.Value = -1;
+		}
+
 
 		#endregion
 

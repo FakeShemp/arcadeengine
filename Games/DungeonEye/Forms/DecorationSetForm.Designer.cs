@@ -44,12 +44,12 @@
 			this.label2 = new System.Windows.Forms.Label();
 			this.TilesetBox = new System.Windows.Forms.ComboBox();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
-			this.DrawTimer = new System.Windows.Forms.Timer(this.components);
 			this.ViewPositionBox = new DungeonEye.Forms.ViewPositionControl();
+			this.DrawTimer = new System.Windows.Forms.Timer(this.components);
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize) (this.TileIdBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize) (this.DecorationIdBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.TileIdBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.DecorationIdBox)).BeginInit();
 			this.groupBox3.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -225,11 +225,6 @@
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "View point :";
 			// 
-			// DrawTimer
-			// 
-			this.DrawTimer.Interval = 66;
-			this.DrawTimer.Tick += new System.EventHandler(this.DrawTimer_Tick);
-			// 
 			// ViewPositionBox
 			// 
 			this.ViewPositionBox.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -238,6 +233,12 @@
 			this.ViewPositionBox.Position = DungeonEye.ViewFieldPosition.Team;
 			this.ViewPositionBox.Size = new System.Drawing.Size(239, 138);
 			this.ViewPositionBox.TabIndex = 0;
+			this.ViewPositionBox.PositionChanged += new DungeonEye.Forms.ViewPositionControl.ChangedEventHandler(this.ViewPositionBox_PositionChanged);
+			// 
+			// DrawTimer
+			// 
+			this.DrawTimer.Interval = 66;
+			this.DrawTimer.Tick += new System.EventHandler(this.DrawTimer_Tick);
 			// 
 			// DecorationSetForm
 			// 
@@ -255,8 +256,8 @@
 			this.groupBox1.PerformLayout();
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
-			((System.ComponentModel.ISupportInitialize) (this.TileIdBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize) (this.DecorationIdBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.TileIdBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.DecorationIdBox)).EndInit();
 			this.groupBox3.ResumeLayout(false);
 			this.ResumeLayout(false);
 

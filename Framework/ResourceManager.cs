@@ -319,7 +319,6 @@ namespace ArcEngine
 				{
 					if (ra.Type == typeof(T))
 					{
-
 						ra.Add(name, node);
 						return true;
 					}

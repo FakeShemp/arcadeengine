@@ -83,7 +83,7 @@ namespace ArcEngine.Storage
 				RegisteredAsset ra = ResourceManager.GetRegisteredByTag(node.Name);
 				if (ra== null)
 				{
-					Trace.WriteLine("[StorageBase::Process()] No registered asset found for tag <" + node.Name + ">...");
+					Trace.WriteLine("[StorageBase::Process()] No registered asset found for tag '" + node.Name + "'...");
 					continue;
 				}
 

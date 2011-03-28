@@ -55,7 +55,7 @@ namespace DungeonEye
 		/// <returns>True on success</returns>
 		public bool Init()
 		{
-			Tileset = ResourceManager.LockSharedAsset<TileSet>(TileSetName);
+			LoadTileSet(TileSetName);
 
 			return true;
 		}
