@@ -153,7 +153,7 @@ namespace DungeonEye
 		void StartGameEvent(object sender, EventArgs e)
 		{
 			//Theme.Stop();
-			ScreenManager.AddScreen(new CharGen(Batch));
+			ScreenManager.AddScreen(new CharGen());
 		}
 
 

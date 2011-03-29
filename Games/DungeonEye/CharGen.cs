@@ -39,9 +39,8 @@ namespace DungeonEye
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public CharGen(SpriteBatch batch)
+		public CharGen()
 		{
-			Batch = batch;
 			Heroes = new Hero[4];
 
 			HeroeBoxes = new Rectangle[] 
@@ -72,6 +71,8 @@ namespace DungeonEye
 		public override void LoadContent()
 		{
 			//ResourceManager.Storages.Add(new BankStorage("data/chargen.bnk", System.IO.FileAccess.Read));
+
+			Batch = new SpriteBatch();
 
 			Tileset = ResourceManager.CreateAsset<TileSet>("CharGen");
 
@@ -118,6 +119,11 @@ namespace DungeonEye
 			if (Anims != null)
 				Anims.Dispose();
 			Anims = null;
+
+			if (Batch != null)
+				Batch.Dispose();
+			Batch = null;
+
 		}
 
 
@@ -429,7 +435,8 @@ namespace DungeonEye
 			// Clears the background
 			Display.ClearBuffers();
 
-			Batch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Immediate, false);
+			//Batch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Immediate, false);
+			Batch.Begin();
 
 
 			// Background
