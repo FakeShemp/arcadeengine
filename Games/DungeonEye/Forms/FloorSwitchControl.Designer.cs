@@ -1,6 +1,6 @@
 ﻿namespace DungeonEye.Forms
 {
-	partial class FloorSwitchForm
+	partial class FloorSwitchControl
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -73,16 +73,8 @@
 			this.ClientSize = new System.Drawing.Size(131, 128);
 			this.Controls.Add(this.DoneBox);
 			this.Controls.Add(this.groupBox1);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-			this.KeyPreview = true;
-			this.MaximizeBox = false;
-			this.MinimizeBox = false;
 			this.Name = "FloorSwitchForm";
-			this.ShowIcon = false;
-			this.ShowInTaskbar = false;
-			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Floor switch wizard";
-			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FloorSwitchForm_KeyDown);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			this.ResumeLayout(false);

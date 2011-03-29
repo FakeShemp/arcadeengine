@@ -1,6 +1,6 @@
 ﻿namespace DungeonEye.Forms
 {
-	partial class DoorForm
+	partial class DoorControl
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -275,7 +275,6 @@
 			// 
 			// DoorForm
 			// 
-			this.AcceptButton = this.DoneBox;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(339, 230);
@@ -286,16 +285,8 @@
 			this.Controls.Add(this.DoorTypeBox);
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.DoneBox);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-			this.KeyPreview = true;
-			this.MaximizeBox = false;
-			this.MinimizeBox = false;
 			this.Name = "DoorForm";
-			this.ShowIcon = false;
-			this.ShowInTaskbar = false;
-			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Door wizard";
-			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DoorForm_KeyDown);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			this.ItemPanel.ResumeLayout(false);

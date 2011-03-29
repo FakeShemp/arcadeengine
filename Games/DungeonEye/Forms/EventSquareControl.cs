@@ -36,14 +36,14 @@ namespace DungeonEye.Forms
 	/// <summary>
 	/// Square event editor form
 	/// </summary>
-	public partial class EventSquareForm : Form
+	public partial class EventSquareControl : UserControl
 	{
 		/// <summary>
 		/// Constructor
 		/// </summary>
 		/// <param name="eventsquare">EventSquare handle</param>
 		/// <param name="dungeon">Dungeon handle</param>
-		public EventSquareForm(EventSquare eventsquare, Dungeon dungeon)
+		public EventSquareControl(EventSquare eventsquare, Dungeon dungeon)
 		{
 			InitializeComponent();
 
@@ -248,17 +248,6 @@ namespace DungeonEye.Forms
 		}
 
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void EventSquareForm_KeyDown(object sender, KeyEventArgs e)
-		{
-			if (e.KeyCode == Keys.Escape)
-				Close();
-
-		}
 
 		/// <summary>
 		/// 

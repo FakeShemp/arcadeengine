@@ -1,6 +1,6 @@
 ﻿namespace DungeonEye.Forms
 {
-	partial class PitForm
+	partial class PitControl
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -152,16 +152,8 @@
 			this.Controls.Add(this.TargetBox);
 			this.Controls.Add(this.DamageBox);
 			this.Controls.Add(this.DoneBox);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-			this.KeyPreview = true;
-			this.MaximizeBox = false;
-			this.MinimizeBox = false;
 			this.Name = "PitForm";
-			this.ShowIcon = false;
-			this.ShowInTaskbar = false;
-			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Pit wizard";
-			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PitForm_KeyDown);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.DifficultyBox)).EndInit();

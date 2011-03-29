@@ -105,6 +105,15 @@ namespace DungeonEye.Forms
 		}
 
 
+		/// <summary>
+		/// Activate the actor tab
+		/// </summary>
+		public void ActivateActorTab()
+		{
+			TabControlBox.SelectedTab = ActorTab;
+		}
+
+
 		#region Items events
 
 
@@ -553,24 +562,45 @@ namespace DungeonEye.Forms
 		#endregion
 
 
-		#region Walls
+		#region Decoration
 
-
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void ButtonNorthButton_CheckedChanged(object sender, EventArgs e)
 		{
 
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void ButtonSouthButton_CheckedChanged(object sender, EventArgs e)
 		{
 
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void ButtonWestButton_CheckedChanged(object sender, EventArgs e)
 		{
 
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void ButtonEastButton_CheckedChanged(object sender, EventArgs e)
 		{
 
@@ -628,6 +658,72 @@ namespace DungeonEye.Forms
 			Square.Type = (SquareType)WallTypeBox.SelectedItem;
 		}
 
+		#endregion
+
+
+		#region Tab events
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void DeleteActorBox_Click(object sender, EventArgs e)
+		{
+			if (MessageBox.Show("Erase actor ? ", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+				return;
+
+			Square.Actor = null;
+			ActorPanelBox.Controls.Clear();
+		}
+		
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ActorTab_Enter(object sender, EventArgs e)
+		{
+			if (Square.Actor == null)
+			{
+				ActorPanelBox.Controls.Clear();
+				return;
+			}
+
+			if (Square.Actor is Door)
+			{
+				ActorPanelBox.Controls.Add(new DoorControl(Square.Actor as Door));
+			}
+			else if (Square.Actor is EventSquare)
+			{
+				ActorPanelBox.Controls.Add(new EventSquareControl(Square.Actor as EventSquare, Maze.Dungeon));
+			}
+			else if (Square.Actor is FloorSwitch)
+			{
+				ActorPanelBox.Controls.Add(new FloorSwitchControl(Square.Actor as FloorSwitch, Maze.Dungeon));
+			}
+			else if (Square.Actor is ForceField)
+			{
+				ActorPanelBox.Controls.Add(new ForceFieldControl(Square.Actor as ForceField, Maze.Dungeon));
+			}
+			else if (Square.Actor is Pit)
+			{
+				ActorPanelBox.Controls.Add(new PitControl(Square.Actor as Pit, Maze.Dungeon));
+			}
+			else if (Square.Actor is Stair)
+			{
+				ActorPanelBox.Controls.Add(new StairControl(Square.Actor as Stair, Maze.Dungeon));
+			}
+			else if (Square.Actor is Teleporter)
+			{
+				ActorPanelBox.Controls.Add(new TeleporterControl(Square.Actor as Teleporter, Maze.Dungeon));
+			}
+			else 
+			{
+			}
+
+		}
 		#endregion
 
 

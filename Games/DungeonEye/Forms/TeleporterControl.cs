@@ -31,14 +31,14 @@ namespace DungeonEye.Forms
 	/// <summary>
 	/// Teleporter form editor
 	/// </summary>
-	public partial class TeleporterForm : Form
+	public partial class TeleporterControl : UserControl
 	{
 		/// <summary>
 		/// Constructor
 		/// </summary>
 		/// <param name="teleporter">Teleporter handle</param>
 		/// <param name="dungeon">Dungeon handle</param>
-		public TeleporterForm(Teleporter teleporter, Dungeon dungeon)
+		public TeleporterControl(Teleporter teleporter, Dungeon dungeon)
 		{
 			InitializeComponent();
 
@@ -65,12 +65,6 @@ namespace DungeonEye.Forms
 
 		#region Events
 
-		private void TeleporterForm_KeyDown(object sender, KeyEventArgs e)
-		{
-
-			if (e.KeyCode == Keys.Escape)
-				Close();
-		}
 
 		private void TeamBox_CheckedChanged(object sender, EventArgs e)
 		{

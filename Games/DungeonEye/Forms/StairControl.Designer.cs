@@ -1,6 +1,6 @@
 ﻿namespace DungeonEye.Forms
 {
-	partial class StairForm
+	partial class StairControl
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -95,16 +95,7 @@
 			this.Controls.Add(this.DoneBox);
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.TargetBox);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-			this.KeyPreview = true;
-			this.MaximizeBox = false;
-			this.MinimizeBox = false;
-			this.Name = "StairForm";
-			this.ShowIcon = false;
-			this.ShowInTaskbar = false;
-			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Stair wizard";
-			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.StairForm_KeyDown);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			this.ResumeLayout(false);

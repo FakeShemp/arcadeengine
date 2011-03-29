@@ -31,7 +31,7 @@ namespace DungeonEye.Forms
 	/// <summary>
 	/// Stair form editor
 	/// </summary>
-	public partial class StairForm : Form
+	public partial class StairControl : UserControl
 	{
 
 		/// <summary>
@@ -39,7 +39,7 @@ namespace DungeonEye.Forms
 		/// </summary>
 		/// <param name="stair"></param>
 		/// <param name="dungeon"></param>
-		public StairForm(Stair stair, Dungeon dungeon)
+		public StairControl(Stair stair, Dungeon dungeon)
 		{
 			InitializeComponent();
 
@@ -84,16 +84,6 @@ namespace DungeonEye.Forms
 			Stair.Type = (StairType)DirectionBox.SelectedItem;
 		}
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void StairForm_KeyDown(object sender, KeyEventArgs e)
-		{
-			if (e.KeyCode == Keys.Escape)
-				Close();
-		}
 		#endregion
 
 

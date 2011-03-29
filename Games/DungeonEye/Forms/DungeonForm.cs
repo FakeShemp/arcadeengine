@@ -206,41 +206,45 @@ namespace DungeonEye.Forms
 		/// Edits the square's actor
 		/// </summary>
 		/// <param name="square">Square handle</param>
-		void EditActor(Square square)
-		{
-			if (square == null || square.Actor == null)
-				return;
+		//void EditActor(Square square)
+		//{
+		//    if (square == null || square.Actor == null)
+		//        return;
 
-			if (square.Actor is Door)
-				new DoorForm(square.Actor as Door).ShowDialog();
+		//    if (square.Actor is Door)
+		//        new DoorForm(square.Actor as Door).ShowDialog();
 
-			else if (square.Actor is Teleporter)
-				new TeleporterForm(square.Actor as Teleporter, Dungeon).ShowDialog();
+		//    //else if (square.Actor is Teleporter)
+		//    //    new TeleporterControl(square.Actor as Teleporter, Dungeon).ShowDialog();
 
-			else if (square.Actor is Pit)
-				new PitForm(square.Actor as Pit, Dungeon).ShowDialog();
+		//    else if (square.Actor is Pit)
+		//        new PitControl(square.Actor as Pit, Dungeon).ShowDialog();
 
-			else if (square.Actor is Stair)
-				new StairForm(square.Actor as Stair, Dungeon).ShowDialog();
+		//    //else if (square.Actor is Stair)
+		//    //    new StairControl(square.Actor as Stair, Dungeon).ShowDialog();
 
-			else if (square.Actor is ForceField)
-				new ForceFieldForm(square.Actor as ForceField, Dungeon).ShowDialog();
+		//    else if (square.Actor is ForceField)
+		//        new ForceFieldForm(square.Actor as ForceField, Dungeon).ShowDialog();
 
-			else if (square.Actor is FloorSwitch)
-				new FloorSwitchForm(square.Actor as FloorSwitch, Dungeon).ShowDialog();
+		//    else if (square.Actor is FloorSwitch)
+		//        new FloorSwitchForm(square.Actor as FloorSwitch, Dungeon).ShowDialog();
 
-			else if (square.Actor is EventSquare)
-				new EventSquareForm(square.Actor as EventSquare, Dungeon).ShowDialog();
-		}
+		//    else if (square.Actor is EventSquare)
+		//        new EventSquareForm(square.Actor as EventSquare, Dungeon).ShowDialog();
+		//}
 
 
 		/// <summary>
 		/// Edits the square
 		/// </summary>
 		/// <param name="square">Square handle</param>
-		void EditSquare(Square square)
+		void EditSquare(Square square, bool showactortab)
 		{
-			new SquareForm(Maze, square).ShowDialog();
+			SquareForm form = new SquareForm(Maze, square);
+			if (showactortab)
+				form.ActivateActorTab();
+
+			form.ShowDialog();
 		}
 
 
@@ -426,13 +430,8 @@ namespace DungeonEye.Forms
 				if (square == null)
 					return;
 
-				// Edit actor
-				if (square.Actor != null)
-					EditActor(square);
-
 				// Edit square
-				else
-					EditSquare(Maze.GetSquare(pos));
+				EditSquare(Maze.GetSquare(pos), true);
 			}
 		}
 
@@ -637,7 +636,7 @@ namespace DungeonEye.Forms
 						}
 
 
-						if (block.Actor is FloorSwitch)
+						if (block.Actor is FloorSwitchControl)
 						{
 							SpriteBatch.DrawTile(Icons, 18, location);
 						}
@@ -895,37 +894,37 @@ namespace DungeonEye.Forms
 				if (TeleporterBox.Checked)
 				{
 					square.Actor = new Teleporter(square);
-					new TeleporterForm(square.Actor as Teleporter, Dungeon).ShowDialog();
+					EditSquare(square, true);
 					UncheckButtons(null);
 				}
 				else if (DoorBox.Checked)
 				{
 					square.Actor = new Door(square);
-					new DoorForm(square.Actor as Door).ShowDialog();
+					EditSquare(square, true);
 					UncheckButtons(null);
 				}
 				else if (FloorSwitchBox.Checked)
 				{
 					square.Actor = new FloorSwitch(square);
-					new FloorSwitchForm(square.Actor as FloorSwitch, Dungeon).ShowDialog();
+					EditSquare(square, true);
 					UncheckButtons(null);
 				}
 				else if (StairBox.Checked)
 				{
 					square.Actor = new Stair(square);
-					new StairForm(square.Actor as Stair, Dungeon).ShowDialog();
+					EditSquare(square, true);
 					UncheckButtons(null);
 				}
 				else if (PitBox.Checked)
 				{
 					square.Actor = new Pit(square);
-					new PitForm(square.Actor as Pit, Dungeon).ShowDialog();
+					EditSquare(square, true);
 					UncheckButtons(null);
 				}
 				else if (EventBox.Checked)
 				{
 					square.Actor = new EventSquare(square);
-					new EventSquareForm(square.Actor as EventSquare, Dungeon).ShowDialog();
+					EditSquare(square, true);
 					UncheckButtons(null);
 				}
 				else
@@ -1252,7 +1251,6 @@ namespace DungeonEye.Forms
 		#endregion
 
 
-
 		#region Context menu
 
 
@@ -1265,7 +1263,7 @@ namespace DungeonEye.Forms
 		{
 			Square square = SquareMenuBox.Tag as Square;
 
-			EditActor(square);
+			EditSquare(square, true);
 		}
 		
 		/// <summary>
@@ -1276,7 +1274,7 @@ namespace DungeonEye.Forms
 		private void editToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			Square square = SquareMenuBox.Tag as Square;
-			EditSquare(square);
+			EditSquare(square, false);
 		}
 
 

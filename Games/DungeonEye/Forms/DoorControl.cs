@@ -32,13 +32,13 @@ namespace DungeonEye.Forms
 	/// <summary>
 	/// Door editor form
 	/// </summary>
-	public partial class DoorForm : Form
+	public partial class DoorControl : UserControl
 	{
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="node"></param>
-		public DoorForm(Door door)
+		/// <param name="door">Door handle</param>
+		public DoorControl(Door door)
 		{
 			InitializeComponent();
 
@@ -92,18 +92,8 @@ namespace DungeonEye.Forms
 
 
 
+		#region Events
 
-
-
-		#region Properties
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		Door Door;
-
-		#endregion
 
 		/// <summary>
 		/// 
@@ -251,18 +241,6 @@ namespace DungeonEye.Forms
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void DoorForm_KeyDown(object sender, KeyEventArgs e)
-		{
-			if (e.KeyCode == Keys.Escape)
-				Close();
-
-		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
 		private void SpeedBox_ValueChanged(object sender, EventArgs e)
 		{
 			if (Door == null)
@@ -270,6 +248,20 @@ namespace DungeonEye.Forms
 
 			Door.Speed = TimeSpan.FromSeconds((int)SpeedBox.Value);
 		}
+
+		#endregion
+
+
+
+		#region Properties
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Door Door;
+
+		#endregion
 
 
 	}

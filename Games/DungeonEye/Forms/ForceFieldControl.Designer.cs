@@ -1,6 +1,6 @@
 ﻿namespace DungeonEye.Forms
 {
-	partial class ForceFieldForm
+	partial class ForceFieldControl
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -177,16 +177,8 @@
 			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.button1);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-			this.KeyPreview = true;
-			this.MaximizeBox = false;
-			this.MinimizeBox = false;
 			this.Name = "ForceFieldForm";
-			this.ShowIcon = false;
-			this.ShowInTaskbar = false;
-			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Force Field wizard";
-			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ForceFieldForm_KeyDown);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			this.groupBox2.ResumeLayout(false);

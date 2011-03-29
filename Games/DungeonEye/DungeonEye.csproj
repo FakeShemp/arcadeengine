@@ -123,11 +123,11 @@
     <Compile Include="Forms\DecorationSetForm.Designer.cs">
       <DependentUpon>DecorationSetForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\DoorForm.cs">
-      <SubType>Form</SubType>
+    <Compile Include="Forms\DoorControl.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\DoorForm.Designer.cs">
-      <DependentUpon>DoorForm.cs</DependentUpon>
+    <Compile Include="Forms\DoorControl.Designer.cs">
+      <DependentUpon>DoorControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\EventActionForm.cs">
       <SubType>Form</SubType>
@@ -141,17 +141,17 @@
     <Compile Include="Forms\EventChoiceForm.Designer.cs">
       <DependentUpon>EventChoiceForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FloorSwitchForm.cs">
-      <SubType>Form</SubType>
+    <Compile Include="Forms\FloorSwitchControl.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\FloorSwitchForm.Designer.cs">
-      <DependentUpon>FloorSwitchForm.cs</DependentUpon>
+    <Compile Include="Forms\FloorSwitchControl.Designer.cs">
+      <DependentUpon>FloorSwitchControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\ForceFieldForm.cs">
-      <SubType>Form</SubType>
+    <Compile Include="Forms\ForceFieldControl.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\ForceFieldForm.Designer.cs">
-      <DependentUpon>ForceFieldForm.cs</DependentUpon>
+    <Compile Include="Forms\ForceFieldControl.Designer.cs">
+      <DependentUpon>ForceFieldControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\HeroControl.cs">
       <SubType>UserControl</SubType>
@@ -237,11 +237,11 @@
     <Compile Include="Forms\PartyForm.Designer.cs">
       <DependentUpon>PartyForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\PitForm.cs">
-      <SubType>Form</SubType>
+    <Compile Include="Forms\PitControl.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\PitForm.Designer.cs">
-      <DependentUpon>PitForm.cs</DependentUpon>
+    <Compile Include="Forms\PitControl.Designer.cs">
+      <DependentUpon>PitControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\ProfessionsControl.cs">
       <SubType>UserControl</SubType>
@@ -363,11 +363,11 @@
     <Compile Include="Forms\SpellForm.Designer.cs">
       <DependentUpon>SpellForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\EventSquareForm.cs">
-      <SubType>Form</SubType>
+    <Compile Include="Forms\EventSquareControl.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\EventSquareForm.Designer.cs">
-      <DependentUpon>EventSquareForm.cs</DependentUpon>
+    <Compile Include="Forms\EventSquareControl.Designer.cs">
+      <DependentUpon>EventSquareControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\SquareForm.cs">
       <SubType>Form</SubType>
@@ -375,11 +375,11 @@
     <Compile Include="Forms\SquareForm.Designer.cs">
       <DependentUpon>SquareForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\StairForm.cs">
-      <SubType>Form</SubType>
+    <Compile Include="Forms\StairControl.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\StairForm.Designer.cs">
-      <DependentUpon>StairForm.cs</DependentUpon>
+    <Compile Include="Forms\StairControl.Designer.cs">
+      <DependentUpon>StairControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\SwitchCountControl.cs">
       <SubType>UserControl</SubType>
@@ -393,11 +393,11 @@
     <Compile Include="Forms\TargetControl.Designer.cs">
       <DependentUpon>TargetControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\TeleporterForm.cs">
-      <SubType>Form</SubType>
+    <Compile Include="Forms\TeleporterControl.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\TeleporterForm.Designer.cs">
-      <DependentUpon>TeleporterForm.cs</DependentUpon>
+    <Compile Include="Forms\TeleporterControl.Designer.cs">
+      <DependentUpon>TeleporterControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\ViewPositionControl.cs">
       <SubType>UserControl</SubType>
@@ -519,8 +519,8 @@
     <EmbeddedResource Include="Forms\DecorationSetForm.resx">
       <DependentUpon>DecorationSetForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\DoorForm.resx">
-      <DependentUpon>DoorForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\DoorControl.resx">
+      <DependentUpon>DoorControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\EventActionForm.resx">
       <DependentUpon>EventActionForm.cs</DependentUpon>
@@ -528,11 +528,11 @@
     <EmbeddedResource Include="Forms\EventChoiceForm.resx">
       <DependentUpon>EventChoiceForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FloorSwitchForm.resx">
-      <DependentUpon>FloorSwitchForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\FloorSwitchControl.resx">
+      <DependentUpon>FloorSwitchControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ForceFieldForm.resx">
-      <DependentUpon>ForceFieldForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\ForceFieldControl.resx">
+      <DependentUpon>ForceFieldControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\HeroControl.resx">
       <DependentUpon>HeroControl.cs</DependentUpon>
@@ -551,8 +551,8 @@
     <EmbeddedResource Include="Forms\PartyForm.resx">
       <DependentUpon>PartyForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\PitForm.resx">
-      <DependentUpon>PitForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\PitControl.resx">
+      <DependentUpon>PitControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ProfessionsControl.resx">
       <DependentUpon>ProfessionsControl.cs</DependentUpon>
@@ -608,14 +608,14 @@
     <EmbeddedResource Include="Forms\SpellForm.resx">
       <DependentUpon>SpellForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\EventSquareForm.resx">
-      <DependentUpon>EventSquareForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\EventSquareControl.resx">
+      <DependentUpon>EventSquareControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SquareForm.resx">
       <DependentUpon>SquareForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\StairForm.resx">
-      <DependentUpon>StairForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\StairControl.resx">
+      <DependentUpon>StairControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SwitchCountControl.resx">
       <DependentUpon>SwitchCountControl.cs</DependentUpon>
@@ -623,8 +623,8 @@
     <EmbeddedResource Include="Forms\TargetControl.resx">
       <DependentUpon>TargetControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\TeleporterForm.resx">
-      <DependentUpon>TeleporterForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\TeleporterControl.resx">
+      <DependentUpon>TeleporterControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ViewPositionControl.resx">
       <DependentUpon>ViewPositionControl.cs</DependentUpon>

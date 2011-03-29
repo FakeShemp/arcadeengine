@@ -12,14 +12,14 @@ namespace DungeonEye.Forms
 	/// <summary>
 	/// Pit form editor
 	/// </summary>
-	public partial class PitForm : Form
+	public partial class PitControl : UserControl
 	{
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="pit">Pit handle</param>
 		/// <param name="dungeon">Dungeon handle</param>
-		public PitForm(Pit pit, Dungeon dungeon)
+		public PitControl(Pit pit, Dungeon dungeon)
 		{
 			InitializeComponent();
 
@@ -84,18 +84,6 @@ namespace DungeonEye.Forms
 			Pit.MonsterTrigger = MonsterTriggerBox.Checked;
 		}
 
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void PitForm_KeyDown(object sender, KeyEventArgs e)
-		{
-
-			if (e.KeyCode == Keys.Escape)
-				Close();
-		}
 
 		#endregion
 

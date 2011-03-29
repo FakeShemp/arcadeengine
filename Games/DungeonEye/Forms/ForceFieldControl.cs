@@ -12,14 +12,14 @@ namespace DungeonEye.Forms
 	/// <summary>
 	/// Force field form editor
 	/// </summary>
-	public partial class ForceFieldForm : Form
+	public partial class ForceFieldControl : UserControl
 	{
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="field"></param>
 		/// <param name="dungeon"></param>
-		public ForceFieldForm(ForceField field, Dungeon dungeon)
+		public ForceFieldControl(ForceField field, Dungeon dungeon)
 		{
 			InitializeComponent();
 
@@ -58,13 +58,6 @@ namespace DungeonEye.Forms
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void ForceFieldForm_KeyDown(object sender, KeyEventArgs e)
-		{
-			if (e.KeyCode == Keys.Escape)
-				Close();
-		}
-
-
 		private void MoveDirectionBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (Field == null)
@@ -73,6 +66,11 @@ namespace DungeonEye.Forms
 			Field.Move = (CardinalPoint) MoveDirectionBox.SelectedItem;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void SpinDirectionBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (Field == null)
@@ -81,6 +79,12 @@ namespace DungeonEye.Forms
 			Field.Spin = (CompassRotation)SpinDirectionBox.SelectedItem;
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void MoveRadioBox_CheckedChanged(object sender, EventArgs e)
 		{
 			MoveDirectionBox.Visible = true;
@@ -92,6 +96,12 @@ namespace DungeonEye.Forms
 			Field.Type = ForceFieldType.Move;
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void SpinRadioBox_CheckedChanged(object sender, EventArgs e)
 		{
 			MoveDirectionBox.Visible = false;
@@ -103,6 +113,11 @@ namespace DungeonEye.Forms
 			Field.Type = ForceFieldType.Spin;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void BlockBox_CheckedChanged(object sender, EventArgs e)
 		{
 			MoveDirectionBox.Visible = false;
@@ -114,6 +129,11 @@ namespace DungeonEye.Forms
 			Field.Type = ForceFieldType.Block;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void AffectTeamBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (Field == null)
@@ -122,6 +142,11 @@ namespace DungeonEye.Forms
 			Field.AffectTeam = AffectTeamBox.Checked;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void AffectMonstersBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (Field == null)
@@ -130,6 +155,11 @@ namespace DungeonEye.Forms
 			Field.AffectMonsters = AffectMonstersBox.Checked;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void AffectItemsBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (Field == null)
