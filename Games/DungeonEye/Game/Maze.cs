@@ -64,17 +64,9 @@ namespace DungeonEye
 		/// <returns>True on success</returns>
 		public bool Init()
 		{
-			WallTileset = ResourceManager.CreateSharedAsset<TileSet>(WallTilesetName, WallTilesetName);
-			if (WallTileset == null)
-				Trace.WriteLine("[Maze] Init() : Failed to create wall tileset for the maze \"" + Name + "\".");
-
-			Decoration = ResourceManager.CreateSharedAsset<DecorationSet>(DecorationName, DecorationName);
-			if (Decoration == null)
-				Trace.WriteLine("[Maze] Init() : Failed to create decoration for the maze \"" + Name + "\".");
-
-			DoorTileset = ResourceManager.CreateSharedAsset<TileSet>("Doors", "Doors");
-			if (DoorTileset == null)
-				Trace.WriteLine("[Maze] Init() : Failed to create door tileset.");
+			LoadWallTileSet();
+			LoadDecoration();
+			LoadDoorTileSet();
 
 
 			foreach (List<Square> list in Blocks)
@@ -102,6 +94,67 @@ namespace DungeonEye
 					}
 					#endregion
 				}
+
+			return true;
+		}
+
+
+		/// <summary>
+		/// Loads wall tilesets
+		/// </summary>
+		/// <returns>True on success</returns>
+		public bool LoadWallTileSet()
+		{
+			if (WallTileset != null)
+				WallTileset.Dispose();
+
+			WallTileset = ResourceManager.CreateSharedAsset<TileSet>(WallTilesetName, WallTilesetName);
+			if (WallTileset == null)
+			{
+				Trace.WriteLine("[Maze] Failed to create wall tileset for the maze \"" + Name + "\".");
+				return false;
+			}
+
+			return true;
+		}
+
+
+		/// <summary>
+		/// Loads decoration
+		/// </summary>
+		/// <returns>True on success</returns>
+		public bool LoadDecoration()
+		{
+
+			if (Decoration != null)
+				Decoration.Dispose();
+
+			Decoration = ResourceManager.CreateSharedAsset<DecorationSet>(DecorationName, DecorationName);
+			if (Decoration == null)
+			{
+				Trace.WriteLine("[Maze] Failed to create decoration for the maze \"" + Name + "\".");
+				return false;
+			}
+
+			return true;
+		}
+
+
+		/// <summary>
+		/// Loads door tilesets
+		/// </summary>
+		/// <returns>True on success</returns>
+		public bool LoadDoorTileSet()
+		{
+			if (DoorTileset != null)
+				DoorTileset.Dispose();
+
+			DoorTileset = ResourceManager.CreateSharedAsset<TileSet>("Doors", "Doors");
+			if (DoorTileset == null)
+			{
+				Trace.WriteLine("[Maze] Failed to create door tileset.");
+				return false;
+			}
 
 			return true;
 		}
@@ -448,7 +501,7 @@ namespace DungeonEye
 
 				// Same coordinate
 				if (item.Location.Coordinate == location.Coordinate)
-					tmp[(int)item.Location.Position].Add(item);
+					tmp[(int) item.Location.Position].Add(item);
 			}
 
 
@@ -528,7 +581,7 @@ namespace DungeonEye
 			// The background is assumed to be x-flipped when party.x & party.y & party.direction = 1.
 			// I.e. all kind of moves and rotations from the current position will result in the background being x-flipped.
 			//bool flipbackdrop = ((location.Position.X + location.Position.Y + (int)location.Direction) & 1) == 0;
-			SpriteEffects effect = ((location.Coordinate.X + location.Coordinate.Y + (int)location.Direction) & 1) == 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+			SpriteEffects effect = ((location.Coordinate.X + location.Coordinate.Y + (int) location.Direction) & 1) == 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
 			batch.DrawTile(WallTileset, 0, Point.Empty, Color.White, 0.0f, effect, 0.0f);
 
 
@@ -594,7 +647,7 @@ namespace DungeonEye
 			if (field == null)
 				return;
 
-			Square block = field.Blocks[(int)position];
+			Square block = field.Blocks[(int) position];
 			Point point;
 			TileDrawing td = null;
 
@@ -666,14 +719,14 @@ namespace DungeonEye
 			List<Item>[] list = block.GetItems(view);
 			if (!block.IsWall)
 			{
-				for (int i = 0; i < 2; i++)
+				for (int i = 0 ; i < 2 ; i++)
 				{
 					if (list[i].Count == 0)
 						continue;
 
 					foreach (Item item in list[i])
 					{
-						point = DisplayCoordinates.GetGroundPosition(position, (SquarePosition)i);
+						point = DisplayCoordinates.GetGroundPosition(position, (SquarePosition) i);
 						if (!point.IsEmpty)
 						{
 							Tile tile = Dungeon.ItemTileSet.GetTile(item.GroundTileID);
@@ -745,7 +798,7 @@ namespace DungeonEye
 						foreach (Item item in block.GetAlcoveItems(view, CardinalPoint.South))
 						{
 							Point loc = td.Location;
-							loc.Offset(offsets[(int)position]);
+							loc.Offset(offsets[(int) position]);
 							batch.DrawTile(Dungeon.ItemTileSet, item.GroundTileID + offset, loc);
 						}
 					}
@@ -757,7 +810,7 @@ namespace DungeonEye
 			#region Items on ground after a door
 			if (!block.IsWall)
 			{
-				for (int i = 2; i < 4; i++)
+				for (int i = 2 ; i < 4 ; i++)
 				{
 					if (list[i].Count == 0)
 						continue;
@@ -765,7 +818,7 @@ namespace DungeonEye
 					foreach (Item item in list[i])
 					{
 						// Get screen coordinate
-						point = DisplayCoordinates.GetGroundPosition(position, (SquarePosition)i);
+						point = DisplayCoordinates.GetGroundPosition(position, (SquarePosition) i);
 						if (!point.IsEmpty)
 						{
 							Tile tile = Dungeon.ItemTileSet.GetTile(item.GroundTileID);
@@ -775,7 +828,7 @@ namespace DungeonEye
 								rect.Inflate(offset, offset);
 
 								//batch.DrawTile(ItemsTileset, item.GroundTileID, point, rect, Color.Red);
-							//	batch.DrawTile(ItemsTileset, item.GroundTileID + offset, point);
+								//	batch.DrawTile(ItemsTileset, item.GroundTileID + offset, point);
 								batch.DrawTile(Dungeon.ItemTileSet, item.GroundTileID, point, colors[offset], 0.0f, scale[offset], SpriteEffects.None, 0.0f);
 							}
 						}
@@ -795,9 +848,9 @@ namespace DungeonEye
 					new int[] {1, 3, 0, 2},	// East
 				};
 
-				for (int i = 0; i < 4; i++)
+				for (int i = 0 ; i < 4 ; i++)
 				{
-					Monster monster = block.Monsters[order[(int)view][i]];
+					Monster monster = block.Monsters[order[(int) view][i]];
 					if (monster != null)
 						monster.Draw(batch, view, position);
 				}
@@ -817,7 +870,7 @@ namespace DungeonEye
 				if (pos == SquarePosition.NorthEast || pos == SquarePosition.SouthEast)
 					fx = SpriteEffects.FlipHorizontally;
 
-				foreach (ThrownItem fi in flyings[(int)pos])
+				foreach (ThrownItem fi in flyings[(int) pos])
 					batch.DrawTile(Dungeon.ItemTileSet, fi.Item.ThrowTileID + offset, point, Color.White, 0.0f, fx, 0.0f);
 
 			}
@@ -841,8 +894,8 @@ namespace DungeonEye
 
 			Color color;
 
-			for (int y = 0; y < Size.Height; y++)
-				for (int x = 0; x < Size.Width; x++)
+			for (int y = 0 ; y < Size.Height ; y++)
+				for (int x = 0 ; x < Size.Width ; x++)
 				{
 					Square block = GetSquare(new Point(x, y));
 
@@ -943,7 +996,7 @@ namespace DungeonEye
 
 					case "doors":
 					{
-						DefaultDoorType = (DoorType)Enum.Parse(typeof(DoorType), node.Attributes["type"].Value);
+						DefaultDoorType = (DoorType) Enum.Parse(typeof(DoorType), node.Attributes["type"].Value);
 					}
 					break;
 
@@ -1069,12 +1122,12 @@ namespace DungeonEye
 			// Rows
 			if (newsize.Height > Size.Height)
 			{
-				for (int y = Size.Height; y < newsize.Height; y++)
+				for (int y = Size.Height ; y < newsize.Height ; y++)
 					InsertRow(y);
 			}
 			else if (newsize.Height < Size.Height)
 			{
-				for (int y = Size.Height - 1; y >= newsize.Height; y--)
+				for (int y = Size.Height - 1 ; y >= newsize.Height ; y--)
 					RemoveRow(y);
 			}
 
@@ -1082,20 +1135,20 @@ namespace DungeonEye
 			// Columns
 			if (newsize.Width > Size.Width)
 			{
-				for (int x = Size.Width; x < newsize.Width; x++)
+				for (int x = Size.Width ; x < newsize.Width ; x++)
 					InsertColumn(x);
 			}
 			else if (newsize.Width < Size.Width)
 			{
-				for (int x = Size.Width - 1; x >= newsize.Width; x--)
+				for (int x = Size.Width - 1 ; x >= newsize.Width ; x--)
 					RemoveColumn(x);
 			}
 
 
 			size = newsize;
 
-			for (int y = 0; y < size.Height; y++)
-				for (int x = 0; x < size.Width; x++)
+			for (int y = 0 ; y < size.Height ; y++)
+				for (int x = 0 ; x < size.Width ; x++)
 				{
 					Blocks[y][x].Location.Coordinate = new Point(x, y);
 				}
@@ -1110,7 +1163,7 @@ namespace DungeonEye
 		{
 			// Build the row
 			List<Square> row = new List<Square>(Size.Width);
-			for (int x = 0; x < Size.Width; x++)
+			for (int x = 0 ; x < Size.Width ; x++)
 				row.Add(new Square(this));
 
 			// Adds the row at the end
@@ -1234,7 +1287,11 @@ namespace DungeonEye
 		/// Is asset disposed
 		/// </summary>
 		[Browsable(false)]
-		public bool IsDisposed { get; private set; }
+		public bool IsDisposed
+		{
+			get;
+			private set;
+		}
 
 
 		#region Tilesets

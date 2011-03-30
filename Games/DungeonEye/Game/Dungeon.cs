@@ -39,6 +39,7 @@ namespace DungeonEye
 		public Dungeon()
 		{
 			Mazes = new Dictionary<string, Maze>();
+			StartLocation = new DungeonLocation();
 		}
 
 
@@ -53,11 +54,10 @@ namespace DungeonEye
 			// Loads maze display coordinates
 			DisplayCoordinates.Load();
 
-			StartLocation.Maze = StartLocation.Maze;
+	//		StartLocation.Maze = StartLocation.Maze;
 
-
-			ItemTileSet = ResourceManager.CreateAsset<TileSet>(ItemTileSetName);
-
+			LoadItemTileSet();
+		
 
 			foreach (Maze maze in Mazes.Values)
 				maze.Init();
@@ -69,20 +69,17 @@ namespace DungeonEye
 		/// <summary>
 		/// Loads default item TileSet
 		/// </summary>
-		/// <param name="name">TileSet name</param>
 		/// <returns>True on succes</returns>
-		public bool LoadItemTileSet(string name)
+		public bool LoadItemTileSet()
 		{
-			if (string.IsNullOrEmpty(name))
+			if (string.IsNullOrEmpty(ItemTileSetName))
 				return false;
 
 			if (ItemTileSet != null)
 				ItemTileSet.Dispose();
 			ItemTileSet = null;
 
-
-			ItemTileSetName = name;
-			ItemTileSet = ResourceManager.CreateAsset<TileSet>(name);
+			ItemTileSet = ResourceManager.CreateAsset<TileSet>(ItemTileSetName);
 
 			return ItemTileSet != null;
 		}

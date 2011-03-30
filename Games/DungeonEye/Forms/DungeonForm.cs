@@ -63,12 +63,12 @@ namespace DungeonEye.Forms
 			PreviewLoc = new DungeonLocation(dungeon.StartLocation);
 
 
-	//		RebuildMazeList();
+			//		RebuildMazeList();
 			DungeonNoteBox.Text = dungeon.Note;
 
 			StartLocationBox.Dungeon = dungeon;
 			StartLocationBox.SetTarget(dungeon.StartLocation);
-			
+
 
 			KeyboardScheme = ResourceManager.CreateAsset<InputScheme>(Game.InputSchemeName);
 			if (KeyboardScheme == null)
@@ -113,28 +113,28 @@ namespace DungeonEye.Forms
 			{
 				case CardinalPoint.North:
 				{
-				//	dst = new Point(PreviewLoc.Position.X + front, PreviewLoc.Position.Y + strafe);
+					//	dst = new Point(PreviewLoc.Position.X + front, PreviewLoc.Position.Y + strafe);
 					offset = new Point(front, strafe);
 				}
 				break;
 
 				case CardinalPoint.South:
 				{
-				//	dst = new Point(PreviewLoc.Position.X - front, PreviewLoc.Position.Y - strafe);
+					//	dst = new Point(PreviewLoc.Position.X - front, PreviewLoc.Position.Y - strafe);
 					offset = new Point(-front, -strafe);
 				}
 				break;
 
 				case CardinalPoint.East:
 				{
-				//	dst = new Point(PreviewLoc.Position.X - strafe, PreviewLoc.Position.Y + front);
+					//	dst = new Point(PreviewLoc.Position.X - strafe, PreviewLoc.Position.Y + front);
 					offset = new Point(-strafe, front);
 				}
 				break;
 
 				case CardinalPoint.West:
 				{
-				//	dst = new Point(PreviewLoc.Position.X + strafe, PreviewLoc.Position.Y - front);
+					//	dst = new Point(PreviewLoc.Position.X + strafe, PreviewLoc.Position.Y - front);
 					offset = new Point(strafe, -front);
 				}
 				break;
@@ -220,13 +220,37 @@ namespace DungeonEye.Forms
 		/// Change the selected maze
 		/// </summary>
 		/// <param name="name">Maze's name</param>
-		void ChangeDungeon(string name)
+		void ChangeMaze(string name)
 		{
+			if (string.IsNullOrEmpty(name) || Dungeon == null)
+				return;
+
 			Maze = Dungeon.GetMaze(name);
 			PreviewLoc.Maze = Maze.Name;
+
+			UpdateMazeTab();
 		}
 
 
+		/// <summary>
+		/// Update maze tab controls
+		/// </summary>
+		void UpdateMazeTab()
+		{
+			if (Maze == null)
+				return;
+
+			Maze maze = Maze;
+			Maze = null;
+
+
+			DefaultDoorBox.SelectedItem = maze.DefaultDoorType;
+			DecorationNameBox.SelectedItem = maze.DecorationName;
+			WallTileSetNameBox.SelectedItem = maze.WallTilesetName;
+
+
+			Maze = maze;
+		}
 
 
 		#region Events
@@ -272,9 +296,9 @@ namespace DungeonEye.Forms
 			Icons = new TileSet();
 			Icons.Texture = new Texture2D(ResourceManager.GetInternalResource("DungeonEye.Forms.data.editor.png"));
 			int id = 0;
-			for (int y = 0; y < Icons.Texture.Size.Height - 50; y += 25)
+			for (int y = 0 ; y < Icons.Texture.Size.Height - 50 ; y += 25)
 			{
-				for (int x = 0; x < Icons.Texture.Size.Width; x += 25)
+				for (int x = 0 ; x < Icons.Texture.Size.Width ; x += 25)
 				{
 					Tile tile = Icons.AddTile(id++);
 					tile.Rectangle = new Rectangle(x, y, 25, 25);
@@ -286,13 +310,13 @@ namespace DungeonEye.Forms
 
 			RebuildMazeList();
 
-			if (Dungeon.StartLocation != null && MazeListBox.Items.Contains(Dungeon.StartLocation.Maze))
+			if (Dungeon.StartLocation != null && !string.IsNullOrEmpty(Dungeon.StartLocation.Maze) && MazeListBox.Items.Contains(Dungeon.StartLocation.Maze))
 				MazeListBox.SelectedItem = Dungeon.StartLocation.Maze;
 			else if (MazeListBox.Items.Count > 0)
 				MazeListBox.SelectedIndex = 0;
 
 			DrawTimer.Start();
-		
+
 		}
 
 
@@ -452,7 +476,7 @@ namespace DungeonEye.Forms
 
 				// Store last mouse location
 				LastMousePos = e.Location;
-	
+
 				return;
 			}
 
@@ -758,7 +782,7 @@ namespace DungeonEye.Forms
 
 
 			#region Display zones
-/*
+			/*
 			if (DisplayZonesBox.Checked)
 			{
 
@@ -816,16 +840,16 @@ namespace DungeonEye.Forms
 					if (CurrentSquare.Actor != null)
 						CurrentSquare.Actor = null;
 				}
-			//   if (ObjectPropertyBox.SelectedObject == null)
-			//      return;
+				//   if (ObjectPropertyBox.SelectedObject == null)
+				//      return;
 
-			//   //if (ObjectPropertyBox.SelectedObject is Monster)
-			//   //{
-			//   //   Monster monster = ObjectPropertyBox.SelectedObject as Monster;
-			//   //   Maze.Monsters.Remove(monster);
-			//   //}
+				//   //if (ObjectPropertyBox.SelectedObject is Monster)
+				//   //{
+				//   //   Monster monster = ObjectPropertyBox.SelectedObject as Monster;
+				//   //   Maze.Monsters.Remove(monster);
+				//   //}
 
-			//   ObjectPropertyBox.SelectedObject = null;
+				//   ObjectPropertyBox.SelectedObject = null;
 			}
 			else if (e.KeyCode == KeyboardScheme["TurnLeft"])
 			{
@@ -858,7 +882,7 @@ namespace DungeonEye.Forms
 
 
 
-		
+
 		/// <summary>
 		/// 
 		/// </summary>
@@ -972,7 +996,7 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void MazeListBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			ChangeDungeon(MazeListBox.SelectedItem.ToString());
+			ChangeMaze(MazeListBox.SelectedItem.ToString());
 		}
 
 
@@ -1054,11 +1078,11 @@ namespace DungeonEye.Forms
 		private void DrawTimer_Tick(object sender, EventArgs e)
 		{
 			DrawTimer.Stop();
-	
+
 
 			GlControl_Paint(null, null);
 
-			if (GlPreviewControl.Created)		
+			if (GlPreviewControl.Created)
 				GlPreviewControl_Paint(null, null);
 
 			DrawTimer.Start();
@@ -1101,7 +1125,7 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void GlPreviewControl_Paint(object sender, PaintEventArgs e)
 		{
-			if (SpriteBatch == null )
+			if (SpriteBatch == null)
 				return;
 
 			GlPreviewControl.MakeCurrent();
@@ -1255,12 +1279,59 @@ namespace DungeonEye.Forms
 			if (Dungeon == null)
 				return;
 
-			Dungeon.LoadItemTileSet((string) ItemTileSetBox.SelectedItem);
+
+			Dungeon.ItemTileSetName = (string) ItemTileSetBox.SelectedItem;
+			Dungeon.LoadItemTileSet();
 		}
 
 
 
-		
+
+		#endregion
+
+
+		#region Maze tab events
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void MazeTab_Enter(object sender, EventArgs e)
+		{
+			UpdateMazeTab();
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void DecorationNameBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (Maze == null)
+				return;
+
+			Maze.DecorationName = (string) DecorationNameBox.SelectedItem;
+			Maze.LoadDecoration();
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void WallTileSetNameBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (Maze == null)
+				return;
+
+			Maze.WallTilesetName = (string) WallTileSetNameBox.SelectedItem;
+			Maze.LoadWallTileSet();
+		}
+
 		#endregion
 
 
@@ -1369,13 +1440,6 @@ namespace DungeonEye.Forms
 
 
 		#endregion
-
-		private void PropertiesBox_Enter(object sender, EventArgs e)
-		{
-
-
-		}
-
 
 	}
 }

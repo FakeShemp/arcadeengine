@@ -564,7 +564,6 @@
 			this.PropertiesBox.SelectedIndex = 0;
 			this.PropertiesBox.Size = new System.Drawing.Size(359, 240);
 			this.PropertiesBox.TabIndex = 11;
-			this.PropertiesBox.Enter += new System.EventHandler(this.PropertiesBox_Enter);
 			// 
 			// DungeonTab
 			// 
@@ -577,6 +576,7 @@
 			this.DungeonTab.Size = new System.Drawing.Size(351, 214);
 			this.DungeonTab.TabIndex = 0;
 			this.DungeonTab.Text = "Dungeon";
+			this.DungeonTab.UseVisualStyleBackColor = true;
 			// 
 			// groupBox3
 			// 
@@ -631,6 +631,7 @@
 			this.MazeTab.TabIndex = 1;
 			this.MazeTab.Text = "Maze";
 			this.MazeTab.UseVisualStyleBackColor = true;
+			this.MazeTab.Enter += new System.EventHandler(this.MazeTab_Enter);
 			// 
 			// groupBox2
 			// 
@@ -654,6 +655,7 @@
 			this.WallTileSetNameBox.Size = new System.Drawing.Size(169, 21);
 			this.WallTileSetNameBox.Sorted = true;
 			this.WallTileSetNameBox.TabIndex = 0;
+			this.WallTileSetNameBox.SelectedIndexChanged += new System.EventHandler(this.WallTileSetNameBox_SelectedIndexChanged);
 			// 
 			// label3
 			// 
@@ -673,6 +675,7 @@
 			this.DecorationNameBox.Size = new System.Drawing.Size(169, 21);
 			this.DecorationNameBox.Sorted = true;
 			this.DecorationNameBox.TabIndex = 0;
+			this.DecorationNameBox.SelectedIndexChanged += new System.EventHandler(this.DecorationNameBox_SelectedIndexChanged);
 			// 
 			// label1
 			// 
