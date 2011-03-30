@@ -330,37 +330,37 @@
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFzSURBVDhPY2AYFKBg1lPb+vr/TGQ7JqzsxP/4Sa81Qlf9
         ZybLkIwpT/8HNdx8ndD51BbdkBvrNJa+P+045e+rih2358v//vssb/fXK54tt9Zp1MEtS+x9+r9z69//
-        bqWX/yf2PrJHNuTXTf+qPVMM//3/2PP/8aGI//8/Tvi/e5Lev8+XPFrhBkR1P/5fu+bv/9TZf//b5J5F
-        MQRk8//P0/7//338/+ena4H04f8gPkgcbkBwy6P/eQuBLmj69l8m5tp/48hl/x0KTseDFNwEOvvh/uD/
-        X16s///3/4f/315v+Q/iP9kk+QtugFfNg/8+7d//S0df+6/o0vNfxntlIEwS7IKPk////7EfbAjIJSA+
-        igscyu7918u+C9Ys7b3CCzkmft0KqNg92eDf35e1/58di/3//8NkzDCwyLsD1izht1ILPRpvrteYBo6F
-        pxl7nu83+wmyGRSAKLFgkHV7k5TXEgOy0gBIk2bKVW2yNQ99jQCXEPDH4j4t4gAAAABJRU5ErkJggg==
+        bqWX/yf2PrJHNuTXTf+qLT2G//5/7Pn/+FDE//8fJ/zf3KX37/Mlj1a4AVHdj//Xrvn7P3X23/82uWdR
+        DAHZ/P/ztP//fx////npWiB9+D+IDxKHGxDc8uh/3kKgC5q+/ZeJufbfOHLZf4eC0/EgBTeBzn64P/j/
+        lxfr///9/+H/t9db/oP4TzZJ/oIb4FXz4L9P+/f/0tHX/iu69PyX8V4ZCJMEu+Dj5P//f+wHGwJyCYiP
+        4gKHsnv/9bLvgjVLe6/wQo6JX7cCKjZ3G/z7+7L2/7Njsf//f5iMGQYWeXfAmiX8VmqhR+PN9RrTwLHw
+        NGPP8/1mP0E2gwIQJRYMsm5vkvJaYkBWGgBp0ky5qk225qGvEQAQMPCHmB9hpAAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="GeneratorBox.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGHSURBVDhP1ZJPSwJRFMUl7DP4f1UgrqL8AAMjCK5ciOnk
-        QpNZpIsKNy7VtgYGCiJqukwD3boZBfsAiZKbXGqCoK0kxmHeaWZALQrRXV14i8d953fPuxyV6k9UqVQS
-        yuUyqdfrpFp9JIVCgWSzWZJM3pJ44obEYrHViUajJBhkicPhwMq8lzkTnzsdTKczCIKAxWKB+Xwu3acY
-        jkaQe61WC7lcDizLwu12Q6PRiCuAyWQ6kKd0u11FJIoi5OIl0Nt4jJd+H41GA+l0Gi6XC1qtFnq9/ngF
-        sFqt+0aj8fDy+grt9hMmk4niZPo+U8QcxyGfz4NhGCJNJjqd7kQS733b/xJyEQoTedpwOMTrYACu2UQ6
-        k4HP54Mk/F28JC0hFEWJypd6PdRqNUQiEdnyZvFXiLwTj8cryIsrFu9hs9lgMBiOftjelCGKOuUfKhXE
-        4wnY7Xayc968XoZPpe4QCJzDYrHsDvD7A3woFAZN01Cr1evQbGvF6XR+0LQNZrNZBqxDsy3g/7z7BJXL
-        52XBFqPuAAAAAElFTkSuQmCC
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGESURBVDhP1ZK/SwJhGMcl7G/w91QgTlH+AQcnCE5WYioO
+        mjikQ4WLo4btF9wNipRgg7k4u5yC/QGJkkuOZ4KgTRLnce+3uwM1KUS3euAdXp73+3m+78NXp/sTVSqV
+        pHw+TyqVCimXHwnHcYRhGJLL3ZJMJrNy0uk0icXixOPxYGH++ORUfmm3MR5PIEkSZrMZptOpch9DGAyg
+        9prNJgqFAuLxOPx+PwwGg7wA2Gy2PXVSp9PRRLIsQy1RAb0Ph3jt9VCv18GyLHw+H4xGI8xm8+EC4HQ6
+        d61W6/7l9RVarWeMRiPNyfhjool5nkexWEQoFCLKZGIymY4U8c7K/ueQi0SSqNMEQcBbvw++0QDLcQiH
+        w1CEv4vnpDmEoihZ+1K3i1qthlQqpVpeL/4OUXcSCAQldXH39w9wuVywWCwHP2yvyxBFnYlP1Sqy2Ru4
+        3W6ydd6CwZDIMHeIRs/hcDi2B0QiUTGRSIKmaej1+mVoNrXi9Xo/adoFu92uApah2RTwf959AT3f5rdw
+        LoLqAAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="SwitchBox.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGuSURBVDhPxVK/SwIBGO0/CNxS/wMhQeLQEOtEBLUfiNxg
-        NNlkpkNDnVmoYHYXHbgopqSTDVkuNkWBUBiCVhBYBOHY4mAqGlL3unPuopZ68/fe9773vpGRv0I8Hj/z
-        +/3PXq/X/eudmUzmDgJ4nkelUoHT6bz/sYjD4ZhnWZZvtVpDgWaziUKhAIvFwkiK0DQ9xzBMM51OP1EU
-        tZhKpZDP51EqlYYOisUiTCZT50uBcDg8m81m30TL/X4fu3t7w80ejwehUAiJRALRaBQqlerlSwGO49oi
-        WcRBJovBYIBarYZYLAa73f5qtdpAEMSjWq1elHKAXq+HTqeDdruNer2OZDIJvV4PrVZ7LZCdOp1uUvL+
-        YDDYu7y6QqPRQLfbHW53u93YF3IwTJMDE0WNftvAGh1YDWxuvedyh6hWqyiXyzgSAqQ3AtBoNLc2m00h
-        KbDDcps7DIvz8wuhJitcriUsC+Gt+HwgjUbeYCCPJclRllsXySLG5AoYjJZT0my9nCCID+HuB51+6uRb
-        65FI5EYkyxVKkOaZBf92fPzH3yYOit3KZLKWXKlc/hXx34c/AY2Q+0o5gdytAAAAAElFTkSuQmCC
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGsSURBVDhPxVI9SwIBGPYfBG6p/0BIkDg0xDqRQO0DkRuM
+        pprUbGioMwsVzM7owEUxJZ1qyHKxKQyEwhC0gsAiCMcWBztFQ+qe7py9qKWe+X0+3ud9ZbK/Qjwev/D5
+        fC9er9f1a89MJnMPATzPo1KpwOl0PvxYxOFwzIdCIb7Vag0Ems0m8vk8LBYLIylC0/QcwzDNdDr9TFHU
+        YiqVQi6XQ6lUGiQoFAowm83toQKC22w2m30XI/d6Pezt7w+cPR4PgsEgEokEIpEI1Gr161ABlmU5kSzi
+        MJNFv99HrVZDLBaD3W5/s1ptIAjiSaPRLEolQLfbRbvdBsdxqNfrSCaTMBgM0Ol0NwLZqdfrJyT3DwQC
+        3avrazQaDXQ6nYG7y+XCgdCDcYrsmylq5NsLrNP+Nf/W9sfR0TGq1SrK5TJOhALpTT+0Wu2dzWZTSgrs
+        RtmtXSaKYvFSOJMVS0vLcAvlrayugjSZeKORPJUkR6LshkgWMapQwmiynJPT1qtxgvgU9n7UGybPvo0e
+        DodvRbJCqQI5PbPg24mP/fjbxEHxtnK5vKVQqdy/Iv778BdB6PsyrodSqQAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="FloorSwitchBox.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

@@ -79,12 +79,12 @@
 			this.DungeonNoteBox = new System.Windows.Forms.TextBox();
 			this.MazeTab = new System.Windows.Forms.TabPage();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
-			this.comboBox3 = new System.Windows.Forms.ComboBox();
+			this.WallTileSetNameBox = new System.Windows.Forms.ComboBox();
 			this.label3 = new System.Windows.Forms.Label();
-			this.comboBox2 = new System.Windows.Forms.ComboBox();
+			this.DecorationNameBox = new System.Windows.Forms.ComboBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
-			this.comboBox1 = new System.Windows.Forms.ComboBox();
+			this.DefaultDoorBox = new System.Windows.Forms.ComboBox();
 			this.LeftPanel = new System.Windows.Forms.Panel();
 			this.groupBox5 = new System.Windows.Forms.GroupBox();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
@@ -564,6 +564,7 @@
 			this.PropertiesBox.SelectedIndex = 0;
 			this.PropertiesBox.Size = new System.Drawing.Size(359, 240);
 			this.PropertiesBox.TabIndex = 11;
+			this.PropertiesBox.Enter += new System.EventHandler(this.PropertiesBox_Enter);
 			// 
 			// DungeonTab
 			// 
@@ -594,7 +595,9 @@
 			this.ItemTileSetBox.Location = new System.Drawing.Point(6, 19);
 			this.ItemTileSetBox.Name = "ItemTileSetBox";
 			this.ItemTileSetBox.Size = new System.Drawing.Size(146, 21);
+			this.ItemTileSetBox.Sorted = true;
 			this.ItemTileSetBox.TabIndex = 4;
+			this.ItemTileSetBox.SelectedIndexChanged += new System.EventHandler(this.ItemTileSetBox_SelectedIndexChanged);
 			// 
 			// groupBox1
 			// 
@@ -620,7 +623,7 @@
 			// 
 			this.MazeTab.Controls.Add(this.groupBox2);
 			this.MazeTab.Controls.Add(this.label2);
-			this.MazeTab.Controls.Add(this.comboBox1);
+			this.MazeTab.Controls.Add(this.DefaultDoorBox);
 			this.MazeTab.Location = new System.Drawing.Point(4, 22);
 			this.MazeTab.Name = "MazeTab";
 			this.MazeTab.Padding = new System.Windows.Forms.Padding(3);
@@ -631,9 +634,9 @@
 			// 
 			// groupBox2
 			// 
-			this.groupBox2.Controls.Add(this.comboBox3);
+			this.groupBox2.Controls.Add(this.WallTileSetNameBox);
 			this.groupBox2.Controls.Add(this.label3);
-			this.groupBox2.Controls.Add(this.comboBox2);
+			this.groupBox2.Controls.Add(this.DecorationNameBox);
 			this.groupBox2.Controls.Add(this.label1);
 			this.groupBox2.Location = new System.Drawing.Point(6, 124);
 			this.groupBox2.Name = "groupBox2";
@@ -642,14 +645,15 @@
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "TileSet :";
 			// 
-			// comboBox3
+			// WallTileSetNameBox
 			// 
-			this.comboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.comboBox3.FormattingEnabled = true;
-			this.comboBox3.Location = new System.Drawing.Point(82, 50);
-			this.comboBox3.Name = "comboBox3";
-			this.comboBox3.Size = new System.Drawing.Size(169, 21);
-			this.comboBox3.TabIndex = 0;
+			this.WallTileSetNameBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.WallTileSetNameBox.FormattingEnabled = true;
+			this.WallTileSetNameBox.Location = new System.Drawing.Point(82, 50);
+			this.WallTileSetNameBox.Name = "WallTileSetNameBox";
+			this.WallTileSetNameBox.Size = new System.Drawing.Size(169, 21);
+			this.WallTileSetNameBox.Sorted = true;
+			this.WallTileSetNameBox.TabIndex = 0;
 			// 
 			// label3
 			// 
@@ -660,14 +664,15 @@
 			this.label3.TabIndex = 1;
 			this.label3.Text = "Wall :";
 			// 
-			// comboBox2
+			// DecorationNameBox
 			// 
-			this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.comboBox2.FormattingEnabled = true;
-			this.comboBox2.Location = new System.Drawing.Point(82, 23);
-			this.comboBox2.Name = "comboBox2";
-			this.comboBox2.Size = new System.Drawing.Size(169, 21);
-			this.comboBox2.TabIndex = 0;
+			this.DecorationNameBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.DecorationNameBox.FormattingEnabled = true;
+			this.DecorationNameBox.Location = new System.Drawing.Point(82, 23);
+			this.DecorationNameBox.Name = "DecorationNameBox";
+			this.DecorationNameBox.Size = new System.Drawing.Size(169, 21);
+			this.DecorationNameBox.Sorted = true;
+			this.DecorationNameBox.TabIndex = 0;
 			// 
 			// label1
 			// 
@@ -687,14 +692,15 @@
 			this.label2.TabIndex = 1;
 			this.label2.Text = "Default door :";
 			// 
-			// comboBox1
+			// DefaultDoorBox
 			// 
-			this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.comboBox1.FormattingEnabled = true;
-			this.comboBox1.Location = new System.Drawing.Point(88, 6);
-			this.comboBox1.Name = "comboBox1";
-			this.comboBox1.Size = new System.Drawing.Size(169, 21);
-			this.comboBox1.TabIndex = 0;
+			this.DefaultDoorBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.DefaultDoorBox.FormattingEnabled = true;
+			this.DefaultDoorBox.Location = new System.Drawing.Point(88, 6);
+			this.DefaultDoorBox.Name = "DefaultDoorBox";
+			this.DefaultDoorBox.Size = new System.Drawing.Size(169, 21);
+			this.DefaultDoorBox.Sorted = true;
+			this.DefaultDoorBox.TabIndex = 0;
 			// 
 			// LeftPanel
 			// 
@@ -837,14 +843,14 @@
 		private System.Windows.Forms.ToolStripButton EventBox;
 		private System.Windows.Forms.Panel LeftPanel;
 		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.ComboBox comboBox1;
+		private System.Windows.Forms.ComboBox DefaultDoorBox;
 		private System.Windows.Forms.GroupBox groupBox5;
 		private System.Windows.Forms.GroupBox groupBox4;
 		private System.Windows.Forms.ComboBox ItemTileSetBox;
 		private System.Windows.Forms.GroupBox groupBox2;
-		private System.Windows.Forms.ComboBox comboBox3;
+		private System.Windows.Forms.ComboBox WallTileSetNameBox;
 		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.ComboBox comboBox2;
+		private System.Windows.Forms.ComboBox DecorationNameBox;
 		private System.Windows.Forms.Label label1;
 		private TargetControl StartLocationBox;
 		private System.Windows.Forms.GroupBox groupBox3;

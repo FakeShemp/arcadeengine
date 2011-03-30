@@ -66,6 +66,27 @@ namespace DungeonEye
 		}
 
 
+		/// <summary>
+		/// Loads default item TileSet
+		/// </summary>
+		/// <param name="name">TileSet name</param>
+		/// <returns>True on succes</returns>
+		public bool LoadItemTileSet(string name)
+		{
+			if (string.IsNullOrEmpty(name))
+				return false;
+
+			if (ItemTileSet != null)
+				ItemTileSet.Dispose();
+			ItemTileSet = null;
+
+
+			ItemTileSetName = name;
+			ItemTileSet = ResourceManager.CreateAsset<TileSet>(name);
+
+			return ItemTileSet != null;
+		}
+
 
 		/// <summary>
 		/// Dispose

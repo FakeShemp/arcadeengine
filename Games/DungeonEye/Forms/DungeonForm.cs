@@ -43,20 +43,31 @@ namespace DungeonEye.Forms
 		{
 			InitializeComponent();
 
-
-
 			// Create the dungeon
-			Dungeon = new Dungeon();
-			Dungeon.Load(node);
-			Dungeon.Init();
-
-			PreviewLoc = new DungeonLocation(Dungeon.StartLocation);
+			Dungeon dungeon = new Dungeon();
+			dungeon.Load(node);
+			dungeon.Init();
 
 
-			//MazePropertyBox.Tag = Dungeon;
-			RebuildMazeList();
-			DungeonNoteBox.Text = Dungeon.Note;
+			ItemTileSetBox.DataSource = ResourceManager.GetAssets<TileSet>();
+			ItemTileSetBox.SelectedItem = dungeon.ItemTileSetName;
 
+			DefaultDoorBox.DataSource = Enum.GetNames(typeof(DoorType));
+			DecorationNameBox.DataSource = ResourceManager.GetAssets<DecorationSet>();
+			WallTileSetNameBox.DataSource = ResourceManager.GetAssets<TileSet>();
+
+
+
+
+
+			PreviewLoc = new DungeonLocation(dungeon.StartLocation);
+
+
+	//		RebuildMazeList();
+			DungeonNoteBox.Text = dungeon.Note;
+
+			StartLocationBox.Dungeon = dungeon;
+			StartLocationBox.SetTarget(dungeon.StartLocation);
 			
 
 			KeyboardScheme = ResourceManager.CreateAsset<InputScheme>(Game.InputSchemeName);
@@ -78,6 +89,10 @@ namespace DungeonEye.Forms
 				KeyboardScheme["SelectHero6"] = Keys.D6;
 			}
 
+
+
+
+			Dungeon = dungeon;
 		}
 
 
@@ -212,6 +227,8 @@ namespace DungeonEye.Forms
 		}
 
 
+
+
 		#region Events
 
 
@@ -245,15 +262,15 @@ namespace DungeonEye.Forms
 
 			SpriteBatch = new SpriteBatch();
 
-			// Preload texture resources
-			Icons = new TileSet();
-			Icons.Texture = new Texture2D(ResourceManager.GetInternalResource("DungeonEye.Forms.data.editor.png"));
 
 			// Preload background texture resource
 			CheckerBoard = new Texture2D(ResourceManager.GetInternalResource("ArcEngine.Resources.checkerboard.png"));
 			CheckerBoard.HorizontalWrap = TextureWrapFilter.Repeat;
 			CheckerBoard.VerticalWrap = TextureWrapFilter.Repeat;
 
+			// Preload texture resources
+			Icons = new TileSet();
+			Icons.Texture = new Texture2D(ResourceManager.GetInternalResource("DungeonEye.Forms.data.editor.png"));
 			int id = 0;
 			for (int y = 0; y < Icons.Texture.Size.Height - 50; y += 25)
 			{
@@ -265,6 +282,14 @@ namespace DungeonEye.Forms
 			}
 			Icons.AddTile(100).Rectangle = new Rectangle(0, 245, 6, 11); // alcoves
 			Icons.AddTile(101).Rectangle = new Rectangle(6, 248, 11, 6); // alcoves
+
+
+			RebuildMazeList();
+
+			if (Dungeon.StartLocation != null && MazeListBox.Items.Contains(Dungeon.StartLocation.Maze))
+				MazeListBox.SelectedItem = Dungeon.StartLocation.Maze;
+			else if (MazeListBox.Items.Count > 0)
+				MazeListBox.SelectedIndex = 0;
 
 			DrawTimer.Start();
 		
@@ -1220,6 +1245,19 @@ namespace DungeonEye.Forms
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ItemTileSetBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (Dungeon == null)
+				return;
+
+			Dungeon.LoadItemTileSet((string) ItemTileSetBox.SelectedItem);
+		}
+
 
 
 		
@@ -1331,6 +1369,13 @@ namespace DungeonEye.Forms
 
 
 		#endregion
+
+		private void PropertiesBox_Enter(object sender, EventArgs e)
+		{
+
+
+		}
+
 
 	}
 }
