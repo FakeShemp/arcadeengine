@@ -28,13 +28,12 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.button1 = new System.Windows.Forms.Button();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.BlockRadioBox = new System.Windows.Forms.RadioButton();
-			this.SpinRadioBox = new System.Windows.Forms.RadioButton();
-			this.MoveRadioBox = new System.Windows.Forms.RadioButton();
 			this.SpinDirectionBox = new System.Windows.Forms.ComboBox();
 			this.MoveDirectionBox = new System.Windows.Forms.ComboBox();
+			this.SpinRadioBox = new System.Windows.Forms.RadioButton();
+			this.MoveRadioBox = new System.Windows.Forms.RadioButton();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.AffectItemsBox = new System.Windows.Forms.CheckBox();
 			this.AffectMonstersBox = new System.Windows.Forms.CheckBox();
@@ -42,17 +41,6 @@
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.SuspendLayout();
-			// 
-			// button1
-			// 
-			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.button1.Location = new System.Drawing.Point(232, 115);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(75, 23);
-			this.button1.TabIndex = 0;
-			this.button1.Text = "Done";
-			this.button1.UseVisualStyleBackColor = true;
 			// 
 			// groupBox1
 			// 
@@ -80,6 +68,26 @@
 			this.BlockRadioBox.UseVisualStyleBackColor = true;
 			this.BlockRadioBox.CheckedChanged += new System.EventHandler(this.BlockBox_CheckedChanged);
 			// 
+			// SpinDirectionBox
+			// 
+			this.SpinDirectionBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.SpinDirectionBox.FormattingEnabled = true;
+			this.SpinDirectionBox.Location = new System.Drawing.Point(64, 44);
+			this.SpinDirectionBox.Name = "SpinDirectionBox";
+			this.SpinDirectionBox.Size = new System.Drawing.Size(101, 21);
+			this.SpinDirectionBox.TabIndex = 0;
+			this.SpinDirectionBox.SelectedIndexChanged += new System.EventHandler(this.SpinDirectionBox_SelectedIndexChanged);
+			// 
+			// MoveDirectionBox
+			// 
+			this.MoveDirectionBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.MoveDirectionBox.FormattingEnabled = true;
+			this.MoveDirectionBox.Location = new System.Drawing.Point(64, 17);
+			this.MoveDirectionBox.Name = "MoveDirectionBox";
+			this.MoveDirectionBox.Size = new System.Drawing.Size(101, 21);
+			this.MoveDirectionBox.TabIndex = 0;
+			this.MoveDirectionBox.SelectedIndexChanged += new System.EventHandler(this.MoveDirectionBox_SelectedIndexChanged);
+			// 
 			// SpinRadioBox
 			// 
 			this.SpinRadioBox.AutoSize = true;
@@ -103,26 +111,6 @@
 			this.MoveRadioBox.Text = "Move";
 			this.MoveRadioBox.UseVisualStyleBackColor = true;
 			this.MoveRadioBox.CheckedChanged += new System.EventHandler(this.MoveRadioBox_CheckedChanged);
-			// 
-			// SpinDirectionBox
-			// 
-			this.SpinDirectionBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.SpinDirectionBox.FormattingEnabled = true;
-			this.SpinDirectionBox.Location = new System.Drawing.Point(64, 44);
-			this.SpinDirectionBox.Name = "SpinDirectionBox";
-			this.SpinDirectionBox.Size = new System.Drawing.Size(101, 21);
-			this.SpinDirectionBox.TabIndex = 0;
-			this.SpinDirectionBox.SelectedIndexChanged += new System.EventHandler(this.SpinDirectionBox_SelectedIndexChanged);
-			// 
-			// MoveDirectionBox
-			// 
-			this.MoveDirectionBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.MoveDirectionBox.FormattingEnabled = true;
-			this.MoveDirectionBox.Location = new System.Drawing.Point(64, 17);
-			this.MoveDirectionBox.Name = "MoveDirectionBox";
-			this.MoveDirectionBox.Size = new System.Drawing.Size(101, 21);
-			this.MoveDirectionBox.TabIndex = 0;
-			this.MoveDirectionBox.SelectedIndexChanged += new System.EventHandler(this.MoveDirectionBox_SelectedIndexChanged);
 			// 
 			// groupBox2
 			// 
@@ -169,16 +157,14 @@
 			this.AffectTeamBox.UseVisualStyleBackColor = true;
 			this.AffectTeamBox.CheckedChanged += new System.EventHandler(this.AffectTeamBox_CheckedChanged);
 			// 
-			// ForceFieldForm
+			// ForceFieldControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(319, 150);
 			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.groupBox1);
-			this.Controls.Add(this.button1);
-			this.Name = "ForceFieldForm";
-			this.Text = "Force Field wizard";
+			this.Name = "ForceFieldControl";
+			this.Size = new System.Drawing.Size(319, 115);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			this.groupBox2.ResumeLayout(false);
@@ -189,7 +175,6 @@
 
 		#endregion
 
-		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.ComboBox SpinDirectionBox;
 		private System.Windows.Forms.ComboBox MoveDirectionBox;

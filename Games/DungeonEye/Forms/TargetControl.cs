@@ -86,12 +86,12 @@ namespace DungeonEye.Forms
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		public delegate void ChangedEventHandler(object sender, DungeonLocation target);
+		public delegate void TargetChangedEventHandler(object sender, DungeonLocation target);
 
 		/// <summary>
-		/// 
+		/// Fired when the target location is changed
 		/// </summary>
-		public event ChangedEventHandler TargetChanged;
+		public event TargetChangedEventHandler TargetChanged;
 
 
 		/// <summary>
@@ -182,6 +182,21 @@ namespace DungeonEye.Forms
 			}
 		}
 
+
+		/// <summary>
+		/// Display title
+		/// </summary>
+		public string Title
+		{
+			get
+			{
+				return groupBox1.Text;
+			}
+			set
+			{
+				groupBox1.Text = value;
+			}
+		}
 
 		#endregion
 	}

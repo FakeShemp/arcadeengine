@@ -32,7 +32,7 @@ namespace DungeonEye.Forms
 			TargetBox.Dungeon = dungeon;
 			TargetBox.SetTarget(((ScriptTeleport)Action).Target);
 
-			TargetBox.TargetChanged +=new TargetControl.ChangedEventHandler(TargetBox_TargetChanged);
+			TargetBox.TargetChanged +=new TargetControl.TargetChangedEventHandler(TargetBox_TargetChanged);
 			
 		}
 

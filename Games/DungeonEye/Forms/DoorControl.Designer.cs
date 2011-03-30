@@ -28,7 +28,6 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.DoneBox = new System.Windows.Forms.Button();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.ItemPanel = new System.Windows.Forms.Panel();
 			this.PicklockBox = new System.Windows.Forms.NumericUpDown();
@@ -49,22 +48,11 @@
 			this.label3 = new System.Windows.Forms.Label();
 			this.groupBox1.SuspendLayout();
 			this.ItemPanel.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.PicklockBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize) (this.PicklockBox)).BeginInit();
 			this.groupBox2.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.SpeedBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.BreakValueBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize) (this.SpeedBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize) (this.BreakValueBox)).BeginInit();
 			this.SuspendLayout();
-			// 
-			// DoneBox
-			// 
-			this.DoneBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.DoneBox.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.DoneBox.Location = new System.Drawing.Point(252, 195);
-			this.DoneBox.Name = "DoneBox";
-			this.DoneBox.Size = new System.Drawing.Size(75, 23);
-			this.DoneBox.TabIndex = 0;
-			this.DoneBox.Text = "Done";
-			this.DoneBox.UseVisualStyleBackColor = true;
 			// 
 			// groupBox1
 			// 
@@ -273,29 +261,27 @@
 			this.label3.TabIndex = 3;
 			this.label3.Text = "State :";
 			// 
-			// DoorForm
+			// DoorControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(339, 230);
 			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.label3);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.DoorStateBox);
 			this.Controls.Add(this.DoorTypeBox);
 			this.Controls.Add(this.groupBox1);
-			this.Controls.Add(this.DoneBox);
-			this.Name = "DoorForm";
-			this.Text = "Door wizard";
+			this.Name = "DoorControl";
+			this.Size = new System.Drawing.Size(339, 230);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			this.ItemPanel.ResumeLayout(false);
 			this.ItemPanel.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.PicklockBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize) (this.PicklockBox)).EndInit();
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.SpeedBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.BreakValueBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize) (this.SpeedBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize) (this.BreakValueBox)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -303,7 +289,6 @@
 
 		#endregion
 
-		private System.Windows.Forms.Button DoneBox;
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.ComboBox DoorTypeBox;
 		private System.Windows.Forms.Label label1;

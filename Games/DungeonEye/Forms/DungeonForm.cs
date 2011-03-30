@@ -53,7 +53,7 @@ namespace DungeonEye.Forms
 			PreviewLoc = new DungeonLocation(Dungeon.StartLocation);
 
 
-			MazePropertyBox.Tag = Dungeon;
+			//MazePropertyBox.Tag = Dungeon;
 			RebuildMazeList();
 			DungeonNoteBox.Text = Dungeon.Note;
 
@@ -144,22 +144,6 @@ namespace DungeonEye.Forms
 
 
 		/// <summary>
-		/// Refresh zones
-		/// </summary>
-		public void RebuildZones()
-		{
-			MazeZonesBox.BeginUpdate();
-			MazeZonesBox.Items.Clear();
-			foreach (MazeZone zone in Maze.Zones)
-			{
-				MazeZonesBox.Items.Add(zone.Name);
-			}
-
-			MazeZonesBox.EndUpdate();
-		}
-
-
-		/// <summary>
 		/// Uncheck all buttons
 		/// </summary>
 		/// <param name="button">Button to avoid</param>
@@ -202,37 +186,6 @@ namespace DungeonEye.Forms
 		}
 
 
-		/// <summary>
-		/// Edits the square's actor
-		/// </summary>
-		/// <param name="square">Square handle</param>
-		//void EditActor(Square square)
-		//{
-		//    if (square == null || square.Actor == null)
-		//        return;
-
-		//    if (square.Actor is Door)
-		//        new DoorForm(square.Actor as Door).ShowDialog();
-
-		//    //else if (square.Actor is Teleporter)
-		//    //    new TeleporterControl(square.Actor as Teleporter, Dungeon).ShowDialog();
-
-		//    else if (square.Actor is Pit)
-		//        new PitControl(square.Actor as Pit, Dungeon).ShowDialog();
-
-		//    //else if (square.Actor is Stair)
-		//    //    new StairControl(square.Actor as Stair, Dungeon).ShowDialog();
-
-		//    else if (square.Actor is ForceField)
-		//        new ForceFieldForm(square.Actor as ForceField, Dungeon).ShowDialog();
-
-		//    else if (square.Actor is FloorSwitch)
-		//        new FloorSwitchForm(square.Actor as FloorSwitch, Dungeon).ShowDialog();
-
-		//    else if (square.Actor is EventSquare)
-		//        new EventSquareForm(square.Actor as EventSquare, Dungeon).ShowDialog();
-		//}
-
 
 		/// <summary>
 		/// Edits the square
@@ -240,11 +193,22 @@ namespace DungeonEye.Forms
 		/// <param name="square">Square handle</param>
 		void EditSquare(Square square, bool showactortab)
 		{
-			SquareForm form = new SquareForm(Maze, square);
+			SquareForm form = new SquareForm(Maze, square, SpriteBatch);
 			if (showactortab)
 				form.ActivateActorTab();
 
 			form.ShowDialog();
+		}
+
+
+		/// <summary>
+		/// Change the selected maze
+		/// </summary>
+		/// <param name="name">Maze's name</param>
+		void ChangeDungeon(string name)
+		{
+			Maze = Dungeon.GetMaze(name);
+			PreviewLoc.Maze = Maze.Name;
 		}
 
 
@@ -431,7 +395,7 @@ namespace DungeonEye.Forms
 					return;
 
 				// Edit square
-				EditSquare(Maze.GetSquare(pos), true);
+				EditSquare(Maze.GetSquare(pos), false);
 			}
 		}
 
@@ -544,7 +508,7 @@ namespace DungeonEye.Forms
 					{
 						CurrentZone.Name = wizard.NewName;
 						Maze.Zones.Add(CurrentZone);
-						RebuildZones();
+						//RebuildZones();
 					}
 					else
 					{
@@ -769,6 +733,7 @@ namespace DungeonEye.Forms
 
 
 			#region Display zones
+/*
 			if (DisplayZonesBox.Checked)
 			{
 
@@ -793,6 +758,7 @@ namespace DungeonEye.Forms
 					SpriteBatch.FillRectangle(rect, Color.FromArgb(128, Color.Blue));
 				}
 			}
+*/
 			#endregion
 
 
@@ -938,10 +904,6 @@ namespace DungeonEye.Forms
 
 			else if (e.Button == MouseButtons.Right)
 			{
-				EventStripMenuItem.Visible = square.Actor != null ? true : false;
-
-				SquareMenuBox.Tag = square;
-				SquareMenuBox.Show(Control.MousePosition);
 			}
 			#endregion
 
@@ -985,9 +947,7 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void MazeListBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			Maze = Dungeon.GetMaze(MazeListBox.SelectedItem.ToString());
-			MazePropertyBox.SelectedObject = Maze;
-			PreviewLoc.Maze = Maze.Name;
+			ChangeDungeon(MazeListBox.SelectedItem.ToString());
 		}
 
 
@@ -1243,68 +1203,26 @@ namespace DungeonEye.Forms
 		#endregion
 
 
-		#region Maze zone region
-
-
-
-		
-		#endregion
-
-
-		#region Context menu
+		#region Dungeon tab events
 
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void editToolStripMenuItem1_Click(object sender, EventArgs e)
+		/// <param name="target"></param>
+		private void StartLocationBox_TargetChanged(object sender, DungeonLocation target)
 		{
-			Square square = SquareMenuBox.Tag as Square;
+			if (Dungeon == null)
+				return;
 
-			EditSquare(square, true);
-		}
-		
-		/// <summary>
-		/// Edits square
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void editToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			Square square = SquareMenuBox.Tag as Square;
-			EditSquare(square, false);
+			Dungeon.StartLocation = target;
 		}
 
 
-		/// <summary>
-		/// Clears square
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void clearToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			Square square = SquareMenuBox.Tag as Square;
 
 
 		
-		}
-
-
-		/// <summary>
-		/// Removes the actor
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void removeToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			Square square = SquareMenuBox.Tag as Square;
-
-			square.Actor = null;
-			glControl.Invalidate();
-		}
-
 		#endregion
 
 
@@ -1413,7 +1331,6 @@ namespace DungeonEye.Forms
 
 
 		#endregion
-
 
 	}
 }

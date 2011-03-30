@@ -23,7 +23,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using ArcEngine;
 using ArcEngine.Graphic;
-
+using ArcEngine.Asset;
 
 namespace DungeonEye.Forms
 {
@@ -38,7 +38,8 @@ namespace DungeonEye.Forms
 		/// </summary>
 		/// <param name="maze">Maze</param>
 		/// <param name="sqaure">Square handle</param>
-		public SquareForm(Maze maze, Square square)
+		/// <param name="batch">SpriteBatch handle</param>
+		public SquareForm(Maze maze, Square square, SpriteBatch batch)
 		{
 			InitializeComponent();
 
@@ -49,10 +50,11 @@ namespace DungeonEye.Forms
 			}
 
 			Maze = maze;
+			Batch = batch;
 
 			List<string> list = ResourceManager.GetAssets<Item>();
 			ItemsBox.DataSource = list;
-			WallTypeBox.DataSource = Enum.GetValues(typeof(SquareType));
+			//WallTypeBox.DataSource = Enum.GetValues(typeof(SquareType));
 
 
 			#region Items
@@ -111,6 +113,32 @@ namespace DungeonEye.Forms
 		public void ActivateActorTab()
 		{
 			TabControlBox.SelectedTab = ActorTab;
+		}
+
+
+		/// <summary>
+		/// Render the decoration scene
+		/// </summary>
+		private void RenderDecorationScene()
+		{
+			GlWallControl.MakeCurrent();
+			Display.ClearBuffers();
+
+			if (Batch != null)
+			{
+				Batch.Begin();
+
+				Batch.DrawTile(Maze.WallTileset, 1, Point.Empty);
+
+				// Draw the decoration
+				if (Maze.Decoration != null)
+					Maze.Decoration.Draw(Batch, (int) DecorationIdBox.Value, ViewFieldPosition.N);
+
+				Batch.End();
+			}
+
+
+			GlWallControl.SwapBuffers();
 		}
 
 
@@ -564,47 +592,6 @@ namespace DungeonEye.Forms
 
 		#region Decoration
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void ButtonNorthButton_CheckedChanged(object sender, EventArgs e)
-		{
-
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void ButtonSouthButton_CheckedChanged(object sender, EventArgs e)
-		{
-
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void ButtonWestButton_CheckedChanged(object sender, EventArgs e)
-		{
-
-		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void ButtonEastButton_CheckedChanged(object sender, EventArgs e)
-		{
-
-		}
 
 
 		/// <summary>
@@ -637,25 +624,62 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void GlWallControl_Paint(object sender, PaintEventArgs e)
 		{
-			GlWallControl.MakeCurrent();
-			Display.ClearBuffers();
-
-
-
-			GlWallControl.SwapBuffers();
+			RenderDecorationScene();
 		}
 
+
 		/// <summary>
-		/// Changes the type of a maze block
+		/// 
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void WallTypeBox_SelectedIndexChanged(object sender, EventArgs e)
+		private void DecorationIdBox_ValueChanged(object sender, EventArgs e)
 		{
-			if (Square == null)
-				return;
 
-			Square.Type = (SquareType)WallTypeBox.SelectedItem;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void NorthDecorationBox_CheckedChanged(object sender, EventArgs e)
+		{
+
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void WestDecorationBox_CheckedChanged(object sender, EventArgs e)
+		{
+
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void EastDecorationBox_CheckedChanged(object sender, EventArgs e)
+		{
+
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void SouthDecorationBox_CheckedChanged(object sender, EventArgs e)
+		{
+
 		}
 
 		#endregion
@@ -685,62 +709,85 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void ActorTab_Enter(object sender, EventArgs e)
 		{
+			// No actor
 			if (Square.Actor == null)
 			{
 				ActorPanelBox.Controls.Clear();
 				return;
 			}
 
+			// Control already present
+			if (ActorPanelBox.Controls.Count > 0)
+				return;
+
+
+			UserControl control = null;
+
+
 			if (Square.Actor is Door)
 			{
-				ActorPanelBox.Controls.Add(new DoorControl(Square.Actor as Door));
+				control = new DoorControl(Square.Actor as Door);
 			}
 			else if (Square.Actor is EventSquare)
 			{
-				ActorPanelBox.Controls.Add(new EventSquareControl(Square.Actor as EventSquare, Maze.Dungeon));
+				control = new EventSquareControl(Square.Actor as EventSquare, Maze.Dungeon);
 			}
 			else if (Square.Actor is FloorSwitch)
 			{
-				ActorPanelBox.Controls.Add(new FloorSwitchControl(Square.Actor as FloorSwitch, Maze.Dungeon));
+				control = new FloorSwitchControl(Square.Actor as FloorSwitch, Maze.Dungeon);
 			}
 			else if (Square.Actor is ForceField)
 			{
-				ActorPanelBox.Controls.Add(new ForceFieldControl(Square.Actor as ForceField, Maze.Dungeon));
+				control = new ForceFieldControl(Square.Actor as ForceField, Maze.Dungeon);
 			}
 			else if (Square.Actor is Pit)
 			{
-				ActorPanelBox.Controls.Add(new PitControl(Square.Actor as Pit, Maze.Dungeon));
+				control = new PitControl(Square.Actor as Pit, Maze.Dungeon);
 			}
 			else if (Square.Actor is Stair)
 			{
-				ActorPanelBox.Controls.Add(new StairControl(Square.Actor as Stair, Maze.Dungeon));
+				control = new StairControl(Square.Actor as Stair, Maze.Dungeon);
 			}
 			else if (Square.Actor is Teleporter)
 			{
-				ActorPanelBox.Controls.Add(new TeleporterControl(Square.Actor as Teleporter, Maze.Dungeon));
+				control = new TeleporterControl(Square.Actor as Teleporter, Maze.Dungeon);
 			}
 			else 
 			{
+				MessageBox.Show("Unhandled actor form", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 
+			if (control != null)
+			{
+				control.Dock = DockStyle.Fill;
+				ActorPanelBox.Controls.Add(control);
+			}
 		}
+		
+		
 		#endregion
 
 
 		#region Properties
 
 		/// <summary>
-		/// 
+		/// Maze handle
 		/// </summary>
 		Maze Maze;
 
 		/// <summary>
-		/// 
+		/// Square to edit
 		/// </summary>
 		Square Square;
 
 
+		/// <summary>
+		/// Spritabatch handle
+		/// </summary>
+		SpriteBatch Batch;
 		#endregion
+
+
 
 	}
 }

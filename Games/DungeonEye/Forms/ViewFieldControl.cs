@@ -33,12 +33,12 @@ namespace DungeonEye.Forms
 	/// <summary>
 	/// 
 	/// </summary>
-	public partial class ViewPositionControl : UserControl
+	public partial class ViewFieldControl : UserControl
 	{
 		/// <summary>
 		/// 
 		/// </summary>
-		public ViewPositionControl()
+		public ViewFieldControl()
 		{
 			InitializeComponent();
 

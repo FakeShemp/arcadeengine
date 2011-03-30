@@ -29,29 +29,17 @@
 		private void InitializeComponent()
 		{
 			DungeonEye.Dice dice1 = new DungeonEye.Dice();
-			this.DoneBox = new System.Windows.Forms.Button();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.DifficultyBox = new System.Windows.Forms.NumericUpDown();
 			this.label1 = new System.Windows.Forms.Label();
+			this.MonsterTriggerBox = new System.Windows.Forms.CheckBox();
 			this.IsHiddenBox = new System.Windows.Forms.CheckBox();
 			this.IsIllusionBox = new System.Windows.Forms.CheckBox();
-			this.MonsterTriggerBox = new System.Windows.Forms.CheckBox();
 			this.TargetBox = new DungeonEye.Forms.TargetControl();
 			this.DamageBox = new DungeonEye.Forms.DiceControl();
 			this.groupBox1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.DifficultyBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize) (this.DifficultyBox)).BeginInit();
 			this.SuspendLayout();
-			// 
-			// DoneBox
-			// 
-			this.DoneBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.DoneBox.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.DoneBox.Location = new System.Drawing.Point(343, 162);
-			this.DoneBox.Name = "DoneBox";
-			this.DoneBox.Size = new System.Drawing.Size(75, 23);
-			this.DoneBox.TabIndex = 0;
-			this.DoneBox.Text = "Done";
-			this.DoneBox.UseVisualStyleBackColor = true;
 			// 
 			// groupBox1
 			// 
@@ -86,6 +74,17 @@
 			this.label1.TabIndex = 1;
 			this.label1.Text = "Difficulty";
 			// 
+			// MonsterTriggerBox
+			// 
+			this.MonsterTriggerBox.AutoSize = true;
+			this.MonsterTriggerBox.Location = new System.Drawing.Point(106, 42);
+			this.MonsterTriggerBox.Name = "MonsterTriggerBox";
+			this.MonsterTriggerBox.Size = new System.Drawing.Size(118, 17);
+			this.MonsterTriggerBox.TabIndex = 0;
+			this.MonsterTriggerBox.Text = "Monster also trigger";
+			this.MonsterTriggerBox.UseVisualStyleBackColor = true;
+			this.MonsterTriggerBox.CheckedChanged += new System.EventHandler(this.MonsterTriggerBox_CheckedChanged);
+			// 
 			// IsHiddenBox
 			// 
 			this.IsHiddenBox.AutoSize = true;
@@ -108,17 +107,6 @@
 			this.IsIllusionBox.UseVisualStyleBackColor = true;
 			this.IsIllusionBox.CheckedChanged += new System.EventHandler(this.IsIllusionBox_CheckedChanged);
 			// 
-			// MonsterTriggerBox
-			// 
-			this.MonsterTriggerBox.AutoSize = true;
-			this.MonsterTriggerBox.Location = new System.Drawing.Point(106, 42);
-			this.MonsterTriggerBox.Name = "MonsterTriggerBox";
-			this.MonsterTriggerBox.Size = new System.Drawing.Size(118, 17);
-			this.MonsterTriggerBox.TabIndex = 0;
-			this.MonsterTriggerBox.Text = "Monster also trigger";
-			this.MonsterTriggerBox.UseVisualStyleBackColor = true;
-			this.MonsterTriggerBox.CheckedChanged += new System.EventHandler(this.MonsterTriggerBox_CheckedChanged);
-			// 
 			// TargetBox
 			// 
 			this.TargetBox.Dungeon = null;
@@ -127,7 +115,7 @@
 			this.TargetBox.Name = "TargetBox";
 			this.TargetBox.Size = new System.Drawing.Size(175, 100);
 			this.TargetBox.TabIndex = 2;
-			this.TargetBox.TargetChanged += new DungeonEye.Forms.TargetControl.ChangedEventHandler(this.TargetBox_TargetChanged);
+			this.TargetBox.TargetChanged += new DungeonEye.Forms.TargetControl.TargetChangedEventHandler(this.TargetBox_TargetChanged);
 			// 
 			// DamageBox
 			// 
@@ -143,27 +131,24 @@
 			this.DamageBox.TabIndex = 1;
 			this.DamageBox.ValueChanged += new System.EventHandler(this.DamageBox_ValueChanged);
 			// 
-			// PitForm
+			// PitControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(430, 197);
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.TargetBox);
 			this.Controls.Add(this.DamageBox);
-			this.Controls.Add(this.DoneBox);
-			this.Name = "PitForm";
-			this.Text = "Pit wizard";
+			this.Name = "PitControl";
+			this.Size = new System.Drawing.Size(430, 197);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.DifficultyBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize) (this.DifficultyBox)).EndInit();
 			this.ResumeLayout(false);
 
 		}
 
 		#endregion
 
-		private System.Windows.Forms.Button DoneBox;
 		private DiceControl DamageBox;
 		private TargetControl TargetBox;
 		private System.Windows.Forms.GroupBox groupBox1;

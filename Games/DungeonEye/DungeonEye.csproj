@@ -399,11 +399,11 @@
     <Compile Include="Forms\TeleporterControl.Designer.cs">
       <DependentUpon>TeleporterControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\ViewPositionControl.cs">
+    <Compile Include="Forms\ViewFieldControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\ViewPositionControl.Designer.cs">
-      <DependentUpon>ViewPositionControl.cs</DependentUpon>
+    <Compile Include="Forms\ViewFieldControl.Designer.cs">
+      <DependentUpon>ViewFieldControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Wizards\NewItemWizard.cs">
       <SubType>Form</SubType>
@@ -426,6 +426,7 @@
     <Compile Include="GameSettings.cs" />
     <Compile Include="Game\Decoration.cs" />
     <Compile Include="Game\GameColors.cs" />
+    <Compile Include="Game\ViewField.cs" />
     <Compile Include="Interfaces\IDoor.cs" />
     <Compile Include="Interfaces\IFloorPlate.cs" />
     <Compile Include="Interfaces\IItem.cs" />
@@ -626,8 +627,8 @@
     <EmbeddedResource Include="Forms\TeleporterControl.resx">
       <DependentUpon>TeleporterControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ViewPositionControl.resx">
-      <DependentUpon>ViewPositionControl.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\ViewFieldControl.resx">
+      <DependentUpon>ViewFieldControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

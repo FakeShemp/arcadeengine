@@ -109,6 +109,7 @@ namespace DungeonEye.Forms
 			BreakValueBox.Visible = Door.IsBreakable;
 		}
 
+
 		/// <summary>
 		/// 
 		/// </summary>
@@ -150,6 +151,12 @@ namespace DungeonEye.Forms
 
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void ItemNameBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (Door == null)
@@ -158,6 +165,7 @@ namespace DungeonEye.Forms
 			Door.OpenItemName = (string)ItemNameBox.SelectedItem;
 
 		}
+
 
 		/// <summary>
 		/// 

@@ -66,19 +66,15 @@ namespace DungeonEye
 		{
 			WallTileset = ResourceManager.CreateSharedAsset<TileSet>(WallTilesetName, WallTilesetName);
 			if (WallTileset == null)
-				Trace.WriteLine("[Maze] Init() : Failed to load wall tileset for the maze \"" + Name + "\".");
+				Trace.WriteLine("[Maze] Init() : Failed to create wall tileset for the maze \"" + Name + "\".");
 
 			Decoration = ResourceManager.CreateSharedAsset<DecorationSet>(DecorationName, DecorationName);
 			if (Decoration == null)
-				Trace.WriteLine("[Maze] Init() : Failed to load decoration for the maze \"" + Name + "\".");
-
-			ItemsTileset = ResourceManager.CreateSharedAsset<TileSet>(ItemsTilesetName, ItemsTilesetName);
-			if (ItemsTileset == null)
-				Trace.WriteLine("[Maze] Init() : Failed to load items tileset for the maze \"" + Name + "\".");
+				Trace.WriteLine("[Maze] Init() : Failed to create decoration for the maze \"" + Name + "\".");
 
 			DoorTileset = ResourceManager.CreateSharedAsset<TileSet>("Doors", "Doors");
 			if (DoorTileset == null)
-				Trace.WriteLine("[Maze] Init() : Failed to load items tileset for doors.");
+				Trace.WriteLine("[Maze] Init() : Failed to create door tileset.");
 
 
 			foreach (List<Square> list in Blocks)
@@ -126,9 +122,6 @@ namespace DungeonEye
 			ResourceManager.UnlockSharedAsset<TileSet>(DoorTileset);
 			DoorTileset = null;
 
-			ResourceManager.UnlockSharedAsset<TileSet>(ItemsTileset);
-			ItemsTileset = null;
-
 			ResourceManager.UnlockSharedAsset<DecorationSet>(Decoration);
 			Decoration = null;
 
@@ -139,7 +132,6 @@ namespace DungeonEye
 			Description = null;
 			Dungeon = null;
 			ThrownItems.Clear();
-			ItemsTilesetName = null;
 			DecorationName = null;
 			WallTilesetName = null;
 			size = Size.Empty;
@@ -684,7 +676,7 @@ namespace DungeonEye
 						point = DisplayCoordinates.GetGroundPosition(position, (SquarePosition)i);
 						if (!point.IsEmpty)
 						{
-							Tile tile = ItemsTileset.GetTile(item.GroundTileID);
+							Tile tile = Dungeon.ItemTileSet.GetTile(item.GroundTileID);
 							if (tile != null)
 							{
 								// Get the screen location
@@ -692,7 +684,7 @@ namespace DungeonEye
 									point.X - tile.Origin.X, point.Y - tile.Origin.Y,
 									tile.Rectangle.Width / (offset + 1), tile.Rectangle.Height / (offset + 1));
 
-								batch.DrawTile(ItemsTileset, item.GroundTileID, point, colors[offset], 0.0f, scale[offset], SpriteEffects.None, 0.0f);
+								batch.DrawTile(Dungeon.ItemTileSet, item.GroundTileID, point, colors[offset], 0.0f, scale[offset], SpriteEffects.None, 0.0f);
 							}
 						}
 					}
@@ -754,7 +746,7 @@ namespace DungeonEye
 						{
 							Point loc = td.Location;
 							loc.Offset(offsets[(int)position]);
-							batch.DrawTile(ItemsTileset, item.GroundTileID + offset, loc);
+							batch.DrawTile(Dungeon.ItemTileSet, item.GroundTileID + offset, loc);
 						}
 					}
 				}
@@ -776,7 +768,7 @@ namespace DungeonEye
 						point = DisplayCoordinates.GetGroundPosition(position, (SquarePosition)i);
 						if (!point.IsEmpty)
 						{
-							Tile tile = ItemsTileset.GetTile(item.GroundTileID);
+							Tile tile = Dungeon.ItemTileSet.GetTile(item.GroundTileID);
 							if (tile != null)
 							{
 								Rectangle rect = tile.Rectangle;
@@ -784,7 +776,7 @@ namespace DungeonEye
 
 								//batch.DrawTile(ItemsTileset, item.GroundTileID, point, rect, Color.Red);
 							//	batch.DrawTile(ItemsTileset, item.GroundTileID + offset, point);
-								batch.DrawTile(ItemsTileset, item.GroundTileID, point, colors[offset], 0.0f, scale[offset], SpriteEffects.None, 0.0f);
+								batch.DrawTile(Dungeon.ItemTileSet, item.GroundTileID, point, colors[offset], 0.0f, scale[offset], SpriteEffects.None, 0.0f);
 							}
 						}
 					}
@@ -826,7 +818,7 @@ namespace DungeonEye
 					fx = SpriteEffects.FlipHorizontally;
 
 				foreach (ThrownItem fi in flyings[(int)pos])
-					batch.DrawTile(ItemsTileset, fi.Item.ThrowTileID + offset, point, Color.White, 0.0f, fx, 0.0f);
+					batch.DrawTile(Dungeon.ItemTileSet, fi.Item.ThrowTileID + offset, point, Color.White, 0.0f, fx, 0.0f);
 
 			}
 			#endregion
@@ -921,8 +913,6 @@ namespace DungeonEye
 					{
 						WallTilesetName = node.Attributes["wall"].Value;
 						DecorationName = node.Attributes["decoration"].Value;
-						ItemsTilesetName = node.Attributes["items"].Value;
-
 					}
 					break;
 
@@ -1012,7 +1002,6 @@ namespace DungeonEye
 			writer.WriteStartElement("tileset");
 			writer.WriteAttributeString("wall", WallTilesetName);
 			writer.WriteAttributeString("decoration", DecorationName);
-			writer.WriteAttributeString("items", ItemsTilesetName);
 			writer.WriteEndElement();
 
 			writer.WriteStartElement("description");
@@ -1284,34 +1273,12 @@ namespace DungeonEye
 			set;
 		}
 
+
 		/// <summary>
 		/// Decoration handle
 		/// </summary>
 		[Browsable(false)]
 		public DecorationSet Decoration
-		{
-			get;
-			private set;
-		}
-
-
-		/// <summary>
-		/// Ground items tilesets
-		/// </summary>
-		[TypeConverter(typeof(TileSetEnumerator))]
-		[Category("TileSet")]
-		public string ItemsTilesetName
-		{
-			get;
-			set;
-		}
-
-
-		/// <summary>
-		/// Items tileset
-		/// </summary>
-		[Browsable(false)]
-		public TileSet ItemsTileset
 		{
 			get;
 			private set;
@@ -1420,6 +1387,7 @@ namespace DungeonEye
 
 
 		/// <summary>
+		/// TODO: Move in MazeZone
 		/// Level Experience Multiplier when Heroes gain experience
 		/// </summary>
 		public float ExperienceMultiplier;
@@ -1436,236 +1404,6 @@ namespace DungeonEye
 
 		#endregion
 	}
-
-
-	/// <summary>
-	/// Get all the blocks viewed from a given point of view
-	/// </summary>
-	public class ViewField
-	{
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		/// <param name="maze">Maze</param>
-		/// <param name="location">Team's location</param>
-		public ViewField(Maze maze, DungeonLocation location)
-		{
-			Maze = maze;
-			Blocks = new Square[19];
-
-
-
-
-			// Cone of vision : 18 blocks + 1 block for the Point of View
-			//
-			//   ABCDEFG
-			//    HIJKL
-			//     MNO
-			//     P^Q
-			//
-			// ^ => Point of view
-			switch (location.Direction)
-			{
-				#region North
-				case CardinalPoint.North:
-				{
-					Blocks[0] = maze.GetSquare(new Point(location.Coordinate.X - 3, location.Coordinate.Y - 3));
-					Blocks[1] = maze.GetSquare(new Point(location.Coordinate.X - 2, location.Coordinate.Y - 3));
-					Blocks[2] = maze.GetSquare(new Point(location.Coordinate.X - 1, location.Coordinate.Y - 3));
-					Blocks[3] = maze.GetSquare(new Point(location.Coordinate.X, location.Coordinate.Y - 3));
-					Blocks[4] = maze.GetSquare(new Point(location.Coordinate.X + 1, location.Coordinate.Y - 3));
-					Blocks[5] = maze.GetSquare(new Point(location.Coordinate.X + 2, location.Coordinate.Y - 3));
-					Blocks[6] = maze.GetSquare(new Point(location.Coordinate.X + 3, location.Coordinate.Y - 3));
-
-					Blocks[7] = maze.GetSquare(new Point(location.Coordinate.X - 2, location.Coordinate.Y - 2));
-					Blocks[8] = maze.GetSquare(new Point(location.Coordinate.X - 1, location.Coordinate.Y - 2));
-					Blocks[9] = maze.GetSquare(new Point(location.Coordinate.X, location.Coordinate.Y - 2));
-					Blocks[10] = maze.GetSquare(new Point(location.Coordinate.X + 1, location.Coordinate.Y - 2));
-					Blocks[11] = maze.GetSquare(new Point(location.Coordinate.X + 2, location.Coordinate.Y - 2));
-
-					Blocks[12] = maze.GetSquare(new Point(location.Coordinate.X - 1, location.Coordinate.Y - 1));
-					Blocks[13] = maze.GetSquare(new Point(location.Coordinate.X, location.Coordinate.Y - 1));
-					Blocks[14] = maze.GetSquare(new Point(location.Coordinate.X + 1, location.Coordinate.Y - 1));
-
-					Blocks[15] = maze.GetSquare(new Point(location.Coordinate.X - 1, location.Coordinate.Y));
-					Blocks[17] = maze.GetSquare(new Point(location.Coordinate.X + 1, location.Coordinate.Y));
-
-				}
-				break;
-				#endregion
-
-				#region South
-				case CardinalPoint.South:
-				{
-					Blocks[0] = maze.GetSquare(new Point(location.Coordinate.X + 3, location.Coordinate.Y + 3));
-					Blocks[1] = maze.GetSquare(new Point(location.Coordinate.X + 2, location.Coordinate.Y + 3));
-					Blocks[2] = maze.GetSquare(new Point(location.Coordinate.X + 1, location.Coordinate.Y + 3));
-					Blocks[3] = maze.GetSquare(new Point(location.Coordinate.X, location.Coordinate.Y + 3));
-					Blocks[4] = maze.GetSquare(new Point(location.Coordinate.X - 1, location.Coordinate.Y + 3));
-					Blocks[5] = maze.GetSquare(new Point(location.Coordinate.X - 2, location.Coordinate.Y + 3));
-					Blocks[6] = maze.GetSquare(new Point(location.Coordinate.X - 3, location.Coordinate.Y + 3));
-
-					Blocks[7] = maze.GetSquare(new Point(location.Coordinate.X + 2, location.Coordinate.Y + 2));
-					Blocks[8] = maze.GetSquare(new Point(location.Coordinate.X + 1, location.Coordinate.Y + 2));
-					Blocks[9] = maze.GetSquare(new Point(location.Coordinate.X, location.Coordinate.Y + 2));
-					Blocks[10] = maze.GetSquare(new Point(location.Coordinate.X - 1, location.Coordinate.Y + 2));
-					Blocks[11] = maze.GetSquare(new Point(location.Coordinate.X - 2, location.Coordinate.Y + 2));
-
-					Blocks[12] = maze.GetSquare(new Point(location.Coordinate.X + 1, location.Coordinate.Y + 1));
-					Blocks[13] = maze.GetSquare(new Point(location.Coordinate.X, location.Coordinate.Y + 1));
-					Blocks[14] = maze.GetSquare(new Point(location.Coordinate.X - 1, location.Coordinate.Y + 1));
-
-					Blocks[15] = maze.GetSquare(new Point(location.Coordinate.X + 1, location.Coordinate.Y));
-					Blocks[17] = maze.GetSquare(new Point(location.Coordinate.X - 1, location.Coordinate.Y));
-				}
-				break;
-				#endregion
-
-				#region East
-				case CardinalPoint.East:
-				{
-					Blocks[0] = maze.GetSquare(new Point(location.Coordinate.X + 3, location.Coordinate.Y - 3));
-					Blocks[1] = maze.GetSquare(new Point(location.Coordinate.X + 3, location.Coordinate.Y - 2));
-					Blocks[2] = maze.GetSquare(new Point(location.Coordinate.X + 3, location.Coordinate.Y - 1));
-					Blocks[3] = maze.GetSquare(new Point(location.Coordinate.X + 3, location.Coordinate.Y));
-					Blocks[4] = maze.GetSquare(new Point(location.Coordinate.X + 3, location.Coordinate.Y + 1));
-					Blocks[5] = maze.GetSquare(new Point(location.Coordinate.X + 3, location.Coordinate.Y + 2));
-					Blocks[6] = maze.GetSquare(new Point(location.Coordinate.X + 3, location.Coordinate.Y + 3));
-
-					Blocks[7] = maze.GetSquare(new Point(location.Coordinate.X + 2, location.Coordinate.Y - 2));
-					Blocks[8] = maze.GetSquare(new Point(location.Coordinate.X + 2, location.Coordinate.Y - 1));
-					Blocks[9] = maze.GetSquare(new Point(location.Coordinate.X + 2, location.Coordinate.Y));
-					Blocks[10] = maze.GetSquare(new Point(location.Coordinate.X + 2, location.Coordinate.Y + 1));
-					Blocks[11] = maze.GetSquare(new Point(location.Coordinate.X + 2, location.Coordinate.Y + 2));
-
-					Blocks[12] = maze.GetSquare(new Point(location.Coordinate.X + 1, location.Coordinate.Y - 1));
-					Blocks[13] = maze.GetSquare(new Point(location.Coordinate.X + 1, location.Coordinate.Y));
-					Blocks[14] = maze.GetSquare(new Point(location.Coordinate.X + 1, location.Coordinate.Y + 1));
-
-					Blocks[15] = maze.GetSquare(new Point(location.Coordinate.X, location.Coordinate.Y - 1));
-					Blocks[17] = maze.GetSquare(new Point(location.Coordinate.X, location.Coordinate.Y + 1));
-				}
-				break;
-				#endregion
-
-				#region West
-				case CardinalPoint.West:
-				{
-					Blocks[0] = maze.GetSquare(new Point(location.Coordinate.X - 3, location.Coordinate.Y + 3));
-					Blocks[1] = maze.GetSquare(new Point(location.Coordinate.X - 3, location.Coordinate.Y + 2));
-					Blocks[2] = maze.GetSquare(new Point(location.Coordinate.X - 3, location.Coordinate.Y + 1));
-					Blocks[3] = maze.GetSquare(new Point(location.Coordinate.X - 3, location.Coordinate.Y));
-					Blocks[4] = maze.GetSquare(new Point(location.Coordinate.X - 3, location.Coordinate.Y - 1));
-					Blocks[5] = maze.GetSquare(new Point(location.Coordinate.X - 3, location.Coordinate.Y - 2));
-					Blocks[6] = maze.GetSquare(new Point(location.Coordinate.X - 3, location.Coordinate.Y - 3));
-
-					Blocks[7] = maze.GetSquare(new Point(location.Coordinate.X - 2, location.Coordinate.Y + 2));
-					Blocks[8] = maze.GetSquare(new Point(location.Coordinate.X - 2, location.Coordinate.Y + 1));
-					Blocks[9] = maze.GetSquare(new Point(location.Coordinate.X - 2, location.Coordinate.Y));
-					Blocks[10] = maze.GetSquare(new Point(location.Coordinate.X - 2, location.Coordinate.Y - 1));
-					Blocks[11] = maze.GetSquare(new Point(location.Coordinate.X - 2, location.Coordinate.Y - 2));
-
-					Blocks[12] = maze.GetSquare(new Point(location.Coordinate.X - 1, location.Coordinate.Y + 1));
-					Blocks[13] = maze.GetSquare(new Point(location.Coordinate.X - 1, location.Coordinate.Y));
-					Blocks[14] = maze.GetSquare(new Point(location.Coordinate.X - 1, location.Coordinate.Y - 1));
-
-					Blocks[15] = maze.GetSquare(new Point(location.Coordinate.X, location.Coordinate.Y + 1));
-					Blocks[17] = maze.GetSquare(new Point(location.Coordinate.X, location.Coordinate.Y - 1));
-				}
-				break;
-				#endregion
-			}
-
-			// Team's position
-			Blocks[16] = maze.GetSquare(location.Coordinate);
-		}
-
-
-		/// <summary>
-		/// Gets a block in the view field
-		/// </summary>
-		/// <param name="position">Block position</param>
-		/// <returns>Block handle</returns>
-		public Square GetBlock(ViewFieldPosition position)
-		{
-			return Blocks[(int)position];
-		}
-
-
-		#region Properties
-
-
-		/// <summary>
-		/// Blocks in the maze
-		/// </summary>
-		public Square[] Blocks
-		{
-			get;
-			private set;
-		}
-
-
-		/// <summary>
-		/// Is the team visible, no wall between the Team and the Point Of View 
-		/// </summary>
-		public bool IsTeamVisible
-		{
-			get;
-			private set;
-		}
-
-
-		/// <summary>
-		/// Current maze
-		/// </summary>
-		public Maze Maze
-		{
-			get;
-			private set;
-		}
-
-
-		#endregion
-	}
-
-
-
-	/// <summary>
-	/// Block position in the view field
-	/// Cone of vision : 18 blocks + 1 block for the Point of View
-	///
-	///   ABCDEFG
-	///    HIJKL
-	///     MNO
-	///     P^Q
-	///
-	/// ^ => Point of view of the team
-	/// </summary>
-	public enum ViewFieldPosition
-	{
-		A = 0,
-		B = 1,
-		C = 2,
-		D = 3,
-		E = 4,
-		F = 5,
-		G = 6,
-
-		H = 7,
-		I = 8,
-		J = 9,
-		K = 10,
-		L = 11,
-
-		M = 12,
-		N = 13,
-		O = 14,
-
-		P = 15,
-		Team = 16,
-		Q = 17
-	}
-
 
 
 

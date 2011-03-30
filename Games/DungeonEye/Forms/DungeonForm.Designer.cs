@@ -30,7 +30,6 @@
 		{
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DungeonForm));
-			this.MazePropertyBox = new System.Windows.Forms.PropertyGrid();
 			this.DungeonStripBox = new System.Windows.Forms.ToolStrip();
 			this.ResetOffsetBox = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
@@ -72,51 +71,37 @@
 			this.TurnLeftBox = new System.Windows.Forms.Button();
 			this.GlPreviewControl = new OpenTK.GLControl();
 			this.RightPanel = new System.Windows.Forms.Panel();
-			this.tabControl1 = new System.Windows.Forms.TabControl();
-			this.PropertiesTab = new System.Windows.Forms.TabPage();
+			this.PropertiesBox = new System.Windows.Forms.TabControl();
+			this.DungeonTab = new System.Windows.Forms.TabPage();
+			this.groupBox3 = new System.Windows.Forms.GroupBox();
+			this.ItemTileSetBox = new System.Windows.Forms.ComboBox();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.DungeonNoteBox = new System.Windows.Forms.TextBox();
-			this.PreviewTab = new System.Windows.Forms.TabPage();
-			this.ZonesTab = new System.Windows.Forms.TabPage();
+			this.MazeTab = new System.Windows.Forms.TabPage();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.comboBox3 = new System.Windows.Forms.ComboBox();
+			this.label3 = new System.Windows.Forms.Label();
+			this.comboBox2 = new System.Windows.Forms.ComboBox();
 			this.label1 = new System.Windows.Forms.Label();
-			this.ZoneNameBox = new System.Windows.Forms.TextBox();
-			this.button2 = new System.Windows.Forms.Button();
-			this.DisplayZonesBox = new System.Windows.Forms.CheckBox();
-			this.MazeZonesBox = new System.Windows.Forms.ListBox();
-			this.DungeonMenu = new System.Windows.Forms.MenuStrip();
-			this.dungeonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.StartLocationMenu = new System.Windows.Forms.ToolStripMenuItem();
+			this.label2 = new System.Windows.Forms.Label();
+			this.comboBox1 = new System.Windows.Forms.ComboBox();
 			this.LeftPanel = new System.Windows.Forms.Panel();
-			this.SquareMenuBox = new System.Windows.Forms.ContextMenuStrip(this.components);
-			this.SquareStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.EventStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.editToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-			this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.groupBox5 = new System.Windows.Forms.GroupBox();
+			this.groupBox4 = new System.Windows.Forms.GroupBox();
+			this.StartLocationBox = new DungeonEye.Forms.TargetControl();
 			this.DungeonStripBox.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.RightPanel.SuspendLayout();
-			this.tabControl1.SuspendLayout();
-			this.PropertiesTab.SuspendLayout();
+			this.PropertiesBox.SuspendLayout();
+			this.DungeonTab.SuspendLayout();
+			this.groupBox3.SuspendLayout();
 			this.groupBox1.SuspendLayout();
-			this.PreviewTab.SuspendLayout();
-			this.ZonesTab.SuspendLayout();
+			this.MazeTab.SuspendLayout();
 			this.groupBox2.SuspendLayout();
-			this.DungeonMenu.SuspendLayout();
 			this.LeftPanel.SuspendLayout();
-			this.SquareMenuBox.SuspendLayout();
+			this.groupBox5.SuspendLayout();
+			this.groupBox4.SuspendLayout();
 			this.SuspendLayout();
-			// 
-			// MazePropertyBox
-			// 
-			this.MazePropertyBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
-			this.MazePropertyBox.Location = new System.Drawing.Point(8, 6);
-			this.MazePropertyBox.Name = "MazePropertyBox";
-			this.MazePropertyBox.Size = new System.Drawing.Size(345, 282);
-			this.MazePropertyBox.TabIndex = 1;
 			// 
 			// DungeonStripBox
 			// 
@@ -146,16 +131,16 @@
             this.FloorDecorationBox,
             this.DecorationBox,
             this.EventBox});
-			this.DungeonStripBox.Location = new System.Drawing.Point(0, 24);
+			this.DungeonStripBox.Location = new System.Drawing.Point(0, 0);
 			this.DungeonStripBox.Name = "DungeonStripBox";
-			this.DungeonStripBox.Size = new System.Drawing.Size(1256, 25);
+			this.DungeonStripBox.Size = new System.Drawing.Size(856, 25);
 			this.DungeonStripBox.TabIndex = 2;
 			this.DungeonStripBox.Text = "toolStrip1";
 			// 
 			// ResetOffsetBox
 			// 
 			this.ResetOffsetBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.ResetOffsetBox.Image = ((System.Drawing.Image)(resources.GetObject("ResetOffsetBox.Image")));
+			this.ResetOffsetBox.Image = ((System.Drawing.Image) (resources.GetObject("ResetOffsetBox.Image")));
 			this.ResetOffsetBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.ResetOffsetBox.Name = "ResetOffsetBox";
 			this.ResetOffsetBox.Size = new System.Drawing.Size(23, 22);
@@ -170,7 +155,7 @@
 			// AddMazeButton
 			// 
 			this.AddMazeButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.AddMazeButton.Image = ((System.Drawing.Image)(resources.GetObject("AddMazeButton.Image")));
+			this.AddMazeButton.Image = ((System.Drawing.Image) (resources.GetObject("AddMazeButton.Image")));
 			this.AddMazeButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.AddMazeButton.Name = "AddMazeButton";
 			this.AddMazeButton.Size = new System.Drawing.Size(23, 22);
@@ -180,7 +165,7 @@
 			// RemoveMazeButton
 			// 
 			this.RemoveMazeButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.RemoveMazeButton.Image = ((System.Drawing.Image)(resources.GetObject("RemoveMazeButton.Image")));
+			this.RemoveMazeButton.Image = ((System.Drawing.Image) (resources.GetObject("RemoveMazeButton.Image")));
 			this.RemoveMazeButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.RemoveMazeButton.Name = "RemoveMazeButton";
 			this.RemoveMazeButton.Size = new System.Drawing.Size(23, 22);
@@ -209,7 +194,7 @@
 			// 
 			this.NoMonstersBox.CheckOnClick = true;
 			this.NoMonstersBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.NoMonstersBox.Image = ((System.Drawing.Image)(resources.GetObject("NoMonstersBox.Image")));
+			this.NoMonstersBox.Image = ((System.Drawing.Image) (resources.GetObject("NoMonstersBox.Image")));
 			this.NoMonstersBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.NoMonstersBox.Name = "NoMonstersBox";
 			this.NoMonstersBox.Size = new System.Drawing.Size(23, 22);
@@ -220,7 +205,7 @@
 			// 
 			this.NoGhostsBox.CheckOnClick = true;
 			this.NoGhostsBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.NoGhostsBox.Image = ((System.Drawing.Image)(resources.GetObject("NoGhostsBox.Image")));
+			this.NoGhostsBox.Image = ((System.Drawing.Image) (resources.GetObject("NoGhostsBox.Image")));
 			this.NoGhostsBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.NoGhostsBox.Name = "NoGhostsBox";
 			this.NoGhostsBox.Size = new System.Drawing.Size(23, 22);
@@ -231,7 +216,7 @@
 			// 
 			this.ZoneBox.CheckOnClick = true;
 			this.ZoneBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.ZoneBox.Image = ((System.Drawing.Image)(resources.GetObject("ZoneBox.Image")));
+			this.ZoneBox.Image = ((System.Drawing.Image) (resources.GetObject("ZoneBox.Image")));
 			this.ZoneBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.ZoneBox.Name = "ZoneBox";
 			this.ZoneBox.Size = new System.Drawing.Size(23, 22);
@@ -242,7 +227,7 @@
 			// 
 			this.AddMonsterBox.CheckOnClick = true;
 			this.AddMonsterBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.AddMonsterBox.Image = ((System.Drawing.Image)(resources.GetObject("AddMonsterBox.Image")));
+			this.AddMonsterBox.Image = ((System.Drawing.Image) (resources.GetObject("AddMonsterBox.Image")));
 			this.AddMonsterBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.AddMonsterBox.Name = "AddMonsterBox";
 			this.AddMonsterBox.Size = new System.Drawing.Size(23, 22);
@@ -253,7 +238,7 @@
 			// 
 			this.AddItemBox.CheckOnClick = true;
 			this.AddItemBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.AddItemBox.Image = ((System.Drawing.Image)(resources.GetObject("AddItemBox.Image")));
+			this.AddItemBox.Image = ((System.Drawing.Image) (resources.GetObject("AddItemBox.Image")));
 			this.AddItemBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.AddItemBox.Name = "AddItemBox";
 			this.AddItemBox.Size = new System.Drawing.Size(23, 22);
@@ -264,7 +249,7 @@
 			// 
 			this.WallBox.CheckOnClick = true;
 			this.WallBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.WallBox.Image = ((System.Drawing.Image)(resources.GetObject("WallBox.Image")));
+			this.WallBox.Image = ((System.Drawing.Image) (resources.GetObject("WallBox.Image")));
 			this.WallBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.WallBox.Name = "WallBox";
 			this.WallBox.Size = new System.Drawing.Size(23, 22);
@@ -275,7 +260,7 @@
 			// 
 			this.StairBox.CheckOnClick = true;
 			this.StairBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.StairBox.Image = ((System.Drawing.Image)(resources.GetObject("StairBox.Image")));
+			this.StairBox.Image = ((System.Drawing.Image) (resources.GetObject("StairBox.Image")));
 			this.StairBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.StairBox.Name = "StairBox";
 			this.StairBox.Size = new System.Drawing.Size(23, 22);
@@ -286,7 +271,7 @@
 			// 
 			this.TeleporterBox.CheckOnClick = true;
 			this.TeleporterBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.TeleporterBox.Image = ((System.Drawing.Image)(resources.GetObject("TeleporterBox.Image")));
+			this.TeleporterBox.Image = ((System.Drawing.Image) (resources.GetObject("TeleporterBox.Image")));
 			this.TeleporterBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.TeleporterBox.Name = "TeleporterBox";
 			this.TeleporterBox.Size = new System.Drawing.Size(23, 22);
@@ -297,7 +282,7 @@
 			// 
 			this.DoorBox.CheckOnClick = true;
 			this.DoorBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.DoorBox.Image = ((System.Drawing.Image)(resources.GetObject("DoorBox.Image")));
+			this.DoorBox.Image = ((System.Drawing.Image) (resources.GetObject("DoorBox.Image")));
 			this.DoorBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.DoorBox.Name = "DoorBox";
 			this.DoorBox.Size = new System.Drawing.Size(23, 22);
@@ -308,7 +293,7 @@
 			// 
 			this.PitBox.CheckOnClick = true;
 			this.PitBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.PitBox.Image = ((System.Drawing.Image)(resources.GetObject("PitBox.Image")));
+			this.PitBox.Image = ((System.Drawing.Image) (resources.GetObject("PitBox.Image")));
 			this.PitBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.PitBox.Name = "PitBox";
 			this.PitBox.Size = new System.Drawing.Size(23, 22);
@@ -319,7 +304,7 @@
 			// 
 			this.WrittingBox.CheckOnClick = true;
 			this.WrittingBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.WrittingBox.Image = ((System.Drawing.Image)(resources.GetObject("WrittingBox.Image")));
+			this.WrittingBox.Image = ((System.Drawing.Image) (resources.GetObject("WrittingBox.Image")));
 			this.WrittingBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.WrittingBox.Name = "WrittingBox";
 			this.WrittingBox.Size = new System.Drawing.Size(23, 22);
@@ -330,7 +315,7 @@
 			// 
 			this.LauncherBox.CheckOnClick = true;
 			this.LauncherBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.LauncherBox.Image = ((System.Drawing.Image)(resources.GetObject("LauncherBox.Image")));
+			this.LauncherBox.Image = ((System.Drawing.Image) (resources.GetObject("LauncherBox.Image")));
 			this.LauncherBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.LauncherBox.Name = "LauncherBox";
 			this.LauncherBox.Size = new System.Drawing.Size(23, 22);
@@ -341,7 +326,7 @@
 			// 
 			this.GeneratorBox.CheckOnClick = true;
 			this.GeneratorBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.GeneratorBox.Image = ((System.Drawing.Image)(resources.GetObject("GeneratorBox.Image")));
+			this.GeneratorBox.Image = ((System.Drawing.Image) (resources.GetObject("GeneratorBox.Image")));
 			this.GeneratorBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.GeneratorBox.Name = "GeneratorBox";
 			this.GeneratorBox.Size = new System.Drawing.Size(23, 22);
@@ -352,7 +337,7 @@
 			// 
 			this.SwitchBox.CheckOnClick = true;
 			this.SwitchBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.SwitchBox.Image = ((System.Drawing.Image)(resources.GetObject("SwitchBox.Image")));
+			this.SwitchBox.Image = ((System.Drawing.Image) (resources.GetObject("SwitchBox.Image")));
 			this.SwitchBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.SwitchBox.Name = "SwitchBox";
 			this.SwitchBox.Size = new System.Drawing.Size(23, 22);
@@ -363,7 +348,7 @@
 			// 
 			this.FloorSwitchBox.CheckOnClick = true;
 			this.FloorSwitchBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.FloorSwitchBox.Image = ((System.Drawing.Image)(resources.GetObject("FloorSwitchBox.Image")));
+			this.FloorSwitchBox.Image = ((System.Drawing.Image) (resources.GetObject("FloorSwitchBox.Image")));
 			this.FloorSwitchBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.FloorSwitchBox.Name = "FloorSwitchBox";
 			this.FloorSwitchBox.Size = new System.Drawing.Size(23, 22);
@@ -374,7 +359,7 @@
 			// 
 			this.FloorDecorationBox.CheckOnClick = true;
 			this.FloorDecorationBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.FloorDecorationBox.Image = ((System.Drawing.Image)(resources.GetObject("FloorDecorationBox.Image")));
+			this.FloorDecorationBox.Image = ((System.Drawing.Image) (resources.GetObject("FloorDecorationBox.Image")));
 			this.FloorDecorationBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.FloorDecorationBox.Name = "FloorDecorationBox";
 			this.FloorDecorationBox.Size = new System.Drawing.Size(23, 22);
@@ -385,7 +370,7 @@
 			// 
 			this.DecorationBox.CheckOnClick = true;
 			this.DecorationBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.DecorationBox.Image = ((System.Drawing.Image)(resources.GetObject("DecorationBox.Image")));
+			this.DecorationBox.Image = ((System.Drawing.Image) (resources.GetObject("DecorationBox.Image")));
 			this.DecorationBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.DecorationBox.Name = "DecorationBox";
 			this.DecorationBox.Size = new System.Drawing.Size(23, 22);
@@ -396,7 +381,7 @@
 			// 
 			this.EventBox.CheckOnClick = true;
 			this.EventBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.EventBox.Image = ((System.Drawing.Image)(resources.GetObject("EventBox.Image")));
+			this.EventBox.Image = ((System.Drawing.Image) (resources.GetObject("EventBox.Image")));
 			this.EventBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.EventBox.Name = "EventBox";
 			this.EventBox.Size = new System.Drawing.Size(23, 22);
@@ -424,7 +409,7 @@
 			// 
 			// SquareDescriptionBox
 			// 
-			this.SquareDescriptionBox.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right)));
+			this.SquareDescriptionBox.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides) ((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right)));
 			this.SquareDescriptionBox.Name = "SquareDescriptionBox";
 			this.SquareDescriptionBox.Size = new System.Drawing.Size(991, 19);
 			this.SquareDescriptionBox.Spring = true;
@@ -433,19 +418,19 @@
 			// hScrollBar1
 			// 
 			this.hScrollBar1.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.hScrollBar1.Location = new System.Drawing.Point(0, 571);
+			this.hScrollBar1.Location = new System.Drawing.Point(0, 620);
 			this.hScrollBar1.Maximum = 200;
 			this.hScrollBar1.Name = "hScrollBar1";
-			this.hScrollBar1.Size = new System.Drawing.Size(873, 17);
+			this.hScrollBar1.Size = new System.Drawing.Size(856, 17);
 			this.hScrollBar1.TabIndex = 4;
 			// 
 			// vScrollBar1
 			// 
 			this.vScrollBar1.Dock = System.Windows.Forms.DockStyle.Right;
-			this.vScrollBar1.Location = new System.Drawing.Point(873, 0);
+			this.vScrollBar1.Location = new System.Drawing.Point(856, 0);
 			this.vScrollBar1.Maximum = 200;
 			this.vScrollBar1.Name = "vScrollBar1";
-			this.vScrollBar1.Size = new System.Drawing.Size(17, 588);
+			this.vScrollBar1.Size = new System.Drawing.Size(17, 637);
 			this.vScrollBar1.TabIndex = 5;
 			// 
 			// DrawTimer
@@ -459,7 +444,7 @@
 			this.glControl.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.glControl.Location = new System.Drawing.Point(0, 0);
 			this.glControl.Name = "glControl";
-			this.glControl.Size = new System.Drawing.Size(873, 571);
+			this.glControl.Size = new System.Drawing.Size(856, 620);
 			this.glControl.TabIndex = 7;
 			this.glControl.VSync = false;
 			this.glControl.Paint += new System.Windows.Forms.PaintEventHandler(this.GlControl_Paint);
@@ -475,8 +460,8 @@
 			// 
 			this.StrafeRightBox.AutoSize = true;
 			this.StrafeRightBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.StrafeRightBox.Image = ((System.Drawing.Image)(resources.GetObject("StrafeRightBox.Image")));
-			this.StrafeRightBox.Location = new System.Drawing.Point(105, 298);
+			this.StrafeRightBox.Image = ((System.Drawing.Image) (resources.GetObject("StrafeRightBox.Image")));
+			this.StrafeRightBox.Location = new System.Drawing.Point(212, 311);
 			this.StrafeRightBox.Name = "StrafeRightBox";
 			this.StrafeRightBox.Size = new System.Drawing.Size(46, 40);
 			this.StrafeRightBox.TabIndex = 3;
@@ -487,8 +472,8 @@
 			// 
 			this.TurnRightBox.AutoSize = true;
 			this.TurnRightBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.TurnRightBox.Image = ((System.Drawing.Image)(resources.GetObject("TurnRightBox.Image")));
-			this.TurnRightBox.Location = new System.Drawing.Point(105, 252);
+			this.TurnRightBox.Image = ((System.Drawing.Image) (resources.GetObject("TurnRightBox.Image")));
+			this.TurnRightBox.Location = new System.Drawing.Point(212, 265);
 			this.TurnRightBox.Name = "TurnRightBox";
 			this.TurnRightBox.Size = new System.Drawing.Size(46, 40);
 			this.TurnRightBox.TabIndex = 3;
@@ -499,8 +484,8 @@
 			// 
 			this.BackwardBox.AutoSize = true;
 			this.BackwardBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.BackwardBox.Image = ((System.Drawing.Image)(resources.GetObject("BackwardBox.Image")));
-			this.BackwardBox.Location = new System.Drawing.Point(53, 298);
+			this.BackwardBox.Image = ((System.Drawing.Image) (resources.GetObject("BackwardBox.Image")));
+			this.BackwardBox.Location = new System.Drawing.Point(160, 311);
 			this.BackwardBox.Name = "BackwardBox";
 			this.BackwardBox.Size = new System.Drawing.Size(46, 40);
 			this.BackwardBox.TabIndex = 3;
@@ -511,8 +496,8 @@
 			// 
 			this.ForwardBox.AutoSize = true;
 			this.ForwardBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.ForwardBox.Image = ((System.Drawing.Image)(resources.GetObject("ForwardBox.Image")));
-			this.ForwardBox.Location = new System.Drawing.Point(53, 252);
+			this.ForwardBox.Image = ((System.Drawing.Image) (resources.GetObject("ForwardBox.Image")));
+			this.ForwardBox.Location = new System.Drawing.Point(160, 265);
 			this.ForwardBox.Name = "ForwardBox";
 			this.ForwardBox.Size = new System.Drawing.Size(46, 40);
 			this.ForwardBox.TabIndex = 3;
@@ -523,8 +508,8 @@
 			// 
 			this.StrafeLeftBox.AutoSize = true;
 			this.StrafeLeftBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.StrafeLeftBox.Image = ((System.Drawing.Image)(resources.GetObject("StrafeLeftBox.Image")));
-			this.StrafeLeftBox.Location = new System.Drawing.Point(3, 298);
+			this.StrafeLeftBox.Image = ((System.Drawing.Image) (resources.GetObject("StrafeLeftBox.Image")));
+			this.StrafeLeftBox.Location = new System.Drawing.Point(110, 311);
 			this.StrafeLeftBox.Name = "StrafeLeftBox";
 			this.StrafeLeftBox.Size = new System.Drawing.Size(44, 40);
 			this.StrafeLeftBox.TabIndex = 3;
@@ -535,8 +520,8 @@
 			// 
 			this.TurnLeftBox.AutoSize = true;
 			this.TurnLeftBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.TurnLeftBox.Image = ((System.Drawing.Image)(resources.GetObject("TurnLeftBox.Image")));
-			this.TurnLeftBox.Location = new System.Drawing.Point(3, 252);
+			this.TurnLeftBox.Image = ((System.Drawing.Image) (resources.GetObject("TurnLeftBox.Image")));
+			this.TurnLeftBox.Location = new System.Drawing.Point(110, 265);
 			this.TurnLeftBox.Name = "TurnLeftBox";
 			this.TurnLeftBox.Size = new System.Drawing.Size(44, 40);
 			this.TurnLeftBox.TabIndex = 3;
@@ -546,7 +531,7 @@
 			// GlPreviewControl
 			// 
 			this.GlPreviewControl.BackColor = System.Drawing.Color.Black;
-			this.GlPreviewControl.Location = new System.Drawing.Point(3, 6);
+			this.GlPreviewControl.Location = new System.Drawing.Point(9, 19);
 			this.GlPreviewControl.Name = "GlPreviewControl";
 			this.GlPreviewControl.Size = new System.Drawing.Size(352, 240);
 			this.GlPreviewControl.TabIndex = 2;
@@ -557,48 +542,66 @@
 			// 
 			// RightPanel
 			// 
+			this.RightPanel.Controls.Add(this.DungeonStripBox);
 			this.RightPanel.Controls.Add(this.glControl);
 			this.RightPanel.Controls.Add(this.hScrollBar1);
 			this.RightPanel.Controls.Add(this.vScrollBar1);
 			this.RightPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.RightPanel.Location = new System.Drawing.Point(366, 49);
+			this.RightPanel.Location = new System.Drawing.Point(383, 0);
 			this.RightPanel.Name = "RightPanel";
-			this.RightPanel.Size = new System.Drawing.Size(890, 588);
+			this.RightPanel.Size = new System.Drawing.Size(873, 637);
 			this.RightPanel.TabIndex = 9;
 			// 
-			// tabControl1
+			// PropertiesBox
 			// 
-			this.tabControl1.Controls.Add(this.PropertiesTab);
-			this.tabControl1.Controls.Add(this.PreviewTab);
-			this.tabControl1.Controls.Add(this.ZonesTab);
-			this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tabControl1.Location = new System.Drawing.Point(0, 0);
-			this.tabControl1.Name = "tabControl1";
-			this.tabControl1.SelectedIndex = 0;
-			this.tabControl1.Size = new System.Drawing.Size(366, 588);
-			this.tabControl1.TabIndex = 11;
+			this.PropertiesBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.PropertiesBox.Controls.Add(this.DungeonTab);
+			this.PropertiesBox.Controls.Add(this.MazeTab);
+			this.PropertiesBox.Location = new System.Drawing.Point(9, 19);
+			this.PropertiesBox.Name = "PropertiesBox";
+			this.PropertiesBox.SelectedIndex = 0;
+			this.PropertiesBox.Size = new System.Drawing.Size(359, 240);
+			this.PropertiesBox.TabIndex = 11;
 			// 
-			// PropertiesTab
+			// DungeonTab
 			// 
-			this.PropertiesTab.Controls.Add(this.groupBox1);
-			this.PropertiesTab.Controls.Add(this.MazePropertyBox);
-			this.PropertiesTab.Location = new System.Drawing.Point(4, 22);
-			this.PropertiesTab.Name = "PropertiesTab";
-			this.PropertiesTab.Padding = new System.Windows.Forms.Padding(3);
-			this.PropertiesTab.Size = new System.Drawing.Size(358, 562);
-			this.PropertiesTab.TabIndex = 0;
-			this.PropertiesTab.Text = "Properties";
-			this.PropertiesTab.UseVisualStyleBackColor = true;
+			this.DungeonTab.Controls.Add(this.groupBox3);
+			this.DungeonTab.Controls.Add(this.StartLocationBox);
+			this.DungeonTab.Controls.Add(this.groupBox1);
+			this.DungeonTab.Location = new System.Drawing.Point(4, 22);
+			this.DungeonTab.Name = "DungeonTab";
+			this.DungeonTab.Padding = new System.Windows.Forms.Padding(3);
+			this.DungeonTab.Size = new System.Drawing.Size(351, 214);
+			this.DungeonTab.TabIndex = 0;
+			this.DungeonTab.Text = "Dungeon";
+			// 
+			// groupBox3
+			// 
+			this.groupBox3.Controls.Add(this.ItemTileSetBox);
+			this.groupBox3.Location = new System.Drawing.Point(187, 6);
+			this.groupBox3.Name = "groupBox3";
+			this.groupBox3.Size = new System.Drawing.Size(158, 51);
+			this.groupBox3.TabIndex = 7;
+			this.groupBox3.TabStop = false;
+			this.groupBox3.Text = "Item TileSet :";
+			// 
+			// ItemTileSetBox
+			// 
+			this.ItemTileSetBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.ItemTileSetBox.FormattingEnabled = true;
+			this.ItemTileSetBox.Location = new System.Drawing.Point(6, 19);
+			this.ItemTileSetBox.Name = "ItemTileSetBox";
+			this.ItemTileSetBox.Size = new System.Drawing.Size(146, 21);
+			this.ItemTileSetBox.TabIndex = 4;
 			// 
 			// groupBox1
 			// 
-			this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
 			this.groupBox1.Controls.Add(this.DungeonNoteBox);
-			this.groupBox1.Location = new System.Drawing.Point(6, 294);
+			this.groupBox1.Location = new System.Drawing.Point(5, 112);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(347, 262);
+			this.groupBox1.Size = new System.Drawing.Size(340, 88);
 			this.groupBox1.TabIndex = 2;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Notes :";
@@ -609,184 +612,141 @@
 			this.DungeonNoteBox.Location = new System.Drawing.Point(3, 16);
 			this.DungeonNoteBox.Multiline = true;
 			this.DungeonNoteBox.Name = "DungeonNoteBox";
-			this.DungeonNoteBox.Size = new System.Drawing.Size(341, 243);
+			this.DungeonNoteBox.Size = new System.Drawing.Size(334, 69);
 			this.DungeonNoteBox.TabIndex = 0;
 			this.DungeonNoteBox.TextChanged += new System.EventHandler(this.DungeonNoteBox_TextChanged);
 			// 
-			// PreviewTab
+			// MazeTab
 			// 
-			this.PreviewTab.Controls.Add(this.StrafeRightBox);
-			this.PreviewTab.Controls.Add(this.TurnRightBox);
-			this.PreviewTab.Controls.Add(this.GlPreviewControl);
-			this.PreviewTab.Controls.Add(this.BackwardBox);
-			this.PreviewTab.Controls.Add(this.TurnLeftBox);
-			this.PreviewTab.Controls.Add(this.ForwardBox);
-			this.PreviewTab.Controls.Add(this.StrafeLeftBox);
-			this.PreviewTab.Location = new System.Drawing.Point(4, 22);
-			this.PreviewTab.Name = "PreviewTab";
-			this.PreviewTab.Padding = new System.Windows.Forms.Padding(3);
-			this.PreviewTab.Size = new System.Drawing.Size(358, 562);
-			this.PreviewTab.TabIndex = 1;
-			this.PreviewTab.Text = "Preview";
-			this.PreviewTab.UseVisualStyleBackColor = true;
-			// 
-			// ZonesTab
-			// 
-			this.ZonesTab.Controls.Add(this.groupBox2);
-			this.ZonesTab.Controls.Add(this.button2);
-			this.ZonesTab.Controls.Add(this.DisplayZonesBox);
-			this.ZonesTab.Controls.Add(this.MazeZonesBox);
-			this.ZonesTab.Location = new System.Drawing.Point(4, 22);
-			this.ZonesTab.Name = "ZonesTab";
-			this.ZonesTab.Size = new System.Drawing.Size(358, 562);
-			this.ZonesTab.TabIndex = 2;
-			this.ZonesTab.Text = "Zones";
-			this.ZonesTab.UseVisualStyleBackColor = true;
+			this.MazeTab.Controls.Add(this.groupBox2);
+			this.MazeTab.Controls.Add(this.label2);
+			this.MazeTab.Controls.Add(this.comboBox1);
+			this.MazeTab.Location = new System.Drawing.Point(4, 22);
+			this.MazeTab.Name = "MazeTab";
+			this.MazeTab.Padding = new System.Windows.Forms.Padding(3);
+			this.MazeTab.Size = new System.Drawing.Size(351, 214);
+			this.MazeTab.TabIndex = 1;
+			this.MazeTab.Text = "Maze";
+			this.MazeTab.UseVisualStyleBackColor = true;
 			// 
 			// groupBox2
 			// 
-			this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.groupBox2.Controls.Add(this.comboBox3);
+			this.groupBox2.Controls.Add(this.label3);
+			this.groupBox2.Controls.Add(this.comboBox2);
 			this.groupBox2.Controls.Add(this.label1);
-			this.groupBox2.Controls.Add(this.ZoneNameBox);
-			this.groupBox2.Location = new System.Drawing.Point(8, 220);
+			this.groupBox2.Location = new System.Drawing.Point(6, 124);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(343, 339);
+			this.groupBox2.Size = new System.Drawing.Size(339, 84);
 			this.groupBox2.TabIndex = 2;
 			this.groupBox2.TabStop = false;
-			this.groupBox2.Text = "Properties :";
+			this.groupBox2.Text = "TileSet :";
+			// 
+			// comboBox3
+			// 
+			this.comboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboBox3.FormattingEnabled = true;
+			this.comboBox3.Location = new System.Drawing.Point(82, 50);
+			this.comboBox3.Name = "comboBox3";
+			this.comboBox3.Size = new System.Drawing.Size(169, 21);
+			this.comboBox3.TabIndex = 0;
+			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Location = new System.Drawing.Point(11, 53);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(34, 13);
+			this.label3.TabIndex = 1;
+			this.label3.Text = "Wall :";
+			// 
+			// comboBox2
+			// 
+			this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboBox2.FormattingEnabled = true;
+			this.comboBox2.Location = new System.Drawing.Point(82, 23);
+			this.comboBox2.Name = "comboBox2";
+			this.comboBox2.Size = new System.Drawing.Size(169, 21);
+			this.comboBox2.TabIndex = 0;
 			// 
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(6, 22);
+			this.label1.Location = new System.Drawing.Point(11, 26);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(41, 13);
-			this.label1.TabIndex = 5;
-			this.label1.Text = "Name :";
+			this.label1.Size = new System.Drawing.Size(65, 13);
+			this.label1.TabIndex = 1;
+			this.label1.Text = "Decoration :";
 			// 
-			// ZoneNameBox
+			// label2
 			// 
-			this.ZoneNameBox.Location = new System.Drawing.Point(56, 19);
-			this.ZoneNameBox.Name = "ZoneNameBox";
-			this.ZoneNameBox.Size = new System.Drawing.Size(201, 20);
-			this.ZoneNameBox.TabIndex = 4;
+			this.label2.AutoSize = true;
+			this.label2.Location = new System.Drawing.Point(11, 9);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(71, 13);
+			this.label2.TabIndex = 1;
+			this.label2.Text = "Default door :";
 			// 
-			// button2
+			// comboBox1
 			// 
-			this.button2.Location = new System.Drawing.Point(8, 191);
-			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(120, 23);
-			this.button2.TabIndex = 1;
-			this.button2.Text = "Remove";
-			this.button2.UseVisualStyleBackColor = true;
-			// 
-			// DisplayZonesBox
-			// 
-			this.DisplayZonesBox.AutoSize = true;
-			this.DisplayZonesBox.Location = new System.Drawing.Point(134, 15);
-			this.DisplayZonesBox.Name = "DisplayZonesBox";
-			this.DisplayZonesBox.Size = new System.Drawing.Size(91, 17);
-			this.DisplayZonesBox.TabIndex = 3;
-			this.DisplayZonesBox.Text = "Display zones";
-			this.DisplayZonesBox.UseVisualStyleBackColor = true;
-			// 
-			// MazeZonesBox
-			// 
-			this.MazeZonesBox.FormattingEnabled = true;
-			this.MazeZonesBox.Location = new System.Drawing.Point(8, 15);
-			this.MazeZonesBox.Name = "MazeZonesBox";
-			this.MazeZonesBox.Size = new System.Drawing.Size(120, 173);
-			this.MazeZonesBox.Sorted = true;
-			this.MazeZonesBox.TabIndex = 0;
-			// 
-			// DungeonMenu
-			// 
-			this.DungeonMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.dungeonToolStripMenuItem});
-			this.DungeonMenu.Location = new System.Drawing.Point(0, 0);
-			this.DungeonMenu.Name = "DungeonMenu";
-			this.DungeonMenu.Size = new System.Drawing.Size(1256, 24);
-			this.DungeonMenu.TabIndex = 10;
-			this.DungeonMenu.Text = "Dungeon";
-			// 
-			// dungeonToolStripMenuItem
-			// 
-			this.dungeonToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.StartLocationMenu});
-			this.dungeonToolStripMenuItem.Name = "dungeonToolStripMenuItem";
-			this.dungeonToolStripMenuItem.Size = new System.Drawing.Size(68, 20);
-			this.dungeonToolStripMenuItem.Text = "Dungeon";
-			// 
-			// StartLocationMenu
-			// 
-			this.StartLocationMenu.Name = "StartLocationMenu";
-			this.StartLocationMenu.Size = new System.Drawing.Size(172, 22);
-			this.StartLocationMenu.Text = "Mark as start point";
-			this.StartLocationMenu.Click += new System.EventHandler(this.StartLocationMenu_Click);
+			this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboBox1.FormattingEnabled = true;
+			this.comboBox1.Location = new System.Drawing.Point(88, 6);
+			this.comboBox1.Name = "comboBox1";
+			this.comboBox1.Size = new System.Drawing.Size(169, 21);
+			this.comboBox1.TabIndex = 0;
 			// 
 			// LeftPanel
 			// 
-			this.LeftPanel.Controls.Add(this.tabControl1);
+			this.LeftPanel.Controls.Add(this.groupBox5);
+			this.LeftPanel.Controls.Add(this.groupBox4);
 			this.LeftPanel.Dock = System.Windows.Forms.DockStyle.Left;
-			this.LeftPanel.Location = new System.Drawing.Point(0, 49);
+			this.LeftPanel.Location = new System.Drawing.Point(0, 0);
 			this.LeftPanel.Name = "LeftPanel";
-			this.LeftPanel.Size = new System.Drawing.Size(366, 588);
+			this.LeftPanel.Size = new System.Drawing.Size(383, 637);
 			this.LeftPanel.TabIndex = 8;
 			// 
-			// SquareMenuBox
+			// groupBox5
 			// 
-			this.SquareMenuBox.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.SquareStripMenuItem,
-            this.EventStripMenuItem});
-			this.SquareMenuBox.Name = "SquareMenuBox";
-			this.SquareMenuBox.Size = new System.Drawing.Size(111, 48);
+			this.groupBox5.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.groupBox5.Controls.Add(this.GlPreviewControl);
+			this.groupBox5.Controls.Add(this.StrafeRightBox);
+			this.groupBox5.Controls.Add(this.TurnLeftBox);
+			this.groupBox5.Controls.Add(this.TurnRightBox);
+			this.groupBox5.Controls.Add(this.StrafeLeftBox);
+			this.groupBox5.Controls.Add(this.BackwardBox);
+			this.groupBox5.Controls.Add(this.ForwardBox);
+			this.groupBox5.Location = new System.Drawing.Point(3, 274);
+			this.groupBox5.Name = "groupBox5";
+			this.groupBox5.Size = new System.Drawing.Size(374, 360);
+			this.groupBox5.TabIndex = 1;
+			this.groupBox5.TabStop = false;
+			this.groupBox5.Text = "Preview :";
 			// 
-			// SquareStripMenuItem
+			// groupBox4
 			// 
-			this.SquareStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.editToolStripMenuItem,
-            this.clearToolStripMenuItem});
-			this.SquareStripMenuItem.Name = "SquareStripMenuItem";
-			this.SquareStripMenuItem.Size = new System.Drawing.Size(110, 22);
-			this.SquareStripMenuItem.Text = "Square";
+			this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.groupBox4.Controls.Add(this.PropertiesBox);
+			this.groupBox4.Location = new System.Drawing.Point(3, 3);
+			this.groupBox4.Name = "groupBox4";
+			this.groupBox4.Size = new System.Drawing.Size(374, 265);
+			this.groupBox4.TabIndex = 0;
+			this.groupBox4.TabStop = false;
+			this.groupBox4.Text = "Properties :";
 			// 
-			// editToolStripMenuItem
+			// StartLocationBox
 			// 
-			this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-			this.editToolStripMenuItem.Size = new System.Drawing.Size(101, 22);
-			this.editToolStripMenuItem.Text = "Edit";
-			this.editToolStripMenuItem.Click += new System.EventHandler(this.editToolStripMenuItem_Click);
-			// 
-			// clearToolStripMenuItem
-			// 
-			this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
-			this.clearToolStripMenuItem.Size = new System.Drawing.Size(101, 22);
-			this.clearToolStripMenuItem.Text = "Clear";
-			this.clearToolStripMenuItem.Click += new System.EventHandler(this.clearToolStripMenuItem_Click);
-			// 
-			// EventStripMenuItem
-			// 
-			this.EventStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.editToolStripMenuItem1,
-            this.removeToolStripMenuItem});
-			this.EventStripMenuItem.Name = "EventStripMenuItem";
-			this.EventStripMenuItem.Size = new System.Drawing.Size(110, 22);
-			this.EventStripMenuItem.Text = "Event";
-			// 
-			// editToolStripMenuItem1
-			// 
-			this.editToolStripMenuItem1.Name = "editToolStripMenuItem1";
-			this.editToolStripMenuItem1.Size = new System.Drawing.Size(117, 22);
-			this.editToolStripMenuItem1.Text = "Edit";
-			this.editToolStripMenuItem1.Click += new System.EventHandler(this.editToolStripMenuItem1_Click);
-			// 
-			// removeToolStripMenuItem
-			// 
-			this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
-			this.removeToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
-			this.removeToolStripMenuItem.Text = "Remove";
-			this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
+			this.StartLocationBox.Dungeon = null;
+			this.StartLocationBox.Location = new System.Drawing.Point(6, 6);
+			this.StartLocationBox.MinimumSize = new System.Drawing.Size(175, 100);
+			this.StartLocationBox.Name = "StartLocationBox";
+			this.StartLocationBox.Size = new System.Drawing.Size(175, 100);
+			this.StartLocationBox.TabIndex = 6;
+			this.StartLocationBox.Title = "Start location :";
+			this.StartLocationBox.TargetChanged += new DungeonEye.Forms.TargetControl.TargetChangedEventHandler(this.StartLocationBox_TargetChanged);
 			// 
 			// DungeonForm
 			// 
@@ -795,10 +755,7 @@
 			this.ClientSize = new System.Drawing.Size(1256, 661);
 			this.Controls.Add(this.RightPanel);
 			this.Controls.Add(this.LeftPanel);
-			this.Controls.Add(this.DungeonStripBox);
-			this.Controls.Add(this.DungeonMenu);
 			this.Controls.Add(this.statusStrip1);
-			this.MainMenuStrip = this.DungeonMenu;
 			this.Name = "DungeonForm";
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
@@ -811,20 +768,20 @@
 			this.statusStrip1.ResumeLayout(false);
 			this.statusStrip1.PerformLayout();
 			this.RightPanel.ResumeLayout(false);
-			this.tabControl1.ResumeLayout(false);
-			this.PropertiesTab.ResumeLayout(false);
+			this.RightPanel.PerformLayout();
+			this.PropertiesBox.ResumeLayout(false);
+			this.DungeonTab.ResumeLayout(false);
+			this.groupBox3.ResumeLayout(false);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
-			this.PreviewTab.ResumeLayout(false);
-			this.PreviewTab.PerformLayout();
-			this.ZonesTab.ResumeLayout(false);
-			this.ZonesTab.PerformLayout();
+			this.MazeTab.ResumeLayout(false);
+			this.MazeTab.PerformLayout();
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
-			this.DungeonMenu.ResumeLayout(false);
-			this.DungeonMenu.PerformLayout();
 			this.LeftPanel.ResumeLayout(false);
-			this.SquareMenuBox.ResumeLayout(false);
+			this.groupBox5.ResumeLayout(false);
+			this.groupBox5.PerformLayout();
+			this.groupBox4.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -841,7 +798,6 @@
 		private System.Windows.Forms.ToolStripStatusLabel SquareCoordBox;
 		private System.Windows.Forms.HScrollBar hScrollBar1;
 		private System.Windows.Forms.VScrollBar vScrollBar1;
-		private System.Windows.Forms.PropertyGrid MazePropertyBox;
 		private System.Windows.Forms.ToolStripButton ResetOffsetBox;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
 		private System.Windows.Forms.Timer DrawTimer;
@@ -855,21 +811,11 @@
 		private System.Windows.Forms.Button TurnLeftBox;
 		private System.Windows.Forms.ToolStripStatusLabel SquareDescriptionBox;
 		private System.Windows.Forms.Panel RightPanel;
-		private System.Windows.Forms.MenuStrip DungeonMenu;
-		private System.Windows.Forms.ToolStripMenuItem dungeonToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem StartLocationMenu;
-		private System.Windows.Forms.TabControl tabControl1;
-		private System.Windows.Forms.TabPage PropertiesTab;
-		private System.Windows.Forms.TabPage PreviewTab;
+		private System.Windows.Forms.TabControl PropertiesBox;
+		private System.Windows.Forms.TabPage DungeonTab;
+		private System.Windows.Forms.TabPage MazeTab;
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.TextBox DungeonNoteBox;
-		private System.Windows.Forms.TabPage ZonesTab;
-		private System.Windows.Forms.ListBox MazeZonesBox;
-		private System.Windows.Forms.GroupBox groupBox2;
-		private System.Windows.Forms.Button button2;
-		private System.Windows.Forms.CheckBox DisplayZonesBox;
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.TextBox ZoneNameBox;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		private System.Windows.Forms.ToolStripButton NoMonstersBox;
 		private System.Windows.Forms.ToolStripButton NoGhostsBox;
@@ -890,12 +836,17 @@
 		private System.Windows.Forms.ToolStripButton DecorationBox;
 		private System.Windows.Forms.ToolStripButton EventBox;
 		private System.Windows.Forms.Panel LeftPanel;
-		private System.Windows.Forms.ContextMenuStrip SquareMenuBox;
-		private System.Windows.Forms.ToolStripMenuItem SquareStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem EventStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem clearToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem1;
-		private System.Windows.Forms.ToolStripMenuItem removeToolStripMenuItem;
+		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.ComboBox comboBox1;
+		private System.Windows.Forms.GroupBox groupBox5;
+		private System.Windows.Forms.GroupBox groupBox4;
+		private System.Windows.Forms.ComboBox ItemTileSetBox;
+		private System.Windows.Forms.GroupBox groupBox2;
+		private System.Windows.Forms.ComboBox comboBox3;
+		private System.Windows.Forms.Label label3;
+		private System.Windows.Forms.ComboBox comboBox2;
+		private System.Windows.Forms.Label label1;
+		private TargetControl StartLocationBox;
+		private System.Windows.Forms.GroupBox groupBox3;
 	}
 }

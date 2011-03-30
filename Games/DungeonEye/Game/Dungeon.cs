@@ -56,8 +56,7 @@ namespace DungeonEye
 			StartLocation.Maze = StartLocation.Maze;
 
 
-			// Generate shared asset
-			//ResourceManager.CreateSharedAsset<TileSet>("Doors", "Doors");
+			ItemTileSet = ResourceManager.CreateAsset<TileSet>(ItemTileSetName);
 
 
 			foreach (Maze maze in Mazes.Values)
@@ -77,9 +76,9 @@ namespace DungeonEye
 				maze.Dispose();
 			Mazes.Clear();
 
-			// Remove shared asset
-			//ResourceManager.UnlockSharedAsset<TileSet>();
-
+			if (ItemTileSet != null)
+				ItemTileSet.Dispose();
+			ItemTileSet = null;
 
 			StartLocation = null;
 			Note = "";
@@ -144,6 +143,12 @@ namespace DungeonEye
 
 				switch (node.Name.ToLower())
 				{
+					case "items":
+					{
+						ItemTileSetName = node.Attributes["tileset"].Value;
+					}
+					break;
+
 					case "maze":
 					{
 						string name = node.Attributes["name"].Value;
@@ -189,7 +194,11 @@ namespace DungeonEye
 
 			writer.WriteStartElement("dungeon");
 			writer.WriteAttributeString("name", Name);
-
+			
+			
+			writer.WriteStartElement("items");
+			writer.WriteAttributeString("tileset", ItemTileSetName);
+			writer.WriteEndElement();
 	
 			foreach (Maze maze in MazeList)
 				maze.Save(writer);
@@ -356,14 +365,24 @@ namespace DungeonEye
 		}
 
 
-		///// <summary>
-		///// Handle to the team
-		///// </summary>
-		//public Team Team
-		//{
-		//    get;
-		//    set;
-		//}
+		/// <summary>
+		/// Item TileSet name
+		/// </summary>
+		public string ItemTileSetName
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// Item tileset
+		/// </summary>
+		public TileSet ItemTileSet
+		{
+			get;
+			private set;
+		}
 		
 		
 		#endregion

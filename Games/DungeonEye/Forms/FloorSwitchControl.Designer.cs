@@ -30,7 +30,6 @@
 		{
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.HiddenBox = new System.Windows.Forms.CheckBox();
-			this.DoneBox = new System.Windows.Forms.Button();
 			this.groupBox1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -55,26 +54,13 @@
 			this.HiddenBox.UseVisualStyleBackColor = true;
 			this.HiddenBox.CheckedChanged += new System.EventHandler(this.HiddenBox_CheckedChanged);
 			// 
-			// DoneBox
-			// 
-			this.DoneBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.DoneBox.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.DoneBox.Location = new System.Drawing.Point(44, 93);
-			this.DoneBox.Name = "DoneBox";
-			this.DoneBox.Size = new System.Drawing.Size(75, 23);
-			this.DoneBox.TabIndex = 1;
-			this.DoneBox.Text = "Done";
-			this.DoneBox.UseVisualStyleBackColor = true;
-			// 
-			// FloorSwitchForm
+			// FloorSwitchControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(131, 128);
-			this.Controls.Add(this.DoneBox);
 			this.Controls.Add(this.groupBox1);
-			this.Name = "FloorSwitchForm";
-			this.Text = "Floor switch wizard";
+			this.Name = "FloorSwitchControl";
+			this.Size = new System.Drawing.Size(131, 128);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			this.ResumeLayout(false);
@@ -85,6 +71,5 @@
 
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.CheckBox HiddenBox;
-		private System.Windows.Forms.Button DoneBox;
 	}
 }

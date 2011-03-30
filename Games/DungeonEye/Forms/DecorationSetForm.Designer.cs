@@ -44,7 +44,7 @@
 			this.label2 = new System.Windows.Forms.Label();
 			this.TilesetBox = new System.Windows.Forms.ComboBox();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
-			this.ViewPositionBox = new DungeonEye.Forms.ViewPositionControl();
+			this.ViewPositionBox = new DungeonEye.Forms.ViewFieldControl();
 			this.DrawTimer = new System.Windows.Forms.Timer(this.components);
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -233,7 +233,7 @@
 			this.ViewPositionBox.Position = DungeonEye.ViewFieldPosition.Team;
 			this.ViewPositionBox.Size = new System.Drawing.Size(239, 138);
 			this.ViewPositionBox.TabIndex = 0;
-			this.ViewPositionBox.PositionChanged += new DungeonEye.Forms.ViewPositionControl.ChangedEventHandler(this.ViewPositionBox_PositionChanged);
+			this.ViewPositionBox.PositionChanged += new DungeonEye.Forms.ViewFieldControl.ChangedEventHandler(this.ViewPositionBox_PositionChanged);
 			// 
 			// DrawTimer
 			// 
@@ -269,7 +269,7 @@
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.GroupBox groupBox2;
 		private System.Windows.Forms.GroupBox groupBox3;
-		private ViewPositionControl ViewPositionBox;
+		private ViewFieldControl ViewPositionBox;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.ComboBox BackgroundTileSetBox;
 		private System.Windows.Forms.Label label2;

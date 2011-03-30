@@ -29,7 +29,6 @@
 		private void InitializeComponent()
 		{
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TeleporterControl));
-			this.DoneBox = new System.Windows.Forms.Button();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.ItemsBox = new System.Windows.Forms.CheckBox();
 			this.MonsterBox = new System.Windows.Forms.CheckBox();
@@ -48,17 +47,6 @@
 			this.groupBox2.SuspendLayout();
 			this.groupBox3.SuspendLayout();
 			this.SuspendLayout();
-			// 
-			// DoneBox
-			// 
-			this.DoneBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.DoneBox.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.DoneBox.Location = new System.Drawing.Point(301, 203);
-			this.DoneBox.Name = "DoneBox";
-			this.DoneBox.Size = new System.Drawing.Size(75, 23);
-			this.DoneBox.TabIndex = 0;
-			this.DoneBox.Text = "Done";
-			this.DoneBox.UseVisualStyleBackColor = true;
 			// 
 			// groupBox1
 			// 
@@ -162,7 +150,7 @@
 			// LoadSoundBox
 			// 
 			this.LoadSoundBox.AutoSize = true;
-			this.LoadSoundBox.Image = ((System.Drawing.Image)(resources.GetObject("LoadSoundBox.Image")));
+			this.LoadSoundBox.Image = ((System.Drawing.Image) (resources.GetObject("LoadSoundBox.Image")));
 			this.LoadSoundBox.Location = new System.Drawing.Point(182, 71);
 			this.LoadSoundBox.Name = "LoadSoundBox";
 			this.LoadSoundBox.Size = new System.Drawing.Size(39, 22);
@@ -172,7 +160,7 @@
 			// 
 			// PlaySoundBox
 			// 
-			this.PlaySoundBox.Image = ((System.Drawing.Image)(resources.GetObject("PlaySoundBox.Image")));
+			this.PlaySoundBox.Image = ((System.Drawing.Image) (resources.GetObject("PlaySoundBox.Image")));
 			this.PlaySoundBox.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.PlaySoundBox.Location = new System.Drawing.Point(6, 71);
 			this.PlaySoundBox.Name = "PlaySoundBox";
@@ -215,20 +203,18 @@
 			this.targetControl1.Name = "targetControl1";
 			this.targetControl1.Size = new System.Drawing.Size(182, 105);
 			this.targetControl1.TabIndex = 3;
-			this.targetControl1.TargetChanged += new DungeonEye.Forms.TargetControl.ChangedEventHandler(this.targetControl1_TargetChanged);
+			this.targetControl1.TargetChanged += new DungeonEye.Forms.TargetControl.TargetChangedEventHandler(this.targetControl1_TargetChanged);
 			// 
-			// TeleporterForm
+			// TeleporterControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(388, 238);
 			this.Controls.Add(this.groupBox3);
 			this.Controls.Add(this.targetControl1);
 			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.groupBox1);
-			this.Controls.Add(this.DoneBox);
-			this.Name = "TeleporterForm";
-			this.Text = "Teleporter wizard";
+			this.Name = "TeleporterControl";
+			this.Size = new System.Drawing.Size(388, 238);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			this.groupBox2.ResumeLayout(false);
@@ -241,7 +227,6 @@
 
 		#endregion
 
-		private System.Windows.Forms.Button DoneBox;
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.CheckBox ItemsBox;
 		private System.Windows.Forms.CheckBox MonsterBox;

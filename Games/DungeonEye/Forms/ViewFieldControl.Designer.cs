@@ -1,6 +1,6 @@
 ﻿namespace DungeonEye.Forms
 {
-	partial class ViewPositionControl
+	partial class ViewFieldControl
 	{
 		/// <summary> 
 		/// Variable nécessaire au concepteur.
