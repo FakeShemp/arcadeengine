@@ -133,14 +133,24 @@ namespace DungeonEye
 		/// <returns>True on succes or false if nothing drew</returns>
 		public void Draw(SpriteBatch batch, int id, ViewFieldPosition position)
 		{
-			if (batch == null)
+			if (batch == null || id == -1)
 				return;
 
 			Decoration deco = GetDecoration(id);
+			if (deco == null)
+				return;
 
-			batch.DrawTile(Tileset, deco.GetTileId(position), deco.GetLocation(position));
+			batch.DrawTile(Tileset, deco.GetTileId(position), deco.GetLocation(position), 
+				Color.White, 0.0f,
+				deco.GetSwap(position) ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
+				0.0f);
 		}
 
+
+		public void Draw(SpriteBatch batch, CardinalPoint point ,ViewFieldPosition position)
+		{
+
+		}
 
 		#region IO
 

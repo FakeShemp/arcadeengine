@@ -53,8 +53,10 @@ namespace DungeonEye.Forms
 			ItemTileSetBox.SelectedItem = dungeon.ItemTileSetName;
 
 			DefaultDoorBox.DataSource = Enum.GetNames(typeof(DoorType));
-			DecorationNameBox.DataSource = ResourceManager.GetAssets<DecorationSet>();
-			WallTileSetNameBox.DataSource = ResourceManager.GetAssets<TileSet>();
+			DecorationNameBox.Items.AddRange(ResourceManager.GetAssets<DecorationSet>().ToArray());
+			DecorationNameBox.Items.Insert(0, "");
+			WallTileSetNameBox.Items.AddRange(ResourceManager.GetAssets<TileSet>().ToArray());
+			WallTileSetNameBox.Items.Insert(0, "");
 
 
 
@@ -208,7 +210,7 @@ namespace DungeonEye.Forms
 		/// <param name="square">Square handle</param>
 		void EditSquare(Square square, bool showactortab)
 		{
-			SquareForm form = new SquareForm(Maze, square, SpriteBatch);
+			SquareForm form = new SquareForm(Maze, square);
 			if (showactortab)
 				form.ActivateActorTab();
 

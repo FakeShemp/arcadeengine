@@ -647,7 +647,7 @@ namespace DungeonEye
 			if (field == null)
 				return;
 
-			Square block = field.Blocks[(int) position];
+			Square square = field.Blocks[(int) position];
 			Point point;
 			TileDrawing td = null;
 
@@ -686,7 +686,7 @@ namespace DungeonEye
 
 
 			#region ceiling pit
-			if (block.IsPitTarget)
+			if (square.IsPitTarget)
 			{
 				//TODO
 				td = DisplayCoordinates.GetCeilingPit(position);
@@ -716,8 +716,8 @@ namespace DungeonEye
 				Color.FromArgb(128, 128, 128, 128),
 			};
 
-			List<Item>[] list = block.GetItems(view);
-			if (!block.IsWall)
+			List<Item>[] list = square.GetItems(view);
+			if (!square.IsWall)
 			{
 				for (int i = 0 ; i < 2 ; i++)
 				{
@@ -746,14 +746,14 @@ namespace DungeonEye
 			#endregion
 
 			#region Actor
-			if (block.Actor != null)
+			if (square.Actor != null)
 			{
-				block.Actor.Draw(batch, field, position, view);
+				square.Actor.Draw(batch, field, position, view);
 			}
 			#endregion
 
 			#region Walls
-			if (block.IsWall)
+			if (square.IsWall)
 			{
 				// Walls
 				foreach (TileDrawing tmp in DisplayCoordinates.GetWalls(position))
@@ -761,7 +761,7 @@ namespace DungeonEye
 
 
 				// Alcoves
-				if (block.HasAlcoves)
+				if (square.HasAlcoves)
 				{
 					// Draw alcoves
 					foreach (CardinalPoint side in Enum.GetValues(typeof(CardinalPoint)))
@@ -795,7 +795,7 @@ namespace DungeonEye
 							new Point(32, 32),		// O
 						};
 
-						foreach (Item item in block.GetAlcoveItems(view, CardinalPoint.South))
+						foreach (Item item in square.GetAlcoveItems(view, CardinalPoint.South))
 						{
 							Point loc = td.Location;
 							loc.Offset(offsets[(int) position]);
@@ -804,11 +804,23 @@ namespace DungeonEye
 					}
 				}
 
+				if (Decoration != null)
+				{
+					int[] decooffset = new int[]
+					{
+						1,		// View from north
+						0,		// View from south
+						3,		// View from west
+						2,		// View from east
+					};
+
+					Decoration.Draw(batch, square.Decorations[decooffset[(int)view]], position);
+				}
 			}
 			#endregion
 
 			#region Items on ground after a door
-			if (!block.IsWall)
+			if (!square.IsWall)
 			{
 				for (int i = 2 ; i < 4 ; i++)
 				{
@@ -838,7 +850,7 @@ namespace DungeonEye
 			#endregion
 
 			#region Monsters
-			if (block.MonsterCount > 0)
+			if (square.MonsterCount > 0)
 			{
 				int[][] order = new int[][]
 				{
@@ -850,7 +862,7 @@ namespace DungeonEye
 
 				for (int i = 0 ; i < 4 ; i++)
 				{
-					Monster monster = block.Monsters[order[(int) view][i]];
+					Monster monster = square.Monsters[order[(int) view][i]];
 					if (monster != null)
 						monster.Draw(batch, view, position);
 				}
@@ -858,7 +870,7 @@ namespace DungeonEye
 			#endregion
 
 			#region Flying items
-			List<ThrownItem>[] flyings = GetFlyingItems(block.Location, view);
+			List<ThrownItem>[] flyings = GetFlyingItems(square.Location, view);
 			foreach (SquarePosition pos in Enum.GetValues(typeof(SquarePosition)))
 			{
 				point = DisplayCoordinates.GetFlyingItem(position, pos);

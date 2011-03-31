@@ -38,8 +38,7 @@ namespace DungeonEye.Forms
 		/// </summary>
 		/// <param name="maze">Maze</param>
 		/// <param name="sqaure">Square handle</param>
-		/// <param name="batch">SpriteBatch handle</param>
-		public SquareForm(Maze maze, Square square, SpriteBatch batch)
+		public SquareForm(Maze maze, Square square)
 		{
 			InitializeComponent();
 
@@ -50,11 +49,9 @@ namespace DungeonEye.Forms
 			}
 
 			Maze = maze;
-			Batch = batch;
 
 			List<string> list = ResourceManager.GetAssets<Item>();
 			ItemsBox.DataSource = list;
-			//WallTypeBox.DataSource = Enum.GetValues(typeof(SquareType));
 
 
 			#region Items
@@ -139,6 +136,18 @@ namespace DungeonEye.Forms
 
 
 			GlWallControl.SwapBuffers();
+		}
+
+
+		/// <summary>
+		/// Decoration changed
+		/// </summary>
+		private void ChangeDecoration()
+		{
+			if (Square == null)
+				return;
+
+			DecorationIdBox.Value = Square.Decorations[(int)DecorationSide];
 		}
 
 
@@ -404,7 +413,6 @@ namespace DungeonEye.Forms
 		private void MazeBlockForm_Load(object sender, EventArgs e)
 		{
 
-
 		}
 
 		/// <summary>
@@ -592,8 +600,6 @@ namespace DungeonEye.Forms
 
 		#region Decoration
 
-
-
 		/// <summary>
 		/// 
 		/// </summary>
@@ -603,8 +609,24 @@ namespace DungeonEye.Forms
 		{
 			GlWallControl.MakeCurrent();
 			Display.Init();
+
+			Batch = new SpriteBatch();
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void SquareForm_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			if (Batch != null)
+				Batch.Dispose();
+			Batch = null;
+		}
+		
+		
 		/// <summary>
 		/// 
 		/// </summary>
@@ -635,7 +657,12 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void DecorationIdBox_ValueChanged(object sender, EventArgs e)
 		{
+			if (Square == null)
+				return;
 
+			Square.Decorations[(int)DecorationSide] = (int)DecorationIdBox.Value;
+
+			RenderDecorationScene();
 		}
 
 
@@ -646,7 +673,8 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void NorthDecorationBox_CheckedChanged(object sender, EventArgs e)
 		{
-
+			DecorationSide = CardinalPoint.North;
+			ChangeDecoration();
 		}
 
 
@@ -657,7 +685,8 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void WestDecorationBox_CheckedChanged(object sender, EventArgs e)
 		{
-
+			DecorationSide = CardinalPoint.West;
+			ChangeDecoration();
 		}
 
 
@@ -668,7 +697,8 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void EastDecorationBox_CheckedChanged(object sender, EventArgs e)
 		{
-
+			DecorationSide = CardinalPoint.East;
+			ChangeDecoration();
 		}
 
 
@@ -679,7 +709,29 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void SouthDecorationBox_CheckedChanged(object sender, EventArgs e)
 		{
+			DecorationSide = CardinalPoint.South;
+			ChangeDecoration();
+		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ClearDecorationBox_Click(object sender, EventArgs e)
+		{
+			if (Square == null)
+				return;
+
+			Square.Decorations[0] = -1;
+			Square.Decorations[1] = -1;
+			Square.Decorations[2] = -1;
+			Square.Decorations[3] = -1;
+
+			DecorationIdBox.Value = -1;
+
+			RenderDecorationScene();
 		}
 
 		#endregion
@@ -785,6 +837,13 @@ namespace DungeonEye.Forms
 		/// Spritabatch handle
 		/// </summary>
 		SpriteBatch Batch;
+
+
+		/// <summary>
+		/// Current side for the decoration
+		/// </summary>
+		CardinalPoint DecorationSide;
+
 		#endregion
 
 

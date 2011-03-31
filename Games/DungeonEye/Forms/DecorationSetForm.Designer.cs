@@ -44,8 +44,9 @@
 			this.label2 = new System.Windows.Forms.Label();
 			this.TilesetBox = new System.Windows.Forms.ComboBox();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
-			this.ViewPositionBox = new DungeonEye.Forms.ViewFieldControl();
 			this.DrawTimer = new System.Windows.Forms.Timer(this.components);
+			this.HorizontalSwapBox = new System.Windows.Forms.CheckBox();
+			this.ViewPositionBox = new DungeonEye.Forms.ViewFieldControl();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.TileIdBox)).BeginInit();
@@ -111,6 +112,7 @@
 			// 
 			// groupBox2
 			// 
+			this.groupBox2.Controls.Add(this.HorizontalSwapBox);
 			this.groupBox2.Controls.Add(this.LocationBox);
 			this.groupBox2.Controls.Add(this.label4);
 			this.groupBox2.Controls.Add(this.label5);
@@ -145,7 +147,7 @@
 			// label5
 			// 
 			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(41, 105);
+			this.label5.Location = new System.Drawing.Point(41, 84);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(41, 13);
 			this.label5.TabIndex = 3;
@@ -162,7 +164,7 @@
 			// 
 			// TileIdBox
 			// 
-			this.TileIdBox.Location = new System.Drawing.Point(91, 103);
+			this.TileIdBox.Location = new System.Drawing.Point(91, 82);
 			this.TileIdBox.Maximum = new decimal(new int[] {
             9999999,
             0,
@@ -225,6 +227,22 @@
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "View point :";
 			// 
+			// DrawTimer
+			// 
+			this.DrawTimer.Interval = 66;
+			this.DrawTimer.Tick += new System.EventHandler(this.DrawTimer_Tick);
+			// 
+			// HorizontalSwapBox
+			// 
+			this.HorizontalSwapBox.AutoSize = true;
+			this.HorizontalSwapBox.Location = new System.Drawing.Point(91, 108);
+			this.HorizontalSwapBox.Name = "HorizontalSwapBox";
+			this.HorizontalSwapBox.Size = new System.Drawing.Size(101, 17);
+			this.HorizontalSwapBox.TabIndex = 6;
+			this.HorizontalSwapBox.Text = "Horizontal swap";
+			this.HorizontalSwapBox.UseVisualStyleBackColor = true;
+			this.HorizontalSwapBox.CheckedChanged += new System.EventHandler(this.HorizontalSwapBox_CheckedChanged);
+			// 
 			// ViewPositionBox
 			// 
 			this.ViewPositionBox.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -234,11 +252,6 @@
 			this.ViewPositionBox.Size = new System.Drawing.Size(239, 138);
 			this.ViewPositionBox.TabIndex = 0;
 			this.ViewPositionBox.PositionChanged += new DungeonEye.Forms.ViewFieldControl.ChangedEventHandler(this.ViewPositionBox_PositionChanged);
-			// 
-			// DrawTimer
-			// 
-			this.DrawTimer.Interval = 66;
-			this.DrawTimer.Tick += new System.EventHandler(this.DrawTimer_Tick);
 			// 
 			// DecorationSetForm
 			// 
@@ -282,5 +295,6 @@
 		private System.Windows.Forms.NumericUpDown TileIdBox;
 		private System.Windows.Forms.CheckBox DisplayWallBox;
 		private System.Windows.Forms.Timer DrawTimer;
+		private System.Windows.Forms.CheckBox HorizontalSwapBox;
 	}
 }

@@ -30,6 +30,14 @@
 		{
 			this.CloseBox = new System.Windows.Forms.Button();
 			this.DecorationTab = new System.Windows.Forms.TabPage();
+			this.ClearDecorationBox = new System.Windows.Forms.Button();
+			this.groupBox6 = new System.Windows.Forms.GroupBox();
+			this.DecorationIdBox = new System.Windows.Forms.NumericUpDown();
+			this.groupBox14 = new System.Windows.Forms.GroupBox();
+			this.SouthDecorationBox = new System.Windows.Forms.RadioButton();
+			this.EastDecorationBox = new System.Windows.Forms.RadioButton();
+			this.WestDecorationBox = new System.Windows.Forms.RadioButton();
+			this.NorthDecorationBox = new System.Windows.Forms.RadioButton();
 			this.groupBox5 = new System.Windows.Forms.GroupBox();
 			this.GlWallControl = new OpenTK.GLControl();
 			this.MonstersTab = new System.Windows.Forms.TabPage();
@@ -79,15 +87,10 @@
 			this.ActorTab = new System.Windows.Forms.TabPage();
 			this.ActorPanelBox = new System.Windows.Forms.Panel();
 			this.DeleteActorBox = new System.Windows.Forms.Button();
-			this.groupBox14 = new System.Windows.Forms.GroupBox();
-			this.NorthDecorationBox = new System.Windows.Forms.RadioButton();
-			this.WestDecorationBox = new System.Windows.Forms.RadioButton();
-			this.SouthDecorationBox = new System.Windows.Forms.RadioButton();
-			this.EastDecorationBox = new System.Windows.Forms.RadioButton();
-			this.groupBox6 = new System.Windows.Forms.GroupBox();
-			this.ClearDecorationBox = new System.Windows.Forms.Button();
-			this.DecorationIdBox = new System.Windows.Forms.NumericUpDown();
 			this.DecorationTab.SuspendLayout();
+			this.groupBox6.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.DecorationIdBox)).BeginInit();
+			this.groupBox14.SuspendLayout();
 			this.groupBox5.SuspendLayout();
 			this.MonstersTab.SuspendLayout();
 			this.groupBox13.SuspendLayout();
@@ -102,14 +105,11 @@
 			this.groupBox2.SuspendLayout();
 			this.TabControlBox.SuspendLayout();
 			this.ActorTab.SuspendLayout();
-			this.groupBox14.SuspendLayout();
-			this.groupBox6.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize) (this.DecorationIdBox)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// CloseBox
 			// 
-			this.CloseBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.CloseBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.CloseBox.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.CloseBox.Location = new System.Drawing.Point(446, 517);
 			this.CloseBox.Name = "CloseBox";
@@ -130,6 +130,119 @@
 			this.DecorationTab.TabIndex = 2;
 			this.DecorationTab.Text = "Decoration";
 			this.DecorationTab.UseVisualStyleBackColor = true;
+			// 
+			// ClearDecorationBox
+			// 
+			this.ClearDecorationBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.ClearDecorationBox.Location = new System.Drawing.Point(6, 444);
+			this.ClearDecorationBox.Name = "ClearDecorationBox";
+			this.ClearDecorationBox.Size = new System.Drawing.Size(492, 23);
+			this.ClearDecorationBox.TabIndex = 25;
+			this.ClearDecorationBox.Text = "Remove decorations";
+			this.ClearDecorationBox.UseVisualStyleBackColor = true;
+			this.ClearDecorationBox.Click += new System.EventHandler(this.ClearDecorationBox_Click);
+			// 
+			// groupBox6
+			// 
+			this.groupBox6.Controls.Add(this.DecorationIdBox);
+			this.groupBox6.Location = new System.Drawing.Point(3, 118);
+			this.groupBox6.Name = "groupBox6";
+			this.groupBox6.Size = new System.Drawing.Size(94, 58);
+			this.groupBox6.TabIndex = 24;
+			this.groupBox6.TabStop = false;
+			this.groupBox6.Text = "Decoration";
+			// 
+			// DecorationIdBox
+			// 
+			this.DecorationIdBox.Location = new System.Drawing.Point(6, 19);
+			this.DecorationIdBox.Maximum = new decimal(new int[] {
+            99999999,
+            0,
+            0,
+            0});
+			this.DecorationIdBox.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+			this.DecorationIdBox.Name = "DecorationIdBox";
+			this.DecorationIdBox.Size = new System.Drawing.Size(82, 20);
+			this.DecorationIdBox.TabIndex = 0;
+			this.DecorationIdBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.DecorationIdBox.ThousandsSeparator = true;
+			this.DecorationIdBox.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+			this.DecorationIdBox.ValueChanged += new System.EventHandler(this.DecorationIdBox_ValueChanged);
+			// 
+			// groupBox14
+			// 
+			this.groupBox14.Controls.Add(this.SouthDecorationBox);
+			this.groupBox14.Controls.Add(this.EastDecorationBox);
+			this.groupBox14.Controls.Add(this.WestDecorationBox);
+			this.groupBox14.Controls.Add(this.NorthDecorationBox);
+			this.groupBox14.Location = new System.Drawing.Point(3, 3);
+			this.groupBox14.Name = "groupBox14";
+			this.groupBox14.Size = new System.Drawing.Size(94, 109);
+			this.groupBox14.TabIndex = 23;
+			this.groupBox14.TabStop = false;
+			this.groupBox14.Text = "Wall side";
+			// 
+			// SouthDecorationBox
+			// 
+			this.SouthDecorationBox.Appearance = System.Windows.Forms.Appearance.Button;
+			this.SouthDecorationBox.Location = new System.Drawing.Point(30, 80);
+			this.SouthDecorationBox.Name = "SouthDecorationBox";
+			this.SouthDecorationBox.Size = new System.Drawing.Size(28, 23);
+			this.SouthDecorationBox.TabIndex = 0;
+			this.SouthDecorationBox.TabStop = true;
+			this.SouthDecorationBox.Text = "S";
+			this.SouthDecorationBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.SouthDecorationBox.UseVisualStyleBackColor = true;
+			this.SouthDecorationBox.CheckedChanged += new System.EventHandler(this.SouthDecorationBox_CheckedChanged);
+			// 
+			// EastDecorationBox
+			// 
+			this.EastDecorationBox.Appearance = System.Windows.Forms.Appearance.Button;
+			this.EastDecorationBox.Location = new System.Drawing.Point(47, 51);
+			this.EastDecorationBox.Name = "EastDecorationBox";
+			this.EastDecorationBox.Size = new System.Drawing.Size(28, 23);
+			this.EastDecorationBox.TabIndex = 0;
+			this.EastDecorationBox.TabStop = true;
+			this.EastDecorationBox.Text = "E";
+			this.EastDecorationBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.EastDecorationBox.UseVisualStyleBackColor = true;
+			this.EastDecorationBox.CheckedChanged += new System.EventHandler(this.EastDecorationBox_CheckedChanged);
+			// 
+			// WestDecorationBox
+			// 
+			this.WestDecorationBox.Appearance = System.Windows.Forms.Appearance.Button;
+			this.WestDecorationBox.Location = new System.Drawing.Point(13, 51);
+			this.WestDecorationBox.Name = "WestDecorationBox";
+			this.WestDecorationBox.Size = new System.Drawing.Size(28, 23);
+			this.WestDecorationBox.TabIndex = 0;
+			this.WestDecorationBox.TabStop = true;
+			this.WestDecorationBox.Text = "W";
+			this.WestDecorationBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.WestDecorationBox.UseVisualStyleBackColor = true;
+			this.WestDecorationBox.CheckedChanged += new System.EventHandler(this.WestDecorationBox_CheckedChanged);
+			// 
+			// NorthDecorationBox
+			// 
+			this.NorthDecorationBox.Appearance = System.Windows.Forms.Appearance.Button;
+			this.NorthDecorationBox.Checked = true;
+			this.NorthDecorationBox.Location = new System.Drawing.Point(30, 22);
+			this.NorthDecorationBox.Name = "NorthDecorationBox";
+			this.NorthDecorationBox.Size = new System.Drawing.Size(28, 23);
+			this.NorthDecorationBox.TabIndex = 0;
+			this.NorthDecorationBox.TabStop = true;
+			this.NorthDecorationBox.Text = "N";
+			this.NorthDecorationBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.NorthDecorationBox.UseVisualStyleBackColor = true;
+			this.NorthDecorationBox.CheckedChanged += new System.EventHandler(this.NorthDecorationBox_CheckedChanged);
 			// 
 			// groupBox5
 			// 
@@ -170,8 +283,8 @@
 			// 
 			// RemoveAllMonstersBox
 			// 
-			this.RemoveAllMonstersBox.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.RemoveAllMonstersBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.RemoveAllMonstersBox.Location = new System.Drawing.Point(6, 444);
 			this.RemoveAllMonstersBox.Name = "RemoveAllMonstersBox";
 			this.RemoveAllMonstersBox.Size = new System.Drawing.Size(492, 23);
@@ -373,8 +486,8 @@
 			// 
 			// ClearAllItemsBox
 			// 
-			this.ClearAllItemsBox.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.ClearAllItemsBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.ClearAllItemsBox.Location = new System.Drawing.Point(6, 444);
 			this.ClearAllItemsBox.Name = "ClearAllItemsBox";
 			this.ClearAllItemsBox.Size = new System.Drawing.Size(492, 23);
@@ -464,9 +577,9 @@
 			// 
 			// SEBox
 			// 
-			this.SEBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.SEBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.SEBox.FormattingEnabled = true;
 			this.SEBox.Location = new System.Drawing.Point(6, 21);
 			this.SEBox.Name = "SEBox";
@@ -487,8 +600,8 @@
 			// 
 			// SERemoveItem
 			// 
-			this.SERemoveItem.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.SERemoveItem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.SERemoveItem.Location = new System.Drawing.Point(103, 148);
 			this.SERemoveItem.Name = "SERemoveItem";
 			this.SERemoveItem.Size = new System.Drawing.Size(80, 23);
@@ -511,9 +624,9 @@
 			// 
 			// SWBox
 			// 
-			this.SWBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.SWBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.SWBox.FormattingEnabled = true;
 			this.SWBox.Location = new System.Drawing.Point(6, 21);
 			this.SWBox.Name = "SWBox";
@@ -534,8 +647,8 @@
 			// 
 			// SWRemoveItem
 			// 
-			this.SWRemoveItem.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.SWRemoveItem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.SWRemoveItem.Location = new System.Drawing.Point(103, 148);
 			this.SWRemoveItem.Name = "SWRemoveItem";
 			this.SWRemoveItem.Size = new System.Drawing.Size(80, 23);
@@ -558,9 +671,9 @@
 			// 
 			// NEBox
 			// 
-			this.NEBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.NEBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.NEBox.FormattingEnabled = true;
 			this.NEBox.Location = new System.Drawing.Point(6, 21);
 			this.NEBox.Name = "NEBox";
@@ -581,8 +694,8 @@
 			// 
 			// NERemoveItem
 			// 
-			this.NERemoveItem.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.NERemoveItem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.NERemoveItem.Location = new System.Drawing.Point(103, 148);
 			this.NERemoveItem.Name = "NERemoveItem";
 			this.NERemoveItem.Size = new System.Drawing.Size(80, 23);
@@ -605,9 +718,9 @@
 			// 
 			// NWBox
 			// 
-			this.NWBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.NWBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.NWBox.FormattingEnabled = true;
 			this.NWBox.Location = new System.Drawing.Point(6, 21);
 			this.NWBox.Name = "NWBox";
@@ -628,8 +741,8 @@
 			// 
 			// NWRemoveItem
 			// 
-			this.NWRemoveItem.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.NWRemoveItem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.NWRemoveItem.Location = new System.Drawing.Point(103, 148);
 			this.NWRemoveItem.Name = "NWRemoveItem";
 			this.NWRemoveItem.Size = new System.Drawing.Size(80, 23);
@@ -640,9 +753,9 @@
 			// 
 			// TabControlBox
 			// 
-			this.TabControlBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.TabControlBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.TabControlBox.Controls.Add(this.ItemsTab);
 			this.TabControlBox.Controls.Add(this.MonstersTab);
 			this.TabControlBox.Controls.Add(this.DecorationTab);
@@ -667,9 +780,9 @@
 			// 
 			// ActorPanelBox
 			// 
-			this.ActorPanelBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.ActorPanelBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.ActorPanelBox.Location = new System.Drawing.Point(3, 3);
 			this.ActorPanelBox.Name = "ActorPanelBox";
 			this.ActorPanelBox.Size = new System.Drawing.Size(495, 438);
@@ -677,8 +790,8 @@
 			// 
 			// DeleteActorBox
 			// 
-			this.DeleteActorBox.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.DeleteActorBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.DeleteActorBox.Location = new System.Drawing.Point(6, 444);
 			this.DeleteActorBox.Name = "DeleteActorBox";
 			this.DeleteActorBox.Size = new System.Drawing.Size(492, 23);
@@ -688,108 +801,6 @@
 			this.DeleteActorBox.UseVisualStyleBackColor = true;
 			this.DeleteActorBox.Click += new System.EventHandler(this.DeleteActorBox_Click);
 			// 
-			// groupBox14
-			// 
-			this.groupBox14.Controls.Add(this.SouthDecorationBox);
-			this.groupBox14.Controls.Add(this.EastDecorationBox);
-			this.groupBox14.Controls.Add(this.WestDecorationBox);
-			this.groupBox14.Controls.Add(this.NorthDecorationBox);
-			this.groupBox14.Location = new System.Drawing.Point(3, 3);
-			this.groupBox14.Name = "groupBox14";
-			this.groupBox14.Size = new System.Drawing.Size(94, 109);
-			this.groupBox14.TabIndex = 23;
-			this.groupBox14.TabStop = false;
-			this.groupBox14.Text = "Wall side";
-			// 
-			// NorthDecorationBox
-			// 
-			this.NorthDecorationBox.Appearance = System.Windows.Forms.Appearance.Button;
-			this.NorthDecorationBox.Checked = true;
-			this.NorthDecorationBox.Location = new System.Drawing.Point(30, 22);
-			this.NorthDecorationBox.Name = "NorthDecorationBox";
-			this.NorthDecorationBox.Size = new System.Drawing.Size(28, 23);
-			this.NorthDecorationBox.TabIndex = 0;
-			this.NorthDecorationBox.TabStop = true;
-			this.NorthDecorationBox.Text = "N";
-			this.NorthDecorationBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.NorthDecorationBox.UseVisualStyleBackColor = true;
-			this.NorthDecorationBox.CheckedChanged += new System.EventHandler(this.NorthDecorationBox_CheckedChanged);
-			// 
-			// WestDecorationBox
-			// 
-			this.WestDecorationBox.Appearance = System.Windows.Forms.Appearance.Button;
-			this.WestDecorationBox.Location = new System.Drawing.Point(13, 51);
-			this.WestDecorationBox.Name = "WestDecorationBox";
-			this.WestDecorationBox.Size = new System.Drawing.Size(28, 23);
-			this.WestDecorationBox.TabIndex = 0;
-			this.WestDecorationBox.TabStop = true;
-			this.WestDecorationBox.Text = "W";
-			this.WestDecorationBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.WestDecorationBox.UseVisualStyleBackColor = true;
-			this.WestDecorationBox.CheckedChanged += new System.EventHandler(this.WestDecorationBox_CheckedChanged);
-			// 
-			// SouthDecorationBox
-			// 
-			this.SouthDecorationBox.Appearance = System.Windows.Forms.Appearance.Button;
-			this.SouthDecorationBox.Location = new System.Drawing.Point(30, 80);
-			this.SouthDecorationBox.Name = "SouthDecorationBox";
-			this.SouthDecorationBox.Size = new System.Drawing.Size(28, 23);
-			this.SouthDecorationBox.TabIndex = 0;
-			this.SouthDecorationBox.TabStop = true;
-			this.SouthDecorationBox.Text = "S";
-			this.SouthDecorationBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.SouthDecorationBox.UseVisualStyleBackColor = true;
-			this.SouthDecorationBox.CheckedChanged += new System.EventHandler(this.SouthDecorationBox_CheckedChanged);
-			// 
-			// EastDecorationBox
-			// 
-			this.EastDecorationBox.Appearance = System.Windows.Forms.Appearance.Button;
-			this.EastDecorationBox.Location = new System.Drawing.Point(47, 51);
-			this.EastDecorationBox.Name = "EastDecorationBox";
-			this.EastDecorationBox.Size = new System.Drawing.Size(28, 23);
-			this.EastDecorationBox.TabIndex = 0;
-			this.EastDecorationBox.TabStop = true;
-			this.EastDecorationBox.Text = "E";
-			this.EastDecorationBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.EastDecorationBox.UseVisualStyleBackColor = true;
-			this.EastDecorationBox.CheckedChanged += new System.EventHandler(this.EastDecorationBox_CheckedChanged);
-			// 
-			// groupBox6
-			// 
-			this.groupBox6.Controls.Add(this.DecorationIdBox);
-			this.groupBox6.Location = new System.Drawing.Point(3, 118);
-			this.groupBox6.Name = "groupBox6";
-			this.groupBox6.Size = new System.Drawing.Size(94, 58);
-			this.groupBox6.TabIndex = 24;
-			this.groupBox6.TabStop = false;
-			this.groupBox6.Text = "Decoration";
-			// 
-			// ClearDecorationBox
-			// 
-			this.ClearDecorationBox.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.ClearDecorationBox.Location = new System.Drawing.Point(6, 444);
-			this.ClearDecorationBox.Name = "ClearDecorationBox";
-			this.ClearDecorationBox.Size = new System.Drawing.Size(492, 23);
-			this.ClearDecorationBox.TabIndex = 25;
-			this.ClearDecorationBox.Text = "Remove decoration";
-			this.ClearDecorationBox.UseVisualStyleBackColor = true;
-			// 
-			// DecorationIdBox
-			// 
-			this.DecorationIdBox.Location = new System.Drawing.Point(6, 19);
-			this.DecorationIdBox.Maximum = new decimal(new int[] {
-            99999999,
-            0,
-            0,
-            0});
-			this.DecorationIdBox.Name = "DecorationIdBox";
-			this.DecorationIdBox.Size = new System.Drawing.Size(82, 20);
-			this.DecorationIdBox.TabIndex = 0;
-			this.DecorationIdBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.DecorationIdBox.ThousandsSeparator = true;
-			this.DecorationIdBox.ValueChanged += new System.EventHandler(this.DecorationIdBox_ValueChanged);
-			// 
 			// SquareForm
 			// 
 			this.AcceptButton = this.CloseBox;
@@ -798,7 +809,7 @@
 			this.ClientSize = new System.Drawing.Size(533, 552);
 			this.Controls.Add(this.CloseBox);
 			this.Controls.Add(this.TabControlBox);
-			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.KeyPreview = true;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
@@ -807,9 +818,13 @@
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Square wizard";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SquareForm_FormClosing);
 			this.Load += new System.EventHandler(this.MazeBlockForm_Load);
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MazeBlockForm_KeyDown);
 			this.DecorationTab.ResumeLayout(false);
+			this.groupBox6.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.DecorationIdBox)).EndInit();
+			this.groupBox14.ResumeLayout(false);
 			this.groupBox5.ResumeLayout(false);
 			this.MonstersTab.ResumeLayout(false);
 			this.groupBox13.ResumeLayout(false);
@@ -830,9 +845,6 @@
 			this.groupBox2.ResumeLayout(false);
 			this.TabControlBox.ResumeLayout(false);
 			this.ActorTab.ResumeLayout(false);
-			this.groupBox14.ResumeLayout(false);
-			this.groupBox6.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize) (this.DecorationIdBox)).EndInit();
 			this.ResumeLayout(false);
 
 		}

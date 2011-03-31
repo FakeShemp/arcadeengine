@@ -60,12 +60,16 @@ namespace DungeonEye
 			Type = SquareType.Wall;
 			Monsters = new Monster[4];
 
-			Decorations = new int[4];
+			Decorations = new int[] { -1, -1, -1, -1 };
 			Alcoves = new bool[4];
 
-			Items = new List<Item>[4];
-			for (int i = 0; i < 4; i++)
-				Items[i] = new List<Item>();
+			Items = new List<Item>[]
+			{
+				new List<Item>(),
+				new List<Item>(),
+				new List<Item>(),
+				new List<Item>()
+			};
 
 		}
 
@@ -75,7 +79,7 @@ namespace DungeonEye
 		/// </summary>
 		public void Init()
 		{
-			for (int i = 0 ; i < 4 ; i++)
+			for (int i = 0; i < 4; i++)
 			{
 				// Monsters
 				if (Monsters[i] != null)
@@ -283,7 +287,7 @@ namespace DungeonEye
 				Actor.OnMonsterEnter(monster);
 		}
 
-	
+
 		/// <summary>
 		/// Monster leaves the block
 		/// </summary>
@@ -306,7 +310,7 @@ namespace DungeonEye
 		{
 			if (item == null)
 				return;
-		
+
 			if (Actor != null)
 				Actor.OnItemDropped(item);
 		}
@@ -337,6 +341,11 @@ namespace DungeonEye
 		{
 			return ResourceManager.CreateAsset<DecorationSet>(Decorations[(int)direction].ToString());
 		}
+
+
+		#region Decoration
+
+		#endregion
 
 
 		#region Monsters
@@ -377,7 +386,7 @@ namespace DungeonEye
 			if (position == SquarePosition.Center)
 				return;
 
-			Monsters[(int) position] = null;
+			Monsters[(int)position] = null;
 		}
 
 		#endregion
@@ -515,19 +524,14 @@ namespace DungeonEye
 
 
 			// Wall decoration
-			for (int i = 0; i < 4; i++)
-			{
-				if (Decorations[i] != 0)
-				{
-					writer.WriteStartElement("decoration");
-					writer.WriteAttributeString("position", i.ToString());
-					writer.WriteAttributeString("id", Decorations[i].ToString());
-					writer.WriteEndElement();
-				}
-			}
+			writer.WriteStartElement("decoration");
+			foreach (CardinalPoint point in Enum.GetValues(typeof(CardinalPoint)))
+				writer.WriteAttributeString(point.ToString(), Decorations[(int)point].ToString());
+			writer.WriteEndElement();
+
 
 			// Alcoves
-			foreach(CardinalPoint side in Enum.GetValues(typeof(CardinalPoint)))
+			foreach (CardinalPoint side in Enum.GetValues(typeof(CardinalPoint)))
 			{
 				if (HasAlcove(side))
 				{
@@ -585,7 +589,7 @@ namespace DungeonEye
 		{
 			if (xml == null)
 				return false;
-			
+
 			foreach (XmlNode node in xml)
 			{
 				if (node.NodeType == XmlNodeType.Comment)
@@ -692,6 +696,13 @@ namespace DungeonEye
 					}
 					break;
 
+					case "decoration":
+					{
+						foreach (CardinalPoint point in Enum.GetValues(typeof(CardinalPoint)))
+							Decorations[(int)point] = int.Parse(node.Attributes[point.ToString()].Value);
+					}
+					break;
+
 					default:
 					{
 						Trace.WriteLine("[Square] Load() : Unknown node \"{0}\"", node.Name);
@@ -718,7 +729,7 @@ namespace DungeonEye
 		/// <returns>List of items</returns>
 		public List<Item> GetItems(SquarePosition position)
 		{
-			return Items[(int) position];
+			return Items[(int)position];
 		}
 
 
@@ -738,7 +749,7 @@ namespace DungeonEye
 				{CardinalPoint.East, CardinalPoint.West, CardinalPoint.North, CardinalPoint.South},
 			};
 
-			return GetItems((SquarePosition) tab[(int) from, (int) position]);
+			return GetItems((SquarePosition)tab[(int)from, (int)position]);
 		}
 
 
@@ -963,7 +974,7 @@ namespace DungeonEye
 
 				else if (IsWall)
 					return true;
-				
+
 				else if (HasMonster)
 					return true;
 
@@ -1092,7 +1103,7 @@ namespace DungeonEye
 		/// Wall block
 		/// </summary>
 		Wall,
-		
+
 		/// <summary>
 		/// Illusionary wall
 		/// </summary>

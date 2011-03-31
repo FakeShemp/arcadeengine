@@ -45,6 +45,7 @@ namespace DungeonEye
 			Location = new Point[18];
 			for (int i = 0 ; i < TileId.Length ; i++)
 				TileId[i] = -1;
+			Swap = new bool[18];
 		}
 
 
@@ -95,6 +96,25 @@ namespace DungeonEye
 		}
 
 
+		/// <summary>
+		/// Gets if the tile need to be swapped
+		/// </summary>
+		/// <param name="position">View field position</param>
+		/// <returns>True on horizontal swap</returns>
+		public bool GetSwap(ViewFieldPosition position)
+		{
+			return Swap[(int)position];
+		}
+
+
+		/// <summary>
+		/// Sets if the tile need to be swapped
+		/// </summary>
+		/// <param name="position">View field position</param>
+		public void SetSwap(ViewFieldPosition position, bool swap)
+		{
+			Swap[(int)position] = swap;
+		}
 
 
 		#region IO
@@ -121,6 +141,7 @@ namespace DungeonEye
 					Location[(int) pos].X = int.Parse(node.Attributes["x"].Value);
 					Location[(int) pos].Y = int.Parse(node.Attributes["y"].Value);
 					TileId[(int) pos] = int.Parse(node.Attributes["id"].Value);
+					Swap[(int)pos] = bool.Parse(node.Attributes["swap"].Value);
 				}
 				catch (Exception e)
 				{
@@ -155,7 +176,8 @@ namespace DungeonEye
 				writer.WriteStartElement(vfp.ToString());
 				writer.WriteAttributeString("id", TileId[(int) vfp].ToString());
 				writer.WriteAttributeString("x", Location[(int) vfp].X.ToString());
-				writer.WriteAttributeString("y", Location[(int) vfp].Y.ToString());
+				writer.WriteAttributeString("y", Location[(int)vfp].Y.ToString());
+				writer.WriteAttributeString("swap", Swap[(int)vfp].ToString());
 				writer.WriteEndElement();
 			}
 
@@ -183,6 +205,11 @@ namespace DungeonEye
 		/// </summary>
 		Point[] Location;
 
+
+		/// <summary>
+		/// Horizontal swap
+		/// </summary>
+		bool[] Swap;
 
 		#endregion
 

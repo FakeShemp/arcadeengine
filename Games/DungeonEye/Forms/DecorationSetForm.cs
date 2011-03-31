@@ -170,6 +170,7 @@ namespace DungeonEye.Forms
 			if (Decoration != null)
 			{
 				TileIdBox.Value = Decoration.GetTileId(ViewPositionBox.Position);
+				HorizontalSwapBox.Checked = Decoration.GetSwap(ViewPositionBox.Position);
 
 			}
 			else
@@ -260,6 +261,21 @@ namespace DungeonEye.Forms
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		private void HorizontalSwapBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Decoration == null)
+				return;
+
+			Decoration.SetSwap(ViewPositionBox.Position, HorizontalSwapBox.Checked);
+
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void BgTileSetBox_SelectedIndexChanged(object sender, System.EventArgs e)
 		{
 			if (BackgroundTileSetBox.SelectedIndex == -1)
@@ -329,7 +345,10 @@ namespace DungeonEye.Forms
 		private void ViewPositionBox_PositionChanged(object sender, ViewFieldPosition position)
 		{
 			if (Decoration != null)
+			{
 				TileIdBox.Value = Decoration.GetTileId(position);
+				HorizontalSwapBox.Checked = Decoration.GetSwap(ViewPositionBox.Position);
+			}
 			else
 				TileIdBox.Value = -1;
 		}
@@ -350,14 +369,16 @@ namespace DungeonEye.Forms
 			if (Decoration == null)
 				return;
 
-			int tileid = Decoration.GetTileId(ViewPositionBox.Position);
-			Point location = Decoration.GetLocation(ViewPositionBox.Position);
-			Tile tile = DecorationSet.Tileset.GetTile(tileid);
-			Point offset = new Point(LastMousePosition.X - e.Location.X, LastMousePosition.Y - e.Location.Y);
 
 			// Left mouse button
 			if (e.Button == MouseButtons.Left)
 			{
+				int tileid = Decoration.GetTileId(ViewPositionBox.Position);
+				Point location = Decoration.GetLocation(ViewPositionBox.Position);
+				Tile tile = DecorationSet.Tileset.GetTile(tileid);
+				Point offset = new Point(LastMousePosition.X - e.Location.X, LastMousePosition.Y - e.Location.Y);
+
+
 				// Mouse over tile, so pan the tile
 				Rectangle rect = new Rectangle(location, tile.Size);
 				Decoration.SetLocation(ViewPositionBox.Position, new Point(location.X - offset.X, location.Y - offset.Y));
@@ -470,6 +491,7 @@ namespace DungeonEye.Forms
 		Point LastMousePosition;
 
 		#endregion
+
 
 	}
 }
