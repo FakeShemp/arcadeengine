@@ -876,19 +876,19 @@ namespace DungeonEye
 
 			switch (pos)
 			{
+				case ViewFieldPosition.A:
 				case ViewFieldPosition.B:
 				case ViewFieldPosition.C:
 				case ViewFieldPosition.D:
 				case ViewFieldPosition.E:
-				case ViewFieldPosition.F:
 
+				case ViewFieldPosition.G:
+				case ViewFieldPosition.H:
 				case ViewFieldPosition.I:
-				case ViewFieldPosition.J:
-				case ViewFieldPosition.K:
 
+				case ViewFieldPosition.K:
+				case ViewFieldPosition.L:
 				case ViewFieldPosition.M:
-				case ViewFieldPosition.N:
-				case ViewFieldPosition.O:
 				{
 					TextureEnvMode mode = Display.TexEnv;
 

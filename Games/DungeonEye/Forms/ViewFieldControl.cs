@@ -58,10 +58,8 @@ namespace DungeonEye.Forms
 				LBox,
 				MBox,
 				NBox,
-				OBox,
-				PBox,
 				TeamBox,
-				QBox,
+				OBox,
 			};
 
 

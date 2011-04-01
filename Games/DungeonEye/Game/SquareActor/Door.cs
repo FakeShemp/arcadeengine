@@ -94,7 +94,7 @@ namespace DungeonEye
 
 
 			// TODO: Under the door, draw sides
-			if (field.GetBlock(ViewFieldPosition.N).IsWall && position == ViewFieldPosition.Team)
+			if (field.GetBlock(ViewFieldPosition.L).IsWall && position == ViewFieldPosition.Team)
 			{
 		//		td = DisplayCoordinates.GetDoor(ViewFieldPosition.Team);
 		//		if (td != null)
@@ -301,9 +301,9 @@ namespace DungeonEye
 
 			switch (distance)
 			{
+				case ViewFieldPosition.K:
+				case ViewFieldPosition.L:
 				case ViewFieldPosition.M:
-				case ViewFieldPosition.N:
-				case ViewFieldPosition.O:
 				{
 					location.Offset(56, 16);
 					scale = Vector2.One;
@@ -311,11 +311,11 @@ namespace DungeonEye
 				}
 				break;
 
+				case ViewFieldPosition.F:
+				case ViewFieldPosition.G:
 				case ViewFieldPosition.H:
 				case ViewFieldPosition.I:
 				case ViewFieldPosition.J:
-				case ViewFieldPosition.K:
-				case ViewFieldPosition.L:
 				{
 					location.Offset(32, 10);
 					scale = new Vector2(0.66f, 0.66f);
@@ -324,13 +324,13 @@ namespace DungeonEye
 				}
 				break;
 
+				//case ViewFieldPosition.A:
 				case ViewFieldPosition.A:
 				case ViewFieldPosition.B:
 				case ViewFieldPosition.C:
 				case ViewFieldPosition.D:
 				case ViewFieldPosition.E:
-				case ViewFieldPosition.F:
-				case ViewFieldPosition.G:
+				//case ViewFieldPosition.G:
 				{
 					location.Offset(12, 6);
 					scale = new Vector2(0.50f, 0.50f);
@@ -368,9 +368,9 @@ namespace DungeonEye
 
 			switch (distance)
 			{
+				case ViewFieldPosition.K:
+				case ViewFieldPosition.L:
 				case ViewFieldPosition.M:
-				case ViewFieldPosition.N:
-				case ViewFieldPosition.O:
 				{
 					location.Offset(56, 14);
 					scale = Vector2.One;
@@ -381,11 +381,11 @@ namespace DungeonEye
 				}
 				break;
 
+				case ViewFieldPosition.F:
+				case ViewFieldPosition.G:
 				case ViewFieldPosition.H:
 				case ViewFieldPosition.I:
 				case ViewFieldPosition.J:
-				case ViewFieldPosition.K:
-				case ViewFieldPosition.L:
 				{
 					location.Offset(28, 8);
 					scale = new Vector2(0.66f, 0.66f);
@@ -397,13 +397,13 @@ namespace DungeonEye
 				}
 				break;
 
+				//case ViewFieldPosition.A:
 				case ViewFieldPosition.A:
 				case ViewFieldPosition.B:
 				case ViewFieldPosition.C:
 				case ViewFieldPosition.D:
 				case ViewFieldPosition.E:
-				case ViewFieldPosition.F:
-				case ViewFieldPosition.G:
+				//case ViewFieldPosition.G:
 				{
 					location.Offset(14, 4);
 					scale = new Vector2(0.5f, 0.5f);

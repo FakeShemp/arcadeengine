@@ -199,6 +199,22 @@ namespace DungeonEye.Forms
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		private void ClearAllBox_Click(object sender, EventArgs e)
+		{
+			if (Decoration == null)
+				return;
+
+			Decoration.Clear();
+
+			UpdateViewBoxStatus();
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void DecorationForm_Load(object sender, System.EventArgs e)
 		{
 			OpenGLBox.MakeCurrent();
@@ -491,7 +507,6 @@ namespace DungeonEye.Forms
 		Point LastMousePosition;
 
 		#endregion
-
 
 	}
 }

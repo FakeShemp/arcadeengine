@@ -75,6 +75,7 @@
 			this.DungeonTab = new System.Windows.Forms.TabPage();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
 			this.ItemTileSetBox = new System.Windows.Forms.ComboBox();
+			this.StartLocationBox = new DungeonEye.Forms.TargetControl();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.DungeonNoteBox = new System.Windows.Forms.TextBox();
 			this.MazeTab = new System.Windows.Forms.TabPage();
@@ -88,7 +89,6 @@
 			this.LeftPanel = new System.Windows.Forms.Panel();
 			this.groupBox5 = new System.Windows.Forms.GroupBox();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
-			this.StartLocationBox = new DungeonEye.Forms.TargetControl();
 			this.DungeonStripBox.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.RightPanel.SuspendLayout();
@@ -599,6 +599,17 @@
 			this.ItemTileSetBox.TabIndex = 4;
 			this.ItemTileSetBox.SelectedIndexChanged += new System.EventHandler(this.ItemTileSetBox_SelectedIndexChanged);
 			// 
+			// StartLocationBox
+			// 
+			this.StartLocationBox.Dungeon = null;
+			this.StartLocationBox.Location = new System.Drawing.Point(6, 6);
+			this.StartLocationBox.MinimumSize = new System.Drawing.Size(175, 100);
+			this.StartLocationBox.Name = "StartLocationBox";
+			this.StartLocationBox.Size = new System.Drawing.Size(175, 100);
+			this.StartLocationBox.TabIndex = 6;
+			this.StartLocationBox.Title = "Start location :";
+			this.StartLocationBox.TargetChanged += new DungeonEye.Forms.TargetControl.TargetChangedEventHandler(this.StartLocationBox_TargetChanged);
+			// 
 			// groupBox1
 			// 
 			this.groupBox1.Controls.Add(this.DungeonNoteBox);
@@ -745,17 +756,6 @@
 			this.groupBox4.TabIndex = 0;
 			this.groupBox4.TabStop = false;
 			this.groupBox4.Text = "Properties :";
-			// 
-			// StartLocationBox
-			// 
-			this.StartLocationBox.Dungeon = null;
-			this.StartLocationBox.Location = new System.Drawing.Point(6, 6);
-			this.StartLocationBox.MinimumSize = new System.Drawing.Size(175, 100);
-			this.StartLocationBox.Name = "StartLocationBox";
-			this.StartLocationBox.Size = new System.Drawing.Size(175, 100);
-			this.StartLocationBox.TabIndex = 6;
-			this.StartLocationBox.Title = "Start location :";
-			this.StartLocationBox.TargetChanged += new DungeonEye.Forms.TargetControl.TargetChangedEventHandler(this.StartLocationBox_TargetChanged);
 			// 
 			// DungeonForm
 			// 

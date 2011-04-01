@@ -35,6 +35,7 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.BackgroundTileSetBox = new System.Windows.Forms.ComboBox();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.HorizontalSwapBox = new System.Windows.Forms.CheckBox();
 			this.LocationBox = new System.Windows.Forms.Label();
 			this.label4 = new System.Windows.Forms.Label();
 			this.label5 = new System.Windows.Forms.Label();
@@ -44,13 +45,13 @@
 			this.label2 = new System.Windows.Forms.Label();
 			this.TilesetBox = new System.Windows.Forms.ComboBox();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
-			this.DrawTimer = new System.Windows.Forms.Timer(this.components);
-			this.HorizontalSwapBox = new System.Windows.Forms.CheckBox();
 			this.ViewPositionBox = new DungeonEye.Forms.ViewFieldControl();
+			this.DrawTimer = new System.Windows.Forms.Timer(this.components);
+			this.ClearAllBox = new System.Windows.Forms.Button();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.TileIdBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.DecorationIdBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize) (this.TileIdBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize) (this.DecorationIdBox)).BeginInit();
 			this.groupBox3.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -73,7 +74,7 @@
 			this.groupBox1.Controls.Add(this.OpenGLBox);
 			this.groupBox1.Location = new System.Drawing.Point(263, 12);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(369, 323);
+			this.groupBox1.Size = new System.Drawing.Size(369, 331);
 			this.groupBox1.TabIndex = 2;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Preview :";
@@ -121,12 +122,23 @@
 			this.groupBox2.Controls.Add(this.DecorationIdBox);
 			this.groupBox2.Controls.Add(this.label2);
 			this.groupBox2.Controls.Add(this.TilesetBox);
-			this.groupBox2.Location = new System.Drawing.Point(12, 175);
+			this.groupBox2.Location = new System.Drawing.Point(12, 183);
 			this.groupBox2.Name = "groupBox2";
 			this.groupBox2.Size = new System.Drawing.Size(245, 160);
 			this.groupBox2.TabIndex = 3;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Properties :";
+			// 
+			// HorizontalSwapBox
+			// 
+			this.HorizontalSwapBox.AutoSize = true;
+			this.HorizontalSwapBox.Location = new System.Drawing.Point(91, 108);
+			this.HorizontalSwapBox.Name = "HorizontalSwapBox";
+			this.HorizontalSwapBox.Size = new System.Drawing.Size(101, 17);
+			this.HorizontalSwapBox.TabIndex = 6;
+			this.HorizontalSwapBox.Text = "Horizontal swap";
+			this.HorizontalSwapBox.UseVisualStyleBackColor = true;
+			this.HorizontalSwapBox.CheckedChanged += new System.EventHandler(this.HorizontalSwapBox_CheckedChanged);
 			// 
 			// LocationBox
 			// 
@@ -219,39 +231,39 @@
 			// 
 			// groupBox3
 			// 
+			this.groupBox3.Controls.Add(this.ClearAllBox);
 			this.groupBox3.Controls.Add(this.ViewPositionBox);
 			this.groupBox3.Location = new System.Drawing.Point(12, 12);
 			this.groupBox3.Name = "groupBox3";
-			this.groupBox3.Size = new System.Drawing.Size(245, 157);
+			this.groupBox3.Size = new System.Drawing.Size(245, 165);
 			this.groupBox3.TabIndex = 4;
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "View point :";
+			// 
+			// ViewPositionBox
+			// 
+			this.ViewPositionBox.Location = new System.Drawing.Point(9, 19);
+			this.ViewPositionBox.MinimumSize = new System.Drawing.Size(160, 120);
+			this.ViewPositionBox.Name = "ViewPositionBox";
+			this.ViewPositionBox.Position = DungeonEye.ViewFieldPosition.Team;
+			this.ViewPositionBox.Size = new System.Drawing.Size(160, 120);
+			this.ViewPositionBox.TabIndex = 0;
+			this.ViewPositionBox.PositionChanged += new DungeonEye.Forms.ViewFieldControl.ChangedEventHandler(this.ViewPositionBox_PositionChanged);
 			// 
 			// DrawTimer
 			// 
 			this.DrawTimer.Interval = 66;
 			this.DrawTimer.Tick += new System.EventHandler(this.DrawTimer_Tick);
 			// 
-			// HorizontalSwapBox
+			// ClearAllBox
 			// 
-			this.HorizontalSwapBox.AutoSize = true;
-			this.HorizontalSwapBox.Location = new System.Drawing.Point(91, 108);
-			this.HorizontalSwapBox.Name = "HorizontalSwapBox";
-			this.HorizontalSwapBox.Size = new System.Drawing.Size(101, 17);
-			this.HorizontalSwapBox.TabIndex = 6;
-			this.HorizontalSwapBox.Text = "Horizontal swap";
-			this.HorizontalSwapBox.UseVisualStyleBackColor = true;
-			this.HorizontalSwapBox.CheckedChanged += new System.EventHandler(this.HorizontalSwapBox_CheckedChanged);
-			// 
-			// ViewPositionBox
-			// 
-			this.ViewPositionBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.ViewPositionBox.Location = new System.Drawing.Point(3, 16);
-			this.ViewPositionBox.Name = "ViewPositionBox";
-			this.ViewPositionBox.Position = DungeonEye.ViewFieldPosition.Team;
-			this.ViewPositionBox.Size = new System.Drawing.Size(239, 138);
-			this.ViewPositionBox.TabIndex = 0;
-			this.ViewPositionBox.PositionChanged += new DungeonEye.Forms.ViewFieldControl.ChangedEventHandler(this.ViewPositionBox_PositionChanged);
+			this.ClearAllBox.Location = new System.Drawing.Point(164, 136);
+			this.ClearAllBox.Name = "ClearAllBox";
+			this.ClearAllBox.Size = new System.Drawing.Size(75, 23);
+			this.ClearAllBox.TabIndex = 1;
+			this.ClearAllBox.Text = "Clear";
+			this.ClearAllBox.UseVisualStyleBackColor = true;
+			this.ClearAllBox.Click += new System.EventHandler(this.ClearAllBox_Click);
 			// 
 			// DecorationSetForm
 			// 
@@ -269,8 +281,8 @@
 			this.groupBox1.PerformLayout();
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.TileIdBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.DecorationIdBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize) (this.TileIdBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize) (this.DecorationIdBox)).EndInit();
 			this.groupBox3.ResumeLayout(false);
 			this.ResumeLayout(false);
 
@@ -296,5 +308,6 @@
 		private System.Windows.Forms.CheckBox DisplayWallBox;
 		private System.Windows.Forms.Timer DrawTimer;
 		private System.Windows.Forms.CheckBox HorizontalSwapBox;
+		private System.Windows.Forms.Button ClearAllBox;
 	}
 }

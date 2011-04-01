@@ -33,19 +33,17 @@
 			this.CBox = new System.Windows.Forms.CheckBox();
 			this.DBox = new System.Windows.Forms.CheckBox();
 			this.EBox = new System.Windows.Forms.CheckBox();
+			this.NBox = new System.Windows.Forms.CheckBox();
 			this.FBox = new System.Windows.Forms.CheckBox();
 			this.GBox = new System.Windows.Forms.CheckBox();
-			this.PBox = new System.Windows.Forms.CheckBox();
 			this.HBox = new System.Windows.Forms.CheckBox();
 			this.IBox = new System.Windows.Forms.CheckBox();
 			this.JBox = new System.Windows.Forms.CheckBox();
 			this.KBox = new System.Windows.Forms.CheckBox();
 			this.LBox = new System.Windows.Forms.CheckBox();
 			this.MBox = new System.Windows.Forms.CheckBox();
-			this.NBox = new System.Windows.Forms.CheckBox();
-			this.OBox = new System.Windows.Forms.CheckBox();
 			this.TeamBox = new System.Windows.Forms.CheckBox();
-			this.QBox = new System.Windows.Forms.CheckBox();
+			this.OBox = new System.Windows.Forms.CheckBox();
 			this.SuspendLayout();
 			// 
 			// ABox
@@ -108,10 +106,22 @@
 			this.EBox.UseVisualStyleBackColor = true;
 			this.EBox.CheckedChanged += new System.EventHandler(this.Box_CheckedChanged);
 			// 
+			// NBox
+			// 
+			this.NBox.Appearance = System.Windows.Forms.Appearance.Button;
+			this.NBox.Location = new System.Drawing.Point(34, 90);
+			this.NBox.Name = "NBox";
+			this.NBox.Size = new System.Drawing.Size(25, 24);
+			this.NBox.TabIndex = 0;
+			this.NBox.Text = "N";
+			this.NBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.NBox.UseVisualStyleBackColor = true;
+			this.NBox.CheckedChanged += new System.EventHandler(this.Box_CheckedChanged);
+			// 
 			// FBox
 			// 
 			this.FBox.Appearance = System.Windows.Forms.Appearance.Button;
-			this.FBox.Location = new System.Drawing.Point(158, 3);
+			this.FBox.Location = new System.Drawing.Point(3, 32);
 			this.FBox.Name = "FBox";
 			this.FBox.Size = new System.Drawing.Size(25, 24);
 			this.FBox.TabIndex = 0;
@@ -123,7 +133,7 @@
 			// GBox
 			// 
 			this.GBox.Appearance = System.Windows.Forms.Appearance.Button;
-			this.GBox.Location = new System.Drawing.Point(189, 3);
+			this.GBox.Location = new System.Drawing.Point(34, 32);
 			this.GBox.Name = "GBox";
 			this.GBox.Size = new System.Drawing.Size(25, 24);
 			this.GBox.TabIndex = 0;
@@ -132,22 +142,10 @@
 			this.GBox.UseVisualStyleBackColor = true;
 			this.GBox.CheckedChanged += new System.EventHandler(this.Box_CheckedChanged);
 			// 
-			// PBox
-			// 
-			this.PBox.Appearance = System.Windows.Forms.Appearance.Button;
-			this.PBox.Location = new System.Drawing.Point(65, 90);
-			this.PBox.Name = "PBox";
-			this.PBox.Size = new System.Drawing.Size(25, 24);
-			this.PBox.TabIndex = 0;
-			this.PBox.Text = "P";
-			this.PBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.PBox.UseVisualStyleBackColor = true;
-			this.PBox.CheckedChanged += new System.EventHandler(this.Box_CheckedChanged);
-			// 
 			// HBox
 			// 
 			this.HBox.Appearance = System.Windows.Forms.Appearance.Button;
-			this.HBox.Location = new System.Drawing.Point(34, 32);
+			this.HBox.Location = new System.Drawing.Point(65, 32);
 			this.HBox.Name = "HBox";
 			this.HBox.Size = new System.Drawing.Size(25, 24);
 			this.HBox.TabIndex = 0;
@@ -159,7 +157,7 @@
 			// IBox
 			// 
 			this.IBox.Appearance = System.Windows.Forms.Appearance.Button;
-			this.IBox.Location = new System.Drawing.Point(65, 32);
+			this.IBox.Location = new System.Drawing.Point(96, 32);
 			this.IBox.Name = "IBox";
 			this.IBox.Size = new System.Drawing.Size(25, 24);
 			this.IBox.TabIndex = 0;
@@ -171,7 +169,7 @@
 			// JBox
 			// 
 			this.JBox.Appearance = System.Windows.Forms.Appearance.Button;
-			this.JBox.Location = new System.Drawing.Point(96, 32);
+			this.JBox.Location = new System.Drawing.Point(127, 32);
 			this.JBox.Name = "JBox";
 			this.JBox.Size = new System.Drawing.Size(25, 24);
 			this.JBox.TabIndex = 0;
@@ -183,7 +181,7 @@
 			// KBox
 			// 
 			this.KBox.Appearance = System.Windows.Forms.Appearance.Button;
-			this.KBox.Location = new System.Drawing.Point(127, 32);
+			this.KBox.Location = new System.Drawing.Point(34, 61);
 			this.KBox.Name = "KBox";
 			this.KBox.Size = new System.Drawing.Size(25, 24);
 			this.KBox.TabIndex = 0;
@@ -195,7 +193,7 @@
 			// LBox
 			// 
 			this.LBox.Appearance = System.Windows.Forms.Appearance.Button;
-			this.LBox.Location = new System.Drawing.Point(158, 32);
+			this.LBox.Location = new System.Drawing.Point(65, 61);
 			this.LBox.Name = "LBox";
 			this.LBox.Size = new System.Drawing.Size(25, 24);
 			this.LBox.TabIndex = 0;
@@ -207,7 +205,7 @@
 			// MBox
 			// 
 			this.MBox.Appearance = System.Windows.Forms.Appearance.Button;
-			this.MBox.Location = new System.Drawing.Point(65, 61);
+			this.MBox.Location = new System.Drawing.Point(96, 61);
 			this.MBox.Name = "MBox";
 			this.MBox.Size = new System.Drawing.Size(25, 24);
 			this.MBox.TabIndex = 0;
@@ -216,34 +214,10 @@
 			this.MBox.UseVisualStyleBackColor = true;
 			this.MBox.CheckedChanged += new System.EventHandler(this.Box_CheckedChanged);
 			// 
-			// NBox
-			// 
-			this.NBox.Appearance = System.Windows.Forms.Appearance.Button;
-			this.NBox.Location = new System.Drawing.Point(96, 61);
-			this.NBox.Name = "NBox";
-			this.NBox.Size = new System.Drawing.Size(25, 24);
-			this.NBox.TabIndex = 0;
-			this.NBox.Text = "N";
-			this.NBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.NBox.UseVisualStyleBackColor = true;
-			this.NBox.CheckedChanged += new System.EventHandler(this.Box_CheckedChanged);
-			// 
-			// OBox
-			// 
-			this.OBox.Appearance = System.Windows.Forms.Appearance.Button;
-			this.OBox.Location = new System.Drawing.Point(127, 61);
-			this.OBox.Name = "OBox";
-			this.OBox.Size = new System.Drawing.Size(25, 24);
-			this.OBox.TabIndex = 0;
-			this.OBox.Text = "O";
-			this.OBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.OBox.UseVisualStyleBackColor = true;
-			this.OBox.CheckedChanged += new System.EventHandler(this.Box_CheckedChanged);
-			// 
 			// TeamBox
 			// 
 			this.TeamBox.Appearance = System.Windows.Forms.Appearance.Button;
-			this.TeamBox.Location = new System.Drawing.Point(96, 90);
+			this.TeamBox.Location = new System.Drawing.Point(65, 90);
 			this.TeamBox.Name = "TeamBox";
 			this.TeamBox.Size = new System.Drawing.Size(25, 24);
 			this.TeamBox.TabIndex = 0;
@@ -252,42 +226,41 @@
 			this.TeamBox.UseVisualStyleBackColor = true;
 			this.TeamBox.CheckedChanged += new System.EventHandler(this.Box_CheckedChanged);
 			// 
-			// QBox
+			// OBox
 			// 
-			this.QBox.Appearance = System.Windows.Forms.Appearance.Button;
-			this.QBox.Location = new System.Drawing.Point(127, 90);
-			this.QBox.Name = "QBox";
-			this.QBox.Size = new System.Drawing.Size(25, 24);
-			this.QBox.TabIndex = 0;
-			this.QBox.Text = "Q";
-			this.QBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.QBox.UseVisualStyleBackColor = true;
-			this.QBox.CheckedChanged += new System.EventHandler(this.Box_CheckedChanged);
+			this.OBox.Appearance = System.Windows.Forms.Appearance.Button;
+			this.OBox.Location = new System.Drawing.Point(96, 90);
+			this.OBox.Name = "OBox";
+			this.OBox.Size = new System.Drawing.Size(25, 24);
+			this.OBox.TabIndex = 0;
+			this.OBox.Text = "O";
+			this.OBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.OBox.UseVisualStyleBackColor = true;
+			this.OBox.CheckedChanged += new System.EventHandler(this.Box_CheckedChanged);
 			// 
-			// ViewPositionControl
+			// ViewFieldControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.Controls.Add(this.GBox);
-			this.Controls.Add(this.LBox);
-			this.Controls.Add(this.QBox);
-			this.Controls.Add(this.OBox);
-			this.Controls.Add(this.FBox);
-			this.Controls.Add(this.TeamBox);
-			this.Controls.Add(this.KBox);
-			this.Controls.Add(this.NBox);
-			this.Controls.Add(this.EBox);
-			this.Controls.Add(this.PBox);
 			this.Controls.Add(this.JBox);
+			this.Controls.Add(this.OBox);
 			this.Controls.Add(this.MBox);
-			this.Controls.Add(this.DBox);
+			this.Controls.Add(this.EBox);
+			this.Controls.Add(this.TeamBox);
 			this.Controls.Add(this.IBox);
-			this.Controls.Add(this.CBox);
+			this.Controls.Add(this.LBox);
+			this.Controls.Add(this.DBox);
+			this.Controls.Add(this.NBox);
 			this.Controls.Add(this.HBox);
+			this.Controls.Add(this.KBox);
+			this.Controls.Add(this.CBox);
+			this.Controls.Add(this.GBox);
 			this.Controls.Add(this.BBox);
+			this.Controls.Add(this.FBox);
 			this.Controls.Add(this.ABox);
-			this.Name = "ViewPositionControl";
-			this.Size = new System.Drawing.Size(223, 122);
+			this.MinimumSize = new System.Drawing.Size(160, 120);
+			this.Name = "ViewFieldControl";
+			this.Size = new System.Drawing.Size(160, 120);
 			this.ResumeLayout(false);
 
 		}
@@ -308,9 +281,7 @@
 		private System.Windows.Forms.CheckBox LBox;
 		private System.Windows.Forms.CheckBox MBox;
 		private System.Windows.Forms.CheckBox NBox;
-		private System.Windows.Forms.CheckBox OBox;
-		private System.Windows.Forms.CheckBox PBox;
 		private System.Windows.Forms.CheckBox TeamBox;
-		private System.Windows.Forms.CheckBox QBox;
+		private System.Windows.Forms.CheckBox OBox;
 	}
 }

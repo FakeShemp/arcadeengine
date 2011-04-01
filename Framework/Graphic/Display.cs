@@ -136,8 +136,8 @@ namespace ArcEngine.Graphic
 			Trace.WriteLine("OpenGL informations :");
 			Trace.WriteLine("Graphics card vendor : {0}", Capabilities.VideoVendor);
 			Trace.WriteLine("Renderer : {0}", Capabilities.VideoRenderer);
-			Trace.WriteLine("Version : {0}", Capabilities.VideoVersion);
-			Trace.WriteLine("Shading Language Version : {0}", Capabilities.ShadingLanguageVersion);
+			Trace.WriteLine("OpenGL Version : {0}", Capabilities.VideoVersion);
+			Trace.WriteLine("GLSL Version : {0}", Capabilities.ShadingLanguageVersion);
 
 			Trace.WriteLine("Display modes");
 			Trace.Indent();

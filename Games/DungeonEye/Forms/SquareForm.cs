@@ -129,7 +129,7 @@ namespace DungeonEye.Forms
 
 				// Draw the decoration
 				if (Maze.Decoration != null)
-					Maze.Decoration.Draw(Batch, (int) DecorationIdBox.Value, ViewFieldPosition.N);
+					Maze.Decoration.Draw(Batch, (int) DecorationIdBox.Value, ViewFieldPosition.L);
 
 				Batch.End();
 			}

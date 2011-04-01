@@ -590,39 +590,37 @@ namespace DungeonEye
 
 
 			// maze block draw order
-			// A G B F C E D
-			// H L I K J
-			// M O N
-			// P Team Q
+			// A E B D C
+			// F J G I H
+			//   K M L
+			//   N ^ O
 
 			#region row -3
 			DrawSquare(batch, pov, ViewFieldPosition.A, location.Direction);
-			DrawSquare(batch, pov, ViewFieldPosition.G, location.Direction);
-			DrawSquare(batch, pov, ViewFieldPosition.B, location.Direction);
-			DrawSquare(batch, pov, ViewFieldPosition.F, location.Direction);
-			DrawSquare(batch, pov, ViewFieldPosition.C, location.Direction);
 			DrawSquare(batch, pov, ViewFieldPosition.E, location.Direction);
+			DrawSquare(batch, pov, ViewFieldPosition.B, location.Direction);
 			DrawSquare(batch, pov, ViewFieldPosition.D, location.Direction);
+			DrawSquare(batch, pov, ViewFieldPosition.C, location.Direction);
 			#endregion
 
 			#region row -2
-			DrawSquare(batch, pov, ViewFieldPosition.H, location.Direction);
-			DrawSquare(batch, pov, ViewFieldPosition.L, location.Direction);
-			DrawSquare(batch, pov, ViewFieldPosition.I, location.Direction);
-			DrawSquare(batch, pov, ViewFieldPosition.K, location.Direction);
+			DrawSquare(batch, pov, ViewFieldPosition.F, location.Direction);
 			DrawSquare(batch, pov, ViewFieldPosition.J, location.Direction);
+			DrawSquare(batch, pov, ViewFieldPosition.G, location.Direction);
+			DrawSquare(batch, pov, ViewFieldPosition.I, location.Direction);
+			DrawSquare(batch, pov, ViewFieldPosition.H, location.Direction);
 			#endregion
 
 			#region row -1
+			DrawSquare(batch, pov, ViewFieldPosition.K, location.Direction);
 			DrawSquare(batch, pov, ViewFieldPosition.M, location.Direction);
-			DrawSquare(batch, pov, ViewFieldPosition.O, location.Direction);
-			DrawSquare(batch, pov, ViewFieldPosition.N, location.Direction);
+			DrawSquare(batch, pov, ViewFieldPosition.L, location.Direction);
 			#endregion
 
 			#region row 0
-			DrawSquare(batch, pov, ViewFieldPosition.P, location.Direction);
+			DrawSquare(batch, pov, ViewFieldPosition.N, location.Direction);
 			DrawSquare(batch, pov, ViewFieldPosition.Team, location.Direction);
-			DrawSquare(batch, pov, ViewFieldPosition.Q, location.Direction);
+			DrawSquare(batch, pov, ViewFieldPosition.O, location.Direction);
 			#endregion
 
 
@@ -660,25 +658,23 @@ namespace DungeonEye
 				case ViewFieldPosition.C:
 				case ViewFieldPosition.D:
 				case ViewFieldPosition.E:
-				case ViewFieldPosition.F:
-				case ViewFieldPosition.G:
 				offset = 3;
 				break;
+				case ViewFieldPosition.F:
+				case ViewFieldPosition.G:
 				case ViewFieldPosition.H:
 				case ViewFieldPosition.I:
 				case ViewFieldPosition.J:
-				case ViewFieldPosition.K:
-				case ViewFieldPosition.L:
 				offset = 2;
 				break;
+				case ViewFieldPosition.K:
+				case ViewFieldPosition.L:
 				case ViewFieldPosition.M:
-				case ViewFieldPosition.N:
-				case ViewFieldPosition.O:
 				offset = 1;
 				break;
-				case ViewFieldPosition.P:
+				case ViewFieldPosition.N:
 				case ViewFieldPosition.Team:
-				case ViewFieldPosition.Q:
+				case ViewFieldPosition.O:
 				offset = 0;
 				break;
 			}
@@ -745,12 +741,14 @@ namespace DungeonEye
 			}
 			#endregion
 
+
 			#region Actor
 			if (square.Actor != null)
 			{
 				square.Actor.Draw(batch, field, position, view);
 			}
 			#endregion
+
 
 			#region Walls
 			if (square.IsWall)
@@ -803,10 +801,15 @@ namespace DungeonEye
 						}
 					}
 				}
+			}
 
-				if (Decoration != null)
-				{
-					int[] decooffset = new int[]
+			#endregion
+
+
+			#region Decoration
+			if (Decoration != null)
+			{
+				int[] decooffset = new int[]
 					{
 						1,		// View from north
 						0,		// View from south
@@ -814,10 +817,11 @@ namespace DungeonEye
 						2,		// View from east
 					};
 
-					Decoration.Draw(batch, square.Decorations[decooffset[(int)view]], position);
-				}
+				Decoration.Draw(batch, square.Decorations[decooffset[(int) view]], position);
 			}
+
 			#endregion
+
 
 			#region Items on ground after a door
 			if (!square.IsWall)
@@ -849,6 +853,7 @@ namespace DungeonEye
 			}
 			#endregion
 
+
 			#region Monsters
 			if (square.MonsterCount > 0)
 			{
@@ -869,6 +874,7 @@ namespace DungeonEye
 			}
 			#endregion
 
+
 			#region Flying items
 			List<ThrownItem>[] flyings = GetFlyingItems(square.Location, view);
 			foreach (SquarePosition pos in Enum.GetValues(typeof(SquarePosition)))
@@ -887,7 +893,6 @@ namespace DungeonEye
 
 			}
 			#endregion
-
 
 		}
 

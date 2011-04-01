@@ -117,6 +117,20 @@ namespace DungeonEye
 		}
 
 
+		/// <summary>
+		/// Clear definition
+		/// </summary>
+		public void Clear()
+		{
+			foreach (ViewFieldPosition pos in Enum.GetValues(typeof(ViewFieldPosition)))
+			{
+				SetTileId(pos, -1);
+				SetLocation(pos, Point.Empty);
+				SetSwap(pos, false);
+			}
+
+		}
+
 		#region IO
 
 		/// <summary>
