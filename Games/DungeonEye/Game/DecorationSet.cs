@@ -68,7 +68,7 @@ namespace DungeonEye
 		public void Dispose()
 		{
 			if (Tileset != null)
-				ResourceManager.UnlockSharedAsset<TileSet>(Tileset);
+				Tileset.Dispose();
 			Tileset = null;
 
 			Decorations = null;
