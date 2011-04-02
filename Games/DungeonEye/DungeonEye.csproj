@@ -500,7 +500,7 @@
     <Compile Include="Game\Dungeon.cs" />
     <Compile Include="DungeonEye.cs" />
     <Compile Include="Game\DungeonLocation.cs" />
-    <Compile Include="Game\SquareActor\FloorSwitch.cs" />
+    <Compile Include="Game\SquareActor\PressurePlate.cs" />
     <Compile Include="Game\Gui\ScreenButton.cs" />
     <Compile Include="Game\CampDialog.cs" />
     <Compile Include="Game\SquareActor\ForceField.cs" />
@@ -666,7 +666,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="credits.txt" />
-    <EmbeddedResource Include="data\GameIcon.ico" />
     <Content Include="data\settings.xml">
       <SubType>Designer</SubType>
     </Content>

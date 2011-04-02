@@ -52,7 +52,7 @@ namespace DungeonEye
 		/// <returns></returns>
 		public bool Load(XmlNode xml)
 		{
-			if (xml == null || xml.NodeType != XmlNodeType.Element)
+			if (xml == null || xml.Name != Tag)
 				return false;
 
 
@@ -124,7 +124,7 @@ namespace DungeonEye
 			if (writer == null)
 				return false;
 
-			writer.WriteStartElement("zone");
+			writer.WriteStartElement(Tag);
 			writer.WriteAttributeString("name", Name);
 
 			writer.WriteStartElement("rectangle");
@@ -180,6 +180,11 @@ namespace DungeonEye
 
 
 		#region Properties
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public const string Tag = "zone";
 
 
 		/// <summary>

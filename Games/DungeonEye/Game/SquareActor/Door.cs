@@ -39,8 +39,7 @@ namespace DungeonEye
 		/// Initializes doors
 		/// </summary>
 		/// <param name="square">Parent square handle</param>
-		public Door(Square square)
-			: base(square)
+		public Door(Square square) : base(square)
 		{
 			// Zone of the button to open/close the door
 			Button = new Rectangle(252, 90, 20, 28);
@@ -446,10 +445,10 @@ namespace DungeonEye
 		/// Loads the door's definition from a bank
 		/// </summary>
 		/// <param name="xml">Xml handle</param>
-		/// <returns></returns>
+		/// <returns>True on success</returns>
 		public override bool Load(XmlNode xml)
 		{
-			if (xml == null)
+			if (xml == null || xml.Name != Tag)
 				return false;
 
 
@@ -545,7 +544,7 @@ namespace DungeonEye
 				return false;
 
 
-			writer.WriteStartElement("door");
+			writer.WriteStartElement(Tag);
 
 			// Type of door
 			writer.WriteStartElement("type");
@@ -634,6 +633,13 @@ namespace DungeonEye
 
 		#region Properties
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public const string Tag = "door";
+
+		
 		/// <summary>
 		/// Tileset for the drawing
 		/// </summary>

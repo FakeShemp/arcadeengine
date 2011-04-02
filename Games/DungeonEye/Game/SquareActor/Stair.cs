@@ -131,10 +131,7 @@ namespace DungeonEye
 		/// <returns></returns>
 		public override bool Load(XmlNode xml)
 		{
-			if (xml == null)
-				return false;
-
-			if (xml.Name.ToLower() != "stair")
+			if (xml == null || xml.Name != Tag)
 				return false;
 
 			foreach (XmlNode node in xml)
@@ -172,7 +169,7 @@ namespace DungeonEye
 				return false;
 
 
-			writer.WriteStartElement("stair");
+			writer.WriteStartElement(Tag);
 
 			writer.WriteStartElement("type");
 			writer.WriteAttributeString("value", Type.ToString());
@@ -192,6 +189,11 @@ namespace DungeonEye
 
 
 		#region Properties
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public const string Tag = "stair";
 
 	
 

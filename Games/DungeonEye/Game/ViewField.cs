@@ -46,8 +46,6 @@ namespace DungeonEye
 			Blocks = new Square[16];
 
 
-
-
 			// Cone of vision : 15 blocks + 1 block for the Point of View
 			//
 			//    ABCDE

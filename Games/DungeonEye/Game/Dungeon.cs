@@ -46,7 +46,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Initialize the dungeon
 		/// </summary>
-		/// <returns>True if all is OK</returns>
+		/// <returns>True on success</returns>
 		public bool Init()
 		{
 			Trace.WriteLine("[Dungeon] : Init()");
@@ -54,10 +54,7 @@ namespace DungeonEye
 			// Loads maze display coordinates
 			DisplayCoordinates.Load();
 
-	//		StartLocation.Maze = StartLocation.Maze;
-
 			LoadItemTileSet();
-		
 
 			foreach (Maze maze in Mazes.Values)
 				maze.Init();
@@ -139,15 +136,12 @@ namespace DungeonEye
 		/// Loads a <see cref="Dungeon"/>
 		/// </summary>
 		/// <param name="xml"></param>
-		/// <returns></returns>
+		/// <returns>True on success</returns>
 		public bool Load(XmlNode xml)
 		{
-			if (xml == null)
-				return false;
-
-			if (xml.Name != XmlTag)
+			if (xml == null || xml.Name != XmlTag)
 			{
-				Trace.WriteLine("Expecting \"" + XmlTag + "\" in node header, found \"" + xml.Name + "\" when loading Dungeon.");
+				Trace.WriteLine("[Dungeon] Expecting \"" + XmlTag + "\" in node header, found \"" + xml.Name + "\" when loading Dungeon.");
 				return false;
 			}
 
@@ -167,7 +161,7 @@ namespace DungeonEye
 					}
 					break;
 
-					case "maze":
+					case Maze.Tag:
 					{
 						string name = node.Attributes["name"].Value;
 						Maze maze = new Maze(this);
@@ -210,7 +204,7 @@ namespace DungeonEye
 			if (writer == null)
 				return false;
 
-			writer.WriteStartElement("dungeon");
+			writer.WriteStartElement(XmlTag);
 			writer.WriteAttributeString("name", Name);
 			
 			

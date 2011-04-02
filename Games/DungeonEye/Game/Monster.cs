@@ -1177,7 +1177,7 @@ namespace DungeonEye
 		/// <returns></returns>
 		public override bool Load(XmlNode xml)
 		{
-			if (xml == null || xml.Name.ToLower() != "monster")
+			if (xml == null || xml.Name.ToLower() != XmlTag)
 				return false;
 
 			Name = xml.Attributes["name"].Value;
@@ -1374,6 +1374,11 @@ namespace DungeonEye
 					}
 					break;
 
+					case "sound":
+					{
+					}
+					break;
+
 					default:
 					{
 						base.Load(node);
@@ -1398,7 +1403,7 @@ namespace DungeonEye
 				return false;
 
 
-			writer.WriteStartElement("monster");
+			writer.WriteStartElement(XmlTag);
 			writer.WriteAttributeString("name", Name);
 			writer.WriteAttributeString("position", position.ToString());
 

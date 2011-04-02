@@ -118,14 +118,18 @@ namespace DungeonEye.Forms
 		/// </summary>
 		private void RenderDecorationScene()
 		{
-			GlWallControl.MakeCurrent();
+			GlDecorationControl.MakeCurrent();
 			Display.ClearBuffers();
 
 			if (Batch != null)
 			{
 				Batch.Begin();
 
-				Batch.DrawTile(Maze.WallTileset, 1, Point.Empty);
+				Batch.DrawTile(Maze.WallTileset, 0, Point.Empty);
+
+				TileDrawing td = DisplayCoordinates.GetWalls(ViewFieldPosition.L)[0];
+				Batch.DrawTile(Maze.WallTileset, td.ID, td.Location);
+
 
 				// Draw the decoration
 				if (Maze.Decoration != null)
@@ -135,7 +139,7 @@ namespace DungeonEye.Forms
 			}
 
 
-			GlWallControl.SwapBuffers();
+			GlDecorationControl.SwapBuffers();
 		}
 
 
@@ -406,15 +410,18 @@ namespace DungeonEye.Forms
 		#region Form events
 
 		/// <summary>
-		/// OnLoad
+		/// 
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void MazeBlockForm_Load(object sender, EventArgs e)
+		private void SquareForm_FormClosing(object sender, FormClosingEventArgs e)
 		{
-
+			if (Batch != null)
+				Batch.Dispose();
+			Batch = null;
 		}
-
+		
+		
 		/// <summary>
 		/// OnKeyDown
 		/// </summary>
@@ -605,9 +612,9 @@ namespace DungeonEye.Forms
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void GlWallControl_Load(object sender, EventArgs e)
+		private void GlDecorationControl_Load(object sender, EventArgs e)
 		{
-			GlWallControl.MakeCurrent();
+			GlDecorationControl.MakeCurrent();
 			Display.Init();
 
 			Batch = new SpriteBatch();
@@ -619,23 +626,10 @@ namespace DungeonEye.Forms
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void SquareForm_FormClosing(object sender, FormClosingEventArgs e)
+		private void GlDecorationControl_Resize(object sender, EventArgs e)
 		{
-			if (Batch != null)
-				Batch.Dispose();
-			Batch = null;
-		}
-		
-		
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void GlWallControl_Resize(object sender, EventArgs e)
-		{
-			GlWallControl.MakeCurrent();
-			Display.ViewPort = new Rectangle(Point.Empty, GlWallControl.Size);
+			GlDecorationControl.MakeCurrent();
+			Display.ViewPort = new Rectangle(Point.Empty, GlDecorationControl.Size);
 		}
 
 
@@ -644,7 +638,7 @@ namespace DungeonEye.Forms
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void GlWallControl_Paint(object sender, PaintEventArgs e)
+		private void GlDecorationControl_Paint(object sender, PaintEventArgs e)
 		{
 			RenderDecorationScene();
 		}
@@ -784,9 +778,9 @@ namespace DungeonEye.Forms
 			{
 				control = new EventSquareControl(Square.Actor as EventSquare, Maze.Dungeon);
 			}
-			else if (Square.Actor is FloorSwitch)
+			else if (Square.Actor is PressurePlate)
 			{
-				control = new FloorSwitchControl(Square.Actor as FloorSwitch, Maze.Dungeon);
+				control = new FloorSwitchControl(Square.Actor as PressurePlate, Maze.Dungeon);
 			}
 			else if (Square.Actor is ForceField)
 			{

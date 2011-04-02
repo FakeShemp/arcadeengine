@@ -31,14 +31,14 @@ namespace DungeonEye
 	/// <summary>
 	/// Floor switch
 	/// </summary>
-	public class FloorSwitch : SquareActor
+	public class PressurePlate : SquareActor
 	{
 
 		/// <summary>
 		/// Constructor
 		/// </summary>
 		/// <param name="square">Square handle</param>
-		public FloorSwitch(Square square) : base(square)
+		public PressurePlate(Square square) : base(square)
 		{
 			//Script = new Script();			
 			AcceptItems = true;
@@ -79,7 +79,7 @@ namespace DungeonEye
 		{
 			StringBuilder sb = new StringBuilder();
 
-			sb.Append("Floor switch (");
+			sb.Append("Pressure plate (");
 
 
 			if (IsHidden)
@@ -108,10 +108,7 @@ namespace DungeonEye
 		/// <returns></returns>
 		public override bool Load(XmlNode xml)
 		{
-			if (xml == null)
-				return false;
-
-			if (xml.Name.ToLower() != "floorswitch")
+			if (xml == null || xml.Name != Tag)
 				return false;
 
 			foreach (XmlNode node in xml)
@@ -162,7 +159,7 @@ namespace DungeonEye
 				return false;
 
 
-			writer.WriteStartElement("floorswitch");
+			writer.WriteStartElement(Tag);
 
 			if (IsHidden)
 			{
@@ -254,6 +251,12 @@ namespace DungeonEye
 
 
 		#region Properties
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public const string Tag = "pressureplate";
+
 
 		/// <summary>
 		/// Decoration handle

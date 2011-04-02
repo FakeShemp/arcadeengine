@@ -83,12 +83,14 @@ namespace DungeonEye
 		/// <returns>Decoration information or null</returns>
 		public Decoration GetDecoration(int id)
 		{
+			if (Decorations == null)
+				return null;
+
 			if (!Decorations.ContainsKey(id))
 				return null;
 
 			return Decorations[id];
 		}
-
 
 
 		/// <summary>
@@ -103,7 +105,6 @@ namespace DungeonEye
 
 			return deco;
 		}
-
 
 
 		/// <summary>
@@ -130,7 +131,6 @@ namespace DungeonEye
 		/// <param name="batch">Spritebatch handle</param>
 		/// <param name="id">Decoration id</param>
 		/// <param name="position">View position</param>
-		/// <returns>True on succes or false if nothing drew</returns>
 		public void Draw(SpriteBatch batch, int id, ViewFieldPosition position)
 		{
 			if (batch == null || id == -1)

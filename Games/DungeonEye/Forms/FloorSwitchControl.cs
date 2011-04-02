@@ -20,7 +20,7 @@ namespace DungeonEye.Forms
 		/// </summary>
 		/// <param name="floorswitch"></param>
 		/// <param name="dungeon"></param>
-		public FloorSwitchControl(FloorSwitch floorswitch, Dungeon dungeon)
+		public FloorSwitchControl(PressurePlate floorswitch, Dungeon dungeon)
 		{
 			InitializeComponent();
 
@@ -53,7 +53,7 @@ namespace DungeonEye.Forms
 		/// <summary>
 		/// 
 		/// </summary>
-		FloorSwitch FloorSwitch;
+		PressurePlate FloorSwitch;
 
 
 		#endregion

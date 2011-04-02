@@ -125,6 +125,8 @@ namespace DungeonEye
 		/// <returns>True on success</returns>
 		public bool LoadDecoration()
 		{
+			if (string.IsNullOrEmpty(DecorationName))
+				return false;
 
 			if (Decoration != null)
 				Decoration.Dispose();
@@ -132,7 +134,7 @@ namespace DungeonEye
 			Decoration = ResourceManager.CreateSharedAsset<DecorationSet>(DecorationName, DecorationName);
 			if (Decoration == null)
 			{
-				Trace.WriteLine("[Maze] Failed to create decoration for the maze \"" + Name + "\".");
+				Trace.WriteLine("[Maze] Failed to create decoration '" + DecorationName + "' for the maze '" + Name + "'.");
 				return false;
 			}
 
@@ -638,7 +640,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="batch">Spritebatch handle</param>
 		/// <param name="field">View field</param>
-		/// <param name="position">Position in the view field</param>
+		/// <param name="position">Position of the square in the view field</param>
 		/// <param name="view">Looking direction of the team</param>
 		void DrawSquare(SpriteBatch batch, ViewField field, ViewFieldPosition position, CardinalPoint view)
 		{
@@ -692,6 +694,7 @@ namespace DungeonEye
 			}
 
 			#endregion
+
 
 			#region Items on ground before a door
 
@@ -755,8 +758,9 @@ namespace DungeonEye
 			{
 				// Walls
 				foreach (TileDrawing tmp in DisplayCoordinates.GetWalls(position))
+				{
 					batch.DrawTile(WallTileset, tmp.ID, tmp.Location, Color.White, 0.0f, tmp.Effect, 0.0f);
-
+				}
 
 				// Alcoves
 				if (square.HasAlcoves)
@@ -817,7 +821,7 @@ namespace DungeonEye
 						2,		// View from east
 					};
 
-				Decoration.Draw(batch, square.Decorations[decooffset[(int) view]], position);
+				Decoration.Draw(batch, square.Decorations[(int) view], position);
 			}
 
 			#endregion
@@ -964,7 +968,7 @@ namespace DungeonEye
 		/// <returns>True on success</returns>
 		public bool Load(XmlNode xml)
 		{
-			if (xml == null)
+			if (xml == null || xml.Name != Tag)
 				return false;
 
 			Name = xml.Attributes["name"].Value;
@@ -1003,7 +1007,7 @@ namespace DungeonEye
 					}
 					break;
 
-					case "zone":
+					case MazeZone.Tag:
 					{
 						MazeZone zone = new MazeZone();
 						zone.Load(node);
@@ -1065,7 +1069,7 @@ namespace DungeonEye
 			if (writer == null)
 				return false;
 
-			writer.WriteStartElement("maze");
+			writer.WriteStartElement(Tag);
 			writer.WriteAttributeString("name", Name);
 
 			// Tilesets
@@ -1299,6 +1303,12 @@ namespace DungeonEye
 
 
 		#region Properties
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public const string Tag = "maze";
+
 
 		/// <summary>
 		/// Is asset disposed

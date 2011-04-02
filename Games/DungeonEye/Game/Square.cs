@@ -503,13 +503,13 @@ namespace DungeonEye
 		/// 
 		/// </summary>
 		/// <param name="writer"></param>
-		public void Save(XmlWriter writer)
+		public bool Save(XmlWriter writer)
 		{
 			if (writer == null)
-				throw new ArgumentNullException("writer");
+				return false;
 
 
-			writer.WriteStartElement("block");
+			writer.WriteStartElement(Tag);
 
 			// Location
 			Location.Save("location", writer);
@@ -576,6 +576,8 @@ namespace DungeonEye
 			writer.WriteEndElement();
 
 			writer.WriteEndElement();
+
+			return true;
 		}
 
 
@@ -587,7 +589,7 @@ namespace DungeonEye
 		/// <returns></returns>
 		public bool Load(XmlNode xml)
 		{
-			if (xml == null)
+			if (xml == null || xml.Name != Tag)
 				return false;
 
 			foreach (XmlNode node in xml)
@@ -640,44 +642,51 @@ namespace DungeonEye
 					}
 					break;
 
-					case "door":
+					case Door.Tag:
 					{
 						Actor = new Door(this);
 						Actor.Load(node);
 					}
 					break;
 
-					case "teleporter":
+					case Teleporter.Tag:
 					{
 						Actor = new Teleporter(this);
 						Actor.Load(node);
 					}
 					break;
 
-					case "floorplate":
+					case PressurePlate.Tag:
 					{
-						Actor = new FloorSwitch(this);
+						Actor = new PressurePlate(this);
 						Actor.Load(node);
 					}
 					break;
 
-					case "pit":
+					case Pit.Tag:
 					{
 						Actor = new Pit(this);
 						Actor.Load(node);
 					}
 					break;
 
-					case "forcefield":
+					case ForceField.Tag:
 					{
 						Actor = new ForceField(this);
 						Actor.Load(node);
 					}
 					break;
 
-					case "stair":
+					case Stair.Tag:
 					{
 						Actor = new Stair(this);
+						Actor.Load(node);
+					}
+					break;
+
+					case EventSquare.Tag:
+					{
+						Actor = new EventSquare(this);
 						Actor.Load(node);
 					}
 					break;
@@ -686,13 +695,6 @@ namespace DungeonEye
 					{
 						CardinalPoint side = (CardinalPoint)Enum.Parse(typeof(CardinalPoint), node.Attributes["side"].Value);
 						SetAlcove(side, true);
-					}
-					break;
-
-					case "eventsquare":
-					{
-						Actor = new EventSquare(this);
-						Actor.Load(node);
 					}
 					break;
 
@@ -868,6 +870,12 @@ namespace DungeonEye
 
 
 		#region Properties
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public const string Tag = "block";
+
 
 		#region Monsters
 

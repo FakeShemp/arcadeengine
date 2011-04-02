@@ -16,7 +16,6 @@
 			<quiver count="24" />
 			<head id="27" />
 			<food value="100" />
-			<npc value="False" />
 			<race value="HumanMale" />
 			<profession>
 				<class name="Fighter" />
@@ -47,7 +46,6 @@
 			<quiver count="0" />
 			<head id="21" />
 			<food value="86" />
-			<npc value="False" />
 			<race value="DwarfMale" />
 			<profession>
 				<class name="Fighter" />
@@ -76,7 +74,6 @@
 			<quiver count="0" />
 			<head id="39" />
 			<food value="99" />
-			<npc value="False" />
 			<race value="ElfFemale" />
 			<profession>
 				<class name="Mage" />
@@ -127,7 +124,6 @@
 			<quiver count="0" />
 			<head id="43" />
 			<food value="88" />
-			<npc value="False" />
 			<race value="HalflingFemale" />
 			<profession>
 				<class name="Cleric" />

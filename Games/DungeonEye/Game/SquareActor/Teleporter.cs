@@ -71,10 +71,7 @@ namespace DungeonEye
 		/// <returns></returns>
 		public override bool Load(XmlNode xml)
 		{
-			if (xml == null)
-				return false;
-			
-			if (xml.Name.ToLower() != "teleporter")
+			if (xml == null || xml.Name != Tag)
 				return false;
 
 			foreach (XmlNode node in xml)
@@ -112,7 +109,7 @@ namespace DungeonEye
 				return false;
 			
 
-			writer.WriteStartElement("teleporter");
+			writer.WriteStartElement(Tag);
 			Target.Save("target", writer);
 			writer.WriteEndElement();
 
@@ -162,6 +159,11 @@ namespace DungeonEye
 
 
 		#region Properties
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public const string Tag = "teleporter";
 
 		/// <summary>
 		/// Name of the sound to play

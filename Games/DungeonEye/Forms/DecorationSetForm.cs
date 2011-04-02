@@ -46,6 +46,8 @@ namespace DungeonEye.Forms
 		{
 			InitializeComponent();
 
+			LastMousePosition = Control.MousePosition;
+
 			BgTileSet = new TileSet();
 
 			DecorationSet = new DecorationSet();

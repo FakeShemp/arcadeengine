@@ -39,7 +39,7 @@
 			this.WestDecorationBox = new System.Windows.Forms.RadioButton();
 			this.NorthDecorationBox = new System.Windows.Forms.RadioButton();
 			this.groupBox5 = new System.Windows.Forms.GroupBox();
-			this.GlWallControl = new OpenTK.GLControl();
+			this.GlDecorationControl = new OpenTK.GLControl();
 			this.MonstersTab = new System.Windows.Forms.TabPage();
 			this.RemoveAllMonstersBox = new System.Windows.Forms.Button();
 			this.groupBox13 = new System.Windows.Forms.GroupBox();
@@ -246,7 +246,7 @@
 			// 
 			// groupBox5
 			// 
-			this.groupBox5.Controls.Add(this.GlWallControl);
+			this.groupBox5.Controls.Add(this.GlDecorationControl);
 			this.groupBox5.Location = new System.Drawing.Point(103, 3);
 			this.groupBox5.Name = "groupBox5";
 			this.groupBox5.Size = new System.Drawing.Size(367, 269);
@@ -256,15 +256,15 @@
 			// 
 			// GlWallControl
 			// 
-			this.GlWallControl.BackColor = System.Drawing.Color.Black;
-			this.GlWallControl.Location = new System.Drawing.Point(6, 19);
-			this.GlWallControl.Name = "GlWallControl";
-			this.GlWallControl.Size = new System.Drawing.Size(352, 240);
-			this.GlWallControl.TabIndex = 0;
-			this.GlWallControl.VSync = true;
-			this.GlWallControl.Load += new System.EventHandler(this.GlWallControl_Load);
-			this.GlWallControl.Paint += new System.Windows.Forms.PaintEventHandler(this.GlWallControl_Paint);
-			this.GlWallControl.Resize += new System.EventHandler(this.GlWallControl_Resize);
+			this.GlDecorationControl.BackColor = System.Drawing.Color.Black;
+			this.GlDecorationControl.Location = new System.Drawing.Point(6, 19);
+			this.GlDecorationControl.Name = "GlWallControl";
+			this.GlDecorationControl.Size = new System.Drawing.Size(352, 240);
+			this.GlDecorationControl.TabIndex = 0;
+			this.GlDecorationControl.VSync = true;
+			this.GlDecorationControl.Load += new System.EventHandler(this.GlDecorationControl_Load);
+			this.GlDecorationControl.Paint += new System.Windows.Forms.PaintEventHandler(this.GlDecorationControl_Paint);
+			this.GlDecorationControl.Resize += new System.EventHandler(this.GlDecorationControl_Resize);
 			// 
 			// MonstersTab
 			// 
@@ -819,7 +819,6 @@
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Square wizard";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SquareForm_FormClosing);
-			this.Load += new System.EventHandler(this.MazeBlockForm_Load);
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MazeBlockForm_KeyDown);
 			this.DecorationTab.ResumeLayout(false);
 			this.groupBox6.ResumeLayout(false);
@@ -854,7 +853,7 @@
 		private System.Windows.Forms.Button CloseBox;
 		private System.Windows.Forms.TabPage DecorationTab;
 		private System.Windows.Forms.GroupBox groupBox5;
-		private OpenTK.GLControl GlWallControl;
+		private OpenTK.GLControl GlDecorationControl;
 		private System.Windows.Forms.TabPage MonstersTab;
 		private System.Windows.Forms.GroupBox groupBox13;
 		private System.Windows.Forms.TextBox SWMonsterBox;

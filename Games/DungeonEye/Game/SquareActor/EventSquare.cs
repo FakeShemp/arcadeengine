@@ -107,7 +107,7 @@ namespace DungeonEye
 		/// <returns></returns>
 		public override bool Load(XmlNode xml)
 		{
-			if (xml == null)
+			if (xml == null || xml.Name != Tag)
 				return false;
 
 
@@ -218,7 +218,7 @@ namespace DungeonEye
 				return false;
 
 
-			writer.WriteStartElement("eventsquare");
+			writer.WriteStartElement(Tag);
 
 			writer.WriteStartElement("messagecolor");
 			writer.WriteAttributeString("value", MessageColor.ToArgb().ToString());
@@ -285,6 +285,11 @@ namespace DungeonEye
 
 
 		#region Properties
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public const string Tag = "eventsquare";
 
 
 		/// <summary>

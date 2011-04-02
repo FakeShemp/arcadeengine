@@ -101,10 +101,7 @@ namespace DungeonEye
 		/// <returns></returns>
 		public override bool Load(XmlNode xml)
 		{
-			if (xml == null)
-				return false;
-
-			if (xml.Name.ToLower() != "pit")
+			if (xml == null || xml.Name != Tag)
 				return false;
 
 			foreach (XmlNode node in xml)
@@ -158,7 +155,7 @@ namespace DungeonEye
 				return false;
 
 
-			writer.WriteStartElement("pit");
+			writer.WriteStartElement(Tag);
 
 			if (Target != null)
 				Target.Save("target", writer);
@@ -228,6 +225,11 @@ namespace DungeonEye
 
 
 		#region Properties
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public const string Tag = "pit";
 
 
 		/// <summary>

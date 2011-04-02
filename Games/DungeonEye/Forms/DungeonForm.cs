@@ -922,7 +922,7 @@ namespace DungeonEye.Forms
 				}
 				else if (FloorSwitchBox.Checked)
 				{
-					square.Actor = new FloorSwitch(square);
+					square.Actor = new PressurePlate(square);
 					EditSquare(square, true);
 					UncheckButtons(null);
 				}
