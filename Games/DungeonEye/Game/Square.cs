@@ -332,18 +332,43 @@ namespace DungeonEye
 		#endregion
 
 
-		/// <summary>
-		/// Returns the wall decoration for a wall
-		/// </summary>
-		/// <param name="compass"></param>
-		/// <returns></returns>
-		public DecorationSet GetWallDecoration(CardinalPoint direction)
-		{
-			return ResourceManager.CreateAsset<DecorationSet>(Decorations[(int)direction].ToString());
-		}
 
 
 		#region Decoration
+
+		/// <summary>
+		/// Gets if the wall have decoration
+		/// </summary>
+		/// <param name="from">Facing direction</param>
+		/// <param name="side">Wall side</param>
+		/// <returns>True if a decoration is present<returns>
+		public bool HasDecoration(CardinalPoint from, CardinalPoint side)
+		{
+			return GetDecorationId(from, side) != -1;
+		}
+
+
+		/// <summary>
+		/// Gets a decoration
+		/// </summary>
+		/// <param name="side">Wall side</param>
+		/// <returns>True if a decoration is present<returns>
+		public bool HasDecoration(CardinalPoint side)
+		{
+			return Decorations[(int)side] != -1;
+		}
+
+
+		/// <summary>
+		/// Gets the decoration id of a wall
+		/// </summary>
+		/// <param name="from">Facing direction</param>
+		/// <param name="side">Wall side</param>
+		/// <returns>Decoration id</returns>
+		public int GetDecorationId(CardinalPoint from, CardinalPoint side)
+		{
+			return Decorations[(int)Compass.GetDirectionFromView(from, side)];
+		}
 
 		#endregion
 
@@ -402,17 +427,9 @@ namespace DungeonEye
 		/// <returns>True if an alcove is present<returns>
 		public bool HasAlcove(CardinalPoint from, CardinalPoint side)
 		{
-			CardinalPoint[,] tab = new CardinalPoint[,]
-			{
-				{CardinalPoint.North, CardinalPoint.South, CardinalPoint.West, CardinalPoint.East},
-				{CardinalPoint.South, CardinalPoint.North, CardinalPoint.East, CardinalPoint.West},
-				{CardinalPoint.West, CardinalPoint.East, CardinalPoint.South, CardinalPoint.North},
-				{CardinalPoint.East, CardinalPoint.West, CardinalPoint.North, CardinalPoint.South},
-			};
-
-
-			return Alcoves[(int)tab[(int)from, (int)side]];
+			return Alcoves[(int)Compass.GetDirectionFromView(from, side)];
 		}
+
 
 		/// <summary>
 		/// Gets an alcove

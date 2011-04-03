@@ -38,8 +38,8 @@ namespace DungeonEye
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="maze">Maze</param>
-		/// <param name="location">Team's location</param>
+		/// <param name="maze">Maze handle</param>
+		/// <param name="location">View's location</param>
 		public ViewField(Maze maze, DungeonLocation location)
 		{
 			Maze = maze;

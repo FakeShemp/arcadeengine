@@ -120,6 +120,7 @@ namespace DungeonEye
 		}
 
 
+
 		#region Getters
 
 		/// <summary>
@@ -134,11 +135,11 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Gets a ground item coordinate
+		/// Gets a ground item display coordinate
 		/// </summary>
 		/// <param name="view">Block position in the view field</param>
-		/// <param name="position">ground position</param>
-		/// <returns></returns>
+		/// <param name="position">Ground position</param>
+		/// <returns>Screen location of the item</returns>
 		static public Point GetGroundPosition(ViewFieldPosition view, SquarePosition position)
 		{
 			return Ground[(int)view, (int)position];
@@ -150,7 +151,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="view">Block position in the view field</param>
 		/// <param name="ground">ground position</param>
-		/// <returns></returns>
+		/// <returns>Screen location of the item</returns>
 		static public Point GetFlyingItem(ViewFieldPosition view, SquarePosition ground)
 		{
 			return FlyingItems[(int)view, (int)ground];
@@ -237,6 +238,8 @@ namespace DungeonEye
 		/// <returns></returns>
 		static public bool Load()
 		{
+			if (IsLoaded)
+				return true;
 			
 			// Load file definition
 			using (Stream stream = ResourceManager.Load("MazeElements.xml"))
@@ -352,6 +355,7 @@ namespace DungeonEye
 
 			}
 
+			IsLoaded = true;
 			return true;
 		}
 
@@ -377,13 +381,26 @@ namespace DungeonEye
 			if (node.Attributes["effect"] != null)
 				effect = (SpriteEffects)Enum.Parse(typeof(SpriteEffects), node.Attributes["effect"].Value);
 
-			return new TileDrawing(id, location, effect);
+			CardinalPoint side = CardinalPoint.North;
+			if (node.Attributes["side"] != null)
+				side = (CardinalPoint)Enum.Parse(typeof(CardinalPoint), node.Attributes["side"].Value, true);
+
+			return new TileDrawing(id, location, side, effect);
 		}
 
 		#endregion
 
 
 		#region Properties
+
+		/// <summary>
+		/// Informations are loaded
+		/// </summary>
+		public static bool IsLoaded
+		{
+			get;
+			private set;
+		}
 
 		/// <summary>
 		/// Pits
@@ -820,8 +837,10 @@ namespace DungeonEye
 		/// Constructor
 		/// </summary>
 		/// <param name="id">ID of the tile</param>
-		/// <param name="location">Location</param>
-		public TileDrawing(int id, Point location) : this(id, location, SpriteEffects.None)
+		/// <param name="location">Display location on the screen</param>
+		/// <param name="side">Wall side</param>
+		public TileDrawing(int id, Point location, CardinalPoint side)
+			: this(id, location, side, SpriteEffects.None)
 		{
 		}
 
@@ -830,13 +849,15 @@ namespace DungeonEye
 		/// Constructor
 		/// </summary>
 		/// <param name="id">ID of the tile</param>
-		/// <param name="location">Location</param>
+		/// <param name="location">Display location on the screen</param>
+		/// <param name="side">Wall side</param>
 		/// <param name="effect">Display effect</param>
-		public TileDrawing(int id, Point location, SpriteEffects effect)
+		public TileDrawing(int id, Point location, CardinalPoint side, SpriteEffects effect)
 		{
 			ID = id;
 			Location = location;
 			Effect = effect;
+			Side = side;
 		}
 
 		/// <summary>
@@ -861,6 +882,15 @@ namespace DungeonEye
 		/// Display effect
 		/// </summary>
 		public SpriteEffects Effect
+		{
+			get;
+			private set;
+		}
+
+		/// <summary>
+		/// Wall side
+		/// </summary>
+		public CardinalPoint Side
 		{
 			get;
 			private set;

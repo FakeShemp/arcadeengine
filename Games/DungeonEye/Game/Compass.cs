@@ -48,6 +48,7 @@ namespace DungeonEye
 			Direction = compass.Direction;
 		}
 
+
 		#region Statics
 
 		/// <summary>
@@ -181,6 +182,27 @@ namespace DungeonEye
 			}
 
 			return false;
+		}
+
+
+		/// <summary>
+		/// Gets a direction from a view point
+		/// </summary>
+		/// <param name="from">Facing direction</param>
+		/// <param name="side">Side</param>
+		/// <returns>Direction</returns>
+		static public CardinalPoint GetDirectionFromView(CardinalPoint from, CardinalPoint side)
+		{
+			CardinalPoint[,] tab = new CardinalPoint[,]
+			{
+				{CardinalPoint.North, CardinalPoint.South, CardinalPoint.West, CardinalPoint.East},
+				{CardinalPoint.South, CardinalPoint.North, CardinalPoint.East, CardinalPoint.West},
+				{CardinalPoint.West, CardinalPoint.East, CardinalPoint.South, CardinalPoint.North},
+				{CardinalPoint.East, CardinalPoint.West, CardinalPoint.North, CardinalPoint.South},
+			};
+
+
+			return tab[(int)from, (int)side];
 		}
 
 
