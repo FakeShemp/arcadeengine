@@ -823,8 +823,6 @@ namespace DungeonEye
 					Decoration deco = Decoration.GetDecoration(id);
 					if (deco != null)
 					{
-						//CardinalPoint dir = Compass.GetDirectionFromView(view, side);
-
 						Point location = deco.GetLocation(position);
 						int tileid = deco.GetTileId(position);
 

@@ -155,6 +155,21 @@ namespace DungeonEye.Forms
 		}
 
 
+		/// <summary>
+		/// Update the visual states of the decoration boxes
+		/// </summary>
+		private void UpdateDecorationBoxes()
+		{
+			if (Square == null)
+				return;
+
+			NorthDecorationBox.ForeColor = Square.Decorations[(int) CardinalPoint.North] == -1 ? Color.Black : Color.Red;
+			SouthDecorationBox.ForeColor = Square.Decorations[(int) CardinalPoint.South] == -1 ? Color.Black : Color.Red;
+			WestDecorationBox.ForeColor = Square.Decorations[(int) CardinalPoint.West] == -1 ? Color.Black : Color.Red;
+			EastDecorationBox.ForeColor = Square.Decorations[(int) CardinalPoint.East] == -1 ? Color.Black : Color.Red;
+		}
+
+
 		#region Items events
 
 
@@ -618,6 +633,10 @@ namespace DungeonEye.Forms
 			Display.Init();
 
 			Batch = new SpriteBatch();
+
+			ChangeDecoration();
+			
+			UpdateDecorationBoxes();
 		}
 
 
@@ -657,6 +676,7 @@ namespace DungeonEye.Forms
 			Square.Decorations[(int)DecorationSide] = (int)DecorationIdBox.Value;
 
 			RenderDecorationScene();
+			UpdateDecorationBoxes();
 		}
 
 
@@ -726,6 +746,7 @@ namespace DungeonEye.Forms
 			DecorationIdBox.Value = -1;
 
 			RenderDecorationScene();
+			UpdateDecorationBoxes();
 		}
 
 		#endregion
