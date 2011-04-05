@@ -186,6 +186,26 @@ namespace DungeonEye
 
 
 		/// <summary>
+		/// Returns if two sides are facing each others
+		/// </summary>
+		/// <param name="view">View</param>
+		/// <param name="side">Side</param>
+		/// <returns>True if sides face each others</returns>
+		static public bool IsSideFacing(CardinalPoint view, CardinalPoint side)
+		{
+			if (view == CardinalPoint.North && side == CardinalPoint.South)
+				return true;
+			if (view == CardinalPoint.South && side == CardinalPoint.North)
+				return true;
+			if (view == CardinalPoint.West && side == CardinalPoint.East)
+				return true;
+			if (view == CardinalPoint.East && side == CardinalPoint.West)
+				return true;
+
+			return false;
+		}
+
+		/// <summary>
 		/// Gets a direction from a view point
 		/// </summary>
 		/// <param name="from">Facing direction</param>
