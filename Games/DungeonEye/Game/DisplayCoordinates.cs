@@ -163,7 +163,8 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="view">Block position in the view field</param>
 		/// <param name="point">Wall side</param>
-		/// <returns></returns>
+		/// <returns>TileDrawing information or null</returns>
+		[Obsolete()]
 		static public TileDrawing GetDecoration(ViewFieldPosition view, CardinalPoint point)
 		{
 			if (point == CardinalPoint.North)

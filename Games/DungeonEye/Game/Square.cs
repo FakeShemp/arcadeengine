@@ -24,7 +24,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
-
+using ArcEngine.Graphic;
+using ArcEngine.Asset;
 
 namespace DungeonEye
 {
@@ -332,9 +333,121 @@ namespace DungeonEye
 		#endregion
 
 
-
-
 		#region Decoration
+
+		/// <summary>
+		/// Draws the decorations
+		/// </summary>
+		/// <param name="batch">Spritebatch handle</param>
+		/// <param name="decoration">DecorationSet handle</param>
+		/// <param name="position">Position of the square in the view</param>
+		/// <param name="view">Viewing direction</param>
+		public void DrawDecoration(SpriteBatch batch, DecorationSet decoration, ViewFieldPosition position, CardinalPoint view)
+		{
+			// Bad args
+			if (batch == null || decoration == null)
+				return;
+
+			CardinalPoint[][] sides = 
+			{
+				new CardinalPoint[] {CardinalPoint.East, CardinalPoint.South},			// A
+				new CardinalPoint[] {CardinalPoint.East, CardinalPoint.South},			// B
+				new CardinalPoint[] {CardinalPoint.South},								// C
+				new CardinalPoint[] {CardinalPoint.West, CardinalPoint.South},			// D
+				new CardinalPoint[] {CardinalPoint.West, CardinalPoint.South},			// E
+	
+				new CardinalPoint[] {CardinalPoint.East},								// F
+				new CardinalPoint[] {CardinalPoint.East, CardinalPoint.South},			// G
+				new CardinalPoint[] {CardinalPoint.South},								// H
+				new CardinalPoint[] {CardinalPoint.West, CardinalPoint.South},			// I
+				new CardinalPoint[] {CardinalPoint.West},								// J
+
+				new CardinalPoint[] {CardinalPoint.East, CardinalPoint.South},			// K
+				new CardinalPoint[] {CardinalPoint.South},								// L
+				new CardinalPoint[] {CardinalPoint.West, CardinalPoint.South},			// M
+
+				new CardinalPoint[] {CardinalPoint.East},								// N
+				new CardinalPoint[] {CardinalPoint.North, CardinalPoint.South, 
+									 CardinalPoint.West, CardinalPoint.East},			// Team
+				new CardinalPoint[] {CardinalPoint.West},								// O
+			};
+
+
+			// For each direction, draws the decoration
+			foreach (CardinalPoint side in sides[(int)position])
+			{
+				// Decoration informations
+				Decoration deco = decoration.GetDecoration(GetDecorationId(view, side));
+				if (deco == null)
+					continue;
+
+				// Location of the decoration on the screen
+				Point location = deco.GetLocation(position);
+
+				// Tile id
+				int tileid = deco.GetTileId(position);
+
+				// Offset the decoration if facing to the view point
+				if (side == CardinalPoint.South)
+				{
+					switch (position)
+					{
+						case ViewFieldPosition.A:
+						location = deco.GetLocation(ViewFieldPosition.C);
+						location.X -= 96 * 2;
+						tileid = deco.GetTileId(ViewFieldPosition.C);
+						break;
+						case ViewFieldPosition.B:
+						location = deco.GetLocation(ViewFieldPosition.C);
+						location.X += -96;
+						tileid = deco.GetTileId(ViewFieldPosition.C);
+						break;
+						case ViewFieldPosition.D:
+						location = deco.GetLocation(ViewFieldPosition.C);
+						location.X += 96 * 1;
+						tileid = deco.GetTileId(ViewFieldPosition.C);
+						break;
+						case ViewFieldPosition.E:
+						location = deco.GetLocation(ViewFieldPosition.C);
+						location.X += 96 * 2;
+						tileid = deco.GetTileId(ViewFieldPosition.C);
+						break;
+
+						case ViewFieldPosition.G:
+						location = deco.GetLocation(ViewFieldPosition.H);
+						location.X += -160;
+						tileid = deco.GetTileId(ViewFieldPosition.H);
+						break;
+						case ViewFieldPosition.I:
+						location = deco.GetLocation(ViewFieldPosition.H);
+						location.X += 160;
+						tileid = deco.GetTileId(ViewFieldPosition.H);
+						break;
+
+						case ViewFieldPosition.K:
+						location = deco.GetLocation(ViewFieldPosition.L);
+						location.X -= 256;
+						tileid = deco.GetTileId(ViewFieldPosition.L);
+						break;
+						case ViewFieldPosition.M:
+						location = deco.GetLocation(ViewFieldPosition.L);
+						location.X += 256;
+						tileid = deco.GetTileId(ViewFieldPosition.L);
+						break;
+					}
+
+				}
+
+				// Draws the decoration
+				batch.DrawTile(decoration.Tileset,
+				tileid,
+				location, Color.White,
+				0.0f,
+				deco.GetSwap(position) ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
+				0.0f);
+			}
+		}
+
 
 		/// <summary>
 		/// Gets if the wall have decoration

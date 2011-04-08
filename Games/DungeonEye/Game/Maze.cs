@@ -811,79 +811,9 @@ namespace DungeonEye
 
 
 			#region Decoration
-			if (Decoration != null)
-			{
-				foreach (CardinalPoint side in Enum.GetValues(typeof(CardinalPoint)))
-				{
-					td = DisplayCoordinates.GetDecoration(position, side);
-					if (td == null)
-						continue;
 
-					int id = square.GetDecorationId(view, side);
-					Decoration deco = Decoration.GetDecoration(id);
-					if (deco != null)
-					{
-						Point location = deco.GetLocation(position);
-						int tileid = deco.GetTileId(position);
+			square.DrawDecoration(batch, Decoration, position, view);
 
-						if (side == CardinalPoint.South)
-						{
-							switch (position)
-							{
-								case ViewFieldPosition.A:
-								location = deco.GetLocation(ViewFieldPosition.C);
-								location.X -= 96 * 2;
-								tileid = deco.GetTileId(ViewFieldPosition.C);
-								break;
-								case ViewFieldPosition.B:
-								location = deco.GetLocation(ViewFieldPosition.C);
-								location.X += -96;
-								tileid = deco.GetTileId(ViewFieldPosition.C);
-								break;
-								case ViewFieldPosition.D:
-								location = deco.GetLocation(ViewFieldPosition.C);
-								location.X += 96 * 1;
-								tileid = deco.GetTileId(ViewFieldPosition.C);
-								break;
-								case ViewFieldPosition.E:
-								location = deco.GetLocation(ViewFieldPosition.C);
-								location.X += 96 * 2;
-								tileid = deco.GetTileId(ViewFieldPosition.C);
-								break;
-
-								case ViewFieldPosition.G:
-								location = deco.GetLocation(ViewFieldPosition.H);
-								location.X += -160;
-								tileid = deco.GetTileId(ViewFieldPosition.H);
-								break;
-								case ViewFieldPosition.I:
-								location = deco.GetLocation(ViewFieldPosition.H);
-								location.X += 160;
-								tileid = deco.GetTileId(ViewFieldPosition.H);
-								break;
-
-								case ViewFieldPosition.K:
-								location = deco.GetLocation(ViewFieldPosition.L);
-								location.X -= 256;
-								tileid = deco.GetTileId(ViewFieldPosition.L);
-								break;
-								case ViewFieldPosition.M:
-								location = deco.GetLocation(ViewFieldPosition.L);
-								location.X += 256;
-								tileid = deco.GetTileId(ViewFieldPosition.L);
-								break;
-							}
-						}
-
-						batch.DrawTile(Decoration.Tileset,
-						tileid,
-						location, Color.White,
-						0.0f,
-						deco.GetSwap(position) ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
-						0.0f);
-					}
-				}
-			}
 
 			#endregion
 

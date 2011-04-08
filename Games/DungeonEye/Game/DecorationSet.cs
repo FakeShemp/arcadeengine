@@ -83,7 +83,7 @@ namespace DungeonEye
 		/// <returns>Decoration information or null</returns>
 		public Decoration GetDecoration(int id)
 		{
-			if (Decorations == null)
+			if (Decorations == null || id == -1)
 				return null;
 
 			if (!Decorations.ContainsKey(id))

@@ -619,9 +619,6 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Shaders.xml" />
-    <Content Include="CLNUIDevice.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Maths\OpenTK License.txt" />
     <Content Include="Utility\GUI\gui.txt" />
     <Content Include="Network\Documentation.txt" />
