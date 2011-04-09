@@ -900,10 +900,12 @@ namespace DungeonEye
 					}
 					break;
 
-					case "alcove":
+					case Alcove.Tag:
 					{
-						CardinalPoint side = (CardinalPoint)Enum.Parse(typeof(CardinalPoint), node.Attributes["side"].Value);
-						SetAlcove(side, true);
+						//CardinalPoint side = (CardinalPoint)Enum.Parse(typeof(CardinalPoint), node.Attributes["side"].Value);
+						//SetAlcove(side, true);
+						Actor = new Alcove(this);
+						Actor.Load(node);
 					}
 					break;
 
@@ -1302,6 +1304,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Alcoves
 		/// </summary>
+		[Obsolete()]
 		bool[] Alcoves;
 
 

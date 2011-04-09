@@ -192,6 +192,7 @@ namespace DungeonEye.Forms
 
 				NoGhostsBox,
 				NoMonstersBox,
+				AlcoveBox,
 			};
 
 
@@ -501,6 +502,7 @@ namespace DungeonEye.Forms
 			SpriteBatch.End();
 			glControl.SwapBuffers();
 		}
+
 
 		#region Events
 
@@ -957,6 +959,12 @@ namespace DungeonEye.Forms
 				else if (EventBox.Checked)
 				{
 					square.Actor = new EventSquare(square);
+					EditSquare(square, true);
+					UncheckButtons(null);
+				}
+				else if (AlcoveBox.Checked)
+				{
+					square.Actor = new Alcove(square);
 					EditSquare(square, true);
 					UncheckButtons(null);
 				}
@@ -1458,6 +1466,7 @@ namespace DungeonEye.Forms
 
 
 		#endregion
+
 
 	}
 }

@@ -116,7 +116,7 @@ namespace DungeonEye.Forms
 		/// <summary>
 		/// Render the decoration scene
 		/// </summary>
-		private void RenderDecorationScene()
+		void RenderDecorationScene()
 		{
 			GlDecorationControl.MakeCurrent();
 			Display.ClearBuffers();
@@ -146,7 +146,7 @@ namespace DungeonEye.Forms
 		/// <summary>
 		/// Decoration changed
 		/// </summary>
-		private void ChangeDecoration()
+		void ChangeDecoration()
 		{
 			if (Square == null)
 				return;
@@ -158,7 +158,7 @@ namespace DungeonEye.Forms
 		/// <summary>
 		/// Update the visual states of the decoration boxes
 		/// </summary>
-		private void UpdateDecorationBoxes()
+		void UpdateDecorationBoxes()
 		{
 			if (Square == null)
 				return;
@@ -819,7 +819,11 @@ namespace DungeonEye.Forms
 			{
 				control = new TeleporterControl(Square.Actor as Teleporter, Maze.Dungeon);
 			}
-			else 
+			else if (Square.Actor is Alcove)
+			{
+				control = new AlcoveControl(Square.Actor as Alcove, Maze.Dungeon);
+			}
+			else
 			{
 				MessageBox.Show("Unhandled actor form", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}

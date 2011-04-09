@@ -105,8 +105,7 @@ namespace DungeonEye
 		/// <returns>True on success</returns>
 		public bool LoadWallTileSet()
 		{
-			if (WallTileset != null)
-				WallTileset.Dispose();
+			ResourceManager.UnlockSharedAsset<TileSet>(WallTileset);
 
 			WallTileset = ResourceManager.CreateSharedAsset<TileSet>(WallTilesetName, WallTilesetName);
 			if (WallTileset == null)

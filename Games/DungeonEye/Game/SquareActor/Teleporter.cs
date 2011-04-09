@@ -34,7 +34,7 @@ namespace DungeonEye
 	{
 
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
 		public Teleporter(Square block) : base(block)
 		{

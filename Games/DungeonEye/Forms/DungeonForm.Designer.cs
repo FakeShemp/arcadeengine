@@ -49,6 +49,7 @@
 			this.DoorBox = new System.Windows.Forms.ToolStripButton();
 			this.PitBox = new System.Windows.Forms.ToolStripButton();
 			this.WrittingBox = new System.Windows.Forms.ToolStripButton();
+			this.AlcoveBox = new System.Windows.Forms.ToolStripButton();
 			this.LauncherBox = new System.Windows.Forms.ToolStripButton();
 			this.GeneratorBox = new System.Windows.Forms.ToolStripButton();
 			this.SwitchBox = new System.Windows.Forms.ToolStripButton();
@@ -124,6 +125,7 @@
             this.DoorBox,
             this.PitBox,
             this.WrittingBox,
+            this.AlcoveBox,
             this.LauncherBox,
             this.GeneratorBox,
             this.SwitchBox,
@@ -310,6 +312,16 @@
 			this.WrittingBox.Size = new System.Drawing.Size(23, 22);
 			this.WrittingBox.Text = "Writting...";
 			this.WrittingBox.CheckedChanged += new System.EventHandler(this.ToggleStripButtons);
+			// 
+			// AlcoveBox
+			// 
+			this.AlcoveBox.CheckOnClick = true;
+			this.AlcoveBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.AlcoveBox.Image = ((System.Drawing.Image)(resources.GetObject("AlcoveBox.Image")));
+			this.AlcoveBox.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.AlcoveBox.Name = "AlcoveBox";
+			this.AlcoveBox.Size = new System.Drawing.Size(23, 22);
+			this.AlcoveBox.Text = "Alcove...";
 			// 
 			// LauncherBox
 			// 
@@ -857,5 +869,6 @@
 		private System.Windows.Forms.Label label1;
 		private TargetControl StartLocationBox;
 		private System.Windows.Forms.GroupBox groupBox3;
+		private System.Windows.Forms.ToolStripButton AlcoveBox;
 	}
 }

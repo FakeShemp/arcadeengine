@@ -330,14 +330,20 @@ namespace ArcEngine
 			if (!Shared.ContainsValue(handle))
 				return;
 
+			if (!SharedCounter.ContainsKey(handle.Name))
+			{
+				Trace.WriteDebugLine("[RegisteredAsset] UnlockShared() : Handle asset's name is not shared (\"" + handle.Name + "\" of type \"" + Type.Name + "\") !");
+				return;
+			}
+
 			SharedCounter[handle.Name]--;
 
 			// No more used, remove it
 			if (SharedCounter[handle.Name] == 0)
 			{
 				Trace.WriteDebugLine("[RegisteredAsset] Flushing asset \"" + handle.Name + "\" of type \"" + Type.Name + "\"");
-				Shared[handle.Name].Dispose();
 				Shared.Remove(handle.Name);
+				handle.Dispose();
 			}
 		}
 
