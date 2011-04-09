@@ -575,7 +575,6 @@ namespace DungeonEye
 			if (dstsquare.IsBlocking)
 				state = false;
 
-
 			// Monsters
 			if (dstsquare.MonsterCount > 0)
 				state = false;

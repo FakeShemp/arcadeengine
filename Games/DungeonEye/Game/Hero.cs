@@ -49,6 +49,25 @@ namespace DungeonEye
 		{
 			Professions = new List<Profession>();
 			LearnedSpells = new List<string>();
+			ClericSpells = new List<Spell>[6]
+			{
+				new List<Spell>(),
+				new List<Spell>(),
+				new List<Spell>(),
+				new List<Spell>(),
+				new List<Spell>(),
+				new List<Spell>(),
+			};
+			MageSpells = new List<Spell>[6]
+			{
+				new List<Spell>(),
+				new List<Spell>(),
+				new List<Spell>(),
+				new List<Spell>(),
+				new List<Spell>(),
+				new List<Spell>(),
+			};
+
 			IsDisposed = false;
 
 			Head = -1;
@@ -74,7 +93,6 @@ namespace DungeonEye
 				new List<Spell>(),
 			};
 		}
-
 
 
 		/// <summary>
@@ -445,6 +463,9 @@ namespace DungeonEye
 
 			Profession prof = GetProfession(classe);
 			if (prof == null)
+				return null;
+
+			if (Spells[level - 1].Count <= number - 1)
 				return null;
 
 			Spell spell = Spells[level - 1][number - 1];
@@ -1699,8 +1720,19 @@ namespace DungeonEye
 		/// <summary>
 		/// Available spells
 		/// </summary>
+		/// TODO: remove !!!
+		[Obsolete()]
 		List<Spell>[] Spells;
 
+		/// <summary>
+		/// Cleric spells list
+		/// </summary>
+		List<Spell>[] ClericSpells;
+
+		/// <summary>
+		/// Mage spells list
+		/// </summary>
+		List<Spell>[] MageSpells;
 
 		/// <summary>
 		/// Known scrolls

@@ -198,10 +198,10 @@ namespace DungeonEye
 		{
 			Team team = GameScreen.Team;
 
-
+			// Actor interaction
 			if (Actor != null)
 			{
-				// A door
+				// Actor present
 				if (team.ItemInHand == null)
 					return Actor.OnClick(location, side);
 
@@ -226,9 +226,11 @@ namespace DungeonEye
 			
 			
 			// Decoration interaction
-			if (GetDecorationId(side) != -1)
+			Decoration decoration = team.Maze.GetDecoration(team.FrontLocation, Compass.GetOppositeDirection(team.Direction));
+			if (decoration != null)
 			{
 				GameMessage.AddMessage("Decoration: OnClick()");
+
 				return true;
 			}
 
@@ -1171,6 +1173,16 @@ namespace DungeonEye
 
 				else if (HasMonster)
 					return true;
+
+				else if (HasDecorations)
+				{
+					foreach (CardinalPoint side in Enum.GetValues(typeof(CardinalPoint)))
+					{
+						Decoration deco = Maze.GetDecoration(Location, side);
+						if (deco != null && deco.IsBlocking)
+							return true;
+					}
+				}
 
 				return false;
 			}

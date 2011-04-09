@@ -173,7 +173,7 @@ namespace DungeonEye.Forms
 			{
 				TileIdBox.Value = Decoration.GetTileId(ViewPositionBox.Position);
 				HorizontalSwapBox.Checked = Decoration.GetSwap(ViewPositionBox.Position);
-
+				BlockBox.Checked = Decoration.IsBlocking;
 			}
 			else
 			{
@@ -288,6 +288,14 @@ namespace DungeonEye.Forms
 
 		}
 
+
+		private void BlockBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Decoration == null)
+				return;
+
+			Decoration.IsBlocking = BlockBox.Checked;
+		}
 
 		/// <summary>
 		/// 
@@ -509,6 +517,7 @@ namespace DungeonEye.Forms
 		Point LastMousePosition;
 
 		#endregion
+
 
 	}
 }

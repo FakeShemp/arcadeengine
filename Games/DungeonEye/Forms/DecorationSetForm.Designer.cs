@@ -35,24 +35,25 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.BackgroundTileSetBox = new System.Windows.Forms.ComboBox();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.label3 = new System.Windows.Forms.Label();
+			this.DecorationIdBox = new System.Windows.Forms.NumericUpDown();
+			this.label2 = new System.Windows.Forms.Label();
+			this.TilesetBox = new System.Windows.Forms.ComboBox();
 			this.HorizontalSwapBox = new System.Windows.Forms.CheckBox();
 			this.LocationBox = new System.Windows.Forms.Label();
 			this.label4 = new System.Windows.Forms.Label();
 			this.label5 = new System.Windows.Forms.Label();
-			this.label3 = new System.Windows.Forms.Label();
 			this.TileIdBox = new System.Windows.Forms.NumericUpDown();
-			this.DecorationIdBox = new System.Windows.Forms.NumericUpDown();
-			this.label2 = new System.Windows.Forms.Label();
-			this.TilesetBox = new System.Windows.Forms.ComboBox();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
 			this.ClearAllBox = new System.Windows.Forms.Button();
+			this.ViewPositionBox = new DungeonEye.Forms.ViewFieldControl();
 			this.DrawTimer = new System.Windows.Forms.Timer(this.components);
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
-			this.ViewPositionBox = new DungeonEye.Forms.ViewFieldControl();
+			this.BlockBox = new System.Windows.Forms.CheckBox();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.TileIdBox)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.DecorationIdBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.TileIdBox)).BeginInit();
 			this.groupBox3.SuspendLayout();
 			this.groupBox4.SuspendLayout();
 			this.SuspendLayout();
@@ -126,42 +127,6 @@
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "General properties :";
 			// 
-			// HorizontalSwapBox
-			// 
-			this.HorizontalSwapBox.AutoSize = true;
-			this.HorizontalSwapBox.Location = new System.Drawing.Point(159, 22);
-			this.HorizontalSwapBox.Name = "HorizontalSwapBox";
-			this.HorizontalSwapBox.Size = new System.Drawing.Size(101, 17);
-			this.HorizontalSwapBox.TabIndex = 6;
-			this.HorizontalSwapBox.Text = "Horizontal swap";
-			this.HorizontalSwapBox.UseVisualStyleBackColor = true;
-			this.HorizontalSwapBox.CheckedChanged += new System.EventHandler(this.HorizontalSwapBox_CheckedChanged);
-			// 
-			// LocationBox
-			// 
-			this.LocationBox.Location = new System.Drawing.Point(62, 51);
-			this.LocationBox.Name = "LocationBox";
-			this.LocationBox.Size = new System.Drawing.Size(151, 23);
-			this.LocationBox.TabIndex = 5;
-			// 
-			// label4
-			// 
-			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(6, 51);
-			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(50, 13);
-			this.label4.TabIndex = 4;
-			this.label4.Text = "Position :";
-			// 
-			// label5
-			// 
-			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(6, 23);
-			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(41, 13);
-			this.label5.TabIndex = 3;
-			this.label5.Text = "Tile id :";
-			// 
 			// label3
 			// 
 			this.label3.AutoSize = true;
@@ -170,26 +135,6 @@
 			this.label3.Size = new System.Drawing.Size(76, 13);
 			this.label3.TabIndex = 3;
 			this.label3.Text = "Decoration id :";
-			// 
-			// TileIdBox
-			// 
-			this.TileIdBox.Location = new System.Drawing.Point(56, 19);
-			this.TileIdBox.Maximum = new decimal(new int[] {
-            9999999,
-            0,
-            0,
-            0});
-			this.TileIdBox.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            -2147483648});
-			this.TileIdBox.Name = "TileIdBox";
-			this.TileIdBox.Size = new System.Drawing.Size(78, 20);
-			this.TileIdBox.TabIndex = 2;
-			this.TileIdBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.TileIdBox.ThousandsSeparator = true;
-			this.TileIdBox.ValueChanged += new System.EventHandler(this.TileIdBox_ValueChanged);
 			// 
 			// DecorationIdBox
 			// 
@@ -226,6 +171,62 @@
 			this.TilesetBox.TabIndex = 0;
 			this.TilesetBox.SelectedIndexChanged += new System.EventHandler(this.TilesetBox_SelectedIndexChanged);
 			// 
+			// HorizontalSwapBox
+			// 
+			this.HorizontalSwapBox.AutoSize = true;
+			this.HorizontalSwapBox.Location = new System.Drawing.Point(159, 22);
+			this.HorizontalSwapBox.Name = "HorizontalSwapBox";
+			this.HorizontalSwapBox.Size = new System.Drawing.Size(101, 17);
+			this.HorizontalSwapBox.TabIndex = 6;
+			this.HorizontalSwapBox.Text = "Horizontal swap";
+			this.HorizontalSwapBox.UseVisualStyleBackColor = true;
+			this.HorizontalSwapBox.CheckedChanged += new System.EventHandler(this.HorizontalSwapBox_CheckedChanged);
+			// 
+			// LocationBox
+			// 
+			this.LocationBox.Location = new System.Drawing.Point(62, 51);
+			this.LocationBox.Name = "LocationBox";
+			this.LocationBox.Size = new System.Drawing.Size(91, 23);
+			this.LocationBox.TabIndex = 5;
+			// 
+			// label4
+			// 
+			this.label4.AutoSize = true;
+			this.label4.Location = new System.Drawing.Point(6, 51);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(50, 13);
+			this.label4.TabIndex = 4;
+			this.label4.Text = "Position :";
+			// 
+			// label5
+			// 
+			this.label5.AutoSize = true;
+			this.label5.Location = new System.Drawing.Point(6, 23);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(41, 13);
+			this.label5.TabIndex = 3;
+			this.label5.Text = "Tile id :";
+			// 
+			// TileIdBox
+			// 
+			this.TileIdBox.Location = new System.Drawing.Point(56, 19);
+			this.TileIdBox.Maximum = new decimal(new int[] {
+            9999999,
+            0,
+            0,
+            0});
+			this.TileIdBox.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+			this.TileIdBox.Name = "TileIdBox";
+			this.TileIdBox.Size = new System.Drawing.Size(97, 20);
+			this.TileIdBox.TabIndex = 2;
+			this.TileIdBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.TileIdBox.ThousandsSeparator = true;
+			this.TileIdBox.ValueChanged += new System.EventHandler(this.TileIdBox_ValueChanged);
+			// 
 			// groupBox3
 			// 
 			this.groupBox3.Controls.Add(this.ClearAllBox);
@@ -247,6 +248,16 @@
 			this.ClearAllBox.UseVisualStyleBackColor = true;
 			this.ClearAllBox.Click += new System.EventHandler(this.ClearAllBox_Click);
 			// 
+			// ViewPositionBox
+			// 
+			this.ViewPositionBox.Location = new System.Drawing.Point(9, 19);
+			this.ViewPositionBox.MinimumSize = new System.Drawing.Size(160, 120);
+			this.ViewPositionBox.Name = "ViewPositionBox";
+			this.ViewPositionBox.Position = DungeonEye.ViewFieldPosition.L;
+			this.ViewPositionBox.Size = new System.Drawing.Size(160, 120);
+			this.ViewPositionBox.TabIndex = 0;
+			this.ViewPositionBox.PositionChanged += new DungeonEye.Forms.ViewFieldControl.ChangedEventHandler(this.ViewPositionBox_PositionChanged);
+			// 
 			// DrawTimer
 			// 
 			this.DrawTimer.Interval = 66;
@@ -254,6 +265,7 @@
 			// 
 			// groupBox4
 			// 
+			this.groupBox4.Controls.Add(this.BlockBox);
 			this.groupBox4.Controls.Add(this.HorizontalSwapBox);
 			this.groupBox4.Controls.Add(this.TileIdBox);
 			this.groupBox4.Controls.Add(this.LocationBox);
@@ -266,15 +278,16 @@
 			this.groupBox4.TabStop = false;
 			this.groupBox4.Text = "Decoration properties";
 			// 
-			// ViewPositionBox
+			// BlockBox
 			// 
-			this.ViewPositionBox.Location = new System.Drawing.Point(9, 19);
-			this.ViewPositionBox.MinimumSize = new System.Drawing.Size(160, 120);
-			this.ViewPositionBox.Name = "ViewPositionBox";
-			this.ViewPositionBox.Position = DungeonEye.ViewFieldPosition.L;
-			this.ViewPositionBox.Size = new System.Drawing.Size(160, 120);
-			this.ViewPositionBox.TabIndex = 0;
-			this.ViewPositionBox.PositionChanged += new DungeonEye.Forms.ViewFieldControl.ChangedEventHandler(this.ViewPositionBox_PositionChanged);
+			this.BlockBox.AutoSize = true;
+			this.BlockBox.Location = new System.Drawing.Point(159, 45);
+			this.BlockBox.Name = "BlockBox";
+			this.BlockBox.Size = new System.Drawing.Size(77, 17);
+			this.BlockBox.TabIndex = 6;
+			this.BlockBox.Text = "Is blocking";
+			this.BlockBox.UseVisualStyleBackColor = true;
+			this.BlockBox.CheckedChanged += new System.EventHandler(this.BlockBox_CheckedChanged);
 			// 
 			// DecorationSetForm
 			// 
@@ -293,8 +306,8 @@
 			this.groupBox1.PerformLayout();
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.TileIdBox)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.DecorationIdBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.TileIdBox)).EndInit();
 			this.groupBox3.ResumeLayout(false);
 			this.groupBox4.ResumeLayout(false);
 			this.groupBox4.PerformLayout();
@@ -324,5 +337,6 @@
 		private System.Windows.Forms.CheckBox HorizontalSwapBox;
 		private System.Windows.Forms.Button ClearAllBox;
 		private System.Windows.Forms.GroupBox groupBox4;
+		private System.Windows.Forms.CheckBox BlockBox;
 	}
 }

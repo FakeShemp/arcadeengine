@@ -129,7 +129,9 @@ namespace DungeonEye
 				SetSwap(pos, false);
 			}
 
+			IsBlocking = false;
 		}
+
 
 		#region IO
 
@@ -144,6 +146,8 @@ namespace DungeonEye
 			if (xml == null || xml.Name != "decoration")
 				return false;
 
+			IsBlocking = bool.Parse(xml.Attributes["isblocking"].Value);
+
 			foreach (XmlNode node in xml)
 			{
 				if (node.NodeType == XmlNodeType.Comment)
@@ -156,6 +160,7 @@ namespace DungeonEye
 					Location[(int) pos].Y = int.Parse(node.Attributes["y"].Value);
 					TileId[(int) pos] = int.Parse(node.Attributes["id"].Value);
 					Swap[(int)pos] = bool.Parse(node.Attributes["swap"].Value);
+
 				}
 				catch (Exception e)
 				{
@@ -184,6 +189,7 @@ namespace DungeonEye
 
 			writer.WriteStartElement("decoration");
 			writer.WriteAttributeString("id", id.ToString());
+			writer.WriteAttributeString("isblocking", IsBlocking.ToString());
 
 			foreach (ViewFieldPosition vfp in Enum.GetValues(typeof(ViewFieldPosition)))
 			{
@@ -224,6 +230,16 @@ namespace DungeonEye
 		/// Horizontal swap
 		/// </summary>
 		bool[] Swap;
+
+
+		/// <summary>
+		/// Does the decoration is blocking
+		/// </summary>
+		public bool IsBlocking
+		{
+			get;
+			set;
+		}
 
 		#endregion
 

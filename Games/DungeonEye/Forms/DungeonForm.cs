@@ -371,8 +371,7 @@ namespace DungeonEye.Forms
 						}
 					}
 
-					// Alcoves
-					//if (block.IsWall && block.HasAlcoves)
+					// Alcoves or decorations
 					if (block.HasAlcoves || block.HasDecorations)
 					{
 						// Display coords
