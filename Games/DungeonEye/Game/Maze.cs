@@ -838,7 +838,7 @@ namespace DungeonEye
 
 			#region Decoration
 
-			square.DrawDecoration(batch, Decoration, position, view);
+			square.DrawDecorations(batch, Decoration, position, view);
 
 
 			#endregion
@@ -917,31 +917,6 @@ namespace DungeonEye
 
 		}
 
-
-		/// <summary>
-		/// Draws a square decoration
-		/// </summary>
-		/// <param name="batch">Spritebatch handle</param>
-		/// <param name="square">Square</param>
-		/// <param name="view">View direction</param>
-		/// <param name="position">Position of the square in the view field</param>
-		void DrawSquareDecoration(SpriteBatch batch, Square square, CardinalPoint view, ViewFieldPosition position)
-		{
-			if (batch == null || Decoration == null)
-				return;
-
-			if (position == ViewFieldPosition.L)
-			{
-			}
-
-			// Walls
-			foreach (TileDrawing tmp in DisplayCoordinates.GetWalls(position))
-			{
-				//	batch.DrawTile(Decoration.Tileset, tmp.ID, tmp.Location, Color.White, 0.0f, tmp.Effect, 0.0f);
-			}
-
-
-		}
 
 
 		/// <summary>

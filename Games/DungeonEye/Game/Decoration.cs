@@ -147,6 +147,7 @@ namespace DungeonEye
 				return false;
 
 			IsBlocking = bool.Parse(xml.Attributes["isblocking"].Value);
+			ForceDisplay = bool.Parse(xml.Attributes["forcedisplay"].Value);
 
 			foreach (XmlNode node in xml)
 			{
@@ -190,6 +191,7 @@ namespace DungeonEye
 			writer.WriteStartElement("decoration");
 			writer.WriteAttributeString("id", id.ToString());
 			writer.WriteAttributeString("isblocking", IsBlocking.ToString());
+			writer.WriteAttributeString("forcedisplay", ForceDisplay.ToString());
 
 			foreach (ViewFieldPosition vfp in Enum.GetValues(typeof(ViewFieldPosition)))
 			{
@@ -211,7 +213,7 @@ namespace DungeonEye
 
 
 
-		#region properties
+		#region Properties
 
 
 		/// <summary>
@@ -236,6 +238,15 @@ namespace DungeonEye
 		/// Does the decoration is blocking
 		/// </summary>
 		public bool IsBlocking
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Does the decoration is visible from all sides
+		/// </summary>
+		public bool ForceDisplay
 		{
 			get;
 			set;

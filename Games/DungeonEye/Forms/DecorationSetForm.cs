@@ -174,10 +174,14 @@ namespace DungeonEye.Forms
 				TileIdBox.Value = Decoration.GetTileId(ViewPositionBox.Position);
 				HorizontalSwapBox.Checked = Decoration.GetSwap(ViewPositionBox.Position);
 				BlockBox.Checked = Decoration.IsBlocking;
+				ForceDisplayBox.Checked = Decoration.ForceDisplay;
 			}
 			else
 			{
 				TileIdBox.Value = -1;
+				HorizontalSwapBox.Checked = false;
+				BlockBox.Checked = false;
+				ForceDisplayBox.Checked = false;
 			}
 
 			UpdateViewBoxStatus();
@@ -289,6 +293,11 @@ namespace DungeonEye.Forms
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void BlockBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (Decoration == null)
@@ -296,6 +305,21 @@ namespace DungeonEye.Forms
 
 			Decoration.IsBlocking = BlockBox.Checked;
 		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void AlwaysVisibleBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Decoration == null)
+				return;
+
+			Decoration.ForceDisplay = ForceDisplayBox.Checked;
+		}
+
 
 		/// <summary>
 		/// 
@@ -517,7 +541,6 @@ namespace DungeonEye.Forms
 		Point LastMousePosition;
 
 		#endregion
-
 
 	}
 }

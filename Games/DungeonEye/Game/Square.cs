@@ -369,6 +369,8 @@ namespace DungeonEye
 
 		#region Decoration
 
+		
+
 		/// <summary>
 		/// Draws the decorations
 		/// </summary>
@@ -376,11 +378,27 @@ namespace DungeonEye
 		/// <param name="decoration">DecorationSet handle</param>
 		/// <param name="position">Position of the square in the view</param>
 		/// <param name="view">Viewing direction</param>
-		public void DrawDecoration(SpriteBatch batch, DecorationSet decoration, ViewFieldPosition position, CardinalPoint view)
+		public void DrawDecorations(SpriteBatch batch, DecorationSet decoration, ViewFieldPosition position, CardinalPoint view)
 		{
 			// Bad args
 			if (batch == null || decoration == null)
 				return;
+
+
+
+
+			// Is there a forced decoration
+			Decoration deco = null;
+			for (int i = 0; i < 4; i++)
+			{
+				deco = decoration.GetDecoration(Decorations[i]);
+				if (deco != null && deco.ForceDisplay)
+					DrawDecoration(batch, decoration, position, deco, true);
+			}
+
+
+
+			#region Offset tables
 
 			CardinalPoint[][] sides = 
 			{
@@ -405,81 +423,95 @@ namespace DungeonEye
 									 CardinalPoint.West, CardinalPoint.East},			// Team
 				new CardinalPoint[] {CardinalPoint.West},								// O
 			};
-
+			#endregion
 
 			// For each direction, draws the decoration
 			foreach (CardinalPoint side in sides[(int)position])
 			{
 				// Decoration informations
-				Decoration deco = decoration.GetDecoration(GetDecorationId(view, side));
+				deco = decoration.GetDecoration(GetDecorationId(view, side));
 				if (deco == null)
 					continue;
 
-				// Location of the decoration on the screen
-				Point location = deco.GetLocation(position);
+				DrawDecoration(batch, decoration, position, deco, side == CardinalPoint.South);
+			}
+		}
 
-				// Tile id
-				int tileid = deco.GetTileId(position);
 
-				// Offset the decoration if facing to the view point
-				if (side == CardinalPoint.South)
+		/// <summary>
+		/// Draws a single decoration
+		/// </summary>
+		/// <param name="batch">Spritebatch handle</param>
+		/// <param name="decoration">DecorationSet handle</param>
+		/// <param name="position">Position of the square in the view</param>
+		/// <param name="view">Viewing direction</param>
+		/// <param name="south">True if the side is facing south (horizontaly span the decoration)</param>
+		void DrawDecoration(SpriteBatch batch, DecorationSet set, ViewFieldPosition position, Decoration deco, bool south)
+		{
+			// Location of the decoration on the screen
+			Point location = deco.GetLocation(position);
+
+			// Tile id
+			int tileid = deco.GetTileId(position);
+
+			// Offset the decoration if facing to the view point
+			if (south)
+			{
+				switch (position)
 				{
-					switch (position)
-					{
-						case ViewFieldPosition.A:
-						location = deco.GetLocation(ViewFieldPosition.C);
-						location.X -= 96 * 2;
-						tileid = deco.GetTileId(ViewFieldPosition.C);
-						break;
-						case ViewFieldPosition.B:
-						location = deco.GetLocation(ViewFieldPosition.C);
-						location.X += -96;
-						tileid = deco.GetTileId(ViewFieldPosition.C);
-						break;
-						case ViewFieldPosition.D:
-						location = deco.GetLocation(ViewFieldPosition.C);
-						location.X += 96 * 1;
-						tileid = deco.GetTileId(ViewFieldPosition.C);
-						break;
-						case ViewFieldPosition.E:
-						location = deco.GetLocation(ViewFieldPosition.C);
-						location.X += 96 * 2;
-						tileid = deco.GetTileId(ViewFieldPosition.C);
-						break;
+					case ViewFieldPosition.A:
+					location = deco.GetLocation(ViewFieldPosition.C);
+					location.X += -96 * 2;
+					tileid = deco.GetTileId(ViewFieldPosition.C);
+					break;
+					case ViewFieldPosition.B:
+					location = deco.GetLocation(ViewFieldPosition.C);
+					location.X += -96;
+					tileid = deco.GetTileId(ViewFieldPosition.C);
+					break;
+					case ViewFieldPosition.D:
+					location = deco.GetLocation(ViewFieldPosition.C);
+					location.X += 96;
+					tileid = deco.GetTileId(ViewFieldPosition.C);
+					break;
+					case ViewFieldPosition.E:
+					location = deco.GetLocation(ViewFieldPosition.C);
+					location.X += 96 * 2;
+					tileid = deco.GetTileId(ViewFieldPosition.C);
+					break;
 
-						case ViewFieldPosition.G:
-						location = deco.GetLocation(ViewFieldPosition.H);
-						location.X += -160;
-						tileid = deco.GetTileId(ViewFieldPosition.H);
-						break;
-						case ViewFieldPosition.I:
-						location = deco.GetLocation(ViewFieldPosition.H);
-						location.X += 160;
-						tileid = deco.GetTileId(ViewFieldPosition.H);
-						break;
+					case ViewFieldPosition.G:
+					location = deco.GetLocation(ViewFieldPosition.H);
+					location.X += -160;
+					tileid = deco.GetTileId(ViewFieldPosition.H);
+					break;
+					case ViewFieldPosition.I:
+					location = deco.GetLocation(ViewFieldPosition.H);
+					location.X += 160;
+					tileid = deco.GetTileId(ViewFieldPosition.H);
+					break;
 
-						case ViewFieldPosition.K:
-						location = deco.GetLocation(ViewFieldPosition.L);
-						location.X -= 256;
-						tileid = deco.GetTileId(ViewFieldPosition.L);
-						break;
-						case ViewFieldPosition.M:
-						location = deco.GetLocation(ViewFieldPosition.L);
-						location.X += 256;
-						tileid = deco.GetTileId(ViewFieldPosition.L);
-						break;
-					}
-
+					case ViewFieldPosition.K:
+					location = deco.GetLocation(ViewFieldPosition.L);
+					location.X -= 256;
+					tileid = deco.GetTileId(ViewFieldPosition.L);
+					break;
+					case ViewFieldPosition.M:
+					location = deco.GetLocation(ViewFieldPosition.L);
+					location.X += 256;
+					tileid = deco.GetTileId(ViewFieldPosition.L);
+					break;
 				}
 
-				// Draws the decoration
-				batch.DrawTile(decoration.Tileset,
-				tileid,
-				location, Color.White,
-				0.0f,
-				deco.GetSwap(position) ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
-				0.0f);
 			}
+
+			// Draws the decoration
+			batch.DrawTile(set.Tileset,
+			tileid,
+			location, Color.White,
+			0.0f,
+			deco.GetSwap(position) ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
+			0.0f);
 		}
 
 
@@ -514,6 +546,7 @@ namespace DungeonEye
 		/// <returns>Decoration id or -1 if no decoration</returns>
 		public int GetDecorationId(CardinalPoint from, CardinalPoint side)
 		{
+			// Get desired side
 			return Decorations[(int)Compass.GetDirectionFromView(from, side)];
 		}
 

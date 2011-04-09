@@ -46,10 +46,11 @@
 			this.TileIdBox = new System.Windows.Forms.NumericUpDown();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
 			this.ClearAllBox = new System.Windows.Forms.Button();
-			this.ViewPositionBox = new DungeonEye.Forms.ViewFieldControl();
 			this.DrawTimer = new System.Windows.Forms.Timer(this.components);
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
 			this.BlockBox = new System.Windows.Forms.CheckBox();
+			this.ForceDisplayBox = new System.Windows.Forms.CheckBox();
+			this.ViewPositionBox = new DungeonEye.Forms.ViewFieldControl();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.DecorationIdBox)).BeginInit();
@@ -248,16 +249,6 @@
 			this.ClearAllBox.UseVisualStyleBackColor = true;
 			this.ClearAllBox.Click += new System.EventHandler(this.ClearAllBox_Click);
 			// 
-			// ViewPositionBox
-			// 
-			this.ViewPositionBox.Location = new System.Drawing.Point(9, 19);
-			this.ViewPositionBox.MinimumSize = new System.Drawing.Size(160, 120);
-			this.ViewPositionBox.Name = "ViewPositionBox";
-			this.ViewPositionBox.Position = DungeonEye.ViewFieldPosition.L;
-			this.ViewPositionBox.Size = new System.Drawing.Size(160, 120);
-			this.ViewPositionBox.TabIndex = 0;
-			this.ViewPositionBox.PositionChanged += new DungeonEye.Forms.ViewFieldControl.ChangedEventHandler(this.ViewPositionBox_PositionChanged);
-			// 
 			// DrawTimer
 			// 
 			this.DrawTimer.Interval = 66;
@@ -265,6 +256,7 @@
 			// 
 			// groupBox4
 			// 
+			this.groupBox4.Controls.Add(this.ForceDisplayBox);
 			this.groupBox4.Controls.Add(this.BlockBox);
 			this.groupBox4.Controls.Add(this.HorizontalSwapBox);
 			this.groupBox4.Controls.Add(this.TileIdBox);
@@ -288,6 +280,27 @@
 			this.BlockBox.Text = "Is blocking";
 			this.BlockBox.UseVisualStyleBackColor = true;
 			this.BlockBox.CheckedChanged += new System.EventHandler(this.BlockBox_CheckedChanged);
+			// 
+			// ForceDisplayBox
+			// 
+			this.ForceDisplayBox.AutoSize = true;
+			this.ForceDisplayBox.Location = new System.Drawing.Point(159, 65);
+			this.ForceDisplayBox.Name = "ForceDisplayBox";
+			this.ForceDisplayBox.Size = new System.Drawing.Size(88, 17);
+			this.ForceDisplayBox.TabIndex = 6;
+			this.ForceDisplayBox.Text = "Force display";
+			this.ForceDisplayBox.UseVisualStyleBackColor = true;
+			this.ForceDisplayBox.CheckedChanged += new System.EventHandler(this.AlwaysVisibleBox_CheckedChanged);
+			// 
+			// ViewPositionBox
+			// 
+			this.ViewPositionBox.Location = new System.Drawing.Point(9, 19);
+			this.ViewPositionBox.MinimumSize = new System.Drawing.Size(160, 120);
+			this.ViewPositionBox.Name = "ViewPositionBox";
+			this.ViewPositionBox.Position = DungeonEye.ViewFieldPosition.L;
+			this.ViewPositionBox.Size = new System.Drawing.Size(160, 120);
+			this.ViewPositionBox.TabIndex = 0;
+			this.ViewPositionBox.PositionChanged += new DungeonEye.Forms.ViewFieldControl.ChangedEventHandler(this.ViewPositionBox_PositionChanged);
 			// 
 			// DecorationSetForm
 			// 
@@ -338,5 +351,6 @@
 		private System.Windows.Forms.Button ClearAllBox;
 		private System.Windows.Forms.GroupBox groupBox4;
 		private System.Windows.Forms.CheckBox BlockBox;
+		private System.Windows.Forms.CheckBox ForceDisplayBox;
 	}
 }
