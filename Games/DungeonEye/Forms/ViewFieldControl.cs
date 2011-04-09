@@ -63,7 +63,7 @@ namespace DungeonEye.Forms
 			};
 
 
-			TeamBox.Checked = true;
+			LBox.Checked = true;
 		}
 
 
@@ -186,6 +186,7 @@ namespace DungeonEye.Forms
 			set
 			{
 				position = value;
+				Invalidate();
 			}
 		}
 		ViewFieldPosition position;

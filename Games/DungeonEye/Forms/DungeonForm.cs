@@ -255,6 +255,254 @@ namespace DungeonEye.Forms
 		}
 
 
+		/// <summary>
+		/// Renders the dungeon
+		/// </summary>
+		private void RenderDungeon()
+		{
+			if (SpriteBatch == null)
+				return;
+
+			glControl.MakeCurrent();
+			Display.ClearBuffers();
+
+			SpriteBatch.Begin();
+
+			// Background texture
+			Rectangle dst = new Rectangle(Point.Empty, glControl.Size);
+			SpriteBatch.Draw(CheckerBoard, dst, dst, Color.White);
+
+
+			// Nom maze, bye bye
+			if (Maze == null)
+			{
+				SpriteBatch.End();
+				glControl.SwapBuffers();
+				return;
+			}
+
+
+			#region Squares
+			for (int y = 0; y < Maze.Size.Height; y++)
+			{
+				for (int x = 0; x < Maze.Size.Width; x++)
+				{
+					Square block = Maze.GetSquare(new Point(x, y));
+					int tileid = block.Type == SquareType.Ground ? 1 : 0;
+
+					// Location of the block on the screen
+					Point location = new Point(Offset.X + x * 25, Offset.Y + y * 25);
+
+
+					Color color = Color.White;
+					if (block.Type == SquareType.Illusion)
+						color = Color.LightGreen;
+
+					SpriteBatch.DrawTile(Icons, tileid, location, color);
+
+					if (block.ItemCount > 0)
+					{
+						SpriteBatch.DrawTile(Icons, 19, location);
+					}
+
+
+					if (block.Actor != null)
+					{
+						// Doors
+						if (block.Actor is Door)
+						{
+							Door door = block.Actor as Door;
+
+							if (Maze.IsDoorNorthSouth(block.Location))
+								tileid = 3;
+							else
+								tileid = 2;
+
+
+							// Door opened or closed
+							if (door.State == DoorState.Broken || door.State == DoorState.Opened || door.State == DoorState.Opening)
+								tileid += 2;
+
+							SpriteBatch.DrawTile(Icons, tileid, location);
+						}
+
+
+						if (block.Actor is PressurePlate)
+						{
+							SpriteBatch.DrawTile(Icons, 18, location);
+						}
+
+						if (block.Actor is Pit)
+						{
+							SpriteBatch.DrawTile(Icons, 9, location);
+						}
+
+						if (block.Actor is Teleporter)
+						{
+							SpriteBatch.DrawTile(Icons, 11, location);
+						}
+
+						if (block.Actor is ForceField)
+						{
+							ForceField field = block.Actor as ForceField;
+
+							if (field.Type == ForceFieldType.Spin)
+								tileid = 12;
+							else if (field.Type == ForceFieldType.Move)
+							{
+								tileid = 13 + (int)field.Move;
+							}
+							else
+								tileid = 17;
+
+							SpriteBatch.DrawTile(Icons, tileid, location);
+						}
+
+						if (block.Actor is Stair)
+						{
+							Stair stair = block.Actor as Stair;
+							tileid = stair.Type == StairType.Up ? 6 : 7;
+							SpriteBatch.DrawTile(Icons, tileid, location);
+						}
+
+						if (block.Actor is EventSquare)
+						{
+							SpriteBatch.DrawTile(Icons, 26, location);
+						}
+					}
+
+					// Alcoves
+					//if (block.IsWall && block.HasAlcoves)
+					if (block.HasAlcoves || block.HasDecorations)
+					{
+						// Display coords
+						Point[] sides = new Point[]
+						{
+							new Point(7, 0),
+							new Point(7, 19),
+							new Point(0, 7),
+							new Point(19, 7),
+						};
+
+
+						foreach (CardinalPoint side in Enum.GetValues(typeof(CardinalPoint)))
+						{
+							if (block.HasAlcove(side))
+							{
+								tileid = (int)side > 1 ? 100 : 101;
+								SpriteBatch.DrawTile(Icons, tileid, new Point(
+									Offset.X + x * 25 + sides[(int)side].X,
+									Offset.Y + y * 25 + sides[(int)side].Y));
+
+							}
+
+							if (block.HasDecoration(side))
+							{
+								tileid = (int)side > 1 ? 100 : 101;
+								SpriteBatch.DrawTile(Icons, tileid, new Point(
+									Offset.X + x * 25 + sides[(int)side].X,
+									Offset.Y + y * 25 + sides[(int)side].Y), Color.LightBlue);
+
+							}
+						}
+					}
+
+					if (block.NoMonster)
+					{
+						SpriteBatch.FillRectangle(new Rectangle(location.X, location.Y, 25, 25), Color.FromArgb(128, Color.Blue));
+					}
+
+
+					if (block.NoGhost)
+					{
+						SpriteBatch.FillRectangle(new Rectangle(location.X, location.Y, 25, 25), Color.FromArgb(128, Color.Green));
+					}
+
+
+					// Monsters
+					if (block.Monsters[0] != null)
+						SpriteBatch.FillRectangle(new Rectangle(location.X + 4, location.Y + 4, 4, 4), Color.Red);
+					if (block.Monsters[1] != null)
+						SpriteBatch.FillRectangle(new Rectangle(location.X + 16, location.Y + 4, 4, 4), Color.Red);
+					if (block.Monsters[2] != null)
+						SpriteBatch.FillRectangle(new Rectangle(location.X + 4, location.Y + 16, 4, 4), Color.Red);
+					if (block.Monsters[3] != null)
+						SpriteBatch.FillRectangle(new Rectangle(location.X + 16, location.Y + 16, 4, 4), Color.Red);
+
+				}
+			}
+			#endregion
+
+
+			// Preview pos
+			SpriteBatch.DrawTile(Icons, 22 + (int)PreviewLoc.Direction, new Point(Offset.X + PreviewLoc.Coordinate.X * 25, Offset.Y + PreviewLoc.Coordinate.Y * 25));
+
+
+			// Starting point
+			if (Dungeon.StartLocation.Maze == Maze.Name)
+			{
+				SpriteBatch.DrawTile(Icons, 20,
+					new Point(Offset.X + Dungeon.StartLocation.Coordinate.X * 25, Offset.Y + Dungeon.StartLocation.Coordinate.Y * 25));
+			}
+
+
+			// Surround the selected object
+			if (CurrentSquare != null)
+				SpriteBatch.DrawRectangle(new Rectangle(CurrentSquare.Location.Coordinate.X * 25 + Offset.X, CurrentSquare.Location.Coordinate.Y * 25 + Offset.Y, 25, 25), Color.White);
+
+
+			// If the current actor has a target
+			if (SquareUnderMouse != null && SquareUnderMouse.Actor != null)
+			{
+				SquareActor actor = SquareUnderMouse.Actor;
+				if (actor.Target != null)
+				{
+
+					if (actor.Target.Maze == Maze.Name)
+					{
+						Point from = new Point(BlockCoord.X * 25 + Offset.X + 12, BlockCoord.Y * 25 + Offset.Y + 12);
+						Point to = new Point(actor.Target.Coordinate.X * 25 + Offset.X + 12, actor.Target.Coordinate.Y * 25 + Offset.Y + 12);
+						SpriteBatch.DrawLine(from, to, Color.Red);
+						SpriteBatch.DrawRectangle(new Rectangle(actor.Target.Coordinate.X * 25 + Offset.X, actor.Target.Coordinate.Y * 25 + Offset.Y, 25, 25), Color.Red);
+					}
+				}
+			}
+
+
+			#region Display zones
+			/*
+			if (DisplayZonesBox.Checked)
+			{
+
+				foreach (MazeZone zone in Maze.Zones)
+				{
+					Rectangle rect = new Rectangle(zone.Rectangle.X * 25, zone.Rectangle.Y * 25, zone.Rectangle.Width * 25, zone.Rectangle.Height * 25);
+					Color color = Color.FromArgb(100, Color.Red);
+
+					if (CurrentZone == zone)
+					{
+						color = Color.FromArgb(100, Color.Red);
+						SpriteBatch.DrawRectangle(rect, Color.White);
+					}
+
+					SpriteBatch.FillRectangle(rect, color);
+				}
+
+
+				if (CurrentZone != null)
+				{
+					Rectangle rect = new Rectangle(CurrentZone.Rectangle.X * 25, CurrentZone.Rectangle.Y * 25, CurrentZone.Rectangle.Width * 25, CurrentZone.Rectangle.Height * 25);
+					SpriteBatch.FillRectangle(rect, Color.FromArgb(128, Color.Blue));
+				}
+			}
+*/
+			#endregion
+
+
+			SpriteBatch.End();
+			glControl.SwapBuffers();
+		}
+
 		#region Events
 
 
@@ -298,9 +546,9 @@ namespace DungeonEye.Forms
 			Icons = new TileSet();
 			Icons.Texture = new Texture2D(ResourceManager.GetInternalResource("DungeonEye.Forms.data.editor.png"));
 			int id = 0;
-			for (int y = 0 ; y < Icons.Texture.Size.Height - 50 ; y += 25)
+			for (int y = 0; y < Icons.Texture.Size.Height - 50; y += 25)
 			{
-				for (int x = 0 ; x < Icons.Texture.Size.Width ; x += 25)
+				for (int x = 0; x < Icons.Texture.Size.Width; x += 25)
 				{
 					Tile tile = Icons.AddTile(id++);
 					tile.Rectangle = new Rectangle(x, y, 25, 25);
@@ -584,239 +832,8 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void GlControl_Paint(object sender, PaintEventArgs e)
 		{
-			if (SpriteBatch == null)
-				return;
-
-			glControl.MakeCurrent();
-			Display.ClearBuffers();
-
-			SpriteBatch.Begin();
-
-			// Background texture
-			Rectangle dst = new Rectangle(Point.Empty, glControl.Size);
-			SpriteBatch.Draw(CheckerBoard, dst, dst, Color.White);
-
-
-			// Nom maze, bye bye
-			if (Maze == null)
-			{
-				SpriteBatch.End();
-				glControl.SwapBuffers();
-				return;
-			}
-
-
-			#region Squares
-			for (int y = 0 ; y < Maze.Size.Height ; y++)
-			{
-				for (int x = 0 ; x < Maze.Size.Width ; x++)
-				{
-					Square block = Maze.GetSquare(new Point(x, y));
-					int tileid = block.Type == SquareType.Ground ? 1 : 0;
-
-					// Location of the block on the screen
-					Point location = new Point(Offset.X + x * 25, Offset.Y + y * 25);
-
-
-					Color color = Color.White;
-					if (block.Type == SquareType.Illusion)
-						color = Color.LightGreen;
-
-					SpriteBatch.DrawTile(Icons, tileid, location, color);
-
-					if (block.ItemCount > 0)
-					{
-						SpriteBatch.DrawTile(Icons, 19, location);
-					}
-
-
-					if (block.Actor != null)
-					{
-						// Doors
-						if (block.Actor is Door)
-						{
-							Door door = block.Actor as Door;
-
-							if (Maze.IsDoorNorthSouth(block.Location))
-								tileid = 3;
-							else
-								tileid = 2;
-
-
-							// Door opened or closed
-							if (door.State == DoorState.Broken || door.State == DoorState.Opened || door.State == DoorState.Opening)
-								tileid += 2;
-
-							SpriteBatch.DrawTile(Icons, tileid, location);
-						}
-
-
-						if (block.Actor is FloorSwitchControl)
-						{
-							SpriteBatch.DrawTile(Icons, 18, location);
-						}
-
-						if (block.Actor is Pit)
-						{
-							SpriteBatch.DrawTile(Icons, 9, location);
-						}
-
-						if (block.Actor is Teleporter)
-						{
-							SpriteBatch.DrawTile(Icons, 11, location);
-						}
-
-						if (block.Actor is ForceField)
-						{
-							ForceField field = block.Actor as ForceField;
-
-							if (field.Type == ForceFieldType.Spin)
-								tileid = 12;
-							else if (field.Type == ForceFieldType.Move)
-							{
-								tileid = 13 + (int) field.Move;
-							}
-							else
-								tileid = 17;
-
-							SpriteBatch.DrawTile(Icons, tileid, location);
-						}
-
-						if (block.Actor is Stair)
-						{
-							Stair stair = block.Actor as Stair;
-							tileid = stair.Type == StairType.Up ? 6 : 7;
-							SpriteBatch.DrawTile(Icons, tileid, location);
-						}
-
-						if (block.Actor is EventSquare)
-						{
-							SpriteBatch.DrawTile(Icons, 26, location);
-						}
-					}
-
-					// Alcoves
-					if (block.IsWall && block.HasAlcoves)
-					{
-						// Alcoves coords
-						Point[] alcoves = new Point[]
-					{
-						new Point(7, 0),
-						new Point(7, 19),
-						new Point(0, 7),
-						new Point(19, 7),
-					};
-
-
-						foreach (CardinalPoint side in Enum.GetValues(typeof(CardinalPoint)))
-						{
-							if (block.HasAlcove(side))
-							{
-								tileid = (int) side > 1 ? 100: 101;
-								SpriteBatch.DrawTile(Icons, tileid, new Point(
-									Offset.X + x * 25 + alcoves[(int) side].X,
-									Offset.Y + y * 25 + alcoves[(int) side].Y));
-
-							}
-						}
-					}
-
-					if (block.NoMonster)
-					{
-						SpriteBatch.FillRectangle(new Rectangle(location.X, location.Y, 25, 25), Color.FromArgb(128, Color.Blue));
-					}
-
-
-					if (block.NoGhost)
-					{
-						SpriteBatch.FillRectangle(new Rectangle(location.X, location.Y, 25, 25), Color.FromArgb(128, Color.Green));
-					}
-
-
-					// Monsters
-					if (block.Monsters[0] != null)
-						SpriteBatch.FillRectangle(new Rectangle(location.X + 4, location.Y + 4, 4, 4), Color.Red);
-					if (block.Monsters[1] != null)
-						SpriteBatch.FillRectangle(new Rectangle(location.X + 16, location.Y + 4, 4, 4), Color.Red);
-					if (block.Monsters[2] != null)
-						SpriteBatch.FillRectangle(new Rectangle(location.X + 4, location.Y + 16, 4, 4), Color.Red);
-					if (block.Monsters[3] != null)
-						SpriteBatch.FillRectangle(new Rectangle(location.X + 16, location.Y + 16, 4, 4), Color.Red);
-
-				}
-			}
-			#endregion
-
-
-			// Preview pos
-			SpriteBatch.DrawTile(Icons, 22 + (int) PreviewLoc.Direction, new Point(Offset.X + PreviewLoc.Coordinate.X * 25, Offset.Y + PreviewLoc.Coordinate.Y * 25));
-
-
-			// Starting point
-			if (Dungeon.StartLocation.Maze == Maze.Name)
-			{
-				SpriteBatch.DrawTile(Icons, 20,
-					new Point(Offset.X + Dungeon.StartLocation.Coordinate.X * 25, Offset.Y + Dungeon.StartLocation.Coordinate.Y * 25));
-			}
-
-
-			// Surround the selected object
-			if (CurrentSquare != null)
-				SpriteBatch.DrawRectangle(new Rectangle(CurrentSquare.Location.Coordinate.X * 25 + Offset.X, CurrentSquare.Location.Coordinate.Y * 25 + Offset.Y, 25, 25), Color.White);
-
-
-			// If the current actor has a target
-			if (SquareUnderMouse != null && SquareUnderMouse.Actor != null)
-			{
-				SquareActor actor = SquareUnderMouse.Actor;
-				if (actor.Target != null)
-				{
-
-					if (actor.Target.Maze == Maze.Name)
-					{
-						Point from = new Point(BlockCoord.X * 25 + Offset.X + 12, BlockCoord.Y * 25 + Offset.Y + 12);
-						Point to = new Point(actor.Target.Coordinate.X * 25 + Offset.X + 12, actor.Target.Coordinate.Y * 25 + Offset.Y + 12);
-						SpriteBatch.DrawLine(from, to, Color.Red);
-						SpriteBatch.DrawRectangle(new Rectangle(actor.Target.Coordinate.X * 25 + Offset.X, actor.Target.Coordinate.Y * 25 + Offset.Y, 25, 25), Color.Red);
-					}
-				}
-			}
-
-
-			#region Display zones
-			/*
-			if (DisplayZonesBox.Checked)
-			{
-
-				foreach (MazeZone zone in Maze.Zones)
-				{
-					Rectangle rect = new Rectangle(zone.Rectangle.X * 25, zone.Rectangle.Y * 25, zone.Rectangle.Width * 25, zone.Rectangle.Height * 25);
-					Color color = Color.FromArgb(100, Color.Red);
-
-					if (CurrentZone == zone)
-					{
-						color = Color.FromArgb(100, Color.Red);
-						SpriteBatch.DrawRectangle(rect, Color.White);
-					}
-
-					SpriteBatch.FillRectangle(rect, color);
-				}
-
-
-				if (CurrentZone != null)
-				{
-					Rectangle rect = new Rectangle(CurrentZone.Rectangle.X * 25, CurrentZone.Rectangle.Y * 25, CurrentZone.Rectangle.Width * 25, CurrentZone.Rectangle.Height * 25);
-					SpriteBatch.FillRectangle(rect, Color.FromArgb(128, Color.Blue));
-				}
-			}
-*/
-			#endregion
-
-
-			SpriteBatch.End();
-			glControl.SwapBuffers();
+			RenderDungeon();
 		}
-
 
 
 		/// <summary>
@@ -1282,7 +1299,7 @@ namespace DungeonEye.Forms
 				return;
 
 
-			Dungeon.ItemTileSetName = (string) ItemTileSetBox.SelectedItem;
+			Dungeon.ItemTileSetName = (string)ItemTileSetBox.SelectedItem;
 			Dungeon.LoadItemTileSet();
 		}
 
@@ -1315,7 +1332,7 @@ namespace DungeonEye.Forms
 			if (Maze == null)
 				return;
 
-			Maze.DecorationName = (string) DecorationNameBox.SelectedItem;
+			Maze.DecorationName = (string)DecorationNameBox.SelectedItem;
 			Maze.LoadDecoration();
 		}
 
@@ -1330,7 +1347,7 @@ namespace DungeonEye.Forms
 			if (Maze == null)
 				return;
 
-			Maze.WallTilesetName = (string) WallTileSetNameBox.SelectedItem;
+			Maze.WallTilesetName = (string)WallTileSetNameBox.SelectedItem;
 			Maze.LoadWallTileSet();
 		}
 

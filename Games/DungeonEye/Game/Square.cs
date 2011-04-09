@@ -196,35 +196,69 @@ namespace DungeonEye
 		/// <returns>True if the event is processed</returns>
 		public bool OnClick(Point location, CardinalPoint side)
 		{
-			if (Actor == null)
-				return false;
-
 			Team team = GameScreen.Team;
 
-			// A door
-			if (team.ItemInHand == null)
+
+			if (Actor != null)
 			{
-				Actor.OnClick(location, side);
+				// A door
+				if (team.ItemInHand == null)
+					return Actor.OnClick(location, side);
+
+
+				// An Alcove 
+				else if (HasAlcove(side) && DisplayCoordinates.Alcove.Contains(location))
+				{
+					if (team.ItemInHand != null)
+					{
+						DropAlcoveItem(side, team.ItemInHand);
+						team.SetItemInHand(null);
+					}
+					else
+					{
+						team.SetItemInHand(CollectAlcoveItem(side));
+					}
+
+					return true;
+				}
+
+			}
+			
+			
+			// Decoration interaction
+			if (GetDecorationId(side) != -1)
+			{
+				GameMessage.AddMessage("Decoration: OnClick()");
 				return true;
 			}
 
-			// An Alcove 
-			else if (HasAlcove(side) && DisplayCoordinates.Alcove.Contains(location))
-			{
-				if (team.ItemInHand != null)
-				{
-					DropAlcoveItem(side, team.ItemInHand);
-					team.SetItemInHand(null);
-				}
-				else
-				{
-					team.SetItemInHand(CollectAlcoveItem(side));
-				}
-
-				return true;
-			}
+			//TODO: Alcove interaction
 
 
+			return false;
+		}
+
+
+
+		/// <summary>
+		/// A hero used an item on the wall
+		/// </summary>
+		/// <param name="item">Item handle</param>
+		/// <returns>True if the event is processed</returns>
+		public bool OnHack(Item item)
+		{
+			GameMessage.AddMessage("Square: OnHack()");
+			return false;
+		}
+
+
+		/// <summary>
+		/// A hero used an empty hand on the wall
+		/// </summary>
+		/// <returns>True if the event is processed</returns>
+		public bool OnBash()
+		{
+			GameMessage.AddMessage("Square: OnBash()");
 			return false;
 		}
 
@@ -261,8 +295,6 @@ namespace DungeonEye
 			if (Actor != null)
 				Actor.OnTeamEnter();
 		}
-
-
 
 
 		/// <summary>
@@ -462,7 +494,7 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Gets a decoration
+		/// Returns if a side has a decoration
 		/// </summary>
 		/// <param name="side">Wall side</param>
 		/// <returns>True if a decoration is present<returns>
@@ -473,15 +505,27 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Gets the decoration id of a wall
+		/// Gets the decoration id of a wall side
 		/// </summary>
 		/// <param name="from">Facing direction</param>
 		/// <param name="side">Wall side</param>
-		/// <returns>Decoration id</returns>
+		/// <returns>Decoration id or -1 if no decoration</returns>
 		public int GetDecorationId(CardinalPoint from, CardinalPoint side)
 		{
 			return Decorations[(int)Compass.GetDirectionFromView(from, side)];
 		}
+
+
+		/// <summary>
+		/// Gets the decoration id of a wall side
+		/// </summary>
+		/// <param name="side">Wall side</param>
+		/// <returns>Decoration id or -1 if no decoration</returns>
+		public int GetDecorationId(CardinalPoint side)
+		{
+			return Decorations[(int)side];
+		}
+
 
 		#endregion
 
@@ -1069,6 +1113,18 @@ namespace DungeonEye
 			get
 			{
 				return (Alcoves[0] || Alcoves[1] || Alcoves[2] || Alcoves[3]);
+			}
+		}
+
+
+		/// <summary>
+		/// Gets if the wall have decorations
+		/// </summary>
+		public bool HasDecorations
+		{
+			get
+			{
+				return (Decorations[0] != -1 || Decorations[1] != -1 || Decorations[2] != -1 || Decorations[3] != -1);
 			}
 		}
 

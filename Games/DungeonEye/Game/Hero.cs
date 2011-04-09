@@ -839,6 +839,7 @@ namespace DungeonEye
 			// Find the entity in front of the hero
 			Entity target = team.GetFrontEntity(team.GetHeroGroundPosition(this));
 
+
 			// Which item is used for the attack
 			Item item = GetInventoryItem(hand == HeroHand.Primary ? InventoryPosition.Primary : InventoryPosition.Secondary);
 
@@ -848,7 +849,10 @@ namespace DungeonEye
 			{
 				if (team.IsHeroInFront(this))
 				{
-					Attacks[(int)hand] = new Attack(this, target, null);
+					if (team.FrontSquare != null)
+						team.FrontSquare.OnBash();
+					else
+						Attacks[(int)hand] = new Attack(this, target, null);
 				}
 				else
 					HandActions[(int)hand] = new HandAction(ActionResult.CantReach);
@@ -859,7 +863,7 @@ namespace DungeonEye
 
 
 
-			// 
+			// Use item
 			DungeonLocation loc = new DungeonLocation(team.Location);
 			loc.Position = team.GetHeroGroundPosition(this);
 			switch (item.Type)
@@ -917,19 +921,24 @@ namespace DungeonEye
 					else
 					{
 						// Check is the weapon can reach the target
-						if (!team.IsHeroInFront(this) && item.Range == 0)
+						if (team.IsHeroInFront(this) && item.Range == 0)
 						{
-							HandActions[(int)hand] = new HandAction(ActionResult.CantReach);
+							if (team.FrontSquare != null)
+								team.FrontSquare.OnHack(item);
+							else
+								Attacks[(int)hand] = new Attack(this, target, item);
 						}
 						else
-							Attacks[(int)hand] = new Attack(this, target, item);
-	
+							HandActions[(int)hand] = new HandAction(ActionResult.CantReach);
+						
 						AddHandPenality(hand, item.AttackSpeed);
 					}
 				}
 				break;
 				#endregion
 
+
+				#region Holy symbol or book
 				case ItemType.HolySymbol:
 				case ItemType.Book:
 				{
@@ -940,6 +949,7 @@ namespace DungeonEye
 					//spell.Script.Instance.OnCast(spell, this);
 				}
 				break;
+				#endregion
 			}
 
 		}

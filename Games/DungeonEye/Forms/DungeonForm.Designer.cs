@@ -140,7 +140,7 @@
 			// ResetOffsetBox
 			// 
 			this.ResetOffsetBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.ResetOffsetBox.Image = ((System.Drawing.Image) (resources.GetObject("ResetOffsetBox.Image")));
+			this.ResetOffsetBox.Image = ((System.Drawing.Image)(resources.GetObject("ResetOffsetBox.Image")));
 			this.ResetOffsetBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.ResetOffsetBox.Name = "ResetOffsetBox";
 			this.ResetOffsetBox.Size = new System.Drawing.Size(23, 22);
@@ -155,7 +155,7 @@
 			// AddMazeButton
 			// 
 			this.AddMazeButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.AddMazeButton.Image = ((System.Drawing.Image) (resources.GetObject("AddMazeButton.Image")));
+			this.AddMazeButton.Image = ((System.Drawing.Image)(resources.GetObject("AddMazeButton.Image")));
 			this.AddMazeButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.AddMazeButton.Name = "AddMazeButton";
 			this.AddMazeButton.Size = new System.Drawing.Size(23, 22);
@@ -165,7 +165,7 @@
 			// RemoveMazeButton
 			// 
 			this.RemoveMazeButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.RemoveMazeButton.Image = ((System.Drawing.Image) (resources.GetObject("RemoveMazeButton.Image")));
+			this.RemoveMazeButton.Image = ((System.Drawing.Image)(resources.GetObject("RemoveMazeButton.Image")));
 			this.RemoveMazeButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.RemoveMazeButton.Name = "RemoveMazeButton";
 			this.RemoveMazeButton.Size = new System.Drawing.Size(23, 22);
@@ -194,7 +194,7 @@
 			// 
 			this.NoMonstersBox.CheckOnClick = true;
 			this.NoMonstersBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.NoMonstersBox.Image = ((System.Drawing.Image) (resources.GetObject("NoMonstersBox.Image")));
+			this.NoMonstersBox.Image = ((System.Drawing.Image)(resources.GetObject("NoMonstersBox.Image")));
 			this.NoMonstersBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.NoMonstersBox.Name = "NoMonstersBox";
 			this.NoMonstersBox.Size = new System.Drawing.Size(23, 22);
@@ -205,7 +205,7 @@
 			// 
 			this.NoGhostsBox.CheckOnClick = true;
 			this.NoGhostsBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.NoGhostsBox.Image = ((System.Drawing.Image) (resources.GetObject("NoGhostsBox.Image")));
+			this.NoGhostsBox.Image = ((System.Drawing.Image)(resources.GetObject("NoGhostsBox.Image")));
 			this.NoGhostsBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.NoGhostsBox.Name = "NoGhostsBox";
 			this.NoGhostsBox.Size = new System.Drawing.Size(23, 22);
@@ -216,7 +216,7 @@
 			// 
 			this.ZoneBox.CheckOnClick = true;
 			this.ZoneBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.ZoneBox.Image = ((System.Drawing.Image) (resources.GetObject("ZoneBox.Image")));
+			this.ZoneBox.Image = ((System.Drawing.Image)(resources.GetObject("ZoneBox.Image")));
 			this.ZoneBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.ZoneBox.Name = "ZoneBox";
 			this.ZoneBox.Size = new System.Drawing.Size(23, 22);
@@ -227,7 +227,7 @@
 			// 
 			this.AddMonsterBox.CheckOnClick = true;
 			this.AddMonsterBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.AddMonsterBox.Image = ((System.Drawing.Image) (resources.GetObject("AddMonsterBox.Image")));
+			this.AddMonsterBox.Image = ((System.Drawing.Image)(resources.GetObject("AddMonsterBox.Image")));
 			this.AddMonsterBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.AddMonsterBox.Name = "AddMonsterBox";
 			this.AddMonsterBox.Size = new System.Drawing.Size(23, 22);
@@ -238,7 +238,7 @@
 			// 
 			this.AddItemBox.CheckOnClick = true;
 			this.AddItemBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.AddItemBox.Image = ((System.Drawing.Image) (resources.GetObject("AddItemBox.Image")));
+			this.AddItemBox.Image = ((System.Drawing.Image)(resources.GetObject("AddItemBox.Image")));
 			this.AddItemBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.AddItemBox.Name = "AddItemBox";
 			this.AddItemBox.Size = new System.Drawing.Size(23, 22);
@@ -249,7 +249,7 @@
 			// 
 			this.WallBox.CheckOnClick = true;
 			this.WallBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.WallBox.Image = ((System.Drawing.Image) (resources.GetObject("WallBox.Image")));
+			this.WallBox.Image = ((System.Drawing.Image)(resources.GetObject("WallBox.Image")));
 			this.WallBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.WallBox.Name = "WallBox";
 			this.WallBox.Size = new System.Drawing.Size(23, 22);
@@ -260,7 +260,7 @@
 			// 
 			this.StairBox.CheckOnClick = true;
 			this.StairBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.StairBox.Image = ((System.Drawing.Image) (resources.GetObject("StairBox.Image")));
+			this.StairBox.Image = ((System.Drawing.Image)(resources.GetObject("StairBox.Image")));
 			this.StairBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.StairBox.Name = "StairBox";
 			this.StairBox.Size = new System.Drawing.Size(23, 22);
@@ -271,7 +271,7 @@
 			// 
 			this.TeleporterBox.CheckOnClick = true;
 			this.TeleporterBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.TeleporterBox.Image = ((System.Drawing.Image) (resources.GetObject("TeleporterBox.Image")));
+			this.TeleporterBox.Image = ((System.Drawing.Image)(resources.GetObject("TeleporterBox.Image")));
 			this.TeleporterBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.TeleporterBox.Name = "TeleporterBox";
 			this.TeleporterBox.Size = new System.Drawing.Size(23, 22);
@@ -282,7 +282,7 @@
 			// 
 			this.DoorBox.CheckOnClick = true;
 			this.DoorBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.DoorBox.Image = ((System.Drawing.Image) (resources.GetObject("DoorBox.Image")));
+			this.DoorBox.Image = ((System.Drawing.Image)(resources.GetObject("DoorBox.Image")));
 			this.DoorBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.DoorBox.Name = "DoorBox";
 			this.DoorBox.Size = new System.Drawing.Size(23, 22);
@@ -293,7 +293,7 @@
 			// 
 			this.PitBox.CheckOnClick = true;
 			this.PitBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.PitBox.Image = ((System.Drawing.Image) (resources.GetObject("PitBox.Image")));
+			this.PitBox.Image = ((System.Drawing.Image)(resources.GetObject("PitBox.Image")));
 			this.PitBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.PitBox.Name = "PitBox";
 			this.PitBox.Size = new System.Drawing.Size(23, 22);
@@ -304,7 +304,7 @@
 			// 
 			this.WrittingBox.CheckOnClick = true;
 			this.WrittingBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.WrittingBox.Image = ((System.Drawing.Image) (resources.GetObject("WrittingBox.Image")));
+			this.WrittingBox.Image = ((System.Drawing.Image)(resources.GetObject("WrittingBox.Image")));
 			this.WrittingBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.WrittingBox.Name = "WrittingBox";
 			this.WrittingBox.Size = new System.Drawing.Size(23, 22);
@@ -315,7 +315,7 @@
 			// 
 			this.LauncherBox.CheckOnClick = true;
 			this.LauncherBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.LauncherBox.Image = ((System.Drawing.Image) (resources.GetObject("LauncherBox.Image")));
+			this.LauncherBox.Image = ((System.Drawing.Image)(resources.GetObject("LauncherBox.Image")));
 			this.LauncherBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.LauncherBox.Name = "LauncherBox";
 			this.LauncherBox.Size = new System.Drawing.Size(23, 22);
@@ -326,7 +326,7 @@
 			// 
 			this.GeneratorBox.CheckOnClick = true;
 			this.GeneratorBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.GeneratorBox.Image = ((System.Drawing.Image) (resources.GetObject("GeneratorBox.Image")));
+			this.GeneratorBox.Image = ((System.Drawing.Image)(resources.GetObject("GeneratorBox.Image")));
 			this.GeneratorBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.GeneratorBox.Name = "GeneratorBox";
 			this.GeneratorBox.Size = new System.Drawing.Size(23, 22);
@@ -337,7 +337,7 @@
 			// 
 			this.SwitchBox.CheckOnClick = true;
 			this.SwitchBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.SwitchBox.Image = ((System.Drawing.Image) (resources.GetObject("SwitchBox.Image")));
+			this.SwitchBox.Image = ((System.Drawing.Image)(resources.GetObject("SwitchBox.Image")));
 			this.SwitchBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.SwitchBox.Name = "SwitchBox";
 			this.SwitchBox.Size = new System.Drawing.Size(23, 22);
@@ -348,7 +348,7 @@
 			// 
 			this.FloorSwitchBox.CheckOnClick = true;
 			this.FloorSwitchBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.FloorSwitchBox.Image = ((System.Drawing.Image) (resources.GetObject("FloorSwitchBox.Image")));
+			this.FloorSwitchBox.Image = ((System.Drawing.Image)(resources.GetObject("FloorSwitchBox.Image")));
 			this.FloorSwitchBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.FloorSwitchBox.Name = "FloorSwitchBox";
 			this.FloorSwitchBox.Size = new System.Drawing.Size(23, 22);
@@ -359,7 +359,7 @@
 			// 
 			this.FloorDecorationBox.CheckOnClick = true;
 			this.FloorDecorationBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.FloorDecorationBox.Image = ((System.Drawing.Image) (resources.GetObject("FloorDecorationBox.Image")));
+			this.FloorDecorationBox.Image = ((System.Drawing.Image)(resources.GetObject("FloorDecorationBox.Image")));
 			this.FloorDecorationBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.FloorDecorationBox.Name = "FloorDecorationBox";
 			this.FloorDecorationBox.Size = new System.Drawing.Size(23, 22);
@@ -370,7 +370,7 @@
 			// 
 			this.DecorationBox.CheckOnClick = true;
 			this.DecorationBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.DecorationBox.Image = ((System.Drawing.Image) (resources.GetObject("DecorationBox.Image")));
+			this.DecorationBox.Image = ((System.Drawing.Image)(resources.GetObject("DecorationBox.Image")));
 			this.DecorationBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.DecorationBox.Name = "DecorationBox";
 			this.DecorationBox.Size = new System.Drawing.Size(23, 22);
@@ -381,7 +381,7 @@
 			// 
 			this.EventBox.CheckOnClick = true;
 			this.EventBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.EventBox.Image = ((System.Drawing.Image) (resources.GetObject("EventBox.Image")));
+			this.EventBox.Image = ((System.Drawing.Image)(resources.GetObject("EventBox.Image")));
 			this.EventBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.EventBox.Name = "EventBox";
 			this.EventBox.Size = new System.Drawing.Size(23, 22);
@@ -409,7 +409,7 @@
 			// 
 			// SquareDescriptionBox
 			// 
-			this.SquareDescriptionBox.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides) ((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right)));
+			this.SquareDescriptionBox.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right)));
 			this.SquareDescriptionBox.Name = "SquareDescriptionBox";
 			this.SquareDescriptionBox.Size = new System.Drawing.Size(991, 19);
 			this.SquareDescriptionBox.Spring = true;
@@ -460,7 +460,7 @@
 			// 
 			this.StrafeRightBox.AutoSize = true;
 			this.StrafeRightBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.StrafeRightBox.Image = ((System.Drawing.Image) (resources.GetObject("StrafeRightBox.Image")));
+			this.StrafeRightBox.Image = ((System.Drawing.Image)(resources.GetObject("StrafeRightBox.Image")));
 			this.StrafeRightBox.Location = new System.Drawing.Point(212, 311);
 			this.StrafeRightBox.Name = "StrafeRightBox";
 			this.StrafeRightBox.Size = new System.Drawing.Size(46, 40);
@@ -472,7 +472,7 @@
 			// 
 			this.TurnRightBox.AutoSize = true;
 			this.TurnRightBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.TurnRightBox.Image = ((System.Drawing.Image) (resources.GetObject("TurnRightBox.Image")));
+			this.TurnRightBox.Image = ((System.Drawing.Image)(resources.GetObject("TurnRightBox.Image")));
 			this.TurnRightBox.Location = new System.Drawing.Point(212, 265);
 			this.TurnRightBox.Name = "TurnRightBox";
 			this.TurnRightBox.Size = new System.Drawing.Size(46, 40);
@@ -484,7 +484,7 @@
 			// 
 			this.BackwardBox.AutoSize = true;
 			this.BackwardBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.BackwardBox.Image = ((System.Drawing.Image) (resources.GetObject("BackwardBox.Image")));
+			this.BackwardBox.Image = ((System.Drawing.Image)(resources.GetObject("BackwardBox.Image")));
 			this.BackwardBox.Location = new System.Drawing.Point(160, 311);
 			this.BackwardBox.Name = "BackwardBox";
 			this.BackwardBox.Size = new System.Drawing.Size(46, 40);
@@ -496,7 +496,7 @@
 			// 
 			this.ForwardBox.AutoSize = true;
 			this.ForwardBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.ForwardBox.Image = ((System.Drawing.Image) (resources.GetObject("ForwardBox.Image")));
+			this.ForwardBox.Image = ((System.Drawing.Image)(resources.GetObject("ForwardBox.Image")));
 			this.ForwardBox.Location = new System.Drawing.Point(160, 265);
 			this.ForwardBox.Name = "ForwardBox";
 			this.ForwardBox.Size = new System.Drawing.Size(46, 40);
@@ -508,7 +508,7 @@
 			// 
 			this.StrafeLeftBox.AutoSize = true;
 			this.StrafeLeftBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.StrafeLeftBox.Image = ((System.Drawing.Image) (resources.GetObject("StrafeLeftBox.Image")));
+			this.StrafeLeftBox.Image = ((System.Drawing.Image)(resources.GetObject("StrafeLeftBox.Image")));
 			this.StrafeLeftBox.Location = new System.Drawing.Point(110, 311);
 			this.StrafeLeftBox.Name = "StrafeLeftBox";
 			this.StrafeLeftBox.Size = new System.Drawing.Size(44, 40);
@@ -520,7 +520,7 @@
 			// 
 			this.TurnLeftBox.AutoSize = true;
 			this.TurnLeftBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.TurnLeftBox.Image = ((System.Drawing.Image) (resources.GetObject("TurnLeftBox.Image")));
+			this.TurnLeftBox.Image = ((System.Drawing.Image)(resources.GetObject("TurnLeftBox.Image")));
 			this.TurnLeftBox.Location = new System.Drawing.Point(110, 265);
 			this.TurnLeftBox.Name = "TurnLeftBox";
 			this.TurnLeftBox.Size = new System.Drawing.Size(44, 40);
@@ -554,9 +554,9 @@
 			// 
 			// PropertiesBox
 			// 
-			this.PropertiesBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.PropertiesBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.PropertiesBox.Controls.Add(this.DungeonTab);
 			this.PropertiesBox.Controls.Add(this.MazeTab);
 			this.PropertiesBox.Location = new System.Drawing.Point(9, 19);
@@ -728,8 +728,8 @@
 			// 
 			// groupBox5
 			// 
-			this.groupBox5.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.groupBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.groupBox5.Controls.Add(this.GlPreviewControl);
 			this.groupBox5.Controls.Add(this.StrafeRightBox);
 			this.groupBox5.Controls.Add(this.TurnLeftBox);
@@ -746,9 +746,9 @@
 			// 
 			// groupBox4
 			// 
-			this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.groupBox4.Controls.Add(this.PropertiesBox);
 			this.groupBox4.Location = new System.Drawing.Point(3, 3);
 			this.groupBox4.Name = "groupBox4";

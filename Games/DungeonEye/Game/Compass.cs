@@ -226,6 +226,24 @@ namespace DungeonEye
 		}
 
 
+		/// <summary>
+		/// Gets the opposite direction
+		/// </summary>
+		/// <param name="direction">Direction</param>
+		/// <returns>Opposite direction</returns>
+		static public CardinalPoint GetOppositeDirection(CardinalPoint direction)
+		{
+			CardinalPoint[] val = new CardinalPoint[]
+			{
+				CardinalPoint.South,
+				CardinalPoint.North,
+				CardinalPoint.East,
+				CardinalPoint.West
+			};
+
+			return val[(int)direction];
+		}
+
 		#endregion
 
 

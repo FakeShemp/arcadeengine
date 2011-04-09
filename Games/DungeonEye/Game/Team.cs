@@ -47,15 +47,6 @@ namespace DungeonEye
 			Heroes = new List<Hero>();
 			for (int i = 0; i < 6; i++)
 				Heroes.Add(null);
-
-			//if (heroes != null)
-			//{
-			//    for (int i = 0; i < heroes.Length; i++)
-			//        Heroes[i] = heroes[i];
-			//}
-			//else
-			//    SaveGame = "data/savegame.xml";
-
 		}
 
 
@@ -323,8 +314,11 @@ namespace DungeonEye
 			// Display a message
 			if (ItemInHand != null)
 			{
-				// TODO: If item is identified, display identified message, else display default item's name
-				GameMessage.BuildMessage(2, ItemInHand.Name);
+				// If item is identified, display identified message, else display default item's name
+				if (ItemInHand.IsIdentified)
+					GameMessage.BuildMessage(2, ItemInHand.IdentifiedName);
+				else
+					GameMessage.BuildMessage(2, ItemInHand.Name);
 
 				// Change cursor
 				Mouse.SetTile(item.TileID);
@@ -1128,15 +1122,7 @@ namespace DungeonEye
 		{
 			get
 			{
-				CardinalPoint[] points = new CardinalPoint[]
-					{
-						CardinalPoint.South,
-						CardinalPoint.North,
-						CardinalPoint.East,
-						CardinalPoint.West,
-					};
-
-				return points[(int)Direction];
+				return Compass.GetOppositeDirection(Direction);
 			}
 		}
 

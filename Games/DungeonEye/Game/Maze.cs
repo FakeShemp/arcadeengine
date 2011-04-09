@@ -388,6 +388,31 @@ namespace DungeonEye
 		#endregion
 
 
+		#region Decoration
+
+		/// <summary>
+		/// Gets the decoration of a wall side
+		/// </summary>
+		/// <param name="location">Location of the square</param>
+		/// <param name="side">Wall side</param>
+		/// <returns>Decoration handle or null</returns>
+		public Decoration GetDecoration(DungeonLocation location, CardinalPoint side)
+		{
+			if (location == null || Decoration == null)
+				return null;
+
+			Square square = GetSquare(location.Coordinate);
+			if (square == null)
+				return null;
+
+			int id = square.GetDecorationId(side);
+
+			return Decoration.GetDecoration(id);
+		}
+
+		#endregion
+
+
 		#region  Helper
 
 
@@ -650,6 +675,7 @@ namespace DungeonEye
 			Square square = field.Blocks[(int)position];
 			Point point;
 			TileDrawing td = null;
+
 
 			#region Drawing offset
 			int offset = 1;

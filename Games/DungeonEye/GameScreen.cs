@@ -255,6 +255,8 @@ namespace DungeonEye
 				//Batch.FillRectangle(InterfaceCoord.MoveBackward, Color.FromArgb(128, Color.Red));
 				//Batch.FillRectangle(InterfaceCoord.MoveLeft, Color.FromArgb(128, Color.Red));
 				//Batch.FillRectangle(InterfaceCoord.MoveRight, Color.FromArgb(128, Color.Red));
+				//Batch.FillRectangle(DisplayCoordinates.LeftFeetTeam, Color.FromArgb(128, Color.Red));
+				//Batch.FillRectangle(DisplayCoordinates.RightFeetTeam, Color.FromArgb(128, Color.Red));
 			}
 
 
@@ -1064,19 +1066,20 @@ namespace DungeonEye
 				#endregion
 
 				#region Alcove
-				else if (DisplayCoordinates.Alcove.Contains(mousePos) && Team.FrontSquare.IsWall)
-				{
+				//TODO: Move in Maze.OnClick() 
+				//else if (DisplayCoordinates.Alcove.Contains(mousePos) && Team.FrontSquare.IsWall)
+				//{
 
-					if (Team.ItemInHand != null)
-					{
-						if (Team.FrontSquare.DropAlcoveItem(Team.FrontWallSide, Team.ItemInHand))
-							Team.SetItemInHand(null);
-					}
-					else
-					{
-						Team.SetItemInHand(Team.FrontSquare.CollectAlcoveItem(Team.FrontWallSide));
-					}
-				}
+				//    if (Team.ItemInHand != null)
+				//    {
+				//        if (Team.FrontSquare.DropAlcoveItem(Team.FrontWallSide, Team.ItemInHand))
+				//            Team.SetItemInHand(null);
+				//    }
+				//    else
+				//    {
+				//        Team.SetItemInHand(Team.FrontSquare.CollectAlcoveItem(Team.FrontWallSide));
+				//    }
+				//}
 				#endregion
 
 				#region Action to process on the front square
@@ -1084,6 +1087,7 @@ namespace DungeonEye
 				// Click on the square in front of the team
 				else if (DisplayCoordinates.FrontSquare.Contains(mousePos))
 				{
+					// On no action on the front wall
 					if (!Team.FrontSquare.OnClick(mousePos, Team.FrontWallSide))
 					{
 						#region Throw an object in the left side
