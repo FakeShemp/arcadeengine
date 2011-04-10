@@ -433,6 +433,12 @@ namespace DungeonEye
 				// Team location
 				batch.DrawString(Font, new Point(10, 340), GameColors.White, Team.Location.ToString());
 			}
+
+
+			// Swap wall tileset
+		//	bool swap = ((Team.Location.Coordinate.X + Team.Location.Coordinate.Y + ((int)Team.Direction) + 1) & 1) == 0;
+		//	bool swap = ((Team.Location.Coordinate.X + Team.Location.Coordinate.Y) & 1) == 0;
+		//	batch.DrawString(Font, new Point(350, 250), GameColors.White, swap.ToString());
 		}
 
 

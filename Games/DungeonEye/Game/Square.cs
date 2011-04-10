@@ -372,7 +372,7 @@ namespace DungeonEye
 		
 
 		/// <summary>
-		/// Draws the decorations
+		/// Draws all the decorations
 		/// </summary>
 		/// <param name="batch">Spritebatch handle</param>
 		/// <param name="decoration">DecorationSet handle</param>
@@ -385,8 +385,6 @@ namespace DungeonEye
 				return;
 
 
-
-
 			// Is there a forced decoration
 			Decoration deco = null;
 			for (int i = 0; i < 4; i++)
@@ -397,7 +395,7 @@ namespace DungeonEye
 			}
 
 
-			// For each direction, draws the decoration
+			// For each directions, draws the decoration
 			foreach (CardinalPoint side in DisplayCoordinates.DrawingWallSides[(int)position])
 			{
 				// Decoration informations
@@ -417,10 +415,10 @@ namespace DungeonEye
 		/// <param name="decoration">DecorationSet handle</param>
 		/// <param name="position">Position of the square in the view</param>
 		/// <param name="view">Viewing direction</param>
-		/// <param name="south">True if the side is facing south (horizontaly span the decoration)</param>
-		public void DrawDecoration(SpriteBatch batch, DecorationSet set, ViewFieldPosition position, Decoration deco, bool south)
+		/// <param name="alignview">True if the side is facing south (horizontaly span the decoration)</param>
+		public void DrawDecoration(SpriteBatch batch, DecorationSet set, ViewFieldPosition position, Decoration deco, bool alignview)
 		{
-			if (deco == null)
+			if (deco == null || batch == null || set == null)
 				return;
 
 			// Location of the decoration on the screen
@@ -429,55 +427,12 @@ namespace DungeonEye
 			// Tile id
 			int tileid = deco.GetTileId(position);
 
+
 			// Offset the decoration if facing to the view point
-			if (south)
+			if (alignview)
 			{
-				switch (position)
-				{
-					case ViewFieldPosition.A:
-					location = deco.GetLocation(ViewFieldPosition.C);
-					location.X += -96 * 2;
-					tileid = deco.GetTileId(ViewFieldPosition.C);
-					break;
-					case ViewFieldPosition.B:
-					location = deco.GetLocation(ViewFieldPosition.C);
-					location.X += -96;
-					tileid = deco.GetTileId(ViewFieldPosition.C);
-					break;
-					case ViewFieldPosition.D:
-					location = deco.GetLocation(ViewFieldPosition.C);
-					location.X += 96;
-					tileid = deco.GetTileId(ViewFieldPosition.C);
-					break;
-					case ViewFieldPosition.E:
-					location = deco.GetLocation(ViewFieldPosition.C);
-					location.X += 96 * 2;
-					tileid = deco.GetTileId(ViewFieldPosition.C);
-					break;
-
-					case ViewFieldPosition.G:
-					location = deco.GetLocation(ViewFieldPosition.H);
-					location.X += -160;
-					tileid = deco.GetTileId(ViewFieldPosition.H);
-					break;
-					case ViewFieldPosition.I:
-					location = deco.GetLocation(ViewFieldPosition.H);
-					location.X += 160;
-					tileid = deco.GetTileId(ViewFieldPosition.H);
-					break;
-
-					case ViewFieldPosition.K:
-					location = deco.GetLocation(ViewFieldPosition.L);
-					location.X -= 256;
-					tileid = deco.GetTileId(ViewFieldPosition.L);
-					break;
-					case ViewFieldPosition.M:
-					location = deco.GetLocation(ViewFieldPosition.L);
-					location.X += 256;
-					tileid = deco.GetTileId(ViewFieldPosition.L);
-					break;
-				}
-
+				location = deco.PrepareLocation(position);
+				tileid = deco.PrepareTile(position);
 			}
 
 			// Draws the decoration
@@ -628,7 +583,6 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="side">Wall side</param>
 		/// <returns>List of items</returns>
-		[Obsolete()]
 		public List<Item> GetAlcoveItems(CardinalPoint side)
 		{
 			return Items[(int)side];
@@ -641,18 +595,9 @@ namespace DungeonEye
 		/// <param name="from">View point</param>
 		/// <param name="side">Wall side</param>
 		/// <returns>List of items</returns>
-		[Obsolete()]
 		public List<Item> GetAlcoveItems(CardinalPoint from, CardinalPoint side)
 		{
-			CardinalPoint[,] tab = new CardinalPoint[,]
-			{
-				{CardinalPoint.North, CardinalPoint.South, CardinalPoint.West, CardinalPoint.East},
-				{CardinalPoint.South, CardinalPoint.North, CardinalPoint.East, CardinalPoint.West},
-				{CardinalPoint.West, CardinalPoint.East, CardinalPoint.South, CardinalPoint.North},
-				{CardinalPoint.East, CardinalPoint.West, CardinalPoint.North, CardinalPoint.South},
-			};
-
-			return GetAlcoveItems(tab[(int)from, (int)side]);
+			return GetAlcoveItems(Compass.GetDirectionFromView(from, side));
 		}
 
 

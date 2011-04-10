@@ -31,9 +31,20 @@
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SquareForm));
 			this.CloseBox = new System.Windows.Forms.Button();
 			this.DecorationTab = new System.Windows.Forms.TabPage();
-			this.ClearDecorationBox = new System.Windows.Forms.Button();
+			this.groupBox8 = new System.Windows.Forms.GroupBox();
+			this.groupBox7 = new System.Windows.Forms.GroupBox();
+			this.OnHackInfoBox = new System.Windows.Forms.TextBox();
+			this.OnBashInfoBox = new System.Windows.Forms.TextBox();
+			this.OnClickInfoBox = new System.Windows.Forms.TextBox();
+			this.ClearOnHackBox = new System.Windows.Forms.Button();
+			this.OnHackBox = new System.Windows.Forms.Button();
+			this.ClearOnBashBox = new System.Windows.Forms.Button();
+			this.OnBashBox = new System.Windows.Forms.Button();
+			this.ClearOnClickBox = new System.Windows.Forms.Button();
+			this.OnClickBox = new System.Windows.Forms.Button();
 			this.groupBox6 = new System.Windows.Forms.GroupBox();
 			this.DecorationIdBox = new System.Windows.Forms.NumericUpDown();
+			this.ClearDecorationBox = new System.Windows.Forms.Button();
 			this.groupBox14 = new System.Windows.Forms.GroupBox();
 			this.SouthDecorationBox = new System.Windows.Forms.RadioButton();
 			this.EastDecorationBox = new System.Windows.Forms.RadioButton();
@@ -62,11 +73,6 @@
 			this.ItemsTab = new System.Windows.Forms.TabPage();
 			this.label1 = new System.Windows.Forms.Label();
 			this.ClearAllItemsBox = new System.Windows.Forms.Button();
-			this.AlcoveGroupBox = new System.Windows.Forms.GroupBox();
-			this.AlcoveEastButton = new System.Windows.Forms.CheckBox();
-			this.AlcoveWestButton = new System.Windows.Forms.CheckBox();
-			this.AlcoveSouthButton = new System.Windows.Forms.CheckBox();
-			this.AlcoveNorthButton = new System.Windows.Forms.CheckBox();
 			this.ItemsBox = new System.Windows.Forms.ComboBox();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
 			this.SEBox = new System.Windows.Forms.ListBox();
@@ -88,18 +94,9 @@
 			this.ActorTab = new System.Windows.Forms.TabPage();
 			this.ActorPanelBox = new System.Windows.Forms.Panel();
 			this.DeleteActorBox = new System.Windows.Forms.Button();
-			this.groupBox7 = new System.Windows.Forms.GroupBox();
-			this.OnHackInfoBox = new System.Windows.Forms.TextBox();
-			this.OnBashInfoBox = new System.Windows.Forms.TextBox();
-			this.OnClickInfoBox = new System.Windows.Forms.TextBox();
-			this.ClearOnHackBox = new System.Windows.Forms.Button();
-			this.OnHackBox = new System.Windows.Forms.Button();
-			this.ClearOnBashBox = new System.Windows.Forms.Button();
-			this.OnBashBox = new System.Windows.Forms.Button();
-			this.ClearOnClickBox = new System.Windows.Forms.Button();
-			this.OnClickBox = new System.Windows.Forms.Button();
-			this.groupBox8 = new System.Windows.Forms.GroupBox();
 			this.DecorationTab.SuspendLayout();
+			this.groupBox8.SuspendLayout();
+			this.groupBox7.SuspendLayout();
 			this.groupBox6.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.DecorationIdBox)).BeginInit();
 			this.groupBox14.SuspendLayout();
@@ -110,15 +107,12 @@
 			this.groupBox11.SuspendLayout();
 			this.groupBox10.SuspendLayout();
 			this.ItemsTab.SuspendLayout();
-			this.AlcoveGroupBox.SuspendLayout();
 			this.groupBox4.SuspendLayout();
 			this.groupBox3.SuspendLayout();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.TabControlBox.SuspendLayout();
 			this.ActorTab.SuspendLayout();
-			this.groupBox7.SuspendLayout();
-			this.groupBox8.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// CloseBox
@@ -145,17 +139,112 @@
 			this.DecorationTab.Text = "Decoration";
 			this.DecorationTab.UseVisualStyleBackColor = true;
 			// 
-			// ClearDecorationBox
+			// groupBox8
 			// 
-			this.ClearDecorationBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
-			this.ClearDecorationBox.Location = new System.Drawing.Point(6, 444);
-			this.ClearDecorationBox.Name = "ClearDecorationBox";
-			this.ClearDecorationBox.Size = new System.Drawing.Size(492, 23);
-			this.ClearDecorationBox.TabIndex = 25;
-			this.ClearDecorationBox.Text = "Remove all decorations";
-			this.ClearDecorationBox.UseVisualStyleBackColor = true;
-			this.ClearDecorationBox.Click += new System.EventHandler(this.ClearDecorationBox_Click);
+			this.groupBox8.Controls.Add(this.groupBox7);
+			this.groupBox8.Controls.Add(this.groupBox6);
+			this.groupBox8.Location = new System.Drawing.Point(3, 278);
+			this.groupBox8.Name = "groupBox8";
+			this.groupBox8.Size = new System.Drawing.Size(467, 160);
+			this.groupBox8.TabIndex = 26;
+			this.groupBox8.TabStop = false;
+			this.groupBox8.Text = "Properties";
+			// 
+			// groupBox7
+			// 
+			this.groupBox7.Controls.Add(this.OnHackInfoBox);
+			this.groupBox7.Controls.Add(this.OnBashInfoBox);
+			this.groupBox7.Controls.Add(this.OnClickInfoBox);
+			this.groupBox7.Controls.Add(this.ClearOnHackBox);
+			this.groupBox7.Controls.Add(this.OnHackBox);
+			this.groupBox7.Controls.Add(this.ClearOnBashBox);
+			this.groupBox7.Controls.Add(this.OnBashBox);
+			this.groupBox7.Controls.Add(this.ClearOnClickBox);
+			this.groupBox7.Controls.Add(this.OnClickBox);
+			this.groupBox7.Location = new System.Drawing.Point(6, 19);
+			this.groupBox7.Name = "groupBox7";
+			this.groupBox7.Size = new System.Drawing.Size(256, 108);
+			this.groupBox7.TabIndex = 26;
+			this.groupBox7.TabStop = false;
+			this.groupBox7.Text = "Scripting";
+			// 
+			// OnHackInfoBox
+			// 
+			this.OnHackInfoBox.Location = new System.Drawing.Point(87, 79);
+			this.OnHackInfoBox.Name = "OnHackInfoBox";
+			this.OnHackInfoBox.ReadOnly = true;
+			this.OnHackInfoBox.Size = new System.Drawing.Size(126, 20);
+			this.OnHackInfoBox.TabIndex = 1;
+			// 
+			// OnBashInfoBox
+			// 
+			this.OnBashInfoBox.Location = new System.Drawing.Point(87, 50);
+			this.OnBashInfoBox.Name = "OnBashInfoBox";
+			this.OnBashInfoBox.ReadOnly = true;
+			this.OnBashInfoBox.Size = new System.Drawing.Size(126, 20);
+			this.OnBashInfoBox.TabIndex = 1;
+			// 
+			// OnClickInfoBox
+			// 
+			this.OnClickInfoBox.Location = new System.Drawing.Point(87, 21);
+			this.OnClickInfoBox.Name = "OnClickInfoBox";
+			this.OnClickInfoBox.ReadOnly = true;
+			this.OnClickInfoBox.Size = new System.Drawing.Size(126, 20);
+			this.OnClickInfoBox.TabIndex = 1;
+			// 
+			// ClearOnHackBox
+			// 
+			this.ClearOnHackBox.Image = ((System.Drawing.Image)(resources.GetObject("ClearOnHackBox.Image")));
+			this.ClearOnHackBox.Location = new System.Drawing.Point(219, 77);
+			this.ClearOnHackBox.Name = "ClearOnHackBox";
+			this.ClearOnHackBox.Size = new System.Drawing.Size(29, 23);
+			this.ClearOnHackBox.TabIndex = 0;
+			this.ClearOnHackBox.UseVisualStyleBackColor = true;
+			// 
+			// OnHackBox
+			// 
+			this.OnHackBox.Location = new System.Drawing.Point(6, 77);
+			this.OnHackBox.Name = "OnHackBox";
+			this.OnHackBox.Size = new System.Drawing.Size(75, 23);
+			this.OnHackBox.TabIndex = 0;
+			this.OnHackBox.Text = "OnHack";
+			this.OnHackBox.UseVisualStyleBackColor = true;
+			// 
+			// ClearOnBashBox
+			// 
+			this.ClearOnBashBox.Image = ((System.Drawing.Image)(resources.GetObject("ClearOnBashBox.Image")));
+			this.ClearOnBashBox.Location = new System.Drawing.Point(219, 48);
+			this.ClearOnBashBox.Name = "ClearOnBashBox";
+			this.ClearOnBashBox.Size = new System.Drawing.Size(29, 23);
+			this.ClearOnBashBox.TabIndex = 0;
+			this.ClearOnBashBox.UseVisualStyleBackColor = true;
+			// 
+			// OnBashBox
+			// 
+			this.OnBashBox.Location = new System.Drawing.Point(6, 48);
+			this.OnBashBox.Name = "OnBashBox";
+			this.OnBashBox.Size = new System.Drawing.Size(75, 23);
+			this.OnBashBox.TabIndex = 0;
+			this.OnBashBox.Text = "OnBash";
+			this.OnBashBox.UseVisualStyleBackColor = true;
+			// 
+			// ClearOnClickBox
+			// 
+			this.ClearOnClickBox.Image = ((System.Drawing.Image)(resources.GetObject("ClearOnClickBox.Image")));
+			this.ClearOnClickBox.Location = new System.Drawing.Point(219, 19);
+			this.ClearOnClickBox.Name = "ClearOnClickBox";
+			this.ClearOnClickBox.Size = new System.Drawing.Size(29, 23);
+			this.ClearOnClickBox.TabIndex = 0;
+			this.ClearOnClickBox.UseVisualStyleBackColor = true;
+			// 
+			// OnClickBox
+			// 
+			this.OnClickBox.Location = new System.Drawing.Point(6, 19);
+			this.OnClickBox.Name = "OnClickBox";
+			this.OnClickBox.Size = new System.Drawing.Size(75, 23);
+			this.OnClickBox.TabIndex = 0;
+			this.OnClickBox.Text = "OnClick";
+			this.OnClickBox.UseVisualStyleBackColor = true;
 			// 
 			// groupBox6
 			// 
@@ -191,6 +280,18 @@
             0,
             -2147483648});
 			this.DecorationIdBox.ValueChanged += new System.EventHandler(this.DecorationIdBox_ValueChanged);
+			// 
+			// ClearDecorationBox
+			// 
+			this.ClearDecorationBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.ClearDecorationBox.Location = new System.Drawing.Point(6, 444);
+			this.ClearDecorationBox.Name = "ClearDecorationBox";
+			this.ClearDecorationBox.Size = new System.Drawing.Size(492, 23);
+			this.ClearDecorationBox.TabIndex = 25;
+			this.ClearDecorationBox.Text = "Remove all decorations";
+			this.ClearDecorationBox.UseVisualStyleBackColor = true;
+			this.ClearDecorationBox.Click += new System.EventHandler(this.ClearDecorationBox_Click);
 			// 
 			// groupBox14
 			// 
@@ -475,7 +576,6 @@
 			// 
 			this.ItemsTab.Controls.Add(this.label1);
 			this.ItemsTab.Controls.Add(this.ClearAllItemsBox);
-			this.ItemsTab.Controls.Add(this.AlcoveGroupBox);
 			this.ItemsTab.Controls.Add(this.ItemsBox);
 			this.ItemsTab.Controls.Add(this.groupBox4);
 			this.ItemsTab.Controls.Add(this.groupBox3);
@@ -509,63 +609,6 @@
 			this.ClearAllItemsBox.Text = "Remove all items";
 			this.ClearAllItemsBox.UseVisualStyleBackColor = true;
 			this.ClearAllItemsBox.Click += new System.EventHandler(this.ClearAllItemsBox_Click);
-			// 
-			// AlcoveGroupBox
-			// 
-			this.AlcoveGroupBox.Controls.Add(this.AlcoveEastButton);
-			this.AlcoveGroupBox.Controls.Add(this.AlcoveWestButton);
-			this.AlcoveGroupBox.Controls.Add(this.AlcoveSouthButton);
-			this.AlcoveGroupBox.Controls.Add(this.AlcoveNorthButton);
-			this.AlcoveGroupBox.Location = new System.Drawing.Point(399, 33);
-			this.AlcoveGroupBox.Name = "AlcoveGroupBox";
-			this.AlcoveGroupBox.Size = new System.Drawing.Size(96, 118);
-			this.AlcoveGroupBox.TabIndex = 22;
-			this.AlcoveGroupBox.TabStop = false;
-			this.AlcoveGroupBox.Text = "Alcoves :";
-			// 
-			// AlcoveEastButton
-			// 
-			this.AlcoveEastButton.AutoSize = true;
-			this.AlcoveEastButton.Location = new System.Drawing.Point(9, 92);
-			this.AlcoveEastButton.Name = "AlcoveEastButton";
-			this.AlcoveEastButton.Size = new System.Drawing.Size(47, 17);
-			this.AlcoveEastButton.TabIndex = 3;
-			this.AlcoveEastButton.Text = "East";
-			this.AlcoveEastButton.UseVisualStyleBackColor = true;
-			this.AlcoveEastButton.CheckedChanged += new System.EventHandler(this.AlcoveEastButton_CheckedChanged);
-			// 
-			// AlcoveWestButton
-			// 
-			this.AlcoveWestButton.AutoSize = true;
-			this.AlcoveWestButton.Location = new System.Drawing.Point(9, 68);
-			this.AlcoveWestButton.Name = "AlcoveWestButton";
-			this.AlcoveWestButton.Size = new System.Drawing.Size(51, 17);
-			this.AlcoveWestButton.TabIndex = 2;
-			this.AlcoveWestButton.Text = "West";
-			this.AlcoveWestButton.UseVisualStyleBackColor = true;
-			this.AlcoveWestButton.CheckedChanged += new System.EventHandler(this.AlcoveWestButton_CheckedChanged);
-			// 
-			// AlcoveSouthButton
-			// 
-			this.AlcoveSouthButton.AutoSize = true;
-			this.AlcoveSouthButton.Location = new System.Drawing.Point(9, 44);
-			this.AlcoveSouthButton.Name = "AlcoveSouthButton";
-			this.AlcoveSouthButton.Size = new System.Drawing.Size(54, 17);
-			this.AlcoveSouthButton.TabIndex = 1;
-			this.AlcoveSouthButton.Text = "South";
-			this.AlcoveSouthButton.UseVisualStyleBackColor = true;
-			this.AlcoveSouthButton.CheckedChanged += new System.EventHandler(this.AlcoveSouthButton_CheckedChanged);
-			// 
-			// AlcoveNorthButton
-			// 
-			this.AlcoveNorthButton.AutoSize = true;
-			this.AlcoveNorthButton.Location = new System.Drawing.Point(9, 20);
-			this.AlcoveNorthButton.Name = "AlcoveNorthButton";
-			this.AlcoveNorthButton.Size = new System.Drawing.Size(52, 17);
-			this.AlcoveNorthButton.TabIndex = 0;
-			this.AlcoveNorthButton.Text = "North";
-			this.AlcoveNorthButton.UseVisualStyleBackColor = true;
-			this.AlcoveNorthButton.CheckedChanged += new System.EventHandler(this.AlcoveNorthButton_CheckedChanged);
 			// 
 			// ItemsBox
 			// 
@@ -815,113 +858,6 @@
 			this.DeleteActorBox.UseVisualStyleBackColor = true;
 			this.DeleteActorBox.Click += new System.EventHandler(this.DeleteActorBox_Click);
 			// 
-			// groupBox7
-			// 
-			this.groupBox7.Controls.Add(this.OnHackInfoBox);
-			this.groupBox7.Controls.Add(this.OnBashInfoBox);
-			this.groupBox7.Controls.Add(this.OnClickInfoBox);
-			this.groupBox7.Controls.Add(this.ClearOnHackBox);
-			this.groupBox7.Controls.Add(this.OnHackBox);
-			this.groupBox7.Controls.Add(this.ClearOnBashBox);
-			this.groupBox7.Controls.Add(this.OnBashBox);
-			this.groupBox7.Controls.Add(this.ClearOnClickBox);
-			this.groupBox7.Controls.Add(this.OnClickBox);
-			this.groupBox7.Location = new System.Drawing.Point(6, 19);
-			this.groupBox7.Name = "groupBox7";
-			this.groupBox7.Size = new System.Drawing.Size(256, 108);
-			this.groupBox7.TabIndex = 26;
-			this.groupBox7.TabStop = false;
-			this.groupBox7.Text = "Scripting";
-			// 
-			// OnHackInfoBox
-			// 
-			this.OnHackInfoBox.Location = new System.Drawing.Point(87, 79);
-			this.OnHackInfoBox.Name = "OnHackInfoBox";
-			this.OnHackInfoBox.ReadOnly = true;
-			this.OnHackInfoBox.Size = new System.Drawing.Size(126, 20);
-			this.OnHackInfoBox.TabIndex = 1;
-			// 
-			// OnBashInfoBox
-			// 
-			this.OnBashInfoBox.Location = new System.Drawing.Point(87, 50);
-			this.OnBashInfoBox.Name = "OnBashInfoBox";
-			this.OnBashInfoBox.ReadOnly = true;
-			this.OnBashInfoBox.Size = new System.Drawing.Size(126, 20);
-			this.OnBashInfoBox.TabIndex = 1;
-			// 
-			// OnClickInfoBox
-			// 
-			this.OnClickInfoBox.Location = new System.Drawing.Point(87, 21);
-			this.OnClickInfoBox.Name = "OnClickInfoBox";
-			this.OnClickInfoBox.ReadOnly = true;
-			this.OnClickInfoBox.Size = new System.Drawing.Size(126, 20);
-			this.OnClickInfoBox.TabIndex = 1;
-			// 
-			// ClearOnHackBox
-			// 
-			this.ClearOnHackBox.Image = ((System.Drawing.Image)(resources.GetObject("ClearOnHackBox.Image")));
-			this.ClearOnHackBox.Location = new System.Drawing.Point(219, 77);
-			this.ClearOnHackBox.Name = "ClearOnHackBox";
-			this.ClearOnHackBox.Size = new System.Drawing.Size(29, 23);
-			this.ClearOnHackBox.TabIndex = 0;
-			this.ClearOnHackBox.UseVisualStyleBackColor = true;
-			// 
-			// OnHackBox
-			// 
-			this.OnHackBox.Location = new System.Drawing.Point(6, 77);
-			this.OnHackBox.Name = "OnHackBox";
-			this.OnHackBox.Size = new System.Drawing.Size(75, 23);
-			this.OnHackBox.TabIndex = 0;
-			this.OnHackBox.Text = "OnHack";
-			this.OnHackBox.UseVisualStyleBackColor = true;
-			// 
-			// ClearOnBashBox
-			// 
-			this.ClearOnBashBox.Image = ((System.Drawing.Image)(resources.GetObject("ClearOnBashBox.Image")));
-			this.ClearOnBashBox.Location = new System.Drawing.Point(219, 48);
-			this.ClearOnBashBox.Name = "ClearOnBashBox";
-			this.ClearOnBashBox.Size = new System.Drawing.Size(29, 23);
-			this.ClearOnBashBox.TabIndex = 0;
-			this.ClearOnBashBox.UseVisualStyleBackColor = true;
-			// 
-			// OnBashBox
-			// 
-			this.OnBashBox.Location = new System.Drawing.Point(6, 48);
-			this.OnBashBox.Name = "OnBashBox";
-			this.OnBashBox.Size = new System.Drawing.Size(75, 23);
-			this.OnBashBox.TabIndex = 0;
-			this.OnBashBox.Text = "OnBash";
-			this.OnBashBox.UseVisualStyleBackColor = true;
-			// 
-			// ClearOnClickBox
-			// 
-			this.ClearOnClickBox.Image = ((System.Drawing.Image)(resources.GetObject("ClearOnClickBox.Image")));
-			this.ClearOnClickBox.Location = new System.Drawing.Point(219, 19);
-			this.ClearOnClickBox.Name = "ClearOnClickBox";
-			this.ClearOnClickBox.Size = new System.Drawing.Size(29, 23);
-			this.ClearOnClickBox.TabIndex = 0;
-			this.ClearOnClickBox.UseVisualStyleBackColor = true;
-			// 
-			// OnClickBox
-			// 
-			this.OnClickBox.Location = new System.Drawing.Point(6, 19);
-			this.OnClickBox.Name = "OnClickBox";
-			this.OnClickBox.Size = new System.Drawing.Size(75, 23);
-			this.OnClickBox.TabIndex = 0;
-			this.OnClickBox.Text = "OnClick";
-			this.OnClickBox.UseVisualStyleBackColor = true;
-			// 
-			// groupBox8
-			// 
-			this.groupBox8.Controls.Add(this.groupBox7);
-			this.groupBox8.Controls.Add(this.groupBox6);
-			this.groupBox8.Location = new System.Drawing.Point(3, 278);
-			this.groupBox8.Name = "groupBox8";
-			this.groupBox8.Size = new System.Drawing.Size(467, 160);
-			this.groupBox8.TabIndex = 26;
-			this.groupBox8.TabStop = false;
-			this.groupBox8.Text = "Properties";
-			// 
 			// SquareForm
 			// 
 			this.AcceptButton = this.CloseBox;
@@ -942,6 +878,9 @@
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SquareForm_FormClosing);
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MazeBlockForm_KeyDown);
 			this.DecorationTab.ResumeLayout(false);
+			this.groupBox8.ResumeLayout(false);
+			this.groupBox7.ResumeLayout(false);
+			this.groupBox7.PerformLayout();
 			this.groupBox6.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.DecorationIdBox)).EndInit();
 			this.groupBox14.ResumeLayout(false);
@@ -957,17 +896,12 @@
 			this.groupBox10.PerformLayout();
 			this.ItemsTab.ResumeLayout(false);
 			this.ItemsTab.PerformLayout();
-			this.AlcoveGroupBox.ResumeLayout(false);
-			this.AlcoveGroupBox.PerformLayout();
 			this.groupBox4.ResumeLayout(false);
 			this.groupBox3.ResumeLayout(false);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox2.ResumeLayout(false);
 			this.TabControlBox.ResumeLayout(false);
 			this.ActorTab.ResumeLayout(false);
-			this.groupBox7.ResumeLayout(false);
-			this.groupBox7.PerformLayout();
-			this.groupBox8.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -996,10 +930,6 @@
 		private System.Windows.Forms.Button DeleteNWBox;
 		private System.Windows.Forms.Button EditNWBox;
 		private System.Windows.Forms.TabPage ItemsTab;
-		private System.Windows.Forms.CheckBox AlcoveEastButton;
-		private System.Windows.Forms.CheckBox AlcoveWestButton;
-		private System.Windows.Forms.CheckBox AlcoveSouthButton;
-		private System.Windows.Forms.CheckBox AlcoveNorthButton;
 		private System.Windows.Forms.GroupBox groupBox4;
 		private System.Windows.Forms.ListBox SEBox;
 		private System.Windows.Forms.Button SEAddItem;
@@ -1021,7 +951,6 @@
 		private System.Windows.Forms.Button ClearAllItemsBox;
 		private System.Windows.Forms.Button RemoveAllMonstersBox;
 		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.GroupBox AlcoveGroupBox;
 		private System.Windows.Forms.TabPage ActorTab;
 		private System.Windows.Forms.Button DeleteActorBox;
 		private System.Windows.Forms.Panel ActorPanelBox;

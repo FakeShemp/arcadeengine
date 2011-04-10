@@ -56,11 +56,6 @@ namespace DungeonEye.Forms
 
 			#region Items
 
-			if (!square.IsWall)
-			{
-				AlcoveGroupBox.Enabled = false;
-			}
-
 			NWBox.BeginUpdate();
 			NEBox.BeginUpdate();
 			SWBox.BeginUpdate();
@@ -89,16 +84,6 @@ namespace DungeonEye.Forms
 			SetMonster(SquarePosition.SouthEast, square.Monsters[3]);
 
 			#endregion
-
-
-			#region Walls
-			AlcoveNorthButton.Checked = square.HasAlcove(CardinalPoint.North);
-			AlcoveSouthButton.Checked = square.HasAlcove(CardinalPoint.South);
-			AlcoveWestButton.Checked = square.HasAlcove(CardinalPoint.West);
-			AlcoveEastButton.Checked = square.HasAlcove(CardinalPoint.East);
-
-			#endregion
-
 
 			Square = square;
 		}
@@ -383,39 +368,6 @@ namespace DungeonEye.Forms
 
 			Square.Items[2].RemoveAt(SWBox.SelectedIndex);
 			SWBox.Items.RemoveAt(SWBox.SelectedIndex);
-		}
-
-
-		private void AlcoveNorthButton_CheckedChanged(object sender, EventArgs e)
-		{
-			if (Square == null)
-				return;
-
-			Square.SetAlcove(CardinalPoint.North, AlcoveNorthButton.Checked);
-		}
-
-		private void AlcoveSouthButton_CheckedChanged(object sender, EventArgs e)
-		{
-			if (Square == null)
-				return;
-
-			Square.SetAlcove(CardinalPoint.South, AlcoveSouthButton.Checked);
-		}
-
-		private void AlcoveWestButton_CheckedChanged(object sender, EventArgs e)
-		{
-			if (Square == null)
-				return;
-
-			Square.SetAlcove(CardinalPoint.West, AlcoveWestButton.Checked);
-		}
-
-		private void AlcoveEastButton_CheckedChanged(object sender, EventArgs e)
-		{
-			if (Square == null)
-				return;
-
-			Square.SetAlcove(CardinalPoint.East, AlcoveEastButton.Checked);
 		}
 
 

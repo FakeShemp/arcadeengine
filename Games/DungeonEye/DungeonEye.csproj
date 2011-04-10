@@ -123,6 +123,12 @@
     <Compile Include="Forms\AlcoveControl.Designer.cs">
       <DependentUpon>AlcoveControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\CardinalPointControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\CardinalPointControl.Designer.cs">
+      <DependentUpon>CardinalPointControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\DecorationSetForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -526,6 +532,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AlcoveControl.resx">
       <DependentUpon>AlcoveControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CardinalPointControl.resx">
+      <DependentUpon>CardinalPointControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\DecorationSetForm.resx">
       <DependentUpon>DecorationSetForm.cs</DependentUpon>

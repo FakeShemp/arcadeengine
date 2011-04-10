@@ -33,12 +33,13 @@
 			this.ClearBox = new System.Windows.Forms.Button();
 			this.label1 = new System.Windows.Forms.Label();
 			this.DecorationBox = new System.Windows.Forms.NumericUpDown();
-			this.NorthBox = new System.Windows.Forms.Button();
-			this.SouthBox = new System.Windows.Forms.Button();
-			this.WestBox = new System.Windows.Forms.Button();
-			this.EastBox = new System.Windows.Forms.Button();
+			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.HideItemsBox = new System.Windows.Forms.CheckBox();
+			this.DirectionBox = new DungeonEye.Forms.CardinalPointControl();
+			this.AcceptBigItemsBox = new System.Windows.Forms.CheckBox();
 			this.groupBox2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.DecorationBox)).BeginInit();
+			this.groupBox1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// GLControl
@@ -54,20 +55,17 @@
 			// 
 			// groupBox2
 			// 
-			this.groupBox2.Controls.Add(this.ClearBox);
-			this.groupBox2.Controls.Add(this.label1);
-			this.groupBox2.Controls.Add(this.DecorationBox);
 			this.groupBox2.Controls.Add(this.GLControl);
-			this.groupBox2.Location = new System.Drawing.Point(3, 32);
+			this.groupBox2.Location = new System.Drawing.Point(3, 3);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(365, 292);
+			this.groupBox2.Size = new System.Drawing.Size(365, 270);
 			this.groupBox2.TabIndex = 2;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Visual properties";
 			// 
 			// ClearBox
 			// 
-			this.ClearBox.Location = new System.Drawing.Point(283, 262);
+			this.ClearBox.Location = new System.Drawing.Point(283, 19);
 			this.ClearBox.Name = "ClearBox";
 			this.ClearBox.Size = new System.Drawing.Size(75, 23);
 			this.ClearBox.TabIndex = 4;
@@ -78,7 +76,7 @@
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(6, 267);
+			this.label1.Location = new System.Drawing.Point(10, 24);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(59, 13);
 			this.label1.TabIndex = 3;
@@ -86,7 +84,7 @@
 			// 
 			// DecorationBox
 			// 
-			this.DecorationBox.Location = new System.Drawing.Point(71, 265);
+			this.DecorationBox.Location = new System.Drawing.Point(75, 22);
 			this.DecorationBox.Maximum = new decimal(new int[] {
             99999999,
             0,
@@ -109,61 +107,66 @@
             -2147483648});
 			this.DecorationBox.ValueChanged += new System.EventHandler(this.DecorationBox_ValueChanged);
 			// 
-			// NorthBox
+			// groupBox1
 			// 
-			this.NorthBox.Location = new System.Drawing.Point(3, 3);
-			this.NorthBox.Name = "NorthBox";
-			this.NorthBox.Size = new System.Drawing.Size(75, 23);
-			this.NorthBox.TabIndex = 3;
-			this.NorthBox.Text = "North";
-			this.NorthBox.UseVisualStyleBackColor = true;
-			this.NorthBox.Click += new System.EventHandler(this.NorthBox_Click);
+			this.groupBox1.Controls.Add(this.AcceptBigItemsBox);
+			this.groupBox1.Controls.Add(this.HideItemsBox);
+			this.groupBox1.Controls.Add(this.ClearBox);
+			this.groupBox1.Controls.Add(this.DecorationBox);
+			this.groupBox1.Controls.Add(this.label1);
+			this.groupBox1.Location = new System.Drawing.Point(3, 279);
+			this.groupBox1.Name = "groupBox1";
+			this.groupBox1.Size = new System.Drawing.Size(365, 99);
+			this.groupBox1.TabIndex = 5;
+			this.groupBox1.TabStop = false;
+			this.groupBox1.Text = "Properties";
 			// 
-			// SouthBox
+			// HideItemsBox
 			// 
-			this.SouthBox.Location = new System.Drawing.Point(84, 3);
-			this.SouthBox.Name = "SouthBox";
-			this.SouthBox.Size = new System.Drawing.Size(75, 23);
-			this.SouthBox.TabIndex = 3;
-			this.SouthBox.Text = "South";
-			this.SouthBox.UseVisualStyleBackColor = true;
-			this.SouthBox.Click += new System.EventHandler(this.SouthBox_Click);
+			this.HideItemsBox.AutoSize = true;
+			this.HideItemsBox.Location = new System.Drawing.Point(6, 48);
+			this.HideItemsBox.Name = "HideItemsBox";
+			this.HideItemsBox.Size = new System.Drawing.Size(75, 17);
+			this.HideItemsBox.TabIndex = 5;
+			this.HideItemsBox.Text = "Hide items";
+			this.HideItemsBox.UseVisualStyleBackColor = true;
+			this.HideItemsBox.CheckedChanged += new System.EventHandler(this.HideItemsBox_CheckedChanged);
 			// 
-			// WestBox
+			// DirectionBox
 			// 
-			this.WestBox.Location = new System.Drawing.Point(165, 3);
-			this.WestBox.Name = "WestBox";
-			this.WestBox.Size = new System.Drawing.Size(75, 23);
-			this.WestBox.TabIndex = 3;
-			this.WestBox.Text = "West";
-			this.WestBox.UseVisualStyleBackColor = true;
-			this.WestBox.Click += new System.EventHandler(this.WestBox_Click);
+			this.DirectionBox.Direction = DungeonEye.CardinalPoint.North;
+			this.DirectionBox.Location = new System.Drawing.Point(374, 3);
+			this.DirectionBox.MinimumSize = new System.Drawing.Size(125, 115);
+			this.DirectionBox.Name = "DirectionBox";
+			this.DirectionBox.Size = new System.Drawing.Size(125, 115);
+			this.DirectionBox.TabIndex = 4;
+			this.DirectionBox.Title = "Side";
+			this.DirectionBox.DirectionChanged += new DungeonEye.Forms.CardinalPointControl.ChangedEventHandler(this.DirectionBox_DirectionChanged);
 			// 
-			// EastBox
+			// AcceptBigItemsBox
 			// 
-			this.EastBox.Location = new System.Drawing.Point(246, 3);
-			this.EastBox.Name = "EastBox";
-			this.EastBox.Size = new System.Drawing.Size(75, 23);
-			this.EastBox.TabIndex = 3;
-			this.EastBox.Text = "East";
-			this.EastBox.UseVisualStyleBackColor = true;
-			this.EastBox.Click += new System.EventHandler(this.EastBox_Click);
+			this.AcceptBigItemsBox.AutoSize = true;
+			this.AcceptBigItemsBox.Location = new System.Drawing.Point(6, 71);
+			this.AcceptBigItemsBox.Name = "AcceptBigItemsBox";
+			this.AcceptBigItemsBox.Size = new System.Drawing.Size(104, 17);
+			this.AcceptBigItemsBox.TabIndex = 6;
+			this.AcceptBigItemsBox.Text = "Accept big items";
+			this.AcceptBigItemsBox.UseVisualStyleBackColor = true;
 			// 
 			// AlcoveControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.Controls.Add(this.EastBox);
-			this.Controls.Add(this.WestBox);
-			this.Controls.Add(this.SouthBox);
-			this.Controls.Add(this.NorthBox);
+			this.Controls.Add(this.groupBox1);
+			this.Controls.Add(this.DirectionBox);
 			this.Controls.Add(this.groupBox2);
 			this.Name = "AlcoveControl";
 			this.Size = new System.Drawing.Size(788, 651);
 			this.Load += new System.EventHandler(this.AlcoveControl_Load);
 			this.groupBox2.ResumeLayout(false);
-			this.groupBox2.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.DecorationBox)).EndInit();
+			this.groupBox1.ResumeLayout(false);
+			this.groupBox1.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -175,9 +178,9 @@
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.NumericUpDown DecorationBox;
 		private System.Windows.Forms.Button ClearBox;
-		private System.Windows.Forms.Button NorthBox;
-		private System.Windows.Forms.Button SouthBox;
-		private System.Windows.Forms.Button WestBox;
-		private System.Windows.Forms.Button EastBox;
+		private CardinalPointControl DirectionBox;
+		private System.Windows.Forms.GroupBox groupBox1;
+		private System.Windows.Forms.CheckBox HideItemsBox;
+		private System.Windows.Forms.CheckBox AcceptBigItemsBox;
 	}
 }

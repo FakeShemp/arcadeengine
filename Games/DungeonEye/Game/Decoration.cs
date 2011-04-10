@@ -41,11 +41,11 @@ namespace DungeonEye
 		/// </summary>
 		public Decoration()
 		{
-			TileId= new int[18];
-			Location = new Point[18];
+			TileId= new int[16];
+			Location = new Point[16];
 			for (int i = 0 ; i < TileId.Length ; i++)
 				TileId[i] = -1;
-			Swap = new bool[18];
+			Swap = new bool[16];
 		}
 
 
@@ -81,7 +81,7 @@ namespace DungeonEye
 		/// <returns>Screen location</returns>
 		public Point GetLocation(ViewFieldPosition position)
 		{
-			return Location[(int) position];
+			return Location[(int)position];
 		}
 
 
@@ -131,6 +131,101 @@ namespace DungeonEye
 
 			IsBlocking = false;
 		}
+
+
+		#region Helpers
+
+		/// <summary>
+		/// Gets the screen location of a decoration if a decoration is facing the view point
+		/// </summary>
+		/// <param name="position">Viewfield position</param>
+		/// <returns>On screen location</returns>
+		public Point PrepareLocation(ViewFieldPosition position)
+		{
+			Point location = Point.Empty;
+
+			switch (position)
+			{
+				case ViewFieldPosition.A:
+				location = GetLocation(ViewFieldPosition.C);
+				location.X += -96 * 2;
+				break;
+				case ViewFieldPosition.B:
+				location = GetLocation(ViewFieldPosition.C);
+				location.X += -96;
+				break;
+				case ViewFieldPosition.D:
+				location = GetLocation(ViewFieldPosition.C);
+				location.X += 96;
+				break;
+				case ViewFieldPosition.E:
+				location = GetLocation(ViewFieldPosition.C);
+				location.X += 96 * 2;
+				break;
+
+				case ViewFieldPosition.G:
+				location = GetLocation(ViewFieldPosition.H);
+				location.X += -160;
+				break;
+				case ViewFieldPosition.I:
+				location = GetLocation(ViewFieldPosition.H);
+				location.X += 160;
+				break;
+
+				case ViewFieldPosition.K:
+				location = GetLocation(ViewFieldPosition.L);
+				location.X -= 256;
+				break;
+				case ViewFieldPosition.M:
+				location = GetLocation(ViewFieldPosition.L);
+				location.X += 256;
+				break;
+
+				default:
+				{
+					location = GetLocation(position);
+				}
+				break;
+			}
+			
+			return location;
+		}
+
+
+		/// <summary>
+		/// Gets the tile id if the decoration is facing the view point
+		/// </summary>
+		/// <param name="position">Viewfield position</param>
+		/// <returns>Tile id</returns>
+		public int PrepareTile(ViewFieldPosition position)
+		{
+			ViewFieldPosition[] pos = new ViewFieldPosition[]
+			{
+				ViewFieldPosition.C,	// A
+				ViewFieldPosition.C,	// B
+				ViewFieldPosition.C,	// C
+				ViewFieldPosition.C,	// D
+				ViewFieldPosition.C,	// E
+
+				ViewFieldPosition.H,	// F
+				ViewFieldPosition.H,	// G
+				ViewFieldPosition.H,	// H
+				ViewFieldPosition.H,	// I
+				ViewFieldPosition.H,	// J
+
+				ViewFieldPosition.L,	// K
+				ViewFieldPosition.L,	// L
+				ViewFieldPosition.L,	// M
+
+				ViewFieldPosition.N,	// N
+				ViewFieldPosition.Team,	// Team
+				ViewFieldPosition.O,	// O
+			};
+
+			return GetTileId(pos[(int)position]);
+		}
+
+		#endregion
 
 
 		#region IO
@@ -210,7 +305,6 @@ namespace DungeonEye
 
 
 		#endregion
-
 
 
 		#region Properties

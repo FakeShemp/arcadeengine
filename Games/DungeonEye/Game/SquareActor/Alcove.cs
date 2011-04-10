@@ -42,7 +42,8 @@ namespace DungeonEye
 		/// <param name="square">Parent square handle</param>
 		public Alcove(Square square) : base(square)
 		{
-			Decorations = new int[4] {-1, -1, -1, -1};
+			Decorations = new int[4] { -1, -1, -1, -1 };
+			ShowItems = new bool[4];
 		}
 
 
@@ -57,13 +58,38 @@ namespace DungeonEye
 		{
 			if (Square.Maze.Decoration == null)
 				return;
-	
-			// For each direction, draws the decoration
+
+			// For each wall side, draws the decoration
 			foreach (CardinalPoint side in DisplayCoordinates.DrawingWallSides[(int)position])
 			{
+				// Get the decoration
 				Decoration deco = Square.Maze.Decoration.GetDecoration(GetTile(Compass.GetDirectionFromView(direction, side)));
+				if (deco == null)
+					continue;
+
+				// Draw the decoration
 				Square.DrawDecoration(batch, Square.Maze.Decoration, position, deco, side == CardinalPoint.South);
+
+
+				// Hide items
+				if (ItemsHidden(side) || side != CardinalPoint.South)
+					continue;
+
+
+				// Draw items in the alcove in front of the team
+				Point loc = deco.PrepareLocation(position);
+
+				Tile tile = Square.Maze.Dungeon.ItemTileSet.GetTile(deco.GetTileId(position));
+				if (tile != null)
+					loc.Offset(tile.Size.Width, tile.Size.Height / 2);
+				foreach (Item item in Square.GetAlcoveItems(direction, side))
+				{
+					batch.DrawTile(Square.Maze.Dungeon.ItemTileSet, item.GroundTileID, loc,
+					    DisplayCoordinates.GetDistantColor(position), 0.0f,
+					    DisplayCoordinates.GetScaleFactor(position), SpriteEffects.None, 0.0f);
+				}
 			}
+
 		}
 
 
@@ -115,6 +141,28 @@ namespace DungeonEye
 		}
 
 
+		/// <summary>
+		/// Gets if the items are hidden or not
+		/// </summary>
+		/// <param name="side">Wall side</param>
+		/// <returns>True if items are hidden, or false to display them</returns>
+		public bool ItemsHidden(CardinalPoint side)
+		{
+			return ShowItems[(int)side];
+		}
+
+
+		/// <summary>
+		/// Sets if items are hidden or not
+		/// </summary>
+		/// <param name="side">Wall side</param>
+		/// <param name="state">True to hide items, or false to display them</param>
+		public void HideItem(CardinalPoint side, bool state)
+		{
+			ShowItems[(int)side] = state;
+		}
+
+
 		#region I/O
 
 
@@ -136,6 +184,7 @@ namespace DungeonEye
 					{
 						CardinalPoint dir = (CardinalPoint)Enum.Parse(typeof(CardinalPoint), node.Attributes["name"].Value);
 						SetSideTile(dir, int.Parse(node.Attributes["tile"].Value));
+						HideItem(dir, bool.Parse(node.Attributes["hide"].Value));
 					}
 					break;
 
@@ -170,6 +219,7 @@ namespace DungeonEye
 				writer.WriteStartElement("side");
 				writer.WriteAttributeString("name", ((CardinalPoint)i).ToString());
 				writer.WriteAttributeString("tile", (Decorations[i]).ToString());
+				writer.WriteAttributeString("hide", (ShowItems[i]).ToString());
 				writer.WriteEndElement();
 			}
 			writer.WriteEndElement();
@@ -194,6 +244,12 @@ namespace DungeonEye
 		/// Decoration id
 		/// </summary>
 		int[] Decorations;
+
+
+		/// <summary>
+		/// Display items in the alcove
+		/// </summary>
+		bool[] ShowItems;
 
 		#endregion
 	}

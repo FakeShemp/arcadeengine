@@ -40,7 +40,7 @@ namespace DungeonEye.Forms
 	{
 
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
 		/// <param name="alcove">Alcove handle</param>
 		/// <param name="maze">Maze handle</param>
@@ -51,65 +51,34 @@ namespace DungeonEye.Forms
 
 			InitializeComponent();
 
-			Buttons = new Button[]
-			{
-				NorthBox,
-				SouthBox,
-				WestBox,
-				EastBox,
-			};
-
 			// Warning, no decoration defined for this maze !!
 			if (maze.Decoration == null)
 				MessageBox.Show("No decoration defined for this maze. Please define a decoration first !", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
+			Maze = maze;
+			Alcove = alcove;
 
 			UpdateUI();
 
-			Maze = maze;
-			Alcove = alcove;
 		}
 
 
 		/// <summary>
-		/// 
+		/// Update user interface
 		/// </summary>
 		void UpdateUI()
 		{
 			if (Alcove == null)
 				return;
 
-			for (int i = 0; i < Buttons.Length; i++)
-			{
-				// Marks face buttons
-				if (Alcove.GetSideState((CardinalPoint)i))
-					Buttons[i].ForeColor = Color.Red;
-				else
-					Buttons[i].ForeColor = Color.Black;
-			}
+			DirectionBox.Highlight(CardinalPoint.North, Alcove.GetSideState(CardinalPoint.North));
+			DirectionBox.Highlight(CardinalPoint.South, Alcove.GetSideState(CardinalPoint.South));
+			DirectionBox.Highlight(CardinalPoint.West, Alcove.GetSideState(CardinalPoint.West));
+			DirectionBox.Highlight(CardinalPoint.East, Alcove.GetSideState(CardinalPoint.East));
+
+			HideItemsBox.Checked = Alcove.ItemsHidden(Face);
 		}
 
-
-		/// <summary>
-		/// Marks faces button with an alcove
-		/// </summary>
-		void UpdateFaceButtons()
-		{
-	
-			for (int i = 0; i < Buttons.Length; i++)
-			{
-
-				// Marks face buttons
-				if (Alcove != null && Alcove.GetSideState((CardinalPoint)i))
-				{
-					Buttons[i].ForeColor = Color.Red;
-				}
-				else
-				{
-					Buttons[i].ForeColor = Color.Black;
-				}
-			}
-		}
 
 
 
@@ -211,8 +180,22 @@ namespace DungeonEye.Forms
 		#endregion
 
 
-		#region Events
+		#region Form events
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void HideItemsBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Alcove == null ||Alcove.ItemsHidden(Face) == HideItemsBox.Checked)
+				return;
+
+			Alcove.HideItem(Face, HideItemsBox.Checked);
+			RenderScene();
+			UpdateUI();
+		}
 
 		/// <summary>
 		/// 
@@ -249,10 +232,10 @@ namespace DungeonEye.Forms
 		{
 			if (Alcove == null)
 				return;
-
+			
+			Alcove.HideItem(Face, false);
 			DecorationBox.Value = -1;
-			UpdateFaceButtons();
-			RenderScene();
+			UpdateUI();
 		}
 
 
@@ -268,18 +251,7 @@ namespace DungeonEye.Forms
 
 			Alcove.SetSideTile(Face, (int)DecorationBox.Value);
 			RenderScene();
-			UpdateFaceButtons();
-		}
-		
-		
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void NorthBox_Click(object sender, EventArgs e)
-		{
-			ChangeSide(CardinalPoint.North);
+			UpdateUI();
 		}
 
 
@@ -287,35 +259,14 @@ namespace DungeonEye.Forms
 		/// 
 		/// </summary>
 		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void SouthBox_Click(object sender, EventArgs e)
+		/// <param name="direction"></param>
+		private void DirectionBox_DirectionChanged(object sender, CardinalPoint direction)
 		{
-			ChangeSide(CardinalPoint.South);
+			ChangeSide(direction);
 		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void WestBox_Click(object sender, EventArgs e)
-		{
-			ChangeSide(CardinalPoint.West);
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void EastBox_Click(object sender, EventArgs e)
-		{
-			ChangeSide(CardinalPoint.East);
-		}
-
 	
+
+
 		#endregion
 
 
@@ -345,13 +296,8 @@ namespace DungeonEye.Forms
 		Maze Maze;
 
 
-		/// <summary>
-		/// 
-		/// </summary>
-		Button[] Buttons;
-
-
 		#endregion
+
 
 
 	}

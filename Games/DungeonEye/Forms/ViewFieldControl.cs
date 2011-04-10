@@ -31,12 +31,12 @@ using DungeonEye;
 namespace DungeonEye.Forms
 {
 	/// <summary>
-	/// 
+	/// ViewField control
 	/// </summary>
 	public partial class ViewFieldControl : UserControl
 	{
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
 		public ViewFieldControl()
 		{

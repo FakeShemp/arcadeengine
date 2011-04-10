@@ -73,7 +73,6 @@ namespace DungeonEye
 				for (int j = 0 ; j < 5 ; j++)
 					Ground[i,j] = new Point(-999, -999);
 
-			Decorations = new TileDrawing[viewcount, 3];
 			FlyingItems = new Point[viewcount, 5];
 			Walls = new List<TileDrawing>[viewcount];
 			for (int i = 0; i < viewcount; i++)
@@ -124,6 +123,61 @@ namespace DungeonEye
 		#region Getters
 
 		/// <summary>
+		/// Gets the scaling factor for distant objects
+		/// </summary>
+		/// <param name="position">View position</param>
+		static public Vector2 GetScaleFactor(ViewFieldPosition position)
+		{
+			Vector2[] scale = new Vector2[]
+			{
+				new Vector2(1.0f, 1.0f),
+				new Vector2(0.66f, 0.66f),
+				new Vector2(0.5f, 0.5f),
+				new Vector2(0.33f, 0.33f)
+			};
+
+
+			int[] offset = new int[]
+			{
+				3, 3, 3, 3, 3,
+				2, 2, 2, 2, 2,
+				   1, 1, 1,
+				   0, 0, 0,
+			};
+
+
+			return scale[offset[(int)position]];
+		}
+
+		/// <summary>
+		/// Gets the color for distant objects
+		/// </summary>
+		/// <param name="position">View position</param>
+		static public Color GetDistantColor(ViewFieldPosition position)
+		{
+			Color[] colors = new Color[]
+			{
+				Color.White,
+				Color.White,
+				Color.FromArgb(255, 128, 128, 128),
+				Color.FromArgb(128, 128, 128, 128),
+			};
+
+
+			int[] offset = new int[]
+			{
+				3, 3, 3, 3, 3,
+				2, 2, 2, 2, 2,
+				   1, 1, 1,
+				   0, 0, 0,
+			};
+
+
+			return colors[offset[(int)position]];
+		}
+
+
+		/// <summary>
 		/// Gets a draw order information
 		/// </summary>
 		/// <param name="position">Block position in the view field</param>
@@ -157,21 +211,6 @@ namespace DungeonEye
 			return FlyingItems[(int)view, (int)ground];
 		}
 
-
-		/// <summary>
-		/// Gets a decoration coordinate
-		/// </summary>
-		/// <param name="view">Block position in the view field</param>
-		/// <param name="point">Wall side</param>
-		/// <returns>TileDrawing information or null</returns>
-		[Obsolete()]
-		static public TileDrawing GetDecoration(ViewFieldPosition view, CardinalPoint point)
-		{
-			if (point == CardinalPoint.North)
-				return null;
-
-			return Decorations[(int)view, (int)point - 1];
-		}
 
 
 		/// <summary>
@@ -266,19 +305,6 @@ namespace DungeonEye
 
 					switch (node.Name.ToLower())
 					{
-						case "decoration":
-						{
-							ViewFieldPosition view = (ViewFieldPosition) Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
-							CardinalPoint side = (CardinalPoint) Enum.Parse(typeof(CardinalPoint), node.Attributes["side"].Value, true);
-							if (side == CardinalPoint.North)
-								throw new ArgumentOutOfRangeException("side", "No north wall side decoration !");
-
-							Decorations[(int) view, (int) side - 1] = GetTileDrawing(node);
-							//new Point(int.Parse(node.Attributes["x"].Value), int.Parse(node.Attributes["y"].Value));
-						}
-						break;
-
-
 						case "wall":
 						{
 							ViewFieldPosition view = (ViewFieldPosition) Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
@@ -408,6 +434,7 @@ namespace DungeonEye
 		/// </summary>
 		static TileDrawing[] Pits;
 
+
 		/// <summary>
 		/// Ceiling pits
 		/// </summary>
@@ -442,12 +469,6 @@ namespace DungeonEye
 		/// Ground items
 		/// </summary>
 		static Point[,] Ground;
-
-
-		/// <summary>
-		/// Decorations
-		/// </summary>
-		static TileDrawing[,] Decorations;
 
 
 		/// <summary>
@@ -924,7 +945,5 @@ namespace DungeonEye
 		}
 
 	}
-
-
 
 }

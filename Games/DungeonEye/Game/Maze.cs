@@ -723,23 +723,6 @@ namespace DungeonEye
 
 			#region Items on ground before a door
 
-			// Zoom factors for items
-			float[] ItemZoom = new float[] { 1.0f, 0.66f, 0.5f, 0.33f };
-			Vector2[] scale = new Vector2[]
-			{
-				new Vector2(1.0f, 1.0f),
-				new Vector2(0.66f, 0.66f),
-				new Vector2(0.5f, 0.5f),
-				new Vector2(0.33f, 0.33f)
-			};
-			Color[] colors = new Color[]
-			{
-				Color.White,
-				Color.White,
-				Color.FromArgb(255, 128, 128, 128),
-				Color.FromArgb(128, 128, 128, 128),
-			};
-
 			List<Item>[] list = square.GetItems(view);
 			if (!square.IsWall)
 			{
@@ -761,7 +744,9 @@ namespace DungeonEye
 									point.X - tile.Origin.X, point.Y - tile.Origin.Y,
 									tile.Rectangle.Width / (offset + 1), tile.Rectangle.Height / (offset + 1));
 
-								batch.DrawTile(Dungeon.ItemTileSet, item.GroundTileID, point, colors[offset], 0.0f, scale[offset], SpriteEffects.None, 0.0f);
+								batch.DrawTile(Dungeon.ItemTileSet, item.GroundTileID, point, 
+									DisplayCoordinates.GetDistantColor(position), 0.0f, 
+									DisplayCoordinates.GetScaleFactor(position), SpriteEffects.None, 0.0f);
 							}
 						}
 					}
@@ -777,50 +762,6 @@ namespace DungeonEye
 				foreach (TileDrawing tmp in DisplayCoordinates.GetWalls(position))
 				{
 					batch.DrawTile(WallTileset, tmp.ID, tmp.Location, Color.White, 0.0f, tmp.Effect, 0.0f);
-				}
-
-				// Alcoves
-				if (square.HasAlcoves)
-				{
-					// Draw alcoves
-					foreach (CardinalPoint side in Enum.GetValues(typeof(CardinalPoint)))
-					{
-						td = DisplayCoordinates.GetDecoration(position, side);
-						//TODO
-						//if (td != null && square.HasAlcove(view, side))
-						//    batch.DrawTile(OverlayTileset, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);
-					}
-
-					// Draw items in the alcove in front of the team
-					td = DisplayCoordinates.GetDecoration(position, CardinalPoint.South);
-					if (td != null)
-					{
-						Point[] offsets = new Point[]
-						{
-							new Point(10, 10),		// A
-							new Point(10, 10),		// B
-							new Point(10, 10),		// C
-							new Point(10, 10),		// D
-							new Point(10, 10),		// E
-							new Point(10, 10),		// F
-							new Point(10, 10),		// G
-							new Point(20, 20),		// H
-							new Point(20, 20),		// I
-							new Point(20, 20),		// J
-							new Point(20, 20),		// K
-							new Point(16, 16),		// L
-							new Point(32, 32),		// M
-							new Point(32, 32),		// N
-							new Point(32, 32),		// O
-						};
-
-						foreach (Item item in square.GetAlcoveItems(view, CardinalPoint.South))
-						{
-							Point loc = td.Location;
-							loc.Offset(offsets[(int)position]);
-							batch.DrawTile(Dungeon.ItemTileSet, item.GroundTileID + offset, loc);
-						}
-					}
 				}
 			}
 
@@ -865,7 +806,9 @@ namespace DungeonEye
 
 								//batch.DrawTile(ItemsTileset, item.GroundTileID, point, rect, Color.Red);
 								//	batch.DrawTile(ItemsTileset, item.GroundTileID + offset, point);
-								batch.DrawTile(Dungeon.ItemTileSet, item.GroundTileID, point, colors[offset], 0.0f, scale[offset], SpriteEffects.None, 0.0f);
+								batch.DrawTile(Dungeon.ItemTileSet, item.GroundTileID, point, 
+									DisplayCoordinates.GetDistantColor(position), 0.0f, 
+									DisplayCoordinates.GetScaleFactor(position), SpriteEffects.None, 0.0f);
 							}
 						}
 					}
