@@ -46,6 +46,26 @@ namespace DungeonEye
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="batch"></param>
+		/// <param name="field"></param>
+		/// <param name="position"></param>
+		/// <param name="direction"></param>
+		public override void Draw(SpriteBatch batch, ViewField field, ViewFieldPosition position, CardinalPoint direction)
+		{
+			if (Square.Maze.Decoration == null)
+				return;
+	
+			// For each direction, draws the decoration
+			foreach (CardinalPoint side in DisplayCoordinates.DrawingWallSides[(int)position])
+			{
+				Decoration deco = Square.Maze.Decoration.GetDecoration(GetTile(Compass.GetDirectionFromView(direction, side)));
+				Square.DrawDecoration(batch, Square.Maze.Decoration, position, deco, side == CardinalPoint.South);
+			}
+		}
+
 
 		/// <summary>
 		/// 
@@ -59,6 +79,8 @@ namespace DungeonEye
 
 			return sb.ToString();
 		}
+
+
 
 		/// <summary>
 		/// Gets an alcove side state
@@ -110,6 +132,12 @@ namespace DungeonEye
 			{
 				switch (node.Name.ToLower())
 				{
+					case "side":
+					{
+						CardinalPoint dir = (CardinalPoint)Enum.Parse(typeof(CardinalPoint), node.Attributes["name"].Value);
+						SetSideTile(dir, int.Parse(node.Attributes["tile"].Value));
+					}
+					break;
 
 					default:
 					{

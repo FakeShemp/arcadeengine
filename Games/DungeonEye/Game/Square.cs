@@ -397,36 +397,8 @@ namespace DungeonEye
 			}
 
 
-
-			#region Offset tables
-
-			CardinalPoint[][] sides = 
-			{
-				new CardinalPoint[] {CardinalPoint.East, CardinalPoint.South},			// A
-				new CardinalPoint[] {CardinalPoint.East, CardinalPoint.South},			// B
-				new CardinalPoint[] {CardinalPoint.South},								// C
-				new CardinalPoint[] {CardinalPoint.West, CardinalPoint.South},			// D
-				new CardinalPoint[] {CardinalPoint.West, CardinalPoint.South},			// E
-	
-				new CardinalPoint[] {CardinalPoint.East},								// F
-				new CardinalPoint[] {CardinalPoint.East, CardinalPoint.South},			// G
-				new CardinalPoint[] {CardinalPoint.South},								// H
-				new CardinalPoint[] {CardinalPoint.West, CardinalPoint.South},			// I
-				new CardinalPoint[] {CardinalPoint.West},								// J
-
-				new CardinalPoint[] {CardinalPoint.East, CardinalPoint.South},			// K
-				new CardinalPoint[] {CardinalPoint.South},								// L
-				new CardinalPoint[] {CardinalPoint.West, CardinalPoint.South},			// M
-
-				new CardinalPoint[] {CardinalPoint.East},								// N
-				new CardinalPoint[] {CardinalPoint.North, CardinalPoint.South, 
-									 CardinalPoint.West, CardinalPoint.East},			// Team
-				new CardinalPoint[] {CardinalPoint.West},								// O
-			};
-			#endregion
-
 			// For each direction, draws the decoration
-			foreach (CardinalPoint side in sides[(int)position])
+			foreach (CardinalPoint side in DisplayCoordinates.DrawingWallSides[(int)position])
 			{
 				// Decoration informations
 				deco = decoration.GetDecoration(GetDecorationId(view, side));
@@ -446,8 +418,11 @@ namespace DungeonEye
 		/// <param name="position">Position of the square in the view</param>
 		/// <param name="view">Viewing direction</param>
 		/// <param name="south">True if the side is facing south (horizontaly span the decoration)</param>
-		void DrawDecoration(SpriteBatch batch, DecorationSet set, ViewFieldPosition position, Decoration deco, bool south)
+		public void DrawDecoration(SpriteBatch batch, DecorationSet set, ViewFieldPosition position, Decoration deco, bool south)
 		{
+			if (deco == null)
+				return;
+
 			// Location of the decoration on the screen
 			Point location = deco.GetLocation(position);
 
@@ -617,6 +592,7 @@ namespace DungeonEye
 		/// <param name="from">Facing direction</param>
 		/// <param name="side">Wall side</param>
 		/// <returns>True if an alcove is present<returns>
+		[Obsolete()]
 		public bool HasAlcove(CardinalPoint from, CardinalPoint side)
 		{
 			return Alcoves[(int)Compass.GetDirectionFromView(from, side)];
@@ -628,6 +604,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="side">Side of the alcove</param>
 		/// <returns>True if an alcove is present<returns>
+		[Obsolete()]
 		public bool HasAlcove(CardinalPoint side)
 		{
 			return Alcoves[(int)side];
@@ -639,6 +616,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="side">Side of the alcove</param>
 		/// <param name="create">Create or remove the alcove</param>
+		[Obsolete()]
 		public void SetAlcove(CardinalPoint side, bool create)
 		{
 			Alcoves[(int)side] = create;
@@ -650,6 +628,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="side">Wall side</param>
 		/// <returns>List of items</returns>
+		[Obsolete()]
 		public List<Item> GetAlcoveItems(CardinalPoint side)
 		{
 			return Items[(int)side];
@@ -662,6 +641,7 @@ namespace DungeonEye
 		/// <param name="from">View point</param>
 		/// <param name="side">Wall side</param>
 		/// <returns>List of items</returns>
+		[Obsolete()]
 		public List<Item> GetAlcoveItems(CardinalPoint from, CardinalPoint side)
 		{
 			CardinalPoint[,] tab = new CardinalPoint[,]
@@ -681,6 +661,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="side">Wall side</param>
 		/// <returns>Item handle or null</returns>
+		[Obsolete()]
 		public Item CollectAlcoveItem(CardinalPoint side)
 		{
 			return CollectItem((SquarePosition)side);
@@ -692,6 +673,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="side">Wall side</param>
 		/// <returns>True if the item can go in the alcove, or false</returns>
+		[Obsolete()]
 		public bool DropAlcoveItem(CardinalPoint side, Item item)
 		{
 			if (item == null || !HasAlcove(side))

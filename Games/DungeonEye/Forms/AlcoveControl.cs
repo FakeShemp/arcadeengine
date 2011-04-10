@@ -63,18 +63,18 @@ namespace DungeonEye.Forms
 			if (maze.Decoration == null)
 				MessageBox.Show("No decoration defined for this maze. Please define a decoration first !", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
+
+			UpdateUI();
+
 			Maze = maze;
 			Alcove = alcove;
-
-
 		}
 
 
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="except"></param>
-		void UncheckFaces(Button except)
+		void UpdateUI()
 		{
 			if (Alcove == null)
 				return;
@@ -169,7 +169,7 @@ namespace DungeonEye.Forms
 		{
 			Face = side;
 
-			UncheckFaces(Buttons[(int)side]);
+			UpdateUI();
 
 			DecorationBox.Value = Alcove.GetTile(side);
 

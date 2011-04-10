@@ -770,14 +770,6 @@ namespace DungeonEye
 			#endregion
 
 
-			#region Actor
-			if (square.Actor != null)
-			{
-				square.Actor.Draw(batch, field, position, view);
-			}
-			#endregion
-
-
 			#region Walls
 			if (square.IsWall)
 			{
@@ -832,6 +824,14 @@ namespace DungeonEye
 				}
 			}
 
+			#endregion
+
+
+			#region Actor
+			if (square.Actor != null)
+			{
+				square.Actor.Draw(batch, field, position, view);
+			}
 			#endregion
 
 

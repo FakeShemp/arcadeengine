@@ -586,6 +586,32 @@ namespace DungeonEye
 		}
 
 
+		#region Offset tables
+
+		static public CardinalPoint[][] DrawingWallSides = 
+			{
+				new CardinalPoint[] {CardinalPoint.East, CardinalPoint.South},			// A
+				new CardinalPoint[] {CardinalPoint.East, CardinalPoint.South},			// B
+				new CardinalPoint[] {CardinalPoint.South},								// C
+				new CardinalPoint[] {CardinalPoint.West, CardinalPoint.South},			// D
+				new CardinalPoint[] {CardinalPoint.West, CardinalPoint.South},			// E
+	
+				new CardinalPoint[] {CardinalPoint.East},								// F
+				new CardinalPoint[] {CardinalPoint.East, CardinalPoint.South},			// G
+				new CardinalPoint[] {CardinalPoint.South},								// H
+				new CardinalPoint[] {CardinalPoint.West, CardinalPoint.South},			// I
+				new CardinalPoint[] {CardinalPoint.West},								// J
+
+				new CardinalPoint[] {CardinalPoint.East, CardinalPoint.South},			// K
+				new CardinalPoint[] {CardinalPoint.South},								// L
+				new CardinalPoint[] {CardinalPoint.West, CardinalPoint.South},			// M
+
+				new CardinalPoint[] {CardinalPoint.East},								// N
+				new CardinalPoint[] {CardinalPoint.North, CardinalPoint.South, 
+									 CardinalPoint.West, CardinalPoint.East},			// Team
+				new CardinalPoint[] {CardinalPoint.West},								// O
+			};
+		#endregion
 
 		#endregion
 
