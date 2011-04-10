@@ -253,6 +253,9 @@ namespace DungeonEye.Forms
 			if (list.Contains(DecorationSet.TileSetName))
 				TilesetBox.SelectedItem = DecorationSet.TileSetName;
 
+
+			OpenGLBox.MouseWheel += new MouseEventHandler(OpenGLBox_MouseWheel);
+
 			DrawTimer.Start();
 		}
 
@@ -409,6 +412,22 @@ namespace DungeonEye.Forms
 
 		#region OpenGL control events
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void OpenGLBox_MouseWheel(object sender, MouseEventArgs e)
+		{
+			if (e.Delta > 0)
+				TileIdBox.Value++;
+			else
+				TileIdBox.Value--;
+		}
+
+
+	
 		/// <summary>
 		/// 
 		/// </summary>
@@ -428,6 +447,9 @@ namespace DungeonEye.Forms
 				Tile tile = DecorationSet.Tileset.GetTile(tileid);
 				Point offset = new Point(LastMousePosition.X - e.Location.X, LastMousePosition.Y - e.Location.Y);
 
+				if (tile == null)
+				{
+				}
 
 				// Mouse over tile, so pan the tile
 				Rectangle rect = new Rectangle(location, tile.Size);
@@ -493,6 +515,20 @@ namespace DungeonEye.Forms
 
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OpenGLBox_MouseClick(object sender, MouseEventArgs e)
+		{
+			if (e.Delta != 0)
+			{
+
+			}
+
+		}
 
 		#endregion
 

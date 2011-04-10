@@ -740,15 +740,15 @@ namespace DungeonEye
 
 
 			// Alcoves
-			foreach (CardinalPoint side in Enum.GetValues(typeof(CardinalPoint)))
-			{
-				if (HasAlcove(side))
-				{
-					writer.WriteStartElement("alcove");
-					writer.WriteAttributeString("side", side.ToString());
-					writer.WriteEndElement();
-				}
-			}
+			//foreach (CardinalPoint side in Enum.GetValues(typeof(CardinalPoint)))
+			//{
+			//    if (HasAlcove(side))
+			//    {
+			//        writer.WriteStartElement("alcove");
+			//        writer.WriteAttributeString("side", side.ToString());
+			//        writer.WriteEndElement();
+			//    }
+			//}
 
 
 			// Items
@@ -770,19 +770,23 @@ namespace DungeonEye
 
 			foreach (Monster monster in Monsters)
 			{
-				if (monster == null)
-					continue;
-
-				monster.Save(writer);
+				if (monster != null)
+					monster.Save(writer);
 			}
 
-			writer.WriteStartElement("nomonster");
-			writer.WriteAttributeString("value", NoMonster.ToString());
-			writer.WriteEndElement();
+			if (NoMonster)
+			{
+				writer.WriteStartElement("nomonster");
+				writer.WriteAttributeString("value", NoMonster.ToString());
+				writer.WriteEndElement();
+			}
 
-			writer.WriteStartElement("noghost");
-			writer.WriteAttributeString("value", NoGhost.ToString());
-			writer.WriteEndElement();
+			if (NoGhost)
+			{
+				writer.WriteStartElement("noghost");
+				writer.WriteAttributeString("value", NoGhost.ToString());
+				writer.WriteEndElement();
+			}
 
 			writer.WriteEndElement();
 

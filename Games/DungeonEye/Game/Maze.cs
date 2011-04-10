@@ -1111,8 +1111,8 @@ namespace DungeonEye
 
 
 			foreach (List<Square> list in Blocks)
-				foreach (Square block in list)
-					block.Save(writer);
+				foreach (Square square in list)
+					square.Save(writer);
 
 			writer.WriteEndElement();
 

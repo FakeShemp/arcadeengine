@@ -25,6 +25,11 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using ArcEngine;
+using ArcEngine.Asset;
+using ArcEngine.Forms;
+using ArcEngine.Graphic;
+using ArcEngine.Interface;
 
 namespace DungeonEye.Forms
 {
@@ -38,36 +43,189 @@ namespace DungeonEye.Forms
 		/// 
 		/// </summary>
 		/// <param name="alcove">Alcove handle</param>
-		/// <param name="dungeon">Dungeon handle</param>
-		public AlcoveControl(Alcove alcove, Dungeon dungeon)
+		/// <param name="maze">Maze handle</param>
+		public AlcoveControl(Alcove alcove, Maze maze)
 		{
+			if (alcove == null || maze == null)
+				throw new ArgumentNullException("[AlcoveControl] : Alcove handle or Maze handle is null !!!");
+
 			InitializeComponent();
 
+			Buttons = new Button[]
+			{
+				NorthBox,
+				SouthBox,
+				WestBox,
+				EastBox,
+			};
 
-			NorthBox.Checked = alcove.GetSideState(CardinalPoint.North);
-			SouthBox.Checked = alcove.GetSideState(CardinalPoint.South);
-			WestBox.Checked = alcove.GetSideState(CardinalPoint.West);
-			EastBox.Checked = alcove.GetSideState(CardinalPoint.East);
+			// Warning, no decoration defined for this maze !!
+			if (maze.Decoration == null)
+				MessageBox.Show("No decoration defined for this maze. Please define a decoration first !", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
+			Maze = maze;
 			Alcove = alcove;
+
+
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="except"></param>
+		void UncheckFaces(Button except)
+		{
+			if (Alcove == null)
+				return;
+
+			for (int i = 0; i < Buttons.Length; i++)
+			{
+				// Marks face buttons
+				if (Alcove.GetSideState((CardinalPoint)i))
+					Buttons[i].ForeColor = Color.Red;
+				else
+					Buttons[i].ForeColor = Color.Black;
+			}
+		}
+
+
+		/// <summary>
+		/// Marks faces button with an alcove
+		/// </summary>
+		void UpdateFaceButtons()
+		{
+	
+			for (int i = 0; i < Buttons.Length; i++)
+			{
+
+				// Marks face buttons
+				if (Alcove != null && Alcove.GetSideState((CardinalPoint)i))
+				{
+					Buttons[i].ForeColor = Color.Red;
+				}
+				else
+				{
+					Buttons[i].ForeColor = Color.Black;
+				}
+			}
+		}
+
+
+
+		/// <summary>
+		/// Draws the scene
+		/// </summary>
+		void RenderScene()
+		{
+			GLControl.MakeCurrent();
+
+			Display.ClearBuffers();
+
+
+			Batch.Begin();
+
+			// Background
+			Batch.DrawTile(Maze.WallTileset, 0, Point.Empty);
+
+			// Draw the wall
+			foreach (TileDrawing tmp in DisplayCoordinates.GetWalls(ViewFieldPosition.L))
+				Batch.DrawTile(Maze.WallTileset, tmp.ID, tmp.Location, Color.White, 0.0f, tmp.Effect, 0.0f);
+
+
+			// Draw the tile
+			if (Maze.Decoration != null)
+			{
+				Decoration deco = Maze.Decoration.GetDecoration(Alcove.GetTile(Face));
+				if (deco != null)
+				{
+					Batch.DrawTile(Maze.Decoration.Tileset, deco.GetTileId(ViewFieldPosition.L), deco.GetLocation(ViewFieldPosition.L));
+				}
+			}
+
+			Batch.End();
+			GLControl.SwapBuffers();
+		}
+
+
+
+		/// <summary>
+		/// Release all resources
+		/// </summary>
+		void ReleaseResources()
+		{
+			if (Batch != null)
+				Batch.Dispose();
+			Batch = null;
+
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="side"></param>
+		void ChangeSide(CardinalPoint side)
+		{
+			Face = side;
+
+			UncheckFaces(Buttons[(int)side]);
+
+			DecorationBox.Value = Alcove.GetTile(side);
+
+			RenderScene();
+		}
+
+
+		#region GLControl
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void GLControl_Load(object sender, EventArgs e)
+		{
+			GLControl.MakeCurrent();
+			Display.Init();
+
+
+			Batch = new SpriteBatch();
+
+			
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void GLControl_Paint(object sender, PaintEventArgs e)
+		{
+			RenderScene();
+		}
+
+
+		#endregion
 
 
 		#region Events
 
+
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void NorthBox_CheckedChanged(object sender, EventArgs e)
+		private void AlcoveControl_Load(object sender, EventArgs e)
 		{
-			if (Alcove == null)
+			if (DesignMode)
 				return;
 
-			Alcove.SetSideState(CardinalPoint.North, NorthBox.Checked);
+			if (ParentForm != null)
+				ParentForm.FormClosing += new FormClosingEventHandler(ParentForm_FormClosing);
 		}
 
 
@@ -76,12 +234,9 @@ namespace DungeonEye.Forms
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void EastBox_CheckedChanged(object sender, EventArgs e)
+		void ParentForm_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			if (Alcove == null)
-				return;
-
-			Alcove.SetSideState(CardinalPoint.East, EastBox.Checked);
+			ReleaseResources();
 		}
 
 
@@ -90,12 +245,14 @@ namespace DungeonEye.Forms
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void SouthBox_CheckedChanged(object sender, EventArgs e)
+		private void ClearBox_Click(object sender, EventArgs e)
 		{
 			if (Alcove == null)
 				return;
 
-			Alcove.SetSideState(CardinalPoint.South, SouthBox.Checked);
+			DecorationBox.Value = -1;
+			UpdateFaceButtons();
+			RenderScene();
 		}
 
 
@@ -104,15 +261,62 @@ namespace DungeonEye.Forms
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void WestBox_CheckedChanged(object sender, EventArgs e)
+		private void DecorationBox_ValueChanged(object sender, EventArgs e)
 		{
 			if (Alcove == null)
 				return;
 
-			Alcove.SetSideState(CardinalPoint.West, WestBox.Checked);
+			Alcove.SetSideTile(Face, (int)DecorationBox.Value);
+			RenderScene();
+			UpdateFaceButtons();
 		}
+		
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void NorthBox_Click(object sender, EventArgs e)
+		{
+			ChangeSide(CardinalPoint.North);
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void SouthBox_Click(object sender, EventArgs e)
+		{
+			ChangeSide(CardinalPoint.South);
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void WestBox_Click(object sender, EventArgs e)
+		{
+			ChangeSide(CardinalPoint.West);
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void EastBox_Click(object sender, EventArgs e)
+		{
+			ChangeSide(CardinalPoint.East);
+		}
+
+	
 		#endregion
-
 
 
 		#region Properties
@@ -122,7 +326,33 @@ namespace DungeonEye.Forms
 		/// </summary>
 		Alcove Alcove;
 
+
+		/// <summary>
+		/// Current face
+		/// </summary>
+		CardinalPoint Face;
+
+
+		/// <summary>
+		/// Sprite batch
+		/// </summary>
+		SpriteBatch Batch;
+
+
+		/// <summary>
+		/// Current maze
+		/// </summary>
+		Maze Maze;
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Button[] Buttons;
+
+
 		#endregion
+
 
 	}
 }

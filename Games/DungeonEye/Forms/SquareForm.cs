@@ -821,7 +821,7 @@ namespace DungeonEye.Forms
 			}
 			else if (Square.Actor is Alcove)
 			{
-				control = new AlcoveControl(Square.Actor as Alcove, Maze.Dungeon);
+				control = new AlcoveControl(Square.Actor as Alcove, Maze);
 			}
 			else
 			{

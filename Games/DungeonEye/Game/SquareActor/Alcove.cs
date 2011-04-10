@@ -42,8 +42,7 @@ namespace DungeonEye
 		/// <param name="square">Parent square handle</param>
 		public Alcove(Square square) : base(square)
 		{
-			Sides = new bool[4];
-
+			Decorations = new int[4] {-1, -1, -1, -1};
 		}
 
 
@@ -61,17 +60,6 @@ namespace DungeonEye
 			return sb.ToString();
 		}
 
-
-		/// <summary>
-		/// Enables or disables an alcove on a side
-		/// </summary>
-		/// <param name="side">Wall side</param>
-		/// <param name="state">True to activate alcove, or false to disable alcove</param>
-		public void SetSideState(CardinalPoint side, bool state)
-		{
-			Sides[(int)side] = state;
-		}
-
 		/// <summary>
 		/// Gets an alcove side state
 		/// </summary>
@@ -79,7 +67,29 @@ namespace DungeonEye
 		/// <returns>True if an alcove is on this side, or false if no alcove</returns>
 		public bool GetSideState(CardinalPoint side)
 		{
-			return Sides[(int)side];
+			return Decorations[(int)side] != -1;
+		}
+
+
+		/// <summary>
+		/// Enables or disables an alcove on a side
+		/// </summary>
+		/// <param name="side">Wall side</param>
+		/// <param name="state">Tile id of the decoration</param>
+		public void SetSideTile(CardinalPoint side, int tileid)
+		{
+			Decorations[(int)side] = tileid;
+		}
+
+
+		/// <summary>
+		/// Gets an alcove side state
+		/// </summary>
+		/// <param name="side">Wall side</param>
+		/// <returns>Tile id of the decoration, or -1 if no decoration</returns>
+		public int GetTile(CardinalPoint side)
+		{
+			return Decorations[(int)side];
 		}
 
 
@@ -126,7 +136,14 @@ namespace DungeonEye
 
 
 			writer.WriteStartElement(Tag);
-		//	Target.Save("target", writer);
+
+			for (int i = 0; i < 4; i++)
+			{
+				writer.WriteStartElement("side");
+				writer.WriteAttributeString("name", ((CardinalPoint)i).ToString());
+				writer.WriteAttributeString("tile", (Decorations[i]).ToString());
+				writer.WriteEndElement();
+			}
 			writer.WriteEndElement();
 
 			return true;
@@ -146,19 +163,9 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Alcoves
-		/// </summary>
-		bool[] Sides;
-
-
-		/// <summary>
 		/// Decoration id
 		/// </summary>
-		public int DecorationId
-		{
-			get;
-			set;
-		}
+		int[] Decorations;
 
 		#endregion
 	}

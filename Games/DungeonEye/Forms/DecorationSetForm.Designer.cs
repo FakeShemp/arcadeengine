@@ -46,11 +46,11 @@
 			this.TileIdBox = new System.Windows.Forms.NumericUpDown();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
 			this.ClearAllBox = new System.Windows.Forms.Button();
+			this.ViewPositionBox = new DungeonEye.Forms.ViewFieldControl();
 			this.DrawTimer = new System.Windows.Forms.Timer(this.components);
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
-			this.BlockBox = new System.Windows.Forms.CheckBox();
 			this.ForceDisplayBox = new System.Windows.Forms.CheckBox();
-			this.ViewPositionBox = new DungeonEye.Forms.ViewFieldControl();
+			this.BlockBox = new System.Windows.Forms.CheckBox();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.DecorationIdBox)).BeginInit();
@@ -67,6 +67,7 @@
 			this.OpenGLBox.Size = new System.Drawing.Size(352, 240);
 			this.OpenGLBox.TabIndex = 0;
 			this.OpenGLBox.VSync = false;
+			this.OpenGLBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OpenGLBox_MouseClick);
 			this.OpenGLBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OpenGLBox_MouseMove);
 			this.OpenGLBox.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.OpenGLBox_PreviewKeyDown);
 			// 
@@ -249,6 +250,16 @@
 			this.ClearAllBox.UseVisualStyleBackColor = true;
 			this.ClearAllBox.Click += new System.EventHandler(this.ClearAllBox_Click);
 			// 
+			// ViewPositionBox
+			// 
+			this.ViewPositionBox.Location = new System.Drawing.Point(9, 19);
+			this.ViewPositionBox.MinimumSize = new System.Drawing.Size(160, 120);
+			this.ViewPositionBox.Name = "ViewPositionBox";
+			this.ViewPositionBox.Position = DungeonEye.ViewFieldPosition.L;
+			this.ViewPositionBox.Size = new System.Drawing.Size(160, 120);
+			this.ViewPositionBox.TabIndex = 0;
+			this.ViewPositionBox.PositionChanged += new DungeonEye.Forms.ViewFieldControl.ChangedEventHandler(this.ViewPositionBox_PositionChanged);
+			// 
 			// DrawTimer
 			// 
 			this.DrawTimer.Interval = 66;
@@ -270,17 +281,6 @@
 			this.groupBox4.TabStop = false;
 			this.groupBox4.Text = "Decoration properties";
 			// 
-			// BlockBox
-			// 
-			this.BlockBox.AutoSize = true;
-			this.BlockBox.Location = new System.Drawing.Point(159, 45);
-			this.BlockBox.Name = "BlockBox";
-			this.BlockBox.Size = new System.Drawing.Size(77, 17);
-			this.BlockBox.TabIndex = 6;
-			this.BlockBox.Text = "Is blocking";
-			this.BlockBox.UseVisualStyleBackColor = true;
-			this.BlockBox.CheckedChanged += new System.EventHandler(this.BlockBox_CheckedChanged);
-			// 
 			// ForceDisplayBox
 			// 
 			this.ForceDisplayBox.AutoSize = true;
@@ -292,15 +292,16 @@
 			this.ForceDisplayBox.UseVisualStyleBackColor = true;
 			this.ForceDisplayBox.CheckedChanged += new System.EventHandler(this.AlwaysVisibleBox_CheckedChanged);
 			// 
-			// ViewPositionBox
+			// BlockBox
 			// 
-			this.ViewPositionBox.Location = new System.Drawing.Point(9, 19);
-			this.ViewPositionBox.MinimumSize = new System.Drawing.Size(160, 120);
-			this.ViewPositionBox.Name = "ViewPositionBox";
-			this.ViewPositionBox.Position = DungeonEye.ViewFieldPosition.L;
-			this.ViewPositionBox.Size = new System.Drawing.Size(160, 120);
-			this.ViewPositionBox.TabIndex = 0;
-			this.ViewPositionBox.PositionChanged += new DungeonEye.Forms.ViewFieldControl.ChangedEventHandler(this.ViewPositionBox_PositionChanged);
+			this.BlockBox.AutoSize = true;
+			this.BlockBox.Location = new System.Drawing.Point(159, 45);
+			this.BlockBox.Name = "BlockBox";
+			this.BlockBox.Size = new System.Drawing.Size(77, 17);
+			this.BlockBox.TabIndex = 6;
+			this.BlockBox.Text = "Is blocking";
+			this.BlockBox.UseVisualStyleBackColor = true;
+			this.BlockBox.CheckedChanged += new System.EventHandler(this.BlockBox_CheckedChanged);
 			// 
 			// DecorationSetForm
 			// 
