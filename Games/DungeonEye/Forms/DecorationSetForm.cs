@@ -420,14 +420,15 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		void OpenGLBox_MouseWheel(object sender, MouseEventArgs e)
 		{
+
 			if (e.Delta > 0)
 				TileIdBox.Value++;
-			else
+			else if (TileIdBox.Value > -1)
 				TileIdBox.Value--;
 		}
 
 
-	
+
 		/// <summary>
 		/// 
 		/// </summary>
@@ -445,17 +446,17 @@ namespace DungeonEye.Forms
 				int tileid = Decoration.GetTileId(ViewPositionBox.Position);
 				Point location = Decoration.GetLocation(ViewPositionBox.Position);
 				Tile tile = DecorationSet.Tileset.GetTile(tileid);
-				Point offset = new Point(LastMousePosition.X - e.Location.X, LastMousePosition.Y - e.Location.Y);
-
-				if (tile == null)
+				if (tile != null)
 				{
+					Point offset = new Point(LastMousePosition.X - e.Location.X, LastMousePosition.Y - e.Location.Y);
+
+
+					// Mouse over tile, so pan the tile
+					Rectangle rect = new Rectangle(location, tile.Size);
+					Decoration.SetLocation(ViewPositionBox.Position, new Point(location.X - offset.X, location.Y - offset.Y));
+
+					Cursor = Cursors.SizeAll;
 				}
-
-				// Mouse over tile, so pan the tile
-				Rectangle rect = new Rectangle(location, tile.Size);
-				Decoration.SetLocation(ViewPositionBox.Position, new Point(location.X - offset.X, location.Y - offset.Y));
-
-				Cursor = Cursors.SizeAll;
 			}
 			else
 			{

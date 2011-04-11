@@ -171,7 +171,7 @@ namespace DungeonEye
 				0.0f);
 		}
 
-
+/*
 		/// <summary>
 		/// Draws a decoration
 		/// </summary>
@@ -220,6 +220,7 @@ namespace DungeonEye
 				break;
 			}
 		}
+*/
 
 
 		#region IO

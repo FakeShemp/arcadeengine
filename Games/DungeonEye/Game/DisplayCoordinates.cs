@@ -67,11 +67,11 @@ namespace DungeonEye
 
 			Doors = new TileDrawing[viewcount];
 			FloorPlates = new TileDrawing[viewcount];
-			
+
 			Ground = new Point[viewcount, 5];
-			for (int i = 0 ; i < viewcount ; i++)
-				for (int j = 0 ; j < 5 ; j++)
-					Ground[i,j] = new Point(-999, -999);
+			for (int i = 0; i < viewcount; i++)
+				for (int j = 0; j < 5; j++)
+					Ground[i, j] = new Point(-999, -999);
 
 			FlyingItems = new Point[viewcount, 5];
 			Walls = new List<TileDrawing>[viewcount];
@@ -85,7 +85,7 @@ namespace DungeonEye
 				Stairs[i] = new List<TileDrawing>();
 
 
-			ThrowRight =  new Rectangle(176, 0, 176, 144);
+			ThrowRight = new Rectangle(176, 0, 176, 144);
 			ThrowLeft = new Rectangle(0, 0, 176, 144);
 			CampButton = new Rectangle(578, 354, 62, 42);
 			FrontSquare = new Rectangle(48, 14, 256, 192);
@@ -128,15 +128,26 @@ namespace DungeonEye
 		/// <param name="position">View position</param>
 		static public Vector2 GetScaleFactor(ViewFieldPosition position)
 		{
-			Vector2[] scale = new Vector2[]
+			int[] offset = new int[]
 			{
-				new Vector2(1.0f, 1.0f),
-				new Vector2(0.66f, 0.66f),
-				new Vector2(0.5f, 0.5f),
-				new Vector2(0.33f, 0.33f)
+				3, 3, 3, 3, 3,
+				2, 2, 2, 2, 2,
+				   1, 1, 1,
+				   0, 0, 0,
 			};
 
+			return ScaleFactor[offset[(int)position]];
+		}
 
+
+		/// <summary>
+		/// Returns a location modified by a distant scale
+		/// </summary>
+		/// <param name="position">View field position</param>
+		/// <param name="point"></param>
+		/// <returns></returns>
+		static public Point GetScaleFactor(ViewFieldPosition position, Point point)
+		{
 			int[] offset = new int[]
 			{
 				3, 3, 3, 3, 3,
@@ -146,8 +157,11 @@ namespace DungeonEye
 			};
 
 
-			return scale[offset[(int)position]];
+			Vector2 vect = ScaleFactor[offset[(int)position]];
+
+			return new Point((int)(point.X * vect.X), (int)(point.Y * vect.Y));
 		}
+
 
 		/// <summary>
 		/// Gets the color for distant objects
@@ -280,7 +294,7 @@ namespace DungeonEye
 		{
 			if (IsLoaded)
 				return true;
-			
+
 			// Load file definition
 			using (Stream stream = ResourceManager.Load("MazeElements.xml"))
 			{
@@ -307,67 +321,67 @@ namespace DungeonEye
 					{
 						case "wall":
 						{
-							ViewFieldPosition view = (ViewFieldPosition) Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
-							Walls[(int) view].Add(GetTileDrawing(node));
+							ViewFieldPosition view = (ViewFieldPosition)Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
+							Walls[(int)view].Add(GetTileDrawing(node));
 						}
 						break;
 
 
 						case "stair":
 						{
-							ViewFieldPosition view = (ViewFieldPosition) Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
-							Stairs[(int) view].Add(GetTileDrawing(node));
+							ViewFieldPosition view = (ViewFieldPosition)Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
+							Stairs[(int)view].Add(GetTileDrawing(node));
 						}
 						break;
 
 
 						case "ground":
 						{
-							ViewFieldPosition view = (ViewFieldPosition) Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
-							SquarePosition ground = (SquarePosition) Enum.Parse(typeof(SquarePosition), node.Attributes["coordinate"].Value, true);
+							ViewFieldPosition view = (ViewFieldPosition)Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
+							SquarePosition ground = (SquarePosition)Enum.Parse(typeof(SquarePosition), node.Attributes["coordinate"].Value, true);
 
-							Ground[(int) view, (int) ground] = new Point(int.Parse(node.Attributes["x"].Value), int.Parse(node.Attributes["y"].Value));
+							Ground[(int)view, (int)ground] = new Point(int.Parse(node.Attributes["x"].Value), int.Parse(node.Attributes["y"].Value));
 						}
 						break;
 
 
 						case "flyingitem":
 						{
-							ViewFieldPosition view = (ViewFieldPosition) Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
-							SquarePosition ground = (SquarePosition) Enum.Parse(typeof(SquarePosition), node.Attributes["coordinate"].Value, true);
+							ViewFieldPosition view = (ViewFieldPosition)Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
+							SquarePosition ground = (SquarePosition)Enum.Parse(typeof(SquarePosition), node.Attributes["coordinate"].Value, true);
 
-							FlyingItems[(int) view, (int) ground] = new Point(int.Parse(node.Attributes["x"].Value), int.Parse(node.Attributes["y"].Value));
+							FlyingItems[(int)view, (int)ground] = new Point(int.Parse(node.Attributes["x"].Value), int.Parse(node.Attributes["y"].Value));
 						}
 						break;
 
 
 						case "pit":
 						{
-							ViewFieldPosition view = (ViewFieldPosition) Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
-							Pits[(int) view] = GetTileDrawing(node);
+							ViewFieldPosition view = (ViewFieldPosition)Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
+							Pits[(int)view] = GetTileDrawing(node);
 						}
 						break;
 
 
 						case "ceilingpit":
 						{
-							ViewFieldPosition view = (ViewFieldPosition) Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
-							CeilingPits[(int) view] = GetTileDrawing(node);
+							ViewFieldPosition view = (ViewFieldPosition)Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
+							CeilingPits[(int)view] = GetTileDrawing(node);
 						}
 						break;
 
 
 						case "floorplate":
 						{
-							ViewFieldPosition view = (ViewFieldPosition) Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
-							FloorPlates[(int) view] = GetTileDrawing(node);
+							ViewFieldPosition view = (ViewFieldPosition)Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
+							FloorPlates[(int)view] = GetTileDrawing(node);
 						}
 						break;
 
 						case "door":
 						{
-							ViewFieldPosition view = (ViewFieldPosition) Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
-							Doors[(int) view] = GetTileDrawing(node);
+							ViewFieldPosition view = (ViewFieldPosition)Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
+							Doors[(int)view] = GetTileDrawing(node);
 						}
 						break;
 
@@ -632,7 +646,24 @@ namespace DungeonEye
 									 CardinalPoint.West, CardinalPoint.East},			// Team
 				new CardinalPoint[] {CardinalPoint.West},								// O
 			};
+
+
+		/// <summary>
+		/// Scaling factor
+		/// </summary>
+		static Vector2[] ScaleFactor = new Vector2[]
+			{
+				new Vector2(1.0f, 1.0f),
+				new Vector2(0.66f, 0.66f),
+				new Vector2(0.5f, 0.5f),
+				new Vector2(0.33f, 0.33f)
+			};
+
+
+
+
 		#endregion
+
 
 		#endregion
 

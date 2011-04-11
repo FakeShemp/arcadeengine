@@ -62,10 +62,11 @@ namespace DungeonEye
 			if (xml == null)
 				return false;
 
-			Decoration = int.Parse(xml.Attributes["tile"].Value);
+			Decoration = int.Parse(xml.Attributes["deco"].Value);
 			HideItems = bool.Parse(xml.Attributes["hide"].Value);
-			HideItems = bool.Parse(xml.Attributes["bigitems"].Value);
-			ItemLocation = new Point(int.Parse(xml.Attributes["x"].Value), int.Parse(xml.Attributes["y"].Value));
+			AcceptBigItems = bool.Parse(xml.Attributes["bigitems"].Value);
+			ItemLocation = new Point(int.Parse(xml.Attributes["x"].Value), 
+									 int.Parse(xml.Attributes["y"].Value));
 
 			return true;
 		}
@@ -81,11 +82,11 @@ namespace DungeonEye
 			if (writer == null)
 				return false;
 
-			writer.WriteAttributeString("tile", (Decoration).ToString());
-			writer.WriteAttributeString("hide", (HideItems).ToString());
-			writer.WriteAttributeString("bigitems", (AcceptBigItems).ToString());
-			writer.WriteAttributeString("x", (ItemLocation.X).ToString());
-			writer.WriteAttributeString("y", (ItemLocation.Y).ToString());
+			writer.WriteAttributeString("deco", Decoration.ToString());
+			writer.WriteAttributeString("hide", HideItems.ToString());
+			writer.WriteAttributeString("bigitems", AcceptBigItems.ToString());
+			writer.WriteAttributeString("x", ItemLocation.X.ToString());
+			writer.WriteAttributeString("y", ItemLocation.Y.ToString());
 
 			return true;
 		}
@@ -100,42 +101,24 @@ namespace DungeonEye
 		/// <summary>
 		/// Decoration id
 		/// </summary>
-		public int Decoration
-		{
-			get;
-			set;
-		}
-
+		public int Decoration;
 
 		/// <summary>
 		/// Hide items in the alcove
 		/// </summary>
-		public bool HideItems
-		{
-			get;
-			set;
-		}
+		public bool HideItems;
 
 
 		/// <summary>
 		/// Items location on the screen
 		/// </summary>
-		public Point ItemLocation
-		{
-			get;
-			set;
-		}
+		public Point ItemLocation;
 
 
 		/// <summary>
 		/// Accept big items
 		/// </summary>
-		public bool AcceptBigItems
-		{
-			get;
-			set;
-		}
-
+		public bool AcceptBigItems;
 
 		#endregion
 	}

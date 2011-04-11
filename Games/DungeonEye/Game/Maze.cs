@@ -606,19 +606,9 @@ namespace DungeonEye
 			// Backdrop
 			// The background is assumed to be x-flipped when party.x & party.y & party.direction = 1.
 			// I.e. all kind of moves and rotations from the current position will result in the background being x-flipped.
-			//bool flipbackdrop = ((location.Position.X + location.Position.Y + (int)location.Direction) & 1) == 0;
-			SpriteEffects effect = ((location.Coordinate.X + location.Coordinate.Y + (int)location.Direction) & 1) == 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+			bool flipbackdrop =  ((location.Coordinate.X + location.Coordinate.Y + (int)location.Direction) & 1) == 0;
+			SpriteEffects effect = flipbackdrop ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
 			batch.DrawTile(WallTileset, 0, Point.Empty, Color.White, 0.0f, effect, 0.0f);
-
-
-			// alternate the wall
-		//	int swapid = (location.Coordinate.Y % 2) * 9;
-			//bool swap = false;
-			//if (location.Direction == CardinalPoint.North || location.Direction == CardinalPoint.South)
-			//    swap = location.Coordinate.X % 2 == 1;
-			//else
-			//    swap = location.Coordinate.Y % 2 == 1;
-	
 
 			// maze block draw order
 			// A E B D C
@@ -671,7 +661,6 @@ namespace DungeonEye
 		/// <param name="field">View field</param>
 		/// <param name="position">Position of the square in the view field</param>
 		/// <param name="view">Looking direction of the team</param>
-		/// 
 		void DrawSquare(SpriteBatch batch, ViewField field, ViewFieldPosition position, CardinalPoint view)
 		{
 			if (field == null)
@@ -679,46 +668,12 @@ namespace DungeonEye
 
 			Square square = field.Blocks[(int)position];
 			Point point;
-			TileDrawing td = null;
-
-
-			#region Drawing offset
-			int offset = 1;
-			switch (position)
-			{
-				case ViewFieldPosition.A:
-				case ViewFieldPosition.B:
-				case ViewFieldPosition.C:
-				case ViewFieldPosition.D:
-				case ViewFieldPosition.E:
-				offset = 3;
-				break;
-				case ViewFieldPosition.F:
-				case ViewFieldPosition.G:
-				case ViewFieldPosition.H:
-				case ViewFieldPosition.I:
-				case ViewFieldPosition.J:
-				offset = 2;
-				break;
-				case ViewFieldPosition.K:
-				case ViewFieldPosition.L:
-				case ViewFieldPosition.M:
-				offset = 1;
-				break;
-				case ViewFieldPosition.N:
-				case ViewFieldPosition.Team:
-				case ViewFieldPosition.O:
-				offset = 0;
-				break;
-			}
-			#endregion
-
 
 			#region ceiling pit
 			if (square.IsPitTarget)
 			{
 				//TODO
-				td = DisplayCoordinates.GetCeilingPit(position);
+				TileDrawing td = DisplayCoordinates.GetCeilingPit(position);
 				//if (td != null)
 				//	batch.DrawTile(OverlayTileset, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);
 				//***batch.DrawTile(ItemsTileset, td.ID, td.Location, td.SwapX, td.SwapY);
@@ -742,18 +697,9 @@ namespace DungeonEye
 						point = DisplayCoordinates.GetGroundPosition(position, (SquarePosition)i);
 						if (!point.IsEmpty)
 						{
-							Tile tile = Dungeon.ItemTileSet.GetTile(item.GroundTileID);
-							if (tile != null)
-							{
-								// Get the screen location
-								Rectangle rect = new Rectangle(
-									point.X - tile.Origin.X, point.Y - tile.Origin.Y,
-									tile.Rectangle.Width / (offset + 1), tile.Rectangle.Height / (offset + 1));
-
-								batch.DrawTile(Dungeon.ItemTileSet, item.GroundTileID, point, 
-									DisplayCoordinates.GetDistantColor(position), 0.0f, 
-									DisplayCoordinates.GetScaleFactor(position), SpriteEffects.None, 0.0f);
-							}
+							batch.DrawTile(Dungeon.ItemTileSet, item.GroundTileID, point,
+								DisplayCoordinates.GetDistantColor(position), 0.0f,
+								DisplayCoordinates.GetScaleFactor(position), SpriteEffects.None, 0.0f);
 						}
 					}
 				}
@@ -813,18 +759,9 @@ namespace DungeonEye
 						point = DisplayCoordinates.GetGroundPosition(position, (SquarePosition)i);
 						if (!point.IsEmpty)
 						{
-							Tile tile = Dungeon.ItemTileSet.GetTile(item.GroundTileID);
-							if (tile != null)
-							{
-								Rectangle rect = tile.Rectangle;
-								rect.Inflate(offset, offset);
-
-								//batch.DrawTile(ItemsTileset, item.GroundTileID, point, rect, Color.Red);
-								//	batch.DrawTile(ItemsTileset, item.GroundTileID + offset, point);
-								batch.DrawTile(Dungeon.ItemTileSet, item.GroundTileID, point, 
-									DisplayCoordinates.GetDistantColor(position), 0.0f, 
-									DisplayCoordinates.GetScaleFactor(position), SpriteEffects.None, 0.0f);
-							}
+							batch.DrawTile(Dungeon.ItemTileSet, item.GroundTileID, point,
+								DisplayCoordinates.GetDistantColor(position), 0.0f,
+								DisplayCoordinates.GetScaleFactor(position), SpriteEffects.None, 0.0f);
 						}
 					}
 				}
@@ -854,6 +791,39 @@ namespace DungeonEye
 
 
 			#region Flying items
+
+			#region Drawing offset
+			int offset = 1;
+			switch (position)
+			{
+				case ViewFieldPosition.A:
+				case ViewFieldPosition.B:
+				case ViewFieldPosition.C:
+				case ViewFieldPosition.D:
+				case ViewFieldPosition.E:
+				offset = 3;
+				break;
+				case ViewFieldPosition.F:
+				case ViewFieldPosition.G:
+				case ViewFieldPosition.H:
+				case ViewFieldPosition.I:
+				case ViewFieldPosition.J:
+				offset = 2;
+				break;
+				case ViewFieldPosition.K:
+				case ViewFieldPosition.L:
+				case ViewFieldPosition.M:
+				offset = 1;
+				break;
+				case ViewFieldPosition.N:
+				case ViewFieldPosition.Team:
+				case ViewFieldPosition.O:
+				offset = 0;
+				break;
+			}
+			#endregion
+
+
 			List<ThrownItem>[] flyings = GetFlyingItems(square.Location, view);
 			foreach (SquarePosition pos in Enum.GetValues(typeof(SquarePosition)))
 			{
@@ -1463,59 +1433,5 @@ namespace DungeonEye
 
 		#endregion
 	}
-
-
-
-	/// <summary>
-	/// Maze Enumerator for PropertyGrids
-	/// </summary>
-	public class MazeEnumerator : StringConverter
-	{
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="context"></param>
-		/// <returns></returns>
-		public override bool GetStandardValuesSupported(ITypeDescriptorContext context)
-		{
-			return true; // display drop
-		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="context"></param>
-		/// <returns></returns>
-		public override bool GetStandardValuesExclusive(ITypeDescriptorContext context)
-		{
-			return true; // drop-down vs combo
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="context"></param>
-		/// <returns></returns>
-		public override StandardValuesCollection GetStandardValues(ITypeDescriptorContext context)
-		{
-			List<string> list = new List<string>();
-
-			list.Add("a");
-			list.Add("z");
-			list.Add("e");
-			list.Add("rt");
-			list.Add("y");
-			list.Add("u");
-			list.Add("id");
-			list.Insert(0, "");
-
-
-			return new StandardValuesCollection(list);
-		}
-
-	}
-
-
 
 }

@@ -40,8 +40,7 @@ namespace DungeonEye
 		/// Cosntructor
 		/// </summary>
 		/// <param name="square">Parent square handle</param>
-		public AlcoveActor(Square square)
-			: base(square)
+		public AlcoveActor(Square square) : base(square)
 		{
 			Alcoves = new Alcove[4]
 			{
@@ -87,7 +86,7 @@ namespace DungeonEye
 
 				// Draw items in the alcove in front of the team
 				Point loc = deco.PrepareLocation(position);
-				loc.Offset(alcove.ItemLocation);
+				loc.Offset(DisplayCoordinates.GetScaleFactor(position, alcove.ItemLocation));
 				foreach (Item item in Square.GetItemsFromSide(direction, side))
 				{
 					batch.DrawTile(Square.Maze.Dungeon.ItemTileSet, item.GroundTileID, loc,
@@ -118,7 +117,7 @@ namespace DungeonEye
 		{
 			StringBuilder sb = new StringBuilder();
 
-			sb.Append("Alcove (x)");
+			sb.Append("Alcoves (x)");
 
 			return sb.ToString();
 		}
@@ -185,7 +184,7 @@ namespace DungeonEye
 					case "side":
 					{
 						CardinalPoint dir = (CardinalPoint) Enum.Parse(typeof(CardinalPoint), node.Attributes["name"].Value);
-						GetAlcove(dir).Load(node);
+						Alcoves[(int)dir].Load(node);
 					}
 					break;
 
