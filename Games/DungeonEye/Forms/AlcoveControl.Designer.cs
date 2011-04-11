@@ -38,15 +38,13 @@
 			this.HideItemsBox = new System.Windows.Forms.CheckBox();
 			this.DirectionBox = new DungeonEye.Forms.CardinalPointControl();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
-			this.ItemIdBox = new System.Windows.Forms.NumericUpDown();
-			this.label4 = new System.Windows.Forms.Label();
 			this.ItemLocationBox = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
+			this.ItemsBox = new System.Windows.Forms.ComboBox();
 			this.groupBox2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.DecorationBox)).BeginInit();
 			this.groupBox1.SuspendLayout();
 			this.groupBox3.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.ItemIdBox)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// GLControl
@@ -165,8 +163,7 @@
 			// 
 			// groupBox3
 			// 
-			this.groupBox3.Controls.Add(this.ItemIdBox);
-			this.groupBox3.Controls.Add(this.label4);
+			this.groupBox3.Controls.Add(this.ItemsBox);
 			this.groupBox3.Controls.Add(this.ItemLocationBox);
 			this.groupBox3.Controls.Add(this.label2);
 			this.groupBox3.Location = new System.Drawing.Point(196, 279);
@@ -174,41 +171,12 @@
 			this.groupBox3.Size = new System.Drawing.Size(172, 99);
 			this.groupBox3.TabIndex = 6;
 			this.groupBox3.TabStop = false;
-			this.groupBox3.Text = "Items";
-			// 
-			// ItemIdBox
-			// 
-			this.ItemIdBox.Location = new System.Drawing.Point(77, 19);
-			this.ItemIdBox.Maximum = new decimal(new int[] {
-            99999999,
-            0,
-            0,
-            0});
-			this.ItemIdBox.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            -2147483648});
-			this.ItemIdBox.Name = "ItemIdBox";
-			this.ItemIdBox.Size = new System.Drawing.Size(89, 20);
-			this.ItemIdBox.TabIndex = 3;
-			this.ItemIdBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.ItemIdBox.ThousandsSeparator = true;
-			this.ItemIdBox.ValueChanged += new System.EventHandler(this.ItemIdBox_ValueChanged);
-			// 
-			// label4
-			// 
-			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(6, 21);
-			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(65, 13);
-			this.label4.TabIndex = 2;
-			this.label4.Text = "Item number";
+			this.groupBox3.Text = "Preview";
 			// 
 			// ItemLocationBox
 			// 
 			this.ItemLocationBox.AutoSize = true;
-			this.ItemLocationBox.Location = new System.Drawing.Point(74, 52);
+			this.ItemLocationBox.Location = new System.Drawing.Point(63, 49);
 			this.ItemLocationBox.Name = "ItemLocationBox";
 			this.ItemLocationBox.Size = new System.Drawing.Size(52, 13);
 			this.ItemLocationBox.TabIndex = 1;
@@ -217,11 +185,21 @@
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(14, 52);
+			this.label2.Location = new System.Drawing.Point(3, 49);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(54, 13);
 			this.label2.TabIndex = 0;
 			this.label2.Text = "Location :";
+			// 
+			// ItemsBox
+			// 
+			this.ItemsBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.ItemsBox.FormattingEnabled = true;
+			this.ItemsBox.Location = new System.Drawing.Point(6, 19);
+			this.ItemsBox.Name = "ItemsBox";
+			this.ItemsBox.Size = new System.Drawing.Size(159, 21);
+			this.ItemsBox.TabIndex = 2;
+			this.ItemsBox.SelectedIndexChanged += new System.EventHandler(this.ItemsBox_SelectedIndexChanged);
 			// 
 			// AlcoveControl
 			// 
@@ -240,7 +218,6 @@
 			this.groupBox1.PerformLayout();
 			this.groupBox3.ResumeLayout(false);
 			this.groupBox3.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.ItemIdBox)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -257,9 +234,8 @@
 		private System.Windows.Forms.CheckBox HideItemsBox;
 		private System.Windows.Forms.CheckBox AcceptBigItemsBox;
 		private System.Windows.Forms.GroupBox groupBox3;
-		private System.Windows.Forms.NumericUpDown ItemIdBox;
-		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.Label ItemLocationBox;
 		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.ComboBox ItemsBox;
 	}
 }

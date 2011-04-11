@@ -253,6 +253,8 @@ namespace DungeonEye.Forms
 			{
 				direction = value;
 				UpdateUI();
+
+				OnDirectionChanged(EventArgs.Empty);
 			}
 		}
 		CardinalPoint direction;

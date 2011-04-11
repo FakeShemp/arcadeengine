@@ -51,13 +51,20 @@ namespace DungeonEye.Forms
 
 			InitializeComponent();
 
+			LastMousePosition = Control.MousePosition;
+
 			// Warning, no decoration defined for this maze !!
 			if (maze.Decoration == null)
 				MessageBox.Show("No decoration defined for this maze. Please define a decoration first !", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-			Maze = maze;
-			Alcove = alcove;
 
+			ItemsBox.Items.Add("");
+			ItemsBox.Items.AddRange(ResourceManager.GetAssets<Item>().ToArray());
+
+			Maze = maze;
+			Actor = alcove;
+
+			DirectionBox.Direction = CardinalPoint.North;
 			UpdateUI();
 
 		}
@@ -68,15 +75,18 @@ namespace DungeonEye.Forms
 		/// </summary>
 		void UpdateUI()
 		{
-			if (Alcove == null)
+			if (Actor == null || Alcove == null)
 				return;
 
-			DirectionBox.Highlight(CardinalPoint.North, Alcove.GetSideState(CardinalPoint.North));
-			DirectionBox.Highlight(CardinalPoint.South, Alcove.GetSideState(CardinalPoint.South));
-			DirectionBox.Highlight(CardinalPoint.West, Alcove.GetSideState(CardinalPoint.West));
-			DirectionBox.Highlight(CardinalPoint.East, Alcove.GetSideState(CardinalPoint.East));
+			DirectionBox.Highlight(CardinalPoint.North, Actor.GetAlcove(CardinalPoint.North).Decoration != -1);
+			DirectionBox.Highlight(CardinalPoint.South, Actor.GetAlcove(CardinalPoint.South).Decoration != -1);
+			DirectionBox.Highlight(CardinalPoint.West, Actor.GetAlcove(CardinalPoint.West).Decoration != -1);
+			DirectionBox.Highlight(CardinalPoint.East, Actor.GetAlcove(CardinalPoint.East).Decoration != -1);
 
-			HideItemsBox.Checked = Alcove.ItemsHidden(Face);
+			HideItemsBox.Checked = Alcove.HideItems;
+			AcceptBigItemsBox.Checked = Alcove.AcceptBigItems;
+			DecorationBox.Value = Alcove.Decoration;
+			ItemLocationBox.Text = Alcove.ItemLocation.ToString();
 		}
 
 
@@ -105,12 +115,25 @@ namespace DungeonEye.Forms
 			// Draw the tile
 			if (Maze.Decoration != null)
 			{
-				Decoration deco = Maze.Decoration.GetDecoration(Alcove.GetTile(Face));
+				Decoration deco = Maze.Decoration.GetDecoration(Alcove.Decoration);
 				if (deco != null)
 				{
-					Batch.DrawTile(Maze.Decoration.Tileset, deco.GetTileId(ViewFieldPosition.L), deco.GetLocation(ViewFieldPosition.L));
+					Point loc = deco.GetLocation(ViewFieldPosition.L);
+					Batch.DrawTile(Maze.Decoration.Tileset, deco.GetTileId(ViewFieldPosition.L), loc);
+
+
+					// Draw preview item
+					if (Maze.Dungeon.ItemTileSet != null && PreviewItem != null)
+					{
+						// Draw the item
+						loc.Offset(Alcove.ItemLocation);
+						Batch.DrawTile(Maze.Dungeon.ItemTileSet, PreviewItem.GroundTileID, loc);
+
+
+					}
 				}
 			}
+
 
 			Batch.End();
 			GLControl.SwapBuffers();
@@ -137,11 +160,9 @@ namespace DungeonEye.Forms
 		void ChangeSide(CardinalPoint side)
 		{
 			Face = side;
+			Alcove = Actor.GetAlcove(side);
 
 			UpdateUI();
-
-			DecorationBox.Value = Alcove.GetTile(side);
-
 			RenderScene();
 		}
 
@@ -186,7 +207,27 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void GLControl_MouseMove(object sender, MouseEventArgs e)
 		{
+			if (e.Button == MouseButtons.Left)
+			{
+				if (PreviewItem != null)
+				{
+					Point offset = new Point(e.Location.X - LastMousePosition.X, e.Location.Y - LastMousePosition.Y);
+					Point location = Alcove.ItemLocation;
+					location.Offset(offset);
+					Alcove.ItemLocation = location;
 
+					RenderScene();
+					UpdateUI();
+				}
+				Cursor = Cursors.SizeAll;
+			}
+			else
+			{
+				Cursor = Cursors.Default;
+			}
+
+			// Update last mouse position
+			LastMousePosition = e.Location;
 		}
 
 
@@ -197,6 +238,47 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void GLControl_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
 		{
+
+			if (PreviewItem != null)
+			{
+
+				Point location = Alcove.ItemLocation;
+
+				switch (e.KeyCode)
+				{
+					case Keys.Up:
+					{
+						location.Y--;
+						e.IsInputKey = true;
+					}
+					break;
+
+					case Keys.Down:
+					{
+						location.Y++;
+						e.IsInputKey = true;
+					}
+					break;
+
+					case Keys.Left:
+					{
+						location.X--;
+						e.IsInputKey = true;
+					}
+					break;
+
+					case Keys.Right:
+					{
+						location.X++;
+						e.IsInputKey = true;
+					}
+					break;
+				}
+
+				Alcove.ItemLocation = location;
+				RenderScene();
+				UpdateUI();
+			}
 
 		}
 
@@ -211,11 +293,11 @@ namespace DungeonEye.Forms
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void ItemIdBox_ValueChanged(object sender, EventArgs e)
+		private void ItemsBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
-
+			PreviewItem = ResourceManager.CreateAsset<Item>((string) ItemsBox.SelectedItem);
+			RenderScene();
 		}
-
 
 		/// <summary>
 		/// 
@@ -224,13 +306,14 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void HideItemsBox_CheckedChanged(object sender, EventArgs e)
 		{
-			if (Alcove == null ||Alcove.ItemsHidden(Face) == HideItemsBox.Checked)
+			if (Actor == null || Alcove.HideItems == HideItemsBox.Checked)
 				return;
 
-			Alcove.HideItem(Face, HideItemsBox.Checked);
+			Alcove.HideItems = HideItemsBox.Checked;
 			RenderScene();
 			UpdateUI();
 		}
+
 
 		/// <summary>
 		/// 
@@ -265,11 +348,12 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void ClearBox_Click(object sender, EventArgs e)
 		{
-			if (Alcove == null)
+			if (Actor == null)
 				return;
 
-			Alcove.HideItem(Face, false);
+			Alcove.HideItems = false;
 			DecorationBox.Value = -1;
+			ItemsBox.SelectedIndex = -1;
 			UpdateUI();
 		}
 
@@ -281,10 +365,10 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void DecorationBox_ValueChanged(object sender, EventArgs e)
 		{
-			if (Alcove == null)
+			if (Actor == null || Alcove.Decoration == (int) DecorationBox.Value)
 				return;
 
-			Alcove.SetSideTile(Face, (int) DecorationBox.Value);
+			Alcove.Decoration = (int) DecorationBox.Value;
 			RenderScene();
 			UpdateUI();
 		}
@@ -308,7 +392,11 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void AcceptBigItemsBox_CheckedChanged(object sender, EventArgs e)
 		{
+			if (Actor == null || Alcove.AcceptBigItems ==  AcceptBigItemsBox.Checked)
+				return;
 
+			Alcove.AcceptBigItems = AcceptBigItemsBox.Checked;
+			UpdateUI();
 		}
 
 
@@ -320,7 +408,13 @@ namespace DungeonEye.Forms
 		/// <summary>
 		/// Alcove
 		/// </summary>
-		AlcoveActor Alcove;
+		AlcoveActor Actor;
+
+
+		/// <summary>
+		/// Current alcove handle
+		/// </summary>
+		Alcove Alcove;
 
 
 		/// <summary>
@@ -341,7 +435,18 @@ namespace DungeonEye.Forms
 		Maze Maze;
 
 
+		/// <summary>
+		/// Preview item
+		/// </summary>
+		Item PreviewItem;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Point LastMousePosition;
+
 		#endregion
+
 
 	}
 }
