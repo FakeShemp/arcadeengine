@@ -612,8 +612,13 @@ namespace DungeonEye
 
 
 			// alternate the wall
-			int swap = (location.Coordinate.Y % 2) * 9;
-
+		//	int swapid = (location.Coordinate.Y % 2) * 9;
+			//bool swap = false;
+			//if (location.Direction == CardinalPoint.North || location.Direction == CardinalPoint.South)
+			//    swap = location.Coordinate.X % 2 == 1;
+			//else
+			//    swap = location.Coordinate.Y % 2 == 1;
+	
 
 			// maze block draw order
 			// A E B D C
@@ -666,6 +671,7 @@ namespace DungeonEye
 		/// <param name="field">View field</param>
 		/// <param name="position">Position of the square in the view field</param>
 		/// <param name="view">Looking direction of the team</param>
+		/// 
 		void DrawSquare(SpriteBatch batch, ViewField field, ViewFieldPosition position, CardinalPoint view)
 		{
 			if (field == null)
@@ -761,7 +767,16 @@ namespace DungeonEye
 				// Walls
 				foreach (TileDrawing tmp in DisplayCoordinates.GetWalls(position))
 				{
-					batch.DrawTile(WallTileset, tmp.ID, tmp.Location, Color.White, 0.0f, tmp.Effect, 0.0f);
+					Color color = Color.White;
+					int tileid = tmp.ID;
+
+					//if (swap)
+					//{
+					//    color = Color.Red;
+					//    tileid += 9;
+					//}
+
+					batch.DrawTile(WallTileset, tileid, tmp.Location, color, 0.0f, tmp.Effect, 0.0f);
 				}
 			}
 
