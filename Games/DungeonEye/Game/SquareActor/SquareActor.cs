@@ -169,7 +169,7 @@ namespace DungeonEye
 		#region Events
 
 		/// <summary>
-		/// ACtivates the actor
+		/// Activates the actor
 		/// </summary>
 		public virtual void Activate()
 		{

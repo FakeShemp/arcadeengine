@@ -152,6 +152,7 @@ namespace DungeonEye
 				break;
 			}
 
+			ret += Dice.GetD20(1);
 
 			return ret;
 		}

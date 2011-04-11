@@ -254,7 +254,7 @@ namespace DungeonEye.Forms
 								Stair stair = block.Actor as Stair;
 								Batch.DrawTile(Icons, stair.Type == StairType.Up ? 6 : 7, new Point(Offset.X + x * 25, Offset.Y + y * 25));
 							}
-
+/*
 							// Alcoves
 							if (block.HasAlcoves)
 							{
@@ -279,6 +279,7 @@ namespace DungeonEye.Forms
 									}
 								}
 							}
+*/
 						}
 
 

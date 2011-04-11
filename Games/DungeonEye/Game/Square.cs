@@ -62,7 +62,7 @@ namespace DungeonEye
 			Monsters = new Monster[4];
 
 			Decorations = new int[] { -1, -1, -1, -1 };
-			Alcoves = new bool[4];
+			//Alcoves = new bool[4];
 
 			Items = new List<Item>[]
 			{
@@ -131,7 +131,7 @@ namespace DungeonEye
 				}
 				else
 					sb.Append(" Wall");
-
+/*
 				if (HasAlcoves)
 				{
 					sb.Append(" Alcove facing ");
@@ -141,6 +141,7 @@ namespace DungeonEye
 							sb.Append(point + " ");
 					}
 				}
+*/
 			}
 			else
 			{
@@ -200,30 +201,9 @@ namespace DungeonEye
 
 			// Actor interaction
 			if (Actor != null)
-			{
-				// Actor present
-				if (team.ItemInHand == null)
-					return Actor.OnClick(location, side);
-
-
-				// An Alcove 
-				else if (HasAlcove(side) && DisplayCoordinates.Alcove.Contains(location))
-				{
-					if (team.ItemInHand != null)
-					{
-						DropAlcoveItem(side, team.ItemInHand);
-						team.SetItemInHand(null);
-					}
-					else
-					{
-						team.SetItemInHand(CollectAlcoveItem(side));
-					}
-
+				if (Actor.OnClick(location, side))
 					return true;
-				}
 
-			}
-			
 			
 			// Decoration interaction
 			Decoration decoration = team.Maze.GetDecoration(team.FrontLocation, Compass.GetOppositeDirection(team.Direction));
@@ -234,7 +214,6 @@ namespace DungeonEye
 				return true;
 			}
 
-			//TODO: Alcove interaction
 
 
 			return false;
@@ -540,7 +519,7 @@ namespace DungeonEye
 
 
 		#region Alcoves
-
+/*
 		/// <summary>
 		/// Gets if the wall have an alcove
 		/// </summary>
@@ -576,52 +555,50 @@ namespace DungeonEye
 		{
 			Alcoves[(int)side] = create;
 		}
-
+*/
 
 		/// <summary>
-		/// Gets items from an alcove 
+		/// Gets a list of items from a side
 		/// </summary>
 		/// <param name="side">Wall side</param>
 		/// <returns>List of items</returns>
-		public List<Item> GetAlcoveItems(CardinalPoint side)
+		public List<Item> GetItemsFromSide(CardinalPoint side)
 		{
 			return Items[(int)side];
 		}
 
 
 		/// <summary>
-		/// Gets items from an alcove 
+		/// Gets a list of items
 		/// </summary>
 		/// <param name="from">View point</param>
 		/// <param name="side">Wall side</param>
 		/// <returns>List of items</returns>
-		public List<Item> GetAlcoveItems(CardinalPoint from, CardinalPoint side)
+		public List<Item> GetItemsFromSide(CardinalPoint from, CardinalPoint side)
 		{
-			return GetAlcoveItems(Compass.GetDirectionFromView(from, side));
+			return GetItemsFromSide(Compass.GetDirectionFromView(from, side));
 		}
 
 
 		/// <summary>
-		/// Collects an item in an alcove
+		/// Collects and removes an item from a side
 		/// </summary>
 		/// <param name="side">Wall side</param>
 		/// <returns>Item handle or null</returns>
-		[Obsolete()]
-		public Item CollectAlcoveItem(CardinalPoint side)
+		public Item CollectItemFromSide(CardinalPoint side)
 		{
 			return CollectItem((SquarePosition)side);
 		}
 
 
 		/// <summary>
-		/// Drops an item in an alcove
+		/// Drops an item from a side
 		/// </summary>
 		/// <param name="side">Wall side</param>
 		/// <returns>True if the item can go in the alcove, or false</returns>
-		[Obsolete()]
-		public bool DropAlcoveItem(CardinalPoint side, Item item)
+		public bool DropItemFromSide(CardinalPoint side, Item item)
 		{
-			if (item == null || !HasAlcove(side))
+			if (item == null) // || !HasAlcove(side))
 				return false;
 
 			Items[(int)side].Add(item);
@@ -1072,7 +1049,7 @@ namespace DungeonEye
 			set;
 		}
 
-
+/*
 		/// <summary>
 		/// Gets if the wall have alcoves
 		/// </summary>
@@ -1083,7 +1060,7 @@ namespace DungeonEye
 				return (Alcoves[0] || Alcoves[1] || Alcoves[2] || Alcoves[3]);
 			}
 		}
-
+*/
 
 		/// <summary>
 		/// Gets if the wall have decorations
@@ -1235,8 +1212,8 @@ namespace DungeonEye
 		/// <summary>
 		/// Alcoves
 		/// </summary>
-		[Obsolete()]
-		bool[] Alcoves;
+//		[Obsolete()]
+//		bool[] Alcoves;
 
 
 		/// <summary>

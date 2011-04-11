@@ -41,7 +41,7 @@ namespace DungeonEye
 		public EventSquare(Square square) : base(square)
 		{
 			Choices = new List<ScriptChoice>();
-			//Events = new List<Event>();
+			MessageColor = Color.White;
 		}
 
 
@@ -66,28 +66,30 @@ namespace DungeonEye
 			if (Remaining == 0)
 				return false;
 
-			// Some message to display
-			if (!string.IsNullOrEmpty(Message))
-			{
-				foreach (Hero hero in GameScreen.Team.Heroes)
-				{
-					if (hero == null)
-						continue;
+			Hero hero = null;
 
-					if (hero.SavingThrow(SavingThrowType.Will) > Dice.GetD20(1))
-					{
-						GameMessage.AddMessage(hero.Name + ": " + Message, MessageColor);
-						break;
-					}
+			// Check if a hero detect the event
+			foreach (Hero h in GameScreen.Team.Heroes)
+			{
+				//if (hero.SavingThrow(SavingThrowType.Will) > Dice.GetD20(1))
+				if (h != null && h.SavingThrow(SavingThrowType.Will) > Intelligence)
+				{
+					hero = h;
+					break;
 				}
 			}
 
+			// No one is able to detect the event
+			if (hero == null)
+				return false;
+
+			// Display message
+			if (!string.IsNullOrEmpty(Message))
+				GameMessage.AddMessage(hero.Name + ": " + Message, MessageColor);
 
 			// Create the scripted dialog if there's a picture to show
 			if (!string.IsNullOrEmpty(PictureName))
-			{
-				GameScreen.Dialog = new ScriptedDialog(Square, this);				
-			}
+				GameScreen.Dialog = new ScriptedDialog(Square, this);
 
 
 			// Decrement usage
@@ -141,7 +143,7 @@ namespace DungeonEye
 
 					case "direction":
 					{
-						Direction = (CardinalPoint)Enum.Parse(typeof(CardinalPoint), node.Attributes["value"].Value);
+						Direction = (CardinalPoint) Enum.Parse(typeof(CardinalPoint), node.Attributes["value"].Value);
 					}
 					break;
 
@@ -272,7 +274,7 @@ namespace DungeonEye
 			writer.WriteEndElement();
 
 
-			foreach(ScriptChoice choice in Choices)
+			foreach (ScriptChoice choice in Choices)
 				choice.Save(writer);
 
 
@@ -322,7 +324,7 @@ namespace DungeonEye
 			set;
 		}
 
-	
+
 		/// <summary>
 		/// Direction Team must face to trigger
 		/// </summary>
@@ -392,7 +394,7 @@ namespace DungeonEye
 			set;
 		}
 
-		
+
 		/// <summary>
 		/// Gets or sets the picture name
 		/// </summary>
@@ -412,22 +414,22 @@ namespace DungeonEye
 			private set;
 		}
 
-/*
-		/// <summary>
-		/// Current event
-		/// </summary>
-		public Event CurrentEvent
-		{
-			get;
-			protected set;
-		}
+		/*
+				/// <summary>
+				/// Current event
+				/// </summary>
+				public Event CurrentEvent
+				{
+					get;
+					protected set;
+				}
 
 
-		/// <summary>
-		/// Available events
-		/// </summary>
-		List<Event> Events;
-*/
+				/// <summary>
+				/// Available events
+				/// </summary>
+				List<Event> Events;
+		*/
 		#endregion
 
 	}

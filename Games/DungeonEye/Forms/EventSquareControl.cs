@@ -52,7 +52,7 @@ namespace DungeonEye.Forms
 			DirectionBox.SelectedItem = eventsquare.Direction;
 			DisplayBorderBox.Checked = eventsquare.DisplayBorder;
 			IntelligenceBox.Value = eventsquare.Intelligence;
-			MessageBox.ForeColor = eventsquare.MessageColor;
+			ColorPanelBox.BackColor = eventsquare.MessageColor;
 			RemainingBox.Value = eventsquare.Remaining;
 			TextBox.Text = eventsquare.Text;
 			TextJustificationBox.DataSource = Enum.GetValues(typeof(TextJustification));
@@ -104,7 +104,7 @@ namespace DungeonEye.Forms
 				return;
 
 			EventSquare.MessageColor = dlg.Color;
-			MessageBox.ForeColor = dlg.Color;
+			ColorPanelBox.BackColor = dlg.Color;
 		}
 
 		

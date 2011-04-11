@@ -76,6 +76,31 @@ namespace DungeonEye
 		}
 
 
+
+		/// <summary>
+		/// Checks if a point is inside the decoration
+		/// </summary>
+		/// <param name="id">Decoration id</param>
+		/// <param name="location">Location to check</param>
+		/// <returns>True if point is inside the alcove</returns>
+		public bool IsPointInside(int id, Point location)
+		{
+			Decoration deco = GetDecoration(id);
+			if (deco == null)
+				return false;
+
+			Tile tile = Tileset.GetTile(deco.GetTileId(ViewFieldPosition.L));
+			if (tile == null)
+				return false;
+
+			Rectangle zone = new Rectangle(
+				deco.GetLocation(ViewFieldPosition.L),
+				tile.Size);
+
+			return zone.Contains(location);
+		}
+
+
 		/// <summary>
 		/// Gets a decoration description
 		/// </summary>
@@ -140,7 +165,7 @@ namespace DungeonEye
 			if (deco == null)
 				return;
 
-			batch.DrawTile(Tileset, deco.GetTileId(position), deco.GetLocation(position), 
+			batch.DrawTile(Tileset, deco.GetTileId(position), deco.GetLocation(position),
 				Color.White, 0.0f,
 				deco.GetSwap(position) ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
 				0.0f);
@@ -153,7 +178,7 @@ namespace DungeonEye
 		/// <param name="batch">SpriteBatch handle</param>
 		/// <param name="point">View point</param>
 		/// <param name="position">Square position in the view field</param>
-		public void Draw(SpriteBatch batch, CardinalPoint point ,ViewFieldPosition position)
+		public void Draw(SpriteBatch batch, CardinalPoint point, ViewFieldPosition position)
 		{
 			if (batch == null || Tileset == null)
 				return;
@@ -189,7 +214,7 @@ namespace DungeonEye
 				case ViewFieldPosition.N:
 				break;
 				case ViewFieldPosition.Team:
-					
+
 				break;
 				case ViewFieldPosition.O:
 				break;
@@ -304,7 +329,11 @@ namespace DungeonEye
 		/// <summary>
 		/// Is asset disposed
 		/// </summary>
-		public bool IsDisposed { get; private set; }
+		public bool IsDisposed
+		{
+			get;
+			private set;
+		}
 
 
 		/// <summary>

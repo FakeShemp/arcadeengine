@@ -40,7 +40,8 @@ namespace DungeonEye
 		/// Cosntructor
 		/// </summary>
 		/// <param name="square">Parent square handle</param>
-		public AlcoveActor(Square square) : base(square)
+		public AlcoveActor(Square square)
+			: base(square)
 		{
 			Alcoves = new Alcove[4]
 			{
@@ -49,6 +50,7 @@ namespace DungeonEye
 				new Alcove(),
 				new Alcove(),
 			};
+			IsBlocking = true;
 		}
 
 
@@ -65,7 +67,7 @@ namespace DungeonEye
 				return;
 
 			// For each wall side, draws the decoration
-			foreach (CardinalPoint side in DisplayCoordinates.DrawingWallSides[(int)position])
+			foreach (CardinalPoint side in DisplayCoordinates.DrawingWallSides[(int) position])
 			{
 				Alcove alcove = GetAlcove(Compass.GetDirectionFromView(direction, side));
 
@@ -86,11 +88,11 @@ namespace DungeonEye
 				// Draw items in the alcove in front of the team
 				Point loc = deco.PrepareLocation(position);
 				loc.Offset(alcove.ItemLocation);
-				foreach (Item item in Square.GetAlcoveItems(direction, side))
+				foreach (Item item in Square.GetItemsFromSide(direction, side))
 				{
 					batch.DrawTile(Square.Maze.Dungeon.ItemTileSet, item.GroundTileID, loc,
-					    DisplayCoordinates.GetDistantColor(position), 0.0f,
-					    DisplayCoordinates.GetScaleFactor(position), SpriteEffects.None, 0.0f);
+						DisplayCoordinates.GetDistantColor(position), 0.0f,
+						DisplayCoordinates.GetScaleFactor(position), SpriteEffects.None, 0.0f);
 				}
 			}
 
@@ -122,6 +124,46 @@ namespace DungeonEye
 		}
 
 
+		#region Events
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="location"></param>
+		/// <param name="side"></param>
+		/// <returns></returns>
+		public override bool OnClick(Point location, CardinalPoint side)
+		{
+			// No decoration set
+			if (Square.Maze.Decoration == null)
+				return false;
+
+			// No decoration for the alcove
+			Alcove alcove = GetAlcove(side);
+			if (alcove.Decoration == -1)
+				return false;
+
+			// Point not in decoration
+			if (!Square.Maze.Decoration.IsPointInside(alcove.Decoration, location))
+				return false;
+
+			Team team = GameScreen.Team;
+			if (team.ItemInHand != null)
+			{
+				Square.DropItemFromSide(side, team.ItemInHand);
+				team.SetItemInHand(null);
+			}
+			else
+			{
+				team.SetItemInHand(Square.CollectItemFromSide(side));
+			}
+			
+
+			return true;
+		}
+
+		#endregion
+
 
 		#region I/O
 
@@ -142,7 +184,7 @@ namespace DungeonEye
 				{
 					case "side":
 					{
-						CardinalPoint dir = (CardinalPoint)Enum.Parse(typeof(CardinalPoint), node.Attributes["name"].Value);
+						CardinalPoint dir = (CardinalPoint) Enum.Parse(typeof(CardinalPoint), node.Attributes["name"].Value);
 						GetAlcove(dir).Load(node);
 					}
 					break;
@@ -173,10 +215,10 @@ namespace DungeonEye
 
 			writer.WriteStartElement(Tag);
 
-			for (int i = 0; i < 4; i++)
-			{			
+			for (int i = 0 ; i < 4 ; i++)
+			{
 				writer.WriteStartElement("side");
-				writer.WriteAttributeString("name", ((CardinalPoint)i).ToString());
+				writer.WriteAttributeString("name", ((CardinalPoint) i).ToString());
 				Alcoves[i].Save(writer);
 				writer.WriteEndElement();
 			}

@@ -372,6 +372,7 @@ namespace DungeonEye.Forms
 						}
 					}
 
+/*
 					// Alcoves or decorations
 					if (block.HasAlcoves || block.HasDecorations)
 					{
@@ -406,7 +407,7 @@ namespace DungeonEye.Forms
 							}
 						}
 					}
-
+*/
 					if (block.NoMonster)
 					{
 						SpriteBatch.FillRectangle(new Rectangle(location.X, location.Y, 25, 25), Color.FromArgb(128, Color.Blue));

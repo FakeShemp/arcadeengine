@@ -1160,7 +1160,7 @@ namespace DungeonEye
 				#region Alcove
 				if (DisplayCoordinates.Alcove.Contains(mousePos) && Team.FrontSquare.IsWall)
 				{
-					Team.SelectedHero.AddToInventory(Team.FrontSquare.CollectAlcoveItem(Team.FrontWallSide));
+					Team.SelectedHero.AddToInventory(Team.FrontSquare.CollectItemFromSide(Team.FrontWallSide));
 				}
 				#endregion
 
