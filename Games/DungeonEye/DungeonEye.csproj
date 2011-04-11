@@ -438,7 +438,8 @@
     <Compile Include="GameSettings.cs" />
     <Compile Include="Game\Decoration.cs" />
     <Compile Include="Game\GameColors.cs" />
-    <Compile Include="Game\SquareActor\Alcove.cs" />
+    <Compile Include="Game\SquareActor\AlcoveActor.cs" />
+    <Compile Include="Game\SquareActor\AlcoveDescriptor.cs" />
     <Compile Include="Game\ViewField.cs" />
     <Compile Include="Interfaces\IDoor.cs" />
     <Compile Include="Interfaces\IFloorPlate.cs" />

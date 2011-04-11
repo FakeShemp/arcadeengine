@@ -771,9 +771,9 @@ namespace DungeonEye.Forms
 			{
 				control = new TeleporterControl(Square.Actor as Teleporter, Maze.Dungeon);
 			}
-			else if (Square.Actor is Alcove)
+			else if (Square.Actor is AlcoveActor)
 			{
-				control = new AlcoveControl(Square.Actor as Alcove, Maze);
+				control = new AlcoveControl(Square.Actor as AlcoveActor, Maze);
 			}
 			else
 			{

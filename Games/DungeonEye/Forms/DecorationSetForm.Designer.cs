@@ -67,7 +67,6 @@
 			this.OpenGLBox.Size = new System.Drawing.Size(352, 240);
 			this.OpenGLBox.TabIndex = 0;
 			this.OpenGLBox.VSync = false;
-			this.OpenGLBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OpenGLBox_MouseClick);
 			this.OpenGLBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OpenGLBox_MouseMove);
 			this.OpenGLBox.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.OpenGLBox_PreviewKeyDown);
 			// 

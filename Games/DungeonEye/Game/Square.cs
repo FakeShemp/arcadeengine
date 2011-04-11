@@ -831,11 +831,11 @@ namespace DungeonEye
 					}
 					break;
 
-					case Alcove.Tag:
+					case AlcoveActor.Tag:
 					{
 						//CardinalPoint side = (CardinalPoint)Enum.Parse(typeof(CardinalPoint), node.Attributes["side"].Value);
 						//SetAlcove(side, true);
-						Actor = new Alcove(this);
+						Actor = new AlcoveActor(this);
 						Actor.Load(node);
 					}
 					break;

@@ -516,20 +516,6 @@ namespace DungeonEye.Forms
 		}
 
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OpenGLBox_MouseClick(object sender, MouseEventArgs e)
-		{
-			if (e.Delta != 0)
-			{
-
-			}
-
-		}
-
 		#endregion
 
 

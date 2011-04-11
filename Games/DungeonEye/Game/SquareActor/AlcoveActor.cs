@@ -31,16 +31,16 @@ namespace DungeonEye
 {
 
 	/// <summary>
-	/// Alcove on walls
+	/// Actor containing alcoves
 	/// </summary>
-	public class Alcove : SquareActor
+	public class AlcoveActor : SquareActor
 	{
 
 		/// <summary>
 		/// Cosntructor
 		/// </summary>
 		/// <param name="square">Parent square handle</param>
-		public Alcove(Square square) : base(square)
+		public AlcoveActor(Square square) : base(square)
 		{
 			Decorations = new int[4] { -1, -1, -1, -1 };
 			ShowItems = new bool[4];
@@ -250,6 +250,18 @@ namespace DungeonEye
 		/// Display items in the alcove
 		/// </summary>
 		bool[] ShowItems;
+
+
+		/// <summary>
+		/// Items locations
+		/// </summary>
+		Point[] Locations;
+
+
+		/// <summary>
+		/// Accept big items
+		/// </summary>
+		bool[] AcceptBigItems;
 
 		#endregion
 	}

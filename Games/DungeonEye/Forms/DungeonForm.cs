@@ -964,7 +964,7 @@ namespace DungeonEye.Forms
 				}
 				else if (AlcoveBox.Checked)
 				{
-					square.Actor = new Alcove(square);
+					square.Actor = new AlcoveActor(square);
 					EditSquare(square, true);
 					UncheckButtons(null);
 				}

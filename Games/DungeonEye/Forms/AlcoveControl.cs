@@ -44,7 +44,7 @@ namespace DungeonEye.Forms
 		/// </summary>
 		/// <param name="alcove">Alcove handle</param>
 		/// <param name="maze">Maze handle</param>
-		public AlcoveControl(Alcove alcove, Maze maze)
+		public AlcoveControl(AlcoveActor alcove, Maze maze)
 		{
 			if (alcove == null || maze == null)
 				throw new ArgumentNullException("[AlcoveControl] : Alcove handle or Maze handle is null !!!");
@@ -162,7 +162,7 @@ namespace DungeonEye.Forms
 
 			Batch = new SpriteBatch();
 
-			
+
 		}
 
 
@@ -177,10 +177,45 @@ namespace DungeonEye.Forms
 		}
 
 
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void GLControl_MouseMove(object sender, MouseEventArgs e)
+		{
+
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void GLControl_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+		{
+
+		}
+
+
 		#endregion
 
 
 		#region Form events
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ItemIdBox_ValueChanged(object sender, EventArgs e)
+		{
+
+		}
+
 
 		/// <summary>
 		/// 
@@ -232,7 +267,7 @@ namespace DungeonEye.Forms
 		{
 			if (Alcove == null)
 				return;
-			
+
 			Alcove.HideItem(Face, false);
 			DecorationBox.Value = -1;
 			UpdateUI();
@@ -249,7 +284,7 @@ namespace DungeonEye.Forms
 			if (Alcove == null)
 				return;
 
-			Alcove.SetSideTile(Face, (int)DecorationBox.Value);
+			Alcove.SetSideTile(Face, (int) DecorationBox.Value);
 			RenderScene();
 			UpdateUI();
 		}
@@ -264,7 +299,17 @@ namespace DungeonEye.Forms
 		{
 			ChangeSide(direction);
 		}
-	
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void AcceptBigItemsBox_CheckedChanged(object sender, EventArgs e)
+		{
+
+		}
 
 
 		#endregion
@@ -275,7 +320,7 @@ namespace DungeonEye.Forms
 		/// <summary>
 		/// Alcove
 		/// </summary>
-		Alcove Alcove;
+		AlcoveActor Alcove;
 
 
 		/// <summary>
@@ -297,8 +342,6 @@ namespace DungeonEye.Forms
 
 
 		#endregion
-
-
 
 	}
 }
