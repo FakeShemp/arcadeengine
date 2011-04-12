@@ -58,6 +58,11 @@ namespace ArcEngine.Editor
 			GLTextureControl.MouseWheel += new MouseEventHandler(GLTextureControl_MouseWheel);
 
 
+			SurroundTileColor = Color.Yellow;
+			SurroundColorBox.BackColor = SurroundTileColor;
+
+			EdgeDetectColor = Color.Red;
+			ColorPanelBox.BackColor = EdgeDetectColor;
 
 			// Set zoom value
 			ZoomBox.SelectedIndex = 0;
@@ -98,9 +103,8 @@ namespace ArcEngine.Editor
 		/// Detect edges of a tile
 		/// </summary>
 		/// <param name="start">Location</param>
-		/// <param name="border">Border color</param>
 		/// <returns></returns>
-		private Rectangle DetectTileEdges(Point start, Color border)
+		private Rectangle DetectTileEdges(Point start)
 		{
 			Cursor cursor = Cursor;
 			Cursor = Cursors.WaitCursor;
@@ -114,7 +118,7 @@ namespace ArcEngine.Editor
 			// Find left border
 			while (bound.X > 0)
 			{
-				if (colors[bound.X - 1, bound.Y] == border)
+				if (colors[bound.X - 1, bound.Y] == EdgeDetectColor)
 					break;
 				bound.X--;
 			}
@@ -122,7 +126,7 @@ namespace ArcEngine.Editor
 			// Find top
 			while (bound.Y > 0)
 			{
-				if (colors[bound.X, bound.Y - 1] == border)
+				if (colors[bound.X, bound.Y - 1] == EdgeDetectColor)
 					break;
 				bound.Y--;
 			}
@@ -130,7 +134,7 @@ namespace ArcEngine.Editor
 			// Find right
 			while (bound.Right < TileSet.Texture.Size.Width - 1)
 			{
-				if (colors[bound.Right + 1, bound.Bottom] == border)
+				if (colors[bound.Right + 1, bound.Bottom] == EdgeDetectColor)
 					break;
 
 				bound.Width++;
@@ -139,7 +143,7 @@ namespace ArcEngine.Editor
 			// Find bottom
 			while (bound.Bottom < TileSet.Texture.Size.Height - 1)
 			{
-				if (colors[bound.Right, bound.Bottom + 1] == border)
+				if (colors[bound.Right, bound.Bottom + 1] == EdgeDetectColor)
 					break;
 
 				bound.Height++;
@@ -208,6 +212,7 @@ namespace ArcEngine.Editor
 		/// <param name="e"></param>
 		void GLTextureControl_MouseWheel(object sender, MouseEventArgs e)
 		{
+
 			if (e.Delta > 0)
 			{
 				ZoomInButton.PerformClick();
@@ -216,6 +221,18 @@ namespace ArcEngine.Editor
 			{
 				ZoomOutButton.PerformClick();
 			}
+
+
+
+			Point loc = e.Location;
+			int zoomvalue = int.Parse((string) ZoomBox.SelectedItem);
+			Point point = new Point(((e.Location.X - TextureOffset.X) / zoomvalue) - loc.X,
+				(int) ((e.Location.Y - TextureOffset.Y) / zoomvalue) - loc.Y);
+
+			Point point2 = new Point(((e.Location.X - TextureOffset.X) / zoomvalue),
+				(int) ((e.Location.Y - TextureOffset.Y) / zoomvalue));
+
+//			TextureOffset.Offset(point);
 		}
 
 
@@ -242,9 +259,8 @@ namespace ArcEngine.Editor
 			Batch.Draw(CheckerBoard, dst, dst, Color.White);
 
 
-			// Get zoom value
-			float zoomvalue = float.Parse((string)ZoomBox.SelectedItem);
 
+			float ZoomFactor = float.Parse((string) ZoomBox.SelectedItem);
 
 			if (TileSet.Texture != null)
 			{
@@ -253,8 +269,8 @@ namespace ArcEngine.Editor
 				Vector4 zoom = new Vector4(
 				TextureOffset.X,
 				TextureOffset.Y,
-				TileSet.Texture.Bounds.Width * zoomvalue,
-				TileSet.Texture.Bounds.Height * zoomvalue);
+				TileSet.Texture.Bounds.Width * ZoomFactor,
+				TileSet.Texture.Bounds.Height * ZoomFactor);
 
 				Vector4 src = new Vector4(0.0f, 0.0f, TileSet.Texture.Size.Width, TileSet.Texture.Size.Height);
 
@@ -262,21 +278,21 @@ namespace ArcEngine.Editor
 
 
 
-				// If we have some tiles to draw
-				//	if (TileSet.Count != 0)
+				// Draw the selection box with sizing handles
+				if (CurrentTile != null)
 				{
-					// Draw the selection box with sizing handles
-					if (CurrentTile != null)
-					{
-						SelectionTool.Zoom = zoomvalue;
-						SelectionTool.Offset = TextureOffset;
-						CurrentTile.Rectangle = SelectionTool.Rectangle;
-						SelectionTool.Draw(Batch);
-					}
-
+					SelectionTool.Zoom = ZoomFactor;
+					SelectionTool.Offset = TextureOffset;
+					CurrentTile.Rectangle = SelectionTool.Rectangle;
+					SelectionTool.Draw(Batch);
 				}
 
-				// Suround all tiles
+			}
+
+			// Suround all tiles
+			if (SurroundTilesBox.Checked)
+			{
+
 				foreach (int id in TileSet.Tiles)
 				{
 					Tile tile = TileSet.GetTile(id);
@@ -284,20 +300,20 @@ namespace ArcEngine.Editor
 						continue;
 
 					Rectangle rect = new Rectangle(
-						tile.Rectangle.X * (int)zoomvalue + TextureOffset.X,
-						tile.Rectangle.Y * (int)zoomvalue + TextureOffset.Y,
-						tile.Rectangle.Width * (int)zoomvalue,
-						tile.Rectangle.Height * (int)zoomvalue);
+						tile.Rectangle.X * (int) ZoomFactor + TextureOffset.X,
+						tile.Rectangle.Y * (int) ZoomFactor + TextureOffset.Y,
+						tile.Rectangle.Width * (int) ZoomFactor,
+						tile.Rectangle.Height * (int) ZoomFactor);
 
-					Batch.DrawRectangle(rect, Color.Red);
+					Batch.DrawRectangle(rect, SurroundTileColor);
+
+					Batch.DrawString(BMFont, rect.Location, SurroundTileColor, id.ToString());
 				}
-
 			}
 
 
+
 			Batch.End();
-
-
 			GLTextureControl.SwapBuffers();
 		}
 
@@ -342,8 +358,8 @@ namespace ArcEngine.Editor
 				SelectionTool.OnMouseMove(e);
 
 			// Prints the location of the mouse
-			int zoomvalue = int.Parse((string)ZoomBox.SelectedItem);
-			PositionLabel.Text = (int)((e.Location.X - TextureOffset.X) / zoomvalue) + "," + (int)((e.Location.Y - TextureOffset.Y) / zoomvalue);
+			int zoomvalue = int.Parse((string) ZoomBox.SelectedItem);
+			PositionLabel.Text = (int) ((e.Location.X - TextureOffset.X) / zoomvalue) + "," + (int) ((e.Location.Y - TextureOffset.Y) / zoomvalue);
 			SizeLabel.Text = SelectionTool.Rectangle.Width + "," + SelectionTool.Rectangle.Height;
 
 
@@ -374,7 +390,7 @@ namespace ArcEngine.Editor
 		/// <param name="e"></param>
 		private void GLTextureControl_MouseDown(object sender, MouseEventArgs e)
 		{
-			int zoomvalue = int.Parse((string)ZoomBox.SelectedItem);
+			int zoomvalue = int.Parse((string) ZoomBox.SelectedItem);
 			Point position = new Point((e.Location.X - TextureOffset.X) / zoomvalue, (e.Location.Y - TextureOffset.Y) / zoomvalue);
 
 			#region Left
@@ -384,7 +400,7 @@ namespace ArcEngine.Editor
 				if ((Control.ModifierKeys & Keys.Control) == Keys.Control)
 				{
 					// Get the tile under the cursor
-					foreach(int id in TileSet.Tiles)
+					foreach (int id in TileSet.Tiles)
 					{
 						Tile tile = TileSet.GetTile(id);
 						if (tile != null && tile.Rectangle.Contains(position))
@@ -406,7 +422,7 @@ namespace ArcEngine.Editor
 						// No tile, so create one
 						if (CurrentTile == null)
 						{
-							SetCurrentTile(TileSet.AddTile((int)TileIDBox.Value));
+							SetCurrentTile(TileSet.AddTile((int) TileIDBox.Value));
 						}
 
 						SelectionTool.Rectangle = new Rectangle(position, Size.Empty);
@@ -446,7 +462,7 @@ namespace ArcEngine.Editor
 						(int) ((e.Location.X - TextureOffset.X) / zoomvalue),
 						(int) ((e.Location.Y - TextureOffset.Y) / zoomvalue));
 
-					SelectionTool.Rectangle = DetectTileEdges(start, Color.FromArgb(255, 255, 0, 0));
+					SelectionTool.Rectangle = DetectTileEdges(start);
 				}
 			}
 
@@ -478,89 +494,62 @@ namespace ArcEngine.Editor
 			switch (e.KeyData)
 			{
 				case Keys.Up:
-					{
-						if (e.Shift)
-							SelectionTool.Rectangle.Height--;
-						else
-							SelectionTool.Rectangle.Y--;
-					}
-					break;
+				{
+					if (e.Shift)
+						SelectionTool.Rectangle.Height--;
+					else
+						SelectionTool.Rectangle.Y--;
+				}
+				break;
 				case Keys.Down:
-					{
-						if (e.Shift)
-							SelectionTool.Rectangle.Height++;
-						else
-							SelectionTool.Rectangle.Y++;
-					}
-					break;
+				{
+					if (e.Shift)
+						SelectionTool.Rectangle.Height++;
+					else
+						SelectionTool.Rectangle.Y++;
+				}
+				break;
 				case Keys.Left:
-					{
-						if (e.Shift)
-							SelectionTool.Rectangle.Width--;
-						else
-							SelectionTool.Rectangle.X--;
-					}
-					break;
+				{
+					if (e.Shift)
+						SelectionTool.Rectangle.Width--;
+					else
+						SelectionTool.Rectangle.X--;
+				}
+				break;
 				case Keys.Right:
-					{
-						if (e.Shift)
-							SelectionTool.Rectangle.Width++;
-						else
-							SelectionTool.Rectangle.X++;
-					}
-					break;
+				{
+					if (e.Shift)
+						SelectionTool.Rectangle.Width++;
+					else
+						SelectionTool.Rectangle.X++;
+				}
+				break;
 
 				// Previous tile
 				case Keys.PageUp:
-					{
-						TileIDBox.Value = Math.Max(TileIDBox.Value - 1, 0);
-					}
-					break;
+				{
+					TileIDBox.Value = Math.Max(TileIDBox.Value - 1, 0);
+				}
+				break;
 
 				// Next tile
 				case Keys.PageDown:
-					{
-						TileIDBox.Value = Math.Min(TileIDBox.Value + 1, TileIDBox.Maximum);
-					}
-					break;
+				{
+					TileIDBox.Value = Math.Min(TileIDBox.Value + 1, TileIDBox.Maximum);
+				}
+				break;
 
 				// Remove current tile
 				case Keys.Delete:
 				{
-					RemoveTile((int)TileIDBox.Value);
+					RemoveTile((int) TileIDBox.Value);
 				}
 				break;
 			}
 
 			e.IsInputKey = true;
 		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void GLTextureControl_MouseClick(object sender, MouseEventArgs e)
-		{
-			//// Auto detect tile border
-			//if ((e.Button & MouseButtons.Right) == MouseButtons.Right && SelectionBox.Checked)
-			//{
-			//    // No texture
-			//    if (TileSet.Texture == null)
-			//        return;
-				
-				
-			//    int zoomvalue = int.Parse((string) ZoomBox.SelectedItem);
-			//    Point start = new Point(
-			//        (int) ((e.Location.X - TextureOffset.X) / zoomvalue),
-			//        (int) ((e.Location.Y - TextureOffset.Y) / zoomvalue));
-
-			//    SelectionTool.Rectangle = DetectTileEdges(start, Color.FromArgb(255, 255, 0, 0));
-			//}
-		}
-
-
 
 
 		#endregion
@@ -606,7 +595,7 @@ namespace ArcEngine.Editor
 		/// <param name="e"></param>
 		private void GLTileControl_Paint(object sender, PaintEventArgs e)
 		{
-			
+
 			GLTileControl.MakeCurrent();
 			Display.ClearBuffers();
 
@@ -617,15 +606,15 @@ namespace ArcEngine.Editor
 			// Background texture
 			Rectangle dst = new Rectangle(Point.Empty, GLTileControl.Size);
 			Batch.Draw(CheckerBoard, dst, dst, Color.White);
-		
 
-		//	CurrentTile = tileSet.GetTile((int)TileIDBox.Value);
+
+			//	CurrentTile = tileSet.GetTile((int)TileIDBox.Value);
 
 			// No tiles, no draw !
 			if (CurrentTile != null)
 			{
 				// Get zoom value
-				float zoomvalue = float.Parse((string)ZoomBox.SelectedItem);
+				float zoomvalue = float.Parse((string) ZoomBox.SelectedItem);
 
 				// Draw the tile
 				Vector4 zoom = new Vector4();
@@ -655,10 +644,10 @@ namespace ArcEngine.Editor
 				if (HotSpotBox.Checked)
 				{
 					Point pos = Point.Empty;
-					pos.X = (int)(CurrentTile.Origin.X * zoomvalue + TileOffset.X);
-					pos.Y = (int)(CurrentTile.Origin.Y * zoomvalue + TileOffset.Y);
+					pos.X = (int) (CurrentTile.Origin.X * zoomvalue + TileOffset.X);
+					pos.Y = (int) (CurrentTile.Origin.Y * zoomvalue + TileOffset.Y);
 
-					Rectangle rect = new Rectangle(pos, new Size((int)zoomvalue, (int)zoomvalue));
+					Rectangle rect = new Rectangle(pos, new Size((int) zoomvalue, (int) zoomvalue));
 					Batch.DrawRectangle(rect, Color.Red);
 
 				}
@@ -694,8 +683,8 @@ namespace ArcEngine.Editor
 
 			// Prints the location of the mouse
 			//int zoomvalue = Int32.Parse((string)ZoomBox.SelectedItem) / 100;
-			int zoomvalue = int.Parse((string)ZoomBox.SelectedItem);
-			PositionLabel.Text = (int)((e.Location.X - TileOffset.X) / zoomvalue) + "," + (int)((e.Location.Y - TileOffset.Y) / zoomvalue);
+			int zoomvalue = int.Parse((string) ZoomBox.SelectedItem);
+			PositionLabel.Text = (int) ((e.Location.X - TileOffset.X) / zoomvalue) + "," + (int) ((e.Location.Y - TileOffset.Y) / zoomvalue);
 
 			// Prints the size of the current tile
 			SizeLabel.Text = CollisionSelection.Rectangle.Width + "," + CollisionSelection.Rectangle.Height;
@@ -737,7 +726,7 @@ namespace ArcEngine.Editor
 				e.Button == MouseButtons.Left &&
 				ColisionBox.Checked)
 			{
-				int zoomvalue = Int32.Parse((string)ZoomBox.SelectedItem);
+				int zoomvalue = Int32.Parse((string) ZoomBox.SelectedItem);
 
 				CollisionSelection.Rectangle.X = (e.Location.X - TileOffset.X) / zoomvalue;
 				CollisionSelection.Rectangle.Y = (e.Location.Y - TileOffset.Y) / zoomvalue;
@@ -759,7 +748,7 @@ namespace ArcEngine.Editor
 				if (CurrentTile != null)
 				{
 					// Get zoom value
-					int zoomvalue = Int32.Parse((string)ZoomBox.SelectedItem);
+					int zoomvalue = Int32.Parse((string) ZoomBox.SelectedItem);
 
 					Point pos = Point.Empty;
 					pos.X = (e.Location.X - TileOffset.X) / zoomvalue;
@@ -794,6 +783,39 @@ namespace ArcEngine.Editor
 
 		#region Form events
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void button1_Click(object sender, EventArgs e)
+		{
+			ColorDialogBox.Color = EdgeDetectColor;
+
+			if (ColorDialogBox.ShowDialog() != DialogResult.OK)
+				return;
+
+			EdgeDetectColor = ColorDialogBox.Color;
+			ColorPanelBox.BackColor = EdgeDetectColor;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void SurroundTileColorBox_Click(object sender, EventArgs e)
+		{
+			ColorDialogBox.Color = SurroundTileColor;
+
+			if (ColorDialogBox.ShowDialog() != DialogResult.OK)
+				return;
+
+			SurroundTileColor = ColorDialogBox.Color;
+			SurroundColorBox.BackColor = SurroundTileColor;
+
+		}
 
 		/// <summary>
 		/// 
@@ -844,7 +866,7 @@ namespace ArcEngine.Editor
 
 			TextureNameBox.Text = TileSet.TextureName;
 
-			BMFont = BitmapFont.CreateFromTTF(@"c:\windows\fonts\verdana.ttf", 14, FontStyle.Regular);
+			BMFont = BitmapFont.CreateFromTTF(@"c:\windows\fonts\verdana.ttf", 12, FontStyle.Bold);
 		}
 
 
@@ -900,7 +922,7 @@ namespace ArcEngine.Editor
 				return;
 
 
-			SetCurrentTile(TileSet.GetTile((int)TileIDBox.Value));
+			SetCurrentTile(TileSet.GetTile((int) TileIDBox.Value));
 		}
 
 
@@ -914,7 +936,6 @@ namespace ArcEngine.Editor
 			int index = ZoomBox.SelectedIndex + 1;
 			if (index >= ZoomBox.Items.Count)
 				return;
-
 			ZoomBox.SelectedIndex = index;
 		}
 
@@ -941,7 +962,7 @@ namespace ArcEngine.Editor
 		/// <param name="e"></param>
 		private void EraseTileButton_Click(object sender, EventArgs e)
 		{
-			RemoveTile((int)TileIDBox.Value);
+			RemoveTile((int) TileIDBox.Value);
 		}
 
 
@@ -1055,6 +1076,18 @@ namespace ArcEngine.Editor
 		/// 
 		/// </summary>
 		BitmapFont BMFont;
+
+
+		/// <summary>
+		/// Color for auto edge detect
+		/// </summary>
+		Color EdgeDetectColor;
+
+
+		/// <summary>
+		/// Color for surrounding tiles
+		/// </summary>
+		Color SurroundTileColor;
 
 		#endregion
 	}

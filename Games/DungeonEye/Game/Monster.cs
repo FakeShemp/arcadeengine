@@ -60,6 +60,7 @@ namespace DungeonEye
 			if (maze != null)
 			{
 				//Location = new DungeonLocation(maze.Dungeon);
+				Trace.WriteLine("[Monster] Monster() : maze == NULL !!!");
 			}
 
 			ItemsInPocket = new List<string>();

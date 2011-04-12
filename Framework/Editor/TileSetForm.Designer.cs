@@ -60,12 +60,20 @@
 			this.RenderTimer = new System.Windows.Forms.Timer(this.components);
 			this.GLTextureControl = new OpenTK.GLControl();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.SurroundTileColorBox = new System.Windows.Forms.Button();
+			this.SurroundColorBox = new System.Windows.Forms.Panel();
+			this.ColorPanelBox = new System.Windows.Forms.Panel();
+			this.button1 = new System.Windows.Forms.Button();
+			this.SurroundTilesBox = new System.Windows.Forms.CheckBox();
+			this.ColorDialogBox = new System.Windows.Forms.ColorDialog();
 			this.TileGroupBox.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
 			this.TextureToolStrip.SuspendLayout();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
 			this.splitContainer1.SuspendLayout();
+			this.groupBox1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// TileGroupBox
@@ -78,7 +86,7 @@
 			this.TileGroupBox.Controls.Add(this.TilePropertyGrid);
 			this.TileGroupBox.Location = new System.Drawing.Point(3, 1);
 			this.TileGroupBox.Name = "TileGroupBox";
-			this.TileGroupBox.Size = new System.Drawing.Size(1152, 370);
+			this.TileGroupBox.Size = new System.Drawing.Size(1152, 162);
 			this.TileGroupBox.TabIndex = 9;
 			this.TileGroupBox.TabStop = false;
 			this.TileGroupBox.Text = "Tile :";
@@ -89,9 +97,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.GLTileControl.BackColor = System.Drawing.Color.Black;
-			this.GLTileControl.Location = new System.Drawing.Point(179, 19);
+			this.GLTileControl.Location = new System.Drawing.Point(179, 2);
 			this.GLTileControl.Name = "GLTileControl";
-			this.GLTileControl.Size = new System.Drawing.Size(967, 345);
+			this.GLTileControl.Size = new System.Drawing.Size(967, 154);
 			this.GLTileControl.TabIndex = 15;
 			this.GLTileControl.VSync = false;
 			this.GLTileControl.Paint += new System.Windows.Forms.PaintEventHandler(this.GLTileControl_Paint);
@@ -194,7 +202,7 @@
             | System.Windows.Forms.AnchorStyles.Left)));
 			this.TilePropertyGrid.Location = new System.Drawing.Point(12, 44);
 			this.TilePropertyGrid.Name = "TilePropertyGrid";
-			this.TilePropertyGrid.Size = new System.Drawing.Size(161, 320);
+			this.TilePropertyGrid.Size = new System.Drawing.Size(161, 112);
 			this.TilePropertyGrid.TabIndex = 2;
 			this.TilePropertyGrid.ToolbarVisible = false;
 			// 
@@ -204,16 +212,16 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.VertScroller.Location = new System.Drawing.Point(1138, 0);
 			this.VertScroller.Name = "VertScroller";
-			this.VertScroller.Size = new System.Drawing.Size(17, 221);
+			this.VertScroller.Size = new System.Drawing.Size(17, 429);
 			this.VertScroller.TabIndex = 13;
 			// 
 			// HScroller
 			// 
 			this.HScroller.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.HScroller.Location = new System.Drawing.Point(0, 221);
+			this.HScroller.Location = new System.Drawing.Point(182, 429);
 			this.HScroller.Name = "HScroller";
-			this.HScroller.Size = new System.Drawing.Size(1139, 17);
+			this.HScroller.Size = new System.Drawing.Size(957, 17);
 			this.HScroller.TabIndex = 12;
 			// 
 			// TextureToolStrip
@@ -379,13 +387,12 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.GLTextureControl.BackColor = System.Drawing.Color.Black;
-			this.GLTextureControl.Location = new System.Drawing.Point(0, 0);
+			this.GLTextureControl.Location = new System.Drawing.Point(182, 0);
 			this.GLTextureControl.Name = "GLTextureControl";
-			this.GLTextureControl.Size = new System.Drawing.Size(1135, 220);
+			this.GLTextureControl.Size = new System.Drawing.Size(953, 428);
 			this.GLTextureControl.TabIndex = 16;
 			this.GLTextureControl.VSync = false;
 			this.GLTextureControl.Paint += new System.Windows.Forms.PaintEventHandler(this.GLTextureControl_Paint);
-			this.GLTextureControl.MouseClick += new System.Windows.Forms.MouseEventHandler(this.GLTextureControl_MouseClick);
 			this.GLTextureControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.GLTextureControl_MouseDown);
 			this.GLTextureControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GLTextureControl_MouseMove);
 			this.GLTextureControl.MouseUp += new System.Windows.Forms.MouseEventHandler(this.GLTextureControl_MouseUp);
@@ -401,6 +408,7 @@
 			// 
 			// splitContainer1.Panel1
 			// 
+			this.splitContainer1.Panel1.Controls.Add(this.groupBox1);
 			this.splitContainer1.Panel1.Controls.Add(this.GLTextureControl);
 			this.splitContainer1.Panel1.Controls.Add(this.VertScroller);
 			this.splitContainer1.Panel1.Controls.Add(this.HScroller);
@@ -409,8 +417,77 @@
 			// 
 			this.splitContainer1.Panel2.Controls.Add(this.TileGroupBox);
 			this.splitContainer1.Size = new System.Drawing.Size(1162, 622);
-			this.splitContainer1.SplitterDistance = 242;
+			this.splitContainer1.SplitterDistance = 450;
 			this.splitContainer1.TabIndex = 17;
+			// 
+			// groupBox1
+			// 
+			this.groupBox1.Controls.Add(this.SurroundTileColorBox);
+			this.groupBox1.Controls.Add(this.SurroundColorBox);
+			this.groupBox1.Controls.Add(this.ColorPanelBox);
+			this.groupBox1.Controls.Add(this.button1);
+			this.groupBox1.Controls.Add(this.SurroundTilesBox);
+			this.groupBox1.Location = new System.Drawing.Point(3, 3);
+			this.groupBox1.Name = "groupBox1";
+			this.groupBox1.Size = new System.Drawing.Size(173, 443);
+			this.groupBox1.TabIndex = 17;
+			this.groupBox1.TabStop = false;
+			this.groupBox1.Text = "Properties";
+			// 
+			// SurroundTileColorBox
+			// 
+			this.SurroundTileColorBox.AutoSize = true;
+			this.SurroundTileColorBox.Image = ((System.Drawing.Image)(resources.GetObject("SurroundTileColorBox.Image")));
+			this.SurroundTileColorBox.Location = new System.Drawing.Point(105, 15);
+			this.SurroundTileColorBox.Name = "SurroundTileColorBox";
+			this.SurroundTileColorBox.Size = new System.Drawing.Size(33, 23);
+			this.SurroundTileColorBox.TabIndex = 3;
+			this.SurroundTileColorBox.UseVisualStyleBackColor = true;
+			this.SurroundTileColorBox.Click += new System.EventHandler(this.SurroundTileColorBox_Click);
+			// 
+			// SurroundColorBox
+			// 
+			this.SurroundColorBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.SurroundColorBox.Location = new System.Drawing.Point(144, 15);
+			this.SurroundColorBox.Name = "SurroundColorBox";
+			this.SurroundColorBox.Size = new System.Drawing.Size(23, 23);
+			this.SurroundColorBox.TabIndex = 2;
+			// 
+			// ColorPanelBox
+			// 
+			this.ColorPanelBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.ColorPanelBox.Location = new System.Drawing.Point(144, 44);
+			this.ColorPanelBox.Name = "ColorPanelBox";
+			this.ColorPanelBox.Size = new System.Drawing.Size(23, 23);
+			this.ColorPanelBox.TabIndex = 2;
+			// 
+			// button1
+			// 
+			this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
+			this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.button1.Location = new System.Drawing.Point(9, 44);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(129, 23);
+			this.button1.TabIndex = 1;
+			this.button1.Text = "Change edge color";
+			this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.button1.UseVisualStyleBackColor = true;
+			this.button1.Click += new System.EventHandler(this.button1_Click);
+			// 
+			// SurroundTilesBox
+			// 
+			this.SurroundTilesBox.AutoSize = true;
+			this.SurroundTilesBox.Location = new System.Drawing.Point(9, 19);
+			this.SurroundTilesBox.Name = "SurroundTilesBox";
+			this.SurroundTilesBox.Size = new System.Drawing.Size(87, 17);
+			this.SurroundTilesBox.TabIndex = 0;
+			this.SurroundTilesBox.Text = "Tile surround";
+			this.SurroundTilesBox.UseVisualStyleBackColor = true;
+			// 
+			// ColorDialogBox
+			// 
+			this.ColorDialogBox.AnyColor = true;
+			this.ColorDialogBox.FullOpen = true;
 			// 
 			// TileSetForm
 			// 
@@ -431,6 +508,8 @@
 			this.splitContainer1.Panel1.ResumeLayout(false);
 			this.splitContainer1.Panel2.ResumeLayout(false);
 			this.splitContainer1.ResumeLayout(false);
+			this.groupBox1.ResumeLayout(false);
+			this.groupBox1.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -467,5 +546,12 @@
 		private System.Windows.Forms.ToolStripButton ChangeTextureBox;
 		private System.Windows.Forms.ToolStripButton AutoDetectBox;
 		private System.Windows.Forms.SplitContainer splitContainer1;
+		private System.Windows.Forms.GroupBox groupBox1;
+		private System.Windows.Forms.Panel ColorPanelBox;
+		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.CheckBox SurroundTilesBox;
+		private System.Windows.Forms.ColorDialog ColorDialogBox;
+		private System.Windows.Forms.Button SurroundTileColorBox;
+		private System.Windows.Forms.Panel SurroundColorBox;
 	}
 }

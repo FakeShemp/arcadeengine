@@ -59,7 +59,7 @@ namespace DungeonEye
 			if (Dungeon != null)
 				Dungeon.Dispose();
 
-			Dungeon = ResourceManager.CreateAsset<Dungeon>("Eye");
+			Dungeon = ResourceManager.CreateAsset<Dungeon>("EOB_2");
 			if (Dungeon == null)
 			{
 				Trace.WriteLine("[Team]Init(): Failed to create default dungeon !");

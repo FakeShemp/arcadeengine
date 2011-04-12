@@ -45,11 +45,7 @@ namespace DungeonEye
 		public GameScreen()
 		{
 			SpellBook = new SpellBook();
-
 			Team = new Team();
-
-			int c = Kinect.Count;
-
 		}
 
 
