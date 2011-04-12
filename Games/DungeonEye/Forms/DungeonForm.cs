@@ -1075,6 +1075,9 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void RemoveMazeButton_Click(object sender, EventArgs e)
 		{
+			if (MessageBox.Show("Delete current maze ?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+				return;
+
 			Dungeon.RemoveMaze(MazeListBox.SelectedItem.ToString());
 			RebuildMazeList();
 
