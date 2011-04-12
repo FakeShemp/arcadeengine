@@ -43,6 +43,7 @@ namespace ArcEngine.Forms
 			InitializeComponent();
 
 			StorageBox.DataSource = ResourceManager.Storages;
+			FilesBox.Focus();
 		}
 
 

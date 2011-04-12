@@ -27,16 +27,17 @@ using WeifenLuo.WinFormsUI.Docking;
 namespace ArcEngine.Editor
 {
 	/// <summary>
-	/// 
+	/// Creates a new asset wizard
 	/// </summary>
 	internal partial class WizardForm : Form
 	{
 
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
-		/// <param name="dockpanel"></param>
-		public WizardForm(DockPanel dockpanel)
+		/// <param name="dockpanel">Parent dockpanel handle</param>
+		/// <param name="type">Type's name</param>
+		public WizardForm(DockPanel dockpanel, string type)
 		{
 			Dockpanel = dockpanel;
 
@@ -46,13 +47,17 @@ namespace ArcEngine.Editor
 			// Collect all asset type
 			TypesBox.SuspendLayout();
 			TypesBox.Items.Clear();
-			//foreach (Provider provider in ResourceManager.Providers)
+
+			//foreach (Type type in provider.Assets)
+			foreach (RegisteredAsset ra in ResourceManager.RegisteredAssets)
 			{
-				//foreach (Type type in provider.Assets)
-				foreach(RegisteredAsset ra in ResourceManager.RegisteredAssets)
-				{
-					TypesBox.Items.Add(ra.Tag);
-				}
+				TypesBox.Items.Add(ra.Tag);
+			}
+
+			if (!string.IsNullOrEmpty(type))
+			{
+				if (TypesBox.Items.Contains(type))
+					TypesBox.SelectedItem = type;
 			}
 
 			TypesBox.ResumeLayout();
@@ -70,7 +75,7 @@ namespace ArcEngine.Editor
 			if (DialogResult != DialogResult.OK)
 				return;
 
-			
+
 			// Invalid name
 			if (string.IsNullOrEmpty(NameBox.Text))
 			{
@@ -80,7 +85,7 @@ namespace ArcEngine.Editor
 			}
 
 
-			
+
 			// Create the asset
 			//foreach (Provider provider in ResourceManager.Providers)
 			{

@@ -38,7 +38,8 @@
 			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
 			this.RemoveMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.TypeContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-			this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.ClearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.AddToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.AssetContextMenu.SuspendLayout();
 			this.TypeContextMenu.SuspendLayout();
 			this.SuspendLayout();
@@ -116,7 +117,7 @@
             this.RemoveMenuItem});
 			this.AssetContextMenu.Name = "BankcontextMenu";
 			this.AssetContextMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-			this.AssetContextMenu.Size = new System.Drawing.Size(153, 98);
+			this.AssetContextMenu.Size = new System.Drawing.Size(118, 76);
 			this.AssetContextMenu.Text = "Resource";
 			// 
 			// CloneMenuItem
@@ -142,22 +143,31 @@
 			// 
 			this.RemoveMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("RemoveMenuItem.Image")));
 			this.RemoveMenuItem.Name = "RemoveMenuItem";
-			this.RemoveMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.RemoveMenuItem.Size = new System.Drawing.Size(117, 22);
 			this.RemoveMenuItem.Text = "Remove";
 			this.RemoveMenuItem.Click += new System.EventHandler(this.EraseMenu_Click);
 			// 
 			// TypeContextMenu
 			// 
 			this.TypeContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.clearToolStripMenuItem});
+            this.AddToolStripMenuItem,
+            this.ClearToolStripMenuItem});
 			this.TypeContextMenu.Name = "TypeContextMenu";
-			this.TypeContextMenu.Size = new System.Drawing.Size(153, 48);
+			this.TypeContextMenu.Size = new System.Drawing.Size(153, 70);
 			// 
-			// clearToolStripMenuItem
+			// ClearToolStripMenuItem
 			// 
-			this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
-			this.clearToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.clearToolStripMenuItem.Text = "Clear";
+			this.ClearToolStripMenuItem.Name = "ClearToolStripMenuItem";
+			this.ClearToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.ClearToolStripMenuItem.Text = "Clear";
+			this.ClearToolStripMenuItem.Click += new System.EventHandler(this.ClearToolStripMenuItem_Click);
+			// 
+			// AddToolStripMenuItem
+			// 
+			this.AddToolStripMenuItem.Name = "AddToolStripMenuItem";
+			this.AddToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.AddToolStripMenuItem.Text = "Add...";
+			this.AddToolStripMenuItem.Click += new System.EventHandler(this.AddToolStripMenuItem_Click);
 			// 
 			// ResourceForm
 			// 
@@ -187,6 +197,7 @@
 		private System.Windows.Forms.ToolStripMenuItem RenameMenuItem;
 		private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
 		private System.Windows.Forms.ContextMenuStrip TypeContextMenu;
-		private System.Windows.Forms.ToolStripMenuItem clearToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem ClearToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem AddToolStripMenuItem;
 	}
 }

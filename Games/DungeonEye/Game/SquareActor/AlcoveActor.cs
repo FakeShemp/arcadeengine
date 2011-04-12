@@ -40,7 +40,8 @@ namespace DungeonEye
 		/// Cosntructor
 		/// </summary>
 		/// <param name="square">Parent square handle</param>
-		public AlcoveActor(Square square) : base(square)
+		public AlcoveActor(Square square)
+			: base(square)
 		{
 			Alcoves = new Alcove[4]
 			{
@@ -79,14 +80,32 @@ namespace DungeonEye
 				Square.DrawDecoration(batch, Square.Maze.Decoration, position, deco, side == CardinalPoint.South);
 
 
+				// Debug draw alcove zone
+				//Tile tile = Square.Maze.Decoration.Tileset.GetTile(deco.GetTileId(position));
+				//if (tile != null)
+				//    batch.DrawRectangle(new Rectangle(deco.GetLocation(position), tile.Size), Color.Red);
+
+
 				// Hide items
 				if (alcove.HideItems || side != CardinalPoint.South)
 					continue;
 
 
-				// Draw items in the alcove in front of the team
+
+				// Offset the item locations according to the distance
+				int[] offset = new int[]
+				{
+					2, 2, 2, 2, 2,
+					1, 1, 1, 1, 1,
+					   0, 0, 0,
+					   0, 0, 0,
+				};
+				Vector2 vect = DisplayCoordinates.ScaleFactor[offset[(int) position]];
 				Point loc = deco.PrepareLocation(position);
-				loc.Offset(DisplayCoordinates.GetScaleFactor(position, alcove.ItemLocation));
+				loc.Offset((int) (alcove.ItemLocation.X * vect.X), (int) (alcove.ItemLocation.Y * vect.Y));
+				
+
+				// Draw items in the alcove in front of the team
 				foreach (Item item in Square.GetItemsFromSide(direction, side))
 				{
 					batch.DrawTile(Square.Maze.Dungeon.ItemTileSet, item.GroundTileID, loc,
@@ -156,7 +175,7 @@ namespace DungeonEye
 			{
 				team.SetItemInHand(Square.CollectItemFromSide(side));
 			}
-			
+
 
 			return true;
 		}
@@ -184,7 +203,7 @@ namespace DungeonEye
 					case "side":
 					{
 						CardinalPoint dir = (CardinalPoint) Enum.Parse(typeof(CardinalPoint), node.Attributes["name"].Value);
-						Alcoves[(int)dir].Load(node);
+						Alcoves[(int) dir].Load(node);
 					}
 					break;
 

@@ -540,7 +540,7 @@ namespace ArcEngine.Editor
 		/// <param name="e"></param>
 		private void NewAssetBox_Click(object sender, EventArgs e)
 		{
-			new WizardForm(dockPanel).ShowDialog();
+			new WizardForm(dockPanel, null).ShowDialog();
 			ResourcePanel.RebuildResourceTree();
 
 		}

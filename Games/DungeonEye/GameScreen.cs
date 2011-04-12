@@ -97,7 +97,7 @@ namespace DungeonEye
 			Items = ResourceManager.CreateAsset<TileSet>("Items");
 
 			// Fonts
-			Font = ResourceManager.CreateSharedAsset<BitmapFont>("inventory", "inventory");
+			InventoryFont = ResourceManager.CreateSharedAsset<BitmapFont>("inventory", "inventory");
 			OutlinedFont = ResourceManager.CreateSharedAsset<BitmapFont>("outline", "outline");
 
 			// Misc init
@@ -128,13 +128,15 @@ namespace DungeonEye
 			SpellBook.Dispose();
 			SpellBook = null;
 
+			GameMessage.Dispose();
+
 			if (OutlinedFont != null)
 				OutlinedFont.Dispose();
 			OutlinedFont = null;
 
-			if (Font != null)
-				Font.Dispose();
-			Font = null;
+			if (InventoryFont != null)
+				InventoryFont.Dispose();
+			InventoryFont = null;
 
 			if (Items != null)
 				Items.Dispose();
@@ -261,7 +263,7 @@ namespace DungeonEye
 
 
 			// Draw game messages
-			GameMessage.Draw(Batch, Font);
+			GameMessage.Draw(Batch);
 
 
 			// Draw the spell window
@@ -313,15 +315,15 @@ namespace DungeonEye
 					// Name
 					if (HeroToSwap == hero)
 					{
-						batch.DrawString(Font, new Point(pos.X + 6, pos.Y + 6), GameColors.Red, " Swapping");
+						batch.DrawString(InventoryFont, new Point(pos.X + 6, pos.Y + 6), GameColors.Red, " Swapping");
 					}
 					else if (Team.SelectedHero == hero)
 					{
-						batch.DrawString(Font, new Point(pos.X + 6, pos.Y + 6), GameColors.White, hero.Name);
+						batch.DrawString(InventoryFont, new Point(pos.X + 6, pos.Y + 6), GameColors.White, hero.Name);
 					}
 					else
 					{
-						batch.DrawString(Font, new Point(pos.X + 6, pos.Y + 6), GameColors.Black, hero.Name);
+						batch.DrawString(InventoryFont, new Point(pos.X + 6, pos.Y + 6), GameColors.Black, hero.Name);
 					}
 
 					// HP
@@ -334,11 +336,11 @@ namespace DungeonEye
 						else if (percent < 0.4)
 							color = GameColors.Yellow;
 
-						batch.DrawString(Font, new Point(pos.X + 6, pos.Y + 88), GameColors.Black, "HP");
+						batch.DrawString(InventoryFont, new Point(pos.X + 6, pos.Y + 88), GameColors.Black, "HP");
 						DrawProgressBar(batch, hero.HitPoint.Current, hero.HitPoint.Max, new Rectangle(pos.X + 30, pos.Y + 88, 92, 10), color);
 					}
 					else
-						batch.DrawString(Font, new Point(pos.X + 6, pos.Y + 88), GameColors.Black, hero.HitPoint.Current + " of " + hero.HitPoint.Max);
+						batch.DrawString(InventoryFont, new Point(pos.X + 6, pos.Y + 88), GameColors.Black, hero.HitPoint.Current + " of " + hero.HitPoint.Max);
 
 
 					// Hands
@@ -371,9 +373,9 @@ namespace DungeonEye
 									batch.DrawTile(TileSet, 21, new Point(pos.X + 64, pos.Y + 20 + yoffset));
 
 									if (attack.IsAHit)
-										batch.DrawString(Font, new Point(pos.X + 90, pos.Y + 32 + yoffset), GameColors.White, attack.Hit.ToString());
+										batch.DrawString(InventoryFont, new Point(pos.X + 90, pos.Y + 32 + yoffset), GameColors.White, attack.Hit.ToString());
 									else if (attack.IsAMiss)
-										batch.DrawString(Font, new Point(pos.X + 76, pos.Y + 32 + yoffset), GameColors.White, "MISS");
+										batch.DrawString(InventoryFont, new Point(pos.X + 76, pos.Y + 32 + yoffset), GameColors.White, "MISS");
 								}
 							}
 
@@ -391,14 +393,14 @@ namespace DungeonEye
 							{
 								case ActionResult.NoAmmo:
 								{
-									batch.DrawString(Font, new Point(pos.X + 86, pos.Y + 24 + yoffset), GameColors.White, "NO");
-									batch.DrawString(Font, new Point(pos.X + 74, pos.Y + 38 + yoffset), GameColors.White, "AMMO");
+									batch.DrawString(InventoryFont, new Point(pos.X + 86, pos.Y + 24 + yoffset), GameColors.White, "NO");
+									batch.DrawString(InventoryFont, new Point(pos.X + 74, pos.Y + 38 + yoffset), GameColors.White, "AMMO");
 								}
 								break;
 								case ActionResult.CantReach:
 								{
-									batch.DrawString(Font, new Point(pos.X + 68, pos.Y + 24 + yoffset), GameColors.White, "CAN'T");
-									batch.DrawString(Font, new Point(pos.X + 68, pos.Y + 38 + yoffset), GameColors.White, "REACH");
+									batch.DrawString(InventoryFont, new Point(pos.X + 68, pos.Y + 24 + yoffset), GameColors.White, "CAN'T");
+									batch.DrawString(InventoryFont, new Point(pos.X + 68, pos.Y + 38 + yoffset), GameColors.White, "REACH");
 								}
 								break;
 							}
@@ -418,7 +420,7 @@ namespace DungeonEye
 					if (hero.LastAttack != null && !hero.LastAttack.IsOutdated(DateTime.Now, 1000))
 					{
 						batch.DrawTile(TileSet, 20, new Point(pos.X + 24, pos.Y + 66));
-						batch.DrawString(Font, new Point(pos.X + 52, pos.Y + 86), GameColors.White, hero.LastAttack.Hit.ToString());
+						batch.DrawString(InventoryFont, new Point(pos.X + 52, pos.Y + 86), GameColors.White, hero.LastAttack.Hit.ToString());
 					}
 
 				}
@@ -431,7 +433,7 @@ namespace DungeonEye
 				Team.Maze.DrawMiniMap(batch, new Point(500, 220));
 
 				// Team location
-				batch.DrawString(Font, new Point(10, 340), GameColors.White, Team.Location.ToString());
+				batch.DrawString(InventoryFont, new Point(10, 340), GameColors.White, Team.Location.ToString());
 			}
 
 
@@ -488,7 +490,7 @@ namespace DungeonEye
 			batch.DrawString(OutlinedFont, new Point(430, 12), GameColors.White, Team.SelectedHero.Name);
 
 			// HP and Food
-			batch.DrawString(Font, new Point(500, 30), GameColors.Black, Team.SelectedHero.HitPoint.Current + " of " + Team.SelectedHero.HitPoint.Max);
+			batch.DrawString(InventoryFont, new Point(500, 30), GameColors.Black, Team.SelectedHero.HitPoint.Current + " of " + Team.SelectedHero.HitPoint.Max);
 
 			// Dead or uncounscious
 			if (Team.SelectedHero.IsUnconscious)
@@ -533,9 +535,9 @@ namespace DungeonEye
 
 			// Quiver count
 			if (Team.SelectedHero.Quiver > 99)
-				batch.DrawString(Font, new Point(452, 128), GameColors.White, "++");
+				batch.DrawString(InventoryFont, new Point(452, 128), GameColors.White, "++");
 			else
-				batch.DrawString(Font, new Point(452, 128), GameColors.White, Team.SelectedHero.Quiver.ToString());
+				batch.DrawString(InventoryFont, new Point(452, 128), GameColors.White, Team.SelectedHero.Quiver.ToString());
 
 			// Armor
 			if (Team.SelectedHero.GetInventoryItem(InventoryPosition.Armor) != null)
@@ -633,7 +635,7 @@ namespace DungeonEye
 			batch.DrawString(OutlinedFont, new Point(370, 80), GameColors.White, "Character info");
 
 			// HP and Food
-			batch.DrawString(Font, new Point(500, 30), GameColors.Black, Team.SelectedHero.HitPoint.Current + " of " + Team.SelectedHero.HitPoint.Max);
+			batch.DrawString(InventoryFont, new Point(500, 30), GameColors.Black, Team.SelectedHero.HitPoint.Current + " of " + Team.SelectedHero.HitPoint.Max);
 
 			// Food
 			Color color;
@@ -651,36 +653,36 @@ namespace DungeonEye
 				txt += prof.Class.ToString() + "/";
 			txt = txt.Substring(0, txt.Length - 1);
 
-			batch.DrawString(Font, new Point(366, 110), GameColors.Black, txt);
-			batch.DrawString(Font, new Point(366, 124), GameColors.Black, Team.SelectedHero.Alignment.ToString());
-			batch.DrawString(Font, new Point(366, 138), GameColors.Black, Team.SelectedHero.Race.ToString());
+			batch.DrawString(InventoryFont, new Point(366, 110), GameColors.Black, txt);
+			batch.DrawString(InventoryFont, new Point(366, 124), GameColors.Black, Team.SelectedHero.Alignment.ToString());
+			batch.DrawString(InventoryFont, new Point(366, 138), GameColors.Black, Team.SelectedHero.Race.ToString());
 
-			batch.DrawString(Font, new Point(366, 166), GameColors.Black, "Strength");
-			batch.DrawString(Font, new Point(366, 180), GameColors.Black, "Intelligence");
-			batch.DrawString(Font, new Point(366, 194), GameColors.Black, "Wisdom");
-			batch.DrawString(Font, new Point(366, 208), GameColors.Black, "Dexterity");
-			batch.DrawString(Font, new Point(366, 222), GameColors.Black, "Constitution");
-			batch.DrawString(Font, new Point(366, 236), GameColors.Black, "Charisma");
-			batch.DrawString(Font, new Point(366, 250), GameColors.Black, "Armor class");
-
-
-			batch.DrawString(Font, new Point(552, 166), GameColors.Black, Team.SelectedHero.Strength.Value.ToString());// + "/" + Team.SelectedHero.MaxStrength.ToString());
-			batch.DrawString(Font, new Point(552, 180), GameColors.Black, Team.SelectedHero.Intelligence.Value.ToString());
-			batch.DrawString(Font, new Point(552, 194), GameColors.Black, Team.SelectedHero.Wisdom.Value.ToString());
-			batch.DrawString(Font, new Point(552, 208), GameColors.Black, Team.SelectedHero.Dexterity.Value.ToString());
-			batch.DrawString(Font, new Point(552, 222), GameColors.Black, Team.SelectedHero.Constitution.Value.ToString());
-			batch.DrawString(Font, new Point(552, 236), GameColors.Black, Team.SelectedHero.Charisma.Value.ToString());
-			batch.DrawString(Font, new Point(552, 250), GameColors.Black, Team.SelectedHero.ArmorClass.ToString());
+			batch.DrawString(InventoryFont, new Point(366, 166), GameColors.Black, "Strength");
+			batch.DrawString(InventoryFont, new Point(366, 180), GameColors.Black, "Intelligence");
+			batch.DrawString(InventoryFont, new Point(366, 194), GameColors.Black, "Wisdom");
+			batch.DrawString(InventoryFont, new Point(366, 208), GameColors.Black, "Dexterity");
+			batch.DrawString(InventoryFont, new Point(366, 222), GameColors.Black, "Constitution");
+			batch.DrawString(InventoryFont, new Point(366, 236), GameColors.Black, "Charisma");
+			batch.DrawString(InventoryFont, new Point(366, 250), GameColors.Black, "Armor class");
 
 
-			batch.DrawString(Font, new Point(470, 270), GameColors.Black, "EXP");
-			batch.DrawString(Font, new Point(550, 270), GameColors.Black, "LVL");
+			batch.DrawString(InventoryFont, new Point(552, 166), GameColors.Black, Team.SelectedHero.Strength.Value.ToString());// + "/" + Team.SelectedHero.MaxStrength.ToString());
+			batch.DrawString(InventoryFont, new Point(552, 180), GameColors.Black, Team.SelectedHero.Intelligence.Value.ToString());
+			batch.DrawString(InventoryFont, new Point(552, 194), GameColors.Black, Team.SelectedHero.Wisdom.Value.ToString());
+			batch.DrawString(InventoryFont, new Point(552, 208), GameColors.Black, Team.SelectedHero.Dexterity.Value.ToString());
+			batch.DrawString(InventoryFont, new Point(552, 222), GameColors.Black, Team.SelectedHero.Constitution.Value.ToString());
+			batch.DrawString(InventoryFont, new Point(552, 236), GameColors.Black, Team.SelectedHero.Charisma.Value.ToString());
+			batch.DrawString(InventoryFont, new Point(552, 250), GameColors.Black, Team.SelectedHero.ArmorClass.ToString());
+
+
+			batch.DrawString(InventoryFont, new Point(470, 270), GameColors.Black, "EXP");
+			batch.DrawString(InventoryFont, new Point(550, 270), GameColors.Black, "LVL");
 			int y = 0;
 			foreach (Profession prof in Team.SelectedHero.Professions)
 			{
-				batch.DrawString(Font, new Point(366, 290 + y), GameColors.Black, prof.Class.ToString());
-				batch.DrawString(Font, new Point(460, 290 + y), GameColors.White, prof.Experience.ToString());
-				batch.DrawString(Font, new Point(560, 290 + y), GameColors.White, prof.Level.ToString());
+				batch.DrawString(InventoryFont, new Point(366, 290 + y), GameColors.Black, prof.Class.ToString());
+				batch.DrawString(InventoryFont, new Point(460, 290 + y), GameColors.White, prof.Experience.ToString());
+				batch.DrawString(InventoryFont, new Point(560, 290 + y), GameColors.White, prof.Level.ToString());
 
 				y += 12;
 			}
@@ -1839,9 +1841,9 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Display font
+		/// Inventory font
 		/// </summary>
-		BitmapFont Font;
+		BitmapFont InventoryFont;
 
 
 		/// <summary>

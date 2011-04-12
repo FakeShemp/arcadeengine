@@ -128,15 +128,7 @@ namespace DungeonEye
 		/// <param name="position">View position</param>
 		static public Vector2 GetScaleFactor(ViewFieldPosition position)
 		{
-			int[] offset = new int[]
-			{
-				3, 3, 3, 3, 3,
-				2, 2, 2, 2, 2,
-				   1, 1, 1,
-				   0, 0, 0,
-			};
-
-			return ScaleFactor[offset[(int)position]];
+			return ScaleFactor[ScaleOffset[(int) position]];
 		}
 
 
@@ -148,16 +140,7 @@ namespace DungeonEye
 		/// <returns></returns>
 		static public Point GetScaleFactor(ViewFieldPosition position, Point point)
 		{
-			int[] offset = new int[]
-			{
-				3, 3, 3, 3, 3,
-				2, 2, 2, 2, 2,
-				   1, 1, 1,
-				   0, 0, 0,
-			};
-
-
-			Vector2 vect = ScaleFactor[offset[(int)position]];
+			Vector2 vect = ScaleFactor[ScaleOffset[(int) position]];
 
 			return new Point((int)(point.X * vect.X), (int)(point.Y * vect.Y));
 		}
@@ -177,17 +160,7 @@ namespace DungeonEye
 				Color.FromArgb(128, 128, 128, 128),
 			};
 
-
-			int[] offset = new int[]
-			{
-				3, 3, 3, 3, 3,
-				2, 2, 2, 2, 2,
-				   1, 1, 1,
-				   0, 0, 0,
-			};
-
-
-			return colors[offset[(int)position]];
+			return colors[ScaleOffset[(int) position]];
 		}
 
 
@@ -651,7 +624,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Scaling factor
 		/// </summary>
-		static Vector2[] ScaleFactor = new Vector2[]
+		static public Vector2[] ScaleFactor = new Vector2[]
 			{
 				new Vector2(1.0f, 1.0f),
 				new Vector2(0.66f, 0.66f),
@@ -659,6 +632,17 @@ namespace DungeonEye
 				new Vector2(0.33f, 0.33f)
 			};
 
+
+		/// <summary>
+		/// Scaling offset
+		/// </summary>
+		static int[] ScaleOffset = new int[]
+			{
+				3, 3, 3, 3, 3,
+				2, 2, 2, 2, 2,
+				   1, 1, 1,
+				   0, 0, 0,
+			};
 
 
 

@@ -377,7 +377,7 @@ namespace ArcEngine.Editor
 			int zoomvalue = int.Parse((string)ZoomBox.SelectedItem);
 			Point position = new Point((e.Location.X - TextureOffset.X) / zoomvalue, (e.Location.Y - TextureOffset.Y) / zoomvalue);
 
-
+			#region Left
 			if (e.Button == MouseButtons.Left)
 			{
 				// Select a tile by left click + ctrl
@@ -420,15 +420,45 @@ namespace ArcEngine.Editor
 				else if (ColisionBox.Checked)
 				{
 				}
-	
+
+			}
+			#endregion
+
+			#region Right
+
+			// Auto detect tile border
+			else if ((e.Button == MouseButtons.Right))
+			{
+				// Auto detect edges
+				if (SelectionBox.Checked)
+				{
+					// No texture
+					if (TileSet.Texture == null)
+						return;
+
+					// No tile, so create one
+					if (CurrentTile == null)
+					{
+						SetCurrentTile(TileSet.AddTile((int) TileIDBox.Value));
+					}
+
+					Point start = new Point(
+						(int) ((e.Location.X - TextureOffset.X) / zoomvalue),
+						(int) ((e.Location.Y - TextureOffset.Y) / zoomvalue));
+
+					SelectionTool.Rectangle = DetectTileEdges(start, Color.FromArgb(255, 255, 0, 0));
+				}
 			}
 
+			#endregion
 
+			#region Middle
 			// Pan the texture
 			else if (e.Button == MouseButtons.Middle)
 			{
 				LastMousePos = e.Location;
 			}
+			#endregion
 
 
 			// Transmit event to the selection box
@@ -513,21 +543,21 @@ namespace ArcEngine.Editor
 		/// <param name="e"></param>
 		private void GLTextureControl_MouseClick(object sender, MouseEventArgs e)
 		{
-			// Auto detect tile border
-			if ((e.Button & MouseButtons.Right) == MouseButtons.Right && SelectionBox.Checked)
-			{
-				// No texture
-				if (TileSet.Texture == null)
-					return;
+			//// Auto detect tile border
+			//if ((e.Button & MouseButtons.Right) == MouseButtons.Right && SelectionBox.Checked)
+			//{
+			//    // No texture
+			//    if (TileSet.Texture == null)
+			//        return;
 				
 				
-				int zoomvalue = int.Parse((string) ZoomBox.SelectedItem);
-				Point start = new Point(
-					(int) ((e.Location.X - TextureOffset.X) / zoomvalue),
-					(int) ((e.Location.Y - TextureOffset.Y) / zoomvalue));
+			//    int zoomvalue = int.Parse((string) ZoomBox.SelectedItem);
+			//    Point start = new Point(
+			//        (int) ((e.Location.X - TextureOffset.X) / zoomvalue),
+			//        (int) ((e.Location.Y - TextureOffset.Y) / zoomvalue));
 
-				SelectionTool.Rectangle = DetectTileEdges(start, Color.FromArgb(255, 255, 0, 0));
-			}
+			//    SelectionTool.Rectangle = DetectTileEdges(start, Color.FromArgb(255, 255, 0, 0));
+			//}
 		}
 
 

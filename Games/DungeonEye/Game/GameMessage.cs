@@ -63,7 +63,21 @@ namespace DungeonEye
 			}
 			Language.LanguageName = Game.LanguageName;
 
+
+			Font = ResourceManager.CreateSharedAsset<BitmapFont>("inventory", "inventory");
+
 			return true;
+		}
+
+
+		/// <summary>
+		/// Dispose resources
+		/// </summary>
+		static public void Dispose()
+		{
+			if (Font != null)
+				Font.Dispose();
+			Font = null;
 		}
 
 
@@ -98,15 +112,14 @@ namespace DungeonEye
 		/// Draws the game messages
 		/// </summary>
 		/// <param name="Batch">Spritebatch handle</param>
-		/// <param name="font">BitmapFont handle</param>
-		public static void Draw(SpriteBatch batch, BitmapFont font)
+		public static void Draw(SpriteBatch batch)
 		{
 
 			// Display the last 3 messages
 			int i = 0;
 			foreach (ScreenMessage msg in GameMessage.Messages)
 			{
-				batch.DrawString(font, new Point(8, 360 + i * 12), msg.Color, msg.Message);
+				batch.DrawString(Font, new Point(8, 360 + i * 12), msg.Color, msg.Message);
 				i++;
 			}
 
@@ -173,11 +186,16 @@ namespace DungeonEye
 		}
 
 
-
 		/// <summary>
 		/// Current language
 		/// </summary>
 		static StringTable Language;
+
+			/// <summary>
+			/// Message font
+			/// </summary>
+			static BitmapFont Font;
+
 
 
 		#endregion

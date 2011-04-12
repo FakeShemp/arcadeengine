@@ -435,7 +435,7 @@ namespace ArcEngine.Editor
 			if (e.Button == MouseButtons.Right)
 			{
 				Point location = PointToScreen(e.Location);
-				TreeNode node = ResourceTree.GetNodeAt(e.Location.X, e.Location.Y);
+				TreeNode node = ResourceTree.GetNodeAt(e.Location);
 				if (node == null)
 					return;
 
@@ -464,6 +464,34 @@ namespace ArcEngine.Editor
 
 		#endregion
 
+
+		#region Type context menu
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void AddToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			RegisteredAsset ra = TypeContextMenu.Tag as RegisteredAsset;
+
+			new WizardForm(DockPanel, ra.Tag).ShowDialog();
+			RebuildResourceTree();
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ClearToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		#endregion
 
 
 		#region Properties
