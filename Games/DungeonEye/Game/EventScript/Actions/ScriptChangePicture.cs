@@ -30,7 +30,7 @@ namespace DungeonEye.EventScript
 	/// <summary>
 	/// Changes the picture of the dialog
 	/// </summary>
-	public class ScriptChangePicture : IScriptAction
+	public class ScriptChangePicture : ScriptAction
 	{
 
 
@@ -38,7 +38,7 @@ namespace DungeonEye.EventScript
 		/// Run actions
 		/// </summary>
 		/// <returns></returns>
-		public bool Run(Team team)
+		public override bool Run(Team team)
 		{
 
 			return false;
@@ -53,7 +53,7 @@ namespace DungeonEye.EventScript
 		/// </summary>
 		/// <param name="filename">Xml data</param>
 		/// <returns>True if team successfuly loaded, otherwise false</returns>
-		public bool Load(XmlNode xml)
+		public override bool Load(XmlNode xml)
 		{
 			return true;
 		}
@@ -65,7 +65,7 @@ namespace DungeonEye.EventScript
 		/// </summary>
 		/// <param name="filename">XmlWriter</param>
 		/// <returns></returns>
-		public bool Save(XmlWriter writer)
+		public override bool Save(XmlWriter writer)
 		{
 			return true;
 		}

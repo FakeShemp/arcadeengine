@@ -72,7 +72,7 @@ namespace DungeonEye.Forms
 		/// </summary>
 		/// <param name="script">Action handle</param>
 		/// <returns>True on success</returns>
-		public bool SetAction(IScriptAction script)
+		public bool SetAction(ScriptAction script)
 		{
 			ControlHandle = null;
 			
@@ -276,7 +276,7 @@ namespace DungeonEye.Forms
 		/// <summary>
 		/// Script action
 		/// </summary>
-		public IScriptAction Script
+		public ScriptAction Script
 		{
 			get
 			{

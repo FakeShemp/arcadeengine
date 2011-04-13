@@ -29,12 +29,6 @@
 		private void InitializeComponent()
 		{
 			this.CloseBox = new System.Windows.Forms.Button();
-			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.ActionsBox = new System.Windows.Forms.ListBox();
-			this.MoveDownActionBox = new System.Windows.Forms.Button();
-			this.MoveUpActionBox = new System.Windows.Forms.Button();
-			this.RemoveActionBox = new System.Windows.Forms.Button();
-			this.AddActionBox = new System.Windows.Forms.Button();
 			this.NameBox = new System.Windows.Forms.TextBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.VisibleBox = new System.Windows.Forms.CheckBox();
@@ -45,84 +39,21 @@
 			this.RemoveItemBox = new System.Windows.Forms.Button();
 			this.AddItemBox = new System.Windows.Forms.Button();
 			this.ItemsBox = new System.Windows.Forms.ListBox();
-			this.groupBox1.SuspendLayout();
+			this.ActionBox = new DungeonEye.Forms.ActionControl();
 			this.groupBox2.SuspendLayout();
 			this.groupBox3.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// CloseBox
 			// 
-			this.CloseBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.CloseBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.CloseBox.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.CloseBox.Location = new System.Drawing.Point(421, 363);
+			this.CloseBox.Location = new System.Drawing.Point(422, 357);
 			this.CloseBox.Name = "CloseBox";
 			this.CloseBox.Size = new System.Drawing.Size(75, 23);
 			this.CloseBox.TabIndex = 0;
 			this.CloseBox.Text = "Close";
 			this.CloseBox.UseVisualStyleBackColor = true;
-			// 
-			// groupBox1
-			// 
-			this.groupBox1.Controls.Add(this.ActionsBox);
-			this.groupBox1.Controls.Add(this.MoveDownActionBox);
-			this.groupBox1.Controls.Add(this.MoveUpActionBox);
-			this.groupBox1.Controls.Add(this.RemoveActionBox);
-			this.groupBox1.Controls.Add(this.AddActionBox);
-			this.groupBox1.Location = new System.Drawing.Point(12, 201);
-			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(484, 153);
-			this.groupBox1.TabIndex = 1;
-			this.groupBox1.TabStop = false;
-			this.groupBox1.Text = "Actions :";
-			// 
-			// ActionsBox
-			// 
-			this.ActionsBox.FormattingEnabled = true;
-			this.ActionsBox.Location = new System.Drawing.Point(6, 19);
-			this.ActionsBox.Name = "ActionsBox";
-			this.ActionsBox.Size = new System.Drawing.Size(391, 121);
-			this.ActionsBox.TabIndex = 1;
-			this.ActionsBox.DoubleClick += new System.EventHandler(this.ActionsBox_DoubleClick);
-			// 
-			// MoveDownActionBox
-			// 
-			this.MoveDownActionBox.Location = new System.Drawing.Point(403, 117);
-			this.MoveDownActionBox.Name = "MoveDownActionBox";
-			this.MoveDownActionBox.Size = new System.Drawing.Size(75, 23);
-			this.MoveDownActionBox.TabIndex = 0;
-			this.MoveDownActionBox.Text = "Down";
-			this.MoveDownActionBox.UseVisualStyleBackColor = true;
-			this.MoveDownActionBox.Click += new System.EventHandler(this.MoveDownActionBox_Click);
-			// 
-			// MoveUpActionBox
-			// 
-			this.MoveUpActionBox.Location = new System.Drawing.Point(403, 88);
-			this.MoveUpActionBox.Name = "MoveUpActionBox";
-			this.MoveUpActionBox.Size = new System.Drawing.Size(75, 23);
-			this.MoveUpActionBox.TabIndex = 0;
-			this.MoveUpActionBox.Text = "Up";
-			this.MoveUpActionBox.UseVisualStyleBackColor = true;
-			this.MoveUpActionBox.Click += new System.EventHandler(this.MoveUpActionBox_Click);
-			// 
-			// RemoveActionBox
-			// 
-			this.RemoveActionBox.Location = new System.Drawing.Point(403, 48);
-			this.RemoveActionBox.Name = "RemoveActionBox";
-			this.RemoveActionBox.Size = new System.Drawing.Size(75, 23);
-			this.RemoveActionBox.TabIndex = 0;
-			this.RemoveActionBox.Text = "Remove";
-			this.RemoveActionBox.UseVisualStyleBackColor = true;
-			this.RemoveActionBox.Click += new System.EventHandler(this.RemoveActionBox_Click);
-			// 
-			// AddActionBox
-			// 
-			this.AddActionBox.Location = new System.Drawing.Point(403, 19);
-			this.AddActionBox.Name = "AddActionBox";
-			this.AddActionBox.Size = new System.Drawing.Size(75, 23);
-			this.AddActionBox.TabIndex = 0;
-			this.AddActionBox.Text = "Add";
-			this.AddActionBox.UseVisualStyleBackColor = true;
-			this.AddActionBox.Click += new System.EventHandler(this.AddActionBox_Click);
 			// 
 			// NameBox
 			// 
@@ -182,7 +113,7 @@
 			this.groupBox3.Controls.Add(this.ItemsBox);
 			this.groupBox3.Location = new System.Drawing.Point(252, 38);
 			this.groupBox3.Name = "groupBox3";
-			this.groupBox3.Size = new System.Drawing.Size(244, 157);
+			this.groupBox3.Size = new System.Drawing.Size(245, 157);
 			this.groupBox3.TabIndex = 8;
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Required items :";
@@ -220,27 +151,39 @@
 			// 
 			// ItemsBox
 			// 
-			this.ItemsBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.ItemsBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.ItemsBox.FormattingEnabled = true;
 			this.ItemsBox.Location = new System.Drawing.Point(6, 19);
 			this.ItemsBox.Name = "ItemsBox";
-			this.ItemsBox.Size = new System.Drawing.Size(120, 121);
+			this.ItemsBox.Size = new System.Drawing.Size(121, 121);
 			this.ItemsBox.Sorted = true;
 			this.ItemsBox.TabIndex = 0;
+			// 
+			// ActionBox
+			// 
+			this.ActionBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.ActionBox.Actions = null;
+			this.ActionBox.Location = new System.Drawing.Point(12, 201);
+			this.ActionBox.MinimumSize = new System.Drawing.Size(350, 150);
+			this.ActionBox.Name = "ActionBox";
+			this.ActionBox.Size = new System.Drawing.Size(485, 150);
+			this.ActionBox.TabIndex = 9;
 			// 
 			// EventChoiceForm
 			// 
 			this.AcceptButton = this.CloseBox;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(508, 398);
+			this.ClientSize = new System.Drawing.Size(509, 391);
+			this.Controls.Add(this.ActionBox);
 			this.Controls.Add(this.groupBox3);
 			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.NameBox);
-			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.CloseBox);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
 			this.KeyPreview = true;
@@ -252,7 +195,6 @@
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Event choice wizard";
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.EventChoiceForm_KeyDown);
-			this.groupBox1.ResumeLayout(false);
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
 			this.groupBox3.ResumeLayout(false);
@@ -265,7 +207,6 @@
 		#endregion
 
 		private System.Windows.Forms.Button CloseBox;
-		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.TextBox NameBox;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.CheckBox VisibleBox;
@@ -276,10 +217,6 @@
 		private System.Windows.Forms.Button RemoveItemBox;
 		private System.Windows.Forms.Button AddItemBox;
 		private System.Windows.Forms.ListBox ItemsBox;
-		private System.Windows.Forms.ListBox ActionsBox;
-		private System.Windows.Forms.Button MoveDownActionBox;
-		private System.Windows.Forms.Button MoveUpActionBox;
-		private System.Windows.Forms.Button RemoveActionBox;
-		private System.Windows.Forms.Button AddActionBox;
+		private ActionControl ActionBox;
 	}
 }

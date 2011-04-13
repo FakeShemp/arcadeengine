@@ -19,11 +19,11 @@
 #endregion
 using System;
 using System.Collections.Generic;
-using ArcEngine;
-using System.Text;
-using ArcEngine.Graphic;
 using System.Drawing;
+using System.Text;
 using System.Xml;
+using ArcEngine;
+using ArcEngine.Graphic;
 
 namespace DungeonEye
 {
@@ -342,7 +342,7 @@ namespace DungeonEye
 		public bool IsActivated
 		{
 			get;
-			private set;
+			protected set;
 		}
 
 		#endregion

@@ -117,6 +117,12 @@
     <Compile Include="Forms\AbilityControl.Designer.cs">
       <DependentUpon>AbilityControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\ActionControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\ActionControl.Designer.cs">
+      <DependentUpon>ActionControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\AlcoveControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -494,7 +500,7 @@
     <Compile Include="Game\EventScript\Actions\ScriptJoinCharacter.cs" />
     <Compile Include="Game\EventScript\Actions\ScriptTeleport.cs" />
     <Compile Include="Game\EventScript\Actions\ScriptToggleTarget.cs" />
-    <Compile Include="Game\EventScript\ScriptButton.cs" />
+    <Compile Include="Game\EventScript\GUIScriptButton.cs" />
     <Compile Include="Game\EventScript\ScriptChoice.cs" />
     <Compile Include="Game\Gui\CampWindows\DropCharacterWindow.cs" />
     <Compile Include="Game\Gui\CampWindows\SpellWindow.cs" />
@@ -551,6 +557,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\AbilityControl.resx">
       <DependentUpon>AbilityControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ActionControl.resx">
+      <DependentUpon>ActionControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AlcoveControl.resx">
       <DependentUpon>AlcoveControl.cs</DependentUpon>

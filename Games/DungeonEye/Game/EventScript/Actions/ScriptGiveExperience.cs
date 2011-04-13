@@ -5,14 +5,14 @@ using System.Text;
 
 namespace DungeonEye.EventScript
 {
-	public class ScriptGiveExperience : IScriptAction
+	public class ScriptGiveExperience : ScriptAction
 	{
 
 		/// <summary>
 		/// Runs the script
 		/// </summary>
 		/// <returns>True on success</returns>
-		public bool Run(Team team)
+		public override bool Run(Team team)
 		{
 			team.AddExperience(Amount);
 
@@ -28,7 +28,7 @@ namespace DungeonEye.EventScript
 		/// </summary>
 		/// <param name="xml"></param>
 		/// <returns>True on success</returns>
-		public bool Load(XmlNode xml)
+		public override bool Load(XmlNode xml)
 		{
 			if (xml == null || xml.Name != Name)
 				return false;
@@ -59,7 +59,7 @@ namespace DungeonEye.EventScript
 		/// </summary>
 		/// <param name="writer"></param>
 		/// <returns>True on success</returns>
-		public bool Save(XmlWriter writer)
+		public override bool Save(XmlWriter writer)
 		{
 			if (writer == null)
 				return false;

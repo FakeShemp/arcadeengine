@@ -55,6 +55,8 @@ namespace DungeonEye
 			Maze = maze;
 			DecorationSet = maze.Decoration;
 			WallSwitch = wallswitch;
+			ActivateScriptBox.Dungeon = maze.Dungeon;
+
 		}
 
 
@@ -112,7 +114,22 @@ namespace DungeonEye
 
 
 		#region Control events
-		
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="direction"></param>
+		private void SideBox_DirectionChanged(object sender, CardinalPoint direction)
+		{
+			if (WallSwitch == null)
+				return;
+
+			WallSwitch.Side = SideBox.Direction;
+		}
+
+
 		/// <summary>
 		/// 
 		/// </summary>
@@ -186,7 +203,6 @@ namespace DungeonEye
 		#endregion
 
 
-
 		#region Deactivated
 
 		/// <summary>
@@ -234,11 +250,9 @@ namespace DungeonEye
 		#endregion
 
 
-
 		#region Script
 
 		#endregion
-
 
 
 		#region Properties
@@ -267,7 +281,6 @@ namespace DungeonEye
 		Maze Maze;
 
 		#endregion
-
 
 	}
 }

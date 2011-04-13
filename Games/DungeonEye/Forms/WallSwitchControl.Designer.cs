@@ -39,12 +39,15 @@
 			this.DeactivatedGlBox = new OpenTK.GLControl();
 			this.DeactivatedIdBox = new System.Windows.Forms.NumericUpDown();
 			this.ScriptTab = new System.Windows.Forms.TabPage();
+			this.SideBox = new DungeonEye.Forms.CardinalPointControl();
+			this.ActivateScriptBox = new DungeonEye.Forms.ActionControl();
 			this.groupBox1.SuspendLayout();
 			this.tabControl1.SuspendLayout();
 			this.ActivatedTab.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.ActivatedIdBox)).BeginInit();
 			this.DeactivatedTab.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.DeactivatedIdBox)).BeginInit();
+			this.ScriptTab.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// groupBox1
@@ -74,6 +77,7 @@
 			// 
 			// ActivatedTab
 			// 
+			this.ActivatedTab.Controls.Add(this.SideBox);
 			this.ActivatedTab.Controls.Add(this.label1);
 			this.ActivatedTab.Controls.Add(this.ActivatedGLBox);
 			this.ActivatedTab.Controls.Add(this.ActivatedIdBox);
@@ -190,12 +194,35 @@
 			// 
 			// ScriptTab
 			// 
+			this.ScriptTab.Controls.Add(this.ActivateScriptBox);
 			this.ScriptTab.Location = new System.Drawing.Point(4, 22);
 			this.ScriptTab.Name = "ScriptTab";
 			this.ScriptTab.Size = new System.Drawing.Size(854, 529);
 			this.ScriptTab.TabIndex = 2;
 			this.ScriptTab.Text = "Script";
 			this.ScriptTab.UseVisualStyleBackColor = true;
+			// 
+			// SideBox
+			// 
+			this.SideBox.Direction = DungeonEye.CardinalPoint.North;
+			this.SideBox.Location = new System.Drawing.Point(364, 8);
+			this.SideBox.MinimumSize = new System.Drawing.Size(125, 115);
+			this.SideBox.Name = "SideBox";
+			this.SideBox.Size = new System.Drawing.Size(125, 115);
+			this.SideBox.TabIndex = 3;
+			this.SideBox.Title = "Side";
+			this.SideBox.DirectionChanged += new DungeonEye.Forms.CardinalPointControl.ChangedEventHandler(this.SideBox_DirectionChanged);
+			// 
+			// ActivateScriptBox
+			// 
+			this.ActivateScriptBox.Actions = null;
+			this.ActivateScriptBox.Dungeon = null;
+			this.ActivateScriptBox.Location = new System.Drawing.Point(3, 3);
+			this.ActivateScriptBox.MinimumSize = new System.Drawing.Size(350, 150);
+			this.ActivateScriptBox.Name = "ActivateScriptBox";
+			this.ActivateScriptBox.Size = new System.Drawing.Size(350, 150);
+			this.ActivateScriptBox.TabIndex = 0;
+			this.ActivateScriptBox.Title = "On activate actions :";
 			// 
 			// WallSwitchControl
 			// 
@@ -213,6 +240,7 @@
 			this.DeactivatedTab.ResumeLayout(false);
 			this.DeactivatedTab.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.DeactivatedIdBox)).EndInit();
+			this.ScriptTab.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -230,6 +258,8 @@
 		private OpenTK.GLControl DeactivatedGlBox;
 		private System.Windows.Forms.NumericUpDown DeactivatedIdBox;
 		private System.Windows.Forms.TabPage ScriptTab;
+		private Forms.ActionControl ActivateScriptBox;
+		private Forms.CardinalPointControl SideBox;
 
 	}
 }

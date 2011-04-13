@@ -39,6 +39,7 @@ namespace DungeonEye.Forms
 		/// Constructor
 		/// </summary>
 		/// <param name="choice">choice to edit</param>
+		/// <param name="dungeon">Dungeon handle</param>
 		public EventChoiceForm(ScriptChoice choice, Dungeon dungeon)
 		{
 			InitializeComponent();
@@ -47,30 +48,12 @@ namespace DungeonEye.Forms
 				throw new ArgumentNullException("choice");
 
 			Dungeon = dungeon;
-
 			NameBox.Text = choice.Name;
-
+			ActionBox.Actions = choice.Actions;
+			ActionBox.Dungeon = dungeon;
 			Choice = choice;
-
-			UpdateActionList();
 		}
 
-
-
-		/// <summary>
-		/// Update action list
-		/// </summary>
-		void UpdateActionList()
-		{
-			ActionsBox.BeginUpdate();
-
-			ActionsBox.Items.Clear();
-
-			foreach (IScriptAction action in Choice.Actions)
-				ActionsBox.Items.Add(action.Name);
-
-			ActionsBox.EndUpdate();
-		}
 
 
 
@@ -103,79 +86,6 @@ namespace DungeonEye.Forms
 		}
 
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void MoveUpActionBox_Click(object sender, EventArgs e)
-		{
-			int id = ActionsBox.SelectedIndex;
-			if (id <= 0)
-				return;
-			IScriptAction action = Choice.Actions[id];
-			Choice.Actions.RemoveAt(id);
-			Choice.Actions.Insert(id -1, action);
-
-			UpdateActionList();
-			ActionsBox.SelectedIndex = id - 1;
-
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void MoveDownActionBox_Click(object sender, EventArgs e)
-		{
-			int id = ActionsBox.SelectedIndex;
-			if (id >= Choice.Actions.Count - 1)
-				return;
-
-			IScriptAction action = Choice.Actions[id];
-			Choice.Actions.RemoveAt(id);
-			Choice.Actions.Insert(id + 1, action);
-
-			UpdateActionList();
-			ActionsBox.SelectedIndex = id + 1;
-
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void RemoveActionBox_Click(object sender, EventArgs e)
-		{
-			if (ActionsBox.SelectedIndex == -1 || ActionsBox.SelectedIndex > Choice.Actions.Count)
-				return;
-
-			Choice.Actions.RemoveAt(ActionsBox.SelectedIndex);
-
-			UpdateActionList();
-		}
-
-
-		/// <summary>
-		/// Adds a new action
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void AddActionBox_Click(object sender, EventArgs e)
-		{
-			EventActionForm form =  new EventActionForm(Dungeon);
-			if (form.ShowDialog() != DialogResult.OK)
-				return;
-
-			if (form.Script != null)
-				Choice.Actions.Add(form.Script);
-	
-			UpdateActionList();
-		}
 
 	
 		private void AddItemBox_Click(object sender, EventArgs e)
@@ -204,23 +114,6 @@ namespace DungeonEye.Forms
 		}
 
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void ActionsBox_DoubleClick(object sender, EventArgs e)
-		{
-			EventActionForm form =  new EventActionForm(Dungeon);
-
-			IScriptAction action = Choice.Actions[ActionsBox.SelectedIndex];
-
-			form.SetAction(action);
-			
-			form.ShowDialog();
-
-			UpdateActionList();
-		}
 
 
 		#endregion

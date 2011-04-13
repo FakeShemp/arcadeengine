@@ -37,7 +37,7 @@ namespace DungeonEye.EventScript
 		/// <param name="name">Choice's name</param>
 		public ScriptChoice(string name)
 		{
-			Actions = new List<IScriptAction>();
+			Actions = new List<ScriptAction>();
 
 			Name = name;
 			Enabled = true;
@@ -50,7 +50,7 @@ namespace DungeonEye.EventScript
 		/// <param name="team">Team handle</param>
 		public void Run(Team team)
 		{
-			foreach (IScriptAction action in Actions)
+			foreach (ScriptAction action in Actions)
 				action.Run(team);
 		}
 
@@ -277,7 +277,7 @@ namespace DungeonEye.EventScript
 			writer.WriteAttributeString("name", Name);
 
 			writer.WriteStartElement("actions");
-			foreach (IScriptAction action in Actions)
+			foreach (ScriptAction action in Actions)
 			{
 				action.Save(writer);
 			}
@@ -292,14 +292,12 @@ namespace DungeonEye.EventScript
 		#endregion
 
 
-
-
 		#region Properties
 
 		/// <summary>
 		/// List of actions
 		/// </summary>
-		public List<IScriptAction> Actions
+		public List<ScriptAction> Actions
 		{
 			get;
 			private set;

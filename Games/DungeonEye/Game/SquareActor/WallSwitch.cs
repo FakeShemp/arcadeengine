@@ -24,6 +24,8 @@ using System.Drawing;
 using System.Xml;
 using ArcEngine.Graphic;
 using ArcEngine;
+using DungeonEye.EventScript;
+
 
 namespace DungeonEye
 {
@@ -42,8 +44,26 @@ namespace DungeonEye
 		{
 			ActivatedDecoration = -1;
 			DeactivatedDecoration = -1;
+
+			Actions = new List<ScriptAction>();
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="location"></param>
+		/// <param name="side"></param>
+		/// <returns></returns>
+		public override bool OnClick(Point location, CardinalPoint side)
+		{
+			if (side != Side)
+				return false;
+
+			IsActivated = !IsActivated;
+
+			return false;
+		}
 
 
 		/// <summary>
@@ -63,8 +83,15 @@ namespace DungeonEye
 			if (deco == null)
 				return;
 
-			batch.DrawTile(decoset.Tileset, deco.GetTileId(position), deco.GetLocation(position));
-		
+
+	//		if (Compass.GetOppositeDirection(direction) == Side)
+		//		batch.DrawTile(decoset.Tileset, deco.GetTileId(position), deco.GetLocation(position));
+			//batch.DrawTile(decoset.Tileset, deco.GetTileId(position), deco.GetLocation(position),
+			//Color.White, 0.0f,
+			//deco.GetSwap(position) ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
+			//0.0f);
+	
+
 		}
 
 
@@ -90,6 +117,12 @@ namespace DungeonEye
 					{
 						ActivatedDecoration = int.Parse(node.Attributes["activated"].Value);
 						DeactivatedDecoration = int.Parse(node.Attributes["deactivated"].Value);
+					}
+					break;
+
+					case "side":
+					{
+						Side = (CardinalPoint)Enum.Parse(typeof(CardinalPoint), node.InnerText);
 					}
 					break;
 
@@ -126,6 +159,10 @@ namespace DungeonEye
 			writer.WriteAttributeString("deactivated", DeactivatedDecoration.ToString());
 			writer.WriteEndElement();
 
+			writer.WriteElementString("side", Side.ToString());
+
+			foreach (ScriptAction action in Actions)
+				action.Save(writer);
 
 			writer.WriteEndElement();
 
@@ -165,6 +202,26 @@ namespace DungeonEye
 			set;
 		}
 
+
+
+		/// <summary>
+		/// On activate actions
+		/// </summary>
+		public List<ScriptAction> Actions
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public CardinalPoint Side
+		{
+			get;
+			set;
+		}
 
 		#endregion
 	}

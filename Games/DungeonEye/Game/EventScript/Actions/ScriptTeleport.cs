@@ -30,7 +30,7 @@ namespace DungeonEye.EventScript
 	/// <summary>
 	/// Teleport the team
 	/// </summary>
-	public class ScriptTeleport : IScriptAction
+	public class ScriptTeleport : ScriptAction
 	{
 		/// <summary>
 		/// 
@@ -45,7 +45,7 @@ namespace DungeonEye.EventScript
 		/// Run actions
 		/// </summary>
 		/// <returns></returns>
-		public bool Run(Team team)
+		public override bool Run(Team team)
 		{
 			if (Target == null)
 				return false;
@@ -69,7 +69,7 @@ namespace DungeonEye.EventScript
 		/// </summary>
 		/// <param name="xml"></param>
 		/// <returns>True on success</returns>
-		public bool Load(XmlNode xml)
+		public override bool Load(XmlNode xml)
 		{
 			if (xml == null || xml.Name != Name)
 				return false;
@@ -103,7 +103,7 @@ namespace DungeonEye.EventScript
 		/// </summary>
 		/// <param name="writer"></param>
 		/// <returns>True on success</returns>
-		public bool Save(XmlWriter writer)
+		public override bool Save(XmlWriter writer)
 		{
 			if (writer == null)
 				return false;

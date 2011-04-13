@@ -944,7 +944,12 @@ namespace DungeonEye
 						// Check is the weapon can reach the target
 						if (team.IsHeroInFront(this) && item.Range == 0)
 						{
-							if (team.FrontSquare != null)
+							// Attack front monster
+							if (target != null)
+							{
+								Attacks[(int)hand] = new Attack(this, target, item);
+							}
+							else if (team.FrontSquare != null)
 								team.FrontSquare.OnHack(item);
 							else
 								Attacks[(int)hand] = new Attack(this, target, item);

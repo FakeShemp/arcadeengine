@@ -92,14 +92,7 @@ namespace DungeonEye
 
 
 				// Offset the item locations according to the distance
-				int[] offset = new int[]
-				{
-					2, 2, 2, 2, 2,
-					1, 1, 1, 1, 1,
-					   0, 0, 0,
-					   0, 0, 0,
-				};
-				Vector2 vect = DisplayCoordinates.ScaleFactor[offset[(int) position]];
+				Vector2 vect = DisplayCoordinates.GetMonsterScaleFactor(position);
 				Point loc = deco.PrepareLocation(position);
 				loc.Offset((int) (alcove.ItemLocation.X * vect.X), (int) (alcove.ItemLocation.Y * vect.Y));
 				

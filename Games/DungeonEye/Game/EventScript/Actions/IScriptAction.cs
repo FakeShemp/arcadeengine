@@ -29,7 +29,7 @@ namespace DungeonEye.EventScript
 	/// <summary>
 	/// Abstract base class for event script actions
 	/// </summary>
-	public interface IScriptAction
+	public class ScriptAction
 	{
 
 		/// <summary>
@@ -37,7 +37,10 @@ namespace DungeonEye.EventScript
 		/// </summary>
 		/// <param name="team">Team handle</param>
 		/// <returns>True on success</returns>
-		bool Run(Team team);
+		public virtual bool Run(Team team)
+		{
+			return false;
+		}
 
 
 		#region IO
@@ -48,7 +51,10 @@ namespace DungeonEye.EventScript
 		/// </summary>
 		/// <param name="filename">Xml data</param>
 		/// <returns>True if team successfuly loaded, otherwise false</returns>
-		bool Load(XmlNode xml);
+		public virtual bool Load(XmlNode xml)
+		{
+			return false;
+		}
 
 
 		/// <summary>
@@ -56,7 +62,10 @@ namespace DungeonEye.EventScript
 		/// </summary>
 		/// <param name="filename">XmlWriter</param>
 		/// <returns></returns>
-		bool Save(XmlWriter writer);
+		public virtual bool Save(XmlWriter writer)
+		{
+			return false;
+		}
 
 
 		#endregion
@@ -69,9 +78,20 @@ namespace DungeonEye.EventScript
 		/// <summary>
 		/// Action's name
 		/// </summary>
-		string Name
+		public string Name
 		{
 			get;
+			protected set;
+		}
+
+
+		/// <summary>
+		/// Target
+		/// </summary>
+		public DungeonLocation Target
+		{
+			get;
+			protected set;
 		}
 
 

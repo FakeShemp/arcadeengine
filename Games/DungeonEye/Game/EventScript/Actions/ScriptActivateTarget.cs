@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DungeonEye.EventScript
 {
-	public class ScriptActivateTarget : IScriptAction
+	public class ScriptActivateTarget : ScriptAction
 	{
 
 		/// <summary>
@@ -13,7 +13,7 @@ namespace DungeonEye.EventScript
 		/// </summary>
 		/// <param name="team"></param>
 		/// <returns></returns>
-		public bool Run(Team team)
+		public override bool Run(Team team)
 		{
 
 
@@ -26,7 +26,7 @@ namespace DungeonEye.EventScript
 		/// </summary>
 		/// <param name="xml"></param>
 		/// <returns></returns>
-		public bool Load(XmlNode xml)
+		public override bool Load(XmlNode xml)
 		{
 			return true;
 		}
@@ -37,7 +37,7 @@ namespace DungeonEye.EventScript
 		/// </summary>
 		/// <param name="writer"></param>
 		/// <returns></returns>
-		public bool Save(XmlWriter writer)
+		public override bool Save(XmlWriter writer)
 		{
 			return true;
 		}
