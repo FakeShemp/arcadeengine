@@ -111,6 +111,7 @@
 			// 
 			// toolStrip1
 			// 
+			this.toolStrip1.AutoSize = false;
 			this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
 			this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.TileIDBox,
@@ -119,7 +120,7 @@
             this.SelectionBox,
             this.HotSpotBox,
             this.ColisionBox});
-			this.toolStrip1.Location = new System.Drawing.Point(3, 16);
+			this.toolStrip1.Location = new System.Drawing.Point(6, 16);
 			this.toolStrip1.Name = "toolStrip1";
 			this.toolStrip1.Size = new System.Drawing.Size(170, 25);
 			this.toolStrip1.TabIndex = 18;
@@ -200,9 +201,9 @@
 			// 
 			this.TilePropertyGrid.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-			this.TilePropertyGrid.Location = new System.Drawing.Point(12, 44);
+			this.TilePropertyGrid.Location = new System.Drawing.Point(6, 44);
 			this.TilePropertyGrid.Name = "TilePropertyGrid";
-			this.TilePropertyGrid.Size = new System.Drawing.Size(161, 112);
+			this.TilePropertyGrid.Size = new System.Drawing.Size(170, 112);
 			this.TilePropertyGrid.TabIndex = 2;
 			this.TilePropertyGrid.ToolbarVisible = false;
 			// 
@@ -488,6 +489,7 @@
 			// 
 			this.ColorDialogBox.AnyColor = true;
 			this.ColorDialogBox.FullOpen = true;
+			this.ColorDialogBox.SolidColorOnly = true;
 			// 
 			// TileSetForm
 			// 
@@ -497,10 +499,10 @@
 			this.Controls.Add(this.splitContainer1);
 			this.Controls.Add(this.TextureToolStrip);
 			this.Name = "TileSetForm";
+			this.Text = "TileSet form";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.TileSetForm_FormClosed);
 			this.Load += new System.EventHandler(this.TileSetForm_Load);
 			this.TileGroupBox.ResumeLayout(false);
-			this.TileGroupBox.PerformLayout();
 			this.toolStrip1.ResumeLayout(false);
 			this.toolStrip1.PerformLayout();
 			this.TextureToolStrip.ResumeLayout(false);

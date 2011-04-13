@@ -100,12 +100,32 @@ namespace ArcEngine.Editor
 
 
 		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="left"></param>
+		/// <param name="right"></param>
+		/// <returns></returns>
+		bool SameColor(Color left, Color right)
+		{
+			return (
+				left.A == right.A &&
+				left.R == right.R &&
+				left.G == right.G &&
+				left.B == right.B);
+		}
+
+
+		/// <summary>
 		/// Detect edges of a tile
 		/// </summary>
 		/// <param name="start">Location</param>
 		/// <returns></returns>
 		private Rectangle DetectTileEdges(Point start)
 		{
+			if (TileSet.Texture == null || !TileSet.Texture.Bounds.Contains(start))
+				return Rectangle.Empty;
+
+
 			Cursor cursor = Cursor;
 			Cursor = Cursors.WaitCursor;
 
@@ -118,7 +138,7 @@ namespace ArcEngine.Editor
 			// Find left border
 			while (bound.X > 0)
 			{
-				if (colors[bound.X - 1, bound.Y] == EdgeDetectColor)
+				if (SameColor(colors[bound.X - 1, bound.Y], EdgeDetectColor))			
 					break;
 				bound.X--;
 			}
@@ -126,7 +146,7 @@ namespace ArcEngine.Editor
 			// Find top
 			while (bound.Y > 0)
 			{
-				if (colors[bound.X, bound.Y - 1] == EdgeDetectColor)
+				if (SameColor(colors[bound.X, bound.Y - 1], EdgeDetectColor))
 					break;
 				bound.Y--;
 			}
@@ -134,7 +154,7 @@ namespace ArcEngine.Editor
 			// Find right
 			while (bound.Right < TileSet.Texture.Size.Width - 1)
 			{
-				if (colors[bound.Right + 1, bound.Bottom] == EdgeDetectColor)
+				if (SameColor(colors[bound.Right + 1, bound.Bottom], EdgeDetectColor))
 					break;
 
 				bound.Width++;
@@ -143,7 +163,7 @@ namespace ArcEngine.Editor
 			// Find bottom
 			while (bound.Bottom < TileSet.Texture.Size.Height - 1)
 			{
-				if (colors[bound.Right, bound.Bottom + 1] == EdgeDetectColor)
+				if (SameColor(colors[bound.Right, bound.Bottom + 1], EdgeDetectColor))
 					break;
 
 				bound.Height++;
@@ -232,7 +252,7 @@ namespace ArcEngine.Editor
 			Point point2 = new Point(((e.Location.X - TextureOffset.X) / zoomvalue),
 				(int) ((e.Location.Y - TextureOffset.Y) / zoomvalue));
 
-//			TextureOffset.Offset(point);
+			//			TextureOffset.Offset(point);
 		}
 
 
@@ -337,6 +357,11 @@ namespace ArcEngine.Editor
 		/// <param name="e"></param>
 		private void GLTextureControl_MouseMove(object sender, MouseEventArgs e)
 		{
+			int zoomvalue = int.Parse((string) ZoomBox.SelectedItem);
+			Point position = new Point((e.Location.X - TextureOffset.X) / zoomvalue, (e.Location.Y - TextureOffset.Y) / zoomvalue);
+
+
+			#region Middle mouse button
 			// If scrolling with the middle mouse button
 			if (e.Button == MouseButtons.Middle)
 			{
@@ -348,18 +373,28 @@ namespace ArcEngine.Editor
 				// Store last mouse location
 				LastMousePos = e.Location;
 			}
+			#endregion
 
+			#region Left mouse button
 			else if (e.Button == MouseButtons.Left)
 			{
 			}
+			#endregion
+
+			#region Right mouse button
+			else if (e.Button == MouseButtons.Right)
+			{
+			}
+			#endregion
+
 
 			// Update selection
-			if (SelectionTool != null && (SelectionBox.Checked || HotSpotBox.Checked || ColisionBox.Checked))
+			if (SelectionTool != null && SelectionBox.Checked)// || HotSpotBox.Checked || ColisionBox.Checked))
 				SelectionTool.OnMouseMove(e);
 
 			// Prints the location of the mouse
-			int zoomvalue = int.Parse((string) ZoomBox.SelectedItem);
-			PositionLabel.Text = (int) ((e.Location.X - TextureOffset.X) / zoomvalue) + "," + (int) ((e.Location.Y - TextureOffset.Y) / zoomvalue);
+			//PositionLabel.Text = (int) ((e.Location.X - TextureOffset.X) / zoomvalue) + "," + (int) ((e.Location.Y - TextureOffset.Y) / zoomvalue);
+			PositionLabel.Text = position.X + "," + position.Y;
 			SizeLabel.Text = SelectionTool.Rectangle.Width + "," + SelectionTool.Rectangle.Height;
 
 
@@ -608,8 +643,6 @@ namespace ArcEngine.Editor
 			Batch.Draw(CheckerBoard, dst, dst, Color.White);
 
 
-			//	CurrentTile = tileSet.GetTile((int)TileIDBox.Value);
-
 			// No tiles, no draw !
 			if (CurrentTile != null)
 			{
@@ -648,7 +681,7 @@ namespace ArcEngine.Editor
 					pos.Y = (int) (CurrentTile.Origin.Y * zoomvalue + TileOffset.Y);
 
 					Rectangle rect = new Rectangle(pos, new Size((int) zoomvalue, (int) zoomvalue));
-					Batch.DrawRectangle(rect, Color.Red);
+					Batch.FillRectangle(rect, Color.Red);
 
 				}
 			}

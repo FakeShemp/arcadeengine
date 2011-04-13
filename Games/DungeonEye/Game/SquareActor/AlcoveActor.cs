@@ -109,7 +109,7 @@ namespace DungeonEye
 				{
 					batch.DrawTile(Square.Maze.Dungeon.ItemTileSet, item.GroundTileID, loc,
 						DisplayCoordinates.GetDistantColor(position), 0.0f,
-						DisplayCoordinates.GetScaleFactor(position), SpriteEffects.None, 0.0f);
+						DisplayCoordinates.GetItemScaleFactor(position), SpriteEffects.None, 0.0f);
 				}
 			}
 

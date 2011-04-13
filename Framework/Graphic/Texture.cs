@@ -382,13 +382,16 @@ namespace ArcEngine.Graphic
 		/// <param name="target">Reference face</param>
 		protected void Unlock(TextureTarget target)
 		{
-			if (!IsLocked || LockMode == ImageLockMode.ReadOnly)
+			if (!IsLocked)
 			{
 				IsLocked = false;
 				Trace.WriteDebugLine("[Texture2D] : Lock() failed. Already locked - {0}", this);
-				
 				return;
 			}
+
+			IsLocked = false;
+			if (LockMode == ImageLockMode.ReadOnly)
+				return;
 
 			Display.Texture = this;
 
@@ -407,7 +410,7 @@ namespace ArcEngine.Graphic
 			//    (TK.PixelFormat) PixelFormat, TK.PixelType.UnsignedByte, Data); 
 
 
-			IsLocked = false;
+			//IsLocked = false;
 			Data = null;
 			LockBound = Rectangle.Empty;
 

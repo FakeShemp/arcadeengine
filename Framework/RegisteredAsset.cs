@@ -76,7 +76,7 @@ namespace ArcEngine
 				throw new ArgumentNullException("name");
 
 			AssetEditorBase form = Activator.CreateInstance(Editor, new object[]{ Get(name)}) as AssetEditorBase;
-			form.Text = name;
+			form.TabText = name + " (" + form.Asset.GetType().Name + ")";
 			return form;
 		}
 

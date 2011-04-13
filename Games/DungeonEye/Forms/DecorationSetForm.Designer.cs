@@ -312,7 +312,7 @@
 			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.groupBox1);
 			this.Name = "DecorationSetForm";
-			this.Text = "DecorationForm";
+			this.Text = "DecorationSet Form";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.DecorationForm_FormClosed);
 			this.Load += new System.EventHandler(this.DecorationForm_Load);
 			this.groupBox1.ResumeLayout(false);

@@ -699,7 +699,7 @@ namespace DungeonEye
 						{
 							batch.DrawTile(Dungeon.ItemTileSet, item.GroundTileID, point,
 								DisplayCoordinates.GetDistantColor(position), 0.0f,
-								DisplayCoordinates.GetScaleFactor(position), SpriteEffects.None, 0.0f);
+								DisplayCoordinates.GetItemScaleFactor(position), SpriteEffects.None, 0.0f);
 						}
 					}
 				}
@@ -761,7 +761,7 @@ namespace DungeonEye
 						{
 							batch.DrawTile(Dungeon.ItemTileSet, item.GroundTileID, point,
 								DisplayCoordinates.GetDistantColor(position), 0.0f,
-								DisplayCoordinates.GetScaleFactor(position), SpriteEffects.None, 0.0f);
+								DisplayCoordinates.GetItemScaleFactor(position), SpriteEffects.None, 0.0f);
 						}
 					}
 				}

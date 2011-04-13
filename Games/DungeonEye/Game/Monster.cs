@@ -774,32 +774,6 @@ namespace DungeonEye
 			if (Tileset == null || Square == null)
 				return;
 
-			#region Tileset scale
-			Vector2[] tilescale = new Vector2[]
-			{
-				new Vector2(1.0f, 1.0f),		// A
-				new Vector2(0.5f, 0.5f),		// B
-				new Vector2(0.5f, 0.5f),		// C
-				new Vector2(0.5f, 0.5f),		// D
-				new Vector2(0.5f, 0.5f),		// E
-				new Vector2(0.5f, 0.5f),		// F
-				new Vector2(1.0f, 1.0f),		// G
-
-				new Vector2(1.0f, 1.0f),		// H
-				new Vector2(0.66f, 0.66f),		// I
-				new Vector2(0.66f, 0.66f),		// J
-				new Vector2(0.66f, 0.66f),		// K
-				new Vector2(1.0f, 1.0f),		// L
-
-				new Vector2(1.0f, 1.0f),		// M
-				new Vector2(1.0f, 1.0f),		// N
-				new Vector2(1.0f, 1.0f),		// O
-
-				new Vector2(1.0f, 1.0f),		// P
-				new Vector2(1.0f, 1.0f),		// Team
-				new Vector2(1.0f, 1.0f),		// Q
-			};
-			#endregion
 
 			#region Draw offset scale
 			Point[] offsetscale = new Point[]
@@ -900,7 +874,6 @@ namespace DungeonEye
 
 					// Draw the monster
 					int offset = (int)pos;
-					Tileset.Scale = tilescale[offset];
 
 					// Find the good square location
 					SquarePosition squarepos;
@@ -911,10 +884,11 @@ namespace DungeonEye
 
 					// Screen coordinate
 					Point position = DisplayCoordinates.GetGroundPosition(pos, squarepos);
-					position.Offset(DrawOffset.X / offsetscale[offset].X, DrawOffset.Y / offsetscale[offset].Y);
+			//		position.Offset(DrawOffset.X / offsetscale[offset].X, DrawOffset.Y / offsetscale[offset].Y);
 
 					// Display color
-					Color tint = colors[(int)pos];
+					Color tint = DisplayCoordinates.GetDistantColor(pos);
+						//colors[(int)pos];
 
 					// Display in red if monster is hit
 					if (LastHit + HitDisplayDuration > DateTime.Now)
@@ -923,11 +897,12 @@ namespace DungeonEye
 					// Draw
 					batch.DrawTile(Tileset, 
 						GetTileID(teamdir), 
-						position, tint, 
-						0.0f, 
+						position, 
+						tint, 
+						0.0f,
+ 						DisplayCoordinates.GetMonsterScaleFactor(pos),
 						NeedSwapSprite(teamdir) ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 
 						0.0f);
-					Tileset.Scale = new Vector2(1.0f, 1.0f);
 
 
 					// Finish special mode

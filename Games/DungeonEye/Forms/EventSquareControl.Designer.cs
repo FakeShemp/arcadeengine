@@ -48,6 +48,7 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.IntelligenceBox = new System.Windows.Forms.NumericUpDown();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.ColorPanelBox = new System.Windows.Forms.Panel();
 			this.MsgColorBox = new System.Windows.Forms.Button();
 			this.MessageBox = new System.Windows.Forms.TextBox();
 			this.PictureTab = new System.Windows.Forms.TabPage();
@@ -64,7 +65,6 @@
 			this.TextJustificationBox = new System.Windows.Forms.ComboBox();
 			this.TextColorBox = new System.Windows.Forms.Button();
 			this.TextBox = new System.Windows.Forms.TextBox();
-			this.ColorPanelBox = new System.Windows.Forms.Panel();
 			this.groupBox1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.PreviewBox)).BeginInit();
 			this.groupBox3.SuspendLayout();
@@ -124,7 +124,7 @@
 			// BrowsePictureBox
 			// 
 			this.BrowsePictureBox.AutoSize = true;
-			this.BrowsePictureBox.Location = new System.Drawing.Point(364, 6);
+			this.BrowsePictureBox.Location = new System.Drawing.Point(6, 252);
 			this.BrowsePictureBox.Name = "BrowsePictureBox";
 			this.BrowsePictureBox.Size = new System.Drawing.Size(98, 23);
 			this.BrowsePictureBox.TabIndex = 1;
@@ -135,7 +135,7 @@
 			// DisplayBorderBox
 			// 
 			this.DisplayBorderBox.AutoSize = true;
-			this.DisplayBorderBox.Location = new System.Drawing.Point(364, 61);
+			this.DisplayBorderBox.Location = new System.Drawing.Point(11, 281);
 			this.DisplayBorderBox.Name = "DisplayBorderBox";
 			this.DisplayBorderBox.Size = new System.Drawing.Size(93, 17);
 			this.DisplayBorderBox.TabIndex = 2;
@@ -297,6 +297,13 @@
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Display message :";
 			// 
+			// ColorPanelBox
+			// 
+			this.ColorPanelBox.Location = new System.Drawing.Point(259, 46);
+			this.ColorPanelBox.Name = "ColorPanelBox";
+			this.ColorPanelBox.Size = new System.Drawing.Size(22, 22);
+			this.ColorPanelBox.TabIndex = 2;
+			// 
 			// MsgColorBox
 			// 
 			this.MsgColorBox.AutoSize = true;
@@ -340,9 +347,9 @@
 			// 
 			this.PictureNameBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.PictureNameBox.Location = new System.Drawing.Point(364, 35);
+			this.PictureNameBox.Location = new System.Drawing.Point(110, 255);
 			this.PictureNameBox.Name = "PictureNameBox";
-			this.PictureNameBox.Size = new System.Drawing.Size(142, 20);
+			this.PictureNameBox.Size = new System.Drawing.Size(248, 20);
 			this.PictureNameBox.TabIndex = 3;
 			this.PictureNameBox.TextChanged += new System.EventHandler(this.PictureNameBox_TextChanged);
 			// 
@@ -370,7 +377,7 @@
 			this.groupBox7.Controls.Add(this.ChoicesBox);
 			this.groupBox7.Location = new System.Drawing.Point(6, 172);
 			this.groupBox7.Name = "groupBox7";
-			this.groupBox7.Size = new System.Drawing.Size(500, 165);
+			this.groupBox7.Size = new System.Drawing.Size(425, 165);
 			this.groupBox7.TabIndex = 2;
 			this.groupBox7.TabStop = false;
 			this.groupBox7.Text = "Choices :";
@@ -378,7 +385,7 @@
 			// DownChoiceBox
 			// 
 			this.DownChoiceBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.DownChoiceBox.Location = new System.Drawing.Point(419, 130);
+			this.DownChoiceBox.Location = new System.Drawing.Point(344, 130);
 			this.DownChoiceBox.Name = "DownChoiceBox";
 			this.DownChoiceBox.Size = new System.Drawing.Size(75, 23);
 			this.DownChoiceBox.TabIndex = 1;
@@ -389,7 +396,7 @@
 			// UpChoiceBox
 			// 
 			this.UpChoiceBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.UpChoiceBox.Location = new System.Drawing.Point(419, 101);
+			this.UpChoiceBox.Location = new System.Drawing.Point(344, 101);
 			this.UpChoiceBox.Name = "UpChoiceBox";
 			this.UpChoiceBox.Size = new System.Drawing.Size(75, 23);
 			this.UpChoiceBox.TabIndex = 1;
@@ -400,7 +407,7 @@
 			// DeleteChoiceBox
 			// 
 			this.DeleteChoiceBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.DeleteChoiceBox.Location = new System.Drawing.Point(419, 48);
+			this.DeleteChoiceBox.Location = new System.Drawing.Point(344, 48);
 			this.DeleteChoiceBox.Name = "DeleteChoiceBox";
 			this.DeleteChoiceBox.Size = new System.Drawing.Size(75, 23);
 			this.DeleteChoiceBox.TabIndex = 1;
@@ -411,7 +418,7 @@
 			// AddEditChoiceBox
 			// 
 			this.AddEditChoiceBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.AddEditChoiceBox.Location = new System.Drawing.Point(419, 19);
+			this.AddEditChoiceBox.Location = new System.Drawing.Point(344, 19);
 			this.AddEditChoiceBox.Name = "AddEditChoiceBox";
 			this.AddEditChoiceBox.Size = new System.Drawing.Size(75, 23);
 			this.AddEditChoiceBox.TabIndex = 1;
@@ -427,7 +434,7 @@
 			this.ChoicesBox.FormattingEnabled = true;
 			this.ChoicesBox.Location = new System.Drawing.Point(6, 19);
 			this.ChoicesBox.Name = "ChoicesBox";
-			this.ChoicesBox.Size = new System.Drawing.Size(407, 134);
+			this.ChoicesBox.Size = new System.Drawing.Size(332, 134);
 			this.ChoicesBox.TabIndex = 0;
 			this.ChoicesBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ChoicesBox_MouseDoubleClick);
 			// 
@@ -441,7 +448,7 @@
 			this.groupBox6.Controls.Add(this.TextBox);
 			this.groupBox6.Location = new System.Drawing.Point(6, 6);
 			this.groupBox6.Name = "groupBox6";
-			this.groupBox6.Size = new System.Drawing.Size(500, 160);
+			this.groupBox6.Size = new System.Drawing.Size(425, 160);
 			this.groupBox6.TabIndex = 1;
 			this.groupBox6.TabStop = false;
 			this.groupBox6.Text = "Initial message :";
@@ -450,7 +457,7 @@
 			// 
 			this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(308, 134);
+			this.label3.Location = new System.Drawing.Point(233, 134);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(59, 13);
 			this.label3.TabIndex = 3;
@@ -461,7 +468,7 @@
 			this.TextJustificationBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.TextJustificationBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.TextJustificationBox.FormattingEnabled = true;
-			this.TextJustificationBox.Location = new System.Drawing.Point(373, 131);
+			this.TextJustificationBox.Location = new System.Drawing.Point(298, 131);
 			this.TextJustificationBox.Name = "TextJustificationBox";
 			this.TextJustificationBox.Size = new System.Drawing.Size(121, 21);
 			this.TextJustificationBox.TabIndex = 2;
@@ -487,16 +494,9 @@
 			this.TextBox.Location = new System.Drawing.Point(6, 19);
 			this.TextBox.Multiline = true;
 			this.TextBox.Name = "TextBox";
-			this.TextBox.Size = new System.Drawing.Size(488, 106);
+			this.TextBox.Size = new System.Drawing.Size(413, 106);
 			this.TextBox.TabIndex = 0;
 			this.TextBox.TextChanged += new System.EventHandler(this.TextBox_TextChanged);
-			// 
-			// ColorPanelBox
-			// 
-			this.ColorPanelBox.Location = new System.Drawing.Point(259, 46);
-			this.ColorPanelBox.Name = "ColorPanelBox";
-			this.ColorPanelBox.Size = new System.Drawing.Size(22, 22);
-			this.ColorPanelBox.TabIndex = 2;
 			// 
 			// EventSquareControl
 			// 

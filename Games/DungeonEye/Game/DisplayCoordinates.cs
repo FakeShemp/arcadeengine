@@ -123,12 +123,12 @@ namespace DungeonEye
 		#region Getters
 
 		/// <summary>
-		/// Gets the scaling factor for distant objects
+		/// Gets the scaling factor for distant items
 		/// </summary>
 		/// <param name="position">View position</param>
-		static public Vector2 GetScaleFactor(ViewFieldPosition position)
+		static public Vector2 GetItemScaleFactor(ViewFieldPosition position)
 		{
-			return ScaleFactor[ScaleOffset[(int) position]];
+			return ScaleFactor[ItemScaleOffset[(int) position]];
 		}
 
 
@@ -136,13 +136,23 @@ namespace DungeonEye
 		/// Returns a location modified by a distant scale
 		/// </summary>
 		/// <param name="position">View field position</param>
-		/// <param name="point"></param>
+		/// <param name="point">Screen location</param>
 		/// <returns></returns>
 		static public Point GetScaleFactor(ViewFieldPosition position, Point point)
 		{
-			Vector2 vect = ScaleFactor[ScaleOffset[(int) position]];
+			Vector2 vect = ScaleFactor[ItemScaleOffset[(int) position]];
 
 			return new Point((int)(point.X * vect.X), (int)(point.Y * vect.Y));
+		}
+
+
+		/// <summary>
+		/// Gets the scaling factor for distant monsters
+		/// </summary>
+		/// <param name="position">View position</param>
+		static public Vector2 GetMonsterScaleFactor(ViewFieldPosition position)
+		{
+			return ScaleFactor[MonsterScaleOffset[(int) position]];
 		}
 
 
@@ -160,7 +170,7 @@ namespace DungeonEye
 				Color.FromArgb(128, 128, 128, 128),
 			};
 
-			return colors[ScaleOffset[(int) position]];
+			return colors[ItemScaleOffset[(int) position]];
 		}
 
 
@@ -596,6 +606,9 @@ namespace DungeonEye
 
 		#region Offset tables
 
+		/// <summary>
+		/// Wall sides to draw
+		/// </summary>
 		static public CardinalPoint[][] DrawingWallSides = 
 			{
 				new CardinalPoint[] {CardinalPoint.East, CardinalPoint.South},			// A
@@ -634,13 +647,25 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Scaling offset
+		/// Scaling offset for items
 		/// </summary>
-		static int[] ScaleOffset = new int[]
+		static int[] ItemScaleOffset = new int[]
 			{
 				3, 3, 3, 3, 3,
 				2, 2, 2, 2, 2,
 				   1, 1, 1,
+				   0, 0, 0,
+			};
+
+
+		/// <summary>
+		/// Scaling offset for monsters
+		/// </summary>
+		static int[] MonsterScaleOffset = new int[]
+			{
+				2, 2, 2, 2, 2,
+				1, 1, 1, 1, 1,
+				   0, 0, 0,
 				   0, 0, 0,
 			};
 
