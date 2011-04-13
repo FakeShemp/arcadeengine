@@ -775,6 +775,10 @@ namespace DungeonEye.Forms
 			{
 				control = new AlcoveControl(Square.Actor as AlcoveActor, Maze);
 			}
+			else if (Square.Actor is WallSwitch)
+			{
+				control = new WallSwitchControl(Square.Actor as WallSwitch, Maze);
+			}
 			else
 			{
 				MessageBox.Show("Unhandled actor form", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

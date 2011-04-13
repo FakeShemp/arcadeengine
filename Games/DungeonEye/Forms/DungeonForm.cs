@@ -969,6 +969,12 @@ namespace DungeonEye.Forms
 					EditSquare(square, true);
 					UncheckButtons(null);
 				}
+				else if (SwitchBox.Checked)
+				{
+					square.Actor = new WallSwitch(square);
+					EditSquare(square, true);
+					UncheckButtons(null);
+				}
 				else
 				{
 					CurrentSquare = square;

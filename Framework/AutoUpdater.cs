@@ -92,7 +92,7 @@ namespace ArcEngine
 			}
 			catch (Exception e)
 			{
-				Trace.WriteLine("[AutoUpdate]Check : Exception : " + e.Message);
+				Trace.WriteLine("[AutoUpdate]Check() : " + e.Message);
 			}
 
 		}

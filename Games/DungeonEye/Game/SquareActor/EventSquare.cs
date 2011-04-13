@@ -30,7 +30,7 @@ using DungeonEye.EventScript;
 namespace DungeonEye
 {
 	/// <summary>
-	/// Event square
+	/// Event Squares can be used for a variety of things such as displaying story information, npc dialog, quests...
 	/// </summary>
 	public class EventSquare : SquareActor
 	{

@@ -417,6 +417,12 @@
     <Compile Include="Forms\ViewFieldControl.Designer.cs">
       <DependentUpon>ViewFieldControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\WallSwitchControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\WallSwitchControl.Designer.cs">
+      <DependentUpon>WallSwitchControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Wizards\NewItemWizard.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -440,6 +446,9 @@
     <Compile Include="Game\GameColors.cs" />
     <Compile Include="Game\SquareActor\AlcoveActor.cs" />
     <Compile Include="Game\SquareActor\Alcove.cs" />
+    <Compile Include="Game\SquareActor\Generator.cs" />
+    <Compile Include="Game\SquareActor\Launcher.cs" />
+    <Compile Include="Game\SquareActor\WallSwitch.cs" />
     <Compile Include="Game\ViewField.cs" />
     <Compile Include="Interfaces\IDoor.cs" />
     <Compile Include="Interfaces\IFloorPlate.cs" />
@@ -649,6 +658,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ViewFieldControl.resx">
       <DependentUpon>ViewFieldControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\WallSwitchControl.resx">
+      <DependentUpon>WallSwitchControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
