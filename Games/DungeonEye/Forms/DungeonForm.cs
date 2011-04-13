@@ -177,11 +177,11 @@ namespace DungeonEye.Forms
 				LauncherBox,
 				GeneratorBox,
 				SwitchBox,
-				FloorSwitchBox,
+				PressurePlateBox,
 
 				EventBox,
 
-				FloorSwitchBox,
+				PressurePlateBox,
 				DecorationBox,
 				FloorDecorationBox,
 
@@ -593,6 +593,7 @@ namespace DungeonEye.Forms
 			// Get the corresponding square
 			Square block = Maze.GetSquare(coord);
 
+			#region Middle button
 			if (e.Button == MouseButtons.Middle)
 			{
 				LastMousePos = e.Location;
@@ -600,6 +601,10 @@ namespace DungeonEye.Forms
 
 				return;
 			}
+			#endregion
+
+
+			#region Left button
 			else if (e.Button == MouseButtons.Left)
 			{
 				BlockCoord = coord;
@@ -643,7 +648,10 @@ namespace DungeonEye.Forms
 						DragPreview = true;
 				}
 			}
+			#endregion
 
+
+			#region Right button
 			else if (e.Button == MouseButtons.Right)
 			{
 
@@ -660,7 +668,7 @@ namespace DungeonEye.Forms
 					block.NoMonster = false;
 				}
 			}
-
+			#endregion
 
 		}
 
@@ -939,7 +947,7 @@ namespace DungeonEye.Forms
 					EditSquare(square, true);
 					UncheckButtons(null);
 				}
-				else if (FloorSwitchBox.Checked)
+				else if (PressurePlateBox.Checked)
 				{
 					square.Actor = new PressurePlate(square);
 					EditSquare(square, true);
@@ -972,6 +980,18 @@ namespace DungeonEye.Forms
 				else if (SwitchBox.Checked)
 				{
 					square.Actor = new WallSwitch(square);
+					EditSquare(square, true);
+					UncheckButtons(null);
+				}
+				else if (GeneratorBox.Checked)
+				{
+					square.Actor = new Generator(square);
+					EditSquare(square, true);
+					UncheckButtons(null);
+				}
+				else if (LauncherBox.Checked)
+				{
+					square.Actor = new Launcher(square);
 					EditSquare(square, true);
 					UncheckButtons(null);
 				}

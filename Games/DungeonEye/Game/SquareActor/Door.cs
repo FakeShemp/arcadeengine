@@ -521,7 +521,7 @@ namespace DungeonEye
 
 					default:
 					{
-						Trace.WriteLine("[Door] Load() : Unknown node \"" + node.Name + "\" found.");
+						base.Load(node);
 					}
 					break;
 				}
@@ -545,6 +545,8 @@ namespace DungeonEye
 
 
 			writer.WriteStartElement(Tag);
+
+			base.Save(writer);
 
 			// Type of door
 			writer.WriteStartElement("type");

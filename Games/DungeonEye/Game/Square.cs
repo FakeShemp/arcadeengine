@@ -759,6 +759,20 @@ namespace DungeonEye
 					}
 					break;
 
+					case "decoration":
+					{
+						foreach (CardinalPoint point in Enum.GetValues(typeof(CardinalPoint)))
+							Decorations[(int) point] = int.Parse(node.Attributes[point.ToString()].Value);
+					}
+					break;
+
+					case WallSwitch.Tag:
+					{
+						Actor = new WallSwitch(this);
+						Actor.Load(node);
+					}
+					break;
+
 					case Door.Tag:
 					{
 						Actor = new Door(this);
@@ -814,13 +828,6 @@ namespace DungeonEye
 						//SetAlcove(side, true);
 						Actor = new AlcoveActor(this);
 						Actor.Load(node);
-					}
-					break;
-
-					case "decoration":
-					{
-						foreach (CardinalPoint point in Enum.GetValues(typeof(CardinalPoint)))
-							Decorations[(int)point] = int.Parse(node.Attributes[point.ToString()].Value);
 					}
 					break;
 

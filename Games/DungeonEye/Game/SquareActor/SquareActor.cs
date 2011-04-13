@@ -40,6 +40,7 @@ namespace DungeonEye
 		public SquareActor(Square square)
 		{
 			Square = square;
+			IsActivated = true;
 		}
 
 
@@ -130,6 +131,7 @@ namespace DungeonEye
 			return false;
 		}
 
+
 		/// <summary>
 		/// Fired when a monster stands on a square
 		/// </summary>
@@ -173,6 +175,7 @@ namespace DungeonEye
 		/// </summary>
 		public virtual void Activate()
 		{
+			IsActivated = true;
 		}
 
 
@@ -181,6 +184,7 @@ namespace DungeonEye
 		/// </summary>
 		public virtual void Deactivate()
 		{
+			IsActivated = false;
 		}
 
 
@@ -189,6 +193,7 @@ namespace DungeonEye
 		/// </summary>
 		public virtual void Toggle()
 		{
+			IsActivated = !IsActivated;
 		}
 
 
@@ -233,12 +238,30 @@ namespace DungeonEye
 		/// <summary>
 		/// Loads the door's definition from a bank
 		/// </summary>
-		/// <param name="xml">Xml handle</param>
+		/// <param name="node">Xml handle</param>
 		/// <returns></returns>
-		public virtual bool Load(XmlNode xml)
+		public virtual bool Load(XmlNode node)
 		{
-			return false;
-			
+			if (node == null)
+				return false;
+
+
+			switch (node.Name)
+			{
+				case "isactivated":
+				{
+					IsActivated = bool.Parse(node.InnerXml);
+				}
+				break;
+
+				default:
+				{
+					Trace.WriteLine("[SquareActove] Load() : Unknown node \"" + node.Name + "\" found.");
+				}
+				break;
+			}
+
+			return true;
 		}
 
 
@@ -250,7 +273,12 @@ namespace DungeonEye
 		/// <returns></returns>
 		public virtual bool Save(XmlWriter writer)
 		{
-			return false;
+			if (writer == null)
+				return false;
+
+			writer.WriteElementString("isactivated", IsActivated.ToString());
+
+			return true;
 		}
 
 		#endregion
@@ -305,6 +333,16 @@ namespace DungeonEye
 		{
 			get;
 			set;
+		}
+
+
+		/// <summary>
+		/// Does the actor is activated
+		/// </summary>
+		public bool IsActivated
+		{
+			get;
+			private set;
 		}
 
 		#endregion

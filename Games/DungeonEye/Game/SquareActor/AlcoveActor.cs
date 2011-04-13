@@ -40,8 +40,7 @@ namespace DungeonEye
 		/// Cosntructor
 		/// </summary>
 		/// <param name="square">Parent square handle</param>
-		public AlcoveActor(Square square)
-			: base(square)
+		public AlcoveActor(Square square) : base(square)
 		{
 			Alcoves = new Alcove[4]
 			{
@@ -209,7 +208,7 @@ namespace DungeonEye
 
 					default:
 					{
-						Trace.WriteLine("[Alcove] Load() : Unknown node \"" + node.Name + "\" found.");
+						base.Load(node);
 					}
 					break;
 				}
@@ -232,6 +231,8 @@ namespace DungeonEye
 
 
 			writer.WriteStartElement(Tag);
+
+			base.Save(writer);
 
 			for (int i = 0 ; i < 4 ; i++)
 			{

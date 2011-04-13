@@ -28,17 +28,85 @@ using ArcEngine;
 namespace DungeonEye
 {
 	/// <summary>
-	/// 
+	/// Item lanucher
 	/// </summary>
 	public class Launcher : SquareActor
 	{
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
-		/// <param name="square"></param>
+		/// <param name="square">Parent square handle</param>
 		public Launcher(Square square) : base(square)
 		{
 
 		}
+
+
+
+		#region I/O
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="node"></param>
+		/// <returns></returns>
+		public override bool Load(XmlNode xml)
+		{
+			if (xml == null || xml.Name != Tag)
+				return false;
+
+			foreach (XmlNode node in xml)
+			{
+				switch (node.Name.ToLower())
+				{
+					default:
+					{
+						base.Load(node);
+					}
+					break;
+				}
+
+			}
+
+			return true;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		public override bool Save(XmlWriter writer)
+		{
+			if (writer == null)
+				return false;
+
+
+			writer.WriteStartElement(Tag);
+
+			base.Save(writer);
+
+			writer.WriteEndElement();
+
+			return true;
+		}
+
+
+
+		#endregion
+
+
+		#region Properties
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public const string Tag = "launcher";
+
+
+
+		#endregion
+
 	}
 }

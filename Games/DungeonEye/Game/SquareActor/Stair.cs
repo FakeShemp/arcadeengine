@@ -66,7 +66,7 @@ namespace DungeonEye
 			int delta = Type == StairType.Up ? 0 : 13;
 
 			foreach (TileDrawing tmp in DisplayCoordinates.GetStairs(position))
-				batch.DrawTile(TileSet, tmp.ID + delta, tmp.Location, Color.White, 0.0f, tmp.Effect, 0.0f);
+				batch.DrawTile(TileSet, tmp.ID + delta, tmp.Location);
 		
 		}
 
@@ -151,6 +151,12 @@ namespace DungeonEye
 						Type = (StairType)Enum.Parse(typeof(StairType), node.Attributes["value"].Value);
 					}
 					break;
+
+					default:
+					{
+						base.Load(node);
+					}
+					break;
 				}
 
 			}
@@ -170,6 +176,8 @@ namespace DungeonEye
 
 
 			writer.WriteStartElement(Tag);
+
+			base.Save(writer);
 
 			writer.WriteStartElement("type");
 			writer.WriteAttributeString("value", Type.ToString());

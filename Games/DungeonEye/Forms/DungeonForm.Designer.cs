@@ -53,7 +53,7 @@
 			this.LauncherBox = new System.Windows.Forms.ToolStripButton();
 			this.GeneratorBox = new System.Windows.Forms.ToolStripButton();
 			this.SwitchBox = new System.Windows.Forms.ToolStripButton();
-			this.FloorSwitchBox = new System.Windows.Forms.ToolStripButton();
+			this.PressurePlateBox = new System.Windows.Forms.ToolStripButton();
 			this.FloorDecorationBox = new System.Windows.Forms.ToolStripButton();
 			this.DecorationBox = new System.Windows.Forms.ToolStripButton();
 			this.EventBox = new System.Windows.Forms.ToolStripButton();
@@ -129,7 +129,7 @@
             this.LauncherBox,
             this.GeneratorBox,
             this.SwitchBox,
-            this.FloorSwitchBox,
+            this.PressurePlateBox,
             this.FloorDecorationBox,
             this.DecorationBox,
             this.EventBox});
@@ -356,16 +356,16 @@
 			this.SwitchBox.Text = "Switch...";
 			this.SwitchBox.CheckedChanged += new System.EventHandler(this.ToggleStripButtons);
 			// 
-			// FloorSwitchBox
+			// PressurePlateBox
 			// 
-			this.FloorSwitchBox.CheckOnClick = true;
-			this.FloorSwitchBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.FloorSwitchBox.Image = ((System.Drawing.Image)(resources.GetObject("FloorSwitchBox.Image")));
-			this.FloorSwitchBox.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.FloorSwitchBox.Name = "FloorSwitchBox";
-			this.FloorSwitchBox.Size = new System.Drawing.Size(23, 22);
-			this.FloorSwitchBox.Text = "Floor switch...";
-			this.FloorSwitchBox.CheckedChanged += new System.EventHandler(this.ToggleStripButtons);
+			this.PressurePlateBox.CheckOnClick = true;
+			this.PressurePlateBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.PressurePlateBox.Image = ((System.Drawing.Image)(resources.GetObject("PressurePlateBox.Image")));
+			this.PressurePlateBox.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.PressurePlateBox.Name = "PressurePlateBox";
+			this.PressurePlateBox.Size = new System.Drawing.Size(23, 22);
+			this.PressurePlateBox.Text = "Pressure plate...";
+			this.PressurePlateBox.CheckedChanged += new System.EventHandler(this.ToggleStripButtons);
 			// 
 			// FloorDecorationBox
 			// 
@@ -852,7 +852,7 @@
 		private System.Windows.Forms.ToolStripButton LauncherBox;
 		private System.Windows.Forms.ToolStripButton GeneratorBox;
 		private System.Windows.Forms.ToolStripButton SwitchBox;
-		private System.Windows.Forms.ToolStripButton FloorSwitchBox;
+		private System.Windows.Forms.ToolStripButton PressurePlateBox;
 		private System.Windows.Forms.ToolStripButton FloorDecorationBox;
 		private System.Windows.Forms.ToolStripButton DecorationBox;
 		private System.Windows.Forms.ToolStripButton EventBox;

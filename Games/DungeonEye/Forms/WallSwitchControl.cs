@@ -48,11 +48,15 @@ namespace DungeonEye
 			InitializeComponent();
 
 
+			ActivatedIdBox.Value = wallswitch.ActivatedDecoration;
+			DeactivatedIdBox.Value = wallswitch.DeactivatedDecoration;
+
+
+			Maze = maze;
 			DecorationSet = maze.Decoration;
-
-
 			WallSwitch = wallswitch;
 		}
+
 
 
 		/// <summary>
@@ -65,6 +69,14 @@ namespace DungeonEye
 
 			Batch.Begin();
 
+			// Background
+			Batch.DrawTile(Maze.WallTileset, 0, Point.Empty);
+
+			// Render the walls
+			foreach (TileDrawing tmp in DisplayCoordinates.GetWalls(ViewFieldPosition.L))
+				Batch.DrawTile(Maze.WallTileset, tmp.ID, tmp.Location);
+
+			// Draw decoration
 			DecorationSet.Draw(Batch, (int)ActivatedIdBox.Value, ViewFieldPosition.L);
 
 			Batch.End();
@@ -83,7 +95,15 @@ namespace DungeonEye
 
 			Batch.Begin();
 
-			DecorationSet.Draw(Batch, (int)DeactivatedIdBox.Value, ViewFieldPosition.L);
+			// Background
+			Batch.DrawTile(Maze.WallTileset, 0, Point.Empty);
+
+			// Render the walls
+			foreach (TileDrawing tmp in DisplayCoordinates.GetWalls(ViewFieldPosition.L))
+				Batch.DrawTile(Maze.WallTileset, tmp.ID, tmp.Location);
+
+			// Draw decoration
+			DecorationSet.Draw(Batch, (int) DeactivatedIdBox.Value, ViewFieldPosition.L);
 
 			Batch.End();
 
@@ -92,6 +112,19 @@ namespace DungeonEye
 
 
 		#region Control events
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void ParentForm_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			if (Batch != null)
+				Batch.Dispose();
+			Batch = null;
+		}
+
 
 		/// <summary>
 		/// 
@@ -100,6 +133,9 @@ namespace DungeonEye
 		/// <param name="e"></param>
 		private void WallSwitchControl_Load(object sender, EventArgs e)
 		{
+			ParentForm.FormClosing +=new FormClosingEventHandler(ParentForm_FormClosing);
+			
+			
 			Batch = new SpriteBatch();
 		}
 
@@ -130,6 +166,9 @@ namespace DungeonEye
 		/// <param name="e"></param>
 		private void ActivatedIdBox_ValueChanged(object sender, EventArgs e)
 		{
+			if (WallSwitch == null)
+				return;
+			WallSwitch.ActivatedDecoration = (int)ActivatedIdBox.Value;
 
 			RenderActivated();
 		}
@@ -173,6 +212,11 @@ namespace DungeonEye
 		/// <param name="e"></param>
 		private void DeactivatedIdBox_ValueChanged(object sender, EventArgs e)
 		{
+			if (WallSwitch == null)
+				return;
+
+			WallSwitch.DeactivatedDecoration = (int) DeactivatedIdBox.Value;
+
 			RenderDeactivated();
 		}
 
@@ -200,7 +244,7 @@ namespace DungeonEye
 		#region Properties
 
 		/// <summary>
-		/// 
+		/// Wall switch handle
 		/// </summary>
 		WallSwitch WallSwitch;
 
@@ -216,6 +260,11 @@ namespace DungeonEye
 		/// </summary>
 		DecorationSet DecorationSet;
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Maze Maze;
 
 		#endregion
 

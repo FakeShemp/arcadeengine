@@ -87,7 +87,7 @@ namespace DungeonEye
 
 					default:
 					{
-						Trace.WriteLine("[Teleporter] Load() : Unknown node \"" + node.Name + "\" found.");
+						base.Load(node);
 					}
 					break;
 				}
@@ -110,6 +110,9 @@ namespace DungeonEye
 			
 
 			writer.WriteStartElement(Tag);
+			
+			base.Save(writer);
+
 			Target.Save("target", writer);
 			writer.WriteEndElement();
 

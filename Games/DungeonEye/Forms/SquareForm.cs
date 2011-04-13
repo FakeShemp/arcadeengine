@@ -779,9 +779,17 @@ namespace DungeonEye.Forms
 			{
 				control = new WallSwitchControl(Square.Actor as WallSwitch, Maze);
 			}
+			else if (Square.Actor is Generator)
+			{
+				control = new GeneratorControl(Square.Actor as WallSwitch, Maze);
+			}
+			else if (Square.Actor is Launcher)
+			{
+				control = new LauncherControl(Square.Actor as WallSwitch, Maze);
+			}
 			else
 			{
-				MessageBox.Show("Unhandled actor form", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show("Unhandled actor control", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 
 			if (control != null)

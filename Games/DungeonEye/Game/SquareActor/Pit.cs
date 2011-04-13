@@ -135,6 +135,11 @@ namespace DungeonEye
 					}
 					break;
 
+					default:
+					{
+						base.Load(node);
+					}
+					break;
 
 				}
 
@@ -156,6 +161,8 @@ namespace DungeonEye
 
 
 			writer.WriteStartElement(Tag);
+
+			base.Save(writer);
 
 			if (Target != null)
 				Target.Save("target", writer);

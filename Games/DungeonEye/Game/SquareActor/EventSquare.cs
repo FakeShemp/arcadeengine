@@ -197,7 +197,7 @@ namespace DungeonEye
 
 					default:
 					{
-						Trace.WriteLine("[EventSquare] Load() : Unknown node \"" + node.Name + "\" found.");
+						base.Load(node);
 					}
 					break;
 				}
@@ -222,6 +222,8 @@ namespace DungeonEye
 
 			writer.WriteStartElement(Tag);
 
+			base.Save(writer);
+			
 			writer.WriteStartElement("messagecolor");
 			writer.WriteAttributeString("value", MessageColor.ToArgb().ToString());
 			writer.WriteEndElement();
