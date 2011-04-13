@@ -38,8 +38,8 @@
 			// 
 			// groupBox1
 			// 
-			this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)));
+			this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
 			this.groupBox1.Controls.Add(this.MonsterModelsBox);
 			this.groupBox1.Controls.Add(this.ApplyModelBox);
 			this.groupBox1.Location = new System.Drawing.Point(12, 12);
@@ -51,9 +51,9 @@
 			// 
 			// MonsterModelsBox
 			// 
-			this.MonsterModelsBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.MonsterModelsBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.MonsterModelsBox.FormattingEnabled = true;
 			this.MonsterModelsBox.Location = new System.Drawing.Point(6, 19);
 			this.MonsterModelsBox.Name = "MonsterModelsBox";
@@ -64,8 +64,8 @@
 			// 
 			// ApplyModelBox
 			// 
-			this.ApplyModelBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.ApplyModelBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.ApplyModelBox.Location = new System.Drawing.Point(6, 480);
 			this.ApplyModelBox.Name = "ApplyModelBox";
 			this.ApplyModelBox.Size = new System.Drawing.Size(114, 23);
@@ -77,19 +77,19 @@
 			// DoneBox
 			// 
 			this.DoneBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.DoneBox.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.DoneBox.Location = new System.Drawing.Point(747, 527);
 			this.DoneBox.Name = "DoneBox";
 			this.DoneBox.Size = new System.Drawing.Size(75, 23);
 			this.DoneBox.TabIndex = 1;
 			this.DoneBox.Text = "Done";
 			this.DoneBox.UseVisualStyleBackColor = true;
-			this.DoneBox.Click += new System.EventHandler(this.DoneBox_Click);
 			// 
 			// MonsterBox
 			// 
-			this.MonsterBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.MonsterBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.MonsterBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.MonsterBox.Location = new System.Drawing.Point(144, 12);
 			this.MonsterBox.Name = "MonsterBox";

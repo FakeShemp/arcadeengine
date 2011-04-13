@@ -54,8 +54,8 @@ namespace DungeonEye
 		/// <param name="max">Maximum</param>
 		public HitPoint(int current, int max)
 		{
-			Current = current;
 			Max = max;
+			Current = current;
 
 			if (Current > Max)
 				Current = Max;

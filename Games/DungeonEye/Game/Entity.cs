@@ -43,6 +43,7 @@ namespace DungeonEye
 			HitPoint = new HitPoint();
 			Intelligence = new Ability();
 			Wisdom = new Ability();
+			MoveSpeed = TimeSpan.FromSeconds(1.0f);
 
 			//RollAbilities();
 		}

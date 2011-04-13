@@ -477,7 +477,7 @@ namespace DungeonEye.Forms
 				return;
 
 			if (Square.Monsters[0] == null)
-				Square.Monsters[0] = new Monster(Square.Maze);
+				Square.Monsters[0] = new Monster();
 
 			new MonsterEditorForm(Square.Monsters[0]).ShowDialog();
 			
@@ -493,7 +493,7 @@ namespace DungeonEye.Forms
 
 
 			if (Square.Monsters[1] == null)
-				Square.Monsters[1] = new Monster(Square.Maze);
+				Square.Monsters[1] = new Monster();
 
 			new MonsterEditorForm(Square.Monsters[1]).ShowDialog();
 			Square.Monsters[1].OnSpawn();
@@ -508,7 +508,7 @@ namespace DungeonEye.Forms
 
 
 			if (Square.Monsters[2] == null)
-				Square.Monsters[2] = new Monster(Square.Maze);
+				Square.Monsters[2] = new Monster();
 
 			new MonsterEditorForm(Square.Monsters[2]).ShowDialog();
 			Square.Monsters[2].OnSpawn();
@@ -522,7 +522,7 @@ namespace DungeonEye.Forms
 				return;
 
 			if (Square.Monsters[3] == null)
-				Square.Monsters[3] = new Monster(Square.Maze);
+				Square.Monsters[3] = new Monster();
 
 			new MonsterEditorForm(Square.Monsters[3]).ShowDialog();
 			Square.Monsters[3].OnSpawn();

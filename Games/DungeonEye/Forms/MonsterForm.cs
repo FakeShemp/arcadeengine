@@ -41,11 +41,8 @@ namespace DungeonEye.Forms
 		{
 			InitializeComponent();
 
-			Monster = new Monster(null);
+			Monster = new Monster();
 			Monster.Load(node);
-
-			MonsterBox.SetMonster(Monster);
-
 		}
 
 
@@ -58,6 +55,31 @@ namespace DungeonEye.Forms
 			ResourceManager.AddAsset<Monster>(Monster.Name, ResourceManager.ConvertAsset(Monster));
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void MonsterForm_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			if (Monster != null)
+				Monster.Dispose();
+			Monster = null;
+		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void MonsterForm_Load(object sender, System.EventArgs e)
+		{
+			MonsterBox.Monster = Monster;
+
+		}
 
 
 		/// <summary>

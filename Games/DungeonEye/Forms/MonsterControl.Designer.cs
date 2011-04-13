@@ -160,7 +160,6 @@
 			this.GlControl.VSync = true;
 			this.GlControl.Load += new System.EventHandler(this.GlControl_Load);
 			this.GlControl.Paint += new System.Windows.Forms.PaintEventHandler(this.GlControl_Paint);
-			this.GlControl.Resize += new System.EventHandler(this.GlControl_Resize);
 			// 
 			// TileSetBox
 			// 

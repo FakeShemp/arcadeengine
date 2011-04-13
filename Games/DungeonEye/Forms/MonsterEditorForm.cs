@@ -18,30 +18,47 @@ namespace DungeonEye.Forms
 	{
 
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
-		/// <param name="monster"></param>
+		/// <param name="monster">Monster's handle</param>
 		public MonsterEditorForm(Monster monster)
 		{
 			InitializeComponent();
 
-			if (monster == null)
-			{
-				Close();
-				return;
-			}
-
-			MonsterBox.SetMonster(monster);
-
+			MonsterBox.Monster = monster;
 			Monster = monster;
 		}
 
 
 
+		/// <summary>
+		/// Apply a model to the monster
+		/// </summary>
+		private void ApplyMonster()
+		{
+			Monster.Load(ResourceManager.GetAsset<Monster>((string) MonsterModelsBox.SelectedItem));
+			MonsterBox.Monster = Monster;
+		}
+
+
 		#region Form events
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void MonsterEditorForm_Load(object sender, EventArgs e)
+		{
+			MonsterModelsBox.DataSource = ResourceManager.GetAssets<Monster>();
+		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void MonsterEditorForm_KeyDown(object sender, KeyEventArgs e)
 		{
 			if (e.KeyCode == Keys.Escape)
@@ -49,40 +66,37 @@ namespace DungeonEye.Forms
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void ApplyModelBox_Click(object sender, EventArgs e)
 		{
-			Monster = ResourceManager.CreateAsset<Monster>((string)MonsterModelsBox.SelectedItem);
-			MonsterBox.SetMonster(Monster);
+			ApplyMonster();
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void MonsterModelsBox_DoubleClick(object sender, EventArgs e)
 		{
-			if (Monster == null)
-				return;
-
-			Monster.Load(ResourceManager.GetAsset<Monster>((string)MonsterModelsBox.SelectedItem));
-			MonsterBox.SetMonster(Monster);
-		}
-
-		private void DoneBox_Click(object sender, EventArgs e)
-		{
-			Close();
+			ApplyMonster();
 		}
 
 
-		private void MonsterEditorForm_Load(object sender, EventArgs e)
-		{
-			MonsterModelsBox.DataSource = ResourceManager.GetAssets<Monster>();
-		}
 
 		#endregion
+
 
 		#region Properties
 
 
 		/// <summary>
-		/// 
+		/// Monster handle
 		/// </summary>
 		Monster Monster;
 

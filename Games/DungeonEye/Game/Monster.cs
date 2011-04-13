@@ -55,13 +55,13 @@ namespace DungeonEye
 		/// Default constructor
 		/// </summary>
 		/// <param name="maze">Maze handle where the monster is</param>
-		public Monster(Maze maze)
+		public Monster()
 		{
-			if (maze != null)
-			{
-				//Location = new DungeonLocation(maze.Dungeon);
-				Trace.WriteLine("[Monster] Monster() : maze == NULL !!!");
-			}
+			//if (maze != null)
+			//{
+			//    //Location = new DungeonLocation(maze.Dungeon);
+			//    Trace.WriteLine("[Monster] Monster() : maze == NULL !!!");
+			//}
 
 			ItemsInPocket = new List<string>();
 			DamageDice = new Dice();
@@ -71,8 +71,6 @@ namespace DungeonEye
 			DrawOffsetDuration = TimeSpan.FromSeconds(1.0f + GameBase.Random.NextDouble());
 
 			HitDisplayDuration = TimeSpan.FromSeconds(0.5f);
-
-			IsDisposed = false;
 		}
 
 

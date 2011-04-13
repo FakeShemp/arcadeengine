@@ -32,14 +32,16 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.DirectionBox = new System.Windows.Forms.ComboBox();
 			this.TargetBox = new DungeonEye.Forms.TargetControl();
+			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.groupBox1.SuspendLayout();
+			this.groupBox2.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// groupBox1
 			// 
 			this.groupBox1.Controls.Add(this.label1);
 			this.groupBox1.Controls.Add(this.DirectionBox);
-			this.groupBox1.Location = new System.Drawing.Point(12, 118);
+			this.groupBox1.Location = new System.Drawing.Point(6, 125);
 			this.groupBox1.Name = "groupBox1";
 			this.groupBox1.Size = new System.Drawing.Size(175, 60);
 			this.groupBox1.TabIndex = 1;
@@ -68,23 +70,36 @@
 			// TargetBox
 			// 
 			this.TargetBox.Dungeon = null;
-			this.TargetBox.Location = new System.Drawing.Point(12, 12);
+			this.TargetBox.Location = new System.Drawing.Point(6, 19);
 			this.TargetBox.MinimumSize = new System.Drawing.Size(175, 100);
 			this.TargetBox.Name = "TargetBox";
 			this.TargetBox.Size = new System.Drawing.Size(175, 100);
 			this.TargetBox.TabIndex = 0;
+			this.TargetBox.Title = "Target :";
 			this.TargetBox.TargetChanged += new DungeonEye.Forms.TargetControl.TargetChangedEventHandler(this.TargetBox_TargetChanged);
+			// 
+			// groupBox2
+			// 
+			this.groupBox2.Controls.Add(this.TargetBox);
+			this.groupBox2.Controls.Add(this.groupBox1);
+			this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.groupBox2.Location = new System.Drawing.Point(0, 0);
+			this.groupBox2.Name = "groupBox2";
+			this.groupBox2.Size = new System.Drawing.Size(964, 671);
+			this.groupBox2.TabIndex = 2;
+			this.groupBox2.TabStop = false;
+			this.groupBox2.Text = "Stair";
 			// 
 			// StairControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.Controls.Add(this.groupBox1);
-			this.Controls.Add(this.TargetBox);
+			this.Controls.Add(this.groupBox2);
 			this.Name = "StairControl";
-			this.Size = new System.Drawing.Size(195, 191);
+			this.Size = new System.Drawing.Size(964, 671);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
+			this.groupBox2.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -95,5 +110,6 @@
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.ComboBox DirectionBox;
+		private System.Windows.Forms.GroupBox groupBox2;
 	}
 }

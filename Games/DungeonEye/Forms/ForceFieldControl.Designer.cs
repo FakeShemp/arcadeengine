@@ -38,8 +38,10 @@
 			this.AffectItemsBox = new System.Windows.Forms.CheckBox();
 			this.AffectMonstersBox = new System.Windows.Forms.CheckBox();
 			this.AffectTeamBox = new System.Windows.Forms.CheckBox();
+			this.groupBox3 = new System.Windows.Forms.GroupBox();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
+			this.groupBox3.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// groupBox1
@@ -49,7 +51,7 @@
 			this.groupBox1.Controls.Add(this.MoveDirectionBox);
 			this.groupBox1.Controls.Add(this.SpinRadioBox);
 			this.groupBox1.Controls.Add(this.MoveRadioBox);
-			this.groupBox1.Location = new System.Drawing.Point(12, 12);
+			this.groupBox1.Location = new System.Drawing.Point(6, 19);
 			this.groupBox1.Name = "groupBox1";
 			this.groupBox1.Size = new System.Drawing.Size(171, 93);
 			this.groupBox1.TabIndex = 2;
@@ -117,7 +119,7 @@
 			this.groupBox2.Controls.Add(this.AffectItemsBox);
 			this.groupBox2.Controls.Add(this.AffectMonstersBox);
 			this.groupBox2.Controls.Add(this.AffectTeamBox);
-			this.groupBox2.Location = new System.Drawing.Point(189, 12);
+			this.groupBox2.Location = new System.Drawing.Point(183, 19);
 			this.groupBox2.Name = "groupBox2";
 			this.groupBox2.Size = new System.Drawing.Size(120, 93);
 			this.groupBox2.TabIndex = 3;
@@ -157,18 +159,30 @@
 			this.AffectTeamBox.UseVisualStyleBackColor = true;
 			this.AffectTeamBox.CheckedChanged += new System.EventHandler(this.AffectTeamBox_CheckedChanged);
 			// 
+			// groupBox3
+			// 
+			this.groupBox3.Controls.Add(this.groupBox1);
+			this.groupBox3.Controls.Add(this.groupBox2);
+			this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.groupBox3.Location = new System.Drawing.Point(0, 0);
+			this.groupBox3.Name = "groupBox3";
+			this.groupBox3.Size = new System.Drawing.Size(739, 420);
+			this.groupBox3.TabIndex = 4;
+			this.groupBox3.TabStop = false;
+			this.groupBox3.Text = "Force field";
+			// 
 			// ForceFieldControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.Controls.Add(this.groupBox2);
-			this.Controls.Add(this.groupBox1);
+			this.Controls.Add(this.groupBox3);
 			this.Name = "ForceFieldControl";
-			this.Size = new System.Drawing.Size(319, 115);
+			this.Size = new System.Drawing.Size(739, 420);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
+			this.groupBox3.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -185,5 +199,6 @@
 		private System.Windows.Forms.RadioButton SpinRadioBox;
 		private System.Windows.Forms.RadioButton MoveRadioBox;
 		private System.Windows.Forms.RadioButton BlockRadioBox;
+		private System.Windows.Forms.GroupBox groupBox3;
 	}
 }

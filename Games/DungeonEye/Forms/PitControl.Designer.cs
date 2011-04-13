@@ -37,8 +37,10 @@
 			this.IsIllusionBox = new System.Windows.Forms.CheckBox();
 			this.TargetBox = new DungeonEye.Forms.TargetControl();
 			this.DamageBox = new DungeonEye.Forms.DiceControl();
+			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.groupBox1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize) (this.DifficultyBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.DifficultyBox)).BeginInit();
+			this.groupBox2.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// groupBox1
@@ -48,7 +50,7 @@
 			this.groupBox1.Controls.Add(this.MonsterTriggerBox);
 			this.groupBox1.Controls.Add(this.IsHiddenBox);
 			this.groupBox1.Controls.Add(this.IsIllusionBox);
-			this.groupBox1.Location = new System.Drawing.Point(12, 118);
+			this.groupBox1.Location = new System.Drawing.Point(6, 125);
 			this.groupBox1.Name = "groupBox1";
 			this.groupBox1.Size = new System.Drawing.Size(230, 72);
 			this.groupBox1.TabIndex = 3;
@@ -110,11 +112,12 @@
 			// TargetBox
 			// 
 			this.TargetBox.Dungeon = null;
-			this.TargetBox.Location = new System.Drawing.Point(248, 12);
+			this.TargetBox.Location = new System.Drawing.Point(242, 19);
 			this.TargetBox.MinimumSize = new System.Drawing.Size(175, 100);
 			this.TargetBox.Name = "TargetBox";
 			this.TargetBox.Size = new System.Drawing.Size(175, 100);
 			this.TargetBox.TabIndex = 2;
+			this.TargetBox.Title = "Target :";
 			this.TargetBox.TargetChanged += new DungeonEye.Forms.TargetControl.TargetChangedEventHandler(this.TargetBox_TargetChanged);
 			// 
 			// DamageBox
@@ -124,25 +127,37 @@
 			dice1.Modifier = 0;
 			dice1.Throws = 1;
 			this.DamageBox.Dice = dice1;
-			this.DamageBox.Location = new System.Drawing.Point(12, 12);
+			this.DamageBox.Location = new System.Drawing.Point(6, 19);
 			this.DamageBox.MinimumSize = new System.Drawing.Size(230, 100);
 			this.DamageBox.Name = "DamageBox";
 			this.DamageBox.Size = new System.Drawing.Size(230, 100);
 			this.DamageBox.TabIndex = 1;
 			this.DamageBox.ValueChanged += new System.EventHandler(this.DamageBox_ValueChanged);
 			// 
+			// groupBox2
+			// 
+			this.groupBox2.Controls.Add(this.groupBox1);
+			this.groupBox2.Controls.Add(this.DamageBox);
+			this.groupBox2.Controls.Add(this.TargetBox);
+			this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.groupBox2.Location = new System.Drawing.Point(0, 0);
+			this.groupBox2.Name = "groupBox2";
+			this.groupBox2.Size = new System.Drawing.Size(1068, 693);
+			this.groupBox2.TabIndex = 4;
+			this.groupBox2.TabStop = false;
+			this.groupBox2.Text = "Pit";
+			// 
 			// PitControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.Controls.Add(this.groupBox1);
-			this.Controls.Add(this.TargetBox);
-			this.Controls.Add(this.DamageBox);
+			this.Controls.Add(this.groupBox2);
 			this.Name = "PitControl";
-			this.Size = new System.Drawing.Size(430, 197);
+			this.Size = new System.Drawing.Size(1068, 693);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
-			((System.ComponentModel.ISupportInitialize) (this.DifficultyBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.DifficultyBox)).EndInit();
+			this.groupBox2.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -157,5 +172,6 @@
 		private System.Windows.Forms.CheckBox IsHiddenBox;
 		private System.Windows.Forms.CheckBox IsIllusionBox;
 		private System.Windows.Forms.CheckBox MonsterTriggerBox;
+		private System.Windows.Forms.GroupBox groupBox2;
 	}
 }

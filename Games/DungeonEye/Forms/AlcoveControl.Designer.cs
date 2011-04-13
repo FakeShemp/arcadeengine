@@ -38,13 +38,15 @@
 			this.HideItemsBox = new System.Windows.Forms.CheckBox();
 			this.DirectionBox = new DungeonEye.Forms.CardinalPointControl();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
+			this.ItemsBox = new System.Windows.Forms.ComboBox();
 			this.ItemLocationBox = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
-			this.ItemsBox = new System.Windows.Forms.ComboBox();
+			this.groupBox4 = new System.Windows.Forms.GroupBox();
 			this.groupBox2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.DecorationBox)).BeginInit();
 			this.groupBox1.SuspendLayout();
 			this.groupBox3.SuspendLayout();
+			this.groupBox4.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// GLControl
@@ -63,7 +65,7 @@
 			// groupBox2
 			// 
 			this.groupBox2.Controls.Add(this.GLControl);
-			this.groupBox2.Location = new System.Drawing.Point(3, 3);
+			this.groupBox2.Location = new System.Drawing.Point(6, 19);
 			this.groupBox2.Name = "groupBox2";
 			this.groupBox2.Size = new System.Drawing.Size(365, 270);
 			this.groupBox2.TabIndex = 2;
@@ -121,7 +123,7 @@
 			this.groupBox1.Controls.Add(this.ClearBox);
 			this.groupBox1.Controls.Add(this.DecorationBox);
 			this.groupBox1.Controls.Add(this.label1);
-			this.groupBox1.Location = new System.Drawing.Point(3, 279);
+			this.groupBox1.Location = new System.Drawing.Point(6, 295);
 			this.groupBox1.Name = "groupBox1";
 			this.groupBox1.Size = new System.Drawing.Size(187, 99);
 			this.groupBox1.TabIndex = 5;
@@ -153,7 +155,7 @@
 			// DirectionBox
 			// 
 			this.DirectionBox.Direction = DungeonEye.CardinalPoint.North;
-			this.DirectionBox.Location = new System.Drawing.Point(374, 3);
+			this.DirectionBox.Location = new System.Drawing.Point(377, 19);
 			this.DirectionBox.MinimumSize = new System.Drawing.Size(125, 115);
 			this.DirectionBox.Name = "DirectionBox";
 			this.DirectionBox.Size = new System.Drawing.Size(125, 115);
@@ -166,12 +168,22 @@
 			this.groupBox3.Controls.Add(this.ItemsBox);
 			this.groupBox3.Controls.Add(this.ItemLocationBox);
 			this.groupBox3.Controls.Add(this.label2);
-			this.groupBox3.Location = new System.Drawing.Point(196, 279);
+			this.groupBox3.Location = new System.Drawing.Point(199, 295);
 			this.groupBox3.Name = "groupBox3";
 			this.groupBox3.Size = new System.Drawing.Size(172, 99);
 			this.groupBox3.TabIndex = 6;
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Preview";
+			// 
+			// ItemsBox
+			// 
+			this.ItemsBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.ItemsBox.FormattingEnabled = true;
+			this.ItemsBox.Location = new System.Drawing.Point(6, 19);
+			this.ItemsBox.Name = "ItemsBox";
+			this.ItemsBox.Size = new System.Drawing.Size(159, 21);
+			this.ItemsBox.TabIndex = 2;
+			this.ItemsBox.SelectedIndexChanged += new System.EventHandler(this.ItemsBox_SelectedIndexChanged);
 			// 
 			// ItemLocationBox
 			// 
@@ -191,24 +203,25 @@
 			this.label2.TabIndex = 0;
 			this.label2.Text = "Location :";
 			// 
-			// ItemsBox
+			// groupBox4
 			// 
-			this.ItemsBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.ItemsBox.FormattingEnabled = true;
-			this.ItemsBox.Location = new System.Drawing.Point(6, 19);
-			this.ItemsBox.Name = "ItemsBox";
-			this.ItemsBox.Size = new System.Drawing.Size(159, 21);
-			this.ItemsBox.TabIndex = 2;
-			this.ItemsBox.SelectedIndexChanged += new System.EventHandler(this.ItemsBox_SelectedIndexChanged);
+			this.groupBox4.Controls.Add(this.groupBox2);
+			this.groupBox4.Controls.Add(this.groupBox3);
+			this.groupBox4.Controls.Add(this.DirectionBox);
+			this.groupBox4.Controls.Add(this.groupBox1);
+			this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.groupBox4.Location = new System.Drawing.Point(0, 0);
+			this.groupBox4.Name = "groupBox4";
+			this.groupBox4.Size = new System.Drawing.Size(788, 651);
+			this.groupBox4.TabIndex = 7;
+			this.groupBox4.TabStop = false;
+			this.groupBox4.Text = "Alcove";
 			// 
 			// AlcoveControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.Controls.Add(this.groupBox3);
-			this.Controls.Add(this.groupBox1);
-			this.Controls.Add(this.DirectionBox);
-			this.Controls.Add(this.groupBox2);
+			this.Controls.Add(this.groupBox4);
 			this.Name = "AlcoveControl";
 			this.Size = new System.Drawing.Size(788, 651);
 			this.Load += new System.EventHandler(this.AlcoveControl_Load);
@@ -218,6 +231,7 @@
 			this.groupBox1.PerformLayout();
 			this.groupBox3.ResumeLayout(false);
 			this.groupBox3.PerformLayout();
+			this.groupBox4.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -237,5 +251,6 @@
 		private System.Windows.Forms.Label ItemLocationBox;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.ComboBox ItemsBox;
+		private System.Windows.Forms.GroupBox groupBox4;
 	}
 }

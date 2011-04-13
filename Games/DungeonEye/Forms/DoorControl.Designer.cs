@@ -46,12 +46,14 @@
 			this.IsBreakableBox = new System.Windows.Forms.CheckBox();
 			this.DoorStateBox = new System.Windows.Forms.ComboBox();
 			this.label3 = new System.Windows.Forms.Label();
+			this.groupBox3 = new System.Windows.Forms.GroupBox();
 			this.groupBox1.SuspendLayout();
 			this.ItemPanel.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize) (this.PicklockBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.PicklockBox)).BeginInit();
 			this.groupBox2.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize) (this.SpeedBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize) (this.BreakValueBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.SpeedBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.BreakValueBox)).BeginInit();
+			this.groupBox3.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// groupBox1
@@ -60,7 +62,7 @@
 			this.groupBox1.Controls.Add(this.ItemRadioBox);
 			this.groupBox1.Controls.Add(this.EventRadioBox);
 			this.groupBox1.Controls.Add(this.ButtonRadioBox);
-			this.groupBox1.Location = new System.Drawing.Point(184, 12);
+			this.groupBox1.Location = new System.Drawing.Point(178, 19);
 			this.groupBox1.Name = "groupBox1";
 			this.groupBox1.Size = new System.Drawing.Size(148, 172);
 			this.groupBox1.TabIndex = 1;
@@ -163,9 +165,9 @@
 			// DoorTypeBox
 			// 
 			this.DoorTypeBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.DoorTypeBox.Location = new System.Drawing.Point(12, 29);
+			this.DoorTypeBox.Location = new System.Drawing.Point(49, 13);
 			this.DoorTypeBox.Name = "DoorTypeBox";
-			this.DoorTypeBox.Size = new System.Drawing.Size(166, 21);
+			this.DoorTypeBox.Size = new System.Drawing.Size(123, 21);
 			this.DoorTypeBox.Sorted = true;
 			this.DoorTypeBox.TabIndex = 2;
 			this.DoorTypeBox.SelectedIndexChanged += new System.EventHandler(this.DoorTypeBox_SelectedIndexChanged);
@@ -173,11 +175,11 @@
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(12, 9);
+			this.label1.Location = new System.Drawing.Point(6, 16);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(59, 13);
+			this.label1.Size = new System.Drawing.Size(37, 13);
 			this.label1.TabIndex = 3;
-			this.label1.Text = "Door type :";
+			this.label1.Text = "Type :";
 			// 
 			// groupBox2
 			// 
@@ -185,7 +187,7 @@
 			this.groupBox2.Controls.Add(this.label4);
 			this.groupBox2.Controls.Add(this.BreakValueBox);
 			this.groupBox2.Controls.Add(this.IsBreakableBox);
-			this.groupBox2.Location = new System.Drawing.Point(12, 113);
+			this.groupBox2.Location = new System.Drawing.Point(6, 79);
 			this.groupBox2.Name = "groupBox2";
 			this.groupBox2.Size = new System.Drawing.Size(166, 105);
 			this.groupBox2.TabIndex = 4;
@@ -245,9 +247,9 @@
 			// DoorStateBox
 			// 
 			this.DoorStateBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.DoorStateBox.Location = new System.Drawing.Point(12, 78);
+			this.DoorStateBox.Location = new System.Drawing.Point(49, 40);
 			this.DoorStateBox.Name = "DoorStateBox";
-			this.DoorStateBox.Size = new System.Drawing.Size(166, 21);
+			this.DoorStateBox.Size = new System.Drawing.Size(122, 21);
 			this.DoorStateBox.Sorted = true;
 			this.DoorStateBox.TabIndex = 2;
 			this.DoorStateBox.SelectedIndexChanged += new System.EventHandler(this.DoorStateBox_SelectedIndexChanged);
@@ -255,35 +257,47 @@
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(12, 58);
+			this.label3.Location = new System.Drawing.Point(5, 45);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(38, 13);
 			this.label3.TabIndex = 3;
 			this.label3.Text = "State :";
 			// 
+			// groupBox3
+			// 
+			this.groupBox3.Controls.Add(this.label1);
+			this.groupBox3.Controls.Add(this.groupBox2);
+			this.groupBox3.Controls.Add(this.groupBox1);
+			this.groupBox3.Controls.Add(this.label3);
+			this.groupBox3.Controls.Add(this.DoorTypeBox);
+			this.groupBox3.Controls.Add(this.DoorStateBox);
+			this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.groupBox3.Location = new System.Drawing.Point(0, 0);
+			this.groupBox3.Name = "groupBox3";
+			this.groupBox3.Size = new System.Drawing.Size(678, 516);
+			this.groupBox3.TabIndex = 5;
+			this.groupBox3.TabStop = false;
+			this.groupBox3.Text = "Door";
+			// 
 			// DoorControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.Controls.Add(this.groupBox2);
-			this.Controls.Add(this.label3);
-			this.Controls.Add(this.label1);
-			this.Controls.Add(this.DoorStateBox);
-			this.Controls.Add(this.DoorTypeBox);
-			this.Controls.Add(this.groupBox1);
+			this.Controls.Add(this.groupBox3);
 			this.Name = "DoorControl";
-			this.Size = new System.Drawing.Size(339, 230);
+			this.Size = new System.Drawing.Size(678, 516);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			this.ItemPanel.ResumeLayout(false);
 			this.ItemPanel.PerformLayout();
-			((System.ComponentModel.ISupportInitialize) (this.PicklockBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.PicklockBox)).EndInit();
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
-			((System.ComponentModel.ISupportInitialize) (this.SpeedBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize) (this.BreakValueBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.SpeedBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.BreakValueBox)).EndInit();
+			this.groupBox3.ResumeLayout(false);
+			this.groupBox3.PerformLayout();
 			this.ResumeLayout(false);
-			this.PerformLayout();
 
 		}
 
@@ -307,5 +321,6 @@
 		private System.Windows.Forms.Panel ItemPanel;
 		private System.Windows.Forms.NumericUpDown SpeedBox;
 		private System.Windows.Forms.Label label4;
+		private System.Windows.Forms.GroupBox groupBox3;
 	}
 }

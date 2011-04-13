@@ -720,7 +720,7 @@ namespace DungeonEye
 				{
 					case "monster":
 					{
-						Monster monster = new Monster(Maze);
+						Monster monster = new Monster();
 						monster.Load(node);
 						monster.Teleport(this, (SquarePosition)Enum.Parse(typeof(SquarePosition), node.Attributes["position"].Value));
 					}
