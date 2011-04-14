@@ -33,6 +33,13 @@ namespace DungeonEye.EventScript
 	public class ScriptChangePicture : ScriptAction
 	{
 
+		/// <summary>
+		/// 
+		/// </summary>
+		public ScriptChangePicture()
+		{
+			Name = "ChangePicture";
+		}
 
 		/// <summary>
 		/// Run actions
@@ -76,17 +83,6 @@ namespace DungeonEye.EventScript
 
 
 		#region Properties
-
-		/// <summary>
-		/// Action's name
-		/// </summary>
-		public string Name
-		{
-			get
-			{
-				return "ChangePicture";
-			}
-		}
 
 
 		#endregion

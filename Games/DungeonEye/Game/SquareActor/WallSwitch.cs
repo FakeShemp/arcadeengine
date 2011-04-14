@@ -40,12 +40,11 @@ namespace DungeonEye
 		/// Constructor
 		/// </summary>
 		/// <param name="square">Parent square handle</param>
-		public WallSwitch(Square square) : base(square)
+		public WallSwitch(Square square)
+			: base(square)
 		{
 			ActivatedDecoration = -1;
 			DeactivatedDecoration = -1;
-
-			Actions = new List<ScriptAction>();
 		}
 
 
@@ -130,7 +129,6 @@ namespace DungeonEye
 					}
 					break;
 
-
 					default:
 					{
 						base.Load(node);
@@ -156,7 +154,6 @@ namespace DungeonEye
 
 			writer.WriteStartElement(Tag);
 
-			base.Save(writer);
 
 			writer.WriteStartElement("decoration");
 			writer.WriteAttributeString("activated", ActivatedDecoration.ToString());
@@ -165,8 +162,8 @@ namespace DungeonEye
 
 			writer.WriteElementString("side", Side.ToString());
 
-			foreach (ScriptAction action in Actions)
-				action.Save(writer);
+
+			base.Save(writer);
 
 			writer.WriteEndElement();
 
@@ -206,16 +203,6 @@ namespace DungeonEye
 			set;
 		}
 
-
-
-		/// <summary>
-		/// On activate actions
-		/// </summary>
-		public List<ScriptAction> Actions
-		{
-			get;
-			private set;
-		}
 
 
 		/// <summary>

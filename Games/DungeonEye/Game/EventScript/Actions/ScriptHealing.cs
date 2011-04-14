@@ -5,8 +5,19 @@ using System.Text;
 
 namespace DungeonEye.EventScript
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	public class ScriptHealing : ScriptAction
 	{
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public ScriptHealing()
+		{
+			Name = "Healing";
+		}
 
 		/// <summary>
 		/// 
@@ -46,17 +57,6 @@ namespace DungeonEye.EventScript
 
 		#region Properties
 
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public string Name
-		{
-			get
-			{
-				return "Healing";
-			}
-		}
 
 		#endregion
 	}

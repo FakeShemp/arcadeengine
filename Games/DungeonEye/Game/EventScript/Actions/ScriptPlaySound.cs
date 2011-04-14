@@ -5,8 +5,21 @@ using System.Text;
 
 namespace DungeonEye.EventScript
 {
+	/// <summary>
+	/// Play a sound
+	/// </summary>
 	public class ScriptPlaySound: ScriptAction
 	{
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public ScriptPlaySound()
+		{
+			Name = "PlaySound";
+		}
+
+
 
 		/// <summary>
 		/// 
@@ -27,7 +40,7 @@ namespace DungeonEye.EventScript
 		/// <returns></returns>
 		public override bool Load(XmlNode xml)
 		{
-			return true;
+			return false;
 		}
 
 
@@ -38,25 +51,13 @@ namespace DungeonEye.EventScript
 		/// <returns></returns>
 		public override bool Save(XmlWriter writer)
 		{
-			return true;
+			return false;
 		}
 
 
 
 
 		#region Properties
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public string Name
-		{
-			get
-			{
-				return "PlaySound";
-			}
-		}
 
 		#endregion
 	}

@@ -5,8 +5,18 @@ using System.Text;
 
 namespace DungeonEye.EventScript
 {
-	public class ScriptJoinCharacter: ScriptAction
+	/// <summary>
+	/// 
+	/// </summary>
+	public class ScriptJoinCharacter : ScriptAction
 	{
+		/// <summary>
+		/// 
+		/// </summary>
+		public ScriptJoinCharacter()
+		{
+			Name = "JoinCharacter";
+		}
 
 		/// <summary>
 		/// 
@@ -45,18 +55,6 @@ namespace DungeonEye.EventScript
 
 
 		#region Properties
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public string Name
-		{
-			get
-			{
-				return "JoinCharacter";
-			}
-		}
 
 		#endregion
 	}

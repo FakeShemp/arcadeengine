@@ -169,8 +169,8 @@ namespace DungeonEye.Forms
 			if (form.ShowDialog() != DialogResult.OK)
 				return;
 
-			if (form.Script != null && Actions != null)
-				Actions.Add(form.Script);
+			if (form.Action != null && Actions != null)
+				Actions.Add(form.Action);
 
 			UpdateActionList();
 		}

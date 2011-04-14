@@ -5,8 +5,20 @@ using System.Text;
 
 namespace DungeonEye.EventScript
 {
+
+	/// <summary>
+	/// 
+	/// </summary>
 	public class ScriptEndChoice : ScriptAction
 	{
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public ScriptEndChoice()
+		{
+			Name = "EndChoice";
+		}
 
 		/// <summary>
 		/// 
@@ -45,18 +57,6 @@ namespace DungeonEye.EventScript
 
 
 		#region Properties
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public string Name
-		{
-			get
-			{
-				return "End Choice";
-			}
-		}
 
 		#endregion
 	}

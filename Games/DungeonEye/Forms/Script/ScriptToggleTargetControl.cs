@@ -33,6 +33,24 @@ namespace DungeonEye.Forms
 		}
 
 
+		#region Form events
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="target"></param>
+		private void TargetBox_TargetChanged(object sender, DungeonLocation target)
+		{
+			if (Action == null)
+				return;
+
+			Action.Target = target;
+		}
+
+		#endregion
+
+
 
 		#region Properties
 

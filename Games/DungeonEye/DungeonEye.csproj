@@ -488,7 +488,7 @@
     <Compile Include="Game\EventScript\Actions\ScriptDisableChoice.cs" />
     <Compile Include="Game\EventScript\Actions\ScriptPlaySound.cs" />
     <Compile Include="Game\EventScript\Actions\ScriptChangePicture.cs" />
-    <Compile Include="Game\EventScript\Actions\IScriptAction.cs" />
+    <Compile Include="Game\EventScript\Actions\ScriptAction.cs" />
     <Compile Include="Game\EventScript\Actions\ScriptActivateTarget.cs" />
     <Compile Include="Game\EventScript\Actions\ScriptChangeText.cs" />
     <Compile Include="Game\EventScript\Actions\ScriptDisableTarget.cs" />

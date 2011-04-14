@@ -643,17 +643,6 @@ namespace DungeonEye
 			writer.WriteEndElement();
 
 
-			// Alcoves
-			//foreach (CardinalPoint side in Enum.GetValues(typeof(CardinalPoint)))
-			//{
-			//    if (HasAlcove(side))
-			//    {
-			//        writer.WriteStartElement("alcove");
-			//        writer.WriteAttributeString("side", side.ToString());
-			//        writer.WriteEndElement();
-			//    }
-			//}
-
 
 			// Items
 			for (int i = 0; i < 4; i++)

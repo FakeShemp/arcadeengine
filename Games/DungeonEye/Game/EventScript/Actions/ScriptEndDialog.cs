@@ -5,8 +5,20 @@ using System.Text;
 
 namespace DungeonEye.EventScript
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	public class ScriptEndDialog : ScriptAction
 	{
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public ScriptEndDialog()
+		{
+			Name = "EndDialog";
+		}
+
 
 		/// <summary>
 		/// 
@@ -58,18 +70,6 @@ namespace DungeonEye.EventScript
 
 
 		#region Properties
-
-
-		/// <summary>
-		/// Name of the script
-		/// </summary>
-		public string Name
-		{
-			get
-			{
-				return "EndDialog";
-			}
-		}
 
 		#endregion
 	}

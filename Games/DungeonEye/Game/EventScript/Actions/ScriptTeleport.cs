@@ -36,8 +36,8 @@ namespace DungeonEye.EventScript
 		/// 
 		/// </summary>
 		public ScriptTeleport()
-		{
-			Target = new DungeonLocation();
+		{ 
+			Name = "Teleport";
 		}
 
 
@@ -131,17 +131,6 @@ namespace DungeonEye.EventScript
 
 		#region Properties
 
-
-		/// <summary>
-		/// Target destination
-		/// </summary>
-		public DungeonLocation Target
-		{
-			get;
-			set;
-		}
-
-
 		/// <summary>
 		/// Change direction
 		/// </summary>
@@ -151,17 +140,6 @@ namespace DungeonEye.EventScript
 			set;
 		}
 
-
-		/// <summary>
-		/// Action's name
-		/// </summary>
-		public string Name
-		{
-			get
-			{
-				return "Teleport";
-			}
-		}
 
 
 		#endregion

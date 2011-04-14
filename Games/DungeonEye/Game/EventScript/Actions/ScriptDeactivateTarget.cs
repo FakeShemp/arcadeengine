@@ -5,8 +5,20 @@ using System.Text;
 
 namespace DungeonEye.EventScript
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	public class ScriptDeactivateTarget : ScriptAction
 	{
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public ScriptDeactivateTarget()
+		{
+			Name = "DeactivateTarget";
+		}
+
 
 		/// <summary>
 		/// 
@@ -45,19 +57,6 @@ namespace DungeonEye.EventScript
 
 
 		#region Properties
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public string Name
-		{
-			get
-			{
-				return "Deactivate Target";
-			}
-		}
-
 		#endregion
 	}
 }

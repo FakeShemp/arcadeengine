@@ -5,8 +5,21 @@ using System.Text;
 
 namespace DungeonEye.EventScript
 {
+	/// <summary>
+	/// Toggle script
+	/// </summary>
 	public class ScriptToggleTarget : ScriptAction
 	{
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public ScriptToggleTarget()
+		{
+			Name = "ToggleTarget";
+		}
+
+
 
 		/// <summary>
 		/// 
@@ -27,6 +40,22 @@ namespace DungeonEye.EventScript
 		/// <returns></returns>
 		public override bool Load(XmlNode xml)
 		{
+			if (xml == null)
+				return false;
+
+			foreach (XmlNode node in xml)
+			{
+				switch (node.Name.ToLower())
+				{
+
+					default:
+					{
+						base.Load(node);
+					}
+					break;
+				}
+			}
+
 			return true;
 		}
 
@@ -38,6 +67,16 @@ namespace DungeonEye.EventScript
 		/// <returns></returns>
 		public override bool Save(XmlWriter writer)
 		{
+			if (writer == null)
+				return false;
+
+
+			writer.WriteStartElement(Name);
+
+			base.Save(writer);
+
+			writer.WriteEndElement();
+
 			return true;
 		}
 
@@ -46,17 +85,6 @@ namespace DungeonEye.EventScript
 
 		#region Properties
 
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public string Name
-		{
-			get
-			{
-				return "EndChoice";
-			}
-		}
 
 		#endregion
 	}

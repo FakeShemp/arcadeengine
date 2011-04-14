@@ -5,8 +5,21 @@ using System.Text;
 
 namespace DungeonEye.EventScript
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	public class ScriptChangeText: ScriptAction
 	{
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public ScriptChangeText()
+		{
+
+			Name = "ChangeText";
+		}
+
 
 		/// <summary>
 		/// 
@@ -47,16 +60,6 @@ namespace DungeonEye.EventScript
 		#region Properties
 
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public string Name
-		{
-			get
-			{
-				return "ChangeText";
-			}
-		}
 
 		#endregion
 	}

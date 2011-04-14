@@ -5,8 +5,19 @@ using System.Text;
 
 namespace DungeonEye.EventScript
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	public class ScriptActivateTarget : ScriptAction
 	{
+		/// <summary>
+		/// 
+		/// </summary>
+		public ScriptActivateTarget()
+		{
+			Name = "ActivateTarget";
+		}
+
 
 		/// <summary>
 		/// 
@@ -48,16 +59,6 @@ namespace DungeonEye.EventScript
 		#region Properties
 
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public string Name
-		{
-			get
-			{
-				return "Activate Target";
-			}
-		}
 
 		#endregion
 	}

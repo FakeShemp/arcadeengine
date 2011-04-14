@@ -5,8 +5,20 @@ using System.Text;
 
 namespace DungeonEye.EventScript
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	public class ScriptGiveExperience : ScriptAction
 	{
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public ScriptGiveExperience()
+		{
+			Name = "GiveExperience";
+		}
+
 
 		/// <summary>
 		/// Runs the script
@@ -78,18 +90,6 @@ namespace DungeonEye.EventScript
 
 
 		#region Properties
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public string Name
-		{
-			get
-			{
-				return "GiveExperience";
-			}
-		}
 
 
 		/// <summary>

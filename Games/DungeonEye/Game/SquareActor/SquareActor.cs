@@ -24,6 +24,7 @@ using System.Text;
 using System.Xml;
 using ArcEngine;
 using ArcEngine.Graphic;
+using DungeonEye.EventScript;
 
 namespace DungeonEye
 {
@@ -41,6 +42,7 @@ namespace DungeonEye
 		{
 			Square = square;
 			IsActivated = true;
+			Actions = new List<ScriptAction>();
 		}
 
 
@@ -63,6 +65,39 @@ namespace DungeonEye
 		/// <param name="time">Elpased time</param>
 		public virtual void Update(GameTime time)
 		{
+		}
+
+
+		/// <summary>
+		/// Loads action script definitions
+		/// </summary>
+		/// <param name="node">XmlNode handle</param>
+		bool LoadActions(XmlNode xml)
+		{
+			if (xml == null)
+				return false;
+
+			if (Actions == null)
+				Actions = new List<ScriptAction>();
+
+			foreach (XmlNode node in xml)
+			{
+				switch (node.Name.ToLower())
+				{
+					case "toggletarget":
+					{
+						ScriptToggleTarget script = new ScriptToggleTarget();
+						script.Load(node);
+
+						Actions.Add(script);
+					}
+					break;
+				}
+			}
+
+
+
+			return true;
 		}
 
 
@@ -257,9 +292,15 @@ namespace DungeonEye
 				}
 				break;
 
+				case "actions":
+				{
+					LoadActions(node);
+				}
+				break;
+
 				default:
 				{
-					Trace.WriteLine("[SquareActove] Load() : Unknown node \"" + node.Name + "\" found.");
+					Trace.WriteLine("[SquareActor] Load() : Unknown node \"" + node.Name + "\" found.");
 				}
 				break;
 			}
@@ -280,6 +321,15 @@ namespace DungeonEye
 				return false;
 
 			writer.WriteElementString("isactivated", IsActivated.ToString());
+
+			if (Actions.Count > 0)
+			{
+				writer.WriteStartElement("actions");
+				foreach (ScriptAction action in Actions)
+					action.Save(writer);
+				writer.WriteEndElement();
+			}
+
 
 			return true;
 		}
@@ -347,6 +397,19 @@ namespace DungeonEye
 			get;
 			protected set;
 		}
+
+
+
+		/// <summary>
+		/// Registered actions
+		/// </summary>
+		public List<ScriptAction> Actions
+		{
+			get;
+			private set;
+		}
+
+
 
 		#endregion
 	}

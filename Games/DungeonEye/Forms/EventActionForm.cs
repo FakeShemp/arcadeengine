@@ -276,7 +276,7 @@ namespace DungeonEye.Forms
 		/// <summary>
 		/// Script action
 		/// </summary>
-		public ScriptAction Script
+		public ScriptAction Action
 		{
 			get
 			{
