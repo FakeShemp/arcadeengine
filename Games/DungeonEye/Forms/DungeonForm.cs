@@ -284,9 +284,9 @@ namespace DungeonEye.Forms
 
 
 			#region Squares
-			for (int y = 0; y < Maze.Size.Height; y++)
+			for (int y = 0 ; y < Maze.Size.Height ; y++)
 			{
-				for (int x = 0; x < Maze.Size.Width; x++)
+				for (int x = 0 ; x < Maze.Size.Width ; x++)
 				{
 					Square block = Maze.GetSquare(new Point(x, y));
 					int tileid = block.Type == SquareType.Ground ? 1 : 0;
@@ -307,6 +307,7 @@ namespace DungeonEye.Forms
 					}
 
 
+					#region Actor
 					if (block.Actor != null)
 					{
 						// Doors
@@ -328,22 +329,22 @@ namespace DungeonEye.Forms
 						}
 
 
-						if (block.Actor is PressurePlate)
+						else if (block.Actor is PressurePlate)
 						{
 							SpriteBatch.DrawTile(Icons, 18, location);
 						}
 
-						if (block.Actor is Pit)
+						else if (block.Actor is Pit)
 						{
 							SpriteBatch.DrawTile(Icons, 9, location);
 						}
 
-						if (block.Actor is Teleporter)
+						else if (block.Actor is Teleporter)
 						{
 							SpriteBatch.DrawTile(Icons, 11, location);
 						}
 
-						if (block.Actor is ForceField)
+						else if (block.Actor is ForceField)
 						{
 							ForceField field = block.Actor as ForceField;
 
@@ -351,7 +352,7 @@ namespace DungeonEye.Forms
 								tileid = 12;
 							else if (field.Type == ForceFieldType.Move)
 							{
-								tileid = 13 + (int)field.Move;
+								tileid = 13 + (int) field.Move;
 							}
 							else
 								tileid = 17;
@@ -359,55 +360,77 @@ namespace DungeonEye.Forms
 							SpriteBatch.DrawTile(Icons, tileid, location);
 						}
 
-						if (block.Actor is Stair)
+						else if (block.Actor is Stair)
 						{
 							Stair stair = block.Actor as Stair;
 							tileid = stair.Type == StairType.Up ? 6 : 7;
 							SpriteBatch.DrawTile(Icons, tileid, location);
 						}
 
-						if (block.Actor is EventSquare)
+						else if (block.Actor is EventSquare)
 						{
 							SpriteBatch.DrawTile(Icons, 26, location);
 						}
-					}
-
-/*
-					// Alcoves or decorations
-					if (block.HasAlcoves || block.HasDecorations)
-					{
-						// Display coords
-						Point[] sides = new Point[]
+						else if (block.Actor is WallSwitch)
 						{
-							new Point(7, 0),
-							new Point(7, 19),
-							new Point(0, 7),
-							new Point(19, 7),
-						};
+							// Display coords
+							Point[] sides = new Point[]
+							{
+								new Point(7, 0),
+								new Point(7, 19),
+								new Point(0, 7),
+								new Point(19, 7),
+							};
 
+							WallSwitch wall = block.Actor as WallSwitch;
+
+							tileid = (int) wall.Side > 1 ? 102 : 103;
+							SpriteBatch.DrawTile(Icons, tileid, new Point(
+								Offset.X + x * 25 + sides[(int) wall.Side].X,
+								Offset.Y + y * 25 + sides[(int) wall.Side].Y));
+
+
+						}
+					}
+					#endregion
+
+
+					#region Decoration
+					if (block.HasDecorations)
+					{
 
 						foreach (CardinalPoint side in Enum.GetValues(typeof(CardinalPoint)))
 						{
-							if (block.HasAlcove(side))
-							{
-								tileid = (int)side > 1 ? 100 : 101;
-								SpriteBatch.DrawTile(Icons, tileid, new Point(
-									Offset.X + x * 25 + sides[(int)side].X,
-									Offset.Y + y * 25 + sides[(int)side].Y));
-
-							}
-
 							if (block.HasDecoration(side))
 							{
-								tileid = (int)side > 1 ? 100 : 101;
-								SpriteBatch.DrawTile(Icons, tileid, new Point(
-									Offset.X + x * 25 + sides[(int)side].X,
-									Offset.Y + y * 25 + sides[(int)side].Y), Color.LightBlue);
+								Point[] from = new Point[]
+								{
+									new Point(1, 1),
+									new Point(1, 24),
+									new Point(1, 1),
+									new Point(24, 1),
+								};
 
+								Point[] to = new Point[]
+								{
+									new Point(24, 1),
+									new Point(24, 24),
+									new Point(1, 24),
+									new Point(24, 24),
+								};
+
+								Point offset = new Point(Offset.X + x * 25, Offset.Y + y * 25);
+
+								SpriteBatch.DrawLine(
+									new Point(from[(int) side].X + offset.X, from[(int) side].Y + offset.Y),
+									new Point(to[(int) side].X + offset.X,   to[(int) side].Y + offset.Y),
+									Color.Red);
 							}
 						}
 					}
-*/
+					#endregion
+
+
 					if (block.NoMonster)
 					{
 						SpriteBatch.FillRectangle(new Rectangle(location.X, location.Y, 25, 25), Color.FromArgb(128, Color.Blue));
@@ -436,7 +459,7 @@ namespace DungeonEye.Forms
 
 
 			// Preview pos
-			SpriteBatch.DrawTile(Icons, 22 + (int)PreviewLoc.Direction, new Point(Offset.X + PreviewLoc.Coordinate.X * 25, Offset.Y + PreviewLoc.Coordinate.Y * 25));
+			SpriteBatch.DrawTile(Icons, 22 + (int) PreviewLoc.Direction, new Point(Offset.X + PreviewLoc.Coordinate.X * 25, Offset.Y + PreviewLoc.Coordinate.Y * 25));
 
 
 			// Starting point
@@ -548,9 +571,9 @@ namespace DungeonEye.Forms
 			Icons = new TileSet();
 			Icons.Texture = new Texture2D(ResourceManager.GetInternalResource("DungeonEye.Forms.data.editor.png"));
 			int id = 0;
-			for (int y = 0; y < Icons.Texture.Size.Height - 50; y += 25)
+			for (int y = 0 ; y < Icons.Texture.Size.Height - 50 ; y += 25)
 			{
-				for (int x = 0; x < Icons.Texture.Size.Width; x += 25)
+				for (int x = 0 ; x < Icons.Texture.Size.Width ; x += 25)
 				{
 					Tile tile = Icons.AddTile(id++);
 					tile.Rectangle = new Rectangle(x, y, 25, 25);
@@ -558,6 +581,8 @@ namespace DungeonEye.Forms
 			}
 			Icons.AddTile(100).Rectangle = new Rectangle(0, 245, 6, 11); // alcoves
 			Icons.AddTile(101).Rectangle = new Rectangle(6, 248, 11, 6); // alcoves
+			Icons.AddTile(102).Rectangle = new Rectangle(17, 243, 10, 13); // wall switch
+			Icons.AddTile(103).Rectangle = new Rectangle(27, 246, 13, 10); // wall switch
 
 
 			RebuildMazeList();
@@ -1336,7 +1361,7 @@ namespace DungeonEye.Forms
 				return;
 
 
-			Dungeon.ItemTileSetName = (string)ItemTileSetBox.SelectedItem;
+			Dungeon.ItemTileSetName = (string) ItemTileSetBox.SelectedItem;
 			Dungeon.LoadItemTileSet();
 		}
 
@@ -1369,7 +1394,7 @@ namespace DungeonEye.Forms
 			if (Maze == null)
 				return;
 
-			Maze.DecorationName = (string)DecorationNameBox.SelectedItem;
+			Maze.DecorationName = (string) DecorationNameBox.SelectedItem;
 			Maze.LoadDecoration();
 		}
 
@@ -1384,7 +1409,7 @@ namespace DungeonEye.Forms
 			if (Maze == null)
 				return;
 
-			Maze.WallTilesetName = (string)WallTileSetNameBox.SelectedItem;
+			Maze.WallTilesetName = (string) WallTileSetNameBox.SelectedItem;
 			Maze.LoadWallTileSet();
 		}
 

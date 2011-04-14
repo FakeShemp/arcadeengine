@@ -210,7 +210,7 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Sets to as state
+		/// Sets to a state
 		/// </summary>
 		public virtual void SetTo()
 		{
