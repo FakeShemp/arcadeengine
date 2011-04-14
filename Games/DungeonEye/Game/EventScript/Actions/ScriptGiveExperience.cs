@@ -24,9 +24,9 @@ namespace DungeonEye.EventScript
 		/// Runs the script
 		/// </summary>
 		/// <returns>True on success</returns>
-		public override bool Run(Team team)
+		public override bool Run()
 		{
-			team.AddExperience(Amount);
+			GameScreen.Team.AddExperience(Amount);
 
 			return true;
 		}

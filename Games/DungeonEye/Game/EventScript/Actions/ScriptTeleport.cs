@@ -45,15 +45,15 @@ namespace DungeonEye.EventScript
 		/// Run actions
 		/// </summary>
 		/// <returns></returns>
-		public override bool Run(Team team)
+		public override bool Run()
 		{
 			if (Target == null)
 				return false;
 
-			if (team.Teleport(Target))
+			if (GameScreen.Team.Teleport(Target))
 			{
 				if (ChangeDirection)
-					team.Direction = Target.Direction;
+					GameScreen.Team.Direction = Target.Direction;
 				return true;
 			}
 
@@ -81,12 +81,6 @@ namespace DungeonEye.EventScript
 
 				switch (node.Name.ToLower())
 				{
-					case "target":
-					{
-						Target.Load(node);
-					}
-					break;
-
 					case "changedirection":
 					{
 						ChangeDirection = (bool) bool.Parse(node.Attributes["value"].Value);
@@ -110,9 +104,6 @@ namespace DungeonEye.EventScript
 
 			writer.WriteStartElement(Name);
 			
-			if (Target != null)
-				Target.Save("target", writer);
-
 			writer.WriteStartElement("changedirection");
 			writer.WriteAttributeString("value", ChangeDirection.ToString());
 			writer.WriteEndElement();
@@ -139,7 +130,6 @@ namespace DungeonEye.EventScript
 			get;
 			set;
 		}
-
 
 
 		#endregion

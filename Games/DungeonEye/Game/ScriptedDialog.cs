@@ -178,7 +178,7 @@ namespace DungeonEye
 			if (button.Tag != null)
 			{
 				ScriptChoice choice = button.Tag as ScriptChoice;
-				choice.Run(GameScreen.Team);
+				choice.Run();
 
 				// Time to quit
 				if (Quit)

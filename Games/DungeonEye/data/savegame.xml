@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="us-ascii"?>
-<team>
+<Team>
 	<dungeon name="EOB_2" />
 	<location maze="Temple - 01" x="13" y="11" direction="West" position="NorthEast" />
 	<position slot="FrontLeft">
@@ -140,4 +140,4 @@
 			<spell name="Slow Poison" />
 		</hero>
 	</position>
-</team>
+</Team>

@@ -29,7 +29,7 @@ namespace DungeonEye.Forms
 			else
 				Action = new ScriptToggleTarget();
 
-			TargetBox.Dungeon = dungeon;
+			TargetBox.SetTarget(dungeon, Action.Target);
 		}
 
 
@@ -45,7 +45,7 @@ namespace DungeonEye.Forms
 			if (Action == null)
 				return;
 
-			Action.Target = target;
+			((ScriptToggleTarget)Action).Target = target;
 		}
 
 		#endregion

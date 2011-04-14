@@ -56,21 +56,17 @@ namespace DungeonEye
 		/// <returns>True on success</returns>
 		public bool Init()
 		{
-			if (Dungeon != null)
-				Dungeon.Dispose();
-
-			Dungeon = ResourceManager.CreateAsset<Dungeon>("EOB_2");
-			if (Dungeon == null)
-			{
-				Trace.WriteLine("[Team]Init(): Failed to create default dungeon !");
-				return false;
-			}
-
-			Dungeon.Init();
 
 			// Set initial location
-			Teleport(Dungeon.StartLocation);
-			Location.Direction = Dungeon.StartLocation.Direction;
+			if (Location == null)
+			{
+				Teleport(GameScreen.Dungeon.StartLocation);
+				Location.Direction = GameScreen.Dungeon.StartLocation.Direction;
+			}
+			else
+			{
+				Teleport(Location);
+			}
 
 			// Select the first hero
 			SelectedHero = Heroes[0];
@@ -84,10 +80,6 @@ namespace DungeonEye
 		/// </summary>
 		public void Dispose()
 		{
-			if (Dungeon != null)
-				Dungeon.Dispose();
-			Dungeon = null;
-
 
 		}
 
@@ -128,55 +120,8 @@ namespace DungeonEye
 		/// <returns>True if loaded</returns>
 		public bool LoadParty()
 		{
-			if (!System.IO.File.Exists(GameSettings.SaveGameName))
-			{
-				Trace.WriteLine("[Team]LoadParty() : Unable to find file \"" + GameSettings.SaveGameName + "\".");
-				return false;
-			}
-
-			XmlDocument xml = new XmlDocument();
-			xml.Load(GameSettings.SaveGameName);
-
-
-			foreach (XmlNode node in xml)
-			{
-				if (node.Name.ToLower() == "team")
-					Load(node);
-			}
-
-			if (Dungeon == null)
-			{
-				Trace.WriteLine("[Team]LoadParty() : Dungeon == NULL !!");
-				throw new NullReferenceException("Dungeon id null");
-			}
-
-			Dungeon.Init();
-			Teleport(Location);
-
-
 			return true;
 		}
-
-
-		/// <summary>
-		/// Saves a party progress
-		/// </summary>
-		/// <param name="filename">File name</param>
-		/// <returns></returns>
-		public bool SaveParty()
-		{
-			XmlWriterSettings settings = new XmlWriterSettings();
-			settings.Indent = true;
-			settings.OmitXmlDeclaration = false;
-			settings.IndentChars = "\t";
-			settings.Encoding = System.Text.ASCIIEncoding.ASCII;
-			XmlWriter xml = XmlWriter.Create(GameSettings.SaveGameName, settings);
-			Save(xml);
-			xml.Close();
-
-			return true;
-		}
-
 
 
 		/// <summary>
@@ -184,7 +129,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="filename">Xml data</param>
 		/// <returns>True if team successfuly loaded, otherwise false</returns>
-		bool Load(XmlNode xml)
+		public bool Load(XmlNode xml)
 		{
 			if (xml == null || xml.Name.ToLower() != "team")
 				return false;
@@ -194,10 +139,6 @@ namespace DungeonEye
 			for (int i = 0; i < Heroes.Count; i++)
 				Heroes[i] = null;
 
-			// Dispose dungeon
-			if (Dungeon != null)
-				Dungeon.Dispose();
-			Dungeon = null;
 
 			foreach (XmlNode node in xml)
 			{
@@ -207,12 +148,12 @@ namespace DungeonEye
 
 				switch (node.Name.ToLower())
 				{
-					case "dungeon":
-					{
-						Dungeon = ResourceManager.CreateAsset<Dungeon>(node.Attributes["name"].Value);
-						//Dungeon.Team = this;
-					}
-					break;
+					//case "dungeon":
+					//{
+					//    Dungeon = ResourceManager.CreateAsset<Dungeon>(node.Attributes["name"].Value);
+					//    //Dungeon.Team = this;
+					//}
+					//break;
 
 					case "location":
 					{
@@ -250,16 +191,13 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="filename">XmlWriter</param>
 		/// <returns></returns>
-		bool Save(XmlWriter writer)
+		public bool Save(XmlWriter writer)
 		{
 			if (writer == null)
 				return false;
 
 			writer.WriteStartElement("team");
 
-			writer.WriteStartElement("dungeon");
-			writer.WriteAttributeString("name", Dungeon.Name);
-			writer.WriteEndElement();
 			Location.Save("location", writer);
 
 
@@ -620,17 +558,28 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Teleport the team to a new location, but don't change direction
+		/// Teleports the team into the current dungeon
 		/// </summary>
 		/// <param name="location">Location in the dungeon</param>
 		/// <returns>True if teleportion is ok, or false if M. Spoke failed !</returns>
 		public bool Teleport(DungeonLocation location)
 		{
-			if (Dungeon == null || location == null)
+			return Teleport(location, GameScreen.Dungeon);
+		}
+
+
+		/// <summary>
+		/// Teleport the team to a new location, but don't change direction
+		/// </summary>
+		/// <param name="location">Location in the dungeon</param>
+		/// <returns>True if teleportion is ok, or false if M. Spoke failed !</returns>
+		public bool Teleport(DungeonLocation location, Dungeon dungeon)
+		{
+			if (dungeon == null || location == null)
 				return false;
 
 			// Destination maze
-			Maze maze = Dungeon.GetMaze(location.Maze);
+			Maze maze = dungeon.GetMaze(location.Maze);
 			if (maze == null)
 				return false;
 
@@ -951,6 +900,11 @@ namespace DungeonEye
 
 		#region Properties
 
+		/// <summary>
+		/// 
+		/// </summary>
+		public const string Tag = "Team";
+
 
 		/// <summary>
 		/// If the team moved during the last update
@@ -1044,7 +998,6 @@ namespace DungeonEye
 		}
 
 
-
 		/// <summary>
 		/// Return the currently selected hero
 		/// </summary>
@@ -1080,17 +1033,6 @@ namespace DungeonEye
 
 				return count;
 			}
-		}
-
-
-
-		/// <summary>
-		/// Dungeon to use
-		/// </summary>
-		public Dungeon Dungeon
-		{
-			get;
-			private set;
 		}
 
 
@@ -1183,6 +1125,7 @@ namespace DungeonEye
 			}
 		}
 
+
 		/// <summary>
 		/// Location of the team
 		/// </summary>
@@ -1191,6 +1134,7 @@ namespace DungeonEye
 			get;
 			private set;
 		}
+
 
 		#endregion
 

@@ -154,7 +154,7 @@ namespace DungeonEye.Forms
 			if (string.IsNullOrEmpty(saveFileDialog1.FileName))
 				return;
 
-			GameScreen.SaveParty(saveFileDialog1.FileName);
+			GameScreen.Save(saveFileDialog1.FileName);
 		}
 
 
@@ -208,7 +208,7 @@ namespace DungeonEye.Forms
 			if (GameScreen == null)
 				return;
 
-			DungeonLocationForm form = new DungeonLocationForm(Team.Dungeon, Team.Location.Maze, Team.Location.Coordinate);
+			DungeonLocationForm form = new DungeonLocationForm(GameScreen.Dungeon, Team.Location.Maze, Team.Location.Coordinate);
 			form.ShowDialog();
 
 			Team.Teleport(form.Target);

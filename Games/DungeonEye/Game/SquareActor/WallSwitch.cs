@@ -63,6 +63,12 @@ namespace DungeonEye
 			if (!Square.Maze.Decoration.IsPointInside(IsActivated ? ActivatedDecoration : DeactivatedDecoration, location))
 				return false;
 
+			// Run each action
+			foreach (ScriptAction action in Actions)
+			{
+				action.Run();
+			}
+
 			Toggle();
 
 			return true;
@@ -116,6 +122,15 @@ namespace DungeonEye
 			{
 				switch (node.Name.ToLower())
 				{
+					case "target":
+					{
+						if (Target == null)
+							Target = new DungeonLocation();
+
+						Target.Load(xml);
+					}
+					break;
+					
 					case "decoration":
 					{
 						ActivatedDecoration = int.Parse(node.Attributes["activated"].Value);
@@ -161,7 +176,6 @@ namespace DungeonEye
 			writer.WriteEndElement();
 
 			writer.WriteElementString("side", Side.ToString());
-
 
 			base.Save(writer);
 

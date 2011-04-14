@@ -45,7 +45,7 @@ namespace DungeonEye
 		public GameScreen()
 		{
 			SpellBook = new SpellBook();
-			Team = new Team();
+		//	Team = new Team();
 		}
 
 
@@ -101,11 +101,27 @@ namespace DungeonEye
 			GameMessage.Init();
 
 
+
+
+/*
+			Dungeon = ResourceManager.CreateAsset<Dungeon>("EOB_2");
+			if (Dungeon == null)
+			{
+				Trace.WriteLine("[GameScreen]Init(): Failed to create default dungeon !");
+				return;
+			}
+
+			Dungeon.Init();
+		
 			// Loads a saved game
-			if (!LoadParty())
+			if (!Load())
 			{
 				Team.Init();
 			}
+*/
+
+			Load();
+
 
 
 			watch.Stop();
@@ -119,6 +135,10 @@ namespace DungeonEye
 		public override void UnloadContent()
 		{
 			Trace.WriteDebugLine("[Team] : UnloadContent");
+
+			if (GameScreen.Dungeon != null)
+				GameScreen.Dungeon.Dispose();
+			GameScreen.Dungeon = null;
 
 			Team.Dispose();
 			SpellBook.Dispose();
@@ -161,12 +181,58 @@ namespace DungeonEye
 		/// <summary>
 		/// Loads a team party
 		/// </summary>
-		/// <param name="filename">File name to load</param>
-		/// <returns>True if loaded</returns>
-		public bool LoadParty()
+		/// <returns>True on success</returns>
+		public bool Load()
 		{
 
-			Team.LoadParty();
+			if (!System.IO.File.Exists(GameSettings.SaveGameName))
+			{
+				Trace.WriteLine("[GameScreen]LoadParty() : Unable to find file \"" + GameSettings.SaveGameName + "\".");
+				return false;
+			}
+
+			XmlDocument xml = new XmlDocument();
+			xml.Load(GameSettings.SaveGameName);
+
+
+			if (Team != null)
+				Team.Dispose();
+			Team = null;
+
+			if (Dungeon != null)
+				Dungeon.Dispose();
+			Dungeon = null;
+
+
+			foreach (XmlNode node in xml)
+			{
+				switch (node.Name)
+				{
+					case Team.Tag:
+					{
+						Team = new Team();
+						Team.Load(node);
+					}
+					break;
+
+					case "Dungeon":
+					{
+						Dungeon = new Dungeon();
+						Dungeon.Load(node);
+					}
+					break;
+				}
+			}
+
+			if (Dungeon == null)
+				Dungeon = ResourceManager.CreateAsset<Dungeon>("EOB_2");
+			Dungeon.Init();
+
+			if (Team == null)
+				Team = new Team();
+			Team.Init();
+
+
 			GameMessage.AddMessage("Party Loaded...", GameColors.Yellow);
 			return true;
 		}
@@ -176,17 +242,34 @@ namespace DungeonEye
 		/// Saves a party progress
 		/// </summary>
 		/// <param name="filename">File name</param>
-		/// <returns></returns>
-		public bool SaveParty(string filename)
+		/// <returns>True on success</returns>
+		public bool Save(string filename)
 		{
 			try
 			{
-				Team.SaveParty();
+				XmlWriterSettings settings = new XmlWriterSettings();
+				settings.Indent = true;
+				settings.OmitXmlDeclaration = false;
+				settings.IndentChars = "\t";
+				settings.Encoding = System.Text.ASCIIEncoding.ASCII;
+				XmlWriter writer = XmlWriter.Create(GameSettings.SaveGameName, settings);
+
+
+				writer.WriteStartElement("dungeon");
+				writer.WriteAttributeString("name", Dungeon.Name);
+
+				Team.Save(writer);
+
+				writer.WriteEndElement();
+
+				writer.Close();
+
+
 				GameMessage.AddMessage("Party saved...", GameColors.Yellow);
 			}
 			catch (Exception e)
 			{
-				Trace.WriteLine("[Team] SaveParty() : Failed to save the party (filename = '{0}') => {1} !", filename, e.Message);
+				Trace.WriteLine("[GameScreen] SaveParty() : Failed to save the party (filename = '{0}') => {1} !", filename, e.Message);
 				GameMessage.AddMessage("Party NOT saved...", GameColors.Red);
 				return false;
 			}
@@ -728,20 +811,6 @@ namespace DungeonEye
 				return;
 			}
 
-			// Reload data banks
-			if (Keyboard.IsNewKeyPress(Keys.W))
-			{
-				DisplayCoordinates.Load();
-				GameMessage.AddMessage("MazeDisplayCoordinates reloaded...");
-			}
-
-
-
-			if (Keyboard.IsNewKeyPress(Keys.V))
-			{
-				Team.ReorderHeroes();
-			}
-
 
 			// Reload data banks
 			if (Keyboard.IsNewKeyPress(Keys.R))
@@ -767,13 +836,13 @@ namespace DungeonEye
 			// Save team
 			if (Keyboard.IsNewKeyPress(Keys.J))
 			{
-				SaveParty(@"z:\data\savegame.xml");
+				Save(@"data\savegame.xml");
 			}
 
 			// Load team
 			if (Keyboard.IsNewKeyPress(Keys.L))
 			{
-				LoadParty();
+				Load();
 			}
 
 
@@ -1480,7 +1549,7 @@ namespace DungeonEye
 
 
 			// Update the dungeon
-			Team.Dungeon.Update(time);
+			Dungeon.Update(time);
 
 
 			if (Team.CanMove && Team.Square != null)
@@ -1780,6 +1849,7 @@ namespace DungeonEye
 			private set;
 		}
 
+
 		/// <summary>
 		/// Dialog GUI
 		/// </summary>
@@ -1798,6 +1868,16 @@ namespace DungeonEye
 			}
 		}
 		static DialogBase dialog;
+
+
+		/// <summary>
+		/// Current dungeon in use
+		/// </summary>
+		static public Dungeon Dungeon
+		{
+			get;
+			set;
+		}
 
 		#endregion
 

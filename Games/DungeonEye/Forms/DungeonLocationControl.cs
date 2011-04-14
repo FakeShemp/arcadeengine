@@ -216,7 +216,7 @@ namespace DungeonEye.Forms
 							}
 
 
-							if (block.Actor is FloorSwitchControl)
+							if (block.Actor is PressurePlate)
 							{
 								Batch.DrawTile(Icons, 18, new Point(Offset.X + x * 25, Offset.Y + y * 25));
 							}

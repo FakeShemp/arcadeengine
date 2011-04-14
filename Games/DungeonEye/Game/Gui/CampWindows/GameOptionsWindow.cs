@@ -121,7 +121,7 @@ namespace DungeonEye.Gui.CampWindows
 		{
 			if (((MessageBox) sender).DialogResult == DialogResult.Yes)
 			{
-				GameScreen.Team.SaveParty();
+				//GameScreen.Team.SaveParty();
 				Camp.Exit();
 			}
 		}

@@ -23,7 +23,7 @@ namespace DungeonEye.EventScript
 		/// 
 		/// </summary>
 		/// <returns></returns>
-		public override bool Run(Team team)
+		public override bool Run()
 		{
 
 

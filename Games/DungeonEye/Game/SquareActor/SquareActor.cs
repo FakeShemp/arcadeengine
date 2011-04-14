@@ -80,22 +80,32 @@ namespace DungeonEye
 			if (Actions == null)
 				Actions = new List<ScriptAction>();
 
+			ScriptAction script = null;
+
 			foreach (XmlNode node in xml)
 			{
 				switch (node.Name.ToLower())
 				{
 					case "toggletarget":
 					{
-						ScriptToggleTarget script = new ScriptToggleTarget();
+						script = new ScriptToggleTarget();
 						script.Load(node);
+					}
+					break;
 
-						Actions.Add(script);
+					case "activatetarget":
+					{
+						script = new ScriptActivateTarget();
+						script.Load(node);
 					}
 					break;
 				}
 			}
 
-
+			if (script != null)
+			{
+				Actions.Add(script);
+			}
 
 			return true;
 		}

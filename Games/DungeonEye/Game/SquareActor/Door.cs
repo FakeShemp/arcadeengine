@@ -250,6 +250,17 @@ namespace DungeonEye
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		public override void Toggle()
+		{
+			if (State == DoorState.Closed || State == DoorState.Closing)
+				Open();
+			else if (State == DoorState.Opened || State == DoorState.Opening)
+				Close();
+		}
+
 		#endregion
 
 

@@ -25,10 +25,18 @@ namespace DungeonEye.EventScript
 		/// 
 		/// </summary>
 		/// <returns></returns>
-		public override bool Run(Team team)
+		public override bool Run()
 		{
+			if (Target == null)
+				return false;
 
+			Square square = Target.GetSquare(GameScreen.Dungeon);
+			if (square == null)
+				return false;
 
+			if (square.Actor != null)
+				square.Actor.Toggle();
+			
 			return true;
 		}
 
@@ -84,6 +92,7 @@ namespace DungeonEye.EventScript
 
 
 		#region Properties
+
 
 
 		#endregion

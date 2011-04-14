@@ -42,9 +42,8 @@ namespace DungeonEye.EventScript
 		/// <summary>
 		/// Run the script
 		/// </summary>
-		/// <param name="team">Team handle</param>
 		/// <returns>True on success</returns>
-		public virtual bool Run(Team team)
+		public virtual bool Run()
 		{
 			return false;
 		}
@@ -97,8 +96,7 @@ namespace DungeonEye.EventScript
 			if (writer == null)
 				return false;
 
-			if (Target != null)
-				Target.Save("target", writer);
+			Target.Save("target", writer);
 
 
 			return true;

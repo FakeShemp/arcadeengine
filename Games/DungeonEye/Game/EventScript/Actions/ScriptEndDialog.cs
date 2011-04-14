@@ -24,7 +24,7 @@ namespace DungeonEye.EventScript
 		/// 
 		/// </summary>
 		/// <returns>True on succes</returns>
-		public override bool Run(Team team)
+		public override bool Run()
 		{
 			if (GameScreen.Dialog == null)
 				return false;

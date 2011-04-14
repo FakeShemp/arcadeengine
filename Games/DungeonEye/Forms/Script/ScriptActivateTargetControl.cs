@@ -29,9 +29,26 @@ namespace DungeonEye.Forms
 			else
 				Action = new ScriptActivateTarget();
 
-			TargetBox.Dungeon = dungeon;
+			TargetBox.SetTarget(dungeon, Action.Target);
 		}
 
+
+		#region Events
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="target"></param>
+		private void TargetBox_TargetChanged(object sender, DungeonLocation target)
+		{
+			if (Action == null)
+				return;
+
+			((ScriptActivateTarget)Action).Target = target;
+		}
+
+		#endregion
 
 
 		#region Properties

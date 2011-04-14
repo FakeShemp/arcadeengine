@@ -26,6 +26,7 @@ using ArcEngine.Asset;
 using ArcEngine.Forms;
 using ArcEngine.Graphic;
 using ArcEngine.Interface;
+using DungeonEye.EventScript;
 
 
 namespace DungeonEye.Forms
@@ -388,8 +389,6 @@ namespace DungeonEye.Forms
 							SpriteBatch.DrawTile(Icons, tileid, new Point(
 								Offset.X + x * 25 + sides[(int) wall.Side].X,
 								Offset.Y + y * 25 + sides[(int) wall.Side].Y));
-
-
 						}
 					}
 					#endregion
@@ -479,7 +478,20 @@ namespace DungeonEye.Forms
 			if (SquareUnderMouse != null && SquareUnderMouse.Actor != null)
 			{
 				SquareActor actor = SquareUnderMouse.Actor;
-				if (actor.Target != null)
+				if (actor is WallSwitch)
+				{
+					foreach(ScriptAction action in actor.Actions)
+					{
+						if (action.Target.Maze == Maze.Name)
+						{
+							Point from = new Point(BlockCoord.X * 25 + Offset.X + 12, BlockCoord.Y * 25 + Offset.Y + 12);
+							Point to = new Point(action.Target.Coordinate.X * 25 + Offset.X + 12, action.Target.Coordinate.Y * 25 + Offset.Y + 12);
+							SpriteBatch.DrawLine(from, to, Color.Red);
+							SpriteBatch.DrawRectangle(new Rectangle(action.Target.Coordinate.X * 25 + Offset.X, action.Target.Coordinate.Y * 25 + Offset.Y, 25, 25), Color.Red);
+						}
+					}
+				}
+				else if (actor.Target != null)
 				{
 
 					if (actor.Target.Maze == Maze.Name)
