@@ -76,7 +76,7 @@ namespace DungeonEye
 					continue;
 
 				// Draw the decoration
-				Square.DrawDecoration(batch, Square.Maze.Decoration, position, deco, side == CardinalPoint.South);
+				deco.DrawDecoration(batch, Square.Maze.Decoration, position, side == CardinalPoint.South);
 
 
 				// Debug draw alcove zone

@@ -57,12 +57,16 @@ namespace DungeonEye
 		/// <returns></returns>
 		public override bool OnClick(Point location, CardinalPoint side)
 		{
-			if (side != Side)
+			if (side != Side || Square.Maze.Decoration == null)
 				return false;
 
-			IsActivated = !IsActivated;
+			// Not in the decoration zone
+			if (!Square.Maze.Decoration.IsPointInside(IsActivated ? ActivatedDecoration : DeactivatedDecoration, location))
+				return false;
 
-			return false;
+			Toggle();
+
+			return true;
 		}
 
 
@@ -75,23 +79,23 @@ namespace DungeonEye
 		/// <param name="direction"></param>
 		public override void Draw(SpriteBatch batch, ViewField field, ViewFieldPosition position, CardinalPoint direction)
 		{
-			DecorationSet decoset = Square.Maze.Decoration;
-			if (decoset == null)
-				return;
+			// Foreach wall side
+			foreach (TileDrawing td in DisplayCoordinates.GetWalls(position))
+			{
+				// Not the good side
+				if (Compass.GetDirectionFromView(direction, td.Side) != Side)
+					continue;
 
-			Decoration deco = decoset.GetDecoration(IsActivated ? ActivatedDecoration : DeactivatedDecoration);
-			if (deco == null)
-				return;
+				DecorationSet decoset = Square.Maze.Decoration;
+				if (decoset == null)
+					return;
 
+				Decoration deco = decoset.GetDecoration(IsActivated ? ActivatedDecoration : DeactivatedDecoration);
+				if (deco == null)
+					return;
 
-	//		if (Compass.GetOppositeDirection(direction) == Side)
-		//		batch.DrawTile(decoset.Tileset, deco.GetTileId(position), deco.GetLocation(position));
-			//batch.DrawTile(decoset.Tileset, deco.GetTileId(position), deco.GetLocation(position),
-			//Color.White, 0.0f,
-			//deco.GetSwap(position) ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
-			//0.0f);
-	
-
+				deco.DrawDecoration(batch, decoset, position, Compass.IsSideFacing(direction, Side));
+			}
 		}
 
 
@@ -122,7 +126,7 @@ namespace DungeonEye
 
 					case "side":
 					{
-						Side = (CardinalPoint)Enum.Parse(typeof(CardinalPoint), node.InnerText);
+						Side = (CardinalPoint) Enum.Parse(typeof(CardinalPoint), node.InnerText);
 					}
 					break;
 

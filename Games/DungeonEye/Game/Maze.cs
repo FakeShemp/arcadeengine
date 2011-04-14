@@ -731,16 +731,34 @@ namespace DungeonEye
 
 			#region Actor
 			if (square.Actor != null)
-			{
 				square.Actor.Draw(batch, field, position, view);
-			}
 			#endregion
 
 
 			#region Decoration
+			if (square.HasDecorations)
+			{
+				// Is there a forced decoration
+				Decoration deco = null;
+				for (int i = 0 ; i < 4 ; i++)
+				{
+					deco = Decoration.GetDecoration(square.GetDecorationId((CardinalPoint) i));
+					if (deco != null && deco.ForceDisplay)
+						deco.DrawDecoration(batch, Decoration, position, true);
+				}
 
-			square.DrawDecorations(batch, Decoration, position, view);
 
+				// For each directions, draws the decoration
+				foreach (CardinalPoint side in DisplayCoordinates.DrawingWallSides[(int) position])
+				{
+					// Decoration informations
+					deco = Decoration.GetDecoration(square.GetDecorationId(view, side));
+					if (deco == null)
+						continue;
+
+					deco.DrawDecoration(batch, Decoration, position, side == CardinalPoint.South);
+				}
+			}
 
 			#endregion
 

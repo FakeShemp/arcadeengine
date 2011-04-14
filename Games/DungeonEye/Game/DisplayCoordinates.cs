@@ -74,9 +74,6 @@ namespace DungeonEye
 					Ground[i, j] = new Point(-999, -999);
 
 			FlyingItems = new Point[viewcount, 5];
-			Walls = new List<TileDrawing>[viewcount];
-			for (int i = 0; i < viewcount; i++)
-				Walls[i] = new List<TileDrawing>();
 
 			Pits = new TileDrawing[viewcount];
 			CeilingPits = new TileDrawing[viewcount];
@@ -179,7 +176,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="position">Block position in the view field</param>
 		/// <returns>List of drawing tiles</returns>
-		static public List<TileDrawing> GetWalls(ViewFieldPosition position)
+		static public TileDrawing[] GetWalls(ViewFieldPosition position)
 		{
 			return Walls[(int)position];
 		}
@@ -302,13 +299,6 @@ namespace DungeonEye
 
 					switch (node.Name.ToLower())
 					{
-						case "wall":
-						{
-							ViewFieldPosition view = (ViewFieldPosition)Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
-							Walls[(int)view].Add(GetTileDrawing(node));
-						}
-						break;
-
 
 						case "stair":
 						{
@@ -450,10 +440,106 @@ namespace DungeonEye
 		static TileDrawing[] Doors;
 
 
+		#region Walls
+
 		/// <summary>
 		/// Walls
 		/// </summary>
-		static List<TileDrawing>[] Walls;
+		static TileDrawing[][] Walls = new TileDrawing[][]
+		{
+			// A
+			new TileDrawing[]
+			{
+				new TileDrawing(7, new Point(32, 56), CardinalPoint.East, SpriteEffects.None),
+				new TileDrawing(3, new Point(-64, 54), CardinalPoint.South, SpriteEffects.None),
+			},
+			// B
+			new TileDrawing[]
+			{
+				new TileDrawing(3, new Point(32, 54), CardinalPoint.South, SpriteEffects.None),
+				new TileDrawing(7, new Point(128, 54), CardinalPoint.East, SpriteEffects.None),
+			},
+			// C
+			new TileDrawing[]
+			{
+				new TileDrawing(3, new Point(128, 54), CardinalPoint.South, SpriteEffects.None),
+			},
+			// D
+			new TileDrawing[]
+			{
+				new TileDrawing(3, new Point(224, 54), CardinalPoint.South, SpriteEffects.None),
+				new TileDrawing(7, new Point(208, 56), CardinalPoint.West, SpriteEffects.FlipHorizontally),
+			},
+			// E
+			new TileDrawing[]
+			{
+				new TileDrawing(3, new Point(320, 54), CardinalPoint.South, SpriteEffects.None),
+				new TileDrawing(7, new Point(304, 56), CardinalPoint.West, SpriteEffects.FlipHorizontally),
+			},
+
+			// F
+			new TileDrawing[]
+			{
+				new TileDrawing(6, new Point(0, 40), CardinalPoint.East, SpriteEffects.None),
+			},
+			// G
+			new TileDrawing[]
+			{
+				new TileDrawing(2, new Point(-64, 40), CardinalPoint.South, SpriteEffects.None),
+				new TileDrawing(6, new Point(96, 38), CardinalPoint.East, SpriteEffects.None),
+			},
+			// H
+			new TileDrawing[]
+			{
+				new TileDrawing(2, new Point(96, 40), CardinalPoint.South, SpriteEffects.None),
+			},
+			// I
+			new TileDrawing[]
+			{
+				new TileDrawing(2, new Point(256, 40), CardinalPoint.South, SpriteEffects.None),
+				new TileDrawing(6, new Point(224, 40), CardinalPoint.West, SpriteEffects.FlipHorizontally),
+			},
+			// J
+			new TileDrawing[]
+			{
+				new TileDrawing(6, new Point(320, 40), CardinalPoint.West, SpriteEffects.FlipHorizontally),
+			},
+
+			// K
+			new TileDrawing[]
+			{
+				new TileDrawing(1, new Point(-208, 14), CardinalPoint.South, SpriteEffects.None),
+				new TileDrawing(5, new Point(48, 14), CardinalPoint.East, SpriteEffects.None),
+			},
+			// L
+			new TileDrawing[]
+			{
+				new TileDrawing(1, new Point(48, 14), CardinalPoint.South, SpriteEffects.None),
+			},
+			// M
+			new TileDrawing[]
+			{
+				new TileDrawing(1, new Point(304, 14), CardinalPoint.South, SpriteEffects.None),
+				new TileDrawing(5, new Point(256, 14), CardinalPoint.West, SpriteEffects.FlipHorizontally),
+			},
+
+			// N
+			new TileDrawing[]
+			{
+				new TileDrawing(4, new Point(0, 0), CardinalPoint.East, SpriteEffects.None),
+			},
+
+			// Team
+			new TileDrawing[] {},
+
+			// O
+			new TileDrawing[]
+			{
+				new TileDrawing(4, new Point(304, 0), CardinalPoint.West, SpriteEffects.FlipHorizontally),
+			},
+		};
+
+		#endregion
 
 
 		/// <summary>

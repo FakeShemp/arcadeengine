@@ -133,6 +133,44 @@ namespace DungeonEye
 		}
 
 
+		/// <summary>
+		/// Draws a single decoration
+		/// </summary>
+		/// <param name="batch">Spritebatch handle</param>
+		/// <param name="decoration">DecorationSet handle</param>
+		/// <param name="position">Position of the square in the view</param>
+		/// <param name="view">Viewing direction</param>
+		/// <param name="alignview">True if the side is facing south (horizontaly span the decoration)</param>
+		public void DrawDecoration(SpriteBatch batch, DecorationSet set, ViewFieldPosition position, bool alignview)
+		{
+			if (batch == null || set == null)
+				return;
+
+			// Location of the decoration on the screen
+			Point location = GetLocation(position);
+
+			// Tile id
+			int tileid = GetTileId(position);
+
+
+			// Offset the decoration if facing to the view point
+			if (alignview)
+			{
+				location = PrepareLocation(position);
+				tileid = PrepareTile(position);
+			}
+
+			// Draws the decoration
+			batch.DrawTile(set.Tileset,
+			tileid,
+			location, Color.White,
+			0.0f,
+			GetSwap(position) ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
+			0.0f);
+		}
+
+
+
 		#region Helpers
 
 		/// <summary>

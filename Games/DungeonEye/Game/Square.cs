@@ -349,7 +349,7 @@ namespace DungeonEye
 		#region Decoration
 
 		
-
+/*
 		/// <summary>
 		/// Draws all the decorations
 		/// </summary>
@@ -370,7 +370,7 @@ namespace DungeonEye
 			{
 				deco = decoration.GetDecoration(Decorations[i]);
 				if (deco != null && deco.ForceDisplay)
-					DrawDecoration(batch, decoration, position, deco, true);
+					deco.DrawDecoration(batch, decoration, position, true);
 			}
 
 
@@ -382,7 +382,7 @@ namespace DungeonEye
 				if (deco == null)
 					continue;
 
-				DrawDecoration(batch, decoration, position, deco, side == CardinalPoint.South);
+				deco.DrawDecoration(batch, decoration, position, side == CardinalPoint.South);
 			}
 		}
 
@@ -422,7 +422,7 @@ namespace DungeonEye
 			deco.GetSwap(position) ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
 			0.0f);
 		}
-
+*/
 
 		/// <summary>
 		/// Gets if the wall have decoration

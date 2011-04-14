@@ -193,7 +193,10 @@ namespace DungeonEye
 		/// </summary>
 		public virtual void Toggle()
 		{
-			IsActivated = !IsActivated;
+			if (IsActivated)
+				Deactivate();
+			else
+				Activate();
 		}
 
 
