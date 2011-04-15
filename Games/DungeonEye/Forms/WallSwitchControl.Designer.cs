@@ -40,7 +40,7 @@
 			this.DeactivatedGlBox = new OpenTK.GLControl();
 			this.DeactivatedIdBox = new System.Windows.Forms.NumericUpDown();
 			this.ScriptTab = new System.Windows.Forms.TabPage();
-			this.switchCountControl1 = new DungeonEye.Forms.SwitchCountControl();
+			this.SwitchCountBox = new DungeonEye.Forms.SwitchCountControl();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.label4 = new System.Windows.Forms.Label();
 			this.label3 = new System.Windows.Forms.Label();
@@ -214,7 +214,7 @@
 			// 
 			// ScriptTab
 			// 
-			this.ScriptTab.Controls.Add(this.switchCountControl1);
+			this.ScriptTab.Controls.Add(this.SwitchCountBox);
 			this.ScriptTab.Controls.Add(this.groupBox2);
 			this.ScriptTab.Controls.Add(this.ActionScriptBox);
 			this.ScriptTab.Location = new System.Drawing.Point(4, 22);
@@ -224,14 +224,14 @@
 			this.ScriptTab.Text = "Script";
 			this.ScriptTab.UseVisualStyleBackColor = true;
 			// 
-			// switchCountControl1
+			// SwitchCountBox
 			// 
-			this.switchCountControl1.Location = new System.Drawing.Point(223, 159);
-			this.switchCountControl1.MinimumSize = new System.Drawing.Size(130, 100);
-			this.switchCountControl1.Name = "switchCountControl1";
-			this.switchCountControl1.Size = new System.Drawing.Size(130, 100);
-			this.switchCountControl1.TabIndex = 2;
-			this.switchCountControl1.Title = "Switch count";
+			this.SwitchCountBox.Location = new System.Drawing.Point(223, 159);
+			this.SwitchCountBox.MinimumSize = new System.Drawing.Size(130, 100);
+			this.SwitchCountBox.Name = "SwitchCountBox";
+			this.SwitchCountBox.Size = new System.Drawing.Size(130, 100);
+			this.SwitchCountBox.TabIndex = 2;
+			this.SwitchCountBox.Title = "Switch count";
 			// 
 			// groupBox2
 			// 
@@ -356,7 +356,7 @@
 		private System.Windows.Forms.CheckBox ConsumeItemBox;
 		private System.Windows.Forms.NumericUpDown PickLockBox;
 		private System.Windows.Forms.ComboBox ItemsBox;
-		private Forms.SwitchCountControl switchCountControl1;
+		private Forms.SwitchCountControl SwitchCountBox;
 
 	}
 }

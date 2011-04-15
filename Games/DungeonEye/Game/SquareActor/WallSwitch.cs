@@ -275,6 +275,13 @@ namespace DungeonEye
 			set;
 		}
 
+
+		/// <summary>
+		/// Switch count
+		/// </summary>
+		SwitchCount Count;
+
+
 		#endregion
 	}
 }

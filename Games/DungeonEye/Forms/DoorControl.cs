@@ -46,51 +46,28 @@ namespace DungeonEye.Forms
 			DoorTypeBox.DataSource = Enum.GetValues(typeof(DoorType));
 			DoorStateBox.DataSource = Enum.GetValues(typeof(DoorState));
 
-			DoorStateBox.SelectedItem = door.State;
-			DoorTypeBox.SelectedItem = door.Type;
-			ItemConsumBox.Checked = door.ConsumeItem;
-			DoorTypeBox.SelectedItem = door.Type;
-			PicklockBox.Value = door.PickLock;
-			SpeedBox.Value = (int)door.Speed.TotalSeconds;
-
-
-			IsBreakableBox.Checked = door.IsBreakable;
-			BreakValueBox.Value = door.Strength;
-			BreakValueBox.Visible = door.IsBreakable;
-
-			switch (door.OpenType)
-			{
-				case DoorOpenType.Button:
-				ButtonRadioBox.Checked = true;
-				break;
-				case DoorOpenType.Item:
-				ItemRadioBox.Checked = true;
-				break;
-				case DoorOpenType.Event:
-				EventRadioBox.Checked = true;
-				break;
-			}
-
-
-			if (door.OpenType == DoorOpenType.Item)
-			{
-
-				// Populate item list
-				if (ItemNameBox.Items.Count == 0 && !DesignMode)
-					ItemNameBox.DataSource = ResourceManager.GetAssets<Item>();
-
-				ItemNameBox.SelectedItem = door.OpenItemName;
-
-				ItemPanel.Visible = true;
-			}
-			else
-				ItemPanel.Visible = false;
-			
-
 			Door = door;
 		}
 
 
+		/// <summary>
+		/// Update user interface
+		/// </summary>
+		void UpdateUI()
+		{
+			if (Door == null)
+				return;
+
+
+			DoorStateBox.SelectedItem = Door.State;
+			DoorTypeBox.SelectedItem = Door.Type;
+			DoorTypeBox.SelectedItem = Door.Type;
+			PicklockBox.Value = Door.PickLock;
+			SpeedBox.Value = (int) Door.Speed.TotalSeconds;
+			IsBreakableBox.Checked = Door.IsBreakable;
+			BreakValueBox.Value = Door.Strength;
+			BreakValueBox.Visible = Door.IsBreakable;
+		}
 
 		#region Events
 
@@ -120,7 +97,7 @@ namespace DungeonEye.Forms
 			if (Door == null)
 				return;
 
-			Door.Strength = (int)BreakValueBox.Value;
+			Door.Strength = (int) BreakValueBox.Value;
 		}
 
 
@@ -134,85 +111,7 @@ namespace DungeonEye.Forms
 			if (Door == null)
 				return;
 
-			Door.PickLock = (int)PicklockBox.Value;
-		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void ItemDisappearBox_CheckedChanged(object sender, EventArgs e)
-		{
-			if (Door == null)
-				return;
-
-			Door.ConsumeItem = ItemConsumBox.Checked;
-
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void ItemNameBox_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			if (Door == null)
-				return;
-
-			Door.OpenItemName = (string)ItemNameBox.SelectedItem;
-
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OpensBy_CheckedChanged(object sender, EventArgs e)
-		{
-			if (Door == null)
-				return;
-
-			RadioButton button = sender as RadioButton;
-
-			if (button.Checked)
-			{
-
-				if (button == ButtonRadioBox)
-				{
-					Door.OpenType = DoorOpenType.Button;
-					Door.OpenItemName = string.Empty;
-					Door.ConsumeItem = false;
-					Door.PickLock = 0;
-				}
-				else if (button == ItemRadioBox)
-				{
-					Door.OpenType = DoorOpenType.Item;
-					Door.OpenItemName = (string)ItemNameBox.SelectedItem;
-					Door.ConsumeItem = ItemConsumBox.Checked;
-					Door.PickLock = (int)PicklockBox.Value;
-
-					// Populate item list
-					if (ItemNameBox.Items.Count == 0 && !DesignMode)
-						ItemNameBox.DataSource = ResourceManager.GetAssets<Item>();
-
-					ItemNameBox.SelectedItem = Door.OpenItemName;
-				}
-				else if (button == EventRadioBox)
-				{
-					Door.OpenType = DoorOpenType.Event;
-					Door.OpenItemName = string.Empty;
-					Door.ConsumeItem = false;
-					Door.PickLock = 0;
-				}
-			}
-
-			ItemPanel.Visible = Door.OpenType == DoorOpenType.Item;
-
+			Door.PickLock = (int) PicklockBox.Value;
 		}
 
 
@@ -226,7 +125,7 @@ namespace DungeonEye.Forms
 			if (Door == null)
 				return;
 
-			Door.Type = (DoorType)DoorTypeBox.SelectedItem;
+			Door.Type = (DoorType) DoorTypeBox.SelectedItem;
 		}
 
 
@@ -239,8 +138,8 @@ namespace DungeonEye.Forms
 		{
 			if (Door == null)
 				return;
-			
-			Door.State = (DoorState)DoorStateBox.SelectedItem;
+
+			Door.State = (DoorState) DoorStateBox.SelectedItem;
 		}
 
 
@@ -254,8 +153,35 @@ namespace DungeonEye.Forms
 			if (Door == null)
 				return;
 
-			Door.Speed = TimeSpan.FromSeconds((int)SpeedBox.Value);
+			Door.Speed = TimeSpan.FromSeconds((int) SpeedBox.Value);
 		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void HasButtonBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Door == null)
+				return;
+
+			Door.HasButton = HasButtonBox.Checked;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void DoorControl_Load(object sender, EventArgs e)
+		{
+			UpdateUI();
+		}
+
+
 
 		#endregion
 
@@ -263,14 +189,12 @@ namespace DungeonEye.Forms
 
 		#region Properties
 
-
 		/// <summary>
-		/// 
+		/// Door handle
 		/// </summary>
 		Door Door;
 
 		#endregion
-
 
 	}
 }

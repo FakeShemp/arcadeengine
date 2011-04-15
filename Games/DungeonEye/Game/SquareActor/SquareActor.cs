@@ -43,6 +43,7 @@ namespace DungeonEye
 			Square = square;
 			IsActivated = true;
 			Actions = new List<ScriptAction>();
+			Count = new SwitchCount();
 		}
 
 
@@ -325,6 +326,12 @@ namespace DungeonEye
 				}
 				break;
 
+				case "switch":
+				{
+					Count.Load(node);
+				}
+				break;
+				
 				default:
 				{
 					Trace.WriteLine("[SquareActor] Load() : Unknown node \"" + node.Name + "\" found.");
@@ -357,6 +364,7 @@ namespace DungeonEye
 				writer.WriteEndElement();
 			}
 
+			Count.Save("switch", writer);
 
 			return true;
 		}
@@ -437,6 +445,14 @@ namespace DungeonEye
 		}
 
 
+		/// <summary>
+		/// Switch count
+		/// </summary>
+		public SwitchCount Count
+		{
+			get;
+			set;
+		}
 
 		#endregion
 	}

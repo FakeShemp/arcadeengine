@@ -467,6 +467,7 @@
     <Compile Include="Game\SquareActor\Generator.cs" />
     <Compile Include="Game\SquareActor\Launcher.cs" />
     <Compile Include="Game\SquareActor\WallSwitch.cs" />
+    <Compile Include="Game\SwitchCount.cs" />
     <Compile Include="Game\ViewField.cs" />
     <Compile Include="Interfaces\IDoor.cs" />
     <Compile Include="Interfaces\IFloorPlate.cs" />

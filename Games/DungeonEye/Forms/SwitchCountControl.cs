@@ -21,12 +21,90 @@ namespace DungeonEye.Forms
 		public SwitchCountControl()
 		{
 			InitializeComponent();
+
+			SwitchCount = new SwitchCount();
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		void UpdateUI()
+		{
+			NeededBox.Value = SwitchCount.Needed;
+			RemainingBox.Value = SwitchCount.Remaining;
+			ResetBox.Checked = SwitchCount.ResetOnTrigger;
+		}
+
+
+		#region Control Events
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ResetBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (SwitchCount == null)
+				return;
+
+			SwitchCount.ResetOnTrigger = ResetBox.Checked;
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void RemainingBox_ValueChanged(object sender, EventArgs e)
+		{
+			if (SwitchCount == null)
+				return;
+
+			SwitchCount.Remaining = (int)RemainingBox.Value;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void NeededBox_ValueChanged(object sender, EventArgs e)
+		{
+			if (SwitchCount == null)
+				return;
+
+			SwitchCount.Needed = (int) NeededBox.Value;
+		}
+
+		#endregion
 
 
 		#region Properties
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public SwitchCount SwitchCount
+		{
+			get
+			{
+				return switchcount;
+			}
+			set
+			{
+				if (value == null)
+					return;
+
+				switchcount = value;
+				UpdateUI();
+			}
+		}
+		SwitchCount switchcount;
 
 		/// <summary>
 		/// Title of the control

@@ -334,13 +334,11 @@ namespace DungeonEye
 				}
 				break;
 
-				//case ViewFieldPosition.A:
 				case ViewFieldPosition.A:
 				case ViewFieldPosition.B:
 				case ViewFieldPosition.C:
 				case ViewFieldPosition.D:
 				case ViewFieldPosition.E:
-				//case ViewFieldPosition.G:
 				{
 					location.Offset(12, 6);
 					scale = new Vector2(0.50f, 0.50f);
@@ -407,13 +405,11 @@ namespace DungeonEye
 				}
 				break;
 
-				//case ViewFieldPosition.A:
 				case ViewFieldPosition.A:
 				case ViewFieldPosition.B:
 				case ViewFieldPosition.C:
 				case ViewFieldPosition.D:
 				case ViewFieldPosition.E:
-				//case ViewFieldPosition.G:
 				{
 					location.Offset(14, 4);
 					scale = new Vector2(0.5f, 0.5f);
@@ -482,7 +478,6 @@ namespace DungeonEye
 						State = (DoorState)Enum.Parse(typeof(DoorState), node.Attributes["value"].Value, true);
 						if (State == DoorState.Opened)
 							VPosition = -30;
-
 					}
 					break;
 
@@ -492,21 +487,10 @@ namespace DungeonEye
 					}
 					break;
 
-					case "consumeitem":
-					{
-						ConsumeItem = Boolean.Parse(node.Attributes["value"].Value);
-					}
-					break;
 
-					case "openitem":
+					case "hasbutton":
 					{
-						OpenItemName = node.Attributes["value"].Value;
-					}
-					break;
-
-					case "opentype":
-					{
-						OpenType = (DoorOpenType)Enum.Parse(typeof(DoorOpenType), node.Attributes["value"].Value, true);
+						HasButton = bool.Parse(node.InnerText);
 					}
 					break;
 
@@ -557,7 +541,6 @@ namespace DungeonEye
 
 			writer.WriteStartElement(Tag);
 
-			base.Save(writer);
 
 			// Type of door
 			writer.WriteStartElement("type");
@@ -575,19 +558,7 @@ namespace DungeonEye
 			writer.WriteEndElement();
 
 			// 
-			writer.WriteStartElement("consumeitem");
-			writer.WriteAttributeString("value", ConsumeItem.ToString());
-			writer.WriteEndElement();
-
-			// 
-			writer.WriteStartElement("openitem");
-			writer.WriteAttributeString("value", OpenItemName);
-			writer.WriteEndElement();
-
-			// 
-			writer.WriteStartElement("opentype");
-			writer.WriteAttributeString("value", OpenType.ToString());
-			writer.WriteEndElement();
+			writer.WriteElementString("hasbutton", HasButton.ToString());
 
 			// 
 			writer.WriteStartElement("picklock");
@@ -605,6 +576,7 @@ namespace DungeonEye
 			writer.WriteAttributeString("value", Strength.ToString());
 			writer.WriteEndElement();
 
+			base.Save(writer);
 
 			writer.WriteEndElement();
 
@@ -648,7 +620,7 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Door's Tag
 		/// </summary>
 		public const string Tag = "door";
 
@@ -660,33 +632,12 @@ namespace DungeonEye
 		{
 			get
 			{
-				if (Square == null)
+				if (Square == null ||Square.Maze == null)
 					return null;
 
 				return Square.Maze.DoorTileset;
 			}
 		}
-
-
-		/// <summary>
-		/// The way the door opens
-		/// </summary>
-		public DoorOpenType OpenType
-		{
-			get;
-			set;
-		}
-
-
-		/// <summary>
-		/// Item needed to opens the door
-		/// </summary>
-		public string OpenItemName
-		{
-			get;
-			set;
-		}
-
 
 		/// <summary>
 		/// Door state
@@ -760,10 +711,8 @@ namespace DungeonEye
 		/// </summary>
 		public bool HasButton
 		{
-			get
-			{
-				return OpenType == DoorOpenType.Button;
-			}
+			get;
+			set;
 		}
 
 
@@ -829,13 +778,13 @@ namespace DungeonEye
 		Rectangle Button;
 
 		/// <summary>
-		/// 
+		/// Opening sound name
 		/// </summary>
 		AudioSample OpenSound;
 
 
 		/// <summary>
-		/// 
+		/// Closing sound name
 		/// </summary>
 		AudioSample CloseSound;
 
@@ -851,15 +800,6 @@ namespace DungeonEye
 			set;
 		}
 
-
-		/// <summary>
-		/// Item disappears upon use
-		/// </summary>
-		public bool ConsumeItem
-		{
-			get;
-			set;
-		}
 		#endregion
 	}
 
@@ -952,26 +892,4 @@ namespace DungeonEye
 		Mantis
 	}
 
-
-	/// <summary>
-	/// The way a door can be opened
-	/// </summary>
-	public enum DoorOpenType
-	{
-		/// <summary>
-		/// The door has a button
-		/// </summary>
-		Button,
-
-		/// <summary>
-		/// The door opens using an item
-		/// </summary>
-		Item,
-
-
-		/// <summary>
-		/// The door opens by an event
-		/// </summary>
-		Event,
-	}
 }

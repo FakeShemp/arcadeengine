@@ -29,22 +29,22 @@
 		private void InitializeComponent()
 		{
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+			this.ResetBox = new System.Windows.Forms.CheckBox();
+			this.RemainingBox = new System.Windows.Forms.NumericUpDown();
 			this.label2 = new System.Windows.Forms.Label();
-			this.CountBox = new System.Windows.Forms.NumericUpDown();
+			this.NeededBox = new System.Windows.Forms.NumericUpDown();
 			this.label1 = new System.Windows.Forms.Label();
-			this.checkBox1 = new System.Windows.Forms.CheckBox();
 			this.groupBox1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.CountBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.RemainingBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.NeededBox)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// groupBox1
 			// 
-			this.groupBox1.Controls.Add(this.checkBox1);
-			this.groupBox1.Controls.Add(this.numericUpDown1);
+			this.groupBox1.Controls.Add(this.ResetBox);
+			this.groupBox1.Controls.Add(this.RemainingBox);
 			this.groupBox1.Controls.Add(this.label2);
-			this.groupBox1.Controls.Add(this.CountBox);
+			this.groupBox1.Controls.Add(this.NeededBox);
 			this.groupBox1.Controls.Add(this.label1);
 			this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupBox1.Location = new System.Drawing.Point(0, 0);
@@ -54,19 +54,32 @@
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Switch count";
 			// 
-			// numericUpDown1
+			// ResetBox
 			// 
-			this.numericUpDown1.Location = new System.Drawing.Point(69, 40);
-			this.numericUpDown1.Maximum = new decimal(new int[] {
+			this.ResetBox.Appearance = System.Windows.Forms.Appearance.Button;
+			this.ResetBox.AutoSize = true;
+			this.ResetBox.Location = new System.Drawing.Point(31, 66);
+			this.ResetBox.Name = "ResetBox";
+			this.ResetBox.Size = new System.Drawing.Size(92, 23);
+			this.ResetBox.TabIndex = 2;
+			this.ResetBox.Text = "Reset on trigger";
+			this.ResetBox.UseVisualStyleBackColor = true;
+			this.ResetBox.CheckedChanged += new System.EventHandler(this.ResetBox_CheckedChanged);
+			// 
+			// RemainingBox
+			// 
+			this.RemainingBox.Location = new System.Drawing.Point(69, 40);
+			this.RemainingBox.Maximum = new decimal(new int[] {
             -1530494977,
             232830,
             0,
             0});
-			this.numericUpDown1.Name = "numericUpDown1";
-			this.numericUpDown1.Size = new System.Drawing.Size(54, 20);
-			this.numericUpDown1.TabIndex = 1;
-			this.numericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.numericUpDown1.ThousandsSeparator = true;
+			this.RemainingBox.Name = "RemainingBox";
+			this.RemainingBox.Size = new System.Drawing.Size(54, 20);
+			this.RemainingBox.TabIndex = 1;
+			this.RemainingBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.RemainingBox.ThousandsSeparator = true;
+			this.RemainingBox.ValueChanged += new System.EventHandler(this.RemainingBox_ValueChanged);
 			// 
 			// label2
 			// 
@@ -77,19 +90,20 @@
 			this.label2.TabIndex = 0;
 			this.label2.Text = "Remaining";
 			// 
-			// CountBox
+			// NeededBox
 			// 
-			this.CountBox.Location = new System.Drawing.Point(69, 14);
-			this.CountBox.Maximum = new decimal(new int[] {
+			this.NeededBox.Location = new System.Drawing.Point(69, 14);
+			this.NeededBox.Maximum = new decimal(new int[] {
             -1530494977,
             232830,
             0,
             0});
-			this.CountBox.Name = "CountBox";
-			this.CountBox.Size = new System.Drawing.Size(54, 20);
-			this.CountBox.TabIndex = 1;
-			this.CountBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.CountBox.ThousandsSeparator = true;
+			this.NeededBox.Name = "NeededBox";
+			this.NeededBox.Size = new System.Drawing.Size(54, 20);
+			this.NeededBox.TabIndex = 1;
+			this.NeededBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.NeededBox.ThousandsSeparator = true;
+			this.NeededBox.ValueChanged += new System.EventHandler(this.NeededBox_ValueChanged);
 			// 
 			// label1
 			// 
@@ -99,17 +113,6 @@
 			this.label1.Size = new System.Drawing.Size(45, 13);
 			this.label1.TabIndex = 0;
 			this.label1.Text = "Needed";
-			// 
-			// checkBox1
-			// 
-			this.checkBox1.Appearance = System.Windows.Forms.Appearance.Button;
-			this.checkBox1.AutoSize = true;
-			this.checkBox1.Location = new System.Drawing.Point(31, 66);
-			this.checkBox1.Name = "checkBox1";
-			this.checkBox1.Size = new System.Drawing.Size(92, 23);
-			this.checkBox1.TabIndex = 2;
-			this.checkBox1.Text = "Reset on trigger";
-			this.checkBox1.UseVisualStyleBackColor = true;
 			// 
 			// SwitchCountControl
 			// 
@@ -121,8 +124,8 @@
 			this.Size = new System.Drawing.Size(130, 100);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.CountBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.RemainingBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.NeededBox)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -130,10 +133,10 @@
 		#endregion
 
 		private System.Windows.Forms.GroupBox groupBox1;
-		private System.Windows.Forms.NumericUpDown numericUpDown1;
+		private System.Windows.Forms.NumericUpDown RemainingBox;
 		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.NumericUpDown CountBox;
+		private System.Windows.Forms.NumericUpDown NeededBox;
 		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.CheckBox checkBox1;
+		private System.Windows.Forms.CheckBox ResetBox;
 	}
 }
