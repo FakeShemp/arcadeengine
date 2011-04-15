@@ -221,6 +221,15 @@ namespace DungeonEye
 		public virtual void Activate()
 		{
 			IsActivated = true;
+
+
+			// Run each action
+			foreach (ScriptAction action in Actions)
+			{
+				action.Run();
+			}
+
+
 		}
 
 
@@ -230,6 +239,14 @@ namespace DungeonEye
 		public virtual void Deactivate()
 		{
 			IsActivated = false;
+
+
+			// Run each action
+			foreach (ScriptAction action in Actions)
+			{
+				action.Run();
+			}
+
 		}
 
 

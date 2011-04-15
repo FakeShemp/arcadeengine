@@ -40,7 +40,6 @@ namespace DungeonEye
 		/// <param name="square">Square handle</param>
 		public PressurePlate(Square square) : base(square)
 		{
-			//Script = new Script();			
 			AcceptItems = true;
 			CanPassThrough = true;
 			IsBlocking = false;
@@ -122,25 +121,24 @@ namespace DungeonEye
 					}
 					break;
 
-					case "script":
+
+					case "affectitems":
 					{
-						ScriptName = node.Attributes["name"].Value;
-						//Script = Script.LoadFromBank(ScriptName);
+						AffectItems = bool.Parse(node.InnerText);
 					}
 					break;
 
-					case "onleave":
+					case "affectmonsters":
 					{
-						OnLeaveScript = node.Attributes["name"].Value;
+						AffectMonsters= bool.Parse(node.InnerText);
 					}
 					break;
 
-					case "onenter":
+					case "affectteam":
 					{
-						OnEnterScript = node.Attributes["name"].Value;
+						AffectTeam = bool.Parse(node.InnerText);
 					}
 					break;
-
 					default:
 					{
 						base.Load(node);
@@ -169,24 +167,11 @@ namespace DungeonEye
 
 			base.Save(writer);
 
-			if (IsHidden)
-			{
-				writer.WriteStartElement("invisible");
-				writer.WriteEndElement();
-			}
+			writer.WriteElementString("invisible", IsHidden.ToString());
+			writer.WriteElementString("affectteam", AffectTeam.ToString());
+			writer.WriteElementString("affectmonsters", AffectMonsters.ToString());
+			writer.WriteElementString("affectitems", AffectItems.ToString());
 
-
-			writer.WriteStartElement("script");
-			writer.WriteAttributeString("name", ScriptName);
-			writer.WriteEndElement();
-
-			writer.WriteStartElement("onleave");
-			writer.WriteAttributeString("name", OnLeaveScript);
-			writer.WriteEndElement();
-
-			writer.WriteStartElement("onenter");
-			writer.WriteAttributeString("name", OnEnterScript);
-			writer.WriteEndElement();
 
 			writer.WriteEndElement();
 
@@ -207,7 +192,10 @@ namespace DungeonEye
 		/// <returns></returns>
 		public override bool OnTeamEnter()
 		{
-			return true;
+			if (AffectTeam)
+				Activate();
+
+			return AffectTeam;
 		}
 
 
@@ -218,11 +206,10 @@ namespace DungeonEye
 		/// <returns></returns>
 		public override bool OnMonsterEnter(Monster monster)
 		{
-			if (monster == null)
-				return false;
+			if (AffectMonsters)
+				Activate();
 
-
-			return true;
+			return AffectMonsters;
 		}
 
 
@@ -233,11 +220,10 @@ namespace DungeonEye
 		/// <param name="item"></param>
 		public override bool OnTeamLeave()
 		{
-			// No script defined
-			if (string.IsNullOrEmpty(OnEnterScript) || Script == null)
-				return false;
+			if (AffectTeam)
+				Deactivate();
 
-			return false;
+			return AffectTeam;
 		}
 
 
@@ -247,11 +233,10 @@ namespace DungeonEye
 		/// <param name="monster"></param>
 		public override bool OnMonsterLeave(Monster monster)
 		{
-			if (monster == null)
-				return false;
+			if (AffectMonsters)
+				Deactivate();
 
-
-			return false;
+			return AffectMonsters;
 		}
 
 
@@ -321,38 +306,6 @@ namespace DungeonEye
 		}
 
 	
-		/// <summary>
-		///  Action to execute
-		/// </summary>
-		public string OnEnterScript
-		{
-			get;
-			set;
-		}
-
-		/// <summary>
-		///  Action to execute
-		/// </summary>
-		public string OnLeaveScript
-		{
-			get;
-			set;
-		}
-
-
-		/// <summary>
-		///  Action to execute
-		/// </summary>
-		public string ScriptName
-		{
-			get;
-			set;
-		}
-
-		/// <summary>
-		/// Script
-		/// </summary>
-		Script Script;
 
 
 

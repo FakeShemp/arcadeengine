@@ -119,7 +119,7 @@
 			// 
 			this.CloseBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.CloseBox.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.CloseBox.Location = new System.Drawing.Point(447, 527);
+			this.CloseBox.Location = new System.Drawing.Point(597, 527);
 			this.CloseBox.Name = "CloseBox";
 			this.CloseBox.Size = new System.Drawing.Size(75, 23);
 			this.CloseBox.TabIndex = 1;
@@ -584,7 +584,7 @@
 			this.ItemsTab.Location = new System.Drawing.Point(4, 22);
 			this.ItemsTab.Name = "ItemsTab";
 			this.ItemsTab.Padding = new System.Windows.Forms.Padding(3);
-			this.ItemsTab.Size = new System.Drawing.Size(502, 483);
+			this.ItemsTab.Size = new System.Drawing.Size(652, 483);
 			this.ItemsTab.TabIndex = 0;
 			this.ItemsTab.Text = "Items";
 			this.ItemsTab.UseVisualStyleBackColor = true;
@@ -604,7 +604,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.ClearAllItemsBox.Location = new System.Drawing.Point(6, 454);
 			this.ClearAllItemsBox.Name = "ClearAllItemsBox";
-			this.ClearAllItemsBox.Size = new System.Drawing.Size(493, 23);
+			this.ClearAllItemsBox.Size = new System.Drawing.Size(643, 23);
 			this.ClearAllItemsBox.TabIndex = 23;
 			this.ClearAllItemsBox.Text = "Remove all items";
 			this.ClearAllItemsBox.UseVisualStyleBackColor = true;
@@ -820,7 +820,7 @@
 			this.TabControlBox.Location = new System.Drawing.Point(12, 12);
 			this.TabControlBox.Name = "TabControlBox";
 			this.TabControlBox.SelectedIndex = 0;
-			this.TabControlBox.Size = new System.Drawing.Size(510, 509);
+			this.TabControlBox.Size = new System.Drawing.Size(660, 509);
 			this.TabControlBox.TabIndex = 0;
 			// 
 			// ActorTab
@@ -863,14 +863,14 @@
 			this.AcceptButton = this.CloseBox;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(534, 562);
+			this.ClientSize = new System.Drawing.Size(684, 562);
 			this.Controls.Add(this.CloseBox);
 			this.Controls.Add(this.TabControlBox);
 			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.KeyPreview = true;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
-			this.MinimumSize = new System.Drawing.Size(550, 600);
+			this.MinimumSize = new System.Drawing.Size(650, 600);
 			this.Name = "SquareForm";
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;

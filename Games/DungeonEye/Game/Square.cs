@@ -201,9 +201,8 @@ namespace DungeonEye
 
 			// Actor interaction
 			if (Actor != null)
-				if (Actor.OnClick(location, side))
-					return true;
-
+				return Actor.OnClick(location, side);
+					
 			
 			// Decoration interaction
 			Decoration decoration = team.Maze.GetDecoration(team.FrontLocation, Compass.GetOppositeDirection(team.Direction));

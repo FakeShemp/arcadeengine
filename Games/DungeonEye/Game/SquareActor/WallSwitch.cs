@@ -40,8 +40,7 @@ namespace DungeonEye
 		/// Constructor
 		/// </summary>
 		/// <param name="square">Parent square handle</param>
-		public WallSwitch(Square square)
-			: base(square)
+		public WallSwitch(Square square) : base(square)
 		{
 			ActivatedDecoration = -1;
 			DeactivatedDecoration = -1;
@@ -59,15 +58,30 @@ namespace DungeonEye
 			if (side != Side || Square.Maze.Decoration == null)
 				return false;
 
+			Team team = GameScreen.Team;
+
+
 			// Not in the decoration zone
 			if (!Square.Maze.Decoration.IsPointInside(IsActivated ? ActivatedDecoration : DeactivatedDecoration, location))
 				return false;
 
-			// Run each action
-			foreach (ScriptAction action in Actions)
+
+			// Does an item is required ?
+			if (!string.IsNullOrEmpty(ActivateItem))
 			{
-				action.Run();
+				// No item in hand
+				if (team.ItemInHand == null)
+					return false;
+
+				// Not the good item
+				if (team.ItemInHand.Name != ActivateItem)
+					return false;
+
+				// Consume item
+				if (ConsumeItem)
+					team.SetItemInHand(null);
 			}
+
 
 			Toggle();
 
@@ -130,7 +144,7 @@ namespace DungeonEye
 						Target.Load(xml);
 					}
 					break;
-					
+
 					case "decoration":
 					{
 						ActivatedDecoration = int.Parse(node.Attributes["activated"].Value);
@@ -138,9 +152,21 @@ namespace DungeonEye
 					}
 					break;
 
+					case "consumeitem":
+					{
+						ConsumeItem = bool.Parse(node.InnerText);
+					}
+					break;
+
 					case "side":
 					{
 						Side = (CardinalPoint) Enum.Parse(typeof(CardinalPoint), node.InnerText);
+					}
+					break;
+
+					case "activateitem":
+					{
+						ActivateItem = node.InnerText;
 					}
 					break;
 
@@ -176,6 +202,8 @@ namespace DungeonEye
 			writer.WriteEndElement();
 
 			writer.WriteElementString("side", Side.ToString());
+			writer.WriteElementString("activateitem", ActivateItem);
+			writer.WriteElementString("consumeitem", ConsumeItem.ToString());
 
 			base.Save(writer);
 
@@ -218,9 +246,28 @@ namespace DungeonEye
 		}
 
 
+		/// <summary>
+		/// Item needed to activate the switch
+		/// </summary>
+		public string ActivateItem
+		{
+			get;
+			set;
+		}
+
 
 		/// <summary>
-		/// 
+		/// Consume item on use
+		/// </summary>
+		public bool ConsumeItem
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// Wall side
 		/// </summary>
 		public CardinalPoint Side
 		{

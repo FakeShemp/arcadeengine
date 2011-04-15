@@ -127,7 +127,12 @@ namespace DungeonEye.Forms
 					{
 						// Draw the item
 						loc.Offset(Alcove.ItemLocation);
-						Batch.DrawTile(Maze.Dungeon.ItemTileSet, PreviewItem.GroundTileID, loc);
+				//		Batch.DrawTile(Maze.Dungeon.ItemTileSet, PreviewItem.GroundTileID, loc);
+
+
+						Batch.DrawTile(Maze.Dungeon.ItemTileSet, PreviewItem.GroundTileID, loc,
+							DisplayCoordinates.GetDistantColor(ViewFieldPosition.L), 0.0f,
+							DisplayCoordinates.GetItemScaleFactor(ViewFieldPosition.L), SpriteEffects.None, 0.0f);
 
 
 					}

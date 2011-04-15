@@ -39,10 +39,10 @@ namespace DungeonEye
 	public partial class WallSwitchControl : UserControl
 	{
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
-		/// <param name="wallswitch"></param>
-		/// <param name="maze"></param>
+		/// <param name="wallswitch">Wallswitch handle</param>
+		/// <param name="maze">Maze handle</param>
 		public WallSwitchControl(WallSwitch wallswitch, Maze maze)
 		{
 			InitializeComponent();
@@ -114,6 +114,18 @@ namespace DungeonEye
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		void UpdateUI()
+		{
+
+			ItemsBox.SelectedItem = WallSwitch.ActivateItem;
+			ConsumeItemBox.Checked = WallSwitch.ConsumeItem;
+
+		}
+
+
 		#region Control events
 
 
@@ -152,10 +164,44 @@ namespace DungeonEye
 		private void WallSwitchControl_Load(object sender, EventArgs e)
 		{
 			ParentForm.FormClosing +=new FormClosingEventHandler(ParentForm_FormClosing);
-			
-			
+
+			ItemsBox.Items.AddRange(ResourceManager.GetAssets<Item>().ToArray());
+			ItemsBox.Items.Insert(0, "");
+
 			Batch = new SpriteBatch();
+
+			UpdateUI();
 		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ItemsBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (ItemsBox.SelectedIndex == -1 ||WallSwitch == null)
+				return;
+
+			WallSwitch.ActivateItem = (string)ItemsBox.SelectedItem;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ConsumeItemBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (WallSwitch == null)
+				return;
+
+			WallSwitch.ConsumeItem = ConsumeItemBox.Checked;
+		}
+
 
 		#endregion
 

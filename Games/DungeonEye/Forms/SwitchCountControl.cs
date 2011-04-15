@@ -11,12 +11,12 @@ namespace DungeonEye.Forms
 {
 
 	/// <summary>
-	/// 
+	/// Switch count control
 	/// </summary>
 	public partial class SwitchCountControl : UserControl
 	{
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
 		public SwitchCountControl()
 		{
@@ -27,6 +27,21 @@ namespace DungeonEye.Forms
 
 		#region Properties
 
+
+		/// <summary>
+		/// Title of the control
+		/// </summary>
+		public string Title
+		{
+			get
+			{
+				return groupBox1.Text;
+			}
+			set
+			{
+				groupBox1.Text = value;
+			}
+		}
 
 		#endregion
 	}

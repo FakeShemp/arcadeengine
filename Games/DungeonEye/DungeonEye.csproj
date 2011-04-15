@@ -159,11 +159,11 @@
     <Compile Include="Forms\EventChoiceForm.Designer.cs">
       <DependentUpon>EventChoiceForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FloorSwitchControl.cs">
+    <Compile Include="Forms\PressurePlateControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\FloorSwitchControl.Designer.cs">
-      <DependentUpon>FloorSwitchControl.cs</DependentUpon>
+    <Compile Include="Forms\PressurePlateControl.Designer.cs">
+      <DependentUpon>PressurePlateControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\ForceFieldControl.cs">
       <SubType>UserControl</SubType>
@@ -483,25 +483,25 @@
     <Compile Include="Game\Defense.cs" />
     <Compile Include="Game\DialogBase.cs" />
     <Compile Include="Game\Entity.cs" />
-    <Compile Include="Game\EventScript\Actions\ScriptDeactivateTarget.cs" />
-    <Compile Include="Game\EventScript\Actions\ScriptEnableChoice.cs" />
-    <Compile Include="Game\EventScript\Actions\ScriptDisableChoice.cs" />
-    <Compile Include="Game\EventScript\Actions\ScriptPlaySound.cs" />
-    <Compile Include="Game\EventScript\Actions\ScriptChangePicture.cs" />
-    <Compile Include="Game\EventScript\Actions\ScriptAction.cs" />
-    <Compile Include="Game\EventScript\Actions\ScriptActivateTarget.cs" />
-    <Compile Include="Game\EventScript\Actions\ScriptChangeText.cs" />
-    <Compile Include="Game\EventScript\Actions\ScriptDisableTarget.cs" />
-    <Compile Include="Game\EventScript\Actions\ScriptEndChoice.cs" />
-    <Compile Include="Game\EventScript\Actions\ScriptEndDialog.cs" />
-    <Compile Include="Game\EventScript\Actions\ScriptGiveExperience.cs" />
-    <Compile Include="Game\EventScript\Actions\ScriptGiveItem.cs" />
-    <Compile Include="Game\EventScript\Actions\ScriptHealing.cs" />
-    <Compile Include="Game\EventScript\Actions\ScriptJoinCharacter.cs" />
-    <Compile Include="Game\EventScript\Actions\ScriptTeleport.cs" />
-    <Compile Include="Game\EventScript\Actions\ScriptToggleTarget.cs" />
-    <Compile Include="Game\EventScript\GUIScriptButton.cs" />
-    <Compile Include="Game\EventScript\ScriptChoice.cs" />
+    <Compile Include="Game\Script\Actions\ScriptDeactivateTarget.cs" />
+    <Compile Include="Game\Script\Actions\ScriptEnableChoice.cs" />
+    <Compile Include="Game\Script\Actions\ScriptDisableChoice.cs" />
+    <Compile Include="Game\Script\Actions\ScriptPlaySound.cs" />
+    <Compile Include="Game\Script\Actions\ScriptChangePicture.cs" />
+    <Compile Include="Game\Script\Actions\ScriptAction.cs" />
+    <Compile Include="Game\Script\Actions\ScriptActivateTarget.cs" />
+    <Compile Include="Game\Script\Actions\ScriptChangeText.cs" />
+    <Compile Include="Game\Script\Actions\ScriptDisableTarget.cs" />
+    <Compile Include="Game\Script\Actions\ScriptEndChoice.cs" />
+    <Compile Include="Game\Script\Actions\ScriptEndDialog.cs" />
+    <Compile Include="Game\Script\Actions\ScriptGiveExperience.cs" />
+    <Compile Include="Game\Script\Actions\ScriptGiveItem.cs" />
+    <Compile Include="Game\Script\Actions\ScriptHealing.cs" />
+    <Compile Include="Game\Script\Actions\ScriptJoinCharacter.cs" />
+    <Compile Include="Game\Script\Actions\ScriptTeleport.cs" />
+    <Compile Include="Game\Script\Actions\ScriptToggleTarget.cs" />
+    <Compile Include="Game\Script\GUIScriptButton.cs" />
+    <Compile Include="Game\Script\ScriptChoice.cs" />
     <Compile Include="Game\Gui\CampWindows\DropCharacterWindow.cs" />
     <Compile Include="Game\Gui\CampWindows\SpellWindow.cs" />
     <Compile Include="Game\Gui\CampWindows\GameOptionsWindow.cs" />
@@ -579,8 +579,8 @@
     <EmbeddedResource Include="Forms\EventChoiceForm.resx">
       <DependentUpon>EventChoiceForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FloorSwitchControl.resx">
-      <DependentUpon>FloorSwitchControl.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\PressurePlateControl.resx">
+      <DependentUpon>PressurePlateControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ForceFieldControl.resx">
       <DependentUpon>ForceFieldControl.cs</DependentUpon>

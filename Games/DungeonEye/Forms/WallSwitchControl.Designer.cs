@@ -40,6 +40,13 @@
 			this.DeactivatedGlBox = new OpenTK.GLControl();
 			this.DeactivatedIdBox = new System.Windows.Forms.NumericUpDown();
 			this.ScriptTab = new System.Windows.Forms.TabPage();
+			this.switchCountControl1 = new DungeonEye.Forms.SwitchCountControl();
+			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.label4 = new System.Windows.Forms.Label();
+			this.label3 = new System.Windows.Forms.Label();
+			this.ConsumeItemBox = new System.Windows.Forms.CheckBox();
+			this.PickLockBox = new System.Windows.Forms.NumericUpDown();
+			this.ItemsBox = new System.Windows.Forms.ComboBox();
 			this.ActionScriptBox = new DungeonEye.Forms.ActionControl();
 			this.groupBox1.SuspendLayout();
 			this.tabControl1.SuspendLayout();
@@ -48,6 +55,8 @@
 			this.DeactivatedTab.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.DeactivatedIdBox)).BeginInit();
 			this.ScriptTab.SuspendLayout();
+			this.groupBox2.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.PickLockBox)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// groupBox1
@@ -205,6 +214,8 @@
 			// 
 			// ScriptTab
 			// 
+			this.ScriptTab.Controls.Add(this.switchCountControl1);
+			this.ScriptTab.Controls.Add(this.groupBox2);
 			this.ScriptTab.Controls.Add(this.ActionScriptBox);
 			this.ScriptTab.Location = new System.Drawing.Point(4, 22);
 			this.ScriptTab.Name = "ScriptTab";
@@ -212,6 +223,82 @@
 			this.ScriptTab.TabIndex = 2;
 			this.ScriptTab.Text = "Script";
 			this.ScriptTab.UseVisualStyleBackColor = true;
+			// 
+			// switchCountControl1
+			// 
+			this.switchCountControl1.Location = new System.Drawing.Point(223, 159);
+			this.switchCountControl1.MinimumSize = new System.Drawing.Size(130, 100);
+			this.switchCountControl1.Name = "switchCountControl1";
+			this.switchCountControl1.Size = new System.Drawing.Size(130, 100);
+			this.switchCountControl1.TabIndex = 2;
+			this.switchCountControl1.Title = "Switch count";
+			// 
+			// groupBox2
+			// 
+			this.groupBox2.Controls.Add(this.label4);
+			this.groupBox2.Controls.Add(this.label3);
+			this.groupBox2.Controls.Add(this.ConsumeItemBox);
+			this.groupBox2.Controls.Add(this.PickLockBox);
+			this.groupBox2.Controls.Add(this.ItemsBox);
+			this.groupBox2.Location = new System.Drawing.Point(3, 159);
+			this.groupBox2.Name = "groupBox2";
+			this.groupBox2.Size = new System.Drawing.Size(214, 100);
+			this.groupBox2.TabIndex = 1;
+			this.groupBox2.TabStop = false;
+			this.groupBox2.Text = "Properties";
+			// 
+			// label4
+			// 
+			this.label4.AutoSize = true;
+			this.label4.Location = new System.Drawing.Point(6, 22);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(67, 13);
+			this.label4.TabIndex = 2;
+			this.label4.Text = "Needed item";
+			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Location = new System.Drawing.Point(25, 69);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(48, 13);
+			this.label3.TabIndex = 1;
+			this.label3.Text = "Picklock";
+			// 
+			// ConsumeItemBox
+			// 
+			this.ConsumeItemBox.AutoSize = true;
+			this.ConsumeItemBox.Location = new System.Drawing.Point(79, 44);
+			this.ConsumeItemBox.Name = "ConsumeItemBox";
+			this.ConsumeItemBox.Size = new System.Drawing.Size(92, 17);
+			this.ConsumeItemBox.TabIndex = 1;
+			this.ConsumeItemBox.Text = "Consume item";
+			this.ConsumeItemBox.UseVisualStyleBackColor = true;
+			this.ConsumeItemBox.CheckedChanged += new System.EventHandler(this.ConsumeItemBox_CheckedChanged);
+			// 
+			// PickLockBox
+			// 
+			this.PickLockBox.Location = new System.Drawing.Point(79, 67);
+			this.PickLockBox.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+			this.PickLockBox.Name = "PickLockBox";
+			this.PickLockBox.Size = new System.Drawing.Size(72, 20);
+			this.PickLockBox.TabIndex = 0;
+			this.PickLockBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.PickLockBox.ThousandsSeparator = true;
+			// 
+			// ItemsBox
+			// 
+			this.ItemsBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.ItemsBox.FormattingEnabled = true;
+			this.ItemsBox.Location = new System.Drawing.Point(79, 17);
+			this.ItemsBox.Name = "ItemsBox";
+			this.ItemsBox.Size = new System.Drawing.Size(119, 21);
+			this.ItemsBox.TabIndex = 0;
+			this.ItemsBox.SelectedIndexChanged += new System.EventHandler(this.ItemsBox_SelectedIndexChanged);
 			// 
 			// ActionScriptBox
 			// 
@@ -222,7 +309,7 @@
 			this.ActionScriptBox.Name = "ActionScriptBox";
 			this.ActionScriptBox.Size = new System.Drawing.Size(350, 150);
 			this.ActionScriptBox.TabIndex = 0;
-			this.ActionScriptBox.Title = "On activate actions :";
+			this.ActionScriptBox.Title = "Actions";
 			// 
 			// WallSwitchControl
 			// 
@@ -241,6 +328,9 @@
 			this.DeactivatedTab.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.DeactivatedIdBox)).EndInit();
 			this.ScriptTab.ResumeLayout(false);
+			this.groupBox2.ResumeLayout(false);
+			this.groupBox2.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.PickLockBox)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -260,6 +350,13 @@
 		private System.Windows.Forms.TabPage ScriptTab;
 		private Forms.ActionControl ActionScriptBox;
 		private Forms.CardinalPointControl SideBox;
+		private System.Windows.Forms.GroupBox groupBox2;
+		private System.Windows.Forms.Label label4;
+		private System.Windows.Forms.Label label3;
+		private System.Windows.Forms.CheckBox ConsumeItemBox;
+		private System.Windows.Forms.NumericUpDown PickLockBox;
+		private System.Windows.Forms.ComboBox ItemsBox;
+		private Forms.SwitchCountControl switchCountControl1;
 
 	}
 }

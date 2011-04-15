@@ -753,7 +753,7 @@ namespace DungeonEye.Forms
 			}
 			else if (Square.Actor is PressurePlate)
 			{
-				control = new FloorSwitchControl(Square.Actor as PressurePlate, Maze.Dungeon);
+				control = new PressurePlateControl(Square.Actor as PressurePlate, Maze.Dungeon);
 			}
 			else if (Square.Actor is ForceField)
 			{
