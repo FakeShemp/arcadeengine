@@ -240,6 +240,34 @@ namespace DungeonEye
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="item"></param>
+		/// <returns></returns>
+		public override bool OnItemCollected(Item item)
+		{
+			if (AffectItems)
+				Deactivate();
+
+			return AffectItems;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="item"></param>
+		/// <returns></returns>
+		public override bool OnItemDropped(Item item)
+		{
+			if (AffectItems)
+				Activate();
+
+			return AffectItems;
+		}
+
+
 		#endregion
 
 

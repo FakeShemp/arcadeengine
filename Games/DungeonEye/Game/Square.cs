@@ -918,7 +918,7 @@ namespace DungeonEye
 			Items[(int)position].Add(item);
 
 			// Call the script
-			OnCollectedItem(item);
+			OnDroppedItem(item);
 
 			return true;
 		}
