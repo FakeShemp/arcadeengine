@@ -33,18 +33,20 @@
 			this.groupBox1.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// targetControl1
+			// TargetBox
 			// 
 			this.TargetBox.Dungeon = null;
 			this.TargetBox.Location = new System.Drawing.Point(6, 19);
 			this.TargetBox.MinimumSize = new System.Drawing.Size(175, 100);
-			this.TargetBox.Name = "targetControl1";
+			this.TargetBox.Name = "TargetBox";
 			this.TargetBox.Size = new System.Drawing.Size(175, 100);
 			this.TargetBox.TabIndex = 0;
+			this.TargetBox.Title = "Target :";
+			this.TargetBox.TargetChanged += new DungeonEye.Forms.TargetControl.TargetChangedEventHandler(this.TargetBox_TargetChanged);
 			// 
 			// groupBox1
 			// 
-			this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.groupBox1.Controls.Add(this.TargetBox);

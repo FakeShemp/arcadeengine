@@ -25,7 +25,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using DungeonEye.EventScript;
+using DungeonEye.Script;
 
 namespace DungeonEye.Forms
 {
@@ -165,10 +165,12 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void AddActionBox_Click(object sender, EventArgs e)
 		{
+			// Empty form
 			EventActionForm form = new EventActionForm(Dungeon);
 			if (form.ShowDialog() != DialogResult.OK)
 				return;
 
+			// Add new action to the list
 			if (form.Action != null && Actions != null)
 				Actions.Add(form.Action);
 

@@ -24,7 +24,7 @@ using System.Text;
 using System.Xml;
 using ArcEngine;
 using ArcEngine.Graphic;
-using DungeonEye.EventScript;
+using DungeonEye.Script;
 
 namespace DungeonEye
 {
@@ -41,7 +41,6 @@ namespace DungeonEye
 		public SquareActor(Square square)
 		{
 			Square = square;
-			IsActivated = true;
 			Actions = new List<ScriptAction>();
 			Count = new SwitchCount();
 		}
@@ -78,9 +77,6 @@ namespace DungeonEye
 			if (xml == null)
 				return false;
 
-			if (Actions == null)
-				Actions = new List<ScriptAction>();
-
 			ScriptAction script = null;
 
 			foreach (XmlNode node in xml)
@@ -90,23 +86,30 @@ namespace DungeonEye
 					case "toggletarget":
 					{
 						script = new ScriptToggleTarget();
-						script.Load(node);
 					}
 					break;
 
 					case "activatetarget":
 					{
 						script = new ScriptActivateTarget();
-						script.Load(node);
+					}
+					break;
+
+					case "deactivatetarget":
+					{
+						script = new ScriptDeactivateTarget();
 					}
 					break;
 				}
+
+
+				if (script != null)
+				{
+					Actions.Add(script);
+					script.Load(node);
+				}
 			}
 
-			if (script != null)
-			{
-				Actions.Add(script);
-			}
 
 			return true;
 		}
@@ -223,14 +226,8 @@ namespace DungeonEye
 		{
 			IsActivated = true;
 
-
-			// Run each action
-			foreach (ScriptAction action in Actions)
-			{
-				action.Run();
-			}
-
-
+			if (Count.Activate())
+				Run();
 		}
 
 
@@ -241,7 +238,17 @@ namespace DungeonEye
 		{
 			IsActivated = false;
 
+			if (Count.Deactivate())
+				Run();
+		}
 
+
+
+		/// <summary>
+		/// Runs actions
+		/// </summary>
+		public void Run()
+		{
 			// Run each action
 			foreach (ScriptAction action in Actions)
 			{
@@ -331,7 +338,7 @@ namespace DungeonEye
 					Count.Load(node);
 				}
 				break;
-				
+
 				default:
 				{
 					Trace.WriteLine("[SquareActor] Load() : Unknown node \"" + node.Name + "\" found.");

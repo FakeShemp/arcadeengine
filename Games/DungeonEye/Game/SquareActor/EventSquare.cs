@@ -25,7 +25,7 @@ using System.Xml;
 using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
-using DungeonEye.EventScript;
+using DungeonEye.Script;
 
 namespace DungeonEye
 {

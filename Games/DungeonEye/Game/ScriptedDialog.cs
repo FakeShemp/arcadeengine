@@ -26,7 +26,7 @@ using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
-using DungeonEye.EventScript;
+using DungeonEye.Script;
 using DungeonEye.Gui;
 
 namespace DungeonEye

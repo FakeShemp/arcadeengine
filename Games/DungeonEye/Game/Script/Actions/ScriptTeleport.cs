@@ -25,7 +25,7 @@ using ArcEngine;
 using System.Xml;
 
 
-namespace DungeonEye.EventScript
+namespace DungeonEye.Script
 {
 	/// <summary>
 	/// Teleport the team

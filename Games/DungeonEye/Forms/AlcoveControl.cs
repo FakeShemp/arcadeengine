@@ -64,6 +64,7 @@ namespace DungeonEye.Forms
 			Maze = maze;
 			Actor = alcove;
 
+	//		ChangeSide(CardinalPoint.North);
 			DirectionBox.Direction = CardinalPoint.North;
 			UpdateUI();
 
@@ -97,6 +98,9 @@ namespace DungeonEye.Forms
 		/// </summary>
 		void RenderScene()
 		{
+			if (Batch == null)
+				return;
+
 			GLControl.MakeCurrent();
 
 			Display.ClearBuffers();
@@ -113,7 +117,7 @@ namespace DungeonEye.Forms
 
 
 			// Draw the tile
-			if (Maze.Decoration != null)
+			if (Maze.Decoration != null && Alcove != null)
 			{
 				Decoration deco = Maze.Decoration.GetDecoration(Alcove.Decoration);
 				if (deco != null)
@@ -187,8 +191,6 @@ namespace DungeonEye.Forms
 
 
 			Batch = new SpriteBatch();
-
-
 		}
 
 

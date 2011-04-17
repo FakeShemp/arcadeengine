@@ -24,42 +24,78 @@ using System.Drawing;
 using System.Xml;
 using ArcEngine.Graphic;
 using ArcEngine;
-using DungeonEye.EventScript;
+using DungeonEye.Script;
 
 
 namespace DungeonEye
 {
 	/// <summary>
-	/// Switch count
+	/// Control how many switches are necessary to trigger an event
 	/// </summary>
 	public class SwitchCount
 	{
 
 		/// <summary>
-		/// 
+		/// Default constructor
 		/// </summary>
-		public SwitchCount()
+		public SwitchCount() : this(1, 1)
 		{
-
 		}
 
 
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
-		public void Activate()
+		/// <param name="target">Target value</param>
+		/// <param name="count">Current count</param>
+		public SwitchCount(int target, int count)
 		{
+			Count = count;
+			Target = target;
+			Enabled = false;
 		}
 
 
 
 		/// <summary>
-		/// 
+		/// Activate
 		/// </summary>
-		public void Deactivate()
+		/// <returns>True if the count is equals to the target</returns>
+		public bool Activate()
 		{
+			if (!Enabled)
+				return true;
+
+			Count++;
+
+			// Reset count
+			if (Count >= Target && ResetOnTrigger)
+			{
+				Count = 0;
+				return true;
+			}
+
+			return Count == Target;
 		}
 
+
+
+		/// <summary>
+		/// Deactivate
+		/// </summary>
+		/// <returns>True if the count is equals to 0</returns>
+		public bool Deactivate()
+		{
+			if (!Enabled)
+				return true;
+			
+			Count--;
+
+			if (Count < 0)
+				Count = 0;
+
+			return Count == 0;
+		}
 
 
 
@@ -76,8 +112,9 @@ namespace DungeonEye
 			if (xml == null)
 				return false;
 
-			Remaining = int.Parse(xml.Attributes["remaining"].Value);
-			Needed = int.Parse(xml.Attributes["needed"].Value);
+			Enabled = bool.Parse(xml.Attributes["enabled"].Value);
+			Target = int.Parse(xml.Attributes["target"].Value);
+			Count = int.Parse(xml.Attributes["count"].Value);
 			ResetOnTrigger = bool.Parse(xml.Attributes["reset"].Value);
 
 
@@ -99,8 +136,9 @@ namespace DungeonEye
 
 
 			writer.WriteStartElement(name);
-			writer.WriteAttributeString("remaining", Remaining.ToString());
-			writer.WriteAttributeString("needed", Needed.ToString());
+			writer.WriteAttributeString("enabled", Enabled.ToString());
+			writer.WriteAttributeString("target", Target.ToString());
+			writer.WriteAttributeString("count", Count.ToString());
 			writer.WriteAttributeString("reset", ResetOnTrigger.ToString());
 			writer.WriteEndElement();
 
@@ -115,10 +153,11 @@ namespace DungeonEye
 
 		#region Properties
 
+
 		/// <summary>
-		/// 
+		/// Active or desactive the count
 		/// </summary>
-		public int Needed
+		public bool Enabled
 		{
 			get;
 			set;
@@ -126,9 +165,9 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Number to reach to fire an event
 		/// </summary>
-		public int Remaining
+		public int Target
 		{
 			get;
 			set;
@@ -136,7 +175,19 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// The number of time the switch was activated
+		/// </summary>
+		public int Count
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// If true, the switch count will be reset after triggering so that again 
+		/// the specified number of switch activations will be necessary. 
+		/// Otherwise, every further switch activation will again trigger.
 		/// </summary>
 		public bool ResetOnTrigger
 		{
@@ -144,6 +195,18 @@ namespace DungeonEye
 			set;
 		}
 
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public bool IsUsable
+		{
+			get
+			{
+				return Count >= Target;
+			}
+		}
 		#endregion
 
 	}

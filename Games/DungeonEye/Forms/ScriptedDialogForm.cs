@@ -29,7 +29,7 @@ using System.Windows.Forms;
 using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Forms;
-using DungeonEye.EventScript;
+using DungeonEye.Script;
 
 namespace DungeonEye.Forms
 {

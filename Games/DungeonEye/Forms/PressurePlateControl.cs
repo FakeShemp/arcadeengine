@@ -11,7 +11,7 @@ using ArcEngine;
 namespace DungeonEye.Forms
 {
 	/// <summary>
-	/// Floor switch form editor
+	/// Pressure plate control editor
 	/// </summary>
 	public partial class PressurePlateControl : UserControl
 	{
@@ -26,7 +26,7 @@ namespace DungeonEye.Forms
 
 			ActionBox.Actions = pressureplate.Actions;
 			ActionBox.Dungeon = dungeon;
-
+			
 			PressurePlate = pressureplate;
 		}
 
@@ -37,9 +37,6 @@ namespace DungeonEye.Forms
 		void UpdateUI()
 		{
 			HiddenBox.Checked = PressurePlate.IsHidden;
-			AffectItemsBox.Checked = PressurePlate.AffectItems;
-			AffectMonstersBox.Checked = PressurePlate.AffectMonsters;
-			AffectTeamBox.Checked = PressurePlate.AffectTeam;
 		}
 
 
@@ -72,46 +69,6 @@ namespace DungeonEye.Forms
 		}
 
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void AffectTeamBox_CheckedChanged(object sender, EventArgs e)
-		{
-			if (PressurePlate == null)
-				return;
-
-			PressurePlate.AffectTeam = AffectTeamBox.Checked;
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void AffectMonstersBox_CheckedChanged(object sender, EventArgs e)
-		{
-			if (PressurePlate == null)
-				return;
-
-			PressurePlate.AffectMonsters = AffectMonstersBox.Checked;
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void AffectItemsBox_CheckedChanged(object sender, EventArgs e)
-		{
-			if (PressurePlate == null)
-				return;
-
-			PressurePlate.AffectItems = AffectItemsBox.Checked;
-		}
 
 		#endregion
 

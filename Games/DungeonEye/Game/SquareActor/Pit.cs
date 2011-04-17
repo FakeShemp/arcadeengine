@@ -59,10 +59,15 @@ namespace DungeonEye
 		/// <param name="direction"></param>
 		public override void Draw(SpriteBatch batch, ViewField field, ViewFieldPosition position, CardinalPoint direction)
 		{
-			if (Decoration == null)
+			if (Decoration == null || IsHidden)
 				return;
 
 			TileDrawing td = DisplayCoordinates.GetPit(position);
+			if (td == null)
+				return;
+
+			if (IsActivated)
+				batch.FillRectangle(new Rectangle(td.Location, new Size(50, 50)), Color.Red);
 			//TODO
 			//if (td != null && !IsHidden)
 			//    batch.DrawTile(TileSet, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);
@@ -197,7 +202,7 @@ namespace DungeonEye
 		/// <returns></returns>
 		public override bool OnTeamEnter()
 		{
-			if (Target == null)
+			if (Target == null || !IsActivated)
 				return false;
 
 			Team team = GameScreen.Team;
@@ -217,7 +222,7 @@ namespace DungeonEye
 		/// <returns></returns>
 		public override bool OnMonsterEnter(Monster monster)
 		{
-			if (monster == null)
+			if (monster == null || IsActivated)
 				return false;
 
 			if (Target == null)

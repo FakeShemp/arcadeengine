@@ -108,6 +108,12 @@ namespace DungeonEye
 		/// </summary>
 		public override void LoadContent()
 		{
+			// Main storage bank
+			Storage = new BankStorage("data/Game.bnk");
+			ResourceManager.AddStorage(Storage);
+			ResourceManager.RootDirectory = "data";
+
+
 			GameWindowParams param = new GameWindowParams();
 			param.Major = 2;
 			param.Minor = 1;
@@ -116,8 +122,11 @@ namespace DungeonEye
 			param.FullScreen = Settings.GetBool("FullScreen");
 			CreateGameWindow(param);
 
-			Window.Icon = new Icon(@"data/GameIcon.ico");
+			using (Stream icon = Storage.OpenFile("GameIcon.ico", FileAccess.Read))
+				Window.Icon = new Icon(icon);
 			Window.Text = "Dungeon Eye";
+
+			
 
 			// Default texture parameters
 			Texture2D.DefaultBorderColor = Color.Black;
@@ -125,10 +134,6 @@ namespace DungeonEye
 			Texture2D.DefaultMinFilter = TextureMinFilter.Nearest;
 
 
-			// Main storage bank
-			Storage = new BankStorage("data/Game.bnk");
-			ResourceManager.AddStorage(Storage);
-			ResourceManager.RootDirectory = "data";
 
 
 			// Change the cursor

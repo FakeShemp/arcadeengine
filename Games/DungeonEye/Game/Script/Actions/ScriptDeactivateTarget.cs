@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Xml;
 using System.Text;
 
-namespace DungeonEye.EventScript
+namespace DungeonEye.Script
 {
 	/// <summary>
-	/// 
+	/// Deactivate a target
 	/// </summary>
 	public class ScriptDeactivateTarget : ScriptAction
 	{
@@ -26,7 +26,15 @@ namespace DungeonEye.EventScript
 		/// <returns></returns>
 		public override bool Run()
 		{
+			if (Target == null)
+				return false;
 
+			Square square = Target.GetSquare(GameScreen.Dungeon);
+			if (square == null)
+				return false;
+
+			if (square.Actor != null)
+				square.Actor.Deactivate();
 
 			return true;
 		}
@@ -39,6 +47,22 @@ namespace DungeonEye.EventScript
 		/// <returns></returns>
 		public override bool Load(XmlNode xml)
 		{
+			if (xml == null)
+				return false;
+
+			foreach (XmlNode node in xml)
+			{
+				switch (node.Name.ToLower())
+				{
+
+					default:
+					{
+						base.Load(node);
+					}
+					break;
+				}
+			}
+
 			return true;
 		}
 
@@ -50,6 +74,16 @@ namespace DungeonEye.EventScript
 		/// <returns></returns>
 		public override bool Save(XmlWriter writer)
 		{
+			if (writer == null)
+				return false;
+
+
+			writer.WriteStartElement(Name);
+
+			base.Save(writer);
+
+			writer.WriteEndElement();
+
 			return true;
 		}
 
@@ -57,6 +91,9 @@ namespace DungeonEye.EventScript
 
 
 		#region Properties
+
+
+
 		#endregion
 	}
 }

@@ -259,4 +259,22 @@ namespace DungeonEye
 
 		#endregion
 	}
+
+
+	/// <summary>
+	/// Condtions for alcove's script
+	/// </summary>
+	public enum AlcoveCondition
+	{
+		/// <summary>
+		/// When an item is added in the alcove
+		/// </summary>
+		OnItemAdded,
+
+
+		/// <summary>
+		/// When an item is removed from the alcove
+		/// </summary>
+		OnItemRemoved,
+	}
 }

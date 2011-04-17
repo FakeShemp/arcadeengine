@@ -57,7 +57,6 @@ namespace DungeonEye
 			WallSwitch = wallswitch;
 			ActionScriptBox.Actions = wallswitch.Actions;
 			ActionScriptBox.Dungeon = maze.Dungeon;
-
 		}
 
 
@@ -122,6 +121,7 @@ namespace DungeonEye
 
 			ItemsBox.SelectedItem = WallSwitch.ActivateItem;
 			ConsumeItemBox.Checked = WallSwitch.ConsumeItem;
+			ReusableBox.Checked = WallSwitch.Reusable;
 
 		}
 
@@ -129,6 +129,21 @@ namespace DungeonEye
 		#region Control events
 
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ReusableBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (WallSwitch == null)
+				return;
+
+			WallSwitch.Reusable = ReusableBox.Checked;
+		}
+		
+		
 		/// <summary>
 		/// 
 		/// </summary>

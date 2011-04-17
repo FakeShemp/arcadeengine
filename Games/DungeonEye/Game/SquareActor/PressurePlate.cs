@@ -25,6 +25,7 @@ using System.Xml;
 using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
+using System.ComponentModel;
 
 namespace DungeonEye
 {
@@ -115,9 +116,9 @@ namespace DungeonEye
 				switch (node.Name.ToLower())
 				{
 
-					case "invisible":
+					case "ishidden":
 					{
-						IsHidden = true;
+						IsHidden = bool.Parse(node.InnerText);
 					}
 					break;
 
@@ -167,7 +168,7 @@ namespace DungeonEye
 
 			base.Save(writer);
 
-			writer.WriteElementString("invisible", IsHidden.ToString());
+			writer.WriteElementString("ishidden", IsHidden.ToString());
 			writer.WriteElementString("affectteam", AffectTeam.ToString());
 			writer.WriteElementString("affectmonsters", AffectMonsters.ToString());
 			writer.WriteElementString("affectitems", AffectItems.ToString());
@@ -188,7 +189,6 @@ namespace DungeonEye
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="team"></param>
 		/// <returns></returns>
 		public override bool OnTeamEnter()
 		{
@@ -214,10 +214,8 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Team /item is leaving the Floor Plate
+		/// Team is leaving the pressure plate
 		/// </summary>
-		/// <param name="team"></param>
-		/// <param name="item"></param>
 		public override bool OnTeamLeave()
 		{
 			if (AffectTeam)
@@ -333,11 +331,116 @@ namespace DungeonEye
 			set;
 		}
 
-	
-
-
-
 		#endregion
 
 	}
+
+
+
+	/// <summary>
+	/// PressurePlate activation conditions
+	/// </summary>
+	public enum PressurcePlateCondition
+	{
+
+		/// <summary>
+		/// Everything triggers the switch.
+		/// </summary>
+		[Description("Always")]
+		Always,
+
+		/// <summary>
+		/// On team stepping on or off the switch will activate it
+		/// </summary>
+		[Description("On Team")]
+		OnTeam,
+
+		/// <summary>
+		/// On team stepping on the switch will activate it
+		/// </summary>
+		[Description("On Team enter")]
+		OnTeamEnter,
+
+		/// <summary>
+		/// On team stepping off the switch will activate it
+		/// </summary>
+		[Description("On Team leave")]
+		OnTeamLeave,
+
+
+		/// <summary>
+		/// On monsters stepping on or off the switch will activate it
+		/// </summary>
+		[Description("On monster")]
+		OnMonster,
+
+		/// <summary>
+		/// On monsters stepping on the switch will activate it
+		/// </summary>
+		[Description("On monster enter")]
+		OnMonsterEnter,
+
+		/// <summary>
+		/// On monsters stepping off the switch will activate it
+		/// </summary>
+		[Description("On monster leave")]
+		OnMonsterLeave,
+
+
+		/// <summary>
+		/// On item adding or removing, the switch will activate it
+		/// </summary>
+		[Description("On item")]
+		OnItem,
+
+		/// <summary>
+		/// On item adding, the switch will activate it
+		/// </summary>
+		[Description("On item add")]
+		OnItemAdd,
+
+		/// <summary>
+		/// On item removing, the switch will activate it
+		/// </summary>
+		[Description("On item remove")]
+		OnItemRemove,
+
+
+
+		/// <summary>
+		/// On team or monsters stepping on or off the switch will activate it
+		/// </summary>
+		[Description("On entity")]
+		OnEntity,
+
+		/// <summary>
+		/// On team or monsters stepping on the switch will activate it
+		/// </summary>
+		[Description("On entity enter")]
+		OnEntityEnter,
+
+		/// <summary>
+		/// On team or monsters stepping off the switch will activate it
+		/// </summary>
+		[Description("On entity leave")]
+		OnEntityLeave,
+
+
+
+		/// <summary>
+		/// On team, monsters or items stepping on the switch will activate it
+		/// </summary>
+		[Description("On anything enter")]
+		OnAnythingEnter,
+
+		/// <summary>
+		/// On team, monsters or items stepping off the switch will activate it
+		/// </summary>
+		[Description("On anything leave")]
+		OnAnythingLeave,
+
+
+	}
+
+
 }

@@ -29,61 +29,26 @@
 		private void InitializeComponent()
 		{
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.AffectItemsBox = new System.Windows.Forms.CheckBox();
-			this.AffectMonstersBox = new System.Windows.Forms.CheckBox();
-			this.AffectTeamBox = new System.Windows.Forms.CheckBox();
 			this.HiddenBox = new System.Windows.Forms.CheckBox();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.ActionBox = new DungeonEye.Forms.ActionControl();
+			this.ConditionBox = new System.Windows.Forms.ComboBox();
+			this.label1 = new System.Windows.Forms.Label();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// groupBox1
 			// 
-			this.groupBox1.Controls.Add(this.AffectItemsBox);
-			this.groupBox1.Controls.Add(this.AffectMonstersBox);
-			this.groupBox1.Controls.Add(this.AffectTeamBox);
+			this.groupBox1.Controls.Add(this.label1);
+			this.groupBox1.Controls.Add(this.ConditionBox);
 			this.groupBox1.Controls.Add(this.HiddenBox);
-			this.groupBox1.Location = new System.Drawing.Point(6, 175);
+			this.groupBox1.Location = new System.Drawing.Point(6, 19);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(350, 146);
+			this.groupBox1.Size = new System.Drawing.Size(350, 100);
 			this.groupBox1.TabIndex = 0;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Properties :";
-			// 
-			// AffectItemsBox
-			// 
-			this.AffectItemsBox.AutoSize = true;
-			this.AffectItemsBox.Location = new System.Drawing.Point(92, 63);
-			this.AffectItemsBox.Name = "AffectItemsBox";
-			this.AffectItemsBox.Size = new System.Drawing.Size(81, 17);
-			this.AffectItemsBox.TabIndex = 1;
-			this.AffectItemsBox.Text = "Affect items";
-			this.AffectItemsBox.UseVisualStyleBackColor = true;
-			this.AffectItemsBox.CheckedChanged += new System.EventHandler(this.AffectItemsBox_CheckedChanged);
-			// 
-			// AffectMonstersBox
-			// 
-			this.AffectMonstersBox.AutoSize = true;
-			this.AffectMonstersBox.Location = new System.Drawing.Point(92, 40);
-			this.AffectMonstersBox.Name = "AffectMonstersBox";
-			this.AffectMonstersBox.Size = new System.Drawing.Size(99, 17);
-			this.AffectMonstersBox.TabIndex = 1;
-			this.AffectMonstersBox.Text = "Affect monsters";
-			this.AffectMonstersBox.UseVisualStyleBackColor = true;
-			this.AffectMonstersBox.CheckedChanged += new System.EventHandler(this.AffectMonstersBox_CheckedChanged);
-			// 
-			// AffectTeamBox
-			// 
-			this.AffectTeamBox.AutoSize = true;
-			this.AffectTeamBox.Location = new System.Drawing.Point(92, 19);
-			this.AffectTeamBox.Name = "AffectTeamBox";
-			this.AffectTeamBox.Size = new System.Drawing.Size(84, 17);
-			this.AffectTeamBox.TabIndex = 1;
-			this.AffectTeamBox.Text = "Affect Team";
-			this.AffectTeamBox.UseVisualStyleBackColor = true;
-			this.AffectTeamBox.CheckedChanged += new System.EventHandler(this.AffectTeamBox_CheckedChanged);
 			// 
 			// HiddenBox
 			// 
@@ -112,12 +77,30 @@
 			// 
 			this.ActionBox.Actions = null;
 			this.ActionBox.Dungeon = null;
-			this.ActionBox.Location = new System.Drawing.Point(6, 19);
+			this.ActionBox.Location = new System.Drawing.Point(6, 125);
 			this.ActionBox.MinimumSize = new System.Drawing.Size(350, 150);
 			this.ActionBox.Name = "ActionBox";
 			this.ActionBox.Size = new System.Drawing.Size(350, 150);
 			this.ActionBox.TabIndex = 1;
 			this.ActionBox.Title = "Actions :";
+			// 
+			// ConditionBox
+			// 
+			this.ConditionBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.ConditionBox.FormattingEnabled = true;
+			this.ConditionBox.Location = new System.Drawing.Point(200, 15);
+			this.ConditionBox.Name = "ConditionBox";
+			this.ConditionBox.Size = new System.Drawing.Size(144, 21);
+			this.ConditionBox.TabIndex = 2;
+			// 
+			// label1
+			// 
+			this.label1.AutoSize = true;
+			this.label1.Location = new System.Drawing.Point(143, 18);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(51, 13);
+			this.label1.TabIndex = 3;
+			this.label1.Text = "Condition";
 			// 
 			// PressurePlateControl
 			// 
@@ -140,8 +123,7 @@
 		private System.Windows.Forms.CheckBox HiddenBox;
 		private System.Windows.Forms.GroupBox groupBox2;
 		private ActionControl ActionBox;
-		private System.Windows.Forms.CheckBox AffectItemsBox;
-		private System.Windows.Forms.CheckBox AffectMonstersBox;
-		private System.Windows.Forms.CheckBox AffectTeamBox;
+		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.ComboBox ConditionBox;
 	}
 }

@@ -24,7 +24,7 @@ using System.Text;
 using ArcEngine;
 using System.Drawing;
 
-namespace DungeonEye.EventScript
+namespace DungeonEye.Script
 {
 	/// <summary>
 	/// Provides interaction in event dialogs

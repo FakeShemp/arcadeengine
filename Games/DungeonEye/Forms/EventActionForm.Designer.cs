@@ -35,12 +35,12 @@
 			this.label2 = new System.Windows.Forms.Label();
 			this.ActionControlBox = new System.Windows.Forms.Panel();
 			this.OKBox = new System.Windows.Forms.Button();
-			((System.ComponentModel.ISupportInitialize) (this.RemainingCountBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.RemainingCountBox)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// CloseBox
 			// 
-			this.CloseBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.CloseBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.CloseBox.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.CloseBox.Location = new System.Drawing.Point(728, 449);
 			this.CloseBox.Name = "CloseBox";
@@ -99,7 +99,7 @@
 			// 
 			// ActionControlBox
 			// 
-			this.ActionControlBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.ActionControlBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.ActionControlBox.Location = new System.Drawing.Point(12, 39);
@@ -109,7 +109,7 @@
 			// 
 			// OKBox
 			// 
-			this.OKBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.OKBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.OKBox.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.OKBox.Location = new System.Drawing.Point(647, 449);
 			this.OKBox.Name = "OKBox";
@@ -142,7 +142,7 @@
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Event action wizard";
-			((System.ComponentModel.ISupportInitialize) (this.RemainingCountBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.RemainingCountBox)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

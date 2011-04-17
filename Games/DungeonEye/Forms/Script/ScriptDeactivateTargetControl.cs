@@ -6,7 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using DungeonEye.EventScript;
+using DungeonEye.Script;
 
 
 namespace DungeonEye.Forms
@@ -29,9 +29,29 @@ namespace DungeonEye.Forms
 			else
 				Action = new ScriptDeactivateTarget();
 
-			TargetBox.Dungeon = dungeon;
+			TargetBox.SetTarget(dungeon, Action.Target);
 		}
 
+
+
+		#region
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="target"></param>
+		private void TargetBox_TargetChanged(object sender, DungeonLocation target)
+		{
+			if (Action == null)
+				return;
+
+			((ScriptDeactivateTarget) Action).Target = target;
+		}
+
+
+		#endregion
 
 
 		#region Properties

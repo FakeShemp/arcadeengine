@@ -27,7 +27,7 @@ using ArcEngine.Graphic;
 using ArcEngine.Input;
 using DungeonEye.Gui;
 
-namespace DungeonEye.EventScript
+namespace DungeonEye.Script
 {
 	//TODO: Maybe melted with DungeonEye.Gui.ScreenButton
 

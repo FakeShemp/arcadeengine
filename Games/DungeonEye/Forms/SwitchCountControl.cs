@@ -31,14 +31,28 @@ namespace DungeonEye.Forms
 		/// </summary>
 		void UpdateUI()
 		{
-			NeededBox.Value = SwitchCount.Needed;
-			RemainingBox.Value = SwitchCount.Remaining;
+			EnabledBox.Checked = SwitchCount.Enabled;
+			TargetBox.Value = SwitchCount.Target;
+			CountBox.Value = SwitchCount.Count;
 			ResetBox.Checked = SwitchCount.ResetOnTrigger;
 		}
 
 
 		#region Control Events
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void EnabledBox_CheckedChanged(object sender, EventArgs e)
+		{
+			PanelBox.Enabled = EnabledBox.Checked;
+
+			if (SwitchCount != null)
+				SwitchCount.Enabled = EnabledBox.Checked;
+		}
 
 		/// <summary>
 		/// 
@@ -63,7 +77,7 @@ namespace DungeonEye.Forms
 			if (SwitchCount == null)
 				return;
 
-			SwitchCount.Remaining = (int)RemainingBox.Value;
+			SwitchCount.Count = (int)CountBox.Value;
 		}
 
 
@@ -77,7 +91,7 @@ namespace DungeonEye.Forms
 			if (SwitchCount == null)
 				return;
 
-			SwitchCount.Needed = (int) NeededBox.Value;
+			SwitchCount.Target = (int) TargetBox.Value;
 		}
 
 		#endregion
@@ -122,5 +136,6 @@ namespace DungeonEye.Forms
 		}
 
 		#endregion
+
 	}
 }

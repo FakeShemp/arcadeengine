@@ -28,11 +28,14 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			DungeonEye.SwitchCount switchCount1 = new DungeonEye.SwitchCount();
 			this.PicklockBox = new System.Windows.Forms.NumericUpDown();
 			this.label2 = new System.Windows.Forms.Label();
 			this.DoorTypeBox = new System.Windows.Forms.ComboBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.ItemPassThroughBox = new System.Windows.Forms.CheckBox();
+			this.HasButtonBox = new System.Windows.Forms.CheckBox();
 			this.SpeedBox = new System.Windows.Forms.NumericUpDown();
 			this.label4 = new System.Windows.Forms.Label();
 			this.BreakValueBox = new System.Windows.Forms.NumericUpDown();
@@ -40,7 +43,7 @@
 			this.DoorStateBox = new System.Windows.Forms.ComboBox();
 			this.label3 = new System.Windows.Forms.Label();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
-			this.HasButtonBox = new System.Windows.Forms.CheckBox();
+			this.SwitchCountBox = new DungeonEye.Forms.SwitchCountControl();
 			((System.ComponentModel.ISupportInitialize)(this.PicklockBox)).BeginInit();
 			this.groupBox2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.SpeedBox)).BeginInit();
@@ -93,6 +96,7 @@
 			// 
 			// groupBox2
 			// 
+			this.groupBox2.Controls.Add(this.ItemPassThroughBox);
 			this.groupBox2.Controls.Add(this.HasButtonBox);
 			this.groupBox2.Controls.Add(this.PicklockBox);
 			this.groupBox2.Controls.Add(this.SpeedBox);
@@ -102,10 +106,31 @@
 			this.groupBox2.Controls.Add(this.IsBreakableBox);
 			this.groupBox2.Location = new System.Drawing.Point(6, 79);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(166, 134);
+			this.groupBox2.Size = new System.Drawing.Size(166, 146);
 			this.groupBox2.TabIndex = 4;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Properties :";
+			// 
+			// ItemPassThroughBox
+			// 
+			this.ItemPassThroughBox.AutoSize = true;
+			this.ItemPassThroughBox.Location = new System.Drawing.Point(11, 123);
+			this.ItemPassThroughBox.Name = "ItemPassThroughBox";
+			this.ItemPassThroughBox.Size = new System.Drawing.Size(142, 17);
+			this.ItemPassThroughBox.TabIndex = 6;
+			this.ItemPassThroughBox.Text = "Small items pass through";
+			this.ItemPassThroughBox.UseVisualStyleBackColor = true;
+			// 
+			// HasButtonBox
+			// 
+			this.HasButtonBox.AutoSize = true;
+			this.HasButtonBox.Location = new System.Drawing.Point(11, 100);
+			this.HasButtonBox.Name = "HasButtonBox";
+			this.HasButtonBox.Size = new System.Drawing.Size(78, 17);
+			this.HasButtonBox.TabIndex = 5;
+			this.HasButtonBox.Text = "Has button";
+			this.HasButtonBox.UseVisualStyleBackColor = true;
+			this.HasButtonBox.CheckedChanged += new System.EventHandler(this.HasButtonBox_CheckedChanged);
 			// 
 			// SpeedBox
 			// 
@@ -178,6 +203,7 @@
 			// 
 			// groupBox3
 			// 
+			this.groupBox3.Controls.Add(this.SwitchCountBox);
 			this.groupBox3.Controls.Add(this.label1);
 			this.groupBox3.Controls.Add(this.groupBox2);
 			this.groupBox3.Controls.Add(this.label3);
@@ -191,16 +217,19 @@
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Door";
 			// 
-			// HasButtonBox
+			// SwitchCountBox
 			// 
-			this.HasButtonBox.AutoSize = true;
-			this.HasButtonBox.Location = new System.Drawing.Point(11, 100);
-			this.HasButtonBox.Name = "HasButtonBox";
-			this.HasButtonBox.Size = new System.Drawing.Size(78, 17);
-			this.HasButtonBox.TabIndex = 5;
-			this.HasButtonBox.Text = "Has button";
-			this.HasButtonBox.UseVisualStyleBackColor = true;
-			this.HasButtonBox.CheckedChanged += new System.EventHandler(this.HasButtonBox_CheckedChanged);
+			this.SwitchCountBox.Location = new System.Drawing.Point(178, 13);
+			this.SwitchCountBox.MinimumSize = new System.Drawing.Size(140, 130);
+			this.SwitchCountBox.Name = "SwitchCountBox";
+			this.SwitchCountBox.Size = new System.Drawing.Size(140, 130);
+			switchCount1.Enabled = false;
+			switchCount1.Count = 0;
+			switchCount1.ResetOnTrigger = false;
+			switchCount1.Target = 0;
+			this.SwitchCountBox.SwitchCount = switchCount1;
+			this.SwitchCountBox.TabIndex = 5;
+			this.SwitchCountBox.Title = "Switch count";
 			// 
 			// DoorControl
 			// 
@@ -236,5 +265,7 @@
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.GroupBox groupBox3;
 		private System.Windows.Forms.CheckBox HasButtonBox;
+		private System.Windows.Forms.CheckBox ItemPassThroughBox;
+		private SwitchCountControl SwitchCountBox;
 	}
 }

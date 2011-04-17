@@ -24,7 +24,7 @@ using System.Drawing;
 using System.Xml;
 using ArcEngine.Graphic;
 using ArcEngine;
-using DungeonEye.EventScript;
+using DungeonEye.Script;
 
 
 namespace DungeonEye
@@ -55,37 +55,62 @@ namespace DungeonEye
 		/// <returns></returns>
 		public override bool OnClick(Point location, CardinalPoint side)
 		{
-			if (side != Side || Square.Maze.Decoration == null)
+			// No wall side or no decoration or already used and not reusable
+			if (side != Side || Square.Maze.Decoration == null || (WasUsed && !Reusable))
 				return false;
-
-			Team team = GameScreen.Team;
 
 
 			// Not in the decoration zone
 			if (!Square.Maze.Decoration.IsPointInside(IsActivated ? ActivatedDecoration : DeactivatedDecoration, location))
 				return false;
-
+	
 
 			// Does an item is required ?
 			if (!string.IsNullOrEmpty(ActivateItem))
 			{
-				// No item in hand
-				if (team.ItemInHand == null)
-					return false;
 
-				// Not the good item
-				if (team.ItemInHand.Name != ActivateItem)
+				// Picklock
+				if (GameScreen.Team.ItemInHand.Name == "PickLock")
+				{
+					// TODO: already unlocked => "It's already unlocked"
+					if (PickLock())
+					{
+						GameMessage.AddMessage("You pick the lock.", GameColors.Green);
+					}
+					else
+					{
+						GameMessage.AddMessage("You failed to pick the lock", GameColors.Yellow);
+					}
+
+					return true;
+				}
+
+				// No item in hand or not the good item
+				if (GameScreen.Team.ItemInHand == null || GameScreen.Team.ItemInHand.Name != ActivateItem)
+				{
+					GameMessage.AddMessage("You need a key to open this lock");
 					return false;
+				}
 
 				// Consume item
 				if (ConsumeItem)
-					team.SetItemInHand(null);
+					GameScreen.Team.SetItemInHand(null);
 			}
 
-
+			WasUsed = true;
 			Toggle();
 
 			return true;
+		}
+
+
+		/// <summary>
+		/// Try to picklock the switch
+		/// </summary>
+		/// <returns>True if the lockpick succeeded, otherwise false</returns>
+		public bool PickLock()
+		{
+			return false;
 		}
 
 
@@ -158,6 +183,18 @@ namespace DungeonEye
 					}
 					break;
 
+					case "reusable":
+					{
+						Reusable = bool.Parse(node.InnerText);
+					}
+					break;
+
+					case "wasused":
+					{
+						WasUsed = bool.Parse(node.InnerText);
+					}
+					break;
+
 					case "side":
 					{
 						Side = (CardinalPoint) Enum.Parse(typeof(CardinalPoint), node.InnerText);
@@ -167,6 +204,12 @@ namespace DungeonEye
 					case "activateitem":
 					{
 						ActivateItem = node.InnerText;
+					}
+					break;
+
+					case "picklock":
+					{
+						LockLevel = int.Parse(node.InnerText);
 					}
 					break;
 
@@ -202,8 +245,11 @@ namespace DungeonEye
 			writer.WriteEndElement();
 
 			writer.WriteElementString("side", Side.ToString());
+			writer.WriteElementString("reusable", Reusable.ToString());
+			writer.WriteElementString("wasused", WasUsed.ToString());
 			writer.WriteElementString("activateitem", ActivateItem);
 			writer.WriteElementString("consumeitem", ConsumeItem.ToString());
+			writer.WriteElementString("picklock", LockLevel.ToString());
 
 			base.Save(writer);
 
@@ -224,6 +270,17 @@ namespace DungeonEye
 		/// 
 		/// </summary>
 		public const string Tag = "wallswitch";
+
+
+
+		/// <summary>
+		/// Switch is already used
+		/// </summary>
+		public bool WasUsed
+		{
+			get;
+			private set;
+		}
 
 
 		/// <summary>
@@ -277,10 +334,24 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Switch count
+		/// Defines if the switch can be used repeatedly. 
+		/// Otherwise, after one use, the switch will no longer function.
 		/// </summary>
-		SwitchCount Count;
+		public bool Reusable
+		{
+			get;
+			set;
+		}
 
+
+		/// <summary>
+		/// Pick lock level required to unlock the switch
+		/// </summary>
+		public int LockLevel
+		{
+			get;
+			set;
+		}
 
 		#endregion
 	}

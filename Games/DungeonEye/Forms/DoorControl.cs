@@ -45,6 +45,7 @@ namespace DungeonEye.Forms
 
 			DoorTypeBox.DataSource = Enum.GetValues(typeof(DoorType));
 			DoorStateBox.DataSource = Enum.GetValues(typeof(DoorState));
+			SwitchCountBox.SwitchCount = door.Count;
 
 			Door = door;
 		}
@@ -68,6 +69,7 @@ namespace DungeonEye.Forms
 			BreakValueBox.Value = Door.Strength;
 			BreakValueBox.Visible = Door.IsBreakable;
 		}
+
 
 		#region Events
 

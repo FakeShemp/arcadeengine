@@ -44,6 +44,8 @@ namespace DungeonEye
 			// Zone of the button to open/close the door
 			Button = new Rectangle(252, 90, 20, 28);
 
+			Count = new SwitchCount();
+
 			// Sounds
 			OpenSound = ResourceManager.LockSharedAsset<AudioSample>("door open");
 			CloseSound = ResourceManager.LockSharedAsset<AudioSample>("door close");
@@ -54,6 +56,8 @@ namespace DungeonEye
 
 			if (Square != null || Square.Maze != null)
 				Type = Square.Maze.DefaultDoorType;
+
+			IsActivated = IsOpen;
 		}
 
 
@@ -196,9 +200,11 @@ namespace DungeonEye
 				else if (State == DoorState.Opened || State == DoorState.Opening)
 					Close();
 			}
-
-
-			// Try to force the door
+			else
+			{
+				// Try to force the door
+				GameMessage.AddMessage("No one is able to pry this door open.");
+			}
 
 
 			return true;
@@ -211,6 +217,7 @@ namespace DungeonEye
 		public void Open()
 		{
 			State = DoorState.Opening;
+			IsActivated = true;
 			//	Audio.PlaySample(0, OpenSound);
 		}
 
@@ -225,6 +232,7 @@ namespace DungeonEye
 			//	return;
 
 			State = DoorState.Closing;
+			IsActivated = false;
 			//	Audio.PlaySample(0, CloseSound);
 		}
 
@@ -237,7 +245,10 @@ namespace DungeonEye
 		/// </summary>
 		public override void Activate()
 		{
-			Open();
+			//base.Activate();
+
+			if (Count.Activate())
+				Open();
 		}
 
 
@@ -246,8 +257,12 @@ namespace DungeonEye
 		/// </summary>
 		public override void Deactivate()
 		{
-			Close();
+			//base.Deactivate();
+
+			if (Count.Deactivate())
+				Close();
 		}
+
 
 
 		/// <summary>
@@ -255,10 +270,10 @@ namespace DungeonEye
 		/// </summary>
 		public override void Toggle()
 		{
-			if (State == DoorState.Closed || State == DoorState.Closing)
-				Open();
-			else if (State == DoorState.Opened || State == DoorState.Opening)
-				Close();
+			if (IsOpen)
+				Deactivate();
+			else
+				Activate();
 		}
 
 		#endregion
@@ -512,7 +527,11 @@ namespace DungeonEye
 					}
 					break;
 
-
+					//case "switch":
+					//{
+					//    Count.Load(node);
+					//}
+					//break;
 
 					default:
 					{
@@ -576,6 +595,8 @@ namespace DungeonEye
 			writer.WriteAttributeString("value", Strength.ToString());
 			writer.WriteEndElement();
 
+			//Count.Save("switch", writer);
+			
 			base.Save(writer);
 
 			writer.WriteEndElement();
@@ -799,6 +820,17 @@ namespace DungeonEye
 			get;
 			set;
 		}
+
+
+		/// <summary>
+		/// Swithc counter
+		/// </summary>
+		//public SwitchCount Count
+		//{
+		//    get;
+		//    set;
+		//}
+
 
 		#endregion
 	}

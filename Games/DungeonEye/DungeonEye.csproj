@@ -462,7 +462,7 @@
     <Compile Include="GameSettings.cs" />
     <Compile Include="Game\Decoration.cs" />
     <Compile Include="Game\GameColors.cs" />
-    <Compile Include="Game\Script\Actions\ScriptAction.cs" />
+    <Compile Include="Game\Script\ScriptAction.cs" />
     <Compile Include="Game\Script\Actions\ScriptActivateTarget.cs" />
     <Compile Include="Game\Script\Actions\ScriptChangePicture.cs" />
     <Compile Include="Game\Script\Actions\ScriptChangeText.cs" />
@@ -479,8 +479,11 @@
     <Compile Include="Game\Script\Actions\ScriptPlaySound.cs" />
     <Compile Include="Game\Script\Actions\ScriptTeleport.cs" />
     <Compile Include="Game\Script\Actions\ScriptToggleTarget.cs" />
+    <Compile Include="Game\Script\AlcoveScript.cs" />
     <Compile Include="Game\Script\GUIScriptButton.cs" />
+    <Compile Include="Game\Script\PressurePlateScript.cs" />
     <Compile Include="Game\Script\ScriptChoice.cs" />
+    <Compile Include="Game\Script\WallSwitchScript.cs" />
     <Compile Include="Game\SquareActor\AlcoveActor.cs" />
     <Compile Include="Game\Alcove.cs" />
     <Compile Include="Game\SquareActor\Generator.cs" />

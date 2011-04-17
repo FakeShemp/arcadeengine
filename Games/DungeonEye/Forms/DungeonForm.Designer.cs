@@ -182,6 +182,8 @@
 			// MazeListBox
 			// 
 			this.MazeListBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.MazeListBox.IntegralHeight = false;
+			this.MazeListBox.MaxDropDownItems = 16;
 			this.MazeListBox.Name = "MazeListBox";
 			this.MazeListBox.Size = new System.Drawing.Size(121, 25);
 			this.MazeListBox.Sorted = true;
@@ -579,6 +581,7 @@
 			// 
 			// DungeonTab
 			// 
+			this.DungeonTab.AutoScroll = true;
 			this.DungeonTab.Controls.Add(this.groupBox3);
 			this.DungeonTab.Controls.Add(this.StartLocationBox);
 			this.DungeonTab.Controls.Add(this.groupBox1);
@@ -644,6 +647,7 @@
 			// 
 			// MazeTab
 			// 
+			this.MazeTab.AutoScroll = true;
 			this.MazeTab.Controls.Add(this.groupBox2);
 			this.MazeTab.Controls.Add(this.label2);
 			this.MazeTab.Controls.Add(this.DefaultDoorBox);
@@ -662,7 +666,7 @@
 			this.groupBox2.Controls.Add(this.label3);
 			this.groupBox2.Controls.Add(this.DecorationNameBox);
 			this.groupBox2.Controls.Add(this.label1);
-			this.groupBox2.Location = new System.Drawing.Point(6, 124);
+			this.groupBox2.Location = new System.Drawing.Point(6, 33);
 			this.groupBox2.Name = "groupBox2";
 			this.groupBox2.Size = new System.Drawing.Size(339, 84);
 			this.groupBox2.TabIndex = 2;

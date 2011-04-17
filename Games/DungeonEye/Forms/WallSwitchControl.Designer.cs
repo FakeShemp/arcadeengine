@@ -40,7 +40,6 @@
 			this.DeactivatedGlBox = new OpenTK.GLControl();
 			this.DeactivatedIdBox = new System.Windows.Forms.NumericUpDown();
 			this.ScriptTab = new System.Windows.Forms.TabPage();
-			this.SwitchCountBox = new DungeonEye.Forms.SwitchCountControl();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.label4 = new System.Windows.Forms.Label();
 			this.label3 = new System.Windows.Forms.Label();
@@ -48,6 +47,7 @@
 			this.PickLockBox = new System.Windows.Forms.NumericUpDown();
 			this.ItemsBox = new System.Windows.Forms.ComboBox();
 			this.ActionScriptBox = new DungeonEye.Forms.ActionControl();
+			this.ReusableBox = new System.Windows.Forms.CheckBox();
 			this.groupBox1.SuspendLayout();
 			this.tabControl1.SuspendLayout();
 			this.ActivatedTab.SuspendLayout();
@@ -214,7 +214,6 @@
 			// 
 			// ScriptTab
 			// 
-			this.ScriptTab.Controls.Add(this.SwitchCountBox);
 			this.ScriptTab.Controls.Add(this.groupBox2);
 			this.ScriptTab.Controls.Add(this.ActionScriptBox);
 			this.ScriptTab.Location = new System.Drawing.Point(4, 22);
@@ -224,17 +223,9 @@
 			this.ScriptTab.Text = "Script";
 			this.ScriptTab.UseVisualStyleBackColor = true;
 			// 
-			// SwitchCountBox
-			// 
-			this.SwitchCountBox.Location = new System.Drawing.Point(223, 159);
-			this.SwitchCountBox.MinimumSize = new System.Drawing.Size(130, 100);
-			this.SwitchCountBox.Name = "SwitchCountBox";
-			this.SwitchCountBox.Size = new System.Drawing.Size(130, 100);
-			this.SwitchCountBox.TabIndex = 2;
-			this.SwitchCountBox.Title = "Switch count";
-			// 
 			// groupBox2
 			// 
+			this.groupBox2.Controls.Add(this.ReusableBox);
 			this.groupBox2.Controls.Add(this.label4);
 			this.groupBox2.Controls.Add(this.label3);
 			this.groupBox2.Controls.Add(this.ConsumeItemBox);
@@ -242,7 +233,7 @@
 			this.groupBox2.Controls.Add(this.ItemsBox);
 			this.groupBox2.Location = new System.Drawing.Point(3, 159);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(214, 100);
+			this.groupBox2.Size = new System.Drawing.Size(214, 110);
 			this.groupBox2.TabIndex = 1;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Properties";
@@ -259,7 +250,7 @@
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(25, 69);
+			this.label3.Location = new System.Drawing.Point(25, 46);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(48, 13);
 			this.label3.TabIndex = 1;
@@ -267,10 +258,11 @@
 			// 
 			// ConsumeItemBox
 			// 
+			this.ConsumeItemBox.Appearance = System.Windows.Forms.Appearance.Button;
 			this.ConsumeItemBox.AutoSize = true;
-			this.ConsumeItemBox.Location = new System.Drawing.Point(79, 44);
+			this.ConsumeItemBox.Location = new System.Drawing.Point(79, 72);
 			this.ConsumeItemBox.Name = "ConsumeItemBox";
-			this.ConsumeItemBox.Size = new System.Drawing.Size(92, 17);
+			this.ConsumeItemBox.Size = new System.Drawing.Size(83, 23);
 			this.ConsumeItemBox.TabIndex = 1;
 			this.ConsumeItemBox.Text = "Consume item";
 			this.ConsumeItemBox.UseVisualStyleBackColor = true;
@@ -278,7 +270,7 @@
 			// 
 			// PickLockBox
 			// 
-			this.PickLockBox.Location = new System.Drawing.Point(79, 67);
+			this.PickLockBox.Location = new System.Drawing.Point(79, 44);
 			this.PickLockBox.Minimum = new decimal(new int[] {
             1,
             0,
@@ -310,6 +302,18 @@
 			this.ActionScriptBox.Size = new System.Drawing.Size(350, 150);
 			this.ActionScriptBox.TabIndex = 0;
 			this.ActionScriptBox.Title = "Actions";
+			// 
+			// ReusableBox
+			// 
+			this.ReusableBox.Appearance = System.Windows.Forms.Appearance.Button;
+			this.ReusableBox.AutoSize = true;
+			this.ReusableBox.Location = new System.Drawing.Point(11, 72);
+			this.ReusableBox.Name = "ReusableBox";
+			this.ReusableBox.Size = new System.Drawing.Size(62, 23);
+			this.ReusableBox.TabIndex = 3;
+			this.ReusableBox.Text = "Reusable";
+			this.ReusableBox.UseVisualStyleBackColor = true;
+			this.ReusableBox.CheckedChanged += new System.EventHandler(this.ReusableBox_CheckedChanged);
 			// 
 			// WallSwitchControl
 			// 
@@ -356,7 +360,7 @@
 		private System.Windows.Forms.CheckBox ConsumeItemBox;
 		private System.Windows.Forms.NumericUpDown PickLockBox;
 		private System.Windows.Forms.ComboBox ItemsBox;
-		private Forms.SwitchCountControl SwitchCountBox;
+		private System.Windows.Forms.CheckBox ReusableBox;
 
 	}
 }

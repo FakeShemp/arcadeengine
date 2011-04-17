@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Xml;
 using System.Text;
 
-namespace DungeonEye.EventScript
+namespace DungeonEye.Script
 {
 	/// <summary>
-	/// 
+	/// Activate a target
 	/// </summary>
 	public class ScriptActivateTarget : ScriptAction
 	{

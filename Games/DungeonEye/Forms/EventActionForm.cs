@@ -25,7 +25,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using DungeonEye.EventScript;
+using DungeonEye.Script;
 
 namespace DungeonEye.Forms
 {
@@ -61,6 +61,7 @@ namespace DungeonEye.Forms
 			ActionListBox.Items.Add("End Dialog");
 			ActionListBox.Items.Add("Change Text");
 			ActionListBox.Items.Add("Play Sound");
+			ActionListBox.Items.Add("Display Message");
 			ActionListBox.EndUpdate();
 
 		}
