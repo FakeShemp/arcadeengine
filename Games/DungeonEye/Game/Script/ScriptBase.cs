@@ -133,7 +133,7 @@ namespace DungeonEye.Script
 
 
 		/// <summary>
-		/// 
+		/// Action to execute
 		/// </summary>
 		public ActionBase Action
 		{

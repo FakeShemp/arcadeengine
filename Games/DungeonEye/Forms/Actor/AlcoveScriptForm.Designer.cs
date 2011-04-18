@@ -36,7 +36,7 @@
 			this.RemainingCountBox = new System.Windows.Forms.NumericUpDown();
 			this.label1 = new System.Windows.Forms.Label();
 			this.ConsumeItemBox = new System.Windows.Forms.CheckBox();
-			this.ActionsBox = new DungeonEye.Forms.Script.ScriptActionChooserControl();
+			this.ActionsBox = new DungeonEye.Forms.Script.ActionChooserControl();
 			this.groupBox1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.RemainingCountBox)).BeginInit();
 			this.SuspendLayout();
@@ -182,6 +182,6 @@
 		private System.Windows.Forms.ComboBox ItemNameBox;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.CheckBox ConsumeItemBox;
-		private Script.ScriptActionChooserControl ActionsBox;
+		private Script.ActionChooserControl ActionsBox;
 	}
 }
