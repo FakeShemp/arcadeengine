@@ -46,7 +46,8 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.DirectionBox = new DungeonEye.Forms.CardinalPointControl();
 			this.ScriptTab = new System.Windows.Forms.TabPage();
-			this.actionControl1 = new DungeonEye.Forms.ActionControl();
+			this.alcoveScriptListControl2 = new DungeonEye.Forms.AlcoveScriptListControl();
+			this.alcoveScriptListControl1 = new DungeonEye.Forms.AlcoveScriptListControl();
 			this.groupBox2.SuspendLayout();
 			this.groupBox3.SuspendLayout();
 			this.groupBox4.SuspendLayout();
@@ -259,7 +260,8 @@
 			// 
 			// ScriptTab
 			// 
-			this.ScriptTab.Controls.Add(this.actionControl1);
+			this.ScriptTab.Controls.Add(this.alcoveScriptListControl2);
+			this.ScriptTab.Controls.Add(this.alcoveScriptListControl1);
 			this.ScriptTab.Location = new System.Drawing.Point(4, 22);
 			this.ScriptTab.Name = "ScriptTab";
 			this.ScriptTab.Padding = new System.Windows.Forms.Padding(3);
@@ -268,16 +270,27 @@
 			this.ScriptTab.Text = "Scripting";
 			this.ScriptTab.UseVisualStyleBackColor = true;
 			// 
-			// actionControl1
+			// alcoveScriptListControl2
 			// 
-			this.actionControl1.Actions = null;
-			this.actionControl1.Dungeon = null;
-			this.actionControl1.Location = new System.Drawing.Point(6, 6);
-			this.actionControl1.MinimumSize = new System.Drawing.Size(350, 150);
-			this.actionControl1.Name = "actionControl1";
-			this.actionControl1.Size = new System.Drawing.Size(365, 150);
-			this.actionControl1.TabIndex = 7;
-			this.actionControl1.Title = "Actions :";
+			this.alcoveScriptListControl2.Actions = null;
+			this.alcoveScriptListControl2.Dungeon = null;
+			this.alcoveScriptListControl2.Location = new System.Drawing.Point(6, 162);
+			this.alcoveScriptListControl2.MinimumSize = new System.Drawing.Size(300, 150);
+			this.alcoveScriptListControl2.Name = "alcoveScriptListControl2";
+			this.alcoveScriptListControl2.Size = new System.Drawing.Size(427, 150);
+			this.alcoveScriptListControl2.TabIndex = 0;
+			this.alcoveScriptListControl2.Title = "On item removed";
+			// 
+			// alcoveScriptListControl1
+			// 
+			this.alcoveScriptListControl1.Actions = null;
+			this.alcoveScriptListControl1.Dungeon = null;
+			this.alcoveScriptListControl1.Location = new System.Drawing.Point(6, 6);
+			this.alcoveScriptListControl1.MinimumSize = new System.Drawing.Size(300, 150);
+			this.alcoveScriptListControl1.Name = "alcoveScriptListControl1";
+			this.alcoveScriptListControl1.Size = new System.Drawing.Size(427, 150);
+			this.alcoveScriptListControl1.TabIndex = 0;
+			this.alcoveScriptListControl1.Title = "On item added";
 			// 
 			// AlcoveControl
 			// 
@@ -310,7 +323,6 @@
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.ComboBox ItemsBox;
 		private System.Windows.Forms.GroupBox groupBox4;
-		private ActionControl actionControl1;
 		private System.Windows.Forms.TabControl tabControl1;
 		private System.Windows.Forms.TabPage ScriptTab;
 		private System.Windows.Forms.TabPage VisualTab;
@@ -322,5 +334,7 @@
 		private System.Windows.Forms.NumericUpDown DecorationBox;
 		private System.Windows.Forms.Label label1;
 		private CardinalPointControl DirectionBox;
+		private AlcoveScriptListControl alcoveScriptListControl1;
+		private AlcoveScriptListControl alcoveScriptListControl2;
 	}
 }

@@ -478,7 +478,7 @@ namespace DungeonEye.Forms
 			if (SquareUnderMouse != null && SquareUnderMouse.Actor != null)
 			{
 				SquareActor actor = SquareUnderMouse.Actor;
-				foreach(ScriptAction action in actor.Actions)
+				foreach(ScriptBase action in actor.Actions)
 				{
 					if (action.Target.Maze == Maze.Name)
 					{

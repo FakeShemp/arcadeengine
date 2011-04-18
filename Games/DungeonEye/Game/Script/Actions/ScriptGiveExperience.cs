@@ -8,7 +8,7 @@ namespace DungeonEye.Script
 	/// <summary>
 	/// 
 	/// </summary>
-	public class ScriptGiveExperience : ScriptAction
+	public class ScriptGiveExperience : ScriptBase
 	{
 
 		/// <summary>

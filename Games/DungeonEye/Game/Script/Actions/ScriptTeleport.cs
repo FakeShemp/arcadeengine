@@ -30,7 +30,7 @@ namespace DungeonEye.Script
 	/// <summary>
 	/// Teleport the team
 	/// </summary>
-	public class ScriptTeleport : ScriptAction
+	public class ScriptTeleport : ScriptBase
 	{
 		/// <summary>
 		/// 

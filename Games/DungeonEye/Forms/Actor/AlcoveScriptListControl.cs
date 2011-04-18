@@ -20,122 +20,70 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using ArcEngine;
+using ArcEngine.Asset;
+using ArcEngine.Forms;
+using ArcEngine.Graphic;
+using ArcEngine.Interface;
 using DungeonEye.Script;
 
 namespace DungeonEye.Forms
 {
 	/// <summary>
-	/// Control that handle actions
+	/// Manages scripts for an Alcove
 	/// </summary>
-	public partial class ActionControl : UserControl
+	public partial class AlcoveScriptListControl : UserControl
 	{
-
 		/// <summary>
-		/// Constructor
+		/// 
 		/// </summary>
-		public ActionControl()
+		public AlcoveScriptListControl()
 		{
 			InitializeComponent();
 		}
 
 
-		/// <summary>
-		/// Update action list
-		/// </summary>
-		void UpdateActionList()
-		{
-			ActionsBox.BeginUpdate();
-
-			ActionsBox.Items.Clear();
-
-			foreach (ScriptAction action in Actions)
-				ActionsBox.Items.Add(action.Name);
-
-			ActionsBox.EndUpdate();
-		}
-
 
 		/// <summary>
 		/// 
 		/// </summary>
-		void EditAction()
+		void UpdateUI()
 		{
-			if (ActionsBox.SelectedIndex == -1)
+			ScriptListBox.Items.Clear();
+			if (Actions == null)
 				return;
 
-			EventActionForm form = new EventActionForm(Dungeon);
-			ScriptAction action = Actions[ActionsBox.SelectedIndex];
-			form.SetAction(action);
-			form.ShowDialog();
 
-			UpdateActionList();
 		}
 
 
-
-		#region Form events
-
+		#region Control events
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void ActionsBox_DoubleClick(object sender, EventArgs e)
-		{
-			EditAction();
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void MoveUpActionBox_Click(object sender, EventArgs e)
+		private void MoveDownBox_Click(object sender, EventArgs e)
 		{
 			if (Actions == null)
 				return;
 
-			int id = ActionsBox.SelectedIndex;
-			if (id <= 0)
-				return;
-			ScriptAction action = Actions[id];
-			Actions.RemoveAt(id);
-			Actions.Insert(id - 1, action);
-
-			UpdateActionList();
-			ActionsBox.SelectedIndex = id - 1;
-
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void MoveDownActionBox_Click(object sender, EventArgs e)
-		{
-			if (Actions == null)
-				return;
-
-			int id = ActionsBox.SelectedIndex;
+			int id = ScriptListBox.SelectedIndex;
 			if (id >= Actions.Count - 1)
 				return;
 
-			ScriptAction action = Actions[id];
+			AlcoveScript action = Actions[id];
 			Actions.RemoveAt(id);
 			Actions.Insert(id + 1, action);
 
-			UpdateActionList();
-			ActionsBox.SelectedIndex = id + 1;
-
+			UpdateUI();
+			ScriptListBox.SelectedIndex = id + 1;
 		}
 
 
@@ -144,38 +92,41 @@ namespace DungeonEye.Forms
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void RemoveActionBox_Click(object sender, EventArgs e)
+		private void MoveUpBox_Click(object sender, EventArgs e)
 		{
 			if (Actions == null)
 				return;
 
-			if (ActionsBox.SelectedIndex == -1 || ActionsBox.SelectedIndex > Actions.Count)
+			int id = ScriptListBox.SelectedIndex;
+			if (id <= 0)
 				return;
+			AlcoveScript script = Actions[id];
+			Actions.RemoveAt(id);
+			Actions.Insert(id - 1, script);
 
-			Actions.RemoveAt(ActionsBox.SelectedIndex);
-
-			UpdateActionList();
+			UpdateUI();
+			ScriptListBox.SelectedIndex = id - 1;
 		}
 
 
 		/// <summary>
-		/// Adds a new action
+		/// 
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void AddActionBox_Click(object sender, EventArgs e)
+		private void RemoveBox_Click(object sender, EventArgs e)
 		{
-			// Empty form
-			EventActionForm form = new EventActionForm(Dungeon);
-			if (form.ShowDialog() != DialogResult.OK)
+			if (Actions == null)
 				return;
 
-			// Add new action to the list
-			if (form.Action != null && Actions != null)
-				Actions.Add(form.Action);
+			if (ScriptListBox.SelectedIndex == -1 || ScriptListBox.SelectedIndex > Actions.Count)
+				return;
 
-			UpdateActionList();
+			Actions.RemoveAt(ScriptListBox.SelectedIndex);
+
+			UpdateUI();
 		}
+
 
 		/// <summary>
 		/// 
@@ -184,34 +135,55 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void EditBox_Click(object sender, EventArgs e)
 		{
-			EditAction();
+			if (ScriptListBox.SelectedIndex == -1)
+				return;
+
+
+			new AlcoveScriptForm(Dungeon, Actions[ScriptListBox.SelectedIndex]).ShowDialog();
+
+			UpdateUI();
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void AddBox_Click(object sender, EventArgs e)
+		{
+			// Empty form
+			AlcoveScriptForm form = new AlcoveScriptForm(Dungeon, null);
+			if (form.ShowDialog() != DialogResult.OK)
+				return;
+
+			// Add new action to the list
+			if (form.Script != null && Actions != null)
+				Actions.Add(form.Script);
+
+			UpdateUI();
 		}
 
 		#endregion
 
 
-
 		#region Properties
 
+
 		/// <summary>
-		/// Actions collection
+		/// Title of the control
 		/// </summary>
-		public IList<ScriptAction> Actions
+		public string Title
 		{
 			get
 			{
-				return actions;
+				return groupBox5.Text;
 			}
 			set
 			{
-				if (value == null)
-					return;
-
-				actions = value;
-				UpdateActionList();
+				groupBox5.Text = value;
 			}
 		}
-		IList<ScriptAction> actions;
 
 
 		/// <summary>
@@ -225,22 +197,25 @@ namespace DungeonEye.Forms
 
 
 		/// <summary>
-		/// Text
+		/// Actions
 		/// </summary>
-		public string Title
+		public IList<AlcoveScript> Actions
 		{
 			get
 			{
-				return groupBox1.Text;
+				return actions;
 			}
 			set
 			{
-				groupBox1.Text = value;
+				actions = value;
+				UpdateUI();
 			}
 		}
-
+		IList<AlcoveScript> actions;
 
 		#endregion
+
+
 
 	}
 }

@@ -33,7 +33,7 @@ namespace DungeonEye.Forms
 		/// <summary>
 		/// Action to execute
 		/// </summary>
-		public ScriptAction Action
+		public ScriptBase Action
 		{
 			get;
 			protected set;

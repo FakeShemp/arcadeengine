@@ -37,7 +37,7 @@ namespace DungeonEye.Script
 		/// <param name="name">Choice's name</param>
 		public ScriptChoice(string name)
 		{
-			Actions = new List<ScriptAction>();
+			Actions = new List<ScriptBase>();
 
 			Name = name;
 			Enabled = true;
@@ -50,7 +50,7 @@ namespace DungeonEye.Script
 		/// <param name="team">Team handle</param>
 		public void Run()
 		{
-			foreach (ScriptAction action in Actions)
+			foreach (ScriptBase action in Actions)
 				action.Run();
 		}
 
@@ -277,7 +277,7 @@ namespace DungeonEye.Script
 			writer.WriteAttributeString("name", Name);
 
 			writer.WriteStartElement("actions");
-			foreach (ScriptAction action in Actions)
+			foreach (ScriptBase action in Actions)
 			{
 				action.Save(writer);
 			}
@@ -297,7 +297,7 @@ namespace DungeonEye.Script
 		/// <summary>
 		/// List of actions
 		/// </summary>
-		public List<ScriptAction> Actions
+		public List<ScriptBase> Actions
 		{
 			get;
 			private set;

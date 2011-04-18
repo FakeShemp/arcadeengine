@@ -17,16 +17,17 @@
 //along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 //
 #endregion
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
+using System.Text;
 using System.Xml;
 using ArcEngine;
-using ArcEngine.Graphic;
-using System.ComponentModel;
-using System;
 using ArcEngine.Asset;
 using ArcEngine.Audio;
-using System.Text;
-
+using ArcEngine.Graphic;
+using DungeonEye.Script;
 
 namespace DungeonEye
 {
@@ -45,6 +46,8 @@ namespace DungeonEye
 			HideItems = false;
 			ItemLocation = Point.Empty;
 			AcceptBigItems = false;
+			OnAddedItem = new List<AlcoveScript>();
+			OnRemovedItem = new List<AlcoveScript>();
 		}
 
 
@@ -119,6 +122,26 @@ namespace DungeonEye
 		/// Accept big items
 		/// </summary>
 		public bool AcceptBigItems;
+
+
+		/// <summary>
+		/// Scripts to execute when an item is added
+		/// </summary>
+		public List<AlcoveScript> OnAddedItem
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// Scripts to execute when an item is removed
+		/// </summary>
+		public List<AlcoveScript> OnRemovedItem
+		{
+			get;
+			private set;
+		}
 
 		#endregion
 	}

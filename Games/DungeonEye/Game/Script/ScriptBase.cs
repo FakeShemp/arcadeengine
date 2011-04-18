@@ -29,12 +29,12 @@ namespace DungeonEye.Script
 	/// <summary>
 	/// Abstract base class for event script actions
 	/// </summary>
-	public class ScriptAction
+	public class ScriptBase
 	{
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public ScriptAction()
+		public ScriptBase()
 		{
 			Target = new DungeonLocation();
 		}
@@ -63,25 +63,27 @@ namespace DungeonEye.Script
 				return false;
 
 
-			switch (xml.Name)
+			foreach (XmlNode node in xml)
 			{
-				case "target":
+				switch (node.Name)
 				{
-					if (Target == null)
-						Target = new DungeonLocation();
+					case "target":
+					{
+						if (Target == null)
+							Target = new DungeonLocation();
 
-					Target.Load(xml);
-				}
-				break;
+						Target.Load(node);
+					}
+					break;
 
-				default:
-				{
-					Trace.WriteLine("[ScriptAction] Load() : Unknown node \"" + xml.Name + "\" found.");
+					default:
+					{
+						Trace.WriteLine("[ScriptBase] Load() : Unknown node \"" + node.Name + "\" found.");
+					}
+					break;
 				}
-				break;
+
 			}
-
-
 			return true;
 		}
 

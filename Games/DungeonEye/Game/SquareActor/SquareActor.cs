@@ -41,7 +41,7 @@ namespace DungeonEye
 		public SquareActor(Square square)
 		{
 			Square = square;
-			Actions = new List<ScriptAction>();
+			Actions = new List<ScriptBase>();
 			Count = new SwitchCount();
 		}
 
@@ -77,7 +77,7 @@ namespace DungeonEye
 			if (xml == null)
 				return false;
 
-			ScriptAction script = null;
+			ScriptBase script = null;
 
 			foreach (XmlNode node in xml)
 			{
@@ -250,7 +250,7 @@ namespace DungeonEye
 		public void Run()
 		{
 			// Run each action
-			foreach (ScriptAction action in Actions)
+			foreach (ScriptBase action in Actions)
 			{
 				action.Run();
 			}
@@ -366,7 +366,7 @@ namespace DungeonEye
 			if (Actions.Count > 0)
 			{
 				writer.WriteStartElement("actions");
-				foreach (ScriptAction action in Actions)
+				foreach (ScriptBase action in Actions)
 					action.Save(writer);
 				writer.WriteEndElement();
 			}
@@ -445,7 +445,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Registered actions
 		/// </summary>
-		public List<ScriptAction> Actions
+		public List<ScriptBase> Actions
 		{
 			get;
 			private set;

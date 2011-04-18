@@ -117,16 +117,28 @@
     <Compile Include="Forms\AbilityControl.Designer.cs">
       <DependentUpon>AbilityControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\ActionControl.cs">
+    <Compile Include="Forms\Actor\AlcoveScriptForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Actor\AlcoveScriptForm.Designer.cs">
+      <DependentUpon>AlcoveScriptForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Actor\AlcoveScriptListControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\ActionControl.Designer.cs">
-      <DependentUpon>ActionControl.cs</DependentUpon>
+    <Compile Include="Forms\Actor\AlcoveScriptListControl.Designer.cs">
+      <DependentUpon>AlcoveScriptListControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\AlcoveControl.cs">
+    <Compile Include="Forms\Script\ActionListControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\AlcoveControl.Designer.cs">
+    <Compile Include="Forms\Script\ActionListControl.Designer.cs">
+      <DependentUpon>ActionListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Actor\AlcoveControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Actor\AlcoveControl.Designer.cs">
       <DependentUpon>AlcoveControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\CardinalPointControl.cs">
@@ -135,16 +147,16 @@
     <Compile Include="Forms\CardinalPointControl.Designer.cs">
       <DependentUpon>CardinalPointControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\DecorationSetForm.cs">
+    <Compile Include="Forms\Asset\DecorationSetForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\DecorationSetForm.Designer.cs">
+    <Compile Include="Forms\Asset\DecorationSetForm.Designer.cs">
       <DependentUpon>DecorationSetForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\DoorControl.cs">
+    <Compile Include="Forms\Actor\DoorControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\DoorControl.Designer.cs">
+    <Compile Include="Forms\Actor\DoorControl.Designer.cs">
       <DependentUpon>DoorControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\EventActionForm.cs">
@@ -159,22 +171,22 @@
     <Compile Include="Forms\EventChoiceForm.Designer.cs">
       <DependentUpon>EventChoiceForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\ForceFieldControl.cs">
+    <Compile Include="Forms\Actor\ForceFieldControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\ForceFieldControl.Designer.cs">
+    <Compile Include="Forms\Actor\ForceFieldControl.Designer.cs">
       <DependentUpon>ForceFieldControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\GeneratorControl.cs">
+    <Compile Include="Forms\Actor\GeneratorControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\GeneratorControl.Designer.cs">
+    <Compile Include="Forms\Actor\GeneratorControl.Designer.cs">
       <DependentUpon>GeneratorControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\HeroControl.cs">
+    <Compile Include="Forms\Asset\HeroControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\HeroControl.Designer.cs">
+    <Compile Include="Forms\Asset\HeroControl.Designer.cs">
       <DependentUpon>HeroControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\DiceControl.cs">
@@ -183,10 +195,10 @@
     <Compile Include="Forms\DiceControl.Designer.cs">
       <DependentUpon>DiceControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\DungeonForm.cs">
+    <Compile Include="Forms\Asset\DungeonForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\DungeonForm.Designer.cs">
+    <Compile Include="Forms\Asset\DungeonForm.Designer.cs">
       <DependentUpon>DungeonForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\EntityControl.cs">
@@ -195,10 +207,10 @@
     <Compile Include="Forms\EntityControl.Designer.cs">
       <DependentUpon>EntityControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\HeroForm.cs">
+    <Compile Include="Forms\Asset\HeroForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\HeroForm.Designer.cs">
+    <Compile Include="Forms\Asset\HeroForm.Designer.cs">
       <DependentUpon>HeroForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\HitPointControl.cs">
@@ -207,10 +219,10 @@
     <Compile Include="Forms\HitPointControl.Designer.cs">
       <DependentUpon>HitPointControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\ItemForm.cs">
+    <Compile Include="Forms\Asset\ItemForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\ItemForm.Designer.cs">
+    <Compile Include="Forms\Asset\ItemForm.Designer.cs">
       <DependentUpon>ItemForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\DungeonLocationControl.cs">
@@ -225,34 +237,34 @@
     <Compile Include="Forms\DungeonLocationForm.Designer.cs">
       <DependentUpon>DungeonLocationForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\LauncherControl.cs">
+    <Compile Include="Forms\Actor\LauncherControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\LauncherControl.Designer.cs">
+    <Compile Include="Forms\Actor\LauncherControl.Designer.cs">
       <DependentUpon>LauncherControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\MonsterControl.cs">
+    <Compile Include="Forms\Asset\MonsterControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\MonsterControl.Designer.cs">
+    <Compile Include="Forms\Asset\MonsterControl.Designer.cs">
       <DependentUpon>MonsterControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\MonsterEditorForm.cs">
+    <Compile Include="Forms\Asset\MonsterEditorForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\MonsterEditorForm.Designer.cs">
+    <Compile Include="Forms\Asset\MonsterEditorForm.Designer.cs">
       <DependentUpon>MonsterEditorForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\MonsterForm.cs">
+    <Compile Include="Forms\Asset\MonsterForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\MonsterForm.Designer.cs">
+    <Compile Include="Forms\Asset\MonsterForm.Designer.cs">
       <DependentUpon>MonsterForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\MonsterGeneratorForm.cs">
+    <Compile Include="Forms\Asset\MonsterGeneratorForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\MonsterGeneratorForm.Designer.cs">
+    <Compile Include="Forms\Asset\MonsterGeneratorForm.Designer.cs">
       <DependentUpon>MonsterGeneratorForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\PartyForm.cs">
@@ -261,16 +273,16 @@
     <Compile Include="Forms\PartyForm.Designer.cs">
       <DependentUpon>PartyForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\PitControl.cs">
+    <Compile Include="Forms\Actor\PitControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\PitControl.Designer.cs">
+    <Compile Include="Forms\Actor\PitControl.Designer.cs">
       <DependentUpon>PitControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\PressurePlateControl.cs">
+    <Compile Include="Forms\Actor\PressurePlateControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\PressurePlateControl.Designer.cs">
+    <Compile Include="Forms\Actor\PressurePlateControl.Designer.cs">
       <DependentUpon>PressurePlateControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\ProfessionsControl.cs">
@@ -279,11 +291,11 @@
     <Compile Include="Forms\ProfessionsControl.Designer.cs">
       <DependentUpon>ProfessionsControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\RenameForm.cs">
-      <SubType>Form</SubType>
+    <Compile Include="Forms\Script\ScriptActionChooserControl.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\RenameForm.Designer.cs">
-      <DependentUpon>RenameForm.cs</DependentUpon>
+    <Compile Include="Forms\Script\ScriptActionChooserControl.Designer.cs">
+      <DependentUpon>ScriptActionChooserControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Script\ScriptEndDialogControl.cs">
       <SubType>UserControl</SubType>
@@ -387,10 +399,10 @@
     <Compile Include="Forms\Script\ScriptTeleportControl.Designer.cs">
       <DependentUpon>ScriptTeleportControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\SpellForm.cs">
+    <Compile Include="Forms\Asset\SpellForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\SpellForm.Designer.cs">
+    <Compile Include="Forms\Asset\SpellForm.Designer.cs">
       <DependentUpon>SpellForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\EventSquareControl.cs">
@@ -405,10 +417,10 @@
     <Compile Include="Forms\SquareForm.Designer.cs">
       <DependentUpon>SquareForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\StairControl.cs">
+    <Compile Include="Forms\Actor\StairControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\StairControl.Designer.cs">
+    <Compile Include="Forms\Actor\StairControl.Designer.cs">
       <DependentUpon>StairControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\SwitchCountControl.cs">
@@ -423,10 +435,10 @@
     <Compile Include="Forms\TargetControl.Designer.cs">
       <DependentUpon>TargetControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\TeleporterControl.cs">
+    <Compile Include="Forms\Actor\TeleporterControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\TeleporterControl.Designer.cs">
+    <Compile Include="Forms\Actor\TeleporterControl.Designer.cs">
       <DependentUpon>TeleporterControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\ViewFieldControl.cs">
@@ -435,10 +447,10 @@
     <Compile Include="Forms\ViewFieldControl.Designer.cs">
       <DependentUpon>ViewFieldControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\WallSwitchControl.cs">
+    <Compile Include="Forms\Actor\WallSwitchControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\WallSwitchControl.Designer.cs">
+    <Compile Include="Forms\Actor\WallSwitchControl.Designer.cs">
       <DependentUpon>WallSwitchControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Wizards\NewItemWizard.cs">
@@ -462,7 +474,7 @@
     <Compile Include="GameSettings.cs" />
     <Compile Include="Game\Decoration.cs" />
     <Compile Include="Game\GameColors.cs" />
-    <Compile Include="Game\Script\ScriptAction.cs" />
+    <Compile Include="Game\Script\ScriptBase.cs" />
     <Compile Include="Game\Script\Actions\ScriptActivateTarget.cs" />
     <Compile Include="Game\Script\Actions\ScriptChangePicture.cs" />
     <Compile Include="Game\Script\Actions\ScriptChangeText.cs" />
@@ -562,19 +574,25 @@
     <EmbeddedResource Include="Forms\AbilityControl.resx">
       <DependentUpon>AbilityControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ActionControl.resx">
-      <DependentUpon>ActionControl.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Actor\AlcoveScriptForm.resx">
+      <DependentUpon>AlcoveScriptForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\AlcoveControl.resx">
+    <EmbeddedResource Include="Forms\Actor\AlcoveScriptListControl.resx">
+      <DependentUpon>AlcoveScriptListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Script\ActionListControl.resx">
+      <DependentUpon>ActionListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Actor\AlcoveControl.resx">
       <DependentUpon>AlcoveControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\CardinalPointControl.resx">
       <DependentUpon>CardinalPointControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\DecorationSetForm.resx">
+    <EmbeddedResource Include="Forms\Asset\DecorationSetForm.resx">
       <DependentUpon>DecorationSetForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\DoorControl.resx">
+    <EmbeddedResource Include="Forms\Actor\DoorControl.resx">
       <DependentUpon>DoorControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\EventActionForm.resx">
@@ -583,36 +601,36 @@
     <EmbeddedResource Include="Forms\EventChoiceForm.resx">
       <DependentUpon>EventChoiceForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ForceFieldControl.resx">
+    <EmbeddedResource Include="Forms\Actor\ForceFieldControl.resx">
       <DependentUpon>ForceFieldControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\GeneratorControl.resx">
+    <EmbeddedResource Include="Forms\Actor\GeneratorControl.resx">
       <DependentUpon>GeneratorControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\HeroControl.resx">
+    <EmbeddedResource Include="Forms\Asset\HeroControl.resx">
       <DependentUpon>HeroControl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\DungeonForm.resx">
+    <EmbeddedResource Include="Forms\Asset\DungeonForm.resx">
       <DependentUpon>DungeonForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\LauncherControl.resx">
+    <EmbeddedResource Include="Forms\Actor\LauncherControl.resx">
       <DependentUpon>LauncherControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\MonsterEditorForm.resx">
+    <EmbeddedResource Include="Forms\Asset\MonsterEditorForm.resx">
       <DependentUpon>MonsterEditorForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\MonsterGeneratorForm.resx">
+    <EmbeddedResource Include="Forms\Asset\MonsterGeneratorForm.resx">
       <DependentUpon>MonsterGeneratorForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\PartyForm.resx">
       <DependentUpon>PartyForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\PitControl.resx">
+    <EmbeddedResource Include="Forms\Actor\PitControl.resx">
       <DependentUpon>PitControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\PressurePlateControl.resx">
+    <EmbeddedResource Include="Forms\Actor\PressurePlateControl.resx">
       <DependentUpon>PressurePlateControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ProfessionsControl.resx">
@@ -620,6 +638,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ScriptedDialogForm.resx">
       <DependentUpon>ScriptedDialogForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Script\ScriptActionChooserControl.resx">
+      <DependentUpon>ScriptActionChooserControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Script\ScriptEndDialogControl.resx">
       <DependentUpon>ScriptEndDialogControl.cs</DependentUpon>
@@ -666,7 +687,7 @@
     <EmbeddedResource Include="Forms\Script\ScriptTeleportControl.resx">
       <DependentUpon>ScriptTeleportControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\SpellForm.resx">
+    <EmbeddedResource Include="Forms\Asset\SpellForm.resx">
       <DependentUpon>SpellForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\EventSquareControl.resx">
@@ -675,7 +696,7 @@
     <EmbeddedResource Include="Forms\SquareForm.resx">
       <DependentUpon>SquareForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\StairControl.resx">
+    <EmbeddedResource Include="Forms\Actor\StairControl.resx">
       <DependentUpon>StairControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SwitchCountControl.resx">
@@ -684,13 +705,13 @@
     <EmbeddedResource Include="Forms\TargetControl.resx">
       <DependentUpon>TargetControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\TeleporterControl.resx">
+    <EmbeddedResource Include="Forms\Actor\TeleporterControl.resx">
       <DependentUpon>TeleporterControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ViewFieldControl.resx">
       <DependentUpon>ViewFieldControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\WallSwitchControl.resx">
+    <EmbeddedResource Include="Forms\Actor\WallSwitchControl.resx">
       <DependentUpon>WallSwitchControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -742,7 +763,7 @@
       <DependentUpon>EntityControl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\HeroForm.resx">
+    <EmbeddedResource Include="Forms\Asset\HeroForm.resx">
       <DependentUpon>HeroForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -750,7 +771,7 @@
       <DependentUpon>HitPointControl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ItemForm.resx">
+    <EmbeddedResource Include="Forms\Asset\ItemForm.resx">
       <DependentUpon>ItemForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -762,16 +783,12 @@
       <DependentUpon>DungeonLocationForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\MonsterControl.resx">
+    <EmbeddedResource Include="Forms\Asset\MonsterControl.resx">
       <DependentUpon>MonsterControl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\MonsterForm.resx">
+    <EmbeddedResource Include="Forms\Asset\MonsterForm.resx">
       <DependentUpon>MonsterForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\RenameForm.resx">
-      <DependentUpon>RenameForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Wizards\NewItemWizard.resx">

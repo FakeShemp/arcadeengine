@@ -8,7 +8,7 @@ namespace DungeonEye.Script
 	/// <summary>
 	/// Activate a target
 	/// </summary>
-	public class ScriptActivateTarget : ScriptAction
+	public class ScriptActivateTarget : ScriptBase
 	{
 		/// <summary>
 		/// 

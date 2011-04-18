@@ -32,15 +32,132 @@ namespace DungeonEye.Script
 	/// <summary>
 	/// 
 	/// </summary>
-	public class AlcoveScript
+	public class AlcoveScript : ScriptBase
 	{
 
+		public AlcoveScript()
+		{
 
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		public override bool Run()
+		{
+			return base.Run();
+		}
+
+
+
+
+		#region IO
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="xml"></param>
+		/// <returns></returns>
+		public override bool Load(XmlNode xml)
+		{
+			if (xml == null)
+				return false;
+
+
+			foreach (XmlNode node in xml)
+			{
+				switch (node.Name)
+				{
+					case "condition":
+					{
+						Condition = (AlcoveCondition)Enum.Parse(typeof(AlcoveCondition), node.InnerText);
+					}
+					break;
+
+					case "consume":
+					{
+						ConsumeItem = true;
+					}
+					break;
+
+					case "item":
+					{
+						ItemName = node.InnerText;
+					}
+					break;
+
+					default:
+					{
+						Trace.WriteLine("[ScriptBase] Load() : Unknown node \"" + node.Name + "\" found.");
+					}
+					break;
+				}
+
+			}
+
+			return true;
+		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="writer"></param>
+		/// <returns></returns>
+		public override bool Save(XmlWriter writer)
+		{
+			if (writer == null)
+				return false;
+
+			writer.WriteElementString("condition", Condition.ToString());
+
+
+			if (ConsumeItem)
+				writer.WriteValue("consume");
+
+			writer.WriteElementString("item", ItemName);
+
+			return base.Save(writer);
+		}
+
+		#endregion
 
 
 
 		#region Properties
 
+
+		/// <summary>
+		/// Condition
+		/// </summary>
+		public AlcoveCondition Condition
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public bool ConsumeItem
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public string ItemName
+		{
+			get;
+			set;
+		}
 
 		#endregion
 	}

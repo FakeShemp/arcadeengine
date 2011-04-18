@@ -8,7 +8,7 @@ namespace DungeonEye.Script
 	/// <summary>
 	/// 
 	/// </summary>
-	public class ScriptChangeText: ScriptAction
+	public class ScriptChangeText: ScriptBase
 	{
 
 		/// <summary>

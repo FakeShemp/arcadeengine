@@ -19,72 +19,86 @@
 #endregion
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
+using DungeonEye.Script;
 using ArcEngine;
-using System.Xml;
 
 
-namespace DungeonEye.Script
+namespace DungeonEye.Forms
 {
 	/// <summary>
-	/// Changes the picture of the dialog
+	/// 
 	/// </summary>
-	public class ScriptChangePicture : ScriptBase
+	public partial class AlcoveScriptForm : Form
 	{
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="dungeon">Dungeon handle</param>
+		/// <param name="script">Script handle to edit</param>
+		public AlcoveScriptForm(Dungeon dungeon, AlcoveScript script)
+		{
+			InitializeComponent();
+
+			if (script == null)
+				Script = new AlcoveScript();
+			else
+				Script = script;
+
+			Dungeon = dungeon;
+		}
+
+
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public ScriptChangePicture()
-		{
-			Name = "ChangePicture";
-		}
-
-		/// <summary>
-		/// Run actions
-		/// </summary>
-		/// <returns></returns>
-		public override bool Run()
+		void UpdateUI()
 		{
 
-			return false;
+			ItemNameBox.SelectedItem = Script.ItemName;
+			ConsumeItemBox.Checked = Script.ConsumeItem;
 		}
-
-
-		#region IO
 
 
 		/// <summary>
-		/// Loads a party
+		/// 
 		/// </summary>
-		/// <param name="filename">Xml data</param>
-		/// <returns>True if team successfuly loaded, otherwise false</returns>
-		public override bool Load(XmlNode xml)
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void AlcoveScriptForm_Load(object sender, EventArgs e)
 		{
-			return true;
+			ItemNameBox.DataSource = ResourceManager.GetAssets<Item>();
+
+			UpdateUI();
 		}
-
-
-
-		/// <summary>
-		/// Saves the party
-		/// </summary>
-		/// <param name="filename">XmlWriter</param>
-		/// <returns></returns>
-		public override bool Save(XmlWriter writer)
-		{
-			return true;
-		}
-
-
-		#endregion
 
 
 
 		#region Properties
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		public AlcoveScript Script
+		{
+			get;
+			private set;
+		}
+		
+
+		/// <summary>
+		/// Dungeon handle
+		/// </summary>
+		Dungeon Dungeon;
+
 		#endregion
+
 	}
 }

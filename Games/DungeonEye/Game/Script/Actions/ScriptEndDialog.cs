@@ -8,7 +8,7 @@ namespace DungeonEye.Script
 	/// <summary>
 	/// 
 	/// </summary>
-	public class ScriptEndDialog : ScriptAction
+	public class ScriptEndDialog : ScriptBase
 	{
 
 		/// <summary>

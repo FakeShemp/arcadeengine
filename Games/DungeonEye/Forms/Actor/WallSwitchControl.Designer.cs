@@ -46,7 +46,7 @@
 			this.ConsumeItemBox = new System.Windows.Forms.CheckBox();
 			this.PickLockBox = new System.Windows.Forms.NumericUpDown();
 			this.ItemsBox = new System.Windows.Forms.ComboBox();
-			this.ActionScriptBox = new DungeonEye.Forms.ActionControl();
+			this.ActionScriptBox = new DungeonEye.Forms.ActionListControl();
 			this.ReusableBox = new System.Windows.Forms.CheckBox();
 			this.groupBox1.SuspendLayout();
 			this.tabControl1.SuspendLayout();
@@ -352,7 +352,7 @@
 		private OpenTK.GLControl DeactivatedGlBox;
 		private System.Windows.Forms.NumericUpDown DeactivatedIdBox;
 		private System.Windows.Forms.TabPage ScriptTab;
-		private Forms.ActionControl ActionScriptBox;
+		private Forms.ActionListControl ActionScriptBox;
 		private Forms.CardinalPointControl SideBox;
 		private System.Windows.Forms.GroupBox groupBox2;
 		private System.Windows.Forms.Label label4;

@@ -31,7 +31,7 @@
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.HiddenBox = new System.Windows.Forms.CheckBox();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
-			this.ActionBox = new DungeonEye.Forms.ActionControl();
+			this.ActionBox = new DungeonEye.Forms.ActionListControl();
 			this.ConditionBox = new System.Windows.Forms.ComboBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.groupBox1.SuspendLayout();
@@ -122,7 +122,7 @@
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.CheckBox HiddenBox;
 		private System.Windows.Forms.GroupBox groupBox2;
-		private ActionControl ActionBox;
+		private ActionListControl ActionBox;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.ComboBox ConditionBox;
 	}

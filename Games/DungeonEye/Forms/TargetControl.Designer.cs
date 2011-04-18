@@ -54,25 +54,30 @@
 			// 
 			// CoordinateBox
 			// 
+			this.CoordinateBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.CoordinateBox.Location = new System.Drawing.Point(70, 45);
 			this.CoordinateBox.Name = "CoordinateBox";
 			this.CoordinateBox.ReadOnly = true;
-			this.CoordinateBox.Size = new System.Drawing.Size(90, 20);
+			this.CoordinateBox.Size = new System.Drawing.Size(99, 20);
 			this.CoordinateBox.TabIndex = 2;
 			this.CoordinateBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			// 
 			// MazeNameBox
 			// 
+			this.MazeNameBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.MazeNameBox.Location = new System.Drawing.Point(70, 19);
 			this.MazeNameBox.Name = "MazeNameBox";
 			this.MazeNameBox.ReadOnly = true;
-			this.MazeNameBox.Size = new System.Drawing.Size(90, 20);
+			this.MazeNameBox.Size = new System.Drawing.Size(99, 20);
 			this.MazeNameBox.TabIndex = 2;
 			this.MazeNameBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			// 
 			// FromMapBox
 			// 
-			this.FromMapBox.Location = new System.Drawing.Point(70, 71);
+			this.FromMapBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.FromMapBox.Location = new System.Drawing.Point(82, 71);
 			this.FromMapBox.Name = "FromMapBox";
 			this.FromMapBox.Size = new System.Drawing.Size(90, 23);
 			this.FromMapBox.TabIndex = 1;

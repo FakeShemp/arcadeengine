@@ -8,7 +8,7 @@ namespace DungeonEye.Script
 	/// <summary>
 	/// 
 	/// </summary>
-	public class ScriptHealing : ScriptAction
+	public class ScriptHealing : ScriptBase
 	{
 
 		/// <summary>

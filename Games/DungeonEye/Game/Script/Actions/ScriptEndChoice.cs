@@ -9,7 +9,7 @@ namespace DungeonEye.Script
 	/// <summary>
 	/// 
 	/// </summary>
-	public class ScriptEndChoice : ScriptAction
+	public class ScriptEndChoice : ScriptBase
 	{
 
 		/// <summary>

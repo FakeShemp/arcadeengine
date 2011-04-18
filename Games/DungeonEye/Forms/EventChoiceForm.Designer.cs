@@ -39,7 +39,7 @@
 			this.RemoveItemBox = new System.Windows.Forms.Button();
 			this.AddItemBox = new System.Windows.Forms.Button();
 			this.ItemsBox = new System.Windows.Forms.ListBox();
-			this.ActionBox = new DungeonEye.Forms.ActionControl();
+			this.ActionBox = new DungeonEye.Forms.ActionListControl();
 			this.groupBox2.SuspendLayout();
 			this.groupBox3.SuspendLayout();
 			this.SuspendLayout();
@@ -217,6 +217,6 @@
 		private System.Windows.Forms.Button RemoveItemBox;
 		private System.Windows.Forms.Button AddItemBox;
 		private System.Windows.Forms.ListBox ItemsBox;
-		private ActionControl ActionBox;
+		private ActionListControl ActionBox;
 	}
 }

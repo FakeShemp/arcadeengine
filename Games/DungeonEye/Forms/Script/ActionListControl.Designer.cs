@@ -1,6 +1,6 @@
 ﻿namespace DungeonEye.Forms
 {
-	partial class ActionControl
+	partial class ActionListControl
 	{
 		/// <summary> 
 		/// Variable nécessaire au concepteur.

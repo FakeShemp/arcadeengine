@@ -19,64 +19,44 @@
 #endregion
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
+using DungeonEye.Script;
 using ArcEngine;
-using System.Xml;
 
 
-namespace DungeonEye.Script
+namespace DungeonEye.Forms.Script
 {
 	/// <summary>
-	/// Changes the picture of the dialog
+	/// 
 	/// </summary>
-	public class ScriptChangePicture : ScriptBase
+	public partial class ScriptActionChooserControl : UserControl
 	{
+		/// <summary>
+		/// 
+		/// </summary>
+		public ScriptActionChooserControl()
+		{
+			InitializeComponent();
+		}
+
+
+
+		#region Control events
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public ScriptChangePicture()
-		{
-			Name = "ChangePicture";
-		}
-
-		/// <summary>
-		/// Run actions
-		/// </summary>
-		/// <returns></returns>
-		public override bool Run()
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ActionChooserBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 
-			return false;
 		}
-
-
-		#region IO
-
-
-		/// <summary>
-		/// Loads a party
-		/// </summary>
-		/// <param name="filename">Xml data</param>
-		/// <returns>True if team successfuly loaded, otherwise false</returns>
-		public override bool Load(XmlNode xml)
-		{
-			return true;
-		}
-
-
-
-		/// <summary>
-		/// Saves the party
-		/// </summary>
-		/// <param name="filename">XmlWriter</param>
-		/// <returns></returns>
-		public override bool Save(XmlWriter writer)
-		{
-			return true;
-		}
-
 
 		#endregion
 

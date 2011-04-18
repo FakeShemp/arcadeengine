@@ -42,11 +42,11 @@ namespace DungeonEye.Forms
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="alcove">Alcove handle</param>
+		/// <param name="actor">AlcoveActor handle</param>
 		/// <param name="maze">Maze handle</param>
-		public AlcoveControl(AlcoveActor alcove, Maze maze)
+		public AlcoveControl(AlcoveActor actor, Maze maze)
 		{
-			if (alcove == null || maze == null)
+			if (actor == null || maze == null)
 				throw new ArgumentNullException("[AlcoveControl] : Alcove handle or Maze handle is null !!!");
 
 			InitializeComponent();
@@ -62,7 +62,7 @@ namespace DungeonEye.Forms
 			ItemsBox.Items.AddRange(ResourceManager.GetAssets<Item>().ToArray());
 
 			Maze = maze;
-			Actor = alcove;
+			Actor = actor;
 
 	//		ChangeSide(CardinalPoint.North);
 			DirectionBox.Direction = CardinalPoint.North;
@@ -170,6 +170,8 @@ namespace DungeonEye.Forms
 		{
 			Face = side;
 			Alcove = Actor.GetAlcove(side);
+	//		ItemAddedControl.Actions = Alcove.OnAddedItem;
+	//		ItemRemovedBox.Actions = Alcove.OnRemovedItem;
 
 			UpdateUI();
 			RenderScene();

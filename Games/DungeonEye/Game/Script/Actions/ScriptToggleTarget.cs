@@ -8,7 +8,7 @@ namespace DungeonEye.Script
 	/// <summary>
 	/// Toggle script
 	/// </summary>
-	public class ScriptToggleTarget : ScriptAction
+	public class ScriptToggleTarget : ScriptBase
 	{
 
 		/// <summary>

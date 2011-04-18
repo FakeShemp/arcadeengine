@@ -8,7 +8,7 @@ namespace DungeonEye.Script
 	/// <summary>
 	/// Play a sound
 	/// </summary>
-	public class ScriptPlaySound: ScriptAction
+	public class ScriptPlaySound: ScriptBase
 	{
 
 		/// <summary>

@@ -8,7 +8,7 @@ namespace DungeonEye.Script
 	/// <summary>
 	/// 
 	/// </summary>
-	public class ScriptDisableTarget : ScriptAction
+	public class ScriptDisableTarget : ScriptBase
 	{
 
 		/// <summary>

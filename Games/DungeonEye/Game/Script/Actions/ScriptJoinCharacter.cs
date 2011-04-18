@@ -8,7 +8,7 @@ namespace DungeonEye.Script
 	/// <summary>
 	/// 
 	/// </summary>
-	public class ScriptJoinCharacter : ScriptAction
+	public class ScriptJoinCharacter : ScriptBase
 	{
 		/// <summary>
 		/// 
