@@ -142,17 +142,6 @@ namespace DungeonEye.Script
 
 		#region Properties
 
-/*
-		/// <summary>
-		/// Condition
-		/// </summary>
-		public AlcoveCondition Condition
-		{
-			get;
-			set;
-		}
-*/
-
 		/// <summary>
 		/// Consume item on use
 		/// </summary>

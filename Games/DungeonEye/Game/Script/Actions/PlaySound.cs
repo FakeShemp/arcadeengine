@@ -5,20 +5,21 @@ using System.Text;
 
 namespace DungeonEye.Script.Actions
 {
-
 	/// <summary>
-	/// 
+	/// Play a sound
 	/// </summary>
-	public class ActionEndChoice : ActionBase
+	public class PlaySound : ActionBase
 	{
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public ActionEndChoice()
+		public PlaySound()
 		{
-			Name = "EndChoice";
+			Name = "PlaySound";
 		}
+
+
 
 		/// <summary>
 		/// 
@@ -39,7 +40,7 @@ namespace DungeonEye.Script.Actions
 		/// <returns></returns>
 		public override bool Load(XmlNode xml)
 		{
-			return true;
+			return false;
 		}
 
 
@@ -50,7 +51,7 @@ namespace DungeonEye.Script.Actions
 		/// <returns></returns>
 		public override bool Save(XmlWriter writer)
 		{
-			return true;
+			return false;
 		}
 
 

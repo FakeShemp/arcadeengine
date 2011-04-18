@@ -6,24 +6,23 @@ using System.Text;
 namespace DungeonEye.Script.Actions
 {
 	/// <summary>
-	/// Toggle action
+	/// Activate a target
 	/// </summary>
-	public class ActionToggleTarget : ActionBase
+	public class ActivateTarget : ActionBase
 	{
-
 		/// <summary>
 		/// 
 		/// </summary>
-		public ActionToggleTarget()
+		public ActivateTarget()
 		{
-			Name = "ToggleTarget";
+			Name = "ActivateTarget";
 		}
 
 
-
 		/// <summary>
 		/// 
 		/// </summary>
+		/// <param name="team"></param>
 		/// <returns></returns>
 		public override bool Run()
 		{
@@ -35,8 +34,8 @@ namespace DungeonEye.Script.Actions
 				return false;
 
 			if (square.Actor != null)
-				square.Actor.Toggle();
-			
+				square.Actor.Activate();
+
 			return true;
 		}
 

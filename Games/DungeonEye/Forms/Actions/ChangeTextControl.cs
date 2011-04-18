@@ -19,7 +19,7 @@ namespace DungeonEye.Forms
 		/// 
 		/// </summary>
 		/// <param name="script"></param>
-		public ChangeTextControl(ActionChangeText script)
+		public ChangeTextControl(ChangeText script)
 		{
 			InitializeComponent();
 
@@ -27,7 +27,7 @@ namespace DungeonEye.Forms
 			if (script != null)
 				Action = script;
 			else
-				Action = new ActionChangeText();
+				Action = new ChangeText();
 
 		}
 

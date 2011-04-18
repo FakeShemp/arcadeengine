@@ -6,19 +6,18 @@ using System.Text;
 namespace DungeonEye.Script.Actions
 {
 	/// <summary>
-	/// Play a sound
+	/// Deactivate a target
 	/// </summary>
-	public class ActionPlaySound : ActionBase
+	public class DeactivateTarget : ActionBase
 	{
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public ActionPlaySound()
+		public DeactivateTarget()
 		{
-			Name = "PlaySound";
+			Name = "DeactivateTarget";
 		}
-
 
 
 		/// <summary>
@@ -27,7 +26,15 @@ namespace DungeonEye.Script.Actions
 		/// <returns></returns>
 		public override bool Run()
 		{
+			if (Target == null)
+				return false;
 
+			Square square = Target.GetSquare(GameScreen.Dungeon);
+			if (square == null)
+				return false;
+
+			if (square.Actor != null)
+				square.Actor.Deactivate();
 
 			return true;
 		}
@@ -40,7 +47,23 @@ namespace DungeonEye.Script.Actions
 		/// <returns></returns>
 		public override bool Load(XmlNode xml)
 		{
-			return false;
+			if (xml == null)
+				return false;
+
+			foreach (XmlNode node in xml)
+			{
+				switch (node.Name.ToLower())
+				{
+
+					default:
+					{
+						base.Load(node);
+					}
+					break;
+				}
+			}
+
+			return true;
 		}
 
 
@@ -51,13 +74,25 @@ namespace DungeonEye.Script.Actions
 		/// <returns></returns>
 		public override bool Save(XmlWriter writer)
 		{
-			return false;
+			if (writer == null)
+				return false;
+
+
+			writer.WriteStartElement(Name);
+
+			base.Save(writer);
+
+			writer.WriteEndElement();
+
+			return true;
 		}
 
 
 
 
 		#region Properties
+
+
 
 		#endregion
 	}

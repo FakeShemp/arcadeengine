@@ -88,19 +88,19 @@ namespace DungeonEye
 				{
 					case "toggletarget":
 					{
-						script = new ActionToggleTarget();
+						script = new ToggleTarget();
 					}
 					break;
 
 					case "activatetarget":
 					{
-						script = new ScriptActivateTarget();
+						script = new ActivateTarget();
 					}
 					break;
 
 					case "deactivatetarget":
 					{
-						script = new ActionDeactivateTarget();
+						script = new DeactivateTarget();
 					}
 					break;
 				}

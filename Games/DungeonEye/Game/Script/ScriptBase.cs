@@ -21,8 +21,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using ArcEngine;
 using System.Xml;
+using ArcEngine;
 using DungeonEye.Script.Actions;
 
 namespace DungeonEye.Script
@@ -30,14 +30,14 @@ namespace DungeonEye.Script
 	/// <summary>
 	/// Abstract base class for event script actions
 	/// </summary>
-	public class ScriptBase
+	public abstract class ScriptBase
 	{
 		/// <summary>
 		/// Constructor
 		/// </summary>
 		public ScriptBase()
 		{
-			Target = new DungeonLocation();
+			//Target = new DungeonLocation();
 		}
 
 		/// <summary>
@@ -68,14 +68,14 @@ namespace DungeonEye.Script
 			{
 				switch (node.Name)
 				{
-					case "target":
-					{
-						if (Target == null)
-							Target = new DungeonLocation();
+					//case "target":
+					//{
+					//    if (Target == null)
+					//        Target = new DungeonLocation();
 
-						Target.Load(node);
-					}
-					break;
+					//    Target.Load(node);
+					//}
+					//break;
 
 					default:
 					{
@@ -99,7 +99,7 @@ namespace DungeonEye.Script
 			if (writer == null)
 				return false;
 
-			Target.Save("target", writer);
+		//	Target.Save("target", writer);
 
 
 			return true;
@@ -111,7 +111,7 @@ namespace DungeonEye.Script
 
 
 		#region Properties
-
+/*
 		/// <summary>
 		/// Target
 		/// </summary>
@@ -120,7 +120,7 @@ namespace DungeonEye.Script
 			get;
 			set;
 		}
-
+*/
 
 		/// <summary>
 		/// Name of the action

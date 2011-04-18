@@ -128,7 +128,7 @@ namespace DungeonEye.Script
 				{
 					case "teleport":
 					{
-						ActionTeleport teleport = new ActionTeleport();
+						Teleport teleport = new Teleport();
 						teleport.Load(node);
 						Actions.Add(teleport);
 					}
@@ -136,7 +136,7 @@ namespace DungeonEye.Script
 
 					case "giveexperience":
 					{
-						ActionGiveExperience script = new ActionGiveExperience();
+						GiveExperience script = new GiveExperience();
 						script.Load(node);
 						Actions.Add(script);
 					}
@@ -144,7 +144,7 @@ namespace DungeonEye.Script
 
 					case "activate":
 					{
-						ScriptActivateTarget script = new ScriptActivateTarget();
+						ActivateTarget script = new ActivateTarget();
 						script.Load(node);
 						Actions.Add(script);
 					}
@@ -152,7 +152,7 @@ namespace DungeonEye.Script
 
 					case "changepicture":
 					{
-						ActionChangePicture script = new ActionChangePicture();
+						ChangePicture script = new ChangePicture();
 						script.Load(node);
 						Actions.Add(script);
 					}
@@ -160,7 +160,7 @@ namespace DungeonEye.Script
 
 					case "changetext":
 					{
-						ActionChangeText script = new ActionChangeText();
+						ChangeText script = new ChangeText();
 						script.Load(node);
 						Actions.Add(script);
 					}
@@ -168,7 +168,7 @@ namespace DungeonEye.Script
 
 					case "deactivate":
 					{
-						ActionDeactivateTarget script = new ActionDeactivateTarget();
+						DeactivateTarget script = new DeactivateTarget();
 						script.Load(node);
 						Actions.Add(script);
 					}
@@ -176,7 +176,7 @@ namespace DungeonEye.Script
 
 					case "disablechoice":
 					{
-						ActionDisableChoice script = new ActionDisableChoice();
+						DisableChoice script = new DisableChoice();
 						script.Load(node);
 						Actions.Add(script);
 					}
@@ -184,7 +184,7 @@ namespace DungeonEye.Script
 
 					case "disable":
 					{
-						ActionDisableTarget script = new ActionDisableTarget();
+						DisableTarget script = new DisableTarget();
 						script.Load(node);
 						Actions.Add(script);
 					}
@@ -192,7 +192,7 @@ namespace DungeonEye.Script
 
 					case "enablechoice":
 					{
-						ActionEnableChoice script = new ActionEnableChoice();
+						EnableChoice script = new EnableChoice();
 						script.Load(node);
 						Actions.Add(script);
 					}
@@ -200,7 +200,7 @@ namespace DungeonEye.Script
 
 					case "endchoice":
 					{
-						ActionEndChoice script = new ActionEndChoice();
+						EndChoice script = new EndChoice();
 						script.Load(node);
 						Actions.Add(script);
 					}
@@ -208,7 +208,7 @@ namespace DungeonEye.Script
 
 					case "enddialog":
 					{
-						ScriptEndDialog script = new ScriptEndDialog();
+						EndDialog script = new EndDialog();
 						script.Load(node);
 						Actions.Add(script);
 					}
@@ -216,7 +216,7 @@ namespace DungeonEye.Script
 
 					case "giveitem":
 					{
-						ActionGiveItem script = new ActionGiveItem();
+						GiveItem script = new GiveItem();
 						script.Load(node);
 						Actions.Add(script);
 					}
@@ -224,7 +224,7 @@ namespace DungeonEye.Script
 
 					case "healing":
 					{
-						ActionHealing script = new ActionHealing();
+						Healing script = new Healing();
 						script.Load(node);
 						Actions.Add(script);
 					}
@@ -232,7 +232,7 @@ namespace DungeonEye.Script
 
 					case "joincharacter":
 					{
-						ActionJoinCharacter script = new ActionJoinCharacter();
+						JoinCharacter script = new JoinCharacter();
 						script.Load(node);
 						Actions.Add(script);
 					}
@@ -240,7 +240,7 @@ namespace DungeonEye.Script
 
 					case "playsound":
 					{
-						ActionPlaySound script = new ActionPlaySound();
+						PlaySound script = new PlaySound();
 						script.Load(node);
 						Actions.Add(script);
 					}
@@ -248,7 +248,7 @@ namespace DungeonEye.Script
 
 					case "toggle":
 					{
-						ActionToggleTarget script = new ActionToggleTarget();
+						ToggleTarget script = new ToggleTarget();
 						script.Load(node);
 						Actions.Add(script);
 					}

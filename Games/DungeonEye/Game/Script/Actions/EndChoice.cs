@@ -5,21 +5,20 @@ using System.Text;
 
 namespace DungeonEye.Script.Actions
 {
+
 	/// <summary>
 	/// 
 	/// </summary>
-	public class ActionChangeText : ActionBase
+	public class EndChoice : ActionBase
 	{
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public ActionChangeText()
+		public EndChoice()
 		{
-
-			Name = "ChangeText";
+			Name = "EndChoice";
 		}
-
 
 		/// <summary>
 		/// 
@@ -58,8 +57,6 @@ namespace DungeonEye.Script.Actions
 
 
 		#region Properties
-
-
 
 		#endregion
 	}

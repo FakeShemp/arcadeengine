@@ -20,7 +20,7 @@ namespace DungeonEye.Forms
 		/// 
 		/// </summary>
 		/// <param name="script"></param>
-		public GiveItemControl(ActionGiveItem script)
+		public GiveItemControl(GiveItem script)
 		{
 			InitializeComponent();
 
@@ -28,7 +28,7 @@ namespace DungeonEye.Forms
 			if (script != null)
 				Action = script;
 			else
-				Action = new ActionGiveItem();
+				Action = new GiveItem();
 		}
 
 

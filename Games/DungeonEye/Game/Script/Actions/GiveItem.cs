@@ -8,13 +8,13 @@ namespace DungeonEye.Script.Actions
 	/// <summary>
 	/// 
 	/// </summary>
-	public class ActionGiveItem : ActionBase
+	public class GiveItem : ActionBase
 	{
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public ActionGiveItem()
+		public GiveItem()
 		{
 			Name = "GiveItem";
 		}

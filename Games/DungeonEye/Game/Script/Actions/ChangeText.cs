@@ -8,15 +8,18 @@ namespace DungeonEye.Script.Actions
 	/// <summary>
 	/// 
 	/// </summary>
-	public class ActionJoinCharacter : ActionBase
+	public class ChangeText : ActionBase
 	{
+
 		/// <summary>
 		/// 
 		/// </summary>
-		public ActionJoinCharacter()
+		public ChangeText()
 		{
-			Name = "JoinCharacter";
+
+			Name = "ChangeText";
 		}
+
 
 		/// <summary>
 		/// 
@@ -55,6 +58,8 @@ namespace DungeonEye.Script.Actions
 
 
 		#region Properties
+
+
 
 		#endregion
 	}

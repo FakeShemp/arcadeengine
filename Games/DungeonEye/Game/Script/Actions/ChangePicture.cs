@@ -28,18 +28,18 @@ using System.Xml;
 namespace DungeonEye.Script.Actions
 {
 	/// <summary>
-	/// Teleport the team
+	/// Changes the picture of the dialog
 	/// </summary>
-	public class ActionTeleport : ActionBase
+	public class ChangePicture : ActionBase
 	{
+
 		/// <summary>
 		/// 
 		/// </summary>
-		public ActionTeleport()
-		{ 
-			Name = "Teleport";
+		public ChangePicture()
+		{
+			Name = "ChangePicture";
 		}
-
 
 		/// <summary>
 		/// Run actions
@@ -47,80 +47,35 @@ namespace DungeonEye.Script.Actions
 		/// <returns></returns>
 		public override bool Run()
 		{
-			if (Target == null)
-				return false;
-
-			if (GameScreen.Team.Teleport(Target))
-			{
-				if (ChangeDirection)
-					GameScreen.Team.Direction = Target.Direction;
-				return true;
-			}
 
 			return false;
 		}
 
-	
+
 		#region IO
 
 
 		/// <summary>
-		/// 
+		/// Loads a party
 		/// </summary>
-		/// <param name="xml"></param>
-		/// <returns>True on success</returns>
+		/// <param name="filename">Xml data</param>
+		/// <returns>True if team successfuly loaded, otherwise false</returns>
 		public override bool Load(XmlNode xml)
 		{
-			if (xml == null || xml.Name != Name)
-				return false;
-
-			foreach (XmlNode node in xml)
-			{
-				if (node.NodeType == XmlNodeType.Comment)
-					continue;
-
-				switch (node.Name.ToLower())
-				{
-					case "changedirection":
-					{
-						ChangeDirection = (bool) bool.Parse(node.Attributes["value"].Value);
-					}
-					break;
-
-					default:
-					{
-						base.Load(node);
-					}
-					break;
-				}
-			}
 			return true;
 		}
+
 
 
 		/// <summary>
-		/// 
+		/// Saves the party
 		/// </summary>
-		/// <param name="writer"></param>
-		/// <returns>True on success</returns>
+		/// <param name="filename">XmlWriter</param>
+		/// <returns></returns>
 		public override bool Save(XmlWriter writer)
 		{
-			if (writer == null)
-				return false;
-
-			writer.WriteStartElement(Name);
-			
-			writer.WriteStartElement("changedirection");
-			writer.WriteAttributeString("value", ChangeDirection.ToString());
-			writer.WriteEndElement();
-
-			base.Save(writer);
-
-			writer.WriteEndElement();
-
 			return true;
 		}
-
 
 
 		#endregion
@@ -128,15 +83,6 @@ namespace DungeonEye.Script.Actions
 
 
 		#region Properties
-
-		/// <summary>
-		/// Change direction
-		/// </summary>
-		public bool ChangeDirection
-		{
-			get;
-			set;
-		}
 
 
 		#endregion

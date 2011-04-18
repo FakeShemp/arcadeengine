@@ -8,15 +8,14 @@ namespace DungeonEye.Script.Actions
 	/// <summary>
 	/// 
 	/// </summary>
-	public class ActionHealing : ActionBase
+	public class JoinCharacter : ActionBase
 	{
-
 		/// <summary>
 		/// 
 		/// </summary>
-		public ActionHealing()
+		public JoinCharacter()
 		{
-			Name = "Healing";
+			Name = "JoinCharacter";
 		}
 
 		/// <summary>
@@ -56,7 +55,6 @@ namespace DungeonEye.Script.Actions
 
 
 		#region Properties
-
 
 		#endregion
 	}

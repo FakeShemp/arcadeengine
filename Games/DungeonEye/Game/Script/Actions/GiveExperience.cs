@@ -8,31 +8,31 @@ namespace DungeonEye.Script.Actions
 	/// <summary>
 	/// 
 	/// </summary>
-	public class ScriptEndDialog : ActionBase
+	public class GiveExperience : ActionBase
 	{
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public ScriptEndDialog()
+		public GiveExperience()
 		{
-			Name = "EndDialog";
+			Name = "GiveExperience";
 		}
 
 
 		/// <summary>
-		/// 
+		/// Runs the script
 		/// </summary>
-		/// <returns>True on succes</returns>
+		/// <returns>True on success</returns>
 		public override bool Run()
 		{
-			if (GameScreen.Dialog == null)
-				return false;
+			GameScreen.Team.AddExperience(Amount);
 
-
-			GameScreen.Dialog.Exit();
 			return true;
 		}
+
+
+		#region IO
 
 
 		/// <summary>
@@ -45,7 +45,23 @@ namespace DungeonEye.Script.Actions
 			if (xml == null || xml.Name != Name)
 				return false;
 
+			if (xml.Attributes["value"] != null)
+				Amount = int.Parse(xml.Attributes["value"].Value);
 
+			//foreach (XmlNode node in xml)
+			//{
+			//    if (node.NodeType == XmlNodeType.Comment)
+			//        continue;
+
+			//    switch (node.Name.ToLower())
+			//    {
+			//        case "amount":
+			//        {
+			//            Amount = int.Parse(node.Attributes["value"].Value);
+			//        }
+			//        break;
+			//    }
+			//}
 			return true;
 		}
 
@@ -61,6 +77,7 @@ namespace DungeonEye.Script.Actions
 				return false;
 
 			writer.WriteStartElement(Name);
+			writer.WriteAttributeString("value", Amount.ToString());
 			writer.WriteEndElement();
 
 			return true;
@@ -68,8 +85,22 @@ namespace DungeonEye.Script.Actions
 
 
 
+		#endregion
+
+
 
 		#region Properties
+
+
+		/// <summary>
+		/// Amount of experience to give
+		/// </summary>
+		public int Amount
+		{
+			get;
+			set;
+		}
+
 
 		#endregion
 	}

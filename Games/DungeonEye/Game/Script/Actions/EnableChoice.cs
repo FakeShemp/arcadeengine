@@ -8,15 +8,14 @@ namespace DungeonEye.Script.Actions
 	/// <summary>
 	/// 
 	/// </summary>
-	public class ActionDisableChoice : ActionBase
+	public class EnableChoice : ActionBase
 	{
-
 		/// <summary>
 		/// 
 		/// </summary>
-		public ActionDisableChoice()
+		public EnableChoice()
 		{
-			Name = "DisableChoice";
+			Name = "EnableChoice";
 		}
 
 		/// <summary>
@@ -56,6 +55,7 @@ namespace DungeonEye.Script.Actions
 
 
 		#region Properties
+
 
 
 		#endregion

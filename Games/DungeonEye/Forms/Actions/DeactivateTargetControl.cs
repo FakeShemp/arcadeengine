@@ -20,14 +20,14 @@ namespace DungeonEye.Forms
 		/// 
 		/// </summary>
 		/// <param name="script"></param>
-		public DeactivateTargetControl(ActionDeactivateTarget script, Dungeon dungeon)
+		public DeactivateTargetControl(DeactivateTarget script, Dungeon dungeon)
 		{
 			InitializeComponent();
 
 			if (script != null)
 				Action = script;
 			else
-				Action = new ActionDeactivateTarget();
+				Action = new DeactivateTarget();
 
 			TargetBox.SetTarget(dungeon, Action.Target);
 		}
@@ -47,7 +47,7 @@ namespace DungeonEye.Forms
 			if (Action == null)
 				return;
 
-			((ActionDeactivateTarget) Action).Target = target;
+			((DeactivateTarget) Action).Target = target;
 		}
 
 

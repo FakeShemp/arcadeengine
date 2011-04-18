@@ -20,14 +20,14 @@ namespace DungeonEye.Forms
 		/// 
 		/// </summary>
 		/// <param name="script"></param>
-		public EndChoiceControl(ActionEndChoice script)
+		public EndChoiceControl(EndChoice script)
 		{
 			InitializeComponent();
 
 			if (script != null)
 				Action = script;
 			else
-				Action = new ActionEndChoice();
+				Action = new EndChoice();
 
 		}
 

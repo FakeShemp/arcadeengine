@@ -19,7 +19,7 @@ namespace DungeonEye.Forms
 		/// 
 		/// </summary>
 		/// <param name="script"></param>
-		public TeleportControl(ActionTeleport script, Dungeon dungeon)
+		public TeleportControl(Teleport script, Dungeon dungeon)
 		{
 			InitializeComponent();
 
@@ -27,10 +27,10 @@ namespace DungeonEye.Forms
 			if (script != null)
 				Action = script;
 			else
-				Action = new ActionTeleport();
+				Action = new Teleport();
 
 			TargetBox.Dungeon = dungeon;
-			TargetBox.SetTarget(((ActionTeleport)Action).Target);
+			TargetBox.SetTarget(((Teleport)Action).Target);
 
 			TargetBox.TargetChanged +=new TargetControl.TargetChangedEventHandler(TargetBox_TargetChanged);
 			
@@ -44,7 +44,7 @@ namespace DungeonEye.Forms
 		/// <param name="target"></param>
 		void TargetBox_TargetChanged(object sender, DungeonLocation target)
 		{
-			((ActionTeleport) Action).Target = target;
+			((Teleport) Action).Target = target;
 		}
 
 
