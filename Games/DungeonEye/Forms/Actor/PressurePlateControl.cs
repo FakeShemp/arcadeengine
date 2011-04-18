@@ -24,7 +24,7 @@ namespace DungeonEye.Forms
 		{
 			InitializeComponent();
 
-			ActionBox.Actions = pressureplate.Actions;
+			//ActionBox.Actions = pressureplate.Actions;
 			ActionBox.Dungeon = dungeon;
 			
 			PressurePlate = pressureplate;

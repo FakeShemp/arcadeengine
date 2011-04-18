@@ -3,23 +3,21 @@ using System.Collections.Generic;
 using System.Xml;
 using System.Text;
 
-namespace DungeonEye.Script
+namespace DungeonEye.Script.Actions
 {
 	/// <summary>
 	/// 
 	/// </summary>
-	public class ScriptChangeText: ScriptBase
+	public class ScriptDisableChoice : ActionBase
 	{
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public ScriptChangeText()
+		public ScriptDisableChoice()
 		{
-
-			Name = "ChangeText";
+			Name = "DisableChoice";
 		}
-
 
 		/// <summary>
 		/// 
@@ -58,7 +56,6 @@ namespace DungeonEye.Script
 
 
 		#region Properties
-
 
 
 		#endregion

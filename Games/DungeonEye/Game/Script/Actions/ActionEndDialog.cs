@@ -3,30 +3,47 @@ using System.Collections.Generic;
 using System.Xml;
 using System.Text;
 
-namespace DungeonEye.Script
+namespace DungeonEye.Script.Actions
 {
 	/// <summary>
-	/// Play a sound
+	/// 
 	/// </summary>
-	public class ScriptPlaySound: ScriptBase
+	public class ScriptEndDialog : ActionBase
 	{
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public ScriptPlaySound()
+		public ScriptEndDialog()
 		{
-			Name = "PlaySound";
+			Name = "EndDialog";
 		}
-
 
 
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>True on succes</returns>
 		public override bool Run()
 		{
+			if (GameScreen.Dialog == null)
+				return false;
+
+
+			GameScreen.Dialog.Exit();
+			return true;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="xml"></param>
+		/// <returns>True on success</returns>
+		public override bool Load(XmlNode xml)
+		{
+			if (xml == null || xml.Name != Name)
+				return false;
 
 
 			return true;
@@ -36,22 +53,17 @@ namespace DungeonEye.Script
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="xml"></param>
-		/// <returns></returns>
-		public override bool Load(XmlNode xml)
-		{
-			return false;
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
 		/// <param name="writer"></param>
-		/// <returns></returns>
+		/// <returns>True on success</returns>
 		public override bool Save(XmlWriter writer)
 		{
-			return false;
+			if (writer == null)
+				return false;
+
+			writer.WriteStartElement(Name);
+			writer.WriteEndElement();
+
+			return true;
 		}
 
 

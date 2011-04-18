@@ -19,108 +19,88 @@
 #endregion
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Drawing;
 using System.Text;
-using ArcEngine;
 using System.Xml;
+using ArcEngine;
+using ArcEngine.Graphic;
+using ArcEngine.Input;
+using DungeonEye.Gui;
 
-
-namespace DungeonEye.Script
+namespace DungeonEye.Script.Actions
 {
 	/// <summary>
-	/// Teleport the team
+	/// 
 	/// </summary>
-	public class ScriptTeleport : ScriptBase
+	public class ActionBase
 	{
-		/// <summary>
-		/// 
-		/// </summary>
-		public ScriptTeleport()
-		{ 
-			Name = "Teleport";
-		}
+
 
 
 		/// <summary>
-		/// Run actions
+		/// Run the script
 		/// </summary>
-		/// <returns></returns>
-		public override bool Run()
+		/// <returns>True on success</returns>
+		public virtual bool Run()
 		{
-			if (Target == null)
-				return false;
-
-			if (GameScreen.Team.Teleport(Target))
-			{
-				if (ChangeDirection)
-					GameScreen.Team.Direction = Target.Direction;
-				return true;
-			}
-
 			return false;
 		}
 
-	
+
 		#region IO
 
 
 		/// <summary>
-		/// 
+		/// Loads a party
 		/// </summary>
-		/// <param name="xml"></param>
-		/// <returns>True on success</returns>
-		public override bool Load(XmlNode xml)
+		/// <param name="filename">Xml data</param>
+		/// <returns>True if team successfuly loaded, otherwise false</returns>
+		public virtual bool Load(XmlNode xml)
 		{
-			if (xml == null || xml.Name != Name)
+			if (xml == null)
 				return false;
+
 
 			foreach (XmlNode node in xml)
 			{
-				if (node.NodeType == XmlNodeType.Comment)
-					continue;
-
-				switch (node.Name.ToLower())
+				switch (node.Name)
 				{
-					case "changedirection":
+					case "target":
 					{
-						ChangeDirection = (bool) bool.Parse(node.Attributes["value"].Value);
+						if (Target == null)
+							Target = new DungeonLocation();
+
+						Target.Load(node);
 					}
 					break;
 
 					default:
 					{
-						base.Load(node);
+						Trace.WriteLine("[ScriptBase] Load() : Unknown node \"" + node.Name + "\" found.");
 					}
 					break;
 				}
+
 			}
 			return true;
 		}
 
 
 		/// <summary>
-		/// 
+		/// Saves the party
 		/// </summary>
-		/// <param name="writer"></param>
-		/// <returns>True on success</returns>
-		public override bool Save(XmlWriter writer)
+		/// <param name="filename">XmlWriter</param>
+		/// <returns></returns>
+		public virtual bool Save(XmlWriter writer)
 		{
 			if (writer == null)
 				return false;
 
-			writer.WriteStartElement(Name);
-			
-			writer.WriteStartElement("changedirection");
-			writer.WriteAttributeString("value", ChangeDirection.ToString());
-			writer.WriteEndElement();
+			Target.Save("target", writer);
 
-			base.Save(writer);
-
-			writer.WriteEndElement();
 
 			return true;
 		}
-
 
 
 		#endregion
@@ -130,14 +110,24 @@ namespace DungeonEye.Script
 		#region Properties
 
 		/// <summary>
-		/// Change direction
+		/// Name of the action
 		/// </summary>
-		public bool ChangeDirection
+		public string Name
+		{
+			get;
+			protected set;
+		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public DungeonLocation Target
 		{
 			get;
 			set;
 		}
-
 
 		#endregion
 	}

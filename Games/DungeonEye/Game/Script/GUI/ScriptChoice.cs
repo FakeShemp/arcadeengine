@@ -23,6 +23,8 @@ using System.Xml;
 using System.Text;
 using ArcEngine;
 using System.Drawing;
+using DungeonEye.Script.Actions;
+
 
 namespace DungeonEye.Script
 {
@@ -37,7 +39,7 @@ namespace DungeonEye.Script
 		/// <param name="name">Choice's name</param>
 		public ScriptChoice(string name)
 		{
-			Actions = new List<ScriptBase>();
+			Actions = new List<ActionBase>();
 
 			Name = name;
 			Enabled = true;
@@ -50,7 +52,7 @@ namespace DungeonEye.Script
 		/// <param name="team">Team handle</param>
 		public void Run()
 		{
-			foreach (ScriptBase action in Actions)
+			foreach (ActionBase action in Actions)
 				action.Run();
 		}
 
@@ -277,7 +279,7 @@ namespace DungeonEye.Script
 			writer.WriteAttributeString("name", Name);
 
 			writer.WriteStartElement("actions");
-			foreach (ScriptBase action in Actions)
+			foreach (ActionBase action in Actions)
 			{
 				action.Save(writer);
 			}
@@ -297,7 +299,7 @@ namespace DungeonEye.Script
 		/// <summary>
 		/// List of actions
 		/// </summary>
-		public List<ScriptBase> Actions
+		public List<ActionBase> Actions
 		{
 			get;
 			private set;

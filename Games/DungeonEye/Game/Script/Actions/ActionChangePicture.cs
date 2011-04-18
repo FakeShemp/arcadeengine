@@ -1,7 +1,7 @@
 ﻿#region Licence
 //
 //This file is part of ArcEngine.
-//Copyright (C)2008-2010 Adrien Hémery ( iliak@mimicprod.net )
+//Copyright (C)2008-2011 Adrien Hémery ( iliak@mimicprod.net )
 //
 //ArcEngine is free software: you can redistribute it and/or modify
 //it under the terms of the GNU General Public License as published by
@@ -23,29 +23,31 @@ using System.Linq;
 using System.Text;
 using ArcEngine;
 using System.Xml;
-using DungeonEye.Script.Actions;
 
-namespace DungeonEye.Script
+
+namespace DungeonEye.Script.Actions
 {
 	/// <summary>
-	/// Abstract base class for event script actions
+	/// Changes the picture of the dialog
 	/// </summary>
-	public class ScriptBase
+	public class ScriptChangePicture : ActionBase
 	{
+
 		/// <summary>
-		/// Constructor
+		/// 
 		/// </summary>
-		public ScriptBase()
+		public ScriptChangePicture()
 		{
-			Target = new DungeonLocation();
+			Name = "ChangePicture";
 		}
 
 		/// <summary>
-		/// Run the script
+		/// Run actions
 		/// </summary>
-		/// <returns>True on success</returns>
-		public virtual bool Run()
+		/// <returns></returns>
+		public override bool Run()
 		{
+
 			return false;
 		}
 
@@ -58,35 +60,11 @@ namespace DungeonEye.Script
 		/// </summary>
 		/// <param name="filename">Xml data</param>
 		/// <returns>True if team successfuly loaded, otherwise false</returns>
-		public virtual bool Load(XmlNode xml)
+		public override bool Load(XmlNode xml)
 		{
-			if (xml == null)
-				return false;
-
-
-			foreach (XmlNode node in xml)
-			{
-				switch (node.Name)
-				{
-					case "target":
-					{
-						if (Target == null)
-							Target = new DungeonLocation();
-
-						Target.Load(node);
-					}
-					break;
-
-					default:
-					{
-						Trace.WriteLine("[ScriptBase] Load() : Unknown node \"" + node.Name + "\" found.");
-					}
-					break;
-				}
-
-			}
 			return true;
 		}
+
 
 
 		/// <summary>
@@ -94,14 +72,8 @@ namespace DungeonEye.Script
 		/// </summary>
 		/// <param name="filename">XmlWriter</param>
 		/// <returns></returns>
-		public virtual bool Save(XmlWriter writer)
+		public override bool Save(XmlWriter writer)
 		{
-			if (writer == null)
-				return false;
-
-			Target.Save("target", writer);
-
-
 			return true;
 		}
 
@@ -112,37 +84,7 @@ namespace DungeonEye.Script
 
 		#region Properties
 
-		/// <summary>
-		/// Target
-		/// </summary>
-		public DungeonLocation Target
-		{
-			get;
-			set;
-		}
-
-
-		/// <summary>
-		/// Name of the action
-		/// </summary>
-		public string Name
-		{
-			get;
-			protected set;
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public ActionBase Action
-		{
-			get;
-			set;
-		}
 
 		#endregion
-
 	}
-
 }

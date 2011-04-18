@@ -3,22 +3,22 @@ using System.Collections.Generic;
 using System.Xml;
 using System.Text;
 
-namespace DungeonEye.Script
+namespace DungeonEye.Script.Actions
 {
 	/// <summary>
-	/// Toggle script
+	/// 
 	/// </summary>
-	public class ScriptToggleTarget : ScriptBase
+	public class ScriptChangeText : ActionBase
 	{
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public ScriptToggleTarget()
+		public ScriptChangeText()
 		{
-			Name = "ToggleTarget";
-		}
 
+			Name = "ChangeText";
+		}
 
 
 		/// <summary>
@@ -27,16 +27,8 @@ namespace DungeonEye.Script
 		/// <returns></returns>
 		public override bool Run()
 		{
-			if (Target == null)
-				return false;
 
-			Square square = Target.GetSquare(GameScreen.Dungeon);
-			if (square == null)
-				return false;
 
-			if (square.Actor != null)
-				square.Actor.Toggle();
-			
 			return true;
 		}
 
@@ -48,22 +40,6 @@ namespace DungeonEye.Script
 		/// <returns></returns>
 		public override bool Load(XmlNode xml)
 		{
-			if (xml == null)
-				return false;
-
-			foreach (XmlNode node in xml)
-			{
-				switch (node.Name.ToLower())
-				{
-
-					default:
-					{
-						base.Load(node);
-					}
-					break;
-				}
-			}
-
 			return true;
 		}
 
@@ -75,16 +51,6 @@ namespace DungeonEye.Script
 		/// <returns></returns>
 		public override bool Save(XmlWriter writer)
 		{
-			if (writer == null)
-				return false;
-
-
-			writer.WriteStartElement(Name);
-
-			base.Save(writer);
-
-			writer.WriteEndElement();
-
 			return true;
 		}
 

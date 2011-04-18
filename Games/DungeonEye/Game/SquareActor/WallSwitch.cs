@@ -161,14 +161,14 @@ namespace DungeonEye
 			{
 				switch (node.Name.ToLower())
 				{
-					case "target":
-					{
-						if (Target == null)
-							Target = new DungeonLocation();
+					//case "target":
+					//{
+					//    if (Target == null)
+					//        Target = new DungeonLocation();
 
-						Target.Load(xml);
-					}
-					break;
+					//    Target.Load(xml);
+					//}
+					//break;
 
 					case "decoration":
 					{

@@ -249,6 +249,14 @@ namespace DungeonEye
 
 
 
+		/// <summary>
+		/// Target
+		/// </summary>
+		public DungeonLocation Target
+		{
+			get;
+			set;
+		}
 
 		#endregion
 

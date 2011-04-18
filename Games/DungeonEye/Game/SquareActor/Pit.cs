@@ -260,8 +260,6 @@ namespace DungeonEye
 
 
 
-
-
 		/// <summary>
 		/// An illusion pit
 		/// </summary>
@@ -306,6 +304,16 @@ namespace DungeonEye
 		/// Damage
 		/// </summary>
 		public Dice Damage
+		{
+			get;
+			set;
+		}
+
+	
+		/// <summary>
+		/// Target
+		/// </summary>
+		public DungeonLocation Target
 		{
 			get;
 			set;

@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Xml;
 using System.Text;
 
-namespace DungeonEye.Script
+namespace DungeonEye.Script.Actions
 {
 	/// <summary>
 	/// Activate a target
 	/// </summary>
-	public class ScriptActivateTarget : ScriptBase
+	public class ScriptActivateTarget : ActionBase
 	{
 		/// <summary>
 		/// 

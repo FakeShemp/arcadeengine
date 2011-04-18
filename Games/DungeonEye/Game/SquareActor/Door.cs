@@ -639,6 +639,14 @@ namespace DungeonEye
 
 		#region Properties
 
+		/// <summary>
+		/// Switch count
+		/// </summary>
+		public SwitchCount Count
+		{
+			get;
+			set;
+		}
 
 		/// <summary>
 		/// Door's Tag

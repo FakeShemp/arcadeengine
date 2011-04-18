@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="DungeonEye.Script.ScriptBase" Collapsed="true">
+    <Position X="5.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgIAAAAAAAAAAAAAAACQAAAAAAAAAAAAAAAAAAAY=</HashCode>
+      <FileName>Game\Script\ScriptBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonEye.Script.AlcoveScript" Collapsed="true">
+    <Position X="3" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEgIAAAACAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAI=</HashCode>
+      <FileName>Game\Script\AlcoveScript.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonEye.Script.Actions.ScriptActivateTarget" Collapsed="true">
+    <Position X="20" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Game\Script\Actions\ActionActivateTarget.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonEye.Script.Actions.ScriptChangePicture" Collapsed="true">
+    <Position X="4.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Game\Script\Actions\ActionChangePicture.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonEye.Script.Actions.ScriptChangeText" Collapsed="true">
+    <Position X="6.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Game\Script\Actions\ActionChangeText.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonEye.Script.Actions.ScriptDeactivateTarget" Collapsed="true">
+    <Position X="8.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Game\Script\Actions\ActionDeactivateTarget.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonEye.Script.Actions.ScriptDisableChoice" Collapsed="true">
+    <Position X="11" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Game\Script\Actions\ActionDisableChoice.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonEye.Script.Actions.ScriptDisableTarget" Collapsed="true">
+    <Position X="13.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Game\Script\Actions\ActionDisableTarget.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonEye.Script.Actions.ScriptEnableChoice" Collapsed="true">
+    <Position X="15.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Game\Script\Actions\ActionEnableChoice.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonEye.Script.Actions.ScriptEndChoice" Collapsed="true">
+    <Position X="17.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Game\Script\Actions\ActionEndChoice.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonEye.Script.Actions.ScriptEndDialog" Collapsed="true">
+    <Position X="22.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Game\Script\Actions\ActionEndDialog.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonEye.Script.Actions.ScriptGiveExperience" Collapsed="true">
+    <Position X="24.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgIAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Game\Script\Actions\ActionGiveExperience.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonEye.Script.Actions.ScriptGiveItem" Collapsed="true">
+    <Position X="26.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Game\Script\Actions\ActionGiveItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonEye.Script.Actions.ScriptHealing" Collapsed="true">
+    <Position X="29" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Game\Script\Actions\ActionHealing.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonEye.Script.Actions.ScriptJoinCharacter" Collapsed="true">
+    <Position X="31.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Game\Script\Actions\ActionJoinCharacter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonEye.Script.Actions.ScriptPlaySound" Collapsed="true">
+    <Position X="33.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Game\Script\Actions\ActionPlaySound.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonEye.Script.Actions.ScriptTeleport" Collapsed="true">
+    <Position X="35.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgIAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAI=</HashCode>
+      <FileName>Game\Script\Actions\ActionTeleport.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonEye.Script.Actions.ScriptToggleTarget" Collapsed="true">
+    <Position X="38" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Game\Script\Actions\ActionToggleTarget.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonEye.Script.PressurePlateScript" Collapsed="true">
+    <Position X="5.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Script\PressurePlateScript.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonEye.Script.WallSwitchScript" Collapsed="true">
+    <Position X="7.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Script\WallSwitchScript.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonEye.Script.Actions.ActionBase" Collapsed="true">
+    <Position X="21.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgIAAAAAAAAAAAAAAACQAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Game\Script\Actions\ActionBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

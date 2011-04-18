@@ -26,6 +26,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using DungeonEye.Script;
+using DungeonEye.Script.Actions;
 
 namespace DungeonEye.Forms
 {
@@ -73,7 +74,7 @@ namespace DungeonEye.Forms
 		/// </summary>
 		/// <param name="script">Action handle</param>
 		/// <returns>True on success</returns>
-		public bool SetAction(ScriptBase script)
+		public bool SetAction(ActionBase script)
 		{
 			ControlHandle = null;
 			
@@ -277,7 +278,7 @@ namespace DungeonEye.Forms
 		/// <summary>
 		/// Script action
 		/// </summary>
-		public ScriptBase Action
+		public ActionBase Action
 		{
 			get
 			{

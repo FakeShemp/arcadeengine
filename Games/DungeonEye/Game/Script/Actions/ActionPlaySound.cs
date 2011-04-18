@@ -3,21 +3,23 @@ using System.Collections.Generic;
 using System.Xml;
 using System.Text;
 
-namespace DungeonEye.Script
+namespace DungeonEye.Script.Actions
 {
 	/// <summary>
-	/// 
+	/// Play a sound
 	/// </summary>
-	public class ScriptHealing : ScriptBase
+	public class ScriptPlaySound : ActionBase
 	{
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public ScriptHealing()
+		public ScriptPlaySound()
 		{
-			Name = "Healing";
+			Name = "PlaySound";
 		}
+
+
 
 		/// <summary>
 		/// 
@@ -38,7 +40,7 @@ namespace DungeonEye.Script
 		/// <returns></returns>
 		public override bool Load(XmlNode xml)
 		{
-			return true;
+			return false;
 		}
 
 
@@ -49,14 +51,13 @@ namespace DungeonEye.Script
 		/// <returns></returns>
 		public override bool Save(XmlWriter writer)
 		{
-			return true;
+			return false;
 		}
 
 
 
 
 		#region Properties
-
 
 		#endregion
 	}

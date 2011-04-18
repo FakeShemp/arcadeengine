@@ -55,7 +55,7 @@ namespace DungeonEye
 			Maze = maze;
 			DecorationSet = maze.Decoration;
 			WallSwitch = wallswitch;
-			ActionScriptBox.Actions = wallswitch.Actions;
+			//ActionScriptBox.Actions = wallswitch.Actions;
 			ActionScriptBox.Dungeon = maze.Dungeon;
 		}
 

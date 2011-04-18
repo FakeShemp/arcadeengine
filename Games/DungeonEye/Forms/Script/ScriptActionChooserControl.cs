@@ -25,8 +25,9 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using DungeonEye.Script;
 using ArcEngine;
+using DungeonEye.Script;
+using DungeonEye.Script.Actions;
 
 
 namespace DungeonEye.Forms.Script
@@ -39,9 +40,15 @@ namespace DungeonEye.Forms.Script
 		/// <summary>
 		/// 
 		/// </summary>
+		/// <param name="dungeon"></param>
+		/// <param name="script"></param>
+	//	public ScriptActionChooserControl(AlcoveScript script, Dungeon dungeon)
 		public ScriptActionChooserControl()
 		{
 			InitializeComponent();
+
+			//Script = script;
+			//Dungeon = dungeon;
 		}
 
 
@@ -55,7 +62,53 @@ namespace DungeonEye.Forms.Script
 		/// <param name="e"></param>
 		private void ActionChooserBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
+			ScriptActionControlBase control = null;
 
+			switch ((string)ActionChooserBox.SelectedItem)
+			{
+				case "Toggles":
+				{
+					//control = new ScriptToggleTargetControl(Script, Dungeon);		
+				}
+				break;
+				case "Activates":
+				{
+				}
+				break;
+				case "Deactivates":
+				{
+				}
+				break;
+				case "Activates / Deactivates":
+				{
+				}
+				break;
+				case "Deactivates / Activates":
+				{
+				}
+				break;
+				case "Exchanges":
+				{
+				}
+				break;
+				case "Set To":
+				{
+				}
+				break;
+				case "Play Sound":
+				{
+				}
+				break;
+				case "Stop Sounds":
+				{
+				}
+				break;
+				default:
+				{
+					MessageBox.Show("Unhandled action type !", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				}
+				break;
+			}
 		}
 
 		#endregion
@@ -63,6 +116,18 @@ namespace DungeonEye.Forms.Script
 
 
 		#region Properties
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Dungeon Dungeon;
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		AlcoveScript Script;
 
 
 		#endregion

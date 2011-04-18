@@ -25,6 +25,8 @@ using System.Xml;
 using ArcEngine;
 using ArcEngine.Graphic;
 using DungeonEye.Script;
+using DungeonEye.Script.Actions;
+
 
 namespace DungeonEye
 {
@@ -41,8 +43,9 @@ namespace DungeonEye
 		public SquareActor(Square square)
 		{
 			Square = square;
-			Actions = new List<ScriptBase>();
-			Count = new SwitchCount();
+			//Actions = new List<ActionBase>();
+			//Count = new SwitchCount();
+			Scripts = new List<ScriptBase>();
 		}
 
 
@@ -77,7 +80,7 @@ namespace DungeonEye
 			if (xml == null)
 				return false;
 
-			ScriptBase script = null;
+			ActionBase script = null;
 
 			foreach (XmlNode node in xml)
 			{
@@ -105,7 +108,7 @@ namespace DungeonEye
 
 				if (script != null)
 				{
-					Actions.Add(script);
+					//Actions.Add(script);
 					script.Load(node);
 				}
 			}
@@ -226,8 +229,8 @@ namespace DungeonEye
 		{
 			IsActivated = true;
 
-			if (Count.Activate())
-				Run();
+			//if (Count.Activate())
+			//    Run();
 		}
 
 
@@ -238,8 +241,8 @@ namespace DungeonEye
 		{
 			IsActivated = false;
 
-			if (Count.Deactivate())
-				Run();
+			//if (Count.Deactivate())
+			//    Run();
 		}
 
 
@@ -250,9 +253,9 @@ namespace DungeonEye
 		public void Run()
 		{
 			// Run each action
-			foreach (ScriptBase action in Actions)
+			foreach (ScriptBase script in Scripts)
 			{
-				action.Run();
+				script.Run();
 			}
 
 		}
@@ -333,15 +336,15 @@ namespace DungeonEye
 				}
 				break;
 
-				case "switch":
-				{
-					Count.Load(node);
-				}
-				break;
+				//case "switch":
+				//{
+				//    Count.Load(node);
+				//}
+				//break;
 
 				default:
 				{
-					Trace.WriteLine("[SquareActor] Load() : Unknown node \"" + node.Name + "\" found.");
+					Trace.WriteLine("[SquareActor] Load() : Unknown node \"" + node.Name + "\" found @ " + Square.Location.ToStringShort() + ".");
 				}
 				break;
 			}
@@ -363,15 +366,15 @@ namespace DungeonEye
 
 			writer.WriteElementString("isactivated", IsActivated.ToString());
 
-			if (Actions.Count > 0)
+			if (Scripts.Count > 0)
 			{
 				writer.WriteStartElement("actions");
-				foreach (ScriptBase action in Actions)
-					action.Save(writer);
+				foreach(ScriptBase script in Scripts)
+					script.Save(writer);
 				writer.WriteEndElement();
 			}
 
-			Count.Save("switch", writer);
+	//		Count.Save("switch", writer);
 
 			return true;
 		}
@@ -420,7 +423,7 @@ namespace DungeonEye
 			protected set;
 		}
 
-
+/*
 		/// <summary>
 		/// Target
 		/// </summary>
@@ -429,7 +432,7 @@ namespace DungeonEye
 			get;
 			set;
 		}
-
+*/
 
 		/// <summary>
 		/// Does the actor is activated
@@ -441,17 +444,27 @@ namespace DungeonEye
 		}
 
 
-
+/*
 		/// <summary>
 		/// Registered actions
 		/// </summary>
-		public List<ScriptBase> Actions
+		public List<ActionBase> Actions
+		{
+			get;
+			private set;
+		}
+*/
+
+		/// <summary>
+		/// Registred scripts
+		/// </summary>
+		public List<ScriptBase> Scripts
 		{
 			get;
 			private set;
 		}
 
-
+/*
 		/// <summary>
 		/// Switch count
 		/// </summary>
@@ -460,7 +473,7 @@ namespace DungeonEye
 			get;
 			set;
 		}
-
+*/
 		#endregion
 	}
 }

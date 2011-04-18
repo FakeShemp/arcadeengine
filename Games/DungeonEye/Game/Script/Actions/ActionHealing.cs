@@ -3,34 +3,30 @@ using System.Collections.Generic;
 using System.Xml;
 using System.Text;
 
-namespace DungeonEye.Script
+namespace DungeonEye.Script.Actions
 {
 	/// <summary>
 	/// 
 	/// </summary>
-	public class ScriptEndDialog : ScriptBase
+	public class ScriptHealing : ActionBase
 	{
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public ScriptEndDialog()
+		public ScriptHealing()
 		{
-			Name = "EndDialog";
+			Name = "Healing";
 		}
-
 
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <returns>True on succes</returns>
+		/// <returns></returns>
 		public override bool Run()
 		{
-			if (GameScreen.Dialog == null)
-				return false;
 
 
-			GameScreen.Dialog.Exit();
 			return true;
 		}
 
@@ -39,13 +35,9 @@ namespace DungeonEye.Script
 		/// 
 		/// </summary>
 		/// <param name="xml"></param>
-		/// <returns>True on success</returns>
+		/// <returns></returns>
 		public override bool Load(XmlNode xml)
 		{
-			if (xml == null || xml.Name != Name)
-				return false;
-
-
 			return true;
 		}
 
@@ -54,15 +46,9 @@ namespace DungeonEye.Script
 		/// 
 		/// </summary>
 		/// <param name="writer"></param>
-		/// <returns>True on success</returns>
+		/// <returns></returns>
 		public override bool Save(XmlWriter writer)
 		{
-			if (writer == null)
-				return false;
-
-			writer.WriteStartElement(Name);
-			writer.WriteEndElement();
-
 			return true;
 		}
 
@@ -70,6 +56,7 @@ namespace DungeonEye.Script
 
 
 		#region Properties
+
 
 		#endregion
 	}

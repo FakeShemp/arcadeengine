@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using DungeonEye.Script.Actions;
 using DungeonEye.Script;
 
 
@@ -33,7 +34,7 @@ namespace DungeonEye.Forms
 		/// <summary>
 		/// Action to execute
 		/// </summary>
-		public ScriptBase Action
+		public ActionBase Action
 		{
 			get;
 			protected set;

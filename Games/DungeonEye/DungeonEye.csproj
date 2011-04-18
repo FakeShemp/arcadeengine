@@ -474,27 +474,28 @@
     <Compile Include="GameSettings.cs" />
     <Compile Include="Game\Decoration.cs" />
     <Compile Include="Game\GameColors.cs" />
+    <Compile Include="Game\Script\Actions\ActionBase.cs" />
     <Compile Include="Game\Script\ScriptBase.cs" />
-    <Compile Include="Game\Script\Actions\ScriptActivateTarget.cs" />
-    <Compile Include="Game\Script\Actions\ScriptChangePicture.cs" />
-    <Compile Include="Game\Script\Actions\ScriptChangeText.cs" />
-    <Compile Include="Game\Script\Actions\ScriptDeactivateTarget.cs" />
-    <Compile Include="Game\Script\Actions\ScriptDisableChoice.cs" />
-    <Compile Include="Game\Script\Actions\ScriptDisableTarget.cs" />
-    <Compile Include="Game\Script\Actions\ScriptEnableChoice.cs" />
-    <Compile Include="Game\Script\Actions\ScriptEndChoice.cs" />
-    <Compile Include="Game\Script\Actions\ScriptEndDialog.cs" />
-    <Compile Include="Game\Script\Actions\ScriptGiveExperience.cs" />
-    <Compile Include="Game\Script\Actions\ScriptGiveItem.cs" />
-    <Compile Include="Game\Script\Actions\ScriptHealing.cs" />
-    <Compile Include="Game\Script\Actions\ScriptJoinCharacter.cs" />
-    <Compile Include="Game\Script\Actions\ScriptPlaySound.cs" />
-    <Compile Include="Game\Script\Actions\ScriptTeleport.cs" />
-    <Compile Include="Game\Script\Actions\ScriptToggleTarget.cs" />
+    <Compile Include="Game\Script\Actions\ActionActivateTarget.cs" />
+    <Compile Include="Game\Script\Actions\ActionChangePicture.cs" />
+    <Compile Include="Game\Script\Actions\ActionChangeText.cs" />
+    <Compile Include="Game\Script\Actions\ActionDeactivateTarget.cs" />
+    <Compile Include="Game\Script\Actions\ActionDisableChoice.cs" />
+    <Compile Include="Game\Script\Actions\ActionDisableTarget.cs" />
+    <Compile Include="Game\Script\Actions\ActionEnableChoice.cs" />
+    <Compile Include="Game\Script\Actions\ActionEndChoice.cs" />
+    <Compile Include="Game\Script\Actions\ActionEndDialog.cs" />
+    <Compile Include="Game\Script\Actions\ActionGiveExperience.cs" />
+    <Compile Include="Game\Script\Actions\ActionGiveItem.cs" />
+    <Compile Include="Game\Script\Actions\ActionHealing.cs" />
+    <Compile Include="Game\Script\Actions\ActionJoinCharacter.cs" />
+    <Compile Include="Game\Script\Actions\ActionPlaySound.cs" />
+    <Compile Include="Game\Script\Actions\ActionTeleport.cs" />
+    <Compile Include="Game\Script\Actions\ActionToggleTarget.cs" />
     <Compile Include="Game\Script\AlcoveScript.cs" />
-    <Compile Include="Game\Script\GUIScriptButton.cs" />
+    <Compile Include="Game\Script\GUI\GUIScriptButton.cs" />
     <Compile Include="Game\Script\PressurePlateScript.cs" />
-    <Compile Include="Game\Script\ScriptChoice.cs" />
+    <Compile Include="Game\Script\GUI\ScriptChoice.cs" />
     <Compile Include="Game\Script\WallSwitchScript.cs" />
     <Compile Include="Game\SquareActor\AlcoveActor.cs" />
     <Compile Include="Game\Alcove.cs" />
@@ -725,6 +726,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="data\Game.bnk" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

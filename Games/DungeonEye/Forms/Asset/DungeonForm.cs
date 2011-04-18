@@ -27,7 +27,7 @@ using ArcEngine.Forms;
 using ArcEngine.Graphic;
 using ArcEngine.Interface;
 using DungeonEye.Script;
-
+using DungeonEye.Script.Actions;
 
 namespace DungeonEye.Forms
 {
@@ -474,30 +474,22 @@ namespace DungeonEye.Forms
 				SpriteBatch.DrawRectangle(new Rectangle(CurrentSquare.Location.Coordinate.X * 25 + Offset.X, CurrentSquare.Location.Coordinate.Y * 25 + Offset.Y, 25, 25), Color.White);
 
 
-			// If the current actor has a target
+			// If the current actor has scripts
 			if (SquareUnderMouse != null && SquareUnderMouse.Actor != null)
 			{
 				SquareActor actor = SquareUnderMouse.Actor;
-				foreach(ScriptBase action in actor.Actions)
+				foreach(ScriptBase script in actor.Scripts)
 				{
-					if (action.Target.Maze == Maze.Name)
-					{
-						Point from = new Point(BlockCoord.X * 25 + Offset.X + 12, BlockCoord.Y * 25 + Offset.Y + 12);
-						Point to = new Point(action.Target.Coordinate.X * 25 + Offset.X + 12, action.Target.Coordinate.Y * 25 + Offset.Y + 12);
-						SpriteBatch.DrawLine(from, to, Color.Red);
-						SpriteBatch.DrawRectangle(new Rectangle(action.Target.Coordinate.X * 25 + Offset.X, action.Target.Coordinate.Y * 25 + Offset.Y, 25, 25), Color.Red);
-					}
-				}
-				
-				if (actor.Target != null)
-				{
+					if (script.Action == null)
+						continue;
 
-					if (actor.Target.Maze == Maze.Name)
+					DungeonLocation target = script.Action.Target;
+					if (target.Maze == Maze.Name)
 					{
 						Point from = new Point(BlockCoord.X * 25 + Offset.X + 12, BlockCoord.Y * 25 + Offset.Y + 12);
-						Point to = new Point(actor.Target.Coordinate.X * 25 + Offset.X + 12, actor.Target.Coordinate.Y * 25 + Offset.Y + 12);
+						Point to = new Point(target.Coordinate.X * 25 + Offset.X + 12, target.Coordinate.Y * 25 + Offset.Y + 12);
 						SpriteBatch.DrawLine(from, to, Color.Red);
-						SpriteBatch.DrawRectangle(new Rectangle(actor.Target.Coordinate.X * 25 + Offset.X, actor.Target.Coordinate.Y * 25 + Offset.Y, 25, 25), Color.Red);
+						SpriteBatch.DrawRectangle(new Rectangle(target.Coordinate.X * 25 + Offset.X, target.Coordinate.Y * 25 + Offset.Y, 25, 25), Color.Red);
 					}
 				}
 			}

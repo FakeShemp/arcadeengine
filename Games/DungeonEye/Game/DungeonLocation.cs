@@ -280,6 +280,16 @@ namespace DungeonEye
 		}
 
 
+		/// <summary>
+		/// Returns a String that represents the current location
+		/// </summary>
+		/// <returns></returns>
+		public string ToStringShort()
+		{
+			return string.Format("{0:00}x{1:00} in \"{2}\"", Coordinate.X, Coordinate.Y, Maze);
+		}
+
+
 
 		#region Properties
 

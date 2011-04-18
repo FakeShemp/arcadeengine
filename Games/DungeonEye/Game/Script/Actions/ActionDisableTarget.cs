@@ -27,20 +27,21 @@ using ArcEngine.Graphic;
 using ArcEngine.Input;
 using DungeonEye.Gui;
 
-namespace DungeonEye.Script
+
+namespace DungeonEye.Script.Actions
 {
 	/// <summary>
 	/// 
 	/// </summary>
-	public class AlcoveScript : ScriptBase
+	public class ScriptDisableTarget : ActionBase
 	{
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public AlcoveScript()
+		public ScriptDisableTarget()
 		{
-
+			Name = "DisableTarget";
 		}
 
 
@@ -50,23 +51,11 @@ namespace DungeonEye.Script
 		/// <returns></returns>
 		public override bool Run()
 		{
-			Team team = GameScreen.Team;
-			if (team.ItemInHand == null || team.ItemInHand.Name != ItemName)
-			{
 
-				return false;
-			}
 
-			if (ConsumeItem)
-				team.SetItemInHand(null);
-
-			return base.Run();
+			return true;
 		}
 
-
-
-
-		#region IO
 
 		/// <summary>
 		/// 
@@ -75,44 +64,8 @@ namespace DungeonEye.Script
 		/// <returns></returns>
 		public override bool Load(XmlNode xml)
 		{
-			if (xml == null)
-				return false;
-
-
-			foreach (XmlNode node in xml)
-			{
-				switch (node.Name)
-				{
-					//case "condition":
-					//{
-					//    Condition = (AlcoveCondition)Enum.Parse(typeof(AlcoveCondition), node.InnerText);
-					//}
-					//break;
-
-					case "consume":
-					{
-						ConsumeItem = true;
-					}
-					break;
-
-					case "item":
-					{
-						ItemName = node.InnerText;
-					}
-					break;
-
-					default:
-					{
-						Trace.WriteLine("[ScriptBase] Load() : Unknown node \"" + node.Name + "\" found.");
-					}
-					break;
-				}
-
-			}
-
 			return true;
 		}
-
 
 
 		/// <summary>
@@ -122,55 +75,14 @@ namespace DungeonEye.Script
 		/// <returns></returns>
 		public override bool Save(XmlWriter writer)
 		{
-			if (writer == null)
-				return false;
-
-		//	writer.WriteElementString("condition", Condition.ToString());
-
-
-			if (ConsumeItem)
-				writer.WriteValue("consume");
-
-			writer.WriteElementString("item", ItemName);
-
-			return base.Save(writer);
+			return true;
 		}
 
-		#endregion
 
 
 
 		#region Properties
 
-/*
-		/// <summary>
-		/// Condition
-		/// </summary>
-		public AlcoveCondition Condition
-		{
-			get;
-			set;
-		}
-*/
-
-		/// <summary>
-		/// Consume item on use
-		/// </summary>
-		public bool ConsumeItem
-		{
-			get;
-			set;
-		}
-
-
-		/// <summary>
-		/// Needed item name
-		/// </summary>
-		public string ItemName
-		{
-			get;
-			set;
-		}
 
 		#endregion
 	}

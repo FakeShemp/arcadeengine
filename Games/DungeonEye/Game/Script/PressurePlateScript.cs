@@ -29,7 +29,10 @@ using DungeonEye.Gui;
 
 namespace DungeonEye.Script
 {
-	class PressurePlateScript
+	/// <summary>
+	/// 
+	/// </summary>
+	public class PressurePlateScript : ScriptBase
 	{
 	}
 }

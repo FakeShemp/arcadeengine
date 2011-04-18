@@ -29,7 +29,10 @@ using DungeonEye.Gui;
 
 namespace DungeonEye.Script
 {
-	class WallSwitchScript
+	/// <summary>
+	/// 
+	/// </summary>
+	public class WallSwitchScript : ScriptBase
 	{
 	}
 }

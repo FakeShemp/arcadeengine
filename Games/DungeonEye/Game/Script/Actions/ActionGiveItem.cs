@@ -3,22 +3,21 @@ using System.Collections.Generic;
 using System.Xml;
 using System.Text;
 
-namespace DungeonEye.Script
+namespace DungeonEye.Script.Actions
 {
 	/// <summary>
 	/// 
 	/// </summary>
-	public class ScriptDisableTarget : ScriptBase
+	public class ScriptGiveItem : ActionBase
 	{
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public ScriptDisableTarget()
+		public ScriptGiveItem()
 		{
-			Name = "DisableTarget";
+			Name = "GiveItem";
 		}
-
 
 		/// <summary>
 		/// 
@@ -57,7 +56,6 @@ namespace DungeonEye.Script
 
 
 		#region Properties
-
 
 		#endregion
 	}

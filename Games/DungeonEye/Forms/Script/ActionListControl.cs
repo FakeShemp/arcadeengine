@@ -26,6 +26,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using DungeonEye.Script;
+using DungeonEye.Script.Actions;
 
 namespace DungeonEye.Forms
 {
@@ -53,7 +54,7 @@ namespace DungeonEye.Forms
 
 			ActionsBox.Items.Clear();
 
-			foreach (ScriptBase action in Actions)
+			foreach (ActionBase action in Actions)
 				ActionsBox.Items.Add(action.Name);
 
 			ActionsBox.EndUpdate();
@@ -76,7 +77,7 @@ namespace DungeonEye.Forms
 			{
 			}
 			EventActionForm form = new EventActionForm(Dungeon);
-			ScriptBase action = Actions[ActionsBox.SelectedIndex];
+			ActionBase action = Actions[ActionsBox.SelectedIndex];
 			form.SetAction(action);
 			form.ShowDialog();
 
@@ -112,7 +113,7 @@ namespace DungeonEye.Forms
 			int id = ActionsBox.SelectedIndex;
 			if (id <= 0)
 				return;
-			ScriptBase action = Actions[id];
+			ActionBase action = Actions[id];
 			Actions.RemoveAt(id);
 			Actions.Insert(id - 1, action);
 
@@ -136,7 +137,7 @@ namespace DungeonEye.Forms
 			if (id >= Actions.Count - 1)
 				return;
 
-			ScriptBase action = Actions[id];
+			ActionBase action = Actions[id];
 			Actions.RemoveAt(id);
 			Actions.Insert(id + 1, action);
 
@@ -203,7 +204,7 @@ namespace DungeonEye.Forms
 		/// <summary>
 		/// Actions collection
 		/// </summary>
-		public IList<ScriptBase> Actions
+		public IList<ActionBase> Actions
 		{
 			get
 			{
@@ -218,7 +219,7 @@ namespace DungeonEye.Forms
 				UpdateActionList();
 			}
 		}
-		IList<ScriptBase> actions;
+		IList<ActionBase> actions;
 
 
 		/// <summary>

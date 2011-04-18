@@ -260,7 +260,7 @@ namespace DungeonEye
 		#endregion
 	}
 
-
+/*
 	/// <summary>
 	/// Condtions for alcove's script
 	/// </summary>
@@ -277,4 +277,5 @@ namespace DungeonEye
 		/// </summary>
 		OnItemRemoved,
 	}
+*/
 }
