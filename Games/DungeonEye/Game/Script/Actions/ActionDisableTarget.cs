@@ -33,13 +33,13 @@ namespace DungeonEye.Script.Actions
 	/// <summary>
 	/// 
 	/// </summary>
-	public class ScriptDisableTarget : ActionBase
+	public class ActionDisableTarget : ActionBase
 	{
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public ScriptDisableTarget()
+		public ActionDisableTarget()
 		{
 			Name = "DisableTarget";
 		}

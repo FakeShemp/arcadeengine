@@ -8,13 +8,13 @@ namespace DungeonEye.Script.Actions
 	/// <summary>
 	/// Deactivate a target
 	/// </summary>
-	public class ScriptDeactivateTarget : ActionBase
+	public class ActionDeactivateTarget : ActionBase
 	{
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public ScriptDeactivateTarget()
+		public ActionDeactivateTarget()
 		{
 			Name = "DeactivateTarget";
 		}

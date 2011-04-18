@@ -8,13 +8,13 @@ namespace DungeonEye.Script.Actions
 	/// <summary>
 	/// 
 	/// </summary>
-	public class ScriptGiveExperience : ActionBase
+	public class ActionGiveExperience : ActionBase
 	{
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public ScriptGiveExperience()
+		public ActionGiveExperience()
 		{
 			Name = "GiveExperience";
 		}

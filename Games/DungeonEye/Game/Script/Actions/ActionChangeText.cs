@@ -8,13 +8,13 @@ namespace DungeonEye.Script.Actions
 	/// <summary>
 	/// 
 	/// </summary>
-	public class ScriptChangeText : ActionBase
+	public class ActionChangeText : ActionBase
 	{
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public ScriptChangeText()
+		public ActionChangeText()
 		{
 
 			Name = "ChangeText";

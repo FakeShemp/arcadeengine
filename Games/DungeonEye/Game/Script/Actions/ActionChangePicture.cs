@@ -30,13 +30,13 @@ namespace DungeonEye.Script.Actions
 	/// <summary>
 	/// Changes the picture of the dialog
 	/// </summary>
-	public class ScriptChangePicture : ActionBase
+	public class ActionChangePicture : ActionBase
 	{
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public ScriptChangePicture()
+		public ActionChangePicture()
 		{
 			Name = "ChangePicture";
 		}

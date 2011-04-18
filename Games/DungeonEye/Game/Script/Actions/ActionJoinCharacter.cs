@@ -8,12 +8,12 @@ namespace DungeonEye.Script.Actions
 	/// <summary>
 	/// 
 	/// </summary>
-	public class ScriptJoinCharacter : ActionBase
+	public class ActionJoinCharacter : ActionBase
 	{
 		/// <summary>
 		/// 
 		/// </summary>
-		public ScriptJoinCharacter()
+		public ActionJoinCharacter()
 		{
 			Name = "JoinCharacter";
 		}

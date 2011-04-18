@@ -20,7 +20,7 @@ namespace DungeonEye.Forms
 		/// 
 		/// </summary>
 		/// <param name="script"></param>
-		public GiveExperienceControl(ScriptGiveExperience script)
+		public GiveExperienceControl(ActionGiveExperience script)
 		{
 			InitializeComponent();
 
@@ -28,7 +28,7 @@ namespace DungeonEye.Forms
 			if (script != null)
 				Action = script;
 			else
-				Action = new ScriptGiveExperience();
+				Action = new ActionGiveExperience();
 
 			UpdateUI();
 		}
@@ -39,7 +39,7 @@ namespace DungeonEye.Forms
 		/// </summary>
 		void UpdateUI()
 		{
-			ScriptGiveExperience script = Action as ScriptGiveExperience;
+			ActionGiveExperience script = Action as ActionGiveExperience;
 			if (script == null)
 				return;
 
@@ -57,7 +57,7 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void AmountBox_ValueChanged(object sender, EventArgs e)
 		{
-			(Action as ScriptGiveExperience).Amount = (int)AmountBox.Value;
+			(Action as ActionGiveExperience).Amount = (int)AmountBox.Value;
 		}
 
 		#endregion

@@ -8,12 +8,12 @@ namespace DungeonEye.Script.Actions
 	/// <summary>
 	/// 
 	/// </summary>
-	public class ScriptEnableChoice : ActionBase
+	public class ActionEnableChoice : ActionBase
 	{
 		/// <summary>
 		/// 
 		/// </summary>
-		public ScriptEnableChoice()
+		public ActionEnableChoice()
 		{
 			Name = "EnableChoice";
 		}

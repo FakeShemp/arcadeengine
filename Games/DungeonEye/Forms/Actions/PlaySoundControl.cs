@@ -20,14 +20,14 @@ namespace DungeonEye.Forms
 		/// 
 		/// </summary>
 		/// <param name="script"></param>
-		public PlaySoundControl(ScriptPlaySound script)
+		public PlaySoundControl(ActionPlaySound script)
 		{
 			InitializeComponent();
 
 			if (script != null)
 				Action = script;
 			else
-				Action = new ScriptPlaySound();
+				Action = new ActionPlaySound();
 		}
 
 

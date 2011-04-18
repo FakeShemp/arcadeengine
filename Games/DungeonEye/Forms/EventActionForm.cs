@@ -78,10 +78,10 @@ namespace DungeonEye.Forms
 		{
 			ControlHandle = null;
 			
-			if (script is ScriptTeleport)
+			if (script is ActionTeleport)
 			{
 				ActionListBox.SelectedItem = "Teleport";
-				ControlHandle = new TeleportControl(script as ScriptTeleport, Dungeon);
+				ControlHandle = new TeleportControl(script as ActionTeleport, Dungeon);
 			}
 
 			else if (script is ScriptActivateTarget)
@@ -90,16 +90,16 @@ namespace DungeonEye.Forms
 				ControlHandle = new ActivateTargetControl(script as ScriptActivateTarget, Dungeon);
 			}
 
-			else if (script is ScriptChangePicture)
+			else if (script is ActionChangePicture)
 			{
 				ActionListBox.SelectedItem = "Change Picture";
-				ControlHandle = new ChangePictureControl(script as ScriptChangePicture);
+				ControlHandle = new ChangePictureControl(script as ActionChangePicture);
 			}
 
-			else if (script is ScriptPlaySound)
+			else if (script is ActionPlaySound)
 			{
 				ActionListBox.SelectedItem = "Play Sound";
-				ControlHandle = new PlaySoundControl(script as ScriptPlaySound);
+				ControlHandle = new PlaySoundControl(script as ActionPlaySound);
 			}
 
 			else if (script is ScriptEndDialog)
@@ -108,64 +108,64 @@ namespace DungeonEye.Forms
 				ControlHandle = new EndDialogControl(script as ScriptEndDialog);
 			}
 
-			else if (script is ScriptEndChoice)
+			else if (script is ActionEndChoice)
 			{
 				ActionListBox.SelectedItem = "End Choice";
-				ControlHandle = new EndChoiceControl(script as ScriptEndChoice);
+				ControlHandle = new EndChoiceControl(script as ActionEndChoice);
 			}
 
-			else if (script is ScriptDeactivateTarget)
+			else if (script is ActionDeactivateTarget)
 			{
 				ActionListBox.SelectedItem = "Deactivate";
-				ControlHandle = new DeactivateTargetControl(script as ScriptDeactivateTarget, Dungeon);
+				ControlHandle = new DeactivateTargetControl(script as ActionDeactivateTarget, Dungeon);
 			}
 
-			else if (script is ScriptEnableChoice)
+			else if (script is ActionEnableChoice)
 			{
 				ActionListBox.SelectedItem = "Enable Choice";
-				ControlHandle = new EnableChoiceControl(script as ScriptEnableChoice);
+				ControlHandle = new EnableChoiceControl(script as ActionEnableChoice);
 			}
 
-			else if (script is ScriptDisableChoice)
+			else if (script is ActionDisableChoice)
 			{
 				ActionListBox.SelectedItem = "Disable Choice";
-				ControlHandle = new DisableChoiceControl(script as ScriptDisableChoice);
+				ControlHandle = new DisableChoiceControl(script as ActionDisableChoice);
 			}
 
-			else if (script is ScriptToggleTarget)
+			else if (script is ActionToggleTarget)
 			{
 				ActionListBox.SelectedItem = "Toggle";
-				ControlHandle = new ToggleTargetControl(script as ScriptToggleTarget, Dungeon);
+				ControlHandle = new ToggleTargetControl(script as ActionToggleTarget, Dungeon);
 			}
 
-			else if (script is ScriptHealing)
+			else if (script is ActionHealing)
 			{
 				ActionListBox.SelectedItem = "Healing";
-				ControlHandle = new HealingControl(script as ScriptHealing);
+				ControlHandle = new HealingControl(script as ActionHealing);
 			}
 
-			else if (script is ScriptGiveExperience)
+			else if (script is ActionGiveExperience)
 			{
 				ActionListBox.SelectedItem = "Give Experience";
-				ControlHandle = new GiveExperienceControl(script as ScriptGiveExperience);
+				ControlHandle = new GiveExperienceControl(script as ActionGiveExperience);
 			}
 
-			else if (script is ScriptGiveItem)
+			else if (script is ActionGiveItem)
 			{
 				ActionListBox.SelectedItem = "Give Item";
-				ControlHandle = new GiveItemControl(script as ScriptGiveItem);
+				ControlHandle = new GiveItemControl(script as ActionGiveItem);
 			}
 
-			else if (script is ScriptChangeText)
+			else if (script is ActionChangeText)
 			{
 				ActionListBox.SelectedItem = "Change Text";
-				ControlHandle = new ChangeTextControl(script as ScriptChangeText);
+				ControlHandle = new ChangeTextControl(script as ActionChangeText);
 			}
 
-			else if (script is ScriptJoinCharacter)
+			else if (script is ActionJoinCharacter)
 			{
 				ActionListBox.SelectedItem = "Join Character";
-				ControlHandle = new JoinCharacterControl(script as ScriptJoinCharacter);
+				ControlHandle = new JoinCharacterControl(script as ActionJoinCharacter);
 			}
 
 

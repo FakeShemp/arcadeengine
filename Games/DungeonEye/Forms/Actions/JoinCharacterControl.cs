@@ -21,14 +21,14 @@ namespace DungeonEye.Forms
 		/// 
 		/// </summary>
 		/// <param name="script"></param>
-		public JoinCharacterControl(ScriptJoinCharacter script)
+		public JoinCharacterControl(ActionJoinCharacter script)
 		{
 			InitializeComponent();
 
 			if (script != null)
 				Action = script;
 			else
-				Action = new ScriptJoinCharacter();
+				Action = new ActionJoinCharacter();
 		}
 
 

@@ -20,14 +20,14 @@ namespace DungeonEye.Forms
 		/// 
 		/// </summary>
 		/// <param name="script"></param>
-		public ChangePictureControl(ScriptChangePicture script)
+		public ChangePictureControl(ActionChangePicture script)
 		{
 			InitializeComponent();
 
 			if (script != null)
 				Action = script;
 			else
-				Action = new ScriptChangePicture();
+				Action = new ActionChangePicture();
 		}
 
 

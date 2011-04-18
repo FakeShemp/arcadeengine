@@ -70,7 +70,16 @@
             "Exchanges",
             "Set To",
             "Play Sound",
-            "Stop Sounds"});
+            "Stop Sounds",
+			"Change Picture",
+			"Disable Choice",
+			"Enable Choice",
+			"End Choice",
+			"End Dialog",
+			"Give Experience",
+			"Heals",
+			"Join Character",
+			"Teleport"});
 			this.ActionChooserBox.Location = new System.Drawing.Point(93, 19);
 			this.ActionChooserBox.Name = "ActionChooserBox";
 			this.ActionChooserBox.Size = new System.Drawing.Size(157, 21);

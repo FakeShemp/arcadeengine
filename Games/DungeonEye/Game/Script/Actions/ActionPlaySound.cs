@@ -8,13 +8,13 @@ namespace DungeonEye.Script.Actions
 	/// <summary>
 	/// Play a sound
 	/// </summary>
-	public class ScriptPlaySound : ActionBase
+	public class ActionPlaySound : ActionBase
 	{
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public ScriptPlaySound()
+		public ActionPlaySound()
 		{
 			Name = "PlaySound";
 		}

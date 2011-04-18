@@ -19,7 +19,7 @@ namespace DungeonEye.Forms
 		/// 
 		/// </summary>
 		/// <param name="script"></param>
-		public HealingControl(ScriptHealing script)
+		public HealingControl(ActionHealing script)
 		{
 			InitializeComponent();
 
@@ -27,7 +27,7 @@ namespace DungeonEye.Forms
 			if (script != null)
 				Action = script;
 			else
-				Action = new ScriptHealing();
+				Action = new ActionHealing();
 		}
 
 

@@ -30,12 +30,12 @@ namespace DungeonEye.Script.Actions
 	/// <summary>
 	/// Teleport the team
 	/// </summary>
-	public class ScriptTeleport : ActionBase
+	public class ActionTeleport : ActionBase
 	{
 		/// <summary>
 		/// 
 		/// </summary>
-		public ScriptTeleport()
+		public ActionTeleport()
 		{ 
 			Name = "Teleport";
 		}

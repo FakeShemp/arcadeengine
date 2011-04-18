@@ -21,14 +21,14 @@ namespace DungeonEye.Forms
 		/// </summary>
 		/// <param name="script"></param>
 		/// <param name="dungeon">Dungeon handle</param>
-		public ToggleTargetControl(ScriptToggleTarget script, Dungeon dungeon)
+		public ToggleTargetControl(ActionToggleTarget script, Dungeon dungeon)
 		{
 			InitializeComponent();
 
 			if (script != null)
 				Action = script;
 			else
-				Action = new ScriptToggleTarget();
+				Action = new ActionToggleTarget();
 
 			TargetBox.SetTarget(dungeon, Action.Target);
 		}
@@ -46,7 +46,7 @@ namespace DungeonEye.Forms
 			if (Action == null)
 				return;
 
-			((ScriptToggleTarget)Action).Target = target;
+			((ActionToggleTarget)Action).Target = target;
 		}
 
 		#endregion

@@ -30,7 +30,7 @@ using DungeonEye.Gui;
 namespace DungeonEye.Script.Actions
 {
 	/// <summary>
-	/// 
+	/// Base class for actions in scripts
 	/// </summary>
 	public class ActionBase
 	{

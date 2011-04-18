@@ -9,13 +9,13 @@ namespace DungeonEye.Script.Actions
 	/// <summary>
 	/// 
 	/// </summary>
-	public class ScriptEndChoice : ActionBase
+	public class ActionEndChoice : ActionBase
 	{
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public ScriptEndChoice()
+		public ActionEndChoice()
 		{
 			Name = "EndChoice";
 		}

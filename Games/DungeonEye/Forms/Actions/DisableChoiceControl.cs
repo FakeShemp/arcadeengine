@@ -20,14 +20,14 @@ namespace DungeonEye.Forms
 		/// 
 		/// </summary>
 		/// <param name="script"></param>
-		public DisableChoiceControl(ScriptDisableChoice script)
+		public DisableChoiceControl(ActionDisableChoice script)
 		{
 			InitializeComponent();
 
 			if (script != null)
 				Action = script;
 			else
-				Action = new ScriptDisableChoice();
+				Action = new ActionDisableChoice();
 		}
 
 

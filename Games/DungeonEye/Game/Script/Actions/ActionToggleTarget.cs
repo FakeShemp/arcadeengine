@@ -6,15 +6,15 @@ using System.Text;
 namespace DungeonEye.Script.Actions
 {
 	/// <summary>
-	/// Toggle script
+	/// Toggle action
 	/// </summary>
-	public class ScriptToggleTarget : ActionBase
+	public class ActionToggleTarget : ActionBase
 	{
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public ScriptToggleTarget()
+		public ActionToggleTarget()
 		{
 			Name = "ToggleTarget";
 		}

@@ -8,13 +8,13 @@ namespace DungeonEye.Script.Actions
 	/// <summary>
 	/// 
 	/// </summary>
-	public class ScriptHealing : ActionBase
+	public class ActionHealing : ActionBase
 	{
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public ScriptHealing()
+		public ActionHealing()
 		{
 			Name = "Healing";
 		}
