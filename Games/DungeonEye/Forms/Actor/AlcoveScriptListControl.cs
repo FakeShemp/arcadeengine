@@ -71,6 +71,26 @@ namespace DungeonEye.Forms
 
 		#region Control events
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ScriptListBox_DoubleClick(object sender, EventArgs e)
+		{
+			if (ScriptListBox.SelectedIndex == -1)
+				return;
+
+
+			new AlcoveScriptForm(Scripts[ScriptListBox.SelectedIndex], Dungeon).ShowDialog();
+
+			UpdateUI();
+
+		}
+
+
+
 		/// <summary>
 		/// 
 		/// </summary>

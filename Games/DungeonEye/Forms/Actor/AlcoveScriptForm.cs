@@ -51,8 +51,8 @@ namespace DungeonEye.Forms
 				Script = script;
 
 			Dungeon = dungeon;
-			ActionBox.Script = Script;
 			ActionBox.Dungeon = dungeon;
+			ActionBox.Script = Script;
 		}
 
 

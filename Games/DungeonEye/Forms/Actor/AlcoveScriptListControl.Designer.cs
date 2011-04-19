@@ -65,6 +65,7 @@
 			this.ScriptListBox.Name = "ScriptListBox";
 			this.ScriptListBox.Size = new System.Drawing.Size(288, 95);
 			this.ScriptListBox.TabIndex = 1;
+			this.ScriptListBox.DoubleClick += new System.EventHandler(this.ScriptListBox_DoubleClick);
 			// 
 			// toolStrip1
 			// 

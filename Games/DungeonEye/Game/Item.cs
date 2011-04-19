@@ -192,6 +192,12 @@ namespace DungeonEye
 					}
 					break;
 
+					case "isbig":
+					{
+						IsBig = true;
+					}
+					break;
+
 					case "canidentify":
 					{
 						CanIdentify = bool.Parse(node.Attributes["value"].Value);
@@ -314,23 +320,34 @@ namespace DungeonEye
 			writer.WriteEndElement();
 
 			Script.Save("script", writer);
-			//writer.WriteStartElement("script");
-			//writer.WriteAttributeString("name", ScriptName);
-			//writer.WriteAttributeString("interface", InterfaceName);
-			//writer.WriteEndElement();
 
-			writer.WriteStartElement("iscursed");
-			writer.WriteAttributeString("value", IsCursed.ToString());
-			writer.WriteEndElement();
+			if (IsCursed)
+			{
+				writer.WriteStartElement("iscursed");
+				writer.WriteAttributeString("value", IsCursed.ToString());
+				writer.WriteEndElement();
+			}
 
-			writer.WriteStartElement("isidentified");
-			writer.WriteAttributeString("value", IsCursed.ToString());
-			writer.WriteEndElement();
+			if (IsIdentified)
+			{
+				writer.WriteStartElement("isidentified");
+				writer.WriteAttributeString("value", IsCursed.ToString());
+				writer.WriteEndElement();
+			}
 
-			writer.WriteStartElement("canidentify");
-			writer.WriteAttributeString("value", IsCursed.ToString());
-			writer.WriteEndElement();
+			if (CanIdentify)
+			{
+				writer.WriteStartElement("canidentify");
+				writer.WriteAttributeString("value", IsCursed.ToString());
+				writer.WriteEndElement();
+			}
 
+			if (IsBig)
+			{
+				writer.WriteStartElement("isbig");
+				writer.WriteAttributeString("value", IsBig.ToString());
+				writer.WriteEndElement();
+			}
 
 			writer.WriteStartElement("allowedhands");
 			writer.WriteAttributeString("value", AllowedHands.ToString());
@@ -652,6 +669,15 @@ namespace DungeonEye
 		/// Is the item cursed
 		/// </summary>
 		public bool IsCursed
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Is the item big
+		/// </summary>
+		public bool IsBig
 		{
 			get;
 			set;

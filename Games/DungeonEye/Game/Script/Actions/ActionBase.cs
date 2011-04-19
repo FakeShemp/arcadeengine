@@ -53,35 +53,32 @@ namespace DungeonEye.Script.Actions
 		/// <summary>
 		/// Loads a party
 		/// </summary>
-		/// <param name="filename">Xml data</param>
+		/// <param name="node">XmlNode handle</param>
 		/// <returns>True if team successfuly loaded, otherwise false</returns>
-		public virtual bool Load(XmlNode xml)
+		public virtual bool Load(XmlNode node)
 		{
-			if (xml == null)
+			if (node == null)
 				return false;
 
 
-			foreach (XmlNode node in xml)
+			switch (node.Name)
 			{
-				switch (node.Name)
+				case "target":
 				{
-					case "target":
-					{
-						if (Target == null)
-							Target = new DungeonLocation();
+					if (Target == null)
+						Target = new DungeonLocation();
 
-						Target.Load(node);
-					}
-					break;
-
-					default:
-					{
-						Trace.WriteLine("[ScriptBase] Load() : Unknown node \"" + node.Name + "\" found.");
-					}
-					break;
+					Target.Load(node);
 				}
+				break;
 
+				default:
+				{
+					Trace.WriteLine("[ActionBase] Load() : Unknown node \"" + node.Name + "\" found.");
+				}
+				break;
 			}
+
 			return true;
 		}
 

@@ -53,6 +53,26 @@ namespace DungeonEye
 		}
 
 
+		/// <summary>
+		/// Add an item to the alcove
+		/// </summary>
+		/// <param name="item">Item handle</param>
+		/// <returns>True if the item can be added to the alcove</returns>
+		public bool AddItem(Item item)
+		{
+			if (item == null)
+				return false;
+
+			foreach (AlcoveScript script in OnAddedItem)
+			{
+				script.Run();
+			}
+
+
+			return true;
+		}
+
+
 
 		#region I/O
 

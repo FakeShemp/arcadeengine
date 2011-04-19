@@ -130,6 +130,7 @@ namespace DungeonEye.Forms
 				IdentifiedBox.Checked = Item.IsIdentified;
 				ShortNameBox.Text = Item.ShortName;
 				IdentifiedNameBox.Text = Item.IdentifiedName;
+				IsBigBox.Checked = Item.IsBig;
 
 
 				PiercingBox.Checked = (Item.DamageType & DamageType.Pierce) == DamageType.Pierce;
@@ -637,6 +638,19 @@ namespace DungeonEye.Forms
 
 
 		#region Events
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void IsBigBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Item == null)
+				return;
+
+			Item.IsBig = IsBigBox.Checked;
+		}
 
 
 		/// <summary>

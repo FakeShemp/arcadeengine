@@ -55,7 +55,6 @@ namespace DungeonEye.Script.Actions
 			{
 				switch (node.Name.ToLower())
 				{
-
 					default:
 					{
 						base.Load(node);

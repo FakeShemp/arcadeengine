@@ -160,6 +160,14 @@ namespace DungeonEye
 			Team team = GameScreen.Team;
 			if (team.ItemInHand != null)
 			{
+				if (!alcove.AcceptBigItems && team.ItemInHand.IsBig)
+				{
+					return false;
+				}
+
+				if (!alcove.AddItem(team.ItemInHand))
+					return false;
+
 				Square.DropItemFromSide(side, team.ItemInHand);
 				team.SetItemInHand(null);
 			}

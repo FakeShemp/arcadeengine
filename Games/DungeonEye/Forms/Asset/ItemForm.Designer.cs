@@ -28,7 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			DungeonEye.Dice dice1 = new DungeonEye.Dice();
+			DungeonEye.Dice dice2 = new DungeonEye.Dice();
 			this.GLGroundTile = new OpenTK.GLControl();
 			this.GLInventoryTile = new OpenTK.GLControl();
 			this.label2 = new System.Windows.Forms.Label();
@@ -101,24 +101,25 @@
 			this.ScriptTab = new System.Windows.Forms.TabPage();
 			this.scriptControl1 = new ArcEngine.Editor.ScriptControl();
 			this.groupBox11 = new System.Windows.Forms.GroupBox();
-			((System.ComponentModel.ISupportInitialize) (this.GroundTileBox)).BeginInit();
+			this.IsBigBox = new System.Windows.Forms.CheckBox();
+			((System.ComponentModel.ISupportInitialize)(this.GroundTileBox)).BeginInit();
 			this.groupBox4.SuspendLayout();
 			this.groupBox5.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize) (this.ACBonusBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize) (this.RangeBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize) (this.WeightBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize) (this.SpeedBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.ACBonusBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.RangeBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.WeightBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.SpeedBox)).BeginInit();
 			this.groupBox6.SuspendLayout();
 			this.groupBox8.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize) (this.MultiplierBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize) (this.CriticalMaxBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize) (this.CriticalMinBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize) (this.IncomingTileBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize) (this.ThrownTileBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.MultiplierBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.CriticalMaxBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.CriticalMinBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.IncomingTileBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.ThrownTileBox)).BeginInit();
 			this.groupBox3.SuspendLayout();
 			this.tabControl1.SuspendLayout();
 			this.VisualTab.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize) (this.InventoryTileBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.InventoryTileBox)).BeginInit();
 			this.PropertiesTab.SuspendLayout();
 			this.groupBox7.SuspendLayout();
 			this.groupBox1.SuspendLayout();
@@ -233,6 +234,7 @@
 			// groupBox5
 			// 
 			this.groupBox5.Controls.Add(this.CanIdentifyBox);
+			this.groupBox5.Controls.Add(this.IsBigBox);
 			this.groupBox5.Controls.Add(this.IdentifiedBox);
 			this.groupBox5.Controls.Add(this.IsCursedBox);
 			this.groupBox5.Controls.Add(this.ACBonusBox);
@@ -266,11 +268,11 @@
 			// IdentifiedBox
 			// 
 			this.IdentifiedBox.AutoSize = true;
-			this.IdentifiedBox.Location = new System.Drawing.Point(133, 72);
+			this.IdentifiedBox.Location = new System.Drawing.Point(133, 65);
 			this.IdentifiedBox.Name = "IdentifiedBox";
-			this.IdentifiedBox.Size = new System.Drawing.Size(79, 17);
+			this.IdentifiedBox.Size = new System.Drawing.Size(80, 17);
 			this.IdentifiedBox.TabIndex = 6;
-			this.IdentifiedBox.Text = "Is identified";
+			this.IdentifiedBox.Text = "Is Identified";
 			this.IdentifiedBox.UseVisualStyleBackColor = true;
 			this.IdentifiedBox.CheckedChanged += new System.EventHandler(this.IdentifiedBox_CheckedChanged);
 			// 
@@ -279,9 +281,9 @@
 			this.IsCursedBox.AutoSize = true;
 			this.IsCursedBox.Location = new System.Drawing.Point(133, 44);
 			this.IsCursedBox.Name = "IsCursedBox";
-			this.IsCursedBox.Size = new System.Drawing.Size(69, 17);
+			this.IsCursedBox.Size = new System.Drawing.Size(70, 17);
 			this.IsCursedBox.TabIndex = 5;
-			this.IsCursedBox.Text = "Is cursed";
+			this.IsCursedBox.Text = "Is Cursed";
 			this.IsCursedBox.UseVisualStyleBackColor = true;
 			this.IsCursedBox.CheckedChanged += new System.EventHandler(this.CursedBox_CheckedChanged);
 			// 
@@ -938,10 +940,10 @@
 			// DamageBox
 			// 
 			this.DamageBox.ControlText = "Damage :";
-			dice1.Faces = 1;
-			dice1.Modifier = 0;
-			dice1.Throws = 1;
-			this.DamageBox.Dice = dice1;
+			dice2.Faces = 1;
+			dice2.Modifier = 0;
+			dice2.Throws = 1;
+			this.DamageBox.Dice = dice2;
 			this.DamageBox.Location = new System.Drawing.Point(6, 255);
 			this.DamageBox.MinimumSize = new System.Drawing.Size(225, 100);
 			this.DamageBox.Name = "DamageBox";
@@ -981,6 +983,17 @@
 			this.groupBox11.TabStop = false;
 			this.groupBox11.Text = "Properties :";
 			// 
+			// IsBigBox
+			// 
+			this.IsBigBox.AutoSize = true;
+			this.IsBigBox.Location = new System.Drawing.Point(133, 88);
+			this.IsBigBox.Name = "IsBigBox";
+			this.IsBigBox.Size = new System.Drawing.Size(52, 17);
+			this.IsBigBox.TabIndex = 6;
+			this.IsBigBox.Text = "Is Big";
+			this.IsBigBox.UseVisualStyleBackColor = true;
+			this.IsBigBox.CheckedChanged += new System.EventHandler(this.IsBigBox_CheckedChanged);
+			// 
 			// ItemForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -992,30 +1005,30 @@
 			this.Text = "ItemForm";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ItemForm_FormClosed);
 			this.Load += new System.EventHandler(this.Form_Load);
-			((System.ComponentModel.ISupportInitialize) (this.GroundTileBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.GroundTileBox)).EndInit();
 			this.groupBox4.ResumeLayout(false);
 			this.groupBox4.PerformLayout();
 			this.groupBox5.ResumeLayout(false);
 			this.groupBox5.PerformLayout();
-			((System.ComponentModel.ISupportInitialize) (this.ACBonusBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize) (this.RangeBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize) (this.WeightBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize) (this.SpeedBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.ACBonusBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.RangeBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.WeightBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.SpeedBox)).EndInit();
 			this.groupBox6.ResumeLayout(false);
 			this.groupBox6.PerformLayout();
 			this.groupBox8.ResumeLayout(false);
 			this.groupBox8.PerformLayout();
-			((System.ComponentModel.ISupportInitialize) (this.MultiplierBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize) (this.CriticalMaxBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize) (this.CriticalMinBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize) (this.IncomingTileBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize) (this.ThrownTileBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.MultiplierBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.CriticalMaxBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.CriticalMinBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.IncomingTileBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.ThrownTileBox)).EndInit();
 			this.groupBox3.ResumeLayout(false);
 			this.groupBox3.PerformLayout();
 			this.tabControl1.ResumeLayout(false);
 			this.VisualTab.ResumeLayout(false);
 			this.VisualTab.PerformLayout();
-			((System.ComponentModel.ISupportInitialize) (this.InventoryTileBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.InventoryTileBox)).EndInit();
 			this.PropertiesTab.ResumeLayout(false);
 			this.groupBox7.ResumeLayout(false);
 			this.groupBox7.PerformLayout();
@@ -1101,5 +1114,6 @@
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.TextBox ShortNameBox;
 		private System.Windows.Forms.Label label34;
+		private System.Windows.Forms.CheckBox IsBigBox;
 	}
 }
