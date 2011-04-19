@@ -43,9 +43,6 @@ namespace DungeonEye
 		public SquareActor(Square square)
 		{
 			Square = square;
-			//Actions = new List<ActionBase>();
-			//Count = new SwitchCount();
-			Scripts = new List<ScriptBase>();
 		}
 
 
@@ -72,52 +69,59 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Loads action script definitions
+		/// Gets a list of all targets
+		/// </summary>
+		/// <returns>Array of targets</returns>
+		public virtual DungeonLocation[] GetTargets()
+		{
+			return new DungeonLocation[]
+			{
+			};
+		}
+
+/*
+		/// <summary>
+		/// Loads script definitions
 		/// </summary>
 		/// <param name="node">XmlNode handle</param>
-		bool LoadActions(XmlNode xml)
+		protected ActionBase LoadAction(XmlNode xml)
 		{
 			if (xml == null)
-				return false;
+				return null;
 
-			ActionBase script = null;
+			ActionBase action = null;
 
-			foreach (XmlNode node in xml)
+			switch (xml.Name.ToLower())
 			{
-				switch (node.Name.ToLower())
+				case "toggletarget":
 				{
-					case "toggletarget":
-					{
-						script = new ToggleTarget();
-					}
-					break;
-
-					case "activatetarget":
-					{
-						script = new ActivateTarget();
-					}
-					break;
-
-					case "deactivatetarget":
-					{
-						script = new DeactivateTarget();
-					}
-					break;
+					action = new ToggleTarget();
 				}
+				break;
 
-
-				if (script != null)
+				case "activatetarget":
 				{
-					//Actions.Add(script);
-					script.Load(node);
+					action = new ActivateTarget();
 				}
+				break;
+
+				case "deactivatetarget":
+				{
+					action = new DeactivateTarget();
+				}
+				break;
 			}
 
 
-			return true;
+			if (action == null)
+				return null;
+
+			action.Load(xml);
+
+			return action;
 		}
 
-
+*/
 		#region Script
 
 		/// <summary>
@@ -253,10 +257,10 @@ namespace DungeonEye
 		public void Run()
 		{
 			// Run each action
-			foreach (ScriptBase script in Scripts)
-			{
-				script.Run();
-			}
+			//foreach (ScriptBase script in Scripts)
+			//{
+			//    script.Run();
+			//}
 
 		}
 
@@ -330,11 +334,11 @@ namespace DungeonEye
 				}
 				break;
 
-				case "actions":
-				{
-					LoadActions(node);
-				}
-				break;
+				//case "actions":
+				//{
+				//    LoadActions(node);
+				//}
+				//break;
 
 				//case "switch":
 				//{
@@ -366,15 +370,15 @@ namespace DungeonEye
 
 			writer.WriteElementString("isactivated", IsActivated.ToString());
 
-			if (Scripts.Count > 0)
-			{
-				writer.WriteStartElement("actions");
-				foreach(ScriptBase script in Scripts)
-					script.Save(writer);
-				writer.WriteEndElement();
-			}
+			//if (Scripts.Count > 0)
+			//{
+			//    writer.WriteStartElement("actions");
+			//    foreach(ScriptBase script in Scripts)
+			//        script.Save(writer);
+			//    writer.WriteEndElement();
+			//}
 
-	//		Count.Save("switch", writer);
+			//		Count.Save("switch", writer);
 
 			return true;
 		}
@@ -423,16 +427,16 @@ namespace DungeonEye
 			protected set;
 		}
 
-/*
-		/// <summary>
-		/// Target
-		/// </summary>
-		public DungeonLocation Target
-		{
-			get;
-			set;
-		}
-*/
+		/*
+				/// <summary>
+				/// Target
+				/// </summary>
+				public DungeonLocation Target
+				{
+					get;
+					set;
+				}
+		*/
 
 		/// <summary>
 		/// Does the actor is activated
@@ -444,36 +448,36 @@ namespace DungeonEye
 		}
 
 
-/*
-		/// <summary>
-		/// Registered actions
-		/// </summary>
-		public List<ActionBase> Actions
-		{
-			get;
-			private set;
-		}
-*/
+		/*
+				/// <summary>
+				/// Registered actions
+				/// </summary>
+				public List<ActionBase> Actions
+				{
+					get;
+					private set;
+				}
 
-		/// <summary>
-		/// Registred scripts
-		/// </summary>
-		public List<ScriptBase> Scripts
-		{
-			get;
-			private set;
-		}
 
-/*
-		/// <summary>
-		/// Switch count
-		/// </summary>
-		public SwitchCount Count
-		{
-			get;
-			set;
-		}
-*/
+				/// <summary>
+				/// Registred scripts
+				/// </summary>
+				public List<ScriptBase> Scripts
+				{
+					get;
+					private set;
+				}
+
+
+				/// <summary>
+				/// Switch count
+				/// </summary>
+				public SwitchCount Count
+				{
+					get;
+					set;
+				}
+		*/
 		#endregion
 	}
 }

@@ -44,6 +44,7 @@ namespace DungeonEye
 		{
 			ActivatedDecoration = -1;
 			DeactivatedDecoration = -1;
+			Scripts = new List<WallSwitchScript>();
 		}
 
 
@@ -63,7 +64,7 @@ namespace DungeonEye
 			// Not in the decoration zone
 			if (!Square.Maze.Decoration.IsPointInside(IsActivated ? ActivatedDecoration : DeactivatedDecoration, location))
 				return false;
-	
+
 
 			// Does an item is required ?
 			if (!string.IsNullOrEmpty(NeededItem))
@@ -99,8 +100,10 @@ namespace DungeonEye
 
 			WasUsed = true;
 
+			foreach (WallSwitchScript script in Scripts)
+				script.Run();
 
-			Toggle();
+	//		Toggle();
 
 			return true;
 		}
@@ -215,6 +218,17 @@ namespace DungeonEye
 					}
 					break;
 
+					case "scripts":
+					{
+						foreach (XmlNode sub in node)
+						{
+							WallSwitchScript script = new WallSwitchScript();
+							script.Load(sub);
+							Scripts.Add(script);
+						}
+					}
+					break;
+
 					default:
 					{
 						base.Load(node);
@@ -252,6 +266,15 @@ namespace DungeonEye
 			writer.WriteElementString("activateitem", NeededItem);
 			writer.WriteElementString("consumeitem", ConsumeItem.ToString());
 			writer.WriteElementString("picklock", LockLevel.ToString());
+
+			if (Scripts.Count > 0)
+			{
+				writer.WriteStartElement("scripts");
+				foreach (ScriptBase script in Scripts)
+					script.Save(writer);
+				writer.WriteEndElement();
+			}
+
 
 			base.Save(writer);
 
@@ -353,6 +376,16 @@ namespace DungeonEye
 		{
 			get;
 			set;
+		}
+
+
+		/// <summary>
+		/// List of scripts
+		/// </summary>
+		public List<WallSwitchScript> Scripts
+		{
+			get;
+			private set;
 		}
 
 		#endregion

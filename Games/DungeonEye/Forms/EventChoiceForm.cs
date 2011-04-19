@@ -49,7 +49,7 @@ namespace DungeonEye.Forms
 
 			Dungeon = dungeon;
 			NameBox.Text = choice.Name;
-			ActionBox.Actions = choice.Actions;
+		//	ActionBox.Actions = choice.Actions;
 			ActionBox.Dungeon = dungeon;
 			Choice = choice;
 		}

@@ -129,17 +129,23 @@
     <Compile Include="Forms\Actor\AlcoveScriptListControl.Designer.cs">
       <DependentUpon>AlcoveScriptListControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Actor\_ActionListControl.cs">
+    <Compile Include="Forms\Actor\WallScriptScriptListControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\Actor\_ActionListControl.Designer.cs">
-      <DependentUpon>_ActionListControl.cs</DependentUpon>
+    <Compile Include="Forms\Actor\WallScriptScriptListControl.Designer.cs">
+      <DependentUpon>WallScriptScriptListControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Actor\AlcoveControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Forms\Actor\AlcoveControl.Designer.cs">
       <DependentUpon>AlcoveControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Actor\WallSwitchScriptForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Actor\WallSwitchScriptForm.Designer.cs">
+      <DependentUpon>WallSwitchScriptForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\CardinalPointControl.cs">
       <SubType>UserControl</SubType>
@@ -581,11 +587,14 @@
     <EmbeddedResource Include="Forms\Actor\AlcoveScriptListControl.resx">
       <DependentUpon>AlcoveScriptListControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Actor\_ActionListControl.resx">
-      <DependentUpon>_ActionListControl.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Actor\WallScriptScriptListControl.resx">
+      <DependentUpon>WallScriptScriptListControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Actor\AlcoveControl.resx">
       <DependentUpon>AlcoveControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Actor\WallSwitchScriptForm.resx">
+      <DependentUpon>WallSwitchScriptForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\CardinalPointControl.resx">
       <DependentUpon>CardinalPointControl.cs</DependentUpon>
@@ -744,12 +753,6 @@
     <Compile Include="Game\DecorationSet.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Framework\ArcEngine.csproj">
-      <Project>{9931BDE3-41D2-4065-9595-37020DD45E8D}</Project>
-      <Name>ArcEngine</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="credits.txt" />
     <Content Include="data\settings.xml">
       <SubType>Designer</SubType>
@@ -836,6 +839,12 @@
     <Folder Include="Generation\" />
     <Folder Include="Intro\" />
     <Folder Include="Option\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Framework\ArcEngine.csproj">
+      <Project>{9931BDE3-41D2-4065-9595-37020DD45E8D}</Project>
+      <Name>ArcEngine</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

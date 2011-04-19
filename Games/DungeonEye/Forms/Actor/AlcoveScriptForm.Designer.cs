@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.CancelBox = new System.Windows.Forms.Button();
-			this.AccpetBox = new System.Windows.Forms.Button();
+			this.AcceptBox = new System.Windows.Forms.Button();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.ConsumeItemBox = new System.Windows.Forms.CheckBox();
 			this.ItemNameBox = new System.Windows.Forms.ComboBox();
@@ -52,16 +52,16 @@
 			this.CancelBox.Text = "Cancel";
 			this.CancelBox.UseVisualStyleBackColor = true;
 			// 
-			// AccpetBox
+			// AcceptBox
 			// 
-			this.AccpetBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.AccpetBox.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.AccpetBox.Location = new System.Drawing.Point(543, 404);
-			this.AccpetBox.Name = "AccpetBox";
-			this.AccpetBox.Size = new System.Drawing.Size(75, 23);
-			this.AccpetBox.TabIndex = 0;
-			this.AccpetBox.Text = "Ok";
-			this.AccpetBox.UseVisualStyleBackColor = true;
+			this.AcceptBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.AcceptBox.DialogResult = System.Windows.Forms.DialogResult.OK;
+			this.AcceptBox.Location = new System.Drawing.Point(543, 404);
+			this.AcceptBox.Name = "AcceptBox";
+			this.AcceptBox.Size = new System.Drawing.Size(75, 23);
+			this.AcceptBox.TabIndex = 0;
+			this.AcceptBox.Text = "Ok";
+			this.AcceptBox.UseVisualStyleBackColor = true;
 			// 
 			// groupBox1
 			// 
@@ -153,12 +153,14 @@
 			// 
 			// AlcoveScriptForm
 			// 
+			this.AcceptButton = this.AcceptBox;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.CancelButton = this.CancelBox;
 			this.ClientSize = new System.Drawing.Size(711, 439);
 			this.Controls.Add(this.ActionBox);
 			this.Controls.Add(this.groupBox1);
-			this.Controls.Add(this.AccpetBox);
+			this.Controls.Add(this.AcceptBox);
 			this.Controls.Add(this.CancelBox);
 			this.MinimizeBox = false;
 			this.MinimumSize = new System.Drawing.Size(650, 400);
@@ -179,7 +181,7 @@
 		#endregion
 
 		private System.Windows.Forms.Button CancelBox;
-		private System.Windows.Forms.Button AccpetBox;
+		private System.Windows.Forms.Button AcceptBox;
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.NumericUpDown RemainingCountBox;
 		private System.Windows.Forms.Label label1;

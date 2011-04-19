@@ -30,6 +30,7 @@ using ArcEngine.Asset;
 using ArcEngine.Forms;
 using ArcEngine.Graphic;
 using ArcEngine.Interface;
+using DungeonEye.Script;
 
 namespace DungeonEye
 {
@@ -55,7 +56,7 @@ namespace DungeonEye
 			Maze = maze;
 			DecorationSet = maze.Decoration;
 			WallSwitch = wallswitch;
-			//ActionScriptBox.Actions = wallswitch.Actions;
+			ActionScriptBox.Scripts= wallswitch.Scripts;
 			ActionScriptBox.Dungeon = maze.Dungeon;
 		}
 

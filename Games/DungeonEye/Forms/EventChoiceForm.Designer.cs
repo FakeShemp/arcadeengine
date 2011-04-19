@@ -39,7 +39,7 @@
 			this.RemoveItemBox = new System.Windows.Forms.Button();
 			this.AddItemBox = new System.Windows.Forms.Button();
 			this.ItemsBox = new System.Windows.Forms.ListBox();
-			this.ActionBox = new DungeonEye.Forms.ActionListControl();
+			this.ActionBox = new DungeonEye.Forms.WallSwitchScriptListControl();
 			this.groupBox2.SuspendLayout();
 			this.groupBox3.SuspendLayout();
 			this.SuspendLayout();
@@ -166,7 +166,6 @@
 			this.ActionBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.ActionBox.Actions = null;
 			this.ActionBox.Location = new System.Drawing.Point(12, 201);
 			this.ActionBox.MinimumSize = new System.Drawing.Size(350, 150);
 			this.ActionBox.Name = "ActionBox";
@@ -217,6 +216,6 @@
 		private System.Windows.Forms.Button RemoveItemBox;
 		private System.Windows.Forms.Button AddItemBox;
 		private System.Windows.Forms.ListBox ItemsBox;
-		private ActionListControl ActionBox;
+		private WallSwitchScriptListControl ActionBox;
 	}
 }
