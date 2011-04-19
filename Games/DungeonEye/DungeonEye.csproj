@@ -129,10 +129,10 @@
     <Compile Include="Forms\Actor\AlcoveScriptListControl.Designer.cs">
       <DependentUpon>AlcoveScriptListControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Actions\_ActionListControl.cs">
+    <Compile Include="Forms\Actor\_ActionListControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\Actions\_ActionListControl.Designer.cs">
+    <Compile Include="Forms\Actor\_ActionListControl.Designer.cs">
       <DependentUpon>_ActionListControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Actor\AlcoveControl.cs">
@@ -581,7 +581,7 @@
     <EmbeddedResource Include="Forms\Actor\AlcoveScriptListControl.resx">
       <DependentUpon>AlcoveScriptListControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Actions\_ActionListControl.resx">
+    <EmbeddedResource Include="Forms\Actor\_ActionListControl.resx">
       <DependentUpon>_ActionListControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Actor\AlcoveControl.resx">
@@ -726,7 +726,6 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
-    <None Include="ClassDiagram1.cd" />
     <None Include="data\Game.bnk" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -66,8 +66,15 @@ namespace DungeonEye
 	
 
 			// Does an item is required ?
-			if (!string.IsNullOrEmpty(ActivateItem))
+			if (!string.IsNullOrEmpty(NeededItem))
 			{
+
+				// No item in hand or not the good item
+				if (GameScreen.Team.ItemInHand == null || GameScreen.Team.ItemInHand.Name != NeededItem)
+				{
+					GameMessage.AddMessage("You need a key to open this lock");
+					return false;
+				}
 
 				// Picklock
 				if (GameScreen.Team.ItemInHand.Name == "PickLock")
@@ -85,19 +92,14 @@ namespace DungeonEye
 					return true;
 				}
 
-				// No item in hand or not the good item
-				if (GameScreen.Team.ItemInHand == null || GameScreen.Team.ItemInHand.Name != ActivateItem)
-				{
-					GameMessage.AddMessage("You need a key to open this lock");
-					return false;
-				}
-
 				// Consume item
 				if (ConsumeItem)
 					GameScreen.Team.SetItemInHand(null);
 			}
 
 			WasUsed = true;
+
+
 			Toggle();
 
 			return true;
@@ -203,7 +205,7 @@ namespace DungeonEye
 
 					case "activateitem":
 					{
-						ActivateItem = node.InnerText;
+						NeededItem = node.InnerText;
 					}
 					break;
 
@@ -247,7 +249,7 @@ namespace DungeonEye
 			writer.WriteElementString("side", Side.ToString());
 			writer.WriteElementString("reusable", Reusable.ToString());
 			writer.WriteElementString("wasused", WasUsed.ToString());
-			writer.WriteElementString("activateitem", ActivateItem);
+			writer.WriteElementString("activateitem", NeededItem);
 			writer.WriteElementString("consumeitem", ConsumeItem.ToString());
 			writer.WriteElementString("picklock", LockLevel.ToString());
 
@@ -306,7 +308,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Item needed to activate the switch
 		/// </summary>
-		public string ActivateItem
+		public string NeededItem
 		{
 			get;
 			set;

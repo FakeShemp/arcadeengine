@@ -119,7 +119,7 @@ namespace DungeonEye
 		void UpdateUI()
 		{
 
-			ItemsBox.SelectedItem = WallSwitch.ActivateItem;
+			ItemsBox.SelectedItem = WallSwitch.NeededItem;
 			ConsumeItemBox.Checked = WallSwitch.ConsumeItem;
 			ReusableBox.Checked = WallSwitch.Reusable;
 
@@ -200,7 +200,7 @@ namespace DungeonEye
 			if (ItemsBox.SelectedIndex == -1 ||WallSwitch == null)
 				return;
 
-			WallSwitch.ActivateItem = (string)ItemsBox.SelectedItem;
+			WallSwitch.NeededItem = (string)ItemsBox.SelectedItem;
 		}
 
 

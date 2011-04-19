@@ -54,20 +54,26 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Add an item to the alcove
+		/// Adds an item to the alcove
 		/// </summary>
-		/// <param name="item">Item handle</param>
 		/// <returns>True if the item can be added to the alcove</returns>
-		public bool AddItem(Item item)
+		public bool AddItem()
 		{
-			if (item == null)
-				return false;
-
 			foreach (AlcoveScript script in OnAddedItem)
-			{
 				script.Run();
-			}
 
+			return true;
+		}
+
+
+		/// <summary>
+		/// Removes an item to the alcove
+		/// </summary>
+		/// <returns>True if the item can be remove to the alcove</returns>
+		public bool RemoveItem()
+		{
+			foreach (AlcoveScript script in OnRemovedItem)
+				script.Run();
 
 			return true;
 		}

@@ -165,14 +165,17 @@ namespace DungeonEye
 					return false;
 				}
 
-				if (!alcove.AddItem(team.ItemInHand))
-					return false;
+				// Run scripts
+				alcove.AddItem();
 
 				Square.DropItemFromSide(side, team.ItemInHand);
 				team.SetItemInHand(null);
 			}
 			else
 			{
+				// Run scripts
+				alcove.RemoveItem();
+				
 				team.SetItemInHand(Square.CollectItemFromSide(side));
 			}
 
@@ -271,22 +274,4 @@ namespace DungeonEye
 		#endregion
 	}
 
-/*
-	/// <summary>
-	/// Condtions for alcove's script
-	/// </summary>
-	public enum AlcoveCondition
-	{
-		/// <summary>
-		/// When an item is added in the alcove
-		/// </summary>
-		OnItemAdded,
-
-
-		/// <summary>
-		/// When an item is removed from the alcove
-		/// </summary>
-		OnItemRemoved,
-	}
-*/
 }
