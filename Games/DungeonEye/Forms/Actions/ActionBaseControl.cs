@@ -15,12 +15,12 @@ namespace DungeonEye.Forms
 	/// <summary>
 	/// Script action control base
 	/// </summary>
-	public partial class ActionControlBase : UserControl
+	public partial class ActionBaseControl : UserControl
 	{
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public ActionControlBase()
+		public ActionBaseControl()
 		{
 			InitializeComponent();
 		}

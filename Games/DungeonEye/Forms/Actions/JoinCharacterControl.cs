@@ -14,7 +14,7 @@ namespace DungeonEye.Forms
 	/// <summary>
 	/// 
 	/// </summary>
-	public partial class JoinCharacterControl : ActionControlBase
+	public partial class JoinCharacterControl : ActionBaseControl
 	{
 		
 		/// <summary>

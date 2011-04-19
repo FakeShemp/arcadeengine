@@ -14,7 +14,7 @@ namespace DungeonEye.Forms
 	/// <summary>
 	/// 
 	/// </summary>
-	public partial class EndDialogControl : ActionControlBase
+	public partial class EndDialogControl : ActionBaseControl
 	{
 		/// <summary>
 		/// 

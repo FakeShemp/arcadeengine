@@ -46,8 +46,8 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.DirectionBox = new DungeonEye.Forms.CardinalPointControl();
 			this.ScriptTab = new System.Windows.Forms.TabPage();
-			this.alcoveScriptListControl2 = new DungeonEye.Forms.AlcoveScriptListControl();
-			this.alcoveScriptListControl1 = new DungeonEye.Forms.AlcoveScriptListControl();
+			this.ItemRemovedBox = new DungeonEye.Forms.AlcoveScriptListControl();
+			this.ItemAddedBox = new DungeonEye.Forms.AlcoveScriptListControl();
 			this.groupBox2.SuspendLayout();
 			this.groupBox3.SuspendLayout();
 			this.groupBox4.SuspendLayout();
@@ -237,6 +237,7 @@
             0,
             0,
             -2147483648});
+			this.DecorationBox.ValueChanged += new System.EventHandler(this.DecorationBox_ValueChanged);
 			// 
 			// label1
 			// 
@@ -260,8 +261,8 @@
 			// 
 			// ScriptTab
 			// 
-			this.ScriptTab.Controls.Add(this.alcoveScriptListControl2);
-			this.ScriptTab.Controls.Add(this.alcoveScriptListControl1);
+			this.ScriptTab.Controls.Add(this.ItemRemovedBox);
+			this.ScriptTab.Controls.Add(this.ItemAddedBox);
 			this.ScriptTab.Location = new System.Drawing.Point(4, 22);
 			this.ScriptTab.Name = "ScriptTab";
 			this.ScriptTab.Padding = new System.Windows.Forms.Padding(3);
@@ -270,27 +271,27 @@
 			this.ScriptTab.Text = "Scripting";
 			this.ScriptTab.UseVisualStyleBackColor = true;
 			// 
-			// alcoveScriptListControl2
+			// ItemRemovedBox
 			// 
-			this.alcoveScriptListControl2.Actions = null;
-			this.alcoveScriptListControl2.Dungeon = null;
-			this.alcoveScriptListControl2.Location = new System.Drawing.Point(6, 162);
-			this.alcoveScriptListControl2.MinimumSize = new System.Drawing.Size(300, 150);
-			this.alcoveScriptListControl2.Name = "alcoveScriptListControl2";
-			this.alcoveScriptListControl2.Size = new System.Drawing.Size(427, 150);
-			this.alcoveScriptListControl2.TabIndex = 0;
-			this.alcoveScriptListControl2.Title = "On item removed";
+			this.ItemRemovedBox.Dungeon = null;
+			this.ItemRemovedBox.Location = new System.Drawing.Point(6, 162);
+			this.ItemRemovedBox.MinimumSize = new System.Drawing.Size(300, 150);
+			this.ItemRemovedBox.Name = "ItemRemovedBox";
+			this.ItemRemovedBox.Scripts = null;
+			this.ItemRemovedBox.Size = new System.Drawing.Size(427, 150);
+			this.ItemRemovedBox.TabIndex = 0;
+			this.ItemRemovedBox.Title = "On item removed";
 			// 
-			// alcoveScriptListControl1
+			// ItemAddedBox
 			// 
-			this.alcoveScriptListControl1.Actions = null;
-			this.alcoveScriptListControl1.Dungeon = null;
-			this.alcoveScriptListControl1.Location = new System.Drawing.Point(6, 6);
-			this.alcoveScriptListControl1.MinimumSize = new System.Drawing.Size(300, 150);
-			this.alcoveScriptListControl1.Name = "alcoveScriptListControl1";
-			this.alcoveScriptListControl1.Size = new System.Drawing.Size(427, 150);
-			this.alcoveScriptListControl1.TabIndex = 0;
-			this.alcoveScriptListControl1.Title = "On item added";
+			this.ItemAddedBox.Dungeon = null;
+			this.ItemAddedBox.Location = new System.Drawing.Point(6, 6);
+			this.ItemAddedBox.MinimumSize = new System.Drawing.Size(300, 150);
+			this.ItemAddedBox.Name = "ItemAddedBox";
+			this.ItemAddedBox.Scripts = null;
+			this.ItemAddedBox.Size = new System.Drawing.Size(427, 150);
+			this.ItemAddedBox.TabIndex = 0;
+			this.ItemAddedBox.Title = "On item added";
 			// 
 			// AlcoveControl
 			// 
@@ -334,7 +335,7 @@
 		private System.Windows.Forms.NumericUpDown DecorationBox;
 		private System.Windows.Forms.Label label1;
 		private CardinalPointControl DirectionBox;
-		private AlcoveScriptListControl alcoveScriptListControl1;
-		private AlcoveScriptListControl alcoveScriptListControl2;
+		private AlcoveScriptListControl ItemAddedBox;
+		private AlcoveScriptListControl ItemRemovedBox;
 	}
 }

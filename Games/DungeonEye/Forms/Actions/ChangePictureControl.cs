@@ -14,7 +14,7 @@ namespace DungeonEye.Forms
 	/// <summary>
 	/// 
 	/// </summary>
-	public partial class ChangePictureControl : ActionControlBase
+	public partial class ChangePictureControl : ActionBaseControl
 	{
 		/// <summary>
 		/// 

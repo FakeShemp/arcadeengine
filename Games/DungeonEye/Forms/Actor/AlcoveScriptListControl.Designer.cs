@@ -63,7 +63,7 @@
 			this.ScriptListBox.FormattingEnabled = true;
 			this.ScriptListBox.Location = new System.Drawing.Point(6, 41);
 			this.ScriptListBox.Name = "ScriptListBox";
-			this.ScriptListBox.Size = new System.Drawing.Size(288, 106);
+			this.ScriptListBox.Size = new System.Drawing.Size(288, 95);
 			this.ScriptListBox.TabIndex = 1;
 			// 
 			// toolStrip1
@@ -154,6 +154,7 @@
 			this.MinimumSize = new System.Drawing.Size(300, 150);
 			this.Name = "AlcoveScriptListControl";
 			this.Size = new System.Drawing.Size(300, 150);
+			this.EnabledChanged += new System.EventHandler(this.AlcoveScriptListControl_EnabledChanged);
 			this.groupBox5.ResumeLayout(false);
 			this.toolStrip1.ResumeLayout(false);
 			this.toolStrip1.PerformLayout();

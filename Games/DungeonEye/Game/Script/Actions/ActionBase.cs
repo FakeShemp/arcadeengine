@@ -96,7 +96,8 @@ namespace DungeonEye.Script.Actions
 			if (writer == null)
 				return false;
 
-			Target.Save("target", writer);
+			if (Target != null)
+				Target.Save("target", writer);
 
 
 			return true;

@@ -13,7 +13,7 @@ namespace DungeonEye.Forms
 	/// <summary>
 	/// 
 	/// </summary>
-	public partial class TeleportControl : ActionControlBase
+	public partial class TeleportControl : ActionBaseControl
 	{
 		/// <summary>
 		/// 

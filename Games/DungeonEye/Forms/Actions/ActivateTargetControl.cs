@@ -12,9 +12,9 @@ using DungeonEye.Script.Actions;
 namespace DungeonEye.Forms
 {
 	/// <summary>
-	/// 
+	/// Activate Target control
 	/// </summary>
-	public partial class ActivateTargetControl : ActionControlBase
+	public partial class ActivateTargetControl : ActionBaseControl
 	{
 		/// <summary>
 		/// 

@@ -266,7 +266,7 @@ namespace DungeonEye.Forms
 		/// <summary>
 		/// 
 		/// </summary>
-		ActionControlBase ControlHandle = null;
+		ActionBaseControl ControlHandle = null;
 
 
 		/// <summary>

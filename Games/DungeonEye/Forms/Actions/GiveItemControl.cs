@@ -13,7 +13,7 @@ namespace DungeonEye.Forms
 	/// <summary>
 	/// 
 	/// </summary>
-	public partial class GiveItemControl : ActionControlBase
+	public partial class GiveItemControl : ActionBaseControl
 	{
 		
 		/// <summary>

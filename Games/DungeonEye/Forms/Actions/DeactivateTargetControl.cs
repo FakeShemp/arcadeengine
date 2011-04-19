@@ -14,7 +14,7 @@ namespace DungeonEye.Forms
 	/// <summary>
 	/// 
 	/// </summary>
-	public partial class DeactivateTargetControl : ActionControlBase
+	public partial class DeactivateTargetControl : ActionBaseControl
 	{
 		/// <summary>
 		/// 

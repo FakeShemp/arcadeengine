@@ -14,7 +14,7 @@ namespace DungeonEye.Forms
 	/// <summary>
 	/// 
 	/// </summary>
-	public partial class PlaySoundControl : ActionControlBase
+	public partial class PlaySoundControl : ActionBaseControl
 	{
 		/// <summary>
 		/// 

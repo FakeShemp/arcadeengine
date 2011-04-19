@@ -88,6 +88,12 @@ namespace DungeonEye.Forms
 			AcceptBigItemsBox.Checked = Alcove.AcceptBigItems;
 			DecorationBox.Value = Alcove.Decoration;
 			ItemLocationBox.Text = Alcove.ItemLocation.ToString();
+
+
+			// Enable or disable scripting
+			ItemAddedBox.Enabled = Alcove.Decoration != -1;
+			ItemRemovedBox.Enabled = Alcove.Decoration != -1;
+					
 		}
 
 
@@ -170,8 +176,21 @@ namespace DungeonEye.Forms
 		{
 			Face = side;
 			Alcove = Actor.GetAlcove(side);
-	//		ItemAddedControl.Actions = Alcove.OnAddedItem;
-	//		ItemRemovedBox.Actions = Alcove.OnRemovedItem;
+			if (Alcove.Decoration == -1)
+			{
+				ItemAddedBox.Enabled = false;
+				ItemRemovedBox.Enabled = false;
+			}
+			else
+			{
+				ItemAddedBox.Enabled = true;
+				ItemRemovedBox.Enabled = true;
+
+				ItemAddedBox.Scripts = Alcove.OnAddedItem;
+				ItemRemovedBox.Scripts = Alcove.OnRemovedItem;
+				ItemAddedBox.Dungeon = Maze.Dungeon;
+				ItemRemovedBox.Dungeon = Maze.Dungeon;
+			}
 
 			UpdateUI();
 			RenderScene();

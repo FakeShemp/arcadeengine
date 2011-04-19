@@ -111,26 +111,6 @@ namespace DungeonEye.Script
 
 
 		#region Properties
-/*
-		/// <summary>
-		/// Target
-		/// </summary>
-		public DungeonLocation Target
-		{
-			get;
-			set;
-		}
-*/
-
-		/// <summary>
-		/// Name of the action
-		/// </summary>
-		public string Name
-		{
-			get;
-			protected set;
-		}
-
 
 		/// <summary>
 		/// Action to execute

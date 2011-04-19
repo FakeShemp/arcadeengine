@@ -345,11 +345,11 @@
     <Compile Include="Forms\Actions\DeactivateTargetControl.Designer.cs">
       <DependentUpon>DeactivateTargetControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Actions\ActionControlBase.cs">
+    <Compile Include="Forms\Actions\ActionBaseControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\Actions\ActionControlBase.Designer.cs">
-      <DependentUpon>ActionControlBase.cs</DependentUpon>
+    <Compile Include="Forms\Actions\ActionBaseControl.Designer.cs">
+      <DependentUpon>ActionBaseControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\ScriptedDialogForm.cs">
       <SubType>Form</SubType>

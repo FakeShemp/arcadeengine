@@ -13,7 +13,7 @@ namespace DungeonEye.Forms
 	/// <summary>
 	/// 
 	/// </summary>
-	public partial class HealingControl : ActionControlBase
+	public partial class HealingControl : ActionBaseControl
 	{
 		/// <summary>
 		/// 

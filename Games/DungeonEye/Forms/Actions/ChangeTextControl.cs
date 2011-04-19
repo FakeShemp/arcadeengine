@@ -13,7 +13,7 @@ namespace DungeonEye.Forms
 	/// <summary>
 	/// 
 	/// </summary>
-	public partial class ChangeTextControl : ActionControlBase
+	public partial class ChangeTextControl : ActionBaseControl
 	{
 		/// <summary>
 		/// 

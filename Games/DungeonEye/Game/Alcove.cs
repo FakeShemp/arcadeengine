@@ -28,6 +28,8 @@ using ArcEngine.Asset;
 using ArcEngine.Audio;
 using ArcEngine.Graphic;
 using DungeonEye.Script;
+using DungeonEye.Script.Actions;
+
 
 namespace DungeonEye
 {
@@ -71,6 +73,28 @@ namespace DungeonEye
 			ItemLocation = new Point(int.Parse(xml.Attributes["x"].Value), 
 									 int.Parse(xml.Attributes["y"].Value));
 
+			foreach (XmlNode node in xml)
+			{
+				switch (node.Name.ToLower())
+				{
+					case "onaddeditem":
+					{
+					}
+					break;
+
+					case "onremoveditem":
+					{
+					}
+					break;
+
+					default:
+					{
+					}
+					break;
+				}
+			}
+
+
 			return true;
 		}
 
@@ -90,6 +114,26 @@ namespace DungeonEye
 			writer.WriteAttributeString("bigitems", AcceptBigItems.ToString());
 			writer.WriteAttributeString("x", ItemLocation.X.ToString());
 			writer.WriteAttributeString("y", ItemLocation.Y.ToString());
+
+
+			if (OnAddedItem.Count > 0)
+			{
+				writer.WriteStartElement("onaddeditem");
+				foreach (AlcoveScript action in OnAddedItem)
+					action.Save(writer);
+
+				writer.WriteEndElement();
+			}
+
+
+			if (OnRemovedItem.Count > 0)
+			{
+				writer.WriteStartElement("onremoveditem");
+				foreach (AlcoveScript action in OnRemovedItem)
+					action.Save(writer);
+
+				writer.WriteEndElement();
+			}
 
 			return true;
 		}

@@ -125,15 +125,23 @@ namespace DungeonEye.Script
 			if (writer == null)
 				return false;
 
-		//	writer.WriteElementString("condition", Condition.ToString());
-
+			writer.WriteStartElement("alcovescript");
 
 			if (ConsumeItem)
 				writer.WriteValue("consume");
 
 			writer.WriteElementString("item", ItemName);
 
-			return base.Save(writer);
+			if (Action != null)
+			{
+				writer.WriteStartElement("action");
+				Action.Save(writer);
+				writer.WriteEndElement();
+			}
+			base.Save(writer);
+
+			writer.WriteEndElement();
+			return true;
 		}
 
 		#endregion

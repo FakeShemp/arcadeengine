@@ -14,7 +14,7 @@ namespace DungeonEye.Forms
 	/// <summary>
 	/// 
 	/// </summary>
-	public partial class EnableChoiceControl : ActionControlBase
+	public partial class EnableChoiceControl : ActionBaseControl
 	{
 		/// <summary>
 		/// 

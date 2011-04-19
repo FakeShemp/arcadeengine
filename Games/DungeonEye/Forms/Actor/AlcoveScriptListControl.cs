@@ -55,9 +55,16 @@ namespace DungeonEye.Forms
 		void UpdateUI()
 		{
 			ScriptListBox.Items.Clear();
-			if (Actions == null)
+			if (Scripts == null)
 				return;
 
+			foreach (AlcoveScript script in Scripts)
+			{
+				if (script.Action == null)
+					continue;
+
+				ScriptListBox.Items.Add(script.Action.Name);
+			}
 
 		}
 
@@ -71,16 +78,16 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void MoveDownBox_Click(object sender, EventArgs e)
 		{
-			if (Actions == null)
+			if (Scripts == null)
 				return;
 
 			int id = ScriptListBox.SelectedIndex;
-			if (id >= Actions.Count - 1)
+			if (id >= Scripts.Count - 1)
 				return;
 
-			AlcoveScript action = Actions[id];
-			Actions.RemoveAt(id);
-			Actions.Insert(id + 1, action);
+			AlcoveScript action = Scripts[id];
+			Scripts.RemoveAt(id);
+			Scripts.Insert(id + 1, action);
 
 			UpdateUI();
 			ScriptListBox.SelectedIndex = id + 1;
@@ -94,15 +101,15 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void MoveUpBox_Click(object sender, EventArgs e)
 		{
-			if (Actions == null)
+			if (Scripts == null)
 				return;
 
 			int id = ScriptListBox.SelectedIndex;
 			if (id <= 0)
 				return;
-			AlcoveScript script = Actions[id];
-			Actions.RemoveAt(id);
-			Actions.Insert(id - 1, script);
+			AlcoveScript script = Scripts[id];
+			Scripts.RemoveAt(id);
+			Scripts.Insert(id - 1, script);
 
 			UpdateUI();
 			ScriptListBox.SelectedIndex = id - 1;
@@ -116,13 +123,13 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void RemoveBox_Click(object sender, EventArgs e)
 		{
-			if (Actions == null)
+			if (Scripts == null)
 				return;
 
-			if (ScriptListBox.SelectedIndex == -1 || ScriptListBox.SelectedIndex > Actions.Count)
+			if (ScriptListBox.SelectedIndex == -1 || ScriptListBox.SelectedIndex > Scripts.Count)
 				return;
 
-			Actions.RemoveAt(ScriptListBox.SelectedIndex);
+			Scripts.RemoveAt(ScriptListBox.SelectedIndex);
 
 			UpdateUI();
 		}
@@ -139,7 +146,7 @@ namespace DungeonEye.Forms
 				return;
 
 
-			new AlcoveScriptForm(Dungeon, Actions[ScriptListBox.SelectedIndex]).ShowDialog();
+			new AlcoveScriptForm(Scripts[ScriptListBox.SelectedIndex], Dungeon).ShowDialog();
 
 			UpdateUI();
 		}
@@ -153,15 +160,28 @@ namespace DungeonEye.Forms
 		private void AddBox_Click(object sender, EventArgs e)
 		{
 			// Empty form
-			AlcoveScriptForm form = new AlcoveScriptForm(Dungeon, null);
+			AlcoveScriptForm form = new AlcoveScriptForm(null, Dungeon);
 			if (form.ShowDialog() != DialogResult.OK)
 				return;
 
 			// Add new action to the list
-			if (form.Script != null && Actions != null)
-				Actions.Add(form.Script);
+			if (form.Script != null && Scripts != null)
+				Scripts.Add(form.Script);
 
 			UpdateUI();
+		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void AlcoveScriptListControl_EnabledChanged(object sender, EventArgs e)
+		{
+			if (!Enabled)
+				ScriptListBox.Items.Clear();
 		}
 
 		#endregion
@@ -197,24 +217,23 @@ namespace DungeonEye.Forms
 
 
 		/// <summary>
-		/// Actions
+		/// Scripts
 		/// </summary>
-		public IList<AlcoveScript> Actions
+		public IList<AlcoveScript> Scripts
 		{
 			get
 			{
-				return actions;
+				return scripts;
 			}
 			set
 			{
-				actions = value;
+				scripts = value;
 				UpdateUI();
 			}
 		}
-		IList<AlcoveScript> actions;
+		IList<AlcoveScript> scripts;
 
 		#endregion
-
 
 
 	}

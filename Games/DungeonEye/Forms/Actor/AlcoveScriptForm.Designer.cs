@@ -31,12 +31,12 @@
 			this.CancelBox = new System.Windows.Forms.Button();
 			this.AccpetBox = new System.Windows.Forms.Button();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.ConsumeItemBox = new System.Windows.Forms.CheckBox();
 			this.ItemNameBox = new System.Windows.Forms.ComboBox();
-			this.label2 = new System.Windows.Forms.Label();
 			this.RemainingCountBox = new System.Windows.Forms.NumericUpDown();
 			this.label1 = new System.Windows.Forms.Label();
-			this.ConsumeItemBox = new System.Windows.Forms.CheckBox();
-			this.ActionsBox = new DungeonEye.Forms.Script.ActionChooserControl();
+			this.label2 = new System.Windows.Forms.Label();
+			this.ActionBox = new DungeonEye.Forms.Script.ActionChooserControl();
 			this.groupBox1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.RemainingCountBox)).BeginInit();
 			this.SuspendLayout();
@@ -79,6 +79,17 @@
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Condition";
 			// 
+			// ConsumeItemBox
+			// 
+			this.ConsumeItemBox.AutoSize = true;
+			this.ConsumeItemBox.Location = new System.Drawing.Point(91, 72);
+			this.ConsumeItemBox.Name = "ConsumeItemBox";
+			this.ConsumeItemBox.Size = new System.Drawing.Size(92, 17);
+			this.ConsumeItemBox.TabIndex = 6;
+			this.ConsumeItemBox.Text = "Consume item";
+			this.ConsumeItemBox.UseVisualStyleBackColor = true;
+			this.ConsumeItemBox.CheckedChanged += new System.EventHandler(this.ConsumeItemBox_CheckedChanged);
+			// 
 			// ItemNameBox
 			// 
 			this.ItemNameBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -87,15 +98,7 @@
 			this.ItemNameBox.Name = "ItemNameBox";
 			this.ItemNameBox.Size = new System.Drawing.Size(108, 21);
 			this.ItemNameBox.TabIndex = 1;
-			// 
-			// label2
-			// 
-			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(6, 22);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(63, 13);
-			this.label2.TabIndex = 0;
-			this.label2.Text = "Item\'s name";
+			this.ItemNameBox.SelectedIndexChanged += new System.EventHandler(this.ItemNameBox_SelectedIndexChanged);
 			// 
 			// RemainingCountBox
 			// 
@@ -127,32 +130,33 @@
 			this.label1.TabIndex = 4;
 			this.label1.Text = "Remaining :";
 			// 
-			// ConsumeItemBox
+			// label2
 			// 
-			this.ConsumeItemBox.AutoSize = true;
-			this.ConsumeItemBox.Location = new System.Drawing.Point(91, 72);
-			this.ConsumeItemBox.Name = "ConsumeItemBox";
-			this.ConsumeItemBox.Size = new System.Drawing.Size(92, 17);
-			this.ConsumeItemBox.TabIndex = 6;
-			this.ConsumeItemBox.Text = "Consume item";
-			this.ConsumeItemBox.UseVisualStyleBackColor = true;
+			this.label2.AutoSize = true;
+			this.label2.Location = new System.Drawing.Point(6, 22);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(63, 13);
+			this.label2.TabIndex = 0;
+			this.label2.Text = "Item\'s name";
 			// 
-			// ActionsBox
+			// ActionBox
 			// 
-			this.ActionsBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.ActionBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.ActionsBox.Location = new System.Drawing.Point(207, 12);
-			this.ActionsBox.Name = "ActionsBox";
-			this.ActionsBox.Size = new System.Drawing.Size(492, 386);
-			this.ActionsBox.TabIndex = 2;
+			this.ActionBox.Dungeon = null;
+			this.ActionBox.Location = new System.Drawing.Point(207, 12);
+			this.ActionBox.Name = "ActionBox";
+			this.ActionBox.Script = null;
+			this.ActionBox.Size = new System.Drawing.Size(492, 386);
+			this.ActionBox.TabIndex = 2;
 			// 
 			// AlcoveScriptForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(711, 439);
-			this.Controls.Add(this.ActionsBox);
+			this.Controls.Add(this.ActionBox);
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.AccpetBox);
 			this.Controls.Add(this.CancelBox);
@@ -182,6 +186,6 @@
 		private System.Windows.Forms.ComboBox ItemNameBox;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.CheckBox ConsumeItemBox;
-		private Script.ActionChooserControl ActionsBox;
+		private Script.ActionChooserControl ActionBox;
 	}
 }

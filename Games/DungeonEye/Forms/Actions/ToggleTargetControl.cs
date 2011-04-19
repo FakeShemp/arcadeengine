@@ -14,7 +14,7 @@ namespace DungeonEye.Forms
 	/// <summary>
 	/// 
 	/// </summary>
-	public partial class ToggleTargetControl : ActionControlBase
+	public partial class ToggleTargetControl : ActionBaseControl
 	{
 		/// <summary>
 		/// 
@@ -46,7 +46,7 @@ namespace DungeonEye.Forms
 			if (Action == null)
 				return;
 
-			((ToggleTarget)Action).Target = target;
+			Action.Target = target;
 		}
 
 		#endregion

@@ -13,7 +13,7 @@ namespace DungeonEye.Forms
 	/// <summary>
 	/// Gives experience to the team
 	/// </summary>
-	public partial class GiveExperienceControl : ActionControlBase
+	public partial class GiveExperienceControl : ActionBaseControl
 	{
 
 		/// <summary>

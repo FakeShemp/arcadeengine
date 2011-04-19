@@ -32,16 +32,16 @@ using ArcEngine;
 namespace DungeonEye.Forms
 {
 	/// <summary>
-	/// 
+	/// Alcove script form
 	/// </summary>
 	public partial class AlcoveScriptForm : Form
 	{
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="dungeon">Dungeon handle</param>
 		/// <param name="script">Script handle to edit</param>
-		public AlcoveScriptForm(Dungeon dungeon, AlcoveScript script)
+		/// <param name="dungeon">Dungeon handle</param>
+		public AlcoveScriptForm(AlcoveScript script, Dungeon dungeon)
 		{
 			InitializeComponent();
 
@@ -51,6 +51,8 @@ namespace DungeonEye.Forms
 				Script = script;
 
 			Dungeon = dungeon;
+			ActionBox.Script = Script;
+			ActionBox.Dungeon = dungeon;
 		}
 
 
@@ -73,10 +75,44 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void AlcoveScriptForm_Load(object sender, EventArgs e)
 		{
-			ItemNameBox.DataSource = ResourceManager.GetAssets<Item>();
+			ItemNameBox.Items.Add("");
+			ItemNameBox.Items.AddRange(ResourceManager.GetAssets<Item>().ToArray());
 
 			UpdateUI();
 		}
+
+
+		#region Form events
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ItemNameBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (Script == null)
+				return;
+
+			Script.ItemName = (string)ItemNameBox.SelectedItem;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ConsumeItemBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Script == null)
+				return;
+
+			Script.ConsumeItem = ConsumeItemBox.Checked;
+		}
+
+		#endregion
 
 
 
@@ -99,6 +135,7 @@ namespace DungeonEye.Forms
 		Dungeon Dungeon;
 
 		#endregion
+
 
 	}
 }
