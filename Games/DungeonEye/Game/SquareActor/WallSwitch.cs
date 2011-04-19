@@ -103,7 +103,7 @@ namespace DungeonEye
 			foreach (WallSwitchScript script in Scripts)
 				script.Run();
 
-	//		Toggle();
+			Toggle();
 
 			return true;
 		}

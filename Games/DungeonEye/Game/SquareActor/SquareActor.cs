@@ -232,9 +232,6 @@ namespace DungeonEye
 		public virtual void Activate()
 		{
 			IsActivated = true;
-
-			//if (Count.Activate())
-			//    Run();
 		}
 
 
@@ -244,9 +241,6 @@ namespace DungeonEye
 		public virtual void Deactivate()
 		{
 			IsActivated = false;
-
-			//if (Count.Deactivate())
-			//    Run();
 		}
 
 
