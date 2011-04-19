@@ -36,8 +36,8 @@ namespace DungeonEye.Script.Actions
 		/// 
 		/// </summary>
 		public Teleport()
-		{ 
-			Name = "Teleport";
+		{
+			Name = XmlTag;
 		}
 
 
@@ -128,6 +128,12 @@ namespace DungeonEye.Script.Actions
 
 
 		#region Properties
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public const string XmlTag = "Teleport";
 
 		/// <summary>
 		/// Change direction

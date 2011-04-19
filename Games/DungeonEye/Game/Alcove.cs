@@ -79,11 +79,25 @@ namespace DungeonEye
 				{
 					case "onaddeditem":
 					{
+						foreach (XmlNode sub in node)
+						{
+							AlcoveScript script = new AlcoveScript();
+							script.Load(sub);
+
+							OnAddedItem.Add(script);
+						}
 					}
 					break;
 
 					case "onremoveditem":
 					{
+						foreach (XmlNode sub in node)
+						{
+							AlcoveScript script = new AlcoveScript();
+							script.Load(sub);
+
+							OnRemovedItem.Add(script);
+						}
 					}
 					break;
 

@@ -64,27 +64,119 @@ namespace DungeonEye.Script
 				return false;
 
 
-			foreach (XmlNode node in xml)
+			Action = null;
+
+			switch (xml.Name)
 			{
-				switch (node.Name)
+				case ActivateTarget.XmlTag:
 				{
-					//case "target":
-					//{
-					//    if (Target == null)
-					//        Target = new DungeonLocation();
-
-					//    Target.Load(node);
-					//}
-					//break;
-
-					default:
-					{
-						Trace.WriteLine("[ScriptBase] Load() : Unknown node \"" + node.Name + "\" found.");
-					}
-					break;
+					Action = new ActivateTarget();
 				}
+				break;
 
+				case ChangePicture.XmlTag:
+				{
+					Action = new ChangePicture();
+				}
+				break;
+
+				case ChangeText.XmlTag:
+				{
+					Action = new ChangeText();
+				}
+				break;
+
+				case DeactivateTarget.XmlTag:
+				{
+					Action = new DeactivateTarget();
+				}
+				break;
+
+				case DisableChoice.XmlTag:
+				{
+					Action = new DisableChoice();
+				}
+				break;
+
+				case DisableTarget.XmlTag:
+				{
+					Action = new DisableTarget();
+				}
+				break;
+
+				case EnableChoice.XmlTag:
+				{
+					Action = new EnableChoice();
+				}
+				break;
+
+				case EndChoice.XmlTag:
+				{
+					Action = new EndChoice();
+				}
+				break;
+
+				case EndDialog.XmlTag:
+				{
+					Action = new EndDialog();
+				}
+				break;
+
+				case GiveExperience.XmlTag:
+				{
+					Action = new GiveExperience();
+				}
+				break;
+
+				case GiveItem.XmlTag:
+				{
+					Action = new GiveItem();
+				}
+				break;
+
+				case Healing.XmlTag:
+				{
+					Action = new Healing();
+				}
+				break;
+
+				case JoinCharacter.XmlTag:
+				{
+					Action = new JoinCharacter();
+				}
+				break;
+
+				case PlaySound.XmlTag:
+				{
+					Action = new PlaySound();
+				}
+				break;
+
+				case Teleport.XmlTag:
+				{
+					Action = new Teleport();
+				}
+				break;
+
+				case ToggleTarget.XmlTag:
+				{
+					Action = new ToggleTarget();
+				}
+				break;
+
+				default:
+				{
+					Trace.WriteLine("[ScriptBase] Load() : Unknown node \"" + xml.Name + "\" found.");
+					return false;
+				}
 			}
+
+			if (Action == null)
+				return false;
+
+
+			Action.Load(xml);
+
 			return true;
 		}
 
@@ -99,8 +191,9 @@ namespace DungeonEye.Script
 			if (writer == null)
 				return false;
 
-		//	Target.Save("target", writer);
 
+			if (Action != null)
+				Action.Save(writer);
 
 			return true;
 		}

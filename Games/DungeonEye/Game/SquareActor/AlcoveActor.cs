@@ -229,6 +229,9 @@ namespace DungeonEye
 
 			for (int i = 0 ; i < 4 ; i++)
 			{
+				if (Alcoves[i].Decoration == -1)
+					continue;
+
 				writer.WriteStartElement("side");
 				writer.WriteAttributeString("name", ((CardinalPoint) i).ToString());
 				Alcoves[i].Save(writer);

@@ -16,7 +16,7 @@ namespace DungeonEye.Script.Actions
 		/// </summary>
 		public ToggleTarget()
 		{
-			Name = "ToggleTarget";
+			Name = XmlTag;
 		}
 
 
@@ -92,6 +92,12 @@ namespace DungeonEye.Script.Actions
 
 
 		#region Properties
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public const string XmlTag = "ToggleTarget";
 
 
 

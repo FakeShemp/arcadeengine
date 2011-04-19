@@ -15,7 +15,7 @@ namespace DungeonEye.Script.Actions
 		/// </summary>
 		public EnableChoice()
 		{
-			Name = "EnableChoice";
+			Name = XmlTag;
 		}
 
 		/// <summary>
@@ -56,6 +56,12 @@ namespace DungeonEye.Script.Actions
 
 		#region Properties
 
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public const string XmlTag = "EnableChoice";
 
 
 		#endregion

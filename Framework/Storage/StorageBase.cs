@@ -24,6 +24,9 @@ using System.Text.RegularExpressions;
 using System.Text;
 using System.Xml;
 
+
+// http://altdevblogaday.org/2011/04/03/solving-problems-with-asynchrony-cinematics/
+// http://altdevblogaday.org/2011/04/19/solving-problems-with-asynchrony-asset-loading/
 namespace ArcEngine.Storage
 {
 	/// <summary>

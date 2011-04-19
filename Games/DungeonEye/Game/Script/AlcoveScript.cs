@@ -83,15 +83,10 @@ namespace DungeonEye.Script
 			{
 				switch (node.Name)
 				{
-					//case "condition":
-					//{
-					//    Condition = (AlcoveCondition)Enum.Parse(typeof(AlcoveCondition), node.InnerText);
-					//}
-					//break;
 
 					case "consume":
 					{
-						ConsumeItem = true;
+						ConsumeItem = bool.Parse(node.InnerText);
 					}
 					break;
 
@@ -103,7 +98,7 @@ namespace DungeonEye.Script
 
 					default:
 					{
-						Trace.WriteLine("[ScriptBase] Load() : Unknown node \"" + node.Name + "\" found.");
+						base.Load(node);
 					}
 					break;
 				}
@@ -125,19 +120,15 @@ namespace DungeonEye.Script
 			if (writer == null)
 				return false;
 
-			writer.WriteStartElement("alcovescript");
+			writer.WriteStartElement(XmlTag);
 
 			if (ConsumeItem)
-				writer.WriteValue("consume");
+				writer.WriteElementString("consume", ConsumeItem.ToString());
 
-			writer.WriteElementString("item", ItemName);
 
-			if (Action != null)
-			{
-				writer.WriteStartElement("action");
-				Action.Save(writer);
-				writer.WriteEndElement();
-			}
+			if (!string.IsNullOrEmpty(ItemName))
+				writer.WriteElementString("item", ItemName);
+
 			base.Save(writer);
 
 			writer.WriteEndElement();
@@ -149,6 +140,12 @@ namespace DungeonEye.Script
 
 
 		#region Properties
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public const string XmlTag = "AlcoveScript";
+
 
 		/// <summary>
 		/// Consume item on use
