@@ -39,22 +39,23 @@
 			this.label2 = new System.Windows.Forms.Label();
 			this.DeactivatedGlBox = new OpenTK.GLControl();
 			this.DeactivatedIdBox = new System.Windows.Forms.NumericUpDown();
-			this.ScriptTab = new System.Windows.Forms.TabPage();
+			this.PropertiesTab = new System.Windows.Forms.TabPage();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.WasUsedBox = new System.Windows.Forms.CheckBox();
+			this.ReusableBox = new System.Windows.Forms.CheckBox();
 			this.label4 = new System.Windows.Forms.Label();
 			this.label3 = new System.Windows.Forms.Label();
 			this.ConsumeItemBox = new System.Windows.Forms.CheckBox();
 			this.PickLockBox = new System.Windows.Forms.NumericUpDown();
 			this.ItemsBox = new System.Windows.Forms.ComboBox();
 			this.ActionScriptBox = new DungeonEye.Forms.WallSwitchScriptListControl();
-			this.ReusableBox = new System.Windows.Forms.CheckBox();
 			this.groupBox1.SuspendLayout();
 			this.tabControl1.SuspendLayout();
 			this.ActivatedTab.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.ActivatedIdBox)).BeginInit();
 			this.DeactivatedTab.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.DeactivatedIdBox)).BeginInit();
-			this.ScriptTab.SuspendLayout();
+			this.PropertiesTab.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.PickLockBox)).BeginInit();
 			this.SuspendLayout();
@@ -77,7 +78,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.tabControl1.Controls.Add(this.ActivatedTab);
 			this.tabControl1.Controls.Add(this.DeactivatedTab);
-			this.tabControl1.Controls.Add(this.ScriptTab);
+			this.tabControl1.Controls.Add(this.PropertiesTab);
 			this.tabControl1.Location = new System.Drawing.Point(6, 19);
 			this.tabControl1.Name = "tabControl1";
 			this.tabControl1.SelectedIndex = 0;
@@ -212,19 +213,20 @@
             -2147483648});
 			this.DeactivatedIdBox.ValueChanged += new System.EventHandler(this.DeactivatedIdBox_ValueChanged);
 			// 
-			// ScriptTab
+			// PropertiesTab
 			// 
-			this.ScriptTab.Controls.Add(this.groupBox2);
-			this.ScriptTab.Controls.Add(this.ActionScriptBox);
-			this.ScriptTab.Location = new System.Drawing.Point(4, 22);
-			this.ScriptTab.Name = "ScriptTab";
-			this.ScriptTab.Size = new System.Drawing.Size(854, 529);
-			this.ScriptTab.TabIndex = 2;
-			this.ScriptTab.Text = "Script";
-			this.ScriptTab.UseVisualStyleBackColor = true;
+			this.PropertiesTab.Controls.Add(this.groupBox2);
+			this.PropertiesTab.Controls.Add(this.ActionScriptBox);
+			this.PropertiesTab.Location = new System.Drawing.Point(4, 22);
+			this.PropertiesTab.Name = "PropertiesTab";
+			this.PropertiesTab.Size = new System.Drawing.Size(854, 529);
+			this.PropertiesTab.TabIndex = 2;
+			this.PropertiesTab.Text = "Properties";
+			this.PropertiesTab.UseVisualStyleBackColor = true;
 			// 
 			// groupBox2
 			// 
+			this.groupBox2.Controls.Add(this.WasUsedBox);
 			this.groupBox2.Controls.Add(this.ReusableBox);
 			this.groupBox2.Controls.Add(this.label4);
 			this.groupBox2.Controls.Add(this.label3);
@@ -233,10 +235,33 @@
 			this.groupBox2.Controls.Add(this.ItemsBox);
 			this.groupBox2.Location = new System.Drawing.Point(3, 159);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(214, 110);
+			this.groupBox2.Size = new System.Drawing.Size(350, 110);
 			this.groupBox2.TabIndex = 1;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Properties";
+			// 
+			// WasUsedBox
+			// 
+			this.WasUsedBox.AutoSize = true;
+			this.WasUsedBox.Location = new System.Drawing.Point(262, 21);
+			this.WasUsedBox.Name = "WasUsedBox";
+			this.WasUsedBox.Size = new System.Drawing.Size(76, 17);
+			this.WasUsedBox.TabIndex = 4;
+			this.WasUsedBox.Text = "Was Used";
+			this.WasUsedBox.UseVisualStyleBackColor = true;
+			this.WasUsedBox.CheckedChanged += new System.EventHandler(this.IsActivatedBox_CheckedChanged);
+			// 
+			// ReusableBox
+			// 
+			this.ReusableBox.Appearance = System.Windows.Forms.Appearance.Button;
+			this.ReusableBox.AutoSize = true;
+			this.ReusableBox.Location = new System.Drawing.Point(11, 72);
+			this.ReusableBox.Name = "ReusableBox";
+			this.ReusableBox.Size = new System.Drawing.Size(62, 23);
+			this.ReusableBox.TabIndex = 3;
+			this.ReusableBox.Text = "Reusable";
+			this.ReusableBox.UseVisualStyleBackColor = true;
+			this.ReusableBox.CheckedChanged += new System.EventHandler(this.ReusableBox_CheckedChanged);
 			// 
 			// label4
 			// 
@@ -298,21 +323,10 @@
 			this.ActionScriptBox.Location = new System.Drawing.Point(3, 3);
 			this.ActionScriptBox.MinimumSize = new System.Drawing.Size(350, 150);
 			this.ActionScriptBox.Name = "ActionScriptBox";
+			this.ActionScriptBox.Scripts = null;
 			this.ActionScriptBox.Size = new System.Drawing.Size(350, 150);
 			this.ActionScriptBox.TabIndex = 0;
 			this.ActionScriptBox.Title = "Actions";
-			// 
-			// ReusableBox
-			// 
-			this.ReusableBox.Appearance = System.Windows.Forms.Appearance.Button;
-			this.ReusableBox.AutoSize = true;
-			this.ReusableBox.Location = new System.Drawing.Point(11, 72);
-			this.ReusableBox.Name = "ReusableBox";
-			this.ReusableBox.Size = new System.Drawing.Size(62, 23);
-			this.ReusableBox.TabIndex = 3;
-			this.ReusableBox.Text = "Reusable";
-			this.ReusableBox.UseVisualStyleBackColor = true;
-			this.ReusableBox.CheckedChanged += new System.EventHandler(this.ReusableBox_CheckedChanged);
 			// 
 			// WallSwitchControl
 			// 
@@ -330,7 +344,7 @@
 			this.DeactivatedTab.ResumeLayout(false);
 			this.DeactivatedTab.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.DeactivatedIdBox)).EndInit();
-			this.ScriptTab.ResumeLayout(false);
+			this.PropertiesTab.ResumeLayout(false);
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.PickLockBox)).EndInit();
@@ -350,7 +364,7 @@
 		private System.Windows.Forms.Label label2;
 		private OpenTK.GLControl DeactivatedGlBox;
 		private System.Windows.Forms.NumericUpDown DeactivatedIdBox;
-		private System.Windows.Forms.TabPage ScriptTab;
+		private System.Windows.Forms.TabPage PropertiesTab;
 		private Forms.WallSwitchScriptListControl ActionScriptBox;
 		private Forms.CardinalPointControl SideBox;
 		private System.Windows.Forms.GroupBox groupBox2;
@@ -360,6 +374,7 @@
 		private System.Windows.Forms.NumericUpDown PickLockBox;
 		private System.Windows.Forms.ComboBox ItemsBox;
 		private System.Windows.Forms.CheckBox ReusableBox;
+		private System.Windows.Forms.CheckBox WasUsedBox;
 
 	}
 }

@@ -79,49 +79,7 @@ namespace DungeonEye
 			};
 		}
 
-/*
-		/// <summary>
-		/// Loads script definitions
-		/// </summary>
-		/// <param name="node">XmlNode handle</param>
-		protected ActionBase LoadAction(XmlNode xml)
-		{
-			if (xml == null)
-				return null;
 
-			ActionBase action = null;
-
-			switch (xml.Name.ToLower())
-			{
-				case "toggletarget":
-				{
-					action = new ToggleTarget();
-				}
-				break;
-
-				case "activatetarget":
-				{
-					action = new ActivateTarget();
-				}
-				break;
-
-				case "deactivatetarget":
-				{
-					action = new DeactivateTarget();
-				}
-				break;
-			}
-
-
-			if (action == null)
-				return null;
-
-			action.Load(xml);
-
-			return action;
-		}
-
-*/
 		#region Script
 
 		/// <summary>
@@ -243,22 +201,6 @@ namespace DungeonEye
 			IsActivated = false;
 		}
 
-
-
-		/// <summary>
-		/// Runs actions
-		/// </summary>
-		public void Run()
-		{
-			// Run each action
-			//foreach (ScriptBase script in Scripts)
-			//{
-			//    script.Run();
-			//}
-
-		}
-
-
 		/// <summary>
 		/// Toggles the actor
 		/// </summary>
@@ -328,18 +270,6 @@ namespace DungeonEye
 				}
 				break;
 
-				//case "actions":
-				//{
-				//    LoadActions(node);
-				//}
-				//break;
-
-				//case "switch":
-				//{
-				//    Count.Load(node);
-				//}
-				//break;
-
 				default:
 				{
 					Trace.WriteLine("[SquareActor] Load() : Unknown node \"" + node.Name + "\" found @ " + Square.Location.ToStringShort() + ".");
@@ -363,16 +293,6 @@ namespace DungeonEye
 				return false;
 
 			writer.WriteElementString("isactivated", IsActivated.ToString());
-
-			//if (Scripts.Count > 0)
-			//{
-			//    writer.WriteStartElement("actions");
-			//    foreach(ScriptBase script in Scripts)
-			//        script.Save(writer);
-			//    writer.WriteEndElement();
-			//}
-
-			//		Count.Save("switch", writer);
 
 			return true;
 		}
@@ -421,16 +341,6 @@ namespace DungeonEye
 			protected set;
 		}
 
-		/*
-				/// <summary>
-				/// Target
-				/// </summary>
-				public DungeonLocation Target
-				{
-					get;
-					set;
-				}
-		*/
 
 		/// <summary>
 		/// Does the actor is activated
@@ -438,40 +348,10 @@ namespace DungeonEye
 		public bool IsActivated
 		{
 			get;
-			protected set;
+			set;
 		}
 
 
-		/*
-				/// <summary>
-				/// Registered actions
-				/// </summary>
-				public List<ActionBase> Actions
-				{
-					get;
-					private set;
-				}
-
-
-				/// <summary>
-				/// Registred scripts
-				/// </summary>
-				public List<ScriptBase> Scripts
-				{
-					get;
-					private set;
-				}
-
-
-				/// <summary>
-				/// Switch count
-				/// </summary>
-				public SwitchCount Count
-				{
-					get;
-					set;
-				}
-		*/
 		#endregion
 	}
 }

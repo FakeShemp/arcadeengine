@@ -52,7 +52,7 @@ namespace DungeonEye
 			ActivatedIdBox.Value = wallswitch.ActivatedDecoration;
 			DeactivatedIdBox.Value = wallswitch.DeactivatedDecoration;
 
-
+			SideBox.Direction = wallswitch.Side;
 			Maze = maze;
 			DecorationSet = maze.Decoration;
 			WallSwitch = wallswitch;
@@ -123,11 +123,25 @@ namespace DungeonEye
 			ItemsBox.SelectedItem = WallSwitch.NeededItem;
 			ConsumeItemBox.Checked = WallSwitch.ConsumeItem;
 			ReusableBox.Checked = WallSwitch.Reusable;
-
+			WasUsedBox.Checked = WallSwitch.WasUsed;
 		}
 
 
 		#region Control events
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void IsActivatedBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (WallSwitch == null)
+				return;
+
+			WallSwitch.WasUsed = WasUsedBox.Checked;
+		}
 
 
 

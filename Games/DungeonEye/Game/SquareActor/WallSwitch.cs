@@ -57,7 +57,7 @@ namespace DungeonEye
 		public override bool OnClick(Point location, CardinalPoint side)
 		{
 			// No wall side or no decoration or already used and not reusable
-			if (side != Side || Square.Maze.Decoration == null || (WasUsed && !Reusable))
+			if (side != Side || Square.Maze.Decoration == null)	
 				return false;
 
 
@@ -65,6 +65,16 @@ namespace DungeonEye
 			if (!Square.Maze.Decoration.IsPointInside(IsActivated ? ActivatedDecoration : DeactivatedDecoration, location))
 				return false;
 
+			// Switch deactivated
+			if (WasUsed)
+			{
+				GameMessage.AddMessage("It's already unlocked.", GameColors.Red);
+				return true;
+			}
+
+			// Alreayd used and not reusable
+			if (WasUsed && !Reusable)
+				return false;
 
 			// Does an item is required ?
 			if (!string.IsNullOrEmpty(NeededItem))
@@ -74,7 +84,7 @@ namespace DungeonEye
 				if (GameScreen.Team.ItemInHand == null || GameScreen.Team.ItemInHand.Name != NeededItem)
 				{
 					GameMessage.AddMessage("You need a key to open this lock");
-					return false;
+					return true;
 				}
 
 				// Picklock
@@ -98,7 +108,6 @@ namespace DungeonEye
 					GameScreen.Team.SetItemInHand(null);
 			}
 
-			WasUsed = true;
 
 			foreach (WallSwitchScript script in Scripts)
 				script.Run();
@@ -149,6 +158,46 @@ namespace DungeonEye
 
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		public override DungeonLocation[] GetTargets()
+		{
+			List<DungeonLocation> list = new List<DungeonLocation>();
+
+			foreach (WallSwitchScript script in Scripts)
+				if (script.Action != null && script.Action.Target != null)
+					list.Add(script.Action.Target);
+
+			return list.ToArray();
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString()
+		{
+			StringBuilder sb = new StringBuilder();
+			sb.Append("WallSwitch : Facing " + Side.ToString() + " - ");
+
+			if (WasUsed)
+				sb.Append("used - ");
+
+			sb.Append(Scripts.Count + " script(s) - ");
+
+			if (!string.IsNullOrEmpty(NeededItem))
+				sb.Append("Need \"" + NeededItem + "\" - ");
+
+			if (Reusable)
+				sb.Append("reusable - ");
+
+			return sb.ToString();
+		}
+
+
 		#region I/O
 
 
@@ -194,11 +243,11 @@ namespace DungeonEye
 					}
 					break;
 
-					case "wasused":
-					{
-						WasUsed = bool.Parse(node.InnerText);
-					}
-					break;
+					//case "wasused":
+					//{
+					//    WasUsed = bool.Parse(node.InnerText);
+					//}
+					//break;
 
 					case "side":
 					{
@@ -262,7 +311,7 @@ namespace DungeonEye
 
 			writer.WriteElementString("side", Side.ToString());
 			writer.WriteElementString("reusable", Reusable.ToString());
-			writer.WriteElementString("wasused", WasUsed.ToString());
+			//writer.WriteElementString("wasused", WasUsed.ToString());
 			writer.WriteElementString("activateitem", NeededItem);
 			writer.WriteElementString("consumeitem", ConsumeItem.ToString());
 			writer.WriteElementString("picklock", LockLevel.ToString());
@@ -303,8 +352,14 @@ namespace DungeonEye
 		/// </summary>
 		public bool WasUsed
 		{
-			get;
-			private set;
+			get
+			{
+				return !IsActivated;
+			}
+			set
+			{
+				IsActivated = !value;
+			}
 		}
 
 

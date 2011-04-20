@@ -78,6 +78,26 @@ namespace DungeonEye
 			return true;
 		}
 
+		
+
+		/// <summary>
+		/// Gets a list of all targets
+		/// </summary>
+		/// <returns>Target array</returns>
+		public DungeonLocation[] GetTargets()
+		{
+			List<DungeonLocation> list = new List<DungeonLocation>();
+			foreach (AlcoveScript script in OnAddedItem)
+				if (script.Action != null && script.Action.Target != null)
+					list.Add(script.Action.Target);
+
+			foreach (AlcoveScript script in OnRemovedItem)
+				if (script.Action != null && script.Action.Target != null)
+					list.Add(script.Action.Target);
+
+
+			return list.ToArray();
+		}
 
 
 		#region I/O

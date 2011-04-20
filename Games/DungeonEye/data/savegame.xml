@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <Team>
 	<dungeon name="EOB_2" />
-	<location maze="Temple - 02" x="14" y="3" direction="North" position="NorthEast" />
+	<location maze="Temple - 01" x="13" y="11" direction="West" position="NorthEast" />
 	<position slot="FrontLeft">
 		<hero name="Allabar">
 			<hitpoint current="16" max="23" />
@@ -57,7 +57,18 @@
 			</profession>
 			<inventory position="Primary" name="Short Sword" />
 			<inventory position="Secondary" name="Grey Key" />
-			<backpack position="0" name="Spell book" />
+			<backpack position="0" name="Grey Key" />
+			<backpack position="1" name="Grey Key" />
+			<backpack position="2" name="Grey Key" />
+			<backpack position="3" name="Grey Key" />
+			<backpack position="4" name="Grey Key" />
+			<backpack position="5" name="Grey Key" />
+			<backpack position="6" name="Grey Key" />
+			<backpack position="7" name="Grey Key" />
+			<backpack position="8" name="Grey Key" />
+			<backpack position="10" name="Grey Key" />
+			<backpack position="11" name="Grey Key" />
+			<backpack position="12" name="Grey Key" />
 			<backpack position="9" name="Boots" />
 		</hero>
 	</position>

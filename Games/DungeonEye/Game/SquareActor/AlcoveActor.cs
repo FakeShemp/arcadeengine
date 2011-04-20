@@ -17,15 +17,16 @@
 //along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 //
 #endregion
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
+using System.Text;
 using System.Xml;
 using ArcEngine;
-using ArcEngine.Graphic;
-using System.ComponentModel;
-using System;
 using ArcEngine.Asset;
 using ArcEngine.Audio;
-using System.Text;
+using ArcEngine.Graphic;
 
 namespace DungeonEye
 {
@@ -133,6 +134,22 @@ namespace DungeonEye
 			return sb.ToString();
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		public override DungeonLocation[] GetTargets()
+		{
+			List<DungeonLocation> list = new List<DungeonLocation>();
+
+			foreach (Alcove alcove in Alcoves)
+				list.AddRange(alcove.GetTargets());
+
+
+			return list.ToArray();
+
+		}
 
 		#region Events
 
