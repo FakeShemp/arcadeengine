@@ -50,6 +50,7 @@
 			this.DeactActBox = new System.Windows.Forms.RadioButton();
 			this.ChangeTextBox = new System.Windows.Forms.RadioButton();
 			this.ActionPropertiesBox = new System.Windows.Forms.Panel();
+			this.DisplayMessageBox = new System.Windows.Forms.RadioButton();
 			this.groupBox1.SuspendLayout();
 			this.panel1.SuspendLayout();
 			this.SuspendLayout();
@@ -61,7 +62,7 @@
 			this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupBox1.Location = new System.Drawing.Point(0, 0);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(566, 444);
+			this.groupBox1.Size = new System.Drawing.Size(890, 689);
 			this.groupBox1.TabIndex = 1;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Action";
@@ -75,6 +76,7 @@
 			this.panel1.Controls.Add(this.ActivatesBox);
 			this.panel1.Controls.Add(this.GiveExperienceBox);
 			this.panel1.Controls.Add(this.ChangePictureBox);
+			this.panel1.Controls.Add(this.DisplayMessageBox);
 			this.panel1.Controls.Add(this.JoinCharacterBox);
 			this.panel1.Controls.Add(this.DeactivatesBox);
 			this.panel1.Controls.Add(this.EndDialogBox);
@@ -92,7 +94,7 @@
 			this.panel1.Controls.Add(this.ChangeTextBox);
 			this.panel1.Location = new System.Drawing.Point(6, 19);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(142, 419);
+			this.panel1.Size = new System.Drawing.Size(142, 664);
 			this.panel1.TabIndex = 4;
 			// 
 			// TogglesBox
@@ -349,8 +351,21 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.ActionPropertiesBox.Location = new System.Drawing.Point(154, 19);
 			this.ActionPropertiesBox.Name = "ActionPropertiesBox";
-			this.ActionPropertiesBox.Size = new System.Drawing.Size(406, 419);
+			this.ActionPropertiesBox.Size = new System.Drawing.Size(730, 664);
 			this.ActionPropertiesBox.TabIndex = 1;
+			// 
+			// DisplayMessageBox
+			// 
+			this.DisplayMessageBox.Appearance = System.Windows.Forms.Appearance.Button;
+			this.DisplayMessageBox.Location = new System.Drawing.Point(3, 554);
+			this.DisplayMessageBox.Name = "DisplayMessageBox";
+			this.DisplayMessageBox.Size = new System.Drawing.Size(113, 23);
+			this.DisplayMessageBox.TabIndex = 3;
+			this.DisplayMessageBox.TabStop = true;
+			this.DisplayMessageBox.Text = "Display Message";
+			this.DisplayMessageBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.DisplayMessageBox.UseVisualStyleBackColor = true;
+			this.DisplayMessageBox.CheckedChanged += new System.EventHandler(this.DisplayMessageBox_CheckedChanged);
 			// 
 			// ActionChooserControl
 			// 
@@ -358,7 +373,7 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.groupBox1);
 			this.Name = "ActionChooserControl";
-			this.Size = new System.Drawing.Size(566, 444);
+			this.Size = new System.Drawing.Size(890, 689);
 			this.groupBox1.ResumeLayout(false);
 			this.panel1.ResumeLayout(false);
 			this.ResumeLayout(false);
@@ -389,5 +404,6 @@
 		private System.Windows.Forms.RadioButton DisableChoiceBox;
 		private System.Windows.Forms.RadioButton ChangeTextBox;
 		private System.Windows.Forms.Panel panel1;
+		private System.Windows.Forms.RadioButton DisplayMessageBox;
 	}
 }

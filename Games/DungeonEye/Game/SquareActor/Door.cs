@@ -193,9 +193,6 @@ namespace DungeonEye
 		/// <returns>True if the event is handled</returns>
 		public override bool OnClick(Point location, CardinalPoint side)
 		{
-			// Door opened
-			if (State == DoorState.Opened)
-				return false;
 
 			// Button
 			if (HasButton && Button.Contains(location))
@@ -208,7 +205,8 @@ namespace DungeonEye
 			else
 			{
 				// Try to force the door
-				GameMessage.AddMessage("No one is able to pry this door open.");
+				if (State != DoorState.Opened)
+					GameMessage.AddMessage("No one is able to pry this door open.");
 			}
 
 

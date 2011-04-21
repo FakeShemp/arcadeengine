@@ -47,6 +47,8 @@ namespace DungeonEye
 			AcceptItems = true;
 			CanPassThrough = true;
 			IsBlocking = false;
+			Reusable = true;
+			WasUsed = false;
 		}
 
 
@@ -80,8 +82,8 @@ namespace DungeonEye
 		void RunScript(PressurcePlateCondition condition)
 		{
 			// Not activated
-			if (!IsActivated)
-				return;
+			//if (!IsActivated)
+			//    return;
 
 			// Already used
 			if (!Reusable && WasUsed)

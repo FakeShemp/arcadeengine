@@ -119,6 +119,10 @@ namespace DungeonEye.Forms.Script
 			{
 				basectrl = new JoinCharacterControl(action as JoinCharacter);
 			}
+			else if (action is DisplayMessage)
+			{
+				basectrl = new DisplayMessageControl(action as DisplayMessage);
+			}
 
 
 			if (basectrl == null)
@@ -134,6 +138,15 @@ namespace DungeonEye.Forms.Script
 
 		#region Control events
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void DisplayMessageBox_CheckedChanged(object sender, EventArgs e)
+		{
+			SetAction(new DisplayMessage());
+		}
 
 		/// <summary>
 		/// 
@@ -379,6 +392,8 @@ namespace DungeonEye.Forms.Script
 		ScriptBase script;
 
 		#endregion
+
+
 
 	}
 }

@@ -45,6 +45,7 @@ namespace DungeonEye
 			ActivatedDecoration = -1;
 			DeactivatedDecoration = -1;
 			Scripts = new List<WallSwitchScript>();
+			Reusable = true;
 			WasUsed = false;
 		}
 

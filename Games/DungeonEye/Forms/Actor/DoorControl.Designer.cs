@@ -225,7 +225,6 @@
 			this.SwitchCountBox.Name = "SwitchCountBox";
 			this.SwitchCountBox.Size = new System.Drawing.Size(140, 130);
 			switchCount1.Count = 0;
-			switchCount1.Disabled = false;
 			switchCount1.ResetOnTrigger = false;
 			switchCount1.Target = 0;
 			this.SwitchCountBox.SwitchCount = switchCount1;

@@ -117,6 +117,12 @@
     <Compile Include="Forms\AbilityControl.Designer.cs">
       <DependentUpon>AbilityControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Actions\DisplayMessageControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Actions\DisplayMessageControl.Designer.cs">
+      <DependentUpon>DisplayMessageControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Actor\AlcoveScriptForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -493,6 +499,7 @@
     <Compile Include="Game\Decoration.cs" />
     <Compile Include="Game\GameColors.cs" />
     <Compile Include="Game\Script\Actions\ActionBase.cs" />
+    <Compile Include="Game\Script\Actions\DisplayMessage.cs" />
     <Compile Include="Game\Script\ScriptBase.cs" />
     <Compile Include="Game\Script\Actions\ActivateTarget.cs" />
     <Compile Include="Game\Script\Actions\ChangePicture.cs" />
@@ -592,6 +599,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\AbilityControl.resx">
       <DependentUpon>AbilityControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Actions\DisplayMessageControl.resx">
+      <DependentUpon>DisplayMessageControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Actor\AlcoveScriptForm.resx">
       <DependentUpon>AlcoveScriptForm.cs</DependentUpon>

@@ -29,49 +29,34 @@
 		private void InitializeComponent()
 		{
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.PanelBox = new System.Windows.Forms.Panel();
 			this.TargetBox = new System.Windows.Forms.NumericUpDown();
 			this.label1 = new System.Windows.Forms.Label();
 			this.ResetBox = new System.Windows.Forms.CheckBox();
 			this.label2 = new System.Windows.Forms.Label();
 			this.CountBox = new System.Windows.Forms.NumericUpDown();
-			this.EnabledBox = new System.Windows.Forms.CheckBox();
 			this.groupBox1.SuspendLayout();
-			this.PanelBox.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.TargetBox)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.CountBox)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// groupBox1
 			// 
-			this.groupBox1.Controls.Add(this.PanelBox);
-			this.groupBox1.Controls.Add(this.EnabledBox);
+			this.groupBox1.Controls.Add(this.TargetBox);
+			this.groupBox1.Controls.Add(this.label1);
+			this.groupBox1.Controls.Add(this.ResetBox);
+			this.groupBox1.Controls.Add(this.CountBox);
+			this.groupBox1.Controls.Add(this.label2);
 			this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupBox1.Location = new System.Drawing.Point(0, 0);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(130, 130);
+			this.groupBox1.Size = new System.Drawing.Size(120, 100);
 			this.groupBox1.TabIndex = 0;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Switch count";
 			// 
-			// PanelBox
-			// 
-			this.PanelBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.PanelBox.Controls.Add(this.TargetBox);
-			this.PanelBox.Controls.Add(this.label1);
-			this.PanelBox.Controls.Add(this.ResetBox);
-			this.PanelBox.Controls.Add(this.label2);
-			this.PanelBox.Controls.Add(this.CountBox);
-			this.PanelBox.Location = new System.Drawing.Point(6, 42);
-			this.PanelBox.Name = "PanelBox";
-			this.PanelBox.Size = new System.Drawing.Size(118, 85);
-			this.PanelBox.TabIndex = 4;
-			// 
 			// TargetBox
 			// 
-			this.TargetBox.Location = new System.Drawing.Point(48, 3);
+			this.TargetBox.Location = new System.Drawing.Point(51, 19);
 			this.TargetBox.Maximum = new decimal(new int[] {
             -1530494977,
             232830,
@@ -87,7 +72,7 @@
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(4, 5);
+			this.label1.Location = new System.Drawing.Point(7, 21);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(38, 13);
 			this.label1.TabIndex = 0;
@@ -97,7 +82,7 @@
 			// 
 			this.ResetBox.Appearance = System.Windows.Forms.Appearance.Button;
 			this.ResetBox.AutoSize = true;
-			this.ResetBox.Location = new System.Drawing.Point(10, 55);
+			this.ResetBox.Location = new System.Drawing.Point(13, 71);
 			this.ResetBox.Name = "ResetBox";
 			this.ResetBox.Size = new System.Drawing.Size(92, 23);
 			this.ResetBox.TabIndex = 2;
@@ -108,7 +93,7 @@
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(7, 31);
+			this.label2.Location = new System.Drawing.Point(10, 47);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(35, 13);
 			this.label2.TabIndex = 0;
@@ -116,7 +101,7 @@
 			// 
 			// CountBox
 			// 
-			this.CountBox.Location = new System.Drawing.Point(48, 29);
+			this.CountBox.Location = new System.Drawing.Point(51, 45);
 			this.CountBox.Maximum = new decimal(new int[] {
             -1530494977,
             232830,
@@ -129,29 +114,16 @@
 			this.CountBox.ThousandsSeparator = true;
 			this.CountBox.ValueChanged += new System.EventHandler(this.RemainingBox_ValueChanged);
 			// 
-			// EnabledBox
-			// 
-			this.EnabledBox.AutoSize = true;
-			this.EnabledBox.Location = new System.Drawing.Point(6, 19);
-			this.EnabledBox.Name = "EnabledBox";
-			this.EnabledBox.Size = new System.Drawing.Size(65, 17);
-			this.EnabledBox.TabIndex = 3;
-			this.EnabledBox.Text = "Enabled";
-			this.EnabledBox.UseVisualStyleBackColor = true;
-			this.EnabledBox.CheckedChanged += new System.EventHandler(this.EnabledBox_CheckedChanged);
-			// 
 			// SwitchCountControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.groupBox1);
-			this.MinimumSize = new System.Drawing.Size(130, 130);
+			this.MinimumSize = new System.Drawing.Size(120, 100);
 			this.Name = "SwitchCountControl";
-			this.Size = new System.Drawing.Size(130, 130);
+			this.Size = new System.Drawing.Size(120, 100);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
-			this.PanelBox.ResumeLayout(false);
-			this.PanelBox.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.TargetBox)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.CountBox)).EndInit();
 			this.ResumeLayout(false);
@@ -166,7 +138,5 @@
 		private System.Windows.Forms.NumericUpDown TargetBox;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.CheckBox ResetBox;
-		private System.Windows.Forms.CheckBox EnabledBox;
-		private System.Windows.Forms.Panel PanelBox;
 	}
 }

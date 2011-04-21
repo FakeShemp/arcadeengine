@@ -53,7 +53,6 @@ namespace DungeonEye
 			Count = count;
 			Target = target;
 
-			Disabled = false;
 		}
 
 
@@ -64,9 +63,6 @@ namespace DungeonEye
 		/// <returns>True if the count is equals to the target</returns>
 		public bool Activate()
 		{
-			if (Disabled)
-				return true;
-
 			Count++;
 
 			// Reset count
@@ -87,9 +83,6 @@ namespace DungeonEye
 		/// <returns>True if the count is equals to 0</returns>
 		public bool Deactivate()
 		{
-			if (Disabled)
-				return true;
-			
 			Count--;
 
 			if (Count < 0)
@@ -113,7 +106,6 @@ namespace DungeonEye
 			if (xml == null)
 				return false;
 
-			Disabled = bool.Parse(xml.Attributes["disabled"].Value);
 			Target = int.Parse(xml.Attributes["target"].Value);
 			Count = int.Parse(xml.Attributes["count"].Value);
 			ResetOnTrigger = bool.Parse(xml.Attributes["reset"].Value);
@@ -137,7 +129,6 @@ namespace DungeonEye
 
 
 			writer.WriteStartElement(name);
-			writer.WriteAttributeString("disabled", Disabled.ToString());
 			writer.WriteAttributeString("target", Target.ToString());
 			writer.WriteAttributeString("count", Count.ToString());
 			writer.WriteAttributeString("reset", ResetOnTrigger.ToString());
@@ -153,16 +144,6 @@ namespace DungeonEye
 
 
 		#region Properties
-
-
-		/// <summary>
-		/// Active or desactive the count
-		/// </summary>
-		public bool Disabled
-		{
-			get;
-			set;
-		}
 
 
 		/// <summary>

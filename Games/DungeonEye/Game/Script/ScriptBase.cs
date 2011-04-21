@@ -168,6 +168,12 @@ namespace DungeonEye.Script
 				}
 				break;
 
+				case DisplayMessage.XmlTag:
+				{
+					Action = new DisplayMessage();
+				}
+				break;
+
 				default:
 				{
 					Trace.WriteLine("[ScriptBase] Load() : Unknown node \"" + xml.Name + "\" found.");
