@@ -30,15 +30,8 @@
 		{
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
-			this.ActivatedTab = new System.Windows.Forms.TabPage();
-			this.label1 = new System.Windows.Forms.Label();
-			this.ActivatedGLBox = new OpenTK.GLControl();
-			this.ActivatedIdBox = new System.Windows.Forms.NumericUpDown();
-			this.DeactivatedTab = new System.Windows.Forms.TabPage();
-			this.label2 = new System.Windows.Forms.Label();
-			this.DeactivatedGlBox = new OpenTK.GLControl();
-			this.DeactivatedIdBox = new System.Windows.Forms.NumericUpDown();
 			this.PropertiesTab = new System.Windows.Forms.TabPage();
+			this.SideBox = new DungeonEye.Forms.CardinalPointControl();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.WasUsedBox = new System.Windows.Forms.CheckBox();
 			this.ReusableBox = new System.Windows.Forms.CheckBox();
@@ -48,16 +41,23 @@
 			this.PickLockBox = new System.Windows.Forms.NumericUpDown();
 			this.ItemsBox = new System.Windows.Forms.ComboBox();
 			this.ActionScriptBox = new DungeonEye.Forms.WallSwitchScriptListControl();
-			this.SideBox = new DungeonEye.Forms.CardinalPointControl();
+			this.ActivatedTab = new System.Windows.Forms.TabPage();
+			this.label1 = new System.Windows.Forms.Label();
+			this.ActivatedGLBox = new OpenTK.GLControl();
+			this.ActivatedIdBox = new System.Windows.Forms.NumericUpDown();
+			this.DeactivatedTab = new System.Windows.Forms.TabPage();
+			this.label2 = new System.Windows.Forms.Label();
+			this.DeactivatedGlBox = new OpenTK.GLControl();
+			this.DeactivatedIdBox = new System.Windows.Forms.NumericUpDown();
 			this.groupBox1.SuspendLayout();
 			this.tabControl1.SuspendLayout();
+			this.PropertiesTab.SuspendLayout();
+			this.groupBox2.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.PickLockBox)).BeginInit();
 			this.ActivatedTab.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.ActivatedIdBox)).BeginInit();
 			this.DeactivatedTab.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.DeactivatedIdBox)).BeginInit();
-			this.PropertiesTab.SuspendLayout();
-			this.groupBox2.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.PickLockBox)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// groupBox1
@@ -84,6 +84,133 @@
 			this.tabControl1.SelectedIndex = 0;
 			this.tabControl1.Size = new System.Drawing.Size(862, 555);
 			this.tabControl1.TabIndex = 1;
+			// 
+			// PropertiesTab
+			// 
+			this.PropertiesTab.Controls.Add(this.SideBox);
+			this.PropertiesTab.Controls.Add(this.groupBox2);
+			this.PropertiesTab.Controls.Add(this.ActionScriptBox);
+			this.PropertiesTab.Location = new System.Drawing.Point(4, 22);
+			this.PropertiesTab.Name = "PropertiesTab";
+			this.PropertiesTab.Size = new System.Drawing.Size(854, 529);
+			this.PropertiesTab.TabIndex = 2;
+			this.PropertiesTab.Text = "Properties";
+			this.PropertiesTab.UseVisualStyleBackColor = true;
+			// 
+			// SideBox
+			// 
+			this.SideBox.Direction = DungeonEye.CardinalPoint.North;
+			this.SideBox.Location = new System.Drawing.Point(359, 3);
+			this.SideBox.MinimumSize = new System.Drawing.Size(125, 115);
+			this.SideBox.Name = "SideBox";
+			this.SideBox.Size = new System.Drawing.Size(125, 115);
+			this.SideBox.TabIndex = 4;
+			this.SideBox.Title = "Side";
+			this.SideBox.DirectionChanged += new DungeonEye.Forms.CardinalPointControl.ChangedEventHandler(this.SideBox_DirectionChanged_1);
+			// 
+			// groupBox2
+			// 
+			this.groupBox2.Controls.Add(this.WasUsedBox);
+			this.groupBox2.Controls.Add(this.ReusableBox);
+			this.groupBox2.Controls.Add(this.label4);
+			this.groupBox2.Controls.Add(this.label3);
+			this.groupBox2.Controls.Add(this.ConsumeItemBox);
+			this.groupBox2.Controls.Add(this.PickLockBox);
+			this.groupBox2.Controls.Add(this.ItemsBox);
+			this.groupBox2.Location = new System.Drawing.Point(3, 159);
+			this.groupBox2.Name = "groupBox2";
+			this.groupBox2.Size = new System.Drawing.Size(350, 110);
+			this.groupBox2.TabIndex = 1;
+			this.groupBox2.TabStop = false;
+			this.groupBox2.Text = "Properties";
+			// 
+			// WasUsedBox
+			// 
+			this.WasUsedBox.AutoSize = true;
+			this.WasUsedBox.Location = new System.Drawing.Point(262, 21);
+			this.WasUsedBox.Name = "WasUsedBox";
+			this.WasUsedBox.Size = new System.Drawing.Size(76, 17);
+			this.WasUsedBox.TabIndex = 4;
+			this.WasUsedBox.Text = "Was Used";
+			this.WasUsedBox.UseVisualStyleBackColor = true;
+			this.WasUsedBox.CheckedChanged += new System.EventHandler(this.WasUsedBox_CheckedChanged);
+			// 
+			// ReusableBox
+			// 
+			this.ReusableBox.Appearance = System.Windows.Forms.Appearance.Button;
+			this.ReusableBox.AutoSize = true;
+			this.ReusableBox.Location = new System.Drawing.Point(11, 72);
+			this.ReusableBox.Name = "ReusableBox";
+			this.ReusableBox.Size = new System.Drawing.Size(62, 23);
+			this.ReusableBox.TabIndex = 3;
+			this.ReusableBox.Text = "Reusable";
+			this.ReusableBox.UseVisualStyleBackColor = true;
+			this.ReusableBox.CheckedChanged += new System.EventHandler(this.ReusableBox_CheckedChanged);
+			// 
+			// label4
+			// 
+			this.label4.AutoSize = true;
+			this.label4.Location = new System.Drawing.Point(6, 22);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(67, 13);
+			this.label4.TabIndex = 2;
+			this.label4.Text = "Needed item";
+			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Location = new System.Drawing.Point(25, 46);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(48, 13);
+			this.label3.TabIndex = 1;
+			this.label3.Text = "Picklock";
+			// 
+			// ConsumeItemBox
+			// 
+			this.ConsumeItemBox.Appearance = System.Windows.Forms.Appearance.Button;
+			this.ConsumeItemBox.AutoSize = true;
+			this.ConsumeItemBox.Location = new System.Drawing.Point(79, 72);
+			this.ConsumeItemBox.Name = "ConsumeItemBox";
+			this.ConsumeItemBox.Size = new System.Drawing.Size(83, 23);
+			this.ConsumeItemBox.TabIndex = 1;
+			this.ConsumeItemBox.Text = "Consume item";
+			this.ConsumeItemBox.UseVisualStyleBackColor = true;
+			this.ConsumeItemBox.CheckedChanged += new System.EventHandler(this.ConsumeItemBox_CheckedChanged);
+			// 
+			// PickLockBox
+			// 
+			this.PickLockBox.Location = new System.Drawing.Point(79, 44);
+			this.PickLockBox.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+			this.PickLockBox.Name = "PickLockBox";
+			this.PickLockBox.Size = new System.Drawing.Size(72, 20);
+			this.PickLockBox.TabIndex = 0;
+			this.PickLockBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.PickLockBox.ThousandsSeparator = true;
+			// 
+			// ItemsBox
+			// 
+			this.ItemsBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.ItemsBox.FormattingEnabled = true;
+			this.ItemsBox.Location = new System.Drawing.Point(79, 17);
+			this.ItemsBox.Name = "ItemsBox";
+			this.ItemsBox.Size = new System.Drawing.Size(119, 21);
+			this.ItemsBox.TabIndex = 0;
+			this.ItemsBox.SelectedIndexChanged += new System.EventHandler(this.ItemsBox_SelectedIndexChanged);
+			// 
+			// ActionScriptBox
+			// 
+			this.ActionScriptBox.Dungeon = null;
+			this.ActionScriptBox.Location = new System.Drawing.Point(3, 3);
+			this.ActionScriptBox.MinimumSize = new System.Drawing.Size(350, 150);
+			this.ActionScriptBox.Name = "ActionScriptBox";
+			this.ActionScriptBox.Scripts = null;
+			this.ActionScriptBox.Size = new System.Drawing.Size(350, 150);
+			this.ActionScriptBox.TabIndex = 0;
+			this.ActionScriptBox.Title = "Actions";
 			// 
 			// ActivatedTab
 			// 
@@ -201,132 +328,6 @@
             -2147483648});
 			this.DeactivatedIdBox.ValueChanged += new System.EventHandler(this.DeactivatedIdBox_ValueChanged);
 			// 
-			// PropertiesTab
-			// 
-			this.PropertiesTab.Controls.Add(this.SideBox);
-			this.PropertiesTab.Controls.Add(this.groupBox2);
-			this.PropertiesTab.Controls.Add(this.ActionScriptBox);
-			this.PropertiesTab.Location = new System.Drawing.Point(4, 22);
-			this.PropertiesTab.Name = "PropertiesTab";
-			this.PropertiesTab.Size = new System.Drawing.Size(854, 529);
-			this.PropertiesTab.TabIndex = 2;
-			this.PropertiesTab.Text = "Properties";
-			this.PropertiesTab.UseVisualStyleBackColor = true;
-			// 
-			// groupBox2
-			// 
-			this.groupBox2.Controls.Add(this.WasUsedBox);
-			this.groupBox2.Controls.Add(this.ReusableBox);
-			this.groupBox2.Controls.Add(this.label4);
-			this.groupBox2.Controls.Add(this.label3);
-			this.groupBox2.Controls.Add(this.ConsumeItemBox);
-			this.groupBox2.Controls.Add(this.PickLockBox);
-			this.groupBox2.Controls.Add(this.ItemsBox);
-			this.groupBox2.Location = new System.Drawing.Point(3, 159);
-			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(350, 110);
-			this.groupBox2.TabIndex = 1;
-			this.groupBox2.TabStop = false;
-			this.groupBox2.Text = "Properties";
-			// 
-			// WasUsedBox
-			// 
-			this.WasUsedBox.AutoSize = true;
-			this.WasUsedBox.Location = new System.Drawing.Point(262, 21);
-			this.WasUsedBox.Name = "WasUsedBox";
-			this.WasUsedBox.Size = new System.Drawing.Size(76, 17);
-			this.WasUsedBox.TabIndex = 4;
-			this.WasUsedBox.Text = "Was Used";
-			this.WasUsedBox.UseVisualStyleBackColor = true;
-			this.WasUsedBox.CheckedChanged += new System.EventHandler(this.WasUsedBox_CheckedChanged);
-			// 
-			// ReusableBox
-			// 
-			this.ReusableBox.Appearance = System.Windows.Forms.Appearance.Button;
-			this.ReusableBox.AutoSize = true;
-			this.ReusableBox.Location = new System.Drawing.Point(11, 72);
-			this.ReusableBox.Name = "ReusableBox";
-			this.ReusableBox.Size = new System.Drawing.Size(62, 23);
-			this.ReusableBox.TabIndex = 3;
-			this.ReusableBox.Text = "Reusable";
-			this.ReusableBox.UseVisualStyleBackColor = true;
-			this.ReusableBox.CheckedChanged += new System.EventHandler(this.ReusableBox_CheckedChanged);
-			// 
-			// label4
-			// 
-			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(6, 22);
-			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(67, 13);
-			this.label4.TabIndex = 2;
-			this.label4.Text = "Needed item";
-			// 
-			// label3
-			// 
-			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(25, 46);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(48, 13);
-			this.label3.TabIndex = 1;
-			this.label3.Text = "Picklock";
-			// 
-			// ConsumeItemBox
-			// 
-			this.ConsumeItemBox.Appearance = System.Windows.Forms.Appearance.Button;
-			this.ConsumeItemBox.AutoSize = true;
-			this.ConsumeItemBox.Location = new System.Drawing.Point(79, 72);
-			this.ConsumeItemBox.Name = "ConsumeItemBox";
-			this.ConsumeItemBox.Size = new System.Drawing.Size(83, 23);
-			this.ConsumeItemBox.TabIndex = 1;
-			this.ConsumeItemBox.Text = "Consume item";
-			this.ConsumeItemBox.UseVisualStyleBackColor = true;
-			this.ConsumeItemBox.CheckedChanged += new System.EventHandler(this.ConsumeItemBox_CheckedChanged);
-			// 
-			// PickLockBox
-			// 
-			this.PickLockBox.Location = new System.Drawing.Point(79, 44);
-			this.PickLockBox.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            -2147483648});
-			this.PickLockBox.Name = "PickLockBox";
-			this.PickLockBox.Size = new System.Drawing.Size(72, 20);
-			this.PickLockBox.TabIndex = 0;
-			this.PickLockBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.PickLockBox.ThousandsSeparator = true;
-			// 
-			// ItemsBox
-			// 
-			this.ItemsBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.ItemsBox.FormattingEnabled = true;
-			this.ItemsBox.Location = new System.Drawing.Point(79, 17);
-			this.ItemsBox.Name = "ItemsBox";
-			this.ItemsBox.Size = new System.Drawing.Size(119, 21);
-			this.ItemsBox.TabIndex = 0;
-			this.ItemsBox.SelectedIndexChanged += new System.EventHandler(this.ItemsBox_SelectedIndexChanged);
-			// 
-			// ActionScriptBox
-			// 
-			this.ActionScriptBox.Dungeon = null;
-			this.ActionScriptBox.Location = new System.Drawing.Point(3, 3);
-			this.ActionScriptBox.MinimumSize = new System.Drawing.Size(350, 150);
-			this.ActionScriptBox.Name = "ActionScriptBox";
-			this.ActionScriptBox.Scripts = null;
-			this.ActionScriptBox.Size = new System.Drawing.Size(350, 150);
-			this.ActionScriptBox.TabIndex = 0;
-			this.ActionScriptBox.Title = "Actions";
-			// 
-			// SideBox
-			// 
-			this.SideBox.Direction = DungeonEye.CardinalPoint.North;
-			this.SideBox.Location = new System.Drawing.Point(359, 3);
-			this.SideBox.MinimumSize = new System.Drawing.Size(125, 115);
-			this.SideBox.Name = "SideBox";
-			this.SideBox.Size = new System.Drawing.Size(125, 115);
-			this.SideBox.TabIndex = 4;
-			this.SideBox.Title = "Side";
-			// 
 			// WallSwitchControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -337,16 +338,16 @@
 			this.Load += new System.EventHandler(this.WallSwitchControl_Load);
 			this.groupBox1.ResumeLayout(false);
 			this.tabControl1.ResumeLayout(false);
+			this.PropertiesTab.ResumeLayout(false);
+			this.groupBox2.ResumeLayout(false);
+			this.groupBox2.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.PickLockBox)).EndInit();
 			this.ActivatedTab.ResumeLayout(false);
 			this.ActivatedTab.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.ActivatedIdBox)).EndInit();
 			this.DeactivatedTab.ResumeLayout(false);
 			this.DeactivatedTab.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.DeactivatedIdBox)).EndInit();
-			this.PropertiesTab.ResumeLayout(false);
-			this.groupBox2.ResumeLayout(false);
-			this.groupBox2.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.PickLockBox)).EndInit();
 			this.ResumeLayout(false);
 
 		}

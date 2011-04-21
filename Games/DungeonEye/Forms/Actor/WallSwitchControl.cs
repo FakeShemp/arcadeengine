@@ -135,6 +135,20 @@ namespace DungeonEye
 		/// 
 		/// </summary>
 		/// <param name="sender"></param>
+		/// <param name="direction"></param>
+		private void SideBox_DirectionChanged_1(object sender, CardinalPoint direction)
+		{
+			if (WallSwitch == null)
+				return;
+
+			WallSwitch.Side = SideBox.Direction;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void WasUsedBox_CheckedChanged(object sender, EventArgs e)
 		{

@@ -45,6 +45,7 @@ namespace DungeonEye
 			ActivatedDecoration = -1;
 			DeactivatedDecoration = -1;
 			Scripts = new List<WallSwitchScript>();
+			WasUsed = false;
 		}
 
 
@@ -71,10 +72,6 @@ namespace DungeonEye
 				GameMessage.AddMessage("It's already unlocked.", GameColors.Red);
 				return true;
 			}
-
-			// Alreayd used and not reusable
-			//if (WasUsed && !Reusable)
-			//    return false;
 
 			// Does an item is required ?
 			if (!string.IsNullOrEmpty(NeededItem))
@@ -109,14 +106,41 @@ namespace DungeonEye
 			}
 
 
-			foreach (WallSwitchScript script in Scripts)
-				script.Run();
-
+			//Run();
 			Toggle();
 
 			return true;
 		}
 
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public override void Activate()
+		{
+			base.Activate();
+
+			Run();
+		}
+
+
+		public override void Deactivate()
+		{
+			base.Deactivate();
+
+			Run();
+		}
+
+
+		/// <summary>
+		/// Run scripts
+		/// </summary>
+		void Run()
+		{
+			foreach (WallSwitchScript script in Scripts)
+				script.Run();
+		}
 
 		/// <summary>
 		/// Try to picklock the switch

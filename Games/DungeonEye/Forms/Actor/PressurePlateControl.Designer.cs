@@ -32,23 +32,25 @@
 			this.WasUsedBox = new System.Windows.Forms.CheckBox();
 			this.IsHiddenBox = new System.Windows.Forms.CheckBox();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
-			this.ActionBox = new DungeonEye.Forms.PressurePlateScriptListControl();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.VisualTab = new System.Windows.Forms.TabPage();
-			this.PropertiesTab = new System.Windows.Forms.TabPage();
 			this.label1 = new System.Windows.Forms.Label();
 			this.VisualBox = new OpenTK.GLControl();
 			this.DecorationIdBox = new System.Windows.Forms.NumericUpDown();
+			this.PropertiesTab = new System.Windows.Forms.TabPage();
+			this.ActionBox = new DungeonEye.Forms.PressurePlateScriptListControl();
+			this.ReusableBox = new System.Windows.Forms.CheckBox();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.tabControl1.SuspendLayout();
 			this.VisualTab.SuspendLayout();
-			this.PropertiesTab.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.DecorationIdBox)).BeginInit();
+			this.PropertiesTab.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// groupBox1
 			// 
+			this.groupBox1.Controls.Add(this.ReusableBox);
 			this.groupBox1.Controls.Add(this.WasUsedBox);
 			this.groupBox1.Controls.Add(this.IsHiddenBox);
 			this.groupBox1.Location = new System.Drawing.Point(6, 6);
@@ -91,17 +93,6 @@
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Pressure plate";
 			// 
-			// ActionBox
-			// 
-			this.ActionBox.Dungeon = null;
-			this.ActionBox.Location = new System.Drawing.Point(3, 112);
-			this.ActionBox.MinimumSize = new System.Drawing.Size(350, 150);
-			this.ActionBox.Name = "ActionBox";
-			this.ActionBox.Scripts = null;
-			this.ActionBox.Size = new System.Drawing.Size(350, 150);
-			this.ActionBox.TabIndex = 1;
-			this.ActionBox.Title = "Scripts";
-			// 
 			// tabControl1
 			// 
 			this.tabControl1.Controls.Add(this.VisualTab);
@@ -126,18 +117,6 @@
 			this.VisualTab.Text = "Visual";
 			this.VisualTab.UseVisualStyleBackColor = true;
 			// 
-			// PropertiesTab
-			// 
-			this.PropertiesTab.Controls.Add(this.groupBox1);
-			this.PropertiesTab.Controls.Add(this.ActionBox);
-			this.PropertiesTab.Location = new System.Drawing.Point(4, 22);
-			this.PropertiesTab.Name = "PropertiesTab";
-			this.PropertiesTab.Padding = new System.Windows.Forms.Padding(3);
-			this.PropertiesTab.Size = new System.Drawing.Size(692, 462);
-			this.PropertiesTab.TabIndex = 1;
-			this.PropertiesTab.Text = "Properties";
-			this.PropertiesTab.UseVisualStyleBackColor = true;
-			// 
 			// label1
 			// 
 			this.label1.AutoSize = true;
@@ -147,11 +126,11 @@
 			this.label1.TabIndex = 5;
 			this.label1.Text = "Decoration id :";
 			// 
-			// ActivatedGLBox
+			// VisualBox
 			// 
 			this.VisualBox.BackColor = System.Drawing.Color.Black;
 			this.VisualBox.Location = new System.Drawing.Point(6, 32);
-			this.VisualBox.Name = "ActivatedGLBox";
+			this.VisualBox.Name = "VisualBox";
 			this.VisualBox.Size = new System.Drawing.Size(352, 240);
 			this.VisualBox.TabIndex = 3;
 			this.VisualBox.VSync = false;
@@ -183,6 +162,41 @@
             -2147483648});
 			this.DecorationIdBox.ValueChanged += new System.EventHandler(this.DecorationIdBox_ValueChanged);
 			// 
+			// PropertiesTab
+			// 
+			this.PropertiesTab.Controls.Add(this.groupBox1);
+			this.PropertiesTab.Controls.Add(this.ActionBox);
+			this.PropertiesTab.Location = new System.Drawing.Point(4, 22);
+			this.PropertiesTab.Name = "PropertiesTab";
+			this.PropertiesTab.Padding = new System.Windows.Forms.Padding(3);
+			this.PropertiesTab.Size = new System.Drawing.Size(692, 462);
+			this.PropertiesTab.TabIndex = 1;
+			this.PropertiesTab.Text = "Properties";
+			this.PropertiesTab.UseVisualStyleBackColor = true;
+			// 
+			// ActionBox
+			// 
+			this.ActionBox.Dungeon = null;
+			this.ActionBox.Location = new System.Drawing.Point(3, 112);
+			this.ActionBox.MinimumSize = new System.Drawing.Size(350, 150);
+			this.ActionBox.Name = "ActionBox";
+			this.ActionBox.Scripts = null;
+			this.ActionBox.Size = new System.Drawing.Size(350, 150);
+			this.ActionBox.TabIndex = 1;
+			this.ActionBox.Title = "Scripts";
+			// 
+			// ReusableBox
+			// 
+			this.ReusableBox.Appearance = System.Windows.Forms.Appearance.Button;
+			this.ReusableBox.AutoSize = true;
+			this.ReusableBox.Location = new System.Drawing.Point(282, 19);
+			this.ReusableBox.Name = "ReusableBox";
+			this.ReusableBox.Size = new System.Drawing.Size(62, 23);
+			this.ReusableBox.TabIndex = 2;
+			this.ReusableBox.Text = "Reusable";
+			this.ReusableBox.UseVisualStyleBackColor = true;
+			this.ReusableBox.CheckedChanged += new System.EventHandler(this.ReusableBox_CheckedChanged);
+			// 
 			// PressurePlateControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -197,8 +211,8 @@
 			this.tabControl1.ResumeLayout(false);
 			this.VisualTab.ResumeLayout(false);
 			this.VisualTab.PerformLayout();
-			this.PropertiesTab.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.DecorationIdBox)).EndInit();
+			this.PropertiesTab.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -216,5 +230,6 @@
 		private System.Windows.Forms.Label label1;
 		private OpenTK.GLControl VisualBox;
 		private System.Windows.Forms.NumericUpDown DecorationIdBox;
+		private System.Windows.Forms.CheckBox ReusableBox;
 	}
 }

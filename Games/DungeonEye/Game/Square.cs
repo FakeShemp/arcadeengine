@@ -94,10 +94,12 @@ namespace DungeonEye
 		/// </summary>
 		public void Dispose()
 		{
-			foreach (Monster monster in Monsters)
+			for (int i = 0 ; i < 4 ; i++)
 			{
-				if (monster != null)
-					monster.Dispose();
+				if (Monsters[i] != null)
+					Monsters[i].Dispose();
+
+				Monsters[i] = null;
 			}
 		}
 
@@ -185,6 +187,20 @@ namespace DungeonEye
 			if (Actor != null)
 				Actor.Update(time);
 		}
+
+
+		/// <summary>
+		/// Can an item passthrough the block
+		/// </summary>
+		/// <param name="item">Item handle</param>
+		/// <returns>True if the item can pass</returns>
+		//public virtual bool CanItemPassThrough(Item item)
+		//{
+		//    if (IsWall)
+		//        return false;
+
+		//    return true;
+		//}
 
 
 		#region Events

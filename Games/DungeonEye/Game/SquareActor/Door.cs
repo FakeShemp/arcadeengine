@@ -190,8 +190,13 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="location">Location of the click</param>
 		/// <param name="side">Wall side</param>
+		/// <returns>True if the event is handled</returns>
 		public override bool OnClick(Point location, CardinalPoint side)
 		{
+			// Door opened
+			if (State == DoorState.Opened)
+				return false;
+
 			// Button
 			if (HasButton && Button.Contains(location))
 			{
@@ -500,6 +505,12 @@ namespace DungeonEye
 
 				switch (node.Name.ToLower())
 				{
+					case "smallitempassthrough":
+					{
+						SmallItemPassThrough = bool.Parse(node.InnerText);
+					}
+					break;
+
 					case "type":
 					{
 						Type = (DoorType)Enum.Parse(typeof(DoorType), node.Attributes["value"].Value, true);
@@ -612,6 +623,8 @@ namespace DungeonEye
 			writer.WriteStartElement("strength");
 			writer.WriteAttributeString("value", Strength.ToString());
 			writer.WriteEndElement();
+
+			writer.WriteElementString("smallitempassthrough", SmallItemPassThrough.ToString());
 
 			//Count.Save("switch", writer);
 			

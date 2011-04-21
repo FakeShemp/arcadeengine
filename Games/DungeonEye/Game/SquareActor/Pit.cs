@@ -206,10 +206,14 @@ namespace DungeonEye
 				return false;
 
 			Team team = GameScreen.Team;
-
+			CardinalPoint dir = team.Direction;
 
 			if (team.Teleport(Target))
 				team.Damage(Damage, SavingThrowType.Reflex, Difficulty);
+
+
+			//Hack: Restore facing direction
+			team.Direction = dir;
 
 			return true;
 		}

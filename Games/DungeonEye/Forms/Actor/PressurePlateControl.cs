@@ -103,6 +103,19 @@ namespace DungeonEye.Forms
 
 		#region Control events
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ReusableBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (PressurePlate == null)
+				return;
+
+			PressurePlate.Reusable = ReusableBox.Checked;
+		}
+
 
 		/// <summary>
 		/// 
@@ -234,7 +247,6 @@ namespace DungeonEye.Forms
 
 
 		#endregion
-
 
 	}
 }

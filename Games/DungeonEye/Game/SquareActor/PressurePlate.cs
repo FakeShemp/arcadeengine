@@ -79,7 +79,12 @@ namespace DungeonEye
 		/// <param name="condition">Condtion</param>
 		void RunScript(PressurcePlateCondition condition)
 		{
+			// Not activated
 			if (!IsActivated)
+				return;
+
+			// Already used
+			if (!Reusable && WasUsed)
 				return;
 
 			foreach (PressurePlateScript script in Scripts)
@@ -87,6 +92,8 @@ namespace DungeonEye
 				if ((script.Condition & condition) == condition)
 					script.Run();
 			}
+
+			WasUsed = true;
 		}
 
 
@@ -108,6 +115,24 @@ namespace DungeonEye
 			sb.Append(")");
 			return sb.ToString();
 		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		public override DungeonLocation[] GetTargets()
+		{
+			List<DungeonLocation> list = new List<DungeonLocation>();
+
+			foreach (PressurePlateScript script in Scripts)
+				if (script.Action != null && script.Action.Target != null)
+					list.Add(script.Action.Target);
+
+			return list.ToArray();
+		}
+
+
 
 
 		#region I/O

@@ -103,20 +103,30 @@ namespace DungeonEye
 
 
 				// Blocked by a wall, fall before the block
-				Square blockinfo =  maze.GetSquare(dst);
+				Square square =  maze.GetSquare(dst);
 
+
+				// Can item pass through a door ?
+				if (square.Actor != null && square.Actor is Door)
+				{
+					Door door = square.Actor as Door;
+					if (!door.CanItemsPassThrough(Item))
+					{
+						Distance = 0;
+					}
+				}
+				
 
 				// Wall is blocking
-				if (blockinfo.IsBlocking)
+				else if (square.IsBlocking)
 				{
 					Distance = 0;
 				}
 
 
 				// Blocked by an obstacle, but fall on the block
-				if ((blockinfo.Actor != null && blockinfo.Actor.CanPassThrough) || blockinfo.MonsterCount > 0)
+				if ((square.Actor != null && square.Actor.CanPassThrough) || square.MonsterCount > 0)
 				{
-					//Distance = 0;
 					Location.Coordinate = dst;
 
 					SquarePosition gp = Location.Position;
@@ -150,7 +160,7 @@ namespace DungeonEye
 
 
 					// Get monster and hit it
-					if (blockinfo.MonsterCount > 0)
+					if (square.MonsterCount > 0)
 					{
 						Monster[] monsters = maze.GetSquare(Location.Coordinate).Monsters;
 						foreach(Monster monster in monsters)
