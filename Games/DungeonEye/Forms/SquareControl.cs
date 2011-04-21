@@ -27,10 +27,28 @@ using ArcEngine.Asset;
 
 namespace DungeonEye.Forms
 {
+
+	public class SquareForm : Form
+	{
+		public SquareForm(Maze maze, Square square)
+		{
+
+		}
+
+		/// <summary>
+		/// Activate the actor tab
+		/// </summary>
+		public void ActivateActorTab()
+		{
+			//TabControlBox.SelectedTab = ActorTab;
+		}
+
+	}
+
 	/// <summary>
-	/// Square editor form
+	/// Square editor control
 	/// </summary>
-	public partial class SquareForm : Form
+	public partial class SquareControl : UserControl
 	{
 
 		/// <summary>
@@ -38,13 +56,13 @@ namespace DungeonEye.Forms
 		/// </summary>
 		/// <param name="maze">Maze</param>
 		/// <param name="sqaure">Square handle</param>
-		public SquareForm(Maze maze, Square square)
+		public void SquareForm(Maze maze, Square square)
 		{
 			InitializeComponent();
 
 			if (square == null)
 			{
-				Close();
+				//Close();
 				return;
 			}
 
@@ -136,7 +154,7 @@ namespace DungeonEye.Forms
 			if (Square == null)
 				return;
 
-			DecorationIdBox.Value = Square.Decorations[(int)DecorationSide];
+			DecorationIdBox.Value = Square.Decorations[(int) DecorationSide];
 		}
 
 
@@ -193,7 +211,7 @@ namespace DungeonEye.Forms
 		{
 			if (Square == null)
 				return;
-			
+
 			Square.Items[0].Add(ResourceManager.CreateAsset<Item>(ItemsBox.SelectedItem as string));
 			NWBox.Items.Add(ItemsBox.SelectedItem as string);
 		}
@@ -387,8 +405,8 @@ namespace DungeonEye.Forms
 				Batch.Dispose();
 			Batch = null;
 		}
-		
-		
+
+
 		/// <summary>
 		/// OnKeyDown
 		/// </summary>
@@ -397,8 +415,8 @@ namespace DungeonEye.Forms
 		private void MazeBlockForm_KeyDown(object sender, KeyEventArgs e)
 		{
 			// Escape key close the form
-			if (e.KeyCode == Keys.Escape)
-				Close();
+			//if (e.KeyCode == Keys.Escape)
+			//	Close();
 		}
 
 
@@ -456,15 +474,15 @@ namespace DungeonEye.Forms
 
 			if (monster == null)
 			{
-				boxes[(int)position].Text = string.Empty;
-				buttons[(int)position].Enabled = false;
+				boxes[(int) position].Text = string.Empty;
+				buttons[(int) position].Enabled = false;
 				if (Square != null)
 					Square.Monsters[(int) position] = null;
 			}
 			else
 			{
-				boxes[(int)position].Text = monster.Name;
-				buttons[(int)position].Enabled = true;
+				boxes[(int) position].Text = monster.Name;
+				buttons[(int) position].Enabled = true;
 				monster.Teleport(Square);
 				monster.Position = position;
 			}
@@ -480,7 +498,7 @@ namespace DungeonEye.Forms
 				Square.Monsters[0] = new Monster();
 
 			new MonsterEditorForm(Square.Monsters[0]).ShowDialog();
-			
+
 			SetMonster(SquarePosition.NorthWest, Square.Monsters[0]);
 			Square.Monsters[0].OnSpawn();
 
@@ -541,7 +559,7 @@ namespace DungeonEye.Forms
 			if (MessageBox.Show("Are you sure ?", "Remove monster", MessageBoxButtons.YesNo) == DialogResult.Yes)
 				SetMonster(SquarePosition.NorthWest, null);
 		}
-		
+
 		private void DeleteNEBox_Click(object sender, EventArgs e)
 		{
 			if (Square == null)
@@ -550,7 +568,7 @@ namespace DungeonEye.Forms
 			if (MessageBox.Show("Are you sure ?", "Remove monster", MessageBoxButtons.YesNo) == DialogResult.Yes)
 				SetMonster(SquarePosition.NorthEast, null);
 		}
-	
+
 		private void DeleteSWBox_Click(object sender, EventArgs e)
 		{
 			if (Square == null)
@@ -587,7 +605,7 @@ namespace DungeonEye.Forms
 			Batch = new SpriteBatch();
 
 			ChangeDecoration();
-			
+
 			UpdateDecorationBoxes();
 		}
 
@@ -625,7 +643,7 @@ namespace DungeonEye.Forms
 			if (Square == null)
 				return;
 
-			Square.Decorations[(int)DecorationSide] = (int)DecorationIdBox.Value;
+			Square.Decorations[(int) DecorationSide] = (int) DecorationIdBox.Value;
 
 			RenderDecorationScene();
 			UpdateDecorationBoxes();
@@ -719,8 +737,8 @@ namespace DungeonEye.Forms
 			Square.Actor = null;
 			ActorPanelBox.Controls.Clear();
 		}
-		
-		
+
+
 		/// <summary>
 		/// 
 		/// </summary>
@@ -798,8 +816,8 @@ namespace DungeonEye.Forms
 				ActorPanelBox.Controls.Add(control);
 			}
 		}
-		
-		
+
+
 		#endregion
 
 

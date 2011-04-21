@@ -1,6 +1,6 @@
 ﻿namespace DungeonEye.Forms
 {
-	partial class SquareForm
+	partial class SquareControl
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -860,23 +860,15 @@
 			// 
 			// SquareForm
 			// 
-			this.AcceptButton = this.CloseBox;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(684, 562);
 			this.Controls.Add(this.CloseBox);
 			this.Controls.Add(this.TabControlBox);
 			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.KeyPreview = true;
-			this.MaximizeBox = false;
-			this.MinimizeBox = false;
 			this.MinimumSize = new System.Drawing.Size(650, 600);
 			this.Name = "SquareForm";
-			this.ShowIcon = false;
-			this.ShowInTaskbar = false;
-			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Square wizard";
-			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SquareForm_FormClosing);
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MazeBlockForm_KeyDown);
 			this.DecorationTab.ResumeLayout(false);
 			this.groupBox8.ResumeLayout(false);
