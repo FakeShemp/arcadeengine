@@ -156,6 +156,12 @@ namespace DungeonEye.Script
 				}
 				break;
 
+				case SetTo.XmlTag:
+				{
+					Action = new SetTo();
+				}
+				break;
+
 				case Teleport.XmlTag:
 				{
 					Action = new Teleport();

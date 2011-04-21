@@ -123,7 +123,9 @@ namespace DungeonEye.Forms.Script
 			{
 				basectrl = new DisplayMessageControl(action as DisplayMessage);
 			}
-
+			else
+			{
+			}
 
 			if (basectrl == null)
 				return;
@@ -218,7 +220,7 @@ namespace DungeonEye.Forms.Script
 		/// <param name="e"></param>
 		private void SetToBox_CheckedChanged(object sender, EventArgs e)
 		{
-			SetAction(null);
+			SetAction(new SetTo());
 		}
 
 

@@ -368,6 +368,9 @@ namespace ArcEngine.Asset
 		/// <returns>Tile handle or null</returns>
 		public Tile GetTile(int id)
 		{
+			if (id < 0)
+				return null;
+
 			if (tiles.ContainsKey(id))
 				return tiles[id];
 			else
