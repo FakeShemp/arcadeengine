@@ -38,7 +38,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Default constructor
 		/// </summary>
-		public SwitchCount() : this(1, 1)
+		public SwitchCount() : this(1, 0)
 		{
 		}
 
@@ -52,7 +52,8 @@ namespace DungeonEye
 		{
 			Count = count;
 			Target = target;
-			Enabled = false;
+
+			Disabled = false;
 		}
 
 
@@ -63,7 +64,7 @@ namespace DungeonEye
 		/// <returns>True if the count is equals to the target</returns>
 		public bool Activate()
 		{
-			if (!Enabled)
+			if (Disabled)
 				return true;
 
 			Count++;
@@ -86,7 +87,7 @@ namespace DungeonEye
 		/// <returns>True if the count is equals to 0</returns>
 		public bool Deactivate()
 		{
-			if (!Enabled)
+			if (Disabled)
 				return true;
 			
 			Count--;
@@ -112,7 +113,7 @@ namespace DungeonEye
 			if (xml == null)
 				return false;
 
-			Enabled = bool.Parse(xml.Attributes["enabled"].Value);
+			Disabled = bool.Parse(xml.Attributes["disabled"].Value);
 			Target = int.Parse(xml.Attributes["target"].Value);
 			Count = int.Parse(xml.Attributes["count"].Value);
 			ResetOnTrigger = bool.Parse(xml.Attributes["reset"].Value);
@@ -136,7 +137,7 @@ namespace DungeonEye
 
 
 			writer.WriteStartElement(name);
-			writer.WriteAttributeString("enabled", Enabled.ToString());
+			writer.WriteAttributeString("disabled", Disabled.ToString());
 			writer.WriteAttributeString("target", Target.ToString());
 			writer.WriteAttributeString("count", Count.ToString());
 			writer.WriteAttributeString("reset", ResetOnTrigger.ToString());
@@ -157,7 +158,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Active or desactive the count
 		/// </summary>
-		public bool Enabled
+		public bool Disabled
 		{
 			get;
 			set;

@@ -34,7 +34,7 @@
 			this.DoorTypeBox = new System.Windows.Forms.ComboBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
-			this.ItemPassThroughBox = new System.Windows.Forms.CheckBox();
+			this.SmallItemPassThroughBox = new System.Windows.Forms.CheckBox();
 			this.HasButtonBox = new System.Windows.Forms.CheckBox();
 			this.SpeedBox = new System.Windows.Forms.NumericUpDown();
 			this.label4 = new System.Windows.Forms.Label();
@@ -96,7 +96,7 @@
 			// 
 			// groupBox2
 			// 
-			this.groupBox2.Controls.Add(this.ItemPassThroughBox);
+			this.groupBox2.Controls.Add(this.SmallItemPassThroughBox);
 			this.groupBox2.Controls.Add(this.HasButtonBox);
 			this.groupBox2.Controls.Add(this.PicklockBox);
 			this.groupBox2.Controls.Add(this.SpeedBox);
@@ -113,13 +113,14 @@
 			// 
 			// ItemPassThroughBox
 			// 
-			this.ItemPassThroughBox.AutoSize = true;
-			this.ItemPassThroughBox.Location = new System.Drawing.Point(11, 123);
-			this.ItemPassThroughBox.Name = "ItemPassThroughBox";
-			this.ItemPassThroughBox.Size = new System.Drawing.Size(142, 17);
-			this.ItemPassThroughBox.TabIndex = 6;
-			this.ItemPassThroughBox.Text = "Small items pass through";
-			this.ItemPassThroughBox.UseVisualStyleBackColor = true;
+			this.SmallItemPassThroughBox.AutoSize = true;
+			this.SmallItemPassThroughBox.Location = new System.Drawing.Point(11, 123);
+			this.SmallItemPassThroughBox.Name = "ItemPassThroughBox";
+			this.SmallItemPassThroughBox.Size = new System.Drawing.Size(142, 17);
+			this.SmallItemPassThroughBox.TabIndex = 6;
+			this.SmallItemPassThroughBox.Text = "Small items pass through";
+			this.SmallItemPassThroughBox.UseVisualStyleBackColor = true;
+			this.SmallItemPassThroughBox.CheckedChanged += new System.EventHandler(this.ItemPassThroughBox_CheckedChanged);
 			// 
 			// HasButtonBox
 			// 
@@ -223,8 +224,8 @@
 			this.SwitchCountBox.MinimumSize = new System.Drawing.Size(140, 130);
 			this.SwitchCountBox.Name = "SwitchCountBox";
 			this.SwitchCountBox.Size = new System.Drawing.Size(140, 130);
-			switchCount1.Enabled = false;
 			switchCount1.Count = 0;
+			switchCount1.Disabled = false;
 			switchCount1.ResetOnTrigger = false;
 			switchCount1.Target = 0;
 			this.SwitchCountBox.SwitchCount = switchCount1;
@@ -265,7 +266,7 @@
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.GroupBox groupBox3;
 		private System.Windows.Forms.CheckBox HasButtonBox;
-		private System.Windows.Forms.CheckBox ItemPassThroughBox;
+		private System.Windows.Forms.CheckBox SmallItemPassThroughBox;
 		private SwitchCountControl SwitchCountBox;
 	}
 }

@@ -237,6 +237,24 @@ namespace DungeonEye
 		}
 
 
+		/// <summary>
+		/// Thrown items can pass through
+		/// </summary>
+		public bool CanItemsPassThrough(Item item)
+		{
+			if (item == null)
+				return false;
+
+			if (State == DoorState.Opened)
+				return true;
+
+			if (!item.IsBig && SmallItemPassThrough)
+				return true;
+
+			return false;
+		}
+
+
 		#region Events
 
 
@@ -770,17 +788,15 @@ namespace DungeonEye
 			set;
 		}
 
-		/// <summary>
-		/// Thrown items can pass through
-		/// </summary>
-		public bool CanItemsPassThrough
-		{
-			get
-			{
-				return State == DoorState.Broken || State == DoorState.Opened || Type == DoorType.Grid;
-			}
-		}
 
+		/// <summary>
+		/// Does small item can pass through the closed door
+		/// </summary>
+		public bool SmallItemPassThrough
+		{
+			get;
+			set;
+		}
 
 
 		/// <summary>
@@ -790,11 +806,16 @@ namespace DungeonEye
 		{
 			get
 			{
-				if (CanItemsPassThrough)
+				//if (CanItemsPassThrough)
+				//	return true;
+
+				if (State == DoorState.Opened)
 					return true;
 
 				if (Type == DoorType.Grid || Type == DoorType.Iron)
 					return true;
+
+
 
 				return false;
 			}

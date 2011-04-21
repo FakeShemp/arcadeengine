@@ -29,42 +29,60 @@
 		private void InitializeComponent()
 		{
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.HiddenBox = new System.Windows.Forms.CheckBox();
+			this.WasUsedBox = new System.Windows.Forms.CheckBox();
+			this.IsHiddenBox = new System.Windows.Forms.CheckBox();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
-			this.ActionBox = new DungeonEye.Forms.WallSwitchScriptListControl();
-			this.ConditionBox = new System.Windows.Forms.ComboBox();
+			this.ActionBox = new DungeonEye.Forms.PressurePlateScriptListControl();
+			this.tabControl1 = new System.Windows.Forms.TabControl();
+			this.VisualTab = new System.Windows.Forms.TabPage();
+			this.PropertiesTab = new System.Windows.Forms.TabPage();
 			this.label1 = new System.Windows.Forms.Label();
+			this.VisualBox = new OpenTK.GLControl();
+			this.DecorationIdBox = new System.Windows.Forms.NumericUpDown();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
+			this.tabControl1.SuspendLayout();
+			this.VisualTab.SuspendLayout();
+			this.PropertiesTab.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.DecorationIdBox)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// groupBox1
 			// 
-			this.groupBox1.Controls.Add(this.label1);
-			this.groupBox1.Controls.Add(this.ConditionBox);
-			this.groupBox1.Controls.Add(this.HiddenBox);
-			this.groupBox1.Location = new System.Drawing.Point(6, 19);
+			this.groupBox1.Controls.Add(this.WasUsedBox);
+			this.groupBox1.Controls.Add(this.IsHiddenBox);
+			this.groupBox1.Location = new System.Drawing.Point(6, 6);
 			this.groupBox1.Name = "groupBox1";
 			this.groupBox1.Size = new System.Drawing.Size(350, 100);
 			this.groupBox1.TabIndex = 0;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Properties :";
 			// 
-			// HiddenBox
+			// WasUsedBox
 			// 
-			this.HiddenBox.AutoSize = true;
-			this.HiddenBox.Location = new System.Drawing.Point(6, 19);
-			this.HiddenBox.Name = "HiddenBox";
-			this.HiddenBox.Size = new System.Drawing.Size(60, 17);
-			this.HiddenBox.TabIndex = 0;
-			this.HiddenBox.Text = "Hidden";
-			this.HiddenBox.UseVisualStyleBackColor = true;
-			this.HiddenBox.CheckedChanged += new System.EventHandler(this.HiddenBox_CheckedChanged);
+			this.WasUsedBox.AutoSize = true;
+			this.WasUsedBox.Location = new System.Drawing.Point(6, 42);
+			this.WasUsedBox.Name = "WasUsedBox";
+			this.WasUsedBox.Size = new System.Drawing.Size(76, 17);
+			this.WasUsedBox.TabIndex = 1;
+			this.WasUsedBox.Text = "Was Used";
+			this.WasUsedBox.UseVisualStyleBackColor = true;
+			this.WasUsedBox.CheckedChanged += new System.EventHandler(this.WasUsedBox_CheckedChanged);
+			// 
+			// IsHiddenBox
+			// 
+			this.IsHiddenBox.AutoSize = true;
+			this.IsHiddenBox.Location = new System.Drawing.Point(6, 19);
+			this.IsHiddenBox.Name = "IsHiddenBox";
+			this.IsHiddenBox.Size = new System.Drawing.Size(71, 17);
+			this.IsHiddenBox.TabIndex = 0;
+			this.IsHiddenBox.Text = "Is Hidden";
+			this.IsHiddenBox.UseVisualStyleBackColor = true;
+			this.IsHiddenBox.CheckedChanged += new System.EventHandler(this.HiddenBox_CheckedChanged);
 			// 
 			// groupBox2
 			// 
-			this.groupBox2.Controls.Add(this.ActionBox);
-			this.groupBox2.Controls.Add(this.groupBox1);
+			this.groupBox2.Controls.Add(this.tabControl1);
 			this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupBox2.Location = new System.Drawing.Point(0, 0);
 			this.groupBox2.Name = "groupBox2";
@@ -76,30 +94,94 @@
 			// ActionBox
 			// 
 			this.ActionBox.Dungeon = null;
-			this.ActionBox.Location = new System.Drawing.Point(6, 125);
+			this.ActionBox.Location = new System.Drawing.Point(3, 112);
 			this.ActionBox.MinimumSize = new System.Drawing.Size(350, 150);
 			this.ActionBox.Name = "ActionBox";
+			this.ActionBox.Scripts = null;
 			this.ActionBox.Size = new System.Drawing.Size(350, 150);
 			this.ActionBox.TabIndex = 1;
-			this.ActionBox.Title = "Actions :";
+			this.ActionBox.Title = "Scripts";
 			// 
-			// ConditionBox
+			// tabControl1
 			// 
-			this.ConditionBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.ConditionBox.FormattingEnabled = true;
-			this.ConditionBox.Location = new System.Drawing.Point(200, 15);
-			this.ConditionBox.Name = "ConditionBox";
-			this.ConditionBox.Size = new System.Drawing.Size(144, 21);
-			this.ConditionBox.TabIndex = 2;
+			this.tabControl1.Controls.Add(this.VisualTab);
+			this.tabControl1.Controls.Add(this.PropertiesTab);
+			this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tabControl1.Location = new System.Drawing.Point(3, 16);
+			this.tabControl1.Name = "tabControl1";
+			this.tabControl1.SelectedIndex = 0;
+			this.tabControl1.Size = new System.Drawing.Size(700, 488);
+			this.tabControl1.TabIndex = 2;
+			// 
+			// VisualTab
+			// 
+			this.VisualTab.Controls.Add(this.label1);
+			this.VisualTab.Controls.Add(this.VisualBox);
+			this.VisualTab.Controls.Add(this.DecorationIdBox);
+			this.VisualTab.Location = new System.Drawing.Point(4, 22);
+			this.VisualTab.Name = "VisualTab";
+			this.VisualTab.Padding = new System.Windows.Forms.Padding(3);
+			this.VisualTab.Size = new System.Drawing.Size(692, 462);
+			this.VisualTab.TabIndex = 0;
+			this.VisualTab.Text = "Visual";
+			this.VisualTab.UseVisualStyleBackColor = true;
+			// 
+			// PropertiesTab
+			// 
+			this.PropertiesTab.Controls.Add(this.groupBox1);
+			this.PropertiesTab.Controls.Add(this.ActionBox);
+			this.PropertiesTab.Location = new System.Drawing.Point(4, 22);
+			this.PropertiesTab.Name = "PropertiesTab";
+			this.PropertiesTab.Padding = new System.Windows.Forms.Padding(3);
+			this.PropertiesTab.Size = new System.Drawing.Size(692, 462);
+			this.PropertiesTab.TabIndex = 1;
+			this.PropertiesTab.Text = "Properties";
+			this.PropertiesTab.UseVisualStyleBackColor = true;
 			// 
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(143, 18);
+			this.label1.Location = new System.Drawing.Point(6, 8);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(51, 13);
-			this.label1.TabIndex = 3;
-			this.label1.Text = "Condition";
+			this.label1.Size = new System.Drawing.Size(76, 13);
+			this.label1.TabIndex = 5;
+			this.label1.Text = "Decoration id :";
+			// 
+			// ActivatedGLBox
+			// 
+			this.VisualBox.BackColor = System.Drawing.Color.Black;
+			this.VisualBox.Location = new System.Drawing.Point(6, 32);
+			this.VisualBox.Name = "ActivatedGLBox";
+			this.VisualBox.Size = new System.Drawing.Size(352, 240);
+			this.VisualBox.TabIndex = 3;
+			this.VisualBox.VSync = false;
+			this.VisualBox.Load += new System.EventHandler(this.VisualBox_Load);
+			this.VisualBox.Paint += new System.Windows.Forms.PaintEventHandler(this.ActivatedGLBox_Paint);
+			// 
+			// DecorationIdBox
+			// 
+			this.DecorationIdBox.Location = new System.Drawing.Point(88, 6);
+			this.DecorationIdBox.Maximum = new decimal(new int[] {
+            999999999,
+            0,
+            0,
+            0});
+			this.DecorationIdBox.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+			this.DecorationIdBox.Name = "DecorationIdBox";
+			this.DecorationIdBox.Size = new System.Drawing.Size(74, 20);
+			this.DecorationIdBox.TabIndex = 4;
+			this.DecorationIdBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.DecorationIdBox.ThousandsSeparator = true;
+			this.DecorationIdBox.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+			this.DecorationIdBox.ValueChanged += new System.EventHandler(this.DecorationIdBox_ValueChanged);
 			// 
 			// PressurePlateControl
 			// 
@@ -112,6 +194,11 @@
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			this.groupBox2.ResumeLayout(false);
+			this.tabControl1.ResumeLayout(false);
+			this.VisualTab.ResumeLayout(false);
+			this.VisualTab.PerformLayout();
+			this.PropertiesTab.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.DecorationIdBox)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -119,10 +206,15 @@
 		#endregion
 
 		private System.Windows.Forms.GroupBox groupBox1;
-		private System.Windows.Forms.CheckBox HiddenBox;
+		private System.Windows.Forms.CheckBox IsHiddenBox;
 		private System.Windows.Forms.GroupBox groupBox2;
-		private WallSwitchScriptListControl ActionBox;
+		private PressurePlateScriptListControl ActionBox;
+		private System.Windows.Forms.CheckBox WasUsedBox;
+		private System.Windows.Forms.TabControl tabControl1;
+		private System.Windows.Forms.TabPage VisualTab;
+		private System.Windows.Forms.TabPage PropertiesTab;
 		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.ComboBox ConditionBox;
+		private OpenTK.GLControl VisualBox;
+		private System.Windows.Forms.NumericUpDown DecorationIdBox;
 	}
 }

@@ -68,11 +68,24 @@ namespace DungeonEye.Forms
 			IsBreakableBox.Checked = Door.IsBreakable;
 			BreakValueBox.Value = Door.Strength;
 			BreakValueBox.Visible = Door.IsBreakable;
+			SmallItemPassThroughBox.Checked = Door.SmallItemPassThrough;
 		}
 
 
 		#region Events
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ItemPassThroughBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Door == null)
+				return;
+
+			Door.SmallItemPassThrough = SmallItemPassThroughBox.Checked;
+		}
 
 		/// <summary>
 		/// 

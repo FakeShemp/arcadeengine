@@ -19,13 +19,15 @@
 #endregion
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Text;
 using System.Xml;
 using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
-using System.ComponentModel;
+using DungeonEye.Script;
+using DungeonEye.Script.Actions;
 
 namespace DungeonEye
 {
@@ -41,6 +43,7 @@ namespace DungeonEye
 		/// <param name="square">Square handle</param>
 		public PressurePlate(Square square) : base(square)
 		{
+			Scripts = new List<PressurePlateScript>();
 			AcceptItems = true;
 			CanPassThrough = true;
 			IsBlocking = false;
@@ -57,18 +60,34 @@ namespace DungeonEye
 		/// <param name="direction"></param>
 		public override void Draw(SpriteBatch batch, ViewField field, ViewFieldPosition position, CardinalPoint direction)
 		{
-			if (Decoration == null)
-				return;
-
-			if (IsHidden)
+			if (Decoration == null || IsHidden)
 				return;
 
 			TileDrawing td = DisplayCoordinates.GetFloorPlate(position);
-		//TODO
-		//	if (td != null)
-		//		batch.DrawTile(TileSet, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);
+			if (td == null)
+				return;
+
+			Decoration.Draw(batch, DecorationID, position);
 		}
 
+
+
+
+		/// <summary>
+		/// Runs scripts
+		/// </summary>
+		/// <param name="condition">Condtion</param>
+		void RunScript(PressurcePlateCondition condition)
+		{
+			if (!IsActivated)
+				return;
+
+			foreach (PressurePlateScript script in Scripts)
+			{
+				if ((script.Condition & condition) == condition)
+					script.Run();
+			}
+		}
 
 
 		/// <summary>
@@ -85,13 +104,6 @@ namespace DungeonEye
 			if (IsHidden)
 				sb.Append("Hidden. ");
 
-			sb.Append("Affect ");
-			if (AffectTeam)
-				sb.Append("Team ");
-			if (AffectMonsters)
-				sb.Append("monsters ");
-			if (AffectItems)
-				sb.Append("items ");
 
 			sb.Append(")");
 			return sb.ToString();
@@ -116,30 +128,36 @@ namespace DungeonEye
 				switch (node.Name.ToLower())
 				{
 
+					case "decoration":
+					{
+						DecorationID = int.Parse(node.Attributes["activated"].Value);
+						int.Parse(node.Attributes["deactivated"].Value);
+					}
+					break;
+
+					case "reusable":
+					{
+						Reusable = bool.Parse(node.InnerText);
+					}
+					break;
+
 					case "ishidden":
 					{
 						IsHidden = bool.Parse(node.InnerText);
 					}
 					break;
 
-
-					case "affectitems":
+					case "scripts":
 					{
-						AffectItems = bool.Parse(node.InnerText);
+						foreach (XmlNode sub in node)
+						{
+							PressurePlateScript script = new PressurePlateScript();
+							script.Load(sub);
+							Scripts.Add(script);
+						}
 					}
 					break;
-
-					case "affectmonsters":
-					{
-						AffectMonsters= bool.Parse(node.InnerText);
-					}
-					break;
-
-					case "affectteam":
-					{
-						AffectTeam = bool.Parse(node.InnerText);
-					}
-					break;
+					
 					default:
 					{
 						base.Load(node);
@@ -169,11 +187,21 @@ namespace DungeonEye
 			base.Save(writer);
 
 			writer.WriteElementString("ishidden", IsHidden.ToString());
-			writer.WriteElementString("affectteam", AffectTeam.ToString());
-			writer.WriteElementString("affectmonsters", AffectMonsters.ToString());
-			writer.WriteElementString("affectitems", AffectItems.ToString());
+			writer.WriteElementString("reusable", Reusable.ToString());
 
+			writer.WriteStartElement("decoration");
+			writer.WriteAttributeString("activated", DecorationID.ToString());
+			writer.WriteAttributeString("deactivated", DecorationID.ToString());
+			writer.WriteEndElement();
 
+			if (Scripts.Count > 0)
+			{
+				writer.WriteStartElement("scripts");
+				foreach (PressurePlateScript script in Scripts)
+					script.Save(writer);
+				writer.WriteEndElement();
+			}
+			
 			writer.WriteEndElement();
 
 			return true;
@@ -192,10 +220,9 @@ namespace DungeonEye
 		/// <returns></returns>
 		public override bool OnTeamEnter()
 		{
-			if (AffectTeam)
-				Activate();
+			RunScript(PressurcePlateCondition.OnTeamEnter);
 
-			return AffectTeam;
+			return false;
 		}
 
 
@@ -206,10 +233,8 @@ namespace DungeonEye
 		/// <returns></returns>
 		public override bool OnMonsterEnter(Monster monster)
 		{
-			if (AffectMonsters)
-				Activate();
-
-			return AffectMonsters;
+			RunScript(PressurcePlateCondition.OnMonsterEnter);
+			return false;
 		}
 
 
@@ -218,10 +243,8 @@ namespace DungeonEye
 		/// </summary>
 		public override bool OnTeamLeave()
 		{
-			if (AffectTeam)
-				Deactivate();
-
-			return AffectTeam;
+			RunScript(PressurcePlateCondition.OnTeamLeave);
+			return false;
 		}
 
 
@@ -231,10 +254,8 @@ namespace DungeonEye
 		/// <param name="monster"></param>
 		public override bool OnMonsterLeave(Monster monster)
 		{
-			if (AffectMonsters)
-				Deactivate();
-
-			return AffectMonsters;
+			RunScript(PressurcePlateCondition.OnMonsterLeave);
+			return false;
 		}
 
 
@@ -245,10 +266,8 @@ namespace DungeonEye
 		/// <returns></returns>
 		public override bool OnItemCollected(Item item)
 		{
-			if (AffectItems)
-				Deactivate();
-
-			return AffectItems;
+			RunScript(PressurcePlateCondition.OnItemRemoved);
+			return false;
 		}
 
 
@@ -259,10 +278,8 @@ namespace DungeonEye
 		/// <returns></returns>
 		public override bool OnItemDropped(Item item)
 		{
-			if (AffectItems)
-				Activate();
-
-			return AffectItems;
+			RunScript(PressurcePlateCondition.OnItemAdded);
+			return false;
 		}
 
 
@@ -275,6 +292,33 @@ namespace DungeonEye
 		/// 
 		/// </summary>
 		public const string Tag = "pressureplate";
+
+
+		/// <summary>
+		/// Defines if the switch can be used repeatedly. 
+		/// Otherwise, after one use, the switch will no longer function.
+		/// </summary>
+		public bool Reusable
+		{
+			get;
+			set;
+		}
+		
+		
+		/// <summary>
+		/// Switch is already used
+		/// </summary>
+		public bool WasUsed
+		{
+			get
+			{
+				return !IsActivated;
+			}
+			set
+			{
+				IsActivated = !value;
+			}
+		}
 
 
 		/// <summary>
@@ -293,6 +337,15 @@ namespace DungeonEye
 
 
 		/// <summary>
+		/// Decoration ID
+		/// </summary>
+		public int DecorationID
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
 		/// Is the floor plate visible
 		/// </summary>
 		public bool IsHidden
@@ -303,144 +356,19 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Does affect monsters
+		/// Scripts
 		/// </summary>
-		public bool AffectMonsters
+		public List<PressurePlateScript> Scripts
 		{
 			get;
-			set;
+			private set;
 		}
-
-
-		/// <summary>
-		/// Does affect team
-		/// </summary>
-		public bool AffectTeam
-		{
-			get;
-			set;
-		}
-
-
-		/// <summary>
-		/// Does affect items
-		/// </summary>
-		public bool AffectItems
-		{
-			get;
-			set;
-		}
-
 		#endregion
 
 	}
 
 
 
-	/// <summary>
-	/// PressurePlate activation conditions
-	/// </summary>
-	public enum PressurcePlateCondition
-	{
-
-		/// <summary>
-		/// Everything triggers the switch.
-		/// </summary>
-		[Description("Always")]
-		Always,
-
-		/// <summary>
-		/// On team stepping on or off the switch will activate it
-		/// </summary>
-		[Description("On Team")]
-		OnTeam,
-
-		/// <summary>
-		/// On team stepping on the switch will activate it
-		/// </summary>
-		[Description("On Team enter")]
-		OnTeamEnter,
-
-		/// <summary>
-		/// On team stepping off the switch will activate it
-		/// </summary>
-		[Description("On Team leave")]
-		OnTeamLeave,
-
-
-		/// <summary>
-		/// On monsters stepping on or off the switch will activate it
-		/// </summary>
-		[Description("On monster")]
-		OnMonster,
-
-		/// <summary>
-		/// On monsters stepping on the switch will activate it
-		/// </summary>
-		[Description("On monster enter")]
-		OnMonsterEnter,
-
-		/// <summary>
-		/// On monsters stepping off the switch will activate it
-		/// </summary>
-		[Description("On monster leave")]
-		OnMonsterLeave,
-
-
-		/// <summary>
-		/// On item adding or removing, the switch will activate it
-		/// </summary>
-		[Description("On item")]
-		OnItem,
-
-		/// <summary>
-		/// On item adding, the switch will activate it
-		/// </summary>
-		[Description("On item add")]
-		OnItemAdd,
-
-		/// <summary>
-		/// On item removing, the switch will activate it
-		/// </summary>
-		[Description("On item remove")]
-		OnItemRemove,
-
-
-
-		/// <summary>
-		/// On team or monsters stepping on or off the switch will activate it
-		/// </summary>
-		[Description("On entity")]
-		OnEntity,
-
-		/// <summary>
-		/// On team or monsters stepping on the switch will activate it
-		/// </summary>
-		[Description("On entity enter")]
-		OnEntityEnter,
-
-		/// <summary>
-		/// On team or monsters stepping off the switch will activate it
-		/// </summary>
-		[Description("On entity leave")]
-		OnEntityLeave,
-
-
-
-		/// <summary>
-		/// On team, monsters or items stepping on the switch will activate it
-		/// </summary>
-		[Description("On anything enter")]
-		OnAnythingEnter,
-
-		/// <summary>
-		/// On team, monsters or items stepping off the switch will activate it
-		/// </summary>
-		[Description("On anything leave")]
-		OnAnythingLeave,
-
-
-	}
 
 
 }

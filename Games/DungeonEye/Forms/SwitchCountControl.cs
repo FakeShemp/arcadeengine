@@ -31,7 +31,7 @@ namespace DungeonEye.Forms
 		/// </summary>
 		void UpdateUI()
 		{
-			EnabledBox.Checked = SwitchCount.Enabled;
+			EnabledBox.Checked = SwitchCount.Disabled;
 			TargetBox.Value = SwitchCount.Target;
 			CountBox.Value = SwitchCount.Count;
 			ResetBox.Checked = SwitchCount.ResetOnTrigger;
@@ -51,7 +51,7 @@ namespace DungeonEye.Forms
 			PanelBox.Enabled = EnabledBox.Checked;
 
 			if (SwitchCount != null)
-				SwitchCount.Enabled = EnabledBox.Checked;
+				SwitchCount.Disabled = !EnabledBox.Checked;
 		}
 
 		/// <summary>

@@ -31,7 +31,6 @@
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.ActivatedTab = new System.Windows.Forms.TabPage();
-			this.SideBox = new DungeonEye.Forms.CardinalPointControl();
 			this.label1 = new System.Windows.Forms.Label();
 			this.ActivatedGLBox = new OpenTK.GLControl();
 			this.ActivatedIdBox = new System.Windows.Forms.NumericUpDown();
@@ -49,6 +48,7 @@
 			this.PickLockBox = new System.Windows.Forms.NumericUpDown();
 			this.ItemsBox = new System.Windows.Forms.ComboBox();
 			this.ActionScriptBox = new DungeonEye.Forms.WallSwitchScriptListControl();
+			this.SideBox = new DungeonEye.Forms.CardinalPointControl();
 			this.groupBox1.SuspendLayout();
 			this.tabControl1.SuspendLayout();
 			this.ActivatedTab.SuspendLayout();
@@ -76,9 +76,9 @@
 			this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.tabControl1.Controls.Add(this.PropertiesTab);
 			this.tabControl1.Controls.Add(this.ActivatedTab);
 			this.tabControl1.Controls.Add(this.DeactivatedTab);
-			this.tabControl1.Controls.Add(this.PropertiesTab);
 			this.tabControl1.Location = new System.Drawing.Point(6, 19);
 			this.tabControl1.Name = "tabControl1";
 			this.tabControl1.SelectedIndex = 0;
@@ -87,7 +87,6 @@
 			// 
 			// ActivatedTab
 			// 
-			this.ActivatedTab.Controls.Add(this.SideBox);
 			this.ActivatedTab.Controls.Add(this.label1);
 			this.ActivatedTab.Controls.Add(this.ActivatedGLBox);
 			this.ActivatedTab.Controls.Add(this.ActivatedIdBox);
@@ -98,17 +97,6 @@
 			this.ActivatedTab.TabIndex = 0;
 			this.ActivatedTab.Text = "Activated";
 			this.ActivatedTab.UseVisualStyleBackColor = true;
-			// 
-			// SideBox
-			// 
-			this.SideBox.Direction = DungeonEye.CardinalPoint.North;
-			this.SideBox.Location = new System.Drawing.Point(364, 8);
-			this.SideBox.MinimumSize = new System.Drawing.Size(125, 115);
-			this.SideBox.Name = "SideBox";
-			this.SideBox.Size = new System.Drawing.Size(125, 115);
-			this.SideBox.TabIndex = 3;
-			this.SideBox.Title = "Side";
-			this.SideBox.DirectionChanged += new DungeonEye.Forms.CardinalPointControl.ChangedEventHandler(this.SideBox_DirectionChanged);
 			// 
 			// label1
 			// 
@@ -215,6 +203,7 @@
 			// 
 			// PropertiesTab
 			// 
+			this.PropertiesTab.Controls.Add(this.SideBox);
 			this.PropertiesTab.Controls.Add(this.groupBox2);
 			this.PropertiesTab.Controls.Add(this.ActionScriptBox);
 			this.PropertiesTab.Location = new System.Drawing.Point(4, 22);
@@ -249,7 +238,7 @@
 			this.WasUsedBox.TabIndex = 4;
 			this.WasUsedBox.Text = "Was Used";
 			this.WasUsedBox.UseVisualStyleBackColor = true;
-			this.WasUsedBox.CheckedChanged += new System.EventHandler(this.IsActivatedBox_CheckedChanged);
+			this.WasUsedBox.CheckedChanged += new System.EventHandler(this.WasUsedBox_CheckedChanged);
 			// 
 			// ReusableBox
 			// 
@@ -328,6 +317,16 @@
 			this.ActionScriptBox.TabIndex = 0;
 			this.ActionScriptBox.Title = "Actions";
 			// 
+			// SideBox
+			// 
+			this.SideBox.Direction = DungeonEye.CardinalPoint.North;
+			this.SideBox.Location = new System.Drawing.Point(359, 3);
+			this.SideBox.MinimumSize = new System.Drawing.Size(125, 115);
+			this.SideBox.Name = "SideBox";
+			this.SideBox.Size = new System.Drawing.Size(125, 115);
+			this.SideBox.TabIndex = 4;
+			this.SideBox.Title = "Side";
+			// 
 			// WallSwitchControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -366,7 +365,6 @@
 		private System.Windows.Forms.NumericUpDown DeactivatedIdBox;
 		private System.Windows.Forms.TabPage PropertiesTab;
 		private Forms.WallSwitchScriptListControl ActionScriptBox;
-		private Forms.CardinalPointControl SideBox;
 		private System.Windows.Forms.GroupBox groupBox2;
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.Label label3;
@@ -375,6 +373,7 @@
 		private System.Windows.Forms.ComboBox ItemsBox;
 		private System.Windows.Forms.CheckBox ReusableBox;
 		private System.Windows.Forms.CheckBox WasUsedBox;
+		private Forms.CardinalPointControl SideBox;
 
 	}
 }

@@ -104,6 +104,9 @@ namespace DungeonEye
 
 				// Blocked by a wall, fall before the block
 				Square blockinfo =  maze.GetSquare(dst);
+
+
+				// Wall is blocking
 				if (blockinfo.IsBlocking)
 				{
 					Distance = 0;

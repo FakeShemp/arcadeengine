@@ -80,7 +80,8 @@ namespace DungeonEye
 				Batch.DrawTile(Maze.WallTileset, tmp.ID, tmp.Location);
 
 			// Draw decoration
-			DecorationSet.Draw(Batch, (int)ActivatedIdBox.Value, ViewFieldPosition.L);
+			if (DecorationSet != null)
+				DecorationSet.Draw(Batch, (int) ActivatedIdBox.Value, ViewFieldPosition.L);
 
 			Batch.End();
 
@@ -135,7 +136,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void IsActivatedBox_CheckedChanged(object sender, EventArgs e)
+		private void WasUsedBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (WallSwitch == null)
 				return;

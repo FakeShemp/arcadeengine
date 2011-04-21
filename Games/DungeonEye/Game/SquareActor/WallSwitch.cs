@@ -66,15 +66,15 @@ namespace DungeonEye
 				return false;
 
 			// Switch deactivated
-			if (WasUsed)
+			if (WasUsed && !Reusable)
 			{
 				GameMessage.AddMessage("It's already unlocked.", GameColors.Red);
 				return true;
 			}
 
 			// Alreayd used and not reusable
-			if (WasUsed && !Reusable)
-				return false;
+			//if (WasUsed && !Reusable)
+			//    return false;
 
 			// Does an item is required ?
 			if (!string.IsNullOrEmpty(NeededItem))
@@ -215,15 +215,6 @@ namespace DungeonEye
 			{
 				switch (node.Name.ToLower())
 				{
-					//case "target":
-					//{
-					//    if (Target == null)
-					//        Target = new DungeonLocation();
-
-					//    Target.Load(xml);
-					//}
-					//break;
-
 					case "decoration":
 					{
 						ActivatedDecoration = int.Parse(node.Attributes["activated"].Value);
@@ -242,12 +233,6 @@ namespace DungeonEye
 						Reusable = bool.Parse(node.InnerText);
 					}
 					break;
-
-					//case "wasused":
-					//{
-					//    WasUsed = bool.Parse(node.InnerText);
-					//}
-					//break;
 
 					case "side":
 					{
@@ -311,7 +296,6 @@ namespace DungeonEye
 
 			writer.WriteElementString("side", Side.ToString());
 			writer.WriteElementString("reusable", Reusable.ToString());
-			//writer.WriteElementString("wasused", WasUsed.ToString());
 			writer.WriteElementString("activateitem", NeededItem);
 			writer.WriteElementString("consumeitem", ConsumeItem.ToString());
 			writer.WriteElementString("picklock", LockLevel.ToString());
@@ -319,7 +303,7 @@ namespace DungeonEye
 			if (Scripts.Count > 0)
 			{
 				writer.WriteStartElement("scripts");
-				foreach (ScriptBase script in Scripts)
+				foreach (WallSwitchScript script in Scripts)
 					script.Save(writer);
 				writer.WriteEndElement();
 			}
