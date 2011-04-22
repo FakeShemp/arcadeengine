@@ -36,23 +36,30 @@ namespace DungeonEye.Script.Actions
 	public class SetTo : ActionBase
 	{
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
-		public SetTo()
+		public SetTo(Dungeon dungeon)
 		{
 			Name = XmlTag;
+
+			Square = new Square(null);
 		}
 
 
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="team"></param>
 		/// <returns></returns>
 		public override bool Run()
 		{
-			if (Target == null)
+			if (Target == null || Square == null)
 				return false;
+
+			Maze maze = Target.GetMaze(GameScreen.Dungeon);
+			if (maze == null)
+				return false;
+
+			maze.SetSquare(Square, Target.Coordinate);
 
 			return true;
 		}
@@ -74,6 +81,14 @@ namespace DungeonEye.Script.Actions
 			{
 				switch (node.Name.ToLower())
 				{
+					case Square.Tag:
+					{
+						if (Square == null)
+							Square = new Square(null);
+
+						Square.Load(node);
+					}
+					break;
 
 					default:
 					{
@@ -100,6 +115,9 @@ namespace DungeonEye.Script.Actions
 
 			writer.WriteStartElement(XmlTag);
 
+			if (Square != null)
+				Square.Save(writer);
+
 			base.Save(writer);
 
 			writer.WriteEndElement();
@@ -119,16 +137,15 @@ namespace DungeonEye.Script.Actions
 		public const string XmlTag = "SetTo";
 
 
+
 		/// <summary>
-		/// 
+		/// Square model to set
 		/// </summary>
 		public Square Square
 		{
 			get;
 			set;
 		}
-
-
 
 		#endregion
 	}

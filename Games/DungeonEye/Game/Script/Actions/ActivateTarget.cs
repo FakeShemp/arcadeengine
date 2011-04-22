@@ -47,19 +47,18 @@ namespace DungeonEye.Script.Actions
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="team"></param>
 		/// <returns></returns>
 		public override bool Run()
 		{
 			if (Target == null)
 				return false;
 
-			Square square = Target.GetSquare(GameScreen.Dungeon);
-			if (square == null)
+			Square target = Target.GetSquare(GameScreen.Dungeon);
+			if (target == null)
 				return false;
 
-			if (square.Actor != null)
-				square.Actor.Activate();
+			if (target.Actor != null)
+				target.Actor.Activate();
 
 			return true;
 		}

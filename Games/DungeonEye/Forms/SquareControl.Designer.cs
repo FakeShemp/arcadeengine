@@ -93,6 +93,11 @@
 			this.ActorTab = new System.Windows.Forms.TabPage();
 			this.ActorPanelBox = new System.Windows.Forms.Panel();
 			this.DeleteActorBox = new System.Windows.Forms.Button();
+			this.PropertiesTab = new System.Windows.Forms.TabPage();
+			this.NoGhostBox = new System.Windows.Forms.CheckBox();
+			this.NoMonsterBox = new System.Windows.Forms.CheckBox();
+			this.SquareTypeBox = new System.Windows.Forms.ComboBox();
+			this.label2 = new System.Windows.Forms.Label();
 			this.DecorationTab.SuspendLayout();
 			this.groupBox8.SuspendLayout();
 			this.groupBox7.SuspendLayout();
@@ -112,6 +117,7 @@
 			this.groupBox2.SuspendLayout();
 			this.TabControlBox.SuspendLayout();
 			this.ActorTab.SuspendLayout();
+			this.PropertiesTab.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// DecorationTab
@@ -798,6 +804,7 @@
 			// 
 			// TabControlBox
 			// 
+			this.TabControlBox.Controls.Add(this.PropertiesTab);
 			this.TabControlBox.Controls.Add(this.ItemsTab);
 			this.TabControlBox.Controls.Add(this.MonstersTab);
 			this.TabControlBox.Controls.Add(this.DecorationTab);
@@ -828,7 +835,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.ActorPanelBox.Location = new System.Drawing.Point(3, 3);
 			this.ActorPanelBox.Name = "ActorPanelBox";
-			this.ActorPanelBox.Size = new System.Drawing.Size(486, 539);
+			this.ActorPanelBox.Size = new System.Drawing.Size(636, 539);
 			this.ActorPanelBox.TabIndex = 0;
 			// 
 			// DeleteActorBox
@@ -837,12 +844,66 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.DeleteActorBox.Location = new System.Drawing.Point(6, 545);
 			this.DeleteActorBox.Name = "DeleteActorBox";
-			this.DeleteActorBox.Size = new System.Drawing.Size(483, 23);
+			this.DeleteActorBox.Size = new System.Drawing.Size(633, 23);
 			this.DeleteActorBox.TabIndex = 0;
 			this.DeleteActorBox.Text = "Remove actor";
 			this.DeleteActorBox.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.DeleteActorBox.UseVisualStyleBackColor = true;
 			this.DeleteActorBox.Click += new System.EventHandler(this.DeleteActorBox_Click);
+			// 
+			// PropertiesTab
+			// 
+			this.PropertiesTab.Controls.Add(this.label2);
+			this.PropertiesTab.Controls.Add(this.SquareTypeBox);
+			this.PropertiesTab.Controls.Add(this.NoMonsterBox);
+			this.PropertiesTab.Controls.Add(this.NoGhostBox);
+			this.PropertiesTab.Location = new System.Drawing.Point(4, 22);
+			this.PropertiesTab.Name = "PropertiesTab";
+			this.PropertiesTab.Size = new System.Drawing.Size(642, 574);
+			this.PropertiesTab.TabIndex = 4;
+			this.PropertiesTab.Text = "Properties";
+			this.PropertiesTab.UseVisualStyleBackColor = true;
+			// 
+			// NoGhostBox
+			// 
+			this.NoGhostBox.AutoSize = true;
+			this.NoGhostBox.Location = new System.Drawing.Point(73, 23);
+			this.NoGhostBox.Name = "NoGhostBox";
+			this.NoGhostBox.Size = new System.Drawing.Size(71, 17);
+			this.NoGhostBox.TabIndex = 0;
+			this.NoGhostBox.Text = "No Ghost";
+			this.NoGhostBox.UseVisualStyleBackColor = true;
+			this.NoGhostBox.CheckedChanged += new System.EventHandler(this.NoGhostBox_CheckedChanged);
+			// 
+			// NoMonsterBox
+			// 
+			this.NoMonsterBox.AutoSize = true;
+			this.NoMonsterBox.Location = new System.Drawing.Point(73, 46);
+			this.NoMonsterBox.Name = "NoMonsterBox";
+			this.NoMonsterBox.Size = new System.Drawing.Size(81, 17);
+			this.NoMonsterBox.TabIndex = 0;
+			this.NoMonsterBox.Text = "No Monster";
+			this.NoMonsterBox.UseVisualStyleBackColor = true;
+			this.NoMonsterBox.CheckedChanged += new System.EventHandler(this.NoMonsterBox_CheckedChanged);
+			// 
+			// SquareTypeBox
+			// 
+			this.SquareTypeBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.SquareTypeBox.FormattingEnabled = true;
+			this.SquareTypeBox.Location = new System.Drawing.Point(73, 69);
+			this.SquareTypeBox.Name = "SquareTypeBox";
+			this.SquareTypeBox.Size = new System.Drawing.Size(121, 21);
+			this.SquareTypeBox.TabIndex = 1;
+			this.SquareTypeBox.SelectedIndexChanged += new System.EventHandler(this.SquareTypeBox_SelectedIndexChanged);
+			// 
+			// label2
+			// 
+			this.label2.AutoSize = true;
+			this.label2.Location = new System.Drawing.Point(16, 72);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(51, 13);
+			this.label2.TabIndex = 2;
+			this.label2.Text = "Wall type";
 			// 
 			// SquareControl
 			// 
@@ -879,6 +940,8 @@
 			this.groupBox2.ResumeLayout(false);
 			this.TabControlBox.ResumeLayout(false);
 			this.ActorTab.ResumeLayout(false);
+			this.PropertiesTab.ResumeLayout(false);
+			this.PropertiesTab.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -949,5 +1012,10 @@
 		private System.Windows.Forms.Button ClearOnClickBox;
 		private System.Windows.Forms.Button OnClickBox;
 		private System.Windows.Forms.GroupBox groupBox8;
+		private System.Windows.Forms.TabPage PropertiesTab;
+		private System.Windows.Forms.CheckBox NoMonsterBox;
+		private System.Windows.Forms.CheckBox NoGhostBox;
+		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.ComboBox SquareTypeBox;
 	}
 }

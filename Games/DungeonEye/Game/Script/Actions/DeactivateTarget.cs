@@ -29,12 +29,12 @@ namespace DungeonEye.Script.Actions
 			if (Target == null)
 				return false;
 
-			Square square = Target.GetSquare(GameScreen.Dungeon);
-			if (square == null)
+			Square target = Target.GetSquare(GameScreen.Dungeon);
+			if (target == null)
 				return false;
 
-			if (square.Actor != null)
-				square.Actor.Deactivate();
+			if (target.Actor != null)
+				target.Actor.Deactivate();
 
 			return true;
 		}

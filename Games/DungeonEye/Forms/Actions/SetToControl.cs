@@ -36,23 +36,25 @@ namespace DungeonEye.Forms
 	public partial class SetToControl : ActionBaseControl
 	{
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
-		/// <param name="script"></param>
+		/// <param name="script">Script handle</param>
 		/// <param name="dungeon">Dungeon handle</param>
 		public SetToControl(SetTo script, Dungeon dungeon)
 		{
+			if (dungeon == null || script == null)
+			{
+				MessageBox.Show("Dungeon == NULL or script == NULL !", "SetToControl", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+
 			InitializeComponent();
 
-			if (script != null)
-				Action = script;
-			else
-				Action = new ActivateTarget();
-
+			Action = script;
 			Dungeon = dungeon;
+			SquareControl.Square = script.Square;			
 			TargetBox.SetTarget(Dungeon, Action.Target);
 		}
-
 
 		#region Events
 

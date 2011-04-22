@@ -50,19 +50,22 @@ namespace DungeonEye
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="maze">Maze</param>
+		/// <param name="maze">Maze handle</param>
 		public Square(Maze maze)
 		{
-			if (maze == null)
-				throw new ArgumentNullException("maze");
+			//if (maze == null)
+			//    throw new ArgumentNullException("maze");
 
-			Location = new DungeonLocation(maze.Name, Point.Empty);
-			Maze = maze;
+			if (maze != null)
+			{
+				Location = new DungeonLocation(maze.Name, Point.Empty);
+				Maze = maze;
+			}
+
 			Type = SquareType.Wall;
 			Monsters = new Monster[4];
 
 			Decorations = new int[] { -1, -1, -1, -1 };
-			//Alcoves = new bool[4];
 
 			Items = new List<Item>[]
 			{
@@ -213,7 +216,6 @@ namespace DungeonEye
 		/// <returns>True if the event is processed</returns>
 		public bool OnClick(Point location, CardinalPoint side)
 		{
-			Team team = GameScreen.Team;
 
 			// Actor interaction
 			if (Actor != null)
@@ -221,6 +223,7 @@ namespace DungeonEye
 					
 			
 			// Decoration interaction
+			Team team = GameScreen.Team;
 			Decoration decoration = team.Maze.GetDecoration(team.FrontLocation, Compass.GetOppositeDirection(team.Direction));
 			if (decoration != null)
 			{
@@ -640,7 +643,8 @@ namespace DungeonEye
 			writer.WriteStartElement(Tag);
 
 			// Location
-			Location.Save("location", writer);
+			if (Location != null)
+				Location.Save("location", writer);
 
 			// Type of wall
 			writer.WriteStartElement("type");
@@ -1060,18 +1064,6 @@ namespace DungeonEye
 			set;
 		}
 
-/*
-		/// <summary>
-		/// Gets if the wall have alcoves
-		/// </summary>
-		public bool HasAlcoves
-		{
-			get
-			{
-				return (Alcoves[0] || Alcoves[1] || Alcoves[2] || Alcoves[3]);
-			}
-		}
-*/
 
 		/// <summary>
 		/// Gets if the wall have decorations
@@ -1218,13 +1210,6 @@ namespace DungeonEye
 			get;
 			private set;
 		}
-
-
-		/// <summary>
-		/// Alcoves
-		/// </summary>
-//		[Obsolete()]
-//		bool[] Alcoves;
 
 
 		/// <summary>

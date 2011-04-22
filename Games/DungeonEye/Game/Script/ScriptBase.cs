@@ -37,9 +37,9 @@ namespace DungeonEye.Script
 		/// </summary>
 		public ScriptBase()
 		{
-			//Target = new DungeonLocation();
 		}
 
+	
 		/// <summary>
 		/// Run the script
 		/// </summary>
@@ -158,7 +158,7 @@ namespace DungeonEye.Script
 
 				case SetTo.XmlTag:
 				{
-					Action = new SetTo();
+					Action = new SetTo(Dungeon);
 				}
 				break;
 
@@ -228,6 +228,16 @@ namespace DungeonEye.Script
 		{
 			get;
 			set;
+		}
+
+
+		/// <summary>
+		/// Dungeon handle
+		/// </summary>
+		public Dungeon Dungeon
+		{
+			get;
+			private set;
 		}
 
 		#endregion

@@ -482,6 +482,28 @@ namespace DungeonEye
 
 
 		/// <summary>
+		/// Sets a square at a given location
+		/// </summary>
+		/// <param name="square">Square handle</param>
+		/// <param name="location">Location in the maze</param>
+		/// <returns>True on success</returns>
+		public bool SetSquare(Square square, Point location)
+		{
+			if (square == null || !Rectangle.Contains(location))
+				return false;
+
+
+			if (Blocks[location.Y][location.X] != null)
+				Blocks[location.Y][location.X].Dispose();
+
+
+			Blocks[location.Y][location.X] = square;
+
+			return true;
+		}
+
+
+		/// <summary>
 		/// Checks if a point is visible from another point
 		/// ie: is a monster visible from the current point of view of the team ?
 		/// </summary>

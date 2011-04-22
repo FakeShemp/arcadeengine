@@ -41,9 +41,24 @@ namespace DungeonEye.Forms
 		{
 			InitializeComponent();
 
+			SquareTypeBox.DataSource = Enum.GetValues(typeof(SquareType));
+
+			UpdateProperties();
 		}
 
 
+		/// <summary>
+		/// Update properties tab
+		/// </summary>
+		void UpdateProperties()
+		{
+			if (Square == null)
+				return;
+
+			SquareTypeBox.SelectedItem = Square.Type;
+			NoMonsterBox.Checked = Square.NoMonster;
+			NoGhostBox.Checked = Square.NoGhost;
+		}
 
 
 		/// <summary>
@@ -851,6 +866,50 @@ namespace DungeonEye.Forms
 		#endregion
 
 
+		#region Square Properties
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void NoGhostBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Square == null)
+				return;
+
+			Square.NoGhost = NoGhostBox.Checked;
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void NoMonsterBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Square == null)
+				return;
+
+			Square.NoMonster = NoMonsterBox.Checked;
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void SquareTypeBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (Square == null)
+				return;
+
+			Square.Type = (SquareType) SquareTypeBox.SelectedItem;
+		}
+
+		#endregion
+
+
 		#region Properties
 
 		/// <summary>
@@ -867,10 +926,17 @@ namespace DungeonEye.Forms
 		/// </summary>
 		public Square Square
 		{
-			get;
-			set;
+			get
+			{
+				return square;
+			}
+			set
+			{
+				square = value;
+				UpdateProperties();
+			}
 		}
-
+		Square square;
 
 		/// <summary>
 		/// Spritebatch handle
@@ -884,7 +950,6 @@ namespace DungeonEye.Forms
 		CardinalPoint DecorationSide;
 
 		#endregion
-
 
 	}
 }
