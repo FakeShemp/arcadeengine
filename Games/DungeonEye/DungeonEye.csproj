@@ -442,7 +442,7 @@
       <DependentUpon>EventSquareControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\SquareControl.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Forms\SquareControl.Designer.cs">
       <DependentUpon>SquareControl.cs</DependentUpon>
@@ -452,6 +452,12 @@
     </Compile>
     <Compile Include="Forms\Actor\StairControl.Designer.cs">
       <DependentUpon>StairControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SquareForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SquareForm.Designer.cs">
+      <DependentUpon>SquareForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\SwitchCountControl.cs">
       <SubType>UserControl</SubType>
@@ -746,6 +752,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Actor\StairControl.resx">
       <DependentUpon>StairControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SquareForm.resx">
+      <DependentUpon>SquareForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SwitchCountControl.resx">
       <DependentUpon>SwitchCountControl.cs</DependentUpon>

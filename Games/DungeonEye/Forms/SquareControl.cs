@@ -28,23 +28,6 @@ using ArcEngine.Asset;
 namespace DungeonEye.Forms
 {
 
-	public class SquareForm : Form
-	{
-		public SquareForm(Maze maze, Square square)
-		{
-
-		}
-
-		/// <summary>
-		/// Activate the actor tab
-		/// </summary>
-		public void ActivateActorTab()
-		{
-			//TabControlBox.SelectedTab = ActorTab;
-		}
-
-	}
-
 	/// <summary>
 	/// Square editor control
 	/// </summary>
@@ -52,59 +35,15 @@ namespace DungeonEye.Forms
 	{
 
 		/// <summary>
-		/// Constructor
+		/// 
 		/// </summary>
-		/// <param name="maze">Maze</param>
-		/// <param name="sqaure">Square handle</param>
-		public void SquareForm(Maze maze, Square square)
+		public SquareControl()
 		{
 			InitializeComponent();
 
-			if (square == null)
-			{
-				//Close();
-				return;
-			}
-
-			Maze = maze;
-
-			List<string> list = ResourceManager.GetAssets<Item>();
-			ItemsBox.DataSource = list;
-
-
-			#region Items
-
-			NWBox.BeginUpdate();
-			NEBox.BeginUpdate();
-			SWBox.BeginUpdate();
-			SEBox.BeginUpdate();
-
-			foreach (Item item in square.Items[0])
-				NWBox.Items.Add(item.Name);
-			foreach (Item item in square.Items[1])
-				NEBox.Items.Add(item.Name);
-			foreach (Item item in square.Items[2])
-				SWBox.Items.Add(item.Name);
-			foreach (Item item in square.Items[3])
-				SEBox.Items.Add(item.Name);
-
-			NWBox.EndUpdate();
-			NEBox.EndUpdate();
-			SWBox.EndUpdate();
-			SEBox.EndUpdate();
-			#endregion
-
-
-			#region Monsters
-			SetMonster(SquarePosition.NorthWest, square.Monsters[0]);
-			SetMonster(SquarePosition.NorthEast, square.Monsters[1]);
-			SetMonster(SquarePosition.SouthWest, square.Monsters[2]);
-			SetMonster(SquarePosition.SouthEast, square.Monsters[3]);
-
-			#endregion
-
-			Square = square;
 		}
+
+
 
 
 		/// <summary>
@@ -124,7 +63,7 @@ namespace DungeonEye.Forms
 			GlDecorationControl.MakeCurrent();
 			Display.ClearBuffers();
 
-			if (Batch != null)
+			if (Batch != null && Maze != null)
 			{
 				Batch.Begin();
 
@@ -392,32 +331,70 @@ namespace DungeonEye.Forms
 		#endregion
 
 
-		#region Form events
+		#region Control events
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void SquareForm_FormClosing(object sender, FormClosingEventArgs e)
+		private void SquareControl_Load(object sender, EventArgs e)
+		{
+			if (ParentForm != null)
+				ParentForm.FormClosing +=new FormClosingEventHandler(ParentForm_FormClosing);
+		
+			List<string> list = ResourceManager.GetAssets<Item>();
+			ItemsBox.DataSource = list;
+
+			if (Square == null)
+				return;
+
+			#region Items
+
+			NWBox.BeginUpdate();
+			NEBox.BeginUpdate();
+			SWBox.BeginUpdate();
+			SEBox.BeginUpdate();
+
+			foreach (Item item in Square.Items[0])
+				NWBox.Items.Add(item.Name);
+			foreach (Item item in Square.Items[1])
+				NEBox.Items.Add(item.Name);
+			foreach (Item item in Square.Items[2])
+				SWBox.Items.Add(item.Name);
+			foreach (Item item in Square.Items[3])
+				SEBox.Items.Add(item.Name);
+
+			NWBox.EndUpdate();
+			NEBox.EndUpdate();
+			SWBox.EndUpdate();
+			SEBox.EndUpdate();
+			#endregion
+
+
+			#region Monsters
+			SetMonster(SquarePosition.NorthWest, Square.Monsters[0]);
+			SetMonster(SquarePosition.NorthEast, Square.Monsters[1]);
+			SetMonster(SquarePosition.SouthWest, Square.Monsters[2]);
+			SetMonster(SquarePosition.SouthEast, Square.Monsters[3]);
+
+			#endregion
+
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void ParentForm_FormClosing(object sender, FormClosingEventArgs e)
 		{
 			if (Batch != null)
 				Batch.Dispose();
 			Batch = null;
 		}
 
-
-		/// <summary>
-		/// OnKeyDown
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void MazeBlockForm_KeyDown(object sender, KeyEventArgs e)
-		{
-			// Escape key close the form
-			//if (e.KeyCode == Keys.Escape)
-			//	Close();
-		}
 
 
 		#endregion
@@ -489,6 +466,11 @@ namespace DungeonEye.Forms
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void EditNWBox_Click(object sender, EventArgs e)
 		{
 			if (Square == null)
@@ -504,6 +486,12 @@ namespace DungeonEye.Forms
 
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void EditNEBox_Click(object sender, EventArgs e)
 		{
 			if (Square == null)
@@ -519,6 +507,12 @@ namespace DungeonEye.Forms
 			SetMonster(SquarePosition.NorthEast, Square.Monsters[1]);
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void EditSWBox_Click(object sender, EventArgs e)
 		{
 			if (Square == null)
@@ -534,6 +528,12 @@ namespace DungeonEye.Forms
 			SetMonster(SquarePosition.SouthWest, Square.Monsters[2]);
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void EditSEBox_Click(object sender, EventArgs e)
 		{
 			if (Square == null)
@@ -549,8 +549,11 @@ namespace DungeonEye.Forms
 		}
 
 
-
-
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void DeleteNWBox_Click(object sender, EventArgs e)
 		{
 			if (Square == null)
@@ -560,6 +563,13 @@ namespace DungeonEye.Forms
 				SetMonster(SquarePosition.NorthWest, null);
 		}
 
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void DeleteNEBox_Click(object sender, EventArgs e)
 		{
 			if (Square == null)
@@ -569,6 +579,13 @@ namespace DungeonEye.Forms
 				SetMonster(SquarePosition.NorthEast, null);
 		}
 
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void DeleteSWBox_Click(object sender, EventArgs e)
 		{
 			if (Square == null)
@@ -578,6 +595,13 @@ namespace DungeonEye.Forms
 				SetMonster(SquarePosition.SouthWest, null);
 		}
 
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void DeleteSEBox_Click(object sender, EventArgs e)
 		{
 			if (Square == null)
@@ -731,6 +755,9 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void DeleteActorBox_Click(object sender, EventArgs e)
 		{
+			if (Square == null)
+				return;
+
 			if (MessageBox.Show("Erase actor ? ", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
 				return;
 
@@ -746,6 +773,9 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void ActorTab_Enter(object sender, EventArgs e)
 		{
+			if (Square == null)
+				return;
+
 			// No actor
 			if (Square.Actor == null)
 			{
@@ -826,16 +856,24 @@ namespace DungeonEye.Forms
 		/// <summary>
 		/// Maze handle
 		/// </summary>
-		Maze Maze;
+		public Maze Maze
+		{
+			get;
+			set;
+		}
 
 		/// <summary>
 		/// Square to edit
 		/// </summary>
-		Square Square;
+		public Square Square
+		{
+			get;
+			set;
+		}
 
 
 		/// <summary>
-		/// Spritabatch handle
+		/// Spritebatch handle
 		/// </summary>
 		SpriteBatch Batch;
 
@@ -846,7 +884,6 @@ namespace DungeonEye.Forms
 		CardinalPoint DecorationSide;
 
 		#endregion
-
 
 
 	}

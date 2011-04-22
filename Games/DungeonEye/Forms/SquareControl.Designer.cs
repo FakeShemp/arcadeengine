@@ -28,8 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SquareForm));
-			this.CloseBox = new System.Windows.Forms.Button();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SquareControl));
 			this.DecorationTab = new System.Windows.Forms.TabPage();
 			this.groupBox8 = new System.Windows.Forms.GroupBox();
 			this.groupBox7 = new System.Windows.Forms.GroupBox();
@@ -115,17 +114,6 @@
 			this.ActorTab.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// CloseBox
-			// 
-			this.CloseBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.CloseBox.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.CloseBox.Location = new System.Drawing.Point(597, 527);
-			this.CloseBox.Name = "CloseBox";
-			this.CloseBox.Size = new System.Drawing.Size(75, 23);
-			this.CloseBox.TabIndex = 1;
-			this.CloseBox.Text = "Done";
-			this.CloseBox.UseVisualStyleBackColor = true;
-			// 
 			// DecorationTab
 			// 
 			this.DecorationTab.Controls.Add(this.groupBox8);
@@ -134,7 +122,7 @@
 			this.DecorationTab.Controls.Add(this.groupBox5);
 			this.DecorationTab.Location = new System.Drawing.Point(4, 22);
 			this.DecorationTab.Name = "DecorationTab";
-			this.DecorationTab.Size = new System.Drawing.Size(502, 483);
+			this.DecorationTab.Size = new System.Drawing.Size(642, 574);
 			this.DecorationTab.TabIndex = 2;
 			this.DecorationTab.Text = "Decoration";
 			this.DecorationTab.UseVisualStyleBackColor = true;
@@ -285,9 +273,9 @@
 			// 
 			this.ClearDecorationBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.ClearDecorationBox.Location = new System.Drawing.Point(6, 454);
+			this.ClearDecorationBox.Location = new System.Drawing.Point(6, 545);
 			this.ClearDecorationBox.Name = "ClearDecorationBox";
-			this.ClearDecorationBox.Size = new System.Drawing.Size(493, 23);
+			this.ClearDecorationBox.Size = new System.Drawing.Size(483, 23);
 			this.ClearDecorationBox.TabIndex = 25;
 			this.ClearDecorationBox.Text = "Remove all decorations";
 			this.ClearDecorationBox.UseVisualStyleBackColor = true;
@@ -391,7 +379,7 @@
 			this.MonstersTab.Location = new System.Drawing.Point(4, 22);
 			this.MonstersTab.Name = "MonstersTab";
 			this.MonstersTab.Padding = new System.Windows.Forms.Padding(3);
-			this.MonstersTab.Size = new System.Drawing.Size(502, 483);
+			this.MonstersTab.Size = new System.Drawing.Size(642, 574);
 			this.MonstersTab.TabIndex = 1;
 			this.MonstersTab.Text = "Monsters";
 			this.MonstersTab.UseVisualStyleBackColor = true;
@@ -400,9 +388,9 @@
 			// 
 			this.RemoveAllMonstersBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.RemoveAllMonstersBox.Location = new System.Drawing.Point(6, 454);
+			this.RemoveAllMonstersBox.Location = new System.Drawing.Point(6, 545);
 			this.RemoveAllMonstersBox.Name = "RemoveAllMonstersBox";
-			this.RemoveAllMonstersBox.Size = new System.Drawing.Size(493, 23);
+			this.RemoveAllMonstersBox.Size = new System.Drawing.Size(483, 23);
 			this.RemoveAllMonstersBox.TabIndex = 16;
 			this.RemoveAllMonstersBox.Text = "Remove all monsters";
 			this.RemoveAllMonstersBox.UseVisualStyleBackColor = true;
@@ -584,7 +572,7 @@
 			this.ItemsTab.Location = new System.Drawing.Point(4, 22);
 			this.ItemsTab.Name = "ItemsTab";
 			this.ItemsTab.Padding = new System.Windows.Forms.Padding(3);
-			this.ItemsTab.Size = new System.Drawing.Size(652, 483);
+			this.ItemsTab.Size = new System.Drawing.Size(642, 574);
 			this.ItemsTab.TabIndex = 0;
 			this.ItemsTab.Text = "Items";
 			this.ItemsTab.UseVisualStyleBackColor = true;
@@ -602,9 +590,9 @@
 			// 
 			this.ClearAllItemsBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.ClearAllItemsBox.Location = new System.Drawing.Point(6, 454);
+			this.ClearAllItemsBox.Location = new System.Drawing.Point(6, 545);
 			this.ClearAllItemsBox.Name = "ClearAllItemsBox";
-			this.ClearAllItemsBox.Size = new System.Drawing.Size(643, 23);
+			this.ClearAllItemsBox.Size = new System.Drawing.Size(633, 23);
 			this.ClearAllItemsBox.TabIndex = 23;
 			this.ClearAllItemsBox.Text = "Remove all items";
 			this.ClearAllItemsBox.UseVisualStyleBackColor = true;
@@ -810,17 +798,15 @@
 			// 
 			// TabControlBox
 			// 
-			this.TabControlBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
 			this.TabControlBox.Controls.Add(this.ItemsTab);
 			this.TabControlBox.Controls.Add(this.MonstersTab);
 			this.TabControlBox.Controls.Add(this.DecorationTab);
 			this.TabControlBox.Controls.Add(this.ActorTab);
-			this.TabControlBox.Location = new System.Drawing.Point(12, 12);
+			this.TabControlBox.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.TabControlBox.Location = new System.Drawing.Point(0, 0);
 			this.TabControlBox.Name = "TabControlBox";
 			this.TabControlBox.SelectedIndex = 0;
-			this.TabControlBox.Size = new System.Drawing.Size(660, 509);
+			this.TabControlBox.Size = new System.Drawing.Size(650, 600);
 			this.TabControlBox.TabIndex = 0;
 			// 
 			// ActorTab
@@ -829,7 +815,7 @@
 			this.ActorTab.Controls.Add(this.DeleteActorBox);
 			this.ActorTab.Location = new System.Drawing.Point(4, 22);
 			this.ActorTab.Name = "ActorTab";
-			this.ActorTab.Size = new System.Drawing.Size(502, 483);
+			this.ActorTab.Size = new System.Drawing.Size(642, 574);
 			this.ActorTab.TabIndex = 3;
 			this.ActorTab.Text = "Actor";
 			this.ActorTab.UseVisualStyleBackColor = true;
@@ -842,34 +828,32 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.ActorPanelBox.Location = new System.Drawing.Point(3, 3);
 			this.ActorPanelBox.Name = "ActorPanelBox";
-			this.ActorPanelBox.Size = new System.Drawing.Size(496, 448);
+			this.ActorPanelBox.Size = new System.Drawing.Size(486, 539);
 			this.ActorPanelBox.TabIndex = 0;
 			// 
 			// DeleteActorBox
 			// 
 			this.DeleteActorBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.DeleteActorBox.Location = new System.Drawing.Point(6, 454);
+			this.DeleteActorBox.Location = new System.Drawing.Point(6, 545);
 			this.DeleteActorBox.Name = "DeleteActorBox";
-			this.DeleteActorBox.Size = new System.Drawing.Size(493, 23);
+			this.DeleteActorBox.Size = new System.Drawing.Size(483, 23);
 			this.DeleteActorBox.TabIndex = 0;
 			this.DeleteActorBox.Text = "Remove actor";
 			this.DeleteActorBox.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.DeleteActorBox.UseVisualStyleBackColor = true;
 			this.DeleteActorBox.Click += new System.EventHandler(this.DeleteActorBox_Click);
 			// 
-			// SquareForm
+			// SquareControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(684, 562);
-			this.Controls.Add(this.CloseBox);
 			this.Controls.Add(this.TabControlBox);
 			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.MinimumSize = new System.Drawing.Size(650, 600);
-			this.Name = "SquareForm";
-			this.Text = "Square wizard";
-			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MazeBlockForm_KeyDown);
+			this.Name = "SquareControl";
+			this.Size = new System.Drawing.Size(650, 600);
+			this.Load += new System.EventHandler(this.SquareControl_Load);
 			this.DecorationTab.ResumeLayout(false);
 			this.groupBox8.ResumeLayout(false);
 			this.groupBox7.ResumeLayout(false);
@@ -901,7 +885,6 @@
 
 		#endregion
 
-		private System.Windows.Forms.Button CloseBox;
 		private System.Windows.Forms.TabPage DecorationTab;
 		private System.Windows.Forms.GroupBox groupBox5;
 		private OpenTK.GLControl GlDecorationControl;

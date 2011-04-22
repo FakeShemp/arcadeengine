@@ -40,7 +40,7 @@ namespace DungeonEye.Forms
 		/// </summary>
 		/// <param name="script"></param>
 		/// <param name="dungeon">Dungeon handle</param>
-		public SetToControl(ActivateTarget script, Dungeon dungeon)
+		public SetToControl(SetTo script, Dungeon dungeon)
 		{
 			InitializeComponent();
 
@@ -49,7 +49,8 @@ namespace DungeonEye.Forms
 			else
 				Action = new ActivateTarget();
 
-			TargetBox.SetTarget(dungeon, Action.Target);
+			Dungeon = dungeon;
+			TargetBox.SetTarget(Dungeon, Action.Target);
 		}
 
 
@@ -65,7 +66,16 @@ namespace DungeonEye.Forms
 			if (Action == null)
 				return;
 
-			((ActivateTarget)Action).Target = target;
+			((SetTo) Action).Target = target;
+
+			if (Dungeon != null && target != null)
+			{
+				SquareControl.Maze = Dungeon.GetMaze(target.Maze);
+			}
+			else
+			{
+				SquareControl.Maze = Dungeon.GetMaze(Dungeon.StartLocation.Maze);
+			}
 		}
 
 		#endregion
@@ -73,6 +83,11 @@ namespace DungeonEye.Forms
 
 		#region Properties
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Dungeon Dungeon;
 
 		#endregion
 

@@ -123,6 +123,10 @@ namespace DungeonEye.Forms.Script
 			{
 				basectrl = new DisplayMessageControl(action as DisplayMessage);
 			}
+			else if (action is SetTo)
+			{
+				basectrl = new SetToControl(action as SetTo, Dungeon);
+			}
 			else
 			{
 			}
