@@ -240,7 +240,7 @@ namespace DungeonEye.Forms
 									id = 12;
 								else if (field.Type == ForceFieldType.Move)
 								{
-									id = 13 + (int) field.Move;
+									id = 13 + (int) field.Direction;
 								}
 								else
 									id = 17;

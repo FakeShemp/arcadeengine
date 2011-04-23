@@ -183,8 +183,6 @@ namespace DungeonEye.Forms
 				EventBox,
 
 				PressurePlateBox,
-				DecorationBox,
-				FloorDecorationBox,
 
 				AddItemBox,
 				AddMonsterBox,
@@ -194,6 +192,8 @@ namespace DungeonEye.Forms
 				NoGhostsBox,
 				NoMonstersBox,
 				AlcoveBox,
+
+				ForceFieldBox
 			};
 
 
@@ -353,7 +353,7 @@ namespace DungeonEye.Forms
 								tileid = 12;
 							else if (field.Type == ForceFieldType.Move)
 							{
-								tileid = 13 + (int) field.Move;
+								tileid = 13 + (int) field.Direction;
 							}
 							else
 								tileid = 17;
@@ -540,9 +540,6 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void ToggleStripButtons(object sender, EventArgs e)
 		{
-			//if (Maze == null)
-			//	return;
-
 			ToolStripButton button = sender as ToolStripButton;
 
 			if (button.Checked)
@@ -1019,6 +1016,12 @@ namespace DungeonEye.Forms
 				else if (LauncherBox.Checked)
 				{
 					square.Actor = new Launcher(square);
+					EditSquare(square, true);
+					UncheckButtons(null);
+				}
+				else if (ForceFieldBox.Checked)
+				{
+					square.Actor = new ForceField(square);
 					EditSquare(square, true);
 					UncheckButtons(null);
 				}

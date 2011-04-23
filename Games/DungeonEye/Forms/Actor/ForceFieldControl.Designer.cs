@@ -39,6 +39,8 @@
 			this.AffectMonstersBox = new System.Windows.Forms.CheckBox();
 			this.AffectTeamBox = new System.Windows.Forms.CheckBox();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
+			this.FaceToBox = new System.Windows.Forms.RadioButton();
+			this.label1 = new System.Windows.Forms.Label();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.groupBox3.SuspendLayout();
@@ -46,14 +48,16 @@
 			// 
 			// groupBox1
 			// 
+			this.groupBox1.Controls.Add(this.label1);
 			this.groupBox1.Controls.Add(this.BlockRadioBox);
 			this.groupBox1.Controls.Add(this.SpinDirectionBox);
 			this.groupBox1.Controls.Add(this.MoveDirectionBox);
 			this.groupBox1.Controls.Add(this.SpinRadioBox);
+			this.groupBox1.Controls.Add(this.FaceToBox);
 			this.groupBox1.Controls.Add(this.MoveRadioBox);
 			this.groupBox1.Location = new System.Drawing.Point(6, 19);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(171, 93);
+			this.groupBox1.Size = new System.Drawing.Size(175, 142);
 			this.groupBox1.TabIndex = 2;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Action :";
@@ -61,7 +65,7 @@
 			// BlockRadioBox
 			// 
 			this.BlockRadioBox.AutoSize = true;
-			this.BlockRadioBox.Location = new System.Drawing.Point(6, 68);
+			this.BlockRadioBox.Location = new System.Drawing.Point(6, 95);
 			this.BlockRadioBox.Name = "BlockRadioBox";
 			this.BlockRadioBox.Size = new System.Drawing.Size(52, 17);
 			this.BlockRadioBox.TabIndex = 3;
@@ -72,21 +76,25 @@
 			// 
 			// SpinDirectionBox
 			// 
+			this.SpinDirectionBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.SpinDirectionBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.SpinDirectionBox.FormattingEnabled = true;
-			this.SpinDirectionBox.Location = new System.Drawing.Point(64, 44);
+			this.SpinDirectionBox.Location = new System.Drawing.Point(77, 44);
 			this.SpinDirectionBox.Name = "SpinDirectionBox";
-			this.SpinDirectionBox.Size = new System.Drawing.Size(101, 21);
+			this.SpinDirectionBox.Size = new System.Drawing.Size(92, 21);
 			this.SpinDirectionBox.TabIndex = 0;
 			this.SpinDirectionBox.SelectedIndexChanged += new System.EventHandler(this.SpinDirectionBox_SelectedIndexChanged);
 			// 
 			// MoveDirectionBox
 			// 
+			this.MoveDirectionBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.MoveDirectionBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.MoveDirectionBox.FormattingEnabled = true;
-			this.MoveDirectionBox.Location = new System.Drawing.Point(64, 17);
+			this.MoveDirectionBox.Location = new System.Drawing.Point(77, 115);
 			this.MoveDirectionBox.Name = "MoveDirectionBox";
-			this.MoveDirectionBox.Size = new System.Drawing.Size(101, 21);
+			this.MoveDirectionBox.Size = new System.Drawing.Size(92, 21);
 			this.MoveDirectionBox.TabIndex = 0;
 			this.MoveDirectionBox.SelectedIndexChanged += new System.EventHandler(this.MoveDirectionBox_SelectedIndexChanged);
 			// 
@@ -119,7 +127,7 @@
 			this.groupBox2.Controls.Add(this.AffectItemsBox);
 			this.groupBox2.Controls.Add(this.AffectMonstersBox);
 			this.groupBox2.Controls.Add(this.AffectTeamBox);
-			this.groupBox2.Location = new System.Drawing.Point(183, 19);
+			this.groupBox2.Location = new System.Drawing.Point(187, 19);
 			this.groupBox2.Name = "groupBox2";
 			this.groupBox2.Size = new System.Drawing.Size(120, 93);
 			this.groupBox2.TabIndex = 3;
@@ -171,6 +179,27 @@
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Force field";
 			// 
+			// FaceToBox
+			// 
+			this.FaceToBox.AutoSize = true;
+			this.FaceToBox.Location = new System.Drawing.Point(6, 72);
+			this.FaceToBox.Name = "FaceToBox";
+			this.FaceToBox.Size = new System.Drawing.Size(65, 17);
+			this.FaceToBox.TabIndex = 3;
+			this.FaceToBox.TabStop = true;
+			this.FaceToBox.Text = "Face To";
+			this.FaceToBox.UseVisualStyleBackColor = true;
+			this.FaceToBox.CheckedChanged += new System.EventHandler(this.DirectionBox_CheckedChanged);
+			// 
+			// label1
+			// 
+			this.label1.AutoSize = true;
+			this.label1.Location = new System.Drawing.Point(22, 118);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(49, 13);
+			this.label1.TabIndex = 4;
+			this.label1.Text = "Direction";
+			// 
 			// ForceFieldControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -200,5 +229,7 @@
 		private System.Windows.Forms.RadioButton MoveRadioBox;
 		private System.Windows.Forms.RadioButton BlockRadioBox;
 		private System.Windows.Forms.GroupBox groupBox3;
+		private System.Windows.Forms.RadioButton FaceToBox;
+		private System.Windows.Forms.Label label1;
 	}
 }

@@ -53,13 +53,16 @@ namespace DungeonEye.Forms
 				case ForceFieldType.Block:
 				BlockRadioBox.Checked = true;
 				break;
+				case ForceFieldType.FaceTo:
+				FaceToBox.Checked = true;
+				break;
 			}
 
 			AffectItemsBox.Checked = field.AffectItems;
 			AffectMonstersBox.Checked = field.AffectMonsters;
 			AffectTeamBox.Checked = field.AffectTeam;
 			MoveDirectionBox.DataSource = Enum.GetValues(typeof(CardinalPoint));
-			MoveDirectionBox.SelectedItem = field.Move;
+			MoveDirectionBox.SelectedItem = field.Direction;
 			SpinDirectionBox.DataSource = Enum.GetValues(typeof(CompassRotation));
 			SpinDirectionBox.SelectedItem = field.Spin;
 
@@ -82,7 +85,7 @@ namespace DungeonEye.Forms
 			if (Field == null)
 				return;
 
-			Field.Move = (CardinalPoint) MoveDirectionBox.SelectedItem;
+			Field.Direction = (CardinalPoint) MoveDirectionBox.SelectedItem;
 		}
 
 		/// <summary>
@@ -106,7 +109,6 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void MoveRadioBox_CheckedChanged(object sender, EventArgs e)
 		{
-			MoveDirectionBox.Visible = true;
 			SpinDirectionBox.Visible = false;
 
 			if (Field == null)
@@ -123,7 +125,6 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void SpinRadioBox_CheckedChanged(object sender, EventArgs e)
 		{
-			MoveDirectionBox.Visible = false;
 			SpinDirectionBox.Visible = true;
 
 			if (Field == null)
@@ -139,7 +140,6 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void BlockBox_CheckedChanged(object sender, EventArgs e)
 		{
-			MoveDirectionBox.Visible = false;
 			SpinDirectionBox.Visible = false;
 
 			if (Field == null)
@@ -148,6 +148,23 @@ namespace DungeonEye.Forms
 			Field.Type = ForceFieldType.Block;
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void DirectionBox_CheckedChanged(object sender, EventArgs e)
+		{
+			SpinDirectionBox.Visible = false;
+
+			if (Field == null)
+				return;
+
+			Field.Type = ForceFieldType.FaceTo;
+		}
+
+		
 		/// <summary>
 		/// 
 		/// </summary>
@@ -200,7 +217,6 @@ namespace DungeonEye.Forms
 		ForceField Field;
 
 		#endregion
-
 
 
 	}

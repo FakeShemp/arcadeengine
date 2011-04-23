@@ -39,7 +39,7 @@ namespace DungeonEye
 		{
 			Type = ForceFieldType.Spin;
 			Spin = CompassRotation.Rotate180;
-			Move = CardinalPoint.North;
+			Direction = CardinalPoint.North;
 
 			AffectTeam = true;
 			AffectMonsters = true;
@@ -67,11 +67,14 @@ namespace DungeonEye
 					sb.Append("Spin " + Spin);
 				break;
 				case ForceFieldType.Move:
-					sb.Append("Move " + Move);
+					sb.Append("Move " + Direction);
 				break;
 				case ForceFieldType.Block:
 					sb.Append("Block");
-			break;
+				break;
+				case ForceFieldType.FaceTo:
+					sb.Append("Face To " + Direction);
+				break;
 			}
 
 			sb.Append(". Affect :");
@@ -116,9 +119,9 @@ namespace DungeonEye
 					}
 					break;
 
-					case "move":
+					case "direction":
 					{
-						Move = (CardinalPoint)Enum.Parse(typeof(CardinalPoint), node.Attributes["value"].Value);
+						Direction = (CardinalPoint)Enum.Parse(typeof(CardinalPoint), node.Attributes["value"].Value);
 					}
 					break;
 
@@ -157,8 +160,8 @@ namespace DungeonEye
 			writer.WriteAttributeString("value", Spin.ToString());
 			writer.WriteEndElement();
 
-			writer.WriteStartElement("move");
-			writer.WriteAttributeString("value", Move.ToString());
+			writer.WriteStartElement("direction");
+			writer.WriteAttributeString("value", Direction.ToString());
 			writer.WriteEndElement();
 
 
@@ -180,6 +183,9 @@ namespace DungeonEye
 		/// <returns></returns>
 		public override bool OnTeamEnter()
 		{
+			if (!AffectTeam)
+				return false;
+
 			Team team = GameScreen.Team;
 
 			switch (Type)
@@ -192,7 +198,13 @@ namespace DungeonEye
 
 				case ForceFieldType.Move:
 				{
-					team.Offset(Move, 1);
+					team.Offset(Direction, 1);
+				}
+				break;
+
+				case ForceFieldType.FaceTo:
+				{
+					team.Location.Direction = Direction;
 				}
 				break;
 			}
@@ -209,7 +221,7 @@ namespace DungeonEye
 		/// <returns></returns>
 		public override bool OnMonsterEnter(Monster monster)
 		{
-			if (monster == null)
+			if (!AffectMonsters || monster == null)
 				return false;
 
 			switch (Type)
@@ -223,7 +235,7 @@ namespace DungeonEye
 				case ForceFieldType.Move:
 				{
 
-					switch (Move)
+					switch (Direction)
 					{
 						case CardinalPoint.North:
 						monster.Location.Coordinate.Offset(0, -1);
@@ -238,6 +250,13 @@ namespace DungeonEye
 						monster.Location.Coordinate.Offset(1, 0);
 						break;
 					}
+				}
+				break;
+			
+				
+				case ForceFieldType.FaceTo:
+				{
+					monster.Location.Direction = Direction;
 				}
 				break;
 			}
@@ -278,7 +297,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Moving value
 		/// </summary>
-		public CardinalPoint Move
+		public CardinalPoint Direction
 		{
 			get;
 			set;
@@ -324,18 +343,24 @@ namespace DungeonEye
 	public enum ForceFieldType
 	{
 		/// <summary>
-		/// Team is turning
+		/// Turn
 		/// </summary>
 		Spin,
 
 		/// <summary>
-		/// Team is moved to a direction
+		/// Move to a direction
 		/// </summary>
 		Move,
 
 		/// <summary>
-		/// Team can't go through
+		/// Can't go through
 		/// </summary>
 		Block,
+
+
+		/// <summary>
+		/// Face to a given direction
+		/// </summary>
+		FaceTo,
 	}
 }

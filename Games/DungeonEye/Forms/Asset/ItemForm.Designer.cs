@@ -28,7 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			DungeonEye.Dice dice2 = new DungeonEye.Dice();
+			DungeonEye.Dice dice1 = new DungeonEye.Dice();
 			this.GLGroundTile = new OpenTK.GLControl();
 			this.GLInventoryTile = new OpenTK.GLControl();
 			this.label2 = new System.Windows.Forms.Label();
@@ -41,6 +41,7 @@
 			this.label34 = new System.Windows.Forms.Label();
 			this.groupBox5 = new System.Windows.Forms.GroupBox();
 			this.CanIdentifyBox = new System.Windows.Forms.CheckBox();
+			this.IsBigBox = new System.Windows.Forms.CheckBox();
 			this.IdentifiedBox = new System.Windows.Forms.CheckBox();
 			this.IsCursedBox = new System.Windows.Forms.CheckBox();
 			this.ACBonusBox = new System.Windows.Forms.NumericUpDown();
@@ -97,11 +98,10 @@
 			this.SlashBox = new System.Windows.Forms.CheckBox();
 			this.BludgeBox = new System.Windows.Forms.CheckBox();
 			this.PiercingBox = new System.Windows.Forms.CheckBox();
-			this.DamageBox = new DungeonEye.Forms.DiceControl();
 			this.ScriptTab = new System.Windows.Forms.TabPage();
 			this.scriptControl1 = new ArcEngine.Editor.ScriptControl();
 			this.groupBox11 = new System.Windows.Forms.GroupBox();
-			this.IsBigBox = new System.Windows.Forms.CheckBox();
+			this.DamageBox = new DungeonEye.Forms.DiceControl();
 			((System.ComponentModel.ISupportInitialize)(this.GroundTileBox)).BeginInit();
 			this.groupBox4.SuspendLayout();
 			this.groupBox5.SuspendLayout();
@@ -134,6 +134,7 @@
 			this.GLGroundTile.Name = "GLGroundTile";
 			this.GLGroundTile.Size = new System.Drawing.Size(181, 165);
 			this.GLGroundTile.TabIndex = 2;
+			this.GLGroundTile.TabStop = false;
 			this.GLGroundTile.VSync = true;
 			this.GLGroundTile.Load += new System.EventHandler(this.GLGroundTile_Load);
 			this.GLGroundTile.Paint += new System.Windows.Forms.PaintEventHandler(this.Paint_Tiles);
@@ -146,6 +147,7 @@
 			this.GLInventoryTile.Name = "GLInventoryTile";
 			this.GLInventoryTile.Size = new System.Drawing.Size(181, 165);
 			this.GLInventoryTile.TabIndex = 2;
+			this.GLInventoryTile.TabStop = false;
 			this.GLInventoryTile.VSync = true;
 			this.GLInventoryTile.Load += new System.EventHandler(this.GLInventoryTile_Load);
 			this.GLInventoryTile.Paint += new System.Windows.Forms.PaintEventHandler(this.Paint_Tiles);
@@ -177,9 +179,14 @@
             0,
             0,
             0});
+			this.GroundTileBox.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
 			this.GroundTileBox.Name = "GroundTileBox";
 			this.GroundTileBox.Size = new System.Drawing.Size(122, 20);
-			this.GroundTileBox.TabIndex = 0;
+			this.GroundTileBox.TabIndex = 2;
 			this.GroundTileBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.GroundTileBox.ThousandsSeparator = true;
 			this.GroundTileBox.ValueChanged += new System.EventHandler(this.GroundTileID_OnChange);
@@ -264,6 +271,17 @@
 			this.CanIdentifyBox.Text = "Can identify";
 			this.CanIdentifyBox.UseVisualStyleBackColor = true;
 			this.CanIdentifyBox.CheckedChanged += new System.EventHandler(this.CanIdentifyBox_CheckedChanged);
+			// 
+			// IsBigBox
+			// 
+			this.IsBigBox.AutoSize = true;
+			this.IsBigBox.Location = new System.Drawing.Point(133, 88);
+			this.IsBigBox.Name = "IsBigBox";
+			this.IsBigBox.Size = new System.Drawing.Size(52, 17);
+			this.IsBigBox.TabIndex = 6;
+			this.IsBigBox.Text = "Is Big";
+			this.IsBigBox.UseVisualStyleBackColor = true;
+			this.IsBigBox.CheckedChanged += new System.EventHandler(this.IsBigBox_CheckedChanged);
 			// 
 			// IdentifiedBox
 			// 
@@ -632,6 +650,7 @@
 			this.GLIncomingTile.Name = "GLIncomingTile";
 			this.GLIncomingTile.Size = new System.Drawing.Size(181, 165);
 			this.GLIncomingTile.TabIndex = 2;
+			this.GLIncomingTile.TabStop = false;
 			this.GLIncomingTile.VSync = true;
 			this.GLIncomingTile.Load += new System.EventHandler(this.GLIncomingTile_Load);
 			this.GLIncomingTile.Paint += new System.Windows.Forms.PaintEventHandler(this.Paint_Tiles);
@@ -644,6 +663,7 @@
 			this.GLThrownTile.Name = "GLThrownTile";
 			this.GLThrownTile.Size = new System.Drawing.Size(181, 165);
 			this.GLThrownTile.TabIndex = 2;
+			this.GLThrownTile.TabStop = false;
 			this.GLThrownTile.VSync = true;
 			this.GLThrownTile.Load += new System.EventHandler(this.GLThrownTile_Load);
 			this.GLThrownTile.Paint += new System.Windows.Forms.PaintEventHandler(this.Paint_Tiles);
@@ -686,9 +706,14 @@
             0,
             0,
             0});
+			this.IncomingTileBox.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
 			this.IncomingTileBox.Name = "IncomingTileBox";
 			this.IncomingTileBox.Size = new System.Drawing.Size(117, 20);
-			this.IncomingTileBox.TabIndex = 0;
+			this.IncomingTileBox.TabIndex = 4;
 			this.IncomingTileBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.IncomingTileBox.ThousandsSeparator = true;
 			this.IncomingTileBox.ValueChanged += new System.EventHandler(this.IncomingTile_OnChange);
@@ -701,9 +726,14 @@
             0,
             0,
             0});
+			this.ThrownTileBox.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
 			this.ThrownTileBox.Name = "ThrownTileBox";
 			this.ThrownTileBox.Size = new System.Drawing.Size(110, 20);
-			this.ThrownTileBox.TabIndex = 0;
+			this.ThrownTileBox.TabIndex = 3;
 			this.ThrownTileBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.ThrownTileBox.ThousandsSeparator = true;
 			this.ThrownTileBox.ValueChanged += new System.EventHandler(this.ThrownID_OnChange);
@@ -833,9 +863,14 @@
             0,
             0,
             0});
+			this.InventoryTileBox.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
 			this.InventoryTileBox.Name = "InventoryTileBox";
 			this.InventoryTileBox.Size = new System.Drawing.Size(121, 20);
-			this.InventoryTileBox.TabIndex = 4;
+			this.InventoryTileBox.TabIndex = 1;
 			this.InventoryTileBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.InventoryTileBox.ThousandsSeparator = true;
 			this.InventoryTileBox.ValueChanged += new System.EventHandler(this.InventoryTileID_OnChange);
@@ -937,20 +972,6 @@
 			this.PiercingBox.UseVisualStyleBackColor = true;
 			this.PiercingBox.CheckedChanged += new System.EventHandler(this.PiercingBox_CheckedChanged);
 			// 
-			// DamageBox
-			// 
-			this.DamageBox.ControlText = "Damage :";
-			dice2.Faces = 1;
-			dice2.Modifier = 0;
-			dice2.Throws = 1;
-			this.DamageBox.Dice = dice2;
-			this.DamageBox.Location = new System.Drawing.Point(6, 255);
-			this.DamageBox.MinimumSize = new System.Drawing.Size(225, 100);
-			this.DamageBox.Name = "DamageBox";
-			this.DamageBox.Size = new System.Drawing.Size(232, 104);
-			this.DamageBox.TabIndex = 9;
-			this.DamageBox.ValueChanged += new System.EventHandler(this.DamageBox_ValueChanged);
-			// 
 			// ScriptTab
 			// 
 			this.ScriptTab.Controls.Add(this.scriptControl1);
@@ -983,16 +1004,19 @@
 			this.groupBox11.TabStop = false;
 			this.groupBox11.Text = "Properties :";
 			// 
-			// IsBigBox
+			// DamageBox
 			// 
-			this.IsBigBox.AutoSize = true;
-			this.IsBigBox.Location = new System.Drawing.Point(133, 88);
-			this.IsBigBox.Name = "IsBigBox";
-			this.IsBigBox.Size = new System.Drawing.Size(52, 17);
-			this.IsBigBox.TabIndex = 6;
-			this.IsBigBox.Text = "Is Big";
-			this.IsBigBox.UseVisualStyleBackColor = true;
-			this.IsBigBox.CheckedChanged += new System.EventHandler(this.IsBigBox_CheckedChanged);
+			this.DamageBox.ControlText = "Damage :";
+			dice1.Faces = 1;
+			dice1.Modifier = 0;
+			dice1.Throws = 1;
+			this.DamageBox.Dice = dice1;
+			this.DamageBox.Location = new System.Drawing.Point(6, 255);
+			this.DamageBox.MinimumSize = new System.Drawing.Size(225, 100);
+			this.DamageBox.Name = "DamageBox";
+			this.DamageBox.Size = new System.Drawing.Size(232, 104);
+			this.DamageBox.TabIndex = 9;
+			this.DamageBox.ValueChanged += new System.EventHandler(this.DamageBox_ValueChanged);
 			// 
 			// ItemForm
 			// 

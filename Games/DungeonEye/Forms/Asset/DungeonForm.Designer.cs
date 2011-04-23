@@ -54,9 +54,8 @@
 			this.GeneratorBox = new System.Windows.Forms.ToolStripButton();
 			this.SwitchBox = new System.Windows.Forms.ToolStripButton();
 			this.PressurePlateBox = new System.Windows.Forms.ToolStripButton();
-			this.FloorDecorationBox = new System.Windows.Forms.ToolStripButton();
-			this.DecorationBox = new System.Windows.Forms.ToolStripButton();
 			this.EventBox = new System.Windows.Forms.ToolStripButton();
+			this.ForceFieldBox = new System.Windows.Forms.ToolStripButton();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.SquareCoordBox = new System.Windows.Forms.ToolStripStatusLabel();
 			this.SquareDescriptionBox = new System.Windows.Forms.ToolStripStatusLabel();
@@ -130,9 +129,8 @@
             this.GeneratorBox,
             this.SwitchBox,
             this.PressurePlateBox,
-            this.FloorDecorationBox,
-            this.DecorationBox,
-            this.EventBox});
+            this.EventBox,
+            this.ForceFieldBox});
 			this.DungeonStripBox.Location = new System.Drawing.Point(0, 0);
 			this.DungeonStripBox.Name = "DungeonStripBox";
 			this.DungeonStripBox.Size = new System.Drawing.Size(856, 25);
@@ -369,28 +367,6 @@
 			this.PressurePlateBox.Text = "Pressure plate...";
 			this.PressurePlateBox.CheckedChanged += new System.EventHandler(this.ToggleStripButtons);
 			// 
-			// FloorDecorationBox
-			// 
-			this.FloorDecorationBox.CheckOnClick = true;
-			this.FloorDecorationBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.FloorDecorationBox.Image = ((System.Drawing.Image)(resources.GetObject("FloorDecorationBox.Image")));
-			this.FloorDecorationBox.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.FloorDecorationBox.Name = "FloorDecorationBox";
-			this.FloorDecorationBox.Size = new System.Drawing.Size(23, 22);
-			this.FloorDecorationBox.Text = "Floor decoration...";
-			this.FloorDecorationBox.CheckedChanged += new System.EventHandler(this.ToggleStripButtons);
-			// 
-			// DecorationBox
-			// 
-			this.DecorationBox.CheckOnClick = true;
-			this.DecorationBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.DecorationBox.Image = ((System.Drawing.Image)(resources.GetObject("DecorationBox.Image")));
-			this.DecorationBox.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.DecorationBox.Name = "DecorationBox";
-			this.DecorationBox.Size = new System.Drawing.Size(23, 22);
-			this.DecorationBox.Text = "Decoration...";
-			this.DecorationBox.CheckedChanged += new System.EventHandler(this.ToggleStripButtons);
-			// 
 			// EventBox
 			// 
 			this.EventBox.CheckOnClick = true;
@@ -401,6 +377,16 @@
 			this.EventBox.Size = new System.Drawing.Size(23, 22);
 			this.EventBox.Text = "Event...";
 			this.EventBox.CheckedChanged += new System.EventHandler(this.ToggleStripButtons);
+			// 
+			// ForceFieldBox
+			// 
+			this.ForceFieldBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.ForceFieldBox.Image = ((System.Drawing.Image)(resources.GetObject("ForceFieldBox.Image")));
+			this.ForceFieldBox.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.ForceFieldBox.Name = "ForceFieldBox";
+			this.ForceFieldBox.Size = new System.Drawing.Size(23, 22);
+			this.ForceFieldBox.Text = "Force field";
+			this.ForceFieldBox.CheckedChanged += new System.EventHandler(this.ToggleStripButtons);
 			// 
 			// statusStrip1
 			// 
@@ -815,15 +801,12 @@
 		#endregion
 
 		private System.Windows.Forms.ToolStrip DungeonStripBox;
-		private System.Windows.Forms.ToolStripButton AddMazeButton;
-		private System.Windows.Forms.ToolStripButton RemoveMazeButton;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 		private System.Windows.Forms.ToolStripComboBox MazeListBox;
 		private System.Windows.Forms.StatusStrip statusStrip1;
 		private System.Windows.Forms.ToolStripStatusLabel SquareCoordBox;
 		private System.Windows.Forms.HScrollBar hScrollBar1;
 		private System.Windows.Forms.VScrollBar vScrollBar1;
-		private System.Windows.Forms.ToolStripButton ResetOffsetBox;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
 		private System.Windows.Forms.Timer DrawTimer;
 		private OpenTK.GLControl glControl;
@@ -841,6 +824,9 @@
 		private System.Windows.Forms.TabPage MazeTab;
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.TextBox DungeonNoteBox;
+		private System.Windows.Forms.ToolStripButton AddMazeButton;
+		private System.Windows.Forms.ToolStripButton ResetOffsetBox;
+		private System.Windows.Forms.ToolStripButton RemoveMazeButton;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		private System.Windows.Forms.ToolStripButton NoMonstersBox;
 		private System.Windows.Forms.ToolStripButton NoGhostsBox;
@@ -857,9 +843,9 @@
 		private System.Windows.Forms.ToolStripButton GeneratorBox;
 		private System.Windows.Forms.ToolStripButton SwitchBox;
 		private System.Windows.Forms.ToolStripButton PressurePlateBox;
-		private System.Windows.Forms.ToolStripButton FloorDecorationBox;
-		private System.Windows.Forms.ToolStripButton DecorationBox;
 		private System.Windows.Forms.ToolStripButton EventBox;
+		private System.Windows.Forms.ToolStripButton AlcoveBox;
+		private System.Windows.Forms.ToolStripButton ForceFieldBox;
 		private System.Windows.Forms.Panel LeftPanel;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.ComboBox DefaultDoorBox;
@@ -873,6 +859,5 @@
 		private System.Windows.Forms.Label label1;
 		private TargetControl StartLocationBox;
 		private System.Windows.Forms.GroupBox groupBox3;
-		private System.Windows.Forms.ToolStripButton AlcoveBox;
 	}
 }
