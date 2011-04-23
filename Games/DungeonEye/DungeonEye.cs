@@ -137,7 +137,7 @@ namespace DungeonEye
 
 
 			// Change the cursor
-			Mouse.LoadTileSet(ResourceManager.CreateAsset<TileSet>("Items"));
+			Mouse.LoadTileSet(ResourceManager.CreateAsset<TileSet>("Cursor"));
 			Mouse.SetTile(0);
 
 			GSM.AddScreen(new MainMenu());

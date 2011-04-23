@@ -66,6 +66,8 @@ namespace ArcEngine.Editor
 
 			// Set zoom value
 			ZoomBox.SelectedIndex = 0;
+
+
 		}
 
 

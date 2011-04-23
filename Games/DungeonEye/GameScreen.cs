@@ -89,8 +89,6 @@ namespace DungeonEye
 			// Heroe's heads
 			Heads = ResourceManager.CreateAsset<TileSet>("Heads");
 
-			// Items tileset
-			Items = ResourceManager.CreateAsset<TileSet>("Items");
 
 			// Fonts
 			InventoryFont = ResourceManager.CreateSharedAsset<BitmapFont>("inventory", "inventory");
@@ -100,25 +98,6 @@ namespace DungeonEye
 			SpellBook.LoadContent();
 			GameMessage.Init();
 
-
-
-
-/*
-			Dungeon = ResourceManager.CreateAsset<Dungeon>("EOB_2");
-			if (Dungeon == null)
-			{
-				Trace.WriteLine("[GameScreen]Init(): Failed to create default dungeon !");
-				return;
-			}
-
-			Dungeon.Init();
-		
-			// Loads a saved game
-			if (!Load())
-			{
-				Team.Init();
-			}
-*/
 
 			Load();
 
@@ -154,9 +133,9 @@ namespace DungeonEye
 				InventoryFont.Dispose();
 			InventoryFont = null;
 
-			if (Items != null)
-				Items.Dispose();
-			Items = null;
+			//if (Items != null)
+			//    Items.Dispose();
+			//Items = null;
 
 			if (Heads != null)
 				Heads.Dispose();
@@ -1907,7 +1886,16 @@ namespace DungeonEye
 		/// <summary>
 		/// Items tilesets
 		/// </summary>
-		TileSet Items;
+		TileSet Items
+		{
+			get
+			{
+				if (Dungeon == null)
+					return null;
+
+				return Dungeon.ItemTileSet;
+			}
+		}
 
 
 		/// <summary>

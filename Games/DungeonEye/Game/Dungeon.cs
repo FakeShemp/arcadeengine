@@ -24,6 +24,7 @@ using System.Xml;
 using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Interface;
+using ArcEngine.Input;
 
 namespace DungeonEye
 {
@@ -59,6 +60,8 @@ namespace DungeonEye
 			foreach (Maze maze in Mazes.Values)
 				maze.Init();
 
+			Mouse.LoadTileSet(ItemTileSet);
+			
 			return true;
 		}
 
