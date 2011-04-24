@@ -129,6 +129,12 @@
     <Compile Include="Forms\Actions\DisplayMessageControl.Designer.cs">
       <DependentUpon>DisplayMessageControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\ActorChooserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\ActorChooserControl.Designer.cs">
+      <DependentUpon>ActorChooserControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Actor\AlcoveScriptForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -618,6 +624,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Actions\DisplayMessageControl.resx">
       <DependentUpon>DisplayMessageControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ActorChooserControl.resx">
+      <DependentUpon>ActorChooserControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Actor\AlcoveScriptForm.resx">
       <DependentUpon>AlcoveScriptForm.cs</DependentUpon>
