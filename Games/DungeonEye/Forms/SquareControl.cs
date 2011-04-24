@@ -67,6 +67,7 @@ namespace DungeonEye.Forms
 		public void ActivateActorTab()
 		{
 			TabControlBox.SelectedTab = ActorTab;
+			TabControlBox.Update();
 		}
 
 
@@ -124,6 +125,87 @@ namespace DungeonEye.Forms
 			SouthDecorationBox.ForeColor = Square.Decorations[(int) CardinalPoint.South] == -1 ? Color.Black : Color.Red;
 			WestDecorationBox.ForeColor = Square.Decorations[(int) CardinalPoint.West] == -1 ? Color.Black : Color.Red;
 			EastDecorationBox.ForeColor = Square.Decorations[(int) CardinalPoint.East] == -1 ? Color.Black : Color.Red;
+		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public void UpdateActorTab()
+		{
+			if (Square == null)
+				return;
+
+			// Control already present
+			if (ActorPanelBox.Controls.Count > 0)
+				return;
+
+	
+	//		ActorPanelBox.Controls.Clear();
+			UserControl control = null;
+
+
+			if (Square.Actor is Door)
+			{
+				control = new DoorControl(Square.Actor as Door);
+			}
+			else if (Square.Actor is EventSquare)
+			{
+				control = new EventSquareControl(Square.Actor as EventSquare, Maze.Dungeon);
+			}
+			else if (Square.Actor is PressurePlate)
+			{
+				control = new PressurePlateControl(Square.Actor as PressurePlate, Maze);
+			}
+			else if (Square.Actor is ForceField)
+			{
+				control = new ForceFieldControl(Square.Actor as ForceField, Maze.Dungeon);
+			}
+			else if (Square.Actor is Pit)
+			{
+				control = new PitControl(Square.Actor as Pit, Maze.Dungeon);
+			}
+			else if (Square.Actor is Stair)
+			{
+				control = new StairControl(Square.Actor as Stair, Maze.Dungeon);
+			}
+			else if (Square.Actor is Teleporter)
+			{
+				control = new TeleporterControl(Square.Actor as Teleporter, Maze.Dungeon);
+			}
+			else if (Square.Actor is AlcoveActor)
+			{
+				control = new AlcoveControl(Square.Actor as AlcoveActor, Maze);
+			}
+			else if (Square.Actor is WallSwitch)
+			{
+				control = new WallSwitchControl(Square.Actor as WallSwitch, Maze);
+			}
+			else if (Square.Actor is Generator)
+			{
+				control = new GeneratorControl(Square.Actor as WallSwitch, Maze);
+			}
+			else if (Square.Actor is Launcher)
+			{
+				control = new LauncherControl(Square.Actor as WallSwitch, Maze);
+			}
+			else if (Square.Actor == null)
+			{
+				ActorChooserControl ctrl = new ActorChooserControl(Square);
+				ctrl.ActorSelected +=new ActorChooserControl.ActorSelectedHandler(ctrl_ActorSelected);
+				control = ctrl;
+			}
+			else
+			{
+				MessageBox.Show("Unhandled actor control", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
+
+			if (control != null)
+			{
+				control.Dock = DockStyle.Fill;
+				ActorPanelBox.Controls.Add(control);
+			}
 		}
 
 
@@ -778,6 +860,8 @@ namespace DungeonEye.Forms
 
 			Square.Actor = null;
 			ActorPanelBox.Controls.Clear();
+
+			UpdateActorTab();
 		}
 
 
@@ -788,78 +872,23 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void ActorTab_Enter(object sender, EventArgs e)
 		{
+
+			UpdateActorTab();
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="type"></param>
+		void ctrl_ActorSelected(object sender)
+		{
 			if (Square == null)
 				return;
 
-			// No actor
-			if (Square.Actor == null)
-			{
-				ActorPanelBox.Controls.Clear();
-				return;
-			}
-
-			// Control already present
-			if (ActorPanelBox.Controls.Count > 0)
-				return;
-
-
-			UserControl control = null;
-
-
-			if (Square.Actor is Door)
-			{
-				control = new DoorControl(Square.Actor as Door);
-			}
-			else if (Square.Actor is EventSquare)
-			{
-				control = new EventSquareControl(Square.Actor as EventSquare, Maze.Dungeon);
-			}
-			else if (Square.Actor is PressurePlate)
-			{
-				control = new PressurePlateControl(Square.Actor as PressurePlate, Maze);
-			}
-			else if (Square.Actor is ForceField)
-			{
-				control = new ForceFieldControl(Square.Actor as ForceField, Maze.Dungeon);
-			}
-			else if (Square.Actor is Pit)
-			{
-				control = new PitControl(Square.Actor as Pit, Maze.Dungeon);
-			}
-			else if (Square.Actor is Stair)
-			{
-				control = new StairControl(Square.Actor as Stair, Maze.Dungeon);
-			}
-			else if (Square.Actor is Teleporter)
-			{
-				control = new TeleporterControl(Square.Actor as Teleporter, Maze.Dungeon);
-			}
-			else if (Square.Actor is AlcoveActor)
-			{
-				control = new AlcoveControl(Square.Actor as AlcoveActor, Maze);
-			}
-			else if (Square.Actor is WallSwitch)
-			{
-				control = new WallSwitchControl(Square.Actor as WallSwitch, Maze);
-			}
-			else if (Square.Actor is Generator)
-			{
-				control = new GeneratorControl(Square.Actor as WallSwitch, Maze);
-			}
-			else if (Square.Actor is Launcher)
-			{
-				control = new LauncherControl(Square.Actor as WallSwitch, Maze);
-			}
-			else
-			{
-				MessageBox.Show("Unhandled actor control", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-			}
-
-			if (control != null)
-			{
-				control.Dock = DockStyle.Fill;
-				ActorPanelBox.Controls.Add(control);
-			}
+			ActorPanelBox.Controls.Clear();
+			UpdateActorTab();
 		}
 
 

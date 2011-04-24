@@ -44,6 +44,12 @@ namespace DungeonEye
 			AcceptItems = true;
 			CanPassThrough = true;
 			IsBlocking = false;
+
+			TeleportTeam = true;
+			TeleportMonsters = true;
+			TeleportItems = true;
+			IsVisible = true;
+
 		}
 
 
@@ -60,7 +66,21 @@ namespace DungeonEye
 			return sb.ToString();
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		public override DungeonLocation[] GetTargets()
+		{
+			DungeonLocation[] target = new DungeonLocation[]
+			{
+				Target
+			};
+			return target;
+		}
 		
+
 		#region I/O
 
 
@@ -82,6 +102,31 @@ namespace DungeonEye
 					{
 						Target = new DungeonLocation(Square.Location);
 						Target.Load(node);
+					}
+					break;
+
+					case "visible":
+					{
+						IsVisible = bool.Parse(node.InnerText);
+					}
+					break;
+
+
+					case "teleportteam":
+					{
+						TeleportTeam = bool.Parse(node.InnerText);
+					}
+					break;
+
+					case "teleportmonsters":
+					{
+						TeleportMonsters = bool.Parse(node.InnerText);
+					}
+					break;
+
+					case "teleportitems":
+					{
+						TeleportItems = bool.Parse(node.InnerText);
 					}
 					break;
 
@@ -114,6 +159,12 @@ namespace DungeonEye
 			base.Save(writer);
 
 			Target.Save("target", writer);
+
+			writer.WriteElementString("teleportteam", TeleportTeam.ToString());
+			writer.WriteElementString("teleportmonsters", TeleportMonsters.ToString());
+			writer.WriteElementString("teleportitems", TeleportItems.ToString());
+			writer.WriteElementString("visible", IsVisible.ToString());
+
 			writer.WriteEndElement();
 
 			return true;

@@ -480,8 +480,8 @@ namespace DungeonEye.Forms
 				SquareActor actor = SquareUnderMouse.Actor;
 				foreach(DungeonLocation target in actor.GetTargets())
 				{
-					//if (script.Action == null)
-					//    continue;
+					if (target == null)
+						continue;
 
 					//DungeonLocation target = script.Action.Target;
 					if (target.Maze == Maze.Name)

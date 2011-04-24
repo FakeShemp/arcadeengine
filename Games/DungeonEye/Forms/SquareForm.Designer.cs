@@ -50,9 +50,11 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.ControlBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.ControlBox.Location = new System.Drawing.Point(12, 12);
+			this.ControlBox.Maze = null;
 			this.ControlBox.MinimumSize = new System.Drawing.Size(650, 600);
 			this.ControlBox.Name = "ControlBox";
 			this.ControlBox.Size = new System.Drawing.Size(660, 609);
+			this.ControlBox.Square = null;
 			this.ControlBox.TabIndex = 0;
 			// 
 			// SquareForm
@@ -63,6 +65,7 @@
 			this.ClientSize = new System.Drawing.Size(684, 662);
 			this.Controls.Add(this.CloseBox);
 			this.Controls.Add(this.ControlBox);
+			this.KeyPreview = true;
 			this.MinimizeBox = false;
 			this.MinimumSize = new System.Drawing.Size(700, 700);
 			this.Name = "SquareForm";
@@ -71,6 +74,7 @@
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Square Form";
+			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SquareForm_KeyDown);
 			this.ResumeLayout(false);
 
 		}

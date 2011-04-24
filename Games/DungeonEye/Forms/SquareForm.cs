@@ -54,5 +54,30 @@ namespace DungeonEye.Forms
 			ControlBox.ActivateActorTab();
 		}
 
+
+
+		#region Form events
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void SquareForm_KeyDown(object sender, KeyEventArgs e)
+		{
+			switch (e.KeyCode)
+			{
+				case Keys.Escape:
+				{
+					Close();
+				}
+				break;
+			}
+		}
+
+		#endregion
+
+
+
 	}
 }
