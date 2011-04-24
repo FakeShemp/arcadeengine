@@ -30,11 +30,6 @@
 		{
 			this.GLControl = new OpenTK.GLControl();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
-			this.groupBox3 = new System.Windows.Forms.GroupBox();
-			this.label3 = new System.Windows.Forms.Label();
-			this.ItemsBox = new System.Windows.Forms.ComboBox();
-			this.ItemLocationBox = new System.Windows.Forms.Label();
-			this.label2 = new System.Windows.Forms.Label();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.VisualTab = new System.Windows.Forms.TabPage();
@@ -49,7 +44,6 @@
 			this.ItemRemovedBox = new DungeonEye.Forms.AlcoveScriptListControl();
 			this.ItemAddedBox = new DungeonEye.Forms.AlcoveScriptListControl();
 			this.groupBox2.SuspendLayout();
-			this.groupBox3.SuspendLayout();
 			this.groupBox4.SuspendLayout();
 			this.tabControl1.SuspendLayout();
 			this.VisualTab.SuspendLayout();
@@ -68,8 +62,6 @@
 			this.GLControl.VSync = false;
 			this.GLControl.Load += new System.EventHandler(this.GLControl_Load);
 			this.GLControl.Paint += new System.Windows.Forms.PaintEventHandler(this.GLControl_Paint);
-			this.GLControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GLControl_MouseMove);
-			this.GLControl.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.GLControl_PreviewKeyDown);
 			// 
 			// groupBox2
 			// 
@@ -80,60 +72,6 @@
 			this.groupBox2.TabIndex = 2;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Visual properties";
-			// 
-			// groupBox3
-			// 
-			this.groupBox3.Controls.Add(this.label3);
-			this.groupBox3.Controls.Add(this.ItemsBox);
-			this.groupBox3.Controls.Add(this.ItemLocationBox);
-			this.groupBox3.Controls.Add(this.label2);
-			this.groupBox3.Location = new System.Drawing.Point(246, 282);
-			this.groupBox3.Name = "groupBox3";
-			this.groupBox3.Size = new System.Drawing.Size(143, 115);
-			this.groupBox3.TabIndex = 6;
-			this.groupBox3.TabStop = false;
-			this.groupBox3.Text = "Preview";
-			// 
-			// label3
-			// 
-			this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.label3.Location = new System.Drawing.Point(6, 72);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(131, 31);
-			this.label3.TabIndex = 3;
-			this.label3.Text = "Drag item to adjust on screen position";
-			this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			// 
-			// ItemsBox
-			// 
-			this.ItemsBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.ItemsBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.ItemsBox.FormattingEnabled = true;
-			this.ItemsBox.Location = new System.Drawing.Point(6, 19);
-			this.ItemsBox.Name = "ItemsBox";
-			this.ItemsBox.Size = new System.Drawing.Size(130, 21);
-			this.ItemsBox.TabIndex = 2;
-			this.ItemsBox.SelectedIndexChanged += new System.EventHandler(this.ItemsBox_SelectedIndexChanged);
-			// 
-			// ItemLocationBox
-			// 
-			this.ItemLocationBox.AutoSize = true;
-			this.ItemLocationBox.Location = new System.Drawing.Point(63, 49);
-			this.ItemLocationBox.Name = "ItemLocationBox";
-			this.ItemLocationBox.Size = new System.Drawing.Size(52, 13);
-			this.ItemLocationBox.TabIndex = 1;
-			this.ItemLocationBox.Text = "position...";
-			// 
-			// label2
-			// 
-			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(3, 49);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(54, 13);
-			this.label2.TabIndex = 0;
-			this.label2.Text = "Location :";
 			// 
 			// groupBox4
 			// 
@@ -162,7 +100,6 @@
 			this.VisualTab.Controls.Add(this.groupBox1);
 			this.VisualTab.Controls.Add(this.DirectionBox);
 			this.VisualTab.Controls.Add(this.groupBox2);
-			this.VisualTab.Controls.Add(this.groupBox3);
 			this.VisualTab.Location = new System.Drawing.Point(4, 22);
 			this.VisualTab.Name = "VisualTab";
 			this.VisualTab.Padding = new System.Windows.Forms.Padding(3);
@@ -302,8 +239,6 @@
 			this.Size = new System.Drawing.Size(788, 651);
 			this.Load += new System.EventHandler(this.AlcoveControl_Load);
 			this.groupBox2.ResumeLayout(false);
-			this.groupBox3.ResumeLayout(false);
-			this.groupBox3.PerformLayout();
 			this.groupBox4.ResumeLayout(false);
 			this.tabControl1.ResumeLayout(false);
 			this.VisualTab.ResumeLayout(false);
@@ -319,15 +254,10 @@
 
 		private OpenTK.GLControl GLControl;
 		private System.Windows.Forms.GroupBox groupBox2;
-		private System.Windows.Forms.GroupBox groupBox3;
-		private System.Windows.Forms.Label ItemLocationBox;
-		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.ComboBox ItemsBox;
 		private System.Windows.Forms.GroupBox groupBox4;
 		private System.Windows.Forms.TabControl tabControl1;
 		private System.Windows.Forms.TabPage ScriptTab;
 		private System.Windows.Forms.TabPage VisualTab;
-		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.CheckBox AcceptBigItemsBox;
 		private System.Windows.Forms.CheckBox HideItemsBox;

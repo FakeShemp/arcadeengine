@@ -287,18 +287,27 @@ namespace DungeonEye
 				if (node.NodeType == XmlNodeType.Comment)
 					continue;
 
-				try
+				if (node.Name == "item")
 				{
-					ViewFieldPosition pos = (ViewFieldPosition) Enum.Parse(typeof(ViewFieldPosition), node.Name);
-					Location[(int) pos].X = int.Parse(node.Attributes["x"].Value);
-					Location[(int) pos].Y = int.Parse(node.Attributes["y"].Value);
-					TileId[(int) pos] = int.Parse(node.Attributes["id"].Value);
-					Swap[(int)pos] = bool.Parse(node.Attributes["swap"].Value);
-
+					ItemLocation = new Point(int.Parse(node.Attributes["x"].Value),
+						 int.Parse(node.Attributes["y"].Value));
 				}
-				catch (Exception e)
+
+				else
 				{
-					Trace.WriteLine("[Decoration]Load : Error while loading : " + e.Message);
+					try
+					{
+						ViewFieldPosition pos = (ViewFieldPosition) Enum.Parse(typeof(ViewFieldPosition), node.Name);
+						Location[(int) pos].X = int.Parse(node.Attributes["x"].Value);
+						Location[(int) pos].Y = int.Parse(node.Attributes["y"].Value);
+						TileId[(int) pos] = int.Parse(node.Attributes["id"].Value);
+						Swap[(int) pos] = bool.Parse(node.Attributes["swap"].Value);
+
+					}
+					catch (Exception e)
+					{
+						Trace.WriteLine("[Decoration]Load : Error while loading : " + e.Message);
+					}
 				}
 			}
 
@@ -325,6 +334,11 @@ namespace DungeonEye
 			writer.WriteAttributeString("id", id.ToString());
 			writer.WriteAttributeString("isblocking", IsBlocking.ToString());
 			writer.WriteAttributeString("forcedisplay", ForceDisplay.ToString());
+
+			writer.WriteStartElement("item");
+			writer.WriteAttributeString("x", ItemLocation.X.ToString());
+			writer.WriteAttributeString("y", ItemLocation.Y.ToString());
+			writer.WriteEndElement();
 
 			foreach (ViewFieldPosition vfp in Enum.GetValues(typeof(ViewFieldPosition)))
 			{
@@ -383,6 +397,17 @@ namespace DungeonEye
 			get;
 			set;
 		}
+
+
+		/// <summary>
+		/// Items location on the screen
+		/// </summary>
+		public Point ItemLocation
+		{
+			get;
+			set;
+		}
+
 
 		#endregion
 

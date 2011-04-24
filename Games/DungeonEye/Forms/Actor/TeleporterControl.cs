@@ -44,12 +44,12 @@ namespace DungeonEye.Forms
 
 			targetControl1.Dungeon = dungeon;
 
-			TeamBox.Checked = teleporter.CanTeleportTeam;
-			ItemsBox.Checked = teleporter.CanTeleportItems;
-			MonsterBox.Checked = teleporter.CanTeleportMonsters;
+			TeamBox.Checked = teleporter.TeleportTeam;
+			ItemsBox.Checked = teleporter.TeleportItems;
+			MonsterBox.Checked = teleporter.TeleportMonsters;
 			VisibleBox.Checked = teleporter.IsVisible;
 			ReusableBox.Checked = teleporter.Reusable;
-			ActiveBox.Checked = teleporter.IsActive;
+			ActiveBox.Checked = teleporter.IsActivated;
 			UseSoundBox.Checked = teleporter.UseSound;
 			SoundNameBox.Text = teleporter.SoundName;
 
@@ -71,7 +71,7 @@ namespace DungeonEye.Forms
 			if (Teleporter == null)
 				return;
 
-			Teleporter.CanTeleportTeam = TeamBox.Checked;
+			Teleporter.TeleportTeam = TeamBox.Checked;
 		}
 
 		private void MonsterBox_CheckedChanged(object sender, EventArgs e)
@@ -79,7 +79,7 @@ namespace DungeonEye.Forms
 			if (Teleporter == null)
 				return;
 
-			Teleporter.CanTeleportMonsters = MonsterBox.Checked;
+			Teleporter.TeleportMonsters = MonsterBox.Checked;
 		}
 
 		private void ItemsBox_CheckedChanged(object sender, EventArgs e)
@@ -87,7 +87,7 @@ namespace DungeonEye.Forms
 			if (Teleporter == null)
 				return;
 
-			Teleporter.CanTeleportItems = ItemsBox.Checked;
+			Teleporter.TeleportItems = ItemsBox.Checked;
 		}
 
 		private void VisibleBox_CheckedChanged(object sender, EventArgs e)
@@ -111,7 +111,7 @@ namespace DungeonEye.Forms
 			if (Teleporter == null)
 				return;
 
-			Teleporter.IsActive = ActiveBox.Checked;
+			Teleporter.IsActivated = ActiveBox.Checked;
 		}
 
 		private void PlaySoundBox_Click(object sender, EventArgs e)

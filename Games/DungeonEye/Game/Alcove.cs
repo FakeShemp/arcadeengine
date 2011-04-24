@@ -46,7 +46,6 @@ namespace DungeonEye
 		{
 			Decoration = -1;
 			HideItems = false;
-			ItemLocation = Point.Empty;
 			AcceptBigItems = false;
 			OnAddedItem = new List<AlcoveScript>();
 			OnRemovedItem = new List<AlcoveScript>();
@@ -116,8 +115,8 @@ namespace DungeonEye
 			Decoration = int.Parse(xml.Attributes["deco"].Value);
 			HideItems = bool.Parse(xml.Attributes["hide"].Value);
 			AcceptBigItems = bool.Parse(xml.Attributes["bigitems"].Value);
-			ItemLocation = new Point(int.Parse(xml.Attributes["x"].Value), 
-									 int.Parse(xml.Attributes["y"].Value));
+			//ItemLocation = new Point(int.Parse(xml.Attributes["x"].Value), 
+			//                         int.Parse(xml.Attributes["y"].Value));
 
 			foreach (XmlNode node in xml)
 			{
@@ -172,8 +171,8 @@ namespace DungeonEye
 			writer.WriteAttributeString("deco", Decoration.ToString());
 			writer.WriteAttributeString("hide", HideItems.ToString());
 			writer.WriteAttributeString("bigitems", AcceptBigItems.ToString());
-			writer.WriteAttributeString("x", ItemLocation.X.ToString());
-			writer.WriteAttributeString("y", ItemLocation.Y.ToString());
+			//writer.WriteAttributeString("x", ItemLocation.X.ToString());
+			//writer.WriteAttributeString("y", ItemLocation.Y.ToString());
 
 
 			if (OnAddedItem.Count > 0)
@@ -219,7 +218,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Items location on the screen
 		/// </summary>
-		public Point ItemLocation;
+	//	public Point ItemLocation;
 
 
 		/// <summary>

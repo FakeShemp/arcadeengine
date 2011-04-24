@@ -216,6 +216,7 @@ namespace DungeonEye.Forms
 				if (tile != null)
 				{
 					Point location = new Point((control.Width - tile.Size.Width) / 2, (control.Height - tile.Size.Height) / 2);
+					location.Offset(tile.Origin);
 					SpriteBatch.DrawTile(TileSet, tileid, location);
 				}
 			}

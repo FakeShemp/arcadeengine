@@ -132,7 +132,7 @@ namespace DungeonEye
 		/// <returns></returns>
 		public override bool OnTeamEnter()
 		{
-			if (Target == null)
+			if (!TeleportTeam || Target == null)
 				return false;
 
 			return GameScreen.Team.Teleport(Target);
@@ -146,7 +146,7 @@ namespace DungeonEye
 		/// <returns></returns>
 		public override bool OnMonsterEnter(Monster monster)
 		{
-			if (monster == null)
+			if (!TeleportMonsters || monster == null)
 				return false;
 
 			if (Target == null)
@@ -157,7 +157,7 @@ namespace DungeonEye
 			return true;
 		}
 
-
+		
 		#endregion
 
 
@@ -211,7 +211,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Can teleport monsters
 		/// </summary>
-		public bool CanTeleportMonsters
+		public bool TeleportMonsters
 		{
 			get;
 			set;
@@ -221,7 +221,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Can teleport the team
 		/// </summary>
-		public bool CanTeleportTeam
+		public bool TeleportTeam
 		{
 			get;
 			set;
@@ -231,22 +231,22 @@ namespace DungeonEye
 		/// <summary>
 		/// Can teleport items
 		/// </summary>
-		public bool CanTeleportItems
+		public bool TeleportItems
 		{
 			get;
 			set;
 		}
 
-
+/*
 		/// <summary>
 		/// Does teleporter is active
 		/// </summary>
-		public bool IsActive
+		public bool IsActivated
 		{
 			get;
 			set;
 		}
-
+*/
 
 
 		/// <summary>

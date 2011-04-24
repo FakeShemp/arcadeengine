@@ -201,16 +201,21 @@ namespace DungeonEye
 					Open();
 				else if (State == DoorState.Opened || State == DoorState.Opening)
 					Close();
+
+				return true;
 			}
 			else
 			{
 				// Try to force the door
 				if (State != DoorState.Opened)
+				{
 					GameMessage.AddMessage("No one is able to pry this door open.");
+					return true;
+				}
 			}
 
 
-			return true;
+			return false;
 		}
 
 

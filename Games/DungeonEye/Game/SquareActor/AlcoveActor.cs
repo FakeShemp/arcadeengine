@@ -80,22 +80,16 @@ namespace DungeonEye
 				deco.DrawDecoration(batch, Square.Maze.Decoration, position, side == CardinalPoint.South);
 
 
-				// Debug draw alcove zone
-				//Tile tile = Square.Maze.Decoration.Tileset.GetTile(deco.GetTileId(position));
-				//if (tile != null)
-				//    batch.DrawRectangle(new Rectangle(deco.GetLocation(position), tile.Size), Color.Red);
-
-
 				// Hide items
 				if (alcove.HideItems || side != CardinalPoint.South)
 					continue;
 
-
+				
 
 				// Offset the item locations according to the distance
 				Vector2 vect = DisplayCoordinates.GetMonsterScaleFactor(position);
 				Point loc = deco.PrepareLocation(position);
-				loc.Offset((int) (alcove.ItemLocation.X * vect.X), (int) (alcove.ItemLocation.Y * vect.Y));
+				loc.Offset((int) (deco.ItemLocation.X * vect.X), (int) (deco.ItemLocation.Y * vect.Y));
 				
 
 				// Draw items in the alcove in front of the team

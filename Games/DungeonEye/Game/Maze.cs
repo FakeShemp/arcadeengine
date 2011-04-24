@@ -832,38 +832,6 @@ namespace DungeonEye
 
 			#region Flying items
 
-			#region Drawing offset
-			int offset = 1;
-			switch (position)
-			{
-				case ViewFieldPosition.A:
-				case ViewFieldPosition.B:
-				case ViewFieldPosition.C:
-				case ViewFieldPosition.D:
-				case ViewFieldPosition.E:
-				offset = 3;
-				break;
-				case ViewFieldPosition.F:
-				case ViewFieldPosition.G:
-				case ViewFieldPosition.H:
-				case ViewFieldPosition.I:
-				case ViewFieldPosition.J:
-				offset = 2;
-				break;
-				case ViewFieldPosition.K:
-				case ViewFieldPosition.L:
-				case ViewFieldPosition.M:
-				offset = 1;
-				break;
-				case ViewFieldPosition.N:
-				case ViewFieldPosition.Team:
-				case ViewFieldPosition.O:
-				offset = 0;
-				break;
-			}
-			#endregion
-
-
 			List<ThrownItem>[] flyings = GetFlyingItems(square.Location, view);
 			foreach (SquarePosition pos in Enum.GetValues(typeof(SquarePosition)))
 			{
@@ -877,7 +845,9 @@ namespace DungeonEye
 					fx = SpriteEffects.FlipHorizontally;
 
 				foreach (ThrownItem fi in flyings[(int)pos])
-					batch.DrawTile(Dungeon.ItemTileSet, fi.Item.ThrowTileID + offset, point, Color.White, 0.0f, fx, 0.0f);
+					batch.DrawTile(Dungeon.ItemTileSet, fi.Item.ThrowTileID, point, 
+						DisplayCoordinates.GetDistantColor(position), 0.0f,
+						DisplayCoordinates.GetItemScaleFactor(position), fx, 0.0f);
 
 			}
 			#endregion

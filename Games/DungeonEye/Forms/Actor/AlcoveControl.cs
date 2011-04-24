@@ -51,20 +51,14 @@ namespace DungeonEye.Forms
 
 			InitializeComponent();
 
-			LastMousePosition = Control.MousePosition;
-
 			// Warning, no decoration defined for this maze !!
 			if (maze.Decoration == null)
 				MessageBox.Show("No decoration defined for this maze. Please define a decoration first !", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
 
-			ItemsBox.Items.Add("");
-			ItemsBox.Items.AddRange(ResourceManager.GetAssets<Item>().ToArray());
-
 			Maze = maze;
 			Actor = actor;
 
-	//		ChangeSide(CardinalPoint.North);
 			DirectionBox.Direction = CardinalPoint.North;
 			UpdateUI();
 
@@ -87,8 +81,6 @@ namespace DungeonEye.Forms
 			HideItemsBox.Checked = Alcove.HideItems;
 			AcceptBigItemsBox.Checked = Alcove.AcceptBigItems;
 			DecorationBox.Value = Alcove.Decoration;
-			ItemLocationBox.Text = Alcove.ItemLocation.ToString();
-
 
 			// Enable or disable scripting
 			ItemAddedBox.Enabled = Alcove.Decoration != -1;
@@ -130,22 +122,6 @@ namespace DungeonEye.Forms
 				{
 					Point loc = deco.GetLocation(ViewFieldPosition.L);
 					Batch.DrawTile(Maze.Decoration.Tileset, deco.GetTileId(ViewFieldPosition.L), loc);
-
-
-					// Draw preview item
-					if (Maze.Dungeon.ItemTileSet != null && PreviewItem != null)
-					{
-						// Draw the item
-						loc.Offset(Alcove.ItemLocation);
-				//		Batch.DrawTile(Maze.Dungeon.ItemTileSet, PreviewItem.GroundTileID, loc);
-
-
-						Batch.DrawTile(Maze.Dungeon.ItemTileSet, PreviewItem.GroundTileID, loc,
-							DisplayCoordinates.GetDistantColor(ViewFieldPosition.L), 0.0f,
-							DisplayCoordinates.GetItemScaleFactor(ViewFieldPosition.L), SpriteEffects.None, 0.0f);
-
-
-					}
 				}
 			}
 
@@ -228,104 +204,12 @@ namespace DungeonEye.Forms
 
 
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void GLControl_MouseMove(object sender, MouseEventArgs e)
-		{
-			if (e.Button == MouseButtons.Left)
-			{
-				if (PreviewItem != null)
-				{
-					Point offset = new Point(e.Location.X - LastMousePosition.X, e.Location.Y - LastMousePosition.Y);
-					Point location = Alcove.ItemLocation;
-					location.Offset(offset);
-					Alcove.ItemLocation = location;
-
-					RenderScene();
-					UpdateUI();
-				}
-				Cursor = Cursors.SizeAll;
-			}
-			else
-			{
-				Cursor = Cursors.Default;
-			}
-
-			// Update last mouse position
-			LastMousePosition = e.Location;
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void GLControl_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
-		{
-
-			if (PreviewItem != null)
-			{
-
-				Point location = Alcove.ItemLocation;
-
-				switch (e.KeyCode)
-				{
-					case Keys.Up:
-					{
-						location.Y--;
-						e.IsInputKey = true;
-					}
-					break;
-
-					case Keys.Down:
-					{
-						location.Y++;
-						e.IsInputKey = true;
-					}
-					break;
-
-					case Keys.Left:
-					{
-						location.X--;
-						e.IsInputKey = true;
-					}
-					break;
-
-					case Keys.Right:
-					{
-						location.X++;
-						e.IsInputKey = true;
-					}
-					break;
-				}
-
-				Alcove.ItemLocation = location;
-				RenderScene();
-				UpdateUI();
-			}
-
-		}
 
 
 		#endregion
 
 
 		#region Form events
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void ItemsBox_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			PreviewItem = ResourceManager.CreateAsset<Item>((string) ItemsBox.SelectedItem);
-			RenderScene();
-		}
 
 		/// <summary>
 		/// 
@@ -381,7 +265,6 @@ namespace DungeonEye.Forms
 
 			Alcove.HideItems = false;
 			DecorationBox.Value = -1;
-			ItemsBox.SelectedIndex = -1;
 			UpdateUI();
 		}
 
@@ -461,17 +344,6 @@ namespace DungeonEye.Forms
 		/// Current maze
 		/// </summary>
 		Maze Maze;
-
-
-		/// <summary>
-		/// Preview item
-		/// </summary>
-		Item PreviewItem;
-
-		/// <summary>
-		/// 
-		/// </summary>
-		Point LastMousePosition;
 
 		#endregion
 
