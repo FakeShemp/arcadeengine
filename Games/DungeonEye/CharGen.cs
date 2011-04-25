@@ -283,7 +283,7 @@ namespace DungeonEye
 								EntityAlignment.ChaoticGood,
 								EntityAlignment.LawfulNeutral,
 								EntityAlignment.TrueNeutral,
-								EntityAlignment.ChoaticNeutral,
+								EntityAlignment.ChaoticNeutral,
 								EntityAlignment.LawfulEvil,
 								EntityAlignment.NeutralEvil,
 								EntityAlignment.ChaoticEvil,

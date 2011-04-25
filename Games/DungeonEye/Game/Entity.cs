@@ -19,10 +19,11 @@
 #endregion
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Reflection;
 using System.Text;
 using System.Xml;
 using ArcEngine;
-
 
 namespace DungeonEye
 {
@@ -462,14 +463,25 @@ namespace DungeonEye
 	/// </summary>
 	public enum EntityAlignment
 	{
+		[Description("Lawfull good")]
 		LawfulGood,
+		[Description("Neutral good")]
 		NeutralGood,
+		[Description("Chaotic good")]
 		ChaoticGood,
+
+		[Description("Lawful neutral")]
 		LawfulNeutral,
+		[Description("Neutral neutral")]
 		TrueNeutral,
-		ChoaticNeutral,
+		[Description("Chaotic neutral")]
+		ChaoticNeutral,
+
+		[Description("Lawfull evil")]
 		LawfulEvil,
+		[Description("Neutral evil")]
 		NeutralEvil,
+		[Description("Chaotic evil")]
 		ChaoticEvil
 	}
 

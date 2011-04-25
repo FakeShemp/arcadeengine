@@ -618,6 +618,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\AbilityControl.resx">
       <DependentUpon>AbilityControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Actions\SetToControl.resx">
       <DependentUpon>SetToControl.cs</DependentUpon>

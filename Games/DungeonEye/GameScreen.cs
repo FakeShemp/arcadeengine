@@ -45,7 +45,7 @@ namespace DungeonEye
 		public GameScreen()
 		{
 			SpellBook = new SpellBook();
-		//	Team = new Team();
+			//	Team = new Team();
 		}
 
 
@@ -98,7 +98,13 @@ namespace DungeonEye
 			SpellBook.LoadContent();
 			GameMessage.Init();
 
+			Hands = new Item[]
+			{
+				ResourceManager.CreateAsset<Item>("Left Hand"),
+				ResourceManager.CreateAsset<Item>("Right Hand")
+			};
 
+			// Load savegame
 			Load();
 
 
@@ -278,15 +284,15 @@ namespace DungeonEye
 			if (Team.Maze != null)
 				Team.Maze.Draw(Batch, Team.Location);
 
-			
+
 			// The interface
 			Batch.DrawTile(TileSet, 0, Point.Empty);
 
 
 			// Display the compass
-			Batch.DrawTile(TileSet, 5 + (int)Team.Location.Direction * 3, new Point(228, 262));
-			Batch.DrawTile(TileSet, 6 + (int)Team.Location.Direction * 3, new Point(158, 316));
-			Batch.DrawTile(TileSet, 7 + (int)Team.Location.Direction * 3, new Point(302, 316));
+			Batch.DrawTile(TileSet, 5 + (int) Team.Location.Direction * 3, new Point(228, 262));
+			Batch.DrawTile(TileSet, 6 + (int) Team.Location.Direction * 3, new Point(158, 316));
+			Batch.DrawTile(TileSet, 7 + (int) Team.Location.Direction * 3, new Point(302, 316));
 
 
 			// Ingame interfaces
@@ -345,6 +351,7 @@ namespace DungeonEye
 		/// <param name="batch"></param>
 		private void DrawMain(SpriteBatch batch)
 		{
+
 			// Draw heroes
 			Point pos;
 			for (int y = 0 ; y < 3 ; y++)
@@ -401,16 +408,17 @@ namespace DungeonEye
 						batch.DrawString(InventoryFont, new Point(pos.X + 6, pos.Y + 88), GameColors.Black, hero.HitPoint.Current + " of " + hero.HitPoint.Max);
 
 
-					// Hands
+					#region Hands
 					for (int i = 0 ; i < 2 ; i++)
 					{
 						HeroHand hand = (HeroHand) i;
 						int yoffset = i * 32;
 
-						// Primary
+						// Hand
 						Item item = hero.GetInventoryItem(hand == HeroHand.Primary ? InventoryPosition.Primary : InventoryPosition.Secondary);
-						batch.DrawTile(Items, item != null ? item.TileID : 86, new Point(pos.X + 96, pos.Y + 36 + yoffset));
+						batch.DrawTile(Items, item != null ? item.TileID : Hands[i].TileID, new Point(pos.X + 96, pos.Y + 36 + yoffset));
 
+						// Ghost hand
 						if (!hero.CanUseHand(hand))
 							batch.DrawTile(TileSet, 3, new Point(pos.X + 66, pos.Y + 20 + yoffset));
 
@@ -464,7 +472,7 @@ namespace DungeonEye
 							}
 						}
 					}
-
+					#endregion
 
 					// Dead or uncounscious
 					if (hero.IsUnconscious || hero.IsDead)
@@ -496,9 +504,9 @@ namespace DungeonEye
 
 
 			// Swap wall tileset
-		//	bool swap = ((Team.Location.Coordinate.X + Team.Location.Coordinate.Y + ((int)Team.Direction) + 1) & 1) == 0;
-		//	bool swap = ((Team.Location.Coordinate.X + Team.Location.Coordinate.Y) & 1) == 0;
-		//	batch.DrawString(Font, new Point(350, 250), GameColors.White, swap.ToString());
+			//	bool swap = ((Team.Location.Coordinate.X + Team.Location.Coordinate.Y + ((int)Team.Direction) + 1) & 1) == 0;
+			//	bool swap = ((Team.Location.Coordinate.X + Team.Location.Coordinate.Y) & 1) == 0;
+			//	batch.DrawString(Font, new Point(350, 250), GameColors.White, swap.ToString());
 		}
 
 
@@ -778,7 +786,7 @@ namespace DungeonEye
 			#endregion
 
 
-		//	Team.HasMoved = false;
+			//	Team.HasMoved = false;
 
 
 			#region Keyboard
@@ -1470,7 +1478,7 @@ namespace DungeonEye
 							}
 							else
 							{
-								Team.Heroes[(int)Team.GetHeroPosition(HeroToSwap)] = hero;
+								Team.Heroes[(int) Team.GetHeroPosition(HeroToSwap)] = hero;
 								Team.Heroes[id] = HeroToSwap;
 
 
@@ -1896,6 +1904,12 @@ namespace DungeonEye
 				return Dungeon.ItemTileSet;
 			}
 		}
+
+
+		/// <summary>
+		/// Hands item
+		/// </summary>
+		Item[] Hands;
 
 
 		/// <summary>

@@ -542,16 +542,19 @@ namespace DungeonEye.Forms
 				{
 					int tileid = Decoration.GetTileId(ViewPositionBox.Position);
 					Point location = Decoration.GetLocation(ViewPositionBox.Position);
-					Tile tile = DecorationSet.Tileset.GetTile(tileid);
-					if (tile != null)
+					if (DecorationSet.Tileset != null)
 					{
+						Tile tile = DecorationSet.Tileset.GetTile(tileid);
+						if (tile != null)
+						{
 
 
-						// Mouse over tile, so pan the tile
-						Rectangle rect = new Rectangle(location, tile.Size);
-						Decoration.SetLocation(ViewPositionBox.Position, new Point(location.X - offset.X, location.Y - offset.Y));
+							// Mouse over tile, so pan the tile
+							Rectangle rect = new Rectangle(location, tile.Size);
+							Decoration.SetLocation(ViewPositionBox.Position, new Point(location.X - offset.X, location.Y - offset.Y));
 
-						Cursor = Cursors.SizeAll;
+							Cursor = Cursors.SizeAll;
+						}
 					}
 				}
 			}

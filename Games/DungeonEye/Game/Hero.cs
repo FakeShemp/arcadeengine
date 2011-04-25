@@ -863,7 +863,7 @@ namespace DungeonEye
 
 			// Which item is used for the attack
 			Item item = GetInventoryItem(hand == HeroHand.Primary ? InventoryPosition.Primary : InventoryPosition.Secondary);
-
+			CardinalPoint side = Compass.GetOppositeDirection(team.Direction);
 
 			// Hand attack
 			if (item == null)
@@ -871,7 +871,7 @@ namespace DungeonEye
 				if (team.IsHeroInFront(this))
 				{
 					if (team.FrontSquare != null)
-						team.FrontSquare.OnBash();
+						team.FrontSquare.OnBash(side, item);
 					else
 						Attacks[(int)hand] = new Attack(this, target, null);
 				}
@@ -950,7 +950,7 @@ namespace DungeonEye
 								Attacks[(int)hand] = new Attack(this, target, item);
 							}
 							else if (team.FrontSquare != null)
-								team.FrontSquare.OnHack(item);
+								team.FrontSquare.OnHack(side, item);
 							else
 								Attacks[(int)hand] = new Attack(this, target, item);
 						}

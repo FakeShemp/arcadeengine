@@ -21,7 +21,6 @@
 			this.PropertiesTab = new System.Windows.Forms.TabPage();
 			this.groupBox13 = new System.Windows.Forms.GroupBox();
 			this.PoisonedBox = new System.Windows.Forms.CheckBox();
-			this.IsNPCBox = new System.Windows.Forms.CheckBox();
 			this.groupBox10 = new System.Windows.Forms.GroupBox();
 			this.NameBox = new System.Windows.Forms.TextBox();
 			this.groupBox9 = new System.Windows.Forms.GroupBox();
@@ -34,21 +33,13 @@
 			this.NextFaceBox = new System.Windows.Forms.Button();
 			this.OpenGLBox = new OpenTK.GLControl();
 			this.groupBox7 = new System.Windows.Forms.GroupBox();
-			this.CharismaBox = new DungeonEye.Forms.AbilityControl();
 			this.ArmorClassBox = new System.Windows.Forms.TextBox();
 			this.label3 = new System.Windows.Forms.Label();
-			this.ConstitutionBox = new DungeonEye.Forms.AbilityControl();
-			this.DexterityBox = new DungeonEye.Forms.AbilityControl();
-			this.WisdomBox = new DungeonEye.Forms.AbilityControl();
-			this.IntelligenceBox = new DungeonEye.Forms.AbilityControl();
-			this.StrengthBox = new DungeonEye.Forms.AbilityControl();
 			this.groupBox6 = new System.Windows.Forms.GroupBox();
 			this.label2 = new System.Windows.Forms.Label();
 			this.groupBox5 = new System.Windows.Forms.GroupBox();
 			this.FoodBox = new System.Windows.Forms.TrackBar();
-			this.HPBox = new DungeonEye.Forms.HitPointControl();
 			this.ProfessionTab = new System.Windows.Forms.TabPage();
-			this.ProfessionsBox = new DungeonEye.Forms.ProfessionsControl();
 			this.EquipementTab = new System.Windows.Forms.TabPage();
 			this.groupBox12 = new System.Windows.Forms.GroupBox();
 			this.ClearBackPackBox = new System.Windows.Forms.Button();
@@ -93,6 +84,8 @@
 			this.WristBox = new System.Windows.Forms.Button();
 			this.ArmorBox = new System.Windows.Forms.Button();
 			this.SpellTab = new System.Windows.Forms.TabPage();
+			this.label6 = new System.Windows.Forms.Label();
+			this.SpellClassBox = new System.Windows.Forms.ComboBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
 			this.AvailableSpellBox = new System.Windows.Forms.ListBox();
@@ -106,8 +99,14 @@
 			this.SpellReportLabel = new System.Windows.Forms.Label();
 			this.SpellReadyBox = new System.Windows.Forms.ListBox();
 			this.button2 = new System.Windows.Forms.Button();
-			this.SpellClassBox = new System.Windows.Forms.ComboBox();
-			this.label6 = new System.Windows.Forms.Label();
+			this.CharismaBox = new DungeonEye.Forms.AbilityControl();
+			this.ConstitutionBox = new DungeonEye.Forms.AbilityControl();
+			this.DexterityBox = new DungeonEye.Forms.AbilityControl();
+			this.WisdomBox = new DungeonEye.Forms.AbilityControl();
+			this.IntelligenceBox = new DungeonEye.Forms.AbilityControl();
+			this.StrengthBox = new DungeonEye.Forms.AbilityControl();
+			this.HPBox = new DungeonEye.Forms.HitPointControl();
+			this.ProfessionsBox = new DungeonEye.Forms.ProfessionsControl();
 			((System.ComponentModel.ISupportInitialize)(this.QuiverBox)).BeginInit();
 			this.tabControl1.SuspendLayout();
 			this.PropertiesTab.SuspendLayout();
@@ -174,7 +173,6 @@
 			// groupBox13
 			// 
 			this.groupBox13.Controls.Add(this.PoisonedBox);
-			this.groupBox13.Controls.Add(this.IsNPCBox);
 			this.groupBox13.Location = new System.Drawing.Point(6, 353);
 			this.groupBox13.Name = "groupBox13";
 			this.groupBox13.Size = new System.Drawing.Size(433, 68);
@@ -185,23 +183,12 @@
 			// PoisonedBox
 			// 
 			this.PoisonedBox.AutoSize = true;
-			this.PoisonedBox.Location = new System.Drawing.Point(6, 45);
+			this.PoisonedBox.Location = new System.Drawing.Point(6, 19);
 			this.PoisonedBox.Name = "PoisonedBox";
 			this.PoisonedBox.Size = new System.Drawing.Size(70, 17);
 			this.PoisonedBox.TabIndex = 1;
 			this.PoisonedBox.Text = "Poisoned";
 			this.PoisonedBox.UseVisualStyleBackColor = true;
-			// 
-			// IsNPCBox
-			// 
-			this.IsNPCBox.AutoSize = true;
-			this.IsNPCBox.Location = new System.Drawing.Point(7, 21);
-			this.IsNPCBox.Name = "IsNPCBox";
-			this.IsNPCBox.Size = new System.Drawing.Size(48, 17);
-			this.IsNPCBox.TabIndex = 0;
-			this.IsNPCBox.Text = "NPC";
-			this.IsNPCBox.UseVisualStyleBackColor = true;
-			this.IsNPCBox.CheckedChanged += new System.EventHandler(this.IsNPCBox_CheckedChanged);
 			// 
 			// groupBox10
 			// 
@@ -254,8 +241,8 @@
 			// 
 			// RaceBox
 			// 
-			this.RaceBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.RaceBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.RaceBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.RaceBox.FormattingEnabled = true;
 			this.RaceBox.Location = new System.Drawing.Point(71, 46);
@@ -267,8 +254,8 @@
 			// 
 			// AlignmentBox
 			// 
-			this.AlignmentBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.AlignmentBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.AlignmentBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.AlignmentBox.FormattingEnabled = true;
 			this.AlignmentBox.Location = new System.Drawing.Point(71, 19);
@@ -339,15 +326,6 @@
 			this.groupBox7.TabStop = false;
 			this.groupBox7.Text = "Abilities :";
 			// 
-			// CharismaBox
-			// 
-			this.CharismaBox.Ability = null;
-			this.CharismaBox.Location = new System.Drawing.Point(6, 175);
-			this.CharismaBox.Name = "CharismaBox";
-			this.CharismaBox.Size = new System.Drawing.Size(260, 25);
-			this.CharismaBox.TabIndex = 0;
-			this.CharismaBox.Title = "Charisma :";
-			// 
 			// ArmorClassBox
 			// 
 			this.ArmorClassBox.Location = new System.Drawing.Point(86, 210);
@@ -365,51 +343,6 @@
 			this.label3.Size = new System.Drawing.Size(68, 13);
 			this.label3.TabIndex = 1;
 			this.label3.Text = "Armor Class :";
-			// 
-			// ConstitutionBox
-			// 
-			this.ConstitutionBox.Ability = null;
-			this.ConstitutionBox.Location = new System.Drawing.Point(6, 143);
-			this.ConstitutionBox.Name = "ConstitutionBox";
-			this.ConstitutionBox.Size = new System.Drawing.Size(260, 25);
-			this.ConstitutionBox.TabIndex = 0;
-			this.ConstitutionBox.Title = "Constitution :";
-			// 
-			// DexterityBox
-			// 
-			this.DexterityBox.Ability = null;
-			this.DexterityBox.Location = new System.Drawing.Point(6, 112);
-			this.DexterityBox.Name = "DexterityBox";
-			this.DexterityBox.Size = new System.Drawing.Size(260, 25);
-			this.DexterityBox.TabIndex = 0;
-			this.DexterityBox.Title = "Dexterity :";
-			// 
-			// WisdomBox
-			// 
-			this.WisdomBox.Ability = null;
-			this.WisdomBox.Location = new System.Drawing.Point(6, 81);
-			this.WisdomBox.Name = "WisdomBox";
-			this.WisdomBox.Size = new System.Drawing.Size(260, 25);
-			this.WisdomBox.TabIndex = 0;
-			this.WisdomBox.Title = "Wisdom :";
-			// 
-			// IntelligenceBox
-			// 
-			this.IntelligenceBox.Ability = null;
-			this.IntelligenceBox.Location = new System.Drawing.Point(6, 50);
-			this.IntelligenceBox.Name = "IntelligenceBox";
-			this.IntelligenceBox.Size = new System.Drawing.Size(260, 25);
-			this.IntelligenceBox.TabIndex = 0;
-			this.IntelligenceBox.Title = "Intelligence :";
-			// 
-			// StrengthBox
-			// 
-			this.StrengthBox.Ability = null;
-			this.StrengthBox.Location = new System.Drawing.Point(6, 19);
-			this.StrengthBox.Name = "StrengthBox";
-			this.StrengthBox.Size = new System.Drawing.Size(260, 25);
-			this.StrengthBox.TabIndex = 0;
-			this.StrengthBox.Title = "Strength :";
 			// 
 			// groupBox6
 			// 
@@ -452,14 +385,6 @@
 			this.FoodBox.TickFrequency = 10;
 			this.FoodBox.ValueChanged += new System.EventHandler(this.FoodBox_ValueChanged);
 			// 
-			// HPBox
-			// 
-			this.HPBox.HitPoint = null;
-			this.HPBox.Location = new System.Drawing.Point(6, 159);
-			this.HPBox.Name = "HPBox";
-			this.HPBox.Size = new System.Drawing.Size(156, 77);
-			this.HPBox.TabIndex = 12;
-			// 
 			// ProfessionTab
 			// 
 			this.ProfessionTab.Controls.Add(this.ProfessionsBox);
@@ -469,16 +394,6 @@
 			this.ProfessionTab.TabIndex = 2;
 			this.ProfessionTab.Text = "Professions";
 			this.ProfessionTab.UseVisualStyleBackColor = true;
-			// 
-			// ProfessionsBox
-			// 
-			this.ProfessionsBox.Hero = null;
-			this.ProfessionsBox.Location = new System.Drawing.Point(3, 3);
-			this.ProfessionsBox.MinimumSize = new System.Drawing.Size(300, 175);
-			this.ProfessionsBox.Name = "ProfessionsBox";
-			this.ProfessionsBox.Size = new System.Drawing.Size(300, 175);
-			this.ProfessionsBox.TabIndex = 0;
-			this.ProfessionsBox.Title = "Professions :";
 			// 
 			// EquipementTab
 			// 
@@ -668,8 +583,8 @@
 			// 
 			// groupBox11
 			// 
-			this.groupBox11.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)));
+			this.groupBox11.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
 			this.groupBox11.Controls.Add(this.ItemsBox);
 			this.groupBox11.Controls.Add(this.CheckValidityBox);
 			this.groupBox11.Location = new System.Drawing.Point(3, 3);
@@ -960,6 +875,28 @@
 			this.SpellTab.Text = "Spells";
 			this.SpellTab.UseVisualStyleBackColor = true;
 			// 
+			// label6
+			// 
+			this.label6.AutoSize = true;
+			this.label6.Location = new System.Drawing.Point(29, 20);
+			this.label6.Name = "label6";
+			this.label6.Size = new System.Drawing.Size(41, 13);
+			this.label6.TabIndex = 6;
+			this.label6.Text = "Class : ";
+			// 
+			// SpellClassBox
+			// 
+			this.SpellClassBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.SpellClassBox.FormattingEnabled = true;
+			this.SpellClassBox.Items.AddRange(new object[] {
+            "Cleric",
+            "Mage"});
+			this.SpellClassBox.Location = new System.Drawing.Point(76, 17);
+			this.SpellClassBox.Name = "SpellClassBox";
+			this.SpellClassBox.Size = new System.Drawing.Size(121, 21);
+			this.SpellClassBox.TabIndex = 5;
+			this.SpellClassBox.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+			// 
 			// label1
 			// 
 			this.label1.AutoSize = true;
@@ -982,8 +919,8 @@
 			// 
 			// AvailableSpellBox
 			// 
-			this.AvailableSpellBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)));
+			this.AvailableSpellBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
 			this.AvailableSpellBox.FormattingEnabled = true;
 			this.AvailableSpellBox.Location = new System.Drawing.Point(6, 19);
 			this.AvailableSpellBox.Name = "AvailableSpellBox";
@@ -994,8 +931,8 @@
 			// 
 			// button1
 			// 
-			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.button1.Location = new System.Drawing.Point(6, 200);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(188, 23);
@@ -1040,9 +977,9 @@
 			// 
 			// LearnedSpellBox
 			// 
-			this.LearnedSpellBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.LearnedSpellBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.LearnedSpellBox.CheckOnClick = true;
 			this.LearnedSpellBox.FormattingEnabled = true;
 			this.LearnedSpellBox.Location = new System.Drawing.Point(6, 19);
@@ -1084,8 +1021,8 @@
 			// 
 			// SpellReportLabel
 			// 
-			this.SpellReportLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.SpellReportLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.SpellReportLabel.Location = new System.Drawing.Point(6, 174);
 			this.SpellReportLabel.Name = "SpellReportLabel";
 			this.SpellReportLabel.Size = new System.Drawing.Size(188, 23);
@@ -1095,8 +1032,8 @@
 			// 
 			// SpellReadyBox
 			// 
-			this.SpellReadyBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)));
+			this.SpellReadyBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
 			this.SpellReadyBox.FormattingEnabled = true;
 			this.SpellReadyBox.Location = new System.Drawing.Point(6, 19);
 			this.SpellReadyBox.Name = "SpellReadyBox";
@@ -1107,8 +1044,8 @@
 			// 
 			// button2
 			// 
-			this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.button2.Location = new System.Drawing.Point(6, 200);
 			this.button2.Name = "button2";
 			this.button2.Size = new System.Drawing.Size(188, 23);
@@ -1117,27 +1054,77 @@
 			this.button2.UseVisualStyleBackColor = true;
 			this.button2.Click += new System.EventHandler(this.button2_Click);
 			// 
-			// comboBox1
+			// CharismaBox
 			// 
-			this.SpellClassBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.SpellClassBox.FormattingEnabled = true;
-			this.SpellClassBox.Items.AddRange(new object[] {
-            "Cleric",
-            "Mage"});
-			this.SpellClassBox.Location = new System.Drawing.Point(76, 17);
-			this.SpellClassBox.Name = "comboBox1";
-			this.SpellClassBox.Size = new System.Drawing.Size(121, 21);
-			this.SpellClassBox.TabIndex = 5;
-			this.SpellClassBox.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+			this.CharismaBox.Ability = null;
+			this.CharismaBox.Location = new System.Drawing.Point(6, 175);
+			this.CharismaBox.Name = "CharismaBox";
+			this.CharismaBox.Size = new System.Drawing.Size(260, 25);
+			this.CharismaBox.TabIndex = 0;
+			this.CharismaBox.Title = "Charisma :";
 			// 
-			// label6
+			// ConstitutionBox
 			// 
-			this.label6.AutoSize = true;
-			this.label6.Location = new System.Drawing.Point(29, 20);
-			this.label6.Name = "label6";
-			this.label6.Size = new System.Drawing.Size(41, 13);
-			this.label6.TabIndex = 6;
-			this.label6.Text = "Class : ";
+			this.ConstitutionBox.Ability = null;
+			this.ConstitutionBox.Location = new System.Drawing.Point(6, 143);
+			this.ConstitutionBox.Name = "ConstitutionBox";
+			this.ConstitutionBox.Size = new System.Drawing.Size(260, 25);
+			this.ConstitutionBox.TabIndex = 0;
+			this.ConstitutionBox.Title = "Constitution :";
+			// 
+			// DexterityBox
+			// 
+			this.DexterityBox.Ability = null;
+			this.DexterityBox.Location = new System.Drawing.Point(6, 112);
+			this.DexterityBox.Name = "DexterityBox";
+			this.DexterityBox.Size = new System.Drawing.Size(260, 25);
+			this.DexterityBox.TabIndex = 0;
+			this.DexterityBox.Title = "Dexterity :";
+			// 
+			// WisdomBox
+			// 
+			this.WisdomBox.Ability = null;
+			this.WisdomBox.Location = new System.Drawing.Point(6, 81);
+			this.WisdomBox.Name = "WisdomBox";
+			this.WisdomBox.Size = new System.Drawing.Size(260, 25);
+			this.WisdomBox.TabIndex = 0;
+			this.WisdomBox.Title = "Wisdom :";
+			// 
+			// IntelligenceBox
+			// 
+			this.IntelligenceBox.Ability = null;
+			this.IntelligenceBox.Location = new System.Drawing.Point(6, 50);
+			this.IntelligenceBox.Name = "IntelligenceBox";
+			this.IntelligenceBox.Size = new System.Drawing.Size(260, 25);
+			this.IntelligenceBox.TabIndex = 0;
+			this.IntelligenceBox.Title = "Intelligence :";
+			// 
+			// StrengthBox
+			// 
+			this.StrengthBox.Ability = null;
+			this.StrengthBox.Location = new System.Drawing.Point(6, 19);
+			this.StrengthBox.Name = "StrengthBox";
+			this.StrengthBox.Size = new System.Drawing.Size(260, 25);
+			this.StrengthBox.TabIndex = 0;
+			this.StrengthBox.Title = "Strength :";
+			// 
+			// HPBox
+			// 
+			this.HPBox.HitPoint = null;
+			this.HPBox.Location = new System.Drawing.Point(6, 159);
+			this.HPBox.Name = "HPBox";
+			this.HPBox.Size = new System.Drawing.Size(156, 77);
+			this.HPBox.TabIndex = 12;
+			// 
+			// ProfessionsBox
+			// 
+			this.ProfessionsBox.Hero = null;
+			this.ProfessionsBox.Location = new System.Drawing.Point(3, 3);
+			this.ProfessionsBox.MinimumSize = new System.Drawing.Size(300, 175);
+			this.ProfessionsBox.Name = "ProfessionsBox";
+			this.ProfessionsBox.Size = new System.Drawing.Size(300, 175);
+			this.ProfessionsBox.TabIndex = 0;
+			this.ProfessionsBox.Title = "Professions :";
 			// 
 			// HeroControl
 			// 
@@ -1272,7 +1259,6 @@
 		private System.Windows.Forms.Button Waist2Box;
 		private System.Windows.Forms.Button Waist1Box;
 		private System.Windows.Forms.GroupBox groupBox13;
-		private System.Windows.Forms.CheckBox IsNPCBox;
 		private System.Windows.Forms.CheckBox PoisonedBox;
 		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.ComboBox SpellClassBox;

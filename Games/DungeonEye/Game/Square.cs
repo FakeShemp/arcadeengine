@@ -244,10 +244,16 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="item">Item handle</param>
 		/// <returns>True if the event is processed</returns>
-		public bool OnHack(Item item)
+		public bool OnHack(CardinalPoint side, Item item)
 		{
+			// No decoration on this side
+			int id = GetDecorationId(side);
+			if (id == -1)
+				return false;
+
 			GameMessage.AddMessage("Square: OnHack()");
-			return false;
+
+			return true;
 		}
 
 
@@ -255,10 +261,15 @@ namespace DungeonEye
 		/// A hero used an empty hand on the wall
 		/// </summary>
 		/// <returns>True if the event is processed</returns>
-		public bool OnBash()
+		public bool OnBash(CardinalPoint side, Item item)
 		{
+			// No decoration on this side
+			int id = GetDecorationId(side);
+			if (id == -1)
+				return false;
+
 			GameMessage.AddMessage("Square: OnBash()");
-			return false;
+			return true;
 		}
 
 
