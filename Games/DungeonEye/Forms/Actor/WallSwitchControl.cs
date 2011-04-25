@@ -125,11 +125,24 @@ namespace DungeonEye
 			ConsumeItemBox.Checked = WallSwitch.ConsumeItem;
 			ReusableBox.Checked = WallSwitch.Reusable;
 			WasUsedBox.Checked = WallSwitch.WasUsed;
+			IsActivatedBox.Checked = WallSwitch.IsActivated;
 		}
 
 
 		#region Control events
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void IsActivatedBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (WallSwitch == null)
+				return;
+
+			WallSwitch.IsActivated = IsActivatedBox.Checked;
+		}
 
 		/// <summary>
 		/// 
@@ -373,6 +386,7 @@ namespace DungeonEye
 		Maze Maze;
 
 		#endregion
+
 
 	}
 }

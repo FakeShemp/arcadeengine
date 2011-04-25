@@ -43,6 +43,7 @@ namespace DungeonEye
 		public SquareActor(Square square)
 		{
 			Square = square;
+			IsActivated = true;
 		}
 
 

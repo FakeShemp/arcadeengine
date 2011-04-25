@@ -306,6 +306,7 @@ namespace DungeonEye
 		public override bool OnItemDropped(Item item)
 		{
 			RunScript(PressurcePlateCondition.OnItemAdded);
+
 			return false;
 		}
 

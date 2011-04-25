@@ -49,6 +49,7 @@
 			this.label2 = new System.Windows.Forms.Label();
 			this.DeactivatedGlBox = new OpenTK.GLControl();
 			this.DeactivatedIdBox = new System.Windows.Forms.NumericUpDown();
+			this.IsActivatedBox = new System.Windows.Forms.CheckBox();
 			this.groupBox1.SuspendLayout();
 			this.tabControl1.SuspendLayout();
 			this.PropertiesTab.SuspendLayout();
@@ -110,6 +111,7 @@
 			// 
 			// groupBox2
 			// 
+			this.groupBox2.Controls.Add(this.IsActivatedBox);
 			this.groupBox2.Controls.Add(this.WasUsedBox);
 			this.groupBox2.Controls.Add(this.ReusableBox);
 			this.groupBox2.Controls.Add(this.label4);
@@ -328,6 +330,17 @@
             -2147483648});
 			this.DeactivatedIdBox.ValueChanged += new System.EventHandler(this.DeactivatedIdBox_ValueChanged);
 			// 
+			// IsActivatedBox
+			// 
+			this.IsActivatedBox.AutoSize = true;
+			this.IsActivatedBox.Location = new System.Drawing.Point(262, 44);
+			this.IsActivatedBox.Name = "IsActivatedBox";
+			this.IsActivatedBox.Size = new System.Drawing.Size(82, 17);
+			this.IsActivatedBox.TabIndex = 4;
+			this.IsActivatedBox.Text = "Is Activated";
+			this.IsActivatedBox.UseVisualStyleBackColor = true;
+			this.IsActivatedBox.CheckedChanged += new System.EventHandler(this.IsActivatedBox_CheckedChanged);
+			// 
 			// WallSwitchControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -375,6 +388,7 @@
 		private System.Windows.Forms.CheckBox ReusableBox;
 		private System.Windows.Forms.CheckBox WasUsedBox;
 		private Forms.CardinalPointControl SideBox;
+		private System.Windows.Forms.CheckBox IsActivatedBox;
 
 	}
 }

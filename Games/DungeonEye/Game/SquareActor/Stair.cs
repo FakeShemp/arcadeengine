@@ -86,6 +86,18 @@ namespace DungeonEye
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		public override DungeonLocation[] GetTargets()
+		{
+			DungeonLocation[] target = new DungeonLocation[] { Target };
+
+			return target;
+		}
+
+
 		#region Script
 
 		/// <summary>

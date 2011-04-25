@@ -58,17 +58,16 @@ namespace DungeonEye
 		/// <returns></returns>
 		public override bool OnClick(Point location, CardinalPoint side)
 		{
-			// No wall side or no decoration or already used and not reusable
-			if (side != Side || Square.Maze.Decoration == null)	
+			// No wall side or no decoration
+			if (side != Side || Square.Maze.Decoration == null)
 				return false;
-
 
 			// Not in the decoration zone
 			if (!Square.Maze.Decoration.IsPointInside(IsActivated ? ActivatedDecoration : DeactivatedDecoration, location))
 				return false;
 
-			// Switch deactivated
-			if (WasUsed && !Reusable)
+			// Switch already used and not reusable
+			if ((WasUsed && !Reusable) || (!IsActivated))
 			{
 				GameMessage.AddMessage("It's already unlocked.", GameColors.Red);
 				return true;
@@ -106,32 +105,15 @@ namespace DungeonEye
 					GameScreen.Team.SetItemInHand(null);
 			}
 
+			WasUsed = true;
 
-			//Run();
-			Toggle();
+			Run();
+			//Toggle();
 
 			return true;
 		}
 
 
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public override void Activate()
-		{
-			base.Activate();
-
-			Run();
-		}
-
-
-		public override void Deactivate()
-		{
-			base.Deactivate();
-
-			Run();
-		}
 
 
 		/// <summary>
@@ -139,6 +121,9 @@ namespace DungeonEye
 		/// </summary>
 		void Run()
 		{
+			if (!IsActivated)
+				return;
+
 			foreach (WallSwitchScript script in Scripts)
 				script.Run();
 		}
@@ -355,20 +340,24 @@ namespace DungeonEye
 		public const string Tag = "wallswitch";
 
 
+		/// <summary>
+		/// Defines if the switch can be used repeatedly. 
+		/// Otherwise, after one use, the switch will no longer function.
+		/// </summary>
+		public bool Reusable
+		{
+			get;
+			set;
+		}
+
 
 		/// <summary>
 		/// Switch is already used
 		/// </summary>
 		public bool WasUsed
 		{
-			get
-			{
-				return !IsActivated;
-			}
-			set
-			{
-				IsActivated = !value;
-			}
+			get;
+			set;
 		}
 
 
@@ -416,17 +405,6 @@ namespace DungeonEye
 		/// Wall side
 		/// </summary>
 		public CardinalPoint Side
-		{
-			get;
-			set;
-		}
-
-
-		/// <summary>
-		/// Defines if the switch can be used repeatedly. 
-		/// Otherwise, after one use, the switch will no longer function.
-		/// </summary>
-		public bool Reusable
 		{
 			get;
 			set;
