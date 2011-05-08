@@ -794,7 +794,8 @@ namespace DungeonEye
 				squarepos = (SquarePosition)sub[(int)view][(int)Position];
 
 			// Screen coordinate
-			Point position = DisplayCoordinates.GetGroundPosition(pos, squarepos);
+			//Point position = DisplayCoordinates.GetGroundPosition(pos, squarepos);
+			Point position = DisplayCoordinates.GetMonsterLocation(pos, squarepos);
 			position.Offset(DisplayCoordinates.GetScaleFactor(pos, DrawOffset));
 
 			// Display color

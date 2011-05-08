@@ -167,6 +167,7 @@ namespace DungeonEye
 				tileid = PrepareTile(position);
 			}
 
+
 			// Draws the decoration
 			batch.DrawTile(set.Tileset,
 			tileid,

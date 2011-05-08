@@ -86,7 +86,6 @@ namespace DungeonEye
 			ThrowLeft = new Rectangle(0, 0, 176, 144);
 			CampButton = new Rectangle(578, 354, 62, 42);
 			FrontSquare = new Rectangle(48, 14, 256, 192);
-			Alcove = new Rectangle(130, 64, 128, 44);
 			LeftFeetTeam = new Rectangle(0, 202, 176, 38);
 			LeftFrontTeamGround = new Rectangle(0, 144, 176, 58);
 			RightFeetTeam = new Rectangle(176, 202, 176, 38);
@@ -154,6 +153,18 @@ namespace DungeonEye
 
 
 		/// <summary>
+		/// Get the monster screen location
+		/// </summary>
+		/// <param name="position">ViewField position</param>
+		/// <param name="sub">square position</param>
+		/// <returns>Screen location</returns>
+		static public Point GetMonsterLocation(ViewFieldPosition position, SquarePosition sub)
+		{
+			return MonsterLocations[(int)position][(int)sub];
+		}
+
+
+		/// <summary>
 		/// Gets the color for distant objects
 		/// </summary>
 		/// <param name="position">View position</param>
@@ -164,7 +175,7 @@ namespace DungeonEye
 				Color.White,
 				Color.White,
 				Color.FromArgb(255, 128, 128, 128),
-				Color.FromArgb(128, 128, 128, 128),
+				Color.FromArgb(220, 96, 96, 96),
 			};
 
 			return colors[ItemScaleOffset[(int) position]];
@@ -561,16 +572,6 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Alcoves zone
-		/// </summary>
-		static public Rectangle Alcove
-		{
-			get;
-			private set;
-		}
-
-
-		/// <summary>
 		/// Scroll display zone
 		/// </summary>
 		static public Rectangle Scroll
@@ -725,6 +726,8 @@ namespace DungeonEye
 		/// </summary>
 		static public Vector2[] ScaleFactor = new Vector2[]
 			{
+				// EOB 2 scaling : 1.0, 0.66, 0.44
+
 				new Vector2(1.0f, 1.0f),
 				new Vector2(0.66f, 0.66f),
 				new Vector2(0.5f, 0.5f),
@@ -742,6 +745,34 @@ namespace DungeonEye
 				   1, 1, 1,
 				   0, 0, 0,
 			};
+
+
+		/// <summary>
+		/// Monster locations
+		/// </summary>
+		static Point[][] MonsterLocations = 
+		{
+			//			North West				North East					South West			South East				Middle
+			new Point[]{new Point(20, 132),		new Point(48, 132),		new Point(-999, -999),	new Point(20, 140),		new Point(36, 156)},		// A
+			new Point[]{new Point(84, 132),		new Point(116, 132),	new Point(64, 140),		new Point(108, 140),	new Point(88, 136)},		// B
+			new Point[]{new Point(160, 132),	new Point(184, 132),	new Point(152, 140),	new Point(192, 140),	new Point(192, 136)},		// C
+			new Point[]{new Point(224, 128),	new Point(256, 128),	new Point(236, 140),	new Point(276, 140),	new Point(256, 136)},		// D
+			new Point[]{new Point(292, 128),	new Point(328, 128),	new Point(320, 140),	new Point(-999, -999),	new Point(312, 136)},		// E
+
+			new Point[]{new Point(-999, -999),	new Point(-999, -999),	new Point(-999, -999),	new Point(-999, -999),	new Point(-999, -999)},		// F
+			new Point[]{new Point(44, 152),		new Point(100, 152),	new Point(12, 164),		new Point(80, 164),		new Point(48, 156)},		// G
+			new Point[]{new Point(148, 152),	new Point(200, 152),	new Point(144, 164),	new Point(208, 164),	new Point(196, 156)},		// H
+			new Point[]{new Point(252, 152),	new Point(304, 152),	new Point(280, 164),	new Point(344, 164),	new Point(312, 156)},		// I
+			new Point[]{new Point(-999, -999),	new Point(-999, -999),	new Point(-999, -999),	new Point(-999, -999),	new Point(-999, -999)},		// J
+
+			new Point[]{new Point(-999, -999),	new Point(44, 184),		new Point(-999, -999),	new Point(12, 212),		new Point(28, 200)},		// K
+			new Point[]{new Point(132, 184),	new Point(224, 184),	new Point(124, 212),	new Point(232, 212),	new Point(195, 200)},		// L
+			new Point[]{new Point(312, 184),	new Point(-999, -999),	new Point(344, 212),	new Point(-999, -999),	new Point(360, 200)},		// M
+
+			new Point[]{new Point(-999, -999),	new Point(-999, -999),	new Point(-999, -999),	new Point(-999, -999),	new Point(-999, -999)},		// N
+			new Point[]{new Point(-999, -999),	new Point(-999, -999),	new Point(-999, -999),	new Point(-999, -999),	new Point(-999, -999)},		// Team
+			new Point[]{new Point(-999, -999),	new Point(-999, -999),	new Point(-999, -999),	new Point(-999, -999),	new Point(-999, -999)},		// O
+		};
 
 
 		/// <summary>
