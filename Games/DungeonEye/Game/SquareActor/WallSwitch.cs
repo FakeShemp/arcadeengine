@@ -19,11 +19,11 @@
 #endregion
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Drawing;
+using System.Text;
+using System.Windows.Forms;
 using System.Xml;
 using ArcEngine.Graphic;
-using ArcEngine;
 using DungeonEye.Script;
 
 
@@ -40,7 +40,8 @@ namespace DungeonEye
 		/// Constructor
 		/// </summary>
 		/// <param name="square">Parent square handle</param>
-		public WallSwitch(Square square) : base(square)
+		public WallSwitch(Square square)
+			: base(square)
 		{
 			ActivatedDecoration = -1;
 			DeactivatedDecoration = -1;
@@ -55,19 +56,20 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="location"></param>
 		/// <param name="side"></param>
+		/// <param name="button"></param>
 		/// <returns></returns>
-		public override bool OnClick(Point location, CardinalPoint side)
+		public override bool OnClick(Point location, CardinalPoint side, MouseButtons button)
 		{
 			// No wall side or no decoration
 			if (side != Side || Square.Maze.Decoration == null)
 				return false;
 
 			// Not in the decoration zone
-			if (!Square.Maze.Decoration.IsPointInside(IsActivated ? ActivatedDecoration : DeactivatedDecoration, location))
+			if (!Square.Maze.Decoration.IsPointInside(IsEnabled ? ActivatedDecoration : DeactivatedDecoration, location))
 				return false;
 
 			// Switch already used and not reusable
-			if ((WasUsed && !Reusable) || (!IsActivated))
+			if ((WasUsed && !Reusable) || (!IsEnabled))
 			{
 				GameMessage.AddMessage("It's already unlocked.", GameColors.Red);
 				return true;
@@ -107,8 +109,10 @@ namespace DungeonEye
 
 			WasUsed = true;
 
+			State = !State;
+
 			Run();
-			//Toggle();
+			
 
 			return true;
 		}
@@ -121,7 +125,7 @@ namespace DungeonEye
 		/// </summary>
 		void Run()
 		{
-			if (!IsActivated)
+			if (!IsEnabled)
 				return;
 
 			foreach (WallSwitchScript script in Scripts)
@@ -158,7 +162,7 @@ namespace DungeonEye
 				if (decoset == null)
 					return;
 
-				Decoration deco = decoset.GetDecoration(IsActivated ? ActivatedDecoration : DeactivatedDecoration);
+				Decoration deco = decoset.GetDecoration(State ? ActivatedDecoration : DeactivatedDecoration);
 				if (deco == null)
 					return;
 
@@ -246,7 +250,7 @@ namespace DungeonEye
 
 					case "side":
 					{
-						Side = (CardinalPoint) Enum.Parse(typeof(CardinalPoint), node.InnerText);
+						Side = (CardinalPoint)Enum.Parse(typeof(CardinalPoint), node.InnerText);
 					}
 					break;
 
@@ -429,6 +433,17 @@ namespace DungeonEye
 			get;
 			private set;
 		}
+
+
+		/// <summary>
+		/// On / Off state
+		/// </summary>
+		public bool State 
+		{ 
+			get; 
+			private set; 
+		}
+
 
 		#endregion
 	}

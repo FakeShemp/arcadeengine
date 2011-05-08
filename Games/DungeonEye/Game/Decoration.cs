@@ -42,7 +42,14 @@ namespace DungeonEye
 		public Decoration()
 		{
 			TileId= new int[16];
-			Location = new Point[16];
+			Location = new Point[16]
+			{
+				new Point(-999, -999), new Point(-999, -999), new Point(-999, -999), new Point(-999, -999), new Point(-999, -999), 
+				new Point(-999, -999), new Point(-999, -999), new Point(-999, -999), new Point(-999, -999), new Point(-999, -999), 
+				new Point(-999, -999), new Point(-999, -999), new Point(-999, -999), 
+				new Point(-999, -999), new Point(-999, -999), new Point(-999, -999), 
+			};
+
 			for (int i = 0 ; i < TileId.Length ; i++)
 				TileId[i] = -1;
 			Swap = new bool[16];
@@ -298,11 +305,14 @@ namespace DungeonEye
 					try
 					{
 						ViewFieldPosition pos = (ViewFieldPosition) Enum.Parse(typeof(ViewFieldPosition), node.Name);
-						Location[(int) pos].X = int.Parse(node.Attributes["x"].Value);
-						Location[(int) pos].Y = int.Parse(node.Attributes["y"].Value);
 						TileId[(int) pos] = int.Parse(node.Attributes["id"].Value);
-						Swap[(int) pos] = bool.Parse(node.Attributes["swap"].Value);
 
+						if (TileId[(int)pos] != -1)
+						{
+							Location[(int)pos].X = int.Parse(node.Attributes["x"].Value);
+							Location[(int)pos].Y = int.Parse(node.Attributes["y"].Value);
+							Swap[(int)pos] = bool.Parse(node.Attributes["swap"].Value);
+						}
 					}
 					catch (Exception e)
 					{

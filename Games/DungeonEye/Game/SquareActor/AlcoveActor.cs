@@ -19,13 +19,11 @@
 #endregion
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
 using System.Text;
+using System.Windows.Forms;
 using System.Xml;
 using ArcEngine;
-using ArcEngine.Asset;
-using ArcEngine.Audio;
 using ArcEngine.Graphic;
 
 namespace DungeonEye
@@ -145,6 +143,7 @@ namespace DungeonEye
 
 		}
 
+
 		#region Events
 
 		/// <summary>
@@ -152,8 +151,9 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="location"></param>
 		/// <param name="side"></param>
+		/// <param name="button"></param>
 		/// <returns></returns>
-		public override bool OnClick(Point location, CardinalPoint side)
+		public override bool OnClick(Point location, CardinalPoint side, MouseButtons button)
 		{
 			// No decoration set
 			if (Square.Maze.Decoration == null)
@@ -169,6 +169,8 @@ namespace DungeonEye
 				return false;
 
 			Team team = GameScreen.Team;
+
+			// No item in hand
 			if (team.ItemInHand != null)
 			{
 				if (!alcove.AcceptBigItems && team.ItemInHand.IsBig)
@@ -186,8 +188,14 @@ namespace DungeonEye
 			{
 				// Run scripts
 				alcove.RemoveItem();
-				
-				team.SetItemInHand(Square.CollectItemFromSide(side));
+
+				// Set item in hand
+				if ((button | MouseButtons.Left) == MouseButtons.Left)
+					team.SetItemInHand(Square.CollectItemFromSide(side));
+
+				// Add to inventory
+				else if ((button | MouseButtons.Right) == MouseButtons.Right && team.SelectedHero != null)
+					team.SelectedHero.AddToInventory(Square.CollectItemFromSide(side));
 			}
 
 

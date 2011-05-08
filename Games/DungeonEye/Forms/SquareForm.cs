@@ -40,8 +40,8 @@ namespace DungeonEye.Forms
 			InitializeComponent();
 
 
-			ControlBox.Maze = maze;
-			ControlBox.Square = square;
+			SquareControlBox.Maze = maze;
+			SquareControlBox.Square = square;
 		}
 
 
@@ -51,7 +51,7 @@ namespace DungeonEye.Forms
 		/// </summary>
 		public void ActivateActorTab()
 		{
-			ControlBox.ActivateActorTab();
+			SquareControlBox.ActivateActorTab();
 		}
 
 

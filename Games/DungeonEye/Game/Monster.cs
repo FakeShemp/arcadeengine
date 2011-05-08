@@ -185,7 +185,7 @@ namespace DungeonEye
 
 				Square.Monsters[(int)position] = null;
 
-					// Move to the new position
+				// Move to the new position
 				if (square != null)
 					square.Monsters[(int)pos] = this;
 
@@ -291,7 +291,7 @@ namespace DungeonEye
 			// Give a weapon  to the monster
 			if (!string.IsNullOrEmpty(WeaponName))
 				Weapon = ResourceManager.CreateAsset<Item>(WeaponName);
-			
+
 			// Last time updated
 			LastUpdate = DateTime.Now;
 
@@ -345,7 +345,7 @@ namespace DungeonEye
 			// Draw offset
 			if (LastDrawOffset + DrawOffsetDuration < DateTime.Now)
 			{
-				DrawOffset = new Point(GameBase.Random.Next(-10, 10), GameBase.Random.Next(-10, 10));
+				DrawOffset = new Point(GameBase.Random.Next(-4, 4), GameBase.Random.Next(-4, 4));
 				LastDrawOffset = DateTime.Now;
 			}
 
@@ -455,7 +455,7 @@ namespace DungeonEye
 				#region North west
 				case SquarePosition.NorthWest:
 				{
-				
+
 					// 
 					if (dist.X < 0)
 					{
@@ -530,7 +530,7 @@ namespace DungeonEye
 					if (dist.Y > 0)
 					{
 						if (Square.GetMonster(SquarePosition.NorthWest) == null || Square.GetMonster(SquarePosition.NorthEast) == null)
-							return true;						
+							return true;
 					}
 
 					// Below
@@ -591,7 +591,7 @@ namespace DungeonEye
 				return;
 
 
-					Point dist = new Point(Location.Coordinate.X - target.Coordinate.X, Location.Coordinate.Y - target.Coordinate.Y);
+			Point dist = new Point(Location.Coordinate.X - target.Coordinate.X, Location.Coordinate.Y - target.Coordinate.Y);
 
 			switch (Position)
 			{
@@ -603,7 +603,7 @@ namespace DungeonEye
 					{
 						if (Square.Monsters[(int)SquarePosition.SouthEast] == null)
 							Teleport(Square, SquarePosition.SouthEast);
-					
+
 						else if (Square.Monsters[(int)SquarePosition.SouthWest] == null)
 							Teleport(Square, SquarePosition.SouthWest);
 					}
@@ -643,8 +643,8 @@ namespace DungeonEye
 					{
 						if (Square.GetMonster(SquarePosition.NorthWest) == null)
 							Teleport(Square, SquarePosition.NorthWest);
-						else if(Square.GetMonster(SquarePosition.SouthWest) == null)
-							Teleport(Square, SquarePosition.SouthWest);							
+						else if (Square.GetMonster(SquarePosition.SouthWest) == null)
+							Teleport(Square, SquarePosition.SouthWest);
 					}
 
 
@@ -767,153 +767,53 @@ namespace DungeonEye
 		/// Draw the monster
 		/// </summary>
 		/// <param name="batch">SpriteBatch to use</param>
-		/// <param name="teamdir">Team's facing direction</param>
+		/// <param name="view">View direction</param>
 		/// <param name="pos">Position of the monster in the field of view</param>
-		public void Draw(SpriteBatch batch, CardinalPoint teamdir, ViewFieldPosition pos)
+		public void Draw(SpriteBatch batch, CardinalPoint view, ViewFieldPosition pos)
 		{
-			if (Tileset == null || Square == null)
+			if (batch == null || Tileset == null || Square == null)
 				return;
 
 
-			#region Draw offset scale
-			Point[] offsetscale = new Point[]
-			{
-				new Point(1, 1),		// A
-				new Point(4, 4),		// B
-				new Point(4, 4),		// C
-				new Point(4, 4),		// D
-				new Point(4, 4),		// E
-				new Point(4, 4),		// F
-				new Point(1, 1),		// G
-
-				new Point(1, 1),		// H
-				new Point(2, 2),		// I
-				new Point(2, 2),		// J
-				new Point(2, 2),		// K
-				new Point(1, 1),		// L
-
-				new Point(1, 1),		// M
-				new Point(1, 1),		// N
-				new Point(1, 1),		// O
-
-				new Point(1, 1),		// P
-				new Point(1, 1),		// Team
-				new Point(1, 1),		// Q
-			};
-			#endregion
-			
-			#region Subsquare
 			// Translate subsquare position according looking point
 			int[][] sub = new int[][]
 			{
-				// Looking from north
-				new int[] {0,1,2,3,4},
-				
-				// Looking from south
-				new int[] {3,2,1,0,4},
-
-				// Looking from west
-				new int[] {1,3,0,2,4},
-
-				// Looking from east
-				new int[] {2,0,3,1,4},
-
+				new int[] {0,1,2,3,4},		// North
+				new int[] {3,2,1,0,4},		// South
+				new int[] {1,3,0,2,4},		// West
+				new int[] {2,0,3,1,4},		// East
 			};
-			#endregion
-
-			#region Color offset
-			Color[] colors = new Color[]
-			{
-				Color.FromArgb(200, 128, 128, 128),			// A
-				Color.FromArgb(200, 128, 128, 128),			// B
-				Color.FromArgb(200, 128, 128, 128),			// C
-				Color.FromArgb(200, 128, 128, 128),			// D
-				Color.FromArgb(200, 128, 128, 128),			// E
-				Color.FromArgb(200, 128, 128, 128),			// F
-				Color.FromArgb(200, 128, 128, 128),			// G
-
-				Color.LightGray,	// H
-				Color.LightGray,	// I
-				Color.LightGray,	// J
-				Color.LightGray,	// K
-				Color.LightGray,	// L
-
-				Color.White,		// M
-				Color.White,		// N
-				Color.White,		// O
-
-				Color.White,		// P
-				Color.White,		// Q
-			};
-			#endregion
-
-			switch (pos)
-			{
-				case ViewFieldPosition.A:
-				case ViewFieldPosition.B:
-				case ViewFieldPosition.C:
-				case ViewFieldPosition.D:
-				case ViewFieldPosition.E:
-
-				case ViewFieldPosition.G:
-				case ViewFieldPosition.H:
-				case ViewFieldPosition.I:
-
-				case ViewFieldPosition.K:
-				case ViewFieldPosition.L:
-				case ViewFieldPosition.M:
-				{
-					TextureEnvMode mode = Display.TexEnv;
-
-					// Monster was hit, redraw it
-					if (LastAttack != null && LastAttack.Time + TimeSpan.FromSeconds(0.25) > DateTime.Now)
-					{
-						Display.BlendingFunction(BlendingFactorSource.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
-						Display.TexEnv = TextureEnvMode.Add;
-					}
-
-					// Draw the monster
-					int offset = (int)pos;
-
-					// Find the good square location
-					SquarePosition squarepos;
-					if (Square.MonsterCount == 1)
-						squarepos = SquarePosition.Center;
-					else
-						squarepos = (SquarePosition) sub[(int)teamdir][(int)Position];
-
-					// Screen coordinate
-					Point position = DisplayCoordinates.GetGroundPosition(pos, squarepos);
-			//		position.Offset(DrawOffset.X / offsetscale[offset].X, DrawOffset.Y / offsetscale[offset].Y);
-
-					// Display color
-					Color tint = DisplayCoordinates.GetDistantColor(pos);
-						//colors[(int)pos];
-
-					// Display in red if monster is hit
-					if (LastHit + HitDisplayDuration > DateTime.Now)
-						tint = Color.Red;
-
-					// Draw
-					batch.DrawTile(Tileset, 
-						GetTileID(teamdir), 
-						position, 
-						tint, 
-						0.0f,
- 						DisplayCoordinates.GetMonsterScaleFactor(pos),
-						NeedSwapSprite(teamdir) ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 
-						0.0f);
 
 
-					// Finish special mode
-					if (LastAttack != null && LastAttack.Time + TimeSpan.FromSeconds(0.25) > DateTime.Now)
-					{
-						Display.TexEnv = mode;
-						Display.BlendingFunction(BlendingFactorSource.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
-					}
-				}
-				break;
-			}
+
+			// Find the good square location
+			SquarePosition squarepos;
+			if (Square.MonsterCount == 1)
+				squarepos = SquarePosition.Center;
+			else
+				squarepos = (SquarePosition)sub[(int)view][(int)Position];
+
+			// Screen coordinate
+			Point position = DisplayCoordinates.GetGroundPosition(pos, squarepos);
+			position.Offset(DisplayCoordinates.GetScaleFactor(pos, DrawOffset));
+
+			// Display color
+			Color tint = DisplayCoordinates.GetDistantColor(pos);
+
+			// Display in red if monster is hit
+			if (LastHit + HitDisplayDuration > DateTime.Now)
+				tint = Color.Red;
+
+			// Draw
+			batch.DrawTile(Tileset,
+				GetTileID(view),
+				position,
+				tint,
+				0.0f,
+				DisplayCoordinates.GetMonsterScaleFactor(pos),
+				NeedSwapSprite(view) ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
+				0.0f);
+
 
 		}
 
@@ -978,7 +878,7 @@ namespace DungeonEye
 			Point dist = new Point(target.Coordinate.X - Location.Coordinate.X, target.Coordinate.Y - Location.Coordinate.Y);
 
 			// Close to the target (up, down or left, right)
-			return	(dist.X == 0 && Math.Abs(dist.Y) == 1) ||
+			return (dist.X == 0 && Math.Abs(dist.Y) == 1) ||
 					(Math.Abs(dist.X) == 1 && dist.Y == 0);
 		}
 
@@ -1096,7 +996,7 @@ namespace DungeonEye
 		/// <returns>True if facing, or false</returns>
 		public bool IsFacing(CardinalPoint direction)
 		{
-			
+
 			return Location.Direction == direction;
 		}
 
@@ -1179,7 +1079,7 @@ namespace DungeonEye
 
 					case "direction":
 					{
-						Direction = (CardinalPoint) Enum.Parse(typeof(CardinalPoint), node.Attributes["value"].Value);
+						Direction = (CardinalPoint)Enum.Parse(typeof(CardinalPoint), node.Attributes["value"].Value);
 					}
 					break;
 
@@ -1253,8 +1153,8 @@ namespace DungeonEye
 
 					case "behaviour":
 					{
-						DefaultBehaviour = (MonsterBehaviour) Enum.Parse(typeof(MonsterBehaviour), node.Attributes["default"].Value);
-						CurrentBehaviour = (MonsterBehaviour) Enum.Parse(typeof(MonsterBehaviour), node.Attributes["current"].Value);
+						DefaultBehaviour = (MonsterBehaviour)Enum.Parse(typeof(MonsterBehaviour), node.Attributes["default"].Value);
+						CurrentBehaviour = (MonsterBehaviour)Enum.Parse(typeof(MonsterBehaviour), node.Attributes["current"].Value);
 					}
 					break;
 
@@ -1685,16 +1585,16 @@ namespace DungeonEye
 			set;
 		}
 
-/*
-		/// <summary>
-		/// State manager
-		/// </summary>
-		public StateManager StateManager
-		{
-			get;
-			private set;
-		}
-*/
+		/*
+				/// <summary>
+				/// State manager
+				/// </summary>
+				public StateManager StateManager
+				{
+					get;
+					private set;
+				}
+		*/
 
 		/// <summary>
 		/// Is asset disposed
@@ -1720,7 +1620,7 @@ namespace DungeonEye
 			set;
 		}
 
-	
+
 		/// <summary>
 		/// Gets or sets if the monster uses of the heal spell
 		/// </summary>
@@ -2149,17 +2049,17 @@ namespace DungeonEye
 		}
 
 
-/*
-		/// <summary>
-		/// Resistance to magical spells like Fireball.
-		/// Values range from 0 to 15. Value 15 means the creature is immune.
-		/// </summary>
-		public byte FireResistance
-		{
-			get;
-			set;
-		}
-*/
+		/*
+				/// <summary>
+				/// Resistance to magical spells like Fireball.
+				/// Values range from 0 to 15. Value 15 means the creature is immune.
+				/// </summary>
+				public byte FireResistance
+				{
+					get;
+					set;
+				}
+		*/
 
 
 		/// <summary>
@@ -2286,111 +2186,111 @@ namespace DungeonEye
 		Big
 	}
 
-/*
-	/// <summary>
-	/// The bigger an opponent is, the easier it is to hit in combat. 
-	/// The smaller it is, the harder it is to hit.
-	/// </summary>
-	public enum MonsterSizeModifier
-	{
+	/*
 		/// <summary>
-		/// Blue whale
+		/// The bigger an opponent is, the easier it is to hit in combat. 
+		/// The smaller it is, the harder it is to hit.
 		/// </summary>
-		Colossal = -8,
+		public enum MonsterSizeModifier
+		{
+			/// <summary>
+			/// Blue whale
+			/// </summary>
+			Colossal = -8,
 
-		/// <summary>
-		/// Gray whale
-		/// </summary>
-		Gargantuan = -4,
+			/// <summary>
+			/// Gray whale
+			/// </summary>
+			Gargantuan = -4,
 
-		/// <summary>
-		/// Elephant
-		/// </summary>
-		Huge = -2,
+			/// <summary>
+			/// Elephant
+			/// </summary>
+			Huge = -2,
 
-		/// <summary>
-		/// Lion
-		/// </summary>
-		Large = -1,
+			/// <summary>
+			/// Lion
+			/// </summary>
+			Large = -1,
 
-		/// <summary>
-		/// Human
-		/// </summary>
-		Medium = 0,
+			/// <summary>
+			/// Human
+			/// </summary>
+			Medium = 0,
 
-		/// <summary>
-		/// German shepherd
-		/// </summary>
-		Small = 1,
+			/// <summary>
+			/// German shepherd
+			/// </summary>
+			Small = 1,
 
-		/// <summary>
-		/// House cat
-		/// </summary>
-		Tiny = 2,
+			/// <summary>
+			/// House cat
+			/// </summary>
+			Tiny = 2,
 
-		/// <summary>
-		/// Rat
-		/// </summary>
-		Diminutive = 4,
+			/// <summary>
+			/// Rat
+			/// </summary>
+			Diminutive = 4,
 
-		/// <summary>
-		/// Horsefly
-		/// </summary>
-		Fine = 8,
-	}
-
-
+			/// <summary>
+			/// Horsefly
+			/// </summary>
+			Fine = 8,
+		}
 
 
-	/// <summary>
-	/// This value defines what kind of attack the creature uses. 
-	/// This value affects how the inflicted damage is computed.
-	/// </summary>
-	public enum AttackType
-	{
-		/// <summary>
-		/// The creature does not attack champions.
-		/// </summary>
-		None,
 
 
 		/// <summary>
-		///  the attacked champion's 'Anti-Fire' characteristic is used to compute damage. 
+		/// This value defines what kind of attack the creature uses. 
+		/// This value affects how the inflicted damage is computed.
 		/// </summary>
-		Fire,
+		public enum AttackType
+		{
+			/// <summary>
+			/// The creature does not attack champions.
+			/// </summary>
+			None,
 
 
-		/// <summary>
-		/// The 'Armor Strength' value of the attacked champion's armor is used to compute damage.
-		/// </summary>
-		Critical,
+			/// <summary>
+			///  the attacked champion's 'Anti-Fire' characteristic is used to compute damage. 
+			/// </summary>
+			Fire,
 
 
-		/// <summary>
-		/// The 'Armor Strength' value of the attacked champion's armor is used to compute damage. 
-		/// </summary>
-		Normal,
-
-		/// <summary>
-		/// The 'Sharp resistance' value of the attacked champion's armor is used to compute damage. 
-		/// </summary>
-		Sharp,
+			/// <summary>
+			/// The 'Armor Strength' value of the attacked champion's armor is used to compute damage.
+			/// </summary>
+			Critical,
 
 
-		/// <summary>
-		///  the attacked champion's 'Anti-Magic' characteristic is used to compute damage. 
-		/// </summary>
-		Magic,
+			/// <summary>
+			/// The 'Armor Strength' value of the attacked champion's armor is used to compute damage. 
+			/// </summary>
+			Normal,
+
+			/// <summary>
+			/// The 'Sharp resistance' value of the attacked champion's armor is used to compute damage. 
+			/// </summary>
+			Sharp,
 
 
-		/// <summary>
-		///  the attacked champion's 'Wisdom' characteristic is used to compute damage. 
-		/// </summary>
-		Psychic,
+			/// <summary>
+			///  the attacked champion's 'Anti-Magic' characteristic is used to compute damage. 
+			/// </summary>
+			Magic,
 
-	}
 
-*/
+			/// <summary>
+			///  the attacked champion's 'Wisdom' characteristic is used to compute damage. 
+			/// </summary>
+			Psychic,
+
+		}
+
+	*/
 
 
 	/// <summary>

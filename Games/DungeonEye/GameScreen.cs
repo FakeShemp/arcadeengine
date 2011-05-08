@@ -1125,30 +1125,13 @@ namespace DungeonEye
 
 				#endregion
 
-				#region Alcove
-				//TODO: Move in Maze.OnClick() 
-				//else if (DisplayCoordinates.Alcove.Contains(mousePos) && Team.FrontSquare.IsWall)
-				//{
-
-				//    if (Team.ItemInHand != null)
-				//    {
-				//        if (Team.FrontSquare.DropAlcoveItem(Team.FrontWallSide, Team.ItemInHand))
-				//            Team.SetItemInHand(null);
-				//    }
-				//    else
-				//    {
-				//        Team.SetItemInHand(Team.FrontSquare.CollectAlcoveItem(Team.FrontWallSide));
-				//    }
-				//}
-				#endregion
-
 				#region Action to process on the front square
 
 				// Click on the square in front of the team
 				else if (DisplayCoordinates.FrontSquare.Contains(mousePos))
 				{
 					// On no action on the front wall
-					if (!Team.FrontSquare.OnClick(mousePos, Team.FrontWallSide))
+					if (!Team.FrontSquare.OnClick(mousePos, Team.FrontWallSide, MouseButtons.Left))
 					{
 						#region Throw an object in the left side
 						if (DisplayCoordinates.ThrowLeft.Contains(mousePos) && Team.ItemInHand != null)
@@ -1212,20 +1195,16 @@ namespace DungeonEye
 			else if (Mouse.IsNewButtonDown(MouseButtons.Right))
 			{
 				#region Alcove
-				if (DisplayCoordinates.Alcove.Contains(mousePos) && Team.FrontSquare.IsWall)
-				{
-					Team.SelectedHero.AddToInventory(Team.FrontSquare.CollectItemFromSide(Team.FrontWallSide));
-				}
-				#endregion
-
-				#region Action to process on the front square
-
+				//if (DisplayCoordinates.Alcove.Contains(mousePos) && Team.FrontSquare.IsWall)
+				//{
+				//    Team.SelectedHero.AddToInventory(Team.FrontSquare.CollectItemFromSide(Team.FrontWallSide));
+				//}
 				#endregion
 
 				#region Gather item on the ground Left
 
 				// Team's feet
-				else if (DisplayCoordinates.LeftFeetTeam.Contains(mousePos))
+				if (DisplayCoordinates.LeftFeetTeam.Contains(mousePos))
 				{
 					switch (Team.Direction)
 					{
@@ -1359,6 +1338,18 @@ namespace DungeonEye
 				}
 
 				#endregion
+	
+				#region Action to process on the front square
+				// Click on the square in front of the team
+				else if (DisplayCoordinates.FrontSquare.Contains(mousePos))
+				{
+					// On no action on the front wall
+					if (!Team.FrontSquare.OnClick(mousePos, Team.FrontWallSide, MouseButtons.Right))
+					{
+					}
+				}
+				#endregion
+
 			}
 
 			#endregion

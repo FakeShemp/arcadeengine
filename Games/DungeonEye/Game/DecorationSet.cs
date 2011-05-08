@@ -171,56 +171,6 @@ namespace DungeonEye
 				0.0f);
 		}
 
-/*
-		/// <summary>
-		/// Draws a decoration
-		/// </summary>
-		/// <param name="batch">SpriteBatch handle</param>
-		/// <param name="point">View point</param>
-		/// <param name="position">Square position in the view field</param>
-		public void Draw(SpriteBatch batch, CardinalPoint point, ViewFieldPosition position)
-		{
-			if (batch == null || Tileset == null)
-				return;
-
-			switch (position)
-			{
-				case ViewFieldPosition.A:
-				break;
-				case ViewFieldPosition.B:
-				break;
-				case ViewFieldPosition.C:
-				break;
-				case ViewFieldPosition.D:
-				break;
-				case ViewFieldPosition.E:
-				break;
-				case ViewFieldPosition.F:
-				break;
-				case ViewFieldPosition.G:
-				break;
-				case ViewFieldPosition.H:
-				break;
-				case ViewFieldPosition.I:
-				break;
-				case ViewFieldPosition.J:
-				break;
-				case ViewFieldPosition.K:
-				break;
-				case ViewFieldPosition.L:
-				break;
-				case ViewFieldPosition.M:
-				break;
-				case ViewFieldPosition.N:
-				break;
-				case ViewFieldPosition.Team:
-
-				break;
-				case ViewFieldPosition.O:
-				break;
-			}
-		}
-*/
 
 
 		#region IO
@@ -314,7 +264,7 @@ namespace DungeonEye
 		#endregion
 
 
-		#region properties
+		#region Properties
 
 
 		/// <summary>

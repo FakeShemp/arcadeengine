@@ -26,6 +26,7 @@ using System.Text;
 using System.Xml;
 using ArcEngine.Graphic;
 using ArcEngine.Asset;
+using System.Windows.Forms;
 
 namespace DungeonEye
 {
@@ -53,9 +54,6 @@ namespace DungeonEye
 		/// <param name="maze">Maze handle</param>
 		public Square(Maze maze)
 		{
-			//if (maze == null)
-			//    throw new ArgumentNullException("maze");
-
 			if (maze != null)
 			{
 				Location = new DungeonLocation(maze.Name, Point.Empty);
@@ -136,17 +134,6 @@ namespace DungeonEye
 				}
 				else
 					sb.Append(" Wall");
-/*
-				if (HasAlcoves)
-				{
-					sb.Append(" Alcove facing ");
-					foreach (CardinalPoint point in Enum.GetValues(typeof(CardinalPoint)))
-					{
-						if (HasAlcove(point))
-							sb.Append(point + " ");
-					}
-				}
-*/
 			}
 			else
 			{
@@ -213,13 +200,14 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="location">Location of the mouse</param>
 		/// <param name="side">Wall side</param>
+		/// <param name="button">Mouse buttons</param>
 		/// <returns>True if the event is processed</returns>
-		public bool OnClick(Point location, CardinalPoint side)
+		public bool OnClick(Point location, CardinalPoint side, MouseButtons button)
 		{
 
 			// Actor interaction
 			if (Actor != null)
-				return Actor.OnClick(location, side);
+				return Actor.OnClick(location, side, button);
 					
 			
 			// Decoration interaction

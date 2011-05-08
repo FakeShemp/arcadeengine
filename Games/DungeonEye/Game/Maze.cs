@@ -812,6 +812,7 @@ namespace DungeonEye
 			#region Monsters
 			if (square.MonsterCount > 0)
 			{
+				// Drawing order for monsters
 				int[][] order = new int[][]
 				{
 					new int[] {0, 1, 2, 3},	// North

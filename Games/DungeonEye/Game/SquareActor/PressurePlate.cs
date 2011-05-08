@@ -340,11 +340,11 @@ namespace DungeonEye
 		{
 			get
 			{
-				return !IsActivated;
+				return !IsEnabled;
 			}
 			set
 			{
-				IsActivated = !value;
+				IsEnabled = !value;
 			}
 		}
 

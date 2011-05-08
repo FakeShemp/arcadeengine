@@ -49,7 +49,7 @@ namespace DungeonEye.Forms
 			MonsterBox.Checked = teleporter.TeleportMonsters;
 			VisibleBox.Checked = teleporter.IsVisible;
 			ReusableBox.Checked = teleporter.Reusable;
-			ActiveBox.Checked = teleporter.IsActivated;
+			ActiveBox.Checked = teleporter.IsEnabled;
 			UseSoundBox.Checked = teleporter.UseSound;
 			SoundNameBox.Text = teleporter.SoundName;
 
@@ -111,7 +111,7 @@ namespace DungeonEye.Forms
 			if (Teleporter == null)
 				return;
 
-			Teleporter.IsActivated = ActiveBox.Checked;
+			Teleporter.IsEnabled = ActiveBox.Checked;
 		}
 
 		private void PlaySoundBox_Click(object sender, EventArgs e)

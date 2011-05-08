@@ -58,7 +58,7 @@ namespace DungeonEye.Script.Actions
 				return false;
 
 			if (target.Actor != null)
-				target.Actor.Activate();
+				target.Actor.Enable();
 
 			return true;
 		}

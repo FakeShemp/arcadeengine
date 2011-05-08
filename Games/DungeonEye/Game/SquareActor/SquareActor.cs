@@ -17,15 +17,11 @@
 //along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 //
 #endregion
-using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Text;
+using System.Windows.Forms;
 using System.Xml;
 using ArcEngine;
 using ArcEngine.Graphic;
-using DungeonEye.Script;
-using DungeonEye.Script.Actions;
 
 
 namespace DungeonEye
@@ -43,7 +39,7 @@ namespace DungeonEye
 		public SquareActor(Square square)
 		{
 			Square = square;
-			IsActivated = true;
+			IsEnabled = true;
 		}
 
 
@@ -89,7 +85,7 @@ namespace DungeonEye
 		/// <param name="location">Location of the mouse</param>
 		/// <param name="side">Wall side</param>
 		/// <returns>True if the event is processed</returns>
-		public virtual bool OnClick(Point location, CardinalPoint side)
+		public virtual bool OnClick(Point location, CardinalPoint side, MouseButtons button)
 		{
 			return false;
 		}
@@ -186,31 +182,32 @@ namespace DungeonEye
 		#region Events
 
 		/// <summary>
-		/// Activates the actor
+		/// Enables the actor
 		/// </summary>
-		public virtual void Activate()
+		public virtual void Enable()
 		{
-			IsActivated = true;
+			IsEnabled = true;
 		}
 
 
 		/// <summary>
-		/// Deactivates the actor
+		/// Disables the actor
 		/// </summary>
-		public virtual void Deactivate()
+		public virtual void Disable()
 		{
-			IsActivated = false;
+			IsEnabled = false;
 		}
+
 
 		/// <summary>
 		/// Toggles the actor
 		/// </summary>
 		public virtual void Toggle()
 		{
-			if (IsActivated)
-				Deactivate();
+			if (IsEnabled)
+				Disable();
 			else
-				Activate();
+				Enable();
 		}
 
 
@@ -267,7 +264,7 @@ namespace DungeonEye
 			{
 				case "isactivated":
 				{
-					IsActivated = bool.Parse(node.InnerXml);
+					IsEnabled = bool.Parse(node.InnerXml);
 				}
 				break;
 
@@ -293,7 +290,7 @@ namespace DungeonEye
 			if (writer == null)
 				return false;
 
-			writer.WriteElementString("isactivated", IsActivated.ToString());
+			writer.WriteElementString("isactivated", IsEnabled.ToString());
 
 			return true;
 		}
@@ -346,7 +343,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Does the actor is activated
 		/// </summary>
-		public bool IsActivated
+		public bool IsEnabled
 		{
 			get;
 			set;

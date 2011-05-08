@@ -17,15 +17,16 @@
 //along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 //
 #endregion
+using System;
+using System.ComponentModel;
 using System.Drawing;
+using System.Text;
+using System.Windows.Forms;
 using System.Xml;
 using ArcEngine;
-using ArcEngine.Graphic;
-using System.ComponentModel;
-using System;
 using ArcEngine.Asset;
 using ArcEngine.Audio;
-using System.Text;
+using ArcEngine.Graphic;
 
 namespace DungeonEye
 {
@@ -57,7 +58,7 @@ namespace DungeonEye
 			if (Square != null || Square.Maze != null)
 				Type = Square.Maze.DefaultDoorType;
 
-			IsActivated = IsOpen;
+			IsEnabled = IsOpen;
 		}
 
 
@@ -190,8 +191,9 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="location">Location of the click</param>
 		/// <param name="side">Wall side</param>
+		/// <param name="button">Mouse button state</param>
 		/// <returns>True if the event is handled</returns>
-		public override bool OnClick(Point location, CardinalPoint side)
+		public override bool OnClick(Point location, CardinalPoint side, MouseButtons button)
 		{
 
 			// Button
@@ -225,7 +227,7 @@ namespace DungeonEye
 		public void Open()
 		{
 			State = DoorState.Opening;
-			IsActivated = true;
+			IsEnabled = true;
 			//	Audio.PlaySample(0, OpenSound);
 		}
 
@@ -240,7 +242,7 @@ namespace DungeonEye
 			//	return;
 
 			State = DoorState.Closing;
-			IsActivated = false;
+			IsEnabled = false;
 			//	Audio.PlaySample(0, CloseSound);
 		}
 
@@ -269,7 +271,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Opens the door
 		/// </summary>
-		public override void Activate()
+		public override void Enable()
 		{
 			//base.Activate();
 
@@ -281,7 +283,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Closes the door
 		/// </summary>
-		public override void Deactivate()
+		public override void Disable()
 		{
 			//base.Deactivate();
 
@@ -297,9 +299,9 @@ namespace DungeonEye
 		public override void Toggle()
 		{
 			if (IsOpen)
-				Deactivate();
+				Disable();
 			else
-				Activate();
+				Enable();
 		}
 
 		#endregion
