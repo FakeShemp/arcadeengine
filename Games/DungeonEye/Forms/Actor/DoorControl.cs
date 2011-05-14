@@ -46,6 +46,7 @@ namespace DungeonEye.Forms
 			DoorTypeBox.DataSource = Enum.GetValues(typeof(DoorType));
 			DoorStateBox.DataSource = Enum.GetValues(typeof(DoorState));
 			SwitchCountBox.SwitchCount = door.Count;
+			ActorPropertiesBox.Actor = door;
 
 			Door = door;
 		}

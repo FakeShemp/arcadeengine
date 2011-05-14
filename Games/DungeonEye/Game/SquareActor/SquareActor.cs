@@ -39,7 +39,7 @@ namespace DungeonEye
 		public SquareActor(Square square)
 		{
 			Square = square;
-			IsActivated = true;
+			IsEnabled = true;
 		}
 
 
@@ -224,9 +224,9 @@ namespace DungeonEye
 		public virtual void Toggle()
 		{
 			if (IsActivated)
-				Disable();
+				Deactivate();
 			else
-				Enable();
+				Activate();
 		}
 
 
@@ -342,7 +342,7 @@ namespace DungeonEye
 		public virtual bool CanPassThrough
 		{
 			get;
-			protected set;
+			set;
 		}
 
 
@@ -352,7 +352,7 @@ namespace DungeonEye
 		public virtual bool IsBlocking
 		{
 			get;
-			protected set;
+			set;
 		}
 
 
@@ -362,7 +362,7 @@ namespace DungeonEye
 		public bool AcceptItems
 		{
 			get;
-			protected set;
+			set;
 		}
 
 
@@ -372,7 +372,7 @@ namespace DungeonEye
 		public bool IsActivated
 		{
 			get;
-			private set;
+			set;
 		}
 
 
@@ -382,7 +382,7 @@ namespace DungeonEye
 		public bool IsEnabled
 		{
 			get;
-			private set;
+			set;
 		}
 
 

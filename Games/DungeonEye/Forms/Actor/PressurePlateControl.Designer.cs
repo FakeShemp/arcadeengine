@@ -29,6 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.ReusableBox = new System.Windows.Forms.CheckBox();
 			this.WasUsedBox = new System.Windows.Forms.CheckBox();
 			this.IsHiddenBox = new System.Windows.Forms.CheckBox();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -38,8 +39,8 @@
 			this.VisualBox = new OpenTK.GLControl();
 			this.DecorationIdBox = new System.Windows.Forms.NumericUpDown();
 			this.PropertiesTab = new System.Windows.Forms.TabPage();
+			this.ActorPropertiesBox = new DungeonEye.Forms.Actor.SquareActorControl();
 			this.ActionBox = new DungeonEye.Forms.PressurePlateScriptListControl();
-			this.ReusableBox = new System.Windows.Forms.CheckBox();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.tabControl1.SuspendLayout();
@@ -55,10 +56,21 @@
 			this.groupBox1.Controls.Add(this.IsHiddenBox);
 			this.groupBox1.Location = new System.Drawing.Point(6, 6);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(350, 100);
+			this.groupBox1.Size = new System.Drawing.Size(214, 120);
 			this.groupBox1.TabIndex = 0;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Properties :";
+			// 
+			// ReusableBox
+			// 
+			this.ReusableBox.AutoSize = true;
+			this.ReusableBox.Location = new System.Drawing.Point(6, 65);
+			this.ReusableBox.Name = "ReusableBox";
+			this.ReusableBox.Size = new System.Drawing.Size(71, 17);
+			this.ReusableBox.TabIndex = 2;
+			this.ReusableBox.Text = "Reusable";
+			this.ReusableBox.UseVisualStyleBackColor = true;
+			this.ReusableBox.CheckedChanged += new System.EventHandler(this.ReusableBox_CheckedChanged);
 			// 
 			// WasUsedBox
 			// 
@@ -164,6 +176,7 @@
 			// 
 			// PropertiesTab
 			// 
+			this.PropertiesTab.Controls.Add(this.ActorPropertiesBox);
 			this.PropertiesTab.Controls.Add(this.groupBox1);
 			this.PropertiesTab.Controls.Add(this.ActionBox);
 			this.PropertiesTab.Location = new System.Drawing.Point(4, 22);
@@ -174,28 +187,24 @@
 			this.PropertiesTab.Text = "Properties";
 			this.PropertiesTab.UseVisualStyleBackColor = true;
 			// 
+			// ActorPropertiesBox
+			// 
+			this.ActorPropertiesBox.Location = new System.Drawing.Point(226, 6);
+			this.ActorPropertiesBox.MinimumSize = new System.Drawing.Size(130, 120);
+			this.ActorPropertiesBox.Name = "ActorPropertiesBox";
+			this.ActorPropertiesBox.Size = new System.Drawing.Size(130, 120);
+			this.ActorPropertiesBox.TabIndex = 2;
+			// 
 			// ActionBox
 			// 
 			this.ActionBox.Dungeon = null;
-			this.ActionBox.Location = new System.Drawing.Point(3, 112);
+			this.ActionBox.Location = new System.Drawing.Point(6, 132);
 			this.ActionBox.MinimumSize = new System.Drawing.Size(350, 150);
 			this.ActionBox.Name = "ActionBox";
 			this.ActionBox.Scripts = null;
 			this.ActionBox.Size = new System.Drawing.Size(350, 150);
 			this.ActionBox.TabIndex = 1;
 			this.ActionBox.Title = "Scripts";
-			// 
-			// ReusableBox
-			// 
-			this.ReusableBox.Appearance = System.Windows.Forms.Appearance.Button;
-			this.ReusableBox.AutoSize = true;
-			this.ReusableBox.Location = new System.Drawing.Point(282, 19);
-			this.ReusableBox.Name = "ReusableBox";
-			this.ReusableBox.Size = new System.Drawing.Size(62, 23);
-			this.ReusableBox.TabIndex = 2;
-			this.ReusableBox.Text = "Reusable";
-			this.ReusableBox.UseVisualStyleBackColor = true;
-			this.ReusableBox.CheckedChanged += new System.EventHandler(this.ReusableBox_CheckedChanged);
 			// 
 			// PressurePlateControl
 			// 
@@ -231,5 +240,6 @@
 		private OpenTK.GLControl VisualBox;
 		private System.Windows.Forms.NumericUpDown DecorationIdBox;
 		private System.Windows.Forms.CheckBox ReusableBox;
+		private Actor.SquareActorControl ActorPropertiesBox;
 	}
 }

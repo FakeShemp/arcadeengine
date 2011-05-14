@@ -58,7 +58,7 @@ namespace DungeonEye.Forms
 			Maze = maze;
 			DecorationSet = maze.Decoration;
 
-		
+			ActorPropertiesBox.Actor = pressureplate;
 			PressurePlate = pressureplate;
 		}
 

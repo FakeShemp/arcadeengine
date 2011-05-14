@@ -268,42 +268,42 @@ namespace DungeonEye
 		#region Actions
 
 		/// <summary>
-		/// Opens the door
+		/// Closes the door
 		/// </summary>
 		public override void Activate()
 		{
-			if (!IsActivated)
+			if (!IsEnabled)
 				return;
 
 			if (Count.Activate())
-				Open();
-		}
-
-
-		/// <summary>
-		/// Closes the door
-		/// </summary>
-		public override void Deactivate()
-		{
-			if (!IsActivated)
-				return;
-
-
-			if (Count.Deactivate())
 				Close();
 		}
 
 
 		/// <summary>
-		/// 
+		/// Opens the door
 		/// </summary>
-		public override void Toggle()
+		public override void Deactivate()
 		{
-			if (IsOpen)
-				Disable();
-			else
-				Enable();
+			if (!IsEnabled)
+				return;
+
+
+			if (Count.Deactivate())
+				Open();
 		}
+
+
+		///// <summary>
+		///// 
+		///// </summary>
+		//public override void Toggle()
+		//{
+		//    if (IsOpen)
+		//        Disable();
+		//    else
+		//        Enable();
+		//}
 
 		#endregion
 

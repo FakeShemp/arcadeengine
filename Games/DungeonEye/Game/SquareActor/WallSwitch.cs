@@ -70,7 +70,7 @@ namespace DungeonEye
 				return false;
 
 			// Switch already used and not reusable
-			if ((WasUsed && !Reusable) || (!IsActivated))
+			if ((WasUsed && !Reusable)) // || (!IsActivated))
 			{
 				GameMessage.AddMessage("It's already unlocked.", GameColors.Red);
 				return true;
@@ -110,11 +110,7 @@ namespace DungeonEye
 
 			WasUsed = true;
 
-			//Run();
-
-			State = !State;
-
-			
+			Toggle();
 
 			return true;
 		}
@@ -124,18 +120,6 @@ namespace DungeonEye
 
 
 		#region Actions
-
-		///// <summary>
-		///// Run scripts
-		///// </summary>
-		//public override void Run()
-		//{
-		//    if (!IsActivated)
-		//        return;
-
-		//    foreach (WallSwitchScript script in Scripts)
-		//        script.Run();
-		//}
 
 		#endregion
 
@@ -170,7 +154,7 @@ namespace DungeonEye
 				if (decoset == null)
 					return;
 
-				Decoration deco = decoset.GetDecoration(State ? ActivatedDecoration : DeactivatedDecoration);
+				Decoration deco = decoset.GetDecoration(IsActivated ? ActivatedDecoration : DeactivatedDecoration);
 				if (deco == null)
 					return;
 
@@ -440,16 +424,6 @@ namespace DungeonEye
 		{
 			get;
 			private set;
-		}
-
-
-		/// <summary>
-		/// On / Off state
-		/// </summary>
-		public bool State 
-		{ 
-			get; 
-			private set; 
 		}
 
 

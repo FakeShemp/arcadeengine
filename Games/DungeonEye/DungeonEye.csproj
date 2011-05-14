@@ -159,6 +159,12 @@
     <Compile Include="Forms\Actor\PressurePlateScriptForm.Designer.cs">
       <DependentUpon>PressurePlateScriptForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Actor\SquareActorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Actor\SquareActorControl.Designer.cs">
+      <DependentUpon>SquareActorControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Actor\WallScriptScriptListControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -641,6 +647,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Actor\PressurePlateScriptForm.resx">
       <DependentUpon>PressurePlateScriptForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Actor\SquareActorControl.resx">
+      <DependentUpon>SquareActorControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Actor\WallScriptScriptListControl.resx">
       <DependentUpon>WallScriptScriptListControl.cs</DependentUpon>

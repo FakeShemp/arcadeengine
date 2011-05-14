@@ -41,8 +41,7 @@ namespace DungeonEye
 		/// Constructor
 		/// </summary>
 		/// <param name="square">Square handle</param>
-		public PressurePlate(Square square)
-			: base(square)
+		public PressurePlate(Square square) : base(square)
 		{
 			Scripts = new List<PressurePlateScript>();
 			AcceptItems = true;

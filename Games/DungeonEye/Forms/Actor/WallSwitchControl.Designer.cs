@@ -49,7 +49,7 @@
 			this.label2 = new System.Windows.Forms.Label();
 			this.DeactivatedGlBox = new OpenTK.GLControl();
 			this.DeactivatedIdBox = new System.Windows.Forms.NumericUpDown();
-			this.IsActivatedBox = new System.Windows.Forms.CheckBox();
+			this.SquarePropertiesBox = new DungeonEye.Forms.Actor.SquareActorControl();
 			this.groupBox1.SuspendLayout();
 			this.tabControl1.SuspendLayout();
 			this.PropertiesTab.SuspendLayout();
@@ -88,6 +88,7 @@
 			// 
 			// PropertiesTab
 			// 
+			this.PropertiesTab.Controls.Add(this.SquarePropertiesBox);
 			this.PropertiesTab.Controls.Add(this.SideBox);
 			this.PropertiesTab.Controls.Add(this.groupBox2);
 			this.PropertiesTab.Controls.Add(this.ActionScriptBox);
@@ -111,7 +112,6 @@
 			// 
 			// groupBox2
 			// 
-			this.groupBox2.Controls.Add(this.IsActivatedBox);
 			this.groupBox2.Controls.Add(this.WasUsedBox);
 			this.groupBox2.Controls.Add(this.ReusableBox);
 			this.groupBox2.Controls.Add(this.label4);
@@ -121,17 +121,18 @@
 			this.groupBox2.Controls.Add(this.ItemsBox);
 			this.groupBox2.Location = new System.Drawing.Point(3, 159);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(350, 110);
+			this.groupBox2.Size = new System.Drawing.Size(243, 120);
 			this.groupBox2.TabIndex = 1;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Properties";
 			// 
 			// WasUsedBox
 			// 
+			this.WasUsedBox.Appearance = System.Windows.Forms.Appearance.Button;
 			this.WasUsedBox.AutoSize = true;
-			this.WasUsedBox.Location = new System.Drawing.Point(262, 21);
+			this.WasUsedBox.Location = new System.Drawing.Point(143, 46);
 			this.WasUsedBox.Name = "WasUsedBox";
-			this.WasUsedBox.Size = new System.Drawing.Size(76, 17);
+			this.WasUsedBox.Size = new System.Drawing.Size(67, 23);
 			this.WasUsedBox.TabIndex = 4;
 			this.WasUsedBox.Text = "Was Used";
 			this.WasUsedBox.UseVisualStyleBackColor = true;
@@ -141,7 +142,7 @@
 			// 
 			this.ReusableBox.Appearance = System.Windows.Forms.Appearance.Button;
 			this.ReusableBox.AutoSize = true;
-			this.ReusableBox.Location = new System.Drawing.Point(11, 72);
+			this.ReusableBox.Location = new System.Drawing.Point(59, 75);
 			this.ReusableBox.Name = "ReusableBox";
 			this.ReusableBox.Size = new System.Drawing.Size(62, 23);
 			this.ReusableBox.TabIndex = 3;
@@ -161,7 +162,7 @@
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(25, 46);
+			this.label3.Location = new System.Drawing.Point(25, 51);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(48, 13);
 			this.label3.TabIndex = 1;
@@ -171,7 +172,7 @@
 			// 
 			this.ConsumeItemBox.Appearance = System.Windows.Forms.Appearance.Button;
 			this.ConsumeItemBox.AutoSize = true;
-			this.ConsumeItemBox.Location = new System.Drawing.Point(79, 72);
+			this.ConsumeItemBox.Location = new System.Drawing.Point(127, 75);
 			this.ConsumeItemBox.Name = "ConsumeItemBox";
 			this.ConsumeItemBox.Size = new System.Drawing.Size(83, 23);
 			this.ConsumeItemBox.TabIndex = 1;
@@ -181,14 +182,14 @@
 			// 
 			// PickLockBox
 			// 
-			this.PickLockBox.Location = new System.Drawing.Point(79, 44);
+			this.PickLockBox.Location = new System.Drawing.Point(79, 49);
 			this.PickLockBox.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             -2147483648});
 			this.PickLockBox.Name = "PickLockBox";
-			this.PickLockBox.Size = new System.Drawing.Size(72, 20);
+			this.PickLockBox.Size = new System.Drawing.Size(58, 20);
 			this.PickLockBox.TabIndex = 0;
 			this.PickLockBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.PickLockBox.ThousandsSeparator = true;
@@ -199,7 +200,7 @@
 			this.ItemsBox.FormattingEnabled = true;
 			this.ItemsBox.Location = new System.Drawing.Point(79, 17);
 			this.ItemsBox.Name = "ItemsBox";
-			this.ItemsBox.Size = new System.Drawing.Size(119, 21);
+			this.ItemsBox.Size = new System.Drawing.Size(131, 21);
 			this.ItemsBox.TabIndex = 0;
 			this.ItemsBox.SelectedIndexChanged += new System.EventHandler(this.ItemsBox_SelectedIndexChanged);
 			// 
@@ -330,16 +331,14 @@
             -2147483648});
 			this.DeactivatedIdBox.ValueChanged += new System.EventHandler(this.DeactivatedIdBox_ValueChanged);
 			// 
-			// IsActivatedBox
+			// SquarePropertiesBox
 			// 
-			this.IsActivatedBox.AutoSize = true;
-			this.IsActivatedBox.Location = new System.Drawing.Point(262, 44);
-			this.IsActivatedBox.Name = "IsActivatedBox";
-			this.IsActivatedBox.Size = new System.Drawing.Size(82, 17);
-			this.IsActivatedBox.TabIndex = 4;
-			this.IsActivatedBox.Text = "Is Activated";
-			this.IsActivatedBox.UseVisualStyleBackColor = true;
-			this.IsActivatedBox.CheckedChanged += new System.EventHandler(this.IsActivatedBox_CheckedChanged);
+			this.SquarePropertiesBox.Actor = null;
+			this.SquarePropertiesBox.Location = new System.Drawing.Point(252, 159);
+			this.SquarePropertiesBox.MinimumSize = new System.Drawing.Size(130, 120);
+			this.SquarePropertiesBox.Name = "SquarePropertiesBox";
+			this.SquarePropertiesBox.Size = new System.Drawing.Size(130, 120);
+			this.SquarePropertiesBox.TabIndex = 5;
 			// 
 			// WallSwitchControl
 			// 
@@ -388,7 +387,7 @@
 		private System.Windows.Forms.CheckBox ReusableBox;
 		private System.Windows.Forms.CheckBox WasUsedBox;
 		private Forms.CardinalPointControl SideBox;
-		private System.Windows.Forms.CheckBox IsActivatedBox;
+		private Forms.Actor.SquareActorControl SquarePropertiesBox;
 
 	}
 }

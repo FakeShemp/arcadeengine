@@ -44,6 +44,7 @@
 			this.label3 = new System.Windows.Forms.Label();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
 			this.SwitchCountBox = new DungeonEye.Forms.SwitchCountControl();
+			this.ActorPropertiesBox = new DungeonEye.Forms.Actor.SquareActorControl();
 			((System.ComponentModel.ISupportInitialize)(this.PicklockBox)).BeginInit();
 			this.groupBox2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.SpeedBox)).BeginInit();
@@ -104,18 +105,18 @@
 			this.groupBox2.Controls.Add(this.label4);
 			this.groupBox2.Controls.Add(this.BreakValueBox);
 			this.groupBox2.Controls.Add(this.IsBreakableBox);
-			this.groupBox2.Location = new System.Drawing.Point(6, 79);
+			this.groupBox2.Location = new System.Drawing.Point(9, 123);
 			this.groupBox2.Name = "groupBox2";
 			this.groupBox2.Size = new System.Drawing.Size(166, 146);
 			this.groupBox2.TabIndex = 4;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Properties :";
 			// 
-			// ItemPassThroughBox
+			// SmallItemPassThroughBox
 			// 
 			this.SmallItemPassThroughBox.AutoSize = true;
 			this.SmallItemPassThroughBox.Location = new System.Drawing.Point(11, 123);
-			this.SmallItemPassThroughBox.Name = "ItemPassThroughBox";
+			this.SmallItemPassThroughBox.Name = "SmallItemPassThroughBox";
 			this.SmallItemPassThroughBox.Size = new System.Drawing.Size(142, 17);
 			this.SmallItemPassThroughBox.TabIndex = 6;
 			this.SmallItemPassThroughBox.Text = "Small items pass through";
@@ -204,6 +205,7 @@
 			// 
 			// groupBox3
 			// 
+			this.groupBox3.Controls.Add(this.ActorPropertiesBox);
 			this.groupBox3.Controls.Add(this.SwitchCountBox);
 			this.groupBox3.Controls.Add(this.label1);
 			this.groupBox3.Controls.Add(this.groupBox2);
@@ -230,6 +232,15 @@
 			this.SwitchCountBox.SwitchCount = switchCount1;
 			this.SwitchCountBox.TabIndex = 5;
 			this.SwitchCountBox.Title = "Switch count";
+			// 
+			// ActorPropertiesBox
+			// 
+			this.ActorPropertiesBox.Actor = null;
+			this.ActorPropertiesBox.Location = new System.Drawing.Point(178, 149);
+			this.ActorPropertiesBox.MinimumSize = new System.Drawing.Size(130, 120);
+			this.ActorPropertiesBox.Name = "ActorPropertiesBox";
+			this.ActorPropertiesBox.Size = new System.Drawing.Size(140, 120);
+			this.ActorPropertiesBox.TabIndex = 6;
 			// 
 			// DoorControl
 			// 
@@ -267,5 +278,6 @@
 		private System.Windows.Forms.CheckBox HasButtonBox;
 		private System.Windows.Forms.CheckBox SmallItemPassThroughBox;
 		private SwitchCountControl SwitchCountBox;
+		private Actor.SquareActorControl ActorPropertiesBox;
 	}
 }
