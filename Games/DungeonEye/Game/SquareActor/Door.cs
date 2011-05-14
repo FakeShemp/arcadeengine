@@ -58,7 +58,7 @@ namespace DungeonEye
 			if (Square != null || Square.Maze != null)
 				Type = Square.Maze.DefaultDoorType;
 
-			IsEnabled = IsOpen;
+			//IsActivated = IsOpen;
 		}
 
 
@@ -227,7 +227,7 @@ namespace DungeonEye
 		public void Open()
 		{
 			State = DoorState.Opening;
-			IsEnabled = true;
+			//IsActivated = true;
 			//	Audio.PlaySample(0, OpenSound);
 		}
 
@@ -242,7 +242,7 @@ namespace DungeonEye
 			//	return;
 
 			State = DoorState.Closing;
-			IsEnabled = false;
+			//IsActivated = false;
 			//	Audio.PlaySample(0, CloseSound);
 		}
 
@@ -265,15 +265,15 @@ namespace DungeonEye
 		}
 
 
-		#region Events
-
+		#region Actions
 
 		/// <summary>
 		/// Opens the door
 		/// </summary>
-		public override void Enable()
+		public override void Activate()
 		{
-			//base.Activate();
+			if (!IsActivated)
+				return;
 
 			if (Count.Activate())
 				Open();
@@ -283,14 +283,15 @@ namespace DungeonEye
 		/// <summary>
 		/// Closes the door
 		/// </summary>
-		public override void Disable()
+		public override void Deactivate()
 		{
-			//base.Deactivate();
+			if (!IsActivated)
+				return;
+
 
 			if (Count.Deactivate())
 				Close();
 		}
-
 
 
 		/// <summary>

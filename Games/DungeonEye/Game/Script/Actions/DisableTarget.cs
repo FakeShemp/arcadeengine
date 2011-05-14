@@ -31,7 +31,7 @@ using DungeonEye.Gui;
 namespace DungeonEye.Script.Actions
 {
 	/// <summary>
-	/// 
+	/// Disables a target
 	/// </summary>
 	public class DisableTarget : ActionBase
 	{
@@ -51,7 +51,17 @@ namespace DungeonEye.Script.Actions
 		/// <returns></returns>
 		public override bool Run()
 		{
+			if (Target == null)
+				return false;
 
+			// Get the target
+			Square target = Target.GetSquare(GameScreen.Dungeon);
+			if (target == null)
+				return false;
+
+			// Get the actor
+			if (target.Actor != null)
+				target.Actor.Enable();
 
 			return true;
 		}

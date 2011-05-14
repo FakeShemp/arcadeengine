@@ -39,7 +39,7 @@ namespace DungeonEye
 		public SquareActor(Square square)
 		{
 			Square = square;
-			IsEnabled = true;
+			IsActivated = true;
 		}
 
 
@@ -77,7 +77,8 @@ namespace DungeonEye
 		}
 
 
-		#region Script
+
+		#region Triggers
 
 		/// <summary>
 		/// A hero interacted with a side of the square
@@ -179,7 +180,7 @@ namespace DungeonEye
 		#endregion
 
 
-		#region Events
+		#region Actions
 
 		/// <summary>
 		/// Enables the actor
@@ -200,11 +201,29 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Toggles the actor
+		/// Activates the actor
+		/// </summary>
+		public virtual void Activate()
+		{
+			IsActivated = true;
+		}
+
+
+		/// <summary>
+		/// Deactivates the actor
+		/// </summary>
+		public virtual void Deactivate()
+		{
+			IsActivated = false;
+		}
+
+
+		/// <summary>
+		/// Toggles the actor state
 		/// </summary>
 		public virtual void Toggle()
 		{
-			if (IsEnabled)
+			if (IsActivated)
 				Disable();
 			else
 				Enable();
@@ -264,6 +283,12 @@ namespace DungeonEye
 			{
 				case "isactivated":
 				{
+					IsActivated = bool.Parse(node.InnerXml);
+				}
+				break;
+
+				case "isenabled":
+				{
 					IsEnabled = bool.Parse(node.InnerXml);
 				}
 				break;
@@ -290,7 +315,8 @@ namespace DungeonEye
 			if (writer == null)
 				return false;
 
-			writer.WriteElementString("isactivated", IsEnabled.ToString());
+			writer.WriteElementString("isactivated", IsActivated.ToString());
+			writer.WriteElementString("isenabled", IsEnabled.ToString());
 
 			return true;
 		}
@@ -343,10 +369,20 @@ namespace DungeonEye
 		/// <summary>
 		/// Does the actor is activated
 		/// </summary>
+		public bool IsActivated
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// Does the actor is enabled
+		/// </summary>
 		public bool IsEnabled
 		{
 			get;
-			set;
+			private set;
 		}
 
 

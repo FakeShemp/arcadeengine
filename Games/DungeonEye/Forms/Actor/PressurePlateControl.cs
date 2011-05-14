@@ -74,6 +74,7 @@ namespace DungeonEye.Forms
 			IsHiddenBox.Checked = PressurePlate.IsHidden;
 			DecorationIdBox.Value = PressurePlate.DecorationID;
 			WasUsedBox.Checked = PressurePlate.WasUsed;
+			ReusableBox.Checked = PressurePlate.Reusable;
 		}
 
 

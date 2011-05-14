@@ -125,7 +125,7 @@ namespace DungeonEye
 			ConsumeItemBox.Checked = WallSwitch.ConsumeItem;
 			ReusableBox.Checked = WallSwitch.Reusable;
 			WasUsedBox.Checked = WallSwitch.WasUsed;
-			IsActivatedBox.Checked = WallSwitch.IsEnabled;
+			IsActivatedBox.Checked = WallSwitch.IsActivated;
 		}
 
 
@@ -141,7 +141,10 @@ namespace DungeonEye
 			if (WallSwitch == null)
 				return;
 
-			WallSwitch.IsEnabled = IsActivatedBox.Checked;
+			if (IsActivatedBox.Checked)
+				WallSwitch.Activate();
+			else
+				WallSwitch.Deactivate();
 		}
 
 		/// <summary>

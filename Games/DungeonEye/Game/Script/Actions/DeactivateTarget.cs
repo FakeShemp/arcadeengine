@@ -6,7 +6,7 @@ using System.Text;
 namespace DungeonEye.Script.Actions
 {
 	/// <summary>
-	/// Deactivate a target
+	/// Deactivates a target
 	/// </summary>
 	public class DeactivateTarget : ActionBase
 	{
@@ -34,7 +34,7 @@ namespace DungeonEye.Script.Actions
 				return false;
 
 			if (target.Actor != null)
-				target.Actor.Disable();
+				target.Actor.Deactivate();
 
 			return true;
 		}

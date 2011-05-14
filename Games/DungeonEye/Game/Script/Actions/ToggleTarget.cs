@@ -6,7 +6,7 @@ using System.Text;
 namespace DungeonEye.Script.Actions
 {
 	/// <summary>
-	/// Toggle action
+	/// Toggles a target
 	/// </summary>
 	public class ToggleTarget : ActionBase
 	{

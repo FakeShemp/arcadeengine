@@ -31,14 +31,14 @@ using DungeonEye.Script;
 namespace DungeonEye.Script.Actions
 {
 	/// <summary>
-	/// Activates a target
+	/// Enables a target
 	/// </summary>
-	public class ActivateTarget : ActionBase
+	public class EnableTarget : ActionBase
 	{
 		/// <summary>
 		/// 
 		/// </summary>
-		public ActivateTarget()
+		public EnableTarget()
 		{
 			Name = XmlTag;
 		}
@@ -60,7 +60,7 @@ namespace DungeonEye.Script.Actions
 
 			// Get the actor
 			if (target.Actor != null)
-				target.Actor.Activate();
+				target.Actor.Enable();
 
 			return true;
 		}
@@ -124,7 +124,7 @@ namespace DungeonEye.Script.Actions
 		/// <summary>
 		/// 
 		/// </summary>
-		public const string XmlTag = "ActivateTarget";
+		public const string XmlTag = "EnableTarget";
 
 
 		#endregion

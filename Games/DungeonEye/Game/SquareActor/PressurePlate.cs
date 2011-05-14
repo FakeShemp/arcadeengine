@@ -41,7 +41,8 @@ namespace DungeonEye
 		/// Constructor
 		/// </summary>
 		/// <param name="square">Square handle</param>
-		public PressurePlate(Square square) : base(square)
+		public PressurePlate(Square square)
+			: base(square)
 		{
 			Scripts = new List<PressurePlateScript>();
 			AcceptItems = true;
@@ -82,8 +83,8 @@ namespace DungeonEye
 		void RunScript(PressurcePlateCondition condition)
 		{
 			// Not activated
-			//if (!IsActivated)
-			//    return;
+			if (!IsEnabled)
+				return;
 
 			// Already used
 			if (!Reusable && WasUsed)
@@ -184,7 +185,13 @@ namespace DungeonEye
 						}
 					}
 					break;
-					
+
+					case "used":
+					{
+						WasUsed = bool.Parse(node.InnerText);
+					}
+					break;
+
 					default:
 					{
 						base.Load(node);
@@ -215,6 +222,7 @@ namespace DungeonEye
 
 			writer.WriteElementString("ishidden", IsHidden.ToString());
 			writer.WriteElementString("reusable", Reusable.ToString());
+			writer.WriteElementString("used", WasUsed.ToString());
 
 			writer.WriteStartElement("decoration");
 			writer.WriteAttributeString("activated", DecorationID.ToString());
@@ -228,7 +236,7 @@ namespace DungeonEye
 					script.Save(writer);
 				writer.WriteEndElement();
 			}
-			
+
 			writer.WriteEndElement();
 
 			return true;
@@ -239,7 +247,7 @@ namespace DungeonEye
 		#endregion
 
 
-		#region Script
+		#region Triggers
 
 		/// <summary>
 		/// 
@@ -331,21 +339,15 @@ namespace DungeonEye
 			get;
 			set;
 		}
-		
-		
+
+
 		/// <summary>
 		/// Switch is already used
 		/// </summary>
 		public bool WasUsed
 		{
-			get
-			{
-				return !IsEnabled;
-			}
-			set
-			{
-				IsEnabled = !value;
-			}
+			get;
+			set;
 		}
 
 

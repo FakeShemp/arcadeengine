@@ -517,6 +517,7 @@
     <Compile Include="Game\Decoration.cs" />
     <Compile Include="Game\GameColors.cs" />
     <Compile Include="Game\Script\Actions\ActionBase.cs" />
+    <Compile Include="Game\Script\Actions\EnableTarget.cs" />
     <Compile Include="Game\Script\Actions\SetTo.cs" />
     <Compile Include="Game\Script\Actions\DisplayMessage.cs" />
     <Compile Include="Game\Script\ScriptBase.cs" />

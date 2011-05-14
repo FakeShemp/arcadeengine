@@ -66,7 +66,7 @@ namespace DungeonEye
 			if (td == null)
 				return;
 
-			if (IsEnabled)
+			if (IsActivated)
 				batch.FillRectangle(new Rectangle(td.Location, new Size(50, 50)), Color.Red);
 			//TODO
 			//if (td != null && !IsHidden)
@@ -214,7 +214,7 @@ namespace DungeonEye
 		/// <returns></returns>
 		public override bool OnTeamEnter()
 		{
-			if (Target == null || !IsEnabled)
+			if (Target == null || !IsActivated)
 				return false;
 
 			Team team = GameScreen.Team;
@@ -238,7 +238,7 @@ namespace DungeonEye
 		/// <returns></returns>
 		public override bool OnMonsterEnter(Monster monster)
 		{
-			if (monster == null || IsEnabled)
+			if (monster == null || IsActivated)
 				return false;
 
 			if (Target == null)

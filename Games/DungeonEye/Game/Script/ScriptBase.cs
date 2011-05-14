@@ -46,11 +46,10 @@ namespace DungeonEye.Script
 		/// <returns>True on success</returns>
 		public virtual bool Run()
 		{
-			if (Action == null)
-				return false;
-
-
-			return Action.Run();
+			if (Action != null)
+				return Action.Run();
+			
+			return false;
 		}
 
 

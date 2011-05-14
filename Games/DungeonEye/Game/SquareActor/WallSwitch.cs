@@ -40,8 +40,7 @@ namespace DungeonEye
 		/// Constructor
 		/// </summary>
 		/// <param name="square">Parent square handle</param>
-		public WallSwitch(Square square)
-			: base(square)
+		public WallSwitch(Square square) : base(square)
 		{
 			ActivatedDecoration = -1;
 			DeactivatedDecoration = -1;
@@ -50,6 +49,8 @@ namespace DungeonEye
 			WasUsed = false;
 		}
 
+
+		#region Triggers
 
 		/// <summary>
 		/// 
@@ -65,11 +66,11 @@ namespace DungeonEye
 				return false;
 
 			// Not in the decoration zone
-			if (!Square.Maze.Decoration.IsPointInside(IsEnabled ? ActivatedDecoration : DeactivatedDecoration, location))
+			if (!Square.Maze.Decoration.IsPointInside(IsActivated ? ActivatedDecoration : DeactivatedDecoration, location))
 				return false;
 
 			// Switch already used and not reusable
-			if ((WasUsed && !Reusable) || (!IsEnabled))
+			if ((WasUsed && !Reusable) || (!IsActivated))
 			{
 				GameMessage.AddMessage("It's already unlocked.", GameColors.Red);
 				return true;
@@ -109,28 +110,35 @@ namespace DungeonEye
 
 			WasUsed = true;
 
+			//Run();
+
 			State = !State;
 
-			Run();
 			
 
 			return true;
 		}
 
 
+		#endregion
 
 
-		/// <summary>
-		/// Run scripts
-		/// </summary>
-		void Run()
-		{
-			if (!IsEnabled)
-				return;
+		#region Actions
 
-			foreach (WallSwitchScript script in Scripts)
-				script.Run();
-		}
+		///// <summary>
+		///// Run scripts
+		///// </summary>
+		//public override void Run()
+		//{
+		//    if (!IsActivated)
+		//        return;
+
+		//    foreach (WallSwitchScript script in Scripts)
+		//        script.Run();
+		//}
+
+		#endregion
+
 
 		/// <summary>
 		/// Try to picklock the switch
