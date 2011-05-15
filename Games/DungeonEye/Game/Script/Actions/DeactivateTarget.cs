@@ -43,6 +43,23 @@ namespace DungeonEye.Script.Actions
 		/// <summary>
 		/// 
 		/// </summary>
+		/// <returns></returns>
+		public override string ToString()
+		{
+			string str = "Deactivates target at ";
+
+			if (Target != null)
+				str += Target.ToStringShort();
+
+			return str;
+		}
+
+
+		#region IO
+
+		/// <summary>
+		/// 
+		/// </summary>
 		/// <param name="xml"></param>
 		/// <returns></returns>
 		public override bool Load(XmlNode xml)
@@ -87,7 +104,7 @@ namespace DungeonEye.Script.Actions
 			return true;
 		}
 
-
+		#endregion
 
 
 		#region Properties

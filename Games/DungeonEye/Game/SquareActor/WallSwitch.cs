@@ -70,7 +70,7 @@ namespace DungeonEye
 				return false;
 
 			// Switch already used and not reusable
-			if ((WasUsed && !Reusable)) // || (!IsActivated))
+			if ((WasUsed && !Reusable) || !IsEnabled)
 			{
 				GameMessage.AddMessage("It's already unlocked.", GameColors.Red);
 				return true;
@@ -108,9 +108,15 @@ namespace DungeonEye
 					GameScreen.Team.SetItemInHand(null);
 			}
 
-			WasUsed = true;
+		//	WasUsed = true;
 
 			Toggle();
+
+
+			// Execute each scripts
+			foreach (WallSwitchScript script in Scripts)
+				script.Run();
+
 
 			return true;
 		}
@@ -120,6 +126,23 @@ namespace DungeonEye
 
 
 		#region Actions
+
+		public override void Activate()
+		{
+			base.Activate();
+
+			WasUsed = true;
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public override void Deactivate()
+		{
+			base.Deactivate();
+
+			WasUsed = true;
+		}
 
 		#endregion
 

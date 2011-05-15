@@ -275,7 +275,7 @@ namespace DungeonEye
 			if (!IsEnabled)
 				return;
 
-			if (Count.Activate())
+			if (Count.Deactivate())
 				Close();
 		}
 
@@ -289,21 +289,11 @@ namespace DungeonEye
 				return;
 
 
-			if (Count.Deactivate())
+			if (Count.Activate())
 				Open();
 		}
 
 
-		///// <summary>
-		///// 
-		///// </summary>
-		//public override void Toggle()
-		//{
-		//    if (IsOpen)
-		//        Disable();
-		//    else
-		//        Enable();
-		//}
 
 		#endregion
 

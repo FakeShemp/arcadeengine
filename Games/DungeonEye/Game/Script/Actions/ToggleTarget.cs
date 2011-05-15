@@ -41,6 +41,8 @@ namespace DungeonEye.Script.Actions
 		}
 
 
+		#region IO
+
 		/// <summary>
 		/// 
 		/// </summary>
@@ -87,6 +89,22 @@ namespace DungeonEye.Script.Actions
 			return true;
 		}
 
+		#endregion
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString()
+		{
+			string str = "Toggles target at ";
+
+			if (Target != null)
+				str += Target.ToStringShort();
+
+			return str;
+		}
 
 
 
