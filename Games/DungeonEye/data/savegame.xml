@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <Team>
 	<dungeon name="EOB_2" />
-	<location maze="Catacomb - 02" x="2" y="34" direction="East" position="NorthEast" />
+	<location maze="Temple - 01" x="14" y="11" direction="West" position="NorthEast" />
 	<position slot="FrontLeft">
 		<hero name="Allabar">
 			<hitpoint current="16" max="23" />

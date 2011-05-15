@@ -66,8 +66,11 @@ namespace DungeonEye
 			if (td == null)
 				return;
 
+
+
 			if (IsActivated)
-				batch.FillRectangle(new Rectangle(td.Location, new Size(50, 50)), Color.Red);
+				//batch.FillRectangle(new Rectangle(td.Location, new Size(50, 50)), Color.Red);
+				Decoration.Draw(batch, Square.Maze.FloorPitDeco, position);
 			//TODO
 			//if (td != null && !IsHidden)
 			//    batch.DrawTile(TileSet, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);

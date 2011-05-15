@@ -34,6 +34,16 @@ namespace DungeonEye.Script.Actions
 		/// <summary>
 		/// 
 		/// </summary>
+		/// <returns></returns>
+		public override string ToString()
+		{
+			return "Give : " + Name;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
 		/// <param name="xml"></param>
 		/// <returns></returns>
 		public override bool Load(XmlNode xml)
@@ -62,6 +72,13 @@ namespace DungeonEye.Script.Actions
 		/// 
 		/// </summary>
 		public const string XmlTag = "GiveItem";
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		string Name;
+
 
 
 		#endregion

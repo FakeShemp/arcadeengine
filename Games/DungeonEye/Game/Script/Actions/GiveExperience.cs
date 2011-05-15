@@ -32,6 +32,16 @@ namespace DungeonEye.Script.Actions
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString()
+		{
+			return "Give " + Amount + " XP";
+		}
+
+
 		#region IO
 
 

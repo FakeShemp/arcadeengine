@@ -29,6 +29,14 @@ namespace DungeonEye.Script.Actions
 			return true;
 		}
 
+		public override string ToString()
+		{
+
+			string str = "Joins character ";
+
+
+			return str;
+		}
 
 		/// <summary>
 		/// 

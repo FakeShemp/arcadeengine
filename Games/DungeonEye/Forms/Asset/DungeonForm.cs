@@ -249,7 +249,9 @@ namespace DungeonEye.Forms
 
 			DecorationNameBox.SelectedItem = maze.DecorationName;
 			WallTileSetNameBox.SelectedItem = maze.WallTilesetName;
-
+			FloorPitDecoIdBox.Value = maze.FloorPitDeco;
+			CeilingDecoIdBox.Value = maze.CeilingPitDeco;
+			DoorDecoIdBox.Value = maze.DoorDeco;
 
 			Maze = maze;
 		}
@@ -529,6 +531,18 @@ namespace DungeonEye.Forms
 
 
 		#region Events
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void MazePropertiesBox_Click(object sender, EventArgs e)
+		{
+			MazePropertiesForm form = new MazePropertiesForm(Maze);
+			form.ShowDialog();
+
+		}
 
 
 		/// <summary>
@@ -1381,6 +1395,46 @@ namespace DungeonEye.Forms
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		private void DoorDecoIdBox_ValueChanged(object sender, EventArgs e)
+		{
+			if (Maze == null)
+				return;
+
+			Maze.DoorDeco = (int)DoorDecoIdBox.Value;
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void FloorPitDecoIdBox_ValueChanged(object sender, EventArgs e)
+		{
+			if (Maze == null)
+				return;
+
+			Maze.FloorPitDeco = (int)FloorPitDecoIdBox.Value;
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void CeilingDecoIdBox_ValueChanged(object sender, EventArgs e)
+		{
+			if (Maze == null)
+				return;
+
+			Maze.CeilingPitDeco = (int)CeilingDecoIdBox.Value;
+		}
+
+	
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void MazeTab_Enter(object sender, EventArgs e)
 		{
 			UpdateMazeTab();
@@ -1524,7 +1578,6 @@ namespace DungeonEye.Forms
 
 
 		#endregion
-
 
 	}
 }

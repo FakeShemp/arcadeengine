@@ -103,6 +103,10 @@ namespace DungeonEye
 		//		td = DisplayCoordinates.GetDoor(ViewFieldPosition.Team);
 		//		if (td != null)
 		//			batch.DrawTile(overlay, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);
+				if (Square.Maze.Decoration != null)
+				{
+					Square.Maze.Decoration.Draw(batch, Square.Maze.DoorDeco, position);
+				}
 			}
 
 			// Draw the door

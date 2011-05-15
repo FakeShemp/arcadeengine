@@ -57,6 +57,14 @@ namespace DungeonEye.Script.Actions
 			return true;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString()
+		{
+			return "Display : " + Message;
+		}
 
 		#region IO
 

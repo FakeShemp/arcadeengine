@@ -195,6 +195,18 @@
     <Compile Include="Forms\Actor\WallSwitchScriptForm.Designer.cs">
       <DependentUpon>WallSwitchScriptForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Asset\MazePropertiesControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Asset\MazePropertiesControl.Designer.cs">
+      <DependentUpon>MazePropertiesControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Asset\MazePropertiesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Asset\MazePropertiesForm.Designer.cs">
+      <DependentUpon>MazePropertiesForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\CardinalPointControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -677,6 +689,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Actor\WallSwitchScriptForm.resx">
       <DependentUpon>WallSwitchScriptForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Asset\MazePropertiesControl.resx">
+      <DependentUpon>MazePropertiesControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Asset\MazePropertiesForm.resx">
+      <DependentUpon>MazePropertiesForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\CardinalPointControl.resx">
       <DependentUpon>CardinalPointControl.cs</DependentUpon>

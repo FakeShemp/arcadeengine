@@ -65,6 +65,20 @@ namespace DungeonEye.Script.Actions
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString()
+		{
+			string str = "Set to ";
+			if (Square != null)
+				str += Square.ToString();
+
+			return str;
+		}
+
+
 		#region IO
 
 		/// <summary>

@@ -53,6 +53,10 @@ namespace DungeonEye
 			ThrownItems = new List<ThrownItem>();
 			Zones = new List<MazeZone>();
 
+			DoorDeco = -1;
+			CeilingPitDeco = -1;
+			FloorPitDeco = -1;
+
 			IsDisposed = false;
 		}
 
@@ -971,6 +975,14 @@ namespace DungeonEye
 					}
 					break;
 
+					case "decorations":
+					{
+						FloorPitDeco = int.Parse(node.Attributes["floorpit"].Value);
+						CeilingPitDeco = int.Parse(node.Attributes["ceilingpit"].Value);
+						DoorDeco = int.Parse(node.Attributes["door"].Value);
+					}
+					break;
+
 					case "doors":
 					{
 						DefaultDoorType = (DoorType)Enum.Parse(typeof(DoorType), node.Attributes["type"].Value);
@@ -1042,6 +1054,11 @@ namespace DungeonEye
 			writer.WriteAttributeString("type", DefaultDoorType.ToString());
 			writer.WriteEndElement();
 
+			writer.WriteStartElement("decorations");
+			writer.WriteAttributeString("ceilingpit", CeilingPitDeco.ToString());
+			writer.WriteAttributeString("floorpit", FloorPitDeco.ToString());
+			writer.WriteAttributeString("door", DoorDeco.ToString());
+			writer.WriteEndElement();
 
 			// Blocks
 			writer.WriteStartElement("blocks");
@@ -1442,6 +1459,35 @@ namespace DungeonEye
 			private set;
 		}
 
+
+		/// <summary>
+		/// Decoration ID for floor pits
+		/// </summary>
+		public int FloorPitDeco
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// Decoration ID for ceiling pits
+		/// </summary>
+		public int CeilingPitDeco
+		{
+			get;
+			set;
+		}
+
+
+		/// <summary>
+		/// Decoration ID for side door views
+		/// </summary>
+		public int DoorDeco
+		{
+			get;
+			set;
+		}
 		#endregion
 	}
 

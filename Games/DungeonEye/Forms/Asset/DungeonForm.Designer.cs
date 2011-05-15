@@ -75,10 +75,17 @@
 			this.DungeonTab = new System.Windows.Forms.TabPage();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
 			this.ItemTileSetBox = new System.Windows.Forms.ComboBox();
-			this.StartLocationBox = new DungeonEye.Forms.TargetControl();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.DungeonNoteBox = new System.Windows.Forms.TextBox();
 			this.MazeTab = new System.Windows.Forms.TabPage();
+			this.groupBox7 = new System.Windows.Forms.GroupBox();
+			this.DoorDecoIdBox = new System.Windows.Forms.NumericUpDown();
+			this.label6 = new System.Windows.Forms.Label();
+			this.groupBox6 = new System.Windows.Forms.GroupBox();
+			this.CeilingDecoIdBox = new System.Windows.Forms.NumericUpDown();
+			this.FloorPitDecoIdBox = new System.Windows.Forms.NumericUpDown();
+			this.label4 = new System.Windows.Forms.Label();
+			this.label2 = new System.Windows.Forms.Label();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.WallTileSetNameBox = new System.Windows.Forms.ComboBox();
 			this.label3 = new System.Windows.Forms.Label();
@@ -87,6 +94,7 @@
 			this.LeftPanel = new System.Windows.Forms.Panel();
 			this.groupBox5 = new System.Windows.Forms.GroupBox();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
+			this.StartLocationBox = new DungeonEye.Forms.TargetControl();
 			this.DungeonStripBox.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.RightPanel.SuspendLayout();
@@ -95,6 +103,11 @@
 			this.groupBox3.SuspendLayout();
 			this.groupBox1.SuspendLayout();
 			this.MazeTab.SuspendLayout();
+			this.groupBox7.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.DoorDecoIdBox)).BeginInit();
+			this.groupBox6.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.CeilingDecoIdBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.FloorPitDecoIdBox)).BeginInit();
 			this.groupBox2.SuspendLayout();
 			this.LeftPanel.SuspendLayout();
 			this.groupBox5.SuspendLayout();
@@ -598,17 +611,6 @@
 			this.ItemTileSetBox.TabIndex = 4;
 			this.ItemTileSetBox.SelectedIndexChanged += new System.EventHandler(this.ItemTileSetBox_SelectedIndexChanged);
 			// 
-			// StartLocationBox
-			// 
-			this.StartLocationBox.Dungeon = null;
-			this.StartLocationBox.Location = new System.Drawing.Point(6, 6);
-			this.StartLocationBox.MinimumSize = new System.Drawing.Size(175, 100);
-			this.StartLocationBox.Name = "StartLocationBox";
-			this.StartLocationBox.Size = new System.Drawing.Size(175, 100);
-			this.StartLocationBox.TabIndex = 6;
-			this.StartLocationBox.Title = "Start location :";
-			this.StartLocationBox.TargetChanged += new DungeonEye.Forms.TargetControl.TargetChangedEventHandler(this.StartLocationBox_TargetChanged);
-			// 
 			// groupBox1
 			// 
 			this.groupBox1.Controls.Add(this.DungeonNoteBox);
@@ -632,6 +634,8 @@
 			// MazeTab
 			// 
 			this.MazeTab.AutoScroll = true;
+			this.MazeTab.Controls.Add(this.groupBox7);
+			this.MazeTab.Controls.Add(this.groupBox6);
 			this.MazeTab.Controls.Add(this.groupBox2);
 			this.MazeTab.Location = new System.Drawing.Point(4, 22);
 			this.MazeTab.Name = "MazeTab";
@@ -641,6 +645,117 @@
 			this.MazeTab.Text = "Maze";
 			this.MazeTab.UseVisualStyleBackColor = true;
 			this.MazeTab.Enter += new System.EventHandler(this.MazeTab_Enter);
+			// 
+			// groupBox7
+			// 
+			this.groupBox7.Controls.Add(this.DoorDecoIdBox);
+			this.groupBox7.Controls.Add(this.label6);
+			this.groupBox7.Location = new System.Drawing.Point(179, 96);
+			this.groupBox7.Name = "groupBox7";
+			this.groupBox7.Size = new System.Drawing.Size(166, 77);
+			this.groupBox7.TabIndex = 7;
+			this.groupBox7.TabStop = false;
+			this.groupBox7.Text = "Door";
+			// 
+			// DoorDecoIdBox
+			// 
+			this.DoorDecoIdBox.Location = new System.Drawing.Point(95, 19);
+			this.DoorDecoIdBox.Maximum = new decimal(new int[] {
+            1215752191,
+            23,
+            0,
+            0});
+			this.DoorDecoIdBox.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+			this.DoorDecoIdBox.Name = "DoorDecoIdBox";
+			this.DoorDecoIdBox.Size = new System.Drawing.Size(55, 20);
+			this.DoorDecoIdBox.TabIndex = 6;
+			this.DoorDecoIdBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.DoorDecoIdBox.ThousandsSeparator = true;
+			this.DoorDecoIdBox.ValueChanged += new System.EventHandler(this.DoorDecoIdBox_ValueChanged);
+			// 
+			// label6
+			// 
+			this.label6.AutoSize = true;
+			this.label6.Location = new System.Drawing.Point(6, 21);
+			this.label6.Name = "label6";
+			this.label6.Size = new System.Drawing.Size(83, 13);
+			this.label6.TabIndex = 5;
+			this.label6.Text = "Door decoration";
+			// 
+			// groupBox6
+			// 
+			this.groupBox6.Controls.Add(this.CeilingDecoIdBox);
+			this.groupBox6.Controls.Add(this.FloorPitDecoIdBox);
+			this.groupBox6.Controls.Add(this.label4);
+			this.groupBox6.Controls.Add(this.label2);
+			this.groupBox6.Location = new System.Drawing.Point(6, 96);
+			this.groupBox6.Name = "groupBox6";
+			this.groupBox6.Size = new System.Drawing.Size(167, 77);
+			this.groupBox6.TabIndex = 6;
+			this.groupBox6.TabStop = false;
+			this.groupBox6.Text = "Pit";
+			// 
+			// CeilingDecoIdBox
+			// 
+			this.CeilingDecoIdBox.Location = new System.Drawing.Point(103, 45);
+			this.CeilingDecoIdBox.Maximum = new decimal(new int[] {
+            1215752191,
+            23,
+            0,
+            0});
+			this.CeilingDecoIdBox.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+			this.CeilingDecoIdBox.Name = "CeilingDecoIdBox";
+			this.CeilingDecoIdBox.Size = new System.Drawing.Size(55, 20);
+			this.CeilingDecoIdBox.TabIndex = 6;
+			this.CeilingDecoIdBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.CeilingDecoIdBox.ThousandsSeparator = true;
+			this.CeilingDecoIdBox.ValueChanged += new System.EventHandler(this.CeilingDecoIdBox_ValueChanged);
+			// 
+			// FloorPitDecoIdBox
+			// 
+			this.FloorPitDecoIdBox.Location = new System.Drawing.Point(103, 19);
+			this.FloorPitDecoIdBox.Maximum = new decimal(new int[] {
+            1215752191,
+            23,
+            0,
+            0});
+			this.FloorPitDecoIdBox.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+			this.FloorPitDecoIdBox.Name = "FloorPitDecoIdBox";
+			this.FloorPitDecoIdBox.Size = new System.Drawing.Size(55, 20);
+			this.FloorPitDecoIdBox.TabIndex = 6;
+			this.FloorPitDecoIdBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.FloorPitDecoIdBox.ThousandsSeparator = true;
+			this.FloorPitDecoIdBox.ValueChanged += new System.EventHandler(this.FloorPitDecoIdBox_ValueChanged);
+			// 
+			// label4
+			// 
+			this.label4.AutoSize = true;
+			this.label4.Location = new System.Drawing.Point(6, 47);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(91, 13);
+			this.label4.TabIndex = 5;
+			this.label4.Text = "Ceiling decoration";
+			// 
+			// label2
+			// 
+			this.label2.AutoSize = true;
+			this.label2.Location = new System.Drawing.Point(14, 21);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(83, 13);
+			this.label2.TabIndex = 5;
+			this.label2.Text = "Floor decoration";
 			// 
 			// groupBox2
 			// 
@@ -736,6 +851,17 @@
 			this.groupBox4.TabStop = false;
 			this.groupBox4.Text = "Properties :";
 			// 
+			// StartLocationBox
+			// 
+			this.StartLocationBox.Dungeon = null;
+			this.StartLocationBox.Location = new System.Drawing.Point(6, 6);
+			this.StartLocationBox.MinimumSize = new System.Drawing.Size(175, 100);
+			this.StartLocationBox.Name = "StartLocationBox";
+			this.StartLocationBox.Size = new System.Drawing.Size(175, 100);
+			this.StartLocationBox.TabIndex = 6;
+			this.StartLocationBox.Title = "Start location :";
+			this.StartLocationBox.TargetChanged += new DungeonEye.Forms.TargetControl.TargetChangedEventHandler(this.StartLocationBox_TargetChanged);
+			// 
 			// DungeonForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -763,6 +889,13 @@
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			this.MazeTab.ResumeLayout(false);
+			this.groupBox7.ResumeLayout(false);
+			this.groupBox7.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.DoorDecoIdBox)).EndInit();
+			this.groupBox6.ResumeLayout(false);
+			this.groupBox6.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.CeilingDecoIdBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.FloorPitDecoIdBox)).EndInit();
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
 			this.LeftPanel.ResumeLayout(false);
@@ -833,5 +966,13 @@
 		private System.Windows.Forms.Label label1;
 		private TargetControl StartLocationBox;
 		private System.Windows.Forms.GroupBox groupBox3;
+		private System.Windows.Forms.GroupBox groupBox6;
+		private System.Windows.Forms.Label label4;
+		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.GroupBox groupBox7;
+		private System.Windows.Forms.NumericUpDown DoorDecoIdBox;
+		private System.Windows.Forms.Label label6;
+		private System.Windows.Forms.NumericUpDown CeilingDecoIdBox;
+		private System.Windows.Forms.NumericUpDown FloorPitDecoIdBox;
 	}
 }

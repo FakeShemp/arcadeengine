@@ -61,7 +61,7 @@ namespace DungeonEye.Forms
 				if (script.Action == null)
 					continue;
 
-				ScriptListBox.Items.Add(script.Action.Name);
+				ScriptListBox.Items.Add(script.Action.ToString());
 			}
 
 		}
