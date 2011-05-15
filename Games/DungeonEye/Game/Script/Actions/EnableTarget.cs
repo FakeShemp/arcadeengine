@@ -65,6 +65,20 @@ namespace DungeonEye.Script.Actions
 			return true;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString()
+		{
+			string str = "Enables target at ";
+
+			if (Target != null)
+				str += Target.ToStringShort();
+
+			return str;
+		}
+
 
 		#region IO
 

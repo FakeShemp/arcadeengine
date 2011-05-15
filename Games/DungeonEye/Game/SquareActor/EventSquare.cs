@@ -58,7 +58,6 @@ namespace DungeonEye
 		/// <summary>
 		/// Team enters the square
 		/// </summary>
-		/// <param name="team">Team handle</param>
 		/// <returns>True on success</returns>
 		public override bool OnTeamEnter()
 		{

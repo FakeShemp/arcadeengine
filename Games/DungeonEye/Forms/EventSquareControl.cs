@@ -57,6 +57,7 @@ namespace DungeonEye.Forms
 			TextBox.Text = eventsquare.Text;
 			TextJustificationBox.DataSource = Enum.GetValues(typeof(TextJustification));
 
+			ActorControlBox.Actor = eventsquare;
 
 			#region Choices
 

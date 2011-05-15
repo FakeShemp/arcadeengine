@@ -65,6 +65,7 @@
 			this.TextJustificationBox = new System.Windows.Forms.ComboBox();
 			this.TextColorBox = new System.Windows.Forms.Button();
 			this.TextBox = new System.Windows.Forms.TextBox();
+			this.ActorControlBox = new DungeonEye.Forms.Actor.SquareActorControl();
 			this.groupBox1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.PreviewBox)).BeginInit();
 			this.groupBox3.SuspendLayout();
@@ -198,6 +199,7 @@
 			// 
 			// PropertiesTab
 			// 
+			this.PropertiesTab.Controls.Add(this.ActorControlBox);
 			this.PropertiesTab.Controls.Add(this.groupBox5);
 			this.PropertiesTab.Controls.Add(this.groupBox4);
 			this.PropertiesTab.Controls.Add(this.groupBox2);
@@ -498,6 +500,15 @@
 			this.TextBox.TabIndex = 0;
 			this.TextBox.TextChanged += new System.EventHandler(this.TextBox_TextChanged);
 			// 
+			// ActorControlBox
+			// 
+			this.ActorControlBox.Actor = null;
+			this.ActorControlBox.Location = new System.Drawing.Point(5, 231);
+			this.ActorControlBox.MinimumSize = new System.Drawing.Size(130, 120);
+			this.ActorControlBox.Name = "ActorControlBox";
+			this.ActorControlBox.Size = new System.Drawing.Size(130, 120);
+			this.ActorControlBox.TabIndex = 8;
+			// 
 			// EventSquareControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -570,5 +581,6 @@
 		private System.Windows.Forms.Button TextColorBox;
 		private System.Windows.Forms.TextBox TextBox;
 		private System.Windows.Forms.Panel ColorPanelBox;
+		private Actor.SquareActorControl ActorControlBox;
 	}
 }

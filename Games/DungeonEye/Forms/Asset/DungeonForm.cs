@@ -53,7 +53,6 @@ namespace DungeonEye.Forms
 			ItemTileSetBox.DataSource = ResourceManager.GetAssets<TileSet>();
 			ItemTileSetBox.SelectedItem = dungeon.ItemTileSetName;
 
-			DefaultDoorBox.DataSource = Enum.GetNames(typeof(DoorType));
 			DecorationNameBox.Items.AddRange(ResourceManager.GetAssets<DecorationSet>().ToArray());
 			DecorationNameBox.Items.Insert(0, "");
 			WallTileSetNameBox.Items.AddRange(ResourceManager.GetAssets<TileSet>().ToArray());
@@ -248,7 +247,6 @@ namespace DungeonEye.Forms
 			Maze = null;
 
 
-			DefaultDoorBox.SelectedItem = maze.DefaultDoorType;
 			DecorationNameBox.SelectedItem = maze.DecorationName;
 			WallTileSetNameBox.SelectedItem = maze.WallTilesetName;
 

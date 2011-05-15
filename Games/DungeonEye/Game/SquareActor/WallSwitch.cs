@@ -108,19 +108,22 @@ namespace DungeonEye
 					GameScreen.Team.SetItemInHand(null);
 			}
 
-		//	WasUsed = true;
-
 			Toggle();
-
-
-			// Execute each scripts
-			foreach (WallSwitchScript script in Scripts)
-				script.Run();
-
 
 			return true;
 		}
 
+
+		/// <summary>
+		/// Executes scripts
+		/// </summary>
+		void Run()
+		{
+
+			// Execute each scripts
+			foreach (WallSwitchScript script in Scripts)
+				script.Run();
+		}
 
 		#endregion
 
@@ -130,7 +133,7 @@ namespace DungeonEye
 		public override void Activate()
 		{
 			base.Activate();
-
+			Run();
 			WasUsed = true;
 		}
 
@@ -140,7 +143,7 @@ namespace DungeonEye
 		public override void Deactivate()
 		{
 			base.Deactivate();
-
+			Run();
 			WasUsed = true;
 		}
 

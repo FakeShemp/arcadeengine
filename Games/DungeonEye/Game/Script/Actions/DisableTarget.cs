@@ -61,11 +61,27 @@ namespace DungeonEye.Script.Actions
 
 			// Get the actor
 			if (target.Actor != null)
-				target.Actor.Enable();
+				target.Actor.Disable();
 
 			return true;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString()
+		{
+			string str = "Disables target at ";
+
+			if (Target != null)
+				str += Target.ToStringShort();
+
+			return str;
+		}
+
+
+		#region IO
 
 		/// <summary>
 		/// 
@@ -74,6 +90,22 @@ namespace DungeonEye.Script.Actions
 		/// <returns></returns>
 		public override bool Load(XmlNode xml)
 		{
+			if (xml == null || xml.Name != XmlTag)
+				return false;
+
+			foreach (XmlNode node in xml)
+			{
+				switch (node.Name.ToLower())
+				{
+
+					default:
+					{
+						base.Load(node);
+					}
+					break;
+				}
+			}
+
 			return true;
 		}
 
@@ -85,9 +117,21 @@ namespace DungeonEye.Script.Actions
 		/// <returns></returns>
 		public override bool Save(XmlWriter writer)
 		{
+			if (writer == null)
+				return false;
+
+
+			writer.WriteStartElement(XmlTag);
+
+			base.Save(writer);
+
+			writer.WriteEndElement();
+
 			return true;
 		}
 
+
+		#endregion
 
 
 

@@ -63,7 +63,15 @@ namespace DungeonEye.Forms.Script
 
 			ActionBaseControl basectrl = null;
 
-			if (action is ToggleTarget)
+			if (action is EnableTarget)
+			{
+				basectrl = new EnableTargetControl(action as EnableTarget, Dungeon);
+			}
+			else if (action is DisableTarget)
+			{
+				basectrl = new DisableTargetControl(action as DisableTarget, Dungeon);
+			}
+			else if (action is ToggleTarget)
 			{
 				basectrl = new ToggleTargetControl(action as ToggleTarget, Dungeon);
 			}
@@ -143,6 +151,28 @@ namespace DungeonEye.Forms.Script
 
 
 		#region Control events
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void DisableBox_CheckedChanged(object sender, EventArgs e)
+		{
+			SetAction(new DisableTarget());
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void EnableBox_CheckedChanged(object sender, EventArgs e)
+		{
+			SetAction(new EnableTarget());
+		}
+
 
 		/// <summary>
 		/// 
@@ -362,7 +392,6 @@ namespace DungeonEye.Forms.Script
 		#endregion
 
 
-
 		#region Properties
 
 
@@ -398,8 +427,6 @@ namespace DungeonEye.Forms.Script
 		ScriptBase script;
 
 		#endregion
-
-
 
 	}
 }

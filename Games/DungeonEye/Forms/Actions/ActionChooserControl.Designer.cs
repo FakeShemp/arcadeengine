@@ -34,6 +34,7 @@
 			this.ActivatesBox = new System.Windows.Forms.RadioButton();
 			this.GiveExperienceBox = new System.Windows.Forms.RadioButton();
 			this.ChangePictureBox = new System.Windows.Forms.RadioButton();
+			this.DisplayMessageBox = new System.Windows.Forms.RadioButton();
 			this.JoinCharacterBox = new System.Windows.Forms.RadioButton();
 			this.DeactivatesBox = new System.Windows.Forms.RadioButton();
 			this.EndDialogBox = new System.Windows.Forms.RadioButton();
@@ -50,7 +51,8 @@
 			this.DeactActBox = new System.Windows.Forms.RadioButton();
 			this.ChangeTextBox = new System.Windows.Forms.RadioButton();
 			this.ActionPropertiesBox = new System.Windows.Forms.Panel();
-			this.DisplayMessageBox = new System.Windows.Forms.RadioButton();
+			this.EnableBox = new System.Windows.Forms.RadioButton();
+			this.DisableBox = new System.Windows.Forms.RadioButton();
 			this.groupBox1.SuspendLayout();
 			this.panel1.SuspendLayout();
 			this.SuspendLayout();
@@ -72,6 +74,8 @@
 			this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
 			this.panel1.AutoScroll = true;
+			this.panel1.Controls.Add(this.DisableBox);
+			this.panel1.Controls.Add(this.EnableBox);
 			this.panel1.Controls.Add(this.TogglesBox);
 			this.panel1.Controls.Add(this.ActivatesBox);
 			this.panel1.Controls.Add(this.GiveExperienceBox);
@@ -100,7 +104,7 @@
 			// TogglesBox
 			// 
 			this.TogglesBox.Appearance = System.Windows.Forms.Appearance.Button;
-			this.TogglesBox.Location = new System.Drawing.Point(3, 3);
+			this.TogglesBox.Location = new System.Drawing.Point(3, 76);
 			this.TogglesBox.Name = "TogglesBox";
 			this.TogglesBox.Size = new System.Drawing.Size(113, 23);
 			this.TogglesBox.TabIndex = 3;
@@ -113,7 +117,7 @@
 			// ActivatesBox
 			// 
 			this.ActivatesBox.Appearance = System.Windows.Forms.Appearance.Button;
-			this.ActivatesBox.Location = new System.Drawing.Point(3, 32);
+			this.ActivatesBox.Location = new System.Drawing.Point(3, 105);
 			this.ActivatesBox.Name = "ActivatesBox";
 			this.ActivatesBox.Size = new System.Drawing.Size(113, 23);
 			this.ActivatesBox.TabIndex = 3;
@@ -126,7 +130,7 @@
 			// GiveExperienceBox
 			// 
 			this.GiveExperienceBox.Appearance = System.Windows.Forms.Appearance.Button;
-			this.GiveExperienceBox.Location = new System.Drawing.Point(3, 438);
+			this.GiveExperienceBox.Location = new System.Drawing.Point(3, 511);
 			this.GiveExperienceBox.Name = "GiveExperienceBox";
 			this.GiveExperienceBox.Size = new System.Drawing.Size(113, 23);
 			this.GiveExperienceBox.TabIndex = 3;
@@ -139,7 +143,7 @@
 			// ChangePictureBox
 			// 
 			this.ChangePictureBox.Appearance = System.Windows.Forms.Appearance.Button;
-			this.ChangePictureBox.Location = new System.Drawing.Point(3, 264);
+			this.ChangePictureBox.Location = new System.Drawing.Point(3, 337);
 			this.ChangePictureBox.Name = "ChangePictureBox";
 			this.ChangePictureBox.Size = new System.Drawing.Size(113, 23);
 			this.ChangePictureBox.TabIndex = 3;
@@ -149,10 +153,23 @@
 			this.ChangePictureBox.UseVisualStyleBackColor = true;
 			this.ChangePictureBox.CheckedChanged += new System.EventHandler(this.ChangePictureBox_CheckedChanged);
 			// 
+			// DisplayMessageBox
+			// 
+			this.DisplayMessageBox.Appearance = System.Windows.Forms.Appearance.Button;
+			this.DisplayMessageBox.Location = new System.Drawing.Point(3, 627);
+			this.DisplayMessageBox.Name = "DisplayMessageBox";
+			this.DisplayMessageBox.Size = new System.Drawing.Size(113, 23);
+			this.DisplayMessageBox.TabIndex = 3;
+			this.DisplayMessageBox.TabStop = true;
+			this.DisplayMessageBox.Text = "Display Message";
+			this.DisplayMessageBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.DisplayMessageBox.UseVisualStyleBackColor = true;
+			this.DisplayMessageBox.CheckedChanged += new System.EventHandler(this.DisplayMessageBox_CheckedChanged);
+			// 
 			// JoinCharacterBox
 			// 
 			this.JoinCharacterBox.Appearance = System.Windows.Forms.Appearance.Button;
-			this.JoinCharacterBox.Location = new System.Drawing.Point(3, 525);
+			this.JoinCharacterBox.Location = new System.Drawing.Point(3, 598);
 			this.JoinCharacterBox.Name = "JoinCharacterBox";
 			this.JoinCharacterBox.Size = new System.Drawing.Size(113, 23);
 			this.JoinCharacterBox.TabIndex = 3;
@@ -165,7 +182,7 @@
 			// DeactivatesBox
 			// 
 			this.DeactivatesBox.Appearance = System.Windows.Forms.Appearance.Button;
-			this.DeactivatesBox.Location = new System.Drawing.Point(3, 61);
+			this.DeactivatesBox.Location = new System.Drawing.Point(3, 134);
 			this.DeactivatesBox.Name = "DeactivatesBox";
 			this.DeactivatesBox.Size = new System.Drawing.Size(113, 23);
 			this.DeactivatesBox.TabIndex = 3;
@@ -178,7 +195,7 @@
 			// EndDialogBox
 			// 
 			this.EndDialogBox.Appearance = System.Windows.Forms.Appearance.Button;
-			this.EndDialogBox.Location = new System.Drawing.Point(3, 409);
+			this.EndDialogBox.Location = new System.Drawing.Point(3, 482);
 			this.EndDialogBox.Name = "EndDialogBox";
 			this.EndDialogBox.Size = new System.Drawing.Size(113, 23);
 			this.EndDialogBox.TabIndex = 3;
@@ -191,7 +208,7 @@
 			// SetToBox
 			// 
 			this.SetToBox.Appearance = System.Windows.Forms.Appearance.Button;
-			this.SetToBox.Location = new System.Drawing.Point(3, 177);
+			this.SetToBox.Location = new System.Drawing.Point(3, 250);
 			this.SetToBox.Name = "SetToBox";
 			this.SetToBox.Size = new System.Drawing.Size(113, 23);
 			this.SetToBox.TabIndex = 3;
@@ -204,7 +221,7 @@
 			// HealingBox
 			// 
 			this.HealingBox.Appearance = System.Windows.Forms.Appearance.Button;
-			this.HealingBox.Location = new System.Drawing.Point(3, 496);
+			this.HealingBox.Location = new System.Drawing.Point(3, 569);
 			this.HealingBox.Name = "HealingBox";
 			this.HealingBox.Size = new System.Drawing.Size(113, 23);
 			this.HealingBox.TabIndex = 3;
@@ -217,7 +234,7 @@
 			// ExchangesBox
 			// 
 			this.ExchangesBox.Appearance = System.Windows.Forms.Appearance.Button;
-			this.ExchangesBox.Location = new System.Drawing.Point(3, 148);
+			this.ExchangesBox.Location = new System.Drawing.Point(3, 221);
 			this.ExchangesBox.Name = "ExchangesBox";
 			this.ExchangesBox.Size = new System.Drawing.Size(113, 23);
 			this.ExchangesBox.TabIndex = 3;
@@ -230,7 +247,7 @@
 			// EndChoiceBox
 			// 
 			this.EndChoiceBox.Appearance = System.Windows.Forms.Appearance.Button;
-			this.EndChoiceBox.Location = new System.Drawing.Point(3, 380);
+			this.EndChoiceBox.Location = new System.Drawing.Point(3, 453);
 			this.EndChoiceBox.Name = "EndChoiceBox";
 			this.EndChoiceBox.Size = new System.Drawing.Size(113, 23);
 			this.EndChoiceBox.TabIndex = 3;
@@ -243,7 +260,7 @@
 			// ActDeactBox
 			// 
 			this.ActDeactBox.Appearance = System.Windows.Forms.Appearance.Button;
-			this.ActDeactBox.Location = new System.Drawing.Point(3, 90);
+			this.ActDeactBox.Location = new System.Drawing.Point(3, 163);
 			this.ActDeactBox.Name = "ActDeactBox";
 			this.ActDeactBox.Size = new System.Drawing.Size(113, 23);
 			this.ActDeactBox.TabIndex = 3;
@@ -256,7 +273,7 @@
 			// GiveItemBox
 			// 
 			this.GiveItemBox.Appearance = System.Windows.Forms.Appearance.Button;
-			this.GiveItemBox.Location = new System.Drawing.Point(3, 467);
+			this.GiveItemBox.Location = new System.Drawing.Point(3, 540);
 			this.GiveItemBox.Name = "GiveItemBox";
 			this.GiveItemBox.Size = new System.Drawing.Size(113, 23);
 			this.GiveItemBox.TabIndex = 3;
@@ -269,7 +286,7 @@
 			// PlaySoundBox
 			// 
 			this.PlaySoundBox.Appearance = System.Windows.Forms.Appearance.Button;
-			this.PlaySoundBox.Location = new System.Drawing.Point(3, 206);
+			this.PlaySoundBox.Location = new System.Drawing.Point(3, 279);
 			this.PlaySoundBox.Name = "PlaySoundBox";
 			this.PlaySoundBox.Size = new System.Drawing.Size(113, 23);
 			this.PlaySoundBox.TabIndex = 3;
@@ -282,7 +299,7 @@
 			// EnableChoiceBox
 			// 
 			this.EnableChoiceBox.Appearance = System.Windows.Forms.Appearance.Button;
-			this.EnableChoiceBox.Location = new System.Drawing.Point(3, 351);
+			this.EnableChoiceBox.Location = new System.Drawing.Point(3, 424);
 			this.EnableChoiceBox.Name = "EnableChoiceBox";
 			this.EnableChoiceBox.Size = new System.Drawing.Size(113, 23);
 			this.EnableChoiceBox.TabIndex = 3;
@@ -295,7 +312,7 @@
 			// StopSoundBox
 			// 
 			this.StopSoundBox.Appearance = System.Windows.Forms.Appearance.Button;
-			this.StopSoundBox.Location = new System.Drawing.Point(3, 235);
+			this.StopSoundBox.Location = new System.Drawing.Point(3, 308);
 			this.StopSoundBox.Name = "StopSoundBox";
 			this.StopSoundBox.Size = new System.Drawing.Size(113, 23);
 			this.StopSoundBox.TabIndex = 3;
@@ -308,7 +325,7 @@
 			// DisableChoiceBox
 			// 
 			this.DisableChoiceBox.Appearance = System.Windows.Forms.Appearance.Button;
-			this.DisableChoiceBox.Location = new System.Drawing.Point(3, 322);
+			this.DisableChoiceBox.Location = new System.Drawing.Point(3, 395);
 			this.DisableChoiceBox.Name = "DisableChoiceBox";
 			this.DisableChoiceBox.Size = new System.Drawing.Size(113, 23);
 			this.DisableChoiceBox.TabIndex = 3;
@@ -321,7 +338,7 @@
 			// DeactActBox
 			// 
 			this.DeactActBox.Appearance = System.Windows.Forms.Appearance.Button;
-			this.DeactActBox.Location = new System.Drawing.Point(3, 119);
+			this.DeactActBox.Location = new System.Drawing.Point(3, 192);
 			this.DeactActBox.Name = "DeactActBox";
 			this.DeactActBox.Size = new System.Drawing.Size(113, 23);
 			this.DeactActBox.TabIndex = 3;
@@ -334,7 +351,7 @@
 			// ChangeTextBox
 			// 
 			this.ChangeTextBox.Appearance = System.Windows.Forms.Appearance.Button;
-			this.ChangeTextBox.Location = new System.Drawing.Point(3, 293);
+			this.ChangeTextBox.Location = new System.Drawing.Point(3, 366);
 			this.ChangeTextBox.Name = "ChangeTextBox";
 			this.ChangeTextBox.Size = new System.Drawing.Size(113, 23);
 			this.ChangeTextBox.TabIndex = 3;
@@ -354,18 +371,31 @@
 			this.ActionPropertiesBox.Size = new System.Drawing.Size(730, 664);
 			this.ActionPropertiesBox.TabIndex = 1;
 			// 
-			// DisplayMessageBox
+			// DisableBox
 			// 
-			this.DisplayMessageBox.Appearance = System.Windows.Forms.Appearance.Button;
-			this.DisplayMessageBox.Location = new System.Drawing.Point(3, 554);
-			this.DisplayMessageBox.Name = "DisplayMessageBox";
-			this.DisplayMessageBox.Size = new System.Drawing.Size(113, 23);
-			this.DisplayMessageBox.TabIndex = 3;
-			this.DisplayMessageBox.TabStop = true;
-			this.DisplayMessageBox.Text = "Display Message";
-			this.DisplayMessageBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.DisplayMessageBox.UseVisualStyleBackColor = true;
-			this.DisplayMessageBox.CheckedChanged += new System.EventHandler(this.DisplayMessageBox_CheckedChanged);
+			this.DisableBox.Appearance = System.Windows.Forms.Appearance.Button;
+			this.DisableBox.Location = new System.Drawing.Point(3, 32);
+			this.DisableBox.Name = "DisableBox";
+			this.DisableBox.Size = new System.Drawing.Size(113, 23);
+			this.DisableBox.TabIndex = 3;
+			this.DisableBox.TabStop = true;
+			this.DisableBox.Text = "Disables";
+			this.DisableBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.DisableBox.UseVisualStyleBackColor = true;
+			this.DisableBox.CheckedChanged += new System.EventHandler(this.DisableBox_CheckedChanged);
+			// 
+			// EnableBox
+			// 
+			this.EnableBox.Appearance = System.Windows.Forms.Appearance.Button;
+			this.EnableBox.Location = new System.Drawing.Point(3, 3);
+			this.EnableBox.Name = "EnableBox";
+			this.EnableBox.Size = new System.Drawing.Size(113, 23);
+			this.EnableBox.TabIndex = 3;
+			this.EnableBox.TabStop = true;
+			this.EnableBox.Text = "Enables";
+			this.EnableBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.EnableBox.UseVisualStyleBackColor = true;
+			this.EnableBox.CheckedChanged += new System.EventHandler(this.EnableBox_CheckedChanged);
 			// 
 			// ActionChooserControl
 			// 
@@ -403,7 +433,9 @@
 		private System.Windows.Forms.RadioButton EnableChoiceBox;
 		private System.Windows.Forms.RadioButton DisableChoiceBox;
 		private System.Windows.Forms.RadioButton ChangeTextBox;
-		private System.Windows.Forms.Panel panel1;
 		private System.Windows.Forms.RadioButton DisplayMessageBox;
+		private System.Windows.Forms.RadioButton DisableBox;
+		private System.Windows.Forms.RadioButton EnableBox;
+		private System.Windows.Forms.Panel panel1;
 	}
 }

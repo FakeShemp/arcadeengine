@@ -395,9 +395,4 @@ namespace DungeonEye
 		#endregion
 
 	}
-
-
-
-
-
 }

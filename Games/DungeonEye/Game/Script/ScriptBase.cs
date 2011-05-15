@@ -71,9 +71,27 @@ namespace DungeonEye.Script
 
 			switch (xml.Name)
 			{
+				case EnableTarget.XmlTag:
+				{
+					Action = new EnableTarget();
+				}
+				break;
+
+				case DisableTarget.XmlTag:
+				{
+					Action = new DisableTarget();
+				}
+				break;
+
 				case ActivateTarget.XmlTag:
 				{
 					Action = new ActivateTarget();
+				}
+				break;
+
+				case DeactivateTarget.XmlTag:
+				{
+					Action = new DeactivateTarget();
 				}
 				break;
 
@@ -89,21 +107,9 @@ namespace DungeonEye.Script
 				}
 				break;
 
-				case DeactivateTarget.XmlTag:
-				{
-					Action = new DeactivateTarget();
-				}
-				break;
-
 				case DisableChoice.XmlTag:
 				{
 					Action = new DisableChoice();
-				}
-				break;
-
-				case DisableTarget.XmlTag:
-				{
-					Action = new DisableTarget();
 				}
 				break;
 
