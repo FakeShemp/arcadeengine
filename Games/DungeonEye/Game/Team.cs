@@ -60,6 +60,7 @@ namespace DungeonEye
 			// Set initial location
 			if (Location == null)
 			{
+				Location = new DungeonLocation();
 				Teleport(GameScreen.Dungeon.StartLocation);
 				Location.Direction = GameScreen.Dungeon.StartLocation.Direction;
 			}

@@ -140,6 +140,9 @@ namespace ArcEngine.Asset
 			if (string.IsNullOrEmpty(text) || batch == null)
 				return;
 
+			if (GlyphTileset == null)
+			{
+			}
 
 			// Encode string to xml
 			string msg = "<?xml version=\"1.0\" encoding=\"unicode\" standalone=\"yes\"?><root>" + text + "</root>";

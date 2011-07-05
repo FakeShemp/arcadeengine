@@ -45,7 +45,6 @@ namespace DungeonEye
 		public GameScreen()
 		{
 			SpellBook = new SpellBook();
-			//	Team = new Team();
 		}
 
 
@@ -170,42 +169,42 @@ namespace DungeonEye
 		public bool Load()
 		{
 
-			if (!System.IO.File.Exists(GameSettings.SaveGameName))
+			if (System.IO.File.Exists(GameSettings.SaveGameName))
 			{
-				Trace.WriteLine("[GameScreen]LoadParty() : Unable to find file \"" + GameSettings.SaveGameName + "\".");
-				return false;
-			}
-
-			XmlDocument xml = new XmlDocument();
-			xml.Load(GameSettings.SaveGameName);
+				Trace.WriteLine("[GameScreen]LoadParty() : Unable to find file \"" + GameSettings.SaveGameName + "\". Loading default starting point !");
 
 
-			if (Team != null)
-				Team.Dispose();
-			Team = null;
-
-			if (Dungeon != null)
-				Dungeon.Dispose();
-			Dungeon = null;
+				XmlDocument xml = new XmlDocument();
+				xml.Load(GameSettings.SaveGameName);
 
 
-			foreach (XmlNode node in xml)
-			{
-				switch (node.Name)
+				if (Team != null)
+					Team.Dispose();
+				Team = null;
+
+				if (Dungeon != null)
+					Dungeon.Dispose();
+				Dungeon = null;
+
+
+				foreach (XmlNode node in xml)
 				{
-					case Team.Tag:
+					switch (node.Name)
 					{
-						Team = new Team();
-						Team.Load(node);
-					}
-					break;
+						case Team.Tag:
+							{
+								Team = new Team();
+								Team.Load(node);
+							}
+							break;
 
-					case "Dungeon":
-					{
-						Dungeon = new Dungeon();
-						Dungeon.Load(node);
+						case "Dungeon":
+							{
+								Dungeon = new Dungeon();
+								Dungeon.Load(node);
+							}
+							break;
 					}
-					break;
 				}
 			}
 

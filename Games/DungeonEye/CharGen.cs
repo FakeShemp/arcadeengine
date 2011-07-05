@@ -137,8 +137,15 @@ namespace DungeonEye
 		/// <param name="e"></param>
 		void PlayButton_Selected(object sender, EventArgs e)
 		{
+			// Generate the team
+			GameSettings.SaveGameName = string.Empty;
+			GameScreen screen = new GameScreen();
+			ScreenManager.AddScreen(screen);
 
-			ScreenManager.AddScreen(new GameScreen());
+			Team team = GameScreen.Team;
+			for (int i = 0; i < 4; i++)
+				team.AddHero(Heroes[i], (HeroPosition)i);
+
 			ExitScreen();
 		}
 
@@ -421,7 +428,7 @@ namespace DungeonEye
 
 
 			// If the team is ready, let's go !
-			if (PlayButton.Rectangle.Contains(Mouse.Location) && Mouse.IsNewButtonDown(System.Windows.Forms.MouseButtons.Left) && IsTeamReadyToPlay)
+			if (PlayButton.Rectangle.Contains(Mouse.Location) && Mouse.IsNewButtonDown(System.Windows.Forms.MouseButtons.Left) ) //&& IsTeamReadyToPlay)
 				PlayButton.OnSelectEntry();
 		}
 
