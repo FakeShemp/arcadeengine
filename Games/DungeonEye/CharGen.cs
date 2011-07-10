@@ -216,12 +216,61 @@ namespace DungeonEye
 				hero.AddToInventory(ResourceManager.CreateAsset<Item>("Iron ration"));
 				hero.AddToInventory(ResourceManager.CreateAsset<Item>("Potion of extra healing"));
 
-				foreach (HeroClass hclass in Enum.GetValues(typeof(HeroClass)))
+				switch (hero.Classes)
 				{
-					if (hero.CheckClass(hclass))
+					case HeroClass.Fighter:
 					{
-
+						hero.SetInventoryItem(InventoryPosition.Armor, ResourceManager.CreateAsset<Item>("scalemail +1"));
+						hero.SetInventoryItem(InventoryPosition.Primary, ResourceManager.CreateAsset<Item>("long sword"));
+						hero.SetInventoryItem(InventoryPosition.Secondary, ResourceManager.CreateAsset<Item>("shield"));
 					}
+					break;
+					case HeroClass.Ranger:
+					{
+						hero.SetInventoryItem(InventoryPosition.Armor, ResourceManager.CreateAsset<Item>("scalemail +1"));
+						hero.SetInventoryItem(InventoryPosition.Primary, ResourceManager.CreateAsset<Item>("long sword"));
+						hero.SetInventoryItem(InventoryPosition.Secondary, ResourceManager.CreateAsset<Item>("shield +1"));
+					}
+					break;
+					case HeroClass.Mage:
+					{
+						hero.SetInventoryItem(InventoryPosition.Armor, ResourceManager.CreateAsset<Item>("chainmail +1"));
+						hero.SetInventoryItem(InventoryPosition.Primary, ResourceManager.CreateAsset<Item>("long sword"));
+						hero.SetInventoryItem(InventoryPosition.Secondary, ResourceManager.CreateAsset<Item>("shield +1"));
+
+						hero.AddToInventory(ResourceManager.CreateAsset<Item>("mage scroll of magic missile"));
+						hero.AddToInventory(ResourceManager.CreateAsset<Item>("mage scroll of fireball"));
+					}
+					break;
+					case HeroClass.Paladin:
+					{
+						hero.SetInventoryItem(InventoryPosition.Armor, ResourceManager.CreateAsset<Item>("scalemail +1"));
+						hero.SetInventoryItem(InventoryPosition.Primary, ResourceManager.CreateAsset<Item>("short sword +1"));
+						hero.SetInventoryItem(InventoryPosition.Secondary, ResourceManager.CreateAsset<Item>("shield +1"));
+
+						hero.AddToInventory(ResourceManager.CreateAsset<Item>("paladin holy symbol"));
+						hero.AddToInventory(ResourceManager.CreateAsset<Item>("scroll of cure serious wounds"));
+					}
+					break;
+					case HeroClass.Cleric:
+					{
+						hero.SetInventoryItem(InventoryPosition.Armor, ResourceManager.CreateAsset<Item>("chainmail +1"));
+						hero.SetInventoryItem(InventoryPosition.Primary, ResourceManager.CreateAsset<Item>("mace +1"));
+						hero.SetInventoryItem(InventoryPosition.Secondary, ResourceManager.CreateAsset<Item>("shield"));
+
+						hero.AddToInventory(ResourceManager.CreateAsset<Item>("cleric holy symbol"));
+						hero.AddToInventory(ResourceManager.CreateAsset<Item>("cleric scroll of cure serious wounds"));
+					}
+					break;
+					case HeroClass.Thief:
+					{
+						hero.SetInventoryItem(InventoryPosition.Armor, ResourceManager.CreateAsset<Item>("leather armor +1"));
+						hero.SetInventoryItem(InventoryPosition.Primary, ResourceManager.CreateAsset<Item>("short sword +1"));
+						hero.SetInventoryItem(InventoryPosition.Secondary, ResourceManager.CreateAsset<Item>("shield +1"));
+
+						hero.AddToInventory(ResourceManager.CreateAsset<Item>("lock picks"));
+					}
+					break;
 				}
 			}
 		}

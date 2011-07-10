@@ -124,7 +124,7 @@ namespace DungeonEye
 
 			using (Stream icon = Storage.OpenFile("GameIcon.ico", FileAccess.Read))
 				Window.Icon = new Icon(icon);
-			Window.Text = "Dungeon Eye";
+			Window.Text = "Dungeon Eye - http://www.dungeoneye.net";
 
 			
 

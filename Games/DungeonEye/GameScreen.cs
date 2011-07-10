@@ -99,8 +99,8 @@ namespace DungeonEye
 
 			Hands = new Item[]
 			{
-				ResourceManager.CreateAsset<Item>("Left Hand"),
-				ResourceManager.CreateAsset<Item>("Right Hand")
+				ResourceManager.CreateAsset<Item>("left hand"),
+				ResourceManager.CreateAsset<Item>("right hand")
 			};
 
 			// Load savegame
@@ -415,7 +415,7 @@ namespace DungeonEye
 
 						// Hand
 						Item item = hero.GetInventoryItem(hand == HeroHand.Primary ? InventoryPosition.Primary : InventoryPosition.Secondary);
-						batch.DrawTile(Items, item != null ? item.TileID : Hands[i].TileID, new Point(pos.X + 96, pos.Y + 36 + yoffset));
+						fbatch.DrawTile(Items, item != null ? item.TileID : Hands[i].TileID, new Point(pos.X + 96, pos.Y + 36 + yoffset));
 
 						// Ghost hand
 						if (!hero.CanUseHand(hand))

@@ -25,8 +25,8 @@
 				<class name="Paladin" />
 				<xp points="32505" />
 			</profession>
-			<inventory position="Secondary" name="PickLock" />
-			<inventory position="Primary" name="Short Sword" />
+			<inventory position="Secondary" name="picklock" />
+			<inventory position="Primary" name="short sword" />
 			<waist position="0" name="Rock" />
 			<waist position="1" name="Rock" />
 			<waist position="2" name="Rock" />
@@ -55,21 +55,21 @@
 				<class name="Thief" />
 				<xp points="0" />
 			</profession>
-			<inventory position="Primary" name="Short Sword" />
-			<inventory position="Secondary" name="Grey Key" />
-			<backpack position="0" name="Grey Key" />
-			<backpack position="1" name="Grey Key" />
-			<backpack position="2" name="Grey Key" />
-			<backpack position="3" name="Grey Key" />
-			<backpack position="4" name="Grey Key" />
-			<backpack position="5" name="Grey Key" />
-			<backpack position="6" name="Grey Key" />
-			<backpack position="7" name="Grey Key" />
-			<backpack position="8" name="Grey Key" />
-			<backpack position="10" name="Grey Key" />
-			<backpack position="11" name="Grey Key" />
-			<backpack position="12" name="Grey Key" />
-			<backpack position="9" name="Boots" />
+			<inventory position="Primary" name="short sword" />
+			<inventory position="Secondary" name="grey key" />
+			<backpack position="0" name="grey key" />
+			<backpack position="1" name="grey key" />
+			<backpack position="2" name="grey key" />
+			<backpack position="3" name="grey key" />
+			<backpack position="4" name="grey key" />
+			<backpack position="5" name="grey key" />
+			<backpack position="6" name="grey key" />
+			<backpack position="7" name="grey key" />
+			<backpack position="8" name="grey key" />
+			<backpack position="10" name="grey key" />
+			<backpack position="11" name="grey key" />
+			<backpack position="12" name="grey key" />
+			<backpack position="9" name="boots" />
 		</hero>
 	</position>
 	<position slot="MiddleLeft">
@@ -95,11 +95,11 @@
 				<class name="Thief" />
 				<xp points="0" />
 			</profession>
-			<inventory position="Primary" name="Spell book" />
-			<inventory position="Secondary" name="Grey Key" />
-			<backpack position="4" name="Dart" />
-			<backpack position="5" name="Dart" />
-			<backpack position="6" name="Rock" />
+			<inventory position="Primary" name="spell book" />
+			<inventory position="Secondary" name="grey key" />
+			<backpack position="4" name="dart" />
+			<backpack position="5" name="dart" />
+			<backpack position="6" name="rock" />
 			<spell name="Armor" />
 			<spell name="Detect Magic" />
 			<spell name="Protect From Evil" />
@@ -143,11 +143,11 @@
 				<class name="Cleric" />
 				<xp points="450010" />
 			</profession>
-			<inventory position="Armor" name="Leather Armor" />
-			<inventory position="Primary" name="Cleric Holy Symbol" />
-			<inventory position="Secondary" name="Grey Key" />
-			<inventory position="Helmet" name="Helmet" />
-			<backpack position="6" name="Light Steel Shield" />
+			<inventory position="Armor" name="leather armor" />
+			<inventory position="Primary" name="cleric holy symbol" />
+			<inventory position="Secondary" name="grey key" />
+			<inventory position="Helmet" name="helmet" />
+			<backpack position="6" name="light steel shield" />
 			<spell name="Create Food" />
 			<spell name="Cure Light Wounds" />
 			<spell name="Slow Poison" />
