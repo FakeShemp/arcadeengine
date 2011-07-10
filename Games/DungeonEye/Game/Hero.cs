@@ -92,6 +92,8 @@ namespace DungeonEye
 				new List<Spell>(),
 				new List<Spell>(),
 			};
+
+
 		}
 
 
@@ -103,7 +105,18 @@ namespace DungeonEye
 			IsDisposed = true;
 		}
 
-		
+
+		/// <summary>
+		/// Roll abilities
+		/// </summary>
+		public override void RollAbilities()
+		{
+			base.RollAbilities();
+
+			AddExperience(69000);
+		}
+
+
 		/// <summary>
 		/// Updates hero
 		/// </summary>
@@ -1656,6 +1669,23 @@ namespace DungeonEye
 			get
 			{
 				return Professions.Count;
+			}
+		}
+
+
+		/// <summary>
+		/// Classes of the hero
+		/// </summary>
+		public HeroClass Classes
+		{
+			get
+			{
+				HeroClass hclass = 0;
+
+				foreach (Profession prof in Professions)
+					hclass |= prof.Class;
+
+				return hclass;
 			}
 		}
 

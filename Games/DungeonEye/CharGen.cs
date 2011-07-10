@@ -17,6 +17,7 @@
 //along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 //
 #endregion
+using System.Collections.Generic;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -60,8 +61,85 @@ namespace DungeonEye
 			HeroID = -1;
 
 			BackButton = new Rectangle(528, 344, 76, 32);
-		}
 
+			#region Allowed classes
+
+			AllowedClass = new Dictionary<HeroRace, List<HeroClass>>();
+			AllowedClass.Add(HeroRace.HumanMale | HeroRace.HumanFemale,
+				new List<HeroClass>()
+				{
+					HeroClass.Fighter,
+					HeroClass.Ranger,
+					HeroClass.Mage,
+					HeroClass.Paladin,
+					HeroClass.Cleric,
+					HeroClass.Thief,
+				});
+
+			AllowedClass.Add(HeroRace.ElfMale | HeroRace.ElfFemale,
+				new List<HeroClass>()
+				{
+					HeroClass.Fighter,
+					HeroClass.Ranger,
+					HeroClass.Mage,
+					HeroClass.Cleric,
+					HeroClass.Thief,
+					HeroClass.Fighter | HeroClass.Thief,
+					HeroClass.Fighter | HeroClass.Mage,
+					HeroClass.Fighter | HeroClass.Mage | HeroClass.Thief,
+					HeroClass.Thief   | HeroClass.Mage,
+				});
+
+			AllowedClass.Add(HeroRace.HalfElfMale | HeroRace.HalfElfFemale,
+				new List<HeroClass>()
+				{
+					HeroClass.Fighter,
+					HeroClass.Ranger,
+					HeroClass.Mage,
+					HeroClass.Cleric,
+					HeroClass.Thief,
+					HeroClass.Fighter | HeroClass.Cleric,
+					HeroClass.Fighter | HeroClass.Thief,
+					HeroClass.Fighter | HeroClass.Mage,
+					HeroClass.Fighter | HeroClass.Mage | HeroClass.Thief,
+					HeroClass.Thief   | HeroClass.Mage,
+					HeroClass.Fighter | HeroClass.Cleric | HeroClass.Mage,
+					HeroClass.Ranger  | HeroClass.Cleric,
+					HeroClass.Cleric  | HeroClass.Mage
+				});
+
+			AllowedClass.Add(HeroRace.DwarfMale | HeroRace.DwarfFemale,
+				new List<HeroClass>()
+				{
+					HeroClass.Fighter,
+					HeroClass.Cleric,
+					HeroClass.Thief,
+					HeroClass.Fighter | HeroClass.Cleric,
+					HeroClass.Fighter | HeroClass.Thief,
+				});
+
+			AllowedClass.Add(HeroRace.GnomeMale | HeroRace.GnomeFemale,
+				new List<HeroClass>()
+				{
+					HeroClass.Fighter,
+					HeroClass.Cleric,
+					HeroClass.Thief,
+					HeroClass.Fighter | HeroClass.Cleric,
+					HeroClass.Fighter | HeroClass.Thief,
+					HeroClass.Cleric  | HeroClass.Thief,
+				});
+
+			AllowedClass.Add(HeroRace.HalflingMale | HeroRace.HalflingFemale,
+				new List<HeroClass>()
+				{
+					HeroClass.Fighter,
+					HeroClass.Cleric,
+					HeroClass.Thief,
+					HeroClass.Fighter | HeroClass.Thief,
+				});
+
+			#endregion
+		}
 
 
 
@@ -127,6 +205,28 @@ namespace DungeonEye
 		}
 
 
+		/// <summary>
+		/// Equipe all heroes in the team
+		/// </summary>
+		void PrepareTeam()
+		{
+			foreach (Hero hero in Heroes)
+			{
+				hero.AddToInventory(ResourceManager.CreateAsset<Item>("Iron ration"));
+				hero.AddToInventory(ResourceManager.CreateAsset<Item>("Iron ration"));
+				hero.AddToInventory(ResourceManager.CreateAsset<Item>("Potion of extra healing"));
+
+				foreach (HeroClass hclass in Enum.GetValues(typeof(HeroClass)))
+				{
+					if (hero.CheckClass(hclass))
+					{
+
+					}
+				}
+			}
+		}
+
+
 		#region Events
 
 
@@ -176,7 +276,7 @@ namespace DungeonEye
 				case CharGenStates.SelectHero:
 				if (Mouse.IsButtonDown(MouseButtons.Left))
 				{
-					for (int id = 0 ; id < 4 ; id++)
+					for (int id = 0; id < 4; id++)
 					{
 						if (HeroeBoxes[id].Contains(Mouse.Location))
 						{
@@ -186,6 +286,7 @@ namespace DungeonEye
 							if (Heroes[id] == null)
 							{
 								Heroes[id] = new Hero();
+
 								CurrentState = CharGenStates.SelectRace;
 							}
 							else
@@ -199,13 +300,13 @@ namespace DungeonEye
 				#region Select race
 				case CharGenStates.SelectRace:
 				{
-					Point point = new Point(300, 140);
-					for (int i = 0 ; i < 12 ; i++)
+					Point point = new Point(302, 160);
+					for (int i = 0; i < 12; i++)
 					{
 						point.Y += 18;
 						if (new Rectangle(point.X, point.Y, 324, 16).Contains(Mouse.Location) && Mouse.IsNewButtonDown(MouseButtons.Left))
 						{
-							CurrentHero.Race = (HeroRace) i;
+							CurrentHero.Race = (HeroRace)i;
 							CurrentState = CharGenStates.SelectClass;
 						}
 					}
@@ -217,9 +318,9 @@ namespace DungeonEye
 				case CharGenStates.SelectClass:
 				{
 					Point point = new Point(304, 0);
-					for (int i = 0 ; i < 9 ; i++)
+					for (int i = 0; i < 9; i++)
 					{
-						point.Y = 176 + i *18;
+						point.Y = 176 + i * 18;
 						if (new Rectangle(286, 176 + i * 18, 324, 16).Contains(Mouse.Location) && Mouse.IsNewButtonDown(MouseButtons.Left))
 						{
 							CurrentHero.Professions.Clear();
@@ -278,7 +379,7 @@ namespace DungeonEye
 				case CharGenStates.SelectAlignment:
 				{
 					Point point = new Point(304, 0);
-					for (int i = 0 ; i < 9 ; i++)
+					for (int i = 0; i < 9; i++)
 					{
 						point.Y = 176 + i * 18;
 						if (new Rectangle(286, 176 + i * 18, 324, 16).Contains(Mouse.Location) && Mouse.IsNewButtonDown(MouseButtons.Left))
@@ -297,6 +398,7 @@ namespace DungeonEye
 							};
 
 							CurrentHero.Alignment = alignments[i];
+							CurrentHero.RollAbilities();
 							CurrentState = CharGenStates.SelectFace;
 						}
 					}
@@ -321,7 +423,7 @@ namespace DungeonEye
 							FaceOffset++;
 
 						// Select a face
-						for (int x = 0 ; x < 4 ; x++)
+						for (int x = 0; x < 4; x++)
 						{
 							if (new Rectangle(352 + x * 64, 132, 64, 64).Contains(Mouse.Location))
 							{
@@ -428,8 +530,11 @@ namespace DungeonEye
 
 
 			// If the team is ready, let's go !
-			if (PlayButton.Rectangle.Contains(Mouse.Location) && Mouse.IsNewButtonDown(System.Windows.Forms.MouseButtons.Left) ) //&& IsTeamReadyToPlay)
+			if (PlayButton.Rectangle.Contains(Mouse.Location) && Mouse.IsNewButtonDown(System.Windows.Forms.MouseButtons.Left) && IsTeamReadyToPlay)
+			{
+				PrepareTeam();
 				PlayButton.OnSelectEntry();
+			}
 		}
 
 
@@ -442,27 +547,24 @@ namespace DungeonEye
 			// Clears the background
 			Display.ClearBuffers();
 
-			//Batch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Immediate, false);
 			Batch.Begin();
 
-
 			// Background
-			//Tileset.Draw(0, Point.Empty);
 			Batch.DrawTile(Tileset, 0, Point.Empty, Color.White);
 
 			// Heroes faces and names
-			for (int i = 0 ; i < 4 ; i++)
+			for (int i = 0; i < 4; i++)
 			{
 				Hero hero = Heroes[i];
 				if (hero == null)
 					continue;
 
 				Batch.DrawTile(Heads, hero.Head, HeroeBoxes[i].Location);
-				//Heads.Draw(hero.Head, HeroeBoxes[id].Location);
 
 				Batch.DrawString(NameFont, NameLocations[i], Color.Blue, hero.Name);
-				//NameFont.DrawText(NameLocations[id], Color.Blue, hero.Name);
 			}
+
+
 
 			switch (CurrentState)
 			{
@@ -486,7 +588,7 @@ namespace DungeonEye
 
 					Point point = new Point(300, 140);
 					Color color;
-					for (int i = 0 ; i < 12 ; i++)
+					for (int i = 0; i < 12; i++)
 					{
 						point.Y += 18;
 						if (new Rectangle(point.X, point.Y, 324, 16).Contains(Mouse.Location))
@@ -504,16 +606,22 @@ namespace DungeonEye
 				#region Select class
 				case CharGenStates.SelectClass:
 				{
+					// Animation
 					Anims.Draw(Batch, HeroeBoxes[HeroID].Location);
-					Batch.DrawString(Font, new Rectangle(304, 140, 300, 64), Color.FromArgb(85, 255, 255), StringTable.GetString(2));
 
-					Point point = new Point(304, 0);
+					// "Select class :"
+					Batch.DrawString(Font, new Rectangle(294, 134, 300, 64), Color.FromArgb(85, 255, 255), StringTable.GetString(2));
+
+
+					Point point = new Point(302, 0);
 					Color color;
-					for (int i = 0 ; i < 9 ; i++)
+					for (int i = 0; i < 9; i++)
 					{
-						point.Y = 176 + i *18;
-						if (new Rectangle(286, 176 + i * 18, 324, 16).Contains(Mouse.Location))
-							color = Color.FromArgb(255, 85, 85);
+						point.Y = 160 + i * 18;
+
+						// On mouse over, paint it in red
+						if (new Rectangle(point.X, point.Y, 324, 16).Contains(Mouse.Location))
+							color = GameColors.Red;
 						else
 							color = Color.White;
 
@@ -535,7 +643,7 @@ namespace DungeonEye
 
 					Point point = new Point(304, 0);
 					Color color;
-					for (int i = 0 ; i < 9 ; i++)
+					for (int i = 0; i < 9; i++)
 					{
 						point.Y = 176 + i * 18;
 						if (new Rectangle(286, 176 + i * 18, 324, 16).Contains(Mouse.Location))
@@ -584,7 +692,7 @@ namespace DungeonEye
 					Batch.DrawTile(Tileset, 19, new Point(300, 172));
 
 					// Faces
-					for (int i = 0 ; i < 4 ; i++)
+					for (int i = 0; i < 4; i++)
 						Batch.DrawTile(Heads, i + FaceOffset, new Point(354 + i * 64, 132));
 
 				}
@@ -866,8 +974,8 @@ namespace DungeonEye
 					if (CurrentHero.Name != null && CurrentHero.Name.Length > 10)
 						break;
 
-					if ((int) e.KeyCode > (int) 'Z')
-						CurrentHero.Name += (char) (e.KeyCode + 32);
+					if ((int)e.KeyCode > (int)'Z')
+						CurrentHero.Name += (char)(e.KeyCode + 32);
 					else
 						CurrentHero.Name += e.KeyCode;
 				}
@@ -879,6 +987,12 @@ namespace DungeonEye
 
 
 		#region Properties
+
+
+		/// <summary>
+		/// Allowed class according to hero race
+		/// </summary>
+		Dictionary<HeroRace, List<HeroClass>> AllowedClass;
 
 
 		/// <summary>
@@ -894,7 +1008,7 @@ namespace DungeonEye
 		{
 			get
 			{
-				for (int id = 0 ; id < 4 ; id++)
+				for (int id = 0; id < 4; id++)
 				{
 					if (Heroes[id] == null)
 						return false;
@@ -1021,4 +1135,5 @@ namespace DungeonEye
 		SelectName,
 		Delete,
 	}
+
 }

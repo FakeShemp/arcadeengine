@@ -54,7 +54,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Reroll entity abilities
 		/// </summary>
-		public void RollAbilities()
+		public virtual void RollAbilities()
 		{
 			Charisma.Value = RollForAbility();
 			Strength.Value = RollForAbility();
