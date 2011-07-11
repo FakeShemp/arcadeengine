@@ -212,9 +212,9 @@ namespace DungeonEye
 		{
 			foreach (Hero hero in Heroes)
 			{
-				hero.AddToInventory(ResourceManager.CreateAsset<Item>("Iron ration"));
-				hero.AddToInventory(ResourceManager.CreateAsset<Item>("Iron ration"));
-				hero.AddToInventory(ResourceManager.CreateAsset<Item>("Potion of extra healing"));
+				hero.AddToInventory(ResourceManager.CreateAsset<Item>("iron ration"));
+				hero.AddToInventory(ResourceManager.CreateAsset<Item>("iron ration"));
+				hero.AddToInventory(ResourceManager.CreateAsset<Item>("potion of extra healing"));
 
 				switch (hero.Classes)
 				{
