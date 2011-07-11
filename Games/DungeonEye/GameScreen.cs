@@ -415,7 +415,7 @@ namespace DungeonEye
 
 						// Hand
 						Item item = hero.GetInventoryItem(hand == HeroHand.Primary ? InventoryPosition.Primary : InventoryPosition.Secondary);
-						fbatch.DrawTile(Items, item != null ? item.TileID : Hands[i].TileID, new Point(pos.X + 96, pos.Y + 36 + yoffset));
+						batch.DrawTile(Items, item != null ? item.TileID : Hands[i].TileID, new Point(pos.X + 96, pos.Y + 36 + yoffset));
 
 						// Ghost hand
 						if (!hero.CanUseHand(hand))
