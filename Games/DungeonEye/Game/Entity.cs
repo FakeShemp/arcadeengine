@@ -45,8 +45,6 @@ namespace DungeonEye
 			Intelligence = new Ability();
 			Wisdom = new Ability();
 			MoveSpeed = TimeSpan.FromSeconds(1.0f);
-
-			//RollAbilities();
 		}
 
 

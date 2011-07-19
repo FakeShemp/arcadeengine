@@ -33,7 +33,7 @@ namespace DungeonEye.Script.Actions
 			if (target == null)
 				return false;
 
-			if (target.Actor != null)
+			if (target.Actor != null && target.Actor.IsActivated)
 				target.Actor.Deactivate();
 
 			return true;

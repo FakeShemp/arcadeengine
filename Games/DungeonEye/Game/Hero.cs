@@ -82,7 +82,7 @@ namespace DungeonEye
 			HandPenality[0] = DateTime.Now;
 			HandPenality[1] = DateTime.Now;
 
-			Food = (byte)Game.Random.Next(50, 100);
+			Food = (byte)Game.Random.Next(80, 100);
 			Spells = new List<Spell>[6]
 			{
 				new List<Spell>(),

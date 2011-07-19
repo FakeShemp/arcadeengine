@@ -54,6 +54,19 @@ namespace DungeonEye
 
 
 		/// <summary>
+		/// Draw the door
+		/// </summary>
+		/// <param name="batch">Spritebatch to use</param>
+		/// <param name="field">View field</param>
+		/// <param name="position">Position in the view filed</param>
+		/// <param name="view">Looking direction of the team</param>
+		public override void Draw(SpriteBatch batch, ViewField field, ViewFieldPosition position, CardinalPoint direction)
+		{
+			base.Draw(batch, field, position, direction);
+		}
+
+
+		/// <summary>
 		/// 
 		/// </summary>
 		/// <returns></returns>
