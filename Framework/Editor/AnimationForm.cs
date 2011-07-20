@@ -61,10 +61,7 @@ namespace ArcEngine.Editor
 
 			}
 
-
-
 			Time = Environment.TickCount;
-			BuildInterface();
 		}
 
 
@@ -77,7 +74,13 @@ namespace ArcEngine.Editor
 			TileSetNameBox.Items.Clear();
 			TileSetNameBox.Items.AddRange(ResourceManager.GetAssets<TileSet>().ToArray());
 			TileSetNameBox.EndUpdate();
+
+
+			if (Animation.TileSet != null)
+				TileSetNameBox.SelectedItem = Animation.TileSetName;
+
 		}
+
 
 		/// <summary>
 		/// save the asset to the manager
@@ -117,18 +120,21 @@ namespace ArcEngine.Editor
 			GlPreviewControl.MakeCurrent();
 			Display.Init();
 
-            SpriteBatch = new SpriteBatch();
+			SpriteBatch = new SpriteBatch();
 
 			// Preload background texture resource
 			CheckerBoard = new Texture2D(ResourceManager.GetInternalResource("ArcEngine.Resources.checkerboard.png"));
 			CheckerBoard.HorizontalWrap = TextureWrapFilter.Repeat;
 			CheckerBoard.VerticalWrap = TextureWrapFilter.Repeat;
 
+
+			BuildInterface();
+
 			// Draw timer
 			DrawTimer.Start();
 		}
 
-	
+
 		/// <summary>
 		/// Draw Timer tick
 		/// </summary>
@@ -139,7 +145,7 @@ namespace ArcEngine.Editor
 			// If not floating panel and the panel is active and AutoRefresh is OK
 			if (this.DockAreas != DockAreas.Float && DockPanel.ActiveDocument == this)
 			{
-		
+
 				int elapsed = Environment.TickCount - Time;
 
 				Time = Environment.TickCount;
@@ -301,17 +307,17 @@ namespace ArcEngine.Editor
 
 			Animation.Draw(SpriteBatch, AnimOffset);
 
-/*
-				Tile tile = Animation.CurrentTile;
-				if (tile == null)
-				{
-					GlPreviewControl.SwapBuffers();
-					return;
-				}
-				Rectangle rect = new Rectangle(AnimOffset, tile.Size);
+			/*
+			Tile tile = Animation.CurrentTile;
+			if (tile == null)
+			{
+				GlPreviewControl.SwapBuffers();
+				return;
+			}
+			Rectangle rect = new Rectangle(AnimOffset, tile.Size);
 
-				Animation.TileSet.Draw(Animation.CurrentFrame, AnimOffset);
-*/
+			Animation.TileSet.Draw(Animation.CurrentFrame, AnimOffset);
+			*/
 
 			SpriteBatch.End();
 			GlPreviewControl.SwapBuffers();
@@ -387,7 +393,7 @@ namespace ArcEngine.Editor
 				}
 			}
 
-			
+
 		}
 
 
@@ -433,7 +439,7 @@ namespace ArcEngine.Editor
 		{
 			if (FrameID >= Animation.Frames.Count - 1)
 				return;
-			
+
 			int tmp = Animation.Frames[FrameID + 1];
 			Animation.Frames[FrameID + 1] = Animation.Frames[FrameID];
 			Animation.Frames[FrameID] = tmp;
@@ -456,7 +462,7 @@ namespace ArcEngine.Editor
 
 			// Find the Frame under the mouse and remove it
 			Rectangle rect = Rectangle.Empty;
-			for(int id = 0; id < Animation.Frames.Count; id++)
+			for (int id = 0; id < Animation.Frames.Count; id++)
 			{
 				Tile tile = Animation.TileSet.GetTile(Animation.Frames[id]);
 				rect.Size = tile.Size;
@@ -567,9 +573,8 @@ namespace ArcEngine.Editor
 				}
 			}
 
+
 			SpriteBatch.End();
-
-
 			GlFramesControl.SwapBuffers();
 		}
 
@@ -671,6 +676,7 @@ namespace ArcEngine.Editor
 		/// <param name="e"></param>
 		private void GlTilesControl_Paint(object sender, PaintEventArgs e)
 		{
+
 			// Draws all tiles
 			GlTilesControl.MakeCurrent();
 			Display.ClearBuffers();
@@ -696,10 +702,13 @@ namespace ArcEngine.Editor
 				{
 					// Get the display rectangle
 					Tile tile = Animation.TileSet.GetTile(id);
+					if (tile == null)
+						continue;
 					rect.Size = tile.Size;
 
 					// Blit the tile
-					//	Animation.TileSet.Draw(id, new Point(rect.X + tile.HotSpot.X, rect.Y + tile.HotSpot.Y));
+					//Animation.TileSet.Draw(id, new Point(rect.X + tile.HotSpot.X, rect.Y + tile.HotSpot.Y));
+					SpriteBatch.DrawTile(Animation.TileSet, id, new Point(rect.X + tile.Origin.X, rect.Y + tile.Origin.Y));
 
 					// Is mouse over or selected tile
 					if (rect.Contains(mouse) || TileID == id)
@@ -727,13 +736,14 @@ namespace ArcEngine.Editor
 
 			SpriteBatch.End();
 			GlTilesControl.SwapBuffers();
+
 		}
 
 
 
 		#endregion
 
-		
+
 
 		#region Properties
 
@@ -790,10 +800,10 @@ namespace ArcEngine.Editor
 		/// </summary>
 		Texture2D CheckerBoard;
 
-        /// <summary>
-        /// SpriteBatch
-        /// </summary>
-        SpriteBatch SpriteBatch;
+		/// <summary>
+		/// SpriteBatch
+		/// </summary>
+		SpriteBatch SpriteBatch;
 
 
 		#endregion
