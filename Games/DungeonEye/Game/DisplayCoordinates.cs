@@ -66,6 +66,7 @@ namespace DungeonEye
 			int viewcount = Enum.GetValues(typeof(ViewFieldPosition)).Length;
 
 			Doors = new TileDrawing[viewcount];
+			Teleporters = new TileDrawing[viewcount];
 			FloorPlates = new TileDrawing[viewcount];
 
 			Ground = new Point[viewcount, 5];
@@ -272,6 +273,18 @@ namespace DungeonEye
 			return Doors[(int)view];
 		}
 
+
+		/// <summary>
+		/// Get teleporter on screen coordinate
+		/// </summary>
+		/// <param name="view">Block position in the view field</param>
+		/// <returns></returns>
+		static public TileDrawing GetTeleporter(ViewFieldPosition view)
+		{
+			return Teleporters[(int)view];
+		}
+
+
 		#endregion
 
 
@@ -343,6 +356,14 @@ namespace DungeonEye
 						{
 							ViewFieldPosition view = (ViewFieldPosition)Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
 							Pits[(int)view] = GetTileDrawing(node);
+						}
+						break;
+
+
+						case "teleporter":
+						{
+							ViewFieldPosition view = (ViewFieldPosition)Enum.Parse(typeof(ViewFieldPosition), node.Attributes["position"].Value, true);
+							Teleporters[(int)view] = GetTileDrawing(node);
 						}
 						break;
 
@@ -449,6 +470,11 @@ namespace DungeonEye
 		/// Doors
 		/// </summary>
 		static TileDrawing[] Doors;
+
+		/// <summary>
+		/// Teleporters
+		/// </summary>
+		static TileDrawing[] Teleporters;
 
 
 		#region Walls

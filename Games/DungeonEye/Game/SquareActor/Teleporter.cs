@@ -36,7 +36,8 @@ namespace DungeonEye
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public Teleporter(Square block) : base(block)
+		public Teleporter(Square block)
+			: base(block)
 		{
 			if (block == null)
 				throw new ArgumentNullException("block");
@@ -62,7 +63,20 @@ namespace DungeonEye
 		/// <param name="view">Looking direction of the team</param>
 		public override void Draw(SpriteBatch batch, ViewField field, ViewFieldPosition position, CardinalPoint direction)
 		{
-			base.Draw(batch, field, position, direction);
+			if (!IsVisible)
+				return;
+
+			TileDrawing td = DisplayCoordinates.GetTeleporter(position);
+			if (td == null)
+				return;
+
+
+				batch.DrawTile(GameScreen.Dungeon.ItemTileSet, 170, td.Location,
+					DisplayCoordinates.GetDistantColor(position), 0.0f,
+					DisplayCoordinates.GetMonsterScaleFactor(position), SpriteEffects.None, 0.0f);
+
+			//batch.DrawTile(GameScreen.Dungeon.ItemTileSet, 170, td.Location);
+
 		}
 
 
@@ -86,13 +100,9 @@ namespace DungeonEye
 		/// <returns></returns>
 		public override DungeonLocation[] GetTargets()
 		{
-			DungeonLocation[] target = new DungeonLocation[]
-			{
-				Target
-			};
-			return target;
+			return new DungeonLocation[] { Target };
 		}
-		
+
 
 		#region I/O
 
@@ -165,10 +175,10 @@ namespace DungeonEye
 		{
 			if (writer == null)
 				return false;
-			
+
 
 			writer.WriteStartElement(Tag);
-			
+
 			base.Save(writer);
 
 			Target.Save("target", writer);
@@ -196,8 +206,11 @@ namespace DungeonEye
 		/// <returns></returns>
 		public override bool OnTeamEnter()
 		{
-			if (!TeleportTeam || Target == null)
+			if (!TeleportTeam || Target == null || !IsActivated)
 				return false;
+
+			// One shot ?
+			IsActivated = Reusable;
 
 			return GameScreen.Team.Teleport(Target);
 		}
@@ -221,7 +234,7 @@ namespace DungeonEye
 			return true;
 		}
 
-		
+
 		#endregion
 
 
@@ -300,17 +313,6 @@ namespace DungeonEye
 			get;
 			set;
 		}
-
-/*
-		/// <summary>
-		/// Does teleporter is active
-		/// </summary>
-		public bool IsActivated
-		{
-			get;
-			set;
-		}
-*/
 
 
 		/// <summary>
