@@ -94,7 +94,7 @@ namespace DungeonEye
 		{
 			// Center position
 			if (position == SquarePosition.Center)
-				throw new ArgumentOutOfRangeException("position");
+				return null;
 
 			int[][] id = new int[][]
 			{
@@ -114,15 +114,15 @@ namespace DungeonEye
 
 		#region IO
 
-		/// <summary>
-		/// Loads a team party
-		/// </summary>
-		/// <param name="filename">File name to load</param>
-		/// <returns>True if loaded</returns>
-		public bool LoadParty()
-		{
-			return true;
-		}
+		///// <summary>
+		///// Loads a team party
+		///// </summary>
+		///// <param name="filename">File name to load</param>
+		///// <returns>True if loaded</returns>
+		//public bool LoadParty()
+		//{
+		//    return true;
+		//}
 
 
 		/// <summary>

@@ -80,11 +80,12 @@ namespace DungeonEye.Gui.CampWindows
 		/// <param name="e"></param>
 		void Load_Selected(object sender, EventArgs e)
 		{
-			MessageBox = new MessageBox("Are you sure you<br />wish to LOAD a<br />saved game ?", MessageBoxButtons.YesNo);
-			MessageBox.Selected +=new EventHandler(LoadAnswer);
+			Camp.AddWindow(new LoadGameWindow(Camp));
+			//MessageBox = new MessageBox("Are you sure you<br />wish to LOAD a<br />saved game ?", MessageBoxButtons.YesNo);
+			//MessageBox.Selected +=new EventHandler(LoadAnswer);
 		}
 
-
+/*
 		/// <summary>
 		/// Load game answer
 		/// </summary>
@@ -98,7 +99,7 @@ namespace DungeonEye.Gui.CampWindows
 				Camp.Exit();
 			}
 		}
-
+*/
 
 		/// <summary>
 		/// Exit button

@@ -19,16 +19,17 @@
 #endregion
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Drawing;
+using System.Text;
 using System.Xml;
-using ArcEngine.Graphic;
 using ArcEngine;
+using ArcEngine.Asset;
+using ArcEngine.Graphic;
 
 namespace DungeonEye
 {
 	/// <summary>
-	/// Teleporter object
+	/// Teleporter actor
 	/// </summary>
 	public class Teleporter : SquareActor
 	{
@@ -36,8 +37,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public Teleporter(Square block)
-			: base(block)
+		public Teleporter(Square block) : base(block)
 		{
 			if (block == null)
 				throw new ArgumentNullException("block");
@@ -51,6 +51,33 @@ namespace DungeonEye
 			TeleportItems = true;
 			IsVisible = true;
 
+
+			Anim = ResourceManager.CreateAsset<Animation>("Teleporter");
+			Anim.Play();
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public override void Dispose()
+		{
+			if (Anim != null)
+			{
+				Anim.Dispose();
+				Anim = null;
+			}
+		}
+
+		/// <summary>
+		/// Update the teleporter
+		/// </summary>
+		/// <param name="time">Elapsed game time</param>
+		public override void Update(GameTime time)
+		{
+			// Update animation
+			if (Anim != null)
+				Anim.Update(time);
 		}
 
 
@@ -70,12 +97,9 @@ namespace DungeonEye
 			if (td == null)
 				return;
 
-
-				batch.DrawTile(GameScreen.Dungeon.ItemTileSet, 170, td.Location,
-					DisplayCoordinates.GetDistantColor(position), 0.0f,
-					DisplayCoordinates.GetMonsterScaleFactor(position), SpriteEffects.None, 0.0f);
-
-			//batch.DrawTile(GameScreen.Dungeon.ItemTileSet, 170, td.Location);
+			Anim.Draw(batch, td.Location, 0.0f, SpriteEffects.None,
+				DisplayCoordinates.GetDistantColor(position), 
+				DisplayCoordinates.GetMonsterScaleFactor(position));
 
 		}
 
@@ -95,7 +119,7 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Get teleporter target
 		/// </summary>
 		/// <returns></returns>
 		public override DungeonLocation[] GetTargets()
@@ -153,6 +177,12 @@ namespace DungeonEye
 					}
 					break;
 
+					case "reusable":
+					{
+						Reusable = bool.Parse(node.InnerText);
+					}
+					break;
+
 					default:
 					{
 						base.Load(node);
@@ -187,6 +217,7 @@ namespace DungeonEye
 			writer.WriteElementString("teleportmonsters", TeleportMonsters.ToString());
 			writer.WriteElementString("teleportitems", TeleportItems.ToString());
 			writer.WriteElementString("visible", IsVisible.ToString());
+			writer.WriteElementString("reusable", Reusable.ToString());
 
 			writer.WriteEndElement();
 
@@ -201,9 +232,9 @@ namespace DungeonEye
 		#region Script
 
 		/// <summary>
-		/// 
+		/// On team enter action
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>True if team teleported</returns>
 		public override bool OnTeamEnter()
 		{
 			if (!TeleportTeam || Target == null || !IsActivated)
@@ -217,16 +248,13 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// On monster enter action
 		/// </summary>
-		/// <param name="monster"></param>
-		/// <returns></returns>
+		/// <param name="monster">Monster handle</param>
+		/// <returns>True on monster teleported</returns>
 		public override bool OnMonsterEnter(Monster monster)
 		{
-			if (!TeleportMonsters || monster == null)
-				return false;
-
-			if (Target == null)
+			if (!TeleportMonsters || monster == null || Target == null)
 				return false;
 
 			monster.Teleport(Target);
@@ -241,9 +269,10 @@ namespace DungeonEye
 		#region Properties
 
 		/// <summary>
-		/// 
+		/// Tag name
 		/// </summary>
 		public const string Tag = "teleporter";
+
 
 		/// <summary>
 		/// Name of the sound to play
@@ -323,6 +352,12 @@ namespace DungeonEye
 			get;
 			set;
 		}
+
+
+		/// <summary>
+		/// Animation
+		/// </summary>
+		Animation Anim;
 
 		#endregion
 

@@ -46,7 +46,8 @@ namespace DungeonEye
 		{
 			DrawHPAsBar = Settings.GetBool("HPAsBar");
 			SaveGameName = @"data/savegame.xml";
-
+			MaxGameSaveSlot = 6;
+			SavedGames = new SaveGame(SaveGameName);
 		}
 
 
@@ -101,6 +102,27 @@ namespace DungeonEye
 			get;
 			set;
 		}
+
+
+		/// <summary>
+		/// Maximum number of gamesave slot
+		/// </summary>
+		static public int MaxGameSaveSlot
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// saved games
+		/// </summary>
+		static public SaveGame SavedGames
+		{
+			get;
+			private set;
+		}
+
 
 		#endregion
 	}

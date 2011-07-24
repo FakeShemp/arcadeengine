@@ -103,9 +103,6 @@ namespace DungeonEye
 				ResourceManager.CreateAsset<Item>("right hand")
 			};
 
-			// Load savegame
-			Load();
-
 
 
 			watch.Stop();
@@ -159,76 +156,59 @@ namespace DungeonEye
 		}
 
 
-		#region IO
+		#region Saved games
 
 
 		/// <summary>
-		/// Loads a team party
+		/// Loads a saved game
 		/// </summary>
+		/// <param name="slotid">Slot id to load</param>
 		/// <returns>True on success</returns>
-		public bool Load()
+		public bool LoadGameSlot(int slotid)
 		{
-
-			if (System.IO.File.Exists(GameSettings.SaveGameName))
+			SaveGameSlot slot = GameSettings.SavedGames.Slots[slotid];
+			if (slot == null)
 			{
-				Trace.WriteLine("[GameScreen]LoadParty() : Unable to find file \"" + GameSettings.SaveGameName + "\". Loading default starting point !");
-
-
-				XmlDocument xml = new XmlDocument();
-				xml.Load(GameSettings.SaveGameName);
-
-
-				if (Team != null)
-					Team.Dispose();
-				Team = null;
-
-				if (Dungeon != null)
-					Dungeon.Dispose();
-				Dungeon = null;
-
-
-				foreach (XmlNode node in xml)
-				{
-					switch (node.Name)
-					{
-						case Team.Tag:
-							{
-								Team = new Team();
-								Team.Load(node);
-							}
-							break;
-
-						case "Dungeon":
-							{
-								Dungeon = new Dungeon();
-								Dungeon.Load(node);
-							}
-							break;
-					}
-				}
+				Trace.WriteLine("[GameScreen]LoadGameSlot() : Slot " + slotid + " empty !");
+				return false;
 			}
 
-			if (Dungeon == null)
-				Dungeon = ResourceManager.CreateAsset<Dungeon>("EOB_2");
+			// Load dungeon
+			if (Dungeon != null)
+				Dungeon.Dispose();
+			else
+				Dungeon = new Dungeon();
+
+			if (slot.Dungeon == null)
+				Dungeon = ResourceManager.CreateAsset<Dungeon>(GameSettings.SavedGames.DungeonName);
+			else
+				Dungeon.Load(slot.Dungeon);
 			Dungeon.Init();
 
-			if (Team == null)
+
+			// Load team
+			if (Team != null)
+				Team.Dispose();
+			else
 				Team = new Team();
+			Team.Load(slot.Team);
 			Team.Init();
 
 
-			GameMessage.AddMessage("Party Loaded...", GameColors.Yellow);
+			GameMessage.AddMessage("Party loaded...", GameColors.Yellow);
 			return true;
 		}
 
 
 		/// <summary>
-		/// Saves a party progress
+		/// Saves a game progress
 		/// </summary>
-		/// <param name="filename">File name</param>
+		/// <param name="slot">Slot id</param>
 		/// <returns>True on success</returns>
-		public bool Save(string filename)
+		public bool SaveGameSlot(int slot)
 		{
+			return false;
+
 			try
 			{
 				XmlWriterSettings settings = new XmlWriterSettings();
@@ -253,7 +233,7 @@ namespace DungeonEye
 			}
 			catch (Exception e)
 			{
-				Trace.WriteLine("[GameScreen] SaveParty() : Failed to save the party (filename = '{0}') => {1} !", filename, e.Message);
+				Trace.WriteLine("[GameScreen] SaveParty() : Failed to save the party (filename = '{0}') => {1} !", GameSettings.SaveGameName, e.Message);
 				GameMessage.AddMessage("Party NOT saved...", GameColors.Red);
 				return false;
 			}
@@ -289,9 +269,9 @@ namespace DungeonEye
 
 
 			// Display the compass
-			Batch.DrawTile(TileSet, 5 + (int) Team.Location.Direction * 3, new Point(228, 262));
-			Batch.DrawTile(TileSet, 6 + (int) Team.Location.Direction * 3, new Point(158, 316));
-			Batch.DrawTile(TileSet, 7 + (int) Team.Location.Direction * 3, new Point(302, 316));
+			Batch.DrawTile(TileSet, 5 + (int)Team.Location.Direction * 3, new Point(228, 262));
+			Batch.DrawTile(TileSet, 6 + (int)Team.Location.Direction * 3, new Point(158, 316));
+			Batch.DrawTile(TileSet, 7 + (int)Team.Location.Direction * 3, new Point(302, 316));
 
 
 			// Ingame interfaces
@@ -353,9 +333,9 @@ namespace DungeonEye
 
 			// Draw heroes
 			Point pos;
-			for (int y = 0 ; y < 3 ; y++)
+			for (int y = 0; y < 3; y++)
 			{
-				for (int x = 0 ; x < 2 ; x++)
+				for (int x = 0; x < 2; x++)
 				{
 					Hero hero = Team.Heroes[y * 2 + x];
 					if (hero == null)
@@ -393,7 +373,7 @@ namespace DungeonEye
 					// HP
 					if (GameSettings.DrawHPAsBar)
 					{
-						float percent = (float) hero.HitPoint.Current / (float) hero.HitPoint.Max;
+						float percent = (float)hero.HitPoint.Current / (float)hero.HitPoint.Max;
 						Color color = GameColors.Green;
 						if (percent < 0.15)
 							color = GameColors.Red;
@@ -408,9 +388,9 @@ namespace DungeonEye
 
 
 					#region Hands
-					for (int i = 0 ; i < 2 ; i++)
+					for (int i = 0; i < 2; i++)
 					{
-						HeroHand hand = (HeroHand) i;
+						HeroHand hand = (HeroHand)i;
 						int yoffset = i * 32;
 
 						// Hand
@@ -526,7 +506,7 @@ namespace DungeonEye
 				Vector4 zone = new Vector4(
 					rectangle.Left + 1,
 					rectangle.Top + 1,
-					((float) value / (float) max * (rectangle.Width - 1)),
+					((float)value / (float)max * (rectangle.Width - 1)),
 					rectangle.Height - 2
 					);
 				batch.FillRectangle(zone, color);
@@ -588,8 +568,8 @@ namespace DungeonEye
 
 			// Draw inventory
 			int pos = 0;
-			for (int y = 94 ; y < 346 ; y += 36)
-				for (int x = 376 ; x < 448 ; x += 36)
+			for (int y = 94; y < 346; y += 36)
+				for (int x = 376; x < 448; x += 36)
 				{
 					if (Team.SelectedHero.GetBackPackItem(pos) != null)
 						batch.DrawTile(Items, Team.SelectedHero.GetBackPackItem(pos).TileID, new Point(x, y));
@@ -798,16 +778,6 @@ namespace DungeonEye
 			}
 
 
-			// Reload data banks
-			if (Keyboard.IsNewKeyPress(Keys.R))
-			{
-				//Team.Dungeon = ResourceManager.CreateAsset<Dungeon>("Eye");
-				//Dungeon.Team = this;
-				//Team.Dungeon.Init();
-				GameMessage.AddMessage("Dungeon reloaded...");
-			}
-
-
 			// AutoMap
 			if (Keyboard.IsNewKeyPress(Keys.Tab))
 			{
@@ -822,19 +792,20 @@ namespace DungeonEye
 			// Save team
 			if (Keyboard.IsNewKeyPress(Keys.J))
 			{
-				Save(@"data\savegame.xml");
+				SaveGameSlot(0);
 			}
 
 			// Load team
 			if (Keyboard.IsNewKeyPress(Keys.L))
 			{
-				Load();
+				OpenCampPanel();
+				((CampDialog)Dialog).AddWindow(new DungeonEye.Gui.CampWindows.LoadGameWindow(Dialog as CampDialog));
 			}
 
 
 			#region Change maze
 			// Change maze
-			for (int i = 0 ; i < 12 ; i++)
+			for (int i = 0; i < 12; i++)
 			{
 				if (Keyboard.IsNewKeyPress(Keys.F1 + i))
 				{
@@ -983,9 +954,7 @@ namespace DungeonEye
 				#region Camp button
 				else if (DisplayCoordinates.CampButton.Contains(mousePos))
 				{
-					SpellBook.Close();
-					Dialog = new CampDialog();
-					Interface = TeamInterface.Main;
+					OpenCampPanel();
 				}
 				#endregion
 
@@ -1337,7 +1306,7 @@ namespace DungeonEye
 				}
 
 				#endregion
-	
+
 				#region Action to process on the front square
 				// Click on the square in front of the team
 				else if (DisplayCoordinates.FrontSquare.Contains(mousePos))
@@ -1378,7 +1347,7 @@ namespace DungeonEye
 					Item item = null;
 
 					// Update each hero interface
-					for (int id = 0 ; id < 6 ; id++)
+					for (int id = 0; id < 6; id++)
 					{
 						// Get the hero
 						Hero hero = Team.Heroes[id];
@@ -1451,7 +1420,7 @@ namespace DungeonEye
 				{
 
 					// Update each hero interface
-					for (int id = 0 ; id < 6 ; id++)
+					for (int id = 0; id < 6; id++)
 					{
 						// Get the hero
 						Hero hero = Team.Heroes[id];
@@ -1468,7 +1437,7 @@ namespace DungeonEye
 							}
 							else
 							{
-								Team.Heroes[(int) Team.GetHeroPosition(HeroToSwap)] = hero;
+								Team.Heroes[(int)Team.GetHeroPosition(HeroToSwap)] = hero;
 								Team.Heroes[id] = HeroToSwap;
 
 
@@ -1535,6 +1504,17 @@ namespace DungeonEye
 
 
 		/// <summary>
+		/// Open camp panel
+		/// </summary>
+		void OpenCampPanel()
+		{
+			SpellBook.Close();
+			Dialog = new CampDialog();
+			Interface = TeamInterface.Main;
+		}
+
+
+		/// <summary>
 		/// Updates inventory
 		/// </summary>
 		/// <param name="time">Elapsed game time</param>
@@ -1567,7 +1547,7 @@ namespace DungeonEye
 
 
 				#region Manage bag pack items
-				for (int id = 0 ; id < 14 ; id++)
+				for (int id = 0; id < 14; id++)
 				{
 					if (InterfaceCoord.BackPack[id].Contains(mousePos))
 					{
@@ -1714,7 +1694,7 @@ namespace DungeonEye
 				else
 				{
 					#region Belt
-					for (int id = 0 ; id < 3 ; id++)
+					for (int id = 0; id < 3; id++)
 					{
 						if (InterfaceCoord.Waist[id].Contains(mousePos))
 						{
@@ -1732,7 +1712,7 @@ namespace DungeonEye
 					#endregion
 
 					#region Rings
-					for (int id = 0 ; id < 2 ; id++)
+					for (int id = 0; id < 2; id++)
 					{
 						item = Team.SelectedHero.GetInventoryItem(InventoryPosition.Ring_Left + id);
 

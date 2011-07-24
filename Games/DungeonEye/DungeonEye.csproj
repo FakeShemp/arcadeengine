@@ -111,6 +111,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SaveGameSlot.cs" />
     <Compile Include="Forms\AbilityControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -546,6 +547,7 @@
     <Compile Include="GameSettings.cs" />
     <Compile Include="Game\Decoration.cs" />
     <Compile Include="Game\GameColors.cs" />
+    <Compile Include="Game\Gui\CampWindows\LoadGameWindow.cs" />
     <Compile Include="Game\Script\Actions\ActionBase.cs" />
     <Compile Include="Game\Script\Actions\EnableTarget.cs" />
     <Compile Include="Game\Script\Actions\SetTo.cs" />
@@ -647,6 +649,7 @@
     <Compile Include="Game\SquareActor\Pit.cs" />
     <Compile Include="Game\ScreenMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SaveGame.cs" />
     <EmbeddedResource Include="Forms\AbilityControl.resx">
       <DependentUpon>AbilityControl.cs</DependentUpon>
       <SubType>Designer</SubType>

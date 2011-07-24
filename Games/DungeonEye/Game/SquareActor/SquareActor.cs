@@ -17,6 +17,7 @@
 //along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 //
 #endregion
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Xml;
@@ -29,7 +30,7 @@ namespace DungeonEye
 	/// <summary>
 	/// Base class for square actors
 	/// </summary>
-	abstract public class SquareActor
+	abstract public class SquareActor : IDisposable
 	{
 
 		/// <summary>
@@ -40,6 +41,14 @@ namespace DungeonEye
 		{
 			Square = square;
 			IsEnabled = true;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public virtual void Dispose()
+		{
 		}
 
 

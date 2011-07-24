@@ -154,7 +154,8 @@ namespace DungeonEye.Forms
 			if (string.IsNullOrEmpty(saveFileDialog1.FileName))
 				return;
 
-			GameScreen.Save(saveFileDialog1.FileName);
+			//GameScreen.SaveGame(saveFileDialog1.FileName);
+			GameScreen.SaveGameSlot(0);
 		}
 
 

@@ -63,6 +63,9 @@
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.VisualTab = new System.Windows.Forms.TabPage();
 			this.ItemsTab = new System.Windows.Forms.TabPage();
+			this.OnHackTab = new System.Windows.Forms.TabPage();
+			this.OnClickTab = new System.Windows.Forms.TabPage();
+			this.OnBatchTab = new System.Windows.Forms.TabPage();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.DecorationIdBox)).BeginInit();
@@ -406,6 +409,9 @@
 			// 
 			this.tabControl1.Controls.Add(this.VisualTab);
 			this.tabControl1.Controls.Add(this.ItemsTab);
+			this.tabControl1.Controls.Add(this.OnHackTab);
+			this.tabControl1.Controls.Add(this.OnClickTab);
+			this.tabControl1.Controls.Add(this.OnBatchTab);
 			this.tabControl1.Location = new System.Drawing.Point(12, 271);
 			this.tabControl1.Name = "tabControl1";
 			this.tabControl1.SelectedIndex = 0;
@@ -442,6 +448,33 @@
 			this.ItemsTab.TabIndex = 1;
 			this.ItemsTab.Text = "Items";
 			this.ItemsTab.UseVisualStyleBackColor = true;
+			// 
+			// OnHackTab
+			// 
+			this.OnHackTab.Location = new System.Drawing.Point(4, 22);
+			this.OnHackTab.Name = "OnHackTab";
+			this.OnHackTab.Size = new System.Drawing.Size(258, 59);
+			this.OnHackTab.TabIndex = 2;
+			this.OnHackTab.Text = "OnHack";
+			this.OnHackTab.UseVisualStyleBackColor = true;
+			// 
+			// OnClickTab
+			// 
+			this.OnClickTab.Location = new System.Drawing.Point(4, 22);
+			this.OnClickTab.Name = "OnClickTab";
+			this.OnClickTab.Size = new System.Drawing.Size(258, 59);
+			this.OnClickTab.TabIndex = 3;
+			this.OnClickTab.Text = "OnClick";
+			this.OnClickTab.UseVisualStyleBackColor = true;
+			// 
+			// OnBatchTab
+			// 
+			this.OnBatchTab.Location = new System.Drawing.Point(4, 22);
+			this.OnBatchTab.Name = "OnBatchTab";
+			this.OnBatchTab.Size = new System.Drawing.Size(258, 59);
+			this.OnBatchTab.TabIndex = 4;
+			this.OnBatchTab.Text = "OnBatch";
+			this.OnBatchTab.UseVisualStyleBackColor = true;
 			// 
 			// DecorationSetForm
 			// 
@@ -509,5 +542,8 @@
 		private System.Windows.Forms.TabPage VisualTab;
 		private System.Windows.Forms.TabPage ItemsTab;
 		private System.Windows.Forms.Label label9;
+		private System.Windows.Forms.TabPage OnHackTab;
+		private System.Windows.Forms.TabPage OnClickTab;
+		private System.Windows.Forms.TabPage OnBatchTab;
 	}
 }

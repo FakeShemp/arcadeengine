@@ -20,16 +20,14 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Audio;
 using ArcEngine.Graphic;
 using ArcEngine.Input;
-using ArcEngine.Storage;
 using ArcEngine.Utility.ScreenManager;
 using DungeonEye.Gui;
-
+using DungeonEye.Gui.CampWindows;
 
 namespace DungeonEye
 {
@@ -53,17 +51,7 @@ namespace DungeonEye
 		/// Load content
 		/// </summary>
 		public override void LoadContent()
-		{
-
-			//using (Stream stream = ResourceManager.Load("cursor.png"))
-			//{
-			//    using (Bitmap bmp = new Bitmap(stream))
-			//    {
-			//        HardwareCursor cursor = new HardwareCursor(bmp, Point.Empty);
-			//        Mouse.HardwareCursor = cursor;
-			//    }
-			//}
-			
+		{			
 			Batch = new SpriteBatch();
 	
 			Tileset = ResourceManager.CreateAsset<TileSet>("Main Menu");
@@ -76,7 +64,7 @@ namespace DungeonEye
 			Buttons[0].Selected += new EventHandler(LoadGameEvent);
 
 			Buttons.Add(new ScreenButton("", new Rectangle(156, 342, 340, 14)));
-			Buttons[1].Selected += new EventHandler(StartGameEvent);
+			Buttons[1].Selected += new EventHandler(StartNewGameEvent);
 
 			Buttons.Add(new ScreenButton("", new Rectangle(156, 360, 340, 14)));
 			Buttons[2].Selected += new EventHandler(OptionEvent);
@@ -119,7 +107,7 @@ namespace DungeonEye
 		}
 
 
-
+		#region Events
 
 		/// <summary>
 		/// Option entry event
@@ -150,7 +138,7 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		void StartGameEvent(object sender, EventArgs e)
+		void StartNewGameEvent(object sender, EventArgs e)
 		{
 			//Theme.Stop();
 			ScreenManager.AddScreen(new CharGen());
@@ -165,16 +153,14 @@ namespace DungeonEye
 		/// <param name="e"></param>
 		void LoadGameEvent(object sender, EventArgs e)
 		{
-			if (!System.IO.File.Exists("data/savegame.xml"))
-				return;
-			GameScreen scr = new GameScreen();
-			//team.SaveGame = "data/savegame.xml";
+			//if (!System.IO.File.Exists("data/savegame.xml"))
+			//    return;
 
-			//Theme.Stop();
-
-			ScreenManager.AddScreen(scr);
+			LoadGame = new LoadGameWindow(null);
 		}
 
+
+		#endregion
 
 
 		/// <summary>
@@ -195,6 +181,8 @@ namespace DungeonEye
 			if (Theme != null)
 				Theme.Play();
 		}
+
+
 
 		#region Update & draw
 
@@ -231,50 +219,87 @@ namespace DungeonEye
 					Buttons[id].Text = StringTable.GetString(id+1);
 			}
 
-			Point mousePos = Mouse.Location;
-			for (int id = 0; id < Buttons.Count; id++)
-			{
-				ScreenButton button = Buttons[id];
 
-				// Mouse over ?
-				if (button.Rectangle.Contains(mousePos))
+			// Mouse interaction
+			Point mousePos = Mouse.Location;
+
+
+			if (LoadGame == null)
+			#region Main menu
+			{
+				for (int id = 0; id < Buttons.Count; id++)
 				{
-					//button.TextColor = Color.FromArgb(255, 85, 85);
-					MenuID = id;
-					if (Mouse.IsNewButtonDown(System.Windows.Forms.MouseButtons.Left))
-						button.OnSelectEntry();
+					ScreenButton button = Buttons[id];
+
+					// Mouse over ?
+					if (button.Rectangle.Contains(mousePos))
+					{
+						//button.TextColor = Color.FromArgb(255, 85, 85);
+						MenuID = id;
+						if (Mouse.IsNewButtonDown(System.Windows.Forms.MouseButtons.Left))
+							button.OnSelectEntry();
+					}
+
 				}
 
-			}
+				// Bye bye
+				if (Keyboard.IsNewKeyPress(System.Windows.Forms.Keys.Escape))
+					Game.Exit();
 
-			// Bye bye
-			if (Keyboard.IsNewKeyPress(System.Windows.Forms.Keys.Escape))
-				Game.Exit();
+				// Run intro
+				if (Keyboard.IsNewKeyPress(System.Windows.Forms.Keys.I))
+					ScreenManager.AddScreen(new IntroScreen());
 
-			// Run intro
-			if (Keyboard.IsNewKeyPress(System.Windows.Forms.Keys.I))
-				ScreenManager.AddScreen(new IntroScreen());
 
-	
-			// Key up
-			if (Keyboard.IsNewKeyPress(System.Windows.Forms.Keys.Up))
-			{
-				MenuID--;
-				if (MenuID < 0)
-					MenuID = Buttons.Count - 1;
+				// Key up
+				if (Keyboard.IsNewKeyPress(System.Windows.Forms.Keys.Up))
+				{
+					MenuID--;
+					if (MenuID < 0)
+						MenuID = Buttons.Count - 1;
+				}
+				// Key down
+				else if (Keyboard.IsNewKeyPress(System.Windows.Forms.Keys.Down))
+				{
+					MenuID++;
+					if (MenuID >= Buttons.Count)
+						MenuID = 0;
+				}
+				// Enter
+				else if (Keyboard.IsNewKeyPress(System.Windows.Forms.Keys.Enter))
+				{
+					Buttons[MenuID].OnSelectEntry();
+				}
 			}
-			// Key down
-			else if (Keyboard.IsNewKeyPress(System.Windows.Forms.Keys.Down))
+			#endregion
+			else
+			#region Load game
 			{
-				MenuID++;
-				if (MenuID >= Buttons.Count)
-					MenuID = 0;
+
+				// Load a game
+				LoadGame.Update(time);
+
+				// A slot is selected
+				if (LoadGame.SelectedSlot != -1)
+				{
+					// close window
+					LoadGame.Close();
+
+					// Run the game
+					GameScreen scr = new GameScreen();
+					ScreenManager.AddScreen(scr);
+
+					// Load saved game
+					scr.LoadGameSlot(LoadGame.SelectedSlot);
+				}
+
+
+				// Close the window
+				if (LoadGame.Closing)
+					LoadGame = null;
+
 			}
-			// Enter
-			else if (Keyboard.IsNewKeyPress(System.Windows.Forms.Keys.Enter))
-			{
-				Buttons[MenuID].OnSelectEntry();
-			}
+			#endregion
 		}
 
 
@@ -305,6 +330,9 @@ namespace DungeonEye
 					button.Text);
 			}
 
+			if (LoadGame != null)
+				LoadGame.Draw(Batch);
+
 
 			Batch.End();
 		}
@@ -314,6 +342,17 @@ namespace DungeonEye
 
 
 		#region Properties
+
+		/// <summary>
+		/// Loading save game window handle
+		/// </summary>
+		LoadGameWindow LoadGame;
+
+
+		/// <summary>
+		/// Save game handler
+		/// </summary>
+		SaveGame SaveGame;
 
 
 		/// <summary>

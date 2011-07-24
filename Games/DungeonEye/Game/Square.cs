@@ -102,6 +102,12 @@ namespace DungeonEye
 
 				Monsters[i] = null;
 			}
+
+			if (Actor != null)
+			{
+				Actor.Dispose();
+				Actor = null;
+			}
 		}
 
 

@@ -115,6 +115,12 @@ namespace DungeonEye.Gui
 			set;
 		}
 
+
+		/// <summary>
+		/// Personal tag
+		/// </summary>
+		public object Tag;
+
 		#endregion
 	}
 }

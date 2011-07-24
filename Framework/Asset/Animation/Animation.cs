@@ -142,7 +142,7 @@ namespace ArcEngine.Asset
 		/// <param name="location">Location on the screen</param>
 		public void Draw(SpriteBatch batch, Point location)
 		{
-			Draw(batch, location, 0.0f, false, false);
+			Draw(batch, location, 0.0f, SpriteEffects.None, Color.White, Vector2.One);
 		}
 
 
@@ -155,16 +155,30 @@ namespace ArcEngine.Asset
 		/// <param name="rotate">Angle of rotation</param>
 		/// <param name="flipx">Horizontal flip</param>
 		/// <param name="flipy">Vertical flip</param>
-        public void Draw(SpriteBatch batch, Point location, float rotate, bool flipx, bool flipy)
+        public void Draw(SpriteBatch batch, Point location, float rotate, SpriteEffects effect)
 		{
-			if (TileSet == null || CurrentTile == null ||batch == null)
+			Draw(batch, location, rotate, effect, Color.White, Vector2.One);
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="batch"></param>
+		/// <param name="location"></param>
+		/// <param name="rotate"></param>
+		/// <param name="flipx"></param>
+		/// <param name="flipy"></param>
+		/// <param name="color"></param>
+		/// <param name="scale"></param>
+		public void Draw(SpriteBatch batch, Point location, float rotate, SpriteEffects effect, Color color, Vector2 scale)
+		{
+			if (TileSet == null || CurrentTile == null || batch == null)
 				return;
 
-			Rectangle rect = new Rectangle(location, CurrentTile.Size);
-
-	    	batch.DrawTile(TileSet, Frames[CurrentFrame], location);
-
+			batch.DrawTile(TileSet, Frames[CurrentFrame], location, color, 0.0f, scale, effect, 0.0f);
 		}
+
 
 		/// <summary>
 		/// Defines the tileset to use

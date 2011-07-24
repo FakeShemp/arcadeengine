@@ -49,6 +49,15 @@ namespace DungeonEye.Gui
 
 
 		/// <summary>
+		/// Close the window
+		/// </summary>
+		public void Close()
+		{
+			Closing = true;
+		}
+
+
+		/// <summary>
 		/// Updates the window
 		/// </summary>
 		/// <param name="time"></param>

@@ -42,6 +42,7 @@ namespace DungeonEye
 		{
 			Choices = new List<ScriptChoice>();
 			MessageColor = Color.White;
+			Remaining = 1;
 		}
 
 

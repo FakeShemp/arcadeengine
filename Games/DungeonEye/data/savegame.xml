@@ -1,156 +1,318 @@
 <?xml version="1.0" encoding="us-ascii"?>
-<Team>
+<savegame>
 	<dungeon name="EOB_2" />
-	<location maze="Temple - 01" x="14" y="11" direction="West" position="NorthEast" />
-	<position slot="FrontLeft">
-		<hero name="Allabar">
-			<hitpoint current="16" max="23" />
-			<strength value="12" />
-			<intelligence value="14" />
-			<wisdom value="13" />
-			<dexterity value="8" />
-			<constitution value="10" />
-			<charisma value="13" />
-			<alignment value="NeutralGood" />
-			<movespeed value="0" />
-			<quiver count="24" />
-			<head id="27" />
-			<food value="100" />
-			<race value="HumanMale" />
-			<profession>
-				<class name="Fighter" />
-				<xp points="98324" />
-			</profession>
-			<profession>
-				<class name="Paladin" />
-				<xp points="32505" />
-			</profession>
-			<inventory position="Secondary" name="picklock" />
-			<inventory position="Primary" name="short sword" />
-			<waist position="0" name="Rock" />
-			<waist position="1" name="Rock" />
-			<waist position="2" name="Rock" />
-		</hero>
-	</position>
-	<position slot="FrontRight">
-		<hero name="Ariel">
-			<hitpoint current="26" max="31" />
-			<strength value="13" />
-			<intelligence value="12" />
-			<wisdom value="14" />
-			<dexterity value="15" />
-			<constitution value="10" />
-			<charisma value="6" />
-			<alignment value="ChaoticGood" />
-			<movespeed value="0" />
-			<quiver count="0" />
-			<head id="21" />
-			<food value="86" />
-			<race value="DwarfMale" />
-			<profession>
-				<class name="Fighter" />
-				<xp points="0" />
-			</profession>
-			<profession>
-				<class name="Thief" />
-				<xp points="0" />
-			</profession>
-			<inventory position="Primary" name="short sword" />
-			<inventory position="Secondary" name="grey key" />
-			<backpack position="0" name="grey key" />
-			<backpack position="1" name="grey key" />
-			<backpack position="2" name="grey key" />
-			<backpack position="3" name="grey key" />
-			<backpack position="4" name="grey key" />
-			<backpack position="5" name="grey key" />
-			<backpack position="6" name="grey key" />
-			<backpack position="7" name="grey key" />
-			<backpack position="8" name="grey key" />
-			<backpack position="10" name="grey key" />
-			<backpack position="11" name="grey key" />
-			<backpack position="12" name="grey key" />
-			<backpack position="9" name="boots" />
-		</hero>
-	</position>
-	<position slot="MiddleLeft">
-		<hero name="Valanau">
-			<hitpoint current="6" max="34" />
-			<strength value="6" />
-			<intelligence value="12" />
-			<wisdom value="12" />
-			<dexterity value="8" />
-			<constitution value="13" />
-			<charisma value="9" />
-			<alignment value="LawfulNeutral" />
-			<movespeed value="0" />
-			<quiver count="0" />
-			<head id="39" />
-			<food value="99" />
-			<race value="ElfFemale" />
-			<profession>
-				<class name="Mage" />
-				<xp points="0" />
-			</profession>
-			<profession>
-				<class name="Thief" />
-				<xp points="0" />
-			</profession>
-			<inventory position="Primary" name="spell book" />
-			<inventory position="Secondary" name="grey key" />
-			<backpack position="4" name="dart" />
-			<backpack position="5" name="dart" />
-			<backpack position="6" name="rock" />
-			<spell name="Armor" />
-			<spell name="Detect Magic" />
-			<spell name="Protect From Evil" />
-			<spell name="Flame Blade" />
-			<spell name="Slow Poison" />
-			<spell name="Slow Poison" />
-			<spell name="Flame Blade" />
-			<spell name="Detect Invisibility" />
-			<spell name="Improved Identify" />
-			<spell name="Invisibility" />
-			<spell name="Melf's Acid Arrow" />
-			<spell name="Dispell Magic" />
-			<spell name="Cure Critical Wounds" />
-			<spell name="Flame Strike" />
-			<spell name="Hold Monster" />
-			<spell name="Cone of Cold" />
-			<spell name="Wall of Force" />
-			<spell name="Wall of Force" />
-			<spell name="Heal" />
-			<spell name="Harm" />
-			<spell name="Heal" />
-			<spell name="Harm" />
-		</hero>
-	</position>
-	<position slot="MiddleRight">
-		<hero name="TenMiyana">
-			<hitpoint current="15" max="30" />
-			<strength value="10" />
-			<intelligence value="13" />
-			<wisdom value="10" />
-			<dexterity value="13" />
-			<constitution value="13" />
-			<charisma value="11" />
-			<alignment value="LawfulEvil" />
-			<movespeed value="0" />
-			<quiver count="0" />
-			<head id="43" />
-			<food value="88" />
-			<race value="HalflingFemale" />
-			<profession>
-				<class name="Cleric" />
-				<xp points="450010" />
-			</profession>
-			<inventory position="Armor" name="leather armor" />
-			<inventory position="Primary" name="cleric holy symbol" />
-			<inventory position="Secondary" name="grey key" />
-			<inventory position="Helmet" name="helmet" />
-			<backpack position="6" name="light steel shield" />
-			<spell name="Create Food" />
-			<spell name="Cure Light Wounds" />
-			<spell name="Slow Poison" />
-		</hero>
-	</position>
-</Team>
+	<slot id="0" name="Debug" >
+		<team>
+			<location maze="Temple - 01" x="14" y="11" direction="West" position="NorthEast" />
+			<position slot="FrontLeft">
+				<hero name="Allabar">
+					<hitpoint current="16" max="23" />
+					<strength value="12" />
+					<intelligence value="14" />
+					<wisdom value="13" />
+					<dexterity value="8" />
+					<constitution value="10" />
+					<charisma value="13" />
+					<alignment value="NeutralGood" />
+					<movespeed value="0" />
+					<quiver count="24" />
+					<head id="27" />
+					<food value="100" />
+					<race value="HumanMale" />
+					<profession>
+						<class name="Fighter" />
+						<xp points="98324" />
+					</profession>
+					<profession>
+						<class name="Paladin" />
+						<xp points="32505" />
+					</profession>
+					<inventory position="Secondary" name="picklock" />
+					<inventory position="Primary" name="short sword" />
+					<waist position="0" name="Rock" />
+					<waist position="1" name="Rock" />
+					<waist position="2" name="Rock" />
+				</hero>
+			</position>
+			<position slot="FrontRight">
+				<hero name="Ariel">
+					<hitpoint current="26" max="31" />
+					<strength value="13" />
+					<intelligence value="12" />
+					<wisdom value="14" />
+					<dexterity value="15" />
+					<constitution value="10" />
+					<charisma value="6" />
+					<alignment value="ChaoticGood" />
+					<movespeed value="0" />
+					<quiver count="0" />
+					<head id="21" />
+					<food value="86" />
+					<race value="DwarfMale" />
+					<profession>
+						<class name="Fighter" />
+						<xp points="0" />
+					</profession>
+					<profession>
+						<class name="Thief" />
+						<xp points="0" />
+					</profession>
+					<inventory position="Primary" name="short sword" />
+					<inventory position="Secondary" name="grey key" />
+					<backpack position="0" name="grey key" />
+					<backpack position="1" name="grey key" />
+					<backpack position="2" name="grey key" />
+					<backpack position="3" name="grey key" />
+					<backpack position="4" name="grey key" />
+					<backpack position="5" name="grey key" />
+					<backpack position="6" name="grey key" />
+					<backpack position="7" name="grey key" />
+					<backpack position="8" name="grey key" />
+					<backpack position="10" name="grey key" />
+					<backpack position="11" name="grey key" />
+					<backpack position="12" name="grey key" />
+					<backpack position="9" name="boots" />
+				</hero>
+			</position>
+			<position slot="MiddleLeft">
+				<hero name="Valanau">
+					<hitpoint current="6" max="34" />
+					<strength value="6" />
+					<intelligence value="12" />
+					<wisdom value="12" />
+					<dexterity value="8" />
+					<constitution value="13" />
+					<charisma value="9" />
+					<alignment value="LawfulNeutral" />
+					<movespeed value="0" />
+					<quiver count="0" />
+					<head id="39" />
+					<food value="99" />
+					<race value="ElfFemale" />
+					<profession>
+						<class name="Mage" />
+						<xp points="0" />
+					</profession>
+					<profession>
+						<class name="Thief" />
+						<xp points="0" />
+					</profession>
+					<inventory position="Primary" name="spell book" />
+					<inventory position="Secondary" name="grey key" />
+					<backpack position="4" name="dart" />
+					<backpack position="5" name="dart" />
+					<backpack position="6" name="rock" />
+					<spell name="Armor" />
+					<spell name="Detect Magic" />
+					<spell name="Protect From Evil" />
+					<spell name="Flame Blade" />
+					<spell name="Slow Poison" />
+					<spell name="Slow Poison" />
+					<spell name="Flame Blade" />
+					<spell name="Detect Invisibility" />
+					<spell name="Improved Identify" />
+					<spell name="Invisibility" />
+					<spell name="Melf's Acid Arrow" />
+					<spell name="Dispell Magic" />
+					<spell name="Cure Critical Wounds" />
+					<spell name="Flame Strike" />
+					<spell name="Hold Monster" />
+					<spell name="Cone of Cold" />
+					<spell name="Wall of Force" />
+					<spell name="Wall of Force" />
+					<spell name="Heal" />
+					<spell name="Harm" />
+					<spell name="Heal" />
+					<spell name="Harm" />
+				</hero>
+			</position>
+			<position slot="MiddleRight">
+				<hero name="TenMiyana">
+					<hitpoint current="15" max="30" />
+					<strength value="10" />
+					<intelligence value="13" />
+					<wisdom value="10" />
+					<dexterity value="13" />
+					<constitution value="13" />
+					<charisma value="11" />
+					<alignment value="LawfulEvil" />
+					<movespeed value="0" />
+					<quiver count="0" />
+					<head id="43" />
+					<food value="88" />
+					<race value="HalflingFemale" />
+					<profession>
+						<class name="Cleric" />
+						<xp points="450010" />
+					</profession>
+					<inventory position="Armor" name="leather armor" />
+					<inventory position="Primary" name="cleric holy symbol" />
+					<inventory position="Secondary" name="grey key" />
+					<inventory position="Helmet" name="helmet" />
+					<backpack position="6" name="light steel shield" />
+					<spell name="Create Food" />
+					<spell name="Cure Light Wounds" />
+					<spell name="Slow Poison" />
+				</hero>
+			</position>
+		</team>
+	</slot>
+
+	
+	<slot id="1" name="Begin" >
+		<team>
+			<location maze="Forest" x="4" y="2" direction="South" position="NorthEast" />
+			<position slot="FrontLeft">
+				<hero name="Allabar">
+					<hitpoint current="16" max="23" />
+					<strength value="12" />
+					<intelligence value="14" />
+					<wisdom value="13" />
+					<dexterity value="8" />
+					<constitution value="10" />
+					<charisma value="13" />
+					<alignment value="NeutralGood" />
+					<movespeed value="0" />
+					<quiver count="24" />
+					<head id="27" />
+					<food value="100" />
+					<race value="HumanMale" />
+					<profession>
+						<class name="Fighter" />
+						<xp points="98324" />
+					</profession>
+					<profession>
+						<class name="Paladin" />
+						<xp points="32505" />
+					</profession>
+					<inventory position="Secondary" name="picklock" />
+					<inventory position="Primary" name="short sword" />
+					<waist position="0" name="Rock" />
+					<waist position="1" name="Rock" />
+					<waist position="2" name="Rock" />
+				</hero>
+			</position>
+			<position slot="FrontRight">
+				<hero name="Ariel">
+					<hitpoint current="26" max="31" />
+					<strength value="13" />
+					<intelligence value="12" />
+					<wisdom value="14" />
+					<dexterity value="15" />
+					<constitution value="10" />
+					<charisma value="6" />
+					<alignment value="ChaoticGood" />
+					<movespeed value="0" />
+					<quiver count="0" />
+					<head id="21" />
+					<food value="86" />
+					<race value="DwarfMale" />
+					<profession>
+						<class name="Fighter" />
+						<xp points="0" />
+					</profession>
+					<profession>
+						<class name="Thief" />
+						<xp points="0" />
+					</profession>
+					<inventory position="Primary" name="short sword" />
+					<inventory position="Secondary" name="grey key" />
+					<backpack position="0" name="grey key" />
+					<backpack position="1" name="grey key" />
+					<backpack position="2" name="grey key" />
+					<backpack position="3" name="grey key" />
+					<backpack position="4" name="grey key" />
+					<backpack position="5" name="grey key" />
+					<backpack position="6" name="grey key" />
+					<backpack position="7" name="grey key" />
+					<backpack position="8" name="grey key" />
+					<backpack position="10" name="grey key" />
+					<backpack position="11" name="grey key" />
+					<backpack position="12" name="grey key" />
+					<backpack position="9" name="boots" />
+				</hero>
+			</position>
+			<position slot="MiddleLeft">
+				<hero name="Valanau">
+					<hitpoint current="6" max="34" />
+					<strength value="6" />
+					<intelligence value="12" />
+					<wisdom value="12" />
+					<dexterity value="8" />
+					<constitution value="13" />
+					<charisma value="9" />
+					<alignment value="LawfulNeutral" />
+					<movespeed value="0" />
+					<quiver count="0" />
+					<head id="39" />
+					<food value="99" />
+					<race value="ElfFemale" />
+					<profession>
+						<class name="Mage" />
+						<xp points="0" />
+					</profession>
+					<profession>
+						<class name="Thief" />
+						<xp points="0" />
+					</profession>
+					<inventory position="Primary" name="spell book" />
+					<inventory position="Secondary" name="grey key" />
+					<backpack position="4" name="dart" />
+					<backpack position="5" name="dart" />
+					<backpack position="6" name="rock" />
+					<spell name="Armor" />
+					<spell name="Detect Magic" />
+					<spell name="Protect From Evil" />
+					<spell name="Flame Blade" />
+					<spell name="Slow Poison" />
+					<spell name="Slow Poison" />
+					<spell name="Flame Blade" />
+					<spell name="Detect Invisibility" />
+					<spell name="Improved Identify" />
+					<spell name="Invisibility" />
+					<spell name="Melf's Acid Arrow" />
+					<spell name="Dispell Magic" />
+					<spell name="Cure Critical Wounds" />
+					<spell name="Flame Strike" />
+					<spell name="Hold Monster" />
+					<spell name="Cone of Cold" />
+					<spell name="Wall of Force" />
+					<spell name="Wall of Force" />
+					<spell name="Heal" />
+					<spell name="Harm" />
+					<spell name="Heal" />
+					<spell name="Harm" />
+				</hero>
+			</position>
+			<position slot="MiddleRight">
+				<hero name="TenMiyana">
+					<hitpoint current="15" max="30" />
+					<strength value="10" />
+					<intelligence value="13" />
+					<wisdom value="10" />
+					<dexterity value="13" />
+					<constitution value="13" />
+					<charisma value="11" />
+					<alignment value="LawfulEvil" />
+					<movespeed value="0" />
+					<quiver count="0" />
+					<head id="43" />
+					<food value="88" />
+					<race value="HalflingFemale" />
+					<profession>
+						<class name="Cleric" />
+						<xp points="450010" />
+					</profession>
+					<inventory position="Armor" name="leather armor" />
+					<inventory position="Primary" name="cleric holy symbol" />
+					<inventory position="Secondary" name="grey key" />
+					<inventory position="Helmet" name="helmet" />
+					<backpack position="6" name="light steel shield" />
+					<spell name="Create Food" />
+					<spell name="Cure Light Wounds" />
+					<spell name="Slow Poison" />
+				</hero>
+			</position>
+		</team>
+	</slot>	
+</savegame>
