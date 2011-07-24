@@ -80,11 +80,16 @@ namespace DungeonEye.Gui.CampWindows
 		/// <param name="e"></param>
 		void Load_Selected(object sender, EventArgs e)
 		{
-			//GameScreen.Team.LoadParty();
-			//if (Camp != null)
-			//    Camp.Exit();
-
 			SelectedSlot = (int)(sender as ScreenButton).Tag;
+
+			if (Camp != null)
+			{
+				Camp.Game.LoadGameSlot(SelectedSlot);
+
+				Camp.Exit();
+			}
+
+
 		}
 
 

@@ -37,8 +37,9 @@ namespace DungeonEye
 		/// <summary>
 		/// Default constructor
 		/// </summary>
-		public CampDialog()
+		public CampDialog(GameScreen game)
 		{
+			Game = game;
 			Windows = new Stack<Window>();
 
 			Buttons = new List<ScreenButton>();
@@ -125,6 +126,14 @@ namespace DungeonEye
 
 		#region Properties
 
+		/// <summary>
+		/// Gamescreen
+		/// </summary>
+		public GameScreen Game
+		{
+			get;
+			private set;
+		}
 
 		/// <summary>
 		/// List of buttons

@@ -1509,7 +1509,7 @@ namespace DungeonEye
 		void OpenCampPanel()
 		{
 			SpellBook.Close();
-			Dialog = new CampDialog();
+			Dialog = new CampDialog(this);
 			Interface = TeamInterface.Main;
 		}
 
