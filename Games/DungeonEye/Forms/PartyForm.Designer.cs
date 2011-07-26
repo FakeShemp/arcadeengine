@@ -54,9 +54,13 @@
 			this.ChangeLocationBox = new System.Windows.Forms.Button();
 			this.SaveBox = new System.Windows.Forms.Button();
 			this.HeroBox = new DungeonEye.Forms.HeroControl();
+			this.groupBox4 = new System.Windows.Forms.GroupBox();
+			this.SlotIdBox = new System.Windows.Forms.TrackBar();
 			this.groupBox2.SuspendLayout();
 			this.groupBox1.SuspendLayout();
 			this.groupBox3.SuspendLayout();
+			this.groupBox4.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.SlotIdBox)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// groupBox2
@@ -69,7 +73,7 @@
 			this.groupBox2.Controls.Add(this.FrontRightBox);
 			this.groupBox2.Controls.Add(this.MiddleLeftBox);
 			this.groupBox2.Controls.Add(this.FrontLeftBox);
-			this.groupBox2.Location = new System.Drawing.Point(12, 12);
+			this.groupBox2.Location = new System.Drawing.Point(12, 85);
 			this.groupBox2.Name = "groupBox2";
 			this.groupBox2.Size = new System.Drawing.Size(304, 106);
 			this.groupBox2.TabIndex = 1;
@@ -172,7 +176,7 @@
 			this.groupBox1.Controls.Add(this.ClearMessageBox);
 			this.groupBox1.Controls.Add(this.MessageTxtBox);
 			this.groupBox1.Controls.Add(this.MessageListBox);
-			this.groupBox1.Location = new System.Drawing.Point(12, 124);
+			this.groupBox1.Location = new System.Drawing.Point(12, 197);
 			this.groupBox1.Name = "groupBox1";
 			this.groupBox1.Size = new System.Drawing.Size(304, 110);
 			this.groupBox1.TabIndex = 0;
@@ -183,7 +187,7 @@
 			// 
 			this.MessageColorBox.AutoSize = true;
 			this.MessageColorBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.MessageColorBox.Image = ((System.Drawing.Image) (resources.GetObject("MessageColorBox.Image")));
+			this.MessageColorBox.Image = ((System.Drawing.Image)(resources.GetObject("MessageColorBox.Image")));
 			this.MessageColorBox.Location = new System.Drawing.Point(192, 80);
 			this.MessageColorBox.Name = "MessageColorBox";
 			this.MessageColorBox.Size = new System.Drawing.Size(22, 22);
@@ -256,7 +260,7 @@
 			this.groupBox3.Controls.Add(this.LocationLabel);
 			this.groupBox3.Controls.Add(this.label1);
 			this.groupBox3.Controls.Add(this.ChangeLocationBox);
-			this.groupBox3.Location = new System.Drawing.Point(12, 240);
+			this.groupBox3.Location = new System.Drawing.Point(12, 313);
 			this.groupBox3.Name = "groupBox3";
 			this.groupBox3.Size = new System.Drawing.Size(304, 70);
 			this.groupBox3.TabIndex = 2;
@@ -292,10 +296,10 @@
 			// 
 			// SaveBox
 			// 
-			this.SaveBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.SaveBox.Image = ((System.Drawing.Image) (resources.GetObject("SaveBox.Image")));
+			this.SaveBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.SaveBox.Image = ((System.Drawing.Image)(resources.GetObject("SaveBox.Image")));
 			this.SaveBox.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.SaveBox.Location = new System.Drawing.Point(12, 389);
+			this.SaveBox.Location = new System.Drawing.Point(12, 487);
 			this.SaveBox.Name = "SaveBox";
 			this.SaveBox.Size = new System.Drawing.Size(75, 23);
 			this.SaveBox.TabIndex = 3;
@@ -306,29 +310,50 @@
 			// 
 			// HeroBox
 			// 
-			this.HeroBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.HeroBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.HeroBox.AutoScroll = true;
-			this.HeroBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+			this.HeroBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.HeroBox.Hero = null;
 			this.HeroBox.Location = new System.Drawing.Point(322, 12);
 			this.HeroBox.MinimumSize = new System.Drawing.Size(635, 400);
 			this.HeroBox.Name = "HeroBox";
-			this.HeroBox.Size = new System.Drawing.Size(635, 400);
+			this.HeroBox.Size = new System.Drawing.Size(651, 498);
 			this.HeroBox.TabIndex = 0;
+			// 
+			// groupBox4
+			// 
+			this.groupBox4.Controls.Add(this.SlotIdBox);
+			this.groupBox4.Location = new System.Drawing.Point(12, 9);
+			this.groupBox4.Name = "groupBox4";
+			this.groupBox4.Size = new System.Drawing.Size(304, 70);
+			this.groupBox4.TabIndex = 4;
+			this.groupBox4.TabStop = false;
+			this.groupBox4.Text = "Slot position";
+			// 
+			// SlotIdBox
+			// 
+			this.SlotIdBox.Location = new System.Drawing.Point(6, 19);
+			this.SlotIdBox.Maximum = 6;
+			this.SlotIdBox.Name = "SlotIdBox";
+			this.SlotIdBox.Size = new System.Drawing.Size(292, 45);
+			this.SlotIdBox.TabIndex = 0;
+			this.SlotIdBox.TickStyle = System.Windows.Forms.TickStyle.Both;
 			// 
 			// PartyForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(968, 424);
+			this.ClientSize = new System.Drawing.Size(984, 522);
+			this.Controls.Add(this.groupBox4);
 			this.Controls.Add(this.SaveBox);
 			this.Controls.Add(this.groupBox3);
 			this.Controls.Add(this.HeroBox);
 			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.groupBox1);
-			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.MinimumSize = new System.Drawing.Size(1000, 560);
 			this.Name = "PartyForm";
 			this.Text = "PartyForm";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.PartyForm_FormClosed);
@@ -339,6 +364,9 @@
 			this.groupBox1.PerformLayout();
 			this.groupBox3.ResumeLayout(false);
 			this.groupBox3.PerformLayout();
+			this.groupBox4.ResumeLayout(false);
+			this.groupBox4.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.SlotIdBox)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -370,5 +398,7 @@
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Button ChangeLocationBox;
 		private System.Windows.Forms.Button SaveBox;
+		private System.Windows.Forms.GroupBox groupBox4;
+		private System.Windows.Forms.TrackBar SlotIdBox;
 	}
 }

@@ -28,13 +28,14 @@ namespace DungeonEye.Gui.CampWindows
 	/// <summary>
 	/// Load game window
 	/// </summary>
-	public class LoadGameWindow : Window
+	public class SaveGameWindow : Window
 	{
 		/// <summary>
 		/// Constructor
 		/// </summary>
 		/// <param name="camp">Camp window handle</param>
-		public LoadGameWindow(CampDialog camp) : base(camp, "Load Game:")
+		public SaveGameWindow(CampDialog camp)
+			: base(camp, "Save Game:")
 		{
 			GameSettings.SavedGames.Load();
 
@@ -42,9 +43,9 @@ namespace DungeonEye.Gui.CampWindows
 			for (int id = 0; id < GameSettings.MaxGameSaveSlot; id++)
 			{
 				SaveGameSlot slot = GameSettings.SavedGames.Slots[id];
-				
+
 				button = new ScreenButton(slot != null ? slot.Name : "", new Rectangle(16, 40 + id * 34, 320, 28));
-				button.Selected += new EventHandler(Slot_Selected);
+				button.Selected += new EventHandler(slot_Selected);
 				button.Tag = slot == null ? -1 : id;
 				Buttons.Add(button);
 			}
@@ -78,25 +79,45 @@ namespace DungeonEye.Gui.CampWindows
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		void Slot_Selected(object sender, EventArgs e)
+		void slot_Selected(object sender, EventArgs e)
 		{
 			ScreenButton button = sender as ScreenButton;
 
-			// Empty slot
-			if (string.IsNullOrEmpty(button.Text))
-				return;
-
-
 			SelectedSlot = (int)(button.Tag);
+
+			// Slot not empty, ask confirmation
+			if (!string.IsNullOrEmpty(button.Text))
+			{
+				MessageBox = new MessageBox("Are you sure you<br />wish to SAVE<br />the game ?", MessageBoxButtons.YesNo);
+				MessageBox.Selected += new EventHandler(MessageBox_Selected);
+
+				return;
+			}
+
 
 
 			// If ingame, then load the savegame
 			if (Camp != null)
 			{
-				Camp.Game.LoadGameSlot(SelectedSlot);
+				Camp.Game.SaveGameSlot(SelectedSlot);
 				Camp.Exit();
 			}
 
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void MessageBox_Selected(object sender, EventArgs e)
+		{
+			if (((MessageBox)sender).DialogResult == DialogResult.Yes && Camp != null)
+			{
+				Camp.Game.SaveGameSlot(SelectedSlot);
+				Camp.Exit();
+			}
 
 		}
 
@@ -111,7 +132,7 @@ namespace DungeonEye.Gui.CampWindows
 		/// <summary>
 		/// Windows offset
 		/// </summary>
-//		public Point Offset;
+		//		public Point Offset;
 
 
 		/// <summary>

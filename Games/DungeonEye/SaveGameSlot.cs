@@ -34,6 +34,18 @@ namespace DungeonEye
 	/// </summary>
 	public class SaveGameSlot
 	{
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString()
+		{
+			if (string.IsNullOrEmpty(Name))
+				return "Empty";
+
+			return Name;
+		}
 		
 		#region Properties
 

@@ -20,14 +20,9 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Windows.Forms;
+using System.Text;
 using System.Xml;
-using ArcEngine;
-using ArcEngine.Asset;
-using ArcEngine.Graphic;
 using ArcEngine.Input;
-using ArcEngine.Utility.ScreenManager;
-using DungeonEye.Gui;
 
 namespace DungeonEye
 {
@@ -190,48 +185,52 @@ namespace DungeonEye
 		/// <summary>
 		/// Saves the party
 		/// </summary>
-		/// <param name="filename">XmlWriter</param>
-		/// <returns></returns>
-		public bool Save(XmlWriter writer)
+		/// <returns>Xml definition of the team</returns>
+		public XmlNode Save()
 		{
-			if (writer == null)
-				return false;
-
-			writer.WriteStartElement("team");
-
-			Location.Save("location", writer);
-
-
-			// Save each hero
-			foreach (Hero hero in Heroes)
+			StringBuilder sb = new StringBuilder();
+			using (XmlWriter writer = XmlWriter.Create(sb))
 			{
-				if (hero != null)
+				writer.WriteStartElement("team");
+
+				Location.Save("location", writer);
+
+
+				// Save each hero
+				foreach (Hero hero in Heroes)
 				{
-					writer.WriteStartElement("position");
-					writer.WriteAttributeString("slot", GetHeroPosition(hero).ToString());
-					hero.Save(writer);
+					if (hero != null)
+					{
+						writer.WriteStartElement("position");
+						writer.WriteAttributeString("slot", GetHeroPosition(hero).ToString());
+						hero.Save(writer);
+						writer.WriteEndElement();
+					}
+				}
+
+
+				System.ComponentModel.TypeConverter colorConverter = System.ComponentModel.TypeDescriptor.GetConverter(typeof(Color));
+				foreach (ScreenMessage message in GameMessage.Messages)
+				{
+					writer.WriteStartElement("message");
+					writer.WriteAttributeString("text", message.Message);
+					writer.WriteAttributeString("R", message.Color.R.ToString());
+					writer.WriteAttributeString("G", message.Color.G.ToString());
+					writer.WriteAttributeString("B", message.Color.B.ToString());
+					writer.WriteAttributeString("A", message.Color.A.ToString());
 					writer.WriteEndElement();
 				}
-			}
 
 
-			System.ComponentModel.TypeConverter colorConverter = System.ComponentModel.TypeDescriptor.GetConverter(typeof(Color));
-			foreach (ScreenMessage message in GameMessage.Messages)
-			{
-				writer.WriteStartElement("message");
-				writer.WriteAttributeString("text", message.Message);
-				writer.WriteAttributeString("R", message.Color.R.ToString());
-				writer.WriteAttributeString("G", message.Color.G.ToString());
-				writer.WriteAttributeString("B", message.Color.B.ToString());
-				writer.WriteAttributeString("A", message.Color.A.ToString());
+
 				writer.WriteEndElement();
 			}
 
+			string xml = sb.ToString();
+			XmlDocument doc = new XmlDocument();
+			doc.LoadXml(xml);
 
-
-			writer.WriteEndElement();
-
-			return false;
+			return doc.DocumentElement;
 		}
 
 

@@ -19,6 +19,7 @@
 #endregion
 using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 using ArcEngine;
@@ -51,9 +52,9 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Loads a savedgame file
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>True on success</returns>
 		public bool Load()
 		{
 			// File not found
@@ -72,7 +73,7 @@ namespace DungeonEye
 			xml.Load(FileName);
 
 			// Bad tag
-			if (xml.DocumentElement.Name != "savegame")
+			if (xml.DocumentElement.Name != Tag)
 			{
 				Trace.WriteLine("[SaveGame]Read() : Bad file format !");
 				return false;
@@ -128,15 +129,59 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Save a gameslot
 		/// </summary>
-		/// <returns></returns>
-		bool Write()
+		/// <returns>True on success</returns>
+		public bool Write()
 		{
-			if (string.IsNullOrEmpty(FileName))
-				return false;
+			// Reload savegame
+		//	if (!Load())
+		//		return false;
 
-			return false;
+			// Xml settings
+			XmlWriterSettings settings = new XmlWriterSettings();
+			settings.Indent = true;
+			settings.OmitXmlDeclaration = false;
+			settings.IndentChars = "\t";
+			settings.Encoding = ASCIIEncoding.ASCII;
+
+
+
+			// Create Xml document
+			using (XmlWriter doc = XmlWriter.Create(FileName, settings))
+			{
+				doc.WriteStartDocument(true);
+				doc.WriteStartElement(Tag);
+
+				doc.WriteStartElement("dungeon");
+				doc.WriteAttributeString("name", DungeonName);
+				doc.WriteEndElement();
+
+				for (int id = 0; id < Slots.Length; id++)
+				{
+					if (Slots[id] == null)
+						continue;
+
+					doc.WriteStartElement("slot");
+					doc.WriteAttributeString("id", id.ToString());
+					doc.WriteAttributeString("name", Slots[id].Name);
+
+					if (Slots[id].Team != null)
+						Slots[id].Team.WriteTo(doc);
+
+					if (Slots[id].Dungeon != null)
+						Slots[id].Dungeon.WriteTo(doc);
+
+					doc.WriteEndElement();
+				}
+
+				// Close xml 
+				doc.WriteEndElement();
+				doc.WriteEndDocument();
+				doc.Flush();
+			}
+
+			return true;
 		}
 
 		#endregion
@@ -144,6 +189,11 @@ namespace DungeonEye
 
 
 		#region Properties
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public const string Tag = "savegame";
 
 
 		/// <summary>

@@ -179,7 +179,8 @@ namespace DungeonEye
 			else
 				Dungeon = new Dungeon();
 
-			if (slot.Dungeon == null)
+			// If Shift key is down, create a new dungeon (DEBUG)
+			if (slot.Dungeon == null || Keyboard.IsKeyPress(Keys.ShiftKey)
 				Dungeon = ResourceManager.CreateAsset<Dungeon>(GameSettings.SavedGames.DungeonName);
 			else
 				Dungeon.Load(slot.Dungeon);
@@ -203,40 +204,29 @@ namespace DungeonEye
 		/// <summary>
 		/// Saves a game progress
 		/// </summary>
-		/// <param name="slot">Slot id</param>
+		/// <param name="slotid">Slot id</param>
 		/// <returns>True on success</returns>
-		public bool SaveGameSlot(int slot)
+		public bool SaveGameSlot(int slotid)
 		{
-			return false;
-
-			try
-			{
-				XmlWriterSettings settings = new XmlWriterSettings();
-				settings.Indent = true;
-				settings.OmitXmlDeclaration = false;
-				settings.IndentChars = "\t";
-				settings.Encoding = System.Text.ASCIIEncoding.ASCII;
-				XmlWriter writer = XmlWriter.Create(GameSettings.SaveGameName, settings);
-
-
-				writer.WriteStartElement("dungeon");
-				writer.WriteAttributeString("name", Dungeon.Name);
-
-				Team.Save(writer);
-
-				writer.WriteEndElement();
-
-				writer.Close();
-
-
-				GameMessage.AddMessage("Party saved...", GameColors.Yellow);
-			}
-			catch (Exception e)
-			{
-				Trace.WriteLine("[GameScreen] SaveParty() : Failed to save the party (filename = '{0}') => {1} !", GameSettings.SaveGameName, e.Message);
-				GameMessage.AddMessage("Party NOT saved...", GameColors.Red);
+			if (slotid < 0 || slotid >= GameSettings.MaxGameSaveSlot)
 				return false;
-			}
+
+
+			SaveGameSlot slot = GameSettings.SavedGames.Slots[slotid];
+			slot.Name = "slot " + slotid.ToString();
+			slot.Team = Team.Save();
+
+			// Some debug, if shitkey down, no dungeon save
+			if (!Keyboard.IsKeyPress(Keys.ShiftKey))
+				slot.Dungeon = ResourceManager.ConvertAsset(Dungeon);
+
+
+			// Save the game
+			if (GameSettings.SavedGames.Write())
+				GameMessage.AddMessage("Game saved.");
+			else
+				GameMessage.AddMessage("Game NOT saved !");
+
 			return true;
 		}
 

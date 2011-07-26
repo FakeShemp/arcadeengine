@@ -108,8 +108,10 @@ namespace DungeonEye.Gui.CampWindows
 		/// <param name="e"></param>
 		void Save_Selected(object sender, EventArgs e)
 		{
-			MessageBox = new MessageBox("Are you sure you<br />wish to SAVE<br />the game ?", MessageBoxButtons.YesNo);
-			MessageBox.Selected +=new EventHandler(SaveAnswer);
+			Camp.AddWindow(new SaveGameWindow(Camp));
+			
+			//MessageBox = new MessageBox("Are you sure you<br />wish to SAVE<br />the game ?", MessageBoxButtons.YesNo);
+			//MessageBox.Selected +=new EventHandler(SaveAnswer);
 		}
 
 
