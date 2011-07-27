@@ -200,6 +200,9 @@ namespace DungeonEye.Forms
 				HorizontalSwapBox.Checked = Decoration.GetSwap(ViewPositionBox.Position);
 				BlockBox.Checked = Decoration.IsBlocking;
 				ForceDisplayBox.Checked = Decoration.ForceDisplay;
+				OnHackIdBox.Value = Decoration.OnHackId;
+				OnBashIdBox.Value = Decoration.OnBashId;
+				OnClickIdBox.Value = Decoration.OnClickId;
 			}
 			else
 			{
@@ -207,6 +210,9 @@ namespace DungeonEye.Forms
 				HorizontalSwapBox.Checked = false;
 				BlockBox.Checked = false;
 				ForceDisplayBox.Checked = false;
+				OnHackIdBox.Value = -1;
+				OnBashIdBox.Value = -1;
+				OnClickIdBox.Value = -1;
 			}
 
 			UpdateViewBoxStatus();
@@ -434,6 +440,12 @@ namespace DungeonEye.Forms
 
 			Decoration.SetTileId(ViewPositionBox.Position, (int) TileIdBox.Value);
 
+
+			// If position is empty (aka X=-999 & y=-999), set it to zero
+			if (Decoration.GetLocation(ViewPositionBox.Position).X < -500 && Decoration.GetLocation(ViewPositionBox.Position).Y < -500)
+				Decoration.SetLocation(ViewPositionBox.Position, Point.Empty);
+
+
 			UpdateViewBoxStatus();
 		}
 
@@ -476,6 +488,47 @@ namespace DungeonEye.Forms
 				TileIdBox.Value = -1;
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnBashIdBox_ValueChanged(object sender, EventArgs e)
+		{
+			if (Decoration == null)
+				return;
+
+			Decoration.OnBashId = (int)OnBashIdBox.Value;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnClickIdBox_ValueChanged(object sender, EventArgs e)
+		{
+			if (Decoration == null)
+				return;
+
+			Decoration.OnClickId = (int)OnClickIdBox.Value;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnHackIdBox_ValueChanged(object sender, EventArgs e)
+		{
+			if (Decoration == null)
+				return;
+
+			Decoration.OnHackId = (int)OnHackIdBox.Value;
+		}
 
 
 		#endregion
@@ -727,7 +780,6 @@ namespace DungeonEye.Forms
 		Point LastMousePosition;
 
 		#endregion
-
 
 	}
 

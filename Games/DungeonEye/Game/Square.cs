@@ -240,10 +240,15 @@ namespace DungeonEye
 		/// <returns>True if the event is processed</returns>
 		public bool OnHack(CardinalPoint side, Item item)
 		{
-			// No decoration on this side
-			int id = GetDecorationId(side);
-			if (id == -1)
-				return false;
+			#region Decoration must change on hack
+			
+			Decoration deco = Maze.Decoration.GetDecoration(GetDecorationId(side));
+			if (deco != null && deco.OnHackId != -1)
+					Decorations[(int)side] = deco.OnHackId;
+
+
+			#endregion
+
 
 			GameMessage.AddMessage("Square: OnHack()");
 
@@ -490,6 +495,15 @@ namespace DungeonEye
 		/// <returns>Decoration id or -1 if no decoration</returns>
 		public int GetDecorationId(CardinalPoint side)
 		{
+			// Is there a forced decoration
+			//foreach (CardinalPoint cp in Enum.GetValues(typeof(CardinalPoint)))
+			//{
+			//    Decoration deco = Maze.GetDecoration(Location, cp);
+			//    if (deco != null && deco.ForceDisplay)
+			//        return 0;
+			//}
+
+			// The decoration of the desired side
 			return Decorations[(int)side];
 		}
 

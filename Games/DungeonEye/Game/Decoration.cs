@@ -49,6 +49,9 @@ namespace DungeonEye
 				new Point(-999, -999), new Point(-999, -999), new Point(-999, -999), 
 				new Point(-999, -999), new Point(-999, -999), new Point(-999, -999), 
 			};
+			OnBashId = -1;
+			OnHackId = -1;
+			OnClickId = -1;
 
 			for (int i = 0 ; i < TileId.Length ; i++)
 				TileId[i] = -1;
@@ -179,6 +182,7 @@ namespace DungeonEye
 
 
 
+
 		#region Helpers
 
 		/// <summary>
@@ -289,6 +293,9 @@ namespace DungeonEye
 
 			IsBlocking = bool.Parse(xml.Attributes["isblocking"].Value);
 			ForceDisplay = bool.Parse(xml.Attributes["forcedisplay"].Value);
+			OnHackId = int.Parse(xml.Attributes["onhack"].Value);
+			OnBashId = int.Parse(xml.Attributes["onbash"].Value);
+			OnClickId = int.Parse(xml.Attributes["onclick"].Value);
 
 			foreach (XmlNode node in xml)
 			{
@@ -345,6 +352,9 @@ namespace DungeonEye
 			writer.WriteAttributeString("id", id.ToString());
 			writer.WriteAttributeString("isblocking", IsBlocking.ToString());
 			writer.WriteAttributeString("forcedisplay", ForceDisplay.ToString());
+			writer.WriteAttributeString("onhack", OnHackId.ToString());
+			writer.WriteAttributeString("onbash", OnBashId.ToString());
+			writer.WriteAttributeString("onclick", OnClickId.ToString());
 
 			writer.WriteStartElement("item");
 			writer.WriteAttributeString("x", ItemLocation.X.ToString());
@@ -419,6 +429,32 @@ namespace DungeonEye
 			set;
 		}
 
+		/// <summary>
+		/// Id of the decoration to use when hacked
+		/// </summary>
+		public int OnHackId
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Id of the decoration to use when bashed
+		/// </summary>
+		public int OnBashId
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Id of the decoration to use when clicked
+		/// </summary>
+		public int OnClickId
+		{
+			get;
+			set;
+		}
 
 		#endregion
 
