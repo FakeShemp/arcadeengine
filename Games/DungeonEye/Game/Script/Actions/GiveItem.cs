@@ -37,7 +37,7 @@ namespace DungeonEye.Script.Actions
 		/// <returns></returns>
 		public override string ToString()
 		{
-			return "Give : " + Name;
+			return "Give : " + ItemName;
 		}
 
 
@@ -69,15 +69,15 @@ namespace DungeonEye.Script.Actions
 
 
 		/// <summary>
-		/// 
+		/// XML Tag name
 		/// </summary>
 		public const string XmlTag = "GiveItem";
 
 
 		/// <summary>
-		/// 
+		/// Name of the item to give
 		/// </summary>
-		string Name;
+		string ItemName;
 
 
 

@@ -34,7 +34,9 @@ namespace DungeonEye.Script.Actions
 	/// </summary>
 	public class ActionBase
 	{
-
+		/// <summary>
+		/// 
+		/// </summary>
 		public ActionBase()
 		{
 

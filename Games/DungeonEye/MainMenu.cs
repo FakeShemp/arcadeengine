@@ -350,12 +350,6 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Save game handler
-		/// </summary>
-		SaveGame SaveGame;
-
-
-		/// <summary>
 		/// Main theme
 		/// </summary>
 		AudioStream Theme;
