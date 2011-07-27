@@ -180,7 +180,7 @@ namespace DungeonEye
 				Dungeon = new Dungeon();
 
 			// If Shift key is down, create a new dungeon (DEBUG)
-			if (slot.Dungeon == null || Keyboard.IsKeyPress(Keys.ShiftKey)
+			if (slot.Dungeon == null || Keyboard.IsKeyPress(Keys.ShiftKey))
 				Dungeon = ResourceManager.CreateAsset<Dungeon>(GameSettings.SavedGames.DungeonName);
 			else
 				Dungeon.Load(slot.Dungeon);
