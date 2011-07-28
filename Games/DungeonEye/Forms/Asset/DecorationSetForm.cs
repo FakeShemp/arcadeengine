@@ -203,6 +203,7 @@ namespace DungeonEye.Forms
 				OnHackIdBox.Value = Decoration.OnHackId;
 				OnBashIdBox.Value = Decoration.OnBashId;
 				OnClickIdBox.Value = Decoration.OnClickId;
+				HideItemsBox.Checked = Decoration.HideItems;
 			}
 			else
 			{
@@ -213,6 +214,7 @@ namespace DungeonEye.Forms
 				OnHackIdBox.Value = -1;
 				OnBashIdBox.Value = -1;
 				OnClickIdBox.Value = -1;
+				HideItemsBox.Checked = false;
 			}
 
 			UpdateViewBoxStatus();
@@ -268,6 +270,7 @@ namespace DungeonEye.Forms
 			}
 			Decoration.ForceDisplay = deco.ForceDisplay;
 			Decoration.IsBlocking = deco.IsBlocking;
+			Decoration.HideItems = deco.HideItems;
 
 			UpdateViewBoxStatus();
 		}
@@ -709,6 +712,19 @@ namespace DungeonEye.Forms
 			ItemTileset = ResourceManager.CreateAsset<TileSet>((string) ItemTileSetBox.SelectedItem);
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void HideItemsBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Decoration == null)
+				return;
+
+			Decoration.HideItems = HideItemsBox.Checked;
+		}
 
 		#endregion
 

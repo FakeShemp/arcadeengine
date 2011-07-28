@@ -52,6 +52,7 @@
 			this.PasteBox = new System.Windows.Forms.Button();
 			this.CopyBox = new System.Windows.Forms.Button();
 			this.ClearAllBox = new System.Windows.Forms.Button();
+			this.ViewPositionBox = new DungeonEye.Forms.ViewFieldControl();
 			this.DrawTimer = new System.Windows.Forms.Timer(this.components);
 			this.ItemTileSetBox = new System.Windows.Forms.ComboBox();
 			this.label6 = new System.Windows.Forms.Label();
@@ -65,18 +66,18 @@
 			this.ItemsTab = new System.Windows.Forms.TabPage();
 			this.label11 = new System.Windows.Forms.Label();
 			this.OnHackTab = new System.Windows.Forms.TabPage();
+			this.OnHackIdBox = new System.Windows.Forms.NumericUpDown();
+			this.label15 = new System.Windows.Forms.Label();
 			this.label12 = new System.Windows.Forms.Label();
 			this.OnClickTab = new System.Windows.Forms.TabPage();
-			this.label13 = new System.Windows.Forms.Label();
-			this.OnBashTab = new System.Windows.Forms.TabPage();
-			this.label14 = new System.Windows.Forms.Label();
-			this.label15 = new System.Windows.Forms.Label();
-			this.OnHackIdBox = new System.Windows.Forms.NumericUpDown();
 			this.OnClickIdBox = new System.Windows.Forms.NumericUpDown();
 			this.label16 = new System.Windows.Forms.Label();
+			this.label13 = new System.Windows.Forms.Label();
+			this.OnBashTab = new System.Windows.Forms.TabPage();
 			this.OnBashIdBox = new System.Windows.Forms.NumericUpDown();
 			this.label17 = new System.Windows.Forms.Label();
-			this.ViewPositionBox = new DungeonEye.Forms.ViewFieldControl();
+			this.label14 = new System.Windows.Forms.Label();
+			this.HideItemsBox = new System.Windows.Forms.CheckBox();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.DecorationIdBox)).BeginInit();
@@ -87,10 +88,10 @@
 			this.VisualTab.SuspendLayout();
 			this.ItemsTab.SuspendLayout();
 			this.OnHackTab.SuspendLayout();
-			this.OnClickTab.SuspendLayout();
-			this.OnBashTab.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.OnHackIdBox)).BeginInit();
+			this.OnClickTab.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.OnClickIdBox)).BeginInit();
+			this.OnBashTab.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.OnBashIdBox)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -342,6 +343,16 @@
 			this.ClearAllBox.UseVisualStyleBackColor = true;
 			this.ClearAllBox.Click += new System.EventHandler(this.ClearAllBox_Click);
 			// 
+			// ViewPositionBox
+			// 
+			this.ViewPositionBox.Location = new System.Drawing.Point(9, 19);
+			this.ViewPositionBox.MinimumSize = new System.Drawing.Size(160, 120);
+			this.ViewPositionBox.Name = "ViewPositionBox";
+			this.ViewPositionBox.Position = DungeonEye.ViewFieldPosition.L;
+			this.ViewPositionBox.Size = new System.Drawing.Size(160, 120);
+			this.ViewPositionBox.TabIndex = 0;
+			this.ViewPositionBox.PositionChanged += new DungeonEye.Forms.ViewFieldControl.ChangedEventHandler(this.ViewPositionBox_PositionChanged);
+			// 
 			// DrawTimer
 			// 
 			this.DrawTimer.Interval = 66;
@@ -351,7 +362,7 @@
 			// 
 			this.ItemTileSetBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.ItemTileSetBox.FormattingEnabled = true;
-			this.ItemTileSetBox.Location = new System.Drawing.Point(56, 42);
+			this.ItemTileSetBox.Location = new System.Drawing.Point(56, 46);
 			this.ItemTileSetBox.Name = "ItemTileSetBox";
 			this.ItemTileSetBox.Size = new System.Drawing.Size(196, 21);
 			this.ItemTileSetBox.TabIndex = 0;
@@ -360,7 +371,7 @@
 			// label6
 			// 
 			this.label6.AutoSize = true;
-			this.label6.Location = new System.Drawing.Point(6, 45);
+			this.label6.Location = new System.Drawing.Point(6, 49);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(44, 13);
 			this.label6.TabIndex = 1;
@@ -369,7 +380,7 @@
 			// ItemPositionBox
 			// 
 			this.ItemPositionBox.AutoSize = true;
-			this.ItemPositionBox.Location = new System.Drawing.Point(175, 72);
+			this.ItemPositionBox.Location = new System.Drawing.Point(175, 76);
 			this.ItemPositionBox.Name = "ItemPositionBox";
 			this.ItemPositionBox.Size = new System.Drawing.Size(58, 13);
 			this.ItemPositionBox.TabIndex = 2;
@@ -378,7 +389,7 @@
 			// label8
 			// 
 			this.label8.AutoSize = true;
-			this.label8.Location = new System.Drawing.Point(119, 72);
+			this.label8.Location = new System.Drawing.Point(119, 76);
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size(50, 13);
 			this.label8.TabIndex = 2;
@@ -387,7 +398,7 @@
 			// label7
 			// 
 			this.label7.AutoSize = true;
-			this.label7.Location = new System.Drawing.Point(6, 72);
+			this.label7.Location = new System.Drawing.Point(6, 76);
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(44, 13);
 			this.label7.TabIndex = 3;
@@ -395,7 +406,7 @@
 			// 
 			// ItemIdBox
 			// 
-			this.ItemIdBox.Location = new System.Drawing.Point(56, 70);
+			this.ItemIdBox.Location = new System.Drawing.Point(56, 74);
 			this.ItemIdBox.Maximum = new decimal(new int[] {
             9999999,
             0,
@@ -422,7 +433,7 @@
 			this.tabControl1.Location = new System.Drawing.Point(12, 271);
 			this.tabControl1.Name = "tabControl1";
 			this.tabControl1.SelectedIndex = 0;
-			this.tabControl1.Size = new System.Drawing.Size(266, 141);
+			this.tabControl1.Size = new System.Drawing.Size(266, 186);
 			this.tabControl1.TabIndex = 7;
 			// 
 			// VisualTab
@@ -436,7 +447,7 @@
 			this.VisualTab.Location = new System.Drawing.Point(4, 22);
 			this.VisualTab.Name = "VisualTab";
 			this.VisualTab.Padding = new System.Windows.Forms.Padding(3);
-			this.VisualTab.Size = new System.Drawing.Size(258, 115);
+			this.VisualTab.Size = new System.Drawing.Size(258, 160);
 			this.VisualTab.TabIndex = 0;
 			this.VisualTab.Text = "Visual";
 			this.VisualTab.UseVisualStyleBackColor = true;
@@ -452,6 +463,7 @@
 			// 
 			// ItemsTab
 			// 
+			this.ItemsTab.Controls.Add(this.HideItemsBox);
 			this.ItemsTab.Controls.Add(this.label11);
 			this.ItemsTab.Controls.Add(this.label8);
 			this.ItemsTab.Controls.Add(this.ItemTileSetBox);
@@ -462,16 +474,16 @@
 			this.ItemsTab.Location = new System.Drawing.Point(4, 22);
 			this.ItemsTab.Name = "ItemsTab";
 			this.ItemsTab.Padding = new System.Windows.Forms.Padding(3);
-			this.ItemsTab.Size = new System.Drawing.Size(258, 115);
+			this.ItemsTab.Size = new System.Drawing.Size(258, 160);
 			this.ItemsTab.TabIndex = 1;
 			this.ItemsTab.Text = "Items";
 			this.ItemsTab.UseVisualStyleBackColor = true;
 			// 
 			// label11
 			// 
-			this.label11.Location = new System.Drawing.Point(3, 3);
+			this.label11.Location = new System.Drawing.Point(7, 7);
 			this.label11.Name = "label11";
-			this.label11.Size = new System.Drawing.Size(249, 36);
+			this.label11.Size = new System.Drawing.Size(248, 36);
 			this.label11.TabIndex = 8;
 			this.label11.Text = "This panel helps you to define the on screen position of items";
 			// 
@@ -482,67 +494,10 @@
 			this.OnHackTab.Controls.Add(this.label12);
 			this.OnHackTab.Location = new System.Drawing.Point(4, 22);
 			this.OnHackTab.Name = "OnHackTab";
-			this.OnHackTab.Size = new System.Drawing.Size(258, 115);
+			this.OnHackTab.Size = new System.Drawing.Size(258, 160);
 			this.OnHackTab.TabIndex = 2;
 			this.OnHackTab.Text = "OnHack";
 			this.OnHackTab.UseVisualStyleBackColor = true;
-			// 
-			// label12
-			// 
-			this.label12.Location = new System.Drawing.Point(3, 0);
-			this.label12.Name = "label12";
-			this.label12.Size = new System.Drawing.Size(249, 31);
-			this.label12.TabIndex = 9;
-			this.label12.Text = "This panel defines the decoration to use when hacked";
-			// 
-			// OnClickTab
-			// 
-			this.OnClickTab.Controls.Add(this.OnClickIdBox);
-			this.OnClickTab.Controls.Add(this.label16);
-			this.OnClickTab.Controls.Add(this.label13);
-			this.OnClickTab.Location = new System.Drawing.Point(4, 22);
-			this.OnClickTab.Name = "OnClickTab";
-			this.OnClickTab.Size = new System.Drawing.Size(258, 115);
-			this.OnClickTab.TabIndex = 3;
-			this.OnClickTab.Text = "OnClick";
-			this.OnClickTab.UseVisualStyleBackColor = true;
-			// 
-			// label13
-			// 
-			this.label13.Location = new System.Drawing.Point(3, 0);
-			this.label13.Name = "label13";
-			this.label13.Size = new System.Drawing.Size(249, 36);
-			this.label13.TabIndex = 10;
-			this.label13.Text = "This panel defines the decoration to use when clicked";
-			// 
-			// OnBashTab
-			// 
-			this.OnBashTab.Controls.Add(this.OnBashIdBox);
-			this.OnBashTab.Controls.Add(this.label17);
-			this.OnBashTab.Controls.Add(this.label14);
-			this.OnBashTab.Location = new System.Drawing.Point(4, 22);
-			this.OnBashTab.Name = "OnBashTab";
-			this.OnBashTab.Size = new System.Drawing.Size(258, 115);
-			this.OnBashTab.TabIndex = 4;
-			this.OnBashTab.Text = "OnBash";
-			this.OnBashTab.UseVisualStyleBackColor = true;
-			// 
-			// label14
-			// 
-			this.label14.Location = new System.Drawing.Point(2, 0);
-			this.label14.Name = "label14";
-			this.label14.Size = new System.Drawing.Size(249, 36);
-			this.label14.TabIndex = 11;
-			this.label14.Text = "This panel defines the decoration to use when bashed";
-			// 
-			// label15
-			// 
-			this.label15.AutoSize = true;
-			this.label15.Location = new System.Drawing.Point(8, 49);
-			this.label15.Name = "label15";
-			this.label15.Size = new System.Drawing.Size(84, 13);
-			this.label15.TabIndex = 10;
-			this.label15.Text = "Exchange to id :";
 			// 
 			// OnHackIdBox
 			// 
@@ -568,6 +523,35 @@
             0,
             -2147483648});
 			this.OnHackIdBox.ValueChanged += new System.EventHandler(this.OnHackIdBox_ValueChanged);
+			// 
+			// label15
+			// 
+			this.label15.AutoSize = true;
+			this.label15.Location = new System.Drawing.Point(8, 49);
+			this.label15.Name = "label15";
+			this.label15.Size = new System.Drawing.Size(84, 13);
+			this.label15.TabIndex = 10;
+			this.label15.Text = "Exchange to id :";
+			// 
+			// label12
+			// 
+			this.label12.Location = new System.Drawing.Point(7, 7);
+			this.label12.Name = "label12";
+			this.label12.Size = new System.Drawing.Size(248, 31);
+			this.label12.TabIndex = 9;
+			this.label12.Text = "This panel defines the decoration to use when hacked";
+			// 
+			// OnClickTab
+			// 
+			this.OnClickTab.Controls.Add(this.OnClickIdBox);
+			this.OnClickTab.Controls.Add(this.label16);
+			this.OnClickTab.Controls.Add(this.label13);
+			this.OnClickTab.Location = new System.Drawing.Point(4, 22);
+			this.OnClickTab.Name = "OnClickTab";
+			this.OnClickTab.Size = new System.Drawing.Size(258, 160);
+			this.OnClickTab.TabIndex = 3;
+			this.OnClickTab.Text = "OnClick";
+			this.OnClickTab.UseVisualStyleBackColor = true;
 			// 
 			// OnClickIdBox
 			// 
@@ -603,6 +587,26 @@
 			this.label16.TabIndex = 12;
 			this.label16.Text = "Exchange to id :";
 			// 
+			// label13
+			// 
+			this.label13.Location = new System.Drawing.Point(7, 7);
+			this.label13.Name = "label13";
+			this.label13.Size = new System.Drawing.Size(249, 36);
+			this.label13.TabIndex = 10;
+			this.label13.Text = "This panel defines the decoration to use when clicked";
+			// 
+			// OnBashTab
+			// 
+			this.OnBashTab.Controls.Add(this.OnBashIdBox);
+			this.OnBashTab.Controls.Add(this.label17);
+			this.OnBashTab.Controls.Add(this.label14);
+			this.OnBashTab.Location = new System.Drawing.Point(4, 22);
+			this.OnBashTab.Name = "OnBashTab";
+			this.OnBashTab.Size = new System.Drawing.Size(258, 160);
+			this.OnBashTab.TabIndex = 4;
+			this.OnBashTab.Text = "OnBash";
+			this.OnBashTab.UseVisualStyleBackColor = true;
+			// 
 			// OnBashIdBox
 			// 
 			this.OnBashIdBox.Location = new System.Drawing.Point(98, 43);
@@ -637,15 +641,24 @@
 			this.label17.TabIndex = 12;
 			this.label17.Text = "Exchange to id :";
 			// 
-			// ViewPositionBox
+			// label14
 			// 
-			this.ViewPositionBox.Location = new System.Drawing.Point(9, 19);
-			this.ViewPositionBox.MinimumSize = new System.Drawing.Size(160, 120);
-			this.ViewPositionBox.Name = "ViewPositionBox";
-			this.ViewPositionBox.Position = DungeonEye.ViewFieldPosition.L;
-			this.ViewPositionBox.Size = new System.Drawing.Size(160, 120);
-			this.ViewPositionBox.TabIndex = 0;
-			this.ViewPositionBox.PositionChanged += new DungeonEye.Forms.ViewFieldControl.ChangedEventHandler(this.ViewPositionBox_PositionChanged);
+			this.label14.Location = new System.Drawing.Point(7, 7);
+			this.label14.Name = "label14";
+			this.label14.Size = new System.Drawing.Size(249, 36);
+			this.label14.TabIndex = 11;
+			this.label14.Text = "This panel defines the decoration to use when bashed";
+			// 
+			// HideItemsBox
+			// 
+			this.HideItemsBox.AutoSize = true;
+			this.HideItemsBox.Location = new System.Drawing.Point(6, 110);
+			this.HideItemsBox.Name = "HideItemsBox";
+			this.HideItemsBox.Size = new System.Drawing.Size(75, 17);
+			this.HideItemsBox.TabIndex = 9;
+			this.HideItemsBox.Text = "Hide items";
+			this.HideItemsBox.UseVisualStyleBackColor = true;
+			this.HideItemsBox.CheckedChanged += new System.EventHandler(this.HideItemsBox_CheckedChanged);
 			// 
 			// DecorationSetForm
 			// 
@@ -676,12 +689,12 @@
 			this.ItemsTab.PerformLayout();
 			this.OnHackTab.ResumeLayout(false);
 			this.OnHackTab.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.OnHackIdBox)).EndInit();
 			this.OnClickTab.ResumeLayout(false);
 			this.OnClickTab.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.OnClickIdBox)).EndInit();
 			this.OnBashTab.ResumeLayout(false);
 			this.OnBashTab.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.OnHackIdBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.OnClickIdBox)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.OnBashIdBox)).EndInit();
 			this.ResumeLayout(false);
 
@@ -736,5 +749,6 @@
 		private System.Windows.Forms.Label label16;
 		private System.Windows.Forms.NumericUpDown OnBashIdBox;
 		private System.Windows.Forms.Label label17;
+		private System.Windows.Forms.CheckBox HideItemsBox;
 	}
 }

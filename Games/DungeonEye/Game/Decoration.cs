@@ -296,6 +296,7 @@ namespace DungeonEye
 			OnHackId = int.Parse(xml.Attributes["onhack"].Value);
 			OnBashId = int.Parse(xml.Attributes["onbash"].Value);
 			OnClickId = int.Parse(xml.Attributes["onclick"].Value);
+			HideItems= bool.Parse(xml.Attributes["hideitems"].Value);
 
 			foreach (XmlNode node in xml)
 			{
@@ -355,6 +356,7 @@ namespace DungeonEye
 			writer.WriteAttributeString("onhack", OnHackId.ToString());
 			writer.WriteAttributeString("onbash", OnBashId.ToString());
 			writer.WriteAttributeString("onclick", OnClickId.ToString());
+			writer.WriteAttributeString("hideitems", HideItems.ToString());
 
 			writer.WriteStartElement("item");
 			writer.WriteAttributeString("x", ItemLocation.X.ToString());
@@ -429,6 +431,17 @@ namespace DungeonEye
 			set;
 		}
 
+
+		/// <summary>
+		/// If true, don't display items on the ground
+		/// </summary>
+		public bool HideItems
+		{
+			get;
+			set;
+		}
+
+
 		/// <summary>
 		/// Id of the decoration to use when hacked
 		/// </summary>
@@ -438,6 +451,7 @@ namespace DungeonEye
 			set;
 		}
 
+
 		/// <summary>
 		/// Id of the decoration to use when bashed
 		/// </summary>
@@ -446,6 +460,7 @@ namespace DungeonEye
 			get;
 			set;
 		}
+
 
 		/// <summary>
 		/// Id of the decoration to use when clicked

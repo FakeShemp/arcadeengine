@@ -422,7 +422,7 @@ namespace DungeonEye
 
 				Decoration deco = Decoration.GetDecoration(id);
 				if (deco != null && deco.ForceDisplay)
-					return deco;				
+					return deco;
 			}
 
 
@@ -648,7 +648,7 @@ namespace DungeonEye
 			// Backdrop
 			// The background is assumed to be x-flipped when party.x & party.y & party.direction = 1.
 			// I.e. all kind of moves and rotations from the current position will result in the background being x-flipped.
-			bool flipbackdrop =  ((location.Coordinate.X + location.Coordinate.Y + (int)location.Direction) & 1) == 0;
+			bool flipbackdrop = ((location.Coordinate.X + location.Coordinate.Y + (int)location.Direction) & 1) == 0;
 			SpriteEffects effect = flipbackdrop ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
 			batch.DrawTile(WallTileset, 0, Point.Empty, Color.White, 0.0f, effect, 0.0f);
 
@@ -710,6 +710,9 @@ namespace DungeonEye
 
 			Square square = field.Blocks[(int)position];
 			Point point;
+			Decoration deco = null;
+			List<Item>[] list = null;
+
 
 			#region ceiling pit
 			if (square.IsPitTarget)
@@ -725,23 +728,27 @@ namespace DungeonEye
 
 
 			#region Items on ground before a door
-
-			List<Item>[] list = square.GetItems(view);
-			if (!square.IsWall)
+			// If there is a deco that hide ground items, skip
+			deco = GetDecoration(square.Location, Compass.GetOppositeDirection(view));
+			if (deco != null && !deco.HideItems)
 			{
-				for (int i = 0; i < 2; i++)
+				list = square.GetItems(view);
+				if (!square.IsWall)
 				{
-					if (list[i].Count == 0)
-						continue;
-
-					foreach (Item item in list[i])
+					for (int i = 0; i < 2; i++)
 					{
-						point = DisplayCoordinates.GetGroundPosition(position, (SquarePosition)i);
-						if (!point.IsEmpty)
+						if (list[i].Count == 0)
+							continue;
+
+						foreach (Item item in list[i])
 						{
-							batch.DrawTile(Dungeon.ItemTileSet, item.GroundTileID, point,
-								DisplayCoordinates.GetDistantColor(position), 0.0f,
-								DisplayCoordinates.GetItemScaleFactor(position), SpriteEffects.None, 0.0f);
+							point = DisplayCoordinates.GetGroundPosition(position, (SquarePosition)i);
+							if (!point.IsEmpty)
+							{
+								batch.DrawTile(Dungeon.ItemTileSet, item.GroundTileID, point,
+									DisplayCoordinates.GetDistantColor(position), 0.0f,
+									DisplayCoordinates.GetItemScaleFactor(position), SpriteEffects.None, 0.0f);
+							}
 						}
 					}
 				}
@@ -775,17 +782,16 @@ namespace DungeonEye
 			if (square.HasDecorations)
 			{
 				// Is there a forced decoration
-				Decoration deco = null;
-				for (int i = 0 ; i < 4 ; i++)
+				for (int i = 0; i < 4; i++)
 				{
-					deco = Decoration.GetDecoration(square.GetDecorationId((CardinalPoint) i));
+					deco = Decoration.GetDecoration(square.GetDecorationId((CardinalPoint)i));
 					if (deco != null && deco.ForceDisplay)
 						deco.DrawDecoration(batch, Decoration, position, true);
 				}
 
 
 				// For each directions, draws the decoration
-				foreach (CardinalPoint side in DisplayCoordinates.DrawingWallSides[(int) position])
+				foreach (CardinalPoint side in DisplayCoordinates.DrawingWallSides[(int)position])
 				{
 					// Decoration informations
 					deco = Decoration.GetDecoration(square.GetDecorationId(view, side));
@@ -808,20 +814,28 @@ namespace DungeonEye
 			#region Items on ground after a door
 			if (!square.IsWall)
 			{
-				for (int i = 2; i < 4; i++)
+				// If there is a deco that hide ground items, skip
+				deco = GetDecoration(square.Location, Compass.GetOppositeDirection(view));
+				if (deco != null && !deco.HideItems)
 				{
-					if (list[i].Count == 0)
-						continue;
-
-					foreach (Item item in list[i])
+					// Both ground positions
+					for (int i = 2; i < 4; i++)
 					{
-						// Get screen coordinate
-						point = DisplayCoordinates.GetGroundPosition(position, (SquarePosition)i);
-						if (!point.IsEmpty)
+						// No items
+						if (list[i].Count == 0)
+							continue;
+
+						// Foreach item on the ground
+						foreach (Item item in list[i])
 						{
-							batch.DrawTile(Dungeon.ItemTileSet, item.GroundTileID, point,
-								DisplayCoordinates.GetDistantColor(position), 0.0f,
-								DisplayCoordinates.GetItemScaleFactor(position), SpriteEffects.None, 0.0f);
+							// Get screen coordinate
+							point = DisplayCoordinates.GetGroundPosition(position, (SquarePosition)i);
+							if (!point.IsEmpty)
+							{
+								batch.DrawTile(Dungeon.ItemTileSet, item.GroundTileID, point,
+									DisplayCoordinates.GetDistantColor(position), 0.0f,
+									DisplayCoordinates.GetItemScaleFactor(position), SpriteEffects.None, 0.0f);
+							}
 						}
 					}
 				}
@@ -866,7 +880,7 @@ namespace DungeonEye
 					fx = SpriteEffects.FlipHorizontally;
 
 				foreach (ThrownItem fi in flyings[(int)pos])
-					batch.DrawTile(Dungeon.ItemTileSet, fi.Item.ThrowTileID, point, 
+					batch.DrawTile(Dungeon.ItemTileSet, fi.Item.ThrowTileID, point,
 						DisplayCoordinates.GetDistantColor(position), 0.0f,
 						DisplayCoordinates.GetItemScaleFactor(position), fx, 0.0f);
 
