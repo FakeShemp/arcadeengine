@@ -408,9 +408,25 @@ namespace DungeonEye
 			if (square == null)
 				return null;
 
+			// if a decoration is found on the desired side
 			int id = square.GetDecorationId(side);
+			if (id != -1)
+				return Decoration.GetDecoration(id);
 
-			return Decoration.GetDecoration(id);
+			// If there's a forced decoration
+			for (int i = 0; i < 4; i++)
+			{
+				id = square.Decorations[i];
+				if (id == -1)
+					continue;
+
+				Decoration deco = Decoration.GetDecoration(id);
+				if (deco != null && deco.ForceDisplay)
+					return deco;				
+			}
+
+
+			return null;
 		}
 
 		#endregion
