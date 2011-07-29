@@ -513,10 +513,12 @@ namespace DungeonEye
 				return false;
 
 
+
 			if (Blocks[location.Y][location.X] != null)
 				Blocks[location.Y][location.X].Dispose();
 
 
+			square.Maze = this;
 			Blocks[location.Y][location.X] = square;
 
 			return true;

@@ -1242,7 +1242,7 @@ namespace DungeonEye
 		public Maze Maze
 		{
 			get;
-			private set;
+			set;
 		}
 
 

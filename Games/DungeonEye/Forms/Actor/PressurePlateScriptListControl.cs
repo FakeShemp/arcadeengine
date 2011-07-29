@@ -59,9 +59,12 @@ namespace DungeonEye.Forms
 			foreach (PressurePlateScript script in Scripts)
 			{
 				if (script.Action == null)
-					continue;
+				{
+					ScriptListBox.Items.Add("## ERROR ##");
+				}
+				else
 
-				ScriptListBox.Items.Add(script.Action.ToString());
+					ScriptListBox.Items.Add(script.Action.ToString());
 			}
 
 		}
@@ -144,7 +147,7 @@ namespace DungeonEye.Forms
 			if (Scripts == null)
 				return;
 
-			if (ScriptListBox.SelectedIndex == -1 || ScriptListBox.SelectedIndex > Scripts.Count)
+			if (ScriptListBox.SelectedIndex == -1)// || ScriptListBox.SelectedIndex > Scripts.Count)
 				return;
 
 			Scripts.RemoveAt(ScriptListBox.SelectedIndex);

@@ -42,7 +42,7 @@ namespace DungeonEye.Script.Actions
 		{
 			Name = XmlTag;
 
-			Square = new Square(null);
+			//Square = new Square();
 		}
 
 
@@ -58,7 +58,7 @@ namespace DungeonEye.Script.Actions
 			Maze maze = Target.GetMaze(GameScreen.Dungeon);
 			if (maze == null)
 				return false;
-
+			
 			maze.SetSquare(Square, Target.Coordinate);
 
 			return true;
@@ -111,6 +111,8 @@ namespace DungeonEye.Script.Actions
 					break;
 				}
 			}
+
+
 
 			return true;
 		}
