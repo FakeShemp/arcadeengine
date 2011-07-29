@@ -30,6 +30,8 @@
 		{
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.panel1 = new System.Windows.Forms.Panel();
+			this.DisableBox = new System.Windows.Forms.RadioButton();
+			this.EnableBox = new System.Windows.Forms.RadioButton();
 			this.TogglesBox = new System.Windows.Forms.RadioButton();
 			this.ActivatesBox = new System.Windows.Forms.RadioButton();
 			this.GiveExperienceBox = new System.Windows.Forms.RadioButton();
@@ -51,8 +53,7 @@
 			this.DeactActBox = new System.Windows.Forms.RadioButton();
 			this.ChangeTextBox = new System.Windows.Forms.RadioButton();
 			this.ActionPropertiesBox = new System.Windows.Forms.Panel();
-			this.EnableBox = new System.Windows.Forms.RadioButton();
-			this.DisableBox = new System.Windows.Forms.RadioButton();
+			this.SpawnMonsterBox = new System.Windows.Forms.RadioButton();
 			this.groupBox1.SuspendLayout();
 			this.panel1.SuspendLayout();
 			this.SuspendLayout();
@@ -64,7 +65,7 @@
 			this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupBox1.Location = new System.Drawing.Point(0, 0);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(890, 689);
+			this.groupBox1.Size = new System.Drawing.Size(890, 758);
 			this.groupBox1.TabIndex = 1;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Action";
@@ -74,6 +75,7 @@
 			this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
 			this.panel1.AutoScroll = true;
+			this.panel1.Controls.Add(this.SpawnMonsterBox);
 			this.panel1.Controls.Add(this.DisableBox);
 			this.panel1.Controls.Add(this.EnableBox);
 			this.panel1.Controls.Add(this.TogglesBox);
@@ -98,8 +100,34 @@
 			this.panel1.Controls.Add(this.ChangeTextBox);
 			this.panel1.Location = new System.Drawing.Point(6, 19);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(142, 664);
+			this.panel1.Size = new System.Drawing.Size(142, 733);
 			this.panel1.TabIndex = 4;
+			// 
+			// DisableBox
+			// 
+			this.DisableBox.Appearance = System.Windows.Forms.Appearance.Button;
+			this.DisableBox.Location = new System.Drawing.Point(3, 32);
+			this.DisableBox.Name = "DisableBox";
+			this.DisableBox.Size = new System.Drawing.Size(113, 23);
+			this.DisableBox.TabIndex = 3;
+			this.DisableBox.TabStop = true;
+			this.DisableBox.Text = "Disables";
+			this.DisableBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.DisableBox.UseVisualStyleBackColor = true;
+			this.DisableBox.CheckedChanged += new System.EventHandler(this.DisableBox_CheckedChanged);
+			// 
+			// EnableBox
+			// 
+			this.EnableBox.Appearance = System.Windows.Forms.Appearance.Button;
+			this.EnableBox.Location = new System.Drawing.Point(3, 3);
+			this.EnableBox.Name = "EnableBox";
+			this.EnableBox.Size = new System.Drawing.Size(113, 23);
+			this.EnableBox.TabIndex = 3;
+			this.EnableBox.TabStop = true;
+			this.EnableBox.Text = "Enables";
+			this.EnableBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.EnableBox.UseVisualStyleBackColor = true;
+			this.EnableBox.CheckedChanged += new System.EventHandler(this.EnableBox_CheckedChanged);
 			// 
 			// TogglesBox
 			// 
@@ -368,34 +396,21 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.ActionPropertiesBox.Location = new System.Drawing.Point(154, 19);
 			this.ActionPropertiesBox.Name = "ActionPropertiesBox";
-			this.ActionPropertiesBox.Size = new System.Drawing.Size(730, 664);
+			this.ActionPropertiesBox.Size = new System.Drawing.Size(730, 733);
 			this.ActionPropertiesBox.TabIndex = 1;
 			// 
-			// DisableBox
+			// SpawnMonsterBox
 			// 
-			this.DisableBox.Appearance = System.Windows.Forms.Appearance.Button;
-			this.DisableBox.Location = new System.Drawing.Point(3, 32);
-			this.DisableBox.Name = "DisableBox";
-			this.DisableBox.Size = new System.Drawing.Size(113, 23);
-			this.DisableBox.TabIndex = 3;
-			this.DisableBox.TabStop = true;
-			this.DisableBox.Text = "Disables";
-			this.DisableBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.DisableBox.UseVisualStyleBackColor = true;
-			this.DisableBox.CheckedChanged += new System.EventHandler(this.DisableBox_CheckedChanged);
-			// 
-			// EnableBox
-			// 
-			this.EnableBox.Appearance = System.Windows.Forms.Appearance.Button;
-			this.EnableBox.Location = new System.Drawing.Point(3, 3);
-			this.EnableBox.Name = "EnableBox";
-			this.EnableBox.Size = new System.Drawing.Size(113, 23);
-			this.EnableBox.TabIndex = 3;
-			this.EnableBox.TabStop = true;
-			this.EnableBox.Text = "Enables";
-			this.EnableBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.EnableBox.UseVisualStyleBackColor = true;
-			this.EnableBox.CheckedChanged += new System.EventHandler(this.EnableBox_CheckedChanged);
+			this.SpawnMonsterBox.Appearance = System.Windows.Forms.Appearance.Button;
+			this.SpawnMonsterBox.Location = new System.Drawing.Point(3, 656);
+			this.SpawnMonsterBox.Name = "SpawnMonsterBox";
+			this.SpawnMonsterBox.Size = new System.Drawing.Size(113, 23);
+			this.SpawnMonsterBox.TabIndex = 4;
+			this.SpawnMonsterBox.TabStop = true;
+			this.SpawnMonsterBox.Text = "Spawn monster";
+			this.SpawnMonsterBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.SpawnMonsterBox.UseVisualStyleBackColor = true;
+			this.SpawnMonsterBox.CheckedChanged += new System.EventHandler(this.SpawnMonsterBox_CheckedChanged);
 			// 
 			// ActionChooserControl
 			// 
@@ -403,7 +418,7 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.groupBox1);
 			this.Name = "ActionChooserControl";
-			this.Size = new System.Drawing.Size(890, 689);
+			this.Size = new System.Drawing.Size(890, 758);
 			this.groupBox1.ResumeLayout(false);
 			this.panel1.ResumeLayout(false);
 			this.ResumeLayout(false);
@@ -437,5 +452,6 @@
 		private System.Windows.Forms.RadioButton DisableBox;
 		private System.Windows.Forms.RadioButton EnableBox;
 		private System.Windows.Forms.Panel panel1;
+		private System.Windows.Forms.RadioButton SpawnMonsterBox;
 	}
 }

@@ -111,7 +111,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\Actions\SpawnMonsterControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Actions\SpawnMonsterControl.Designer.cs">
+      <DependentUpon>SpawnMonsterControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Game\Gui\CampWindows\SaveGameWindow.cs" />
+    <Compile Include="Game\Script\Actions\SpawnMonster.cs" />
     <Compile Include="SaveGameSlot.cs" />
     <Compile Include="Forms\AbilityControl.cs">
       <SubType>UserControl</SubType>
@@ -654,6 +661,9 @@
     <EmbeddedResource Include="Forms\AbilityControl.resx">
       <DependentUpon>AbilityControl.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Actions\SpawnMonsterControl.resx">
+      <DependentUpon>SpawnMonsterControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Actions\DisableTargetControl.resx">
       <DependentUpon>DisableTargetControl.cs</DependentUpon>

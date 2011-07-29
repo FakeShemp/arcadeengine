@@ -711,7 +711,7 @@ namespace DungeonEye
 			Square square = field.Blocks[(int)position];
 			Point point;
 			Decoration deco = null;
-			List<Item>[] list = null;
+			List<Item>[] list = square.GetItems(view);
 
 
 			#region ceiling pit
@@ -730,10 +730,9 @@ namespace DungeonEye
 			#region Items on ground before a door
 			// If there is a deco that hide ground items, skip
 			deco = GetDecoration(square.Location, Compass.GetOppositeDirection(view));
-			if (deco != null && !deco.HideItems)
+			if (deco == null || (deco != null && !deco.HideItems))
 			{
-				list = square.GetItems(view);
-				if (!square.IsWall)
+				if (!square.IsWall || (deco != null && !deco.HideItems))
 				{
 					for (int i = 0; i < 2; i++)
 					{
@@ -816,7 +815,7 @@ namespace DungeonEye
 			{
 				// If there is a deco that hide ground items, skip
 				deco = GetDecoration(square.Location, Compass.GetOppositeDirection(view));
-				if (deco != null && !deco.HideItems)
+				if (deco == null || (deco != null && !deco.HideItems))
 				{
 					// Both ground positions
 					for (int i = 2; i < 4; i++)

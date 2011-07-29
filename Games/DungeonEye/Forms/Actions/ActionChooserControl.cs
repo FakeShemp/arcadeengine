@@ -157,6 +157,16 @@ namespace DungeonEye.Forms.Script
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		private void SpawnMonsterBox_CheckedChanged(object sender, EventArgs e)
+		{
+			SetAction(new SpawnMonster());
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void DisableBox_CheckedChanged(object sender, EventArgs e)
 		{
 			SetAction(new DisableTarget());
@@ -427,6 +437,5 @@ namespace DungeonEye.Forms.Script
 		ScriptBase script;
 
 		#endregion
-
 	}
 }

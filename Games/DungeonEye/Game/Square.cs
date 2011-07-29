@@ -223,7 +223,7 @@ namespace DungeonEye
 			{
 				GameMessage.AddMessage("Decoration: OnClick()");
 
-				return true;
+				return false;
 			}
 
 
@@ -258,6 +258,8 @@ namespace DungeonEye
 				// change only this decoration
 				else
 					Decorations[(int)side] = deco.OnHackId;
+
+				return true;
 			}
 
 			#endregion
@@ -265,7 +267,7 @@ namespace DungeonEye
 
 			GameMessage.AddMessage("Square: OnHack()");
 
-			return true;
+			return false;
 		}
 
 
@@ -281,7 +283,7 @@ namespace DungeonEye
 				return false;
 
 			GameMessage.AddMessage("Square: OnBash()");
-			return true;
+			return false;
 		}
 
 
