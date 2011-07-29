@@ -347,12 +347,13 @@ namespace DungeonEye
 					Point point = new Point(302, 160);
 					for (int i = 0; i < 12; i++)
 					{
-						point.Y += 18;
 						if (new Rectangle(point.X, point.Y, 324, 16).Contains(Mouse.Location) && Mouse.IsNewButtonDown(MouseButtons.Left))
 						{
 							CurrentHero.Race = (HeroRace)i;
 							CurrentState = CharGenStates.SelectClass;
 						}
+
+						point.Y += 18;
 					}
 				}
 				break;
