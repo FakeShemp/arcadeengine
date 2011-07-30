@@ -95,12 +95,15 @@ namespace DungeonEye
 		/// </summary>
 		public void Dispose()
 		{
-			for (int i = 0 ; i < 4 ; i++)
+			for (int i = 0; i < 4; i++)
 			{
 				if (Monsters[i] != null)
 					Monsters[i].Dispose();
 
 				Monsters[i] = null;
+
+				Decorations[i] = -1;
+				Items[i].Clear();
 			}
 
 			if (Actor != null)
@@ -108,8 +111,8 @@ namespace DungeonEye
 				Actor.Dispose();
 				Actor = null;
 			}
-		}
 
+		}
 
 
 		/// <summary>

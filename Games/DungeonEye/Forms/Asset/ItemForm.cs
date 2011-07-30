@@ -708,7 +708,7 @@ namespace DungeonEye.Forms
 			if (Item == null)
 				return;
 
-			Item.IdentifiedName = IdentifiedBox.Text;
+			Item.IdentifiedName = IdentifiedNameBox.Text;
 
 		}
 

@@ -252,11 +252,7 @@ namespace DungeonEye
 			// Display a message
 			if (ItemInHand != null)
 			{
-				// If item is identified, display identified message, else display default item's name
-				if (ItemInHand.IsIdentified)
-					GameMessage.BuildMessage(2, ItemInHand.IdentifiedName);
-				else
-					GameMessage.BuildMessage(2, ItemInHand.Name);
+				GameMessage.BuildMessage(2, ItemInHand.GetName());
 
 				// Change cursor
 				Mouse.SetTile(item.TileID);

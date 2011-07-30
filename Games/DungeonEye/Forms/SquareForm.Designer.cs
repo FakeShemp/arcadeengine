@@ -54,7 +54,6 @@
 			this.SquareControlBox.MinimumSize = new System.Drawing.Size(650, 600);
 			this.SquareControlBox.Name = "SquareControlBox";
 			this.SquareControlBox.Size = new System.Drawing.Size(660, 609);
-			this.SquareControlBox.Square = null;
 			this.SquareControlBox.TabIndex = 0;
 			// 
 			// SquareForm

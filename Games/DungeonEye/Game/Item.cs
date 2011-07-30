@@ -62,6 +62,7 @@ namespace DungeonEye
 			DamageVsSmall = new Dice();
 			DamageType = 0;
 			Script = new ScriptInterface<IItem>();
+			CanIdentify = true;
 
 			IsDisposed = false;
 		}
@@ -83,6 +84,16 @@ namespace DungeonEye
 
 
 			return true;
+		}
+
+
+		/// <summary>
+		/// Returns the name of the item if identified or not
+		/// </summary>
+		/// <returns></returns>
+		public string GetName()
+		{
+			return IsIdentified ? IdentifiedName : Name;
 		}
 
 

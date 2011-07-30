@@ -35,7 +35,7 @@ namespace DungeonEye.Forms
 	{
 
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
 		public SquareControl()
 		{
@@ -43,7 +43,26 @@ namespace DungeonEye.Forms
 
 			SquareTypeBox.DataSource = Enum.GetValues(typeof(SquareType));
 
+			Square = new Square(null);
+
 			UpdateProperties();
+		}
+
+
+
+		/// <summary>
+		/// Change the square
+		/// </summary>
+		/// <param name="square">Square handle</param>
+		public void SetSquare(Square square)
+		{
+			if (square == null)
+				return;
+
+			if (Square != null)
+				Square.Dispose();
+
+			Square = square;
 		}
 
 
@@ -955,17 +974,10 @@ namespace DungeonEye.Forms
 		/// </summary>
 		public Square Square
 		{
-			get
-			{
-				return square;
-			}
-			set
-			{
-				square = value;
-				UpdateProperties();
-			}
+			get;
+			private set;
 		}
-		Square square;
+
 
 		/// <summary>
 		/// Spritebatch handle

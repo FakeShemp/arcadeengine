@@ -54,7 +54,7 @@
 			this.groupBox1.Controls.Add(this.TargetBox);
 			this.groupBox1.Location = new System.Drawing.Point(3, 3);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(1063, 748);
+			this.groupBox1.Size = new System.Drawing.Size(1090, 754);
 			this.groupBox1.TabIndex = 1;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Set To";
@@ -67,7 +67,6 @@
 			this.SquareControl.MinimumSize = new System.Drawing.Size(650, 600);
 			this.SquareControl.Name = "SquareControl";
 			this.SquareControl.Size = new System.Drawing.Size(650, 600);
-			this.SquareControl.Square = null;
 			this.SquareControl.TabIndex = 1;
 			// 
 			// SetToControl

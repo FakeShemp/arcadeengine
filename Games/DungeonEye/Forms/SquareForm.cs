@@ -31,17 +31,17 @@ namespace DungeonEye.Forms
 	{
 
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
-		/// <param name="maze"></param>
-		/// <param name="square"></param>
+		/// <param name="maze">Maze handle</param>
+		/// <param name="square">Square handle</param>
 		public SquareForm(Maze maze, Square square)
 		{
 			InitializeComponent();
 
 
 			SquareControlBox.Maze = maze;
-			SquareControlBox.Square = square;
+			SquareControlBox.SetSquare(square);
 		}
 
 

@@ -52,9 +52,10 @@ namespace DungeonEye.Forms
 
 			Action = script;
 			Dungeon = dungeon;
-			SquareControl.Square = script.Square;			
+			SquareControl.Square.Load(script.Node);
 			TargetBox.SetTarget(Dungeon, Action.Target);
 		}
+
 
 		#region Events
 
@@ -68,14 +69,18 @@ namespace DungeonEye.Forms
 			if (Action == null)
 				return;
 
+			// Change the target
 			((SetTo) Action).Target = target;
 
+
+			// Change the maze of the square control
 			if (Dungeon != null && target != null)
 			{
 				SquareControl.Maze = Dungeon.GetMaze(target.Maze);
 			}
 			else
 			{
+				// Default start location
 				SquareControl.Maze = Dungeon.GetMaze(Dungeon.StartLocation.Maze);
 			}
 		}
@@ -87,7 +92,7 @@ namespace DungeonEye.Forms
 
 
 		/// <summary>
-		/// 
+		/// Dungeon handle
 		/// </summary>
 		Dungeon Dungeon;
 
