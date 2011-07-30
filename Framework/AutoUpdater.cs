@@ -92,7 +92,7 @@ namespace ArcEngine
 			}
 			catch (Exception e)
 			{
-				//Trace.WriteLine("[AutoUpdate]Check() : " + e.Message);
+				// Oops, it did it again !
 			}
 
 		}
@@ -203,5 +203,16 @@ namespace ArcEngine
 		[XmlElement("DirectDownload")]
 		public string DirectDownload { get; set; }
 	}
-	
+
+/*
+<?xml version="1.0" encoding="us-ascii" standalone="yes"?>
+<Products>
+	<Product>
+		<Name>Dungeon Eye</Name>
+		<Version>0.3.3.0</Version>
+		<Url>http://www.dungeoneye.net</Url>
+		<DirectDownload>http://www.dungeoneye.net/download/1/</DirectDownload>
+	</Product>
+</Products>
+*/
 }

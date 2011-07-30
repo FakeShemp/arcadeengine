@@ -76,7 +76,7 @@ namespace DungeonEye.Forms
 			EntityBox.Entity = Monster;
 			TileSetBox.Text = Monster.TileSetName;
 			TileIDBox.Value = Monster.Tile;
-			PocketItemsBox.DataSource = Monster.ItemsInPocket;
+			PocketItemsBox.Items.AddRange(Monster.ItemsInPocket.ToArray());
 			XPRewardBox.Value = Monster.Reward;
 			ArmorClassBox.Value = Monster.ArmorClass;
 			ScriptBox.SetValues<IMonster>(Monster.Script);
@@ -275,8 +275,9 @@ namespace DungeonEye.Forms
 			if (Monster == null || ItemsBox.SelectedItem == null)
 				return;
 
-			Monster.ItemsInPocket.Add(ItemsBox.SelectedItem as string);
-			PocketItemsBox.Items.Add(ItemsBox.SelectedItem as string);
+			string name = ItemsBox.SelectedItem as string;
+			Monster.ItemsInPocket.Add(name);
+			PocketItemsBox.Items.Add(name);
 		}
 
 
