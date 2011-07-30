@@ -468,7 +468,7 @@ namespace DungeonEye
 				Team.Maze.DrawMiniMap(batch, new Point(500, 220));
 
 				// Team location
-				batch.DrawString(InventoryFont, new Point(10, 340), GameColors.White, Team.Location.ToString());
+				batch.DrawString(InventoryFont, new Point(10, 340), GameColors.White, Team.Location.ToStringShort());
 			}
 
 
