@@ -49,7 +49,7 @@ namespace DungeonEye
 			Name = "No name";
 			Dungeon = dungeon;
 
-			Blocks = new List<List<Square>>();
+			Squares = new List<List<Square>>();
 			ThrownItems = new List<ThrownItem>();
 			Zones = new List<MazeZone>();
 
@@ -73,7 +73,7 @@ namespace DungeonEye
 			LoadDoorTileSet();
 
 
-			foreach (List<Square> list in Blocks)
+			foreach (List<Square> list in Squares)
 				foreach (Square square in list)
 				{
 					square.Init();
@@ -172,7 +172,7 @@ namespace DungeonEye
 		{
 
 			// Dispose each sqaure
-			foreach (List<Square> list in Blocks)
+			foreach (List<Square> list in Squares)
 				foreach (Square square in list)
 					square.Dispose();
 
@@ -186,7 +186,7 @@ namespace DungeonEye
 			ResourceManager.UnlockSharedAsset<TileSet>(WallTileset);
 			WallTileset = null;
 
-			Blocks.Clear();
+			Squares.Clear();
 			Description = null;
 			Dungeon = null;
 			ThrownItems.Clear();
@@ -206,7 +206,7 @@ namespace DungeonEye
 		public void Update(GameTime time)
 		{
 			// Update monsters
-			foreach (List<Square> list in Blocks)
+			foreach (List<Square> list in Squares)
 				foreach (Square square in list)
 				{
 					square.Update(time);
@@ -289,6 +289,17 @@ namespace DungeonEye
 					return true;
 				});
 			#endregion
+		}
+
+
+
+		/// <summary>
+		/// Convert to string
+		/// </summary>
+		/// <returns>Maze name</returns>
+		public override string ToString()
+		{
+			return Name;
 		}
 
 
@@ -399,12 +410,12 @@ namespace DungeonEye
 		/// <param name="location">Location of the square</param>
 		/// <param name="side">Wall side</param>
 		/// <returns>Decoration handle or null</returns>
-		public Decoration GetDecoration(DungeonLocation location, CardinalPoint side)
+		public Decoration GetDecoration(Point location, CardinalPoint side)
 		{
 			if (location == null || Decoration == null)
 				return null;
 
-			Square square = GetSquare(location.Coordinate);
+			Square square = GetSquare(location);
 			if (square == null)
 				return null;
 
@@ -473,18 +484,19 @@ namespace DungeonEye
 		/// </summary>
 		/// <param name="location">Door location in the maze</param>
 		/// <returns>True if the door is pointing north or south</returns>
-		public bool IsDoorNorthSouth(DungeonLocation location)
+		public bool IsDoorNorthSouth(Point location)
 		{
 			if (location == null)
 				throw new ArgumentNullException("location");
 
-			Point left = new Point(location.Coordinate.X - 1, location.Coordinate.Y);
+			Point left = new Point(location.X - 1, location.Y);
 			if (!Contains(left))
 				return false;
 
 			Square block = GetSquare(left);
 			return (block.IsWall);
 		}
+
 
 		/// <summary>
 		/// Returns informations about a block in the maze
@@ -496,7 +508,7 @@ namespace DungeonEye
 			if (!Rectangle.Contains(location))
 				return new Square(this);
 
-			return Blocks[location.Y][location.X];
+			return Squares[location.Y][location.X];
 
 		}
 
@@ -504,22 +516,17 @@ namespace DungeonEye
 		/// <summary>
 		/// Sets a square at a given location
 		/// </summary>
-		/// <param name="square">Square handle</param>
 		/// <param name="location">Location in the maze</param>
+		/// <param name="square">Square handle</param>
 		/// <returns>True on success</returns>
-		public bool SetSquare(Square square, Point location)
+		public bool SetSquare(Point location, Square square)
 		{
 			if (square == null || !Rectangle.Contains(location))
 				return false;
 
-
-
-			if (Blocks[location.Y][location.X] != null)
-				Blocks[location.Y][location.X].Dispose();
-
-
+			Squares[location.Y][location.X] = square;
+			square.Location = location;
 			square.Maze = this;
-			Blocks[location.Y][location.X] = square;
 
 			return true;
 		}
@@ -554,7 +561,7 @@ namespace DungeonEye
 		/// Position 1 : North East
 		/// Position 2 : South West
 		/// Position 3 : South East</returns>
-		public List<ThrownItem>[] GetFlyingItems(DungeonLocation location, CardinalPoint direction)
+		public List<ThrownItem>[] GetFlyingItems(Point location, CardinalPoint direction)
 		{
 			List<ThrownItem>[] tmp = new List<ThrownItem>[5];
 			tmp[0] = new List<ThrownItem>();
@@ -566,11 +573,11 @@ namespace DungeonEye
 			foreach (ThrownItem item in ThrownItems)
 			{
 				// Not in the same maze
-				if (item.Location.Maze != location.Maze)
-					continue;
+	//			if (item.Location.Maze != location.Maze)
+	//				continue;
 
 				// Same coordinate
-				if (item.Location.Coordinate == location.Coordinate)
+				if (item.Location.Coordinate == location)
 					tmp[(int)item.Location.Position].Add(item);
 			}
 
@@ -647,7 +654,7 @@ namespace DungeonEye
 			ViewField pov = new ViewField(this, location);
 
 
-			// Backdrop
+			// TODO Backdrop
 			// The background is assumed to be x-flipped when party.x & party.y & party.direction = 1.
 			// I.e. all kind of moves and rotations from the current position will result in the background being x-flipped.
 			bool flipbackdrop = ((location.Coordinate.X + location.Coordinate.Y + (int)location.Direction) & 1) == 0;
@@ -1021,26 +1028,36 @@ namespace DungeonEye
 					break;
 
 
-					#region Blocks
+					#region Squares
 
-					case "blocks":
+					case "squares":
 					{
 						// Resize maze
 						Size = new Size(int.Parse(node.Attributes["width"].Value), int.Parse(node.Attributes["height"].Value));
+						Point location = new Point();
 
 						foreach (XmlNode subnode in node)
 						{
 							switch (subnode.Name.ToLower())
 							{
 								// Add a row
-								case "block":
+								case Square.Tag:
 								{
 									block = new Square(this);
+									block.Location = location;
 									block.Load(subnode);
 
-									Blocks[block.Location.Coordinate.Y][block.Location.Coordinate.X] = block;
+									Squares[location.Y][location.X] = block;
 								}
 								break;
+							}
+
+							// Next location
+							location.X++;
+							if (location.X == Size.Width)
+							{
+								location.Y++;
+								location.X = 0;
 							}
 						}
 
@@ -1048,6 +1065,12 @@ namespace DungeonEye
 					break;
 
 					#endregion
+
+
+					default:
+					{
+					}
+					break;
 				}
 			}
 
@@ -1092,14 +1115,19 @@ namespace DungeonEye
 			writer.WriteEndElement();
 
 			// Blocks
-			writer.WriteStartElement("blocks");
+			writer.WriteStartElement("squares");
 			writer.WriteAttributeString("width", Size.Width.ToString());
 			writer.WriteAttributeString("height", Size.Height.ToString());
 
-
-			foreach (List<Square> list in Blocks)
-				foreach (Square square in list)
-					square.Save(writer);
+			try
+			{
+				foreach (List<Square> list in Squares)
+					foreach (Square square in list)
+						square.Save(writer);
+			}
+			catch (Exception e)
+			{
+			}
 
 			writer.WriteEndElement();
 
@@ -1107,17 +1135,6 @@ namespace DungeonEye
 			foreach (MazeZone zone in Zones)
 				zone.Save(writer);
 
-			/*
-
-						// Monsters
-						if (Monsters.Count > 0)
-						{
-							writer.WriteStartElement("monsters");
-							foreach (Monster monster in Monsters)
-								monster.Save(writer);
-							writer.WriteEndElement();
-						}
-			*/
 
 			// flying items
 			if (ThrownItems.Count > 0)
@@ -1175,7 +1192,7 @@ namespace DungeonEye
 			for (int y = 0; y < size.Height; y++)
 				for (int x = 0; x < size.Width; x++)
 				{
-					Blocks[y][x].Location.Coordinate = new Point(x, y);
+					Squares[y][x].Location = new Point(x, y);
 				}
 		}
 
@@ -1192,15 +1209,15 @@ namespace DungeonEye
 				row.Add(new Square(this));
 
 			// Adds the row at the end
-			if (rowid >= Blocks.Count)
+			if (rowid >= Squares.Count)
 			{
-				Blocks.Add(row);
+				Squares.Add(row);
 			}
 
 			// Or insert the row
 			else
 			{
-				Blocks.Insert(rowid, row);
+				Squares.Insert(rowid, row);
 
 				// Offset objects
 				//	Rectangle zone = new Rectangle(0, rowid * level.BlockDimension.Height, level.Dimension.Width, level.Dimension.Height);
@@ -1216,10 +1233,10 @@ namespace DungeonEye
 		public void RemoveRow(int rowid)
 		{
 			// Removes the row
-			if (rowid >= Blocks.Count)
+			if (rowid >= Squares.Count)
 				return;
 
-			Blocks.RemoveAt(rowid);
+			Squares.RemoveAt(rowid);
 
 			// Offset objects
 			//	Rectangle zone = new Rectangle(0, rowid * level.BlockDimension.Height, level.Dimension.Width, level.Dimension.Height);
@@ -1234,7 +1251,7 @@ namespace DungeonEye
 		public void InsertColumn(int columnid)
 		{
 			// Insert the column
-			foreach (List<Square> row in Blocks)
+			foreach (List<Square> row in Squares)
 			{
 				if (columnid >= row.Count)
 				{
@@ -1259,7 +1276,7 @@ namespace DungeonEye
 		public void RemoveColumn(int columnid)
 		{
 			// Remove the column
-			foreach (List<Square> row in Blocks)
+			foreach (List<Square> row in Squares)
 			{
 				row.RemoveAt(columnid);
 			}
@@ -1389,7 +1406,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Blocks in the maze
 		/// </summary>
-		List<List<Square>> Blocks;
+		List<List<Square>> Squares;
 
 
 		/// <summary>

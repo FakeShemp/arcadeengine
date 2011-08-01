@@ -61,7 +61,7 @@ namespace DungeonEye
 		/// <param name="direction">Looking direction</param>
 		public override void Draw(SpriteBatch batch, ViewField field, ViewFieldPosition position, CardinalPoint direction)
 		{
-			if (Square.Maze.Decoration == null)
+			if (field.Maze.Decoration == null)
 				return;
 
 			// For each wall side, draws the decoration
@@ -70,12 +70,12 @@ namespace DungeonEye
 				Alcove alcove = GetAlcove(Compass.GetDirectionFromView(direction, side));
 
 				// Get the decoration
-				Decoration deco = Square.Maze.Decoration.GetDecoration(alcove.Decoration);
+				Decoration deco = field.Maze.Decoration.GetDecoration(alcove.Decoration);
 				if (deco == null)
 					continue;
 
 				// Draw the decoration
-				deco.DrawDecoration(batch, Square.Maze.Decoration, position, side == CardinalPoint.South);
+				deco.DrawDecoration(batch, field.Maze.Decoration, position, side == CardinalPoint.South);
 
 
 				// Hide items

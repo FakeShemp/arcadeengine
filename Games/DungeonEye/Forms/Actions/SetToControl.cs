@@ -52,12 +52,13 @@ namespace DungeonEye.Forms
 
 			Action = script;
 			Dungeon = dungeon;
-			SquareControl.Square.Load(script.Node);
+			SquareControl.SetSquare(script.Square);
 			TargetBox.SetTarget(Dungeon, Action.Target);
 		}
 
 
 		#region Events
+
 
 		/// <summary>
 		/// 
@@ -95,6 +96,7 @@ namespace DungeonEye.Forms
 		/// Dungeon handle
 		/// </summary>
 		Dungeon Dungeon;
+
 
 		#endregion
 

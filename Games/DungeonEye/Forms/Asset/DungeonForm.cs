@@ -289,7 +289,8 @@ namespace DungeonEye.Forms
 			{
 				for (int x = 0 ; x < Maze.Size.Width ; x++)
 				{
-					Square block = Maze.GetSquare(new Point(x, y));
+					Point coord = new Point(x, y);
+					Square block = Maze.GetSquare(coord);
 					int tileid = block.Type == SquareType.Ground ? 1 : 0;
 
 					// Location of the block on the screen
@@ -471,7 +472,7 @@ namespace DungeonEye.Forms
 
 			// Surround the selected object
 			if (CurrentSquare != null)
-				SpriteBatch.DrawRectangle(new Rectangle(CurrentSquare.Location.Coordinate.X * 25 + Offset.X, CurrentSquare.Location.Coordinate.Y * 25 + Offset.Y, 25, 25), Color.White);
+				SpriteBatch.DrawRectangle(new Rectangle(CurrentSquare.Location.X * 25 + Offset.X, CurrentSquare.Location.Y * 25 + Offset.Y, 25, 25), Color.White);
 
 
 			// If the current actor has scripts

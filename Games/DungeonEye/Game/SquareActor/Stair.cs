@@ -37,6 +37,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Constructor
 		/// </summary>
+		/// <param name="block"></param>
 		public Stair(Square block) : base(block)
 		{
 			if (block == null)
@@ -152,7 +153,7 @@ namespace DungeonEye
 				{
 					case "target":
 					{
-						Target = new DungeonLocation(Square.Location);
+						Target = new DungeonLocation();
 						Target.Load(node);
 					}
 					break;

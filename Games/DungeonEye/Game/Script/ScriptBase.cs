@@ -163,7 +163,7 @@ namespace DungeonEye.Script
 
 				case SetTo.XmlTag:
 				{
-					Action = new SetTo(Dungeon);
+					Action = new SetTo();
 				}
 				break;
 

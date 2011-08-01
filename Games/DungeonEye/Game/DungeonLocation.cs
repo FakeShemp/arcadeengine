@@ -43,6 +43,7 @@ namespace DungeonEye
 
 		}
 
+
 		/// <summary>
 		/// Copy constructor
 		/// </summary>

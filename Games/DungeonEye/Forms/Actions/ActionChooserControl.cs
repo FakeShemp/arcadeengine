@@ -264,7 +264,7 @@ namespace DungeonEye.Forms.Script
 		/// <param name="e"></param>
 		private void SetToBox_CheckedChanged(object sender, EventArgs e)
 		{
-			SetAction(new SetTo(Dungeon));
+			SetAction(new SetTo());
 		}
 
 

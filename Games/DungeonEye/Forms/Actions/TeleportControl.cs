@@ -38,6 +38,7 @@ namespace DungeonEye.Forms
 		/// 
 		/// </summary>
 		/// <param name="script"></param>
+		/// <param name="dungeon"></param>
 		public TeleportControl(Teleport script, Dungeon dungeon)
 		{
 			InitializeComponent();

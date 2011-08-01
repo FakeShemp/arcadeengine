@@ -70,7 +70,7 @@ namespace DungeonEye
 
 			if (IsActivated)
 				//batch.FillRectangle(new Rectangle(td.Location, new Size(50, 50)), Color.Red);
-				Decoration.Draw(batch, Square.Maze.FloorPitDeco, position);
+				Decoration.Draw(batch, field.Maze.FloorPitDeco, position);
 			//TODO
 			//if (td != null && !IsHidden)
 			//    batch.DrawTile(TileSet, td.ID, td.Location, Color.White, 0.0f, td.Effect, 0.0f);
@@ -130,10 +130,7 @@ namespace DungeonEye
 				{
 					case "target":
 					{
-						if (Target == null)
-							Target = new DungeonLocation(Square.Location);
-
-						Target.Load(node);
+						Target = new DungeonLocation(node);
 					}
 					break;
 
@@ -258,7 +255,7 @@ namespace DungeonEye
 		#region Properties
 
 		/// <summary>
-		/// 
+		/// XML Tag
 		/// </summary>
 		public const string Tag = "pit";
 

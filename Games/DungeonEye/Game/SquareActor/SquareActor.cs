@@ -304,7 +304,7 @@ namespace DungeonEye
 
 				default:
 				{
-					Trace.WriteLine("[SquareActor] Load() : Unknown node \"" + node.Name + "\" found @ " + Square.Location.ToStringShort() + ".");
+					Trace.WriteLine("[SquareActor] Load() : Unknown node \"" + node.Name + "\" found @ " + Square.Location.ToString() + ".");
 				}
 				break;
 			}

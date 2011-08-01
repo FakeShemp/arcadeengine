@@ -147,7 +147,7 @@ namespace DungeonEye
 				{
 					case "target":
 					{
-						Target = new DungeonLocation(Square.Location);
+						Target = new DungeonLocation();
 						Target.Load(node);
 					}
 					break;
@@ -211,7 +211,8 @@ namespace DungeonEye
 
 			base.Save(writer);
 
-			Target.Save("target", writer);
+			if(Target != null)
+				Target.Save("target", writer);
 
 			writer.WriteElementString("teleportteam", TeleportTeam.ToString());
 			writer.WriteElementString("teleportmonsters", TeleportMonsters.ToString());

@@ -176,7 +176,7 @@ namespace DungeonEye
 				if (Compass.GetDirectionFromView(direction, td.Side) != Side)
 					continue;
 
-				DecorationSet decoset = Square.Maze.Decoration;
+				DecorationSet decoset = field.Maze.Decoration;
 				if (decoset == null)
 					return;
 

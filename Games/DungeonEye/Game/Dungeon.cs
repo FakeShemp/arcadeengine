@@ -133,6 +133,25 @@ namespace DungeonEye
 
 
 
+		/// <summary>
+		/// Defines a square at a given location
+		/// </summary>
+		/// <param name="target">Location in the dungeon</param>
+		/// <param name="square">Square handle</param>
+		/// <returns>True on success</returns>
+		public bool SetSquare(DungeonLocation target, Square square)
+		{
+			if (target == null || square == null)
+				return false;
+
+			Maze maze = GetMaze(target.Maze);
+			if (maze == null)
+				return false;
+
+			return maze.SetSquare(target.Coordinate, square);
+		}
+
+
 		#region IO
 
 		/// <summary>

@@ -38,9 +38,10 @@ namespace DungeonEye.Script.Actions
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public SetTo(Dungeon dungeon)
+		public SetTo()
 		{
 			Name = XmlTag;
+			Square = new Square(null);
 		}
 
 
@@ -50,16 +51,10 @@ namespace DungeonEye.Script.Actions
 		/// <returns>True on success</returns>
 		public override bool Run()
 		{
-			if (Target == null)
+			if (Target == null || GameScreen.Dungeon == null)
 				return false;
 
-			Square square = Target.GetSquare(GameScreen.Dungeon);
-			if (square == null)
-				return false;
-
-			square.Dispose();
-			square.Load(Node);
-			return true;
+			return GameScreen.Dungeon.SetSquare(Target, Square);
 		}
 
 
@@ -91,12 +86,7 @@ namespace DungeonEye.Script.Actions
 				{
 					case Square.Tag:
 					{
-						//if (Square == null)
-						//    Square = new Square(null);
-
-						//Square.Load(node);
-
-						Node = node;
+						Square.Load(node);
 					}
 					break;
 
@@ -117,7 +107,7 @@ namespace DungeonEye.Script.Actions
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="writer"></param>
+		/// <param name="writer">XmlWriter handle</param>
 		/// <returns></returns>
 		public override bool Save(XmlWriter writer)
 		{
@@ -127,10 +117,7 @@ namespace DungeonEye.Script.Actions
 
 			writer.WriteStartElement(XmlTag);
 
-			if (Node != null)
-				Node.WriteContentTo(writer);
-			//if (Square != null)
-			//    Square.Save(writer);
+			Square.Save(writer);
 
 			base.Save(writer);
 
@@ -146,29 +133,19 @@ namespace DungeonEye.Script.Actions
 		#region Properties
 
 		/// <summary>
-		/// 
+		/// XML Tag
 		/// </summary>
 		public const string XmlTag = "SetTo";
 
 
 		/// <summary>
-		/// Square definition
+		/// Square model
 		/// </summary>
-		public XmlNode Node
+		public Square Square
 		{
 			get;
 			private set;
 		}
-
-
-		/// <summary>
-		/// Square model to set
-		/// </summary>
-		//public Square Square
-		//{
-		//    get;
-		//    set;
-		//}
 
 		#endregion
 	}

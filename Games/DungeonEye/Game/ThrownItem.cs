@@ -38,11 +38,12 @@ namespace DungeonEye
 		/// <summary>
 		/// Default constructor
 		/// </summary>
-		/// <param name="block">Location</param>
-		public ThrownItem(Square block)
+		/// <param name="square">Square location</param>
+		public ThrownItem(Square square)
 		{
-			if (block != null)
-				Location = new DungeonLocation(block.Location);
+			if (square != null)
+				Location = new DungeonLocation(square.Maze.Name, square.Location);
+
 		}
 
 

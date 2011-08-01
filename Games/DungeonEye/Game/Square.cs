@@ -54,12 +54,7 @@ namespace DungeonEye
 		/// <param name="maze">Maze handle</param>
 		public Square(Maze maze)
 		{
-			if (maze != null)
-			{
-				Location = new DungeonLocation(maze.Name, Point.Empty);
-				Maze = maze;
-			}
-
+			Maze = maze;
 			Type = SquareType.Wall;
 			Monsters = new Monster[4];
 
@@ -113,6 +108,7 @@ namespace DungeonEye
 			}
 
 		}
+
 
 
 		/// <summary>
@@ -188,20 +184,6 @@ namespace DungeonEye
 		}
 
 
-		/// <summary>
-		/// Can an item passthrough the block
-		/// </summary>
-		/// <param name="item">Item handle</param>
-		/// <returns>True if the item can pass</returns>
-		//public virtual bool CanItemPassThrough(Item item)
-		//{
-		//    if (IsWall)
-		//        return false;
-
-		//    return true;
-		//}
-
-
 		#region Events
 
 		/// <summary>
@@ -217,11 +199,11 @@ namespace DungeonEye
 			// Actor interaction
 			if (Actor != null)
 				return Actor.OnClick(location, side, button);
-					
-			
+
+
 			// Decoration interaction
 			Team team = GameScreen.Team;
-			Decoration decoration = team.Maze.GetDecoration(team.FrontLocation, Compass.GetOppositeDirection(team.Direction));
+			Decoration decoration = team.Maze.GetDecoration(team.FrontLocation.Coordinate, Compass.GetOppositeDirection(team.Direction));
 			if (decoration != null)
 			{
 				GameMessage.AddMessage("Decoration: OnClick()");
@@ -244,7 +226,7 @@ namespace DungeonEye
 		public bool OnHack(CardinalPoint side, Item item)
 		{
 			#region Decoration must change on hack
-			
+
 			Decoration deco = Maze.GetDecoration(Location, side);
 			if (deco != null && deco.OnHackId != -1)
 			{
@@ -394,81 +376,7 @@ namespace DungeonEye
 
 		#region Decoration
 
-		
-/*
-		/// <summary>
-		/// Draws all the decorations
-		/// </summary>
-		/// <param name="batch">Spritebatch handle</param>
-		/// <param name="decoration">DecorationSet handle</param>
-		/// <param name="position">Position of the square in the view</param>
-		/// <param name="view">Viewing direction</param>
-		public void DrawDecorations(SpriteBatch batch, DecorationSet decoration, ViewFieldPosition position, CardinalPoint view)
-		{
-			// Bad args
-			if (batch == null || decoration == null)
-				return;
 
-
-			// Is there a forced decoration
-			Decoration deco = null;
-			for (int i = 0; i < 4; i++)
-			{
-				deco = decoration.GetDecoration(Decorations[i]);
-				if (deco != null && deco.ForceDisplay)
-					deco.DrawDecoration(batch, decoration, position, true);
-			}
-
-
-			// For each directions, draws the decoration
-			foreach (CardinalPoint side in DisplayCoordinates.DrawingWallSides[(int)position])
-			{
-				// Decoration informations
-				deco = decoration.GetDecoration(GetDecorationId(view, side));
-				if (deco == null)
-					continue;
-
-				deco.DrawDecoration(batch, decoration, position, side == CardinalPoint.South);
-			}
-		}
-
-
-		/// <summary>
-		/// Draws a single decoration
-		/// </summary>
-		/// <param name="batch">Spritebatch handle</param>
-		/// <param name="decoration">DecorationSet handle</param>
-		/// <param name="position">Position of the square in the view</param>
-		/// <param name="view">Viewing direction</param>
-		/// <param name="alignview">True if the side is facing south (horizontaly span the decoration)</param>
-		public void DrawDecoration(SpriteBatch batch, DecorationSet set, ViewFieldPosition position, Decoration deco, bool alignview)
-		{
-			if (deco == null || batch == null || set == null)
-				return;
-
-			// Location of the decoration on the screen
-			Point location = deco.GetLocation(position);
-
-			// Tile id
-			int tileid = deco.GetTileId(position);
-
-
-			// Offset the decoration if facing to the view point
-			if (alignview)
-			{
-				location = deco.PrepareLocation(position);
-				tileid = deco.PrepareTile(position);
-			}
-
-			// Draws the decoration
-			batch.DrawTile(set.Tileset,
-			tileid,
-			location, Color.White,
-			0.0f,
-			deco.GetSwap(position) ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
-			0.0f);
-		}
-*/
 
 		/// <summary>
 		/// Gets if the wall have decoration
@@ -574,43 +482,6 @@ namespace DungeonEye
 
 
 		#region Alcoves
-/*
-		/// <summary>
-		/// Gets if the wall have an alcove
-		/// </summary>
-		/// <param name="from">Facing direction</param>
-		/// <param name="side">Wall side</param>
-		/// <returns>True if an alcove is present<returns>
-		[Obsolete()]
-		public bool HasAlcove(CardinalPoint from, CardinalPoint side)
-		{
-			return Alcoves[(int)Compass.GetDirectionFromView(from, side)];
-		}
-
-
-		/// <summary>
-		/// Gets an alcove
-		/// </summary>
-		/// <param name="side">Side of the alcove</param>
-		/// <returns>True if an alcove is present<returns>
-		[Obsolete()]
-		public bool HasAlcove(CardinalPoint side)
-		{
-			return Alcoves[(int)side];
-		}
-
-
-		/// <summary>
-		/// Creates or removes an alcove
-		/// </summary>
-		/// <param name="side">Side of the alcove</param>
-		/// <param name="create">Create or remove the alcove</param>
-		[Obsolete()]
-		public void SetAlcove(CardinalPoint side, bool create)
-		{
-			Alcoves[(int)side] = create;
-		}
-*/
 
 		/// <summary>
 		/// Gets a list of items from a side
@@ -679,41 +550,35 @@ namespace DungeonEye
 
 			writer.WriteStartElement(Tag);
 
-			// Location
-			if (Location != null)
-				Location.Save("location", writer);
-
 			// Type of wall
 			writer.WriteStartElement("type");
 			writer.WriteAttributeString("value", Type.ToString());
 			writer.WriteEndElement();
 
+			// Actor
 			if (Actor != null)
 				Actor.Save(writer);
 
-
 			// Wall decoration
 			writer.WriteStartElement("decoration");
-			foreach (CardinalPoint point in Enum.GetValues(typeof(CardinalPoint)))
-				writer.WriteAttributeString(point.ToString(), Decorations[(int)point].ToString());
+			writer.WriteAttributeString(CardinalPoint.North.ToString(), GetDecorationId(CardinalPoint.North).ToString());
+			writer.WriteAttributeString(CardinalPoint.South.ToString(), GetDecorationId(CardinalPoint.South).ToString());
+			writer.WriteAttributeString(CardinalPoint.West.ToString(), GetDecorationId(CardinalPoint.West).ToString());
+			writer.WriteAttributeString(CardinalPoint.East.ToString(), GetDecorationId(CardinalPoint.East).ToString());
 			writer.WriteEndElement();
-
-
 
 			// Items
 			for (int i = 0; i < 4; i++)
 			{
-				if (Items[i].Count > 0)
+				if (Items[i].Count == 0)
+					continue;
+
+				foreach (Item item in Items[i])
 				{
-
-					foreach (Item item in Items[i])
-					{
-						writer.WriteStartElement("item");
-						writer.WriteAttributeString("location", ((SquarePosition)i).ToString());
-						writer.WriteAttributeString("name", item.Name);
-						writer.WriteEndElement();
-					}
-
+					writer.WriteStartElement("item");
+					writer.WriteAttributeString("location", ((SquarePosition)i).ToString());
+					writer.WriteAttributeString("name", item.Name);
+					writer.WriteEndElement();
 				}
 			}
 
@@ -745,9 +610,9 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Loads block defintion
+		/// Loads square definition
 		/// </summary>
-		/// <param name="xml">Xml handle</param>
+		/// <param name="xml">XmlNode handle</param>
 		/// <returns></returns>
 		public bool Load(XmlNode xml)
 		{
@@ -792,11 +657,11 @@ namespace DungeonEye
 					}
 					break;
 
-					case "location":
-					{
-						Location.Load(node);
-					}
-					break;
+					//case "location":
+					//{
+					//    Location.Load(node);
+					//}
+					//break;
 
 					case "type":
 					{
@@ -807,7 +672,7 @@ namespace DungeonEye
 					case "decoration":
 					{
 						foreach (CardinalPoint point in Enum.GetValues(typeof(CardinalPoint)))
-							Decorations[(int) point] = int.Parse(node.Attributes[point.ToString()].Value);
+							Decorations[(int)point] = int.Parse(node.Attributes[point.ToString()].Value);
 					}
 					break;
 
@@ -869,8 +734,6 @@ namespace DungeonEye
 
 					case AlcoveActor.Tag:
 					{
-						//CardinalPoint side = (CardinalPoint)Enum.Parse(typeof(CardinalPoint), node.Attributes["side"].Value);
-						//SetAlcove(side, true);
 						Actor = new AlcoveActor(this);
 						Actor.Load(node);
 					}
@@ -878,7 +741,7 @@ namespace DungeonEye
 
 					default:
 					{
-						Trace.WriteLine("[Square] Load() : Unknown node \"{0}\"", node.Name);
+					//	Trace.WriteLine("[Square] Load() : Unknown node \"{0}\"", node.Name);
 					}
 					break;
 				}
@@ -1043,9 +906,9 @@ namespace DungeonEye
 		#region Properties
 
 		/// <summary>
-		/// 
+		/// XML Tag
 		/// </summary>
-		public const string Tag = "block";
+		public const string Tag = "square";
 
 
 		#region Monsters
@@ -1232,15 +1095,14 @@ namespace DungeonEye
 		/// <summary>
 		/// Location of the block in the maze
 		/// </summary>
-		public DungeonLocation Location
+		public Point Location
 		{
 			get;
-			private set;
+			set;
 		}
 
-
 		/// <summary>
-		/// Maze
+		/// Parent maze
 		/// </summary>
 		public Maze Maze
 		{

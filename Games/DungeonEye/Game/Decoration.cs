@@ -288,7 +288,7 @@ namespace DungeonEye
 		public bool Load(XmlNode xml)
 		{
 
-			if (xml == null || xml.Name != "decoration")
+			if (xml == null || xml.Name != Tag)
 				return false;
 
 			IsBlocking = bool.Parse(xml.Attributes["isblocking"].Value);
@@ -383,6 +383,12 @@ namespace DungeonEye
 
 
 		#region Properties
+
+
+		/// <summary>
+		/// XML Tag
+		/// </summary>
+		public const string Tag = "decoration";
 
 
 		/// <summary>

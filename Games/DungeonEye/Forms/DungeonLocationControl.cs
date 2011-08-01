@@ -180,7 +180,7 @@ namespace DungeonEye.Forms
 					for (int x = 0; x < Maze.Size.Width; x++)
 					{
 						Square block = Maze.GetSquare(new Point(x, y));
-
+						Point location = new Point(x, y);
 						Color color = Color.White;
 						if (block.Type == SquareType.Illusion)
 							color = Color.LightGreen;
@@ -202,7 +202,7 @@ namespace DungeonEye.Forms
 
 								int tileid = 0;
 
-								if (Maze.IsDoorNorthSouth(block.Location))
+								if (Maze.IsDoorNorthSouth(location))
 									tileid = 3;
 								else
 									tileid = 2;
@@ -286,7 +286,7 @@ namespace DungeonEye.Forms
 						// Draw monsters
 						if (block.HasMonster)
 						{
-							Batch.DrawTile(Icons, 8, new Point(Offset.X + block.Location.Coordinate.X * 25, Offset.Y + block.Location.Coordinate.Y * 25));
+							Batch.DrawTile(Icons, 8, new Point(Offset.X + location.X * 25, Offset.Y + location.Y * 25));
 						}
 
 

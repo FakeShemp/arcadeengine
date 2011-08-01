@@ -1452,7 +1452,7 @@ namespace DungeonEye
 				if (Square == null)
 					return null;
 
-				return Square.Location;
+				return new DungeonLocation(Square.Maze.Name, Square.Location);
 			}
 		}
 
