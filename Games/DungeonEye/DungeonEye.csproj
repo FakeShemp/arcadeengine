@@ -118,6 +118,7 @@
       <DependentUpon>SpawnMonsterControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Game\Gui\CampWindows\SaveGameWindow.cs" />
+    <Compile Include="Game\HeroName.cs" />
     <Compile Include="Game\Script\Actions\SpawnMonster.cs" />
     <Compile Include="SaveGameSlot.cs" />
     <Compile Include="Forms\AbilityControl.cs">
