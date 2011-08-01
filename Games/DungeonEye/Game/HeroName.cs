@@ -30,10 +30,183 @@ using DungeonEye.Script;
 
 namespace DungeonEye
 {
+
 	/// <summary>
-	/// 
+	/// Hero naming class
 	/// </summary>
 	public class HeroName
 	{
+
+		/// <summary>
+		/// Gets a name for a Hero
+		/// </summary>
+		/// <param name="thehero">Hero handle</param>
+		/// <returns>Name of the Hero</returns>
+		public static string GetNameForHero(Hero thehero)
+		{
+			string name = "";
+			switch (thehero.Race)
+			{
+				case HeroRace.HumanMale:
+				name = HumanMaleName();
+				break;
+				case HeroRace.HumanFemale:
+				name = HumanFemaleName();
+				break;
+				case HeroRace.ElfMale:
+				name = ElfMaleName();
+				break;
+				case HeroRace.ElfFemale:
+				name = ElfFemaleName();
+				break;
+				case HeroRace.HalfElfMale:
+				name = HalfElfMaleName();
+				break;
+				case HeroRace.HalfElfFemale:
+				name = HalfElfFemaleName();
+				break;
+				case HeroRace.DwarfMale:
+				name = DwarfMaleName();
+				break;
+				case HeroRace.DwarfFemale:
+				name = DwarfFemaleName();
+				break;
+				case HeroRace.GnomeMale:
+				name = GnomeMaleName();
+				break;
+				case HeroRace.GnomeFemale:
+				name = GnomeFemaleName();
+				break;
+				case HeroRace.HalflingMale:
+				name = HalflingMaleName();
+				break;
+				case HeroRace.HalflingFemale:
+				name = HalflingFemaleName();
+				break;
+			}
+
+
+			return name;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		private static string HalflingFemaleName()
+		{
+			return "Martha";
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		private static string HalflingMaleName()
+		{
+			return "Robbi";
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		private static string GnomeFemaleName()
+		{
+			return "Farmunlundi";
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		private static string GnomeMaleName()
+		{
+			return "Gargodokulunus";
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		private static string DwarfFemaleName()
+		{
+			return "Melinda";
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		private static string DwarfMaleName()
+		{
+			return "Bardarok";
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		private static string HalfElfFemaleName()
+		{
+			return "Gwendolin";
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		private static string HalfElfMaleName()
+		{
+			return "Jeen Klaus";
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		private static string ElfFemaleName()
+		{
+			return "Aelindiale";
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		private static string ElfMaleName()
+		{
+			return "Lindolrin";
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		private static string HumanFemaleName()
+		{
+			return "Katerin";
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		private static string HumanMaleName()
+		{
+			return "Marcandrus";
+		}
 	}
 }

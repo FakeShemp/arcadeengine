@@ -465,7 +465,8 @@ namespace DungeonEye
 			// Mini map
 			if (Debug)
 			{
-				Team.Maze.DrawMiniMap(batch, new Point(500, 220));
+				if (Team.Maze != null)
+					Team.Maze.DrawMiniMap(batch, new Point(500, 220));
 
 				// Team location
 				batch.DrawString(InventoryFont, new Point(10, 340), GameColors.White, Team.Location.ToStringShort());
@@ -736,6 +737,8 @@ namespace DungeonEye
 		/// Update the Team status
 		/// </summary>
 		/// <param name="time">Time passed since the last call to the last update.</param>
+		/// <param name="hasFocus">Put it true if Game Screen is focused</param>
+		/// <param name="isCovered">Put it true if Game Screen has something over it</param>
 		public override void Update(GameTime time, bool hasFocus, bool isCovered)
 		{
 
@@ -786,11 +789,13 @@ namespace DungeonEye
 			}
 
 			// Load team
-			if (Keyboard.IsNewKeyPress(Keys.L))
+			if (Dialog != null && Keyboard.IsNewKeyPress(Keys.L))
 			{
 				OpenCampPanel();
-				((CampDialog)Dialog).AddWindow(new DungeonEye.Gui.CampWindows.LoadGameWindow(Dialog as CampDialog));
+				((CampDialog)Dialog).AddWindow(new Gui.CampWindows.LoadGameWindow(Dialog as CampDialog));
 			}
+
+			if (Team.Location == null) return;
 
 
 			#region Change maze
@@ -898,7 +903,7 @@ namespace DungeonEye
 
 			SquarePosition groundpos = SquarePosition.NorthEast;
 			Point mousePos = Mouse.Location;
-			Point pos = Point.Empty;
+			//never used : Point pos = Point.Empty;
 
 			// Get the square at team position
 			Square square = Team.Maze.GetSquare(Team.Location.Coordinate);
@@ -1723,6 +1728,44 @@ namespace DungeonEye
 
 
 
+		}
+
+
+		/// <summary>
+		/// Create a game with new team and new dungeon
+		/// </summary>
+		/// <param name="theteam">the team</param>
+		/// <param name="thedungeon">the dungeon or null to start default one</param>
+		public void NewGame(Team theteam, Dungeon thedungeon)
+		{
+			if (theteam == null)
+				throw new ArgumentNullException("theteam");
+
+			// Load dungeon
+			if (Dungeon != null)
+				Dungeon.Dispose();
+			Dungeon = thedungeon ?? ResourceManager.CreateAsset<Dungeon>("EOB_2");
+			Dungeon.Init();
+
+			// Load team
+			if (Team != null)
+				Team.Dispose();
+			Team = theteam;
+			Team.Init();
+
+			GameMessage.Clear();
+			GameMessage.AddMessage("New party starting...", GameColors.Yellow);
+
+		}
+
+
+		/// <summary>
+		/// Create a game with new team and the default dungeon
+		/// </summary>
+		/// <param name="theteam">the team</param>
+		public void NewGame(Team theteam)
+		{
+			NewGame(theteam, null);
 		}
 
 

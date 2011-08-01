@@ -20,6 +20,7 @@
 using System.Collections.Generic;
 using System;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using ArcEngine;
 using ArcEngine.Asset;
@@ -281,14 +282,19 @@ namespace DungeonEye
 		/// <param name="e"></param>
 		void PlayButton_Selected(object sender, EventArgs e)
 		{
-			// Generate the team
-			GameSettings.SaveGameName = string.Empty;
-			GameScreen screen = new GameScreen();
-			ScreenManager.AddScreen(screen);
+		    if (Heroes.Any(hero => hero == null)) return;
+            var screen = new GameScreen();
 
-			Team team = GameScreen.Team;
-			for (int i = 0; i < 4; i++)
-				team.AddHero(Heroes[i], (HeroPosition)i);
+            // Generate the team
+			GameSettings.SaveGameName = string.Empty;
+
+            Team gsteam = new Team();
+            for (int i = 0; i < 4; i++)
+                gsteam.AddHero(Heroes[i], (HeroPosition)i);
+
+            screen.NewGame(gsteam);
+
+            ScreenManager.AddScreen(screen);
 
 			ExitScreen();
 		}
@@ -532,6 +538,7 @@ namespace DungeonEye
 						if (new Rectangle(528, 350, 76, 32).Contains(Mouse.Location))
 						{
 							CurrentState = CharGenStates.SelectName;
+							CurrentHero.Name = HeroName.GetNameForHero(CurrentHero);
 							Keyboard.KeyDown += new EventHandler<PreviewKeyDownEventArgs>(Keyboard_OnKeyDown);
 						}
 					}
@@ -542,6 +549,13 @@ namespace DungeonEye
 				#region Select name
 				case CharGenStates.SelectName:
 				{
+                    // Back
+                    if (BackButton.Contains(Mouse.Location) && Mouse.IsNewButtonDown(MouseButtons.Left))
+                    {
+                        CurrentState = CharGenStates.Confirm;
+                        Keyboard.KeyDown -= Keyboard_OnKeyDown;
+                    }
+                        
 				}
 				break;
 				#endregion
@@ -575,7 +589,7 @@ namespace DungeonEye
 
 
 			// If the team is ready, let's go !
-			if (PlayButton.Rectangle.Contains(Mouse.Location) && Mouse.IsNewButtonDown(System.Windows.Forms.MouseButtons.Left))// && IsTeamReadyToPlay)
+			if (PlayButton.Rectangle.Contains(Mouse.Location) && Mouse.IsNewButtonDown(MouseButtons.Left))// && IsTeamReadyToPlay)
 			{
 				PrepareTeam();
 				PlayButton.OnSelectEntry();
@@ -731,6 +745,9 @@ namespace DungeonEye
 					// Faces
 					for (int i = 0; i < 4; i++)
 						Batch.DrawTile(Heads, i + FaceOffset, new Point(354 + i * 64, 132));
+					// Back
+                    Batch.DrawTile(Tileset, 3, BackButton.Location);
+                    Batch.DrawTile(Tileset, 12, new Point(BackButton.Location.X + 12, BackButton.Location.Y + 12));
 
 				}
 				break;
@@ -780,6 +797,9 @@ namespace DungeonEye
 					DisplayProperties();
 
 					Batch.DrawTile(Heads, CurrentHero.Head, new Point(438, 132));
+                    // Back
+                    Batch.DrawTile(Tileset, 3, BackButton.Location);
+                    Batch.DrawTile(Tileset, 12, new Point(BackButton.Location.X + 12, BackButton.Location.Y + 12));
 				}
 				break;
 				#endregion
@@ -877,7 +897,6 @@ namespace DungeonEye
 				case Keys.Control:
 				case Keys.ControlKey:
 				case Keys.Crsel:
-				case Keys.D:
 				case Keys.D0:
 				case Keys.D1:
 				case Keys.D2:
@@ -1033,7 +1052,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Current state
 		/// </summary>
-		CharGenStates CurrentState;
+		CharGenStates CurrentState=CharGenStates.SelectRace;
 
 
 		/// <summary>
@@ -1082,7 +1101,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Heroes in the team
 		/// </summary>
-		Hero[] Heroes;
+		readonly Hero[] Heroes=new Hero[4];
 
 
 		/// <summary>
