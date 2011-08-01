@@ -83,16 +83,6 @@ namespace DungeonEye
 			HandPenality[1] = DateTime.Now;
 
 			Food = (byte)Game.Random.Next(80, 100);
-			Spells = new List<Spell>[6]
-			{
-				new List<Spell>(),
-				new List<Spell>(),
-				new List<Spell>(),
-				new List<Spell>(),
-				new List<Spell>(),
-				new List<Spell>(),
-			};
-
 
 		}
 
@@ -123,7 +113,7 @@ namespace DungeonEye
 		/// <param name="time">Elapsed gametime</param>
 		public void Update(GameTime time)
 		{
-		//	Point mousePos = Mouse.Location;
+			//	Point mousePos = Mouse.Location;
 
 
 			if (Food > 100)
@@ -282,7 +272,7 @@ namespace DungeonEye
 			};
 			#endregion
 
-			
+
 			int bonus = 0;
 			int[] data = null;
 
@@ -436,10 +426,10 @@ namespace DungeonEye
 			{
 				case HeroClass.Paladin:
 				{
-					count =PaladinLevels[Math.Min(13, prof.Level - 1)][level - 1];
+					count = PaladinLevels[Math.Min(13, prof.Level - 1)][level - 1];
 				}
 				break;
-	
+
 				case HeroClass.Mage:
 				{
 					count = MageLevels[Math.Min(13, prof.Level - 1)][level - 1];
@@ -449,7 +439,7 @@ namespace DungeonEye
 				case HeroClass.Cleric:
 				{
 					// Base
-					count = ClercLevels[Math.Min(13,prof.Level - 1)][level - 1];
+					count = ClercLevels[Math.Min(13, prof.Level - 1)][level - 1];
 
 					// Bonus
 					if (prof.Level >= 13)
@@ -471,6 +461,7 @@ namespace DungeonEye
 		/// <returns>Spell handle or null</returns>
 		public Spell PopSpell(HeroClass classe, int level, int number)
 		{
+			// Out of border
 			if (level > 6 || number < 0)
 				return null;
 
@@ -478,14 +469,34 @@ namespace DungeonEye
 			if (prof == null)
 				return null;
 
-			if (Spells[level - 1].Count <= number - 1)
+			// Get the spells of the desired level
+			List<Spell>[] spells = GetSpellsFromHeroClass(classe);
+			if (spells[level - 1].Count <= number - 1)
 				return null;
 
-			Spell spell = Spells[level - 1][number - 1];
-
-			Spells[level - 1].RemoveAt(number - 1);
+			// Remove it
+			Spell spell = spells[level - 1][number - 1];
+			spells[level - 1].RemoveAt(number - 1);
 
 			return spell;
+		}
+
+
+		/// <summary>
+		/// Gets all available spells from a class
+		/// </summary>
+		/// <param name="classe">Desired class</param>
+		/// <returns>List of spells</returns>
+		List<Spell>[] GetSpellsFromHeroClass(HeroClass classe)
+		{
+			List<Spell>[] spells;
+			if ((classe & HeroClass.Paladin) > 0 || (classe & HeroClass.Cleric) > 0)
+				spells = ClericSpells;
+			else if ((classe & HeroClass.Mage) > 0)
+				spells = MageSpells;
+			else
+				spells = NoSpells;
+			return spells;
 		}
 
 
@@ -499,11 +510,13 @@ namespace DungeonEye
 			if (spell == null)
 				return false;
 
-			Spells[spell.Level - 1].Add(spell);
+			List<Spell>[] spells = GetSpellsFromHeroClass(Classes);
+			spells[spell.Level - 1].Add(spell);
 
 			return true;
 		}
 
+	
 		/// <summary>
 		/// Get avaiable spell for a level
 		/// </summary>
@@ -512,26 +525,27 @@ namespace DungeonEye
 		/// <returns>Available spells</returns>
 		public List<Spell> GetSpells(HeroClass classe, int level)
 		{
-			List<Spell> spells = new List<Spell>();
+			List<Spell> lspells = new List<Spell>();
+			List<Spell>[] spells = GetSpellsFromHeroClass(Classes);
 
 			// Bad level
 			if (level < 0 || level > 6)
-				return spells;
+				return lspells;
 
 			// Wrong profession
 			if (GetProfession(classe) == null)
-				return spells;
+				return lspells;
 
 
 			// Get a list of available spells for this level
-			foreach(Spell spell in Spells[level - 1])
+			foreach (Spell spell in spells[level - 1])
 			{
 				if (spell.Class == classe)
-					spells.Add(spell);
+					lspells.Add(spell);
 			}
 
 
-			return spells;
+			return lspells;
 		}
 
 		#endregion
@@ -707,7 +721,8 @@ namespace DungeonEye
 					SetInventoryItem(InventoryPosition.Ring_Right, item);
 					return true;
 				}
-				else if (GetInventoryItem(InventoryPosition.Ring_Right) == null)
+				//else
+				if (GetInventoryItem(InventoryPosition.Ring_Right) == null)
 				{
 					SetInventoryItem(InventoryPosition.Ring_Left, item);
 					return true;
@@ -741,7 +756,7 @@ namespace DungeonEye
 			return false;
 		}
 
-		
+
 		/// <summary>
 		/// Sets an item in the back pack
 		/// </summary>
@@ -789,7 +804,7 @@ namespace DungeonEye
 
 			if ((item.Slot & BodySlot.Belt) != BodySlot.Belt)
 				return false;
-			
+
 			WaistPack[position] = item;
 			return true;
 		}
@@ -948,7 +963,7 @@ namespace DungeonEye
 						}
 						else
 							HandActions[(int)hand] = new HandAction(ActionResult.NoAmmo);
-						
+
 						AddHandPenality(hand, TimeSpan.FromMilliseconds(500));
 					}
 
@@ -969,7 +984,7 @@ namespace DungeonEye
 						}
 						else
 							HandActions[(int)hand] = new HandAction(ActionResult.CantReach);
-						
+
 						AddHandPenality(hand, item.AttackSpeed);
 					}
 				}
@@ -1033,7 +1048,7 @@ namespace DungeonEye
 		/// <returns>True if the Hero belongs to this class</returns>
 		public bool CheckClass(HeroClass classe)
 		{
-			foreach(Profession prof in Professions)
+			foreach (Profession prof in Professions)
 				if (prof != null)
 				{
 					if ((prof.Class | classe) == classe)
@@ -1190,7 +1205,12 @@ namespace DungeonEye
 					{
 						Spell spell = ResourceManager.CreateAsset<Spell>(node.Attributes["name"].Value);
 						if (spell != null)
-							Spells[spell.Level - 1].Add(spell);
+						{
+							Trace.Write("@Loading Hero Part : Unknown spell " + node.Attributes["name"].Value);
+							continue;
+						}
+						var spells = GetSpellsFromHeroClass(Classes);
+						spells[spell.Level - 1].Add(spell);
 					}
 					break;
 
@@ -1286,7 +1306,8 @@ namespace DungeonEye
 
 			for (int i = 0; i < 6; i++)
 			{
-				foreach (Spell spell in Spells[i])
+				var spells = GetSpellsFromHeroClass(Classes);
+				foreach (Spell spell in spells[i])
 				{
 					writer.WriteStartElement("spell");
 					writer.WriteAttributeString("name", spell.Name);
@@ -1356,7 +1377,7 @@ namespace DungeonEye
 			return false;
 		}
 
-	
+
 		/// <summary>
 		/// Heal a hero
 		/// </summary>
@@ -1513,8 +1534,8 @@ namespace DungeonEye
 				return value;
 			}
 		}
-	
-		
+
+
 		/// <summary>
 		/// Armor bonus
 		/// Provided by armor slot, head slot and bracers slot 
@@ -1648,13 +1669,13 @@ namespace DungeonEye
 			}
 		}
 
-	
+
 		/// <summary>
 		/// Items in the bag
 		/// </summary>
 		Item[] Inventory;
 
-		
+
 		/// <summary>
 		/// Profressions of the Hero
 		/// </summary>
@@ -1753,11 +1774,9 @@ namespace DungeonEye
 		#region Magic
 
 		/// <summary>
-		/// Available spells
+		/// No spells available
 		/// </summary>
-		/// TODO: remove !!!
-		[Obsolete()]
-		List<Spell>[] Spells;
+		private static readonly List<Spell>[] NoSpells = new[] { new List<Spell>(0), new List<Spell>(0), new List<Spell>(0), new List<Spell>(0), new List<Spell>(0), new List<Spell>(0) };
 
 		/// <summary>
 		/// Cleric spells list
@@ -1884,6 +1903,7 @@ namespace DungeonEye
 	/// <summary>
 	/// Race of the Hero
 	/// </summary>
+	[Flags]
 	public enum HeroRace
 	{
 
