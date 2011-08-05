@@ -30,16 +30,16 @@ using DungeonEye.Script.Actions;
 namespace DungeonEye.Forms
 {
 	/// <summary>
-	/// Spawn a new monster
+	/// Spawn a new monster control
 	/// </summary>
 	public partial class SpawnMonsterControl : ActionBaseControl
 	{
 
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
-		/// <param name="script"></param>
-		public SpawnMonsterControl(GiveExperience script)
+		/// <param name="script">Script handle</param>
+		public SpawnMonsterControl(SpawnMonster script)
 		{
 			InitializeComponent();
 
@@ -47,22 +47,14 @@ namespace DungeonEye.Forms
 			if (script != null)
 				Action = script;
 			else
-				Action = new GiveExperience();
+				Action = new SpawnMonster();
 
-			UpdateUI();
 		}
 
 
-		/// <summary>
-		/// Updates user interface
-		/// </summary>
-		void UpdateUI()
-		{
-		}
 
 
 		#region Events
-
 
 
 		#endregion
@@ -70,6 +62,14 @@ namespace DungeonEye.Forms
 
 		#region Properties
 
+		/// <summary>
+		/// Monster
+		/// </summary>
+		public Monster Monster
+		{
+			get;
+			private set;
+		}
 
 		#endregion
 	}

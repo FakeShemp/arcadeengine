@@ -117,6 +117,12 @@
     <Compile Include="Forms\Actions\SpawnMonsterControl.Designer.cs">
       <DependentUpon>SpawnMonsterControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Asset\MonsterEditorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Asset\MonsterEditorControl.Designer.cs">
+      <DependentUpon>MonsterEditorControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Game\Gui\CampWindows\SaveGameWindow.cs" />
     <Compile Include="Game\HeroName.cs" />
     <Compile Include="Game\Script\Actions\SpawnMonster.cs" />
@@ -704,6 +710,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Actor\WallSwitchScriptForm.resx">
       <DependentUpon>WallSwitchScriptForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Asset\MonsterEditorControl.resx">
+      <DependentUpon>MonsterEditorControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Asset\MazePropertiesControl.resx">
       <DependentUpon>MazePropertiesControl.cs</DependentUpon>

@@ -92,15 +92,15 @@ namespace DungeonEye.Forms
 			SmartAIBox.Checked = Monster.SmartAI;
 			CanSeeInvisibleBox.Checked = Monster.CanSeeInvisible;
 			SightRangeBox.Value = Monster.SightRange;
-			PickupBox.Value = (decimal) Monster.PickupRate * 100;
-			StealBox.Value = (decimal) Monster.StealRate * 100;
+			PickupBox.Value = (decimal)Monster.PickupRate * 100;
+			StealBox.Value = (decimal)Monster.StealRate * 100;
 			CanSeeInvisibleBox.Checked = Monster.CanSeeInvisible;
 			TeleportsBox.Checked = Monster.Teleports;
 			DefaultBehaviourBox.SelectedItem = Monster.DefaultBehaviour;
 			CurrentBehaviourBox.SelectedItem = Monster.CurrentBehaviour;
 			DirectionBox.SelectedItem = Monster.Direction;
 			NameBox.Text = Monster.Name;
-			AttackSpeedBox.Value = (int) Monster.AttackSpeed.TotalMilliseconds;
+			AttackSpeedBox.Value = (int)Monster.AttackSpeed.TotalMilliseconds;
 			WeaponNameBox.SelectedItem = Monster.WeaponName;
 
 
@@ -109,46 +109,49 @@ namespace DungeonEye.Forms
 
 
 		/// <summary>
-		/// 
+		/// Render the monster visual
 		/// </summary>
 		void Draw()
 		{
-			if (DesignMode || SpriteBatch == null)
-			{
-				if (DesignMode)
-					GlControl.SwapBuffers();
-				return;
-			}
-
-
 			GlControl.MakeCurrent();
 			Display.ClearBuffers();
 
-			SpriteBatch.Begin();
 
-			// Background texture
-			Rectangle dst = new Rectangle(Point.Empty, GlControl.Size);
-			SpriteBatch.Draw(CheckerBoard, dst, dst, Color.White);
+			//if (DesignMode || SpriteBatch == null)
+			//{
+			//    if (DesignMode)
+			//        GlControl.SwapBuffers();
+			//    return;
+			//}
 
-			if (Monster != null && TileSet != null)
+			if (SpriteBatch != null)
 			{
-				Tile tile = TileSet.GetTile(Monster.Tile);
-				if (tile != null)
+				SpriteBatch.Begin();
+
+				// Background texture
+				Rectangle dst = new Rectangle(Point.Empty, GlControl.Size);
+				SpriteBatch.Draw(CheckerBoard, dst, dst, Color.White);
+
+				if (Monster != null && TileSet != null)
 				{
-					Point pos = new Point((GlControl.Width - tile.Size.Width) / 2, (GlControl.Height - tile.Size.Height) / 2);
-					pos.Offset(tile.Origin);
-					SpriteBatch.DrawTile(TileSet, Monster.Tile, pos);
+					Tile tile = TileSet.GetTile(Monster.Tile);
+					if (tile != null)
+					{
+						Point pos = new Point((GlControl.Width - tile.Size.Width) / 2, (GlControl.Height - tile.Size.Height) / 2);
+						pos.Offset(tile.Origin);
+						SpriteBatch.DrawTile(TileSet, Monster.Tile, pos);
+					}
 				}
+
+				SpriteBatch.End();
 			}
 
-			SpriteBatch.End();
+
 			GlControl.SwapBuffers();
 		}
 
 
 		#region Events
-
-
 
 		/// <summary>
 		/// 
@@ -157,8 +160,8 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void MonsterControl_Load(object sender, EventArgs e)
 		{
-			if (DesignMode)
-				return;
+			//if (DesignMode)
+			//    return;
 
 			if (ParentForm != null)
 				ParentForm.FormClosing += new FormClosingEventHandler(ParentForm_FormClosing);
@@ -195,8 +198,8 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void GlControl_Load(object sender, EventArgs e)
 		{
-			if (DesignMode)
-				return;
+			//if (DesignMode)
+			//    return;
 
 			GlControl.MakeCurrent();
 			Display.ViewPort = new Rectangle(new Point(), GlControl.Size);
@@ -204,12 +207,19 @@ namespace DungeonEye.Forms
 			Display.Init();
 			Display.ClearBuffers();
 
-			SpriteBatch = new SpriteBatch();
+
+
+
 
 			// Preload background texture resource
 			CheckerBoard = new Texture2D(ResourceManager.GetInternalResource("ArcEngine.Resources.checkerboard.png"));
 			CheckerBoard.HorizontalWrap = TextureWrapFilter.Repeat;
 			CheckerBoard.VerticalWrap = TextureWrapFilter.Repeat;
+
+
+			if (SpriteBatch == null)
+				SpriteBatch = new SpriteBatch();
+
 
 			Draw();
 		}
@@ -222,20 +232,18 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void TileSetBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if (Monster == null || Monster.TileSetName == (string) TileSetBox.SelectedItem)
+			if (Monster == null || Monster.TileSetName == (string)TileSetBox.SelectedItem)
 				return;
 
 			// Reload tileset
 			if (TileSet != null)
 				TileSet.Dispose();
 
-			Monster.TileSetName = (string) TileSetBox.SelectedItem;
+			Monster.TileSetName = (string)TileSetBox.SelectedItem;
 			TileSet = ResourceManager.CreateAsset<TileSet>(Monster.TileSetName);
 
 			Draw();
 		}
-
-
 
 
 		/// <summary>
@@ -249,7 +257,6 @@ namespace DungeonEye.Forms
 		}
 
 
-
 		/// <summary>
 		/// Change tileset ID
 		/// </summary>
@@ -260,7 +267,7 @@ namespace DungeonEye.Forms
 			if (Monster == null)
 				return;
 
-			Monster.Tile = (int) TileIDBox.Value;
+			Monster.Tile = (int)TileIDBox.Value;
 			Draw();
 		}
 
@@ -314,12 +321,17 @@ namespace DungeonEye.Forms
 
 		#region Magic Tab
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void CastingLevelBox_ValueChanged(object sender, EventArgs e)
 		{
 			if (Monster == null)
 				return;
 
-			Monster.MagicCastingLevel = (int) CastingLevelBox.Value;
+			Monster.MagicCastingLevel = (int)CastingLevelBox.Value;
 		}
 
 		/// <summary>
@@ -362,6 +374,12 @@ namespace DungeonEye.Forms
 
 		#region Properties Tab
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void NameBox_TextChanged(object sender, EventArgs e)
 		{
 			if (Monster == null)
@@ -371,12 +389,17 @@ namespace DungeonEye.Forms
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void AttackSpeedBox_ValueChanged(object sender, EventArgs e)
 		{
 			if (Monster == null)
 				return;
 
-			Monster.AttackSpeed = TimeSpan.FromMilliseconds((int) AttackSpeedBox.Value);
+			Monster.AttackSpeed = TimeSpan.FromMilliseconds((int)AttackSpeedBox.Value);
 		}
 
 		/// <summary>
@@ -420,15 +443,21 @@ namespace DungeonEye.Forms
 		{
 			if (Monster == null)
 				return;
-			Monster.Reward = (int) XPRewardBox.Value;
+			Monster.Reward = (int)XPRewardBox.Value;
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void DirectionBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (Monster == null)
 				return;
 
-			Monster.Direction = (CardinalPoint) DirectionBox.SelectedItem;
+			Monster.Direction = (CardinalPoint)DirectionBox.SelectedItem;
 		}
 
 
@@ -442,8 +471,9 @@ namespace DungeonEye.Forms
 			if (Monster == null)
 				return;
 
-			Monster.ArmorClass = (int) ArmorClassBox.Value;
+			Monster.ArmorClass = (int)ArmorClassBox.Value;
 		}
+
 
 		/// <summary>
 		/// Flees after attack
@@ -458,6 +488,12 @@ namespace DungeonEye.Forms
 			Monster.FleesAfterAttack = FleesBox.Checked;
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void FillSquareBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (Monster == null)
@@ -499,7 +535,7 @@ namespace DungeonEye.Forms
 			if (Monster == null)
 				return;
 
-			Monster.PickupRate = (float) PickupBox.Value / 100.0f;
+			Monster.PickupRate = (float)PickupBox.Value / 100.0f;
 
 		}
 
@@ -508,7 +544,7 @@ namespace DungeonEye.Forms
 			if (Monster == null)
 				return;
 
-			Monster.StealRate = (float) StealBox.Value / 100.0f;
+			Monster.StealRate = (float)StealBox.Value / 100.0f;
 
 		}
 
@@ -569,7 +605,7 @@ namespace DungeonEye.Forms
 			if (Monster == null)
 				return;
 
-			Monster.SightRange= (int) SightRangeBox.Value;
+			Monster.SightRange = (int)SightRangeBox.Value;
 
 		}
 
@@ -579,7 +615,7 @@ namespace DungeonEye.Forms
 			if (Monster == null)
 				return;
 
-			Monster.DefaultBehaviour = (MonsterBehaviour) DefaultBehaviourBox.SelectedItem;
+			Monster.DefaultBehaviour = (MonsterBehaviour)DefaultBehaviourBox.SelectedItem;
 
 		}
 
@@ -588,7 +624,7 @@ namespace DungeonEye.Forms
 			if (Monster == null)
 				return;
 
-			Monster.CurrentBehaviour = (MonsterBehaviour) CurrentBehaviourBox.SelectedItem;
+			Monster.CurrentBehaviour = (MonsterBehaviour)CurrentBehaviourBox.SelectedItem;
 		}
 
 		private void WeaponNameBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -596,7 +632,7 @@ namespace DungeonEye.Forms
 			if (Monster == null)
 				return;
 
-			Monster.WeaponName = (string) WeaponNameBox.SelectedItem;
+			Monster.WeaponName = (string)WeaponNameBox.SelectedItem;
 		}
 
 		#endregion

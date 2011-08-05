@@ -25,7 +25,7 @@ namespace DungeonEye.Forms
 		{
 			InitializeComponent();
 
-			MonsterBox.Monster = monster;
+	//		MonsterBox.Monster = monster;
 			Monster = monster;
 		}
 
@@ -36,8 +36,8 @@ namespace DungeonEye.Forms
 		/// </summary>
 		private void ApplyMonster()
 		{
-			Monster.Load(ResourceManager.GetAsset<Monster>((string) MonsterModelsBox.SelectedItem));
-			MonsterBox.Monster = Monster;
+	//		Monster.Load(ResourceManager.GetAsset<Monster>((string) MonsterModelsBox.SelectedItem));
+	//		MonsterBox.Monster = Monster;
 		}
 
 
@@ -50,7 +50,7 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void MonsterEditorForm_Load(object sender, EventArgs e)
 		{
-			MonsterModelsBox.DataSource = ResourceManager.GetAssets<Monster>();
+		//	MonsterModelsBox.DataSource = ResourceManager.GetAssets<Monster>();
 		}
 
 

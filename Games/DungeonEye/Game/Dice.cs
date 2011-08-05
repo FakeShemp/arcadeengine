@@ -26,7 +26,7 @@ using System.Xml;
 namespace DungeonEye
 {
 	/// <summary>
-	/// Dice
+	/// Dice class
 	/// </summary>
 	public class Dice : ICloneable
 	{

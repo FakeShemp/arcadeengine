@@ -27,9 +27,7 @@ using ArcEngine.Asset;
 using ArcEngine.Audio;
 using ArcEngine.Graphic;
 using ArcEngine.Interface;
-using ArcEngine.Utility.GameState;
 using DungeonEye.Interfaces;
-using DungeonEye.MonsterStates;
 
 
 //
@@ -54,15 +52,8 @@ namespace DungeonEye
 		/// <summary>
 		/// Default constructor
 		/// </summary>
-		/// <param name="maze">Maze handle where the monster is</param>
 		public Monster()
 		{
-			//if (maze != null)
-			//{
-			//    //Location = new DungeonLocation(maze.Dungeon);
-			//    Trace.WriteLine("[Monster] Monster() : maze == NULL !!!");
-			//}
-
 			ItemsInPocket = new List<string>();
 			DamageDice = new Dice();
 			HitDice = new Dice();
@@ -72,7 +63,6 @@ namespace DungeonEye
 
 			HitDisplayDuration = TimeSpan.FromSeconds(0.5f);
 		}
-
 
 
 		/// <summary>
@@ -1600,7 +1590,11 @@ namespace DungeonEye
 		/// <summary>
 		/// Is asset disposed
 		/// </summary>
-		public bool IsDisposed { get; private set; }
+		public bool IsDisposed
+		{
+			get;
+			private set;
+		}
 
 
 		/// <summary>

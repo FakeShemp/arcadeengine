@@ -37,7 +37,7 @@ namespace DungeonEye.Script.Actions
 	{
 
 		/// <summary>
-		/// 
+		/// Constructor
 		/// </summary>
 		public SpawnMonster()
 		{
@@ -139,7 +139,7 @@ namespace DungeonEye.Script.Actions
 
 
 		/// <summary>
-		/// 
+		/// Xml Tag
 		/// </summary>
 		public const string XmlTag = "SpawnMonster";
 
