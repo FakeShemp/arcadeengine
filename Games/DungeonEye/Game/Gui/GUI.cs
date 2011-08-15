@@ -43,6 +43,21 @@ namespace DungeonEye.Gui
 		}
 
 
+		/// <summary>
+		/// Dispose resources
+		/// </summary>
+        public static void Dispose()
+        {
+			if (MenuFont != null)
+				MenuFont.Dispose();
+			MenuFont = null;
+
+			if (DialogFont != null)
+				DialogFont.Dispose();
+			DialogFont = null;
+        }
+
+
 		#region Bevels
 
 		/// <summary>

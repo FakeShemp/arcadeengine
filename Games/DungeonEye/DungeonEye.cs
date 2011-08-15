@@ -157,7 +157,7 @@ namespace DungeonEye
 		public override void UnloadContent()
 		{
 			GSM.UnloadContent();
-
+            Gui.GUI.Dispose();
 			ResourceManager.ClearAssets();
 		}
 

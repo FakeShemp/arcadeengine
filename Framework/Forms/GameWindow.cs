@@ -289,12 +289,15 @@ namespace ArcEngine.Forms
 		private void GameWindow_FormClosed(object sender, FormClosedEventArgs e)
 		{
 			Trace.WriteDebugLine("[GameWindow] Form_Closed()");
-
-			Display.Dispose();
+            
+            GameBase.Exit();
+            
+            Display.Dispose();
 
 			if (RenderControl != null)
 				RenderControl.Dispose();
 			RenderControl = null;
+
 		}
 
 
