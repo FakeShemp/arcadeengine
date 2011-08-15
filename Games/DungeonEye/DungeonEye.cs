@@ -126,7 +126,10 @@ namespace DungeonEye
 				Window.Icon = new Icon(icon);
 			Window.Text = "Dungeon Eye - http://www.dungeoneye.net";
 
-			
+
+			// Remove Multi sampling
+			Display.RenderState.MultiSample = false;
+
 
 			// Default texture parameters
 			Texture2D.DefaultBorderColor = Color.Black;
