@@ -108,7 +108,10 @@ namespace ArcEngine.Graphic
 		~SpriteBatch()
 		{
 			if (!IsDisposed)
-				throw new Exception(this + " not disposed, Call Dispose() !!");
+			{
+				//throw new Exception(this + " not disposed, Call Dispose() !!");
+				System.Windows.Forms.MessageBox.Show(this + " not disposed, Call Dispose() !!", "ERROR", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+			}
 		}
 
 
@@ -294,6 +297,7 @@ namespace ArcEngine.Graphic
 			Display.RenderState.Culling = true;
 			Display.RenderState.DepthTest = false;
 			Display.RenderState.Blending = true;
+			Display.RenderState.MultiSample = false;
 		}
 
 

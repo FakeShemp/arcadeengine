@@ -58,7 +58,8 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		~BatchBuffer()
 		{
-			throw new Exception("BatchBuffer : Call Dispose() !!");
+			//throw new Exception("BatchBuffer : Call Dispose() !!");
+			System.Windows.Forms.MessageBox.Show("BatchBuffer : Call Dispose() !!", "ERROR", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
 		}
 
 

@@ -54,7 +54,10 @@ namespace ArcEngine.Graphic
 		~Texture()
 		{
 			if (!IsDisposed)
-				throw new Exception(this + " not disposed, Call Dispose() !!");
+			{
+				//throw new Exception(this + " not disposed, Call Dispose() !!");
+				System.Windows.Forms.MessageBox.Show(this + " not disposed, Call Dispose() !!");
+			}
 		}
 
 
