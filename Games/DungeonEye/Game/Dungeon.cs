@@ -161,7 +161,7 @@ namespace DungeonEye
 		/// <returns>True on success</returns>
 		public bool Load(XmlNode xml)
 		{
-			if (xml == null || xml.Name != XmlTag)
+			if (xml == null || xml.Name != Tag)
 			{
 				Trace.WriteLine("[Dungeon] Expecting \"" + XmlTag + "\" in node header, found \"" + xml.Name + "\" when loading Dungeon.");
 				return false;
@@ -226,7 +226,7 @@ namespace DungeonEye
 			if (writer == null)
 				return false;
 
-			writer.WriteStartElement(XmlTag);
+			writer.WriteStartElement(Tag);
 			writer.WriteAttributeString("name", Name);
 			
 			
@@ -345,13 +345,19 @@ namespace DungeonEye
 
 
 		/// <summary>
+		/// Tag
+		/// </summary>
+		public const string Tag = "dungeon";
+
+
+		/// <summary>
 		/// Xml tag of the asset in bank
 		/// </summary>
 		public string XmlTag
 		{
 			get
 			{
-				return "dungeon";
+				return Tag;
 			}
 		}
 

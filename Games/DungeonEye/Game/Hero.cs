@@ -1453,13 +1453,19 @@ namespace DungeonEye
 
 
 		/// <summary>
+		/// Tag
+		/// </summary>
+		public const string Tag = "hero";
+
+
+		/// <summary>
 		/// Xml tag of the asset in bank
 		/// </summary>
 		public string XmlTag
 		{
 			get
 			{
-				return "hero";
+				return Tag;
 			}
 		}
 

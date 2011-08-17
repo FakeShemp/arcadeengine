@@ -16,7 +16,7 @@ namespace DungeonEye.Script.Actions
 		/// </summary>
 		public EndDialog()
 		{
-			Name = XmlTag;
+			Name = Tag;
 		}
 
 
@@ -75,7 +75,7 @@ namespace DungeonEye.Script.Actions
 		/// <summary>
 		/// 
 		/// </summary>
-		public const string XmlTag = "EndDialog";
+		public const string Tag = "EndDialog";
 
 
 		#endregion

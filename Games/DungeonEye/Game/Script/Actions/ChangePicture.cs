@@ -38,7 +38,7 @@ namespace DungeonEye.Script.Actions
 		/// </summary>
 		public ChangePicture()
 		{
-			Name = XmlTag;
+			Name = Tag;
 		}
 
 		/// <summary>
@@ -88,7 +88,7 @@ namespace DungeonEye.Script.Actions
 		/// <summary>
 		/// 
 		/// </summary>
-		public const string XmlTag = "ChangePicture";
+		public const string Tag = "ChangePicture";
 
 
 		#endregion

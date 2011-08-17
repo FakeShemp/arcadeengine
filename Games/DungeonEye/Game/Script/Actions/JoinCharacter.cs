@@ -15,7 +15,7 @@ namespace DungeonEye.Script.Actions
 		/// </summary>
 		public JoinCharacter()
 		{
-			Name = XmlTag;
+			Name = Tag;
 		}
 
 		/// <summary>
@@ -68,7 +68,7 @@ namespace DungeonEye.Script.Actions
 		/// <summary>
 		/// 
 		/// </summary>
-		public const string XmlTag = "JoinCharacter";
+		public const string Tag = "JoinCharacter";
 
 		#endregion
 	}

@@ -667,7 +667,7 @@ namespace ArcEngine.Asset
 			if (xml == null)
 				return false;
 
-			xml.WriteStartElement(XmlTag);
+			xml.WriteStartElement(Tag);
 			xml.WriteAttributeString("name", Name);
 
 
@@ -786,13 +786,19 @@ namespace ArcEngine.Asset
 
 
 		/// <summary>
+		/// Tag
+		/// </summary>
+		public const string Tag = "bitmapfont";
+
+		
+		/// <summary>
 		/// Xml tag of the asset in bank
 		/// </summary>
 		public string XmlTag
 		{
 			get
 			{
-				return "bitmapfont";
+				return Tag;
 			}
 		}
 

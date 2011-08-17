@@ -135,10 +135,6 @@ namespace DungeonEye
 				InventoryFont.Dispose();
 			InventoryFont = null;
 
-			//if (Items != null)
-			//    Items.Dispose();
-			//Items = null;
-
 			if (Heads != null)
 				Heads.Dispose();
 			Heads = null;

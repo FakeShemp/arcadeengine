@@ -41,7 +41,7 @@ namespace DungeonEye.Script.Actions
 		/// </summary>
 		public SpawnMonster()
 		{
-			Name = XmlTag;
+			Name = Tag;
 		}
 
 
@@ -59,12 +59,12 @@ namespace DungeonEye.Script.Actions
 			if (target == null)
 				return false;
 
-			// Get the actor
-			if (target.Actor != null)
-				target.Actor.Disable();
+			//TODO: Spawn the monster
+			
 
 			return true;
 		}
+
 
 		/// <summary>
 		/// 
@@ -72,7 +72,7 @@ namespace DungeonEye.Script.Actions
 		/// <returns></returns>
 		public override string ToString()
 		{
-			string str = "Spawn monster at ";
+			string str = "Spawn monster \"" + Monster + "\" at ";
 
 			if (Target != null)
 				str += Target.ToStringShort();
@@ -90,21 +90,13 @@ namespace DungeonEye.Script.Actions
 		/// <returns></returns>
 		public override bool Load(XmlNode xml)
 		{
-			if (xml == null || xml.Name != XmlTag)
+			if (xml == null || xml.Name != Tag)
 				return false;
 
-			foreach (XmlNode node in xml)
-			{
-				switch (node.Name.ToLower())
-				{
+			if (xml.Attributes["name"] != null)
+				Monster = xml.Attributes["name"].Value;
 
-					default:
-					{
-						base.Load(node);
-					}
-					break;
-				}
-			}
+			base.Load(xml.FirstChild);
 
 			return true;
 		}
@@ -121,7 +113,10 @@ namespace DungeonEye.Script.Actions
 				return false;
 
 
-			writer.WriteStartElement(XmlTag);
+			writer.WriteStartElement(Tag);
+
+			writer.WriteAttributeString("name", Monster);
+
 
 			base.Save(writer);
 
@@ -141,7 +136,17 @@ namespace DungeonEye.Script.Actions
 		/// <summary>
 		/// Xml Tag
 		/// </summary>
-		public const string XmlTag = "SpawnMonster";
+		public const string Tag = "SpawnMonster";
+
+
+		/// <summary>
+		/// Monster name
+		/// </summary>
+		public string Monster
+		{
+			get;
+			set;
+		}
 
 
 		#endregion

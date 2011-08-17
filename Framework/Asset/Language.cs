@@ -118,7 +118,7 @@ namespace ArcEngine.Asset
 			if (xml == null)
 				return false;
 
-			xml.WriteStartElement("language");
+			xml.WriteStartElement(Tag);
 			xml.WriteAttributeString("name", Name);
 
 			foreach(KeyValuePair<int, string> kvp in Strings)
@@ -177,6 +177,12 @@ namespace ArcEngine.Asset
 
 
 		#region Properties
+
+		/// <summary>
+		/// Tag
+		/// </summary>
+		public const string Tag = "language";
+
 
 		/// <summary>
 		/// Language name

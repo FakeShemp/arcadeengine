@@ -52,7 +52,16 @@ namespace DungeonEye.Forms.Script
 		/// <param name="action">Action handle</param>
 		void SetAction(ActionBase action)
 		{
+			// Dispose disposable controls
+			foreach (var ctrl in ActionPropertiesBox.Controls)
+			{
+				if (ctrl is IDisposable)
+					((IDisposable)ctrl).Dispose();
+			}
 			ActionPropertiesBox.Controls.Clear();
+
+
+
 			if (Script == null)
 				return;
 
@@ -134,6 +143,10 @@ namespace DungeonEye.Forms.Script
 			else if (action is SetTo)
 			{
 				basectrl = new SetToControl(action as SetTo, Dungeon);
+			}
+			else if (action is SpawnMonster)
+			{
+				basectrl = new SpawnMonsterControl(action as SpawnMonster, Dungeon);
 			}
 			else
 			{

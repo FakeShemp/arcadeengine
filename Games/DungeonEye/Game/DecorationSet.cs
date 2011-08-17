@@ -17,15 +17,12 @@
 //along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 //
 #endregion
-using System.ComponentModel;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Drawing;
 using System.Xml;
 using ArcEngine;
-using ArcEngine.Graphic;
 using ArcEngine.Asset;
+using ArcEngine.Graphic;
 using ArcEngine.Interface;
 
 
@@ -33,7 +30,7 @@ namespace DungeonEye
 {
 
 	/// <summary>
-	/// Decoration
+	/// Decoration collection
 	/// </summary>
 	public class DecorationSet : IAsset
 	{
@@ -288,13 +285,19 @@ namespace DungeonEye
 
 
 		/// <summary>
+		/// Tag
+		/// </summary>
+		public const string Tag = "decorationset";
+
+
+		/// <summary>
 		/// Xml tag of the asset in bank
 		/// </summary>
 		public string XmlTag
 		{
 			get
 			{
-				return "decorationset";
+				return Tag;
 			}
 		}
 

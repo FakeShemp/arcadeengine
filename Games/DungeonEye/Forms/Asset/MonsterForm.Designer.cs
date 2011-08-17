@@ -33,14 +33,11 @@
 			// 
 			// MonsterBox
 			// 
-			this.MonsterBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.MonsterBox.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.MonsterBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.MonsterBox.Location = new System.Drawing.Point(12, 12);
-			this.MonsterBox.Monster = null;
+			this.MonsterBox.Location = new System.Drawing.Point(0, 0);
 			this.MonsterBox.Name = "MonsterBox";
-			this.MonsterBox.Size = new System.Drawing.Size(664, 504);
+			this.MonsterBox.Size = new System.Drawing.Size(688, 528);
 			this.MonsterBox.TabIndex = 0;
 			// 
 			// MonsterForm

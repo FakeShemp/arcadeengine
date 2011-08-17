@@ -56,6 +56,12 @@ namespace ArcEngine.Asset
 		#region Properties
 
 		/// <summary>
+		/// Tag
+		/// </summary>
+		public const string Tag = "tile";
+
+	
+		/// <summary>
 		/// Gets / sets the rectangle of the tile in the texture
 		/// </summary>
 		public Rectangle Rectangle

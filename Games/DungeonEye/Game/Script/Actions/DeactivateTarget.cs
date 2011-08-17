@@ -16,7 +16,7 @@ namespace DungeonEye.Script.Actions
 		/// </summary>
 		public DeactivateTarget()
 		{
-			Name = XmlTag;
+			Name = Tag;
 		}
 
 
@@ -113,7 +113,7 @@ namespace DungeonEye.Script.Actions
 		/// <summary>
 		/// 
 		/// </summary>
-		public const string XmlTag = "DeactivateTarget";
+		public const string Tag = "DeactivateTarget";
 
 
 

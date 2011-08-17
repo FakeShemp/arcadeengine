@@ -124,7 +124,7 @@ namespace ArcEngine.Asset
 				return false;
 
 
-			writer.WriteStartElement(XmlTag);
+			writer.WriteStartElement(Tag);
 			writer.WriteAttributeString("name", Name);
 
 
@@ -315,19 +315,6 @@ namespace ArcEngine.Asset
 			return tile;
 		}
 
-/*
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="rectangle"></param>
-		/// <returns></returns>
-		public int AddTile(Rectangle rectangle)
-		{
-			
-			return -1;
-		}
-
-*/
 
 		/// <summary>
 		/// Adds a tile
@@ -607,7 +594,13 @@ namespace ArcEngine.Asset
 		public bool IsDisposed { get; private set; }
 
 
-	
+
+		/// <summary>
+		/// Tag
+		/// </summary>
+		public const string Tag = "tileset";
+
+
 		/// <summary>
 		/// Xml tag of the asset in bank
 		/// </summary>
@@ -615,7 +608,7 @@ namespace ArcEngine.Asset
 		{
 			get
 			{
-				return "tileset";
+				return Tag;
 			}
 		}
 

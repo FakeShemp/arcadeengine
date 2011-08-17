@@ -16,7 +16,7 @@ namespace DungeonEye.Script.Actions
 		/// </summary>
 		public GiveExperience()
 		{
-			Name = XmlTag;
+			Name = Tag;
 		}
 
 
@@ -105,7 +105,7 @@ namespace DungeonEye.Script.Actions
 		/// <summary>
 		/// 
 		/// </summary>
-		public const string XmlTag = "GiveExperience";
+		public const string Tag = "GiveExperience";
 
 
 		/// <summary>

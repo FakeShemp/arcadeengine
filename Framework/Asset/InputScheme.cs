@@ -146,7 +146,7 @@ namespace ArcEngine.Asset
 				return false;
 
 
-			writer.WriteStartElement(XmlTag);
+			writer.WriteStartElement(Tag);
 			writer.WriteAttributeString("name", Name);
 
 
@@ -196,6 +196,12 @@ namespace ArcEngine.Asset
 		#region Properties
 
 
+
+		/// <summary>
+		/// Tag
+		/// </summary>
+		public const string Tag = "inputscheme";
+
 		/// <summary>
 		/// Xml tag of the asset in bank
 		/// </summary>
@@ -203,7 +209,7 @@ namespace ArcEngine.Asset
 		{
 			get
 			{
-				return "inputscheme";
+				return Tag;
 			}
 		}
 

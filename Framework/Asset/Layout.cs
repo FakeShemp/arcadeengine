@@ -320,13 +320,19 @@ namespace ArcEngine.Asset
 
 
 		/// <summary>
+		/// Tag
+		/// </summary>
+		public const string Tag = "layout";
+
+
+		/// <summary>
 		/// Xml tag of the asset in bank
 		/// </summary>
 		public string XmlTag
 		{
 			get
 			{
-				return "layout";
+				return Tag;
 			}
 		}
 

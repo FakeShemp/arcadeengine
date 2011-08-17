@@ -46,9 +46,15 @@ namespace DungeonEye.Forms
 
 			ItemsBox.Items.AddRange(ResourceManager.GetAssets<Item>().ToArray());
 			TileSetBox.Items.AddRange(ResourceManager.GetAssets<TileSet>().ToArray());
-			DefaultBehaviourBox.DataSource = Enum.GetValues(typeof(MonsterBehaviour));
-			CurrentBehaviourBox.DataSource = Enum.GetValues(typeof(MonsterBehaviour));
-			DirectionBox.DataSource = Enum.GetValues(typeof(CardinalPoint));
+
+			foreach(var name in Enum.GetValues(typeof(MonsterBehaviour)))
+				DefaultBehaviourBox.Items.Add(name);
+
+			foreach (var name in Enum.GetValues(typeof(MonsterBehaviour)))
+				CurrentBehaviourBox.Items.Add(name);
+
+			foreach (var name in Enum.GetValues(typeof(CardinalPoint)))
+				DirectionBox.Items.Add(name);
 		}
 
 
@@ -72,39 +78,70 @@ namespace DungeonEye.Forms
 			}
 
 
-
-			EntityBox.Entity = Monster;
-			TileSetBox.Text = Monster.TileSetName;
-			TileIDBox.Value = Monster.Tile;
-			PocketItemsBox.Items.AddRange(Monster.ItemsInPocket.ToArray());
-			XPRewardBox.Value = Monster.Reward;
-			ArmorClassBox.Value = Monster.ArmorClass;
-			ScriptBox.SetValues<IMonster>(Monster.Script);
-			DamageBox.Dice = Monster.DamageDice;
-			FleesBox.Checked = Monster.FleesAfterAttack;
-			FlyingBox.Checked = Monster.Flying;
-			FillSquareBox.Checked = Monster.FillSquare;
-			NonMaterialBox.Checked = Monster.NonMaterial;
-			UseStairsBox.Checked = Monster.UseStairs;
-			BackRowAttackBox.Checked = Monster.BackRowAttack;
-			PoisonImmunityBox.Checked = Monster.PoisonImmunity;
-			ThrowWeaponsBox.Checked = Monster.ThrowWeapons;
-			SmartAIBox.Checked = Monster.SmartAI;
-			CanSeeInvisibleBox.Checked = Monster.CanSeeInvisible;
-			SightRangeBox.Value = Monster.SightRange;
-			PickupBox.Value = (decimal)Monster.PickupRate * 100;
-			StealBox.Value = (decimal)Monster.StealRate * 100;
-			CanSeeInvisibleBox.Checked = Monster.CanSeeInvisible;
-			TeleportsBox.Checked = Monster.Teleports;
-			DefaultBehaviourBox.SelectedItem = Monster.DefaultBehaviour;
-			CurrentBehaviourBox.SelectedItem = Monster.CurrentBehaviour;
-			DirectionBox.SelectedItem = Monster.Direction;
-			NameBox.Text = Monster.Name;
-			AttackSpeedBox.Value = (int)Monster.AttackSpeed.TotalMilliseconds;
-			WeaponNameBox.SelectedItem = Monster.WeaponName;
-
+			if (Monster != null)
+			{
+				EntityBox.Entity = Monster;
+				TileSetBox.Text = Monster.TileSetName;
+				TileIDBox.Value = Monster.Tile;
+				PocketItemsBox.Items.AddRange(Monster.ItemsInPocket.ToArray());
+				XPRewardBox.Value = Monster.Reward;
+				ArmorClassBox.Value = Monster.ArmorClass;
+				ScriptBox.SetValues<IMonster>(Monster.Script);
+				DamageBox.Dice = Monster.DamageDice;
+				FleesBox.Checked = Monster.FleesAfterAttack;
+				FlyingBox.Checked = Monster.Flying;
+				FillSquareBox.Checked = Monster.FillSquare;
+				NonMaterialBox.Checked = Monster.NonMaterial;
+				UseStairsBox.Checked = Monster.UseStairs;
+				BackRowAttackBox.Checked = Monster.BackRowAttack;
+				PoisonImmunityBox.Checked = Monster.PoisonImmunity;
+				ThrowWeaponsBox.Checked = Monster.ThrowWeapons;
+				SmartAIBox.Checked = Monster.SmartAI;
+				CanSeeInvisibleBox.Checked = Monster.CanSeeInvisible;
+				SightRangeBox.Value = Monster.SightRange;
+				PickupBox.Value = (decimal)Monster.PickupRate * 100;
+				StealBox.Value = (decimal)Monster.StealRate * 100;
+				CanSeeInvisibleBox.Checked = Monster.CanSeeInvisible;
+				TeleportsBox.Checked = Monster.Teleports;
+				DefaultBehaviourBox.SelectedItem = Monster.DefaultBehaviour;
+				CurrentBehaviourBox.SelectedItem = Monster.CurrentBehaviour;
+				DirectionBox.SelectedItem = Monster.Direction;
+				NameBox.Text = Monster.Name;
+				AttackSpeedBox.Value = (int)Monster.AttackSpeed.TotalMilliseconds;
+				WeaponNameBox.SelectedItem = Monster.WeaponName;
+			}
 
 			Draw();
+		}
+
+
+		/// <summary>
+		/// Changes the monster
+		/// </summary>
+		/// <param name="handle">Monster handle</param>
+		public void SetMonster(Monster handle)
+		{
+			// Dispose previous monster
+			if (Monster != null)
+				Monster.Dispose();
+			Monster = handle;
+
+
+
+			// Change tileset
+			if (TileSet == null || TileSet.Name != Monster.TileSetName)
+			{
+				if (TileSet != null)
+					TileSet.Dispose();
+				TileSet = null;
+
+				if (Monster != null)
+					TileSet = ResourceManager.CreateAsset<TileSet>(Monster.TileSetName);
+			}
+
+
+			// Update visual
+			UpdateControls();
 		}
 
 
@@ -113,69 +150,59 @@ namespace DungeonEye.Forms
 		/// </summary>
 		void Draw()
 		{
-			GlControl.MakeCurrent();
-			Display.ClearBuffers();
-
-
-			//if (DesignMode || SpriteBatch == null)
-			//{
-			//    if (DesignMode)
-			//        GlControl.SwapBuffers();
-			//    return;
-			//}
-
-			if (SpriteBatch != null)
+			try
 			{
-				SpriteBatch.Begin();
+			//	GlControl.MakeCurrent();
+			//	Display.ClearBuffers();
 
-				// Background texture
-				Rectangle dst = new Rectangle(Point.Empty, GlControl.Size);
-				SpriteBatch.Draw(CheckerBoard, dst, dst, Color.White);
+				//if (SpriteBatch != null)
+				//{
+				//    SpriteBatch.Begin();
 
-				if (Monster != null && TileSet != null)
-				{
-					Tile tile = TileSet.GetTile(Monster.Tile);
-					if (tile != null)
-					{
-						Point pos = new Point((GlControl.Width - tile.Size.Width) / 2, (GlControl.Height - tile.Size.Height) / 2);
-						pos.Offset(tile.Origin);
-						SpriteBatch.DrawTile(TileSet, Monster.Tile, pos);
-					}
-				}
+				//    // Background texture
+				//    Rectangle dst = new Rectangle(Point.Empty, GlControl.Size);
+				//    SpriteBatch.Draw(CheckerBoard, dst, dst, Color.White);
 
-				SpriteBatch.End();
+				//    if (Monster != null && TileSet != null)
+				//    {
+				//        Tile tile = TileSet.GetTile(Monster.Tile);
+				//        if (tile != null)
+				//        {
+				//            Point pos = new Point((GlControl.Width - tile.Size.Width) / 2, (GlControl.Height - tile.Size.Height) / 2);
+				//            pos.Offset(tile.Origin);
+				//            SpriteBatch.DrawTile(TileSet, Monster.Tile, pos);
+				//        }
+				//    }
+
+				//    SpriteBatch.End();
+				//}
+
+
+			//	GlControl.SwapBuffers();
+			}
+			catch (Exception e)
+			{
 			}
 
 
-			GlControl.SwapBuffers();
 		}
 
 
-		#region Events
 
-		/// <summary>
-		/// 
+		/// <summary> 
+		/// Dispose resources
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void MonsterControl_Load(object sender, EventArgs e)
+		/// <param name="disposing"></param>
+		protected override void Dispose(bool disposing)
 		{
-			//if (DesignMode)
-			//    return;
 
-			if (ParentForm != null)
-				ParentForm.FormClosing += new FormClosingEventHandler(ParentForm_FormClosing);
+			if (disposing && (components != null))
+			{
+				components.Dispose();
+			}
+			base.Dispose(disposing);
 
-		}
-
-
-		/// <summary>
-		/// Form closing
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		void ParentForm_FormClosing(object sender, FormClosingEventArgs e)
-		{
+	
 			if (TileSet != null)
 				TileSet.Dispose();
 			TileSet = null;
@@ -187,8 +214,12 @@ namespace DungeonEye.Forms
 			if (CheckerBoard != null)
 				CheckerBoard.Dispose();
 			CheckerBoard = null;
-
 		}
+
+
+
+		#region Events
+
 
 
 		/// <summary>
@@ -198,8 +229,14 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void GlControl_Load(object sender, EventArgs e)
 		{
-			//if (DesignMode)
-			//    return;
+			return;
+
+			if (DesignMode)
+				return;
+
+			//HACK: this method is called twice... Strange...
+			if (SpriteBatch != null)
+				MessageBox.Show("[MonsterControl] : Double call to GlControlLoad(), Oops !");
 
 			GlControl.MakeCurrent();
 			Display.ViewPort = new Rectangle(new Point(), GlControl.Size);
@@ -217,8 +254,7 @@ namespace DungeonEye.Forms
 			CheckerBoard.VerticalWrap = TextureWrapFilter.Repeat;
 
 
-			if (SpriteBatch == null)
-				SpriteBatch = new SpriteBatch();
+			SpriteBatch = new SpriteBatch();
 
 
 			Draw();
@@ -232,6 +268,7 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void TileSetBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
+			// No monster or same tileset
 			if (Monster == null || Monster.TileSetName == (string)TileSetBox.SelectedItem)
 				return;
 
@@ -668,34 +705,13 @@ namespace DungeonEye.Forms
 		#region Properties
 
 		/// <summary>
-		/// Current monster
+		/// Monster handle
 		/// </summary>
 		public Monster Monster
 		{
-			get
-			{
-				return monster;
-			}
-			set
-			{
-				if (value == null)
-					return;
-
-				monster = value;
-
-				// Change tileset
-				if (TileSet == null || TileSet.Name != monster.TileSetName)
-				{
-					if (TileSet != null)
-						TileSet.Dispose();
-
-					TileSet = ResourceManager.CreateAsset<TileSet>(monster.TileSetName);
-				}
-
-				UpdateControls();
-			}
+			get;
+			private set;
 		}
-		Monster monster;
 
 
 		/// <summary>

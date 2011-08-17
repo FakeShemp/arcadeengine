@@ -16,7 +16,7 @@ namespace DungeonEye.Script.Actions
 		/// </summary>
 		public GiveItem()
 		{
-			Name = XmlTag;
+			Name = Tag;
 		}
 
 		/// <summary>
@@ -71,7 +71,7 @@ namespace DungeonEye.Script.Actions
 		/// <summary>
 		/// XML Tag name
 		/// </summary>
-		public const string XmlTag = "GiveItem";
+		public const string Tag = "GiveItem";
 
 
 		/// <summary>

@@ -30,6 +30,7 @@ namespace ArcEngine.Asset
 	/// <summary>
 	/// Model of script
 	/// </summary>
+	[Obsolete]
 	public class ScriptModel : IAsset
 	{
 
@@ -145,13 +146,19 @@ namespace ArcEngine.Asset
 
 
 		/// <summary>
+		/// Tag
+		/// </summary>
+		public const string Tag = "scriptmodel";
+
+
+		/// <summary>
 		/// Xml tag of the asset in bank
 		/// </summary>
 		public string XmlTag
 		{
 			get
 			{
-				return "scriptmodel";
+				return Tag;
 			}
 		}
 

@@ -26,6 +26,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using DungeonEye.Script.Actions;
+using ArcEngine;
 
 namespace DungeonEye.Forms
 {
@@ -39,16 +40,20 @@ namespace DungeonEye.Forms
 		/// Constructor
 		/// </summary>
 		/// <param name="script">Script handle</param>
-		public SpawnMonsterControl(SpawnMonster script)
+		/// <param name="dungeon">Dungeon handle</param>
+		public SpawnMonsterControl(SpawnMonster script, Dungeon dungeon)
 		{
 			InitializeComponent();
 
 
-			if (script != null)
-				Action = script;
-			else
-				Action = new SpawnMonster();
+			Action = script ?? new SpawnMonster();
 
+			TargetBox.Dungeon = dungeon;
+			TargetBox.SetTarget(script.Target);
+
+			MonsterNameBox.Items.AddRange(ResourceManager.GetAssets<Monster>().ToArray());
+			if (!string.IsNullOrEmpty(SpawnScript.Monster))
+				MonsterNameBox.SelectedItem = SpawnScript.Monster;
 		}
 
 
@@ -57,20 +62,47 @@ namespace DungeonEye.Forms
 		#region Events
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="target"></param>
+		void TargetBox_TargetChanged(object sender, DungeonLocation target)
+		{
+			Action.Target = target;
+		}
+		
+		
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void MonsterNameBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			((SpawnMonster)Action).Monster = (string) MonsterNameBox.SelectedItem;
+		}
+
 		#endregion
+
 
 
 		#region Properties
 
+
 		/// <summary>
-		/// Monster
+		/// 
 		/// </summary>
-		public Monster Monster
+		SpawnMonster SpawnScript
 		{
-			get;
-			private set;
+			get
+			{
+				return Action as SpawnMonster;
+			}
 		}
 
 		#endregion
+
 	}
 }

@@ -438,7 +438,7 @@ namespace ArcEngine.Asset
 			if (writer == null)
 				return false;
 
-			writer.WriteStartElement("script");
+			writer.WriteStartElement(Tag);
 			writer.WriteAttributeString("name", Name);
 
 
@@ -538,6 +538,12 @@ namespace ArcEngine.Asset
 		public bool IsDisposed { get; private set; }
 
 
+
+		/// <summary>
+		/// Tag
+		/// </summary>
+		public const string Tag = "script";
+
 		/// <summary>
 		/// Xml tag of the asset in bank
 		/// </summary>
@@ -545,7 +551,7 @@ namespace ArcEngine.Asset
 		{
 			get
 			{
-				return "script";
+				return Tag;
 			}
 		}
 

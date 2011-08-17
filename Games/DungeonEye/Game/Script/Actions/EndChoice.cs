@@ -17,7 +17,7 @@ namespace DungeonEye.Script.Actions
 		/// </summary>
 		public EndChoice()
 		{
-			Name = XmlTag;
+			Name = Tag;
 		}
 
 		/// <summary>
@@ -61,7 +61,7 @@ namespace DungeonEye.Script.Actions
 		/// <summary>
 		/// 
 		/// </summary>
-		public const string XmlTag = "EndChoice";
+		public const string Tag = "EndChoice";
 
 
 		#endregion

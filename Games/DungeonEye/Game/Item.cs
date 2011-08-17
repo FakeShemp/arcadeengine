@@ -408,6 +408,13 @@ namespace DungeonEye
 
 		#region Properties
 
+
+		/// <summary>
+		/// Tag
+		/// </summary>
+		public const string Tag = "item";
+
+
 		/// <summary>
 		/// Xml tag of the asset in bank
 		/// </summary>
@@ -415,7 +422,7 @@ namespace DungeonEye
 		{
 			get
 			{
-				return "item";
+				return Tag;
 			}
 		}
 

@@ -37,7 +37,7 @@ namespace DungeonEye.Script.Actions
 		/// </summary>
 		public Teleport()
 		{
-			Name = XmlTag;
+			Name = Tag;
 		}
 
 
@@ -131,9 +131,9 @@ namespace DungeonEye.Script.Actions
 
 
 		/// <summary>
-		/// 
+		/// XML tag
 		/// </summary>
-		public const string XmlTag = "Teleport";
+		public const string Tag = "Teleport";
 
 		/// <summary>
 		/// Change direction

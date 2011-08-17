@@ -113,11 +113,17 @@ namespace ArcEngine.Asset
 
 
 		/// <summary>
+		/// Tag
+		/// </summary>
+		public const string Tag = "skin";
+
+
+		/// <summary>
 		/// 
 		/// </summary>
 		public string XmlTag
 		{
-			get { return "skin"; }
+			get { return Tag; }
 		}
 
 		#endregion

@@ -27,15 +27,6 @@ using ArcEngine.Interface;
 //
 // http://wiki.openttd.org/Format_of_langfiles
 //
-//
-//
-//
-//
-//
-//
-//
-//
-
 
 namespace ArcEngine.Asset
 {
@@ -106,7 +97,7 @@ namespace ArcEngine.Asset
 			if (xml == null)
 				return false;
 
-			xml.WriteStartElement("stringtable");
+			xml.WriteStartElement(Tag);
 			xml.WriteAttributeString("name", Name);
 
 			xml.WriteStartElement("default");
@@ -386,7 +377,6 @@ namespace ArcEngine.Asset
 		#endregion
 
 
-
 		#region Properties
 
 		/// <summary>
@@ -404,6 +394,13 @@ namespace ArcEngine.Asset
 		public bool IsDisposed { get; private set; }
 
 
+
+		/// <summary>
+		/// Tag
+		/// </summary>
+		public const string Tag = "stringtable";
+
+
 		/// <summary>
 		/// Xml tag of the asset in bank
 		/// </summary>
@@ -411,7 +408,7 @@ namespace ArcEngine.Asset
 		{
 			get
 			{
-				return "stringtable";
+				return Tag;
 			}
 		}
 
@@ -478,7 +475,6 @@ namespace ArcEngine.Asset
 		Dictionary<string, Language> Languages;
 
 		#endregion
-
 
 	}
 

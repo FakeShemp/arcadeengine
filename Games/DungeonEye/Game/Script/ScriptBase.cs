@@ -71,115 +71,121 @@ namespace DungeonEye.Script
 
 			switch (xml.Name)
 			{
-				case EnableTarget.XmlTag:
+				case SpawnMonster.Tag:
+				{
+					Action = new SpawnMonster();
+				}
+				break;
+
+				case EnableTarget.Tag:
 				{
 					Action = new EnableTarget();
 				}
 				break;
 
-				case DisableTarget.XmlTag:
+				case DisableTarget.Tag:
 				{
 					Action = new DisableTarget();
 				}
 				break;
 
-				case ActivateTarget.XmlTag:
+				case ActivateTarget.Tag:
 				{
 					Action = new ActivateTarget();
 				}
 				break;
 
-				case DeactivateTarget.XmlTag:
+				case DeactivateTarget.Tag:
 				{
 					Action = new DeactivateTarget();
 				}
 				break;
 
-				case ChangePicture.XmlTag:
+				case ChangePicture.Tag:
 				{
 					Action = new ChangePicture();
 				}
 				break;
 
-				case ChangeText.XmlTag:
+				case ChangeText.Tag:
 				{
 					Action = new ChangeText();
 				}
 				break;
 
-				case DisableChoice.XmlTag:
+				case DisableChoice.Tag:
 				{
 					Action = new DisableChoice();
 				}
 				break;
 
-				case EnableChoice.XmlTag:
+				case EnableChoice.Tag:
 				{
 					Action = new EnableChoice();
 				}
 				break;
 
-				case EndChoice.XmlTag:
+				case EndChoice.Tag:
 				{
 					Action = new EndChoice();
 				}
 				break;
 
-				case EndDialog.XmlTag:
+				case EndDialog.Tag:
 				{
 					Action = new EndDialog();
 				}
 				break;
 
-				case GiveExperience.XmlTag:
+				case GiveExperience.Tag:
 				{
 					Action = new GiveExperience();
 				}
 				break;
 
-				case GiveItem.XmlTag:
+				case GiveItem.Tag:
 				{
 					Action = new GiveItem();
 				}
 				break;
 
-				case Healing.XmlTag:
+				case Healing.Tag:
 				{
 					Action = new Healing();
 				}
 				break;
 
-				case JoinCharacter.XmlTag:
+				case JoinCharacter.Tag:
 				{
 					Action = new JoinCharacter();
 				}
 				break;
 
-				case PlaySound.XmlTag:
+				case PlaySound.Tag:
 				{
 					Action = new PlaySound();
 				}
 				break;
 
-				case SetTo.XmlTag:
+				case SetTo.Tag:
 				{
 					Action = new SetTo();
 				}
 				break;
 
-				case Teleport.XmlTag:
+				case Teleport.Tag:
 				{
 					Action = new Teleport();
 				}
 				break;
 
-				case ToggleTarget.XmlTag:
+				case ToggleTarget.Tag:
 				{
 					Action = new ToggleTarget();
 				}
 				break;
 
-				case DisplayMessage.XmlTag:
+				case DisplayMessage.Tag:
 				{
 					Action = new DisplayMessage();
 				}

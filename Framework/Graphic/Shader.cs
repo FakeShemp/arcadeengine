@@ -99,6 +99,8 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		~Shader()
 		{
+			if (!IsDisposed)
+				System.Windows.Forms.MessageBox.Show("Shader : Call Dispose() !!");
 		//	throw new Exception("Shader : Call Dispose() !!");
 		}
 

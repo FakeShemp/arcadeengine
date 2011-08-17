@@ -7,19 +7,7 @@
 		/// </summary>
 		private System.ComponentModel.IContainer components = null;
 
-		/// <summary> 
-		/// Nettoyage des ressources utilisées.
-		/// </summary>
-		/// <param name="disposing">true si les ressources managées doivent être supprimées ; sinon, false.</param>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && (components != null))
-			{
-				components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
-
+	
 		#region Code généré par le Concepteur de composants
 
 		/// <summary> 
@@ -1030,7 +1018,6 @@
 			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Name = "MonsterControl";
 			this.Size = new System.Drawing.Size(500, 473);
-			this.Load += new System.EventHandler(this.MonsterControl_Load);
 			this.PocketGroupBox.ResumeLayout(false);
 			this.PocketGroupBox.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.XPRewardBox)).EndInit();

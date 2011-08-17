@@ -17,7 +17,7 @@ namespace DungeonEye.Script.Actions
 		public ChangeText()
 		{
 
-			Name = XmlTag;
+			Name = Tag;
 		}
 
 
@@ -63,7 +63,7 @@ namespace DungeonEye.Script.Actions
 		/// <summary>
 		/// 
 		/// </summary>
-		public const string XmlTag = "ChangeText";
+		public const string Tag = "ChangeText";
 
 
 

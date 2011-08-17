@@ -424,7 +424,7 @@ namespace DungeonEye.Forms
 								SpriteBatch.DrawLine(
 									new Point(from[(int) side].X + offset.X, from[(int) side].Y + offset.Y),
 									new Point(to[(int) side].X + offset.X,   to[(int) side].Y + offset.Y),
-									Color.Red);
+									Color.LightGreen);
 							}
 						}
 					}

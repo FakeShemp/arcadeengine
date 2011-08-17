@@ -46,16 +46,28 @@ namespace DungeonEye.Forms
 
 
 		/// <summary>
+		/// Clean up any resources being used.
+		/// </summary>
+		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+		protected override void Dispose(bool disposing)
+		{
+			MonsterBox.Dispose();
+
+			if (disposing && (components != null))
+			{
+				components.Dispose();
+			}
+			base.Dispose(disposing);
+		}
+		
+		
+		/// <summary>
 		/// Sets the monster to edit
 		/// </summary>
 		/// <param name="monster">Monster handle</param>
 		public void SetMonster(Monster monster)
 		{
-			if (monster == null)
-				return;
-
-			MonsterBox.Monster = monster;
-			Monster = monster;
+			MonsterBox.SetMonster(monster);
 		}
 
 
@@ -64,8 +76,7 @@ namespace DungeonEye.Forms
 		/// </summary>
 		private void ApplyMonster()
 		{
-			Monster.Load(ResourceManager.GetAsset<Monster>((string)MonsterModelsBox.SelectedItem));
-			MonsterBox.Monster = Monster;
+			MonsterBox.SetMonster(ResourceManager.CreateAsset<Monster>((string)MonsterModelsBox.SelectedItem));
 		}
 
 
@@ -79,6 +90,8 @@ namespace DungeonEye.Forms
 		private void MonsterEditorControl_Load(object sender, EventArgs e)
 		{
 			MonsterModelsBox.Items.AddRange(ResourceManager.GetAssets<Monster>().ToArray());
+
+	//		SetMonster(Monster);
 		}
 
 
@@ -115,7 +128,13 @@ namespace DungeonEye.Forms
 		/// <summary>
 		/// Monster handle
 		/// </summary>
-		Monster Monster;
+		public Monster Monster
+		{
+			get
+			{
+				return MonsterBox.Monster;
+			}
+		}
 
 		#endregion
 

@@ -40,7 +40,7 @@ namespace DungeonEye.Script.Actions
 		/// </summary>
 		public SetTo()
 		{
-			Name = XmlTag;
+			Name = Tag;
 			Square = new Square(null);
 		}
 
@@ -77,7 +77,7 @@ namespace DungeonEye.Script.Actions
 		/// <returns></returns>
 		public override bool Load(XmlNode xml)
 		{
-			if (xml == null || xml.Name != XmlTag)
+			if (xml == null || xml.Name != Tag)
 				return false;
 
 			foreach (XmlNode node in xml)
@@ -115,9 +115,10 @@ namespace DungeonEye.Script.Actions
 				return false;
 
 
-			writer.WriteStartElement(XmlTag);
+			writer.WriteStartElement(Tag);
 
-			Square.Save(writer);
+			if (Square != null)
+				Square.Save(writer);
 
 			base.Save(writer);
 
@@ -135,7 +136,7 @@ namespace DungeonEye.Script.Actions
 		/// <summary>
 		/// XML Tag
 		/// </summary>
-		public const string XmlTag = "SetTo";
+		public const string Tag = "SetTo";
 
 
 		/// <summary>

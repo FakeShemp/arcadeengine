@@ -40,7 +40,7 @@ namespace DungeonEye.Script.Actions
 		/// </summary>
 		public ActivateTarget()
 		{
-			Name = XmlTag;
+			Name = Tag;
 		}
 
 
@@ -90,7 +90,7 @@ namespace DungeonEye.Script.Actions
 		/// <returns></returns>
 		public override bool Load(XmlNode xml)
 		{
-			if (xml == null || xml.Name != XmlTag)
+			if (xml == null || xml.Name != Tag)
 				return false;
 
 			foreach (XmlNode node in xml)
@@ -121,7 +121,7 @@ namespace DungeonEye.Script.Actions
 				return false;
 
 
-			writer.WriteStartElement(XmlTag);
+			writer.WriteStartElement(Tag);
 
 			base.Save(writer);
 
@@ -139,7 +139,7 @@ namespace DungeonEye.Script.Actions
 		/// <summary>
 		/// 
 		/// </summary>
-		public const string XmlTag = "ActivateTarget";
+		public const string Tag = "ActivateTarget";
 
 
 		#endregion

@@ -16,7 +16,7 @@ namespace DungeonEye.Script.Actions
 		/// </summary>
 		public PlaySound()
 		{
-			Name = XmlTag;
+			Name = Tag;
 		}
 
 
@@ -63,7 +63,7 @@ namespace DungeonEye.Script.Actions
 		/// <summary>
 		/// 
 		/// </summary>
-		public const string XmlTag = "PlaySound";
+		public const string Tag = "PlaySound";
 
 
 		#endregion

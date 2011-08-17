@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.DoneBox = new System.Windows.Forms.Button();
-			this.monsterEditorControl1 = new DungeonEye.Forms.MonsterEditorControl();
+			this.MonsterBox = new DungeonEye.Forms.MonsterEditorControl();
 			this.SuspendLayout();
 			// 
 			// DoneBox
@@ -43,23 +43,23 @@
 			this.DoneBox.Text = "Done";
 			this.DoneBox.UseVisualStyleBackColor = true;
 			// 
-			// monsterEditorControl1
+			// MonsterBox
 			// 
-			this.monsterEditorControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.MonsterBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.monsterEditorControl1.Location = new System.Drawing.Point(4, 6);
-			this.monsterEditorControl1.MinimumSize = new System.Drawing.Size(800, 500);
-			this.monsterEditorControl1.Name = "monsterEditorControl1";
-			this.monsterEditorControl1.Size = new System.Drawing.Size(854, 538);
-			this.monsterEditorControl1.TabIndex = 2;
+			this.MonsterBox.Location = new System.Drawing.Point(4, 6);
+			this.MonsterBox.MinimumSize = new System.Drawing.Size(800, 500);
+			this.MonsterBox.Name = "MonsterBox";
+			this.MonsterBox.Size = new System.Drawing.Size(854, 538);
+			this.MonsterBox.TabIndex = 2;
 			// 
 			// MonsterEditorForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(870, 584);
-			this.Controls.Add(this.monsterEditorControl1);
+			this.Controls.Add(this.MonsterBox);
 			this.Controls.Add(this.DoneBox);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
 			this.KeyPreview = true;
@@ -72,7 +72,6 @@
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Monster editor wizard";
-			this.Load += new System.EventHandler(this.MonsterEditorForm_Load);
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MonsterEditorForm_KeyDown);
 			this.ResumeLayout(false);
 
@@ -81,6 +80,6 @@
 		#endregion
 
 		private System.Windows.Forms.Button DoneBox;
-		private MonsterEditorControl monsterEditorControl1;
+		private MonsterEditorControl MonsterBox;
 	}
 }
