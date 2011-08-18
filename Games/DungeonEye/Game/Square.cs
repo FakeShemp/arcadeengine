@@ -158,6 +158,15 @@ namespace DungeonEye
 		/// <param name="time"></param>
 		public void Update(GameTime time)
 		{
+
+			// Count the number of monster
+			MonsterCount = 0;
+			if (Monsters[0] != null) MonsterCount++;
+			if (Monsters[1] != null) MonsterCount++;
+			if (Monsters[2] != null) MonsterCount++;
+			if (Monsters[3] != null) MonsterCount++;
+
+
 			// Update monsters
 			if (MonsterCount > 0)
 				for (int i = 0; i < 4; i++)
@@ -918,17 +927,19 @@ namespace DungeonEye
 		/// </summary>
 		public int MonsterCount
 		{
-			get
-			{
-				int count = 0;
+			//get
+			//{
+			//    int count = 0;
 
-				if (Monsters[0] != null) count++;
-				if (Monsters[1] != null) count++;
-				if (Monsters[2] != null) count++;
-				if (Monsters[3] != null) count++;
+			//    if (Monsters[0] != null) count++;
+			//    if (Monsters[1] != null) count++;
+			//    if (Monsters[2] != null) count++;
+			//    if (Monsters[3] != null) count++;
 
-				return count;
-			}
+			//    return count;
+			//}
+			get;
+			private set;
 		}
 
 
