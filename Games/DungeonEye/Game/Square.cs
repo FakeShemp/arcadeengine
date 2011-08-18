@@ -628,6 +628,9 @@ namespace DungeonEye
 			if (xml == null || xml.Name != Tag)
 				return false;
 
+			// A little speedup
+			string[] cardinalnames = Enum.GetNames(typeof(CardinalPoint));
+
 			foreach (XmlNode node in xml)
 			{
 				if (node.NodeType == XmlNodeType.Comment)
@@ -680,8 +683,10 @@ namespace DungeonEye
 
 					case "decoration":
 					{
-						foreach (CardinalPoint point in Enum.GetValues(typeof(CardinalPoint)))
-							Decorations[(int)point] = int.Parse(node.Attributes[point.ToString()].Value);
+						Decorations[0] = int.Parse(node.Attributes[cardinalnames[0]].Value);
+						Decorations[1] = int.Parse(node.Attributes[cardinalnames[1]].Value);
+						Decorations[2] = int.Parse(node.Attributes[cardinalnames[2]].Value);
+						Decorations[3] = int.Parse(node.Attributes[cardinalnames[3]].Value);
 					}
 					break;
 
