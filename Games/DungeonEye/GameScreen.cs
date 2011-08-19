@@ -121,8 +121,12 @@ namespace DungeonEye
 				GameScreen.Dungeon.Dispose();
 			GameScreen.Dungeon = null;
 
-			Team.Dispose();
-			SpellBook.Dispose();
+			if (Team != null)
+				Team.Dispose();
+			Team = null;
+
+			if (SpellBook != null)
+				SpellBook.Dispose();
 			SpellBook = null;
 
 			GameMessage.Dispose();
@@ -146,8 +150,12 @@ namespace DungeonEye
 				Batch.Dispose();
 			Batch = null;
 
-
+			if (Dialog != null)
+				Dialog.Dispose();
 			Dialog = null;
+
+			if (InputScheme != null)
+				InputScheme.Dispose();
 			InputScheme = null;
 		}
 

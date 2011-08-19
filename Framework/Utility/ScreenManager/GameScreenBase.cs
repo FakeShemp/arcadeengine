@@ -186,6 +186,7 @@ namespace ArcEngine.Utility.ScreenManager
 		/// </summary>
 		public virtual void OnLeave()
 		{
+			ScreenState = ScreenState.Leaving;
 		}
 
 
@@ -194,6 +195,16 @@ namespace ArcEngine.Utility.ScreenManager
 		/// </summary>
 		public virtual void OnEnter()
 		{
+			ScreenState = ScreenState.Entering;
+		}
+
+
+		/// <summary>
+		/// Screen is closing
+		/// </summary>
+		public virtual void OnClosing()
+		{
+			ScreenState = ScreenState.Closing;
 		}
 
 		#endregion
@@ -341,6 +352,12 @@ namespace ArcEngine.Utility.ScreenManager
 		/// Screen is hidden
 		/// </summary>
 		Hidden,
+
+
+		/// <summary>
+		/// Screen is closing
+		/// </summary>
+		Closing,
 	}
 
 

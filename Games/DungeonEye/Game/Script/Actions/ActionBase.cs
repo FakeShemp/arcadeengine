@@ -32,7 +32,7 @@ namespace DungeonEye.Script.Actions
 	/// <summary>
 	/// Base class for actions in scripts
 	/// </summary>
-	public class ActionBase
+	public class ActionBase : IDisposable
 	{
 		/// <summary>
 		/// 
@@ -41,6 +41,15 @@ namespace DungeonEye.Script.Actions
 		{
 
 		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public virtual void Dispose()
+		{
+		}
+
 
 		/// <summary>
 		/// Run the script

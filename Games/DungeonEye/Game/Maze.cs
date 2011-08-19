@@ -205,7 +205,8 @@ namespace DungeonEye
 		/// </summary>
 		public void Update(GameTime time)
 		{
-			// Update monsters
+			// TODO: URGENT TOP PRIORITY Update squares
+			// Remove this lines (glouton cpu).
 			foreach (List<Square> list in Squares)
 				foreach (Square square in list)
 				{

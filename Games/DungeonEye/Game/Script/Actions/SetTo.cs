@@ -46,6 +46,19 @@ namespace DungeonEye.Script.Actions
 
 
 		/// <summary>
+		/// 
+		/// </summary>
+		public override void Dispose()
+		{
+			if (Square != null)
+				Square.Dispose();
+			Square = null;
+
+			base.Dispose();
+		}
+
+
+		/// <summary>
 		/// Runs the action
 		/// </summary>
 		/// <returns>True on success</returns>

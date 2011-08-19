@@ -63,10 +63,8 @@ namespace DungeonEye
 		public override void Dispose()
 		{
 			if (Anim != null)
-			{
 				Anim.Dispose();
-				Anim = null;
-			}
+			Anim = null;
 		}
 
 		/// <summary>

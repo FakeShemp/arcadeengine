@@ -104,6 +104,12 @@ namespace DungeonEye
 			if (Batch != null)
 				Batch.Dispose();
 			Batch = null;
+
+			StringTable.Dispose();
+			StringTable = null;
+
+			Buttons.Clear();
+			Buttons = null;
 		}
 
 
@@ -168,8 +174,11 @@ namespace DungeonEye
 		/// </summary>
 		public override void OnLeave()
 		{
+			base.OnLeave();
+
 			if (Theme != null)
 				Theme.Stop();
+
 		}
 
 
@@ -178,6 +187,8 @@ namespace DungeonEye
 		/// </summary>
 		public override void OnEnter()
 		{
+			base.OnEnter();
+
 			if (Theme != null)
 				Theme.Play();
 		}

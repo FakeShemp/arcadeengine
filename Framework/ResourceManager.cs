@@ -89,7 +89,7 @@ namespace ArcEngine
 				Trace.WriteLine("{0} TileSet remaining...", TileSet.InUse.Count);
 				foreach (TileSet ts in TileSet.InUse)
 				{
-					Trace.WriteLine("Tileset \"" + ts.Name + "\" (" + ts.Count + " lock(s)).");
+					Trace.WriteLine(" -> \"" + ts.Name + "\"");
 				}
 			}
 

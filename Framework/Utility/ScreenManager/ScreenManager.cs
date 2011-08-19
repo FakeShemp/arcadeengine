@@ -116,7 +116,6 @@ namespace ArcEngine.Utility.ScreenManager
 			{
 				GameScreenBase current = Screens[Screens.Count - 1];
 				current.OnLeave();
-
 			}
 
 			Screens.Add(screen);

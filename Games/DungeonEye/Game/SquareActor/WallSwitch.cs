@@ -40,13 +40,28 @@ namespace DungeonEye
 		/// Constructor
 		/// </summary>
 		/// <param name="square">Parent square handle</param>
-		public WallSwitch(Square square) : base(square)
+		public WallSwitch(Square square)
+			: base(square)
 		{
 			ActivatedDecoration = -1;
 			DeactivatedDecoration = -1;
 			Scripts = new List<WallSwitchScript>();
 			Reusable = true;
 			WasUsed = false;
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public override void Dispose()
+		{
+
+			foreach (WallSwitchScript script in Scripts)
+				script.Dispose();
+			Scripts = null;
+
+			base.Dispose();
 		}
 
 

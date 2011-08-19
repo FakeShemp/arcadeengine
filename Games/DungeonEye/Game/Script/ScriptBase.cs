@@ -30,7 +30,7 @@ namespace DungeonEye.Script
 	/// <summary>
 	/// Abstract base class for event script actions
 	/// </summary>
-	public abstract class ScriptBase
+	public abstract class ScriptBase : IDisposable
 	{
 		/// <summary>
 		/// Constructor
@@ -39,7 +39,19 @@ namespace DungeonEye.Script
 		{
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public virtual void Dispose()
+		{
+			if (Action != null)
+				Action.Dispose();
+			Action = null;
+		}
 	
+
+
 		/// <summary>
 		/// Run the script
 		/// </summary>
