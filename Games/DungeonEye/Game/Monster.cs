@@ -155,9 +155,7 @@ namespace DungeonEye
 			{
 				// Remove from previous location
 				if (Square != null)
-				{
 					Square.Monsters[(int)position] = null;
-				}
 
 				Square = square;
 
@@ -188,12 +186,18 @@ namespace DungeonEye
 
 		/// <summary>
 		/// Teleport the monster to a given location
-		/// but keep the same square position
 		/// </summary>
 		/// <param name="square">Destination square</param>
-		public void Teleport(Square square)
+		/// <returns>True on success</returns>
+		public bool Teleport(Square square)
 		{
-			Teleport(square, Position);
+			if (!Teleport(square, SquarePosition.NorthWest))
+				if (!Teleport(square, SquarePosition.NorthEast))
+					if (!Teleport(square, SquarePosition.SouthEast))
+						if (!Teleport(square, SquarePosition.SouthWest))
+							return false;
+
+			return true;
 		}
 
 
@@ -201,9 +205,20 @@ namespace DungeonEye
 		/// Teleport the monster to a given location
 		/// </summary>
 		/// <param name="target">Destination</param>
-		public void Teleport(DungeonLocation target)
+		/// <returns>True on success</returns>
+		public bool Teleport(DungeonLocation target)
 		{
-			//Teleport(target.Square, target.Position);
+			if (target == null)
+				return false;
+
+			if (GameScreen.Dungeon == null)
+				return false;
+
+			Maze maze = GameScreen.Dungeon.GetMaze(target.Maze);
+			if (maze == null)
+				return false;
+
+			return Teleport(maze.GetSquare(target.Coordinate), target.Position);
 		}
 
 
@@ -284,18 +299,6 @@ namespace DungeonEye
 
 			// Last time updated
 			LastUpdate = DateTime.Now;
-
-
-			//if (!string.IsNullOrEmpty(ScriptName) && !string.IsNullOrEmpty(InterfaceName))
-			//{
-			//    Script script = ResourceManager.CreateAsset<Script>(ScriptName);
-			//    script.Compile();
-
-			//    Interface = script.CreateInstance<IMonster>(InterfaceName);
-			//}
-
-
-			//StateManager.SetState(new IdleState(this));
 		}
 
 
@@ -1605,6 +1608,7 @@ namespace DungeonEye
 			get;
 			set;
 		}
+
 
 		/// <summary>
 		/// Gets or sets if the monster uses of the drain spell

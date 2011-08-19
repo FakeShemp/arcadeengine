@@ -1,7 +1,10 @@
 ﻿CREDITS 
 
+Project leader : Iliak
+
 Code :
-Iliak - (Adrien Hémery) www.mimicprod.net
+Lead : Iliak - (Adrien Hémery) www.mimicprod.net
+Benoît Silliard - 
 
 Graphics :
 Romain Shlin - 

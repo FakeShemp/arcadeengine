@@ -52,8 +52,8 @@ namespace DungeonEye.Forms
 			TargetBox.SetTarget(script.Target);
 
 			MonsterNameBox.Items.AddRange(ResourceManager.GetAssets<Monster>().ToArray());
-			if (!string.IsNullOrEmpty(SpawnScript.Monster))
-				MonsterNameBox.SelectedItem = SpawnScript.Monster;
+			if (!string.IsNullOrEmpty(SpawnScript.MonsterName))
+				MonsterNameBox.SelectedItem = SpawnScript.MonsterName;
 		}
 
 
@@ -81,7 +81,7 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void MonsterNameBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			((SpawnMonster)Action).Monster = (string) MonsterNameBox.SelectedItem;
+			((SpawnMonster)Action).MonsterName = (string) MonsterNameBox.SelectedItem;
 		}
 
 		#endregion

@@ -51,7 +51,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="maze">Maze handle</param>
+		/// <param name="maze">Parent maze handle</param>
 		public Square(Maze maze)
 		{
 			Maze = maze;
@@ -447,6 +447,51 @@ namespace DungeonEye
 
 
 		#region Monsters
+
+		/// <summary>
+		/// Adds a monster to the square
+		/// </summary>
+		/// <param name="monster">Monster handle</param>
+		/// <returns>True on success</returns>
+		public bool AddMonster(Monster monster)
+		{
+			return false;
+
+			if (monster == null)
+				return false;
+
+			// Find the first free slot
+			for (int i = 0; i < 4; i++)
+				if (Monsters[i] == null)
+				{
+					Monsters[i] = monster;
+					monster.Teleport(this);
+					monster.OnSpawn();
+					return true;
+				}
+
+
+			return false;
+		}
+
+
+		/// <summary>
+		/// Adds a monster to the square
+		/// </summary>
+		/// <param name="monster">Monster handle</param>
+		/// <param name="position">Square position</param>
+		/// <returns>True on success</returns>
+		public bool AddMonster(Monster monster, SquarePosition position)
+		{
+			return false;
+
+			if (position == SquarePosition.Center || GetMonster(position) != null || monster == null)
+				return false;
+
+			Monsters[(int)position] = monster;
+
+			return true;
+		}
 
 
 		/// <summary>

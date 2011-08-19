@@ -51,16 +51,16 @@ namespace DungeonEye.Script.Actions
 		/// <returns></returns>
 		public override bool Run()
 		{
-			if (Target == null)
+			if (Target == null || string.IsNullOrEmpty(MonsterName))
 				return false;
 
-			// Get the target
-			Square target = Target.GetSquare(GameScreen.Dungeon);
-			if (target == null)
+			// Spawn the monster
+			Monster monster = ResourceManager.CreateAsset<Monster>(MonsterName);
+			if (monster == null)
 				return false;
 
-			//TODO: Spawn the monster
-			
+			monster.Teleport(Target);
+			monster.OnSpawn();
 
 			return true;
 		}
@@ -72,7 +72,7 @@ namespace DungeonEye.Script.Actions
 		/// <returns></returns>
 		public override string ToString()
 		{
-			string str = "Spawn monster \"" + Monster + "\" at ";
+			string str = "Spawn monster \"" + MonsterName + "\" at ";
 
 			if (Target != null)
 				str += Target.ToStringShort();
@@ -94,7 +94,7 @@ namespace DungeonEye.Script.Actions
 				return false;
 
 			if (xml.Attributes["name"] != null)
-				Monster = xml.Attributes["name"].Value;
+				MonsterName = xml.Attributes["name"].Value;
 
 			base.Load(xml.FirstChild);
 
@@ -115,7 +115,7 @@ namespace DungeonEye.Script.Actions
 
 			writer.WriteStartElement(Tag);
 
-			writer.WriteAttributeString("name", Monster);
+			writer.WriteAttributeString("name", MonsterName);
 
 
 			base.Save(writer);
@@ -142,7 +142,7 @@ namespace DungeonEye.Script.Actions
 		/// <summary>
 		/// Monster name
 		/// </summary>
-		public string Monster
+		public string MonsterName
 		{
 			get;
 			set;
