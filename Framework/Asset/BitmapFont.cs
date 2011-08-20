@@ -66,6 +66,7 @@ namespace ArcEngine.Asset
 		/// </summary>
 		~BitmapFont()
 		{
+			MessageBox.Show("[BitmapFont] : Call Dispose() !!");
 			Trace.WriteLine("BitmapFont : Call Dispose() !!");
 		}
 

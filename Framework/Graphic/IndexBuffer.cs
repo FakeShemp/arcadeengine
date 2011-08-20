@@ -35,7 +35,8 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		~IndexBuffer()
 		{
-			throw new Exception("IndexBuffer : Call Dispose() !!");
+			System.Windows.Forms.MessageBox.Show("[IndexBuffer] : Call Dispose() !!");
+			//throw new Exception("IndexBuffer : Call Dispose() !!");
 		}
 
 

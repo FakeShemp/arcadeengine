@@ -57,7 +57,8 @@ namespace ArcEngine.Asset
 		~Layout()
 		{
 			if (Texture != null)
-				throw new Exception("Layout : Call Dispose() !!");
+				System.Windows.Forms.MessageBox.Show("[Layout] : Call Dispose() !!");
+				//throw new Exception("Layout : Call Dispose() !!");
 
 		}
 

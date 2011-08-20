@@ -46,9 +46,9 @@ namespace DungeonEye.Script.Actions
 
 
 		/// <summary>
-		/// 
+		/// Runs the script
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>True on success</returns>
 		public override bool Run()
 		{
 			if (Target == null || string.IsNullOrEmpty(MonsterName))

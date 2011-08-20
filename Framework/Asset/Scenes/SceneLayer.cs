@@ -11,7 +11,7 @@ namespace ArcEngine.Asset
 	/// <summary>
 	/// Class representing a layer in an <see cref="Scene"/>
 	/// </summary>
-	public class SceneLayer : IComparable<SceneLayer>
+	public class SceneLayer : IComparable<SceneLayer>, IDisposable
 	{
 
 		/// <summary>
@@ -22,6 +22,30 @@ namespace ArcEngine.Asset
 
 			Animation = anim;
 
+		}
+
+
+		/// <summary>
+		/// Destructor
+		/// </summary>
+		~SceneLayer()
+		{
+			if (!IsDisposed)
+				System.Windows.Forms.MessageBox.Show("[SceneLayer] : Call Dispose() !!");
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public void Dispose()
+		{
+			if (Animation != null)
+				Animation.Dispose();
+			Animation = null;
+
+			IsDisposed = true;
+			GC.SuppressFinalize(this);
 		}
 
 
@@ -340,6 +364,16 @@ namespace ArcEngine.Asset
 
 				return KeyFrames[KeyFrames.Count - 1];
 			}
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public bool IsDisposed
+		{
+			get;
+			private set;
 		}
 
 		#endregion

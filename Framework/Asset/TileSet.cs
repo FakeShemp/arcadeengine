@@ -76,6 +76,16 @@ namespace ArcEngine.Asset
 			GC.SuppressFinalize(this);
 		}
 
+
+		/// <summary>
+		/// Destructor
+		/// </summary>
+		~TileSet()
+		{
+			System.Windows.Forms.MessageBox.Show("[TileSet] : Call Dispose() !!");
+
+		}
+
 		#endregion
 
 

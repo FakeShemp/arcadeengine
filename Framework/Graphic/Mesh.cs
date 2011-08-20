@@ -63,6 +63,11 @@ namespace ArcEngine.Graphic
 		}
 
 
+		~Mesh()
+		{
+			System.Windows.Forms.MessageBox.Show("[Mesh] : Call Dispose() !!");
+		}
+
 
 		/// <summary>
 		/// Update vertices
@@ -106,6 +111,8 @@ namespace ArcEngine.Graphic
 			if (Buffer != null)
 				Buffer.Dispose();
 			Buffer = null;
+
+			GC.SuppressFinalize(this);
 		}
 
 

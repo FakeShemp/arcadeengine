@@ -47,6 +47,12 @@ namespace ArcEngine.Asset
 		}
 
 
+		~Scene()
+		{
+			if (!IsDisposed)
+				System.Windows.Forms.MessageBox.Show("[Scene] : Call Dispose() !!");
+		}
+
 		/// <summary>
 		/// Initializes the asset
 		/// </summary>
@@ -71,6 +77,7 @@ namespace ArcEngine.Asset
 			Font = null;
 
 			IsDisposed = true;
+			GC.SuppressFinalize(this);
 		}
 
 

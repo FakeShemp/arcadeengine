@@ -100,8 +100,8 @@ namespace ArcEngine.Graphic
 		~Shader()
 		{
 			if (!IsDisposed)
-				System.Windows.Forms.MessageBox.Show("Shader : Call Dispose() !!");
-		//	throw new Exception("Shader : Call Dispose() !!");
+				System.Windows.Forms.MessageBox.Show("[Shader] : Call Dispose() Id=" + ProgramID.ToString() + " !!");
+			//	throw new Exception("Shader : Call Dispose() !!");
 		}
 
 

@@ -78,7 +78,8 @@ namespace ArcEngine.Audio
 		~AudioStream()
 		{
 			if (!IsDisposed)
-				throw new Exception ("[AudioStream] : Call Dispose() !!");
+				System.Windows.Forms.MessageBox.Show("[AudioStream] : Call Dispose() !!");
+				//throw new Exception ("[AudioStream] : Call Dispose() !!");
 		}
 
 	

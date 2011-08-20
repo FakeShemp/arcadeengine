@@ -64,6 +64,14 @@ namespace ArcEngine.Asset
 
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		~Animation()
+		{
+			if (!IsDisposed)
+				System.Windows.Forms.MessageBox.Show("[Animation] : Call Dispose() !!");
+		}
 
 
 		/// <summary>
@@ -288,6 +296,8 @@ namespace ArcEngine.Asset
 			TileSet = null;
 
 			IsDisposed = true;
+
+			GC.SuppressFinalize(this);
 		}
 
 

@@ -89,7 +89,8 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		~FrameBuffer()
 		{
-			throw new Exception("FrameBuffer : Call Dispose() !!");
+			System.Windows.Forms.MessageBox.Show("[FrameBuffer] : Call Dispose() !!");
+			//throw new Exception("FrameBuffer : Call Dispose() !!");
 		}
 
 		

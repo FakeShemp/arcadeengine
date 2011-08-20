@@ -66,7 +66,8 @@ namespace ArcEngine.Audio
 		~AudioSample()
 		{
 			if (!IsDisposed)
-				throw new Exception("[AudioSample] : Call Dispose() !!");
+				System.Windows.Forms.MessageBox.Show("[AudioSample] : Call Dispose() !!");
+				//throw new Exception("[AudioSample] : Call Dispose() !!");
 		}
 
 

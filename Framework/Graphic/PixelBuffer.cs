@@ -46,7 +46,8 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		~PixelBuffer()
 		{
-			throw new Exception("PixelBuffer : Handle (id=" + Handle.ToString() + ") != -1, Call Dispose() !!");
+			System.Windows.Forms.MessageBox.Show("[PixelBuffer] : Call Dispose() Id=" + Handle.ToString() + " !!");
+			//throw new Exception("PixelBuffer : Handle (id=" + Handle.ToString() + ") != -1, Call Dispose() !!");
 		}
 
 
