@@ -59,7 +59,7 @@ namespace ArcEngine.Interface
 
 
 		/// <summary>
-		/// Name of the asset
+		/// Name of the asset used when creating it with ResourceManager
 		/// </summary>
 		string Name
 		{

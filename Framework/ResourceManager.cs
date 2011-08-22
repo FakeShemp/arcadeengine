@@ -93,7 +93,7 @@ namespace ArcEngine
 				}
 			}
 
-			ClearSharedAssets();
+			EraseSharedAssets();
 
 
 			foreach (StorageBase storage in StorageList)
@@ -591,21 +591,21 @@ namespace ArcEngine
 				foreach (RegisteredAsset ra in RegisteredAssets)
 				{
 					if (ra.Type == typeof(T))
-						ra.ClearShared();
+						ra.EraseShared();
 				}
 			}
 		}
 
 
 		/// <summary>
-		/// Removes all shared assets
+		/// Erases all shared assets
 		/// </summary>
-		static public void ClearSharedAssets()
+		static public void EraseSharedAssets()
 		{
 			lock (BinaryLock)
 			{
 				foreach (RegisteredAsset ra in RegisteredAssets)
-					ra.ClearShared();
+					ra.EraseShared();
 			}
 		}
 

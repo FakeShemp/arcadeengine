@@ -75,7 +75,7 @@ namespace ArcEngine
 			if (string.IsNullOrEmpty(name))
 				throw new ArgumentNullException("name");
 
-			AssetEditorBase form = Activator.CreateInstance(Editor, new object[]{ Get(name)}) as AssetEditorBase;
+			AssetEditorBase form = Activator.CreateInstance(Editor, new object[] { Get(name) }) as AssetEditorBase;
 			form.TabText = name + " (" + form.Asset.GetType().Name + ")";
 			return form;
 		}
@@ -249,15 +249,24 @@ namespace ArcEngine
 		/// <summary>
 		/// Adds an asset as Shared
 		/// </summary>
-		/// <param name="name">Name of the asset to register</param>
+		/// <param name="sharename">Share name</param>
 		/// <param name="asset">Asset's handle</param>
-		public void AddShared(string name, IAsset asset)
+		/// <returns>True on success</returns>
+		public bool AddShared(string sharename, IAsset asset)
 		{
-			if (string.IsNullOrEmpty(name) || asset == null)
-				return;
+			if (string.IsNullOrEmpty(sharename) || asset == null)
+				return false;
 
-			Shared[name] = asset;
-			SharedCounter[name] = 0;
+			//if (!string.IsNullOrEmpty(sharename))
+			//{
+			//    Trace.WriteLine("[RegisterAsset] Asset \"" + asset.Name + "\" already shared as \"" + sharename + "\".");
+			//    return false;
+			//}
+
+			Shared[sharename] = asset;
+			SharedCounter[sharename] = 0;
+
+			return true;
 		}
 
 
@@ -269,7 +278,7 @@ namespace ArcEngine
 		/// <returns>Handle to the asset</returns>
 		public IAsset CreateShared(string sharename, string assetname)
 		{
-			if (string.IsNullOrEmpty(sharename) ||string.IsNullOrEmpty(assetname))
+			if (string.IsNullOrEmpty(sharename) || string.IsNullOrEmpty(assetname))
 				return null;
 
 
@@ -326,32 +335,40 @@ namespace ArcEngine
 			if (handle == null)
 				return;
 
-			// Asset not found
-			if (!Shared.ContainsValue(handle))
-				return;
-
-			if (!SharedCounter.ContainsKey(handle.Name))
+			foreach (var pair in Shared)
 			{
-				Trace.WriteDebugLine("[RegisteredAsset] UnlockShared() : Handle asset's name is not shared (\"" + handle.Name + "\" of type \"" + Type.Name + "\") !");
-				return;
+				if (pair.Value == handle)
+				{
+
+
+					//if (!SharedCounter.ContainsKey(ShareName))
+					//{
+					//    Trace.WriteDebugLine("[RegisteredAsset] UnlockShared() : Handle asset's name is not shared (\"" + handle.Name + "\" of type \"" + Type.Name + "\") !");
+					//    return;
+					//}
+
+					SharedCounter[pair.Key]--;
+
+					// No more used, remove it
+					if (SharedCounter[pair.Key] == 0)
+					{
+						Trace.WriteDebugLine("[RegisteredAsset] Flushing asset \"" + handle.Name + "\" of type \"" + Type.Name + "\"");
+						Shared.Remove(pair.Key);
+						handle.Dispose();
+					}
+
+					return;
+				}
 			}
 
-			SharedCounter[handle.Name]--;
 
-			// No more used, remove it
-			if (SharedCounter[handle.Name] == 0)
-			{
-				Trace.WriteDebugLine("[RegisteredAsset] Flushing asset \"" + handle.Name + "\" of type \"" + Type.Name + "\"");
-				Shared.Remove(handle.Name);
-				handle.Dispose();
-			}
 		}
 
 
 		/// <summary>
 		/// Erases all shared assets
 		/// </summary>
-		public void ClearShared()
+		public void EraseShared()
 		{
 			foreach (IAsset asset in Shared.Values)
 			{

@@ -149,7 +149,7 @@ namespace DungeonEye
 		/// </summary>
 		public override void LoadContent()
 		{
-			//ResourceManager.Storages.Add(new BankStorage("data/chargen.bnk", System.IO.FileAccess.Read));
+			Trace.WriteLine("[CharGen] LoadContent()");
 
 			Batch = new SpriteBatch();
 
@@ -179,6 +179,9 @@ namespace DungeonEye
 		/// </summary>
 		public override void UnloadContent()
 		{
+			Trace.WriteLine("[CharGen] UnloadContent()");
+			
+			
 			if (Tileset != null)
 				Tileset.Dispose();
 			Tileset = null;
@@ -316,8 +319,10 @@ namespace DungeonEye
 		{
 			// Go back to the main menu
 			if (Keyboard.IsNewKeyPress(Keys.Escape))
+			{
+				ScreenManager.AddScreen(new MainMenu());
 				ExitScreen();
-
+			}
 
 
 			switch (CurrentState)

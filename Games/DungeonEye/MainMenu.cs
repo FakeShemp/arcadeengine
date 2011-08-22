@@ -51,7 +51,9 @@ namespace DungeonEye
 		/// Load content
 		/// </summary>
 		public override void LoadContent()
-		{			
+		{
+			Trace.WriteLine("[MainMenu] LoadContent()");
+
 			Batch = new SpriteBatch();
 	
 			Tileset = ResourceManager.CreateAsset<TileSet>("Main Menu");
@@ -93,8 +95,7 @@ namespace DungeonEye
 				Tileset.Dispose();
 			Tileset = null;
 
-			if (Font != null)
-				Font.Dispose();
+			ResourceManager.UnlockSharedAsset<BitmapFont>(Font);
 			Font = null;
 
 			if (Theme != null)
@@ -109,7 +110,7 @@ namespace DungeonEye
 			StringTable = null;
 
 			Buttons.Clear();
-			Buttons = null;
+		//	Buttons = null;
 		}
 
 
@@ -148,6 +149,7 @@ namespace DungeonEye
 		{
 			//Theme.Stop();
 			ScreenManager.AddScreen(new CharGen());
+			ExitScreen();
 		}
 
 
@@ -170,7 +172,7 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Leave this game screen
 		/// </summary>
 		public override void OnLeave()
 		{
@@ -183,7 +185,7 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// 
+		/// Enter this gamescreen
 		/// </summary>
 		public override void OnEnter()
 		{
