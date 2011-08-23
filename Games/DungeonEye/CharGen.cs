@@ -17,11 +17,12 @@
 //along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 //
 #endregion
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using System.Xml;
 using ArcEngine;
 using ArcEngine.Asset;
 using ArcEngine.Graphic;
@@ -29,6 +30,8 @@ using ArcEngine.Input;
 using ArcEngine.Storage;
 using ArcEngine.Utility.ScreenManager;
 using DungeonEye.Gui;
+using System.IO;
+using System.Xml.Linq;
 
 namespace DungeonEye
 {
@@ -66,7 +69,7 @@ namespace DungeonEye
 			#region Allowed classes
 
 			AllowedClass = new Dictionary<HeroRace, List<HeroClass>>();
-			AllowedClass.Add(HeroRace.HumanMale | HeroRace.HumanFemale,
+			AllowedClass.Add(HeroRace.Human,
 				new List<HeroClass>()
 				{
 					HeroClass.Fighter,
@@ -77,7 +80,7 @@ namespace DungeonEye
 					HeroClass.Thief,
 				});
 
-			AllowedClass.Add(HeroRace.ElfMale | HeroRace.ElfFemale,
+			AllowedClass.Add(HeroRace.Elf,
 				new List<HeroClass>()
 				{
 					HeroClass.Fighter,
@@ -91,7 +94,7 @@ namespace DungeonEye
 					HeroClass.Thief   | HeroClass.Mage,
 				});
 
-			AllowedClass.Add(HeroRace.HalfElfMale | HeroRace.HalfElfFemale,
+			AllowedClass.Add(HeroRace.HalfElf,
 				new List<HeroClass>()
 				{
 					HeroClass.Fighter,
@@ -109,7 +112,7 @@ namespace DungeonEye
 					HeroClass.Cleric  | HeroClass.Mage
 				});
 
-			AllowedClass.Add(HeroRace.DwarfMale | HeroRace.DwarfFemale,
+			AllowedClass.Add(HeroRace.Dwarf,
 				new List<HeroClass>()
 				{
 					HeroClass.Fighter,
@@ -119,7 +122,7 @@ namespace DungeonEye
 					HeroClass.Fighter | HeroClass.Thief,
 				});
 
-			AllowedClass.Add(HeroRace.GnomeMale | HeroRace.GnomeFemale,
+			AllowedClass.Add(HeroRace.Gnome,
 				new List<HeroClass>()
 				{
 					HeroClass.Fighter,
@@ -130,7 +133,7 @@ namespace DungeonEye
 					HeroClass.Cleric  | HeroClass.Thief,
 				});
 
-			AllowedClass.Add(HeroRace.HalflingMale | HeroRace.HalflingFemale,
+			AllowedClass.Add(HeroRace.Halfling,
 				new List<HeroClass>()
 				{
 					HeroClass.Fighter,
@@ -171,6 +174,45 @@ namespace DungeonEye
 			Anims.Play();
 
 			CurrentState = CharGenStates.SelectHero;
+
+
+
+			// Load name list
+			using (Stream stream = ResourceManager.Load("names.xml"))
+			{
+				if (stream != null)
+				{
+					XmlReader xr = XmlReader.Create(stream);
+					Names = XDocument.Load(xr);
+				}
+			}
+
+		}
+
+
+
+		/// <summary>
+		/// Returns a random name
+		/// </summary>
+		/// <param name="race">Race</param>
+		/// <param name="gender">Gender</param>
+		/// <returns>Random name</returns>
+		string GetRandomName(HeroRace race, HeroGender gender)
+		{
+			if (Names == null)
+				return string.Empty;
+
+			var res = (from name in Names.Descendants("race")
+					   where name.Attribute("name").Value == race.ToString()
+					   select new
+					   {
+						   Entries = name.Element(gender.ToString()).Elements("name")
+					   }).FirstOrDefault();
+
+			if (res == null || res.Entries.Count() == 0)
+				return string.Empty;
+
+			return res.Entries.ElementAt(GameBase.Random.Next(res.Entries.Count() - 1)).Value;
 		}
 
 
@@ -180,8 +222,8 @@ namespace DungeonEye
 		public override void UnloadContent()
 		{
 			Trace.WriteLine("[CharGen] UnloadContent()");
-			
-			
+
+
 			if (Tileset != null)
 				Tileset.Dispose();
 			Tileset = null;
@@ -285,19 +327,19 @@ namespace DungeonEye
 		/// <param name="e"></param>
 		void PlayButton_Selected(object sender, EventArgs e)
 		{
-		    if (Heroes.Any(hero => hero == null)) return;
-            var screen = new GameScreen();
+			if (Heroes.Any(hero => hero == null)) return;
+			var screen = new GameScreen();
 
-            // Generate the team
+			// Generate the team
 			GameSettings.SaveGameName = string.Empty;
 
-            Team gsteam = new Team();
-            for (int i = 0; i < 4; i++)
-                gsteam.AddHero(Heroes[i], (HeroPosition)i);
+			Team gsteam = new Team();
+			for (int i = 0; i < 4; i++)
+				gsteam.AddHero(Heroes[i], (HeroPosition)i);
 
-            screen.NewGame(gsteam);
+			screen.NewGame(gsteam);
 
-            ScreenManager.AddScreen(screen);
+			ScreenManager.AddScreen(screen);
 
 			ExitScreen();
 		}
@@ -360,7 +402,8 @@ namespace DungeonEye
 					{
 						if (new Rectangle(point.X, point.Y, 324, 16).Contains(Mouse.Location) && Mouse.IsNewButtonDown(MouseButtons.Left))
 						{
-							CurrentHero.Race = (HeroRace)i;
+							CurrentHero.Race = (HeroRace) Enum.GetValues(typeof(HeroRace)).GetValue(i / 2);
+							CurrentHero.Gender = (HeroGender)(i % 2);
 							CurrentState = CharGenStates.SelectClass;
 						}
 
@@ -543,7 +586,7 @@ namespace DungeonEye
 						if (new Rectangle(528, 350, 76, 32).Contains(Mouse.Location))
 						{
 							CurrentState = CharGenStates.SelectName;
-							CurrentHero.Name = HeroName.GetNameForHero(CurrentHero);
+							CurrentHero.Name = GetRandomName(CurrentHero.Race, CurrentHero.Gender);
 							Keyboard.KeyDown += new EventHandler<PreviewKeyDownEventArgs>(Keyboard_OnKeyDown);
 						}
 					}
@@ -554,13 +597,13 @@ namespace DungeonEye
 				#region Select name
 				case CharGenStates.SelectName:
 				{
-                    // Back
-                    if (BackButton.Contains(Mouse.Location) && Mouse.IsNewButtonDown(MouseButtons.Left))
-                    {
-                        CurrentState = CharGenStates.Confirm;
-                        Keyboard.KeyDown -= Keyboard_OnKeyDown;
-                    }
-                        
+					// Back
+					if (BackButton.Contains(Mouse.Location) && Mouse.IsNewButtonDown(MouseButtons.Left))
+					{
+						CurrentState = CharGenStates.Confirm;
+						Keyboard.KeyDown -= Keyboard_OnKeyDown;
+					}
+
 				}
 				break;
 				#endregion
@@ -751,8 +794,8 @@ namespace DungeonEye
 					for (int i = 0; i < 4; i++)
 						Batch.DrawTile(Heads, i + FaceOffset, new Point(354 + i * 64, 132));
 					// Back
-                    Batch.DrawTile(Tileset, 3, BackButton.Location);
-                    Batch.DrawTile(Tileset, 12, new Point(BackButton.Location.X + 12, BackButton.Location.Y + 12));
+					Batch.DrawTile(Tileset, 3, BackButton.Location);
+					Batch.DrawTile(Tileset, 12, new Point(BackButton.Location.X + 12, BackButton.Location.Y + 12));
 
 				}
 				break;
@@ -802,9 +845,9 @@ namespace DungeonEye
 					DisplayProperties();
 
 					Batch.DrawTile(Heads, CurrentHero.Head, new Point(438, 132));
-                    // Back
-                    Batch.DrawTile(Tileset, 3, BackButton.Location);
-                    Batch.DrawTile(Tileset, 12, new Point(BackButton.Location.X + 12, BackButton.Location.Y + 12));
+					// Back
+					Batch.DrawTile(Tileset, 3, BackButton.Location);
+					Batch.DrawTile(Tileset, 12, new Point(BackButton.Location.X + 12, BackButton.Location.Y + 12));
 				}
 				break;
 				#endregion
@@ -1057,7 +1100,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Current state
 		/// </summary>
-		CharGenStates CurrentState=CharGenStates.SelectRace;
+		CharGenStates CurrentState = CharGenStates.SelectRace;
 
 
 		/// <summary>
@@ -1106,7 +1149,7 @@ namespace DungeonEye
 		/// <summary>
 		/// Heroes in the team
 		/// </summary>
-		readonly Hero[] Heroes=new Hero[4];
+		readonly Hero[] Heroes = new Hero[4];
 
 
 		/// <summary>
@@ -1175,6 +1218,12 @@ namespace DungeonEye
 		/// Spritebatch
 		/// </summary>
 		SpriteBatch Batch;
+
+
+		/// <summary>
+		/// Names definition
+		/// </summary>
+		XDocument Names;
 
 		#endregion
 	}

@@ -18,7 +18,8 @@
 					<quiver count="24" />
 					<head id="27" />
 					<food value="100" />
-					<race value="HumanMale" />
+					<race value="Human" />
+					<gender value="Male" />
 					<profession>
 						<class name="Fighter" />
 						<xp points="98324" />
@@ -47,7 +48,8 @@
 					<quiver count="0" />
 					<head id="21" />
 					<food value="86" />
-					<race value="DwarfMale" />
+					<race value="Dwarf" />
+					<gender value="Male" />
 					<profession>
 						<class name="Fighter" />
 						<xp points="0" />
@@ -87,7 +89,8 @@
 					<quiver count="0" />
 					<head id="39" />
 					<food value="99" />
-					<race value="ElfFemale" />
+					<race value="Elf" />
+					<gender value="Female" />
 					<profession>
 						<class name="Mage" />
 						<xp points="0" />
@@ -117,7 +120,8 @@
 					<quiver count="0" />
 					<head id="43" />
 					<food value="88" />
-					<race value="HalflingFemale" />
+					<race value="Halfling" />
+					<gender value="Female" />
 					<profession>
 						<class name="Cleric" />
 						<xp points="450010" />

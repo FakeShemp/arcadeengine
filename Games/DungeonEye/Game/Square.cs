@@ -271,10 +271,29 @@ namespace DungeonEye
 		/// <returns>True if the event is processed</returns>
 		public bool OnBash(CardinalPoint side, Item item)
 		{
-			// No decoration on this side
-			int id = GetDecorationId(side);
-			if (id == -1)
-				return false;
+			#region Decoration must change on hack
+			
+			Decoration deco = Maze.GetDecoration(Location, side);
+			if (deco != null && deco.OnHackId != -1)
+			{
+				// If forced decoration, then erase all other decorations
+				if (deco.ForceDisplay)
+				{
+					for (int id = 0; id < 4; id++)
+					{
+						if (Decorations[id] != -1)
+							Decorations[id] = deco.OnHackId;
+					}
+				}
+
+				// change only this decoration
+				else
+					Decorations[(int)side] = deco.OnHackId;
+
+				return true;
+			}
+
+			#endregion
 
 			GameMessage.AddMessage("Square: OnBash()");
 			return false;

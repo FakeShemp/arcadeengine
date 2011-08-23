@@ -110,6 +110,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="WeifenLuo.WinFormsUI.Docking, Version=2.3.1.24483, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Framework\Libraries\DockPanel\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
@@ -129,7 +130,6 @@
       <DependentUpon>MonsterEditorControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Game\Gui\CampWindows\SaveGameWindow.cs" />
-    <Compile Include="Game\HeroName.cs" />
     <Compile Include="Game\Script\Actions\SpawnMonster.cs" />
     <Compile Include="SaveGameSlot.cs" />
     <Compile Include="Forms\AbilityControl.cs">
@@ -968,7 +968,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Generation\" />
     <Folder Include="Intro\" />
     <Folder Include="Option\" />
   </ItemGroup>

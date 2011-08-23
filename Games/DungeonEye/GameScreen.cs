@@ -695,7 +695,7 @@ namespace DungeonEye
 
 			batch.DrawString(InventoryFont, new Point(366, 110), GameColors.Black, txt);
 			batch.DrawString(InventoryFont, new Point(366, 124), GameColors.Black, Team.SelectedHero.Alignment.ToString());
-			batch.DrawString(InventoryFont, new Point(366, 138), GameColors.Black, Team.SelectedHero.Race.ToString());
+			batch.DrawString(InventoryFont, new Point(366, 138), GameColors.Black, Team.SelectedHero.Race.ToString() + " / " + Team.SelectedHero.Gender.ToString());
 
 			batch.DrawString(InventoryFont, new Point(366, 166), GameColors.Black, "Strength");
 			batch.DrawString(InventoryFont, new Point(366, 180), GameColors.Black, "Intelligence");

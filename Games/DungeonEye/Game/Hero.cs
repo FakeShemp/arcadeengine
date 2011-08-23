@@ -1182,15 +1182,15 @@ namespace DungeonEye
 					}
 					break;
 
-					//case "npc":
-					//{
-					//    IsNPC = bool.Parse(node.Attributes["value"].Value);
-					//}
-					//break;
-
 					case "race":
 					{
 						Race = (HeroRace)Enum.Parse(typeof(HeroRace), node.Attributes["value"].Value, true);
+					}
+					break;
+
+					case "gender":
+					{
+						Gender = (HeroGender)Enum.Parse(typeof(HeroGender), node.Attributes["value"].Value, true);
 					}
 					break;
 
@@ -1260,12 +1260,12 @@ namespace DungeonEye
 			writer.WriteAttributeString("value", Food.ToString());
 			writer.WriteEndElement();
 
-			//writer.WriteStartElement("npc");
-			//writer.WriteAttributeString("value", IsNPC.ToString());
-			//writer.WriteEndElement();
-
 			writer.WriteStartElement("race");
 			writer.WriteAttributeString("value", Race.ToString());
+			writer.WriteEndElement();
+
+			writer.WriteStartElement("gender");
+			writer.WriteAttributeString("value", Gender.ToString());
 			writer.WriteEndElement();
 
 			foreach (Profession prof in Professions)
@@ -1665,14 +1665,12 @@ namespace DungeonEye
 
 
 		/// <summary>
-		/// Gender
+		/// Hero gender
 		/// </summary>
 		public HeroGender Gender
 		{
-			get
-			{
-				return ((int)Race) % 2 == 0 ? HeroGender.Male : HeroGender.Female;
-			}
+			get;
+			set;
 		}
 
 
@@ -1916,62 +1914,32 @@ namespace DungeonEye
 		/// <summary>
 		/// 
 		/// </summary>
-		HumanMale = 0,
+		Human = 0,
 
 		/// <summary>
 		/// 
 		/// </summary>
-		HumanFemale = 1,
+		Elf = 1,
 
 		/// <summary>
 		/// 
 		/// </summary>
-		ElfMale = 2,
+		HalfElf = 2,
 
 		/// <summary>
 		/// 
 		/// </summary>
-		ElfFemale = 3,
+		Dwarf = 4,
 
 		/// <summary>
 		/// 
 		/// </summary>
-		HalfElfMale = 4,
+		Gnome = 8,
 
 		/// <summary>
 		/// 
 		/// </summary>
-		HalfElfFemale = 5,
-
-		/// <summary>
-		/// 
-		/// </summary>
-		DwarfMale = 6,
-
-		/// <summary>
-		/// 
-		/// </summary>
-		DwarfFemale = 7,
-
-		/// <summary>
-		/// 
-		/// </summary>
-		GnomeMale = 8,
-
-		/// <summary>
-		/// 
-		/// </summary>
-		GnomeFemale = 9,
-
-		/// <summary>
-		/// 
-		/// </summary>
-		HalflingMale = 10,
-
-		/// <summary>
-		/// 
-		/// </summary>
-		HalflingFemale = 11,
+		Halfling = 16,
 	}
 
 
