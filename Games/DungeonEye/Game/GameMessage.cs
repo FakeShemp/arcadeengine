@@ -75,8 +75,7 @@ namespace DungeonEye
 		/// </summary>
 		static public void Dispose()
 		{
-			if (Font != null)
-				Font.Dispose();
+			ResourceManager.UnlockSharedAsset<BitmapFont>(Font);
 			Font = null;
 		}
 

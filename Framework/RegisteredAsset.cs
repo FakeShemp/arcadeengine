@@ -340,22 +340,16 @@ namespace ArcEngine
 				if (pair.Value == handle)
 				{
 
-
-					//if (!SharedCounter.ContainsKey(ShareName))
-					//{
-					//    Trace.WriteDebugLine("[RegisteredAsset] UnlockShared() : Handle asset's name is not shared (\"" + handle.Name + "\" of type \"" + Type.Name + "\") !");
-					//    return;
-					//}
-
 					SharedCounter[pair.Key]--;
 
 					// No more used, remove it
-					if (SharedCounter[pair.Key] == 0)
-					{
-						Trace.WriteDebugLine("[RegisteredAsset] Flushing asset \"" + handle.Name + "\" of type \"" + Type.Name + "\"");
-						Shared.Remove(pair.Key);
-						handle.Dispose();
-					}
+					//if (SharedCounter[pair.Key] == 0)
+					//{
+					//    Trace.WriteDebugLine("[RegisteredAsset] Flushing asset \"" + handle.Name + "\" of type \"" + Type.Name + "\"");
+					//    Shared.Remove(pair.Key);
+					//    SharedCounter.Remove(pair.Key);
+					//    handle.Dispose();
+					//}
 
 					return;
 				}
@@ -380,6 +374,25 @@ namespace ArcEngine
 			SharedCounter.Clear();
 		}
 
+
+
+		/// <summary>
+		/// Flush all unsused shared asset
+		/// </summary>
+		public void Flush()
+		{
+			foreach (var pair in Shared)
+			{
+				if (SharedCounter[pair.Key] <= 0)
+				{
+					if (pair.Value is IDisposable)
+						pair.Value.Dispose();
+
+					Shared.Remove(pair.Key);
+					SharedCounter.Remove(pair.Key);
+				}
+			}
+		}
 
 
 		#endregion

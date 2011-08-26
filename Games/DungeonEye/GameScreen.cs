@@ -131,20 +131,18 @@ namespace DungeonEye
 
 			GameMessage.Dispose();
 
-			if (OutlinedFont != null)
-				OutlinedFont.Dispose();
+			ResourceManager.UnlockSharedAsset<BitmapFont>(OutlinedFont);
+			ResourceManager.UnlockSharedAsset<BitmapFont>(InventoryFont);
+			ResourceManager.UnlockSharedAsset<TileSet>(TileSet);
+			TileSet = null;
+			InventoryFont = null;
 			OutlinedFont = null;
 
-			if (InventoryFont != null)
-				InventoryFont.Dispose();
-			InventoryFont = null;
 
 			if (Heads != null)
 				Heads.Dispose();
 			Heads = null;
 
-			ResourceManager.UnlockSharedAsset<TileSet>(TileSet);
-			TileSet = null;
 
 			if (Batch != null)
 				Batch.Dispose();
@@ -770,6 +768,7 @@ namespace DungeonEye
 			// Bye bye
 			if (Keyboard.IsNewKeyPress(Keys.Escape))
 			{
+				ScreenManager.AddScreen(new MainMenu());
 				ExitScreen();
 				return;
 			}
