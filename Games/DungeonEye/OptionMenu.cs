@@ -237,11 +237,7 @@ namespace DungeonEye
 
 
 			// Version info
-			Batch.DrawString(GUI.MenuFont, new Point(500, 380), Color.White, "V 0.3.3");
-
-			// Draw the cursor or the item in the hand
-            Batch.DrawTile(Tileset, 0, Mouse.Location);
-
+			Batch.DrawString(GUI.MenuFont, new Point(512, 380), Color.White, "V0.4");
 
             Batch.End();
 		}
