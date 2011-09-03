@@ -288,7 +288,7 @@ namespace DungeonEye
 		/// </summary>
 		public void OnSpawn()
 		{
-			Trace.WriteDebugLine("[Monster] {0} spawn at {1}.", Name, Location.ToStringShort());
+			//Trace.WriteDebugLine("[Monster] {0} spawn at {1}.", Name, Location.ToStringShort());
 
 			// Tileset
 			Tileset = ResourceManager.CreateSharedAsset<TileSet>(TileSetName, TileSetName);

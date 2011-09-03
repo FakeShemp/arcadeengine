@@ -152,33 +152,33 @@ namespace DungeonEye.Forms
 		{
 			try
 			{
-			//	GlControl.MakeCurrent();
-			//	Display.ClearBuffers();
+				GlControl.MakeCurrent();
+				Display.ClearBuffers();
 
-				//if (SpriteBatch != null)
-				//{
-				//    SpriteBatch.Begin();
+				if (SpriteBatch != null)
+				{
+					SpriteBatch.Begin();
 
-				//    // Background texture
-				//    Rectangle dst = new Rectangle(Point.Empty, GlControl.Size);
-				//    SpriteBatch.Draw(CheckerBoard, dst, dst, Color.White);
+					// Background texture
+					Rectangle dst = new Rectangle(Point.Empty, GlControl.Size);
+					SpriteBatch.Draw(CheckerBoard, dst, dst, Color.White);
 
-				//    if (Monster != null && TileSet != null)
-				//    {
-				//        Tile tile = TileSet.GetTile(Monster.Tile);
-				//        if (tile != null)
-				//        {
-				//            Point pos = new Point((GlControl.Width - tile.Size.Width) / 2, (GlControl.Height - tile.Size.Height) / 2);
-				//            pos.Offset(tile.Origin);
-				//            SpriteBatch.DrawTile(TileSet, Monster.Tile, pos);
-				//        }
-				//    }
+					if (Monster != null && TileSet != null)
+					{
+						Tile tile = TileSet.GetTile(Monster.Tile);
+						if (tile != null)
+						{
+							Point pos = new Point((GlControl.Width - tile.Size.Width) / 2, (GlControl.Height - tile.Size.Height) / 2);
+							pos.Offset(tile.Origin);
+							SpriteBatch.DrawTile(TileSet, Monster.Tile, pos);
+						}
+					}
 
-				//    SpriteBatch.End();
-				//}
+					SpriteBatch.End();
+				}
 
 
-			//	GlControl.SwapBuffers();
+				GlControl.SwapBuffers();
 			}
 			catch (Exception e)
 			{
@@ -229,8 +229,6 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void GlControl_Load(object sender, EventArgs e)
 		{
-			return;
-
 			if (DesignMode)
 				return;
 

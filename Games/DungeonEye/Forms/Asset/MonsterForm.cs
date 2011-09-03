@@ -43,7 +43,7 @@ namespace DungeonEye.Forms
 
 			Monster = new Monster();
 			Monster.Load(node);
-			MonsterBox.SetMonster(Monster);
+		//	MonsterBox.SetMonster(Monster);
 		}
 
 
@@ -78,7 +78,7 @@ namespace DungeonEye.Forms
 		/// <param name="e"></param>
 		private void MonsterForm_Load(object sender, System.EventArgs e)
 		{
-		//	MonsterBox.SetMonster(Monster);
+			MonsterBox.SetMonster(Monster);
 
 		}
 

@@ -139,6 +139,7 @@ namespace ArcEngine.Asset
 		/// <param name="method">Method's name</param>
 		/// <param name="args">Arguments</param>
 		/// <returns>true if args or false</returns>
+		// http://msdn.microsoft.com/en-us/library/3y322t50%28v=VS.90%29.aspx => Reflection.Emmit()
 		public bool Invoke(string method, params object[] args)
 		{
 			if (!IsCompiled)

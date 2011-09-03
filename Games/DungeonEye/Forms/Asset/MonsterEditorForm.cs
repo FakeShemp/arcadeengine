@@ -24,8 +24,7 @@ namespace DungeonEye.Forms
 		public MonsterEditorForm(Monster monster)
 		{
 			InitializeComponent();
-
-			MonsterBox.SetMonster(monster);
+			Monster = monster;
 		}
 
 
@@ -38,13 +37,23 @@ namespace DungeonEye.Forms
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		private void MonsterEditorForm_Load(object sender, EventArgs e)
+		{
+			MonsterBox.SetMonster(Monster);
+
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void MonsterEditorForm_KeyDown(object sender, KeyEventArgs e)
 		{
 			if (e.KeyCode == Keys.Escape)
 				Close();
 		}
-
-
 
 		#endregion
 
@@ -52,6 +61,10 @@ namespace DungeonEye.Forms
 		#region Properties
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		Monster Monster;
 
 		#endregion
 	}

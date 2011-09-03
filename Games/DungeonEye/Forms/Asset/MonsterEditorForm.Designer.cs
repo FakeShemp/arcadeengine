@@ -72,6 +72,7 @@
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Monster editor wizard";
+			this.Load += new System.EventHandler(this.MonsterEditorForm_Load);
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MonsterEditorForm_KeyDown);
 			this.ResumeLayout(false);
 
