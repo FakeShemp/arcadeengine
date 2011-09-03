@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using TK = OpenTK.Graphics.OpenGL;
+using ArcEngine.Input;
 
 //
 //
@@ -85,6 +86,8 @@ namespace ArcEngine.Graphic
 		internal static void Dispose()
 		{
 			Trace.WriteDebugLine("[Display] : Dispose()");
+
+			Mouse.Dispose();
 
 			if (Texture.InUse.Count > 0)
 			{

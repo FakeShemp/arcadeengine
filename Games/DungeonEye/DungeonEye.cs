@@ -158,6 +158,7 @@ namespace DungeonEye
 		{
 			GSM.UnloadContent();
             Gui.GUI.Dispose();
+
 			ResourceManager.ClearAssets();
 		}
 

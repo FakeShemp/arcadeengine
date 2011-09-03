@@ -57,6 +57,26 @@ namespace ArcEngine
 
 			Random = new Random((int) DateTime.Now.Ticks);
 			Components = new GameComponentCollection();
+
+			Application.ApplicationExit += new EventHandler(Application_ApplicationExit);
+		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void Application_ApplicationExit(object sender, EventArgs e)
+		{
+			Trace.WriteDebugLine("[GameBase] : ApplicationExit()");
+
+			Audio.AudioManager.Release();
+			Gamepad.Dispose();
+
+			ResourceManager.Dispose();
+			Trace.Close();
 		}
 
 
@@ -256,9 +276,9 @@ namespace ArcEngine
 		{
 			if (IsExiting)
 			{
-				Audio.AudioManager.Release();
-				Gamepad.Dispose();
-				Mouse.Dispose();
+				//Audio.AudioManager.Release();
+				//Gamepad.Dispose();
+				//Mouse.Dispose();
 
 				Application.Exit();
 			}
@@ -513,8 +533,8 @@ namespace ArcEngine
 			}
 
 
-			ResourceManager.Dispose();
-			Trace.Close();
+			//ResourceManager.Dispose();
+			//Trace.Close();
 		}
 
 		#endregion
