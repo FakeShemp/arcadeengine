@@ -232,7 +232,7 @@ namespace DungeonEye
 				Point point = button.Rectangle.Location;
 
 				// Text
-                Batch.DrawString(GUI.MenuFont, point, id == MenuID ? Color.FromArgb(255, 85, 85) : Color.White, button.Text);
+                Batch.DrawString(GUI.MenuFont, point, id == MenuID ? GameColors.Red : Color.White, button.Text);
 			}
 
 
