@@ -51,7 +51,6 @@ namespace ArcEngine.Graphic
 			textures = new Texture[32];
 		}
 
-
 		/// <summary>
 		/// Resets default state
 		/// </summary>
@@ -89,7 +88,7 @@ namespace ArcEngine.Graphic
 
 			Mouse.Dispose();
 
-			if (Texture.InUse.Count > 0)
+			if (Texture.InUse != null && Texture.InUse.Count > 0)
 			{
 				Trace.WriteLine("{0} texture(s) remaining !", Texture.InUse.Count);
 				foreach (Texture tex in Texture.InUse)
