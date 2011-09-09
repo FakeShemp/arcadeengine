@@ -137,11 +137,11 @@ namespace ArcEngine.Examples.PathRenderingDemo
 			neither font is available as a system font, settle for the "Sans" standard
 			(built-in) font. */
 			PathGlyphRange(glyphBase,
-				GL_FILE_NAME_NV, "Pacifico.ttf", 0,
+				GL_FILE_NAME_NV, Marshal.StringToHGlobalUni("Pacifico.ttf"), 0,
 				0, numChars,
 				GL_SKIP_MISSING_GLYPH_NV, pathTemplate, emScale);
 			PathGlyphRange(glyphBase,
-				GL_STANDARD_FONT_NAME_NV, "Sans", GL_BOLD_BIT_NV,
+				GL_STANDARD_FONT_NAME_NV, Marshal.StringToHGlobalUni("Sans"), GL_BOLD_BIT_NV,
 				0, numChars,
 				GL_SKIP_MISSING_GLYPH_NV, pathTemplate, emScale);
 
@@ -150,7 +150,7 @@ namespace ArcEngine.Examples.PathRenderingDemo
 				GL_FONT_UNDERLINE_POSITION_NV | GL_FONT_UNDERLINE_THICKNESS_NV,
 				glyphBase + ' ', /*count*/1,
 				4 * sizeof(float),
-				font_data);
+				Marshal.UnsafeAddrOfPinnedArrayElement(font_data, 0));
 			yMin = font_data[0];
 			yMax = font_data[1];
 			underline_position = font_data[2];
@@ -160,41 +160,32 @@ namespace ArcEngine.Examples.PathRenderingDemo
 			GetPathMetricRange(GL_GLYPH_HORIZONTAL_BEARING_ADVANCE_BIT_NV,
 				glyphBase, numChars,
 				0, /* stride of zero means sizeof(float) since 1 bit in mask */
-				horizontalAdvance);
+				Marshal.UnsafeAddrOfPinnedArrayElement(horizontalAdvance, 0));
 
 			/* Query spacing information for example's message. */
-			messageLen = strlen(message);
-			xtranslate = (float*)malloc(sizeof(float) * messageLen);
-			if (!xtranslate)
-			{
-				fprintf(stderr, "%s: malloc of xtranslate failed\n", programName);
-				exit(1);
-			}
-			xtranslate[0] = 0.0;  /* Initial xtranslate is zero. */
+			xtranslate = new float[Message.Length];
+			xtranslate[0] = 0.0f;  /* Initial xtranslate is zero. */
 			{
 				/* Use 100% spacing; use 0.9 for both for 90% spacing. */
-				float advanceScale = 1.0,
-					kerningScale = 1.0; /* Set this to zero to ignore kerning. */
+				float advanceScale = 1.0f;
+				float kerningScale = 1.0f; /* Set this to zero to ignore kerning. */
 				GetPathSpacing(GL_ACCUM_ADJACENT_PAIRS_NV,
-					(int)messageLen, GL_UNSIGNED_BYTE, message,
+					Message.Length, GL_UNSIGNED_BYTE, Marshal.StringToHGlobalUni(Message),
 					glyphBase,
 					advanceScale, kerningScale,
 					GL_TRANSLATE_X_NV,
-					&xtranslate[1]);  /* messageLen-1 accumulated translates are written here. */
+					Marshal.UnsafeAddrOfPinnedArrayElement(xtranslate, 1));  /* messageLen-1 accumulated translates are written here. */
 			}
 
-			/* Total advance is accumulated spacing plus horizontal advance of
-			the last glyph */
-			totalAdvance = xtranslate[messageLen - 1] +
-				horizontalAdvance[message_ub[messageLen - 1]];
-			xBorder = totalAdvance / messageLen;
+			// Total advance is accumulated spacing plus horizontal advance of the last glyph
+			totalAdvance = xtranslate[Message.Length - 1] + horizontalAdvance[Message.ToCharArray()[Message.Length - 1]];
+			xBorder = totalAdvance / Message.Length;
 
-			glEnable(GL_STENCIL_TEST);
-			glStencilFunc(GL_NOTEQUAL, 0, ~0);
-			glStencilOp(GL_KEEP, GL_KEEP, GL_ZERO);
+			//glEnable(GL_STENCIL_TEST);
+			//glStencilFunc(GL_NOTEQUAL, 0, ~0);
+			//glStencilOp(GL_KEEP, GL_KEEP, GL_ZERO);
 
 		}
-
 
 
 		/// <summary>
@@ -215,7 +206,7 @@ namespace ArcEngine.Examples.PathRenderingDemo
 			PathGlyphRange = (glPathGlyphRange)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glPathGlyphRangeNV"), typeof(glPathGlyphRange));
 			WeightPaths = (glWeightPaths)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glWeightPathsNV"), typeof(glWeightPaths));
 			CopyPath = (glCopyPath)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glCopyPathNV"), typeof(glCopyPath));
-			InterpolatePaths = (interpolatePaths)Marshal.GetDelegateForFunctionPointer(context.GetAddress("interpolatePathsNV"), typeof(interpolatePaths));
+			InterpolatePaths = (glInterpolatePaths)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glInterpolatePathsNV"), typeof(glInterpolatePaths));
 			TransformPath = (glTransformPath)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glTransformPathNV"), typeof(glTransformPath));
 			PathParameteriv = (glPathParameteriv)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glPathParameterivNV"), typeof(glPathParameteriv));
 			PathParameteri = (glPathParameteri)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glPathParameteriNV"), typeof(glPathParameteri));
@@ -272,7 +263,7 @@ namespace ArcEngine.Examples.PathRenderingDemo
 		glPathGlyphRange PathGlyphRange;
 		glWeightPaths WeightPaths;
 		glCopyPath CopyPath;
-		interpolatePaths InterpolatePaths;
+		glInterpolatePaths InterpolatePaths;
 		glTransformPath TransformPath;
 		glPathParameteriv PathParameteriv;
 		glPathParameteri PathParameteri;
@@ -310,115 +301,56 @@ namespace ArcEngine.Examples.PathRenderingDemo
 		glPointAlongPath PointAlongPath;
 		glPathStencilFunc PathStencilFunc;
 
+
 		unsafe delegate int glGenPaths(int range);
 		unsafe delegate void glDeletePaths(int path, int range);
-		unsafe delegate void glIsPath(int path);
-		unsafe delegate void glPathCommands(int path, int numCommands, byte* commands, int numCoords, int coordType, void* coords);
-		unsafe delegate void glPathCoords(int path, int numCoords, int coordType, void* coords);
-		unsafe delegate void glPathSubCommands(int path, int commandStart, int commandsToDelete, int numCommands, byte* commands, int numCoords, int coordType, void* coords);
-		unsafe delegate void glPathSubCoords(int path, int coordStart, int numCoords, int coordType, void* coords);
-		unsafe delegate void glPathString(int path, int format, int length, void* pathString);
-		unsafe delegate void glPathGlyphs(int firstPathName, int fontTarget, void* fontName, int fontStyle, int numGlyphs, int type, void* charcodes, int handleMissingGlyphs, int pathParameterTemplate, float emScale);
-		unsafe delegate void glPathGlyphRange(int firstPathName, int fontTarget, string fontName, int fontStyle, int firstGlyph, int numGlyphs, int handleMissingGlyphs, int pathParameterTemplate, float emScale);
+		unsafe delegate bool glIsPath(int path);
+		unsafe delegate void glPathCommands(int path, int numCommands, byte* commands, int numCoords, int coordType, IntPtr coords);
+		unsafe delegate void glPathCoords(int path, int numCoords, int coordType, IntPtr coords);
+		unsafe delegate void glPathSubCommands(int path, int commandStart, int commandsToDelete, int numCommands, byte* commands, int numCoords, int coordType, IntPtr coords);
+		unsafe delegate void glPathSubCoords(int path, int coordStart, int numCoords, int coordType, IntPtr coords);
+		unsafe delegate void glPathString(int path, int format, int length, IntPtr pathString);
+		unsafe delegate void glPathGlyphs(int firstPathName, int fontTarget, IntPtr fontName, int fontStyle, int numGlyphs, int type, IntPtr charcodes, int handleMissingGlyphs, int pathParameterTemplate, float emScale);
+		unsafe delegate void glPathGlyphRange(int firstPathName, int fontTarget, IntPtr fontName, int fontStyle, int firstGlyph, int numGlyphs, int handleMissingGlyphs, int pathParameterTemplate, float emScale);
 		unsafe delegate void glWeightPaths(int resultPath, int numPaths, int* paths, float* weights);
 		unsafe delegate void glCopyPath(int resultPath, int srcPath);
-		unsafe delegate void interpolatePaths(int resultPath, int pathA, int pathB, float weight);
+		unsafe delegate void glInterpolatePaths(int resultPath, int pathA, int pathB, float weight);
 		unsafe delegate void glTransformPath(int resultPath, int srcPath, int transformType, float* transformValues);
 		unsafe delegate void glPathParameteriv(int path, int pname, int* value);
 		unsafe delegate void glPathParameteri(int path, int pname, int value);
 		unsafe delegate void glPathParameterfv(int path, int pname, float* value);
 		unsafe delegate void glPathParameterf(int path, int pname, float value);
 		unsafe delegate void glPathDashArray(int path, int dashCount, float* dashArray);
-		unsafe delegate void glStencilFillPath(int mode, int reference, int mask);
+		unsafe delegate void glPathStencilFunc(int func, int reference, int mask);
 		unsafe delegate void glPathStencilDepthOffset(float factor, float units);
-		unsafe delegate void glStencilStrokePath(int path, int fillMode, int mask);
-		unsafe delegate void glStencilFillPathInstanced(int path, int reference, int mask);
-		unsafe delegate void glStencilStrokePathInstanced(int numPaths, int pathNameType, void* paths, int pathBase, int fillMode, int mask, int transformType, float* transformValues);
-		unsafe delegate void glPathCoverDepthFunc(int numPaths, int pathNameType, void* paths, int pathBase, int reference, int mask, int transformType, float* transformValues);
-		unsafe delegate void glPathColorGen(int func);
-		unsafe delegate void glPathTexGen(int color, int genMode, int colorFormat, float* coeffs);
-		unsafe delegate void glPathFogGen(int texCoordSet, int genMode, int components, float* coeffs);
-		unsafe delegate void glCoverFillPath(int genMode);
+		unsafe delegate void glStencilFillPath(int path, int fillMode, int mask);
+		unsafe delegate void glStencilStrokePath(int path, int reference, int mask);
+		unsafe delegate void glStencilFillPathInstanced(int numPaths, int pathNameType, IntPtr paths, int pathBase, int fillMode, int mask, int transformType, float* transformValues);
+		unsafe delegate void glStencilStrokePathInstanced(int numPaths, int pathNameType, IntPtr paths, int pathBase, int reference, int mask, int transformType, float* transformValues);
+		unsafe delegate void glPathCoverDepthFunc(int func);
+		unsafe delegate void glPathColorGen(int color, int genMode, int colorFormat, float* coeffs);
+		unsafe delegate void glPathTexGen(int texCoordSet, int genMode, int components, float* coeffs);
+		unsafe delegate void glPathFogGen(int genMode);
+		unsafe delegate void glCoverFillPath(int path, int coverMode);
 		unsafe delegate void glCoverStrokePath(int path, int coverMode);
-		unsafe delegate void glCoverFillPathInstanced(int path, int coverMode);
-		unsafe delegate void glCoverStrokePathInstanced(int numPaths, int pathNameType, void* paths, int pathBase, int coverMode, int transformType, float* transformValues);
-		unsafe delegate void glGetPathParameteriv(int numPaths, int pathNameType, void* paths, int pathBase, int coverMode, int transformType, float* transformValues);
-		unsafe delegate void glGetPathParameterfv(int path, int pname, int* value);
-		unsafe delegate void glGetPathCommands(int path, int pname, float* value);
-		unsafe delegate void glGetPathCoords(int path, byte* commands);
-		unsafe delegate void glGetPathDashArray(int path, float* coords);
-		unsafe delegate void glGetPathMetrics(int path, float* dashArray);
-		unsafe delegate void glGetPathMetricRange(int metricQueryMask, int numPaths, int pathNameType, void* paths, int pathBase, int stride, float* metrics);
-		unsafe delegate void glGetPathSpacing(int metricQueryMask, int firstPathName, int numPaths, int stride, float* metrics);
-		unsafe delegate void glGetPathColorGeniv(int pathListMode, int numPaths, int pathNameType, void* paths, int pathBase, float advanceScale, float kerningScale, int transformType, float* returnedSpacing);
-		unsafe delegate void glGetPathColorGenfv(int color, int pname, int* value);
-		unsafe delegate void glGetPathTexGeniv(int color, int pname, float* value);
-		unsafe delegate void glGetPathTexGenfv(int texCoordSet, int pname, int* value);
-		unsafe delegate bool glIsPointInFillPath(int texCoordSet, int pname, float* value);
-		unsafe delegate bool glIsPointInStrokePath(int path, int mask, float x, float y);
-		unsafe delegate float glGetPathLength(int path, float x, float y);
-		unsafe delegate bool glPointAlongPath(int path, int startSegment, int numSegments);
-
-		unsafe delegate void glPathStencilFunc(int path, int startSegment, int numSegments, float distance, float* x, float* y, float* tangentX, float* tangentY);
-
-
-
-
-
-
-
-
-
-unsafe delegate int   GenPathsNV (int range);
-unsafe delegate void  DeletePathsNV (uint path, int range);
-unsafe delegate bool  IsPathNV (uint path);
-unsafe delegate void  PathCommandsNV (uint path, int numCommands, const GLubyte *commands, int numCoords, int coordType, const GLvoid *coords);
-unsafe delegate void  PathCoordsNV (uint path, int numCoords, int coordType, const GLvoid *coords);
-unsafe delegate void  PathSubCommandsNV (uint path, int commandStart, int commandsToDelete, int numCommands, const GLubyte *commands, int numCoords, int coordType, const GLvoid *coords);
-unsafe delegate void  PathSubCoordsNV (uint path, int coordStart, int numCoords, int coordType, const GLvoid *coords);
-unsafe delegate void  PathStringNV (uint path, int format, int length, const GLvoid *pathString);
-unsafe delegate void  PathGlyphsNV (uint firstPathName, int fontTarget, const GLvoid *fontName, GLbitfield fontStyle, int numGlyphs, int type, const GLvoid *charcodes, int handleMissingGlyphs, uint pathParameterTemplate, float emScale);
-unsafe delegate void  PathGlyphRangeNV (uint firstPathName, int fontTarget, const GLvoid *fontName, GLbitfield fontStyle, uint firstGlyph, int numGlyphs, int handleMissingGlyphs, uint pathParameterTemplate, float emScale);
-unsafe delegate void  WeightPathsNV (uint resultPath, int numPaths, const uint *paths, const float *weights);
-unsafe delegate void  CopyPathNV (uint resultPath, uint srcPath);
-unsafe delegate void  InterpolatePathsNV (uint resultPath, uint pathA, uint pathB, float weight);
-unsafe delegate void  TransformPathNV (uint resultPath, uint srcPath, int transformType, const float *transformValues);
-unsafe delegate void  TransformPathNV (uint resultPath, uint srcPath, int transformType, const float *transformValues);
-unsafe delegate void  PathParameterivNV (uint path, int pname, const int *value);
-unsafe delegate void  PathParameteriNV (uint path, int pname, int value);
-unsafe delegate void  PathParameterfvNV (uint path, int pname, const float *value);
-unsafe delegate void  PathParameterfNV (uint path, int pname, float value);
-unsafe delegate void  PathDashArrayNV (uint path, int dashCount, const float *dashArray);
-unsafe delegate void  PathStencilFuncNV (int func, int ref, uint mask);
-unsafe delegate void  PathStencilDepthOffsetNV (float factor, float units);
-unsafe delegate void  StencilFillPathNV (uint path, int fillMode, uint mask);
-unsafe delegate void  StencilStrokePathNV (uint path, int reference, uint mask);
-unsafe delegate void  StencilFillPathInstancedNV (int numPaths, int pathNameType, const GLvoid *paths, uint pathBase, int fillMode, uint mask, int transformType, const float *transformValues);
-unsafe delegate void  StencilStrokePathInstancedNV (int numPaths, int pathNameType, const GLvoid *paths, uint pathBase, int reference, uint mask, int transformType, const float *transformValues);
-unsafe delegate void  PathCoverDepthFuncNV (int func);
-unsafe delegate void  PathColorGenNV (int color, int genMode, int colorFormat, const float *coeffs);
-unsafe delegate void  PathTexGenNV (int texCoordSet, int genMode, int components, const float *coeffs);
-unsafe delegate void  PathFogGenNV (int genMode);
-unsafe delegate void  CoverFillPathNV (uint path, int coverMode);
-unsafe delegate void  CoverStrokePathNV (uint path, int coverMode);
-unsafe delegate void  CoverFillPathInstancedNV (int numPaths, int pathNameType, const GLvoid *paths, uint pathBase, int coverMode, int transformType, const float *transformValues);
-unsafe delegate void  CoverStrokePathInstancedNV (int numPaths, int pathNameType, const GLvoid *paths, uint pathBase, int coverMode, int transformType, const float *transformValues);
-unsafe delegate void  GetPathParameterivNV (uint path, int pname, int *value);
-unsafe delegate void  GetPathParameterfvNV (uint path, int pname, float *value);
-unsafe delegate void  GetPathCommandsNV (uint path, GLubyte *commands);
-unsafe delegate void  GetPathCoordsNV (uint path, float *coords);
-unsafe delegate void  GetPathDashArrayNV (uint path, float *dashArray);
-unsafe delegate void  GetPathMetricsNV (GLbitfield metricQueryMask, int numPaths, int pathNameType, const GLvoid *paths, uint pathBase, int stride, float *metrics);
-unsafe delegate void  GetPathMetricRangeNV (GLbitfield metricQueryMask, uint firstPathName, int numPaths, int stride, float *metrics);
-unsafe delegate void  GetPathSpacingNV (int pathListMode, int numPaths, int pathNameType, const GLvoid *paths, uint pathBase, float advanceScale, float kerningScale, int transformType, float *returnedSpacing);
-unsafe delegate void  GetPathColorGenivNV (int color, int pname, int *value);
-unsafe delegate void  GetPathColorGenfvNV (int color, int pname, float *value);
-unsafe delegate void  GetPathTexGenivNV (int texCoordSet, int pname, int *value);
-unsafe delegate void  GetPathTexGenfvNV (int texCoordSet, int pname, float *value);
-unsafe delegate bool  IsPointInFillPathNV (uint path, uint mask, float x, float y);
-unsafe delegate bool  IsPointInStrokePathNV (uint path, float x, float y);
-unsafe delegate float GetPathLengthNV (uint path, int startSegment, int numSegments);
-unsafe delegate bool  PointAlongPathNV (uint path, int startSegment, int numSegments, float distance, float *x, float *y, float *tangentX, float *tangentY);
+		unsafe delegate void glCoverFillPathInstanced(int numPaths, int pathNameType, IntPtr paths, int pathBase, int coverMode, int transformType, float* transformValues);
+		unsafe delegate void glCoverStrokePathInstanced(int numPaths, int pathNameType, IntPtr paths, int pathBase, int coverMode, int transformType, float* transformValues);
+		unsafe delegate void glGetPathParameteriv(int path, int pname, int* value);
+		unsafe delegate void glGetPathParameterfv(int path, int pname, float* value);
+		unsafe delegate void glGetPathCommands(int path, byte* commands);
+		unsafe delegate void glGetPathCoords(int path, float* coords);
+		unsafe delegate void glGetPathDashArray(int path, float* dashArray);
+		unsafe delegate void glGetPathMetrics(int metricQueryMask, int numPaths, int pathNameType, IntPtr paths, int pathBase, int stride, IntPtr metrics);
+		unsafe delegate void glGetPathMetricRange(int metricQueryMask, int firstPathName, int numPaths, int stride, IntPtr metrics);
+		unsafe delegate void glGetPathSpacing(int pathListMode, int numPaths, int pathNameType, IntPtr paths, int pathBase, float advanceScale, float kerningScale, int transformType, IntPtr returnedSpacing);
+		unsafe delegate void glGetPathColorGeniv(int color, int pname, int* value);
+		unsafe delegate void glGetPathColorGenfv(int color, int pname, float* value);
+		unsafe delegate void glGetPathTexGeniv(int texCoordSet, int pname, int* value);
+		unsafe delegate void glGetPathTexGenfv(int texCoordSet, int pname, float* value);
+		unsafe delegate bool glIsPointInFillPath(int path, int mask, float x, float y);
+		unsafe delegate bool glIsPointInStrokePath(int path, float x, float y);
+		unsafe delegate float glGetPathLength(int path, int startSegment, int numSegments);
+		unsafe delegate bool glPointAlongPath(int path, int startSegment, int numSegments, float distance, float* x, float* y, float* tangentX, float* tangentY);
 
 
 
@@ -433,6 +365,18 @@ unsafe delegate bool  PointAlongPathNV (uint path, int startSegment, int numSegm
 
 
 		#region Defines
+		const int GL_BYTE = 0x1400;
+		const int GL_UNSIGNED_BYTE = 0x1401;
+		const int GL_SHORT = 0x1402;
+		const int GL_UNSIGNED_SHORT = 0x1403;
+		const int GL_INT = 0x1404;
+		const int GL_UNSIGNED_INT = 0x1405;
+		const int GL_FLOAT = 0x1406;
+		const int GL_2_BYTES = 0x1407;
+		const int GL_3_BYTES = 0x1408;
+		const int GL_4_BYTES = 0x1409;
+		const int GL_DOUBLE = 0x140A;
+
 
 		const int GL_CLOSE_PATH_NV = 0x00;
 		const int GL_MOVE_TO_NV = 0x02;
@@ -834,7 +778,7 @@ unsafe delegate bool  PointAlongPathNV (uint path, int startSegment, int numSegm
 		int pathTemplate;
 		//const char* message = "Hello world!"; /* the message to show */
 		//size_t messageLen;
-		float xtranslate;
+		float[] xtranslate;
 		float window_width, window_height, aspect_ratio;
 		float view_width, view_height;
 		//Transform3x2 win2obj;
