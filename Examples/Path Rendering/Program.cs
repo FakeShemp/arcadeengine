@@ -27,7 +27,41 @@ using ArcEngine.Input;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
+using OpenTK.Graphics.OpenGL;
 
+#region GLDataTypes
+// These define the mapping between OpenGL data types
+// and the .net equivalents.
+using GLsizei = System.Int32;
+using GLsizeiptr = System.IntPtr;
+using GLintptr = System.IntPtr;
+using GLenum = System.Int32;
+using GLboolean = System.Int32;
+using GLbitfield = System.Int32;
+using GLvoid = System.Object;
+using GLchar = System.Char;
+using GLbyte = System.Byte;
+using GLubyte = System.Byte;
+using GLshort = System.Int16;
+using GLushort = System.Int16;
+using GLint = System.Int32;
+using GLuint = System.Int32;
+using GLfloat = System.Single;
+using GLclampf = System.Single;
+using GLdouble = System.Double;
+using GLclampd = System.Double;
+using GLstring = System.String;
+using GLsizeiptrARB = System.IntPtr;
+using GLintptrARB = System.IntPtr;
+using GLhandleARB = System.Int32;
+using GLhalfARB = System.Int16;
+using GLhalfNV = System.Int16;
+using GLcharARB = System.Char;
+using GLint64EXT = System.Int64;
+using GLuint64EXT = System.Int64;
+using GLint64 = System.Int64;
+using GLuint64 = System.Int64;
+#endregion
 
 
 namespace ArcEngine.Examples.PathRenderingDemo
@@ -56,8 +90,8 @@ namespace ArcEngine.Examples.PathRenderingDemo
 		{
 			GameWindowParams p = new GameWindowParams();
 			p.Size = new Size(1024, 768);
-			p.Major = 4;
-			p.Minor = 1;
+			p.Major = 3;
+			p.Minor = 0;
 			CreateGameWindow(p);
 		}
 
@@ -70,6 +104,8 @@ namespace ArcEngine.Examples.PathRenderingDemo
 			// Render states
 			Display.RenderState.ClearColor = Color.Black;
 			Display.RenderState.DepthTest = true;
+
+			Batch = new SpriteBatch();
 
 			Path = new PathRendering();
 
@@ -88,6 +124,9 @@ namespace ArcEngine.Examples.PathRenderingDemo
 				Path.Dispose();
 			Path = null;
 
+			if (Batch != null)
+				Batch.Dispose();
+			Batch = null;
 		}
 
 
@@ -102,88 +141,59 @@ namespace ArcEngine.Examples.PathRenderingDemo
 				Exit();
 		}
 
+		bool filling = true;
+		bool even_odd = true;
+		bool stroking = true;
 
 		/// <summary>
 		/// Called when it is time to draw a frame.
 		/// </summary>
 		public override void Draw()
 		{
-			// Clears the background
-			Display.ClearBuffers();
+			GL.ClearStencil(0);
+			GL.ClearColor(0, 255, 0, 0);
+			GL.StencilMask(~0);
+			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.StencilBufferBit);
+
+
+
 
 		}
 
+
+		int pathObj = 42;
+
+		void initPathFromSVG()
+		{
+			/* Here is an example of specifying and then rendering a five-point
+			star and a heart as a path using Scalable Vector Graphics (SVG)
+			path description syntax: */
+
+			string svgPathString = "M100,180 L40,10 L190,120 L10,120 L160,10 z" +      // star
+								   "M300 300 C 100 400,100 200,300 100,500 200,500 400,300 300Z"; // heart
+
+		//	PathString(pathObj, GL_PATH_FORMAT_SVG_NV, svgPathString.Length, Marshal.StringToHGlobalUni(svgPathString));
+			PathString(pathObj, GL_PATH_FORMAT_SVG_NV, svgPathString.Length, svgPathString);
+			Display.GetLastError("");
+		}
 
 		/// <summary>
 		/// 
 		/// </summary>
 		void Init()
 		{
-			float[] font_data = new float[4];
-			int numChars = 256;
-			float[] horizontalAdvance = new float[256];
-			Message = "Hello World";
+			//	pathObj = GenPaths(1);
+
+			initPathFromSVG();
+
+			PathParameteri(pathObj, GL_PATH_JOIN_STYLE_NV, GL_ROUND_NV);
+			Display.GetLastError("");
+			PathParameterf(pathObj, GL_PATH_STROKE_WIDTH_NV, 6.5f);
+			Display.GetLastError("");
 
 
-			DeletePaths(glyphBase, numChars);
 
-			/* Create a range of path objects corresponding to Latin-1 character codes. */
-			glyphBase = GenPaths(1 + numChars);
-			pathTemplate = glyphBase;
-			PathParameteri(pathTemplate, GL_PATH_STROKE_WIDTH_NV, 50);
-			PathParameteri(pathTemplate, GL_PATH_JOIN_STYLE_NV, GL_ROUND_NV);
-			glyphBase++;
-			/* Choose a bold sans-serif font face, preferring Veranda over Arial; if
-			neither font is available as a system font, settle for the "Sans" standard
-			(built-in) font. */
-			PathGlyphRange(glyphBase,
-				GL_FILE_NAME_NV, Marshal.StringToHGlobalUni("Pacifico.ttf"), 0,
-				0, numChars,
-				GL_SKIP_MISSING_GLYPH_NV, pathTemplate, emScale);
-			PathGlyphRange(glyphBase,
-				GL_STANDARD_FONT_NAME_NV, Marshal.StringToHGlobalUni("Sans"), GL_BOLD_BIT_NV,
-				0, numChars,
-				GL_SKIP_MISSING_GLYPH_NV, pathTemplate, emScale);
 
-			/* Query font and glyph metrics. */
-			GetPathMetricRange(GL_FONT_Y_MIN_BOUNDS_NV | GL_FONT_Y_MAX_BOUNDS_NV |
-				GL_FONT_UNDERLINE_POSITION_NV | GL_FONT_UNDERLINE_THICKNESS_NV,
-				glyphBase + ' ', /*count*/1,
-				4 * sizeof(float),
-				Marshal.UnsafeAddrOfPinnedArrayElement(font_data, 0));
-			yMin = font_data[0];
-			yMax = font_data[1];
-			underline_position = font_data[2];
-			underline_thickness = font_data[3];
-			//printf("Y min,max = %f,%f\n", yMin, yMax);
-			//printf("underline: pos=%f, thickness=%f\n", underline_position, underline_thickness);
-			GetPathMetricRange(GL_GLYPH_HORIZONTAL_BEARING_ADVANCE_BIT_NV,
-				glyphBase, numChars,
-				0, /* stride of zero means sizeof(float) since 1 bit in mask */
-				Marshal.UnsafeAddrOfPinnedArrayElement(horizontalAdvance, 0));
-
-			/* Query spacing information for example's message. */
-			xtranslate = new float[Message.Length];
-			xtranslate[0] = 0.0f;  /* Initial xtranslate is zero. */
-			{
-				/* Use 100% spacing; use 0.9 for both for 90% spacing. */
-				float advanceScale = 1.0f;
-				float kerningScale = 1.0f; /* Set this to zero to ignore kerning. */
-				GetPathSpacing(GL_ACCUM_ADJACENT_PAIRS_NV,
-					Message.Length, GL_UNSIGNED_BYTE, Marshal.StringToHGlobalUni(Message),
-					glyphBase,
-					advanceScale, kerningScale,
-					GL_TRANSLATE_X_NV,
-					Marshal.UnsafeAddrOfPinnedArrayElement(xtranslate, 1));  /* messageLen-1 accumulated translates are written here. */
-			}
-
-			// Total advance is accumulated spacing plus horizontal advance of the last glyph
-			totalAdvance = xtranslate[Message.Length - 1] + horizontalAdvance[Message.ToCharArray()[Message.Length - 1]];
-			xBorder = totalAdvance / Message.Length;
-
-			//glEnable(GL_STENCIL_TEST);
-			//glStencilFunc(GL_NOTEQUAL, 0, ~0);
-			//glStencilOp(GL_KEEP, GL_KEEP, GL_ZERO);
 
 		}
 
@@ -194,36 +204,46 @@ namespace ArcEngine.Examples.PathRenderingDemo
 		void InitExtensions()
 		{
 			var context = OpenTK.Graphics.GraphicsContext.CurrentContext as OpenTK.Graphics.IGraphicsContextInternal;
+
+			// GL_EXT_direct_state_access
+			MatrixLoadIdentity = (glMatrixLoadIdentity)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glMatrixLoadIdentityEXT"), typeof(glMatrixLoadIdentity));
+			MatrixOrtho = (glMatrixOrtho)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glMatrixOrthoEXT"), typeof(glMatrixOrtho));
+
+
+			// NV_rendering_path
+			PathCommands = (glPathCommands)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glPathCommandsNV"), typeof(glPathCommands));
+			PathString = (glPathString)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glPathStringNV"), typeof(glPathString));
+			PathParameteri = (glPathParameteri)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glPathParameteriNV"), typeof(glPathParameteri));
+			PathParameterf = (glPathParameterf)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glPathParameterfNV"), typeof(glPathParameterf));
+			CoverFillPath = (glCoverFillPath)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glCoverFillPathNV"), typeof(glCoverFillPath));
+			CoverStrokePath = (glCoverStrokePath)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glCoverStrokePathNV"), typeof(glCoverStrokePath));
+			StencilFillPath = (glStencilFillPath)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glStencilFillPathNV"), typeof(glStencilFillPath));
+			StencilStrokePath = (glStencilStrokePath)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glStencilStrokePathNV"), typeof(glStencilStrokePath));
+			  
+/*
+			  
+			PathParameterfv = (glPathParameterfv)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glPathParameterfvNV"), typeof(glPathParameterfv));
+			PathParameteriv = (glPathParameteriv)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glPathParameterivNV"), typeof(glPathParameteriv));
 			GenPaths = (glGenPaths)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glGenPathsNV"), typeof(glGenPaths));
 			DeletePaths = (glDeletePaths)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glDeletePathsNV"), typeof(glDeletePaths));
 			IsPath = (glIsPath)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glIsPathNV"), typeof(glIsPath));
-			PathCommands = (glPathCommands)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glPathCommandsNV"), typeof(glPathCommands));
 			PathCoords = (glPathCoords)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glPathCoordsNV"), typeof(glPathCoords));
 			PathSubCommands = (glPathSubCommands)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glPathSubCommandsNV"), typeof(glPathSubCommands));
 			PathSubCoords = (glPathSubCoords)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glPathSubCoordsNV"), typeof(glPathSubCoords));
-			PathString = (glPathString)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glPathStringNV"), typeof(glPathString));
 			PathGlyphs = (glPathGlyphs)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glPathGlyphsNV"), typeof(glPathGlyphs));
 			PathGlyphRange = (glPathGlyphRange)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glPathGlyphRangeNV"), typeof(glPathGlyphRange));
 			WeightPaths = (glWeightPaths)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glWeightPathsNV"), typeof(glWeightPaths));
 			CopyPath = (glCopyPath)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glCopyPathNV"), typeof(glCopyPath));
 			InterpolatePaths = (glInterpolatePaths)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glInterpolatePathsNV"), typeof(glInterpolatePaths));
 			TransformPath = (glTransformPath)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glTransformPathNV"), typeof(glTransformPath));
-			PathParameteriv = (glPathParameteriv)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glPathParameterivNV"), typeof(glPathParameteriv));
-			PathParameteri = (glPathParameteri)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glPathParameteriNV"), typeof(glPathParameteri));
-			PathParameterfv = (glPathParameterfv)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glPathParameterfvNV"), typeof(glPathParameterfv));
-			PathParameterf = (glPathParameterf)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glPathParameterfNV"), typeof(glPathParameterf));
 			PathDashArray = (glPathDashArray)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glPathDashArrayNV"), typeof(glPathDashArray));
-			StencilFillPath = (glStencilFillPath)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glStencilFillPathNV"), typeof(glStencilFillPath));
 			PathStencilDepthOffset = (glPathStencilDepthOffset)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glPathStencilDepthOffsetNV"), typeof(glPathStencilDepthOffset));
-			StencilStrokePath = (glStencilStrokePath)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glStencilStrokePathNV"), typeof(glStencilStrokePath));
 			StencilFillPathInstanced = (glStencilFillPathInstanced)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glStencilFillPathInstancedNV"), typeof(glStencilFillPathInstanced));
 			StencilStrokePathInstanced = (glStencilStrokePathInstanced)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glStencilStrokePathInstancedNV"), typeof(glStencilStrokePathInstanced));
 			PathCoverDepthFunc = (glPathCoverDepthFunc)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glPathCoverDepthFuncNV"), typeof(glPathCoverDepthFunc));
 			PathColorGen = (glPathColorGen)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glPathColorGenNV"), typeof(glPathColorGen));
 			PathTexGen = (glPathTexGen)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glPathTexGenNV"), typeof(glPathTexGen));
 			PathFogGen = (glPathFogGen)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glPathFogGenNV"), typeof(glPathFogGen));
-			CoverFillPath = (glCoverFillPath)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glCoverFillPathNV"), typeof(glCoverFillPath));
-			CoverStrokePath = (glCoverStrokePath)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glCoverStrokePathNV"), typeof(glCoverStrokePath));
 			CoverFillPathInstanced = (glCoverFillPathInstanced)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glCoverFillPathInstancedNV"), typeof(glCoverFillPathInstanced));
 			CoverStrokePathInstanced = (glCoverStrokePathInstanced)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glCoverStrokePathInstancedNV"), typeof(glCoverStrokePathInstanced));
 			GetPathParameteriv = (glGetPathParameteriv)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glGetPathParameterivNV"), typeof(glGetPathParameteriv));
@@ -243,14 +263,17 @@ namespace ArcEngine.Examples.PathRenderingDemo
 			GetPathLength = (glGetPathLength)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glGetPathLengthNV"), typeof(glGetPathLength));
 			PointAlongPath = (glPointAlongPath)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glPointAlongPathNV"), typeof(glPointAlongPath));
 			PathStencilFunc = (glPathStencilFunc)Marshal.GetDelegateForFunctionPointer(context.GetAddress("glPathStencilFuncNV"), typeof(glPathStencilFunc));
-
+*/
 		}
 
 
 
 		#region Extensions
 
+		glMatrixLoadIdentity MatrixLoadIdentity;
+		glMatrixOrtho MatrixOrtho;
 
+/*
 		glGenPaths GenPaths;
 		glDeletePaths DeletePaths;
 		glIsPath IsPath;
@@ -300,8 +323,11 @@ namespace ArcEngine.Examples.PathRenderingDemo
 		glGetPathLength GetPathLength;
 		glPointAlongPath PointAlongPath;
 		glPathStencilFunc PathStencilFunc;
+*/
+		unsafe delegate void glMatrixLoadIdentity(int mode);
+		unsafe delegate void glMatrixOrtho(int mode, float left, float right, float bottom, float top, float zNear, float zFar);
 
-
+/*
 		unsafe delegate int glGenPaths(int range);
 		unsafe delegate void glDeletePaths(int path, int range);
 		unsafe delegate bool glIsPath(int path);
@@ -316,10 +342,10 @@ namespace ArcEngine.Examples.PathRenderingDemo
 		unsafe delegate void glCopyPath(int resultPath, int srcPath);
 		unsafe delegate void glInterpolatePaths(int resultPath, int pathA, int pathB, float weight);
 		unsafe delegate void glTransformPath(int resultPath, int srcPath, int transformType, float* transformValues);
-		unsafe delegate void glPathParameteriv(int path, int pname, int* value);
+		unsafe delegate void glPathParameteriv(int path, int pname, IntPtr value);
 		unsafe delegate void glPathParameteri(int path, int pname, int value);
-		unsafe delegate void glPathParameterfv(int path, int pname, float* value);
-		unsafe delegate void glPathParameterf(int path, int pname, float value);
+		unsafe delegate void glPathParameterfv(int path, int pname, IntPtr value);
+		unsafe delegate void glPathParameterf(int path, int pname, double value);
 		unsafe delegate void glPathDashArray(int path, int dashCount, float* dashArray);
 		unsafe delegate void glPathStencilFunc(int func, int reference, int mask);
 		unsafe delegate void glPathStencilDepthOffset(float factor, float units);
@@ -351,20 +377,41 @@ namespace ArcEngine.Examples.PathRenderingDemo
 		unsafe delegate bool glIsPointInStrokePath(int path, float x, float y);
 		unsafe delegate float glGetPathLength(int path, int startSegment, int numSegments);
 		unsafe delegate bool glPointAlongPath(int path, int startSegment, int numSegments, float distance, float* x, float* y, float* tangentX, float* tangentY);
+*/
 
 
 
+		unsafe delegate void glPathCommands(GLuint path, GLsizei numCommands, GLubyte *commands, GLsizei numCoords, GLenum coordType, GLintptr coords);
+		unsafe delegate void glPathString(GLuint path, GLenum format, GLsizei length, string pathString);
+		unsafe delegate void glPathParameteri(GLuint path, GLenum pname, GLint value);
+		unsafe delegate void glPathParameterf(GLuint path, GLenum pname, GLfloat value);
+		unsafe delegate void glCoverFillPath(GLuint path, GLenum fillMode, GLuint mask);
+		unsafe delegate void glCoverStrokePath(GLuint path, GLint reference, GLuint mask);
+		unsafe delegate void glStencilFillPath(GLuint path, GLenum coverMode);
+		unsafe delegate void glStencilStrokePath(GLuint path, GLenum coverMode);
 
-
-
-
-
+		glPathCommands				PathCommands;		
+		glPathString				PathString;		
+		glPathParameteri			PathParameteri;	
+		glPathParameterf			PathParameterf;	
+		glCoverFillPath				CoverFillPath;		
+		glCoverStrokePath			CoverStrokePath;	
+		glStencilFillPath			StencilFillPath;	
+		glStencilStrokePath			StencilStrokePath;
 
 
 		#endregion
 
 
 		#region Defines
+		/* MatrixMode */
+		const int GL_MODELVIEW = 0x1700;
+		const int GL_PROJECTION = 0x1701;
+		const int GL_TEXTURE = 0x1702;
+
+
+
+
 		const int GL_BYTE = 0x1400;
 		const int GL_UNSIGNED_BYTE = 0x1401;
 		const int GL_SHORT = 0x1402;
@@ -767,6 +814,12 @@ namespace ArcEngine.Examples.PathRenderingDemo
 
 
 		#region Properties
+
+		/// <summary>
+		/// 
+		/// </summary>
+		SpriteBatch Batch;
+
 
 		/// <summary>
 		/// Message to display
