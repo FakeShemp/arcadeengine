@@ -177,7 +177,7 @@ namespace DungeonEye
 
 				switch (node.Name.ToLower())
 				{
-					case "items":
+					case Item.Tag:
 					{
 						ItemTileSetName = node.Attributes["tileset"].Value;
 					}

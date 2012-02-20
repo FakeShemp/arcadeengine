@@ -27,6 +27,7 @@ using System.Collections.Generic;
 
 // http://blog.paranoidferret.com/index.php/2008/04/03/winforms-accessing-mouse-and-keyboard-state/
 // http://cboard.cprogramming.com/showthread.php?p=783623
+//http://www.mti.epita.fr/blogs/2011/10/17/realisation-dune-gestion-des-entrees-utilisateur-clavier-gamepad-xbox-360-en-c-xna/
 
 namespace ArcEngine.Input
 {
