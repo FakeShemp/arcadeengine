@@ -598,12 +598,19 @@ namespace DungeonEye
 				case CharGenStates.SelectName:
 				{
 					// Back
-					if (BackButton.Contains(Mouse.Location) && Mouse.IsNewButtonDown(MouseButtons.Left))
+					//if (BackButton.Contains(Mouse.Location) && Mouse.IsNewButtonDown(MouseButtons.Left))
+					if (new Rectangle(448, 350, 80, 32).Contains(Mouse.Location) && Mouse.IsNewButtonDown(MouseButtons.Left))
 					{
 						CurrentState = CharGenStates.Confirm;
 						Keyboard.KeyDown -= Keyboard_OnKeyDown;
 					}
 
+					// OK
+					if (new Rectangle(528, 350, 80, 32).Contains(Mouse.Location) && Mouse.IsNewButtonDown(MouseButtons.Left))
+					{
+						Keyboard.KeyDown -= new EventHandler<PreviewKeyDownEventArgs>(Keyboard_OnKeyDown);
+						CurrentState = CharGenStates.SelectHero;
+					}
 				}
 				break;
 				#endregion
@@ -845,9 +852,14 @@ namespace DungeonEye
 					DisplayProperties();
 
 					Batch.DrawTile(Heads, CurrentHero.Head, new Point(438, 132));
+
+					// Ok
+					Batch.DrawTile(Tileset, 5, new Point(528, 350));
+					Batch.DrawTile(Tileset, 15, new Point(560, 360));
+
 					// Back
-					Batch.DrawTile(Tileset, 3, BackButton.Location);
-					Batch.DrawTile(Tileset, 12, new Point(BackButton.Location.X + 12, BackButton.Location.Y + 12));
+					Batch.DrawTile(Tileset, 5, new Point(448, 350));
+					Batch.DrawTile(Tileset, 12, new Point(466, 362));
 				}
 				break;
 				#endregion
@@ -882,6 +894,7 @@ namespace DungeonEye
 
 			Batch.End();
 		}
+
 
 
 
@@ -1066,9 +1079,10 @@ namespace DungeonEye
 
 
 				case Keys.Return:
-
-				Keyboard.KeyDown -= new EventHandler<PreviewKeyDownEventArgs>(Keyboard_OnKeyDown);
-				CurrentState = CharGenStates.SelectHero;
+				{
+					Keyboard.KeyDown -= new EventHandler<PreviewKeyDownEventArgs>(Keyboard_OnKeyDown);
+					CurrentState = CharGenStates.SelectHero;
+				}
 				break;
 
 				default:
