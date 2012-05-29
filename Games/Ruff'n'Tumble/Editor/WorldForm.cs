@@ -30,12 +30,13 @@ using ArcEngine.Forms;
 using ArcEngine.Graphic;
 using RuffnTumble;
 using WeifenLuo.WinFormsUI.Docking;
+using ArcEngine.Interface;
 
 
 namespace RuffnTumble.Editor
 {
 	/// <summary>
-	/// 
+	/// World form edition
 	/// </summary>
 	public partial class WorldForm : AssetEditorBase
 	{
@@ -1130,6 +1131,19 @@ namespace RuffnTumble.Editor
 				return World.CurrentLevel;
 			}
 		}
+
+
+		/// <summary>
+		/// Asset
+		/// </summary>
+		public override IAsset Asset
+		{
+			get
+			{
+				return World;
+			}
+		}
+
 
 		/// <summary>
 		/// 

@@ -476,7 +476,7 @@ namespace RuffnTumble
 			TileLayer.Draw(batch, Camera);
 
 			// Draw collision layer
-			CollisionLayer.Draw(batch, Camera);
+	//		CollisionLayer.Draw(batch, Camera);
 
 			//
 			// Draw Spawnpoints

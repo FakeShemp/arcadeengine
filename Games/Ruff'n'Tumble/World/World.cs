@@ -10,7 +10,7 @@ using ArcEngine.Interface;
 namespace RuffnTumble
 {
 	/// <summary>
-	/// 
+	/// World asset definition
 	/// </summary>
 	public class World : IAsset
 	{
@@ -115,7 +115,6 @@ namespace RuffnTumble
 						Trace.WriteLine("World '{0}' : Unknown node element found (\"{1}\")", Name, node.Name);
 					}
 					break;
-
 				}
 			}
 

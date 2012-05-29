@@ -12,7 +12,7 @@
     <AssemblyName>RuffnTumble</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <StartupObject>RuffnTumble.Ruff</StartupObject>
+    <StartupObject>RuffnTumble.Game</StartupObject>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <SccProjectName>
     </SccProjectName>
@@ -198,6 +198,7 @@
     <Compile Include="Editor\Wizards\NewModelWizard.Designer.cs">
       <DependentUpon>NewModelWizard.cs</DependentUpon>
     </Compile>
+    <Compile Include="GameScreen.cs" />
     <Compile Include="World\Camera.cs" />
     <Compile Include="World\Entity.cs" />
     <Compile Include="Interfaces\IEntity.cs" />
@@ -213,7 +214,7 @@
     <Compile Include="World\SpawnLocation.cs" />
     <Compile Include="World\World.cs" />
     <Compile Include="Player.cs" />
-    <Compile Include="Ruff.cs" />
+    <Compile Include="RuffnTumble.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="OpenTK, Version=0.9.9.4, Culture=neutral, processorArchitecture=MSIL">

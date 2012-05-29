@@ -154,12 +154,14 @@ namespace ArcEngine.Editor
 			if (node == null || node.Nodes.Count > 0)
 				return false;
 
+			// Don not edit binaires
 			if (node.Text.StartsWith("Binaries"))
 			{
 				new BinaryForm().Show(DockPanel, DockState.Document);
 				return true;
 			}
 
+			// Asset not editable
 			if (node.Tag == null)
 				return false;
 

@@ -75,7 +75,11 @@ namespace ArcEngine
 			if (string.IsNullOrEmpty(name))
 				throw new ArgumentNullException("name");
 
+			// Create the form from the registred asset
 			AssetEditorBase form = Activator.CreateInstance(Editor, new object[] { Get(name) }) as AssetEditorBase;
+			if (form == null)
+				throw new NullReferenceException("");
+
 			form.TabText = name + " (" + form.Asset.GetType().Name + ")";
 			return form;
 		}
