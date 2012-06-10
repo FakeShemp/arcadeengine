@@ -112,7 +112,7 @@ namespace RuffnTumble
 			param.Major = 2;
 			param.Minor = 1;
 			param.Compatible = true;
-			param.Size = new Size(800, 600);
+			param.Size = new Size(1024, 768);
 			CreateGameWindow(param);
 			Window.Text = "Ruff'n'Tumble";
 
@@ -131,7 +131,7 @@ namespace RuffnTumble
 			Gamepad.Init(Window);
 
 			// Register specific game assets
-			ResourceManager.RegisterAsset<World>(typeof(RuffnTumble.Editor.WorldForm), "world");
+			//ResourceManager.RegisterAsset<World>(typeof(RuffnTumble.Editor.WorldForm), "world");
 
 
 			GSM.AddScreen(new GameScreen());

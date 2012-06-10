@@ -107,7 +107,7 @@ namespace RuffnTumble
 			Display.RenderState.ClearColor = Color.CornflowerBlue;
 			Display.ClearBuffers();
 
-			//		Display.ClearBuffers();
+
 			Batch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Deferred, false);
 
 
@@ -208,10 +208,6 @@ namespace RuffnTumble
 		}
 
 
-
-
-
-
 		#endregion
 
 
@@ -252,6 +248,7 @@ namespace RuffnTumble
 
 			#region Keyboard
 
+			// Exit
 			if (Keyboard.IsNewKeyPress(Keys.Escape))
 				Game.Exit();
 
@@ -277,7 +274,7 @@ namespace RuffnTumble
 				World.SetLevel("Level_5");
 			}
 
-			int speed = 4;
+			int speed = 1;
 
 			if (Keyboard.IsKeyPress(Keys.Right))
 			{

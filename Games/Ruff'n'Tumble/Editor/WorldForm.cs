@@ -813,8 +813,8 @@ namespace RuffnTumble.Editor
 				pos.Y /= Level.BlockSize.Height;
 
 				// Smooth the value
-				pos.X += (LastMousePos.X - e.X) / 3;
-				pos.Y += (LastMousePos.Y - e.Y) / 3;
+				pos.X += (LastMousePos.X - e.X) / 6;
+				pos.Y += (LastMousePos.Y - e.Y) / 6;
 
 
 				// Scroll the layer

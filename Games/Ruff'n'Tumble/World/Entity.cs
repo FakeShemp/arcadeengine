@@ -49,7 +49,7 @@ namespace RuffnTumble
 	/// <summary>
 	/// 
 	/// </summary>
-	public class Entity
+	public class Entity : IDisposable
 	{
 		/// <summary>
 		/// Constructor
@@ -59,6 +59,14 @@ namespace RuffnTumble
 		public Entity(Level level)
 		{
 			Level = level;
+		}
+
+
+		/// <summary>
+		/// Disposes resources
+		/// </summary>
+		public void Dispose()
+		{
 		}
 
 

@@ -162,7 +162,7 @@ namespace RuffnTumble
 			if (TileSet == null || !Visible || camera == null || batch == null)
 				return;
 
-
+/*
 			// Taille de rendu du niveau
 			int renderwidth = camera.ViewPort.Width / Level.BlockDimension.Width;
 			int renderheight = camera.ViewPort.Height / Level.BlockDimension.Height;
@@ -197,14 +197,19 @@ namespace RuffnTumble
 					batch.DrawTile(TileSet, id, rect.Location, rect, color);
 				}
 			}
+*/
+			
+			for (int y = 0; y < Size.Height; y++)
+				for (int x = 0; x < Size.Width; x++)
+				{
+					Rectangle rect = new Rectangle(
+						new Point((int)(x * Level.BlockDimension.Width) - camera.Location.X,
+									(int)(y * Level.BlockDimension.Height) - camera.Location.Y),
+						new Size(32, 32)
+						);
 
-
-
-
-
-
-
-
+					batch.DrawTile(TileSet, GetTileAtBlock(new Point(x, y)), rect.Location, rect, Color.FromArgb(Alpha, Color.White));
+				}
 		}
 
 
@@ -384,57 +389,32 @@ namespace RuffnTumble
 			if (xml == null)
 				return false;
 
-			XmlNodeList nodes = xml.ChildNodes;
-			foreach (XmlNode node in nodes)
+			if (xml.Attributes["texture"] != null)
+				SetTexture(xml.Attributes["texture"].Value);
+
+			if (xml.Attributes["visibility"] != null)
+				Visible = Boolean.Parse(xml.Attributes["visibility"].Value);
+
+			if (xml.Attributes["alpha"] != null)
+				Alpha = byte.Parse(xml.Attributes["alpha"].Value);
+
+
+			foreach (XmlNode node in xml.ChildNodes)
 			{
-				if (node.NodeType == XmlNodeType.Comment)
+				if (node.Name != "row")
 					continue;
+				
+				int rowid = Int32.Parse(node.Attributes["id"].Value);
+				int pos = 0;
 
-				switch (node.Name.ToLower())
-				{
-					case "texture":
-					{
-						SetTexture(node.Attributes["name"].Value);
-					}
-					break;
-
-
-					// Add a row
-					case "row":
-					{
-						int rowid = Int32.Parse(node.Attributes["id"].Value);
-						int pos = 0;
-
-						string[] val = node.InnerText.Split(null as char[], StringSplitOptions.RemoveEmptyEntries);
-						foreach (string id in val)
-							Tiles[rowid][pos++] = Int32.Parse(id);
-					}
-					break;
+				string[] val = node.InnerText.Split(null as char[], StringSplitOptions.RemoveEmptyEntries);
+				foreach (string id in val)
+					Tiles[rowid][pos++] = Int32.Parse(id);
 
 
-					// Layer visibility
-					case "visibility":
-					{
-						Visible = Boolean.Parse(node.Attributes["value"].Value);
-					}
-					break;
-
-					// Alpha
-					case "alpha":
-					{
-						Alpha = byte.Parse(node.Attributes["value"].Value);
-					}
-					break;
-
-					default:
-					{
-						Trace.WriteLine("Layer : Unknown node element \"{0}\"", node.Name);
-					}
-					break;
-				}
 			}
-			return true;
 
+			return true;
 		}
 
 
@@ -476,7 +456,7 @@ namespace RuffnTumble
 
 
 		/// <summary>
-		/// Returns the BufferID of the tile at block location
+		/// Returns the id of the tile at block location
 		/// </summary>
 		/// <param name="point">Point in the layer in block</param>
 		/// <returns>ID of the block</returns>

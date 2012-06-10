@@ -120,7 +120,7 @@ namespace ArcEngine.Examples.DrawBufer
 			// Vertex elements
 			float[] vertices = new float[]
 			{
-				// Coord							Color									Texture
+				// Coord						Color							Texture
 				100.0f,  100.0f,				1.0f, 0.0f, 0.0f, 1.0f,			0.0f,   0.0f,
 				500.0f,  100.0f,				0.0f, 1.0f, 0.0f, 1.0f,			256.0f, 0.0f,
 				100.0f,  500.0f,				0.0f, 0.0f, 1.0f, 1.0f,			0.0f,   256.0f,

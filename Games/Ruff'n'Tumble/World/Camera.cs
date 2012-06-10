@@ -17,7 +17,7 @@ namespace RuffnTumble
 		/// <param name="level"></param>
 		public Camera(Level level)
 		{
-			// Hardcoded !!!
+			//HACK: Hardcoded !!!
 			ViewPort = new Rectangle(0, 56, 800, 544);
 			Scale = new Vector2(2.0f, 2.0f);
 		}

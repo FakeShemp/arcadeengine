@@ -29,8 +29,13 @@ namespace RuffnTumble
 		/// </summary>
 		public void Dispose()
 		{
+			CurrentLevel = null;
+
 			foreach (Level level in Levels.Values)
-				level.Dispose();
+				if (level != null)
+					level.Dispose();
+
+			Levels.Clear();
 		}
 
 		/// <summary>
@@ -178,8 +183,8 @@ namespace RuffnTumble
 		/// <summary>
 		/// Adds a level to the world
 		/// </summary>
-		/// <param name="name"></param>
-		/// <param name="level"></param>
+		/// <param name="name">Associated level's name</param>
+		/// <param name="level">Level handle</param>
 		public void AddLevel(string name, Level level)
 		{
 			if (string.IsNullOrEmpty(name) || level == null)
@@ -192,7 +197,7 @@ namespace RuffnTumble
 		/// <summary>
 		/// Removes a level 
 		/// </summary>
-		/// <param name="name"></param>
+		/// <param name="name">Level's name</param>
 		public void RemoveLevel(string name)
 		{
 			if (string.IsNullOrEmpty(name))

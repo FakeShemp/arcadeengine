@@ -60,7 +60,7 @@ namespace RuffnTumble
 
 
 		/// <summary>
-		/// 
+		/// Dispose all resources
 		/// </summary>
 		public void Dispose()
 		{
@@ -76,8 +76,25 @@ namespace RuffnTumble
 				CollisionLayer.Dispose();
 			CollisionLayer = null;
 
+			Brushes.Clear();
+			Paths.Clear();
+			SpawnPoints.Clear();
 
+
+
+			foreach (var entity in Entities)
+			{
+				if (entity.Value != null)
+					entity.Value.Dispose(); 
+			}
+			Entities.Clear();
+
+	
+			Size = Size.Empty;
+			Camera = null;
+			BlockSize = Size.Empty;
 		}
+
 
 		#region IO routines
 
@@ -203,13 +220,13 @@ namespace RuffnTumble
 					// Tiles of the level
 					case "tiles":
 					{
-						TileLayer.Load(node.FirstChild);
+						TileLayer.Load(node);
 					}
 					break;
 
 					case "collision":
 					{
-						CollisionLayer.Load(node.FirstChild);
+						CollisionLayer.Load(node);
 					}
 					break;
 
@@ -466,7 +483,7 @@ namespace RuffnTumble
 		/// <summary>
 		/// Draws the level
 		/// </summary>
-		/// <param name="batch"></param>
+		/// <param name="batch">Spritebatch handle</param>
 		public void Draw(SpriteBatch batch)
 		{
 			if (batch == null)
@@ -476,7 +493,7 @@ namespace RuffnTumble
 			TileLayer.Draw(batch, Camera);
 
 			// Draw collision layer
-	//		CollisionLayer.Draw(batch, Camera);
+			CollisionLayer.Draw(batch, Camera);
 
 			//
 			// Draw Spawnpoints
@@ -540,6 +557,7 @@ namespace RuffnTumble
 		/// <summary>
 		/// Updates all layers
 		/// </summary>
+		/// <param name="time">Elapsed game time</param>
 		public void Update(GameTime time)
 		{
 			// Ask all entities to update
@@ -928,7 +946,8 @@ namespace RuffnTumble
 
 
 		/// <summary>
-		/// If true, level is ready to be used. Else call Init() to make it ready to use.
+		/// If true, level is ready to be used. 
+		/// Else call Init() to make it ready to use.
 		/// </summary>
 		[Browsable(false)]
 		public bool LevelReady
@@ -982,6 +1001,9 @@ namespace RuffnTumble
 		{
 			get
 			{
+				if (Camera == null)
+					return Size.Empty;
+
 				return new Size((int)(BlockSize.Width * Camera.Scale.X), (int)(BlockSize.Height * Camera.Scale.Y));
 			}
 		}
