@@ -1,8 +1,10 @@
-﻿using System.Drawing;
+﻿using System.Windows.Forms;
+using System.Drawing;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using ArcEngine;
+using ArcEngine.Input;
 
 namespace RuffnTumble
 {
@@ -14,12 +16,13 @@ namespace RuffnTumble
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="level"></param>
+		/// <param name="level">Level handle</param>
 		public Camera(Level level)
 		{
 			//HACK: Hardcoded !!!
-			ViewPort = new Rectangle(0, 56, 800, 544);
-			Scale = new Vector2(2.0f, 2.0f);
+			ViewPort = new Rectangle(0, 56, 800, 44);
+			Speed = 250.0f;
+			ClampToEdges = true;
 		}
 
 
@@ -29,6 +32,33 @@ namespace RuffnTumble
 		/// <param name="time"></param>
 		public void Update(GameTime time)
 		{
+			Console.WriteLine(time.ElapsedGameTime);
+
+			float speed = Speed * time.ElapsedGameTime.Milliseconds / 1000;
+
+			if (Keyboard.IsKeyPress(Keys.Right))
+			{
+				Location.X += speed;
+			}
+			if (Keyboard.IsKeyPress(Keys.Left))
+			{
+				Location.X -= speed;
+			}
+			if (Keyboard.IsKeyPress(Keys.Up))
+			{
+				Location.Y -= speed;
+			}
+			if (Keyboard.IsKeyPress(Keys.Down))
+			{
+				Location.Y += speed;
+			}
+
+
+			if (ClampToEdges)
+			{
+				Location.X = Math.Max(0.0f, Location.X);
+				Location.Y = Math.Max(0.0f, Location.Y);
+			}
 		}
 
 
@@ -36,10 +66,12 @@ namespace RuffnTumble
 		/// <summary>
 		/// Translate the camera
 		/// </summary>
-		/// <param name="offset"></param>
-		public void Translate(int x, int y)
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		public void Translate(float x, float y)
 		{
-			Location.Offset(x, y);
+			Location.X += x;
+			Location.Y += y;
 		}
 
 
@@ -49,9 +81,9 @@ namespace RuffnTumble
 
 
 		/// <summary>
-		/// Location of the camera
+		/// Location of the camera in the level
 		/// </summary>
-		public Point Location;
+		public PointF Location;
 
 
 		/// <summary>
@@ -76,22 +108,11 @@ namespace RuffnTumble
 		/// <summary>
 		/// Offset of the target
 		/// </summary>
-		public Point Offset
+		public PointF TargetOffset
 		{
 			get;
 			set;
 		}
-
-
-		/// <summary>
-		/// Scale factor
-		/// </summary>
-		public Vector2 Scale
-		{
-			get;
-			set;
-		}
-
 
 
 		/// <summary>
@@ -103,6 +124,15 @@ namespace RuffnTumble
 			set;
 		}
 
+
+		/// <summary>
+		/// Movment speed
+		/// </summary>
+		public float Speed
+		{
+			get;
+			set;
+		}
 
 		#endregion
 	}

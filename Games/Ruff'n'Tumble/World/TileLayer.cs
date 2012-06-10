@@ -109,9 +109,8 @@ namespace RuffnTumble
 
 			return true;
 		}
-*/
 
-/*
+ * 
 		/// <summary>
 		/// Build the tileset
 		/// </summary>
@@ -202,13 +201,8 @@ namespace RuffnTumble
 			for (int y = 0; y < Size.Height; y++)
 				for (int x = 0; x < Size.Width; x++)
 				{
-					Rectangle rect = new Rectangle(
-						new Point((int)(x * Level.BlockDimension.Width) - camera.Location.X,
-									(int)(y * Level.BlockDimension.Height) - camera.Location.Y),
-						new Size(32, 32)
-						);
-
-					batch.DrawTile(TileSet, GetTileAtBlock(new Point(x, y)), rect.Location, rect, Color.FromArgb(Alpha, Color.White));
+					Vector2 loc = new Vector2((x * Level.BlockSize.Width) - camera.Location.X, (y * Level.BlockSize.Height) - camera.Location.Y);
+					batch.DrawTile(TileSet, GetTileAtBlock(new Point(x, y)), loc, Color.FromArgb(Alpha, Color.White), 0.0f, new Vector2(1.0f, 1.0f), SpriteEffects.None, 0.0f);
 				}
 		}
 
@@ -479,10 +473,10 @@ namespace RuffnTumble
 		/// <returns>ID of the tile</returns>
 		public int GetTileAtPixel(Point point)
 		{
-			if (Level.BlockDimension.Width == 0 || Level.BlockDimension.Height == 0)
+			if (Level.BlockSize.Width == 0 || Level.BlockSize.Height == 0)
 				return -1;
 
-			Point p = new Point(point.X / Level.BlockDimension.Width, point.Y / Level.BlockDimension.Height);
+			Point p = new Point(point.X / Level.BlockSize.Width, point.Y / Level.BlockSize.Height);
 
 			return GetTileAtBlock(p);
 		}
@@ -565,7 +559,7 @@ namespace RuffnTumble
 			{
 				if (colblock.BottomLeft != 0 || colblock.BottomRight != 0)
 				{
-					res.FinalVelocity.Y = velocity.Y - (entity.Location.Y + velocity.Y) % Level.BlockDimension.Height - 1;
+					res.FinalVelocity.Y = velocity.Y - (entity.Location.Y + velocity.Y) % Level.BlockSize.Height - 1;
 				}
 				else
 					res.FinalVelocity.Y = velocity.Y;

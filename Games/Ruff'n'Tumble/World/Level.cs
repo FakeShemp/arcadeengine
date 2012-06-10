@@ -355,8 +355,8 @@ namespace RuffnTumble
 			Size = new Size(Size.Width, Size.Height + 1);
 
 			// Offset objects
-			Rectangle zone = new Rectangle(0, row * BlockDimension.Height, SizeInPixel.Width, SizeInPixel.Height);
-			OffsetObjects(zone, new Point(0, BlockDimension.Height));
+			Rectangle zone = new Rectangle(0, row * BlockSize.Height, SizeInPixel.Width, SizeInPixel.Height);
+			OffsetObjects(zone, new Point(0, BlockSize.Height));
 		}
 
 
@@ -373,8 +373,8 @@ namespace RuffnTumble
 			Size = new Size(Size.Width, Size.Height - 1);
 
 			// Offset objects
-			Rectangle zone = new Rectangle(0, row * BlockDimension.Height, SizeInPixel.Width, SizeInPixel.Height);
-			OffsetObjects(zone, new Point(0, -BlockDimension.Height));
+			Rectangle zone = new Rectangle(0, row * BlockSize.Height, SizeInPixel.Width, SizeInPixel.Height);
+			OffsetObjects(zone, new Point(0, -BlockSize.Height));
 
 		}
 
@@ -393,8 +393,8 @@ namespace RuffnTumble
 			Size = new Size(Size.Width + 1, Size.Height);
 
 			// Offset objects
-			Rectangle zone = new Rectangle(column * BlockDimension.Width, 0, SizeInPixel.Width, SizeInPixel.Height);
-			OffsetObjects(zone, new Point(BlockDimension.Width, 0));
+			Rectangle zone = new Rectangle(column * BlockSize.Width, 0, SizeInPixel.Width, SizeInPixel.Height);
+			OffsetObjects(zone, new Point(BlockSize.Width, 0));
 
 		}
 
@@ -412,9 +412,9 @@ namespace RuffnTumble
 
 			// Offset objects
 			Rectangle zone = new Rectangle(
-				column * BlockDimension.Width, 0,
+				column * BlockSize.Width, 0,
 				SizeInPixel.Width, SizeInPixel.Height);
-			OffsetObjects(zone, new Point(-BlockDimension.Width, 0));
+			OffsetObjects(zone, new Point(-BlockSize.Width, 0));
 
 		}
 
@@ -564,6 +564,9 @@ namespace RuffnTumble
 			foreach (Entity entity in Entities.Values)
 				entity.Update(time);
 
+
+			// Update the camera
+			Camera.Update(time);
 		}
 
 
@@ -579,8 +582,8 @@ namespace RuffnTumble
 		/// <returns>Position in screen coordinate</returns>
 		public Point LevelToScreen(Point pos)
 		{
-			return new Point(pos.X - Camera.Location.X + Camera.ViewPort.Left,
-				pos.Y - Camera.Location.Y + Camera.ViewPort.Top);
+			return new Point(pos.X - (int)Camera.Location.X + Camera.ViewPort.Left,
+				pos.Y - (int)Camera.Location.Y + Camera.ViewPort.Top);
 		}
 
 
@@ -592,8 +595,8 @@ namespace RuffnTumble
 		public Point ScreenToLevel(Point pos)
 		{
 			return new Point(
-				Camera.Location.X + pos.X - Camera.ViewPort.Left,
-				Camera.Location.Y + pos.Y - Camera.ViewPort.Top);
+				(int)Camera.Location.X + pos.X - Camera.ViewPort.Left,
+				(int)Camera.Location.Y + pos.Y - Camera.ViewPort.Top);
 		}
 
 
@@ -605,10 +608,10 @@ namespace RuffnTumble
 		/// <returns>Block coordinate in the layer</returns>
 		public Point PositionToBlock(Point point)
 		{
-			if (BlockDimension.Width == 0 || BlockDimension.Height == 0)
+			if (BlockSize.Width == 0 || BlockSize.Height == 0)
 				return Point.Empty;
 
-			return new Point(point.X / BlockDimension.Width, point.Y / BlockDimension.Height);
+			return new Point(point.X / BlockSize.Width, point.Y / BlockSize.Height);
 		}
 
 		#endregion
@@ -976,7 +979,7 @@ namespace RuffnTumble
 		{
 			get
 			{
-				return new Size(BlockDimension.Width * Size.Width, BlockDimension.Height * Size.Height);
+				return new Size(BlockSize.Width * Size.Width, BlockSize.Height * Size.Height);
 			}
 		}
 
@@ -992,7 +995,7 @@ namespace RuffnTumble
 			set;
 		}
 
-
+/*
 		/// <summary>
 		/// Gets the dimension in pixel of a block (including the zoom factor)
 		/// </summary>
@@ -1008,7 +1011,7 @@ namespace RuffnTumble
 			}
 		}
 
-/*
+
 		/// <summary>
 		/// Gets/sets the location (in pixel) in the layer (aka : scrolling).
 		/// </summary>

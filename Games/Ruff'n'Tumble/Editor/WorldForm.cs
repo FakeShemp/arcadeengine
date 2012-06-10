@@ -100,7 +100,7 @@ namespace RuffnTumble.Editor
 			if (LevelHScroller != null)
 			{
 				LevelHScroller.LargeChange = GlControl.Width / (Level.BlockSize.Width);
-				LevelHScroller.Maximum = (Level.SizeInPixel.Width - GlControl.Width) / (Level.BlockSize.Width * (int)Level.Camera.Scale.X) + LevelHScroller.LargeChange;
+				LevelHScroller.Maximum = (Level.SizeInPixel.Width - GlControl.Width) / Level.BlockSize.Width + LevelHScroller.LargeChange;
 				LevelHScroller.Maximum = 1000;
 			}
 
@@ -108,7 +108,7 @@ namespace RuffnTumble.Editor
 			if (LevelVScroller != null)
 			{
 				LevelVScroller.LargeChange = GlControl.Height / Level.BlockSize.Height; //GlControl.Height;
-				LevelVScroller.Maximum = (Level.SizeInPixel.Height - GlControl.Height) / (Level.BlockSize.Height * (int)Level.Camera.Scale.Y) + LevelVScroller.LargeChange;
+				LevelVScroller.Maximum = (Level.SizeInPixel.Height - GlControl.Height) / Level.BlockSize.Height + LevelVScroller.LargeChange;
 				LevelVScroller.Maximum = 1000;
 			}
 		}
@@ -531,10 +531,10 @@ namespace RuffnTumble.Editor
 			if (sizingBrush)
 			{
 				Rectangle rec = new Rectangle(
-					BrushRectangle.Left * Level.BlockDimension.Width,
-					BrushRectangle.Top * Level.BlockDimension.Height,
-					BrushRectangle.Width * Level.BlockDimension.Width,
-					BrushRectangle.Height * Level.BlockDimension.Height);
+					BrushRectangle.Left * Level.BlockSize.Width,
+					BrushRectangle.Top * Level.BlockSize.Height,
+					BrushRectangle.Width * Level.BlockSize.Width,
+					BrushRectangle.Height * Level.BlockSize.Height);
 				rec.Location = Level.LevelToScreen(rec.Location);
 				Batch.DrawRectangle(rec, Color.Green);
 			}
@@ -716,11 +716,11 @@ namespace RuffnTumble.Editor
 			{
 
 				Point pos = e.Location;
-				pos.Offset(Level.Camera.Location);
+				pos.Offset((int)Level.Camera.Location.X, (int)Level.Camera.Location.Y);
 
 				BrushRectangle = new Rectangle(
-					pos.X / Level.BlockDimension.Width,
-					pos.Y / Level.BlockDimension.Height,
+					pos.X / Level.BlockSize.Width,
+					pos.Y / Level.BlockSize.Height,
 					1,
 					1);
 
@@ -740,8 +740,8 @@ namespace RuffnTumble.Editor
 
 				// Find the entity under the mouse
 				Point pos = e.Location;
-				pos.X += Level.Camera.Location.X;
-				pos.Y += Level.Camera.Location.Y;
+				pos.X += (int)Level.Camera.Location.X;
+				pos.Y += (int)Level.Camera.Location.Y;
 				//pos.Offset(CurrentLayer.Offset);
 
 				entity = Level.FindEntity(pos);
@@ -808,7 +808,7 @@ namespace RuffnTumble.Editor
 			if (e.Button == MouseButtons.Middle)
 			{
 				// Find the new coord for the level
-				pos = Level.Camera.Location;
+				pos = new Point((int)Level.Camera.Location.X, (int)Level.Camera.Location.Y);
 				pos.X /= Level.BlockSize.Width;
 				pos.Y /= Level.BlockSize.Height;
 
@@ -883,8 +883,8 @@ namespace RuffnTumble.Editor
 			{
 				pos = Level.ScreenToLevel(e.Location);
 
-				BrushRectangle.Size = new Size(pos.X / Level.BlockDimension.Width - BrushRectangle.Left + 1,
-												pos.Y / Level.BlockDimension.Height - BrushRectangle.Top + 1);
+				BrushRectangle.Size = new Size(pos.X / Level.BlockSize.Width - BrushRectangle.Left + 1,
+												pos.Y / Level.BlockSize.Height - BrushRectangle.Top + 1);
 
 				return;
 			}
