@@ -204,7 +204,7 @@
     <Compile Include="Interfaces\IEntity.cs" />
     <Compile Include="Interfaces\ILayer.cs" />
     <Compile Include="Interfaces\ILevel.cs" />
-    <Compile Include="World\TileLayer.cs">
+    <Compile Include="World\Layer.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="World\LayerBrush.cs" />

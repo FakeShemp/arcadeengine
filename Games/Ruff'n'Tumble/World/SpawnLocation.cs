@@ -68,8 +68,8 @@ namespace RuffnTumble
 				{
 					case "location":
 					{
-						Location = new Point(Int32.Parse(node.Attributes["x"].Value),
-							Int32.Parse(node.Attributes["y"].Value));
+						Location = new Vector2(float.Parse(node.Attributes["x"].Value),
+							float.Parse(node.Attributes["y"].Value));
 					}
 					break;
 
@@ -116,6 +116,10 @@ namespace RuffnTumble
 
 		#region Properties
 
+
+		/// <summary>
+		/// Name of the spawn location
+		/// </summary>
 		public string Name
 		{
 			get;
@@ -126,7 +130,7 @@ namespace RuffnTumble
 		/// <summary>
 		/// Offset of the SpawnPoint
 		/// </summary>
-		public Point Location
+		public Vector2 Location
 		{
 			get;
 			set;
@@ -138,11 +142,11 @@ namespace RuffnTumble
         /// to the entity location in screen coordinate)
         /// </summary>
         [Browsable(false)]
-        public Rectangle CollisionBoxLocation
+        public Vector4 CollisionBoxLocation
         {
             get
             {
-                return new Rectangle(
+                return new Vector4(
                     Location.X - 8,
                     Location.Y - 8,
                     16,

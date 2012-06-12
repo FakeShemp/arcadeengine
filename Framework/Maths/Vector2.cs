@@ -797,6 +797,18 @@ namespace ArcEngine
 
 		#endregion
 
+
+
+		/// <summary>
+		/// Offset the current vector
+		/// </summary>
+		/// <param name="offset">Offset</param>
+		public void Offset(Vector2 offset)
+		{
+			X += offset.X;
+			Y += offset.Y;
+		}
+
 		/// <summary>
 		/// 
 		/// </summary>

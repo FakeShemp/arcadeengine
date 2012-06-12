@@ -154,7 +154,7 @@ namespace RuffnTumble
 				{
 					case "location":
 					{
-						Location = new Point(Int32.Parse(node.Attributes["x"].Value), Int32.Parse(node.Attributes["y"].Value));
+						Location = new Vector2(float.Parse(node.Attributes["x"].Value), float.Parse(node.Attributes["y"].Value));
 					}
 					break;
 
@@ -199,7 +199,7 @@ namespace RuffnTumble
 		/// Renders the entity
 		/// </summary>
 		///<param name="loc">Location of the entity relative to the layer coordinate</param>
-		public void Draw(SpriteBatch batch, Point loc)
+		public void Draw(SpriteBatch batch, Vector2 loc)
 		{
 			if (batch == null)
 				return;
@@ -482,7 +482,7 @@ namespace RuffnTumble
 		/// </summary>
 		[Category("Entity")]
 		[Description("Offset of the entity")]
-		public Point Location
+		public Vector2 Location
 		{
 			get;
 			set;

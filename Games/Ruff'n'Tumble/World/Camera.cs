@@ -32,9 +32,7 @@ namespace RuffnTumble
 		/// <param name="time"></param>
 		public void Update(GameTime time)
 		{
-			Console.WriteLine(time.ElapsedGameTime);
-
-			float speed = Speed * time.ElapsedGameTime.Milliseconds / 1000;
+			speed = Speed * time.ElapsedGameTime.Milliseconds / 1000.0f;
 
 			if (Keyboard.IsKeyPress(Keys.Right))
 			{
@@ -59,9 +57,10 @@ namespace RuffnTumble
 				Location.X = Math.Max(0.0f, Location.X);
 				Location.Y = Math.Max(0.0f, Location.Y);
 			}
+
 		}
 
-
+		public float speed;
 
 		/// <summary>
 		/// Translate the camera
@@ -83,7 +82,7 @@ namespace RuffnTumble
 		/// <summary>
 		/// Location of the camera in the level
 		/// </summary>
-		public PointF Location;
+		public Vector2 Location;
 
 
 		/// <summary>
@@ -108,7 +107,7 @@ namespace RuffnTumble
 		/// <summary>
 		/// Offset of the target
 		/// </summary>
-		public PointF TargetOffset
+		public Vector2 TargetOffset
 		{
 			get;
 			set;

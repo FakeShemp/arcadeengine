@@ -53,9 +53,11 @@ namespace RuffnTumble
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="lvl">Level in which the layer is</param>
+		/// <param name="lvl">Parent level</param>
 		public Layer(Level lvl)
 		{
+			if (lvl == null)
+				throw new ArgumentNullException("lvl", "lvl can not be null in Layer constructor !");
 			Level = lvl;
 			Visible = true;
 			TileSet = new TileSet();
@@ -64,7 +66,7 @@ namespace RuffnTumble
 
 
 		/// <summary>
-		/// 
+		/// Dispose resources
 		/// </summary>
 		public void Dispose()
 		{
@@ -471,12 +473,12 @@ namespace RuffnTumble
 		/// </summary>
 		/// <param name="point">Point in the layer in pixel</param>
 		/// <returns>ID of the tile</returns>
-		public int GetTileAtPixel(Point point)
+		public int GetTileAtPixel(Vector2 point)
 		{
 			if (Level.BlockSize.Width == 0 || Level.BlockSize.Height == 0)
 				return -1;
 
-			Point p = new Point(point.X / Level.BlockSize.Width, point.Y / Level.BlockSize.Height);
+			Point p = new Point((int)(point.X / Level.BlockSize.Width), (int)(point.Y / Level.BlockSize.Height));
 
 			return GetTileAtBlock(p);
 		}
@@ -510,7 +512,7 @@ namespace RuffnTumble
 		/// </summary>
 		/// <param name="point">Point in the layer in pixel</param>
 		/// <param name="BufferID">ID of the block to paste</param>
-		public void SetTileAtPixel(Point point, int id)
+		public void SetTileAtPixel(Vector2 point, int id)
 		{
 			Point p = Level.PositionToBlock(point);
 
@@ -532,7 +534,7 @@ namespace RuffnTumble
 		// http://jnrdev.72dpiarmy.com/en/jnrdev1/
 		// http://www.tonypa.pri.ee/tbw/start.html
 		// http://games.greggman.com/mckids/programming_mc_kids.htm
-		public CollisionResult CheckForCollision(Entity entity, Point velocity)
+		public CollisionResult CheckForCollision(Entity entity, Vector2 velocity)
 		{
 			// Adds the gravity
 			//velocity.Offset(entity.Gravity);
@@ -552,12 +554,11 @@ namespace RuffnTumble
 
 
 			// Check for vertical collision
-			Rectangle colrect = Rectangle.Empty;//entity.CollisionBoxLocation;
-			colrect.Offset(0, velocity.Y);
-			CollisionBlock colblock = res.CheckForCollision(colrect);
+			Vector4 colrect = new Vector4(0.0f, velocity.Y, 0.0f, 0.0f);
+			Vector4 colblock = res.CheckForCollision(colrect);
 			if (velocity.Y > 0)
 			{
-				if (colblock.BottomLeft != 0 || colblock.BottomRight != 0)
+				if (colblock.Bottom != 0 || colblock.Right + colblock.Height != 0)
 				{
 					res.FinalVelocity.Y = velocity.Y - (entity.Location.Y + velocity.Y) % Level.BlockSize.Height - 1;
 				}
@@ -566,7 +567,7 @@ namespace RuffnTumble
 			}
 			else if (velocity.Y < 0)
 			{
-				if (colblock.TopLeft != 0 || colblock.TopRight != 0)
+				if (colblock.Top != 0 || colblock.Right != 0)
 				{
 					res.FinalVelocity.Y = 0;
 				}
@@ -765,7 +766,7 @@ namespace RuffnTumble
 		}
 
 		/// <summary>
-		/// Parent level ?
+		/// Parent level 
 		/// </summary>
 		[Browsable(false)]
 		public Level Level
@@ -884,21 +885,21 @@ namespace RuffnTumble
 		/// </summary>
 		/// <param name="ent"></param>
 		/// <param name="offset"></param>
-		public CollisionResult(Entity ent, Point offset)
+		public CollisionResult(Entity ent, Vector2 offset)
 		{
 			entity = ent;
 			InitialVelocity = offset;
-			Location = new CollisionCoord();
-			Tile = new CollisionBlock();
-			Collision = new CollisionBlock();
+			Location = new Vector4();
+			Tile = new Vector4();
+			Collision = new Vector4();
 		}
 
 		/// <summary>
 		/// Checks for vertical collision
 		/// </summary>
-		public CollisionBlock CheckForCollision(Rectangle rect)
+		public Vector4 CheckForCollision(Vector4 rect)
 		{
-			CollisionBlock col = new CollisionBlock();
+			Vector4 col = new Vector4();
 
 			if (entity == null)
 				return col;
@@ -911,10 +912,10 @@ namespace RuffnTumble
 
 
 			// Collision points
-			Point topLeft = new Point(rect.Left, rect.Top);
-			Point topRight = new Point(rect.Left + rect.Width, topLeft.Y);
-			Point bottomLeft = new Point(topLeft.X, topLeft.Y + rect.Height);
-			Point bottomRight = new Point(topRight.X, bottomLeft.Y);
+			Vector2 topLeft = new Vector2(rect.Left, rect.Top);
+			Vector2 topRight = new Vector2(rect.Left + rect.Width, topLeft.Y);
+			Vector2 bottomLeft = new Vector2(topLeft.X, topLeft.Y + rect.Height);
+			Vector2 bottomRight = new Vector2(topRight.X, bottomLeft.Y);
 
 
 			// Collision blocks
@@ -938,16 +939,17 @@ namespace RuffnTumble
 				return;
 
 			// Translate the collision box
-			Rectangle col = Rectangle.Empty; //entity.CollisionBoxLocation;
+			Vector4 col = new Vector4(); //entity.CollisionBoxLocation;
 			col.Offset(InitialVelocity);
 			//col.Offset(entity.Gravity);
 
 
 			// Collision points
-			Location.TopLeft = new Point(col.Left, col.Top);
-			Location.TopRight = new Point(col.Left + col.Width, Location.TopLeft.Y);
-			Location.BottomLeft = new Point(Location.TopLeft.X, Location.TopLeft.Y + col.Height);
-			Location.BottomRight = new Point(Location.TopRight.X, Location.BottomLeft.Y);
+			Location = col;
+			//Location.TopLeft = new Vector2(col.Left, col.Top);
+			//Location.TopRight = new Vector2(col.Left + col.Width, Location.TopLeft.Y);
+			//Location.BottomLeft = new Vector2(Location.TopLeft.X, Location.TopLeft.Y + col.Height);
+			//Location.BottomRight = new Vector2(Location.TopRight.X, Location.BottomLeft.Y);
 
 
 			// Tile block under the collision points
@@ -995,14 +997,14 @@ namespace RuffnTumble
 		/// <summary>
 		/// Initial velocity of the entity before the collision test
 		/// </summary>
-		public Point InitialVelocity;
+		public Vector2 InitialVelocity;
 
 
 
 		/// <summary>
 		/// Velocity of the entity after the collision test
 		/// </summary>
-		public Point FinalVelocity;
+		public Vector2 FinalVelocity;
 
 
 		/// <summary>
@@ -1014,19 +1016,19 @@ namespace RuffnTumble
 		/// <summary>
 		/// Tiles block ID
 		/// </summary>
-		public CollisionBlock Tile;
+		public Vector4 Tile;
 
 
 		/// <summary>
 		/// Collisions block ID
 		/// </summary>
-		public CollisionBlock Collision;
+		public Vector4 Collision;
 
 
 		/// <summary>
 		/// Collision point location
 		/// </summary>
-		public CollisionCoord Location;
+		public Vector4 Location;
 
 		#endregion
 
@@ -1035,6 +1037,8 @@ namespace RuffnTumble
 
 	}
 
+
+/*
 	/// <summary>
 	/// Collision block ID
 	/// </summary>
@@ -1082,7 +1086,7 @@ namespace RuffnTumble
 		public Point BottomRight;
 	}
 
-
+*/
 	#endregion
 
 

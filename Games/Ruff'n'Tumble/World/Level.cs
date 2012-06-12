@@ -355,8 +355,8 @@ namespace RuffnTumble
 			Size = new Size(Size.Width, Size.Height + 1);
 
 			// Offset objects
-			Rectangle zone = new Rectangle(0, row * BlockSize.Height, SizeInPixel.Width, SizeInPixel.Height);
-			OffsetObjects(zone, new Point(0, BlockSize.Height));
+			Vector4 zone = new Vector4(0, row * BlockSize.Height, SizeInPixel.Width, SizeInPixel.Height);
+			OffsetObjects(zone, new Vector2(0, BlockSize.Height));
 		}
 
 
@@ -373,8 +373,8 @@ namespace RuffnTumble
 			Size = new Size(Size.Width, Size.Height - 1);
 
 			// Offset objects
-			Rectangle zone = new Rectangle(0, row * BlockSize.Height, SizeInPixel.Width, SizeInPixel.Height);
-			OffsetObjects(zone, new Point(0, -BlockSize.Height));
+			Vector4 zone = new Vector4(0, row * BlockSize.Height, SizeInPixel.Width, SizeInPixel.Height);
+			OffsetObjects(zone, new Vector2(0, -BlockSize.Height));
 
 		}
 
@@ -393,8 +393,8 @@ namespace RuffnTumble
 			Size = new Size(Size.Width + 1, Size.Height);
 
 			// Offset objects
-			Rectangle zone = new Rectangle(column * BlockSize.Width, 0, SizeInPixel.Width, SizeInPixel.Height);
-			OffsetObjects(zone, new Point(BlockSize.Width, 0));
+			Vector4 zone = new Vector4(column * BlockSize.Width, 0, SizeInPixel.Width, SizeInPixel.Height);
+			OffsetObjects(zone, new Vector2(BlockSize.Width, 0));
 
 		}
 
@@ -411,10 +411,10 @@ namespace RuffnTumble
 			Size = new Size(Size.Width - 1, Size.Height);
 
 			// Offset objects
-			Rectangle zone = new Rectangle(
+			Vector4 zone = new Vector4(
 				column * BlockSize.Width, 0,
 				SizeInPixel.Width, SizeInPixel.Height);
-			OffsetObjects(zone, new Point(-BlockSize.Width, 0));
+			OffsetObjects(zone, new Vector2(-BlockSize.Width, 0));
 
 		}
 
@@ -424,7 +424,7 @@ namespace RuffnTumble
 		/// </summary>
 		/// <param name="zone">Each object in this rectangle</param>
 		/// <param name="offset">Offset to move</param>
-		void OffsetObjects(Rectangle zone, Point offset)
+		void OffsetObjects(Vector4 zone, Vector2 offset)
 		{
 
 			//// Move entities
@@ -432,7 +432,7 @@ namespace RuffnTumble
 			{
 				if (zone.Contains(entity.Location))
 				{
-					entity.Location = new Point(
+					entity.Location = new Vector2(
 						 entity.Location.X + offset.X,
 						 entity.Location.Y + offset.Y);
 				}
@@ -443,7 +443,7 @@ namespace RuffnTumble
 			{
 				if (zone.Contains(spawn.Location))
 				{
-					spawn.Location = new Point(
+					spawn.Location = new Vector2(
 						spawn.Location.X + offset.X,
 						spawn.Location.Y + offset.Y);
 				}
@@ -493,7 +493,7 @@ namespace RuffnTumble
 			TileLayer.Draw(batch, Camera);
 
 			// Draw collision layer
-			CollisionLayer.Draw(batch, Camera);
+			//CollisionLayer.Draw(batch, Camera);
 
 			//
 			// Draw Spawnpoints
@@ -509,7 +509,7 @@ namespace RuffnTumble
 					if (spawn == null)
 						continue;
 
-					Point pos = LevelToScreen(spawn.Location);
+					Vector2 pos = LevelToScreen(spawn.Location);
 					pos.X = pos.X - 8;
 					pos.Y = pos.Y - 8;
 					batch.Draw(spTexture, pos, Color.White);
@@ -580,10 +580,10 @@ namespace RuffnTumble
 		/// </summary>
 		/// <param name="pos">Point in pixel in the level</param>
 		/// <returns>Position in screen coordinate</returns>
-		public Point LevelToScreen(Point pos)
+		public Vector2 LevelToScreen(Vector2 pos)
 		{
-			return new Point(pos.X - (int)Camera.Location.X + Camera.ViewPort.Left,
-				pos.Y - (int)Camera.Location.Y + Camera.ViewPort.Top);
+			return new Vector2(pos.X - Camera.Location.X + Camera.ViewPort.Left,
+							pos.Y - Camera.Location.Y + Camera.ViewPort.Top);
 		}
 
 
@@ -592,11 +592,11 @@ namespace RuffnTumble
 		/// </summary>
 		/// <param name="pos">Position in screen coordinate</param>
 		/// <returns>Point in pixel in the level</returns>
-		public Point ScreenToLevel(Point pos)
+		public Vector2 ScreenToLevel(Point pos)
 		{
-			return new Point(
-				(int)Camera.Location.X + pos.X - Camera.ViewPort.Left,
-				(int)Camera.Location.Y + pos.Y - Camera.ViewPort.Top);
+			return new Vector2(
+				Camera.Location.X + pos.X - Camera.ViewPort.Left,
+				Camera.Location.Y + pos.Y - Camera.ViewPort.Top);
 		}
 
 
@@ -606,12 +606,12 @@ namespace RuffnTumble
 		/// </summary>
 		/// <param name="point">GameScreen location</param>
 		/// <returns>Block coordinate in the layer</returns>
-		public Point PositionToBlock(Point point)
+		public Point PositionToBlock(Vector2 point)
 		{
 			if (BlockSize.Width == 0 || BlockSize.Height == 0)
 				return Point.Empty;
 
-			return new Point(point.X / BlockSize.Width, point.Y / BlockSize.Height);
+			return new Point((int)point.X / BlockSize.Width, (int)point.Y / BlockSize.Height);
 		}
 
 		#endregion
@@ -760,7 +760,7 @@ namespace RuffnTumble
 		/// </summary>
 		/// <param name="point"></param>
 		/// <returns></returns>
-		public SpawnLocation FindSpawnPoint(Point point)
+		public SpawnLocation FindSpawnPoint(Vector2 point)
 		{
 			foreach (SpawnLocation spawn in SpawnPoints.Values)
 			{
@@ -813,9 +813,9 @@ namespace RuffnTumble
 		/// <summary>
 		/// Finds an entity by his location
 		/// </summary>
-		/// <param name="point"></param>
+		/// <param name="point">Location in the level</param>
 		/// <returns></returns>
-		public Entity FindEntity(Point point)
+		public Entity FindEntity(Vector2 point)
 		{
 			foreach (Entity ent in Entities.Values)
 			{
@@ -824,7 +824,7 @@ namespace RuffnTumble
 				//	continue;
 
 
-				Rectangle pos = Rectangle.Empty; //ent.CollisionBoxLocation;
+				Vector4 pos = Vector4.Zero; //ent.CollisionBoxLocation;
 				//pos.Offset(ent.Location);
 
 				if (pos.Contains(point))
@@ -872,7 +872,7 @@ namespace RuffnTumble
 		#endregion
 
 
-		#region RootDirectory
+		#region Path
 
 
 		/// <summary>
@@ -985,7 +985,7 @@ namespace RuffnTumble
 
 
 		/// <summary>
-		/// Size of the blocks in pixel (not including the zoom factor)
+		/// Size of the blocks in pixel
 		/// </summary>
 		[CategoryAttribute("Tiles")]
 		[Description("Size of the block in the tile texture")]

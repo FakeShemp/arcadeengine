@@ -123,6 +123,7 @@ namespace RuffnTumble
 			if (World != null)
 			{
 				Batch.DrawString(Font, new Point(100, 100), Color.White, "Camera location : " + World.CurrentLevel.Camera.Location.ToString());
+				Batch.DrawString(Font, new Point(100, 120), Color.White, "Camera speed : " + World.CurrentLevel.Camera.speed.ToString());
 			}
 
 			#region Stats

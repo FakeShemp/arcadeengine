@@ -243,6 +243,38 @@ namespace ArcEngine
 
 		#endregion
 
+		#region Contains
+
+		/// <summary>
+		/// Checks if a point is inside the rectangle
+		/// </summary>
+		/// <param name="vec">Point location</param>
+		/// <returns>True if the point is inside the rectangle</returns>
+		public bool Contains(Vector2 vec)
+		{
+			return this.X <= vec.X && vec.X < this.X + this.Width && this.Y <= vec.Y && vec.Y < this.Y + this.Height;
+		}
+
+
+		#endregion
+		
+
+		#region Offset
+
+
+		/// <summary>
+		/// Offset Vector location
+		/// </summary>
+		/// <param name="offset">Offset</param>
+		public void Offset(Vector2 offset)
+		{
+			this.X += offset.X;
+			this.Y += offset.Y;
+		}
+
+		#endregion
+
+
 		#endregion
 
 		#region Static

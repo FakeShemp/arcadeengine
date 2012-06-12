@@ -117,9 +117,9 @@ namespace RuffnTumble.Editor
 		/// <summary>
 		/// Sets the location in the layer
 		/// </summary>
-		public void ScrollLayer(Point pos)
+		public void ScrollLayer(Vector2 pos)
 		{
-			Level.Camera.Location = new Point(pos.X * Level.BlockSize.Width, pos.Y * Level.BlockSize.Height);
+			Level.Camera.Location = new Vector2(pos.X * Level.BlockSize.Width, pos.Y * Level.BlockSize.Height);
 
 			// Update the display to be smoothy
 			GlControl.Invalidate();
@@ -272,7 +272,7 @@ namespace RuffnTumble.Editor
 		/// <param name="e"></param>
 		private void Scroller_OnScroll(object sender, ScrollEventArgs e)
 		{
-			ScrollLayer(new Point(LevelHScroller.Value, LevelVScroller.Value));
+			ScrollLayer(new Vector2(LevelHScroller.Value, LevelVScroller.Value));
 		}
 
 
@@ -461,8 +461,7 @@ namespace RuffnTumble.Editor
 		private void PasteBrush(Point location)
 		{
 			// Find the location and paste it
-			Point pos = Level.ScreenToLevel(location);
-			pos = Level.PositionToBlock(pos);
+			Point pos = Level.PositionToBlock(Level.ScreenToLevel(location));
 			LayerBrush.Paste(CurrentLayer, pos);
 		}
 
@@ -530,12 +529,12 @@ namespace RuffnTumble.Editor
 			// Draw a rectangle showing the brush selection in the layer
 			if (sizingBrush)
 			{
-				Rectangle rec = new Rectangle(
+				Vector4 rec = new Vector4(
 					BrushRectangle.Left * Level.BlockSize.Width,
 					BrushRectangle.Top * Level.BlockSize.Height,
 					BrushRectangle.Width * Level.BlockSize.Width,
 					BrushRectangle.Height * Level.BlockSize.Height);
-				rec.Location = Level.LevelToScreen(rec.Location);
+				rec.Xy = Level.LevelToScreen(rec.Xy);
 				Batch.DrawRectangle(rec, Color.Green);
 			}
 
@@ -703,7 +702,7 @@ namespace RuffnTumble.Editor
 			// Left mouse button and FloodFill checked ? => Fill tile in the layer
 			if (e.Button == MouseButtons.Left && TileMode == TileMode.Fill)
 			{
-				Point pos = Level.ScreenToLevel(e.Location);
+				Vector2 pos = Level.ScreenToLevel(e.Location);
 
 				CurrentLayer.FloodFill(Level.PositionToBlock(pos), LayerBrush);
 				return;
@@ -739,9 +738,7 @@ namespace RuffnTumble.Editor
 				if (entity != null) entity.Debug = false;
 
 				// Find the entity under the mouse
-				Point pos = e.Location;
-				pos.X += (int)Level.Camera.Location.X;
-				pos.Y += (int)Level.Camera.Location.Y;
+				Vector2 pos = new Vector2(e.Location.X + Level.Camera.Location.X, e.Location.Y + Level.Camera.Location.Y);
 				//pos.Offset(CurrentLayer.Offset);
 
 				entity = Level.FindEntity(pos);
@@ -794,21 +791,21 @@ namespace RuffnTumble.Editor
 
 			// Display the tile coord
 			MousePos = e.Location;
-			Point pos = Level.ScreenToLevel(MousePos);
+			Vector2 pos = Level.ScreenToLevel(MousePos);
 
 			if (CurrentLayer != null)
 			{
 				MouseCoordLabel.Text = "Mouse coord : " + pos.X + "x" + pos.Y;
 				TileIDLabel.Text = "Tile ID : " + CurrentLayer.GetTileAtPixel(pos).ToString();
-				pos = Level.PositionToBlock(pos);
-				TileCoordLabel.Text = "Tile coord : " + pos.X + "x" + pos.Y;
+				Point coord = Level.PositionToBlock(pos);
+				TileCoordLabel.Text = "Tile coord : " + coord.X + "x" + coord.Y;
 			}
 
 			// If scrolling with the middle mouse button
 			if (e.Button == MouseButtons.Middle)
 			{
 				// Find the new coord for the level
-				pos = new Point((int)Level.Camera.Location.X, (int)Level.Camera.Location.Y);
+				pos = new Vector2((int)Level.Camera.Location.X, (int)Level.Camera.Location.Y);
 				pos.X /= Level.BlockSize.Width;
 				pos.Y /= Level.BlockSize.Height;
 
@@ -821,8 +818,8 @@ namespace RuffnTumble.Editor
 				ScrollLayer(pos);
 
 				// Scroll sliders
-				LevelHScroller.Value = Math.Max(0, pos.X);
-				LevelVScroller.Value = Math.Max(0, pos.Y);
+				LevelHScroller.Value = Math.Max(0, (int)pos.X);
+				LevelVScroller.Value = Math.Max(0, (int)pos.Y);
 
 
 				DebugLabel.Text = LevelHScroller.Value.ToString() + " " + LevelVScroller.Value.ToString();
@@ -848,9 +845,7 @@ namespace RuffnTumble.Editor
 			if (e.Button == MouseButtons.Left && DragObjectByMouse)
 			{
 				// Find the delta mouse movement
-				Point offset = e.Location;
-				offset.X -= LastMousePos.X;
-				offset.Y -= LastMousePos.Y;
+				Vector2 offset = new Vector2(e.Location.X - LastMousePos.X, e.Location.Y - LastMousePos.Y);
 
 
 				// Set entity location
@@ -883,8 +878,8 @@ namespace RuffnTumble.Editor
 			{
 				pos = Level.ScreenToLevel(e.Location);
 
-				BrushRectangle.Size = new Size(pos.X / Level.BlockSize.Width - BrushRectangle.Left + 1,
-												pos.Y / Level.BlockSize.Height - BrushRectangle.Top + 1);
+				BrushRectangle.Size = new Size((int)(pos.X / Level.BlockSize.Width - BrushRectangle.Left + 1),
+												(int)(pos.Y / Level.BlockSize.Height - BrushRectangle.Top + 1));
 
 				return;
 			}
@@ -1037,7 +1032,7 @@ namespace RuffnTumble.Editor
 		/// <param name="e"></param>
 		private void InsertRow_Click(object sender, EventArgs e)
 		{
-			Point pos = Level.ScreenToLevel(MousePos);
+			Vector2 pos = Level.ScreenToLevel(MousePos);
 
 			Level.InsertRow(Level.PositionToBlock(pos).Y, 0);
 		}
@@ -1050,7 +1045,7 @@ namespace RuffnTumble.Editor
 		/// <param name="e"></param>
 		private void DeleteRow_Click(object sender, EventArgs e)
 		{
-			Point pos = Level.ScreenToLevel(MousePos);
+			Vector2 pos = Level.ScreenToLevel(MousePos);
 
 			Level.RemoveRow(Level.PositionToBlock(pos).Y);
 
@@ -1063,7 +1058,7 @@ namespace RuffnTumble.Editor
 		/// <param name="e"></param>
 		private void InsertColumn_Click(object sender, EventArgs e)
 		{
-			Point pos = Level.ScreenToLevel(MousePos);
+			Vector2 pos = Level.ScreenToLevel(MousePos);
 
 			Level.InsertColumn(Level.PositionToBlock(pos).X, 0);
 		}
@@ -1075,7 +1070,7 @@ namespace RuffnTumble.Editor
 		/// <param name="e"></param>
 		private void DeleteColumn_Click(object sender, EventArgs e)
 		{
-			Point pos = Level.ScreenToLevel(MousePos);
+			Vector2 pos = Level.ScreenToLevel(MousePos);
 
 			Level.RemoveColumn(Level.PositionToBlock(pos).X);
 

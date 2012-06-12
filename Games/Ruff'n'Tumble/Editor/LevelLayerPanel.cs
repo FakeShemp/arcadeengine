@@ -26,7 +26,7 @@ using System.Text;
 using System.Windows.Forms;
 using ArcEngine.Graphic;
 using ArcEngine.Asset;
-
+using ArcEngine;
 
 using WeifenLuo.WinFormsUI.Docking;
 
@@ -145,7 +145,7 @@ namespace RuffnTumble.Editor
 		/// <param name="e"></param>
 		private void FindButton_Click(object sender, EventArgs e)
 		{
-			Point pos = Point.Empty;
+			Vector2 pos = Vector2.Zero;
 /*
 			if (PropertyGridBox.SelectedObject is Entity)
 			{

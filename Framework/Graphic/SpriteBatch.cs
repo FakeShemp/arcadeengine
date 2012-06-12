@@ -1096,6 +1096,17 @@ namespace ArcEngine.Graphic
 		/// </summary>
 		/// <param name="destination">Destination</param>
 		/// <param name="color">Color</param>
+		public void DrawRectangle(Vector4 destination, Color color)
+		{
+			InternalDraw(WhiteTexture, ref destination, ref destination, color, 0.0f, Vector2.Zero, Vector2.One, SpriteEffects.None, 0.0f, PrimitiveType.LineStrip);
+		}
+
+
+		/// <summary>
+		/// Draws a rectangle
+		/// </summary>
+		/// <param name="destination">Destination</param>
+		/// <param name="color">Color</param>
 		/// <param name="rotation">Rotation angle in radian</param>
 		/// <param name="origin">Origin of rotation</param>
 		public void DrawRectangle(Vector4 destination, Color color, float rotation, Vector2 origin)
