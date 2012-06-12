@@ -20,9 +20,10 @@ namespace RuffnTumble
 		public Camera(Level level)
 		{
 			//HACK: Hardcoded !!!
-			ViewPort = new Rectangle(0, 56, 800, 44);
+			ViewPort = new Rectangle(0, 56, 1024, 712);
 			Speed = 250.0f;
 			ClampToEdges = true;
+			Level = level;
 		}
 
 
@@ -56,6 +57,13 @@ namespace RuffnTumble
 			{
 				Location.X = Math.Max(0.0f, Location.X);
 				Location.Y = Math.Max(0.0f, Location.Y);
+
+				if (Location.X + ViewPort.Width> Level.SizeInPixel.Width)
+					Location.X = Level.SizeInPixel.Width - ViewPort.Width;
+
+				if (Location.Y + ViewPort.Height > Level.SizeInPixel.Height)
+					Location.Y = Level.SizeInPixel.Height - ViewPort.Height;
+
 			}
 
 		}
@@ -132,6 +140,12 @@ namespace RuffnTumble
 			get;
 			set;
 		}
+
+
+		/// <summary>
+		/// Level handle
+		/// </summary>
+		Level Level;
 
 		#endregion
 	}

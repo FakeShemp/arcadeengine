@@ -163,49 +163,16 @@ namespace RuffnTumble
 			if (TileSet == null || !Visible || camera == null || batch == null)
 				return;
 
-/*
-			// Taille de rendu du niveau
-			int renderwidth = camera.ViewPort.Width / Level.BlockDimension.Width;
-			int renderheight = camera.ViewPort.Height / Level.BlockDimension.Height;
-			if (renderwidth > Level.Size.Width) renderwidth = Level.Size.Width;
-			if (renderheight > Level.Size.Height) renderheight = Level.Size.Height;
-
-			// On trouve la location en block pour le "pixel perfect scrolling"
-			int blockx = camera.Location.X / Level.BlockDimension.Width;
-			int blocky = camera.Location.Y / Level.BlockDimension.Height;
-			int deltax = camera.Location.X % Level.BlockDimension.Width;
-			int deltay = camera.Location.Y % Level.BlockDimension.Width;
-
-
-			// Draw tiles
-			TileSet.Scale = Level.Camera.Scale;
-			Color color = Color.FromArgb(Alpha, Color.White);
-			for (int yy = 0; yy < renderheight + 2; yy++)
-			{
-				for (int xx = 0; xx < renderwidth + 2; xx++)
-				{
-					int id = GetTileAtBlock(new Point(blockx + xx, blocky + yy));
-
-					if (id == -1)
-						continue;
-
-					Rectangle rect = new Rectangle(
-						new Point((int)(xx * Level.BlockDimension.Width) + camera.ViewPort.X - deltax,
-									(int)(yy * Level.BlockDimension.Height) + camera.ViewPort.Y - deltay),
-						new Size(32, 32)
-						);
-
-					batch.DrawTile(TileSet, id, rect.Location, rect, color);
-				}
-			}
-*/
-			
+			batch.Flush();
+			Display.PushScissor(camera.ViewPort);
 			for (int y = 0; y < Size.Height; y++)
 				for (int x = 0; x < Size.Width; x++)
 				{
 					Vector2 loc = new Vector2((x * Level.BlockSize.Width) - camera.Location.X, (y * Level.BlockSize.Height) - camera.Location.Y);
 					batch.DrawTile(TileSet, GetTileAtBlock(new Point(x, y)), loc, Color.FromArgb(Alpha, Color.White), 0.0f, new Vector2(1.0f, 1.0f), SpriteEffects.None, 0.0f);
 				}
+			batch.Flush();
+			Display.PopScissor();
 		}
 
 
