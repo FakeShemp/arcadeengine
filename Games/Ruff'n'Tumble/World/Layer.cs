@@ -169,7 +169,7 @@ namespace RuffnTumble
 			for (int y = 0; y < Size.Height; y++)
 				for (int x = 0; x < Size.Width; x++)
 				{
-					Vector2 loc = new Vector2((x * Level.BlockSize.Width) - camera.Location.X, (y * Level.BlockSize.Height) - camera.Location.Y);
+					Vector2 loc = new Vector2(x * Level.BlockSize.Width - camera.Location.X , y * Level.BlockSize.Height - camera.Location.Y);
 					batch.DrawTile(TileSet, GetTileAtBlock(new Point(x, y)), loc, Color, 0.0f, new Vector2(1.0f, 1.0f), SpriteEffects.None, 0.0f);
 				}
 			batch.Flush();
@@ -573,8 +573,8 @@ namespace RuffnTumble
 */
 
 			// Is entity falling ?
-			entity.IsFalling = res.FinalVelocity.Y > 0.0f;
-			entity.IsJumping = res.FinalVelocity.Y < 0.0f;
+		//	entity.IsFalling = res.FinalVelocity.Y > 0.0f;
+		//	entity.IsJumping = res.FinalVelocity.Y < 0.0f;
 
 
 

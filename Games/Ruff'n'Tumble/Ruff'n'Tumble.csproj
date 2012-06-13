@@ -199,9 +199,11 @@
       <DependentUpon>NewModelWizard.cs</DependentUpon>
     </Compile>
     <Compile Include="GameScreen.cs" />
+    <Compile Include="Interfaces\IEntity.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="World\Camera.cs" />
     <Compile Include="World\Entity.cs" />
-    <Compile Include="Interfaces\IEntity.cs" />
     <Compile Include="Interfaces\ILayer.cs" />
     <Compile Include="Interfaces\ILevel.cs" />
     <Compile Include="World\Layer.cs">

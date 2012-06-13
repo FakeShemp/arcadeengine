@@ -47,10 +47,11 @@ namespace RuffnTumble
 {
 
 	/// <summary>
-	/// 
+	/// Base class for every entity in the game
 	/// </summary>
-	public class Entity : IDisposable
+	public abstract class Entity : IDisposable
 	{
+/*
 		/// <summary>
 		/// Constructor
 		/// </summary>
@@ -61,11 +62,11 @@ namespace RuffnTumble
 			Level = level;
 		}
 
-
+*/
 		/// <summary>
 		/// Disposes resources
 		/// </summary>
-		public void Dispose()
+		public virtual void Dispose()
 		{
 		}
 
@@ -74,17 +75,8 @@ namespace RuffnTumble
 		/// Initialize the entity
 		/// </summary>
 		/// <returns>Success or not</returns>
-		public bool Init()
+		public virtual bool Init()
 		{
-
-			//Model = ResourceManager.CreateAsset<Model>(ModelName);
-
-
-			//if (ScriptInterface != null)
-			//    return ScriptInterface.Init(this);
-
-
-
 			return true;
 		}
 
@@ -95,9 +87,13 @@ namespace RuffnTumble
 		/// <summary>
 		/// Saves the entity
 		/// </summary>
-		/// <param name="xml">xml node</param>
+		/// <param name="xml">XmlWriter handle</param>
 		/// <returns></returns>
-		public bool Save(XmlWriter xml)
+		public virtual bool Save(XmlWriter xml)
+		{
+			return true;
+		}
+/*
 		{
 
 			xml.WriteStartElement("entity");
@@ -126,16 +122,19 @@ namespace RuffnTumble
 
 			return true;
 		}
-
+*/
 
 
 		/// <summary>
 		/// Loads the entity
 		/// </summary>
-		/// <param name="xml">xml node</param>
+		/// <param name="xml">XmlNode handle</param>
 		/// <returns></returns>
-		public bool Load(XmlNode xml)
+		public virtual bool Load(XmlNode xml)
 		{
+			return true;
+		}
+/*		{
 			if (xml == null)
 				return false;
 
@@ -178,7 +177,7 @@ namespace RuffnTumble
 
 			return true;
 		}
-
+*/
 		#endregion
 
 
@@ -187,39 +186,17 @@ namespace RuffnTumble
 		/// <summary>
 		/// Update the entity
 		/// </summary>
-		public void Update(GameTime time)
+		public virtual void Update(GameTime time)
 		{
-			// If script present, then call it's Update method
-			//if (ScriptInterface != null)
-			//    ScriptInterface.Update(this, time);
 		}
 
 
 		/// <summary>
 		/// Renders the entity
 		/// </summary>
-		///<param name="loc">Location of the entity relative to the layer coordinate</param>
-		public void Draw(SpriteBatch batch, Vector2 loc)
+		/// <param name="batch">Spritebatch handle</param>
+		public virtual void Draw(SpriteBatch batch, Camera camera)
 		{
-			if (batch == null)
-				return;
-/*
-			if (TileSet != null)
-			{
-				TileSet.Scale = Zoom;
-				//tileSet.Draw(TileId, loc);
-				TileSet.Draw(tileId, loc);
-			}
-
-
-			// Is entity in debug mode ?
-			if (Debug)
-			{
-                Rectangle coll = CollisionBoxLocation;
-                coll.Location = Level.LevelToScreen(coll.Location);
-					 Display.Rectangle(coll, false);
-			}
-*/
 		}
 
 		#endregion
@@ -227,200 +204,16 @@ namespace RuffnTumble
 
 		#region Properties
 
-		/// <summary>
-		/// Name of the entity
-		/// </summary>
-		public string Name
-		{
-			get;
-			set;
-		}
-
-
-/*
-
-		/// <summary>
-		/// Entity TileSet name
-		/// </summary>
-		[TypeConverter(typeof(TileSetEnumerator))]
-		public string TileSetName
-		{
-			get;
-			set;
-		}
-
-
-		/// <summary>
-		/// Gets the current tileset of the entity
-		/// </summary>
-		[Browsable(false)]
-		public TileSet TileSet
-		{
-			get;
-			private set;
-		}
-
-
-		/// <summary>
-		/// Gets/sets the current sequence
-		/// </summary>
-		public int TileId
-		{
-			get
-			{
-				return tileId;
-			}
-			set
-			{
-				tileId = value;
-
-				if (TileSet != null)
-					Tile = TileSet.GetTile(tileId);
-				else
-					Tile = null;
-			}
-		}
-		int tileId;
-
-
-		/// <summary>
-		/// Current tile
-		/// </summary>
-		[Browsable(false)]
-		public Tile Tile
-		{
-			get;
-			private set;
-		}
-
-
-
-		/// <summary>
-		/// Gets the original collision box (without zoom)
-		/// </summary>
-		[Browsable(false)]
-		public Rectangle CollisionBox
-		{
-			get
-			{
-				if (Tile == null)
-					return Rectangle.Empty;
-
-				Rectangle coll = Tile.CollisionBox;
-				//coll.Width *= (int)zoom.Width;
-				//coll.Height *= (int)zoom.Height;
-
-				return coll;
-			}
-		}
-
-
-		/// <summary>
-		/// Gets the location of the collision box of the entity (CollisionBox translated
-		/// to the entity location in screen coordinate)
-		/// </summary>
-		[Browsable(false)]
-		public Rectangle CollisionBoxLocation
-		{
-			get
-			{
-				if (Tile == null)
-					return Rectangle.Empty;
-
-
-				return new Rectangle(
-					Location.X - (int) (Tile.HotSpot.X * Zoom.Width) + (int)(CollisionBox.X * Zoom.Width),
-					Location.Y - (int) (Tile.HotSpot.Y * Zoom.Height) + (int)(CollisionBox.Y * Zoom.Height),
-					(int) (Tile.CollisionBox.Width * Zoom.Width),
-					(int) (Tile.CollisionBox.Height * Zoom.Height));
-			}
-		}
-
-
-								
-
-		/// <summary>
-		/// Entity model reference
-		/// </summary>
-		[Description("Model name to use")]
-		[Category("Model")]
-		[TypeConverter(typeof(ModelEnumerator))]
-		public string ModelName
-		{
-			get;
-			set;
-		}
-
-
-
-
-		/// <summary>
-		/// Handle to the model
-		/// </summary>
-		[Browsable(false)]
-		public Model Model
-		{
-			get
-			{
-				return model;
-			}
-			private set
-			{
-				model = value;
-				if (model == null) return;
-
-				// tileset
-				TileSet = ResourceManager.CreateAsset<TileSet>(model.TileSetName);
-
-				// script
-				Script script = ResourceManager.CreateAsset<Script>(model.ScriptName);
-				if (script != null)
-				{
-					//if (script.Compile())
-					//	ScriptInterface = (IEntity)script.FindInterface("RuffnTumble.Interface.IEntity");
-				}
-
-				// zoom
-				Zoom = model.Zoom;
-
-				// Movements
-				Velocity = model.MaxVelocity;
-				JumpHeight = model.JumpHeight;
-				Gravity = model.Gravity;
-			}
-		}
-		Model model;
-
-*/
-
 
 		/// <summary>
 		/// Zoom factor of the entity
 		/// </summary>
 		[Category("Display")]
 		[Description("Zoom factor of the entity")]
-		public Vector2 Zoom
+		public Vector2 Scale
 		{
 			get;
 			set;
-		}
-
-									
-
-		/// <summary>
-		/// Compiled script handle
-		/// </summary>
-	//	IEntity ScriptInterface;
-
-
-		/// <summary>
-		/// The layer where the entity is
-		/// </summary>
-		[Browsable(false)]
-		public Level Level
-		{
-			get;
-			private set;
 		}
 
 
@@ -429,7 +222,11 @@ namespace RuffnTumble
 		/// Gets / sets the entity debug mode
 		/// </summary>
 		[Browsable(false)]
-		public bool Debug;
+		public bool Debug
+		{
+			get;
+			set;
+		}
 
 
 
@@ -445,36 +242,6 @@ namespace RuffnTumble
 			set;
 		}
 
-/*
-		/// <summary>
-		/// Gets the hotspot of the entity
-		/// </summary>
-		[Browsable(false)]
-		public Point HotSpot
-		{
-			get
-			{
-				if (Tile == null)
-					return Point.Empty;
-
-				return Tile.HotSpot;
-			}
-		}
-
-*/
-
-
-		/// <summary>
-		/// Gets/sets the maxVelocity of the entity
-		/// (pixels per second)
-		/// </summary>
-		[Browsable(false)]
-		public int Velocity
-		{
-			get;
-			set;
-		}
-
 
 
 		/// <summary>
@@ -484,103 +251,19 @@ namespace RuffnTumble
 		[Description("Offset of the entity")]
 		public Vector2 Location
 		{
-			get;
-			set;
-		}
-
-
-
-		/// <summary>
-		/// Gets / sets the acceleration
-		/// </summary>
-		public int Acceleration
-		{
-			get;
-			set;
-		}
-
-/*									
-
-
-		/// <summary>
-		/// Gravity of the entity
-		/// (pixels per second)
-		/// </summary>
-		[Browsable(false)]
-		public Point Gravity
-		{
-			get;
-			set;
-		}
-
-*/									
-
-
-		/// <summary>
-		/// Initial jump height in pixels
-		/// </summary>
-		[Browsable(false)]
-		public int JumpHeight
-		{
-			get;
-			set;
-		}
-
-
-
-		/// <summary>
-		/// Is the entity is jumping
-		/// </summary>
-		[Browsable(false)]
-		public bool IsJumping
-		{
-			get;
-			set;
-		}
-
-
-
-		/// <summary>
-		/// Is entity falling ?
-		/// </summary>
-		[Browsable(false)]
-		public bool IsFalling
-		{
-			get;
-			set;
-		}
-
-									
-
-		/// <summary>
-		/// Current jump height of the entity
-		/// </summary>
-		[Browsable(false)]
-		public int Jump
-		{
 			get
 			{
-				return jump;
+				return location;
 			}
 			set
 			{
-				jump = value;
-//				if (jump > parentLayer.BlockSize.Height * (int)parentLayer.Zoom.Height)
-//					jump = parentLayer.BlockSize.Height * (int)parentLayer.Zoom.Height;
-
-				if (jump < 0)
-					jump = 0;
+				location = value;
 			}
 		}
-		int jump;
+		protected Vector2 location;
 
-									
 
 		#endregion
 	}
-
-
-
-
 
 }

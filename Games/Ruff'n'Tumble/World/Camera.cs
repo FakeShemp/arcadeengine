@@ -21,7 +21,6 @@ namespace RuffnTumble
 		{
 			//HACK: Hardcoded !!!
 			ViewPort = new Rectangle(0, 56, 1024, 712);
-			Speed = 250.0f;
 			ClampToEdges = true;
 			Level = level;
 		}
@@ -33,26 +32,16 @@ namespace RuffnTumble
 		/// <param name="time"></param>
 		public void Update(GameTime time)
 		{
-			speed = Speed * time.ElapsedGameTime.Milliseconds / 1000.0f;
 
-			if (Keyboard.IsKeyPress(Keys.Right))
+			// Center the camera at the target
+			if (Target != null)
 			{
-				Location.X += speed;
-			}
-			if (Keyboard.IsKeyPress(Keys.Left))
-			{
-				Location.X -= speed;
-			}
-			if (Keyboard.IsKeyPress(Keys.Up))
-			{
-				Location.Y -= speed;
-			}
-			if (Keyboard.IsKeyPress(Keys.Down))
-			{
-				Location.Y += speed;
+				Location.X = Target.Location.X - ViewPort.Width / 2.0f;
+				Location.Y = Target.Location.Y - ViewPort.Height / 2.0f;
 			}
 
 
+			// Clamp to the level edges
 			if (ClampToEdges)
 			{
 				Location.X = Math.Max(0.0f, Location.X);
@@ -67,20 +56,6 @@ namespace RuffnTumble
 			}
 
 		}
-
-		public float speed;
-
-		/// <summary>
-		/// Translate the camera
-		/// </summary>
-		/// <param name="x"></param>
-		/// <param name="y"></param>
-		public void Translate(float x, float y)
-		{
-			Location.X += x;
-			Location.Y += y;
-		}
-
 
 
 
@@ -126,16 +101,6 @@ namespace RuffnTumble
 		/// Limit camera to the level borders
 		/// </summary>
 		public bool ClampToEdges
-		{
-			get;
-			set;
-		}
-
-
-		/// <summary>
-		/// Movment speed
-		/// </summary>
-		public float Speed
 		{
 			get;
 			set;

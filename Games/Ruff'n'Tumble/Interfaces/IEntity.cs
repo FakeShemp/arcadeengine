@@ -23,6 +23,7 @@ using ArcEngine;
 
 namespace RuffnTumble.Interface
 {
+/*
 	/// <summary>
 	/// Interface pour la gestion des entite par scripting
 	/// </summary>
@@ -61,5 +62,5 @@ namespace RuffnTumble.Interface
 		bool Load(Entity entity, XmlNode xml);
 
 	}
-
+*/
 }

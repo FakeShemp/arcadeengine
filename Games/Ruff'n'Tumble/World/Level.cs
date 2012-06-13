@@ -59,6 +59,8 @@ namespace RuffnTumble
 			Brushes = new Dictionary<string,LayerBrush>();
 			SpawnPoints = new Dictionary<string, SpawnLocation>();
 			BlockSize = new Size(16, 16);
+
+			Player = new Player();
 		}
 
 
@@ -67,6 +69,10 @@ namespace RuffnTumble
 		/// </summary>
 		public void Dispose()
 		{
+			if (Player != null)
+				Player.Dispose();
+			Player = null;
+
 			if (TileLayer != null)
 				TileLayer.Dispose();
 			TileLayer = null;
@@ -470,12 +476,14 @@ namespace RuffnTumble
 
 			// Init all entities
 			foreach (Entity entity in Entities.Values)
-				entity.Init();
+				if (entity != null)
+					entity.Init();
 
 
 			// Load the SpawnPoint texture
 			spTexture = new Texture2D(ResourceManager.GetInternalResource("RuffnTumble.Resources.SpawnPoint.png"));
 
+			Camera.Target = Player;
 
 			// All ok
 			LevelReady = true;
@@ -494,6 +502,9 @@ namespace RuffnTumble
 
 			// Draw the layer
 			TileLayer.Draw(batch, Camera);
+
+			Player.Draw(batch, Camera);
+
 
 			// Draw collision layer
 			CollisionLayer.Draw(batch, Camera);
@@ -536,7 +547,8 @@ namespace RuffnTumble
 			{
 				foreach (Entity entity in Entities.Values)
 				{
-					entity.Draw(batch, LevelToScreen(entity.Location));
+					if (entity != null)
+						entity.Draw(batch, Camera);
 				}
 			}
 
@@ -563,16 +575,21 @@ namespace RuffnTumble
 		/// <param name="time">Elapsed game time</param>
 		public void Update(GameTime time)
 		{
+
+			Player.Update(time);
+			
 			// Ask all entities to update
 			foreach (Entity entity in Entities.Values)
-				entity.Update(time);
+				if (entity != null)
+					entity.Update(time);
 
 
 			// Update the camera
 			Camera.Update(time);
 
 
-			CollisionLayer.Visible = Keyboard.IsKeyPress(System.Windows.Forms.Keys.Space);
+			if (Keyboard.IsNewKeyPress(System.Windows.Forms.Keys.Space))
+				CollisionLayer.Visible = !CollisionLayer.Visible;
 		}
 
 
@@ -793,7 +810,7 @@ namespace RuffnTumble
 			if (Entities.ContainsKey(name))
 				return null;
 
-			Entity ent = new Entity(this);
+			Entity ent = null; // new Entity(this);
 
 			Entities[name] = ent;
 			return ent;
@@ -955,6 +972,17 @@ namespace RuffnTumble
 
 
 		/// <summary>
+		/// Player handle
+		/// </summary>
+		public Player Player
+		{
+			get;
+			private set;
+		}
+
+
+
+		/// <summary>
 		/// If true, level is ready to be used. 
 		/// Else call Init() to make it ready to use.
 		/// </summary>
@@ -1000,48 +1028,6 @@ namespace RuffnTumble
 			get;
 			set;
 		}
-
-/*
-		/// <summary>
-		/// Gets the dimension in pixel of a block (including the zoom factor)
-		/// </summary>
-		[Browsable(false)]
-		public Size BlockDimension
-		{
-			get
-			{
-				if (Camera == null)
-					return Size.Empty;
-
-				return new Size((int)(BlockSize.Width * Camera.Scale.X), (int)(BlockSize.Height * Camera.Scale.Y));
-			}
-		}
-
-
-		/// <summary>
-		/// Gets/sets the location (in pixel) in the layer (aka : scrolling).
-		/// </summary>
-		[Browsable(false)]
-		public Point Location
-		{
-			get { return location; }
-			set
-			{
-				location = value;
-
-				if (location.X > (Size.Width * BlockDimension.Width) - Camera.ViewPort.Width)
-					location.X = Size.Width * BlockDimension.Width - Camera.ViewPort.Width;
-				if (location.Y > (Size.Height * BlockDimension.Height) - Camera.ViewPort.Height)
-					location.Y = Size.Height * BlockDimension.Height - Camera.ViewPort.Height;
-
-				if (location.X < 0) location.X = 0;
-				if (location.Y < 0) location.Y = 0;
-			}
-		}
-		Point location;
-*/
-
-
 
 
 		/// <summary>
