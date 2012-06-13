@@ -730,7 +730,24 @@ namespace ArcEngine
 		#region Swizzle
 
 		/// <summary>
-		/// Gets or sets an OpenTK.Vector2 with the X and Y components of this instance.
+		/// Gets or sets an Vector2 with the X and Y components of this instance.
+		/// </summary>
+		[XmlIgnore]
+		public Vector2 Location
+		{
+			get
+			{
+				return new Vector2(X, Y);
+			}
+			set
+			{
+				X = value.X;
+				Y = value.Y;
+			}
+		}
+
+		/// <summary>
+		/// Gets or sets an Vector2 with the X and Y components of this instance.
 		/// </summary>
 		[XmlIgnore]
 		public Vector2 Xy
@@ -741,7 +758,7 @@ namespace ArcEngine
 			}
 			set
 			{
-				X = value.X; 
+				X = value.X;
 				Y = value.Y;
 			}
 		}

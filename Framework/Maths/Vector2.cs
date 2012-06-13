@@ -48,6 +48,50 @@ namespace ArcEngine
 		/// </summary>
 		public float Y;
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public float Width
+		{
+			get
+			{
+				return X;
+			}
+			set
+			{
+				X = value;
+			}
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public float Height
+		{
+			get
+			{
+				return Y;
+			}
+			set
+			{
+				Y = value;
+			}
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public bool IsNull
+		{
+			get
+			{
+				return X == 0.0f && Y == 0.0f;
+			}
+		}
+
 		#endregion
 
 		#region Constructors

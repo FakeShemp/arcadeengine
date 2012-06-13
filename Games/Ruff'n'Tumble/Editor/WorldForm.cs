@@ -319,7 +319,7 @@ namespace RuffnTumble.Editor
 		/// <param name="e"></param>
 		private void AddEntityMenu_Click(object sender, EventArgs e)
 		{
-			Point pos = new Point(LevelContextMenuStrip.Left, LevelContextMenuStrip.Top);
+			Vector2 pos = new Vector2(LevelContextMenuStrip.Left, LevelContextMenuStrip.Top);
 
 			new Wizards.NewEntityWizard(Level, pos).ShowDialog();
 		}
@@ -458,6 +458,7 @@ namespace RuffnTumble.Editor
 		/// <summary>
 		/// Paste the brush on the layer
 		/// </summary>
+		/// <param name="location"></param>
 		private void PasteBrush(Point location)
 		{
 			// Find the location and paste it

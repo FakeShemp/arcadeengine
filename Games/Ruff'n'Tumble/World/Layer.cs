@@ -58,10 +58,11 @@ namespace RuffnTumble
 		{
 			if (lvl == null)
 				throw new ArgumentNullException("lvl", "lvl can not be null in Layer constructor !");
+
 			Level = lvl;
 			Visible = true;
 			TileSet = new TileSet();
-			Alpha = 255;
+			Color = Color.White;
 		}
 
 
@@ -169,7 +170,7 @@ namespace RuffnTumble
 				for (int x = 0; x < Size.Width; x++)
 				{
 					Vector2 loc = new Vector2((x * Level.BlockSize.Width) - camera.Location.X, (y * Level.BlockSize.Height) - camera.Location.Y);
-					batch.DrawTile(TileSet, GetTileAtBlock(new Point(x, y)), loc, Color.FromArgb(Alpha, Color.White), 0.0f, new Vector2(1.0f, 1.0f), SpriteEffects.None, 0.0f);
+					batch.DrawTile(TileSet, GetTileAtBlock(new Point(x, y)), loc, Color, 0.0f, new Vector2(1.0f, 1.0f), SpriteEffects.None, 0.0f);
 				}
 			batch.Flush();
 			Display.PopScissor();
@@ -318,7 +319,7 @@ namespace RuffnTumble
 			writer.WriteEndElement();	// Visibility
 
 			writer.WriteStartElement("alpha");
-			writer.WriteAttributeString("value", Alpha.ToString());
+			writer.WriteAttributeString("value", Color.A.ToString());
 			writer.WriteEndElement();	// Alpha
 
 
@@ -359,7 +360,7 @@ namespace RuffnTumble
 				Visible = Boolean.Parse(xml.Attributes["visibility"].Value);
 
 			if (xml.Attributes["alpha"] != null)
-				Alpha = byte.Parse(xml.Attributes["alpha"].Value);
+				Color = Color.FromArgb(byte.Parse(xml.Attributes["alpha"].Value), Color.White);
 
 
 			foreach (XmlNode node in xml.ChildNodes)
@@ -697,15 +698,6 @@ namespace RuffnTumble
 
 
 		/// <summary>
-		/// Transparency of the layer
-		/// </summary>
-		public byte Alpha
-		{
-			get;
-			set;
-		}
-
-		/// <summary>
 		/// TileSet
 		/// </summary>
 		TileSet TileSet;
@@ -757,6 +749,15 @@ namespace RuffnTumble
 			}
 		}
 
+
+		/// <summary>
+		/// Layer color
+		/// </summary>
+		public Color Color
+		{
+			get;
+			set;
+		}
 
 		#endregion
 	}

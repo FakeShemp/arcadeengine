@@ -103,7 +103,7 @@ namespace RuffnTumble.Editor
 			OptionsBox.SetItemCheckState(1, Form.Level.RenderEntities ? CheckState.Checked : CheckState.Unchecked);
 			OptionsBox.SetItemCheckState(2, Form.Level.RenderSpawnPoints ? CheckState.Checked : CheckState.Unchecked);
 
-			AlphaBox.Value = Form.CurrentLayer.Alpha;
+			AlphaBox.Value = Form.CurrentLayer.Color.A;
 		}
 
 
@@ -221,7 +221,7 @@ namespace RuffnTumble.Editor
 		{
 			if (Form.CurrentLayer == null)
 				return;
-			Form.CurrentLayer.Alpha = (byte)AlphaBox.Value ;
+			Form.CurrentLayer.Color = Color.FromArgb((byte)AlphaBox.Value, Form.CurrentLayer.Color);
 		}
 
 

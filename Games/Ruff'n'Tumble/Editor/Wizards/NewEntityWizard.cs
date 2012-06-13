@@ -25,7 +25,7 @@ using System.Drawing;
 using ArcEngine.Asset;
 using System.Text;
 using System.Windows.Forms;
-
+using ArcEngine;
 
 
 
@@ -35,7 +35,7 @@ namespace RuffnTumble.Editor.Wizards
 	public partial class NewEntityWizard : Form
 	{
 
-		public NewEntityWizard(Level level, Point pos)
+		public NewEntityWizard(Level level, Vector2 pos)
 		{
 			InitializeComponent();
 
@@ -98,7 +98,7 @@ namespace RuffnTumble.Editor.Wizards
 		/// <summary>
 		/// Location of the entity in the level
 		/// </summary>
-		Point Position;
+		Vector2 Position;
 
 	}
 }

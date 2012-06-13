@@ -45,7 +45,7 @@ namespace RuffnTumble
 		/// <param name="name"></param>
 		public Path()//string name) : base(name)
 		{
-			points = new List<Point>();
+			points = new List<Vector2>();
 		}
 
 
@@ -108,7 +108,7 @@ namespace RuffnTumble
 	//		base.SaveComment(xml);
 
 
-			foreach (Point point in points)
+			foreach (Vector2 point in points)
 			{
 				xml.WriteStartElement("point");
 				xml.WriteAttributeString("x", point.X.ToString());
@@ -145,7 +145,7 @@ namespace RuffnTumble
 				{
 					case "point":
 					{
-						AddPoint(new Point(int.Parse(node.Attributes["x"].Value), int.Parse(node.Attributes["y"].Value)));
+						AddPoint(new Vector2(float.Parse(node.Attributes["x"].Value), float.Parse(node.Attributes["y"].Value)));
 					}
 					break;
 
@@ -172,7 +172,7 @@ namespace RuffnTumble
 		/// Adds a point at the end
 		/// </summary>
 		/// <param name="point"></param>
-		public void AddPoint(Point point)
+		public void AddPoint(Vector2 point)
 		{
 			points.Add(point);
 			ComputeRectangle();
@@ -217,27 +217,27 @@ namespace RuffnTumble
 			// No elements
 			if (points.Count == 0)
 			{
-				zone = Rectangle.Empty;
+				zone = Vector4.Zero;
 				return;
 			}
 
-			zone = new Rectangle(points[0], Size.Empty);
+			zone = new Vector4(points[0]);
 
-			foreach (Point point in points)
+			foreach (Vector2 point in points)
 			{
 				if (!zone.Contains(point))
 				{
 					if (zone.Left > point.X)
-						zone.Location = new Point(point.X, zone.Top);
+						zone.Location = new Vector2(point.X, zone.Top);
 
 					if (zone.Top > point.Y)
-						zone.Location = new Point(zone.Left, point.Y);
+						zone.Location = new Vector2(zone.Left, point.Y);
 
 					if (zone.Right < point.X)
-						zone.Size = new Size(point.X - Zone.Left, zone.Height);
+						zone.Size = new Vector2(point.X - Zone.Left, zone.Height);
 
 					if (zone.Bottom < point.Y)
-						zone.Size = new Size(zone.Width, point.Y - Zone.Top);
+						zone.Size = new Vector2(zone.Width, point.Y - Zone.Top);
 				}
 			}
 		}
@@ -253,14 +253,14 @@ namespace RuffnTumble
 		/// <summary>
 		/// List of points in the path
 		/// </summary>
-		public List<Point> Points
+		public List<Vector2> Points
 		{
 			get
 			{
 				return points;
 			}
 		}
-		List<Point> points;
+		List<Vector2> points;
 
 
 		/// <summary>
@@ -272,14 +272,14 @@ namespace RuffnTumble
 		/// <summary>
 		/// Gets the rectangle of the path
 		/// </summary>
-		public Rectangle Zone
+		public Vector4 Zone
 		{
 			get
 			{
 				return zone;
 			}
 		}
-		Rectangle zone;
+		Vector4 zone;
 
 
 		#endregion

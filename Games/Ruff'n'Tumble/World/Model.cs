@@ -296,12 +296,12 @@ namespace RuffnTumble
 		/// <summary>
 		/// Gets/sets the zoom of the tileset
 		/// </summary>
-		public SizeF Zoom
+		public Vector2 Zoom
 		{
 			get
 			{
-				if (zoom.IsEmpty)
-					return new SizeF(1, 1);
+				if (zoom.IsNull)
+					return new Vector2(1, 1);
 				else
 					return zoom;
 			}
@@ -310,7 +310,7 @@ namespace RuffnTumble
 				zoom = value;
 			}
 		}
-		SizeF zoom;
+		Vector2 zoom;
 
 
 

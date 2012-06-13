@@ -104,7 +104,6 @@ namespace RuffnTumble
 		/// </summary>
 		public override void Draw()
 		{
-			Display.RenderState.ClearColor = Color.CornflowerBlue;
 			Display.ClearBuffers();
 
 

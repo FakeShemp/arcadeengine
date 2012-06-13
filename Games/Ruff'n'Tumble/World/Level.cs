@@ -25,6 +25,7 @@ using ArcEngine.Graphic;
 using ArcEngine.Asset;
 using ArcEngine;
 using System;
+using ArcEngine.Input;
 
 //
 // - Ajouter un tag <gravity x="0.0" y="0.0" /> dans le tag <layer> pour definir la gravite du layer
@@ -49,6 +50,8 @@ namespace RuffnTumble
 		{
 			TileLayer = new Layer(this);
 			CollisionLayer = new Layer(this);
+			CollisionLayer.Color = Color.Red;
+
 			Paths = new Dictionary<string, Path>();
 
 			Entities = new Dictionary<string, Entity>();
@@ -493,7 +496,7 @@ namespace RuffnTumble
 			TileLayer.Draw(batch, Camera);
 
 			// Draw collision layer
-			//CollisionLayer.Draw(batch, Camera);
+			CollisionLayer.Draw(batch, Camera);
 
 			//
 			// Draw Spawnpoints
@@ -567,6 +570,9 @@ namespace RuffnTumble
 
 			// Update the camera
 			Camera.Update(time);
+
+
+			CollisionLayer.Visible = Keyboard.IsKeyPress(System.Windows.Forms.Keys.Space);
 		}
 
 
