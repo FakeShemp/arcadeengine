@@ -11,6 +11,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Drawing;
 
 namespace ArcEngine
 {
@@ -75,9 +76,51 @@ namespace ArcEngine
 
         #region Public Members
 
-        #region NextPowerOfTwo
+		#region GetIntersectionDepth
 
-        /// <summary>
+		/// <summary>
+		/// Calculates the signed depth of intersection between two rectangles.
+		/// </summary>
+		/// <returns>
+		/// The amount of overlap between two intersecting rectangles. These
+		/// depth values can be negative depending on which wides the rectangles
+		/// intersect. This allows callers to determine the correct direction
+		/// to push objects in order to resolve collisions.
+		/// If the rectangles are not intersecting, Vector2.Zero is returned.
+		/// </returns>
+		public static Vector2 GetIntersectionDepth(Rectangle rectA, Rectangle rectB)
+		{
+			// Calculate half sizes.
+			float halfWidthA = rectA.Width / 2.0f;
+			float halfHeightA = rectA.Height / 2.0f;
+			float halfWidthB = rectB.Width / 2.0f;
+			float halfHeightB = rectB.Height / 2.0f;
+
+			// Calculate centers.
+			Vector2 centerA = new Vector2(rectA.Left + halfWidthA, rectA.Top + halfHeightA);
+			Vector2 centerB = new Vector2(rectB.Left + halfWidthB, rectB.Top + halfHeightB);
+
+			// Calculate current and minimum-non-intersecting distances between centers.
+			float distanceX = centerA.X - centerB.X;
+			float distanceY = centerA.Y - centerB.Y;
+			float minDistanceX = halfWidthA + halfWidthB;
+			float minDistanceY = halfHeightA + halfHeightB;
+
+			// If we are not intersecting at all, return (0, 0).
+			if (Math.Abs(distanceX) >= minDistanceX || Math.Abs(distanceY) >= minDistanceY)
+				return Vector2.Zero;
+
+			// Calculate and return intersection depths.
+			float depthX = distanceX > 0 ? minDistanceX - distanceX : -minDistanceX - distanceX;
+			float depthY = distanceY > 0 ? minDistanceY - distanceY : -minDistanceY - distanceY;
+			return new Vector2(depthX, depthY);
+		}
+
+		#endregion
+
+		#region NextPowerOfTwo
+
+		/// <summary>
         /// Returns the next power of two that is larger than the specified number.
         /// </summary>
         /// <param name="n">The specified number.</param>
@@ -267,6 +310,27 @@ namespace ArcEngine
 
         #endregion
 
-        #endregion
-    }
+		#region Clamp
+		/// <summary>
+		/// Restricts a value to be within a specified range. 
+		/// </summary>
+		/// <param name="value">The value to clamp</param>
+		/// <param name="min">The minimum value. If value is less than min, min will be returned. </param>
+		/// <param name="max">The maximum value. If value is greater than max, max will be returned. </param>
+		/// <returns>The clamped value.
+		///    If value > max, max will be returned.
+		///    If value < min, min will be returned.
+		///    If min ≤ value ≥ max, value will be returned.
+		///</returns>
+		public static float Clamp(float value, float min, float max)
+		{
+			value = ((value > max) ? max : value);
+			value = ((value < min) ? min : value);
+			return value;
+		}
+
+		#endregion
+
+		#endregion
+	}
 }

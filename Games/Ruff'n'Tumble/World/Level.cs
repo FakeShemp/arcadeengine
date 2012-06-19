@@ -48,9 +48,9 @@ namespace RuffnTumble
 		/// </summary>
 		public Level()
 		{
-			TileLayer = new Layer(this);
+			ForegroundLayer = new Layer(this);
 			CollisionLayer = new Layer(this);
-			CollisionLayer.Color = Color.Red;
+			CollisionLayer.Visible = false;
 
 			Paths = new Dictionary<string, Path>();
 
@@ -60,7 +60,7 @@ namespace RuffnTumble
 			SpawnPoints = new Dictionary<string, SpawnLocation>();
 			BlockSize = new Size(16, 16);
 
-			Player = new Player();
+			Player = new Player(this);
 		}
 
 
@@ -73,9 +73,9 @@ namespace RuffnTumble
 				Player.Dispose();
 			Player = null;
 
-			if (TileLayer != null)
-				TileLayer.Dispose();
-			TileLayer = null;
+			if (ForegroundLayer != null)
+				ForegroundLayer.Dispose();
+			ForegroundLayer = null;
 
 			if (spTexture != null)
 				spTexture.Dispose();
@@ -102,6 +102,44 @@ namespace RuffnTumble
 			Size = Size.Empty;
 			Camera = null;
 			BlockSize = Size.Empty;
+		}
+
+
+		/// <summary>
+		/// Gets the collision of the tile at a given location
+		/// </summary>
+		/// <param name="location">Tile location</param>
+		/// <returns>TileCollision value</returns>
+		public TileCollision GetCollision(int x, int y)
+		{
+			// Prevent escaping past the level ends.
+			if (x < 0 || x >= Size.Width)
+				return TileCollision.Impassable;
+
+			// Allow jumping past the level top and falling through the bottom.
+			if (y < 0 || y >= Size.Height)
+				return TileCollision.Passable;
+
+			int res = CollisionLayer.GetTileAtBlock(x, y);
+
+			if (res == 1)
+				return TileCollision.Impassable;
+
+			if (res == 2)
+				return TileCollision.Platform;
+
+			return TileCollision.Passable;
+		}
+
+
+		/// <summary>
+		/// Gets the bounding rectangle of a tile in world space.
+		/// </summary>     
+		/// <param name="x">X block coordinate</param>
+		/// <param name="y">Y block coordinate</param>
+		public Rectangle GetBounds(int x, int y)
+		{
+			return new Rectangle(x * BlockSize.Width, y * BlockSize.Height, BlockSize.Width, BlockSize.Height);
 		}
 
 
@@ -139,7 +177,7 @@ namespace RuffnTumble
 
 
 			xml.WriteStartElement("tiles");
-			TileLayer.Save(xml);
+			ForegroundLayer.Save(xml);
 			xml.WriteEndElement();
 			
 			xml.WriteStartElement("collisions");
@@ -229,7 +267,7 @@ namespace RuffnTumble
 					// Tiles of the level
 					case "tiles":
 					{
-						TileLayer.Load(node);
+						ForegroundLayer.Load(node);
 					}
 					break;
 
@@ -266,7 +304,6 @@ namespace RuffnTumble
 		}
 
 		#endregion
-
 
 
 		#region Layers
@@ -344,7 +381,7 @@ namespace RuffnTumble
 			// Resize
 			Size = newsize;
 
-			TileLayer.SetSize(Size);
+			ForegroundLayer.SetSize(Size);
 			CollisionLayer.SetSize(Size);
 		}
 
@@ -357,7 +394,7 @@ namespace RuffnTumble
 		/// <param name="tileid">Tile BufferID</param>
 		public void InsertRow(int row, int tileid)
 		{
-			TileLayer.InsertRow(row, tileid);
+			ForegroundLayer.InsertRow(row, tileid);
 			CollisionLayer.InsertRow(row, tileid);
 
 			// Resize the level
@@ -376,7 +413,7 @@ namespace RuffnTumble
 		/// <param name="row">Row ID to remove</param>
 		public void RemoveRow(int row)
 		{
-			TileLayer.RemoveRow(row);
+			ForegroundLayer.RemoveRow(row);
 			CollisionLayer.RemoveRow(row);
 
 			Size = new Size(Size.Width, Size.Height - 1);
@@ -396,7 +433,7 @@ namespace RuffnTumble
 		/// <param name="tileid">Tile BufferID</param>
 		public void InsertColumn(int column, int tileid)
 		{
-			TileLayer.InsertColumn(column, tileid);
+			ForegroundLayer.InsertColumn(column, tileid);
 			CollisionLayer.InsertColumn(column, tileid);
 
 			Size = new Size(Size.Width + 1, Size.Height);
@@ -414,7 +451,7 @@ namespace RuffnTumble
 		/// <param name="column">Columns ID to remove</param>
 		public void RemoveColumn(int column)
 		{
-			TileLayer.RemoveColumn(column);
+			ForegroundLayer.RemoveColumn(column);
 			CollisionLayer.RemoveColumn(column);
 
 			Size = new Size(Size.Width - 1, Size.Height);
@@ -439,11 +476,11 @@ namespace RuffnTumble
 			//// Move entities
 			foreach (Entity entity in Entities.Values)
 			{
-				if (zone.Contains(entity.Location))
+				if (zone.Contains(entity.Position))
 				{
-					entity.Location = new Vector2(
-						 entity.Location.X + offset.X,
-						 entity.Location.Y + offset.Y);
+					entity.Position = new Vector2(
+						 entity.Position.X + offset.X,
+						 entity.Position.Y + offset.Y);
 				}
 			}
 
@@ -501,7 +538,7 @@ namespace RuffnTumble
 				return;
 
 			// Draw the layer
-			TileLayer.Draw(batch, Camera);
+			ForegroundLayer.Draw(batch, Camera);
 
 			Player.Draw(batch, Camera);
 
@@ -1031,10 +1068,22 @@ namespace RuffnTumble
 
 
 		/// <summary>
-		/// Tiles layer
+		/// Foreground tiles layer
 		/// </summary>
 		[Browsable(false)]
-		public Layer TileLayer
+		public Layer ForegroundLayer
+		{
+			get;
+			private set;
+		}
+
+
+
+		/// <summary>
+		/// Background tiles layer
+		/// </summary>
+		[Browsable(false)]
+		public Layer BackgroundLayer
 		{
 			get;
 			private set;

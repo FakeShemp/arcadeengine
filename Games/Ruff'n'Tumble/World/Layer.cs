@@ -17,10 +17,7 @@
 //along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 //
 #endregion
-using ArcEngine;
-using RuffnTumble.Interface;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -28,9 +25,9 @@ using System.Drawing.Design;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
 using System.Xml;
-using ArcEngine.Graphic;
-using System.IO;
+using ArcEngine;
 using ArcEngine.Asset;
+using ArcEngine.Graphic;
 
 
 
@@ -170,7 +167,7 @@ namespace RuffnTumble
 				for (int x = 0; x < Size.Width; x++)
 				{
 					Vector2 loc = new Vector2(x * Level.BlockSize.Width - camera.Location.X , y * Level.BlockSize.Height - camera.Location.Y);
-					batch.DrawTile(TileSet, GetTileAtBlock(new Point(x, y)), loc, Color, 0.0f, new Vector2(1.0f, 1.0f), SpriteEffects.None, 0.0f);
+					batch.DrawTile(TileSet, GetTileAtBlock(x, y), loc, Color, 0.0f, new Vector2(1.0f, 1.0f), SpriteEffects.None, 0.0f);
 				}
 			batch.Flush();
 			Display.PopScissor();
@@ -424,15 +421,15 @@ namespace RuffnTumble
 		/// </summary>
 		/// <param name="point">Point in the layer in block</param>
 		/// <returns>ID of the block</returns>
-		public int GetTileAtBlock(Point point)
+		public int GetTileAtBlock(int x, int y)
 		{
-			if (point.Y < 0 || point.Y >= Tiles.Count)
+			if (y < 0 || y >= Tiles.Count)
 				return -1;
 
-			if (point.X < 0 || point.X >= Tiles[point.Y].Count)
+			if (x < 0 || x >= Tiles[y].Count)
 				return -1;
 
-			return Tiles[point.Y][point.X];
+			return Tiles[y][x];
 		}
 
 
@@ -448,7 +445,7 @@ namespace RuffnTumble
 
 			Point p = new Point((int)(point.X / Level.BlockSize.Width), (int)(point.Y / Level.BlockSize.Height));
 
-			return GetTileAtBlock(p);
+			return GetTileAtBlock(p.X, p.Y);
 		}
 
 
@@ -528,7 +525,7 @@ namespace RuffnTumble
 			{
 				if (colblock.Bottom != 0 || colblock.Right + colblock.Height != 0)
 				{
-					res.FinalVelocity.Y = velocity.Y - (entity.Location.Y + velocity.Y) % Level.BlockSize.Height - 1;
+					res.FinalVelocity.Y = velocity.Y - (entity.Position.Y + velocity.Y) % Level.BlockSize.Height - 1;
 				}
 				else
 					res.FinalVelocity.Y = velocity.Y;
@@ -611,7 +608,7 @@ namespace RuffnTumble
 			ranges.Clear();
 
 			// Target tile
-			int targetTile = GetTileAtBlock(pt);
+			int targetTile = GetTileAtBlock(pt.X, pt.Y);
 
 			// First fill
 			LinearFill(pt, id);
@@ -624,11 +621,11 @@ namespace RuffnTumble
 				for (int x = range.StartX; x <= range.EndX; x++)
 				{
 					// Check upward
-					if (range.Y > 0 && GetTileAtBlock(new Point(x, range.Y - 1)) == targetTile)
+					if (range.Y > 0 && GetTileAtBlock(x, range.Y - 1) == targetTile)
 						LinearFill(new Point(x, range.Y - 1), id);
 
 					// Check downward
-					if (range.Y < Level.Size.Height + 1 && GetTileAtBlock(new Point(x, range.Y + 1)) == targetTile)
+					if (range.Y < Level.Size.Height + 1 && GetTileAtBlock(x, range.Y + 1) == targetTile)
 						LinearFill(new Point(x, range.Y + 1), id);
 				}
 
@@ -650,7 +647,7 @@ namespace RuffnTumble
 		{
 
 			// ID of the tile to fill
-			int targetId = GetTileAtBlock(pt);
+			int targetId = GetTileAtBlock(pt.X, pt.Y);
 			if (targetId == id)
 				return;
 
@@ -663,7 +660,7 @@ namespace RuffnTumble
 			for (minx = pt.X; minx >= 0; minx--)
 			{
 				Point pos = new Point(minx, pt.Y);
-				if (GetTileAtBlock(pos) != targetId)
+				if (GetTileAtBlock(pos.X, pos.Y) != targetId)
 					break;
 
 				SetTileAtBlock(pos, id);
@@ -674,7 +671,7 @@ namespace RuffnTumble
 			for (maxx = pt.X + 1; maxx <= Level.Size.Width; maxx++)
 			{
 				Point pos = new Point(maxx, pt.Y);
-				if (GetTileAtBlock(pos) != targetId)
+				if (GetTileAtBlock(pos.X, pos.Y) != targetId)
 					break;
 
 				SetTileAtBlock(pos, id);
@@ -1006,55 +1003,6 @@ namespace RuffnTumble
 	}
 
 
-/*
-	/// <summary>
-	/// Collision block ID
-	/// </summary>
-	public class CollisionBlock
-	{
-		/// <summary>
-		/// 
-		/// </summary>
-		public int TopLeft;
-		/// <summary>
-		/// 
-		/// </summary>
-		public int TopRight;
-		/// <summary>
-		/// 
-		/// </summary>
-		public int BottomLeft;
-		/// <summary>
-		/// 
-		/// </summary>
-		public int BottomRight;
-	}
-
-
-	/// <summary>
-	/// Collision point location
-	/// </summary>
-	public class CollisionCoord
-	{
-		/// <summary>
-		/// 
-		/// </summary>
-		public Point TopLeft;
-		/// <summary>
-		/// 
-		/// </summary>
-		public Point TopRight;
-		/// <summary>
-		/// 
-		/// </summary>
-		public Point BottomLeft;
-		/// <summary>
-		/// 
-		/// </summary>
-		public Point BottomRight;
-	}
-
-*/
 	#endregion
 
 

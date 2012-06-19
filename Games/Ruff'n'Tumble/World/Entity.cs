@@ -202,6 +202,23 @@ namespace RuffnTumble
 		#endregion
 
 
+		#region
+
+
+		/// <summary>
+		/// Called when the entity
+		/// <param name="killedBy">
+		/// The enemy who killed the entity. This parameter is null if the entity was
+		/// killed by self.
+		/// </param>
+		public virtual void OnKilled(Entity killedBy)
+		{
+		}
+
+
+
+		#endregion
+
 		#region Properties
 
 
@@ -245,22 +262,48 @@ namespace RuffnTumble
 
 
 		/// <summary>
-		/// Gets / sets entity location in the layer.
+		/// Gets / sets entity position in the level
 		/// </summary>
-		[Category("Entity")]
-		[Description("Offset of the entity")]
-		public Vector2 Location
+		public Vector2 Position
 		{
 			get
 			{
-				return location;
+				return position;
 			}
 			set
 			{
-				location = value;
+				position = value;
 			}
 		}
-		protected Vector2 location;
+		protected Vector2 position;
+
+
+
+		/// <summary>
+		/// Gets / sets entity velocity in the level
+		/// </summary>
+		public Vector2 Velocity
+		{
+			get
+			{
+				return velocity;
+			}
+			set
+			{
+				velocity = value;
+			}
+		}
+		protected Vector2 velocity;
+
+
+		/// <summary>
+		/// Gets whether or not the entity's feet are on the ground.
+		/// </summary>
+		public bool IsOnGround
+		{
+			get { return isOnGround; }
+		}
+		protected bool isOnGround;
 
 
 		#endregion

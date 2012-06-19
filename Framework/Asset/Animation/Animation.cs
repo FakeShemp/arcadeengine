@@ -49,7 +49,7 @@ namespace ArcEngine.Asset
 {
 
 	/// <summary>
-	/// Defines an animation set.
+	/// Represents an animated texture..
 	/// </summary>
 	public class Animation : IAsset, IDisposable
 	{

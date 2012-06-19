@@ -95,7 +95,7 @@ namespace RuffnTumble.Editor
 		private void LayersBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (LayersBox.SelectedIndex == 0)
-				Form.CurrentLayer = Form.Level.TileLayer;
+				Form.CurrentLayer = Form.Level.ForegroundLayer;
 			else
 				Form.CurrentLayer = Form.Level.CollisionLayer;
 

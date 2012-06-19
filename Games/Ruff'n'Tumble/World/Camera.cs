@@ -36,8 +36,8 @@ namespace RuffnTumble
 			// Center the camera at the target
 			if (Target != null)
 			{
-				Location.X = Target.Location.X - ViewPort.Width / 2.0f;
-				Location.Y = Target.Location.Y - ViewPort.Height / 2.0f;
+				Location.X = Target.Position.X - ViewPort.Width / 2.0f;
+				Location.Y = Target.Position.Y - ViewPort.Height / 2.0f;
 			}
 
 

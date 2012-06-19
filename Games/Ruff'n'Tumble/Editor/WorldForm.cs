@@ -853,11 +853,11 @@ namespace RuffnTumble.Editor
 				entity = null; //LayerPanel.PropertyGridBox.SelectedObject as Entity;
 				if (entity != null)
 				{
-					pos = entity.Location;
+					pos = entity.Position;
 					pos.X += offset.X;
 					pos.Y += offset.Y;
 					//pos.Offset(offset);
-					entity.Location = pos;
+					entity.Position = pos;
 				}
 				SpawnLocation spawn = null; //LayerPanel.PropertyGridBox.SelectedObject as SpawnPoint;
 				if (spawn != null)
@@ -981,7 +981,7 @@ namespace RuffnTumble.Editor
 					for (int x = 0; x < BrushRectangle.Width; x++)
 					{
 						//int BufferID = (BrushRectangle.Top + y) + BrushRectangle.Left + x;
-						LayerBrush.Tiles[y][x] = CurrentLayer.GetTileAtBlock(new Point(BrushRectangle.Left + x, BrushRectangle.Top + y));
+						LayerBrush.Tiles[y][x] = CurrentLayer.GetTileAtBlock(BrushRectangle.Left + x, BrushRectangle.Top + y);
 					}
 				}
 
