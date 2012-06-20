@@ -42,6 +42,9 @@ namespace RuffnTumble
 		/// <param name="level">Level handle</param>
 		public Player(Level level)
 		{
+			if (level == null)
+				throw new ArgumentNullException("level", "Level handle is null");
+
 			Level = level;
 			position = new Vector2(200, 100);
 			localBounds = new Rectangle(0, 0, 32, 64);
@@ -66,8 +69,6 @@ namespace RuffnTumble
 		/// <param name="time"></param>
 		public override void Update(GameTime time)
 		{
-			float speed = (float)(300.0f * time.ElapsedGameTime.TotalSeconds);
-
 			#region Get inputs
 
 			// Left or right movement
@@ -82,11 +83,11 @@ namespace RuffnTumble
 
 			#endregion
 
-			// 
+			// Apply physic law
 			ApplyPhysic(time);
 
 
-			// 
+			// Play the animation
 			if (isOnGround && isAlive)
 			{
 				if (Math.Abs(Velocity.X) - 0.02f > 0)
@@ -99,9 +100,10 @@ namespace RuffnTumble
 				}
 			}
 
+			// Debug
 			if (Keyboard.IsNewKeyPress(Keys.P))
 			{
-				position = new Vector2(200, 100);
+				position = new Vector2(400, 100);
 				velocity = Vector2.Zero;
 				Movement = 0.0f;
 			}
@@ -111,7 +113,6 @@ namespace RuffnTumble
 			isJumping = false;
 	
 		}
-
 
 
 		/// <summary>
@@ -156,10 +157,8 @@ namespace RuffnTumble
 		}
 
 
-
 		/// <summary>
-		/// Calculates the Y velocity accounting for jumping and
-		/// animates accordingly.
+		/// Calculates the Y velocity accounting for jumping and animates accordingly.
 		/// </summary>
 		/// <remarks>
 		/// During the accent of a jump, the Y velocity is completely
@@ -167,9 +166,7 @@ namespace RuffnTumble
 		/// over. The jump velocity is controlled by the jumpTime field
 		/// which measures time into the accent of the current jump.
 		/// </remarks>
-		/// <param name="velocityY">
-		/// The player's current velocity along the Y axis.
-		/// </param>
+		/// <param name="velocityY">The player's current velocity along the Y axis.</param>
 		/// <returns>
 		/// A new Y velocity if beginning or continuing a jump.
 		/// Otherwise, the existing Y velocity.
@@ -206,6 +203,7 @@ namespace RuffnTumble
 				// Continues not jumping or cancels a jump in progress
 				jumpTime = 0.0f;
 			}
+
 			wasJumping = isJumping;
 
 			return velocityY;
@@ -240,6 +238,12 @@ namespace RuffnTumble
 					if (collision == TileCollision.Passable)
 						continue;
 
+					// Death tile
+					if (collision == TileCollision.Death)
+					{
+						isAlive = false;
+						return;
+					}
 					
 					// Determine collision depth (with direction) and magnitude.
 					Rectangle tileBounds = Level.GetBounds(x, y);

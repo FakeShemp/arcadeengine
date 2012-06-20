@@ -61,6 +61,9 @@ namespace RuffnTumble
 			BlockSize = new Size(16, 16);
 
 			Player = new Player(this);
+
+			ExitReady = false;
+			ReachedExit = false;
 		}
 
 
@@ -125,8 +128,14 @@ namespace RuffnTumble
 			if (res == 1)
 				return TileCollision.Impassable;
 
-			if (res == 2)
-				return TileCollision.Platform;
+			if (res >= 2 && res <= 11)
+				return TileCollision.Slope;
+
+			if (res == 12)
+				return TileCollision.Death;
+
+			if (res == 13)
+				return TileCollision.Ladder;
 
 			return TileCollision.Passable;
 		}
@@ -1176,6 +1185,46 @@ namespace RuffnTumble
 		Dictionary<string, Path> Paths;
 
 
+		/// <summary>
+		/// Level's score
+		/// </summary>
+		public int Score
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// True if the player reached  the exit point
+		/// </summary>
+		public bool ReachedExit
+		{
+			get;
+			private set;
+		}
+
+
+		/// <summary>
+		/// True if the exit point is open
+		/// </summary>
+		public bool ExitReady
+		{
+			get;
+			private set;
+		}
+
+
+
+
+		/// <summary>
+		/// Time remaining on the level
+		/// </summary>
+		public TimeSpan TimeRemaining
+		{
+			get;
+			private set;
+		}
 
 		#endregion
 	}

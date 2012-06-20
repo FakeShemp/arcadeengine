@@ -38,6 +38,9 @@ namespace RuffnTumble
 	//
 	// QuadTree 2D : http://www.gamedev.net/community/forums/topic.asp?topic_id=512632
 	// Collision : http://wiki.allegro.cc/index.php?title=Pixelate:Issue_14/jnrdev#2_-_hills_.26_slopes
+	// http://jnrdev.72dpiarmy.com/en/jnrdev1/
+	// http://www.tonypa.pri.ee/tbw/start.html
+	// http://games.greggman.com/mckids/programming_mc_kids.htm
 	//
 	//
 	//
@@ -74,71 +77,10 @@ namespace RuffnTumble
 		}
 
 
-/*
 		/// <summary>
-		///  Inits the layer
+		/// Reset the size of the layer
 		/// </summary>
-		/// <returns></returns>
-		public bool Init()
-		{
-
-
-
-			// If a texture is present, build tileset
-			TileSet.LoadTexture(TextureName);
-			BuildTileSet();
-
-
-			// Creates the script
-			if (!string.IsNullOrEmpty(ScriptName))
-			{
-				Script script = ResourceManager.CreateAsset<Script>(ScriptName);
-				if (script != null)
-				{
-					//if (script.Compile())
-					//	ScriptInterface = (ILayer)script.FindInterface("RuffnTumble.Interface.ILayer");
-
-				}
-			}
-			
-
-			// Init the script
-			//if (ScriptInterface != null)
-			//    ScriptInterface.Init(this);
-
-
-			return true;
-		}
-
- * 
-		/// <summary>
-		/// Build the tileset
-		/// </summary>
-		private void BuildTileSet()
-		{
-			TileSet.Clear();
-
-			if (TileSet.Texture == null)
-				return ;
-			
-			int start = 0;
-			int x = 0;
-			int y = 0;
-			for (y = 0; y < TileSet.Texture.Size.Height; y += Level.BlockSize.Height)
-				for (x = 0; x < TileSet.Texture.Size.Width; x += Level.BlockSize.Width)
-				{
-					Tile tile = TileSet.AddTile(start++);
-					tile.Rectangle = new Rectangle(x, y, Level.BlockSize.Width, Level.BlockSize.Height);
-				}
-		}
-
-*/
-
-
-		/// <summary>
-		/// Resize the layer
-		/// </summary>
-		/// <param name="size">New size</param>
+		/// <param name="size">Desired size</param>
 		public void SetSize(Size size)
 		{
 			Tiles = new List<List<int>>(size.Height);
@@ -190,9 +132,11 @@ namespace RuffnTumble
 		/// Resize the layer
 		/// </summary>
 		/// <param name="newsize">new size</param>
-		/// <returns></returns>
 		public void Resize(Size newsize)
 		{
+			if (newsize.Width <= 0 || newsize.Height <= 0)
+				return;
+
 			// Rows
 			if (newsize.Height > Level.Size.Height)
 			{
@@ -388,8 +332,8 @@ namespace RuffnTumble
 		/// <summary>
 		/// Sets the texture for the tileset
 		/// </summary>
-		/// <param name="name"></param>
-		/// <returns></returns>
+		/// <param name="name">Name of the texture</param>
+		/// <returns>True on success</returns>
 		public bool SetTexture(string name)
 		{
 			TextureName = name;
@@ -434,9 +378,9 @@ namespace RuffnTumble
 
 
 		/// <summary>
-		/// Returns the id of the tile at pixel location
+		/// Returns the id of the tile in world location
 		/// </summary>
-		/// <param name="point">Point in the layer in pixel</param>
+		/// <param name="point">Wolrd location</param>
 		/// <returns>ID of the tile</returns>
 		public int GetTileAtPixel(Vector2 point)
 		{
@@ -457,10 +401,6 @@ namespace RuffnTumble
 		/// <param name="BufferID">ID of the block to paste</param>
 		public void SetTileAtBlock(Point point, int id)
 		{
-			// No tile
-			if (id < 0)
-				return;
-
 			// Out of bound
 			if (point.Y < 0 || point.Y >= Tiles.Count)
 				return;
@@ -473,111 +413,17 @@ namespace RuffnTumble
 
 
 		/// <summary>
-		/// Sets the tile BufferID at the given location (in pixel)
+		/// Sets the tile at the given world location 
 		/// </summary>
-		/// <param name="point">Point in the layer in pixel</param>
+		/// <param name="point">Wolrd coordinate</param>
 		/// <param name="BufferID">ID of the block to paste</param>
 		public void SetTileAtPixel(Vector2 point, int id)
 		{
-			Point p = Level.PositionToBlock(point);
+			if (Level == null)
+				return;
 
-			SetTileAtBlock(p, id);
+			SetTileAtBlock(Level.PositionToBlock(point), id);
 		}
-
-
-		#endregion
-
-
-		#region Collision
-
-		/// <summary>
-		/// Check for collision
-		/// </summary>
-		/// <param name="entity">Entity to check</param>
-		/// <param name="velocity">Direction offset</param>
-		/// <returns>Collision result</returns>
-		// http://jnrdev.72dpiarmy.com/en/jnrdev1/
-		// http://www.tonypa.pri.ee/tbw/start.html
-		// http://games.greggman.com/mckids/programming_mc_kids.htm
-		public CollisionResult CheckForCollision(Entity entity, Vector2 velocity)
-		{
-			// Adds the gravity
-			//velocity.Offset(entity.Gravity);
-
-			// Jumping ?
-			//if (entity.Jump > 0)
-			//{
-			//    velocity.Offset(0, -entity.Jump / 2);
-			//    entity.Jump -= entity.Gravity.Y / 2;
-			//}
-
-			// Collision result
-			CollisionResult res = new CollisionResult(entity, velocity);
-
-
-
-
-
-			// Check for vertical collision
-			Vector4 colrect = new Vector4(0.0f, velocity.Y, 0.0f, 0.0f);
-			Vector4 colblock = res.CheckForCollision(colrect);
-			if (velocity.Y > 0)
-			{
-				if (colblock.Bottom != 0 || colblock.Right + colblock.Height != 0)
-				{
-					res.FinalVelocity.Y = velocity.Y - (entity.Position.Y + velocity.Y) % Level.BlockSize.Height - 1;
-				}
-				else
-					res.FinalVelocity.Y = velocity.Y;
-			}
-			else if (velocity.Y < 0)
-			{
-				if (colblock.Top != 0 || colblock.Right != 0)
-				{
-					res.FinalVelocity.Y = 0;
-				}
-				else
-					res.FinalVelocity.Y = velocity.Y;
-			}
-
-/*
-
-			// Check for horizontal collision
-			colrect = Rectangle.Empty; //entity.CollisionBoxLocation;
-			colrect.Offset(velocity.X, res.FinalVelocity.Y);
-			colblock = res.CheckForCollision(colrect);
-			if (velocity.X > 0)  // Right
-			{
-				if (colblock.TopRight != 0 || colblock.BottomRight != 0)
-				{
-					res.FinalVelocity.X = velocity.X -
-						(entity.Location.X + velocity.X + entity.CollisionBox.Width) % Level.BlockDimension.Width;
-				}
-				else
-					res.FinalVelocity.X = velocity.X;
-			}
-			else if (velocity.X < 0)    // Left
-			{
-				if (colblock.TopLeft != 0 || colblock.BottomLeft != 0)
-				{
-					res.FinalVelocity.X = velocity.X +
-					   Level.BlockDimension.Width - (entity.CollisionBoxLocation.Left + velocity.X) % Level.BlockDimension.Width;
-				}
-				else
-					res.FinalVelocity.X = velocity.X;
-			}
-
-*/
-
-			// Is entity falling ?
-		//	entity.IsFalling = res.FinalVelocity.Y > 0.0f;
-		//	entity.IsJumping = res.FinalVelocity.Y < 0.0f;
-
-
-
-			return res;
-		}
-
 
 
 		#endregion
@@ -733,7 +579,7 @@ namespace RuffnTumble
 
 
 		/// <summary>
-		/// Size of the Layer
+		/// Size of the Layer in block
 		/// </summary>
 		public Size Size
 		{
@@ -837,174 +683,6 @@ namespace RuffnTumble
 	}
 
 
-	#region Collision
-
-
-	/// <summary>
-	/// Result of an entity collision test
-	/// </summary>
-	public class CollisionResult
-	{
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="ent"></param>
-		/// <param name="offset"></param>
-		public CollisionResult(Entity ent, Vector2 offset)
-		{
-			entity = ent;
-			InitialVelocity = offset;
-			Location = new Vector4();
-			Tile = new Vector4();
-			Collision = new Vector4();
-		}
-
-		/// <summary>
-		/// Checks for vertical collision
-		/// </summary>
-		public Vector4 CheckForCollision(Vector4 rect)
-		{
-			Vector4 col = new Vector4();
-
-			if (entity == null)
-				return col;
-
-
-			// Translate the collision box
-			//Rectangle rect = entity.CollisionBoxLocation;
-			//rect.Offset(0, InitialVelocity.Y);
-			//rect.Offset(0, entity.Gravity.Y);
-
-
-			// Collision points
-			Vector2 topLeft = new Vector2(rect.Left, rect.Top);
-			Vector2 topRight = new Vector2(rect.Left + rect.Width, topLeft.Y);
-			Vector2 bottomLeft = new Vector2(topLeft.X, topLeft.Y + rect.Height);
-			Vector2 bottomRight = new Vector2(topRight.X, bottomLeft.Y);
-
-
-			// Collision blocks
-			//col.TopLeft = Level.CollisionLayer.GetTileAtCoord(topLeft);
-			//col.TopRight = Level.CollisionLayer.GetTileAtCoord(topRight);
-			//col.BottomLeft = Level.CollisionLayer.GetTileAtCoord(bottomLeft);
-			//col.BottomRight = Level.CollisionLayer.GetTileAtCoord(bottomRight);
-
-
-			//
-			return col;
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public void Check()
-		{
-			if (entity == null)
-				return;
-
-			// Translate the collision box
-			Vector4 col = new Vector4(); //entity.CollisionBoxLocation;
-			col.Offset(InitialVelocity);
-			//col.Offset(entity.Gravity);
-
-
-			// Collision points
-			Location = col;
-			//Location.TopLeft = new Vector2(col.Left, col.Top);
-			//Location.TopRight = new Vector2(col.Left + col.Width, Location.TopLeft.Y);
-			//Location.BottomLeft = new Vector2(Location.TopLeft.X, Location.TopLeft.Y + col.Height);
-			//Location.BottomRight = new Vector2(Location.TopRight.X, Location.BottomLeft.Y);
-
-
-			// Tile block under the collision points
-			//Tile.TopLeft = layer.GetTileAtCoord(Location.TopLeft);
-			//Tile.TopRight = layer.GetTileAtCoord(Location.TopRight);
-			//Tile.BottomLeft = layer.GetTileAtCoord(Location.BottomLeft);
-			//Tile.BottomRight = layer.GetTileAtCoord(Location.BottomRight);
-
-
-			// Collision blocks
-			//layer = entity.ParentLayer.Level.CollisionLayer;
-			//if (layer != null)
-			//{
-			//    Collision.TopLeft = layer.GetTileAtCoord(Location.TopLeft);
-			//    Collision.TopRight = layer.GetTileAtCoord(Location.TopRight);
-			//    Collision.BottomLeft = layer.GetTileAtCoord(Location.BottomLeft);
-			//    Collision.BottomRight = layer.GetTileAtCoord(Location.BottomRight);
-			//}
-
-
-			//
-			FinalVelocity = InitialVelocity;
-		}
-
-
-		#region Properties
-
-
-
-		/// <summary>
-		/// Entity
-		/// </summary>
-		public Entity Entity
-		{
-			get
-			{
-				return entity;
-			}
-		}
-		Entity entity;
-
-
-
-
-		/// <summary>
-		/// Initial velocity of the entity before the collision test
-		/// </summary>
-		public Vector2 InitialVelocity;
-
-
-
-		/// <summary>
-		/// Velocity of the entity after the collision test
-		/// </summary>
-		public Vector2 FinalVelocity;
-
-
-		/// <summary>
-		/// List of entities the entity collided with
-		/// </summary>
-		public List<Entity> CollideWith;
-
-
-		/// <summary>
-		/// Tiles block ID
-		/// </summary>
-		public Vector4 Tile;
-
-
-		/// <summary>
-		/// Collisions block ID
-		/// </summary>
-		public Vector4 Collision;
-
-
-		/// <summary>
-		/// Collision point location
-		/// </summary>
-		public Vector4 Location;
-
-		#endregion
-
-
-
-
-	}
-
-
-	#endregion
-
 
 	#region FloodFill
 
@@ -1018,6 +696,13 @@ namespace RuffnTumble
 		public int EndX;
 		public int Y;
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="startX"></param>
+		/// <param name="endX"></param>
+		/// <param name="y"></param>
 		public FloodFillRange(int startX, int endX, int y)
 		{
 			StartX = startX;
@@ -1030,46 +715,6 @@ namespace RuffnTumble
 
 	#endregion
 
-
-
-/*
-	/// <summary>
-	/// Layer enumerator for PropertyGrids
-	/// </summary>
-	internal class LayerEnumerator : StringConverter
-	{
-		public override bool GetStandardValuesSupported(ITypeDescriptorContext context)
-		{
-			return true; // display drop
-		}
-		public override bool GetStandardValuesExclusive(ITypeDescriptorContext context)
-		{
-			return true; // drop-down vs combo
-		}
-
-
-		/// <summary>
-		/// Retourne la liste de toutes les texture pour permettre de les selectionner
-		/// </summary>
-		/// <param name="context"></param>
-		/// <returns></returns>
-		public override StandardValuesCollection GetStandardValues(ITypeDescriptorContext context)
-		{
-
-			List<Layer> layers = ((Level)context.Instance).Layers;
-
-			List<string> list = new List<string>();
-			list.Insert(0, "");
-
-		//	foreach (Layer layer in layers)
-		//		list.Add(layer.Name);
-
-			return new StandardValuesCollection(list);
-		}
-
-	}
-
-*/
 }
 
 
