@@ -272,6 +272,13 @@ namespace RuffnTumble
 							bounds = BoundingRectangle;
 						}
 					}
+					else if (collision == TileCollision.Slope)
+					{
+						int id = Level.GetCollisionTile(x, y);
+						int offset = SlopeTileData.Data[id, (int)Position.X % Level.BlockSize.Width];
+
+					//	Position = new Vector2(Position.X, y * Level.BlockSize.Height + offset);
+					}
 					else if (collision == TileCollision.Impassable) // Ignore platforms.
 					{
 						// Resolve the collision along the X axis.

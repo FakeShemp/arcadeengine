@@ -123,6 +123,9 @@ namespace RuffnTumble
 			{
 				Batch.DrawString(Font, new Point(100, 100), Color.White, "Camera location : " + World.CurrentLevel.Camera.Location.ToString());
 				Batch.DrawString(Font, new Point(100, 120), Color.White, "Player : " + World.CurrentLevel.Player.Position.ToString());
+
+				Batch.DrawString(Font, new Point(100, 140), Color.White, "Offset: " + (World.CurrentLevel.Player.Position.X % World.CurrentLevel.BlockSize.Width).ToString());
+				
 			}
 
 			#region Stats

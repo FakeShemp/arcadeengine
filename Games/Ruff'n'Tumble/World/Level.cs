@@ -111,7 +111,8 @@ namespace RuffnTumble
 		/// <summary>
 		/// Gets the collision of the tile at a given location
 		/// </summary>
-		/// <param name="location">Tile location</param>
+		/// <param name="x">X tile location in world space</param>
+		/// <param name="y">Y tile location in world space</param>
 		/// <returns>TileCollision value</returns>
 		public TileCollision GetCollision(int x, int y)
 		{
@@ -138,6 +139,18 @@ namespace RuffnTumble
 				return TileCollision.Ladder;
 
 			return TileCollision.Passable;
+		}
+
+
+		/// <summary>
+		/// Gets the collision tile id
+		/// </summary>
+		/// <param name="x">X tile location in world space</param>
+		/// <param name="y">Y tile location in world space</param>
+		/// <returns>Collision tile id</returns>
+		public int GetCollisionTile(int x, int y)
+		{
+			return CollisionLayer.GetTileAtBlock(x, y);
 		}
 
 
@@ -554,6 +567,7 @@ namespace RuffnTumble
 
 			// Draw collision layer
 			CollisionLayer.Draw(batch, Camera);
+
 
 			//
 			// Draw Spawnpoints
