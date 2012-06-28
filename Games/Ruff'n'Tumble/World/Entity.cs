@@ -51,18 +51,20 @@ namespace RuffnTumble
 	/// </summary>
 	public abstract class Entity : IDisposable
 	{
-/*
+
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="name">Name of the entity</param>
-		/// <param name="layer">Layer of the entity</param>
+		/// <param name="level">Level handle</param>
 		public Entity(Level level)
 		{
+			if (level == null)
+				throw new ArgumentNullException("level", "Level handle is null");
+
 			Level = level;
 		}
 
-*/
+
 		/// <summary>
 		/// Disposes resources
 		/// </summary>
@@ -75,7 +77,7 @@ namespace RuffnTumble
 		/// Initialize the entity
 		/// </summary>
 		/// <returns>Success or not</returns>
-		public virtual bool Init()
+		public virtual bool LoadContent()
 		{
 			return true;
 		}
@@ -222,17 +224,11 @@ namespace RuffnTumble
 		#region Properties
 
 
-		/// <summary>
-		/// Zoom factor of the entity
-		/// </summary>
-		[Category("Display")]
-		[Description("Zoom factor of the entity")]
-		public Vector2 Scale
-		{
-			get;
-			set;
-		}
 
+		/// <summary>
+		/// Level handle
+		/// </summary>
+		protected Level Level;
 
 
 		/// <summary>
@@ -253,7 +249,7 @@ namespace RuffnTumble
 		/// </summary>
 		[Category("Cheat")]
 		[Description("Entity is like a God")]
-		public bool God
+		public bool IsInvincible
 		{
 			get;
 			set;
@@ -262,7 +258,7 @@ namespace RuffnTumble
 
 
 		/// <summary>
-		/// Gets / sets entity position in the level
+		/// Gets / sets entity position in world space
 		/// </summary>
 		public Vector2 Position
 		{
@@ -277,6 +273,21 @@ namespace RuffnTumble
 		}
 		protected Vector2 position;
 
+
+
+		/// <summary>
+		/// Player location in world space
+		/// </summary>
+		public Point LayerCoordinate
+		{
+			get
+			{
+				if (Level == null)
+					return Point.Empty;
+
+				return new Point((int)(position.X / Level.BlockSize.Width), (int)(position.Y / Level.BlockSize.Height));
+			}
+		}
 
 
 		/// <summary>
@@ -296,6 +307,27 @@ namespace RuffnTumble
 		protected Vector2 velocity;
 
 
+
+		/// <summary>
+		/// Gets a rectangle which bounds the entity in world space.
+		/// </summary>
+		public Rectangle BoundingRectangle
+		{
+			get
+			{
+				int left = (int)Math.Round(Position.X - 16) + localBounds.X;
+				int top = (int)Math.Round(Position.Y - 64) + localBounds.Y;
+
+				return new Rectangle(left, top, localBounds.Width, localBounds.Height);
+			}
+		}
+
+		/// <summary>
+		/// Entity's collision rectangle in world space
+		/// </summary>
+		protected Rectangle localBounds;
+
+
 		/// <summary>
 		/// Gets whether or not the entity's feet are on the ground.
 		/// </summary>
@@ -304,6 +336,17 @@ namespace RuffnTumble
 			get { return isOnGround; }
 		}
 		protected bool isOnGround;
+
+
+		/// <summary>
+		/// Gets whether or not the entity's feet are inside a slope.
+		/// </summary>
+		public bool IsInSlope
+		{
+			get { return isInSlope; }
+		}
+		protected bool isInSlope;
+		protected bool wasInSlope;
 
 
 		#endregion

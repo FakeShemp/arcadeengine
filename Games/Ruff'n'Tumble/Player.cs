@@ -28,24 +28,23 @@ using ArcEngine.Asset;
 using ArcEngine.Input;
 using System.Windows.Forms;
 
+
+// http://robotfootgames.com/xna-tutorials/
+
 namespace RuffnTumble
 {
 	/// <summary>
 	/// The hero of the Game
 	/// </summary>
-	public class Player : Entity
+	public sealed class Player : Entity
 	{
 
 		/// <summary>
 		/// Constructor
 		/// </summary>
 		/// <param name="level">Level handle</param>
-		public Player(Level level)
+		public Player(Level level) : base(level)
 		{
-			if (level == null)
-				throw new ArgumentNullException("level", "Level handle is null");
-
-			Level = level;
 			position = new Vector2(200, 100);
 			localBounds = new Rectangle(0, 0, 32, 64);
 		}
@@ -55,9 +54,11 @@ namespace RuffnTumble
 		/// 
 		/// </summary>
 		/// <returns></returns>
-		public override bool Init()
+		public override bool LoadContent()
 		{
 			isAlive = true;
+			LadderUpSpeed = -1.0f; 
+			LadderDownSpeed = 2.0f;
 
 			return true;
 		}
@@ -69,49 +70,132 @@ namespace RuffnTumble
 		/// <param name="time"></param>
 		public override void Update(GameTime time)
 		{
+
+			TileCollision collisiontile = Level.GetCollision(LayerCoordinate.X, LayerCoordinate.Y);
+
 			#region Get inputs
 
 			// Left or right movement
 			if (Keyboard.IsKeyPress(Keys.Left))
-				Movement = -1.0f;
+				Movement.X = -1.0f;
 			else if (Keyboard.IsKeyPress(Keys.Right))
-				Movement = 1.0f;
+				Movement.X = 1.0f;
 
 			// Jump
 			if (Keyboard.IsKeyPress(Keys.Up))
-				isJumping = true;
+			{
+				isClimbing = false;
+
+				// A ladder tile is just behind the player
+				if (collisiontile == TileCollision.Ladder)
+				{
+					isClimbing = true;
+					isJumping = false;
+					isOnGround = false;
+					Movement.Y = LadderUpSpeed;
+				}
+				else		// Normal jump
+				{
+					isJumping = true;
+					isClimbing = false;
+				}
+			}
+			else if (Keyboard.IsKeyPress(Keys.Down))
+			{
+				isClimbing = false;
+				
+				// A ladder is just behind the player
+				if (collisiontile == TileCollision.Ladder)
+				{
+					isClimbing = true;
+					isJumping = false;
+					isOnGround = false;
+					Movement.Y = LadderDownSpeed;
+				}
+
+			}
 
 			#endregion
+
+
+			// Check if the player is in a slope tile
+			if (Level.GetCollision(LayerCoordinate.X, LayerCoordinate.Y - 1) == TileCollision.Slope) // || collisiontile == TileCollision.Slope)
+			{
+				isInSlope = true;
+				int id = Level.GetCollisionTile(LayerCoordinate.X, LayerCoordinate.Y - 1);
+				offset = SlopeTileData.Data[id, (int)Position.X % Level.BlockSize.Width];
+		//		if (!wasInSlope)
+				{
+					Position = new Vector2(Position.X, Position.Y - offset);
+					//wasInSlope = true;
+				}
+			}
+			else
+			{
+				isInSlope = false;
+				//wasInSlope = false;
+			}
+
 
 			// Apply physic law
 			ApplyPhysic(time);
 
 
-			// Play the animation
-			if (isOnGround && isAlive)
+			#region Play the animation
+			if (isAlive)
 			{
-				if (Math.Abs(Velocity.X) - 0.02f > 0)
+				// This if statement deals with running/idling
+				if (isOnGround)
 				{
-					//sprite.PlayAnimation(runAnimation);
+					// Run animation
+					if (Math.Abs(Velocity.X) - 0.02f > 0)
+					{
+						//sprite.PlayAnimation(runAnimation);
+					}
+					else		// Idle
+					{
+						//sprite.PlayAnimation(idleAnimation);
+					}
 				}
-				else
+				else if (isClimbing)
 				{
-					//sprite.PlayAnimation(idleAnimation);
+					// If he's moving down play ladderDownAnimation
+					if (Velocity.Y - 0.02f > 0)
+					{
+						//sprite.PlayAnimation(ladderDownAnimation);
+					}
+					// If he's moving up play ladderUpAnimation
+					else if (Velocity.Y - 0.02f < 0)
+					{
+						//sprite.PlayAnimation(ladderUpAnimation);
+					}
+					// Otherwise, just stand on the ladder (idleAnimation)
+					else
+					{
+						//sprite.PlayAnimation(idleAnimation);
+					}
 				}
 			}
+			#endregion
 
 			// Debug
 			if (Keyboard.IsNewKeyPress(Keys.P))
 			{
-				position = new Vector2(400, 100);
+				position = new Vector2(2000, 100);
 				velocity = Vector2.Zero;
-				Movement = 0.0f;
+				Movement = Vector2.Zero;
 			}
 
+
+			// Save states			
+			wasClimbing = isClimbing;
+			//wasInSlope = isInSlope;
+
 			// Clear input.
-			Movement = 0.0f;
+			Movement = Vector2.Zero;
+			isClimbing = false;
+			//isInSlope = false;
 			isJumping = false;
-	
 		}
 
 
@@ -125,11 +209,27 @@ namespace RuffnTumble
 
 			Vector2 previousPosition = Position;
 
-			// Base velocity is a combination of horizontal movement control and
-			// acceleration downward due to gravity.
-			velocity.X += Movement * MoveAcceleration * elapsed;
-			velocity.Y = MathHelper.Clamp(velocity.Y + GravityAcceleration * elapsed, -MaxFallSpeed, MaxFallSpeed);
 
+			// If climbing on a ladder
+			if (isClimbing)
+			{
+				velocity.Y = Movement.Y * MoveAcceleration * elapsed;
+			}
+			else
+			{
+				if (wasClimbing)
+				{
+					// If we've just finished climbing, stop at the top of the ladder.
+					velocity.Y = 0.0f;
+				}
+				else
+					// Apply gravity as normal
+					velocity.Y = MathHelper.Clamp(velocity.Y + GravityAcceleration * elapsed, -MaxFallSpeed, MaxFallSpeed);
+			}
+			velocity.X += Movement.X * MoveAcceleration * elapsed;
+
+
+			// Apply jump physic
 			velocity.Y = DoJump(velocity.Y, time);
 
 			// Apply pseudo-drag horizontally.
@@ -147,6 +247,7 @@ namespace RuffnTumble
 
 			// If the player is now colliding with the level, separate them.
 			HandleCollisions();
+
 
 			// If the collision stopped us from moving, reset the velocity to zero.
 			if (Position.X == previousPosition.X)
@@ -218,6 +319,7 @@ namespace RuffnTumble
 		/// </summary>
 		private void HandleCollisions()
 		{
+
 			// Get the player's bounding rectangle and find neighboring tiles.
 			Rectangle bounds = BoundingRectangle;
 			int leftTile = (int)Math.Floor((float)bounds.Left / Level.BlockSize.Width);
@@ -227,6 +329,10 @@ namespace RuffnTumble
 
 			// Reset flag to search for ground collision.
 			isOnGround = false;
+		
+			offset = 0;
+
+
 
 			// For each potentially colliding tile,
 			for (int y = topTile; y <= bottomTile; ++y)
@@ -235,13 +341,15 @@ namespace RuffnTumble
 				{
 					// If this tile is collidable,
 					TileCollision collision = Level.GetCollision(x, y);
+
+					// No problems, can go through
 					if (collision == TileCollision.Passable)
 						continue;
 
 					// Death tile
 					if (collision == TileCollision.Death)
 					{
-						isAlive = false;
+						OnKilled(null);
 						return;
 					}
 					
@@ -256,11 +364,31 @@ namespace RuffnTumble
 					float absDepthY = Math.Abs(depth.Y);
 
 					// Resolve the collision along the shallow axis.
-					if (absDepthY < absDepthX || collision == TileCollision.Platform)
+					if (absDepthY < absDepthX || collision == TileCollision.Passable)
 					{
 						// If we crossed the top of a tile, we are on the ground.
 						if (previousBottom <= tileBounds.Top)
 							isOnGround = true;
+
+						if (previousBottom <= tileBounds.Top)
+						{
+							// On top of a ladder
+							if (collision == TileCollision.Ladder)
+							{
+								if (!isClimbing && !isJumping)
+								{
+									// When walking over a ladder
+									isOnGround = true;
+								}
+							}
+							else
+							{
+								isOnGround = true;
+								isClimbing = false;
+								isJumping = false;
+							}
+						}
+
 
 						// Ignore platforms, unless we are on the ground.
 						if (collision == TileCollision.Impassable || IsOnGround)
@@ -272,13 +400,6 @@ namespace RuffnTumble
 							bounds = BoundingRectangle;
 						}
 					}
-					else if (collision == TileCollision.Slope)
-					{
-						int id = Level.GetCollisionTile(x, y);
-						int offset = SlopeTileData.Data[id, (int)Position.X % Level.BlockSize.Width];
-
-					//	Position = new Vector2(Position.X, y * Level.BlockSize.Height + offset);
-					}
 					else if (collision == TileCollision.Impassable) // Ignore platforms.
 					{
 						// Resolve the collision along the X axis.
@@ -287,16 +408,34 @@ namespace RuffnTumble
 						// Perform further collisions with the new bounds.
 						bounds = BoundingRectangle;
 					}
+					else if (collision == TileCollision.Ladder && !isClimbing)
+					{
+						// Resolve the collision along the Y axis.
+						Position = new Vector2(Position.X, Position.Y);
+
+						// Perform further collisions with the new bounds.
+						bounds = BoundingRectangle;
+					}
+					else if (collision == TileCollision.Slope && !isInSlope)
+					{
+						//int id = Level.GetCollisionTile(LayerCoordinate.X, LayerCoordinate.Y - 1);
+						//offset = SlopeTileData.Data[id, (int)Position.X % Level.BlockSize.Width];
+						//Position = new Vector2(Position.X, Position.Y - offset);
+				
+						bounds = BoundingRectangle;
+					}
 				}
 				
 				
 			}
 
+
+
 			// Save the new bounds bottom.
 			previousBottom = bounds.Bottom;
 		}
 
-
+		public int offset;
 
 		/// <summary>
 		/// Render the player
@@ -306,6 +445,11 @@ namespace RuffnTumble
 			Vector4 pos = new Vector4(Position.X - localBounds.Width / 2.0f, Position.Y - localBounds.Height, localBounds.Width, localBounds.Height);
 			pos.Offset(-camera.Location);
 			batch.FillRectangle(pos, Color.Blue);
+
+
+			Rectangle bound = BoundingRectangle;
+			bound.Offset((int)-camera.Location.X, (int)-camera.Location.Y);
+			batch.DrawRectangle(bound, Color.Red);
 
 			Vector2 loc = Position;
 			loc.Offset(-camera.Location);
@@ -321,68 +465,64 @@ namespace RuffnTumble
 		Animation RunAnimation;
 		Animation JumpAnimation;
 		Animation DieAnimation;
+		Animation LadderDownAnimation;
+		Animation LadderUpAnimation;
 
 		/// <summary>
 		/// Current user movement input.
 		/// </summary>
-		private float Movement;
+		private Vector2 Movement;
 
 
 		// Constants for controling horizontal movement
-		private const float MoveAcceleration = 13000.0f;
-		private const float MaxMoveSpeed = 2000.0f;
-		private const float GroundDragFactor = 0.60f;
-		private const float AirDragFactor = 0.57f;
+		private const float MoveAcceleration = 13000.0f;				// 
+		private const float MaxMoveSpeed = 2000.0f;						// 
+		private const float GroundDragFactor = 0.60f;					// 
+		private const float AirDragFactor = 0.57f;						// 
 
 		// Constants for controlling vertical movement
-		private const float MaxJumpTime = 0.35f;
-		private const float JumpLaunchVelocity = -3500.0f;
-		private const float GravityAcceleration = 3400.0f;
-		private const float MaxFallSpeed = 550.0f;
-		private const float JumpControlPower = 0.15f;
+		private const float MaxJumpTime = 0.35f;						// 
+		private const float JumpLaunchVelocity = -3500.0f;				// 
+		private const float GravityAcceleration = 3400.0f;				// 
+		private const float MaxFallSpeed = 550.0f;						// 
+		private const float JumpControlPower = 0.15f;					// 
 
 
 		// Jumping state
-		private bool isJumping;
-		private bool wasJumping;
-		private float jumpTime;
-		private float previousBottom;
+		private bool isJumping;											 // Does the player want to jump
+		private bool wasJumping;										 // Does the player was jumping during the previous frame
+		private float jumpTime;											 // 
+		public float previousBottom;									 // 
+
 
 
 		/// <summary>
-		/// 
+		/// Gets whether or not the entity is climbing a ladder.
+		/// </summary>
+		public bool IsClimbing
+		{
+			get { return isClimbing; }
+		}
+		bool isClimbing;
+		private bool wasClimbing;
+		
+		/// <summary>
+		/// Speed of the player on a ladder
+		/// </summary>
+		float LadderUpSpeed;											// Up speed
+		float LadderDownSpeed;											// Down speed
+
+
+
+
+		/// <summary>
+		/// True if the player is alive
 		/// </summary>
 		public bool IsAlive
 		{
 			get { return isAlive; }
 		}
 		bool isAlive;
-
-
-		/// <summary>
-		/// Level handle
-		/// </summary>
-		private Level Level;
-
-
-		/// <summary>
-		/// Gets a rectangle which bounds this player in world space.
-		/// </summary>
-		public Rectangle BoundingRectangle
-		{
-			get
-			{
-				int left = (int)Math.Round(Position.X - 16) + localBounds.X;
-				int top = (int)Math.Round(Position.Y - 64) + localBounds.Y;
-
-				return new Rectangle(left, top, localBounds.Width, localBounds.Height);
-			}
-		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		private Rectangle localBounds;
 
 		#endregion
 	}

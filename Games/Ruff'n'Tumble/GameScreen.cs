@@ -122,9 +122,17 @@ namespace RuffnTumble
 			if (World != null)
 			{
 				Batch.DrawString(Font, new Point(100, 100), Color.White, "Camera location : " + World.CurrentLevel.Camera.Location.ToString());
-				Batch.DrawString(Font, new Point(100, 120), Color.White, "Player : " + World.CurrentLevel.Player.Position.ToString());
+				Batch.DrawString(Font, new Point(100, 120), Color.White, "Velocity : " + World.CurrentLevel.Player.Velocity.ToString());
+				Batch.DrawString(Font, new Point(100, 140), Color.White, "Layer coordinate : " + World.CurrentLevel.Player.LayerCoordinate.ToString());
+				Batch.DrawString(Font, new Point(100, 160), Color.White, "previousBottom : " + World.CurrentLevel.Player.previousBottom.ToString());
 
-				Batch.DrawString(Font, new Point(100, 140), Color.White, "Offset: " + (World.CurrentLevel.Player.Position.X % World.CurrentLevel.BlockSize.Width).ToString());
+				if (World.CurrentLevel.Player.IsInSlope)
+				{
+					Batch.DrawString(Font, new Point(100, 200), Color.White, "In slope : " + World.CurrentLevel.Player.IsInSlope.ToString());
+					Batch.DrawString(Font, new Point(100, 220), Color.White, "Offset : " + World.CurrentLevel.Player.offset.ToString());
+				}
+				if (World.CurrentLevel.Player.IsClimbing)
+					Batch.DrawString(Font, new Point(100, 260), Color.White, "Climbing !");
 				
 			}
 

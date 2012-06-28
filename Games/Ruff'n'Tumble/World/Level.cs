@@ -532,11 +532,12 @@ namespace RuffnTumble
 			if (LevelReady)
 				return true;
 
+			Player.LoadContent();
 
 			// Init all entities
 			foreach (Entity entity in Entities.Values)
 				if (entity != null)
-					entity.Init();
+					entity.LoadContent();
 
 
 			// Load the SpawnPoint texture
@@ -635,7 +636,6 @@ namespace RuffnTumble
 		/// <param name="time">Elapsed game time</param>
 		public void Update(GameTime time)
 		{
-
 			Player.Update(time);
 			
 			// Ask all entities to update

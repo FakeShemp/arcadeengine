@@ -50,7 +50,7 @@ namespace RuffnTumble
 		/// player is above it. A player can jump up through a platform as well as move
 		/// past it to the left and right, but can not fall down through the top of it.
 		/// </summary>
-		Platform = 2,
+//		Platform = 2,
 
 		/// <summary>
 		/// A slope tile
@@ -63,7 +63,7 @@ namespace RuffnTumble
 		Ladder = 4,
 
 		/// <summary>
-		/// Cause instant death
+		/// A tile which causes instant death of every entity
 		/// </summary>
 		Death = 5
 	}
