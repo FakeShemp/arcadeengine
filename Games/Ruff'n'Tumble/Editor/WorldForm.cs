@@ -535,7 +535,7 @@ namespace RuffnTumble.Editor
 					BrushRectangle.Top * Level.BlockSize.Height,
 					BrushRectangle.Width * Level.BlockSize.Width,
 					BrushRectangle.Height * Level.BlockSize.Height);
-				rec.Xy = Level.LevelToScreen(rec.Xy);
+				rec.Xy = (Vector2) Level.LevelToScreen(rec.Xy);
 				Batch.DrawRectangle(rec, Color.Green);
 			}
 

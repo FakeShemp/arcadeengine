@@ -106,6 +106,7 @@ namespace RuffnTumble
 		{
 			Display.ClearBuffers();
 
+			Level level = World.CurrentLevel;
 
 			Batch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Deferred, false);
 
@@ -119,101 +120,29 @@ namespace RuffnTumble
 			Batch.DrawTile(Icons, 0, Point.Empty);
 
 
-			if (World != null)
+			if (level != null)
 			{
-				Batch.DrawString(Font, new Point(100, 100), Color.White, "Camera location : " + World.CurrentLevel.Camera.Location.ToString());
-				Batch.DrawString(Font, new Point(100, 120), Color.White, "Velocity : " + World.CurrentLevel.Player.Velocity.ToString());
-				Batch.DrawString(Font, new Point(100, 140), Color.White, "Layer coordinate : " + World.CurrentLevel.Player.LayerCoordinate.ToString());
-				Batch.DrawString(Font, new Point(100, 160), Color.White, "previousBottom : " + World.CurrentLevel.Player.previousBottom.ToString());
+				Batch.DrawString(Font, new Point(100, 80), Color.White, "Block coordinate: " + level.PositionToBlock(new Vector2(Mouse.Location.X + level.Camera.Location.X, Mouse.Location.Y + level.Camera.Location.Y)).ToString());
+				Batch.DrawString(Font, new Point(100, 100), Color.White, "Camera location : " + level.Camera.Location.ToString());
+				Batch.DrawString(Font, new Point(100, 120), Color.White, "Velocity : " + level.Player.Velocity.ToString());
+				Batch.DrawString(Font, new Point(100, 140), Color.White, "Layer coordinate : " + level.Player.LayerCoordinate.ToString());
+				Batch.DrawString(Font, new Point(100, 160), Color.White, "previousBottom : " + level.Player.previousBottom.ToString());
 
 				if (World.CurrentLevel.Player.IsInSlope)
 				{
-					Batch.DrawString(Font, new Point(100, 200), Color.White, "In slope : " + World.CurrentLevel.Player.IsInSlope.ToString());
-					Batch.DrawString(Font, new Point(100, 220), Color.White, "Offset : " + World.CurrentLevel.Player.offset.ToString());
+					Batch.DrawString(Font, new Point(100, 200), Color.White, "In slope : " + level.Player.IsInSlope.ToString());
+					Batch.DrawString(Font, new Point(100, 220), Color.White, "Offset : " + level.Player.offset.ToString());
 				}
 				if (World.CurrentLevel.Player.IsClimbing)
 					Batch.DrawString(Font, new Point(100, 260), Color.White, "Climbing !");
 				
 			}
 
-			#region Stats
-			//Point pos = Point.Empty;
-			//Layer layer = CurrentWorld.GetLayer("tiles");
-			//Entity player = CurrentLevel.GetLayer("tiles").GetEntity("Player");
-			//if (player.God)
-			//   Font.DrawText(new Point(700, 60), "GOD MODE !!!!");
+			// Tile under the player
+			Point p = level.LevelToScreen(new Vector2(level.Player.LayerCoordinate.X * 32, level.Player.LayerCoordinate.Y * 32));
+			Vector4 rect = new Vector4(p.X - level.Camera.ViewPort.Left, p.Y - level.Camera.ViewPort.Top, 32, 32);
+			Batch.DrawRectangle(rect, Color.Red);
 
-
-			/*
-						if (DebugStat)
-						{
-
-							Display.Color = Color.White;
-							Rectangle rect = player.CollisionBoxLocation;
-							rect.Location = CurrentLevel.LevelToScreen(rect.Location);
-							Display.Rectangle(rect, false);
-
-							Point tl = new Point(player.CollisionBoxLocation.Left, player.CollisionBoxLocation.Top);
-							Point tr = new Point(player.CollisionBoxLocation.Left + player.CollisionBoxLocation.Width, player.CollisionBoxLocation.Top);
-							Point bl = new Point(tl.X, tl.Y + player.CollisionBoxLocation.Height);
-							Point br = new Point(tr.X, bl.Y);
-
-							Display.Color = Color.White;
-							Layer col = CurrentLevel.CollisionLayer;
-							Font.DrawText(new Point(400, 100), "tl : " + tl.ToString() + " = " + col.GetTileAtCoord(tl));
-							Font.DrawText(new Point(400, 120), "tr : " + tr.ToString() + " = " + col.GetTileAtCoord(tr));
-							Font.DrawText(new Point(400, 140), "bl : " + bl.ToString() + " = " + col.GetTileAtCoord(bl));
-							Font.DrawText(new Point(400, 160), "br : " + br.ToString() + " = " + col.GetTileAtCoord(br));
-
-
-							string txt;
-							pos = new Point(100, 70);
-						//	txt = "Level name : \"" + CurrentLevel.Name + "\"";
-						//	Font.DrawText(pos, txt);
-							Point lvlpos = CurrentLevel.Location;
-
-							txt = "Level pos : " + lvlpos.X + "x" + lvlpos.Y;
-							pos.Y += Font.LineHeight;
-							Font.DrawText(pos, txt);
-
-
-							if (player != null)
-							{
-								txt = "Player pos : " + player.Location.X + "x" + player.Location.Y;
-								pos.Y += Font.LineHeight;
-								Font.DrawText(pos, txt);
-							}
-
-
-
-							pos = new Point(10, 200);
-							pos.Y += Font.LineHeight;
-							//Display.DrawText(pos, Video.Time.ElapsedGameTime.ToString());
-
-							pos.Y += Font.LineHeight;
-							Font.DrawText(pos, "Jumping : " + player.IsJumping + " - " + player.Jump);
-							pos.Y += Font.LineHeight;
-							Font.DrawText(pos, "Falling : " + player.IsFalling + "   ");
-
-							pos = new Point(10, 550);
-							txt = "Press 'C' to shows/hides collision layer, 'G' to shows/hides grid, 'W' for god mode";
-							Font.DrawText(pos, txt);
-							txt = "Press F1 to F5 to change level, 'Escape' to quit";
-							pos.Y += Font.LineHeight;
-							Font.DrawText(pos, txt);
-						}
-
-
-						// Hot spot
-						Display.Color = Color.Red;
-						Point off = CurrentLevel.LevelToScreen(player.Location);
-						Display.Plot(off);
-						Display.Color = Color.White;
-			*/
-			#endregion
-
-
-			//Batch.FillRectangle(new Rectangle(10, 10, 200, 200), Color.Red);
 
 			Batch.End();
 		}

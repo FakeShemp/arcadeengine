@@ -117,7 +117,7 @@ namespace RuffnTumble
 
 			#endregion
 
-
+/*
 			// Check if the player is in a slope tile
 			if (Level.GetCollision(LayerCoordinate.X, LayerCoordinate.Y - 1) == TileCollision.Slope) // || collisiontile == TileCollision.Slope)
 			{
@@ -126,7 +126,7 @@ namespace RuffnTumble
 				offset = SlopeTileData.Data[id, (int)Position.X % Level.BlockSize.Width];
 		//		if (!wasInSlope)
 				{
-					Position = new Vector2(Position.X, Position.Y - offset);
+					//Position = new Vector2(Position.X, Position.Y - offset);
 					//wasInSlope = true;
 				}
 			}
@@ -135,7 +135,7 @@ namespace RuffnTumble
 				isInSlope = false;
 				//wasInSlope = false;
 			}
-
+*/
 
 			// Apply physic law
 			ApplyPhysic(time);
@@ -320,17 +320,33 @@ namespace RuffnTumble
 		private void HandleCollisions()
 		{
 
+			// Reset flag to search for ground collision.
+			isOnGround = false;
+
+
+			// Check if the player is in a slope tile
+			if (Level.GetCollision(LayerCoordinate.X, LayerCoordinate.Y - 1) == TileCollision.Slope)
+			{
+				isInSlope = true;
+				int id = Level.GetCollisionTile(LayerCoordinate.X, LayerCoordinate.Y - 1);
+				offset = SlopeTileData.Data[id, (int)Position.X % Level.BlockSize.Width];
+
+				Position = new Vector2(Position.X, Position.Y - offset);
+			}
+			else
+			{
+				isInSlope = false;
+			}
+
+
+
+	
 			// Get the player's bounding rectangle and find neighboring tiles.
 			Rectangle bounds = BoundingRectangle;
 			int leftTile = (int)Math.Floor((float)bounds.Left / Level.BlockSize.Width);
 			int rightTile = (int)Math.Ceiling(((float)bounds.Right / Level.BlockSize.Width)) - 1;
 			int topTile = (int)Math.Floor((float)bounds.Top / Level.BlockSize.Height);
 			int bottomTile = (int)Math.Ceiling(((float)bounds.Bottom / Level.BlockSize.Height)) - 1;
-
-			// Reset flag to search for ground collision.
-			isOnGround = false;
-		
-			offset = 0;
 
 
 
@@ -362,8 +378,18 @@ namespace RuffnTumble
 					
 					float absDepthX = Math.Abs(depth.X);
 					float absDepthY = Math.Abs(depth.Y);
-
+/*
 					// Resolve the collision along the shallow axis.
+					if (collision == TileCollision.Slope && y == bottomTile)
+					{
+						int id = Level.GetCollisionTile(LayerCoordinate.X, LayerCoordinate.Y - 1);
+						offset = SlopeTileData.Data[id, (int)Position.X % Level.BlockSize.Width];
+						//Position = new Vector2(Position.X, Position.Y - offset);
+						//velocity.Y = offset;
+				
+						//bounds = BoundingRectangle;
+					}
+*/
 					if (absDepthY < absDepthX || collision == TileCollision.Passable)
 					{
 						// If we crossed the top of a tile, we are on the ground.
@@ -414,14 +440,6 @@ namespace RuffnTumble
 						Position = new Vector2(Position.X, Position.Y);
 
 						// Perform further collisions with the new bounds.
-						bounds = BoundingRectangle;
-					}
-					else if (collision == TileCollision.Slope && !isInSlope)
-					{
-						//int id = Level.GetCollisionTile(LayerCoordinate.X, LayerCoordinate.Y - 1);
-						//offset = SlopeTileData.Data[id, (int)Position.X % Level.BlockSize.Width];
-						//Position = new Vector2(Position.X, Position.Y - offset);
-				
 						bounds = BoundingRectangle;
 					}
 				}

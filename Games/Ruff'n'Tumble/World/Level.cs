@@ -584,7 +584,7 @@ namespace RuffnTumble
 					if (spawn == null)
 						continue;
 
-					Vector2 pos = LevelToScreen(spawn.Location);
+					Point pos = LevelToScreen(spawn.Location);
 					pos.X = pos.X - 8;
 					pos.Y = pos.Y - 8;
 					batch.Draw(spTexture, pos, Color.White);
@@ -663,10 +663,10 @@ namespace RuffnTumble
 		/// </summary>
 		/// <param name="pos">Point in pixel in the level</param>
 		/// <returns>Position in screen coordinate</returns>
-		public Vector2 LevelToScreen(Vector2 pos)
+		public Point LevelToScreen(Vector2 pos)
 		{
-			return new Vector2(pos.X - Camera.Location.X + Camera.ViewPort.Left,
-							pos.Y - Camera.Location.Y + Camera.ViewPort.Top);
+			return new Point((int)(pos.X - Camera.Location.X + Camera.ViewPort.Left),
+							(int)(pos.Y - Camera.Location.Y + Camera.ViewPort.Top));
 		}
 
 
