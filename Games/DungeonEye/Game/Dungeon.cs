@@ -230,7 +230,7 @@ namespace DungeonEye
 			writer.WriteAttributeString("name", Name);
 			
 			
-			writer.WriteStartElement("items");
+			writer.WriteStartElement(Item.Tag);
 			writer.WriteAttributeString("tileset", ItemTileSetName);
 			writer.WriteEndElement();
 	
