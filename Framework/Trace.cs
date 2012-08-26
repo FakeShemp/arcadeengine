@@ -323,6 +323,15 @@ namespace ArcEngine
 		#region WriteLine
 
 		/// <summary>
+		/// Writes an empty line to the log
+		/// </summary>
+		public static void WriteLine()
+		{
+			WriteLine("");
+		}
+
+
+		/// <summary>
 		/// Writes a line to the log
 		/// </summary>
 		/// <param name="message">Message</param>

@@ -226,6 +226,39 @@ namespace ArcEngine
 		#endregion
 
 		#region Static
+/*
+		/// <summary>
+		/// Converts a Vector2 structure to a PointF
+		/// </summary>
+		/// <param name="v">Vector2 structure</param>
+		/// <returns>PointF structure</returns>
+		public static explicit operator PointF(Vector2 v)
+		{
+			return new PointF(v.X, v.Y);
+		}
+*/
+
+		/// <summary>
+		/// Converts Point to as Vector2
+		/// </summary>
+		/// <param name="v">Point structure to convert</param>
+		/// <returns>Vector2 structure</returns>
+		public static explicit operator Vector2(Point v)
+		{
+			return new Vector2(v.X, v.Y);
+		}
+
+
+		/// <summary>
+		/// Converts a Vector2 to a Point
+		/// </summary>
+		/// <param name="v">Vector2 structure</param>
+		/// <returns>Point structure</returns>
+		public static explicit operator Point(Vector2 v)
+		{
+			return new Point((int)v.X, (int)v.Y);
+		}
+
 
 		#region Fields
 
@@ -851,16 +884,6 @@ namespace ArcEngine
 		{
 			X += offset.X;
 			Y += offset.Y;
-		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="v"></param>
-		/// <returns></returns>
-		public static explicit operator PointF(Vector2 v)
-		{
-			return new PointF(v.X, v.Y);
 		}
 
 		#endregion

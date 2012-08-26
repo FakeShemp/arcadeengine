@@ -1019,12 +1019,12 @@ namespace ArcEngine.Graphic
 		/// <summary>
 		/// 
 		/// </summary>
-		DstColor = OpenTK.Graphics.OpenGL.BlendingFactorDest.DstColor,
+		//DstColor = OpenTK.Graphics.OpenGL.BlendingFactorDest.DstColor,
 
 		/// <summary>
 		/// 
 		/// </summary>
-		OneMinusDstColor = OpenTK.Graphics.OpenGL.BlendingFactorDest.OneMinusDstColor,
+		//OneMinusDstColor = OpenTK.Graphics.OpenGL.BlendingFactorDest.OneMinusDstColor,
 
 		/// <summary>
 		/// 

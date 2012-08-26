@@ -134,7 +134,7 @@ namespace ArcEngine.Graphic
 				Trace.Unindent();
 			}
 
-			Trace.WriteLine("");
+			Trace.WriteLine();
 			Trace.WriteLine("OpenGL informations :");
 			Trace.WriteLine("Graphics card vendor : {0}", Capabilities.VideoVendor);
 			Trace.WriteLine("Renderer : {0}", Capabilities.VideoRenderer);
@@ -143,8 +143,13 @@ namespace ArcEngine.Graphic
 
 			Trace.WriteLine("Display modes");
 			Trace.Indent();
-			foreach (OpenTK.DisplayDevice device in OpenTK.DisplayDevice.AvailableDisplays)
-				Trace.WriteLine(device.ToString());
+			//foreach (OpenTK.DisplayDevice device in OpenTK.DisplayDevice.AvailableDisplays)
+			foreach (OpenTK.DisplayIndex index in Enum.GetValues(typeof(OpenTK.DisplayIndex)))
+			{
+				OpenTK.DisplayDevice device = OpenTK.DisplayDevice.GetDisplay(index);
+				if (device != null)
+					Trace.WriteLine(device.ToString());
+			}
 			Trace.Unindent();
 
 
@@ -162,7 +167,7 @@ namespace ArcEngine.Graphic
 				for (int i = 0; i < count; i++)
 					Trace.Write("{0}, ", TK.GL.GetString(TK.StringName.Extensions, i));
 			}
-			Trace.WriteLine("");
+			Trace.WriteLine();
 
 			Trace.Unindent();
 		}
