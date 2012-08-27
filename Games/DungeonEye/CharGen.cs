@@ -280,8 +280,7 @@ namespace DungeonEye
 				else if ((hero.Classes & HeroClass.Mage) == HeroClass.Mage)
 				{
 					hero.SetInventoryItem(InventoryPosition.Armor, ResourceManager.CreateAsset<Item>("chainmail +1"));
-					hero.SetInventoryItem(InventoryPosition.Primary, ResourceManager.CreateAsset<Item>("long sword"));
-					hero.SetInventoryItem(InventoryPosition.Secondary, ResourceManager.CreateAsset<Item>("shield +1"));
+					hero.SetInventoryItem(InventoryPosition.Secondary, ResourceManager.CreateAsset<Item>("spell book"));
 
 					hero.AddToInventory(ResourceManager.CreateAsset<Item>("mage scroll of magic missile"));
 					hero.AddToInventory(ResourceManager.CreateAsset<Item>("mage scroll of fireball"));
