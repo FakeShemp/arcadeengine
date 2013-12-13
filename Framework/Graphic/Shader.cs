@@ -270,16 +270,16 @@ namespace ArcEngine.Graphic
 		{
 			// Set the input type of the primitives we are going to feed the geometry shader, this should be the same as
 			// the primitive type given to GL.Begin. If the types do not match a GL error will occur (todo: verify GL_INVALID_ENUM, on glBegin)
-			TK.GL.ProgramParameter(ProgramID, TK.AssemblyProgramParameterArb.GeometryInputType, (int)input);
+			//TK.GL.ProgramParameter(ProgramID, TK.AssemblyProgramParameterArb.GeometryInputType, (int)input);
 			GeometryInput = input;
 
 			// Set the output type of the geometry shader. Because we input Lines we will output LineStrip(s).
-			TK.GL.ProgramParameter(ProgramID, TK.AssemblyProgramParameterArb.GeometryOutputType, (int)output);
+			//TK.GL.ProgramParameter(ProgramID, TK.AssemblyProgramParameterArb.GeometryOutputType, (int)output);
 			GeometryOutput = output;
 
 			// We must tell the shader program how much vertices the geometry shader will output (at most).
 			// One simple way is to query the maximum and use that.
-			TK.GL.ProgramParameter(ProgramID, TK.AssemblyProgramParameterArb.GeometryVerticesOut, count);
+			//TK.GL.ProgramParameter(ProgramID, TK.AssemblyProgramParameterArb.GeometryVerticesOut, count);
 		}
 
 

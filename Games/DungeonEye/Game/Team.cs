@@ -28,6 +28,7 @@ namespace DungeonEye
 {
 	/// <summary>
 	/// Represents the player's heroes in the dungeon
+	/// => rename to Party
 	/// </summary>
 	public class Team
 	{

@@ -363,9 +363,9 @@ namespace ArcEngine.Editor
 			Point position = new Point((e.Location.X - TextureOffset.X) / zoomvalue, (e.Location.Y - TextureOffset.Y) / zoomvalue);
 
 
-			#region Middle mouse button
+			#region Pan the texture
 			// If scrolling with the middle mouse button
-			if (e.Button == MouseButtons.Middle)
+			if (e.Button == MouseButtons.Middle || e.Button == MouseButtons.Right)
 			{
 
 				// Smooth the value
@@ -383,11 +383,6 @@ namespace ArcEngine.Editor
 			}
 			#endregion
 
-			#region Right mouse button
-			else if (e.Button == MouseButtons.Right)
-			{
-			}
-			#endregion
 
 
 			// Update selection
@@ -500,6 +495,11 @@ namespace ArcEngine.Editor
 						(int) ((e.Location.Y - TextureOffset.Y) / zoomvalue));
 
 					SelectionTool.Rectangle = DetectTileEdges(start);
+				}
+				else
+				{
+					// Pan the texture
+					LastMousePos = e.Location;
 				}
 			}
 
@@ -702,7 +702,7 @@ namespace ArcEngine.Editor
 		private void GLTileControl_MouseMove(object sender, MouseEventArgs e)
 		{
 			// If scrolling with the middle mouse button
-			if (e.Button == MouseButtons.Middle)
+			if (e.Button == MouseButtons.Middle ||e.Button == MouseButtons.Right)
 			{
 
 				// Smooth the value
@@ -795,7 +795,7 @@ namespace ArcEngine.Editor
 			}
 
 			// Pan the texture
-			if (e.Button == MouseButtons.Middle)
+			if (e.Button == MouseButtons.Middle || e.Button == MouseButtons.Right)
 				LastMousePos = e.Location;
 
 		}

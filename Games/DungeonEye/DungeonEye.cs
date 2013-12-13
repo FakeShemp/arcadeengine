@@ -32,6 +32,13 @@ using DungeonEye.Forms;
 using System.Collections.Generic;
 using ArcEngine.Asset;
 
+
+//
+// http://dirkkok.wordpress.com/dungeon-generation-article-series/
+//
+//
+//
+
 namespace DungeonEye
 {
 	/// <summary>
@@ -117,7 +124,7 @@ namespace DungeonEye
 			GameWindowParams param = new GameWindowParams();
 			param.Major = 2;
 			param.Minor = 1;
-			param.Compatible = true;
+			param.Compatible = false;
 			param.Size = new Size(640,400);
 			param.FullScreen = Settings.GetBool("FullScreen");
 			CreateGameWindow(param);

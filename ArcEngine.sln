@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{D0B8D0B6-C7C7-4968-B451-E454CABB3DB7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Games", "Games", "{781C636C-ADCF-4C2F-8969-E3E8CF385323}"
@@ -72,10 +72,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Path Rendering", "Examples\Path Rendering\Path Rendering.csproj", "{73510FB3-AAC3-46CF-8592-DC2659C17221}"
 EndProject
 Global
-	GlobalSection(SubversionScc) = preSolution
-		Svn-Managed = True
-		Manager = AnkhSVN - Subversion Support for Visual Studio
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
@@ -235,11 +231,11 @@ Global
 		{318F674B-A5BD-459C-AD50-FC8B582B30A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{318F674B-A5BD-459C-AD50-FC8B582B30A8}.Release|x64.ActiveCfg = Release|x64
 		{318F674B-A5BD-459C-AD50-FC8B582B30A8}.Release|x86.ActiveCfg = Release|x86
-		{FF34F9D4-CD5B-4EC9-A3B2-850CCA04E037}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FF34F9D4-CD5B-4EC9-A3B2-850CCA04E037}.Debug|x64.ActiveCfg = Debug|x64
+		{FF34F9D4-CD5B-4EC9-A3B2-850CCA04E037}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{FF34F9D4-CD5B-4EC9-A3B2-850CCA04E037}.Debug|x64.ActiveCfg = Debug|x86
 		{FF34F9D4-CD5B-4EC9-A3B2-850CCA04E037}.Debug|x86.ActiveCfg = Debug|x86
-		{FF34F9D4-CD5B-4EC9-A3B2-850CCA04E037}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FF34F9D4-CD5B-4EC9-A3B2-850CCA04E037}.Release|x64.ActiveCfg = Release|x64
+		{FF34F9D4-CD5B-4EC9-A3B2-850CCA04E037}.Release|Any CPU.ActiveCfg = Release|x86
+		{FF34F9D4-CD5B-4EC9-A3B2-850CCA04E037}.Release|x64.ActiveCfg = Release|x86
 		{FF34F9D4-CD5B-4EC9-A3B2-850CCA04E037}.Release|x86.ActiveCfg = Release|x86
 		{9B7596C0-9BAC-421B-A4E2-2C02FFEDA35D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9B7596C0-9BAC-421B-A4E2-2C02FFEDA35D}.Debug|x64.ActiveCfg = Debug|x64
@@ -247,11 +243,11 @@ Global
 		{9B7596C0-9BAC-421B-A4E2-2C02FFEDA35D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B7596C0-9BAC-421B-A4E2-2C02FFEDA35D}.Release|x64.ActiveCfg = Release|x64
 		{9B7596C0-9BAC-421B-A4E2-2C02FFEDA35D}.Release|x86.ActiveCfg = Release|x86
-		{E755A81E-2D38-4385-A604-3807C214DD7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E755A81E-2D38-4385-A604-3807C214DD7F}.Debug|x64.ActiveCfg = Debug|x64
+		{E755A81E-2D38-4385-A604-3807C214DD7F}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{E755A81E-2D38-4385-A604-3807C214DD7F}.Debug|x64.ActiveCfg = Debug|x86
 		{E755A81E-2D38-4385-A604-3807C214DD7F}.Debug|x86.ActiveCfg = Debug|x86
-		{E755A81E-2D38-4385-A604-3807C214DD7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E755A81E-2D38-4385-A604-3807C214DD7F}.Release|x64.ActiveCfg = Release|x64
+		{E755A81E-2D38-4385-A604-3807C214DD7F}.Release|Any CPU.ActiveCfg = Release|x86
+		{E755A81E-2D38-4385-A604-3807C214DD7F}.Release|x64.ActiveCfg = Release|x86
 		{E755A81E-2D38-4385-A604-3807C214DD7F}.Release|x86.ActiveCfg = Release|x86
 		{1DBB7CA0-B7C2-45AB-96C7-140DF2652EAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1DBB7CA0-B7C2-45AB-96C7-140DF2652EAA}.Debug|x64.ActiveCfg = Debug|x64
@@ -259,17 +255,17 @@ Global
 		{1DBB7CA0-B7C2-45AB-96C7-140DF2652EAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1DBB7CA0-B7C2-45AB-96C7-140DF2652EAA}.Release|x64.ActiveCfg = Release|x64
 		{1DBB7CA0-B7C2-45AB-96C7-140DF2652EAA}.Release|x86.ActiveCfg = Release|x86
-		{B46574B8-BAC0-4A39-970A-8EF6CAAC4ABD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B46574B8-BAC0-4A39-970A-8EF6CAAC4ABD}.Debug|x64.ActiveCfg = Debug|x64
+		{B46574B8-BAC0-4A39-970A-8EF6CAAC4ABD}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{B46574B8-BAC0-4A39-970A-8EF6CAAC4ABD}.Debug|x64.ActiveCfg = Debug|x86
 		{B46574B8-BAC0-4A39-970A-8EF6CAAC4ABD}.Debug|x86.ActiveCfg = Debug|x86
-		{B46574B8-BAC0-4A39-970A-8EF6CAAC4ABD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B46574B8-BAC0-4A39-970A-8EF6CAAC4ABD}.Release|x64.ActiveCfg = Release|x64
+		{B46574B8-BAC0-4A39-970A-8EF6CAAC4ABD}.Release|Any CPU.ActiveCfg = Release|x86
+		{B46574B8-BAC0-4A39-970A-8EF6CAAC4ABD}.Release|x64.ActiveCfg = Release|x86
 		{B46574B8-BAC0-4A39-970A-8EF6CAAC4ABD}.Release|x86.ActiveCfg = Release|x86
-		{9CFE0A0E-27F0-4438-913C-5E3DDEBF3903}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9CFE0A0E-27F0-4438-913C-5E3DDEBF3903}.Debug|x64.ActiveCfg = Debug|x64
+		{9CFE0A0E-27F0-4438-913C-5E3DDEBF3903}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{9CFE0A0E-27F0-4438-913C-5E3DDEBF3903}.Debug|x64.ActiveCfg = Debug|x86
 		{9CFE0A0E-27F0-4438-913C-5E3DDEBF3903}.Debug|x86.ActiveCfg = Debug|x86
-		{9CFE0A0E-27F0-4438-913C-5E3DDEBF3903}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9CFE0A0E-27F0-4438-913C-5E3DDEBF3903}.Release|x64.ActiveCfg = Release|x64
+		{9CFE0A0E-27F0-4438-913C-5E3DDEBF3903}.Release|Any CPU.ActiveCfg = Release|x86
+		{9CFE0A0E-27F0-4438-913C-5E3DDEBF3903}.Release|x64.ActiveCfg = Release|x86
 		{9CFE0A0E-27F0-4438-913C-5E3DDEBF3903}.Release|x86.ActiveCfg = Release|x86
 		{DF5D9606-7433-4709-8984-E30F4E520835}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DF5D9606-7433-4709-8984-E30F4E520835}.Debug|x64.ActiveCfg = Debug|x64
@@ -326,5 +322,9 @@ Global
 		{3F1ACC3B-1FFC-43A7-9463-193615B4F3BE} = {781C636C-ADCF-4C2F-8969-E3E8CF385323}
 		{AF615530-818F-475B-B79D-5ED4A2D01D79} = {781C636C-ADCF-4C2F-8969-E3E8CF385323}
 		{836F03CA-2542-48F2-9249-A1529BC7B0EF} = {588D2618-C188-4813-8590-938D4D6D8E18}
+	EndGlobalSection
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
 	EndGlobalSection
 EndGlobal
