@@ -152,7 +152,7 @@ namespace ArcEngine.Input
 				g.DrawImage(Texture, new Rectangle(Point.Empty, tile.Rectangle.Size), tile.Rectangle, GraphicsUnit.Pixel);
 			}
 
-			SetCursor(bm, tile.Origin);
+			SetCursor(bm, tile.Pivot);
 
 			return true;
 		}

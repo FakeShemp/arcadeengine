@@ -39,6 +39,7 @@
 			this.SelectionBox = new System.Windows.Forms.ToolStripButton();
 			this.HotSpotBox = new System.Windows.Forms.ToolStripButton();
 			this.ColisionBox = new System.Windows.Forms.ToolStripButton();
+			this.TrimBox = new System.Windows.Forms.ToolStripButton();
 			this.TilePropertyGrid = new System.Windows.Forms.PropertyGrid();
 			this.VertScroller = new System.Windows.Forms.VScrollBar();
 			this.HScroller = new System.Windows.Forms.HScrollBar();
@@ -70,6 +71,7 @@
 			this.TileGroupBox.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
 			this.TextureToolStrip.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
 			this.splitContainer1.SuspendLayout();
@@ -86,7 +88,7 @@
 			this.TileGroupBox.Controls.Add(this.TilePropertyGrid);
 			this.TileGroupBox.Location = new System.Drawing.Point(3, 1);
 			this.TileGroupBox.Name = "TileGroupBox";
-			this.TileGroupBox.Size = new System.Drawing.Size(1152, 162);
+			this.TileGroupBox.Size = new System.Drawing.Size(1152, 268);
 			this.TileGroupBox.TabIndex = 9;
 			this.TileGroupBox.TabStop = false;
 			this.TileGroupBox.Text = "Tile :";
@@ -97,9 +99,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.GLTileControl.BackColor = System.Drawing.Color.Black;
-			this.GLTileControl.Location = new System.Drawing.Point(179, 2);
+			this.GLTileControl.Location = new System.Drawing.Point(233, 2);
 			this.GLTileControl.Name = "GLTileControl";
-			this.GLTileControl.Size = new System.Drawing.Size(967, 154);
+			this.GLTileControl.Size = new System.Drawing.Size(913, 260);
 			this.GLTileControl.TabIndex = 15;
 			this.GLTileControl.VSync = false;
 			this.GLTileControl.Paint += new System.Windows.Forms.PaintEventHandler(this.GLTileControl_Paint);
@@ -119,10 +121,11 @@
             this.toolStripSeparator5,
             this.SelectionBox,
             this.HotSpotBox,
-            this.ColisionBox});
+            this.ColisionBox,
+            this.TrimBox});
 			this.toolStrip1.Location = new System.Drawing.Point(6, 16);
 			this.toolStrip1.Name = "toolStrip1";
-			this.toolStrip1.Size = new System.Drawing.Size(170, 25);
+			this.toolStrip1.Size = new System.Drawing.Size(221, 25);
 			this.toolStrip1.TabIndex = 18;
 			this.toolStrip1.Text = "toolStrip1";
 			// 
@@ -183,7 +186,7 @@
 			this.HotSpotBox.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.HotSpotBox.Name = "HotSpotBox";
 			this.HotSpotBox.Size = new System.Drawing.Size(23, 22);
-			this.HotSpotBox.Text = "Set hotspot";
+			this.HotSpotBox.Text = "Set pivot point";
 			this.HotSpotBox.CheckedChanged += new System.EventHandler(this.ToggleStripButtons);
 			// 
 			// ColisionBox
@@ -197,13 +200,24 @@
 			this.ColisionBox.Text = "Set colision box";
 			this.ColisionBox.CheckedChanged += new System.EventHandler(this.ToggleStripButtons);
 			// 
+			// TrimBox
+			// 
+			this.TrimBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.TrimBox.Image = ((System.Drawing.Image)(resources.GetObject("TrimBox.Image")));
+			this.TrimBox.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.TrimBox.Name = "TrimBox";
+			this.TrimBox.Size = new System.Drawing.Size(23, 22);
+			this.TrimBox.Text = "toolStripButton1";
+			this.TrimBox.ToolTipText = "trim off excess space around the tile";
+			this.TrimBox.Click += new System.EventHandler(this.TrimBox_Click);
+			// 
 			// TilePropertyGrid
 			// 
 			this.TilePropertyGrid.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
 			this.TilePropertyGrid.Location = new System.Drawing.Point(6, 44);
 			this.TilePropertyGrid.Name = "TilePropertyGrid";
-			this.TilePropertyGrid.Size = new System.Drawing.Size(170, 112);
+			this.TilePropertyGrid.Size = new System.Drawing.Size(221, 218);
 			this.TilePropertyGrid.TabIndex = 2;
 			this.TilePropertyGrid.ToolbarVisible = false;
 			// 
@@ -213,14 +227,14 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.VertScroller.Location = new System.Drawing.Point(1138, 0);
 			this.VertScroller.Name = "VertScroller";
-			this.VertScroller.Size = new System.Drawing.Size(17, 429);
+			this.VertScroller.Size = new System.Drawing.Size(17, 323);
 			this.VertScroller.TabIndex = 13;
 			// 
 			// HScroller
 			// 
 			this.HScroller.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.HScroller.Location = new System.Drawing.Point(182, 429);
+			this.HScroller.Location = new System.Drawing.Point(182, 323);
 			this.HScroller.Name = "HScroller";
 			this.HScroller.Size = new System.Drawing.Size(957, 17);
 			this.HScroller.TabIndex = 12;
@@ -390,7 +404,7 @@
 			this.GLTextureControl.BackColor = System.Drawing.Color.Black;
 			this.GLTextureControl.Location = new System.Drawing.Point(182, 0);
 			this.GLTextureControl.Name = "GLTextureControl";
-			this.GLTextureControl.Size = new System.Drawing.Size(953, 428);
+			this.GLTextureControl.Size = new System.Drawing.Size(953, 322);
 			this.GLTextureControl.TabIndex = 16;
 			this.GLTextureControl.VSync = false;
 			this.GLTextureControl.Paint += new System.Windows.Forms.PaintEventHandler(this.GLTextureControl_Paint);
@@ -418,7 +432,7 @@
 			// 
 			this.splitContainer1.Panel2.Controls.Add(this.TileGroupBox);
 			this.splitContainer1.Size = new System.Drawing.Size(1162, 622);
-			this.splitContainer1.SplitterDistance = 450;
+			this.splitContainer1.SplitterDistance = 344;
 			this.splitContainer1.TabIndex = 17;
 			// 
 			// groupBox1
@@ -509,6 +523,7 @@
 			this.TextureToolStrip.PerformLayout();
 			this.splitContainer1.Panel1.ResumeLayout(false);
 			this.splitContainer1.Panel2.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
 			this.splitContainer1.ResumeLayout(false);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
@@ -555,5 +570,6 @@
 		private System.Windows.Forms.ColorDialog ColorDialogBox;
 		private System.Windows.Forms.Button SurroundTileColorBox;
 		private System.Windows.Forms.Panel SurroundColorBox;
+		private System.Windows.Forms.ToolStripButton TrimBox;
 	}
 }

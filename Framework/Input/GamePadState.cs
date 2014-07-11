@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-using SlimDX.DirectInput;
+using OpenTK.Input;
 
 
 namespace ArcEngine.Input
@@ -44,7 +44,7 @@ namespace ArcEngine.Input
 			// No joystick (unplugged ?)
 			if (Joystick == null)
 				return;
-
+/*
 			// Collect device state
 			try
 			{
@@ -73,6 +73,7 @@ namespace ArcEngine.Input
 			//   StateIndex = 0;
 
 		//	Trace.WriteLine(StateIndex.ToString());
+*/
 		}
 
 
@@ -88,7 +89,8 @@ namespace ArcEngine.Input
 		/// <returns></returns>
 		public bool IsButtonDown(int id)
 		{
-			return CurrentState.IsPressed(id);
+			//return CurrentState.IsPressed(id);
+			return false;
 		}
 
 
@@ -99,7 +101,8 @@ namespace ArcEngine.Input
 		/// <returns></returns>
 		public bool IsButtonUp(int id)
 		{
-			return CurrentState.IsReleased(id);
+			//return CurrentState.IsReleased(id);
+			return false;
 		}
 
 
@@ -111,7 +114,8 @@ namespace ArcEngine.Input
 		/// <returns></returns>
 		public bool IsNewButtonDown(int id)
 		{
-			return CurrentState.IsPressed(id) && PreviousState.IsReleased(id);
+			//return CurrentState.IsPressed(id) && PreviousState.IsReleased(id);
+			return false;
 		}
 
 
@@ -122,7 +126,8 @@ namespace ArcEngine.Input
 		/// <returns></returns>
 		public bool IsNewButtonUp(int id)
 		{
-			return CurrentState.IsReleased(id) && PreviousState.IsPressed(id);
+			//return CurrentState.IsReleased(id) && PreviousState.IsPressed(id);
+			return false;
 		}
 
 
@@ -198,7 +203,8 @@ namespace ArcEngine.Input
 		{
 			get
 			{
-				return States[StateIndex].GetButtons();
+				//return States[StateIndex].GetButtons();
+				return new bool[8];
 			}
 		}
 
@@ -210,7 +216,8 @@ namespace ArcEngine.Input
 		{
 			get
 			{
-				return CurrentState.GetPointOfViewControllers();
+				//return CurrentState.GetPointOfViewControllers();
+				return new int[4];
 			}
 		}
 
@@ -221,7 +228,8 @@ namespace ArcEngine.Input
 		{
 			get
 			{
-				return CurrentState.X;
+				//return CurrentState.X;
+				return -1;
 			}
 		}
 
@@ -232,7 +240,8 @@ namespace ArcEngine.Input
 		{
 			get
 			{
-				return CurrentState.Y;
+				//return CurrentState.Y;
+				return -1;
 			}
 		}
 
@@ -243,7 +252,8 @@ namespace ArcEngine.Input
 		{
 			get
 			{
-				return CurrentState.Z;
+				//return CurrentState.Z;
+				return -1;
 			}
 		}
 
@@ -328,7 +338,8 @@ namespace ArcEngine.Input
 		{
 			get
 			{
-				return CurrentState.RotationX;
+				//return CurrentState.RotationX;
+				return -1;
 			}
 		}
 
@@ -340,7 +351,8 @@ namespace ArcEngine.Input
 		{
 			get
 			{
-				return CurrentState.RotationY;
+				//return CurrentState.RotationY;
+				return -1;
 			}
 		}
 
@@ -352,7 +364,8 @@ namespace ArcEngine.Input
 		{
 			get
 			{
-				return CurrentState.RotationZ;
+				//return CurrentState.RotationZ;
+				return -1;
 			}
 		}
 

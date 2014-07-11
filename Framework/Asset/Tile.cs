@@ -35,11 +35,11 @@ namespace ArcEngine.Asset
 		/// Constructor
 		/// </summary>
 		/// <param name="source"></param>
-		/// <param name="origin"></param>
-		public Tile(Rectangle source, Point origin)
+		/// <param name="pivot"></param>
+		public Tile(Rectangle source, Point pivot)
 		{
 			Rectangle = source;
-			Origin = origin;
+			Pivot = pivot;
 		}
 
 		/// <summary>
@@ -48,7 +48,7 @@ namespace ArcEngine.Asset
 		public Tile()
 		{
 			Rectangle = Rectangle.Empty;
-			Origin = Point.Empty;
+			Pivot = Point.Empty;
 		}
 
 
@@ -90,7 +90,7 @@ namespace ArcEngine.Asset
 		/// <summary>
 		/// HotSpot of the tile
 		/// </summary>
-		public Point Origin
+		public Point Pivot
 		{
 			get;
 			set;

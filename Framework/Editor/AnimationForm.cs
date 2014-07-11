@@ -708,7 +708,7 @@ namespace ArcEngine.Editor
 
 					// Blit the tile
 					//Animation.TileSet.Draw(id, new Point(rect.X + tile.HotSpot.X, rect.Y + tile.HotSpot.Y));
-					SpriteBatch.DrawTile(Animation.TileSet, id, new Point(rect.X + tile.Origin.X, rect.Y + tile.Origin.Y));
+					SpriteBatch.DrawTile(Animation.TileSet, id, new Point(rect.X + tile.Pivot.X, rect.Y + tile.Pivot.Y));
 
 					// Is mouse over or selected tile
 					if (rect.Contains(mouse) || TileID == id)

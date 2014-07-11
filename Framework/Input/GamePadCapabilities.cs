@@ -21,7 +21,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using SlimDX.DirectInput;
+using OpenTK.Input;
 
 namespace ArcEngine.Input
 {
@@ -62,7 +62,8 @@ namespace ArcEngine.Input
 		{
 			get
 			{
-				return Joystick.Capabilities.AxesCount;
+				//return Joystick.GetCapabilities().AxisCount;
+				return -1;
 			}
 		}
 
@@ -73,7 +74,8 @@ namespace ArcEngine.Input
 		{
 			get
 			{
-				return Joystick.Capabilities.ButtonCount;
+				//return Joystick.Capabilities.ButtonCount;
+				return -1;
 			}
 		}
 
@@ -88,7 +90,8 @@ namespace ArcEngine.Input
 				if (Joystick == null)
 					return string.Empty;
 
-				return Joystick.Information.InstanceName;
+				//return Joystick.Information.InstanceName;
+				return string.Empty;
 			}
 		}
 
@@ -102,7 +105,8 @@ namespace ArcEngine.Input
 				if (Joystick == null)
 					return string.Empty;
 
-				return Joystick.Information.ProductName;
+				//return Joystick.Information.ProductName;
+				return string.Empty;
 			}
 		}
 
@@ -130,7 +134,8 @@ namespace ArcEngine.Input
 				if (Joystick == null)
 					return false;
 
-				return (Joystick.Capabilities.Flags & DeviceFlags.ForceFeedback) == DeviceFlags.ForceFeedback;
+				//return (Joystick.Capabilities.Flags & DeviceFlags.ForceFeedback) == DeviceFlags.ForceFeedback;
+				return false;
 			}
 		}
 
@@ -145,7 +150,8 @@ namespace ArcEngine.Input
 				if (Joystick == null)
 					return 0;
 
-				return Joystick.Capabilities.PovCount;
+				//return Joystick.Capabilities.PovCount;
+				return -1;
 			}
 		}
 		#endregion

@@ -21,7 +21,7 @@
 using System;
 using System.Collections.Generic;
 using ArcEngine.Forms;
-using SlimDX.DirectInput;
+using OpenTK.Input;
 
 
 // http://msdn.microsoft.com/en-us/library/dd757116%28VS.85%29.aspx
@@ -43,7 +43,7 @@ namespace ArcEngine.Input
 		static Gamepad()
 		{
 			Trace.WriteDebugLine("[GamePad] Constructor()");
-			Device = null;
+			//Device = null;
 			AvailableDevices = new List<GamePadState>();
 		}
 
@@ -64,7 +64,7 @@ namespace ArcEngine.Input
 				throw new ArgumentNullException("window");
 			}
 
-			Device = new DirectInput();
+			//Device = new DirectInput();
 			Window = window;
 
 			return true;
@@ -79,9 +79,9 @@ namespace ArcEngine.Input
 			Trace.WriteDebugLine("[GamePad] Dispose()");
 			ReleaseDevices();
 			
-			if (Device != null)
-				Device.Dispose();
-			Device = null;
+			//if (Device != null)
+			//	Device.Dispose();
+			//Device = null;
 		}
 
 
@@ -99,7 +99,7 @@ namespace ArcEngine.Input
 				Trace.WriteDebugLine("[GamePad] GamePad not initialized. GameWindow is null !!");
 				return;
 			}
-
+/*
 			foreach (DeviceInstance device in Device.GetDevices(DeviceClass.GameController, DeviceEnumerationFlags.AttachedOnly))
 			{
 				try
@@ -116,7 +116,7 @@ namespace ArcEngine.Input
 					Trace.WriteDebugLine("[GamePad] Error while acquiring joystick : \"{0}\"", ex.Message);
 				}
 			}
-
+*/
 
 			// Sets axis ranges
 			for (int id = 0; id < Count; id++)
@@ -142,11 +142,11 @@ namespace ArcEngine.Input
 				return;
 			}
 
-			foreach (DeviceObjectInstance deviceObject in joystick.GetObjects())
-			{
-				if ((deviceObject.ObjectType & ObjectDeviceType.Axis) != 0)
-					joystick.GetObjectPropertiesById((int)deviceObject.ObjectType).SetRange(min, max);
-			}
+			//foreach (DeviceObjectInstance deviceObject in joystick.GetObjects())
+			//{
+			//	if ((deviceObject.ObjectType & ObjectDeviceType.Axis) != 0)
+			//		joystick.GetObjectPropertiesById((int)deviceObject.ObjectType).SetRange(min, max);
+			//}
 		}
 
 
@@ -165,11 +165,11 @@ namespace ArcEngine.Input
 				return;
 			}
 
-			foreach (DeviceObjectInstance deviceObject in joystick.GetObjects())
-			{
-				if ((deviceObject.ObjectType & ObjectDeviceType.Axis) != 0)
-					joystick.GetObjectPropertiesById((int)deviceObject.ObjectType).DeadZone = value;
-			}
+			//foreach (DeviceObjectInstance deviceObject in joystick.GetObjects())
+			//{
+			//	if ((deviceObject.ObjectType & ObjectDeviceType.Axis) != 0)
+			//		joystick.GetObjectPropertiesById((int)deviceObject.ObjectType).DeadZone = value;
+			//}
 		}
 
 
@@ -237,11 +237,11 @@ namespace ArcEngine.Input
 
 
 
-			int[] dwAxes = new int[2] { JoystickObjects.XAxis, JoystickObjects.YAxis };
-			int[] lDirection = new int[] { 0, 0 };
+			//int[] dwAxes = new int[2] { JoystickObjects.XAxis, JoystickObjects.YAxis };
+			//int[] lDirection = new int[] { 0, 0 };
 
-			ConstantForce diConstantForce = new ConstantForce();
-			diConstantForce.Magnitude = 100000;
+			//ConstantForce diConstantForce = new ConstantForce();
+			//diConstantForce.Magnitude = 100000;
 
 			//SlimDX.DirectInput.
 			//Effect effect = new Effect(joystick, EffectGuid.ConstantForce);
@@ -259,17 +259,17 @@ namespace ArcEngine.Input
 			//effect.cbTypeSpecificParams = sizeof(DICONSTANTFORCE);
 			//effect.lpvTypeSpecificParams = &diConstantForce;  
 
-			EffectParameters param = new EffectParameters();
-			param.Flags = EffectFlags.Cartesian | EffectFlags.ObjectOffsets;
-			param.Duration = 100;
-			param.SamplePeriod = 0;
-			param.Gain = 10000;
-			param.TriggerButton = -1;
-			param.TriggerRepeatInterval = 0;
-			param.Envelope = null;
-			param.StartDelay = 0;
+			//EffectParameters param = new EffectParameters();
+			//param.Flags = EffectFlags.Cartesian | EffectFlags.ObjectOffsets;
+			//param.Duration = 100;
+			//param.SamplePeriod = 0;
+			//param.Gain = 10000;
+			//param.TriggerButton = -1;
+			//param.TriggerRepeatInterval = 0;
+			//param.Envelope = null;
+			//param.StartDelay = 0;
 			
-			Effect effect = new Effect(joystick, EffectGuid.ConstantForce, param);
+			//Effect effect = new Effect(joystick, EffectGuid.ConstantForce, param);
 
 			//joystick.CreateEffect(GUID_ConstantForce, &diEffect, &lpdiEffect, NULL);
 
@@ -464,8 +464,8 @@ namespace ArcEngine.Input
 				if (state.Joystick == null)
 					continue;
 
-				state.Joystick.Unacquire();
-				state.Joystick.Dispose();
+				//state.Joystick.Unacquire();
+				//state.Joystick.Dispose();
 			}
 
 			AvailableDevices.Clear();
@@ -480,7 +480,7 @@ namespace ArcEngine.Input
 		/// <summary>
 		/// DirectInput device
 		/// </summary>
-		public static DirectInput Device;
+		//public static DirectInput Device;
 
 
 		/// <summary>

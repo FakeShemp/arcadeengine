@@ -980,7 +980,7 @@ namespace ArcEngine.Graphic
 
 			Vector4 src = new Vector4(tile.Rectangle.X, tile.Rectangle.Y, tile.Rectangle.Width, tile.Rectangle.Height);
 
-			Vector2 origin = new Vector2(tile.Origin.X * tileset.Scale.X, tile.Origin.Y * tileset.Scale.Y);
+			Vector2 origin = new Vector2(tile.Pivot.X * tileset.Scale.X, tile.Pivot.Y * tileset.Scale.Y);
 
 			InternalDraw(tileset.Texture, ref dst, ref src, color, rotation, origin, scale, effect, depth, PrimitiveType.Triangles);
 		}

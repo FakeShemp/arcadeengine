@@ -161,8 +161,8 @@ namespace ArcEngine.Asset
 				writer.WriteEndElement();
 
 				writer.WriteStartElement("hotspot");
-				writer.WriteAttributeString("x", val.Value.Origin.X.ToString());
-				writer.WriteAttributeString("y", val.Value.Origin.Y.ToString());
+				writer.WriteAttributeString("x", val.Value.Pivot.X.ToString());
+				writer.WriteAttributeString("y", val.Value.Pivot.Y.ToString());
 				writer.WriteEndElement();
 
 				writer.WriteStartElement("collisionbox");
@@ -257,7 +257,7 @@ namespace ArcEngine.Asset
 									origin.X = int.Parse(subnode.Attributes["x"].Value);
 									origin.Y = int.Parse(subnode.Attributes["y"].Value);
 
-									tile.Origin = origin;
+									tile.Pivot = origin;
 								}
 								break;
 

@@ -679,8 +679,8 @@ namespace ArcEngine.Editor
 				if (HotSpotBox.Checked)
 				{
 					Point pos = Point.Empty;
-					pos.X = (int) (CurrentTile.Origin.X * zoomvalue + TileOffset.X);
-					pos.Y = (int) (CurrentTile.Origin.Y * zoomvalue + TileOffset.Y);
+					pos.X = (int) (CurrentTile.Pivot.X * zoomvalue + TileOffset.X);
+					pos.Y = (int) (CurrentTile.Pivot.Y * zoomvalue + TileOffset.Y);
 
 					Rectangle rect = new Rectangle(pos, new Size((int) zoomvalue, (int) zoomvalue));
 					Batch.FillRectangle(rect, Color.Red);
@@ -741,7 +741,7 @@ namespace ArcEngine.Editor
 					pos.X = (e.Location.X - TileOffset.X) / zoomvalue;
 					pos.Y = (e.Location.Y - TileOffset.Y) / zoomvalue;
 
-					CurrentTile.Origin = pos;
+					CurrentTile.Pivot = pos;
 				}
 
 			}
@@ -789,7 +789,7 @@ namespace ArcEngine.Editor
 					pos.X = (e.Location.X - TileOffset.X) / zoomvalue;
 					pos.Y = (e.Location.Y - TileOffset.Y) / zoomvalue;
 
-					CurrentTile.Origin = pos;
+					CurrentTile.Pivot = pos;
 				}
 
 			}
@@ -817,6 +817,17 @@ namespace ArcEngine.Editor
 
 
 		#region Form events
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void TrimBox_Click(object sender, EventArgs e)
+		{
+			MessageBox.Show("To do !");
+		}
+
 
 		/// <summary>
 		/// 
@@ -1125,5 +1136,6 @@ namespace ArcEngine.Editor
 		Color SurroundTileColor;
 
 		#endregion
+
 	}
 }
