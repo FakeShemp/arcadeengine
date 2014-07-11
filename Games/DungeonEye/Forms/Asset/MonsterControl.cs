@@ -169,7 +169,7 @@ namespace DungeonEye.Forms
 						if (tile != null)
 						{
 							Point pos = new Point((GlControl.Width - tile.Size.Width) / 2, (GlControl.Height - tile.Size.Height) / 2);
-							pos.Offset(tile.Origin);
+							pos.Offset(tile.Pivot);
 							SpriteBatch.DrawTile(TileSet, Monster.Tile, pos);
 						}
 					}
